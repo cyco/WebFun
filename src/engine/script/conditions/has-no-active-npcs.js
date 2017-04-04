@@ -1,0 +1,1 @@
+export default (args, zone, engine) => !zone.npcs.some((npc) => npc.charId !== -1); // TODO: might be npc.enabled

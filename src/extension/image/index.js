@@ -1,0 +1,1 @@
+export blankImage from './blank-image';
