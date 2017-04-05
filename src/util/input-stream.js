@@ -1,4 +1,4 @@
-import Stream from './stream';
+import Stream from "./stream";
 
 export default class InputStream extends Stream {
 	constructor(data) {
@@ -13,7 +13,7 @@ export default class InputStream extends Stream {
 		if (data instanceof ArrayBuffer)
 			return data;
 
-		if (typeof data === 'string') {
+		if (typeof data === "string") {
 			let binaryString = atob(data);
 			let len = binaryString.length;
 			let bytes = new Uint8Array(len);
@@ -71,7 +71,7 @@ export default class InputStream extends Stream {
 	}
 
 	getCharacters(length) {
-		if (length === 0) return '';
+		if (length === 0) return "";
 
 		const characterCodes = new Uint8Array(this._arrayBuffer, this._offset, length);
 		this._offset += length;
@@ -126,5 +126,5 @@ export default class InputStream extends Stream {
 		return result;
 	}
 
-	// // // // // // // // // // // // // // // // // //
+// // // // // // // // // // // // // // // // // //
 }

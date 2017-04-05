@@ -1,5 +1,7 @@
 export default class {
 	constructor() {
-		this.palette = null;
+		this.renderer = null;
+		this.imageFactory = null;
+		this.data = null;
 	}
 }

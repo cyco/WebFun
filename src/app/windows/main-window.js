@@ -1,29 +1,29 @@
-import { Window, View } from '/ui';
-import { AmmoView, HealthView, InventoryView, LocationView, WeaponView } from '/app/ui';
+import { Window, View } from "/ui";
+import { AmmoView, HealthView, InventoryView, LocationView, WeaponView } from "/app/ui";
 
 export default class extends Window {
 	constructor() {
 		super();
-		this.classList.add('main-window');
+		this.classList.add("main-window");
 
 		this._main = new View();
-		this._main.element.classList.add('main');
+		this._main.element.classList.add("main");
 		this.content.appendChild(this._main.element);
 
 		this._sidebar = new View();
-		this._sidebar.element.classList.add('sidebar');
+		this._sidebar.element.classList.add("sidebar");
 
 		this._inventoryView = new InventoryView();
 		this._sidebar.element.appendChild(this._inventoryView.element);
 
 		const group = new View();
-		group.classList.add('group');
+		group.classList.add("group");
 
 		this._locationView = new LocationView();
 		group.element.appendChild(this._locationView.element);
 
 		const equipment = new View();
-		equipment.classList.add('equipment');
+		equipment.classList.add("equipment");
 		this._ammoView = new AmmoView();
 		equipment.element.appendChild(this._ammoView.element);
 		this._weaponView = new WeaponView();

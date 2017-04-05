@@ -1,11 +1,11 @@
-import View from './view';
-import WindowTitlebar from './window-titlebar';
+import View from "./view";
+import WindowTitlebar from "./window-titlebar";
 
 export default class extends View {
 	constructor() {
 		super();
 
-		this.element.classList.add('window');
+		this.element.classList.add("window");
 		this.x = 0;
 		this.y = 0;
 
@@ -13,7 +13,7 @@ export default class extends View {
 		this.element.appendChild(this._titlebar.element);
 
 		this._content = new View();
-		this._content.element.classList.add('content');
+		this._content.element.classList.add("content");
 		this.element.appendChild(this._content.element);
 	}
 

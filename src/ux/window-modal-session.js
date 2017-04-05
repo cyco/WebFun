@@ -1,6 +1,6 @@
-import { dispatch } from '/util';
+import { dispatch } from "/util";
 
-import ModalSession from './modal-session';
+import ModalSession from "./modal-session";
 
 export default class extends ModalSession {
 	constructor(window) {
@@ -26,3 +26,6 @@ export default class extends ModalSession {
 		callback();
 	}
 }
+
+
+

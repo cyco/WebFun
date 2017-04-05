@@ -1,12 +1,12 @@
-import View from './view';
-import Menu from './menu';
-import {Separator, State as MenuItemState} from './menu-item';
+import View from "./view";
+import Menu from "./menu";
+import { Separator, State as MenuItemState } from "./menu-item";
 
 export default class MenuView extends View {
 	constructor(menu, element) {
-		super(element || document.createElement('ul'));
+		super(element || document.createElement("ul"));
 
-		this.element.classList.add('menu-view');
+		this.element.classList.add("menu-view");
 
 		if (menu && !(menu instanceof Menu))
 			menu = new Menu(menu);
@@ -15,7 +15,7 @@ export default class MenuView extends View {
 
 	close() {
 		this.element.remove();
-		if(this.onclose && typeof this.onclose === 'function')
+		if (this.onclose && typeof this.onclose === "function")
 			this.onclose();
 	}
 
@@ -39,8 +39,8 @@ export default class MenuView extends View {
 	}
 
 	addItemNode(menuItem) {
-		const node = document.createElement('li');
-		node.classList.add('menu-item');
+		const node = document.createElement("li");
+		node.classList.add("menu-item");
 
 		const stateNode = this._makeStateNode(menuItem);
 		node.appendChild(stateNode);
@@ -52,8 +52,8 @@ export default class MenuView extends View {
 			const mnemonic = title.substring(mnemonicIndex, mnemonicIndex + 1);
 			const postMnemonic = title.substring(mnemonicIndex + 1);
 
-			const mnemonicHighlight = document.createElement('span');
-			mnemonicHighlight.classList.add('mnemonic');
+			const mnemonicHighlight = document.createElement("span");
+			mnemonicHighlight.classList.add("mnemonic");
 			mnemonicHighlight.append(mnemonic);
 
 			node.append(preMnemonic);
@@ -63,10 +63,11 @@ export default class MenuView extends View {
 			node.append(menuItem.title);
 		}
 
-		const stateClass = menuItem.enabled ? 'enabled' : 'disabled';
+		const stateClass = menuItem.enabled ? "enabled" : "disabled";
 		node.classList.add(stateClass);
 
-		if (menuItem.enabled && menuItem.callback) node.onmouseup = menuItem.callback;
+		if (menuItem.enabled && menuItem.callback)
+			node.onmouseup = menuItem.callback;
 		this.element.appendChild(node);
 		menuItem.element = node;
 
@@ -74,26 +75,26 @@ export default class MenuView extends View {
 	}
 
 	_makeStateNode(menuItem) {
-		const node = document.createElement('span');
-		node.classList.add('state');
+		const node = document.createElement("span");
+		node.classList.add("state");
 
 		let state = menuItem.state;
 		if (state === undefined) return node;
 
-		if (typeof state === 'function') try {
-			state = state();
-		} catch (e) {}
+		if (typeof state === "function") try {
+				state = state();
+			} catch (e) {}
 
 		let className = null;
 		switch (state) {
 			case MenuItemState.On:
-				className = 'on';
+				className = "on";
 				break;
 			case MenuItemState.Off:
-				className = 'off';
+				className = "off";
 				break;
 			case MenuItemState.Mixed:
-				className = 'mixed';
+				className = "mixed";
 				break;
 			case MenuItemState.None:
 				break;
@@ -108,11 +109,11 @@ export default class MenuView extends View {
 	}
 
 	addSeparatorNode() {
-		const node = document.createElement('li');
-		node.classList.add('menu-item');
-		node.classList.add('separator');
+		const node = document.createElement("li");
+		node.classList.add("menu-item");
+		node.classList.add("separator");
 
-		const line = document.createElement('div');
+		const line = document.createElement("div");
 		node.appendChild(line);
 
 		this.element.appendChild(node);

@@ -1,1 +1,1 @@
-export default from './place-tile';
+export default from "./place-tile";

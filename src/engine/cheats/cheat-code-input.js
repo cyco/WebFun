@@ -1,6 +1,6 @@
 export default class CheatCodeInput {
 	constructor(cheats) {
-		this._input = '';
+		this._input = "";
 		this._cheats = cheats;
 	}
 
@@ -9,7 +9,7 @@ export default class CheatCodeInput {
 	}
 
 	reset() {
-		this._input = '';
+		this._input = "";
 	}
 
 	execute(engine) {

@@ -1,5 +1,5 @@
-import { structure, array, blob } from '/parser/functions';
-import { uint8, uint32 } from '/parser/types';
+import { structure, array, blob } from "/parser/functions";
+import { uint8, uint32 } from "/parser/types";
 
 const TILE_WIDTH = 32;
 const TILE_HEIGHT = 32;

@@ -1,0 +1,16 @@
+* {
+    user-select: none;
+    -webkit-user-select: none;
+    cursor: default;
+}
+
+input[type=text],
+textarea {
+    user-select: text;
+    -webkit-user-select: none;
+    cursor: text;
+}
+
+a {
+    cursor: default;
+}

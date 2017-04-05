@@ -1,24 +1,24 @@
-import View from './view';
+import View from "./view";
 
 export default class extends View {
 	constructor() {
-		super(document.createElement('input'));
+		super(document.createElement("input"));
 
-		this.element.type = 'text';
-		this.element.classList.add('textbox');
+		this.element.type = "text";
+		this.element.classList.add("textbox");
 	}
 
 	set editable(e) {
-		if (e) this.element.setAttribute('readonly', '');
-		else this.element.removeAttribute('readonly');
+		if (e) this.element.setAttribute("readonly", "");
+		else this.element.removeAttribute("readonly");
 	}
 
 	get editable() {
-		return !!this.element.hasAttribute('readonly');
+		return !!this.element.hasAttribute("readonly");
 	}
 
 	set width(w) {
-		this.element.style.width = w + 'px';
+		this.element.style.width = w + "px";
 	}
 
 	get width() {
@@ -26,9 +26,9 @@ export default class extends View {
 	}
 
 	set height(h) {
-		this.element.style.height = h + 'px';
+		this.element.style.height = h + "px";
 	}
-	
+
 	get height() {
 		return this.element.style.height;
 	}
@@ -44,9 +44,9 @@ export default class extends View {
 	set align(a) {
 		this.element.style.textAlign = a;
 	}
-	
+
 	get align() {
-		return this.element.style.textAlign || 'left';
+		return this.element.style.textAlign || "left";
 	}
 
 	get onchange() {

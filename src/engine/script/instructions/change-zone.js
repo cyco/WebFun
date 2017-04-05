@@ -1,10 +1,10 @@
-import TransitionScene from '/engine/scenes/transition-scene';
-import { Point } from '/util';
-import * as Result from '../result';
- 
+import TransitionScene from "/engine/scenes/transition-scene";
+import { Point } from "/util";
+import * as Result from "../result";
+
 export default (instruction, engine, action) => {
 	const args = instruction.arguments;
-	
+
 	const transitionScene = new TransitionScene();
 	transitionScene.type = TransitionScene.TRANSITION_TYPE.ROOM;
 	transitionScene.targetHeroLocation = new Point(args[1], args[2]);

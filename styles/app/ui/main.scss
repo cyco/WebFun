@@ -1,0 +1,7 @@
+.main-window > .content > .main {
+	@extend .inset-border-2px;
+	
+	position: relative;
+	width: 288px + 2 * 2px;
+	height: 288px + 2 * 2px;
+}

@@ -1,8 +1,8 @@
-import ZoneScene from '/engine/scenes/zone-scene';
-import * as Result from '../result';
+import ZoneScene from "/engine/scenes/zone-scene";
+import * as Result from "../result";
 
 export default (instruction, engine, action) => {
-   	/*
+	/*
     v37 = instruction->arg4;
     v78 = instruction->arg3;
     v77 = v37;
@@ -61,7 +61,7 @@ export default (instruction, engine, action) => {
     while ( !v70 );
     YodaView::Draw_(view, context);
     goto fetch_next_instruction;
-   	*/
+	*/
 
 	throw `method not implemented correctly`;
 

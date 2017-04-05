@@ -1,4 +1,4 @@
-import { View } from '/ui';
+import { View } from "/ui";
 
 export default class WeaponView extends View {
 	constructor(element) {
@@ -7,14 +7,14 @@ export default class WeaponView extends View {
 		this._weapon = null;
 		this.data = null;
 
-		this.element.classList.add('weapon-view');
+		this.element.classList.add("weapon-view");
 
-		const background = document.createElement('div');
-		background.classList.add('background');
+		const background = document.createElement("div");
+		background.classList.add("background");
 		this.element.appendChild(background);
 
-		this._tileContainer = document.createElement('img');
-		this._tileContainer.classList.add('pixelated');
+		this._tileContainer = document.createElement("img");
+		this._tileContainer.classList.add("pixelated");
 		this.element.appendChild(this._tileContainer);
 
 		Object.seal(this);
@@ -31,7 +31,7 @@ export default class WeaponView extends View {
 
 	_update() {
 		let url = Image.blankImage;
-		this._tileContainer.style.backgroundPosition = '';
+		this._tileContainer.style.backgroundPosition = "";
 		if (this._weapon && this._weapon.frames && this._weapon.frames.length) {
 			const tileID = this._weapon.frames[0].extensionRight;
 			if (tileID !== 0xFFFF) {

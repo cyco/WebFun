@@ -1,4 +1,4 @@
-import { _Action } from './action';
+import { _Action } from "./action";
 
 export const Opcode = {
 	ZoneNotInitalized: 0x00,
@@ -38,4 +38,5 @@ export const Opcode = {
 	TileAtIsAgain: 0x22,
 	GamesWonIsGreaterThan: 0x23,
 };
-export default class Condition extends _Action {}
+export default class Condition extends _Action {
+}

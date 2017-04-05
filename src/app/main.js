@@ -1,4 +1,4 @@
-import GameController from './game-controller';
+import GameController from "./game-controller";
 
 export default () => {
 	const gameController = new GameController();

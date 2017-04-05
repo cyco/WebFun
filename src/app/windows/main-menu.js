@@ -1,86 +1,86 @@
-import { Menu, MenuItemSeparator as Separator } from '/ui';
-import { WindowModalSession } from '/ux';
+import { Menu, MenuItemSeparator as Separator } from "/ui";
+import { WindowModalSession } from "/ux";
 
-import StatisticsWindow from './statistics-window';
+import StatisticsWindow from "./statistics-window";
 
 export default class extends Menu {
 	constructor(gameController) {
 		super([{
-			title: 'File',
+			title: "File",
 			mnemonic: 0,
 			submenu: [{
-					title: 'New World',
-					mnemonic: 0,
-					callback: () => gameController.newStory(),
-					enabled: () => gameController.isDataLoaded(),
-				}, {
-					title: 'Replay Story',
-					mnemonic: 0,
-					callback: () => gameController.replayStory(),
-					enabled: () => gameController.isGameInProgress(),
-				}, {
-					title: 'Load World',
-					mnemonic: 0,
-					callback: () => gameController.load(),
-					enabled: () => gameController.isDataLoaded(),
-				}, {
-					title: 'Save World',
-					mnemonic: 0,
-					callback: () => gameController.save(),
-					enabled: () => gameController.isGameInProgress()
-				},
+				title: "New World",
+				mnemonic: 0,
+				callback: () => gameController.newStory(),
+				enabled: () => gameController.isDataLoaded(),
+			}, {
+				title: "Replay Story",
+				mnemonic: 0,
+				callback: () => gameController.replayStory(),
+				enabled: () => gameController.isGameInProgress(),
+			}, {
+				title: "Load World",
+				mnemonic: 0,
+				callback: () => gameController.load(),
+				enabled: () => gameController.isDataLoaded(),
+			}, {
+				title: "Save World",
+				mnemonic: 0,
+				callback: () => gameController.save(),
+				enabled: () => gameController.isGameInProgress()
+			},
 				Separator, {
-					title: 'Exit',
+					title: "Exit",
 					mnemonic: 1
 				}
 			]
 		}, {
-			title: 'Options',
+			title: "Options",
 			mnemonic: 0,
 			submenu: [{
-					title: 'Combat Difficulty...',
-					mnemonic: 0
-				}, {
-					title: 'Game Speed...',
-					mnemonic: 0
-				}, {
-					title: 'World Control...',
-					mnemonic: 0
-				}, {
-					title: 'Statistics...',
-					mnemonic: 0,
-					callback: () => this._runModalSession(new StatisticsWindow())
-				}, Separator, {
-					title: 'Music On',
-					mnemonic: 0,
-				}, {
-					title: 'Sound On',
-					mnemonic: 0,
-				},
+				title: "Combat Difficulty...",
+				mnemonic: 0
+			}, {
+				title: "Game Speed...",
+				mnemonic: 0
+			}, {
+				title: "World Control...",
+				mnemonic: 0
+			}, {
+				title: "Statistics...",
+				mnemonic: 0,
+				callback: () => this._runModalSession(new StatisticsWindow())
+			}, Separator, {
+				title: "Music On",
+				mnemonic: 0,
+			}, {
+				title: "Sound On",
+				mnemonic: 0,
+			},
 				Separator, {
-					title: 'Pause',
+					title: "Pause",
 					mnemonic: 0,
 					enabled: () => gameController.isGameInProgress()
 				}
 			]
 		}, {
-			title: 'Window',
+			title: "Window",
 			mnemonic: 0,
 			submenu: [{
-				title: 'Hide Me!',
+				title: "Hide Me!",
 				mnemonic: 0
 			}]
 		}, {
-			title: 'Help',
+			title: "Help",
 			mnemonic: 0,
 			submenu: [{
-				title: 'How to Play',
+				title: "How to Play",
 				mnemonic: 0
 			}, {
-				title: 'Using Help',
+				title: "Using Help",
 				mnemonic: 0
 			}, Separator, {
-				title: 'About...',
+				title: "About...",
 				mnemonic: 0
 			}]
 		}]);

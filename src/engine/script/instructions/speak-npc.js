@@ -1,5 +1,5 @@
-import Point from '/util/point';
-import SpeakText from './speak-text';
+import Point from "/util/point";
+import SpeakText from "./speak-text";
 
 export default (instruction, engine, action) => {
 	const args = instruction.arguments;

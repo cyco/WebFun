@@ -1,4 +1,4 @@
-import * as Result from '../result';
+import * as Result from "../result";
 
 export default (instruction, engine, action) => {
 	const zone = engine.state.currentZone;
@@ -7,6 +7,6 @@ export default (instruction, engine, action) => {
 		hotspot.enabled = false;
 		return Result.UpdateHotspot;
 	}
-	
+
 	return Result.OK;
 };

@@ -1,6 +1,7 @@
-import { _Action } from './action';
+import { _Action } from "./action";
 
-export default class Instruction extends _Action {}
+export default class Instruction extends _Action {
+}
 
 export const Opcode = {
 	PlaceTile: 0x00,

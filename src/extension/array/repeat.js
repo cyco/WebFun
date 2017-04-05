@@ -1,4 +1,4 @@
-import { constantly } from '/util';
+import { constantly } from "/util";
 
 Array.Repeat = (item, count) => Array.apply(null, Array(count)).map(constantly(item));
 

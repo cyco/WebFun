@@ -24,7 +24,7 @@ export const Type = {
 	Island: 104,
 	Spaceport: 201,
 	Candidate: 300,
-	
+
 	BlockWest: 301,
 	BlockEast: 302,
 	BlockNorth: 303,

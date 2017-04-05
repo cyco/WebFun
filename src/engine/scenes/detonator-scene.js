@@ -1,6 +1,6 @@
-import Scene from '/engine/scenes/scene';
-import Tile from '/engine/objects/tile';
-import { Point, Size } from '/util';
+import Scene from "/engine/scenes/scene";
+import Tile from "/engine/objects/tile";
+import { Point, Size } from "/util";
 
 export default class DetonatorScene extends Scene {
 	constructor() {

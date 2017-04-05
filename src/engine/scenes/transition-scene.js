@@ -1,7 +1,7 @@
-import Scene from '/engine/scenes/scene';
-import Tile from '/engine/objects/tile';
-import Zone from '/engine/objects/zone';
-import Point from '/util/point';
+import Scene from "/engine/scenes/scene";
+import Tile from "/engine/objects/tile";
+import Zone from "/engine/objects/zone";
+import Point from "/util/point";
 
 export default class TransitionScene extends Scene {
 	static get TRANSITION_TYPE() {
@@ -37,7 +37,7 @@ export default class TransitionScene extends Scene {
 	}
 
 	willShow() {
-		console.log('willShow()');
+		console.log("willShow()");
 
 		this._setupAnimationAttributes();
 		this.state = 0;
@@ -45,7 +45,7 @@ export default class TransitionScene extends Scene {
 		let offset = this.scene.currentOffset;
 		// TODO: fix offset for new scene that has never been visited
 		if (offset === null || offset === undefined) {
-			offset = new Point(0,0);
+			offset = new Point(0, 0);
 		}
 
 		this._source = this._takeSnapshot(this.engine.state.currentZone, offset.x, offset.y);
@@ -72,7 +72,7 @@ export default class TransitionScene extends Scene {
 	}
 
 	willHide() {
-		console.log('willHide()');
+		console.log("willHide()");
 	}
 
 	update( /*ticks*/ ) {
@@ -88,13 +88,13 @@ export default class TransitionScene extends Scene {
 	}
 
 	_swapZones() {
-		console.warn('_swapZones()');
+		console.warn("_swapZones()");
 		const state = this.engine.state;
 		state.hero.location = this.targetHeroLocation;
 		state.worldLocation = this.targetZoneLocation;
 		state.currentZone = this.targetZone;
 		state.currentZone.visited = true;
-		
+
 		console.log(this.scene);
 		this.scene.zone = state.currentZone;
 		this.scene.prepareCamera();
@@ -119,7 +119,7 @@ export default class TransitionScene extends Scene {
 		}
 	}
 
-	_renderZoneAnimation(renderer) {          
+	_renderZoneAnimation(renderer) {
 		const w = 9.0;
 		const h = 9.0;
 
@@ -139,14 +139,20 @@ export default class TransitionScene extends Scene {
 
 		if (!this._target) {
 			let x2;
-			if (xDir === -1) x2 = 0;
-			else if (xDir === 1) x2 = -9;
-			else x2 = this.scene.currentOffset.x;
+			if (xDir === -1)
+				x2 = 0;
+			else if (xDir === 1)
+				x2 = -9;
+			else
+				x2 = this.scene.currentOffset.x;
 
 			let y2;
-			if (yDir === -1) y2 = 0;
-			else if (yDir === 1) y2 = -9;
-			else y2 = this.scene.currentOffset.y;
+			if (yDir === -1)
+				y2 = 0;
+			else if (yDir === 1)
+				y2 = -9;
+			else
+				y2 = this.scene.currentOffset.y;
 			this._target = this._takeSnapshot(this.targetZone, x2, y2);
 		}
 
@@ -162,7 +168,8 @@ export default class TransitionScene extends Scene {
 		const directionAdjustedState = this.state - (fadeIn ? this._duration / 2.0 : 0.0);
 
 		let t = (directionAdjustedState / (this._duration / 2.0)) * 7;
-		if (fadeIn) t = 5 - t;
+		if (fadeIn)
+			t = 5 - t;
 		if (this._snapAnimationToTiles)
 			t = Math.floor(t);
 
@@ -183,7 +190,7 @@ export default class TransitionScene extends Scene {
 	}
 
 	_takeSnapshot(zone, xOffset, yOffset) {
-		const canvas = document.createElement('canvas');
+		const canvas = document.createElement("canvas");
 		const viewWidth = 9,
 			viewHeight = 9;
 		const tileWidth = Tile.WIDTH,
@@ -191,7 +198,7 @@ export default class TransitionScene extends Scene {
 
 		canvas.width = viewWidth * tileWidth;
 		canvas.height = viewHeight * tileHeight;
-		const ctx = canvas.getContext('2d');
+		const ctx = canvas.getContext("2d");
 
 		for (let l = 0; l < Zone.LAYERS; l++) {
 			for (let y = 0; y < viewHeight; y++) {

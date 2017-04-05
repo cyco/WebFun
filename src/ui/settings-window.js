@@ -1,11 +1,11 @@
-import Window from './window';
-import Slider from './slider';
-import Button from './button';
+import Window from "./window";
+import Slider from "./slider";
+import Button from "./button";
 
 export default class SettingsWindow extends Window {
 	constructor() {
 		super();
-		
+
 		this.slider = null;
 	}
 
@@ -15,7 +15,7 @@ export default class SettingsWindow extends Window {
 		slider.maxValue = 1;
 		slider.value = 0.5;
 
-		slider.onchange = (event) => console.log('slider changed', event);
+		slider.onchange = (event) => console.log("slider changed", event);
 
 		this.content.appendChild(slider.element);
 		this.slider = slider;
@@ -31,12 +31,12 @@ export default class SettingsWindow extends Window {
 	setupConfirmationButtons() {
 		const self = this;
 		const okButton = new Button();
-		okButton.title = 'OK';
+		okButton.title = "OK";
 		okButton.onclick = () => self.close();
 		this.element.appendChild(okButton.element);
 
 		const cancelButton = new Button();
-		cancelButton.title = 'Cancel';
+		cancelButton.title = "Cancel";
 		cancelButton.onclick = () => self.close();
 		this.element.appendChild(cancelButton.element);
 	}

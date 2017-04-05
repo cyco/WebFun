@@ -1,17 +1,17 @@
-import View from './view';
-import Menubar from './menubar';
-import { identity } from '/util';
+import View from "./view";
+import Menubar from "./menubar";
+import { identity } from "/util";
 
 export default class extends View {
 	constructor(window) {
 		super();
-		this.element.classList.add('titlebar');
+		this.element.classList.add("titlebar");
 
 		this._menubar = null;
 		this._titleNode = null;
 
 		this._closeButton = new View();
-		this._closeButton.classList.add('close-button');
+		this._closeButton.classList.add("close-button");
 		this._closeButton.element.onclick = () => {
 			window.element.remove();
 			this.onclose();
@@ -31,8 +31,8 @@ export default class extends View {
 		};
 
 		const mouseUp = () => {
-			window.removeEventListener('mouseup', mouseUp);
-			window.removeEventListener('mousemove', mouseMove);
+			window.removeEventListener("mouseup", mouseUp);
+			window.removeEventListener("mousemove", mouseMove);
 		};
 
 		const mouseDown = (event) => {
@@ -41,11 +41,11 @@ export default class extends View {
 				x: event.clientX - win.x,
 				y: event.clientY - win.y
 			};
-			window.addEventListener('mouseup', mouseUp);
-			window.addEventListener('mousemove', mouseMove);
+			window.addEventListener("mouseup", mouseUp);
+			window.addEventListener("mousemove", mouseMove);
 		};
 
-		this.element.addEventListener('mousedown', mouseDown);
+		this.element.addEventListener("mousedown", mouseDown);
 	}
 
 	set menu(m) {
@@ -60,7 +60,7 @@ export default class extends View {
 		}
 
 		if (this._menubar && this._titleNode) {
-			this._titleNode.style.display = this._menubar ? 'none' : '';
+			this._titleNode.style.display = this._menubar ? "none" : "";
 		}
 	}
 
@@ -76,10 +76,10 @@ export default class extends View {
 
 		if (t) {
 			if (this._menu) {
-				this._titleNode.style.display = 'none';
+				this._titleNode.style.display = "none";
 			}
 
-			this._titleNode = document.createElement('span');
+			this._titleNode = document.createElement("span");
 			this._titleNode.innerText = t;
 			this.element.insertBefore(this._titleNode, null);
 		}
@@ -90,10 +90,10 @@ export default class extends View {
 	}
 
 	set closable(flag) {
-		this._closeButton.style.display = flag ? '' : 'none';
+		this._closeButton.style.display = flag ? "" : "none";
 	}
 
 	get closable() {
-		return this._closeButton.style.display !== 'none';
+		return this._closeButton.style.display !== "none";
 	}
 }

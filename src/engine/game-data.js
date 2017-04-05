@@ -1,6 +1,6 @@
-import { Tile, Puzzle, Zone, Hotspot, Action, Instruction, Condition, NPC } from './objects';
-import { Type as HotspotType } from './objects/hotspot';
-import { Type as PuzzleType } from './objects/puzzle';
+import { Tile, Puzzle, Zone, Hotspot, Action, Instruction, Condition, NPC } from "./objects";
+import { Type as HotspotType } from "./objects/hotspot";
+import { Type as PuzzleType } from "./objects/puzzle";
 
 export default class {
 	constructor(raw) {

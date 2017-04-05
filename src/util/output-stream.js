@@ -1,4 +1,4 @@
-import Stream from './stream';
+import Stream from "./stream";
 
 export default class OutputStream extends Stream {
 	constructor(size) {

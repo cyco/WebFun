@@ -1,11 +1,11 @@
-import { Point, dispatch } from '/util';
-import ResetCursor from './reset-cursor';
+import { Point, dispatch } from "/util";
+import ResetCursor from "./reset-cursor";
 
 export default class ModalSession {
 	constructor() {
-		const overlay = document.createElement('div');
-		overlay.classList.add('full-size');
-		overlay.style.position = 'fixed';
+		const overlay = document.createElement("div");
+		overlay.classList.add("full-size");
+		overlay.style.position = "fixed";
 		overlay.style.zIndex = 1000;
 
 		this._overlay = overlay;
@@ -14,13 +14,13 @@ export default class ModalSession {
 	run() {
 		document.body.appendChild(this._overlay);
 		this._locationHandler = (e) => (this._lastMouseLocation = new Point(e.clientX, e.clientY));
-		['mouseup', 'mousedown', 'mousemove', 'mousedrag'].forEach(
+		["mouseup", "mousedown", "mousemove", "mousedrag"].forEach(
 			(eventName) => window.addEventListener(eventName, this._locationHandler));
 
 	}
 
 	end(code) {
-		['mouseup', 'mousedown', 'mousemove', 'mousedrag'].forEach(
+		["mouseup", "mousedown", "mousemove", "mousedrag"].forEach(
 			(eventName) => window.removeEventListener(eventName, this._locationHandler));
 		ResetCursor();
 		this._overlay.remove();
@@ -47,7 +47,7 @@ export default class ModalSession {
 
 	set cursor(c) {
 		let style = this._overlay.style;
-		const cursorStyle = c ? "url(" + c + ") 16 16, auto" : '';
+		const cursorStyle = c ? "url(" + c + ") 16 16, auto" : "";
 
 		// hack to get WebKit to change the cursor without further mouse events
 		// should have been fixed in https://bugs.webkit.org/show_bug.cgi?id=101857

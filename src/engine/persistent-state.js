@@ -11,30 +11,30 @@ export default class PersistentState {
 	}
 
 	get highScore() {
-		return this._getValue('highScore') | 0;
+		return this._getValue("highScore") | 0;
 	}
 	set highScore(s) {
-		this._setValue('highScore', 0 | s);
+		this._setValue("highScore", 0 | s);
 	}
 
 	get lastScore() {
-		return this._getValue('lastScore') | 0;
+		return this._getValue("lastScore") | 0;
 	}
 	set lastScore(s) {
-		this._setValue('lastScore', 0 | s);
+		this._setValue("lastScore", 0 | s);
 	}
 
 	get gamesWon() {
-		return this._getValue('gamesWon') | 0;
+		return this._getValue("gamesWon") | 0;
 	}
 	set gamesWon(g) {
-		this._setValue('gamesWon', 0 | g);
+		this._setValue("gamesWon", 0 | g);
 	}
 
 	get gamesLost() {
-		return this._getValue('gamesLost') | 0;
+		return this._getValue("gamesLost") | 0;
 	}
 	set gamesLost(g) {
-		this._setValue('gamesLost', 0 | g);
+		this._setValue("gamesLost", 0 | g);
 	}
 }

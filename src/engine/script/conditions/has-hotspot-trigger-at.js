@@ -1,4 +1,4 @@
-import { Type as HotspotType } from '/engine/objects/hotspot';
+import { Type as HotspotType } from "/engine/objects/hotspot";
 
 export default (args, zone, engine) => {
 	for (let hotspot of zone.hotspots) {

@@ -1,11 +1,11 @@
-import Cheat from '/engine/cheats/cheat';
+import Cheat from "/engine/cheats/cheat";
 
 export default class extends Cheat {
 	get code() {
-		return 'gohan';
+		return "gohan";
 	}
 	get message() {
-		return 'Super Smuggler!';
+		return "Super Smuggler!";
 	}
 
 	execute(engine) {

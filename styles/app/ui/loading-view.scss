@@ -1,0 +1,15 @@
+.loading-view {
+	@extend .full-size;
+	position: absolute;
+	background-color: #000000;
+	
+	> img {
+		@extend .full-size;
+		@extend .pixelated;
+		position: absolute;
+	}
+	
+	> img:not([src]) {
+		display: none;
+	}	
+}

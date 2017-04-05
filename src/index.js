@@ -1,8 +1,8 @@
-import './extension';
+import "./extension";
 
-import './ui';
-import './util';
+import "./ui";
+import "./util";
 
-import { main } from './app';
+import { main } from "./app";
 
-window.addEventListener('load', main);
+window.addEventListener("load", main);

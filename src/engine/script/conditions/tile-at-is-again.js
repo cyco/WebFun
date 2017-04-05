@@ -1,1 +1,1 @@
-export default from './tile-at-is';
+export default from "./tile-at-is";

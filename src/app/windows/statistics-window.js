@@ -1,13 +1,13 @@
-import { Window, Textbox } from '/ui';
-import { PersistentState } from '/engine';
+import { Window, Textbox } from "/ui";
+import { PersistentState } from "/engine";
 
 export default class extends Window {
 	constructor() {
 		super();
-		
-		this.title = 'Player Statistics';
-		this.element.classList.add('statistics-window');
-		
+
+		this.title = "Player Statistics";
+		this.element.classList.add("statistics-window");
+
 		this._setupWindow();
 	}
 
@@ -18,25 +18,25 @@ export default class extends Window {
 
 		this._state = new PersistentState();
 
-		this.icon = document.createElement('div');
-		this.icon.classList.add('icon');
+		this.icon = document.createElement("div");
+		this.icon.classList.add("icon");
 		this.content.appendChild(this.icon);
 
-		this._list = document.createElement('ul');
-		this._addRow('High Score:', 'highScore');
-		this._addRow('Last Score:', 'lastScore');
-		this._addRow('Game Won:', 'gamesWon');
-		this._addRow('Games Lost:', 'gamesLost');
+		this._list = document.createElement("ul");
+		this._addRow("High Score:", "highScore");
+		this._addRow("Last Score:", "lastScore");
+		this._addRow("Game Won:", "gamesWon");
+		this._addRow("Games Lost:", "gamesLost");
 		this.content.appendChild(this._list);
 	}
 
 	_addRow(name, key) {
-		const label = document.createElement('span');
+		const label = document.createElement("span");
 		label.append(name);
 
 		const textbox = new Textbox();
 		textbox.editable = false;
-		textbox.align = 'right';
+		textbox.align = "right";
 		textbox.width = 60;
 		textbox.height = 20;
 		textbox.value = this._state[key];
@@ -48,7 +48,7 @@ export default class extends Window {
 		}
 		*/
 
-		const row = document.createElement('li');
+		const row = document.createElement("li");
 		row.appendChild(label);
 		row.appendChild(textbox.element);
 

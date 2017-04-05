@@ -1,23 +1,23 @@
-import View from './view';
-import '/util';
+import View from "./view";
+import "/util";
 
 export default class Checkbox extends View {
 	constructor(title, element) {
-		super(element || document.createElement('span'));
+		super(element || document.createElement("span"));
 
-		this.element.classList.add('Checkbox');
+		this.element.classList.add("Checkbox");
 
 		const boxID = String.UUID();
 
-		const box = document.createElement('input');
-		box.type = 'checkbox';
+		const box = document.createElement("input");
+		box.type = "checkbox";
 		box.id = boxID;
 		this.element.appendChild(box);
 		this._box = box;
 
-		const label = document.createElement('label');
+		const label = document.createElement("label");
 		label.append(title);
-		label.setAttribute('for', boxID);
+		label.setAttribute("for", boxID);
 		this._label = label;
 		this.element.appendChild(label);
 	}

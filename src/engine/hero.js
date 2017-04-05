@@ -1,10 +1,10 @@
-import { EventTarget, Point, Direction } from '/util';
+import { EventTarget, Point, Direction } from "/util";
 
 export const MAX_HEALTH = 0x300;
 export const Event = {
-	HealthChanged: 'HealthChanged',
-	WeaponChanged: 'WeaponChanged',
-	AmmoChanged: 'AmmoChanged'
+	HealthChanged: "HealthChanged",
+	WeaponChanged: "WeaponChanged",
+	AmmoChanged: "AmmoChanged"
 };
 
 export default class Hero extends EventTarget {
@@ -30,7 +30,8 @@ export default class Hero extends EventTarget {
 	update(ticks) {
 		if (this.isWalking || this.isAttacking)
 			this._actionFrames += ticks;
-		else this._actionFrames = 0;
+		else
+			this._actionFrames = 0;
 	}
 
 	face(direction) {

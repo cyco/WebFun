@@ -1,7 +1,7 @@
-import '/extension';
-import { rand } from '/util';
+import "/extension";
+import { rand } from "/util";
 
-Array.prototype.shuffle =  function() {
+Array.prototype.shuffle = function() {
 	const count = this.length;
 	if (count === 0) return;
 

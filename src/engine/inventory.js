@@ -1,7 +1,7 @@
-import { EventTarget } from '/util';
+import { EventTarget } from "/util";
 
 export const Event = {
-	ItemsDidChange: 'ItemsDidChange'
+	ItemsDidChange: "ItemsDidChange"
 };
 
 export default class Inventory extends EventTarget {
@@ -13,7 +13,7 @@ export default class Inventory extends EventTarget {
 	addItem(item) {
 		this._items.push(item);
 		this.dispatchEvent(Event.ItemsDidChange, {
-			mode: 'add',
+			mode: "add",
 			item: item
 		});
 	}
@@ -24,13 +24,13 @@ export default class Inventory extends EventTarget {
 
 		this._items.splice(index, 1);
 		this.dispatchEvent(Event.ItemsDidChange, {
-			mode: 'remove',
+			mode: "remove",
 			item: item
 		});
 	}
 
 	contains(item) {
-		if (typeof item === 'number') {
+		if (typeof item === "number") {
 			for (let i = 0, len = this._items.length; i < len; i++)
 				if (this._items[i].id === item) return true;
 		} else {

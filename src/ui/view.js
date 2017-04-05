@@ -1,4 +1,4 @@
-import {Point, EventTarget} from '/util';
+import { Point, EventTarget } from "/util";
 
 export default class View extends EventTarget {
 	constructor(element) {
@@ -37,8 +37,8 @@ export default class View extends EventTarget {
 	get style() {
 		return this.element.style;
 	}
-	
-	get classList(){
+
+	get classList() {
 		return this.element.classList;
 	}
 
@@ -51,7 +51,7 @@ export default class View extends EventTarget {
 	}
 
 	get TagName() {
-		return 'div';
+		return "div";
 	}
 
 	get absoluteLocation() {

@@ -1,5 +1,5 @@
-import { structure, array } from '/parser/functions';
-import { uint8, uint16, uint32, character } from '/parser/types';
+import { structure, array } from "/parser/functions";
+import { uint8, uint16, uint32, character } from "/parser/types";
 
 export const sound = structure({
 	length: uint16,

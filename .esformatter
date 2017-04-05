@@ -1,0 +1,10 @@
+{
+  "root": true,
+  "indent": {
+      "value": "\t"
+    },
+    "plugins": ["esformatter-quotes"],
+    "quotes": {
+      "type": "double"
+    }
+}

@@ -1,5 +1,5 @@
-import EventTarget from '/util/event-target';
-import Menu from './menu';
+import EventTarget from "/util/event-target";
+import Menu from "./menu";
 
 export const State = {
 	None: 0,
@@ -12,7 +12,7 @@ export default class MenuItem extends EventTarget {
 	constructor(item = {}) {
 		super();
 
-		this.title = item.title || '';
+		this.title = item.title || "";
 		this.state = item.state || State.None;
 		this.callback = item.callback || null;
 		this._enabled = item.enabled !== undefined ? item.enabled : true;
@@ -20,13 +20,13 @@ export default class MenuItem extends EventTarget {
 		if (item.submenu) {
 			this.submenu = item.submenu instanceof Menu ? item.submenu : new Menu(item.submenu);
 		}
-		this.mnemonic = item.mnemonic || '';
+		this.mnemonic = item.mnemonic || "";
 	}
 
 	get enabled() {
 		if (!this.callback && !this.submenu) return false;
 
-		if (typeof this._enabled === 'function')
+		if (typeof this._enabled === "function")
 			return this._enabled();
 
 		return this._enabled;

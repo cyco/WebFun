@@ -1,10 +1,10 @@
-import Scene from '/engine/scenes/scene';
-import Tile from '/engine/objects/tile';
-import SpeechBubble from '/ui/speech-bubble';
-import { ModalSession } from '/ux';
-import Size from '/util/size';
-import Point from '/util/point';
-import Settings from '/settings';
+import Scene from "/engine/scenes/scene";
+import Tile from "/engine/objects/tile";
+import SpeechBubble from "/ui/speech-bubble";
+import { ModalSession } from "/ux";
+import Size from "/util/size";
+import Point from "/util/point";
+import Settings from "/settings";
 
 export default class SpeechScene extends Scene {
 	constructor(engine = null) {
