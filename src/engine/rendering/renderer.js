@@ -1,17 +1,21 @@
 export default class Renderer {
-    redisplayTile(x, y) {}
+	get imageFactory() {
+		return null;
+	}
 
-    redisplayRect(x, y, width, height) {}
+	redisplayTile(x, y) {}
 
-    redisplay() {}
+	redisplayRect(x, y, width, height) {}
 
-    renderTile(tile, x, y, z) {}
+	redisplay() {}
 
-    renderImage(image, x, y) {}
+	renderTile(tile, x, y, z) {}
 
-    renderImageNode(image, x, y) {}
+	renderImage(image, x, y) {}
 
-    renderImageData(image, x, y) {}
+	renderImageNode(image, x, y) {}
 
-    fillBlackRect(x, y, width, height) {}
-};
+	renderImageData(image, x, y) {}
+
+	fillBlackRect(x, y, width, height) {}
+}

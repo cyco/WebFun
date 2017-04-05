@@ -1,4 +1,4 @@
-import { Point } from '/util';
+import { Point } from "/util";
 
 export default class Camera {
 	constructor() {

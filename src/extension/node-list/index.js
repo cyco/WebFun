@@ -1,2 +1,2 @@
-export forEach from './for-each';
-export map from './map';
+export forEach from "./for-each";
+export map from "./map";

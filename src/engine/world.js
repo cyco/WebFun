@@ -1,4 +1,4 @@
-import { Point } from '/util';
+import { Point } from "/util";
 
 export default class World {
 	static get WIDTH() {
@@ -35,7 +35,8 @@ export default class World {
 	}
 
 	setZone(x, y, zoneID) {
-		if (!this.data) throw "Data has not been set";
+		if (!this.data)
+			throw "Data has not been set";
 
 		const zone = this.data.zones[zoneID];
 		this.map[this._pointToIndex(x, y)] = zone;

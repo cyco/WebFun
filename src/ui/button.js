@@ -1,11 +1,11 @@
-import View from './view';
+import View from "./view";
 
 export default class Button extends View {
 	constructor() {
-		super(document.createElement('button'));
+		super(document.createElement("button"));
 
-		this.element.classList.add('Button');
-		this.element.appendChild(document.createElement('div'));
+		this.element.classList.add("Button");
+		this.element.appendChild(document.createElement("div"));
 	}
 
 	set title(t) {
@@ -19,10 +19,10 @@ export default class Button extends View {
 
 	setImage(src, width, height) {
 		this.element.clear();
-		const imageNode = document.createElement('img');
+		const imageNode = document.createElement("img");
 		imageNode.src = src;
-		imageNode.style.width = width + 'px';
-		imageNode.style.height = height + 'px';
+		imageNode.style.width = width + "px";
+		imageNode.style.height = height + "px";
 		this.element.appendChild(imageNode);
 	}
 

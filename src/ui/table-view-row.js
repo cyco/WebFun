@@ -1,18 +1,18 @@
-import View from './view';
+import View from "./view";
 
 export default class TableViewRow extends View {
 	constructor(element) {
 		super(element);
 
-		this.element.classList.add('row');
+		this.element.classList.add("row");
 		this._model = null;
 	}
 
 	setData(model) {
 		this._model = model;
 	}
-	
-	getData(){
+
+	getData() {
 		return this._model;
 	}
 
@@ -21,11 +21,11 @@ export default class TableViewRow extends View {
 	}
 
 	set selected(flag) {
-		if (flag) this.element.classList.add('selected');
-		else this.element.classList.remove('selected');
+		if (flag) this.element.classList.add("selected");
+		else this.element.classList.remove("selected");
 	}
 
 	get selected() {
-		return this.element.classList.contains('selected');
+		return this.element.classList.contains("selected");
 	}
 }

@@ -51,5 +51,5 @@ export const Teleporter = 0x0D;
 export const xWingFromD = 0x0E;
 export const xWingToD = 0x0;
 
-export WorldSize from './world-size';
-export Planet from './planet';
+export WorldSize from "./world-size";
+export Planet from "./planet";

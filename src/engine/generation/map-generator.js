@@ -1,9 +1,9 @@
-import { srand, rand, randmod } from '/util';
-import { Point, HorizontalPointRange, VerticalPointRange, Message } from '/util';
+import { srand, rand, randmod } from "/util";
+import { Point, HorizontalPointRange, VerticalPointRange, Message } from "/util";
 
-import { WorldSize } from '/engine/types';
-import { GetDistanceToCenter } from './world-generator';
-import IslandBuilder from './island-builder';
+import { WorldSize } from "/engine/types";
+import { GetDistanceToCenter } from "./world-generator";
+import IslandBuilder from "./island-builder";
 
 const IslandOrientation = {
 	Left: 1,
@@ -27,10 +27,14 @@ const BlockSouth = 304;
 const KeptFree = 305;
 const Puzzle = 306;
 
-let min_x, alternate_x;
-let min_y, alternate_y;
-let variance, probablility;
-let threshold, travel_threshold;
+let min_x,
+	alternate_x;
+let min_y,
+	alternate_y;
+let variance,
+	probablility;
+let threshold,
+	travel_threshold;
 let last_item;
 let remaining_count_to_place;
 let typeMap;
@@ -323,7 +327,9 @@ function _choosePuzzlesOnIslands() {
 		height: 10
 	};
 
-	let range, step, puzzleLocation;
+	let range,
+		step,
+		puzzleLocation;
 	const iteration = (point, control) => {
 		const nextPoint = Point.add(point, control.step);
 		if (!nextPoint.isInBounds(bounds) ||
@@ -372,7 +378,8 @@ function _chooseAdditionalPuzzles(total_puzzle_count) {
 	// Message("_chooseAdditionalPuzzles(%d, %d)\n", placedPuzzles, total_puzzle_count);
 	let do_break = 0;
 	for (let i = 0; i <= 200; i++) {
-		let x, y;
+		let x,
+			y;
 
 		// Message("%d >= %d\n", placedPuzzles, total_puzzle_count);
 		// Message("%d > 200\n", i);
@@ -402,7 +409,7 @@ function _chooseAdditionalPuzzles(total_puzzle_count) {
 
 				typeMap.set(x, y, Puzzle);
 				orderMap.set(x, y, placedPuzzles++);
-				// Message("did_place %d => %d\n", placedPuzzles - 1, placedPuzzles);
+			// Message("did_place %d => %d\n", placedPuzzles - 1, placedPuzzles);
 			}
 
 			if (placedPuzzles >= total_puzzle_count)
@@ -410,7 +417,7 @@ function _chooseAdditionalPuzzles(total_puzzle_count) {
 		}
 
 		if (distance < 3 && i < 150) i--;
-		else; //Message("%d => %d\n", i, i+1);
+		else ; //Message("%d => %d\n", i, i+1);
 
 		if (do_break) break;
 	}
@@ -473,7 +480,8 @@ function _placeIntermediateWorldThing() {
 	let blockades_count = blockades;
 
 	let total_puzzle_count = Math.floor(puzzles_count / 4) + rand() % (Math.floor(puzzles_count / 5) + 1) - blockades_count - travel_count - 2;
-	if (total_puzzle_count < 4) total_puzzle_count = 4;
+	if (total_puzzle_count < 4)
+		total_puzzle_count = 4;
 
 	placedPuzzles = 0;
 
@@ -537,7 +545,8 @@ function _determinePuzzleLocations(iteration, puzzle_count_to_place) {
 	}
 
 	for (let i = 0; i <= 144 && remaining_count_to_place > 0; i++) {
-		let x, y;
+		let x,
+			y;
 		if (rand() % 2) {
 			x = rand() % 2 ? min_x : alternate_x;
 			y = rand() % variance + min_y;
@@ -550,9 +559,9 @@ function _determinePuzzleLocations(iteration, puzzle_count_to_place) {
 		if (typeMap[item_idx]) continue;
 
 		handle_neighbor(x, y, iteration, -1, 0) ||
-			handle_neighbor(x, y, iteration, 1, 0) ||
-			handle_neighbor(x, y, iteration, 0, -1) ||
-			handle_neighbor(x, y, iteration, 0, 1);
+		handle_neighbor(x, y, iteration, 1, 0) ||
+		handle_neighbor(x, y, iteration, 0, -1) ||
+		handle_neighbor(x, y, iteration, 0, 1);
 
 		_tryPlacingTravel(item_idx, iteration, last_item);
 	}
@@ -561,7 +570,8 @@ function _determinePuzzleLocations(iteration, puzzle_count_to_place) {
 function _determineAdditionalPuzzleLocations(travels_to_place) {
 	Message("_determineAdditionalPuzzleLocations(%x)\n", travels_to_place);
 	for (let i = 0; i <= 400 && travels_to_place > 0; i++) {
-		let x, y;
+		let x,
+			y;
 		let is_vertical = rand() % 2;
 		if (is_vertical) {
 			x = rand() % 2 ? 0 : 9;
@@ -611,11 +621,15 @@ function _determineAdditionalPuzzleLocations(travels_to_place) {
 				typeMap[world_idx] = Candidate;
 
 				if (!x_diff) {
-					if (x > 0) typeMap[world_idx - 1] = KeptFree;
-					if (x < 9) typeMap[world_idx + 1] = KeptFree;
+					if (x > 0)
+						typeMap[world_idx - 1] = KeptFree;
+					if (x < 9)
+						typeMap[world_idx + 1] = KeptFree;
 				} else if (!y_diff) {
-					if (y > 0) typeMap[world_idx - 10] = KeptFree;
-					if (y < 9) typeMap[world_idx + 10] = KeptFree;
+					if (y > 0)
+						typeMap[world_idx - 10] = KeptFree;
+					if (y < 9)
+						typeMap[world_idx + 10] = KeptFree;
 				}
 
 				continue;
@@ -628,8 +642,10 @@ function _determineAdditionalPuzzleLocations(travels_to_place) {
 
 				typeMap[world_idx] = Candidate;
 
-				if (y > 0) typeMap[world_idx - 10] = KeptFree;
-				if (y < 9) typeMap[world_idx + 10] = KeptFree;
+				if (y > 0)
+					typeMap[world_idx - 10] = KeptFree;
+				if (y < 9)
+					typeMap[world_idx + 10] = KeptFree;
 				break;
 			case BlockEast:
 				if (x_diff !== 1) continue;
@@ -638,8 +654,10 @@ function _determineAdditionalPuzzleLocations(travels_to_place) {
 
 				typeMap[world_idx] = Candidate;
 
-				if (y > 0) typeMap[world_idx - 10] = KeptFree;
-				if (y < 9) typeMap[world_idx + 10] = KeptFree;
+				if (y > 0)
+					typeMap[world_idx - 10] = KeptFree;
+				if (y < 9)
+					typeMap[world_idx + 10] = KeptFree;
 				break;
 			case BlockNorth:
 				if (y_diff !== -1) continue;
@@ -648,8 +666,10 @@ function _determineAdditionalPuzzleLocations(travels_to_place) {
 
 				typeMap[world_idx] = Candidate;
 
-				if (x > 0) typeMap[world_idx - 1] = KeptFree;
-				if (x < 9) typeMap[world_idx + 1] = KeptFree;
+				if (x > 0)
+					typeMap[world_idx - 1] = KeptFree;
+				if (x < 9)
+					typeMap[world_idx + 1] = KeptFree;
 				break;
 			case BlockSouth:
 				if (y_diff !== 1) continue;
@@ -658,8 +678,10 @@ function _determineAdditionalPuzzleLocations(travels_to_place) {
 
 				typeMap[world_idx] = Candidate;
 
-				if (x > 0) typeMap[world_idx - 1] = KeptFree;
-				if (x < 9) typeMap[world_idx + 1] = KeptFree;
+				if (x > 0)
+					typeMap[world_idx - 1] = KeptFree;
+				if (x < 9)
+					typeMap[world_idx + 1] = KeptFree;
 				break;
 			default:
 				continue;

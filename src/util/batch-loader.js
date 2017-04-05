@@ -1,10 +1,10 @@
-import EventTarget from './event-target';
-import dispatch from './dispatch';
+import EventTarget from "./event-target";
+import dispatch from "./dispatch";
 
 export const Event = {
-	Start: 'start',
-	Progress: 'progress',
-	Finish: 'finish'
+	Start: "start",
+	Progress: "progress",
+	Finish: "finish"
 };
 
 export default class BatchLoader extends EventTarget {
@@ -66,6 +66,6 @@ export default class BatchLoader extends EventTarget {
 
 		// dispatch(function () { disabled for debugging
 		self._loop();
-		// }, 0);
+	// }, 0);
 	}
 }

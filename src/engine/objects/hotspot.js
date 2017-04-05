@@ -25,7 +25,7 @@ export default class Hotspot {
 		this.enabled = false;
 		this.arg = -1;
 		this.type = -1;
-		
+
 		Object.seal(this);
 	}
 

@@ -1,2 +1,2 @@
-export load from './load';
-export store from './store';
+export load from "./load";
+export store from "./store";

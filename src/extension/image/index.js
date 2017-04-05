@@ -1,1 +1,1 @@
-export blankImage from './blank-image';
+export blankImage from "./blank-image";

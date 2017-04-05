@@ -1,29 +1,31 @@
-import { ModalSession } from '/ux';
-import TableView from '/ui/table-view';
-import { Event as InventoryEvent } from '/engine/inventory';
-import InventoryRow from './inventory-row';
-import Yoda from '/engine/yoda';
-import { Attribute as TileAttribute, Subtype as TileSubtype } from '/engine/objects/tile';
+import { ModalSession } from "/ux";
+import TableView from "/ui/table-view";
+import { Event as InventoryEvent } from "/engine/inventory";
+import InventoryRow from "./inventory-row";
+import Yoda from "/engine/yoda";
+import { Attribute as TileAttribute, Subtype as TileSubtype } from "/engine/objects/tile";
 
 export const Event = {
-	PlacedItem: 'PlacedItem',
-	PlacedWeapon: 'PlacedWeapon',
-	PlacedConsumeable: 'PlacedConsumeable',
-	PlacedLocator: 'PlacedLocator',
-	ThrowDetonator: 'ThrowDetonator'
+	PlacedItem: "PlacedItem",
+	PlacedWeapon: "PlacedWeapon",
+	PlacedConsumeable: "PlacedConsumeable",
+	PlacedLocator: "PlacedLocator",
+	ThrowDetonator: "ThrowDetonator"
 };
 
 export default class InventoryView extends TableView {
 	constructor(element) {
-		super(element, { selectable: false });
+		super(element, {
+			selectable: false
+		});
 
 		this._inventory = null;
 
-		this.element.classList.add('inventory-view');
+		this.element.classList.add("inventory-view");
 
 		this.rowClass = InventoryRow;
 		while (this.rowCount < this._minRowCount)
-			this.addRow(null);
+		this.addRow(null);
 	}
 
 	_rebuildTable() {
@@ -36,12 +38,12 @@ export default class InventoryView extends TableView {
 		});
 
 		while (this.rowCount < this._minRowCount)
-			this.addRow(null);
+		this.addRow(null);
 	}
 
 	set inventory(i) {
 		if (this._inventory) {
-			this._inventory.removeEventListener('itemsDidChange');
+			this._inventory.removeEventListener("itemsDidChange");
 		}
 
 		const self = this;
@@ -77,7 +79,7 @@ export default class InventoryView extends TableView {
 		}
 
 		const element = this.element;
-		const imgNode = element.querySelectorAll('.Row')[row].querySelector('img');
+		const imgNode = element.querySelectorAll(".Row")[row].querySelector("img");
 		imgNode.src = Image.blankImage;
 
 		const modalSession = new ModalSession();
@@ -97,8 +99,8 @@ export default class InventoryView extends TableView {
 			location: location
 		};
 
-		console.log('TileAttribute', TileAttribute);
-		console.log('TileSubtype', TileSubtype);
+		console.log("TileAttribute", TileAttribute);
+		console.log("TileSubtype", TileSubtype);
 
 		let eventName = Event.PlacedItem;
 		if (item.getAttribute(TileAttribute.Weapon)) {

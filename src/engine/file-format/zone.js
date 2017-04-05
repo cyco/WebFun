@@ -1,9 +1,9 @@
-import { structure, array } from '/parser/functions';
-import { uint16, uint32, character } from '/parser/types';
+import { structure, array } from "/parser/functions";
+import { uint16, uint32, character } from "/parser/types";
 
-import { action } from './action';
-import { hotspot } from './hotspot';
-import { npc } from './npc';
+import { action } from "./action";
+import { hotspot } from "./hotspot";
+import { npc } from "./npc";
 
 const LAYERCOUNT = 3;
 

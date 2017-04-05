@@ -1,0 +1,6 @@
+include = "*"
+
+exclude               = "{}"
+excludeDirectories    = "{tmp,log,doc,build,dist,test/coverage,coverage,node_modules}"
+excludeInFileChooser  = "{tmp,log,doc,.DS_Store,.gitkeep,build,dist,test/coverage,node_modules/**}"
+excludeInFolderSearch = "{tmp,log,doc,build,dist,test/coverage,node_modules/**,game-data}"

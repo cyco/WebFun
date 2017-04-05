@@ -1,11 +1,11 @@
-import EventTarget from './event-target';
-import InputStream from './input-stream';
+import EventTarget from "./event-target";
+import InputStream from "./input-stream";
 
 export const Event = {
-	Start: 'start',
-	Progress: 'progress',
-	Load: 'load',
-	Fail: 'fail'
+	Start: "start",
+	Progress: "progress",
+	Load: "load",
+	Fail: "fail"
 };
 
 export default class extends EventTarget {
@@ -17,7 +17,7 @@ export default class extends EventTarget {
 
 	load() {
 		let reader = new FileReader();
-		if (!window.location.href.startsWith('file://')) {
+		if (!window.location.href.startsWith("file://")) {
 			reader = new FileReader();
 		} else {
 			reader = new XMLHttpRequest();
@@ -25,11 +25,11 @@ export default class extends EventTarget {
 			reader.responseType = "arraybuffer";
 		}
 
-		reader.onload = ({ target }) => this._didLoad(target);
+		reader.onload = ({target}) => this._didLoad(target);
 		reader.onerror = (event) => this._didFail(event);
-		reader.onprogress = ({ loaded, total }) => this._didProgress(loaded / total);
+		reader.onprogress = ({loaded, total}) => this._didProgress(loaded / total);
 
-		if (!window.location.href.startsWith('file://')) {
+		if (!window.location.href.startsWith("file://")) {
 			reader.readAsArrayBuffer(this._file);
 		} else {
 			reader.send(void 0);
@@ -40,14 +40,21 @@ export default class extends EventTarget {
 
 	_didLoad(reader) {
 		const stream = new InputStream(reader.result || reader.response);
-		this.dispatchEvent(Event.Load, { stream, arraybuffer: reader.result || reader.response });
+		this.dispatchEvent(Event.Load, {
+			stream,
+			arraybuffer: reader.result || reader.response
+		});
 	}
 
 	_didFail(event) {
-		this.dispatchEvent(Event.Fail, { reason: event });
+		this.dispatchEvent(Event.Fail, {
+			reason: event
+		});
 	}
 
 	_didProgress(progress) {
-		this.dispatchEvent(Event.Progress, { progress: progress });
+		this.dispatchEvent(Event.Progress, {
+			progress: progress
+		});
 	}
 }

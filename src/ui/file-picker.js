@@ -24,13 +24,13 @@ export default class FilePicker {
 		this._fileInput = null;
 
 		const result = this.allowsMultipleFiles ? files : files.last();
-		if (this.didPick && typeof this.didPick === 'function')
+		if (this.didPick && typeof this.didPick === "function")
 			this.didPick(result);
 	}
 
 	_createFileInput() {
-		const fileInput = document.createElement('input');
-		fileInput.type = 'file';
+		const fileInput = document.createElement("input");
+		fileInput.type = "file";
 		fileInput.style.opacity = 0.0;
 
 		document.body.appendChild(fileInput);
@@ -41,10 +41,10 @@ export default class FilePicker {
 	_configureFileInput() {
 		if (this._allowedTypes.length)
 			this._fileInput.accept = this._allowedTypes.map(
-				(type) => type.indexOf('/') === -1 ? type : '.' + type).join(',');
+				(type) => type.indexOf("/") === -1 ? type : "." + type).join(",");
 
 		if (this.allowsMultipleFiles)
-			this._fileInput.setAttribute('multiple', '');
+			this._fileInput.setAttribute("multiple", "");
 	}
 
 	set allowsMultipleFiles(flag) {
@@ -67,4 +67,5 @@ export default class FilePicker {
 	get didPick() {
 		return this._didPick;
 	}
-};
+}
+;

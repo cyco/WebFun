@@ -3,7 +3,7 @@ export const load = function(key) {
 		if (this.getItem(key))
 			return JSON.parse(this.getItem(key));
 	} catch (e) {
-		console.warn('Invalid item in Storage: ', this.getItem(key));
+		console.warn("Invalid item in Storage: ", this.getItem(key));
 	}
 };
 

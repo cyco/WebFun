@@ -1,5 +1,5 @@
-import Point from './point';
-import PointRange from './point-range';
+import Point from "./point";
+import PointRange from "./point-range";
 
 export default class HorizontalPointRange extends PointRange {
 	constructor(from, to, y) {

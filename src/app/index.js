@@ -1,2 +1,2 @@
-export main from './main';
-export Loader from './loader';
+export main from "./main";
+export Loader from "./loader";

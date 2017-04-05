@@ -1,4 +1,4 @@
-import { uint8, uint16, uint32, character } from './types';
+import { uint8, uint16, uint32, character } from "./types";
 
 export const structure = (definition) => {
 	return (stream) => {
@@ -12,9 +12,12 @@ export const structure = (definition) => {
 
 const _evalLength = (stream, length, result) => {
 	let r;
-	if (length instanceof Function) r = length(stream, result);
-	else if (typeof length === 'string') r = result[length];
-	else r = length;
+	if (length instanceof Function)
+		r = length(stream, result);
+	else if (typeof length === "string")
+		r = result[length];
+	else
+		r = length;
 	return r;
 };
 

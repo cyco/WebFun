@@ -1,12 +1,12 @@
-import Cheat from '/engine/cheats/cheat';
-import Yoda from '/engine/yoda';
+import Cheat from "/engine/cheats/cheat";
+import Yoda from "/engine/yoda";
 
 export default class WeaponsCheat extends Cheat {
 	get code() {
-		return 'gojedi';
+		return "gojedi";
 	}
 	get message() {
-		return 'Super Jedi!';
+		return "Super Jedi!";
 	}
 
 	execute(engine) {

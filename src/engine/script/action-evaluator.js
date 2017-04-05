@@ -1,5 +1,5 @@
-import ConditionChecker from './condition-checker';
-import InstructionExecutor from './instruction-executor';
+import ConditionChecker from "./condition-checker";
+import InstructionExecutor from "./instruction-executor";
 export default class ActionEvaluator {
 	constructor() {
 		this._engine = null;
@@ -20,7 +20,7 @@ export default class ActionEvaluator {
 
 	actionDoesApply(action) {
 		return (action.enabled || action.instructionPointer !== 0) && action.conditions.every(
-			(condition) => this._checker.check(condition), this);
+				(condition) => this._checker.check(condition), this);
 	}
 
 	executeInstructions(action) {

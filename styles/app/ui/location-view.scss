@@ -1,0 +1,30 @@
+.location-view {
+    width: 46px;
+    height: 46px;
+    display: inline-block;
+    position: relative;
+
+    & .left,
+    & .right,
+    & .up,
+    & .down {
+        fill: none;
+    }
+
+    & svg.left .left,
+    & svg.right .right,
+    & svg.up .up,
+    & svg.down .down {
+        fill: #00FF00;
+    }
+
+    & path {
+        stroke-width: 1px;
+        stroke: white;
+    }
+
+    & path.dark {
+        stroke: rgba(127, 127, 127, 1);
+    }
+
+}

@@ -30,7 +30,7 @@ export default class Action {
 		this.instructionPointer = 0;
 		this.enabled = true;
 		this.name = null;
-		
+
 		this.debug = {};
 
 		Object.seal(this);
@@ -39,7 +39,7 @@ export default class Action {
 	get conditions() {
 		return this._conditions;
 	}
-	
+
 	get instructions() {
 		return this._instructions;
 	}

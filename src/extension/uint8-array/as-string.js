@@ -1,5 +1,5 @@
 const asString = function() {
-    return String.fromCharCode.apply(null, this);
+	return String.fromCharCode.apply(null, this);
 };
 
 Uint8Array.prototype.asString = asString;

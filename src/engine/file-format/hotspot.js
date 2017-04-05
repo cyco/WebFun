@@ -1,5 +1,5 @@
-import { structure } from '/parser/functions';
-import { uint16, uint32, int16 } from '/parser/types';
+import { structure } from "/parser/functions";
+import { uint16, uint32, int16 } from "/parser/types";
 
 export const hotspot = structure({
 	type: uint32,

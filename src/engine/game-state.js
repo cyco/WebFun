@@ -1,5 +1,5 @@
-import { Point, EventTarget } from '/util';
-import { Hero, Inventory } from '/engine';
+import { Point, EventTarget } from "/util";
+import { Hero, Inventory } from "/engine";
 
 export default class GameSate extends EventTarget {
 	constructor() {

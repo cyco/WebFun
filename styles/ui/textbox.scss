@@ -1,0 +1,8 @@
+.textbox {
+	@extend .inset-border;
+
+	border-width: $border-size;
+	
+	background: none;
+	outline: none;
+}

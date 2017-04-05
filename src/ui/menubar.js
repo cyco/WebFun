@@ -1,14 +1,14 @@
-import { Point } from '/util';
-import {ModalSession} from '/ux';
-import MenuView from './menu-view';
-import MenuWindow from './menu-window';
-import MenuStack from './menu-stack';
-import { Separator } from './menu-item';
+import { Point } from "/util";
+import { ModalSession } from "/ux";
+import MenuView from "./menu-view";
+import MenuWindow from "./menu-window";
+import MenuStack from "./menu-stack";
+import { Separator } from "./menu-item";
 
 export default class Menubar extends MenuView {
 	constructor(menu, element) {
 		super(menu, element);
-		this.element.classList.add('menubar');
+		this.element.classList.add("menubar");
 		const self = this;
 		this.element.onmousedown = (e) => {
 			self.startMouseHandling(e);
@@ -21,7 +21,7 @@ export default class Menubar extends MenuView {
 		if (itemIndex === -1) return;
 		const menuItem = this.menu.items[itemIndex];
 		if (!menuItem.submenu) {
-			if (typeof menuItem.callback === 'function') {
+			if (typeof menuItem.callback === "function") {
 				menuItem.callback();
 			}
 			return;
@@ -30,10 +30,10 @@ export default class Menubar extends MenuView {
 		const modalSession = new ModalSession();
 		modalSession.onmousemove = (e) => this._mouseMoved(e);
 		modalSession.onend = () => {
-			window.removeEventListener('mouseup', this._mouseDownHandler);
+			window.removeEventListener("mouseup", this._mouseDownHandler);
 			this._mouseDownHandler = null;
 
-			this.element.querySelector('.open').classList.remove('open');
+			this.element.querySelector(".open").classList.remove("open");
 			MenuStack.sharedStack.clear();
 		};
 		this._modalSession = modalSession;
@@ -41,10 +41,10 @@ export default class Menubar extends MenuView {
 		// hack to only receive the mouse up event after the one currently being processed
 		this._registerMouseUpHandler = () => {
 			this._mouseDownHandler = () => modalSession.end();
-			window.addEventListener('mouseup', this._mouseDownHandler);
-			window.removeEventListener('mouseup', this._registerMouseUpHandler);
+			window.addEventListener("mouseup", this._mouseDownHandler);
+			window.removeEventListener("mouseup", this._registerMouseUpHandler);
 		};
-		window.addEventListener('mouseup', this._registerMouseUpHandler);
+		window.addEventListener("mouseup", this._registerMouseUpHandler);
 
 		modalSession.run();
 		this._showMenuForItem(itemIndex);
@@ -68,7 +68,7 @@ export default class Menubar extends MenuView {
 
 		const itemNode = this.element.children[idx];
 
-		itemNode.classList.remove('open');
+		itemNode.classList.remove("open");
 		MenuStack.sharedStack.clear();
 	}
 
@@ -77,7 +77,7 @@ export default class Menubar extends MenuView {
 
 		const itemNode = this.element.children[idx];
 		const menuItem = this.menu.items[idx];
-		itemNode.classList.add('open');
+		itemNode.classList.add("open");
 
 		if (!menuItem || !menuItem.submenu) {
 			this._currentItem = -1;

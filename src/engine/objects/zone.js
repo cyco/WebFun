@@ -1,6 +1,6 @@
-import Size from '/util/size';
+import Size from "/util/size";
 
-import {Type as HotspotType} from './hotspot';
+import { Type as HotspotType } from "./hotspot";
 
 export const Type = {
 	Empty: 1,
@@ -20,7 +20,7 @@ export const Type = {
 	Use: 16,
 	Find: 17,
 	FindTheForce: 18,
-	
+
 	Unknown: 9999
 };
 
@@ -33,7 +33,7 @@ export default class Zone {
 		this.visited = false;
 		this.solved = false;
 		this._npcs = [];
-		
+
 		this.id = -1;
 		this._planet = -1;
 		this._width = 0;
@@ -46,20 +46,20 @@ export default class Zone {
 		this.requiredItemIDs = [];
 		this.providedItemIDs = [];
 		this.puzzleNPCTileIDs = [];
-		
+
 		this._actions = [];
 		this.actionsInitialized = false;
-		
+
 		this.counter = 0;
 		this.random = null;
-		
+
 		this._debug_worldItem = null;
-		
+
 		this.puzzle = null;
 		this.puzzleNPC = null;
 		this.puzzleGain = null;
 		this.puzzleRequired = null;
-		
+
 		Object.seal(this);
 	}
 
@@ -83,27 +83,27 @@ export default class Zone {
 		if (this.solved) return "...solved!";
 		switch (this.type) {
 			case Type.Find:
-				return 'find something useful...';
+				return "find something useful...";
 			case Type.FindTheForce:
-				return 'find the Force...';
+				return "find the Force...";
 			case Type.Goal:
-				return 'unknown...';
+				return "unknown...";
 			case Type.Town:
-				return 'Spaceport';
+				return "Spaceport";
 		}
 	}
 
 	getTileID(x, y, z) {
-		if(x < 0 || x >= this._width) debugger;
-		if(y < 0 || y >= this._height) debugger;
-		if(z < 0 || z >= 3) debugger;
+		if (x < 0 || x >= this._width) debugger;
+		if (y < 0 || y >= this._height) debugger;
+		if (z < 0 || z >= 3) debugger;
 
 		const index = Zone.LAYERS * (y * this.width + x) + z;
 		return this._tileIDs[index];
 	}
 
 	getTile(x, y, z) {
-		if (typeof x === 'object') {
+		if (typeof x === "object") {
 			y = x.y;
 			z = x.z;
 			x = x.x;
@@ -115,12 +115,12 @@ export default class Zone {
 		else if (index === 0xFFFF)
 			return null;
 
-		console.warn('Tried to access invalid tile');
+		console.warn("Tried to access invalid tile");
 		return null;
 	}
 
 	setTile(tile, x, y, z) {
-		if (typeof x === 'object') {
+		if (typeof x === "object") {
 			y = x.y;
 			z = x.z;
 			x = x.x;
@@ -141,7 +141,7 @@ export default class Zone {
 	}
 
 	placeWalkable(x, y) {
-		if (typeof x === 'object') {
+		if (typeof x === "object") {
 			y = x.y;
 			x = x.x;
 		}
@@ -154,7 +154,7 @@ export default class Zone {
 	}
 
 	containsPoint(x, y) {
-		if (typeof x === 'object') {
+		if (typeof x === "object") {
 			y = x.y;
 			x = x.x;
 		}
@@ -181,19 +181,19 @@ export default class Zone {
 		return this._height;
 	}
 
-	leadsTo(needleZone, allZones){
-		if(needleZone === this) return false;
-		
-		for(let hotspot of this._hotspots) {
-			if(hotspot.type === HotspotType.DoorIn && hotspot.arg !== -1) {
+	leadsTo(needleZone, allZones) {
+		if (needleZone === this) return false;
+
+		for (let hotspot of this._hotspots) {
+			if (hotspot.type === HotspotType.DoorIn && hotspot.arg !== -1) {
 				let zone = allZones[hotspot.arg];
-				if(zone.leadsTo(needleZone, allZones)) return true;
+				if (zone.leadsTo(needleZone, allZones)) return true;
 			}
 		}
-		
+
 		return false;
 	}
-	
+
 	get doors() {
 		return this._hotspots.filter((hotspot) => hotspot.type === HotspotType.DoorIn && hotspot.arg !== -1);
 	}

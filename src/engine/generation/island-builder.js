@@ -1,5 +1,5 @@
-import { Point, VerticalPointRange, HorizontalPointRange, Message, rand } from '/util';
-import { Type as WorldItemType } from '/engine/world-item';
+import { Point, VerticalPointRange, HorizontalPointRange, Message, rand } from "/util";
+import { Type as WorldItemType } from "/engine/world-item";
 
 const Island = {
 	East: 3,
@@ -95,9 +95,12 @@ export default class IslandBuilder {
 		if (run.length < 3) return false;
 		else if (run.length === 3) {
 			if (0 < run.start && run.start < 7) return false;
-			if (run.start === 0) run.length = 2;
-			if (run.start === 7) run.length = 2;
-		} else if (run.length >= 4) run.length = Math.min(run.length - 2, 4);
+			if (run.start === 0)
+				run.length = 2;
+			if (run.start === 7)
+				run.length = 2;
+		} else if (run.length >= 4)
+			run.length = Math.min(run.length - 2, 4);
 
 		if (run.start > 0 && run.start + run.length < 10) run.start++;
 

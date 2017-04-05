@@ -1,4 +1,4 @@
-import * as Result from '../result';
+import * as Result from "../result";
 
 export default (instruction, engine, action) => {
 	//  zone->random = rand() % instruction->arg1 + 1

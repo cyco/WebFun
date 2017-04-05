@@ -1,4 +1,4 @@
-import Instructions from '/engine/script/instructions';
+import Instructions from "/engine/script/instructions";
 
 export default class InstructionExecutor {
 	constructor(engine = null) {
@@ -10,7 +10,8 @@ export default class InstructionExecutor {
 
 	execute(instruction) {
 		const handler = Instructions[instruction.opcode];
-		if (!handler) throw `Unknown instruction opcode 0x${instruction.opcode.toString(0x10)}!`;
+		if (!handler)
+			throw `Unknown instruction opcode 0x${instruction.opcode.toString(0x10)}!`;
 
 		return handler(instruction, this.engine, this.action);
 	}
