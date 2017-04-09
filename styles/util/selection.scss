@@ -7,7 +7,7 @@
 input[type=text],
 textarea {
     user-select: text;
-    -webkit-user-select: none;
+    -webkit-user-select: text;
     cursor: text;
 }
 

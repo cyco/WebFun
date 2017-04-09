@@ -27,19 +27,6 @@
 		"Buffer": true,
 		
 		// Node.js
-		"global": true,
-		
-		// Jasmine
-		"describe": true,
-		"fdescribe": true,
-		"xdescribe": true,
-		"beforeAll": true,
-		"afterAll": true,
-		"beforeEach": true,
-		"afterEach": true,
-		"it": true,
-		"fit": true,
-		"xit": true,
-		"expect": true
+		"global": true
 	}
 }
