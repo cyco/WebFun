@@ -10,8 +10,7 @@ export default class InstructionExecutor {
 
 	execute(instruction) {
 		const handler = Instructions[instruction.opcode];
-		if (!handler)
-			throw `Unknown instruction opcode 0x${instruction.opcode.toString(0x10)}!`;
+		console.assert(handler, `Unknown instruction opcode 0x${instruction.opcode.toString(0x10)}!`);
 
 		return handler(instruction, this.engine, this.action);
 	}

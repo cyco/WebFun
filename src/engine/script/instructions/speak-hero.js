@@ -1,5 +1,5 @@
 import SpeakText from "./speak-text";
 
 export default (instruction, engine, action) => {
-	return SpeakText(instruction.text, engine.state.hero.location, engine);
+	return SpeakText(instruction.text, engine.hero.location, engine);
 };

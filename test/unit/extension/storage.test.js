@@ -1,7 +1,7 @@
 import storeFn from '/extension/storage/store';
 import loadFn from '/extension/storage/load';
 
-describe.skip('Storage', () => {
+describe('Storage', () => {
 	let originalSetItem, originalGetItem, originalConsoleWarn;
 	let store, warnings;
 
@@ -60,7 +60,7 @@ describe.skip('Storage', () => {
 	describe('load', () => {
 		it('extends the Storage prototype', () => {
 			expect(typeof loadFn).toBe('function');
-			
+
 			if (typeof Storage !== 'undefined') {
 				expect(typeof localStorage.load).toBe('function');
 			}

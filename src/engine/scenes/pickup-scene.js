@@ -6,6 +6,7 @@ export default class PickupScene extends Scene {
 
 		this.engine = engine;
 		this.tile = null;
+		this.location = null;
 		this._ticks = 0;
 	}
 
@@ -29,8 +30,7 @@ export default class PickupScene extends Scene {
 
 	willHide() {
 		const engine = this.engine;
-		const state = engine.state;
-		const inventory = state.inventory;
+		const inventory = engine.inventory;
 
 		inventory.addItem(this.tile);
 	}

@@ -10,6 +10,10 @@ export default class NPC {
 		this._data = unknown3;
 	}
 
+	get enabled() {
+		return this._enabled;
+	}
+
 	get x() {
 		return this._x;
 	}

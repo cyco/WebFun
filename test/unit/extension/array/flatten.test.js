@@ -38,6 +38,6 @@ describe('Array.flatten', () =>  {
 	it('leaves the original array untouched', () => {
 		let sample = [['a']];
 		sample.flatten();
-		expect(sample[0] instanceof Array).toBe(true);
+		expect(sample[0] instanceof Array).toBeTrue();
 	});
 });

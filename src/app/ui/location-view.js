@@ -10,8 +10,6 @@ export default class WeaponView extends View {
 		this.element.innerHTML = LocationSVG;
 
 		this._svg = this.element.querySelector("svg");
-
-		Object.seal(this);
 	}
 
 	set left(flag) {

@@ -7,7 +7,7 @@ describe('AmmoView', sandboxed(function(sand) {
 	it('shows a simple bar inidcating how much ammo is left', () => {
 		ammoView = new AmmoView();
 		sand.box.appendChild(ammoView.element);
-		expect(sand.box.querySelector('.ammo-view').length).not.toBe(0);
+		expect(sand.box.querySelector('.ammo-view')).not.toBeNull();
 	});
 
 	it('it has an accessor to set the current level of available ammo', () => {

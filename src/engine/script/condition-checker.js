@@ -11,9 +11,8 @@ export default class ConditionChecker {
 
 	check(condition) {
 		const handler = Conditions[condition.opcode];
-		if (!handler)
-			throw `Unknown condition opcode 0x${condition.opcode.toString(0x10)}!`;
+		console.assert(handler, `Unknown condition opcode 0x${condition.opcode.toString(0x10)}!`);
 
-		return handler(condition.arguments, this.engine.state.currentZone, this.engine);
+		return handler(condition.arguments, this.engine.currentZone, this.engine);
 	}
 }

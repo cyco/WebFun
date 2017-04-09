@@ -11,11 +11,10 @@ export default (instruction, engine, action) => {
 	transitionScene.targetZone = engine.data.zones[args[0]];
 	transitionScene.scene = engine.sceneManager.currentScene;
 
-	const document = engine.document;
-	let world = document.dagobah;
+	let world = engine.dagobah;
 	let location = world.locationOfZone(transitionScene.targetZone);
 	if (!location) {
-		world = document.world;
+		world = engine.world;
 		location = world.locationOfZone(transitionScene.targetZone);
 	}
 

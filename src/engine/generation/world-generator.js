@@ -1,39 +1,26 @@
 import { Point, Message, srand, rand, VerticalPointRange, HorizontalPointRange } from "/util";
 
 import MapGenerator from "./map-generator";
-import WorldItem, { Type as WorldItemType } from "/engine/world-item";
+import WorldItem from "./world-item";
+import WorldItemType from "./world-item-type";
 import { Planet, WorldSize } from "/engine/types";
 import Quest from "/engine/quest";
+
+import GetDistanceToCenter from "./distance-to-center";
 
 import { Type as ZoneType } from "/engine/objects/zone";
 import { Type as PuzzleType } from "/engine/objects/puzzle";
 import { Type as HotspotType } from "/engine/objects/hotspot";
 import * as Type from "/engine/types";
 
-export const GetDistanceToCenter = (x, y) => {
-	Message("Map::GetDistanceToCenter %dx%d\n", x, y);
-	return [
-		5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
-		5, 4, 4, 4, 4, 4, 4, 4, 4, 5,
-		5, 4, 3, 3, 3, 3, 3, 3, 4, 5,
-		5, 4, 3, 2, 2, 2, 2, 3, 4, 5,
-		5, 4, 3, 2, 1, 1, 2, 3, 4, 5,
-		5, 4, 3, 2, 1, 1, 2, 3, 4, 5,
-		5, 4, 3, 2, 2, 2, 2, 3, 4, 5,
-		5, 4, 3, 3, 3, 3, 3, 3, 4, 5,
-		5, 4, 4, 4, 4, 4, 4, 4, 4, 5,
-		5, 5, 5, 5, 5, 5, 5, 5, 5, 5
-	][x + 10 * y];
-};
+const TILE_ADEGAN_CRYSTAL = 459;
 
 export default class WorldGenerator {
 	constructor(seedOrDocument, size, planet, engine) {
-		let data = engine && engine.data;
-
 		this._seed = seedOrDocument | 0;
 		this._size = size | 0;
 		this._planet = planet | 0;
-		this.data = data;
+		this.data = engine && engine.data;
 
 		this._puzzleIds = [];
 		this.chosenZoneIDs = [];
@@ -69,7 +56,6 @@ export default class WorldGenerator {
 
 	generate() {
 		Message("Generate New World (JS, 0x%x, 0x%x, 0x%x)", this._seed, this._size, this._planet);
-		window.gen = this;
 
 		srand(this._seed);
 
@@ -85,7 +71,6 @@ export default class WorldGenerator {
 		const orderMap = mapGenerator.orderMap;
 
 		for (let i = 0; i < 100; i++) {
-			this.world[i].zoneTypeID = typeMap[i];
 			this.world[i].puzzleIdx = orderMap[i];
 		}
 
@@ -181,7 +166,7 @@ export default class WorldGenerator {
 
 		for (let i = 0; i < 100; i++) {
 			if (this.world[i].zoneID >= 0) {
-				this.PlaceHotspotTiles(this.world[i].zoneID);
+				this.placeHotspotTiles(this.world[i].zoneID);
 			}
 		}
 
@@ -240,7 +225,7 @@ export default class WorldGenerator {
 				this.world[idx].zoneType = ZoneType.TravelStart;
 				this.world[idx].requiredItemID = this.wg_item_id;
 
-				let zone = this.data.zones[zoneID];
+				let zone = this.getZoneByID(zoneID);
 				let connectedZoneID = -1;
 				for (let hotspot of zone._hotspots) {
 					if (hotspot.type === Type.VehicleTo) {
@@ -297,7 +282,7 @@ export default class WorldGenerator {
 		this.world[idx].zoneID = targetID;
 		this.world[idx].zoneType = ZoneType.TravelEnd;
 		this.world[idx].requiredItemID = this.wg_item_id;
-		this.worldZones[idx] = this.data.zones[targetID];
+		this.worldZones[idx] = this.getZoneByID(targetID);
 		// v87 = zone_2;
 		// v88 = (char *)doc + 0x34 * idx_3;
 		/*
@@ -345,8 +330,8 @@ export default class WorldGenerator {
 					worldThing.zoneID = zoneID;
 					worldThing.requiredItemID = -1;
 					/*
-					 *(_DWORD *)itemType = this.data.zones.ptrs[zone_id_2];
-					 worldThing[-1].field_30 = zone_id_2;
+					 *(_DWORD *)itemType = this.getZoneByID(zoneId_2);
+					 worldThing[-1].field_30 = zoneId_2;
 					 worldThing.field_C = -1;
 					 LOWORD(worldThing.zoneType) = -1;
 					 */
@@ -354,7 +339,7 @@ export default class WorldGenerator {
 				} else {
 					worldThing.zoneID = zoneID;
 					/*
-					 *v193 = this.data.zones.ptrs[zoneID];
+					 *v193 = this.getZoneByID(zoneID);
 					 worldThing.field_C = -1;
 					 */
 					if (worldThing.zoneType !== ZoneType.Town)
@@ -378,8 +363,6 @@ export default class WorldGenerator {
 
 	// TODO: continue cleanup here
 	choosePuzzles(puzzleMapIdx, puzzles) {
-		const getDistanceToCenter = GetDistanceToCenter;
-
 		for (let zone_type = puzzleMapIdx; zone_type > 0; zone_type--) {
 			this.wg_zone_type = -1;
 			this.wg_last_added_item_id = -1;
@@ -391,11 +374,11 @@ export default class WorldGenerator {
 			this.field_3398 = -1;
 
 			const point = this.findPositionOfPuzzle(zone_type - 1, puzzles);
-			const distance = getDistanceToCenter(point.x, point.y);
+			const distance = GetDistanceToCenter(point.x, point.y);
 			const idx = point.x + 10 * point.y;
 
 			let puzzleID = this.puzzleIDs_2[zone_type];
-			let item_1 = this.data.puzzles[puzzleID].item_1;
+			let item_1 = this._getPuzzleItemId(puzzleID);
 			let zoneID = -1;
 
 			let type;
@@ -430,7 +413,7 @@ export default class WorldGenerator {
 			this.world[idx].npcID = this.wg_npc_id;
 			/*v147 = (char *)doc + 52 * idx_5;
 			 *((_WORD *)v147 + 624) = 0; */
-			this.worldZones[idx] = this.data.zones[zoneID];
+			this.worldZones[idx] = this.getZoneByID(zoneID);
 			this.wg_another_item_id = -1;
 		}
 		return true;
@@ -468,7 +451,7 @@ export default class WorldGenerator {
 			return result;
 		}
 
-		if (ZoneType.BlockadeNorth <= type && type <= ZoneType.BlockadeWest) {
+		if (ZoneType.BlockadeNorth <= type && type <= ZoneType.BlockadeEast) {
 			let result = this.getZoneIDWithType(type, -1, -1, -1, -1, distance, 0);
 			if (result < 0) {
 				did_not_place_zone_ref.value = 1;
@@ -487,9 +470,9 @@ export default class WorldGenerator {
 			case WorldItemType.Spaceport:
 				return ZoneType.Town;
 			case WorldItemType.BlockWest:
-				return ZoneType.BlockadeWest;
-			case WorldItemType.BlockEast:
 				return ZoneType.BlockadeEast;
+			case WorldItemType.BlockEast:
+				return ZoneType.BlockadeWest;
 			case WorldItemType.BlockNorth:
 				return ZoneType.BlockadeNorth;
 			case WorldItemType.BlockSouth:
@@ -501,11 +484,11 @@ export default class WorldGenerator {
 
 	doLoop0(puzzle_count, puzzles2_count, puzzles) {
 		let y_1 = 0;
-		let zone_id_3 = 0;
+		let zoneId_3 = 0;
 		let x_4 = 1;
 
 		let connectedZoneID = puzzle_count;
-		let zone_id_11 = this.puzzleIDs_1.length - 1;
+		let zoneId_11 = this.puzzleIDs_1.length - 1;
 		if (puzzle_count > 0) {
 			do {
 				this.wg_zone_type = -1;
@@ -519,7 +502,7 @@ export default class WorldGenerator {
 
 				y_1 = 0;
 				let row = 0;
-				let zone_2 = this.puzzleIDs_1[zone_id_11];
+				let zone_2 = this.puzzleIDs_1[zoneId_11];
 
 				let x = 0,
 					y = 0;
@@ -535,20 +518,20 @@ export default class WorldGenerator {
 					if (foundSomething) {
 						let world_puz_idx = puzzles[x + 10 * y];
 
-						let item_1 = this.data.puzzles[zone_2].item_1;
-						let item_2 = this.data.puzzles[zone_2].item_2;
+						let item_1 = this._getPuzzleItemId(zone_2);
+						let item_2 = this._getPuzzleItemId2(zone_2);
 
 						let breakAgain = 0;
-						zone_id_3 = -1;
+						zoneId_3 = -1;
 						while (1) {
-							if (zone_id_3 >= 0) {
+							if (zoneId_3 >= 0) {
 								breakAgain = 1;
 								break;
 							}
 							if (connectedZoneID === puzzle_count) {
 								let distance = GetDistanceToCenter(x, y);
-								zone_id_3 = this.getZoneIDWithType(ZoneType.Goal, zone_id_11 - 1, puzzles2_count - 1, item_1, item_2, distance, true);
-								if (zone_id_3 < 0) break;
+								zoneId_3 = this.getZoneIDWithType(ZoneType.Goal, zoneId_11 - 1, puzzles2_count - 1, item_1, item_2, distance, true);
+								if (zoneId_3 < 0) break;
 
 								this.wg_zone_type = ZoneType.Goal;
 								this.wg_another_item_id = world_puz_idx - 1;
@@ -558,21 +541,21 @@ export default class WorldGenerator {
 								Message("random = %x\n", random);
 								let type = ((random ^ 1) & 1) + 15; // was rand() & 1
 								let distance = GetDistanceToCenter(x, y);
-								zone_id_3 = this.getZoneIDWithType(type,
-									zone_id_11 - 1, -1,
+								zoneId_3 = this.getZoneIDWithType(type,
+									zoneId_11 - 1, -1,
 									item_1, -1,
 									distance,
 									true);
-								if (zone_id_3 < 0) {
+								if (zoneId_3 < 0) {
 									if (type === ZoneType.Use) {
 										let distance = GetDistanceToCenter(x, y);
-										zone_id_3 = this.getZoneIDWithType(ZoneType.Trade, zone_id_11 - 1, -1, item_1, -1, distance, true);
-										if (zone_id_3 < 0) break;
+										zoneId_3 = this.getZoneIDWithType(ZoneType.Trade, zoneId_11 - 1, -1, item_1, -1, distance, true);
+										if (zoneId_3 < 0) break;
 										this.wg_zone_type = ZoneType.Trade;
 									} else {
 										let distance = GetDistanceToCenter(x, y);
-										zone_id_3 = this.getZoneIDWithType(ZoneType.Use, zone_id_11 - 1, -1, item_1, -1, distance, false);
-										if (zone_id_3 < 0) break;
+										zoneId_3 = this.getZoneIDWithType(ZoneType.Use, zoneId_11 - 1, -1, item_1, -1, distance, false);
+										if (zoneId_3 < 0) break;
 										this.wg_zone_type = ZoneType.Use;
 									}
 									this.wg_another_item_id = world_puz_idx - 1;
@@ -581,12 +564,12 @@ export default class WorldGenerator {
 									this.wg_another_item_id = world_puz_idx - 1;
 								}
 							}
-							this.addZoneWithIDToWorld(zone_id_3);
-							if (zone_id_3 < 0) break;
+							this.addZoneWithIDToWorld(zoneId_3);
+							if (zoneId_3 < 0) break;
 							let world_idx_1 = x + 10 * y;
 
 							this.world[world_idx_1].zoneType = this.wg_zone_type;
-							this.world[world_idx_1].zoneID = zone_id_3;
+							this.world[world_idx_1].zoneID = zoneId_3;
 							this.world[world_idx_1].findItemID = this.wg_last_added_item_id;
 							this.world[world_idx_1].unknown606 = this.wg_another_item_id;
 							this.world[world_idx_1].requiredItemID = this.wg_item_id;
@@ -598,10 +581,10 @@ export default class WorldGenerator {
 							 *((_WORD *)v113 + 607) = this.field_3398;
 							 *((_WORD *)v113 + 624) = 1;
 							 */
-							this.worldZones[world_idx_1] = this.data.zones[zone_id_3];
+							this.worldZones[world_idx_1] = this.getZoneByID(zoneId_3);
 
-							Message("y_2 = %d\n", zone_id_11);
-							if (zone_id_11 === 1) {
+							Message("y_2 = %d\n", zoneId_11);
+							if (zoneId_11 === 1) {
 								let distance = GetDistanceToCenter(x, y);
 								this.AddProvidedQuestWithItemID(this.wg_item_id, distance);
 
@@ -631,20 +614,20 @@ export default class WorldGenerator {
 				Message("x_4 = %d\n", x_4);
 				if (!x_4) {
 					let distance_1 = GetDistanceToCenter(x, y);
-					let zone_id_4 = this.getZoneIDWithType(ZoneType.Empty, -1, -1, -1, -1, distance_1, 0);
-					if (zone_id_4 >= 0) {
+					let zoneId_4 = this.getZoneIDWithType(ZoneType.Empty, -1, -1, -1, -1, distance_1, 0);
+					if (zoneId_4 >= 0) {
 						let idx_4 = x + 10 * y;
 						console.log("idx_4: ", idx_4);
 						this.world[idx_4].zoneType = this.wg_zone_type;
-						this.worldZones[idx_4] = this.data.zones[zone_id_4];
-						this.world[idx_4].zoneID = zone_id_4;
-						this.addZoneWithIDToWorld(zone_id_4);
+						this.worldZones[idx_4] = this.getZoneByID(zoneId_4);
+						this.world[idx_4].zoneID = zoneId_4;
+						this.addZoneWithIDToWorld(zoneId_4);
 					}
 				}
-				Message("v198 = %d\n", zone_id_11);
+				Message("v198 = %d\n", zoneId_11);
 				connectedZoneID--;
-				zone_id_11--;
-			} while (zone_id_11 > 0);
+				zoneId_11--;
+			} while (zoneId_11 > 0);
 		}
 		return true;
 	}
@@ -653,7 +636,7 @@ export default class WorldGenerator {
 		Message("YodaDocument::RemoveEmptyZoneIdsFromWorld()\n");
 		let nonEmptyZoneIDs = [];
 		for (let zoneID of this.chosenZoneIDs) {
-			if (this.data.zones[zoneID].getType() !== ZoneType.Empty)
+			if (this.getZoneByIDType(zoneID) !== ZoneType.Empty)
 				nonEmptyZoneIDs.push(zoneID);
 		}
 
@@ -682,7 +665,7 @@ export default class WorldGenerator {
 		let puzzle_idx = 0;
 		while (1) {
 			puzzle_id = puzzleIDs[puzzle_idx];
-			puzzle_1 = this.data.puzzles[puzzle_id];
+			puzzle_1 = this._getPuzzle(puzzle_id);
 			if (this.containsPuzzleID(puzzle_id)) {
 				if (!break_from_loop) {
 					++puzzle_idx;
@@ -750,32 +733,34 @@ export default class WorldGenerator {
 
 		// item_id_1 = first required quest.itemID, last required quest.itemID
 		let usableZoneIDs = [];
-		for (let zone_index = 0; zone_index < this.data.zones.length; zone_index++) {
-			let zone = this.data.zones[zone_index];
-			if (zone === -1 || !zone || zone.getPlanet() !== this._planet)
+		const zoneCount = this.getZoneCount();
+		for (let zoneIndex = 0; zoneIndex < zoneCount; zoneIndex++) {
+			let zone = this.getZoneByID(zoneIndex);
+			if (zone === -1 || !zone || zone.planet !== this._planet)
 				continue;
 
 			switch (type_1) {
 				case ZoneType.Empty:
 				case ZoneType.BlockadeNorth:
 				case ZoneType.BlockadeSouth:
-				case ZoneType.BlockadeEast:
 				case ZoneType.BlockadeWest:
+				case ZoneType.BlockadeEast:
 				case ZoneType.TravelStart:
 				case ZoneType.TravelEnd:
 				case ZoneType.Goal:
 				case ZoneType.Town:
 				case ZoneType.Trade:
 				case ZoneType.Use:
-					if (zone.getType() === type_1)
-						usableZoneIDs.push(zone_index);
+					if (zone.type === type_1)
+						usableZoneIDs.push(zoneIndex);
 					break;
 				case ZoneType.Find:
-				case ZoneType.FindTheForce: { // ?
-					if (zone.getType() === ZoneType.Find || zone.getType() === ZoneType.FindTheForce)
-						usableZoneIDs.push(zone_index);
-					break;
-				}
+				case ZoneType.FindTheForce:
+					{ // ?
+						if (zone.type === ZoneType.Find || zone.type === ZoneType.FindTheForce)
+							usableZoneIDs.push(zoneIndex);
+						break;
+					}
 				default:
 					break;
 			}
@@ -794,9 +779,9 @@ export default class WorldGenerator {
 			let item_id = [null, null];
 			let item_ids = 0;
 
-			let zone_id = usableZoneIDs[idx];
-			let zone = this.data.zones[zone_id];
-			if (this.worldContainsZoneId(zone_id) && (type_1 !== ZoneType.Goal || this.document.puzzles_can_be_reused <= 0))
+			let zoneId = usableZoneIDs[idx];
+			let zone = this.getZoneByID(zoneId);
+			if (this.worldContainsZoneId(zoneId) && (type_1 !== ZoneType.Goal || this.document.puzzles_can_be_reused <= 0))
 				continue;
 
 			switch (type_1) {
@@ -804,57 +789,57 @@ export default class WorldGenerator {
 					if (this.field_2E64) {
 						const count = zone._hotspots.length;
 						if (count <= 0) {
-							Message("YodaDocument::getZoneIDWithType => %d\n", zone_id);
-							return zone_id;
+							Message("YodaDocument::getZoneIDWithType => %d\n", zoneId);
+							return zoneId;
 						}
-					// used to iterate through all teleporter hotspots here
-					} else if (zone.getType() === ZoneType.Empty) {
-						Message("YodaDocument::getZoneIDWithType => %d\n", zone_id);
-						return zone_id;
+						// used to iterate through all teleporter hotspots here
+					} else if (zone.type === ZoneType.Empty) {
+						Message("YodaDocument::getZoneIDWithType => %d\n", zoneId);
+						return zoneId;
 					}
 					continue;
 				case ZoneType.BlockadeNorth:
-					if (zone.getType() !== ZoneType.BlockadeNorth || !this.SetupRequiredItemForZone_(zone_id, item_id_3, 0)) {
+					if (zone.type !== ZoneType.BlockadeNorth || !this.SetupRequiredItemForZone_(zoneId, item_id_3, 0)) {
 						continue;
 					}
-					Message("YodaDocument::getZoneIDWithType => %d\n", zone_id);
-					return zone_id;
+					Message("YodaDocument::getZoneIDWithType => %d\n", zoneId);
+					return zoneId;
 				case ZoneType.BlockadeSouth:
-					if (zone.getType() !== ZoneType.BlockadeSouth || !this.SetupRequiredItemForZone_(zone_id, item_id_3, 0)) {
+					if (zone.type !== ZoneType.BlockadeSouth || !this.SetupRequiredItemForZone_(zoneId, item_id_3, 0)) {
 						continue;
 					}
-					Message("YodaDocument::getZoneIDWithType => %d\n", zone_id);
-					return zone_id;
-				case ZoneType.BlockadeEast:
-					if (zone.getType() !== ZoneType.BlockadeEast || !this.SetupRequiredItemForZone_(zone_id, item_id_3, 0))
-						continue;
-					Message("YodaDocument::getZoneIDWithType => %d\n", zone_id);
-					return zone_id;
+					Message("YodaDocument::getZoneIDWithType => %d\n", zoneId);
+					return zoneId;
 				case ZoneType.BlockadeWest:
-					if (zone.getType() !== ZoneType.BlockadeWest || !this.SetupRequiredItemForZone_(zone_id, item_id_3, 0))
+					if (zone.type !== ZoneType.BlockadeWest || !this.SetupRequiredItemForZone_(zoneId, item_id_3, 0))
 						continue;
-					Message("YodaDocument::getZoneIDWithType => %d\n", zone_id);
-					return zone_id;
+					Message("YodaDocument::getZoneIDWithType => %d\n", zoneId);
+					return zoneId;
+				case ZoneType.BlockadeEast:
+					if (zone.type !== ZoneType.BlockadeEast || !this.SetupRequiredItemForZone_(zoneId, item_id_3, 0))
+						continue;
+					Message("YodaDocument::getZoneIDWithType => %d\n", zoneId);
+					return zoneId;
 				case ZoneType.TravelStart:
-					if (zone.getType() !== ZoneType.TravelStart || !this.SetupRequiredItemForZone_(zone_id, item_id_3, 0))
+					if (zone.type !== ZoneType.TravelStart || !this.SetupRequiredItemForZone_(zoneId, item_id_3, 0))
 						continue;
-					Message("YodaDocument::getZoneIDWithType => %d\n", zone_id);
-					return zone_id;
+					Message("YodaDocument::getZoneIDWithType => %d\n", zoneId);
+					return zoneId;
 				case ZoneType.TravelEnd:
-					if (zone.getType() !== ZoneType.TravelEnd || !this.SetupRequiredItemForZone_(zone_id, item_id_3, 0))
+					if (zone.type !== ZoneType.TravelEnd || !this.SetupRequiredItemForZone_(zoneId, item_id_3, 0))
 						continue;
-					Message("YodaDocument::getZoneIDWithType => %d\n", zone_id);
-					return zone_id;
+					Message("YodaDocument::getZoneIDWithType => %d\n", zoneId);
+					return zoneId;
 				case ZoneType.Goal:
-					if (zone.getType() !== ZoneType.Goal)
+					if (zone.type !== ZoneType.Goal)
 						continue;
-					if (!this.ZoneHasProvidedItem(zone_id, item_id_1))
+					if (!this.ZoneHasProvidedItem(zoneId, item_id_1))
 						continue;
-					if (!this.ZoneHasProvidedItem(zone_id, item_id_2))
+					if (!this.ZoneHasProvidedItem(zoneId, item_id_2))
 						continue;
 
-					let newItem0 = this.GetItemIDThatsNotRequiredYet(zone_id, a3, 0);
-					let newItem1 = this.GetItemIDThatsNotRequiredYet(zone_id, a4, 1);
+					let newItem0 = this.GetItemIDThatsNotRequiredYet(zoneId, a3, 0);
+					let newItem1 = this.GetItemIDThatsNotRequiredYet(zoneId, a4, 1);
 					if (newItem0 < 0 || newItem1 < 0)
 						continue;
 					let newItem2 = this.GetNewPuzzleId(newItem0, item_id_1, ZoneType.Goal, !a3);
@@ -868,23 +853,23 @@ export default class WorldGenerator {
 
 					this.puzzleIDs_1[a3] = newItem2;
 					this.puzzleIDs_2[a4] = puzzle_id;
-					if (!this.Unknown_7(zone_id, a3, a4, item_id_3, a8)) {
+					if (!this.Unknown_7(zoneId, a3, a4, item_id_3, a8)) {
 						this.puzzleIDs_1[a3] = -1;
 						this.puzzleIDs_2[a4] = -1;
 						continue;
 					}
 					this.AddRequiredQuestWithItemID(item_id[0], item_id_3);
 					this.AddRequiredQuestWithItemID(item_ids, item_id_3);
-					Message("YodaDocument::getZoneIDWithType => %d\n", zone_id);
-					return zone_id;
+					Message("YodaDocument::getZoneIDWithType => %d\n", zoneId);
+					return zoneId;
 				case ZoneType.Town:
-					if (zone.getType() !== ZoneType.Town) continue;
-					Message("YodaDocument::getZoneIDWithType => %d\n", zone_id);
-					return zone_id;
+					if (zone.type !== ZoneType.Town) continue;
+					Message("YodaDocument::getZoneIDWithType => %d\n", zoneId);
+					return zoneId;
 				case ZoneType.Trade:
-					if (zone.getType() !== ZoneType.Trade) continue;
-					if (!this.ZoneHasProvidedItem(zone_id, item_id_1)) continue;
-					let newItem38 = this.GetItemIDThatsNotRequiredYet(zone_id, a3, 0);
+					if (zone.type !== ZoneType.Trade) continue;
+					if (!this.ZoneHasProvidedItem(zoneId, item_id_1)) continue;
+					let newItem38 = this.GetItemIDThatsNotRequiredYet(zoneId, a3, 0);
 					if (newItem38 < 0) continue;
 					let newItem25 = this.GetNewPuzzleId(newItem38, item_id_1, ZoneType.Trade, !a3);
 					if (newItem25 < 0) continue;
@@ -894,43 +879,44 @@ export default class WorldGenerator {
 					else
 						this.puzzleIDs_2[a3] = newItem25;
 
-					if (!this.Unknown_1(zone_id, a3, item_id_3, a8)) continue;
+					if (!this.Unknown_1(zoneId, a3, item_id_3, a8)) continue;
 
 					this.puzzleIDs.push(newItem25);
 					this.AddRequiredQuestWithItemID(newItem38, item_id_3);
 
-					Message("YodaDocument::getZoneIDWithType => %d\n", zone_id);
-					return zone_id;
-				case ZoneType.Use: {
-					if (zone.getType() !== ZoneType.Use)
-						continue;
-					if (!this.ZoneHasProvidedItem(zone_id, item_id_1))
-						continue;
-					let puzzleID1 = this.GetItemIDThatsNotRequiredYet(zone_id, a3, 0);
-					if (puzzleID1 < 0) continue;
+					Message("YodaDocument::getZoneIDWithType => %d\n", zoneId);
+					return zoneId;
+				case ZoneType.Use:
+					{
+						if (zone.type !== ZoneType.Use)
+							continue;
+						if (!this.ZoneHasProvidedItem(zoneId, item_id_1))
+							continue;
+						let puzzleID1 = this.GetItemIDThatsNotRequiredYet(zoneId, a3, 0);
+						if (puzzleID1 < 0) continue;
 
-					let puzzleID2 = this.GetNewPuzzleId(puzzleID1, item_id_1, ZoneType.Use, !a3);
-					if (puzzleID2 < 0) continue;
+						let puzzleID2 = this.GetNewPuzzleId(puzzleID1, item_id_1, ZoneType.Use, !a3);
+						if (puzzleID2 < 0) continue;
 
-					if (a8)
-						this.puzzleIDs_1[a3] = puzzleID2;
-					else
-						this.puzzleIDs_2[a3] = puzzleID2;
+						if (a8)
+							this.puzzleIDs_1[a3] = puzzleID2;
+						else
+							this.puzzleIDs_2[a3] = puzzleID2;
 
-					if (!this.useIDsFromArray1(zone_id, a3, item_id_3, a8)) continue;
-					this.puzzleIDs.push(puzzleID2);
+						if (!this.useIDsFromArray1(zoneId, a3, item_id_3, a8)) continue;
+						this.puzzleIDs.push(puzzleID2);
 
-					this.AddRequiredQuestWithItemID(puzzleID1, item_id_3);
-					Message("YodaDocument::getZoneIDWithType => %d\n", zone_id);
-					return zone_id;
-				}
+						this.AddRequiredQuestWithItemID(puzzleID1, item_id_3);
+						Message("YodaDocument::getZoneIDWithType => %d\n", zoneId);
+						return zoneId;
+					}
 				case ZoneType.Find:
-					zone_type = zone.getType();
-					if ((zone_type !== ZoneType.Find && zone_type !== ZoneType.FindTheForce) || !this.AssociateItemWithZoneHotspot(zone_id, item_id_1, item_id_3)) {
+					zone_type = zone.type;
+					if ((zone_type !== ZoneType.Find && zone_type !== ZoneType.FindTheForce) || !this.AssociateItemWithZoneHotspot(zoneId, item_id_1, item_id_3)) {
 						continue;
 					}
-					Message("YodaDocument::getZoneIDWithType => %d\n", zone_id);
-					return zone_id;
+					Message("YodaDocument::getZoneIDWithType => %d\n", zoneId);
+					return zoneId;
 				default:
 					continue;
 			}
@@ -985,7 +971,7 @@ export default class WorldGenerator {
 			this.world[idx].zoneType = ZoneType.Find;
 			this.world[idx].zoneID = zoneID;
 			this.world[idx].findItemID = this.wg_last_added_item_id;
-			this.worldZones[idx] = this.data.zones[zoneID];
+			this.worldZones[idx] = this.getZoneByID(zoneID);
 			world[idx] = WorldItemType.Puzzle;
 
 			this.addZoneWithIDToWorld(zoneID);
@@ -1025,7 +1011,7 @@ export default class WorldGenerator {
 						}
 
 						while (1) {
-							zone = this.data.zones[zoneID];
+							zone = this.getZoneByID(zoneID);
 							if (this.field_2E64) break;
 
 							let has_teleporter = 0;
@@ -1136,7 +1122,7 @@ export default class WorldGenerator {
 					this.world[idx].unknown606 = -1;
 					this.world[idx].requiredItemID = -1;
 					this.world[idx].findItemID = -1;
-					this.worldZones[idx] = this.data.zones[zoneID];
+					this.worldZones[idx] = this.getZoneByID(zoneID);
 
 					this.addZoneWithIDToWorld(zoneID);
 				}
@@ -1150,8 +1136,8 @@ export default class WorldGenerator {
 	}
 
 
-	Unknown_1(zone_id, a3, distance, a8) {
-		Message("YodaDocument::Unknown_1(%d, %d, %d, %d)\n", zone_id, a3, distance, a8);
+	Unknown_1(zoneId, a3, distance, a8) {
+		Message("YodaDocument::Unknown_1(%d, %d, %d, %d)\n", zoneId, a3, distance, a8);
 		if (false) return false;
 		if (false) return false;
 
@@ -1170,8 +1156,8 @@ export default class WorldGenerator {
 
 		let p1,
 			p2;
-		p1 = this.data.puzzles[puzzleID1];
-		p2 = this.data.puzzles[puzzleID2];
+		p1 = this._getPuzzle(puzzleID1);
+		p2 = this._getPuzzle(puzzleID2);
 
 		if (!p1) return false;
 		if (!p2) return false;
@@ -1179,7 +1165,7 @@ export default class WorldGenerator {
 		this.AddRequiredQuestWithItemID(p1.item_1, distance);
 		this.AddRequiredQuestWithItemID(p2.item_1, distance);
 
-		if (!this.RequiredItemForZoneWasNotPlaced(zone_id)) {
+		if (!this.RequiredItemForZoneWasNotPlaced(zoneId)) {
 			this.RemoveQuestRequiringItem(p1.item_1);
 			// RemoveQuestRequiringItem(0);
 
@@ -1187,11 +1173,11 @@ export default class WorldGenerator {
 			return false;
 		}
 
-		if (this.ChooseItemIDFromZone_1(zone_id, puzzleID1, distance, p1.item_1, 0) >= 0) {
-			this.Unknown_14(zone_id, puzzleID1, distance, p2.item_1);
+		if (this.ChooseItemIDFromZone_1(zoneId, puzzleID1, distance, p1.item_1, 0) >= 0) {
+			this.Unknown_14(zoneId, puzzleID1, distance, p2.item_1);
 		}
 
-		this.addRequiredItemQuestsFromHotspots(zone_id);
+		this.addRequiredItemQuestsFromHotspots(zoneId);
 
 		Message("YodaDocument::Unknown_1 => %d\n", 1);
 		return true;
@@ -1202,7 +1188,7 @@ export default class WorldGenerator {
 		Message("YodaDocument::Unknown_14(%d, %d, %d, %d)\n", zoneID, a3, distance, providedItemID);
 		if (zoneID < 0) return false;
 
-		let zone = this.data.zones[zoneID];
+		let zone = this.getZoneByID(zoneID);
 
 		for (let itemID of zone.providedItemIDs) {
 			if (itemID === providedItemID) {
@@ -1256,8 +1242,8 @@ export default class WorldGenerator {
 		return false;
 	}
 
-	PlaceHotspotTiles(zone_id) {
-		const zone = this.data.zones[zone_id];
+	placeHotspotTiles(zoneId) {
+		const zone = this.getZoneByID(zoneId);
 		zone.hotspots.filter((htsp) => htsp.enabled).forEach((hotspot) => {
 			let tile = null;
 
@@ -1277,7 +1263,7 @@ export default class WorldGenerator {
 					zone.setTile(hotspot.x, hotspot.y, 1, hotspot.arg);
 					break;
 				case HotspotType.Unused:
-					hotspot.arg = 0x1CB; // TODO: use proper constant for adegan crystal 
+					hotspot.arg = TILE_ADEGAN_CRYSTAL;
 
 					tile = zone.getTile(hotspot.x, hotspot.y, 1);
 					if (tile) break;
@@ -1315,24 +1301,13 @@ export default class WorldGenerator {
 		return false;
 	}
 
-	getZoneByID(zoneID) {
-		return this.data.zones[zoneID];
-	}
-
-	getZoneID(zone) {
-		for (let i = 0; i < this.data.zones.length; i++)
-			if (this.data.zones[i] === zone) return i;
-
-		return -1;
-	}
-
 	HasQuestRequiringItem(itemID) {
 		Message("YodaDocument::HasQuestRequiringItem(%d)\n", itemID);
 		for (let quest of this.requiredItemQuests)
 			if (quest.itemID === itemID) {
 				Message("YodaDocument::HasQuestRequiringItem => 1\n");
 				return true;
-		}
+			}
 
 		Message("YodaDocument::HasQuestRequiringItem => 0\n");
 		return false;
@@ -1366,7 +1341,7 @@ export default class WorldGenerator {
 			if (this.providedItemQuests[i].itemID === itemID) {
 				this.providedItemQuests.splice(i, 1);
 				return;
-		}
+			}
 	}
 
 	RemoveQuestRequiringItem(itemID) {
@@ -1376,12 +1351,12 @@ export default class WorldGenerator {
 			if (this.requiredItemQuests[i].itemID === itemID) {
 				this.requiredItemQuests.splice(i, 1);
 				return;
-		}
+			}
 	}
 
-	RequiredItemForZoneWasNotPlaced(zone_id) {
-		Message("YodaDocument::ZoneDoesNOTProvideRequiredItemID(%d)\n", zone_id);
-		let zone = this.data.zones[zone_id];
+	RequiredItemForZoneWasNotPlaced(zoneId) {
+		Message("YodaDocument::ZoneDoesNOTProvideRequiredItemID(%d)\n", zoneId);
+		let zone = this.getZoneByID(zoneId);
 		if (!zone) {
 			Message("YodaDocument::ZoneDoesNOTProvideRequiredItemID => 0\n");
 			return false;
@@ -1471,14 +1446,14 @@ export default class WorldGenerator {
 			if (chosenZoneID === zoneID) {
 				Message("YodaDocument::WorldContainsZoneId => 1\n");
 				return true;
-		}
+			}
 		Message("YodaDocument::WorldContainsZoneId => 0\n");
 		return false;
 	}
 
 	addZoneWithIDToWorld(zoneID) {
 		Message("YodaDocument::AddZoneWithIdToWorld(%d)\n", zoneID);
-		if (zoneID >= this.data.zones.length) {
+		if (zoneID >= this.getZoneCount()) {
 			console.log("Invalid Zone ID\n");
 			return;
 		}
@@ -1488,7 +1463,7 @@ export default class WorldGenerator {
 
 	addRequiredItemQuestsFromHotspots(zoneID) {
 		Message("YodaDocument::AddRequiredItemsFromHotspots(%d)\n", zoneID);
-		let zone = this.data.zones[zoneID];
+		let zone = this.getZoneByID(zoneID);
 		for (let hotspot of zone._hotspots) {
 			switch (hotspot.type) {
 				case Type.CrateItem:
@@ -1507,9 +1482,9 @@ export default class WorldGenerator {
 		}
 	}
 
-	findUnusedNPCForZone(zone_id) {
-		Message("YodaDocument::ChoosePuzzleNPCForZone(%d)\n", zone_id);
-		let zone = this.getZoneByID(zone_id);
+	findUnusedNPCForZone(zoneId) {
+		Message("YodaDocument::ChoosePuzzleNPCForZone(%d)\n", zoneId);
+		let zone = this.getZoneByID(zoneId);
 		if (!zone) {
 			Message("YodaDocument::ChoosePuzzleNPCForZone => %d\n", -1);
 			return -1;
@@ -1556,14 +1531,14 @@ export default class WorldGenerator {
 			if (npcID === targetNPCID) {
 				Message("YodaDocument::hasPuzzleNPC => 1");
 				return true;
-		}
+			}
 
 		for (let hotspot of zone._hotspots)
 			if (hotspot.type === HotspotType.DoorIn && hotspot.arg !== -1)
 				if (this.hasPuzzleNPC(hotspot.arg, targetNPCID)) {
 					Message("YodaDocument::hasPuzzleNPC => 1");
 					return true;
-		}
+				}
 
 		Message("YodaDocument::hasPuzzleNPC => 0");
 		return false;
@@ -1576,13 +1551,13 @@ export default class WorldGenerator {
 			if (itemIDInZone === itemID) {
 				Message("YodaDocument::ZoneLeadsToItem => 1\n");
 				return true;
-		}
+			}
 
 		for (let hotspot of zone._hotspots)
 			if (hotspot.type === HotspotType.DoorIn && hotspot.arg !== -1 && this.ZoneHasProvidedItem(hotspot.arg, itemID)) {
 				Message("YodaDocument::ZoneLeadsToItem => 1\n");
 				return true;
-		}
+			}
 
 		Message("YodaDocument::ZoneLeadsToItem => 0\n");
 		return false;
@@ -1682,7 +1657,7 @@ export default class WorldGenerator {
 	GetItemIDThatsNotRequiredYet(zoneID, unused, use_array_2_ids) {
 		Message("YodaDocument::GetItemIDThatsNotRequiredYet(%d, %d, %d)\n", zoneID, unused, use_array_2_ids);
 		let itemIDs = [];
-		let zone = this.data.zones[zoneID];
+		let zone = this.getZoneByID(zoneID);
 
 		let zoneItemIds = use_array_2_ids ? zone.assignedItemIDs : zone.requiredItemIDs;
 		for (let itemID of zoneItemIds) {
@@ -1718,14 +1693,14 @@ export default class WorldGenerator {
 					if (item === 1) {
 						Message("1) %dx%d\n", x, y);
 						farPoints.push(point);
-					} else ; //delete point;
+					} else; //delete point;
 				} else if (item === 1 || item === WorldItemType.Candidate) {
 					Message("2) %dx%d\n", x, y);
 					if ((x < 1 || world[idx - 1] !== WorldItemType.Puzzle) && (x > 8 || world[idx + 1] !== WorldItemType.Puzzle) && (y < 1 || world[idx - 10] !== WorldItemType.Puzzle) && (y > 8 || world[idx + 10] !== WorldItemType.Puzzle))
 						bestPoints.push(point);
 					else
 						pointsCloseToPuzzles.push(point);
-				} else ; //delete point;
+				} else; //delete point;
 			}
 		}
 
@@ -1761,61 +1736,60 @@ export default class WorldGenerator {
 
 	GetPuzzleCandidates(result, item_id, a3, zone_type /*, a5*/ ) {
 		result.clear();
-		for (let puzzle_idx = 0; puzzle_idx < this.data.puzzles.length; puzzle_idx++) {
-			let puzzle = this.data.puzzles[puzzle_idx];
+
+		this.forEachPuzzle((puzzle, puzzleID) => {
 			if (zone_type <= ZoneType.Trade) {
 				if (zone_type === ZoneType.Trade) {
-					if (puzzle.type !== PuzzleType.U2 || this.containsPuzzleID(puzzle_idx))
-						continue;
-				} else if (zone_type !== ZoneType.Goal || puzzle.type !== PuzzleType.U3 || this.containsPuzzleID(puzzle_idx)) {
-					continue;
+					if (puzzle.type !== PuzzleType.U2 || this.containsPuzzleID(puzzleID))
+						return;
+				} else if (zone_type !== ZoneType.Goal || puzzle.type !== PuzzleType.U3 || this.containsPuzzleID(puzzleID)) {
+					return;
 				}
 
-				result.push(puzzle_idx);
-				continue;
+				result.push(puzzleID);
+				return;
 			}
 
 			if (zone_type === ZoneType.Use) {
-				if (!puzzle.type && !this.containsPuzzleID(puzzle_idx))
-					result.push(puzzle_idx);
-				continue;
+				if (!puzzle.type && !this.containsPuzzleID(puzzleID))
+					result.push(puzzleID);
+				return;
 			}
 
 			if (zone_type !== ZoneType.Unknown || puzzle.type !== PuzzleType.End)
-				continue;
+				return;
 
-			if (this.PuzzleUsedInLastGame(puzzle_idx, this._planet) && this.goalPuzzleID < 0)
-				continue;
+			if (this.PuzzleUsedInLastGame(puzzleID, this._planet) && this.goalPuzzleID < 0)
+				return;
 
-			if (this.PuzzleIsGoal(puzzle_idx, this._planet)) {
-				result.push(puzzle_idx);
+			if (this.PuzzleIsGoal(puzzleID, this._planet)) {
+				result.push(puzzleID);
 			}
-		}
+		});
 	}
 
-	ChooseItemIDFromZone_0(zone_id, itemID) {
-		Message("YodaDocument::ChooseItemIDFromZone_0(%d, %d)\n", zone_id, itemID);
+	ChooseItemIDFromZone_0(zoneId, itemID) {
+		Message("YodaDocument::ChooseItemIDFromZone_0(%d, %d)\n", zoneId, itemID);
 		let hotspotCandidates = [];
-		let zone = this.getZoneByID(zone_id);
+		let zone = this.getZoneByID(zoneId);
 		if (!zone) return -1;
 
 		Message("v16 = %d\n", 0);
-		for (let providedItemID of zone.providedItemIDs) {
-			if (itemID === providedItemID) {
-				hotspotCandidates.clear();
+		
+		if(zone.providedItemIDs.contains(itemID)) {
+			hotspotCandidates.clear();
 
-				for (let hotspot of zone._hotspots)
-					if (hotspot.type === Type.TriggerLocation)
-						hotspotCandidates.unshift(hotspot);
+			for (let hotspot of zone._hotspots)
+				if (hotspot.type === Type.TriggerLocation)
+					hotspotCandidates.unshift(hotspot);
 
-				if (hotspotCandidates.length > 0) {
-					let idx = rand() % hotspotCandidates.length;
-					let hotspot = hotspotCandidates[idx];
-					if (hotspot.type === Type.TriggerLocation) {
-						hotspot.arg = providedItemID;
-						hotspot.enabled = true;
-						return providedItemID;
-					}
+			if (hotspotCandidates.length > 0) {
+				let idx = rand() % hotspotCandidates.length;
+				let hotspot = hotspotCandidates[idx];
+				if (hotspot.type === Type.TriggerLocation) {
+					hotspot.arg = itemID;
+					hotspot.enabled = true;
+					return itemID;
 				}
 			}
 		}
@@ -1837,7 +1811,7 @@ export default class WorldGenerator {
 			return false;
 		}
 
-		let zone = this.data.zones[zoneID];
+		let zone = this.getZoneByID(zoneID);
 		let itemIDs = a6 ? zone.assignedItemIDs : zone.requiredItemIDs;
 		for (let itemID of itemIDs) {
 			if (itemID !== item_id) continue;
@@ -1874,8 +1848,8 @@ export default class WorldGenerator {
 		return false;
 	}
 
-	useIDsFromArray1(zone_id, a3, item_id_1, a5) {
-		Message("YodaDocument::useIDsFromArray1(%d, %d, %d, %d)\n", zone_id, a3, item_id_1, a5);
+	useIDsFromArray1(zoneId, a3, item_id_1, a5) {
+		Message("YodaDocument::useIDsFromArray1(%d, %d, %d, %d)\n", zoneId, a3, item_id_1, a5);
 		let zone = null;
 		let v9 = null;
 		let v10 = 0;
@@ -1886,13 +1860,13 @@ export default class WorldGenerator {
 		let a3a = 0;
 		let a3_2 = null;
 
-		if (zone_id < 0) return false;
-		zone = this.data.zones[zone_id];
+		if (zoneId < 0) return false;
+		zone = this.getZoneByID(zoneId);
 
 		if (!zone) return false;
 
-		if (zone.getType() !== ZoneType.Use) return false;
-		if (!this.RequiredItemForZoneWasNotPlaced(zone_id)) return false;
+		if (zone.type !== ZoneType.Use) return false;
+		if (!this.RequiredItemForZoneWasNotPlaced(zoneId)) return false;
 
 		if (a5) {
 			if (this.puzzleIDs_1.length - 1 > a3) {
@@ -1922,17 +1896,17 @@ export default class WorldGenerator {
 		a3a = v12.item_1;
 		if (v10 >= 0)
 			item_id = v13.item_1;
-		let npcID = this.findUnusedNPCForZone(zone_id);
+		let npcID = this.findUnusedNPCForZone(zoneId);
 		if (npcID < 0) return false;
 
 		let v19 = 1;
-		let a3_2a = this.ZoneHasItem(zone_id, a3a, 0);
+		let a3_2a = this.ZoneHasItem(zoneId, a3a, 0);
 		if (item_id >= 0)
-			v19 = this.ZoneHasProvidedItem(zone_id, item_id);
+			v19 = this.ZoneHasProvidedItem(zoneId, item_id);
 
 		if (!a3_2a || !v19) return false;
 
-		let resultingNPCID = this.ChooseSpawnForPuzzleNPC(zone_id, npcID);
+		let resultingNPCID = this.ChooseSpawnForPuzzleNPC(zoneId, npcID);
 		if (resultingNPCID < 0) return false;
 
 		this.wg_npc_id = npcID;
@@ -1941,28 +1915,28 @@ export default class WorldGenerator {
 		this.wg_another_item_id = a3;
 
 		this.AddRequiredQuestWithItemID(npcID, item_id_1);
-		this.addRequiredItemQuestsFromHotspots(zone_id);
+		this.addRequiredItemQuestsFromHotspots(zoneId);
 
 		return true;
 	}
 
-	Unknown_7(zone_id, puzzle_idx, a4, unknown, a6) {
-		Message("YodaDocument::Unknown_7(%d, %d, %d, %d, %d)\n", zone_id, puzzle_idx, a4, unknown, a6);
+	Unknown_7(zoneId, puzzle_idx, a4, unknown, a6) {
+		Message("YodaDocument::Unknown_7(%d, %d, %d, %d, %d)\n", zoneId, puzzle_idx, a4, unknown, a6);
 		let zone = null;
 		let item = 0;
 
-		zone = this.data.zones[zone_id];
+		zone = this.getZoneByID(zoneId);
 		if (!zone) {
 			Message("YodaDocument::Unknown_7 => 0\n");
 			return false;
 		}
 
-		if (zone.getType() !== ZoneType.Goal) {
+		if (zone.type !== ZoneType.Goal) {
 			Message("YodaDocument::Unknown_7 => 0\n");
 			return false;
 		}
 
-		if (!this.RequiredItemForZoneWasNotPlaced(zone_id)) {
+		if (!this.RequiredItemForZoneWasNotPlaced(zoneId)) {
 			Message("YodaDocument::Unknown_7 => 0\n");
 			return false;
 		}
@@ -1971,15 +1945,15 @@ export default class WorldGenerator {
 		let puzzle3 = this.data.puzzles[this.puzzleIDs_1[puzzle_idx + 1]];
 		let puzzle2 = this.data.puzzles[this.puzzleIDs_2[a4]];
 
-		const npcID = this.findUnusedNPCForZone(zone_id);
-		const hasPuzzleNPC = npcID >= 0 ? this.hasPuzzleNPC(zone_id, npcID) : 0;
+		const npcID = this.findUnusedNPCForZone(zoneId);
+		const hasPuzzleNPC = npcID >= 0 ? this.hasPuzzleNPC(zoneId, npcID) : 0;
 		puzzle1.hasPuzzleNPC = hasPuzzleNPC;
 
 		let hasItem = true;
-		hasItem &= this.ZoneHasItem(zone_id, puzzle1.item_1, 0);
-		hasItem &= this.ZoneHasProvidedItem(zone_id, puzzle3.item_1);
-		// this.ZoneHasItem(zone_id, puzzle2.item_1, 1);
-		// this.ZoneHasProvidedItem(zone_id, puzzle3.item_2);
+		hasItem &= this.ZoneHasItem(zoneId, puzzle1.item_1, 0);
+		hasItem &= this.ZoneHasProvidedItem(zoneId, puzzle3.item_1);
+		// this.ZoneHasItem(zoneId, puzzle2.item_1, 1);
+		// this.ZoneHasProvidedItem(zoneId, puzzle3.item_2);
 
 		if (!hasItem) {
 			Message("YodaDocument::Unknown_7 => 0\n");
@@ -1987,7 +1961,7 @@ export default class WorldGenerator {
 		}
 
 		if (hasPuzzleNPC) {
-			this.addRequiredItemQuestsFromHotspots(zone_id);
+			this.addRequiredItemQuestsFromHotspots(zoneId);
 
 			this.wg_npc_id = npcID;
 			this.wg_last_added_item_id = item;
@@ -1996,17 +1970,17 @@ export default class WorldGenerator {
 			this.wg_another_item_id = puzzle_idx;
 			this.field_3398 = a4;
 			this.wg_item_id_unknown_3 = puzzle1.item_1;
-			this.addRequiredItemQuestsFromHotspots(zone_id);
+			this.addRequiredItemQuestsFromHotspots(zoneId);
 			Message("YodaDocument::Unknown_7 => %d\n", true);
 			return true;
 		}
 
 		let didAddItem = true;
-		didAddItem &= this.ChooseItemIDFromZone(zone_id, puzzle1.item_1, 0) !== -1;
-		didAddItem &= this.ChooseItemIDFromZone_0(zone_id, puzzle3.item_1) !== -1;
+		didAddItem &= this.ChooseItemIDFromZone(zoneId, puzzle1.item_1, 0) !== -1;
+		didAddItem &= this.ChooseItemIDFromZone_0(zoneId, puzzle3.item_1) !== -1;
 
-		didAddItem &= this.ChooseItemIDFromZone(zone_id, puzzle2.item_1, 1) !== -1;
-		didAddItem &= this.ChooseItemIDFromZone_0(zone_id, puzzle3.item_2) !== -1;
+		didAddItem &= this.ChooseItemIDFromZone(zoneId, puzzle2.item_1, 1) !== -1;
+		didAddItem &= this.ChooseItemIDFromZone_0(zoneId, puzzle3.item_2) !== -1;
 
 		if (didAddItem) {
 			this.AddRequiredQuestWithItemID(puzzle2.item_1, unknown);
@@ -2021,7 +1995,7 @@ export default class WorldGenerator {
 			this.wg_item_id_unknown_2 = puzzle1.item_1;
 			this.wg_item_id_unknown_3 = puzzle1.item_1;
 			this.field_3398 = a4;
-			this.addRequiredItemQuestsFromHotspots(zone_id);
+			this.addRequiredItemQuestsFromHotspots(zoneId);
 			Message("YodaDocument::Unknown_7 => %d\n", true);
 
 			return true;
@@ -2036,14 +2010,14 @@ export default class WorldGenerator {
 		return false;
 	}
 
-	SetupRequiredItemForZone_(zone_id, arg2, use_required_items_array) {
-		Message("YodaDocument::SetupRequiredItemForZone_(%d, %d, %d)\n", zone_id, arg2, use_required_items_array);
-		if (zone_id < 0) {
+	SetupRequiredItemForZone_(zoneId, arg2, use_required_items_array) {
+		Message("YodaDocument::SetupRequiredItemForZone_(%d, %d, %d)\n", zoneId, arg2, use_required_items_array);
+		if (zoneId < 0) {
 			Message("YodaDocument::SetupRequiredItemForZone => 0\n");
 			return false;
 		}
 
-		let zone = this.data.zones[zone_id];
+		let zone = this.getZoneByID(zoneId);
 		if (zone === null) {
 			Message("YodaDocument::SetupRequiredItemForZone => 0\n");
 			return false;
@@ -2055,7 +2029,7 @@ export default class WorldGenerator {
 			return false;
 		}
 
-		if (!this.RequiredItemForZoneWasNotPlaced(zone_id)) {
+		if (!this.RequiredItemForZoneWasNotPlaced(zoneId)) {
 			Message("YodaDocument::SetupRequiredItemForZone => 0\n");
 			return false;
 		}
@@ -2090,7 +2064,7 @@ export default class WorldGenerator {
 			this.item_ids.push(zone.providedItemIDs[0]);
 		}
 
-		if (zone.getType() === ZoneType.TravelStart) {
+		if (zone.type === ZoneType.TravelStart) {
 			this.AddProvidedQuestWithItemID(random_item_id, 5);
 		} else {
 			// TODO: broken here?
@@ -2100,20 +2074,20 @@ export default class WorldGenerator {
 		this.AddRequiredQuestWithItemID(random_item_id, arg2);
 
 		this.wg_item_id = random_item_id;
-		this.addRequiredItemQuestsFromHotspots(zone_id);
+		this.addRequiredItemQuestsFromHotspots(zoneId);
 
 		Message("YodaDocument::SetupRequiredItemForZone => 1\n");
 		return true;
 	}
 
-	AssociateItemWithZoneHotspot(zone_id, item_id, a4) {
+	AssociateItemWithZoneHotspot(zoneId, item_id, a4) {
 		// TODO: check if this implementation is broken
-		Message("YodaDocument::AssociateItemWithZoneHotspot(%d, %d, %d)\n", zone_id, item_id, a4);
-		if (zone_id < 0) {
+		Message("YodaDocument::AssociateItemWithZoneHotspot(%d, %d, %d)\n", zoneId, item_id, a4);
+		if (zoneId < 0) {
 			Message("YodaDocument::AssociateItemWithZoneHotspot => 0\n");
 			return false;
 		}
-		if (!this.RequiredItemForZoneWasNotPlaced(zone_id)) {
+		if (!this.RequiredItemForZoneWasNotPlaced(zoneId)) {
 			Message("YodaDocument::AssociateItemWithZoneHotspot => 0\n");
 			return false;
 		}
@@ -2121,7 +2095,7 @@ export default class WorldGenerator {
 		let hotspot_type;
 		let tile_specs;
 
-		let zone = this.data.zones[zone_id];
+		let zone = this.getZoneByID(zoneId);
 		if (!zone) {
 			Message("YodaDocument::AssociateItemWithZoneHotspot => 0\n");
 			return false;
@@ -2164,7 +2138,7 @@ export default class WorldGenerator {
 				hotspot.enabled = true;
 				this.AddRequiredQuestWithItemID(item_id, a4);
 				this.wg_last_added_item_id = item_id;
-				this.addRequiredItemQuestsFromHotspots(zone_id);
+				this.addRequiredItemQuestsFromHotspots(zoneId);
 				Message("YodaDocument::AssociateItemWithZoneHotspot => 1\n");
 				return true;
 			}
@@ -2177,7 +2151,7 @@ export default class WorldGenerator {
 			if (hotspot.type === HotspotType.DoorIn && hotspot.arg >= 0) {
 				let result = this.AssociateItemWithZoneHotspot(hotspot.arg, item_id, a4);
 				if (result) {
-					this.addRequiredItemQuestsFromHotspots(zone_id);
+					this.addRequiredItemQuestsFromHotspots(zoneId);
 
 					Message("YodaDocument::AssociateItemWithZoneHotspot => 1\n");
 					return true;
@@ -2187,5 +2161,40 @@ export default class WorldGenerator {
 
 		Message("YodaDocument::AssociateItemWithZoneHotspot => 0\n");
 		return false;
+	}
+
+	_getPuzzle(puzzleID) {
+		return this.data.puzzles[puzzleID];
+	}
+
+	forEachPuzzle(callback) {
+		this.data.puzzles.forEach(callback);
+	}
+
+	_getPuzzleItemId(puzzleID) {
+		return this.data.puzzles[puzzleID].item_1;
+	}
+
+	_getPuzzleItemId2(puzzleID) {
+		return this.data.puzzles[puzzleID].item_1;
+	}
+
+	getZoneCount() {
+		return this.data.zones.length;
+	}
+
+	getZoneByIDType(zoneID) {
+		return this.getZoneByID(zoneID).type;
+	}
+
+	getZoneByID(zoneID) {
+		return this.data.zones[zoneID];
+	}
+
+	getZoneID(zone) {
+		for (let i = 0, len = this.getZoneCount(); i < len; i++)
+			if (this.getZoneByID(i) === zone) return i;
+
+		return -1;
 	}
 }

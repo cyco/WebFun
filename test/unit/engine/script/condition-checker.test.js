@@ -5,11 +5,10 @@ describe('ConditionChecker', () => {
 	let checker, engine, condition;
 	beforeEach(() => {
 		engine = {
-			state: {
-				currentZone: {},
-				hero: {}
-			},
-			persistentState: {}
+			currentZone: {},
+			hero: { location: {} },
+			persistentState: {},
+			state: {}
 		};
 		condition = new Condition({});
 		checker = new ConditionChecker(engine);
@@ -36,96 +35,96 @@ describe('ConditionChecker', () => {
 			condition._opcode = Opcode.CounterIs;
 			condition._arguments = [5];
 
-			engine.state.currentZone.counter = 5;
-			expect(checker.check(condition)).toBe(true);
+			engine.currentZone.counter = 5;
+			expect(checker.check(condition)).toBeTrue();
 
-			engine.state.currentZone.counter = 10;
-			expect(checker.check(condition)).toBe(false);
+			engine.currentZone.counter = 10;
+			expect(checker.check(condition)).toBeFalse();
 		});
 
 		it('Opcode.CounterIsNot:', () => {
 			condition._opcode = Opcode.CounterIsNot;
 			condition._arguments = [5];
 
-			engine.state.currentZone.counter = 5;
-			expect(checker.check(condition)).toBe(false);
+			engine.currentZone.counter = 5;
+			expect(checker.check(condition)).toBeFalse();
 
-			engine.state.currentZone.counter = 10;
-			expect(checker.check(condition)).toBe(true);
+			engine.currentZone.counter = 10;
+			expect(checker.check(condition)).toBeTrue();
 		});
 
 		it('Opcode.RandomIs:', () => {
 			condition._opcode = Opcode.RandomIs;
 			condition._arguments = [5];
 
-			engine.state.currentZone.random = 5;
-			expect(checker.check(condition)).toBe(true);
+			engine.currentZone.random = 5;
+			expect(checker.check(condition)).toBeTrue();
 
-			engine.state.currentZone.random = 10;
-			expect(checker.check(condition)).toBe(false);
+			engine.currentZone.random = 10;
+			expect(checker.check(condition)).toBeFalse();
 		});
 
 		it('Opcode.RandomIsNot:', () => {
 			condition._opcode = Opcode.RandomIsNot;
 			condition._arguments = [5];
 
-			engine.state.currentZone.random = 5;
-			expect(checker.check(condition)).toBe(false);
+			engine.currentZone.random = 5;
+			expect(checker.check(condition)).toBeFalse();
 
-			engine.state.currentZone.random = 10;
-			expect(checker.check(condition)).toBe(true);
+			engine.currentZone.random = 10;
+			expect(checker.check(condition)).toBeTrue();
 		});
 
 		it('Opcode.HealthIsLessThan:', () => {
 			condition._opcode = Opcode.HealthIsLessThan;
 			condition._arguments = [10];
 
-			engine.state.hero.health = 5;
-			expect(checker.check(condition)).toBe(true);
+			engine.hero.health = 5;
+			expect(checker.check(condition)).toBeTrue();
 
-			engine.state.hero.health = 10;
-			expect(checker.check(condition)).toBe(false);
+			engine.hero.health = 10;
+			expect(checker.check(condition)).toBeFalse();
 		});
 
 		it('Opcode.HealthIsGreaterThan:', () => {
 			condition._opcode = Opcode.HealthIsGreaterThan;
 			condition._arguments = [10];
 
-			engine.state.hero.health = 5;
-			expect(checker.check(condition)).toBe(false);
+			engine.hero.health = 5;
+			expect(checker.check(condition)).toBeFalse();
 
-			engine.state.hero.health = 11;
-			expect(checker.check(condition)).toBe(true);
+			engine.hero.health = 11;
+			expect(checker.check(condition)).toBeTrue();
 		});
 
 		it('Opcode.ZoneNotInitalized:', () => {
 			condition._opcode = Opcode.ZoneNotInitalized;
 
-			engine.state.currentZone.actionsInitialized = false;
-			expect(checker.check(condition)).toBe(true);
+			engine.currentZone.actionsInitialized = false;
+			expect(checker.check(condition)).toBeTrue();
 
-			engine.state.currentZone.actionsInitialized = true;
-			expect(checker.check(condition)).toBe(false);
+			engine.currentZone.actionsInitialized = true;
+			expect(checker.check(condition)).toBeFalse();
 		});
 
 		it('Opcode.ZoneEntered:', () => {
 			condition._opcode = Opcode.ZoneEntered;
 
 			engine.state.justEntered = true;
-			expect(checker.check(condition)).toBe(true);
+			expect(checker.check(condition)).toBeTrue();
 
 			engine.state.justEntered = false;
-			expect(checker.check(condition)).toBe(false);
+			expect(checker.check(condition)).toBeFalse();
 		});
 
 		it('Opcode.EnterByPlane:', () => {
 			condition._opcode = Opcode.EnterByPlane;
 
 			engine.state.enteredByPlane = true;
-			expect(checker.check(condition)).toBe(true);
+			expect(checker.check(condition)).toBeTrue();
 
 			engine.state.enteredByPlane = false;
-			expect(checker.check(condition)).toBe(false);
+			expect(checker.check(condition)).toBeFalse();
 		});
 
 		it('Opcode.GamesWonIs', () => {
@@ -133,10 +132,10 @@ describe('ConditionChecker', () => {
 			condition._arguments = [10];
 
 			engine.persistentState.gamesWon = 5;
-			expect(checker.check(condition)).toBe(false);
+			expect(checker.check(condition)).toBeFalse();
 
 			engine.persistentState.gamesWon = 10;
-			expect(checker.check(condition)).toBe(true);
+			expect(checker.check(condition)).toBeTrue();
 		});
 
 		it('Opcode.GamesWonIsGreaterThan', () => {
@@ -144,93 +143,159 @@ describe('ConditionChecker', () => {
 			condition._arguments = [10];
 
 			engine.persistentState.gamesWon = 5;
-			expect(checker.check(condition)).toBe(false);
+			expect(checker.check(condition)).toBeFalse();
 
 			engine.persistentState.gamesWon = 10;
-			expect(checker.check(condition)).toBe(false);
+			expect(checker.check(condition)).toBeFalse();
 
 			engine.persistentState.gamesWon = 11;
-			expect(checker.check(condition)).toBe(true);
+			expect(checker.check(condition)).toBeTrue();
 		});
 
 		it('Opcode.StandingOn', () => {
-			let state = engine.state;
+			const hero = engine.hero;
 			condition._opcode = Opcode.StandingOn;
 			condition._arguments = [1, 2, 5];
 
-			state.hero.location = { x: 1, y: 2 };
-			state.currentZone.getTileID = () => {
-				return 5; };
-			expect(checker.check(condition)).toBe(true);
+			hero.location = { x: 1, y: 2 };
+			engine.currentZone.getTileID = () => {
+				return 5;
+			};
+			expect(checker.check(condition)).toBeTrue();
 
-			state.hero.location.x = 2;
-			expect(checker.check(condition)).toBe(false);
+			hero.location.x = 2;
+			expect(checker.check(condition)).toBeFalse();
 
-			state.hero.location.x = 1;
-			state.hero.location.y = 3;
-			expect(checker.check(condition)).toBe(false);
+			hero.location.x = 1;
+			hero.location.y = 3;
+			expect(checker.check(condition)).toBeFalse();
 
-			state.hero.location = { x: 1, y: 2 };
-			state.currentZone.getTileID = () => {
-				return 3; };
-			expect(checker.check(condition)).toBe(false);
+			hero.location = { x: 1, y: 2 };
+			engine.currentZone.getTileID = () => {
+				return 3;
+			};
+			expect(checker.check(condition)).toBeFalse();
 		});
 
 		it('Opcode.HeroIsAt', () => {
-			let state = engine.state;
+			const hero = engine.hero;
 			condition._opcode = Opcode.HeroIsAt;
 			condition._arguments = [1, 2];
 
-			state.hero.location = { x: 1, y: 2 };
-			expect(checker.check(condition)).toBe(true);
+			hero.location = { x: 1, y: 2 };
+			expect(checker.check(condition)).toBeTrue();
 
-			state.hero.location = { x: 1, y: 1 };
-			expect(checker.check(condition)).toBe(false);
+			hero.location = { x: 1, y: 1 };
+			expect(checker.check(condition)).toBeFalse();
 		});
 
 
 		it('Opcode.TileAtIs', () => {
-			let state = engine.state;
 			condition._opcode = Opcode.TileAtIs;
 			condition._arguments = [10, 5, 7, 2];
 
-			state.currentZone.getTileID = function(x, y, z) {
+			engine.currentZone.getTileID = function(x, y, z) {
 				if (x === 5 && y === 7 && z === 2) return 10;
 				return 7;
 			};
-			expect(checker.check(condition)).toBe(true);
+			expect(checker.check(condition)).toBeTrue();
 
 			condition._arguments = [3, 5, 7, 2];
-			expect(checker.check(condition)).toBe(false);
+			expect(checker.check(condition)).toBeFalse();
 		});
 
 		it('Opcode.TileAtIsAgain', () => {
-			let state = engine.state;
 			condition._opcode = Opcode.TileAtIsAgain;
 			condition._arguments = [10, 5, 7, 2];
 
-			state.currentZone.getTileID = function(x, y, z) {
+			engine.currentZone.getTileID = function(x, y, z) {
 				if (x === 5 && y === 7 && z === 2) return 10;
 				return 7;
 			};
-			expect(checker.check(condition)).toBe(true);
+			expect(checker.check(condition)).toBeTrue();
 
 			condition._arguments = [3, 5, 7, 2];
-			expect(checker.check(condition)).toBe(false);
+			expect(checker.check(condition)).toBeFalse();
 		});
 
 		it('Opcode.HasItem', () => {
-			engine.state.inventory = {
+			engine.inventory = {
 				contains: function(itemID) {
 					return itemID === 13;
 				}
 			};
 			condition._opcode = Opcode.HasItem;
 			condition._arguments = [13];
-			expect(checker.check(condition)).toBe(true);
+			expect(checker.check(condition)).toBeTrue();
 
 			condition._arguments = [15];
-			expect(checker.check(condition)).toBe(false);
+			expect(checker.check(condition)).toBeFalse();
+		});
+		
+		it('Opcode.PaddingIs:', () => {
+			condition._opcode = Opcode.PaddingIs;
+			condition._arguments = [5];
+
+			engine.currentZone.padding = 5;
+			expect(checker.check(condition)).toBeTrue();
+
+			engine.currentZone.padding = 10;
+			expect(checker.check(condition)).toBeFalse();
+		});
+		
+		it('Opcode.PaddingIsGreaterThan:', () => {
+			condition._opcode = Opcode.PaddingIsGreaterThan;
+			condition._arguments = [5];
+
+			engine.currentZone.padding = 5;
+			expect(checker.check(condition)).toBeFalse();
+
+			engine.currentZone.padding = 10;
+			expect(checker.check(condition)).toBeTrue();
+		});
+		
+		it('Opcode.PaddingIsLessThan:', () => {
+			condition._opcode = Opcode.PaddingIsLessThan;
+			condition._arguments = [5];
+
+			engine.currentZone.padding = 5;
+			expect(checker.check(condition)).toBeFalse();
+
+			engine.currentZone.padding = 4;
+			expect(checker.check(condition)).toBeTrue();
+		});
+		
+		it('Opcode.PaddingIsNot:', () => {
+			condition._opcode = Opcode.PaddingIsNot;
+			condition._arguments = [5];
+
+			engine.currentZone.padding = 5;
+			expect(checker.check(condition)).toBeFalse();
+
+			engine.currentZone.padding = 10;
+			expect(checker.check(condition)).toBeTrue();
+		});
+		
+		it('Opcode.RandomIsGreaterThan:', () => {
+			condition._opcode = Opcode.RandomIsGreaterThan;
+			condition._arguments = [5];
+
+			engine.currentZone.random = 5;
+			expect(checker.check(condition)).toBeFalse();
+
+			engine.currentZone.random = 10;
+			expect(checker.check(condition)).toBeTrue();
+		});
+		
+		it('Opcode.RandomIsLessThan:', () => {
+			condition._opcode = Opcode.RandomIsLessThan;
+			condition._arguments = [5];
+
+			engine.currentZone.random = 5;
+			expect(checker.check(condition)).toBeFalse();
+
+			engine.currentZone.random = 4;
+			expect(checker.check(condition)).toBeTrue();
 		});
 	});
 });

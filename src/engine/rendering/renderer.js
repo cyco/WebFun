@@ -13,8 +13,6 @@ export default class Renderer {
 
 	renderImage(image, x, y) {}
 
-	renderImageNode(image, x, y) {}
-
 	renderImageData(image, x, y) {}
 
 	fillBlackRect(x, y, width, height) {}

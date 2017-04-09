@@ -22,12 +22,12 @@ describe('CheatCodeInput', () => {
 		subject.addCharacter('s');
 
 		subject.execute();
-		expect(cheatExecuted).toBe(false);
+		expect(cheatExecuted).toBeFalse();
 
 		subject.addCharacter('t');
 		subject.execute();
 
-		expect(cheatExecuted).toBe(true);
+		expect(cheatExecuted).toBeTrue();
 	});
 
 	it('returns an array of messages to be shown for each executed cheat', () => {
@@ -55,6 +55,6 @@ describe('CheatCodeInput', () => {
 		subject.addCharacter('t');
 
 		subject.execute();
-		expect(cheatExecuted).toBe(false);
+		expect(cheatExecuted).toBeFalse();
 	});
 });

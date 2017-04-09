@@ -20,18 +20,18 @@ describe('Button', sandboxed(function(sand) {
 	});
 
 	it('can be enabled or disabled', () => {
-		expect(subject.enabled).toBe(true);
+		expect(subject.enabled).toBeTrue();
 
 		subject.enabled = false;
-		expect(subject.enabled).toBe(false);
+		expect(subject.enabled).toBeFalse();
 
 		subject.enabled = true;
-		expect(subject.enabled).toBe(true);
+		expect(subject.enabled).toBeTrue();
 	});
 
 	it('when clicked it calls it\'s onclick callback', (done) => {
 		let callback = () => {
-			expect(true).toBe(true);
+			expect(true).toBeTrue();
 			done();
 		};
 		subject.onclick = callback;

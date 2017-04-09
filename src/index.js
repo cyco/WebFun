@@ -2,6 +2,7 @@ import "./extension";
 
 import "./ui";
 import "./util";
+import "./debug";
 
 import { main } from "./app";
 

@@ -1,1 +1,1 @@
-export default (args, zone, engine) => engine.state.hero.health < args[0];
+export default (args, zone, engine) => engine.hero.health < args[0];

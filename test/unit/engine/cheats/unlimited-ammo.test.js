@@ -13,8 +13,8 @@ describe('UnlimitedAmmoCheat', () => {
 	});
 
 	it('grants unlimited ammo when executed', () => {
-		const mockEngine = { state: { hero: {} } };
+		const mockEngine = { hero: {} };
 		subject.execute(mockEngine);
-		expect(mockEngine.state.hero.unlimitedAmmo).toBe(true);
+		expect(mockEngine.hero.unlimitedAmmo).toBeTrue();
 	});
 });

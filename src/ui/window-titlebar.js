@@ -11,12 +11,12 @@ export default class extends View {
 		this._titleNode = null;
 
 		this._closeButton = new View();
-		this._closeButton.classList.add("close-button");
+		this._closeButton.element.classList.add("close-button");
 		this._closeButton.element.onclick = () => {
 			window.element.remove();
 			this.onclose();
 		};
-		this.addSubview(this._closeButton);
+		this.element.appendChild(this._closeButton.element);
 
 		this._setupDragging(window);
 
@@ -90,10 +90,10 @@ export default class extends View {
 	}
 
 	set closable(flag) {
-		this._closeButton.style.display = flag ? "" : "none";
+		this._closeButton.element.style.display = flag ? "" : "none";
 	}
 
 	get closable() {
-		return this._closeButton.style.display !== "none";
+		return this._closeButton.element.style.display !== "none";
 	}
 }

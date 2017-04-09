@@ -48,7 +48,7 @@ export default class TransitionScene extends Scene {
 			offset = new Point(0, 0);
 		}
 
-		this._source = this._takeSnapshot(this.engine.state.currentZone, offset.x, offset.y);
+		this._source = this._takeSnapshot(this.engine.currentZone, offset.x, offset.y);
 		this._startTime = performance.now();
 	}
 
@@ -90,7 +90,8 @@ export default class TransitionScene extends Scene {
 	_swapZones() {
 		console.warn("_swapZones()");
 		const state = this.engine.state;
-		state.hero.location = this.targetHeroLocation;
+		const hero = this.engine.hero;
+		hero.location = this.targetHeroLocation;
 		state.worldLocation = this.targetZoneLocation;
 		state.currentZone = this.targetZone;
 		state.currentZone.visited = true;
@@ -102,7 +103,7 @@ export default class TransitionScene extends Scene {
 		state.justEntered = true;
 		state.enteredByPlane = this.type === TransitionScene.TRANSITION_TYPE.ROOM;
 
-		state.dispatchEvent(Event.ZoneLocationDidChange);
+		// state.dispatchEvent(Event.ZoneLocationDidChange);
 	}
 
 	render(renderer) {
@@ -206,13 +207,12 @@ export default class TransitionScene extends Scene {
 					const tile = zone.getTile(x - xOffset, y - yOffset, l);
 					if (!tile) continue;
 
-					const image = tile.image.imageNode;
-					ctx.drawImage(image, x * tileWidth, y * tileHeight);
+					ctx.drawImage(tile.image.representation, x * tileWidth, y * tileHeight);
 				}
 			}
 
-			if (l === 1 && zone === this.engine.state.currentZone) {
-				const hero = this.engine.state.hero;
+			if (l === 1 && zone === this.engine.currentZone) {
+				const hero = this.engine.hero;
 				if (!hero.visible) continue;
 
 				const tile = hero._appearance.getFace(hero._direction, hero._actionFrames);
@@ -220,7 +220,7 @@ export default class TransitionScene extends Scene {
 
 				const x1 = (hero._location.x + xOffset) * tileWidth;
 				const y1 = (hero._location.y + yOffset) * tileHeight;
-				ctx.drawImage(tile.image.imageNode, x1, y1);
+				ctx.drawImage(tile.image.representation, x1, y1);
 			}
 		}
 

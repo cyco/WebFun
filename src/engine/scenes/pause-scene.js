@@ -15,16 +15,20 @@ export default class PauseScene extends Scene {
 	render(renderer) {
 		for (let x = 0; x < 9; x++) {
 			for (let y = 0; y < 9; y++) {
-				renderer.renderImageNode(this._image, x * Tile.WIDTH, y * Tile.HEIGHT);
+				renderer.renderImage({ representation: this._image }, x * Tile.WIDTH, y * Tile.HEIGHT);
 			}
 		}
 	}
 
-	update(ticks) {
+	update( /*ticks*/ ) {
 		const engine = this.engine;
 		const inputManager = engine.inputManager;
 		if (!inputManager.pause) {
 			engine.sceneManager.popScene();
 		}
+	}
+
+	isOpaque() {
+		return false;
 	}
 }

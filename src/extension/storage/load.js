@@ -1,4 +1,4 @@
-export const load = function(key) {
+const load = function(key) {
 	try {
 		if (this.getItem(key))
 			return JSON.parse(this.getItem(key));
@@ -7,6 +7,8 @@ export const load = function(key) {
 	}
 };
 
-if (typeof Storage !== "undefined" && Storage.prototype) {
+if (typeof Storage !== "undefined") {
 	Storage.prototype.load = Storage.prototype.load || load;
 }
+
+export default load;

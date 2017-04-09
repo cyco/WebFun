@@ -1,5 +1,5 @@
 import { Point, VerticalPointRange, HorizontalPointRange, Message, rand } from "/util";
-import { Type as WorldItemType } from "/engine/world-item";
+import WorldItemType from "./world-item-type";
 
 const Island = {
 	East: 3,

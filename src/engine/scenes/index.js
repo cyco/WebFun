@@ -5,4 +5,4 @@ export PickupScene from "./pickup-scene";
 export Scene from "./scene";
 export SpeechScene from "./speech-scene";
 export TransitionScene from "./transition-scene";
-export ZeroScene from "./zone-scene";
+export ZoneScene from "./zone-scene";

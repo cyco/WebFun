@@ -27,17 +27,17 @@ describe('Message', () => {
 	it('is a wrapper for console.warn that only prints something if window.logging is true', () => {
 		window.logging = false;
 		Message('test');
-		expect(consoleLogCalled).toBe(false);
+		expect(consoleLogCalled).toBeFalse();
 
 		window.logging = true;
 		Message('test');
-		expect(consoleLogCalled).toBe(true);
+		expect(consoleLogCalled).toBeTrue();
 		expect(messages[0][0]).toBe('test');
 
 		window.logging = false;
 		consoleLogCalled = false;
 		Message('test');
-		expect(consoleLogCalled).toBe(false);
+		expect(consoleLogCalled).toBeFalse();
 
 		expect(messages.length).toBe(1);
 	});

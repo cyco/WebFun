@@ -9,6 +9,6 @@ export default class InvincibilityCheat extends Cheat {
 	}
 
 	execute(engine) {
-		engine.state.hero.invincible = true;
+		engine.hero.invincible = true;
 	}
 }

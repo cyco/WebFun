@@ -1,7 +1,6 @@
 import { KeyEvent } from "/util";
 import View from "./view";
 import TableViewRow from "./table-view-row";
-import { ViewFocusManager } from "/ux";
 
 export const Event = {
 	DidMakeRow: "TableView.Event",
@@ -88,9 +87,7 @@ export default class TableView extends View {
 	}
 
 	// Interaction
-	mouseDown() {
-		ViewFocusManager.sharedManager.focusView(this);
-	}
+	mouseDown() {}
 
 	mouseUp(e) {
 		if (!this._selectable) return;
@@ -128,6 +125,7 @@ export default class TableView extends View {
 	}
 
 	keyPress(e) {
+		return;
 		if (!this._selectable) return;
 
 		let index;

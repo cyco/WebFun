@@ -4,7 +4,7 @@ import { AmmoView, HealthView, InventoryView, LocationView, WeaponView } from "/
 export default class extends Window {
 	constructor() {
 		super();
-		this.classList.add("main-window");
+		this.element.classList.add("main-window");
 
 		this._main = new View();
 		this._main.element.classList.add("main");
@@ -17,13 +17,13 @@ export default class extends Window {
 		this._sidebar.element.appendChild(this._inventoryView.element);
 
 		const group = new View();
-		group.classList.add("group");
+		group.element.classList.add("group");
 
 		this._locationView = new LocationView();
 		group.element.appendChild(this._locationView.element);
 
 		const equipment = new View();
-		equipment.classList.add("equipment");
+		equipment.element.classList.add("equipment");
 		this._ammoView = new AmmoView();
 		equipment.element.appendChild(this._ammoView.element);
 		this._weaponView = new WeaponView();

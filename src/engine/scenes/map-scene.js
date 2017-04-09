@@ -106,11 +106,10 @@ export default class MapScene extends Scene {
 		const tileY = Math.floor(p.y * World.HEIGHT);
 
 		const engine = this.engine;
-		const document = this.engine.document;
 		const currentZone = engine.state.currentZone;
-		let world = document.world;
+		let world = this.engine.world;
 		if (currentZone.planet === Planet.DAGOBAH) {
-			world = document.dagobah;
+			world = this.engine.dagobah;
 		}
 		const zone = world.getZone(tileX, tileY);
 		if (!zone || !zone.visited || zone.type === ZoneType.Empty) {
@@ -133,11 +132,10 @@ export default class MapScene extends Scene {
 		const engine = this.engine;
 		const state = engine.state;
 		const currentZone = state.currentZone;
-		const document = engine.document;
-		let world = document.world;
+		let world = engine.world;
 
 		if (currentZone.planet === Planet.DAGOBAH) {
-			world = document.dagobah;
+			world = engine.dagobah;
 		}
 
 		const offsetX = (288 - World.WIDTH * TileWidth) / 2;
@@ -148,8 +146,8 @@ export default class MapScene extends Scene {
 				const zone = world.getZone(x, y);
 				let tile = this._tileForZone(zone);
 
-				if (tile && tile.image && tile.image.imageNode)
-					renderer.renderImageNode(tile.image.imageNode,
+				if (tile && tile.image && tile.image)
+					renderer.renderImage(tile.image,
 						offsetX + x * TileWidth, offsetY + y * TileHeight);
 			}
 		}
@@ -158,7 +156,7 @@ export default class MapScene extends Scene {
 			const x = offsetX + TileWidth * state.worldLocation.x;
 			const y = offsetY + TileHeight * state.worldLocation.y;
 			if (this._location && this._location.image && this._location.image.imageNode)
-				renderer.renderImageNode(this._location.image.imageNode, x, y);
+				renderer.renderImage(this._location.image, x, y);
 		}
 	}
 
@@ -189,9 +187,9 @@ export default class MapScene extends Scene {
 			case ZoneType.TravelEnd:
 				return [0x333, 0x334];
 			case ZoneType.BlockadeEast:
-				return [0x337, 0x338];
-			case ZoneType.BlockadeWest:
 				return [0x33b, 0x33c];
+			case ZoneType.BlockadeWest:
+				return [0x337, 0x338];
 			case ZoneType.BlockadeNorth:
 				return [0x335, 0x336];
 			case ZoneType.BlockadeSouth:
