@@ -1,4 +1,5 @@
 import Image from "../image";
+import { Image as DOMImage, ImageData } from '/std';
 
 export default class {
 	constructor() {
@@ -10,7 +11,7 @@ export default class {
 
 		const palette = this._palette;
 		const size = width * height;
-		const imageData = new window.ImageData(width, height);
+		const imageData = new ImageData(width, height);
 		const rawImageData = imageData.data;
 
 		for (let i = 0; i < size; i++) {
@@ -30,7 +31,7 @@ export default class {
 		const context = canvas.getContext("2d");
 		context.putImageData(imageData, 0, 0);
 
-		const imageElement = new window.Image(width, height);
+		const imageElement = new DOMImage(width, height);
 		imageElement.classList.add("pixelated");
 		imageElement.src = canvas.toDataURL();
 

@@ -35,8 +35,7 @@ export default class World {
 	}
 
 	setZone(x, y, zoneID) {
-		if (!this.data)
-			throw "Data has not been set";
+		console.assert(this.data, "Data has not been set");
 
 		const zone = this.data.zones[zoneID];
 		this.map[this._pointToIndex(x, y)] = zone;

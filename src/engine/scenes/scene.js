@@ -16,7 +16,7 @@ export default class Scene {
 	update() {}
 
 	isOpaque() {
-		return false;
+		return true;
 	}
 
 	get cameraOffset() {

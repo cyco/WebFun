@@ -1,5 +1,6 @@
-import { EventTarget, FileLoader } from "/util";
+import { EventTarget, FileLoader, dispatch } from "/util";
 import { FileReader, GameData } from "/engine";
+import { Tile } from '/engine/objects';
 import Settings from "/settings";
 
 export const Event = {
@@ -9,7 +10,8 @@ export const Event = {
 	DidLoadSetupImage: "loadsetupimage"
 };
 
-const StageCount = 5;
+export const StageCount = 10;
+const TileImageBatchSize = 100;
 export default class GameDataLoader extends EventTarget {
 	constructor() {
 		super();
@@ -27,9 +29,9 @@ export default class GameDataLoader extends EventTarget {
 		this._engine = engine;
 
 		const loader = new FileLoader(this._dataUrl);
-		loader.onprogress = ({detail: {progress}}) => this._progress(0, progress);
+		loader.onprogress = ({ detail: { progress } }) => this._progress(0, progress);
 		loader.onfail = (reason) => this._fail(reason);
-		loader.onload = ({detail: {stream}}) => this._readGameData(stream);
+		loader.onload = ({ detail: { stream } }) => this._readGameData(stream);
 		loader.load();
 	}
 
@@ -42,9 +44,9 @@ export default class GameDataLoader extends EventTarget {
 
 	_loadPalette() {
 		const loader = new FileLoader(this._paletteUrl);
-		loader.onprogress = ({detail: {progress}}) => this._progress(2, progress);
+		loader.onprogress = ({ detail: { progress } }) => this._progress(2, progress);
 		loader.onfail = (reason) => this._fail(reason);
-		loader.onload = ({detail: {arraybuffer}}) => {
+		loader.onload = ({ detail: { arraybuffer } }) => {
 			const palette = new Uint8Array(arraybuffer);
 			this._engine.imageFactory.palette = palette;
 			this._loadSetupImage();
@@ -67,7 +69,42 @@ export default class GameDataLoader extends EventTarget {
 		this._progress(4, 0);
 		this._engine.data = new GameData(this._rawData);
 		this._progress(4, 1);
-		this._load();
+
+		this._loadTileImages();
+	}
+
+	_loadTileImages() {
+		this._progress(5, 0);
+		const engine = this._engine;
+		const tiles = engine.data.tiles;
+		const imageFactory = engine.imageFactory;
+		const tileHeight = Tile.HEIGHT;
+		const tileWidth = Tile.WIDTH;
+		const tileCount = tiles.length;
+
+		const loadBatch = (idx) => {
+			const max = Math.min(idx + TileImageBatchSize, tileCount);
+			for (; idx < max; idx++) {
+				const tile = tiles[idx];
+				tile._image = imageFactory.buildImage(tileWidth, tileHeight, tile._imageData);
+				tile._imageData = null;
+				this._progress(5, 4 * (idx / tileCount));
+			}
+		};
+
+		const loadTileImage = (idx) => {
+			if (idx >= tileCount) {
+				this._progress(9, 1);
+				this._load();
+				return;
+			}
+
+			loadBatch(idx);
+
+			dispatch(() => loadTileImage(idx + TileImageBatchSize));
+		};
+
+		loadTileImage(0);
 	}
 
 	_fail(reason) {

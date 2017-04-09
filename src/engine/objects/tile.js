@@ -69,10 +69,6 @@ export default class Tile {
 	getSubtype(attr) {
 		return !!(this.subtype & (1 << attr));
 	}
-
-	get loader() {
-		return this._image.loader;
-	}
 }
 
 Tile.Attribute = {

@@ -33,15 +33,15 @@ describe('RadioButton', sandboxed(function(sand) {
 		let radio = new RadioButton();
 		sand.box.appendChild(radio.element);
 
-		expect(radio.checked).toBe(false);
+		expect(radio.checked).toBeFalse();
 		expect(sand.box.querySelector('input[checked]')).toBeFalsy();
 
 		radio.checked = true;
-		expect(radio.checked).toBe(true);
+		expect(radio.checked).toBeTrue();
 		expect(sand.box.querySelector('input[checked]')).toBeTruthy();
 
 		radio.checked = false;
-		expect(radio.checked).toBe(false);
+		expect(radio.checked).toBeFalse();
 		expect(sand.box.querySelector('input[checked]')).toBeFalsy();
 	});
 
@@ -56,10 +56,10 @@ describe('RadioButton', sandboxed(function(sand) {
 		expect(sand.box.querySelector('input[name=' + groupID + ']')).toBeTruthy();
 	});
 
-	xit('can be created and assigned to a group at the same time', (done) => {
+	it('can be created and assigned to a group at the same time', (done) => {
 		let groupMock = {
 			addButton: () => {
-				expect(true).toBe(true);
+				expect(true).toBeTrue();
 				done();
 			}
 		};

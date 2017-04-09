@@ -22,15 +22,11 @@ export default class CanvasRenderer extends Renderer {
 	renderTile(tile, x, y, z) {
 		if (!tile) return;
 
-		this._ctx.drawImage(tile.image.imageNode, x * TILE_WIDTH, y * TILE_HEIGHT);
+		this._ctx.drawImage(tile.image.representation, x * TILE_WIDTH, y * TILE_HEIGHT);
 	}
 
 	renderImage(image, x, y) {
-		this._ctx.drawImage(image.imageNode, x, y);
-	}
-
-	renderImageNode(image, x, y) {
-		this._ctx.drawImage(image, x, y);
+		this._ctx.drawImage(image.representation, x, y);
 	}
 
 	renderImageData(image, x, y) {
@@ -38,10 +34,7 @@ export default class CanvasRenderer extends Renderer {
 	}
 
 	fillBlackRect(x, y, width, height) {
-		this._ctx.save();
-		this._ctx.fillStyle = "#000000";
-		this._ctx.fillRect(x, y, width, height);
-		this._ctx.restore();
+		this.fillRect(x, y, width, height, '#000000');
 	}
 
 	// debug

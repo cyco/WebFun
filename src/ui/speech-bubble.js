@@ -1,7 +1,16 @@
 import View from "./view";
 import Button from "./button";
+import { dispatch } from '/util';
+
+export const Event = {
+	End: "end"
+};
 
 export default class SpeechBubble extends View {
+	static get Event() {
+		return Event;
+	}
+
 	static get ARROW_STYLE() {
 		return {
 			MODIFIED: 1,
@@ -195,7 +204,7 @@ export default class SpeechBubble extends View {
 
 		this._upButton.enabled = line !== 0;
 		this._downButton.enabled = line !== totalLineCount - this._maxNumberOfLines;
-	//        this._endButton.enabled = line === totalLineCount - this._maxNumberOfLines || totalLineCount === 1;
+		//        this._endButton.enabled = line === totalLineCount - this._maxNumberOfLines || totalLineCount === 1;
 	}
 
 	end() {
@@ -221,8 +230,8 @@ export default class SpeechBubble extends View {
 	}
 
 	set text(t) {
-		while (this._text.children.length)
-		this._text.children[0].remove();
+		while (this._text.firstChild)
+			this._text.firstChild.remove();
 
 		const lines = t.split("\n");
 		lines.forEach((line) => {
@@ -238,7 +247,7 @@ export default class SpeechBubble extends View {
 	}
 
 	get text() {
-		return this._text;
+		return this._text.textContent;
 	}
 
 	get x() {
@@ -257,8 +266,3 @@ export default class SpeechBubble extends View {
 		this.element.style.top = v + "px";
 	}
 }
-;
-
-SpeechBubble.Event = {
-	End: "end"
-};

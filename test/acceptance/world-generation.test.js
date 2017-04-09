@@ -55,10 +55,12 @@ describe('World Generation', function() {
 					for (i = 0; i < 100; i++) {
 						let thing = worldGenerator.world[i];
 						expect(thing.zoneID).toBe(sample[i * 10]);
+//						expect(thing.zoneType).toBe(sample[i * 10 + 1]);
+						
 						if (thing.zoneID !== sample[i * 10]) return;
 						if (thing.zoneType !== sample[i * 10 + 1]) return;
-						if (thing.findItemID !== sample[i * 10 + 6]) return;
-						if (thing.requiredItemID !== sample[i * 10 + 4]) return;
+						// if (thing.findItemID !== sample[i * 10 + 6]) return;
+						// if (thing.requiredItemID !== sample[i * 10 + 4]) return;
 					}
 					window.logging = false;
 				};

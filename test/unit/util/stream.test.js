@@ -27,8 +27,8 @@ describe('Stream', () =>  {
 		expect(stream.endianess).not.toBe(undefined);
 		
 		stream.endianess = Stream.ENDIAN.LITTLE;
-		expect(stream.littleEndian).toBe(true);
+		expect(stream.littleEndian).toBeTrue();
 		stream.endianess = Stream.ENDIAN.BIG;
-		expect(stream.littleEndian).toBe(false);
+		expect(stream.littleEndian).toBeFalse();
 	});
 });

@@ -17,21 +17,21 @@ describe('Checkbox', sandboxed(function(sand){
 	});
 	
 	it('can be checked', () => {
-		expect(checkbox.checked).toBe(false);
+		expect(checkbox.checked).toBeFalse();
 		
 		checkbox.checked = true;
-		expect(checkbox.checked).toBe(true);
+		expect(checkbox.checked).toBeTrue();
 		let inputNode = checkbox.element.querySelector('input[type=checkbox]');		
-		expect(inputNode.checked).toBe(true);
+		expect(inputNode.checked).toBeTrue();
 	
 		checkbox.checked = false;
-		expect(checkbox.checked).toBe(false);
-		expect(inputNode.checked).toBe(false);
+		expect(checkbox.checked).toBeFalse();
+		expect(inputNode.checked).toBeFalse();
 	});
 	
 	it('when changed it calls it\s onclick callback', (done) => {
 		let callback = () => {
-			expect(true).toBe(true);
+			expect(true).toBeTrue();
 			done();
 		};
 		checkbox.onchange = callback;

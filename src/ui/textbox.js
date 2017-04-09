@@ -9,12 +9,12 @@ export default class extends View {
 	}
 
 	set editable(e) {
-		if (e) this.element.setAttribute("readonly", "");
+		if (!e) this.element.setAttribute("readonly", "");
 		else this.element.removeAttribute("readonly");
 	}
 
 	get editable() {
-		return !!this.element.hasAttribute("readonly");
+		return !this.element.hasAttribute("readonly");
 	}
 
 	set width(w) {
@@ -22,7 +22,7 @@ export default class extends View {
 	}
 
 	get width() {
-		return this.element.style.width;
+		return parseInt(this.element.style.width);
 	}
 
 	set height(h) {
@@ -30,7 +30,7 @@ export default class extends View {
 	}
 
 	get height() {
-		return this.element.style.height;
+		return parseInt(this.element.style.height);
 	}
 
 	set value(v) {

@@ -9,6 +9,6 @@ export default class extends Cheat {
 	}
 
 	execute(engine) {
-		engine.state.hero.unlimitedAmmo = true;
+		engine.hero.unlimitedAmmo = true;
 	}
 }

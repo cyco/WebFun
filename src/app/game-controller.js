@@ -1,16 +1,25 @@
 import { dispatch } from "/util";
 import { LoadingView, SceneView } from "./ui";
+import Settings from '/settings';
 import { MainWindow, MainMenu } from "./windows";
-import { Engine, CanvasRenderer, Story } from "/engine";
+import { Engine, CanvasRenderer, Story, Metronome, Hero, Inventory } from "/engine";
 import { WorldGenerator } from "/engine/generation";
 import { Planet, WorldSize } from "/engine/types";
+import { ZoneScene } from '/engine/scenes';
+import { DesktopInputManager } from '/engine/input';
 import Loader from "./loader";
+
+import { WorldGeneration } from '/debug';
 
 export default class {
 	constructor() {
 		this._window = null;
 		this._sceneView = new SceneView();
 		this._engine = this._buildEngine();
+		this._sceneView.manager.engine = this._engine;
+
+
+		window.engine = this._engine;
 	}
 
 	_buildEngine() {
@@ -19,6 +28,11 @@ export default class {
 		const canvas = this._sceneView.canvas;
 		engine.renderer = new CanvasRenderer.Renderer(canvas);
 		engine.imageFactory = new CanvasRenderer.ImageFactory();
+		engine.sceneManager = this._sceneView.manager;
+		engine.inputManager = new DesktopInputManager(this._sceneView.element);
+		engine.metronome = new Metronome();
+		engine.hero = new Hero();
+		engine.inventory = new Inventory();
 
 		return engine;
 	}
@@ -41,8 +55,8 @@ export default class {
 
 		const loader = new Loader();
 		loader.onfail = (event) => console.log("fail", event);
-		loader.onprogress = ({detail: {progress}}) => loadingView.progress = progress;
-		loader.onloadsetupimage = ({detail: {setupImage}}) => loadingView.backgroundImageSource = setupImage.representation.src;
+		loader.onprogress = ({ detail: { progress } }) => loadingView.progress = progress;
+		loader.onloadsetupimage = ({ detail: { setupImage } }) => loadingView.backgroundImageSource = setupImage.representation.src;
 		loader.onload = (event) => {
 			loadingView.progress = 1.0;
 			dispatch(() => this.newStory(), 3000);
@@ -51,9 +65,14 @@ export default class {
 	}
 
 	newStory() {
+		if (Settings.debug) {
+			new WorldGeneration(this._engine);
+			return;
+		}
+		
 		const story = new Story(0x0000, Planet.ENDOR, WorldSize.LARGE);
-		const worldGenerator = new WorldGenerator(story.seed, story.planet, story.size, this._engine);
-		worldGenerator.generate();
+		story.generateWorld(this._engine);
+		this._engine.story = story;
 
 		this._showSceneView();
 	}
@@ -79,8 +98,23 @@ export default class {
 	}
 
 	_showSceneView() {
+		const engine = this._engine;
+		engine.metronome.stop();
+		engine.metronome.ontick = (delta) => engine.update(delta);
+		engine.metronome.onrender = () => engine.render();
+
+		const loadingZone = engine.data.zones.find(z => z.isLoadingZone());
+		const zoneScene = new ZoneScene();
+		zoneScene.zone = loadingZone;
+		engine.currentZone = loadingZone;
+
+		engine.sceneManager.clear();
+		engine.sceneManager.pushScene(zoneScene);
+
 		const windowContent = this._window.mainContent;
 		windowContent.clear();
 		windowContent.appendChild(this._sceneView.element);
+
+		engine.metronome.start();
 	}
 }

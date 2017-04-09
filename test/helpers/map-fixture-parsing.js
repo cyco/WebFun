@@ -16,7 +16,7 @@ export default (name) => {
 				seed: parts[0],
 				planet: parts[1],
 				size: parts[2],
-				data: parts.slice(3)
+				data: data
 			};
 		});
 };

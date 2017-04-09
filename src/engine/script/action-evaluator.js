@@ -1,5 +1,6 @@
 import ConditionChecker from "./condition-checker";
 import InstructionExecutor from "./instruction-executor";
+
 export default class ActionEvaluator {
 	constructor() {
 		this._engine = null;
@@ -19,11 +20,13 @@ export default class ActionEvaluator {
 	}
 
 	actionDoesApply(action) {
+		debugger;
 		return (action.enabled || action.instructionPointer !== 0) && action.conditions.every(
-				(condition) => this._checker.check(condition), this);
+			(condition) => this._checker.check(condition), this);
 	}
 
 	executeInstructions(action) {
+		debugger;
 		this._executor.action = action;
 		for (let i = action.instructionPointer | 0, len = action.instructions.length; i < len; i++) {
 			action.instructionPointer = i + 1;

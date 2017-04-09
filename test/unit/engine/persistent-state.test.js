@@ -1,6 +1,6 @@
 import PersistentState from '/engine/persistent-state';
 
-xdescribe('PersistentState', () =>  {
+describe('PersistentState', () =>  {
 	let originalSetItem, originalGetItem;
 	let storage, state;
 	beforeEach(() =>  {

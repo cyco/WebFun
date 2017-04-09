@@ -3,7 +3,7 @@ import CharFrame from '/engine/objects/char-frame';
 describe('CharFrame', () =>  {
 	it('is a class representing one frame of character animation', () =>  {
 		let charFrame = new CharFrame();
-		expect(charFrame instanceof CharFrame).toBe(true);
+		expect(charFrame instanceof CharFrame).toBeTrue();
 	});
 
 	it('basically wraps an array and offers a more expressive interface', () =>  {

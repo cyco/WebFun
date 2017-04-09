@@ -2,8 +2,7 @@ import Scene from "/engine/scenes/scene";
 import Tile from "/engine/objects/tile";
 import SpeechBubble from "/ui/speech-bubble";
 import { ModalSession } from "/ux";
-import Size from "/util/size";
-import Point from "/util/point";
+import { Size, Point } from "/util";
 import Settings from "/settings";
 
 export default class SpeechScene extends Scene {
@@ -20,9 +19,8 @@ export default class SpeechScene extends Scene {
 	}
 
 	_setupBubble() {
-		const self = this;
 		const bubble = new SpeechBubble();
-		bubble.onend = () => self.engine.sceneManager.popScene();
+		bubble.onend = () => this.engine.sceneManager.popScene();
 		this._bubble = bubble;
 	}
 

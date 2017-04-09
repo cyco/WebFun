@@ -5,7 +5,7 @@ import * as Result from "../result";
 export default (instruction, engine, action) => {
 	// TODO: validate against original implementation
 	const args = instruction.arguments;
-	const zone = engine.state.currentZone;
+	const zone = engine.currentZone;
 
 	const pickupScene = new PickupScene(engine);
 	pickupScene.location = new Point(args[1], args[2]);

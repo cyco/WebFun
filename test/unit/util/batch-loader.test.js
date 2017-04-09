@@ -32,7 +32,7 @@ describe('BatchLoader', () => {
 			progressed = true;
 		};
 		batchLoader.onfinish = () => {
-			expect(started).toBe(true);
+			expect(started).toBeTrue();
 			expect(started).toBe(progressed);
 			expect(operationsExecuted).toBe(2);
 

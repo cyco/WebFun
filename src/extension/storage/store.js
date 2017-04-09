@@ -1,4 +1,4 @@
-export const store = function(key, object) {
+const store = function(key, object) {
 	try {
 		this.setItem(key, JSON.stringify(object));
 	} catch (e) {
@@ -6,6 +6,8 @@ export const store = function(key, object) {
 	}
 };
 
-if (typeof Storage !== "undefined" && Storage.prototype) {
+if (typeof Storage !== "undefined") {
 	Storage.prototype.store = Storage.prototype.store || store;
 }
+
+export default store;

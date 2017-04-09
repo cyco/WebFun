@@ -25,13 +25,13 @@ export default class ZoneScene extends Scene {
 	}
 
 	update(ticks) {
-		const state = this.engine.state;
-		const hero = state.hero;
+		const engine = this.engine;
+		const hero = engine.hero;
 		hero.isWalking = false;
 
 		let stop = false;
 
-		const previousActions = state.currentZone.actions.filter(
+		const previousActions = engine.currentZone.actions.filter(
 			(action) => action.instructionPointer);
 		stop = this._evaluateActions(previousActions, false);
 		if (stop) return;
@@ -46,16 +46,16 @@ export default class ZoneScene extends Scene {
 			this._removeBullet();
 		}
 
-		this._camera.update(ticks);
 		this._camera.hero = hero;
+		this._camera.update(ticks);
 		hero.update(ticks);
 		this._objects.forEach((go) => go.update(ticks));
 
-		state.currentZone.actions.forEach(
+		this.engine.currentZone.actions.forEach(
 			(action, idx) => {
 				action.id = idx;
 			});
-		this._evaluateActions(state.currentZone.actions);
+		this._evaluateActions(engine.currentZone.actions);
 
 		this._handleBullet();
 	}
@@ -64,9 +64,9 @@ export default class ZoneScene extends Scene {
 		const bullet = this._bullet;
 		if (!bullet) return;
 
-		const state = this.engine.state;
-		const zone = state.currentZone;
-		const hero = state.hero;
+		const engine = this.engine;
+		const zone = engine.currentZone;
+		const hero = this.engine.hero;
 
 		if (!bullet.location.isInBounds(zone.size)) {
 			this._removeBullet();
@@ -95,8 +95,7 @@ export default class ZoneScene extends Scene {
 
 		const zone = this.zone;
 		const offset = this._camera.offset;
-		const state = this.engine.state;
-		const hero = state.hero;
+		const hero = this.engine.hero;
 
 		const renderObject = (object) => object.render(offset, renderer);
 		for (let z = 0; z < Zone.LAYERS; z++) {
@@ -134,7 +133,7 @@ export default class ZoneScene extends Scene {
 		}
 
 		if (hasActions) {
-			this.engine.state.currentZone.actionsInitialized = true;
+			this.engine.currentZone.actionsInitialized = true;
 			this.engine.state.justEntered = false;
 			this.engine.state.enteredByPlane = false;
 			this.engine.state.bump = null;
@@ -145,7 +144,6 @@ export default class ZoneScene extends Scene {
 
 	_handleMouse() {
 		const engine = this.engine;
-		const state = this.engine.state;
 
 		const inputManager = engine.inputManager;
 		const mouseLocationInView = inputManager.mouseLocationInView;
@@ -154,7 +152,7 @@ export default class ZoneScene extends Scene {
 		const offset = camera.offset;
 		const size = camera.size;
 
-		const hero = state.hero;
+		const hero = engine.hero;
 
 		const mouseLocationOnZone = new Point(mouseLocationInView.x * size.width - offset.x - 0.5,
 			mouseLocationInView.y * size.height - offset.y - 0.5);
@@ -183,8 +181,7 @@ export default class ZoneScene extends Scene {
 	_handleKeys() {
 		const engine = this.engine;
 		const inputManager = engine.inputManager;
-		const state = engine.state;
-		const hero = state.hero;
+		const hero = engine.hero;
 
 		if (inputManager.pause) {
 			const pauseScene = new PauseScene();
@@ -206,10 +203,9 @@ export default class ZoneScene extends Scene {
 	}
 
 	_attackTriggered() {
-		const state = this.engine.state;
-		const hero = state.hero;
+		const hero = this.engine.hero;
 		const weapon = hero.weapon;
-		const zone = state.currentZone;
+		const zone = this.engine.currentZone;
 
 		// do nothing if no weapon is equipped
 		if (!weapon) {
@@ -236,8 +232,8 @@ export default class ZoneScene extends Scene {
 	_moveHero(direction) {
 		const engine = this.engine;
 		const state = engine.state;
-		const hero = state.hero;
-		const zone = state.currentZone;
+		const hero = engine.hero;
+		const zone = engine.currentZone;
 
 		let diri = Direction.Confine(direction);
 		let point = Direction.CalculateRelativeCoordinates(diri, 1);
@@ -275,8 +271,7 @@ export default class ZoneScene extends Scene {
 	_executeHotspots() {
 		if (this.engine.state.justEntered) return;
 		const zone = this.zone;
-		const state = this.engine.state;
-		const hero = state.hero;
+		const hero = this.engine.hero;
 
 		const hotspotIsTriggered = (h) => h.enabled && h.x === hero.location.x && h.y === hero.location.y;
 		const self = this;
@@ -285,8 +280,7 @@ export default class ZoneScene extends Scene {
 
 	_hotspotTriggered(hotspot) {
 		const engine = this.engine;
-		const state = engine.state;
-		const zone = state.currentZone;
+		const zone = engine.currentZone;
 
 		switch (hotspot.type) {
 			case HotspotType.DoorIn: {
@@ -300,11 +294,11 @@ export default class ZoneScene extends Scene {
 				transitionScene.targetHeroLocation = new Point(waysOut.first().x, waysOut.first().y);
 				transitionScene.targetZone = targetZone;
 				transitionScene.scene = engine.sceneManager.currentScene;
-				const document = engine.document;
-				let world = document.dagobah;
+
+				let world = engine.dagobah;
 				let location = world.locationOfZone(targetZone);
 				if (!location) {
-					world = document.world;
+					world = engine.world;
 					location = world.locationOfZone(targetZone);
 				}
 				transitionScene.targetWorld = world;
@@ -338,11 +332,11 @@ export default class ZoneScene extends Scene {
 				transitionScene.targetHeroLocation = new Point(waysIn.first().x, waysIn.first().y);
 				transitionScene.targetZone = targetZone;
 				transitionScene.scene = engine.sceneManager.currentScene;
-				const document = engine.document;
-				let world = document.dagobah;
+
+				let world = engine.dagobah;
 				let location = world.locationOfZone(targetZone);
 				if (!location) {
-					world = document.world;
+					world = engine.world;
 					location = world.locationOfZone(targetZone);
 				}
 				transitionScene.targetWorld = world;
@@ -365,8 +359,8 @@ export default class ZoneScene extends Scene {
 				transitionScene.targetHeroLocation = new Point(0, 0);
 				transitionScene.targetZone = targetZone;
 				transitionScene.scene = engine.sceneManager.currentScene;
-				const document = engine.document;
-				const world = document.world;
+
+				const world = engine.world;
 				const location = world.locationOfZone(targetZone);
 				if (!location) {
 					// zone is not on the current planet
@@ -388,8 +382,8 @@ export default class ZoneScene extends Scene {
 				transitionScene.targetHeroLocation = new Point(0, 0);
 				transitionScene.targetZone = targetZone;
 				transitionScene.scene = engine.sceneManager.currentScene;
-				const document = engine.document;
-				const location = document.dagobah.locationOfZone(targetZone);
+
+				const location = engine.dagobah.locationOfZone(targetZone);
 				if (!location) {
 					// zone is not on dagobah
 					return;
@@ -406,8 +400,8 @@ export default class ZoneScene extends Scene {
 	_tryTransition(direction) {
 		const engine = this.engine;
 		const state = engine.state;
-		const hero = state.hero;
-		const currentZone = state.currentZone;
+		const hero = engine.hero;
+		const currentZone = engine.currentZone;
 
 		const targetLocation = Point.add(hero.location, direction);
 		if (currentZone.containsPoint(targetLocation)) {
@@ -435,11 +429,10 @@ export default class ZoneScene extends Scene {
 			return;
 		}
 
-		const document = engine.document;
 		const zoneLocation = state.worldLocation;
-		let world = document.dagobah;
-		if (world.locationOfZone(state.currentZone) === null) {
-			world = document.world;
+		let world = engine.dagobah;
+		if (world.locationOfZone(engine.currentZone) === null) {
+			world = engine.world;
 		}
 
 		if (!zoneLocation) return;
@@ -509,6 +502,7 @@ export default class ZoneScene extends Scene {
 	get objects() {
 		return this._objects;
 	}
+
 	set objects(o) {
 		this._objects = o;
 	}

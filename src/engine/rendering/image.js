@@ -6,11 +6,11 @@ export default class {
 	}
 
 	get width() {
-		return width;
+		return this._width;
 	}
 
 	get height() {
-		return height;
+		return this._height;
 	}
 
 	get representation() {

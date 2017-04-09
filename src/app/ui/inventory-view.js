@@ -24,8 +24,8 @@ export default class InventoryView extends TableView {
 		this.element.classList.add("inventory-view");
 
 		this.rowClass = InventoryRow;
-		while (this.rowCount < this._minRowCount)
-		this.addRow(null);
+		while (this.rowCount < this._minRowCount) 
+			this.addRow(null);
 	}
 
 	_rebuildTable() {
@@ -37,8 +37,8 @@ export default class InventoryView extends TableView {
 			row.element.onclick = () => self.rowClicked(item, rowIdx);
 		});
 
-		while (this.rowCount < this._minRowCount)
-		this.addRow(null);
+		while (this.rowCount < this._minRowCount) 
+			this.addRow(null);
 	}
 
 	set inventory(i) {

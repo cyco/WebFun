@@ -6,8 +6,8 @@ export const Type = {
 	Empty: 1,
 	BlockadeNorth: 2,
 	BlockadeSouth: 3,
-	BlockadeEast: 4,
-	BlockadeWest: 5,
+	BlockadeEast: 5,
+	BlockadeWest: 4,
 	TravelStart: 6,
 	TravelEnd: 7,
 	Room: 8,
@@ -198,12 +198,8 @@ export default class Zone {
 		return this._hotspots.filter((hotspot) => hotspot.type === HotspotType.DoorIn && hotspot.arg !== -1);
 	}
 
-	getPlanet() {
-		return this._planet;
-	}
-
-	getType() {
-		return this._type;
+	isLoadingZone(){
+		return this._type === Type.Load;
 	}
 }
 

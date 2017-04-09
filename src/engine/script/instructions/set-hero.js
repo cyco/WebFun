@@ -13,11 +13,10 @@ export default (instruction, engine, action) => {
 	break;
 	*/
 
-	engine.state.hero.location.x = instruction.arguments[0];
-	engine.state.hero.location.y = instruction.arguments[1];
+	engine.hero.location.x = instruction.arguments[0];
+	engine.hero.location.y = instruction.arguments[1];
 
-	const scene = engine.sceneManager.currentScene;
-	if (engine.state.hero.visible === false && scene instanceof ZoneScene)
+	if (engine.hero.visible === false && engine.sceneManager.currentScene instanceof ZoneScene)
 		scene._executeHotspots();
 
 	// original implementation actually has a hard break here

@@ -1,0 +1,162 @@
+import { KeyEvent, Point } from "/util";
+import InputManager, { Direction } from "./input-manager";
+
+export default class DesktopInputManager extends InputManager {
+	constructor(gameViewElement) {
+		super();
+
+		this._element = gameViewElement;
+		this._lastMouse = new Point(NaN, NaN);
+	}
+	
+	set engine(engine){
+		this._engine = engine;		
+	}
+	
+	get engine(){
+		return this._engine;
+	}
+
+	addListeners() {
+		document.addEventListener("keydown", this.keyDown.bind(this));
+		document.addEventListener("keyup", this.keyUp.bind(this));
+		document.addEventListener("mousemove", this.mouseMove.bind(this));
+		document.addEventListener("mousedown", this.mouseDown.bind(this));
+		document.addEventListener("mouseup", this.mouseUp.bind(this));
+		document.addEventListener("contextmenu", (event) => event.preventDefault());
+	}
+
+	removeListeners() {
+		document.removeEventListener("keydown", this.keyDown.bind(this));
+		document.removeEventListener("keyup", this.keyUp.bind(this));
+		document.removeEventListener("mousemove", this.mouseMove.bind(this));
+		document.removeEventListener("mousedown", this.mouseDown.bind(this));
+		document.removeEventListener("mouseup", this.mouseUp.bind(this));
+		document.removeEventListener("contextmenu", (event) => event.preventDefault());
+	}
+
+	keyDown(e) {		
+		let directionMask = 0;
+		switch (e.which) {
+			case KeyEvent.DOM_VK_UP:
+				directionMask |= Direction.Up;
+				this.scrollUp = true;
+				break;
+			case KeyEvent.DOM_VK_DOWN:
+				this.scrollDown = true;
+				directionMask |= Direction.Down;
+				break;
+			case KeyEvent.DOM_VK_LEFT:
+				directionMask |= Direction.Left;
+				break;
+			case KeyEvent.DOM_VK_RIGHT:
+				directionMask |= Direction.Right;
+				break;
+			case KeyEvent.DOM_VK_SPACE:
+				this._attack = true;
+				this.endDialog = true;
+				this.pickUp = true;
+				break;
+			case KeyEvent.DOM_VK_SHIFT:
+				this._drag = true;
+				break;
+
+			case KeyEvent.DOM_VK_P: // toggle pause
+				this.pause = !this.pause;
+				break;
+			case KeyEvent.DOM_VK_L: // toggle map, must be reset if locator is not available
+				this.locator = !this.locator;
+				break;
+
+			default:
+				break;
+		}
+
+		this._direction |= directionMask;
+		if (this._direction)
+			this._walk = true;
+
+		if (typeof this.keyDownHandler === "function") {
+			this.keyDownHandler(e);
+		}
+	}
+
+	keyUp(e) {
+		let mask = 0xFF;
+
+		switch (e.which) {
+			case KeyEvent.DOM_VK_UP:
+				mask = ~Direction.Up;
+				this.scrollUp = false;
+				break;
+			case KeyEvent.DOM_VK_DOWN:
+				mask &= ~Direction.Down;
+				this.scrollDown = false;
+				break;
+			case KeyEvent.DOM_VK_LEFT:
+				mask &= ~Direction.Left;
+				break;
+			case KeyEvent.DOM_VK_RIGHT:
+				mask &= ~Direction.Right;
+				break;
+			case KeyEvent.DOM_VK_SPACE:
+				this._attack = false;
+				this.endDialog = false;
+				this.pickUp = false;
+				break;
+			case KeyEvent.DOM_VK_SHIFT:
+				this._drag = false;
+				break;
+
+			default:
+				break;
+		}
+
+		this._direction &= mask;
+		if (!this._direction)
+			this._walk = false;
+	}
+
+	mouseDown(e) {
+		const mouseLocation = new Point(e.clientX, e.clientY);
+		const point = this._getPointInViewCoordinates(mouseLocation);
+		const pointIsInView = point.x > 0 && point.y > 0 && point.x < 1 && point.y < 1;
+		if (!pointIsInView)
+			return;
+
+		if (e.button === 0)
+			this._walk = true;
+		if (e.button === 1)
+			this._attack = true;
+
+		if (typeof this.mouseDownHandler === "function") {
+			this.mouseDownHandler(point);
+		}
+	}
+
+	mouseMove(e) {
+		const mouseLocation = new Point(e.clientX, e.clientY);
+		this._lastMouse = this._getPointInViewCoordinates(mouseLocation);
+	}
+
+	mouseUp(e) {
+		if (e.button === 0)
+			this._walk = false;
+		if (e.button === 1)
+			this._attack = false;
+	}
+
+	_getPointInViewCoordinates(location) {
+		const boundingRect = this._element.getBoundingClientRect();
+		const viewOffset = new Point(boundingRect.left, boundingRect.top);
+
+		let point = Point.subtract(location, viewOffset);
+		point.x /= boundingRect.width;
+		point.y /= boundingRect.height;
+		return point;
+	}
+
+	get mouseLocationInView() {
+		return this._lastMouse;
+	}
+}

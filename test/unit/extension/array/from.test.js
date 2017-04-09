@@ -10,7 +10,7 @@ describe('Array.from', () =>  {
 		const arrayLike = { 0: "test", 1: "values", length: 2};
 		const array = From(arrayLike);
 		
-		expect(array instanceof Array).toBe(true);
+		expect(array instanceof Array).toBeTrue();
 		expect(typeof array.map).toBe('function');
 	});
 });

@@ -1,5 +1,7 @@
 import sandboxed from '../../helpers/dom-sandbox';
-import {default as MenuItem, State, Separator} from '/ui/menu-item';
+import { default as MenuItem, State, Separator } from '/ui/menu-item';
+import Menu from '/ui/menu';
+
 describe('MenuItem', sandboxed((sand) => {
 	it('represents an item in a menu', () => {
 		let menuItem = new MenuItem();
@@ -20,7 +22,7 @@ describe('MenuItem', sandboxed((sand) => {
 
 		expect(menuItem.title).toBe('test-title');
 		expect(menuItem.state).toBe(State.Mixed);
-		expect(menuItem.enabled).toBe(false);
+		expect(menuItem.enabled).toBeFalse();
 		expect(menuItem.mnemonic).toBe('M');
 	});
 
@@ -30,31 +32,37 @@ describe('MenuItem', sandboxed((sand) => {
 
 	it('is enabled by default, if it has a callback or a submenu', () => {
 		let menuItem = new MenuItem({});
-		expect(menuItem.enabled).toBe(false);
+		expect(menuItem.enabled).toBeFalse();
 
 		menuItem = new MenuItem({ callback: () => null });
-		expect(menuItem.enabled).toBe(true);
+		expect(menuItem.enabled).toBeTrue();
 
 		menuItem = new MenuItem({ submenu: [] });
-		expect(menuItem.enabled).toBe(true);
+		expect(menuItem.enabled).toBeTrue();
 
 		menuItem = new MenuItem();
-		expect(menuItem.enabled).toBe(false);
+		expect(menuItem.enabled).toBeFalse();
 	});
 
 	it('can be dynamically disabled by supplying a function', () => {
 		let menuItem = new MenuItem({ callback: () => null });
 
-		expect(menuItem.enabled).toBe(true);
+		expect(menuItem.enabled).toBeTrue();
 
 		let functionCalls = 0;
 		menuItem.enabled = () => {
 			functionCalls++;
 			return functionCalls > 1;
 		};
-		expect(menuItem.enabled).toBe(false);
+		expect(menuItem.enabled).toBeFalse();
 		expect(functionCalls).toBe(1);
-		expect(menuItem.enabled).toBe(true);
+		expect(menuItem.enabled).toBeTrue();
 		expect(functionCalls).toBe(2);
+	});
+
+	it('has a method to easily detect if something has a submenu', () => {
+		let menuItem = new MenuItem({ submenu: new Menu([]) });
+		expect(menuItem.hasSubmenu).toBeTrue();
+
 	});
 }));

@@ -176,18 +176,18 @@ describe('Point', () =>  {
 			let point;
 
 			point = new Point(0, 2, -5);
-			expect(point.isUnidirectional()).toBe(true);
+			expect(point.isUnidirectional()).toBeTrue();
 
 			point = new Point(2, 0, -5);
-			expect(point.isUnidirectional()).toBe(true);
+			expect(point.isUnidirectional()).toBeTrue();
 
 			point = new Point(2, 2, -5);
-			expect(point.isUnidirectional()).toBe(false);
+			expect(point.isUnidirectional()).toBeFalse();
 		});
 
 		it('A zero point is considered to be unidirectional', () =>  {
 			let point = new Point(0, 0);
-			expect(point.isUnidirectional()).toBe(true);
+			expect(point.isUnidirectional()).toBeTrue();
 		});
 	});
 
@@ -199,41 +199,41 @@ describe('Point', () =>  {
 		let point;
 
 		point = new Point(2, 3);
-		expect(point.isInBounds(size)).toBe(true);
+		expect(point.isInBounds(size)).toBeTrue();
 
 		point = new Point(0, 0);
-		expect(point.isInBounds(size)).toBe(true);
+		expect(point.isInBounds(size)).toBeTrue();
 
 		point = new Point(-1, 3);
-		expect(point.isInBounds(size)).toBe(false);
+		expect(point.isInBounds(size)).toBeFalse();
 
 		point = new Point(0, -3);
-		expect(point.isInBounds(size)).toBe(false);
+		expect(point.isInBounds(size)).toBeFalse();
 
 		point = new Point(11, 0);
-		expect(point.isInBounds(size)).toBe(false);
+		expect(point.isInBounds(size)).toBeFalse();
 
 		point = new Point(0, 6);
-		expect(point.isInBounds(size)).toBe(false);
+		expect(point.isInBounds(size)).toBeFalse();
 
 		point = new Point(10, 5);
-		expect(point.isInBounds(size)).toBe(false);
+		expect(point.isInBounds(size)).toBeFalse();
 	});
 
 	it('isZeroPoint determines if all coordinates are zero', () =>  {
 		let point;
 
 		point = new Point(0, 0);
-		expect(point.isZeroPoint()).toBe(true);
+		expect(point.isZeroPoint()).toBeTrue();
 
 		point = new Point(0, 1);
-		expect(point.isZeroPoint()).toBe(false);
+		expect(point.isZeroPoint()).toBeFalse();
 
 		point = new Point(1, 0);
-		expect(point.isZeroPoint()).toBe(false);
+		expect(point.isZeroPoint()).toBeFalse();
 
 		point = new Point(1, 1);
-		expect(point.isZeroPoint()).toBe(false);
+		expect(point.isZeroPoint()).toBeFalse();
 	});
 
 	it('properly converts to a human-readable string', () =>  {

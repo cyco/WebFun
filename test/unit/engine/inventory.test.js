@@ -32,13 +32,13 @@ describe('Inventory', () =>  {
 		};
 		inventory.addItem(mockItem);
 
-		expect(inventory.contains(mockItem)).toBe(true);
-		expect(inventory.contains(5)).toBe(true);
+		expect(inventory.contains(mockItem)).toBeTrue();
+		expect(inventory.contains(5)).toBeTrue();
 
 		inventory.removeItem(mockItem);
 
-		expect(inventory.contains(mockItem)).toBe(false);
-		expect(inventory.contains(5)).toBe(false);
+		expect(inventory.contains(mockItem)).toBeFalse();
+		expect(inventory.contains(5)).toBeFalse();
 	});
 
 	it('has a method for easy enumeration', () =>  {

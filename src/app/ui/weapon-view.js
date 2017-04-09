@@ -16,8 +16,6 @@ export default class WeaponView extends View {
 		this._tileContainer = document.createElement("img");
 		this._tileContainer.classList.add("pixelated");
 		this.element.appendChild(this._tileContainer);
-
-		Object.seal(this);
 	}
 
 	get weapon() {

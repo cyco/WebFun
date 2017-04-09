@@ -21,7 +21,7 @@ describe('Action', () =>  {
 	});
 
 	it('is initially enabled', () =>  {
-		expect(action.enabled).toBe(true);
+		expect(action.enabled).toBeTrue();
 	});
 
 	describe('_Action', () =>  {
@@ -33,7 +33,7 @@ describe('Action', () =>  {
 	describe('Instruction', () =>  {
 		it('extends _Action', () =>  {
 			let instruction = new Instruction({});
-			expect(instruction instanceof _Action).toBe(true);
+			expect(instruction instanceof _Action).toBeTrue();
 		});
 		
 		it('may have \'additional data\' of arbitrary length (usually text someone speaks)', () => {
@@ -46,7 +46,7 @@ describe('Action', () =>  {
 	describe('Condition', () =>  {
 		it('extends _Action', () =>  {
 			let condition = new Condition({});
-			expect(condition instanceof _Action).toBe(true);
+			expect(condition instanceof _Action).toBeTrue();
 		});
 	});
 });

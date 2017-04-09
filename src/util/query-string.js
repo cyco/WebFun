@@ -2,11 +2,8 @@ export default class QueryString {
 	static Compose(data) {
 		let result = "";
 
-		for (const key in data) {
-			if (!data.hasOwnProperty(key)) continue;
-
-			if (result)
-				result += "&";
+		for (const key of Object.keys(data)) {
+			if (result) result += "&";
 			result += encodeURIComponent(key);
 			result += "=";
 			result += encodeURIComponent(data[key]);

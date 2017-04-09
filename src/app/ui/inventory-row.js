@@ -18,10 +18,10 @@ export default class InventoryRow extends TableViewRow {
 
 	setData(model) {
 		this._iconElement.src = Image.blankImage;
-		this._nameElement.textContent = "";
+		this._nameElement.clear();
 
 		if (model) {
-			this._nameElement.textContent = model.name;
+			this._nameElement.append(model.name);
 			this._iconElement.src = model.image.dataURL;
 		}
 	}

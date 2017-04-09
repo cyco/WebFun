@@ -62,15 +62,15 @@ const checkNextSourceFile = (callback) => {
 		Process.stdin.resume();
 
 		Process.stdin.once("data", function(data) {
-			process.stdin.pause();
+			Process.stdin.pause();
 
 			const input = data.toString().trim();
 			if (input === 'y' || input === 'n') {
 				lastChoice = input;
 			}
 
-			if (choice === 'y') {
-				fs.writeFileSync(file.test, "describe(\"Missing Test\", () => {});\n");
+			if (lastChoice === 'y') {
+				FS.writeFileSync(file.test, "describe(\"Missing test\", () => {\n	it(\"must still be written\", () => {\n		expect(mustBeWritten).toBeTrue();\n	});\n});\n\n");
 				Process.stdout.write("\t- created -\n");
 			}
 
@@ -92,14 +92,14 @@ const checkNextTestFile = (callback) => {
 		Process.stdin.resume();
 
 		Process.stdin.once("data", function(data) {
-			process.stdin.pause();
+			Process.stdin.pause();
 
 			const input = data.toString().trim();
 			if (input === 'y' || input === 'n') {
 				lastChoice = input;
 			}
 
-			if (choice === 'y') {
+			if (lastChoice === 'y') {
 				FS.unlinkSync(file.test);
 				Process.stdout.write("\t- deleted -\n");
 			}
@@ -114,5 +114,5 @@ const checkNextTestFile = (callback) => {
 checkNextSourceFile(() => {
 	Process.stdout.write('––––===================================––––\n');
 	lastChoice = 'n';
-	checkNextTestFile(() => {})
+	checkNextTestFile(() => {});
 });

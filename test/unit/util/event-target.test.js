@@ -80,7 +80,7 @@ describe('EventTarget', () => {
 
 		dispatch(() => {
 			expect(executedCallbacks[0]).toBeFalsy();
-			expect(executedCallbacks[1]).toBe(true);
+			expect(executedCallbacks[1]).toBeTrue();
 
 			done();
 		}, 10);
@@ -101,7 +101,7 @@ describe('EventTarget', () => {
 
 		dispatch(() => {
 			expect(executedCallbacks[0]).toBeFalsy();
-			expect(executedCallbacks[1]).toBe(true);
+			expect(executedCallbacks[1]).toBeTrue();
 
 			done();
 		}, 10);
