@@ -30,6 +30,8 @@ $tile-size: 32px;
 
 @import 'app/windows/statistics-window';
 
+@import 'debug';
+
 body {
 	background-color: $background-color;
 }
