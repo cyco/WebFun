@@ -20,15 +20,7 @@ function getPlanetName(p) {
 	if (p === 3) return "Endor";
 }
 
-function testWorld({ seed, planet, size }, sample) {
-	console.log('test world ', seed, planet, size);
-	it(`World 0x${seed.toString(0x10)} ${getPlanetName(planet)} ${getSizeName(size)}`, () => {
-		console.log('execute it');
-		expect({ seed, planet, size, data: new GameData(rawData) }).toGenerateWorld(sample);
-	});
-}
-
-describe('World Generation', function() {
+describe('World Generation', () => {
 	beforeAll((done) => {
 		loadGameData(function(data) {
 			rawData = data;
@@ -38,6 +30,28 @@ describe('World Generation', function() {
 
 	let worlds = loadMapFixtures('worlds.txt');
 	for (let i = 0; i < worlds.length; i++) {
-		testWorld(worlds[i], worlds[i].data);
+		let { seed, planet, size, data } = worlds[i];
+		const world = worlds[i];
+		it(`World 0x${seed.toString(0x10)} ${getPlanetName(planet)} ${getSizeName(size)}`, ((seed, planet, size, sample) => () => {
+			// expect({ seed, planet, size, data: new GameData(rawData) }).toGenerateWorld(sample);
+			window.logging = false;
+
+			let worldGenerator = new WorldGenerator(seed, size, planet, { data: new GameData(rawData) });
+			worldGenerator.generate();
+
+			const world = worldGenerator.world;
+			for (let i = 0; i < 100; i++) {
+				let thing = world.index(i);
+				expect(thing.zoneId).toBe(sample[i * 10]);
+				expect(thing.zoneType).toBe(sample[i * 10 + 1]);
+
+				if (thing.zoneId !== sample[i * 10]) return;
+				if (thing.zoneType !== sample[i * 10 + 1]) return;
+				// if (thing.findItemID !== sample[i * 10 + 6]) return;
+				// if (thing.requiredItemID !== sample[i * 10 + 4]) return;
+			}
+			window.logging = false;
+			return;
+		})(seed, planet, size, data));
 	}
 });

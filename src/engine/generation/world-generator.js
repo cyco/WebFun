@@ -3,6 +3,7 @@ import { Point, Message, srand, rand, VerticalPointRange, HorizontalPointRange }
 import MapGenerator from "./map-generator";
 import WorldItem from "./world-item";
 import WorldItemType from "./world-item-type";
+import World from '/engine/world';
 import { Planet, WorldSize } from "/engine/types";
 import Quest from "/engine/quest";
 
@@ -28,8 +29,7 @@ export default class WorldGenerator {
 		this.providedItems = [];
 		this.goalPuzzleID = -1;
 
-		this.world = [];
-		for (let i = 0; i < 100; i++) this.world[i] = new WorldItem();
+		this.world = null;
 
 		this.mapGenerator = null;
 		this.field_3398 = -1;
@@ -62,16 +62,14 @@ export default class WorldGenerator {
 		const mapGenerator = this.mapGenerator = new MapGenerator();
 		mapGenerator.generate(-1, this._size);
 		Message('map generation done');
-		this.world.clear();
-		for (let i = 0; i < 100; i++) {
-			this.world[i] = new WorldItem();
-		}
+
+		this.world = new World();
 
 		const typeMap = mapGenerator.typeMap;
 		const orderMap = mapGenerator.orderMap;
 
 		for (let i = 0; i < 100; i++) {
-			this.world[i].puzzleIdx = orderMap[i];
+			this.world.index(i).puzzleIdx = orderMap[i];
 		}
 
 		const puzzle_count = mapGenerator.puzzleCount;
@@ -165,8 +163,8 @@ export default class WorldGenerator {
 		}
 
 		for (let i = 0; i < 100; i++) {
-			if (this.world[i].zoneId >= 0) {
-				this.placeHotspotTiles(this.world[i].zoneId);
+			if (this.world.index(i).zoneId >= 0) {
+				this.placeHotspotTiles(this.world.index(i).zoneId);
 			}
 		}
 
@@ -221,9 +219,9 @@ export default class WorldGenerator {
 				let zoneID = this.getZoneIDWithType(ZoneType.TravelStart, -1, -1, -1, -1, distance, 1);
 				if (zoneID < 0) continue;
 
-				this.world[idx].zoneId = zoneID;
-				this.world[idx].zoneType = ZoneType.TravelStart;
-				this.world[idx].requiredItemID = this.wg_item_id;
+				this.world.index(idx).zoneId = zoneID;
+				this.world.index(idx).zoneType = ZoneType.TravelStart;
+				this.world.index(idx).requiredItemID = this.wg_item_id;
 
 				let zone = this.getZoneByID(zoneID);
 				let connectedZoneID = -1;
@@ -267,9 +265,9 @@ export default class WorldGenerator {
 
 				this.RemoveQuestProvidingItem(this.wg_item_id);
 
-				this.world[idx].zoneId = -1;
-				this.world[idx].zoneType = 0;
-				this.world[idx].requiredItemID = -1;
+				this.world.index(idx).zoneId = -1;
+				this.world.index(idx).zoneType = 0;
+				this.world.index(idx).requiredItemID = -1;
 			}
 		}
 		Message("After Transport Loop\n");
@@ -280,9 +278,9 @@ export default class WorldGenerator {
 
 		Message('transport loop: %dx%d', x, y);
 		const idx = x + 10 * y;
-		this.world[idx].zoneId = targetID;
-		this.world[idx].zoneType = ZoneType.TravelEnd;
-		this.world[idx].requiredItemID = this.wg_item_id;
+		this.world.index(idx).zoneId = targetID;
+		this.world.index(idx).zoneType = ZoneType.TravelEnd;
+		this.world.index(idx).requiredItemID = this.wg_item_id;
 		this.worldZones[idx] = this.getZoneByID(targetID);
 		// v87 = zone_2;
 		// v88 = (char *)doc + 0x34 * idx_3;
@@ -306,7 +304,7 @@ export default class WorldGenerator {
 				this.wg_item_id = -1;
 				this.wg_last_added_item_id = -1;
 
-				let worldThing = this.world[idx];
+				let worldThing = this.world.index(idx);
 				if (itemType === WorldItemType.None) continue;
 				if (itemType === WorldItemType.KeptFree) continue;
 				if (this.worldZones[idx] !== null) continue;
@@ -406,12 +404,12 @@ export default class WorldGenerator {
 
 			this.addZoneWithIDToWorld(zoneID);
 
-			this.world[idx].zoneType = this.wg_zone_type;
-			this.world[idx].zoneId = zoneID;
-			this.world[idx].findItemID = this.wg_last_added_item_id;
-			this.world[idx].unknown606 = -1; // this.wg_another_item_id;
-			this.world[idx].requiredItemID = this.wg_item_id;
-			this.world[idx].npcID = this.wg_npc_id;
+			this.world.index(idx).zoneType = this.wg_zone_type;
+			this.world.index(idx).zoneId = zoneID;
+			this.world.index(idx).findItemID = this.wg_last_added_item_id;
+			this.world.index(idx).unknown606 = -1; // this.wg_another_item_id;
+			this.world.index(idx).requiredItemID = this.wg_item_id;
+			this.world.index(idx).npcID = this.wg_npc_id;
 			/*v147 = (char *)doc + 52 * idx_5;
 			 *((_WORD *)v147 + 624) = 0; */
 			this.worldZones[idx] = this.getZoneByID(zoneID);
@@ -437,7 +435,7 @@ export default class WorldGenerator {
 	doPuzzle(x, y, zone_2, did_not_place_zone_ref) {
 		Message("doPuzzle\n");
 		let distance = GetDistanceToCenter(x, y);
-		let worldThing = this.world[x + 10 * y];
+		let worldThing = this.world.index(x + 10 * y);
 		let type = this.zoneTypeForWorldItem(zone_2);
 
 
@@ -581,12 +579,12 @@ export default class WorldGenerator {
 							if (zoneId_3 < 0) break;
 							let world_idx_1 = x + 10 * y;
 
-							this.world[world_idx_1].zoneType = this.wg_zone_type;
-							this.world[world_idx_1].zoneId = zoneId_3;
-							this.world[world_idx_1].findItemID = this.wg_last_added_item_id;
-							this.world[world_idx_1].unknown606 = this.wg_another_item_id;
-							this.world[world_idx_1].requiredItemID = this.wg_item_id;
-							this.world[world_idx_1].npcID = this.wg_npc_id;
+							this.world.index(world_idx_1).zoneType = this.wg_zone_type;
+							this.world.index(world_idx_1).zoneId = zoneId_3;
+							this.world.index(world_idx_1).findItemID = this.wg_last_added_item_id;
+							this.world.index(world_idx_1).unknown606 = this.wg_another_item_id;
+							this.world.index(world_idx_1).requiredItemID = this.wg_item_id;
+							this.world.index(world_idx_1).npcID = this.wg_npc_id;
 
 							/*
 							 *((_WORD *)v113 + 611) = this.wg_item_id_unknown_2;
@@ -631,9 +629,9 @@ export default class WorldGenerator {
 					if (zoneId_4 >= 0) {
 						let idx_4 = x + 10 * y;
 						console.log("idx_4: ", idx_4);
-						this.world[idx_4].zoneType = this.wg_zone_type;
+						this.world.index(idx_4).zoneType = this.wg_zone_type;
 						this.worldZones[idx_4] = this.getZoneByID(zoneId_4);
-						this.world[idx_4].zoneId = zoneId_4;
+						this.world.index(idx_4).zoneId = zoneId_4;
 						this.addZoneWithIDToWorld(zoneId_4);
 					}
 				}
@@ -983,9 +981,9 @@ export default class WorldGenerator {
 			}
 
 			let idx = x + 10 * y;
-			this.world[idx].zoneType = ZoneType.Find;
-			this.world[idx].zoneId = zoneID;
-			this.world[idx].findItemID = this.wg_last_added_item_id;
+			this.world.index(idx).zoneType = ZoneType.Find;
+			this.world.index(idx).zoneId = zoneID;
+			this.world.index(idx).findItemID = this.wg_last_added_item_id;
 			this.worldZones[idx] = this.getZoneByID(zoneID);
 			world[idx] = WorldItemType.Puzzle;
 
@@ -1105,12 +1103,12 @@ export default class WorldGenerator {
 
 						let idx = x + 10 * y;
 						this.worldZones[idx] = zone;
-						this.world[idx].zoneId = zoneID;
-						this.world[idx].zoneType = ZoneType.Empty;
-						this.world[idx].unknown606 = -1;
-						this.world[idx].requiredItemID = -1;
-						this.world[idx].npcID = -1;
-						this.world[idx].findItemID = -1;
+						this.world.index(idx).zoneId = zoneID;
+						this.world.index(idx).zoneType = ZoneType.Empty;
+						this.world.index(idx).unknown606 = -1;
+						this.world.index(idx).requiredItemID = -1;
+						this.world.index(idx).npcID = -1;
+						this.world.index(idx).findItemID = -1;
 
 						this.addZoneWithIDToWorld(zoneID);
 
@@ -1132,11 +1130,11 @@ export default class WorldGenerator {
 				let zoneID = this.getZoneIDWithType(ZoneType.Empty, -1, -1, -1, -1, distance, 0);
 				if (zoneID !== -1) {
 					let idx = x + 10 * y;
-					this.world[idx].zoneType = 1;
-					this.world[idx].zoneId = zoneID;
-					this.world[idx].unknown606 = -1;
-					this.world[idx].requiredItemID = -1;
-					this.world[idx].findItemID = -1;
+					this.world.index(idx).zoneType = 1;
+					this.world.index(idx).zoneId = zoneID;
+					this.world.index(idx).unknown606 = -1;
+					this.world.index(idx).requiredItemID = -1;
+					this.world.index(idx).findItemID = -1;
 					this.worldZones[idx] = this.getZoneByID(zoneID);
 
 					this.addZoneWithIDToWorld(zoneID);
@@ -1336,7 +1334,7 @@ export default class WorldGenerator {
 		console.assert(Number.isInteger(maximumDistance));
 
 		let quest = this.providedItemQuests.find(quest => quest.itemID === itemID);
-		if (!quest) {;
+		if (!quest) {
 			quest = new Quest(itemID, maximumDistance);
 			this.providedItemQuests.unshift(quest);
 		}
@@ -1445,15 +1443,15 @@ export default class WorldGenerator {
 
 	getZoneIDAt(x, y) {
 		if (x + y * 10 < 0) return null;
-		if (this.world.length <= x + 10 * y) return null;
+		if (100 <= x + 10 * y) return null;
 
-		return this.world[x + 10 * y].zoneId;
+		return this.world.index(x + 10 * y).zoneId;
 	}
 
 	getLocationOfZoneWithID(zoneID, xOut, yOut) {
 		for (let y = 0; y < 10; y++) {
 			for (let x = 0; x < 10; x++) {
-				if (this.world[x + 10 * y].zoneId === zoneID) {
+				if (this.world.index(x + 10 * y).zoneId === zoneID) {
 					xOut.value = x;
 					yOut.value = y;
 					return true;

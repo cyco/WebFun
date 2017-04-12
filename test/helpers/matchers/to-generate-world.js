@@ -3,18 +3,14 @@ import { WorldGenerator } from '/engine/generation';
 
 addMatchers({
 	toGenerateWorld: (sample, { seed, size, planet, data }) => {
-		console.log('toGenerateWorld');
 		window.logging = false;
 
-		console.log('make new world generator');
 		let worldGenerator = new WorldGenerator(seed, size, planet, { data });
-		console.log('generate world');
 		worldGenerator.generate();
-		console.log('start comparison');
 
-
+		const world = worldGenerator.world;
 		for (let i = 0; i < 100; i++) {
-			let thing = worldGenerator.world[i];
+			let thing = world[i];
 			expect(thing.zoneId).toBe(sample[i * 10]);
 			expect(thing.zoneType).toBe(sample[i * 10 + 1]);
 

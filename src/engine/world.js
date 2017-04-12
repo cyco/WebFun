@@ -80,4 +80,8 @@ export default class World {
 	at(x, y) {
 		return this._items[this._pointToIndex(x, y)];
 	}
+	
+	index(index) {
+		return this._items[index];
+	}
 }
