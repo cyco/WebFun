@@ -1,18 +1,21 @@
 import { Point } from "/util";
+import { WorldItem } from './generation';
+
+export const width = 10;
+export const height = 10;
 
 export default class World {
 	static get WIDTH() {
-		return 10;
+		return width;
 	}
 
 	static get HEIGHT() {
-		return 10;
+		return height;
 	}
 
 	constructor() {
-		this.map = Array.Repeat(null, World.WIDTH * World.HEIGHT);
+		this._items = (World.WIDTH * World.HEIGHT).times(() => new WorldItem());
 		this.data = null;
-
 		Object.seal(this);
 	}
 
@@ -21,6 +24,8 @@ export default class World {
 	}
 
 	getZone(x, y) {
+		console.assert(this.data, "Data has not been set");
+
 		if (typeof x === "object") {
 			y = x.y;
 			x = x.x;
@@ -31,21 +36,25 @@ export default class World {
 			return null;
 		}
 
-		return this.map[this._pointToIndex(x, y)];
+		const index = this._pointToIndex(x, y);
+		const worldItem = this._items[index];
+		const zoneId = worldItem.zoneId;
+		if(zoneId === -1) return null;
+		return this.data.zones[zoneId];
 	}
 
 	setZone(x, y, zoneID) {
-		console.assert(this.data, "Data has not been set");
-
-		const zone = this.data.zones[zoneID];
-		this.map[this._pointToIndex(x, y)] = zone;
+		const index = this._pointToIndex(x, y);
+		const worldItem = this._items[index];
+		worldItem.zoneId = zoneID;
 	}
 
 	locationOfZone(zone) {
+		const zoneID = this.data.zones.indexOf(zone);
 		for (let y = 0; y < World.HEIGHT; y++) {
 			for (let x = 0; x < World.HEIGHT; x++) {
 				let index = this._pointToIndex(x, y);
-				if (this.map[index] === zone) {
+				if (this._items[index].zoneId === zoneID) {
 					return new Point(x, y);
 				}
 			}
@@ -66,5 +75,9 @@ export default class World {
 		if (zone === needleZone) return true;
 
 		return zone.leadsTo(needleZone, this.data.zones);
+	}
+
+	at(x, y) {
+		return this._items[this._pointToIndex(x, y)];
 	}
 }

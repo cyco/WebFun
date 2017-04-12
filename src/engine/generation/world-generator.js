@@ -227,7 +227,7 @@ export default class WorldGenerator {
 
 				let zone = this.getZoneByID(zoneID);
 				let connectedZoneID = -1;
-				for (let hotspot of zone._hotspots) {
+				for (let hotspot of zone.hotspots) {
 					if (hotspot.type === Type.VehicleTo) {
 						connectedZoneID = hotspot.arg;
 						break;
@@ -649,7 +649,7 @@ export default class WorldGenerator {
 		Message("YodaDocument::RemoveEmptyZoneIdsFromWorld()\n");
 		let nonEmptyZoneIDs = [];
 		for (let zoneID of this.chosenZoneIDs) {
-			if (this.getZoneByIDType(zoneID) !== ZoneType.Empty)
+			if (this.getZoneTypeByZoneID(zoneID) !== ZoneType.Empty)
 				nonEmptyZoneIDs.push(zoneID);
 		}
 
@@ -802,7 +802,7 @@ export default class WorldGenerator {
 			switch (type_1) {
 				case ZoneType.Empty:
 					if (this.field_2E64) {
-						const count = zone._hotspots.length;
+						const count = zone.hotspots.length;
 						if (count <= 0) {
 							// Message("YodaDocument::getZoneIDWithType => %d\n", zoneId);
 							return zoneId;
@@ -1030,7 +1030,7 @@ export default class WorldGenerator {
 							if (this.field_2E64) break;
 
 							let has_teleporter = 0;
-							for (let hotspot of zone._hotspots) {
+							for (let hotspot of zone.hotspots) {
 								if (hotspot.type === Type.Teleporter) {
 									has_teleporter = 1;
 									break;
@@ -1208,7 +1208,7 @@ export default class WorldGenerator {
 		for (let itemID of zone.providedItemIDs) {
 			if (itemID === providedItemID) {
 				let hotspots = [];
-				for (let hotspot of zone._hotspots) {
+				for (let hotspot of zone.hotspots) {
 					if (hotspot.type === Type.TriggerLocation) {
 						hotspots.push(hotspot);
 					}
@@ -1229,7 +1229,7 @@ export default class WorldGenerator {
 			}
 		}
 
-		for (let hotspot of zone._hotspots) {
+		for (let hotspot of zone.hotspots) {
 			if (hotspot.type === HotspotType.DoorIn) {
 				let result = this.Unknown_14(hotspot.arg, a3, distance, providedItemID);
 				if (result) {
@@ -1308,7 +1308,7 @@ export default class WorldGenerator {
 			if (itemID === targetItemID)
 				return true;
 
-		for (let hotspot of zone._hotspots)
+		for (let hotspot of zone.hotspots)
 			if (hotspot.type === HotspotType.DoorIn && hotspot.arg >= 0)
 				if (this.ZoneHasItem(hotspot.arg, targetItemID, a4))
 					return true;
@@ -1317,6 +1317,7 @@ export default class WorldGenerator {
 	}
 
 	HasQuestRequiringItem(itemID) {
+		console.assert(Number.isInteger(itemID));
 		Message("YodaDocument::HasQuestRequiringItem(%d)\n", itemID);
 		for (let quest of this.requiredItemQuests)
 			if (quest.itemID === itemID) {
@@ -1324,24 +1325,30 @@ export default class WorldGenerator {
 				return true;
 			}
 
-		// Message("YodaDocument::HasQuestRequiringItem => 0\n");
+			// Message("YodaDocument::HasQuestRequiringItem => 0\n");
 		return false;
 	}
 
 	AddProvidedQuestWithItemID(itemID, maximumDistance) {
+		if (itemID === null) return null;
 		Message("YodaDocument::AddProvidedQuestWithItemID(%d, %d)\n", itemID, maximumDistance);
+		console.assert(Number.isInteger(itemID));
+		console.assert(Number.isInteger(maximumDistance));
 
-		let quest;
-		for (quest of this.providedItemQuests)
-			if (quest.itemID === itemID) return quest;
-
-		quest = new Quest(itemID, maximumDistance);
-		this.providedItemQuests.unshift(quest);
+		let quest = this.providedItemQuests.find(quest => quest.itemID === itemID);
+		if (!quest) {;
+			quest = new Quest(itemID, maximumDistance);
+			this.providedItemQuests.unshift(quest);
+		}
 
 		return quest;
 	}
 
 	AddRequiredQuestWithItemID(itemID, maximumDistance) {
+		if (itemID === null) return null;
+		console.assert(Number.isInteger(itemID), 'itemID argument must be an integer');
+		console.assert(Number.isInteger(maximumDistance), 'maxiumDistance argument must be an integer');
+
 		Message("YodaDocument::AddRequiredQuestWithItemID(%d, %d)\n", itemID, maximumDistance);
 		let quest = new Quest(itemID, maximumDistance);
 		this.requiredItemQuests.push(quest);
@@ -1350,6 +1357,7 @@ export default class WorldGenerator {
 	}
 
 	RemoveQuestProvidingItem(itemID) {
+		console.assert(Number.isInteger(itemID));
 		Message("YodaDocument::RemoveQuestProvidingItem(%d)\n", itemID);
 
 		for (let i = 0; i < this.providedItemQuests.length; i++)
@@ -1360,6 +1368,7 @@ export default class WorldGenerator {
 	}
 
 	RemoveQuestRequiringItem(itemID) {
+		console.assert(Number.isInteger(itemID));
 		Message("YodaDocument::RemoveQuestRequiringItem(%d)\n", itemID);
 
 		for (let i = 0; i < this.requiredItemQuests.length; i++)
@@ -1377,7 +1386,7 @@ export default class WorldGenerator {
 			return false;
 		}
 
-		for (let hotspot of zone._hotspots) {
+		for (let hotspot of zone.hotspots) {
 			if (hotspot.arg <= 0) continue;
 
 			switch (hotspot.type) {
@@ -1420,7 +1429,7 @@ export default class WorldGenerator {
 			}
 		}
 
-		for (let hotspot of zone._hotspots) {
+		for (let hotspot of zone.hotspots) {
 			if (hotspot.type === HotspotType.DoorIn && hotspot.arg >= 0) {
 				let result = this.ChooseItemIDFromZone(hotspot.arg, itemID, fromAssignedItems);
 				if (result >= 0) {
@@ -1479,7 +1488,7 @@ export default class WorldGenerator {
 	addRequiredItemQuestsFromHotspots(zoneID) {
 		Message("YodaDocument::AddRequiredItemsFromHotspots(%d)\n", zoneID);
 		let zone = this.getZoneByID(zoneID);
-		for (let hotspot of zone._hotspots) {
+		for (let hotspot of zone.hotspots) {
 			switch (hotspot.type) {
 				case Type.CrateItem:
 				case Type.PuzzleNPC:
@@ -1517,7 +1526,7 @@ export default class WorldGenerator {
 			return npcCandidates[idx];
 		}
 
-		for (let hotspot of zone._hotspots) {
+		for (let hotspot of zone.hotspots) {
 			if (hotspot.type === HotspotType.DoorIn && hotspot.arg >= 0) {
 				let result = this.findUnusedNPCForZone(hotspot.arg);
 				if (result >= 0) {
@@ -1548,7 +1557,7 @@ export default class WorldGenerator {
 				return true;
 			}
 
-		for (let hotspot of zone._hotspots)
+		for (let hotspot of zone.hotspots)
 			if (hotspot.type === HotspotType.DoorIn && hotspot.arg !== -1)
 				if (this.hasPuzzleNPC(hotspot.arg, targetNPCID)) {
 					Message("YodaDocument::hasPuzzleNPC => 1");
@@ -1568,7 +1577,7 @@ export default class WorldGenerator {
 				return true;
 			}
 
-		for (let hotspot of zone._hotspots)
+		for (let hotspot of zone.hotspots)
 			if (hotspot.type === HotspotType.DoorIn && hotspot.arg !== -1 && this.ZoneHasProvidedItem(hotspot.arg, itemID)) {
 				Message("YodaDocument::ZoneLeadsToItem => 1\n");
 				return true;
@@ -1592,7 +1601,7 @@ export default class WorldGenerator {
 			if (npcTileID !== npcID) continue;
 
 			hotspotCandidates.clear();
-			for (let hotspot of zone._hotspots) {
+			for (let hotspot of zone.hotspots) {
 				if (hotspot.type === Type.SpawnLocation && hotspot.arg === -1) {
 					hotspotCandidates.push(hotspot);
 				}
@@ -1611,7 +1620,7 @@ export default class WorldGenerator {
 			}
 		}
 
-		for (let hotspot of zone._hotspots) {
+		for (let hotspot of zone.hotspots) {
 			if (hotspot.type === HotspotType.DoorIn && hotspot.arg !== -1) {
 				let result = this.ChooseSpawnForPuzzleNPC(hotspot.arg, npcID);
 				if (result !== -1) {
@@ -1683,7 +1692,7 @@ export default class WorldGenerator {
 		if (itemIDs.length)
 			return itemIDs[rand() % itemIDs.length];
 
-		for (let hotspot of zone._hotspots) {
+		for (let hotspot of zone.hotspots) {
 			if (hotspot.type === HotspotType.DoorIn && hotspot.arg !== -1) {
 				let itemID = this.GetItemIDThatsNotRequiredYet(hotspot.arg, unused, use_array_2_ids);
 				if (itemID !== -1) return itemID;
@@ -1794,7 +1803,7 @@ export default class WorldGenerator {
 		if (zone.providedItemIDs.contains(itemID)) {
 			hotspotCandidates.clear();
 
-			for (let hotspot of zone._hotspots)
+			for (let hotspot of zone.hotspots)
 				if (hotspot.type === Type.TriggerLocation)
 					hotspotCandidates.unshift(hotspot);
 
@@ -1810,7 +1819,7 @@ export default class WorldGenerator {
 			}
 		}
 
-		for (let hotspot of zone._hotspots) {
+		for (let hotspot of zone.hotspots) {
 			if (hotspot.type === HotspotType.DoorIn && hotspot.arg >= 0) {
 				let itemID = this.ChooseItemIDFromZone_0(hotspot.arg, itemID);
 				if (itemID >= 0) {
@@ -1819,7 +1828,7 @@ export default class WorldGenerator {
 				}
 			}
 		}
-		
+
 		Message("YodaDocument::ChooseItemIDFromZone_0 => %d\n", -1);
 		return -1;
 	}
@@ -1836,7 +1845,7 @@ export default class WorldGenerator {
 		for (let itemID of itemIDs) {
 			if (itemID !== item_id) continue;
 
-			for (let hotspot of zone._hotspots) {
+			for (let hotspot of zone.hotspots) {
 				if (hotspot.type === Type.Lock) {
 					this.AddRequiredQuestWithItemID(item_id, a4);
 
@@ -1854,7 +1863,7 @@ export default class WorldGenerator {
 			}
 		}
 
-		for (let hotspot of zone._hotspots) {
+		for (let hotspot of zone.hotspots) {
 			if (hotspot.type === HotspotType.DoorIn) {
 				let result = this.ChooseItemIDFromZone_1(hotspot.arg, a3, a4, item_id, a6);
 				if (result) {
@@ -2147,7 +2156,7 @@ export default class WorldGenerator {
 				hotspot_type = Type.TriggerLocation;
 			}
 
-			for (let hotspot of zone._hotspots) {
+			for (let hotspot of zone.hotspots) {
 				if (hotspot.type === hotspot_type)
 					hotspotCandidates.push(hotspot);
 			}
@@ -2167,7 +2176,7 @@ export default class WorldGenerator {
 			return false;
 		}
 
-		for (let hotspot of zone._hotspots) {
+		for (let hotspot of zone.hotspots) {
 			if (hotspot.type === HotspotType.DoorIn && hotspot.arg >= 0) {
 				let result = this.AssociateItemWithZoneHotspot(hotspot.arg, item_id, a4);
 				if (result) {
@@ -2203,7 +2212,7 @@ export default class WorldGenerator {
 		return this.data.zones.length;
 	}
 
-	getZoneByIDType(zoneID) {
+	getZoneTypeByZoneID(zoneID) {
 		return this.getZoneByID(zoneID).type;
 	}
 

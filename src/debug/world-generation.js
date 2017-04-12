@@ -199,17 +199,11 @@ export default class {
 		item.classList.add(this._classForZoneType(worldItem.zoneType));
 
 		if (expectedWorldItem) {
-			/*
-			if (expectedWorldItem.findItemID !== worldItem.findItemID ||
-				expectedWorldItem.requiredItemID !== worldItem.requiredItemID ||
-				expectedWorldItem.npcID !== worldItem.npcID ||
-				expectedWorldItem.unknown606 !== worldItem.unknown606) {
+			if (expectedWorldItem[6] !== worldItem.findItemID ||
+				expectedWorldItem[4] !== worldItem.requiredItemID
+			) {
 				item.classList.add('invalid-details');
 			}
-			*/
-
-			expectedWorldItem[0] !== worldItem.zoneId && console.log('zoneId', expectedWorldItem[0], worldItem.zoneId);
-			expectedWorldItem[1] !== worldItem.zoneType && console.log('zoneType', expectedWorldItem[1], worldItem.zoneType);
 
 			if (expectedWorldItem[0] !== worldItem.zoneId ||
 				expectedWorldItem[1] !== worldItem.zoneType) {
