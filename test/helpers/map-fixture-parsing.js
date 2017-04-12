@@ -11,12 +11,11 @@ export default (name) => {
 				return v === 0xFFFF ? -1 : v;
 			});
 			let data = parts.slice(3);
-			if (data.length !== 100 && data.length !== 1000) console.log('ERRORRRROR');
 			return {
 				seed: parts[0],
 				planet: parts[1],
 				size: parts[2],
-				data: data
+				data: data.slice(0, 1000)
 			};
 		});
 };
