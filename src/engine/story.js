@@ -57,7 +57,7 @@ export default class {
 		world.data = data;
 		for (let i = 0; i < 100; i++) {
 			const worldItem = generator.world[i];
-			const zone = data.zones[worldItem.zoneID];
+			const zone = data.zones[worldItem.zoneId];
 
 			world.map[i] = zone;
 

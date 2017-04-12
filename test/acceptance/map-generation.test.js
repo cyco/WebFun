@@ -20,7 +20,7 @@ const getPlanetName = (p) => {
 	return "Invalid";
 };
 
-describe('Map Generation', function() {
+xdescribe('Map Generation', function() {
 	let orderMaps = loadMapFixtures('order_maps.txt');
 	let typeMaps = loadMapFixtures('type_maps.txt');
 
