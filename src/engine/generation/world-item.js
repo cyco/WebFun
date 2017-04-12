@@ -1,7 +1,7 @@
 export default class WorldItem {
 	constructor() {
-		this.zoneID = -1;
-		this.zoneType = -1;
+		this.zoneId = -1;
+		this.zoneType = 0;
 
 		this.puzzleIdx = -1;
 

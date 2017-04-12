@@ -43,7 +43,7 @@ describe('World Generation', function() {
 		it('World 0x' + seed.toString(0x10) + " " + getPlanetName(planet) + " " + getSizeName(size),
 			(function(world) {
 				return function() {
-					window.logging = false;
+					window.logging = true;
 					let seed = world.seed;
 					let planet = world.planet;
 					let size = world.size;
@@ -54,11 +54,11 @@ describe('World Generation', function() {
 					let i;
 					for (i = 0; i < 100; i++) {
 						let thing = worldGenerator.world[i];
-						expect(thing.zoneID).toBe(sample[i * 10]);
-//						expect(thing.zoneType).toBe(sample[i * 10 + 1]);
+						expect(thing.zoneId).toBe(sample[i * 10]);
+						// expect(thing.zoneType).toBe(sample[i * 10 + 1]);
 						
-						if (thing.zoneID !== sample[i * 10]) return;
-						if (thing.zoneType !== sample[i * 10 + 1]) return;
+						if (thing.zoneId !== sample[i * 10]) return;
+						// if (thing.zoneType !== sample[i * 10 + 1]) return;
 						// if (thing.findItemID !== sample[i * 10 + 6]) return;
 						// if (thing.requiredItemID !== sample[i * 10 + 4]) return;
 					}

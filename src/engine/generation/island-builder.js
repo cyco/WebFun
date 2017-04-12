@@ -26,7 +26,7 @@ export default class IslandBuilder {
 	}
 
 	placeIslands(count) {
-		Message("MapGenerator::_placeIslands(%x)\n", count);
+		Message("MapGenerator::PlaceTransports(%x)\n", count);
 		for (let i = 0; i < count; i++) {
 			this._placeIsland();
 		}

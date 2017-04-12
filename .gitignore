@@ -1,0 +1,16 @@
+dist
+build
+node_modules
+test/coverage
+.tm_properties
+game-data/tiles
+game-data/zones
+yoda.data
+yoda-demo.data
+indy.data
+indy-demo.data
+sfx_yoda
+sfx_indy
+yoda.pal
+indy.pal
+

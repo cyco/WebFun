@@ -95,7 +95,8 @@ export default class {
 			const planet = this.readInt(this._planetInput.value);
 			const size = this.readInt(this._sizeInput.value);
 
-			const generator = new WorldGenerator(seed, planet, size, engine);
+			const generator = new WorldGenerator(seed, size, planet, engine);
+			console.log('generate', seed, size, planet);
 			if (!generator.generate()) throw "Unable to build world!";
 
 			this._showWorld(generator.world, seed, planet, size);
@@ -104,13 +105,13 @@ export default class {
 
 	_showDetails(i) {
 		const worldItem = this._currentWorld[i];
-		
+
 		const details = document.createElement('div');
 		details.append('Details:');
 		details.appendChild(document.createElement('br'));
 		details.append(`${i%10}x${Math.floor(i/10)}`);
 		details.appendChild(document.createElement('br'));
-		details.append(`Zone: ${worldItem.zoneID}`);
+		details.append(`Zone: ${worldItem.zoneId}`);
 		details.appendChild(document.createElement('br'));
 		details.append(`Type: ${this._typeName(worldItem.zoneType)}`);
 		details.appendChild(document.createElement('br'));
@@ -122,7 +123,7 @@ export default class {
 		details.appendChild(this._itemRow('findItemID', worldItem.findItemID, expectedWorldItem.findItemID));
 		details.appendChild(this._itemRow('npcID', worldItem.npcID, expectedWorldItem.npcID));
 		details.appendChild(this._itemRow('unknown606', worldItem.unknown606, expectedWorldItem.unknown606));
-		
+
 		this._details.replaceWith(details);
 		this._details = details;
 	}
@@ -138,8 +139,8 @@ export default class {
 		const tile = this._engine.data.tiles[itemIdx];
 		image.src = tile ? tile.image.representation.src : Image.blankImage;
 		row.appendChild(image);
-		
-		if(itemIdx !== expectedItemIdx) {
+
+		if (itemIdx !== expectedItemIdx) {
 			const image = document.createElement('img');
 			image.style.width = '32px';
 			image.style.height = '32px';
@@ -147,7 +148,7 @@ export default class {
 			const tile = this._engine.data.tiles[expectedItemIdx];
 			image.src = tile ? tile.image.representation.src : Image.blankImage;
 			row.appendChild(image);
-			
+
 			row.style.color = 'red';
 		}
 
@@ -186,7 +187,7 @@ export default class {
 
 		this._mapContainer.clear();
 		for (let i = 0; i < 100; i++) {
-			this._addItem(world[i], expectedWorld && expectedWorld[i]);
+			this._addItem(world[i], expectedWorld && expectedWorld.slice(i * 10, (i + 1) * 10));
 		}
 		this._currentWorld = world;
 		this._currentSample = expectedWorld;
@@ -198,18 +199,23 @@ export default class {
 		item.classList.add(this._classForZoneType(worldItem.zoneType));
 
 		if (expectedWorldItem) {
+			/*
 			if (expectedWorldItem.findItemID !== worldItem.findItemID ||
 				expectedWorldItem.requiredItemID !== worldItem.requiredItemID ||
 				expectedWorldItem.npcID !== worldItem.npcID ||
 				expectedWorldItem.unknown606 !== worldItem.unknown606) {
 				item.classList.add('invalid-details');
 			}
+			*/
 
-			if (expectedWorldItem.zoneId !== worldItem.zoneId ||
-				expectedWorldItem.zoneType !== worldItem.zoneType) {
+			expectedWorldItem[0] !== worldItem.zoneId && console.log('zoneId', expectedWorldItem[0], worldItem.zoneId);
+			expectedWorldItem[1] !== worldItem.zoneType && console.log('zoneType', expectedWorldItem[1], worldItem.zoneType);
+
+			if (expectedWorldItem[0] !== worldItem.zoneId ||
+				expectedWorldItem[1] !== worldItem.zoneType) {
 				item.classList.add('invalid');
-			}
-		}
+			} else item.classList.remove('invalid');
+		} else item.classList.remove('invalid');
 
 		this._mapContainer.appendChild(item);
 	}

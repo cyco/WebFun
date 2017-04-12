@@ -24,11 +24,11 @@
 		&.trade, &.use, &.find, &.find-the-force, { background-image: url('game-data/tiles/0817.png'); }
 		
 		&.invalid-details {
-			border: 0.5 solid orange;
+			border: 0.5px solid orange;
 		}
 		
 		&.invalid {
-			border: 0.5 solid red;
+			border: 0.5px solid red;
 		}
 	}
 }
