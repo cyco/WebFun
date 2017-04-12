@@ -106,7 +106,6 @@ function place_blockade(x, y, xdif, ydif) {
 }
 
 function extend_blockade(x, y, xdif, ydif) {
-	console.warn('extend_blockade');
 	typeMap.set(x, y, WorldItemType.Candidate);
 	typeMap.set(x - ydif, y - xdif, WorldItemType.KeptFree);
 	typeMap.set(x + ydif, y + xdif, WorldItemType.KeptFree);
