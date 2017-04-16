@@ -1,6 +1,6 @@
 import { rand } from '/util';
 import WorldItemType from './world-item-type';
-import World from '/engine/world';
+import World from './world';
 import { Type as HotspotType } from '/engine/objects/hotspot';
 import { Type as ZoneType } from '/engine/objects/zone';
 
@@ -26,15 +26,19 @@ export default class {
 		dagobah.data = data;
 
 		dagobah.setZone(4, 4, ZONE_DAGOBAH_NORTH_EAST);
+		dagobah.at(4, 4).zoneType = data.zones[ZONE_DAGOBAH_NORTH_EAST].type;
 		dagobah.setZone(5, 4, ZONE_DAGOBAH_NORTH_WEST);
+		dagobah.at(5, 4).zoneType = data.zones[ZONE_DAGOBAH_NORTH_WEST].type;
 		dagobah.setZone(4, 5, ZONE_DAGOBAH_SOUTH_EAST);
+		dagobah.at(4, 5).zoneType = data.zones[ZONE_DAGOBAH_SOUTH_EAST].type;
 		dagobah.setZone(5, 5, ZONE_DAGOBAH_SOUTH_WEST);
+		dagobah.at(5, 5).zoneType = data.zones[ZONE_DAGOBAH_SOUTH_WEST].type;
 
 		let random = rand();
 		let mode = Math.abs(random) % 3;
-		if (this.goal.id === GOAL_IMPERIAL_BATTLE_CODE) {
+		if (generator.goalPuzzleID === GOAL_IMPERIAL_BATTLE_CODE) {
 			mode = 3;
-		} else if (this.goal.id === GOAL_RESCUE_YODA) {
+		} else if (generator.goalPuzzleID === GOAL_RESCUE_YODA) {
 			mode = 4;
 		}
 
@@ -45,7 +49,7 @@ export default class {
 				worldItem = dagobah.at(4, 4);
 				worldItem.zoneType = ZoneType.Use;
 				worldItem.zoneId = ZONE_DAGOBAH_NORTH_EAST;
-				worldItem.npcId = TILE_YODA;
+				worldItem.npcID = TILE_YODA;
 				/*
 	      		document->world_things_1[44].zone_type = Use;
 	      		v7 = document->puzzle_ids_2.ptrs;
@@ -62,7 +66,7 @@ export default class {
 				worldItem = dagobah.at(4, 5);
 				worldItem.zoneType = ZoneType.Use;
 				worldItem.zoneId = ZONE_YODAS_HUT;
-				worldItem.npcId = TILE_YODA;
+				worldItem.npcID = TILE_YODA;
 				/*
 	      		document->world_things_1[45].zone_type = Use;
 	      		v10 = document->puzzle_ids_2.ptrs;
@@ -79,7 +83,7 @@ export default class {
 				worldItem = dagobah.at(5, 5);
 				worldItem.zoneType = ZoneType.Use;
 				worldItem.zoneId = ZONE_DAGOBAH_SOUTH_WEST;
-				worldItem.npcId = TILE_YODA;
+				worldItem.npcID = TILE_YODA;
 				/*
 	      		document->world_things_1[55].zone_type = Use;
 	      		v8 = document->puzzle_ids_2.ptrs;
@@ -96,7 +100,7 @@ export default class {
 				worldItem = dagobah.at(5, 4);
 				worldItem.zoneType = ZoneType.Use;
 				worldItem.zoneId = ZONE_DAGOBAH_SOUTH_EAST;
-				worldItem.npcId = TILE_YODA;
+				worldItem.npcID = TILE_YODA;
 				/*
 				document->world_things_1[54].zone_type = Use;
 				v9 = document->puzzle_ids_2.ptrs;
@@ -113,7 +117,7 @@ export default class {
 				worldItem = dagobah.at(4, 5);
 				worldItem.zoneType = ZoneType.Use;
 				worldItem.zoneId = ZONE_DAGOBAH_SOUTH_EAST;
-				worldItem.npcId = TILE_YODA;
+				worldItem.npcID = TILE_YODA;
 				/*
 	      document->world_things_1[45].zone_type = Use;
 	      v10 = document->puzzle_ids_2.ptrs;
@@ -129,29 +133,29 @@ export default class {
 				break;
 		}
 
-		return dagobah;
+		return (this._world = dagobah);
 	}
 
-	_setupSpawnHotspot(zoneId, npcId, data) {
+	_setupSpawnHotspot(zoneId, npcID, data) {
 		const zones = data.zones;
 		const zone = zones[zoneId];
 		const hotspots = zone.hotspots;
 
 		if (zoneId !== ZONE_YODAS_HUT) {
-			const index = zone.puzzleNPCTileIDs.indexOf(npcId);
+			const index = zone.puzzleNPCTileIDs.indexOf(npcID);
 			if (index === -1) return;
 
 			const candidates = zone.hotspots.filter((hotspot) => hotspot.type === HotspotType.SpawnLocation);
 			if (candidates.length) {
 				let hotspot = candidates[rand() % candidates.length];
-				hotspot.arg = npcId;
+				hotspot.arg = npcID;
 				hotspot.enabled = true;
 			}
 
 			return;
 		}
 
-		if (npcId === TILE_YODA) {
+		if (npcID === TILE_YODA) {
 			const index = zone.puzzleNPCTileIDs.indexOf(TILE_YODA);
 			if (index === -1) return;
 
@@ -164,14 +168,14 @@ export default class {
 			return;
 		}
 
-		if (npcId === TILE_YODAS_SEAT) {
-			const index = zone.puzzleNPCTileIDs.indexOf(npcId);
+		if (npcID === TILE_YODAS_SEAT) {
+			const index = zone.puzzleNPCTileIDs.indexOf(npcID);
 			if (index === -1) return;
 
 			let hotspot = hotspots.filter((hotspot) => hotspot.x === 3 && hotspot.y === 2).last();
 			if (!hotspot) return;
 
-			hotspot.arg = npcId;
+			hotspot.arg = npcID;
 			hotspot.enabled = true;
 
 			return;

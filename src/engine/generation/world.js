@@ -1,5 +1,5 @@
 import { Point } from "/util";
-import { WorldItem } from './generation';
+import WorldItem from './world-item';
 
 export const width = 10;
 export const height = 10;

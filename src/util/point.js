@@ -75,7 +75,7 @@ export default class Point {
 	}
 
 	isEqualTo(point) {
-		return point && this.x === point.x && this.y === point.y && this.z === point.z;
+		return !!(point && this.x === point.x && this.y === point.y && this.z === point.z);
 	}
 
 	isUnidirectional() {
@@ -94,5 +94,3 @@ export default class Point {
 		return `Point {${this.x}x${this.y}}`;
 	}
 }
-
-window.Point = Point;

@@ -1,4 +1,4 @@
-import World from '/engine/world';
+import World from '/engine/generation/world';
 import Point from '/util/point';
 import Zone from '/engine/objects/zone';
 

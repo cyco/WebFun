@@ -26,10 +26,11 @@ export default class {
 	generateWorld(engine) {
 		let generator = null;
 		let success = false;
+		let effectiveSeed = this.seed;
 		do {
-			generator = new WorldGenerator(this.seed, this.planet, this.size, engine);
+			generator = new WorldGenerator(effectiveSeed, this.size, this.planet, engine);
 			success = generator.generate();
-			if (!success) this.seed = srand();
+			if (!success) effectiveSeed = srand();
 		} while (!success);
 
 		const goalID = generator.goalPuzzleID;
@@ -44,8 +45,11 @@ export default class {
 	}
 
 	_setupDagobah(wordlGenerator, engine) {
-		const generator = DagobahGenerator(engine);
+		const generator = new DagobahGenerator(engine);
 		generator.generate(wordlGenerator);
 		this._dagobah = generator.world;
 	}
+	
+	get world(){ return this._world; }
+	get dagobah(){ return this._dagobah; }
 }

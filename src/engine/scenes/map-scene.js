@@ -1,7 +1,7 @@
 import Scene from "/engine/scenes/scene";
 import Tile from "/engine/objects/tile";
 import { Type as ZoneType } from "/engine/objects/zone";
-import World from "/engine/world";
+import { World } from "/engine/generation/world";
 import { Planet } from "/engine/types";
 import { Weapons, UnlimitedAmmo, Invincibility, CheatCodeInput } from "/engine/cheats";
 

@@ -3,7 +3,7 @@ import { Point, Message, srand, rand, VerticalPointRange, HorizontalPointRange }
 import MapGenerator from "./map-generator";
 import WorldItem from "./world-item";
 import WorldItemType from "./world-item-type";
-import World from '/engine/world';
+import World from './world';
 import { Planet, WorldSize } from "/engine/types";
 import Quest from "/engine/quest";
 
@@ -40,7 +40,6 @@ export default class WorldGenerator {
 		this.puzzleIDs_2 = [];
 		this.requiredItemQuests = [];
 		this.wg_another_item_id = -1;
-		this.wg_another_item_id = null;
 		this.wg_item_id = -1;
 		this.wg_item_id_unknown_2 = -1;
 		this.wg_item_id_unknown_3 = -1;

@@ -1,6 +1,7 @@
 import loadGameData from '../helpers/game-data';
 import loadMapFixtures from '../helpers/map-fixture-parsing';
 
+import Story from '/engine/story';
 import GameData from '/engine/game-data';
 import WorldGenerator from '/engine/generation/world-generator';
 
@@ -36,10 +37,10 @@ describe('World Generation', () => {
 			// expect({ seed, planet, size, data: new GameData(rawData) }).toGenerateWorld(sample);
 			window.logging = false;
 
-			let worldGenerator = new WorldGenerator(seed, size, planet, { data: new GameData(rawData) });
-			worldGenerator.generate();
-
-			const world = worldGenerator.world;
+			const story = new Story(seed, planet, size);
+			story.generateWorld({data: new GameData(rawData)});
+			
+			const world = story._world;
 			for (let i = 0; i < 100; i++) {
 				let thing = world.index(i);
 				expect(thing.zoneId).toBe(sample[i * 10]);

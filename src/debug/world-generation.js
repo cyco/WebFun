@@ -1,6 +1,6 @@
 import { Window, Textbox } from '/ui';
 import { FileLoader } from '/util';
-import { WorldGenerator } from '/engine/generation';
+import Story from '/engine/story';
 import { FileReader, GameData } from '/engine';
 import { Type as ZoneType } from '/engine/objects/zone';
 
@@ -12,6 +12,7 @@ export default class {
 		this._window = new Window();
 		this._window.content.style.flexDirection = 'column';
 
+		this._currentStory = null;
 		this._readExpectations();
 		this._setupInputFields();
 		this._setupMapView();
@@ -33,8 +34,7 @@ export default class {
 					}).map(function(v) {
 						return v === 0xFFFF ? -1 : v;
 					});
-					let data = parts.slice(3);
-					if (data.length !== 100 && data.length !== 1000) console.log('ERRORRRROR');
+
 					return {
 						seed: parts[0],
 						planet: parts[1],
@@ -95,16 +95,18 @@ export default class {
 			const planet = this.readInt(this._planetInput.value);
 			const size = this.readInt(this._sizeInput.value);
 
-			const generator = new WorldGenerator(seed, size, planet, engine);
-			console.log('generate', seed, size, planet);
-			if (!generator.generate()) throw "Unable to build world!";
+			const story = new Story(seed, planet, size);
+			story.generateWorld(engine);
+			this._currentStory = story;
 
-			this._showWorld(generator.world, seed, planet, size);
+			this._showWorld(story.dagobah, seed, planet, size);
 		});
 	}
 
 	_showDetails(i) {
-		const worldItem = this._currentWorld[i];
+		const worldItem = this._currentWorld.index(i);
+		debugger; 
+		const expectedWorldItem = this._currentSample && this._currentSample.slice(i * 10, (i + 1) * 10);
 
 		const details = document.createElement('div');
 		details.append('Details:');
@@ -112,17 +114,22 @@ export default class {
 		details.append(`${i%10}x${Math.floor(i/10)}`);
 		details.appendChild(document.createElement('br'));
 		details.append(`Zone: ${worldItem.zoneId}`);
+		if (expectedWorldItem && expectedWorldItem[0] !== worldItem.zoneId) {
+			details.append(` vs ${expectedWorldItem[0]}`);
+		}
 		details.appendChild(document.createElement('br'));
 		details.append(`Type: ${this._typeName(worldItem.zoneType)}`);
+		if (expectedWorldItem && expectedWorldItem[1] !== worldItem.zoneType) {
+			details.append(` vs ${expectedWorldItem[1]}`);
+		}
 		details.appendChild(document.createElement('br'));
 		details.append(`Puzzle: ${worldItem.puzzleIdx}`);
 		details.appendChild(document.createElement('br'));
 
-		const expectedWorldItem = this._currentWorld && this._currentWorld[i];
-		details.appendChild(this._itemRow('requiredItemID', worldItem.requiredItemID, expectedWorldItem.requiredItemID));
-		details.appendChild(this._itemRow('findItemID', worldItem.findItemID, expectedWorldItem.findItemID));
-		details.appendChild(this._itemRow('npcID', worldItem.npcID, expectedWorldItem.npcID));
-		details.appendChild(this._itemRow('unknown606', worldItem.unknown606, expectedWorldItem.unknown606));
+		details.appendChild(this._itemRow('requiredItemID', worldItem.requiredItemID, expectedWorldItem ? expectedWorldItem.requiredItemID : -1));
+		details.appendChild(this._itemRow('findItemID', worldItem.findItemID, expectedWorldItem ? expectedWorldItem.findItemID : -1));
+		details.appendChild(this._itemRow('npcID', worldItem.npcID, expectedWorldItem ? expectedWorldItem.npcID : -1));
+		details.appendChild(this._itemRow('unknown606', worldItem.unknown606, expectedWorldItem ? expectedWorldItem.unknown606 : -1));
 
 		this._details.replaceWith(details);
 		this._details = details;
@@ -183,11 +190,11 @@ export default class {
 
 	_showWorld(world, seed, planet, size) {
 		const expectedResult = this.expectations.find((e) => e.seed === seed && e.planet === planet && e.size === size);
-		const expectedWorld = expectedResult && expectedResult.data;
-
+		let expectedWorld = expectedResult && expectedResult.data.slice(1000, 2000);
+		expectedWorld = expectedWorld.length ? expectedWorld : null;
 		this._mapContainer.clear();
 		for (let i = 0; i < 100; i++) {
-			this._addItem(world[i], expectedWorld && expectedWorld.slice(i * 10, (i + 1) * 10));
+			this._addItem(world.index(i), expectedWorld && expectedWorld.slice(i * 10, (i + 1) * 10));
 		}
 		this._currentWorld = world;
 		this._currentSample = expectedWorld;

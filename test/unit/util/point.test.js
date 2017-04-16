@@ -1,14 +1,14 @@
 import Point from '/util/point';
 
-describe('Point', () =>  {
-	it('defines a point in space with up to 3 coordinates', () =>  {
+describe('Point', () => {
+	it('defines a point in space with up to 3 coordinates', () => {
 		let point = new Point(1, 2, 3);
 		expect(point.x).toBe(1);
 		expect(point.y).toBe(2);
 		expect(point.z).toBe(3);
 	});
 
-	it('points can also be created from any object that has x,y and z properties', () =>  {
+	it('points can also be created from any object that has x,y and z properties', () => {
 		let object = {
 			x: 2,
 			y: 3,
@@ -20,7 +20,7 @@ describe('Point', () =>  {
 		expect(point.z).toBe(4);
 	});
 
-	it('has a static method to add to points', () =>  {
+	it('has a static method to add to points', () => {
 		expect(typeof Point.add).toBe('function');
 
 		let firstPoint = new Point(1, 2, 3);
@@ -32,7 +32,7 @@ describe('Point', () =>  {
 		expect(result.y).toBe(5);
 	});
 
-	it('adding two points just uses the z-coordinate of the first point', () =>  {
+	it('adding two points just uses the z-coordinate of the first point', () => {
 		expect(typeof Point.add).toBe('function');
 
 		let firstPoint = new Point(1, 2, 7);
@@ -43,7 +43,7 @@ describe('Point', () =>  {
 		expect(result.z).toBe(7);
 	});
 
-	it('has a static method to subtract to points', () =>  {
+	it('has a static method to subtract to points', () => {
 		expect(typeof Point.add).toBe('function');
 
 		let firstPoint = new Point(1, 2, 3);
@@ -55,7 +55,7 @@ describe('Point', () =>  {
 		expect(result.y).toBe(-1);
 	});
 
-	it('subtract two points just uses the z-coordinate of the first point', () =>  {
+	it('subtract two points just uses the z-coordinate of the first point', () => {
 		expect(typeof Point.add).toBe('function');
 
 		let firstPoint = new Point(1, 2, 7);
@@ -66,8 +66,8 @@ describe('Point', () =>  {
 		expect(result.z).toBe(7);
 	});
 
-	describe('add', () =>  {
-		it('adds one point to another', () =>  {
+	describe('add', () => {
+		it('adds one point to another', () => {
 
 			let firstPoint = new Point(1, 2, 3);
 			let secondPoint = new Point(-5, 3, 3);
@@ -78,7 +78,7 @@ describe('Point', () =>  {
 			expect(firstPoint.y).toBe(5);
 		});
 
-		it('can also be called with the coordinates to add', () =>  {
+		it('can also be called with the coordinates to add', () => {
 			let firstPoint = new Point(1, 2, 3);
 
 			firstPoint.add(1, 2, 3);
@@ -87,7 +87,7 @@ describe('Point', () =>  {
 			expect(firstPoint.y).toBe(4);
 		});
 
-		it('doesn\'t touch the z-coordinate', () =>  {
+		it('doesn\'t touch the z-coordinate', () => {
 			let firstPoint = new Point(1, 2, 3);
 			let secondPoint = new Point(-5, 3, 3);
 			firstPoint.add(secondPoint);
@@ -96,8 +96,8 @@ describe('Point', () =>  {
 	});
 
 
-	describe('subtract', () =>  {
-		it('subtract one point from another', () =>  {
+	describe('subtract', () => {
+		it('subtract one point from another', () => {
 
 			let firstPoint = new Point(1, 2, 3);
 			let secondPoint = new Point(-5, 3, 3);
@@ -108,7 +108,7 @@ describe('Point', () =>  {
 			expect(firstPoint.y).toBe(-1);
 		});
 
-		it('can also be called with the coordinates to subtract', () =>  {
+		it('can also be called with the coordinates to subtract', () => {
 			let firstPoint = new Point(1, 2, 3);
 
 			firstPoint.subtract(1, 2, 3);
@@ -117,7 +117,7 @@ describe('Point', () =>  {
 			expect(firstPoint.y).toBe(0);
 		});
 
-		it('doesn\'t touch the z-coordinate', () =>  {
+		it('doesn\'t touch the z-coordinate', () => {
 			let firstPoint = new Point(1, 2, 3);
 			let secondPoint = new Point(-5, 3, 3);
 			firstPoint.subtract(secondPoint);
@@ -125,29 +125,29 @@ describe('Point', () =>  {
 		});
 	});
 
-	describe('abs', () =>  {
-		it('negates negative coordinates', () =>  {
+	describe('abs', () => {
+		it('negates negative coordinates', () => {
 			let point = new Point(-1, -2);
 			point.abs();
 			expect(point.x).toBe(1);
 			expect(point.y).toBe(2);
 		});
 
-		it('doesn\'t touch positive coordinates', () =>  {
+		it('doesn\'t touch positive coordinates', () => {
 			let point = new Point(1, 2);
 			point.abs();
 			expect(point.x).toBe(1);
 			expect(point.y).toBe(2);
 		});
 
-		it('never touches the z coordinate', () =>  {
+		it('never touches the z coordinate', () => {
 			let point = new Point(1, 2, -5);
 			point.abs();
 			expect(point.z).toBe(-5);
 		});
 	});
 
-	it('has a method to floor all coordinates', () =>  {
+	it('has a method to floor all coordinates', () => {
 		let point = new Point(1.2, 3.2, 7.9);
 		point.floor();
 		expect(point.x).toBe(1);
@@ -155,7 +155,7 @@ describe('Point', () =>  {
 		expect(point.z).toBe(7);
 	});
 
-	it('has a method to ceil all coordinates', () =>  {
+	it('has a method to ceil all coordinates', () => {
 		let point = new Point(1.2, 3.2, 7.9);
 		point.ceil();
 		expect(point.x).toBe(2);
@@ -163,7 +163,7 @@ describe('Point', () =>  {
 		expect(point.z).toBe(8);
 	});
 
-	it('has a method to scale x,y coordinates', () =>  {
+	it('has a method to scale x,y coordinates', () => {
 		let point = new Point(1, 3, 7);
 		point.scaleBy(3);
 		expect(point.x).toBe(3);
@@ -171,8 +171,8 @@ describe('Point', () =>  {
 		expect(point.z).toBe(7);
 	});
 
-	describe('isUnidirectional', () =>  {
-		it('it determines if only either the x or y-coordinate is set', () =>  {
+	describe('isUnidirectional', () => {
+		it('it determines if only either the x or y-coordinate is set', () => {
 			let point;
 
 			point = new Point(0, 2, -5);
@@ -185,13 +185,13 @@ describe('Point', () =>  {
 			expect(point.isUnidirectional()).toBeFalse();
 		});
 
-		it('A zero point is considered to be unidirectional', () =>  {
+		it('A zero point is considered to be unidirectional', () => {
 			let point = new Point(0, 0);
 			expect(point.isUnidirectional()).toBeTrue();
 		});
 	});
 
-	it('isInBounds is true if coordinates are positive and less than the specified size', () =>  {
+	it('isInBounds is true if coordinates are positive and less than the specified size', () => {
 		let size = {
 			width: 10,
 			height: 5
@@ -220,7 +220,7 @@ describe('Point', () =>  {
 		expect(point.isInBounds(size)).toBeFalse();
 	});
 
-	it('isZeroPoint determines if all coordinates are zero', () =>  {
+	it('isZeroPoint determines if all coordinates are zero', () => {
 		let point;
 
 		point = new Point(0, 0);
@@ -236,9 +236,21 @@ describe('Point', () =>  {
 		expect(point.isZeroPoint()).toBeFalse();
 	});
 
-	it('properly converts to a human-readable string', () =>  {
+	it('properly converts to a human-readable string', () => {
 		let point = new Point(2, 3);
 		expect(point.toString()).toBe('Point {2x3}');
 		expect("" + point).toBe('Point {2x3}');
+	});
+
+	it('isEqualTo can be used to check two points for equality', () => {
+		const pointA = new Point(2, 3, 4);
+		const pointB = new Point(2, 3, 4);
+		const pointC = new Point(-2, 4, 4);
+
+		expect(pointA.isEqualTo(pointB)).toBeTrue();
+		expect(pointB.isEqualTo(pointA)).toBeTrue();
+
+		expect(pointA.isEqualTo(pointC)).toBeFalse();
+		expect(pointA.isEqualTo(null)).toBeFalse();
 	});
 });
