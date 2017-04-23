@@ -5,6 +5,7 @@
 	"license": "MIT",
 	"devDependencies": {
 		"add-matchers": "^0.5.0",
+		"babel-cli": "^6.24.1",
 		"babel-jest": "^19.0.0",
 		"babel-loader": "^6.4.1",
 		"babel-plugin-transform-export-extensions": "^6.22.0",
@@ -26,7 +27,9 @@
 		"build:styles:cont": "find styles -type f|entr yarn build:styles",
 		"format": "find src -type f -name '*.js'|xargs esformatter -i",
 		"format:cont": "find src -type f -name '*.js'|entr yarn format",
-		"check-tests": "node ./check-tests.js"
+		"check-tests": "node ./check-tests.js",
+		"world": "babel-node -- generate-world.js -v -d \"game-data/yoda.data\"",
+		"world:validate": "babel-node -- generate-world.js -c -d \"game-data/yoda.data\" -e \"game-data/worlds.txt\""
 	},
 	"jest": {
 		"automock": false,
@@ -39,15 +42,31 @@
 			"/node_modules/",
 			"/test/fixture/",
 			"/test/coverage/",
-			"/test/helpers/"
+			"/test/helpers/",
+			"/test/unit/"
 		],
 		"coveragePathIgnorePatterns": [
 			"/test/helpers/",
 			"/src/debug/"
 		]
 	},
+	"babel": {
+		"presets": [
+			"es2015"
+		],
+		"plugins": [
+			"babel-plugin-transform-export-extensions",
+			[
+				"babel-root-slash-import",
+				{
+					"rootPathSuffix": "src"
+				}
+			]
+		]
+	},
 	"dependencies": {
 		"esformatter": "^0.10.0",
-		"esformatter-quotes": "^1.1.0"
+		"esformatter-quotes": "^1.1.0",
+		"sprintf.js": "^0.1.4"
 	}
 }

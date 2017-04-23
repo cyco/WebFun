@@ -27,6 +27,7 @@
 		"Buffer": true,
 		
 		// Node.js
-		"global": true
+		"global": true,
+		"process": true
 	}
 }

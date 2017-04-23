@@ -1,9 +1,0 @@
-{
-	 "presets": ["es2015"],
-	"plugins": [
-		"babel-plugin-transform-export-extensions",
-		["babel-root-slash-import", {
-					"rootPathSuffix": "src",
-		}]
-	]
-}
