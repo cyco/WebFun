@@ -9,7 +9,3 @@ export const rand = () => {
 	return result;
 };
 export const randmod = (mod) => rand() % mod;
-
-window.srand = srand;
-window.rand = rand;
-window.randmod = randmod;

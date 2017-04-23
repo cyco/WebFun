@@ -12,5 +12,3 @@ export default class Range {
 		return this.min + rand() % (this.max - this.min + 1);
 	}
 }
-
-window.Range = Range;

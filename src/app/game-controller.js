@@ -17,9 +17,6 @@ export default class {
 		this._sceneView = new SceneView();
 		this._engine = this._buildEngine();
 		this._sceneView.manager.engine = this._engine;
-
-
-		window.engine = this._engine;
 	}
 
 	_buildEngine() {

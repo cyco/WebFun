@@ -1,13 +1,12 @@
-import { Window, Textbox } from '/ui';
+import { Window, Textbox, Checkbox } from '/ui';
 import { FileLoader } from '/util';
 import Story from '/engine/story';
 import { FileReader, GameData } from '/engine';
 import { Type as ZoneType } from '/engine/objects/zone';
+import { PrepareExpectations, ParseExpectation, ComparisonResult, CompareWorldItems } from './expectation';
 
 export default class {
 	constructor(engine) {
-		window.dbg = this;
-
 		this._engine = engine;
 		this._window = new Window();
 		this._window.content.style.flexDirection = 'column';
@@ -25,23 +24,7 @@ export default class {
 	_readExpectations() {
 		const fileLoader = new FileLoader('game-data/worlds.txt');
 		fileLoader.onload = ({ detail: { arraybuffer } }) => {
-			this.expectations = (new TextDecoder()).decode(arraybuffer).split('\n')
-				.filter(function(line) {
-					return line.length && line[0] !== ';';
-				}).map(function(line) {
-					let parts = line.split(', ').map(function(v) {
-						return parseInt(v, 0x10);
-					}).map(function(v) {
-						return v === 0xFFFF ? -1 : v;
-					});
-
-					return {
-						seed: parts[0],
-						planet: parts[1],
-						size: parts[2],
-						data: parts.slice(3)
-					};
-				});
+			this.expectations = PrepareExpectations((new TextDecoder()).decode(arraybuffer)).map(ParseExpectation);
 		};
 		fileLoader.load();
 	}
@@ -54,6 +37,13 @@ export default class {
 		inputContainer.appendChild(this._planetInput.element);
 		this._sizeInput = this._buildInputField('dbg.size');
 		inputContainer.appendChild(this._sizeInput.element);
+		this._showDagobahCheckbox = new Checkbox('Show Dagobah');
+		this._showDagobahCheckbox.checked = !!localStorage.load('showDagobah');
+		this._showDagobahCheckbox.onchange = () => {
+			localStorage.store('showDagobah', this._showDagobahCheckbox.checked);
+			this._rebuildWorld();
+		};
+		inputContainer.appendChild(this._showDagobahCheckbox.element);
 		this._window.content.appendChild(inputContainer);
 	}
 
@@ -65,6 +55,7 @@ export default class {
 			localStorage.setItem(key, input.value);
 			this._rebuildWorld();
 		};
+		input.element.style.width = '60px';
 		return input;
 	}
 
@@ -99,34 +90,38 @@ export default class {
 			story.generateWorld(engine);
 			this._currentStory = story;
 
-			this._showWorld(story.dagobah, seed, planet, size);
+			this._showWorld(this.showDagobah ? story.dagobah : story.world, seed, planet, size);
 		});
+	}
+
+	get showDagobah() {
+		return this._showDagobahCheckbox.checked;
 	}
 
 	_showDetails(i) {
 		const worldItem = this._currentWorld.index(i);
-		debugger; 
-		const expectedWorldItem = this._currentSample && this._currentSample.slice(i * 10, (i + 1) * 10);
+		const expectedWorldItem = this._currentSample && this._currentSample[i];
 
 		const details = document.createElement('div');
 		details.append('Details:');
 		details.appendChild(document.createElement('br'));
 		details.append(`${i%10}x${Math.floor(i/10)}`);
 		details.appendChild(document.createElement('br'));
-		details.append(`Zone: ${worldItem.zoneId}`);
-		if (expectedWorldItem && expectedWorldItem[0] !== worldItem.zoneId) {
-			details.append(` vs ${expectedWorldItem[0]}`);
+		details.append(`Zone: ${worldItem.zoneID}`);
+		if (expectedWorldItem && expectedWorldItem.zoneID !== worldItem.zoneID) {
+			details.append(` vs ${expectedWorldItem.zoneID}`);
 		}
 		details.appendChild(document.createElement('br'));
 		details.append(`Type: ${this._typeName(worldItem.zoneType)}`);
-		if (expectedWorldItem && expectedWorldItem[1] !== worldItem.zoneType) {
-			details.append(` vs ${expectedWorldItem[1]}`);
+		if (expectedWorldItem && expectedWorldItem.zoneType !== worldItem.zoneType) {
+			details.append(` vs ${this._typeName(expectedWorldItem.zoneType)}`);
 		}
 		details.appendChild(document.createElement('br'));
 		details.append(`Puzzle: ${worldItem.puzzleIdx}`);
 		details.appendChild(document.createElement('br'));
 
 		details.appendChild(this._itemRow('requiredItemID', worldItem.requiredItemID, expectedWorldItem ? expectedWorldItem.requiredItemID : -1));
+		details.appendChild(this._itemRow('additionalRequiredItemID', worldItem.additionalRequiredItemID, expectedWorldItem ? expectedWorldItem.additionalRequiredItemID : -1));
 		details.appendChild(this._itemRow('findItemID', worldItem.findItemID, expectedWorldItem ? expectedWorldItem.findItemID : -1));
 		details.appendChild(this._itemRow('npcID', worldItem.npcID, expectedWorldItem ? expectedWorldItem.npcID : -1));
 		details.appendChild(this._itemRow('unknown606', worldItem.unknown606, expectedWorldItem ? expectedWorldItem.unknown606 : -1));
@@ -190,14 +185,35 @@ export default class {
 
 	_showWorld(world, seed, planet, size) {
 		const expectedResult = this.expectations.find((e) => e.seed === seed && e.planet === planet && e.size === size);
-		let expectedWorld = expectedResult && expectedResult.data.slice(1000, 2000);
-		expectedWorld = expectedWorld.length ? expectedWorld : null;
+		let expectedWorld = !expectedResult ? null : (this.showDagobah ? this._expandDagobah(expectedResult.dagobah) : expectedResult.world);
 		this._mapContainer.clear();
+
 		for (let i = 0; i < 100; i++) {
-			this._addItem(world.index(i), expectedWorld && expectedWorld.slice(i * 10, (i + 1) * 10));
+			this._addItem(world.index(i), expectedWorld[i]);
 		}
 		this._currentWorld = world;
 		this._currentSample = expectedWorld;
+	}
+
+	_expandDagobah(world) {
+		const result = [];
+		for (let i = 0; i < 100; i++) {
+			result.push({
+				zoneID: -1,
+				zoneType: -1,
+				npcID: -1,
+				findItemID: -1,
+				requiredItemID: -1,
+				additionalRequiredItemID: -1
+			});
+		}
+
+		result[44] = world[0];
+		result[45] = world[1];
+		result[54] = world[2];
+		result[55] = world[3];
+
+		return result;
 	}
 
 	_addItem(worldItem, expectedWorldItem) {
@@ -206,17 +222,18 @@ export default class {
 		item.classList.add(this._classForZoneType(worldItem.zoneType));
 
 		if (expectedWorldItem) {
-			if (expectedWorldItem[6] !== worldItem.findItemID ||
-				expectedWorldItem[4] !== worldItem.requiredItemID
-			) {
+			const comparisonResult = CompareWorldItems(expectedWorldItem, worldItem);
+			if (comparisonResult === ComparisonResult.Similar) {
 				item.classList.add('invalid-details');
-			}
+			} else item.classList.remove('invalid-details');
 
-			if (expectedWorldItem[0] !== worldItem.zoneId ||
-				expectedWorldItem[1] !== worldItem.zoneType) {
+			if (comparisonResult === ComparisonResult.Different) {
 				item.classList.add('invalid');
 			} else item.classList.remove('invalid');
-		} else item.classList.remove('invalid');
+		} else {
+			item.classList.remove('invalid');
+			item.classList.remove('invalid-details');
+		}
 
 		this._mapContainer.appendChild(item);
 	}

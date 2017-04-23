@@ -8,7 +8,7 @@ export HorizontalPointRange from "./horizontal-point-range";
 export identity from "./identity";
 export InputStream from "./input-stream";
 export KeyEvent from "./key-event";
-export Message from "./message";
+export Message, { Finalize as PrintMessages } from "./message";
 export OutputStream from "./output-stream";
 export Point from "./point";
 export QueryString from "./query-string";

@@ -10,6 +10,8 @@ export default class {
 		this._tiles = raw.TILE.tiles.map((t, i) => new Tile(i, t.attributes, t.pixelData));
 		this._puzzles = raw.PUZ2.puzzles.map((data, index) => this._makePuzzle(data, index));
 		this._zones = raw.ZONE.map((data, index) => this._makeZone(data, index));
+		
+		window.gd = this;
 	}
 
 	_makePuzzle(data, index) {

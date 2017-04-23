@@ -1,3 +1,5 @@
+import { Element } from '/std.dom';
+
 const clear = function() {
 	while (this.firstChild) {
 		this.removeChild(this.firstChild);

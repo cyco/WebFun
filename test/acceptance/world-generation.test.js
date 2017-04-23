@@ -1,5 +1,6 @@
 import loadGameData from '../helpers/game-data';
-import loadMapFixtures from '../helpers/map-fixture-parsing';
+import { getFixtureContent } from '../helpers/fixture-loading';
+import { PrepareExpectations, ParseExpectation, ComparisonResult, CompareWorldItems } from '/debug';
 
 import Story from '/engine/story';
 import GameData from '/engine/game-data';
@@ -21,6 +22,7 @@ function getPlanetName(p) {
 	if (p === 3) return "Endor";
 }
 
+console.log('world generation executed');
 describe('World Generation', () => {
 	beforeAll((done) => {
 		loadGameData(function(data) {
@@ -29,30 +31,27 @@ describe('World Generation', () => {
 		});
 	});
 
-	let worlds = loadMapFixtures('worlds.txt');
-	for (let i = 0; i < worlds.length; i++) {
-		let { seed, planet, size, data } = worlds[i];
-		const world = worlds[i];
-		it(`World 0x${seed.toString(0x10)} ${getPlanetName(planet)} ${getSizeName(size)}`, ((seed, planet, size, sample) => () => {
-			// expect({ seed, planet, size, data: new GameData(rawData) }).toGenerateWorld(sample);
-			window.logging = false;
+	let expectations = PrepareExpectations(getFixtureContent('worlds.txt'));
+	for (let i = 0; i < expectations.length; i++) {
+		let { seed, planet, size, world, dagobah } = ParseExpectation(expectations[i]);
+		if (seed === -1) {
+			console.warn('expectation', i, 'is broken');
+			continue;
+		}
 
-			const story = new Story(seed, planet, size);
-			story.generateWorld({data: new GameData(rawData)});
-			
-			const world = story._world;
-			for (let i = 0; i < 100; i++) {
-				let thing = world.index(i);
-				expect(thing.zoneId).toBe(sample[i * 10]);
-				expect(thing.zoneType).toBe(sample[i * 10 + 1]);
+		it(`World ${seed} ${getPlanetName(planet)} ${getSizeName(size)}`,
+			((seed, planet, size, expectedWorld, expectedDagobah) => () => {
+				window.logging = false;
 
-				if (thing.zoneId !== sample[i * 10]) return;
-				if (thing.zoneType !== sample[i * 10 + 1]) return;
-				// if (thing.findItemID !== sample[i * 10 + 6]) return;
-				// if (thing.requiredItemID !== sample[i * 10 + 4]) return;
-			}
-			window.logging = false;
-			return;
-		})(seed, planet, size, data));
+				const story = new Story(seed, planet, size);
+				story.generateWorld({ data: new GameData(rawData) });
+
+				for (let i = 0; i < 100; i++) {
+					const result = CompareWorldItems(story._world.index(i), expectedWorld[i]);
+					expect(result).toBe(ComparisonResult.Equal);
+					if (result !== ComparisonResult.Equal) break;
+				}
+				window.logging = false;
+			})(seed, planet, size, world, dagobah));
 	}
 });

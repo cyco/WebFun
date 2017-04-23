@@ -1,3 +1,5 @@
+import { NodeList } from '/std.dom';
+
 const map = function(callback) {
 	let results = [];
 	for (let i = 0; i < this.length; i++) {
