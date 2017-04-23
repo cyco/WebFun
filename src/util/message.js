@@ -1,5 +1,12 @@
+let messages = [];
+
+let messagesEnabled = false;
+
+export const Enabled = () => messagesEnabled = true;
+export const Disable = () => messagesEnabled = false;
+
 export default (...args) => {
-	if (window.logging !== true) return;
+	if (!messagesEnabled) return;
 	let arg = Array.prototype.slice.call(args);
 
 	let formatString = arg[0];
@@ -34,5 +41,13 @@ export default (...args) => {
 	arg[0] = arg[0].replace(/%d/g, "%s");
 	arg[0] = arg[0].replace(/\n$/g, "");
 
-	console.warn.apply(console, arg);
+	messages.push(arg);
+};
+
+export const Finalize = (prefix) => {
+	messages.forEach((m) => {
+		typeof process !== "undefined" && process.stdout.write(prefix);
+		console.log.apply(console, m);
+	});
+	messages.splice(0,messages.length);
 };

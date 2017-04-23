@@ -1,4 +1,4 @@
-import { srand } from '/util';
+import { Message, srand } from '/util';
 import { WorldGenerator, DagobahGenerator } from '/engine/generation';
 
 export default class {
@@ -30,7 +30,10 @@ export default class {
 		do {
 			generator = new WorldGenerator(effectiveSeed, this.size, this.planet, engine);
 			success = generator.generate();
-			if (!success) effectiveSeed = srand();
+			if (!success) {
+				Message("YodaDocument::Reseed");
+				effectiveSeed = srand();
+			}
 		} while (!success);
 
 		const goalID = generator.goalPuzzleID;
@@ -38,18 +41,25 @@ export default class {
 
 		this._setupWorld(generator, engine);
 		this._setupDagobah(generator, engine);
+		
+		Message(`done 0x${this.seed.toString(0x10).padStart(4, '0')}, 0x${this.planet.toString(0x10).padStart(4, '0')}, 0x${this.size.toString(0x10).padStart(4, '0')}`);
 	}
 
 	_setupWorld(generator) {
 		this._world = generator.world;
 	}
 
-	_setupDagobah(wordlGenerator, engine) {
+	_setupDagobah(worldGenerator, engine) {
+		Message("YodaDocument::SetupDagobah");
 		const generator = new DagobahGenerator(engine);
-		generator.generate(wordlGenerator);
+		generator.generate(worldGenerator);
 		this._dagobah = generator.world;
 	}
-	
-	get world(){ return this._world; }
-	get dagobah(){ return this._dagobah; }
+
+	get world() {
+		return this._world;
+	}
+	get dagobah() {
+		return this._dagobah;
+	}
 }

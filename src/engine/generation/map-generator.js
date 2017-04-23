@@ -1,5 +1,5 @@
 import { srand, rand, randmod } from "/util";
-import { Point, HorizontalPointRange, VerticalPointRange, Message } from "/util";
+import { Point, Range, HorizontalPointRange, VerticalPointRange, Message } from "/util";
 
 import IslandBuilder from "./island-builder";
 import GetDistanceToCenter from "./distance-to-center";
@@ -609,15 +609,11 @@ function _determineAdditionalPuzzleLocations(travels_to_place) {
 				typeMap[world_idx] = WorldItemType.Candidate;
 
 				if (!x_diff) {
-					if (x > 0)
-						typeMap[world_idx - 1] = WorldItemType.KeptFree;
-					if (x < 9)
-						typeMap[world_idx + 1] = WorldItemType.KeptFree;
+					if (x > 0) typeMap[world_idx - 1] = WorldItemType.KeptFree;
+					if (x < 9) typeMap[world_idx + 1] = WorldItemType.KeptFree;
 				} else if (!y_diff) {
-					if (y > 0)
-						typeMap[world_idx - 10] = WorldItemType.KeptFree;
-					if (y < 9)
-						typeMap[world_idx + 10] = WorldItemType.KeptFree;
+					if (y > 0) typeMap[world_idx - 10] = WorldItemType.KeptFree;
+					if (y < 9) typeMap[world_idx + 10] = WorldItemType.KeptFree;
 				}
 
 				continue;
@@ -628,24 +624,18 @@ function _determineAdditionalPuzzleLocations(travels_to_place) {
 
 				typeMap[world_idx] = WorldItemType.Candidate;
 
-				if (y > 0)
-					typeMap[world_idx - 10] = WorldItemType.KeptFree;
-				if (y < 9)
-					typeMap[world_idx + 10] = WorldItemType.KeptFree;
+				if (y > 0) typeMap[world_idx - 10] = WorldItemType.KeptFree;
+				if (y < 9) typeMap[world_idx + 10] = WorldItemType.KeptFree;
 				break;
 			case WorldItemType.BlockWest:
 				if (x_diff !== -1) continue;
-				if (WorldItemType.None < item_above && item_above <= WorldItemType.BlockNorth)
-					continue;
-				if (WorldItemType.None < item_below && item_below <= WorldItemType.BlockNorth)
-					continue;
+				if (WorldItemType.None < item_above && item_above <= WorldItemType.BlockNorth) continue;
+				if (WorldItemType.None < item_below && item_below <= WorldItemType.BlockNorth) continue;
 
 				typeMap[world_idx] = WorldItemType.Candidate;
 
-				if (y > 0)
-					typeMap[world_idx - 10] = WorldItemType.KeptFree;
-				if (y < 9)
-					typeMap[world_idx + 10] = WorldItemType.KeptFree;
+				if (y > 0) typeMap[world_idx - 10] = WorldItemType.KeptFree;
+				if (y < 9) typeMap[world_idx + 10] = WorldItemType.KeptFree;
 				break;
 			case WorldItemType.BlockNorth:
 				if (y_diff !== -1) continue;

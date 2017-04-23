@@ -38,15 +38,15 @@ export default class World {
 
 		const index = this._pointToIndex(x, y);
 		const worldItem = this._items[index];
-		const zoneId = worldItem.zoneId;
-		if(zoneId === -1) return null;
-		return this.data.zones[zoneId];
+		const zoneID = worldItem.zoneID;
+		if(zoneID === -1) return null;
+		return this.data.zones[zoneID];
 	}
 
 	setZone(x, y, zoneID) {
 		const index = this._pointToIndex(x, y);
 		const worldItem = this._items[index];
-		worldItem.zoneId = zoneID;
+		worldItem.zoneID = zoneID;
 	}
 
 	locationOfZone(zone) {
@@ -54,7 +54,7 @@ export default class World {
 		for (let y = 0; y < World.HEIGHT; y++) {
 			for (let x = 0; x < World.HEIGHT; x++) {
 				let index = this._pointToIndex(x, y);
-				if (this._items[index].zoneId === zoneID) {
+				if (this._items[index].zoneID === zoneID) {
 					return new Point(x, y);
 				}
 			}

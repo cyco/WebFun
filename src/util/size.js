@@ -10,5 +10,3 @@ export default class Size {
 		return `Size {${this.width}x${this.height}}`;
 	}
 }
-
-window.Size = Size;

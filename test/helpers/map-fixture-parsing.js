@@ -5,7 +5,7 @@ export default (name) => {
 		.filter(function(line) {
 			return line.length && line[0] !== ';';
 		}).map(function(line) {
-			let parts = line.split(', ').map(function(v) {
+			let parts = line.split(',').map(function(v) {
 				return parseInt(v, 0x10);
 			}).map(function(v) {
 				return v === 0xFFFF ? -1 : v;

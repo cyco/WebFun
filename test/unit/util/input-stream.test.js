@@ -194,16 +194,27 @@ describe('InputStream', () => {
 			expect(data[1]).toBe(0x4242);
 		});
 
-		xit('getUint32Array can be used even if the offset is not dword aligned', () => {
+		it('getUint32Array can be used even if the offset is not dword aligned', () => {
 			let stream = new InputStream(buffer);
 			stream.seek(1, Stream.SEEK.SET);
 			expect(stream.offset).toBe(1);
 
-			let data = stream.getUint32Array(3);
-			expect(data.length).toBe(3);
+			let data = stream.getUint32Array(1);
+			expect(data.length).toBe(1);
 			expect(data[0]).toBe(0x4242232A);
-			expect(data[1]).toBe(0x172A2342);
-			expect(data[2]).toBe(0x00000000);
+
+			expect(stream.offset).toBe(5);
+		});
+
+		it('getUint32Array can be used to read arrays of unsigned integers', () => {
+			let stream = new InputStream(buffer);
+			expect(stream.offset).toBe(0);
+
+			let data = stream.getUint32Array(1);
+			expect(data.length).toBe(1);
+			expect(data[0]).toBe(0x42232A17);
+
+			expect(stream.offset).toBe(4);
 		});
 	});
 });

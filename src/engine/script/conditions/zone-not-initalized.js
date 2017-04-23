@@ -8,8 +8,8 @@ export default (args, zone, engine) => !engine.currentZone.actionsInitialized;
 		  goto condition_NOT_satisfied;
 		if ( !document )
 		  goto condition_NOT_satisfied;
-		zoneId = YodaDocument::GetZoneID(document, zone);
-		if ( YodaDocument::GetLocationOfZoneWithID(document, zoneId, &x_ref, &y_ref) )
+		zoneID = YodaDocument::GetzoneID(document, zone);
+		if ( YodaDocument::GetLocationOfZoneWithID(document, zoneID, &x_ref, &y_ref) )
 		{
 		  if ( document->world_things_1[document->world_x + 10 * document->world_y].zone? == (Zone *)1 )
 		    goto condition_NOT_satisfied;

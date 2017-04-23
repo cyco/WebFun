@@ -1,4 +1,6 @@
-let KeyEvent = window.KeyEvent;
+import { global } from '/std';
+
+let KeyEvent = global.KeyEvent || {};
 
 if (typeof KeyEvent === "undefined") {
 	KeyEvent = {
