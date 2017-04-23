@@ -8,8 +8,8 @@ export default {
 	Spaceport: 201,
 	Candidate: 300,
 
-	BlockWest: 301,
-	BlockEast: 302,
+	BlockEast: 301,
+	BlockWest: 302,
 	BlockNorth: 303,
 	BlockSouth: 304,
 	KeptFree: 305,

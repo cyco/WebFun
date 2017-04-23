@@ -38,9 +38,9 @@ export default class {
 		this._sizeInput = this._buildInputField('dbg.size');
 		inputContainer.appendChild(this._sizeInput.element);
 		this._showDagobahCheckbox = new Checkbox('Show Dagobah');
-		this._showDagobahCheckbox.checked = !!localStorage.load('showDagobah');
+		this._showDagobahCheckbox.checked = !!localStorage.load('dbg.showDagobah');
 		this._showDagobahCheckbox.onchange = () => {
-			localStorage.store('showDagobah', this._showDagobahCheckbox.checked);
+			localStorage.store('dbg.showDagobah', this._showDagobahCheckbox.checked);
 			this._rebuildWorld();
 		};
 		inputContainer.appendChild(this._showDagobahCheckbox.element);
@@ -189,7 +189,7 @@ export default class {
 		this._mapContainer.clear();
 
 		for (let i = 0; i < 100; i++) {
-			this._addItem(world.index(i), expectedWorld[i]);
+			this._addItem(world.index(i), expectedWorld && expectedWorld[i]);
 		}
 		this._currentWorld = world;
 		this._currentSample = expectedWorld;

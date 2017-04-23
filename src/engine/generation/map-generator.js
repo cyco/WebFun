@@ -40,25 +40,16 @@ function blockadeTypeFor(xdiff, ydiff) {
 	if (xdiff === 0 && ydiff === -1) {
 		return WorldItemType.BlockSouth;
 	}
-	if (xdiff === 1 && ydiff === 0) {
-		return WorldItemType.BlockWest;
-	}
 	if (xdiff === -1 && ydiff === 0) {
 		return WorldItemType.BlockEast;
+	}
+	if (xdiff === 1 && ydiff === 0) {
+		return WorldItemType.BlockWest;
 	}
 }
 
 function blockadeTypeForCheck(xdiff, ydiff) {
-	if (ydiff) {
-		return blockadeTypeFor(xdiff, ydiff);
-	}
-
-	if (xdiff === 1) {
-		return WorldItemType.BlockEast;
-	}
-	if (xdiff === -1) {
-		return WorldItemType.BlockWest;
-	}
+	return blockadeTypeFor(xdiff, ydiff);
 }
 
 function _determineCounts() {
@@ -223,7 +214,9 @@ function generate(seed, size) {
 
 	rand(); // waste a random number
 
-	_initializeTypeMap(randmod(2) + 4, randmod(2) + 4);
+	let rand1 = randmod(2) + 4;
+	let rand2 = randmod(2) + 4;
+	_initializeTypeMap(rand1, rand2);
 	_initializeOrderMap();
 
 	const ranges = determineRanges(size);
@@ -313,9 +306,9 @@ function _choosePuzzlesOnIslands() {
 		height: 10
 	};
 
-	let range,
-		step,
-		puzzleLocation;
+	let range;
+	let step;
+	let puzzleLocation;
 	const iteration = (point, control) => {
 		const nextPoint = Point.add(point, control.step);
 		if (!nextPoint.isInBounds(bounds) ||
@@ -555,7 +548,7 @@ function _determinePuzzleLocations(iteration, puzzle_count_to_place) {
 }
 
 function _determineAdditionalPuzzleLocations(travels_to_place) {
-	Message("AdditionalPuzzleLocations(%x)\n", travels_to_place);
+	Message("AdditionalPuzzleLocations(%d)\n", travels_to_place);
 	for (let i = 0; i <= 400 && travels_to_place > 0; i++) {
 		let x,
 			y;
