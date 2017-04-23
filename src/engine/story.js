@@ -9,6 +9,7 @@ export default class {
 
 		this._world = null;
 		this._dagobah = null;
+		this._reseeded = false;
 	}
 
 	get seed() {
@@ -31,7 +32,8 @@ export default class {
 			generator = new WorldGenerator(effectiveSeed, this.size, this.planet, engine);
 			success = generator.generate();
 			if (!success) {
-				Message("YodaDocument::Reseed");
+				Message("--== YodaDocument::Reseed ==--");
+				this._reseeded = true;
 				effectiveSeed = srand();
 			}
 		} while (!success);
@@ -59,6 +61,7 @@ export default class {
 	get world() {
 		return this._world;
 	}
+	
 	get dagobah() {
 		return this._dagobah;
 	}

@@ -18,8 +18,10 @@ export default (...args) => {
 		if (currentArgumentPosition === -1) continue;
 
 		let formatArg = formatString[currentArgumentPosition + 1];
-
-		if (typeof value === "boolean")
+		
+		if (typeof value === 'undefined')
+			value = '<undefined>';
+		else if (typeof value === "boolean")
 			value = value ? 1 : 0;
 		else if (value === -1)
 			value = "65535";
@@ -49,5 +51,5 @@ export const Finalize = (prefix) => {
 		typeof process !== "undefined" && process.stdout.write(prefix);
 		console.log.apply(console, m);
 	});
-	messages.splice(0,messages.length);
+	messages.splice(0, messages.length);
 };
