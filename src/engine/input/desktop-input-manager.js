@@ -8,12 +8,12 @@ export default class DesktopInputManager extends InputManager {
 		this._element = gameViewElement;
 		this._lastMouse = new Point(NaN, NaN);
 	}
-	
-	set engine(engine){
-		this._engine = engine;		
+
+	set engine(engine) {
+		this._engine = engine;
 	}
-	
-	get engine(){
+
+	get engine() {
 		return this._engine;
 	}
 
@@ -35,7 +35,7 @@ export default class DesktopInputManager extends InputManager {
 		document.removeEventListener("contextmenu", (event) => event.preventDefault());
 	}
 
-	keyDown(e) {		
+	keyDown(e) {
 		let directionMask = 0;
 		switch (e.which) {
 			case KeyEvent.DOM_VK_UP:

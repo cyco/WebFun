@@ -10,6 +10,7 @@ const isExcluded = (path) => {
 	if (basename === 'conditions') return true;
 	if (basename === 'instructions') return true;
 	if (basename === 'index.js') return true;
+	if (basename === 'debug') return true;
 
 	const stat = FS.statSync(path);
 	if (stat.isDirectory()) return false;
@@ -121,5 +122,5 @@ const checkNextTestFile = (callback) => {
 checkNextSourceFile(() => {
 	Process.stdout.write('––––===================================––––\n');
 	lastChoice = 'n';
-	checkNextTestFile(() => {})
+	checkNextTestFile(() => {});
 });

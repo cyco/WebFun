@@ -1,84 +1,83 @@
-import Message from '/util/message';
+import Message, { Enable, Disable } from '/util/message';
+import { global, console } from '/std';
 
-describe('Message', () => {
-	let consoleLogCalled;
+xdescribe('Message', () => {
+	let consoleWarnCalled;
 	let originalConsole;
 	let messages;
 
 	beforeEach(() => {
-		window.logging = true;
+		Disable();
 
 		messages = [];
-		consoleLogCalled = false;
-		originalConsole = window.console;
-		window.console = {
-			warn: (...args) => {
-				messages.push(args);
-				consoleLogCalled = true;
-			}
-		};
 	});
 
 	afterEach(() => {
-		window.logging = false;
-		window.console = originalConsole;
+		Disable();
+		global.console = originalConsole;
 	});
 
 	it('is a wrapper for console.warn that only prints something if window.logging is true', () => {
-		window.logging = false;
+		spyOn(console, 'warn');
+		Disable();
+		
 		Message('test');
-		expect(consoleLogCalled).toBeFalse();
+		expect(console.warn).not.toHaveBeenCalled();
 
-		window.logging = true;
+		Enable();
 		Message('test');
-		expect(consoleLogCalled).toBeTrue();
-		expect(messages[0][0]).toBe('test');
-
-		window.logging = false;
-		consoleLogCalled = false;
-		Message('test');
-		expect(consoleLogCalled).toBeFalse();
-
-		expect(messages.length).toBe(1);
+		expect(console.warn).toHaveBeenCalledWith('test');
 	});
 
 	it('converts booleans to \'1\' and \'0\'', () => {
+		spyOn(console, 'warn');
+		
 		Message("%d", false);
 		Message("%d", true);
 
-		expect(messages[0][1]).toBe(0);
-		expect(messages[1][1]).toBe(1);
+		expect(console.warn).toHaveBeenCalledWith("%d", 0);
+		expect(console.warn).toHaveBeenCalledWith("%d", 1);
 	});
 
 	it('prints -1 as 16-bit decimal', () => {
+		spyOn(console, 'warn');
+		
 		Message("%d", -1);
-		expect(messages[0][1]).toBe('65535');
+		expect(console.warn).toHaveBeenCalledWith("%d", '65535');
 
 		Message("%d", 'ffffffff');
-		expect(messages[1][1]).toBe('65535');
+		expect(console.warn).toHaveBeenCalledWith("%d", '65535');
 	});
 
 	it('knows how to print hexadecimals', () => {
+		spyOn(console, 'warn');
+		
 		Message("%x", 11);
-		expect(messages[0][1]).toBe('b');
+		expect(console.warn).toHaveBeenCalledWith("%x", 11);
 	});
 
 	it('converts numbers to strings', () => {
+		spyOn(console, 'warn');
+		
 		Message("%d", 11);
-		expect(messages[0][1]).toBe('11');
+		expect(console.warn).toHaveBeenCalledWith("%d", 11);
 	});
 
 	it('just prints objects', () => {
+		spyOn(console, 'warn');
+		
 		Message("%a", {
 			toString: () => {
 				return '5';
 			}
 		});
-		expect(messages[0][1]).toBe('5');
+		expect(console.warn).toHaveBeenCalledWith("%a", '5');
 	});
 
 	it('does not fail if there aren\'t enough arguments', () => {
+		spyOn(console, 'warn');
+		
 		Message("%d", 1, 2, 3);
-		expect(messages[0][1]).toBe('1');
+		expect(console.warn).toHaveBeenCalledWith("%d", 1, 2, 3);
 	});
 });

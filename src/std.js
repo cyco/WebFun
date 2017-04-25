@@ -3,7 +3,10 @@ export const global = function() {
 	let get = eval;
 	return get("this");
 }();
+export const setTimeout = global.setTimeout;
+export const console = global.console;
+export const Array = global.Array;
+
 export const requestAnimationFrame = global.requestAnimationFrame;
 export const cancelAnimationFrame = global.cancelAnimationFrame;
 export const performance = global.performance;
-export const setTimeout = global.setTimeout;

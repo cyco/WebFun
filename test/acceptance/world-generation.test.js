@@ -6,6 +6,8 @@ import Story from '/engine/story';
 import GameData from '/engine/game-data';
 import WorldGenerator from '/engine/generation/world-generator';
 
+import using from 'jasmine-data-provider';
+
 let rawData = null;
 
 function getSizeName(size) {
@@ -22,7 +24,39 @@ function getPlanetName(p) {
 	if (p === 3) return "Endor";
 }
 
-console.log('world generation executed');
+const compareItem = (actual, expected) => {
+	const result = CompareWorldItems(actual, expected);
+	if (result !== ComparisonResult.Different) return;
+
+	if (actual.zoneID !== expected.zoneID) throw `Difference in zone ids detected! ${actual.zoneID} !== ${expected.zoneID}`;
+	if (actual.zoneType !== expected.zoneType) throw `Difference in zone types detected! ${actual.zoneType} !== ${expected.zoneType}`;
+	throw `Difference detected`;
+};
+
+const compare = (story, expectation) => {
+	if (expectation.world === null && !story._reseeded) throw `Expected reseed!`;
+	else if (expectation.world === null) return;
+
+	/* main world */
+	try {
+		for (let i = 0; i < 100; i++) {
+			compareItem(story.world.index(i), expectation.world[i]);
+		}
+	} catch (e) {
+		throw `World: ${e}`;
+	}
+
+	/* dagobah */
+	try {
+		compareItem(story.dagobah.at(4, 4), expectation.dagobah[0]);
+		compareItem(story.dagobah.at(5, 4), expectation.dagobah[1]);
+		compareItem(story.dagobah.at(4, 5), expectation.dagobah[2]);
+		compareItem(story.dagobah.at(5, 5), expectation.dagobah[3]);
+	} catch (e) {
+		throw `Dagobah: ${e}`;
+	}
+};
+
 describe('World Generation', () => {
 	beforeAll((done) => {
 		loadGameData(function(data) {
@@ -31,27 +65,12 @@ describe('World Generation', () => {
 		});
 	});
 
-	let expectations = PrepareExpectations(getFixtureContent('worlds.txt'));
-	for (let i = 0; i < expectations.length; i++) {
-		let { seed, planet, size, world, dagobah } = ParseExpectation(expectations[i]);
-		if (seed === -1) {
-			console.warn('expectation', i, 'is broken');
-			continue;
-		}
+	using(PrepareExpectations(getFixtureContent('../../game-data/worlds.txt')).map(ParseExpectation), ({ seed, planet, size, world, dagobah }) =>
+		it(`World ${seed} ${getPlanetName(planet)} ${getSizeName(size)}`, () => {
+			const story = new Story(seed, planet, size);
+			story.generateWorld({ data: new GameData(rawData) });
 
-		it(`World ${seed} ${getPlanetName(planet)} ${getSizeName(size)}`,
-			((seed, planet, size, expectedWorld, expectedDagobah) => () => {
-				window.logging = false;
-
-				const story = new Story(seed, planet, size);
-				story.generateWorld({ data: new GameData(rawData) });
-
-				for (let i = 0; i < 100; i++) {
-					const result = CompareWorldItems(story._world.index(i), expectedWorld[i]);
-					expect(result).toBe(ComparisonResult.Equal);
-					if (result !== ComparisonResult.Equal) break;
-				}
-				window.logging = false;
-			})(seed, planet, size, world, dagobah));
-	}
+			expect(() => compare(story, { seed, planet, size, world, dagobah })).not.toThrow();
+		})
+	);
 });

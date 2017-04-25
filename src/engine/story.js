@@ -1,4 +1,4 @@
-import { Message, srand } from '/util';
+import { Message, rand } from '/util';
 import { WorldGenerator, DagobahGenerator } from '/engine/generation';
 
 export default class {
@@ -30,11 +30,11 @@ export default class {
 		let effectiveSeed = this.seed;
 		do {
 			generator = new WorldGenerator(effectiveSeed, this.size, this.planet, engine);
-			success = generator.generate();
+			success = generator.generate(effectiveSeed);
 			if (!success) {
 				Message("--== YodaDocument::Reseed ==--");
 				this._reseeded = true;
-				effectiveSeed = srand();
+				effectiveSeed = rand();
 			}
 		} while (!success);
 

@@ -4,7 +4,7 @@ import { identity } from "/util";
 const TICKLENGTH = 100;
 
 export default class {
-	constructor() {
+	constructor() {		
 		this._stopped = true;
 		this._mainLoop = null;
 
