@@ -1770,6 +1770,10 @@ istanbul-reports@^1.0.2:
   dependencies:
     handlebars "^4.0.3"
 
+jasmine-data-provider@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/jasmine-data-provider/-/jasmine-data-provider-2.2.0.tgz#5f029b2c5fbcdaafbfa5b910ca627eac48cdbb66"
+
 jasmine-expect@^3.7.0:
   version "3.7.0"
   resolved "https://registry.yarnpkg.com/jasmine-expect/-/jasmine-expect-3.7.0.tgz#841e1382f4bff0258c8dc96eca27c4fbc6ae4887"

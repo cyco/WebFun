@@ -1,5 +1,6 @@
 import * as Util from '/util';
 import ResetCursor from '/ux/reset-cursor';
+import { document } from '/std.dom';
 
 describe('ResetCursor', () => {
 	it('in Safari it changes the cursor immediately without waiting for mouse movement', () => {

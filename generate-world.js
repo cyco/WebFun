@@ -27,6 +27,7 @@ const help = (node, self) => {
 	process.stdout.write('options:\n');
 	process.stdout.write(`\t-v       enable logging\n`);
 	process.stdout.write(`\t-c       compare with original\n`);
+	process.stdout.write(`\t-a       generate all worlds in expection file\n`);
 	process.stdout.write(`\t-d path  game file (default: ./yoda.data)\n`);
 	process.stdout.write(`\t-e path  expectation file (default: ./worlds.txt)\n`);
 };
@@ -57,7 +58,8 @@ const parseArguments = (args) => {
 		d: 'yoda.data',
 		e: 'world.txt',
 		v: false,
-		c: false
+		c: false,
+		a: false
 	};
 	const optionNames = Object.keys(options);
 	const flagNames = optionNames.filter((o) => typeof options[o] === 'boolean');
@@ -91,8 +93,6 @@ const parseArguments = (args) => {
 		nonOptionArguments.push(arg);
 	}
 
-	if (nonOptionArguments.length > 3) throw `Invalid number of arguments specified!`;
-
 	let [seed, planet, size] = nonOptionArguments;
 
 	return {
@@ -107,13 +107,15 @@ const readArguments = (node, self, ...args) => {
 	try {
 		let { options, seed, planet, size } = parseArguments(args);
 
-		seed = parseIntegerArgument(seed, 'seed');
-		planet = parseIntegerArgument(planet, 'planet');
-		size = parseIntegerArgument(size, 'size');
+		if (!options.a) {
+			seed = parseIntegerArgument(seed, 'seed');
+			planet = parseIntegerArgument(planet, 'planet');
+			size = parseIntegerArgument(size, 'size');
 
-		if (seed < 0 || seed > 0xFFFF) helpAndExit(`Seed is not in range 0 - 0xFFFF!`, node, self);
-		if (planet < 1 || planet > 3) helpAndExit(`Planet is not in range 1 - 3!`, node, self);
-		if (size < 0 || size > 3) helpAndExit(`Size is not in range 0 - 0xFFFF!`, node, self);
+			if (seed < 0 || seed > 0xFFFF) helpAndExit(`Seed is not in range 0 - 0xFFFF!`, node, self);
+			if (planet < 1 || planet > 3) helpAndExit(`Planet is not in range 1 - 3!`, node, self);
+			if (size < 0 || size > 3) helpAndExit(`Size is not in range 0 - 0xFFFF!`, node, self);
+		}
 
 		return { options, seed, planet, size };
 	} catch (e) {
@@ -149,16 +151,19 @@ const readExpectations = (path) => {
 };
 
 const findExpectation = (expectations, seed, planet, size) => expectations.find((e) => e.seed === seed && e.planet === planet && e.size === size);
-const compareItem = (actual, expected) => {
+const compareItem = (actual, expected) => {	
 	const result = CompareWorldItems(actual, expected);
-	if(result !== ComparisonResult.Different) return;
-	
+	if (result !== ComparisonResult.Different) return;
+
 	if (actual.zoneID !== expected.zoneID) throw `Difference in zone ids detected! ${actual.zoneID} !== ${expected.zoneID}`;
 	if (actual.zoneType !== expected.zoneType) throw `Difference in zone types detected! ${actual.zoneType} !== ${expected.zoneType}`;
 	throw `Difference detected`;
 };
 
 const compare = (story, expectation) => {
+	if(expectation.world === null && !story._reseeded) throw `Expected reseed!`;
+	else if(expectation.world === null) return;
+		
 	/* main world */
 	try {
 		for (let i = 0; i < 100; i++) {
@@ -183,23 +188,45 @@ const main = (...args) => {
 	let { options, seed, planet, size } = readArguments(...args);
 
 	try {
-		const gameData = readGameData(options.d);
-		const story = new Story(seed, planet, size);
-
-		try {
-			if (options.v) EnabledMessages();
-			story.generateWorld({ data: gameData });
-			if (options.v) FinalizeMessages('==>');
-		} catch (e) {
-			throw `Unexpected failure in world generation. ${e}`;
-		}
-
-		if (options.c) {
+		if(!options.a) {
+			const gameData = readGameData(options.d);
+			const story = new Story(seed, planet, size);
+        	
+			try {
+				if (options.v) EnabledMessages();
+				story.generateWorld({ data: gameData });
+				if (options.v) FinalizeMessages('==>');
+			} catch (e) {
+				throw `Unexpected failure in world generation. ${e}`;
+			}
+        	
+			if (options.c) {
+				const expectations = readExpectations(options.e);
+				const expectation = findExpectation(expectations, seed, planet, size);
+				if (!expectation) throw `No sample found for world 0x${seed.toString(0x10)} 0x${planet.toString(0x10)} 0x${size.toString(0x10)}!`;
+        	
+				compare(story, expectation);
+			}
+		} else {
+			let tested = 0;
+			let failed = 0;
 			const expectations = readExpectations(options.e);
-			const expectation = findExpectation(expectations, seed, planet, size);
-			if (!expectation) throw `No sample found for world 0x${seed.toString(0x10)} 0x${planet.toString(0x10)} 0x${size.toString(0x10)}!`;
-
-			compare(story, expectation);
+			expectations.forEach((e) => {
+				tested++;
+				const { seed, planet, size } = e;
+				const story = new Story(seed, planet, size);
+				story.generateWorld({ data: readGameData(options.d) });
+			
+				try {
+					compare(story, e);
+					process.stdout.write(`[OK]   0x${seed.toString(0x10)} 0x${planet.toString(0x10)} 0x${size.toString(0x10)}\n`);
+				} catch(err) {
+					process.stdout.write(`[FAIL] 0x${seed.toString(0x10)} 0x${planet.toString(0x10)} 0x${size.toString(0x10)}\n`);
+					failed++;
+				}
+			});
+			
+			process.stdout.write(`${tested-failed} of ${tested} world combinations were generated correctly!\n`);
 		}
 	} catch (error) {
 		process.stderr.write(`${error}\n`);
