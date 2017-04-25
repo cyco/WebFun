@@ -12,6 +12,7 @@
 		"babel-preset-es2015": "^6.24.0",
 		"babel-root-slash-import": "^1.1.0",
 		"canvas": "^1.6.5",
+		"jasmine-data-provider": "^2.2.0",
 		"jasmine-expect": "^3.7.0",
 		"jest": "^19.0.2",
 		"webpack": "^2.3.3"
@@ -29,10 +30,12 @@
 		"format:cont": "find src -type f -name '*.js'|entr yarn format",
 		"check-tests": "node ./check-tests.js",
 		"world": "babel-node -- generate-world.js -v -d \"game-data/yoda.data\"",
-		"world:validate": "babel-node -- generate-world.js -c -d \"game-data/yoda.data\" -e \"game-data/worlds.txt\""
+		"world:validate": "babel-node -- generate-world.js -c -d \"game-data/yoda.data\" -e \"game-data/worlds.txt\"",
+		"world:validate:all": "babel-node -- generate-world.js -c -d \"game-data/yoda.data\" -e \"game-data/worlds.txt\" -a"
 	},
 	"jest": {
 		"automock": false,
+		"notify": true,
 		"setupTestFrameworkScriptFile": "./test/helpers/jest.init.js",
 		"coverageDirectory": "./test/coverage",
 		"coverageReporters": [
@@ -42,8 +45,7 @@
 			"/node_modules/",
 			"/test/fixture/",
 			"/test/coverage/",
-			"/test/helpers/",
-			"/test/unit/"
+			"/test/helpers/"
 		],
 		"coveragePathIgnorePatterns": [
 			"/test/helpers/",
