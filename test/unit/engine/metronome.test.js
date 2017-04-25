@@ -16,9 +16,9 @@ describe("Metronome", () => {
 
 	it('uses requestAnimationFrame to allow for smooth rendering', () => {
 		spyOn(Std, 'requestAnimationFrame').and.returnValue(1);
-		
+
 		metronome.start();
-		
+
 		expect(Std.requestAnimationFrame).toHaveBeenCalled();
 	});
 

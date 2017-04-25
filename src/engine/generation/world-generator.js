@@ -54,9 +54,9 @@ export default class WorldGenerator {
 		Object.seal(this);
 	}
 
-	generate() {
+	generate(seed = undefined) {
 		Message("Generate New World (JS, 0x%x, 0x%x, 0x%x)", this._seed, this._size, this._planet);
-
+		if(seed !== undefined) this._seed = seed;
 		srand(this._seed);
 
 		const mapGenerator = this.mapGenerator = new MapGenerator();
@@ -750,10 +750,6 @@ export default class WorldGenerator {
 
 	getZoneIDWithType(type_1, a3, a4, item_id_1, item_id_2, item_id_3, a8) {
 		Message("YodaDocument::GetZoneIDWithType(%d, %d, %d, %d, %d, %d, %d)\n", type_1, a3, a4, item_id_1, item_id_2, item_id_3, a8);
-
-		if(type_1 === 16 && a3 === 0 && a4 === -1 && item_id_1 === 509 && item_id_2 === -1 && item_id_3 === 5 && !a8)
-			debugger;
-
 		// item_id_1 = first required quest.itemID, last required quest.itemID
 		let usablezoneIDs = [];
 		const zoneCount = this.getZoneCount();
@@ -1332,7 +1328,7 @@ export default class WorldGenerator {
 					Message("YodaDocument::ChooseItemIDFromZone_2 => %d\n", 1);
 					return true;
 				}
-				
+
 		Message("YodaDocument::ChooseItemIDFromZone_2 => %d\n", 0);
 		return false;
 	}

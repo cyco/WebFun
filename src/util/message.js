@@ -1,8 +1,8 @@
-let messages = [];
+import { global, Array, console } from '/std';
 
 let messagesEnabled = false;
 
-export const Enabled = () => messagesEnabled = true;
+export const Enable = () => messagesEnabled = true;
 export const Disable = () => messagesEnabled = false;
 
 export default (...args) => {
@@ -43,13 +43,5 @@ export default (...args) => {
 	arg[0] = arg[0].replace(/%d/g, "%s");
 	arg[0] = arg[0].replace(/\n$/g, "");
 
-	messages.push(arg);
-};
-
-export const Finalize = (prefix) => {
-	messages.forEach((m) => {
-		typeof process !== "undefined" && process.stdout.write(prefix);
-		console.log.apply(console, m);
-	});
-	messages.splice(0, messages.length);
+	console.warn.apply(arg);
 };
