@@ -9,8 +9,8 @@ export default class {
 	constructor(engine) {
 		this._engine = engine;
 		this._window = new Window();
-		this._window.content.style.flexDirection = 'column';
-
+		this._window.content.classList.add('world-generation');
+		
 		this._currentStory = null;
 		this._readExpectations();
 		this._setupInputFields();

@@ -21,6 +21,7 @@ export default class SceneManager {
 	}
 
 	render(renderer) {
+		// TODO: determine visible scenes at push/pop time
 		let visibleScenes = [];
 		for (let i = 0, len = this._stack.length; i < len; i++) {
 			const scene = this._stack[i];

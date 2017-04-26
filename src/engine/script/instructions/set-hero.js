@@ -17,7 +17,7 @@ export default (instruction, engine, action) => {
 	engine.hero.location.y = instruction.arguments[1];
 
 	if (engine.hero.visible === false && engine.sceneManager.currentScene instanceof ZoneScene)
-		scene._executeHotspots();
+		engine.sceneManager.currentScene._executeHotspots();
 
 	// original implementation actually has a hard break here
 	return Result.OK;

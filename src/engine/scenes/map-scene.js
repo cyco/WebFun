@@ -106,7 +106,7 @@ export default class MapScene extends Scene {
 		const tileY = Math.floor(p.y * World.HEIGHT);
 
 		const engine = this.engine;
-		const currentZone = engine.state.currentZone;
+		const currentZone = engine.currentZone;
 		let world = this.engine.world;
 		if (currentZone.planet === Planet.DAGOBAH) {
 			world = this.engine.dagobah;
@@ -131,7 +131,7 @@ export default class MapScene extends Scene {
 
 		const engine = this.engine;
 		const state = engine.state;
-		const currentZone = state.currentZone;
+		const currentZone = engine.currentZone;
 		let world = engine.world;
 
 		if (currentZone.planet === Planet.DAGOBAH) {

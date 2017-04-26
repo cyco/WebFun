@@ -1,4 +1,9 @@
+@charset "UTF-8";
+
 $tile-size: 32px;
+$fa-font-path: 'fonts';
+
+@import 'font-awesome/scss/font-awesome';
 
 @import 'colors';
 
@@ -17,6 +22,7 @@ $tile-size: 32px;
 @import 'ui/progress-bar';
 @import 'ui/window';
 @import 'ui/textbox';
+@import 'ui/icon-button';
 
 @import 'app/ui/ammo-view';
 @import 'app/ui/equipment';

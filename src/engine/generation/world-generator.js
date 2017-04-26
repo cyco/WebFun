@@ -63,6 +63,7 @@ export default class WorldGenerator {
 		mapGenerator.generate(-1, this._size);
 
 		this.world = new World();
+		this.world.zones = this.data.zones;
 
 		const orderMap = mapGenerator.orderMap;
 
@@ -1284,7 +1285,7 @@ export default class WorldGenerator {
 					tile = zone.getTile(hotspot.x, hotspot.y, 1);
 					if (tile) break;
 
-					zone.setTile(hotspot.x, hotspot.y, 1, hotspot.arg);
+					zone.setTile(this.getTile(hotspot.arg), hotspot.x, hotspot.y, 1);
 					break;
 				case HotspotType.Unused:
 					hotspot.arg = TILE_ADEGAN_CRYSTAL;
@@ -1292,7 +1293,7 @@ export default class WorldGenerator {
 					tile = zone.getTile(hotspot.x, hotspot.y, 1);
 					if (tile) break;
 
-					zone.setTile(hotspot.x, hotspot.y, 1, 0x1CB);
+					zone.setTile(this.getTile(0x1CB), hotspot.x, hotspot.y, 1);
 					break;
 				default:
 					break;
@@ -2239,5 +2240,9 @@ export default class WorldGenerator {
 			if (this.getZoneByID(i) === zone) return i;
 
 		return -1;
+	}
+	
+	getTile(id) {
+		return id === -1 ? null : this.data.tiles[id];
 	}
 }

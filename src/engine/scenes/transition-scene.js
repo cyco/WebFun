@@ -91,13 +91,14 @@ export default class TransitionScene extends Scene {
 		console.warn("_swapZones()");
 		const state = this.engine.state;
 		const hero = this.engine.hero;
+		const engine = this.engine;
 		hero.location = this.targetHeroLocation;
 		state.worldLocation = this.targetZoneLocation;
-		state.currentZone = this.targetZone;
-		state.currentZone.visited = true;
+		engine.currentZone = this.targetZone;
+		engine.currentZone.visited = true;
 
 		console.log(this.scene);
-		this.scene.zone = state.currentZone;
+		this.scene.zone = engine.currentZone;
 		this.scene.prepareCamera();
 
 		state.justEntered = true;

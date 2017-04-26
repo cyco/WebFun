@@ -18,3 +18,4 @@ export Textbox from "./textbox";
 export View from "./view";
 export Window from "./window";
 export WindowTitlebar from "./window-titlebar";
+export IconButton from './icon-button';
