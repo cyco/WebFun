@@ -1,10 +1,10 @@
-import View from "./view";
+import View from './view';
 
 export default class Button extends View {
 	constructor() {
 		super(document.createElement("button"));
 
-		this.element.classList.add("Button");
+		this.element.classList.add("button");
 		this.element.appendChild(document.createElement("div"));
 	}
 

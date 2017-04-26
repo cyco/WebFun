@@ -3,13 +3,12 @@ import { LoadingView, SceneView } from "./ui";
 import Settings from '/settings';
 import { MainWindow, MainMenu } from "./windows";
 import { Engine, CanvasRenderer, Story, Metronome, Hero, Inventory } from "/engine";
-import { WorldGenerator } from "/engine/generation";
 import { Planet, WorldSize } from "/engine/types";
 import { ZoneScene } from '/engine/scenes';
 import { DesktopInputManager } from '/engine/input';
 import Loader from "./loader";
-
-import { WorldGeneration } from '/debug';
+import { ScriptExecutor } from '/engine/script';
+import { WorldGeneration, Debugger } from '/debug';
 
 export default class {
 	constructor() {
@@ -30,6 +29,9 @@ export default class {
 		engine.metronome = new Metronome();
 		engine.hero = new Hero();
 		engine.inventory = new Inventory();
+		engine.scriptExecutor = new ScriptExecutor();
+
+		window.engine = engine;
 
 		return engine;
 	}
@@ -54,7 +56,7 @@ export default class {
 		loader.onfail = (event) => console.log("fail", event);
 		loader.onprogress = ({ detail: { progress } }) => loadingView.progress = progress;
 		loader.onloadsetupimage = ({ detail: { setupImage } }) => loadingView.backgroundImageSource = setupImage.representation.src;
-		loader.onload = (event) => {
+		loader.onload = () => {
 			loadingView.progress = 1.0;
 			dispatch(() => this.newStory(), 3000);
 		};
@@ -62,11 +64,14 @@ export default class {
 	}
 
 	newStory() {
-		if (Settings.debug) {
+		if (Settings.debugWorldGeneration) {
 			new WorldGeneration(this._engine);
-			return;
 		}
 		
+		if (Settings.debugActions) {
+			new Debugger(this._engine);
+		}
+
 		const story = new Story(0x0000, Planet.ENDOR, WorldSize.LARGE);
 		story.generateWorld(this._engine);
 		this._engine.story = story;

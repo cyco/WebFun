@@ -1,0 +1,38 @@
+.world-generation{
+	flex-direction: column;
+	
+.debug-map {
+	display: flex;
+	flex-wrap: wrap;
+	background-color: black;
+	
+	width: 288px;
+	height: 288px;
+	padding: 4px;
+	
+	.debug-map-item {
+		@extend .pixelated;
+		width: 28px;
+		height: 28px;
+		
+		&.none { background-image: url('game-data/tiles/0836.png'); }
+		&.empty { background-image: url('game-data/tiles/0832.png'); }
+		&.travel { background-image: url('game-data/tiles/0819.png'); }
+		&.spaceport { background-image: url('game-data/tiles/0829.png'); }
+		&.block-west { background-image: url('game-data/tiles/0827.png'); }
+		&.block-east { background-image: url('game-data/tiles/0823.png'); }
+		&.block-north { background-image: url('game-data/tiles/0821.png'); }
+		&.block-south { background-image: url('game-data/tiles/0825.png'); }
+		&.goal { background-image: url('game-data/tiles/0831.png'); }
+		&.trade, &.use, &.find, &.find-the-force, { background-image: url('game-data/tiles/0817.png'); }
+		
+		&.invalid-details {
+			border: 0.5px solid orange;
+		}
+		
+		&.invalid {
+			border: 0.5px solid red;
+		}
+	}
+}
+}

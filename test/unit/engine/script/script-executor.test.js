@@ -1,13 +1,13 @@
-import ActionEvaluator from '/engine/script/action-evaluator';
+import ScriptExecutor from '/engine/script/script-executor';
 
-describe("ActionEvaluator", () => {
+describe("ScriptExecutor", () => {
 	let evaluator, engine, action;
 	beforeEach(() => {
 		engine = {};
 
 		action = {};
 
-		evaluator = new ActionEvaluator();
+		evaluator = new ScriptExecutor();
 		evaluator.engine = engine;
 	});
 

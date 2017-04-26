@@ -30,7 +30,7 @@ export default class SpeechScene extends Scene {
 		this._modalSession.run();
 
 		const anchor = Point.add(this.location, this.cameraOffset);
-		const offset = this.engine.state.viewOffset;
+		const offset = new Point(0, 0, 0);
 
 		this._bubble.x = anchor.x * this.tileSize.width + offset.x;
 		this._bubble.y = anchor.y * this.tileSize.height + offset.y;

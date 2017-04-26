@@ -1,5 +1,7 @@
 export const Settings = {
-	debug: true,
+	debug: false,
+	debugWorldGeneration: false,
+	debugActions: true,
 
 	drawHotspots: true,
 	drawHeroTile: false,

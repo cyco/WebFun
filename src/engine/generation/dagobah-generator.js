@@ -22,7 +22,7 @@ export default class {
 	generate(generator) {
 		const data = this._engine.data;
 		const dagobah = new World();
-		dagobah.data = data;
+		dagobah.zones = data.zones;
 
 		dagobah.setZone(4, 4, ZONE_DAGOBAH_NORTH_WEST);
 		dagobah.at(4, 4).zoneType = ZoneType.Find; // data.zones[ZONE_DAGOBAH_NORTH_WEST].type;
