@@ -87,6 +87,7 @@ export default class GameDataLoader extends EventTarget {
 			for (; idx < max; idx++) {
 				const tile = tiles[idx];
 				tile._image = imageFactory.buildImage(tileWidth, tileHeight, tile._imageData);
+				if(tile.image && tile.name) tile.image.representation.title = tile.name;
 				tile._imageData = null;
 				this._progress(5, 4 * (idx / tileCount));
 			}

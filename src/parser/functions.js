@@ -45,8 +45,9 @@ export const blob = (type, length) => {
 export const until = (index, end, type) => {
 	return (stream) => {
 		const result = [];
-		while (index(stream, result) !== end) {
-			result.push(type(stream, result));
+		let idx;
+		while ((idx = index(stream, result)) !== end) {
+			result[idx] = type(stream, result);
 		}
 		return result;
 	};

@@ -18,4 +18,6 @@ export Textbox from "./textbox";
 export View from "./view";
 export Window from "./window";
 export WindowTitlebar from "./window-titlebar";
-export IconButton from './icon-button';
+export * as Components from './components';
+export Component from './component';
+export ComponentRegistry from './component-registry';

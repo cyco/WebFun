@@ -1,3 +1,5 @@
+// import 'webcomponents.js/webcomponents.min.js';
+// import "webcomponentsjs/full";
 import "./extension";
 
 import "./ui";

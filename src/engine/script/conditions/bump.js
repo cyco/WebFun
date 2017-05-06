@@ -4,6 +4,8 @@ export default (args, zone, engine) => {
 	if (!bump || bump.x !== args[0] || bump.y !== args[1]) {
 		return false;
 	}
+	
+	return false;
 
 	if (engine.currentZone.getTileID(args[0], args[1], 0) === args[2]) return true;
 	if (engine.currentZone.getTileID(args[0], args[1], 1) === args[2]) return true;

@@ -1,14 +1,15 @@
 .equipment {
-    $indicator-color: #0091EA;
+  $indicator-color: #0091EA;
+
+  height: $tile-size + 2 * $border-size;
+
+  > * {
     height: $tile-size + 2 * $border-size;
+    display: inline-block;
+    position: relative;
+  }
 
-    > * {
-        height: $tile-size + 2 * $border-size;
-        display: inline-block;
-        position: relative;
-    }
-
-    .ammo + .weapon {
-        margin-left: 2px;
-    }
+  .ammo + .weapon {
+    margin-left: 2px;
+  }
 }

@@ -1,30 +1,29 @@
 .ammo-view {
-    @extend .inset-border;
-    border-width: 2px;
+  @extend .inset-border;
 
-    width: 10px  + 2 * $border-size;
+  border-width: 2px;
+  width: 10px + 2 * $border-size;
 
-    > * {
-        position: absolute;
-    }
+  > * {
+    position: absolute;
+  }
 
-    > .background {
-        @extend .inset-border-inverted;
-        @extend .full-size;
+  > .background {
+    @extend .inset-border-inverted;
 
-        border-width: 1px;
+    @extend .full-size;
 
-        width: auto;
-        height: auto;
-    }
+    border-width: 1px;
+    width: auto;
+    height: auto;
+  }
 
-    > .indicator {
-        background-color: $indicator-color;
-        border: 0;
-        height: 30%;
-
-        left: 1px;
-        right: 1px;
-        bottom: 1px;
-    }
+  > .indicator {
+    background-color: $indicator-color;
+    border: 0;
+    height: 30%;
+    left: 1px;
+    right: 1px;
+    bottom: 1px;
+  }
 }
