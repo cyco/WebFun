@@ -37,6 +37,7 @@ export default class extends EventTarget {
 		this._metronome.start();
 		this.dispatchEvent(Event.StatusChange);
 	}
+	
 	stop() {
 		this._metronome.stop();
 		this.dispatchEvent(Event.StatusChange);

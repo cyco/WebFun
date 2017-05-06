@@ -1,8 +1,8 @@
 .textbox {
-	@extend .inset-border;
+  @extend .inset-border;
 
-	border-width: $border-size;
-	
-	background: none;
-	outline: none;
+  border-width: $border-size;
+  background: none;
+  outline: none;
+  min-width: 0px;
 }

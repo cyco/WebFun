@@ -1,24 +1,24 @@
 .weapon-view {
-    @extend .inset-border;
-    border-width: 2px;
+  @extend .inset-border;
 
-    width: $tile-size + 2 * $border-size;
+  border-width: 2px;
+  width: $tile-size + 2 * $border-size;
 
-    > .background {
-        @extend .full-size;
-        @extend .inset-border-inverted;
+  > .background {
+    @extend .full-size;
 
-        position: absolute;
-        border-width: 1px;
+    @extend .inset-border-inverted;
 
-        margin: 0;
-    }
+    position: absolute;
+    border-width: 1px;
+    margin: 0;
+  }
 
-    > img {
-        @extend .full-size;
+  > img {
+    @extend .full-size;
 
-        position: absolute;
-        width: $tile-size;
-        height: $tile-size;
-    }
+    position: absolute;
+    width: $tile-size;
+    height: $tile-size;
+  }
 }

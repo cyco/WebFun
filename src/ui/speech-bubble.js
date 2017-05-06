@@ -35,10 +35,10 @@ export default class SpeechBubble extends View {
 		this.element.style.width = this._width + "px";
 		this.element.style.position = "absolute";
 
-		this.element.classList.add("SpeechBubble");
+		this.element.classList.add("speech-bubble");
 
 		const textContainer = document.createElement("div");
-		textContainer.classList.add("textContainer");
+		textContainer.classList.add("text-container");
 
 		const text = document.createElement("div");
 		text.classList.add("text");

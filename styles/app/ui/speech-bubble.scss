@@ -1,0 +1,25 @@
+.speech-bubble {
+	position: absolute;
+	z-index: 1001;
+	
+	.text-container {
+		position: absolute;
+	}
+	
+	.text {
+		
+	}
+	
+	.singleline {
+		
+	}
+	
+	.controls {
+		display: block;
+		width: 16px;
+
+		position: absolute;
+		bottom: 5px;
+		right: 5px;
+	}
+}

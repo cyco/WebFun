@@ -22,7 +22,7 @@ export class _Action {
 
 export default class Action {
 	constructor() {
-		this.id = -1;
+		this._id = -1;
 
 		this._conditions = [];
 		this._instructions = [];
@@ -34,6 +34,10 @@ export default class Action {
 		this.debug = {};
 
 		Object.seal(this);
+	}
+
+	get id() {
+		return this._id;
 	}
 
 	get conditions() {

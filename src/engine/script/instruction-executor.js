@@ -9,6 +9,7 @@ export default class InstructionExecutor {
 	}
 
 	execute(instruction) {
+		console.log('execute', instruction);
 		const handler = Instructions[instruction.opcode];
 		console.assert(handler, `Unknown instruction opcode 0x${instruction.opcode.toString(0x10)}!`);
 

@@ -1,23 +1,25 @@
 $border-size: 2px;
 
 .inset-border {
-    border: solid $border-dark;
-    border-right-color: $border-light;
-    border-bottom-color: $border-light;
+  border: solid $border-dark;
+  border-right-color: $border-light;
+  border-bottom-color: $border-light;
 }
 
 .inset-border-inverted {
-    border: solid $border-light;
-    border-right-color: $border-dark;
-    border-bottom-color: $border-dark;
+  border: solid $border-light;
+  border-right-color: $border-dark;
+  border-bottom-color: $border-dark;
 }
 
 .inset-border-1px {
-	@extend .inset-border;
-	border-width: 1px;
+  @extend .inset-border;
+
+  border-width: 1px;
 }
 
 .inset-border-2px {
-	@extend .inset-border;
-	border-width: 2px;
+  @extend .inset-border;
+
+  border-width: 2px;
 }

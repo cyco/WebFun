@@ -48,11 +48,7 @@ export default class ZoneScene extends Scene {
 		hero.update(ticks);
 		this._objects.forEach((go) => go.update(ticks));
 
-		this.engine.currentZone.actions.forEach(
-			(action, idx) => {
-				action.id = idx;
-			});
-		engine.scriptExecutor.runActions(engine);
+		await engine.scriptExecutor.runActions(engine);
 
 		this._handleBullet();
 	}

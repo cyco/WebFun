@@ -1,43 +1,48 @@
 @charset "UTF-8";
 
 $tile-size: 32px;
-$fa-font-path: 'fonts';
+$fa-font-path: "fonts";
 
-@import 'font-awesome/scss/font-awesome';
+@import "font-awesome/scss/font-awesome";
 
-@import 'colors';
+@import "colors";
 
-@import 'util/animation';
-@import 'util/border';
-@import 'util/layers';
-@import 'util/pixelated';
-@import 'util/reset';
-@import 'util/selection';
-@import 'util/sizing';
+@import "util/animation";
+@import "util/border";
+@import "util/layers";
+@import "util/pixelated";
+@import "util/reset";
+@import "util/selection";
+@import "util/sizing";
 
-@import 'ui/menu-item';
-@import 'ui/menu-view';
-@import 'ui/menu-window';
-@import 'ui/menubar';
-@import 'ui/progress-bar';
-@import 'ui/window';
-@import 'ui/textbox';
-@import 'ui/icon-button';
+@import "ui/menu-item";
+@import "ui/menu-view";
+@import "ui/menu-window";
+@import "ui/menubar";
+@import "ui/progress-bar";
+@import "ui/window";
+@import "ui/textbox";
+@import "ui/components/icon-button";
 
-@import 'app/ui/ammo-view';
-@import 'app/ui/equipment';
-@import 'app/ui/health-view';
-@import 'app/ui/inventory-view';
-@import 'app/ui/loading-view';
-@import 'app/ui/location-view';
-@import 'app/ui/main';
-@import 'app/ui/sidebar';
-@import 'app/ui/weapon-view';
+@import "app/ui/ammo-view";
+@import "app/ui/equipment";
+@import "app/ui/health-view";
+@import "app/ui/inventory-view";
+@import "app/ui/loading-view";
+@import "app/ui/location-view";
+@import "app/ui/main";
+@import "app/ui/sidebar";
+@import "app/ui/weapon-view";
+@import "app/ui/speech-bubble";
 
-@import 'app/windows/statistics-window';
+@import "app/windows/statistics-window";
 
-@import 'debug';
+@import "debug/debugger";
+@import "debug/world-generation";
+@import "debug/components/action";
+@import "debug/components/controls";
+@import "debug/components/breakpoint-button";
 
 body {
-	background-color: $background-color;
+  background-color: $background-color;
 }

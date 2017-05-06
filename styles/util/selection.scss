@@ -1,16 +1,16 @@
 * {
-    user-select: none;
-    -webkit-user-select: none;
-    cursor: default;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: default;
 }
 
 input[type=text],
 textarea {
-    user-select: text;
-    -webkit-user-select: text;
-    cursor: text;
+  user-select: text;
+  -webkit-user-select: text;
+  cursor: text;
 }
 
 a {
-    cursor: default;
+  cursor: default;
 }

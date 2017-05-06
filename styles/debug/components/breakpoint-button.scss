@@ -1,0 +1,19 @@
+wf-breakpoint-button {
+	display: inline-block;
+	
+	border-radius: 1000px;
+	border: 1px solid rgba(115, 115, 115, 0.84);
+	background-color: darken($window-background-color, 5%);
+	
+	width: 10px;
+	height: 10px;
+	
+	margin-top: 4px;
+	margin-right: 5px;
+
+	&[active] {
+		background-color: #4C7EEA;
+		box-shadow: 0px 0px 3px rgba(76, 126, 234, 0.73);
+		border-color: rgba(76, 126, 234, 0.73);
+	}
+}

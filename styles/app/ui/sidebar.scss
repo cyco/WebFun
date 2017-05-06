@@ -1,17 +1,14 @@
-.main-window > .content > .sidebar {		
+.main-window > .content > .sidebar {
+  display: flex;
+  flex-direction: column;
+  margin-left: 6px;
+  height: 288px + 2 * $border-size;
+
+  > .group {
     display: flex;
-    flex-direction: column;
-    margin-left: 6px;
-	
-	height: 288px + 2 * $border-size;
-	
-    > .group {
-        display: flex;
-        flex-direction: row;
-
-        margin-top: 12px;
-
-        justify-content: space-around;
-        align-items: center;
-    }
+    flex-direction: row;
+    margin-top: 12px;
+    justify-content: space-around;
+    align-items: center;
+  }
 }

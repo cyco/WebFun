@@ -1,6 +1,7 @@
 import { Tile, Puzzle, Zone, Hotspot, Action, Instruction, Condition, NPC } from "./objects";
 import { Type as HotspotType } from "./objects/hotspot";
 import { Type as PuzzleType } from "./objects/puzzle";
+import Settings from '/settings';
 
 export default class {
 	constructor(raw) {
@@ -10,7 +11,8 @@ export default class {
 		this._tiles = raw.TILE.tiles.map((t, i) => new Tile(i, t.attributes, t.pixelData));
 		this._puzzles = raw.PUZ2.puzzles.map((data, index) => this._makePuzzle(data, index));
 		this._zones = raw.ZONE.map((data, index) => this._makeZone(data, index));
-		
+
+		raw.TNAM.tileNames.forEach((name, idx) => name && (this._tiles[idx]._name = name.trimCharacter("\0")) && Settings.debug && this._tiles[idx]._image && (this._tiles[idx]._image.title = name.trimCharacter("\0")));
 		window.gd = this;
 	}
 
@@ -50,7 +52,7 @@ export default class {
 		zone.providedItemIDs = data.izx2.providedItemIds;
 		zone.puzzleNPCTileIDs = data.izx3.npcTileIds;
 
-		zone._actions = data.actions.map((data) => this._makeAction(data));
+		zone._actions = data.actions.map((data, i) => this._makeAction(data, i));
 		zone._tileStore = this.tiles;
 
 		return zone;
@@ -92,9 +94,10 @@ export default class {
 		return hotspot;
 	}
 
-	_makeAction(data) {
+	_makeAction(data, idx) {
 		const action = new Action();
 
+		action._id = idx;
 		action._conditions = data.conditions.map((data) => new Condition(data));
 		action._instructions = data.instructions.map((data) => new Instruction(data));
 

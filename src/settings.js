@@ -1,11 +1,11 @@
 export const Settings = {
-	debug: false,
+	debug: true,
 	debugWorldGeneration: false,
 	debugActions: true,
 
 	drawHotspots: true,
 	drawHeroTile: false,
-	skipDialogs: true,
+	skipDialogs: false,
 
 	autostartEngine: false,
 
@@ -14,7 +14,5 @@ export const Settings = {
 		palette: "./game-data/yoda.pal",
 		sfx: (file) => `./game-data/sfx-yoda/${encodeURIComponent(file)}.wav`
 	}
-
-
 };
 export default Settings;

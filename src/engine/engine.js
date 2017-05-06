@@ -1,7 +1,7 @@
 import { EventTarget } from '/util';
 
 export const Event = {
-	CurrentZoneChange: 'currentZoneChange'
+	CurrentZoneChange: 'currentzonechange'
 };
 
 export default class extends EventTarget {
@@ -13,6 +13,7 @@ export default class extends EventTarget {
 		super();
 
 		this.metronome = null;
+		this.inputManager = null;
 		this.sceneManager = null;
 		this.renderer = null;
 		this.imageFactory = null;
@@ -20,15 +21,21 @@ export default class extends EventTarget {
 		this.hero = null;
 		this._currentZone = null;
 		this.inventory = null;
-
+		this.scriptExecutor = null;
+		
 		this.story = null;
 
 		// TODO: remove state
 		this.state = {
-			justEntered: true
+			justEntered: true,
+			enteredByPlane: true
+		};
+		this.persistentState = {
+			gamesWon: 0
 		};
 
-		this.registerEvent(Event);
+		this.registerEvents(Event);
+		Object.seal(this);
 	}
 
 	update(ticks) {
