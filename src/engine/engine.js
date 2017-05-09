@@ -28,7 +28,8 @@ export default class extends EventTarget {
 		// TODO: remove state
 		this.state = {
 			justEntered: true,
-			enteredByPlane: true
+			enteredByPlane: true,
+			bump: false
 		};
 		this.persistentState = {
 			gamesWon: 0

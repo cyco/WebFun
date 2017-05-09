@@ -8,7 +8,6 @@ Object.setPrototypeOf(BabelHTMLElement, HTMLElement);
 Object.setPrototypeOf(BabelHTMLElement.prototype, HTMLElement.prototype);
 
 
-
 export default class extends BabelHTMLElement {
 	static get TagName() {
 		console.assert(false, 'Components must define a tag name');

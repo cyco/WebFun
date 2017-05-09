@@ -34,7 +34,7 @@ export default class ZoneScene extends Scene {
 		if (stop) return;
 
 		if (!this._bullet) {
-			stop = this._handleMouse();
+			stop = await this._handleMouse();
 			if (stop) return;
 
 			stop = this._handleKeys();
@@ -115,7 +115,7 @@ export default class ZoneScene extends Scene {
 			});
 	}
 
-	_handleMouse() {
+	async _handleMouse() {
 		const engine = this.engine;
 
 		const inputManager = engine.inputManager;
@@ -145,7 +145,7 @@ export default class ZoneScene extends Scene {
 
 			hero.face(direction);
 			if (inputManager.walk)
-				this._moveHero(direction);
+				await this._moveHero(direction);
 		}
 
 		return false;
@@ -202,7 +202,7 @@ export default class ZoneScene extends Scene {
 		hero._actionFrames = 0;
 	}
 
-	_moveHero(direction) {
+	async _moveHero(direction) {
 		const engine = this.engine;
 		const state = engine.state;
 		const hero = engine.hero;
@@ -217,20 +217,8 @@ export default class ZoneScene extends Scene {
 		const targetPoint = Point.add(hero.location, p);
 		const targetTile = zone.containsPoint(targetPoint) && zone.getTile(targetPoint.x, targetPoint.y, 1);
 		if (targetTile) {
-			const evaluator = this._actionEvaluator;
-			state.bump = targetPoint;
-			const actions = zone.actions.filter((a) => evaluator.actionDoesApply(a));
-			if (actions.length) {
-				let action;
-				while ((action = actions.shift())) {
-					const result = evaluator.executeInstructions(action);
-					if (result === true) break;
-				}
-				state.bump = null;
-				hero.isWalking = false;
-				return;
-			}
-			state.bump = null;
+			const result = await this.engine.scriptExecutor.bump(targetPoint);
+			//TODO: handle result
 		}
 
 		if (!hero.move(p, this._zone)) {

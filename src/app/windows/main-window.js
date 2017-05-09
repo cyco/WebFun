@@ -1,43 +1,42 @@
-import { Window, View } from "/ui";
-import { AmmoView, HealthView, InventoryView, LocationView, WeaponView } from "/app/ui";
+import { Window } from "/ui";
+import { Group } from '/ui/components';
+import { Location, Health, Ammo, Weapon, Inventory } from '/app/ui/components';
 
 export default class extends Window {
 	constructor() {
 		super();
 		this.element.classList.add("main-window");
 
-		this._main = new View();
-		this._main.element.classList.add("main");
-		this.content.appendChild(this._main.element);
+		this._main = document.createElement(Group.TagName);
+		this._main.classList.add("main");
+		this.content.appendChild(this._main);
 
-		this._sidebar = new View();
-		this._sidebar.element.classList.add("sidebar");
+		this._sidebar = document.createElement(Group.TagName);
+		this._sidebar.classList.add("sidebar");
 
-		this._inventoryView = new InventoryView();
-		this._sidebar.element.appendChild(this._inventoryView.element);
+		this._inventory = document.createElement(Inventory.TagName);
+		this._sidebar.appendChild(this._inventory);
 
-		const group = new View();
-		group.element.classList.add("group");
+		const group = document.createElement(Group.TagName);
+		this._locationView = document.createElement(Location.TagName);
+		group.appendChild(this._locationView);
 
-		this._locationView = new LocationView();
-		group.element.appendChild(this._locationView.element);
+		const equipment = document.createElement(Group.TagName);
+		equipment.classList.add("equipment");
+		this._ammoView = document.createElement(Ammo.TagName);
+		equipment.appendChild(this._ammoView);
+		this._weaponView = document.createElement(Weapon.TagName);
+		equipment.appendChild(this._weaponView);
+		group.appendChild(equipment);
 
-		const equipment = new View();
-		equipment.element.classList.add("equipment");
-		this._ammoView = new AmmoView();
-		equipment.element.appendChild(this._ammoView.element);
-		this._weaponView = new WeaponView();
-		equipment.element.appendChild(this._weaponView.element);
-		group.element.appendChild(equipment.element);
+		this._healthView = document.createElement(Health.TagName);
+		group.appendChild(this._healthView);
 
-		this._healthView = new HealthView();
-		group.element.appendChild(this._healthView.element);
-
-		this._sidebar.element.appendChild(group.element);
-		this.content.appendChild(this._sidebar.element);
+		this._sidebar.appendChild(group);
+		this.content.appendChild(this._sidebar);
 	}
 
 	get mainContent() {
-		return this._main.element;
+		return this._main;
 	}
 }

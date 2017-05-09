@@ -1,7 +1,7 @@
 import { ModalSession } from "/ux";
-import TableView from "/ui/table-view";
 import { Event as InventoryEvent } from "/engine/inventory";
 import InventoryRow from "./inventory-row";
+import { Component } from '/ui';
 import Yoda from "/engine/yoda";
 import { Attribute as TileAttribute, Subtype as TileSubtype } from "/engine/objects/tile";
 
@@ -13,19 +13,17 @@ export const Event = {
 	ThrowDetonator: "ThrowDetonator"
 };
 
-export default class InventoryView extends TableView {
-	constructor(element) {
-		super(element, {
-			selectable: false
-		});
+const MinRows = 7;
 
-		this._inventory = null;
+export default class extends Component {
+	static get TagName() {
+		return 'wf-inventory';
+	}
 
-		this.element.classList.add("inventory-view");
+	constructor() {
+		super();
 
-		this.rowClass = InventoryRow;
-		while (this.rowCount < this._minRowCount) 
-			this.addRow(null);
+		this._inventory = [];
 	}
 
 	_rebuildTable() {
@@ -34,11 +32,18 @@ export default class InventoryView extends TableView {
 		const self = this;
 		this._inventory.forEach((item, rowIdx) => {
 			const row = this.addRow(item);
-			row.element.onclick = () => self.rowClicked(item, rowIdx);
+			row.onclick = () => self.rowClicked(item, rowIdx);
 		});
 
-		while (this.rowCount < this._minRowCount) 
-			this.addRow(null);
+		this.fillRows();
+	}
+
+	fillRows() {
+		while (this.rowCount < MinRows) this.addRow(null);
+	}
+
+	get rowCount() {
+		return this.querySelectorAll(InventoryRow.TagName).length;
 	}
 
 	set inventory(i) {
@@ -61,6 +66,11 @@ export default class InventoryView extends TableView {
 		return 7;
 	}
 
+	connectedCallback() {
+		super.connectedCallback();
+		this._rebuildTable();
+	}
+
 	rowClicked(item, row) {
 		if (item.id === Yoda.Locator) {
 			this.dispatchEvent(Event.PlacedLocator, {
@@ -78,8 +88,7 @@ export default class InventoryView extends TableView {
 			return;
 		}
 
-		const element = this.element;
-		const imgNode = element.querySelectorAll(".Row")[row].querySelector("img");
+		const imgNode = this.querySelectorAll(InventoryRow.TagName)[row].querySelector("img");
 		imgNode.src = Image.blankImage;
 
 		const modalSession = new ModalSession();
@@ -111,5 +120,13 @@ export default class InventoryView extends TableView {
 		}
 
 		this.dispatchEvent(eventName, eventDetail);
+	}
+
+	addRow(model) {
+		const row = document.createElement(InventoryRow.TagName);
+		row.tile = model;
+		this.appendChild(row);
+
+		return row;
 	}
 }

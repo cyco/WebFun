@@ -30,10 +30,12 @@ export default class SpeechScene extends Scene {
 		this._modalSession.run();
 
 		const anchor = Point.add(this.location, this.cameraOffset);
-		const offset = new Point(0, 0, 0);
+		
+		const windowOffset = this._determineGlobalOffset();
 
-		this._bubble.x = anchor.x * this.tileSize.width + offset.x;
-		this._bubble.y = anchor.y * this.tileSize.height + offset.y;
+		// TODO: fix posiitoning
+		this._bubble.x = anchor.x * this.tileSize.width + windowOffset.x + 32;
+		this._bubble.y = anchor.y * this.tileSize.height + windowOffset.y + 2 * 32;
 
 		this._bubble.show();
 	}
@@ -55,5 +57,12 @@ export default class SpeechScene extends Scene {
 
 	get text() {
 		return this._bubble.text;
+	}
+	
+	_determineGlobalOffset(){
+		const canvas = document.querySelector('canvas[width="288"][height="288"]');
+		const box = canvas.getBoundingClientRect();
+		
+		return new Point(box.left, box.top, 0);
 	}
 }

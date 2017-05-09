@@ -33,7 +33,8 @@ export default class extends EventTarget {
 	async continueActions(engine) {
 		engine.metronome.stop();
 		const r = await this._doContinueActions(engine);
-		engine.metronome.start();
+		if(r) engine.metronome.start();
+		else ; // metronome will be started again when ZoneScene calls runActions
 		return r;
 	}
 
@@ -47,6 +48,7 @@ export default class extends EventTarget {
 
 		if (this._unbreak) {
 			console.warn('Queueing blocks while executor is stopped');
+			debugger;
 		}
 
 		return await this._evaluateActions(previousActions, false);
@@ -66,6 +68,7 @@ export default class extends EventTarget {
 
 		if (this._unbreak) {
 			console.warn('Queueing blocks while executor is stopped');
+			debugger;
 		}
 
 		return await this._evaluateActions(engine.currentZone.actions, true);
@@ -156,6 +159,39 @@ export default class extends EventTarget {
 		return new Promise((resolve, reject) => {
 			this._unbreak = resolve;
 		});
+	}
+
+	async bump(targetPoint) {
+		console.log(`bump ${targetPoint.x.toString(0x10)}x${targetPoint.y.toString(0x10)}`);
+		const engine = this.engine;
+		const state = engine.state;
+		const zone = engine.currentZone;
+		const hero = engine.hero;
+		
+		engine.metronome.stop();
+		// metronome will be started again when ZoneScene calls runActions
+		
+		state.bump = targetPoint;
+		const actions = zone.actions.slice();
+
+		let action;
+		let didExecuteSomething = false;
+		while ((action = actions.shift())) {
+			await this._breakIfNecessary(action);
+
+			const execute = await this._actionDoesApply(action);
+			if (!execute) continue;
+
+			const result = await this._executeInstructions(action);
+			if (result === true) break;
+			didExecuteSomething = true;
+		}
+
+		state.bump = null;
+
+		if (didExecuteSomething) {
+			hero.isWalking = false;
+		}
 	}
 
 	continue (mode = Continuation.Step) {

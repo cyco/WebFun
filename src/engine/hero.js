@@ -140,7 +140,7 @@ export default class Hero extends EventTarget {
 		if (!this._visible) return;
 
 		let appearance = this._appearance;
-		
+		     
 		// TODO: implement appearance
 		if(!appearance) return;
 		let frame = this._actionFrames;

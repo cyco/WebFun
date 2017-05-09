@@ -27,10 +27,9 @@ export default class {
 		engine.sceneManager = this._sceneView.manager;
 		engine.inputManager = new DesktopInputManager(this._sceneView.element);
 		engine.metronome = new Metronome();
-		engine.hero = new Hero();
 		engine.inventory = new Inventory();
 		engine.scriptExecutor = new ScriptExecutor();
-
+		engine.hero = new Hero();
 		window.engine = engine;
 
 		return engine;
@@ -109,13 +108,16 @@ export default class {
 		const zoneScene = new ZoneScene();
 		zoneScene.zone = loadingZone;
 		engine.currentZone = loadingZone;
-
+		engine.hero.appearance = engine.data.characters.find(c => c.isHero());
+		
 		engine.sceneManager.clear();
 		engine.sceneManager.pushScene(zoneScene);
 
 		const windowContent = this._window.mainContent;
 		windowContent.clear();
 		windowContent.appendChild(this._sceneView.element);
+
+		engine.inputManager.addListeners();
 
 		// engine.metronome.start();
 	}
