@@ -1,7 +1,6 @@
-import { Tile, Puzzle, Zone, Hotspot, Action, Instruction, Condition, NPC } from "./objects";
+import { Tile, Puzzle, Zone, Hotspot, Action, Instruction, Condition, NPC, Char, CharFrame } from "./objects";
 import { Type as HotspotType } from "./objects/hotspot";
 import { Type as PuzzleType } from "./objects/puzzle";
-import Settings from '/settings';
 
 export default class {
 	constructor(raw) {
@@ -11,8 +10,9 @@ export default class {
 		this._tiles = raw.TILE.tiles.map((t, i) => new Tile(i, t.attributes, t.pixelData));
 		this._puzzles = raw.PUZ2.puzzles.map((data, index) => this._makePuzzle(data, index));
 		this._zones = raw.ZONE.map((data, index) => this._makeZone(data, index));
+		this._characters = raw.CHAR.characters.map((data, index) => this._makeCharacter(data, index));
 
-		raw.TNAM.tileNames.forEach((name, idx) => name && (this._tiles[idx]._name = name.trimCharacter("\0")) && Settings.debug && this._tiles[idx]._image && (this._tiles[idx]._image.title = name.trimCharacter("\0")));
+		raw.TNAM.tileNames.forEach((name, idx) => name && (this._tiles[idx]._name = name.trimCharacter("\0")));
 		window.gd = this;
 	}
 
@@ -104,6 +104,34 @@ export default class {
 		return action;
 	}
 
+	_makeCharacter({blob: data}, idx) {
+		const frameSize = 8 * 2, frameCount = 3;
+		
+		const size = data.length;
+		const nonFrameSize = size - frameCount * frameSize;
+		const nonFrameData = data.slice(0, nonFrameSize);
+		const nameEnd = nonFrameData.indexOf(0);
+		const frameData = new Uint16Array(new Uint8Array(data.slice(nonFrameSize)).buffer);
+		const char = new Char();
+		char._id = idx;
+		char._name = nonFrameData.slice(0, nameEnd).map(c => String.fromCharCode(c)).join('');
+		const flags = nonFrameData.slice(nameEnd+1);
+		// flags contain garbage
+		// it is at least 6 bytes for indy, max 15 bytes
+		// it is at least 10 bytes for yoda, max 21 bytes
+		// common bytes are aligned the end
+		char._data = flags.slice(-10);		
+		for (let i = 0; i < frameCount; i++) {
+			const thing = frameData.slice(i * frameSize / 2, (i + 1) * frameSize / 2);
+			const frameTiles = Array.from(thing).map(id => this._tiles[id] || null);
+			const frame = new CharFrame();
+			frame._tiles = frameTiles;
+			char._frames.push(frame);
+		}
+
+		return char;
+	}
+
 	get version() {
 		return this._version;
 	}
@@ -122,5 +150,9 @@ export default class {
 
 	get zones() {
 		return this._zones;
+	}
+
+	get characters() {
+		return this._characters;
 	}
 }

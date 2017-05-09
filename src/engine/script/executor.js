@@ -40,6 +40,10 @@ export default class {
 		return (action.enabled || action.instructionPointer !== 0) && action.conditions.every(
 			(condition) => this._checker.check(condition), this);
 	}
+	
+	bump(targetPoint) {
+		// TODO: implement (see breaking executor)
+	}
 
 	executeInstructions(action) {
 		this._executor.action = action;

@@ -4,9 +4,9 @@ export const Settings = {
 	debugActions: true,
 
 	drawHotspots: true,
-	drawHeroTile: false,
+	drawHeroTile: true,
 	skipDialogs: false,
-
+	
 	autostartEngine: false,
 
 	url: {

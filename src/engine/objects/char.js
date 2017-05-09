@@ -7,7 +7,11 @@ export const Type = {
 };
 
 export default class Char {
-	constructor() {}
+	constructor() {
+		this._frames = [];
+		this._name = null;
+		this._data = null;
+	}
 
 	getFace(direction, frameIdx) {
 		if (this.isHero()) {
@@ -16,7 +20,7 @@ export default class Char {
 			frameIdx = 1 + frameIdx % 2;
 		}
 
-		let tileID = 0xFFFF;
+		let tile = null;
 		let frame = this._frames[frameIdx];
 
 		const dir = Direction.Confine(direction);
@@ -24,22 +28,22 @@ export default class Char {
 			case Direction.NorthEast:
 			case Direction.NorthWest:
 			case Direction.North:
-				tileID = frame.up;
+				tile = frame.up;
 				break;
 			case Direction.SouthEast:
 			case Direction.SouthWest:
 			case Direction.South:
-				tileID = frame.down;
+				tile = frame.down;
 				break;
 			case Direction.East:
-				tileID = frame.right;
+				tile = frame.right;
 				break;
 			case Direction.West:
-				tileID = frame.left;
+				tile = frame.left;
 				break;
 		}
 
-		return this._tileStore[tileID];
+		return tile;
 	}
 
 	get frames() {
@@ -71,13 +75,17 @@ export default class Char {
 	}
 
 	produceBullet(inertia) {
-		const tileID = this._getBulletTileID(inertia);
-		const tile = window.engine.data.tiles[tileID]; // TODO: fix global referene
+		return null;
+		// TODO: implement shooting
+		/*
+		const tile = this._getBullettile(inertia);
+		const tile = window.engine.data.tiles[tile]; // TODO: fix global referene
 		const bullet = new Bullet([tile], inertia);
 		return bullet;
+		*/
 	}
 
-	_getBulletTileID(inertia) {
+	_getBullettile(inertia) {
 		const frame = this._frames.first();
 
 		if (inertia.x) return inertia.x === 1 ? frame.right : frame.left;

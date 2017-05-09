@@ -1,21 +1,27 @@
-import { View } from "/ui";
+import { Component } from '/ui';
 
-export default class WeaponView extends View {
-	constructor(element) {
-		super(element);
+export default class extends Component {
+	static get TagName() {
+		return 'wf-weapon';
+	}
+
+	constructor() {
+		super();
 
 		this._weapon = null;
 		this.data = null;
 
-		this.element.classList.add("weapon-view");
-
 		const background = document.createElement("div");
 		background.classList.add("background");
-		this.element.appendChild(background);
+		this._background = background;
 
 		this._tileContainer = document.createElement("img");
 		this._tileContainer.classList.add("pixelated");
-		this.element.appendChild(this._tileContainer);
+	}
+
+	connectedCallback() {
+		this.appendChild(this._background);
+		this.appendChild(this._tileContainer);
 	}
 
 	get weapon() {

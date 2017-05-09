@@ -1,7 +1,7 @@
 import { KeyEvent, Point } from "/util";
 import InputManager, { Direction } from "./input-manager";
 
-export default class DesktopInputManager extends InputManager {
+export default class extends InputManager {
 	constructor(gameViewElement) {
 		super();
 
@@ -26,7 +26,8 @@ export default class DesktopInputManager extends InputManager {
 		document.addEventListener("contextmenu", (event) => event.preventDefault());
 	}
 
-	removeListeners() {
+	removeListeners() {		
+		console.log('DesktopInputManager -removeListeners');
 		document.removeEventListener("keydown", this.keyDown.bind(this));
 		document.removeEventListener("keyup", this.keyUp.bind(this));
 		document.removeEventListener("mousemove", this.mouseMove.bind(this));

@@ -10,7 +10,6 @@ export default class ConditionChecker {
 	}
 
 	check(condition) {
-		console.log('check', condition);
 		const handler = Conditions[condition.opcode];
 		console.assert(handler, `Unknown condition opcode 0x${condition.opcode.toString(0x10)}!`);
 
