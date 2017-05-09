@@ -20,13 +20,13 @@ $fa-font-path: "fonts";
 @import "ui/menu-window";
 @import "ui/menubar";
 @import "ui/progress-bar";
-@import "ui/window";
 @import "ui/textbox";
 @import "ui/components/icon-button";
+@import "ui/components/window";
+@import "ui/components/group";
 
 @import "app/ui/equipment";
 @import "app/ui/loading-view";
-@import "app/ui/main";
 @import "app/ui/sidebar";
 @import "app/ui/speech-bubble";
 @import "app/ui/components/inventory";
@@ -36,6 +36,7 @@ $fa-font-path: "fonts";
 @import "app/ui/components/health";
 @import "app/ui/components/location";
 
+@import "app/windows/main-window";
 @import "app/windows/statistics-window";
 
 @import "debug/debugger";

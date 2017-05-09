@@ -1,4 +1,5 @@
-import { ComponentRegistry, Textbox, Window } from '/ui';
+import { ComponentRegistry, Textbox } from '/ui';
+import { Window } from '/ui/components';
 import SteppingMetronome, { Status as MetronomeStatus } from './stepping-metronome';
 import BreakingExecutor, { Continuation as ContinuationMode } from './breaking-executor';
 import * as Components from './components';
@@ -17,7 +18,7 @@ export default class {
 		this._engine.metronome = this._metronome;
 		this._engine.scriptExecutor = this._executor;
 
-		this._window = new Window();
+		this._window = document.createElement(Window.TagName);
 		this._window.content.classList.add('debugger');
 		this._window.content.style.flexDirection = 'column';
 		this._window.content.style.width = '200px';
@@ -28,7 +29,7 @@ export default class {
 		this._window.content.appendChild(document.createElement('hr'));
 		this._setupActionList();
 
-		document.body.appendChild(this._window.element);
+		document.body.appendChild(this._window);
 	}
 	
 	_executorStateChanged({action, zone, index, type}) {

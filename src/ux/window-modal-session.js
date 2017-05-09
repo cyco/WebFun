@@ -9,7 +9,7 @@ export default class extends ModalSession {
 	}
 
 	run() {
-		this._overlay.appendChild(this._window.element);
+		this._overlay.appendChild(this._window);
 		super.run();
 		this._window.center();
 	}
@@ -21,7 +21,7 @@ export default class extends ModalSession {
 			return;
 		}
 
-		this._window.element.remove();
+		this._window.remove();
 
 		callback();
 	}

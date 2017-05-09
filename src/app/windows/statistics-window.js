@@ -1,12 +1,17 @@
-import { Window, Textbox } from "/ui";
+import { Window } from '/ui/components';
+import { Textbox } from "/ui";
 import { PersistentState } from "/engine";
 
 export default class extends Window {
+	static get TagName(){
+		return 'wf-statistics-window';
+	}
+	
 	constructor() {
 		super();
 
 		this.title = "Player Statistics";
-		this.element.classList.add("statistics-window");
+		this.classList.add("statistics-window");
 
 		this._setupWindow();
 	}

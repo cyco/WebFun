@@ -1,12 +1,14 @@
-import { Window } from "/ui";
-import { Group } from '/ui/components';
+import { Window, Group } from '/ui/components';
 import { Location, Health, Ammo, Weapon, Inventory } from '/app/ui/components';
 
 export default class extends Window {
+	static get TagName(){
+		return 'wf-main-window';
+	}
+	
 	constructor() {
 		super();
-		this.element.classList.add("main-window");
-
+		
 		this._main = document.createElement(Group.TagName);
 		this._main.classList.add("main");
 		this.content.appendChild(this._main);
