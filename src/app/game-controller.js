@@ -36,12 +36,12 @@ export default class {
 	}
 
 	start() {
-		this._window = new MainWindow();
+		this._window = document.createElement(MainWindow.TagName);
 		this._window.menu = new MainMenu(this);
 
 		this._load();
 
-		document.body.appendChild(this._window.element);
+		document.body.appendChild(this._window);
 		this._window.center();
 	}
 

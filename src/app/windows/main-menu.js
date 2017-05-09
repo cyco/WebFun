@@ -49,7 +49,7 @@ export default class extends Menu {
 			}, {
 				title: "Statistics...",
 				mnemonic: 0,
-				callback: () => this._runModalSession(new StatisticsWindow())
+				callback: () => this._runModalSession(document.createElement(StatisticsWindow.TagName))
 			}, Separator, {
 				title: "Music On",
 				mnemonic: 0,

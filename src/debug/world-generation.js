@@ -1,4 +1,5 @@
-import { Window, Textbox, Checkbox } from '/ui';
+import { Textbox, Checkbox } from '/ui';
+import { Window } from '/ui/components';
 import { FileLoader } from '/util';
 import Story from '/engine/story';
 import { FileReader, GameData } from '/engine';
@@ -8,7 +9,7 @@ import { PrepareExpectations, ParseExpectation, ComparisonResult, CompareWorldIt
 export default class {
 	constructor(engine) {
 		this._engine = engine;
-		this._window = new Window();
+		this._window = document.createElement(Window.TagName);
 		this._window.content.classList.add('world-generation');
 		
 		this._currentStory = null;
