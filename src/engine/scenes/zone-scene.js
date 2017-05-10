@@ -101,7 +101,7 @@ export default class ZoneScene extends Scene {
 			if (z === 1) {
 				if (hero.visible) hero.render(offset, renderer);
 				// always show hero while debugging
-				else if (Settings.drawHeroTile && typeof renderer.fillRect === "function") {
+				else if (Settings.drawHeroTile && renderer.fillRect instanceof Function) {
 					renderer.fillRect((hero.location.x + offset.x) * Tile.WIDTH, (hero.location.y + offset.y) * Tile.HEIGHT, Tile.WIDTH, Tile.HEIGHT, rgba(0, 0, 255, 0.3));
 				}
 				this._objects.forEach(renderObject);
@@ -109,7 +109,7 @@ export default class ZoneScene extends Scene {
 		}
 
 		// show hotspots while debugging
-		if (Settings.drawHotspots && typeof renderer.fillRect === "function")
+		if (Settings.drawHotspots && renderer.fillRect instanceof Function)
 			zone.hotspots.forEach((h) => {
 				renderer.fillRect((h.x + offset.x) * Tile.WIDTH, (h.y + offset.y) * Tile.HEIGHT, Tile.WIDTH, Tile.HEIGHT, h.enabled ? rgba(0, 255, 0, 0.3) : rgba(255, 0, 0, 0.3));
 			});

@@ -15,8 +15,8 @@ export default class MenuStack extends EventTarget {
 
 	push(menu) {
 		this._stack.push(menu);
-		menu.element.style.zIndex = 1001 + this._stack.length;
-		document.body.appendChild(menu.element);
+		menu.style.zIndex = 1001 + this._stack.length;
+		document.body.appendChild(menu);
 	}
 
 	pop(menu) {

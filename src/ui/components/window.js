@@ -1,5 +1,5 @@
 import Component from "../component";
-import WindowTitlebar from "../window-titlebar";
+import WindowTitlebar from "./window-titlebar";
 import View from '../view';
 
 export default class extends Component {
@@ -13,7 +13,7 @@ export default class extends Component {
 		this.x = 0;
 		this.y = 0;
 
-		this._titlebar = new WindowTitlebar(this);
+		this._titlebar = document.createElement(WindowTitlebar.TagName);
 
 		this._content = new View();
 		this._content.element.classList.add("content");
@@ -22,7 +22,9 @@ export default class extends Component {
 	connectedCallback() {
 		super.connectedCallback();
 		
-		this.appendChild(this._titlebar.element);
+		this._titlebar.window = this;
+		
+		this.appendChild(this._titlebar);
 		this.appendChild(this._content.element);
 	}
 
@@ -96,7 +98,7 @@ export default class extends Component {
 	_update(){
 		if(!this.isConnected) return;
 		
-		this.style.top = `${this._y}px`;
-		this.style.left = `${this._x}px`;
+		this.style.top = `${this._y|0}px`;
+		this.style.left = `${this._x|0}px`;
 	}
 }

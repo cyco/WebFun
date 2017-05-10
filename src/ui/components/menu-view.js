@@ -1,21 +1,26 @@
-import View from "./view";
-import Menu from "./menu";
-import { Separator, State as MenuItemState } from "./menu-item";
+import Component from "../component";
+import Menu from "../menu";
+import { Separator, State as MenuItemState } from "../menu-item";
 
-export default class MenuView extends View {
-	constructor(menu, element) {
-		super(element || document.createElement("ul"));
+export default class MenuView extends Component {
+	static get TagName() {
+		return 'wf-menu-view';
+	}
 
-		this.element.classList.add("menu-view");
+	constructor() {
+		super();
+		
+		this._menu = null;
+	}
 
-		if (menu && !(menu instanceof Menu))
-			menu = new Menu(menu);
-		this.menu = menu;
+	connectedCallback() {
+		this.removeItemNodes();
+		this.addItemNodes();
 	}
 
 	close() {
-		this.element.remove();
-		if (this.onclose && typeof this.onclose === "function")
+		this.remove();
+		if (this.onclose instanceof Function)
 			this.onclose();
 	}
 
@@ -24,8 +29,12 @@ export default class MenuView extends View {
 	}
 
 	set menu(menu) {
+		if (menu && !(menu instanceof Menu))
+			menu = new Menu(menu);
+		
 		this._menu = menu;
 
+		if (!this.isConnected) return;
 		this.removeItemNodes();
 		this.addItemNodes();
 	}
@@ -33,7 +42,7 @@ export default class MenuView extends View {
 	addItemNodes() {
 		const self = this;
 		this.menu.items.forEach((menuItem) => {
-			if (menuItem === Separator) self.addSeparatorNode();
+			if (menuItem === Separator || menuItem.isSeparator) self.addSeparatorNode();
 			else self.addItemNode(menuItem);
 		});
 	}
@@ -68,7 +77,8 @@ export default class MenuView extends View {
 
 		if (menuItem.enabled && menuItem.callback)
 			node.onmouseup = menuItem.callback;
-		this.element.appendChild(node);
+		
+		this.appendChild(node);
 		menuItem.element = node;
 
 		return node;
@@ -81,9 +91,9 @@ export default class MenuView extends View {
 		let state = menuItem.state;
 		if (state === undefined) return node;
 
-		if (typeof state === "function") try {
-				state = state();
-			} catch (e) {}
+		if (state instanceof Function) try {
+			state = state();
+		} catch (e) {}
 
 		let className = null;
 		switch (state) {
@@ -116,13 +126,11 @@ export default class MenuView extends View {
 		const line = document.createElement("div");
 		node.appendChild(line);
 
-		this.element.appendChild(node);
+		this.appendChild(node);
 		return node;
 	}
 
 	removeItemNodes() {
-		while (this.element.childNodes.length) {
-			this.element.childNodes.last().remove();
-		}
+		this.clear();
 	}
 }

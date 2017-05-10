@@ -16,14 +16,15 @@ $fa-font-path: "fonts";
 @import "util/sizing";
 
 @import "ui/menu-item";
-@import "ui/menu-view";
-@import "ui/menu-window";
-@import "ui/menubar";
 @import "ui/progress-bar";
 @import "ui/textbox";
 @import "ui/components/icon-button";
 @import "ui/components/window";
+@import "ui/components/window-titlebar";
 @import "ui/components/group";
+@import "ui/components/menu-view";
+@import "ui/components/menu-window";
+@import "ui/components/menubar";
 
 @import "app/ui/equipment";
 @import "app/ui/loading-view";
@@ -47,4 +48,6 @@ $fa-font-path: "fonts";
 
 body {
   background-color: $background-color;
+  margin: 0;
+  padding: 0;
 }

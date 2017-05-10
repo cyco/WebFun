@@ -77,7 +77,7 @@ export default class extends InputManager {
 		if (this._direction)
 			this._walk = true;
 
-		if (typeof this.keyDownHandler === "function") {
+		if (this.keyDownHandler instanceof Function) {
 			this.keyDownHandler(e);
 		}
 	}
@@ -130,7 +130,7 @@ export default class extends InputManager {
 		if (e.button === 1)
 			this._attack = true;
 
-		if (typeof this.mouseDownHandler === "function") {
+		if (this.mouseDownHandler instanceof Function) {
 			this.mouseDownHandler(point);
 		}
 	}

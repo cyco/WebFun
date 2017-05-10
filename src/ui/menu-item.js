@@ -1,4 +1,4 @@
-import EventTarget from "/util/event-target";
+import { EventTarget } from "/util";
 import Menu from "./menu";
 
 export const State = {
@@ -26,7 +26,7 @@ export default class MenuItem extends EventTarget {
 	get enabled() {
 		if (!this.callback && !this.submenu) return false;
 
-		if (typeof this._enabled === "function")
+		if (this._enabled instanceof Function)
 			return this._enabled();
 
 		return this._enabled;
@@ -41,4 +41,6 @@ export default class MenuItem extends EventTarget {
 	}
 }
 
-export const Separator = new MenuItem();
+const separator = new MenuItem();
+separator.isSeparator = true;
+export const Separator = separator;
