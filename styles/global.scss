@@ -15,7 +15,6 @@ $fa-font-path: "fonts";
 @import "util/selection";
 @import "util/sizing";
 
-@import "ui/menu-item";
 @import "ui/progress-bar";
 @import "ui/textbox";
 @import "ui/components/icon-button";
@@ -25,6 +24,8 @@ $fa-font-path: "fonts";
 @import "ui/components/menu-view";
 @import "ui/components/menu-window";
 @import "ui/components/menubar";
+@import "ui/components/menu-item";
+@import "ui/components/menu-item-separator";
 
 @import "app/ui/equipment";
 @import "app/ui/loading-view";

@@ -1,6 +1,8 @@
 import Component from "../component";
 import Menu from "../menu";
-import { Separator, State as MenuItemState } from "../menu-item";
+import { Separator } from "../menu-item";
+import MenuItem from './menu-item';
+import MenuItemSeparator from './menu-item-separator';
 
 export default class MenuView extends Component {
 	static get TagName() {
@@ -48,84 +50,14 @@ export default class MenuView extends Component {
 	}
 
 	addItemNode(menuItem) {
-		const node = document.createElement("li");
-		node.classList.add("menu-item");
-
-		const stateNode = this._makeStateNode(menuItem);
-		node.appendChild(stateNode);
-
-		if (menuItem.mnemonic !== undefined) {
-			const title = menuItem.title;
-			const mnemonicIndex = menuItem.mnemonic;
-			const preMnemonic = title.substring(0, mnemonicIndex);
-			const mnemonic = title.substring(mnemonicIndex, mnemonicIndex + 1);
-			const postMnemonic = title.substring(mnemonicIndex + 1);
-
-			const mnemonicHighlight = document.createElement("span");
-			mnemonicHighlight.classList.add("mnemonic");
-			mnemonicHighlight.append(mnemonic);
-
-			node.append(preMnemonic);
-			node.appendChild(mnemonicHighlight);
-			node.append(postMnemonic);
-		} else {
-			node.append(menuItem.title);
-		}
-
-		const stateClass = menuItem.enabled ? "enabled" : "disabled";
-		node.classList.add(stateClass);
-
-		if (menuItem.enabled && menuItem.callback)
-			node.onmouseup = menuItem.callback;
-		
+		const node = document.createElement(MenuItem.TagName);
+		node.item = menuItem;
 		this.appendChild(node);
-		menuItem.element = node;
-
 		return node;
-	}
-
-	_makeStateNode(menuItem) {
-		const node = document.createElement("span");
-		node.classList.add("state");
-
-		let state = menuItem.state;
-		if (state === undefined) return node;
-
-		if (state instanceof Function) try {
-			state = state();
-		} catch (e) {}
-
-		let className = null;
-		switch (state) {
-			case MenuItemState.On:
-				className = "on";
-				break;
-			case MenuItemState.Off:
-				className = "off";
-				break;
-			case MenuItemState.Mixed:
-				className = "mixed";
-				break;
-			case MenuItemState.None:
-				break;
-			default:
-				break;
-		}
-
-		if (className)
-			node.classList.add(className);
-		return node;
-
 	}
 
 	addSeparatorNode() {
-		const node = document.createElement("li");
-		node.classList.add("menu-item");
-		node.classList.add("separator");
-
-		const line = document.createElement("div");
-		node.appendChild(line);
-
+		const node = document.createElement(MenuItemSeparator.TagName);
 		this.appendChild(node);
 		return node;
 	}
