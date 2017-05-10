@@ -7,13 +7,11 @@ export default class extends Window {
 		return 'wf-statistics-window';
 	}
 	
-	constructor() {
-		super();
-
-		this.title = "Player Statistics";
-		this.classList.add("statistics-window");
+	connectedCallback(){
+		super.connectedCallback();
 
 		this._setupWindow();
+		this.title = "Player Statistics";
 	}
 
 	_setupWindow() {
