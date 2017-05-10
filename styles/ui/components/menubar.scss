@@ -1,6 +1,6 @@
 wf-menubar {
-	@extend wf-menu-view;
-	
+  @extend wf-menu-view;
+
   margin-left: 16px;
   margin-right: 16px;
   height: 22px;
@@ -11,28 +11,27 @@ wf-menubar {
   pointer-events: none;
   border: 0px;
 
- > .menu-item {
-  display: inline-block;
-  border-width: 0px;
-  padding: 1px 5px 1px 5px;
-  margin-left: 1px;
-  pointer-events: all;
-}
+  > .menu-item {
+    display: inline-block;
+    border-width: 0px;
+    padding: 1px 5px 1px 5px;
+    margin-left: 1px;
+    pointer-events: all;
+  }
 
- > .menu-item .state {
-  display: none;
-}
+  > .menu-item .state {
+    display: none;
+  }
 
- > .menu-item:first-child {
-  margin-left: 4px;
-}
+  > .menu-item:first-child {
+    margin-left: 4px;
+  }
 
- > .menu-item.open {
-  @extend .inset-border;
+  > .menu-item.open {
+    @extend .inset-border;
 
-  cursor: default;
-  padding: 0px 4px 0px 4px;
-  border-width: 1px;
-}
-
+    cursor: default;
+    padding: 0px 4px 0px 4px;
+    border-width: 1px;
+  }
 }
