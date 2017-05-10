@@ -11,27 +11,27 @@ wf-menubar {
   pointer-events: none;
   border: 0px;
 
-  > .menu-item {
+  > wf-menu-item {
     display: inline-block;
     border-width: 0px;
     padding: 1px 5px 1px 5px;
     margin-left: 1px;
     pointer-events: all;
-  }
 
-  > .menu-item .state {
-    display: none;
-  }
+    &:first-child {
+      margin-left: 4px;
+    }
 
-  > .menu-item:first-child {
-    margin-left: 4px;
-  }
+    &.open {
+      @extend .inset-border;
 
-  > .menu-item.open {
-    @extend .inset-border;
+      cursor: default;
+      padding: 0px 4px 0px 4px;
+      border-width: 1px;
+    }
 
-    cursor: default;
-    padding: 0px 4px 0px 4px;
-    border-width: 1px;
+    .state {
+      display: none;
+    }
   }
 }

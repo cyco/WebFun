@@ -6,3 +6,5 @@ export MenuView from './menu-view';
 export MenuWindow from './menu-window';
 export Menubar from './menubar';
 export SubmenuWindow from './submenu-window';
+export MenuItemSeparator from './menu-item-separator';
+export Menu from './menu-item';
