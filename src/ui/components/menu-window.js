@@ -1,11 +1,14 @@
 import Point from "/util/point";
 import MenuView from "./menu-view";
-import MenuStack from "./menu-stack";
+import MenuStack from "../menu-stack";
 
 export default class MenuWindow extends MenuView {
-	constructor(menu, element) {
-		super(menu, element);
-		this.element.classList.add("menu-window");
+	static get TagName(){
+		return 'wf-menu-window';
+	}
+	
+	connectedCallback(){
+		super.connectedCallback();
 	}
 
 	show(location) {
@@ -22,10 +25,10 @@ export default class MenuWindow extends MenuView {
 			minWidth = box.width;
 		}
 
-		this.element.style.left = x + "px";
-		this.element.style.top = y + "px";
+		this.style.left = x + "px";
+		this.style.top = y + "px";
 		if (minWidth) {
-			this.element.style.minWidth = minWidth + "px";
+			this.style.minWidth = minWidth + "px";
 		}
 
 		MenuStack.sharedStack.push(this);

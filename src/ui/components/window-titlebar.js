@@ -1,26 +1,43 @@
-import View from "./view";
+import Component from "../component";
 import Menubar from "./menubar";
 import { identity } from "/util";
+import View from '../view';
 
-export default class extends View {
-	constructor(window) {
+export default class extends Component {
+	static get TagName() {
+		return 'wf-window-titlebar';
+	}
+
+	constructor() {
 		super();
-		this.element.classList.add("titlebar");
 
 		this._menubar = null;
 		this._titleNode = null;
 
 		this._closeButton = new View();
 		this._closeButton.element.classList.add("close-button");
-		this._closeButton.element.onclick = () => {
-			window.element.remove();
-			this.onclose();
-		};
-		this.element.appendChild(this._closeButton.element);
-
-		this._setupDragging(window);
 
 		this.onclose = identity;
+	}
+
+	connectedCallback() {
+		super.connectedCallback();
+
+		this.appendChild(this._closeButton.element);		
+		if(this._menubar) this.appendChild(this._menubar);
+	}
+
+	set window(window) {
+		this._window = window;
+		this._closeButton.element.onclick = () => {
+			window.remove();
+			this.onclose();
+		};
+		this._setupDragging(window);
+	}
+
+	get window() {
+		return this._window;
 	}
 
 	_setupDragging(win) {
@@ -36,7 +53,7 @@ export default class extends View {
 		};
 
 		const mouseDown = (event) => {
-			if (event.target !== this.element) return;
+			if (event.target !== this) return;
 			dragLocation = {
 				x: event.clientX - win.x,
 				y: event.clientY - win.y
@@ -45,18 +62,20 @@ export default class extends View {
 			window.addEventListener("mousemove", mouseMove);
 		};
 
-		this.element.addEventListener("mousedown", mouseDown);
+		this.addEventListener("mousedown", mouseDown);
 	}
 
 	set menu(m) {
 		if (this._menubar) {
-			this._menubar.element.remove();
+			this._menubar.remove();
 			this._menubar = null;
 		}
 
 		if (m) {
-			this._menubar = new Menubar(m);
-			this.element.appendChild(this._menubar.element);
+			this._menubar = document.createElement(Menubar.TagName);
+			this._menubar.menu = m;
+			if(this.isConnected)
+				this.appendChild(this._menubar);
 		}
 
 		if (this._menubar && this._titleNode) {
@@ -81,7 +100,7 @@ export default class extends View {
 
 			this._titleNode = document.createElement("span");
 			this._titleNode.innerText = t;
-			this.element.insertBefore(this._titleNode, null);
+			this.insertBefore(this._titleNode, null);
 		}
 	}
 

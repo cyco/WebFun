@@ -2,18 +2,24 @@ import { Point } from "/util";
 import { ModalSession } from "/ux";
 import MenuView from "./menu-view";
 import MenuWindow from "./menu-window";
-import MenuStack from "./menu-stack";
-import { Separator } from "./menu-item";
+import MenuStack from "../menu-stack";
+import { Separator } from "../menu-item";
 
 export default class Menubar extends MenuView {
-	constructor(menu, element) {
-		super(menu, element);
-		this.element.classList.add("menubar");
-		const self = this;
-		this.element.onmousedown = (e) => {
-			self.startMouseHandling(e);
-		};
+	static get TagName() {
+		return 'wf-menubar';
+	}
+
+	constructor() {
+		super();
 		this._currentItem = -1;
+	}
+	
+	connectedCallback(){
+		super.connectedCallback();
+
+		this.classList.add("menubar");
+		this.onmousedown = (e) => this.startMouseHandling(e);
 	}
 
 	startMouseHandling(event) {
@@ -21,7 +27,7 @@ export default class Menubar extends MenuView {
 		if (itemIndex === -1) return;
 		const menuItem = this.menu.items[itemIndex];
 		if (!menuItem.submenu) {
-			if (typeof menuItem.callback === "function") {
+			if (menuItem.callback instanceof Function) {
 				menuItem.callback();
 			}
 			return;
@@ -33,7 +39,7 @@ export default class Menubar extends MenuView {
 			window.removeEventListener("mouseup", this._mouseDownHandler);
 			this._mouseDownHandler = null;
 
-			this.element.querySelector(".open").classList.remove("open");
+			this.querySelector(".open").classList.remove("open");
 			MenuStack.sharedStack.clear();
 		};
 		this._modalSession = modalSession;
@@ -52,7 +58,7 @@ export default class Menubar extends MenuView {
 
 	_mouseMoved(event) {
 		const location = new Point(event.pageX, event.pageY);
-		if (!this._elementContainsPoint(this.element, location))
+		if (!this._elementContainsPoint(this, location))
 			return;
 
 		const itemIdx = this._findItemAt(location);
@@ -66,7 +72,7 @@ export default class Menubar extends MenuView {
 	_closeMenuForItem(idx) {
 		if (idx === -1) return;
 
-		const itemNode = this.element.children[idx];
+		const itemNode = this.children[idx];
 
 		itemNode.classList.remove("open");
 		MenuStack.sharedStack.clear();
@@ -75,7 +81,7 @@ export default class Menubar extends MenuView {
 	_showMenuForItem(idx) {
 		if (idx === -1) return;
 
-		const itemNode = this.element.children[idx];
+		const itemNode = this.children[idx];
 		const menuItem = this.menu.items[idx];
 		itemNode.classList.add("open");
 
@@ -84,7 +90,8 @@ export default class Menubar extends MenuView {
 			return;
 		}
 
-		const menuWindow = new MenuWindow(menuItem.submenu);
+		const menuWindow = document.createElement(MenuWindow.TagName);
+		menuWindow.menu = menuItem.submenu;
 		menuWindow.show(itemNode);
 
 		this._currentItem = idx;
@@ -96,7 +103,7 @@ export default class Menubar extends MenuView {
 	}
 
 	_findItemAt(location) {
-		const children = this.element.children;
+		const children = this.children;
 		for (let i = 0, len = children.length; i < len; i++) {
 			if (this._elementContainsPoint(children[i], location))
 				return i;

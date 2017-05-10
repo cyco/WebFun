@@ -158,7 +158,7 @@ export default class Slider extends View {
 	}
 
 	_postChangeNotification() {
-		if (typeof this._onChange === "function") {
+		if (this._onChange instanceof Function) {
 			this._onChange(this);
 		}
 	}

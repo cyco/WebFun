@@ -24,7 +24,7 @@ export default class FilePicker {
 		this._fileInput = null;
 
 		const result = this.allowsMultipleFiles ? files : files.last();
-		if (this.didPick && typeof this.didPick === "function")
+		if (this.didPick instanceof Function)
 			this.didPick(result);
 	}
 
@@ -68,4 +68,3 @@ export default class FilePicker {
 		return this._didPick;
 	}
 }
-;

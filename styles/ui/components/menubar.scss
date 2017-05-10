@@ -1,4 +1,6 @@
-.menubar {
+wf-menubar {
+	@extend wf-menu-view;
+	
   margin-left: 16px;
   margin-right: 16px;
   height: 22px;
@@ -8,9 +10,8 @@
   display: block;
   pointer-events: none;
   border: 0px;
-}
 
-.menubar > .menu-item {
+ > .menu-item {
   display: inline-block;
   border-width: 0px;
   padding: 1px 5px 1px 5px;
@@ -18,18 +19,20 @@
   pointer-events: all;
 }
 
-.menubar > .menu-item .state {
+ > .menu-item .state {
   display: none;
 }
 
-.menubar > .menu-item:first-child {
+ > .menu-item:first-child {
   margin-left: 4px;
 }
 
-.menubar > .menu-item.open {
+ > .menu-item.open {
   @extend .inset-border;
 
   cursor: default;
   padding: 0px 4px 0px 4px;
   border-width: 1px;
+}
+
 }
