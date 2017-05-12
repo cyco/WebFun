@@ -17,7 +17,15 @@ describe('WeaponsCheat', () => {
 		const items = [];
 		const mockEngine = {
 			state: { inventory: { addItem: (item) => items.push(item) } },
-			data: { getTile: (id) => id }
+			data: {
+				tiles: {
+					0x1A5: 0x1A5,
+					0x1FF: 0x1FF,
+					0x200: 0x200,
+					0x201: 0x201,
+					0x202: 0x202
+				}
+			}
 		};
 		subject.execute(mockEngine);
 

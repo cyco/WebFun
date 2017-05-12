@@ -1,5 +1,5 @@
 import { EventTarget, FileLoader, dispatch } from "/util";
-import { FileReader, GameData } from "/engine";
+import { DataFileReader, GameData } from "/engine";
 import { Tile } from '/engine/objects';
 import Settings from "/settings";
 
@@ -37,7 +37,7 @@ export default class GameDataLoader extends EventTarget {
 
 	_readGameData(stream) {
 		this._progress(1, 0);
-		this._rawData = FileReader(stream);
+		this._rawData = DataFileReader(stream);
 		this._progress(1, 1);
 		this._loadPalette();
 	}

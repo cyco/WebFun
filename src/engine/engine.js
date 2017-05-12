@@ -1,12 +1,17 @@
 import { EventTarget } from '/util';
 
-export const Event = {
-	CurrentZoneChange: 'currentzonechange'
+export const Events = {
+	CurrentZoneChange: 'currentzonechange',
+	AmmoChanged: 'ammochange',
+	InventoryChanged: 'inventorychange',
+	WeaponChanged: 'weaponchange',
+	LocationChanged: 'locationchange',
+	HealthChanged: 'healthchange'
 };
 
 export default class extends EventTarget {
 	static get Event() {
-		return Event;
+		return Events;
 	}
 
 	constructor() {
@@ -35,7 +40,7 @@ export default class extends EventTarget {
 			gamesWon: 0
 		};
 
-		this.registerEvents(Event);
+		this.registerEvents(Events);
 		Object.seal(this);
 	}
 
@@ -59,7 +64,8 @@ export default class extends EventTarget {
 
 	set currentZone(z) {
 		this._currentZone = z;
-		this.dispatchEvent(Event.CurrentZoneChange);
+		this.dispatchEvent(Events.CurrentZoneChange);
+		this.dispatchEvent(Events.LocationChanged);
 	}
 
 	get currentZone() {

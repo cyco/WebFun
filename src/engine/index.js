@@ -1,6 +1,6 @@
 export Cheats from "./cheats";
 export Engine from "./engine";
-export FileReader from "./file-format/file";
+export DataFileReader from "./data-format/file";
 export GameData from "./game-data";
 export Generation from "./generation";
 export Hero from "./hero";

@@ -1,15 +1,15 @@
-import sandboxed from '../../../helpers/dom-sandbox';
-import WeaponView from '/app/ui/weapon-view';
+import { sandboxed } from '../../../../helpers/dom-sandbox';
+import Weapon from '/app/ui/components/weapon';
 
-describe('WeaponView', sandboxed(function(sand) {
+xdescribe('Weapon', sandboxed(function(sand) {
 	let subject = null;
 	beforeEach(() => {
-		subject = new WeaponView();
+		subject = new Weapon();
 		sand.box.appendChild(subject.element);
 	});
 
 	it('shows which weapon is currently equipped', () => {
-		let view = new WeaponView();
+		let view = new Weapon();
 		sand.box.appendChild(view.element);
 	});
 

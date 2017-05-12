@@ -1,4 +1,6 @@
-.statistics-window {
+wf-statistics-window {
+	@extend wf-window;
+	
   li {
     display: flex;
     flex-wrap: nowrap;

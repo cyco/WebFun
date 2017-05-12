@@ -8,3 +8,4 @@ export Menubar from './menubar';
 export SubmenuWindow from './submenu-window';
 export MenuItemSeparator from './menu-item-separator';
 export Menu from './menu-item';
+export Button from './button';

@@ -1,6 +1,6 @@
 import View from "./view";
-import Button from "./button";
 import { dispatch } from '/util';
+import { Button } from '/ui/components';
 
 export const Event = {
 	End: "end"
@@ -60,22 +60,31 @@ export default class SpeechBubble extends View {
 		const buttonBar = document.createElement("div");
 		buttonBar.classList.add("controls");
 
-		const up = new Button();
-		up.element.classList.add("up");
+		const up = document.createElement(Button.TagName);
+		up.classList.add("bordered");
+		up.classList.add("up");
 		up.onclick = () => self.scrollUp();
-		buttonBar.appendChild(up.element);
+		up.icon = 'caret-up';
+		up.fixedWidth = true;
+		buttonBar.appendChild(up);
 		this._upButton = up;
 
-		const down = new Button();
-		down.element.classList.add("down");
+		const down = document.createElement(Button.TagName);
+		down.classList.add("bordered");
+		down.classList.add("down");
 		down.onclick = () => self.scrollDown();
-		buttonBar.appendChild(down.element);
+		down.icon = 'caret-down';
+		down.fixedWidth = true;
+		buttonBar.appendChild(down);
 		this._downButton = down;
 
-		const end = new Button();
-		end.element.classList.add("end");
+		const end = document.createElement(Button.TagName);
+		end.classList.add("bordered");
+		end.classList.add("end");
 		end.onclick = () => self.end();
-		buttonBar.appendChild(end.element);
+		end.icon = 'circle';
+		end.fixedWidth = true;
+		buttonBar.appendChild(end);
 		end.enabled = true;
 		this._endButton = end;
 
@@ -129,7 +138,7 @@ export default class SpeechBubble extends View {
 		this._text.parentNode.style.bottom = 5 + bottomArrowWidth + "px";
 		this._text.parentNode.style.right = 21 + 5 + rightArrowWidth + "px";
 
-		this._endButton.element.parentNode.style.bottom = 5 + bottomArrowWidth + "px";
+		this._endButton.parentNode.style.bottom = 5 + bottomArrowWidth + "px";
 	}
 
 	_buildPath() {

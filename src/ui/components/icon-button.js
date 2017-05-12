@@ -1,6 +1,5 @@
-import Component, { makeComponent } from '../component';
+import Component from '../component';
 
-// makeComponent(HTMLButtonElement)
 export default class extends Component {
 	static get TagName() {
 		return 'wf-icon-button';
