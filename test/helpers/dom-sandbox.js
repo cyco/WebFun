@@ -1,4 +1,4 @@
-export default (description) => {
+export const sandboxed = (description) => {
 	return () => {
 		let sand = {
 			box: null
@@ -6,7 +6,7 @@ export default (description) => {
 		beforeEach(() => {
 			global.document = global.doc;
 			
-			sand.box = document.createElement('div');
+			sand.box = global.document.createElement('div');
 			sand.box.className = 'sandbox';
 			global.document.body.appendChild(sand.box);
 		});
@@ -19,3 +19,5 @@ export default (description) => {
 		});
 	};
 };
+
+export default sandboxed;

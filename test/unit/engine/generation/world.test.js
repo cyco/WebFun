@@ -8,9 +8,7 @@ describe('World', () => {
 	beforeEach(() => {
 		subject = new World();
 		zone = new Zone();
-		subject.data = {
-			zones: [zone]
-		};
+		subject.zones = [zone];
 	});
 
 	it('knows the standard size of a world', () => {

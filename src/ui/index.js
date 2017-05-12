@@ -1,4 +1,3 @@
-export Button from "./button";
 export Checkbox from "./checkbox";
 export FilePicker from "./file-picker";
 export Menu from "./menu";

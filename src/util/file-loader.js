@@ -25,9 +25,9 @@ export default class extends EventTarget {
 			reader.responseType = "arraybuffer";
 		}
 
-		reader.onload = ({target}) => this._didLoad(target);
+		reader.onload = ({ target }) => this._didLoad(target);
 		reader.onerror = (event) => this._didFail(event);
-		reader.onprogress = ({loaded, total}) => this._didProgress(loaded / total);
+		reader.onprogress = ({ loaded, total }) => this._didProgress(loaded / total);
 
 		if (!window.location.href.startsWith("file://")) {
 			reader.readAsArrayBuffer(this._file);

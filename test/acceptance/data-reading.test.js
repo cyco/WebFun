@@ -1,7 +1,7 @@
 import { getFixtureData } from '../helpers/fixture-loading';
 
 import { InputStream } from '/util';
-import Reader from '/engine/file-format/file';
+import Reader from '/engine/data-format/file';
 
 describe('Data Reading', function() {
 	let data = null;

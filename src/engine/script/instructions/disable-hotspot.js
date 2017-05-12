@@ -4,7 +4,7 @@ export default (instruction, engine, action) => {
 	const zone = engine.currentZone;
 	const hotspot = zone.hotspots[instruction.arguments[0]];
 	if (hotspot) {
-		hotspot.enabled = true;
+		hotspot.enabled = false;
 		return Result.UpdateHotspot;
 	}
 

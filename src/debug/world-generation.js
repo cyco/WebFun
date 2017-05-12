@@ -2,7 +2,7 @@ import { Textbox, Checkbox } from '/ui';
 import { Window } from '/ui/components';
 import { FileLoader } from '/util';
 import Story from '/engine/story';
-import { FileReader, GameData } from '/engine';
+import { DataFileReader, GameData } from '/engine';
 import { Type as ZoneType } from '/engine/objects/zone';
 import { PrepareExpectations, ParseExpectation, ComparisonResult, CompareWorldItems } from './expectation';
 
@@ -169,7 +169,7 @@ export default class {
 
 		const loader = new FileLoader('game-data/yoda.data');
 		loader.onload = ({ detail: { stream } }) => {
-			this._rawData = new FileReader(stream);
+			this._rawData = new DataFileReader(stream);
 			prepareEngine();
 		};
 		loader.load();

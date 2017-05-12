@@ -17,4 +17,17 @@
     bottom: 5px;
     right: 5px;
   }
+  
+  
+  .up,.down,.end {
+	  font-size: 14px;
+	  display: flex;
+	  
+	  justify-content: center;
+	  align-items: center;
+  }
+  
+  .end {
+  	font-size: 9px;
+  }
 }
