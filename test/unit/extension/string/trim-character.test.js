@@ -5,7 +5,7 @@ describe("String.trimCharacter", () => {
 	
 	it('is a function extending the String prototype', () => {
 		expect('test'.trimCharacter).toBeFunction();
-		expect(trimCharacter).toBeFunciton();
+		expect(trimCharacter).toBeFunction();
 	});
 	
 	it('removes the specified character from both ends', () => {
