@@ -118,6 +118,7 @@ export default class {
 		windowContent.appendChild(this._sceneView.element);
 
 		engine.inputManager.addListeners();
+		this._window.engine = engine;
 
 		// engine.metronome.start();
 	}

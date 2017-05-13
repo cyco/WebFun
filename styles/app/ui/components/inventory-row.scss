@@ -5,6 +5,7 @@ wf-inventory-row {
   > span {
     @extend .inset-border-inverted;
 
+	position: relative;
     border-width: 1px;
     display: inline-block;
     height: inherit;

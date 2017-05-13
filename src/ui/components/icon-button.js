@@ -28,12 +28,6 @@ export default class extends Component {
 	connectedCallback() {
 		this._icon.remove();
 		this.appendChild(this._icon);
-
-//		this._icon.addEventListener('click', this._clickListener);
-	}
-
-	disconnectedCallback() {
-//		this._icon.removeEventListener('cick', this._clickListener);
 	}
 
 	attributeChangedCallback(attributeName, oldValue, newValue) {

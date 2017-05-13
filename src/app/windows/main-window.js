@@ -49,7 +49,6 @@ export default class extends Window {
 
 		this._handlers = {};
 		this._handlers[Events.AmmoChanged] = () => this._updateAmmo();
-		this._handlers[Events.InventoryChanged] = () => this._updateInventory();
 		this._handlers[Events.WeaponChanged] = () => this._updateWeapon();
 		this._handlers[Events.LocationChanged] = () => this._updateLocation();
 		this._handlers[Events.HealthChanged] = () => this._updateHealth();
@@ -61,6 +60,7 @@ export default class extends Window {
 		}
 
 		this._engine = e;
+		this._inventory.inventory = this._engine.inventory;
 
 		if (this._engine) {
 			this._handlers.each((event, handler) => this._engine.addEventListener(event, handler));
@@ -84,9 +84,6 @@ export default class extends Window {
 	}
 
 	_updateLocation() {
-	}
-
-	_updateInventory() {
 	}
 
 	_updateHealth() {

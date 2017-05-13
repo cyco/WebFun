@@ -1,9 +1,9 @@
 import { EventTarget } from '/util';
+import Inventory from './inventory';
 
 export const Events = {
 	CurrentZoneChange: 'currentzonechange',
 	AmmoChanged: 'ammochange',
-	InventoryChanged: 'inventorychange',
 	WeaponChanged: 'weaponchange',
 	LocationChanged: 'locationchange',
 	HealthChanged: 'healthchange'
