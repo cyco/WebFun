@@ -1,13 +1,17 @@
 import { EventTarget, Point, Direction } from "/util";
 
 export const MAX_HEALTH = 0x300;
-export const Event = {
+export const Events = {
 	HealthChanged: "HealthChanged",
 	WeaponChanged: "WeaponChanged",
 	AmmoChanged: "AmmoChanged"
 };
 
 export default class Hero extends EventTarget {
+	static get Event(){
+		return Events;
+	}
+	
 	constructor() {
 		super();
 
@@ -192,7 +196,7 @@ export default class Hero extends EventTarget {
 		if (this.invincible) return;
 
 		this._health = h;
-		this.dispatchEvent(Event.HealthChanged, {
+		this.dispatchEvent(Events.HealthChanged, {
 			health: h
 		});
 	}
@@ -234,7 +238,7 @@ export default class Hero extends EventTarget {
 		if (this.unlimitedAmmo) return;
 
 		this._weapon = w;
-		this.dispatchEvent(Event.WeaponChanged, {
+		this.dispatchEvent(Events.WeaponChanged, {
 			weapon: w
 		});
 	}
@@ -245,7 +249,7 @@ export default class Hero extends EventTarget {
 
 	set ammo(a) {
 		this._ammo = a;
-		this.dispatchEvent(Event.AmmoChanged, {
+		this.dispatchEvent(Events.AmmoChanged, {
 			ammo: a
 		});
 	}
