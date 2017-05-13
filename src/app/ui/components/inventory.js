@@ -1,5 +1,5 @@
 import { ModalSession } from "/ux";
-import { Event as InventoryEvent } from "/engine/inventory";
+import { Events as InventoryEvent } from "/engine/inventory";
 import InventoryRow from "./inventory-row";
 import { Component } from '/ui';
 import Yoda from "/engine/yoda";
@@ -23,17 +23,19 @@ export default class extends Component {
 	constructor() {
 		super();
 
-		this._inventory = [];
+		this._inventory = null;
+		this._inventoryChangedHandler = () => this._rebuildTable();
 	}
 
 	_rebuildTable() {
 		this.clear();
 
-		const self = this;
-		this._inventory.forEach((item, rowIdx) => {
-			const row = this.addRow(item);
-			row.onclick = () => self.rowClicked(item, rowIdx);
-		});
+		if (this._inventory) {
+			this._inventory.forEach((item, rowIdx) => {
+				const row = this.addRow(item);
+				row.onclick = () => this.rowClicked(item, rowIdx);
+			});
+		}
 
 		this.fillRows();
 	}
@@ -48,12 +50,16 @@ export default class extends Component {
 
 	set inventory(i) {
 		if (this._inventory) {
-			this._inventory.removeEventListener("itemsDidChange");
+			this._inventory.removeEventListener(InventoryEvent.ItemsDidChange, this._inventoryChangedHandler);
 		}
 
-		const self = this;
 		this._inventory = i;
-		this._inventory.addEventListener(InventoryEvent.ItemsDidChange, () => self._rebuildTable());
+
+		if (this._inventory) {
+			this._inventory.addEventListener(InventoryEvent.ItemsDidChange, () => {
+				this._inventoryChangedHandler();
+			});
+		}
 
 		this._rebuildTable();
 	}

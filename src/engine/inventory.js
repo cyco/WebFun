@@ -1,18 +1,26 @@
 import { EventTarget } from "/util";
 
-export const Event = {
+export const Events = {
 	ItemsDidChange: "ItemsDidChange"
 };
 
 export default class Inventory extends EventTarget {
+	static get Event(){
+		return Events;
+	}
+	
 	constructor() {
 		super();
+		
 		this._items = [];
+		
+		this.registerEvents(Events);
+		Object.seal(this);
 	}
 
 	addItem(item) {
 		this._items.push(item);
-		this.dispatchEvent(Event.ItemsDidChange, {
+		this.dispatchEvent(Events.ItemsDidChange, {
 			mode: "add",
 			item: item
 		});
@@ -23,7 +31,7 @@ export default class Inventory extends EventTarget {
 		if (index === -1) return;
 
 		this._items.splice(index, 1);
-		this.dispatchEvent(Event.ItemsDidChange, {
+		this.dispatchEvent(Events.ItemsDidChange, {
 			mode: "remove",
 			item: item
 		});
