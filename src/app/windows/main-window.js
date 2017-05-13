@@ -1,6 +1,7 @@
 import { Window, Group } from '/ui/components';
 import { Location, Health, Ammo, Weapon, Inventory } from '/app/ui/components';
 import { Events } from '/engine/engine';
+import Hero from '/engine/hero';
 
 export default class extends Window {
 	static get TagName() {
@@ -51,22 +52,24 @@ export default class extends Window {
 		this._handlers[Events.AmmoChanged] = () => this._updateAmmo();
 		this._handlers[Events.WeaponChanged] = () => this._updateWeapon();
 		this._handlers[Events.LocationChanged] = () => this._updateLocation();
-		this._handlers[Events.HealthChanged] = () => this._updateHealth();
+
+		this._handlers.healthChanged = () => this._updateHealth();
 	}
 
 	set engine(e) {
 		if (this._engine) {
 			this._handlers.each((event, handler) => this._engine.removeEventListener(event, handler));
+			this._engine.hero.removeEventListener(Hero.Event.HealthChanged, this._handlers.healthChanged);
 		}
 
 		this._engine = e;
 		this._inventory.inventory = this._engine.inventory;
 
+
 		if (this._engine) {
+			this._engine.hero.addEventListener(Hero.Event.HealthChanged, this._handlers.healthChanged);
 			this._handlers.each((event, handler) => this._engine.addEventListener(event, handler));
 		}
-
-		this._handlers.each((_, handler) => handler());
 	}
 
 	get engine() {
@@ -77,15 +80,14 @@ export default class extends Window {
 		return this._main;
 	}
 
-	_updateAmmo() {
-	}
+	_updateAmmo() {}
 
-	_updateWeapon() {
-	}
+	_updateWeapon() {}
 
-	_updateLocation() {
-	}
+	_updateLocation() {}
 
 	_updateHealth() {
+		console.log('update health', this._engine.hero);
+		this._healthView.health = this._engine.hero.health;
 	}
 }
