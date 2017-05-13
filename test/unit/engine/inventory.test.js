@@ -1,4 +1,4 @@
-import {default as Inventory, Event} from '/engine/inventory';
+import {default as Inventory, Events} from '/engine/inventory';
 
 describe('Inventory', () =>  {
 	let inventory = null;
@@ -55,12 +55,12 @@ describe('Inventory', () =>  {
 	
 	describe('Events', () =>  {
 		afterEach(() => {
-			inventory.removeEventListener(Event.ItemsDidChange);
+			inventory.removeEventListener(Events.ItemsDidChange);
 		});
 		
 		it('sends an event when an item is added', (done) => {
 			let mockItem = {id: 3};
-			inventory.addEventListener(Event.ItemsDidChange, function(event){
+			inventory.addEventListener(Events.ItemsDidChange, function(event){
 				expect(event.detail.mode).toEqual('add');
 				expect(event.detail.item).toBe(mockItem);
 				
@@ -73,7 +73,7 @@ describe('Inventory', () =>  {
 			let mockItem = {id: 3};
 			inventory.addItem(mockItem);
 			
-			inventory.addEventListener(Event.ItemsDidChange, function(event){
+			inventory.addEventListener(Events.ItemsDidChange, function(event){
 				expect(event.detail.mode).toEqual('remove');
 				expect(event.detail.item).toBe(mockItem);
 				
