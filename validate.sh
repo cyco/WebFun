@@ -1,0 +1,11 @@
+babel-node -- generate-world.js -c -d "game-data/yoda.data" -e "game-data/worlds.txt" 0 1 1
+babel-node -- generate-world.js -c -d "game-data/yoda.data" -e "game-data/worlds.txt" 0 1 2
+babel-node -- generate-world.js -c -d "game-data/yoda.data" -e "game-data/worlds.txt" 0 1 3
+babel-node -- generate-world.js -c -d "game-data/yoda.data" -e "game-data/worlds.txt" 0 3 3
+babel-node -- generate-world.js -c -d "game-data/yoda.data" -e "game-data/worlds.txt" 1 1 1
+babel-node -- generate-world.js -c -d "game-data/yoda.data" -e "game-data/worlds.txt" 1 3 1
+babel-node -- generate-world.js -c -d "game-data/yoda.data" -e "game-data/worlds.txt" 1 1 2
+babel-node -- generate-world.js -c -d "game-data/yoda.data" -e "game-data/worlds.txt" 1 1 3
+babel-node -- generate-world.js -c -d "game-data/yoda.data" -e "game-data/worlds.txt" 44 1 1
+babel-node -- generate-world.js -c -d "game-data/yoda.data" -e "game-data/worlds.txt" 44 3 1
+babel-node -- generate-world.js -c -d "game-data/yoda.data" -e "game-data/worlds.txt" 90 1 3
