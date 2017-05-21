@@ -71,6 +71,7 @@ export default class {
 			new Debugger(this._engine);
 		}
 
+		return;
 		const story = new Story(0x0000, Planet.ENDOR, WorldSize.LARGE);
 		story.generateWorld(this._engine);
 		this._engine.story = story;

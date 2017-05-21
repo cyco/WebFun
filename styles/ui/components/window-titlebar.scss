@@ -8,7 +8,8 @@ wf-window-titlebar {
   box-shadow: 0px 1px 0px 0px #FFFFFF;
   line-height: 26px;
   white-space: nowrap;
-
+  margin-bottom: 1px;
+  
   > .close-button {
     float: left;
     margin-top: 2px;

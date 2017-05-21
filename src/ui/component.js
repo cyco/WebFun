@@ -18,6 +18,7 @@ export default class extends BabelHTMLElement {
 	}
 	adoptedCallback() {}
 	connectedCallback() {}
+	disconnectedCallback() {}
 	attributeChangedCallback(attributeName, oldValue, newValue) {}
 }
 
@@ -41,5 +42,6 @@ export const makeComponent = (baseClass = HTMLElement) => class extends makeBabe
 	}
 	adoptedCallback() {}
 	connectedCallback() {}
+	disconnectedCallback() {}
 	attributeChangedCallback(attributeName, oldValue, newValue) {}
 };

@@ -1,25 +1,37 @@
-import View from "./view";
-import "/util";
+import Component from "../component";
 
-export default class Checkbox extends View {
-	constructor(title, element) {
-		super(element || document.createElement("span"));
-
-		this.element.classList.add("Checkbox");
-
+export default class Checkbox extends Component {
+	static get TagName(){
+		return 'wf-checkbox';
+	}
+	
+	constructor() {
+		super();
+		
 		const boxID = String.UUID();
 
 		const box = document.createElement("input");
 		box.type = "checkbox";
 		box.id = boxID;
-		this.element.appendChild(box);
 		this._box = box;
 
 		const label = document.createElement("label");
-		label.append(title);
+		label.append();
 		label.setAttribute("for", boxID);
 		this._label = label;
-		this.element.appendChild(label);
+	}
+	
+	connectedCallback(){
+		super.connectedCallback();
+		
+		this.appendChild(this._box);
+		this.appendChild(this._label);
+	}
+	
+	disconnectedCallback(){
+		this.clear();
+		
+		super.disconnectedCallback();
 	}
 
 	get title() {
@@ -34,6 +46,7 @@ export default class Checkbox extends View {
 	get checked() {
 		return this._box.checked;
 	}
+	
 	set checked(c) {
 		this._box.checked = c;
 	}

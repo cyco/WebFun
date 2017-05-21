@@ -1,26 +1,38 @@
-import View from "./view";
-export default class RadioButton extends View {
-	constructor(title = "", group = null, element = null) {
-		super(element || document.createElement("span"));
+import Component from "../component";
 
-		this.element.classList.add("Radio");
+export Group from './radio-group';
+
+export default class RadioButton extends Component {
+	static get TagName() {
+		return 'wf-radio-button';
+	}
+
+	constructor() {
+		super();
 
 		const buttonID = String.UUID();
 		const radio = document.createElement("input");
 		radio.type = "radio";
 		radio.id = buttonID;
 		this._radio = radio;
-		this.element.appendChild(radio);
 
 		const label = document.createElement("label");
-		label.append(title);
 		label.setAttribute("for", buttonID);
 		this._label = label;
-		this.element.appendChild(label);
 
 		Object.seal(this);
+	}
 
-		if (group) group.addButton(this);
+	connectedCallback() {
+		super.conectedCallback();
+
+		this.appendChild(this._radio);
+		this.appendChild(this._label);
+	}
+
+	disconnectedCallback() {
+		super.disconnectedCallback();
+		this.clear();
 	}
 
 	get title() {
@@ -57,4 +69,3 @@ export default class RadioButton extends View {
 		return this._radio.name;
 	}
 }
-;

@@ -11,6 +11,10 @@ export default class Char {
 		this._frames = [];
 		this._name = null;
 		this._data = null;
+		
+		this.rawData = null;
+		this.rawAuxData = null;
+		this.rawWeaponData = null;
 	}
 
 	getFace(direction, frameIdx) {

@@ -16,8 +16,8 @@ import * as Type from "/engine/types";
 const TILE_ADEGAN_CRYSTAL = 459;
 
 export default class WorldGenerator {
-	constructor(seedOrDocument, size, planet, engine) {
-		this._seed = seedOrDocument | 0;
+	constructor(seed, size, planet, engine) {
+		this._seed = seed | 0;
 		this._size = size | 0;
 		this._planet = planet | 0;
 		this.data = engine && engine.data;

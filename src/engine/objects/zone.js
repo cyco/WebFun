@@ -24,8 +24,18 @@ export const Type = {
 	Unknown: 9999
 };
 
+export const Layer = {
+	Floor: 0,
+	Object: 1,
+	Roof: 2
+};
+
 export default class Zone {
 	static get LAYERS() {
+		return 3;
+	}
+	
+	get LAYERS(){
 		return 3;
 	}
 
@@ -46,6 +56,8 @@ export default class Zone {
 		this.requiredItemIDs = [];
 		this.providedItemIDs = [];
 		this.puzzleNPCTileIDs = [];
+		this.izx4Unknown = null;
+		this.izaxUnknown = null;
 
 		this._actions = [];
 		this.actionsInitialized = false;

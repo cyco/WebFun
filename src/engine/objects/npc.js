@@ -1,5 +1,5 @@
 export default class NPC {
-	constructor({face, x, y, unknown1, unknown2, unknown3}) {
+	constructor({ face, x, y, unknown1, unknown2, unknown3 }) {
 		this._enabled = true;
 		this._face = face;
 		this._x = x;
@@ -14,11 +14,27 @@ export default class NPC {
 		return this._enabled;
 	}
 
+	get face() {
+		return this._face;
+	}
+
 	get x() {
 		return this._x;
 	}
 
 	get y() {
 		return this._y;
+	}
+
+	get unknown1() {
+		return this._unknown1;
+	}
+
+	get unknown2() {
+		return this._unknown2;
+	}
+
+	get unknown3() {
+		return this._data;
 	}
 }

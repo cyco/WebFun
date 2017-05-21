@@ -38,4 +38,8 @@ export default class Puzzle {
 	get unknown_3() {
 		return this.hasPuzzleNPC;
 	}
+
+	get strings() {
+		return this._strings;
+	}
 }
