@@ -1,5 +1,6 @@
-import EventTarget from "/util/event-target";
-export default class RadioGroup extends EventTarget {
+import { EventTarget } from "/util";
+
+export default class extends EventTarget {
 	constructor(buttons = []) {
 		super();
 
@@ -20,4 +21,3 @@ export default class RadioGroup extends EventTarget {
 		return this._buttons;
 	}
 }
-;

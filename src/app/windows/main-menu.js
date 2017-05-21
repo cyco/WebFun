@@ -1,11 +1,13 @@
 import { Menu, MenuItemSeparator as Separator } from "/ui";
 import { WindowModalSession } from "/ux";
+import Settings from '/settings';
+import { Menu as DebugMenu } from '/debug';
 
 import StatisticsWindow from "./statistics-window";
 
 export default class extends Menu {
 	constructor(gameController) {
-		super([{
+		const menuItems = [{
 			title: "File",
 			mnemonic: 0,
 			submenu: [{
@@ -83,7 +85,11 @@ export default class extends Menu {
 				title: "About...",
 				mnemonic: 0
 			}]
-		}]);
+		}];
+		
+		if(Settings.debug) menuItems.push(DebugMenu);
+		
+		super(menuItems);
 	}
 
 	_runModalSession(window) {

@@ -1,14 +1,13 @@
-export IconButton from './icon-button';
+export Button from './button';
+export Checkbox from './checkbox';
 export Group from './group';
-export Window from './window';
-export WindowTitlebar from './window-titlebar';
+export IconButton from './icon-button';
+export Menu from './menu-item';
+export Menubar from './menubar';
+export MenuItemSeparator from './menu-item-separator';
 export MenuView from './menu-view';
 export MenuWindow from './menu-window';
-export Menubar from './menubar';
+export RadioButton from './radio-button';
 export SubmenuWindow from './submenu-window';
-export MenuItemSeparator from './menu-item-separator';
-export Menu from './menu-item';
-export Button from './button';
-
-import Group from './group';
-window.group = Group;
+export Window from './window';
+export WindowTitlebar from './window-titlebar';

@@ -3,7 +3,7 @@ import { DataFileReader, GameData } from "/engine";
 import { Tile } from '/engine/objects';
 import Settings from "/settings";
 
-export const Event = {
+export const Events = {
 	Progress: "progress",
 	Fail: "fail",
 	Load: "load",
@@ -58,7 +58,7 @@ export default class GameDataLoader extends EventTarget {
 		this._progress(3, 0);
 		const pixelData = this._rawData.STUP.pixelData;
 		const setupImage = this._engine.imageFactory.buildImage(288, 288, pixelData);
-		this.dispatchEvent(Event.DidLoadSetupImage, {
+		this.dispatchEvent(Events.DidLoadSetupImage, {
 			setupImage
 		});
 		this._progress(3, 1);
@@ -69,7 +69,7 @@ export default class GameDataLoader extends EventTarget {
 		this._progress(4, 0);
 		this._engine.data = new GameData(this._rawData);
 		this._progress(4, 1);
-
+		
 		this._loadTileImages();
 	}
 
@@ -88,7 +88,6 @@ export default class GameDataLoader extends EventTarget {
 				const tile = tiles[idx];
 				tile._image = imageFactory.buildImage(tileWidth, tileHeight, tile._imageData);
 				if(tile.image && tile.name) tile.image.representation.title = tile.name;
-				tile._imageData = null;
 				this._progress(5, 4 * (idx / tileCount));
 			}
 		};
@@ -109,7 +108,7 @@ export default class GameDataLoader extends EventTarget {
 	}
 
 	_fail(reason) {
-		this.dispatchEvent(Event.Fail, {
+		this.dispatchEvent(Events.Fail, {
 			reason
 		});
 
@@ -117,13 +116,17 @@ export default class GameDataLoader extends EventTarget {
 	}
 
 	_progress(state, progress) {
-		this.dispatchEvent(Event.Progress, {
+		this.dispatchEvent(Events.Progress, {
 			progress: (state + progress) / StageCount
 		});
 	}
 
 	_load() {
-		this.dispatchEvent(Event.Load);
+		if(Settings.debug) {
+			window.data = this._engine.data;
+		}
+		
+		this.dispatchEvent(Events.Load);
 		this._clearData();
 	}
 

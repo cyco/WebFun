@@ -12,8 +12,9 @@ export default class {
 		this._zones = raw.ZONE.map((data, index) => this._makeZone(data, index));
 		this._characters = raw.CHAR.characters.map((data, index) => this._makeCharacter(data, index));
 
+		raw.CAUX.auxData.forEach(({data}, idx) => this._characters[idx].rawAuxData = data);
+		raw.CHWP.weaponData.forEach(({data}, idx) => this._characters[idx].rawWeaponData = data);
 		raw.TNAM.tileNames.forEach((name, idx) => name && (this._tiles[idx]._name = name.trimCharacter("\0")));
-		window.gd = this;
 	}
 
 	_makePuzzle(data, index) {
@@ -51,10 +52,12 @@ export default class {
 		zone.requiredItemIDs = data.izax.requiredItemIds;
 		zone.providedItemIDs = data.izx2.providedItemIds;
 		zone.puzzleNPCTileIDs = data.izx3.npcTileIds;
+		zone.izaxUnknown = data.izax.count1;
+		zone.izx4Unknown = data.izx4.unknown;
 
 		zone._actions = data.actions.map((data, i) => this._makeAction(data, i));
 		zone._tileStore = this.tiles;
-
+				
 		return zone;
 	}
 
@@ -128,6 +131,7 @@ export default class {
 			frame._tiles = frameTiles;
 			char._frames.push(frame);
 		}
+		char.rawData = data;
 
 		return char;
 	}

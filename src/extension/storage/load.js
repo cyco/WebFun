@@ -1,10 +1,10 @@
 const load = function(key) {
 	try {
-		if (this.getItem(key))
-			return JSON.parse(this.getItem(key));
+		if (this.has(key)) return JSON.parse(this.getItem(key));
 	} catch (e) {
 		console.warn("Invalid item in Storage: ", this.getItem(key));
 	}
+	return null;
 };
 
 if (typeof Storage !== "undefined") {

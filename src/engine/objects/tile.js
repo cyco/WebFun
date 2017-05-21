@@ -38,6 +38,10 @@ export default class Tile {
 		return this._image;
 	}
 
+	get pixelData() {
+		return this._imageData;
+	}
+
 	get walkable() {
 		return !this.getAttribute(Tile.Attribute.Object) && !this.getAttribute(Tile.Attribute.Character);
 	}
