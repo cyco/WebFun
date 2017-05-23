@@ -1,3 +1,5 @@
+export const Opcode = 0x03;
+export const Arguments = -1;
 export default (args, zone, engine) => false;
 // TODO: validate against original implementation
 /*

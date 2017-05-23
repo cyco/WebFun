@@ -1,3 +1,5 @@
+export const Opcode = 0x09;
+export const Arguments = 0;
 export default (args, zone, engine) => engine.state.enteredByPlane;
 // TODO: validate against original implementation
 /*

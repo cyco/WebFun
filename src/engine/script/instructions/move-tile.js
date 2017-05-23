@@ -1,5 +1,7 @@
 import * as Result from "../result";
 
+export const Opcode = 0x02;
+export const Arguments = 5;
 export default (instruction, engine, action) => {
 	const args = instruction.arguments;
 	const zone = engine.currentZone;

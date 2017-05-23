@@ -1,3 +1,5 @@
+export const Opcode = 0x02;
+export const Arguments = 3;
 export default (args, zone, engine) => {
 	const state = engine.state;
 	const bump = state.bump;

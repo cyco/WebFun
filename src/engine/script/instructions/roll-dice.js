@@ -1,5 +1,7 @@
 import * as Result from "../result";
 
+export const Opcode = 0x0c;
+export const Arguments = 1;
 export default (instruction, engine, action) => {
 	//  zone->random = rand() % instruction->arg1 + 1
 	// TODO: consider using { rand } from '/util'
