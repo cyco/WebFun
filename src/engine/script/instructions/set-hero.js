@@ -1,6 +1,8 @@
 import ZoneScene from "/engine/scenes/zone-scene";
 import * as Result from "../result";
 
+export const Opcode = 0x12;
+export const Arguments = 2;
 export default (instruction, engine, action) => {
 	/*
 	YodaView::RedrawTile(view, document->hero_x / 32, document->hero_y / 32);

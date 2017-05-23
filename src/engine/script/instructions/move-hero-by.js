@@ -1,6 +1,8 @@
 import ZoneScene from "/engine/scenes/zone-scene";
 import * as Result from "../result";
 
+export const Opcode = 0x13;
+export const Arguments = -1;
 export default (instruction, engine, action) => {
 	/*
     v37 = instruction->arg4;

@@ -1,1 +1,2 @@
-export default from "./tile-at-is";
+export const Opcode = 0x22;
+export { default, Arguments } from "./tile-at-is";

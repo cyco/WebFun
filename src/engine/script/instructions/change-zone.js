@@ -2,6 +2,8 @@ import TransitionScene from "/engine/scenes/transition-scene";
 import { Point } from "/util";
 import * as Result from "../result";
 
+export const Opcode = 0x21;
+export const Arguments = 3;
 export default (instruction, engine, action) => {
 	const args = instruction.arguments;
 
