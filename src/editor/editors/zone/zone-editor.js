@@ -1,6 +1,6 @@
 import { Component } from '/ui';
 import { Group } from '/ui/components';
-import { LayerSelection, TileSelection, Zone, Toolbar } from '/editor/components';
+import { LayerSelection, TileSelection, Zone, Toolbar, ActionList } from '/editor/components';
 import * as Tools from './tools';
 
 const ToolStorageKey = 'editor.zone.tool';
@@ -15,7 +15,7 @@ export default class extends Component {
 		this._zone = null;
 
 		this.currentLayer = null;
-		this.currentTile = null;
+		this._currentTile = null;
 		this._currentTool = null;
 
 		this._layerSelection = document.createElement(LayerSelection.TagName);
@@ -34,8 +34,11 @@ export default class extends Component {
 		this._sidebar.appendChild(this._layerSelection);
 		this._sidebar.appendChild(this._tileSelection);
 
+		this._actionList = document.createElement(ActionList.TagName);
+
 		this._toolbar = document.createElement(Toolbar.TagName);
 		this._toolbar.ontoolchange = (tool) => this.activateTool(tool);
+
 		Object.values(Tools).forEach(Tool => this._toolbar.addTool(new Tool()));
 	}
 
@@ -47,12 +50,14 @@ export default class extends Component {
 		const tools = this._toolbar.tools;
 		const tool = tools.find(tool => tool.name === lastToolName) || tools.first();
 		this._toolbar.selectTool(tool);
-		
-		const group = document.createElement(Group.TagName);
+
+		let group = document.createElement(Group.TagName);
 		group.appendChild(this._toolbar);
 		group.appendChild(this._zoneView);
 		this.appendChild(group);
 		this.appendChild(this._sidebar);
+
+		this.appendChild(this._actionList);
 	}
 
 	set data(d) {
@@ -67,10 +72,20 @@ export default class extends Component {
 	set zone(z) {
 		this._zone = z;
 		this._zoneView.zone = z;
+		this._actionList.zone = z;
 	}
 
 	get zone() {
 		return this._zone;
+	}
+
+	set currentTile(t) {
+		this._currentTile = t;
+		this._tileSelection.selectedTile = t;
+	}
+
+	get currentTile() {
+		return this._currentTile;
 	}
 
 	activateTool(tool) {
