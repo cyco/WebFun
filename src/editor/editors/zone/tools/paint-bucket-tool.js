@@ -16,15 +16,16 @@ export default class extends Tool {
 	}
 
 	mouseDownAt(x, y, event) {
-		const z = this._editor.currentLayer;
-		const currentTile = this._editor.zone.getTile(x, y, z);
-
 		const NEW = 0;
 		const MARKED = 1;
 		const VISITED = 2;
-
-		const width = this._editor.zone.width;
-		const height = this._editor.zone.height;
+		
+		const z = this._editor.currentLayer;
+		const tile = this._editor.currentTile;
+		const zone = this._editor.zone;
+		const currentTile = zone.getTile(x, y, z);
+		const width = zone.width;
+		const height = zone.height;
 		const size = width * height;
 		const maxX = width - 1;
 		const maxY = height - 1;
@@ -33,7 +34,7 @@ export default class extends Tool {
 		const open = [
 			x + width * y
 		];
-
+		
 		const neighbors = (i) => {
 			const result = new Array(4);
 
@@ -47,8 +48,7 @@ export default class extends Tool {
 
 			return result;
 		};
-
-		const isCandidate = (i) => this._editor.zone.getTile(i % width, Math.floor(i / width), z) === currentTile;
+		const isCandidate = (i) => zone.getTile(i % width, Math.floor(i / width), z) === currentTile;
 		const visit = (i) => {
 			if (state[i] !== NEW) return;
 
@@ -65,8 +65,6 @@ export default class extends Tool {
 			neighbors(current).forEach(visit);
 		}
 
-		const tile = this._editor.currentTile;
-		const zone = this._editor.zone;
 		state.forEach((i, idx) => i === MARKED && zone.setTile(tile, idx % width, Math.floor(idx / width), z));
 	}
 
