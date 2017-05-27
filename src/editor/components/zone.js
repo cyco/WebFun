@@ -32,8 +32,9 @@ export default class extends Component {
 		this._layerMask = DrawMask.All;
 
 		this._canvas = document.createElement('canvas');
-		this._canvas.width = TileSize * 18;
-		this._canvas.height = TileSize * 18;
+		this._canvas.setAttribute('width', TileSize * 18);
+		this._canvas.setAttribute('height', TileSize * 18);
+		this._canvas.style.backgroundColor = this._backgroundColor;
 		this._canvas.onmousemove = (e) => this._mouseMoved(e);
 		this._canvas.onmousedown = (e) => this._mousePressed(e);
 
@@ -81,6 +82,8 @@ export default class extends Component {
 	}
 
 	_mousePressed(e) {
+		if (e.button !== 0) return;
+
 		if (this.tool) {
 			this._exeuteCallback(this.tool.mouseDownAt, e);
 		}
@@ -134,6 +137,8 @@ export default class extends Component {
 	}
 
 	draw() {
+		this._context.save();
+		
 		this._context.clearRect(0, 0, TileSize * 18 * this._zoom.width, TileSize * 18 * this._zoom.height);
 		this._context.fillStyle = this._backgroundColor;
 		this._context.fillRect(0, 0, TileSize * 18 * this._zoom.width, TileSize * 18 * this._zoom.height);
@@ -151,6 +156,7 @@ export default class extends Component {
 				this.drawHotspot(htsp);
 			});
 		}
+		this._context.restore();
 	}
 
 	drawPlace(x, y) {
@@ -168,7 +174,7 @@ export default class extends Component {
 	drawTile(x, y, z) {
 		const tile = this._zone.getTile(x, y, z);
 		if (!tile) return;
-		this._context.drawImage(tile.image.representation, this._offset.x + x * TileSize, this._offset.y + y * TileSize);
+		this._context.drawImage(tile.image.representation, this._offset.x + x * TileSize, this._offset.y + y * TileSize, TileSize, TileSize);
 	}
 
 	drawHotspot(hotspot) {
