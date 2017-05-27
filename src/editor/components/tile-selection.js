@@ -13,6 +13,7 @@ export default class extends Component {
 		this._selectedTile = null;
 		this._selectedTileNode = null;
 		this.ontilechange = null;
+		this._tileNodes = [];
 	}
 
 	_draw() {
@@ -20,14 +21,16 @@ export default class extends Component {
 
 		const node = document.createElement(TilePreview.TagName);
 		node.tile = null;
-		node.onclick = () => this.selectTile(null, node);
+		node.onclick = () => this.selectTile(null);
 		this.appendChild(node);
 
-		this._tiles.forEach(tile => {
+		this._tileNodes = this._tiles.map(tile => {
 			const node = document.createElement(TilePreview.TagName);
 			node.tile = tile;
-			node.onclick = () => this.selectTile(tile, node);
+			node.onclick = () => this.selectTile(tile);
 			this.appendChild(node);
+			
+			return node;
 		});
 	}
 
@@ -40,17 +43,8 @@ export default class extends Component {
 		return this._tiles;
 	}
 
-	selectTile(tile, node) {
-		if (this._selectedTileNode) {
-			this._selectedTileNode.removeAttribute('selected');
-		}
-
-		this._selectedTile = tile;
-		this._selectedTileNode = node;
-
-		if (this._selectedTileNode) {
-			this._selectedTileNode.setAttribute('selected', '');
-		}
+	selectTile(tile) {
+		this.selectedTile = tile;
 
 		if (this.ontilechange instanceof Function) {
 			this.ontilechange();
@@ -59,5 +53,21 @@ export default class extends Component {
 
 	get selectedTile() {
 		return this._selectedTile;
+	}
+
+	set selectedTile(t) {
+		let node = t === null ? this.firstElementChild : this._tileNodes[t.id];
+		
+		if (this._selectedTileNode) {
+			this._selectedTileNode.removeAttribute('selected');
+		}
+
+		this._selectedTile = t;
+		this._selectedTileNode = node;
+
+		if (this._selectedTileNode) {
+			this._selectedTileNode.setAttribute('selected', '');
+			this._selectedTileNode.scrollIntoViewIfNeeded();
+		}
 	}
 }

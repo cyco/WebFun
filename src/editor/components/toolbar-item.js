@@ -29,7 +29,6 @@ export default class extends Component {
 
 	set tool(t) {
 		this._tool = t;
-		console.log(t);
 		this._label.innerText = t ? t.name : '';
 		this._icon.className = `fa fa-${t ? t.icon : ''}`;
 	}

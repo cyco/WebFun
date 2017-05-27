@@ -13,7 +13,6 @@
 		"babel-preset-es2015": "^6.24.0",
 		"babel-root-slash-import": "^1.1.0",
 		"canvas": "^1.6.5",
-		"document-register-element": "^1.4.1",
 		"esformatter": "^0.10.0",
 		"esformatter-quotes": "^1.1.0",
 		"jasmine-data-provider": "^2.2.0",
