@@ -3,4 +3,6 @@ wf-editor-zone {
 
 	width: 32px * 18;
 	height: 32px * 18;
+	
+	@extend .pixelated;
 }

@@ -4,14 +4,18 @@ wf-editor-zone-editor {
 	> wf-group {
 		display: flex;
 		flex-direction: column;
+	}
 	
-		&:nth-child(1) {
-			width: 576px;
-		}
-	
-		&:nth-child(2) {
-			width: 134px;
-		}
+	> *:nth-child(1) {
+		width: 576px;
+	}
+
+	> *:nth-child(2) {
+		width: 134px;
+	}
+
+	> *:nth-child(3) {
+		width: 134px;
 	}
 
 	wf-editor-layer-selection {

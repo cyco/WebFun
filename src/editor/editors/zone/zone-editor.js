@@ -1,6 +1,6 @@
 import { Component } from '/ui';
 import { Group } from '/ui/components';
-import { LayerSelection, TileSelection, Zone, Toolbar, ActionList } from '/editor/components';
+import { LayerSelection, TileSelection, Zone, Toolbar, ToolbarItem, ActionList } from '/editor/components';
 import * as Tools from './tools';
 
 const ToolStorageKey = 'editor.zone.tool';
@@ -38,6 +38,12 @@ export default class extends Component {
 
 		this._toolbar = document.createElement(Toolbar.TagName);
 		this._toolbar.ontoolchange = (tool) => this.activateTool(tool);
+
+		const toggleSize = document.createElement(ToolbarItem.TagName);
+		toggleSize.onclick = () => this.toggleSize();
+		toggleSize.tool = { name: 'Toggle Size', icon: '' };
+		this._toolbar.appendChild(toggleSize);
+
 
 		Object.values(Tools).forEach(Tool => this._toolbar.addTool(new Tool()));
 	}
@@ -100,5 +106,33 @@ export default class extends Component {
 		if (this._zoneView.tool) {
 			tool.activate(this);
 		}
+	}
+
+	toggleSize() {
+		let desiredEdgeLength = this._zone.width === 9 ? 18 : 9;
+		if (desiredEdgeLength === 9 && !confirm('Do you really want to resize the zone?')) return;
+
+		const desiredSize = desiredEdgeLength * desiredEdgeLength;
+		const newTileIDs = new Array(desiredSize * 3);
+		for (let i = 0; i < desiredSize * 3; i++) {
+			newTileIDs[i] = 0xFFFF;
+		}
+
+		let srcOffset = desiredSize === 9 ? 4 : 0;
+		let targetOffset = desiredSize === 9 ? 0 : 4;
+		for (let y = 0; y < 9; y++) {
+			for (let x = 0; x < 9; x++) {
+				for (let z = 0; z < 3; z++) {
+					newTileIDs[3 * ((y + targetOffset) * desiredEdgeLength + (x + targetOffset)) + z] = this._zone.getTileID(x + srcOffset, y + srcOffset, z);
+				}
+			}
+		}
+
+		this._zone._tileIDs = newTileIDs;
+		this._zone._width = desiredEdgeLength;
+		this._zone._height = desiredEdgeLength;
+
+		// TODO: remove hotspots outside of new size
+		this._zone._hotspots = this.zone.hotspots.filter(htsp => htsp.x < desiredEdgeLength && htsp.y < desiredEdgeLength);
 	}
 }
