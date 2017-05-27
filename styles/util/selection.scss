@@ -5,7 +5,8 @@
 }
 
 input[type=text],
-textarea {
+textarea,
+[contenteditable], [contenteditable] * {
   user-select: text;
   -webkit-user-select: text;
   cursor: text;

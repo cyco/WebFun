@@ -63,7 +63,8 @@ $fa-font-path: "fonts";
 @import "editor/editors/zones-editor";
 @import "editor/components/toolbar";
 @import "editor/components/toolbar-item";
-
+@import "editor/components/action-item";
+@import "editor/components/action-list";
 
 body {
   background-color: $background-color;
