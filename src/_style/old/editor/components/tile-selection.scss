@@ -1,0 +1,10 @@
+wf-editor-tile-selection {
+	display: block;
+	overflow-y: auto;
+	
+	-webkit-scroll-snap-type: proximity;
+	-webkit-scroll-snap-destination: 0% 0%;
+	wf-editor-tile-preview {
+		-webkit-scroll-snap-coordinate: 0 0;
+	}
+}

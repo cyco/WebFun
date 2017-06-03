@@ -1,0 +1,9 @@
+wf-editor-zones {
+	display: flex;
+	
+	wf-editor-zone-selection {
+		@extend .inset-border;
+		
+		width: 100px;
+	}
+}

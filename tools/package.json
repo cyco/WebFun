@@ -1,0 +1,74 @@
+{
+	"name": "WebFun",
+	"version": "1.0.0",
+	"main": "index.js",
+	"license": "MIT",
+	"devDependencies": {
+		"add-matchers": "^0.5.0",
+		"babel-cli": "^6.24.1",
+		"babel-jest": "^19.0.0",
+		"babel-loader": "^6.4.1",
+		"babel-plugin-syntax-async-functions": "^6.13.0",
+		"babel-plugin-transform-export-extensions": "^6.22.0",
+		"babel-preset-es2015": "^6.24.0",
+		"babel-root-slash-import": "^1.1.0",
+		"canvas": "^1.6.5",
+		"esformatter": "^0.10.0",
+		"esformatter-quotes": "^1.1.0",
+		"jasmine-data-provider": "^2.2.0",
+		"jasmine-expect": "^3.7.0",
+		"jest": "^19.0.2",
+		"webpack": "^2.3.3"
+	},
+	"scripts": {
+		"build": "yarn build:styles && webpack",
+		"build:cont": "yarn build:styles:cont & webpack --watch",
+		"test": "jest",
+		"test:cont": "jest --watch",
+		"test:cov": "jest --coverage",
+		"test:cont:cov": "jest --watch --coverage",
+		"build:styles": "sassc styles/global.scss build/styles.css",
+		"build:styles:cont": "find styles -type f|entr yarn build:styles",
+		"format": "find src -type f -name '*.js'|xargs esformatter -i",
+		"format:cont": "find src -type f -name '*.js'|entr yarn format",
+		"format:styles": "sass-convert -r -i -F scss -T scss styles",
+		"check-tests": "node ./check-tests.js",
+		"world": "babel-node -- generate-world.js -v -d \"game-data/yoda.data\"",
+		"world:validate": "babel-node -- generate-world.js -c -d \"game-data/yoda.data\" -e \"game-data/worlds.txt\"",
+		"world:validate:all": "babel-node -- generate-world.js -c -d \"game-data/yoda.data\" -e \"game-data/worlds.txt\" -a"
+	},
+	"jest": {
+		"automock": false,
+		"notify": true,
+		"setupTestFrameworkScriptFile": "./test/helpers/jest.init.js",
+		"coverageDirectory": "./test/coverage",
+		"coverageReporters": [
+			"html"
+		],
+		"testPathIgnorePatterns": [
+			"/node_modules/",
+			"/test/fixture/",
+			"/test/coverage/",
+			"/test/helpers/"
+		],
+		"coveragePathIgnorePatterns": [
+			"/test/helpers/",
+			"/src/debug/"
+		]
+	},
+	"babel": {
+		"presets": [
+			"es2015"
+		],
+		"plugins": [
+			"babel-plugin-syntax-async-functions",
+			"babel-plugin-transform-export-extensions",
+			[
+				"babel-root-slash-import",
+				{
+					"rootPathSuffix": "src"
+				}
+			]
+		]
+	}
+}

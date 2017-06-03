@@ -11,3 +11,5 @@ export const Event = global.Event;
 
 export const document = global.document;
 export const localStorage = global.localStorage;
+export const Storage = global.Storage;
+export const XMLHttpRequest = global.XMLHttpRequest;
