@@ -1,25 +1,47 @@
-var path = require('path');
+const Path = require('path');
+const Webpack = require('webpack');
 
 module.exports = {
 	entry: './src/index.js',
-	devtool: 'eval-source-map',
+	output: {
+		filename: 'webfun.js',
+		path: Path.resolve(__dirname, 'build')
+	},
+	resolve: {
+		alias: {
+			'std': Path.resolve(__dirname, 'src/std'),
+			'std.dom': Path.resolve(__dirname, 'src/std.dom'),
+			'test-helpers': Path.resolve(__dirname, 'test/helpers')
+		}
+	},
 	module: {
 		rules: [{
+			/* JavaScript / Babel */
 			test: /\.js?$/,
-			include: [
-				path.resolve(__dirname, "src")
-			],
-			exclude: [],
-
 			loader: "babel-loader",
-
-			options: {
-				presets: ["es2015"]
-			},
+			include: [
+				Path.resolve(__dirname, "src")
+			]
+		}, {
+			/* Styles */
+			test: /\.scss$/,
+			use: [{
+				loader: "style-loader"
+			}, {
+				loader: "css-loader"
+			}, {
+				loader: "sass-loader"
+			}]
 		}]
 	},
-	output: {
-		filename: 'app.js',
-		path: path.resolve(__dirname, 'build')
+	plugins: [
+		new Webpack.HotModuleReplacementPlugin(),
+	],
+
+	devtool: 'inline-source-map',
+	devServer: {
+		publicPath: "/",
+		contentBase: "./dist",
+		hot: true
 	}
 };
