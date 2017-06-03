@@ -28,6 +28,18 @@
 		
 		// Node.js
 		"global": true,
-		"process": true
+		"process": true,
+
+		// Jasmine
+"describe": true,
+"xdescribe": true,
+"fdescribe": true,
+"it": true,
+"fit": true,
+"xit": true,
+"expect": true,
+"afterEach": true,
+"beforeEach": true,
+"afterAll": true
 	}
 }

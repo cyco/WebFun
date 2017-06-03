@@ -25,7 +25,7 @@ const config = {
 	frameworks: ['jasmine', 'jasmine-matchers'],
 	reporters: ['dots'],
 	webpack: webpackConfig,
-	browsers: ['Chrome'],
+	browsers: ['ChromeHeadless'],
 	customLaunchers: {
 		ChromeHeadless: {
 			base: 'ChromeCanary',
@@ -39,11 +39,11 @@ const config = {
 			]
 		}
 	},
-	// logLevel: 'error',
+	logLevel: 'error',
 	webpackMiddleware: {
-	// 	noInfo: true,
+		noInfo: true,
 		stats: {
-	// 		chunks: false
+			chunks: false
 		}
 	}
 };
