@@ -1,0 +1,35 @@
+.progress-bar {
+  @extend .inset-border;
+
+  width: auto;
+  height: 15px;
+  border-width: 1px;
+  padding: 1px;
+  position: absolute;
+  left: 12px;
+  right: 13px;
+  bottom: 10px;
+  background: #CAC6BC;
+  line-height: 0px;
+  text-align: left;
+  overflow: hidden;
+  white-space: nowrap;
+  opacity: 1;
+  transition: opacity 3s cubic-bezier(1, -0.04, 0.41, 0.96);
+
+  &[data-value="1"] {
+    opacity: 0;
+  }
+
+  > div {
+    display: inline-block;
+    background: #0A246A;
+    width: 9px;
+    height: 11px;
+    margin-bottom: 1px;
+  }
+
+  > div + div {
+    margin-left: 2px;
+  }
+}

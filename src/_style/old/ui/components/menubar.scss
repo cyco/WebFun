@@ -1,0 +1,37 @@
+wf-menubar {
+  @extend wf-menu-view;
+
+  margin-left: 16px;
+  margin-right: 16px;
+  height: 22px;
+  line-height: 22px;
+  position: relative;
+  top: 2px;
+  display: block;
+  pointer-events: none;
+  border: 0px;
+
+  > wf-menu-item {
+    display: inline-block;
+    border-width: 0px;
+    padding: 1px 5px 1px 5px;
+    margin-left: 1px;
+    pointer-events: all;
+
+    &:first-child {
+      margin-left: 4px;
+    }
+
+    &.open {
+      @extend .inset-border;
+
+      cursor: default;
+      padding: 0px 4px 0px 4px;
+      border-width: 1px;
+    }
+
+    .state {
+      display: none;
+    }
+  }
+}

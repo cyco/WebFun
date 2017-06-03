@@ -1,0 +1,17 @@
+* {
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: default;
+}
+
+input[type=text],
+textarea,
+[contenteditable], [contenteditable] * {
+  user-select: text;
+  -webkit-user-select: text;
+  cursor: text;
+}
+
+a {
+  cursor: default;
+}

@@ -1,1 +1,0 @@
-window.testing = true;

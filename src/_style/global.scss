@@ -1,0 +1,10 @@
+@import "colors";
+
+body {
+  background-color: $background-color;
+  margin: 0;
+  padding: 0;
+}
+
+
+@import "old/global";

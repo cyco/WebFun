@@ -1,13 +1,30 @@
-import fs from 'fs';
-import path from 'path';
+import { XMLHttpRequest } from 'std.dom';
 
-function getFixtureContent(name) {
-	return fs.readFileSync(path.resolve('./test/fixture') + '/' + name, { encoding: 'utf8' });
+const base = "base/test/fixtures/";
+
+function buildFixtureUrl(name) {
+	return base + name;
 }
 
-function getFixtureData(name, callback) {
-	const buffer = fs.readFileSync(path.resolve('./test/fixture') + '/' + name);
-	callback(buffer.buffer.slice(buffer.byteOffset, buffer.byteOffset + buffer.byteLength));
+function getFixtureContent(name) {
+	const url = buildFixtureUrl(name);
+
+	const xhr = new XMLHttpRequest();
+	xhr.responseType = "arraybuffer";
+	xhr.open("GET", url, false);
+	xhr.send();
+	
+	return xhr.response;
+}
+
+function getFixtureData(name, callback) {	
+	const url = buildFixtureUrl(name);
+	
+	const xhr = new XMLHttpRequest();
+	xhr.responseType = "arraybuffer";
+	xhr.open("GET", url, true);
+	xhr.send();
+	xhr.onload = () => callback(xhr.response);
 }
 
 export { getFixtureContent, getFixtureData };

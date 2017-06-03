@@ -1,0 +1,15 @@
+.equipment {
+  $indicator-color: #0091EA;
+
+  height: $tile-size + 2 * $border-size;
+
+  > * {
+    height: $tile-size + 2 * $border-size;
+    display: inline-block;
+    position: relative;
+  }
+
+  wf-ammo + wf-weapon {
+    margin-left: 2px;
+  }
+}
