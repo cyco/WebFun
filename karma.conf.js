@@ -10,8 +10,13 @@ console.log(includeCoverage ? 'coverage' : '', runUnitTests ? 'unit' : '', runAc
 const config = {
 	files: [
 		'test/helpers/index.js',
-		// fixtures
+		// {pattern: 'test/**/*_test.js', watched: false},
 		{
+			pattern: 'game-data/**',
+			watched: true,
+			served: true,
+			included: false
+		}, {
 			pattern: 'test/fixtures/**',
 			watched: true,
 			served: true,
@@ -39,36 +44,51 @@ const config = {
 			]
 		}
 	},
-	logLevel: 'error',
+//	logLevel: 'error',
 	webpackMiddleware: {
-		noInfo: true,
+//		noInfo: true,
 		stats: {
-			chunks: false
+//			chunks: false
 		}
 	}
 };
 
-if (runUnitTests) {
-	// config.files.unshift('src/**/*.test.js');
-	// config.preprocessors['src/**/*.test.js'] = ['webpack'];
-}
-
-if (runAcceptanceTests) {
-	// config.files.unshift('test/acceptance/*.test.js');
-	// config.preprocessors['test/acceptance/*.test.js'] = ['webpack'];
-}
+delete config.webpack.entry;
 
 if (includeCoverage) {
+	let fileName = 'lcov.info';
+	if (runUnitTests && !runAcceptanceTests) {
+		fileName = 'unit.lcov';
+	} else if (runAcceptanceTests && !runUnitTests) {
+		fileName = 'acceptance.lcov';
+	}
+
 	config.reporters.push('coverage-istanbul');
 	config.coverageIstanbulReporter = {
-		reports: ['html'],
+		reports: ['lcovonly'],
 		fixWebpackSourcePaths: false,
 		dir: Path.join(__dirname, 'test/coverage'),
+		'report-config': {
+			lcovonly: {
+				file: fileName
+			},
+		},
+		file: fileName
 	};
 
 	config.webpack.module.rules[0].options = {
 		plugins: ['istanbul']
 	};
+}
+
+if (runUnitTests) {
+	config.files.push({ pattern: 'src/**/*.test.js', watched: false });
+	config.preprocessors['src/**/*.test.js'] = ['webpack'];
+}
+
+if (runAcceptanceTests) {
+	// config.files.push({ pattern: 'test/acceptance/**/*.test.js', watched: false });
+	// config.preprocessors['test/acceptance/**/*.test.js'] = ['webpack'];
 }
 
 module.exports = function(c) {

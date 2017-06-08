@@ -13,4 +13,5 @@ sfx_yoda
 sfx_indy
 yoda.pal
 indy.pal
-
+.yarnclean
+/stats.json
