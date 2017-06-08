@@ -1,6 +1,7 @@
 import { Component } from '/ui';
 import { identity } from '/util';
 import ToolbarItem from './toolbar-item';
+import "./toolbar.scss";
 
 export default class extends Component {
 	static get TagName() {

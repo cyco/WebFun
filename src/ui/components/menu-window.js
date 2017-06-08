@@ -1,6 +1,7 @@
-import Point from "/util/point";
+import {Point} from "/util";
 import MenuView from "./menu-view";
 import MenuStack from "../menu-stack";
+import "./menu-window.scss";
 
 export default class MenuWindow extends MenuView {
 	static get TagName(){

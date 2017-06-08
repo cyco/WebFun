@@ -1,7 +1,6 @@
 import { randmod, Message } from '/util';
 import World from './world';
-import { Type as HotspotType } from '/engine/objects/hotspot';
-import { Type as ZoneType } from '/engine/objects/zone';
+import { HotspotType, ZoneType } from '/engine/objects';
 
 const TILE_YODA = 0x30c;
 const TILE_YODAS_SEAT = 2034;

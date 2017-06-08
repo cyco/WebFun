@@ -1,13 +1,12 @@
-import { sandboxed } from 'test-helpers/dom-sandbox';
-import Ammo from '/app/ui/components/ammo';
+import Ammo from './ammo';
 
-xdescribe('Ammo', sandboxed(function(sand) {
+describeComponent(Ammo, () => {
 	let subject;
 
+	beforeAll(() => subject = render(Ammo));
+
 	it('shows a simple bar inidcating how much ammo is left', () => {
-		subject = new Ammo();
-		sand.box.appendChild(subject.element);
-		expect(sand.box.querySelector('.ammo-view')).not.toBeNull();
+		expect(subject).not.toBeNull();
 	});
 
 	it('it has an accessor to set the current level of available ammo', () => {
@@ -18,7 +17,7 @@ xdescribe('Ammo', sandboxed(function(sand) {
 	});
 
 	it('roughly reflects the current ammo in a bar whose height changes', () => {
-		let indicator = subject.element.querySelector('.value');
+		let indicator = subject.querySelector('.value');
 		subject.ammo = 1;
 		expect(parseInt(indicator.style.height)).toBeGreaterThan(90);
 
@@ -27,7 +26,7 @@ xdescribe('Ammo', sandboxed(function(sand) {
 	});
 
 	it('a value of 0xFF or -1 indicates that there is no current weapon', () => {
-		let background = subject.element.querySelector('.background');
+		let background = subject.querySelector('.background');
 
 		subject.ammo = 0xFF;
 		expect(background.style.backgroundColor).toBe('');
@@ -38,4 +37,4 @@ xdescribe('Ammo', sandboxed(function(sand) {
 		subject.ammo = -1;
 		expect(background.style.backgroundColor).toBe('');
 	});
-}));
+});

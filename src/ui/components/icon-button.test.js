@@ -1,7 +1,10 @@
-import IconButton from '/ui/components/icon-button';
+import render from 'test-helpers/render';
+import IconButton from './icon-button';
 
-xdescribe("icon-button", () => {
+describe("icon-button", () => {
 	let subject;
+
+	beforeAll(() => customElements.define(IconButton.TagName, IconButton, IconButton.Options));
 
 	it('is a custom element', () => {
 		expect(IconButton).toBeCustomElement();
@@ -13,12 +16,24 @@ xdescribe("icon-button", () => {
 
 	it('takes a font-awesome icon name in the icon attribute', () => {
 		subject = render(IconButton, { icon: 'test' });
-		console.log(subject);
 		expect(subject.icon).toBe('test');
 		expect(subject.querySelector('.fa-test')).not.toBeNull();
 
 		subject.icon = 'my-new-icon';
-		expect(subject.querySelector('.my-new-icon')).not.toBeNull();
+		expect(subject.querySelector('.fa-my-new-icon')).not.toBeNull();
+	});
+	
+	it('can be disabled', () => {
+		subject = render(IconButton, { }, ['disabled']);
+		expect(subject).toHaveAttribute('disabled');
+		expect(subject.disabled).toBeTrue();
+		
+		subject.disabled = false;
+		expect(subject).not.toHaveAttribute('disabled');
+		expect(subject.disabled).toBeFalse();
+		
+		subject.setAttribute('disabled', '');
+		expect(subject.disabled).toBeTrue();
 	});
 });
  

@@ -1,17 +1,13 @@
 import Settings from "/settings";
-import Scene from "/engine/scenes/scene";
-import PauseScene from "/engine/scenes/pause-scene";
-import MapScene from "/engine/scenes/map-scene";
-import TransitionScene from "/engine/scenes/transition-scene";
+import Scene from "./scene";
+import PauseScene from "./pause-scene";
+import MapScene from "./map-scene";
+import TransitionScene from "./transition-scene";
 
-import Tile from "/engine/objects/tile";
-import Zone from "/engine/objects/zone";
-import { Type as HotspotType } from "/engine/objects/hotspot";
+import {Tile,Zone,HotspotType} from "/engine/objects";
 import Camera from "/engine/camera";
-import * as Result from "/engine/script/result";
-import { rgba } from "/util/color";
-import Direction from "/util/direction";
-import Point from "/util/point";
+import Result from "/engine/script";
+import { rgba, Direction, Point } from "/util";
 
 export default class ZoneScene extends Scene {
 	constructor() {

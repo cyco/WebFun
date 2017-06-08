@@ -1,71 +1,59 @@
-import { sandboxed } from 'test-helpers/dom-sandbox';
-import Location from '/app/ui/components/location';
+import Location, { Direction } from './location';
 
-xdescribe('Location', sandboxed(function(sand) {
+describeComponent(Location, () => {
 	let subject;
-	beforeEach(() => {
-		subject = new Location();
-		sand.box.appendChild(subject.element);
-	});
+	beforeAll(() => subject = render(Location));
 
 	it('shows which adjacent zones can be accessed, by default all directions are inaccessible', () => {
-		expect(subject.left).toBeFalse();
-		expect(subject.down).toBeFalse();
-		expect(subject.up).toBeFalse();
-		expect(subject.right).toBeFalse();
+		expect(subject.mask).toBe(Direction.None);
 	});
 
 	describe('activating is done by setting a css class on the svg', () => {
 		it('can activate the left arrow', () => {
-			subject.left = true;
-			expect(subject.left).toBeTrue();
+			subject.mask = Direction.West;
 			expect(subject._svg.classList).toContain('left');
 		});
 
 		it('can deactivate the left arrow', () => {
-			subject.left = true;
-			subject.left = false;
-			expect(subject.left).toBeFalse();
+			subject.mask ^= Direction.West;
 			expect(subject._svg.classList).not.toContain('left');
 		});
 
 		it('can activate the down arrow', () => {
-			subject.down = true;
-			expect(subject.down).toBeTrue();
+			subject.mask = Direction.South;
 			expect(subject._svg.classList).toContain('down');
 		});
 
 		it('can deactivate the down arrow', () => {
-			subject.down = true;
-			subject.down = false;
-			expect(subject.down).toBeFalse();
+			subject.mask ^= Direction.South;
 			expect(subject._svg.classList).not.toContain('down');
 		});
 
 		it('can activate the right arrow', () => {
-			subject.right = true;
-			expect(subject.right).toBeTrue();
+			subject.mask = Direction.East;
 			expect(subject._svg.classList).toContain('right');
 		});
 
 		it('can deactivate the right arrow', () => {
-			subject.right = true;
-			subject.right = false;
-			expect(subject.right).toBeFalse();
+			subject.mask ^= Direction.East;
 			expect(subject._svg.classList).not.toContain('right');
 		});
 
 		it('can activate the up arrow', () => {
-			subject.up = true;
-			expect(subject.up).toBeTrue();
+			subject.mask = Direction.North;
 			expect(subject._svg.classList).toContain('up');
 		});
 
 		it('can deactivate the up arrow', () => {
-			subject.up = true;
-			subject.up = false;
-			expect(subject.up).toBeFalse();
+			subject.mask ^= Direction.North;
 			expect(subject._svg.classList).not.toContain('up');
 		});
 	});
-}));
+	
+	it('can show multiple states at once', () => {
+		subject.mask = Direction.North | Direction.West;
+
+		expect(subject._svg.classList).toContain('up');
+		expect(subject._svg.classList).toContain('left');
+	});
+});

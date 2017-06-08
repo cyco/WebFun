@@ -1,5 +1,4 @@
-import { structure, array } from "/parser/functions";
-import { uint32, uint16, character } from "/parser/types";
+import { uint32, uint16, character, structure, array } from "/parser";
 
 export default structure({
 	magic: array(character, 9),

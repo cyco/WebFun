@@ -3,6 +3,7 @@ import Menu from "../menu";
 import { Separator } from "../menu-item";
 import MenuItem from './menu-item';
 import MenuItemSeparator from './menu-item-separator';
+import "./menu-view.scss";
 
 export default class MenuView extends Component {
 	static get TagName() {

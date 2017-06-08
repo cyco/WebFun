@@ -1,3 +1,4 @@
+import "./controls.scss";
 import { Component } from '/ui';
 import { IconButton } from '/ui/components';
 

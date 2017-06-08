@@ -1,9 +1,10 @@
+import './inventory.scss';
 import { ModalSession } from "/ux";
 import { Events as InventoryEvent } from "/engine/inventory";
 import InventoryRow from "./inventory-row";
 import { Component } from '/ui';
 import Yoda from "/engine/yoda";
-import { Attribute as TileAttribute, Subtype as TileSubtype } from "/engine/objects/tile";
+import { TileAttribute, TileSubtype } from "/engine/objects";
 
 export const Event = {
 	PlacedItem: "PlacedItem",

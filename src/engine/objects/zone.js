@@ -1,4 +1,4 @@
-import Size from "/util/size";
+import {Size} from "/util";
 
 import { Type as HotspotType } from "./hotspot";
 

@@ -1,4 +1,5 @@
 import { Component } from '/ui';
+import './weapon.scss';
 
 export default class extends Component {
 	static get TagName() {

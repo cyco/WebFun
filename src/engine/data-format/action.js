@@ -1,5 +1,4 @@
-import { structure, array } from "/parser/functions";
-import { uint16, uint32, character } from "/parser/types";
+import { structure, array, uint16, uint32, character } from "/parser";
 
 export const actionItem = structure({
 	opcode: uint16,

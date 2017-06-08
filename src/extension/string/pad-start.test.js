@@ -3,7 +3,7 @@ import padStart from '/extension/string/pad-start';
 describe('String.padStart', () => {
 	it('extends the String prototype', () => {
 		let string = 'test';
-		expect(typeof string.padStart).toBe('function');
+		expect(string.padStart).toBeFunction();
 	});
 
 	it('add spaces to the front of a string to pad it to the specified length', () => {

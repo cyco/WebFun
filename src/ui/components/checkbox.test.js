@@ -1,31 +1,29 @@
-import sandboxed from 'test-helpers/dom-sandbox';
 import simulateEvent from 'test-helpers/dom-events';
 
 import Checkbox from './checkbox';
-describe('Checkbox', sandboxed(function(sand){
-	let checkbox;
-	it('displays a checkbox', () => {
-		checkbox = new Checkbox();
-		sand.box.appendChild(checkbox.element);
-	});
+
+describeComponent(Checkbox, () => {
+	let subject;
+	
+	beforeEach(() => subject = render(Checkbox));
 	
 	it('can have a title', () => {
-		let labelNode = checkbox.element.querySelector('label');
-		checkbox.title = "test title";
-		expect(checkbox.title).toBe('test title');
+		let labelNode = subject.querySelector('label');
+		subject.title = "test title";
+		expect(subject.title).toBe('test title');
 		expect(labelNode.textContent.indexOf('test title')).not.toBe(-1);
 	});
 	
 	it('can be checked', () => {
-		expect(checkbox.checked).toBeFalse();
+		expect(subject.checked).toBeFalse();
 		
-		checkbox.checked = true;
-		expect(checkbox.checked).toBeTrue();
-		let inputNode = checkbox.element.querySelector('input[type=checkbox]');		
+		subject.checked = true;
+		expect(subject.checked).toBeTrue();
+		let inputNode = subject.querySelector('input[type=checkbox]');		
 		expect(inputNode.checked).toBeTrue();
 	
-		checkbox.checked = false;
-		expect(checkbox.checked).toBeFalse();
+		subject.checked = false;
+		expect(subject.checked).toBeFalse();
 		expect(inputNode.checked).toBeFalse();
 	});
 	
@@ -34,10 +32,10 @@ describe('Checkbox', sandboxed(function(sand){
 			expect(true).toBeTrue();
 			done();
 		};
-		checkbox.onchange = callback;
-		expect(checkbox.onchange).toBe(callback);
+		subject.onchange = callback;
+		expect(subject.onchange).toBe(callback);
 		
-		let inputNode = checkbox.element.querySelector('input[type=checkbox]');		
+		let inputNode = subject.querySelector('input[type=checkbox]');		
 		simulateEvent(inputNode, 'change');
 	});
-}));
+});

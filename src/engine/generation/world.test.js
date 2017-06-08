@@ -1,6 +1,6 @@
 import World from '/engine/generation/world';
-import Point from '/util/point';
-import Zone from '/engine/objects/zone';
+import {Point} from '/util';
+import {Zone} from '/engine/objects';
 
 describe('World', () => {
 	let subject = null;

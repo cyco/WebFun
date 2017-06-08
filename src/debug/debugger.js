@@ -1,9 +1,10 @@
+import "./debugger.scss";
+
 import { ComponentRegistry, Textbox } from '/ui';
 import { Window } from '/ui/components';
 import SteppingMetronome, { Status as MetronomeStatus } from './stepping-metronome';
 import BreakingExecutor, { Continuation as ContinuationMode } from './breaking-executor';
 import * as Components from './components';
-import { Action, Controls } from './components';
 
 export default class {
 	constructor(engine) {
@@ -70,7 +71,7 @@ export default class {
 	}
 	
 	_setupDebuggerControls() {
-		const controls = new Controls();
+		const controls = new Components.Controls();
 		controls.onstep = () => {
 			this._executor.continue(ContinuationMode.Step);
 		};
@@ -99,7 +100,7 @@ export default class {
 	rebuildActionList() {
 		this._actionList.clear();
 		this._engine.currentZone.actions.forEach((action, idx) => {
-			const component = new Action();
+			const component = new Components.Action();
 			component.zone = this._engine.currentZone.id;
 			component.index = idx;
 			component.action = action;

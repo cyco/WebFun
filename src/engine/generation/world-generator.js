@@ -8,9 +8,7 @@ import Quest from "/engine/quest";
 
 import GetDistanceToCenter from "./distance-to-center";
 
-import { Type as ZoneType } from "/engine/objects/zone";
-import { Type as PuzzleType } from "/engine/objects/puzzle";
-import { Type as HotspotType } from "/engine/objects/hotspot";
+import { ZoneType, PuzzleType, HotspotType } from "/engine/objects";
 import * as Type from "/engine/types";
 
 const TILE_ADEGAN_CRYSTAL = 459;
@@ -56,7 +54,7 @@ export default class WorldGenerator {
 
 	generate(seed = undefined) {
 		Message("Generate New World (JS, 0x%x, 0x%x, 0x%x)", this._seed, this._size, this._planet);
-		if(seed !== undefined) this._seed = seed;
+		if (seed !== undefined) this._seed = seed;
 		srand(this._seed);
 
 		const mapGenerator = this.mapGenerator = new MapGenerator();
@@ -2241,7 +2239,7 @@ export default class WorldGenerator {
 
 		return -1;
 	}
-	
+
 	getTile(id) {
 		return id === -1 ? null : this.data.tiles[id];
 	}

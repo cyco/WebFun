@@ -1,41 +1,10 @@
-import sandboxed from 'test-helpers/dom-sandbox';
-import simulateEvent from 'test-helpers/dom-events';
+import Button from './button';
 
-import Button from '/ui/components/button';
-
-xdescribe('Button', sandboxed(function(sand) {
+describeComponent(Button, () => {
 	let subject;
-	beforeEach(() => subject = new Button());
+	beforeEach(() => subject = render(Button));
 
 	it('displays a button that can be clicked', () => {
-		sand.box.appendChild(subject.element);
-
-		expect(subject.element.tagName.toLowerCase()).toBe('button');
+		expect(subject.tagName.toLowerCase()).toBe('wf-button');
 	});
-
-	it('can have a title', () => {
-		subject.title = "test title";
-		expect(subject.title).toBe('test title');
-		expect(subject.element.textContent.indexOf('test title')).not.toBe(-1);
-	});
-
-	it('can be enabled or disabled', () => {
-		expect(subject.enabled).toBeTrue();
-
-		subject.enabled = false;
-		expect(subject.enabled).toBeFalse();
-
-		subject.enabled = true;
-		expect(subject.enabled).toBeTrue();
-	});
-
-	it('when clicked it calls it\'s onclick callback', (done) => {
-		let callback = () => {
-			expect(true).toBeTrue();
-			done();
-		};
-		subject.onclick = callback;
-		expect(subject.onclick).toBe(callback);
-		simulateEvent(subject.element, 'click');
-	});
-}));
+});

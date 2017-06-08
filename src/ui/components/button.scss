@@ -1,0 +1,55 @@
+@import "colors";
+@import "border";
+
+wf-button {
+	display: block;
+	border: 1px solid black;
+	
+	position: relative;
+	
+	min-height: 16px;
+	min-width: 16px;
+	
+	text-align: center;
+	
+	color: $control-text-color;
+	background-color: $window-background-color;
+	
+	> div {
+		@extend .inset-border-inverted;
+		position: absolute;
+		border-width: 1px;
+		
+		left: 0px;
+		right: 0px;
+		top: 0px;
+		bottom: 0px;
+	}
+	
+	&.disabled {
+		color: $disabled-color;
+	}
+	
+	&:not(.disabled) i {
+		text-shadow: 1px 1px #828282;
+	}
+	
+	&:active:not(.disabled) {
+		> div {
+			@extend .inset-border;
+			border-width: 1px;
+		}
+		
+		i {
+			text-shadow: none;
+		}
+	}
+	
+	&.icon {
+		line-height: 16px;
+	}
+	
+	& + wf-button {
+		margin-top: 2px;
+	}
+}

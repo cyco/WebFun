@@ -2,29 +2,40 @@ import { XMLHttpRequest } from 'std.dom';
 
 const base = "base/test/fixtures/";
 
-function buildFixtureUrl(name) {
-	return base + name;
-}
-
-function getFixtureContent(name) {
+let getFixtureContent = (name) => {
 	const url = buildFixtureUrl(name);
-
 	const xhr = new XMLHttpRequest();
-	xhr.responseType = "arraybuffer";
 	xhr.open("GET", url, false);
 	xhr.send();
-	
-	return xhr.response;
-}
 
-function getFixtureData(name, callback) {	
+	return xhr.responseText;
+};
+
+let getFixtureData = (name, callback) => {
 	const url = buildFixtureUrl(name);
-	
 	const xhr = new XMLHttpRequest();
 	xhr.responseType = "arraybuffer";
 	xhr.open("GET", url, true);
 	xhr.send();
 	xhr.onload = () => callback(xhr.response);
+};
+
+function buildFixtureUrl(name) {
+	return base + name;
+}
+
+if (!process.browser) {
+	const fs = require('fs');
+	const path = require('path');
+	
+	getFixtureContent = (name) => {
+		return fs.readFileSync(path.resolve('./game-data') + '/' + name, { encoding: 'utf8' });
+	};
+
+	getFixtureData = (name, callback) => {
+		const buffer = fs.readFileSync(path.resolve('./game-data') + '/' + name);
+		callback(buffer.buffer.slice(buffer.byteOffset, buffer.byteOffset + buffer.byteLength));
+	};
 }
 
 export { getFixtureContent, getFixtureData };

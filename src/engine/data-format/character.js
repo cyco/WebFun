@@ -1,5 +1,4 @@
-import { structure, array, until } from "/parser/functions";
-import { uint8, uint16, uint32, character } from "/parser/types";
+import { uint8, uint16, uint32, character, structure, array, until } from "/parser";
 
 export const char = structure({
 	marker: array(character, 4),

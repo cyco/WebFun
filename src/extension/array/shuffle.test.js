@@ -1,4 +1,4 @@
-import { srand } from '/util/random';
+import { srand } from '/util';
 import shuffle from '/extension/array/shuffle';
 
 describe('Array.shuffle', () =>  {

@@ -1,3 +1,4 @@
+import './index.scss';
 import { ComponentRegistry } from '/ui';
 import { OutputStream } from '/util';
 import * as Components from './components';

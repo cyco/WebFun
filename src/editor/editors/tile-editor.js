@@ -1,5 +1,6 @@
 import { Component } from '/ui';
 import { TileSelection } from '/editor/components';
+import "./tile-editor.scss";
 
 export default class extends Component {
 	static get TagName() {

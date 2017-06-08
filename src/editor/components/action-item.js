@@ -1,6 +1,7 @@
 import { IconButton } from '/ui/components';
 import { Component } from '/ui';
 import { assemble, disassemble } from '../opcode'; 
+import "./action-item.scss";
 
 export default class extends Component {
 	static get TagName() {

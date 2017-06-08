@@ -1,6 +1,6 @@
-import Scene from "/engine/scenes/scene";
-import Tile from "/engine/objects/tile";
-import SpeechBubble from "/ui/speech-bubble";
+import Scene from "./scene";
+import { Tile } from "/engine/objects";
+import { SpeechBubble } from "/ui";
 import { ModalSession } from "/ux";
 import { Size, Point } from "/util";
 import Settings from "/settings";
@@ -30,7 +30,7 @@ export default class SpeechScene extends Scene {
 		this._modalSession.run();
 
 		const anchor = Point.add(this.location, this.cameraOffset);
-		
+
 		const windowOffset = this._determineGlobalOffset();
 
 		// TODO: fix posiitoning
@@ -58,11 +58,11 @@ export default class SpeechScene extends Scene {
 	get text() {
 		return this._bubble.text;
 	}
-	
-	_determineGlobalOffset(){
+
+	_determineGlobalOffset() {
 		const canvas = document.querySelector('canvas[width="288"][height="288"]');
 		const box = canvas.getBoundingClientRect();
-		
+
 		return new Point(box.left, box.top, 0);
 	}
 }

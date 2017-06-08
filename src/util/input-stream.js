@@ -126,5 +126,5 @@ export default class InputStream extends Stream {
 		return result;
 	}
 
-// // // // // // // // // // // // // // // // // //
+	// // // // // // // // // // // // // // // // // //
 }

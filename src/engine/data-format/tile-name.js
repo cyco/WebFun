@@ -1,5 +1,4 @@
-import { structure, array, until } from "/parser/functions";
-import { character, uint16, uint32 } from "/parser/types";
+import { character, uint16, uint32, structure, array, until } from "/parser";
 
 export const tileNames = structure({
 	size: uint32,

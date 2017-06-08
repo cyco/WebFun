@@ -1,7 +1,6 @@
-import Scene from "/engine/scenes/scene";
-import Tile from "/engine/objects/tile";
-import Zone from "/engine/objects/zone";
-import Point from "/util/point";
+import Scene from "./scene";
+import {Tile, Zone} from "/engine/objects";
+import {Point} from "/util";
 
 export default class TransitionScene extends Scene {
 	static get TRANSITION_TYPE() {

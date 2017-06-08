@@ -1,5 +1,5 @@
-import Scene from "/engine/scenes/scene";
-import Tile from "/engine/objects/tile";
+import Scene from "./scene";
+import {Tile} from "/engine/objects";
 
 export default class PauseScene extends Scene {
 	constructor() {

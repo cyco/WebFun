@@ -1,0 +1,5 @@
+@import "src/ui/components/window.scss";
+
+wf-editor-window {
+	@extend wf-window;
+}

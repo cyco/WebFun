@@ -1,0 +1,1 @@
+export default (stream) => stream.getUint8();

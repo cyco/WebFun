@@ -1,5 +1,6 @@
 import { Component } from '/ui';
 import ActionItem from './action-item';
+import "./action-list.scss";
 
 export default class extends Component {
 	static get TagName() {

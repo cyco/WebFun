@@ -1,6 +1,6 @@
-describe("Missing test", () => {
-	it('must still be written', () => {
-		
-	});
-});
+import MainWindow from './main-window';
 
+describeComponent(MainWindow, () => {
+	let subject;
+	beforeEach(() => subject = render(MainWindow));
+});

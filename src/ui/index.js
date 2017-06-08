@@ -6,6 +6,6 @@ export Selector from "./selector";
 export Slider from "./slider";
 export Textbox from "./textbox";
 export View from "./view";
-export * as Components from './components';
 export Component from './component';
 export ComponentRegistry from './component-registry';
+export SpeechBubble from './speech-bubble';

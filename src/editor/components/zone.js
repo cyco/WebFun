@@ -1,6 +1,7 @@
 import { Component } from '/ui';
 import { Size, Point, rgba } from '/util';
 import { Layer } from '/engine/objects/zone';
+import "./zone.scss";
 
 export const DrawMask = {
 	None: 0,

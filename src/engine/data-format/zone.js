@@ -1,5 +1,4 @@
-import { structure, array } from "/parser/functions";
-import { uint16, uint32, character } from "/parser/types";
+import { uint16, uint32, character, structure, array } from "/parser";
 
 import { action } from "./action";
 import { hotspot } from "./hotspot";

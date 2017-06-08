@@ -1,4 +1,4 @@
-import Direction from "/util/direction";
+import {Direction} from "/util";
 
 export const Type = {
 	Hero: 0x0001,

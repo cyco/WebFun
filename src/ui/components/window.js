@@ -1,6 +1,7 @@
 import Component from "../component";
 import WindowTitlebar from "./window-titlebar";
 import View from '../view';
+import "./window.scss";
 
 export default class extends Component {
 	static get TagName() {
