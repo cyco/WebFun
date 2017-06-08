@@ -1,5 +1,4 @@
-import { structure, array } from "/parser/functions";
-import { uint8, uint16, uint32 } from "/parser/types";
+import { structure, array, uint8, uint16, uint32 } from "/parser";
 
 export const npc = structure({
 	face: uint16,

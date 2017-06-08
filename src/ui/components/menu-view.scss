@@ -1,0 +1,9 @@
+@import "border";
+
+wf-menu-view {
+  @extend .inset-border-inverted;
+
+  margin: 0px;
+  padding: 0px;
+  list-style-type: none;
+}

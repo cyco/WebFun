@@ -1,4 +1,4 @@
-import Cheat from "/engine/cheats/cheat";
+import Cheat from "./cheat";
 
 export default class extends Cheat {
 	get code() {

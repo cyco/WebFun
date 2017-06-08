@@ -17,23 +17,14 @@ export default class extends EventTarget {
 
 	load() {
 		let reader = new FileReader();
-		if (!window.location.href.startsWith("file://")) {
-			reader = new FileReader();
-		} else {
-			reader = new XMLHttpRequest();
-			reader.open("GET", this._path, true);
-			reader.responseType = "arraybuffer";
-		}
+		reader = new XMLHttpRequest();
+		reader.open("GET", this._path, true);
+		reader.responseType = "arraybuffer";
 
 		reader.onload = ({ target }) => this._didLoad(target);
 		reader.onerror = (event) => this._didFail(event);
 		reader.onprogress = ({ loaded, total }) => this._didProgress(loaded / total);
-
-		if (!window.location.href.startsWith("file://")) {
-			reader.readAsArrayBuffer(this._file);
-		} else {
-			reader.send(void 0);
-		}
+		reader.send(void 0);
 
 		this.dispatchEvent(Event.Start);
 	}

@@ -1,5 +1,6 @@
 import Component from '../component';
 import { State } from "../menu-item";
+import "./menu-item.scss";
 
 export default class extends Component {
 	static get TagName() {

@@ -1,0 +1,41 @@
+@import "variables";
+@import "border";
+
+wf-inventory-row {
+  display: flex;
+  height: $tile-size;
+
+  > span {
+    @extend .inset-border-inverted;
+
+	position: relative;
+    border-width: 1px;
+    display: inline-block;
+    height: inherit;
+  }
+
+  > span:nth-child(1) {
+    width: $tile-size;
+  }
+
+  > span:nth-child(2) {
+    flex-grow: 2;
+    padding: 0 5px;
+    line-height: $tile-size;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  > span + span {
+    margin-left: 0px;
+  }
+
+  img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: $tile-size;
+    height: $tile-size;
+  }
+}

@@ -1,0 +1,16 @@
+@import "variables";
+@import "border";
+
+wf-inventory {
+  @extend .inset-border;
+
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  height: 7 * $tile-size + 2 * $border-size;
+  width: 206px;
+  padding: 0;
+  border-width: 2px;
+  overflow-y: scroll;
+  list-style-type: none;
+}

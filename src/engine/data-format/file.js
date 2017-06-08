@@ -1,5 +1,4 @@
-import { loopedSwitch, array } from "/parser/functions";
-import { character } from "/parser/types";
+import { character, loopedSwitch, array } from "/parser";
 
 import { version } from "./version";
 import { characters, characterWeapons, characterAuxiliaries } from "./character";

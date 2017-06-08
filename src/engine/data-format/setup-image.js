@@ -1,5 +1,4 @@
-import { structure, array } from "/parser/functions";
-import { uint8, uint32 } from "/parser/types";
+import { uint8, uint32, structure, array } from "/parser";
 
 const IMAGE_WIDTH = 288;
 const IMAGE_HEIGHT = 288;

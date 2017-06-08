@@ -1,3 +1,5 @@
+import "./zone-editor.scss";
+
 import { Component } from '/ui';
 import { Group } from '/ui/components';
 import { LayerSelection, TileSelection, Zone, Toolbar, ToolbarItem, ActionList } from '/editor/components';

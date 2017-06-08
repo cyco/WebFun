@@ -1,6 +1,7 @@
 import GameController from "./game-controller";
-import { ComponentRegistry, Components } from '/ui';
-import { Components as AppComponents } from './ui';
+import { ComponentRegistry } from '/ui';
+import * as Components from '/ui/components';
+import * as AppComponents from './ui/components';
 import { MainWindow, StatisticsWindow} from './windows';
 
 export default () => {

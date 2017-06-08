@@ -1,4 +1,5 @@
 import View from "./view";
+import './textbox.scss';
 
 export default class extends View {
 	constructor() {

@@ -1,16 +1,11 @@
-import { sandboxed } from 'test-helpers/dom-sandbox';
-import Weapon from '/app/ui/components/weapon';
+import Weapon from './weapon';
 
-xdescribe('Weapon', sandboxed(function(sand) {
+describeComponent(Weapon, () => {
 	let subject = null;
-	beforeEach(() => {
-		subject = new Weapon();
-		sand.box.appendChild(subject.element);
-	});
+	beforeEach(() => subject = render(Weapon));
 
 	it('shows which weapon is currently equipped', () => {
-		let view = new Weapon();
-		sand.box.appendChild(view.element);
+		expect(subject).not.toBeNull();
 	});
 
 	it('has a setter / getter for the equipped weapon', () => {
@@ -23,7 +18,7 @@ xdescribe('Weapon', sandboxed(function(sand) {
 	it('shows a blank image if no weapon is set (aka equipped)', () => {
 		subject.weapon = null;
 
-		expect(subject.element.querySelector('img').src).toEqual(Image.blankImage);
+		expect(subject.querySelector('img').src).toEqual(Image.blankImage);
 	});
 
 	it('shows the correct image if a weapon is set', () => {
@@ -32,11 +27,11 @@ xdescribe('Weapon', sandboxed(function(sand) {
 
 		subject.weapon = weapon;
 
-		expect(subject.element.querySelector('img').src).toEqual('image-data-url');
+		expect(subject.querySelector('img').src).toEndWith('image-data-url');
 	});
 
 	it('also shows no image if the weapon does not supply one', () => {
 		subject.weapon = { frames: [{ extensionRight: 0xFFFF }] };
-		expect(subject.element.querySelector('img').src).toEqual(Image.blankImage);
+		expect(subject.querySelector('img').src).toEqual(Image.blankImage);
 	});
-}));
+});

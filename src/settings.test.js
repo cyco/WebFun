@@ -17,4 +17,3 @@ describe("Settings", () => {
 		expect(Settings.url.sfx('youwin.wav')).toContain('game-data');
 	});
 });
-

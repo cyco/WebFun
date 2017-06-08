@@ -1,5 +1,5 @@
 export class _Action {
-	constructor(data) {
+	constructor(data = {}) {
 		this._opcode = data.opcode;
 		this._arguments = data.arguments;
 		this._additionalData = data.text;

@@ -2,6 +2,7 @@ import Component from "../component";
 import Menubar from "./menubar";
 import { identity } from "/util";
 import View from '../view';
+import "./window-titlebar.scss";
 
 export default class extends Component {
 	static get TagName() {

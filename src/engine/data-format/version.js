@@ -1,5 +1,4 @@
-import { structure } from "/parser/functions";
-import { uint32 } from "/parser/types";
+import { uint32, structure } from "/parser";
 
 export const version = structure({
 	version: uint32

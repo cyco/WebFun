@@ -1,12 +1,14 @@
-import InventoryRow from '/app/ui/components/inventory-row';
+import InventoryRow from './inventory-row';
 
-xdescribe("InventoryRow", () => {
+describeComponent(InventoryRow, () => {
 	it('is a row that shows a tile\'s image and name', () => {
-		const item = { name: 'Test Item Name', image: { dataURL: 'tile image data url' } };
+		const image = document.createElement('img');
+		image.src = 'tile%20image%20data%20url';
+		const item = { name: 'Test Item Name', image: { representation: image } };
 
-		const row = new InventoryRow();
-		row.setData(item);
+		const row = render(InventoryRow);
+		row.tile = item;
 
-		expect(row.element.querySelector('img').src).toBe('tile image data url');
+		expect(row.querySelector('img').src).toEndWith('tile%20image%20data%20url');
 	});
 });

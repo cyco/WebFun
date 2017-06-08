@@ -3,7 +3,7 @@ import padEnd from '/extension/string/pad-end';
 describe('String.padEnd', () => {
 	it('extends the String prototype', () => {
 		let string = 'test';
-		expect(typeof string.padEnd).toBe('function');
+		expect(string.padEnd).toBeFunction();
 	});
 
 	it('add spaces to the back of a string to pad it to the specified length', () => {

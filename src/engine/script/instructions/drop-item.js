@@ -1,5 +1,5 @@
-import PickupScene from "/engine/scenes/pickup-scene";
-import Point from "/util/point";
+import { PickupScene } from "/engine/scenes";
+import { Point } from "/util";
 import * as Result from "../result";
 
 export const Opcode = 0x1b;

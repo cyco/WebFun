@@ -1,20 +1,17 @@
-import { sandboxed } from 'test-helpers/dom-sandbox';
-import Health from '/app/ui/components/health';
+import Health from './health';
 
-xdescribe('Health', sandboxed(function(sand) {
+describeComponent(Health, () => {
+	let subject;
+	
+	beforeAll(() => subject = render(Health));
+	
 	it('displays the hero\'s health in a circle', () => {
-		let healthView = new Health();
-		sand.box.appendChild(healthView.element);
-		
-		expect(healthView.element.querySelector('svg')).not.toBe(null);
+		expect(subject.querySelector('svg')).not.toBe(null);
 	});
 	
-	it('starts off with full health', () => {
-		let healthView = new Health();
-		sand.box.appendChild(healthView.element);
-		
-		expect(healthView.health).toBe(300);
-		expect(healthView.lives).toBe(3);
-		expect(healthView.damage).toBe(0);
+	it('starts off with full health', () => {		
+		expect(subject.health).toBe(300);
+		expect(subject.lives).toBe(3);
+		expect(subject.damage).toBe(0);
 	});
-}));
+});

@@ -1,4 +1,4 @@
-import Point from "/util/point";
+import {Point} from "/util";
 import SpeakText from "./speak-text";
 
 export const Opcode = 0x05;

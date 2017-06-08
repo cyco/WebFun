@@ -2,6 +2,7 @@ import { Window, Group } from '/ui/components';
 import { Location, Health, Ammo, Weapon, Inventory } from '/app/ui/components';
 import { Events } from '/engine/engine';
 import Hero from '/engine/hero';
+import "./main-window.scss";
 
 export default class extends Window {
 	static get TagName() {

@@ -1,4 +1,5 @@
 import Component from '../component';
+import "./icon-button.scss";
 
 export default class extends Component {
 	static get TagName() {

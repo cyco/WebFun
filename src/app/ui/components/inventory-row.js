@@ -1,3 +1,4 @@
+import './inventory-row.scss';
 import { Component } from '/ui';
 
 export default class extends Component {

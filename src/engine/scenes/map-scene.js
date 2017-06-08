@@ -1,11 +1,10 @@
-import Scene from "/engine/scenes/scene";
-import Tile from "/engine/objects/tile";
-import { Type as ZoneType } from "/engine/objects/zone";
+import Scene from "./scene";
+import { Tile, ZoneType } from "/engine/objects";
 import { World } from "/engine/generation/world";
 import { Planet } from "/engine/types";
 import { Weapons, UnlimitedAmmo, Invincibility, CheatCodeInput } from "/engine/cheats";
 
-import SpeechScene from "/engine/scenes/speech-scene";
+import SpeechScene from "./speech-scene";
 
 import { Size } from "/util";
 

@@ -1,4 +1,5 @@
 import { View, ProgressBar } from "/ui";
+import "./loading-view.scss";
 
 export default class extends View {
 	constructor() {

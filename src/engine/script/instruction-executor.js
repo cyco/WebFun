@@ -1,4 +1,4 @@
-import Instructions from "/engine/script/instructions";
+import Instructions from "./instructions";
 
 export default class InstructionExecutor {
 	constructor(engine = null) {

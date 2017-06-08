@@ -4,6 +4,7 @@ import MenuView from "./menu-view";
 import MenuWindow from "./menu-window";
 import MenuStack from "../menu-stack";
 import { Separator } from "../menu-item";
+import "./menubar.scss";
 
 export default class Menubar extends MenuView {
 	static get TagName() {

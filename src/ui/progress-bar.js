@@ -1,4 +1,5 @@
 import View from "./view";
+import './progress-bar.scss';
 
 export default class extends View {
 	constructor() {

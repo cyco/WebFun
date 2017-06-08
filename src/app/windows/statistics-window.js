@@ -1,6 +1,7 @@
 import { Window } from '/ui/components';
 import { Textbox } from "/ui";
 import { PersistentState } from "/engine";
+import "./statistics-window.scss";
 
 export default class extends Window {
 	static get TagName(){

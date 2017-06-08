@@ -1,4 +1,5 @@
 import Component from "../component";
+import "./checkbox.scss";
 
 export default class Checkbox extends Component {
 	static get TagName(){

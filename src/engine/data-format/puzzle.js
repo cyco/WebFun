@@ -1,5 +1,4 @@
-import { structure, array, until } from "/parser/functions";
-import { uint16, uint32, character, lengthPrefixedString } from "/parser/types";
+import { uint16, uint32, character, lengthPrefixedString, structure, array, until } from "/parser";
 
 export const puzzle = structure({
 	marker: array(character, 4),

@@ -1,5 +1,5 @@
 import PersistentState from "/engine/persistent-state";
-import { default as Conditions } from "/engine/script/conditions";
+import Conditions from "./conditions";
 
 export default class ConditionChecker {
 	constructor(engine = null) {

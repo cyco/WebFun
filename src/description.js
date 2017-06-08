@@ -7,6 +7,6 @@ export const Description = {
 	LicenseURL: "",
 
 	RepositoryName: "github.com/cyco/WebFun",
-	RepositoryURL: "https://github.com/cyco/WebFun",
+	RepositoryURL: "https://github.com/cyco/WebFun"
 };
 export default Description;

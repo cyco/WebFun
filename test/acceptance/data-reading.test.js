@@ -1,9 +1,9 @@
-import { getFixtureData } from '../helpers/fixture-loading';
+import { getFixtureData } from 'test/helpers/fixture-loading';
 
-import { InputStream } from '/util';
-import Reader from '/engine/data-format/file';
+import { InputStream } from 'src/util';
+import Reader from 'src/engine/data-format/file';
 
-describe('Data Reading', function() {
+describe('Data Reading', () => {
 	let data = null;
 	beforeAll((done) => {
 		getFixtureData('yoda.data', (buffer) => {

@@ -1,5 +1,6 @@
 import { Component } from '/ui';
 import TilePreview from './tile-preview';
+import "./tile-selection.scss";
 
 export default class extends Component {
 	static get TagName() {

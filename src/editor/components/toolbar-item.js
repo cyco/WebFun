@@ -1,4 +1,5 @@
 import { Component } from '/ui';
+import "./toolbar-item.scss";
 
 export default class extends Component {
 	static get TagName() {

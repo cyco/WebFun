@@ -1,3 +1,4 @@
+import "./breakpoint-button.scss";
 import { Component } from '/ui';
 import BreakpointStore from '../breakpoint-store';
 

@@ -1,4 +1,4 @@
-import Scene from "/engine/scenes/scene";
+import Scene from "./scene";
 
 export default class PickupScene extends Scene {
 	constructor(engine = null) {

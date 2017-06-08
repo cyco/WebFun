@@ -1,3 +1,4 @@
+import './ammo.scss'
 import { Component } from '/ui';
 
 export default class extends Component {

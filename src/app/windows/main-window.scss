@@ -1,0 +1,14 @@
+@import "border";
+@import "src/ui/components/window.scss";
+
+wf-main-window {
+  @extend wf-window;
+
+  > .content > .main {
+    @extend .inset-border-2px;
+
+    position: relative;
+    width: 288px + 2 * 2px;
+    height: 288px + 2 * 2px;
+  }
+}

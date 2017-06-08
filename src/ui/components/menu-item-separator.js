@@ -1,4 +1,5 @@
 import Component from '../component';
+import "./menu-item-separator.scss";
 
 export default class extends Component {
 	static get TagName() {
