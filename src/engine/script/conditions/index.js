@@ -1,4 +1,4 @@
-import * as ZoneNotInitalized from "./zone-not-initalized";
+import * as ZoneNotInitialized from "./zone-not-initialized";
 import * as ZoneEntered from "./zone-entered";
 import * as Bump from "./bump";
 import * as PlaceItem from "./place-item";
@@ -38,7 +38,7 @@ import * as GamesWonIsGreaterThan from "./games-won-is-greater-than";
 const Conditions = {};
 const exportCondition = (C) => Conditions[C.Opcode] = C.default;
 
-exportCondition(ZoneNotInitalized);
+exportCondition(ZoneNotInitialized);
 exportCondition(ZoneEntered);
 exportCondition(Bump);
 exportCondition(PlaceItem);
