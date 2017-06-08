@@ -5,14 +5,18 @@ module.exports = {
 	entry: './src/index.js',
 	output: {
 		filename: 'webfun.js',
-		path: Path.resolve(__dirname, 'build')
+		path: Path.resolve(__dirname, 'dist')
 	},
 	resolve: {
 		alias: {
+			'src': Path.resolve(__dirname, 'src'),
 			'std': Path.resolve(__dirname, 'src/std'),
 			'std.dom': Path.resolve(__dirname, 'src/std.dom'),
-			'test-helpers': Path.resolve(__dirname, 'test/helpers')
-		}
+			'test-helpers': Path.resolve(__dirname, 'test/helpers'),
+			'fs': Path.resolve(__dirname, 'test/helpers/polyfill/fs.js'),
+			'path': Path.resolve(__dirname, 'test/helpers/polyfill/path.js')
+		},
+		unsafeCache: true
 	},
 	module: {
 		rules: [{
@@ -21,6 +25,20 @@ module.exports = {
 			loader: "babel-loader",
 			include: [
 				Path.resolve(__dirname, "src")
+			],
+			exclude: [
+				'node_modules',
+				Path.resolve(__dirname, "src/editor"),
+				Path.resolve(__dirname, "src/debug")
+			]
+		}, {
+			/* JavaScript / Babel */
+			test: /\.js?$/,
+			loader: "babel-loader",
+			include: [
+				Path.resolve(__dirname, "src/editor"),
+				Path.resolve(__dirname, "src/debug"),
+				Path.resolve(__dirname, "test/helpers")
 			]
 		}, {
 			/* Styles */
@@ -30,18 +48,25 @@ module.exports = {
 			}, {
 				loader: "css-loader"
 			}, {
-				loader: "sass-loader"
-			}]
+				loader: "sass-loader",
+				options: {
+					includePaths: ["src/_style"]
+				}
+			}],
+			exclude: [
+				'node_modules'
+			]
 		}]
 	},
+	cache: true,
 	plugins: [
-		new Webpack.HotModuleReplacementPlugin(),
+		// new Webpack.HotModuleReplacementPlugin(),
 	],
 
 	devtool: 'inline-source-map',
 	devServer: {
 		publicPath: "/",
 		contentBase: "./dist",
-		hot: true
+		hot: false
 	}
 };

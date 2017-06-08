@@ -13,12 +13,17 @@
 		"babel-plugin-transform-export-extensions": "^6.22.0",
 		"babel-preset-es2015": "^6.24.0",
 		"babel-root-slash-import": "^1.1.0",
+		"canvas": "^1.6.5",
 		"cross-env": "^5.0.0",
 		"css-loader": "^0.28.4",
+		"identity-obj-proxy": "^3.0.0",
 		"istanbul-reports": "^1.1.1",
 		"jasmine-core": "^2.6.2",
 		"jasmine-data-provider": "^2.2.0",
 		"jasmine-expect": "^3.7.0",
+		"jest": "^20.0.4",
+		"jest-cli": "^20.0.4",
+		"jsdom": "^11.0.0",
 		"karma": "^1.7.0",
 		"karma-chrome-launcher": "^2.1.1",
 		"karma-coverage-istanbul-reporter": "^1.3.0",
@@ -26,6 +31,8 @@
 		"karma-jasmine-matchers": "^3.7.0",
 		"karma-sourcemap-loader": "^0.3.7",
 		"karma-webpack": "^2.0.3",
+		"lcov-result-merger": "^1.2.0",
+		"light-server": "^2.0.2",
 		"node-sass": "^4.5.3",
 		"sass-loader": "^6.0.5",
 		"style-loader": "^0.18.1",
@@ -39,15 +46,19 @@
 		"test:cov": "cross-env coverage=1 karma start --single-run",
 		"test:cov:cont": "cross-env coverage=1 karma start",
 		"test:cont:cov": "cross-env coverage=1 karma start",
-		"test:acceptance": "cross-env coverage=1 scope=acceptance karma start --single-run",
-		"test:unit": "cross-env coverage=1 karma start"
-	},
+		"test:acceptance": "jest --coverage",
+		"test:unit": "cross-env coverage=1 scope=unit karma start --single-run",
+		"test:acceptance:cont": "jest --watch --coverage",
+		"test:unit:cont": "cross-env coverage=1 scope=unit karma start",
+		"gen-coverage": "genhtml test/coverage/unit.lcov test/coverage/acceptance/lcov.info -o test/coverage/html"
+		},
 	"babel": {
 		"presets": [
 			"es2015"
 		],
 		"plugins": [
 			"babel-plugin-syntax-async-functions",
+			"babel-plugin-transform-export-extensions",
 			"babel-plugin-transform-export-extensions",
 			[
 				"babel-root-slash-import",
@@ -56,5 +67,39 @@
 				}
 			]
 		]
+	},
+	"jest": {
+		"automock": false,
+		"notify": false,
+		"setupTestFrameworkScriptFile": "./test/helpers/jest.init.js",
+		"coverageDirectory": "./test/coverage/acceptance",
+		"coverageReporters": [
+			"lcov"
+		],
+		"testPathIgnorePatterns": [
+			"/node_modules/",
+			"/src/"
+		],
+		"coveragePathIgnorePatterns": [
+			"/\\.test\\.js/",
+			"/test/",
+			"src\/editor",
+			"src\/debug",
+			"components\/",
+			"index.js"
+		],
+		"collectCoverageFrom": [
+			"src/**/*.!(test.)js",
+			"!**/node_modules/**",
+			"test/**"
+		],
+		"moduleDirectories": [
+			"node_modules",
+			"src",
+			""
+		],
+		"moduleNameMapper": {
+			"\\.(scss|css)$": "identity-obj-proxy"
+		}
 	}
 }

@@ -31,6 +31,7 @@
 		"process": true,
 
 		// Jasmine
+		"spyOn": true,
 "describe": true,
 "xdescribe": true,
 "fdescribe": true,
@@ -40,6 +41,18 @@
 "expect": true,
 "afterEach": true,
 "beforeEach": true,
-"afterAll": true
+"afterAll": true,
+"beforeAll": true,
+// --custom--
+"render": true,
+"describeComponent": true,
+"xdescribeComponent": true,
+"fdescribeComponent": true,
+"describeInstruction": true,
+"xdescribeInstruction": true,
+"fdescribeInstruction": true,
+"describeCondition": true,
+"fdescribeCondition": true,
+"xdescribeCondition": true
 	}
 }
