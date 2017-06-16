@@ -1,6 +1,6 @@
 import Scene from "./scene";
 import { Tile, ZoneType } from "/engine/objects";
-import { World } from "/engine/generation/world";
+import { World } from "/engine/generation";
 import { Planet } from "/engine/types";
 import { Weapons, UnlimitedAmmo, Invincibility, CheatCodeInput } from "/engine/cheats";
 
@@ -83,6 +83,7 @@ export default class MapScene extends Scene {
 	mouseDown(p) {
 		const viewWidth = 288,
 			viewHeight = 288;
+
 		const worldWidth = World.WIDTH,
 			worldHeight = World.HEIGHT;
 		const worldHeightPx = worldHeight * Tile.HEIGHT;
@@ -154,7 +155,7 @@ export default class MapScene extends Scene {
 		if (this._ticks % (2 * MapScene.LOCATOR_TICKS) / MapScene.LOCATOR_TICKS < 1) {
 			const x = offsetX + TileWidth * state.worldLocation.x;
 			const y = offsetY + TileHeight * state.worldLocation.y;
-			if (this._location && this._location.image && this._location.image.imageNode)
+			if (this._location && this._location.image)
 				renderer.renderImage(this._location.image, x, y);
 		}
 	}
