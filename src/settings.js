@@ -5,7 +5,8 @@ export const Settings = {
 
 	drawHotspots: true,
 	drawHeroTile: true,
-	skipDialogs: false,
+	identifyTranslucentScenes: true,
+//	skipDialogs: true,
 	
 	autostartEngine: false,
 

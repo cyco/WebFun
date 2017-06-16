@@ -70,8 +70,7 @@ export default class {
 		if (Settings.debugActions) {
 			new Debugger(this._engine);
 		}
-
-		return;
+			
 		const story = new Story(0x0000, Planet.ENDOR, WorldSize.LARGE);
 		story.generateWorld(this._engine);
 		this._engine.story = story;
@@ -121,6 +120,8 @@ export default class {
 		engine.inputManager.addListeners();
 		this._window.engine = engine;
 
-		// engine.metronome.start();
+		if(Settings.autostartEngine) {
+			engine.metronome.start();
+		}
 	}
 }
