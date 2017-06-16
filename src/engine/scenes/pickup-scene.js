@@ -34,4 +34,8 @@ export default class PickupScene extends Scene {
 
 		inventory.addItem(this.tile);
 	}
+
+	isOpaque() {
+		return false;
+	}
 }
