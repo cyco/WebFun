@@ -16,6 +16,8 @@
 		"canvas": "^1.6.5",
 		"cross-env": "^5.0.0",
 		"css-loader": "^0.28.4",
+		"file-loader": "^0.11.2",
+		"font-loader": "^0.1.2",
 		"identity-obj-proxy": "^3.0.0",
 		"istanbul-reports": "^1.1.1",
 		"jasmine-core": "^2.6.2",
@@ -36,6 +38,7 @@
 		"node-sass": "^4.5.3",
 		"sass-loader": "^6.0.5",
 		"style-loader": "^0.18.1",
+		"url-loader": "^0.5.9",
 		"webpack": "^2.3.3",
 		"webpack-dev-server": "^2.4.5"
 	},
@@ -51,7 +54,7 @@
 		"test:acceptance:cont": "jest --watch --coverage",
 		"test:unit:cont": "cross-env coverage=1 scope=unit karma start",
 		"gen-coverage": "genhtml test/coverage/unit.lcov test/coverage/acceptance/lcov.info -o test/coverage/html"
-		},
+	},
 	"babel": {
 		"presets": [
 			"es2015"
@@ -83,9 +86,9 @@
 		"coveragePathIgnorePatterns": [
 			"/\\.test\\.js/",
 			"/test/",
-			"src\/editor",
-			"src\/debug",
-			"components\/",
+			"src/editor",
+			"src/debug",
+			"components/",
 			"index.js"
 		],
 		"collectCoverageFrom": [
