@@ -126,7 +126,7 @@ export default class extends Component {
 			eventName = Event.PlacedConsumeable;
 		}
 
-		this.dispatchEvent(eventName, eventDetail);
+		this.dispatchEvent(new CustomEvent(eventName, { detail: eventDetail }));
 	}
 
 	addRow(model) {
