@@ -1,6 +1,6 @@
 import * as Result from "../result";
 
-export const Opcode = 0x16;
+export const Opcode = 0x15;
 export const Arguments = 1;
 export default (instruction, engine, action) => {
 	const zone = engine.currentZone;
