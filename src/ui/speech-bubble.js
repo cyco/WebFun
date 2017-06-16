@@ -1,3 +1,5 @@
+import "./speech-bubble.scss";
+
 import View from "./view";
 import { dispatch } from '/util';
 import { Button } from '/ui/components';
