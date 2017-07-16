@@ -104,5 +104,8 @@
 		"moduleNameMapper": {
 			"\\.(scss|css)$": "identity-obj-proxy"
 		}
+	},
+	"dependencies": {
+		"kaitai-struct": "^0.8.0-SNAPSHOT.2"
 	}
 }
