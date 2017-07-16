@@ -53,7 +53,8 @@
 		"test:unit": "cross-env coverage=1 scope=unit karma start --single-run",
 		"test:acceptance:cont": "jest --watch --coverage",
 		"test:unit:cont": "cross-env coverage=1 scope=unit karma start",
-		"gen-coverage": "genhtml test/coverage/unit.lcov test/coverage/acceptance/lcov.info -o test/coverage/html"
+		"gen-coverage": "genhtml test/coverage/unit.lcov test/coverage/acceptance/lcov.info -o test/coverage/html",
+		"test:performance": "cross-env scope=performance karma start --single-run"
 	},
 	"babel": {
 		"presets": [

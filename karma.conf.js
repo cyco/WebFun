@@ -4,6 +4,7 @@ const webpackConfig = require('./webpack.config.js');
 const includeCoverage = !!process.env.coverage;
 const runUnitTests = !process.env.scope || ~process.env.scope.indexOf('unit');
 const runAcceptanceTests = process.env.scope && ~process.env.scope.indexOf('acceptance');
+const runPerformanceTests = process.env.scope && ~process.env.scope.indexOf('performance');
 
 console.log(includeCoverage ? 'coverage' : '', runUnitTests ? 'unit' : '', runAcceptanceTests ? 'acceptance' : '');
 
@@ -84,6 +85,11 @@ if (includeCoverage) {
 if (runUnitTests) {
 	config.files.push({ pattern: 'src/**/*.test.js', watched: false });
 	config.preprocessors['src/**/*.test.js'] = ['webpack'];
+}
+
+if (runPerformanceTests) {
+	config.files.push({ pattern: 'test/performance/**/*.test.js', watched: false });
+	config.preprocessors['test/performance/**/*.test.js'] = ['webpack'];
 }
 
 if (runAcceptanceTests) {
