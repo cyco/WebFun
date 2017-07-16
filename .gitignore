@@ -1,5 +1,4 @@
 dist
-build
 node_modules
 test/coverage
 .tm_properties
@@ -15,3 +14,4 @@ yoda.pal
 indy.pal
 .yarnclean
 /stats.json
+.idea/
