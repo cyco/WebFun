@@ -123,3 +123,42 @@ exportOpcode('LoseGame', LoseGame);
 exportOpcode('MarkAsSolved', MarkAsSolved);
 exportOpcode('MoveHeroBy', MoveHeroBy);
 export { Opcode };
+
+export { PlaceTile }
+export { RemoveTile }
+export { MoveTile }
+export { DrawTile }
+export { SpeakHero }
+export { SpeakNPC }
+export { EnableNPC }
+export { DisableNPC }
+export { EnableAllNPCs }
+export { DisableAllNPCs }
+export { SetTileNeedsDisplay }
+export { SetRectNeedsDisplay }
+export { Wait }
+export { Redraw }
+export { PlaySound }
+export { StopSound }
+export { RollDice }
+export { SetCounter }
+export { PlaceTile_Alias_ }
+export { HideHero }
+export { ShowHero }
+export { SetHero }
+export { MoveHeroBy }
+export { DisableAction }
+export { DisableHotspot }
+export { EnableHotspot }
+export { DropItem }
+export { AddItem }
+export { RemoveItem }
+export { ChangeZone }
+export { SetPadding }
+export { AddToPadding }
+export { SetRandom }
+export { AddHealth }
+export { AddToCounter }
+export { LoseGame }
+export { WinGame }
+export { MarkAsSolved }
