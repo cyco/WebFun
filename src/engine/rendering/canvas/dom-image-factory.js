@@ -1,5 +1,5 @@
 import Image from "../image";
-import { Image as DOMImage, ImageData } from '/std.dom';
+import {Image as DOMImage, ImageData} from '/std.dom';
 
 export default class {
 	constructor() {

@@ -48,7 +48,7 @@ export default class GameDataLoader extends EventTarget {
 		loader.onfail = (reason) => this._fail(reason);
 		loader.onload = ({ detail: { arraybuffer } }) => {
 			const palette = new Uint8Array(arraybuffer);
-			this._engine.imageFactory.palette = palette;
+			this._engine.palette = palette;
 			this._loadSetupImage();
 		};
 		loader.load();
@@ -69,7 +69,7 @@ export default class GameDataLoader extends EventTarget {
 		this._progress(4, 0);
 		this._engine.data = new GameData(this._rawData);
 		this._progress(4, 1);
-		
+
 		this._loadTileImages();
 	}
 
@@ -125,7 +125,7 @@ export default class GameDataLoader extends EventTarget {
 		if(Settings.debug) {
 			window.data = this._engine.data;
 		}
-		
+
 		this.dispatchEvent(Events.Load);
 		this._clearData();
 	}

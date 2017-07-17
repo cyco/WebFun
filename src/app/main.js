@@ -12,5 +12,5 @@ export default () => {
 	});
 
 	const gameController = new GameController();
-	gameController.start();
+	// gameController.start();
 };
