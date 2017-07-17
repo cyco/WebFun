@@ -17,7 +17,8 @@ export default class CanvasRenderer extends Renderer {
 		this._ctx.clearRect(0, 0, this._canvas.width, this._canvas.height);
 	}
 
-	clearTile(x, y, z) {}
+	clearTile(x, y, z) {
+	}
 
 	renderTile(tile, x, y, z) {
 		if (!tile) return;
