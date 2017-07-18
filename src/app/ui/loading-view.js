@@ -1,4 +1,5 @@
 import { View, ProgressBar } from "/ui";
+import { CanvasRenderer } from '/engine';
 import "./loading-view.scss";
 
 export default class extends View {
@@ -7,24 +8,25 @@ export default class extends View {
 
 		this.element.classList.add("loading-view");
 
-		this._backgroundImage = new View(document.createElement("img"));
-		this._backgroundImage.element.ondragstart = (event) => {
+		this._imageCanvas = document.createElement("canvas");
+		this._imageCanvas.ondragstart = (event) => {
 			event.preventDefault();
 			return false;
 		};
-		this.element.appendChild(this._backgroundImage.element);
+		this._imageCanvas.width = 288;
+		this._imageCanvas.height = 288;
+		this.element.appendChild(this._imageCanvas);
 
 		this._progressBar = new ProgressBar();
 		this.element.appendChild(this._progressBar.element);
 	}
 
-	set backgroundImageSource(src) {
-		this._backgroundImage.element.src = src;
-		this._backgroundImage.element.classList.add("fadeIn");
-	}
-
-	get backgroundImageSource() {
-		return this._backgroundImage.element.src;
+	showImage(pixels, palette) {
+		const renderer = new CanvasRenderer(this._imageCanvas);
+		const imageFactory = renderer.imageFactory;
+		imageFactory.palette = palette;
+		const image = imageFactory.buildImage(288, 288, pixels);
+		renderer.renderImage(image, 0, 0);
 	}
 
 	set progress(p) {

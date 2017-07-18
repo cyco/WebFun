@@ -62,7 +62,7 @@ export default class {
 		const loader = new Loader();
 		loader.onfail = (event) => console.log("fail", event);
 		loader.onprogress = ({ detail: { progress } }) => loadingView.progress = progress;
-		loader.onloadsetupimage = ({ detail: { setupImage } }) => loadingView.backgroundImageSource = setupImage.representation.src;
+		loader.onloadsetupimage = ({ detail: { pixels, palette} }) => loadingView.showImage(pixels, palette);
 		loader.onload = () => {
 			loadingView.progress = 1.0;
 			dispatch(() => this.newStory(), 3000);

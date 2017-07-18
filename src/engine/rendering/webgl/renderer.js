@@ -12,6 +12,10 @@ class WebGLRenderer extends Renderer {
 		this._canvas = canvas;
 		this._context = canvas.getContext('webgl');
 	}
+
+	get imageFactory() {
+		return {};
+	}
 }
 
 export default WebGLRenderer;
