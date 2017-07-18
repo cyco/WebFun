@@ -16,4 +16,5 @@ export Script from "./script";
 export Story from "./story";
 export Types from "./types";
 export Yoda from "./yoda";
-export { CanvasRenderer } from "./rendering";
+export CanvasRenderer from "./rendering/canvas/canvas-renderer";
+export WebGLRenderer from "./rendering/webgl/renderer";

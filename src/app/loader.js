@@ -48,7 +48,7 @@ export default class GameDataLoader extends EventTarget {
 		loader.onfail = (reason) => this._fail(reason);
 		loader.onload = ({ detail: { arraybuffer } }) => {
 			const palette = new Uint8Array(arraybuffer);
-			this._engine.palette = palette;
+			this._engine.imageFactory.palette = palette;
 			this._loadSetupImage();
 		};
 		loader.load();

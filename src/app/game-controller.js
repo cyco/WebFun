@@ -2,7 +2,7 @@ import { dispatch } from "/util";
 import { LoadingView, SceneView } from "./ui";
 import Settings from '/settings';
 import { MainWindow, MainMenu } from "./windows";
-import { Engine, CanvasRenderer, Story, Metronome, Hero, Inventory } from "/engine";
+import { Engine, CanvasRenderer, WebGLRenderer, Story, Metronome, Hero, Inventory } from "/engine";
 import { Planet, WorldSize } from "/engine/types";
 import { ZoneScene } from '/engine/scenes';
 import { DesktopInputManager } from '/engine/input';
@@ -20,10 +20,10 @@ export default class {
 
 	_buildEngine() {
 		const engine = new Engine();
+		const renderer = this._determineRenderer();
 
-		const canvas = this._sceneView.canvas;
-		engine.renderer = new CanvasRenderer.Renderer(canvas);
-		engine.imageFactory = new CanvasRenderer.ImageFactory();
+		engine.renderer = new renderer(this._sceneView.canvas);
+		engine.imageFactory = engine.renderer.imageFactory;
 		engine.sceneManager = this._sceneView.manager;
 		engine.inputManager = new DesktopInputManager(this._sceneView.element);
 		engine.metronome = new Metronome();
@@ -33,6 +33,14 @@ export default class {
 		window.engine = engine;
 
 		return engine;
+	}
+
+	_determineRenderer() {
+		if(WebGLRenderer.isSupported()) {
+			return WebGLRenderer;
+		}
+
+		return CanvasRenderer;
 	}
 
 	start() {
@@ -66,11 +74,11 @@ export default class {
 		if (Settings.debugWorldGeneration) {
 			new WorldGeneration(this._engine);
 		}
-		
+
 		if (Settings.debugActions) {
 			new Debugger(this._engine);
 		}
-			
+
 		const story = new Story(0x0000, Planet.ENDOR, WorldSize.LARGE);
 		story.generateWorld(this._engine);
 		this._engine.story = story;
@@ -109,7 +117,7 @@ export default class {
 		zoneScene.zone = loadingZone;
 		engine.currentZone = loadingZone;
 		engine.hero.appearance = engine.data.characters.find(c => c.isHero());
-		
+
 		engine.sceneManager.clear();
 		engine.sceneManager.pushScene(zoneScene);
 
