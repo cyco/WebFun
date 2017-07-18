@@ -16,6 +16,7 @@ export default class {
 		this._sceneView = new SceneView();
 		this._engine = this._buildEngine();
 		this._sceneView.manager.engine = this._engine;
+		this._startTime = null;
 	}
 
 	_buildEngine() {
@@ -46,6 +47,8 @@ export default class {
 	}
 
 	_load() {
+		this._startTime = performance.now();
+
 		const loadingView = new LoadingView();
 		const windowContent = this._window.mainContent;
 		windowContent.clear();
@@ -57,20 +60,22 @@ export default class {
 		loader.onloadsetupimage = ({ detail: { setupImage } }) => loadingView.backgroundImageSource = setupImage.representation.src;
 		loader.onload = () => {
 			loadingView.progress = 1.0;
-			dispatch(() => this.newStory(), 3000);
+			dispatch(() => this.newStory(), 0);
 		};
 		loader.load(this._engine);
 	}
 
 	newStory() {
+		const duration = (performance.now() - this._startTime)/1000;
+		console.log(`Loading took ${duration.toFixed(4)}s`);
 		if (Settings.debugWorldGeneration) {
 			new WorldGeneration(this._engine);
 		}
-		
+
 		if (Settings.debugActions) {
 			new Debugger(this._engine);
 		}
-			
+
 		const story = new Story(0x0000, Planet.ENDOR, WorldSize.LARGE);
 		story.generateWorld(this._engine);
 		this._engine.story = story;
@@ -109,7 +114,7 @@ export default class {
 		zoneScene.zone = loadingZone;
 		engine.currentZone = loadingZone;
 		engine.hero.appearance = engine.data.characters.find(c => c.isHero());
-		
+
 		engine.sceneManager.clear();
 		engine.sceneManager.pushScene(zoneScene);
 
