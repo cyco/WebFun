@@ -1,4 +1,5 @@
 import Renderer from "../renderer";
+import DOMImageFactory from './dom-image-factory';
 
 const TILE_WIDTH = 32.0;
 const TILE_HEIGHT = 32.0;
@@ -16,6 +17,11 @@ export default class CanvasRenderer extends Renderer {
 		this._ctx = canvas.getContext("2d");
 		this._ctx.globalCompositeOperation = "source-over";
 		this._ctx.webkitImageSmoothingEnabled = false;
+		this._imageFactory = new DOMImageFactory();
+	}
+
+	get imageFactory() {
+		return this._imageFactory;
 	}
 
 	clear() {

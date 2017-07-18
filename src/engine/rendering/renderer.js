@@ -1,4 +1,8 @@
 export default class Renderer {
+	static isSupported() {
+		return false;
+	}
+
 	get imageFactory() {
 		return null;
 	}
