@@ -8,8 +8,8 @@
 		// Note: createProgramFromScripts will call bindAttribLocation
 		// based on the index of the attibute names we pass to it.
 		var program = twgl.createProgramFromScripts(
-		    gl, 
-		    ["vshader", "fshader"], 
+		    gl,
+		    ["vshader", "fshader"],
 		    ["a_position", "a_textureIndex"]);
 		gl.useProgram(program);
 		var imageLoc = gl.getUniformLocation(program, "u_image");
@@ -20,12 +20,12 @@
 
 		// Setup a unit quad
 		var positions = [
-		      1,  1,  
-		     -1,  1,  
-		     -1, -1,  
-		      1,  1,  
-		     -1, -1,  
-		      1, -1,  
+		      1,  1,
+		     -1,  1,
+		     -1, -1,
+		      1,  1,
+		     -1, -1,
+		      1, -1,
 		];
 		var vertBuffer = gl.createBuffer();
 		gl.bindBuffer(gl.ARRAY_BUFFER, vertBuffer);
@@ -70,7 +70,7 @@
 		    0,1,0,0,0,0,1,0,
 		    0,0,1,1,1,1,0,0,
 		]);
-    
+
 		// make image textures and upload image
 		gl.activeTexture(gl.TEXTURE0);
 		var imageTex = gl.createTexture();
@@ -80,11 +80,11 @@
 		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
 		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
 		gl.texImage2D(gl.TEXTURE_2D, 0, gl.ALPHA, width, height, 0, gl.ALPHA, gl.UNSIGNED_BYTE, image);
-    
+
 		var frameCounter = 0;
-		function render() {  
+		function render() {
 		  ++frameCounter;
-    
+
 		  // skip 3 of 4 frames so the animation is not too fast
 		  if ((frameCounter & 3) == 0) {
 		    // rotate the 3 palette colors
@@ -100,7 +100,7 @@
 		    gl.activeTexture(gl.TEXTURE1);
 		    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 256, 1, 0, gl.RGBA,
 		                  gl.UNSIGNED_BYTE, palette);
-    
+
 		    gl.drawArrays(gl.TRIANGLES, 0, positions.length / 2);
 		  }
 		  requestAnimationFrame(render);
@@ -121,18 +121,18 @@
 	    varying vec2 v_texcoord;
 	    void main() {
 	      gl_Position = a_position;
-    
+
 	      // assuming a unit quad for position we
 	      // can just use that for texcoords. Flip Y though so we get the top at 0
 	      v_texcoord = a_position.xy * vec2(0.5, -0.5) + 0.5;
-	    }    
+	    }
 	</script>
 	<script id="fshader" type="whatever">
 	precision mediump float;
 	varying vec2 v_texcoord;
 	uniform sampler2D u_image;
 	uniform sampler2D u_palette;
-    
+
 	void main() {
 	    float index = texture2D(u_image, v_texcoord).a * 255.0;
 	    gl_FragColor = texture2D(u_palette, vec2((index + 0.5) / 256.0, 0.5));
