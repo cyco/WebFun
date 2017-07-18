@@ -4,6 +4,11 @@ const TILE_WIDTH = 32.0;
 const TILE_HEIGHT = 32.0;
 
 export default class CanvasRenderer extends Renderer {
+	static isSupported() {
+		const canvas = document.createElement('canvas');
+		return canvas.getContext("2d") !== null;
+	}
+
 	constructor(canvas) {
 		super();
 
