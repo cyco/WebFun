@@ -80,7 +80,7 @@ export default class {
 
 		// Setup a palette.
 		const palette = new Uint8Array(buffer);
-		for(let i=0; i < 0xFF; i++) {
+		for(let i=0; i <= 0xFF; i++) {
 			const temp = palette[4 * i + 0];
 			palette[4 * i + 0] = palette[4 * i + 2];
 			palette[4 * i + 2] = temp;
@@ -111,7 +111,7 @@ export default class {
 		const width = 16;
 		const height = 16;
 		const image = new Uint8Array(width * height);
-		for(let i=0; i < 0xFF; i++) {
+		for(let i=0; i <= 0xFF; i++) {
 			image[i] = i;
 		}
 
@@ -124,6 +124,7 @@ export default class {
 		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
 		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
 		gl.texImage2D(gl.TEXTURE_2D, 0, gl.ALPHA, width, height, 0, gl.ALPHA, gl.UNSIGNED_BYTE, image);
+
 	}
 
 	_determineSpecs(gl) {
