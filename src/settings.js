@@ -1,14 +1,14 @@
 export const Settings = {
-	debug: true,
+	debug: false,
 	debugWorldGeneration: false,
-	debugActions: true,
+	debugActions: false,
 
 	drawHotspots: true,
 	drawHeroTile: true,
 	identifyTranslucentScenes: true,
 //	skipDialogs: true,
-	
-	autostartEngine: false,
+
+	autostartEngine: true,
 
 	url: {
 		data: "./game-data/yoda.data",
