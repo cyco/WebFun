@@ -7,6 +7,9 @@ export default class AbstractRenderer {
 		return null;
 	}
 
+	clear() {
+	}
+
 	redisplayTile(x, y) {
 	}
 

@@ -15,6 +15,9 @@ class WebGLRenderer extends AbstractRenderer {
 		this._imageFactory = new ImageFactory(this._context);
 	}
 
+^	clear() {
+	}
+
 	get imageFactory() {
 		return this._imageFactory;
 	}
