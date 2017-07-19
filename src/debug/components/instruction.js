@@ -31,13 +31,13 @@ export default class extends InstructionThing {
 			const tile = window.engine.data.tiles[itemId];
 			this._title.innerHTML = `give `;
 			if (!tile) this._title.innerHTML += `${itemId}`;
-			else this._title.appendChild(tile.image.representation.cloneNode());
+			else this._title.appendChild(this._tileImageNode(tile));
 		} else if (instruction.opcode === Opcode.RemoveItem) {
 			const itemId = instruction.arguments[0];
 			const tile = window.engine.data.tiles[itemId];
 			this._title.innerHTML = `remove `;
 			if (!tile) this._title.innerHTML += `${itemId}`;
-			else this._title.appendChild(tile.image.representation.cloneNode());
+			else this._title.appendChild(this._tileImageNode(tile));
 		} else if (instruction.opcode === Opcode.EnableHotspot) {
 			this._title.innerHTML = `enable htsp ${instruction.arguments[0]} `;
 		} else if (instruction.opcode === Opcode.DisableHotspot) {
@@ -47,14 +47,14 @@ export default class extends InstructionThing {
 			const tile = window.engine.data.tiles[itemId];
 			this._title.innerHTML = `place `;
 			if (!tile) this._title.innerHTML += `${itemId}`;
-			else this._title.appendChild(tile.image.representation.cloneNode());
+			else this._title.appendChild(this._tileImageNode(tile));
 			this._title.innerHTML += ` at ${instruction.arguments[0]}x${instruction.arguments[1]}x${instruction.arguments[2]}`;
 		} else if (instruction.opcode === Opcode.PlaceTile_Alias_) {
 			const itemId = instruction.arguments[3];
 			const tile = window.engine.data.tiles[itemId];
 			this._title.innerHTML = `place `;
 			if (!tile) this._title.innerHTML += `${itemId}`;
-			else this._title.appendChild(tile.image.representation.cloneNode());
+			else this._title.appendChild(this._tileImageNode(tile));
 			this._title.innerHTML += ` at ${instruction.arguments[0]}x${instruction.arguments[1]}x${instruction.arguments[2]} (alias)`;
 		} else if (instruction.opcode === Opcode.MoveTile) {
 			this._title.innerHTML = `move `;
@@ -68,13 +68,21 @@ export default class extends InstructionThing {
 			const tile = window.engine.data.tiles[itemId];
 			this._title.innerHTML = `draw `;
 			if (!tile) this._title.innerHTML += `${itemId}`;
-			else this._title.appendChild(tile.image.representation.cloneNode());
+			else this._title.appendChild(this._tileImageNode(tile));
 			this._title.innerHTML += ` at ${instruction.arguments[0]}x${instruction.arguments[1]}`;
 		} else if (instruction.opcode === Opcode.SpeakHero) {
 			this._title.innerHTML = `hero: &quot;${instruction.text}&quot;`
 		} else if (instruction.opcode === Opcode.SpeakNPC) {
 			this._title.innerHTML = `npc: &quot;${instruction.text}&quot;`
 		}
+	}
+
+	_tileImageNode(tile) {
+		const representation = tile.image.representation;
+		if (representation instanceof HTMLElement) {
+			return representation.cloneNode();
+		}
+		return document.createElement('img');
 	}
 
 	get instruction() {
