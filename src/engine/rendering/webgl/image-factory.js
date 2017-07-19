@@ -25,6 +25,9 @@ class ImageFactory extends AbstractImageFactory {
 
 	set palette(palette) {
 		this._palette = palette;
+		if (this.onpalettechange instanceof Function) {
+			this.onpalettechange(palette);
+		}
 	}
 
 	get palette() {
