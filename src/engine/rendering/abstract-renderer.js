@@ -1,4 +1,4 @@
-export default class Renderer {
+export default class AbstractRenderer {
 	static isSupported() {
 		return false;
 	}

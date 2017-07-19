@@ -1,5 +1,5 @@
 import CanvasRenderer from '/engine/rendering/canvas/canvas-renderer';
-import Renderer from '/engine/rendering/renderer';
+import AbstractRenderer from '/engine/rendering/abstract-renderer';
 
 describe("CanvasRenderer", () => {
 	let subject = null;
@@ -25,7 +25,7 @@ describe("CanvasRenderer", () => {
 	});
 
 	it('is a canvas based renderer', () => {
-		expect(subject).toBeInstanceOf(Renderer);
+		expect(subject).toBeInstanceOf(AbstractRenderer);
 	});
 
 	it('sets up the context for pixelated rendering', () => {
