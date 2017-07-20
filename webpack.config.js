@@ -20,46 +20,53 @@ module.exports = {
 	},
 	module: {
 		rules: [{
-				/* JavaScript / Babel */
-				test: /\.js?$/,
-				loader: "babel-loader",
-				include: [
-					Path.resolve(__dirname, "src")
-				],
-				exclude: [
-					'node_modules',
-					Path.resolve(__dirname, "src/editor"),
-					Path.resolve(__dirname, "src/debug")
-				]
+			/* JavaScript / Babel */
+			test: /\.js?$/,
+			loader: "babel-loader",
+			include: [
+				Path.resolve(__dirname, "src")
+			],
+			exclude: [
+				'node_modules',
+				Path.resolve(__dirname, "src/editor"),
+				Path.resolve(__dirname, "src/debug")
+			]
+		}, {
+			/* JavaScript / Babel */
+			test: /\.js?$/,
+			loader: "babel-loader",
+			include: [
+				Path.resolve(__dirname, "src/editor"),
+				Path.resolve(__dirname, "src/debug"),
+				Path.resolve(__dirname, "test/helpers")
+			]
+		}, {
+			/* Styles */
+			test: /\.scss$/,
+			use: [{
+				loader: "style-loader"
 			}, {
-				/* JavaScript / Babel */
-				test: /\.js?$/,
-				loader: "babel-loader",
-				include: [
-					Path.resolve(__dirname, "src/editor"),
-					Path.resolve(__dirname, "src/debug"),
-					Path.resolve(__dirname, "test/helpers")
-				]
+				loader: "css-loader"
 			}, {
-				/* Styles */
-				test: /\.scss$/,
-				use: [{
-					loader: "style-loader"
-				}, {
-					loader: "css-loader"
-				}, {
-					loader: "sass-loader",
-					options: {
-						includePaths: ["src/_style"]
-					}
-				}],
-				exclude: [
-					'node_modules'
-				]
-			},
+				loader: "sass-loader",
+				options: {
+					includePaths: ["src/_style"]
+				}
+			}],
+			exclude: [
+				'node_modules'
+			]
+		}, {
+			/* Shader */
+			test: /\.glsl?$/,
+			loader: "webpack-glsl-loader"
+		},
 			/** fonts **/
-			{ test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "url-loader?limit=10000&mimetype=application/font-woff" },
-			{ test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "file-loader" }
+			{
+				test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+				loader: "url-loader?limit=10000&mimetype=application/font-woff"
+			},
+			{test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "file-loader"}
 		]
 	},
 	cache: true,
