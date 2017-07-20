@@ -1,6 +1,11 @@
 import AbstractRenderer from "../abstract-renderer";
 import ImageFactory from './image-factory';
 
+import VertexShader from './vertex.glsl';
+import FragmentShader from './fragment.glsl';
+
+import twgl from 'twgl.js';
+
 class WebGLRenderer extends AbstractRenderer {
 	static isSupported() {
 		const canvas = document.createElement('canvas');
@@ -61,7 +66,14 @@ class WebGLRenderer extends AbstractRenderer {
 	}
 
 	clear() {
-		this._context.clear(gl.COLOR_BUFFER_BIT);
+		const gl = this._context;
+		gl.clear(gl.COLOR_BUFFER_BIT);
+
+		if (this._lastTile) {
+			gl.activeTexture(gl.TEXTURE0);
+			gl.bindTexture(gl.TEXTURE_2D, this._lastTile.image.representation);
+			gl.drawArrays(gl.TRIANGLES, 0, 12 / 2);
+		}
 	}
 
 	get imageFactory() {
@@ -69,9 +81,9 @@ class WebGLRenderer extends AbstractRenderer {
 	}
 
 	_setupShaders(gl) {
-		const program = window.twgl.createProgramFromScripts(
+		const program = twgl.createProgramFromSources(
 			gl,
-			["vshader", "fshader"],
+			[VertexShader, FragmentShader],
 			["a_position", "a_textureIndex"]);
 		gl.useProgram(program);
 		gl.uniform1i(gl.getUniformLocation(program, "u_image"), 0);

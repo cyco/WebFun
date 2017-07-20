@@ -2,6 +2,11 @@ import { Window } from '/ui/components';
 import { FileLoader } from '/util';
 import Settings from '/settings';
 
+import twgl from 'twgl.js';
+
+import VertexShader from './vertex.glsl';
+import FragmentShader from './fragment.glsl';
+
 export default class {
 	constructor() {
 		this._palette = null;
@@ -34,9 +39,9 @@ export default class {
 	_setupShaders(gl) {
 		// Note: createProgramFromScripts will call bindAttribLocation
 		// based on the index of the attibute names we pass to it.
-		const program = window.twgl.createProgramFromScripts(
+		const program = twgl.createProgramFromSources(
 			gl,
-			["vshader", "fshader"],
+			[VertexShader, FragmentShader],
 			["a_position", "a_textureIndex"]);
 		gl.useProgram(program);
 		const imageLoc = gl.getUniformLocation(program, "u_image");
@@ -73,8 +78,6 @@ export default class {
 	_didLoadPalette(buffer) {
 		const gl = this._context;
 
-		// Note: createProgramFromScripts will call bindAttribLocation
-		// based on the index of the attibute names we pass to it.
 		this._setupShaders(gl);
 		this._setupVertexBuffer(gl);
 
