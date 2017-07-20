@@ -16,13 +16,22 @@ class WebGLRenderer extends AbstractRenderer {
 		super(canvas);
 
 		this._canvas = canvas;
+		this._canvas.style.border = '0';
+		this._canvas.style.width = '288px';
+		this._canvas.style.height = '288px';
+
 		this._context = canvas.getContext('webgl');
+
 		this._imageFactory = new ImageFactory(this._context);
 		this._imageFactory.onpalettechange = (palette) => this._setupPalette(palette);
-		this._paletteTexture = null;
 
 		this._setupShaders(this._context);
 		this._setupVertexBuffer(this._context);
+
+		const gl = this._context;
+		gl.clearColor(0.0, 0.0, 0.0, 1.0);
+		gl.enable(gl.BLEND);
+		gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
 	}
 
 	_setupPalette(bgrPalette) {
@@ -37,8 +46,6 @@ class WebGLRenderer extends AbstractRenderer {
 		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
 		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
 		gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 256, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, palette);
-
-		this._paletteTexture = texture;
 	}
 
 	_convertToRGBA(bgrPalette) {
@@ -56,7 +63,7 @@ class WebGLRenderer extends AbstractRenderer {
 		return rgbaPalette;
 	}
 
-	renderTile(tile, x, y) {
+	renderTile(tile, x, y, z) {
 		if (!tile) return;
 		const gl = this._context;
 
