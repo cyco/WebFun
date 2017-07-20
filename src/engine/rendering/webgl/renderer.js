@@ -23,8 +23,6 @@ class WebGLRenderer extends AbstractRenderer {
 
 		this._setupShaders(this._context);
 		this._setupVertexBuffer(this._context);
-
-		this._lastTile = null;
 	}
 
 	_setupPalette(bgrPalette) {
@@ -53,27 +51,38 @@ class WebGLRenderer extends AbstractRenderer {
 		}
 
 		// make sure color 0 is transparent
-		rgbaPalette[3] = 0;
+		rgbaPalette[3] = 0x00;
 
 		return rgbaPalette;
 	}
 
 	renderTile(tile, x, y) {
 		if (!tile) return;
+		const gl = this._context;
 
-		if (tile.image.representation)
-			this._lastTile = tile;
+		const positions = [
+			x + 1, 8 - y + 1,
+			x + 0, 8 - y + 1,
+			x + 0, 8 - y + 0,
+			x + 1, 8 - y + 1,
+			x + 0, 8 - y + 0,
+			x + 1, 8 - y + 0,
+		];
+
+		const vertBuffer = gl.createBuffer();
+		gl.bindBuffer(gl.ARRAY_BUFFER, vertBuffer);
+		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
+		gl.enableVertexAttribArray(0);
+		gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
+
+		gl.activeTexture(gl.TEXTURE0);
+		gl.bindTexture(gl.TEXTURE_2D, tile.image.representation);
+		gl.drawArrays(gl.TRIANGLES, 0, 12 / 2);
 	}
 
 	clear() {
 		const gl = this._context;
 		gl.clear(gl.COLOR_BUFFER_BIT);
-
-		if (this._lastTile) {
-			gl.activeTexture(gl.TEXTURE0);
-			gl.bindTexture(gl.TEXTURE_2D, this._lastTile.image.representation);
-			gl.drawArrays(gl.TRIANGLES, 0, 12 / 2);
-		}
 	}
 
 	get imageFactory() {
@@ -84,14 +93,14 @@ class WebGLRenderer extends AbstractRenderer {
 		const program = twgl.createProgramFromSources(
 			gl,
 			[VertexShader, FragmentShader],
-			["a_position", "a_textureIndex"]);
+			["a_position", "a_textureIndex", "a_palette_position"]);
 		gl.useProgram(program);
 		gl.uniform1i(gl.getUniformLocation(program, "u_image"), 0);
 		gl.uniform1i(gl.getUniformLocation(program, "u_palette"), 1);
 	}
 
 	_setupVertexBuffer(gl) {
-		const positions = [
+		const palette_positions = [
 			1, 1,
 			-1, 1,
 			-1, -1,
@@ -99,11 +108,11 @@ class WebGLRenderer extends AbstractRenderer {
 			-1, -1,
 			1, -1,
 		];
-		const vertBuffer = gl.createBuffer();
-		gl.bindBuffer(gl.ARRAY_BUFFER, vertBuffer);
-		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
-		gl.enableVertexAttribArray(0);
-		gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
+		const vertBuffer2 = gl.createBuffer();
+		gl.bindBuffer(gl.ARRAY_BUFFER, vertBuffer2);
+		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(palette_positions), gl.STATIC_DRAW);
+		gl.enableVertexAttribArray(2);
+		gl.vertexAttribPointer(2, 2, gl.FLOAT, false, 0, 0);
 	}
 }
 

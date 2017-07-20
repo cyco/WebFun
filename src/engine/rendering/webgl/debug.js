@@ -42,7 +42,7 @@ export default class {
 		const program = twgl.createProgramFromSources(
 			gl,
 			[VertexShader, FragmentShader],
-			["a_position", "a_textureIndex"]);
+			["a_position", "a_textureIndex", "a_palette_position"]);
 		gl.useProgram(program);
 		const imageLoc = gl.getUniformLocation(program, "u_image");
 		const paletteLoc = gl.getUniformLocation(program, "u_palette");
@@ -54,19 +54,33 @@ export default class {
 	_setupVertexBuffer(gl) {
 		// Setup a unit quad
 		const positions = [
-			1, 1,
-			-1, 1,
-			-1, -1,
-
-			1, 1,
-			-1, -1,
-			1, -1,
+			0.5, 0.5,
+			-0.5, 0.5,
+			-0.5, -0.5,
+			0.5, 0.5,
+			-0.5, -0.5,
+			0.5, -0.5,
 		];
 		const vertBuffer = gl.createBuffer();
 		gl.bindBuffer(gl.ARRAY_BUFFER, vertBuffer);
 		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
 		gl.enableVertexAttribArray(0);
 		gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
+
+
+		const palette_positions = [
+			1, 1,
+			-1, 1,
+			-1, -1,
+			1, 1,
+			-1, -1,
+			1, -1,
+		];
+		const vertBuffer2 = gl.createBuffer();
+		gl.bindBuffer(gl.ARRAY_BUFFER, vertBuffer2);
+		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(palette_positions), gl.STATIC_DRAW);
+		gl.enableVertexAttribArray(2);
+		gl.vertexAttribPointer(2, 2, gl.FLOAT, false, 0, 0);
 	}
 
 	_loadPalette() {
@@ -127,7 +141,6 @@ export default class {
 		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
 		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
 		gl.texImage2D(gl.TEXTURE_2D, 0, gl.ALPHA, width, height, 0, gl.ALPHA, gl.UNSIGNED_BYTE, image);
-
 	}
 
 	_determineSpecs(gl) {
