@@ -8,4 +8,3 @@
  import { main } from "./app";
 
  window.addEventListener("load", main);
- 
