@@ -1,33 +1,34 @@
 .speech-bubble {
-  position: absolute;
-  z-index: 1001;
+	position: absolute;
+	z-index: 1001;
 
-  .text-container {
-    position: absolute;
-  }
+	.text-container {
+		position: absolute;
+	}
 
-  .text {}
+	.text {
+	}
 
-  .singleline {}
+	.singleline {
+	}
 
-  .controls {
-    display: block;
-    width: 16px;
-    position: absolute;
-    bottom: 5px;
-    right: 5px;
-  }
-  
-  
-  .up,.down,.end {
-	  font-size: 14px;
-	  display: flex;
-	  
-	  justify-content: center;
-	  align-items: center;
-  }
-  
-  .end {
-  	font-size: 9px;
-  }
+	.controls {
+		display: block;
+		width: 16px;
+		position: absolute;
+		bottom: 5px;
+		right: 5px;
+	}
+
+	.up, .down, .end {
+		font-size: 14px;
+		display: flex;
+
+		justify-content: center;
+		align-items: center;
+	}
+
+	.end {
+		font-size: 9px;
+	}
 }

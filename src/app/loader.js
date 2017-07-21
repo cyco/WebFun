@@ -1,6 +1,6 @@
 import { EventTarget, FileLoader, dispatch } from "/util";
 import { DataFileReader, GameData } from "/engine";
-import { Tile } from '/engine/objects';
+import { Tile } from "/engine/objects";
 import Settings from "/settings";
 
 export const Events = {

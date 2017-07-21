@@ -1,4 +1,4 @@
-import FileLoader from '/util/file-loader';
+import FileLoader from "/util/file-loader";
 
 describe("FileLoader", () => {
 	let subject = null;
@@ -9,8 +9,8 @@ describe("FileLoader", () => {
 	it('is a class', () => {
 		expect(FileLoader).toBeClass();
 	});
-	
+
 	it('is used to crete an input stream from a file', () => {
-		subject = new FileLoader('asciiString');		
+		subject = new FileLoader('asciiString');
 	});
 });

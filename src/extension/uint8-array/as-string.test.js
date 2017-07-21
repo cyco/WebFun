@@ -1,9 +1,9 @@
-import { getFixtureData } from 'test-helpers/fixture-loading';
-import asString from '/extension/uint8-array/as-string';
+import { getFixtureData } from "test-helpers/fixture-loading";
+import asString from "/extension/uint8-array/as-string";
 describe('Uint8Array.asString', () => {
 	let buffer;
 	beforeEach((done) => {
-		getFixtureData('asciiString', function(b) {
+		getFixtureData('asciiString', function (b) {
 			buffer = b;
 			done();
 		});

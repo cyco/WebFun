@@ -1,6 +1,6 @@
-import { NodeList } from 'std.dom';
-import sandboxed from 'test-helpers/dom-sandbox';
-import map from '/extension/node-list/map';
+import { NodeList } from "std.dom";
+import sandboxed from "test-helpers/dom-sandbox";
+import map from "/extension/node-list/map";
 
 describe('NodeList.map', sandboxed((sand) => {
 	it('extends the NodeList prototype', () => {
@@ -23,7 +23,7 @@ describe('NodeList.map', sandboxed((sand) => {
 		expect(typeof nodeList.map).toBe('function');
 		expect(nodeList.length).toBe(2);
 
-		let result = map.call(nodeList, function(node) {
+		let result = map.call(nodeList, function (node) {
 			return node.textContent;
 		});
 		expect(result).toEqual(["test", "values"]);

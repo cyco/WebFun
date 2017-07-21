@@ -1,5 +1,5 @@
-import { Component } from '/ui';
-import ActionItem from './action-item';
+import { Component } from "/ui";
+import ActionItem from "./action-item";
 import "./action-list.scss";
 
 export default class extends Component {

@@ -1,5 +1,5 @@
-import { Instruction } from '/engine/objects';
-import * as DisableNPC from './disable-npc';
+import { Instruction } from "/engine/objects";
+import * as DisableNPC from "./disable-npc";
 
 describeInstruction('DisableNPC', (execute, engine) => {
 	it('disables the specified npc in the current zone', () => {

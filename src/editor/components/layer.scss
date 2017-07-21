@@ -5,12 +5,12 @@ wf-editor-layer {
 	border-width: 1px;
 	display: block;
 	padding: 2px;
-	
+
 	span {
 		margin-left: 6px;
 		margin-right: 6px;
 	}
-	
+
 	&[selected] {
 		font-weight: bold;
 	}

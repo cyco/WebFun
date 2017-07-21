@@ -1,5 +1,4 @@
-import {Size} from "/util";
-
+import { Size } from "/util";
 import { Type as HotspotType } from "./hotspot";
 
 export const Type = {
@@ -34,8 +33,8 @@ export default class Zone {
 	static get LAYERS() {
 		return 3;
 	}
-	
-	get LAYERS(){
+
+	get LAYERS() {
 		return 3;
 	}
 
@@ -210,7 +209,7 @@ export default class Zone {
 		return this._hotspots.filter((hotspot) => hotspot.type === HotspotType.DoorIn && hotspot.arg !== -1);
 	}
 
-	isLoadingZone(){
+	isLoadingZone() {
 		return this._type === Type.Load;
 	}
 }

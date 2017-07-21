@@ -1,6 +1,5 @@
-import InstructionExecutor from '/engine/script/instruction-executor';
-import { default as Instruction, Opcode } from '/engine/objects/instruction';
-import * as SpeakText from '/engine/script/instructions/speak-text';
+import InstructionExecutor from "/engine/script/instruction-executor";
+import { Opcode } from "/engine/objects/instruction";
 
 describe('InstructionExecutor', () => {
 	let executor, engine;

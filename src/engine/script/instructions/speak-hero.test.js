@@ -1,6 +1,6 @@
-import { Instruction } from '/engine/objects';
-import * as SpeakHero from './speak-hero';
-import * as SpeakText from './speak-text';
+import { Instruction } from "/engine/objects";
+import * as SpeakHero from "./speak-hero";
+import * as SpeakText from "./speak-text";
 
 xdescribeInstruction('SpeakHero', (execute, engine) => {
 	it('shows a speech bubble next to the hero', () => {

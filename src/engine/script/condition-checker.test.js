@@ -1,12 +1,12 @@
-import Condition from '/engine/objects/condition';
-import ConditionChecker from '/engine/script/condition-checker';
+import Condition from "/engine/objects/condition";
+import ConditionChecker from "/engine/script/condition-checker";
 
 describe('ConditionChecker', () => {
 	let checker, engine, condition;
 	beforeEach(() => {
 		engine = {
 			currentZone: {},
-			hero: { location: {} },
+			hero: {location: {}},
 			persistentState: {},
 			state: {}
 		};

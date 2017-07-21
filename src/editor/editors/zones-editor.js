@@ -1,6 +1,6 @@
-import { Component } from '/ui';
-import { ZoneSelection } from '/editor/components';
-import {ZoneEditor} from './zone';
+import { Component } from "/ui";
+import { ZoneSelection } from "/editor/components";
+import { ZoneEditor } from "./zone";
 import "./zones-editor.scss";
 
 export default class extends Component {

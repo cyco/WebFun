@@ -1,4 +1,4 @@
-const padEnd = function(length, character = " ") {
+const padEnd = function (length, character = " ") {
 	let result = this;
 	while (result.length < length) {
 		result = result + character;

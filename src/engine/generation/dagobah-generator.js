@@ -1,6 +1,6 @@
-import { randmod, Message } from '/util';
-import World from './world';
-import { HotspotType, ZoneType } from '/engine/objects';
+import { randmod, Message } from "/util";
+import World from "./world";
+import { HotspotType, ZoneType } from "/engine/objects";
 
 const TILE_YODA = 0x30c;
 const TILE_YODAS_SEAT = 2034;
@@ -38,7 +38,7 @@ export default class {
 		} else if (generator.goalPuzzleID === GOAL_RESCUE_YODA) {
 			mode = 4;
 		}
-		
+
 		const startingItem = data.puzzles[generator.puzzleIDs_2[0]].item_1;
 
 		//* temporarily copy zone types over from main world for easy comparison against original
@@ -49,7 +49,7 @@ export default class {
 		dagobah.at(4, 5).zoneType = world.at(4, 5).zoneType;
 		dagobah.at(5, 5).zoneType = world.at(5, 5).zoneType;
 		//*/
-		
+
 		Message('mode: %d', mode);
 
 		let worldItem = null;
@@ -99,7 +99,7 @@ export default class {
 				worldItem.findItemID = startingItem;
 				generator.placeHotspotTiles(ZONE_YODAS_HUT);
 				break;
-				
+
 			default:
 				break;
 		}

@@ -1,6 +1,5 @@
-import 'jasmine-expect';
-import './polyfill';
-import './matchers';
-
-import '/extension';
-import '/util';
+import "jasmine-expect";
+import "./polyfill";
+import "./matchers";
+import "/extension";
+import "/util";

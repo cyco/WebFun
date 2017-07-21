@@ -1,5 +1,5 @@
-import { Instruction } from '/engine/objects';
-import * as DrawTile from './draw-tile';
+import { Instruction } from "/engine/objects";
+import * as DrawTile from "./draw-tile";
 
 describeInstruction('DrawTile', (execute, engine) => {
 	it('draws a tile immediately without waiting for the next gameloop', () => {

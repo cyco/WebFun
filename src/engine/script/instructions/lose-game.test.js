@@ -1,5 +1,5 @@
-import { Instruction } from '/engine/objects';
-import * as LoseGame from './lose-game';
+import { Instruction } from "/engine/objects";
+import * as LoseGame from "./lose-game";
 
 describeInstruction('LoseGame', (execute, engine) => {
 	it('ends the current story by losing', () => {

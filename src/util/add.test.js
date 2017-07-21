@@ -1,4 +1,4 @@
-import add from './add'
+import add from "./add";
 
 describe('add', () => {
 	it('is a function', () => {

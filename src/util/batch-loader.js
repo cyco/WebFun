@@ -52,7 +52,8 @@ export default class BatchLoader extends EventTarget {
 		this._currentOperation.start();
 	}
 
-	cancel() {}
+	cancel() {
+	}
 
 	_operationDidFinish() {
 		const self = this;
@@ -66,6 +67,6 @@ export default class BatchLoader extends EventTarget {
 
 		// dispatch(function () { disabled for debugging
 		self._loop();
-	// }, 0);
+		// }, 0);
 	}
 }

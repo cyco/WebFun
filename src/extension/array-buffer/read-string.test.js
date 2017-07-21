@@ -1,10 +1,10 @@
-import { getFixtureData } from 'test-helpers/fixture-loading';
-import readString from './read-string';
+import { getFixtureData } from "test-helpers/fixture-loading";
+import readString from "./read-string";
 
 describe('ArrayBuffer.readString', () => {
 	let sampleBuffer;
 	beforeEach((done) => {
-		getFixtureData('asciiString', function(buffer) {
+		getFixtureData('asciiString', function (buffer) {
 			sampleBuffer = buffer;
 			done();
 		});
@@ -30,7 +30,7 @@ describe('ArrayBuffer.readString', () => {
 	it('returns an empty string if length is zero', () => {
 		let string = sampleBuffer.readString(123903, 0);
 		expect(string).toBe('');
-		
+
 		string = readString.call(sampleBuffer, 123903, 0);
 		expect(string).toBe('');
 	});

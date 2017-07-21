@@ -18,13 +18,20 @@ export default class {
 	activate(editor) {
 		this._editor = editor;
 	}
-	
+
 	deactivate() {
 		this._edtior = null;
 	}
 
-	mouseDownAt(x, y, event) {}
-	mouseMoved(x, y, event) {}
-	mouseDragged(x, y, event) {}
-	mouseUpAt(x, y, event) {}
+	mouseDownAt(x, y, event) {
+	}
+
+	mouseMoved(x, y, event) {
+	}
+
+	mouseDragged(x, y, event) {
+	}
+
+	mouseUpAt(x, y, event) {
+	}
 }

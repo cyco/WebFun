@@ -5,6 +5,7 @@ export default class WeaponsCheat extends Cheat {
 	get code() {
 		return "gojedi";
 	}
+
 	get message() {
 		return "Super Jedi!";
 	}

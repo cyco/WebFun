@@ -1,1 +1,5 @@
-global.performance = { now() { return 0; } };
+global.performance = {
+	now() {
+		return 0;
+	}
+};

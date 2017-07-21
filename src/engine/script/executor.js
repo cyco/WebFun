@@ -2,15 +2,15 @@ import ConditionChecker from "./condition-checker";
 import InstructionExecutor from "./instruction-executor";
 
 export default class {
-	constructor(){
+	constructor() {
 		this._checker = new ConditionChecker();
 		this._executor = new InstructionExecutor();
 	}
-	
+
 	run(engine) {
 		this._checker.engine = engine;
 		this._executor.engine = engine;
-		
+
 		const previousActions = engine.currentZone.actions.filter(
 			(action) => action.instructionPointer);
 		this._evaluateActions(previousActions, false);
@@ -35,12 +35,12 @@ export default class {
 
 		return false;
 	}
-	
+
 	actionDoesApply(action) {
 		return (action.enabled || action.instructionPointer !== 0) && action.conditions.every(
-			(condition) => this._checker.check(condition), this);
+				(condition) => this._checker.check(condition), this);
 	}
-	
+
 	bump(targetPoint) {
 		// TODO: implement (see breaking executor)
 	}

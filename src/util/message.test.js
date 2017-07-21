@@ -1,5 +1,5 @@
-import Message, { Enable, Disable } from '/util/message';
-import { global, console } from '/std';
+import Message, { Enable, Disable } from "/util/message";
+import { global, console } from "/std";
 
 xdescribe('Message', () => {
 	let consoleWarnCalled;
@@ -20,7 +20,7 @@ xdescribe('Message', () => {
 	it('is a wrapper for console.warn that only prints something if window.logging is true', () => {
 		spyOn(console, 'warn');
 		Disable();
-		
+
 		Message('test');
 		expect(console.warn).not.toHaveBeenCalled();
 
@@ -31,7 +31,7 @@ xdescribe('Message', () => {
 
 	it('converts booleans to \'1\' and \'0\'', () => {
 		spyOn(console, 'warn');
-		
+
 		Message("%d", false);
 		Message("%d", true);
 
@@ -41,7 +41,7 @@ xdescribe('Message', () => {
 
 	it('prints -1 as 16-bit decimal', () => {
 		spyOn(console, 'warn');
-		
+
 		Message("%d", -1);
 		expect(console.warn).toHaveBeenCalledWith("%d", '65535');
 
@@ -51,21 +51,21 @@ xdescribe('Message', () => {
 
 	it('knows how to print hexadecimals', () => {
 		spyOn(console, 'warn');
-		
+
 		Message("%x", 11);
 		expect(console.warn).toHaveBeenCalledWith("%x", 11);
 	});
 
 	it('converts numbers to strings', () => {
 		spyOn(console, 'warn');
-		
+
 		Message("%d", 11);
 		expect(console.warn).toHaveBeenCalledWith("%d", 11);
 	});
 
 	it('just prints objects', () => {
 		spyOn(console, 'warn');
-		
+
 		Message("%a", {
 			toString: () => {
 				return '5';
@@ -76,7 +76,7 @@ xdescribe('Message', () => {
 
 	it('does not fail if there aren\'t enough arguments', () => {
 		spyOn(console, 'warn');
-		
+
 		Message("%d", 1, 2, 3);
 		expect(console.warn).toHaveBeenCalledWith("%d", 1, 2, 3);
 	});

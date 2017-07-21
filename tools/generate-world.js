@@ -1,14 +1,13 @@
-import './test/helpers/polyfill';
-import '/extension';
-import { InputStream } from '/util';
-import Yodesk from '/engine/file-format/yodesk.ksy';
-import { GameData, Story } from '/engine';
-import { Enabled as EnabledMessages, Finalize as FinalizeMessages } from '/util/message';
-import { PrepareExpectations, ParseExpectation, ComparisonResult, CompareWorldItems } from '/debug/expectation';
-import KaitaiStream from 'kaitai-struct/KaitaiStream';
-
-import Path from 'path';
-import FS from 'fs';
+import "./test/helpers/polyfill";
+import "/extension";
+import { InputStream } from "/util";
+import Yodesk from "/engine/file-format/yodesk.ksy";
+import { GameData, Story } from "/engine";
+import { Enabled as EnabledMessages, Finalize as FinalizeMessages } from "/util/message";
+import { PrepareExpectations, ParseExpectation, ComparisonResult, CompareWorldItems } from "/debug/expectation";
+import KaitaiStream from "kaitai-struct/KaitaiStream";
+import Path from "path";
+import FS from "fs";
 
 const Exit = {
 	Normal: 0,
@@ -106,7 +105,7 @@ const parseArguments = (args) => {
 
 const readArguments = (node, self, ...args) => {
 	try {
-		let { options, seed, planet, size } = parseArguments(args);
+		let {options, seed, planet, size} = parseArguments(args);
 
 		if (!options.a) {
 			seed = parseIntegerArgument(seed, 'seed');
@@ -118,7 +117,7 @@ const readArguments = (node, self, ...args) => {
 			if (size < 0 || size > 3) helpAndExit(`Size is not in range 0 - 0xFFFF!`, node, self);
 		}
 
-		return { options, seed, planet, size };
+		return {options, seed, planet, size};
 	} catch (e) {
 		helpAndExit(e, node, self);
 	}
@@ -162,8 +161,8 @@ const compareItem = (actual, expected) => {
 };
 
 const compare = (story, expectation) => {
-	if(expectation.world === null && !story._reseeded) throw `Expected reseed!`;
-	else if(expectation.world === null) return;
+	if (expectation.world === null && !story._reseeded) throw `Expected reseed!`;
+	else if (expectation.world === null) return;
 
 	/* main world */
 	try {
@@ -186,16 +185,16 @@ const compare = (story, expectation) => {
 };
 
 const main = (...args) => {
-	let { options, seed, planet, size } = readArguments(...args);
+	let {options, seed, planet, size} = readArguments(...args);
 
 	try {
-		if(!options.a) {
+		if (!options.a) {
 			const gameData = readGameData(options.d);
 			const story = new Story(seed, planet, size);
 
 			try {
 				if (options.v) EnabledMessages();
-				story.generateWorld({ data: gameData });
+				story.generateWorld({data: gameData});
 				if (options.v) FinalizeMessages('==>');
 			} catch (e) {
 				throw `Unexpected failure in world generation. ${e}`;
@@ -214,20 +213,20 @@ const main = (...args) => {
 			const expectations = readExpectations(options.e);
 			expectations.forEach((e) => {
 				tested++;
-				const { seed, planet, size } = e;
+				const {seed, planet, size} = e;
 				const story = new Story(seed, planet, size);
-				story.generateWorld({ data: readGameData(options.d) });
+				story.generateWorld({data: readGameData(options.d)});
 
 				try {
 					compare(story, e);
 					process.stdout.write(`[OK]   0x${seed.toString(0x10)} 0x${planet.toString(0x10)} 0x${size.toString(0x10)}\n`);
-				} catch(err) {
+				} catch (err) {
 					process.stdout.write(`[FAIL] 0x${seed.toString(0x10)} 0x${planet.toString(0x10)} 0x${size.toString(0x10)}\n`);
 					failed++;
 				}
 			});
 
-			process.stdout.write(`${tested-failed} of ${tested} world combinations were generated correctly!\n`);
+			process.stdout.write(`${tested - failed} of ${tested} world combinations were generated correctly!\n`);
 		}
 	} catch (error) {
 		process.stderr.write(`${error}\n`);

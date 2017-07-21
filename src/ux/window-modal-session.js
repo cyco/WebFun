@@ -1,5 +1,4 @@
 import { dispatch } from "/util";
-
 import ModalSession from "./modal-session";
 
 export default class extends ModalSession {

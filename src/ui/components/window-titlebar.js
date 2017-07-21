@@ -1,7 +1,7 @@
 import Component from "../component";
 import Menubar from "./menubar";
 import { identity } from "/util";
-import View from '../view';
+import View from "../view";
 import "./window-titlebar.scss";
 
 export default class extends Component {
@@ -24,8 +24,8 @@ export default class extends Component {
 	connectedCallback() {
 		super.connectedCallback();
 
-		this.appendChild(this._closeButton.element);		
-		if(this._menubar) this.appendChild(this._menubar);
+		this.appendChild(this._closeButton.element);
+		if (this._menubar) this.appendChild(this._menubar);
 	}
 
 	set window(window) {
@@ -75,7 +75,7 @@ export default class extends Component {
 		if (m) {
 			this._menubar = document.createElement(Menubar.TagName);
 			this._menubar.menu = m;
-			if(this.isConnected)
+			if (this.isConnected)
 				this.appendChild(this._menubar);
 		}
 

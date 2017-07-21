@@ -1,5 +1,5 @@
-import { dispatch } from '/util';
-import EventTarget from '/util/event-target';
+import { dispatch } from "/util";
+import EventTarget from "/util/event-target";
 
 describe('EventTarget', () => {
 	let target;
@@ -117,13 +117,16 @@ describe('EventTarget', () => {
 
 	it('removeEventListener won\'t do anything if the callback is not registered', () => {
 		expect(() => {
-			target.removeEventListener('testEvent', () => {});
+			target.removeEventListener('testEvent', () => {
+			});
 		}).not.toThrow();
 
-		target.addEventListener('testEvent', () => {});
+		target.addEventListener('testEvent', () => {
+		});
 		expect(() => {
 			target.removeEventListener('testEvent', () => {
-				return 15; });
+				return 15;
+			});
 		}).not.toThrow();
 	});
 
@@ -152,7 +155,7 @@ describe('EventTarget', () => {
 	it('has a method to register all events to make it compatible with sealed objects', () => {
 		expect(target.registerEvents).not.toBe(undefined);
 
-		target.registerEvents({ E1: 'testEvent1', E2: 'testEvent2' });
+		target.registerEvents({E1: 'testEvent1', E2: 'testEvent2'});
 
 		expect(target.ontestEvent1).toBe(null);
 		expect(target.ontestEvent2).toBe(null);

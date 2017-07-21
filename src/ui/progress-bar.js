@@ -1,5 +1,5 @@
 import View from "./view";
-import './progress-bar.scss';
+import "./progress-bar.scss";
 
 export default class extends View {
 	constructor() {
@@ -16,10 +16,10 @@ export default class extends View {
 		const numberOfSegments = Math.min(Math.round(progress * maxNumberOfSegments), maxNumberOfSegments);
 
 		while (node.childNodes.length < numberOfSegments)
-		node.appendChild(document.createElement("div"));
+			node.appendChild(document.createElement("div"));
 
 		while (node.childNodes.length > numberOfSegments)
-		node.firstChild.remove();
+			node.firstChild.remove();
 
 		this._value = progress;
 		this.element.dataset && (this.element.dataset.value = progress);

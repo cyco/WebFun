@@ -1,9 +1,6 @@
-import { srand, rand, randmod } from "/util";
-import { Point, Range, HorizontalPointRange, VerticalPointRange, Message } from "/util";
-
+import { srand, rand, randmod, Point, Range, HorizontalPointRange, VerticalPointRange, Message } from "/util";
 import IslandBuilder from "./island-builder";
 import GetDistanceToCenter from "./distance-to-center";
-
 import WorldItemType from "./world-item-type";
 import { WorldSize } from "/engine/types";
 
@@ -539,9 +536,9 @@ function _determinePuzzleLocations(iteration, puzzle_count_to_place) {
 		if (typeMap[item_idx]) continue;
 
 		handle_neighbor(x, y, iteration, -1, 0) ||
-			handle_neighbor(x, y, iteration, 1, 0) ||
-			handle_neighbor(x, y, iteration, 0, -1) ||
-			handle_neighbor(x, y, iteration, 0, 1);
+		handle_neighbor(x, y, iteration, 1, 0) ||
+		handle_neighbor(x, y, iteration, 0, -1) ||
+		handle_neighbor(x, y, iteration, 0, 1);
 
 		_tryPlacingTravel(item_idx, iteration, last_item);
 	}

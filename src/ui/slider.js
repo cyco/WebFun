@@ -166,6 +166,7 @@ export default class Slider extends View {
 	get minValue() {
 		return this._minValue;
 	}
+
 	set minValue(v) {
 		this._minValue = v;
 		this.layout();
@@ -175,6 +176,7 @@ export default class Slider extends View {
 		this._value = Math.max(this._minValue, Math.min(v, this._maxValue));
 		this.layout();
 	}
+
 	get value() {
 		return this._value;
 	}
@@ -182,6 +184,7 @@ export default class Slider extends View {
 	get maxValue() {
 		return this._maxValue;
 	}
+
 	set maxValue(v) {
 		this._maxValue = v;
 		this.layout();
@@ -190,18 +193,23 @@ export default class Slider extends View {
 	get minText() {
 		return this._minText;
 	}
+
 	set minText(t) {
 		this._minText = t;
 	}
+
 	get midText() {
 		return this._midText;
 	}
+
 	set midText(t) {
 		this._midText = t;
 	}
+
 	get maxText() {
 		return this._maxText;
 	}
+
 	set maxText(t) {
 		this._maxText = t;
 	}
@@ -209,6 +217,7 @@ export default class Slider extends View {
 	set stepSize(s) {
 		this._stepSize = s;
 	}
+
 	get stepSize() {
 		return this._StepSize;
 	}
@@ -232,6 +241,7 @@ export default class Slider extends View {
 	set snapToIntegers(s) {
 		this._snapToIntegers = s;
 	}
+
 	get snapToIntegers() {
 		return this._snapToIntegers;
 	}

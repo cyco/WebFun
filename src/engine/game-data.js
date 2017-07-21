@@ -1,5 +1,17 @@
-import { Tile, Puzzle, Zone, Hotspot, Action, Instruction, Condition, NPC, Char, CharFrame } from "./objects";
-import { HotspotType, PuzzleType } from "./objects";
+import {
+	Tile,
+	Puzzle,
+	Zone,
+	Hotspot,
+	Action,
+	Instruction,
+	Condition,
+	NPC,
+	Char,
+	CharFrame,
+	HotspotType,
+	PuzzleType
+} from "./objects";
 
 export default class {
 	constructor(raw) {

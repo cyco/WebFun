@@ -1,5 +1,5 @@
-import { Instruction } from '/engine/objects';
-import * as AddToPadding from './add-to-padding';
+import { Instruction } from "/engine/objects";
+import * as AddToPadding from "./add-to-padding";
 
 describeInstruction('AddToPadding', (execute, engine) => {
 	it('adds a value to the current zone\'s padding', () => {

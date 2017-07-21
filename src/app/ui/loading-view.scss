@@ -2,22 +2,22 @@
 @import "pixelated";
 
 .loading-view {
-    @extend .full-size;
+	@extend .full-size;
 
-    position: absolute;
-    background-color: #000000;
+	position: absolute;
+	background-color: #000000;
 
-    > canvas {
-        @extend .full-size;
+	> canvas {
+		@extend .full-size;
 
-        @extend .pixelated;
+		@extend .pixelated;
 
-        position: absolute;
-        width: 288px;
-        height: 288px;
-    }
+		position: absolute;
+		width: 288px;
+		height: 288px;
+	}
 
-    > img:not([src]) {
-        display: none;
-    }
+	> img:not([src]) {
+		display: none;
+	}
 }

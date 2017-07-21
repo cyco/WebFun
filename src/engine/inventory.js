@@ -5,15 +5,15 @@ export const Events = {
 };
 
 export default class Inventory extends EventTarget {
-	static get Event(){
+	static get Event() {
 		return Events;
 	}
-	
+
 	constructor() {
 		super();
-		
+
 		this._items = [];
-		
+
 		this.registerEvents(Events);
 		Object.seal(this);
 	}

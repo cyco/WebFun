@@ -1,5 +1,5 @@
-import { Condition } from '/engine/objects';
-import * as RandomIsNot from './random-is-not';
+import { Condition } from "/engine/objects";
+import * as RandomIsNot from "./random-is-not";
 
 describeCondition('RandomIsNot', (check, engine) => {
 	it('tests is the current zone\'s random value is not equal to the supplied value', () => {

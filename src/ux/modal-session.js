@@ -58,12 +58,15 @@ export default class ModalSession {
 	set onclick(h) {
 		this._overlay.onclick = h;
 	}
+
 	set onmousemove(h) {
 		this._overlay.onmousemove = h;
 	}
+
 	set onmousedown(h) {
 		this._overlay.onmousedown = h;
 	}
+
 	set onmouseup(h) {
 		this._overlay.onmouseup = h;
 	}
@@ -71,6 +74,7 @@ export default class ModalSession {
 	set onend(h) {
 		this._endHandler = h;
 	}
+
 	get onend() {
 		return this._endHandler;
 	}

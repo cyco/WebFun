@@ -1,39 +1,39 @@
 wf-icon-button {
-  align-items: flex-start;
-  text-align: center;
-  cursor: default;
-  color: buttontext;
-  padding-top: 2px;
-  padding-right: 6px;
-  padding-bottom: 3px;
-  padding-left: 6px;
-  border-top-width: 2px;
-  border-right-width: 2px;
-  border-bottom-width: 2px;
-  border-left-width: 2px;
-  border-top-style: outset;
-  border-right-style: outset;
-  border-bottom-style: outset;
-  border-left-style: outset;
-  border-top-color: buttonface;
-  border-right-color: buttonface;
-  border-bottom-color: buttonface;
-  border-left-color: buttonface;
-  border-image-source: initial;
-  border-image-slice: initial;
-  border-image-width: initial;
-  border-image-outset: initial;
-  border-image-repeat: initial;
-  background-color: buttonface;
-  display: inline-block;
-  border: none;
-  background: none;
+	align-items: flex-start;
+	text-align: center;
+	cursor: default;
+	color: buttontext;
+	padding-top: 2px;
+	padding-right: 6px;
+	padding-bottom: 3px;
+	padding-left: 6px;
+	border-top-width: 2px;
+	border-right-width: 2px;
+	border-bottom-width: 2px;
+	border-left-width: 2px;
+	border-top-style: outset;
+	border-right-style: outset;
+	border-bottom-style: outset;
+	border-left-style: outset;
+	border-top-color: buttonface;
+	border-right-color: buttonface;
+	border-bottom-color: buttonface;
+	border-left-color: buttonface;
+	border-image-source: initial;
+	border-image-slice: initial;
+	border-image-width: initial;
+	border-image-outset: initial;
+	border-image-repeat: initial;
+	background-color: buttonface;
+	display: inline-block;
+	border: none;
+	background: none;
 
-  > i {
-    font-size: 1.5em;
-  }
+	> i {
+		font-size: 1.5em;
+	}
 
-  &[disabled] {
-    color: rgb(127, 127, 127);
-  }
+	&[disabled] {
+		color: rgb(127, 127, 127);
+	}
 }

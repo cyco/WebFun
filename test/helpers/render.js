@@ -13,8 +13,8 @@ export default (text, attributes = {}, flags = []) => {
 	if (textIsHTML) {
 		container.innerHTML = text;
 		return container.firstElementChild;
-	} 
-	
+	}
+
 	container.clear();
 	const node = document.createElement(textIsString ? text : text.TagName);
 	attributes.each((key, value) => node.setAttribute(key, value));

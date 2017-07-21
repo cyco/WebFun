@@ -1,4 +1,4 @@
-import CheatCodeInput from '/engine/cheats/cheat-code-input';
+import CheatCodeInput from "/engine/cheats/cheat-code-input";
 
 describe('CheatCodeInput', () => {
 	let subject;

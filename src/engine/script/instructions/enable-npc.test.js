@@ -1,5 +1,5 @@
-import { Instruction } from '/engine/objects';
-import * as EnableNPC from './enable-npc';
+import { Instruction } from "/engine/objects";
+import * as EnableNPC from "./enable-npc";
 
 describeInstruction('EnableNPC', (execute, engine) => {
 	it('enables the specified npc in the current zone', () => {

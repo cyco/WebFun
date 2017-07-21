@@ -3,10 +3,8 @@ import Scene from "./scene";
 import PauseScene from "./pause-scene";
 import MapScene from "./map-scene";
 import TransitionScene from "./transition-scene";
-
 import { Tile, Zone, HotspotType } from "/engine/objects";
 import Camera from "/engine/camera";
-import Result from "/engine/script";
 import { rgba, Direction, Point } from "/util";
 
 export default class ZoneScene extends Scene {

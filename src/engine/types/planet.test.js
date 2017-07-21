@@ -1,4 +1,4 @@
-import Planet from '/engine/types/planet';
+import Planet from "/engine/types/planet";
 
 describe("Planet", () => {
 	it('defines constants for the planets yoda can encounter', () => {

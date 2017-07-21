@@ -1,4 +1,4 @@
-import TransitionScene from '/engine/scenes/transition-scene';
+import TransitionScene from "/engine/scenes/transition-scene";
 
 describe("TransitionScene", () => {
 	it('can be instantiated without throwing exceptions', () => {

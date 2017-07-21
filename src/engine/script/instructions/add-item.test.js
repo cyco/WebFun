@@ -1,10 +1,13 @@
-import { Instruction } from '/engine/objects';
-import * as AddItem from './add-item';
+import { Instruction } from "/engine/objects";
+import * as AddItem from "./add-item";
 
 describeInstruction('AddItem', (execute, engine) => {
 	it('adds an item to the inventory', () => {
 		engine.data.tiles = [null, 'fake-tile'];
-		engine.inventory = { addItem() {} };
+		engine.inventory = {
+			addItem() {
+			}
+		};
 
 		spyOn(engine.inventory, 'addItem');
 

@@ -1,6 +1,6 @@
 import Scene from "./scene";
-import {Tile, Zone} from "/engine/objects";
-import {Point} from "/util";
+import { Tile, Zone } from "/engine/objects";
+import { Point } from "/util";
 
 export default class TransitionScene extends Scene {
 	static get TRANSITION_TYPE() {
@@ -74,7 +74,7 @@ export default class TransitionScene extends Scene {
 		console.log("willHide()");
 	}
 
-	update( /*ticks*/ ) {
+	update(/*ticks*/) {
 		if (this._zoneSwapTime !== Infinity && this.state > this._zoneSwapTime) {
 			// make sure we don't swap again
 			this._zoneSwapTime = Infinity;

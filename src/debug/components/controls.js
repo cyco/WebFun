@@ -1,6 +1,6 @@
 import "./controls.scss";
-import { Component } from '/ui';
-import { IconButton } from '/ui/components';
+import { Component } from "/ui";
+import { IconButton } from "/ui/components";
 
 export default class extends Component {
 	static get TagName() {

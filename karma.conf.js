@@ -83,12 +83,12 @@ if (includeCoverage) {
 }
 
 if (runUnitTests) {
-	config.files.push({ pattern: 'src/**/*.test.js', watched: false });
+	config.files.push({pattern: 'src/**/*.test.js', watched: false});
 	config.preprocessors['src/**/*.test.js'] = ['webpack'];
 }
 
 if (runPerformanceTests) {
-	config.files.push({ pattern: 'test/performance/**/*.test.js', watched: false });
+	config.files.push({pattern: 'test/performance/**/*.test.js', watched: false});
 	config.preprocessors['test/performance/**/*.test.js'] = ['webpack'];
 }
 
@@ -97,6 +97,6 @@ if (runAcceptanceTests) {
 	// config.preprocessors['test/acceptance/**/*.test.js'] = ['webpack'];
 }
 
-module.exports = function(c) {
+module.exports = function (c) {
 	c.set(config);
 };

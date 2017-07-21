@@ -1,9 +1,10 @@
-import { Instruction } from '/engine/objects';
-import * as RemoveTile from './remove-tile';
+import { Instruction } from "/engine/objects";
+import * as RemoveTile from "./remove-tile";
 
 describeInstruction('RemoveTile', (execute, engine) => {
 	it('removes a tile from the current zone', () => {
-		engine.currentZone.removeTile = () => {};
+		engine.currentZone.removeTile = () => {
+		};
 		spyOn(engine.currentZone, 'removeTile');
 
 		let instruction = new Instruction({});

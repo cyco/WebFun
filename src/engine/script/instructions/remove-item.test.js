@@ -1,10 +1,13 @@
-import { Instruction } from '/engine/objects';
-import * as RemoveItem from './remove-item';
+import { Instruction } from "/engine/objects";
+import * as RemoveItem from "./remove-item";
 
 describeInstruction('RemoveItem', (execute, engine) => {
 	it('removes an item from the inventory', () => {
 		engine.data.tiles = [null, 'fake-tile'];
-		engine.inventory = { removeItem() {} };
+		engine.inventory = {
+			removeItem() {
+			}
+		};
 
 		spyOn(engine.inventory, 'removeItem');
 

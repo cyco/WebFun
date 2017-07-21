@@ -1,5 +1,5 @@
-import { Condition } from '/engine/objects';
-import * as CounterIsNot from './counter-is-not';
+import { Condition } from "/engine/objects";
+import * as CounterIsNot from "./counter-is-not";
 
 describeCondition('CounterIsNot', (check, engine) => {
 	it('compares the supplied value against the current zone\'s counter, returning false on equality', () => {

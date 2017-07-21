@@ -1,6 +1,6 @@
 import AbstractRenderer from "../abstract-renderer";
-import DOMImageFactory from './dom-image-factory';
-import { rgb } from '/util';
+import DOMImageFactory from "./dom-image-factory";
+import { rgb } from "/util";
 
 const TILE_WIDTH = 32.0;
 const TILE_HEIGHT = 32.0;

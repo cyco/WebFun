@@ -8,10 +8,10 @@ export const Events = {
 };
 
 export default class Hero extends EventTarget {
-	static get Event(){
+	static get Event() {
 		return Events;
 	}
-	
+
 	constructor() {
 		super();
 
@@ -144,9 +144,9 @@ export default class Hero extends EventTarget {
 		if (!this._visible) return;
 
 		let appearance = this._appearance;
-		     
+
 		// TODO: implement appearance
-		if(!appearance) return;
+		if (!appearance) return;
 		let frame = this._actionFrames;
 		if (this._attacking) {
 			appearance = this.weapon;

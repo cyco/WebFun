@@ -18,7 +18,7 @@ export default class ScriptExecutor {
 			action => action.instructionPointer);
 		return this._evaluateActions(previousActions, false);
 	}
-	
+
 	async runActions(engine) {
 		this.engine = engine;
 		this._checker.engine = engine;
@@ -48,7 +48,7 @@ export default class ScriptExecutor {
 
 	actionDoesApply(action) {
 		return (action.enabled || action.instructionPointer !== 0) && action.conditions.every(
-			(condition) => this._checker.check(condition), this);
+				(condition) => this._checker.check(condition), this);
 	}
 
 	executeInstructions(action) {

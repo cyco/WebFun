@@ -1,4 +1,4 @@
-import { Point, EventTarget } from "/util";
+import { EventTarget } from "/util";
 
 export default class View extends EventTarget {
 	constructor(element) {

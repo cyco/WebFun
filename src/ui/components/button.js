@@ -1,5 +1,5 @@
-import IconButton from './icon-button';
-import './button.scss';
+import IconButton from "./icon-button";
+import "./button.scss";
 
 export default class extends IconButton {
 	static get TagName() {
@@ -10,6 +10,7 @@ export default class extends IconButton {
 		this.appendChild(document.createElement('div'));
 		this.appendChild(this._icon);
 	}
-	
-	disconnectedCallback() {}
+
+	disconnectedCallback() {
+	}
 }

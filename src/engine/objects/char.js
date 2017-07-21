@@ -1,4 +1,4 @@
-import {Direction} from "/util";
+import { Direction } from "/util";
 
 export const Type = {
 	Hero: 0x0001,
@@ -83,11 +83,11 @@ export default class Char {
 		return null;
 		// TODO: implement shooting
 		/*
-		const tile = this._getBullettile(inertia);
-		const tile = window.engine.data.tiles[tile]; // TODO: fix global referene
-		const bullet = new Bullet([tile], inertia);
-		return bullet;
-		*/
+		 const tile = this._getBullettile(inertia);
+		 const tile = window.engine.data.tiles[tile]; // TODO: fix global referene
+		 const bullet = new Bullet([tile], inertia);
+		 return bullet;
+		 */
 	}
 
 	_getBullettile(inertia) {

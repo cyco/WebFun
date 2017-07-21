@@ -8,7 +8,7 @@ export default class Menu {
 	get items() {
 		return this._items;
 	}
-	
+
 	set items(items) {
 		this._items = items;
 	}

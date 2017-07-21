@@ -3,44 +3,44 @@
 @import "src/ui/components/window.scss";
 
 wf-main-window {
-  @extend wf-window;
+	@extend wf-window;
 
-  > .content > .main {
-    @extend .inset-border-2px;
+	> .content > .main {
+		@extend .inset-border-2px;
 
-    position: relative;
-    width: 288px + 2 * 2px;
-    height: 288px + 2 * 2px;
-  }
-  
-  .equipment {
-    $indicator-color: #0091EA;
+		position: relative;
+		width: 288px + 2 * 2px;
+		height: 288px + 2 * 2px;
+	}
 
-    height: $tile-size + 2 * $border-size;
+	.equipment {
+		$indicator-color: #0091EA;
 
-    > * {
-      height: $tile-size + 2 * $border-size;
-      display: inline-block;
-      position: relative;
-    }
+		height: $tile-size + 2 * $border-size;
 
-    wf-ammo + wf-weapon {
-      margin-left: 2px;
-    }
-  }
-  
- .sidebar {
-    display: flex;
-    flex-direction: column;
-    margin-left: 6px;
-    height: 288px + 2 * $border-size;
+		> * {
+			height: $tile-size + 2 * $border-size;
+			display: inline-block;
+			position: relative;
+		}
 
-    > wf-group {
-      display: flex;
-      flex-direction: row;
-      margin-top: 12px;
-      justify-content: space-around;
-      align-items: center;
-    }
-  }
+		wf-ammo + wf-weapon {
+			margin-left: 2px;
+		}
+	}
+
+	.sidebar {
+		display: flex;
+		flex-direction: column;
+		margin-left: 6px;
+		height: 288px + 2 * $border-size;
+
+		> wf-group {
+			display: flex;
+			flex-direction: row;
+			margin-top: 12px;
+			justify-content: space-around;
+			align-items: center;
+		}
+	}
 }

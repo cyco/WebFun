@@ -1,11 +1,9 @@
-import contains from '/extension/array/contains';
-
-describe('Array.contains', () =>  {
-	it('extends the Array prototype', () =>  {
+describe('Array.contains', () => {
+	it('extends the Array prototype', () => {
 		expect(typeof Array.prototype.contains).toBe('function');
 	});
 
-	it('returns true if the array contains the specified item', () =>  {
+	it('returns true if the array contains the specified item', () => {
 		let array = [1, 2, 3];
 		expect(array.contains(2)).toBeTrue();
 
@@ -13,7 +11,7 @@ describe('Array.contains', () =>  {
 		expect(array.contains("test")).toBeTrue();
 	});
 
-	it('returns false if the array does not contain the specified item', () =>  {
+	it('returns false if the array does not contain the specified item', () => {
 		let array = [1, 2, 3];
 		expect(array.contains(6)).toBeFalse();
 

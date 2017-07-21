@@ -1,5 +1,5 @@
 import Scene from "./scene";
-import {Tile} from "/engine/objects";
+import { Tile } from "/engine/objects";
 import { Point, Size } from "/util";
 
 export default class DetonatorScene extends Scene {
@@ -26,7 +26,7 @@ export default class DetonatorScene extends Scene {
 		this.engine.inputManager.mouseDownHandler = null;
 	}
 
-	update( /*ticks*/ ) {
+	update(/*ticks*/) {
 		if (this._ticks === -1) return;
 
 		this._ticks++;

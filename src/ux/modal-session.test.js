@@ -1,5 +1,4 @@
-import sandboxed from 'test-helpers/dom-sandbox';
-import ModalSession from '/ux/modal-session';
+import ModalSession from "/ux/modal-session";
 
 describe("ModalSession", () => {
 	let subject;

@@ -1,5 +1,5 @@
-import { Component } from '/ui';
-import TilePreview from './tile-preview';
+import { Component } from "/ui";
+import TilePreview from "./tile-preview";
 import "./tile-selection.scss";
 
 export default class extends Component {
@@ -30,7 +30,7 @@ export default class extends Component {
 			node.tile = tile;
 			node.onclick = () => this.selectTile(tile);
 			this.appendChild(node);
-			
+
 			return node;
 		});
 	}
@@ -58,7 +58,7 @@ export default class extends Component {
 
 	set selectedTile(t) {
 		let node = t === null ? this.firstElementChild : this._tileNodes[t.id];
-		
+
 		if (this._selectedTileNode) {
 			this._selectedTileNode.removeAttribute('selected');
 		}

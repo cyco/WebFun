@@ -1,4 +1,4 @@
-import MainWindow from './main-window';
+import MainWindow from "./main-window";
 
 describeComponent(MainWindow, () => {
 	let subject;

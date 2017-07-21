@@ -1,4 +1,4 @@
-import { EventTarget } from '/util';
+import { EventTarget } from "/util";
 
 export const Event = {
 	StatusChange: 'statuschange'
@@ -37,14 +37,25 @@ export default class extends EventTarget {
 		this._metronome.start();
 		this.dispatchEvent(Event.StatusChange);
 	}
-	
+
 	stop() {
 		this._metronome.stop();
 		this.dispatchEvent(Event.StatusChange);
 	}
-	
-	set ontick(cb) { this._metronome.ontick = cb; }
-	set onrender(cb) { this._metronome.onrender = cb; }
-	get ontick() { return this._metronome.ontick; }
-	get onrender() { return this._metronome.onrender; }
+
+	set ontick(cb) {
+		this._metronome.ontick = cb;
+	}
+
+	set onrender(cb) {
+		this._metronome.onrender = cb;
+	}
+
+	get ontick() {
+		return this._metronome.ontick;
+	}
+
+	get onrender() {
+		return this._metronome.onrender;
+	}
 }

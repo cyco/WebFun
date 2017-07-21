@@ -1,4 +1,4 @@
-const has = function(key) {
+const has = function (key) {
 	return this.getItem(key) !== null;
 };
 

@@ -26,7 +26,7 @@ export default class extends InputManager {
 		document.addEventListener("contextmenu", (event) => event.preventDefault());
 	}
 
-	removeListeners() {		
+	removeListeners() {
 		document.removeEventListener("keydown", this.keyDown.bind(this));
 		document.removeEventListener("keyup", this.keyUp.bind(this));
 		document.removeEventListener("mousemove", this.mouseMove.bind(this));

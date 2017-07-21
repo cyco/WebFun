@@ -1,10 +1,10 @@
-import { getFixtureData } from 'test-helpers/fixture-loading';
-import readUint16 from '/extension/array-buffer/read-uint16';
+import { getFixtureData } from "test-helpers/fixture-loading";
+import readUint16 from "/extension/array-buffer/read-uint16";
 
 describe('ArrayBuffer reading', () => {
 	let sampleBuffer;
 	beforeEach((done) => {
-		getFixtureData('someData', function(buffer) {
+		getFixtureData('someData', function (buffer) {
 			sampleBuffer = buffer;
 			done();
 		});

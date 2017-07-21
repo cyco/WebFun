@@ -1,4 +1,4 @@
-const trimCharacter = function(character = " ") {
+const trimCharacter = function (character = " ") {
 	let result = this;
 	while (~character.indexOf(result[0])) {
 		result = result.slice(1);

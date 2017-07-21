@@ -1,5 +1,5 @@
-import { Component } from '/ui';
-import { Checkbox } from '/ui/components';
+import { Component } from "/ui";
+import { Checkbox } from "/ui/components";
 import "./layer.scss";
 
 export default class extends Component {

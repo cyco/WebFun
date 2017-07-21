@@ -1,9 +1,8 @@
 import "./zone-editor.scss";
-
-import { Component } from '/ui';
-import { Group } from '/ui/components';
-import { LayerSelection, TileSelection, Zone, Toolbar, ToolbarItem, ActionList } from '/editor/components';
-import * as Tools from './tools';
+import { Component } from "/ui";
+import { Group } from "/ui/components";
+import { LayerSelection, TileSelection, Zone, Toolbar, ToolbarItem, ActionList } from "/editor/components";
+import * as Tools from "./tools";
 
 const ToolStorageKey = 'editor.zone.tool';
 export default class extends Component {
@@ -43,7 +42,7 @@ export default class extends Component {
 
 		const toggleSize = document.createElement(ToolbarItem.TagName);
 		toggleSize.onclick = () => this.toggleSize();
-		toggleSize.tool = { name: 'Toggle Size', icon: '' };
+		toggleSize.tool = {name: 'Toggle Size', icon: ''};
 		this._toolbar.appendChild(toggleSize);
 
 

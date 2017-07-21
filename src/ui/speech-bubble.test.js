@@ -1,7 +1,7 @@
-import sandboxed from 'test-helpers/dom-sandbox';
-import SpeechBubble from '/ui/speech-bubble';
+import sandboxed from "test-helpers/dom-sandbox";
+import SpeechBubble from "/ui/speech-bubble";
 
-xdescribe('SpeechBubble', sandboxed(function(sand) {
+xdescribe('SpeechBubble', sandboxed(function (sand) {
 	it('displays a bubble with text above other views', () => {
 		let bubble = new SpeechBubble();
 		sand.box.appendChild(bubble.element);

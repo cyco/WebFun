@@ -1,4 +1,4 @@
-import Component from '../component';
+import Component from "../component";
 import "./icon-button.scss";
 
 export default class extends Component {
@@ -7,7 +7,7 @@ export default class extends Component {
 	}
 
 	static get Options() {
-		return { extends: 'button' };
+		return {extends: 'button'};
 	}
 
 	static get observedAttributes() {
@@ -45,12 +45,12 @@ export default class extends Component {
 	get icon() {
 		return this.getAttribute('icon');
 	}
-	
+
 	set disabled(d) {
-		if(d) this.setAttribute('disabled', '');
+		if (d) this.setAttribute('disabled', '');
 		else this.removeAttribute('disabled');
 	}
-	
+
 	get disabled() {
 		return this.hasAttribute('disabled');
 	}

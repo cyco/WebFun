@@ -1,7 +1,7 @@
-import { Component } from '/ui';
-import { DrawMask } from './zone';
-import Layer from './layer';
-import { Layer as ZoneLayer } from '/engine/objects/zone';
+import { Component } from "/ui";
+import { DrawMask } from "./zone";
+import Layer from "./layer";
+import { Layer as ZoneLayer } from "/engine/objects/zone";
 import "./layer-selection.scss";
 
 const MaskKey = 'editor.layerMask';
@@ -102,8 +102,8 @@ export default class extends Component {
 
 		this._selectedLayer = newLayer;
 		localStorage.store(LayerKey, newSelection.name);
-		
-		if(this.onlayerchange instanceof Function)
+
+		if (this.onlayerchange instanceof Function)
 			this.onlayerchange();
 	}
 

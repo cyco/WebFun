@@ -1,5 +1,5 @@
-import ConditionChecker from '../../src/engine/script/condition-checker';
-import InstructionExecutor from '../../src/engine/script/instruction-executor';
+import ConditionChecker from "../../src/engine/script/condition-checker";
+import InstructionExecutor from "../../src/engine/script/instruction-executor";
 
 const makeConditionDescription = (desc) => (Name, block) => {
 	desc(`Condition ${Name}`, () => {
@@ -8,7 +8,7 @@ const makeConditionDescription = (desc) => (Name, block) => {
 
 		beforeEach(() => {
 			engine.currentZone = {};
-			engine.hero = { location: {} };
+			engine.hero = {location: {}};
 			engine.persistentState = {};
 			engine.state = {};
 		});

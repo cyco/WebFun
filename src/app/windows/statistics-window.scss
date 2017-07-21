@@ -2,18 +2,18 @@
 
 wf-statistics-window {
 	@extend wf-window;
-	
-  li {
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: space-between;
 
-    span + .textbox {
-      margin-left: 5px;
-    }
-  }
+	li {
+		display: flex;
+		flex-wrap: nowrap;
+		justify-content: space-between;
 
-  li + li {
-    margin-top: 5px;
-  }
+		span + .textbox {
+			margin-left: 5px;
+		}
+	}
+
+	li + li {
+		margin-top: 5px;
+	}
 }

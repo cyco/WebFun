@@ -1,11 +1,9 @@
-import { Window } from '/ui/components';
-import { FileLoader } from '/util';
-import Settings from '/settings';
-
-import twgl from 'twgl.js';
-
-import VertexShader from './vertex.glsl';
-import FragmentShader from './fragment.glsl';
+import { Window } from "/ui/components";
+import { FileLoader } from "/util";
+import Settings from "/settings";
+import twgl from "twgl.js";
+import VertexShader from "./vertex.glsl";
+import FragmentShader from "./fragment.glsl";
 
 export default class {
 	constructor() {
@@ -25,7 +23,7 @@ export default class {
 		this._window.content.appendChild(this._canvas);
 
 		const gl = this._canvas.getContext('webgl');
-		if(!gl) throw "WebGL is not available!";
+		if (!gl) throw "WebGL is not available!";
 
 		this._context = gl;
 
@@ -97,13 +95,13 @@ export default class {
 
 		// Setup a palette.
 		const palette = new Uint8Array(buffer);
-		for(let i=0; i <= 0xFF; i++) {
+		for (let i = 0; i <= 0xFF; i++) {
 			const temp = palette[4 * i + 0];
 			palette[4 * i + 0] = palette[4 * i + 2];
 			palette[4 * i + 2] = temp;
 			palette[4 * i + 3] = 0xFF;
 		}
-		palette[3]= 0;
+		palette[3] = 0;
 
 		// make palette texture and upload palette
 		gl.activeTexture(gl.TEXTURE1);
@@ -120,6 +118,7 @@ export default class {
 		function render() {
 			gl.drawArrays(gl.TRIANGLES, 0, 6);
 		}
+
 		render()
 	}
 
@@ -128,7 +127,7 @@ export default class {
 		const width = 16;
 		const height = 16;
 		const image = new Uint8Array(width * height);
-		for(let i=0; i <= 0xFF; i++) {
+		for (let i = 0; i <= 0xFF; i++) {
 			image[i] = i;
 		}
 
@@ -156,7 +155,7 @@ export default class {
 	}
 
 	render() {
-		if(!this._palette) return;
+		if (!this._palette) return;
 
 		const gl = this._context;
 		gl.activeTexture(gl.TEXTURE1);

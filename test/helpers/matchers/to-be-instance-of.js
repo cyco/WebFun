@@ -1,5 +1,5 @@
-import addMatchers from 'add-matchers';
+import addMatchers from "add-matchers";
 
 addMatchers({
-	toBeInstanceOf: (received, actual) =>  actual instanceof received
+	toBeInstanceOf: (received, actual) => actual instanceof received
 });

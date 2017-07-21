@@ -1,4 +1,4 @@
-const padStart = function(length, character) {
+const padStart = function (length, character) {
 	if (character === undefined || character === null) {
 		character = " ";
 	}

@@ -1,9 +1,8 @@
-import { Promise } from '/std';
-import { Event } from '/std.dom';
-import { EventTarget } from '/util';
+import { Promise } from "/std";
+import { EventTarget } from "/util";
 import { ConditionChecker, InstructionExecutor } from "/engine/script";
-import { LocationBreakpoint } from './breakpoint';
-import BreakpointStore from './breakpoint-store';
+import { LocationBreakpoint } from "./breakpoint";
+import BreakpointStore from "./breakpoint-store";
 
 export const Continuation = {
 	Step: 'step',
@@ -33,7 +32,7 @@ export default class extends EventTarget {
 	async continueActions(engine) {
 		engine.metronome.stop();
 		const r = await this._doContinueActions(engine);
-		if(r) engine.metronome.start();
+		if (r) engine.metronome.start();
 		else ; // metronome will be started again when ZoneScene calls runActions
 		return r;
 	}
@@ -105,7 +104,9 @@ export default class extends EventTarget {
 				await this._breakIfNecessary(action, 'c', i);
 				if (!this._checker.check(condition))
 					return false;
-			} catch (e) { console.warn('check crashed', e); }
+			} catch (e) {
+				console.warn('check crashed', e);
+			}
 		}
 
 		return true;
@@ -167,10 +168,10 @@ export default class extends EventTarget {
 		const state = engine.state;
 		const zone = engine.currentZone;
 		const hero = engine.hero;
-		
+
 		engine.metronome.stop();
 		// metronome will be started again when ZoneScene calls runActions
-		
+
 		state.bump = targetPoint;
 		const actions = zone.actions.slice();
 
@@ -194,7 +195,7 @@ export default class extends EventTarget {
 		}
 	}
 
-	continue (mode = Continuation.Step) {
+	continue(mode = Continuation.Step) {
 		if (mode === Continuation.Step) this._breakAsap = true;
 
 		if (this._unbreak) {

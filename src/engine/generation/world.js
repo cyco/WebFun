@@ -1,5 +1,5 @@
 import { Point } from "/util";
-import WorldItem from './world-item';
+import WorldItem from "./world-item";
 
 export const width = 10;
 export const height = 10;
@@ -39,7 +39,7 @@ export default class World {
 		const index = this._pointToIndex(x, y);
 		const worldItem = this._items[index];
 		const zoneID = worldItem.zoneID;
-		if(zoneID === -1) return null;
+		if (zoneID === -1) return null;
 		return this.zones[zoneID];
 	}
 
@@ -80,7 +80,7 @@ export default class World {
 	at(x, y) {
 		return this._items[this._pointToIndex(x, y)];
 	}
-	
+
 	index(index) {
 		return this._items[index];
 	}

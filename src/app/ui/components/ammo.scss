@@ -3,32 +3,32 @@
 @import "colors";
 
 wf-ammo {
-  @extend .inset-border;
+	@extend .inset-border;
 
-  position: relative;
-  border-width: 2px;
-  width: 10px + 2 * $border-size;
+	position: relative;
+	border-width: 2px;
+	width: 10px + 2 * $border-size;
 
-  > * {
-    position: absolute;
-  }
+	> * {
+		position: absolute;
+	}
 
-  > .background {
-    @extend .inset-border-inverted;
+	> .background {
+		@extend .inset-border-inverted;
 
-    @extend .full-size;
+		@extend .full-size;
 
-    border-width: 1px;
-    width: auto;
-    height: auto;
-  }
+		border-width: 1px;
+		width: auto;
+		height: auto;
+	}
 
-  > .indicator {
-    background-color: $indicator-color;
-    border: 0;
-    height: 30%;
-    left: 1px;
-    right: 1px;
-    bottom: 1px;
-  }
+	> .indicator {
+		background-color: $indicator-color;
+		border: 0;
+		height: 30%;
+		left: 1px;
+		right: 1px;
+		bottom: 1px;
+	}
 }

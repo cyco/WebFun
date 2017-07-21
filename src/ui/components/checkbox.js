@@ -2,13 +2,13 @@ import Component from "../component";
 import "./checkbox.scss";
 
 export default class Checkbox extends Component {
-	static get TagName(){
+	static get TagName() {
 		return 'wf-checkbox';
 	}
-	
+
 	constructor() {
 		super();
-		
+
 		const boxID = String.UUID();
 
 		const box = document.createElement("input");
@@ -21,17 +21,17 @@ export default class Checkbox extends Component {
 		label.setAttribute("for", boxID);
 		this._label = label;
 	}
-	
-	connectedCallback(){
+
+	connectedCallback() {
 		super.connectedCallback();
-		
+
 		this.appendChild(this._box);
 		this.appendChild(this._label);
 	}
-	
-	disconnectedCallback(){
+
+	disconnectedCallback() {
 		this.clear();
-		
+
 		super.disconnectedCallback();
 	}
 
@@ -47,7 +47,7 @@ export default class Checkbox extends Component {
 	get checked() {
 		return this._box.checked;
 	}
-	
+
 	set checked(c) {
 		this._box.checked = c;
 	}
@@ -55,6 +55,7 @@ export default class Checkbox extends Component {
 	set onchange(f) {
 		this._box.onchange = f;
 	}
+
 	get onchange() {
 		return this._box.onchange;
 	}

@@ -1,4 +1,4 @@
-import NPC from '/engine/objects/npc';
+import NPC from "/engine/objects/npc";
 
 describe("NPC", () => {
 	it('is a class representing an npc', () => {

@@ -1,4 +1,4 @@
-import Repeat from '/extension/array/repeat';
+import Repeat from "/extension/array/repeat";
 
 describe('Array.Repeat', () => {
 	it('is a static function', () => {

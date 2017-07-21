@@ -1,4 +1,4 @@
-import Tool from './tool';
+import Tool from "./tool";
 
 export default class extends Tool {
 	get name() {
@@ -9,6 +9,9 @@ export default class extends Tool {
 		return '';
 	}
 
-	activate() {}
-	deactivate() {}
+	activate() {
+	}
+
+	deactivate() {
+	}
 }

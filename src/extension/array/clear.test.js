@@ -1,4 +1,4 @@
-import clear from '/extension/array/clear';
+import clear from "/extension/array/clear";
 
 describe('Array.clear', () => {
 	it('it extends the Array prototype', () => {

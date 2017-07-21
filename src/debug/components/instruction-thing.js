@@ -1,6 +1,6 @@
-import { Component } from '/ui';
-import BreakpointButton from './breakpoint-button';
-import { LocationBreakpoint } from '../breakpoint';
+import { Component } from "/ui";
+import BreakpointButton from "./breakpoint-button";
+import { LocationBreakpoint } from "../breakpoint";
 
 export default class extends Component {
 	static get TagName() {
@@ -35,7 +35,8 @@ export default class extends Component {
 		this._setUp = true;
 	}
 
-	attributeChangedCallback(attribute) {}
+	attributeChangedCallback(attribute) {
+	}
 
 	set current(flag) {
 		if (flag) this.setAttribute('current', '');

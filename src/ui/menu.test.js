@@ -1,4 +1,4 @@
-import Menu from '/ui/menu';
+import Menu from "/ui/menu";
 
 describe('Menu', () => {
 	it('represents a menu', () => {

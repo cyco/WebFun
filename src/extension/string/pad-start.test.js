@@ -1,4 +1,4 @@
-import padStart from '/extension/string/pad-start';
+import padStart from "/extension/string/pad-start";
 
 describe('String.padStart', () => {
 	it('extends the String prototype', () => {

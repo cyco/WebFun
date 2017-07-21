@@ -1,6 +1,6 @@
 import Component from "../component";
 import WindowTitlebar from "./window-titlebar";
-import View from '../view';
+import View from "../view";
 import "./window.scss";
 
 export default class extends Component {
@@ -22,9 +22,9 @@ export default class extends Component {
 
 	connectedCallback() {
 		super.connectedCallback();
-		
+
 		this._titlebar.window = this;
-		
+
 		this.appendChild(this._titlebar);
 		this.appendChild(this._content.element);
 	}
@@ -72,8 +72,8 @@ export default class extends Component {
 	}
 
 	get x() {
-		if(!this.isConnected) return this._x;
-		
+		if (!this.isConnected) return this._x;
+
 		return parseFloat(this.style.left);
 	}
 
@@ -83,8 +83,8 @@ export default class extends Component {
 	}
 
 	get y() {
-		if(!this.isConnected) return this._y;
-		
+		if (!this.isConnected) return this._y;
+
 		return parseFloat(this.style.top);
 	}
 
@@ -95,11 +95,11 @@ export default class extends Component {
 	get onclose() {
 		return this._titlebar.onclose;
 	}
-	
-	_update(){
-		if(!this.isConnected) return;
-		
-		this.style.top = `${this._y|0}px`;
-		this.style.left = `${this._x|0}px`;
+
+	_update() {
+		if (!this.isConnected) return;
+
+		this.style.top = `${this._y | 0}px`;
+		this.style.left = `${this._x | 0}px`;
 	}
 }

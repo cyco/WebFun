@@ -1,7 +1,7 @@
-import sandboxed from 'test-helpers/dom-sandbox';
-import RadioButton from './radio-button';
+import sandboxed from "test-helpers/dom-sandbox";
+import RadioButton from "./radio-button";
 
-xdescribe('RadioButton', sandboxed(function(sand) {
+xdescribe('RadioButton', sandboxed(function (sand) {
 	it('manages a radio input element', () => {
 		let radio = new RadioButton();
 		sand.box.appendChild(radio.element);
