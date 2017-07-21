@@ -32,7 +32,7 @@ export default class extends EventTarget {
 
 	_didLoad(reader) {
 		const stream = new InputStream(reader.result || reader.response);
-		const kaitaiStream = new KaitaiStream(reader.result || reader.response, 0);
+		const kaitaiStream = new KaitaiStream(reader.result || reader.response);
 		this.dispatchEvent(Event.Load, {
 			stream,
 			kaitaiStream,
