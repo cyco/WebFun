@@ -2,7 +2,7 @@ import { dispatch } from "/util";
 import { LoadingView, SceneView } from "./ui";
 import Settings from '/settings';
 import { MainWindow, MainMenu } from "./windows";
-import { Engine, CanvasRenderer, Story, Metronome, Hero, Inventory } from "/engine";
+import { Engine, CanvasRenderer, WebGLRenderer, Story, Metronome, Hero, Inventory } from "/engine";
 import { Planet, WorldSize } from "/engine/types";
 import { ZoneScene } from '/engine/scenes';
 import { DesktopInputManager } from '/engine/input';
@@ -21,10 +21,10 @@ export default class {
 
 	_buildEngine() {
 		const engine = new Engine();
+		const renderer = this._determineRenderer();
 
-		const canvas = this._sceneView.canvas;
-		engine.renderer = new CanvasRenderer.Renderer(canvas);
-		engine.imageFactory = new CanvasRenderer.ImageFactory();
+		engine.renderer = new renderer(this._sceneView.canvas);
+		engine.imageFactory = engine.renderer.imageFactory;
 		engine.sceneManager = this._sceneView.manager;
 		engine.inputManager = new DesktopInputManager(this._sceneView.element);
 		engine.metronome = new Metronome();
@@ -34,6 +34,14 @@ export default class {
 		window.engine = engine;
 
 		return engine;
+	}
+
+	_determineRenderer() {
+		if(WebGLRenderer.isSupported()) {
+			return WebGLRenderer;
+		}
+
+		return CanvasRenderer;
 	}
 
 	start() {
@@ -57,7 +65,7 @@ export default class {
 		const loader = new Loader();
 		loader.onfail = (event) => console.log("fail", event);
 		loader.onprogress = ({ detail: { progress } }) => loadingView.progress = progress;
-		loader.onloadsetupimage = ({ detail: { setupImage } }) => loadingView.backgroundImageSource = setupImage.representation.src;
+		loader.onloadsetupimage = ({ detail: { pixels, palette} }) => loadingView.showImage(pixels, palette);
 		loader.onload = () => {
 			loadingView.progress = 1.0;
 			dispatch(() => this.newStory(), 0);

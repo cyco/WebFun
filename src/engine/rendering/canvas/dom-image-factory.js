@@ -1,8 +1,10 @@
+import AbstractImageFactory from "../abstract-image-factory";
 import Image from "../image";
-import { Image as DOMImage, ImageData } from '/std.dom';
+import {Image as DOMImage, ImageData} from '/std.dom';
 
-export default class {
+export default class extends AbstractImageFactory {
 	constructor() {
+		super();
 		this._palette = null;
 	}
 

@@ -1,23 +1,39 @@
-import Renderer from "../renderer";
+import AbstractRenderer from "../abstract-renderer";
+import DOMImageFactory from './dom-image-factory';
+import { rgb } from '/util';
 
 const TILE_WIDTH = 32.0;
 const TILE_HEIGHT = 32.0;
 
-export default class CanvasRenderer extends Renderer {
+export default class CanvasRenderer extends AbstractRenderer {
+	static isSupported() {
+		const canvas = document.createElement('canvas');
+		return canvas.getContext("2d") !== null;
+	}
+
 	constructor(canvas) {
 		super();
 
 		this._canvas = canvas;
+
 		this._ctx = canvas.getContext("2d");
 		this._ctx.globalCompositeOperation = "source-over";
 		this._ctx.webkitImageSmoothingEnabled = false;
+		this._ctx.fillStyle = rgb(0, 0, 0);
+		this._ctx.fillRect(0, 0, 288, 288);
+		this._imageFactory = new DOMImageFactory();
+	}
+
+	get imageFactory() {
+		return this._imageFactory;
 	}
 
 	clear() {
 		this._ctx.clearRect(0, 0, this._canvas.width, this._canvas.height);
 	}
 
-	clearTile(x, y, z) {}
+	clearTile(x, y, z) {
+	}
 
 	renderTile(tile, x, y, z) {
 		if (!tile) return;

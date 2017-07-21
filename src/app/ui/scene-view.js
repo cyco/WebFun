@@ -16,10 +16,6 @@ export default class extends View {
 		canvas.classList.add("pixelated");
 		canvas.width = 288;
 		canvas.height = 288;
-
-		let ctx = canvas.getContext("2d");
-		ctx.fillStyle = rgb(255, 0, 0);
-		ctx.fillRect(0, 0, 288, 288);
 	}
 
 	get canvas() {
