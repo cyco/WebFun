@@ -1,4 +1,4 @@
-import contains from './contains';
+import contains from "./contains";
 
 describe('String.contains', () => {
 	it('extends the String prototype', () => {
@@ -9,7 +9,7 @@ describe('String.contains', () => {
 	it('returns true if the string contains another string', () => {
 		expect('my-string'.contains('-')).toBeTrue();
 		expect('my-fancy-string'.contains('y')).toBeTrue();
-		
+
 		expect(contains.call('another-example', 'x')).toBeTrue();
 	});
 

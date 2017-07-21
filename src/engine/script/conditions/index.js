@@ -79,7 +79,7 @@ export default Conditions;
 
 
 const Opcode = {};
-const exportOpcode = (name, { Opcode: code }) => Opcode[name] = code;
+const exportOpcode = (name, {Opcode: code}) => Opcode[name] = code;
 exportOpcode("ZoneNotInitialized", ZoneNotInitialized);
 exportOpcode("ZoneEntered", ZoneEntered);
 exportOpcode("Bump", Bump);

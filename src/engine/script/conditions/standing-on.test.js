@@ -1,5 +1,5 @@
-import { Condition } from '/engine/objects';
-import * as StandingOn from './standing-on';
+import { Condition } from "/engine/objects";
+import * as StandingOn from "./standing-on";
 
 describeCondition('StandingOn', (check, engine) => {
 	it('checks if the hero is standing on a specific tile', () => {
@@ -8,7 +8,7 @@ describeCondition('StandingOn', (check, engine) => {
 		condition._opcode = StandingOn.Opcode;
 		condition._arguments = [1, 2, 5];
 
-		hero.location = { x: 1, y: 2 };
+		hero.location = {x: 1, y: 2};
 		engine.currentZone.getTileID = () => {
 			return 5;
 		};
@@ -21,7 +21,7 @@ describeCondition('StandingOn', (check, engine) => {
 		hero.location.y = 3;
 		expect(check(condition)).toBeFalse();
 
-		hero.location = { x: 1, y: 2 };
+		hero.location = {x: 1, y: 2};
 		engine.currentZone.getTileID = () => {
 			return 3;
 		};

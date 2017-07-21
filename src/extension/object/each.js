@@ -1,4 +1,4 @@
-const each = function(callback) {
+const each = function (callback) {
 	for (let key in this) {
 		callback(key, this[key]);
 	}

@@ -1,4 +1,4 @@
-import { global, Array, console } from '/std';
+import { Array, console } from "/std";
 
 let messagesEnabled = false;
 
@@ -18,7 +18,7 @@ export default (...args) => {
 		if (currentArgumentPosition === -1) continue;
 
 		let formatArg = formatString[currentArgumentPosition + 1];
-		
+
 		if (typeof value === 'undefined')
 			value = '<undefined>';
 		else if (typeof value === "boolean")

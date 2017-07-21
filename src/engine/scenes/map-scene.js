@@ -3,9 +3,7 @@ import { Tile, ZoneType } from "/engine/objects";
 import { World } from "/engine/generation";
 import { Planet } from "/engine/types";
 import { Weapons, UnlimitedAmmo, Invincibility, CheatCodeInput } from "/engine/cheats";
-
 import SpeechScene from "./speech-scene";
-
 import { Size } from "/util";
 
 const TileWidth = 28;
@@ -55,7 +53,7 @@ export default class MapScene extends Scene {
 		this.engine.inputManager.keyDownHandler = null;
 	}
 
-	update( /*ticks*/ ) {
+	update(/*ticks*/) {
 		const engine = this.engine;
 		const inputManager = engine.inputManager;
 		if (!inputManager.locator) {

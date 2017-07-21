@@ -1,4 +1,4 @@
-import Message from './message';
+import Message from "./message";
 let lastRandom = 0;
 
 export const srand = (seed) => lastRandom = seed;

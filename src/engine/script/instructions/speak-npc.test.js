@@ -1,10 +1,14 @@
-import { Instruction } from '/engine/objects';
-import * as SpeakNPC from './speak-npc';
+import { Instruction } from "/engine/objects";
+import * as SpeakNPC from "./speak-npc";
 
 describeInstruction('SpeakNPC', (execute, engine) => {
 	it('shows a speech bubble next to an npc', () => {
 		let scene = null;
-		engine.sceneManager = { pushScene(s) { scene = s; } };
+		engine.sceneManager = {
+			pushScene(s) {
+				scene = s;
+			}
+		};
 
 		let instruction = new Instruction({});
 		instruction._opcode = SpeakNPC.Opcode;

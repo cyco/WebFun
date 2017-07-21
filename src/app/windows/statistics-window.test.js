@@ -1,4 +1,4 @@
-import StatisticsWindow from './statistics-window';
+import StatisticsWindow from "./statistics-window";
 
 describeComponent(StatisticsWindow, () => {
 	let subject;

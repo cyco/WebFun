@@ -3,27 +3,27 @@
 @import "variables";
 
 wf-weapon {
-  @extend .inset-border;
+	@extend .inset-border;
 
-  position: relative;
-  border-width: 2px;
-  width: $tile-size + 2 * $border-size;
+	position: relative;
+	border-width: 2px;
+	width: $tile-size + 2 * $border-size;
 
-  > .background {
-    @extend .full-size;
+	> .background {
+		@extend .full-size;
 
-    @extend .inset-border-inverted;
+		@extend .inset-border-inverted;
 
-    position: absolute;
-    border-width: 1px;
-    margin: 0;
-  }
+		position: absolute;
+		border-width: 1px;
+		margin: 0;
+	}
 
-  > img {
-    @extend .full-size;
+	> img {
+		@extend .full-size;
 
-    position: absolute;
-    width: $tile-size;
-    height: $tile-size;
-  }
+		position: absolute;
+		width: $tile-size;
+		height: $tile-size;
+	}
 }

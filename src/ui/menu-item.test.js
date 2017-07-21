@@ -1,6 +1,6 @@
-import sandboxed from 'test-helpers/dom-sandbox';
-import { default as MenuItem, State, Separator } from '/ui/menu-item';
-import Menu from '/ui/menu';
+import sandboxed from "test-helpers/dom-sandbox";
+import { default as MenuItem, State, Separator } from "/ui/menu-item";
+import Menu from "/ui/menu";
 
 describe('MenuItem', sandboxed((sand) => {
 	it('represents an item in a menu', () => {
@@ -34,10 +34,10 @@ describe('MenuItem', sandboxed((sand) => {
 		let menuItem = new MenuItem({});
 		expect(menuItem.enabled).toBeFalse();
 
-		menuItem = new MenuItem({ callback: () => null });
+		menuItem = new MenuItem({callback: () => null});
 		expect(menuItem.enabled).toBeTrue();
 
-		menuItem = new MenuItem({ submenu: [] });
+		menuItem = new MenuItem({submenu: []});
 		expect(menuItem.enabled).toBeTrue();
 
 		menuItem = new MenuItem();
@@ -45,7 +45,7 @@ describe('MenuItem', sandboxed((sand) => {
 	});
 
 	it('can be dynamically disabled by supplying a function', () => {
-		let menuItem = new MenuItem({ callback: () => null });
+		let menuItem = new MenuItem({callback: () => null});
 
 		expect(menuItem.enabled).toBeTrue();
 
@@ -61,7 +61,7 @@ describe('MenuItem', sandboxed((sand) => {
 	});
 
 	it('has a method to easily detect if something has a submenu', () => {
-		let menuItem = new MenuItem({ submenu: new Menu([]) });
+		let menuItem = new MenuItem({submenu: new Menu([])});
 		expect(menuItem.hasSubmenu).toBeTrue();
 
 	});

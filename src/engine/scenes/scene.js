@@ -3,17 +3,23 @@ export default class Scene {
 		this.engine = null;
 	}
 
-	willShow() {}
+	willShow() {
+	}
 
-	didShow() {}
+	didShow() {
+	}
 
-	willHide() {}
+	willHide() {
+	}
 
-	didHide() {}
+	didHide() {
+	}
 
-	render() {}
+	render() {
+	}
 
-	update() {}
+	update() {
+	}
 
 	isOpaque() {
 		return true;

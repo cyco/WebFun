@@ -1,5 +1,5 @@
-import { Instruction } from '/engine/objects';
-import * as Wait from './stop-sound';
+import { Instruction } from "/engine/objects";
+import * as Wait from "./stop-sound";
 
 describeInstruction('Wait', (execute, engine) => {
 	it('wait a few milliseconds before executing the next instruction', () => {

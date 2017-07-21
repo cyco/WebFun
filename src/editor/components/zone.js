@@ -1,6 +1,6 @@
-import { Component } from '/ui';
-import { Size, Point, rgba } from '/util';
-import { Layer } from '/engine/objects/zone';
+import { Component } from "/ui";
+import { Size, Point, rgba } from "/util";
+import { Layer } from "/engine/objects/zone";
 import "./zone.scss";
 
 export const DrawMask = {
@@ -139,7 +139,7 @@ export default class extends Component {
 
 	draw() {
 		this._context.save();
-		
+
 		this._context.clearRect(0, 0, TileSize * 18 * this._zoom.width, TileSize * 18 * this._zoom.height);
 		this._context.fillStyle = this._backgroundColor;
 		this._context.fillRect(0, 0, TileSize * 18 * this._zoom.width, TileSize * 18 * this._zoom.height);

@@ -1,6 +1,6 @@
-import { Element } from '/std.dom';
+import { Element } from "/std.dom";
 
-const clear = function() {
+const clear = function () {
 	while (this.firstChild) {
 		this.removeChild(this.firstChild);
 	}

@@ -1,4 +1,4 @@
-const { JSDOM } = require("jsdom");
+const {JSDOM} = require("jsdom");
 
 const documentHTML = '<!doctype html><html><body><div id="root"></div></body></html>';
 global.doc = new JSDOM(documentHTML);

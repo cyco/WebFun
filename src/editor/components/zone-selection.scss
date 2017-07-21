@@ -1,10 +1,10 @@
 wf-editor-zone-selection {
 	display: block;
 	overflow-y: auto;
-	
+
 	-webkit-scroll-snap-type: proximity;
 	-webkit-scroll-snap-destination: 0% 0%;
 	wf-editor-zone-preview {
 		-webkit-scroll-snap-coordinate: 0 -3px;
-	}	
+	}
 }

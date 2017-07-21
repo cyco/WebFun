@@ -1,4 +1,4 @@
-import Tool from './tool';
+import Tool from "./tool";
 
 export default class extends Tool {
 	get name() {
@@ -19,7 +19,7 @@ export default class extends Tool {
 		const NEW = 0;
 		const MARKED = 1;
 		const VISITED = 2;
-		
+
 		const z = this._editor.currentLayer;
 		const tile = this._editor.currentTile;
 		const zone = this._editor.zone;
@@ -34,7 +34,7 @@ export default class extends Tool {
 		const open = [
 			x + width * y
 		];
-		
+
 		const neighbors = (i) => {
 			const result = new Array(4);
 

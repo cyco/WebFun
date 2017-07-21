@@ -1,5 +1,3 @@
-import { Message } from "/util";
-
 export default (x, y) => {
 	// Message("Map::GetDistanceToCenter %dx%d\n", x, y);
 	return [

@@ -1,5 +1,5 @@
-import './health.scss';
-import { Component } from '/ui';
+import "./health.scss";
+import { Component } from "/ui";
 
 const HealthSVG = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><svg xmlns=\"http://www.w3.org/2000/svg\" height=\"43\" version=\"1.1\" width=\"43\"><g transform=\"matrix(0.21500001,0,0,0.215,0,9.5140266e-7)\"><g transform=\"matrix(1.0025057,0,0,1.0027319,-2.3574243,-282.67661)\"><path d=\"m 101.85868,381.36758 64.9448,-76.04059 A 100,100 0 0 1 36.913868,457.40818 Z\" style=\"fill:#ffffff;\"/><path style=\"fill:#6D6D6D;\" d=\"m 102.3445,381.90046 64.9448,-76.0406 A 100,100 0 0 0 37.399688,457.94105 Z\"/></g><circle id=\"health-condition\" style=\"fill:#00FF00;\" cx=\"100\" cy=\"100\" r=\"89\"/><path id=\"health-pie\" style=\"fill:#6D6D6D;\" d=\"m 0,0 Z\"/></g></svg>";
 
@@ -26,15 +26,19 @@ export default class extends Component {
 	static get GoodColor() {
 		return GoodColor;
 	}
+
 	static get MediumColor() {
 		return MediumColor;
 	}
+
 	static get BadColor() {
 		return BadColor;
 	}
+
 	static get CriticalColor() {
 		return CriticalColor;
 	}
+
 	static get Conditions() {
 		return Conditions;
 	}

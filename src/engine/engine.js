@@ -1,4 +1,4 @@
-import { EventTarget } from '/util';
+import { EventTarget } from "/util";
 
 export const Events = {
 	CurrentZoneChange: 'currentzonechange',
@@ -25,7 +25,7 @@ export default class extends EventTarget {
 		this._currentZone = null;
 		this.inventory = null;
 		this.scriptExecutor = null;
-		
+
 		this.story = null;
 
 		// TODO: remove state
@@ -51,11 +51,13 @@ export default class extends EventTarget {
 	}
 
 	// TODO: remove calls and method
-	setCursor() {}
+	setCursor() {
+	}
 
 	get dagobah() {
 		return this.story.dagobah;
 	}
+
 	get world() {
 		return this.story.world;
 	}

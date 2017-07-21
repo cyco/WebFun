@@ -3,14 +3,14 @@ global.Storage = class {
 		this._values = {};
 	}
 
-	setItem(key, value) { 
-		this._values[key] = '' + value; 
+	setItem(key, value) {
+		this._values[key] = '' + value;
 	}
-	
+
 	getItem(key) {
-		return this._values[key]; 
+		return this._values[key];
 	}
-	
+
 	clear() {
 		this._values = {};
 	}

@@ -1,12 +1,11 @@
-import { getFixtureData } from 'test-helpers/fixture-loading';
-
-import Stream from '/util/stream';
-import InputStream from '/util/input-stream';
+import { getFixtureData } from "test-helpers/fixture-loading";
+import Stream from "/util/stream";
+import InputStream from "/util/input-stream";
 
 describe('InputStream', () => {
 	let buffer;
 	beforeEach((done) => {
-		getFixtureData('someData', function(b) {
+		getFixtureData('someData', function (b) {
 			buffer = b;
 			done();
 		});
@@ -101,7 +100,7 @@ describe('InputStream', () => {
 
 	describe('string reading', () => {
 		beforeEach((done) => {
-			getFixtureData('asciiString', function(b) {
+			getFixtureData('asciiString', function (b) {
 				buffer = b;
 				done();
 			});
@@ -156,7 +155,7 @@ describe('InputStream', () => {
 
 	describe('array reading', () => {
 		beforeEach((done) => {
-			getFixtureData('arrayReading', function(b) {
+			getFixtureData('arrayReading', function (b) {
 				buffer = b;
 				done();
 			});

@@ -1,15 +1,15 @@
-import BatchLoader from '/util/batch-loader';
+import BatchLoader from "/util/batch-loader";
 
 describe('BatchLoader', () => {
 	let operationsExecuted;
-	let SampleOperation = function() {
+	let SampleOperation = function () {
 		let self = this;
 		this.start = () => {
 			operationsExecuted++;
 			if (self.onfinish) self.onfinish();
 		};
 	};
-	let FailingOperation = function() {
+	let FailingOperation = function () {
 		let self = this;
 		this.start = () => {
 			operationsExecuted++;

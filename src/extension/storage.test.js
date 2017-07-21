@@ -1,5 +1,5 @@
-import storeFn from '/extension/storage/store';
-import loadFn from '/extension/storage/load';
+import storeFn from "/extension/storage/store";
+import loadFn from "/extension/storage/load";
 
 describe('Storage', () => {
 	let originalSetItem, originalGetItem, originalConsoleWarn;
@@ -13,10 +13,10 @@ describe('Storage', () => {
 		store = {};
 		warnings = [];
 
-		localStorage.setItem = function(key, data) {
+		localStorage.setItem = function (key, data) {
 			store[key] = data;
 		};
-		localStorage.getItem = function(key) {
+		localStorage.getItem = function (key) {
 			return store[key];
 		};
 		console.warn = () => {

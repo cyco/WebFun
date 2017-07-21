@@ -2,7 +2,7 @@ const buildName = (tagName) => tagName.substr(tagName.indexOf('-') + 1).slice().
 
 
 const makeFunction = (desc) => (Component, block) => {
-	desc(`Component ${buildName(Component.TagName||'')}`, () => {
+	desc(`Component ${buildName(Component.TagName || '')}`, () => {
 		beforeAll(() => customElements.define(Component.TagName, Component, Component.options));
 		block();
 	});

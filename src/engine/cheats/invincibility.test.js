@@ -1,4 +1,4 @@
-import InvincibilityCheat from '/engine/cheats/invincibility';
+import InvincibilityCheat from "/engine/cheats/invincibility";
 
 describe('InvincibilityCheat', () => {
 	let subject;
@@ -13,7 +13,7 @@ describe('InvincibilityCheat', () => {
 	});
 
 	it('makes the hero invinicible when executed', () => {
-		const mockEngine = { hero: {} };
+		const mockEngine = {hero: {}};
 		subject.execute(mockEngine);
 		expect(mockEngine.hero.invincible).toBeTrue();
 	});

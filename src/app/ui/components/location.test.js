@@ -1,4 +1,4 @@
-import Location, { Direction } from './location';
+import Location, { Direction } from "./location";
 
 describeComponent(Location, () => {
 	let subject;
@@ -49,7 +49,7 @@ describeComponent(Location, () => {
 			expect(subject._svg.classList).not.toContain('up');
 		});
 	});
-	
+
 	it('can show multiple states at once', () => {
 		subject.mask = Direction.North | Direction.West;
 

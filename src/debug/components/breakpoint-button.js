@@ -1,6 +1,6 @@
 import "./breakpoint-button.scss";
-import { Component } from '/ui';
-import BreakpointStore from '../breakpoint-store';
+import { Component } from "/ui";
+import BreakpointStore from "../breakpoint-store";
 
 export const Events = {
 	DidSet: 'DidSet',
@@ -25,8 +25,8 @@ export default class extends Component {
 
 		this._store = BreakpointStore.sharedStore;
 		this.breakpoint = null;
-		this._removeHandler = ({ detail: { breakpoint } }) => breakpoint === this.breakpoint && (this.active = false);
-		this._addHandler = ({ detail: { breakpoint } }) => breakpoint === this.breakpoint && (this.active = true);
+		this._removeHandler = ({detail: {breakpoint}}) => breakpoint === this.breakpoint && (this.active = false);
+		this._addHandler = ({detail: {breakpoint}}) => breakpoint === this.breakpoint && (this.active = true);
 	}
 
 	connectedCallback() {

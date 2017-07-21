@@ -1,5 +1,5 @@
-import { Condition } from '/engine/objects';
-import * as TileAtIsAgain from './tile-at-is-again';
+import { Condition } from "/engine/objects";
+import * as TileAtIsAgain from "./tile-at-is-again";
 
 describeCondition('TileAtIsAgain', (check, engine) => {
 	it('checks if a specific tile is found at the given location', () => {
@@ -7,7 +7,7 @@ describeCondition('TileAtIsAgain', (check, engine) => {
 		condition._opcode = TileAtIsAgain.Opcode;
 		condition._arguments = [10, 5, 7, 2];
 
-		engine.currentZone.getTileID = function(x, y, z) {
+		engine.currentZone.getTileID = function (x, y, z) {
 			if (x === 5 && y === 7 && z === 2) return 10;
 			return 7;
 		};

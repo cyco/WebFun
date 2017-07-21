@@ -1,4 +1,4 @@
-import {TransitionScene} from "/engine/scenes";
+import { TransitionScene } from "/engine/scenes";
 import { Point } from "/util";
 import * as Result from "../result";
 

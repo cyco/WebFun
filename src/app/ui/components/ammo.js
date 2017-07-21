@@ -1,11 +1,11 @@
-import './ammo.scss'
-import { Component } from '/ui';
+import "./ammo.scss";
+import { Component } from "/ui";
 
 export default class extends Component {
-	static get TagName(){
+	static get TagName() {
 		return 'wf-ammo';
 	}
-	
+
 	constructor() {
 		super();
 
@@ -15,12 +15,12 @@ export default class extends Component {
 
 		this._indicator = document.createElement("div");
 		this._indicator.classList.add("value");
-		
+
 	}
-	
-	connectedCallback(){
+
+	connectedCallback() {
 		super.connectedCallback();
-		
+
 		this.appendChild(this._background);
 		this.appendChild(this._indicator);
 	}

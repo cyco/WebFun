@@ -1,4 +1,4 @@
-import { XMLHttpRequest } from 'std.dom';
+import { XMLHttpRequest } from "std.dom";
 
 const base = "base/test/fixtures/";
 
@@ -27,9 +27,9 @@ function buildFixtureUrl(name) {
 if (!process.browser) {
 	const fs = require('fs');
 	const path = require('path');
-	
+
 	getFixtureContent = (name) => {
-		return fs.readFileSync(path.resolve('./game-data') + '/' + name, { encoding: 'utf8' });
+		return fs.readFileSync(path.resolve('./game-data') + '/' + name, {encoding: 'utf8'});
 	};
 
 	getFixtureData = (name, callback) => {

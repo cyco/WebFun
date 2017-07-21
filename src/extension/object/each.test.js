@@ -1,5 +1,3 @@
-import each from '/extension/object/each';
-
 describe('Object.each', () => {
 	it('extends the Object prototype', () => {
 		let object = {};

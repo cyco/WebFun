@@ -1,16 +1,15 @@
-import loadGameData from 'test/helpers/game-data';
-import { getFixtureContent } from 'test/helpers/fixture-loading';
-import { PrepareExpectations, ParseExpectation, ComparisonResult, CompareWorldItems } from 'src/debug';
-import ReadSaveGame from 'src/engine/save-format';
-import GameData from 'src/engine/game-data';
-import { InputStream } from 'src/util';
+import loadGameData from "test/helpers/game-data";
+import { getFixtureContent } from "test/helpers/fixture-loading";
+import { PrepareExpectations, ParseExpectation, ComparisonResult, CompareWorldItems } from "src/debug";
+import ReadSaveGame from "src/engine/save-format";
+import { InputStream } from "src/util";
 
 let rawData = null;
 
 xdescribe('SaveGame Reading', () => {
 	console.log('SaveGame Reading');
 	beforeAll((done) => {
-		loadGameData(function(data) {
+		loadGameData(function (data) {
 			rawData = data;
 			done();
 		});

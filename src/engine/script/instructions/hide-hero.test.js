@@ -1,5 +1,5 @@
-import { Instruction } from '/engine/objects';
-import * as HideHero from './hide-hero';
+import { Instruction } from "/engine/objects";
+import * as HideHero from "./hide-hero";
 
 describeInstruction('HideHero', (execute, engine) => {
 	it('hides the hero', () => {

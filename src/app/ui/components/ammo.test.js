@@ -1,4 +1,4 @@
-import Ammo from './ammo';
+import Ammo from "./ammo";
 
 describeComponent(Ammo, () => {
 	let subject;

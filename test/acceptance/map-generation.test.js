@@ -1,5 +1,5 @@
-import loadMapFixtures from 'test/helpers/map-fixture-parsing';
-import MapGenerator from 'src/engine/generation/map-generator';
+import loadMapFixtures from "test/helpers/map-fixture-parsing";
+import MapGenerator from "src/engine/generation/map-generator";
 
 const getSizeName = (size) => {
 	if (size === 1) return "Small";
@@ -16,7 +16,7 @@ const getPlanetName = (p) => {
 	return "Invalid";
 };
 
-xdescribe('Map Generation', function() {
+xdescribe('Map Generation', function () {
 	console.log('Map Generation');
 	let orderMaps = loadMapFixtures('order_maps.txt');
 	let typeMaps = loadMapFixtures('type_maps.txt');
@@ -29,7 +29,7 @@ xdescribe('Map Generation', function() {
 		let planet = typeMaps[i].planet;
 
 		it('Map 0x' + seed.toString(0x10) + " " + getPlanetName(planet) + " " + getSizeName(size),
-			(function(typeSample, orderSample) {
+			(function (typeSample, orderSample) {
 				return () => {
 					console.log('test map');
 					let seed = typeSample.seed;

@@ -1,10 +1,9 @@
 import "./debugger.scss";
-
-import { ComponentRegistry, Textbox } from '/ui';
-import { Window } from '/ui/components';
-import SteppingMetronome, { Status as MetronomeStatus } from './stepping-metronome';
-import BreakingExecutor, { Continuation as ContinuationMode } from './breaking-executor';
-import * as Components from './components';
+import { ComponentRegistry, Textbox } from "/ui";
+import { Window } from "/ui/components";
+import SteppingMetronome, { Status as MetronomeStatus } from "./stepping-metronome";
+import BreakingExecutor, { Continuation as ContinuationMode } from "./breaking-executor";
+import * as Components from "./components";
 
 export default class {
 	constructor(engine) {
@@ -32,20 +31,20 @@ export default class {
 
 		document.body.appendChild(this._window);
 	}
-	
+
 	_executorStateChanged({action, zone, index, type}) {
 		console.log('_executorStateChanged', action, zone, index, type);
 		Array.from(this._actionList.querySelectorAll('[current]')).forEach(e => e.current = false);
 
 		const actionNode = this._actionList.children[action];
 		actionNode.expanded = true;
-		
-		if(type === 'i') {
-			const thingy = actionNode.querySelector(`wf-debug-instruction:nth-child(${index+1})`);
+
+		if (type === 'i') {
+			const thingy = actionNode.querySelector(`wf-debug-instruction:nth-child(${index + 1})`);
 			thingy.current = true;
 			thingy.scrollIntoView();
-		} else if(type === 'c') {
-			const thingy = actionNode.querySelector(`wf-debug-condition:nth-child(${index+1})`);
+		} else if (type === 'c') {
+			const thingy = actionNode.querySelector(`wf-debug-condition:nth-child(${index + 1})`);
 			thingy.current = true;
 			thingy.scrollIntoView();
 		} else {
@@ -54,22 +53,22 @@ export default class {
 		}
 	}
 
-	_setupPointerFields(){	
+	_setupPointerFields() {
 		const container = document.createElement('div');
 		container.style.display = 'flex';
 		container.style.flexDirection = 'row';
-		
+
 		const actionPointer = new Textbox();
 		container.appendChild(actionPointer.element);
 		this._actionPointerField = actionPointer;
-		
+
 		const instructionPointer = new Textbox();
 		container.appendChild(instructionPointer.element);
 		this._instructionPointerField = instructionPointer;
-		
+
 		this._window.content.appendChild(container);
 	}
-	
+
 	_setupDebuggerControls() {
 		const controls = new Components.Controls();
 		controls.onstep = () => {
@@ -104,7 +103,7 @@ export default class {
 			component.zone = this._engine.currentZone.id;
 			component.index = idx;
 			component.action = action;
-			this._actionList.appendChild(component);	
+			this._actionList.appendChild(component);
 		});
 	}
 }

@@ -1,4 +1,4 @@
-import append from '/extension/element/append';
+import append from "/extension/element/append";
 
 describe('Element.append', () => {
 	it('is a function', () => {

@@ -1,9 +1,8 @@
-import './test/helpers/polyfill';
-import '/extension';
-import { PrepareExpectations, ParseExpectation } from '/debug/expectation';
-
-import Path from 'path';
-import FS from 'fs';
+import "./test/helpers/polyfill";
+import "/extension";
+import { PrepareExpectations, ParseExpectation } from "/debug/expectation";
+import Path from "path";
+import FS from "fs";
 
 const Exit = {
 	Normal: 0,
@@ -67,10 +66,10 @@ const parseArguments = (args) => {
 
 const readArguments = (node, self, ...args) => {
 	try {
-		let { options, seed, planet, size } = parseArguments(args);
+		let {options, seed, planet, size} = parseArguments(args);
 
 
-		return { options, seed, planet, size };
+		return {options, seed, planet, size};
 	} catch (e) {
 		helpAndExit(e, node, self);
 	}
@@ -86,21 +85,25 @@ const readExpectations = (path) => {
 	return PrepareExpectations(fileContents).map(ParseExpectation);
 };
 
-const key = ({ seed, planet, size }) => `0x${seed.toString(0x10).padStart(4, '0')}.0x${planet.toString(0x10).padStart(4, '0')}.0x${size.toString(0x10).padStart(4, '0')}}`;
+const key = ({seed, planet, size}) => `0x${seed.toString(0x10).padStart(4, '0')}.0x${planet.toString(0x10).padStart(4, '0')}.0x${size.toString(0x10).padStart(4, '0')}}`;
 
 const main = (...args) => {
-	let { options } = readArguments(...args);
+	let {options} = readArguments(...args);
 
 	try {
 		const expectations = {};
 		readExpectations(options.e).forEach((e) => {
-			const { seed, planet, size } = e;
-			if (!options.p && expectations[key({ seed, planet, size })]) console.warn(`Multiple expectations for world ${seed} ${planet} ${size} found!`);
-			if (options.p && !expectations[key({ seed, planet, size })]) {
+			const {seed, planet, size} = e;
+			if (!options.p && expectations[key({
+					seed,
+					planet,
+					size
+				})]) console.warn(`Multiple expectations for world ${seed} ${planet} ${size} found!`);
+			if (options.p && !expectations[key({seed, planet, size})]) {
 				process.stdout.write(JSON.stringify(e));
 				process.stdout.write('\n');
 			}
-			expectations[key({ seed, planet, size })] = true;
+			expectations[key({seed, planet, size})] = true;
 		});
 
 		if (options.p) process.stdout.write('\n\n');
@@ -108,7 +111,7 @@ const main = (...args) => {
 		for (let seed = 0; seed < 100; seed++)
 			for (let size = 1; size <= 3; size++)
 				for (let planet = 1; planet <= 3; planet++)
-					if (!expectations[key({ seed, planet, size })])
+					if (!expectations[key({seed, planet, size})])
 						process.stdout.write(`dumpWorld(${seed}, ${planet}, ${size});\n`);
 	} catch (error) {
 		process.stderr.write(`${error}\n`);

@@ -50,6 +50,7 @@ export default class FilePicker {
 	set allowsMultipleFiles(flag) {
 		this._allowsMultipleFiles = flag;
 	}
+
 	get allowsMultipleFiles() {
 		return this._allowsMultipleFiles;
 	}
@@ -57,6 +58,7 @@ export default class FilePicker {
 	set allowedTypes(types) {
 		this._allowedTypes = types;
 	}
+
 	get allowedTypes() {
 		return this._allowedTypes;
 	}
@@ -64,6 +66,7 @@ export default class FilePicker {
 	set didPick(dp) {
 		this._didPick = dp;
 	}
+
 	get didPick() {
 		return this._didPick;
 	}

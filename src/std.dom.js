@@ -1,4 +1,4 @@
-import { global } from './std';
+import { global } from "./std";
 
 export const Element = global.Element;
 export const Image = global.Image;

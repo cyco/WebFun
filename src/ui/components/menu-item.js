@@ -1,4 +1,4 @@
-import Component from '../component';
+import Component from "../component";
 import { State } from "../menu-item";
 import "./menu-item.scss";
 
@@ -55,7 +55,8 @@ export default class extends Component {
 
 		if (state instanceof Function) try {
 			state = state();
-		} catch (e) {}
+		} catch (e) {
+		}
 
 		let className = null;
 		switch (state) {
@@ -76,7 +77,7 @@ export default class extends Component {
 
 		if (className)
 			node.classList.add(className);
-		
+
 		return node;
 
 	}

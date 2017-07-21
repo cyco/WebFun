@@ -1,6 +1,5 @@
 import { PickupScene } from "/engine/scenes";
 import { Point } from "/util";
-import * as Result from "../result";
 
 export const Opcode = 0x1b;
 export const Arguments = 3;

@@ -1,8 +1,8 @@
 import Component from "../component";
 import Menu from "../menu";
 import { Separator } from "../menu-item";
-import MenuItem from './menu-item';
-import MenuItemSeparator from './menu-item-separator';
+import MenuItem from "./menu-item";
+import MenuItemSeparator from "./menu-item-separator";
 import "./menu-view.scss";
 
 export default class MenuView extends Component {
@@ -12,7 +12,7 @@ export default class MenuView extends Component {
 
 	constructor() {
 		super();
-		
+
 		this._menu = null;
 	}
 
@@ -34,7 +34,7 @@ export default class MenuView extends Component {
 	set menu(menu) {
 		if (menu && !(menu instanceof Menu))
 			menu = new Menu(menu);
-		
+
 		this._menu = menu;
 
 		if (!this.isConnected) return;

@@ -1,5 +1,5 @@
-import { Condition } from '/engine/objects';
-import * as EnterByPlane from './enter-by-plane';
+import { Condition } from "/engine/objects";
+import * as EnterByPlane from "./enter-by-plane";
 
 describeCondition('EnterByPlane', (check, engine) => {
 	it('checks if the zone has been entered by plane', () => {

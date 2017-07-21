@@ -1,5 +1,5 @@
 import { View } from "/ui";
-import { rgb } from '/util';
+import { rgb } from "/util";
 import { SceneManager } from "/engine";
 
 export default class extends View {

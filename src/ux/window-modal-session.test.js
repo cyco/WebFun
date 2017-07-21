@@ -1,4 +1,4 @@
-import WindowModalSession from '/ux/window-modal-session';
+import WindowModalSession from "/ux/window-modal-session";
 
 describe("WindowModalSession", () => {
 	let subject;
@@ -7,7 +7,7 @@ describe("WindowModalSession", () => {
 		window = {};
 		subject = new WindowModalSession(window);
 	});
-	
+
 	it('is a class', () => {
 		expect(WindowModalSession).toBeClass();
 	});

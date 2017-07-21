@@ -1,5 +1,5 @@
-import { Component } from '/ui';
-import ZonePreview from './zone-preview';
+import { Component } from "/ui";
+import ZonePreview from "./zone-preview";
 import "./zone-selection.scss";
 
 export default class extends Component {

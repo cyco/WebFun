@@ -2,12 +2,12 @@
 
 wf-editor-zone-editor {
 	display: flex;
-	
+
 	> wf-group {
 		display: flex;
 		flex-direction: column;
 	}
-	
+
 	> *:nth-child(1) {
 		width: 576px;
 	}
@@ -23,11 +23,11 @@ wf-editor-zone-editor {
 	wf-editor-layer-selection {
 		flex-shrink: 0;
 	}
-	
+
 	wf-editor-tile-selection {
 		@extend .inset-border;
 	}
-	
+
 	wf-editor-zone {
 	}
 }

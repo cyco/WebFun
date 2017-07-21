@@ -1,4 +1,4 @@
-import { HTMLElement } from '/std.dom';
+import { HTMLElement } from "/std.dom";
 
 function BabelHTMLElement() {
 	const newTarget = this.__proto__.constructor;
@@ -16,10 +16,18 @@ export default class extends BabelHTMLElement {
 	static get Options() {
 		return undefined;
 	}
-	adoptedCallback() {}
-	connectedCallback() {}
-	disconnectedCallback() {}
-	attributeChangedCallback(attributeName, oldValue, newValue) {}
+
+	adoptedCallback() {
+	}
+
+	connectedCallback() {
+	}
+
+	disconnectedCallback() {
+	}
+
+	attributeChangedCallback(attributeName, oldValue, newValue) {
+	}
 }
 
 export const makeBabelClass = (baseClass) => {
@@ -27,6 +35,7 @@ export const makeBabelClass = (baseClass) => {
 		const newTarget = this.__proto__.constructor;
 		return Reflect.construct(HTMLElement, [], newTarget);
 	}
+
 	Object.setPrototypeOf(BabelHTMLElement, baseClass);
 	Object.setPrototypeOf(BabelHTMLElement.prototype, baseClass.prototype);
 	return BabelHTMLElement;
@@ -40,8 +49,16 @@ export const makeComponent = (baseClass = HTMLElement) => class extends makeBabe
 	static get Options() {
 		return undefined;
 	}
-	adoptedCallback() {}
-	connectedCallback() {}
-	disconnectedCallback() {}
-	attributeChangedCallback(attributeName, oldValue, newValue) {}
+
+	adoptedCallback() {
+	}
+
+	connectedCallback() {
+	}
+
+	disconnectedCallback() {
+	}
+
+	attributeChangedCallback(attributeName, oldValue, newValue) {
+	}
 };

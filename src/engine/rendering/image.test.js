@@ -1,4 +1,4 @@
-import Image from '/engine/rendering/image';
+import Image from "/engine/rendering/image";
 
 describe("Image", () => {
 	it('is a simple container representing an image', () => {

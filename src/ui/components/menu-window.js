@@ -1,14 +1,14 @@
-import {Point} from "/util";
+import { Point } from "/util";
 import MenuView from "./menu-view";
 import MenuStack from "../menu-stack";
 import "./menu-window.scss";
 
 export default class MenuWindow extends MenuView {
-	static get TagName(){
+	static get TagName() {
 		return 'wf-menu-window';
 	}
-	
-	connectedCallback(){
+
+	connectedCallback() {
 		super.connectedCallback();
 	}
 

@@ -1,4 +1,4 @@
-import Breakpoint from './breakpoint';
+import Breakpoint from "./breakpoint";
 
 export default class extends Breakpoint {
 	constructor(symbolType, symbol) {

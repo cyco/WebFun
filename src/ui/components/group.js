@@ -1,4 +1,4 @@
-import Component from '../component';
+import Component from "../component";
 import "./group.scss";
 
 export default class extends Component {

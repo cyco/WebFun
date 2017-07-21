@@ -1,7 +1,7 @@
-import { Window, Group } from '/ui/components';
-import { Location, Health, Ammo, Weapon, Inventory } from '/app/ui/components';
-import { Events } from '/engine/engine';
-import Hero from '/engine/hero';
+import { Window, Group } from "/ui/components";
+import { Location, Health, Ammo, Weapon, Inventory } from "/app/ui/components";
+import { Events } from "/engine/engine";
+import Hero from "/engine/hero";
 import "./main-window.scss";
 
 export default class extends Window {
@@ -81,11 +81,14 @@ export default class extends Window {
 		return this._main;
 	}
 
-	_updateAmmo() {}
+	_updateAmmo() {
+	}
 
-	_updateWeapon() {}
+	_updateWeapon() {
+	}
 
-	_updateLocation() {}
+	_updateLocation() {
+	}
 
 	_updateHealth() {
 		console.log('update health', this._engine.hero);

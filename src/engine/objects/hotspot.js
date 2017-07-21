@@ -18,10 +18,10 @@ export const Type = {
 };
 
 export default class Hotspot {
-	static get Type(){
+	static get Type() {
 		return Type;
 	}
-	
+
 	constructor() {
 		this._x = -1;
 		this._y = -1;

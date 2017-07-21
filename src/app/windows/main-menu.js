@@ -1,8 +1,7 @@
 import { Menu, MenuItemSeparator as Separator } from "/ui";
 import { WindowModalSession } from "/ux";
-import Settings from '/settings';
-import { Menu as DebugMenu } from '/debug';
-
+import Settings from "/settings";
+import { Menu as DebugMenu } from "/debug";
 import StatisticsWindow from "./statistics-window";
 
 export default class extends Menu {
@@ -86,9 +85,9 @@ export default class extends Menu {
 				mnemonic: 0
 			}]
 		}];
-		
-		if(Settings.debug) menuItems.push(DebugMenu);
-		
+
+		if (Settings.debug) menuItems.push(DebugMenu);
+
 		super(menuItems);
 	}
 

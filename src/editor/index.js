@@ -1,12 +1,12 @@
-import './index.scss';
-import { ComponentRegistry } from '/ui';
-import { OutputStream } from '/util';
-import * as Components from './components';
-import { Window } from './components';
-import * as Editors from './editors';
-import { ZonesEditor, TileEditor } from './editors';
-import WindowMenu from './menu';
-import Writer from './writer';
+import "./index.scss";
+import { ComponentRegistry } from "/ui";
+import { OutputStream } from "/util";
+import * as Components from "./components";
+import { Window } from "./components";
+import * as Editors from "./editors";
+import { ZonesEditor, TileEditor } from "./editors";
+import WindowMenu from "./menu";
+import Writer from "./writer";
 
 export const Type = {
 	Zones: 'Zones',
@@ -51,7 +51,7 @@ export default class {
 
 		const buffer = stream.buffer;
 		const array = new Uint8Array(buffer);
-		const base64 = btoa(Array.from(array).map(function(byte) {
+		const base64 = btoa(Array.from(array).map(function (byte) {
 			return String.fromCharCode(byte);
 		}).join(''));
 

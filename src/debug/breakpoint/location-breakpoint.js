@@ -1,13 +1,13 @@
-import Breakpoint from './breakpoint';
+import Breakpoint from "./breakpoint";
 
 export default class extends Breakpoint {
-	constructor(zone, action, type=null, idx=null) {
+	constructor(zone, action, type = null, idx = null) {
 		super();
-		
+
 		this._path = [zone, action];
-		
-		if(type !== null) this._path.push(type);
-		if(idx !== null) this._path.push(idx);
+
+		if (type !== null) this._path.push(type);
+		if (idx !== null) this._path.push(idx);
 	}
 
 	get id() {

@@ -1,4 +1,4 @@
-import PickupScene from '/engine/scenes/pickup-scene';
+import PickupScene from "/engine/scenes/pickup-scene";
 
 describe("PickupScene", () => {
 	it('can be instantiated without throwing exceptions', () => {
@@ -8,9 +8,12 @@ describe("PickupScene", () => {
 	it('watches the input manager for pause button input and eventually pops itself from the scene manager', () => {
 		let popCalled = false;
 		const engine = {
-			inputManager: { pickUp: false },
-			sceneManager: { popScene: () => popCalled = true },
-			inventory: { addItem: () => {} }
+			inputManager: {pickUp: false},
+			sceneManager: {popScene: () => popCalled = true},
+			inventory: {
+				addItem: () => {
+				}
+			}
 		};
 
 		const scene = new PickupScene();
@@ -27,7 +30,12 @@ describe("PickupScene", () => {
 
 	it('adds the current item to the inventory when it is removed from the scene manager', () => {
 		const item = {};
-		const engine = { inventory: { addItem() {} } };
+		const engine = {
+			inventory: {
+				addItem() {
+				}
+			}
+		};
 		spyOn(engine.inventory, 'addItem');
 
 		const scene = new PickupScene();
@@ -41,9 +49,12 @@ describe("PickupScene", () => {
 	it('counts ticks and flashes the item', () => {
 		const engine = {
 			inputManager: {},
-			sceneManager: { _stack: [{ camera: { offset: {} } }] }
+			sceneManager: {_stack: [{camera: {offset: {}}}]}
 		};
-		const renderer = { renderTile() {} };
+		const renderer = {
+			renderTile() {
+			}
+		};
 		const item = {};
 
 		const scene = new PickupScene();
@@ -73,15 +84,18 @@ describe("PickupScene", () => {
 	it('renders the tile at the correct location', () => {
 		const engine = {
 			inputManager: {},
-			sceneManager: { _stack: [{ camera: { offset: { x: -2, y: -1 } } }] }
+			sceneManager: {_stack: [{camera: {offset: {x: -2, y: -1}}}]}
 		};
-		const renderer = { renderTile() {} };
+		const renderer = {
+			renderTile() {
+			}
+		};
 		const item = {};
 
 		const scene = new PickupScene();
 		scene.engine = engine;
 		scene.tile = item;
-		scene.location = { x: 4, y: 8 };
+		scene.location = {x: 4, y: 8};
 
 		5..times(() => scene.update());
 

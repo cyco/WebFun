@@ -1,4 +1,4 @@
-const store = function(key, object) {
+const store = function (key, object) {
 	try {
 		this.setItem(key, JSON.stringify(object));
 	} catch (e) {

@@ -1,7 +1,7 @@
-import HorizontalPointRange from '/util/horizontal-point-range';
+import HorizontalPointRange from "/util/horizontal-point-range";
 
-describe('HorizontalPointRange', () =>  {
-	it('is a range of points that only extends in y-dimension', () =>  {
+describe('HorizontalPointRange', () => {
+	it('is a range of points that only extends in y-dimension', () => {
 		let range = new HorizontalPointRange(3, 8, 4);
 		expect(range.from.x).toBe(3);
 		expect(range.from.y).toBe(4);
@@ -9,11 +9,11 @@ describe('HorizontalPointRange', () =>  {
 		expect(range.to.y).toBe(4);
 	});
 
-	it('has a method to iterate through all points', () =>  {
+	it('has a method to iterate through all points', () => {
 		let visited = {};
 		let range = new HorizontalPointRange(3, 8, 4);
 
-		range.iterate(function(point) {
+		range.iterate(function (point) {
 			visited[point.x + "x" + point.y] = true;
 		});
 
@@ -27,11 +27,11 @@ describe('HorizontalPointRange', () =>  {
 		});
 	});
 
-	it('can iterate backwards', () =>  {
+	it('can iterate backwards', () => {
 		let visited = {};
 		let range = new HorizontalPointRange(2, 0, 4);
 
-		range.iterate(function(point) {
+		range.iterate(function (point) {
 			visited[point.x + "x" + point.y] = true;
 		}, -1);
 

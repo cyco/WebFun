@@ -15,8 +15,8 @@ export default class Menubar extends MenuView {
 		super();
 		this._currentItem = -1;
 	}
-	
-	connectedCallback(){
+
+	connectedCallback() {
 		super.connectedCallback();
 
 		this.classList.add("menubar");

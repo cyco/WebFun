@@ -1,14 +1,14 @@
-import { Window } from '/ui/components';
+import { Window } from "/ui/components";
 import { Textbox } from "/ui";
 import { PersistentState } from "/engine";
 import "./statistics-window.scss";
 
 export default class extends Window {
-	static get TagName(){
+	static get TagName() {
 		return 'wf-statistics-window';
 	}
-	
-	connectedCallback(){
+
+	connectedCallback() {
 		super.connectedCallback();
 
 		this._setupWindow();
@@ -46,11 +46,11 @@ export default class extends Window {
 		textbox.value = this._state[key];
 		/* textbox.editable = !WebFun.DEBUG;
 
-		if (WebFun.DEBUG) {
-			const self = this;
-			textbox.onchange = () => self._state[key] = textbox.value;
-		}
-		*/
+		 if (WebFun.DEBUG) {
+		 const self = this;
+		 textbox.onchange = () => self._state[key] = textbox.value;
+		 }
+		 */
 
 		const row = document.createElement("li");
 		row.appendChild(label);

@@ -4,6 +4,7 @@ export default class InvincibilityCheat extends Cheat {
 	get code() {
 		return "goyoda";
 	}
+
 	get message() {
 		return "Invincible!";
 	}

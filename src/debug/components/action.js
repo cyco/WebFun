@@ -1,11 +1,11 @@
 import "./action.scss";
-import { Component } from '/ui';
-import { IconButton } from '/ui/components';
-import BreakpointButton from './breakpoint-button';
-import Condition from './condition';
-import Instruction from './instruction';
-import { LocationBreakpoint } from '../breakpoint';
-import { localStorage } from '/std.dom';
+import { Component } from "/ui";
+import { IconButton } from "/ui/components";
+import BreakpointButton from "./breakpoint-button";
+import Condition from "./condition";
+import Instruction from "./instruction";
+import { LocationBreakpoint } from "../breakpoint";
+import { localStorage } from "/std.dom";
 
 export default class extends Component {
 	static get TagName() {
@@ -49,7 +49,8 @@ export default class extends Component {
 		this.expanded = localStorage.load(this._storageId);
 	}
 
-	attributeChangedCallback(attribute) {}
+	attributeChangedCallback(attribute) {
+	}
 
 	set action(action) {
 		this._action = action;

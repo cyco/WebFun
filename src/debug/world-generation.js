@@ -1,11 +1,11 @@
 import "./world-generation.scss";
-import { Textbox, Checkbox } from '/ui';
-import { Window } from '/ui/components';
-import { FileLoader } from '/util';
-import Story from '/engine/story';
-import { DataFileReader, GameData } from '/engine';
-import ZoneType from '/engine/objects';
-import { PrepareExpectations, ParseExpectation, ComparisonResult, CompareWorldItems } from './expectation';
+import { Textbox, Checkbox } from "/ui";
+import { Window } from "/ui/components";
+import { FileLoader } from "/util";
+import Story from "/engine/story";
+import { DataFileReader, GameData } from "/engine";
+import ZoneType from "/engine/objects";
+import { PrepareExpectations, ParseExpectation, ComparisonResult, CompareWorldItems } from "./expectation";
 
 export default class {
 	constructor(engine) {

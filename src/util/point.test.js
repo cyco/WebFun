@@ -1,4 +1,4 @@
-import Point from '/util/point';
+import Point from "/util/point";
 
 describe('Point', () => {
 	it('defines a point in space with up to 3 coordinates', () => {

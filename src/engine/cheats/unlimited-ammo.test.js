@@ -1,4 +1,4 @@
-import UnlimitedAmmoCheat from '/engine/cheats/unlimited-ammo';
+import UnlimitedAmmoCheat from "/engine/cheats/unlimited-ammo";
 
 describe('UnlimitedAmmoCheat', () => {
 	let subject;
@@ -13,7 +13,7 @@ describe('UnlimitedAmmoCheat', () => {
 	});
 
 	it('grants unlimited ammo when executed', () => {
-		const mockEngine = { hero: {} };
+		const mockEngine = {hero: {}};
 		subject.execute(mockEngine);
 		expect(mockEngine.hero.unlimitedAmmo).toBeTrue();
 	});

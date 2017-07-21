@@ -1,4 +1,4 @@
-import Hotspot from '/engine/objects/hotspot';
+import Hotspot from "/engine/objects/hotspot";
 
 describe('Hotspot', () => {
 	it('right now it\'s a very simple class', () => {
@@ -8,6 +8,6 @@ describe('Hotspot', () => {
 		expect(hotspot.type).toBe(-1);
 		expect(hotspot.arg).toBe(-1);
 		expect(hotspot.x).toBe(-1);
-		expect(hotspot.y).toBe(-1); 
+		expect(hotspot.y).toBe(-1);
 	});
 });

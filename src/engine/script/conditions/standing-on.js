@@ -5,12 +5,12 @@ export default (args, zone, engine) => engine.hero.location.x === args[0] && eng
 
 // TODO: validate against original implementation
 /* case STANDS_ON:
-                if ( mode != 1
-                  || condition->arg1 != hero_x
-                  || condition->arg2 != hero_y
-                  || zone->tile_ids[3 * (hero_x + 18 * hero_y)] != condition->arg3 )
-                {
-                  goto condition_NOT_satisfied;
-                }
-                break;
-*/
+ if ( mode != 1
+ || condition->arg1 != hero_x
+ || condition->arg2 != hero_y
+ || zone->tile_ids[3 * (hero_x + 18 * hero_y)] != condition->arg3 )
+ {
+ goto condition_NOT_satisfied;
+ }
+ break;
+ */

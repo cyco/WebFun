@@ -1,14 +1,14 @@
 wf-editor-tile-preview {
 	display: inline-block;
 	position: relative;
-	
+
 	width: 32px;
 	height: 32px;
-	
-	div{
+
+	div {
 		display: none;
 	}
-	
+
 	&[selected] div {
 		display: block;
 		position: absolute;
@@ -16,7 +16,7 @@ wf-editor-tile-preview {
 		right: 0px;
 		top: 0px;
 		bottom: 0px;
-		
+
 		border: 1px solid green;
 	}
 }

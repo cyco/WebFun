@@ -1,5 +1,5 @@
-import { Message, rand } from '/util';
-import { WorldGenerator, DagobahGenerator } from '/engine/generation';
+import { Message, rand } from "/util";
+import { WorldGenerator, DagobahGenerator } from "/engine/generation";
 
 export default class {
 	constructor(seed, planet, size) {
@@ -43,7 +43,7 @@ export default class {
 
 		this._setupWorld(generator, engine);
 		this._setupDagobah(generator, engine);
-		
+
 		Message(`done 0x${this.seed.toString(0x10).padStart(4, '0')}, 0x${this.planet.toString(0x10).padStart(4, '0')}, 0x${this.size.toString(0x10).padStart(4, '0')}`);
 	}
 
@@ -61,7 +61,7 @@ export default class {
 	get world() {
 		return this._world;
 	}
-	
+
 	get dagobah() {
 		return this._dagobah;
 	}

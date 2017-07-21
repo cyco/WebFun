@@ -1,5 +1,5 @@
-import './inventory-row.scss';
-import { Component } from '/ui';
+import "./inventory-row.scss";
+import { Component } from "/ui";
 
 export default class extends Component {
 	static get TagName() {

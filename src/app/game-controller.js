@@ -1,14 +1,14 @@
 import { dispatch } from "/util";
 import { LoadingView, SceneView } from "./ui";
-import Settings from '/settings';
+import Settings from "/settings";
 import { MainWindow, MainMenu } from "./windows";
 import { Engine, CanvasRenderer, WebGLRenderer, Story, Metronome, Hero, Inventory } from "/engine";
 import { Planet, WorldSize } from "/engine/types";
-import { ZoneScene } from '/engine/scenes';
-import { DesktopInputManager } from '/engine/input';
+import { ZoneScene } from "/engine/scenes";
+import { DesktopInputManager } from "/engine/input";
 import Loader from "./loader";
-import { ScriptExecutor } from '/engine/script';
-import { WorldGeneration, Debugger } from '/debug';
+import { ScriptExecutor } from "/engine/script";
+import { WorldGeneration, Debugger } from "/debug";
 
 export default class {
 	constructor() {
@@ -37,7 +37,7 @@ export default class {
 	}
 
 	_determineRenderer() {
-		if(WebGLRenderer.isSupported()) {
+		if (WebGLRenderer.isSupported()) {
 			return WebGLRenderer;
 		}
 
@@ -64,8 +64,8 @@ export default class {
 
 		const loader = new Loader();
 		loader.onfail = (event) => console.log("fail", event);
-		loader.onprogress = ({ detail: { progress } }) => loadingView.progress = progress;
-		loader.onloadsetupimage = ({ detail: { pixels, palette} }) => loadingView.showImage(pixels, palette);
+		loader.onprogress = ({detail: {progress}}) => loadingView.progress = progress;
+		loader.onloadsetupimage = ({detail: {pixels, palette}}) => loadingView.showImage(pixels, palette);
 		loader.onload = () => {
 			loadingView.progress = 1.0;
 			dispatch(() => this.newStory(), 0);
@@ -74,7 +74,7 @@ export default class {
 	}
 
 	newStory() {
-		const duration = (performance.now() - this._startTime)/1000;
+		const duration = (performance.now() - this._startTime) / 1000;
 		console.log(`Loading took ${duration.toFixed(4)}s`);
 		if (Settings.debugWorldGeneration) {
 			new WorldGeneration(this._engine);
@@ -133,7 +133,7 @@ export default class {
 		engine.inputManager.addListeners();
 		this._window.engine = engine;
 
-		if(Settings.autostartEngine) {
+		if (Settings.autostartEngine) {
 			engine.metronome.start();
 		}
 	}

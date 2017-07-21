@@ -1,4 +1,4 @@
-import clear from '/extension/element/clear';
+import clear from "/extension/element/clear";
 
 describe('Element.clear', () => {
 	it('removes all children of an element', () => {

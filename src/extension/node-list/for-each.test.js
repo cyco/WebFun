@@ -1,6 +1,6 @@
-import { NodeList } from 'std.dom';
-import sandboxed from 'test-helpers/dom-sandbox';
-import forEach from './for-each';
+import { NodeList } from "std.dom";
+import sandboxed from "test-helpers/dom-sandbox";
+import forEach from "./for-each";
 
 describe('NodeList.forEach', sandboxed((sand) => {
 	it('extends the NodeList prototype', () => {

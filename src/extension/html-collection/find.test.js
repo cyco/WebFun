@@ -1,5 +1,5 @@
-import { HTMLCollection } from 'std.dom';
-import render from 'test-helpers/render';
+import { HTMLCollection } from "std.dom";
+import render from "test-helpers/render";
 
 describe('HTMLCollection.map', () => {
 	let subject;

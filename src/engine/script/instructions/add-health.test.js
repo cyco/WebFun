@@ -1,5 +1,5 @@
-import { Instruction } from '/engine/objects';
-import * as AddHealth from './add-health';
+import { Instruction } from "/engine/objects";
+import * as AddHealth from "./add-health";
 
 describeInstruction('AddHealth', (execute, engine) => {
 	it('replenishes the hero\'s health', () => {

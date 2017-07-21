@@ -1,5 +1,5 @@
-import { Instruction } from '/engine/objects';
-import * as EnableHotspot from './enable-hotspot';
+import { Instruction } from "/engine/objects";
+import * as EnableHotspot from "./enable-hotspot";
 
 describeInstruction('EnableHotspot', (execute, engine) => {
 	it('enables the specified hotspot in the current zone', () => {

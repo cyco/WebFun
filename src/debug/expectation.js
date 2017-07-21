@@ -11,7 +11,7 @@ export const ParseExpectation = (expectation, line) => {
 		else
 			console.warn(`Unable to parse expectation!`);
 	}
-	return { seed: -1 };
+	return {seed: -1};
 };
 
 export const ComparisonResult = {

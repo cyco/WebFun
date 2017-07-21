@@ -1,7 +1,7 @@
-import constantly from '/util/constantly';
+import constantly from "/util/constantly";
 
-describe('constantly', ()=> {
-	it('returns a function that always evaluates to the given input', ()=> {
+describe('constantly', () => {
+	it('returns a function that always evaluates to the given input', () => {
 		let newFn = constantly(5);
 
 		expect(newFn()).toBe(5);

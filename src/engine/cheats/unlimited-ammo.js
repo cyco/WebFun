@@ -4,6 +4,7 @@ export default class extends Cheat {
 	get code() {
 		return "gohan";
 	}
+
 	get message() {
 		return "Super Smuggler!";
 	}

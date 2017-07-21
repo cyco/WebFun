@@ -1,4 +1,4 @@
-import ScriptExecutor from '/engine/script/script-executor';
+import ScriptExecutor from "/engine/script/script-executor";
 
 describe("ScriptExecutor", () => {
 	let evaluator, engine, action;
@@ -36,7 +36,10 @@ describe("ScriptExecutor", () => {
 		});
 
 		it('uses a condition checker to test all conditions', () => {
-			const checker = { check() {} };
+			const checker = {
+				check() {
+				}
+			};
 			evaluator._checker = checker;
 
 			spyOn(checker, 'check').and.returnValue(true);
@@ -47,7 +50,10 @@ describe("ScriptExecutor", () => {
 		});
 
 		it('returns false if one condition check fails', () => {
-			const checker = { check() {} };
+			const checker = {
+				check() {
+				}
+			};
 			evaluator._checker = checker;
 
 			spyOn(checker, 'check').and.returnValue(false);
@@ -57,7 +63,10 @@ describe("ScriptExecutor", () => {
 		});
 
 		it('stops execution early if one condition fails', () => {
-			const checker = { check() {} };
+			const checker = {
+				check() {
+				}
+			};
 			evaluator._checker = checker;
 
 			spyOn(checker, 'check').and.returnValue(false);
@@ -72,12 +81,15 @@ describe("ScriptExecutor", () => {
 	describe('execute intructions', () => {
 		let executor;
 		beforeEach(() => {
-			executor = { execute() {} };
+			executor = {
+				execute() {
+				}
+			};
 			evaluator._executor = executor;
 		});
 
 		it('executes all instructions in an action', () => {
-			const action = { instructions: ['instruction1', 'instruction2'] };
+			const action = {instructions: ['instruction1', 'instruction2']};
 			spyOn(executor, 'execute');
 
 			evaluator.executeInstructions(action);
@@ -86,7 +98,7 @@ describe("ScriptExecutor", () => {
 		});
 
 		it('starts execution at the instruction pointer', () => {
-			const action = { instructions: ['instruction1', 'instruction2'], instructionPointer: 1 };
+			const action = {instructions: ['instruction1', 'instruction2'], instructionPointer: 1};
 			spyOn(executor, 'execute');
 
 			evaluator.executeInstructions(action);
@@ -95,7 +107,7 @@ describe("ScriptExecutor", () => {
 		});
 
 		it('stops executing instructions when an instruction returns true', () => {
-			const action = { instructions: ['instruction1', 'instruction2'], instructionPointer: 0 };
+			const action = {instructions: ['instruction1', 'instruction2'], instructionPointer: 0};
 			spyOn(executor, 'execute').and.returnValue(true);
 
 			evaluator.executeInstructions(action);

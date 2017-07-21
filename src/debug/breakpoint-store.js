@@ -1,6 +1,6 @@
-import { EventTarget } from '/util';
-import { localStorage } from '/std.dom';
-import { SymbolicBreakpoint, LocationBreakpoint } from './breakpoint';
+import { EventTarget } from "/util";
+import { localStorage } from "/std.dom";
+import { SymbolicBreakpoint, LocationBreakpoint } from "./breakpoint";
 
 let sharedInstance = null;
 
@@ -32,13 +32,13 @@ export default class BreakpointStore extends EventTarget {
 	addBreakpoint(bpt) {
 		this._breakpoints[bpt.id] = bpt;
 		this._store();
-		this.dispatchEvent(new Event(Events.DidAddBreakpoint), { detail: { breakpoint: bpt } });
+		this.dispatchEvent(new Event(Events.DidAddBreakpoint), {detail: {breakpoint: bpt}});
 	}
 
 	hasBreakpoint(id) {
 		return !!this.getBreakpoint(id);
 	}
-	
+
 	getBreakpoint(id) {
 		return this._breakpoints[id];
 	}
@@ -46,7 +46,7 @@ export default class BreakpointStore extends EventTarget {
 	removeBreakpoint(bpt) {
 		delete this._breakpoints[bpt.id];
 		this._store();
-		this.dispatchEvent(new Event(Events.DidRemoveBreakpoint), { detail: { breakpoint: bpt } });
+		this.dispatchEvent(new Event(Events.DidRemoveBreakpoint), {detail: {breakpoint: bpt}});
 	}
 
 	_store() {
