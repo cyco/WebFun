@@ -1,4 +1,8 @@
 export default class CharFrame {
+	constructor(tiles) {
+		this._tiles = tiles;
+	}
+
 	get tiles() {
 		return this._tiles;
 	}

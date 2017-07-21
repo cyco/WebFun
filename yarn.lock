@@ -1882,6 +1882,10 @@ esprima@^3.1.1:
   version "3.1.3"
   resolved "https://registry.yarnpkg.com/esprima/-/esprima-3.1.3.tgz#fdca51cee6133895e3c88d535ce49dbff62a4633"
 
+esprima@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/esprima/-/esprima-4.0.0.tgz#4499eddcd1110e0b218bacf2fa7f7f59f55ca804"
+
 esrecurse@^4.1.0:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/esrecurse/-/esrecurse-4.2.0.tgz#fa9568d98d3823f9a41d91e902dcab9ea6e5b163"
@@ -3124,6 +3128,13 @@ js-yaml@^3.7.0:
     argparse "^1.0.7"
     esprima "^3.1.1"
 
+js-yaml@^3.9.0:
+  version "3.9.0"
+  resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-3.9.0.tgz#4ffbbf25c2ac963b8299dc74da7e3740de1c18ce"
+  dependencies:
+    argparse "^1.0.7"
+    esprima "^4.0.0"
+
 js-yaml@~3.7.0:
   version "3.7.0"
   resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-3.7.0.tgz#5c967ddd837a9bfdca5f2de84253abe8a1c03b80"
@@ -3235,6 +3246,21 @@ jsprim@^1.2.2:
     extsprintf "1.0.2"
     json-schema "0.2.3"
     verror "1.3.6"
+
+kaitai-struct-compiler@^0.7.1:
+  version "0.7.1"
+  resolved "https://registry.yarnpkg.com/kaitai-struct-compiler/-/kaitai-struct-compiler-0.7.1.tgz#6f527beec86e05301394a425d7de7e0c84c03e4f"
+
+"kaitai-struct-loader@https://github.com/cyco/kaitai-struct-loader.git":
+  version "0.1.0"
+  resolved "https://github.com/cyco/kaitai-struct-loader.git#3c11ec710907275bffb347ad01e36f9b64c80f33"
+  dependencies:
+    js-yaml "^3.9.0"
+    kaitai-struct-compiler "^0.7.1"
+
+kaitai-struct@^0.8.0-SNAPSHOT.2:
+  version "0.8.0-SNAPSHOT.2"
+  resolved "https://registry.yarnpkg.com/kaitai-struct/-/kaitai-struct-0.8.0-SNAPSHOT.2.tgz#225a2618349437653897a13e06e683078cd70c2d"
 
 karma-chrome-launcher@^2.2.0:
   version "2.2.0"

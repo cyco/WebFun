@@ -1,5 +1,6 @@
 import EventTarget from "./event-target";
 import InputStream from "./input-stream";
+import KaitaiStream from 'kaitai-struct/KaitaiStream';
 
 export const Event = {
 	Start: "start",
@@ -31,8 +32,10 @@ export default class extends EventTarget {
 
 	_didLoad(reader) {
 		const stream = new InputStream(reader.result || reader.response);
+		const kaitaiStream = new KaitaiStream(reader.result || reader.response);
 		this.dispatchEvent(Event.Load, {
 			stream,
+			kaitaiStream,
 			arraybuffer: reader.result || reader.response
 		});
 	}

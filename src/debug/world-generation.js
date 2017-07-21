@@ -12,7 +12,7 @@ export default class {
 		this._engine = engine;
 		this._window = document.createElement(Window.TagName);
 		this._window.content.classList.add('world-generation');
-		
+
 		this._currentStory = null;
 		this._readExpectations();
 		this._setupInputFields();
@@ -25,7 +25,7 @@ export default class {
 
 	_readExpectations() {
 		const fileLoader = new FileLoader('game-data/worlds.txt');
-		fileLoader.onload = ({ detail: { arraybuffer } }) => {
+		fileLoader.onload = ({detail: {arraybuffer}}) => {
 			this.expectations = PrepareExpectations((new TextDecoder()).decode(arraybuffer)).map(ParseExpectation);
 		};
 		fileLoader.load();
@@ -107,7 +107,7 @@ export default class {
 		const details = document.createElement('div');
 		details.append('Details:');
 		details.appendChild(document.createElement('br'));
-		details.append(`${i%10}x${Math.floor(i/10)}`);
+		details.append(`${i % 10}x${Math.floor(i / 10)}`);
 		details.appendChild(document.createElement('br'));
 		details.append(`Zone: ${worldItem.zoneID}`);
 		if (expectedWorldItem && expectedWorldItem.zoneID !== worldItem.zoneID) {
@@ -161,7 +161,7 @@ export default class {
 
 	withFreshEngine(callback) {
 		const prepareEngine = () => {
-			callback({ data: new GameData(this._rawData) });
+			callback({data: new GameData(this._rawData)});
 		};
 
 		if (this._freshEngine) {
@@ -169,8 +169,8 @@ export default class {
 		}
 
 		const loader = new FileLoader('game-data/yoda.data');
-		loader.onload = ({ detail: { stream } }) => {
-			this._rawData = new DataFileReader(stream);
+		loader.onload = ({detail: {kaitaiStream}}) => {
+			this._rawData = new DataFileReader(kaitaiStream);
 			prepareEngine();
 		};
 		loader.load();
