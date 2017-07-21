@@ -41,7 +41,7 @@ module.exports = {
 					Path.resolve(__dirname, "test/helpers")
 				]
 			}, { /* Kaitai-Struct definitions */
-				test: /\.ksy\.yml$/,
+				test: /\.ksy$/,
 				loader: 'kaitai-struct-loader'
 			}, {
 				/* Styles */

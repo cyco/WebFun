@@ -17,4 +17,4 @@ export Types from "./types";
 export Yoda from "./yoda";
 export { CanvasRenderer } from "./rendering";
 
-export DataFileReader from "../../docs/yodesk.ksy.yml";
+export DataFileReader from "./data-format/yodesk.ksy";
