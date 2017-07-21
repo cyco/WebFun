@@ -12,7 +12,7 @@ export const Events = {
 
 export const StageCount = 10;
 const TileImageBatchSize = 100;
-export default class GameDataLoader extends EventTarget {
+class Loader extends EventTarget {
 	constructor() {
 		super();
 
@@ -29,24 +29,25 @@ export default class GameDataLoader extends EventTarget {
 		this._engine = engine;
 
 		const loader = new FileLoader(this._dataUrl);
-		loader.onprogress = ({ detail: { progress } }) => this._progress(0, progress);
+		loader.onprogress = ({detail: {progress}}) => this._progress(0, progress);
 		loader.onfail = (reason) => this._fail(reason);
-		loader.onload = ({ detail: { stream } }) => this._readGameData(stream);
+		loader.onload = ({detail: {kaitaiStream}}) => this._readGameData(kaitaiStream);
 		loader.load();
 	}
 
 	_readGameData(stream) {
 		this._progress(1, 0);
-		this._rawData = DataFileReader(stream);
+		this._rawData = new DataFileReader(stream);
+		window.raw = this._rawData;
 		this._progress(1, 1);
 		this._loadPalette();
 	}
 
 	_loadPalette() {
 		const loader = new FileLoader(this._paletteUrl);
-		loader.onprogress = ({ detail: { progress } }) => this._progress(2, progress);
+		loader.onprogress = ({detail: {progress}}) => this._progress(2, progress);
 		loader.onfail = (reason) => this._fail(reason);
-		loader.onload = ({ detail: { arraybuffer } }) => {
+		loader.onload = ({detail: {arraybuffer}}) => {
 			const palette = new Uint8Array(arraybuffer);
 			this._engine.imageFactory.palette = palette;
 			this._loadSetupImage();
@@ -56,7 +57,14 @@ export default class GameDataLoader extends EventTarget {
 
 	_loadSetupImage() {
 		this._progress(3, 0);
-		const pixelData = this._rawData.STUP.pixelData;
+
+		const setupImageCategory = this._rawData.catalog.find(c => c.type === 'STUP');
+		if (!setupImageCategory) {
+			this._fail('Setup image not found in game file!');
+			return;
+		}
+
+		const pixelData = setupImageCategory.content.pixels;
 		const setupImage = this._engine.imageFactory.buildImage(288, 288, pixelData);
 		this.dispatchEvent(Events.DidLoadSetupImage, {
 			setupImage
@@ -69,7 +77,7 @@ export default class GameDataLoader extends EventTarget {
 		this._progress(4, 0);
 		this._engine.data = new GameData(this._rawData);
 		this._progress(4, 1);
-		
+
 		this._loadTileImages();
 	}
 
@@ -87,7 +95,7 @@ export default class GameDataLoader extends EventTarget {
 			for (; idx < max; idx++) {
 				const tile = tiles[idx];
 				tile._image = imageFactory.buildImage(tileWidth, tileHeight, tile._imageData);
-				if(tile.image && tile.name) tile.image.representation.title = tile.name;
+				if (tile.image && tile.name) tile.image.representation.title = tile.name;
 				this._progress(5, 4 * (idx / tileCount));
 			}
 		};
@@ -122,10 +130,10 @@ export default class GameDataLoader extends EventTarget {
 	}
 
 	_load() {
-		if(Settings.debug) {
+		if (Settings.debug) {
 			window.data = this._engine.data;
 		}
-		
+
 		this.dispatchEvent(Events.Load);
 		this._clearData();
 	}
@@ -139,3 +147,4 @@ export default class GameDataLoader extends EventTarget {
 		return this._setupImage;
 	}
 }
+export default Loader;
