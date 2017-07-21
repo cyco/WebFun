@@ -26,7 +26,7 @@
     "jest": "^20.0.4",
     "jest-cli": "^20.0.4",
     "jsdom": "^11.1.0",
-    "kaitai-struct-loader": "https://github.com/cyco/kaitai-struct-loader.git",
+    "kaitai-struct-loader": "^0.1.2",
     "karma": "^1.7.0",
     "karma-chrome-launcher": "^2.2.0",
     "karma-coverage-istanbul-reporter": "^1.3.0",
@@ -109,7 +109,7 @@
     }
   },
   "dependencies": {
-    "twgl.js": "^3.4.1",
-    "kaitai-struct": "^0.8.0-SNAPSHOT.2"
+    "kaitai-struct": "^0.8.0-SNAPSHOT.2",
+    "twgl.js": "^3.4.1"
   }
 }

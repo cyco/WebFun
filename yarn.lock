@@ -3251,11 +3251,12 @@ kaitai-struct-compiler@^0.7.1:
   version "0.7.1"
   resolved "https://registry.yarnpkg.com/kaitai-struct-compiler/-/kaitai-struct-compiler-0.7.1.tgz#6f527beec86e05301394a425d7de7e0c84c03e4f"
 
-"kaitai-struct-loader@https://github.com/cyco/kaitai-struct-loader.git":
-  version "0.1.0"
-  resolved "https://github.com/cyco/kaitai-struct-loader.git#3c11ec710907275bffb347ad01e36f9b64c80f33"
+kaitai-struct-loader@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/kaitai-struct-loader/-/kaitai-struct-loader-0.1.2.tgz#941b1f825ea138986e240c66d8d4b711de878346"
   dependencies:
     js-yaml "^3.9.0"
+    kaitai-struct "^0.8.0-SNAPSHOT.2"
     kaitai-struct-compiler "^0.7.1"
 
 kaitai-struct@^0.8.0-SNAPSHOT.2:
