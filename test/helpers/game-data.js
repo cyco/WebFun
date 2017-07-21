@@ -1,10 +1,11 @@
 import { getFixtureData } from './fixture-loading';
 import { InputStream } from 'src/util';
-import ReadFile from 'src/engine/data-format/file';
+import Yodesk from 'src/engine/file-format/yodesk.ksy';
+import KaitaiStream from 'kaitai-struct/KaitaiStream';
 
 export default (callback) => {
 	getFixtureData('yoda.data', function(file) {
-		let stream = new InputStream(file);
-		callback(ReadFile(stream));
+		let stream = new KaitaiStream(file);
+		callback(new Yodesk(stream));
 	});
 };

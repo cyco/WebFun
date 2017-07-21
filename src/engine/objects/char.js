@@ -11,10 +11,11 @@ export default class Char {
 		this._frames = [];
 		this._name = null;
 		this._data = null;
-		
+
 		this.rawData = null;
 		this.rawAuxData = null;
 		this.rawWeaponData = null;
+		this._type = null;
 	}
 
 	getFace(direction, frameIdx) {
@@ -59,7 +60,7 @@ export default class Char {
 	}
 
 	get type() {
-		return this._data[1] << 8 | this._data[0];
+		return this._type;
 	}
 
 	isHero() {

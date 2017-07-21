@@ -1,6 +1,5 @@
 export Cheats from "./cheats";
 export Engine from "./engine";
-export DataFileReader from "./data-format/file";
 export GameData from "./game-data";
 export Generation from "./generation";
 export Hero from "./hero";
@@ -18,3 +17,5 @@ export Types from "./types";
 export Yoda from "./yoda";
 export CanvasRenderer from "./rendering/canvas/canvas-renderer";
 export WebGLRenderer from "./rendering/webgl/renderer";
+
+export DataFileReader from "./file-format/yodesk.ksy";

@@ -61,6 +61,10 @@ module.exports = {
 			test: /\.glsl?$/,
 			loader: "webpack-glsl-loader"
 		},
+		{ /* Kaitai-Struct definitions */
+			test: /\.ksy$/,
+			loader: 'kaitai-struct-loader'
+		},
 			/** fonts **/
 			{
 				test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,

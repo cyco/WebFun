@@ -4,16 +4,23 @@ import { HotspotType, PuzzleType } from "./objects";
 export default class {
 	constructor(raw) {
 		this._rawInput = raw;
-		this._version = raw.VERS.version;
-		this._sounds = raw.SNDS.items.map((i) => i.name);
-		this._tiles = raw.TILE.tiles.map((t, i) => new Tile(i, t.attributes, t.pixelData));
-		this._puzzles = raw.PUZ2.puzzles.map((data, index) => this._makePuzzle(data, index));
-		this._zones = raw.ZONE.map((data, index) => this._makeZone(data, index));
-		this._characters = raw.CHAR.characters.map((data, index) => this._makeCharacter(data, index));
+		this._version = this._getCategory('VERS').version;
+		this._sounds = this._getCategory('SNDS').sounds.map((i) => i.content);
+		this._tiles = this._getCategory('TILE').tiles.map((t, i) => new Tile(i, t.attributes, t.pixels));
+		this._puzzles = this._getCategory('PUZ2').puzzles.map((data, index) => this._makePuzzle(data, index));
+		this._zones = this._getCategory('ZONE').zones.map((data, index) => this._makeZone(data, index));
+		this._characters = this._getCategory('CHAR').characters.map((data, index) => this._makeCharacter(data, index));
 
-		raw.CAUX.auxData.forEach(({data}, idx) => this._characters[idx].rawAuxData = data);
-		raw.CHWP.weaponData.forEach(({data}, idx) => this._characters[idx].rawWeaponData = data);
-		raw.TNAM.tileNames.forEach((name, idx) => name && (this._tiles[idx]._name = name.trimCharacter("\0")));
+		this._getCategory('CAUX').auxiliaries.forEach(({data}, idx) => this._characters[idx].rawAuxData = data);
+		this._getCategory('CHWP').weapons.forEach(({data}, idx) => this._characters[idx].rawWeaponData = data);
+		this._getCategory('TNAM').names.forEach((obj, idx) => obj.name && (this._tiles[obj.tileId]._name = obj.name));
+	}
+
+	_getCategory(category) {
+		const catalogEntry = this._rawInput.catalog.find(c => c.type === category);
+		if (!catalogEntry) throw `Category ${category} not found in game file!`;
+
+		return catalogEntry.content;
 	}
 
 	_makePuzzle(data, index) {
@@ -47,16 +54,16 @@ export default class {
 		zone._tileIDs = data.tileIds;
 		zone._hotspots = data.hotspots.map((d) => this._makeHotspot(d));
 		zone._npcs = data.izax.npcs.map((d) => new NPC(d));
-		zone.assignedItemIDs = data.izax.assignedItemIds;
-		zone.requiredItemIDs = data.izax.requiredItemIds;
-		zone.providedItemIDs = data.izx2.providedItemIds;
-		zone.puzzleNPCTileIDs = data.izx3.npcTileIds;
+		zone.assignedItemIDs = data.izax.assignedItems;
+		zone.requiredItemIDs = data.izax.requiredItems;
+		zone.providedItemIDs = data.izx2.providedItems;
+		zone.puzzleNPCTileIDs = data.izx3.puzzleNpc;
 		zone.izaxUnknown = data.izax.count1;
 		zone.izx4Unknown = data.izx4.unknown;
 
 		zone._actions = data.actions.map((data, i) => this._makeAction(data, i));
 		zone._tileStore = this.tiles;
-				
+
 		return zone;
 	}
 
@@ -66,7 +73,7 @@ export default class {
 		hotspot._y = data.y;
 
 		hotspot.enabled = !!data.enabled;
-		hotspot.arg = data.arg;
+		hotspot.arg = data.argument;
 		hotspot.type = data.type;
 
 		switch (hotspot.type) {
@@ -106,31 +113,14 @@ export default class {
 		return action;
 	}
 
-	_makeCharacter({blob: data}, idx) {
-		const frameSize = 8 * 2, frameCount = 3;
-		
-		const size = data.length;
-		const nonFrameSize = size - frameCount * frameSize;
-		const nonFrameData = data.slice(0, nonFrameSize);
-		const nameEnd = nonFrameData.indexOf(0);
-		const frameData = new Uint16Array(new Uint8Array(data.slice(nonFrameSize)).buffer);
+	_makeCharacter(data, idx) {
 		const char = new Char();
 		char._id = idx;
-		char._name = nonFrameData.slice(0, nameEnd).map(c => String.fromCharCode(c)).join('');
-		const flags = nonFrameData.slice(nameEnd+1);
-		// flags contain garbage
-		// it is at least 6 bytes for indy, max 15 bytes
-		// it is at least 10 bytes for yoda, max 21 bytes
-		// common bytes are aligned the end
-		char._data = flags.slice(-10);		
-		for (let i = 0; i < frameCount; i++) {
-			const thing = frameData.slice(i * frameSize / 2, (i + 1) * frameSize / 2);
-			const frameTiles = Array.from(thing).map(id => this._tiles[id] || null);
-			const frame = new CharFrame();
-			frame._tiles = frameTiles;
-			char._frames.push(frame);
-		}
-		char.rawData = data;
+		char._name = data.name;
+		char._frames.push(new CharFrame(data.frame1));
+		char._frames.push(new CharFrame(data.frame2));
+		char._frames.push(new CharFrame(data.frame3));
+		char._type = data.type;
 
 		return char;
 	}
