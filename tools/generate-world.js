@@ -1,10 +1,11 @@
 import './test/helpers/polyfill';
 import '/extension';
 import { InputStream } from '/util';
-import ReadFile from '/engine/file-format/file';
+import Yodesk from '/engine/file-format/yodesk.ksy';
 import { GameData, Story } from '/engine';
 import { Enabled as EnabledMessages, Finalize as FinalizeMessages } from '/util/message';
 import { PrepareExpectations, ParseExpectation, ComparisonResult, CompareWorldItems } from '/debug/expectation';
+import KaitaiStream from 'kaitai-struct/KaitaiStream';
 
 import Path from 'path';
 import FS from 'fs';
@@ -134,8 +135,8 @@ const readGameData = (path) => {
 	try {
 		const buffer = FS.readFileSync(fullPath);
 		const arrayBuffer = buffer.buffer.slice(buffer.byteOffset, buffer.byteOffset + buffer.byteLength);
-		const stream = new InputStream(arrayBuffer);
-		const rawData = ReadFile(stream);
+		const stream = new KaitaiStream(arrayBuffer);
+		const rawData = new Yodesk(stream);
 		return new GameData(rawData);
 	} catch (e) {
 		throw `Game file ${fullPath} could not be parsed!`;
@@ -151,7 +152,7 @@ const readExpectations = (path) => {
 };
 
 const findExpectation = (expectations, seed, planet, size) => expectations.find((e) => e.seed === seed && e.planet === planet && e.size === size);
-const compareItem = (actual, expected) => {	
+const compareItem = (actual, expected) => {
 	const result = CompareWorldItems(actual, expected);
 	if (result !== ComparisonResult.Different) return;
 
@@ -163,7 +164,7 @@ const compareItem = (actual, expected) => {
 const compare = (story, expectation) => {
 	if(expectation.world === null && !story._reseeded) throw `Expected reseed!`;
 	else if(expectation.world === null) return;
-		
+
 	/* main world */
 	try {
 		for (let i = 0; i < 100; i++) {
@@ -191,7 +192,7 @@ const main = (...args) => {
 		if(!options.a) {
 			const gameData = readGameData(options.d);
 			const story = new Story(seed, planet, size);
-        	
+
 			try {
 				if (options.v) EnabledMessages();
 				story.generateWorld({ data: gameData });
@@ -199,12 +200,12 @@ const main = (...args) => {
 			} catch (e) {
 				throw `Unexpected failure in world generation. ${e}`;
 			}
-        	
+
 			if (options.c) {
 				const expectations = readExpectations(options.e);
 				const expectation = findExpectation(expectations, seed, planet, size);
 				if (!expectation) throw `No sample found for world 0x${seed.toString(0x10)} 0x${planet.toString(0x10)} 0x${size.toString(0x10)}!`;
-        	
+
 				compare(story, expectation);
 			}
 		} else {
@@ -216,7 +217,7 @@ const main = (...args) => {
 				const { seed, planet, size } = e;
 				const story = new Story(seed, planet, size);
 				story.generateWorld({ data: readGameData(options.d) });
-			
+
 				try {
 					compare(story, e);
 					process.stdout.write(`[OK]   0x${seed.toString(0x10)} 0x${planet.toString(0x10)} 0x${size.toString(0x10)}\n`);
@@ -225,7 +226,7 @@ const main = (...args) => {
 					failed++;
 				}
 			});
-			
+
 			process.stdout.write(`${tested-failed} of ${tested} world combinations were generated correctly!\n`);
 		}
 	} catch (error) {
