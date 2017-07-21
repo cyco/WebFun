@@ -122,8 +122,6 @@ export default class {
 		char._frames.push(new CharFrame(data.frame3));
 		char._type = data.type;
 
-		console.log(data);
-
 		return char;
 	}
 
