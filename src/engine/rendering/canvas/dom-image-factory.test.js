@@ -1,5 +1,5 @@
 import DOMImageFactory from '/engine/rendering/canvas/dom-image-factory';
-import { Image } from '/std.dom';
+import {Image} from '/std.dom';
 
 describe("DOMImageFactory", () => {
 	const colorPalette = [
@@ -39,13 +39,13 @@ describe("DOMImageFactory", () => {
 		expect(representation).toHaveClass('pixelated');
 
 		/* for visual inspection
-		const imageNode = document.createElement('img');
-		imageNode.width = 3;
-		imageNode.height = 2;
-		imageNode.src = representation.src;
-		imageNode.style.zoom = 10;
-		imageNode.style.imageRendering = 'pixelated';
-		console.log('document.body.innerHTML = \'' + imageNode.outerHTML + '\';');
-		//*/
+		 const imageNode = document.createElement('img');
+		 imageNode.width = 3;
+		 imageNode.height = 2;
+		 imageNode.src = representation.src;
+		 imageNode.style.zoom = 10;
+		 imageNode.style.imageRendering = 'pixelated';
+		 console.log('document.body.innerHTML = \'' + imageNode.outerHTML + '\';');
+		 //*/
 	});
 });

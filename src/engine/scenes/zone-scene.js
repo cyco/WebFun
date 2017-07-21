@@ -4,7 +4,7 @@ import PauseScene from "./pause-scene";
 import MapScene from "./map-scene";
 import TransitionScene from "./transition-scene";
 
-import {Tile,Zone,HotspotType} from "/engine/objects";
+import { Tile, Zone, HotspotType } from "/engine/objects";
 import Camera from "/engine/camera";
 import Result from "/engine/script";
 import { rgba, Direction, Point } from "/util";
@@ -90,7 +90,10 @@ export default class ZoneScene extends Scene {
 		for (let z = 0; z < Zone.LAYERS; z++) {
 			for (let y = 0; y < zone.height; y++) {
 				for (let x = 0; x < zone.width; x++) {
-					renderer.renderTile(zone.getTile(x, y, z), x + offset.x, y + offset.y, z);
+					const tile = zone.getTile(x, y, z);
+					if (tile) {
+						renderer.renderTile(tile, x + offset.x, y + offset.y, z);
+					}
 				}
 			}
 
@@ -241,121 +244,117 @@ export default class ZoneScene extends Scene {
 		const zone = engine.currentZone;
 
 		switch (hotspot.type) {
-			case HotspotType.DoorIn:
-				{
-					const targetZone = engine.data.zones[hotspot.arg];
-					let waysOut = targetZone.hotspots.filter((h) => h.type === HotspotType.DoorOut);
+			case HotspotType.DoorIn: {
+				const targetZone = engine.data.zones[hotspot.arg];
+				let waysOut = targetZone.hotspots.filter((h) => h.type === HotspotType.DoorOut);
 
-					if (waysOut.length !== 1) console.warn("Found multiple doors out");
+				if (waysOut.length !== 1) console.warn("Found multiple doors out");
 
-					const transitionScene = new TransitionScene();
-					transitionScene.type = TransitionScene.TRANSITION_TYPE.ROOM;
-					transitionScene.targetHeroLocation = new Point(waysOut.first().x, waysOut.first().y);
-					transitionScene.targetZone = targetZone;
-					transitionScene.scene = engine.sceneManager.currentScene;
+				const transitionScene = new TransitionScene();
+				transitionScene.type = TransitionScene.TRANSITION_TYPE.ROOM;
+				transitionScene.targetHeroLocation = new Point(waysOut.first().x, waysOut.first().y);
+				transitionScene.targetZone = targetZone;
+				transitionScene.scene = engine.sceneManager.currentScene;
 
-					let world = engine.dagobah;
-					let location = world.locationOfZone(targetZone);
-					if (!location) {
-						world = engine.world;
-						location = world.locationOfZone(targetZone);
-					}
-					transitionScene.targetWorld = world;
-
-					targetZone.hotspots.filter((hotspot) => {
-						return hotspot.type === HotspotType.DoorOut && hotspot.arg === -1;
-					}).forEach((hotspot) => hotspot.arg = zone.id);
-
-					if (!location) {
-						world = null;
-						location = null;
-					}
-					transitionScene.targetZoneLocation = location;
-					engine.sceneManager.pushScene(transitionScene);
-					return true;
+				let world = engine.dagobah;
+				let location = world.locationOfZone(targetZone);
+				if (!location) {
+					world = engine.world;
+					location = world.locationOfZone(targetZone);
 				}
-			case HotspotType.DoorOut:
-				{
-					if (hotspot.arg === -1) console.warn("This is not where we're coming from!");
+				transitionScene.targetWorld = world;
 
-					const targetZone = engine.data.zones[hotspot.arg];
+				targetZone.hotspots.filter((hotspot) => {
+					return hotspot.type === HotspotType.DoorOut && hotspot.arg === -1;
+				}).forEach((hotspot) => hotspot.arg = zone.id);
 
-					zone.hotspots.filter((hotspot) => {
-						return hotspot.type === HotspotType.DoorOut;
-					}).forEach((hotspot) => hotspot.arg = -1);
-
-					const waysIn = targetZone.hotspots.filter((hotspot) => hotspot.type === HotspotType.DoorIn && hotspot.arg === zone.id);
-					if (waysIn.length !== 1) console.warn("Found multiple doors we might have come through!");
-
-					const transitionScene = new TransitionScene();
-					transitionScene.type = TransitionScene.TRANSITION_TYPE.ROOM;
-					transitionScene.targetHeroLocation = new Point(waysIn.first().x, waysIn.first().y);
-					transitionScene.targetZone = targetZone;
-					transitionScene.scene = engine.sceneManager.currentScene;
-
-					let world = engine.dagobah;
-					let location = world.locationOfZone(targetZone);
-					if (!location) {
-						world = engine.world;
-						location = world.locationOfZone(targetZone);
-					}
-					transitionScene.targetWorld = world;
-
-					if (!location) {
-						world = null;
-						location = null;
-					}
-					transitionScene.targetZoneLocation = location;
-					engine.sceneManager.pushScene(transitionScene);
-					return true;
+				if (!location) {
+					world = null;
+					location = null;
 				}
-			case HotspotType.xWingFromD:
-				{
-					if (hotspot.arg === -1) console.warn("This is not where we're coming from!");
+				transitionScene.targetZoneLocation = location;
+				engine.sceneManager.pushScene(transitionScene);
+				return true;
+			}
+			case HotspotType.DoorOut: {
+				if (hotspot.arg === -1) console.warn("This is not where we're coming from!");
 
-					const targetZone = engine.data.zones[hotspot.arg];
+				const targetZone = engine.data.zones[hotspot.arg];
 
-					const transitionScene = new TransitionScene();
-					transitionScene.type = TransitionScene.TRANSITION_TYPE.ROOM;
-					transitionScene.targetHeroLocation = new Point(0, 0);
-					transitionScene.targetZone = targetZone;
-					transitionScene.scene = engine.sceneManager.currentScene;
+				zone.hotspots.filter((hotspot) => {
+					return hotspot.type === HotspotType.DoorOut;
+				}).forEach((hotspot) => hotspot.arg = -1);
 
-					const world = engine.world;
-					const location = world.locationOfZone(targetZone);
-					if (!location) {
-						// zone is not on the current planet
-						return;
-					}
-					transitionScene.targetWorld = world;
-					transitionScene.targetZoneLocation = location;
-					engine.sceneManager.pushScene(transitionScene);
-					this.engine.state.enteredByPlane = true;
-					return true;
+				const waysIn = targetZone.hotspots.filter((hotspot) => hotspot.type === HotspotType.DoorIn && hotspot.arg === zone.id);
+				if (waysIn.length !== 1) console.warn("Found multiple doors we might have come through!");
+
+				const transitionScene = new TransitionScene();
+				transitionScene.type = TransitionScene.TRANSITION_TYPE.ROOM;
+				transitionScene.targetHeroLocation = new Point(waysIn.first().x, waysIn.first().y);
+				transitionScene.targetZone = targetZone;
+				transitionScene.scene = engine.sceneManager.currentScene;
+
+				let world = engine.dagobah;
+				let location = world.locationOfZone(targetZone);
+				if (!location) {
+					world = engine.world;
+					location = world.locationOfZone(targetZone);
 				}
-			case HotspotType.xWingToD:
-				{
-					if (hotspot.arg === -1) console.warn("This is not where we're coming from!");
+				transitionScene.targetWorld = world;
 
-					const targetZone = engine.data.zones[hotspot.arg];
-
-					const transitionScene = new TransitionScene();
-					transitionScene.type = TransitionScene.TRANSITION_TYPE.ROOM;
-					transitionScene.targetHeroLocation = new Point(0, 0);
-					transitionScene.targetZone = targetZone;
-					transitionScene.scene = engine.sceneManager.currentScene;
-
-					const location = engine.dagobah.locationOfZone(targetZone);
-					if (!location) {
-						// zone is not on dagobah
-						return;
-					}
-					transitionScene.targetWorld = document.dagobah;
-					transitionScene.targetZoneLocation = location;
-					engine.sceneManager.pushScene(transitionScene);
-					this.engine.state.enteredByPlane = true;
-					return true;
+				if (!location) {
+					world = null;
+					location = null;
 				}
+				transitionScene.targetZoneLocation = location;
+				engine.sceneManager.pushScene(transitionScene);
+				return true;
+			}
+			case HotspotType.xWingFromD: {
+				if (hotspot.arg === -1) console.warn("This is not where we're coming from!");
+
+				const targetZone = engine.data.zones[hotspot.arg];
+
+				const transitionScene = new TransitionScene();
+				transitionScene.type = TransitionScene.TRANSITION_TYPE.ROOM;
+				transitionScene.targetHeroLocation = new Point(0, 0);
+				transitionScene.targetZone = targetZone;
+				transitionScene.scene = engine.sceneManager.currentScene;
+
+				const world = engine.world;
+				const location = world.locationOfZone(targetZone);
+				if (!location) {
+					// zone is not on the current planet
+					return;
+				}
+				transitionScene.targetWorld = world;
+				transitionScene.targetZoneLocation = location;
+				engine.sceneManager.pushScene(transitionScene);
+				this.engine.state.enteredByPlane = true;
+				return true;
+			}
+			case HotspotType.xWingToD: {
+				if (hotspot.arg === -1) console.warn("This is not where we're coming from!");
+
+				const targetZone = engine.data.zones[hotspot.arg];
+
+				const transitionScene = new TransitionScene();
+				transitionScene.type = TransitionScene.TRANSITION_TYPE.ROOM;
+				transitionScene.targetHeroLocation = new Point(0, 0);
+				transitionScene.targetZone = targetZone;
+				transitionScene.scene = engine.sceneManager.currentScene;
+
+				const location = engine.dagobah.locationOfZone(targetZone);
+				if (!location) {
+					// zone is not on dagobah
+					return;
+				}
+				transitionScene.targetWorld = document.dagobah;
+				transitionScene.targetZoneLocation = location;
+				engine.sceneManager.pushScene(transitionScene);
+				this.engine.state.enteredByPlane = true;
+				return true;
+			}
 		}
 	}
 

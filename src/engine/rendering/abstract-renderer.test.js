@@ -1,8 +1,8 @@
-import Renderer from '/engine/rendering/renderer';
+import AbstractRenderer from '/engine/rendering/abstract-renderer';
 
-describe("Renderer", () => {
+describe("AbstractRenderer", () => {
 	it('is an abstract class used to define the interface a renderer must implement', () => {
-		const renderer = new Renderer();
+		const renderer = new AbstractRenderer();
 
 		expect(() => renderer.redisplayTile()).not.toThrow();
 		expect(() => renderer.redisplayRect()).not.toThrow();
