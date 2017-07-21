@@ -21,7 +21,7 @@ module.exports = {
 	module: {
 		rules: [{
 				/* JavaScript / Babel */
-				test: /\.js?$/,
+				test: /\.js$/,
 				loader: "babel-loader",
 				include: [
 					Path.resolve(__dirname, "src")
@@ -33,13 +33,16 @@ module.exports = {
 				]
 			}, {
 				/* JavaScript / Babel */
-				test: /\.js?$/,
+				test: /\.js$/,
 				loader: "babel-loader",
 				include: [
 					Path.resolve(__dirname, "src/editor"),
 					Path.resolve(__dirname, "src/debug"),
 					Path.resolve(__dirname, "test/helpers")
 				]
+			}, { /* Kaitai-Struct definitions */
+				test: /\.ksy\.yml$/,
+				loader: 'kaitai-struct-loader'
 			}, {
 				/* Styles */
 				test: /\.scss$/,
