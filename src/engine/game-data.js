@@ -73,7 +73,7 @@ export default class {
 		hotspot._y = data.y;
 
 		hotspot.enabled = !!data.enabled;
-		hotspot.arg = data.arg;
+		hotspot.arg = data.argument;
 		hotspot.type = data.type;
 
 		switch (hotspot.type) {
@@ -120,6 +120,9 @@ export default class {
 		char._frames.push(new CharFrame(data.frame1));
 		char._frames.push(new CharFrame(data.frame2));
 		char._frames.push(new CharFrame(data.frame3));
+		char._type = data.type;
+
+		console.log(data);
 
 		return char;
 	}
