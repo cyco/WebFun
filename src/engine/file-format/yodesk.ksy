@@ -45,9 +45,7 @@ types:
       - id: size
         type: u4
       - id: pixels
-        type: u1
-        repeat: expr
-        repeat-expr: size
+        size: size
 
   sounds:
     seq:
@@ -88,9 +86,8 @@ types:
         - id: attributes
           type: u4
         - id: pixels
-          type: u1
-          repeat: expr
-          repeat-expr: 32 * 32
+          size: 32 * 32
+
   action:
     seq:
       - id: marker
@@ -135,9 +132,7 @@ types:
       - id: unknown2
         type: u4
       - id: unknown3
-        type: u1
-        repeat: expr
-        repeat-expr: 0x20
+        size: 0x20
 
   zone:
     seq:
