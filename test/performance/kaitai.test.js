@@ -1,6 +1,6 @@
 import { getFixtureData } from "../helpers/fixture-loading";
 import KaitaiStream from "kaitai-struct/KaitaiStream";
-import Yodesk from "/engine/file-format/yodesk.ksy";
+import Yodesk from "src/engine/file-format/yodesk.ksy";
 
 describe('Kaitai-Struct parsing', () => {
 	let gameDataBuffer;
@@ -14,5 +14,6 @@ describe('Kaitai-Struct parsing', () => {
 		const yodesk = new Yodesk(new KaitaiStream(gameDataBuffer));
 		const end = performance.now();
 		console.log('Kaitai duration: ', end - start, 'ms');
+		expect(start-end).toBeLessThan(500);
 	});
 });
