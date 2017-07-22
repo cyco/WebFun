@@ -1,7 +1,7 @@
 const Path = require('path');
 const webpackConfig = require('./webpack.config.js');
 
-const includeCoverage = !!process.env.coverage;
+const includeCoverage = !!process.env.coverage || true;
 const runUnitTests = !process.env.scope || ~process.env.scope.indexOf('unit');
 const runAcceptanceTests = process.env.scope && ~process.env.scope.indexOf('acceptance');
 const runPerformanceTests = process.env.scope && ~process.env.scope.indexOf('performance');
@@ -10,7 +10,7 @@ console.log(includeCoverage ? 'coverage' : '', runUnitTests ? 'unit' : '', runAc
 
 const config = {
 	files: [
-		'test/helpers/index.js',
+		'test/helpers/context.js',
 		// {pattern: 'test/**/*_test.js', watched: false},
 		{
 			pattern: 'game-data/**',
@@ -25,9 +25,8 @@ const config = {
 		}
 	],
 	preprocessors: {
-		'test/helpers/index.js': ['webpack'],
+		'test/helpers/context.js': ['webpack'],
 	},
-
 	frameworks: ['jasmine', 'jasmine-matchers'],
 	reporters: ['dots'],
 	webpack: webpackConfig,
@@ -80,11 +79,6 @@ if (includeCoverage) {
 	config.webpack.module.rules[0].options = {
 		plugins: ['istanbul']
 	};
-}
-
-if (runUnitTests) {
-	config.files.push({pattern: 'src/**/*.test.js', watched: false});
-	config.preprocessors['src/**/*.test.js'] = ['webpack'];
 }
 
 if (runPerformanceTests) {
