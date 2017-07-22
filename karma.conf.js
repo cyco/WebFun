@@ -10,7 +10,6 @@ console.log(includeCoverage ? 'coverage' : '', runUnitTests ? 'unit' : '', runAc
 
 const config = {
 	files: [
-		'test/helpers/context.js',
 		// {pattern: 'test/**/*_test.js', watched: false},
 		{
 			pattern: 'game-data/**',
@@ -25,7 +24,7 @@ const config = {
 		}
 	],
 	preprocessors: {
-		'test/helpers/context.js': ['webpack'],
+		'test/context/*.js': ['webpack']
 	},
 	frameworks: ['jasmine', 'jasmine-matchers'],
 	reporters: ['dots'],
@@ -81,14 +80,16 @@ if (includeCoverage) {
 	};
 }
 
+if (runUnitTests) {
+	config.files.push({pattern: 'test/context/unit.js', watched: false});
+}
+
 if (runPerformanceTests) {
-	config.files.push({pattern: 'test/performance/**/*.test.js', watched: false});
-	config.preprocessors['test/performance/**/*.test.js'] = ['webpack'];
+	config.files.push({pattern: 'test/context/performance.js', watched: false});
 }
 
 if (runAcceptanceTests) {
-	// config.files.push({ pattern: 'test/acceptance/**/*.test.js', watched: false });
-	// config.preprocessors['test/acceptance/**/*.test.js'] = ['webpack'];
+	config.files.push({pattern: 'test/context/acceptance.js', watched: false});
 }
 
 module.exports = function (c) {
