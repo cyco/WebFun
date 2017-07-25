@@ -1,5 +1,5 @@
-import loadGameData from "test/helpers/game-data";
-import { getFixtureContent } from "test/helpers/fixture-loading";
+import loadGameData from "test-helpers/game-data";
+import { getFixtureContent } from "test-helpers/fixture-loading";
 import { PrepareExpectations, ParseExpectation, ComparisonResult, CompareWorldItems } from "src/debug";
 import Story from "src/engine/story";
 import GameData from "src/engine/game-data";
