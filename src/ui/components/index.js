@@ -11,3 +11,4 @@ export RadioButton from './radio-button';
 export SubmenuWindow from './submenu-window';
 export Window from './window';
 export WindowTitlebar from './window-titlebar';
+export Slider from './slider';
