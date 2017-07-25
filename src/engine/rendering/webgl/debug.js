@@ -1,7 +1,7 @@
 import { Window } from "/ui/components";
 import { FileLoader } from "/util";
 import Settings from "/settings";
-import twgl from "twgl.js";
+import { twgl } from "libs";
 import VertexShader from "./vertex.glsl";
 import FragmentShader from "./fragment.glsl";
 
