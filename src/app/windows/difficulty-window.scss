@@ -1,0 +1,5 @@
+@import "../ui/components/settings-window.scss";
+
+wf-difficulty-window {
+	@extend wf-settings-window;
+}

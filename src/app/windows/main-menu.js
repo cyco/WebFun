@@ -3,6 +3,7 @@ import { WindowModalSession } from "/ux";
 import Settings from "/settings";
 import { Menu as DebugMenu } from "/debug";
 import StatisticsWindow from "./statistics-window";
+import DifficultyWindow from './difficulty-window';
 import GameSpeedWindow from "./game-speed-window";
 
 export default class extends Menu {
@@ -41,7 +42,8 @@ export default class extends Menu {
 			mnemonic: 0,
 			submenu: [{
 				title: "Combat Difficulty...",
-				mnemonic: 0
+				mnemonic: 0,
+				callback: () => this._runModalSession(document.createElement(DifficultyWindow.TagName))
 			}, {
 				title: "Game Speed...",
 				callback: () => this._runModalSession(document.createElement(GameSpeedWindow.TagName)),
