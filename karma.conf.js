@@ -1,7 +1,7 @@
 const Path = require('path');
 const webpackConfig = require('./webpack.config.js');
 
-const includeCoverage = !!process.env.coverage || true;
+const includeCoverage = !!process.env.coverage;
 const runUnitTests = !process.env.scope || ~process.env.scope.indexOf('unit');
 const runAcceptanceTests = process.env.scope && ~process.env.scope.indexOf('acceptance');
 const runPerformanceTests = process.env.scope && ~process.env.scope.indexOf('performance');

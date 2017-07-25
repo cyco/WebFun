@@ -67,12 +67,13 @@ const runTest = ({seed, planet, size, world, dagobah}) => {
 
 describe('World Generation', () => {
 	beforeAll((done) => {
-		loadGameData(function (data) {
+		loadGameData(data => {
 			rawData = data;
 			done();
 		});
 	});
 
-	const maps = PrepareExpectations(getFixtureContent('../game-data/worlds.txt')).map(ParseExpectation);
+	const worldsFixture = getFixtureContent('worlds.txt');
+	const maps = PrepareExpectations(worldsFixture).map(ParseExpectation);
 	maps.forEach(runTest);
 });
