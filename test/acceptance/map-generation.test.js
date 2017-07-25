@@ -1,4 +1,4 @@
-import loadMapFixtures from "test/helpers/map-fixture-parsing";
+import loadMapFixtures from "test-helpers/map-fixture-parsing";
 import MapGenerator from "src/engine/generation/map-generator";
 
 const getSizeName = (size) => {
