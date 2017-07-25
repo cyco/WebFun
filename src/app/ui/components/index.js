@@ -4,3 +4,4 @@ export Ammo from './ammo';
 export Weapon from './weapon';
 export Health from './health';
 export Location from './location';
+export SettingsWindow from './settings-window';

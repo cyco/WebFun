@@ -102,4 +102,9 @@ export default class extends Component {
 		this.style.top = `${this._y | 0}px`;
 		this.style.left = `${this._x | 0}px`;
 	}
+
+	close() {
+		this.remove();
+		this.onclose();
+	}
 }

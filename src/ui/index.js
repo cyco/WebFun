@@ -3,7 +3,6 @@ export Menu from "./menu";
 export MenuItem, { Separator as MenuItemSeparator, State as MenuItemState } from "./menu-item";
 export ProgressBar from "./progress-bar";
 export Selector from "./selector";
-export Slider from "./slider";
 export Textbox from "./textbox";
 export View from "./view";
 export Component from './component';
