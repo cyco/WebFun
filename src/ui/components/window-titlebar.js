@@ -30,10 +30,7 @@ export default class extends Component {
 
 	set window(window) {
 		this._window = window;
-		this._closeButton.element.onclick = () => {
-			window.remove();
-			this.onclose();
-		};
+		this._closeButton.element.onclick = () => this._window.close();
 		this._setupDragging(window);
 	}
 
