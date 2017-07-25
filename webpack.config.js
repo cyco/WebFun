@@ -14,7 +14,10 @@ module.exports = {
 			'std.dom': Path.resolve(__dirname, 'src/std.dom'),
 			'test-helpers': Path.resolve(__dirname, 'test/helpers'),
 			'fs': Path.resolve(__dirname, 'test/helpers/polyfill/fs.js'),
-			'path': Path.resolve(__dirname, 'test/helpers/polyfill/path.js')
+			'path': Path.resolve(__dirname, 'test/helpers/polyfill/path.js'),
+			'libs': Path.resolve(__dirname, 'src/libs.js'),
+			// disable zlib (imported from KaitaiStream)
+			'zlib': Path.resolve(__dirname, 'src/util/empty.js')
 		},
 		unsafeCache: true
 	},
