@@ -112,7 +112,6 @@
     "kaitai-struct": "^0.8.0-SNAPSHOT.2",
     "kaitai-struct-compiler": "^0.7.1",
     "karma-coverage": "^1.1.1",
-    "loglevel": "^1.4.1",
     "shelljs": "^0.7.8",
     "twgl.js": "^3.4.1"
   }
