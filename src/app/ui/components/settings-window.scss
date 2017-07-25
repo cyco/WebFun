@@ -1,0 +1,17 @@
+@import 'src/ui/components/window';
+
+wf-settings-window {
+	@extend wf-window;
+
+	> .content {
+		flex-direction: column;
+
+		> div {
+			display: flex;
+
+			wf-button + wf-button {
+				margin-left: 10px;
+			}
+		}
+	}
+}

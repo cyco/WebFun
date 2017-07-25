@@ -1,28 +1,44 @@
-import View from "./view";
-export default class Slider extends View {
+import Component from "../component";
+import "./slider.scss";
+import { document } from "/std.dom";
+import { dispatch } from "/util";
+
+class Slider extends Component {
+	static get TagName() {
+		return 'wf-slider';
+	}
+
 	constructor() {
 		super();
 
-		this.element.classList.add("Slider");
-
 		this._value = 0;
-		this._minValue = 0;
-		this._maxValue = 0;
-		this._stepSize = 0.01;
+		this._min = 0;
+		this._max = 0;
 
 		this._snapToIntegers = false;
 		this._continuous = false;
 		this._onChange = null;
+	}
+
+	connectedCallback() {
+		super.connectedCallback();
 
 		this._setupLeftButton();
 		this._setupThumb();
 		this._setupRightButton();
+
+		this.layout();
 	}
+
+	disconnectedCallback() {
+	}
+
+	/** **/
 
 	_setupThumb() {
 		this._knob = this._makeButton();
 		this._knob.classList.add("thumb");
-		this.element.appendChild(this._knob);
+		this.appendChild(this._knob);
 
 		const self = this;
 
@@ -50,7 +66,7 @@ export default class Slider extends View {
 			let difY = e.pageY - mouseCoordinates.y;
 
 			const buttonWidth = 16;
-			const width = this.element.getBoundingClientRect().width - 2 * buttonWidth;
+			const width = this.getBoundingClientRect().width - 2 * buttonWidth;
 			let pos = buttonCoordinates.x + difX;
 
 			pos = Math.max(buttonWidth, pos);
@@ -58,13 +74,13 @@ export default class Slider extends View {
 
 			self._knob.style.left = pos + "px";
 
-			this._value = this._minValue + (pos - buttonWidth) / (this.element.getBoundingClientRect().width - 3 * buttonWidth) * (this._maxValue - this.minValue);
+			this._value = this._min + (pos - buttonWidth) / (this.getBoundingClientRect().width - 3 * buttonWidth) * (this._max - this._min);
 			if (this._snapToIntegers) {
 				this._value = Math.round(this._value);
 			}
 
-			this._value = Math.max(this._minValue, this._value);
-			this._value = Math.min(this._maxValue, this._value);
+			this._value = Math.max(this._min, this._value);
+			this._value = Math.min(this._max, this._value);
 
 			if (this.continuous) this._postChangeNotification();
 		};
@@ -96,7 +112,7 @@ export default class Slider extends View {
 			self._left.classList.remove("active");
 		};
 
-		this.element.appendChild(this._left);
+		this.appendChild(this._left);
 	}
 
 	_setupRightButton() {
@@ -112,7 +128,7 @@ export default class Slider extends View {
 			self._right.classList.remove("active");
 		};
 
-		this.element.appendChild(this._right);
+		this.appendChild(this._right);
 	}
 
 	_makeButton() {
@@ -148,12 +164,14 @@ export default class Slider extends View {
 	}
 
 	layout() {
-		this._value = Math.max(this._minValue, this._value);
-		this._value = Math.min(this._maxValue, this._value);
+		this._value = Math.max(this._min, this._value);
+		this._value = Math.min(this._max, this._value);
 
-		const relativeValue = (this._value - this._minValue) / (this._maxValue - this._minValue);
+		if (!this.isConnected) return;
+
+		const relativeValue = (this._value - this._min) / (this._max - this._min);
 		const knobWidth = 16;
-		const width = this.element.getBoundingClientRect().width - 3 * knobWidth;
+		const width = this.getBoundingClientRect().width - 3 * knobWidth;
 		this._knob.style.left = (knobWidth + width * relativeValue) + "px";
 	}
 
@@ -163,17 +181,17 @@ export default class Slider extends View {
 		}
 	}
 
-	get minValue() {
-		return this._minValue;
+	get min() {
+		return this._min;
 	}
 
-	set minValue(v) {
-		this._minValue = v;
+	set min(v) {
+		this._min = v;
 		this.layout();
 	}
 
 	set value(v) {
-		this._value = Math.max(this._minValue, Math.min(v, this._maxValue));
+		this._value = Math.max(this._min, Math.min(v, this._max));
 		this.layout();
 	}
 
@@ -181,12 +199,12 @@ export default class Slider extends View {
 		return this._value;
 	}
 
-	get maxValue() {
-		return this._maxValue;
+	get max() {
+		return this._max;
 	}
 
-	set maxValue(v) {
-		this._maxValue = v;
+	set max(v) {
+		this._max = v;
 		this.layout();
 	}
 
@@ -214,14 +232,6 @@ export default class Slider extends View {
 		this._maxText = t;
 	}
 
-	set stepSize(s) {
-		this._stepSize = s;
-	}
-
-	get stepSize() {
-		return this._StepSize;
-	}
-
 	set continuous(c) {
 		this._continuous = c;
 	}
@@ -246,4 +256,5 @@ export default class Slider extends View {
 		return this._snapToIntegers;
 	}
 }
-;
+
+export default Slider;
