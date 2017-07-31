@@ -1,4 +1,4 @@
-global.Storage = class {
+global.Storage = global.window.Storage = class {
 	constructor() {
 		this._values = {};
 	}

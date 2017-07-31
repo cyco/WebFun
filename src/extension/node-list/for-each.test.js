@@ -1,4 +1,4 @@
-import { NodeList } from "std.dom";
+import { NodeList } from "/std.dom";
 import sandboxed from "test-helpers/dom-sandbox";
 import forEach from "./for-each";
 

@@ -1,4 +1,4 @@
-import { document } from "std.dom";
+import { document } from "/std.dom";
 
 export const sandboxed = (description) => {
 	return () => {
