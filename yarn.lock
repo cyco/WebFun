@@ -2944,17 +2944,23 @@ istanbul@^0.4.0:
     which "^1.1.1"
     wordwrap "^1.0.0"
 
-jasmine-core@^2.6.4:
-  version "2.6.4"
-  resolved "https://registry.yarnpkg.com/jasmine-core/-/jasmine-core-2.6.4.tgz#dec926cd0a9fa287fb6db5c755fa487e74cecac5"
+jasmine-core@^2.7.0:
+  version "2.7.0"
+  resolved "https://registry.yarnpkg.com/jasmine-core/-/jasmine-core-2.7.0.tgz#50ff8c4f92d8ef5c0b2c1b846dd263ed85152091"
 
 jasmine-data-provider@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/jasmine-data-provider/-/jasmine-data-provider-2.2.0.tgz#5f029b2c5fbcdaafbfa5b910ca627eac48cdbb66"
 
-jasmine-expect@3.7.0, jasmine-expect@^3.7.0:
+jasmine-expect@3.7.0:
   version "3.7.0"
   resolved "https://registry.yarnpkg.com/jasmine-expect/-/jasmine-expect-3.7.0.tgz#841e1382f4bff0258c8dc96eca27c4fbc6ae4887"
+  dependencies:
+    add-matchers "0.5.0"
+
+jasmine-expect@^3.7.1:
+  version "3.7.1"
+  resolved "https://registry.yarnpkg.com/jasmine-expect/-/jasmine-expect-3.7.1.tgz#37037bedee2e83412273573f0a4305973c7e71e5"
   dependencies:
     add-matchers "0.5.0"
 
@@ -3458,9 +3464,9 @@ levn@~0.3.0:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
 
-light-server@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/light-server/-/light-server-2.2.0.tgz#2a48180115a5c57a84b0b5c2d2176afb4f53e102"
+light-server@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/light-server/-/light-server-2.2.1.tgz#021291985bd4b1201def6ebaa1d5b3fe10a96099"
   dependencies:
     commander "^2.9.0"
     connect "~3.4.1"
