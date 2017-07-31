@@ -3,7 +3,7 @@ import readUint16 from "/extension/array-buffer/read-uint16";
 
 describe('ArrayBuffer reading', () => {
 	let sampleBuffer;
-	beforeEach((done) => {
+	beforeAll((done) => {
 		getFixtureData('someData', function (buffer) {
 			sampleBuffer = buffer;
 			done();

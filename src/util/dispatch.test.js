@@ -12,6 +12,6 @@ describe('dispatch', () => {
 		dispatch(() => {
 			expect(true).toBeTrue();
 			done();
-		}, 10);
+		}, 0);
 	});
 });

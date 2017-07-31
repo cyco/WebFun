@@ -5,13 +5,12 @@ import { KeyEvent } from "/util";
 describe('DesktopInputManager', () => {
 	let manager = null;
 
-	beforeEach(() => {
+	beforeAll(() => {
 		manager = new DesktopInputManager();
 	});
 
 	afterEach(() => {
 		manager.removeListeners();
-		manager = null;
 	});
 
 	it('collects game input from keyboard and mouse', () => {

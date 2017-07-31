@@ -1,5 +1,6 @@
 import { getFixtureData } from "test-helpers/fixture-loading";
 import asString from "/extension/uint8-array/as-string";
+
 describe('Uint8Array.asString', () => {
 	let buffer;
 	beforeEach((done) => {

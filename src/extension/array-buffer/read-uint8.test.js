@@ -3,7 +3,7 @@ import readUint8 from "/extension/array-buffer/read-uint8";
 
 describe('ArrayBuffer reading', () => {
 	let sampleBuffer;
-	beforeEach((done) => {
+	beforeAll((done) => {
 		getFixtureData('someData', function (buffer) {
 			sampleBuffer = buffer;
 			done();

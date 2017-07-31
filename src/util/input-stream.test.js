@@ -4,7 +4,7 @@ import InputStream from "/util/input-stream";
 
 describe('InputStream', () => {
 	let buffer;
-	beforeEach((done) => {
+	beforeAll((done) => {
 		getFixtureData('someData', function (b) {
 			buffer = b;
 			done();
@@ -99,7 +99,7 @@ describe('InputStream', () => {
 		});
 
 	describe('string reading', () => {
-		beforeEach((done) => {
+		beforeAll((done) => {
 			getFixtureData('asciiString', function (b) {
 				buffer = b;
 				done();
@@ -154,7 +154,7 @@ describe('InputStream', () => {
 	});
 
 	describe('array reading', () => {
-		beforeEach((done) => {
+		beforeAll((done) => {
 			getFixtureData('arrayReading', function (b) {
 				buffer = b;
 				done();

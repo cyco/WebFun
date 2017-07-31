@@ -3,7 +3,7 @@ import EventTarget from "/util/event-target";
 
 describe('EventTarget', () => {
 	let target;
-	beforeEach(() => {
+	beforeAll(() => {
 		target = new EventTarget();
 	});
 

@@ -16,8 +16,8 @@ let getFixtureData = (name, callback) => {
 	const xhr = new XMLHttpRequest();
 	xhr.responseType = "arraybuffer";
 	xhr.open("GET", url, true);
-	xhr.send();
 	xhr.onload = () => callback(xhr.response);
+	xhr.send();
 };
 
 function buildFixtureUrl(name) {
