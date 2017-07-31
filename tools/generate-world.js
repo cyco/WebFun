@@ -1,4 +1,4 @@
-import "./test/helpers/polyfill";
+import "../test/helpers/polyfill";
 import "/extension";
 import { InputStream } from "/util";
 import Yodesk from "/engine/file-format/yodesk.ksy";
