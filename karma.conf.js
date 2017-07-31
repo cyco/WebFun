@@ -1,4 +1,5 @@
 const Path = require('path');
+const Webpack = require('webpack');
 const webpackConfig = require('./webpack.config.js');
 
 const includeCoverage = !!process.env.coverage;
@@ -91,6 +92,15 @@ if (runPerformanceTests) {
 if (runAcceptanceTests) {
 	config.files.push({pattern: 'test/context/acceptance.js', watched: false});
 }
+
+config.webpack.plugins.push(
+	new Webpack.DefinePlugin({
+		'process.acceptance': JSON.stringify({
+			size: (process.env.size !== undefined ? +process.env.size : undefined),
+			planet: (process.env.planet !== undefined ? +process.env.planet : undefined),
+			seed: (process.env.seed !== undefined ? +process.env.seed : undefined)
+		})
+	}));
 
 module.exports = function (c) {
 	c.set(config);

@@ -65,6 +65,24 @@ const runTest = ({seed, planet, size, world, dagobah}) => {
 	});
 };
 
+const runnerFilter = (map) => {
+	const values = process.acceptance;
+	if (values.seed !== undefined && map.seed !== values.seed) {
+		return false;
+	}
+
+	if (values.planet !== undefined && map.planet !== values.planet) {
+		return false;
+	}
+
+	if (values.size !== undefined && map.size !== values.size) {
+		return false;
+	}
+
+	return true;
+};
+const identity = (i) => i;
+
 describe('World Generation', () => {
 	beforeAll((done) => {
 		loadGameData(data => {
@@ -74,6 +92,6 @@ describe('World Generation', () => {
 	});
 
 	const worldsFixture = getFixtureContent('worlds.txt');
-	const maps = PrepareExpectations(worldsFixture).map(ParseExpectation);
+	const maps = PrepareExpectations(worldsFixture).map(ParseExpectation).filter(process.acceptance ? runnerFilter : identity);
 	maps.forEach(runTest);
 });
