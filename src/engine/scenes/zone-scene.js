@@ -384,7 +384,7 @@ export default class ZoneScene extends Scene {
 			zoneDirection.y = 0;
 
 		if (!zoneDirection.isUnidirectional()) {
-			console.log("can\t move two zones at once!");
+			console.log("can't move two zones at once!");
 			return;
 		}
 
