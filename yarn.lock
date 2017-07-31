@@ -3458,12 +3458,13 @@ levn@~0.3.0:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
 
-light-server@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/light-server/-/light-server-2.1.0.tgz#594fd5db56915e1157a607edd4fffd5ecab7f56c"
+light-server@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/light-server/-/light-server-2.2.0.tgz#2a48180115a5c57a84b0b5c2d2176afb4f53e102"
   dependencies:
     commander "^2.9.0"
     connect "~3.4.1"
+    connect-history-api-fallback "^1.3.0"
     connect-injector "^0.4.2"
     glob "^7.0.3"
     http-proxy "^1.13.2"
@@ -5975,6 +5976,10 @@ webpack-glsl-loader@^1.0.1:
     fs "0.0.2"
     path "^0.11.14"
 
+webpack-node-externals@^1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/webpack-node-externals/-/webpack-node-externals-1.6.0.tgz#232c62ec6092b100635a3d29d83c1747128df9bd"
+
 webpack-sources@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/webpack-sources/-/webpack-sources-1.0.1.tgz#c7356436a4d13123be2e2426a05d1dad9cbe65cf"
@@ -5982,9 +5987,9 @@ webpack-sources@^1.0.1:
     source-list-map "^2.0.0"
     source-map "~0.5.3"
 
-webpack@^3.4.0:
-  version "3.4.0"
-  resolved "https://registry.yarnpkg.com/webpack/-/webpack-3.4.0.tgz#e9465b660ad79dd2d33874d968b31746ea9a8e63"
+webpack@^3.4.1:
+  version "3.4.1"
+  resolved "https://registry.yarnpkg.com/webpack/-/webpack-3.4.1.tgz#4c3f4f3fb318155a4db0cb6a36ff05c5697418f4"
   dependencies:
     acorn "^5.0.0"
     acorn-dynamic-import "^2.0.0"
