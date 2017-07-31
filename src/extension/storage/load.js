@@ -1,4 +1,4 @@
-import { Storage } from "std.dom";
+import { Storage } from "/std.dom";
 
 const load = function (key) {
 	try {
