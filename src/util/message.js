@@ -1,26 +1,27 @@
 import { Array, console } from "/std";
+import { sprintf } from "/libs";
 
-let messagesEnabled = false;
+let messagesEnabled = true;
 
 export const Enable = () => messagesEnabled = true;
 export const Disable = () => messagesEnabled = false;
 
-export default (...args) => {
+export default (...argss) => {
 	if (!messagesEnabled) return;
-	let arg = Array.prototype.slice.call(args);
+	let args = argss; // Array.prototype.slice.call(argss);
 
-	let formatString = arg[0];
+	let formatString = args[0];
 	let lastArgumentPosition;
 
-	for (let i = 1; i < arg.length; i++) {
-		let value = arg[i];
+	for (let i = 1; i < args.length; i++) {
+		let value = args[i];
 		let currentArgumentPosition = formatString.indexOf("%", lastArgumentPosition);
 		if (currentArgumentPosition === -1) continue;
 
 		let formatArg = formatString[currentArgumentPosition + 1];
 
-		if (typeof value === 'undefined')
-			value = '<undefined>';
+		if (typeof value === "undefined")
+			value = "<undefined>";
 		else if (typeof value === "boolean")
 			value = value ? 1 : 0;
 		else if (value === -1)
@@ -36,12 +37,12 @@ export default (...args) => {
 			value = "65535";
 		lastArgumentPosition = currentArgumentPosition + 1;
 
-		arg[i] = value;
+		args[i] = value;
 	}
 
-	arg[0] = arg[0].replace(/%x/g, "%s");
-	arg[0] = arg[0].replace(/%d/g, "%s");
-	arg[0] = arg[0].replace(/\n$/g, "");
+	args[0] = args[0].replace(/%x/g, "%s");
+	args[0] = args[0].replace(/%d/g, "%s");
+	args[0] = args[0].replace(/\n$/g, "");
 
-	console.warn.apply(arg);
+	console.log(sprintf.apply(null, args));
 };
