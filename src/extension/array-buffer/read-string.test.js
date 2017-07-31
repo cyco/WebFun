@@ -3,7 +3,7 @@ import readString from "./read-string";
 
 describe('ArrayBuffer.readString', () => {
 	let sampleBuffer;
-	beforeEach((done) => {
+	beforeAll((done) => {
 		getFixtureData('asciiString', function (buffer) {
 			sampleBuffer = buffer;
 			done();
