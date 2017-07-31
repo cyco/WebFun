@@ -17,15 +17,28 @@ export default class {
 	constructor(raw) {
 		this._rawInput = raw;
 		this._version = this._getCategory('VERS').version;
-		this._sounds = this._getCategory('SNDS').sounds.map((i) => i.content);
-		this._tiles = this._getCategory('TILE').tiles.map((t, i) => new Tile(i, t.attributes, t.pixels));
-		this._puzzles = this._getCategory('PUZ2').puzzles.map((data, index) => this._makePuzzle(data, index));
-		this._zones = this._getCategory('ZONE').zones.map((data, index) => this._makeZone(data, index));
-		this._characters = this._getCategory('CHAR').characters.map((data, index) => this._makeCharacter(data, index));
+		this._sounds = this._getCategory('SNDS').sounds
+			.map((i) => i.content);
+		this._tiles = this._getCategory('TILE').tiles
+			.map((t, i) => new Tile(i, t.attributes, t.pixels));
+		this._puzzles = this._getCategory('PUZ2').puzzles
+			.filter(({index}) => index !== -1)
+			.map((data, index) => this._makePuzzle(data, index));
+		this._zones = this._getCategory('ZONE').zones
+			.map((data, index) => this._makeZone(data, index));
+		this._characters = this._getCategory('CHAR').characters
+			.filter(({index}) => index !== -1)
+			.map((data, index) => this._makeCharacter(data, index));
 
-		this._getCategory('CAUX').auxiliaries.forEach(({data}, idx) => this._characters[idx].rawAuxData = data);
-		this._getCategory('CHWP').weapons.forEach(({data}, idx) => this._characters[idx].rawWeaponData = data);
-		this._getCategory('TNAM').names.forEach((obj, idx) => obj.name && (this._tiles[obj.tileId]._name = obj.name));
+		this._getCategory('CAUX').auxiliaries
+			.filter(({index}) => index !== -1)
+			.forEach(({data}, idx) => this._characters[idx].rawAuxData = data);
+		this._getCategory('CHWP').weapons
+			.filter(({index}) => index !== -1)
+			.forEach(({data}, idx) => this._characters[idx].rawWeaponData = data);
+		this._getCategory('TNAM').names
+			.filter(({tileId}) => tileId !== -1)
+			.forEach((obj, idx) => obj.name && (this._tiles[obj.tileId]._name = obj.name));
 	}
 
 	_getCategory(category) {
