@@ -133,7 +133,7 @@ function handle_neighbor(x, y, iteration, xdif, ydif) {
 	let neighborOtherAxisBefore = typeMap.get(x + ydif, y + xdif);
 	let neighborOtherAxisAfter = typeMap.get(x - ydif, y - xdif);
 
-	if (is_free(neighbor)) return false; // mybe negate is_free
+	if (is_free(neighbor)) return false; // maybe negate is_free
 
 	last_item = typeMap.get(x + xdif, y + ydif);
 
