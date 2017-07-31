@@ -1,12 +1,14 @@
 const Path = require('path');
 const Webpack = require('webpack');
+var NodeExternals = require('webpack-node-externals');
 
 module.exports = {
-	entry: './src/index.js',
+	entry: './tools/generate-world.js',
 	output: {
-		filename: 'webfun.js',
-		path: Path.resolve(__dirname, 'dist')
+		filename: 'generate-world.bin.js',
+		path: Path.resolve(__dirname, 'tools')
 	},
+	externals: [NodeExternals()],
 	resolve: {
 		alias: {
 			'src': Path.resolve(__dirname, 'src'),
@@ -27,7 +29,8 @@ module.exports = {
 			test: /\.js?$/,
 			loader: "babel-loader",
 			include: [
-				Path.resolve(__dirname, "src")
+				Path.resolve(__dirname, "src"),
+				Path.resolve(__dirname, "tools")
 			],
 			exclude: [
 				'node_modules',
@@ -71,16 +74,12 @@ module.exports = {
 			/** fonts **/
 			test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
 			loader: "url-loader?limit=10000&mimetype=application/font-woff"
-		}, {test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "file-loader"}
-		]
+		}, {
+			test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+			loader: "file-loader"
+		}]
 	},
 	cache: true,
 	plugins: [],
-
-	devtool: 'inline-source-map',
-	devServer: {
-		publicPath: "/",
-		contentBase: "./dist",
-		hot: false
-	}
+	target: 'node'
 };
