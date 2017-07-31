@@ -1,8 +1,9 @@
 import "/extension";
-import { rand } from "/util";
+import { rand, Message } from "/util";
 
 Array.prototype.shuffle = function () {
 	const count = this.length;
+	Message("Array::Shuffle %d items", count);
 	if (count === 0) return;
 
 	let tempArray = Array.Repeat(-1, count);
