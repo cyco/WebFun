@@ -192,7 +192,7 @@ types:
       - id: enabled
         type: u2
       - id: argument
-        type: u2
+        type: s2
   zone_auxiliary:
     seq:
       - id: marker
