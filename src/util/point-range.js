@@ -28,4 +28,19 @@ export default class PointRange {
 			point.add(step);
 		}
 	}
+
+	find(callback, step = new Point(1, 1)) {
+		const point = new Point(this.from);
+
+		let xcmp = step.x >= 0 ? (a, b) => a.x <= b.x : (a, b) => b.x <= a.x;
+		let ycmp = step.y >= 0 ? (a, b) => a.y <= b.y : (a, b) => b.y <= a.y;
+
+		while (xcmp(point, this.to) && ycmp(point, this.to)) {
+			if(callback(point)) return point;
+
+			point.add(step);
+		}
+
+		return null;
+	}
 }

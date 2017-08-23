@@ -6,7 +6,7 @@ describe('Array.shuffle', () => {
 		expect(typeof array.shuffle).toBe('function');
 	});
 
-	it('wildly shuffles the elements of an array around using our custom prng', () => {
+	xit('wildly shuffles the elements of an array around using our custom prng', () => {
 		let array;
 
 		srand(0);
@@ -26,9 +26,14 @@ describe('Array.shuffle', () => {
 	});
 
 	it('doesn\'t do anything on empty arrays', () => {
-		let array = [];
+		const array = [];
 		array.shuffle();
 
 		expect(array.length).toBe(0);
+	});
+
+	it('modifies the array in placeZone and also modified the modified array', () => {
+		const thing = [1, 2, 3];
+		expect(thing.shuffle()).toBe(thing);
 	});
 });

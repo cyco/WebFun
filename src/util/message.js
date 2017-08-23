@@ -1,7 +1,7 @@
 import { Array, console } from "/std";
 import { sprintf } from "/libs";
 
-let messagesEnabled = true;
+let messagesEnabled = false;
 
 export const Enable = () => messagesEnabled = true;
 export const Disable = () => messagesEnabled = false;

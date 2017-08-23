@@ -22,7 +22,7 @@ export default class Puzzle {
 		this.item_1 = -1;
 		this.item_2 = -1;
 
-		this.hasPuzzleNPC = false; // aka hasPuzzleNPC
+		this.hasPuzzleNPC = false; // aka zoneLeadsToNPC
 
 		Object.seal(this);
 	}

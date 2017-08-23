@@ -39,7 +39,7 @@ export default class {
 			mode = 4;
 		}
 
-		const startingItem = data.puzzles[generator.puzzleIDs_2[0]].item_1;
+		const startingItem = data.puzzles[generator.puzzleIDs2[0]].item_1;
 
 		//* temporarily copy zone types over from main world for easy comparison against original
 		// FIXME: remove this section when comparisons are not necessary anymore
@@ -61,7 +61,6 @@ export default class {
 				worldItem.zoneID = ZONE_DAGOBAH_NORTH_WEST;
 				worldItem.npcID = TILE_YODA;
 				worldItem.findItemID = startingItem;
-				generator.placeHotspotTiles(ZONE_DAGOBAH_NORTH_WEST);
 				break;
 			case 1:
 				this._setupSpawnHotspot(ZONE_YODAS_HUT, TILE_YODA, data);
@@ -70,7 +69,6 @@ export default class {
 				worldItem.zoneID = ZONE_YODAS_HUT;
 				worldItem.npcID = TILE_YODA;
 				worldItem.findItemID = startingItem;
-				generator.placeHotspotTiles(ZONE_YODAS_HUT);
 				break;
 			case 2:
 				this._setupSpawnHotspot(ZONE_DAGOBAH_SOUTH_EAST, TILE_YODA, data);
@@ -79,7 +77,6 @@ export default class {
 				worldItem.zoneID = ZONE_DAGOBAH_SOUTH_EAST;
 				worldItem.npcID = TILE_YODA;
 				worldItem.findItemID = startingItem;
-				generator.placeHotspotTiles(ZONE_DAGOBAH_SOUTH_EAST);
 				break;
 			case 3:
 				this._setupSpawnHotspot(ZONE_DAGOBAH_SOUTH_WEST, TILE_YODA, data);
@@ -88,7 +85,6 @@ export default class {
 				worldItem.zoneID = ZONE_DAGOBAH_SOUTH_WEST;
 				worldItem.npcID = TILE_YODA;
 				worldItem.findItemID = startingItem;
-				generator.placeHotspotTiles(ZONE_DAGOBAH_SOUTH_WEST);
 				break;
 			case 4:
 				this._setupSpawnHotspot(ZONE_YODAS_HUT, TILE_YODAS_SEAT, data);
@@ -97,7 +93,6 @@ export default class {
 				worldItem.zoneID = ZONE_DAGOBAH_SOUTH_WEST;
 				worldItem.npcID = TILE_YODA;
 				worldItem.findItemID = startingItem;
-				generator.placeHotspotTiles(ZONE_YODAS_HUT);
 				break;
 
 			default:

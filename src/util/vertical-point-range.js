@@ -9,4 +9,8 @@ export default class VerticalPointRange extends PointRange {
 	iterate(callback, step = 1) {
 		super.iterate(callback, new Point(0, step));
 	}
+
+	find(callback, step = 1) {
+		return super.find(callback, new Point(0, step));
+	}
 }

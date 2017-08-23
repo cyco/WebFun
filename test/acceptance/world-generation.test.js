@@ -58,7 +58,6 @@ const runTest = ({seed, planet, size, world, dagobah}) => {
 		it('is generated correctly', (done) => {
 			const story = new Story(seed, planet, size);
 			story.generateWorld({data: new GameData(rawData)});
-
 			expect(() => compare(story, {seed, planet, size, world, dagobah})).not.toThrow();
 			done();
 		});
@@ -83,7 +82,7 @@ const runnerFilter = (map) => {
 };
 const identity = (i) => i;
 
-describe('World Generation', () => {
+fdescribe('World Generation', () => {
 	beforeAll((done) => {
 		loadGameData(data => {
 			rawData = data;
@@ -93,5 +92,6 @@ describe('World Generation', () => {
 
 	const worldsFixture = getFixtureContent('worlds.txt');
 	const maps = PrepareExpectations(worldsFixture).map(ParseExpectation).filter(process.acceptance ? runnerFilter : identity);
-	maps.forEach(runTest);
+	const copy = maps;//./*shuffle().*/slice(0, 1000);
+	copy.forEach(runTest);
 });

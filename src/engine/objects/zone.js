@@ -2,6 +2,7 @@ import { Size } from "/util";
 import { Type as HotspotType } from "./hotspot";
 
 export const Type = {
+	None: 0,
 	Empty: 1,
 	BlockadeNorth: 2,
 	BlockadeSouth: 3,
@@ -51,6 +52,7 @@ export default class Zone {
 		this._tileIDs = [];
 		this._hotspots = [];
 		this._tileStore = null;
+		this._zoneStore = null;
 		this.assignedItemIDs = [];
 		this.requiredItemIDs = [];
 		this.providedItemIDs = [];
@@ -121,13 +123,10 @@ export default class Zone {
 		}
 
 		const index = this.getTileID(x, y, z);
-		if (index < this._tileStore.length)
-			return this._tileStore[index];
-		else if (index === 0xFFFF)
+		if (index === -1 || index === 0xFFFF || index >= this._tileStore.length)
 			return null;
 
-		console.warn("Tried to access invalid tile");
-		return null;
+		return this._tileStore[index];
 	}
 
 	setTile(tile, x, y, z) {
@@ -211,6 +210,33 @@ export default class Zone {
 
 	isLoadingZone() {
 		return this._type === Type.Load;
+	}
+
+	layDownHotspotItems() {
+		this.hotspots.filter((htsp) => htsp.enabled).forEach((hotspot) => {
+			switch (hotspot.type) {
+				case HotspotType.Unused:
+					hotspot.arg = TILE_ADEGAN_CRYSTAL;
+				/* intentional fallthrough */
+				case HotspotType.TriggerLocation:
+				case HotspotType.SpawnLocation:
+				case HotspotType.ForceLocation:
+				case HotspotType.LocatorThingy:
+				case HotspotType.CrateItem:
+				case HotspotType.PuzzleNPC:
+				case HotspotType.CrateWeapon:
+					if (hotspot.arg < 0) break;
+					this.setTile({id: hotspot.arg}, hotspot.x, hotspot.y, 1);
+					break;
+				case HotspotType.DoorIn:
+					if (hotspot.arg < 0) break;
+					const zone = this._zoneStore[hotspot.arg];
+					zone.layDownHotspotItems();
+					break;
+				default:
+					break;
+			}
+		});
 	}
 }
 

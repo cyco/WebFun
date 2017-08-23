@@ -1,4 +1,4 @@
-import { Point } from "/util";
+import { Point, identity } from "/util";
 import WorldItem from "./world-item";
 
 export const width = 10;
@@ -83,5 +83,9 @@ export default class World {
 
 	index(index) {
 		return this._items[index];
+	}
+
+	layDownHotspotItems() {
+		this.zones.filter(identity).forEach(zone => zone.layDownHotspotItems());
 	}
 }

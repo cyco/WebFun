@@ -1,3 +1,5 @@
+import './extension';
+
 export Cheats from "./cheats";
 export Engine from "./engine";
 export GameData from "./game-data";
@@ -8,7 +10,6 @@ export Inventory from "./inventory";
 export Metronome from './metronome';
 export Objects from "./objects";
 export PersistentState from "./persistent-state";
-export Quest from "./quest";
 export SceneManager from "./scene-manager";
 export Scenes from "./scenes";
 export Script from "./script";

@@ -24,8 +24,9 @@ export default class {
 		this._puzzles = this._getCategory('PUZ2').puzzles
 			.filter(({index}) => index !== -1)
 			.map((data, index) => this._makePuzzle(data, index));
-		this._zones = this._getCategory('ZONE').zones
-			.map((data, index) => this._makeZone(data, index));
+		this._zones = [];
+		 this._getCategory('ZONE').zones
+			.map((data, index) => this._makeZone(data, index)).forEach(z => this._zones.push(z));
 		this._characters = this._getCategory('CHAR').characters
 			.filter(({index}) => index !== -1)
 			.map((data, index) => this._makeCharacter(data, index));
@@ -88,6 +89,7 @@ export default class {
 
 		zone._actions = data.actions.map((data, i) => this._makeAction(data, i));
 		zone._tileStore = this.tiles;
+		zone._zoneStore = this.zones;
 
 		return zone;
 	}
