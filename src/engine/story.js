@@ -1,5 +1,5 @@
 import { Message, rand } from "/util";
-import { WorldGenerator, DagobahGenerator } from "/engine/generation";
+import { WorldGenerator, DagobahGenerator, WorldGenerationError } from "/engine/generation";
 
 export default class {
 	constructor(seed, planet, size) {
@@ -29,13 +29,19 @@ export default class {
 		let success = false;
 		let effectiveSeed = this.seed;
 		do {
+		try {
 			generator = new WorldGenerator(effectiveSeed, this.size, this.planet, engine);
 			success = generator.generate(effectiveSeed);
+		} catch (e) {
+			if(e instanceof WorldGenerationError)
+				success = false;
+		} finally {
 			if (!success) {
 				Message("--== YodaDocument::Reseed ==--");
 				this._reseeded = true;
 				effectiveSeed = rand();
 			}
+		}
 		} while (!success);
 
 		const goalID = generator.goalPuzzleID;
@@ -43,6 +49,9 @@ export default class {
 
 		this._setupWorld(generator, engine);
 		this._setupDagobah(generator, engine);
+
+		this._world.layDownHotspotItems();
+		this._dagobah.layDownHotspotItems();
 
 		Message(`done 0x${this.seed.toString(0x10).padStart(4, '0')}, 0x${this.planet.toString(0x10).padStart(4, '0')}, 0x${this.size.toString(0x10).padStart(4, '0')}`);
 	}

@@ -11,14 +11,14 @@ const IslandOrientation = {
 	Down: 4,
 };
 
-let min_x,
-	alternate_x;
-let min_y,
-	alternate_y;
-let variance,
-	probablility;
-let threshold,
-	travel_threshold;
+let min_x;
+let alternate_x;
+let min_y;
+let alternate_y;
+let variance;
+let probablility;
+let threshold;
+let travel_threshold;
 let last_item;
 let remaining_count_to_place;
 let typeMap;

@@ -191,7 +191,7 @@ export default class ZoneScene extends Scene {
 			return;
 		}
 
-		// place bullet
+		// placeZone bullet
 		const bullet = weapon.produceBullet(inertia);
 		bullet.location = new Point(hero.location);
 		this._bullet = bullet;

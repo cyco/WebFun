@@ -9,4 +9,8 @@ export default class HorizontalPointRange extends PointRange {
 	iterate(callback, step = 1) {
 		super.iterate(callback, new Point(step, 0));
 	}
+
+	find(callback, step = 1) {
+		return super.find(callback, new Point(step, 0));
+	}
 }

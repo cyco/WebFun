@@ -7,7 +7,7 @@ export default class WorldItem {
 
 		this.requiredItemID = -1;
 		this.additionalRequiredItemID = -1;
-		this.unknown606 = -1; // this one's wrongly set to non 0 when a tool is required
+		this.puzzleIndex = -1; // this one's wrongly set to non 0 when a tool is required
 		this.npcID = -1;
 		this.findItemID = -1;
 

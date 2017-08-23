@@ -16,7 +16,7 @@ describe('World', () => {
 		expect(World.WIDTH).toBe(10);
 	});
 
-	it('has methods to get and set zones at a specific place', () => {
+	it('has methods to get and set zones at a specific placeZone', () => {
 		expect(subject.getZone(0, 0)).toBe(null);
 		expect(subject.getZone(5, 5)).toBe(null);
 		expect(subject.getZone(9, 9)).toBe(null);

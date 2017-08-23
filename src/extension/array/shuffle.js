@@ -4,7 +4,7 @@ import { rand, Message } from "/util";
 Array.prototype.shuffle = function () {
 	const count = this.length;
 	Message("Array::Shuffle %d items", count);
-	if (count === 0) return;
+	if (count === 0) return this;
 
 	let tempArray = Array.Repeat(-1, count);
 
@@ -42,5 +42,7 @@ Array.prototype.shuffle = function () {
 	for (let i = 0; i < count; i++) {
 		this[i] = tempArray[i];
 	}
+
+	return this;
 };
 export default Array.prototype.shuffle;
