@@ -17,21 +17,31 @@ export default class SceneManager {
 	}
 
 	update(ticks) {
-		this.currentScene.update(ticks);
+		try {
+			this.currentScene.update(ticks);
+		}
+		catch (e) {
+			console.error(e);
+		}
 	}
 
 	render(renderer) {
 		// TODO: determine visible scenes at push/pop time
-		let visibleScenes = [];
-		for (let i = 0, len = this._stack.length; i < len; i++) {
-			const scene = this._stack[i];
-			if (scene.isOpaque())
-				visibleScenes = [scene];
-			else visibleScenes.push(scene);
-		}
+		try {
+			let visibleScenes = [];
+			for (let i = 0, len = this._stack.length; i < len; i++) {
+				const scene = this._stack[i];
+				if (scene.isOpaque())
+					visibleScenes = [scene];
+				else visibleScenes.push(scene);
+			}
 
-		for (let i = 0, len = visibleScenes.length; i < len; i++)
-			visibleScenes[i].render(renderer);
+			for (let i = 0, len = visibleScenes.length; i < len; i++)
+				visibleScenes[i].render(renderer);
+		}
+		catch (e) {
+			console.error(e);
+		}
 	}
 
 	popScene() {
