@@ -1,6 +1,7 @@
 import Scene from "./scene";
 import { Tile, Zone } from "/engine/objects";
 import { Point } from "/util";
+import { WebGLTexture } from 'std.webgl';
 
 export default class TransitionScene extends Scene {
 	static get TRANSITION_TYPE() {
@@ -201,12 +202,16 @@ export default class TransitionScene extends Scene {
 		canvas.height = viewHeight * tileHeight;
 		const ctx = canvas.getContext("2d");
 
+
 		for (let l = 0; l < Zone.LAYERS; l++) {
 			for (let y = 0; y < viewHeight; y++) {
 				for (let x = 0; x < viewWidth; x++) {
 					const tile = zone.getTile(x - xOffset, y - yOffset, l);
 					if (!tile) continue;
 
+					if(tile.image.representation instanceof WebGLTexture) {
+						continue;
+					}
 					ctx.drawImage(tile.image.representation, x * tileWidth, y * tileHeight);
 				}
 			}
@@ -220,6 +225,10 @@ export default class TransitionScene extends Scene {
 
 				const x1 = (hero._location.x + xOffset) * tileWidth;
 				const y1 = (hero._location.y + yOffset) * tileHeight;
+
+				if(tile.image.representation instanceof WebGLTexture) {
+					continue;
+				}
 				ctx.drawImage(tile.image.representation, x1, y1);
 			}
 		}

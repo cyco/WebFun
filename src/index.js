@@ -7,4 +7,3 @@ import WebGLDebug from "/engine/rendering/webgl/debug.js";
 import { main } from "./app";
 
 window.addEventListener("load", main);
-window.addEventListener('load', () => new WebGLDebug());
