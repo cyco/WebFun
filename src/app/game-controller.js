@@ -38,9 +38,11 @@ export default class {
 
 	_determineRenderer() {
 		if (WebGLRenderer.isSupported()) {
+			console.log('Using WebGL renderer');
 			return WebGLRenderer;
 		}
 
+		console.log('Using Canvas renderer');
 		return CanvasRenderer;
 	}
 

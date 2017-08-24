@@ -31,10 +31,14 @@ export default class extends EventTarget {
 
 	async continueActions(engine) {
 		engine.metronome.stop();
-		const r = await this._doContinueActions(engine);
-		if (r) engine.metronome.start();
-		else ; // metronome will be started again when ZoneScene calls runActions
-		return r;
+		try {
+			const r = await this._doContinueActions(engine);
+			if (r) engine.metronome.start();
+			else ; // metronome will be started again when ZoneScene calls runActions
+			return r;
+		} catch(e) {
+			console.error(e);
+		}
 	}
 
 	async _doContinueActions(engine) {
