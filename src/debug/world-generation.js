@@ -261,7 +261,7 @@ export default class {
 				return 'travel';
 			case ZoneType.Load:
 				return 'load';
-			case ZoneType.PickGoal:
+			case ZoneType.Goal:
 				return 'goal';
 			case ZoneType.Town:
 				return 'spaceport';
@@ -306,8 +306,8 @@ export default class {
 				return 'Room';
 			case ZoneType.Load:
 				return 'Load';
-			case ZoneType.PickGoal:
-				return 'PickGoal';
+			case ZoneType.Goal:
+				return 'Goal';
 			case ZoneType.Town:
 				return 'Town';
 			case ZoneType.Win:

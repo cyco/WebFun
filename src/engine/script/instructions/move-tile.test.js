@@ -2,7 +2,7 @@ import { Instruction } from "/engine/objects";
 import * as MoveTile from "./move-tile";
 
 describeInstruction('MoveTile', (execute, engine) => {
-	it('moves the tile at the specified location to a new placeZone on the same layer', () => {
+	it('moves the tile at the specified location to a new place on the same layer', () => {
 		engine.currentZone.moveTile = () => {
 		};
 		spyOn(engine.currentZone, 'moveTile');

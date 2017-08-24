@@ -32,7 +32,7 @@ describe('Array.shuffle', () => {
 		expect(array.length).toBe(0);
 	});
 
-	it('modifies the array in placeZone and also modified the modified array', () => {
+	it('modifies the array in place and also modified the modified array', () => {
 		const thing = [1, 2, 3];
 		expect(thing.shuffle()).toBe(thing);
 	});

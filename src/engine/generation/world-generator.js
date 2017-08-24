@@ -75,12 +75,12 @@ class WorldGenerator {
 		this.requiredItemQuests = [];
 
 		let goalID = this.goalPuzzleID;
-		if (goalID < 0) {
+		if (goalID === -1) {
 			const puzzle = this.GetUnusedPuzzleRandomly(-1, ZoneType.Unknown);
 			if (puzzle)
 				goalID = this.goalPuzzleID = puzzle.id
 		}
-		if (goalID < 0) {
+		if (goalID === -1) {
 			return false;
 		}
 
@@ -129,7 +129,7 @@ class WorldGenerator {
 
 				const vehicleHotspot = zone.hotspots.find(htsp => htsp.type === HotspotType.VehicleTo);
 				const connectedZoneID = vehicleHotspot ? vehicleHotspot.arg : -1;
-				if (connectedZoneID < 0)
+				if (connectedZoneID === -1)
 					continue;
 
 				let range = null;
@@ -361,7 +361,7 @@ class WorldGenerator {
 			case ZoneType.Empty:
 				if (this.field_2E64) {
 					const count = zone.hotspots.length;
-					if (count <= 0) {
+					if (!count) {
 						return true;
 					}
 					// used to iterate through all teleporter hotspots here
@@ -377,7 +377,7 @@ class WorldGenerator {
 
 				const newPuzzleItem1 = this.GetUnusedRequiredItemForZoneRandomly(zone.id, false);
 				const newPuzzleItem2 = this.GetUnusedRequiredItemForZoneRandomly(zone.id, true);
-				if (newPuzzleItem1 < 0 || newPuzzleItem2 < 0)
+				if (newPuzzleItem1 === -1 || newPuzzleItem2 === -1)
 					return false;
 				const newPuzzle = this.GetUnusedPuzzleRandomly(newPuzzleItem1, ZoneType.Goal);
 				if (newPuzzle) this.puzzleIDs.push(newPuzzle.id);
@@ -399,7 +399,7 @@ class WorldGenerator {
 				const puzzle3 = this._puzzles[this.puzzleIDs1[puzzleIndex + 1]];
 
 				const npcID = this.findUnusedNPCForZoneRandomly(zone.id);
-				const hasPuzzleNPC = npcID >= 0 ? this.zoneLeadsToNPC(zone.id, npcID) : 0;
+				const hasPuzzleNPC = npcID !== -1 ? this.zoneLeadsToNPC(zone.id, npcID) : 0;
 				puzzle1.hasPuzzleNPC = hasPuzzleNPC;
 
 				let hasItem = true;
@@ -451,7 +451,7 @@ class WorldGenerator {
 				if (!this.ZoneLeadsToProvidedItem(zone.id, providedItem))
 					return false;
 				const requiredItem = this.GetUnusedRequiredItemForZoneRandomly(zone.id, false);
-				if (requiredItem < 0)
+				if (requiredItem === -1)
 					return false;
 				const puzzle = this.GetUnusedPuzzleRandomly(requiredItem, ZoneType.Trade);
 				if (!puzzle)
@@ -495,7 +495,7 @@ class WorldGenerator {
 				if (!this.ZoneLeadsToProvidedItem(zone.id, providedItem))
 					return false;
 				const puzzleID1 = this.GetUnusedRequiredItemForZoneRandomly(zone.id, false);
-				if (puzzleID1 < 0)
+				if (puzzleID1 === -1)
 					return false;
 
 				const puzzle2 = this.GetUnusedPuzzleRandomly(puzzleID1, ZoneType.Use);
@@ -509,7 +509,7 @@ class WorldGenerator {
 				if (!this.RequiredItemForZoneWasNotPlaced(zone.id)) return false;
 
 				const npcID = this.findUnusedNPCForZoneRandomly(zone.id);
-				if (npcID < 0)
+				if (npcID === -1)
 					return false;
 
 				const requiredItemID = this._puzzles[array[puzzleIndex]].item_1;
@@ -683,7 +683,7 @@ class WorldGenerator {
 	RequiredItemForZoneWasNotPlaced(zoneID) {
 		const zone = this._zones[zoneID];
 		for (const hotspot of zone.hotspots) {
-			if (hotspot.arg < 0) continue;
+			if (hotspot.arg === -1) continue;
 			if (hotspot.type.canHoldItem() && this.HasQuestRequiringItem(hotspot.arg)) return false;
 			if (hotspot.type === HotspotType.DoorIn && !this.RequiredItemForZoneWasNotPlaced(hotspot.arg)) return false;
 		}
@@ -693,7 +693,7 @@ class WorldGenerator {
 
 	addRequiredItemQuestsFromHotspots(zoneID) {
 		this._zones[zoneID].hotspots.forEach(hotspot => {
-			if (hotspot.arg < 0) return;
+			if (hotspot.arg === -1) return;
 			if (hotspot.type.canHoldItem()) this.AddRequiredQuestWithItemID(hotspot.arg, -1);
 			if (hotspot.type === HotspotType.DoorIn) this.addRequiredItemQuestsFromHotspots(hotspot.arg);
 		});
@@ -858,7 +858,7 @@ class WorldGenerator {
 		this.world.index(idx).npcID = options.npcID !== undefined ? options.npcID : -1;
 		this.world.index(idx).findItemID = options.findItemID !== undefined ? options.findItemID : -1;
 		this.world.index(idx).additionalRequiredItemID = options.additionalRequiredItemID !== undefined ? options.additionalRequiredItemID : -1;
-		if (id >= 0 && type !== ZoneType.Town) this.puzzleZoneIDs.unshift(id);
+		if (id !== -1 && type !== ZoneType.Town) this.puzzleZoneIDs.unshift(id);
 	}
 
 	errorWhen(condition, message) {
