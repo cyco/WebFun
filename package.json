@@ -60,7 +60,11 @@
     "test:acceptance:cont": "jest --watch --coverage",
     "test:unit:cont": "cross-env coverage=1 scope=unit karma start",
     "gen-coverage": "genhtml test/coverage/unit.lcov test/coverage/acceptance/lcov.info -o test/coverage/html",
-    "test:performance": "cross-env scope=performance karma start --single-run"
+    "test:performance": "cross-env scope=performance karma start --single-run",
+    "world": "node -- tools/generate-world.bin.js -v -d \"game-data/yoda.data\"",
+    "world:validate": "node -- tools/generate-world.bin.js -c -d \"game-data/yoda.data\" -e \"game-data/worlds.txt\"",
+    "world:validate:all": "node -- tools/generate-world.bin.js -c -d \"./game-data/yoda.data\" -e \"./game-data/full.txt\" -a"
+
   },
   "babel": {
     "presets": [
