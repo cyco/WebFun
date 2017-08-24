@@ -82,7 +82,7 @@ const runnerFilter = (map) => {
 };
 const identity = (i) => i;
 
-fdescribe('World Generation', () => {
+describe('World Generation', () => {
 	beforeAll((done) => {
 		loadGameData(data => {
 			rawData = data;
@@ -92,6 +92,5 @@ fdescribe('World Generation', () => {
 
 	const worldsFixture = getFixtureContent('worlds.txt');
 	const maps = PrepareExpectations(worldsFixture).map(ParseExpectation).filter(process.acceptance ? runnerFilter : identity);
-	const copy = maps;//./*shuffle().*/slice(0, 1000);
-	copy.forEach(runTest);
+	maps.forEach(runTest);
 });
