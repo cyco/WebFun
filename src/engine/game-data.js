@@ -75,7 +75,7 @@ export default class {
 		zone.id = data.index;
 		zone._planet = data.planet;
 		zone._width = data.width;
-		zone._height = data.width;
+		zone._height = data.height;
 		zone._type = data.type;
 		zone._tileIDs = data.tileIds;
 		zone._hotspots = data.hotspots.map((d) => this._makeHotspot(d));
@@ -144,9 +144,9 @@ export default class {
 		const char = new Char();
 		char._id = idx;
 		char._name = data.name;
-		char._frames.push(new CharFrame(data.frame1));
-		char._frames.push(new CharFrame(data.frame2));
-		char._frames.push(new CharFrame(data.frame3));
+		char._frames.push(new CharFrame(data.frame1.tiles.map(i => this.tiles[i])));
+		char._frames.push(new CharFrame(data.frame2.tiles.map(i => this.tiles[i])));
+		char._frames.push(new CharFrame(data.frame3.tiles.map(i => this.tiles[i])));
 		char._type = data.type;
 
 		return char;
