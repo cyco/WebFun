@@ -6,7 +6,7 @@ describe("Settings", () => {
 	});
 
 	it('holds basic settings that are mostly used for debugging', () => {
-		expect(Settings.autostartEngine).toBeTrue();
+		expect(Settings.autostartEngine).toBeBoolean();
 	});
 
 	it('also provides access to urls for game data', () => {
