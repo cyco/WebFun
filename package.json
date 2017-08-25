@@ -6,7 +6,6 @@
   "devDependencies": {
     "add-matchers": "^0.5.0",
     "babel-cli": "^6.26.0",
-    "babel-jest": "^20.0.3",
     "babel-loader": "^7.1.2",
     "babel-plugin-istanbul": "^4.1.4",
     "babel-plugin-syntax-async-functions": "^6.13.0",
@@ -23,8 +22,6 @@
     "jasmine-core": "^2.7.0",
     "jasmine-data-provider": "^2.2.0",
     "jasmine-expect": "^3.7.1",
-    "jest": "^20.0.4",
-    "jest-cli": "^20.0.4",
     "jsdom": "^11.2.0",
     "kaitai-struct-compiler": "^0.7.1",
     "kaitai-struct-loader": "^0.1.2",
@@ -57,14 +54,13 @@
     "test:cont:cov": "cross-env coverage=1 karma start",
     "test:acceptance": "cross-env scope=acceptance karma start --single-run --",
     "test:unit": "cross-env coverage=1 scope=unit karma start --single-run",
-    "test:acceptance:cont": "jest --watch --coverage",
+    "test:coverage": "cross-env coverage=1 scope=unit,acceptance,performance karma start --single-run",
     "test:unit:cont": "cross-env coverage=1 scope=unit karma start",
     "gen-coverage": "genhtml test/coverage/unit.lcov test/coverage/acceptance/lcov.info -o test/coverage/html",
     "test:performance": "cross-env scope=performance karma start --single-run",
     "world": "node -- tools/generate-world.bin.js -v -d \"game-data/yoda.data\"",
     "world:validate": "node -- tools/generate-world.bin.js -c -d \"game-data/yoda.data\" -e \"game-data/worlds.txt\"",
     "world:validate:all": "node -- tools/generate-world.bin.js -c -d \"./game-data/yoda.data\" -e \"./game-data/full.txt\" -a"
-
   },
   "babel": {
     "presets": [
@@ -81,40 +77,6 @@
         }
       ]
     ]
-  },
-  "jest": {
-    "automock": false,
-    "notify": false,
-    "setupTestFrameworkScriptFile": "./test/helpers/jest.init.js",
-    "coverageDirectory": "./test/coverage/acceptance",
-    "coverageReporters": [
-      "lcov"
-    ],
-    "testPathIgnorePatterns": [
-      "/node_modules/",
-      "/src/"
-    ],
-    "coveragePathIgnorePatterns": [
-      "/\\.test\\.js/",
-      "/test/",
-      "src/editor",
-      "src/debug",
-      "components/",
-      "index.js"
-    ],
-    "collectCoverageFrom": [
-      "src/**/*.!(test.)js",
-      "!**/node_modules/**",
-      "test/**"
-    ],
-    "moduleDirectories": [
-      "node_modules",
-      "src",
-      ""
-    ],
-    "moduleNameMapper": {
-      "\\.(scss|css)$": "identity-obj-proxy"
-    }
   },
   "dependencies": {
     "kaitai-struct": "^0.8.0-SNAPSHOT.2",
