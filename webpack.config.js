@@ -12,6 +12,7 @@ module.exports = {
 			'src': Path.resolve(__dirname, 'src'),
 			'std': Path.resolve(__dirname, 'src/std'),
 			'std.dom': Path.resolve(__dirname, 'src/std.dom'),
+			'std.webgl': Path.resolve(__dirname, 'src/std.webgl'),
 			'test-helpers': Path.resolve(__dirname, 'test/helpers'),
 			'fs': Path.resolve(__dirname, 'test/helpers/polyfill/fs.js'),
 			'path': Path.resolve(__dirname, 'test/helpers/polyfill/path.js'),
