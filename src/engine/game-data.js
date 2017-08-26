@@ -25,7 +25,7 @@ export default class {
 			.filter(({index}) => index !== -1)
 			.map((data, index) => this._makePuzzle(data, index));
 		this._zones = [];
-		 this._getCategory('ZONE').zones
+		this._getCategory('ZONE').zones
 			.map((data, index) => this._makeZone(data, index)).forEach(z => this._zones.push(z));
 		this._characters = this._getCategory('CHAR').characters
 			.filter(({index}) => index !== -1)
@@ -59,7 +59,6 @@ export default class {
 		puzzle._unknown3 = data.unknown3;
 
 		puzzle._strings = data.strings;
-		puzzle._itemIDs = [data.item1, data.item2];
 		puzzle.item_1 = data.item1;
 		puzzle.item_2 = data.item2;
 

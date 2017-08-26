@@ -52,7 +52,7 @@ export default class extends Window {
 		this._handlers = {};
 		this._handlers[Events.AmmoChanged] = () => this._updateAmmo();
 		this._handlers[Events.WeaponChanged] = () => this._updateWeapon();
-		this._handlers[Events.LocationChanged] = () => this._updateLocation();
+		this._handlers[Events.LocationChanged] = ({detail}) => this._updateLocation(detail);
 
 		this._handlers.healthChanged = () => this._updateHealth();
 	}
@@ -87,7 +87,8 @@ export default class extends Window {
 	_updateWeapon() {
 	}
 
-	_updateLocation() {
+	_updateLocation({zone, world}) {
+		console.log('Update location', zone, world);
 	}
 
 	_updateHealth() {

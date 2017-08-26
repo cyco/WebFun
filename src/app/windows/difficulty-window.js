@@ -1,5 +1,5 @@
 import { SettingsWindow } from "/app/ui/components";
-import "./difficulty-window.scss"
+import "./difficulty-window.scss";
 
 class DifficultyWindow extends SettingsWindow {
 	static get TagName() {

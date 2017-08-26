@@ -1,10 +1,6 @@
 import { Direction } from "/util";
-
-export const Type = {
-	Hero: 0x0001,
-	Enemy: 0x0002,
-	Weapon: 0x0004
-};
+import Type from "./char-type";
+export { Type };
 
 export default class Char {
 	constructor() {

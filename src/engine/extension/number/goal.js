@@ -1,7 +1,7 @@
-import * as Type from '../../types';
-import { Planet } from '../../types';
+import * as Type from "../../types";
+import { Planet } from "../../types";
 
-Number.prototype.isGoalOnPlanet = function(planet) {
+Number.prototype.isGoalOnPlanet = function (planet) {
 	if (planet === Planet.TATOOINE) {
 		switch (this) {
 			case Type.GOAL_FALCON:

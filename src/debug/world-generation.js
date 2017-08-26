@@ -40,15 +40,15 @@ export default class {
 		this._sizeInput = this._buildInputField('dbg.size');
 		inputContainer.appendChild(this._sizeInput.element);
 
-		this._showDagobahCheckbox = {checked: false };
+		this._showDagobahCheckbox = {checked: false};
 		// this._showDagobahCheckbox = new Checkbox('Show Dagobah');
 		// this._showDagobahCheckbox.checked = !!localStorage.load('dbg.showDagobah');
 		/* this._showDagobahCheckbox.onchange = () => {
-			localStorage.store('dbg.showDagobah', this._showDagobahCheckbox.checked);
-			this._rebuildWorld();
-		};
-		inputContainer.appendChild(this._showDagobahCheckbox.element);
-		*/
+		 localStorage.store('dbg.showDagobah', this._showDagobahCheckbox.checked);
+		 this._rebuildWorld();
+		 };
+		 inputContainer.appendChild(this._showDagobahCheckbox.element);
+		 */
 		this._window.content.appendChild(inputContainer);
 	}
 

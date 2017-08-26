@@ -16,6 +16,6 @@ export Range from "./range";
 export Size from "./size";
 export Stream from "./stream";
 export VerticalPointRange from "./vertical-point-range";
-export { rand, srand, randmod }	from "./random";
+export { rand, srand, randmod }    from "./random";
 export { rgb, rgba } from "./color";
 export add from './add';

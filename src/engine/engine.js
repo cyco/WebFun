@@ -23,6 +23,7 @@ export default class extends EventTarget {
 		this.data = null;
 		this.hero = null;
 		this._currentZone = null;
+		this._currentWorld = null;
 		this.inventory = null;
 		this.scriptExecutor = null;
 
@@ -65,7 +66,7 @@ export default class extends EventTarget {
 	set currentZone(z) {
 		this._currentZone = z;
 		this.dispatchEvent(Events.CurrentZoneChange);
-		this.dispatchEvent(Events.LocationChanged);
+		this.dispatchEvent(Events.LocationChanged, {zone: z, world: this._currentWorld});
 	}
 
 	get currentZone() {

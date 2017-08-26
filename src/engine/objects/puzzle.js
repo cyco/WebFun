@@ -1,12 +1,5 @@
-export const Type = {
-	U1: 0,
-	U2: 1,
-	U3: 2,
-	End: 3,
-	U4: 4,
-
-	Disabled: 0xFFFF
-};
+import Type from "./puzzle-type";
+export { Type };
 
 export default class Puzzle {
 	constructor() {
@@ -18,7 +11,6 @@ export default class Puzzle {
 		this._unknown3 = null;
 
 		this._strings = [];
-		this._itemIDs = [];
 		this.item_1 = -1;
 		this.item_2 = -1;
 
@@ -29,14 +21,6 @@ export default class Puzzle {
 
 	get type() {
 		return this._type;
-	}
-
-	get _unknown_3() {
-		return this.hasPuzzleNPC;
-	}
-
-	get unknown_3() {
-		return this.hasPuzzleNPC;
 	}
 
 	get strings() {

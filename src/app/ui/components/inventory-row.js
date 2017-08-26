@@ -27,7 +27,7 @@ export default class extends Component {
 	set tile(tile) {
 		this._tile = tile;
 
-		const rep = tile ? tile.image.representation :null;
+		const rep = tile ? tile.image.representation : null;
 		const icon = rep && rep.cloneNode ? rep.cloneNode() : this._emptyIcon;
 		const label = tile ? tile.name : '';
 

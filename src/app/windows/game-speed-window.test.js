@@ -1,5 +1,4 @@
 import GameSpeedWindow from "./game-speed-window";
-import { SettingsWindow } from "/app/ui/components";
 
 describeComponent(GameSpeedWindow, () => {
 	let subject;

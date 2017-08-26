@@ -36,7 +36,7 @@ export default class PointRange {
 		let ycmp = step.y >= 0 ? (a, b) => a.y <= b.y : (a, b) => b.y <= a.y;
 
 		while (xcmp(point, this.to) && ycmp(point, this.to)) {
-			if(callback(point)) return point;
+			if (callback(point)) return point;
 
 			point.add(step);
 		}
