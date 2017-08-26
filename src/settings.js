@@ -9,6 +9,7 @@ export const Settings = {
 //	skipDialogs: true,
 
 	autostartEngine: false,
+	revealWorld: true,
 
 	url: {
 		data: "./game-data/yoda.data",
