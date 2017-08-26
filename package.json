@@ -18,7 +18,7 @@
     "file-loader": "^0.11.2",
     "font-loader": "^0.1.2",
     "identity-obj-proxy": "^3.0.0",
-    "istanbul-reports": "^1.1.1",
+    "istanbul-reports": "^1.1.2",
     "jasmine-core": "^2.8.0",
     "jasmine-data-provider": "^2.2.0",
     "jasmine-expect": "^3.7.1",
