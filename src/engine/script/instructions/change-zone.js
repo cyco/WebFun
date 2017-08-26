@@ -20,6 +20,7 @@ export default (instruction, engine, action) => {
 		world = engine.world;
 		location = world.locationOfZone(transitionScene.targetZone);
 	}
+	transitionScene.targetWorld = world;
 
 	if (!location) {
 		world = null;

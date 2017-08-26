@@ -32,6 +32,10 @@ export default class Point {
 		return this;
 	}
 
+	byAdding(x,y) {
+		return (new Point(this)).add(x,y);
+	}
+
 	subtract(x, y) {
 		if (typeof x === "object") {
 			y = x.y;
@@ -44,11 +48,19 @@ export default class Point {
 		return this;
 	}
 
+	bySubtract(x,y) {
+		return (new Point(this)).subtract(x,y);
+	}
+
 	scaleBy(a) {
 		this.x *= a;
 		this.y *= a;
 
 		return this;
+	}
+
+	byScalingBy(a) {
+		return (new Point(this)).scaleBy(a);
 	}
 
 	floor() {
@@ -59,6 +71,10 @@ export default class Point {
 		return this;
 	}
 
+	byFlooring() {
+		return (new Point(this)).floor(a);
+	}
+
 	ceil() {
 		this.x = Math.ceil(this.x);
 		this.y = Math.ceil(this.y);
@@ -67,11 +83,19 @@ export default class Point {
 		return this;
 	}
 
+	byCeiling() {
+		return (new Point(this)).ceil();
+	}
+
 	abs() {
 		this.x = Math.abs(this.x);
 		this.y = Math.abs(this.y);
 
 		return this;
+	}
+
+	byAbsing() {
+		return (new Point(this)).abs();
 	}
 
 	isEqualTo(point) {
