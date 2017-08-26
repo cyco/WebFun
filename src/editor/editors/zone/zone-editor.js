@@ -1,13 +1,13 @@
 import "./zone-editor.scss";
 import { Component } from "/ui";
 import { Group } from "/ui/components";
-import { LayerSelection, TileSelection, Zone, Toolbar, ToolbarItem, ActionList } from "/editor/components";
+import { ActionList, LayerSelection, TileSelection, Toolbar, ToolbarItem, Zone } from "/editor/components";
 import * as Tools from "./tools";
 
-const ToolStorageKey = 'editor.zone.tool';
+const ToolStorageKey = "editor.zone.tool";
 export default class extends Component {
 	static get TagName() {
-		return 'wf-editor-zone-editor';
+		return "wf-editor-zone-editor";
 	}
 
 	constructor() {
@@ -42,7 +42,7 @@ export default class extends Component {
 
 		const toggleSize = document.createElement(ToolbarItem.TagName);
 		toggleSize.onclick = () => this.toggleSize();
-		toggleSize.tool = {name: 'Toggle Size', icon: ''};
+		toggleSize.tool = {name: "Toggle Size", icon: ""};
 		this._toolbar.appendChild(toggleSize);
 
 
@@ -111,7 +111,7 @@ export default class extends Component {
 
 	toggleSize() {
 		let desiredEdgeLength = this._zone.width === 9 ? 18 : 9;
-		if (desiredEdgeLength === 9 && !confirm('Do you really want to resize the zone?')) return;
+		if (desiredEdgeLength === 9 && !confirm("Do you really want to resize the zone?")) return;
 
 		const desiredSize = desiredEdgeLength * desiredEdgeLength;
 		const newTileIDs = new Array(desiredSize * 3);

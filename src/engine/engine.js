@@ -1,10 +1,10 @@
 import { EventTarget } from "/util";
 
 export const Events = {
-	CurrentZoneChange: 'currentzonechange',
-	AmmoChanged: 'ammochange',
-	WeaponChanged: 'weaponchange',
-	LocationChanged: 'locationchange',
+	CurrentZoneChange: "currentzonechange",
+	AmmoChanged: "ammochange",
+	WeaponChanged: "weaponchange",
+	LocationChanged: "locationchange"
 };
 
 export default class extends EventTarget {

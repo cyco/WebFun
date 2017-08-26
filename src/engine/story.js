@@ -1,5 +1,5 @@
 import { Message, rand } from "/util";
-import { WorldGenerator, DagobahGenerator, WorldGenerationError } from "/engine/generation";
+import { DagobahGenerator, WorldGenerationError, WorldGenerator } from "/engine/generation";
 
 export default class {
 	constructor(seed, planet, size) {
@@ -53,7 +53,7 @@ export default class {
 		this._world.layDownHotspotItems();
 		this._dagobah.layDownHotspotItems();
 
-		Message(`done 0x${this.seed.toString(0x10).padStart(4, '0')}, 0x${this.planet.toString(0x10).padStart(4, '0')}, 0x${this.size.toString(0x10).padStart(4, '0')}`);
+		Message(`done 0x${this.seed.toString(0x10).padStart(4, "0")}, 0x${this.planet.toString(0x10).padStart(4, "0")}, 0x${this.size.toString(0x10).padStart(4, "0")}`);
 	}
 
 	_setupWorld(generator) {

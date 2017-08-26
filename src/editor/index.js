@@ -4,13 +4,13 @@ import { OutputStream } from "/util";
 import * as Components from "./components";
 import { Window } from "./components";
 import * as Editors from "./editors";
-import { ZonesEditor, TileEditor } from "./editors";
+import { TileEditor, ZonesEditor } from "./editors";
 import WindowMenu from "./menu";
 import Writer from "./writer";
 
 export const Type = {
-	Zones: 'Zones',
-	Tiles: 'Types',
+	Zones: "Zones",
+	Tiles: "Types"
 };
 
 let componentsInitialized = false;
@@ -53,14 +53,14 @@ export default class {
 		const array = new Uint8Array(buffer);
 		const base64 = btoa(Array.from(array).map(function (byte) {
 			return String.fromCharCode(byte);
-		}).join(''));
+		}).join(""));
 
-		const link = "data:" + 'application/binary' + ";base64," + base64;
+		const link = "data:" + "application/binary" + ";base64," + base64;
 		const uri = encodeURI(link);
-		const anchor = document.createElement('a');
+		const anchor = document.createElement("a");
 		document.body.appendChild(anchor);
 		anchor.href = uri;
-		anchor.download = 'yoda.modified.data';
+		anchor.download = "yoda.modified.data";
 		anchor.click();
 		document.body.removeChild(anchor);
 		debugger;

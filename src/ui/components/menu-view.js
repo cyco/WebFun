@@ -7,7 +7,7 @@ import "./menu-view.scss";
 
 export default class MenuView extends Component {
 	static get TagName() {
-		return 'wf-menu-view';
+		return "wf-menu-view";
 	}
 
 	constructor() {

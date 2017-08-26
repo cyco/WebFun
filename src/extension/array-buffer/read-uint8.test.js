@@ -1,21 +1,21 @@
 import { getFixtureData } from "test-helpers/fixture-loading";
 import readUint8 from "/extension/array-buffer/read-uint8";
 
-describe('ArrayBuffer reading', () => {
+describe("ArrayBuffer reading", () => {
 	let sampleBuffer;
 	beforeAll((done) => {
-		getFixtureData('someData', function (buffer) {
+		getFixtureData("someData", function (buffer) {
 			sampleBuffer = buffer;
 			done();
 		});
 	});
 
-	describe('ArrayBuffer.readUint8', () => {
-		it('is a function extending the ArrayBuffer prototype', () => {
-			expect(typeof sampleBuffer.readUint8).toBe('function');
+	describe("ArrayBuffer.readUint8", () => {
+		it("is a function extending the ArrayBuffer prototype", () => {
+			expect(typeof sampleBuffer.readUint8).toBe("function");
 		});
 
-		it('returns 1 byte unsigned data at the specified position', () => {
+		it("returns 1 byte unsigned data at the specified position", () => {
 			let byte;
 
 			byte = sampleBuffer.readUint8(0);

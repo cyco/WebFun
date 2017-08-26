@@ -5,7 +5,7 @@ import "./statistics-window.scss";
 
 export default class extends Window {
 	static get TagName() {
-		return 'wf-statistics-window';
+		return "wf-statistics-window";
 	}
 
 	connectedCallback() {

@@ -19,31 +19,31 @@ export default class {
 		this._engine.scriptExecutor = this._executor;
 
 		this._window = document.createElement(Window.TagName);
-		this._window.content.classList.add('debugger');
-		this._window.content.style.flexDirection = 'column';
-		this._window.content.style.width = '200px';
+		this._window.content.classList.add("debugger");
+		this._window.content.style.flexDirection = "column";
+		this._window.content.style.width = "200px";
 
 		this._setupDebuggerControls();
-		this._window.content.appendChild(document.createElement('hr'));
+		this._window.content.appendChild(document.createElement("hr"));
 		this._setupPointerFields();
-		this._window.content.appendChild(document.createElement('hr'));
+		this._window.content.appendChild(document.createElement("hr"));
 		this._setupActionList();
 
 		document.body.appendChild(this._window);
 	}
 
 	_executorStateChanged({action, zone, index, type}) {
-		console.log('_executorStateChanged', action, zone, index, type);
-		Array.from(this._actionList.querySelectorAll('[current]')).forEach(e => e.current = false);
+		console.log("_executorStateChanged", action, zone, index, type);
+		Array.from(this._actionList.querySelectorAll("[current]")).forEach(e => e.current = false);
 
 		const actionNode = this._actionList.children[action];
 		actionNode.expanded = true;
 
-		if (type === 'i') {
+		if (type === "i") {
 			const thingy = actionNode.querySelector(`wf-debug-instruction:nth-child(${index + 1})`);
 			thingy.current = true;
 			thingy.scrollIntoView();
-		} else if (type === 'c') {
+		} else if (type === "c") {
 			const thingy = actionNode.querySelector(`wf-debug-condition:nth-child(${index + 1})`);
 			thingy.current = true;
 			thingy.scrollIntoView();
@@ -54,9 +54,9 @@ export default class {
 	}
 
 	_setupPointerFields() {
-		const container = document.createElement('div');
-		container.style.display = 'flex';
-		container.style.flexDirection = 'row';
+		const container = document.createElement("div");
+		container.style.display = "flex";
+		container.style.flexDirection = "row";
 
 		const actionPointer = new Textbox();
 		container.appendChild(actionPointer.element);
@@ -86,12 +86,12 @@ export default class {
 	}
 
 	_setupActionList() {
-		const actionList = document.createElement('div');
-		actionList.classList.add('action-list');
+		const actionList = document.createElement("div");
+		actionList.classList.add("action-list");
 		this._window.content.appendChild(actionList);
 		this._actionList = actionList;
 		this._engine.oncurrentzonechange = () => {
-			console.log('Current Zone Changed');
+			console.log("Current Zone Changed");
 			this.rebuildActionList();
 		};
 	}

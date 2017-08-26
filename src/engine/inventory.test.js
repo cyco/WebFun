@@ -1,16 +1,16 @@
 import { default as Inventory, Events } from "/engine/inventory";
 
-describe('Inventory', () => {
+describe("Inventory", () => {
 	let inventory = null;
 	beforeEach(() => {
 		inventory = new Inventory();
 	});
 
-	it('is a class', () => {
-		expect(typeof Inventory).toBe('function');
+	it("is a class", () => {
+		expect(typeof Inventory).toBe("function");
 	});
 
-	it('items can be added', () => {
+	it("items can be added", () => {
 		let mockItem = {};
 
 		expect(() => {
@@ -18,7 +18,7 @@ describe('Inventory', () => {
 		}).not.toThrow();
 	});
 
-	it('items can be removed', () => {
+	it("items can be removed", () => {
 		let mockItem = {};
 
 		expect(() => {
@@ -26,7 +26,7 @@ describe('Inventory', () => {
 		}).not.toThrow();
 	});
 
-	it('has method to check if it contains an item', () => {
+	it("has method to check if it contains an item", () => {
 		let mockItem = {
 			id: 5
 		};
@@ -41,7 +41,7 @@ describe('Inventory', () => {
 		expect(inventory.contains(5)).toBeFalse();
 	});
 
-	it('has a method for easy enumeration', () => {
+	it("has a method for easy enumeration", () => {
 		inventory.addItem({id: 3});
 		inventory.addItem({id: 4});
 
@@ -53,15 +53,15 @@ describe('Inventory', () => {
 		expect(enumeratedItemIds).toEqual([3, 4]);
 	});
 
-	describe('Events', () => {
+	describe("Events", () => {
 		afterEach(() => {
 			inventory.removeEventListener(Events.ItemsDidChange);
 		});
 
-		it('sends an event when an item is added', (done) => {
+		it("sends an event when an item is added", (done) => {
 			let mockItem = {id: 3};
 			inventory.addEventListener(Events.ItemsDidChange, function (event) {
-				expect(event.detail.mode).toEqual('add');
+				expect(event.detail.mode).toEqual("add");
 				expect(event.detail.item).toBe(mockItem);
 
 				done();
@@ -69,12 +69,12 @@ describe('Inventory', () => {
 			inventory.addItem(mockItem);
 		});
 
-		it('sends an event when an item is removed', (done) => {
+		it("sends an event when an item is removed", (done) => {
 			let mockItem = {id: 3};
 			inventory.addItem(mockItem);
 
 			inventory.addEventListener(Events.ItemsDidChange, function (event) {
-				expect(event.detail.mode).toEqual('remove');
+				expect(event.detail.mode).toEqual("remove");
 				expect(event.detail.item).toBe(mockItem);
 
 				done();

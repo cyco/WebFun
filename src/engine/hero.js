@@ -1,4 +1,4 @@
-import { EventTarget, Point, Direction } from "/util";
+import { Direction, EventTarget, Point } from "/util";
 
 export const MAX_HEALTH = 0x300;
 export const Events = {

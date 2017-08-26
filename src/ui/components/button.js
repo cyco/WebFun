@@ -3,27 +3,27 @@ import "./button.scss";
 
 export default class extends IconButton {
 	static get TagName() {
-		return 'wf-button';
+		return "wf-button";
 	}
 
 	static get observedAttributes() {
-		return ['label'];
+		return ["label"];
 	}
 
 	constructor() {
 		super();
 
-		this._label = document.createElement('span');
+		this._label = document.createElement("span");
 	}
 
 	connectedCallback() {
 		super.connectedCallback();
 
-		this.appendChild(document.createElement('div'));
+		this.appendChild(document.createElement("div"));
 		this.appendChild(this._icon);
 		this.appendChild(this._label);
 
-		this.attributeChangedCallback('label', this.getAttribute('label'), this.getAttribute('label'));
+		this.attributeChangedCallback("label", this.getAttribute("label"), this.getAttribute("label"));
 	}
 
 	disconnectedCallback() {
@@ -31,7 +31,7 @@ export default class extends IconButton {
 	}
 
 	attributeChangedCallback(attrName, newValue, oldValue) {
-		if (attrName === 'label') {
+		if (attrName === "label") {
 			this._label.textContent = newValue;
 		}
 

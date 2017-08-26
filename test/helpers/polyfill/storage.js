@@ -4,7 +4,7 @@ global.Storage = global.window.Storage = class {
 	}
 
 	setItem(key, value) {
-		this._values[key] = '' + value;
+		this._values[key] = "" + value;
 	}
 
 	getItem(key) {

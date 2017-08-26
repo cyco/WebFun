@@ -1,11 +1,11 @@
 import { Instruction } from "/engine/objects";
 import * as RemoveTile from "./remove-tile";
 
-describeInstruction('RemoveTile', (execute, engine) => {
-	it('removes a tile from the current zone', () => {
+describeInstruction("RemoveTile", (execute, engine) => {
+	it("removes a tile from the current zone", () => {
 		engine.currentZone.removeTile = () => {
 		};
-		spyOn(engine.currentZone, 'removeTile');
+		spyOn(engine.currentZone, "removeTile");
 
 		let instruction = new Instruction({});
 		instruction._opcode = RemoveTile.Opcode;

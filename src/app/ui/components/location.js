@@ -8,12 +8,12 @@ export const Direction = {
 	North: 1 << 1,
 	East: 1 << 2,
 	South: 1 << 3,
-	West: 1 << 4,
+	West: 1 << 4
 };
 
 export default class extends Component {
 	static get TagName() {
-		return 'wf-location';
+		return "wf-location";
 	}
 
 	constructor() {
@@ -43,9 +43,9 @@ export default class extends Component {
 		const classList = this._svg.classList;
 		const set = (on, c) => (on ? classList.add.bind(classList) : classList.remove.bind(classList))(c);
 
-		set(this._mask & Direction.North, 'up');
-		set(this._mask & Direction.South, 'down');
-		set(this._mask & Direction.West, 'left');
-		set(this._mask & Direction.East, 'right');
+		set(this._mask & Direction.North, "up");
+		set(this._mask & Direction.South, "down");
+		set(this._mask & Direction.West, "left");
+		set(this._mask & Direction.East, "right");
 	}
 }

@@ -3,7 +3,7 @@ import { Component } from "/ui";
 
 export default class extends Component {
 	static get TagName() {
-		return 'wf-ammo';
+		return "wf-ammo";
 	}
 
 	constructor() {
@@ -30,7 +30,7 @@ export default class extends Component {
 	}
 
 	set ammo(value) {
-		let color = '';
+		let color = "";
 		if (value === 0xFF || value === -1) value = 0;
 		else color = "#000000";
 

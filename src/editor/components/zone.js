@@ -1,5 +1,5 @@
 import { Component } from "/ui";
-import { Size, Point, rgba } from "/util";
+import { Point, rgba, Size } from "/util";
 import { Layer } from "/engine/objects/zone";
 import "./zone.scss";
 
@@ -32,14 +32,14 @@ export default class extends Component {
 		this._hotspotColor = rgba(0, 0, 255, 0.2);
 		this._layerMask = DrawMask.All;
 
-		this._canvas = document.createElement('canvas');
-		this._canvas.setAttribute('width', TileSize * 18);
-		this._canvas.setAttribute('height', TileSize * 18);
+		this._canvas = document.createElement("canvas");
+		this._canvas.setAttribute("width", TileSize * 18);
+		this._canvas.setAttribute("height", TileSize * 18);
 		this._canvas.style.backgroundColor = this._backgroundColor;
 		this._canvas.onmousemove = (e) => this._mouseMoved(e);
 		this._canvas.onmousedown = (e) => this._mousePressed(e);
 
-		this._context = this._canvas.getContext('2d');
+		this._context = this._canvas.getContext("2d");
 		this._context.globalCompositeOperation = "source-over";
 		this._context.webkitImageSmoothingEnabled = false;
 
@@ -90,7 +90,7 @@ export default class extends Component {
 		}
 
 		this._mouseIsPressed = true;
-		document.addEventListener('mouseup', this._handlers.mouseUp);
+		document.addEventListener("mouseup", this._handlers.mouseUp);
 	}
 
 	_exeuteCallback(handler, event) {
@@ -105,7 +105,7 @@ export default class extends Component {
 		}
 
 		this._mouseIsPressed = false;
-		document.removeEventListener('mouseup', this._handlers.mouseUp);
+		document.removeEventListener("mouseup", this._handlers.mouseUp);
 	}
 
 	_locationInView(e) {

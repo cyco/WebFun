@@ -4,7 +4,7 @@ import "./zone-selection.scss";
 
 export default class extends Component {
 	static get TagName() {
-		return 'wf-editor-zone-selection';
+		return "wf-editor-zone-selection";
 	}
 
 	constructor() {
@@ -37,14 +37,14 @@ export default class extends Component {
 
 	selectZone(zone, node) {
 		if (this._selectedZoneNode) {
-			this._selectedZoneNode.removeAttribute('selected');
+			this._selectedZoneNode.removeAttribute("selected");
 		}
 
 		this._selectedZone = zone;
 		this._selectedZoneNode = node;
 
 		if (this._selectedZoneNode) {
-			this._selectedZoneNode.setAttribute('selected', '');
+			this._selectedZoneNode.setAttribute("selected", "");
 		}
 
 		if (this.onzonechange instanceof Function) {

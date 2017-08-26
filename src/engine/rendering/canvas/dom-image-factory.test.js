@@ -8,21 +8,21 @@ describe("DOMImageFactory", () => {
 		255, 255, 255, 0, // white
 		255, 0, 0, 1, // red
 		0, 255, 0, 1, // green
-		0, 0, 255, 1, // blue
+		0, 0, 255, 1 // blue
 	];
 
-	it('it is a class that builds images from palette and pixel data', () => {
+	it("it is a class that builds images from palette and pixel data", () => {
 		expect(DOMImageFactory).toBeClass();
 	});
 
-	it('uses a color palette', () => {
+	it("uses a color palette", () => {
 		const factory = new DOMImageFactory();
 		factory.palette = colorPalette;
 
 		expect(factory.palette).toBe(colorPalette);
 	});
 
-	it('can be used to build images', () => {
+	it("can be used to build images", () => {
 		const factory = new DOMImageFactory();
 		factory.palette = colorPalette;
 
@@ -36,7 +36,7 @@ describe("DOMImageFactory", () => {
 
 		const representation = image.representation;
 		expect(representation).toBeInstanceOf(Image);
-		expect(representation).toHaveClass('pixelated');
+		expect(representation).toHaveClass("pixelated");
 
 		/* for visual inspection
 		 const imageNode = document.createElement('img');

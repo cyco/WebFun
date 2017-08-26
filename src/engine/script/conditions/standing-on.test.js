@@ -1,8 +1,8 @@
 import { Condition } from "/engine/objects";
 import * as StandingOn from "./standing-on";
 
-describeCondition('StandingOn', (check, engine) => {
-	it('checks if the hero is standing on a specific tile', () => {
+describeCondition("StandingOn", (check, engine) => {
+	it("checks if the hero is standing on a specific tile", () => {
 		const hero = engine.hero;
 		const condition = new Condition();
 		condition._opcode = StandingOn.Opcode;

@@ -5,7 +5,7 @@ import "./zones-editor.scss";
 
 export default class extends Component {
 	static get TagName() {
-		return 'wf-editor-zones';
+		return "wf-editor-zones";
 	}
 
 	constructor() {

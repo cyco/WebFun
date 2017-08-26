@@ -1,6 +1,6 @@
 import loadGameData from "test-helpers/game-data";
 import { getFixtureContent } from "test-helpers/fixture-loading";
-import { PrepareExpectations, ParseExpectation, ComparisonResult, CompareWorldItems } from "src/debug";
+import { CompareWorldItems, ComparisonResult, ParseExpectation, PrepareExpectations } from "src/debug";
 import Story from "src/engine/story";
 import GameData from "src/engine/game-data";
 
@@ -55,7 +55,7 @@ const compare = (story, expectation) => {
 
 const runTest = ({seed, planet, size, world, dagobah}) => {
 	describe(`World ${seed} ${getPlanetName(planet)} ${getSizeName(size)}`, () => {
-		it('is generated correctly', (done) => {
+		it("is generated correctly", (done) => {
 			const story = new Story(seed, planet, size);
 			story.generateWorld({data: new GameData(rawData)});
 			expect(() => compare(story, {seed, planet, size, world, dagobah})).not.toThrow();
@@ -82,7 +82,7 @@ const runnerFilter = (map) => {
 };
 const identity = (i) => i;
 
-describe('World Generation', () => {
+describe("World Generation", () => {
 	beforeAll((done) => {
 		loadGameData(data => {
 			rawData = data;
@@ -90,7 +90,7 @@ describe('World Generation', () => {
 		});
 	});
 
-	const worldsFixture = getFixtureContent('worlds.txt');
+	const worldsFixture = getFixtureContent("worlds.txt");
 	const maps = PrepareExpectations(worldsFixture).map(ParseExpectation).filter(process.acceptance ? runnerFilter : identity);
 	maps.forEach(runTest);
 });

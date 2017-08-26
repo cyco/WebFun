@@ -1,12 +1,11 @@
-import { identity, constantly, Point, srand, rand, VerticalPointRange, HorizontalPointRange } from "/util";
-import { console } from "std";
+import { constantly, HorizontalPointRange, identity, Point, rand, srand, VerticalPointRange } from "/util";
 import MapGenerator from "./map-generator";
 import WorldItemType from "./world-item-type";
 import World from "./world";
 import * as Type from "/engine/types";
 import { WorldSize } from "/engine/types";
 import GetDistanceToCenter from "./distance-to-center";
-import { ZoneType, PuzzleType, HotspotType } from "/engine/objects";
+import { HotspotType, PuzzleType, ZoneType } from "/engine/objects";
 import { and, not } from "/util/functional";
 import WorldGenerationError from "./world-generation-error";
 
@@ -78,7 +77,7 @@ class WorldGenerator {
 		if (goalID === -1) {
 			const puzzle = this.GetUnusedPuzzleRandomly(-1, ZoneType.Unknown);
 			if (puzzle)
-				goalID = this.goalPuzzleID = puzzle.id
+				goalID = this.goalPuzzleID = puzzle.id;
 		}
 		if (goalID === -1) {
 			return false;
@@ -230,7 +229,7 @@ class WorldGenerator {
 				zone = this.GetUnusedZoneRandomly(type, puzzleIndex - 1, -1, item_1, -1, distance, false);
 			}
 
-			this.errorWhen(!zone, 'Unable to find suitable puzzle zone');
+			this.errorWhen(!zone, "Unable to find suitable puzzle zone");
 
 			this.placeZone(point.x, point.y, zone.id, zone.type, {
 				findItemID: this.findItemID,

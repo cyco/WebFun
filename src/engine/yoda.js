@@ -5,6 +5,6 @@ export default {
 		TheForce: 0x1FF,
 		Blaster: 0x200,
 		BlasterRifle: 0x201,
-		ThermalDetonator: 0x202,
+		ThermalDetonator: 0x202
 	}
 };

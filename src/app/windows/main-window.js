@@ -1,5 +1,5 @@
-import { Window, Group } from "/ui/components";
-import { Location, Health, Ammo, Weapon, Inventory } from "/app/ui/components";
+import { Group, Window } from "/ui/components";
+import { Ammo, Health, Inventory, Location, Weapon } from "/app/ui/components";
 import { Direction } from "/app/ui/components/location";
 import { Events } from "/engine/engine";
 import Hero from "/engine/hero";
@@ -7,7 +7,7 @@ import "./main-window.scss";
 
 export default class extends Window {
 	static get TagName() {
-		return 'wf-main-window';
+		return "wf-main-window";
 	}
 
 	constructor() {
@@ -105,7 +105,7 @@ export default class extends Window {
 	}
 
 	_updateHealth() {
-		console.log('update health', this._engine.hero);
+		console.log("update health", this._engine.hero);
 		this._healthView.health = this._engine.hero.health;
 	}
 }

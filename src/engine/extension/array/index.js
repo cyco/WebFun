@@ -1,1 +1,1 @@
-export withType from './with-type';
+export withType from "./with-type";

@@ -1,17 +1,17 @@
 import "./world-generation.scss";
-import { Textbox, Checkbox } from "/ui";
+import { Checkbox, Textbox } from "/ui";
 import { Window } from "/ui/components";
 import { FileLoader } from "/util";
 import Story from "/engine/story";
 import { DataFileReader, GameData } from "/engine";
 import ZoneType from "/engine/objects";
-import { PrepareExpectations, ParseExpectation, ComparisonResult, CompareWorldItems } from "./expectation";
+import { CompareWorldItems, ComparisonResult, ParseExpectation, PrepareExpectations } from "./expectation";
 
 export default class {
 	constructor(engine) {
 		this._engine = engine;
 		this._window = document.createElement(Window.TagName);
-		this._window.content.classList.add('world-generation');
+		this._window.content.classList.add("world-generation");
 
 		this._currentStory = null;
 		this._readExpectations();
@@ -24,7 +24,7 @@ export default class {
 	}
 
 	_readExpectations() {
-		const fileLoader = new FileLoader('game-data/worlds.txt');
+		const fileLoader = new FileLoader("game-data/worlds.txt");
 		fileLoader.onload = ({detail: {arraybuffer}}) => {
 			this.expectations = PrepareExpectations((new TextDecoder()).decode(arraybuffer)).map(ParseExpectation);
 		};
@@ -32,12 +32,12 @@ export default class {
 	}
 
 	_setupInputFields() {
-		const inputContainer = document.createElement('div');
-		this._seedInput = this._buildInputField('dbg.seed');
+		const inputContainer = document.createElement("div");
+		this._seedInput = this._buildInputField("dbg.seed");
 		inputContainer.appendChild(this._seedInput.element);
-		this._planetInput = this._buildInputField('dbg.planet');
+		this._planetInput = this._buildInputField("dbg.planet");
 		inputContainer.appendChild(this._planetInput.element);
-		this._sizeInput = this._buildInputField('dbg.size');
+		this._sizeInput = this._buildInputField("dbg.size");
 		inputContainer.appendChild(this._sizeInput.element);
 
 		this._showDagobahCheckbox = {checked: false};
@@ -60,24 +60,24 @@ export default class {
 			localStorage.setItem(key, input.value);
 			this._rebuildWorld();
 		};
-		input.element.style.width = '60px';
+		input.element.style.width = "60px";
 		return input;
 	}
 
 	_setupMapView() {
-		const container = document.createElement('div');
-		container.style.display = 'flex';
+		const container = document.createElement("div");
+		container.style.display = "flex";
 
-		this._mapContainer = document.createElement('div');
-		this._mapContainer.classList.add('debug-map');
+		this._mapContainer = document.createElement("div");
+		this._mapContainer.classList.add("debug-map");
 		this._mapContainer.onmousemove = (e) => {
 			this._showDetails(Array.from(e.target.parentElement.children).indexOf(e.target));
 		};
 		container.appendChild(this._mapContainer);
 
-		this._details = document.createElement('div');
-		this._details.style.display = 'flex';
-		this._details.style.flexDirection = 'column';
+		this._details = document.createElement("div");
+		this._details.style.display = "flex";
+		this._details.style.flexDirection = "column";
 		container.appendChild(this._details);
 
 		this._window.content.appendChild(container);
@@ -107,56 +107,56 @@ export default class {
 		const worldItem = this._currentWorld.index(i);
 		const expectedWorldItem = this._currentSample && this._currentSample[i];
 
-		const details = document.createElement('div');
-		details.append('Details:');
-		details.appendChild(document.createElement('br'));
+		const details = document.createElement("div");
+		details.append("Details:");
+		details.appendChild(document.createElement("br"));
 		details.append(`${i % 10}x${Math.floor(i / 10)}`);
-		details.appendChild(document.createElement('br'));
+		details.appendChild(document.createElement("br"));
 		details.append(`Zone: ${worldItem.zoneID}`);
 		if (expectedWorldItem && expectedWorldItem.zoneID !== worldItem.zoneID) {
 			details.append(` vs ${expectedWorldItem.zoneID}`);
 		}
-		details.appendChild(document.createElement('br'));
+		details.appendChild(document.createElement("br"));
 		details.append(`Type: ${this._typeName(worldItem.zoneType)}`);
 		if (expectedWorldItem && expectedWorldItem.zoneType !== worldItem.zoneType) {
 			details.append(` vs ${this._typeName(expectedWorldItem.zoneType)}`);
 		}
-		details.appendChild(document.createElement('br'));
+		details.appendChild(document.createElement("br"));
 		details.append(`Puzzle: ${worldItem.puzzleIdx}`);
-		details.appendChild(document.createElement('br'));
+		details.appendChild(document.createElement("br"));
 
-		details.appendChild(this._itemRow('requiredItemID', worldItem.requiredItemID, expectedWorldItem ? expectedWorldItem.requiredItemID : -1));
-		details.appendChild(this._itemRow('additionalRequiredItemID', worldItem.additionalRequiredItemID, expectedWorldItem ? expectedWorldItem.additionalRequiredItemID : -1));
-		details.appendChild(this._itemRow('findItemID', worldItem.findItemID, expectedWorldItem ? expectedWorldItem.findItemID : -1));
-		details.appendChild(this._itemRow('npcID', worldItem.npcID, expectedWorldItem ? expectedWorldItem.npcID : -1));
-		details.appendChild(this._itemRow('unknown606', worldItem.unknown606, expectedWorldItem ? expectedWorldItem.unknown606 : -1));
+		details.appendChild(this._itemRow("requiredItemID", worldItem.requiredItemID, expectedWorldItem ? expectedWorldItem.requiredItemID : -1));
+		details.appendChild(this._itemRow("additionalRequiredItemID", worldItem.additionalRequiredItemID, expectedWorldItem ? expectedWorldItem.additionalRequiredItemID : -1));
+		details.appendChild(this._itemRow("findItemID", worldItem.findItemID, expectedWorldItem ? expectedWorldItem.findItemID : -1));
+		details.appendChild(this._itemRow("npcID", worldItem.npcID, expectedWorldItem ? expectedWorldItem.npcID : -1));
+		details.appendChild(this._itemRow("unknown606", worldItem.unknown606, expectedWorldItem ? expectedWorldItem.unknown606 : -1));
 
 		this._details.replaceWith(details);
 		this._details = details;
 	}
 
 	_itemRow(label, itemIdx, expectedItemIdx) {
-		const row = document.createElement('div');
-		row.style.lineHeight = '32px';
+		const row = document.createElement("div");
+		row.style.lineHeight = "32px";
 		row.append(label);
 
-		const image = document.createElement('img');
-		image.style.width = '32px';
-		image.style.height = '32px';
+		const image = document.createElement("img");
+		image.style.width = "32px";
+		image.style.height = "32px";
 		const tile = this._engine.data.tiles[itemIdx];
 		image.src = tile ? tile.image.representation.src : Image.blankImage;
 		row.appendChild(image);
 
 		if (itemIdx !== expectedItemIdx) {
-			const image = document.createElement('img');
-			image.style.width = '32px';
-			image.style.height = '32px';
-			image.style.border = '1px solid red';
+			const image = document.createElement("img");
+			image.style.width = "32px";
+			image.style.height = "32px";
+			image.style.border = "1px solid red";
 			const tile = this._engine.data.tiles[expectedItemIdx];
 			image.src = tile ? tile.image.representation.src : Image.blankImage;
 			row.appendChild(image);
 
-			row.style.color = 'red';
+			row.style.color = "red";
 		}
 
 		return row;
@@ -171,7 +171,7 @@ export default class {
 			prepareEngine();
 		}
 
-		const loader = new FileLoader('game-data/yoda.data');
+		const loader = new FileLoader("game-data/yoda.data");
 		loader.onload = ({detail: {kaitaiStream}}) => {
 			this._rawData = new DataFileReader(kaitaiStream);
 			prepareEngine();
@@ -181,7 +181,7 @@ export default class {
 
 	readInt(string) {
 		string = string.toLowerCase();
-		if (string.startsWith('0x')) {
+		if (string.startsWith("0x")) {
 			return parseInt(string.substring(2), 0x10);
 		}
 
@@ -222,22 +222,22 @@ export default class {
 	}
 
 	_addItem(worldItem, expectedWorldItem) {
-		const item = document.createElement('div');
-		item.classList.add('debug-map-item');
+		const item = document.createElement("div");
+		item.classList.add("debug-map-item");
 		item.classList.add(this._classForZoneType(worldItem.zoneType));
 
 		if (expectedWorldItem) {
 			const comparisonResult = CompareWorldItems(expectedWorldItem, worldItem);
 			if (comparisonResult === ComparisonResult.Similar) {
-				item.classList.add('invalid-details');
-			} else item.classList.remove('invalid-details');
+				item.classList.add("invalid-details");
+			} else item.classList.remove("invalid-details");
 
 			if (comparisonResult === ComparisonResult.Different) {
-				item.classList.add('invalid');
-			} else item.classList.remove('invalid');
+				item.classList.add("invalid");
+			} else item.classList.remove("invalid");
 		} else {
-			item.classList.remove('invalid');
-			item.classList.remove('invalid-details');
+			item.classList.remove("invalid");
+			item.classList.remove("invalid-details");
 		}
 
 		this._mapContainer.appendChild(item);
@@ -246,86 +246,86 @@ export default class {
 	_classForZoneType(type) {
 		switch (type) {
 			case ZoneType.Empty:
-				return 'empty';
+				return "empty";
 			case ZoneType.BlockadeNorth:
-				return 'block-north';
+				return "block-north";
 			case ZoneType.BlockadeSouth:
-				return 'block-south';
+				return "block-south";
 			case ZoneType.BlockadeEast:
-				return 'block-east';
+				return "block-east";
 			case ZoneType.BlockadeWest:
-				return 'block-west';
+				return "block-west";
 			case ZoneType.TravelStart:
-				return 'travel';
+				return "travel";
 			case ZoneType.TravelEnd:
-				return 'travel';
+				return "travel";
 			case ZoneType.Load:
-				return 'load';
+				return "load";
 			case ZoneType.Goal:
-				return 'goal';
+				return "goal";
 			case ZoneType.Town:
-				return 'spaceport';
+				return "spaceport";
 			case ZoneType.Win:
-				return 'win';
+				return "win";
 			case ZoneType.Lose:
-				return 'lose';
+				return "lose";
 			case ZoneType.Trade:
-				return 'trade';
+				return "trade";
 			case ZoneType.Use:
-				return 'use';
+				return "use";
 			case ZoneType.Find:
-				return 'find';
+				return "find";
 			case ZoneType.FindTheForce:
-				return 'find-the-force';
+				return "find-the-force";
 			case ZoneType.Unknown:
-				return 'unknown';
+				return "unknown";
 			case ZoneType.Room:
-				return 'room';
+				return "room";
 			default:
-				return 'none';
+				return "none";
 		}
 	}
 
 	_typeName(type) {
 		switch (type) {
 			case ZoneType.Empty:
-				return 'Empty';
+				return "Empty";
 			case ZoneType.BlockadeNorth:
-				return 'BlockadeNorth';
+				return "BlockadeNorth";
 			case ZoneType.BlockadeSouth:
-				return 'BlockadeSouth';
+				return "BlockadeSouth";
 			case ZoneType.BlockadeEast:
-				return 'BlockadeEast';
+				return "BlockadeEast";
 			case ZoneType.BlockadeWest:
-				return 'BlockadeWest';
+				return "BlockadeWest";
 			case ZoneType.TravelStart:
-				return 'TravelStart';
+				return "TravelStart";
 			case ZoneType.TravelEnd:
-				return 'TravelEnd';
+				return "TravelEnd";
 			case ZoneType.Room:
-				return 'Room';
+				return "Room";
 			case ZoneType.Load:
-				return 'Load';
+				return "Load";
 			case ZoneType.Goal:
-				return 'Goal';
+				return "Goal";
 			case ZoneType.Town:
-				return 'Town';
+				return "Town";
 			case ZoneType.Win:
-				return 'Win';
+				return "Win";
 			case ZoneType.Lose:
-				return 'Lose';
+				return "Lose";
 			case ZoneType.Trade:
-				return 'Trade';
+				return "Trade";
 			case ZoneType.Use:
-				return 'Use';
+				return "Use";
 			case ZoneType.Find:
-				return 'Find';
+				return "Find";
 			case ZoneType.FindTheForce:
-				return 'FindTheForce';
+				return "FindTheForce";
 			case ZoneType.Unknown:
-				return 'Unknown';
+				return "Unknown";
 			default:
-				return 'unknown';
+				return "unknown";
 		}
 	}
 }

@@ -1,8 +1,8 @@
 import { Instruction } from "/engine/objects";
 import * as AddToPadding from "./add-to-padding";
 
-describeInstruction('AddToPadding', (execute, engine) => {
-	it('adds a value to the current zone\'s padding', () => {
+describeInstruction("AddToPadding", (execute, engine) => {
+	it("adds a value to the current zone's padding", () => {
 		engine.currentZone.padding = 5;
 
 		let instruction = new Instruction({});

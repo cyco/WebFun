@@ -10,21 +10,21 @@ export default class {
 	}
 
 	writeTo(stream) {
-		stream.writeCharacters('VERS');
+		stream.writeCharacters("VERS");
 		stream.writeUint32(512);
 
-		stream.writeCharacters('STUP');
+		stream.writeCharacters("STUP");
 		stream.writeUint32(288 * 288);
 		stream.writeUint8Array(this._data._rawInput.STUP.pixelData);
 
 		const sounds = this._data.sounds;
-		stream.writeCharacters('SNDS');
+		stream.writeCharacters("SNDS");
 		stream.writeUint32(2 + sounds.length * 3 + sounds.map(snd => snd.length).reduce(add, 0));
 		stream.writeInt16(-sounds.length);
 		sounds.forEach(snd => stream.writeLengthPrefixedNullTerminatedString(snd));
 
 		const tiles = this._data.tiles;
-		stream.writeCharacters('TILE');
+		stream.writeCharacters("TILE");
 		stream.writeUint32(tiles.length * (4 + 32 * 32));
 		tiles.forEach((tile) => {
 			stream.writeUint32(tile.attributes);
@@ -32,12 +32,12 @@ export default class {
 		});
 
 		const zones = this._data.zones;
-		stream.writeCharacters('ZONE');
+		stream.writeCharacters("ZONE");
 		stream.writeUint16(zones.length);
 		zones.forEach(zone => this._writeZone(zone, stream));
 
 		const puzzles = this._data.puzzles;
-		stream.writeCharacters('PUZ2');
+		stream.writeCharacters("PUZ2");
 		stream.writeUint32(this._calculatePuzzlesSize(puzzles));
 		puzzles.forEach((p, idx) => {
 			stream.writeUint16(idx);
@@ -46,18 +46,18 @@ export default class {
 		stream.writeInt16(-1);
 
 		const characters = this._data.characters;
-		stream.writeCharacters('CHAR');
+		stream.writeCharacters("CHAR");
 		stream.writeUint32(2 + characters.length * (2 + 4 + 4) + characters.map(c => c.rawData.length).reduce(add, 0));
 		characters.forEach((char, idx) => {
 			stream.writeUint16(idx);
-			stream.writeCharacters('ICHA');
+			stream.writeCharacters("ICHA");
 			stream.writeUint32(char.rawData.length);
 			stream.writeUint8Array(char.rawData);
 
 		});
 		stream.writeInt16(-1);
 
-		stream.writeCharacters('CHWP');
+		stream.writeCharacters("CHWP");
 		stream.writeUint32((2 + 4) * characters.length + 2);
 		characters.forEach((char, idx) => {
 			stream.writeUint16(idx);
@@ -65,7 +65,7 @@ export default class {
 		});
 		stream.writeInt16(-1);
 
-		stream.writeCharacters('CAUX');
+		stream.writeCharacters("CAUX");
 		stream.writeUint32((2 + 2) * characters.length + 2);
 		characters.forEach((char, idx) => {
 			stream.writeUint16(idx);
@@ -74,7 +74,7 @@ export default class {
 		stream.writeInt16(-1);
 
 		const namedTiles = tiles.filter(t => t.name);
-		stream.writeCharacters('TNAM');
+		stream.writeCharacters("TNAM");
 		stream.writeUint32(2 + namedTiles.length * (0x18 + 2));
 		namedTiles.forEach(t => {
 			stream.writeUint16(t.id);
@@ -84,7 +84,7 @@ export default class {
 		});
 		stream.writeInt16(-1);
 
-		stream.writeCharacters('ENDF');
+		stream.writeCharacters("ENDF");
 		stream.writeUint32(0);
 	}
 
@@ -92,9 +92,9 @@ export default class {
 		stream.writeUint16(zone.planet);
 		stream.writeUint32(this._calculateZoneSize(zone) + 4);
 		stream.writeUint16(zone.id);
-		stream.writeCharacters('IZON');
+		stream.writeCharacters("IZON");
 		stream.writeUint32(2 + // width
-			2 + // height	
+			2 + // height
 			4 + // type
 			2 + // padding
 			2 + // planet
@@ -119,7 +119,7 @@ export default class {
 		const npcs = zone.npcs;
 		const requiredItemIDs = zone.requiredItemIDs;
 		const assignedItemIDs = zone.assignedItemIDs;
-		stream.writeCharacters('IZAX');
+		stream.writeCharacters("IZAX");
 		stream.writeUint32(8 +
 			2 +
 			2 + npcs.length * 44 +
@@ -135,18 +135,18 @@ export default class {
 		assignedItemIDs.forEach(item => stream.writeUint16(item));
 
 		const providedItemIDs = zone.providedItemIDs;
-		stream.writeCharacters('IZX2');
+		stream.writeCharacters("IZX2");
 		stream.writeUint32(4 + 4 + providedItemIDs.length * 2 + 2);
 		stream.writeUint16(providedItemIDs.length);
 		providedItemIDs.forEach(item => stream.writeUint16(item));
 
 		const puzzleNPCTileIDs = zone.puzzleNPCTileIDs;
-		stream.writeCharacters('IZX3');
+		stream.writeCharacters("IZX3");
 		stream.writeUint32(4 + 4 + 2 + puzzleNPCTileIDs.length * 2);
 		stream.writeUint16(puzzleNPCTileIDs.length);
 		puzzleNPCTileIDs.forEach(npc => stream.writeUint16(npc));
 
-		stream.writeCharacters('IZX4');
+		stream.writeCharacters("IZX4");
 		stream.writeUint32(2);
 		stream.writeUint16(zone.izx4Unknown);
 
@@ -165,7 +165,7 @@ export default class {
 
 	_calculateZoneSize(zone) {
 		return 2 + // width
-			2 + // height	
+			2 + // height
 			4 + // type
 			2 + // padding
 			2 + // planet
@@ -211,7 +211,7 @@ export default class {
 
 		const conditionsSize = action.conditions.map(calculateActionItemSize).reduce(add, 0);
 		const instructionsSize = action.instructions.map(calculateActionItemSize).reduce(add, 0);
-		stream.writeCharacters('IACT');
+		stream.writeCharacters("IACT");
 		stream.writeUint32(2 + conditionsSize + 2 + instructionsSize);
 		stream.writeUint16(action.conditions.length);
 		action.conditions.forEach(writeActionItem);
@@ -228,7 +228,7 @@ export default class {
 	}
 
 	_writePuzzle(puzzle, stream) {
-		stream.writeCharacters('IPUZ');
+		stream.writeCharacters("IPUZ");
 		stream.writeUint32(this._calculatePuzzleSize(puzzle));
 
 		if (puzzle.id === 0xBD || puzzle.id === 0xC5) {

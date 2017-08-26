@@ -1,14 +1,14 @@
 import { dispatch } from "/util";
 import { LoadingView, SceneView } from "./ui";
 import Settings from "/settings";
-import { MainWindow, MainMenu } from "./windows";
-import { Engine, CanvasRenderer, WebGLRenderer, Story, Metronome, Hero, Inventory } from "/engine";
+import { MainMenu, MainWindow } from "./windows";
+import { CanvasRenderer, Engine, Hero, Inventory, Metronome, Story, WebGLRenderer } from "/engine";
 import { Planet, WorldSize } from "/engine/types";
 import { ZoneScene } from "/engine/scenes";
 import { DesktopInputManager } from "/engine/input";
 import Loader from "./loader";
 import { ScriptExecutor } from "/engine/script";
-import { WorldGeneration, Debugger } from "/debug";
+import { Debugger, WorldGeneration } from "/debug";
 
 export default class {
 	constructor() {
@@ -38,11 +38,11 @@ export default class {
 
 	_determineRenderer() {
 		if (WebGLRenderer.isSupported()) {
-			console.log('Using WebGL renderer');
+			console.log("Using WebGL renderer");
 			return WebGLRenderer;
 		}
 
-		console.log('Using Canvas renderer');
+		console.log("Using Canvas renderer");
 		return CanvasRenderer;
 	}
 

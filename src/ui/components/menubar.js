@@ -8,7 +8,7 @@ import "./menubar.scss";
 
 export default class Menubar extends MenuView {
 	static get TagName() {
-		return 'wf-menubar';
+		return "wf-menubar";
 	}
 
 	constructor() {

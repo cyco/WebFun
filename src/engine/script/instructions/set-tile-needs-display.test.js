@@ -1,8 +1,8 @@
 import { Instruction } from "/engine/objects";
 import * as SetTileNeedsDisplay from "./set-tile-needs-display";
 
-describeInstruction('SetTileNeedsDisplay', (execute, engine) => {
-	it('Marks the specified tile as dirty', () => {
+describeInstruction("SetTileNeedsDisplay", (execute, engine) => {
+	it("Marks the specified tile as dirty", () => {
 		let instruction = new Instruction({});
 		instruction._opcode = SetTileNeedsDisplay.Opcode;
 		instruction._arguments = [];

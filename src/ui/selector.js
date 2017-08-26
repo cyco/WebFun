@@ -1,4 +1,5 @@
 import View from "./view";
+
 export default class Selector extends View {
 	constructor(element) {
 		super(element || document.createElement("select"));

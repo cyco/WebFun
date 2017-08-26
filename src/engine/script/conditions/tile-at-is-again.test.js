@@ -1,8 +1,8 @@
 import { Condition } from "/engine/objects";
 import * as TileAtIsAgain from "./tile-at-is-again";
 
-describeCondition('TileAtIsAgain', (check, engine) => {
-	it('checks if a specific tile is found at the given location', () => {
+describeCondition("TileAtIsAgain", (check, engine) => {
+	it("checks if a specific tile is found at the given location", () => {
 		const condition = new Condition();
 		condition._opcode = TileAtIsAgain.Opcode;
 		condition._arguments = [10, 5, 7, 2];

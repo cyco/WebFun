@@ -1,10 +1,10 @@
 import Component from "../component";
 
-export Group from './radio-group';
+export Group from "./radio-group";
 
 export default class RadioButton extends Component {
 	static get TagName() {
-		return 'wf-radio-button';
+		return "wf-radio-button";
 	}
 
 	constructor() {

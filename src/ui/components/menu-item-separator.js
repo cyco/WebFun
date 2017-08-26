@@ -3,7 +3,7 @@ import "./menu-item-separator.scss";
 
 export default class extends Component {
 	static get TagName() {
-		return 'wf-menu-item-separator';
+		return "wf-menu-item-separator";
 	}
 
 	constructor() {

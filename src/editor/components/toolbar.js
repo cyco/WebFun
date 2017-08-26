@@ -5,7 +5,7 @@ import "./toolbar.scss";
 
 export default class extends Component {
 	static get TagName() {
-		return 'wf-editor-toolbar';
+		return "wf-editor-toolbar";
 	}
 
 	constructor() {
@@ -39,11 +39,11 @@ export default class extends Component {
 	}
 
 	selectTool(tool) {
-		const currentItem = this.querySelector(ToolbarItem.TagName + '[selected]');
-		if (currentItem) currentItem.removeAttribute('selected');
+		const currentItem = this.querySelector(ToolbarItem.TagName + "[selected]");
+		if (currentItem) currentItem.removeAttribute("selected");
 
 		const item = this.children.find(item => item.tool === tool);
-		if (item) item.setAttribute('selected', '');
+		if (item) item.setAttribute("selected", "");
 
 		if (this.ontoolchange instanceof Function) {
 			this.ontoolchange(item.tool);

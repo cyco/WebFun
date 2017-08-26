@@ -5,7 +5,7 @@ import "./menu-window.scss";
 
 export default class MenuWindow extends MenuView {
 	static get TagName() {
-		return 'wf-menu-window';
+		return "wf-menu-window";
 	}
 
 	connectedCallback() {

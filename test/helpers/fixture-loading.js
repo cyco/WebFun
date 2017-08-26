@@ -25,15 +25,15 @@ function buildFixtureUrl(name) {
 }
 
 if (!process.browser) {
-	const fs = require('fs');
-	const path = require('path');
+	const fs = require("fs");
+	const path = require("path");
 
 	getFixtureContent = (name) => {
-		return fs.readFileSync(path.resolve('./game-data') + '/' + name, {encoding: 'utf8'});
+		return fs.readFileSync(path.resolve("./game-data") + "/" + name, {encoding: "utf8"});
 	};
 
 	getFixtureData = (name, callback) => {
-		const buffer = fs.readFileSync(path.resolve('./game-data') + '/' + name);
+		const buffer = fs.readFileSync(path.resolve("./game-data") + "/" + name);
 		callback(buffer.buffer.slice(buffer.byteOffset, buffer.byteOffset + buffer.byteLength));
 	};
 }

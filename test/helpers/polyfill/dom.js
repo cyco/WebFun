@@ -1,7 +1,8 @@
-import { global } from '/std';
+import { global } from "/std";
+
 const {JSDOM} = require("jsdom");
 
-const documentHTML = '<!doctype html><html><body><div id="root"></div></body></html>';
+const documentHTML = "<!doctype html><html><body><div id=\"root\"></div></body></html>";
 global.jsdom = new JSDOM(documentHTML);
 global.window = global.jsdom.window;
 global.document = global.window.document;

@@ -4,7 +4,7 @@ import InstructionThing from "./instruction-thing";
 
 export default class extends InstructionThing {
 	static get TagName() {
-		return 'wf-debug-instruction';
+		return "wf-debug-instruction";
 	}
 
 	constructor(instruction = null) {
@@ -71,9 +71,9 @@ export default class extends InstructionThing {
 			else this._title.appendChild(this._tileImageNode(tile));
 			this._title.innerHTML += ` at ${instruction.arguments[0]}x${instruction.arguments[1]}`;
 		} else if (instruction.opcode === Opcode.SpeakHero) {
-			this._title.innerHTML = `hero: &quot;${instruction.text}&quot;`
+			this._title.innerHTML = `hero: &quot;${instruction.text}&quot;`;
 		} else if (instruction.opcode === Opcode.SpeakNPC) {
-			this._title.innerHTML = `npc: &quot;${instruction.text}&quot;`
+			this._title.innerHTML = `npc: &quot;${instruction.text}&quot;`;
 		}
 	}
 
@@ -82,7 +82,7 @@ export default class extends InstructionThing {
 		if (representation instanceof HTMLElement) {
 			return representation.cloneNode();
 		}
-		return document.createElement('img');
+		return document.createElement("img");
 	}
 
 	get instruction() {
@@ -90,6 +90,6 @@ export default class extends InstructionThing {
 	}
 
 	get type() {
-		return 'i';
+		return "i";
 	}
 }

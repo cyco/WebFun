@@ -1,8 +1,8 @@
 import { Condition } from "/engine/objects";
 import * as HealthIsLessThan from "./health-is-less-than";
 
-describeCondition('HealthIsLessThan', (check, engine) => {
-	it('checks if the hero\'s health is less than the supplied value', () => {
+describeCondition("HealthIsLessThan", (check, engine) => {
+	it("checks if the hero's health is less than the supplied value", () => {
 		const condition = new Condition();
 		condition._opcode = HealthIsLessThan.Opcode;
 		condition._arguments = [10];

@@ -9,11 +9,11 @@ import { localStorage } from "/std.dom";
 
 export default class extends Component {
 	static get TagName() {
-		return 'wf-debug-action';
+		return "wf-debug-action";
 	}
 
 	static get observedAttributes() {
-		return ['current'];
+		return ["current"];
 	}
 
 	constructor() {
@@ -24,15 +24,15 @@ export default class extends Component {
 		this.zone = null;
 		this.index = null;
 
-		this._title = document.createElement('span');
-		this._conditionContainer = document.createElement('div');
-		this._conditionContainer.style.marginBottom = '10px';
-		this._instructionContainer = document.createElement('div');
+		this._title = document.createElement("span");
+		this._conditionContainer = document.createElement("div");
+		this._conditionContainer.style.marginBottom = "10px";
+		this._instructionContainer = document.createElement("div");
 	}
 
 	connectedCallback() {
-		const container = document.createElement('div');
-		container.classList.add('container');
+		const container = document.createElement("div");
+		container.classList.add("container");
 
 		const breakpointButton = new BreakpointButton();
 		breakpointButton.breakpoint = new LocationBreakpoint(this.zone, this.index);
@@ -40,8 +40,8 @@ export default class extends Component {
 		container.appendChild(breakpointButton);
 		container.appendChild(this._title);
 
-		const expandButton = new IconButton('caret-right');
-		expandButton.classList.add('expand');
+		const expandButton = new IconButton("caret-right");
+		expandButton.classList.add("expand");
 		expandButton.onclick = () => this.expanded = !this.expanded;
 		container.appendChild(expandButton);
 
@@ -73,17 +73,17 @@ export default class extends Component {
 	}
 
 	set current(flag) {
-		if (flag) this.setAttribute('current', '');
-		else this.removeAttribute('current');
+		if (flag) this.setAttribute("current", "");
+		else this.removeAttribute("current");
 	}
 
 	get current() {
-		return this.hasAttribute('current');
+		return this.hasAttribute("current");
 	}
 
 	set expanded(flag) {
-		if (flag) this.classList.add('expanded');
-		else this.classList.remove('expanded');
+		if (flag) this.classList.add("expanded");
+		else this.classList.remove("expanded");
 
 		if (flag) {
 			this.appendChild(this._conditionContainer);
@@ -97,7 +97,7 @@ export default class extends Component {
 	}
 
 	get expanded() {
-		return this.classList.contains('expanded');
+		return this.classList.contains("expanded");
 	}
 
 	get _storageId() {

@@ -4,13 +4,14 @@ function BabelHTMLElement() {
 	const newTarget = this.__proto__.constructor;
 	return Reflect.construct(HTMLElement, [], newTarget);
 }
+
 Object.setPrototypeOf(BabelHTMLElement, HTMLElement);
 Object.setPrototypeOf(BabelHTMLElement.prototype, HTMLElement.prototype);
 
 
 export default class extends BabelHTMLElement {
 	static get TagName() {
-		console.assert(false, 'Components must define a tag name');
+		console.assert(false, "Components must define a tag name");
 	}
 
 	static get Options() {
@@ -43,7 +44,7 @@ export const makeBabelClass = (baseClass) => {
 
 export const makeComponent = (baseClass = HTMLElement) => class extends makeBabelClass(baseClass) {
 	static get TagName() {
-		console.assert(false, 'Components must define a tag name');
+		console.assert(false, "Components must define a tag name");
 	}
 
 	static get Options() {

@@ -1,2 +1,2 @@
-export isBlockadeType from './is-blockade-type';
-export toPuzzleType from './to-puzzle-type';
+export isBlockadeType from "./is-blockade-type";
+export toPuzzleType from "./to-puzzle-type";

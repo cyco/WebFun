@@ -1,16 +1,16 @@
 import sandboxed from "test-helpers/dom-sandbox";
-import { default as MenuItem, State, Separator } from "/ui/menu-item";
+import { default as MenuItem, Separator, State } from "/ui/menu-item";
 import Menu from "/ui/menu";
 
-describe('MenuItem', sandboxed((sand) => {
-	it('represents an item in a menu', () => {
+describe("MenuItem", sandboxed((sand) => {
+	it("represents an item in a menu", () => {
 		let menuItem = new MenuItem();
 	});
 
-	it('can be initiated with an object specifying releveant properties', () => {
+	it("can be initiated with an object specifying releveant properties", () => {
 		let callbackExecuted = false;
 		let properties = {
-			title: 'test-title',
+			title: "test-title",
 			state: State.Mixed,
 			callback: () => {
 				callbackExecuted = true;
@@ -20,17 +20,17 @@ describe('MenuItem', sandboxed((sand) => {
 		};
 		let menuItem = new MenuItem(properties);
 
-		expect(menuItem.title).toBe('test-title');
+		expect(menuItem.title).toBe("test-title");
 		expect(menuItem.state).toBe(State.Mixed);
 		expect(menuItem.enabled).toBeFalse();
-		expect(menuItem.mnemonic).toBe('M');
+		expect(menuItem.mnemonic).toBe("M");
 	});
 
-	it('defines a special item used to represent separatation between other items', () => {
+	it("defines a special item used to represent separatation between other items", () => {
 		expect(Separator).not.toBe(undefined);
 	});
 
-	it('is enabled by default, if it has a callback or a submenu', () => {
+	it("is enabled by default, if it has a callback or a submenu", () => {
 		let menuItem = new MenuItem({});
 		expect(menuItem.enabled).toBeFalse();
 
@@ -44,7 +44,7 @@ describe('MenuItem', sandboxed((sand) => {
 		expect(menuItem.enabled).toBeFalse();
 	});
 
-	it('can be dynamically disabled by supplying a function', () => {
+	it("can be dynamically disabled by supplying a function", () => {
 		let menuItem = new MenuItem({callback: () => null});
 
 		expect(menuItem.enabled).toBeTrue();
@@ -60,7 +60,7 @@ describe('MenuItem', sandboxed((sand) => {
 		expect(functionCalls).toBe(2);
 	});
 
-	it('has a method to easily detect if something has a submenu', () => {
+	it("has a method to easily detect if something has a submenu", () => {
 		let menuItem = new MenuItem({submenu: new Menu([])});
 		expect(menuItem.hasSubmenu).toBeTrue();
 

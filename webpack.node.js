@@ -1,26 +1,26 @@
-const Path = require('path');
-const Webpack = require('webpack');
-var NodeExternals = require('webpack-node-externals');
+const Path = require("path");
+const Webpack = require("webpack");
+const NodeExternals = require("webpack-node-externals");
 
 module.exports = {
-	entry: './tools/generate-world.js',
+	entry: "./tools/generate-world.js",
 	output: {
-		filename: 'generate-world.bin.js',
-		path: Path.resolve(__dirname, 'tools')
+		filename: "generate-world.bin.js",
+		path: Path.resolve(__dirname, "tools")
 	},
 	externals: [NodeExternals()],
 	resolve: {
 		alias: {
-			'src': Path.resolve(__dirname, 'src'),
-			'std': Path.resolve(__dirname, 'src/std'),
-			'std.dom': Path.resolve(__dirname, 'src/std.dom'),
-			'std.webgl': Path.resolve(__dirname, 'src/std.webgl'),
-			'test-helpers': Path.resolve(__dirname, 'test/helpers'),
-			'fs': Path.resolve(__dirname, 'test/helpers/polyfill/fs.js'),
-			'path': Path.resolve(__dirname, 'test/helpers/polyfill/path.js'),
-			'libs': Path.resolve(__dirname, 'src/libs.js'),
+			"src": Path.resolve(__dirname, "src"),
+			"std": Path.resolve(__dirname, "src/std"),
+			"std.dom": Path.resolve(__dirname, "src/std.dom"),
+			"std.webgl": Path.resolve(__dirname, "src/std.webgl"),
+			"test-helpers": Path.resolve(__dirname, "test/helpers"),
+			"fs": Path.resolve(__dirname, "test/helpers/polyfill/fs.js"),
+			"path": Path.resolve(__dirname, "test/helpers/polyfill/path.js"),
+			"libs": Path.resolve(__dirname, "src/libs.js"),
 			// disable zlib (imported from KaitaiStream)
-			'zlib': Path.resolve(__dirname, 'src/util/empty.js')
+			"zlib": Path.resolve(__dirname, "src/util/empty.js")
 		},
 		unsafeCache: true
 	},
@@ -34,7 +34,7 @@ module.exports = {
 				Path.resolve(__dirname, "tools")
 			],
 			exclude: [
-				'node_modules',
+				"node_modules",
 				Path.resolve(__dirname, "src/editor"),
 				Path.resolve(__dirname, "src/debug")
 			]
@@ -61,7 +61,7 @@ module.exports = {
 				}
 			}],
 			exclude: [
-				'node_modules'
+				"node_modules"
 			]
 		}, {
 			/* Shader */
@@ -70,7 +70,7 @@ module.exports = {
 		}, {
 			/* Kaitai-Struct definitions */
 			test: /\.ksy$/,
-			loader: 'kaitai-struct-loader'
+			loader: "kaitai-struct-loader"
 		}, {
 			/** fonts **/
 			test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
@@ -82,5 +82,5 @@ module.exports = {
 	},
 	cache: true,
 	plugins: [],
-	target: 'node'
+	target: "node"
 };

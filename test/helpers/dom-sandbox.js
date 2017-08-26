@@ -6,8 +6,8 @@ export const sandboxed = (description) => {
 			box: null
 		};
 		beforeEach(() => {
-			sand.box = document.createElement('div');
-			sand.box.className = 'sandbox';
+			sand.box = document.createElement("div");
+			sand.box.className = "sandbox";
 			document.body.appendChild(sand.box);
 		});
 

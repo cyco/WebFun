@@ -15,17 +15,17 @@ export default class extends Menu {
 				title: "New World",
 				mnemonic: 0,
 				callback: () => gameController.newStory(),
-				enabled: () => gameController.isDataLoaded(),
+				enabled: () => gameController.isDataLoaded()
 			}, {
 				title: "Replay Story",
 				mnemonic: 0,
 				callback: () => gameController.replayStory(),
-				enabled: () => gameController.isGameInProgress(),
+				enabled: () => gameController.isGameInProgress()
 			}, {
 				title: "Load World",
 				mnemonic: 0,
 				callback: () => gameController.load(),
-				enabled: () => gameController.isDataLoaded(),
+				enabled: () => gameController.isDataLoaded()
 			}, {
 				title: "Save World",
 				mnemonic: 0,
@@ -57,10 +57,10 @@ export default class extends Menu {
 				callback: () => this._runModalSession(document.createElement(StatisticsWindow.TagName))
 			}, Separator, {
 				title: "Music On",
-				mnemonic: 0,
+				mnemonic: 0
 			}, {
 				title: "Sound On",
-				mnemonic: 0,
+				mnemonic: 0
 			},
 				Separator, {
 					title: "Pause",

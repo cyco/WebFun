@@ -1,10 +1,10 @@
 import Cheat from "/engine/cheats/cheat";
 
-describe('Cheat', () => {
+describe("Cheat", () => {
 	let subject;
 	beforeEach(() => subject = new Cheat());
 
-	it('is an abstract class used to represent a cheat code', () => {
+	it("is an abstract class used to represent a cheat code", () => {
 		expect(subject.execute instanceof Function).toBeTrue();
 		expect(subject.code).toBe(null);
 		expect(subject.message).toBe(null);

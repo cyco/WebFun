@@ -8,7 +8,7 @@ describe("WindowModalSession", () => {
 		subject = new WindowModalSession(window);
 	});
 
-	it('is a class', () => {
+	it("is a class", () => {
 		expect(WindowModalSession).toBeClass();
 	});
 });

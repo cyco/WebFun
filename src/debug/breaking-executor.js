@@ -5,12 +5,12 @@ import { LocationBreakpoint } from "./breakpoint";
 import BreakpointStore from "./breakpoint-store";
 
 export const Continuation = {
-	Step: 'step',
-	Run: 'run'
+	Step: "step",
+	Run: "run"
 };
 
 export const Events = {
-	Stop: 'stop'
+	Stop: "stop"
 };
 
 export default class extends EventTarget {
@@ -50,7 +50,7 @@ export default class extends EventTarget {
 			action => action.instructionPointer);
 
 		if (this._unbreak) {
-			console.warn('Queueing blocks while executor is stopped');
+			console.warn("Queueing blocks while executor is stopped");
 			debugger;
 		}
 
@@ -74,7 +74,7 @@ export default class extends EventTarget {
 		this._executor.engine = engine;
 
 		if (this._unbreak) {
-			console.warn('Queueing blocks while executor is stopped');
+			console.warn("Queueing blocks while executor is stopped");
 			debugger;
 		}
 
@@ -109,11 +109,11 @@ export default class extends EventTarget {
 		for (let i = 0; i < action.conditions.length; i++) {
 			const condition = action.conditions[i];
 			try {
-				await this._breakIfNecessary(action, 'c', i);
+				await this._breakIfNecessary(action, "c", i);
 				if (!this._checker.check(condition))
 					return false;
 			} catch (e) {
-				console.warn('check crashed', e);
+				console.warn("check crashed", e);
 			}
 		}
 
@@ -124,7 +124,7 @@ export default class extends EventTarget {
 		this._executor.action = action;
 		for (let i = action.instructionPointer | 0, len = action.instructions.length; i < len; i++) {
 			action.instructionPointer = i + 1;
-			await this._breakIfNecessary(action, 'i', i);
+			await this._breakIfNecessary(action, "i", i);
 
 			const wait = this._executor.execute(action.instructions[i]);
 
@@ -155,7 +155,7 @@ export default class extends EventTarget {
 		const needle = new LocationBreakpoint(zone, action, type, index);
 		const bpt = this._breakpointStore.getBreakpoint(needle.id);
 		if (this._unbreak) {
-			console.warn('Breaking again!');
+			console.warn("Breaking again!");
 		}
 
 		console.log(`Break. ${zone} ${action} ${type} ${index}`);

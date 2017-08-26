@@ -2,11 +2,11 @@ import Tool from "./tool";
 
 export default class extends Tool {
 	get name() {
-		return 'Tile Picker';
+		return "Tile Picker";
 	}
 
 	get icon() {
-		return 'crosshairs';
+		return "crosshairs";
 	}
 
 	mouseDownAt(x, y, event) {

@@ -6,7 +6,7 @@ import "./window-titlebar.scss";
 
 export default class extends Component {
 	static get TagName() {
-		return 'wf-window-titlebar';
+		return "wf-window-titlebar";
 	}
 
 	constructor() {

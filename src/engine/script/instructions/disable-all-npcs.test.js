@@ -1,8 +1,8 @@
 import { Instruction } from "/engine/objects";
 import * as DiableAllNPCs from "./disable-all-npcs";
 
-describeInstruction('DiableAllNPCs', (execute, engine) => {
-	it('enables all npcs in the current zone', () => {
+describeInstruction("DiableAllNPCs", (execute, engine) => {
+	it("enables all npcs in the current zone", () => {
 		engine.currentZone.npcs = [{}, {}, {}];
 
 		let instruction = new Instruction({});

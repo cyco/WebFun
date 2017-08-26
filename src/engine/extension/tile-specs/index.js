@@ -1,1 +1,1 @@
-export toHotspotType from './to-hotspot-type';
+export toHotspotType from "./to-hotspot-type";

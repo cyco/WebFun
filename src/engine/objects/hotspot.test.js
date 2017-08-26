@@ -1,7 +1,7 @@
 import Hotspot from "/engine/objects/hotspot";
 
-describe('Hotspot', () => {
-	it('right now it\'s a very simple class', () => {
+describe("Hotspot", () => {
+	it("right now it's a very simple class", () => {
 		let hotspot = new Hotspot();
 
 		expect(hotspot.enabled).toBeFalse();

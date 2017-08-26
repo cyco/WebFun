@@ -1,7 +1,7 @@
 import Camera from "/engine/camera";
 
 describe("Camera", () => {
-	it('manages the view on to a scene, all coordinates are expressed in tiles', () => {
+	it("manages the view on to a scene, all coordinates are expressed in tiles", () => {
 		const camera = new Camera();
 
 		expect(camera.size.width).toBe(9);
@@ -11,7 +11,7 @@ describe("Camera", () => {
 		expect(camera.zoneSize.height).toBe(9);
 	});
 
-	it('has an update method to keep the hero centered', () => {
+	it("has an update method to keep the hero centered", () => {
 		const hero = {location: {x: 9, y: 9}};
 		const camera = new Camera();
 		camera.zoneSize = {width: 18, height: 18};
@@ -27,7 +27,7 @@ describe("Camera", () => {
 		expect(camera.offset.y).toBe(-5);
 	});
 
-	it('makes sure that the view never leaves view bounds', () => {
+	it("makes sure that the view never leaves view bounds", () => {
 		const hero = {location: {x: 0, y: 0}};
 		const camera = new Camera();
 		camera.zoneSize = {width: 18, height: 18};

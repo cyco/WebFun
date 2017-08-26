@@ -32,11 +32,11 @@ export default (editor) => {
 		title: "Editor",
 		mnemonic: 0,
 		submenu: [
-			EditorItem('Zones', EditorType.Zones),
-			EditorItem('Tiles', EditorType.Tiles),
-			EditorItem('Sounds', EditorType.Sounds),
-			EditorItem('Chars', EditorType.Chars),
-			EditorItem('Palette', EditorType.Palette)
+			EditorItem("Zones", EditorType.Zones),
+			EditorItem("Tiles", EditorType.Tiles),
+			EditorItem("Sounds", EditorType.Sounds),
+			EditorItem("Chars", EditorType.Chars),
+			EditorItem("Palette", EditorType.Palette)
 		]
 	}, {
 		title: "Options",

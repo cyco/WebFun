@@ -4,7 +4,7 @@ import { InputStream } from "/util";
 import Yodesk from "/engine/file-format/yodesk.ksy";
 import { GameData, Story } from "/engine";
 import { Enabled as EnabledMessages, Finalize as FinalizeMessages } from "/util/message";
-import { PrepareExpectations, ParseExpectation, ComparisonResult, CompareWorldItems } from "/debug/expectation";
+import { CompareWorldItems, ComparisonResult, ParseExpectation, PrepareExpectations } from "/debug/expectation";
 import KaitaiStream from "kaitai-struct/KaitaiStream";
 import Path from "path";
 import FS from "fs";
@@ -23,8 +23,8 @@ const help = (node, self) => {
 	process.stdout.write(`\tplanet  1 (Tatooine), 2 (Hoth), 3 (Endor)\n`);
 	process.stdout.write(`\tsize    1 - 3\n`);
 
-	process.stdout.write('\n');
-	process.stdout.write('options:\n');
+	process.stdout.write("\n");
+	process.stdout.write("options:\n");
 	process.stdout.write(`\t-v       enable logging\n`);
 	process.stdout.write(`\t-c       compare with original\n`);
 	process.stdout.write(`\t-a       generate all worlds in expection file\n`);
@@ -43,7 +43,7 @@ const parseIntegerArgument = (input, name) => {
 
 	input = input.toLowerCase();
 	let base = 10;
-	if (input.startsWith('0x')) {
+	if (input.startsWith("0x")) {
 		input = input.substr(2);
 		base = 0x10;
 	}
@@ -55,14 +55,14 @@ const parseIntegerArgument = (input, name) => {
 
 const parseArguments = (args) => {
 	const options = {
-		d: 'yoda.data',
-		e: 'world.txt',
+		d: "yoda.data",
+		e: "world.txt",
 		v: false,
 		c: false,
 		a: false
 	};
 	const optionNames = Object.keys(options);
-	const flagNames = optionNames.filter((o) => typeof options[o] === 'boolean');
+	const flagNames = optionNames.filter((o) => typeof options[o] === "boolean");
 	Object.seal(options);
 
 	const nonOptionArguments = [];
@@ -70,7 +70,7 @@ const parseArguments = (args) => {
 	while (args.length) {
 		const arg = args.shift();
 
-		const isOption = arg.startsWith('-');
+		const isOption = arg.startsWith("-");
 		const optionName = isOption && arg.substr(1);
 		const isFlag = flagNames.contains(optionName);
 
@@ -108,9 +108,9 @@ const readArguments = (node, self, ...args) => {
 		let {options, seed, planet, size} = parseArguments(args);
 
 		if (!options.a) {
-			seed = parseIntegerArgument(seed, 'seed');
-			planet = parseIntegerArgument(planet, 'planet');
-			size = parseIntegerArgument(size, 'size');
+			seed = parseIntegerArgument(seed, "seed");
+			planet = parseIntegerArgument(planet, "planet");
+			size = parseIntegerArgument(size, "size");
 
 			if (seed < 0 || seed > 0xFFFF) helpAndExit(`Seed is not in range 0 - 0xFFFF!`, node, self);
 			if (planet < 1 || planet > 3) helpAndExit(`Planet is not in range 1 - 3!`, node, self);
@@ -146,7 +146,7 @@ const readExpectations = (path) => {
 	const fullPath = Path.resolve(path);
 	if (!FS.existsSync(fullPath)) throw `Expectation file ${fullPath} does not exist!`;
 
-	const fileContents = FS.readFileSync(fullPath, 'utf8');
+	const fileContents = FS.readFileSync(fullPath, "utf8");
 	return PrepareExpectations(fileContents).map(ParseExpectation);
 };
 
@@ -195,7 +195,7 @@ const main = (...args) => {
 			try {
 				if (options.v) EnabledMessages();
 				story.generateWorld({data: gameData});
-				if (options.v) FinalizeMessages('==>');
+				if (options.v) FinalizeMessages("==>");
 			} catch (e) {
 				throw `Unexpected failure in world generation. ${e}`;
 			}

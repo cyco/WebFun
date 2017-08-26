@@ -1,7 +1,7 @@
 import RadioGroup from "./radio-group";
 
-describe('RadioGroup', () => {
-	it('provides a method for grouping radio buttons', () => {
+describe("RadioGroup", () => {
+	it("provides a method for grouping radio buttons", () => {
 		let button = {};
 
 		let group = new RadioGroup();
@@ -11,7 +11,7 @@ describe('RadioGroup', () => {
 		expect(button.groupID).not.toBe(undefined);
 	});
 
-	it('buttons can also be passed in to the constructor', () => {
+	it("buttons can also be passed in to the constructor", () => {
 		let button = {};
 
 		let group = new RadioGroup([button]);

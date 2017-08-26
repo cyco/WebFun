@@ -1,12 +1,12 @@
 import CheatCodeInput from "/engine/cheats/cheat-code-input";
 
-describe('CheatCodeInput', () => {
+describe("CheatCodeInput", () => {
 	let subject;
 
 	let cheatExecuted = false;
 	const mockCheat = {
-		code: 'test',
-		message: 'test executed',
+		code: "test",
+		message: "test executed",
 		execute() {
 			cheatExecuted = true;
 		}
@@ -14,45 +14,45 @@ describe('CheatCodeInput', () => {
 
 	beforeEach(() => cheatExecuted = false);
 
-	it('takes pressed keys and executes matching cheats', () => {
+	it("takes pressed keys and executes matching cheats", () => {
 		const subject = new CheatCodeInput([mockCheat]);
 
-		subject.addCharacter('t');
-		subject.addCharacter('e');
-		subject.addCharacter('s');
+		subject.addCharacter("t");
+		subject.addCharacter("e");
+		subject.addCharacter("s");
 
 		subject.execute();
 		expect(cheatExecuted).toBeFalse();
 
-		subject.addCharacter('t');
+		subject.addCharacter("t");
 		subject.execute();
 
 		expect(cheatExecuted).toBeTrue();
 	});
 
-	it('returns an array of messages to be shown for each executed cheat', () => {
+	it("returns an array of messages to be shown for each executed cheat", () => {
 		const subject = new CheatCodeInput([mockCheat]);
 
-		subject.addCharacter('t');
-		subject.addCharacter('e');
-		subject.addCharacter('s');
+		subject.addCharacter("t");
+		subject.addCharacter("e");
+		subject.addCharacter("s");
 
 		expect(subject.execute()).toEqual([]);
 
-		subject.addCharacter('t');
+		subject.addCharacter("t");
 
-		expect(subject.execute()).toEqual(['test executed']);
+		expect(subject.execute()).toEqual(["test executed"]);
 	});
 
-	it('can reset previously given iinput', () => {
+	it("can reset previously given iinput", () => {
 		const subject = new CheatCodeInput([mockCheat]);
 
-		subject.addCharacter('t');
-		subject.addCharacter('e');
-		subject.addCharacter('s');
+		subject.addCharacter("t");
+		subject.addCharacter("e");
+		subject.addCharacter("s");
 
 		subject.reset();
-		subject.addCharacter('t');
+		subject.addCharacter("t");
 
 		subject.execute();
 		expect(cheatExecuted).toBeFalse();

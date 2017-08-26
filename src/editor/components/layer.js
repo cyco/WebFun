@@ -4,7 +4,7 @@ import "./layer.scss";
 
 export default class extends Component {
 	static get TagName() {
-		return 'wf-editor-layer';
+		return "wf-editor-layer";
 	}
 
 	constructor() {
@@ -12,7 +12,7 @@ export default class extends Component {
 
 		this._visiblity = document.createElement(Checkbox.TagName);
 		this._visiblity.onchange = () => this.onchange instanceof Function && this.onchange();
-		this._label = document.createElement('span');
+		this._label = document.createElement("span");
 
 		this.onchange = null;
 		this.onselect = null;

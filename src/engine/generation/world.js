@@ -1,4 +1,4 @@
-import { Point, identity } from "/util";
+import { identity, Point } from "/util";
 import WorldItem from "./world-item";
 
 export const width = 10;

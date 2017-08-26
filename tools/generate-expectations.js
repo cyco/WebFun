@@ -1,6 +1,6 @@
 import "./test/helpers/polyfill";
 import "/extension";
-import { PrepareExpectations, ParseExpectation } from "/debug/expectation";
+import { ParseExpectation, PrepareExpectations } from "/debug/expectation";
 import Path from "path";
 import FS from "fs";
 
@@ -19,11 +19,11 @@ const helpAndExit = (error) => {
 
 const parseArguments = (args) => {
 	const options = {
-		e: 'world.txt',
+		e: "world.txt",
 		p: false
 	};
 	const optionNames = Object.keys(options);
-	const flagNames = optionNames.filter((o) => typeof options[o] === 'boolean');
+	const flagNames = optionNames.filter((o) => typeof options[o] === "boolean");
 	Object.seal(options);
 
 	const nonOptionArguments = [];
@@ -31,7 +31,7 @@ const parseArguments = (args) => {
 	while (args.length) {
 		const arg = args.shift();
 
-		const isOption = arg.startsWith('-');
+		const isOption = arg.startsWith("-");
 		const optionName = isOption && arg.substr(1);
 		const isFlag = flagNames.contains(optionName);
 
@@ -81,11 +81,11 @@ const readExpectations = (path) => {
 	const fullPath = Path.resolve(path);
 	if (!FS.existsSync(fullPath)) throw `Expectation file ${fullPath} does not exist!`;
 
-	const fileContents = FS.readFileSync(fullPath, 'utf8');
+	const fileContents = FS.readFileSync(fullPath, "utf8");
 	return PrepareExpectations(fileContents).map(ParseExpectation);
 };
 
-const key = ({seed, planet, size}) => `0x${seed.toString(0x10).padStart(4, '0')}.0x${planet.toString(0x10).padStart(4, '0')}.0x${size.toString(0x10).padStart(4, '0')}}`;
+const key = ({seed, planet, size}) => `0x${seed.toString(0x10).padStart(4, "0")}.0x${planet.toString(0x10).padStart(4, "0")}.0x${size.toString(0x10).padStart(4, "0")}}`;
 
 const main = (...args) => {
 	let {options} = readArguments(...args);
@@ -101,12 +101,12 @@ const main = (...args) => {
 				})]) console.warn(`Multiple expectations for world ${seed} ${planet} ${size} found!`);
 			if (options.p && !expectations[key({seed, planet, size})]) {
 				process.stdout.write(JSON.stringify(e));
-				process.stdout.write('\n');
+				process.stdout.write("\n");
 			}
 			expectations[key({seed, planet, size})] = true;
 		});
 
-		if (options.p) process.stdout.write('\n\n');
+		if (options.p) process.stdout.write("\n\n");
 
 		for (let seed = 0; seed < 100; seed++)
 			for (let size = 1; size <= 3; size++)

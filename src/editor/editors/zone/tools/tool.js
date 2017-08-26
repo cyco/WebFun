@@ -1,14 +1,14 @@
 export default class {
 	get name() {
-		console.assert(false, 'Tool must define a name');
+		console.assert(false, "Tool must define a name");
 	}
 
 	get icon() {
-		console.assert(false, 'Tool must define an icon');
+		console.assert(false, "Tool must define an icon");
 	}
 
 	get shortcut() {
-		return '';
+		return "";
 	}
 
 	constructor() {

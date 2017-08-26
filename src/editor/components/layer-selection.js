@@ -4,12 +4,12 @@ import Layer from "./layer";
 import { Layer as ZoneLayer } from "/engine/objects/zone";
 import "./layer-selection.scss";
 
-const MaskKey = 'editor.layerMask';
-const LayerKey = 'editor.layer';
+const MaskKey = "editor.layerMask";
+const LayerKey = "editor.layer";
 
 export default class extends Component {
 	static get TagName() {
-		return 'wf-editor-layer-selection';
+		return "wf-editor-layer-selection";
 	}
 
 	constructor() {
@@ -18,25 +18,25 @@ export default class extends Component {
 		const lastMask = localStorage.has(MaskKey) ? localStorage.load(MaskKey) : DrawMask.All;
 
 		this._hotspot = document.createElement(Layer.TagName);
-		this._hotspot.name = 'Hotspot';
+		this._hotspot.name = "Hotspot";
 		this._hotspot.visible = lastMask & DrawMask.Hotspot;
 		this._hotspot.onchange = () => this._visibilityDidChange();
 		this._hotspot.onselect = () => this._layerDidChange(this._hotspot);
 
 		this._roof = document.createElement(Layer.TagName);
-		this._roof.name = 'Roof';
+		this._roof.name = "Roof";
 		this._roof.visible = lastMask & DrawMask.Roof;
 		this._roof.onchange = () => this._visibilityDidChange();
 		this._roof.onselect = () => this._layerDidChange(this._roof, ZoneLayer.Roof);
 
 		this._objects = document.createElement(Layer.TagName);
-		this._objects.name = 'Objects';
+		this._objects.name = "Objects";
 		this._objects.visible = lastMask & DrawMask.Objects;
 		this._objects.onchange = () => this._visibilityDidChange();
 		this._objects.onselect = () => this._layerDidChange(this._objects, ZoneLayer.Object);
 
 		this._floor = document.createElement(Layer.TagName);
-		this._floor.name = 'Floor';
+		this._floor.name = "Floor";
 		this._floor.visible = lastMask & DrawMask.Floor;
 		this._floor.onchange = () => this._visibilityDidChange();
 		this._floor.onselect = () => this._layerDidChange(this._floor, ZoneLayer.Floor);
@@ -49,28 +49,28 @@ export default class extends Component {
 	}
 
 	_restoreCurrentLayer() {
-		const lastLayer = localStorage.has(LayerKey) ? localStorage.load(LayerKey) : 'Hotspot';
+		const lastLayer = localStorage.has(LayerKey) ? localStorage.load(LayerKey) : "Hotspot";
 
 		let node = null;
 		switch (lastLayer) {
-			case 'Hotspot':
+			case "Hotspot":
 				node = this._hotspot;
 				break;
-			case 'Roof':
+			case "Roof":
 				node = this._roof;
 				this._selectedLayer = ZoneLayer.Roof;
 				break;
-			case 'Objects':
+			case "Objects":
 				node = this._objects;
 				this._selectedLayer = ZoneLayer.Object;
 				break;
-			case 'Floor':
+			case "Floor":
 				node = this._floor;
 				this._selectedLayer = ZoneLayer.Floor;
 				break;
 		}
 
-		node.setAttribute('selected', '');
+		node.setAttribute("selected", "");
 	}
 
 	connectedCallback() {
@@ -96,9 +96,9 @@ export default class extends Component {
 	}
 
 	_layerDidChange(newSelection, newLayer) {
-		const currentSelection = this.querySelector(Layer.TagName + '[selected]');
-		if (currentSelection) currentSelection.removeAttribute('selected');
-		if (newSelection) newSelection.setAttribute('selected', '');
+		const currentSelection = this.querySelector(Layer.TagName + "[selected]");
+		if (currentSelection) currentSelection.removeAttribute("selected");
+		if (newSelection) newSelection.setAttribute("selected", "");
 
 		this._selectedLayer = newLayer;
 		localStorage.store(LayerKey, newSelection.name);

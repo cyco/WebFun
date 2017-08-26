@@ -2,11 +2,11 @@ import Tool from "./tool";
 
 export default class extends Tool {
 	get name() {
-		return 'Paint Bucket';
+		return "Paint Bucket";
 	}
 
 	get icon() {
-		return 'paint-bucket';
+		return "paint-bucket";
 	}
 
 	constructor() {

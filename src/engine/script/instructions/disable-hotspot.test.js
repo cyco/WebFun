@@ -1,8 +1,8 @@
 import { Instruction } from "/engine/objects";
 import * as DisableHotspot from "./disable-hotspot";
 
-describeInstruction('DisableHotspot', (execute, engine) => {
-	it('disables the specified hotspot in the current zone', () => {
+describeInstruction("DisableHotspot", (execute, engine) => {
+	it("disables the specified hotspot in the current zone", () => {
 		engine.currentZone.hotspots = [null, null, {}, null];
 
 		let instruction = new Instruction({});
