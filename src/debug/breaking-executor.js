@@ -58,9 +58,13 @@ export default class extends EventTarget {
 	}
 
 	async runActions(engine) {
-		engine.metronome.stop();
-		const r = await this._doRunActions(engine);
-		engine.metronome.start();
+		try {
+			engine.metronome.stop();
+			const r = await this._doRunActions(engine);
+			engine.metronome.start();
+		} catch (e) {
+			console.error(e);
+		}
 		return r;
 	}
 
@@ -120,10 +124,11 @@ export default class extends EventTarget {
 		this._executor.action = action;
 		for (let i = action.instructionPointer | 0, len = action.instructions.length; i < len; i++) {
 			action.instructionPointer = i + 1;
-
 			await this._breakIfNecessary(action, 'i', i);
 
 			const wait = this._executor.execute(action.instructions[i]);
+
+			if (window.d) debugger;
 			if (wait === true) return true;
 		}
 		this._executor.action = null;

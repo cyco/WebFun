@@ -5,6 +5,7 @@ import { Planet } from "/engine/types";
 import { Weapons, UnlimitedAmmo, Invincibility, CheatCodeInput } from "/engine/cheats";
 import SpeechScene from "./speech-scene";
 import { Size } from "/util";
+import Settings from '/settings';
 
 const TileWidth = 28;
 const TileHeight = 28;
@@ -110,7 +111,7 @@ export default class MapScene extends Scene {
 			world = this.engine.dagobah;
 		}
 		const zone = world.getZone(tileX, tileY);
-		if (!zone || !zone.visited || zone.type === ZoneType.Empty) {
+		if (!zone || (!Settings.revealWorld && !zone.visited) || zone.type === ZoneType.Empty) {
 			this._exitScene();
 			return;
 		}
@@ -170,7 +171,7 @@ export default class MapScene extends Scene {
 		if (!zone)
 			return 0x344;
 
-		if (!zone.visited)
+		if (!zone.visited && !Settings.revealWorld)
 			return 0x343;
 
 		switch (zone.type) {
