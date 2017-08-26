@@ -1,4 +1,4 @@
-import { srand, rand, randmod, Point, Range, HorizontalPointRange, VerticalPointRange, Message } from "/util";
+import { HorizontalPointRange, Message, Point, rand, randmod, Range, srand, VerticalPointRange } from "/util";
 import IslandBuilder from "./island-builder";
 import GetDistanceToCenter from "./distance-to-center";
 import WorldItemType from "./world-item-type";
@@ -8,7 +8,7 @@ const IslandOrientation = {
 	Left: 1,
 	Right: 3,
 	Up: 2,
-	Down: 4,
+	Down: 4
 };
 
 let min_x;
@@ -393,7 +393,7 @@ function _chooseAdditionalPuzzles(total_puzzle_count) {
 		}
 
 		if (distance < 3 && i < 150) i--;
-		else; //Message("%d => %d\n", i, i+1);
+		else ; //Message("%d => %d\n", i, i+1);
 
 		if (do_break) break;
 	}

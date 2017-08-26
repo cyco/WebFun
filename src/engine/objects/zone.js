@@ -207,7 +207,7 @@ export default class Zone {
 				case HotspotType.PuzzleNPC:
 				case HotspotType.CrateWeapon:
 					if (hotspot.arg < 0) break;
-					if(this.getTile(hotspot.x, hotspot.y, 1)) return;
+					if (this.getTile(hotspot.x, hotspot.y, 1)) return;
 					this.setTile({id: hotspot.arg}, hotspot.x, hotspot.y, 1);
 					break;
 				case HotspotType.DoorIn:

@@ -10,19 +10,19 @@ export default class {
 		this._palette = null;
 
 		this._window = document.createElement(Window.TagName);
-		this._window.title = 'WebGL Debug';
-		this._window.content.style.display = 'block';
-		this._window.content.style.width = '200px';
-		this._window.content.style.height = '300px';
-		this._window.content.style.fontSize = '9pt';
+		this._window.title = "WebGL Debug";
+		this._window.content.style.display = "block";
+		this._window.content.style.width = "200px";
+		this._window.content.style.height = "300px";
+		this._window.content.style.fontSize = "9pt";
 
-		this._canvas = document.createElement('canvas');
-		this._canvas.style.border = '1px solid black';
-		this._canvas.width = '180';
-		this._canvas.height = '180';
+		this._canvas = document.createElement("canvas");
+		this._canvas.style.border = "1px solid black";
+		this._canvas.width = "180";
+		this._canvas.height = "180";
 		this._window.content.appendChild(this._canvas);
 
-		const gl = this._canvas.getContext('webgl');
+		const gl = this._canvas.getContext("webgl");
 		if (!gl) throw "WebGL is not available!";
 
 		this._context = gl;
@@ -57,7 +57,7 @@ export default class {
 			-0.5, -0.5,
 			0.5, 0.5,
 			-0.5, -0.5,
-			0.5, -0.5,
+			0.5, -0.5
 		];
 		const vertBuffer = gl.createBuffer();
 		gl.bindBuffer(gl.ARRAY_BUFFER, vertBuffer);
@@ -72,7 +72,7 @@ export default class {
 			-1, -1,
 			1, 1,
 			-1, -1,
-			1, -1,
+			1, -1
 		];
 		const vertBuffer2 = gl.createBuffer();
 		gl.bindBuffer(gl.ARRAY_BUFFER, vertBuffer2);
@@ -119,7 +119,7 @@ export default class {
 			gl.drawArrays(gl.TRIANGLES, 0, 6);
 		}
 
-		render()
+		render();
 	}
 
 	_makeSampleImage(gl) {
@@ -143,13 +143,13 @@ export default class {
 	}
 
 	_determineSpecs(gl) {
-		this._window.content.appendChild(document.createElement('br'));
+		this._window.content.appendChild(document.createElement("br"));
 
-		const textureImageUnits = document.createElement('div');
+		const textureImageUnits = document.createElement("div");
 		textureImageUnits.textContent = `MAX_TEXTURE_IMAGE_UNITS: ${gl.getParameter(gl.MAX_TEXTURE_IMAGE_UNITS)}`;
 		this._window.content.appendChild(textureImageUnits);
 
-		const maxTextureSize = document.createElement('div');
+		const maxTextureSize = document.createElement("div");
 		maxTextureSize.textContent = `MAX_TEXTURE_SIZE: ${gl.getParameter(gl.MAX_TEXTURE_SIZE)}`;
 		this._window.content.appendChild(maxTextureSize);
 	}

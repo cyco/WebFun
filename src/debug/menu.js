@@ -9,24 +9,24 @@ const SettingsItem = (label, key) => ({
 });
 
 export default {
-	title: 'Debug',
+	title: "Debug",
 	mnemonic: 0,
 	submenu: [{
-		title: 'Start Game',
+		title: "Start Game",
 		callback: () => false,
 		enabled: () => window.data
 	}, {
-		title: 'Edit Data',
+		title: "Edit Data",
 		callback: () => (new Editor(window.data)).show(),
 		enabled: () => window.data
 	}, {
-		title: 'Inspect Save Game',
-		callback: () => false,
+		title: "Inspect Save Game",
+		callback: () => false
 	},
 		MenuItemSeparator,
-		SettingsItem('Draw invisible Hero', 'drawHeroTile'),
-		SettingsItem('Reveal World', 'revealWorld'),
-		SettingsItem('Show Hotspots', 'drawHotspots'),
-		SettingsItem('Skip Dialogs', 'skipDialogs')
+		SettingsItem("Draw invisible Hero", "drawHeroTile"),
+		SettingsItem("Reveal World", "revealWorld"),
+		SettingsItem("Show Hotspots", "drawHotspots"),
+		SettingsItem("Skip Dialogs", "skipDialogs")
 	]
 };

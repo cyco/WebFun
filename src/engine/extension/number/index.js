@@ -1,1 +1,1 @@
-export goal from './goal';
+export goal from "./goal";

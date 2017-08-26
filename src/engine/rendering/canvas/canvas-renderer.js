@@ -7,7 +7,7 @@ const TILE_HEIGHT = 32.0;
 
 export default class CanvasRenderer extends AbstractRenderer {
 	static isSupported() {
-		const canvas = document.createElement('canvas');
+		const canvas = document.createElement("canvas");
 		return canvas.getContext("2d") !== null;
 	}
 
@@ -50,7 +50,7 @@ export default class CanvasRenderer extends AbstractRenderer {
 	}
 
 	fillBlackRect(x, y, width, height) {
-		this.fillRect(x, y, width, height, '#000000');
+		this.fillRect(x, y, width, height, "#000000");
 	}
 
 	// debug

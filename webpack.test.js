@@ -1,22 +1,22 @@
-const Path = require('path');
-const Webpack = require('webpack');
+const Path = require("path");
+const Webpack = require("webpack");
 
 module.exports = {
 	output: {
-		filename: 'webfun.js',
-		path: Path.resolve(__dirname, 'dist')
+		filename: "webfun.js",
+		path: Path.resolve(__dirname, "dist")
 	},
 	resolve: {
 		alias: {
-			'src': Path.resolve(__dirname, 'src'),
-			'std': Path.resolve(__dirname, 'src/std'),
-			'std.dom': Path.resolve(__dirname, 'src/std.dom'),
-			'test-helpers': Path.resolve(__dirname, 'test/helpers'),
-			'fs': Path.resolve(__dirname, 'test/helpers/polyfill/fs.js'),
-			'path': Path.resolve(__dirname, 'test/helpers/polyfill/path.js'),
-			'libs': Path.resolve(__dirname, 'src/libs.js'),
+			"src": Path.resolve(__dirname, "src"),
+			"std": Path.resolve(__dirname, "src/std"),
+			"std.dom": Path.resolve(__dirname, "src/std.dom"),
+			"test-helpers": Path.resolve(__dirname, "test/helpers"),
+			"fs": Path.resolve(__dirname, "test/helpers/polyfill/fs.js"),
+			"path": Path.resolve(__dirname, "test/helpers/polyfill/path.js"),
+			"libs": Path.resolve(__dirname, "src/libs.js"),
 			// disable zlib (imported from KaitaiStream)
-			'zlib': Path.resolve(__dirname, 'src/util/empty.js')
+			"zlib": Path.resolve(__dirname, "src/util/empty.js")
 		},
 		unsafeCache: true
 	},
@@ -26,10 +26,10 @@ module.exports = {
 			test: /\.js?$/,
 			loader: "babel-loader",
 			include: [
-				Path.resolve(__dirname, "src"),
+				Path.resolve(__dirname, "src")
 			],
 			exclude: [
-				'node_modules',
+				"node_modules",
 				Path.resolve(__dirname, "src/editor"),
 				Path.resolve(__dirname, "src/debug")
 			]
@@ -57,7 +57,7 @@ module.exports = {
 				}
 			}],
 			exclude: [
-				'node_modules'
+				"node_modules"
 			]
 		}, {
 			/* Shader */
@@ -66,7 +66,7 @@ module.exports = {
 		}, {
 			/* Kaitai-Struct definitions */
 			test: /\.ksy$/,
-			loader: 'kaitai-struct-loader'
+			loader: "kaitai-struct-loader"
 		},
 			{
 				/** fonts **/
@@ -81,6 +81,6 @@ module.exports = {
 	},
 	cache: true,
 	plugins: [],
-	devtool: 'none',
+	devtool: "none",
 	watch: false
 };

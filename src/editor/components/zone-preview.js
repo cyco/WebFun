@@ -3,7 +3,7 @@ import "./zone-preview.scss";
 
 export default class extends Component {
 	static get TagName() {
-		return 'wf-editor-zone-preview';
+		return "wf-editor-zone-preview";
 	}
 
 	_draw() {

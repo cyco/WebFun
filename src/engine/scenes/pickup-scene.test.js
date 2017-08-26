@@ -1,11 +1,11 @@
 import PickupScene from "/engine/scenes/pickup-scene";
 
 describe("PickupScene", () => {
-	it('can be instantiated without throwing exceptions', () => {
+	it("can be instantiated without throwing exceptions", () => {
 		expect(() => new PickupScene()).not.toThrow();
 	});
 
-	it('watches the input manager for pause button input and eventually pops itself from the scene manager', () => {
+	it("watches the input manager for pause button input and eventually pops itself from the scene manager", () => {
 		let popCalled = false;
 		const engine = {
 			inputManager: {pickUp: false},
@@ -28,7 +28,7 @@ describe("PickupScene", () => {
 		expect(popCalled).toBeTrue();
 	});
 
-	it('adds the current item to the inventory when it is removed from the scene manager', () => {
+	it("adds the current item to the inventory when it is removed from the scene manager", () => {
 		const item = {};
 		const engine = {
 			inventory: {
@@ -36,7 +36,7 @@ describe("PickupScene", () => {
 				}
 			}
 		};
-		spyOn(engine.inventory, 'addItem');
+		spyOn(engine.inventory, "addItem");
 
 		const scene = new PickupScene();
 		scene.tile = item;
@@ -46,7 +46,7 @@ describe("PickupScene", () => {
 		expect(engine.inventory.addItem).toHaveBeenCalledWith(item);
 	});
 
-	it('counts ticks and flashes the item', () => {
+	it("counts ticks and flashes the item", () => {
 		const engine = {
 			inputManager: {},
 			sceneManager: {_stack: [{camera: {offset: {}}}]}
@@ -62,7 +62,7 @@ describe("PickupScene", () => {
 		scene.tile = item;
 		scene.location = {};
 
-		spyOn(renderer, 'renderTile');
+		spyOn(renderer, "renderTile");
 
 		// doesn't render for five ticks
 		for (let i = 0; i < 5; i++) {
@@ -81,7 +81,7 @@ describe("PickupScene", () => {
 		}
 	});
 
-	it('renders the tile at the correct location', () => {
+	it("renders the tile at the correct location", () => {
 		const engine = {
 			inputManager: {},
 			sceneManager: {_stack: [{camera: {offset: {x: -2, y: -1}}}]}
@@ -99,7 +99,7 @@ describe("PickupScene", () => {
 
 		5..times(() => scene.update());
 
-		spyOn(renderer, 'renderTile');
+		spyOn(renderer, "renderTile");
 		scene.render(renderer);
 
 		expect(renderer.renderTile).toHaveBeenCalledWith(item, 2, 7);

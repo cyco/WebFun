@@ -84,81 +84,81 @@ export default Instructions;
 
 const Opcode = {};
 const exportOpcode = (name, {Opcode: code}) => Opcode[name] = code;
-exportOpcode('PlaceTile', PlaceTile);
-exportOpcode('RemoveTile', RemoveTile);
-exportOpcode('MoveTile', MoveTile);
-exportOpcode('DrawTile', DrawTile);
-exportOpcode('SpeakHero', SpeakHero);
-exportOpcode('SpeakNPC', SpeakNPC);
-exportOpcode('EnableNPC', EnableNPC);
-exportOpcode('DisableNPC', DisableNPC);
-exportOpcode('EnableAllNPCs', EnableAllNPCs);
-exportOpcode('DisableAllNPCs', DisableAllNPCs);
-exportOpcode('SetTileNeedsDisplay', SetTileNeedsDisplay);
-exportOpcode('SetRectNeedsDisplay', SetRectNeedsDisplay);
-exportOpcode('Wait', Wait);
-exportOpcode('Redraw', Redraw);
-exportOpcode('PlaySound', PlaySound);
-exportOpcode('StopSound', StopSound);
-exportOpcode('RollDice', RollDice);
-exportOpcode('SetCounter', SetCounter);
-exportOpcode('PlaceTile_Alias_', PlaceTile_Alias_);
-exportOpcode('HideHero', HideHero);
-exportOpcode('ShowHero', ShowHero);
-exportOpcode('SetHero', SetHero);
-exportOpcode('DisableAction', DisableAction);
-exportOpcode('DisableHotspot', DisableHotspot);
-exportOpcode('EnableHotspot', EnableHotspot);
-exportOpcode('DropItem', DropItem);
-exportOpcode('AddItem', AddItem);
-exportOpcode('RemoveItem', RemoveItem);
-exportOpcode('ChangeZone', ChangeZone);
-exportOpcode('SetPadding', SetPadding);
-exportOpcode('AddToPadding', AddToPadding);
-exportOpcode('SetRandom', SetRandom);
-exportOpcode('AddHealth', AddHealth);
-exportOpcode('AddToCounter', AddToCounter);
-exportOpcode('WinGame', WinGame);
-exportOpcode('LoseGame', LoseGame);
-exportOpcode('MarkAsSolved', MarkAsSolved);
-exportOpcode('MoveHeroBy', MoveHeroBy);
+exportOpcode("PlaceTile", PlaceTile);
+exportOpcode("RemoveTile", RemoveTile);
+exportOpcode("MoveTile", MoveTile);
+exportOpcode("DrawTile", DrawTile);
+exportOpcode("SpeakHero", SpeakHero);
+exportOpcode("SpeakNPC", SpeakNPC);
+exportOpcode("EnableNPC", EnableNPC);
+exportOpcode("DisableNPC", DisableNPC);
+exportOpcode("EnableAllNPCs", EnableAllNPCs);
+exportOpcode("DisableAllNPCs", DisableAllNPCs);
+exportOpcode("SetTileNeedsDisplay", SetTileNeedsDisplay);
+exportOpcode("SetRectNeedsDisplay", SetRectNeedsDisplay);
+exportOpcode("Wait", Wait);
+exportOpcode("Redraw", Redraw);
+exportOpcode("PlaySound", PlaySound);
+exportOpcode("StopSound", StopSound);
+exportOpcode("RollDice", RollDice);
+exportOpcode("SetCounter", SetCounter);
+exportOpcode("PlaceTile_Alias_", PlaceTile_Alias_);
+exportOpcode("HideHero", HideHero);
+exportOpcode("ShowHero", ShowHero);
+exportOpcode("SetHero", SetHero);
+exportOpcode("DisableAction", DisableAction);
+exportOpcode("DisableHotspot", DisableHotspot);
+exportOpcode("EnableHotspot", EnableHotspot);
+exportOpcode("DropItem", DropItem);
+exportOpcode("AddItem", AddItem);
+exportOpcode("RemoveItem", RemoveItem);
+exportOpcode("ChangeZone", ChangeZone);
+exportOpcode("SetPadding", SetPadding);
+exportOpcode("AddToPadding", AddToPadding);
+exportOpcode("SetRandom", SetRandom);
+exportOpcode("AddHealth", AddHealth);
+exportOpcode("AddToCounter", AddToCounter);
+exportOpcode("WinGame", WinGame);
+exportOpcode("LoseGame", LoseGame);
+exportOpcode("MarkAsSolved", MarkAsSolved);
+exportOpcode("MoveHeroBy", MoveHeroBy);
 export { Opcode };
 
-export { PlaceTile }
-export { RemoveTile }
-export { MoveTile }
-export { DrawTile }
-export { SpeakHero }
-export { SpeakNPC }
-export { EnableNPC }
-export { DisableNPC }
-export { EnableAllNPCs }
-export { DisableAllNPCs }
-export { SetTileNeedsDisplay }
-export { SetRectNeedsDisplay }
-export { Wait }
-export { Redraw }
-export { PlaySound }
-export { StopSound }
-export { RollDice }
-export { SetCounter }
-export { PlaceTile_Alias_ }
-export { HideHero }
-export { ShowHero }
-export { SetHero }
-export { MoveHeroBy }
-export { DisableAction }
-export { DisableHotspot }
-export { EnableHotspot }
-export { DropItem }
-export { AddItem }
-export { RemoveItem }
-export { ChangeZone }
-export { SetPadding }
-export { AddToPadding }
-export { SetRandom }
-export { AddHealth }
-export { AddToCounter }
-export { LoseGame }
-export { WinGame }
-export { MarkAsSolved }
+export { PlaceTile };
+export { RemoveTile };
+export { MoveTile };
+export { DrawTile };
+export { SpeakHero };
+export { SpeakNPC };
+export { EnableNPC };
+export { DisableNPC };
+export { EnableAllNPCs };
+export { DisableAllNPCs };
+export { SetTileNeedsDisplay };
+export { SetRectNeedsDisplay };
+export { Wait };
+export { Redraw };
+export { PlaySound };
+export { StopSound };
+export { RollDice };
+export { SetCounter };
+export { PlaceTile_Alias_ };
+export { HideHero };
+export { ShowHero };
+export { SetHero };
+export { MoveHeroBy };
+export { DisableAction };
+export { DisableHotspot };
+export { EnableHotspot };
+export { DropItem };
+export { AddItem };
+export { RemoveItem };
+export { ChangeZone };
+export { SetPadding };
+export { AddToPadding };
+export { SetRandom };
+export { AddHealth };
+export { AddToCounter };
+export { LoseGame };
+export { WinGame };
+export { MarkAsSolved };

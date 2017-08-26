@@ -1,4 +1,4 @@
-import { Window, Slider, Button } from "/ui/components";
+import { Button, Slider, Window } from "/ui/components";
 import "./settings-window.scss";
 
 class SettingsWindow extends Window {
@@ -33,20 +33,20 @@ class SettingsWindow extends Window {
 		this.content.appendChild(slider);
 		this._slider = slider;
 
-		const labels = document.createElement('div');
-		labels.style.justifyContent = 'space-between';
-		this._minLabel = document.createElement('label');
+		const labels = document.createElement("div");
+		labels.style.justifyContent = "space-between";
+		this._minLabel = document.createElement("label");
 		labels.appendChild(this._minLabel);
-		this._midLabel = document.createElement('label');
+		this._midLabel = document.createElement("label");
 		labels.appendChild(this._midLabel);
-		this._maxLabel = document.createElement('label');
+		this._maxLabel = document.createElement("label");
 		labels.appendChild(this._maxLabel);
 		this.content.appendChild(labels);
 
-		const buttons = document.createElement('div');
-		buttons.style.justifyContent = 'center';
+		const buttons = document.createElement("div");
+		buttons.style.justifyContent = "center";
 		const okButton = document.createElement(Button.TagName);
-		okButton.setAttribute('label', 'OK');
+		okButton.setAttribute("label", "OK");
 		okButton.onclick = () => {
 			this._storeValue();
 			this.close();
@@ -54,7 +54,7 @@ class SettingsWindow extends Window {
 		buttons.appendChild(okButton);
 
 		const cancelButton = document.createElement(Button.TagName);
-		cancelButton.setAttribute('label', 'Cancel');
+		cancelButton.setAttribute("label", "Cancel");
 		cancelButton.onclick = () => this.close();
 		buttons.appendChild(cancelButton);
 		this.content.appendChild(buttons);
@@ -98,4 +98,5 @@ class SettingsWindow extends Window {
 		}
 	}
 }
+
 export default SettingsWindow;

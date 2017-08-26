@@ -5,7 +5,7 @@ describeComponent(Slider, () => {
 	let subject = null;
 	beforeEach(() => subject = render(Slider));
 
-	it('is an html element', () => {
+	it("is an html element", () => {
 		expect(subject instanceof HTMLElement).toBeTrue();
 	});
 });

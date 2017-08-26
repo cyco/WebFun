@@ -1,4 +1,4 @@
-import { EventTarget, FileLoader, dispatch } from "/util";
+import { dispatch, EventTarget, FileLoader } from "/util";
 import { DataFileReader, GameData } from "/engine";
 import { Tile } from "/engine/objects";
 import Settings from "/settings";
@@ -12,6 +12,7 @@ export const Events = {
 
 export const StageCount = 10;
 const TileImageBatchSize = 100;
+
 class Loader extends EventTarget {
 	constructor() {
 		super();
@@ -58,9 +59,9 @@ class Loader extends EventTarget {
 	_loadSetupImage(palette) {
 		this._progress(3, 0);
 
-		const setupImageCategory = this._rawData.catalog.find(c => c.type === 'STUP');
+		const setupImageCategory = this._rawData.catalog.find(c => c.type === "STUP");
 		if (!setupImageCategory) {
-			this._fail('Setup image not found in game file!');
+			this._fail("Setup image not found in game file!");
 			return;
 		}
 
@@ -147,4 +148,5 @@ class Loader extends EventTarget {
 		return this._setupImage;
 	}
 }
+
 export default Loader;

@@ -3,7 +3,7 @@ import "./checkbox.scss";
 
 export default class Checkbox extends Component {
 	static get TagName() {
-		return 'wf-checkbox';
+		return "wf-checkbox";
 	}
 
 	constructor() {

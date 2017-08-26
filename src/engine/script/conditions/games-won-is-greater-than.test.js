@@ -1,8 +1,8 @@
 import { Condition } from "/engine/objects";
 import * as GamesWonIsGreaterThan from "./games-won-is-greater-than";
 
-describeCondition('GamesWonIsGreaterThan', (check, engine) => {
-	it('checks if more than x games have been won', () => {
+describeCondition("GamesWonIsGreaterThan", (check, engine) => {
+	it("checks if more than x games have been won", () => {
 		const condition = new Condition();
 		condition._opcode = GamesWonIsGreaterThan.Opcode;
 		condition._arguments = [10];

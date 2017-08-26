@@ -3,7 +3,7 @@ import "./tile-preview.scss";
 
 export default class extends Component {
 	static get TagName() {
-		return 'wf-editor-tile-preview';
+		return "wf-editor-tile-preview";
 	}
 
 	_draw() {
@@ -12,7 +12,7 @@ export default class extends Component {
 
 		const imageNode = this._tile.image.representation.cloneNode();
 		this.appendChild(imageNode);
-		this.appendChild(document.createElement('div'));
+		this.appendChild(document.createElement("div"));
 	}
 
 	set tile(t) {

@@ -1,11 +1,11 @@
 import PauseScene from "/engine/scenes/pause-scene";
 
 describe("PauseScene", () => {
-	it('can be instantiated without throwing exceptions', () => {
+	it("can be instantiated without throwing exceptions", () => {
 		expect(() => new PauseScene()).not.toThrow();
 	});
 
-	it('watches the input manager for pause button input and eventually pops itself from the scene manager', () => {
+	it("watches the input manager for pause button input and eventually pops itself from the scene manager", () => {
 		let popCalled = false;
 		const engine = {
 			inputManager: {pause: true},
@@ -24,12 +24,12 @@ describe("PauseScene", () => {
 		expect(popCalled).toBeTrue();
 	});
 
-	it('renders a checkered tile above the current scene', () => {
+	it("renders a checkered tile above the current scene", () => {
 		const renderer = {
 			renderImage() {
 			}
 		};
-		spyOn(renderer, 'renderImage');
+		spyOn(renderer, "renderImage");
 
 		const scene = new PauseScene();
 		scene.render(renderer);

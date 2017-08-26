@@ -2,11 +2,11 @@ import Tool from "./tool";
 
 export default class extends Tool {
 	get name() {
-		return 'Brush';
+		return "Brush";
 	}
 
 	get icon() {
-		return 'paint-brush';
+		return "paint-brush";
 	}
 
 	constructor() {

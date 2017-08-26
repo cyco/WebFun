@@ -1,8 +1,8 @@
 import { Instruction } from "/engine/objects";
 import * as Wait from "./stop-sound";
 
-describeInstruction('Wait', (execute, engine) => {
-	it('wait a few milliseconds before executing the next instruction', () => {
+describeInstruction("Wait", (execute, engine) => {
+	it("wait a few milliseconds before executing the next instruction", () => {
 		let instruction = new Instruction({});
 		instruction._opcode = Wait.Opcode;
 		instruction._arguments = [];

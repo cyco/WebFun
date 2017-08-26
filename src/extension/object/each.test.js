@@ -1,10 +1,10 @@
-describe('Object.each', () => {
-	it('extends the Object prototype', () => {
+describe("Object.each", () => {
+	it("extends the Object prototype", () => {
 		let object = {};
-		expect(typeof object.each).toBe('function');
+		expect(typeof object.each).toBe("function");
 	});
 
-	it('can be used to enumerate every \'own property\' of an object', () => {
+	it("can be used to enumerate every 'own property' of an object", () => {
 		const object = {
 			key1: "test",
 			key2: "test"

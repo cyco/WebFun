@@ -1,8 +1,8 @@
 import { Instruction } from "/engine/objects";
 import * as ShowHero from "./show-hero";
 
-describeInstruction('ShowHero', (execute, engine) => {
-	it('hides the hero', () => {
+describeInstruction("ShowHero", (execute, engine) => {
+	it("hides the hero", () => {
 		let instruction = new Instruction({});
 		instruction._opcode = ShowHero.Opcode;
 		instruction._arguments = [];

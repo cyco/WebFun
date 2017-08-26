@@ -19,7 +19,7 @@ export default class SpeechBubble extends View {
 			BOTTOM: 2,
 			LEFT: 4,
 			RIGHT: 6,
-			TOP: 8,
+			TOP: 8
 		};
 	}
 
@@ -65,7 +65,7 @@ export default class SpeechBubble extends View {
 		up.classList.add("bordered");
 		up.classList.add("up");
 		up.onclick = () => self.scrollUp();
-		up.icon = 'caret-up';
+		up.icon = "caret-up";
 		up.fixedWidth = true;
 		buttonBar.appendChild(up);
 		this._upButton = up;
@@ -74,7 +74,7 @@ export default class SpeechBubble extends View {
 		down.classList.add("bordered");
 		down.classList.add("down");
 		down.onclick = () => self.scrollDown();
-		down.icon = 'caret-down';
+		down.icon = "caret-down";
 		down.fixedWidth = true;
 		buttonBar.appendChild(down);
 		this._downButton = down;
@@ -83,7 +83,7 @@ export default class SpeechBubble extends View {
 		end.classList.add("bordered");
 		end.classList.add("end");
 		end.onclick = () => self.end();
-		end.icon = 'circle';
+		end.icon = "circle";
 		end.fixedWidth = true;
 		buttonBar.appendChild(end);
 		end.enabled = true;

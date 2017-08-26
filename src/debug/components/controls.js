@@ -4,11 +4,11 @@ import { IconButton } from "/ui/components";
 
 export default class extends Component {
 	static get TagName() {
-		return 'wf-debug-controls';
+		return "wf-debug-controls";
 	}
 
 	static get observedAttributes() {
-		return ['running'];
+		return ["running"];
 	}
 
 	constructor() {
@@ -20,22 +20,22 @@ export default class extends Component {
 		this.onfastforward = null;
 
 		const drawButton = new IconButton();
-		drawButton.icon = 'paint-brush';
+		drawButton.icon = "paint-brush";
 		drawButton.onclick = () => this.ondraw instanceof Function ? this.ondraw() : null;
 		this._drawButton = drawButton;
 
 		const stepButton = new IconButton();
-		stepButton.icon = 'step-forward';
+		stepButton.icon = "step-forward";
 		stepButton.onclick = () => this.onstep instanceof Function ? this.onstep() : null;
 		this._stepButton = stepButton;
 
 		const fastForward = new IconButton();
-		fastForward.icon = 'fast-forward';
+		fastForward.icon = "fast-forward";
 		fastForward.onclick = () => this.onfastforward instanceof Function ? this.onfastforward() : null;
 		this._fastForwardButton = fastForward;
 
 		const playButton = new IconButton();
-		playButton.icon = 'play';
+		playButton.icon = "play";
 		playButton.onclick = () => this.ontogglepause instanceof Function ? this.ontogglepause() : null;
 		this._playButton = playButton;
 	}
@@ -50,20 +50,20 @@ export default class extends Component {
 	}
 
 	attributeChangedCallback(attribute) {
-		if (attribute === 'running') {
-			const isRunning = this.hasAttribute('running');
-			this._playButton.icon = isRunning ? 'pause' : 'play';
+		if (attribute === "running") {
+			const isRunning = this.hasAttribute("running");
+			this._playButton.icon = isRunning ? "pause" : "play";
 			this._stepButton.disabled = isRunning;
 			this._fastForwardButton.disabled = isRunning;
 		}
 	}
 
 	set running(flag) {
-		if (flag) this.setAttribute('running', '');
-		else this.removeAttribute('running');
+		if (flag) this.setAttribute("running", "");
+		else this.removeAttribute("running");
 	}
 
 	get running() {
-		return this.hasAttribute('running');
+		return this.hasAttribute("running");
 	}
 }

@@ -3,7 +3,7 @@ import "./weapon.scss";
 
 export default class extends Component {
 	static get TagName() {
-		return 'wf-weapon';
+		return "wf-weapon";
 	}
 
 	constructor() {

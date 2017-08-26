@@ -5,7 +5,7 @@ import "./window.scss";
 
 export default class extends Component {
 	static get TagName() {
-		return 'wf-window';
+		return "wf-window";
 	}
 
 	constructor() {

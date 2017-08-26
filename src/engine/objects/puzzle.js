@@ -1,4 +1,5 @@
 import Type from "./puzzle-type";
+
 export { Type };
 
 export default class Puzzle {

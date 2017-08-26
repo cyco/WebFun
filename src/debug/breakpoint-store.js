@@ -1,15 +1,15 @@
 import { EventTarget } from "/util";
 import { localStorage } from "/std.dom";
-import { SymbolicBreakpoint, LocationBreakpoint } from "./breakpoint";
+import { LocationBreakpoint, SymbolicBreakpoint } from "./breakpoint";
 
 let sharedInstance = null;
 
 export const Events = {
-	DidAddBreakpoint: 'DidAddBreakpoint',
-	DidRemoveBreakpoint: 'DidRemoveBreakpoint'
+	DidAddBreakpoint: "DidAddBreakpoint",
+	DidRemoveBreakpoint: "DidRemoveBreakpoint"
 };
 
-const StorageKey = 'debug.breakpoints';
+const StorageKey = "debug.breakpoints";
 
 export default class BreakpointStore extends EventTarget {
 	static get Event() {
@@ -50,7 +50,7 @@ export default class BreakpointStore extends EventTarget {
 	}
 
 	_store() {
-		localStorage.setItem(StorageKey, Object.keys(this._breakpoints).join(','));
+		localStorage.setItem(StorageKey, Object.keys(this._breakpoints).join(","));
 	}
 
 	_load() {
@@ -58,10 +58,10 @@ export default class BreakpointStore extends EventTarget {
 		if (!storedValue) return;
 
 		try {
-			storedValue.split(',').map(desc => {
+			storedValue.split(",").map(desc => {
 				let breakpoint = null;
-				if (desc.startsWith('@')) breakpoint = new LocationBreakpoint(...desc.substr(1).split(':'));
-				else if (desc.startsWith('SYM:')) breakpoint = new SymbolicBreakpoint(...desc.substr(4).split(':'));
+				if (desc.startsWith("@")) breakpoint = new LocationBreakpoint(...desc.substr(1).split(":"));
+				else if (desc.startsWith("SYM:")) breakpoint = new SymbolicBreakpoint(...desc.substr(4).split(":"));
 
 				if (breakpoint.id !== desc) {
 					console.warn(`Unable to restore breakpoint ${desc}`);

@@ -17,7 +17,7 @@ export default (object, key, storage = localStorage) => {
 				result[privateKey] = value;
 				storage.store(storageKey, value);
 			},
-			get: () => result[privateKey],
+			get: () => result[privateKey]
 		});
 	});
 	return result;

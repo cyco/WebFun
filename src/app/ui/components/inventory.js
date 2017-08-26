@@ -18,7 +18,7 @@ const MinRows = 7;
 
 export default class extends Component {
 	static get TagName() {
-		return 'wf-inventory';
+		return "wf-inventory";
 	}
 
 	constructor() {

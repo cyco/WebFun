@@ -1,4 +1,4 @@
-import { randmod, Message } from "/util";
+import { Message, randmod } from "/util";
 import World from "./world";
 import { HotspotType, ZoneType } from "/engine/objects";
 
@@ -50,7 +50,7 @@ export default class {
 		dagobah.at(5, 5).zoneType = world.at(5, 5).zoneType;
 		//*/
 
-		Message('mode: %d', mode);
+		Message("mode: %d", mode);
 
 		let worldItem = null;
 		switch (mode) {
@@ -149,7 +149,7 @@ export default class {
 			hotspot.arg = npcID;
 			hotspot.enabled = true;
 
-			return;
+
 		}
 	}
 

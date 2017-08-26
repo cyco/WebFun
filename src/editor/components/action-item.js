@@ -11,7 +11,7 @@ export default class extends Component {
 	constructor() {
 		super();
 
-		this._label = document.createElement('span');
+		this._label = document.createElement("span");
 	}
 
 	connectedCallback() {
@@ -19,11 +19,11 @@ export default class extends Component {
 
 		this.clear();
 
-		this._editor = document.createElement('div');
-		this._editor.setAttribute('contenteditable', '');
+		this._editor = document.createElement("div");
+		this._editor.setAttribute("contenteditable", "");
 
-		const expandButton = new IconButton('caret-right');
-		expandButton.classList.add('expand');
+		const expandButton = new IconButton("caret-right");
+		expandButton.classList.add("expand");
 		expandButton.onclick = () => this.expanded = !this.expanded;
 		this.appendChild(expandButton);
 
@@ -41,8 +41,8 @@ export default class extends Component {
 	}
 
 	set expanded(flag) {
-		if (flag) this.classList.add('expanded');
-		else this.classList.remove('expanded');
+		if (flag) this.classList.add("expanded");
+		else this.classList.remove("expanded");
 
 		if (flag) {
 			this.appendChild(this._editor);
@@ -55,7 +55,7 @@ export default class extends Component {
 	}
 
 	get expanded() {
-		return this.classList.contains('expanded');
+		return this.classList.contains("expanded");
 	}
 
 	get _storageId() {

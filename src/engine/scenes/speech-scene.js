@@ -2,7 +2,7 @@ import Scene from "./scene";
 import { Tile } from "/engine/objects";
 import { SpeechBubble } from "/ui";
 import { ModalSession } from "/ux";
-import { Size, Point } from "/util";
+import { Point, Size } from "/util";
 import Settings from "/settings";
 
 export default class SpeechScene extends Scene {
@@ -60,7 +60,7 @@ export default class SpeechScene extends Scene {
 	}
 
 	_determineGlobalOffset() {
-		const canvas = document.querySelector('canvas[width="288"][height="288"]');
+		const canvas = document.querySelector("canvas[width=\"288\"][height=\"288\"]");
 		const box = canvas.getBoundingClientRect();
 
 		return new Point(box.left, box.top, 0);

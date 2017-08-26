@@ -3,9 +3,9 @@ import Scene from "./scene";
 import PauseScene from "./pause-scene";
 import MapScene from "./map-scene";
 import TransitionScene from "./transition-scene";
-import { Tile, Zone, HotspotType } from "/engine/objects";
+import { HotspotType, Tile, Zone } from "/engine/objects";
 import Camera from "/engine/camera";
-import { rgba, Direction, Point } from "/util";
+import { Direction, Point, rgba } from "/util";
 
 export default class ZoneScene extends Scene {
 	constructor() {
@@ -68,7 +68,7 @@ export default class ZoneScene extends Scene {
 
 		if (hero._actionFrames >= hero.weapon.attackDuration) {
 			this._removeBullet();
-			return;
+
 		}
 	}
 
@@ -238,7 +238,7 @@ export default class ZoneScene extends Scene {
 	}
 
 	_hotspotTriggered(hotspot) {
-		console.log('trigger hotspot', hotspot);
+		console.log("trigger hotspot", hotspot);
 		const engine = this.engine;
 		const zone = engine.currentZone;
 

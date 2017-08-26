@@ -1,7 +1,7 @@
 import NPC from "/engine/objects/npc";
 
 describe("NPC", () => {
-	it('is a class representing an npc', () => {
+	it("is a class representing an npc", () => {
 		const intValues = {
 			face: null,
 			x: 4,

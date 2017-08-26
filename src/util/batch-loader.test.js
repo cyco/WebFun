@@ -1,6 +1,6 @@
 import BatchLoader from "/util/batch-loader";
 
-describe('BatchLoader', () => {
+describe("BatchLoader", () => {
 	let operationsExecuted;
 	let SampleOperation = function () {
 		let self = this;
@@ -21,7 +21,7 @@ describe('BatchLoader', () => {
 		operationsExecuted = 0;
 	});
 
-	it('seuentially executes a bunch of operations', (done) => {
+	it("seuentially executes a bunch of operations", (done) => {
 		let started = false;
 		let progressed = false;
 		let batchLoader = new BatchLoader();
@@ -43,7 +43,7 @@ describe('BatchLoader', () => {
 		batchLoader.start();
 	});
 
-	it('can\'t be cancelled yet', (done) => {
+	it("can't be cancelled yet", (done) => {
 		let batchLoader = new BatchLoader();
 		batchLoader.onfinish = () => {
 			expect(operationsExecuted).toBe(1);

@@ -1,14 +1,14 @@
 import Stream from "/util/stream";
 import OutputStream from "/util/output-stream";
 
-describe('OutputStream', () => {
+describe("OutputStream", () => {
 	let outputStream;
-	it('is a class used to write data', () => {
+	it("is a class used to write data", () => {
 		outputStream = new OutputStream(1);
-		expect(typeof outputStream.writeUint8).toBe('function');
+		expect(typeof outputStream.writeUint8).toBe("function");
 	});
 
-	it('defaults to using little endian', () => {
+	it("defaults to using little endian", () => {
 		outputStream = new OutputStream(2);
 
 		outputStream.writeUint16(0x4223);
@@ -17,7 +17,7 @@ describe('OutputStream', () => {
 		expect(getByte(1)).toBe(0x42);
 	});
 
-	it('but endianess can be changed at any time', () => {
+	it("but endianess can be changed at any time", () => {
 		outputStream = new OutputStream(8);
 
 		outputStream.endianess = Stream.ENDIAN.BIG;
@@ -31,7 +31,7 @@ describe('OutputStream', () => {
 		expect(getByte(3)).toBe(0x42);
 	});
 
-	it('has a function to write a byte', () => {
+	it("has a function to write a byte", () => {
 		outputStream = new OutputStream(2);
 
 		outputStream.writeUint8(0x42);
@@ -41,7 +41,7 @@ describe('OutputStream', () => {
 		expect(getByte(1)).toBe(0x23);
 	});
 
-	it('has a function to write a word', () => {
+	it("has a function to write a word", () => {
 		outputStream = new OutputStream(2);
 
 		outputStream.writeUint16(0x4223);
@@ -50,7 +50,7 @@ describe('OutputStream', () => {
 		expect(getByte(1)).toBe(0x42);
 	});
 
-	it('has a function to write a double word', () => {
+	it("has a function to write a double word", () => {
 		outputStream = new OutputStream(4);
 
 		outputStream.writeUint32(0x42230550);
@@ -61,7 +61,7 @@ describe('OutputStream', () => {
 		expect(getByte(3)).toBe(0x42);
 	});
 
-	it('has a function to write a signed byte', () => {
+	it("has a function to write a signed byte", () => {
 		outputStream = new OutputStream(2);
 
 		outputStream.writeInt8(-1);
@@ -71,7 +71,7 @@ describe('OutputStream', () => {
 		expect(getByte(1)).toBe(0x23);
 	});
 
-	it('has a function to write a signed word', () => {
+	it("has a function to write a signed word", () => {
 		outputStream = new OutputStream(2);
 
 		outputStream.writeInt16(-1);
@@ -80,7 +80,7 @@ describe('OutputStream', () => {
 		expect(getByte(1)).toBe(0xFF);
 	});
 
-	it('has a function to write a signed double word', () => {
+	it("has a function to write a signed double word", () => {
 		outputStream = new OutputStream(4);
 
 		outputStream.writeInt32(-1);
@@ -91,7 +91,7 @@ describe('OutputStream', () => {
 		expect(getByte(3)).toBe(0xFF);
 	});
 
-	it('has a function to write a bunch of characters to the stream', () => {
+	it("has a function to write a bunch of characters to the stream", () => {
 		outputStream = new OutputStream(4);
 
 		outputStream.writeCharacters("test");
@@ -102,7 +102,7 @@ describe('OutputStream', () => {
 		expect(getByte(3)).toBe(0x74);
 	});
 
-	it('has a function to write a null terminated string', () => {
+	it("has a function to write a null terminated string", () => {
 		outputStream = new OutputStream(5);
 
 		outputStream.writeNullTerminatedString("test");
@@ -114,7 +114,7 @@ describe('OutputStream', () => {
 		expect(getByte(4)).toBe(0x00);
 	});
 
-	it('has a function to write a length-prefixed string', () => {
+	it("has a function to write a length-prefixed string", () => {
 		outputStream = new OutputStream(7);
 
 		outputStream.writeLengthPrefixedString("test");
@@ -128,7 +128,7 @@ describe('OutputStream', () => {
 		expect(getByte(6)).toBe(0x00);
 	});
 
-	it('has a function to write a byte array to the stream', () => {
+	it("has a function to write a byte array to the stream", () => {
 		outputStream = new OutputStream(2);
 		let array = new Uint8Array(2);
 		array[0] = 0x23;
@@ -139,7 +139,7 @@ describe('OutputStream', () => {
 		expect(getByte(1)).toBe(0x42);
 	});
 
-	it('has a function to write a word array to the stream', () => {
+	it("has a function to write a word array to the stream", () => {
 		outputStream = new OutputStream(2);
 		let array = new Uint16Array(1);
 		array[0] = 0x2342;
@@ -149,7 +149,7 @@ describe('OutputStream', () => {
 		expect(getByte(1)).toBe(0x23);
 	});
 
-	it('has a function to write a double word array to the stream', () => {
+	it("has a function to write a double word array to the stream", () => {
 		outputStream = new OutputStream(4);
 		let array = new Uint32Array(1);
 		array[0] = 0x23420500;
@@ -161,7 +161,7 @@ describe('OutputStream', () => {
 		expect(getByte(3)).toBe(0x23);
 	});
 
-	it('throws an exception if the pre-specified size is exceeded', () => {
+	it("throws an exception if the pre-specified size is exceeded", () => {
 		outputStream = new OutputStream(1);
 		outputStream.writeUint8(0x42);
 

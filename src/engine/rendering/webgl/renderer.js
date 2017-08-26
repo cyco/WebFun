@@ -6,7 +6,7 @@ import { twgl } from "/libs";
 
 class WebGLRenderer extends AbstractRenderer {
 	static isSupported() {
-		const canvas = document.createElement('canvas');
+		const canvas = document.createElement("canvas");
 		return canvas.getContext("webgl") !== null;
 	}
 
@@ -14,11 +14,11 @@ class WebGLRenderer extends AbstractRenderer {
 		super(canvas);
 
 		this._canvas = canvas;
-		this._canvas.style.border = '0';
-		this._canvas.style.width = '288px';
-		this._canvas.style.height = '288px';
+		this._canvas.style.border = "0";
+		this._canvas.style.width = "288px";
+		this._canvas.style.height = "288px";
 
-		this._context = canvas.getContext('webgl');
+		this._context = canvas.getContext("webgl");
 
 		this._imageFactory = new ImageFactory(this._context);
 		this._imageFactory.onpalettechange = (palette) => this._setupPalette(palette);
@@ -71,7 +71,7 @@ class WebGLRenderer extends AbstractRenderer {
 			x + 0, 8 - y + 0,
 			x + 1, 8 - y + 1,
 			x + 0, 8 - y + 0,
-			x + 1, 8 - y + 0,
+			x + 1, 8 - y + 0
 		];
 
 		const vertBuffer = gl.createBuffer();
@@ -111,7 +111,7 @@ class WebGLRenderer extends AbstractRenderer {
 			-1, -1,
 			1, 1,
 			-1, -1,
-			1, -1,
+			1, -1
 		];
 		const vertBuffer2 = gl.createBuffer();
 		gl.bindBuffer(gl.ARRAY_BUFFER, vertBuffer2);

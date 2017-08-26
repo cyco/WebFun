@@ -1,4 +1,4 @@
-describeCondition('', (check, engine) => {
-	it('', () => {
+describeCondition("", (check, engine) => {
+	it("", () => {
 	});
 });

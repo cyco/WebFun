@@ -1,5 +1,6 @@
 import { Direction } from "/util";
 import Type from "./char-type";
+
 export { Type };
 
 export default class Char {

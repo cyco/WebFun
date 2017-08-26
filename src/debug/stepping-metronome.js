@@ -1,12 +1,12 @@
 import { EventTarget } from "/util";
 
 export const Event = {
-	StatusChange: 'statuschange'
+	StatusChange: "statuschange"
 };
 
 export const Status = {
-	Paused: 'paused',
-	Running: 'running'
+	Paused: "paused",
+	Running: "running"
 };
 
 export default class extends EventTarget {

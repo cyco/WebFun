@@ -9,4 +9,4 @@ export Storage from "./storage";
 export String from "./string";
 export Uint16Array from "./uint16-array";
 export Uint8Array from "./uint8-array";
-export HTMLCollection from './html-collection';
+export HTMLCollection from "./html-collection";

@@ -1,6 +1,6 @@
 let eventMatchers = {
-	'HTMLEvents': /^(?:load|unload|abort|error|select|change|submit|reset|focus|blur|resize|scroll)$/,
-	'MouseEvents': /^(?:click|dblclick|mouse(?:down|up|over|move|out))$/
+	"HTMLEvents": /^(?:load|unload|abort|error|select|change|submit|reset|focus|blur|resize|scroll)$/,
+	"MouseEvents": /^(?:click|dblclick|mouse(?:down|up|over|move|out))$/
 };
 
 let defaultOptions = {
@@ -35,11 +35,11 @@ function simulateEvent(element, eventName) {
 	}
 
 	if (!eventType)
-		throw new SyntaxError('Only HTMLEvents and MouseEvents interfaces are supported');
+		throw new SyntaxError("Only HTMLEvents and MouseEvents interfaces are supported");
 
 	if (document.createEvent) {
 		oEvent = document.createEvent(eventType);
-		if (eventType === 'HTMLEvents') {
+		if (eventType === "HTMLEvents") {
 			oEvent.initEvent(eventName, options.bubbles, options.cancelable);
 		} else {
 			oEvent.initMouseEvent(eventName, options.bubbles, options.cancelable, document.defaultView,
@@ -52,7 +52,7 @@ function simulateEvent(element, eventName) {
 		options.clientY = options.pointerY;
 		let evt = document.createEventObject();
 		oEvent = extend(evt, options);
-		element.fireEvent('on' + eventName, oEvent);
+		element.fireEvent("on" + eventName, oEvent);
 	}
 	return element;
 }

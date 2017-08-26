@@ -2,10 +2,10 @@ import Scene from "./scene";
 import { Tile, ZoneType } from "/engine/objects";
 import { World } from "/engine/generation";
 import { Planet } from "/engine/types";
-import { Weapons, UnlimitedAmmo, Invincibility, CheatCodeInput } from "/engine/cheats";
+import { CheatCodeInput, Invincibility, UnlimitedAmmo, Weapons } from "/engine/cheats";
 import SpeechScene from "./speech-scene";
 import { Size } from "/util";
-import Settings from '/settings';
+import Settings from "/settings";
 
 const TileWidth = 28;
 const TileHeight = 28;

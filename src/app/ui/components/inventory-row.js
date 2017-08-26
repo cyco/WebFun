@@ -3,17 +3,17 @@ import { Component } from "/ui";
 
 export default class extends Component {
 	static get TagName() {
-		return 'wf-inventory-row';
+		return "wf-inventory-row";
 	}
 
 	constructor() {
 		super();
 
-		this._emptyIcon = document.createElement('img');
+		this._emptyIcon = document.createElement("img");
 		this._emptyIcon.src = Image.blankImage;
 
-		this._icon = document.createElement('span');
-		this._label = document.createElement('span');
+		this._icon = document.createElement("span");
+		this._label = document.createElement("span");
 
 		this.tile = null;
 	}
@@ -29,7 +29,7 @@ export default class extends Component {
 
 		const rep = tile ? tile.image.representation : null;
 		const icon = rep && rep.cloneNode ? rep.cloneNode() : this._emptyIcon;
-		const label = tile ? tile.name : '';
+		const label = tile ? tile.name : "";
 
 		this._icon.clear();
 		this._icon.appendChild(icon);

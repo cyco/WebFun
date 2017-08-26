@@ -1,1 +1,1 @@
-export toZoneType from './to-zone-type';
+export toZoneType from "./to-zone-type";

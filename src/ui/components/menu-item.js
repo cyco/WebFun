@@ -4,7 +4,7 @@ import "./menu-item.scss";
 
 export default class extends Component {
 	static get TagName() {
-		return 'wf-menu-item';
+		return "wf-menu-item";
 	}
 
 	constructor() {

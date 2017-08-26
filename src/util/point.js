@@ -32,8 +32,8 @@ export default class Point {
 		return this;
 	}
 
-	byAdding(x,y) {
-		return (new Point(this)).add(x,y);
+	byAdding(x, y) {
+		return (new Point(this)).add(x, y);
 	}
 
 	subtract(x, y) {
@@ -48,8 +48,8 @@ export default class Point {
 		return this;
 	}
 
-	bySubtract(x,y) {
-		return (new Point(this)).subtract(x,y);
+	bySubtract(x, y) {
+		return (new Point(this)).subtract(x, y);
 	}
 
 	scaleBy(a) {

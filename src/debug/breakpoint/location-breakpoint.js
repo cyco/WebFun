@@ -11,6 +11,6 @@ export default class extends Breakpoint {
 	}
 
 	get id() {
-		return `@${this._path.join(':')}`;
+		return `@${this._path.join(":")}`;
 	}
 }

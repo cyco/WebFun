@@ -4,7 +4,7 @@ import * as Result from "../result";
 
 export const Opcode = 0x21;
 export const Arguments = 3;
-export const Description = 'Change current zone to `arg_0`. Hero will be placed at `arg_1`x`arg_2` in the new zone.';
+export const Description = "Change current zone to `arg_0`. Hero will be placed at `arg_1`x`arg_2` in the new zone.";
 export default (instruction, engine, action) => {
 	const args = instruction.arguments;
 

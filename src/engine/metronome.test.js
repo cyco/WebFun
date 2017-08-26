@@ -7,24 +7,24 @@ describe("Metronome", () => {
 		metronome = new Metronome();
 	});
 
-	it('is a class that manages update and render cycles', () => {
+	it("is a class that manages update and render cycles", () => {
 		expect(Metronome).toBeAClass();
 
-		expect(metronome).toHaveMethod('start');
-		expect(metronome).toHaveMethod('stop');
+		expect(metronome).toHaveMethod("start");
+		expect(metronome).toHaveMethod("stop");
 	});
 
-	it('uses requestAnimationFrame to allow for smooth rendering', () => {
-		spyOn(Std, 'requestAnimationFrame').and.returnValue(1);
+	it("uses requestAnimationFrame to allow for smooth rendering", () => {
+		spyOn(Std, "requestAnimationFrame").and.returnValue(1);
 
 		metronome.start();
 
 		expect(Std.requestAnimationFrame).toHaveBeenCalled();
 	});
 
-	it('properly cancels animation frame requests when stopped', () => {
-		spyOn(Std, 'requestAnimationFrame').and.returnValue(1);
-		spyOn(Std, 'cancelAnimationFrame');
+	it("properly cancels animation frame requests when stopped", () => {
+		spyOn(Std, "requestAnimationFrame").and.returnValue(1);
+		spyOn(Std, "cancelAnimationFrame");
 
 		metronome.start();
 		metronome.stop();

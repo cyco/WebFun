@@ -7,7 +7,7 @@ export Generation from "./generation";
 export Hero from "./hero";
 export Input from "./input";
 export Inventory from "./inventory";
-export Metronome from './metronome';
+export Metronome from "./metronome";
 export Objects from "./objects";
 export PersistentState from "./persistent-state";
 export SceneManager from "./scene-manager";

@@ -1,7 +1,7 @@
 import HorizontalPointRange from "/util/horizontal-point-range";
 
-describe('HorizontalPointRange', () => {
-	it('is a range of points that only extends in y-dimension', () => {
+describe("HorizontalPointRange", () => {
+	it("is a range of points that only extends in y-dimension", () => {
 		let range = new HorizontalPointRange(3, 8, 4);
 		expect(range.from.x).toBe(3);
 		expect(range.from.y).toBe(4);
@@ -9,7 +9,7 @@ describe('HorizontalPointRange', () => {
 		expect(range.to.y).toBe(4);
 	});
 
-	it('has a method to iterate through all points', () => {
+	it("has a method to iterate through all points", () => {
 		let visited = {};
 		let range = new HorizontalPointRange(3, 8, 4);
 
@@ -18,16 +18,16 @@ describe('HorizontalPointRange', () => {
 		});
 
 		expect(visited).toEqual({
-			'3x4': true,
-			'4x4': true,
-			'5x4': true,
-			'6x4': true,
-			'7x4': true,
-			'8x4': true,
+			"3x4": true,
+			"4x4": true,
+			"5x4": true,
+			"6x4": true,
+			"7x4": true,
+			"8x4": true
 		});
 	});
 
-	it('can iterate backwards', () => {
+	it("can iterate backwards", () => {
 		let visited = {};
 		let range = new HorizontalPointRange(2, 0, 4);
 
@@ -36,9 +36,9 @@ describe('HorizontalPointRange', () => {
 		}, -1);
 
 		expect(visited).toEqual({
-			'2x4': true,
-			'1x4': true,
-			'0x4': true
+			"2x4": true,
+			"1x4": true,
+			"0x4": true
 		});
 	});
 });

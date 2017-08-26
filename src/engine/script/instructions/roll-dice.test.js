@@ -1,8 +1,8 @@
 import { Instruction } from "/engine/objects";
 import * as RollDice from "./roll-dice";
 
-describeInstruction('SetCounter', (execute, engine) => {
-	it('set the current zone\'s random register to a random() % arg', () => {
+describeInstruction("SetCounter", (execute, engine) => {
+	it("set the current zone's random register to a random() % arg", () => {
 		let instruction = new Instruction({});
 		instruction._opcode = RollDice.Opcode;
 		instruction._arguments = [5];

@@ -1,7 +1,7 @@
 import InstructionExecutor from "/engine/script/instruction-executor";
 import { Opcode } from "/engine/objects/instruction";
 
-describe('InstructionExecutor', () => {
+describe("InstructionExecutor", () => {
 	let executor, engine;
 	beforeEach(() => {
 		engine = {
@@ -14,7 +14,7 @@ describe('InstructionExecutor', () => {
 		executor = new InstructionExecutor(engine);
 	});
 
-	it('has a function to execute a single instruction', () => {
-		expect(typeof executor.execute).toBe('function');
+	it("has a function to execute a single instruction", () => {
+		expect(typeof executor.execute).toBe("function");
 	});
 });

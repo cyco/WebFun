@@ -6,11 +6,11 @@ describe("FileLoader", () => {
 		subject = new FileLoader();
 	});
 
-	it('is a class', () => {
+	it("is a class", () => {
 		expect(FileLoader).toBeClass();
 	});
 
-	it('is used to crete an input stream from a file', () => {
-		subject = new FileLoader('asciiString');
+	it("is used to crete an input stream from a file", () => {
+		subject = new FileLoader("asciiString");
 	});
 });

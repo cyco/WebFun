@@ -4,7 +4,7 @@ import "./tile-selection.scss";
 
 export default class extends Component {
 	static get TagName() {
-		return 'wf-editor-tile-selection';
+		return "wf-editor-tile-selection";
 	}
 
 	constructor() {
@@ -60,14 +60,14 @@ export default class extends Component {
 		let node = t === null ? this.firstElementChild : this._tileNodes[t.id];
 
 		if (this._selectedTileNode) {
-			this._selectedTileNode.removeAttribute('selected');
+			this._selectedTileNode.removeAttribute("selected");
 		}
 
 		this._selectedTile = t;
 		this._selectedTileNode = node;
 
 		if (this._selectedTileNode) {
-			this._selectedTileNode.setAttribute('selected', '');
+			this._selectedTileNode.setAttribute("selected", "");
 			this._selectedTileNode.scrollIntoViewIfNeeded();
 		}
 	}

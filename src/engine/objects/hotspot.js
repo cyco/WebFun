@@ -1,4 +1,5 @@
 import Type from "./hotspot-type";
+
 export { Type };
 
 class Hotspot {
@@ -25,4 +26,5 @@ class Hotspot {
 		return this._y;
 	}
 }
+
 export default Hotspot;

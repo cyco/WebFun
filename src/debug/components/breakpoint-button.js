@@ -3,8 +3,8 @@ import { Component } from "/ui";
 import BreakpointStore from "../breakpoint-store";
 
 export const Events = {
-	DidSet: 'DidSet',
-	DidUnset: 'DidUnset'
+	DidSet: "DidSet",
+	DidUnset: "DidUnset"
 };
 
 export default class extends Component {
@@ -13,11 +13,11 @@ export default class extends Component {
 	}
 
 	static get TagName() {
-		return 'wf-breakpoint-button';
+		return "wf-breakpoint-button";
 	}
 
 	static get observedAttributes() {
-		return ['active'];
+		return ["active"];
 	}
 
 	constructor() {
@@ -48,11 +48,11 @@ export default class extends Component {
 	}
 
 	set active(flag) {
-		if (flag) this.setAttribute('active', '');
-		else this.removeAttribute('active');
+		if (flag) this.setAttribute("active", "");
+		else this.removeAttribute("active");
 	}
 
 	get active() {
-		return this.hasAttribute('active');
+		return this.hasAttribute("active");
 	}
 }

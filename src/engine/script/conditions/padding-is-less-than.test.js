@@ -1,8 +1,8 @@
 import { Condition } from "/engine/objects";
 import * as PaddingIsLessThan from "./padding-is-less-than";
 
-describeCondition('PaddingIsLessThan', (check, engine) => {
-	it('checks if the current zone\'s padding value is greater than the given value', () => {
+describeCondition("PaddingIsLessThan", (check, engine) => {
+	it("checks if the current zone's padding value is greater than the given value", () => {
 		const condition = new Condition();
 		condition._opcode = PaddingIsLessThan.Opcode;
 		condition._arguments = [5];

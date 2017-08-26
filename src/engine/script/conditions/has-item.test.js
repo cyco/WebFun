@@ -1,8 +1,8 @@
 import { Condition } from "/engine/objects";
 import * as HasItem from "./has-item";
 
-describeCondition('HasItem', (check, engine) => {
-	it('checks if the inventory contains the specified item', () => {
+describeCondition("HasItem", (check, engine) => {
+	it("checks if the inventory contains the specified item", () => {
 		engine.inventory = {
 			contains: function (itemID) {
 				return itemID === 13;

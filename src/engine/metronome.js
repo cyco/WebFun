@@ -1,4 +1,4 @@
-import { requestAnimationFrame, cancelAnimationFrame, performance } from "/std";
+import { cancelAnimationFrame, performance, requestAnimationFrame } from "/std";
 import { identity } from "/util";
 
 const TICKLENGTH = 100;

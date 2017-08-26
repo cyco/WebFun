@@ -2,15 +2,15 @@ import Tool from "./tool";
 
 export default class extends Tool {
 	get name() {
-		return 'Move';
+		return "Move";
 	}
 
 	get icon() {
-		return 'mouse-pointer';
+		return "mouse-pointer";
 	}
 
 	get shortcut() {
-		return 'v';
+		return "v";
 	}
 
 	activate() {

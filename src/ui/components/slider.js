@@ -5,7 +5,7 @@ import { dispatch } from "/util";
 
 class Slider extends Component {
 	static get TagName() {
-		return 'wf-slider';
+		return "wf-slider";
 	}
 
 	constructor() {

@@ -1,8 +1,8 @@
 import { Instruction } from "/engine/objects";
 import * as SetCounter from "./set-counter";
 
-describeInstruction('SetCounter', (execute, engine) => {
-	it('set the current zone\'s counter to the specified value', () => {
+describeInstruction("SetCounter", (execute, engine) => {
+	it("set the current zone's counter to the specified value", () => {
 		let instruction = new Instruction({});
 		instruction._opcode = SetCounter.Opcode;
 		instruction._arguments = [2];

@@ -1,8 +1,8 @@
 import { Condition } from "/engine/objects";
 import * as ZoneEntered from "./zone-entered";
 
-describeCondition('ZoneEntered', (check, engine) => {
-	it('checks if the zone has just been entered', () => {
+describeCondition("ZoneEntered", (check, engine) => {
+	it("checks if the zone has just been entered", () => {
 		const condition = new Condition();
 		condition._opcode = ZoneEntered.Opcode;
 

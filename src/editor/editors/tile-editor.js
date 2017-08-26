@@ -4,7 +4,7 @@ import "./tile-editor.scss";
 
 export default class extends Component {
 	static get TagName() {
-		return 'wf-editor-tiles';
+		return "wf-editor-tiles";
 	}
 
 	constructor() {

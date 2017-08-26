@@ -2,7 +2,7 @@ import DesktopInputManager from "/engine/input/desktop-input-manager";
 import { Direction } from "/engine/input/input-manager";
 import { KeyEvent } from "/util";
 
-describe('DesktopInputManager', () => {
+describe("DesktopInputManager", () => {
 	let manager = null;
 
 	beforeAll(() => {
@@ -13,18 +13,18 @@ describe('DesktopInputManager', () => {
 		manager.removeListeners();
 	});
 
-	it('collects game input from keyboard and mouse', () => {
+	it("collects game input from keyboard and mouse", () => {
 		let manager = new DesktopInputManager();
 
-		expect(typeof manager.keyDown).toBe('function');
-		expect(typeof manager.keyUp).toBe('function');
-		expect(typeof manager.mouseDown).toBe('function');
-		expect(typeof manager.mouseMove).toBe('function');
-		expect(typeof manager.mouseUp).toBe('function');
+		expect(typeof manager.keyDown).toBe("function");
+		expect(typeof manager.keyUp).toBe("function");
+		expect(typeof manager.mouseDown).toBe("function");
+		expect(typeof manager.mouseMove).toBe("function");
+		expect(typeof manager.mouseUp).toBe("function");
 	});
 
-	describe('keyboard input', () => {
-		it('toggles locator when the l-key is pressed', () => {
+	describe("keyboard input", () => {
+		it("toggles locator when the l-key is pressed", () => {
 			manager.keyDown({which: KeyEvent.DOM_VK_L});
 			expect(manager.locator).toBeTrue();
 
@@ -35,7 +35,7 @@ describe('DesktopInputManager', () => {
 			expect(manager.locator).toBeTrue();
 		});
 
-		it('toggles pause when the p-key is pressed', () => {
+		it("toggles pause when the p-key is pressed", () => {
 			manager.keyDown({which: KeyEvent.DOM_VK_P});
 			expect(manager.pause).toBeTrue();
 
@@ -47,7 +47,7 @@ describe('DesktopInputManager', () => {
 		});
 
 
-		it('activates dragging while shift key is pressed', () => {
+		it("activates dragging while shift key is pressed", () => {
 			manager.keyDown({which: KeyEvent.DOM_VK_SHIFT});
 			expect(manager._drag).toBeTrue();
 			manager.keyDown({which: KeyEvent.DOM_VK_SHIFT});
@@ -58,7 +58,7 @@ describe('DesktopInputManager', () => {
 		});
 
 
-		it('keeps track of directional input', () => {
+		it("keeps track of directional input", () => {
 			let Mask = Direction;
 
 			let upKey = {which: KeyEvent.DOM_VK_UP};
@@ -85,7 +85,7 @@ describe('DesktopInputManager', () => {
 			expect(manager._direction & Mask.Right).toBeFalsy();
 		});
 
-		it('tracks the \'attack\' key', () => {
+		it("tracks the 'attack' key", () => {
 			let attackKey = {which: KeyEvent.DOM_VK_SPACE};
 			manager.keyDown(attackKey);
 			expect(manager._attack).toBeTrue();
@@ -93,19 +93,19 @@ describe('DesktopInputManager', () => {
 			expect(manager._attack).toBeFalse();
 		});
 
-		it('tracks the \'end dialog\' key', () => {
+		it("tracks the 'end dialog' key", () => {
 			let endDialogKey = {which: KeyEvent.DOM_VK_SPACE};
 			manager.keyDown(endDialogKey);
 			expect(manager.endDialog).toBeTrue();
 		});
 
-		it('tracks the \'pick up\' key', () => {
+		it("tracks the 'pick up' key", () => {
 			let pickUpKey = {which: KeyEvent.DOM_VK_SPACE};
 			manager.keyDown(pickUpKey);
 			expect(manager.pickUp).toBeTrue();
 		});
 
-		it('ignores unknown keys', () => {
+		it("ignores unknown keys", () => {
 			let unknownKey = {which: 12};
 
 			expect(() => {

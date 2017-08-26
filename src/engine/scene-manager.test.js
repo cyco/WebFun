@@ -7,7 +7,7 @@ describe("SceneManager", () => {
 		subject = new SceneManager();
 	});
 
-	it('is in charge of managing the stack of scenes visible during gameplay', () => {
+	it("is in charge of managing the stack of scenes visible during gameplay", () => {
 		const scene1 = new (class extends Scene {
 		})();
 		const scene2 = new (class extends Scene {
@@ -22,8 +22,8 @@ describe("SceneManager", () => {
 		expect(subject.currentScene).toBe(scene1);
 	});
 
-	describe('clear', () => {
-		it('just pops off all scenes', () => {
+	describe("clear", () => {
+		it("just pops off all scenes", () => {
 			const AScene = class extends Scene {
 			};
 
@@ -37,7 +37,7 @@ describe("SceneManager", () => {
 		});
 	});
 
-	it('passes calls to update to the current scene', () => {
+	it("passes calls to update to the current scene", () => {
 		const AScene = class extends Scene {
 		};
 
@@ -47,8 +47,8 @@ describe("SceneManager", () => {
 		subject.pushScene(scene1);
 		subject.pushScene(scene2);
 
-		spyOn(scene1, 'update');
-		spyOn(scene2, 'update');
+		spyOn(scene1, "update");
+		spyOn(scene2, "update");
 
 		subject.update(0);
 
@@ -56,7 +56,7 @@ describe("SceneManager", () => {
 		expect(scene2.update).toHaveBeenCalled();
 	});
 
-	it('passes \'render\' calls to all scenes until an opaque scene is encountered', () => {
+	it("passes 'render' calls to all scenes until an opaque scene is encountered", () => {
 		const AScene = class extends Scene {
 			isOpaque() {
 				return false;
@@ -76,9 +76,9 @@ describe("SceneManager", () => {
 		subject.pushScene(scene2);
 		subject.pushScene(scene3);
 
-		spyOn(scene1, 'render');
-		spyOn(scene2, 'render');
-		spyOn(scene3, 'render');
+		spyOn(scene1, "render");
+		spyOn(scene2, "render");
+		spyOn(scene3, "render");
 
 		subject.render({});
 

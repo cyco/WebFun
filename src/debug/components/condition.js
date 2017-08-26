@@ -4,7 +4,7 @@ import InstructionThing from "./instruction-thing";
 
 export default class extends InstructionThing {
 	static get TagName() {
-		return 'wf-debug-condition';
+		return "wf-debug-condition";
 	}
 
 	constructor(condition = null) {
@@ -75,7 +75,7 @@ export default class extends InstructionThing {
 		} else if (condition.opcode === Opcode.TileAtIs || condition.opcode === Opcode.TileAtIsAgain) {
 			const itemId = condition.arguments[0];
 			const tile = data.tiles[itemId];
-			this._title.innerHTML = '';
+			this._title.innerHTML = "";
 			if (!tile) this._title.innerHTML += `${itemId}`;
 			else this._title.appendChild(this._tileImageNode(tile));
 			this._title.innerHTML += ` at ${condition.arguments[1]}x${condition.arguments[1]}x${condition.arguments[3]}`;
@@ -87,7 +87,7 @@ export default class extends InstructionThing {
 		if (representation instanceof HTMLElement) {
 			return representation.cloneNode();
 		}
-		return document.createElement('img');
+		return document.createElement("img");
 	}
 
 	get condition() {
@@ -95,6 +95,6 @@ export default class extends InstructionThing {
 	}
 
 	get type() {
-		return 'c';
+		return "c";
 	}
 }

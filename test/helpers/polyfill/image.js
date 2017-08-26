@@ -1,1 +1,1 @@
-global.Image = require('canvas').Image;
+global.Image = require("canvas").Image;

@@ -6,19 +6,19 @@ describeComponent(Checkbox, () => {
 
 	beforeEach(() => subject = render(Checkbox));
 
-	it('can have a title', () => {
-		let labelNode = subject.querySelector('label');
+	it("can have a title", () => {
+		let labelNode = subject.querySelector("label");
 		subject.title = "test title";
-		expect(subject.title).toBe('test title');
-		expect(labelNode.textContent.indexOf('test title')).not.toBe(-1);
+		expect(subject.title).toBe("test title");
+		expect(labelNode.textContent.indexOf("test title")).not.toBe(-1);
 	});
 
-	it('can be checked', () => {
+	it("can be checked", () => {
 		expect(subject.checked).toBeFalse();
 
 		subject.checked = true;
 		expect(subject.checked).toBeTrue();
-		let inputNode = subject.querySelector('input[type=checkbox]');
+		let inputNode = subject.querySelector("input[type=checkbox]");
 		expect(inputNode.checked).toBeTrue();
 
 		subject.checked = false;
@@ -26,7 +26,7 @@ describeComponent(Checkbox, () => {
 		expect(inputNode.checked).toBeFalse();
 	});
 
-	it('when changed it calls it\s onclick callback', (done) => {
+	it("when changed it calls it\s onclick callback", (done) => {
 		let callback = () => {
 			expect(true).toBeTrue();
 			done();
@@ -34,7 +34,7 @@ describeComponent(Checkbox, () => {
 		subject.onchange = callback;
 		expect(subject.onchange).toBe(callback);
 
-		let inputNode = subject.querySelector('input[type=checkbox]');
-		simulateEvent(inputNode, 'change');
+		let inputNode = subject.querySelector("input[type=checkbox]");
+		simulateEvent(inputNode, "change");
 	});
 });

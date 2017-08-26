@@ -1,7 +1,7 @@
 import AbstractRenderer from "/engine/rendering/abstract-renderer";
 
 describe("AbstractRenderer", () => {
-	it('is an abstract class used to define the interface a renderer must implement', () => {
+	it("is an abstract class used to define the interface a renderer must implement", () => {
 		const renderer = new AbstractRenderer();
 
 		expect(() => renderer.redisplayTile()).not.toThrow();

@@ -1,24 +1,24 @@
-const Path = require('path');
-const Webpack = require('webpack');
+const Path = require("path");
+const Webpack = require("webpack");
 
 module.exports = {
-	entry: './src/index.js',
+	entry: "./src/index.js",
 	output: {
-		filename: 'webfun.js',
-		path: Path.resolve(__dirname, 'dist')
+		filename: "webfun.js",
+		path: Path.resolve(__dirname, "dist")
 	},
 	resolve: {
 		alias: {
-			'src': Path.resolve(__dirname, 'src'),
-			'std': Path.resolve(__dirname, 'src/std'),
-			'std.dom': Path.resolve(__dirname, 'src/std.dom'),
-			'std.webgl': Path.resolve(__dirname, 'src/std.webgl'),
-			'test-helpers': Path.resolve(__dirname, 'test/helpers'),
-			'fs': Path.resolve(__dirname, 'test/helpers/polyfill/fs.js'),
-			'path': Path.resolve(__dirname, 'test/helpers/polyfill/path.js'),
-			'libs': Path.resolve(__dirname, 'src/libs.js'),
+			"src": Path.resolve(__dirname, "src"),
+			"std": Path.resolve(__dirname, "src/std"),
+			"std.dom": Path.resolve(__dirname, "src/std.dom"),
+			"std.webgl": Path.resolve(__dirname, "src/std.webgl"),
+			"test-helpers": Path.resolve(__dirname, "test/helpers"),
+			"fs": Path.resolve(__dirname, "test/helpers/polyfill/fs.js"),
+			"path": Path.resolve(__dirname, "test/helpers/polyfill/path.js"),
+			"libs": Path.resolve(__dirname, "src/libs.js"),
 			// disable zlib (imported from KaitaiStream)
-			'zlib': Path.resolve(__dirname, 'src/util/empty.js')
+			"zlib": Path.resolve(__dirname, "src/util/empty.js")
 		},
 		unsafeCache: true
 	},
@@ -31,7 +31,7 @@ module.exports = {
 				Path.resolve(__dirname, "src")
 			],
 			exclude: [
-				'node_modules',
+				"node_modules",
 				Path.resolve(__dirname, "src/editor"),
 				Path.resolve(__dirname, "src/debug")
 			]
@@ -58,7 +58,7 @@ module.exports = {
 				}
 			}],
 			exclude: [
-				'node_modules'
+				"node_modules"
 			]
 		}, {
 			/* Shader */
@@ -67,7 +67,7 @@ module.exports = {
 		}, {
 			/* Kaitai-Struct definitions */
 			test: /\.ksy$/,
-			loader: 'kaitai-struct-loader'
+			loader: "kaitai-struct-loader"
 		}, {
 			/** fonts **/
 			test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
@@ -78,7 +78,7 @@ module.exports = {
 	cache: true,
 	plugins: [],
 
-	devtool: 'inline-source-map',
+	devtool: "inline-source-map",
 	devServer: {
 		publicPath: "/",
 		contentBase: "./dist",

@@ -1,8 +1,8 @@
 import { Condition } from "/engine/objects";
 import * as PaddingIsNot from "./padding-is-not";
 
-describeCondition('', (check, engine) => {
-	it('checks if the current zone\'s padding value is not equal to the given value', () => {
+describeCondition("", (check, engine) => {
+	it("checks if the current zone's padding value is not equal to the given value", () => {
 		const condition = new Condition();
 		condition._opcode = PaddingIsNot.Opcode;
 		condition._arguments = [5];

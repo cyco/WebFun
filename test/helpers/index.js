@@ -1,15 +1,16 @@
 import "src/extension";
 import "./matchers";
-import { describeComponent, xdescribeComponent, fdescribeComponent } from "./component";
+import { describeComponent, fdescribeComponent, xdescribeComponent } from "./component";
 import {
-	describeInstruction,
-	xdescribeInstruction,
-	fdescribeInstruction,
 	describeCondition,
+	describeInstruction,
+	fdescribeCondition,
+	fdescribeInstruction,
 	xdescribeCondition,
-	fdescribeCondition
+	xdescribeInstruction
 } from "./script";
 import render from "./render";
+
 global.render = render;
 
 global.describeComponent = describeComponent;

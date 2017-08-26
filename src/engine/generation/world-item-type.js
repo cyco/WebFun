@@ -14,5 +14,5 @@ export default {
 	BlockSouth: 304,
 	KeptFree: 305,
 
-	Puzzle: 306,
+	Puzzle: 306
 };

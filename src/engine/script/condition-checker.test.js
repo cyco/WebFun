@@ -1,7 +1,7 @@
 import Condition from "/engine/objects/condition";
 import ConditionChecker from "/engine/script/condition-checker";
 
-describe('ConditionChecker', () => {
+describe("ConditionChecker", () => {
 	let checker, engine, condition;
 	beforeEach(() => {
 		engine = {
@@ -14,7 +14,7 @@ describe('ConditionChecker', () => {
 		checker = new ConditionChecker(engine);
 	});
 
-	it('can be instantiated with or without an engine', () => {
+	it("can be instantiated with or without an engine", () => {
 		expect(() => {
 			new ConditionChecker();
 		}).not.toThrow();
@@ -25,7 +25,7 @@ describe('ConditionChecker', () => {
 		}).not.toThrow();
 	});
 
-	it('has a function to evaluate a single condition', () => {
-		expect(typeof checker.check).toBe('function');
+	it("has a function to evaluate a single condition", () => {
+		expect(typeof checker.check).toBe("function");
 	});
 });

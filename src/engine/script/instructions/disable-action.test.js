@@ -2,8 +2,8 @@ import { Instruction } from "/engine/objects";
 import { InstructionExecutor } from "/engine/script";
 import * as DisableAction from "./disable-action";
 
-describeInstruction('DisableAction', () => {
-	it('disables the action that\'s currently executing', () => {
+describeInstruction("DisableAction", () => {
+	it("disables the action that's currently executing", () => {
 		let engine = {
 			currentZone: {},
 			hero: {},

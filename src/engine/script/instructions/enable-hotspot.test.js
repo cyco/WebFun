@@ -1,8 +1,8 @@
 import { Instruction } from "/engine/objects";
 import * as EnableHotspot from "./enable-hotspot";
 
-describeInstruction('EnableHotspot', (execute, engine) => {
-	it('enables the specified hotspot in the current zone', () => {
+describeInstruction("EnableHotspot", (execute, engine) => {
+	it("enables the specified hotspot in the current zone", () => {
 		engine.currentZone.hotspots = [null, null, {}, null];
 
 		let instruction = new Instruction();

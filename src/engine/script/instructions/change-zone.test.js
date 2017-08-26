@@ -1,8 +1,8 @@
 import { Instruction } from "/engine/objects";
 import * as ChangeZone from "./change-zone";
 
-describeInstruction('ChangeZone', (execute, engine) => {
-	it('Switches to a differnt zone using the room animation', () => {
+describeInstruction("ChangeZone", (execute, engine) => {
+	it("Switches to a differnt zone using the room animation", () => {
 		const zone = {};
 		engine.data.zones = [null, null, zone, null];
 		engine.dagobah = {locationOfZone: () => true};
@@ -10,7 +10,7 @@ describeInstruction('ChangeZone', (execute, engine) => {
 			pushScene() {
 			}
 		};
-		spyOn(engine.sceneManager, 'pushScene');
+		spyOn(engine.sceneManager, "pushScene");
 
 		let instruction = new Instruction({});
 		instruction._opcode = ChangeZone.Opcode;
