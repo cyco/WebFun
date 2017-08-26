@@ -1,3 +1,5 @@
+import { persistent } from "/util";
+
 export const Settings = {
 	debug: true,
 	debugWorldGeneration: false,
@@ -6,7 +8,7 @@ export const Settings = {
 	drawHotspots: true,
 	drawHeroTile: true,
 	identifyTranslucentScenes: true,
-//	skipDialogs: true,
+	skipDialogs: false,
 
 	autostartEngine: false,
 	revealWorld: true,
@@ -17,4 +19,6 @@ export const Settings = {
 		sfx: (file) => `./game-data/sfx-yoda/${encodeURIComponent(file)}.wav`
 	}
 };
-export default Settings;
+const s = persistent(Settings, 'settings');
+window.s = s;
+export default s;
