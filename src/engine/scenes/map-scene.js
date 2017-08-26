@@ -1,7 +1,7 @@
 import Scene from "./scene";
-import { HotspotType, Tile, ZoneType } from "/engine/objects";
+import { Tile, ZoneType } from "/engine/objects";
 import { World } from "/engine/generation";
-import { Planet } from "/engine/types";
+import { LocatorTile, Planet } from "/engine/types";
 import { CheatCodeInput, Invincibility, UnlimitedAmmo, Weapons } from "/engine/cheats";
 import SpeechScene from "./speech-scene";
 import { Size } from "/util";
@@ -160,50 +160,10 @@ export default class MapScene extends Scene {
 	}
 
 	_tileForZone(zone) {
-		let tile = this._tileIDForZone(zone);
+		let tile = LocatorTile.ForZone(zone);
 		if (tile instanceof Array)
 			tile = tile[zone.solved ? 1 : 0];
 
 		return this.engine.data.tiles[tile];
-	}
-
-	_tileIDForZone(zone) {
-		if (!zone)
-			return 0x344;
-
-		if (!zone.visited && !Settings.revealWorld)
-			return 0x343;
-
-		switch (zone.type) {
-			case ZoneType.Empty:
-				const teleportHotspot = zone.hotspots.find(({type}) => type === HotspotType.Teleporter);
-				if (teleportHotspot) {
-					return [0x341, 0x342];
-				}
-				return 0x340;
-			case ZoneType.Town:
-				return [0x33d];
-			case ZoneType.Goal:
-				return [0x33f, 0x33e];
-			case ZoneType.TravelStart:
-				return [0x333, 0x334];
-			case ZoneType.TravelEnd:
-				return [0x333, 0x334];
-			case ZoneType.BlockadeEast:
-				return [0x33b, 0x33c];
-			case ZoneType.BlockadeWest:
-				return [0x337, 0x338];
-			case ZoneType.BlockadeNorth:
-				return [0x335, 0x336];
-			case ZoneType.BlockadeSouth:
-				return [0x339, 0x33a];
-			case ZoneType.Use:
-			case ZoneType.Trade:
-			case ZoneType.Find:
-			case ZoneType.FindTheForce:
-				return [0x331, 0x332];
-		}
-
-		return 0;
 	}
 }

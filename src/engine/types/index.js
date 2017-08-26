@@ -21,3 +21,4 @@ export const GOAL_CAR = 0x0C5;
 
 export WorldSize from "./world-size";
 export Planet from "./planet";
+export LocatorTile from "./locator-tile";
