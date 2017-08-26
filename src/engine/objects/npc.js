@@ -14,6 +14,10 @@ export default class NPC {
 		return this._enabled;
 	}
 
+	set enabled(flag) {
+		this._enabled = flag;
+	}
+
 	get face() {
 		return this._face;
 	}
