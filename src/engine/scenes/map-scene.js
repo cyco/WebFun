@@ -1,5 +1,5 @@
 import Scene from "./scene";
-import { Tile, ZoneType } from "/engine/objects";
+import { HotspotType, Tile, ZoneType } from "/engine/objects";
 import { World } from "/engine/generation";
 import { Planet } from "/engine/types";
 import { CheatCodeInput, Invincibility, UnlimitedAmmo, Weapons } from "/engine/cheats";
@@ -176,6 +176,10 @@ export default class MapScene extends Scene {
 
 		switch (zone.type) {
 			case ZoneType.Empty:
+				const teleportHotspot = zone.hotspots.find(({type}) => type === HotspotType.Teleporter);
+				if (teleportHotspot) {
+					return [0x341, 0x342];
+				}
 				return 0x340;
 			case ZoneType.Town:
 				return [0x33d];
