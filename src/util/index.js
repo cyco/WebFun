@@ -19,3 +19,5 @@ export VerticalPointRange from "./vertical-point-range";
 export { rand, srand, randmod }    from "./random";
 export { rgb, rgba } from "./color";
 export add from './add';
+
+export persistent from './persistent';

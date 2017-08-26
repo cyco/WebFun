@@ -1,4 +1,12 @@
 import Editor from "/editor";
+import Settings from "/settings";
+import { MenuItemSeparator, MenuItemState } from "/ui";
+
+const SettingsItem = (label, key) => ({
+	title: label,
+	callback: () => Settings[key] = !Settings[key],
+	state: () => Settings[key] ? MenuItemState.On : MenuItemState.Off
+});
 
 export default {
 	title: 'Debug',
@@ -14,5 +22,11 @@ export default {
 	}, {
 		title: 'Inspect Save Game',
 		callback: () => false,
-	}]
+	},
+		MenuItemSeparator,
+		SettingsItem('Draw invisible Hero', 'drawHeroTile'),
+		SettingsItem('Reveal World', 'revealWorld'),
+		SettingsItem('Show Hotspots', 'drawHotspots'),
+		SettingsItem('Skip Dialogs', 'skipDialogs')
+	]
 };
