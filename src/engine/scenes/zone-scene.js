@@ -170,6 +170,7 @@ export default class ZoneScene extends Scene {
 
 		hero.isAttacking = inputManager.attack; // TOOD: check if hero can attack right now
 		if (hero.isAttacking) this._attackTriggered();
+		return false;
 	}
 
 	_attackTriggered() {

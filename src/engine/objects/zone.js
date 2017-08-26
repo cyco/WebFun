@@ -45,6 +45,7 @@ export default class Zone {
 
 		this.counter = 0;
 		this.random = null;
+		this.padding = 0;
 
 		this._debug_worldItem = null;
 
@@ -206,6 +207,7 @@ export default class Zone {
 				case HotspotType.PuzzleNPC:
 				case HotspotType.CrateWeapon:
 					if (hotspot.arg < 0) break;
+					if(this.getTile(hotspot.x, hotspot.y, 1)) return;
 					this.setTile({id: hotspot.arg}, hotspot.x, hotspot.y, 1);
 					break;
 				case HotspotType.DoorIn:
