@@ -72,4 +72,12 @@ export default class extends EventTarget {
 	get currentZone() {
 		return this._currentZone;
 	}
+
+	set currentWorld(w) {
+		this._currentWorld = w;
+	}
+
+	get currentWorld() {
+		return this._currentWorld;
+	}
 }

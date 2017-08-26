@@ -94,6 +94,7 @@ export default class TransitionScene extends Scene {
 		const engine = this.engine;
 		hero.location = this.targetHeroLocation;
 		state.worldLocation = this.targetZoneLocation;
+		engine.currentWorld = this.targetWorld;
 		engine.currentZone = this.targetZone;
 		engine.currentZone.visited = true;
 

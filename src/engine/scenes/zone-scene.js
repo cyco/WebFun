@@ -347,7 +347,7 @@ export default class ZoneScene extends Scene {
 					// zone is not on dagobah
 					return;
 				}
-				transitionScene.targetWorld = document.dagobah;
+				transitionScene.targetWorld = engine.dagobah;
 				transitionScene.targetZoneLocation = location;
 				engine.sceneManager.pushScene(transitionScene);
 				this.engine.state.enteredByPlane = true;

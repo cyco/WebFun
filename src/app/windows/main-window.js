@@ -1,5 +1,6 @@
 import { Window, Group } from "/ui/components";
 import { Location, Health, Ammo, Weapon, Inventory } from "/app/ui/components";
+import { Direction } from "/app/ui/components/location";
 import { Events } from "/engine/engine";
 import Hero from "/engine/hero";
 import "./main-window.scss";
@@ -88,7 +89,19 @@ export default class extends Window {
 	}
 
 	_updateLocation({zone, world}) {
-		console.log('Update location', zone, world);
+		let mask = Direction.None;
+		const location = world.locationOfZone(zone);
+		if (!location) {
+			this._locationView.mask = mask;
+
+			return;
+		}
+		mask |= world.getZone(location.byAdding(-1, 0)) ? Direction.West : 0;
+		mask |= world.getZone(location.byAdding(1, 0)) ? Direction.East : 0;
+		mask |= world.getZone(location.byAdding(0, -1)) ? Direction.North : 0;
+		mask |= world.getZone(location.byAdding(0, 1)) ? Direction.South : 0;
+
+		this._locationView.mask = mask;
 	}
 
 	_updateHealth() {
