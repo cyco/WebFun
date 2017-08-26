@@ -36,7 +36,7 @@ export default class extends EventTarget {
 			if (r) engine.metronome.start();
 			else ; // metronome will be started again when ZoneScene calls runActions
 			return r;
-		} catch(e) {
+		} catch (e) {
 			console.error(e);
 		}
 	}

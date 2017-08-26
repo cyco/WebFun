@@ -1,4 +1,4 @@
-import './extension';
+import "./extension";
 
 export Cheats from "./cheats";
 export Engine from "./engine";

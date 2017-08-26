@@ -1,43 +1,23 @@
 import { Size } from "/util";
 import { Type as HotspotType } from "./hotspot";
+import Type from "./zone-type";
+import Layer from "./zone-layer";
 
-export const Type = {
-	None: 0,
-	Empty: 1,
-	BlockadeNorth: 2,
-	BlockadeSouth: 3,
-	BlockadeEast: 4,
-	BlockadeWest: 5,
-	TravelStart: 6,
-	TravelEnd: 7,
-	Room: 8,
-	Load: 9,
-	Goal: 10,
-	Town: 11,
-	Win: 13,
-	Lose: 14,
-	Trade: 15,
-	Use: 16,
-	Find: 17,
-	FindTheForce: 18,
-
-	Unknown: 9999
-};
-
-export const Layer = {
-	Floor: 0,
-	Object: 1,
-	Roof: 2
-};
+export { Type, Layer };
 
 export default class Zone {
 	static get LAYERS() {
 		return 3;
 	}
 
+	static get Type() {
+		return Type;
+	}
+
 	get LAYERS() {
 		return 3;
 	}
+
 
 	constructor() {
 		this.visited = false;
@@ -238,6 +218,8 @@ export default class Zone {
 			}
 		});
 	}
-}
 
-Zone.Type = Type;
+	isRoom() {
+		return this.width === 9;
+	}
+}

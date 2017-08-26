@@ -29,19 +29,19 @@ export default class {
 		let success = false;
 		let effectiveSeed = this.seed;
 		do {
-		try {
-			generator = new WorldGenerator(effectiveSeed, this.size, this.planet, engine);
-			success = generator.generate(effectiveSeed);
-		} catch (e) {
-			if(e instanceof WorldGenerationError)
-				success = false;
-		} finally {
-			if (!success) {
-				Message("--== YodaDocument::Reseed ==--");
-				this._reseeded = true;
-				effectiveSeed = rand();
+			try {
+				generator = new WorldGenerator(effectiveSeed, this.size, this.planet, engine);
+				success = generator.generate(effectiveSeed);
+			} catch (e) {
+				if (e instanceof WorldGenerationError)
+					success = false;
+			} finally {
+				if (!success) {
+					Message("--== YodaDocument::Reseed ==--");
+					this._reseeded = true;
+					effectiveSeed = rand();
+				}
 			}
-		}
 		} while (!success);
 
 		const goalID = generator.goalPuzzleID;

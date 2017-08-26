@@ -1,5 +1,5 @@
 import { SettingsWindow } from "/app/ui/components";
-import "./game-speed-window.scss"
+import "./game-speed-window.scss";
 
 class GameSpeedWindow extends SettingsWindow {
 	static get TagName() {

@@ -588,9 +588,9 @@ function _determineAdditionalPuzzleLocations(travels_to_place) {
 
 		let item_neighbor = typeMap.get(x - x_diff, y - y_diff);
 		if (item_neighbor === WorldItemType.None)
-		continue;
+			continue;
 		if (item_neighbor === WorldItemType.Invalid)
-		continue;
+			continue;
 
 		switch (item_neighbor) {
 			case WorldItemType.Empty:

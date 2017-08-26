@@ -1,4 +1,4 @@
-import { Array, console } from "/std";
+import { console } from "/std";
 import { sprintf } from "/libs";
 
 let messagesEnabled = false;
