@@ -1,1 +1,1 @@
-global.localStorage = new Storage();
+global.window.localStorage = new Storage();
