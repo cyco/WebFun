@@ -10,7 +10,7 @@ import Loader from "./loader";
 import { ScriptExecutor } from "/engine/script";
 import { Debugger, WorldGeneration } from "/debug";
 
-export default class {
+class GameController {
 	constructor() {
 		this._window = null;
 		this._sceneView = new SceneView();
@@ -140,3 +140,5 @@ export default class {
 		}
 	}
 }
+
+export default GameController;
