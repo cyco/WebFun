@@ -19,8 +19,8 @@ describe("Storage", () => {
 		localStorage.getItem = function (key) {
 			return store[key];
 		};
-		console.warn = () => {
-			warnings.push(arguments);
+		console.warn = (...args) => {
+			warnings.push(args);
 		};
 	});
 

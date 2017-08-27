@@ -1,4 +1,4 @@
-global.Storage = global.window.Storage = class {
+global.Storage = class {
 	constructor() {
 		this._values = {};
 	}
@@ -8,7 +8,7 @@ global.Storage = global.window.Storage = class {
 	}
 
 	getItem(key) {
-		return this._values[key];
+		return this._values[key] === undefined ? null : this._values[key];
 	}
 
 	clear() {

@@ -2,16 +2,17 @@ import { global } from "./std";
 
 const window = global.window;
 
-export const Element = window.Element;
-export const Image = window.Image;
-export const NodeList = window.NodeList;
-export const ImageData = window.ImageData;
-export const KeyEvent = window.KeyEvent || {};
-export const HTMLElement = window.HTMLElement;
-export const HTMLCollection = window.HTMLCollection;
-export const Event = window.Event;
+export const Storage = global.Storage;
+export const XMLHttpRequest = global.XMLHttpRequest;
+export const Element = global.Element;
+export const Image = global.Image;
+export const NodeList = global.NodeList;
+export const ImageData = global.ImageData;
+export const KeyEvent = global.KeyEvent || {};
+export const HTMLElement = global.HTMLElement;
+export const HTMLCollection = global.HTMLCollection;
+export const Event = global.Event;
 
+export { window };
 export const document = window.document;
 export const localStorage = window.localStorage;
-export const Storage = window.Storage;
-export const XMLHttpRequest = window.XMLHttpRequest;
