@@ -20,3 +20,4 @@ export CanvasRenderer from "./rendering/canvas/canvas-renderer";
 export WebGLRenderer from "./rendering/webgl/renderer";
 
 export DataFileReader from "./file-format/yodesk.ksy";
+export SaveGameReader from './save-game/reader';

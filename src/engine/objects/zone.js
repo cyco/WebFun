@@ -18,7 +18,6 @@ export default class Zone {
 		return 3;
 	}
 
-
 	constructor() {
 		this.visited = false;
 		this.solved = false;
@@ -29,7 +28,7 @@ export default class Zone {
 		this._width = 0;
 		this._height = 0;
 		this._type = -1;
-		this._tileIDs = [];
+		this._tileIDs = new Int16Array(0);
 		this._hotspots = [];
 		this._tileStore = null;
 		this._zoneStore = null;
@@ -118,7 +117,7 @@ export default class Zone {
 		}
 
 		const index = Zone.LAYERS * (y * this.width + x) + z;
-		this._tileIDs[index] = tile === null ? 0xFFFF : tile.id;
+		this._tileIDs[index] = tile === null ? -1 : tile.id;
 	}
 
 	removeTile(x, y, z) {

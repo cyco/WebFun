@@ -1,4 +1,5 @@
 import Type from "./hotspot-type";
+import Point from "/util/point";
 
 export { Type };
 
@@ -24,6 +25,10 @@ class Hotspot {
 
 	get y() {
 		return this._y;
+	}
+
+	get location() {
+		return new Point(this.x, this.y);
 	}
 }
 
