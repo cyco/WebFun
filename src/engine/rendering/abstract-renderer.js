@@ -7,27 +7,19 @@ export default class AbstractRenderer {
 		return null;
 	}
 
-	clear() {
-	}
+	clear() {}
 
-	redisplayTile(x, y) {
-	}
+	redisplayTile(x, y) {}
 
-	redisplayRect(x, y, width, height) {
-	}
+	redisplayRect(x, y, width, height) {}
 
-	redisplay() {
-	}
+	redisplay() {}
 
-	renderTile(tile, x, y, z) {
-	}
+	renderTile(tile, x, y, z) {}
 
-	renderImage(image, x, y) {
-	}
+	renderImage(image, x, y) {}
 
-	renderImageData(image, x, y) {
-	}
+	renderImageData(image, x, y) {}
 
-	fillBlackRect(x, y, width, height) {
-	}
+	fillBlackRect(x, y, width, height) {}
 }
