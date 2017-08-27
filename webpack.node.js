@@ -10,6 +10,7 @@ module.exports = {
 	},
 	externals: [NodeExternals()],
 	resolve: {
+		extensions: [".js", ".ts"],
 		alias: {
 			"src": Path.resolve(__dirname, "src"),
 			"std": Path.resolve(__dirname, "src/std"),
@@ -46,6 +47,17 @@ module.exports = {
 				Path.resolve(__dirname, "src/editor"),
 				Path.resolve(__dirname, "src/debug"),
 				Path.resolve(__dirname, "test/helpers")
+			]
+		}, {
+			/* JavaScript / Babel */
+			test: /\.tsx?$/,
+			loader: "ts-loader",
+			include: [
+				Path.resolve(__dirname, "src"),
+				Path.resolve(__dirname, "tools")
+			],
+			exclude: [
+				"node_modules"
 			]
 		}, {
 			/* Styles */
