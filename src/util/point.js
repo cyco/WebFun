@@ -1,4 +1,4 @@
-export default class Point {
+class Point {
 	static add(p1, p2) {
 		return new Point(p1.x + p2.x, p1.y + p2.y, p1.z);
 	}
@@ -48,7 +48,7 @@ export default class Point {
 		return this;
 	}
 
-	bySubtract(x, y) {
+	bySubtracting(x, y) {
 		return (new Point(this)).subtract(x, y);
 	}
 
@@ -118,3 +118,4 @@ export default class Point {
 		return `Point {${this.x}x${this.y}}`;
 	}
 }
+export default Point;

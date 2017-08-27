@@ -6,6 +6,10 @@ export default class Size {
 		Object.seal(this);
 	}
 
+	get area() {
+		return this.width * this.height;
+	}
+
 	toString() {
 		return `Size {${this.width}x${this.height}}`;
 	}

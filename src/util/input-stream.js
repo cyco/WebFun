@@ -112,6 +112,20 @@ export default class InputStream extends Stream {
 		return result;
 	}
 
+	getInt16Array(length) {
+		let result;
+
+		if (this._offset % 2 !== 0) {
+			let buffer = this._arrayBuffer.slice(this._offset, this._offset + length * 2);
+			result = new Int16Array(buffer);
+		} else {
+			result = new Int16Array(this._arrayBuffer, this._offset, length);
+		}
+
+		this._offset += length * 2;
+		return result;
+	}
+
 	getUint32Array(length) {
 		let result;
 

@@ -14,5 +14,12 @@ export default {
 	Lock: 0x0C,
 	Teleporter: 0x0D,
 	xWingFromD: 0x0E,
-	xWingToD: 0x0F
+	xWingToD: 0x0F,
+
+	FromNumber(num) {
+		if (!Object.values(this).contains(num) || typeof num !== "number")
+			throw new Error(`Invalid hotspot type@ ${num} specified`);
+
+		return num;
+	}
 };
