@@ -53,19 +53,19 @@ export default class RadioButton extends Component {
 		else this._radio.removeAttribute("checked");
 	}
 
-	set onchange(f) {
-		this._radio.onchange = f;
-	}
-
 	get onchange() {
 		return this._radio.onchange;
 	}
 
-	set groupID(id) {
-		this._radio.name = id;
+	set onchange(f) {
+		this._radio.onchange = f;
 	}
 
 	get groupID() {
 		return this._radio.name;
+	}
+
+	set groupID(id) {
+		this._radio.name = id;
 	}
 }

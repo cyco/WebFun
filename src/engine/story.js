@@ -12,18 +12,6 @@ export default class {
 		this._reseeded = false;
 	}
 
-	get seed() {
-		return this._seed;
-	}
-
-	get planet() {
-		return this._planet;
-	}
-
-	get size() {
-		return this._size;
-	}
-
 	generateWorld(engine) {
 		let generator = null;
 		let success = false;
@@ -65,6 +53,18 @@ export default class {
 		const generator = new DagobahGenerator(engine);
 		generator.generate(worldGenerator);
 		this._dagobah = generator.world;
+	}
+
+	get seed() {
+		return this._seed;
+	}
+
+	get planet() {
+		return this._planet;
+	}
+
+	get size() {
+		return this._size;
 	}
 
 	get world() {

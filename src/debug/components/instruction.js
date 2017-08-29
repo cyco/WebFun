@@ -12,6 +12,18 @@ export default class extends InstructionThing {
 		if (instruction) this.instruction = instruction;
 	}
 
+	_tileImageNode(tile) {
+		const representation = tile.image.representation;
+		if (representation instanceof HTMLElement) {
+			return representation.cloneNode();
+		}
+		return document.createElement("img");
+	}
+
+	get instruction() {
+		return this._instruction;
+	}
+
 	set instruction(instruction) {
 		this._instruction = instruction;
 		this._title.innerText = EnumName(Opcode, instruction.opcode);
@@ -75,18 +87,6 @@ export default class extends InstructionThing {
 		} else if (instruction.opcode === Opcode.SpeakNPC) {
 			this._title.innerHTML = `npc: &quot;${instruction.text}&quot;`;
 		}
-	}
-
-	_tileImageNode(tile) {
-		const representation = tile.image.representation;
-		if (representation instanceof HTMLElement) {
-			return representation.cloneNode();
-		}
-		return document.createElement("img");
-	}
-
-	get instruction() {
-		return this._instruction;
 	}
 
 	get type() {

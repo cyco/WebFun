@@ -52,6 +52,10 @@ export default class extends Component {
 	attributeChangedCallback(attribute) {
 	}
 
+	get action() {
+		return this._action;
+	}
+
 	set action(action) {
 		this._action = action;
 		this._title.innerText = `Action ${action.id}`;
@@ -68,8 +72,8 @@ export default class extends Component {
 		action.instructions.forEach(makeComponent(Instruction, this._instructionContainer));
 	}
 
-	get action() {
-		return this._action;
+	get current() {
+		return this.hasAttribute("current");
 	}
 
 	set current(flag) {
@@ -77,8 +81,8 @@ export default class extends Component {
 		else this.removeAttribute("current");
 	}
 
-	get current() {
-		return this.hasAttribute("current");
+	get expanded() {
+		return this.classList.contains("expanded");
 	}
 
 	set expanded(flag) {
@@ -94,10 +98,6 @@ export default class extends Component {
 		}
 
 		localStorage.store(this._storageId, !!flag);
-	}
-
-	get expanded() {
-		return this.classList.contains("expanded");
 	}
 
 	get _storageId() {

@@ -1,17 +1,17 @@
 import WorldItem from "./world-item";
-import {Point, Rectangle, Size} from "../../util";
+import { Point, Rectangle, Size } from "../../util";
 
 class World {
 	_world: WorldItem[];
 	_bounds: Rectangle;
 
-	get size(): Size {
-		return this._bounds.size;
-	}
-
 	constructor(size = new Size(10, 10)) {
 		this._bounds = new Rectangle(new Point(0, 0), size);
 		this._world = (new Array(size.area)).fill(null);
+	}
+
+	get size(): Size {
+		return this._bounds.size;
 	}
 
 	setWorldItem(x: number, y: number, item: WorldItem): void {

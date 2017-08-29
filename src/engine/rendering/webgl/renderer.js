@@ -90,10 +90,6 @@ class WebGLRenderer extends AbstractRenderer {
 		gl.clear(gl.COLOR_BUFFER_BIT);
 	}
 
-	get imageFactory() {
-		return this._imageFactory;
-	}
-
 	_setupShaders(gl) {
 		const program = twgl.createProgramFromSources(
 			gl,
@@ -118,6 +114,10 @@ class WebGLRenderer extends AbstractRenderer {
 		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(palette_positions), gl.STATIC_DRAW);
 		gl.enableVertexAttribArray(2);
 		gl.vertexAttribPointer(2, 2, gl.FLOAT, false, 0, 0);
+	}
+
+	get imageFactory() {
+		return this._imageFactory;
 	}
 }
 

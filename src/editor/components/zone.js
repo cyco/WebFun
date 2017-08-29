@@ -55,25 +55,6 @@ export default class extends Component {
 		this.draw();
 	}
 
-	set layerMask(m) {
-		this._layerMask = m;
-		this.draw();
-	}
-
-	get layerMask() {
-		return this._layerMask;
-	}
-
-	set zone(z) {
-		this._zone = z;
-		this.calculateOffset();
-		this.draw();
-	}
-
-	get zone() {
-		return this._zone;
-	}
-
 	/* interaction */
 	_mouseMoved(e) {
 		if (!this.tool) return;
@@ -181,5 +162,24 @@ export default class extends Component {
 	drawHotspot(hotspot) {
 		this._context.fillStyle = this._hotspotColor;
 		this._context.fillRect(this._offset.x + hotspot.x * TileSize, this._offset.y + hotspot.y * TileSize, TileSize, TileSize);
+	}
+
+	get layerMask() {
+		return this._layerMask;
+	}
+
+	set layerMask(m) {
+		this._layerMask = m;
+		this.draw();
+	}
+
+	get zone() {
+		return this._zone;
+	}
+
+	set zone(z) {
+		this._zone = z;
+		this.calculateOffset();
+		this.draw();
 	}
 }

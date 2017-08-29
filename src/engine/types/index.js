@@ -24,4 +24,4 @@ import Planet from "./planet";
 
 import LocatorTile from "./locator-tile";
 
-export {Planet, WorldSize, LocatorTile};
+export { Planet, WorldSize, LocatorTile };

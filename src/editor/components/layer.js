@@ -36,19 +36,19 @@ export default class extends Component {
 		this.clear();
 	}
 
-	set name(s) {
-		this._label.innerText = s;
-	}
-
 	get name() {
 		return this._label.innerText;
 	}
 
-	set visible(v) {
-		this._visiblity.checked = v;
+	set name(s) {
+		this._label.innerText = s;
 	}
 
 	get visible() {
 		return this._visiblity.checked;
+	}
+
+	set visible(v) {
+		this._visiblity.checked = v;
 	}
 }

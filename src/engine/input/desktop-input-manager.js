@@ -9,14 +9,6 @@ export default class extends InputManager {
 		this._lastMouse = new Point(NaN, NaN);
 	}
 
-	set engine(engine) {
-		this._engine = engine;
-	}
-
-	get engine() {
-		return this._engine;
-	}
-
 	addListeners() {
 		document.addEventListener("keydown", this.keyDown.bind(this));
 		document.addEventListener("keyup", this.keyUp.bind(this));
@@ -154,6 +146,14 @@ export default class extends InputManager {
 		point.x /= boundingRect.width;
 		point.y /= boundingRect.height;
 		return point;
+	}
+
+	get engine() {
+		return this._engine;
+	}
+
+	set engine(engine) {
+		this._engine = engine;
 	}
 
 	get mouseLocationInView() {

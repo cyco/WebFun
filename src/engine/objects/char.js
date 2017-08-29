@@ -48,18 +48,6 @@ export default class Char {
 		return tile;
 	}
 
-	get frames() {
-		return this._frames;
-	}
-
-	get name() {
-		return this._name;
-	}
-
-	get type() {
-		return this._type;
-	}
-
 	isHero() {
 		return this.type & Type.Hero;
 	}
@@ -70,10 +58,6 @@ export default class Char {
 
 	isWeapon() {
 		return this.type & Type.Weapon;
-	}
-
-	get attackDuration() {
-		return 4;
 	}
 
 	produceBullet(inertia) {
@@ -92,5 +76,21 @@ export default class Char {
 
 		if (inertia.x) return inertia.x === 1 ? frame.right : frame.left;
 		else return inertia.y === 1 ? frame.down : frame.up;
+	}
+
+	get frames() {
+		return this._frames;
+	}
+
+	get name() {
+		return this._name;
+	}
+
+	get type() {
+		return this._type;
+	}
+
+	get attackDuration() {
+		return 4;
 	}
 }

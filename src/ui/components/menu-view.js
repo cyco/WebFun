@@ -27,21 +27,6 @@ export default class MenuView extends Component {
 			this.onclose();
 	}
 
-	get menu() {
-		return this._menu;
-	}
-
-	set menu(menu) {
-		if (menu && !(menu instanceof Menu))
-			menu = new Menu(menu);
-
-		this._menu = menu;
-
-		if (!this.isConnected) return;
-		this.removeItemNodes();
-		this.addItemNodes();
-	}
-
 	addItemNodes() {
 		const self = this;
 		this.menu.items.forEach((menuItem) => {
@@ -65,5 +50,20 @@ export default class MenuView extends Component {
 
 	removeItemNodes() {
 		this.clear();
+	}
+
+	get menu() {
+		return this._menu;
+	}
+
+	set menu(menu) {
+		if (menu && !(menu instanceof Menu))
+			menu = new Menu(menu);
+
+		this._menu = menu;
+
+		if (!this.isConnected) return;
+		this.removeItemNodes();
+		this.addItemNodes();
 	}
 }

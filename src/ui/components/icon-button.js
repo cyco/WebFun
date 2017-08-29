@@ -38,20 +38,20 @@ export default class extends Component {
 		}
 	}
 
+	get icon() {
+		return this.getAttribute("icon");
+	}
+
 	set icon(i) {
 		this.setAttribute("icon", i);
 	}
 
-	get icon() {
-		return this.getAttribute("icon");
+	get disabled() {
+		return this.hasAttribute("disabled");
 	}
 
 	set disabled(d) {
 		if (d) this.setAttribute("disabled", "");
 		else this.removeAttribute("disabled");
-	}
-
-	get disabled() {
-		return this.hasAttribute("disabled");
 	}
 }

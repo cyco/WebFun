@@ -22,6 +22,26 @@ export default class Tile {
 		Object.seal(this);
 	}
 
+	isObject() {
+		return this.getAttribute(Tile.Attribute.Object);
+	}
+
+	isDraggable() {
+		return this.getAttribute(Tile.Attribute.Draggable);
+	}
+
+	isLocator() {
+		return this.getAttribute(Tile.Attribute.Locator);
+	}
+
+	getAttribute(attr) {
+		return !!(this._attributes & (1 << attr));
+	}
+
+	getSubtype(attr) {
+		return !!(this.subtype & (1 << attr));
+	}
+
 	get name() {
 		return this._name;
 	}
@@ -46,32 +66,12 @@ export default class Tile {
 		return !this.getAttribute(Tile.Attribute.Object) && !this.getAttribute(Tile.Attribute.Character);
 	}
 
-	isObject() {
-		return this.getAttribute(Tile.Attribute.Object);
-	}
-
-	isDraggable() {
-		return this.getAttribute(Tile.Attribute.Draggable);
-	}
-
-	isLocator() {
-		return this.getAttribute(Tile.Attribute.Locator);
-	}
-
 	get attributes() {
 		return this._attributes;
 	}
 
-	getAttribute(attr) {
-		return !!(this._attributes & (1 << attr));
-	}
-
 	get subtype() {
 		return this._attributes & 0xFFFF;
-	}
-
-	getSubtype(attr) {
-		return !!(this.subtype & (1 << attr));
 	}
 }
 

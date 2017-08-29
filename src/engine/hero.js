@@ -226,12 +226,16 @@ export default class Hero extends EventTarget {
 		}
 	}
 
+	get appearance() {
+		return this._appearance;
+	}
+
 	set appearance(a) {
 		this._appearance = a;
 	}
 
-	get appearance() {
-		return this._appearance;
+	get weapon() {
+		return this._weapon;
 	}
 
 	set weapon(w) {
@@ -243,8 +247,8 @@ export default class Hero extends EventTarget {
 		});
 	}
 
-	get weapon() {
-		return this._weapon;
+	get ammo() {
+		return this._ammo;
 	}
 
 	set ammo(a) {
@@ -252,9 +256,5 @@ export default class Hero extends EventTarget {
 		this.dispatchEvent(Events.AmmoChanged, {
 			ammo: a
 		});
-	}
-
-	get ammo() {
-		return this._ammo;
 	}
 }

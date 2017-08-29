@@ -61,23 +61,6 @@ export default class extends Component {
 		this._update();
 	}
 
-	set health(value) {
-		this._health = Math.max(0, Math.min(value, MaxHealth));
-		this._update();
-	}
-
-	get health() {
-		return this._health;
-	}
-
-	get lives() {
-		return Math.floor(this._health / HealthPerColor);
-	}
-
-	get damage() {
-		return Math.floor(this._health % HealthPerColor);
-	}
-
 	_update() {
 		if (!this.isConnected) return;
 
@@ -115,5 +98,22 @@ export default class extends Component {
 			x: c.x + r * Math.cos(this._toRadians(270 - angle)),
 			y: c.y + r * Math.sin(this._toRadians(270 - angle))
 		};
+	}
+
+	get health() {
+		return this._health;
+	}
+
+	set health(value) {
+		this._health = Math.max(0, Math.min(value, MaxHealth));
+		this._update();
+	}
+
+	get lives() {
+		return Math.floor(this._health / HealthPerColor);
+	}
+
+	get damage() {
+		return Math.floor(this._health % HealthPerColor);
 	}
 }

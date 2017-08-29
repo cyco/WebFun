@@ -190,13 +190,13 @@ class Slider extends Component {
 		this.layout();
 	}
 
+	get value() {
+		return this._value;
+	}
+
 	set value(v) {
 		this._value = Math.max(this._min, Math.min(v, this._max));
 		this.layout();
-	}
-
-	get value() {
-		return this._value;
 	}
 
 	get max() {
@@ -232,28 +232,28 @@ class Slider extends Component {
 		this._maxText = t;
 	}
 
-	set continuous(c) {
-		this._continuous = c;
-	}
-
 	get continuous() {
 		return this._continuous;
 	}
 
-	set onChange(fn) {
-		this._onChange = fn;
+	set continuous(c) {
+		this._continuous = c;
 	}
 
 	get onChange() {
 		return this._onChange;
 	}
 
-	set snapToIntegers(s) {
-		this._snapToIntegers = s;
+	set onChange(fn) {
+		this._onChange = fn;
 	}
 
 	get snapToIntegers() {
 		return this._snapToIntegers;
+	}
+
+	set snapToIntegers(s) {
+		this._snapToIntegers = s;
 	}
 }
 

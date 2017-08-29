@@ -30,15 +30,6 @@ export default class extends Component {
 		this._svg = this.querySelector("svg");
 	}
 
-	set mask(mask) {
-		this._mask = mask;
-		this._updateClassList();
-	}
-
-	get mask() {
-		return this._mask;
-	}
-
 	_updateClassList() {
 		const classList = this._svg.classList;
 		const set = (on, c) => (on ? classList.add.bind(classList) : classList.remove.bind(classList))(c);
@@ -47,5 +38,14 @@ export default class extends Component {
 		set(this._mask & Direction.South, "down");
 		set(this._mask & Direction.West, "left");
 		set(this._mask & Direction.East, "right");
+	}
+
+	get mask() {
+		return this._mask;
+	}
+
+	set mask(mask) {
+		this._mask = mask;
+		this._updateClassList();
 	}
 }

@@ -47,27 +47,27 @@ export default class FilePicker {
 			this._fileInput.setAttribute("multiple", "");
 	}
 
-	set allowsMultipleFiles(flag) {
-		this._allowsMultipleFiles = flag;
-	}
-
 	get allowsMultipleFiles() {
 		return this._allowsMultipleFiles;
 	}
 
-	set allowedTypes(types) {
-		this._allowedTypes = types;
+	set allowsMultipleFiles(flag) {
+		this._allowsMultipleFiles = flag;
 	}
 
 	get allowedTypes() {
 		return this._allowedTypes;
 	}
 
-	set didPick(dp) {
-		this._didPick = dp;
+	set allowedTypes(types) {
+		this._allowedTypes = types;
 	}
 
 	get didPick() {
 		return this._didPick;
+	}
+
+	set didPick(dp) {
+		this._didPick = dp;
 	}
 }

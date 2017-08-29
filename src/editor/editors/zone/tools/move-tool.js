@@ -1,6 +1,12 @@
 import Tool from "./tool";
 
 export default class extends Tool {
+	activate() {
+	}
+
+	deactivate() {
+	}
+
 	get name() {
 		return "Move";
 	}
@@ -11,11 +17,5 @@ export default class extends Tool {
 
 	get shortcut() {
 		return "v";
-	}
-
-	activate() {
-	}
-
-	deactivate() {
 	}
 }

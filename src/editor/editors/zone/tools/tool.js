@@ -1,16 +1,4 @@
 export default class {
-	get name() {
-		console.assert(false, "Tool must define a name");
-	}
-
-	get icon() {
-		console.assert(false, "Tool must define an icon");
-	}
-
-	get shortcut() {
-		return "";
-	}
-
 	constructor() {
 		this._editor = null;
 	}
@@ -33,5 +21,17 @@ export default class {
 	}
 
 	mouseUpAt(x, y, event) {
+	}
+
+	get name() {
+		console.assert(false, "Tool must define a name");
+	}
+
+	get icon() {
+		console.assert(false, "Tool must define an icon");
+	}
+
+	get shortcut() {
+		return "";
 	}
 }

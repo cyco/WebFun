@@ -26,10 +26,6 @@ export default class InputStream extends Stream {
 		throw new TypeError();
 	}
 
-	get length() {
-		return this._arrayBuffer.byteLength;
-	}
-
 	getCharacter() {
 		return String.fromCharCode(this.getUint8());
 	}
@@ -138,6 +134,10 @@ export default class InputStream extends Stream {
 
 		this._offset += length * 4;
 		return result;
+	}
+
+	get length() {
+		return this._arrayBuffer.byteLength;
 	}
 
 	// // // // // // // // // // // // // // // // // //

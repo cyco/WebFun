@@ -24,6 +24,10 @@ export default class extends Component {
 		this.appendChild(this._label);
 	}
 
+	get tile() {
+		return this._tile;
+	}
+
 	set tile(tile) {
 		this._tile = tile;
 
@@ -34,9 +38,5 @@ export default class extends Component {
 		this._icon.clear();
 		this._icon.appendChild(icon);
 		this._label.innerText = label;
-	}
-
-	get tile() {
-		return this._tile;
 	}
 }

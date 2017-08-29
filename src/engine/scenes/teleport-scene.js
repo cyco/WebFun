@@ -1,4 +1,6 @@
-import Scene from './scene';
+import Scene from "./scene";
 
-class TeleportScene extends Scene {}
-export default TeleportScene ;
+class TeleportScene extends Scene {
+}
+
+export default TeleportScene;

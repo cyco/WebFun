@@ -35,21 +35,21 @@ export default class extends Component {
 		});
 	}
 
-	set tiles(t) {
-		this._tiles = t;
-		this._draw();
-	}
-
-	get tiles() {
-		return this._tiles;
-	}
-
 	selectTile(tile) {
 		this.selectedTile = tile;
 
 		if (this.ontilechange instanceof Function) {
 			this.ontilechange();
 		}
+	}
+
+	get tiles() {
+		return this._tiles;
+	}
+
+	set tiles(t) {
+		this._tiles = t;
+		this._draw();
 	}
 
 	get selectedTile() {

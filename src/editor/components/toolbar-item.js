@@ -27,14 +27,13 @@ export default class extends Component {
 		super.disconnectedCallback();
 	}
 
+	get tool() {
+		return this._tool;
+	}
 
 	set tool(t) {
 		this._tool = t;
 		this._label.innerText = t ? t.name : "";
 		this._icon.className = `fa fa-${t ? t.icon : ""}`;
-	}
-
-	get tool() {
-		return this._tool;
 	}
 }

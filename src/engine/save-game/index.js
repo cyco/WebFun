@@ -4,4 +4,4 @@ import World from "./world";
 import SaveState from "./save-state";
 import SaveGameWriter from "./writer";
 
-export {SaveGameReader, SaveGameWriter, WorldItem, World, SaveState};
+export { SaveGameReader, SaveGameWriter, WorldItem, World, SaveState };

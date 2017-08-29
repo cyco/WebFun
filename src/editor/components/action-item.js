@@ -31,13 +31,17 @@ export default class extends Component {
 		this.expanded = localStorage.load(this._storageId);
 	}
 
+	get action() {
+		return this._action;
+	}
+
 	set action(action) {
 		this._action = action;
 		this._label.innerHTML = `Action ${action.id}`;
 	}
 
-	get action() {
-		return this._action;
+	get expanded() {
+		return this.classList.contains("expanded");
 	}
 
 	set expanded(flag) {
@@ -52,10 +56,6 @@ export default class extends Component {
 		}
 
 		localStorage.store(this._storageId, !!flag);
-	}
-
-	get expanded() {
-		return this.classList.contains("expanded");
 	}
 
 	get _storageId() {

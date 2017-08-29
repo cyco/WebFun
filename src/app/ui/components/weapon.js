@@ -25,15 +25,6 @@ export default class extends Component {
 		this.appendChild(this._tileContainer);
 	}
 
-	get weapon() {
-		return this._weapon;
-	}
-
-	set weapon(w) {
-		this._weapon = w;
-		this._update();
-	}
-
 	_update() {
 		let url = Image.blankImage;
 		this._tileContainer.style.backgroundPosition = "";
@@ -46,5 +37,14 @@ export default class extends Component {
 			}
 		}
 		this._tileContainer.src = url;
+	}
+
+	get weapon() {
+		return this._weapon;
+	}
+
+	set weapon(w) {
+		this._weapon = w;
+		this._update();
 	}
 }

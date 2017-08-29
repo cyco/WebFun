@@ -23,15 +23,15 @@ class ImageFactory extends AbstractImageFactory {
 		return new Image(width, height, texture);
 	}
 
+	get palette() {
+		return this._palette;
+	}
+
 	set palette(palette) {
 		this._palette = palette;
 		if (this.onpalettechange instanceof Function) {
 			this.onpalettechange(palette);
 		}
-	}
-
-	get palette() {
-		return this._palette;
 	}
 }
 

@@ -23,13 +23,13 @@ export default class extends Component {
 		this.appendChild(this._zoneEditor);
 	}
 
+	get data() {
+		return this._data;
+	}
+
 	set data(d) {
 		this._data = d;
 		this._zoneSelection.zones = d.zones;
 		this._zoneEditor.data = d;
-	}
-
-	get data() {
-		return this._data;
 	}
 }

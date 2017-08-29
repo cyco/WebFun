@@ -44,15 +44,15 @@ export default class DetonatorScene extends Scene {
 		}
 	}
 
+	get engine() {
+		return this._engine;
+	}
+
 	set engine(e) {
 		this._engine = e;
 		if (!e) return;
 
 		const data = e.data;
 		this._detonatorFrames = [0x202, 0x431, 0x432, 0x433].map((id) => data.getTile(id));
-	}
-
-	get engine() {
-		return this._engine;
 	}
 }

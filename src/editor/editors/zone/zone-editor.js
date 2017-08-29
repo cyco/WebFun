@@ -67,34 +67,6 @@ export default class extends Component {
 		this.appendChild(this._actionList);
 	}
 
-	set data(d) {
-		this._data = d;
-		this._tileSelection.tiles = d.tiles;
-	}
-
-	get data() {
-		return this._data;
-	}
-
-	set zone(z) {
-		this._zone = z;
-		this._zoneView.zone = z;
-		this._actionList.zone = z;
-	}
-
-	get zone() {
-		return this._zone;
-	}
-
-	set currentTile(t) {
-		this._currentTile = t;
-		this._tileSelection.selectedTile = t;
-	}
-
-	get currentTile() {
-		return this._currentTile;
-	}
-
 	activateTool(tool) {
 		if (this._zoneView.currentTool) {
 			this._zoneView.currentTool.deactivate(this);
@@ -135,5 +107,33 @@ export default class extends Component {
 
 		// TODO: remove hotspots outside of new size
 		this._zone._hotspots = this.zone.hotspots.filter(htsp => htsp.x < desiredEdgeLength && htsp.y < desiredEdgeLength);
+	}
+
+	get data() {
+		return this._data;
+	}
+
+	set data(d) {
+		this._data = d;
+		this._tileSelection.tiles = d.tiles;
+	}
+
+	get zone() {
+		return this._zone;
+	}
+
+	set zone(z) {
+		this._zone = z;
+		this._zoneView.zone = z;
+		this._actionList.zone = z;
+	}
+
+	get currentTile() {
+		return this._currentTile;
+	}
+
+	set currentTile(t) {
+		this._currentTile = t;
+		this._tileSelection.selectedTile = t;
 	}
 }

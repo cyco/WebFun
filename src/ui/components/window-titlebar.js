@@ -28,16 +28,6 @@ export default class extends Component {
 		if (this._menubar) this.appendChild(this._menubar);
 	}
 
-	set window(window) {
-		this._window = window;
-		this._closeButton.element.onclick = () => this._window.close();
-		this._setupDragging(window);
-	}
-
-	get window() {
-		return this._window;
-	}
-
 	_setupDragging(win) {
 		let dragLocation;
 		const mouseMove = (event) => {
@@ -63,6 +53,20 @@ export default class extends Component {
 		this.addEventListener("mousedown", mouseDown);
 	}
 
+	get window() {
+		return this._window;
+	}
+
+	set window(window) {
+		this._window = window;
+		this._closeButton.element.onclick = () => this._window.close();
+		this._setupDragging(window);
+	}
+
+	get menu() {
+		return this._menu;
+	}
+
 	set menu(m) {
 		if (this._menubar) {
 			this._menubar.remove();
@@ -81,8 +85,8 @@ export default class extends Component {
 		}
 	}
 
-	get menu() {
-		return this._menu;
+	get title() {
+		return this._titleNode.innerText;
 	}
 
 	set title(t) {
@@ -102,15 +106,11 @@ export default class extends Component {
 		}
 	}
 
-	get title() {
-		return this._titleNode.innerText;
+	get closable() {
+		return this._closeButton.element.style.display !== "none";
 	}
 
 	set closable(flag) {
 		this._closeButton.element.style.display = flag ? "" : "none";
-	}
-
-	get closable() {
-		return this._closeButton.element.style.display !== "none";
 	}
 }

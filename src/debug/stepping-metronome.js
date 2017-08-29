@@ -21,10 +21,6 @@ export default class extends EventTarget {
 		this.registerEvents(Event);
 	}
 
-	get status() {
-		return this._metronome._stopped ? Status.Paused : Status.Running;
-	}
-
 	redraw() {
 		this._metronome.onrender();
 	}
@@ -43,19 +39,23 @@ export default class extends EventTarget {
 		this.dispatchEvent(Event.StatusChange);
 	}
 
-	set ontick(cb) {
-		this._metronome.ontick = cb;
-	}
-
-	set onrender(cb) {
-		this._metronome.onrender = cb;
+	get status() {
+		return this._metronome._stopped ? Status.Paused : Status.Running;
 	}
 
 	get ontick() {
 		return this._metronome.ontick;
 	}
 
+	set ontick(cb) {
+		this._metronome.ontick = cb;
+	}
+
 	get onrender() {
 		return this._metronome.onrender;
+	}
+
+	set onrender(cb) {
+		this._metronome.onrender = cb;
 	}
 }
