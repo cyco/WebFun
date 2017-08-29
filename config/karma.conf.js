@@ -10,7 +10,7 @@ const runPerformanceTests = process.env.scope && ~process.env.scope.indexOf("per
 console.log(includeCoverage ? "coverage" : "", runUnitTests ? "unit" : "", runAcceptanceTests ? "acceptance" : "");
 
 const config = {
-	basePath: '../',
+	basePath: "../",
 	files: [
 		// {pattern: 'test/**/*_test.js', watched: false},
 		{
@@ -26,12 +26,12 @@ const config = {
 		}
 	],
 	preprocessors: {
-		"test/context/*.js": ["webpack"]
+		"test/context/*.js": [ "webpack" ]
 	},
-	frameworks: ["jasmine", "jasmine-matchers"],
-	reporters: ["dots"],
+	frameworks: [ "jasmine", "jasmine-matchers" ],
+	reporters: [ "dots" ],
 	webpack: webpackConfig,
-	browsers: ["ChromeHeadless"],
+	browsers: [ "ChromeHeadless" ],
 	customLaunchers: {
 		ChromeHeadless: {
 			base: "ChromeCanary",
@@ -64,11 +64,12 @@ if (includeCoverage) {
 		fileName = "acceptance.lcov";
 	}
 
+
 	config.reporters.push("coverage-istanbul");
 	config.coverageIstanbulReporter = {
-		reports: ["lcovonly"],
-		fixWebpackSourcePaths: false,
-		dir: Path.join(__dirname, "test/coverage"),
+		reports: [ "lcovonly" ],
+		fixWebpackSourcePaths: true,
+		dir: Path.join(__dirname, "../test/coverage"),
 		"report-config": {
 			lcovonly: {
 				file: fileName
@@ -77,31 +78,38 @@ if (includeCoverage) {
 		file: fileName
 	};
 
-	config.webpack.module.rules[0].options = {
-		plugins: ["istanbul"]
-	};
+	config.webpack.module.rules.push({
+		test: /\.(ts|js)$/,
+		use: {
+			loader: "istanbul-instrumenter-loader"
+		},
+		include: Path.resolve(__dirname, "../src"),
+		enforce: "post"
+	});
 }
 
 if (runUnitTests) {
-	config.files.push({pattern: "test/context/unit.js", watched: false});
+	config.files.push({ pattern: "test/context/unit.js", watched: false });
 }
 
 if (runPerformanceTests) {
-	config.files.push({pattern: "test/context/performance.js", watched: false});
+	config.files.push({ pattern: "test/context/performance.js", watched: false });
 }
 
 if (runAcceptanceTests) {
-	config.files.push({pattern: "test/context/acceptance.js", watched: false});
-}
+	config.files.push({ pattern: "test/context/acceptance.js", watched: false });
 
-config.webpack.plugins.push(
-	new Webpack.DefinePlugin({
+	const environment = new Webpack.DefinePlugin({
 		"process.acceptance": JSON.stringify({
 			size: (process.env.size !== undefined ? +process.env.size : undefined),
 			planet: (process.env.planet !== undefined ? +process.env.planet : undefined),
 			seed: (process.env.seed !== undefined ? +process.env.seed : undefined)
 		})
-	}));
+	});
+
+	config.webpack.plugins = config.webpack.plugins || [];
+	config.webpack.plugins.push(environment);
+}
 
 module.exports = function (c) {
 	c.set(config);

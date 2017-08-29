@@ -1,8 +1,8 @@
 import loadGameData from "test-helpers/game-data";
 import { getFixtureContent } from "test-helpers/fixture-loading";
-import { CompareWorldItems, ComparisonResult, ParseExpectation, PrepareExpectations } from "src/debug";
-import Story from "src/engine/story";
-import GameData from "src/engine/game-data";
+import { CompareWorldItems, ComparisonResult, ParseExpectation, PrepareExpectations } from "../../src/debug";
+import Story from "../../src/engine/story";
+import GameData from "../../src/engine/game-data";
 
 let rawData = null;
 

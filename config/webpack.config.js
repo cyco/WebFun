@@ -1,15 +1,14 @@
 const Path = require("path");
-const Webpack = require("webpack");
 
 const projectRoot = Path.resolve(__dirname, "../");
 module.exports = {
 	entry: "./src/index.js",
 	output: {
 		filename: "webfun.js",
-		path: Path.resolve(projectRoot, "dist")
+		path: Path.resolve(projectRoot, "build")
 	},
 	resolve: {
-		extensions: [".js", ".ts"],
+		extensions: [ ".js", ".ts" ],
 		alias: {
 			"src": Path.resolve(projectRoot, "src"),
 			"std": Path.resolve(projectRoot, "src/std"),
@@ -25,54 +24,30 @@ module.exports = {
 		unsafeCache: true
 	},
 	module: {
-		rules: [{
+		rules: [ {
 			/* JavaScript / Babel */
-			test: /\.js?$/,
+			test: /\.js$/,
 			loader: "babel-loader",
-			include: [
-				Path.resolve(projectRoot, "src")
-			],
-			exclude: [
-				"node_modules",
-				Path.resolve(projectRoot, "src/editor"),
-				Path.resolve(projectRoot, "src/debug")
-			]
+			exclude: [ "node_modules" ]
 		}, {
 			/* JavaScript / Babel */
-			test: /\.js?$/,
-			loader: "babel-loader",
-			include: [
-				Path.resolve(projectRoot, "src/editor"),
-				Path.resolve(projectRoot, "src/debug"),
-				Path.resolve(projectRoot, "test/helpers")
-			]
-		}, {
-			/* JavaScript / Babel */
-			test: /\.tsx?$/,
+			test: /\.ts$/,
 			loader: "ts-loader",
-			include: [
-				Path.resolve(projectRoot, "src"),
-				Path.resolve(projectRoot, "tools")
-			],
-			exclude: [
-				"node_modules"
-			]
+			exclude: [ "node_modules" ]
 		}, {
 			/* Styles */
 			test: /\.scss$/,
-			use: [{
+			use: [ {
 				loader: "style-loader"
 			}, {
 				loader: "css-loader"
 			}, {
 				loader: "sass-loader",
 				options: {
-					includePaths: ["src/_style"]
+					includePaths: [ "../src/_style", "../" ]
 				}
-			}],
-			exclude: [
-				"node_modules"
-			]
+			} ],
+			exclude: [ "node_modules" ]
 		}, {
 			/* Shader */
 			test: /\.glsl?$/,
@@ -85,16 +60,14 @@ module.exports = {
 			/** fonts **/
 			test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
 			loader: "url-loader?limit=10000&mimetype=application/font-woff"
-		}, {test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "file-loader"}
+		}, { test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "file-loader" }
 		]
 	},
 	cache: true,
-	plugins: [],
-
 	devtool: "inline-source-map",
 	devServer: {
 		publicPath: "/",
-		contentBase: "./dist",
+		contentBase: Path.resolve(projectRoot, "build"),
 		hot: false
 	}
 };

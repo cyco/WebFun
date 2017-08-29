@@ -1,5 +1,5 @@
 import { getFixtureData } from "./fixture-loading";
-import Yodesk from "src/engine/file-format/yodesk.ksy";
+import Yodesk from "../../src/engine/file-format/yodesk.ksy";
 import KaitaiStream from "kaitai-struct/KaitaiStream";
 
 export default (callback) => {
