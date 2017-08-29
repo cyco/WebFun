@@ -2,30 +2,34 @@ import WorldItem from "./world-item";
 import {Point, Rectangle, Size} from "../../util";
 
 class World {
-    _world: WorldItem[];
-    _bounds: Rectangle;
+	_world: WorldItem[];
+	_bounds: Rectangle;
 
-    constructor(size = new Size(10, 10)) {
-        this._bounds = new Rectangle(new Point(0, 0), size);
-        this._world = (new Array(size.area)).fill(null);
-    }
+	get size(): Size {
+		return this._bounds.size;
+	}
 
-    setWorldItem(x: number, y: number, item: WorldItem): void {
-        const index = this._toIndex(new Point(x, y));
-        this._world[index] = item;
-    }
+	constructor(size = new Size(10, 10)) {
+		this._bounds = new Rectangle(new Point(0, 0), size);
+		this._world = (new Array(size.area)).fill(null);
+	}
 
-    getWorldItem(x: number, y: number): WorldItem {
-        const index = this._toIndex(new Point(x, y));
-        return this._world[index];
-    }
+	setWorldItem(x: number, y: number, item: WorldItem): void {
+		const index = this._toIndex(new Point(x, y));
+		this._world[index] = item;
+	}
 
-    _toIndex(p: Point): number {
-        if (!this._bounds.contains(p))
-            throw new RangeError(`Index ${p} does not lie within rect ${this._bounds}`);
+	getWorldItem(x: number, y: number): WorldItem {
+		const index = this._toIndex(new Point(x, y));
+		return this._world[index];
+	}
 
-        return p.y * 10 + p.x;
-    }
+	_toIndex(p: Point): number {
+		if (!this._bounds.contains(p))
+			throw new RangeError(`Index ${p} does not lie within rect ${this._bounds}`);
+
+		return p.y * 10 + p.x;
+	}
 }
 
 export default World;
