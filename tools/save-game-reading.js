@@ -2,10 +2,11 @@ import "../test/helpers/polyfill";
 import "/extension";
 import {InputStream} from "/util";
 import Yodesk from "/engine/file-format/yodesk.ksy";
-import {GameData, SaveGameReader} from "/engine";
+import {GameData, SaveGameReader, SaveGameWriter} from "/engine";
 import KaitaiStream from "kaitai-struct/KaitaiStream";
 import Path from "path";
 import FS from "fs";
+import DiscardingOutputStream from "../src/util/discarding-output-stream";
 
 const readFile = (path) => {
 	const buffer = FS.readFileSync(path);
@@ -32,6 +33,17 @@ const readGameData = (path) => {
 };
 
 const gameData = readGameData("game-data/yoda.data");
-const saveGameData = readFile(process.argv.last());
+const inputStream = readFile(process.argv.last());
 const saveGameReader = new SaveGameReader(gameData);
-saveGameReader.read(saveGameData);
+const state = saveGameReader.read(inputStream);
+
+const outputStream = new DiscardingOutputStream(100);
+const saveGameWriter = new SaveGameWriter(gameData);
+saveGameWriter.write(state, outputStream);
+
+console.log('');
+if (outputStream.offset !== inputStream.offset) {
+	console.warn(`Expected to write ${inputStream.offset} bytes but ${outputStream.offset} written!`);
+} else {
+	console.log(`Output should be fine`);
+}
