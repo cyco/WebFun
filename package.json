@@ -3,6 +3,44 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "start": "webpack-dev-server --config config/webpack.config.js",
+    "test": "karma start config/karma.conf.js --single-run",
+    "test:cont": "karma start",
+    "test:cov": "cross-env coverage=1 karma start config/karma.conf.js --single-run",
+    "test:cov:cont": "cross-env coverage=1 karma start",
+    "test:cont:cov": "cross-env coverage=1 karma start",
+    "test:acceptance": "cross-env scope=acceptance karma start config/karma.conf.js --single-run --",
+    "test:unit": "cross-env coverage=1 scope=unit karma start config/karma.conf.js --single-run",
+    "test:coverage": "cross-env coverage=1 scope=unit,acceptance,performance karma start config/karma.conf.js --single-run",
+    "test:unit:cont": "cross-env coverage=1 scope=unit karma start",
+    "gen-coverage": "genhtml test/coverage/unit.lcov test/coverage/acceptance/lcov.info -o test/coverage/html",
+    "test:performance": "cross-env scope=performance karma start config/karma.conf.js --single-run",
+    "world": "node -- tools/generate-world.bin.js -v -d \"game-data/yoda.data\"",
+    "world:validate": "node -- tools/generate-world.bin.js -c -d \"game-data/yoda.data\" -e \"game-data/worlds.txt\"",
+    "world:validate:all": "node -- tools/generate-world.bin.js -c -d \"./game-data/yoda.data\" -e \"./game-data/full.txt\" -a"
+  },
+  "babel": {
+    "presets": [
+      "es2015"
+    ],
+    "plugins": [
+      "babel-plugin-syntax-async-functions",
+      "babel-plugin-transform-export-extensions",
+      "babel-plugin-transform-export-extensions",
+      [
+        "babel-root-slash-import",
+        {
+          "rootPathSuffix": "src"
+        }
+      ]
+    ]
+  },
+  "dependencies": {
+    "kaitai-struct": "^0.8.0-SNAPSHOT.2",
+    "sprintf-js": "^1.1.1",
+    "twgl.js": "^3.4.1"
+  },
   "devDependencies": {
     "add-matchers": "^0.5.0",
     "babel-cli": "^6.26.0",
@@ -46,43 +84,5 @@
     "webpack-dev-server": "^2.7.1",
     "webpack-glsl-loader": "^1.0.1",
     "webpack-node-externals": "^1.6.0"
-  },
-  "scripts": {
-    "start": "webpack-dev-server",
-    "test": "karma start --single-run",
-    "test:cont": "karma start",
-    "test:cov": "cross-env coverage=1 karma start --single-run",
-    "test:cov:cont": "cross-env coverage=1 karma start",
-    "test:cont:cov": "cross-env coverage=1 karma start",
-    "test:acceptance": "cross-env scope=acceptance karma start --single-run --",
-    "test:unit": "cross-env coverage=1 scope=unit karma start --single-run",
-    "test:coverage": "cross-env coverage=1 scope=unit,acceptance,performance karma start --single-run",
-    "test:unit:cont": "cross-env coverage=1 scope=unit karma start",
-    "gen-coverage": "genhtml test/coverage/unit.lcov test/coverage/acceptance/lcov.info -o test/coverage/html",
-    "test:performance": "cross-env scope=performance karma start --single-run",
-    "world": "node -- tools/generate-world.bin.js -v -d \"game-data/yoda.data\"",
-    "world:validate": "node -- tools/generate-world.bin.js -c -d \"game-data/yoda.data\" -e \"game-data/worlds.txt\"",
-    "world:validate:all": "node -- tools/generate-world.bin.js -c -d \"./game-data/yoda.data\" -e \"./game-data/full.txt\" -a"
-  },
-  "babel": {
-    "presets": [
-      "es2015"
-    ],
-    "plugins": [
-      "babel-plugin-syntax-async-functions",
-      "babel-plugin-transform-export-extensions",
-      "babel-plugin-transform-export-extensions",
-      [
-        "babel-root-slash-import",
-        {
-          "rootPathSuffix": "src"
-        }
-      ]
-    ]
-  },
-  "dependencies": {
-    "kaitai-struct": "^0.8.0-SNAPSHOT.2",
-    "sprintf-js": "^1.1.1",
-    "twgl.js": "^3.4.1"
   }
 }

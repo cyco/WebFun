@@ -1,25 +1,26 @@
 const Path = require("path");
 const Webpack = require("webpack");
 
+const projectRoot = Path.resolve(__dirname, "../");
 module.exports = {
 	entry: "./src/index.js",
 	output: {
 		filename: "webfun.js",
-		path: Path.resolve(__dirname, "dist")
+		path: Path.resolve(projectRoot, "dist")
 	},
 	resolve: {
 		extensions: [".js", ".ts"],
 		alias: {
-			"src": Path.resolve(__dirname, "src"),
-			"std": Path.resolve(__dirname, "src/std"),
-			"std.dom": Path.resolve(__dirname, "src/std.dom"),
-			"std.webgl": Path.resolve(__dirname, "src/std.webgl"),
-			"test-helpers": Path.resolve(__dirname, "test/helpers"),
-			"fs": Path.resolve(__dirname, "test/helpers/polyfill/fs.js"),
-			"path": Path.resolve(__dirname, "test/helpers/polyfill/path.js"),
-			"libs": Path.resolve(__dirname, "src/libs.js"),
+			"src": Path.resolve(projectRoot, "src"),
+			"std": Path.resolve(projectRoot, "src/std"),
+			"std.dom": Path.resolve(projectRoot, "src/std.dom"),
+			"std.webgl": Path.resolve(projectRoot, "src/std.webgl"),
+			"test-helpers": Path.resolve(projectRoot, "test/helpers"),
+			"fs": Path.resolve(projectRoot, "test/helpers/polyfill/fs.js"),
+			"path": Path.resolve(projectRoot, "test/helpers/polyfill/path.js"),
+			"libs": Path.resolve(projectRoot, "src/libs.js"),
 			// disable zlib (imported from KaitaiStream)
-			"zlib": Path.resolve(__dirname, "src/util/empty.js")
+			"zlib": Path.resolve(projectRoot, "src/util/empty.js")
 		},
 		unsafeCache: true
 	},
@@ -29,29 +30,29 @@ module.exports = {
 			test: /\.js?$/,
 			loader: "babel-loader",
 			include: [
-				Path.resolve(__dirname, "src")
+				Path.resolve(projectRoot, "src")
 			],
 			exclude: [
 				"node_modules",
-				Path.resolve(__dirname, "src/editor"),
-				Path.resolve(__dirname, "src/debug")
+				Path.resolve(projectRoot, "src/editor"),
+				Path.resolve(projectRoot, "src/debug")
 			]
 		}, {
 			/* JavaScript / Babel */
 			test: /\.js?$/,
 			loader: "babel-loader",
 			include: [
-				Path.resolve(__dirname, "src/editor"),
-				Path.resolve(__dirname, "src/debug"),
-				Path.resolve(__dirname, "test/helpers")
+				Path.resolve(projectRoot, "src/editor"),
+				Path.resolve(projectRoot, "src/debug"),
+				Path.resolve(projectRoot, "test/helpers")
 			]
 		}, {
 			/* JavaScript / Babel */
 			test: /\.tsx?$/,
 			loader: "ts-loader",
 			include: [
-				Path.resolve(__dirname, "src"),
-				Path.resolve(__dirname, "tools")
+				Path.resolve(projectRoot, "src"),
+				Path.resolve(projectRoot, "tools")
 			],
 			exclude: [
 				"node_modules"
