@@ -10,6 +10,7 @@ const runPerformanceTests = process.env.scope && ~process.env.scope.indexOf("per
 console.log(includeCoverage ? "coverage" : "", runUnitTests ? "unit" : "", runAcceptanceTests ? "acceptance" : "");
 
 const config = {
+	basePath: '../',
 	files: [
 		// {pattern: 'test/**/*_test.js', watched: false},
 		{
