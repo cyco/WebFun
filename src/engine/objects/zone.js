@@ -14,10 +14,6 @@ export default class Zone {
 		return Type;
 	}
 
-	get LAYERS() {
-		return 3;
-	}
-
 	constructor() {
 		this.visited = false;
 		this.solved = false;
@@ -54,22 +50,6 @@ export default class Zone {
 		this.puzzleRequired = null;
 
 		Object.seal(this);
-	}
-
-	get name() {
-		return this._name;
-	}
-
-	get type() {
-		return this._type;
-	}
-
-	get planet() {
-		return this._planet;
-	}
-
-	get hotspots() {
-		return this._hotspots;
 	}
 
 	getLocatorDescription() {
@@ -151,26 +131,6 @@ export default class Zone {
 		return x >= 0 && y >= 0 && x < this.width && y < this.height;
 	}
 
-	get size() {
-		return new Size(this.width, this.height);
-	}
-
-	get actions() {
-		return this._actions;
-	}
-
-	get npcs() {
-		return this._npcs;
-	}
-
-	get width() {
-		return this._width;
-	}
-
-	get height() {
-		return this._height;
-	}
-
 	leadsTo(needleZone, allZones) {
 		if (needleZone === this) return false;
 
@@ -182,10 +142,6 @@ export default class Zone {
 		}
 
 		return false;
-	}
-
-	get doors() {
-		return this._hotspots.filter((hotspot) => hotspot.type === HotspotType.DoorIn && hotspot.arg !== -1);
 	}
 
 	isLoadingZone() {
@@ -222,5 +178,49 @@ export default class Zone {
 
 	isRoom() {
 		return this.width === 9;
+	}
+
+	get LAYERS() {
+		return 3;
+	}
+
+	get name() {
+		return this._name;
+	}
+
+	get type() {
+		return this._type;
+	}
+
+	get planet() {
+		return this._planet;
+	}
+
+	get hotspots() {
+		return this._hotspots;
+	}
+
+	get size() {
+		return new Size(this.width, this.height);
+	}
+
+	get actions() {
+		return this._actions;
+	}
+
+	get npcs() {
+		return this._npcs;
+	}
+
+	get width() {
+		return this._width;
+	}
+
+	get height() {
+		return this._height;
+	}
+
+	get doors() {
+		return this._hotspots.filter((hotspot) => hotspot.type === HotspotType.DoorIn && hotspot.arg !== -1);
 	}
 }

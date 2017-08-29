@@ -8,4 +8,4 @@ export WorldGenerationError from "./world-generation-error";
 import World from "./world";
 import WorldItem from "./world-item";
 
-export {WorldItem, World};
+export { WorldItem, World };

@@ -51,18 +51,18 @@ export default class SpeechScene extends Scene {
 		this._modalSession.end(0);
 	}
 
-	set text(t) {
-		this._bubble.text = t;
+	_determineGlobalOffset() {
+		const canvas = document.querySelector("canvas[width=\"288\"][height=\"288\"]");
+		const box = canvas.getBoundingClientRect();
+
+		return new Point(box.left, box.top, 0);
 	}
 
 	get text() {
 		return this._bubble.text;
 	}
 
-	_determineGlobalOffset() {
-		const canvas = document.querySelector("canvas[width=\"288\"][height=\"288\"]");
-		const box = canvas.getBoundingClientRect();
-
-		return new Point(box.left, box.top, 0);
+	set text(t) {
+		this._bubble.text = t;
 	}
 }

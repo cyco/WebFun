@@ -99,10 +99,6 @@ export default class {
 		});
 	}
 
-	get showDagobah() {
-		return this._showDagobahCheckbox.checked;
-	}
-
 	_showDetails(i) {
 		const worldItem = this._currentWorld.index(i);
 		const expectedWorldItem = this._currentSample && this._currentSample[i];
@@ -327,5 +323,9 @@ export default class {
 			default:
 				return "unknown";
 		}
+	}
+
+	get showDagobah() {
+		return this._showDagobahCheckbox.checked;
 	}
 }

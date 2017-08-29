@@ -47,12 +47,12 @@ export default class extends Component {
 		else this._store.removeBreakpoint(this.breakpoint);
 	}
 
+	get active() {
+		return this.hasAttribute("active");
+	}
+
 	set active(flag) {
 		if (flag) this.setAttribute("active", "");
 		else this.removeAttribute("active");
-	}
-
-	get active() {
-		return this.hasAttribute("active");
 	}
 }

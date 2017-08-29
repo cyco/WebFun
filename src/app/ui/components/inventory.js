@@ -45,34 +45,6 @@ export default class extends Component {
 		while (this.rowCount < MinRows) this.addRow(null);
 	}
 
-	get rowCount() {
-		return this.querySelectorAll(InventoryRow.TagName).length;
-	}
-
-	set inventory(i) {
-		if (this._inventory) {
-			this._inventory.removeEventListener(InventoryEvent.ItemsDidChange, this._inventoryChangedHandler);
-		}
-
-		this._inventory = i;
-
-		if (this._inventory) {
-			this._inventory.addEventListener(InventoryEvent.ItemsDidChange, () => {
-				this._inventoryChangedHandler();
-			});
-		}
-
-		this._rebuildTable();
-	}
-
-	get inventory() {
-		return this._inventory;
-	}
-
-	get _minRowCount() {
-		return 7;
-	}
-
 	connectedCallback() {
 		super.connectedCallback();
 		this._rebuildTable();
@@ -135,5 +107,33 @@ export default class extends Component {
 		this.appendChild(row);
 
 		return row;
+	}
+
+	get rowCount() {
+		return this.querySelectorAll(InventoryRow.TagName).length;
+	}
+
+	get inventory() {
+		return this._inventory;
+	}
+
+	set inventory(i) {
+		if (this._inventory) {
+			this._inventory.removeEventListener(InventoryEvent.ItemsDidChange, this._inventoryChangedHandler);
+		}
+
+		this._inventory = i;
+
+		if (this._inventory) {
+			this._inventory.addEventListener(InventoryEvent.ItemsDidChange, () => {
+				this._inventoryChangedHandler();
+			});
+		}
+
+		this._rebuildTable();
+	}
+
+	get _minRowCount() {
+		return 7;
 	}
 }

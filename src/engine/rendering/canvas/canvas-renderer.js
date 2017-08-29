@@ -24,10 +24,6 @@ export default class CanvasRenderer extends AbstractRenderer {
 		this._imageFactory = new DOMImageFactory();
 	}
 
-	get imageFactory() {
-		return this._imageFactory;
-	}
-
 	clear() {
 		this._ctx.clearRect(0, 0, this._canvas.width, this._canvas.height);
 	}
@@ -63,5 +59,9 @@ export default class CanvasRenderer extends AbstractRenderer {
 
 	fillTile(x, y, color) {
 		this.fillRect(x * TILE_WIDTH, y * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT, color);
+	}
+
+	get imageFactory() {
+		return this._imageFactory;
 	}
 }

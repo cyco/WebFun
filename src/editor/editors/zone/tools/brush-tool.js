@@ -1,14 +1,6 @@
 import Tool from "./tool";
 
 export default class extends Tool {
-	get name() {
-		return "Brush";
-	}
-
-	get icon() {
-		return "paint-brush";
-	}
-
 	constructor() {
 		super();
 
@@ -29,11 +21,19 @@ export default class extends Tool {
 	mouseUpAt(x, y, event) {
 	}
 
-	set tile(t) {
-		this._tile = t;
+	get name() {
+		return "Brush";
+	}
+
+	get icon() {
+		return "paint-brush";
 	}
 
 	get tile() {
 		return this._tile;
+	}
+
+	set tile(t) {
+		this._tile = t;
 	}
 }

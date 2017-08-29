@@ -239,6 +239,10 @@ export default class SpeechBubble extends View {
 		return Math.min(line, 5);
 	}
 
+	get text() {
+		return this._text.textContent;
+	}
+
 	set text(t) {
 		while (this._text.firstChild)
 			this._text.firstChild.remove();
@@ -254,10 +258,6 @@ export default class SpeechBubble extends View {
 			self._setupBackground();
 			self._scrollTo(0);
 		});
-	}
-
-	get text() {
-		return this._text.textContent;
 	}
 
 	get x() {

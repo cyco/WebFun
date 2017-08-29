@@ -118,4 +118,5 @@ class Point {
 		return `Point {${this.x}x${this.y}}`;
 	}
 }
+
 export default Point;

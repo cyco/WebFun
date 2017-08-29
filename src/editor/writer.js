@@ -5,10 +5,6 @@ export default class {
 		this._data = data;
 	}
 
-	get requiredSize() {
-		return 1024 * 1024 * 5;
-	}
-
 	writeTo(stream) {
 		stream.writeCharacters("VERS");
 		stream.writeUint32(512);
@@ -251,5 +247,9 @@ export default class {
 	_calculatePuzzleSize(puzzle) {
 		const textSize = puzzle.strings.map(str => str.length + 1).reduce(add, 0);
 		return 4 + 4 + 4 + 4 + 4 + 2 + textSize + 2 + 2 - 3;
+	}
+
+	get requiredSize() {
+		return 1024 * 1024 * 5;
 	}
 }

@@ -38,13 +38,13 @@ export default class extends Component {
 	attributeChangedCallback(attribute) {
 	}
 
+	get current() {
+		return this.hasAttribute("current");
+	}
+
 	set current(flag) {
 		if (flag) this.setAttribute("current", "");
 		else this.removeAttribute("current");
-	}
-
-	get current() {
-		return this.hasAttribute("current");
 	}
 
 	get type() {

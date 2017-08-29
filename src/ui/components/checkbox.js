@@ -52,11 +52,11 @@ export default class Checkbox extends Component {
 		this._box.checked = c;
 	}
 
-	set onchange(f) {
-		this._box.onchange = f;
-	}
-
 	get onchange() {
 		return this._box.onchange;
+	}
+
+	set onchange(f) {
+		this._box.onchange = f;
 	}
 }

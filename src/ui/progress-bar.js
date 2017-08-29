@@ -9,6 +9,10 @@ export default class extends View {
 		this._value = 0;
 	}
 
+	get value() {
+		return this._value;
+	}
+
 	set value(progress) {
 		const maxNumberOfSegments = 24;
 		const node = this.element;
@@ -23,9 +27,5 @@ export default class extends View {
 
 		this._value = progress;
 		this.element.dataset && (this.element.dataset.value = progress);
-	}
-
-	get value() {
-		return this._value;
 	}
 }

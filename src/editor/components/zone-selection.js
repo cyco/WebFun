@@ -26,15 +26,6 @@ export default class extends Component {
 		});
 	}
 
-	set zones(t) {
-		this._zones = t;
-		this._draw();
-	}
-
-	get zones() {
-		return this._zones;
-	}
-
 	selectZone(zone, node) {
 		if (this._selectedZoneNode) {
 			this._selectedZoneNode.removeAttribute("selected");
@@ -50,6 +41,15 @@ export default class extends Component {
 		if (this.onzonechange instanceof Function) {
 			this.onzonechange();
 		}
+	}
+
+	get zones() {
+		return this._zones;
+	}
+
+	set zones(t) {
+		this._zones = t;
+		this._draw();
 	}
 
 	get selectedZone() {

@@ -1,14 +1,6 @@
 import Tool from "./tool";
 
 export default class extends Tool {
-	get name() {
-		return "Paint Bucket";
-	}
-
-	get icon() {
-		return "paint-bucket";
-	}
-
 	constructor() {
 		super();
 
@@ -68,11 +60,19 @@ export default class extends Tool {
 		state.forEach((i, idx) => i === MARKED && zone.setTile(tile, idx % width, Math.floor(idx / width), z));
 	}
 
-	set tile(t) {
-		this._tile = t;
+	get name() {
+		return "Paint Bucket";
+	}
+
+	get icon() {
+		return "paint-bucket";
 	}
 
 	get tile() {
 		return this._tile;
+	}
+
+	set tile(t) {
+		this._tile = t;
 	}
 }

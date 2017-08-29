@@ -63,21 +63,21 @@ export default class extends EventTarget {
 		return this.story.world;
 	}
 
+	get currentZone() {
+		return this._currentZone;
+	}
+
 	set currentZone(z) {
 		this._currentZone = z;
 		this.dispatchEvent(Events.CurrentZoneChange);
 		this.dispatchEvent(Events.LocationChanged, {zone: z, world: this._currentWorld});
 	}
 
-	get currentZone() {
-		return this._currentZone;
+	get currentWorld() {
+		return this._currentWorld;
 	}
 
 	set currentWorld(w) {
 		this._currentWorld = w;
-	}
-
-	get currentWorld() {
-		return this._currentWorld;
 	}
 }

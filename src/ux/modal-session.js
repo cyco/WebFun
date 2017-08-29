@@ -71,12 +71,12 @@ export default class ModalSession {
 		this._overlay.onmouseup = h;
 	}
 
-	set onend(h) {
-		this._endHandler = h;
-	}
-
 	get onend() {
 		return this._endHandler;
+	}
+
+	set onend(h) {
+		this._endHandler = h;
 	}
 
 	get lastMouseLocation() {

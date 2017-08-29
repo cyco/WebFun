@@ -58,12 +58,12 @@ export default class extends Component {
 		}
 	}
 
+	get running() {
+		return this.hasAttribute("running");
+	}
+
 	set running(flag) {
 		if (flag) this.setAttribute("running", "");
 		else this.removeAttribute("running");
-	}
-
-	get running() {
-		return this.hasAttribute("running");
 	}
 }

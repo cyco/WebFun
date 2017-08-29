@@ -1,4 +1,6 @@
-import Scene from './scene';
+import Scene from "./scene";
 
-class WinScene extends Scene {}
-export default WinScene ;
+class WinScene extends Scene {
+}
+
+export default WinScene;

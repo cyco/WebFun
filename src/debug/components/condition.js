@@ -15,6 +15,18 @@ export default class extends InstructionThing {
 	attributeChangedCallback(attribute) {
 	}
 
+	_tileImageNode(tile) {
+		const representation = tile.image.representation;
+		if (representation instanceof HTMLElement) {
+			return representation.cloneNode();
+		}
+		return document.createElement("img");
+	}
+
+	get condition() {
+		return this._condition;
+	}
+
 	set condition(condition) {
 		this._condition = condition;
 		this._title.innerText = EnumName(Opcode, condition.opcode);
@@ -80,18 +92,6 @@ export default class extends InstructionThing {
 			else this._title.appendChild(this._tileImageNode(tile));
 			this._title.innerHTML += ` at ${condition.arguments[1]}x${condition.arguments[1]}x${condition.arguments[3]}`;
 		}
-	}
-
-	_tileImageNode(tile) {
-		const representation = tile.image.representation;
-		if (representation instanceof HTMLElement) {
-			return representation.cloneNode();
-		}
-		return document.createElement("img");
-	}
-
-	get condition() {
-		return this._condition;
 	}
 
 	get type() {

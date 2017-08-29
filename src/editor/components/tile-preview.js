@@ -15,12 +15,12 @@ export default class extends Component {
 		this.appendChild(document.createElement("div"));
 	}
 
+	get tile() {
+		return this._tile;
+	}
+
 	set tile(t) {
 		this._tile = t;
 		this._draw();
-	}
-
-	get tile() {
-		return this._tile;
 	}
 }

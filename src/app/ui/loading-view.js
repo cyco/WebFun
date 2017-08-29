@@ -29,11 +29,11 @@ export default class extends View {
 		renderer.renderImage(image, 0, 0);
 	}
 
-	set progress(p) {
-		this._progressBar.value = p;
-	}
-
 	get progress() {
 		return this._progressBar.value;
+	}
+
+	set progress(p) {
+		this._progressBar.value = p;
 	}
 }

@@ -29,10 +29,6 @@ export default class extends Component {
 		this.appendChild(item);
 	}
 
-	get tools() {
-		return this.children.map(item => item.tool).filter(identity);
-	}
-
 	removeTool(tool) {
 		const item = this.children.find(item => item.tool === tool);
 		if (item) item.remove();
@@ -48,5 +44,9 @@ export default class extends Component {
 		if (this.ontoolchange instanceof Function) {
 			this.ontoolchange(item.tool);
 		}
+	}
+
+	get tools() {
+		return this.children.map(item => item.tool).filter(identity);
 	}
 }

@@ -1,4 +1,6 @@
-import Scene from './scene';
+import Scene from "./scene";
 
-class LoseScene extends Scene {}
+class LoseScene extends Scene {
+}
+
 export default LoseScene;

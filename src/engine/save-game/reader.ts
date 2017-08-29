@@ -1,9 +1,9 @@
 import GameData from "../game-data";
-import {InputStream, Point} from "../../util";
-import {Planet, WorldSize} from "../types";
+import { InputStream, Point } from "../../util";
+import { Planet, WorldSize } from "../types";
 import World from "./world";
 import WorldItem from "./world-item";
-import {Action, Hotspot, HotspotType, NPC, Tile, Zone} from "../objects";
+import { Action, Hotspot, HotspotType, NPC, Tile, Zone } from "../objects";
 import SaveState from "./save-state";
 
 class Reader {

@@ -2,14 +2,6 @@ import Cheat from "./cheat";
 import Yoda from "/engine/yoda";
 
 export default class WeaponsCheat extends Cheat {
-	get code() {
-		return "gojedi";
-	}
-
-	get message() {
-		return "Super Jedi!";
-	}
-
 	execute(engine) {
 		5..times(() => this._addItem(engine, Yoda.ItemIDs.ThermalDetonator));
 		this._addItem(engine, Yoda.ItemIDs.BlasterRifle);
@@ -20,5 +12,13 @@ export default class WeaponsCheat extends Cheat {
 	_addItem(engine, id) {
 		const tile = engine.data.tiles[id];
 		engine.state.inventory.addItem(tile);
+	}
+
+	get code() {
+		return "gojedi";
+	}
+
+	get message() {
+		return "Super Jedi!";
 	}
 }

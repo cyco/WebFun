@@ -1,6 +1,6 @@
-import {Planet} from "../types";
+import { Planet } from "../types";
 import World from "./world";
-import {Point} from "util";
+import { Point } from "../../util";
 
 class SaveState {
 	seed: number;

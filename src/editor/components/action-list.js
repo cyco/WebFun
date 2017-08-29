@@ -15,15 +15,6 @@ export default class extends Component {
 		super.connectedCallback();
 	}
 
-	set zone(z) {
-		this._zone = z;
-		this._rebuild();
-	}
-
-	get zone() {
-		return this._zone;
-	}
-
 	_rebuild() {
 		this.clear();
 
@@ -33,5 +24,14 @@ export default class extends Component {
 			actionItem.action = action;
 			this.appendChild(actionItem);
 		});
+	}
+
+	get zone() {
+		return this._zone;
+	}
+
+	set zone(z) {
+		this._zone = z;
+		this._rebuild();
 	}
 }

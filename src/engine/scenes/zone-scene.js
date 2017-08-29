@@ -424,26 +424,6 @@ export default class ZoneScene extends Scene {
 		return true;
 	}
 
-	set zone(z) {
-		this._zone = z;
-		this._camera.zoneSize = {
-			width: z.width,
-			height: z.height
-		};
-	}
-
-	get zone() {
-		return this._zone;
-	}
-
-	get camera() {
-		return this._camera;
-	}
-
-	get currentOffset() {
-		return this._camera.offset;
-	}
-
 	prepareCamera() {
 		this._camera.update(Infinity);
 	}
@@ -455,6 +435,26 @@ export default class ZoneScene extends Scene {
 
 	willHide() {
 		this.engine.setCursor(null);
+	}
+
+	get zone() {
+		return this._zone;
+	}
+
+	set zone(z) {
+		this._zone = z;
+		this._camera.zoneSize = {
+			width: z.width,
+			height: z.height
+		};
+	}
+
+	get camera() {
+		return this._camera;
+	}
+
+	get currentOffset() {
+		return this._camera.offset;
 	}
 
 	get objects() {
