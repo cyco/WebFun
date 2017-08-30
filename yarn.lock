@@ -3152,6 +3152,10 @@ karma-coverage@^1.1.1:
     minimatch "^3.0.0"
     source-map "^0.5.1"
 
+karma-firefox-launcher@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/karma-firefox-launcher/-/karma-firefox-launcher-1.0.1.tgz#ce58f47c2013a88156d55a5d61337c099cf5bb51"
+
 karma-jasmine-matchers@^3.7.0:
   version "3.7.0"
   resolved "https://registry.yarnpkg.com/karma-jasmine-matchers/-/karma-jasmine-matchers-3.7.0.tgz#3772fdab641ff477505e10a91a0b527be2c8e3ea"

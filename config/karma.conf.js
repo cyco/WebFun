@@ -11,20 +11,17 @@ console.log(includeCoverage ? "coverage" : "", runUnitTests ? "unit" : "", runAc
 
 const config = {
 	basePath: "../",
-	files: [
-		// {pattern: 'test/**/*_test.js', watched: false},
-		{
-			pattern: "game-data/**",
-			watched: true,
-			served: true,
-			included: false
-		}, {
-			pattern: "test/fixtures/**",
-			watched: true,
-			served: true,
-			included: false
-		}
-	],
+	files: [ {
+		pattern: "game-data/**",
+		watched: true,
+		served: true,
+		included: false
+	}, {
+		pattern: "test/fixtures/**",
+		watched: true,
+		served: true,
+		included: false
+	} ],
 	preprocessors: {
 		"test/context/*.js": [ "webpack" ]
 	},
@@ -37,11 +34,15 @@ const config = {
 			base: "ChromeCanary",
 			flags: [
 				"--no-sandbox",
-				// See https://chromium.googlesource.com/chromium/src/+/lkgr/headless/README.md
 				"--headless",
 				"--disable-gpu",
-				// Without a remote debugging port, Google Chrome exits immediately.
 				" --remote-debugging-port=9222"
+			]
+		},
+		FirefoxHeadless: {
+			base: "FirefoxNightly",
+			flags: [
+				"--headless",
 			]
 		}
 	},
