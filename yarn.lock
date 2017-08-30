@@ -1463,9 +1463,9 @@ css-list-helpers@^1.0.1:
   dependencies:
     tcomb "^2.5.0"
 
-css-loader@^0.28.5:
-  version "0.28.5"
-  resolved "https://registry.yarnpkg.com/css-loader/-/css-loader-0.28.5.tgz#dd02bb91b94545710212ef7f6aaa66663113d754"
+css-loader@^0.28.6:
+  version "0.28.6"
+  resolved "https://registry.yarnpkg.com/css-loader/-/css-loader-0.28.6.tgz#9cc15eeee3f8d2f4eeb4c37556581ac84f39bad1"
   dependencies:
     babel-code-frame "^6.11.0"
     css-selector-tokenizer "^0.7.0"
@@ -3178,9 +3178,9 @@ karma-webpack@^2.0.4:
     source-map "^0.1.41"
     webpack-dev-middleware "^1.0.11"
 
-karma@^1.7.0:
-  version "1.7.0"
-  resolved "https://registry.yarnpkg.com/karma/-/karma-1.7.0.tgz#6f7a1a406446fa2e187ec95398698f4cee476269"
+karma@^1.7.1:
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/karma/-/karma-1.7.1.tgz#85cc08e9e0a22d7ce9cca37c4a1be824f6a2b1ae"
   dependencies:
     bluebird "^3.3.0"
     body-parser "^1.16.1"
