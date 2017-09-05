@@ -1,7 +1,7 @@
-import { Menu, MenuItemSeparator as Separator } from "/ui";
-import { WindowModalSession } from "/ux";
-import Settings from "/settings";
-import { Menu as DebugMenu } from "/debug";
+import { Menu, MenuItemSeparator as Separator } from "src/ui";
+import { WindowModalSession } from "src/ux";
+import Settings from "src/settings";
+import { Menu as DebugMenu } from "src/debug";
 import StatisticsWindow from "./statistics-window";
 import DifficultyWindow from "./difficulty-window";
 import GameSpeedWindow from "./game-speed-window";

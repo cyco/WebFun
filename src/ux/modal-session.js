@@ -1,4 +1,4 @@
-import { dispatch, Point } from "/util";
+import { dispatch, Point } from "src/util";
 import ResetCursor from "./reset-cursor";
 
 export default class ModalSession {

@@ -1,4 +1,4 @@
-import Cheat from "/engine/cheats/cheat";
+import Cheat from "src/engine/cheats/cheat";
 
 describe("Cheat", () => {
 	let subject;

@@ -1,4 +1,4 @@
-import UnlimitedAmmoCheat from "/engine/cheats/unlimited-ammo";
+import UnlimitedAmmoCheat from "src/engine/cheats/unlimited-ammo";
 
 describe("UnlimitedAmmoCheat", () => {
 	let subject;

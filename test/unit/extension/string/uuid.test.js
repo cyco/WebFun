@@ -1,4 +1,4 @@
-import uuid from "/extension/string/uuid";
+import uuid from "src/extension/string/uuid";
 
 describe("String.UUID", () => {
 	it("defines a static function on String that generates new UUIDs", () => {

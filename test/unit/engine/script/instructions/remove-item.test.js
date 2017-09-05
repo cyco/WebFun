@@ -1,5 +1,5 @@
-import { Instruction } from "/engine/objects";
-import * as RemoveItem from "/engine/script/instructions/remove-item";
+import { Instruction } from "src/engine/objects";
+import * as RemoveItem from "src/engine/script/instructions/remove-item";
 
 describeInstruction("RemoveItem", (execute, engine) => {
 	it("removes an item from the inventory", () => {

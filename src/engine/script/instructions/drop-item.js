@@ -1,5 +1,5 @@
-import { PickupScene } from "/engine/scenes";
-import { Point } from "/util";
+import { PickupScene } from "src/engine/scenes";
+import { Point } from "src/util";
 
 export const Opcode = 0x1b;
 export const Arguments = 3;

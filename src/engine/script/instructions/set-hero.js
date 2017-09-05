@@ -1,4 +1,4 @@
-import ZoneScene from "/engine/scenes/zone-scene";
+import ZoneScene from "src/engine/scenes/zone-scene";
 import * as Result from "../result";
 
 export const Opcode = 0x12;

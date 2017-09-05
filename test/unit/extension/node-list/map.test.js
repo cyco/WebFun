@@ -1,6 +1,6 @@
-import { NodeList } from "/std.dom";
+import { NodeList } from "std.dom";
 import sandboxed from "test-helpers/dom-sandbox";
-import map from "/extension/node-list/map";
+import map from "src/extension/node-list/map";
 
 describe("NodeList.map", sandboxed((sand) => {
 	it("extends the NodeList prototype", () => {

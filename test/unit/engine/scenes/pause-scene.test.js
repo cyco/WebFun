@@ -1,4 +1,4 @@
-import PauseScene from "/engine/scenes/pause-scene";
+import PauseScene from "src/engine/scenes/pause-scene";
 
 describe("PauseScene", () => {
 	it("can be instantiated without throwing exceptions", () => {

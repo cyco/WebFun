@@ -1,10 +1,10 @@
 import "../test/helpers/polyfill";
 import "/extension";
-import { InputStream } from "/util";
-import Yodesk from "/engine/file-format/yodesk.ksy";
-import { GameData, Story } from "/engine";
-import { Enabled as EnabledMessages, Finalize as FinalizeMessages } from "/util/message";
-import { CompareWorldItems, ComparisonResult, ParseExpectation, PrepareExpectations } from "/debug/expectation";
+import { InputStream } from "src/util";
+import Yodesk from "src/engine/file-format/yodesk.ksy";
+import { GameData, Story } from "src/engine";
+import { Enabled as EnabledMessages, Finalize as FinalizeMessages } from "src/util/message";
+import { CompareWorldItems, ComparisonResult, ParseExpectation, PrepareExpectations } from "src/debug/expectation";
 import KaitaiStream from "kaitai-struct/KaitaiStream";
 import Path from "path";
 import FS from "fs";

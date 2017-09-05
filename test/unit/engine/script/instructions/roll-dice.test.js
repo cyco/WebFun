@@ -1,5 +1,5 @@
-import { Instruction } from "/engine/objects";
-import * as RollDice from "/engine/script/instructions/roll-dice";
+import { Instruction } from "src/engine/objects";
+import * as RollDice from "src/engine/script/instructions/roll-dice";
 
 describeInstruction("SetCounter", (execute, engine) => {
 	it("set the current zone's random register to a random() % arg", () => {

@@ -1,8 +1,8 @@
 import "../test/helpers/polyfill";
 import "/extension";
-import { InputStream } from "/util";
-import Yodesk from "/engine/file-format/yodesk.ksy";
-import { GameData, SaveGameReader, SaveGameWriter } from "/engine";
+import { InputStream } from "src/util";
+import Yodesk from "src/engine/file-format/yodesk.ksy";
+import { GameData, SaveGameReader, SaveGameWriter } from "src/engine";
 import KaitaiStream from "kaitai-struct/KaitaiStream";
 import Path from "path";
 import FS from "fs";

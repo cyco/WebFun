@@ -1,4 +1,4 @@
-import SpeechScene from "/engine/scenes/speech-scene";
+import SpeechScene from "src/engine/scenes/speech-scene";
 import * as Result from "../result";
 
 export default (text, location, engine) => {

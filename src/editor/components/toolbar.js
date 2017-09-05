@@ -1,5 +1,5 @@
-import { Component } from "/ui";
-import { identity } from "/util";
+import { Component } from "src/ui";
+import { identity } from "src/util";
 import ToolbarItem from "./toolbar-item";
 import "./toolbar.scss";
 

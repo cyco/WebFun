@@ -1,5 +1,5 @@
-import SceneManager from "/engine/scene-manager";
-import { Scene } from "/engine/scenes";
+import SceneManager from "src/engine/scene-manager";
+import { Scene } from "src/engine/scenes";
 
 describe("SceneManager", () => {
 	let subject;

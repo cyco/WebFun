@@ -1,5 +1,5 @@
-import { TransitionScene } from "/engine/scenes";
-import { Point } from "/util";
+import { TransitionScene } from "src/engine/scenes";
+import { Point } from "src/util";
 import * as Result from "../result";
 
 export const Opcode = 0x21;

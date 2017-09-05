@@ -1,4 +1,4 @@
-import { HTMLCollection } from "/std.dom";
+import { HTMLCollection } from "std.dom";
 
 const map = function (cb) {
 	let result = [];

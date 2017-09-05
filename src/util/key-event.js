@@ -1,4 +1,4 @@
-import { KeyEvent } from "/std.dom";
+import { KeyEvent } from "std.dom";
 
 if (!KeyEvent.DOM_VK_CANCEL)
 	Object.assign(KeyEvent, {

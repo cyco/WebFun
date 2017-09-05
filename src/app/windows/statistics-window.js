@@ -1,6 +1,6 @@
-import { Window } from "/ui/components";
-import { Textbox } from "/ui";
-import { PersistentState } from "/engine";
+import { Window } from "src/ui/components";
+import { Textbox } from "src/ui";
+import { PersistentState } from "src/engine";
 import "./statistics-window.scss";
 
 export default class extends Window {

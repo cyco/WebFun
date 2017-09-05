@@ -1,4 +1,4 @@
-import Ammo from "/app/ui/components/ammo";
+import Ammo from "src/app/ui/components/ammo";
 
 describeComponent(Ammo, () => {
 	let subject;

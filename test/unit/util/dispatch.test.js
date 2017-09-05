@@ -1,4 +1,4 @@
-import dispatch from "/util/dispatch";
+import dispatch from "src/util/dispatch";
 
 describe("dispatch", () => {
 	it("dispatch is an alias for setTimeout", (done) => {

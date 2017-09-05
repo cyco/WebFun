@@ -1,6 +1,6 @@
-import { _Action, default as Action } from "/engine/objects/action";
-import Instruction from "/engine/objects/instruction";
-import Condition from "/engine/objects/condition";
+import { _Action, default as Action } from "src/engine/objects/action";
+import Instruction from "src/engine/objects/instruction";
+import Condition from "src/engine/objects/condition";
 
 describe("Action", () => {
 	let action;

@@ -1,5 +1,5 @@
 import simulateEvent from "test-helpers/dom-events";
-import Checkbox from "/ui/components/checkbox";
+import Checkbox from "src/ui/components/checkbox";
 
 describeComponent(Checkbox, () => {
 	let subject;

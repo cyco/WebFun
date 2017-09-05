@@ -5,6 +5,7 @@
   "license": "MIT",
   "scripts": {
     "build": "webpack",
+    "build:cont": "webpack --watch",
     "start": "webpack-dev-server --config webpack.config.js",
     "test": "karma start karma.conf.js --single-run",
     "test:cont": "karma start",
@@ -15,6 +16,7 @@
     "test:unit": "cross-env coverage=1 scope=unit karma start karma.conf.js --single-run",
     "test:coverage": "cross-env coverage=1 scope=unit,acceptance,performance karma start karma.conf.js --single-run",
     "test:unit:cont": "cross-env coverage=1 scope=unit karma start",
+    "test:full": "cross-env coverage=1 scope=unit,acceptance,performance karma start",
     "gen-coverage": "genhtml test/coverage/unit.lcov test/coverage/acceptance/lcov.info -o test/coverage/html",
     "test:performance": "cross-env scope=performance karma start karma.conf.js --single-run",
     "world": "node -- tools/generate-world.bin.js -v -d \"game-data/yoda.data\"",
@@ -27,13 +29,7 @@
     ],
     "plugins": [
       "babel-plugin-syntax-async-functions",
-      "babel-plugin-transform-export-extensions",
-      [
-        "babel-root-slash-import",
-        {
-          "rootPathSuffix": "./src"
-        }
-      ]
+      "babel-plugin-transform-export-extensions"
     ]
   },
   "dependencies": {
@@ -50,7 +46,6 @@
     "babel-plugin-syntax-async-functions": "^6.13.0",
     "babel-plugin-transform-export-extensions": "^6.22.0",
     "babel-preset-es2015": "^6.24.1",
-    "babel-root-slash-import": "^1.1.0",
     "canvas": "^1.6.6",
     "cross-env": "^5.0.5",
     "css-loader": "^0.28.7",

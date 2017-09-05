@@ -1,14 +1,14 @@
-import { dispatch } from "/util";
+import { dispatch } from "src/util";
 import { LoadingView, SceneView } from "./ui";
-import Settings from "/settings";
+import Settings from "src/settings";
 import { MainMenu, MainWindow } from "./windows";
-import { CanvasRenderer, Engine, Hero, Inventory, Metronome, Story, WebGLRenderer } from "/engine";
-import { Planet, WorldSize } from "/engine/types";
-import { ZoneScene } from "/engine/scenes";
-import { DesktopInputManager } from "/engine/input";
+import { CanvasRenderer, Engine, Hero, Inventory, Metronome, Story, WebGLRenderer } from "src/engine";
+import { Planet, WorldSize } from "src/engine/types";
+import { ZoneScene } from "src/engine/scenes";
+import { DesktopInputManager } from "src/engine/input";
 import Loader from "./loader";
-import { ScriptExecutor } from "/engine/script";
-import { Debugger, WorldGeneration } from "/debug";
+import { ScriptExecutor } from "src/engine/script";
+import { Debugger, WorldGeneration } from "src/debug";
 
 class GameController {
 	constructor() {

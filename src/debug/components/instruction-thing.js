@@ -1,4 +1,4 @@
-import { Component } from "/ui";
+import { Component } from "src/ui";
 import BreakpointButton from "./breakpoint-button";
 import { LocationBreakpoint } from "../breakpoint";
 

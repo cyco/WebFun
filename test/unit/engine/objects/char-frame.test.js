@@ -1,4 +1,4 @@
-import CharFrame from "/engine/objects/char-frame";
+import CharFrame from "src/engine/objects/char-frame";
 
 describe("CharFrame", () => {
 	it("is a class representing one frame of character animation", () => {

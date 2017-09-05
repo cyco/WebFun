@@ -1,4 +1,4 @@
-import Weapon from "/app/ui/components/weapon";
+import Weapon from "src/app/ui/components/weapon";
 
 describeComponent(Weapon, () => {
 	let subject = null;

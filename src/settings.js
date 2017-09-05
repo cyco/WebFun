@@ -1,4 +1,4 @@
-import { persistent } from "/util";
+import { persistent } from "src/util";
 
 export const Settings = {
 	debug: true,

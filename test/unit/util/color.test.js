@@ -1,4 +1,4 @@
-import { rgb, rgba } from "/util/color";
+import { rgb, rgba } from "src/util/color";
 
 describe("Color", () => {
 	it("defines two funtions in the global namespace", () => {

@@ -1,8 +1,8 @@
-import { Group, Window } from "/ui/components";
-import { Ammo, Health, Inventory, Location, Weapon } from "/app/ui/components";
-import { Direction } from "/app/ui/components/location";
-import { Events } from "/engine/engine";
-import Hero from "/engine/hero";
+import { Group, Window } from "src/ui/components";
+import { Ammo, Health, Inventory, Location, Weapon } from "src/app/ui/components";
+import { Direction } from "src/app/ui/components/location";
+import { Events } from "src/engine/engine";
+import Hero from "src/engine/hero";
 import "./main-window.scss";
 
 export default class extends Window {

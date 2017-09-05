@@ -1,5 +1,5 @@
-import { Condition } from "/engine/objects";
-import * as GamesWonIs from "/engine/script/conditions/games-won-is";
+import { Condition } from "src/engine/objects";
+import * as GamesWonIs from "src/engine/script/conditions/games-won-is";
 
 describeCondition("GamesWonIs", (check, engine) => {
 	it("checks if exactly x games have been won", () => {

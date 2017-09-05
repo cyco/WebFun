@@ -1,4 +1,4 @@
-import Size from "/util/size";
+import Size from "src/util/size";
 
 describe("Size", () => {
 	it("is a simple that represents a size", () => {

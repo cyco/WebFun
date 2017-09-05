@@ -1,12 +1,12 @@
-import { constantly, HorizontalPointRange, identity, Point, rand, srand, VerticalPointRange } from "/util";
+import { constantly, HorizontalPointRange, identity, Point, rand, srand, VerticalPointRange } from "src/util";
 import MapGenerator from "./map-generator";
 import WorldItemType from "./world-item-type";
 import World from "./world";
-import * as Type from "/engine/types";
-import { WorldSize } from "/engine/types";
+import * as Type from "src/engine/types";
+import { WorldSize } from "src/engine/types";
 import GetDistanceToCenter from "./distance-to-center";
-import { HotspotType, PuzzleType, ZoneType } from "/engine/objects";
-import { and, not } from "/util/functional";
+import { HotspotType, PuzzleType, ZoneType } from "src/engine/objects";
+import { and, not } from "src/util/functional";
 import WorldGenerationError from "./world-generation-error";
 
 class WorldGenerator {

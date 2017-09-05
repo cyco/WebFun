@@ -1,4 +1,4 @@
-import padEnd from "/extension/string/pad-end";
+import padEnd from "src/extension/string/pad-end";
 
 describe("String.padEnd", () => {
 	it("extends the String prototype", () => {

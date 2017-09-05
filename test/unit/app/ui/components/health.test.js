@@ -1,4 +1,4 @@
-import Health from "/app/ui/components/health";
+import Health from "src/app/ui/components/health";
 
 describeComponent(Health, () => {
 	let subject;

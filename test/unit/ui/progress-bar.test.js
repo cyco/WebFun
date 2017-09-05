@@ -1,5 +1,5 @@
 import sandboxed from "test-helpers/dom-sandbox";
-import ProgressBar from "/ui/progress-bar";
+import ProgressBar from "src/ui/progress-bar";
 
 describe("ProgressBar", sandboxed(function (sand) {
 	let progressBar;

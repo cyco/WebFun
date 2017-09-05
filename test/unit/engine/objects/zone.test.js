@@ -1,4 +1,4 @@
-import Zone, { Type } from "/engine/objects/zone";
+import Zone, { Type } from "src/engine/objects/zone";
 
 describe("Zone", () => {
 	it("is a class representing an in-game map", () => {

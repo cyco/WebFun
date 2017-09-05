@@ -1,4 +1,4 @@
-import RadioGroup from "/ui/components/radio-group";
+import RadioGroup from "src/ui/components/radio-group";
 
 describe("RadioGroup", () => {
 	it("provides a method for grouping radio buttons", () => {

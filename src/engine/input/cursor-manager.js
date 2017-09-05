@@ -1,4 +1,4 @@
-import { Direction } from "/util";
+import { Direction } from "src/util";
 
 export default class CursorManager {
 	constructor(node) {

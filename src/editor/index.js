@@ -1,6 +1,6 @@
 import "./index.scss";
-import { ComponentRegistry } from "/ui";
-import { OutputStream } from "/util";
+import { ComponentRegistry } from "src/ui";
+import { OutputStream } from "src/util";
 import * as Components from "./components";
 import { Window } from "./components";
 import * as Editors from "./editors";

@@ -1,5 +1,5 @@
-import { Message, rand } from "/util";
-import { DagobahGenerator, WorldGenerationError, WorldGenerator } from "/engine/generation";
+import { Message, rand } from "src/util";
+import { DagobahGenerator, WorldGenerationError, WorldGenerator } from "src/engine/generation";
 
 export default class {
 	constructor(seed, planet, size) {

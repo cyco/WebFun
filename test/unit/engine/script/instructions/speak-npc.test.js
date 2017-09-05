@@ -1,5 +1,5 @@
-import { Instruction } from "/engine/objects";
-import * as SpeakNPC from "/engine/script/instructions/speak-npc";
+import { Instruction } from "src/engine/objects";
+import * as SpeakNPC from "src/engine/script/instructions/speak-npc";
 
 describeInstruction("SpeakNPC", (execute, engine) => {
 	it("shows a speech bubble next to an npc", () => {

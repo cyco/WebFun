@@ -1,5 +1,5 @@
-import CanvasRenderer from "/engine/rendering/canvas/canvas-renderer";
-import AbstractRenderer from "/engine/rendering/abstract-renderer";
+import CanvasRenderer from "src/engine/rendering/canvas/canvas-renderer";
+import AbstractRenderer from "src/engine/rendering/abstract-renderer";
 
 describe("CanvasRenderer", () => {
 	let subject = null;

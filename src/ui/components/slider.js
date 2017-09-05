@@ -1,7 +1,7 @@
 import Component from "../component";
 import "./slider.scss";
-import { document } from "/std.dom";
-import { dispatch } from "/util";
+import { document } from "std.dom";
+import { dispatch } from "src/util";
 
 class Slider extends Component {
 	static get TagName() {

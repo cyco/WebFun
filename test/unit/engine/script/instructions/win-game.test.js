@@ -1,5 +1,5 @@
-import { Instruction } from "/engine/objects";
-import * as WinGame from "/engine/script/instructions/win-game";
+import { Instruction } from "src/engine/objects";
+import * as WinGame from "src/engine/script/instructions/win-game";
 
 describeInstruction("WinGame", (execute, engine) => {
 	it("ends the current story by winning", () => {

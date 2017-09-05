@@ -1,4 +1,4 @@
-import { global } from "/std";
+import { global } from "std";
 
 const {JSDOM} = require("jsdom");
 

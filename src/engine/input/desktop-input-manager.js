@@ -1,4 +1,4 @@
-import { KeyEvent, Point } from "/util";
+import { KeyEvent, Point } from "src/util";
 import InputManager, { Direction } from "./input-manager";
 
 export default class extends InputManager {

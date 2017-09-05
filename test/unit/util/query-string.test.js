@@ -1,4 +1,4 @@
-import QueryString from "/util/query-string";
+import QueryString from "src/util/query-string";
 
 describe("QueryString", () => {
 	it("has a method to create a query string from an object", () => {

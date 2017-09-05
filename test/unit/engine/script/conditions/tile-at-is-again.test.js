@@ -1,5 +1,5 @@
-import { Condition } from "/engine/objects";
-import * as TileAtIsAgain from "/engine/script/conditions/tile-at-is-again";
+import { Condition } from "src/engine/objects";
+import * as TileAtIsAgain from "src/engine/script/conditions/tile-at-is-again";
 
 describeCondition("TileAtIsAgain", (check, engine) => {
 	it("checks if a specific tile is found at the given location", () => {

@@ -1,5 +1,5 @@
-import { Component } from "/ui";
-import { TileSelection } from "/editor/components";
+import { Component } from "src/ui";
+import { TileSelection } from "src/editor/components";
 import "./tile-editor.scss";
 
 export default class extends Component {

@@ -1,4 +1,4 @@
-import AbstractRenderer from "/engine/rendering/abstract-renderer";
+import AbstractRenderer from "src/engine/rendering/abstract-renderer";
 
 describe("AbstractRenderer", () => {
 	it("is an abstract class used to define the interface a renderer must implement", () => {

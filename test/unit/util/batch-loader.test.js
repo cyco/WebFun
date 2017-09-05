@@ -1,4 +1,4 @@
-import BatchLoader from "/util/batch-loader";
+import BatchLoader from "src/util/batch-loader";
 
 describe("BatchLoader", () => {
 	let operationsExecuted;

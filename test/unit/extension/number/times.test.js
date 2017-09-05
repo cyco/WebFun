@@ -1,4 +1,4 @@
-import times from "/extension/number/times";
+import times from "src/extension/number/times";
 
 describe("Number.times", () => {
 	it("is an extension of the number prototype that executes a callback n-times", () => {

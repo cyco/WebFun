@@ -1,5 +1,5 @@
-import { EventTarget } from "/util";
-import { localStorage } from "/std.dom";
+import { EventTarget } from "src/util";
+import { localStorage } from "std.dom";
 import { LocationBreakpoint, SymbolicBreakpoint } from "./breakpoint";
 
 let sharedInstance = null;

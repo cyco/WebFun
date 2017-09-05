@@ -1,4 +1,4 @@
-import trimCharacter from "/extension/string/trim-character";
+import trimCharacter from "src/extension/string/trim-character";
 
 describe("String.trimCharacter", () => {
 	let subject;

@@ -1,4 +1,4 @@
-import { HotspotType, ZoneLayer } from "/engine/objects";
+import { HotspotType, ZoneLayer } from "src/engine/objects";
 
 class HotspotExecutor {
 	constructor(engine) {

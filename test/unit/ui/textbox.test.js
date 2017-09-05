@@ -1,5 +1,5 @@
 import sandboxed from "test-helpers/dom-sandbox";
-import Textbox from "/ui/textbox";
+import Textbox from "src/ui/textbox";
 
 describe("Textbox", sandboxed(function (sand) {
 	let subject, node;

@@ -1,6 +1,6 @@
-import { View } from "/ui";
-import { rgb } from "/util";
-import { SceneManager } from "/engine";
+import { View } from "src/ui";
+import { rgb } from "src/util";
+import { SceneManager } from "src/engine";
 
 export default class extends View {
 	constructor() {

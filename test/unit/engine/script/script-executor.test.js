@@ -1,4 +1,4 @@
-import ScriptExecutor from "/engine/script/script-executor";
+import ScriptExecutor from "src/engine/script/script-executor";
 
 describe("ScriptExecutor", () => {
 	let evaluator, engine, action;

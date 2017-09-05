@@ -1,5 +1,5 @@
-import { Instruction } from "/engine/objects";
-import * as Redraw from "/engine/script/instructions/redraw";
+import { Instruction } from "src/engine/objects";
+import * as Redraw from "src/engine/script/instructions/redraw";
 
 describeInstruction("Redraw", (execute, engine) => {
 	it("redraws the current scene immediately without waiting for the next gameloop", () => {

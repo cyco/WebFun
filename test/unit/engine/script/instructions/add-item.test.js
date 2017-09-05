@@ -1,5 +1,5 @@
-import { Instruction } from "/engine/objects";
-import * as AddItem from "/engine/script/instructions/add-item";
+import { Instruction } from "src/engine/objects";
+import * as AddItem from "src/engine/script/instructions/add-item";
 
 describeInstruction("AddItem", (execute, engine) => {
 	it("adds an item to the inventory", () => {

@@ -1,5 +1,5 @@
-import { Instruction } from "/engine/objects";
-import * as StopSound from "/engine/script/instructions/stop-sound";
+import { Instruction } from "src/engine/objects";
+import * as StopSound from "src/engine/script/instructions/stop-sound";
 
 describeInstruction("StopSound", (execute, engine) => {
 	it("stops all sounds that are currently playing", () => {

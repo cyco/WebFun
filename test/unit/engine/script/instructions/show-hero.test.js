@@ -1,5 +1,5 @@
-import { Instruction } from "/engine/objects";
-import * as ShowHero from "/engine/script/instructions/show-hero";
+import { Instruction } from "src/engine/objects";
+import * as ShowHero from "src/engine/script/instructions/show-hero";
 
 describeInstruction("ShowHero", (execute, engine) => {
 	it("hides the hero", () => {

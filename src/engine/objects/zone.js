@@ -1,4 +1,4 @@
-import { Size } from "/util";
+import { Size } from "src/util";
 import { Type as HotspotType } from "./hotspot";
 import Type from "./zone-type";
 import Layer from "./zone-layer";

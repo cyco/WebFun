@@ -1,4 +1,4 @@
-import PickupScene from "/engine/scenes/pickup-scene";
+import PickupScene from "src/engine/scenes/pickup-scene";
 
 describe("PickupScene", () => {
 	it("can be instantiated without throwing exceptions", () => {

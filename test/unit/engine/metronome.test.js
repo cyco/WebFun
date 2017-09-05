@@ -1,5 +1,5 @@
-import * as Std from "/std";
-import Metronome from "/engine/metronome";
+import * as Std from "std";
+import Metronome from "src/engine/metronome";
 
 describe("Metronome", () => {
 	let metronome;

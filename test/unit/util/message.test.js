@@ -1,5 +1,5 @@
-import Message, { Disable, Enable } from "/util/message";
-import { console, global } from "/std";
+import Message, { Disable, Enable } from "src/util/message";
+import { console, global } from "std";
 
 xdescribe("Message", () => {
 	let consoleWarnCalled;

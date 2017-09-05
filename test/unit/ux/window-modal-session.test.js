@@ -1,4 +1,4 @@
-import WindowModalSession from "/ux/window-modal-session";
+import WindowModalSession from "src/ux/window-modal-session";
 
 describe("WindowModalSession", () => {
 	let subject;

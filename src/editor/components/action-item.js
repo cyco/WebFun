@@ -1,5 +1,5 @@
-import { IconButton } from "/ui/components";
-import { Component } from "/ui";
+import { IconButton } from "src/ui/components";
+import { Component } from "src/ui";
 import { disassemble } from "../opcode";
 import "./action-item.scss";
 

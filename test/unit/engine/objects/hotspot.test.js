@@ -1,4 +1,4 @@
-import Hotspot from "/engine/objects/hotspot";
+import Hotspot from "src/engine/objects/hotspot";
 
 describe("Hotspot", () => {
 	it("right now it's a very simple class", () => {

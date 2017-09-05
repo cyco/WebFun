@@ -1,5 +1,5 @@
-import Point from "/util/point";
-import PointRange from "/util/point-range";
+import Point from "src/util/point";
+import PointRange from "src/util/point-range";
 
 describe("PointRange", () => {
 	it("describes a of points", () => {

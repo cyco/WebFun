@@ -1,4 +1,4 @@
-import { Point } from "/util";
+import { Point } from "src/util";
 import MenuView from "./menu-view";
 import MenuStack from "../menu-stack";
 import "./menu-window.scss";

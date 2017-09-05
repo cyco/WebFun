@@ -1,6 +1,6 @@
 import Scene from "./scene";
-import { Tile, Zone } from "/engine/objects";
-import { Point } from "/util";
+import { Tile, Zone } from "src/engine/objects";
+import { Point } from "src/util";
 import { WebGLTexture } from "std.webgl";
 
 export default class TransitionScene extends Scene {

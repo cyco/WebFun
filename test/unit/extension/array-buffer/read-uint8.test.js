@@ -1,5 +1,5 @@
 import { getFixtureData } from "test-helpers/fixture-loading";
-import readUint8 from "/extension/array-buffer/read-uint8";
+import readUint8 from "src/extension/array-buffer/read-uint8";
 
 describe("ArrayBuffer reading", () => {
 	let sampleBuffer;

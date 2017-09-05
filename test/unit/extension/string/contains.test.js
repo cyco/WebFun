@@ -1,4 +1,4 @@
-import contains from "/extension/string/contains";
+import contains from "src/extension/string/contains";
 
 describe("String.contains", () => {
 	it("extends the String prototype", () => {

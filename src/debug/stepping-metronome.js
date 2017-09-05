@@ -1,4 +1,4 @@
-import { EventTarget } from "/util";
+import { EventTarget } from "src/util";
 
 export const Event = {
 	StatusChange: "statuschange"

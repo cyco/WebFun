@@ -1,4 +1,4 @@
-import { srand } from "/util";
+import { srand } from "src/util";
 
 describe("Array.shuffle", () => {
 	it("extends the Array prototype", () => {

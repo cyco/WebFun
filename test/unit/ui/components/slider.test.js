@@ -1,5 +1,5 @@
-import Slider from "/ui/components/slider";
-import { HTMLElement } from "/std.dom";
+import Slider from "src/ui/components/slider";
+import { HTMLElement } from "std.dom";
 
 describeComponent(Slider, () => {
 	let subject = null;

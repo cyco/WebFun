@@ -1,6 +1,6 @@
-import { Component } from "/ui";
-import { Point, rgba, Size } from "/util";
-import { Layer } from "/engine/objects/zone";
+import { Component } from "src/ui";
+import { Point, rgba, Size } from "src/util";
+import { Layer } from "src/engine/objects/zone";
 import "./zone.scss";
 
 export const DrawMask = {
