@@ -9,8 +9,10 @@ const runPerformanceTests = process.env.scope && ~process.env.scope.indexOf("per
 
 console.log(includeCoverage ? "coverage" : "", runUnitTests ? "unit" : "", runAcceptanceTests ? "acceptance" : "");
 
+const projectRoot = Path.resolve(__dirname, '../');
+
 const config = {
-	basePath: "./",
+	basePath: projectRoot,
 	files: [ {
 		pattern: "game-data/**",
 		watched: true,
