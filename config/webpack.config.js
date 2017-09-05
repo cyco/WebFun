@@ -1,6 +1,8 @@
 const Path = require("path");
 
-const projectRoot = Path.resolve(__dirname);
+const projectRoot = Path.resolve(__dirname, '../');
+const sourceRoot = Path.resolve(projectRoot, "src");
+
 module.exports = {
 	entry: "./src/index.js",
 	output: {
@@ -10,17 +12,16 @@ module.exports = {
 	resolve: {
 		extensions: [ ".js", ".ts" ],
 		alias: {
-			"src": Path.resolve(projectRoot, "src"),
-			"std": Path.resolve(projectRoot, "src/std"),
-			"std.dom": Path.resolve(projectRoot, "src/std.dom"),
-			"std.webgl": Path.resolve(projectRoot, "src/std.webgl"),
-			"libs": Path.resolve(projectRoot, "src/libs"),
+			"src": sourceRoot,
+			"std": Path.resolve(sourceRoot, "std"),
+			"std.dom": Path.resolve(sourceRoot, "std.dom"),
+			"std.webgl": Path.resolve(sourceRoot, "std.webgl"),
+			"libs": Path.resolve(sourceRoot, "libs"),
 			"test-helpers": Path.resolve(projectRoot, "test/helpers"),
 			"fs": Path.resolve(projectRoot, "test/helpers/polyfill/fs.js"),
 			"path": Path.resolve(projectRoot, "test/helpers/polyfill/path.js"),
-			"libs": Path.resolve(projectRoot, "src/libs.js"),
 			// disable zlib (imported from KaitaiStream)
-			"zlib": Path.resolve(projectRoot, "src/util/empty.js")
+			"zlib": Path.resolve(sourceRoot, "util/empty.js")
 		},
 		unsafeCache: true
 	},

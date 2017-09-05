@@ -4,19 +4,19 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "build": "webpack",
-    "build:cont": "webpack --watch",
-    "start": "webpack-dev-server --config webpack.config.js",
-    "test": "karma start karma.conf.js --single-run",
-    "test:cont": "karma start",
-    "test:cov": "cross-env coverage=1 karma start karma.conf.js --single-run",
-    "test:cov:cont": "cross-env coverage=1 karma start",
-    "test:cont:cov": "cross-env coverage=1 karma start",
-    "test:acceptance": "cross-env scope=acceptance karma start karma.conf.js --single-run --",
-    "test:unit": "cross-env coverage=1 scope=unit karma start karma.conf.js --single-run",
-    "test:coverage": "cross-env coverage=1 scope=unit,acceptance,performance karma start karma.conf.js --single-run",
-    "test:unit:cont": "cross-env coverage=1 scope=unit karma start",
-    "test:full": "cross-env coverage=1 scope=unit,acceptance,performance karma start",
+    "build": "webpack --config config/webpack.config.js",
+    "build:cont": "webpack --config config/webpack.config.js --watch",
+    "start": "webpack-dev-server --config config/webpack.config.js",
+    "test": "karma start config/karma.conf.js --single-run",
+    "test:cont": "karma start config/karma.conf.js",
+    "test:cov": "cross-env coverage=1 karma start config/karma.conf.js --single-run",
+    "test:cov:cont": "cross-env coverage=1 karma start config/karma.conf.js",
+    "test:cont:cov": "cross-env coverage=1 karma start config/karma.conf.js",
+    "test:acceptance": "cross-env scope=acceptance karma start config/karma.conf.js --single-run --",
+    "test:unit": "cross-env coverage=1 scope=unit karma start config/karma.conf.js --single-run",
+    "test:coverage": "cross-env coverage=1 scope=unit,acceptance,performance karma start config/karma.conf.js --single-run",
+    "test:unit:cont": "cross-env coverage=1 scope=unit karma start config/karma.conf.js",
+    "test:full": "cross-env coverage=1 scope=unit,acceptance,performance karma start config/karma.conf.js",
     "gen-coverage": "genhtml test/coverage/unit.lcov test/coverage/acceptance/lcov.info -o test/coverage/html",
     "test:performance": "cross-env scope=performance karma start karma.conf.js --single-run",
     "world": "node -- tools/generate-world.bin.js -v -d \"game-data/yoda.data\"",
@@ -28,8 +28,7 @@
       "es2015"
     ],
     "plugins": [
-      "babel-plugin-syntax-async-functions",
-      "babel-plugin-transform-export-extensions"
+      "babel-plugin-syntax-async-functions"
     ]
   },
   "dependencies": {
@@ -44,7 +43,6 @@
     "babel-loader": "^7.1.2",
     "babel-plugin-istanbul": "^4.1.4",
     "babel-plugin-syntax-async-functions": "^6.13.0",
-    "babel-plugin-transform-export-extensions": "^6.22.0",
     "babel-preset-es2015": "^6.24.1",
     "canvas": "^1.6.6",
     "cross-env": "^5.0.5",
