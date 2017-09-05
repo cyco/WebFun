@@ -15,9 +15,9 @@ export default class {
 
 	registerComponent(Component) {
 		console.assert(Component.TagName, `Components must define a tag to be used!`);
-		console.assert(!this.components[Component.TagName], `A component with tag '${Component.TagName}' is already registered!`);
+		console.assert(!this.components[ Component.TagName ], `A component with tag '${Component.TagName}' is already registered!`);
 
 		customElements.define(Component.TagName, Component, Component.Options);
-		this.components[Component.TagName] = Component;
+		this.components[ Component.TagName ] = Component;
 	}
 }

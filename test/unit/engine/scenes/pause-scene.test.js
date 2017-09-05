@@ -8,8 +8,8 @@ describe("PauseScene", () => {
 	it("watches the input manager for pause button input and eventually pops itself from the scene manager", () => {
 		let popCalled = false;
 		const engine = {
-			inputManager: {pause: true},
-			sceneManager: {popScene: () => popCalled = true}
+			inputManager: { pause: true },
+			sceneManager: { popScene: () => popCalled = true }
 		};
 
 		const scene = new PauseScene();

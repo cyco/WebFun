@@ -1,6 +1,8 @@
-export * as PuzzleID from "./puzzle-id";
-export * as HotspotType from "./hotspot-type";
-export * as WorldItem from "./world-item";
-export * as ZoneType from "./zone-type";
-export * as TileSpecs from "./tile-specs";
-export * as Array from "./array";
+import * as PuzzleID from "./puzzle-id";
+import * as HotspotType from "./hotspot-type";
+import * as WorldItem from "./world-item";
+import * as ZoneType from "./zone-type";
+import * as TileSpecs from "./tile-specs";
+import * as Array from "./array";
+
+export { PuzzleID, HotspotType, WorldItem, ZoneType, TileSpecs, Array };

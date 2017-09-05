@@ -1,3 +1,5 @@
-export ModalSession from "./modal-session";
-export ResetCursor from "./reset-cursor";
-export WindowModalSession from "./window-modal-session";
+import ModalSession from "./modal-session";
+import ResetCursor from "./reset-cursor";
+import WindowModalSession from "./window-modal-session";
+
+export { ModalSession, ResetCursor, WindowModalSession };

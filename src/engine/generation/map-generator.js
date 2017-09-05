@@ -69,11 +69,11 @@ function getIslandOrientation(x, y) {
 function determineRanges(size) {
 	switch (size) {
 		case WorldSize.SMALL:
-			return [new Range(5, 8), new Range(4, 6), new Range(1, 1), new Range(1, 1)];
+			return [ new Range(5, 8), new Range(4, 6), new Range(1, 1), new Range(1, 1) ];
 		case WorldSize.MEDIUM:
-			return [new Range(5, 9), new Range(5, 9), new Range(4, 8), new Range(3, 8)];
+			return [ new Range(5, 9), new Range(5, 9), new Range(4, 8), new Range(3, 8) ];
 		case WorldSize.LARGE:
-			return [new Range(6, 12), new Range(6, 12), new Range(6, 11), new Range(4, 11)];
+			return [ new Range(6, 12), new Range(6, 12), new Range(6, 11), new Range(4, 11) ];
 		default:
 			throw "Invalid world size specified";
 	}
@@ -161,7 +161,7 @@ function handle_neighbor(x, y, iteration, xdif, ydif) {
 	if (!should_place_blockade ||
 		(ydif && !canPlaceBlockade) ||
 		(xdif && is_within_blockade_range)) {
-		typeMap[item_idx] = WorldItemType.Empty;
+		typeMap[ item_idx ] = WorldItemType.Empty;
 		++placedPuzzles;
 		--remaining_count_to_place;
 		return true;
@@ -187,19 +187,19 @@ function constructor() {
 
 function _initializeTypeMap(spaceportX, spaceportY) {
 	typeMap = new Uint16Array(100);
-	typeMap[44] = WorldItemType.Empty;
-	typeMap[45] = WorldItemType.Empty;
-	typeMap[54] = WorldItemType.Empty;
-	typeMap[55] = WorldItemType.Empty;
+	typeMap[ 44 ] = WorldItemType.Empty;
+	typeMap[ 45 ] = WorldItemType.Empty;
+	typeMap[ 54 ] = WorldItemType.Empty;
+	typeMap[ 55 ] = WorldItemType.Empty;
 
-	typeMap[spaceportX + 10 * spaceportY] = WorldItemType.Spaceport;
+	typeMap[ spaceportX + 10 * spaceportY ] = WorldItemType.Spaceport;
 }
 
 
 function _initializeOrderMap() {
 	orderMap = new Int16Array(100);
 	for (let i = 0, len = orderMap.length; i < len; i++) {
-		orderMap[i] = -1;
+		orderMap[ i ] = -1;
 	}
 }
 
@@ -219,12 +219,12 @@ function generate(seed, size) {
 	const ranges = determineRanges(size);
 	let itemsToPlace = travels;
 	itemsToPlace += blockades;
-	itemsToPlace += ranges[0].randomElement();
+	itemsToPlace += ranges[ 0 ].randomElement();
 
 	_determinePuzzleLocations(2, Math.min(itemsToPlace, 12));
-	_determinePuzzleLocations(3, ranges[1].randomElement());
-	_determinePuzzleLocations(4, ranges[2].randomElement());
-	_determineAdditionalPuzzleLocations(ranges[3].randomElement());
+	_determinePuzzleLocations(3, ranges[ 1 ].randomElement());
+	_determinePuzzleLocations(4, ranges[ 2 ].randomElement());
+	_determineAdditionalPuzzleLocations(ranges[ 3 ].randomElement());
 
 	const islandBuilder = new IslandBuilder(typeMap);
 	islandBuilder.placeIslands(placedTravels);
@@ -404,7 +404,7 @@ function _mapCountStuff() {
 	blockades = 0;
 	puzzles = 0;
 	for (let i = 0; i < 100; i++) {
-		switch (typeMap[i]) {
+		switch (typeMap[ i ]) {
 			case WorldItemType.Empty:
 			case WorldItemType.Island:
 			case WorldItemType.Candidate:
@@ -470,14 +470,14 @@ function _placeIntermediateWorldThing() {
 }
 
 function _tryPlacingTravel(item_idx, iteration, last_item) {
-	if (typeMap[item_idx] !== WorldItemType.Empty) return;
+	if (typeMap[ item_idx ] !== WorldItemType.Empty) return;
 
 	if (travels <= placedTravels) return;
 	if (((rand()) & 7) >= travel_threshold) return;
 	if (last_item === WorldItemType.TravelStart) return;
 	if (iteration <= 2) return;
 
-	typeMap[item_idx] = WorldItemType.TravelStart;
+	typeMap[ item_idx ] = WorldItemType.TravelStart;
 	placedTravels++;
 }
 
@@ -533,7 +533,7 @@ function _determinePuzzleLocations(iteration, puzzle_count_to_place) {
 
 		let item_idx = x + 10 * y;
 		Message("%dx%d", x, y);
-		if (typeMap[item_idx]) continue;
+		if (typeMap[ item_idx ]) continue;
 
 		handle_neighbor(x, y, iteration, -1, 0) ||
 		handle_neighbor(x, y, iteration, 1, 0) ||
@@ -560,7 +560,7 @@ function _determineAdditionalPuzzleLocations(travels_to_place) {
 
 		let world_idx = x + 10 * y;
 		Message("AdditionalPuzzleLocations: %dx%d", x, y);
-		if (typeMap[world_idx] !== 0)
+		if (typeMap[ world_idx ] !== 0)
 			continue;
 
 		let item_before = typeMap.get(x - 1, y);
@@ -596,17 +596,17 @@ function _determineAdditionalPuzzleLocations(travels_to_place) {
 			case WorldItemType.Empty:
 			case WorldItemType.TravelStart:
 			case WorldItemType.Spaceport:
-				typeMap[world_idx] = WorldItemType.Empty;
+				typeMap[ world_idx ] = WorldItemType.Empty;
 				break;
 			case WorldItemType.Candidate:
-				typeMap[world_idx] = WorldItemType.Candidate;
+				typeMap[ world_idx ] = WorldItemType.Candidate;
 
 				if (!x_diff) {
-					if (x > 0) typeMap[world_idx - 1] = WorldItemType.KeptFree;
-					if (x < 9) typeMap[world_idx + 1] = WorldItemType.KeptFree;
+					if (x > 0) typeMap[ world_idx - 1 ] = WorldItemType.KeptFree;
+					if (x < 9) typeMap[ world_idx + 1 ] = WorldItemType.KeptFree;
 				} else if (!y_diff) {
-					if (y > 0) typeMap[world_idx - 10] = WorldItemType.KeptFree;
-					if (y < 9) typeMap[world_idx + 10] = WorldItemType.KeptFree;
+					if (y > 0) typeMap[ world_idx - 10 ] = WorldItemType.KeptFree;
+					if (y < 9) typeMap[ world_idx + 10 ] = WorldItemType.KeptFree;
 				}
 
 				continue;
@@ -615,40 +615,40 @@ function _determineAdditionalPuzzleLocations(travels_to_place) {
 				if (WorldItemType.None < item_below && item_below <= WorldItemType.BlockNorth) continue;
 				if (WorldItemType.None < item_above && item_above <= WorldItemType.BlockNorth) continue;
 
-				typeMap[world_idx] = WorldItemType.Candidate;
+				typeMap[ world_idx ] = WorldItemType.Candidate;
 
-				if (y > 0) typeMap[world_idx - 10] = WorldItemType.KeptFree;
-				if (y < 9) typeMap[world_idx + 10] = WorldItemType.KeptFree;
+				if (y > 0) typeMap[ world_idx - 10 ] = WorldItemType.KeptFree;
+				if (y < 9) typeMap[ world_idx + 10 ] = WorldItemType.KeptFree;
 				break;
 			case WorldItemType.BlockWest:
 				if (x_diff !== -1) continue;
 				if (WorldItemType.None < item_above && item_above <= WorldItemType.BlockNorth) continue;
 				if (WorldItemType.None < item_below && item_below <= WorldItemType.BlockNorth) continue;
 
-				typeMap[world_idx] = WorldItemType.Candidate;
+				typeMap[ world_idx ] = WorldItemType.Candidate;
 
-				if (y > 0) typeMap[world_idx - 10] = WorldItemType.KeptFree;
-				if (y < 9) typeMap[world_idx + 10] = WorldItemType.KeptFree;
+				if (y > 0) typeMap[ world_idx - 10 ] = WorldItemType.KeptFree;
+				if (y < 9) typeMap[ world_idx + 10 ] = WorldItemType.KeptFree;
 				break;
 			case WorldItemType.BlockNorth:
 				if (y_diff !== -1) continue;
 				if (WorldItemType.None < item_before && item_before <= WorldItemType.BlockNorth) continue;
 				if (WorldItemType.None < item_after && item_after <= WorldItemType.BlockNorth) continue;
 
-				typeMap[world_idx] = WorldItemType.Candidate;
+				typeMap[ world_idx ] = WorldItemType.Candidate;
 
-				if (x > 0) typeMap[world_idx - 1] = WorldItemType.KeptFree;
-				if (x < 9) typeMap[world_idx + 1] = WorldItemType.KeptFree;
+				if (x > 0) typeMap[ world_idx - 1 ] = WorldItemType.KeptFree;
+				if (x < 9) typeMap[ world_idx + 1 ] = WorldItemType.KeptFree;
 				break;
 			case WorldItemType.BlockSouth:
 				if (y_diff !== 1) continue;
 				if (WorldItemType.None < item_before && item_before <= WorldItemType.BlockNorth) continue;
 				if (WorldItemType.None < item_after && item_after <= WorldItemType.BlockNorth) continue;
 
-				typeMap[world_idx] = WorldItemType.Candidate;
+				typeMap[ world_idx ] = WorldItemType.Candidate;
 
-				if (x > 0) typeMap[world_idx - 1] = WorldItemType.KeptFree;
-				if (x < 9) typeMap[world_idx + 1] = WorldItemType.KeptFree;
+				if (x > 0) typeMap[ world_idx - 1 ] = WorldItemType.KeptFree;
+				if (x < 9) typeMap[ world_idx + 1 ] = WorldItemType.KeptFree;
 				break;
 			default:
 				continue;

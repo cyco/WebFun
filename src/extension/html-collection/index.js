@@ -1,2 +1,4 @@
-export find from "./find";
-export map from "./map";
+import find from "./find";
+import map from "./map";
+
+export { find, map };

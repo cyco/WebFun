@@ -29,9 +29,9 @@ export default class extends Component {
 		let url = Image.blankImage;
 		this._tileContainer.style.backgroundPosition = "";
 		if (this._weapon && this._weapon.frames && this._weapon.frames.length) {
-			const tileID = this._weapon.frames[0].extensionRight;
+			const tileID = this._weapon.frames[ 0 ].extensionRight;
 			if (tileID !== 0xFFFF) {
-				const tile = this.data.tiles[tileID];
+				const tile = this.data.tiles[ tileID ];
 				url = tile.image.dataURL;
 				this._tileContainer.style.backgroundImage = url;
 			}

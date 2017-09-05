@@ -1,14 +1,31 @@
-export Button from "./button";
-export Checkbox from "./checkbox";
-export Group from "./group";
-export IconButton from "./icon-button";
-export Menu from "./menu-item";
-export Menubar from "./menubar";
-export MenuItemSeparator from "./menu-item-separator";
-export MenuView from "./menu-view";
-export MenuWindow from "./menu-window";
-export RadioButton from "./radio-button";
-export SubmenuWindow from "./submenu-window";
-export Window from "./window";
-export WindowTitlebar from "./window-titlebar";
-export Slider from "./slider";
+import Button from "./button";
+import Checkbox from "./checkbox";
+import Group from "./group";
+import IconButton from "./icon-button";
+import Menu from "./menu-item";
+import Menubar from "./menubar";
+import MenuItemSeparator from "./menu-item-separator";
+import MenuView from "./menu-view";
+import MenuWindow from "./menu-window";
+import RadioButton from "./radio-button";
+import SubmenuWindow from "./submenu-window";
+import Window from "./window";
+import WindowTitlebar from "./window-titlebar";
+import Slider from "./slider";
+
+export {
+	Button,
+	Checkbox,
+	Group,
+	IconButton,
+	Menu,
+	Menubar,
+	MenuItemSeparator,
+	MenuView,
+	MenuWindow,
+	RadioButton,
+	SubmenuWindow,
+	Window,
+	WindowTitlebar,
+	Slider
+};

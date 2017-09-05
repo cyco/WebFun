@@ -14,13 +14,13 @@ export default class ModalSession {
 	run() {
 		document.body.appendChild(this._overlay);
 		this._locationHandler = (e) => (this._lastMouseLocation = new Point(e.clientX, e.clientY));
-		["mouseup", "mousedown", "mousemove", "mousedrag"].forEach(
+		[ "mouseup", "mousedown", "mousemove", "mousedrag" ].forEach(
 			(eventName) => window.addEventListener(eventName, this._locationHandler));
 
 	}
 
 	end(code) {
-		["mouseup", "mousedown", "mousemove", "mousedrag"].forEach(
+		[ "mouseup", "mousedown", "mousemove", "mousedrag" ].forEach(
 			(eventName) => window.removeEventListener(eventName, this._locationHandler));
 		ResetCursor();
 		this._overlay.remove();

@@ -1,5 +1,7 @@
-export MainMenu from "./main-menu";
-export MainWindow from "./main-window";
-export StatisticsWindow from "./statistics-window";
-export GameSpeedWindow from "./game-speed-window";
-export DifficultyWindow from "./difficulty-window";
+import MainMenu from "./main-menu";
+import MainWindow from "./main-window";
+import StatisticsWindow from "./statistics-window";
+import GameSpeedWindow from "./game-speed-window";
+import DifficultyWindow from "./difficulty-window";
+
+export { MainMenu, MainWindow, StatisticsWindow, GameSpeedWindow, DifficultyWindow };

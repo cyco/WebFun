@@ -7,12 +7,12 @@ describeInstruction("AddToPadding", (execute, engine) => {
 
 		let instruction = new Instruction({});
 		instruction._opcode = AddToPadding.Opcode;
-		instruction._arguments = [2];
+		instruction._arguments = [ 2 ];
 
 		execute(instruction);
 		expect(engine.currentZone.padding).toBe(7);
 
-		instruction._arguments = [-3];
+		instruction._arguments = [ -3 ];
 		execute(instruction);
 		expect(engine.currentZone.padding).toBe(4);
 	});

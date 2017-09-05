@@ -89,7 +89,7 @@ class Writer {
 		this._writeZone(zone, visited, stream);
 		const doors = zone.hotspots.filter((hotspot: Hotspot) => hotspot.type === HotspotType.DoorIn && hotspot.arg !== -1);
 		doors.forEach((hotspot: Hotspot) => {
-			const zone = this._data.zones[hotspot.arg];
+			const zone = this._data.zones[ hotspot.arg ];
 			stream.writeInt16(zone.id);
 			stream.writeUint32(zone.visited);
 			this._writeRoom(zone, visited, stream);
@@ -173,7 +173,7 @@ class Writer {
 				stream.writeInt16(item.zoneId);
 				stream.writeUint32(item.visited);
 
-				this._writeRoom(this._data.zones[item.zoneId], item.visited, stream);
+				this._writeRoom(this._data.zones[ item.zoneId ], item.visited, stream);
 			}
 		}
 

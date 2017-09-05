@@ -39,7 +39,7 @@ describe("BatchLoader", () => {
 			done();
 		};
 
-		batchLoader.addOperations([new SampleOperation(), new FailingOperation()]);
+		batchLoader.addOperations([ new SampleOperation(), new FailingOperation() ]);
 		batchLoader.start();
 	});
 

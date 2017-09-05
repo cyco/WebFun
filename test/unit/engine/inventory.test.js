@@ -42,15 +42,15 @@ describe("Inventory", () => {
 	});
 
 	it("has a method for easy enumeration", () => {
-		inventory.addItem({id: 3});
-		inventory.addItem({id: 4});
+		inventory.addItem({ id: 3 });
+		inventory.addItem({ id: 4 });
 
 		let enumeratedItemIds = [];
 		inventory.forEach(function (item) {
 			enumeratedItemIds.push(item.id);
 		});
 
-		expect(enumeratedItemIds).toEqual([3, 4]);
+		expect(enumeratedItemIds).toEqual([ 3, 4 ]);
 	});
 
 	describe("Events", () => {
@@ -59,7 +59,7 @@ describe("Inventory", () => {
 		});
 
 		it("sends an event when an item is added", (done) => {
-			let mockItem = {id: 3};
+			let mockItem = { id: 3 };
 			inventory.addEventListener(Events.ItemsDidChange, function (event) {
 				expect(event.detail.mode).toEqual("add");
 				expect(event.detail.item).toBe(mockItem);
@@ -70,7 +70,7 @@ describe("Inventory", () => {
 		});
 
 		it("sends an event when an item is removed", (done) => {
-			let mockItem = {id: 3};
+			let mockItem = { id: 3 };
 			inventory.addItem(mockItem);
 
 			inventory.addEventListener(Events.ItemsDidChange, function (event) {

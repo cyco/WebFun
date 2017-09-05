@@ -1,3 +1,7 @@
-export isInRange from "./is-in-range";
-export times from "./times";
-export toHex from "./to-hex";
+import isInRange from "./is-in-range";
+import times from "./times";
+import toHex from "./to-hex";
+
+export {
+	isInRange, times, toHex
+};

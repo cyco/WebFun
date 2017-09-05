@@ -8,8 +8,8 @@ describe("PickupScene", () => {
 	it("watches the input manager for pause button input and eventually pops itself from the scene manager", () => {
 		let popCalled = false;
 		const engine = {
-			inputManager: {pickUp: false},
-			sceneManager: {popScene: () => popCalled = true},
+			inputManager: { pickUp: false },
+			sceneManager: { popScene: () => popCalled = true },
 			inventory: {
 				addItem: () => {
 				}
@@ -49,7 +49,7 @@ describe("PickupScene", () => {
 	it("counts ticks and flashes the item", () => {
 		const engine = {
 			inputManager: {},
-			sceneManager: {_stack: [{camera: {offset: {}}}]}
+			sceneManager: { _stack: [ { camera: { offset: {} } } ] }
 		};
 		const renderer = {
 			renderTile() {
@@ -84,7 +84,7 @@ describe("PickupScene", () => {
 	it("renders the tile at the correct location", () => {
 		const engine = {
 			inputManager: {},
-			sceneManager: {_stack: [{camera: {offset: {x: -2, y: -1}}}]}
+			sceneManager: { _stack: [ { camera: { offset: { x: -2, y: -1 } } } ] }
 		};
 		const renderer = {
 			renderTile() {
@@ -95,7 +95,7 @@ describe("PickupScene", () => {
 		const scene = new PickupScene();
 		scene.engine = engine;
 		scene.tile = item;
-		scene.location = {x: 4, y: 8};
+		scene.location = { x: 4, y: 8 };
 
 		5..times(() => scene.update());
 

@@ -5,7 +5,7 @@ const readUint32 = function (offset) {
 	else
 		buffer = new Uint32Array(this, offset, 1);
 
-	return buffer[0];
+	return buffer[ 0 ];
 };
 
 ArrayBuffer.prototype.readUint32 = ArrayBuffer.prototype.readUint32 || readUint32;

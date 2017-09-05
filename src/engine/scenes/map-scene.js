@@ -42,7 +42,7 @@ export default class MapScene extends Scene {
 		this._ticks = 4;
 
 		const self = this;
-		this._location = this.engine.data.tiles[0x345];
+		this._location = this.engine.data.tiles[ 0x345 ];
 		this.engine.inputManager.mouseDownHandler = (p) => self.mouseDown(p);
 		this.engine.inputManager.keyDownHandler = (e) => {
 			self._cheatInput.addCharacter(String.fromCharCode(e.keyCode).toLowerCase());
@@ -162,8 +162,8 @@ export default class MapScene extends Scene {
 	_tileForZone(zone) {
 		let tile = LocatorTile.ForZone(zone);
 		if (tile instanceof Array)
-			tile = tile[zone.solved ? 1 : 0];
+			tile = tile[ zone.solved ? 1 : 0 ];
 
-		return this.engine.data.tiles[tile];
+		return this.engine.data.tiles[ tile ];
 	}
 }

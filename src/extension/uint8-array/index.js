@@ -1,1 +1,3 @@
-export asString from "./as-string";
+import asString from "./as-string";
+
+export { asString };

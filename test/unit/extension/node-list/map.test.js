@@ -26,6 +26,6 @@ describe("NodeList.map", sandboxed((sand) => {
 		let result = map.call(nodeList, function (node) {
 			return node.textContent;
 		});
-		expect(result).toEqual(["test", "values"]);
+		expect(result).toEqual([ "test", "values" ]);
 	});
 }));

@@ -1,2 +1,4 @@
-export append from "./append";
-export clear from "./clear";
+import append from "./append";
+import clear from "./clear";
+
+export { append, clear };

@@ -36,7 +36,7 @@ import * as TileAtIsAgain from "./tile-at-is-again";
 import * as GamesWonIsGreaterThan from "./games-won-is-greater-than";
 
 const Conditions = {};
-const exportCondition = (C) => Conditions[C.Opcode] = C.default;
+const exportCondition = (C) => Conditions[ C.Opcode ] = C.default;
 
 exportCondition(ZoneNotInitialized);
 exportCondition(ZoneEntered);
@@ -79,7 +79,7 @@ export default Conditions;
 
 
 const Opcode = {};
-const exportOpcode = (name, {Opcode: code}) => Opcode[name] = code;
+const exportOpcode = (name, { Opcode: code }) => Opcode[ name ] = code;
 exportOpcode("ZoneNotInitialized", ZoneNotInitialized);
 exportOpcode("ZoneEntered", ZoneEntered);
 exportOpcode("Bump", Bump);

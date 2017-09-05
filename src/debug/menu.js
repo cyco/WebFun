@@ -4,14 +4,14 @@ import { MenuItemSeparator, MenuItemState } from "src/ui";
 
 const SettingsItem = (label, key) => ({
 	title: label,
-	callback: () => Settings[key] = !Settings[key],
-	state: () => Settings[key] ? MenuItemState.On : MenuItemState.Off
+	callback: () => Settings[ key ] = !Settings[ key ],
+	state: () => Settings[ key ] ? MenuItemState.On : MenuItemState.Off
 });
 
 export default {
 	title: "Debug",
 	mnemonic: 0,
-	submenu: [{
+	submenu: [ {
 		title: "Start Game",
 		callback: () => false,
 		enabled: () => window.data

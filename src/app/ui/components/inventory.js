@@ -67,7 +67,7 @@ export default class extends Component {
 			return;
 		}
 
-		const imgNode = this.querySelectorAll(InventoryRow.TagName)[row].querySelector("img");
+		const imgNode = this.querySelectorAll(InventoryRow.TagName)[ row ].querySelector("img");
 		imgNode.src = Image.blankImage;
 
 		const modalSession = new ModalSession();
@@ -98,7 +98,7 @@ export default class extends Component {
 			eventName = Event.PlacedConsumeable;
 		}
 
-		this.dispatchEvent(new CustomEvent(eventName, {detail: eventDetail}));
+		this.dispatchEvent(new CustomEvent(eventName, { detail: eventDetail }));
 	}
 
 	addRow(model) {

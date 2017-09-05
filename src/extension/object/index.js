@@ -1,1 +1,3 @@
-export each from "./each";
+import each from "./each";
+
+export { each };

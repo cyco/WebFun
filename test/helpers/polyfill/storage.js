@@ -4,11 +4,11 @@ global.Storage = class {
 	}
 
 	setItem(key, value) {
-		this._values[key] = "" + value;
+		this._values[ key ] = "" + value;
 	}
 
 	getItem(key) {
-		return this._values[key] === undefined ? null : this._values[key];
+		return this._values[ key ] === undefined ? null : this._values[ key ];
 	}
 
 	clear() {

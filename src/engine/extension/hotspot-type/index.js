@@ -1,2 +1,3 @@
-export toZoneType from "./to-zone-type";
-export canHoldItem from "./can-hold-item";
+import toZoneType from "./to-zone-type";
+import canHoldItem from "./can-hold-item";
+export{ toZoneType, canHoldItem,}

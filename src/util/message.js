@@ -10,15 +10,15 @@ export default (...argss) => {
 	if (!messagesEnabled) return;
 	let args = argss; // Array.prototype.slice.call(argss);
 
-	let formatString = args[0];
+	let formatString = args[ 0 ];
 	let lastArgumentPosition;
 
 	for (let i = 1; i < args.length; i++) {
-		let value = args[i];
+		let value = args[ i ];
 		let currentArgumentPosition = formatString.indexOf("%", lastArgumentPosition);
 		if (currentArgumentPosition === -1) continue;
 
-		let formatArg = formatString[currentArgumentPosition + 1];
+		let formatArg = formatString[ currentArgumentPosition + 1 ];
 
 		if (typeof value === "undefined")
 			value = "<undefined>";
@@ -37,12 +37,12 @@ export default (...argss) => {
 			value = "65535";
 		lastArgumentPosition = currentArgumentPosition + 1;
 
-		args[i] = value;
+		args[ i ] = value;
 	}
 
-	args[0] = args[0].replace(/%x/g, "%s");
-	args[0] = args[0].replace(/%d/g, "%s");
-	args[0] = args[0].replace(/\n$/g, "");
+	args[ 0 ] = args[ 0 ].replace(/%x/g, "%s");
+	args[ 0 ] = args[ 0 ].replace(/%d/g, "%s");
+	args[ 0 ] = args[ 0 ].replace(/\n$/g, "");
 
 	console.log(sprintf.apply(null, args));
 };

@@ -7,7 +7,7 @@ export default class extends IconButton {
 	}
 
 	static get observedAttributes() {
-		return ["label"];
+		return [ "label" ];
 	}
 
 	constructor() {

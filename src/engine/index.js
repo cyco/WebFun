@@ -1,23 +1,45 @@
 import "./extension";
 
-export Cheats from "./cheats";
-export Engine from "./engine";
-export GameData from "./game-data";
-export Generation from "./generation";
-export Hero from "./hero";
-export Input from "./input";
-export Inventory from "./inventory";
-export Metronome from "./metronome";
-export Objects from "./objects";
-export PersistentState from "./persistent-state";
-export SceneManager from "./scene-manager";
-export Scenes from "./scenes";
-export Script from "./script";
-export Story from "./story";
-export Types from "./types";
-export Yoda from "./yoda";
-export CanvasRenderer from "./rendering/canvas/canvas-renderer";
-export WebGLRenderer from "./rendering/webgl/renderer";
+import Cheats from "./cheats";
+import Engine from "./engine";
+import GameData from "./game-data";
+import Generation from "./generation";
+import Hero from "./hero";
+import Input from "./input";
+import Inventory from "./inventory";
+import Metronome from "./metronome";
+import Objects from "./objects";
+import PersistentState from "./persistent-state";
+import SceneManager from "./scene-manager";
+import Scenes from "./scenes";
+import Script from "./script";
+import Story from "./story";
+import Types from "./types";
+import Yoda from "./yoda";
+import CanvasRenderer from "./rendering/canvas/canvas-renderer";
+import WebGLRenderer from "./rendering/webgl/renderer";
+import DataFileReader from "./file-format/yodesk.ksy";
+import SaveGameReader from "./save-game/reader";
 
-export DataFileReader from "./file-format/yodesk.ksy";
-export SaveGameReader from "./save-game/reader";
+export {
+	Cheats,
+	Engine,
+	GameData,
+	Generation,
+	Hero,
+	Input,
+	Inventory,
+	Metronome,
+	Objects,
+	PersistentState,
+	SceneManager,
+	Scenes,
+	Script,
+	Story,
+	Types,
+	Yoda,
+	CanvasRenderer,
+	WebGLRenderer,
+	DataFileReader,
+	SaveGameReader
+};

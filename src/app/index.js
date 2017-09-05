@@ -1,2 +1,7 @@
-export main from "./main";
-export Loader from "./loader";
+import main from "./main";
+import Loader from "./loader";
+
+export {
+	main,
+	Loader
+};

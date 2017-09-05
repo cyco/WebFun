@@ -1,3 +1,5 @@
-export ZonesEditor from "./zones-editor";
-export TileEditor from "./tile-editor";
-export { ZoneEditor } from "./zone";
+import ZonesEditor from "./zones-editor";
+import TileEditor from "./tile-editor";
+import { ZoneEditor } from "./zone";
+
+export { ZonesEditor, TileEditor, ZoneEditor };

@@ -6,9 +6,9 @@ describeCondition("StandingOn", (check, engine) => {
 		const hero = engine.hero;
 		const condition = new Condition();
 		condition._opcode = StandingOn.Opcode;
-		condition._arguments = [1, 2, 5];
+		condition._arguments = [ 1, 2, 5 ];
 
-		hero.location = {x: 1, y: 2};
+		hero.location = { x: 1, y: 2 };
 		engine.currentZone.getTileID = () => {
 			return 5;
 		};
@@ -21,7 +21,7 @@ describeCondition("StandingOn", (check, engine) => {
 		hero.location.y = 3;
 		expect(check(condition)).toBeFalse();
 
-		hero.location = {x: 1, y: 2};
+		hero.location = { x: 1, y: 2 };
 		engine.currentZone.getTileID = () => {
 			return 3;
 		};

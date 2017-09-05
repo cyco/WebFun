@@ -14,10 +14,10 @@ describe("Storage", () => {
 		warnings = [];
 
 		localStorage.setItem = function (key, data) {
-			store[key] = data;
+			store[ key ] = data;
 		};
 		localStorage.getItem = function (key) {
-			return store[key];
+			return store[ key ];
 		};
 		console.warn = (...args) => {
 			warnings.push(args);
@@ -45,7 +45,7 @@ describe("Storage", () => {
 			};
 
 			localStorage.store("sample", object);
-			expect(store["sample"]).toBe("{\"a\":5}");
+			expect(store[ "sample" ]).toBe("{\"a\":5}");
 		});
 
 		it("will log a warning if the object can' be stringified", () => {
@@ -67,7 +67,7 @@ describe("Storage", () => {
 		});
 
 		it("retrieves objects from the storage", () => {
-			store["sample"] = "{ \"a\": 2 }";
+			store[ "sample" ] = "{ \"a\": 2 }";
 
 			let result = localStorage.load("sample");
 			expect(typeof result).toBe("object");
@@ -75,7 +75,7 @@ describe("Storage", () => {
 		});
 
 		it("logs a warning if the object can't be transformed from json", () => {
-			store["sample"] = "{ \"a\": 2 ";
+			store[ "sample" ] = "{ \"a\": 2 ";
 			localStorage.load("sample");
 			expect(warnings.length).toBe(1);
 		});

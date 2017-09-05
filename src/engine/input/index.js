@@ -1,2 +1,4 @@
-export InputManager from "./input-manager";
-export DesktopInputManager from "./desktop-input-manager";
+import InputManager from "./input-manager";
+import DesktopInputManager from "./desktop-input-manager";
+
+export { InputManager, DesktopInputManager };

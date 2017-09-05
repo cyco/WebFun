@@ -10,7 +10,7 @@ export default class WeaponsCheat extends Cheat {
 	}
 
 	_addItem(engine, id) {
-		const tile = engine.data.tiles[id];
+		const tile = engine.data.tiles[ id ];
 		engine.state.inventory.addItem(tile);
 	}
 

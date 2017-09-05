@@ -39,7 +39,7 @@ export default class DetonatorScene extends Scene {
 
 	render(renderer) {
 		for (let i = 0; i <= this._ticks && i <= this._detonatorFrames.length; i++) {
-			const frame = this._detonatorFrames[i];
+			const frame = this._detonatorFrames[ i ];
 			renderer.renderTile(frame, this._detonatorLocation.x, this._detonatorLocation.y);
 		}
 	}
@@ -53,6 +53,6 @@ export default class DetonatorScene extends Scene {
 		if (!e) return;
 
 		const data = e.data;
-		this._detonatorFrames = [0x202, 0x431, 0x432, 0x433].map((id) => data.getTile(id));
+		this._detonatorFrames = [ 0x202, 0x431, 0x432, 0x433 ].map((id) => data.getTile(id));
 	}
 }

@@ -3,7 +3,7 @@ import * as RemoveItem from "src/engine/script/instructions/remove-item";
 
 describeInstruction("RemoveItem", (execute, engine) => {
 	it("removes an item from the inventory", () => {
-		engine.data.tiles = [null, "fake-tile"];
+		engine.data.tiles = [ null, "fake-tile" ];
 		engine.inventory = {
 			removeItem() {
 			}
@@ -13,7 +13,7 @@ describeInstruction("RemoveItem", (execute, engine) => {
 
 		let instruction = new Instruction({});
 		instruction._opcode = RemoveItem.Opcode;
-		instruction._arguments = [1];
+		instruction._arguments = [ 1 ];
 
 		execute(instruction);
 		expect(engine.inventory.removeItem).toHaveBeenCalledWith("fake-tile");

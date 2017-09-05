@@ -1,5 +1,5 @@
 export default class NPC {
-	constructor({face, x, y, unknown1, unknown2, unknown3}) {
+	constructor({ face, x, y, unknown1, unknown2, unknown3 }) {
 		this._enabled = true;
 		this._face = face;
 		this._x = x;

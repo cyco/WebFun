@@ -57,7 +57,7 @@ export default class extends Component {
 	}
 
 	set selectedTile(t) {
-		let node = t === null ? this.firstElementChild : this._tileNodes[t.id];
+		let node = t === null ? this.firstElementChild : this._tileNodes[ t.id ];
 
 		if (this._selectedTileNode) {
 			this._selectedTileNode.removeAttribute("selected");

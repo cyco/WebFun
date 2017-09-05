@@ -1,1 +1,3 @@
-export goal from "./goal";
+import goal from "./goal";
+
+export { goal };
