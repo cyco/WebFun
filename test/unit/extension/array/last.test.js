@@ -5,7 +5,7 @@ describe("Array.last", () => {
 	});
 
 	it("simply returns the last element of an array", () => {
-		let array = ["a", "b", "c"];
+		let array = [ "a", "b", "c" ];
 		let result = array.last();
 		expect(result).toBe("c");
 	});

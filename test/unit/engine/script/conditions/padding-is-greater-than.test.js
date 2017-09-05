@@ -5,7 +5,7 @@ describeCondition("PaddingIsGreaterThan", (check, engine) => {
 	it("checks if the current zone's padding value is greater than the given value", () => {
 		const condition = new Condition();
 		condition._opcode = PaddingIsGreaterThan.Opcode;
-		condition._arguments = [5];
+		condition._arguments = [ 5 ];
 
 		engine.currentZone.padding = 5;
 		expect(check(condition)).toBeFalse();

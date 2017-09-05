@@ -37,15 +37,15 @@ export default class World {
 		}
 
 		const index = this._pointToIndex(x, y);
-		const worldItem = this._items[index];
+		const worldItem = this._items[ index ];
 		const zoneID = worldItem.zoneID;
 		if (zoneID === -1) return null;
-		return this.zones[zoneID];
+		return this.zones[ zoneID ];
 	}
 
 	setZone(x, y, zoneID) {
 		const index = this._pointToIndex(x, y);
-		const worldItem = this._items[index];
+		const worldItem = this._items[ index ];
 		worldItem.zoneID = zoneID;
 	}
 
@@ -54,7 +54,7 @@ export default class World {
 		for (let y = 0; y < World.HEIGHT; y++) {
 			for (let x = 0; x < World.HEIGHT; x++) {
 				let index = this._pointToIndex(x, y);
-				if (this._items[index].zoneID === zoneID) {
+				if (this._items[ index ].zoneID === zoneID) {
 					return new Point(x, y);
 				}
 			}
@@ -64,7 +64,7 @@ export default class World {
 	}
 
 	locationOfZoneWithID(zoneID) {
-		const zone = this.zones[zoneID];
+		const zone = this.zones[ zoneID ];
 		if (!zone) return null;
 		return this.locationOfZone(zone);
 	}
@@ -78,11 +78,11 @@ export default class World {
 	}
 
 	at(x, y) {
-		return this._items[this._pointToIndex(x, y)];
+		return this._items[ this._pointToIndex(x, y) ];
 	}
 
 	index(index) {
-		return this._items[index];
+		return this._items[ index ];
 	}
 
 	layDownHotspotItems() {

@@ -30,9 +30,9 @@ export default class BreakpointStore extends EventTarget {
 	}
 
 	addBreakpoint(bpt) {
-		this._breakpoints[bpt.id] = bpt;
+		this._breakpoints[ bpt.id ] = bpt;
 		this._store();
-		this.dispatchEvent(new Event(Events.DidAddBreakpoint), {detail: {breakpoint: bpt}});
+		this.dispatchEvent(new Event(Events.DidAddBreakpoint), { detail: { breakpoint: bpt } });
 	}
 
 	hasBreakpoint(id) {
@@ -40,13 +40,13 @@ export default class BreakpointStore extends EventTarget {
 	}
 
 	getBreakpoint(id) {
-		return this._breakpoints[id];
+		return this._breakpoints[ id ];
 	}
 
 	removeBreakpoint(bpt) {
-		delete this._breakpoints[bpt.id];
+		delete this._breakpoints[ bpt.id ];
 		this._store();
-		this.dispatchEvent(new Event(Events.DidRemoveBreakpoint), {detail: {breakpoint: bpt}});
+		this.dispatchEvent(new Event(Events.DidRemoveBreakpoint), { detail: { breakpoint: bpt } });
 	}
 
 	_store() {
@@ -65,7 +65,7 @@ export default class BreakpointStore extends EventTarget {
 
 				if (breakpoint.id !== desc) {
 					console.warn(`Unable to restore breakpoint ${desc}`);
-				} else this._breakpoints[desc] = breakpoint;
+				} else this._breakpoints[ desc ] = breakpoint;
 			});
 		} catch (e) {
 			console.warn(`Unable to deserialize breakpoints! ${e}`);

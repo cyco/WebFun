@@ -13,7 +13,7 @@ export default class extends Component {
 	}
 
 	static get observedAttributes() {
-		return ["current"];
+		return [ "current" ];
 	}
 
 	constructor() {

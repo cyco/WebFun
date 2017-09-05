@@ -40,7 +40,7 @@ export default class Inventory extends EventTarget {
 	contains(item) {
 		if (typeof item === "number") {
 			for (let i = 0, len = this._items.length; i < len; i++)
-				if (this._items[i].id === item) return true;
+				if (this._items[ i ].id === item) return true;
 		} else {
 			return this._items.indexOf(item) !== -1;
 		}

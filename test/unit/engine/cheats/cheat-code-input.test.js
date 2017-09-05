@@ -15,7 +15,7 @@ describe("CheatCodeInput", () => {
 	beforeEach(() => cheatExecuted = false);
 
 	it("takes pressed keys and executes matching cheats", () => {
-		const subject = new CheatCodeInput([mockCheat]);
+		const subject = new CheatCodeInput([ mockCheat ]);
 
 		subject.addCharacter("t");
 		subject.addCharacter("e");
@@ -31,7 +31,7 @@ describe("CheatCodeInput", () => {
 	});
 
 	it("returns an array of messages to be shown for each executed cheat", () => {
-		const subject = new CheatCodeInput([mockCheat]);
+		const subject = new CheatCodeInput([ mockCheat ]);
 
 		subject.addCharacter("t");
 		subject.addCharacter("e");
@@ -41,11 +41,11 @@ describe("CheatCodeInput", () => {
 
 		subject.addCharacter("t");
 
-		expect(subject.execute()).toEqual(["test executed"]);
+		expect(subject.execute()).toEqual([ "test executed" ]);
 	});
 
 	it("can reset previously given iinput", () => {
-		const subject = new CheatCodeInput([mockCheat]);
+		const subject = new CheatCodeInput([ mockCheat ]);
 
 		subject.addCharacter("t");
 		subject.addCharacter("e");

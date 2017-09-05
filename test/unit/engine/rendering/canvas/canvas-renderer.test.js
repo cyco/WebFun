@@ -20,7 +20,7 @@ describe("CanvasRenderer", () => {
 			restore() {
 			}
 		};
-		canvas = {getContext: () => context};
+		canvas = { getContext: () => context };
 		subject = new CanvasRenderer(canvas);
 	});
 
@@ -54,7 +54,7 @@ describe("CanvasRenderer", () => {
 		subject.renderTile(null, 0, 0);
 		expect(context.drawImage).not.toHaveBeenCalled();
 
-		const tile = {image: {representation: "image-rep"}};
+		const tile = { image: { representation: "image-rep" } };
 		subject.renderTile(tile, 1, 2);
 		expect(context.drawImage).toHaveBeenCalledWith("image-rep", 32, 64);
 	});
@@ -62,7 +62,7 @@ describe("CanvasRenderer", () => {
 	it("implements renderImage", () => {
 		spyOn(context, "drawImage");
 
-		const tile = {representation: "image-rep"};
+		const tile = { representation: "image-rep" };
 		subject.renderImage(tile, 1, 2);
 		expect(context.drawImage).toHaveBeenCalledWith("image-rep", 1, 2);
 	});

@@ -165,10 +165,10 @@ describe("InputStream", () => {
 			let stream = new InputStream(buffer);
 			let data = stream.getUint8Array(4);
 			expect(data.length).toBe(4);
-			expect(data[0]).toBe(0x17);
-			expect(data[1]).toBe(0x2a);
-			expect(data[2]).toBe(0x23);
-			expect(data[3]).toBe(0x42);
+			expect(data[ 0 ]).toBe(0x17);
+			expect(data[ 1 ]).toBe(0x2a);
+			expect(data[ 2 ]).toBe(0x23);
+			expect(data[ 3 ]).toBe(0x42);
 		});
 
 		it("getUint16Array reads an array of unsigned words (length is specified in elements)", () => {
@@ -176,10 +176,10 @@ describe("InputStream", () => {
 
 			let data = stream.getUint16Array(4);
 			expect(data.length).toBe(4);
-			expect(data[0]).toBe(0x2a17);
-			expect(data[1]).toBe(0x4223);
-			expect(data[2]).toBe(0x2342);
-			expect(data[3]).toBe(0x172a);
+			expect(data[ 0 ]).toBe(0x2a17);
+			expect(data[ 1 ]).toBe(0x4223);
+			expect(data[ 2 ]).toBe(0x2342);
+			expect(data[ 3 ]).toBe(0x172a);
 		});
 
 		it("getUint16Array can be used even if the offset is not word aligned", () => {
@@ -189,8 +189,8 @@ describe("InputStream", () => {
 
 			let data = stream.getUint16Array(2);
 			expect(data.length).toBe(2);
-			expect(data[0]).toBe(0x232A);
-			expect(data[1]).toBe(0x4242);
+			expect(data[ 0 ]).toBe(0x232A);
+			expect(data[ 1 ]).toBe(0x4242);
 		});
 
 		it("getUint32Array can be used even if the offset is not dword aligned", () => {
@@ -200,7 +200,7 @@ describe("InputStream", () => {
 
 			let data = stream.getUint32Array(1);
 			expect(data.length).toBe(1);
-			expect(data[0]).toBe(0x4242232A);
+			expect(data[ 0 ]).toBe(0x4242232A);
 
 			expect(stream.offset).toBe(5);
 		});
@@ -211,7 +211,7 @@ describe("InputStream", () => {
 
 			let data = stream.getUint32Array(1);
 			expect(data.length).toBe(1);
-			expect(data[0]).toBe(0x42232A17);
+			expect(data[ 0 ]).toBe(0x42232A17);
 
 			expect(stream.offset).toBe(4);
 		});

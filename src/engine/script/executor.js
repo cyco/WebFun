@@ -49,7 +49,7 @@ export default class {
 		this._executor.action = action;
 		for (let i = action.instructionPointer | 0, len = action.instructions.length; i < len; i++) {
 			action.instructionPointer = i + 1;
-			const wait = this._executor.execute(action.instructions[i]);
+			const wait = this._executor.execute(action.instructions[ i ]);
 			if (wait === true) return true;
 		}
 		this._executor.action = null;

@@ -2,11 +2,11 @@ import Image from "src/engine/rendering/image";
 
 describe("Image", () => {
 	it("is a simple container representing an image", () => {
-		const image = new Image(32, 28, {image: "representation"});
+		const image = new Image(32, 28, { image: "representation" });
 
 		expect(image.width).toEqual(32);
 		expect(image.height).toEqual(28);
-		expect(image.representation).toEqual({image: "representation"});
+		expect(image.representation).toEqual({ image: "representation" });
 	});
 
 	it("does not make any assumption on the representation used", () => {

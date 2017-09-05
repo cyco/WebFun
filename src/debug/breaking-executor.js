@@ -107,7 +107,7 @@ export default class extends EventTarget {
 			return false;
 
 		for (let i = 0; i < action.conditions.length; i++) {
-			const condition = action.conditions[i];
+			const condition = action.conditions[ i ];
 			try {
 				await this._breakIfNecessary(action, "c", i);
 				if (!this._checker.check(condition))
@@ -126,7 +126,7 @@ export default class extends EventTarget {
 			action.instructionPointer = i + 1;
 			await this._breakIfNecessary(action, "i", i);
 
-			const wait = this._executor.execute(action.instructions[i]);
+			const wait = this._executor.execute(action.instructions[ i ]);
 
 			if (window.d) debugger;
 			if (wait === true) return true;

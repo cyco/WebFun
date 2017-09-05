@@ -67,11 +67,11 @@ export default class extends Component {
 		const health = this.health === MaxHealth - 1 ? MaxHealth : this.health;
 
 		const condition = Math.floor(health / HealthPerColor);
-		const conditionColor = Conditions[condition];
+		const conditionColor = Conditions[ condition ];
 		this._condition.style.fill = conditionColor;
 
 		const value = (health % HealthPerColor) / HealthPerColor;
-		this._pie.style.fill = Conditions[condition + 1];
+		this._pie.style.fill = Conditions[ condition + 1 ];
 		this._pie.setAttribute("d", "M100,100 L" + this._buildArc(value) + "Z");
 	}
 

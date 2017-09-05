@@ -1,2 +1,4 @@
 export * from "./tools";
-export ZoneEditor from "./zone-editor";
+import ZoneEditor from "./zone-editor";
+
+export { ZoneEditor };

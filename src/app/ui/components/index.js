@@ -1,7 +1,9 @@
-export InventoryRow from "./inventory-row";
-export Inventory from "./inventory";
-export Ammo from "./ammo";
-export Weapon from "./weapon";
-export Health from "./health";
-export Location from "./location";
-export SettingsWindow from "./settings-window";
+import InventoryRow from "./inventory-row";
+import Inventory from "./inventory";
+import Ammo from "./ammo";
+import Weapon from "./weapon";
+import Health from "./health";
+import Location from "./location";
+import SettingsWindow from "./settings-window";
+
+export { InventoryRow, Inventory, Ammo, Weapon, Health, Location, SettingsWindow };

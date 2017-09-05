@@ -7,12 +7,12 @@ describeInstruction("AddToCounter", (execute, engine) => {
 
 		let instruction = new Instruction({});
 		instruction._opcode = AddToCounter.Opcode;
-		instruction._arguments = [2];
+		instruction._arguments = [ 2 ];
 
 		execute(instruction);
 		expect(engine.currentZone.counter).toBe(7);
 
-		instruction._arguments = [-3];
+		instruction._arguments = [ -3 ];
 		execute(instruction);
 		expect(engine.currentZone.counter).toBe(4);
 	});

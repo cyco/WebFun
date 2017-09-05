@@ -22,24 +22,24 @@ export default class {
 		this._tiles = this._getCategory("TILE").tiles
 			.map((t, i) => new Tile(i, t.attributes, t.pixels));
 		this._puzzles = this._getCategory("PUZ2").puzzles
-			.filter(({index}) => index !== -1)
+			.filter(({ index }) => index !== -1)
 			.map((data, index) => this._makePuzzle(data, index));
 		this._zones = [];
 		this._getCategory("ZONE").zones
 			.map((data, index) => this._makeZone(data, index)).forEach(z => this._zones.push(z));
 		this._characters = this._getCategory("CHAR").characters
-			.filter(({index}) => index !== -1)
+			.filter(({ index }) => index !== -1)
 			.map((data, index) => this._makeCharacter(data, index));
 
 		this._getCategory("CAUX").auxiliaries
-			.filter(({index}) => index !== -1)
-			.forEach(({data}, idx) => this._characters[idx].rawAuxData = data);
+			.filter(({ index }) => index !== -1)
+			.forEach(({ data }, idx) => this._characters[ idx ].rawAuxData = data);
 		this._getCategory("CHWP").weapons
-			.filter(({index}) => index !== -1)
-			.forEach(({data}, idx) => this._characters[idx].rawWeaponData = data);
+			.filter(({ index }) => index !== -1)
+			.forEach(({ data }, idx) => this._characters[ idx ].rawWeaponData = data);
 		this._getCategory("TNAM").names
-			.filter(({tileId}) => tileId !== -1)
-			.forEach((obj, idx) => obj.name && (this._tiles[obj.tileId]._name = obj.name));
+			.filter(({ tileId }) => tileId !== -1)
+			.forEach((obj, idx) => obj.name && (this._tiles[ obj.tileId ]._name = obj.name));
 	}
 
 	_getCategory(category) {
@@ -143,9 +143,9 @@ export default class {
 		const char = new Char();
 		char._id = idx;
 		char._name = data.name;
-		char._frames.push(new CharFrame(data.frame1.tiles.map(i => this.tiles[i])));
-		char._frames.push(new CharFrame(data.frame2.tiles.map(i => this.tiles[i])));
-		char._frames.push(new CharFrame(data.frame3.tiles.map(i => this.tiles[i])));
+		char._frames.push(new CharFrame(data.frame1.tiles.map(i => this.tiles[ i ])));
+		char._frames.push(new CharFrame(data.frame2.tiles.map(i => this.tiles[ i ])));
+		char._frames.push(new CharFrame(data.frame3.tiles.map(i => this.tiles[ i ])));
 		char._type = data.type;
 
 		return char;

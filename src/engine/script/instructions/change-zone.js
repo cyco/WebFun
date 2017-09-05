@@ -10,8 +10,8 @@ export default (instruction, engine, action) => {
 
 	const transitionScene = new TransitionScene();
 	transitionScene.type = TransitionScene.TRANSITION_TYPE.ROOM;
-	transitionScene.targetHeroLocation = new Point(args[1], args[2]);
-	transitionScene.targetZone = engine.data.zones[args[0]];
+	transitionScene.targetHeroLocation = new Point(args[ 1 ], args[ 2 ]);
+	transitionScene.targetZone = engine.data.zones[ args[ 0 ] ];
 	transitionScene.scene = engine.sceneManager.currentScene;
 
 	let world = engine.dagobah;

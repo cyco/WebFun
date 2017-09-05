@@ -1,1 +1,3 @@
-export blankImage from "./blank-image";
+import blankImage from "./blank-image";
+
+export { blankImage };

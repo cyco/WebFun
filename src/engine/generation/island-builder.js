@@ -21,8 +21,8 @@ export default class IslandBuilder {
 	at(point, value) {
 		const index = point.x + 10 * point.y;
 		if (value !== undefined)
-			this.typeMap[index] = value;
-		else return this.typeMap[index];
+			this.typeMap[ index ] = value;
+		else return this.typeMap[ index ];
 	}
 
 	placeIslands(count) {

@@ -48,18 +48,18 @@ describe("EventTarget", () => {
 		let executedCallbacks = [];
 
 		target.addEventListener("testEvent", () => {
-			executedCallbacks[0] = true;
+			executedCallbacks[ 0 ] = true;
 		});
 		target.addEventListener("testEvent", () => {
-			executedCallbacks[1] = true;
+			executedCallbacks[ 1 ] = true;
 		});
 
 		target.removeEventListener("testEvent");
 		target.dispatchEvent("testEvent");
 
 		dispatch(() => {
-			expect(executedCallbacks[0]).toBeFalsy();
-			expect(executedCallbacks[1]).toBeFalsy();
+			expect(executedCallbacks[ 0 ]).toBeFalsy();
+			expect(executedCallbacks[ 1 ]).toBeFalsy();
 
 			done();
 		}, 10);
@@ -68,19 +68,19 @@ describe("EventTarget", () => {
 	it("event handlers can be unregistered per type & callback ", (done) => {
 		let executedCallbacks = [];
 		let fn1 = () => {
-			executedCallbacks[0] = true;
+			executedCallbacks[ 0 ] = true;
 		};
 		target.addEventListener("testEvent", fn1);
 		target.addEventListener("testEvent", () => {
-			executedCallbacks[1] = true;
+			executedCallbacks[ 1 ] = true;
 		});
 
 		target.removeEventListener("testEvent", fn1);
 		target.dispatchEvent("testEvent");
 
 		dispatch(() => {
-			expect(executedCallbacks[0]).toBeFalsy();
-			expect(executedCallbacks[1]).toBeTrue();
+			expect(executedCallbacks[ 0 ]).toBeFalsy();
+			expect(executedCallbacks[ 1 ]).toBeTrue();
 
 			done();
 		}, 10);
@@ -89,19 +89,19 @@ describe("EventTarget", () => {
 	it("global event handlers can be unregistered in the same way ", (done) => {
 		let executedCallbacks = [];
 		let fn1 = () => {
-			executedCallbacks[0] = true;
+			executedCallbacks[ 0 ] = true;
 		};
 		EventTarget.addEventListener("testEvent", fn1);
 		EventTarget.addEventListener("testEvent", () => {
-			executedCallbacks[1] = true;
+			executedCallbacks[ 1 ] = true;
 		});
 
 		EventTarget.removeEventListener("testEvent", fn1);
 		target.dispatchEvent("testEvent");
 
 		dispatch(() => {
-			expect(executedCallbacks[0]).toBeFalsy();
-			expect(executedCallbacks[1]).toBeTrue();
+			expect(executedCallbacks[ 0 ]).toBeFalsy();
+			expect(executedCallbacks[ 1 ]).toBeTrue();
 
 			done();
 		}, 10);
@@ -155,7 +155,7 @@ describe("EventTarget", () => {
 	it("has a method to register all events to make it compatible with sealed objects", () => {
 		expect(target.registerEvents).not.toBe(undefined);
 
-		target.registerEvents({E1: "testEvent1", E2: "testEvent2"});
+		target.registerEvents({ E1: "testEvent1", E2: "testEvent2" });
 
 		expect(target.ontestEvent1).toBe(null);
 		expect(target.ontestEvent2).toBe(null);

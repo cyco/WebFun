@@ -1,4 +1,11 @@
-export readString from "./read-string";
-export readUint8 from "./read-uint8";
-export readUint16 from "./read-uint16";
-export readUint32 from "./read-uint32";
+import readString from "./read-string";
+import readUint8 from "./read-uint8";
+import readUint16 from "./read-uint16";
+import readUint32 from "./read-uint32";
+
+export {
+	readString,
+	readUint8,
+	readUint16,
+	readUint32
+};

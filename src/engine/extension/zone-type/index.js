@@ -1,2 +1,4 @@
-export isBlockadeType from "./is-blockade-type";
-export toPuzzleType from "./to-puzzle-type";
+import isBlockadeType from "./is-blockade-type";
+import toPuzzleType from "./to-puzzle-type";
+
+export { isBlockadeType, toPuzzleType };

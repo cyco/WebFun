@@ -12,9 +12,9 @@ describe("Camera", () => {
 	});
 
 	it("has an update method to keep the hero centered", () => {
-		const hero = {location: {x: 9, y: 9}};
+		const hero = { location: { x: 9, y: 9 } };
 		const camera = new Camera();
-		camera.zoneSize = {width: 18, height: 18};
+		camera.zoneSize = { width: 18, height: 18 };
 		camera.hero = hero;
 
 		camera.update(0);
@@ -28,9 +28,9 @@ describe("Camera", () => {
 	});
 
 	it("makes sure that the view never leaves view bounds", () => {
-		const hero = {location: {x: 0, y: 0}};
+		const hero = { location: { x: 0, y: 0 } };
 		const camera = new Camera();
-		camera.zoneSize = {width: 18, height: 18};
+		camera.zoneSize = { width: 18, height: 18 };
 		camera.hero = hero;
 
 		camera.update(0);

@@ -1,8 +1,10 @@
-export DetonatorScene from "./detonator-scene";
-export MapScene from "./map-scene";
-export PauseScene from "./pause-scene";
-export PickupScene from "./pickup-scene";
-export Scene from "./scene";
-export SpeechScene from "./speech-scene";
-export TransitionScene from "./transition-scene";
-export ZoneScene from "./zone-scene";
+import DetonatorScene from "./detonator-scene";
+import MapScene from "./map-scene";
+import PauseScene from "./pause-scene";
+import PickupScene from "./pickup-scene";
+import Scene from "./scene";
+import SpeechScene from "./speech-scene";
+import TransitionScene from "./transition-scene";
+import ZoneScene from "./zone-scene";
+
+export { DetonatorScene, MapScene, PauseScene, PickupScene, Scene, SpeechScene, TransitionScene, ZoneScene };

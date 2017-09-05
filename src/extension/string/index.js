@@ -1,5 +1,13 @@
-export padEnd from "./pad-end";
-export padStart from "./pad-start";
-export uuid from "./uuid";
-export trimCharacter from "./trim-character";
-export contains from "./contains";
+import padEnd from "./pad-end";
+import padStart from "./pad-start";
+import uuid from "./uuid";
+import trimCharacter from "./trim-character";
+import contains from "./contains";
+
+export {
+	padEnd,
+	padStart,
+	uuid,
+	trimCharacter,
+	contains
+};

@@ -14,6 +14,6 @@ describe("Number.times", () => {
 	});
 
 	it("collects all results and returns them", () => {
-		expect(5..times(() => 0)).toEqual([0, 0, 0, 0, 0]);
+		expect(5..times(() => 0)).toEqual([ 0, 0, 0, 0, 0 ]);
 	});
 });

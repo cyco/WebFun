@@ -1,2 +1,4 @@
-export get from "./get";
-export set from "./set";
+import get from "./get";
+import set from "./set";
+
+export { get, set };

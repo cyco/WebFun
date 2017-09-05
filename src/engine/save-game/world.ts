@@ -16,12 +16,12 @@ class World {
 
 	setWorldItem(x: number, y: number, item: WorldItem): void {
 		const index = this._toIndex(new Point(x, y));
-		this._world[index] = item;
+		this._world[ index ] = item;
 	}
 
 	getWorldItem(x: number, y: number): WorldItem {
 		const index = this._toIndex(new Point(x, y));
-		return this._world[index];
+		return this._world[ index ];
 	}
 
 	_toIndex(p: Point): number {

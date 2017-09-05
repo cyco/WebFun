@@ -14,7 +14,7 @@ describe("HTMLCollection.find", () => {
 
 	it("is used to find the first node in the collection to satisfy a predicate", () => {
 		const node = subject.find(node => node.classList.contains("second"));
-		expect(node).toBe(subject[1]);
+		expect(node).toBe(subject[ 1 ]);
 	});
 
 	it("returns null if no element in the collection matches the predicate", () => {

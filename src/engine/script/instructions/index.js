@@ -38,7 +38,7 @@ import * as WinGame from "./win-game";
 import * as MarkAsSolved from "./mark-as-solved";
 
 const Instructions = {};
-const exportInstruction = (I) => Instructions[I.Opcode] = I.default;
+const exportInstruction = (I) => Instructions[ I.Opcode ] = I.default;
 
 exportInstruction(PlaceTile);
 exportInstruction(RemoveTile);
@@ -83,7 +83,7 @@ export default Instructions;
 
 
 const Opcode = {};
-const exportOpcode = (name, {Opcode: code}) => Opcode[name] = code;
+const exportOpcode = (name, { Opcode: code }) => Opcode[ name ] = code;
 exportOpcode("PlaceTile", PlaceTile);
 exportOpcode("RemoveTile", RemoveTile);
 exportOpcode("MoveTile", MoveTile);

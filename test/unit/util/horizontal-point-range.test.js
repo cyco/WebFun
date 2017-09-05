@@ -14,7 +14,7 @@ describe("HorizontalPointRange", () => {
 		let range = new HorizontalPointRange(3, 8, 4);
 
 		range.iterate(function (point) {
-			visited[point.x + "x" + point.y] = true;
+			visited[ point.x + "x" + point.y ] = true;
 		});
 
 		expect(visited).toEqual({
@@ -32,7 +32,7 @@ describe("HorizontalPointRange", () => {
 		let range = new HorizontalPointRange(2, 0, 4);
 
 		range.iterate(function (point) {
-			visited[point.x + "x" + point.y] = true;
+			visited[ point.x + "x" + point.y ] = true;
 		}, -1);
 
 		expect(visited).toEqual({

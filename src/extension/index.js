@@ -1,12 +1,27 @@
-export Array from "./array";
-export ArrayBuffer from "./array-buffer";
-export Element from "./element";
-export Image from "./image";
-export NodeList from "./node-list";
-export Number from "./number";
-export Object_ from "./object";
-export Storage from "./storage";
-export String from "./string";
-export Uint16Array from "./uint16-array";
-export Uint8Array from "./uint8-array";
-export HTMLCollection from "./html-collection";
+import Array from "./array";
+import ArrayBuffer from "./array-buffer";
+import Element from "./element";
+import Image from "./image";
+import NodeList from "./node-list";
+import Number from "./number";
+import Object_ from "./object";
+import Storage from "./storage";
+import String from "./string";
+import Uint16Array from "./uint16-array";
+import Uint8Array from "./uint8-array";
+import HTMLCollection from "./html-collection";
+
+export {
+	Array,
+	ArrayBuffer,
+	Element,
+	Image,
+	NodeList,
+	Number,
+	Object_,
+	Storage,
+	String,
+	Uint16Array,
+	Uint8Array,
+	HTMLCollection
+};

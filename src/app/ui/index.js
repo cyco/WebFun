@@ -1,2 +1,4 @@
-export LoadingView from "./loading-view";
-export SceneView from "./scene-view";
+import LoadingView from "./loading-view";
+import SceneView from "./scene-view";
+
+export { LoadingView, SceneView };

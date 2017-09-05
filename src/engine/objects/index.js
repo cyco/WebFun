@@ -4,11 +4,18 @@ import Zone, { Layer as ZoneLayer, Type as ZoneType } from "./zone";
 import NPC from "./npc";
 import Tile, { Attribute as TileAttribute, Subtype as TileSubtype } from "./tile";
 
-export Char from "./char";
-export CharFrame from "./char-frame";
-export Condition from "./condition";
+import Char from "./char";
+import CharFrame from "./char-frame";
+import Condition from "./condition";
+import Instruction from "./instruction";
+import Puzzle, { Type as PuzzleType } from "./puzzle";
 
-export Instruction from "./instruction";
-export Puzzle, { Type as PuzzleType } from "./puzzle";
-
-export { Tile, Action, Zone, ZoneType, TileAttribute, ZoneLayer, TileSubtype, Hotspot, HotspotType, NPC };
+export {
+	Char,
+	CharFrame,
+	Condition,
+	Instruction,
+	Puzzle,
+	PuzzleType,
+	Tile, Action, Zone, ZoneType, TileAttribute, ZoneLayer, TileSubtype, Hotspot, HotspotType, NPC
+};

@@ -8,6 +8,6 @@ export default (instruction, engine, action) => {
 	// TODO: consider using { rand } from '/util'
 	const args = instruction.arguments;
 	const zone = engine.currentZone;
-	zone.random = Math.round(Math.random() * args[0]) % args[0];
+	zone.random = Math.round(Math.random() * args[ 0 ]) % args[ 0 ];
 	return Result.OK;
 };

@@ -42,7 +42,7 @@ export default class extends Component {
 
 		const toggleSize = document.createElement(ToolbarItem.TagName);
 		toggleSize.onclick = () => this.toggleSize();
-		toggleSize.tool = {name: "Toggle Size", icon: ""};
+		toggleSize.tool = { name: "Toggle Size", icon: "" };
 		this._toolbar.appendChild(toggleSize);
 
 
@@ -88,7 +88,7 @@ export default class extends Component {
 		const desiredSize = desiredEdgeLength * desiredEdgeLength;
 		const newTileIDs = new Array(desiredSize * 3);
 		for (let i = 0; i < desiredSize * 3; i++) {
-			newTileIDs[i] = 0xFFFF;
+			newTileIDs[ i ] = 0xFFFF;
 		}
 
 		let srcOffset = desiredSize === 9 ? 4 : 0;
@@ -96,7 +96,7 @@ export default class extends Component {
 		for (let y = 0; y < 9; y++) {
 			for (let x = 0; x < 9; x++) {
 				for (let z = 0; z < 3; z++) {
-					newTileIDs[3 * ((y + targetOffset) * desiredEdgeLength + (x + targetOffset)) + z] = this._zone.getTileID(x + srcOffset, y + srcOffset, z);
+					newTileIDs[ 3 * ((y + targetOffset) * desiredEdgeLength + (x + targetOffset)) + z ] = this._zone.getTileID(x + srcOffset, y + srcOffset, z);
 				}
 			}
 		}

@@ -8,10 +8,10 @@ import GameSpeedWindow from "./game-speed-window";
 
 export default class extends Menu {
 	constructor(gameController) {
-		const menuItems = [{
+		const menuItems = [ {
 			title: "File",
 			mnemonic: 0,
-			submenu: [{
+			submenu: [ {
 				title: "New World",
 				mnemonic: 0,
 				callback: () => gameController.newStory(),
@@ -40,7 +40,7 @@ export default class extends Menu {
 		}, {
 			title: "Options",
 			mnemonic: 0,
-			submenu: [{
+			submenu: [ {
 				title: "Combat Difficulty...",
 				mnemonic: 0,
 				callback: () => this._runModalSession(document.createElement(DifficultyWindow.TagName))
@@ -71,14 +71,14 @@ export default class extends Menu {
 		}, {
 			title: "Window",
 			mnemonic: 0,
-			submenu: [{
+			submenu: [ {
 				title: "Hide Me!",
 				mnemonic: 0
-			}]
+			} ]
 		}, {
 			title: "Help",
 			mnemonic: 0,
-			submenu: [{
+			submenu: [ {
 				title: "How to Play",
 				mnemonic: 0
 			}, {
@@ -87,8 +87,8 @@ export default class extends Menu {
 			}, Separator, {
 				title: "About...",
 				mnemonic: 0
-			}]
-		}];
+			} ]
+		} ];
 
 		if (Settings.debug) menuItems.push(DebugMenu);
 

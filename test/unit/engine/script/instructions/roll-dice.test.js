@@ -5,7 +5,7 @@ describeInstruction("SetCounter", (execute, engine) => {
 	it("set the current zone's random register to a random() % arg", () => {
 		let instruction = new Instruction({});
 		instruction._opcode = RollDice.Opcode;
-		instruction._arguments = [5];
+		instruction._arguments = [ 5 ];
 
 		for (let i = 0; i < 10; i++) {
 			execute(instruction);

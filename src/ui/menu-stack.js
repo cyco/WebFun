@@ -24,7 +24,7 @@ export default class MenuStack extends EventTarget {
 		if (index === -1) return;
 
 		for (let i = this._stack.length; i > index; i--) {
-			let menu = this._stack[i - 1];
+			let menu = this._stack[ i - 1 ];
 			menu.close();
 			this._stack.pop();
 		}

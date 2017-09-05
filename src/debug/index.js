@@ -1,4 +1,6 @@
-export Debugger from "./debugger";
-export WorldGeneration from "./world-generation";
-export { PrepareExpectations, ParseExpectation, ComparisonResult, CompareWorldItems } from "./expectation";
-export Menu from "./menu";
+import Debugger from "./debugger";
+import WorldGeneration from "./world-generation";
+import { CompareWorldItems, ComparisonResult, ParseExpectation, PrepareExpectations } from "./expectation";
+import Menu from "./menu";
+
+export { Debugger, WorldGeneration, Menu, PrepareExpectations, ParseExpectation, ComparisonResult, CompareWorldItems };

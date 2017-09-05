@@ -3,13 +3,13 @@ export const Arguments = 3;
 export default (args, zone, engine) => {
 	const state = engine.state;
 	const bump = state.bump;
-	if (!bump || bump.x !== args[0] || bump.y !== args[1]) {
+	if (!bump || bump.x !== args[ 0 ] || bump.y !== args[ 1 ]) {
 		return false;
 	}
 
-	if (engine.currentZone.getTileID(args[0], args[1], 0) === args[2]) return true;
-	if (engine.currentZone.getTileID(args[0], args[1], 1) === args[2]) return true;
-	if (engine.currentZone.getTileID(args[0], args[1], 2) === args[2]) return true;
+	if (engine.currentZone.getTileID(args[ 0 ], args[ 1 ], 0) === args[ 2 ]) return true;
+	if (engine.currentZone.getTileID(args[ 0 ], args[ 1 ], 1) === args[ 2 ]) return true;
+	if (engine.currentZone.getTileID(args[ 0 ], args[ 1 ], 2) === args[ 2 ]) return true;
 
 	return false;
 };

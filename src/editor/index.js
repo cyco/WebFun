@@ -32,8 +32,8 @@ export default class {
 	}
 
 	_registerEditors() {
-		this._editors[Type.Zones] = document.createElement(ZonesEditor.TagName);
-		this._editors[Type.Tiles] = document.createElement(TileEditor.TagName);
+		this._editors[ Type.Zones ] = document.createElement(ZonesEditor.TagName);
+		this._editors[ Type.Tiles ] = document.createElement(TileEditor.TagName);
 
 		Object.values(this._editors).forEach(editor => editor.data = this._data);
 	}
@@ -73,7 +73,7 @@ export default class {
 	showEditor(type) {
 		console.assert(Object.values(Type).contains(type));
 
-		const editor = this._editors[type];
+		const editor = this._editors[ type ];
 		this._window.content.clear();
 		this._window.content.appendChild(editor);
 

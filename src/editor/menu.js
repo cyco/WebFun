@@ -10,10 +10,10 @@ export default (editor) => {
 		state: () => editor.currentEditor === type ? State.On : State.Off
 	});
 
-	return new Menu([{
+	return new Menu([ {
 		title: "File",
 		mnemonic: 0,
-		submenu: [{
+		submenu: [ {
 			title: "Load Data",
 			mnemonic: 0,
 			callback: () => editor.load()
@@ -45,9 +45,9 @@ export default (editor) => {
 	}, {
 		title: "Window",
 		mnemonic: 0,
-		submenu: [{
+		submenu: [ {
 			title: "Hide Me!",
 			mnemonic: 0
-		}]
-	}]);
+		} ]
+	} ]);
 };
