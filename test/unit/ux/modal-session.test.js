@@ -1,4 +1,4 @@
-import ModalSession from "/ux/modal-session";
+import ModalSession from "src/ux/modal-session";
 
 describe("ModalSession", () => {
 	let subject;

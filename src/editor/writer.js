@@ -1,4 +1,4 @@
-import { add } from "/util";
+import { add } from "src/util";
 
 export default class {
 	constructor(data) {

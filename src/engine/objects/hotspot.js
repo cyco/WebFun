@@ -1,5 +1,5 @@
 import Type from "./hotspot-type";
-import Point from "/util/point";
+import Point from "src/util/point";
 
 export { Type };
 

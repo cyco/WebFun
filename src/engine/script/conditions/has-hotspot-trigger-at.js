@@ -1,4 +1,4 @@
-import { HotspotType } from "/engine/objects";
+import { HotspotType } from "src/engine/objects";
 
 export const Opcode = 0x1d;
 export const Arguments = 2;

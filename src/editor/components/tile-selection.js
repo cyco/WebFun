@@ -1,4 +1,4 @@
-import { Component } from "/ui";
+import { Component } from "src/ui";
 import TilePreview from "./tile-preview";
 import "./tile-selection.scss";
 

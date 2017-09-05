@@ -1,4 +1,4 @@
-import { Direction } from "/util";
+import { Direction } from "src/util";
 import Type from "./char-type";
 
 export { Type };

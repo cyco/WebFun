@@ -1,11 +1,11 @@
-import Settings from "/settings";
+import Settings from "src/settings";
 import Scene from "./scene";
 import PauseScene from "./pause-scene";
 import MapScene from "./map-scene";
 import TransitionScene from "./transition-scene";
-import { HotspotType, Tile, Zone } from "/engine/objects";
-import Camera from "/engine/camera";
-import { Direction, Point, rgba } from "/util";
+import { HotspotType, Tile, Zone } from "src/engine/objects";
+import Camera from "src/engine/camera";
+import { Direction, Point, rgba } from "src/util";
 
 export default class ZoneScene extends Scene {
 	constructor() {

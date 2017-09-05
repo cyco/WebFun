@@ -1,4 +1,4 @@
-import Description, { Description as NamedDescription } from "/description";
+import Description, { Description as NamedDescription } from "src/description";
 
 describe("Description", () => {
 	it("it holds the values displayed in the about section", () => {

@@ -1,6 +1,6 @@
-import Editor from "/editor";
-import Settings from "/settings";
-import { MenuItemSeparator, MenuItemState } from "/ui";
+import Editor from "src/editor";
+import Settings from "src/settings";
+import { MenuItemSeparator, MenuItemState } from "src/ui";
 
 const SettingsItem = (label, key) => ({
 	title: label,

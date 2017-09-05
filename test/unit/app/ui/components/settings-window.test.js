@@ -1,5 +1,5 @@
-import SettingsWindow from "/app/ui/components/settings-window";
-import { Slider } from "/ui/components";
+import SettingsWindow from "src/app/ui/components/settings-window";
+import { Slider } from "src/ui/components";
 
 describeComponent(SettingsWindow, () => {
 	let subject;

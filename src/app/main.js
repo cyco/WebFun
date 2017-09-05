@@ -1,6 +1,6 @@
 import GameController from "./game-controller";
-import { ComponentRegistry } from "/ui";
-import * as Components from "/ui/components";
+import { ComponentRegistry } from "src/ui";
+import * as Components from "src/ui/components";
 import * as AppComponents from "./ui/components";
 import * as WindowComponents from "./windows";
 

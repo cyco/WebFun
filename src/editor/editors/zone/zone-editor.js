@@ -1,7 +1,7 @@
 import "./zone-editor.scss";
-import { Component } from "/ui";
-import { Group } from "/ui/components";
-import { ActionList, LayerSelection, TileSelection, Toolbar, ToolbarItem, Zone } from "/editor/components";
+import { Component } from "src/ui";
+import { Group } from "src/ui/components";
+import { ActionList, LayerSelection, TileSelection, Toolbar, ToolbarItem, Zone } from "src/editor/components";
 import * as Tools from "./tools";
 
 const ToolStorageKey = "editor.zone.tool";

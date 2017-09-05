@@ -1,4 +1,4 @@
-import HorizontalPointRange from "/util/horizontal-point-range";
+import HorizontalPointRange from "src/util/horizontal-point-range";
 
 describe("HorizontalPointRange", () => {
 	it("is a range of points that only extends in y-dimension", () => {

@@ -1,7 +1,7 @@
-import { Window } from "/ui/components";
-import { FileLoader } from "/util";
-import Settings from "/settings";
-import { twgl } from "/libs";
+import { Window } from "src/ui/components";
+import { FileLoader } from "src/util";
+import Settings from "src/settings";
+import { twgl } from "libs";
 import VertexShader from "./vertex.glsl";
 import FragmentShader from "./fragment.glsl";
 

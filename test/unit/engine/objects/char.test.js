@@ -1,4 +1,4 @@
-import Char from "/engine/objects/char";
+import Char from "src/engine/objects/char";
 
 describe("Char", () => {
 	it("is a class representing character specification", () => {

@@ -1,4 +1,4 @@
-import { rand, srand } from "/util/random";
+import { rand, srand } from "src/util/random";
 
 describe("Random", () => {
 	it("defines the functions srand and rand", () => {

@@ -1,4 +1,4 @@
-import { dispatch } from "/util";
+import { dispatch } from "src/util";
 
 export default () => {
 	dispatch(() => {

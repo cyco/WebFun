@@ -1,6 +1,6 @@
-import DesktopInputManager from "/engine/input/desktop-input-manager";
-import { Direction } from "/engine/input/input-manager";
-import { KeyEvent } from "/util";
+import DesktopInputManager from "src/engine/input/desktop-input-manager";
+import { Direction } from "src/engine/input/input-manager";
+import { KeyEvent } from "src/util";
 
 describe("DesktopInputManager", () => {
 	let manager = null;

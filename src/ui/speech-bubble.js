@@ -1,7 +1,7 @@
 import "./speech-bubble.scss";
 import View from "./view";
-import { dispatch } from "/util";
-import { Button } from "/ui/components";
+import { dispatch } from "src/util";
+import { Button } from "src/ui/components";
 
 export const Event = {
 	End: "end"

@@ -1,5 +1,5 @@
-import { Instruction } from "/engine/objects";
-import * as SetRandom from "/engine/script/instructions/set-random";
+import { Instruction } from "src/engine/objects";
+import * as SetRandom from "src/engine/script/instructions/set-random";
 
 describeInstruction("SetCounter", (execute, engine) => {
 	it("set the current zone's random register to the specified value", () => {

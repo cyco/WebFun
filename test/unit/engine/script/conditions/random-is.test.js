@@ -1,5 +1,5 @@
-import { Condition } from "/engine/objects";
-import * as RandomIs from "/engine/script/conditions/random-is";
+import { Condition } from "src/engine/objects";
+import * as RandomIs from "src/engine/script/conditions/random-is";
 
 describeCondition("RandomIs", (check, engine) => {
 	it("it checks if the supplied value is equal to the current zone's random value", () => {

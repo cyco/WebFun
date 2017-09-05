@@ -1,4 +1,4 @@
-import { Window } from "/ui/components";
+import { Window } from "src/ui/components";
 import "./window.scss";
 
 export default class extends Window {

@@ -1,5 +1,5 @@
-import { Instruction } from "/engine/objects";
-import * as PlaySound from "/engine/script/instructions/play-sound";
+import { Instruction } from "src/engine/objects";
+import * as PlaySound from "src/engine/script/instructions/play-sound";
 
 describeInstruction("PlaySound", (execute, engine) => {
 	it("play a sound", () => {

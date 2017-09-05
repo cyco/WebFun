@@ -1,4 +1,4 @@
-import Tile from "/engine/objects/tile";
+import Tile from "src/engine/objects/tile";
 
 describe("Tile", () => {
 	it("is a class representing a game tile", () => {

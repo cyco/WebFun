@@ -1,5 +1,5 @@
-import { HotspotType, ZoneType } from "/engine/objects";
-import Settings from "/settings";
+import { HotspotType, ZoneType } from "src/engine/objects";
+import Settings from "src/settings";
 
 class LocatorTile {
 	static ForZone(zone) {

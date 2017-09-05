@@ -1,4 +1,4 @@
-import Scene from "/engine/scenes/scene";
+import Scene from "src/engine/scenes/scene";
 
 describe("Scene", () => {
 	let subject = null;

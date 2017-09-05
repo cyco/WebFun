@@ -1,5 +1,5 @@
-import { Condition } from "/engine/objects";
-import * as StandingOn from "/engine/script/conditions/standing-on";
+import { Condition } from "src/engine/objects";
+import * as StandingOn from "src/engine/script/conditions/standing-on";
 
 describeCondition("StandingOn", (check, engine) => {
 	it("checks if the hero is standing on a specific tile", () => {

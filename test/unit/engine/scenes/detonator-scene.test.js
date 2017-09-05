@@ -1,4 +1,4 @@
-import DetonatorScene from "/engine/scenes/detonator-scene";
+import DetonatorScene from "src/engine/scenes/detonator-scene";
 
 describe("DetonatorScene", () => {
 	it("can be instantiated without throwing exceptions", () => {

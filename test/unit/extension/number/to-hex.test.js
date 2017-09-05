@@ -1,4 +1,4 @@
-import toHex from "/extension/number/to-hex";
+import toHex from "src/extension/number/to-hex";
 
 describe("Number.toHex", () => {
 	it("is an extension of the number prototype", () => {

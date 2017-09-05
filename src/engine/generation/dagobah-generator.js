@@ -1,6 +1,6 @@
-import { Message, randmod } from "/util";
+import { Message, randmod } from "src/util";
 import World from "./world";
-import { HotspotType, ZoneType } from "/engine/objects";
+import { HotspotType, ZoneType } from "src/engine/objects";
 
 const TILE_YODA = 0x30c;
 const TILE_YODAS_SEAT = 2034;

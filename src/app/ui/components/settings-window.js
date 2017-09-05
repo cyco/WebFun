@@ -1,4 +1,4 @@
-import { Button, Slider, Window } from "/ui/components";
+import { Button, Slider, Window } from "src/ui/components";
 import "./settings-window.scss";
 
 class SettingsWindow extends Window {

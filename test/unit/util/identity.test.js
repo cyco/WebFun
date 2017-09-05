@@ -1,4 +1,4 @@
-import identity from "/util/identity";
+import identity from "src/util/identity";
 
 describe("identity", () => {
 	it("simply returns what's passed in, useful for filtering", () => {

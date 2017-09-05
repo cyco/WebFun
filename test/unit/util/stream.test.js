@@ -1,4 +1,4 @@
-import Stream from "/util/stream";
+import Stream from "src/util/stream";
 
 describe("Stream", () => {
 	let stream;

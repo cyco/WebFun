@@ -1,4 +1,4 @@
-import VerticalPointRange from "/util/vertical-point-range";
+import VerticalPointRange from "src/util/vertical-point-range";
 
 describe("VerticalPointRange", () => {
 	it("is a range of points that only extends in y-dimension", () => {

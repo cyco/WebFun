@@ -1,4 +1,4 @@
-import FileLoader from "/util/file-loader";
+import FileLoader from "src/util/file-loader";
 
 describe("FileLoader", () => {
 	let subject = null;

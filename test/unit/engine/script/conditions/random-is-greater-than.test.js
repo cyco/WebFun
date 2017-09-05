@@ -1,5 +1,5 @@
-import { Condition } from "/engine/objects";
-import * as RandomIsGreaterThan from "/engine/script/conditions/random-is-greater-than";
+import { Condition } from "src/engine/objects";
+import * as RandomIsGreaterThan from "src/engine/script/conditions/random-is-greater-than";
 
 describeCondition("RandomIsGreaterThan", (check, engine) => {
 	it("checks if the current zone's random value is greater than the argument", () => {

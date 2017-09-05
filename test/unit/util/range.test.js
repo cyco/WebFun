@@ -1,5 +1,5 @@
-import Range from "/util/range";
-import { srand } from "/util/random";
+import Range from "src/util/range";
+import { srand } from "src/util/random";
 
 describe("Range", () => {
 	it("describes a simple 1 dimensional range of numbers", () => {

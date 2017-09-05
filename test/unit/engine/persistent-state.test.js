@@ -1,4 +1,4 @@
-import PersistentState from "/engine/persistent-state";
+import PersistentState from "src/engine/persistent-state";
 
 describe("PersistentState", () => {
 	let originalSetItem, originalGetItem;

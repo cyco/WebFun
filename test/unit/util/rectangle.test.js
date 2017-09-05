@@ -1,6 +1,6 @@
-import Point from "/util/point";
-import Size from "/util/size";
-import Rectangle from "/util/rectangle";
+import Point from "src/util/point";
+import Size from "src/util/size";
+import Rectangle from "src/util/rectangle";
 
 describe("Rectangle", () => {
 	it("is a class", () => {

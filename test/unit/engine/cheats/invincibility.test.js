@@ -1,4 +1,4 @@
-import InvincibilityCheat from "/engine/cheats/invincibility";
+import InvincibilityCheat from "src/engine/cheats/invincibility";
 
 describe("InvincibilityCheat", () => {
 	let subject;

@@ -1,4 +1,4 @@
-import Settings from "/settings";
+import Settings from "src/settings";
 
 describe("Settings", () => {
 	it("is a simple obejct", () => {

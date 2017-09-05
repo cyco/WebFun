@@ -1,4 +1,4 @@
-import { default as Inventory, Events } from "/engine/inventory";
+import { default as Inventory, Events } from "src/engine/inventory";
 
 describe("Inventory", () => {
 	let inventory = null;

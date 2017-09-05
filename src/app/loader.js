@@ -1,7 +1,7 @@
-import { dispatch, EventTarget, FileLoader } from "/util";
-import { DataFileReader, GameData } from "/engine";
-import { Tile } from "/engine/objects";
-import Settings from "/settings";
+import { dispatch, EventTarget, FileLoader } from "src/util";
+import { DataFileReader, GameData } from "src/engine";
+import { Tile } from "src/engine/objects";
+import Settings from "src/settings";
 
 export const Events = {
 	Progress: "progress",

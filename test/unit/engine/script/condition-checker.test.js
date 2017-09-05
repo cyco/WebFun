@@ -1,5 +1,5 @@
-import Condition from "/engine/objects/condition";
-import ConditionChecker from "/engine/script/condition-checker";
+import Condition from "src/engine/objects/condition";
+import ConditionChecker from "src/engine/script/condition-checker";
 
 describe("ConditionChecker", () => {
 	let checker, engine, condition;

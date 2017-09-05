@@ -1,5 +1,5 @@
-import { Condition } from "/engine/objects";
-import * as GamesWonIsGreaterThan from "/engine/script/conditions/games-won-is-greater-than";
+import { Condition } from "src/engine/objects";
+import * as GamesWonIsGreaterThan from "src/engine/script/conditions/games-won-is-greater-than";
 
 describeCondition("GamesWonIsGreaterThan", (check, engine) => {
 	it("checks if more than x games have been won", () => {

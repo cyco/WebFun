@@ -1,4 +1,4 @@
-import constantly from "/util/constantly";
+import constantly from "src/util/constantly";
 
 describe("constantly", () => {
 	it("returns a function that always evaluates to the given input", () => {

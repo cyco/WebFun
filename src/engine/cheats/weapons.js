@@ -1,5 +1,5 @@
 import Cheat from "./cheat";
-import Yoda from "/engine/yoda";
+import Yoda from "src/engine/yoda";
 
 export default class WeaponsCheat extends Cheat {
 	execute(engine) {

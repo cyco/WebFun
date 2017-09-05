@@ -1,4 +1,4 @@
-import InventoryRow from "/app/ui/components/inventory-row";
+import InventoryRow from "src/app/ui/components/inventory-row";
 
 describeComponent(InventoryRow, () => {
 	it("is a row that shows a tile's image and name", () => {

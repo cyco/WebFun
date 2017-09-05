@@ -1,4 +1,4 @@
-import { Component } from "/ui";
+import { Component } from "src/ui";
 import "./zone-preview.scss";
 
 export default class extends Component {

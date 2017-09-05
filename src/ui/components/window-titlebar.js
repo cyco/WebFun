@@ -1,6 +1,6 @@
 import Component from "../component";
 import Menubar from "./menubar";
-import { identity } from "/util";
+import { identity } from "src/util";
 import View from "../view";
 import "./window-titlebar.scss";
 

@@ -1,4 +1,4 @@
-import isInRange from "/extension/number/is-in-range";
+import isInRange from "src/extension/number/is-in-range";
 
 describe("Number.isInRange", () => {
 	it("is an extension of the number prototype that executes a callback n-times", () => {

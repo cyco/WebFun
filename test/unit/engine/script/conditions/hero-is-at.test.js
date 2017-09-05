@@ -1,5 +1,5 @@
-import { Condition } from "/engine/objects";
-import * as HeroIsAt from "/engine/script/conditions/hero-is-at";
+import { Condition } from "src/engine/objects";
+import * as HeroIsAt from "src/engine/script/conditions/hero-is-at";
 
 describeCondition("HeroIsAt", (check, engine) => {
 	it("checks if the hero is currently at a specific location", () => {

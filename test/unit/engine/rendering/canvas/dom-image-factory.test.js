@@ -1,5 +1,5 @@
-import DOMImageFactory from "/engine/rendering/canvas/dom-image-factory";
-import { Image } from "/std.dom";
+import DOMImageFactory from "src/engine/rendering/canvas/dom-image-factory";
+import { Image } from "std.dom";
 
 describe("DOMImageFactory", () => {
 	const colorPalette = [

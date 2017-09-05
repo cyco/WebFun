@@ -14,6 +14,7 @@ module.exports = {
 			"std": Path.resolve(projectRoot, "src/std"),
 			"std.dom": Path.resolve(projectRoot, "src/std.dom"),
 			"std.webgl": Path.resolve(projectRoot, "src/std.webgl"),
+			"libs": Path.resolve(projectRoot, "src/libs"),
 			"test-helpers": Path.resolve(projectRoot, "test/helpers"),
 			"fs": Path.resolve(projectRoot, "test/helpers/polyfill/fs.js"),
 			"path": Path.resolve(projectRoot, "test/helpers/polyfill/path.js"),

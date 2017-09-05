@@ -1,4 +1,4 @@
-import { Point } from "/util";
+import { Point } from "src/util";
 
 export const Direction = {
 	Up: 1 << 0,

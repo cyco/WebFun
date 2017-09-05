@@ -1,5 +1,5 @@
-import { Condition } from "/engine/objects";
-import * as HealthIsGreaterThan from "/engine/script/conditions/health-is-greater-than";
+import { Condition } from "src/engine/objects";
+import * as HealthIsGreaterThan from "src/engine/script/conditions/health-is-greater-than";
 
 describeCondition("HealthIsGreaterThan", (check, engine) => {
 	it("checks if the hero's health is greater than the supplied value", () => {

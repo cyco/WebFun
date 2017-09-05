@@ -1,6 +1,6 @@
-import { Instruction } from "/engine/objects";
-import { InstructionExecutor } from "/engine/script";
-import * as DisableAction from "/engine/script/instructions/disable-action";
+import { Instruction } from "src/engine/objects";
+import { InstructionExecutor } from "src/engine/script";
+import * as DisableAction from "src/engine/script/instructions/disable-action";
 
 describeInstruction("DisableAction", () => {
 	it("disables the action that's currently executing", () => {

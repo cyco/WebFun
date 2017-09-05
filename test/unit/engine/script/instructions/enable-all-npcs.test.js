@@ -1,5 +1,5 @@
-import { Instruction } from "/engine/objects";
-import * as EnableAllNPCs from "/engine/script/instructions/enable-all-npcs";
+import { Instruction } from "src/engine/objects";
+import * as EnableAllNPCs from "src/engine/script/instructions/enable-all-npcs";
 
 describeInstruction("EnableAllNPCs", (execute, engine) => {
 	it("enables all npcs in the current zone", () => {

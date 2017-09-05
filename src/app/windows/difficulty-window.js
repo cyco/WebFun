@@ -1,4 +1,4 @@
-import { SettingsWindow } from "/app/ui/components";
+import { SettingsWindow } from "src/app/ui/components";
 import "./difficulty-window.scss";
 
 class DifficultyWindow extends SettingsWindow {

@@ -1,4 +1,4 @@
-import { EventTarget } from "/util";
+import { EventTarget } from "src/util";
 
 let sharedMenuStack = null;
 

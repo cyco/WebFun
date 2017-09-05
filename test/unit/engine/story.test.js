@@ -1,4 +1,4 @@
-import Story from "/engine/story";
+import Story from "src/engine/story";
 
 describe("Story", () => {
 	it("is a simple container for seed, size and world size at the moment", () => {

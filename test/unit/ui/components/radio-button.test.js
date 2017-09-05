@@ -1,5 +1,5 @@
 import sandboxed from "test-helpers/dom-sandbox";
-import RadioButton from "/ui/components/radio-button";
+import RadioButton from "src/ui/components/radio-button";
 
 xdescribe("RadioButton", sandboxed(function (sand) {
 	it("manages a radio input element", () => {

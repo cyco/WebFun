@@ -1,5 +1,5 @@
-import { ProgressBar, View } from "/ui";
-import { CanvasRenderer } from "/engine";
+import { ProgressBar, View } from "src/ui";
+import { CanvasRenderer } from "src/engine";
 import "./loading-view.scss";
 
 export default class extends View {

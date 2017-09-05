@@ -1,4 +1,4 @@
-import add from "/util/add";
+import add from "src/util/add";
 
 describe("add", () => {
 	it("is a function", () => {

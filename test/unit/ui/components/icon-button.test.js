@@ -1,5 +1,5 @@
 import render from "test-helpers/render";
-import IconButton from "/ui/components/icon-button";
+import IconButton from "src/ui/components/icon-button";
 
 describe("icon-button", () => {
 	let subject;

@@ -1,5 +1,5 @@
-import { Instruction } from "/engine/objects";
-import * as SetHero from "/engine/script/instructions/set-hero";
+import { Instruction } from "src/engine/objects";
+import * as SetHero from "src/engine/script/instructions/set-hero";
 
 describeInstruction("SetHero", (execute, engine) => {
 	it("moves the hero to the specified coordinates", () => {

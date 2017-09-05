@@ -1,4 +1,4 @@
-import Engine from "/engine/engine";
+import Engine from "src/engine/engine";
 
 describe("Engine", () => {
 	it("it holds all state required for running a game", () => {

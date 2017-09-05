@@ -1,4 +1,4 @@
-import Camera from "/engine/camera";
+import Camera from "src/engine/camera";
 
 describe("Camera", () => {
 	it("manages the view on to a scene, all coordinates are expressed in tiles", () => {

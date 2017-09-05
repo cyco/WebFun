@@ -1,5 +1,5 @@
 import "./breakpoint-button.scss";
-import { Component } from "/ui";
+import { Component } from "src/ui";
 import BreakpointStore from "../breakpoint-store";
 
 export const Events = {

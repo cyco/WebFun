@@ -1,5 +1,5 @@
-import Stream from "/util/stream";
-import OutputStream from "/util/output-stream";
+import Stream from "src/util/stream";
+import OutputStream from "src/util/output-stream";
 
 describe("OutputStream", () => {
 	let outputStream;

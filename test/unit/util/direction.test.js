@@ -1,4 +1,4 @@
-import Direction from "/util/direction";
+import Direction from "src/util/direction";
 
 describe("Direction", () => {
 	it("is a static class that can't be initlaized", () => {

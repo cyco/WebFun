@@ -1,4 +1,4 @@
-import Button from "/ui/components/button";
+import Button from "src/ui/components/button";
 
 describeComponent(Button, () => {
 	let subject;

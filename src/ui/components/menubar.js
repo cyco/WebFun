@@ -1,5 +1,5 @@
-import { Point } from "/util";
-import { ModalSession } from "/ux";
+import { Point } from "src/util";
+import { ModalSession } from "src/ux";
 import MenuView from "./menu-view";
 import MenuWindow from "./menu-window";
 import MenuStack from "../menu-stack";

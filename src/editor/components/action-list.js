@@ -1,4 +1,4 @@
-import { Component } from "/ui";
+import { Component } from "src/ui";
 import ActionItem from "./action-item";
 import "./action-list.scss";
 

@@ -1,5 +1,5 @@
-import { Instruction } from "/engine/objects";
-import * as SetCounter from "/engine/script/instructions/set-counter";
+import { Instruction } from "src/engine/objects";
+import * as SetCounter from "src/engine/script/instructions/set-counter";
 
 describeInstruction("SetCounter", (execute, engine) => {
 	it("set the current zone's counter to the specified value", () => {

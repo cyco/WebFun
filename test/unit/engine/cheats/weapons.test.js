@@ -1,5 +1,5 @@
-import WeaponsCheat from "/engine/cheats/weapons";
-import { Yoda } from "/engine";
+import WeaponsCheat from "src/engine/cheats/weapons";
+import { Yoda } from "src/engine";
 
 describe("WeaponsCheat", () => {
 	let subject;

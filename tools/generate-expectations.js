@@ -1,6 +1,6 @@
 import "./test/helpers/polyfill";
 import "/extension";
-import { ParseExpectation, PrepareExpectations } from "/debug/expectation";
+import { ParseExpectation, PrepareExpectations } from "src/debug/expectation";
 import Path from "path";
 import FS from "fs";
 

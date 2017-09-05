@@ -1,4 +1,4 @@
-import { Menu, MenuItemSeparator as Separator, MenuItemState as State } from "/ui";
+import { Menu, MenuItemSeparator as Separator, MenuItemState as State } from "src/ui";
 import { Type as EditorType } from "./index";
 
 export default (editor) => {

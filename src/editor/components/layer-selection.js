@@ -1,7 +1,7 @@
-import { Component } from "/ui";
+import { Component } from "src/ui";
 import { DrawMask } from "./zone";
 import Layer from "./layer";
-import { Layer as ZoneLayer } from "/engine/objects/zone";
+import { Layer as ZoneLayer } from "src/engine/objects/zone";
 import "./layer-selection.scss";
 
 const MaskKey = "editor.layerMask";

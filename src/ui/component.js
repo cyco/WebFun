@@ -1,4 +1,4 @@
-import { HTMLElement } from "/std.dom";
+import { HTMLElement } from "std.dom";
 
 function BabelHTMLElement() {
 	const newTarget = this.__proto__.constructor;

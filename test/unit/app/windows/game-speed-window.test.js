@@ -1,4 +1,4 @@
-import GameSpeedWindow from "/app/windows/game-speed-window";
+import GameSpeedWindow from "src/app/windows/game-speed-window";
 
 describeComponent(GameSpeedWindow, () => {
 	let subject;

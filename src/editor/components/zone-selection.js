@@ -1,4 +1,4 @@
-import { Component } from "/ui";
+import { Component } from "src/ui";
 import ZonePreview from "./zone-preview";
 import "./zone-selection.scss";
 

@@ -1,5 +1,5 @@
-import { Component } from "/ui";
-import { ZoneSelection } from "/editor/components";
+import { Component } from "src/ui";
+import { ZoneSelection } from "src/editor/components";
 import { ZoneEditor } from "./zone";
 import "./zones-editor.scss";
 

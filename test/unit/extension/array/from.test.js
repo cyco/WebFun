@@ -1,4 +1,4 @@
-import From from "/extension/array/from";
+import From from "src/extension/array/from";
 
 describe("Array.from", () => {
 	it("is a static function on Array, polyfilled if necessary", () => {

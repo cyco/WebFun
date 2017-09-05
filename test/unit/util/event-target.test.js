@@ -1,5 +1,5 @@
-import { dispatch } from "/util";
-import EventTarget from "/util/event-target";
+import { dispatch } from "src/util";
+import EventTarget from "src/util/event-target";
 
 describe("EventTarget", () => {
 	let target;

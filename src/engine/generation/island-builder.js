@@ -1,4 +1,4 @@
-import { HorizontalPointRange, Message, Point, rand, VerticalPointRange } from "/util";
+import { HorizontalPointRange, Message, Point, rand, VerticalPointRange } from "src/util";
 import WorldItemType from "./world-item-type";
 
 const Island = {
