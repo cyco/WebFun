@@ -1,6 +1,6 @@
 const Path = require("path");
 
-const projectRoot = Path.resolve(__dirname, "../");
+const projectRoot = Path.resolve(__dirname);
 module.exports = {
 	entry: "./src/index.js",
 	output: {
@@ -44,7 +44,7 @@ module.exports = {
 			}, {
 				loader: "sass-loader",
 				options: {
-					includePaths: [ "../src/_style", "../" ]
+					includePaths: [ "./src/_style", "./" ]
 				}
 			} ],
 			exclude: [ "node_modules" ]
