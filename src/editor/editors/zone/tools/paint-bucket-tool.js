@@ -42,15 +42,15 @@ export default class extends Tool {
 		};
 		const isCandidate = (i) => zone.getTile(i % width, Math.floor(i / width), z) === currentTile;
 		const visit = (i) => {
-			if (state[i] !== NEW) return;
+			if (state[ i ] !== NEW) return;
 
 			if (isCandidate(i)) {
-				state[i] = MARKED;
+				state[ i ] = MARKED;
 				open.push(i);
-			} else state[i] = VISITED;
+			} else state[ i ] = VISITED;
 		};
 
-		visit(open[0]);
+		visit(open[ 0 ]);
 
 		let current;
 		while ((current = open.shift()) !== undefined) {
