@@ -17,12 +17,12 @@ export default class extends AbstractImageFactory {
 		const rawImageData = imageData.data;
 
 		for (let i = 0; i < size; i++) {
-			const paletteIndex = pixelData[i] * 4;
+			const paletteIndex = pixelData[ i ] * 4;
 
-			rawImageData[4 * i + 0] = palette[paletteIndex + 2];
-			rawImageData[4 * i + 1] = palette[paletteIndex + 1];
-			rawImageData[4 * i + 2] = palette[paletteIndex + 0];
-			rawImageData[4 * i + 3] = paletteIndex === 0 ? 0x00 : 0xFF;
+			rawImageData[ 4 * i + 0 ] = palette[ paletteIndex + 2 ];
+			rawImageData[ 4 * i + 1 ] = palette[ paletteIndex + 1 ];
+			rawImageData[ 4 * i + 2 ] = palette[ paletteIndex + 0 ];
+			rawImageData[ 4 * i + 3 ] = paletteIndex === 0 ? 0x00 : 0xFF;
 		}
 
 		const canvas = document.createElement("canvas");

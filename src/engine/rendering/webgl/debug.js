@@ -39,8 +39,8 @@ export default class {
 		// based on the index of the attibute names we pass to it.
 		const program = twgl.createProgramFromSources(
 			gl,
-			[VertexShader, FragmentShader],
-			["a_position", "a_textureIndex", "a_palette_position"]);
+			[ VertexShader, FragmentShader ],
+			[ "a_position", "a_textureIndex", "a_palette_position" ]);
 		gl.useProgram(program);
 		const imageLoc = gl.getUniformLocation(program, "u_image");
 		const paletteLoc = gl.getUniformLocation(program, "u_palette");
@@ -96,12 +96,12 @@ export default class {
 		// Setup a palette.
 		const palette = new Uint8Array(buffer);
 		for (let i = 0; i <= 0xFF; i++) {
-			const temp = palette[4 * i + 0];
-			palette[4 * i + 0] = palette[4 * i + 2];
-			palette[4 * i + 2] = temp;
-			palette[4 * i + 3] = 0xFF;
+			const temp = palette[ 4 * i + 0 ];
+			palette[ 4 * i + 0 ] = palette[ 4 * i + 2 ];
+			palette[ 4 * i + 2 ] = temp;
+			palette[ 4 * i + 3 ] = 0xFF;
 		}
-		palette[3] = 0;
+		palette[ 3 ] = 0;
 
 		// make palette texture and upload palette
 		gl.activeTexture(gl.TEXTURE1);
@@ -128,7 +128,7 @@ export default class {
 		const height = 16;
 		const image = new Uint8Array(width * height);
 		for (let i = 0; i <= 0xFF; i++) {
-			image[i] = i;
+			image[ i ] = i;
 		}
 
 		// make image textures and upload image
