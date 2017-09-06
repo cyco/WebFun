@@ -15,12 +15,12 @@ const config = {
 	basePath: projectRoot,
 	files: [ {
 		pattern: "game-data/**",
-		watched: true,
+		watched: false,
 		served: true,
 		included: false
 	}, {
 		pattern: "test/fixtures/**",
-		watched: true,
+		watched: false,
 		served: true,
 		included: false
 	} ],
@@ -48,6 +48,8 @@ const config = {
 			]
 		}
 	},
+	watch: false,
+	singleRun: true,
 //	logLevel: 'error',
 	webpackMiddleware: {
 //		noInfo: true,
