@@ -69,10 +69,9 @@ if (includeCoverage) {
 		fileName = "acceptance.lcov";
 	}
 
-
 	config.reporters.push("coverage-istanbul");
 	config.coverageIstanbulReporter = {
-		reports: [ "lcovonly" ],
+		reports: [ "lcovonly", "html" ],
 		fixWebpackSourcePaths: true,
 		dir: Path.join(__dirname, "../test/coverage"),
 		"report-config": {

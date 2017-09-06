@@ -15,3 +15,4 @@ indy.pal
 .yarnclean
 /stats.json
 .idea/
+config/.typescript

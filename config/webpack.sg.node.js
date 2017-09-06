@@ -52,14 +52,15 @@ module.exports = {
 		}, {
 			/* JavaScript / Babel */
 			test: /\.tsx?$/,
-			loader: "ts-loader",
+			loader: "awesome-typescript-loader",
 			include: [
 				Path.resolve(__dirname, "src"),
 				Path.resolve(__dirname, "tools")
 			],
 			exclude: [
 				"node_modules"
-			]
+			],
+			options: { configFileName: "./config/tsconfig.json" }
 		}, {
 			/* Styles */
 			test: /\.scss$/,

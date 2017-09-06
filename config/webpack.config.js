@@ -32,10 +32,11 @@ module.exports = {
 			loader: "babel-loader",
 			exclude: [ "node_modules" ]
 		}, {
-			/* JavaScript / Babel */
+			/* TypeScript */
 			test: /\.ts$/,
-			loader: "ts-loader",
-			exclude: [ "node_modules" ]
+			loader: "awesome-typescript-loader",
+			exclude: [ "node_modules" ],
+			options: { configFileName: "./config/tsconfig.json" }
 		}, {
 			/* Styles */
 			test: /\.scss$/,
