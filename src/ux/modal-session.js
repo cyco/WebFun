@@ -1,7 +1,7 @@
 import { dispatch, Point } from "src/util";
 import ResetCursor from "./reset-cursor";
 
-export default class ModalSession {
+class ModalSession {
 	constructor() {
 		const overlay = document.createElement("div");
 		overlay.classList.add("full-size");
@@ -83,3 +83,5 @@ export default class ModalSession {
 		return this._lastMouseLocation;
 	}
 }
+
+export default ModalSession;

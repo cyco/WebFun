@@ -1,6 +1,5 @@
-import Editor from "src/editor";
 import Settings from "src/settings";
-import { MenuItemSeparator, MenuItemState } from "src/ui";
+import { MenuItemState } from "src/ui";
 
 const SettingsItem = (label, key) => ({
 	title: label,
@@ -11,19 +10,7 @@ const SettingsItem = (label, key) => ({
 export default {
 	title: "Debug",
 	mnemonic: 0,
-	submenu: [ {
-		title: "Start Game",
-		callback: () => false,
-		enabled: () => window.data
-	}, {
-		title: "Edit Data",
-		callback: () => (new Editor(window.data)).show(),
-		enabled: () => window.data
-	}, {
-		title: "Inspect Save Game",
-		callback: () => false
-	},
-		MenuItemSeparator,
+	submenu: [
 		SettingsItem("Draw invisible Hero", "drawHeroTile"),
 		SettingsItem("Reveal World", "revealWorld"),
 		SettingsItem("Show Hotspots", "drawHotspots"),

@@ -3,7 +3,7 @@ import WindowTitlebar from "./window-titlebar";
 import View from "../view";
 import "./window.scss";
 
-export default class extends Component {
+class Window extends Component {
 	static get TagName() {
 		return "wf-window";
 	}
@@ -108,3 +108,5 @@ export default class extends Component {
 		this._titlebar.onclose = cb;
 	}
 }
+
+export default Window;
