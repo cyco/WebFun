@@ -1,0 +1,28 @@
+{
+	"compilerOptions": {
+		"module": "commonjs",
+		"noImplicitAny": true,
+		"removeComments": true,
+		"preserveConstEnums": true,
+		"sourceMap": false,
+		"inlineSourceMap": true,
+		"inlineSources": true,
+		"allowJs": true,
+		"rootDirs": [
+			"src"
+		],
+		"target": "es2015",
+		"sourceRoot": "../"
+	},
+	"include": [
+		"src/**/*.ts"
+	],
+	"exclude": [
+		"node_modules"
+	],
+	"awesomeTypescriptLoaderOptions": {
+		"useBabel": true,
+		"useCache": true,
+		"cacheDirectory": "./config/.typescript"
+	}
+}
