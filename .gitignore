@@ -16,3 +16,5 @@ indy.pal
 /stats.json
 .idea/
 config/.typescript
+tools/*.bin.js
+

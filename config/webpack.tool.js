@@ -1,6 +1,4 @@
 const Path = require("path");
-const Webpack = require("webpack");
-const NodeExternals = require("webpack-node-externals");
 
 const Paths = require("./paths");
 const BaseConfig = require("./webpack.node.js");
