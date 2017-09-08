@@ -2,16 +2,21 @@ import { dispatch, Point } from "src/util";
 import ResetCursor from "./reset-cursor";
 
 class ModalSession {
+	protected _overlay: HTMLDivElement;
+	private _locationHandler: (_: MouseEvent) => void;
+	private _lastMouseLocation: Point;
+	private _endHandler: Function;
+
 	constructor() {
 		const overlay = document.createElement("div");
 		overlay.classList.add("full-size");
 		overlay.style.position = "fixed";
-		overlay.style.zIndex = 1000;
+		overlay.style.zIndex = "1000";
 
 		this._overlay = overlay;
 	}
 
-	run() {
+	run(): void {
 		document.body.appendChild(this._overlay);
 		this._locationHandler = (e) => (this._lastMouseLocation = new Point(e.clientX, e.clientY));
 		[ "mouseup", "mousedown", "mousemove", "mousedrag" ].forEach(
@@ -19,10 +24,10 @@ class ModalSession {
 
 	}
 
-	end(code) {
+	end(code: Number): void {
 		[ "mouseup", "mousedown", "mousemove", "mousedrag" ].forEach(
 			(eventName) => window.removeEventListener(eventName, this._locationHandler));
-		ResetCursor();
+		ResetCursor(window.document);
 		this._overlay.remove();
 		this._whenOverlayIsGone(() => {
 			this._overlay = null;
@@ -30,7 +35,7 @@ class ModalSession {
 		});
 	}
 
-	_whenOverlayIsGone(callback) {
+	_whenOverlayIsGone(callback: Function): void {
 		// hack to give webkit time to remove the overlay, so elementFromPoint works correctly
 		if (document.elementFromPoint(0, 0) === this._overlay) {
 			dispatch(() => this._whenOverlayIsGone(callback), 1);
@@ -45,7 +50,7 @@ class ModalSession {
 		return this._overlay.style;
 	}
 
-	set cursor(c) {
+	set cursor(c:string) {
 		let style = this._overlay.style;
 		const cursorStyle = c ? "url(" + c + ") 16 16, auto" : "";
 
@@ -55,19 +60,19 @@ class ModalSession {
 	}
 
 	/* Event Handling */
-	set onclick(h) {
+	set onclick(h:(this: HTMLElement, ev: MouseEvent) => any) {
 		this._overlay.onclick = h;
 	}
 
-	set onmousemove(h) {
+	set onmousemove(h:(this: HTMLElement, ev: MouseEvent) => any) {
 		this._overlay.onmousemove = h;
 	}
 
-	set onmousedown(h) {
+	set onmousedown(h:(this: HTMLElement, ev: MouseEvent) => any) {
 		this._overlay.onmousedown = h;
 	}
 
-	set onmouseup(h) {
+	set onmouseup(h:(this: HTMLElement, ev: MouseEvent) => any) {
 		this._overlay.onmouseup = h;
 	}
 

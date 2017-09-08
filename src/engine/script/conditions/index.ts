@@ -35,8 +35,8 @@ import * as PaddingIsNot from "./padding-is-not";
 import * as TileAtIsAgain from "./tile-at-is-again";
 import * as GamesWonIsGreaterThan from "./games-won-is-greater-than";
 
-const Conditions = {};
-const exportCondition = (C) => Conditions[ C.Opcode ] = C.default;
+const Conditions = <{ [index: string]: Function }>{};
+const exportCondition = (C: any) => Conditions[ C.Opcode ] = C.default;
 
 exportCondition(ZoneNotInitialized);
 exportCondition(ZoneEntered);
@@ -77,9 +77,8 @@ exportCondition(GamesWonIsGreaterThan);
 
 export default Conditions;
 
-
-const Opcode = {};
-const exportOpcode = (name, { Opcode: code }) => Opcode[ name ] = code;
+const Opcode = <{ [index: string]: any }>{};
+const exportOpcode = (name: string, { Opcode: code }:{Opcode: any}) => Opcode[ name ] = code;
 exportOpcode("ZoneNotInitialized", ZoneNotInitialized);
 exportOpcode("ZoneEntered", ZoneEntered);
 exportOpcode("Bump", Bump);

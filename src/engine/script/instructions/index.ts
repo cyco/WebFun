@@ -37,8 +37,8 @@ import * as LoseGame from "./lose-game";
 import * as WinGame from "./win-game";
 import * as MarkAsSolved from "./mark-as-solved";
 
-const Instructions = {};
-const exportInstruction = (I) => Instructions[ I.Opcode ] = I.default;
+const Instructions = <{ [_: string]: Function }>{};
+const exportInstruction = (I: any) => Instructions[ I.Opcode ] = I.default;
 
 exportInstruction(PlaceTile);
 exportInstruction(RemoveTile);
@@ -81,9 +81,8 @@ exportInstruction(MoveHeroBy);
 
 export default Instructions;
 
-
-const Opcode = {};
-const exportOpcode = (name, { Opcode: code }) => Opcode[ name ] = code;
+const Opcode = <{ [_: string]: any }>{};
+const exportOpcode = (name: string, { Opcode: code }: { Opcode: any }) => Opcode[ name ] = code;
 exportOpcode("PlaceTile", PlaceTile);
 exportOpcode("RemoveTile", RemoveTile);
 exportOpcode("MoveTile", MoveTile);
