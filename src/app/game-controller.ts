@@ -9,8 +9,14 @@ import { DesktopInputManager } from "src/engine/input";
 import Loader from "./loader";
 import { ScriptExecutor } from "src/engine/script";
 import { Debugger, WorldGeneration } from "src/debug";
+import { Char, Zone } from "src/engine/objects";
 
 class GameController {
+	private _window: any;
+	private _sceneView: SceneView;
+	private _engine: Engine;
+	private _startTime: number;
+
 	constructor() {
 		this._window = null;
 		this._sceneView = new SceneView();
@@ -31,7 +37,6 @@ class GameController {
 		engine.inventory = new Inventory();
 		engine.scriptExecutor = new ScriptExecutor();
 		engine.hero = new Hero();
-		window.engine = engine;
 
 		return engine;
 	}
@@ -116,14 +121,14 @@ class GameController {
 	_showSceneView() {
 		const engine = this._engine;
 		engine.metronome.stop();
-		engine.metronome.ontick = (delta) => engine.update(delta);
+		engine.metronome.ontick = (delta: number) => engine.update(delta);
 		engine.metronome.onrender = () => engine.render();
 
-		const loadingZone = engine.data.zones.find(z => z.isLoadingZone());
+		const loadingZone = engine.data.zones.find((z: Zone) => z.isLoadingZone());
 		const zoneScene = new ZoneScene();
 		zoneScene.zone = loadingZone;
 		engine.currentZone = loadingZone;
-		engine.hero.appearance = engine.data.characters.find(c => c.isHero());
+		engine.hero.appearance = engine.data.characters.find((c: Char) => c.isHero());
 
 		engine.sceneManager.clear();
 		engine.sceneManager.pushScene(zoneScene);
