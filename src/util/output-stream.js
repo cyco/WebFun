@@ -67,25 +67,25 @@ export default class OutputStream extends Stream {
 
 	writeUint8Array(array) {
 		for (let i = 0, len = array.length; i < len; i++) {
-			this.writeUint8(array[ i ]);
+			this.writeUint8(array[i]);
 		}
 	}
 
 	writeUint16Array(array) {
 		for (let i = 0, len = array.length; i < len; i++) {
-			this.writeUint16(array[ i ]);
+			this.writeUint16(array[i]);
 		}
 	}
 
 	writeInt16Array(array) {
 		for (let i = 0, len = array.length; i < len; i++) {
-			this.writeInt16(array[ i ]);
+			this.writeInt16(array[i]);
 		}
 	}
 
 	writeUint32Array(array) {
 		for (let i = 0, len = array.length; i < len; i++) {
-			this.writeUint32(array[ i ]);
+			this.writeUint32(array[i]);
 		}
 	}
 

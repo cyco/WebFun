@@ -5,7 +5,7 @@ describeCondition("GamesWonIs", (check, engine) => {
 	it("checks if exactly x games have been won", () => {
 		const condition = new Condition();
 		condition._opcode = GamesWonIs.Opcode;
-		condition._arguments = [ 10 ];
+		condition._arguments = [10];
 
 		engine.persistentState.gamesWon = 5;
 		expect(check(condition)).toBeFalse();

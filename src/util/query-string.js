@@ -6,7 +6,7 @@ export default class QueryString {
 			if (result) result += "&";
 			result += encodeURIComponent(key);
 			result += "=";
-			result += encodeURIComponent(data[ key ]);
+			result += encodeURIComponent(data[key]);
 		}
 
 		return result;

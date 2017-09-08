@@ -10,10 +10,10 @@ describeCondition("HasItem", (check, engine) => {
 		};
 		const condition = new Condition();
 		condition._opcode = HasItem.Opcode;
-		condition._arguments = [ 13 ];
+		condition._arguments = [13];
 		expect(check(condition)).toBeTrue();
 
-		condition._arguments = [ 15 ];
+		condition._arguments = [15];
 		expect(check(condition)).toBeFalse();
 	});
 });

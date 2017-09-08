@@ -30,9 +30,9 @@ class Loader extends EventTarget {
 		this._engine = engine;
 
 		const loader = new FileLoader(this._dataUrl);
-		loader.onprogress = ({ detail: { progress } }) => this._progress(0, progress);
+		loader.onprogress = ({detail: {progress}}) => this._progress(0, progress);
 		loader.onfail = (reason) => this._fail(reason);
-		loader.onload = ({ detail: { kaitaiStream } }) => this._readGameData(kaitaiStream);
+		loader.onload = ({detail: {kaitaiStream}}) => this._readGameData(kaitaiStream);
 		loader.load();
 	}
 
@@ -46,9 +46,9 @@ class Loader extends EventTarget {
 
 	_loadPalette() {
 		const loader = new FileLoader(this._paletteUrl);
-		loader.onprogress = ({ detail: { progress } }) => this._progress(2, progress);
+		loader.onprogress = ({detail: {progress}}) => this._progress(2, progress);
 		loader.onfail = (reason) => this._fail(reason);
-		loader.onload = ({ detail: { arraybuffer } }) => {
+		loader.onload = ({detail: {arraybuffer}}) => {
 			const palette = new Uint8Array(arraybuffer);
 			this._engine.imageFactory.palette = palette;
 			this._loadSetupImage(palette);
@@ -94,7 +94,7 @@ class Loader extends EventTarget {
 		const loadBatch = (idx) => {
 			const max = Math.min(idx + TileImageBatchSize, tileCount);
 			for (; idx < max; idx++) {
-				const tile = tiles[ idx ];
+				const tile = tiles[idx];
 				tile._image = imageFactory.buildImage(tileWidth, tileHeight, tile._imageData);
 				if (tile.image && tile.name) tile.image.representation.title = tile.name;
 				this._progress(5, 4 * (idx / tileCount));

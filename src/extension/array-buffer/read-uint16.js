@@ -5,7 +5,7 @@ const readUint16 = function (offset) {
 	else
 		buffer = new Uint16Array(this, offset, Uint16Array.BYTES_PER_ELEMENT);
 
-	return buffer[ 0 ];
+	return buffer[0];
 };
 
 ArrayBuffer.prototype.readUint16 = ArrayBuffer.prototype.readUint16 || readUint16;

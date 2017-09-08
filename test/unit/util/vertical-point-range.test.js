@@ -14,7 +14,7 @@ describe("VerticalPointRange", () => {
 		let range = new VerticalPointRange(3, 8, 4);
 
 		range.iterate(function (point) {
-			visited[ point.x + "x" + point.y ] = true;
+			visited[point.x + "x" + point.y] = true;
 		});
 
 		expect(visited).toEqual({

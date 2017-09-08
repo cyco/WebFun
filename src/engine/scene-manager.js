@@ -30,14 +30,14 @@ export default class SceneManager {
 		try {
 			let visibleScenes = [];
 			for (let i = 0, len = this._stack.length; i < len; i++) {
-				const scene = this._stack[ i ];
+				const scene = this._stack[i];
 				if (scene.isOpaque())
-					visibleScenes = [ scene ];
+					visibleScenes = [scene];
 				else visibleScenes.push(scene);
 			}
 
 			for (let i = 0, len = visibleScenes.length; i < len; i++)
-				visibleScenes[ i ].render(renderer);
+				visibleScenes[i].render(renderer);
 		}
 		catch (e) {
 			console.error(e);
@@ -46,7 +46,7 @@ export default class SceneManager {
 
 	popScene() {
 		const oldScene = this.currentScene;
-		const newScene = this._stack[ this._stack.length - 2 ];
+		const newScene = this._stack[this._stack.length - 2];
 		if (oldScene) oldScene.willHide();
 		if (newScene) newScene.willShow();
 

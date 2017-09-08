@@ -1,4 +1,4 @@
-const Path = require('path');
+const Path = require("path");
 
 const projectRoot = Path.resolve(__dirname, "../");
 const sourceRoot = Path.resolve(projectRoot, "src");

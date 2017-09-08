@@ -9,7 +9,7 @@ describeInstruction("MoveTile", (execute, engine) => {
 
 		let instruction = new Instruction({});
 		instruction._opcode = MoveTile.Opcode;
-		instruction._arguments = [ 0, 1, 2, 3, 4 ];
+		instruction._arguments = [0, 1, 2, 3, 4];
 		execute(instruction);
 
 		expect(engine.currentZone.moveTile).toHaveBeenCalledWith(0, 1, 2, 3, 4);

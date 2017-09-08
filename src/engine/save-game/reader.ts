@@ -118,7 +118,7 @@ class Reader {
 	}
 
 	_readRoom(zoneId: number, visited: boolean, stream: InputStream): void {
-		const zone = this._data.zones[ zoneId ];
+		const zone = this._data.zones[zoneId];
 		this._readZone(zone, visited, stream);
 		const doors = zone.hotspots.withType(HotspotType.DoorIn).filter((hotspot: Hotspot) => hotspot.arg !== -1);
 		doors.forEach((hotspot: Hotspot) => {

@@ -8,7 +8,7 @@ export default class extends Component {
 	}
 
 	static get observedAttributes() {
-		return [ "running" ];
+		return ["running"];
 	}
 
 	constructor() {

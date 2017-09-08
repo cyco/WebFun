@@ -1,4 +1,4 @@
-import { Message, rand } from "src/util";
+import { Message } from "src/util";
 import { DagobahGenerator, WorldGenerationError, WorldGenerator } from "src/engine/generation";
 
 export default class {
@@ -33,7 +33,7 @@ export default class {
 		} while (!success);
 
 		const goalID = generator.goalPuzzleID;
-		this.goal = engine.data.puzzles[ goalID ];
+		this.goal = engine.data.puzzles[goalID];
 
 		this._setupWorld(generator, engine);
 		this._setupDagobah(generator, engine);

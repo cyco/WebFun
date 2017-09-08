@@ -8,7 +8,7 @@ const makeConditionDescription = (desc) => (Name, block) => {
 
 		beforeEach(() => {
 			engine.currentZone = {};
-			engine.hero = { location: {} };
+			engine.hero = {location: {}};
 			engine.persistentState = {};
 			engine.state = {};
 		});

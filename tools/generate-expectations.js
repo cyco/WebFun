@@ -110,6 +110,8 @@ const main = (...args) => {
 
 		for (let seed = 0; seed < 100; seed++)
 			for (let size = 1;; ; ;
+		;
+		;
 		size <= 3;
 		size++;
 	)

@@ -70,7 +70,7 @@ export default class extends EventTarget {
 	set currentZone(z) {
 		this._currentZone = z;
 		this.dispatchEvent(Events.CurrentZoneChange);
-		this.dispatchEvent(Events.LocationChanged, { zone: z, world: this._currentWorld });
+		this.dispatchEvent(Events.LocationChanged, {zone: z, world: this._currentWorld});
 	}
 
 	get currentWorld() {

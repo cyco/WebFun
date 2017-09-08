@@ -155,35 +155,35 @@ export default class SpeechBubble extends View {
 
 		let path = [];
 
-		path.push([ "M", left + b, top ]);
+		path.push(["M", left + b, top]);
 		if (this._arrowStyle & SpeechBubble.ARROW_STYLE.TOP) {
 			const arrowLeft = !!this._arrowStyle & SpeechBubble.ARROW_STYLE.MODIFIED;
 			const arrowStart = (right - left) / 2 - arrowWidth / 2;
 			const arrowTipX = arrowLeft ? arrowStart : arrowStart + arrowWidth;
 
-			path.push([ "L", arrowStart, top ]);
-			path.push([ "L", arrowTipX, top - arrowWidth ]);
-			path.push([ "L", arrowStart + arrowWidth, top ]);
+			path.push(["L", arrowStart, top]);
+			path.push(["L", arrowTipX, top - arrowWidth]);
+			path.push(["L", arrowStart + arrowWidth, top]);
 		}
 
-		path.push([ "L", right - b, top ]);
-		path.push([ "A", b, b, 0, 0, 1, right, top + b ]);
-		path.push([ "L", right, bottom - b ]);
-		path.push([ "A", b, b, 0, 0, 1, width - b, bottom ]);
+		path.push(["L", right - b, top]);
+		path.push(["A", b, b, 0, 0, 1, right, top + b]);
+		path.push(["L", right, bottom - b]);
+		path.push(["A", b, b, 0, 0, 1, width - b, bottom]);
 		if (this._arrowStyle & SpeechBubble.ARROW_STYLE.BOTTOM) {
 			const arrowStart = (right - left) / 2 - arrowWidth / 2;
 			const arrowLeft = !!this._arrowStyle & SpeechBubble.ARROW_STYLE.MODIFIED;
 			const arrowTipX = arrowLeft ? arrowStart : arrowStart + arrowWidth;
 
-			path.push([ "L", arrowStart + arrowWidth, height ]);
-			path.push([ "L", arrowTipX, bottom + arrowWidth ]);
-			path.push([ "L", arrowStart, bottom ]);
+			path.push(["L", arrowStart + arrowWidth, height]);
+			path.push(["L", arrowTipX, bottom + arrowWidth]);
+			path.push(["L", arrowStart, bottom]);
 		}
-		path.push([ "L", left + b, bottom ]);
-		path.push([ "A", b, b, 0, 0, 1, left, bottom - b ]);
-		path.push([ "L", left, top + b ]);
-		path.push([ "A", b, b, 0, 0, 1, left + b, top ]);
-		path.push([ "Z" ]);
+		path.push(["L", left + b, bottom]);
+		path.push(["A", b, b, 0, 0, 1, left, bottom - b]);
+		path.push(["L", left, top + b]);
+		path.push(["A", b, b, 0, 0, 1, left + b, top]);
+		path.push(["Z"]);
 
 		return path.map((pa) => {
 			return pa.first() + pa.rest().join(",");

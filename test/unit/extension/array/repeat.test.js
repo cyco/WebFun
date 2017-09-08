@@ -11,7 +11,7 @@ describe("Array.Repeat", () => {
 		() => {
 			let array = Array.Repeat("something", 10);
 			expect(array.length).toBe(10);
-			expect(array[ 0 ]).toBe("something");
-			expect(array[ 9 ]).toBe("something");
+			expect(array[0]).toBe("something");
+			expect(array[9]).toBe("something");
 		});
 });

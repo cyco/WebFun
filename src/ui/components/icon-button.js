@@ -7,11 +7,11 @@ export default class extends Component {
 	}
 
 	static get Options() {
-		return { extends: "button" };
+		return {extends: "button"};
 	}
 
 	static get observedAttributes() {
-		return [ "icon" ];
+		return ["icon"];
 	}
 
 	constructor(iconName = "") {

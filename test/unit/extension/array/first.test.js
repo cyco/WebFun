@@ -5,7 +5,7 @@ describe("Array.first", () => {
 	});
 
 	it("simply returns the first element of an array", () => {
-		let array = [ "a", "b", "c" ];
+		let array = ["a", "b", "c"];
 		let result = array.first();
 		expect(result).toBe("a");
 	});

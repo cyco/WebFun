@@ -6,12 +6,12 @@ describeCondition("HeroIsAt", (check, engine) => {
 		const hero = engine.hero;
 		const condition = new Condition();
 		condition._opcode = HeroIsAt.Opcode;
-		condition._arguments = [ 1, 2 ];
+		condition._arguments = [1, 2];
 
-		hero.location = { x: 1, y: 2 };
+		hero.location = {x: 1, y: 2};
 		expect(check(condition)).toBeTrue();
 
-		hero.location = { x: 1, y: 1 };
+		hero.location = {x: 1, y: 1};
 		expect(check(condition)).toBeFalse();
 	});
 });

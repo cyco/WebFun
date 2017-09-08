@@ -49,14 +49,14 @@ class WebGLRenderer extends AbstractRenderer {
 	_convertToRGBA(bgrPalette) {
 		const rgbaPalette = new Uint8Array(bgrPalette.length);
 		for (let i = 0; i <= 0xFF; i++) {
-			rgbaPalette[ 4 * i + 0 ] = bgrPalette[ 4 * i + 2 ];
-			rgbaPalette[ 4 * i + 1 ] = bgrPalette[ 4 * i + 1 ];
-			rgbaPalette[ 4 * i + 2 ] = bgrPalette[ 4 * i + 0 ];
-			rgbaPalette[ 4 * i + 3 ] = 0xFF;
+			rgbaPalette[4 * i + 0] = bgrPalette[4 * i + 2];
+			rgbaPalette[4 * i + 1] = bgrPalette[4 * i + 1];
+			rgbaPalette[4 * i + 2] = bgrPalette[4 * i + 0];
+			rgbaPalette[4 * i + 3] = 0xFF;
 		}
 
 		// make sure color 0 is transparent
-		rgbaPalette[ 3 ] = 0x00;
+		rgbaPalette[3] = 0x00;
 
 		return rgbaPalette;
 	}
@@ -93,8 +93,8 @@ class WebGLRenderer extends AbstractRenderer {
 	_setupShaders(gl) {
 		const program = twgl.createProgramFromSources(
 			gl,
-			[ VertexShader, FragmentShader ],
-			[ "a_position", "a_textureIndex", "a_palette_position" ]);
+			[VertexShader, FragmentShader],
+			["a_position", "a_textureIndex", "a_palette_position"]);
 		gl.useProgram(program);
 		gl.uniform1i(gl.getUniformLocation(program, "u_image"), 0);
 		gl.uniform1i(gl.getUniformLocation(program, "u_palette"), 1);

@@ -9,10 +9,10 @@ describe("Array.clear", () => {
 	});
 
 	it("removes all elements from an array", () => {
-		let array = [ "a", "b", "c" ];
+		let array = ["a", "b", "c"];
 		clear.call(array);
 		expect(array.length).toBe(0);
-		expect(array[ 0 ]).toBe(undefined);
+		expect(array[0]).toBe(undefined);
 	});
 
 	it("does nothing on empty arrays", () => {

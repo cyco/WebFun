@@ -20,7 +20,7 @@ class HotspotExecutor {
 		if (currentTile) return;
 
 		const tiles = this._engine.data.tiles;
-		const tile = tiles[ hotspot.arg ];
+		const tile = tiles[hotspot.arg];
 
 		const type = hotspot.type;
 		if (type === HotspotType.SpawnLocation) {

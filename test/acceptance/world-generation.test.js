@@ -1,6 +1,5 @@
 import loadGameData from "test-helpers/game-data";
 import { getFixtureContent } from "test-helpers/fixture-loading";
-import { CompareWorldItems, ComparisonResult, ParseExpectation, PrepareExpectations } from "../../src/debug";
 import Story from "../../src/engine/story";
 import GameData from "../../src/engine/game-data";
 
@@ -36,7 +35,7 @@ const compare = (story, expectation) => {
 	/* main world */
 	try {
 		for (let i = 0; i < 100; i++) {
-			compareItem(story.world.index(i), expectation.world[ i ]);
+			compareItem(story.world.index(i), expectation.world[i]);
 		}
 	} catch (e) {
 		throw `World: ${e}`;
@@ -44,21 +43,21 @@ const compare = (story, expectation) => {
 
 	/* dagobah */
 	try {
-		compareItem(story.dagobah.at(4, 4), expectation.dagobah[ 0 ]);
-		compareItem(story.dagobah.at(5, 4), expectation.dagobah[ 1 ]);
-		compareItem(story.dagobah.at(4, 5), expectation.dagobah[ 2 ]);
-		compareItem(story.dagobah.at(5, 5), expectation.dagobah[ 3 ]);
+		compareItem(story.dagobah.at(4, 4), expectation.dagobah[0]);
+		compareItem(story.dagobah.at(5, 4), expectation.dagobah[1]);
+		compareItem(story.dagobah.at(4, 5), expectation.dagobah[2]);
+		compareItem(story.dagobah.at(5, 5), expectation.dagobah[3]);
 	} catch (e) {
 		throw `Dagobah: ${e}`;
 	}
 };
 
-const runTest = ({ seed, planet, size, world, dagobah }) => {
+const runTest = ({seed, planet, size, world, dagobah}) => {
 	describe(`World ${seed} ${getPlanetName(planet)} ${getSizeName(size)}`, () => {
 		it("is generated correctly", (done) => {
 			const story = new Story(seed, planet, size);
-			story.generateWorld({ data: new GameData(rawData) });
-			expect(() => compare(story, { seed, planet, size, world, dagobah })).not.toThrow();
+			story.generateWorld({data: new GameData(rawData)});
+			expect(() => compare(story, {seed, planet, size, world, dagobah})).not.toThrow();
 			done();
 		});
 	});

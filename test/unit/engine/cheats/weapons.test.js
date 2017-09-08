@@ -16,7 +16,7 @@ describe("WeaponsCheat", () => {
 	it("gives the hero a couple of items when executed", () => {
 		const items = [];
 		const mockEngine = {
-			state: { inventory: { addItem: (item) => items.push(item) } },
+			state: {inventory: {addItem: (item) => items.push(item)}},
 			data: {
 				tiles: {
 					0x1A5: 0x1A5,
