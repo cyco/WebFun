@@ -244,7 +244,7 @@ export default class ZoneScene extends Scene {
 
 		switch (hotspot.type) {
 			case HotspotType.DoorIn: {
-				const targetZone = engine.data.zones[ hotspot.arg ];
+				const targetZone = engine.data.zones[hotspot.arg];
 				let waysOut = targetZone.hotspots.filter((h) => h.type === HotspotType.DoorOut);
 
 				if (waysOut.length !== 1) console.warn("Found multiple doors out");
@@ -278,7 +278,7 @@ export default class ZoneScene extends Scene {
 			case HotspotType.DoorOut: {
 				if (hotspot.arg === -1) console.warn("This is not where we're coming from!");
 
-				const targetZone = engine.data.zones[ hotspot.arg ];
+				const targetZone = engine.data.zones[hotspot.arg];
 
 				zone.hotspots.filter((hotspot) => {
 					return hotspot.type === HotspotType.DoorOut;
@@ -312,7 +312,7 @@ export default class ZoneScene extends Scene {
 			case HotspotType.xWingFromD: {
 				if (hotspot.arg === -1) console.warn("This is not where we're coming from!");
 
-				const targetZone = engine.data.zones[ hotspot.arg ];
+				const targetZone = engine.data.zones[hotspot.arg];
 
 				const transitionScene = new TransitionScene();
 				transitionScene.type = TransitionScene.TRANSITION_TYPE.ROOM;
@@ -335,7 +335,7 @@ export default class ZoneScene extends Scene {
 			case HotspotType.xWingToD: {
 				if (hotspot.arg === -1) console.warn("This is not where we're coming from!");
 
-				const targetZone = engine.data.zones[ hotspot.arg ];
+				const targetZone = engine.data.zones[hotspot.arg];
 
 				const transitionScene = new TransitionScene();
 				transitionScene.type = TransitionScene.TRANSITION_TYPE.ROOM;

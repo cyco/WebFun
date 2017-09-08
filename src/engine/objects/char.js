@@ -23,7 +23,7 @@ export default class Char {
 		}
 
 		let tile = null;
-		let frame = this._frames[ frameIdx ];
+		let frame = this._frames[frameIdx];
 
 		const dir = Direction.Confine(direction);
 		switch (dir) {

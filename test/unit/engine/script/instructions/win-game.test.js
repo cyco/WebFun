@@ -5,7 +5,7 @@ describeInstruction("WinGame", (execute, engine) => {
 	it("ends the current story by winning", () => {
 		let instruction = new Instruction({});
 		instruction._opcode = WinGame.Opcode;
-		instruction._arguments = [ 0, 1, 2, 3, 4 ];
+		instruction._arguments = [0, 1, 2, 3, 4];
 
 		expect(() => execute(instruction)).toThrow("Game Won!");
 	});

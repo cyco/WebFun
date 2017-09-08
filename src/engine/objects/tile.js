@@ -112,7 +112,7 @@ Tile.Subtype.Locator = {
 	YouAreHere: 15
 };
 
-Tile.Subtype[ Tile.Attribute.Weapon ] = {
+Tile.Subtype[Tile.Attribute.Weapon] = {
 	BlasterLow: 16,
 	BlasterHigh: 17,
 	Lightsaber: 18,
@@ -129,7 +129,7 @@ Tile.Subtype.Item = {
 	Consumeable: 6
 };
 
-Tile.Subtype[ Tile.Attribute.Type ] = {
+Tile.Subtype[Tile.Attribute.Type] = {
 	Hero: 16,
 	Enemy: 17,
 	NPC: 18

@@ -1,6 +1,5 @@
 import "../test/helpers/polyfill";
 import "/extension";
-import { InputStream } from "src/util";
 import Yodesk from "src/engine/file-format/yodesk.ksy";
 import { GameData, Story } from "src/engine";
 import { Enabled as EnabledMessages, Finalize as FinalizeMessages } from "src/util/message";

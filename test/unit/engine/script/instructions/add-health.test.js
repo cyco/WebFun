@@ -7,7 +7,7 @@ describeInstruction("AddHealth", (execute, engine) => {
 
 		let instruction = new Instruction();
 		instruction._opcode = AddHealth.Opcode;
-		instruction._arguments = [ 15 ];
+		instruction._arguments = [15];
 
 		execute(instruction);
 		expect(engine.hero.health).toBe(19);

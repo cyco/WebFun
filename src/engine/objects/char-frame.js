@@ -8,34 +8,34 @@ export default class CharFrame {
 	}
 
 	get up() {
-		return this._tiles[ 0 ];
+		return this._tiles[0];
 	}
 
 	get down() {
-		return this._tiles[ 1 ];
+		return this._tiles[1];
 	}
 
 	get extensionUp() {
-		return this._tiles[ 2 ];
+		return this._tiles[2];
 	}
 
 	get left() {
-		return this._tiles[ 3 ];
+		return this._tiles[3];
 	}
 
 	get extensionDown() {
-		return this._tiles[ 4 ];
+		return this._tiles[4];
 	}
 
 	get extensionLeft() {
-		return this._tiles[ 5 ];
+		return this._tiles[5];
 	}
 
 	get right() {
-		return this._tiles[ 6 ];
+		return this._tiles[6];
 	}
 
 	get extensionRight() {
-		return this._tiles[ 7 ];
+		return this._tiles[7];
 	}
 }

@@ -5,12 +5,12 @@ describe("Array.flatten", () => {
 	});
 
 	it("creates a new array from the elements of the arrays contained", () => {
-		let sample = [ [ "a" ], [ "b" ], [ "c", "d" ] ];
+		let sample = [["a"], ["b"], ["c", "d"]];
 
 		let result = sample.flatten();
 		expect(result.length).toBe(4);
-		expect(result[ 0 ]).toBe("a");
-		expect(result[ 3 ]).toBe("d");
+		expect(result[0]).toBe("a");
+		expect(result[3]).toBe("d");
 	});
 
 	it("returns an empty array if the original array is empty", () => {
@@ -20,22 +20,22 @@ describe("Array.flatten", () => {
 	});
 
 	it("works if there are non-array elements", () => {
-		let sample = [ [ "a", "b" ], "c" ];
+		let sample = [["a", "b"], "c"];
 		let result = sample.flatten();
 		expect(result.length).toBe(3);
-		expect(result[ 2 ]).toBe("c");
+		expect(result[2]).toBe("c");
 	});
 
 	it("only flattens one layer of arrays", () => {
-		let sample = [ [ "a", [ "b" ] ], "c" ];
+		let sample = [["a", ["b"]], "c"];
 		let result = sample.flatten();
 		expect(result.length).toBe(3);
-		expect(result[ 1 ]).toEqual([ "b" ]);
+		expect(result[1]).toEqual(["b"]);
 	});
 
 	it("leaves the original array untouched", () => {
-		let sample = [ [ "a" ] ];
+		let sample = [["a"]];
 		sample.flatten();
-		expect(sample[ 0 ] instanceof Array).toBeTrue();
+		expect(sample[0] instanceof Array).toBeTrue();
 	});
 });

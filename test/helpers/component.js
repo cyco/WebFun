@@ -1,4 +1,4 @@
-const buildName = (tagName) => tagName.substr(tagName.indexOf("-") + 1).slice().split("-").map(p => p[ 0 ].toUpperCase() + p.substr(1)).join("");
+const buildName = (tagName) => tagName.substr(tagName.indexOf("-") + 1).slice().split("-").map(p => p[0].toUpperCase() + p.substr(1)).join("");
 
 
 const makeFunction = (desc) => (Component, block) => {

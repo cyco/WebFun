@@ -9,7 +9,7 @@ describe("ResetCursor", () => {
 
 		expect(ResetCursor).toBeFunction();
 		expect(() => {
-			ResetCursor();
+			ResetCursor(window.document);
 		}).not.toThrow();
 
 		expect(Util.dispatch).toHaveBeenCalled();

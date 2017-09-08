@@ -29,8 +29,8 @@ describe("Direction", () => {
 	});
 
 	it("calculates the angle from the origin point to a gien point", () => {
-		expect(Direction.CalculateAngleFromRelativePoint({ x: 1, y: 0 })).toBe(0);
-		expect(Direction.CalculateAngleFromRelativePoint({ x: -1, y: 0 })).toBe(180);
+		expect(Direction.CalculateAngleFromRelativePoint({x: 1, y: 0})).toBe(0);
+		expect(Direction.CalculateAngleFromRelativePoint({x: -1, y: 0})).toBe(180);
 
 	});
 

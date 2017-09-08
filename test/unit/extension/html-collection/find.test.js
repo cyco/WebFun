@@ -14,7 +14,7 @@ describe("HTMLCollection.map", () => {
 
 	it("is used to create an array by applying a funtion to each node in a collection", () => {
 		const result = subject.map(node => node.className);
-		expect(result).toEqual([ "first", "second", "third" ]);
+		expect(result).toEqual(["first", "second", "third"]);
 	});
 });
 

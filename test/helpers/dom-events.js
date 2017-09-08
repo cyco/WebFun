@@ -17,18 +17,18 @@ let defaultOptions = {
 
 function extend(destination, source) {
 	for (let property in source) {
-		destination[ property ] = source[ property ];
+		destination[property] = source[property];
 	}
 	return destination;
 }
 
 // found at http://stackoverflow.com/questions/6157929/how-to-simulate-a-mouse-click-using-javascript
 function simulateEvent(element, eventName) {
-	let options = extend(defaultOptions, arguments[ 2 ] || {});
+	let options = extend(defaultOptions, arguments[2] || {});
 	let oEvent, eventType = null;
 
 	for (let name in eventMatchers) {
-		if (eventMatchers[ name ].test(eventName)) {
+		if (eventMatchers[name].test(eventName)) {
 			eventType = name;
 			break;
 		}

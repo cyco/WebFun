@@ -25,7 +25,7 @@ export default class {
 
 	_readExpectations() {
 		const fileLoader = new FileLoader("game-data/worlds.txt");
-		fileLoader.onload = ({ detail: { arraybuffer } }) => {
+		fileLoader.onload = ({detail: {arraybuffer}}) => {
 			this.expectations = PrepareExpectations((new TextDecoder()).decode(arraybuffer)).map(ParseExpectation);
 		};
 		fileLoader.load();
@@ -40,7 +40,7 @@ export default class {
 		this._sizeInput = this._buildInputField("dbg.size");
 		inputContainer.appendChild(this._sizeInput.element);
 
-		this._showDagobahCheckbox = { checked: false };
+		this._showDagobahCheckbox = {checked: false};
 		// this._showDagobahCheckbox = new Checkbox('Show Dagobah');
 		// this._showDagobahCheckbox.checked = !!localStorage.load('dbg.showDagobah');
 		/* this._showDagobahCheckbox.onchange = () => {
@@ -101,7 +101,7 @@ export default class {
 
 	_showDetails(i) {
 		const worldItem = this._currentWorld.index(i);
-		const expectedWorldItem = this._currentSample && this._currentSample[ i ];
+		const expectedWorldItem = this._currentSample && this._currentSample[i];
 
 		const details = document.createElement("div");
 		details.append("Details:");
@@ -139,7 +139,7 @@ export default class {
 		const image = document.createElement("img");
 		image.style.width = "32px";
 		image.style.height = "32px";
-		const tile = this._engine.data.tiles[ itemIdx ];
+		const tile = this._engine.data.tiles[itemIdx];
 		image.src = tile ? tile.image.representation.src : Image.blankImage;
 		row.appendChild(image);
 
@@ -148,7 +148,7 @@ export default class {
 			image.style.width = "32px";
 			image.style.height = "32px";
 			image.style.border = "1px solid red";
-			const tile = this._engine.data.tiles[ expectedItemIdx ];
+			const tile = this._engine.data.tiles[expectedItemIdx];
 			image.src = tile ? tile.image.representation.src : Image.blankImage;
 			row.appendChild(image);
 
@@ -160,7 +160,7 @@ export default class {
 
 	withFreshEngine(callback) {
 		const prepareEngine = () => {
-			callback({ data: new GameData(this._rawData) });
+			callback({data: new GameData(this._rawData)});
 		};
 
 		if (this._freshEngine) {
@@ -168,7 +168,7 @@ export default class {
 		}
 
 		const loader = new FileLoader("game-data/yoda.data");
-		loader.onload = ({ detail: { kaitaiStream } }) => {
+		loader.onload = ({detail: {kaitaiStream}}) => {
 			this._rawData = new DataFileReader(kaitaiStream);
 			prepareEngine();
 		};
@@ -190,7 +190,7 @@ export default class {
 		this._mapContainer.clear();
 
 		for (let i = 0; i < 100; i++) {
-			this._addItem(world.index(i), expectedWorld && expectedWorld[ i ]);
+			this._addItem(world.index(i), expectedWorld && expectedWorld[i]);
 		}
 		this._currentWorld = world;
 		this._currentSample = expectedWorld;
@@ -209,10 +209,10 @@ export default class {
 			});
 		}
 
-		result[ 44 ] = world[ 0 ];
-		result[ 45 ] = world[ 1 ];
-		result[ 54 ] = world[ 2 ];
-		result[ 55 ] = world[ 3 ];
+		result[44] = world[0];
+		result[45] = world[1];
+		result[54] = world[2];
+		result[55] = world[3];
 
 		return result;
 	}

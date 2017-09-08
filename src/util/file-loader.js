@@ -22,9 +22,9 @@ export default class extends EventTarget {
 		reader.open("GET", this._path, true);
 		reader.responseType = "arraybuffer";
 
-		reader.onload = ({ target }) => this._didLoad(target);
+		reader.onload = ({target}) => this._didLoad(target);
 		reader.onerror = (event) => this._didFail(event);
-		reader.onprogress = ({ loaded, total }) => this._didProgress(loaded / total);
+		reader.onprogress = ({loaded, total}) => this._didProgress(loaded / total);
 		reader.send(void 0);
 
 		this.dispatchEvent(Event.Start);

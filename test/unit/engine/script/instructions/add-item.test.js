@@ -3,7 +3,7 @@ import * as AddItem from "src/engine/script/instructions/add-item";
 
 describeInstruction("AddItem", (execute, engine) => {
 	it("adds an item to the inventory", () => {
-		engine.data.tiles = [ null, "fake-tile" ];
+		engine.data.tiles = [null, "fake-tile"];
 		engine.inventory = {
 			addItem() {
 			}
@@ -13,7 +13,7 @@ describeInstruction("AddItem", (execute, engine) => {
 
 		let instruction = new Instruction({});
 		instruction._opcode = AddItem.Opcode;
-		instruction._arguments = [ 1 ];
+		instruction._arguments = [1];
 
 		execute(instruction);
 		expect(engine.inventory.addItem).toHaveBeenCalledWith("fake-tile");

@@ -8,7 +8,7 @@ class Planet {
 	_value: number;
 
 	constructor(number: number) {
-		const knownPlanets = [ Planet.NONE, Planet.TATOOINE, Planet.HOTH, Planet.ENDOR, Planet.DAGOBAH ];
+		const knownPlanets = [Planet.NONE, Planet.TATOOINE, Planet.HOTH, Planet.ENDOR, Planet.DAGOBAH];
 		const planet = knownPlanets.find(p => p === number);
 		if (planet) throw `Planets can not be instantiated. Use static constants or FromNumber instead!`;
 
@@ -20,12 +20,12 @@ class Planet {
 	}
 
 	static isPlanet(number: number): boolean {
-		const knownPlanets = [ Planet.NONE, Planet.TATOOINE, Planet.HOTH, Planet.ENDOR, Planet.DAGOBAH ];
+		const knownPlanets = [Planet.NONE, Planet.TATOOINE, Planet.HOTH, Planet.ENDOR, Planet.DAGOBAH];
 		return !!knownPlanets.find(p => p === number);
 	}
 
 	static fromNumber(number: number): number {
-		const knownPlanets = [ Planet.NONE, Planet.TATOOINE, Planet.HOTH, Planet.ENDOR, Planet.DAGOBAH ];
+		const knownPlanets = [Planet.NONE, Planet.TATOOINE, Planet.HOTH, Planet.ENDOR, Planet.DAGOBAH];
 		const planet = knownPlanets.find(p => p === number);
 		if (!planet) throw RangeError(`Invalid planet ${number} requested!`);
 		return planet;

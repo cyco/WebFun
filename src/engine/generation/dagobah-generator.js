@@ -28,7 +28,7 @@ export default class {
 		dagobah.setZone(5, 4, ZONE_DAGOBAH_NORTH_EAST);
 		dagobah.at(5, 4).zoneType = ZoneType.Find; // data.zones[ZONE_DAGOBAH_NORTH_EAST].type;
 		dagobah.setZone(4, 5, ZONE_DAGOBAH_SOUTH_WEST);
-		dagobah.at(4, 5).zoneType = data.zones[ ZONE_DAGOBAH_SOUTH_WEST ].type;
+		dagobah.at(4, 5).zoneType = data.zones[ZONE_DAGOBAH_SOUTH_WEST].type;
 		dagobah.setZone(5, 5, ZONE_DAGOBAH_SOUTH_EAST);
 		dagobah.at(5, 5).zoneType = ZoneType.Town; // data.zones[ZONE_DAGOBAH_SOUTH_EAST].type;
 
@@ -39,7 +39,7 @@ export default class {
 			mode = 4;
 		}
 
-		const startingItem = data.puzzles[ generator.puzzleIDs2[ 0 ] ].item_1;
+		const startingItem = data.puzzles[generator.puzzleIDs2[0]].item_1;
 
 		//* temporarily copy zone types over from main world for easy comparison against original
 		// FIXME: remove this section when comparisons are not necessary anymore
@@ -109,7 +109,7 @@ export default class {
 
 	_setupSpawnHotspot(zoneID, npcID, data) {
 		const zones = data.zones;
-		const zone = zones[ zoneID ];
+		const zone = zones[zoneID];
 		const hotspots = zone.hotspots;
 
 		if (zoneID !== ZONE_YODAS_HUT) {
@@ -118,7 +118,7 @@ export default class {
 
 			const candidates = zone.hotspots.filter((hotspot) => hotspot.type === HotspotType.SpawnLocation);
 			if (candidates.length) {
-				let hotspot = candidates[ randmod(candidates.length) ];
+				let hotspot = candidates[randmod(candidates.length)];
 				hotspot.arg = npcID;
 				hotspot.enabled = true;
 			}

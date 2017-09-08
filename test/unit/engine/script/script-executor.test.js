@@ -44,7 +44,7 @@ describe("ScriptExecutor", () => {
 
 			spyOn(checker, "check").and.returnValue(true);
 
-			action.conditions = [ "condition-1", "condition-2", "condition-3" ];
+			action.conditions = ["condition-1", "condition-2", "condition-3"];
 			expect(evaluator.actionDoesApply(action)).toBeTrue();
 			expect(checker.check).toHaveBeenCalledTimes(3);
 		});
@@ -58,7 +58,7 @@ describe("ScriptExecutor", () => {
 
 			spyOn(checker, "check").and.returnValue(false);
 
-			action.conditions = [ "condition-1", "condition-2", "condition-3" ];
+			action.conditions = ["condition-1", "condition-2", "condition-3"];
 			expect(evaluator.actionDoesApply(action)).toBeFalse();
 		});
 
@@ -71,7 +71,7 @@ describe("ScriptExecutor", () => {
 
 			spyOn(checker, "check").and.returnValue(false);
 
-			action.conditions = [ "condition-1", "condition-2", "condition-3" ];
+			action.conditions = ["condition-1", "condition-2", "condition-3"];
 			evaluator.actionDoesApply(action);
 
 			expect(checker.check).toHaveBeenCalledTimes(1);
@@ -89,7 +89,7 @@ describe("ScriptExecutor", () => {
 		});
 
 		it("executes all instructions in an action", () => {
-			const action = { instructions: [ "instruction1", "instruction2" ] };
+			const action = {instructions: ["instruction1", "instruction2"]};
 			spyOn(executor, "execute");
 
 			evaluator.executeInstructions(action);
@@ -98,7 +98,7 @@ describe("ScriptExecutor", () => {
 		});
 
 		it("starts execution at the instruction pointer", () => {
-			const action = { instructions: [ "instruction1", "instruction2" ], instructionPointer: 1 };
+			const action = {instructions: ["instruction1", "instruction2"], instructionPointer: 1};
 			spyOn(executor, "execute");
 
 			evaluator.executeInstructions(action);
@@ -107,7 +107,7 @@ describe("ScriptExecutor", () => {
 		});
 
 		it("stops executing instructions when an instruction returns true", () => {
-			const action = { instructions: [ "instruction1", "instruction2" ], instructionPointer: 0 };
+			const action = {instructions: ["instruction1", "instruction2"], instructionPointer: 0};
 			spyOn(executor, "execute").and.returnValue(true);
 
 			evaluator.executeInstructions(action);

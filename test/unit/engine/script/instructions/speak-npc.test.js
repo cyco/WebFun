@@ -12,7 +12,7 @@ describeInstruction("SpeakNPC", (execute, engine) => {
 
 		let instruction = new Instruction({});
 		instruction._opcode = SpeakNPC.Opcode;
-		instruction._arguments = [ 0, 1 ];
+		instruction._arguments = [0, 1];
 		instruction._additionalData = "test text";
 
 		execute(instruction);

@@ -4,7 +4,7 @@ export default class extends Breakpoint {
 	constructor(zone, action, type = null, idx = null) {
 		super();
 
-		this._path = [ zone, action ];
+		this._path = [zone, action];
 
 		if (type !== null) this._path.push(type);
 		if (idx !== null) this._path.push(idx);

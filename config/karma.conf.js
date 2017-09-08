@@ -9,11 +9,11 @@ const runPerformanceTests = process.env.scope && ~process.env.scope.indexOf("per
 
 console.log(includeCoverage ? "coverage" : "", runUnitTests ? "unit" : "", runAcceptanceTests ? "acceptance" : "");
 
-const projectRoot = Path.resolve(__dirname, '../');
+const projectRoot = Path.resolve(__dirname, "../");
 
 const config = {
 	basePath: projectRoot,
-	files: [ {
+	files: [{
 		pattern: "game-data/**",
 		watched: false,
 		served: true,
@@ -23,14 +23,14 @@ const config = {
 		watched: false,
 		served: true,
 		included: false
-	} ],
+	}],
 	preprocessors: {
-		"test/context/*.js": [ "webpack" ]
+		"test/context/*.js": ["webpack"]
 	},
-	frameworks: [ "jasmine", "jasmine-matchers" ],
-	reporters: [ "dots" ],
+	frameworks: ["jasmine", "jasmine-matchers"],
+	reporters: ["dots"],
 	webpack: webpackConfig,
-	browsers: [ "ChromeHeadless" ],
+	browsers: ["ChromeHeadless"],
 	customLaunchers: {
 		ChromeHeadless: {
 			base: "ChromeCanary",
@@ -44,7 +44,7 @@ const config = {
 		FirefoxHeadless: {
 			base: "FirefoxNightly",
 			flags: [
-				"--headless",
+				"--headless"
 			]
 		}
 	},
@@ -71,7 +71,7 @@ if (includeCoverage) {
 
 	config.reporters.push("coverage-istanbul");
 	config.coverageIstanbulReporter = {
-		reports: [ "lcovonly", "html" ],
+		reports: ["lcovonly", "html"],
 		fixWebpackSourcePaths: true,
 		dir: Path.join(__dirname, "../test/coverage"),
 		"report-config": {
@@ -93,15 +93,15 @@ if (includeCoverage) {
 }
 
 if (runUnitTests) {
-	config.files.push({ pattern: "test/context/unit.js", watched: false });
+	config.files.push({pattern: "test/context/unit.js", watched: false});
 }
 
 if (runPerformanceTests) {
-	config.files.push({ pattern: "test/context/performance.js", watched: false });
+	config.files.push({pattern: "test/context/performance.js", watched: false});
 }
 
 if (runAcceptanceTests) {
-	config.files.push({ pattern: "test/context/acceptance.js", watched: false });
+	config.files.push({pattern: "test/context/acceptance.js", watched: false});
 
 	const environment = new Webpack.DefinePlugin({
 		"process.acceptance": JSON.stringify({

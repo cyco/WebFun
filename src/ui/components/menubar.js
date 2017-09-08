@@ -26,7 +26,7 @@ export default class Menubar extends MenuView {
 	startMouseHandling(event) {
 		let itemIndex = this._findItemAt(new Point(event.pageX, event.pageY));
 		if (itemIndex === -1) return;
-		const menuItem = this.menu.items[ itemIndex ];
+		const menuItem = this.menu.items[itemIndex];
 		if (!menuItem.submenu) {
 			if (menuItem.callback instanceof Function) {
 				menuItem.callback();
@@ -73,7 +73,7 @@ export default class Menubar extends MenuView {
 	_closeMenuForItem(idx) {
 		if (idx === -1) return;
 
-		const itemNode = this.children[ idx ];
+		const itemNode = this.children[idx];
 
 		itemNode.classList.remove("open");
 		MenuStack.sharedStack.clear();
@@ -82,8 +82,8 @@ export default class Menubar extends MenuView {
 	_showMenuForItem(idx) {
 		if (idx === -1) return;
 
-		const itemNode = this.children[ idx ];
-		const menuItem = this.menu.items[ idx ];
+		const itemNode = this.children[idx];
+		const menuItem = this.menu.items[idx];
 		itemNode.classList.add("open");
 
 		if (!menuItem || !menuItem.submenu) {
@@ -106,7 +106,7 @@ export default class Menubar extends MenuView {
 	_findItemAt(location) {
 		const children = this.children;
 		for (let i = 0, len = children.length; i < len; i++) {
-			if (this._elementContainsPoint(children[ i ], location))
+			if (this._elementContainsPoint(children[i], location))
 				return i;
 		}
 		return -1;

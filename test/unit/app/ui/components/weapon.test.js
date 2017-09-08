@@ -22,8 +22,8 @@ describeComponent(Weapon, () => {
 	});
 
 	it("shows the correct image if a weapon is set", () => {
-		const weapon = { frames: [ { extensionRight: 3 } ] };
-		subject.data = { tiles: [ , , , { image: { dataURL: "image-data-url" } } ] };
+		const weapon = {frames: [{extensionRight: 3}]};
+		subject.data = {tiles: [, , , {image: {dataURL: "image-data-url"}}]};
 
 		subject.weapon = weapon;
 
@@ -31,7 +31,7 @@ describeComponent(Weapon, () => {
 	});
 
 	it("also shows no image if the weapon does not supply one", () => {
-		subject.weapon = { frames: [ { extensionRight: 0xFFFF } ] };
+		subject.weapon = {frames: [{extensionRight: 0xFFFF}]};
 		expect(subject.querySelector("img").src).toEqual(Image.blankImage);
 	});
 });

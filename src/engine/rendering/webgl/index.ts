@@ -1,2 +1,8 @@
-export Renderer from "./renderer";
-export ImageFactory from "./image-factory";
+export
+Renderer;
+from;
+"./renderer";
+export
+ImageFactory;
+from;
+"./image-factory";

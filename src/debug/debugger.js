@@ -32,11 +32,11 @@ export default class {
 		document.body.appendChild(this._window);
 	}
 
-	_executorStateChanged({ action, zone, index, type }) {
+	_executorStateChanged({action, zone, index, type}) {
 		console.log("_executorStateChanged", action, zone, index, type);
 		Array.from(this._actionList.querySelectorAll("[current]")).forEach(e => e.current = false);
 
-		const actionNode = this._actionList.children[ action ];
+		const actionNode = this._actionList.children[action];
 		actionNode.expanded = true;
 
 		if (type === "i") {

@@ -15,13 +15,13 @@ export default class EventTarget {
 	}
 
 	constructor() {
-		this[ LISTENERS ] = [];
+		this[LISTENERS] = [];
 	}
 
 	addEventListener(type, listener) {
-		let place = this[ LISTENERS ][ type ];
+		let place = this[LISTENERS][type];
 		if (!place)
-			place = this[ LISTENERS ][ type ] = [];
+			place = this[LISTENERS][type] = [];
 		place.splice(0, 0, listener);
 	}
 
@@ -29,13 +29,13 @@ export default class EventTarget {
 		if (!type) return;
 
 		if (listener) {
-			const listeners = this[ LISTENERS ][ type ];
+			const listeners = this[LISTENERS][type];
 			if (!listeners) return;
 			const index = listeners.indexOf(listener);
 			if (index === -1) return;
-			this[ LISTENERS ][ type ].splice(index, 1);
+			this[LISTENERS][type].splice(index, 1);
 		} else
-			delete this[ LISTENERS ][ type ];
+			delete this[LISTENERS][type];
 	}
 
 	dispatchEvent(type, detail = {}) {
@@ -45,13 +45,13 @@ export default class EventTarget {
 			detail: detail
 		});
 
-		if (this[ "on" + type ] && this[ "on" + type ](event) === false)
+		if (this["on" + type] && this["on" + type](event) === false)
 			return;
 
-		let listeners = this[ LISTENERS ][ type ];
+		let listeners = this[LISTENERS][type];
 		for (let i in listeners) {
 			if (!listeners.hasOwnProperty(i)) continue;
-			listeners[ i ].call(this, event);
+			listeners[i].call(this, event);
 		}
 
 		if (this !== globalInstance) {
@@ -62,7 +62,7 @@ export default class EventTarget {
 	registerEvents(events) {
 		for (let i in events) {
 			if (!events.hasOwnProperty(i)) continue;
-			this[ "on" + events[ i ] ] = null;
+			this["on" + events[i]] = null;
 		}
 	}
 }

@@ -17,7 +17,7 @@ describe("Object.each", () => {
 			values.push(value);
 		});
 
-		expect(keys).toEqual([ "key1", "key2" ]);
-		expect(values).toEqual([ "test", "test" ]);
+		expect(keys).toEqual(["key1", "key2"]);
+		expect(values).toEqual(["test", "test"]);
 	});
 });

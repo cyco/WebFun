@@ -72,7 +72,7 @@ export default class Zone {
 		if (z < 0 || z >= 3) debugger;
 
 		const index = Zone.LAYERS * (y * this.width + x) + z;
-		return this._tileIDs[ index ];
+		return this._tileIDs[index];
 	}
 
 	getTile(x, y, z) {
@@ -86,7 +86,7 @@ export default class Zone {
 		if (index === -1 || index === 0xFFFF || index >= this._tileStore.length)
 			return null;
 
-		return this._tileStore[ index ];
+		return this._tileStore[index];
 	}
 
 	setTile(tile, x, y, z) {
@@ -97,7 +97,7 @@ export default class Zone {
 		}
 
 		const index = Zone.LAYERS * (y * this.width + x) + z;
-		this._tileIDs[ index ] = tile === null ? -1 : tile.id;
+		this._tileIDs[index] = tile === null ? -1 : tile.id;
 	}
 
 	removeTile(x, y, z) {
@@ -136,7 +136,7 @@ export default class Zone {
 
 		for (let hotspot of this._hotspots) {
 			if (hotspot.type === HotspotType.DoorIn && hotspot.arg !== -1) {
-				let zone = allZones[ hotspot.arg ];
+				let zone = allZones[hotspot.arg];
 				if (zone.leadsTo(needleZone, allZones)) return true;
 			}
 		}
@@ -163,11 +163,11 @@ export default class Zone {
 				case HotspotType.CrateWeapon:
 					if (hotspot.arg < 0) break;
 					if (this.getTile(hotspot.x, hotspot.y, 1)) return;
-					this.setTile({ id: hotspot.arg }, hotspot.x, hotspot.y, 1);
+					this.setTile({id: hotspot.arg}, hotspot.x, hotspot.y, 1);
 					break;
 				case HotspotType.DoorIn:
 					if (hotspot.arg < 0) break;
-					const zone = this._zoneStore[ hotspot.arg ];
+					const zone = this._zoneStore[hotspot.arg];
 					zone.layDownHotspotItems();
 					break;
 				default:

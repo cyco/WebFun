@@ -51,9 +51,9 @@ export default class extends Window {
 		console.assert(!this._handlers || !this._engine);
 
 		this._handlers = {};
-		this._handlers[ Events.AmmoChanged ] = () => this._updateAmmo();
-		this._handlers[ Events.WeaponChanged ] = () => this._updateWeapon();
-		this._handlers[ Events.LocationChanged ] = ({ detail }) => this._updateLocation(detail);
+		this._handlers[Events.AmmoChanged] = () => this._updateAmmo();
+		this._handlers[Events.WeaponChanged] = () => this._updateWeapon();
+		this._handlers[Events.LocationChanged] = ({detail}) => this._updateLocation(detail);
 
 		this._handlers.healthChanged = () => this._updateHealth();
 	}
@@ -64,7 +64,7 @@ export default class extends Window {
 	_updateWeapon() {
 	}
 
-	_updateLocation({ zone, world }) {
+	_updateLocation({zone, world}) {
 		let mask = Direction.None;
 		const location = world.locationOfZone(zone);
 		if (!location) {

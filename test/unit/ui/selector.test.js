@@ -23,8 +23,8 @@ describe("Selector", sandboxed((sand) => {
 		let optionNodes = selector.element.querySelectorAll("option");
 
 		expect(optionNodes.length).toBe(2);
-		expect(optionNodes[ 0 ].value).toBe("10");
-		expect(optionNodes[ 1 ].value).toBe("labelAndValue");
+		expect(optionNodes[0].value).toBe("10");
+		expect(optionNodes[1].value).toBe("labelAndValue");
 	});
 
 	it("has an onchange callback", () => {

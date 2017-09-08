@@ -10,19 +10,19 @@ describe("Array.shuffle", () => {
 		let array;
 
 		srand(0);
-		array = [ "a", "b", "c" ];
+		array = ["a", "b", "c"];
 		array.shuffle();
-		expect(array).toEqual([ "b", "c", "a" ]);
+		expect(array).toEqual(["b", "c", "a"]);
 
 		srand(0x1234);
-		array = [ "a", "b", "c" ];
+		array = ["a", "b", "c"];
 		array.shuffle();
-		expect(array).toEqual([ "c", "a", "b" ]);
+		expect(array).toEqual(["c", "a", "b"]);
 
 		srand(0);
-		array = [ "a", "b", "c" ];
+		array = ["a", "b", "c"];
 		array.shuffle();
-		expect(array).toEqual([ "b", "c", "a" ]);
+		expect(array).toEqual(["b", "c", "a"]);
 	});
 
 	it("doesn't do anything on empty arrays", () => {
@@ -33,7 +33,7 @@ describe("Array.shuffle", () => {
 	});
 
 	it("modifies the array in place and also modified the modified array", () => {
-		const thing = [ 1, 2, 3 ];
+		const thing = [1, 2, 3];
 		expect(thing.shuffle()).toBe(thing);
 	});
 });

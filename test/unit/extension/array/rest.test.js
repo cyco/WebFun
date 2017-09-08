@@ -5,9 +5,9 @@ describe("Array.rest", () => {
 	});
 
 	it("simply returns all but the first elements of an array", () => {
-		let array = [ "a", "b", "c" ];
+		let array = ["a", "b", "c"];
 		let result = array.rest();
-		expect(result).toEqual([ "b", "c" ]);
+		expect(result).toEqual(["b", "c"]);
 	});
 
 	it("returns [] if the array is empty", () => {

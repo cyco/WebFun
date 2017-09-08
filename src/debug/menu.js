@@ -3,8 +3,8 @@ import { MenuItemState } from "src/ui";
 
 const SettingsItem = (label, key) => ({
 	title: label,
-	callback: () => Settings[ key ] = !Settings[ key ],
-	state: () => Settings[ key ] ? MenuItemState.On : MenuItemState.Off
+	callback: () => Settings[key] = !Settings[key],
+	state: () => Settings[key] ? MenuItemState.On : MenuItemState.Off
 });
 
 export default {

@@ -131,8 +131,8 @@ describe("OutputStream", () => {
 	it("has a function to write a byte array to the stream", () => {
 		outputStream = new OutputStream(2);
 		let array = new Uint8Array(2);
-		array[ 0 ] = 0x23;
-		array[ 1 ] = 0x42;
+		array[0] = 0x23;
+		array[1] = 0x42;
 		outputStream.writeUint8Array(array);
 
 		expect(getByte(0)).toBe(0x23);
@@ -142,7 +142,7 @@ describe("OutputStream", () => {
 	it("has a function to write a word array to the stream", () => {
 		outputStream = new OutputStream(2);
 		let array = new Uint16Array(1);
-		array[ 0 ] = 0x2342;
+		array[0] = 0x2342;
 		outputStream.writeUint16Array(array);
 
 		expect(getByte(0)).toBe(0x42);
@@ -152,7 +152,7 @@ describe("OutputStream", () => {
 	it("has a function to write a double word array to the stream", () => {
 		outputStream = new OutputStream(4);
 		let array = new Uint32Array(1);
-		array[ 0 ] = 0x23420500;
+		array[0] = 0x23420500;
 		outputStream.writeUint32Array(array);
 
 		expect(getByte(0)).toBe(0x00);

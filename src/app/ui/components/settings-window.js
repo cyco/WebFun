@@ -7,7 +7,7 @@ class SettingsWindow extends Window {
 	}
 
 	static get observedAttributes() {
-		return [ "title", "text", "key", "min-label", "mid-label", "max-label", "steps" ];
+		return ["title", "text", "key", "min-label", "mid-label", "max-label", "steps"];
 	}
 
 	constructor() {

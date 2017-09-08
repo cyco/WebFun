@@ -17,7 +17,7 @@ export default class extends Component {
 	}
 
 	static get observedAttributes() {
-		return [ "active" ];
+		return ["active"];
 	}
 
 	constructor() {
@@ -25,8 +25,8 @@ export default class extends Component {
 
 		this._store = BreakpointStore.sharedStore;
 		this.breakpoint = null;
-		this._removeHandler = ({ detail: { breakpoint } }) => breakpoint === this.breakpoint && (this.active = false);
-		this._addHandler = ({ detail: { breakpoint } }) => breakpoint === this.breakpoint && (this.active = true);
+		this._removeHandler = ({detail: {breakpoint}}) => breakpoint === this.breakpoint && (this.active = false);
+		this._addHandler = ({detail: {breakpoint}}) => breakpoint === this.breakpoint && (this.active = true);
 	}
 
 	connectedCallback() {

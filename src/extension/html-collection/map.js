@@ -3,7 +3,7 @@ import { HTMLCollection } from "std.dom";
 const map = function (cb) {
 	let result = [];
 	for (let i = 0, len = this.length; i < len; i++) {
-		result.push(cb(this[ i ]));
+		result.push(cb(this[i]));
 	}
 	return result;
 };
