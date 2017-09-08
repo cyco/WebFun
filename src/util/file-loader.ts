@@ -1,6 +1,6 @@
 import EventTarget from "./event-target";
 import InputStream from "./input-stream";
-import { KaitaiStream } from "libs";
+import { KaitaiStream } from "src/libs";
 
 export const Event = {
 	Start: "start",
@@ -10,19 +10,24 @@ export const Event = {
 };
 
 export default class extends EventTarget {
-	constructor(path) {
+	private _path: string;
+
+	public onfail: (_: CustomEvent) => void;
+	public onprogress: (_: CustomEvent) => void;
+	public onload: (_: CustomEvent) => void;
+
+	constructor(path: string) {
 		super();
 		this.registerEvents(Event);
 		this._path = path;
 	}
 
 	load() {
-		let reader = new FileReader();
-		reader = new XMLHttpRequest();
+		let reader = new XMLHttpRequest();
 		reader.open("GET", this._path, true);
 		reader.responseType = "arraybuffer";
 
-		reader.onload = ({target}) => this._didLoad(target);
+		reader.onload = ({target}) => this._didLoad(target as XMLHttpRequest);
 		reader.onerror = (event) => this._didFail(event);
 		reader.onprogress = ({loaded, total}) => this._didProgress(loaded / total);
 		reader.send(void 0);
@@ -30,23 +35,23 @@ export default class extends EventTarget {
 		this.dispatchEvent(Event.Start);
 	}
 
-	_didLoad(reader) {
-		const stream = new InputStream(reader.result || reader.response);
-		const kaitaiStream = new KaitaiStream(reader.result || reader.response);
+	_didLoad(reader: XMLHttpRequest) {
+		const stream = new InputStream(reader.response);
+		const kaitaiStream = new KaitaiStream(reader.response);
 		this.dispatchEvent(Event.Load, {
 			stream,
 			kaitaiStream,
-			arraybuffer: reader.result || reader.response
+			arraybuffer: reader.response
 		});
 	}
 
-	_didFail(event) {
+	_didFail(event: ErrorEvent) {
 		this.dispatchEvent(Event.Fail, {
 			reason: event
 		});
 	}
 
-	_didProgress(progress) {
+	_didProgress(progress: number) {
 		this.dispatchEvent(Event.Progress, {
 			progress: progress
 		});

@@ -1,5 +1,5 @@
-import { dispatch, EventTarget, FileLoader } from "src/util";
-import { DataFileReader, GameData } from "src/engine";
+import { dispatch, EventTarget, FileLoader, InputStream } from "src/util";
+import { DataFileReader, Engine, GameData } from "src/engine";
 import { Tile } from "src/engine/objects";
 import Settings from "src/settings";
 
@@ -14,6 +14,17 @@ export const StageCount = 10;
 const TileImageBatchSize = 100;
 
 class Loader extends EventTarget {
+	private _dataUrl: string;
+	private _paletteUrl: string;
+	private _rawData: any;
+	private _engine: Engine;
+	private _setupImage: any;
+
+	public onfail: (_: CustomEvent) => void;
+	public onprogress: (_: CustomEvent) => void;
+	public onloadsetupimage: (_: CustomEvent) => void;
+	public onload: (_: CustomEvent) => void;
+
 	constructor() {
 		super();
 
@@ -22,11 +33,10 @@ class Loader extends EventTarget {
 		this._rawData = null;
 
 		this._engine = null;
-
 		this.registerEvents(Event);
 	}
 
-	load(engine) {
+	load(engine: Engine) {
 		this._engine = engine;
 
 		const loader = new FileLoader(this._dataUrl);
@@ -36,10 +46,9 @@ class Loader extends EventTarget {
 		loader.load();
 	}
 
-	_readGameData(stream) {
+	_readGameData(stream: InputStream) {
 		this._progress(1, 0);
 		this._rawData = new DataFileReader(stream);
-		window.raw = this._rawData;
 		this._progress(1, 1);
 		this._loadPalette();
 	}
@@ -56,10 +65,10 @@ class Loader extends EventTarget {
 		loader.load();
 	}
 
-	_loadSetupImage(palette) {
+	_loadSetupImage(palette: Uint8Array) {
 		this._progress(3, 0);
 
-		const setupImageCategory = this._rawData.catalog.find(c => c.type === "STUP");
+		const setupImageCategory = this._rawData.catalog.find((c: any) => c.type === "STUP");
 		if (!setupImageCategory) {
 			this._fail("Setup image not found in game file!");
 			return;
@@ -91,7 +100,7 @@ class Loader extends EventTarget {
 		const tileWidth = Tile.WIDTH;
 		const tileCount = tiles.length;
 
-		const loadBatch = (idx) => {
+		const loadBatch = (idx: number) => {
 			const max = Math.min(idx + TileImageBatchSize, tileCount);
 			for (; idx < max; idx++) {
 				const tile = tiles[idx];
@@ -101,7 +110,7 @@ class Loader extends EventTarget {
 			}
 		};
 
-		const loadTileImage = (idx) => {
+		const loadTileImage = (idx: number) => {
 			if (idx >= tileCount) {
 				this._progress(9, 1);
 				this._load();
@@ -116,7 +125,7 @@ class Loader extends EventTarget {
 		loadTileImage(0);
 	}
 
-	_fail(reason) {
+	_fail(reason: any) {
 		this.dispatchEvent(Events.Fail, {
 			reason
 		});
@@ -124,17 +133,13 @@ class Loader extends EventTarget {
 		this._clearData();
 	}
 
-	_progress(state, progress) {
+	_progress(state: number, progress: number) {
 		this.dispatchEvent(Events.Progress, {
 			progress: (state + progress) / StageCount
 		});
 	}
 
 	_load() {
-		if (Settings.debug) {
-			window.data = this._engine.data;
-		}
-
 		this.dispatchEvent(Events.Load);
 		this._clearData();
 	}
