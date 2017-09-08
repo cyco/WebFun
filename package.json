@@ -21,7 +21,9 @@
     "test:performance": "cross-env scope=performance karma start karma.conf.js --single-run",
     "world": "node -- tools/generate-world.bin.js -v -d \"game-data/yoda.data\"",
     "world:validate": "node -- tools/generate-world.bin.js -c -d \"game-data/yoda.data\" -e \"game-data/worlds.txt\"",
-    "world:validate:all": "node -- tools/generate-world.bin.js -c -d \"./game-data/yoda.data\" -e \"./game-data/full.txt\" -a"
+    "world:validate:all": "node -- tools/generate-world.bin.js -c -d \"./game-data/yoda.data\" -e \"./game-data/full.txt\" -a",
+    "build-tool": "webpack --config config/webpack.tool.js",
+    "build-tool:cont": "webpack --config config/webpack.tool.js --watch"
   },
   "babel": {
     "presets": [
