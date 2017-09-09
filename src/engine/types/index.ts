@@ -19,9 +19,9 @@ export const GOAL_ADEGAN_CRYSTAL = 0x0c7;
 export const GOAL_THREEPIOS_PARTS = 0x0c9;
 export const GOAL_CAR = 0x0C5;
 
-import WorldSize from "./world-size";
+import WorldSize from "./world-size.js";
 import Planet from "./planet";
 
-import LocatorTile from "./locator-tile";
+import LocatorTile from "./locator-tile.js";
 
 export { Planet, WorldSize, LocatorTile };
