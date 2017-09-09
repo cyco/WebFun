@@ -1,5 +1,5 @@
 import "../test/helpers/polyfill";
-import "/extension";
+import "src/extension";
 import { InputStream } from "src/util";
 import Yodesk from "src/engine/file-format/yodesk.ksy";
 import { GameData, SaveGameReader, SaveGameWriter } from "src/engine";

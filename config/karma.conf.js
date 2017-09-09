@@ -2,6 +2,8 @@ const Path = require("path");
 const Webpack = require("webpack");
 const webpackConfig = require("./webpack.config.js");
 
+const Paths = require('./paths');
+
 const includeCoverage = !!process.env.coverage;
 const runUnitTests = !process.env.scope || ~process.env.scope.indexOf("unit");
 const runAcceptanceTests = process.env.scope && ~process.env.scope.indexOf("acceptance");
@@ -64,17 +66,12 @@ delete config.webpack.entry;
 
 if (includeCoverage) {
 	let fileName = "lcov.info";
-	if (runUnitTests && !runAcceptanceTests) {
-		fileName = "unit.lcov";
-	} else if (runAcceptanceTests && !runUnitTests) {
-		fileName = "acceptance.lcov";
-	}
 
 	config.reporters.push("coverage-istanbul");
 	config.coverageIstanbulReporter = {
 		reports: ["lcovonly", "html"],
 		fixWebpackSourcePaths: true,
-		dir: Path.join(__dirname, "../test/coverage"),
+		dir: Paths.coverageRoot,
 		"report-config": {
 			lcovonly: {
 				file: fileName
@@ -88,7 +85,8 @@ if (includeCoverage) {
 		use: {
 			loader: "istanbul-instrumenter-loader"
 		},
-		include: Path.resolve(__dirname, "../src"),
+		include: Paths.sourceRoot,
+		exclude: /debug/,
 		enforce: "post"
 	});
 }

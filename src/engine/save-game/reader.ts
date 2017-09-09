@@ -19,20 +19,15 @@ class Reader {
 		console.assert(magic === "YODASAV44");
 
 		state.seed = stream.getUint32();
-		console.log(`Seed: ${state.seed }`);
 		state.planet = Planet.fromNumber(stream.getUint32());
-		console.log(`Planet: ${state.planet}`);
 
 		state.onDagobah = !!stream.getUint32();
-		console.log(`Hero is on Dagobah: ${state.onDagobah }`);
 
 		const puzzles1Count = stream.getUint16();
 		state.puzzleIDs1 = stream.getInt16Array(puzzles1Count);
-		console.log(`Puzzles 1: ${state.puzzleIDs1}`);
 
 		const puzzles2Count = stream.getUint16();
 		state.puzzleIDs2 = stream.getInt16Array(puzzles2Count);
-		console.log(`Puzzles 2: ${state.puzzleIDs2}`);
 
 		state.dagobah = this._readDagobah(stream);
 		state.world = this._readWorld(stream);
@@ -40,10 +35,8 @@ class Reader {
 		const inventoryCount = stream.getInt16();
 		const inventoryIDs = stream.getUint32Array(inventoryCount);
 		state.inventoryIDs = new Int16Array(inventoryIDs);
-		console.log(`Inventory (${inventoryCount} item${inventoryCount === 1 ? "" : "s"}): ${state.inventoryIDs}`);
 
 		state.currentZoneID = stream.getInt16();
-		console.log(`Current Zone: ${state.currentZoneID}`);
 
 		const positionOnWorld = new Point(0, 0);
 		positionOnWorld.x = stream.getUint32();
@@ -51,43 +44,29 @@ class Reader {
 		state.positionOnWorld = positionOnWorld;
 
 		state.currentWeapon = stream.getInt16();
-		console.log(`Weapon: ${state.currentWeapon}`);
 		state.currentAmmo = -1;
 		if (state.currentWeapon !== -1)
 			state.currentAmmo = stream.getInt16();
-		console.log(`Ammo (current): ${state.currentAmmo}`);
 		state.forceAmmo = stream.getInt16();
-		console.log(`Ammo (Force): ${state.forceAmmo}`);
 		state.blasterAmmo = stream.getInt16();
-		console.log(`Ammo (Blaster): ${state.blasterAmmo}`);
 		state.blasterRifleAmmo = stream.getInt16();
-		console.log(`Ammo (Blaster Rifle): ${state.currentAmmo}`);
 
 		const positionOnZone = new Point(0, 0);
 		positionOnZone.x = stream.getUint32() / Tile.WIDTH;
 		positionOnZone.y = stream.getUint32() / Tile.HEIGHT;
 		state.positionOnZone = positionOnZone;
 
-		console.log(`At (World): ${positionOnWorld}`);
-		console.log(`At (Zone): ${positionOnZone}`);
-
 		state.damageTaken = stream.getUint32();
-		console.log(`Damage: ${state.damageTaken}`);
 		state.livesLeft = stream.getUint32();
-		console.log(`Lives: ${state.livesLeft}`);
 
 		state.difficulty = stream.getUint32();
-		console.log(`Difficulty: ${state.difficulty}`);
 		state.timeElapsed = stream.getUint32();
-		console.log(`Time elapsed: ${state.timeElapsed} second${state.timeElapsed === 1 ? "" : "s"}`);
 		state.worldSize = stream.getInt16();
-		console.log(`World size: ${state.worldSize}`);
 		state.unknownCount = stream.getInt16();
 		state.unknownSum = stream.getInt16();
 		state.unknownThing = stream.getInt16();
 
 		state.goalPuzzle = stream.getUint32();
-		console.log(`Goal Puzzle: ${state.goalPuzzle}`);
 		const goalPuzzleAgain = stream.getUint32();
 		console.assert(state.goalPuzzle === goalPuzzleAgain, "Puzzle ID must be the same!");
 		return state;

@@ -1,9 +1,9 @@
 class Planet {
-	static NONE = 0;
-	static TATOOINE = 1;
-	static HOTH = 2;
-	static ENDOR = 3;
-	static DAGOBAH = 5;
+	public static NONE = 0;
+	public static TATOOINE = 1;
+	public static HOTH = 2;
+	public static ENDOR = 3;
+	public static DAGOBAH = 5;
 
 	_value: number;
 
