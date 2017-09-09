@@ -5,10 +5,14 @@ import { Menu as DebugMenu } from "src/debug";
 import StatisticsWindow from "./statistics-window";
 import DifficultyWindow from "./difficulty-window";
 import GameSpeedWindow from "./game-speed-window";
+import GameController from "../game-controller";
+import WorldSizeWindow from "./world-size-window";
+import Window from "../../ui/components/window";
+import { document } from "../../std.dom";
 
 export default class extends Menu {
-	constructor(gameController) {
-		const menuItems = [{
+	constructor(gameController: GameController) {
+		const menuItems: any[] = [{
 			title: "File",
 			mnemonic: 0,
 			submenu: [{
@@ -43,18 +47,19 @@ export default class extends Menu {
 			submenu: [{
 				title: "Combat Difficulty...",
 				mnemonic: 0,
-				callback: () => this._runModalSession(document.createElement(DifficultyWindow.TagName))
+				callback: () => this._runModalSessionForWindowComponent(DifficultyWindow.TagName)
 			}, {
 				title: "Game Speed...",
-				callback: () => this._runModalSession(document.createElement(GameSpeedWindow.TagName)),
+				callback: () => this._runModalSessionForWindowComponent(GameSpeedWindow.TagName),
 				mnemonic: 0
 			}, {
 				title: "World Control...",
+				callback: () => this._runModalSessionForWindowComponent(WorldSizeWindow.TagName),
 				mnemonic: 0
 			}, {
 				title: "Statistics...",
 				mnemonic: 0,
-				callback: () => this._runModalSession(document.createElement(StatisticsWindow.TagName))
+				callback: () => this._runModalSessionForWindowComponent(StatisticsWindow.TagName)
 			}, Separator, {
 				title: "Music On",
 				mnemonic: 0
@@ -95,9 +100,14 @@ export default class extends Menu {
 		super(menuItems);
 	}
 
-	_runModalSession(window) {
+	_runModalSessionForWindowComponent(tagName: string) {
+		const window = <Window>document.createElement(tagName);
+		this._runModalSession(window);
+	}
+
+	_runModalSession(window: Window) {
 		const session = new WindowModalSession(window);
-		window.onclose = () => session.end();
+		window.onclose = () => session.end(0);
 		session.run();
 	}
 }

@@ -1,11 +1,9 @@
 import BabelHTMLElement from "./babel-html-element";
 
-class Component extends BabelHTMLElement {
+abstract class Component extends BabelHTMLElement {
 	public static TagName: string;
-
-	static get Options(): any {
-		return undefined;
-	}
+	public static observedAttributes: string[];
+	public static Options: any = undefined;
 
 	adoptedCallback(): void {
 	}

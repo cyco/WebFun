@@ -2,23 +2,18 @@ import { Button, Slider, Window } from "src/ui/components";
 import "./settings-window.scss";
 
 class SettingsWindow extends Window {
-	static get TagName() {
-		return "wf-settings-window";
-	}
+	public static TagName = "wf-settings-window";
+	public static observedAttributes = ["title", "text", "key", "min-label", "mid-label", "max-label", "steps"];
 
-	static get observedAttributes() {
-		return ["title", "text", "key", "min-label", "mid-label", "max-label", "steps"];
-	}
+	private _store: Storage;
+	private _minLabel: HTMLLabelElement;
+	private _midLabel: HTMLLabelElement;
+	private _maxLabel: HTMLLabelElement;
+	private _slider: Slider;
+	private _key: string;
 
 	constructor() {
 		super();
-
-		this._store = null;
-		this._minLabel = null;
-		this._midLabel = null;
-		this._maxLabel = null;
-		this._slider = null;
-		this._key = null;
 
 		this.closable = false;
 
@@ -26,7 +21,7 @@ class SettingsWindow extends Window {
 	}
 
 	_setupContents() {
-		const slider = document.createElement(Slider.TagName);
+		const slider = <Slider>document.createElement(Slider.TagName);
 		slider.min = 0;
 		slider.value = 0.5;
 		slider.max = 1;
@@ -71,7 +66,7 @@ class SettingsWindow extends Window {
 		this._slider.value = localStorage.load(this._key);
 	}
 
-	attributeChangedCallback(attributeName, oldValue, newValue) {
+	attributeChangedCallback(attributeName: string, oldValue: string, newValue: string): void {
 		if (attributeName === "title") {
 			this.title = newValue;
 		}
