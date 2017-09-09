@@ -2,29 +2,29 @@ import { LoadingView, SceneView } from "./ui";
 import Settings from "src/settings";
 import { MainMenu, MainWindow } from "./windows";
 import { CanvasRenderer, Engine, GameData, Hero, Inventory, Metronome, Story, WebGLRenderer } from "src/engine";
-import { Planet, WorldSize } from "src/engine/types";
 import { ZoneScene } from "src/engine/scenes";
 import { DesktopInputManager } from "src/engine/input";
 import Loader, { LoaderEventDetails } from "./loader";
 import { ScriptExecutor } from "src/engine/script";
-import { Debugger, WorldGeneration } from "src/debug";
 import { Char, Zone } from "src/engine/objects";
+import { ConfirmationResult, ModalConfirm } from "src/ux";
+import GameState from "../engine/game-state";
+import { Planet, WorldSize } from "src/engine/types";
 
 class GameController {
 	private _window: MainWindow;
 	private _sceneView: SceneView;
 	private _engine: Engine;
-	private _startTime: number;
 
 	private _data: GameData;
 	private _palette: Uint8Array;
 
 	constructor() {
-		this._window = null;
 		this._sceneView = new SceneView();
 		this._engine = this._buildEngine();
 		this._sceneView.manager.engine = this._engine;
-		this._startTime = null;
+
+		this._data = null;
 	}
 
 	_buildEngine() {
@@ -64,8 +64,6 @@ class GameController {
 	}
 
 	_load() {
-		this._startTime = performance.now();
-
 		const loadingView = new LoadingView();
 		const windowContent = this._window.mainContent;
 		windowContent.clear();
@@ -80,37 +78,41 @@ class GameController {
 			loadingView.progress = 1.0;
 			this._data = details.data;
 			this._palette = details.palette;
+			this._engine.data = this._data;
 		};
 		loader.load(this._engine.imageFactory);
 	}
 
-	newStory() {
-		const duration = (performance.now() - this._startTime) / 1000;
-		console.log(`Loading took ${duration.toFixed(4)}s`);
-		if (Settings.debugWorldGeneration) {
-			new WorldGeneration(this._engine);
-		}
-
-		if (Settings.debugActions) {
-			new Debugger(this._engine);
+	async newStory() {
+		const gameState = this.engine.gameState;
+		if (gameState === GameState.Running && await ModalConfirm("This command will discard the current world.\nBuild a new world anyway?") !== ConfirmationResult.Confirmed) {
+			return;
 		}
 
 		const story = new Story(0x0000, Planet.ENDOR, WorldSize.LARGE);
-		story.generateWorld(this._engine);
+		await story.generateWorld(this._engine);
 		this._engine.story = story;
 
 		this._showSceneView();
 	}
 
-	replayStory() {
+	async replayStory() {
 		console.log("Replay Story");
+		const gameState = this.engine.gameState;
+		if (gameState === GameState.Running && await ModalConfirm("This command will discard the current world.\nReplay anyway?") !== ConfirmationResult.Confirmed) {
+			return;
+		}
 	}
 
-	load() {
+	async load() {
 		console.log("Load");
+		const gameState = this.engine.gameState;
+		if (gameState === GameState.Running && await ModalConfirm("This command will discard the current world.\nLoad anyway?") !== ConfirmationResult.Confirmed) {
+			return;
+		}
 	}
 
-	save() {
+	async save() {
 		console.log("Save");
 	}
 
@@ -119,7 +121,7 @@ class GameController {
 	}
 
 	isDataLoaded() {
-		return false;
+		return this._data !== null;
 	}
 
 	_showSceneView() {
@@ -147,6 +149,10 @@ class GameController {
 		if (Settings.autostartEngine) {
 			engine.metronome.start();
 		}
+	}
+
+	get engine() {
+		return this._engine;
 	}
 }
 

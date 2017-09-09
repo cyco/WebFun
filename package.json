@@ -34,6 +34,7 @@
     ]
   },
   "dependencies": {
+    "babel-polyfill": "^6.26.0",
     "kaitai-struct": "^0.8.0-SNAPSHOT.2",
     "sprintf-js": "^1.1.1",
     "twgl.js": "^3.5.0"

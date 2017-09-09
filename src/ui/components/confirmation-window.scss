@@ -1,0 +1,24 @@
+@import "./window";
+
+wf-confirmation-window {
+	@extend wf-window;
+
+	.content {
+		flex-direction: column;
+		> div.text {
+			white-space: pre;
+
+			margin-bottom: 20px;
+			max-width: 300px;
+		}
+
+		> div.buttons {
+			display: flex;
+			justify-content: center;
+
+			> wf-button + wf-button {
+				margin-left: 10px;
+			}
+		}
+	}
+}

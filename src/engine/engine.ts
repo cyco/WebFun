@@ -1,33 +1,34 @@
 import { EventTarget } from "src/util";
+import Story from "./story";
+import PersistentState from "./persistent-state";
+import GameState from "./game-state";
+import Events from "./engine-events";
 
-export const Events = {
-	CurrentZoneChange: "currentzonechange",
-	AmmoChanged: "ammochange",
-	WeaponChanged: "weaponchange",
-	LocationChanged: "locationchange"
-};
+export { Events };
 
-export default class extends EventTarget {
+class Engine extends EventTarget {
 	static get Event() {
 		return Events;
 	}
 
+	public metronome: any = null;
+	public inputManager: any = null;
+	public sceneManager: any = null;
+	public renderer: any = null;
+	public imageFactory: any = null;
+	public data: any = null;
+	public hero: any = null;
+	private _currentZone: any = null;
+	private _currentWorld: any = null;
+	public inventory: any = null;
+	public scriptExecutor: any = null;
+	public story: Story = null;
+	public persistentState: PersistentState = null;
+	public state: any = null;
+	public gameState: GameState = GameState.Stopped;
+
 	constructor() {
 		super();
-
-		this.metronome = null;
-		this.inputManager = null;
-		this.sceneManager = null;
-		this.renderer = null;
-		this.imageFactory = null;
-		this.data = null;
-		this.hero = null;
-		this._currentZone = null;
-		this._currentWorld = null;
-		this.inventory = null;
-		this.scriptExecutor = null;
-
-		this.story = null;
 
 		// TODO: remove state
 		this.state = {
@@ -35,15 +36,14 @@ export default class extends EventTarget {
 			enteredByPlane: true,
 			bump: false
 		};
-		this.persistentState = {
+		this.persistentState = <PersistentState>{
 			gamesWon: 0
 		};
 
 		this.registerEvents(Events);
-		Object.seal(this);
 	}
 
-	update(ticks) {
+	update(ticks: number) {
 		this.sceneManager.update(ticks);
 	}
 
@@ -81,3 +81,5 @@ export default class extends EventTarget {
 		this._currentWorld = w;
 	}
 }
+
+export default Engine;
