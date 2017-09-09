@@ -75,7 +75,6 @@ class GameController {
 		loader.onloadsetupimage = ({detail: {pixels, palette}}) => loadingView.showImage(pixels, palette);
 		loader.onload = () => {
 			loadingView.progress = 1.0;
-			dispatch(() => this.newStory(), 0);
 		};
 		loader.load(this._engine);
 	}
