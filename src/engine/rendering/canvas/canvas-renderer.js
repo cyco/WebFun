@@ -1,11 +1,11 @@
-import AbstractRenderer from "../abstract-renderer";
+import AbstractRenderer from "../abstract-renderer.ts";
 import DOMImageFactory from "./dom-image-factory";
 import { rgb } from "src/util";
 
 const TILE_WIDTH = 32.0;
 const TILE_HEIGHT = 32.0;
 
-export default class CanvasRenderer extends AbstractRenderer {
+class CanvasRenderer extends AbstractRenderer {
 	static isSupported() {
 		const canvas = document.createElement("canvas");
 		return canvas.getContext("2d") !== null;
@@ -65,3 +65,5 @@ export default class CanvasRenderer extends AbstractRenderer {
 		return this._imageFactory;
 	}
 }
+
+export default CanvasRenderer;
