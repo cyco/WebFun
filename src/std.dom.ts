@@ -14,5 +14,5 @@ export const HTMLCollection = global.HTMLCollection;
 export const Event = global.Event;
 
 export { window };
-export const document = window.document;
-export const localStorage = window.localStorage;
+export const document = <Document>window.document;
+export const localStorage = <Storage>window.localStorage;

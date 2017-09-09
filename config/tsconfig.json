@@ -11,7 +11,16 @@
     "target": "es2015",
     "sourceRoot": "../",
     "baseUrl": "../",
-    "rootDir": "../"
+    "rootDir": "../",
+    "typeRoots": [
+      "../src/@types"
+    ],
+    "types": [
+      "jasmine",
+      "jasmine-matchers",
+      "webfun-additions",
+      "webcomponents.js"
+    ]
   },
   "include": [
     "src/**/*.ts"
