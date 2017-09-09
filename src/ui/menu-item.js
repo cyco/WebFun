@@ -8,7 +8,7 @@ export const State = {
 	Mixed: 3
 };
 
-export default class MenuItem extends EventTarget {
+class MenuItem extends EventTarget {
 	constructor(item = {}) {
 		super();
 
@@ -40,6 +40,8 @@ export default class MenuItem extends EventTarget {
 		return !!this.submenu;
 	}
 }
+
+export default MenuItem;
 
 const separator = new MenuItem();
 separator.isSeparator = true;

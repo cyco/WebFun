@@ -1,7 +1,7 @@
 import PageObject from "./page-object";
 
 class RootPageObject extends PageObject {
-	protected page: PageObject;
+	protected page: any;
 
 	constructor(page: any) {
 		super(null);
@@ -20,6 +20,10 @@ class RootPageObject extends PageObject {
 
 	async $$(selector: string): Promise<any[]> {
 		return this.page.$$(selector);
+	}
+
+	async evaluate(code: Function, selector:string = ""): Promise<any> {
+		return this.page.$eval(selector, code);
 	}
 }
 

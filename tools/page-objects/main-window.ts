@@ -1,6 +1,6 @@
 import RootPageObject from "./root-page-object";
 
-import MainMenu from "./main-menu";
+import Menubar from "./menubar";
 import GameView from "./game-view";
 import HealthView from "./health-view";
 import Inventory from "./inventory";
@@ -9,7 +9,7 @@ import AmmoView from "./ammo-view";
 import LocationView from "./location-view";
 
 class MainWindow extends RootPageObject {
-	mainMenu: MainMenu;
+	menubar: Menubar;
 	gameView: GameView;
 	inventory: Inventory;
 	weapponView: WeaponView;
@@ -26,7 +26,7 @@ class MainWindow extends RootPageObject {
 	constructor(page: any) {
 		super(page);
 
-		this.mainMenu = new MainMenu(this);
+		this.menubar = new Menubar(this);
 		this.gameView = new GameView(this);
 		this.inventory = new Inventory(this);
 		this.weapponView = new WeaponView(this);
@@ -36,7 +36,7 @@ class MainWindow extends RootPageObject {
 	}
 
 	async setup() {
-		await this.mainMenu.setup();
+		await this.menubar.setup();
 		await this.gameView.setup();
 		await this.inventory.setup();
 		await this.weapponView.setup();

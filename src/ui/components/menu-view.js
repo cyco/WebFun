@@ -5,7 +5,7 @@ import MenuItem from "./menu-item";
 import MenuItemSeparator from "./menu-item-separator";
 import "./menu-view.scss";
 
-export default class MenuView extends Component {
+class MenuView extends Component {
 	static get TagName() {
 		return "wf-menu-view";
 	}
@@ -67,3 +67,5 @@ export default class MenuView extends Component {
 		this.addItemNodes();
 	}
 }
+
+export default MenuView;
