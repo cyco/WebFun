@@ -1,12 +1,11 @@
-import { dispatch } from "src/util";
 import { LoadingView, SceneView } from "./ui";
 import Settings from "src/settings";
 import { MainMenu, MainWindow } from "./windows";
-import { CanvasRenderer, Engine, Hero, Inventory, Metronome, Story, WebGLRenderer } from "src/engine";
+import { CanvasRenderer, Engine, GameData, Hero, Inventory, Metronome, Story, WebGLRenderer } from "src/engine";
 import { Planet, WorldSize } from "src/engine/types";
 import { ZoneScene } from "src/engine/scenes";
 import { DesktopInputManager } from "src/engine/input";
-import Loader from "./loader";
+import Loader, { LoaderEventDetails } from "./loader";
 import { ScriptExecutor } from "src/engine/script";
 import { Debugger, WorldGeneration } from "src/debug";
 import { Char, Zone } from "src/engine/objects";
@@ -16,6 +15,9 @@ class GameController {
 	private _sceneView: SceneView;
 	private _engine: Engine;
 	private _startTime: number;
+
+	private _data: GameData;
+	private _palette: Uint8Array;
 
 	constructor() {
 		this._window = null;
@@ -73,8 +75,11 @@ class GameController {
 		loader.onfail = (event) => console.log("fail", event);
 		loader.onprogress = ({detail: {progress}}) => loadingView.progress = progress;
 		loader.onloadsetupimage = ({detail: {pixels, palette}}) => loadingView.showImage(pixels, palette);
-		loader.onload = () => {
+		loader.onload = (e) => {
+			const details = e.detail as LoaderEventDetails;
 			loadingView.progress = 1.0;
+			this._data = details.data;
+			this._palette = details.palette;
 		};
 		loader.load(this._engine);
 	}

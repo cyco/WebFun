@@ -22,6 +22,64 @@ class Window extends Component {
 		this._content.element.classList.add("content");
 	}
 
+	get content() {
+		return this._content.element;
+	}
+
+	get x() {
+		if (!this.isConnected) return this._x;
+
+		return parseFloat(this.style.left);
+	}
+
+	set x(x) {
+		this._x = x;
+		this._update();
+	}
+
+	get y() {
+		if (!this.isConnected) return this._y;
+
+		return parseFloat(this.style.top);
+	}
+
+	set y(y) {
+		this._y = y;
+		this._update();
+	}
+
+	get menu() {
+		return this._titlebar.menu;
+	}
+
+	set menu(menu) {
+		this._titlebar.menu = menu;
+	}
+
+	get closable() {
+		return this._titlebar.closable;
+	}
+
+	set closable(flag) {
+		this._titlebar.closable = flag;
+	}
+
+	get title() {
+		return this._titlebar.title;
+	}
+
+	set title(t) {
+		this._titlebar.title = t;
+	}
+
+	get onclose() {
+		return this._titlebar.onclose;
+	}
+
+	set onclose(cb) {
+		this._titlebar.onclose = cb;
+	}
+
 	connectedCallback() {
 		super.connectedCallback();
 
@@ -50,64 +108,6 @@ class Window extends Component {
 	close() {
 		this.remove();
 		this.onclose();
-	}
-
-	get menu() {
-		return this._titlebar.menu;
-	}
-
-	set menu(menu) {
-		this._titlebar.menu = menu;
-	}
-
-	get closable() {
-		return this._titlebar.closable;
-	}
-
-	set closable(flag) {
-		this._titlebar.closable = flag;
-	}
-
-	get title() {
-		return this._titlebar.title;
-	}
-
-	set title(t) {
-		this._titlebar.title = t;
-	}
-
-	get content() {
-		return this._content.element;
-	}
-
-	get x() {
-		if (!this.isConnected) return this._x;
-
-		return parseFloat(this.style.left);
-	}
-
-	set x(x) {
-		this._x = x;
-		this._update();
-	}
-
-	get y() {
-		if (!this.isConnected) return this._y;
-
-		return parseFloat(this.style.top);
-	}
-
-	set y(y) {
-		this._y = y;
-		this._update();
-	}
-
-	get onclose() {
-		return this._titlebar.onclose;
-	}
-
-	set onclose(cb) {
-		this._titlebar.onclose = cb;
 	}
 }
 

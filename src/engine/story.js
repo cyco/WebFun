@@ -1,4 +1,4 @@
-import { Message } from "src/util";
+import { Message, rand } from "src/util";
 import { DagobahGenerator, WorldGenerationError, WorldGenerator } from "src/engine/generation";
 
 export default class {

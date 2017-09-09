@@ -1,3 +1,5 @@
+import { CompareWorldItems, ComparisonResult, ParseExpectation, PrepareExpectations } from "src/debug/expectation";
+
 import loadGameData from "test-helpers/game-data";
 import { getFixtureContent } from "test-helpers/fixture-loading";
 import Story from "../../src/engine/story";
