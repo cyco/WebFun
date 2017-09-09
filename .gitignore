@@ -17,3 +17,4 @@ indy.pal
 .idea/
 config/.typescript
 tools/*.bin.js
+test/screenshots

@@ -1,6 +1,8 @@
 import { persistent } from "src/util";
 
 export const Settings = {
+	AllowWebGL: false,
+
 	debug: true,
 	debugWorldGeneration: false,
 	debugActions: false,
@@ -8,7 +10,7 @@ export const Settings = {
 	drawHotspots: true,
 	drawHeroTile: true,
 	identifyTranslucentScenes: true,
-	skipDialogs: false,
+	skipDialogs: true,
 
 	autostartEngine: true,
 	revealWorld: true,

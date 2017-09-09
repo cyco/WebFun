@@ -1,5 +1,5 @@
 import { LoadingView, SceneView } from "./ui";
-import Settings from "src/settings";
+import Settings from "src/settings.js";
 import { MainMenu, MainWindow } from "./windows";
 import { CanvasRenderer, Engine, GameData, Hero, Inventory, Metronome, Story, WebGLRenderer } from "src/engine";
 import { ZoneScene } from "src/engine/scenes";
@@ -44,7 +44,7 @@ class GameController {
 	}
 
 	_determineRenderer() {
-		if (WebGLRenderer.isSupported()) {
+		if (WebGLRenderer.isSupported() && Settings.AllowWebGL) {
 			console.log("Using WebGL renderer");
 			return WebGLRenderer;
 		}
