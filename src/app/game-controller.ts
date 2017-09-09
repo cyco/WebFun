@@ -12,7 +12,7 @@ import { Debugger, WorldGeneration } from "src/debug";
 import { Char, Zone } from "src/engine/objects";
 
 class GameController {
-	private _window: any;
+	private _window: MainWindow;
 	private _sceneView: SceneView;
 	private _engine: Engine;
 	private _startTime: number;
@@ -52,7 +52,7 @@ class GameController {
 	}
 
 	start() {
-		this._window = document.createElement(MainWindow.TagName);
+		this._window = <MainWindow>document.createElement(MainWindow.TagName);
 		this._window.menu = new MainMenu(this);
 
 		this._load();

@@ -5,10 +5,18 @@ import { Events } from "src/engine/engine";
 import Hero from "src/engine/hero";
 import "./main-window.scss";
 
-export default class extends Window {
-	static get TagName() {
-		return "wf-main-window";
-	}
+class MainWindow extends Window {
+	public static TagName = "wf-main-window";
+
+	private _engine: any;
+	private _handlers: any;
+	private _main: any;
+	private _sidebar: any;
+	private _inventory: any;
+	private _locationView: any;
+	private _ammoView: any;
+	private _weaponView: any;
+	private _healthView: any;
 
 	constructor() {
 		super();
@@ -53,7 +61,7 @@ export default class extends Window {
 		this._handlers = {};
 		this._handlers[Events.AmmoChanged] = () => this._updateAmmo();
 		this._handlers[Events.WeaponChanged] = () => this._updateWeapon();
-		this._handlers[Events.LocationChanged] = ({detail}) => this._updateLocation(detail);
+		this._handlers[Events.LocationChanged] = ({detail}: {detail: any}) => this._updateLocation(detail);
 
 		this._handlers.healthChanged = () => this._updateHealth();
 	}
@@ -64,7 +72,7 @@ export default class extends Window {
 	_updateWeapon() {
 	}
 
-	_updateLocation({zone, world}) {
+	_updateLocation({zone, world}: {zone: any, world: any}) {
 		let mask = Direction.None;
 		const location = world.locationOfZone(zone);
 		if (!location) {
@@ -85,13 +93,13 @@ export default class extends Window {
 		this._healthView.health = this._engine.hero.health;
 	}
 
-	get engine() {
-		return this.engine;
+	get engine(): any {
+		return this._engine;
 	}
 
 	set engine(e) {
 		if (this._engine) {
-			this._handlers.each((event, handler) => this._engine.removeEventListener(event, handler));
+			this._handlers.each((event: any, handler: any) => this._engine.removeEventListener(event, handler));
 			this._engine.hero.removeEventListener(Hero.Event.HealthChanged, this._handlers.healthChanged);
 		}
 
@@ -101,7 +109,7 @@ export default class extends Window {
 
 		if (this._engine) {
 			this._engine.hero.addEventListener(Hero.Event.HealthChanged, this._handlers.healthChanged);
-			this._handlers.each((event, handler) => this._engine.addEventListener(event, handler));
+			this._handlers.each((event: any, handler: any) => this._engine.addEventListener(event, handler));
 		}
 	}
 
@@ -109,3 +117,5 @@ export default class extends Window {
 		return this._main;
 	}
 }
+
+export default MainWindow;

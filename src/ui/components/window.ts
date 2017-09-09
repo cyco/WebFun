@@ -4,9 +4,11 @@ import View from "../view";
 import "./window.scss";
 
 class Window extends Component {
-	static get TagName() {
-		return "wf-window";
-	}
+	public static TagName = "wf-window";
+	private _titlebar: any;
+	private _content: any;
+	private _x: any;
+	private _y: any;
 
 	constructor() {
 		super();

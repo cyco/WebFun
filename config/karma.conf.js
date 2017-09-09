@@ -10,6 +10,7 @@ const runPerformanceTests = process.env.scope && ~process.env.scope.indexOf("per
 console.log(includeCoverage ? "coverage" : "", runUnitTests ? "unit" : "", runAcceptanceTests ? "acceptance" : "");
 
 const projectRoot = Path.resolve(__dirname, "../");
+process.chdir(projectRoot);
 
 const config = {
 	basePath: projectRoot,
