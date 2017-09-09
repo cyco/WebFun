@@ -12,27 +12,20 @@ export const Direction = {
 };
 
 export default class extends Component {
-	static get TagName() {
-		return "wf-location";
-	}
-
-	constructor() {
-		super();
-
-		this._mask = Direction.None;
-		this._svg = null;
-	}
+	public static TagName = "wf-location";
+	private _mask: number = Direction.None;
+	private _svg: SVGElement = null;
 
 	connectedCallback() {
 		super.connectedCallback();
 
 		this.innerHTML = LocationSVG;
-		this._svg = this.querySelector("svg");
+		this._svg = <SVGElement>this.querySelector("svg");
 	}
 
 	_updateClassList() {
 		const classList = this._svg.classList;
-		const set = (on, c) => (on ? classList.add.bind(classList) : classList.remove.bind(classList))(c);
+		const set = (on: number, c: string) => (on ? classList.add.bind(classList) : classList.remove.bind(classList))(c);
 
 		set(this._mask & Direction.North, "up");
 		set(this._mask & Direction.South, "down");

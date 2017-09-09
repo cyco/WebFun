@@ -2,9 +2,9 @@ import "./ammo.scss";
 import { Component } from "src/ui";
 
 export default class extends Component {
-	static get TagName() {
-		return "wf-ammo";
-	}
+	public static TagName = 'wf-ammo';
+	private _background: HTMLDivElement;
+	private _indicator: HTMLDivElement;
 
 	constructor() {
 		super();
@@ -15,7 +15,6 @@ export default class extends Component {
 
 		this._indicator = document.createElement("div");
 		this._indicator.classList.add("value");
-
 	}
 
 	connectedCallback() {
@@ -29,7 +28,7 @@ export default class extends Component {
 		return parseInt(this._indicator.style.height) / 95 || 0;
 	}
 
-	set ammo(value) {
+	set ammo(value: number) {
 		let color = "";
 		if (value === 0xFF || value === -1) value = 0;
 		else color = "#000000";

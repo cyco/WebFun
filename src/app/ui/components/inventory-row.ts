@@ -1,16 +1,19 @@
 import "./inventory-row.scss";
 import { Component } from "src/ui";
+import { Tile } from "src/engine/objects";
 
-export default class extends Component {
-	static get TagName() {
-		return "wf-inventory-row";
-	}
+class InventoryRow extends Component {
+	public static TagName = "wf-inventory-row";
+	private _emptyIcon: HTMLImageElement;
+	private _icon: HTMLSpanElement;
+	private _label: HTMLSpanElement;
+	private _tile: Tile;
 
 	constructor() {
 		super();
 
 		this._emptyIcon = document.createElement("img");
-		this._emptyIcon.src = Image.blankImage;
+		this._emptyIcon.src = (<any>Image).blankImage;
 
 		this._icon = document.createElement("span");
 		this._label = document.createElement("span");
@@ -40,3 +43,5 @@ export default class extends Component {
 		this._label.innerText = label;
 	}
 }
+
+export default InventoryRow;

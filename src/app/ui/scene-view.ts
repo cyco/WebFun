@@ -2,7 +2,9 @@ import { View } from "src/ui";
 import { rgb } from "src/util";
 import { SceneManager } from "src/engine";
 
-export default class extends View {
+class SceneView extends View {
+	private _manager: SceneManager;
+
 	constructor() {
 		super(document.createElement("canvas"));
 
@@ -26,3 +28,4 @@ export default class extends View {
 		return this._manager;
 	}
 }
+export default SceneView;
