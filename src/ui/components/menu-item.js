@@ -2,7 +2,7 @@ import Component from "../component";
 import { State } from "../menu-item";
 import "./menu-item.scss";
 
-export default class extends Component {
+class MenuItem extends Component {
 	static get TagName() {
 		return "wf-menu-item";
 	}
@@ -82,3 +82,4 @@ export default class extends Component {
 
 	}
 }
+export default MenuItem;

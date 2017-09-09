@@ -16,7 +16,10 @@
       "../src/@types"
     ],
     "lib": [
-      "es2015", "dom", "es6"
+      "es2015",
+      "dom",
+      "es6",
+      "es2015.promise"
     ],
     "types": [
       "jasmine",
