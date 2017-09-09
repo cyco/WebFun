@@ -30,6 +30,7 @@ let screenshotIdx = 1;
 
 async function TakeScreenshot(page, name) {
 	if (!page) return;
+
 	await page.screenshot({path: Path.resolve(ScreenShotDirectory, (screenshotIdx++) + "_" + name + ".png")});
 }
 
@@ -55,7 +56,6 @@ async function inject(page) {
 	};
 
 	page.game = async () => {
-		await page.evaluate("window.s.autostartEngine = false");
 		await page.waitForSelector(".progress-bar[data-value=\"1\"]");
 
 		await sleep(2300); // wait through fade out
@@ -64,7 +64,7 @@ async function inject(page) {
 }
 
 async function start() {
-	const browser = await Puppeteer.launch({headless: false});
+	const browser = await Puppeteer.launch({headless: true, omitBackground: true});
 	const page = await browser.newPage();
 	await page.setViewport({width: 526, height: 342, deviceScaleFactor: 2});
 	await page.goto(GameURL);
@@ -89,6 +89,8 @@ async function start() {
 			TakeScreenshot(page, "page error");
 		});
 
+		await page.evaluate(() => localStorage.clear());
+
 		await page.waitForSelector("wf-main-window .progress-bar");
 		await page.game();
 		const mainWindow = new MainWindow(page);
@@ -107,8 +109,9 @@ async function start() {
 		await TakeScreenshot(page, "on new world item");
 		await newStoryItem.click();
 		await TakeScreenshot(page, "clicked new world item");
-		// await record(page, 10);
+		await record(page, 30);
 		await TakeScreenshot(page, "running game");
+
 		/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 		await TakeScreenshot(page, "end");
 		browser.close();
