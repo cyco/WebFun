@@ -1,7 +1,17 @@
 import { LoadingView, SceneView } from "./ui";
 import Settings from "src/settings.js";
 import { MainMenu, MainWindow } from "./windows";
-import { CanvasRenderer, Engine, GameData, Hero, Inventory, Metronome, Story, WebGLRenderer } from "src/engine";
+import {
+	CanvasRenderer,
+	Engine,
+	GameData,
+	Hero,
+	Inventory,
+	Metronome,
+	SaveGameReader,
+	Story,
+	WebGLRenderer
+} from "src/engine";
 import { ZoneScene } from "src/engine/scenes";
 import { DesktopInputManager } from "src/engine/input";
 import Loader, { LoaderEventDetails } from "./loader";
@@ -11,6 +21,7 @@ import { ConfirmationResult, ModalConfirm } from "src/ux";
 import GameState from "../engine/game-state";
 import { Planet, WorldSize } from "src/engine/types";
 import { FilePicker } from "src/ui";
+import { InputStream } from "src/util";
 
 class GameController {
 	private _window: MainWindow;
@@ -115,6 +126,20 @@ class GameController {
 		filePicker.allowedTypes = ["*.wld"];
 		filePicker.allowsMultipleFiles = false;
 		const [file] = await filePicker.pickFile();
+		if (!file) return;
+		if (!file.name.endsWith(".wld")) return;
+
+		const readFile = async (file: File) => {
+			return new Promise<InputStream>((resolve) => {
+				const fileReader = new FileReader();
+				fileReader.onload = (e: any) => resolve(new InputStream(e.target.result));
+				fileReader.readAsArrayBuffer(file);
+			});
+		};
+		const stream = await readFile(file);
+		const reader = new SaveGameReader(this._data);
+		const state = reader.read(stream);
+		console.log("state: ", state);
 	}
 
 	async save() {
