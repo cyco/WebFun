@@ -1,10 +1,14 @@
 import { Component } from "src/ui";
 import "./weapon.scss";
 
-export default class extends Component {
-	static get TagName() {
-		return "wf-weapon";
-	}
+import GameData from "src/engine/game-data";
+
+class Weapon extends Component {
+	public static TagName = "wf-weapon";
+	private _weapon: any;
+	private _background: HTMLDivElement;
+	private _tileContainer: HTMLImageElement;
+	public data: GameData;
 
 	constructor() {
 		super();
@@ -26,11 +30,11 @@ export default class extends Component {
 	}
 
 	_update() {
-		let url = Image.blankImage;
+		let url = (<any>Image).blankImage;
 		this._tileContainer.style.backgroundPosition = "";
 		if (this._weapon && this._weapon.frames && this._weapon.frames.length) {
 			const tileID = this._weapon.frames[0].extensionRight;
-			if (tileID !== 0xFFFF) {
+			if (tileID !== 0xFFFF && tileID !== -1) {
 				const tile = this.data.tiles[tileID];
 				url = tile.image.dataURL;
 				this._tileContainer.style.backgroundImage = url;
@@ -48,3 +52,5 @@ export default class extends Component {
 		this._update();
 	}
 }
+
+export default Weapon;

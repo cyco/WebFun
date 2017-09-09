@@ -18,10 +18,13 @@ const Conditions = [
 const MaxHealth = 300;
 const HealthPerColor = 100;
 
-export default class extends Component {
-	static get TagName() {
-		return "wf-health";
-	}
+declare interface SimplePoint {
+	x: number;
+	y: number;
+}
+
+class Health extends Component {
+	public static TagName = "wf-health";
 
 	static get GoodColor() {
 		return GoodColor;
@@ -43,6 +46,10 @@ export default class extends Component {
 		return Conditions;
 	}
 
+	private _condition: SVGCircleElement = null;
+	private _pie: SVGPathElement = null;
+	private _health: number;
+
 	constructor() {
 		super();
 
@@ -55,8 +62,8 @@ export default class extends Component {
 	connectedCallback() {
 		super.connectedCallback();
 		this.innerHTML = HealthSVG;
-		this._condition = this.querySelector("#health-condition");
-		this._pie = this.querySelector("#health-pie");
+		this._condition = <SVGCircleElement>this.querySelector("#health-condition");
+		this._pie = <SVGPathElement>this.querySelector("#health-pie");
 
 		this._update();
 	}
@@ -75,7 +82,7 @@ export default class extends Component {
 		this._pie.setAttribute("d", "M100,100 L" + this._buildArc(value) + "Z");
 	}
 
-	_buildArc(value) {
+	_buildArc(value: number): String {
 		const c = {
 			x: 100,
 			y: 100
@@ -89,11 +96,11 @@ export default class extends Component {
 		return `${start.x},${start.y} A${r},${r},0,${sweep},0,${end.x},${end.y} `;
 	}
 
-	_toRadians(angle) {
+	_toRadians(angle: number): number {
 		return Math.PI * angle / 180;
 	}
 
-	_pointWithAngle(angle, c, r) {
+	_pointWithAngle(angle: number, c: SimplePoint, r: number): SimplePoint {
 		return {
 			x: c.x + r * Math.cos(this._toRadians(270 - angle)),
 			y: c.y + r * Math.sin(this._toRadians(270 - angle))
@@ -117,3 +124,5 @@ export default class extends Component {
 		return Math.floor(this._health % HealthPerColor);
 	}
 }
+
+export default Health;

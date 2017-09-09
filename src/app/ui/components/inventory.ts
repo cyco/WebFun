@@ -1,10 +1,11 @@
 import "./inventory.scss";
 import { ModalSession } from "src/ux";
-import { Events as InventoryEvent } from "src/engine/inventory";
+import Inventory, { Events as InventoryEvent } from "src/engine/inventory";
 import InventoryRow from "./inventory-row";
 import { Component } from "src/ui";
 import Yoda from "src/engine/yoda";
-import { TileAttribute, TileSubtype } from "src/engine/objects";
+import { Tile, TileAttribute, TileSubtype } from "src/engine/objects";
+import { Point } from "src/util";
 
 export const Event = {
 	PlacedItem: "PlacedItem",
@@ -16,10 +17,10 @@ export const Event = {
 
 const MinRows = 7;
 
-export default class extends Component {
-	static get TagName() {
-		return "wf-inventory";
-	}
+class InventoryComponent extends Component {
+	public static TagName = "wf-inventory";
+	private _inventory: Inventory;
+	private _inventoryChangedHandler: Function;
 
 	constructor() {
 		super();
@@ -32,7 +33,7 @@ export default class extends Component {
 		this.clear();
 
 		if (this._inventory) {
-			this._inventory.forEach((item, rowIdx) => {
+			this._inventory.forEach((item: Tile, rowIdx: number) => {
 				const row = this.addRow(item);
 				row.onclick = () => this.rowClicked(item, rowIdx);
 			});
@@ -50,28 +51,32 @@ export default class extends Component {
 		this._rebuildTable();
 	}
 
-	rowClicked(item, row) {
+	rowClicked(item: Tile, row: number) {
 		if (item.id === Yoda.Locator) {
-			this.dispatchEvent(Event.PlacedLocator, {
-				item: item,
-				row: row
-			});
+			this.dispatchEvent(new CustomEvent(Event.PlacedLocator, {
+				detail: {
+					item: item,
+					row: row
+				}
+			}));
 			return;
 		}
 
 		if (item.id === Yoda.ItemIDs.ThermalDetonator) {
-			this.dispatchEvent(Event.ThrowDetonator, {
-				item: item,
-				row: row
-			});
+			this.dispatchEvent(new CustomEvent(Event.ThrowDetonator, {
+				detail: {
+					item: item,
+					row: row
+				}
+			}));
 			return;
 		}
 
 		const imgNode = this.querySelectorAll(InventoryRow.TagName)[row].querySelector("img");
-		imgNode.src = Image.blankImage;
+		imgNode.src = (<any>Image).blankImage;
 
 		const modalSession = new ModalSession();
-		modalSession.onmouseup = () => modalSession.end();
+		modalSession.onmouseup = () => modalSession.end(0);
 		modalSession.onend = () => {
 			imgNode.src = item.image.dataURL;
 			this.placeItem(item, row, modalSession.lastMouseLocation);
@@ -80,7 +85,7 @@ export default class extends Component {
 		modalSession.run();
 	}
 
-	placeItem(item, row, location) {
+	placeItem(item: Tile, row: number, location: Point) {
 		const eventDetail = {
 			item: item,
 			row: row,
@@ -101,8 +106,8 @@ export default class extends Component {
 		this.dispatchEvent(new CustomEvent(eventName, {detail: eventDetail}));
 	}
 
-	addRow(model) {
-		const row = document.createElement(InventoryRow.TagName);
+	addRow(model: Tile) {
+		const row = <InventoryRow>document.createElement(InventoryRow.TagName);
 		row.tile = model;
 		this.appendChild(row);
 
@@ -137,3 +142,5 @@ export default class extends Component {
 		return 7;
 	}
 }
+
+export default InventoryComponent;
