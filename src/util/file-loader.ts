@@ -10,11 +10,10 @@ export const Event = {
 };
 
 export default class extends EventTarget {
-	private _path: string;
-
 	public onfail: (_: CustomEvent) => void;
 	public onprogress: (_: CustomEvent) => void;
 	public onload: (_: CustomEvent) => void;
+	private _path: string;
 
 	constructor(path: string) {
 		super();

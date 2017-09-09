@@ -20,8 +20,10 @@ import CanvasRenderer from "./rendering/canvas/canvas-renderer";
 import WebGLRenderer from "./rendering/webgl/renderer";
 import DataFileReader from "./file-format/yodesk.js";
 import SaveGameReader from "./save-game/reader";
+import ColorPalette from "./color-palette";
 
 export {
+	ColorPalette,
 	Cheats,
 	Engine,
 	GameData,

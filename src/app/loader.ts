@@ -2,6 +2,7 @@ import { dispatch, EventTarget, FileLoader, InputStream } from "src/util";
 import { DataFileReader, Engine, GameData } from "src/engine";
 import { Tile } from "src/engine/objects";
 import Settings from "src/settings";
+import { ColorPalette } from "../engine";
 
 export const Events = {
 	Progress: "progress",
@@ -13,24 +14,28 @@ export const Events = {
 export const StageCount = 10;
 const TileImageBatchSize = 100;
 
-class Loader extends EventTarget {
-	private _dataUrl: string;
-	private _paletteUrl: string;
-	private _rawData: any;
-	private _engine: Engine;
-	private _setupImage: any;
+export declare interface LoaderEventDetails {
+	data: GameData;
+	palette: ColorPalette
+}
 
+class Loader extends EventTarget {
 	public onfail: (_: CustomEvent) => void;
 	public onprogress: (_: CustomEvent) => void;
 	public onloadsetupimage: (_: CustomEvent) => void;
 	public onload: (_: CustomEvent) => void;
+	private _dataUrl: string;
+	private _paletteUrl: string;
+	private _rawData: any;
+	private _data: GameData;
+	private _engine: Engine;
+	private _palette: Uint8Array;
 
 	constructor() {
 		super();
 
 		this._dataUrl = Settings.url.data;
 		this._paletteUrl = Settings.url.palette;
-		this._rawData = null;
 
 		this._engine = null;
 		this.registerEvents(Event);
@@ -60,6 +65,7 @@ class Loader extends EventTarget {
 		loader.onload = ({detail: {arraybuffer}}) => {
 			const palette = new Uint8Array(arraybuffer);
 			this._engine.imageFactory.palette = palette;
+			this._palette = palette;
 			this._loadSetupImage(palette);
 		};
 		loader.load();
@@ -85,7 +91,8 @@ class Loader extends EventTarget {
 
 	_loadGameData() {
 		this._progress(4, 0);
-		this._engine.data = new GameData(this._rawData);
+		this._data = new GameData(this._rawData);
+		this._engine.data = this._data;
 		this._progress(4, 1);
 
 		this._loadTileImages();
@@ -129,8 +136,6 @@ class Loader extends EventTarget {
 		this.dispatchEvent(Events.Fail, {
 			reason
 		});
-
-		this._clearData();
 	}
 
 	_progress(state: number, progress: number) {
@@ -140,17 +145,7 @@ class Loader extends EventTarget {
 	}
 
 	_load() {
-		this.dispatchEvent(Events.Load);
-		this._clearData();
-	}
-
-	_clearData() {
-		this._rawData = null;
-		this._setupImage = null;
-	}
-
-	get setupImage() {
-		return this._setupImage;
+		this.dispatchEvent(Events.Load, <LoaderEventDetails>{palette: this._palette, data: this._data});
 	}
 }
 

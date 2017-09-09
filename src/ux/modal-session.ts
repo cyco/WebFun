@@ -5,6 +5,7 @@ class ModalSession {
 	protected _overlay: HTMLDivElement;
 	private _locationHandler: (_: MouseEvent) => void;
 	private _endHandler: Function;
+	private _lastMouseLocation: Point;
 
 	constructor() {
 		const overlay = document.createElement("div");
@@ -14,8 +15,6 @@ class ModalSession {
 
 		this._overlay = overlay;
 	}
-
-	private _lastMouseLocation: Point;
 
 	get lastMouseLocation() {
 		return this._lastMouseLocation;
