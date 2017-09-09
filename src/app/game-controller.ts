@@ -81,7 +81,7 @@ class GameController {
 			this._data = details.data;
 			this._palette = details.palette;
 		};
-		loader.load(this._engine);
+		loader.load(this._engine.imageFactory);
 	}
 
 	newStory() {
