@@ -13,7 +13,6 @@ describe("Kaitai-Struct parsing", () => {
 		const start = performance.now();
 		const yodesk = new Yodesk(new KaitaiStream(gameDataBuffer));
 		const end = performance.now();
-		console.log("Kaitai duration: ", end - start, "ms");
 		expect(start - end).toBeLessThan(400);
 	});
 });
