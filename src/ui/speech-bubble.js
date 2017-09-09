@@ -7,7 +7,7 @@ export const Event = {
 	End: "end"
 };
 
-export default class SpeechBubble extends View {
+class SpeechBubble extends View {
 	static get Event() {
 		return Event;
 	}
@@ -276,3 +276,5 @@ export default class SpeechBubble extends View {
 		this.element.style.top = v + "px";
 	}
 }
+
+export default SpeechBubble;

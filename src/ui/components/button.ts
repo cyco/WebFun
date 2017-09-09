@@ -1,14 +1,11 @@
 import IconButton from "./icon-button";
 import "./button.scss";
 
-export default class extends IconButton {
-	static get TagName() {
-		return "wf-button";
-	}
+class Button extends IconButton {
+	public static TagName = "wf-button";
+	public static observedAttributes = ["label"];
 
-	static get observedAttributes() {
-		return ["label"];
-	}
+	private _label: HTMLSpanElement;
 
 	constructor() {
 		super();
@@ -16,21 +13,16 @@ export default class extends IconButton {
 		this._label = document.createElement("span");
 	}
 
-	connectedCallback() {
+	connectedCallback(): void {
 		super.connectedCallback();
 
 		this.appendChild(document.createElement("div"));
-		this.appendChild(this._icon);
 		this.appendChild(this._label);
 
 		this.attributeChangedCallback("label", this.getAttribute("label"), this.getAttribute("label"));
 	}
 
-	disconnectedCallback() {
-		super.disconnectedCallback();
-	}
-
-	attributeChangedCallback(attrName, newValue, oldValue) {
+	attributeChangedCallback(attrName: string, newValue: string, oldValue: string): void {
 		if (attrName === "label") {
 			this._label.textContent = newValue;
 		}
@@ -38,3 +30,5 @@ export default class extends IconButton {
 		super.attributeChangedCallback(attrName, newValue, oldValue);
 	}
 }
+
+export default Button;

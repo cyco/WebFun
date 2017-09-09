@@ -1,3 +1,5 @@
+import "babel-polyfill";
+
 import "./_style/global.scss";
 import "./extension";
 import "./ui";

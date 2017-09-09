@@ -3,14 +3,14 @@ import { persistent } from "src/util";
 export const Settings = {
 	debug: true,
 	debugWorldGeneration: false,
-	debugActions: true,
+	debugActions: false,
 
 	drawHotspots: true,
 	drawHeroTile: true,
 	identifyTranslucentScenes: true,
 	skipDialogs: false,
 
-	autostartEngine: false,
+	autostartEngine: true,
 	revealWorld: true,
 
 	url: {

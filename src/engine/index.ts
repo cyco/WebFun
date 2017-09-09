@@ -21,8 +21,12 @@ import WebGLRenderer from "./rendering/webgl/renderer";
 import DataFileReader from "./file-format/yodesk.js";
 import SaveGameReader from "./save-game/reader";
 import ColorPalette from "./color-palette";
+import EngineEvents from "./engine-events";
+import GameState from "./game-state";
 
 export {
+	GameState,
+	EngineEvents,
 	ColorPalette,
 	Cheats,
 	Engine,

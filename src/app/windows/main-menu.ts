@@ -9,6 +9,7 @@ import GameController from "../game-controller";
 import WorldSizeWindow from "./world-size-window";
 import Window from "../../ui/components/window";
 import { document } from "../../std.dom";
+import { GameState } from "../../engine";
 
 export default class extends Menu {
 	constructor(gameController: GameController) {
@@ -24,7 +25,7 @@ export default class extends Menu {
 				title: "Replay Story",
 				mnemonic: 0,
 				callback: () => gameController.replayStory(),
-				enabled: () => gameController.isGameInProgress()
+				enabled: () => gameController.isGameInProgress(),
 			}, {
 				title: "Load World",
 				mnemonic: 0,
@@ -35,12 +36,10 @@ export default class extends Menu {
 				mnemonic: 0,
 				callback: () => gameController.save(),
 				enabled: () => gameController.isGameInProgress()
-			},
-				Separator, {
-					title: "Exit",
-					mnemonic: 1
-				}
-			]
+			}, Separator, {
+				title: "Exit",
+				mnemonic: 1
+			}]
 		}, {
 			title: "Options",
 			mnemonic: 0,
@@ -66,13 +65,11 @@ export default class extends Menu {
 			}, {
 				title: "Sound On",
 				mnemonic: 0
-			},
-				Separator, {
-					title: "Pause",
-					mnemonic: 0,
-					enabled: () => gameController.isGameInProgress()
-				}
-			]
+			}, Separator, {
+				title: "Pause",
+				mnemonic: 0,
+				enabled: () => gameController.isGameInProgress()
+			}]
 		}, {
 			title: "Window",
 			mnemonic: 0,

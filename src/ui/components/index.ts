@@ -12,8 +12,10 @@ import SubmenuWindow from "./submenu-window";
 import Window from "./window";
 import WindowTitlebar from "./window-titlebar";
 import Slider from "./slider.js";
+import ConfirmationWindow from "./confirmation-window";
 
 export {
+	ConfirmationWindow,
 	Button,
 	Checkbox,
 	Group,

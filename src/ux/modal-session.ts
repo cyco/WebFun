@@ -4,7 +4,7 @@ import ResetCursor from "./reset-cursor";
 class ModalSession {
 	protected _overlay: HTMLDivElement;
 	private _locationHandler: (_: MouseEvent) => void;
-	private _endHandler: Function;
+	private _endHandler: (_: number) => void;
 	private _lastMouseLocation: Point;
 
 	constructor() {
@@ -55,7 +55,7 @@ class ModalSession {
 		return this._endHandler;
 	}
 
-	set onend(h) {
+	set onend(h: (_: number) => void) {
 		this._endHandler = h;
 	}
 
@@ -67,7 +67,7 @@ class ModalSession {
 
 	}
 
-	end(code: Number): void {
+	end(code: number): void {
 		["mouseup", "mousedown", "mousemove", "mousedrag"].forEach(
 			(eventName) => window.removeEventListener(eventName, this._locationHandler));
 		ResetCursor(window.document);

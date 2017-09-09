@@ -1,18 +1,13 @@
 import Component from "../component";
 import "./icon-button.scss";
 
-export default class extends Component {
-	static get TagName() {
-		return "wf-icon-button";
-	}
+class IconButton extends Component {
+	public static TagName = "wf-icon-button";
+	public static Options = {extends: "button"};
+	public static observedAttributes = ["icon"];
 
-	static get Options() {
-		return {extends: "button"};
-	}
-
-	static get observedAttributes() {
-		return ["icon"];
-	}
+	private _icon: HTMLElement;
+	private _clickListener: Function;
 
 	constructor(iconName = "") {
 		super();
@@ -21,7 +16,7 @@ export default class extends Component {
 		icon.classList.add("fa");
 		this._icon = icon;
 		this.onclick = null;
-		this._clickListener = (e) => this.onclick instanceof Function ? this.onclick(e) : null;
+		this._clickListener = (e: any) => this.onclick instanceof Function ? this.onclick(e) : null;
 
 		if (iconName) this.setAttribute("icon", iconName);
 	}
@@ -31,7 +26,7 @@ export default class extends Component {
 		this.appendChild(this._icon);
 	}
 
-	attributeChangedCallback(attributeName, oldValue, newValue) {
+	attributeChangedCallback(attributeName: string, oldValue: string, newValue: string): void {
 		if (attributeName === "icon") {
 			this._icon.classList.remove(`fa-${oldValue}`);
 			this._icon.classList.add(`fa-${newValue}`);
@@ -55,3 +50,5 @@ export default class extends Component {
 		else this.removeAttribute("disabled");
 	}
 }
+
+export default IconButton;
