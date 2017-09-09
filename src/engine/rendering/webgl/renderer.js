@@ -1,4 +1,4 @@
-import AbstractRenderer from "../abstract-renderer";
+import AbstractRenderer from "../abstract-renderer.ts";
 import ImageFactory from "./image-factory";
 import VertexShader from "./vertex.glsl";
 import FragmentShader from "./fragment.glsl";

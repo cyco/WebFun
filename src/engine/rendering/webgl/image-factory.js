@@ -1,4 +1,4 @@
-import AbstractImageFactory from "../abstract-image-factory";
+import AbstractImageFactory from "../abstract-image-factory.ts";
 import Image from "../image";
 
 class ImageFactory extends AbstractImageFactory {

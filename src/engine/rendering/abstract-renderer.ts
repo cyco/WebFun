@@ -1,6 +1,10 @@
 import AbstractImageFactory from "./abstract-image-factory";
 
 abstract class AbstractRenderer {
+	get imageFactory(): AbstractImageFactory {
+		return null;
+	}
+
 	static isSupported(): boolean {
 		return false;
 	}
@@ -27,10 +31,6 @@ abstract class AbstractRenderer {
 	}
 
 	fillBlackRect(x: number, y: number, width: number, height: number) {
-	}
-
-	get imageFactory(): AbstractImageFactory {
-		return null;
 	}
 }
 
