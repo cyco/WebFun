@@ -1,3 +1,4 @@
+import "babel-polyfill";
 import Puppeteer from "puppeteer";
 import MainWindow from "./page-objects/main-window";
 
@@ -20,29 +21,30 @@ async function inject(page) {
 
 	page.game = async () => {
 		await page.evaluate("window.s.autostartEngine = false");
-		await page.waitUntilGone(".loading-view");
+		await page.waitForSelector(".progress-bar[data-value=\"1\"]");
+
+		await sleep(2300); // wait through fade out
+		await page.screenshot({path: "build/screenshots/1) after loading.png"});
 	};
 }
 
 async function start() {
 	const browser = await Puppeteer.launch();
 	const page = await browser.newPage();
-	await page.setViewport({ width: 526, height: 342, deviceScaleFactor: 2 });
+	await page.setViewport({width: 526, height: 342, deviceScaleFactor: 2});
 	await page.goto(GameURL);
 	inject(page);
-	return { browser, page };
+	return {browser, page};
 }
 
 (async () => {
 	try {
-		const { browser, page } = await start();
+		const {browser, page} = await start();
 		await page.waitForSelector("wf-main-window .progress-bar");
 		await page.game();
-
 		const mainWindow = new MainWindow(page);
-		mainWindow.setup();
+		await mainWindow.setup();
 
-		await page.screenshot({ path: "example.png" });
 		browser.close();
 	} catch (e) {
 		console.log("Caught", e);
