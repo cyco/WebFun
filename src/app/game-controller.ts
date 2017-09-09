@@ -10,6 +10,7 @@ import { Char, Zone } from "src/engine/objects";
 import { ConfirmationResult, ModalConfirm } from "src/ux";
 import GameState from "../engine/game-state";
 import { Planet, WorldSize } from "src/engine/types";
+import { FilePicker } from "src/ui";
 
 class GameController {
 	private _window: MainWindow;
@@ -105,11 +106,15 @@ class GameController {
 	}
 
 	async load() {
-		console.log("Load");
 		const gameState = this.engine.gameState;
 		if (gameState === GameState.Running && await ModalConfirm("This command will discard the current world.\nLoad anyway?") !== ConfirmationResult.Confirmed) {
 			return;
 		}
+
+		const filePicker = new FilePicker();
+		filePicker.allowedTypes = ["*.wld"];
+		filePicker.allowsMultipleFiles = false;
+		const [file] = await filePicker.pickFile();
 	}
 
 	async save() {
