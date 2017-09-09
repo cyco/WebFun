@@ -2,13 +2,7 @@ import { SettingsWindow } from "src/app/ui/components";
 import "./game-speed-window.scss";
 
 class GameSpeedWindow extends SettingsWindow {
-	static get TagName() {
-		return "wf-game-speed-window";
-	}
-
-	constructor() {
-		super();
-	}
+	public static TagName = "wf-game-speed-window";
 
 	connectedCallback() {
 		this.setAttribute("title", "Game Speed");

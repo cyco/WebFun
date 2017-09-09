@@ -1,0 +1,5 @@
+@import "../ui/components/settings-window.scss";
+
+wf-world-size-window {
+	@extend wf-settings-window;
+}

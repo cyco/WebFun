@@ -4,11 +4,13 @@ import { PersistentState } from "src/engine";
 import "./statistics-window.scss";
 
 export default class extends Window {
-	static get TagName() {
-		return "wf-statistics-window";
-	}
+	public static TagName = "wf-statistics-window";
 
-	connectedCallback() {
+	private _state: PersistentState;
+	private icon: HTMLDivElement;
+	private _list: HTMLUListElement;
+
+	connectedCallback(): void {
 		super.connectedCallback();
 
 		this._setupWindow();
@@ -17,8 +19,6 @@ export default class extends Window {
 
 	_setupWindow() {
 		this.closable = true;
-
-		this.contentWidth = 200;
 
 		this._state = new PersistentState();
 
@@ -34,9 +34,9 @@ export default class extends Window {
 		this.content.appendChild(this._list);
 	}
 
-	_addRow(name, key) {
+	_addRow(name: string, key: string) {
 		const label = document.createElement("span");
-		label.append(name);
+		label.textContent = name;
 
 		const textbox = new Textbox();
 		textbox.editable = false;
@@ -44,13 +44,6 @@ export default class extends Window {
 		textbox.width = 60;
 		textbox.height = 20;
 		textbox.value = this._state[key];
-		/* textbox.editable = !WebFun.DEBUG;
-
-		 if (WebFun.DEBUG) {
-		 const self = this;
-		 textbox.onchange = () => self._state[key] = textbox.value;
-		 }
-		 */
 
 		const row = document.createElement("li");
 		row.appendChild(label);

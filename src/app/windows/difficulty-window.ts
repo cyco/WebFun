@@ -2,15 +2,9 @@ import { SettingsWindow } from "src/app/ui/components";
 import "./difficulty-window.scss";
 
 class DifficultyWindow extends SettingsWindow {
-	static get TagName() {
-		return "wf-difficulty-window";
-	}
+	public static TagName = "wf-difficulty-window";
 
-	constructor() {
-		super();
-	}
-
-	connectedCallback() {
+	connectedCallback(): void {
 		this.setAttribute("title", "Difficulty");
 		this.setAttribute("key", "difficulty");
 		this.setAttribute("min-label", "Easy");

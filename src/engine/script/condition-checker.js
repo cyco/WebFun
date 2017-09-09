@@ -1,4 +1,4 @@
-import PersistentState from "src/engine/persistent-state";
+import PersistentState from "src/engine/persistent-state.ts";
 import Conditions from "./conditions";
 
 export default class ConditionChecker {

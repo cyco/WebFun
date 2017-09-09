@@ -14,6 +14,7 @@ class Slider extends Component {
 		this._value = 0;
 		this._min = 0;
 		this._max = 0;
+		this._setps = 0;
 
 		this._snapToIntegers = false;
 		this._continuous = false;
@@ -250,6 +251,14 @@ class Slider extends Component {
 
 	get snapToIntegers() {
 		return this._snapToIntegers;
+	}
+
+	get steps() {
+		return this._steps;
+	}
+
+	set steps(s) {
+		this._steps = s;
 	}
 
 	set snapToIntegers(s) {
