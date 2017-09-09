@@ -21,6 +21,5 @@ export const Settings = {
 		sfx: (file) => `./game-data/sfx-yoda/${encodeURIComponent(file)}.wav`
 	}
 };
-const s = persistent(Settings, "settings");
-window.s = s;
-export default s;
+
+export default persistent(Settings, "settings");
