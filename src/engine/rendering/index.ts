@@ -1,14 +1,6 @@
-export
-Renderer;
-from;
-"./renderer";
-export *
-as;
-CanvasRenderer;
-from;
-"./canvas";
-export *
-as;
-WebGLRenderer;
-from;
-"./webgl";
+import Renderer from "./abstract-renderer";
+import * as CanvasRenderer from "./canvas/canvas-renderer.js";
+import * as WebGLRenderer from "./webgl/renderer.js";
+import AbstractImageFactory from "./abstract-image-factory";
+
+export { AbstractImageFactory, Renderer, CanvasRenderer, WebGLRenderer };
