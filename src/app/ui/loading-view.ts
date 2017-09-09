@@ -1,8 +1,12 @@
 import { ProgressBar, View } from "src/ui";
 import { CanvasRenderer } from "src/engine";
 import "./loading-view.scss";
+import { ColorPalette } from "../../engine";
 
 export default class extends View {
+	private _imageCanvas: HTMLCanvasElement;
+	private _progressBar: ProgressBar;
+
 	constructor() {
 		super();
 
@@ -21,12 +25,14 @@ export default class extends View {
 		this.element.appendChild(this._progressBar.element);
 	}
 
-	showImage(pixels, palette) {
+	showImage(pixels: Uint8Array, palette: ColorPalette) {
 		const renderer = new CanvasRenderer(this._imageCanvas);
 		const imageFactory = renderer.imageFactory;
 		imageFactory.palette = palette;
 		const image = imageFactory.buildImage(288, 288, pixels);
-		renderer.renderImage(image, 0, 0);
+		const representation = <HTMLImageElement><any>image.representation;
+		if (representation.complete) renderer.renderImage(image, 0, 0);
+		else representation.onload = () => renderer.renderImage(image, 0, 0);
 	}
 
 	get progress() {
