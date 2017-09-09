@@ -15,11 +15,14 @@
     "typeRoots": [
       "src/@types"
     ],
+    "lib": [
+      "es2015", "dom", "es6"
+    ],
     "types": [
       "jasmine",
       "jasmine-matchers",
       "webfun-additions",
-      "webcomponent.js"
+      "webcomponents.js"
     ]
   },
   "include": [

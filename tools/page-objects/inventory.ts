@@ -1,4 +1,10 @@
-class Inventory {
+import MainWindow from "./main-window";
+import PageObject from "./page-object";
+
+class Inventory extends PageObject {
+	public get selector() {
+		return "wf-inventory";
+	}
 }
 
 export default Inventory;
