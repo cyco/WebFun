@@ -2,7 +2,7 @@ const Path = require("path");
 const Webpack = require("webpack");
 const webpackConfig = require("./webpack.config.js");
 
-const Paths = require('./paths');
+const Paths = require("./paths");
 
 const includeCoverage = !!process.env.coverage;
 const runUnitTests = !process.env.scope || ~process.env.scope.indexOf("unit");
@@ -16,18 +16,21 @@ process.chdir(projectRoot);
 
 const config = {
 	basePath: projectRoot,
-	files: [{
-		pattern: "game-data/**",
-		watched: false,
-		served: true,
-		included: false
-	}, {
-		pattern: "test/fixtures/**",
-		watched: false,
-		served: true,
-		included: false
-	}],
+	files: [
+		"test/helpers/index.js",
+		{
+			pattern: "game-data/**",
+			watched: false,
+			served: true,
+			included: false
+		}, {
+			pattern: "test/fixtures/**",
+			watched: false,
+			served: true,
+			included: false
+		}],
 	preprocessors: {
+		"test/helpers/index.js": ["webpack"],
 		"test/context/*.js": ["webpack"]
 	},
 	frameworks: ["jasmine", "jasmine-matchers"],
@@ -86,7 +89,7 @@ if (includeCoverage) {
 			loader: "istanbul-instrumenter-loader"
 		},
 		include: Paths.sourceRoot,
-		exclude: /debug/,
+		exclude: /(debug|test\.js)/,
 		enforce: "post"
 	});
 }
