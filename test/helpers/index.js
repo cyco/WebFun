@@ -1,3 +1,5 @@
+import "babel-polyfill";
+
 import "src/extension";
 import "./matchers";
 import { describeComponent, fdescribeComponent, xdescribeComponent } from "./component";
