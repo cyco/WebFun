@@ -1,11 +1,13 @@
+import { global } from "src/std";
 import Message from "./message";
 
-let lastRandom = 0;
+// HACK: Never ever let module loading interfere with the shared state of the RNG
+global.lastRandom = 0;
 
-export const srand = (seed) => lastRandom = seed;
+export const srand = (seed) => global.lastRandom = seed;
 export const rand = () => {
-	lastRandom = Math.imul(lastRandom, 214013) + 2531011 & 0xFFFFFFFF;
-	let result = lastRandom >> 16 & 0x7fff;
+	global.lastRandom = Math.imul(global.lastRandom, 214013) + 2531011 & 0xFFFFFFFF;
+	let result = global.lastRandom >> 16 & 0x7fff;
 	Message("rand: %x", result);
 	return result;
 };

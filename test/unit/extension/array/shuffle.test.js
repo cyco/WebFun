@@ -6,7 +6,7 @@ describe("Array.shuffle", () => {
 		expect(typeof array.shuffle).toBe("function");
 	});
 
-	xit("wildly shuffles the elements of an array around using our custom prng", () => {
+	it("wildly shuffles the elements of an array around using our custom prng", () => {
 		let array;
 
 		srand(0);
