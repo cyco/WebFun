@@ -92,9 +92,6 @@ class InventoryComponent extends Component {
 			location: location
 		};
 
-		console.log("TileAttribute", TileAttribute);
-		console.log("TileSubtype", TileSubtype);
-
 		let eventName = Event.PlacedItem;
 		if (item.getAttribute(TileAttribute.Weapon)) {
 			eventName = Event.PlacedWeapon;
@@ -130,16 +127,10 @@ class InventoryComponent extends Component {
 		this._inventory = i;
 
 		if (this._inventory) {
-			this._inventory.addEventListener(InventoryEvent.ItemsDidChange, () => {
-				this._inventoryChangedHandler();
-			});
+			this._inventory.addEventListener(InventoryEvent.ItemsDidChange, this._inventoryChangedHandler);
 		}
 
 		this._rebuildTable();
-	}
-
-	get _minRowCount() {
-		return 7;
 	}
 }
 

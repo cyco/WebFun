@@ -1,4 +1,4 @@
-export default class {
+class ComponentRegistry {
 	static get sharedRegistry() {
 		return this.registry || (this.registry = new this());
 	}
@@ -17,7 +17,9 @@ export default class {
 		console.assert(Component.TagName, `Components must define a tag to be used!`);
 		console.assert(!this.components[Component.TagName], `A component with tag '${Component.TagName}' is already registered!`);
 
-		customElements.define(Component.TagName, Component, Component.Options);
+		window.customElements.define(Component.TagName, Component, Component.Options);
 		this.components[Component.TagName] = Component;
 	}
 }
+
+export default ComponentRegistry;

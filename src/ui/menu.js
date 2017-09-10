@@ -1,6 +1,6 @@
 import MenuItem from "./menu-item";
 
-export default class Menu {
+class Menu {
 	constructor(items) {
 		this._items = items && items.map((item) => item instanceof MenuItem ? item : new MenuItem(item)) || [];
 	}
@@ -13,3 +13,4 @@ export default class Menu {
 		this._items = items;
 	}
 }
+export default Menu;

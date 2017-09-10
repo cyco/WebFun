@@ -1,25 +1,23 @@
 import { EventTarget } from "src/util";
+import MenuWindow from "./components/menu-window";
 
-let sharedMenuStack = null;
+let sharedMenuStack: MenuStack = null;
 
-export default class MenuStack extends EventTarget {
+class MenuStack extends EventTarget {
 	static get sharedStack() {
 		return (sharedMenuStack = sharedMenuStack || new MenuStack());
 	}
 
-	constructor() {
-		super();
+	private baseIndex: number = 1001;
+	private _stack: MenuWindow[] = [];
 
-		this._stack = [];
-	}
-
-	push(menu) {
+	push(menu: MenuWindow): void {
 		this._stack.push(menu);
-		menu.style.zIndex = 1001 + this._stack.length;
+		menu.style.zIndex = `${this.baseIndex + this._stack.length}`;
 		document.body.appendChild(menu);
 	}
 
-	pop(menu) {
+	pop(menu: MenuWindow): void {
 		let index = this._stack.indexOf(menu);
 		if (index === -1) return;
 
@@ -30,9 +28,11 @@ export default class MenuStack extends EventTarget {
 		}
 	}
 
-	clear() {
+	clear(): void {
 		while (this._stack.length) {
 			this.pop(this._stack.last());
 		}
 	}
 }
+
+export default MenuStack;
