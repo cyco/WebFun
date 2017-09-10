@@ -9,6 +9,7 @@ class ModalSession {
 
 	constructor() {
 		const overlay = document.createElement("div");
+		overlay.classList.add("modal-session");
 		overlay.classList.add("full-size");
 		overlay.style.position = "fixed";
 		overlay.style.zIndex = "1000";
@@ -20,7 +21,6 @@ class ModalSession {
 		return this._lastMouseLocation;
 	}
 
-	/* style handling */
 	get style() {
 		return this._overlay.style;
 	}
@@ -29,12 +29,11 @@ class ModalSession {
 		let style = this._overlay.style;
 		const cursorStyle = c ? "url(" + c + ") 16 16, auto" : "";
 
-		// hack to get WebKit to change the cursor without further mouse events
+		// HACK: get WebKit to change the cursor without further mouse events
 		// should have been fixed in https://bugs.webkit.org/show_bug.cgi?id=101857
 		dispatch(() => style.cursor = cursorStyle);
 	}
 
-	/* Event Handling */
 	set onclick(h: (this: HTMLElement, ev: MouseEvent) => any) {
 		this._overlay.onclick = h;
 	}
@@ -79,7 +78,7 @@ class ModalSession {
 	}
 
 	_whenOverlayIsGone(callback: Function): void {
-		// hack to give webkit time to remove the overlay, so elementFromPoint works correctly
+		// HACK: give webkit time to remove the overlay, so elementFromPoint works correctly
 		if (document.elementFromPoint(0, 0) === this._overlay) {
 			dispatch(() => this._whenOverlayIsGone(callback), 1);
 			return;

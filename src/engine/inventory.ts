@@ -1,13 +1,16 @@
 import { EventTarget } from "src/util";
+import { Tile } from "./objects";
 
 export const Events = {
 	ItemsDidChange: "ItemsDidChange"
 };
 
-export default class Inventory extends EventTarget {
+class Inventory extends EventTarget {
 	static get Event() {
 		return Events;
 	}
+
+	private _items: Tile[];
 
 	constructor() {
 		super();
@@ -18,7 +21,7 @@ export default class Inventory extends EventTarget {
 		Object.seal(this);
 	}
 
-	addItem(item) {
+	addItem(item: Tile): void {
 		this._items.push(item);
 		this.dispatchEvent(Events.ItemsDidChange, {
 			mode: "add",
@@ -26,7 +29,7 @@ export default class Inventory extends EventTarget {
 		});
 	}
 
-	removeItem(item) {
+	removeItem(item: Tile): void {
 		const index = this._items.indexOf(item);
 		if (index === -1) return;
 
@@ -37,7 +40,7 @@ export default class Inventory extends EventTarget {
 		});
 	}
 
-	contains(item) {
+	contains(item: Tile|number): boolean {
 		if (typeof item === "number") {
 			for (let i = 0, len = this._items.length; i < len; i++)
 				if (this._items[i].id === item) return true;
@@ -48,7 +51,9 @@ export default class Inventory extends EventTarget {
 		return false;
 	}
 
-	forEach(fn) {
-		return this._items.forEach(fn);
+	forEach(fn: (tile: Tile, index: number, items: Tile[]) => void): void {
+		this._items.forEach(fn);
 	}
 }
+
+export default Inventory;
