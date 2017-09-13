@@ -2,7 +2,7 @@ import Button from "./button";
 import Checkbox from "./checkbox";
 import Group from "./group";
 import IconButton from "./icon-button";
-import Menu from "./menu-item";
+import MenuItem from "./menu-item";
 import Menubar from "./menubar";
 import MenuItemSeparator from "./menu-item-separator";
 import MenuView from "./menu-view";
@@ -20,10 +20,10 @@ export {
 	Checkbox,
 	Group,
 	IconButton,
-	Menu,
 	Menubar,
 	MenuItemSeparator,
 	MenuView,
+	MenuItem,
 	MenuWindow,
 	RadioButton,
 	SubmenuWindow,

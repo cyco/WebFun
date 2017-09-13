@@ -1,15 +1,10 @@
 import Component from "../component";
 import "./menu-item-separator.scss";
+import Menu from "src/ui/menu";
 
-export default class extends Component {
-	static get TagName() {
-		return "wf-menu-item-separator";
-	}
-
-	constructor() {
-		super();
-		this.menu = null;
-	}
+class MenuItemSeparator extends Component {
+	public static TagName: string = "wf-menu-item-separator";
+	public menu: Menu = null;
 
 	connectedCallback() {
 		super.connectedCallback();
@@ -18,3 +13,5 @@ export default class extends Component {
 		this.appendChild(document.createElement("div"));
 	}
 }
+
+export default MenuItemSeparator;

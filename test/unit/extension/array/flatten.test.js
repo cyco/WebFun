@@ -1,13 +1,21 @@
+import flatten from 'src/extension/array/flatten';
+
 describe("Array.flatten", () => {
 	it("it extends the Array prototype", () => {
 		let array = [];
-		expect(typeof array.flatten).toBe("function");
+		expect(array.flatten).toBeFunction();
+		expect(flatten).toBeFunction();
 	});
 
 	it("creates a new array from the elements of the arrays contained", () => {
 		let sample = [["a"], ["b"], ["c", "d"]];
 
 		let result = sample.flatten();
+		expect(result.length).toBe(4);
+		expect(result[0]).toBe("a");
+		expect(result[3]).toBe("d");
+
+		result = flatten.call(sample);
 		expect(result.length).toBe(4);
 		expect(result[0]).toBe("a");
 		expect(result[3]).toBe("d");

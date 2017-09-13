@@ -1,8 +1,8 @@
 import "./ammo.scss";
 import { Component } from "src/ui";
 
-export default class extends Component {
-	public static TagName = 'wf-ammo';
+class AmmoComponent extends Component {
+	public static TagName = "wf-ammo";
 	private _background: HTMLDivElement;
 	private _indicator: HTMLDivElement;
 
@@ -37,3 +37,5 @@ export default class extends Component {
 		this._indicator.style.height = ((value > 1 ? 1 : value) * 95) + "%";
 	}
 }
+
+export default AmmoComponent;

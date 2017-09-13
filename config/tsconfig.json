@@ -24,8 +24,8 @@
     "types": [
       "jasmine",
       "jasmine-matchers",
-      "webfun-additions",
-      "webcomponents.js"
+      "webcomponents.js",
+      "webfun-additions"
     ]
   },
   "include": [
