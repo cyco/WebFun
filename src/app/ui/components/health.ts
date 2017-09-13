@@ -74,8 +74,7 @@ class Health extends Component {
 		const health = this.health === MaxHealth - 1 ? MaxHealth : this.health;
 
 		const condition = Math.floor(health / HealthPerColor);
-		const conditionColor = Conditions[condition];
-		this._condition.style.fill = conditionColor;
+		this._condition.style.fill = Conditions[condition];
 
 		const value = (health % HealthPerColor) / HealthPerColor;
 		this._pie.style.fill = Conditions[condition + 1];

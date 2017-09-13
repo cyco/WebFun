@@ -4,12 +4,14 @@ const webpackConfig = require("./webpack.config.js");
 
 const Paths = require("./paths");
 
-const includeCoverage = !!process.env.coverage;
+const intellijCoverageParameterName = "--coverageTempDir=";
+const intellijCoverageArg = process.argv.find((s) => s.indexOf(intellijCoverageParameterName) === 0);
+const customCoverageDirectory = intellijCoverageArg ? intellijCoverageArg.substr(intellijCoverageParameterName.length) : null;
+
+const includeCoverage = !!process.env.coverage || customCoverageDirectory;
 const runUnitTests = !process.env.scope || ~process.env.scope.indexOf("unit");
 const runAcceptanceTests = process.env.scope && ~process.env.scope.indexOf("acceptance");
 const runPerformanceTests = process.env.scope && ~process.env.scope.indexOf("performance");
-
-console.log(includeCoverage ? "coverage" : "", runUnitTests ? "unit" : "", runAcceptanceTests ? "acceptance" : "");
 
 const projectRoot = Path.resolve(__dirname, "../");
 process.chdir(projectRoot);
@@ -55,14 +57,7 @@ const config = {
 		}
 	},
 	watch: false,
-	singleRun: true,
-//	logLevel: 'error',
-	webpackMiddleware: {
-//		noInfo: true,
-		stats: {
-//			chunks: false
-		}
-	}
+	singleRun: true
 };
 
 delete config.webpack.entry;
@@ -74,7 +69,7 @@ if (includeCoverage) {
 	config.coverageIstanbulReporter = {
 		reports: ["lcovonly", "html"],
 		fixWebpackSourcePaths: true,
-		dir: Paths.coverageRoot,
+		dir: customCoverageDirectory ? customCoverageDirectory : Paths.coverageRoot,
 		"report-config": {
 			lcovonly: {
 				file: fileName
@@ -82,6 +77,8 @@ if (includeCoverage) {
 		},
 		file: fileName
 	};
+
+	console.log(config.coverageIstanbulReporter.dir);
 
 	config.webpack.module.rules.push({
 		test: /\.(ts|js)$/,

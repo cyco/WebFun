@@ -3,31 +3,29 @@ import { ModalSession } from "src/ux";
 import MenuView from "./menu-view";
 import MenuWindow from "./menu-window";
 import MenuStack from "../menu-stack";
-import { Separator } from "../menu-item";
 import "./menubar.scss";
 
-export default class Menubar extends MenuView {
-	static get TagName() {
-		return "wf-menubar";
-	}
+class Menubar extends MenuView {
+	public static TagName: string = "wf-menubar";
 
-	constructor() {
-		super();
-		this._currentItem = -1;
-	}
+	private _currentItem: number = -1;
+	private _mouseDownHandler: (_: MouseEvent) => void;
+	private _modalSession: ModalSession;
+	private _registerMouseUpHandler: () => void;
 
 	connectedCallback() {
 		super.connectedCallback();
 
 		this.classList.add("menubar");
-		this.onmousedown = (e) => this.startMouseHandling(e);
+		this.onmousedown = (e: MouseEvent) => this.startMouseHandling(e);
 	}
 
-	startMouseHandling(event) {
+	startMouseHandling(event: MouseEvent) {
 		let itemIndex = this._findItemAt(new Point(event.pageX, event.pageY));
 		if (itemIndex === -1) return;
 		const menuItem = this.menu.items[itemIndex];
 		if (!menuItem.submenu) {
+			// TODO: only execute callback if item is enabled
 			if (menuItem.callback instanceof Function) {
 				menuItem.callback();
 			}
@@ -45,9 +43,9 @@ export default class Menubar extends MenuView {
 		};
 		this._modalSession = modalSession;
 
-		// hack to only receive the mouse up event after the one currently being processed
+		// HACK: only receive the mouse up event after the one currently being processed
 		this._registerMouseUpHandler = () => {
-			this._mouseDownHandler = () => modalSession.end();
+			this._mouseDownHandler = () => modalSession.end(0);
 			window.addEventListener("mouseup", this._mouseDownHandler);
 			window.removeEventListener("mouseup", this._registerMouseUpHandler);
 		};
@@ -57,7 +55,7 @@ export default class Menubar extends MenuView {
 		this._showMenuForItem(itemIndex);
 	}
 
-	_mouseMoved(event) {
+	_mouseMoved(event: MouseEvent): void {
 		const location = new Point(event.pageX, event.pageY);
 		if (!this._elementContainsPoint(this, location))
 			return;
@@ -70,7 +68,7 @@ export default class Menubar extends MenuView {
 		this._showMenuForItem(itemIdx);
 	}
 
-	_closeMenuForItem(idx) {
+	_closeMenuForItem(idx: number): void {
 		if (idx === -1) return;
 
 		const itemNode = this.children[idx];
@@ -79,7 +77,7 @@ export default class Menubar extends MenuView {
 		MenuStack.sharedStack.clear();
 	}
 
-	_showMenuForItem(idx) {
+	_showMenuForItem(idx: number): void {
 		if (idx === -1) return;
 
 		const itemNode = this.children[idx];
@@ -91,36 +89,21 @@ export default class Menubar extends MenuView {
 			return;
 		}
 
-		const menuWindow = document.createElement(MenuWindow.TagName);
+		const menuWindow = <MenuWindow>document.createElement(MenuWindow.TagName);
 		menuWindow.menu = menuItem.submenu;
 		menuWindow.show(itemNode);
 
 		this._currentItem = idx;
 	}
 
-	_elementContainsPoint(element, point) {
+	_elementContainsPoint(element: Element, point: Point): boolean {
 		const frame = element.getBoundingClientRect();
 		return point.x >= frame.left && point.x <= frame.right && point.y >= frame.top && point.y <= frame.bottom;
 	}
 
-	_findItemAt(location) {
-		const children = this.children;
-		for (let i = 0, len = children.length; i < len; i++) {
-			if (this._elementContainsPoint(children[i], location))
-				return i;
-		}
-		return -1;
-	}
-
-	addItemNodes() {
-		if (!this.menu) return;
-
-		const self = this;
-
-		this.menu.items.forEach((menuItem) => {
-			if (menuItem === Separator) return self.addSeparatorNode();
-
-			let node = self.addItemNode(menuItem);
-		});
+	_findItemAt(location: Point): number {
+		return Array.from(this.children).findIndex((child) => this._elementContainsPoint(child, location));
 	}
 }
+
+export default Menubar;

@@ -7,7 +7,6 @@ class IconButton extends Component {
 	public static observedAttributes = ["icon"];
 
 	private _icon: HTMLElement;
-	private _clickListener: Function;
 
 	constructor(iconName = "") {
 		super();
@@ -16,7 +15,6 @@ class IconButton extends Component {
 		icon.classList.add("fa");
 		this._icon = icon;
 		this.onclick = null;
-		this._clickListener = (e: any) => this.onclick instanceof Function ? this.onclick(e) : null;
 
 		if (iconName) this.setAttribute("icon", iconName);
 	}

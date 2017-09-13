@@ -33,6 +33,10 @@ class MenuStack extends EventTarget {
 			this.pop(this._stack.last());
 		}
 	}
+
+	get size(){
+		return this._stack.length;
+	}
 }
 
 export default MenuStack;

@@ -1,4 +1,6 @@
-Array.prototype.flatten = Array.prototype.flatten || function () {
+const flatten = function(){
 	return Array.prototype.concat.apply([], this);
 };
-export default Array.prototype.flatten;
+
+Array.prototype.flatten = Array.prototype.flatten || flatten;
+export default flatten;

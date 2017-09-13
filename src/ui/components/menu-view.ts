@@ -1,20 +1,14 @@
 import Component from "../component";
 import Menu from "../menu";
-import { Separator } from "../menu-item";
-import MenuItem from "./menu-item";
+import MenuItem, { Separator } from "../menu-item";
+import MenuItemComponent from "./menu-item";
 import MenuItemSeparator from "./menu-item-separator";
 import "./menu-view.scss";
 
 class MenuView extends Component {
-	static get TagName() {
-		return "wf-menu-view";
-	}
-
-	constructor() {
-		super();
-
-		this._menu = null;
-	}
+	public static TagName = "wf-menu-view";
+	public onclose: Function = null;
+	private _menu: Menu = null;
 
 	connectedCallback() {
 		this.removeItemNodes();
@@ -28,15 +22,15 @@ class MenuView extends Component {
 	}
 
 	addItemNodes() {
-		const self = this;
-		this.menu.items.forEach((menuItem) => {
-			if (menuItem === Separator || menuItem.isSeparator) self.addSeparatorNode();
-			else self.addItemNode(menuItem);
+		if (!this.menu) return;
+		this.menu.items.forEach((menuItem: MenuItem) => {
+			if (menuItem === Separator || menuItem.isSeparator) this.addSeparatorNode();
+			else this.addItemNode(menuItem);
 		});
 	}
 
-	addItemNode(menuItem) {
-		const node = document.createElement(MenuItem.TagName);
+	addItemNode(menuItem: MenuItem) {
+		const node = <MenuItemComponent>document.createElement(MenuItemComponent.TagName);
 		node.item = menuItem;
 		this.appendChild(node);
 		return node;

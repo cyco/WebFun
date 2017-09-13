@@ -67,7 +67,6 @@ class MainWindow extends Window {
 		this._engine = e;
 		this._inventory.inventory = this._engine.inventory;
 
-
 		if (this._engine) {
 			this._engine.hero.addEventListener(Hero.Event.HealthChanged, this._handlers.healthChanged);
 			this._handlers.each((event: any, handler: any) => this._engine.addEventListener(event, handler));
@@ -100,7 +99,6 @@ class MainWindow extends Window {
 		const location = world.locationOfZone(zone);
 		if (!location) {
 			this._locationView.mask = mask;
-
 			return;
 		}
 		mask |= world.getZone(location.byAdding(-1, 0)) ? Direction.West : 0;
@@ -112,7 +110,6 @@ class MainWindow extends Window {
 	}
 
 	_updateHealth() {
-		console.log("update health", this._engine.hero);
 		this._healthView.health = this._engine.hero.health;
 	}
 }

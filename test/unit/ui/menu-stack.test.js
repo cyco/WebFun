@@ -67,6 +67,20 @@ describe("MenuStack", () => {
 		menu2.remove();
 	});
 
+	it("has a property to query the stack size", () => {
+		let menu1 = mockMenuWindow();
+		let menu2 = mockMenuWindow();
+
+		const subject = new MenuStack();
+
+		subject.push(menu1);
+		subject.push(menu2);
+
+		expect(subject.size).toBe(2);
+
+		subject.clear();
+	});
+
 	function mockMenuWindow() {
 		const mockedMenuWindow = document.createElement("div");
 		mockedMenuWindow.close = () => {
