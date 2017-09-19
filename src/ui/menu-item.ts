@@ -1,30 +1,9 @@
 import { EventTarget } from "src/util";
 import Menu from "./menu";
 
-export const State = {
-	None: 0,
-	On: 1,
-	Off: 2,
-	Mixed: 3
-};
-
-declare interface MenuItemInit {
-	title: string;
-	state: number;
-	callback: Function;
-	enabled: boolean|Function,
-	submenu: Menu|MenuItem[]|Partial<MenuItemInit>[];
-	mnemonic: number;
-}
-
-const MenuItemDefaults: MenuItemInit = {
-	title: "",
-	state: State.Off,
-	callback: null,
-	mnemonic: 0,
-	submenu: null,
-	enabled: true
-};
+import State from "./menu-item-state";
+import MenuItemInit from "./menu-item-init";
+import MenuItemDefaults from "./menu-item-defaults";
 
 class MenuItem extends EventTarget {
 	public title: string;
@@ -69,9 +48,9 @@ class MenuItem extends EventTarget {
 	}
 }
 
-export default MenuItem;
 
 const Separator = new MenuItem();
 Separator.isSeparator = true;
 
-export { MenuItemInit, Separator };
+export default MenuItem;
+export { State, MenuItemInit, Separator };
