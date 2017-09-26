@@ -18,3 +18,5 @@ indy.pal
 config/.typescript
 tools/*.bin.js
 test/screenshots
+build
+game-data/*
