@@ -1,5 +1,5 @@
 import { LoadingView, SceneView } from "./ui";
-import Settings from "src/settings.js";
+import Settings from "src/settings";
 import { MainMenu, MainWindow } from "./windows";
 import {
 	CanvasRenderer,

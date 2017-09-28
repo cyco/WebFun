@@ -1,4 +1,5 @@
-import { _Action, default as Action } from "src/engine/objects/action";
+import Action from "src/engine/objects/action";
+import AbstractActionItem from "src/engine/objects/abstract-action-item";
 import Instruction from "src/engine/objects/instruction";
 import Condition from "src/engine/objects/condition";
 
@@ -24,16 +25,16 @@ describe("Action", () => {
 		expect(action.enabled).toBeTrue();
 	});
 
-	describe("_Action", () => {
+	describe("AbstractActionItem", () => {
 		it("is a common (private) base class for instructions and conditions", () => {
-			expect(typeof _Action).toBe("function");
+			expect(typeof AbstractActionItem).toBe("function");
 		});
 	});
 
 	describe("Instruction", () => {
-		it("extends _Action", () => {
+		it("extends AbstractActionItem", () => {
 			let instruction = new Instruction({});
-			expect(instruction instanceof _Action).toBeTrue();
+			expect(instruction instanceof AbstractActionItem).toBeTrue();
 		});
 
 		it("may have 'additional data' of arbitrary length (usually text someone speaks)", () => {
@@ -44,9 +45,9 @@ describe("Action", () => {
 	});
 
 	describe("Condition", () => {
-		it("extends _Action", () => {
+		it("extends AbstractActionItem", () => {
 			let condition = new Condition({});
-			expect(condition instanceof _Action).toBeTrue();
+			expect(condition instanceof AbstractActionItem).toBeTrue();
 		});
 	});
 });

@@ -1,12 +1,14 @@
 import { Direction } from "src/util";
 
-export default class CursorManager {
-	constructor(node) {
+class CursorManager {
+	private _node: HTMLElement;
+
+	constructor(node: HTMLElement) {
 		this._node = node;
 		Object.seal(this);
 	}
 
-	changeCursor(cursor) {
+	changeCursor(cursor: string|number): void {
 		let cursorName = cursor;
 		if (typeof cursor === "string") {
 			cursorName = cursor;
@@ -15,13 +17,13 @@ export default class CursorManager {
 		}
 
 		if (cursorName !== null) {
-			this._node.dataset.cursor = cursorName;
+			this._node.dataset.cursor = `${cursorName}`;
 		} else if (this._node.dataset.cursor === undefined) {
 			delete this._node.dataset.cursor;
 		}
 	}
 
-	_cursorNameForDirection(direction) {
+	_cursorNameForDirection(direction: Direction) {
 		let cursorName = "";
 		switch (direction) {
 			case Direction.East:
@@ -52,3 +54,4 @@ export default class CursorManager {
 		return cursorName;
 	}
 }
+export default CursorManager;

@@ -1,11 +1,16 @@
-import { Size } from "src/util";
-import { Type as HotspotType } from "./hotspot";
+import { PointLike, Size } from "src/util";
+import { default as Hotspot, Type as HotspotType } from "./hotspot";
 import Type from "./zone-type";
 import Layer from "./zone-layer";
+import NPC from "./npc";
+import Action from "./action";
+import Tile from "./tile";
 
 export { Type, Layer };
 
-export default class Zone {
+const TILE_ADEGAN_CRYSTAL = 12;
+
+class Zone {
 	static get LAYERS() {
 		return 3;
 	}
@@ -14,43 +19,40 @@ export default class Zone {
 		return Type;
 	}
 
-	constructor() {
-		this.visited = false;
-		this.solved = false;
-		this._npcs = [];
+	public visited: boolean = false;
+	public solved: boolean = false;
+	public _npcs: NPC[] = [];
 
-		this.id = -1;
-		this._planet = -1;
-		this._width = 0;
-		this._height = 0;
-		this._type = -1;
-		this._tileIDs = new Int16Array(0);
-		this._hotspots = [];
-		this._tileStore = null;
-		this._zoneStore = null;
-		this.assignedItemIDs = [];
-		this.requiredItemIDs = [];
-		this.providedItemIDs = [];
-		this.puzzleNPCTileIDs = [];
-		this.izx4Unknown = null;
-		this.izaxUnknown = null;
+	public id: number = -1;
+	public _name: string = "";
+	public _planet: number = -1;
+	public _width: number = 0;
+	public _height: number = 0;
+	public _type: number = -1;
+	public _tileIDs: Int16Array = new Int16Array(0);
+	public _hotspots: Hotspot[] = [];
+	public _tileStore: any = null;
+	public _zoneStore: any = null;
+	public assignedItemIDs: number[] = [];
+	public requiredItemIDs: number[] = [];
+	public providedItemIDs: number[] = [];
+	public puzzleNPCTileIDs: number[] = [];
+	public izx4Unknown: any = null;
+	public izaxUnknown: any = null;
 
-		this._actions = [];
-		this.actionsInitialized = false;
+	public _actions: Action[] = [];
+	public actionsInitialized: boolean = false;
 
-		this.counter = 0;
-		this.random = null;
-		this.padding = 0;
+	public counter: number = 0;
+	public random: number = 0;
+	public padding: number = 0;
 
-		this._debug_worldItem = null;
+	public _debug_worldItem: any = null;
 
-		this.puzzle = null;
-		this.puzzleNPC = null;
-		this.puzzleGain = null;
-		this.puzzleRequired = null;
-
-		Object.seal(this);
-	}
+	public puzzle: number = null;
+	public puzzleNPC: number = null;
+	public puzzleGain: number = null;
+	public puzzleRequired: number = null;
 
 	getLocatorDescription() {
 		if (this.solved) return "...solved!";
@@ -66,16 +68,16 @@ export default class Zone {
 		}
 	}
 
-	getTileID(x, y, z) {
+	getTileID(x: number, y: number, z: number): number {
 		if (x < 0 || x >= this._width) debugger;
 		if (y < 0 || y >= this._height) debugger;
 		if (z < 0 || z >= 3) debugger;
 
 		const index = Zone.LAYERS * (y * this.width + x) + z;
-		return this._tileIDs[index];
+		return this.tileIDs[index];
 	}
 
-	getTile(x, y, z) {
+	getTile(x: number|PointLike, y: number, z: number): Tile {
 		if (typeof x === "object") {
 			y = x.y;
 			z = x.z;
@@ -89,7 +91,7 @@ export default class Zone {
 		return this._tileStore[index];
 	}
 
-	setTile(tile, x, y, z) {
+	setTile(tile: Tile, x: number|PointLike, y: number = null, z: number = null): void {
 		if (typeof x === "object") {
 			y = x.y;
 			z = x.z;
@@ -97,20 +99,20 @@ export default class Zone {
 		}
 
 		const index = Zone.LAYERS * (y * this.width + x) + z;
-		this._tileIDs[index] = tile === null ? -1 : tile.id;
+		this.tileIDs[index] = tile === null ? -1 : tile.id;
 	}
 
-	removeTile(x, y, z) {
+	removeTile(x: number, y: number, z: number): void {
 		this.setTile(null, x, y, z);
 	}
 
-	moveTile(sourceX, sourceY, z, targetX, targetY) {
+	moveTile(sourceX: number, sourceY: number, z: number, targetX: number, targetY: number): void {
 		const tile = this.getTile(sourceX, sourceY, z);
 		this.setTile(tile, targetX, targetY, z);
 		this.setTile(null, sourceX, sourceY, z);
 	}
 
-	placeWalkable(x, y) {
+	placeWalkable(x: number|PointLike, y: number): boolean {
 		if (typeof x === "object") {
 			y = x.y;
 			x = x.x;
@@ -123,7 +125,7 @@ export default class Zone {
 		return !object;
 	}
 
-	containsPoint(x, y) {
+	containsPoint(x: number|PointLike, y: number): boolean {
 		if (typeof x === "object") {
 			y = x.y;
 			x = x.x;
@@ -131,7 +133,7 @@ export default class Zone {
 		return x >= 0 && y >= 0 && x < this.width && y < this.height;
 	}
 
-	leadsTo(needleZone, allZones) {
+	leadsTo(needleZone: Zone, allZones: Zone[]): boolean {
 		if (needleZone === this) return false;
 
 		for (let hotspot of this._hotspots) {
@@ -144,11 +146,11 @@ export default class Zone {
 		return false;
 	}
 
-	isLoadingZone() {
+	isLoadingZone(): boolean {
 		return this._type === Type.Load;
 	}
 
-	layDownHotspotItems() {
+	layDownHotspotItems(): void {
 		this.hotspots.filter((htsp) => htsp.enabled).forEach((hotspot) => {
 			switch (hotspot.type) {
 				case HotspotType.Unused:
@@ -163,7 +165,7 @@ export default class Zone {
 				case HotspotType.CrateWeapon:
 					if (hotspot.arg < 0) break;
 					if (this.getTile(hotspot.x, hotspot.y, 1)) return;
-					this.setTile({id: hotspot.arg}, hotspot.x, hotspot.y, 1);
+					this.setTile(<Tile>{id: hotspot.arg}, hotspot.x, hotspot.y, 1);
 					break;
 				case HotspotType.DoorIn:
 					if (hotspot.arg < 0) break;
@@ -174,6 +176,14 @@ export default class Zone {
 					break;
 			}
 		});
+	}
+
+	set tileIDs(tileIDs) {
+		this._tileIDs = tileIDs;
+	}
+
+	get tileIDs() {
+		return this._tileIDs;
 	}
 
 	isRoom() {
@@ -190,10 +200,6 @@ export default class Zone {
 
 	get type() {
 		return this._type;
-	}
-
-	get planet() {
-		return this._planet;
 	}
 
 	get hotspots() {
@@ -220,7 +226,17 @@ export default class Zone {
 		return this._height;
 	}
 
-	get doors() {
+	get doors(): Hotspot[] {
 		return this._hotspots.filter((hotspot) => hotspot.type === HotspotType.DoorIn && hotspot.arg !== -1);
 	}
+
+	set planet(p){
+		this._planet = p;
+	}
+
+	get planet(){
+		return this._planet;
+	}
 }
+
+export default Zone;

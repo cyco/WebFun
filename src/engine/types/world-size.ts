@@ -3,7 +3,7 @@ export default {
 	MEDIUM: 2,
 	LARGE: 3,
 
-	FromNumber(num) {
+	FromNumber(num: number): number {
 		if (!Object.values(this).contains(num) || typeof num !== "number")
 			throw new RangeError(`Invalid world-size ${num} specified`);
 

@@ -18,7 +18,7 @@ export const Settings = {
 	url: {
 		data: "./game-data/yoda.data",
 		palette: "./game-data/yoda.pal",
-		sfx: (file) => `./game-data/sfx-yoda/${encodeURIComponent(file)}.wav`
+		sfx: (file: string) => `./game-data/sfx-yoda/${encodeURIComponent(file)}.wav`
 	}
 };
 
