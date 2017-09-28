@@ -1,4 +1,4 @@
-export default (x, y) => {
+export default (x: number, y: number): number => {
 	// Message("Map::GetDistanceToCenter %dx%d\n", x, y);
 	return [
 		5, 5, 5, 5, 5, 5, 5, 5, 5, 5,

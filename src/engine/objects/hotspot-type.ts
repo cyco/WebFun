@@ -16,7 +16,7 @@ export default {
 	xWingFromD: 0x0E,
 	xWingToD: 0x0F,
 
-	FromNumber(num) {
+	FromNumber(num: number): number {
 		if (!Object.values(this).contains(num) || typeof num !== "number")
 			throw new Error(`Invalid hotspot type@ ${num} specified`);
 

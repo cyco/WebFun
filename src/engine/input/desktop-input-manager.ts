@@ -1,8 +1,13 @@
 import { KeyEvent, Point } from "src/util";
 import InputManager, { Direction } from "./input-manager";
+import Engine from "../engine";
 
-export default class extends InputManager {
-	constructor(gameViewElement) {
+class DesktopInputManager extends InputManager {
+	private _element: HTMLElement;
+	private _lastMouse: Point;
+	private _engine: Engine;
+
+	constructor(gameViewElement: HTMLElement) {
 		super();
 
 		this._element = gameViewElement;
@@ -27,7 +32,7 @@ export default class extends InputManager {
 		document.removeEventListener("contextmenu", (event) => event.preventDefault());
 	}
 
-	keyDown(e) {
+	keyDown(e: KeyEvent) {
 		let directionMask = 0;
 		switch (e.which) {
 			case KeyEvent.DOM_VK_UP:
@@ -73,7 +78,7 @@ export default class extends InputManager {
 		}
 	}
 
-	keyUp(e) {
+	keyUp(e: KeyEvent) {
 		let mask = 0xFF;
 
 		switch (e.which) {
@@ -109,7 +114,7 @@ export default class extends InputManager {
 			this._walk = false;
 	}
 
-	mouseDown(e) {
+	mouseDown(e: MouseEvent) {
 		const mouseLocation = new Point(e.clientX, e.clientY);
 		const point = this._getPointInViewCoordinates(mouseLocation);
 		const pointIsInView = point.x > 0 && point.y > 0 && point.x < 1 && point.y < 1;
@@ -126,19 +131,19 @@ export default class extends InputManager {
 		}
 	}
 
-	mouseMove(e) {
+	mouseMove(e: MouseEvent) {
 		const mouseLocation = new Point(e.clientX, e.clientY);
 		this._lastMouse = this._getPointInViewCoordinates(mouseLocation);
 	}
 
-	mouseUp(e) {
+	mouseUp(e: MouseEvent) {
 		if (e.button === 0)
 			this._walk = false;
 		if (e.button === 1)
 			this._attack = false;
 	}
 
-	_getPointInViewCoordinates(location) {
+	_getPointInViewCoordinates(location: Point): Point {
 		const boundingRect = this._element.getBoundingClientRect();
 		const viewOffset = new Point(boundingRect.left, boundingRect.top);
 
@@ -148,15 +153,17 @@ export default class extends InputManager {
 		return point;
 	}
 
-	get engine() {
+	get engine(): Engine {
 		return this._engine;
 	}
 
-	set engine(engine) {
+	set engine(engine: Engine) {
 		this._engine = engine;
 	}
 
-	get mouseLocationInView() {
+	get mouseLocationInView(): Point {
 		return this._lastMouse;
 	}
 }
+
+export default DesktopInputManager;

@@ -1,8 +1,8 @@
-import { HotspotType, ZoneType } from "src/engine/objects";
+import { HotspotType, Zone, ZoneType } from "src/engine/objects";
 import Settings from "src/settings";
 
 class LocatorTile {
-	static ForZone(zone) {
+	static ForZone(zone: Zone) {
 		if (!zone)
 			return 0x344;
 
@@ -41,7 +41,7 @@ class LocatorTile {
 		}
 	}
 
-	static _hasTeleporterHotspot(zone) {
+	static _hasTeleporterHotspot(zone: Zone): boolean {
 		return !!zone.hotspots.find(({type}) => type === HotspotType.Teleporter);
 	}
 }

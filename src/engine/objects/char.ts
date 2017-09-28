@@ -1,21 +1,19 @@
-import { Direction } from "src/util";
+import { Direction, Point } from "src/util";
 import Type from "./char-type";
+import CharFrame from "./char-frame";
 
 export { Type };
 
-export default class Char {
-	constructor() {
-		this._frames = [];
-		this._name = null;
-		this._data = null;
+class Char {
+	private _frames: CharFrame[] = [];
+	private _name: string = null;
+	private _data: any = null;
+	private rawData: any = null;
+	private rawAuxData: any = null;
+	private rawWeaponData: any = null;
+	private _type: number = null;
 
-		this.rawData = null;
-		this.rawAuxData = null;
-		this.rawWeaponData = null;
-		this._type = null;
-	}
-
-	getFace(direction, frameIdx) {
+	getFace(direction: Direction, frameIdx: number): number {
 		if (this.isHero()) {
 			frameIdx = frameIdx % 3;
 		} else {
@@ -48,19 +46,19 @@ export default class Char {
 		return tile;
 	}
 
-	isHero() {
-		return this.type & Type.Hero;
+	isHero(): boolean {
+		return !!(this.type & Type.Hero);
 	}
 
-	isEnemy() {
-		return this.type & Type.Enemy;
+	isEnemy(): boolean {
+		return !!(this.type & Type.Enemy);
 	}
 
-	isWeapon() {
-		return this.type & Type.Weapon;
+	isWeapon(): boolean {
+		return !!(this.type & Type.Weapon);
 	}
 
-	produceBullet(inertia) {
+	produceBullet(inertia: Point): any {
 		return null;
 		// TODO: implement shooting
 		/*
@@ -71,7 +69,7 @@ export default class Char {
 		 */
 	}
 
-	_getBullettile(inertia) {
+	_getBullettile(inertia: Point): number {
 		const frame = this._frames.first();
 
 		if (inertia.x) return inertia.x === 1 ? frame.right : frame.left;
@@ -94,3 +92,5 @@ export default class Char {
 		return 4;
 	}
 }
+
+export default Char;

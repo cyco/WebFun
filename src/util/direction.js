@@ -1,4 +1,4 @@
-export default class Direction {
+class Direction {
 	static Normalize(direction) {
 		let result = direction % 360.0;
 		if (result < 0)
@@ -38,3 +38,5 @@ Direction.West = 180;
 Direction.NorthWest = 225;
 Direction.North = 270;
 Direction.NorthEast = 315;
+
+export default Direction;

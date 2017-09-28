@@ -103,9 +103,9 @@ class Writer {
 			stream.writeUint32(0); // TODO: field_83C
 			stream.writeUint32(0); // TODO: field_840
 			stream.writeUint16(zone.padding);
-			stream.writeUint16(zone._planet);
+			stream.writeUint16(zone.planet);
 
-			stream.writeInt16Array(zone._tileIDs);
+			stream.writeInt16Array(zone.tileIDs);
 		}
 
 		stream.writeUint32(zone.visited);

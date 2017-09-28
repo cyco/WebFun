@@ -1,21 +1,18 @@
-import { Point } from "src/util";
+import { Point, Size } from "src/util";
+import Hero from "./hero";
 
-export default class Camera {
+class Camera {
+	private _offset: Point;
+	private _size: Size;
+	public zoneSize: Size;
+	public hero: Hero;
+
 	constructor() {
 		this._offset = new Point(0, 0);
-		this._size = {
-			width: 9,
-			height: 9
-		};
-
-		this.zoneSize = {
-			width: 9,
-			height: 9
-		};
+		this._size = new Size(9, 9);
+		this.zoneSize = new Size(9, 9);
 
 		this.hero = null;
-
-		Object.seal(this);
 	}
 
 	update(/*timeDelta*/) {
@@ -37,11 +34,13 @@ export default class Camera {
 		this._offset.y = Math.max(this._offset.y, this._size.height - this.zoneSize.height);
 	}
 
-	get offset() {
+	get offset(): Point {
 		return this._offset;
 	}
 
-	get size() {
+	get size(): Size {
 		return this._size;
 	}
 }
+
+export default Camera;

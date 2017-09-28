@@ -1,5 +1,7 @@
-export default class CharFrame {
-	constructor(tiles) {
+class CharFrame {
+	private _tiles: number[];
+
+	constructor(tiles: number[]) {
 		this._tiles = tiles;
 	}
 
@@ -39,3 +41,5 @@ export default class CharFrame {
 		return this._tiles[7];
 	}
 }
+
+export default CharFrame;

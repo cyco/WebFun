@@ -1,8 +1,18 @@
 import { Message, rand } from "src/util";
 import { DagobahGenerator, WorldGenerationError, WorldGenerator } from "src/engine/generation";
+import World from "./generation/world";
+import Engine from "./engine";
 
-export default class {
-	constructor(seed, planet, size) {
+class Story {
+	private _seed: number;
+	private _planet: number;
+	private _size: number;
+	private _world: World;
+	private _dagobah: World;
+	private _reseeded: boolean;
+	public goal: any;
+
+	constructor(seed: number, planet: number, size: number) {
 		this._seed = seed;
 		this._planet = planet;
 		this._size = size;
@@ -12,7 +22,7 @@ export default class {
 		this._reseeded = false;
 	}
 
-	generateWorld(engine) {
+	generateWorld(engine: Engine): void {
 		let generator = null;
 		let success = false;
 		let effectiveSeed = this.seed;
@@ -44,11 +54,11 @@ export default class {
 		Message(`done 0x${this.seed.toString(0x10).padStart(4, "0")}, 0x${this.planet.toString(0x10).padStart(4, "0")}, 0x${this.size.toString(0x10).padStart(4, "0")}`);
 	}
 
-	_setupWorld(generator) {
+	_setupWorld(generator: WorldGenerator, engine: Engine): void {
 		this._world = generator.world;
 	}
 
-	_setupDagobah(worldGenerator, engine) {
+	_setupDagobah(worldGenerator: WorldGenerator, engine: Engine): void {
 		Message("YodaDocument::SetupDagobah");
 		const generator = new DagobahGenerator(engine);
 		generator.generate(worldGenerator);
@@ -75,3 +85,5 @@ export default class {
 		return this._dagobah;
 	}
 }
+
+export default Story;

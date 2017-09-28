@@ -12,7 +12,8 @@ import OutputStream from "./output-stream.js";
 import InputStream from "./input-stream.js";
 import Size from "./size.js";
 import Rectangle from "./rectangle";
-import Point from "./point.js";
+import Point from "./point";
+import PointLike from "./point-like";
 
 import QueryString from "./query-string.js";
 import Range from "./range.js";
@@ -40,6 +41,7 @@ export {
 	InputStream,
 	Point,
 	Size,
+	PointLike,
 	Rectangle,
 	BatchLoader,
 	constantly,
