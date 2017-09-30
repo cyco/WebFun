@@ -52,7 +52,7 @@ class InventoryComponent extends Component {
 	}
 
 	rowClicked(item: Tile, row: number) {
-		if (item.id === Yoda.Locator) {
+		if (item.id === Yoda.ItemIDs.Locator) {
 			this.dispatchEvent(new CustomEvent(Event.PlacedLocator, {
 				detail: {
 					item: item,
