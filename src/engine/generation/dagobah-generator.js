@@ -12,7 +12,7 @@ const ZONE_DAGOBAH_NORTH_EAST = 95;
 const ZONE_DAGOBAH_SOUTH_WEST = 93;
 const ZONE_DAGOBAH_SOUTH_EAST = 96;
 
-export default class {
+class DagobahGenerator {
 	constructor(engine) {
 		this._engine = engine;
 		this._world = null;
@@ -158,3 +158,4 @@ export default class {
 		return this._world;
 	}
 }
+export default DagobahGenerator;

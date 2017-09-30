@@ -59,11 +59,11 @@ describeComponent(InventoryComponent, () => {
 		describe("row click handlers", () => {
 			it("are used to start the locator", (done) => {
 				let inventory = new Inventory();
-				inventory.addItem(mockTile(Yoda.Locator));
+				inventory.addItem(mockTile(Yoda.ItemIDs.Locator));
 				subject.inventory = inventory;
 
 				subject.addEventListener(InventoryEvent.PlacedLocator, (e) => {
-					expect(e.detail.item.id).toBe(Yoda.Locator);
+					expect(e.detail.item.id).toBe(Yoda.ItemIDs.Locator);
 					expect(e.detail.row).toBe(0);
 
 					done();
