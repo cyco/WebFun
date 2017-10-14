@@ -76,7 +76,7 @@ class GameData {
 		zone._planet = Planet.fromNumber(data.planet);
 		zone._width = data.width;
 		zone._height = data.height;
-		zone._type = data.type;
+		zone._type = ZoneType.fromNumber(data.type);
 		zone._tileIDs = data.tileIds;
 		zone._hotspots = data.hotspots.map((d) => this._makeHotspot(d));
 		zone._npcs = data.izax.npcs.map((d) => new NPC(d));
