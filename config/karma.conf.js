@@ -19,13 +19,7 @@ process.chdir(projectRoot);
 const config = {
 	basePath: projectRoot,
 	files: [
-		"test/helpers/index.js",
-		{
-			pattern: "game-data/**",
-			watched: false,
-			served: true,
-			included: false
-		}, {
+		"test/helpers/index.js", {
 			pattern: "test/fixtures/**",
 			watched: false,
 			served: true,
