@@ -1,9 +1,8 @@
 import { ProgressBar, View } from "src/ui";
-import { CanvasRenderer } from "src/engine";
+import { CanvasRenderer, ColorPalette } from "src/engine";
 import "./loading-view.scss";
-import { ColorPalette } from "../../engine";
 
-export default class extends View {
+class LoadingView extends View {
 	private _imageCanvas: HTMLCanvasElement;
 	private _progressBar: ProgressBar;
 
@@ -43,3 +42,5 @@ export default class extends View {
 		this._progressBar.value = p;
 	}
 }
+
+export default LoadingView;

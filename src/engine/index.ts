@@ -17,20 +17,20 @@ import Story from "./story";
 import * as Types from "./types";
 import Yoda from "./yoda";
 import CanvasRenderer from "./rendering/canvas/canvas-renderer";
+import { ColorPalette } from "./rendering";
 import WebGLRenderer from "./rendering/webgl/renderer";
 import DataFileReader from "./file-format/yodesk.js";
 import SaveGameReader from "./save-game/reader";
 import SaveGameWriter from "./save-game/writer";
-import ColorPalette from "./color-palette";
 import EngineEvents from "./engine-events";
 import GameState from "./game-state";
 
 export {
 	GameState,
 	EngineEvents,
-	ColorPalette,
 	Cheats,
 	Engine,
+	ColorPalette,
 	GameData,
 	Generation,
 	Hero,

@@ -1,7 +1,7 @@
 import Scene from "./scene";
 import { Tile } from "src/engine/objects";
 
-export default class PauseScene extends Scene {
+class PauseScene extends Scene {
 	constructor() {
 		super();
 
@@ -32,3 +32,4 @@ export default class PauseScene extends Scene {
 		return false;
 	}
 }
+export default PauseScene;

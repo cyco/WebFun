@@ -7,9 +7,7 @@ import Events from "./engine-events";
 export { Events };
 
 class Engine extends EventTarget {
-	static get Event() {
-		return Events;
-	}
+	static readonly Event = Events;
 
 	public metronome: any = null;
 	public inputManager: any = null;

@@ -1,10 +1,12 @@
-export default class SceneManager {
-	constructor() {
-		this._stack = [];
-		this.engine = null;
-	}
+import Scene from "./scenes/scene";
+import Engine from "./engine";
+import { Renderer } from "./rendering";
 
-	pushScene(scene) {
+class SceneManager {
+	private _stack: Scene[] = [];
+	public engine: Engine = null;
+
+	pushScene(scene: Scene): void {
 		let currentScene = this.currentScene;
 
 		scene.engine = this.engine;
@@ -16,19 +18,18 @@ export default class SceneManager {
 		scene.didShow();
 	}
 
-	update(ticks) {
+	update(ticks: number): void {
 		try {
 			this.currentScene.update(ticks);
-		}
-		catch (e) {
+		} catch (e) {
 			console.error(e);
 		}
 	}
 
-	render(renderer) {
+	render(renderer: Renderer): void {
 		// TODO: determine visible scenes at push/pop time
 		try {
-			let visibleScenes = [];
+			let visibleScenes: Scene[] = [];
 			for (let i = 0, len = this._stack.length; i < len; i++) {
 				const scene = this._stack[i];
 				if (scene.isOpaque())
@@ -38,8 +39,7 @@ export default class SceneManager {
 
 			for (let i = 0, len = visibleScenes.length; i < len; i++)
 				visibleScenes[i].render(renderer);
-		}
-		catch (e) {
+		} catch (e) {
 			console.error(e);
 		}
 	}
@@ -66,3 +66,5 @@ export default class SceneManager {
 		return this._stack.last();
 	}
 }
+
+export default SceneManager;

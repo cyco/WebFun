@@ -7,7 +7,7 @@ import { HotspotType, Tile, Zone } from "src/engine/objects";
 import Camera from "src/engine/camera";
 import { Direction, Point, rgba } from "src/util";
 
-export default class ZoneScene extends Scene {
+class ZoneScene extends Scene {
 	constructor() {
 		super();
 
@@ -465,3 +465,5 @@ export default class ZoneScene extends Scene {
 		this._objects = o;
 	}
 }
+
+export default ZoneScene;

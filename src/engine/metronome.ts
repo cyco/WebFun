@@ -1,9 +1,17 @@
-import { cancelAnimationFrame, performance, requestAnimationFrame } from "std";
+import { cancelAnimationFrame, performance, requestAnimationFrame } from "src/std";
 import { identity } from "src/util";
 
 const TICKLENGTH = 100;
 
-export default class {
+class Metronome {
+	private _stopped: boolean;
+	private _mainLoop: number;
+	private _lastTick: number;
+	private _nextTick: number;
+
+	private ontick: Function;
+	private onrender: Function;
+
 	constructor() {
 		this._stopped = true;
 		this._mainLoop = null;
@@ -43,3 +51,5 @@ export default class {
 		this._mainLoop = null;
 	}
 }
+
+export default Metronome;

@@ -10,7 +10,7 @@ import Settings from "src/settings";
 const TileWidth = 28;
 const TileHeight = 28;
 
-export default class MapScene extends Scene {
+class MapScene extends Scene {
 	static get LOCATOR_TICKS() {
 		return 10;
 	}
@@ -167,3 +167,4 @@ export default class MapScene extends Scene {
 		return this.engine.data.tiles[tile];
 	}
 }
+export default MapScene;

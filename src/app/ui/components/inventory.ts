@@ -78,10 +78,10 @@ class InventoryComponent extends Component {
 		const modalSession = new ModalSession();
 		modalSession.onmouseup = () => modalSession.end(0);
 		modalSession.onend = () => {
-			imgNode.src = item.image.dataURL;
+			imgNode.src = (<any>item.image).dataURL;
 			this.placeItem(item, row, modalSession.lastMouseLocation);
 		};
-		modalSession.cursor = item.image.dataURL;
+		modalSession.cursor = (<any>item.image).dataURL;
 		modalSession.run();
 	}
 

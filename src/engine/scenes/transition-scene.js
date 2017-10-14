@@ -3,7 +3,7 @@ import { Tile, Zone } from "src/engine/objects";
 import { Point } from "src/util";
 import { WebGLTexture } from "std.webgl";
 
-export default class TransitionScene extends Scene {
+class TransitionScene extends Scene {
 	static get TRANSITION_TYPE() {
 		return {
 			ZONE: 0,
@@ -237,3 +237,5 @@ export default class TransitionScene extends Scene {
 		return ctx.getImageData(0, 0, viewWidth * tileWidth, viewHeight * tileHeight);
 	}
 }
+
+export default TransitionScene;

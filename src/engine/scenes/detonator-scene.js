@@ -2,7 +2,7 @@ import Scene from "./scene";
 import { Tile } from "src/engine/objects";
 import { Point, Size } from "src/util";
 
-export default class DetonatorScene extends Scene {
+class DetonatorScene extends Scene {
 	constructor() {
 		super();
 		this._detonatorLocation = null;
@@ -56,3 +56,4 @@ export default class DetonatorScene extends Scene {
 		this._detonatorFrames = [0x202, 0x431, 0x432, 0x433].map((id) => data.getTile(id));
 	}
 }
+export default DetonatorScene;

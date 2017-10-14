@@ -1,30 +1,30 @@
-import { identity, Point } from "src/util";
+import { identity, Point, PointLike } from "src/util";
 import WorldItem from "./world-item";
+import { Zone } from "../objects";
 
 export const width = 10;
 export const height = 10;
 
-export default class World {
-	static get WIDTH() {
-		return width;
-	}
-
-	static get HEIGHT() {
-		return height;
-	}
+class World {
+	static readonly WIDTH = 10;
+	static readonly HEIGHT = 10;
+	public zones: Zone[] = null;
+	private _items: WorldItem[];
 
 	constructor() {
-		this._items = (World.WIDTH * World.HEIGHT).times(() => new WorldItem());
-		this.zones = null;
-		Object.seal(this);
+		const items = new Array(World.WIDTH * World.HEIGHT);
+		for (let i = 0; i < World.WIDTH * World.HEIGHT; i++) {
+			items[i] = new WorldItem();
+		}
+		this._items = items;
 	}
 
-	_pointToIndex(x, y) {
+	private _pointToIndex(x: number, y: number) {
 		return y * World.WIDTH + x;
 	}
 
-	getZone(x, y) {
-		console.assert(this.zones, "Data has not been set");
+	getZone(x: number|PointLike, y?: number) {
+		console.assert(!!this.zones, "Data has not been set");
 
 		if (typeof x === "object") {
 			y = x.y;
@@ -43,13 +43,13 @@ export default class World {
 		return this.zones[zoneID];
 	}
 
-	setZone(x, y, zoneID) {
+	setZone(x: number, y: number, zoneID: number) {
 		const index = this._pointToIndex(x, y);
 		const worldItem = this._items[index];
 		worldItem.zoneID = zoneID;
 	}
 
-	locationOfZone(zone) {
+	locationOfZone(zone: Zone): Point {
 		const zoneID = this.zones.indexOf(zone);
 		for (let y = 0; y < World.HEIGHT; y++) {
 			for (let x = 0; x < World.HEIGHT; x++) {
@@ -63,13 +63,13 @@ export default class World {
 		return null;
 	}
 
-	locationOfZoneWithID(zoneID) {
+	locationOfZoneWithID(zoneID: number): Point {
 		const zone = this.zones[zoneID];
 		if (!zone) return null;
 		return this.locationOfZone(zone);
 	}
 
-	zoneIsAt(needleZone, x, y) {
+	zoneIsAt(needleZone: Zone, x: number, y: number): boolean {
 		let zone = this.getZone(x, y);
 		if (!zone) return false;
 		if (zone === needleZone) return true;
@@ -77,15 +77,17 @@ export default class World {
 		return zone.leadsTo(needleZone, this.zones);
 	}
 
-	at(x, y) {
+	at(x: number, y?: number): WorldItem {
 		return this._items[this._pointToIndex(x, y)];
 	}
 
-	index(index) {
+	index(index: number): WorldItem {
 		return this._items[index];
 	}
 
-	layDownHotspotItems() {
+	layDownHotspotItems(): void {
 		this.zones.filter(identity).forEach(zone => zone.layDownHotspotItems());
 	}
 }
+
+export default World;

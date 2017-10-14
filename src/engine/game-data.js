@@ -13,7 +13,7 @@ import {
 	Zone
 } from "./objects";
 
-export default class {
+class GameData {
 	constructor(raw) {
 		this._rawInput = raw;
 		this._version = this._getCategory("VERS").version;
@@ -175,3 +175,5 @@ export default class {
 		return this._characters;
 	}
 }
+
+export default GameData;

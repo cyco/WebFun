@@ -77,7 +77,7 @@ class Zone {
 		return this.tileIDs[index];
 	}
 
-	getTile(x: number|PointLike, y: number, z: number): Tile {
+	getTile(x: number|PointLike, y?: number, z?: number): Tile {
 		if (typeof x === "object") {
 			y = x.y;
 			z = x.z;
@@ -112,7 +112,7 @@ class Zone {
 		this.setTile(null, sourceX, sourceY, z);
 	}
 
-	placeWalkable(x: number|PointLike, y: number): boolean {
+	placeWalkable(x: number|PointLike, y?: number): boolean {
 		if (typeof x === "object") {
 			y = x.y;
 			x = x.x;
@@ -230,11 +230,11 @@ class Zone {
 		return this._hotspots.filter((hotspot) => hotspot.type === HotspotType.DoorIn && hotspot.arg !== -1);
 	}
 
-	set planet(p){
+	set planet(p) {
 		this._planet = p;
 	}
 
-	get planet(){
+	get planet() {
 		return this._planet;
 	}
 }
