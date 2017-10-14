@@ -1,8 +1,8 @@
 import { HorizontalPointRange, Message, Point, rand, randmod, Range, srand, VerticalPointRange } from "src/util";
 import IslandBuilder from "./island-builder";
 import GetDistanceToCenter from "./distance-to-center";
-import WorldItemType from './world-item-type';
-import { WorldSize } from '../types';
+import WorldItemType from "./world-item-type";
+import { WorldSize } from "../types";
 
 const IslandOrientation = {
 	Left: 1,
@@ -11,10 +11,8 @@ const IslandOrientation = {
 	Down: 4
 };
 
-
 type WorldItemTypeType = number;
 type IslandOrientationType = number;
-type WorldSizeType = number;
 type Map = Uint16Array;
 
 declare interface Uint16Array {
@@ -85,16 +83,14 @@ function getIslandOrientation(x: number, y: number, typeMap: Map): IslandOrienta
 	return 0;
 }
 
-function determineRanges(size: WorldSizeType): Range[] {
+function determineRanges(size: WorldSize): Range[] {
 	switch (size) {
-		case WorldSize.SMALL:
+		case WorldSize.Small:
 			return [new Range(5, 8), new Range(4, 6), new Range(1, 1), new Range(1, 1)];
-		case WorldSize.MEDIUM:
+		case WorldSize.Medium:
 			return [new Range(5, 9), new Range(5, 9), new Range(4, 8), new Range(3, 8)];
-		case WorldSize.LARGE:
+		case WorldSize.Large:
 			return [new Range(6, 12), new Range(6, 12), new Range(6, 11), new Range(4, 11)];
-		default:
-			throw "Invalid world size specified";
 	}
 }
 
@@ -223,7 +219,7 @@ function _initializeOrderMap() {
 }
 
 
-function generate(seed: number, size: number) {
+function generate(seed: number, size: WorldSize) {
 	if (seed >= 0) srand(seed);
 
 	_determineCounts();
@@ -679,7 +675,7 @@ function _determineAdditionalPuzzleLocations(travels_to_place: number) {
 }
 
 class MapGenerator {
-	generate(seed: number, size:number) {
+	generate(seed: number, size: WorldSize) {
 		constructor();
 		return generate(seed, size);
 	}
@@ -696,4 +692,5 @@ class MapGenerator {
 		return orderMap;
 	}
 }
+
 export default MapGenerator;

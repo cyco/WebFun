@@ -101,7 +101,7 @@ class GameController {
 			return;
 		}
 
-		const story = new Story(0x0000, Planet.ENDOR, WorldSize.LARGE);
+		const story = new Story(0x0000, Planet.ENDOR, WorldSize.Large);
 		await story.generateWorld(this._engine);
 		this._engine.story = story;
 
