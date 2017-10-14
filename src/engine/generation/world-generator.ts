@@ -13,7 +13,6 @@ import WorldItem from "./world-item";
 import Hotspot from "../objects/hotspot";
 
 type PlanetType = number;
-type WorldSizeType = number;
 type Map = Uint16Array;
 
 type ZoneTypeType = number;
@@ -50,7 +49,7 @@ type HotspotTypeType = number;
 
 class WorldGenerator {
 	private _seed: number;
-	private _size: WorldSizeType;
+	private _size: WorldSize;
 	private _planet: PlanetType;
 	private _zones: Zone[];
 	private _tiles: Tile[];
@@ -77,9 +76,9 @@ class WorldGenerator {
 	private field_2E64: number;
 	private puzzles_can_be_reused: number;
 
-	constructor(seed: number, size: WorldSizeType, planet: PlanetType, engine: Engine) {
+	constructor(seed: number, size: WorldSize, planet: PlanetType, engine: Engine) {
 		this._seed = seed | 0;
-		this._size = size | 0;
+		this._size = size;
 		this._planet = planet | 0;
 		const data = engine && engine.data;
 		this._zones = data._zones;
@@ -669,7 +668,7 @@ class WorldGenerator {
 						break;
 					}
 
-					let distance = this._size === WorldSize.LARGE ? 2 : 1;
+					let distance = this._size === WorldSize.Large ? 2 : 1;
 					if (Math.abs(teleporterSource.x - x) > distance || Math.abs(teleporterSource.y - y) > distance) {
 						teleportersFound++;
 						teleporterSource = new Point(x, y);

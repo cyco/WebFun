@@ -2,17 +2,18 @@ import { Message, rand } from "src/util";
 import { DagobahGenerator, WorldGenerationError, WorldGenerator } from "src/engine/generation";
 import World from "./generation/world";
 import Engine from "./engine";
+import WorldSize from "./types/world-size";
 
 class Story {
 	private _seed: number;
 	private _planet: number;
-	private _size: number;
+	private _size: WorldSize;
 	private _world: World;
 	private _dagobah: World;
 	private _reseeded: boolean;
 	public goal: any;
 
-	constructor(seed: number, planet: number, size: number) {
+	constructor(seed: number, planet: number, size: WorldSize) {
 		this._seed = seed;
 		this._planet = planet;
 		this._size = size;
@@ -51,7 +52,7 @@ class Story {
 		this._world.layDownHotspotItems();
 		this._dagobah.layDownHotspotItems();
 
-		Message(`done 0x${this.seed.toString(0x10).padStart(4, "0")}, 0x${this.planet.toString(0x10).padStart(4, "0")}, 0x${this.size.toString(0x10).padStart(4, "0")}`);
+		Message(`done 0x${this.seed.toString(0x10).padStart(4, "0")}, 0x${this.planet.toString(0x10).padStart(4, "0")}, 0x${WorldSize.toNumber(this.size).toString(0x10).padStart(4, "0")}`);
 	}
 
 	_setupWorld(generator: WorldGenerator, engine: Engine): void {

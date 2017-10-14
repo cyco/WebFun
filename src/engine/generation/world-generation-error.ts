@@ -1,10 +1,11 @@
+import { WorldSize } from "../types";
+
 type PlanetTypeType = number;
-type WorldSizeType = number;
 
 class WorldGenerationError extends Error {
 	public seed: number;
 	public planet: PlanetTypeType;
-	public size: WorldSizeType;
+	public size: WorldSize;
 }
 
 export default WorldGenerationError;

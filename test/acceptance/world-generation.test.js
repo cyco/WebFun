@@ -4,6 +4,7 @@ import loadGameData from "test-helpers/game-data";
 import { getFixtureContent } from "test-helpers/fixture-loading";
 import Story from "../../src/engine/story";
 import GameData from "../../src/engine/game-data";
+import WorldSize from "../../src/engine/types/world-size";
 
 let rawData = null;
 
@@ -57,7 +58,7 @@ const compare = (story, expectation) => {
 const runTest = ({seed, planet, size, world, dagobah}) => {
 	describe(`World ${seed} ${getPlanetName(planet)} ${getSizeName(size)}`, () => {
 		it("is generated correctly", (done) => {
-			const story = new Story(seed, planet, size);
+			const story = new Story(seed, planet, WorldSize.fromNumber(size));
 			story.generateWorld({data: new GameData(rawData)});
 			expect(() => compare(story, {seed, planet, size, world, dagobah})).not.toThrow();
 			done();
