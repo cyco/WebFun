@@ -1,4 +1,4 @@
-import ColorPalette from "../color-palette";
+import ColorPalette from "./color-palette";
 
 abstract class AbstractImageFactory {
 	public palette: ColorPalette;

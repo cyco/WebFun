@@ -1,6 +1,6 @@
 import Scene from "./scene";
 
-export default class PickupScene extends Scene {
+class PickupScene extends Scene {
 	constructor(engine = null) {
 		super();
 
@@ -39,3 +39,5 @@ export default class PickupScene extends Scene {
 		return false;
 	}
 }
+
+export default PickupScene;

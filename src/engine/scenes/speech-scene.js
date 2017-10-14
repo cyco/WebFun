@@ -5,7 +5,7 @@ import { ModalSession } from "src/ux";
 import { Point, Size } from "src/util";
 import Settings from "src/settings";
 
-export default class SpeechScene extends Scene {
+class SpeechScene extends Scene {
 	constructor(engine = null) {
 		super();
 
@@ -66,3 +66,5 @@ export default class SpeechScene extends Scene {
 		this._bubble.text = t;
 	}
 }
+
+export default SpeechScene;

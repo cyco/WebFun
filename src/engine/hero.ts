@@ -1,4 +1,6 @@
 import { Direction, EventTarget, Point } from "src/util";
+import { Char, Zone } from "./objects";
+import { Renderer } from "./rendering";
 
 export const MAX_HEALTH = 0x300;
 export const Events = {
@@ -7,42 +9,37 @@ export const Events = {
 	AmmoChanged: "AmmoChanged"
 };
 
-export default class Hero extends EventTarget {
+class Hero extends EventTarget {
 	static get Event() {
 		return Events;
 	}
 
-	constructor() {
-		super();
+	public visible: boolean = false;
+	private _location: Point = new Point(0, 0, 1);
+	private _health: number = MAX_HEALTH;
+	private invincible: boolean = false;
+	private unlimitedAmmo: boolean = false;
+	private _actionFrames: number = 0;
+	private _direction: Direction = Direction.South;
+	private _walking: boolean = false;
+	private _attacking: boolean = false;
+	private _dragging: boolean = false;
+	private _weapon: Char = null;
+	private _appearance: Char = null;
+	private _ammo: number;
 
-		this._visible = false;
-
-		this._location = new Point(0, 0, 1);
-		this._health = MAX_HEALTH;
-		this.invincible = false;
-		this.unlimitedAmmo = false;
-
-		this._actionFrames = 0;
-		this._direction = Direction.South;
-		this._walking = false;
-		this._attacking = false;
-
-		this._dragging = false;
-		this._weapon = null;
-	}
-
-	update(ticks) {
+	update(ticks: number): void {
 		if (this.isWalking || this.isAttacking)
 			this._actionFrames += ticks;
 		else
 			this._actionFrames = 0;
 	}
 
-	face(direction) {
+	face(direction: Direction): void {
 		this._direction = direction;
 	}
 
-	move(relative, zone) {
+	move(relative: Point, zone: Zone): boolean {
 		let targetPoint = Point.add(relative, this._location);
 
 		// Look where we're going
@@ -102,7 +99,7 @@ export default class Hero extends EventTarget {
 		return (this._walking = false);
 	}
 
-	_doMove(rel, z, dragging) {
+	_doMove(rel: Point, z: Zone, dragging: boolean) {
 		if (rel.isZeroPoint())
 			return false;
 
@@ -126,7 +123,7 @@ export default class Hero extends EventTarget {
 		return false;
 	}
 
-	_doDrag(src, target, z) {
+	_doDrag(src: Point, target: Point, z: Zone): boolean {
 		let t = z.getTile(src);
 		if (!t || !t.isDraggable())
 			return false;
@@ -140,8 +137,8 @@ export default class Hero extends EventTarget {
 		return true;
 	}
 
-	render(offset, renderer) {
-		if (!this._visible) return;
+	render(offset: Point, renderer: Renderer): void {
+		if (!this.visible) return;
 
 		let appearance = this._appearance;
 
@@ -154,14 +151,6 @@ export default class Hero extends EventTarget {
 
 		const tile = appearance.getFace(this._direction, frame);
 		if (tile) renderer.renderTile(tile, offset.x + this._location.x, offset.y + this._location.y, 1);
-	}
-
-	get visible() {
-		return this._visible;
-	}
-
-	set visible(v) {
-		this._visible = v;
 	}
 
 	get isWalking() {
@@ -258,3 +247,5 @@ export default class Hero extends EventTarget {
 		});
 	}
 }
+
+export default Hero;
