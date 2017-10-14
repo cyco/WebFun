@@ -1,8 +1,8 @@
 import { HorizontalPointRange, Message, Point, rand, randmod, Range, srand, VerticalPointRange } from "src/util";
 import IslandBuilder from "./island-builder";
 import GetDistanceToCenter from "./distance-to-center";
-import WorldItemType from "./world-item-type";
-import { WorldSize } from "src/engine/types";
+import WorldItemType from './world-item-type';
+import { WorldSize } from '../types';
 
 const IslandOrientation = {
 	Left: 1,
@@ -11,26 +11,43 @@ const IslandOrientation = {
 	Down: 4
 };
 
-let min_x;
-let alternate_x;
-let min_y;
-let alternate_y;
-let variance;
-let probablility;
-let threshold;
-let travel_threshold;
-let last_item;
-let remaining_count_to_place;
-let typeMap;
-let placedPuzzles;
-let blockades;
-let travels;
-let placedTravels;
-let puzzles;
-let orderMap;
+
+type WorldItemTypeType = number;
+type IslandOrientationType = number;
+type WorldSizeType = number;
+type Map = Uint16Array;
+
+declare interface Uint16Array {
+	set(x: number, y: number, value: number): void;
+
+	get(x: number, y: number): number;
+
+	[_: number]: number;
+
+	readonly length: number;
+}
+
+let min_x: number;
+let alternate_x: number;
+let min_y: number;
+let alternate_y: number;
+let variance: number;
+let probablility: number;
+let threshold: number;
+let travel_threshold: number;
+let last_item: WorldItemTypeType;
+let remaining_count_to_place: number;
+let typeMap: Map;
+let placedPuzzles: number;
+let blockades: number;
+let travels: number;
+let placedTravels: number;
+let puzzles: number;
+let orderMap: Map;
 let config;
 
-function blockadeTypeFor(xdiff, ydiff) {
+
+function blockadeTypeFor(xdiff: number, ydiff: number): WorldItemTypeType {
 	if (xdiff === 0 && ydiff === 1) {
 		return WorldItemType.BlockNorth;
 	}
@@ -43,13 +60,15 @@ function blockadeTypeFor(xdiff, ydiff) {
 	if (xdiff === 1 && ydiff === 0) {
 		return WorldItemType.BlockWest;
 	}
+
+	return null;
 }
 
-function blockadeTypeForCheck(xdiff, ydiff) {
+function blockadeTypeForCheck(xdiff: number, ydiff: number): WorldItemTypeType {
 	return blockadeTypeFor(xdiff, ydiff);
 }
 
-function _determineCounts() {
+function _determineCounts(): void {
 	travels = rand() % 3;
 	blockades = rand() % 4;
 
@@ -57,7 +76,7 @@ function _determineCounts() {
 	placedTravels = 0;
 }
 
-function getIslandOrientation(x, y) {
+function getIslandOrientation(x: number, y: number, typeMap: Map): IslandOrientationType {
 	if (typeMap.get(x - 1, y) === WorldItemType.Island) return IslandOrientation.Left;
 	if (typeMap.get(x + 1, y) === WorldItemType.Island) return IslandOrientation.Right;
 	if (typeMap.get(x, y - 1) === WorldItemType.Island) return IslandOrientation.Up;
@@ -66,7 +85,7 @@ function getIslandOrientation(x, y) {
 	return 0;
 }
 
-function determineRanges(size) {
+function determineRanges(size: WorldSizeType): Range[] {
 	switch (size) {
 		case WorldSize.SMALL:
 			return [new Range(5, 8), new Range(4, 6), new Range(1, 1), new Range(1, 1)];
@@ -79,7 +98,7 @@ function determineRanges(size) {
 	}
 }
 
-function place_blockade(x, y, xdif, ydif) {
+function place_blockade(x: number, y: number, xdif: number, ydif: number): void {
 	typeMap.set(x, y, blockadeTypeFor(xdif, ydif));
 
 	typeMap.set(x - ydif, y - xdif, WorldItemType.KeptFree);
@@ -93,7 +112,7 @@ function place_blockade(x, y, xdif, ydif) {
 	--blockades;
 }
 
-function extend_blockade(x, y, xdif, ydif) {
+function extend_blockade(x: number, y: number, xdif: number, ydif: number): void {
 	typeMap.set(x, y, WorldItemType.Candidate);
 	typeMap.set(x - ydif, y - xdif, WorldItemType.KeptFree);
 	typeMap.set(x + ydif, y + xdif, WorldItemType.KeptFree);
@@ -102,15 +121,15 @@ function extend_blockade(x, y, xdif, ydif) {
 	--remaining_count_to_place;
 }
 
-function is_free(type) {
+function is_free(type: WorldItemTypeType): boolean {
 	return type === WorldItemType.None || type === WorldItemType.KeptFree;
 }
 
-function is_less_than_candidate(type) {
+function is_less_than_candidate(type: WorldItemTypeType): boolean {
 	return type < WorldItemType.Candidate;
 }
 
-function neighbors(map, x, y) {
+function neighbors(map: Map, x: number, y: number) {
 	return [
 		map.get(x - 1, y),
 		map.get(x + 1, y),
@@ -119,14 +138,14 @@ function neighbors(map, x, y) {
 	];
 }
 
-function is_blockade(type) {
+function is_blockade(type: WorldItemTypeType): boolean {
 	return type === WorldItemType.BlockWest ||
 		type === WorldItemType.BlockEast ||
 		type === WorldItemType.BlockNorth ||
 		type === WorldItemType.BlockSouth;
 }
 
-function handle_neighbor(x, y, iteration, xdif, ydif) {
+function handle_neighbor(x: number, y: number, iteration: number, xdif: number, ydif: number): boolean {
 	let item_idx = x + 10 * y;
 
 	let neighbor = typeMap.get(x + xdif, y + ydif);
@@ -185,8 +204,8 @@ function constructor() {
 	config = [];
 }
 
-function _initializeTypeMap(spaceportX, spaceportY) {
-	typeMap = new Uint16Array(100);
+function _initializeTypeMap(spaceportX: number, spaceportY: number) {
+	typeMap = <any>new Uint16Array(100);
 	typeMap[44] = WorldItemType.Empty;
 	typeMap[45] = WorldItemType.Empty;
 	typeMap[54] = WorldItemType.Empty;
@@ -197,14 +216,14 @@ function _initializeTypeMap(spaceportX, spaceportY) {
 
 
 function _initializeOrderMap() {
-	orderMap = new Int16Array(100);
+	orderMap = <any>new Int16Array(100);
 	for (let i = 0, len = orderMap.length; i < len; i++) {
 		orderMap[i] = -1;
 	}
 }
 
 
-function generate(seed, size) {
+function generate(seed: number, size: number) {
 	if (seed >= 0) srand(seed);
 
 	_determineCounts();
@@ -306,7 +325,7 @@ function _choosePuzzlesOnIslands() {
 	let range;
 	let step;
 	let puzzleLocation;
-	const iteration = (point, control) => {
+	const iteration = (point: Point, control: any) => {
 		const nextPoint = Point.add(point, control.step);
 		if (!nextPoint.isInBounds(bounds) ||
 			typeMap.get(nextPoint.x, nextPoint.y) !== WorldItemType.Island) {
@@ -350,7 +369,7 @@ function _choosePuzzlesOnIslands() {
 }
 
 
-function _chooseAdditionalPuzzles(total_puzzle_count) {
+function _chooseAdditionalPuzzles(total_puzzle_count: number): void {
 	// Message("_chooseAdditionalPuzzles(%d, %d)\n", placedPuzzles, total_puzzle_count);
 	let do_break = 0;
 	for (let i = 0; i <= 200; i++) {
@@ -399,7 +418,7 @@ function _chooseAdditionalPuzzles(total_puzzle_count) {
 	}
 }
 
-function _mapCountStuff() {
+function _mapCountStuff(): number {
 	travels = 0;
 	blockades = 0;
 	puzzles = 0;
@@ -426,7 +445,7 @@ function _mapCountStuff() {
 	return 0;
 }
 
-function _makeSureLastPuzzleIsNotTooCloseToCenter() {
+function _makeSureLastPuzzleIsNotTooCloseToCenter(): void {
 	const getDistanceToCenter = GetDistanceToCenter;
 	// Message("_makeSureLastPuzzleIsNotTooCloseToCenter(%d)\n", placedPuzzles);
 	const lastPuzzle = findPuzzleLastPuzzle();
@@ -445,7 +464,7 @@ function _makeSureLastPuzzleIsNotTooCloseToCenter() {
 	}
 }
 
-function _placeIntermediateWorldThing() {
+function _placeIntermediateWorldThing(): number {
 	Message("place_intermediate_world_thing()\n");
 	placedPuzzles = 0;
 
@@ -469,7 +488,7 @@ function _placeIntermediateWorldThing() {
 	return placedPuzzles;
 }
 
-function _tryPlacingTravel(item_idx, iteration, last_item) {
+function _tryPlacingTravel(item_idx: number, iteration: number, last_item: WorldItemTypeType) {
 	if (typeMap[item_idx] !== WorldItemType.Empty) return;
 
 	if (travels <= placedTravels) return;
@@ -481,7 +500,7 @@ function _tryPlacingTravel(item_idx, iteration, last_item) {
 	placedTravels++;
 }
 
-function _determinePuzzleLocations(iteration, puzzle_count_to_place) {
+function _determinePuzzleLocations(iteration: number, puzzle_count_to_place: number) {
 	Message("YodaDocument::PlacePuzzleLocations(%d, %d, %d, %d)\n", iteration, puzzle_count_to_place, travels, blockades);
 	remaining_count_to_place = puzzle_count_to_place;
 
@@ -544,7 +563,7 @@ function _determinePuzzleLocations(iteration, puzzle_count_to_place) {
 	}
 }
 
-function _determineAdditionalPuzzleLocations(travels_to_place) {
+function _determineAdditionalPuzzleLocations(travels_to_place: number) {
 	Message("AdditionalPuzzleLocations(%d)\n", travels_to_place);
 	for (let i = 0; i <= 400 && travels_to_place > 0; i++) {
 		let x,
@@ -659,8 +678,8 @@ function _determineAdditionalPuzzleLocations(travels_to_place) {
 	}
 }
 
-export default class MapGenerator {
-	generate(seed, size) {
+class MapGenerator {
+	generate(seed: number, size:number) {
 		constructor();
 		return generate(seed, size);
 	}
@@ -677,3 +696,4 @@ export default class MapGenerator {
 		return orderMap;
 	}
 }
+export default MapGenerator;
