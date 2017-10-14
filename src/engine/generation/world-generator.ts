@@ -3,7 +3,7 @@ import MapGenerator from "./map-generator";
 import WorldItemType from "./world-item-type";
 import World from "./world";
 import * as Type from "src/engine/types";
-import { WorldSize } from "src/engine/types";
+import { Planet, WorldSize } from "src/engine/types";
 import GetDistanceToCenter from "./distance-to-center";
 import { HotspotType, Puzzle, PuzzleType, Tile, Zone, ZoneType } from "src/engine/objects";
 import { and, not } from "src/util/functional";
@@ -12,7 +12,6 @@ import Engine from "../engine";
 import WorldItem from "./world-item";
 import Hotspot from "../objects/hotspot";
 
-type PlanetType = number;
 type Map = Uint16Array;
 
 type ZoneTypeType = number;
@@ -28,7 +27,7 @@ declare global {
 
 		toPuzzleType(): PuzzleTypeType;
 
-		isGoalOnPlanet(planet: PlanetType): boolean;
+		isGoalOnPlanet(planet: Planet): boolean;
 
 		canHoldItem(): boolean;
 	}
@@ -50,7 +49,7 @@ type HotspotTypeType = number;
 class WorldGenerator {
 	private _seed: number;
 	private _size: WorldSize;
-	private _planet: PlanetType;
+	private _planet: Planet;
 	private _zones: Zone[];
 	private _tiles: Tile[];
 	private _puzzles: Puzzle[];
@@ -76,10 +75,10 @@ class WorldGenerator {
 	private field_2E64: number;
 	private puzzles_can_be_reused: number;
 
-	constructor(seed: number, size: WorldSize, planet: PlanetType, engine: Engine) {
+	constructor(seed: number, size: WorldSize, planet: Planet, engine: Engine) {
 		this._seed = seed | 0;
 		this._size = size;
-		this._planet = planet | 0;
+		this._planet = planet;
 		const data = engine && engine.data;
 		this._zones = data._zones;
 		this._tiles = data.tiles;
@@ -706,7 +705,7 @@ class WorldGenerator {
 	WritePlanetValues() {
 	}
 
-	PuzzleUsedInLastGame(puzzle_id: number, planet: PlanetType) {
+	PuzzleUsedInLastGame(puzzle_id: number, planet: Planet) {
 		return false;
 	}
 

@@ -1,34 +1,43 @@
 class Planet {
-	public static NONE = 0;
-	public static TATOOINE = 1;
-	public static HOTH = 2;
-	public static ENDOR = 3;
-	public static DAGOBAH = 5;
+	public static readonly NONE = new Planet();
+	public static readonly TATOOINE = new Planet();
+	public static readonly HOTH = new Planet();
+	public static readonly ENDOR = new Planet();
+	public static readonly DAGOBAH = new Planet();
 
-	_value: number;
+	public static readonly UNKNOWN = new Planet();
 
-	constructor(number: number) {
-		const knownPlanets = [Planet.NONE, Planet.TATOOINE, Planet.HOTH, Planet.ENDOR, Planet.DAGOBAH];
-		const planet = knownPlanets.find(p => p === number);
-		if (planet) throw `Planets can not be instantiated. Use static constants or FromNumber instead!`;
+	private static readonly knownPlanets = [Planet.NONE, Planet.TATOOINE, Planet.HOTH, Planet.ENDOR, Planet.DAGOBAH, Planet.UNKNOWN];
 
-		this._value = number;
+	static isPlanet(number: number): boolean {
+		return number > 0 && number < Planet.knownPlanets.length;
+	}
+
+	static fromNumber(number: number): Planet {
+		if (!this.isPlanet(number)) throw RangeError(`Invalid planet ${number} requested!`);
+		return Planet.knownPlanets[number];
 	}
 
 	get rawValue(): number {
-		return this._value;
+		return Planet.knownPlanets.indexOf(this);
 	}
 
-	static isPlanet(number: number): boolean {
-		const knownPlanets = [Planet.NONE, Planet.TATOOINE, Planet.HOTH, Planet.ENDOR, Planet.DAGOBAH];
-		return !!knownPlanets.find(p => p === number);
-	}
-
-	static fromNumber(number: number): number {
-		const knownPlanets = [Planet.NONE, Planet.TATOOINE, Planet.HOTH, Planet.ENDOR, Planet.DAGOBAH];
-		const planet = knownPlanets.find(p => p === number);
-		if (!planet) throw RangeError(`Invalid planet ${number} requested!`);
-		return planet;
+	public toString() {
+		return `Planet {${(() => {
+			switch (this) {
+				case Planet.NONE:
+					return "None";
+				case Planet.TATOOINE:
+					return "Tatooine";
+				case Planet.HOTH:
+					return "Hoth";
+				case Planet.ENDOR:
+					return "Endor";
+				case Planet.DAGOBAH:
+					return "Dagobah";
+				default: return 'Unknown';
+			}
+		})()}}`;
 	}
 }
 

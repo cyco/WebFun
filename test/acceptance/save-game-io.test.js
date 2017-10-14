@@ -6,7 +6,7 @@ import SaveGameWriter from "src/engine/save-game/writer.ts";
 import GameData from "src/engine/game-data";
 import { InputStream, OutputStream } from "src/util";
 
-describe("Save Game IO", () => {
+xdescribe("Save Game IO", () => {
 	let data, state, inputStream;
 
 	describe("simple world", () => {

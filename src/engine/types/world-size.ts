@@ -1,26 +1,37 @@
 class WorldSize {
-	public static readonly Small = <WorldSize>Symbol();
-	public static readonly Medium = <WorldSize>Symbol();
-	public static readonly Large = <WorldSize>Symbol();
+	public static readonly Small = new WorldSize();
+	public static readonly Medium = new WorldSize();
+	public static readonly Large = new WorldSize();
 
-	public static fromNumber(number: 1|2|3): WorldSize {
-		if (number === 1) return WorldSize.Small;
-		if (number === 2) return WorldSize.Medium;
-		if (number === 3) return WorldSize.Large;
+	private static readonly knownSizes = [WorldSize.Small, WorldSize.Medium, WorldSize.Large];
 
-		throw `Value ${number} does not specify a valid world size!`;
+	public static isWorldSize(number: number) {
+		return number >= 1 && number <= WorldSize.knownSizes.length;
 	}
 
-	public static toNumber(size: WorldSize) {
-		if (size === WorldSize.Small) return 1;
-		if (size === WorldSize.Medium) return 2;
-		if (size === WorldSize.Large) return 3;
+	public static fromNumber(number: number): WorldSize {
+		if (!WorldSize.isWorldSize(number)) {
+			throw `Value ${number} does not specify a valid world size!`;
+		}
 
-		throw `Value ${size} does not specify a valid world size!`;
+		return WorldSize.knownSizes[number-1];
 	}
 
-	constructor() {
-		throw `Can not instantiate a type`;
+	get rawValue() {
+		return WorldSize.knownSizes.indexOf(this) + 1;
+	}
+
+	public toString() {
+		return `WorldSize {${(() => {
+			switch (this) {
+				case WorldSize.Small:
+					return "Small";
+				case WorldSize.Medium:
+					return "Medium";
+				case WorldSize.Large:
+					return "Large";
+			}
+		})()}}`;
 	}
 }
 

@@ -5,6 +5,7 @@ import Layer from "./zone-layer";
 import NPC from "./npc";
 import Action from "./action";
 import Tile from "./tile";
+import {Planet} from '../types';
 
 export { Type, Layer };
 
@@ -25,7 +26,7 @@ class Zone {
 
 	public id: number = -1;
 	public _name: string = "";
-	public _planet: number = -1;
+	public _planet: Planet = Planet.NONE;
 	public _width: number = 0;
 	public _height: number = 0;
 	public _type: number = -1;

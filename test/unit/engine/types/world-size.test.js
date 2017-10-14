@@ -15,14 +15,13 @@ describe("WorldSize", () => {
 		expect(WorldSize.Small).not.toBe(WorldSize.Medium);
 	});
 
-	it("can be converted to / from numbers for seriaization", () => {
-		expect(WorldSize.fromNumber(WorldSize.toNumber(WorldSize.Small))).toBe(WorldSize.Small);
-		expect(WorldSize.fromNumber(WorldSize.toNumber(WorldSize.Medium))).toBe(WorldSize.Medium);
-		expect(WorldSize.fromNumber(WorldSize.toNumber(WorldSize.Large))).toBe(WorldSize.Large);
+	it("can be converted to / from numbers for easy serialization", () => {
+		expect(WorldSize.fromNumber(WorldSize.Small.rawValue)).toBe(WorldSize.Small);
+		expect(WorldSize.fromNumber(WorldSize.Medium.rawValue)).toBe(WorldSize.Medium);
+		expect(WorldSize.fromNumber(WorldSize.Large.rawValue)).toBe(WorldSize.Large);
 	});
 
 	it("throws if invalid values are given as input", () => {
-		expect(() => WorldSize.toNumber(4)).toThrow();
 		expect(() => WorldSize.fromNumber(4)).toThrow();
 	});
 

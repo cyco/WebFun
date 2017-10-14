@@ -1,10 +1,10 @@
-import { Planet } from "../types";
+import { Planet, WorldSize } from "../types";
 import World from "./world";
 import { Point } from "../../util";
 
 class SaveState {
 	seed: number;
-	planet: number;
+	planet: Planet;
 	puzzleIDs1: Int16Array;
 	puzzleIDs2: Int16Array;
 	goalPuzzle: number;
@@ -31,7 +31,7 @@ class SaveState {
 
 	difficulty: number;
 	timeElapsed: number;
-	worldSize: number; // TODO: convert to world size
+	worldSize: WorldSize;
 
 	unknownCount: number;
 	unknownSum: number;

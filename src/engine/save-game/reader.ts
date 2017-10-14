@@ -61,7 +61,7 @@ class Reader {
 
 		state.difficulty = stream.getUint32();
 		state.timeElapsed = stream.getUint32();
-		state.worldSize = stream.getInt16();
+		state.worldSize = WorldSize.fromNumber(stream.getInt16());
 		state.unknownCount = stream.getInt16();
 		state.unknownSum = stream.getInt16();
 		state.unknownThing = stream.getInt16();
@@ -115,7 +115,7 @@ class Reader {
 			stream.getUint32(); // field_83C
 			stream.getUint32(); // field_840
 			zone.padding = stream.getUint16();
-			zone._planet = stream.getUint16();
+			zone._planet = Planet.fromNumber(stream.getUint16());
 
 			zone._tileIDs = stream.getInt16Array(zone.size.area * Zone.LAYERS);
 		}
