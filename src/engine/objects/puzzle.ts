@@ -10,8 +10,8 @@ class Puzzle {
 	private _unknown1: any = null;
 	private _unknown2: any = null;
 	private _unknown3: any = null;
-	private item_1 = -1;
-	private item_2 = -1;
+	public readonly item_1 = -1;
+	public readonly item_2 = -1;
 	public hasPuzzleNPC: boolean = false;
 
 	get type(): number {
