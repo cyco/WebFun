@@ -12,6 +12,7 @@ import {
 	Tile,
 	Zone
 } from "./objects";
+import { Planet } from "./types";
 
 class GameData {
 	constructor(raw) {
@@ -72,7 +73,7 @@ class GameData {
 		const zone = new Zone();
 
 		zone.id = data.index;
-		zone._planet = data.planet;
+		zone._planet = Planet.fromNumber(data.planet);
 		zone._width = data.width;
 		zone._height = data.height;
 		zone._type = data.type;
