@@ -13,6 +13,7 @@ sfx_indy
 yoda.pal
 indy.pal
 .yarnclean
+yarn-error.log
 /stats.json
 .idea/
 config/.typescript
