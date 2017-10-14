@@ -10,7 +10,8 @@ import KeyEvent from "./key-event.js";
 import Message from "./message.js";
 import OutputStream from "./output-stream.js";
 import InputStream from "./input-stream.js";
-import Size from "./size.js";
+import Size from "./size";
+import SizeLike from "./size-like";
 import Rectangle from "./rectangle";
 import Point from "./point";
 import PointLike from "./point-like";
@@ -42,6 +43,7 @@ export {
 	InputStream,
 	Point,
 	Size,
+	SizeLike,
 	PointLike,
 	Rectangle,
 	BatchLoader,
