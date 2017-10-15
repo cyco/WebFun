@@ -170,7 +170,7 @@ class Reader {
 	_readHotspot(hotspot: Hotspot, stream: InputStream): void {
 		hotspot.enabled = !!stream.getUint16();
 		hotspot.arg = stream.getInt16();
-		hotspot.type = HotspotType.FromNumber(stream.getUint32());
+		hotspot.type = HotspotType.fromNumber(stream.getUint32());
 		hotspot._x = stream.getInt16();
 		hotspot._y = stream.getInt16();
 	}

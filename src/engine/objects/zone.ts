@@ -1,6 +1,6 @@
 import { PointLike, Size } from "src/util";
 import { default as Hotspot, Type as HotspotType } from "./hotspot";
-import Type, { default as ZoneType } from "./zone-type";
+import Type from "./zone-type";
 import Layer from "./zone-layer";
 import NPC from "./npc";
 import Action from "./action";
@@ -29,7 +29,7 @@ class Zone {
 	public _planet: Planet = Planet.NONE;
 	public _width: number = 0;
 	public _height: number = 0;
-	public _type: ZoneType;
+	public _type: Type;
 	public _tileIDs: Int16Array = new Int16Array(0);
 	public _hotspots: Hotspot[] = [];
 	public _tileStore: any = null;

@@ -24,7 +24,7 @@ export const CompareWorldItems = (item1, item2) => {
 	if (item1.zoneID === item2.zoneID && item1.zoneID === -1) return ComparisonResult.Equal;
 
 	if (item1.zoneID !== item2.zoneID) return ComparisonResult.Different;
-	if (item1.zoneType !== item2.zoneType) return ComparisonResult.Different;
+	if (item1.zoneType.rawValue !== item2.zoneType) return ComparisonResult.Different;
 
 	if (item1.findItemID !== item2.findItemID) return ComparisonResult.Different;
 	if (item1.requiredItemID !== item2.requiredItemID) return ComparisonResult.Different;

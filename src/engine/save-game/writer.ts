@@ -16,9 +16,9 @@ class Writer {
 	write(state: SaveState, stream: OutputStream): void {
 		stream.writeCharacters("YODASAV44");
 		stream.writeUint32(state.seed);
-		stream.writeUint32(state.planet);
+		stream.writeUint32(state.planet.rawValue);
 
-		stream.writeUint32(state.onDagobah);
+		stream.writeUint32(+state.onDagobah);
 
 		stream.writeUint16(state.puzzleIDs1.length);
 		stream.writeUint16Array(state.puzzleIDs1);
@@ -55,7 +55,7 @@ class Writer {
 		stream.writeUint32(state.difficulty);
 		stream.writeUint32(state.timeElapsed);
 
-		stream.writeInt32(state.worldSize);
+		stream.writeInt32(state.worldSize.rawValue);
 
 		stream.writeInt16(state.unknownCount);
 		stream.writeInt16(state.unknownSum);
@@ -103,12 +103,12 @@ class Writer {
 			stream.writeUint32(0); // TODO: field_83C
 			stream.writeUint32(0); // TODO: field_840
 			stream.writeUint16(zone.padding);
-			stream.writeUint16(zone.planet);
+			stream.writeUint16(zone.planet.rawValue);
 
 			stream.writeInt16Array(zone.tileIDs);
 		}
 
-		stream.writeUint32(zone.visited);
+		stream.writeUint32(+zone.visited);
 
 		stream.writeUint32(zone.hotspots.length);
 		zone.hotspots.forEach((hotspot: Hotspot) => this._writeHotspot(hotspot, stream));
@@ -118,7 +118,7 @@ class Writer {
 			zone.npcs.forEach((npc: NPC) => this._writeNPC(npc, stream));
 
 			stream.writeUint32(zone.actions.length);
-			zone.actions.forEach((action: Action) => stream.writeUint32(action.enabled));
+			zone.actions.forEach((action: Action) => stream.writeUint32(+action.enabled));
 		}
 	}
 
@@ -127,7 +127,7 @@ class Writer {
 		stream.writeInt16(npc._x);
 		stream.writeInt16(npc._y);
 		stream.writeInt16(0); // TODO: field_A
-		stream.writeUint32(npc._enabled);
+		stream.writeUint32(+npc._enabled);
 		stream.writeInt16(0); // TODO: field_10
 		stream.writeInt16(0); // TODO: y__
 		stream.writeInt16(0); // TODO: x__
@@ -154,9 +154,9 @@ class Writer {
 	}
 
 	_writeHotspot(hotspot: Hotspot, stream: OutputStream): void {
-		stream.writeUint16(hotspot.enabled);
+		stream.writeUint16(+hotspot.enabled);
 		stream.writeInt16(hotspot.arg);
-		stream.writeUint32(hotspot.type);
+		stream.writeUint32(hotspot.type.rawValue);
 		stream.writeInt16(hotspot._x);
 		stream.writeInt16(hotspot._y);
 	}
@@ -171,7 +171,7 @@ class Writer {
 				stream.writeInt32(y);
 
 				stream.writeInt16(item.zoneId);
-				stream.writeUint32(item.visited);
+				stream.writeUint32(+item.visited);
 
 				this._writeRoom(this._data.zones[item.zoneId], item.visited, stream);
 			}
@@ -182,7 +182,7 @@ class Writer {
 	}
 
 	_writeWorldItem(item: WorldItem, stream: OutputStream): void {
-		stream.writeUint32(item.visited);
+		stream.writeUint32(+item.visited);
 
 		stream.writeUint32(item.solved_1);
 		stream.writeUint32(item.solved_3);

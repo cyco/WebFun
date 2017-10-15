@@ -1,5 +1,6 @@
 import { HorizontalPointRange, Message, Point, rand, VerticalPointRange } from "src/util";
 import WorldItemType from "./world-item-type";
+import PointRange from "../../util/point-range";
 
 const Island = {
 	East: 3,
@@ -8,31 +9,36 @@ const Island = {
 	West: 0
 };
 
-export default class IslandBuilder {
-	constructor(world) {
+type Map = Uint16Array;
+type Run = {length: number, start: number};
+
+class IslandBuilder {
+	private stepX: Point;
+	private stepY: Point;
+	private typeMap: Map;
+
+	constructor(world: Uint16Array) {
 		this.typeMap = world;
 
 		this.stepX = new Point(1, 0);
 		this.stepY = new Point(0, 1);
-
-		Object.seal(this);
 	}
 
-	at(point, value) {
+	private at(point: Point, value?: number) {
 		const index = point.x + 10 * point.y;
 		if (value !== undefined)
 			this.typeMap[index] = value;
 		else return this.typeMap[index];
 	}
 
-	placeIslands(count) {
+	public placeIslands(count: number) {
 		Message("MapGenerator::PlaceTransports(%x)\n", count);
 		for (let i = 0; i < count; i++) {
 			this._placeIsland();
 		}
 	}
 
-	_placeIsland() {
+	private _placeIsland() {
 		for (let i = 0; i <= 200; i++) {
 			switch (rand() % 4) {
 				case Island.West:
@@ -51,17 +57,17 @@ export default class IslandBuilder {
 		}
 	}
 
-	_findRun(range, neighbor) {
+	private _findRun(range: PointRange, neighbor: Point): Run {
 		let start = 0,
 			length = 0,
 			currentRun = 0;
 
 		let i = 0;
 		const self = this;
-		range.iterate((point) => {
+		range.iterate((point: Point) => {
 			const currentItem = self.at(point);
 			const neighborItem = self.at(Point.add(point, neighbor));
-			if (currentItem || neighborItem && neighborItem !== WorldItemType.KeptFree) {
+			if (currentItem || neighborItem && neighborItem !== WorldItemType.KeptFree.rawValue) {
 				if (length < currentRun) {
 					length = currentRun;
 					start = i - currentRun;
@@ -82,16 +88,16 @@ export default class IslandBuilder {
 		};
 	}
 
-	_buildIsland(range) {
+	private _buildIsland(range: PointRange) {
 		const self = this;
-		range.iterate((point) => {
-			self.at(point, WorldItemType.Island);
+		range.iterate((point: Point) => {
+			self.at(point, WorldItemType.Island.rawValue);
 		});
 		const end = rand() % 2 ? range.from : range.to;
-		this.at(end, WorldItemType.TravelEnd);
+		this.at(end, WorldItemType.TravelEnd.rawValue);
 	}
 
-	_verifyShortRun(run) {
+	private _verifyShortRun(run: Run): boolean {
 		if (run.length < 3) return false;
 		else if (run.length === 3) {
 			if (0 < run.start && run.start < 7) return false;
@@ -107,7 +113,7 @@ export default class IslandBuilder {
 		return true;
 	}
 
-	_verifyLongRun(run) {
+	private _verifyLongRun(run: Run) {
 		if (run.length < 4) return false;
 		run.length = Math.min(run.length - 2, 4);
 
@@ -115,7 +121,7 @@ export default class IslandBuilder {
 		return true;
 	}
 
-	_placeIslandWest() {
+	private _placeIslandWest() {
 		let range = new VerticalPointRange(0, 9, 0);
 		const run = this._findRun(range, new Point(1, 0));
 		if (!this._verifyShortRun(run)) return false;
@@ -125,7 +131,7 @@ export default class IslandBuilder {
 		return true;
 	}
 
-	_placeIslandNorth() {
+	private _placeIslandNorth() {
 		let range = new HorizontalPointRange(0, 9, 0);
 		const run = this._findRun(range, new Point(0, 1));
 		if (!this._verifyShortRun(run)) return false;
@@ -136,7 +142,7 @@ export default class IslandBuilder {
 		return true;
 	}
 
-	_placeIslandSouth() {
+	private _placeIslandSouth() {
 		let range = new HorizontalPointRange(0, 9, 9);
 		const run = this._findRun(range, new Point(0, -1));
 		if (!this._verifyLongRun(run)) return false;
@@ -147,7 +153,7 @@ export default class IslandBuilder {
 		return 1;
 	}
 
-	_placeIslandEast() {
+	private _placeIslandEast() {
 		let range = new VerticalPointRange(0, 9, 9);
 		const run = this._findRun(range, new Point(-1, 0));
 		if (!this._verifyLongRun(run)) return false;
@@ -158,3 +164,5 @@ export default class IslandBuilder {
 		return 1;
 	}
 }
+
+export default IslandBuilder;

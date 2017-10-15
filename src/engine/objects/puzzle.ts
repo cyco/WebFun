@@ -1,4 +1,4 @@
-import Type from "./puzzle-type";
+import Type, { default as PuzzleType } from "./puzzle-type";
 
 export { Type };
 
@@ -6,7 +6,7 @@ class Puzzle {
 	private _strings: string[] = ["", "", "", "", ""];
 	public id: number = -1;
 	private _name: string = "";
-	private _type: number = -1;
+	private _type: PuzzleType = null;
 	private _unknown1: any = null;
 	private _unknown2: any = null;
 	private _unknown3: any = null;
@@ -14,7 +14,7 @@ class Puzzle {
 	public readonly item_2 = -1;
 	public hasPuzzleNPC: boolean = false;
 
-	get type(): number {
+	get type(): PuzzleType {
 		return this._type;
 	}
 

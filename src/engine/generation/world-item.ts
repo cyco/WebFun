@@ -1,6 +1,8 @@
+import ZoneType from "../objects/zone-type";
+
 class WorldItem {
 	public zoneID: number = -1;
-	public zoneType: number = 0;
+	public zoneType: ZoneType = null;
 	public puzzleIdx: number = -1;
 	public requiredItemID: number = -1;
 	public additionalRequiredItemID: number = -1;

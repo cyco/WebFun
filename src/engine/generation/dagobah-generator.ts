@@ -1,6 +1,10 @@
 import { Message, randmod } from "src/util";
 import World from "./world";
 import { HotspotType, ZoneType } from "src/engine/objects";
+import Engine from "../engine";
+import WorldGenerator from "./world-generator";
+import Hotspot from "../objects/hotspot";
+import GameData from "../game-data";
 
 const TILE_YODA = 0x30c;
 const TILE_YODAS_SEAT = 2034;
@@ -13,12 +17,14 @@ const ZONE_DAGOBAH_SOUTH_WEST = 93;
 const ZONE_DAGOBAH_SOUTH_EAST = 96;
 
 class DagobahGenerator {
-	constructor(engine) {
+	private _engine: Engine;
+	private _world: World = null;
+
+	constructor(engine: Engine) {
 		this._engine = engine;
-		this._world = null;
 	}
 
-	generate(generator) {
+	generate(generator: WorldGenerator) {
 		const data = this._engine.data;
 		const dagobah = new World();
 		dagobah.zones = data.zones;
@@ -107,7 +113,7 @@ class DagobahGenerator {
 		return (this._world = dagobah);
 	}
 
-	_setupSpawnHotspot(zoneID, npcID, data) {
+	_setupSpawnHotspot(zoneID: number, npcID: number, data: GameData) {
 		const zones = data.zones;
 		const zone = zones[zoneID];
 		const hotspots = zone.hotspots;
@@ -116,7 +122,7 @@ class DagobahGenerator {
 			const index = zone.puzzleNPCTileIDs.indexOf(npcID);
 			if (index === -1) return;
 
-			const candidates = zone.hotspots.filter((hotspot) => hotspot.type === HotspotType.SpawnLocation);
+			const candidates = zone.hotspots.filter((hotspot: Hotspot) => hotspot.type === HotspotType.SpawnLocation);
 			if (candidates.length) {
 				let hotspot = candidates[randmod(candidates.length)];
 				hotspot.arg = npcID;
@@ -130,7 +136,7 @@ class DagobahGenerator {
 			const index = zone.puzzleNPCTileIDs.indexOf(TILE_YODA);
 			if (index === -1) return;
 
-			let hotspot = hotspots.filter((hotspot) => hotspot.x === 3 && hotspot.y === 3).last();
+			let hotspot = hotspots.filter((hotspot: Hotspot) => hotspot.x === 3 && hotspot.y === 3).last();
 			if (!hotspot) return;
 
 			hotspot.arg = TILE_YODA;
@@ -143,19 +149,18 @@ class DagobahGenerator {
 			const index = zone.puzzleNPCTileIDs.indexOf(npcID);
 			if (index === -1) return;
 
-			let hotspot = hotspots.filter((hotspot) => hotspot.x === 3 && hotspot.y === 2).last();
+			let hotspot = hotspots.filter((hotspot: Hotspot) => hotspot.x === 3 && hotspot.y === 2).last();
 			if (!hotspot) return;
 
 			hotspot.arg = npcID;
 			hotspot.enabled = true;
-
-
 		}
 	}
 
 	get world() {
-		console.assert(this._world);
+		console.assert(this._world !== null);
 		return this._world;
 	}
 }
+
 export default DagobahGenerator;

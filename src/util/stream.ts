@@ -8,13 +8,14 @@ export const ENDIAN = {
 	BIG: 1
 };
 
-export default class Stream {
-	constructor() {
-		this.endianess = Stream.ENDIAN.BIG;
-		this._offset = 0;
-	}
+class Stream {
+	public static readonly SEEK = SEEK;
+	public static readonly ENDIAN = ENDIAN;
 
-	seek(offset, mode) {
+	public endianess: number = Stream.ENDIAN.BIG;
+	protected _offset: number = 0;
+
+	seek(offset: number, mode: number) {
 		switch (mode) {
 			case Stream.SEEK.SET:
 				this._offset = offset;
@@ -34,5 +35,4 @@ export default class Stream {
 	}
 }
 
-Stream.SEEK = SEEK;
-Stream.ENDIAN = ENDIAN;
+export default Stream;

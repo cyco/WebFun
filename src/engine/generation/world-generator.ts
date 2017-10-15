@@ -2,34 +2,20 @@ import { constantly, HorizontalPointRange, identity, Point, rand, srand, Vertica
 import MapGenerator from "./map-generator";
 import WorldItemType from "./world-item-type";
 import World from "./world";
-import * as Type from "src/engine/types";
 import { Planet, WorldSize } from "src/engine/types";
 import GetDistanceToCenter from "./distance-to-center";
-import { HotspotType, Puzzle, PuzzleType, Tile, Zone, ZoneType } from "src/engine/objects";
+import { Hotspot, HotspotType, Puzzle, PuzzleType, Tile, Zone, ZoneType } from "src/engine/objects";
 import { and, not } from "src/util/functional";
 import WorldGenerationError from "./world-generation-error";
 import Engine from "../engine";
 import WorldItem from "./world-item";
-import Hotspot from "../objects/hotspot";
+import * as Type from "../types";
 
 type Map = Uint16Array;
 
-type ZoneTypeType = number;
-type WorldItemTypeType = number;
-type PuzzleTypeType = number;
-
-
 declare global {
 	interface Number {
-		toZoneType(): ZoneTypeType;
-
-		isBlockadeType(): boolean;
-
-		toPuzzleType(): PuzzleTypeType;
-
 		isGoalOnPlanet(planet: Planet): boolean;
-
-		canHoldItem(): boolean;
 	}
 
 	interface Quest {
@@ -39,12 +25,9 @@ declare global {
 
 	interface Array<T> {
 		shuffle(): T[];
-
-		withType(type: HotspotTypeType): Hotspot[];
+		withType(type: HotspotType): Hotspot[];
 	}
 }
-
-type HotspotTypeType = number;
 
 class WorldGenerator {
 	private _seed: number;
@@ -59,13 +42,13 @@ class WorldGenerator {
 	private providedItems: number[];
 
 	public goalPuzzleID: number;
-	public world: any;
+	public world: World;
 	private mapGenerator: MapGenerator;
 	private additionalRequiredItemID: number;
 	private providedItemQuests: Quest[];
 	private puzzleIDs: number[];
 	private puzzleIDs1: number[];
-	private puzzleIDs2: number[];
+	public puzzleIDs2: number[];
 	private requiredItemQuests: Quest[];
 	private puzzleIndex: number;
 	private requiredItemID: number;
@@ -114,6 +97,7 @@ class WorldGenerator {
 		if (seed !== undefined) this._seed = seed;
 		srand(this._seed);
 
+
 		const mapGenerator = this.mapGenerator = new MapGenerator();
 		mapGenerator.generate(-1, this._size);
 
@@ -147,13 +131,13 @@ class WorldGenerator {
 		if (goalID === -1) {
 			return false;
 		}
-
 		this.puzzleIDs.push(goalID);
 		this.puzzleIDs1[puzzles1Count] = goalID;
 		this.puzzleIDs2[puzzles2Count] = goalID;
 
 		this.DetermineTransportZones();
 		this.DetermineGoalZone(puzzleCount, puzzles2Count, <any>mapGenerator.orderMap);
+
 		this.DetermineQuestZones(puzzleCount, <any>mapGenerator.orderMap);
 		this.PlacePuzzlesZones(puzzles2Count - 1, <any>mapGenerator.orderMap);
 		this.DetermineBlockadeAndTownZones(<any>mapGenerator.typeMap);
@@ -175,12 +159,12 @@ class WorldGenerator {
 		const typeMap = this.mapGenerator.typeMap;
 		const isTravelTarget = (point: Point) => {
 			const index = point.x + point.y * 10;
-			return typeMap[index] === WorldItemType.TravelEnd && !this.worldZones[index];
+			return typeMap[index] === WorldItemType.TravelEnd.rawValue && !this.worldZones[index];
 		};
 
 		for (let y = 0; y < 10; y++) {
 			for (let x = 0; x < 10; x++) {
-				if (typeMap[x + y * 10] !== WorldItemType.TravelStart)
+				if (typeMap[x + y * 10] !== WorldItemType.TravelStart.rawValue)
 					continue;
 
 				this.resetState();
@@ -238,10 +222,10 @@ class WorldGenerator {
 		}
 	}
 
-	loopWorld(map: Map, callback: ((v: WorldItemTypeType, x: number, y: number, id: number, map: Map) => void)) {
+	loopWorld(map: Map, callback: ((v: WorldItemType, x: number, y: number, id: number, map: Map) => void)) {
 		for (let y = 0; y < 10; y++) {
 			for (let x = 0; x < 10; x++) {
-				callback(<WorldItemTypeType><any>map[x + 10 * y], x, y, x + 10 * y, map);
+				callback(WorldItemType.fromNumber(map[x + 10 * y]), x, y, x + 10 * y, map);
 			}
 		}
 	}
@@ -341,6 +325,7 @@ class WorldGenerator {
 
 			const puzzleId = this.puzzleIDs1[puzzleIdIndex];
 			const pos = this.findPositionOfPuzzle(previousPuzzleIndex - 1, puzzles);
+			this.errorWhen(pos === null, `Could not find previous puzzle location!`);
 			const distance = GetDistanceToCenter(pos.x, pos.y);
 			const worldPuzzleIndex = puzzles[pos.x + 10 * pos.y];
 			const itemID1 = this._puzzles[puzzleId].item_1;
@@ -354,6 +339,7 @@ class WorldGenerator {
 					type = type === ZoneType.Use ? ZoneType.Trade : ZoneType.Use;
 					zone = this.GetUnusedZoneRandomly(type, puzzleIdIndex - 1, -1, itemID1, -1, distance, true);
 				}
+
 				this.errorWhen(!zone, `Unable to find suitable zone for puzzle at ${pos.x}x${pos.y}`);
 
 				this.puzzleIndex = worldPuzzleIndex - 1;
@@ -375,7 +361,7 @@ class WorldGenerator {
 		}
 	}
 
-	GetUnusedPuzzleRandomly(itemID: number, zoneType: ZoneTypeType) {
+	GetUnusedPuzzleRandomly(itemID: number, zoneType: ZoneType) {
 		let puzzles = this.GetPuzzleCandidates(zoneType).shuffle();
 		const puzzleType = zoneType.toPuzzleType();
 		const typeIsCompatible = (puzzle: Puzzle) => puzzle.type === puzzleType;
@@ -387,14 +373,13 @@ class WorldGenerator {
 		return puzzles.find(and(typeIsCompatible, not(hasPuzzleBeenPlaced), hasRequiredItem));
 	}
 
-	GetUnusedZoneRandomly(zoneType: ZoneTypeType, puzzleIndex: number, puzzleIndex2: number, providedItem: number, providedItem2: number, distance: number, a8: boolean): Zone {
+	GetUnusedZoneRandomly(zoneType: ZoneType, puzzleIndex: number, puzzleIndex2: number, providedItem: number, providedItem2: number, distance: number, a8: boolean): Zone {
 		let zoneMatchesType = (zone: Zone) => zone.type === zoneType;
 		if (zoneType === ZoneType.Find || zoneType === ZoneType.FindTheForce)
 			zoneMatchesType = zone => zone.type === ZoneType.Find || zone.type === ZoneType.FindTheForce;
 		let zoneMatchesPlanet = (zone: Zone) => zone.planet === this._planet;
 		let zoneIsUnused = (zone: Zone) => !this.puzzleZoneIDs.contains(zone.id) || (zoneType === ZoneType.Goal && this.puzzles_can_be_reused > 0);
 		const usableZones = this._zones.filter(and(zoneMatchesPlanet, zoneMatchesType)).shuffle();
-
 		return usableZones.filter(zoneIsUnused).find((zone: Zone) => this.GetUnusedZone(zone, puzzleIndex, puzzleIndex2, providedItem, providedItem2, distance, a8));
 	}
 
@@ -465,11 +450,11 @@ class WorldGenerator {
 				const npcID = this.findUnusedNPCForZoneRandomly(zone.id);
 				const hasPuzzleNPC = npcID !== -1 ? this.zoneLeadsToNPC(zone.id, npcID) : 0;
 
-				let hasItem = true;
+				let hasItem = 1;
 				// TODO: this used to be &= which might evaluate the second expression in any case
-				hasItem = hasItem && this.ZoneLeadsToRequiredItem(zone.id, puzzle1.item_1);
+				hasItem = +hasItem & +this.ZoneLeadsToRequiredItem(zone.id, puzzle1.item_1);
 				// this.ZoneLeadsToRequiredItem(zone.id, puzzle2.item_1, 1);
-				hasItem = hasItem && this.ZoneLeadsToProvidedItem(zone.id, puzzle3.item_1);
+				hasItem = +hasItem & +this.ZoneLeadsToProvidedItem(zone.id, puzzle3.item_1);
 				this.ZoneLeadsToProvidedItem(zone.id, puzzle3.item_2);
 
 				if (!hasItem) {
@@ -486,13 +471,13 @@ class WorldGenerator {
 					this.additionalRequiredItemID = puzzleIndex2;
 					this.addRequiredItemQuestsFromHotspots(zone.id);
 				} else {
-					let didAddItem = true;
+					let didAddItem = 1;
 					// TODO: this used to be &= which might evaluate the second expression in any case
-					didAddItem = didAddItem && this.ChooseItemIDFromZone(zone.id, puzzle1.item_1, false);
-					didAddItem = didAddItem && this.DropItemAtTriggerHotspotRandomly(zone.id, puzzle3.item_1);
+					didAddItem = didAddItem & +this.ChooseItemIDFromZone(zone.id, puzzle1.item_1, false);
+					didAddItem = didAddItem & +this.DropItemAtTriggerHotspotRandomly(zone.id, puzzle3.item_1);
 
-					didAddItem = didAddItem && this.ChooseItemIDFromZone(zone.id, puzzle2.item_1, true);
-					didAddItem = didAddItem && this.DropItemAtTriggerHotspotRandomly(zone.id, puzzle3.item_2);
+					didAddItem = didAddItem & +this.ChooseItemIDFromZone(zone.id, puzzle2.item_1, true);
+					didAddItem = didAddItem & +this.DropItemAtTriggerHotspotRandomly(zone.id, puzzle3.item_2);
 
 					if (!didAddItem)
 						return false;
@@ -627,7 +612,7 @@ class WorldGenerator {
 			this.errorWhen(!zone, "No zone for puzzle found");
 			this.placeZone(point.x, point.y, zone.id, ZoneType.Find, {findItemID: this.findItemID});
 			const idx = point.x + 10 * point.y;
-			world[idx] = WorldItemType.Puzzle;
+			world[idx] = WorldItemType.Puzzle.rawValue;
 		}
 	}
 
@@ -641,7 +626,7 @@ class WorldGenerator {
 
 		for (let y = 0; y < 10; y++) {
 			for (let x = 0; x < 10; x++) {
-				const worldItemType = world[x + 10 * y];
+				const worldItemType = WorldItemType.fromNumber(world[x + 10 * y]);
 				if (worldItemType !== WorldItemType.Empty && worldItemType !== WorldItemType.Candidate && worldItemType !== WorldItemType.Island)
 					continue;
 
@@ -821,10 +806,10 @@ class WorldGenerator {
 					farPoints.push(point);
 				}
 			} else if (item === WorldItemType.Empty || item === WorldItemType.Candidate) {
-				if ((x < 1 || world[idx - 1] !== WorldItemType.Puzzle)
-					&& (x > 8 || world[idx + 1] !== WorldItemType.Puzzle)
-					&& (y < 1 || world[idx - 10] !== WorldItemType.Puzzle)
-					&& (y > 8 || world[idx + 10] !== WorldItemType.Puzzle))
+				if ((x < 1 || world[idx - 1] !== WorldItemType.Puzzle.rawValue)
+					&& (x > 8 || world[idx + 1] !== WorldItemType.Puzzle.rawValue)
+					&& (y < 1 || world[idx - 10] !== WorldItemType.Puzzle.rawValue)
+					&& (y > 8 || world[idx + 10] !== WorldItemType.Puzzle.rawValue))
 					bestPoints.push(point);
 				else
 					pointsCloseToPuzzles.push(point);
@@ -838,7 +823,7 @@ class WorldGenerator {
 		return null;
 	}
 
-	GetPuzzleCandidates(zoneType: ZoneTypeType): Puzzle[] {
+	GetPuzzleCandidates(zoneType: ZoneType): Puzzle[] {
 		return this._puzzles.filter(puzzle => {
 			switch (zoneType) {
 				case ZoneType.Find:
@@ -913,7 +898,7 @@ class WorldGenerator {
 		}, false, identity);
 	}
 
-	placeZone(x: number, y: number, id: number, type: ZoneTypeType, options: Partial<WorldItem> = {}) {
+	placeZone(x: number, y: number, id: number, type: ZoneType, options: Partial<WorldItem> = {}) {
 		const idx = x + 10 * y;
 		this.worldZones[idx] = this._zones[id] || null;
 		this.world.index(idx).zoneID = id;

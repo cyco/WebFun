@@ -11,7 +11,6 @@ const IslandOrientation = {
 	Down: 4
 };
 
-type WorldItemTypeType = number;
 type IslandOrientationType = number;
 type Map = Uint16Array;
 
@@ -33,7 +32,7 @@ let variance: number;
 let probablility: number;
 let threshold: number;
 let travel_threshold: number;
-let last_item: WorldItemTypeType;
+let last_item: WorldItemType;
 let remaining_count_to_place: number;
 let typeMap: Map;
 let placedPuzzles: number;
@@ -45,7 +44,7 @@ let orderMap: Map;
 let config;
 
 
-function blockadeTypeFor(xdiff: number, ydiff: number): WorldItemTypeType {
+function blockadeTypeFor(xdiff: number, ydiff: number): WorldItemType {
 	if (xdiff === 0 && ydiff === 1) {
 		return WorldItemType.BlockNorth;
 	}
@@ -62,7 +61,7 @@ function blockadeTypeFor(xdiff: number, ydiff: number): WorldItemTypeType {
 	return null;
 }
 
-function blockadeTypeForCheck(xdiff: number, ydiff: number): WorldItemTypeType {
+function blockadeTypeForCheck(xdiff: number, ydiff: number): WorldItemType {
 	return blockadeTypeFor(xdiff, ydiff);
 }
 
@@ -75,10 +74,10 @@ function _determineCounts(): void {
 }
 
 function getIslandOrientation(x: number, y: number, typeMap: Map): IslandOrientationType {
-	if (typeMap.get(x - 1, y) === WorldItemType.Island) return IslandOrientation.Left;
-	if (typeMap.get(x + 1, y) === WorldItemType.Island) return IslandOrientation.Right;
-	if (typeMap.get(x, y - 1) === WorldItemType.Island) return IslandOrientation.Up;
-	if (typeMap.get(x, y + 1) === WorldItemType.Island) return IslandOrientation.Down;
+	if (typeMap.get(x - 1, y) === WorldItemType.Island.rawValue) return IslandOrientation.Left;
+	if (typeMap.get(x + 1, y) === WorldItemType.Island.rawValue) return IslandOrientation.Right;
+	if (typeMap.get(x, y - 1) === WorldItemType.Island.rawValue) return IslandOrientation.Up;
+	if (typeMap.get(x, y + 1) === WorldItemType.Island.rawValue) return IslandOrientation.Down;
 
 	return 0;
 }
@@ -95,13 +94,13 @@ function determineRanges(size: WorldSize): Range[] {
 }
 
 function place_blockade(x: number, y: number, xdif: number, ydif: number): void {
-	typeMap.set(x, y, blockadeTypeFor(xdif, ydif));
+	typeMap.set(x, y, blockadeTypeFor(xdif, ydif).rawValue);
 
-	typeMap.set(x - ydif, y - xdif, WorldItemType.KeptFree);
-	typeMap.set(x + ydif, y + xdif, WorldItemType.KeptFree);
-	typeMap.set(x - xdif, y - ydif, WorldItemType.Candidate);
-	typeMap.set(x - ydif - xdif, y - ydif - xdif, WorldItemType.KeptFree);
-	typeMap.set(x + ydif - xdif, y - ydif + xdif, WorldItemType.KeptFree);
+	typeMap.set(x - ydif, y - xdif, WorldItemType.KeptFree.rawValue);
+	typeMap.set(x + ydif, y + xdif, WorldItemType.KeptFree.rawValue);
+	typeMap.set(x - xdif, y - ydif, WorldItemType.Candidate.rawValue);
+	typeMap.set(x - ydif - xdif, y - ydif - xdif, WorldItemType.KeptFree.rawValue);
+	typeMap.set(x + ydif - xdif, y - ydif + xdif, WorldItemType.KeptFree.rawValue);
 
 	--remaining_count_to_place;
 	placedPuzzles += 2;
@@ -109,20 +108,20 @@ function place_blockade(x: number, y: number, xdif: number, ydif: number): void 
 }
 
 function extend_blockade(x: number, y: number, xdif: number, ydif: number): void {
-	typeMap.set(x, y, WorldItemType.Candidate);
-	typeMap.set(x - ydif, y - xdif, WorldItemType.KeptFree);
-	typeMap.set(x + ydif, y + xdif, WorldItemType.KeptFree);
+	typeMap.set(x, y, WorldItemType.Candidate.rawValue);
+	typeMap.set(x - ydif, y - xdif, WorldItemType.KeptFree.rawValue);
+	typeMap.set(x + ydif, y + xdif, WorldItemType.KeptFree.rawValue);
 
 	++placedPuzzles;
 	--remaining_count_to_place;
 }
 
-function is_free(type: WorldItemTypeType): boolean {
+function is_free(type: WorldItemType): boolean {
 	return type === WorldItemType.None || type === WorldItemType.KeptFree;
 }
 
-function is_less_than_candidate(type: WorldItemTypeType): boolean {
-	return type < WorldItemType.Candidate;
+function is_less_than_candidate(type: number): boolean {
+	return type < WorldItemType.Candidate.rawValue;
 }
 
 function neighbors(map: Map, x: number, y: number) {
@@ -134,7 +133,7 @@ function neighbors(map: Map, x: number, y: number) {
 	];
 }
 
-function is_blockade(type: WorldItemTypeType): boolean {
+function is_blockade(type: WorldItemType): boolean {
 	return type === WorldItemType.BlockWest ||
 		type === WorldItemType.BlockEast ||
 		type === WorldItemType.BlockNorth ||
@@ -144,13 +143,13 @@ function is_blockade(type: WorldItemTypeType): boolean {
 function handle_neighbor(x: number, y: number, iteration: number, xdif: number, ydif: number): boolean {
 	let item_idx = x + 10 * y;
 
-	let neighbor = typeMap.get(x + xdif, y + ydif);
-	let neighborOtherAxisBefore = typeMap.get(x + ydif, y + xdif);
-	let neighborOtherAxisAfter = typeMap.get(x - ydif, y - xdif);
+	let neighbor = WorldItemType.fromNumber(typeMap.get(x + xdif, y + ydif));
+	let neighborOtherAxisBefore = WorldItemType.fromNumber(typeMap.get(x + ydif, y + xdif));
+	let neighborOtherAxisAfter = WorldItemType.fromNumber(typeMap.get(x - ydif, y - xdif));
 
 	if (is_free(neighbor)) return false; // maybe negate is_free
 
-	last_item = typeMap.get(x + xdif, y + ydif);
+	last_item = WorldItemType.fromNumber(typeMap.get(x + xdif, y + ydif));
 
 	const BlockadeType = blockadeTypeForCheck(xdif, ydif);
 	const canPlaceBlockade = is_free(neighborOtherAxisBefore) && is_free(neighborOtherAxisAfter);
@@ -176,7 +175,7 @@ function handle_neighbor(x: number, y: number, iteration: number, xdif: number, 
 	if (!should_place_blockade ||
 		(ydif && !canPlaceBlockade) ||
 		(xdif && is_within_blockade_range)) {
-		typeMap[item_idx] = WorldItemType.Empty;
+		typeMap[item_idx] = WorldItemType.Empty.rawValue;
 		++placedPuzzles;
 		--remaining_count_to_place;
 		return true;
@@ -202,12 +201,12 @@ function constructor() {
 
 function _initializeTypeMap(spaceportX: number, spaceportY: number) {
 	typeMap = <any>new Uint16Array(100);
-	typeMap[44] = WorldItemType.Empty;
-	typeMap[45] = WorldItemType.Empty;
-	typeMap[54] = WorldItemType.Empty;
-	typeMap[55] = WorldItemType.Empty;
+	typeMap[44] = WorldItemType.Empty.rawValue;
+	typeMap[45] = WorldItemType.Empty.rawValue;
+	typeMap[54] = WorldItemType.Empty.rawValue;
+	typeMap[55] = WorldItemType.Empty.rawValue;
 
-	typeMap[spaceportX + 10 * spaceportY] = WorldItemType.Spaceport;
+	typeMap[spaceportX + 10 * spaceportY] = WorldItemType.Spaceport.rawValue;
 }
 
 
@@ -241,7 +240,7 @@ function generate(seed: number, size: WorldSize) {
 	_determinePuzzleLocations(4, ranges[2].randomElement());
 	_determineAdditionalPuzzleLocations(ranges[3].randomElement());
 
-	const islandBuilder = new IslandBuilder(typeMap);
+	const islandBuilder = new IslandBuilder(<any>typeMap);
 	islandBuilder.placeIslands(placedTravels);
 
 	_placeIntermediateWorldThing();
@@ -271,7 +270,7 @@ function _choosePuzzlesBehindBlockades() {
 
 	for (let y = 0; y < 10; y++) {
 		for (let x = 0; x < 10; x++) {
-			switch (typeMap.get(x, y)) {
+			switch (WorldItemType.fromNumber(typeMap.get(x, y))) {
 				case WorldItemType.BlockWest:
 					smallStep = new Point(-1, 0);
 					largeStep = new Point(-2, 0);
@@ -296,16 +295,16 @@ function _choosePuzzlesBehindBlockades() {
 			let point = new Point(x, y);
 			const smallStepped = Point.add(point, smallStep);
 			const largeStepped = Point.add(point, largeStep);
-			if (typeMap.get(smallStepped.x, smallStepped.y) !== WorldItemType.Candidate)
+			if (typeMap.get(smallStepped.x, smallStepped.y) !== WorldItemType.Candidate.rawValue)
 				continue;
 
-			if (!largeStepped.isInBounds(bounds) || typeMap.get(largeStepped.x, largeStepped.y) !== WorldItemType.Candidate) {
+			if (!largeStepped.isInBounds(bounds) || typeMap.get(largeStepped.x, largeStepped.y) !== WorldItemType.Candidate.rawValue) {
 				point = smallStepped;
 			} else {
 				point = largeStepped;
 			}
 
-			typeMap.set(point.x, point.y, WorldItemType.Puzzle);
+			typeMap.set(point.x, point.y, WorldItemType.Puzzle.rawValue);
 			orderMap.set(point.x, point.y, placedPuzzles++);
 		}
 	}
@@ -324,7 +323,7 @@ function _choosePuzzlesOnIslands() {
 	const iteration = (point: Point, control: any) => {
 		const nextPoint = Point.add(point, control.step);
 		if (!nextPoint.isInBounds(bounds) ||
-			typeMap.get(nextPoint.x, nextPoint.y) !== WorldItemType.Island) {
+			typeMap.get(nextPoint.x, nextPoint.y) !== WorldItemType.Island.rawValue) {
 			control.stop = true;
 			puzzleLocation = point;
 		}
@@ -333,7 +332,7 @@ function _choosePuzzlesOnIslands() {
 
 	for (let y = 0; y < 10; y++) {
 		for (let x = 0; x < 10; x++) {
-			if (typeMap.get(x, y) !== WorldItemType.TravelEnd)
+			if (typeMap.get(x, y) !== WorldItemType.TravelEnd.rawValue)
 				continue;
 
 			switch (getIslandOrientation(x, y, typeMap)) {
@@ -358,7 +357,7 @@ function _choosePuzzlesOnIslands() {
 			puzzleLocation = range.from;
 			range.iterate(iteration, step);
 
-			typeMap.set(puzzleLocation.x, puzzleLocation.y, WorldItemType.Puzzle);
+			typeMap.set(puzzleLocation.x, puzzleLocation.y, WorldItemType.Puzzle.rawValue);
 			orderMap.set(puzzleLocation.x, puzzleLocation.y, placedPuzzles++);
 		}
 	}
@@ -395,10 +394,10 @@ function _chooseAdditionalPuzzles(total_puzzle_count: number): void {
 
 		let distance = GetDistanceToCenter(x, y);
 		if (distance >= 3 || i >= 150) {
-			let item = typeMap.get(x, y);
-			if ((item === WorldItemType.Empty || item === WorldItemType.Candidate) && (x === 0 || typeMap.get(x - 1, y) !== WorldItemType.Puzzle) && (x === 9 || typeMap.get(x + 1, y) !== WorldItemType.Puzzle) && (y === 0 || typeMap.get(x, y - 1) !== WorldItemType.Puzzle) && (y === 9 || typeMap.get(x, y + 1) !== WorldItemType.Puzzle)) {
+			let item = WorldItemType.fromNumber(typeMap.get(x, y));
+			if ((item === WorldItemType.Empty || item === WorldItemType.Candidate) && (x === 0 || typeMap.get(x - 1, y) !== WorldItemType.Puzzle.rawValue) && (x === 9 || typeMap.get(x + 1, y) !== WorldItemType.Puzzle.rawValue) && (y === 0 || typeMap.get(x, y - 1) !== WorldItemType.Puzzle.rawValue) && (y === 9 || typeMap.get(x, y + 1) !== WorldItemType.Puzzle.rawValue)) {
 
-				typeMap.set(x, y, WorldItemType.Puzzle);
+				typeMap.set(x, y, WorldItemType.Puzzle.rawValue);
 				orderMap.set(x, y, placedPuzzles++);
 				// Message("did_place %d => %d\n", placedPuzzles - 1, placedPuzzles);
 			}
@@ -419,7 +418,7 @@ function _mapCountStuff(): number {
 	blockades = 0;
 	puzzles = 0;
 	for (let i = 0; i < 100; i++) {
-		switch (typeMap[i]) {
+		switch (WorldItemType.fromNumber(typeMap[i])) {
 			case WorldItemType.Empty:
 			case WorldItemType.Island:
 			case WorldItemType.Candidate:
@@ -484,15 +483,15 @@ function _placeIntermediateWorldThing(): number {
 	return placedPuzzles;
 }
 
-function _tryPlacingTravel(item_idx: number, iteration: number, last_item: WorldItemTypeType) {
-	if (typeMap[item_idx] !== WorldItemType.Empty) return;
+function _tryPlacingTravel(item_idx: number, iteration: number, last_item: WorldItemType) {
+	if (typeMap[item_idx] !== WorldItemType.Empty.rawValue) return;
 
 	if (travels <= placedTravels) return;
 	if (((rand()) & 7) >= travel_threshold) return;
 	if (last_item === WorldItemType.TravelStart) return;
 	if (iteration <= 2) return;
 
-	typeMap[item_idx] = WorldItemType.TravelStart;
+	typeMap[item_idx] = WorldItemType.TravelStart.rawValue;
 	placedTravels++;
 }
 
@@ -578,10 +577,10 @@ function _determineAdditionalPuzzleLocations(travels_to_place: number) {
 		if (typeMap[world_idx] !== 0)
 			continue;
 
-		let item_before = typeMap.get(x - 1, y);
-		let item_after = typeMap.get(x + 1, y);
-		let item_above = typeMap.get(x, y - 1);
-		let item_below = typeMap.get(x, y + 1);
+		let item_before = WorldItemType.fromNumber(typeMap.get(x - 1, y));
+		let item_after = WorldItemType.fromNumber(typeMap.get(x + 1, y));
+		let item_above = WorldItemType.fromNumber(typeMap.get(x, y - 1));
+		let item_below = WorldItemType.fromNumber(typeMap.get(x, y + 1));
 
 		let y_diff = 0,
 			x_diff = 0;
@@ -601,7 +600,7 @@ function _determineAdditionalPuzzleLocations(travels_to_place: number) {
 
 		if (x_diff === 0 && y_diff === 0) continue;
 
-		let item_neighbor = typeMap.get(x - x_diff, y - y_diff);
+		let item_neighbor = WorldItemType.fromNumber(typeMap.get(x - x_diff, y - y_diff));
 		if (item_neighbor === WorldItemType.None)
 			continue;
 		if (item_neighbor === WorldItemType.Invalid)
@@ -611,17 +610,17 @@ function _determineAdditionalPuzzleLocations(travels_to_place: number) {
 			case WorldItemType.Empty:
 			case WorldItemType.TravelStart:
 			case WorldItemType.Spaceport:
-				typeMap[world_idx] = WorldItemType.Empty;
+				typeMap[world_idx] = WorldItemType.Empty.rawValue;
 				break;
 			case WorldItemType.Candidate:
-				typeMap[world_idx] = WorldItemType.Candidate;
+				typeMap[world_idx] = WorldItemType.Candidate.rawValue;
 
 				if (!x_diff) {
-					if (x > 0) typeMap[world_idx - 1] = WorldItemType.KeptFree;
-					if (x < 9) typeMap[world_idx + 1] = WorldItemType.KeptFree;
+					if (x > 0) typeMap[world_idx - 1] = WorldItemType.KeptFree.rawValue;
+					if (x < 9) typeMap[world_idx + 1] = WorldItemType.KeptFree.rawValue;
 				} else if (!y_diff) {
-					if (y > 0) typeMap[world_idx - 10] = WorldItemType.KeptFree;
-					if (y < 9) typeMap[world_idx + 10] = WorldItemType.KeptFree;
+					if (y > 0) typeMap[world_idx - 10] = WorldItemType.KeptFree.rawValue;
+					if (y < 9) typeMap[world_idx + 10] = WorldItemType.KeptFree.rawValue;
 				}
 
 				continue;
@@ -630,40 +629,40 @@ function _determineAdditionalPuzzleLocations(travels_to_place: number) {
 				if (WorldItemType.None < item_below && item_below <= WorldItemType.BlockNorth) continue;
 				if (WorldItemType.None < item_above && item_above <= WorldItemType.BlockNorth) continue;
 
-				typeMap[world_idx] = WorldItemType.Candidate;
+				typeMap[world_idx] = WorldItemType.Candidate.rawValue;
 
-				if (y > 0) typeMap[world_idx - 10] = WorldItemType.KeptFree;
-				if (y < 9) typeMap[world_idx + 10] = WorldItemType.KeptFree;
+				if (y > 0) typeMap[world_idx - 10] = WorldItemType.KeptFree.rawValue;
+				if (y < 9) typeMap[world_idx + 10] = WorldItemType.KeptFree.rawValue;
 				break;
 			case WorldItemType.BlockWest:
 				if (x_diff !== -1) continue;
 				if (WorldItemType.None < item_above && item_above <= WorldItemType.BlockNorth) continue;
 				if (WorldItemType.None < item_below && item_below <= WorldItemType.BlockNorth) continue;
 
-				typeMap[world_idx] = WorldItemType.Candidate;
+				typeMap[world_idx] = WorldItemType.Candidate.rawValue;
 
-				if (y > 0) typeMap[world_idx - 10] = WorldItemType.KeptFree;
-				if (y < 9) typeMap[world_idx + 10] = WorldItemType.KeptFree;
+				if (y > 0) typeMap[world_idx - 10] = WorldItemType.KeptFree.rawValue;
+				if (y < 9) typeMap[world_idx + 10] = WorldItemType.KeptFree.rawValue;
 				break;
 			case WorldItemType.BlockNorth:
 				if (y_diff !== -1) continue;
 				if (WorldItemType.None < item_before && item_before <= WorldItemType.BlockNorth) continue;
 				if (WorldItemType.None < item_after && item_after <= WorldItemType.BlockNorth) continue;
 
-				typeMap[world_idx] = WorldItemType.Candidate;
+				typeMap[world_idx] = WorldItemType.Candidate.rawValue;
 
-				if (x > 0) typeMap[world_idx - 1] = WorldItemType.KeptFree;
-				if (x < 9) typeMap[world_idx + 1] = WorldItemType.KeptFree;
+				if (x > 0) typeMap[world_idx - 1] = WorldItemType.KeptFree.rawValue;
+				if (x < 9) typeMap[world_idx + 1] = WorldItemType.KeptFree.rawValue;
 				break;
 			case WorldItemType.BlockSouth:
 				if (y_diff !== 1) continue;
 				if (WorldItemType.None < item_before && item_before <= WorldItemType.BlockNorth) continue;
 				if (WorldItemType.None < item_after && item_after <= WorldItemType.BlockNorth) continue;
 
-				typeMap[world_idx] = WorldItemType.Candidate;
+				typeMap[world_idx] = WorldItemType.Candidate.rawValue;
 
-				if (x > 0) typeMap[world_idx - 1] = WorldItemType.KeptFree;
-				if (x < 9) typeMap[world_idx + 1] = WorldItemType.KeptFree;
+				if (x > 0) typeMap[world_idx - 1] = WorldItemType.KeptFree.rawValue;
+				if (x < 9) typeMap[world_idx + 1] = WorldItemType.KeptFree.rawValue;
 				break;
 			default:
 				continue;

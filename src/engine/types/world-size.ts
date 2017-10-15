@@ -14,7 +14,7 @@ class WorldSize {
 			throw `Value ${number} does not specify a valid world size!`;
 		}
 
-		return WorldSize.knownSizes[number-1];
+		return WorldSize.knownSizes[number - 1];
 	}
 
 	get rawValue() {

@@ -13,7 +13,7 @@ const compareItem = (actual, expected) => {
 	if (result !== ComparisonResult.Different) return;
 
 	if (actual.zoneID !== expected.zoneID) throw `Difference in zone ids detected! ${actual.zoneID} !== ${expected.zoneID}`;
-	if (actual.zoneType !== expected.zoneType) throw `Difference in zone types detected! ${actual.zoneType} !== ${expected.zoneType}`;
+	if (actual.zoneType.rawValue !== expected.zoneType) throw `Difference in zone types detected! ${actual.zoneType.rawValue} !== ${expected.zoneType}`;
 	throw `Difference detected`;
 };
 
@@ -68,12 +68,13 @@ const runnerFilter = (map) => {
 
 	return true;
 };
-const identity = (i) => i;
+const identity = (i, idx) => idx === 0;
 
 describe("World Generation", () => {
 	beforeAll((done) => {
 		loadGameData(data => {
 			rawData = data;
+			console.log("did load game data");
 			done();
 		});
 	});
