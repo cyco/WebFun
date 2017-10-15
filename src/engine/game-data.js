@@ -10,8 +10,10 @@ import {
 	Puzzle,
 	PuzzleType,
 	Tile,
-	Zone
+	Zone,
+	ZoneType
 } from "./objects";
+
 import { Planet } from "./types";
 
 class GameData {
@@ -54,7 +56,7 @@ class GameData {
 		const puzzle = new Puzzle();
 
 		puzzle.id = index;
-		puzzle._type = data.type;
+		puzzle._type = PuzzleType.fromNumber(data.type);
 		puzzle._unknown1 = data.unknown1;
 		puzzle._unknown2 = data.unknown2;
 		puzzle._unknown3 = data.unknown3;
@@ -101,7 +103,7 @@ class GameData {
 
 		hotspot.enabled = !!data.enabled;
 		hotspot.arg = data.argument;
-		hotspot.type = data.type;
+		hotspot.type = HotspotType.fromNumber(data.type);
 
 		switch (hotspot.type) {
 			case HotspotType.TriggerLocation:

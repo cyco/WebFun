@@ -77,7 +77,7 @@ class World {
 		return zone.leadsTo(needleZone, this.zones);
 	}
 
-	at(x: number, y?: number): WorldItem {
+	public at(x: number, y?: number): WorldItem {
 		return this._items[this._pointToIndex(x, y)];
 	}
 

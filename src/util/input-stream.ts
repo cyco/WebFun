@@ -1,7 +1,10 @@
 import Stream from "./stream";
 
-export default class InputStream extends Stream {
-	constructor(data) {
+class InputStream extends Stream {
+	private _arrayBuffer: ArrayBuffer;
+	private _dataView: DataView;
+
+	constructor(data: ArrayBuffer|string) {
 		super();
 
 		this.endianess = Stream.ENDIAN.LITTLE;
@@ -9,7 +12,7 @@ export default class InputStream extends Stream {
 		this._dataView = new DataView(this._arrayBuffer);
 	}
 
-	_makeArrayBuffer(data) {
+	_makeArrayBuffer(data: ArrayBuffer|string) {
 		if (data instanceof ArrayBuffer)
 			return data;
 
@@ -26,47 +29,47 @@ export default class InputStream extends Stream {
 		throw new TypeError();
 	}
 
-	getCharacter() {
+	getCharacter(): string {
 		return String.fromCharCode(this.getUint8());
 	}
 
-	getUint8() {
+	getUint8(): number {
 		const result = this._dataView.getUint8(this._offset);
 		this._offset += Uint8Array.BYTES_PER_ELEMENT;
 		return result;
 	}
 
-	getUint16() {
+	getUint16(): number {
 		const result = this._dataView.getUint16(this._offset, this.littleEndian);
 		this._offset += Uint16Array.BYTES_PER_ELEMENT;
 		return result;
 	}
 
-	getUint32() {
+	getUint32(): number {
 		const result = this._dataView.getUint32(this._offset, this.littleEndian);
 		this._offset += Uint32Array.BYTES_PER_ELEMENT;
 		return result;
 	}
 
-	getInt8() {
+	getInt8(): number {
 		const result = this._dataView.getInt8(this._offset);
 		this._offset += Uint8Array.BYTES_PER_ELEMENT;
 		return result;
 	}
 
-	getInt16() {
+	getInt16(): number {
 		const result = this._dataView.getInt16(this._offset, this.littleEndian);
 		this._offset += Uint16Array.BYTES_PER_ELEMENT;
 		return result;
 	}
 
-	getInt32() {
+	getInt32(): number {
 		const result = this._dataView.getInt32(this._offset, this.littleEndian);
 		this._offset += Uint32Array.BYTES_PER_ELEMENT;
 		return result;
 	}
 
-	getCharacters(length) {
+	getCharacters(length: number): string {
 		if (length === 0) return "";
 
 		const characterCodes = new Uint8Array(this._arrayBuffer, this._offset, length);
@@ -74,7 +77,7 @@ export default class InputStream extends Stream {
 		return String.fromCharCode.apply(null, characterCodes);
 	}
 
-	getNullTerminatedString(maxLength) {
+	getNullTerminatedString(maxLength: number): string {
 		const uint8Array = new Uint8Array(this._arrayBuffer, this._offset, maxLength);
 
 		let length = -1;
@@ -83,18 +86,18 @@ export default class InputStream extends Stream {
 		return this.getCharacters(length);
 	}
 
-	getLengthPrefixedString() {
+	getLengthPrefixedString(): string {
 		const length = this.getUint16();
 		return this.getCharacters(length);
 	}
 
-	getUint8Array(length) {
+	getUint8Array(length: number): Uint8Array {
 		const result = new Uint8Array(this._arrayBuffer, this._offset, length);
 		this._offset += length;
 		return result;
 	}
 
-	getUint16Array(length) {
+	getUint16Array(length: number): Uint16Array {
 		let result;
 
 		if (this._offset % 2 !== 0) {
@@ -108,7 +111,7 @@ export default class InputStream extends Stream {
 		return result;
 	}
 
-	getInt16Array(length) {
+	getInt16Array(length: number): Int16Array {
 		let result;
 
 		if (this._offset % 2 !== 0) {
@@ -122,7 +125,7 @@ export default class InputStream extends Stream {
 		return result;
 	}
 
-	getUint32Array(length) {
+	getUint32Array(length: number): Uint32Array {
 		let result;
 
 		if (this._offset % 4 !== 0) {
@@ -139,6 +142,6 @@ export default class InputStream extends Stream {
 	get length() {
 		return this._arrayBuffer.byteLength;
 	}
-
-	// // // // // // // // // // // // // // // // // //
 }
+
+export default InputStream;

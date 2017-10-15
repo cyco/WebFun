@@ -6,9 +6,8 @@ let messagesEnabled = false;
 export const Enable = () => messagesEnabled = true;
 export const Disable = () => messagesEnabled = false;
 
-export default (...argss) => {
+export default (...args) => {
 	if (!messagesEnabled) return;
-	let args = argss; // Array.prototype.slice.call(argss);
 
 	let formatString = args[0];
 	let lastArgumentPosition;

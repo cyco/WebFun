@@ -1,7 +1,10 @@
 import Stream from "./stream";
 
-export default class OutputStream extends Stream {
-	constructor(size) {
+class OutputStream extends Stream {
+	private _arrayBuffer: ArrayBuffer;
+	private _dataView: DataView;
+
+	constructor(size: number) {
 		super();
 
 		this.endianess = Stream.ENDIAN.LITTLE;
@@ -9,81 +12,77 @@ export default class OutputStream extends Stream {
 		this._dataView = new DataView(this._arrayBuffer);
 	}
 
-	writeUint8(value) {
-		this._dataView.setUint8(this._offset, value, this.endianess === Stream.ENDIAN.LITTLE);
+	writeUint8(value: number): void {
+		this._dataView.setUint8(this._offset, value);
 		this._offset += Uint8Array.BYTES_PER_ELEMENT;
 	}
 
-	writeUint16(value) {
+	writeUint16(value: number): void {
 		this._dataView.setUint16(this._offset, value, this.endianess === Stream.ENDIAN.LITTLE);
 		this._offset += Uint16Array.BYTES_PER_ELEMENT;
 	}
 
-	writeUint32(value) {
+	writeUint32(value: number): void {
 		this._dataView.setUint32(this._offset, value, this.endianess === Stream.ENDIAN.LITTLE);
 		this._offset += Uint32Array.BYTES_PER_ELEMENT;
 	}
 
-	writeInt8(value) {
-		this._dataView.setInt8(this._offset, value, this.endianess === Stream.ENDIAN.LITTLE);
+	writeInt8(value: number): void {
+		this._dataView.setInt8(this._offset, value);
 		this._offset += Uint8Array.BYTES_PER_ELEMENT;
 	}
 
-	writeInt16(value) {
+	writeInt16(value: number): void {
 		this._dataView.setInt16(this._offset, value, this.endianess === Stream.ENDIAN.LITTLE);
 		this._offset += Uint16Array.BYTES_PER_ELEMENT;
 	}
 
-	writeInt32(value) {
+	writeInt32(value: number): void {
 		this._dataView.setInt32(this._offset, value, this.endianess === Stream.ENDIAN.LITTLE);
 		this._offset += Uint32Array.BYTES_PER_ELEMENT;
 	}
 
-	writeCharacters(string) {
-		if (string === undefined) debugger;
+	writeCharacters(string: string): void {
 		for (let i = 0, len = string.length; i < len; i++) {
 			this.writeUint8(string.charCodeAt(i));
 		}
 	}
 
-	writeNullTerminatedString(string) {
-		if (string === undefined) debugger;
+	writeNullTerminatedString(string: string): void {
 		this.writeCharacters(string);
 		this.writeUint8(0);
 	}
 
-	writeLengthPrefixedString(string) {
-		if (string === undefined) debugger;
+	writeLengthPrefixedString(string: string): void {
 		this.writeUint16(string.length);
 		this.writeCharacters(string);
 	}
 
-	writeLengthPrefixedNullTerminatedString(string) {
-		if (string === undefined) debugger;
+	writeLengthPrefixedNullTerminatedString(string: string): void {
 		this.writeUint16(string.length + 1);
 		this.writeCharacters(string);
 		this.writeUint8(0);
 	}
 
-	writeUint8Array(array) {
+	writeUint8Array(array: number[]|Int8Array): void {
 		for (let i = 0, len = array.length; i < len; i++) {
 			this.writeUint8(array[i]);
 		}
 	}
 
-	writeUint16Array(array) {
+	writeUint16Array(array: number[]|Uint16Array|Int16Array): void {
 		for (let i = 0, len = array.length; i < len; i++) {
 			this.writeUint16(array[i]);
 		}
 	}
 
-	writeInt16Array(array) {
+	writeInt16Array(array: number[]|Int16Array): void {
 		for (let i = 0, len = array.length; i < len; i++) {
 			this.writeInt16(array[i]);
 		}
 	}
 
-	writeUint32Array(array) {
+	writeUint32Array(array: number[]|Uint32Array): void {
 		for (let i = 0, len = array.length; i < len; i++) {
 			this.writeUint32(array[i]);
 		}
@@ -93,3 +92,5 @@ export default class OutputStream extends Stream {
 		return this._arrayBuffer.slice(0, this._offset);
 	}
 }
+
+export default OutputStream;
