@@ -1,5 +1,5 @@
 import PointLike from "./point-like";
-import SizeLinke from './size-like';
+import SizeLinke from "./size-like";
 
 class Point implements PointLike {
 	public x: number;
@@ -23,6 +23,10 @@ class Point implements PointLike {
 		this.x = x;
 		this.y = y;
 		this.z = z;
+	}
+
+	public clone(): Point {
+		return new Point(this.x, this.y, this.z);
 	}
 
 	add(x: number|PointLike, y: number = null): this {

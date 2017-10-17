@@ -1,15 +1,20 @@
 import { HotspotType, ZoneLayer } from "src/engine/objects";
+import Engine from "../engine";
+import Zone from "../objects/zone";
+import Hotspot from "../objects/hotspot";
 
 class HotspotExecutor {
-	constructor(engine) {
+	private _engine: Engine;
+
+	constructor(engine: Engine) {
 		this._engine = engine;
 	}
 
-	laydownHotspotItems(zone) {
+	laydownHotspotItems(zone: Zone):void  {
 		zone.hotspots.forEach((hotspot) => this._laydownHotspotItem(zone, hotspot));
 	}
 
-	_laydownHotspotItem(zone, hotspot) {
+	_laydownHotspotItem(zone: Zone, hotspot: Hotspot): void {
 		if (!hotspot.enabled) return;
 		if (hotspot.arg === -1) return;
 
@@ -25,23 +30,23 @@ class HotspotExecutor {
 		const type = hotspot.type;
 		if (type === HotspotType.SpawnLocation) {
 			if (hotspot.arg !== zone.puzzleNPC) console.warn("NPC ID mismatch");
-			zone.set(tile, location);
+			zone.setTile(tile, location);
 		} else if ((hotspot.type === HotspotType.TriggerLocation)
 			|| (hotspot.type === HotspotType.CrateItem)
 			|| (hotspot.type === HotspotType.CrateWeapon)
 			|| (hotspot.type === HotspotType.ForceLocation)) {
-			zone.set(tile, location);
+			zone.setTile(tile, location);
 		} else return;
 
 		// TODO: redraw location
 		hotspot.enabled = false;
 	}
 
-	pickUpHotspotItems(zone) {
+	pickUpHotspotItems(zone: Zone) {
 		zone.hotspots.forEach((hotspot) => this._pickUpHotspotItem(zone, hotspot));
 	}
 
-	_pickUpHotspotItem(zone, hotspot) {
+	_pickUpHotspotItem(zone: Zone, hotspot: Hotspot) {
 	}
 }
 
