@@ -56,8 +56,6 @@ class DagobahGenerator {
 		dagobah.at(5, 5).zoneType = world.at(5, 5).zoneType;
 		//*/
 
-		Message("mode: %d", mode);
-
 		let worldItem = null;
 		switch (mode) {
 			case 0:

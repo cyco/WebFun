@@ -14,10 +14,6 @@ import * as Type from "../types";
 type Map = Uint16Array;
 
 declare global {
-	interface Number {
-		isGoalOnPlanet(planet: Planet): boolean;
-	}
-
 	interface Quest {
 		itemID: number;
 		distance: number;
@@ -25,6 +21,7 @@ declare global {
 
 	interface Array<T> {
 		shuffle(): T[];
+
 		withType(type: HotspotType): Hotspot[];
 	}
 }
@@ -96,7 +93,6 @@ class WorldGenerator {
 	generate(seed?: number) {
 		if (seed !== undefined) this._seed = seed;
 		srand(this._seed);
-
 
 		const mapGenerator = this.mapGenerator = new MapGenerator();
 		mapGenerator.generate(-1, this._size);
@@ -834,7 +830,7 @@ class WorldGenerator {
 				case ZoneType.Goal:
 					return !this.hasPuzzleBeenPlaced(puzzle.id) && puzzle.type === zoneType.toPuzzleType();
 				case ZoneType.Unknown:
-					return puzzle.type === PuzzleType.End && (!this.PuzzleUsedInLastGame(puzzle.id, this._planet) || this.goalPuzzleID >= 0) && puzzle.id.isGoalOnPlanet(this._planet);
+					return puzzle.type === PuzzleType.End && (!this.PuzzleUsedInLastGame(puzzle.id, this._planet) || this.goalPuzzleID >= 0) && puzzle.isGoalOnPlanet(this._planet);
 				default:
 					return true;
 			}

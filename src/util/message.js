@@ -5,6 +5,7 @@ let messagesEnabled = false;
 
 export const Enable = () => messagesEnabled = true;
 export const Disable = () => messagesEnabled = false;
+export const Finalize = () => {/**/};
 
 export default (...args) => {
 	if (!messagesEnabled) return;

@@ -51,8 +51,6 @@ class Story {
 
 		this._world.layDownHotspotItems();
 		this._dagobah.layDownHotspotItems();
-
-		Message(`done 0x${this.seed.toString(0x10).padStart(4, "0")}, 0x${this.planet.rawValue.toString(0x10).padStart(4, "0")}, 0x${this.size.rawValue.toString(0x10).padStart(4, "0")}`);
 	}
 
 	_setupWorld(generator: WorldGenerator, engine: Engine): void {
@@ -60,7 +58,6 @@ class Story {
 	}
 
 	_setupDagobah(worldGenerator: WorldGenerator, engine: Engine): void {
-		Message("YodaDocument::SetupDagobah");
 		const generator = new DagobahGenerator(engine);
 		generator.generate(worldGenerator);
 		this._dagobah = generator.world;

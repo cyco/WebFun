@@ -74,7 +74,6 @@ describe("World Generation", () => {
 	beforeAll((done) => {
 		loadGameData(data => {
 			rawData = data;
-			console.log("did load game data");
 			done();
 		});
 	});
