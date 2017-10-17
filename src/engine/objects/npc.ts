@@ -18,6 +18,11 @@ class NPC {
 		this._data = unknown3;
 	}
 
+	get id(){
+		// TODO: implement
+		return -1;
+	}
+
 	get enabled() {
 		return this._enabled;
 	}
