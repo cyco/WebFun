@@ -12,6 +12,10 @@ class OutputStream extends Stream {
 		this._dataView = new DataView(this._arrayBuffer);
 	}
 
+	get buffer() {
+		return this._arrayBuffer.slice(0, this._offset);
+	}
+
 	writeUint8(value: number): void {
 		this._dataView.setUint8(this._offset, value);
 		this._offset += Uint8Array.BYTES_PER_ELEMENT;
@@ -86,10 +90,6 @@ class OutputStream extends Stream {
 		for (let i = 0, len = array.length; i < len; i++) {
 			this.writeUint32(array[i]);
 		}
-	}
-
-	get buffer() {
-		return this._arrayBuffer.slice(0, this._offset);
 	}
 }
 

@@ -5,25 +5,16 @@ import Layer from "./zone-layer";
 import NPC from "./npc";
 import Action from "./action";
 import Tile from "./tile";
-import {Planet} from '../types';
+import { Planet } from "../types";
 
 export { Type, Layer };
 
 const TILE_ADEGAN_CRYSTAL = 12;
 
 class Zone {
-	static get LAYERS() {
-		return 3;
-	}
-
-	static get Type() {
-		return Type;
-	}
-
 	public visited: boolean = false;
 	public solved: boolean = false;
 	public _npcs: NPC[] = [];
-
 	public id: number = -1;
 	public _name: string = "";
 	public _planet: Planet = Planet.NONE;
@@ -40,20 +31,80 @@ class Zone {
 	public puzzleNPCTileIDs: number[] = [];
 	public izx4Unknown: any = null;
 	public izaxUnknown: any = null;
-
 	public _actions: Action[] = [];
 	public actionsInitialized: boolean = false;
-
 	public counter: number = 0;
 	public random: number = 0;
 	public padding: number = 0;
-
 	public _debug_worldItem: any = null;
-
 	public puzzle: number = null;
 	public puzzleNPC: number = null;
 	public puzzleGain: number = null;
 	public puzzleRequired: number = null;
+
+	static get LAYERS() {
+		return 3;
+	}
+
+	static get Type() {
+		return Type;
+	}
+
+	get tileIDs() {
+		return this._tileIDs;
+	}
+
+	set tileIDs(tileIDs) {
+		this._tileIDs = tileIDs;
+	}
+
+	get LAYERS() {
+		return 3;
+	}
+
+	get name() {
+		return this._name;
+	}
+
+	get type() {
+		return this._type;
+	}
+
+	get hotspots() {
+		return this._hotspots;
+	}
+
+	get size() {
+		return new Size(this.width, this.height);
+	}
+
+	get actions() {
+		return this._actions;
+	}
+
+	get npcs() {
+		return this._npcs;
+	}
+
+	get width() {
+		return this._width;
+	}
+
+	get height() {
+		return this._height;
+	}
+
+	get doors(): Hotspot[] {
+		return this._hotspots.filter((hotspot) => hotspot.type === HotspotType.DoorIn && hotspot.arg !== -1);
+	}
+
+	get planet() {
+		return this._planet;
+	}
+
+	set planet(p) {
+		this._planet = p;
+	}
 
 	getLocatorDescription() {
 		if (this.solved) return "...solved!";
@@ -179,64 +230,8 @@ class Zone {
 		});
 	}
 
-	set tileIDs(tileIDs) {
-		this._tileIDs = tileIDs;
-	}
-
-	get tileIDs() {
-		return this._tileIDs;
-	}
-
 	isRoom() {
 		return this.width === 9;
-	}
-
-	get LAYERS() {
-		return 3;
-	}
-
-	get name() {
-		return this._name;
-	}
-
-	get type() {
-		return this._type;
-	}
-
-	get hotspots() {
-		return this._hotspots;
-	}
-
-	get size() {
-		return new Size(this.width, this.height);
-	}
-
-	get actions() {
-		return this._actions;
-	}
-
-	get npcs() {
-		return this._npcs;
-	}
-
-	get width() {
-		return this._width;
-	}
-
-	get height() {
-		return this._height;
-	}
-
-	get doors(): Hotspot[] {
-		return this._hotspots.filter((hotspot) => hotspot.type === HotspotType.DoorIn && hotspot.arg !== -1);
-	}
-
-	set planet(p) {
-		this._planet = p;
-	}
-
-	get planet() {
-		return this._planet;
 	}
 }
 

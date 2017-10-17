@@ -12,6 +12,10 @@ class InputStream extends Stream {
 		this._dataView = new DataView(this._arrayBuffer);
 	}
 
+	get length() {
+		return this._arrayBuffer.byteLength;
+	}
+
 	_makeArrayBuffer(data: ArrayBuffer|string) {
 		if (data instanceof ArrayBuffer)
 			return data;
@@ -137,10 +141,6 @@ class InputStream extends Stream {
 
 		this._offset += length * 4;
 		return result;
-	}
-
-	get length() {
-		return this._arrayBuffer.byteLength;
 	}
 }
 

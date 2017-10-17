@@ -8,6 +8,27 @@ class PuzzleType {
 	public static readonly Disabled = new PuzzleType();
 	private static knownTypes = [PuzzleType.U1, PuzzleType.U2, PuzzleType.U3, PuzzleType.End, PuzzleType.U4];
 
+	public get rawValue() {
+		if (this === PuzzleType.Disabled) return -1;
+
+		return PuzzleType.knownTypes.indexOf(this);
+	}
+
+	private get name() {
+		switch (this) {
+			case PuzzleType.U1:
+				return "U1";
+			case PuzzleType.U2:
+				return "U2";
+			case PuzzleType.U3:
+				return "U3";
+			case PuzzleType.End:
+				return "End";
+			case PuzzleType.U4:
+				return "U4";
+		}
+	}
+
 	public static isPuzzleType(number: number): boolean {
 		if (number === -1 || number === 0xFFFF) return true;
 		if (number < PuzzleType.knownTypes.length) return true;
@@ -22,24 +43,8 @@ class PuzzleType {
 		return this.knownTypes[number];
 	}
 
-	public get rawValue() {
-		if (this === PuzzleType.Disabled) return -1;
-
-		return PuzzleType.knownTypes.indexOf(this);
-	}
-
-	public toString(){
+	public toString() {
 		return `PuzzleType{${this.name}}`;
-	}
-
-	private get name(){
-		switch(this) {
-			case PuzzleType.U1: return 'U1';
-			case PuzzleType.U2: return 'U2';
-			case PuzzleType.U3: return 'U3';
-			case PuzzleType.End: return 'End';
-			case PuzzleType.U4: return 'U4';
-		}
 	}
 }
 

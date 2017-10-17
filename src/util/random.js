@@ -1,5 +1,4 @@
 import { global } from "src/std";
-import Message from "./message";
 
 // HACK: Never ever let module loading interfere with the shared state of the RNG
 global.lastRandom = 0;

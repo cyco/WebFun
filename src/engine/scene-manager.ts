@@ -3,8 +3,12 @@ import Engine from "./engine";
 import { Renderer } from "./rendering";
 
 class SceneManager {
-	private _stack: Scene[] = [];
 	public engine: Engine = null;
+	private _stack: Scene[] = [];
+
+	get currentScene() {
+		return this._stack.last();
+	}
 
 	pushScene(scene: Scene): void {
 		let currentScene = this.currentScene;
@@ -60,10 +64,6 @@ class SceneManager {
 
 	clear() {
 		while (this.popScene()) ;
-	}
-
-	get currentScene() {
-		return this._stack.last();
 	}
 }
 

@@ -19,10 +19,6 @@ class World {
 		this._items = items;
 	}
 
-	private _pointToIndex(x: number, y: number) {
-		return y * World.WIDTH + x;
-	}
-
 	getZone(x: number|PointLike, y?: number) {
 		console.assert(!!this.zones, "Data has not been set");
 
@@ -87,6 +83,10 @@ class World {
 
 	layDownHotspotItems(): void {
 		this.zones.filter(identity).forEach(zone => zone.layDownHotspotItems());
+	}
+
+	private _pointToIndex(x: number, y: number) {
+		return y * World.WIDTH + x;
 	}
 }
 

@@ -56,4 +56,5 @@ class DetonatorScene extends Scene {
 		this._detonatorFrames = [0x202, 0x431, 0x432, 0x433].map((id) => data.getTile(id));
 	}
 }
+
 export default DetonatorScene;

@@ -1,4 +1,4 @@
-import flatten from 'src/extension/array/flatten';
+import flatten from "src/extension/array/flatten";
 
 describe("Array.flatten", () => {
 	it("it extends the Array prototype", () => {

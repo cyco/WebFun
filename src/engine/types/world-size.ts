@@ -5,6 +5,10 @@ class WorldSize {
 
 	private static readonly knownSizes = [WorldSize.Small, WorldSize.Medium, WorldSize.Large];
 
+	get rawValue() {
+		return WorldSize.knownSizes.indexOf(this) + 1;
+	}
+
 	public static isWorldSize(number: number) {
 		return number >= 1 && number <= WorldSize.knownSizes.length;
 	}
@@ -15,10 +19,6 @@ class WorldSize {
 		}
 
 		return WorldSize.knownSizes[number - 1];
-	}
-
-	get rawValue() {
-		return WorldSize.knownSizes.indexOf(this) + 1;
 	}
 
 	public toString() {

@@ -14,7 +14,7 @@ class PointRange {
 		this.to = <Point>fromY;
 	}
 
-	iterate(callback: (_: Point, control: any) => void, step:any = new Point(1, 1)): void {
+	iterate(callback: (_: Point, control: any) => void, step: any = new Point(1, 1)): void {
 		const point = new Point(this.from);
 		const control = {
 			stop: false,
@@ -32,7 +32,7 @@ class PointRange {
 		}
 	}
 
-	find(callback: (_: Point) => boolean, step:any = new Point(1, 1)): Point {
+	find(callback: (_: Point) => boolean, step: any = new Point(1, 1)): Point {
 		const point = new Point(this.from);
 
 		let xcmp = step.x >= 0 ? (a: Point, b: Point) => a.x <= b.x : (a: Point, b: Point) => b.x <= a.x;

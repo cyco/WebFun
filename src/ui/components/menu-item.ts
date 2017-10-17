@@ -6,6 +6,16 @@ class MenuItemComponent extends Component {
 	public static TagName: string = "wf-menu-item";
 	private _item: MenuItem = null;
 
+	get item() {
+		return this._item;
+	}
+
+	set item(i) {
+		if (this._item) this._reset();
+		this._item = i;
+		if (this._item) this._rebuild();
+	}
+
 	_reset() {
 		this.onmouseup = null;
 	}
@@ -73,16 +83,6 @@ class MenuItemComponent extends Component {
 			default:
 				return null;
 		}
-	}
-
-	set item(i) {
-		if (this._item) this._reset();
-		this._item = i;
-		if (this._item) this._rebuild();
-	}
-
-	get item() {
-		return this._item;
 	}
 }
 

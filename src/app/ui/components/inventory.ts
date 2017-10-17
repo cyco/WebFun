@@ -29,6 +29,28 @@ class InventoryComponent extends Component {
 		this._inventoryChangedHandler = () => this._rebuildTable();
 	}
 
+	get rowCount() {
+		return this.querySelectorAll(InventoryRow.TagName).length;
+	}
+
+	get inventory() {
+		return this._inventory;
+	}
+
+	set inventory(i) {
+		if (this._inventory) {
+			this._inventory.removeEventListener(InventoryEvent.ItemsDidChange, this._inventoryChangedHandler);
+		}
+
+		this._inventory = i;
+
+		if (this._inventory) {
+			this._inventory.addEventListener(InventoryEvent.ItemsDidChange, this._inventoryChangedHandler);
+		}
+
+		this._rebuildTable();
+	}
+
 	_rebuildTable() {
 		this.clear();
 
@@ -109,28 +131,6 @@ class InventoryComponent extends Component {
 		this.appendChild(row);
 
 		return row;
-	}
-
-	get rowCount() {
-		return this.querySelectorAll(InventoryRow.TagName).length;
-	}
-
-	get inventory() {
-		return this._inventory;
-	}
-
-	set inventory(i) {
-		if (this._inventory) {
-			this._inventory.removeEventListener(InventoryEvent.ItemsDidChange, this._inventoryChangedHandler);
-		}
-
-		this._inventory = i;
-
-		if (this._inventory) {
-			this._inventory.addEventListener(InventoryEvent.ItemsDidChange, this._inventoryChangedHandler);
-		}
-
-		this._rebuildTable();
 	}
 }
 

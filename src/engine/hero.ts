@@ -10,10 +10,6 @@ export const Events = {
 };
 
 class Hero extends EventTarget {
-	static get Event() {
-		return Events;
-	}
-
 	public visible: boolean = false;
 	private _location: Point = new Point(0, 0, 1);
 	private _health: number = MAX_HEALTH;
@@ -27,6 +23,104 @@ class Hero extends EventTarget {
 	private _weapon: Char = null;
 	private _appearance: Char = null;
 	private _ammo: number;
+
+	static get Event() {
+		return Events;
+	}
+
+	get isWalking() {
+		return this._walking;
+	}
+
+	set isWalking(w) {
+		this._walking = w;
+	}
+
+	get isAttacking() {
+		return this._attacking;
+	}
+
+	set isAttacking(a) {
+		this._attacking = a;
+	}
+
+	get isDragging() {
+		return this._dragging;
+	}
+
+	set isDragging(d) {
+		this._dragging = d;
+	}
+
+	get health() {
+		return this._health;
+	}
+
+	set health(h) {
+		if (this.invincible) return;
+
+		this._health = h;
+		this.dispatchEvent(Events.HealthChanged, {
+			health: h
+		});
+	}
+
+	get location() {
+		return this._location;
+	}
+
+	set location(l) {
+		this._location = l;
+	}
+
+	get direction() {
+		switch (Direction.Confine(this._direction)) {
+			case Direction.NorthEast:
+			case Direction.NorthWest:
+			case Direction.North:
+				return Direction.North;
+			case Direction.SouthEast:
+			case Direction.SouthWest:
+			case Direction.South:
+				return Direction.South;
+			case Direction.East:
+				return Direction.East;
+			case Direction.West:
+				return Direction.West;
+		}
+	}
+
+	get appearance() {
+		return this._appearance;
+	}
+
+	set appearance(a) {
+		this._appearance = a;
+	}
+
+	get weapon() {
+		return this._weapon;
+	}
+
+	set weapon(w) {
+		if (this.unlimitedAmmo) return;
+
+		this._weapon = w;
+		this.dispatchEvent(Events.WeaponChanged, {
+			weapon: w
+		});
+	}
+
+	get ammo() {
+		return this._ammo;
+	}
+
+	set ammo(a) {
+		this._ammo = a;
+		this.dispatchEvent(Events.AmmoChanged, {
+			ammo: a
+		});
+	}
 
 	update(ticks: number): void {
 		if (this.isWalking || this.isAttacking)
@@ -151,100 +245,6 @@ class Hero extends EventTarget {
 
 		const tile = appearance.getFace(this._direction, frame);
 		if (tile) renderer.renderTile(tile, offset.x + this._location.x, offset.y + this._location.y, 1);
-	}
-
-	get isWalking() {
-		return this._walking;
-	}
-
-	set isWalking(w) {
-		this._walking = w;
-	}
-
-	get isAttacking() {
-		return this._attacking;
-	}
-
-	set isAttacking(a) {
-		this._attacking = a;
-	}
-
-	get isDragging() {
-		return this._dragging;
-	}
-
-	set isDragging(d) {
-		this._dragging = d;
-	}
-
-	get health() {
-		return this._health;
-	}
-
-	set health(h) {
-		if (this.invincible) return;
-
-		this._health = h;
-		this.dispatchEvent(Events.HealthChanged, {
-			health: h
-		});
-	}
-
-	get location() {
-		return this._location;
-	}
-
-	set location(l) {
-		this._location = l;
-	}
-
-	get direction() {
-		switch (Direction.Confine(this._direction)) {
-			case Direction.NorthEast:
-			case Direction.NorthWest:
-			case Direction.North:
-				return Direction.North;
-			case Direction.SouthEast:
-			case Direction.SouthWest:
-			case Direction.South:
-				return Direction.South;
-			case Direction.East:
-				return Direction.East;
-			case Direction.West:
-				return Direction.West;
-		}
-	}
-
-	get appearance() {
-		return this._appearance;
-	}
-
-	set appearance(a) {
-		this._appearance = a;
-	}
-
-	get weapon() {
-		return this._weapon;
-	}
-
-	set weapon(w) {
-		if (this.unlimitedAmmo) return;
-
-		this._weapon = w;
-		this.dispatchEvent(Events.WeaponChanged, {
-			weapon: w
-		});
-	}
-
-	get ammo() {
-		return this._ammo;
-	}
-
-	set ammo(a) {
-		this._ammo = a;
-		this.dispatchEvent(Events.AmmoChanged, {
-			ammo: a
-		});
 	}
 }
 

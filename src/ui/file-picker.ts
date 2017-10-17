@@ -7,11 +7,6 @@ class FilePicker implements FilePickerOptions {
 	public allowsMultipleFiles: boolean = false;
 	public allowedTypes: string[] = [];
 
-	static async Pick(options: FilePickerOptions) {
-		const picker = new FilePicker(options);
-		return await picker.pickFile();
-	}
-
 	constructor(options: FilePickerOptions = <FilePickerOptions>{}) {
 		if (options.allowsMultipleFiles !== undefined)
 			this.allowsMultipleFiles = options.allowsMultipleFiles;
@@ -19,6 +14,11 @@ class FilePicker implements FilePickerOptions {
 		if (options.allowedTypes !== undefined) {
 			this.allowedTypes = options.allowedTypes;
 		}
+	}
+
+	static async Pick(options: FilePickerOptions) {
+		const picker = new FilePicker(options);
+		return await picker.pickFile();
 	}
 
 	async pickFile(): Promise<File[]> {

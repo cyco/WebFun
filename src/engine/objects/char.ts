@@ -13,6 +13,22 @@ class Char {
 	private rawWeaponData: any = null;
 	private _type: number = null;
 
+	get frames() {
+		return this._frames;
+	}
+
+	get name() {
+		return this._name;
+	}
+
+	get type() {
+		return this._type;
+	}
+
+	get attackDuration() {
+		return 4;
+	}
+
 	getFace(direction: Direction, frameIdx: number): number {
 		if (this.isHero()) {
 			frameIdx = frameIdx % 3;
@@ -74,22 +90,6 @@ class Char {
 
 		if (inertia.x) return inertia.x === 1 ? frame.right : frame.left;
 		else return inertia.y === 1 ? frame.down : frame.up;
-	}
-
-	get frames() {
-		return this._frames;
-	}
-
-	get name() {
-		return this._name;
-	}
-
-	get type() {
-		return this._type;
-	}
-
-	get attackDuration() {
-		return 4;
 	}
 }
 

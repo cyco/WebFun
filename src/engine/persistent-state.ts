@@ -6,14 +6,6 @@ class PersistentState {
 		this._storage = storage;
 	}
 
-	_getValue(key: string): number {
-		return +this._storage.getItem(key);
-	}
-
-	_setValue(key: string, value: number): void {
-		this._storage.setItem(key, "" + value);
-	}
-
 	get highScore(): number {
 		return this._getValue("highScore");
 	}
@@ -44,6 +36,14 @@ class PersistentState {
 
 	set gamesLost(g) {
 		this._setValue("gamesLost", 0 | g);
+	}
+
+	_getValue(key: string): number {
+		return +this._storage.getItem(key);
+	}
+
+	_setValue(key: string, value: number): void {
+		this._storage.setItem(key, "" + value);
 	}
 }
 

@@ -1,4 +1,4 @@
-import { Message, randmod } from "src/util";
+import { randmod } from "src/util";
 import World from "./world";
 import { HotspotType, ZoneType } from "src/engine/objects";
 import Engine from "../engine";
@@ -22,6 +22,11 @@ class DagobahGenerator {
 
 	constructor(engine: Engine) {
 		this._engine = engine;
+	}
+
+	get world() {
+		console.assert(this._world !== null);
+		return this._world;
 	}
 
 	generate(generator: WorldGenerator) {
@@ -153,11 +158,6 @@ class DagobahGenerator {
 			hotspot.arg = npcID;
 			hotspot.enabled = true;
 		}
-	}
-
-	get world() {
-		console.assert(this._world !== null);
-		return this._world;
 	}
 }
 

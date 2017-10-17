@@ -12,14 +12,6 @@ class SceneView extends View {
 		this._setupCanvas();
 	}
 
-	_setupCanvas() {
-		const canvas = this.element;
-		canvas.style.backgroundColor = rgb(0, 0, 0);
-		canvas.classList.add("pixelated");
-		canvas.width = 288;
-		canvas.height = 288;
-	}
-
 	get canvas() {
 		return this.element;
 	}
@@ -27,5 +19,14 @@ class SceneView extends View {
 	get manager() {
 		return this._manager;
 	}
+
+	_setupCanvas() {
+		const canvas = this.element;
+		canvas.style.backgroundColor = rgb(0, 0, 0);
+		canvas.classList.add("pixelated");
+		canvas.width = 288;
+		canvas.height = 288;
+	}
 }
+
 export default SceneView;

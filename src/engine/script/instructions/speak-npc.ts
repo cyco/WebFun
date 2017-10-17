@@ -1,9 +1,7 @@
-import * as Result from "../result";
 import { InstructionResult } from "../arguments";
 import Instruction from "../../objects/instruction";
 import Engine from "../../engine";
 import Action from "../../objects/action";
-import { Point } from "src/util";
 import SpeakText from "./speak-text";
 
 export const Opcode = 0x05;

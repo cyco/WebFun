@@ -5,10 +5,10 @@ import GameData from "src/engine/game-data";
 
 class Weapon extends Component {
 	public static TagName = "wf-weapon";
+	public data: GameData;
 	private _weapon: any;
 	private _background: HTMLDivElement;
 	private _tileContainer: HTMLImageElement;
-	public data: GameData;
 
 	constructor() {
 		super();
@@ -22,6 +22,15 @@ class Weapon extends Component {
 
 		this._tileContainer = document.createElement("img");
 		this._tileContainer.classList.add("pixelated");
+	}
+
+	get weapon() {
+		return this._weapon;
+	}
+
+	set weapon(w) {
+		this._weapon = w;
+		this._update();
 	}
 
 	connectedCallback() {
@@ -41,15 +50,6 @@ class Weapon extends Component {
 			}
 		}
 		this._tileContainer.src = url;
-	}
-
-	get weapon() {
-		return this._weapon;
-	}
-
-	set weapon(w) {
-		this._weapon = w;
-		this._update();
 	}
 }
 

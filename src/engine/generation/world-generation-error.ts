@@ -1,4 +1,4 @@
-import { WorldSize, Planet } from "../types";
+import { Planet, WorldSize } from "../types";
 
 class WorldGenerationError extends Error {
 	public seed: number;

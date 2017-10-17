@@ -46,6 +46,55 @@ class ZoneType {
 		ZoneType.FindTheForce
 	];
 
+	get rawValue(): number {
+		if (this === ZoneType.Unknown) return 9999;
+		return ZoneType.knownTypes.indexOf(this);
+	}
+
+	private get name() {
+		switch (this) {
+			case ZoneType.None:
+				return "None";
+			case ZoneType.Empty:
+				return "Empty";
+			case ZoneType.BlockadeNorth:
+				return "BlockadeNorth";
+			case ZoneType.BlockadeSouth:
+				return "BlockadeSouth";
+			case ZoneType.BlockadeEast:
+				return "BlockadeEast";
+			case ZoneType.BlockadeWest:
+				return "BlockadeWest";
+			case ZoneType.TravelStart:
+				return "TravelStart";
+			case ZoneType.TravelEnd:
+				return "TravelEnd";
+			case ZoneType.Room:
+				return "Room";
+			case ZoneType.Load:
+				return "Load";
+			case ZoneType.Goal:
+				return "Goal";
+			case ZoneType.Town:
+				return "Town";
+			case ZoneType.Win:
+				return "Win";
+			case ZoneType.Lose:
+				return "Lose";
+			case ZoneType.Trade:
+				return "Trade";
+			case ZoneType.Use:
+				return "Use";
+			case ZoneType.Find:
+				return "Find";
+			case ZoneType.FindTheForce:
+				return "FindTheForce";
+
+			default:
+				return "Unknown";
+		}
+	}
+
 	static isZoneType(number: number): boolean {
 		return number >= 0 && number < ZoneType.knownTypes.length || number === 9999;
 	}
@@ -55,11 +104,6 @@ class ZoneType {
 		if (number === 9999) return ZoneType.Unknown;
 
 		return ZoneType.knownTypes[number];
-	}
-
-	get rawValue(): number {
-		if (this === ZoneType.Unknown) return 9999;
-		return ZoneType.knownTypes.indexOf(this);
 	}
 
 	public isBlockadeType(): boolean {
@@ -91,31 +135,6 @@ class ZoneType {
 
 	public toString(): string {
 		return `ZoneType{${this.name}}`;
-	}
-
-	private get name(){
-		switch(this) {
-			case ZoneType.None: return 'None';
-			case ZoneType.Empty: return 'Empty';
-			case ZoneType.BlockadeNorth: return 'BlockadeNorth';
-			case ZoneType.BlockadeSouth: return 'BlockadeSouth';
-			case ZoneType.BlockadeEast: return 'BlockadeEast';
-			case ZoneType.BlockadeWest: return 'BlockadeWest';
-			case ZoneType.TravelStart: return 'TravelStart';
-			case ZoneType.TravelEnd: return 'TravelEnd';
-			case ZoneType.Room: return 'Room';
-			case ZoneType.Load: return 'Load';
-			case ZoneType.Goal: return 'Goal';
-			case ZoneType.Town: return 'Town';
-			case ZoneType.Win: return 'Win';
-			case ZoneType.Lose: return 'Lose';
-			case ZoneType.Trade: return 'Trade';
-			case ZoneType.Use: return 'Use';
-			case ZoneType.Find: return 'Find';
-			case ZoneType.FindTheForce: return 'FindTheForce';
-
-			default: return 'Unknown';
-		}
 	}
 }
 

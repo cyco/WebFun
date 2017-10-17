@@ -1,4 +1,3 @@
-import * as Result from "../result";
 import { InstructionResult } from "../arguments";
 import Instruction from "../../objects/instruction";
 import Engine from "../../engine";

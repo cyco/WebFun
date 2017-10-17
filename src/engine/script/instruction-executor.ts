@@ -18,4 +18,5 @@ class InstructionExecutor {
 		return handler(instruction, this.engine, this.action);
 	}
 }
+
 export default InstructionExecutor;

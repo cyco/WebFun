@@ -1,21 +1,28 @@
 import Type, { default as PuzzleType } from "./puzzle-type";
 import * as ItemType from "../types";
 import { Planet } from "../types";
-import { Message } from "src/util";
 
 export { Type };
 
 class Puzzle {
-	private _strings: string[] = ["", "", "", "", ""];
 	public id: number = -1;
+	public readonly item_1 = -1;
+	public readonly item_2 = -1;
+	public hasPuzzleNPC: boolean = false;
+	private _strings: string[] = ["", "", "", "", ""];
 	private _name: string = "";
 	private _type: PuzzleType = null;
 	private _unknown1: any = null;
 	private _unknown2: any = null;
 	private _unknown3: any = null;
-	public readonly item_1 = -1;
-	public readonly item_2 = -1;
-	public hasPuzzleNPC: boolean = false;
+
+	get type(): PuzzleType {
+		return this._type;
+	}
+
+	get strings(): string[] {
+		return this._strings;
+	}
 
 	public isGoalOnPlanet(planet: Planet): boolean {
 		const id = this.id;
@@ -59,14 +66,6 @@ class Puzzle {
 		}
 
 		return false;
-	}
-
-	get type(): PuzzleType {
-		return this._type;
-	}
-
-	get strings(): string[] {
-		return this._strings;
 	}
 }
 

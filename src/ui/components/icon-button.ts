@@ -19,18 +19,6 @@ class IconButton extends Component {
 		if (iconName) this.setAttribute("icon", iconName);
 	}
 
-	connectedCallback() {
-		this._icon.remove();
-		this.appendChild(this._icon);
-	}
-
-	attributeChangedCallback(attributeName: string, oldValue: string, newValue: string): void {
-		if (attributeName === "icon") {
-			this._icon.classList.remove(`fa-${oldValue}`);
-			this._icon.classList.add(`fa-${newValue}`);
-		}
-	}
-
 	get icon() {
 		return this.getAttribute("icon");
 	}
@@ -46,6 +34,18 @@ class IconButton extends Component {
 	set disabled(d) {
 		if (d) this.setAttribute("disabled", "");
 		else this.removeAttribute("disabled");
+	}
+
+	connectedCallback() {
+		this._icon.remove();
+		this.appendChild(this._icon);
+	}
+
+	attributeChangedCallback(attributeName: string, oldValue: string, newValue: string): void {
+		if (attributeName === "icon") {
+			this._icon.classList.remove(`fa-${oldValue}`);
+			this._icon.classList.add(`fa-${newValue}`);
+		}
 	}
 }
 

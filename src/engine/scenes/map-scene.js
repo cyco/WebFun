@@ -167,4 +167,5 @@ class MapScene extends Scene {
 		return this.engine.data.tiles[tile];
 	}
 }
+
 export default MapScene;

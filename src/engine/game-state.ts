@@ -4,4 +4,5 @@ enum GameState {
 	Won,
 	Lost
 }
+
 export default GameState;

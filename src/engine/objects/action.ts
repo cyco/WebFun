@@ -1,14 +1,14 @@
-import Condition from './condition';
-import Instruction from './instruction';
+import Condition from "./condition";
+import Instruction from "./instruction";
 
 class Action {
+	public instructionPointer: number = 0;
+	public enabled: boolean = true;
+	public name: string = "";
+	public debug: any = {};
 	private _id: number = -1;
 	private _conditions: Condition[] = [];
 	private _instructions: Instruction[] = [];
-	public instructionPointer: number = 0;
-	public enabled: boolean = true;
-	public name: string = '';
-	public debug: any = {};
 
 	get id() {
 		return this._id;
@@ -22,4 +22,5 @@ class Action {
 		return this._instructions;
 	}
 }
+
 export default Action;

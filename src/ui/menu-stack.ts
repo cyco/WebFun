@@ -4,12 +4,16 @@ import MenuWindow from "./components/menu-window";
 let sharedMenuStack: MenuStack = null;
 
 class MenuStack extends EventTarget {
+	private baseIndex: number = 1001;
+	private _stack: MenuWindow[] = [];
+
 	static get sharedStack() {
 		return (sharedMenuStack = sharedMenuStack || new MenuStack());
 	}
 
-	private baseIndex: number = 1001;
-	private _stack: MenuWindow[] = [];
+	get size() {
+		return this._stack.length;
+	}
 
 	push(menu: MenuWindow): void {
 		this._stack.push(menu);
@@ -32,10 +36,6 @@ class MenuStack extends EventTarget {
 		while (this._stack.length) {
 			this.pop(this._stack.last());
 		}
-	}
-
-	get size(){
-		return this._stack.length;
 	}
 }
 

@@ -54,4 +54,5 @@ class CursorManager {
 		return cursorName;
 	}
 }
+
 export default CursorManager;

@@ -16,6 +16,15 @@ export default class extends Component {
 	private _mask: number = Direction.None;
 	private _svg: SVGElement = null;
 
+	get mask() {
+		return this._mask;
+	}
+
+	set mask(mask) {
+		this._mask = mask;
+		this._updateClassList();
+	}
+
 	connectedCallback() {
 		super.connectedCallback();
 
@@ -31,14 +40,5 @@ export default class extends Component {
 		set(this._mask & Direction.South, "down");
 		set(this._mask & Direction.West, "left");
 		set(this._mask & Direction.East, "right");
-	}
-
-	get mask() {
-		return this._mask;
-	}
-
-	set mask(mask) {
-		this._mask = mask;
-		this._updateClassList();
 	}
 }

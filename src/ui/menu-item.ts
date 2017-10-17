@@ -9,10 +9,10 @@ class MenuItem extends EventTarget {
 	public title: string;
 	public state: number;
 	public callback: Function;
-	private _enabled: boolean|Function;
 	public submenu: Menu;
 	public mnemonic: number;
 	public isSeparator: boolean = false;
+	private _enabled: boolean|Function;
 
 	constructor(item: Partial<MenuItemInit> = {}) {
 		super();
