@@ -1,13 +1,16 @@
 import ConditionChecker from "./condition-checker";
 import InstructionExecutor from "./instruction-executor";
+import Engine from "../engine";
+import Action from "../objects/action";
+import Point from "../../util/point";
 
-export default class {
-	constructor() {
-		this._checker = new ConditionChecker();
-		this._executor = new InstructionExecutor();
-	}
+class Executor {
+	private _engine: Engine;
+	private _checker = new ConditionChecker();
+	private _executor = new InstructionExecutor();
 
-	run(engine) {
+	run(engine: Engine): void {
+		this._engine = engine;
 		this._checker.engine = engine;
 		this._executor.engine = engine;
 
@@ -16,36 +19,35 @@ export default class {
 		this._evaluateActions(previousActions, false);
 	}
 
-	_evaluateActions(actions, check = true) {
+	_evaluateActions(actions: Action[], check = true): boolean {
 		const hasActions = actions.length;
 		actions = actions.slice();
-		const evaluator = this._actionEvaluator;
 		while (actions.length) {
 			let action = actions.shift();
-			if ((!check || evaluator.actionDoesApply(action)) && evaluator.executeInstructions(action))
+			if ((!check || this.actionDoesApply(action)) && this.executeInstructions(action))
 				return true;
 		}
 
 		if (hasActions) {
-			this.engine.currentZone.actionsInitialized = true;
-			this.engine.state.justEntered = false;
-			this.engine.state.enteredByPlane = false;
-			this.engine.state.bump = null;
+			this._engine.currentZone.actionsInitialized = true;
+			this._engine.state.justEntered = false;
+			this._engine.state.enteredByPlane = false;
+			this._engine.state.bump = null;
 		}
 
 		return false;
 	}
 
-	actionDoesApply(action) {
+	actionDoesApply(action: Action): boolean {
 		return (action.enabled || action.instructionPointer !== 0) && action.conditions.every(
 			(condition) => this._checker.check(condition), this);
 	}
 
-	bump(targetPoint) {
+	bump(targetPoint: Point) {
 		// TODO: implement (see breaking executor)
 	}
 
-	executeInstructions(action) {
+	executeInstructions(action: Action): boolean {
 		this._executor.action = action;
 		for (let i = action.instructionPointer | 0, len = action.instructions.length; i < len; i++) {
 			action.instructionPointer = i + 1;
@@ -58,3 +60,5 @@ export default class {
 		return false;
 	}
 }
+
+export default Executor;

@@ -3,6 +3,7 @@ import Story from "./story";
 import PersistentState from "./persistent-state";
 import GameState from "./game-state";
 import Events from "./engine-events";
+import Zone from "./objects/zone";
 
 export { Events };
 
@@ -16,7 +17,7 @@ class Engine extends EventTarget {
 	public imageFactory: any = null;
 	public data: any = null;
 	public hero: any = null;
-	private _currentZone: any = null;
+	private _currentZone: Zone = null;
 	private _currentWorld: any = null;
 	public inventory: any = null;
 	public scriptExecutor: any = null;
