@@ -12,5 +12,6 @@ const toHotspotType = function () {
 
 	throw `Tile specification ${this} can't be associated with a hotspot`;
 };
-Number.prototype.toHotspotType = toHotspotType;
+
+(<any>Number.prototype).toHotspotType = toHotspotType;
 export default toHotspotType;

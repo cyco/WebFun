@@ -1,15 +1,12 @@
-import AbstractImageFactory from "../abstract-image-factory.ts";
+import AbstractImageFactory from "../abstract-image-factory";
 import Image from "../image";
-import { Image as DOMImage, ImageData } from "std.dom";
+import ColorPalette from "../color-palette";
 
 class DOMImageFactory extends AbstractImageFactory {
-	constructor() {
-		super();
-		this._palette = null;
-	}
+	private _palette: ColorPalette = null;
 
-	buildImage(width, height, pixelData) {
-		console.assert(this._palette, "Can not build images before a palette is set.");
+	buildImage(width: number, height: number, pixelData: ArrayLike<number>): Image {
+		console.assert(!!this._palette, "Can not build images before a palette is set.");
 
 		const palette = this._palette;
 		const size = width * height;
@@ -33,7 +30,7 @@ class DOMImageFactory extends AbstractImageFactory {
 		const context = canvas.getContext("2d");
 		context.putImageData(imageData, 0, 0);
 
-		const imageElement = new DOMImage(width, height);
+		const imageElement = new HTMLImageElement();
 		imageElement.classList.add("pixelated");
 		imageElement.src = canvas.toDataURL();
 
