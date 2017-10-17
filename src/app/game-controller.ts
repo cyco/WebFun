@@ -47,7 +47,7 @@ class GameController {
 		const engine = new Engine();
 		const renderer = this._determineRenderer();
 
-		engine.renderer = new renderer(this._sceneView.canvas);
+		engine.renderer = new (<any>renderer)(this._sceneView.canvas);
 		engine.imageFactory = engine.renderer.imageFactory;
 		engine.sceneManager = this._sceneView.manager;
 		engine.inputManager = new DesktopInputManager(this._sceneView.element);
@@ -59,7 +59,7 @@ class GameController {
 		return engine;
 	}
 
-	_determineRenderer() {
+	_determineRenderer(): typeof WebGLRenderer|typeof CanvasRenderer {
 		if (WebGLRenderer.isSupported() && Settings.AllowWebGL) {
 			console.log("Using WebGL renderer");
 			return WebGLRenderer;

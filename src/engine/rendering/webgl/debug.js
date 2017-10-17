@@ -5,7 +5,7 @@ import { twgl } from "libs";
 import VertexShader from "./vertex.glsl";
 import FragmentShader from "./fragment.glsl";
 
-export default class {
+class WebGLDebug {
 	constructor() {
 		this._palette = null;
 
@@ -165,3 +165,5 @@ export default class {
 		requestAnimationFrame(() => this.render());
 	}
 }
+
+export default WebGLDebug;
