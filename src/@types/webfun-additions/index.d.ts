@@ -4,8 +4,10 @@ declare interface Node {
 
 interface Array<T> {
 	first(): T|null;
+
 	last(): T|null;
-	contains(T:any): boolean
+
+	contains(T: any): boolean
 }
 
 interface String {

@@ -1,5 +1,5 @@
 import "src/extension";
-import { Message, rand } from "src/util";
+import { rand } from "src/util";
 
 Array.prototype.shuffle = function () {
 	const count = this.length;

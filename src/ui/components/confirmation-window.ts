@@ -6,12 +6,11 @@ import { Description } from "../../description";
 class ConfirmationWindow extends Window {
 	public static TagName = "wf-confirmation-window";
 	public static observedAttributes = ["text", "confirm-text", "abort-text"];
-
+	public onconfirm: () => void;
+	public onabort: () => void;
 	private _label: HTMLDivElement;
 	private _confirmButton: Button;
 	private _abortButton: Button;
-	public onconfirm: () => void;
-	public onabort: () => void;
 
 	constructor() {
 		super();

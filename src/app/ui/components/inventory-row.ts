@@ -21,12 +21,6 @@ class InventoryRow extends Component {
 		this.tile = null;
 	}
 
-	connectedCallback() {
-		super.connectedCallback();
-		this.appendChild(this._icon);
-		this.appendChild(this._label);
-	}
-
 	get tile() {
 		return this._tile;
 	}
@@ -41,6 +35,12 @@ class InventoryRow extends Component {
 		this._icon.clear();
 		this._icon.appendChild(icon);
 		this._label.innerText = label;
+	}
+
+	connectedCallback() {
+		super.connectedCallback();
+		this.appendChild(this._icon);
+		this.appendChild(this._label);
 	}
 }
 

@@ -24,6 +24,14 @@ class LoadingView extends View {
 		this.element.appendChild(this._progressBar.element);
 	}
 
+	get progress() {
+		return this._progressBar.value;
+	}
+
+	set progress(p) {
+		this._progressBar.value = p;
+	}
+
 	showImage(pixels: Uint8Array, palette: ColorPalette) {
 		const renderer = new CanvasRenderer(this._imageCanvas);
 		const imageFactory = renderer.imageFactory;
@@ -32,14 +40,6 @@ class LoadingView extends View {
 		const representation = <HTMLImageElement><any>image.representation;
 		if (representation.complete) renderer.renderImage(image, 0, 0);
 		else representation.onload = () => renderer.renderImage(image, 0, 0);
-	}
-
-	get progress() {
-		return this._progressBar.value;
-	}
-
-	set progress(p) {
-		this._progressBar.value = p;
 	}
 }
 

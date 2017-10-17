@@ -6,10 +6,6 @@ export const Events = {
 };
 
 class Inventory extends EventTarget {
-	static get Event() {
-		return Events;
-	}
-
 	private _items: Tile[];
 
 	constructor() {
@@ -19,6 +15,10 @@ class Inventory extends EventTarget {
 
 		this.registerEvents(Events);
 		Object.seal(this);
+	}
+
+	static get Event() {
+		return Events;
 	}
 
 	addItem(item: Tile): void {

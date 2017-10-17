@@ -32,4 +32,5 @@ class PauseScene extends Scene {
 		return false;
 	}
 }
+
 export default PauseScene;

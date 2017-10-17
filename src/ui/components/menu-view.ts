@@ -10,6 +10,21 @@ class MenuView extends Component {
 	public onclose: Function = null;
 	private _menu: Menu = null;
 
+	get menu() {
+		return this._menu;
+	}
+
+	set menu(menu) {
+		if (menu && !(menu instanceof Menu))
+			menu = new Menu(menu);
+
+		this._menu = menu;
+
+		if (!this.isConnected) return;
+		this.removeItemNodes();
+		this.addItemNodes();
+	}
+
 	connectedCallback() {
 		this.removeItemNodes();
 		this.addItemNodes();
@@ -44,21 +59,6 @@ class MenuView extends Component {
 
 	removeItemNodes() {
 		this.clear();
-	}
-
-	get menu() {
-		return this._menu;
-	}
-
-	set menu(menu) {
-		if (menu && !(menu instanceof Menu))
-			menu = new Menu(menu);
-
-		this._menu = menu;
-
-		if (!this.isConnected) return;
-		this.removeItemNodes();
-		this.addItemNodes();
 	}
 }
 

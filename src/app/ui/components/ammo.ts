@@ -17,13 +17,6 @@ class AmmoComponent extends Component {
 		this._indicator.classList.add("value");
 	}
 
-	connectedCallback() {
-		super.connectedCallback();
-
-		this.appendChild(this._background);
-		this.appendChild(this._indicator);
-	}
-
 	get ammo() {
 		return parseInt(this._indicator.style.height) / 95 || 0;
 	}
@@ -35,6 +28,13 @@ class AmmoComponent extends Component {
 
 		this._background.style.backgroundColor = color;
 		this._indicator.style.height = ((value > 1 ? 1 : value) * 95) + "%";
+	}
+
+	connectedCallback() {
+		super.connectedCallback();
+
+		this.appendChild(this._background);
+		this.appendChild(this._indicator);
 	}
 }
 

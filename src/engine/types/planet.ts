@@ -9,6 +9,10 @@ class Planet {
 
 	private static readonly knownPlanets = [Planet.NONE, Planet.TATOOINE, Planet.HOTH, Planet.ENDOR, Planet.DAGOBAH, Planet.UNKNOWN];
 
+	get rawValue(): number {
+		return Planet.knownPlanets.indexOf(this);
+	}
+
 	static isPlanet(number: number): boolean {
 		return number >= 0 && number < Planet.knownPlanets.length;
 	}
@@ -16,10 +20,6 @@ class Planet {
 	static fromNumber(number: number): Planet {
 		if (!this.isPlanet(number)) throw RangeError(`Invalid planet ${number} specified!`);
 		return Planet.knownPlanets[number];
-	}
-
-	get rawValue(): number {
-		return Planet.knownPlanets.indexOf(this);
 	}
 }
 

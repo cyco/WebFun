@@ -1,1 +1,1 @@
-export const or = (...conditions:string[]) => conditions.join(',');
+export const or = (...conditions: string[]) => conditions.join(",");

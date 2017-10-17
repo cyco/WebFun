@@ -5,6 +5,11 @@ import { Renderer } from "../rendering";
 abstract class Scene {
 	public engine: Engine = null;
 
+	get cameraOffset(): Point {
+		// TODO: remove access to private variable stack and dependency on stack order
+		return this.engine.sceneManager._stack[0].camera.offset;
+	}
+
 	abstract render(renderer: Renderer): void;
 
 	abstract update(ticks: number): void;
@@ -23,11 +28,6 @@ abstract class Scene {
 
 	isOpaque(): boolean {
 		return true;
-	}
-
-	get cameraOffset(): Point {
-		// TODO: remove access to private variable stack and dependency on stack order
-		return this.engine.sceneManager._stack[0].camera.offset;
 	}
 }
 

@@ -8,6 +8,8 @@ export const Direction = {
 };
 
 class InputManager {
+	public mouseDownHandler: Function;
+	public keyDownHandler: Function;
 	protected _direction: number = 0;
 	protected _drag: boolean = false;
 	protected _attack: boolean = false;
@@ -18,9 +20,6 @@ class InputManager {
 	protected scrollUp: boolean = false;
 	protected endDialog: boolean = false;
 	protected pickUp: boolean = false;
-
-	public mouseDownHandler: Function;
-	public keyDownHandler: Function;
 
 	get directions() {
 		return this._direction;

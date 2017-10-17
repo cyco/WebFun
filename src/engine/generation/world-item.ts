@@ -10,4 +10,5 @@ class WorldItem {
 	public npcID: number = -1;
 	public findItemID: number = -1;
 }
+
 export default WorldItem;

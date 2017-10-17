@@ -1,4 +1,4 @@
-import { HorizontalPointRange, Message, Point, rand, randmod, Range, srand, VerticalPointRange } from "src/util";
+import { HorizontalPointRange, Point, rand, randmod, Range, srand, VerticalPointRange } from "src/util";
 import IslandBuilder from "./island-builder";
 import GetDistanceToCenter from "./distance-to-center";
 import WorldItemType from "./world-item-type";
@@ -15,13 +15,13 @@ type IslandOrientationType = number;
 type Map = Uint16Array;
 
 declare interface Uint16Array {
+	readonly length: number;
+
 	set(x: number, y: number, value: number): void;
 
 	get(x: number, y: number): number;
 
 	[_: number]: number;
-
-	readonly length: number;
 }
 
 let min_x: number;
@@ -660,11 +660,6 @@ function _determineAdditionalPuzzleLocations(travels_to_place: number) {
 }
 
 class MapGenerator {
-	generate(seed: number, size: WorldSize) {
-		constructor();
-		return generate(seed, size);
-	}
-
 	get puzzleCount() {
 		return Math.max.apply(null, orderMap) + 1;
 	}
@@ -675,6 +670,11 @@ class MapGenerator {
 
 	get orderMap() {
 		return orderMap;
+	}
+
+	generate(seed: number, size: WorldSize) {
+		constructor();
+		return generate(seed, size);
 	}
 }
 

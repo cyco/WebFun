@@ -25,6 +25,18 @@ declare interface SimplePoint {
 
 class Health extends Component {
 	public static TagName = "wf-health";
+	private _condition: SVGCircleElement = null;
+	private _pie: SVGPathElement = null;
+	private _health: number;
+
+	constructor() {
+		super();
+
+		this._condition = null;
+		this._pie = null;
+
+		this.health = 300;
+	}
 
 	static get GoodColor() {
 		return GoodColor;
@@ -46,17 +58,21 @@ class Health extends Component {
 		return Conditions;
 	}
 
-	private _condition: SVGCircleElement = null;
-	private _pie: SVGPathElement = null;
-	private _health: number;
+	get health() {
+		return this._health;
+	}
 
-	constructor() {
-		super();
+	set health(value) {
+		this._health = Math.max(0, Math.min(value, MaxHealth));
+		this._update();
+	}
 
-		this._condition = null;
-		this._pie = null;
+	get lives() {
+		return Math.floor(this._health / HealthPerColor);
+	}
 
-		this.health = 300;
+	get damage() {
+		return Math.floor(this._health % HealthPerColor);
 	}
 
 	connectedCallback() {
@@ -104,23 +120,6 @@ class Health extends Component {
 			x: c.x + r * Math.cos(this._toRadians(270 - angle)),
 			y: c.y + r * Math.sin(this._toRadians(270 - angle))
 		};
-	}
-
-	get health() {
-		return this._health;
-	}
-
-	set health(value) {
-		this._health = Math.max(0, Math.min(value, MaxHealth));
-		this._update();
-	}
-
-	get lives() {
-		return Math.floor(this._health / HealthPerColor);
-	}
-
-	get damage() {
-		return Math.floor(this._health % HealthPerColor);
 	}
 }
 

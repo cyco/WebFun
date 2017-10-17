@@ -9,12 +9,12 @@ class Size implements SizeLike {
 		this.height = height;
 	}
 
-	toString() {
-		return `Size {${this.width}x${this.height}}`;
-	}
-
 	get area() {
 		return this.width * this.height;
+	}
+
+	toString() {
+		return `Size {${this.width}x${this.height}}`;
 	}
 }
 

@@ -77,10 +77,6 @@ describeComponent(MainWindow, () => {
 		const hero = new MockHero();
 
 		class MockEngine extends EventTarget {
-			get hero() {
-				return hero;
-			}
-
 			triggerHealthChange(value) {
 				hero.health = value;
 				hero.dispatchEvent(HeroEvents.HealthChanged);
@@ -110,6 +106,10 @@ describeComponent(MainWindow, () => {
 					}
 				};
 				this.dispatchEvent(EngineEvents.LocationChanged, detail);
+			}
+
+			get hero() {
+				return hero;
 			}
 		}
 

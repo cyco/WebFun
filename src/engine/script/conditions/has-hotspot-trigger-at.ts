@@ -6,7 +6,7 @@ import { int16 } from "../arguments";
 
 export const Opcode = 0x1d;
 export const Arguments = 2;
-export default (args: int16[], zone: Zone, engine: Engine): boolean =>{
+export default (args: int16[], zone: Zone, engine: Engine): boolean => {
 	for (let hotspot of zone.hotspots) {
 		if (hotspot.type === HotspotType.TriggerLocation &&
 			hotspot.x === args[0] &&

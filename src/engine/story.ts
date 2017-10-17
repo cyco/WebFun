@@ -5,13 +5,13 @@ import Engine from "./engine";
 import { Planet, WorldSize } from "./types";
 
 class Story {
+	public goal: any;
 	private _seed: number;
 	private _planet: Planet;
 	private _size: WorldSize;
 	private _world: World;
 	private _dagobah: World;
 	private _reseeded: boolean;
-	public goal: any;
 
 	constructor(seed: number, planet: Planet, size: WorldSize) {
 		this._seed = seed;
@@ -21,6 +21,26 @@ class Story {
 		this._world = null;
 		this._dagobah = null;
 		this._reseeded = false;
+	}
+
+	get seed() {
+		return this._seed;
+	}
+
+	get planet() {
+		return this._planet;
+	}
+
+	get size() {
+		return this._size;
+	}
+
+	get world() {
+		return this._world;
+	}
+
+	get dagobah() {
+		return this._dagobah;
 	}
 
 	generateWorld(engine: Engine): void {
@@ -61,26 +81,6 @@ class Story {
 		const generator = new DagobahGenerator(engine);
 		generator.generate(worldGenerator);
 		this._dagobah = generator.world;
-	}
-
-	get seed() {
-		return this._seed;
-	}
-
-	get planet() {
-		return this._planet;
-	}
-
-	get size() {
-		return this._size;
-	}
-
-	get world() {
-		return this._world;
-	}
-
-	get dagobah() {
-		return this._dagobah;
 	}
 }
 

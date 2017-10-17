@@ -18,7 +18,7 @@ class NPC {
 		this._data = unknown3;
 	}
 
-	get id(){
+	get id() {
 		// TODO: implement
 		return -1;
 	}

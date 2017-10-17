@@ -39,6 +39,10 @@ class GameController {
 		this._data = null;
 	}
 
+	get engine() {
+		return this._engine;
+	}
+
 	_buildEngine() {
 		const engine = new Engine();
 		const renderer = this._determineRenderer();
@@ -179,10 +183,6 @@ class GameController {
 		if (Settings.autostartEngine) {
 			engine.metronome.start();
 		}
-	}
-
-	get engine() {
-		return this._engine;
 	}
 }
 

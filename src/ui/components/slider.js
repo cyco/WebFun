@@ -253,16 +253,16 @@ class Slider extends Component {
 		return this._snapToIntegers;
 	}
 
+	set snapToIntegers(s) {
+		this._snapToIntegers = s;
+	}
+
 	get steps() {
 		return this._steps;
 	}
 
 	set steps(s) {
 		this._steps = s;
-	}
-
-	set snapToIntegers(s) {
-		this._snapToIntegers = s;
 	}
 }
 

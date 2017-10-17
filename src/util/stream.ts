@@ -15,6 +15,14 @@ class Stream {
 	public endianess: number = Stream.ENDIAN.BIG;
 	protected _offset: number = 0;
 
+	get littleEndian() {
+		return this.endianess === Stream.ENDIAN.LITTLE;
+	}
+
+	get offset() {
+		return this._offset;
+	}
+
 	seek(offset: number, mode: number) {
 		switch (mode) {
 			case Stream.SEEK.SET:
@@ -24,14 +32,6 @@ class Stream {
 				this._offset += offset;
 				break;
 		}
-	}
-
-	get littleEndian() {
-		return this.endianess === Stream.ENDIAN.LITTLE;
-	}
-
-	get offset() {
-		return this._offset;
 	}
 }
 

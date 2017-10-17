@@ -35,6 +35,49 @@ class HotspotType {
 		HotspotType.xWingToD
 	];
 
+	get rawValue(): number {
+		return HotspotType.knownTypes.indexOf(this);
+	}
+
+	private get name() {
+		switch (this) {
+			case HotspotType.TriggerLocation:
+				return "TriggerLocation";
+			case HotspotType.SpawnLocation:
+				return "SpawnLocation";
+			case HotspotType.ForceLocation:
+				return "ForceLocation";
+			case HotspotType.VehicleTo:
+				return "VehicleTo";
+			case HotspotType.VehicleBack:
+				return "VehicleBack";
+			case HotspotType.LocatorThingy:
+				return "LocatorThingy";
+			case HotspotType.CrateItem:
+				return "CrateItem";
+			case HotspotType.PuzzleNPC:
+				return "PuzzleNPC";
+			case HotspotType.CrateWeapon:
+				return "CrateWeapon";
+			case HotspotType.DoorIn:
+				return "DoorIn";
+			case HotspotType.DoorOut:
+				return "DoorOut";
+			case HotspotType.Unused:
+				return "Unused";
+			case HotspotType.Lock:
+				return "Lock";
+			case HotspotType.Teleporter:
+				return "Teleporter";
+			case HotspotType.xWingFromD:
+				return "xWingFromD";
+			case HotspotType.xWingToD:
+				return "xWingToD";
+			default:
+				return "unknown";
+		}
+	}
+
 	public static isHotspotType(number: number) {
 		return number >= 0 && number < HotspotType.knownTypes.length;
 	}
@@ -58,34 +101,8 @@ class HotspotType {
 		}
 	}
 
-	get rawValue(): number {
-		return HotspotType.knownTypes.indexOf(this);
-	}
-
 	public toString(): string {
 		return `HotspotType{${this.name}}`;
-	}
-
-	private get name(){
-		switch(this) {
-			case HotspotType.TriggerLocation: return 'TriggerLocation';
-			case HotspotType.SpawnLocation: return 'SpawnLocation';
-			case HotspotType.ForceLocation: return 'ForceLocation';
-			case HotspotType.VehicleTo: return 'VehicleTo';
-			case HotspotType.VehicleBack: return 'VehicleBack';
-			case HotspotType.LocatorThingy: return 'LocatorThingy';
-			case HotspotType.CrateItem: return 'CrateItem';
-			case HotspotType.PuzzleNPC: return 'PuzzleNPC';
-			case HotspotType.CrateWeapon: return 'CrateWeapon';
-			case HotspotType.DoorIn: return 'DoorIn';
-			case HotspotType.DoorOut: return 'DoorOut';
-			case HotspotType.Unused: return 'Unused';
-			case HotspotType.Lock: return 'Lock';
-			case HotspotType.Teleporter: return 'Teleporter';
-			case HotspotType.xWingFromD: return 'xWingFromD';
-			case HotspotType.xWingToD: return 'xWingToD';
-			default: return 'unknown';
-		}
 	}
 }
 

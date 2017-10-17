@@ -4,7 +4,7 @@ describeComponent(StatisticsWindow, () => {
 	let subject;
 	beforeEach(() => subject = render(StatisticsWindow));
 
-	it('renders serveral text boxes', () => {
-		expect(subject.querySelector('input')).not.toBeNull();
+	it("renders serveral text boxes", () => {
+		expect(subject.querySelector("input")).not.toBeNull();
 	});
 });

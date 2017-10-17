@@ -1,9 +1,8 @@
 import GameData from "../game-data";
-import { OutputStream, Point } from "src/util";
-import { Planet, WorldSize } from "src/engine/types";
+import { OutputStream } from "src/util";
 import World from "./world";
 import WorldItem from "./world-item";
-import { Action, Hotspot, HotspotType, NPC, Tile, Zone } from "src/engine/objects";
+import { Action, Hotspot, HotspotType, NPC, Zone } from "src/engine/objects";
 import SaveState from "./save-state";
 
 class Writer {

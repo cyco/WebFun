@@ -2,7 +2,7 @@ import Point from "./point";
 import PointRange from "./point-range";
 
 export default class VerticalPointRange extends PointRange {
-	constructor(from: number, to: number, x:number) {
+	constructor(from: number, to: number, x: number) {
 		super(x, from, x, to);
 	}
 

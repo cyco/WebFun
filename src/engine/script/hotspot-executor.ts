@@ -10,7 +10,7 @@ class HotspotExecutor {
 		this._engine = engine;
 	}
 
-	laydownHotspotItems(zone: Zone):void  {
+	laydownHotspotItems(zone: Zone): void {
 		zone.hotspots.forEach((hotspot) => this._laydownHotspotItem(zone, hotspot));
 	}
 

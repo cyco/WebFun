@@ -76,26 +76,6 @@ class Tile {
 		Object.seal(this);
 	}
 
-	isObject() {
-		return this.getAttribute(Tile.Attribute.Object);
-	}
-
-	isDraggable() {
-		return this.getAttribute(Tile.Attribute.Draggable);
-	}
-
-	isLocator() {
-		return this.getAttribute(Tile.Attribute.Locator);
-	}
-
-	getAttribute(attr: number): boolean {
-		return !!(this._attributes & (1 << attr));
-	}
-
-	getSubtype(attr: number): boolean {
-		return !!(this.subtype & (1 << attr));
-	}
-
 	get name() {
 		return this._name;
 	}
@@ -126,6 +106,26 @@ class Tile {
 
 	get subtype() {
 		return this._attributes & 0xFFFF;
+	}
+
+	isObject() {
+		return this.getAttribute(Tile.Attribute.Object);
+	}
+
+	isDraggable() {
+		return this.getAttribute(Tile.Attribute.Draggable);
+	}
+
+	isLocator() {
+		return this.getAttribute(Tile.Attribute.Locator);
+	}
+
+	getAttribute(attr: number): boolean {
+		return !!(this._attributes & (1 << attr));
+	}
+
+	getSubtype(attr: number): boolean {
+		return !!(this.subtype & (1 << attr));
 	}
 }
 

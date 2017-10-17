@@ -1,6 +1,5 @@
 import { TransitionScene } from "src/engine/scenes";
 import { Point } from "src/util";
-import * as Result from "../result";
 import { InstructionResult } from "../arguments";
 import Instruction from "../../objects/instruction";
 import Engine from "../../engine";

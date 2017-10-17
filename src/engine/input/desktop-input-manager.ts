@@ -14,6 +14,18 @@ class DesktopInputManager extends InputManager {
 		this._lastMouse = new Point(NaN, NaN);
 	}
 
+	get engine(): Engine {
+		return this._engine;
+	}
+
+	set engine(engine: Engine) {
+		this._engine = engine;
+	}
+
+	get mouseLocationInView(): Point {
+		return this._lastMouse;
+	}
+
 	addListeners() {
 		document.addEventListener("keydown", this.keyDown.bind(this));
 		document.addEventListener("keyup", this.keyUp.bind(this));
@@ -151,18 +163,6 @@ class DesktopInputManager extends InputManager {
 		point.x /= boundingRect.width;
 		point.y /= boundingRect.height;
 		return point;
-	}
-
-	get engine(): Engine {
-		return this._engine;
-	}
-
-	set engine(engine: Engine) {
-		this._engine = engine;
-	}
-
-	get mouseLocationInView(): Point {
-		return this._lastMouse;
 	}
 }
 

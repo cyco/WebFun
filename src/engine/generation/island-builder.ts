@@ -1,4 +1,4 @@
-import { HorizontalPointRange, Message, Point, rand, VerticalPointRange } from "src/util";
+import { HorizontalPointRange, Point, rand, VerticalPointRange } from "src/util";
 import WorldItemType from "./world-item-type";
 import PointRange from "../../util/point-range";
 
@@ -24,17 +24,17 @@ class IslandBuilder {
 		this.stepY = new Point(0, 1);
 	}
 
+	public placeIslands(count: number) {
+		for (let i = 0; i < count; i++) {
+			this._placeIsland();
+		}
+	}
+
 	private at(point: Point, value?: number) {
 		const index = point.x + 10 * point.y;
 		if (value !== undefined)
 			this.typeMap[index] = value;
 		else return this.typeMap[index];
-	}
-
-	public placeIslands(count: number) {
-		for (let i = 0; i < count; i++) {
-			this._placeIsland();
-		}
 	}
 
 	private _placeIsland() {

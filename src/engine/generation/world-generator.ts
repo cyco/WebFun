@@ -27,25 +27,23 @@ declare global {
 }
 
 class WorldGenerator {
+	public goalPuzzleID: number;
+	public world: World;
+	public puzzleIDs2: number[];
 	private _seed: number;
 	private _size: WorldSize;
 	private _planet: Planet;
 	private _zones: Zone[];
 	private _tiles: Tile[];
 	private _puzzles: Puzzle[];
-
 	private puzzleZoneIDs: number[];
 	private requiredItems: number[];
 	private providedItems: number[];
-
-	public goalPuzzleID: number;
-	public world: World;
 	private mapGenerator: MapGenerator;
 	private additionalRequiredItemID: number;
 	private providedItemQuests: Quest[];
 	private puzzleIDs: number[];
 	private puzzleIDs1: number[];
-	public puzzleIDs2: number[];
 	private requiredItemQuests: Quest[];
 	private puzzleIndex: number;
 	private requiredItemID: number;

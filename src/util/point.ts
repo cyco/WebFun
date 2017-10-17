@@ -6,14 +6,6 @@ class Point implements PointLike {
 	public y: number;
 	public z: number;
 
-	static add(p1: PointLike, p2: PointLike): Point {
-		return new Point(p1.x + p2.x, p1.y + p2.y, p1.z);
-	}
-
-	static subtract(p1: PointLike, p2: PointLike): Point {
-		return new Point(p1.x - p2.x, p1.y - p2.y, p1.z);
-	}
-
 	constructor(x: number|PointLike, y: number = null, z: number = null) {
 		if (typeof x === "object") {
 			y = x.y;
@@ -23,6 +15,14 @@ class Point implements PointLike {
 		this.x = x;
 		this.y = y;
 		this.z = z;
+	}
+
+	static add(p1: PointLike, p2: PointLike): Point {
+		return new Point(p1.x + p2.x, p1.y + p2.y, p1.z);
+	}
+
+	static subtract(p1: PointLike, p2: PointLike): Point {
+		return new Point(p1.x - p2.x, p1.y - p2.y, p1.z);
 	}
 
 	public clone(): Point {
