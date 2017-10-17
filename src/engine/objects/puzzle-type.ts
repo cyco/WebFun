@@ -22,6 +22,12 @@ class PuzzleType {
 		return this.knownTypes[number];
 	}
 
+	public get rawValue() {
+		if (this === PuzzleType.Disabled) return -1;
+
+		return PuzzleType.knownTypes.indexOf(this);
+	}
+
 	public toString(){
 		return `PuzzleType{${this.name}}`;
 	}

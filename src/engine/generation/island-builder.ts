@@ -32,7 +32,6 @@ class IslandBuilder {
 	}
 
 	public placeIslands(count: number) {
-		Message("MapGenerator::PlaceTransports(%x)\n", count);
 		for (let i = 0; i < count; i++) {
 			this._placeIsland();
 		}

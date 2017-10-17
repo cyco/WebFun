@@ -1,12 +1,14 @@
+import "babel-polyfill";
 import "../test/helpers/polyfill";
-import "/extension";
+import "src/extension";
 import Yodesk from "src/engine/file-format/yodesk.ksy";
 import { GameData, Story } from "src/engine";
-import { Enabled as EnabledMessages, Finalize as FinalizeMessages } from "src/util/message";
+import { Enable as EnabledMessages, Finalize as FinalizeMessages } from "src/util/message";
 import { CompareWorldItems, ComparisonResult, ParseExpectation, PrepareExpectations } from "src/debug/expectation";
 import KaitaiStream from "kaitai-struct/KaitaiStream";
 import Path from "path";
 import FS from "fs";
+import { Planet, WorldSize } from "../src/engine/types";
 
 const Exit = {
 	Normal: 0,
@@ -116,7 +118,12 @@ const readArguments = (node, self, ...args) => {
 			if (size < 0 || size > 3) helpAndExit(`Size is not in range 0 - 0xFFFF!`, node, self);
 		}
 
-		return {options, seed, planet, size};
+		return {
+			options,
+			seed,
+			planet: Planet.fromNumber(planet),
+			size: WorldSize.fromNumber(size)
+		};
 	} catch (e) {
 		helpAndExit(e, node, self);
 	}

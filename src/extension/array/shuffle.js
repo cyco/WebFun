@@ -3,16 +3,13 @@ import { Message, rand } from "src/util";
 
 Array.prototype.shuffle = function () {
 	const count = this.length;
-	Message("Array::Shuffle %d items", count);
 	if (count === 0) return this;
 
 	let tempArray = Array.Repeat(-1, count);
 
 	let idx = 0;
 	for (let i = 0; i < count; i++) {
-		let random = rand();
-		// Message("Array::Shuffle rand 1: %x\n", random);
-		idx = random % count;
+		idx = rand() % count;
 		if (tempArray[idx] === -1) {
 			tempArray[idx] = this[i];
 			this[i] = -1;
@@ -28,9 +25,7 @@ Array.prototype.shuffle = function () {
 
 			if (!did_find_free_spot) break;
 
-			let random = rand();
-			// Message("Array::Shuffle rand 2: %x\n", random);
-			idx = random % count;
+			idx = rand() % count;
 			if (tempArray[idx] === -1) {
 				tempArray[idx] = this[i];
 				this[i] = -1;

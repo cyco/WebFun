@@ -260,7 +260,6 @@ function findPuzzleLastPuzzle() {
 }
 
 function _choosePuzzlesBehindBlockades() {
-	// Message("_choosePuzzlesBehindBlockades()\n");
 	const bounds = {
 		width: 10,
 		height: 10
@@ -311,7 +310,6 @@ function _choosePuzzlesBehindBlockades() {
 }
 
 function _choosePuzzlesOnIslands() {
-	// Message("_choosePuzzlesOnIslands(%d)\n", placedPuzzles);
 	const bounds = {
 		width: 10,
 		height: 10
@@ -365,17 +363,13 @@ function _choosePuzzlesOnIslands() {
 
 
 function _chooseAdditionalPuzzles(total_puzzle_count: number): void {
-	// Message("_chooseAdditionalPuzzles(%d, %d)\n", placedPuzzles, total_puzzle_count);
 	let do_break = 0;
 	for (let i = 0; i <= 200; i++) {
 		let x,
 			y;
 
-		// Message("%d >= %d\n", placedPuzzles, total_puzzle_count);
-		// Message("%d > 200\n", i);
 		if (i > 200) {
 			do_break = 1;
-			Message("inc something 1\n");
 		}
 		if (placedPuzzles >= total_puzzle_count) {
 			do_break = 1;
@@ -399,7 +393,6 @@ function _chooseAdditionalPuzzles(total_puzzle_count: number): void {
 
 				typeMap.set(x, y, WorldItemType.Puzzle.rawValue);
 				orderMap.set(x, y, placedPuzzles++);
-				// Message("did_place %d => %d\n", placedPuzzles - 1, placedPuzzles);
 			}
 
 			if (placedPuzzles >= total_puzzle_count)
@@ -407,7 +400,6 @@ function _chooseAdditionalPuzzles(total_puzzle_count: number): void {
 		}
 
 		if (distance < 3 && i < 150) i--;
-		else ; //Message("%d => %d\n", i, i+1);
 
 		if (do_break) break;
 	}
@@ -442,7 +434,6 @@ function _mapCountStuff(): number {
 
 function _makeSureLastPuzzleIsNotTooCloseToCenter(): void {
 	const getDistanceToCenter = GetDistanceToCenter;
-	// Message("_makeSureLastPuzzleIsNotTooCloseToCenter(%d)\n", placedPuzzles);
 	const lastPuzzle = findPuzzleLastPuzzle();
 	if (getDistanceToCenter(lastPuzzle.x, lastPuzzle.y) < 3) {
 		for (let y = 0; y < 10; y++) {
@@ -460,7 +451,6 @@ function _makeSureLastPuzzleIsNotTooCloseToCenter(): void {
 }
 
 function _placeIntermediateWorldThing(): number {
-	Message("place_intermediate_world_thing()\n");
 	placedPuzzles = 0;
 
 	_mapCountStuff();
@@ -496,7 +486,6 @@ function _tryPlacingTravel(item_idx: number, iteration: number, last_item: World
 }
 
 function _determinePuzzleLocations(iteration: number, puzzle_count_to_place: number) {
-	Message("YodaDocument::PlacePuzzleLocations(%d, %d, %d, %d)\n", iteration, puzzle_count_to_place, travels, blockades);
 	remaining_count_to_place = puzzle_count_to_place;
 
 	switch (iteration) {
@@ -546,7 +535,6 @@ function _determinePuzzleLocations(iteration: number, puzzle_count_to_place: num
 		}
 
 		let item_idx = x + 10 * y;
-		Message("%dx%d", x, y);
 		if (typeMap[item_idx]) continue;
 
 		handle_neighbor(x, y, iteration, -1, 0) ||
@@ -559,7 +547,6 @@ function _determinePuzzleLocations(iteration: number, puzzle_count_to_place: num
 }
 
 function _determineAdditionalPuzzleLocations(travels_to_place: number) {
-	Message("AdditionalPuzzleLocations(%d)\n", travels_to_place);
 	for (let i = 0; i <= 400 && travels_to_place > 0; i++) {
 		let x,
 			y;
@@ -573,7 +560,6 @@ function _determineAdditionalPuzzleLocations(travels_to_place: number) {
 		}
 
 		let world_idx = x + 10 * y;
-		Message("AdditionalPuzzleLocations: %dx%d", x, y);
 		if (typeMap[world_idx] !== 0)
 			continue;
 

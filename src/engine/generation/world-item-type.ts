@@ -19,6 +19,7 @@ class WorldItemType {
 	public static isWorldItemType(number: number): boolean {
 		switch (number) {
 			case -1:
+			case 0xFFFF:
 			case 0:
 			case 1:
 			case 101:
@@ -42,6 +43,7 @@ class WorldItemType {
 		if(!WorldItemType.isWorldItemType(number)) throw new RangeError(`Value ${number} does not specify a world item type`);
 		switch (number) {
 			case -1: return WorldItemType.Invalid;
+			case 0xFFFF: return WorldItemType.Invalid;
 			case 0: return WorldItemType.None;
 			case 1: return WorldItemType.Empty;
 			case 101: return WorldItemType.TravelStart;

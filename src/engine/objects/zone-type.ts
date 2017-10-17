@@ -1,5 +1,4 @@
-import PuzzleType from './puzzle-type';
-import Puzzle from "./puzzle";
+import PuzzleType from "./puzzle-type";
 
 class ZoneType {
 	public static readonly None = new ZoneType();
@@ -35,10 +34,10 @@ class ZoneType {
 		ZoneType.Room,
 		ZoneType.Load,
 		ZoneType.Goal,
+		ZoneType.Town,
 
 		undefined,
 
-		ZoneType.Town,
 		ZoneType.Win,
 		ZoneType.Lose,
 		ZoneType.Trade,
@@ -59,6 +58,7 @@ class ZoneType {
 	}
 
 	get rawValue(): number {
+		if (this === ZoneType.Unknown) return 9999;
 		return ZoneType.knownTypes.indexOf(this);
 	}
 
