@@ -18,7 +18,5 @@ describeInstruction("SpeakNPC", (execute, engine) => {
 		execute(instruction);
 
 		expect(scene.text).toEqual("test text");
-		expect(scene.location.x).toBe(0);
-		expect(scene.location.y).toBe(1);
 	});
 });
