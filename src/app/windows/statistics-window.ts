@@ -43,7 +43,7 @@ export default class extends Window {
 		textbox.align = "right";
 		textbox.width = 60;
 		textbox.height = 20;
-		textbox.value = this._state[key];
+		textbox.value = `${this._state[key]}`;
 
 		const row = document.createElement("li");
 		row.appendChild(label);

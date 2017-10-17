@@ -3,22 +3,27 @@ import Menubar from "./menubar";
 import { identity } from "src/util";
 import View from "../view";
 import "./window-titlebar.scss";
+import Window from "./window";
+import Point from "../../util/point";
+import Menu from "../menu";
 
-export default class extends Component {
+class WindowTitlebar extends Component {
 	static get TagName() {
 		return "wf-window-titlebar";
 	}
 
+	private _menu: Menu = null;
+	private _menubar: Menubar = null;
+	private _titleNode: HTMLElement = null;
+	private _window: Window;
+	private _closeButton: View;
+	private onclose = identity;
+
 	constructor() {
 		super();
 
-		this._menubar = null;
-		this._titleNode = null;
-
 		this._closeButton = new View();
 		this._closeButton.element.classList.add("close-button");
-
-		this.onclose = identity;
 	}
 
 	connectedCallback() {
@@ -28,9 +33,9 @@ export default class extends Component {
 		if (this._menubar) this.appendChild(this._menubar);
 	}
 
-	_setupDragging(win) {
-		let dragLocation;
-		const mouseMove = (event) => {
+	private _setupDragging(win: Window) {
+		let dragLocation: Point;
+		const mouseMove = (event: MouseEvent) => {
 			win.x = event.clientX - dragLocation.x;
 			win.y = event.clientY - dragLocation.y;
 		};
@@ -40,12 +45,9 @@ export default class extends Component {
 			window.removeEventListener("mousemove", mouseMove);
 		};
 
-		const mouseDown = (event) => {
+		const mouseDown = (event: MouseEvent) => {
 			if (event.target !== this) return;
-			dragLocation = {
-				x: event.clientX - win.x,
-				y: event.clientY - win.y
-			};
+			dragLocation = new Point(event.clientX - win.x, event.clientY - win.y);
 			window.addEventListener("mouseup", mouseUp);
 			window.addEventListener("mousemove", mouseMove);
 		};
@@ -57,7 +59,7 @@ export default class extends Component {
 		return this._window;
 	}
 
-	set window(window) {
+	set window(window: Window) {
 		this._window = window;
 		this._closeButton.element.onclick = () => this._window.close();
 		this._setupDragging(window);
@@ -74,7 +76,7 @@ export default class extends Component {
 		}
 
 		if (m) {
-			this._menubar = document.createElement(Menubar.TagName);
+			this._menubar = <Menubar>document.createElement(Menubar.TagName);
 			this._menubar.menu = m;
 			if (this.isConnected)
 				this.appendChild(this._menubar);
@@ -114,3 +116,5 @@ export default class extends Component {
 		this._closeButton.element.style.display = flag ? "" : "none";
 	}
 }
+
+export default WindowTitlebar;

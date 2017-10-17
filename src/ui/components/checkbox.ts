@@ -1,10 +1,19 @@
 import Component from "../component";
 import "./checkbox.scss";
 
-export default class Checkbox extends Component {
+declare global {
+	interface StringConstructor {
+		UUID(): string;
+	}
+}
+
+class Checkbox extends Component {
 	static get TagName() {
 		return "wf-checkbox";
 	}
+
+	private _label: HTMLLabelElement;
+	private _box: HTMLInputElement;
 
 	constructor() {
 		super();
@@ -17,7 +26,6 @@ export default class Checkbox extends Component {
 		this._box = box;
 
 		const label = document.createElement("label");
-		label.append();
 		label.setAttribute("for", boxID);
 		this._label = label;
 	}
@@ -60,3 +68,5 @@ export default class Checkbox extends Component {
 		this._box.onchange = f;
 	}
 }
+
+export default Checkbox;

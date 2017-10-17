@@ -3,10 +3,14 @@ import Component from "../component";
 import Group from "./radio-group";
 
 export { Group };
-export default class RadioButton extends Component {
+
+class RadioButton extends Component {
 	static get TagName() {
 		return "wf-radio-button";
 	}
+
+	private _radio: HTMLInputElement;
+	private _label: HTMLLabelElement;
 
 	constructor() {
 		super();
@@ -20,12 +24,10 @@ export default class RadioButton extends Component {
 		const label = document.createElement("label");
 		label.setAttribute("for", buttonID);
 		this._label = label;
-
-		Object.seal(this);
 	}
 
 	connectedCallback() {
-		super.conectedCallback();
+		super.connectedCallback();
 
 		this.appendChild(this._radio);
 		this.appendChild(this._label);
@@ -70,3 +72,5 @@ export default class RadioButton extends Component {
 		this._radio.name = id;
 	}
 }
+
+export default RadioButton;

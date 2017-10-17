@@ -20,6 +20,10 @@ class SceneView extends View {
 		return this._manager;
 	}
 
+	get element(): HTMLCanvasElement {
+		return <HTMLCanvasElement>super.element;
+	}
+
 	_setupCanvas() {
 		const canvas = this.element;
 		canvas.style.backgroundColor = rgb(0, 0, 0);
