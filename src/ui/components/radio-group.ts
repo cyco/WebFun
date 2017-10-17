@@ -1,18 +1,20 @@
 import { EventTarget } from "src/util";
+import RadioButton from "./radio-button";
 
-export default class extends EventTarget {
-	constructor(buttons = []) {
+class RadioGroup extends EventTarget {
+	private _buttons: RadioButton[];
+	private _id: string;
+
+	constructor(buttons: RadioButton[] = []) {
 		super();
 
 		const self = this;
 		this._buttons = [];
 		this._id = String.UUID();
 		buttons.forEach((b) => self.addButton(b));
-
-		Object.seal(this);
 	}
 
-	addButton(button) {
+	addButton(button: RadioButton) {
 		this._buttons.push(button);
 		button.groupID = this._id;
 	}
@@ -21,3 +23,5 @@ export default class extends EventTarget {
 		return this._buttons;
 	}
 }
+
+export default RadioGroup;

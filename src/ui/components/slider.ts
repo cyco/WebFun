@@ -1,6 +1,6 @@
 import Component from "../component";
 import "./slider.scss";
-import { document } from "std.dom";
+import { document } from "src/std.dom";
 import { dispatch } from "src/util";
 
 class Slider extends Component {
@@ -8,18 +8,19 @@ class Slider extends Component {
 		return "wf-slider";
 	}
 
-	constructor() {
-		super();
-
-		this._value = 0;
-		this._min = 0;
-		this._max = 0;
-		this._setps = 0;
-
-		this._snapToIntegers = false;
-		this._continuous = false;
-		this._onChange = null;
-	}
+	private _value = 0;
+	private _min = 0;
+	private _max = 0;
+	private _steps = 0;
+	private _snapToIntegers = false;
+	private _continuous = false;
+	private _onChange: Function = null;
+	private _knob: HTMLDivElement;
+	private _left: HTMLDivElement;
+	private _right: HTMLDivElement;
+	private _minText: string;
+	private _midText: string;
+	private _maxText: string;
 
 	connectedCallback() {
 		super.connectedCallback();
@@ -30,11 +31,6 @@ class Slider extends Component {
 
 		this.layout();
 	}
-
-	disconnectedCallback() {
-	}
-
-	/** **/
 
 	_setupThumb() {
 		this._knob = this._makeButton();
@@ -51,7 +47,7 @@ class Slider extends Component {
 			x: 0,
 			y: 0
 		};
-		const mouseDown = (e) => {
+		const mouseDown = (e: MouseEvent) => {
 			mouseCoordinates.x = e.pageX;
 			mouseCoordinates.y = e.pageY;
 
@@ -62,7 +58,7 @@ class Slider extends Component {
 			window.addEventListener("mousemove", mouseMove);
 		};
 
-		const mouseMove = (e) => {
+		const mouseMove = (e: MouseEvent) => {
 			let difX = e.pageX - mouseCoordinates.x;
 			let difY = e.pageY - mouseCoordinates.y;
 

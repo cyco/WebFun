@@ -1,12 +1,13 @@
 import View from "./view";
 import "./progress-bar.scss";
 
-export default class extends View {
+class ProgressBar extends View {
+	private _value: number = 0;
+
 	constructor() {
 		super();
 
 		this.element.classList.add("progress-bar");
-		this._value = 0;
 	}
 
 	get value() {
@@ -19,13 +20,15 @@ export default class extends View {
 
 		const numberOfSegments = Math.min(Math.round(progress * maxNumberOfSegments), maxNumberOfSegments);
 
-		while (node.childNodes.length < numberOfSegments)
+		while (node.children.length < numberOfSegments)
 			node.appendChild(document.createElement("div"));
 
-		while (node.childNodes.length > numberOfSegments)
-			node.firstChild.remove();
+		while (node.children.length > numberOfSegments)
+			node.firstElementChild.remove();
 
 		this._value = progress;
-		this.element.dataset && (this.element.dataset.value = progress);
+		this.element.dataset && (this.element.dataset.value = `${progress}`);
 	}
 }
+
+export default ProgressBar;

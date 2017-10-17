@@ -9,11 +9,6 @@ const TILE_WIDTH = 32.0;
 const TILE_HEIGHT = 32.0;
 
 class CanvasRenderer extends AbstractRenderer {
-	static isSupported() {
-		const canvas = document.createElement("canvas");
-		return canvas.getContext("2d") !== null;
-	}
-
 	private _canvas: HTMLCanvasElement;
 	private _ctx: CanvasRenderingContext2D;
 	private _imageFactory: DOMImageFactory;
@@ -29,6 +24,15 @@ class CanvasRenderer extends AbstractRenderer {
 		this._ctx.fillStyle = rgb(0, 0, 0);
 		this._ctx.fillRect(0, 0, 288, 288);
 		this._imageFactory = new DOMImageFactory();
+	}
+
+	get imageFactory() {
+		return this._imageFactory;
+	}
+
+	static isSupported() {
+		const canvas = document.createElement("canvas");
+		return canvas.getContext("2d") !== null;
 	}
 
 	clear() {
@@ -48,8 +52,8 @@ class CanvasRenderer extends AbstractRenderer {
 		this._ctx.drawImage(image.representation, x, y);
 	}
 
-	renderImageData(image: Image, x: number, y: number) {
-		this._ctx.putImageData(image.representation, x, y);
+	renderImageData(image: ImageData, x: number, y: number) {
+		this._ctx.putImageData(image, x, y);
 	}
 
 	fillBlackRect(x: number, y: number, width: number, height: number) {
@@ -66,10 +70,6 @@ class CanvasRenderer extends AbstractRenderer {
 
 	fillTile(x: number, y: number, color: string) {
 		this.fillRect(x * TILE_WIDTH, y * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT, color);
-	}
-
-	get imageFactory() {
-		return this._imageFactory;
 	}
 }
 

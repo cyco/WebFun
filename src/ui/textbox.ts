@@ -1,9 +1,9 @@
 import View from "./view";
 import "./textbox.scss";
 
-export default class extends View {
+class Textbox extends View {
 	constructor() {
-		super(document.createElement("input"));
+		super();
 
 		this.element.type = "text";
 		this.element.classList.add("textbox");
@@ -57,4 +57,14 @@ export default class extends View {
 	set onchange(cb) {
 		this.element.onchange = cb;
 	}
+
+	get element(): HTMLInputElement {
+		return <HTMLInputElement>super.element;
+	}
+
+	protected get tagName() {
+		return "input";
+	}
 }
+
+export default Textbox;

@@ -5,6 +5,15 @@ import ColorPalette from "../color-palette";
 class DOMImageFactory extends AbstractImageFactory {
 	private _palette: ColorPalette = null;
 
+	get palette() {
+		return this._palette;
+	}
+
+	set palette(palette) {
+		console.assert(!this._palette, "Color palette can not be changed once it's been set.");
+		this._palette = palette;
+	}
+
 	buildImage(width: number, height: number, pixelData: ArrayLike<number>): Image {
 		console.assert(!!this._palette, "Can not build images before a palette is set.");
 
@@ -30,20 +39,11 @@ class DOMImageFactory extends AbstractImageFactory {
 		const context = canvas.getContext("2d");
 		context.putImageData(imageData, 0, 0);
 
-		const imageElement = new HTMLImageElement();
+		const imageElement = <HTMLImageElement>document.createElement("image");
 		imageElement.classList.add("pixelated");
 		imageElement.src = canvas.toDataURL();
 
 		return new Image(width, height, imageElement);
-	}
-
-	get palette() {
-		return this._palette;
-	}
-
-	set palette(palette) {
-		console.assert(!this._palette, "Color palette can not be changed once it's been set.");
-		this._palette = palette;
 	}
 }
 
