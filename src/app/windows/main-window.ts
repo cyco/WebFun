@@ -1,51 +1,51 @@
 import { Group, Window } from "src/ui/components";
 import { Ammo, Health, Inventory, Location, Weapon } from "src/app/ui/components";
 import { Direction } from "src/app/ui/components/location";
-import { Events } from "src/engine/engine";
+import { default as Engine, Events } from "src/engine/engine";
 import Hero from "src/engine/hero";
 import "./main-window.scss";
+import World from "../../engine/generation/world";
+import Zone from "../../engine/objects/zone";
+import InventoryComponent from "../ui/components/inventory";
 
 class MainWindow extends Window {
 	public static TagName = "wf-main-window";
-	private _handlers: any;
-	private _main: any;
-	private _sidebar: any;
-	private _inventory: any;
-	private _locationView: any;
-	private _ammoView: any;
-	private _weaponView: any;
-	private _healthView: any;
-	private _engine: any;
+	private _ammoView: Ammo;
+	private _engine: Engine = null;
+	private _handlers: {[_: string]: Function};
+	private _healthView: Health;
+	private _inventory: InventoryComponent;
+	private _locationView: Location;
+	private _main: Group;
+	private _sidebar: Group;
+	private _weaponView: Weapon;
 
 	constructor() {
 		super();
 
-		this._engine = null;
-		this._handlers = null;
-
-		this._main = document.createElement(Group.TagName);
+		this._main = <Group>document.createElement(Group.TagName);
 		this._main.classList.add("main");
 		this.content.appendChild(this._main);
 
-		this._sidebar = document.createElement(Group.TagName);
+		this._sidebar = <Group>document.createElement(Group.TagName);
 		this._sidebar.classList.add("sidebar");
 
-		this._inventory = document.createElement(Inventory.TagName);
+		this._inventory = <Inventory>document.createElement(Inventory.TagName);
 		this._sidebar.appendChild(this._inventory);
 
 		const group = document.createElement(Group.TagName);
-		this._locationView = document.createElement(Location.TagName);
+		this._locationView = <Location>document.createElement(Location.TagName);
 		group.appendChild(this._locationView);
 
 		const equipment = document.createElement(Group.TagName);
 		equipment.classList.add("equipment");
-		this._ammoView = document.createElement(Ammo.TagName);
+		this._ammoView = <Ammo>document.createElement(Ammo.TagName);
 		equipment.appendChild(this._ammoView);
-		this._weaponView = document.createElement(Weapon.TagName);
+		this._weaponView = <Weapon>document.createElement(Weapon.TagName);
 		equipment.appendChild(this._weaponView);
 		group.appendChild(equipment);
 
-		this._healthView = document.createElement(Health.TagName);
+		this._healthView = <Health>document.createElement(Health.TagName);
 		group.appendChild(this._healthView);
 
 		this._sidebar.appendChild(group);
@@ -54,7 +54,7 @@ class MainWindow extends Window {
 		this._buildEventHandlers();
 	}
 
-	get engine(): any {
+	get engine(): Engine {
 		return this._engine;
 	}
 
@@ -78,8 +78,6 @@ class MainWindow extends Window {
 	}
 
 	_buildEventHandlers() {
-		console.assert(!this._handlers || !this._engine);
-
 		this._handlers = {};
 		this._handlers[Events.AmmoChanged] = () => this._updateAmmo();
 		this._handlers[Events.WeaponChanged] = () => this._updateWeapon();
@@ -94,10 +92,10 @@ class MainWindow extends Window {
 	_updateWeapon() {
 	}
 
-	_updateLocation({zone, world}: {zone: any, world: any}) {
+	_updateLocation({zone, world}: {zone: Zone, world: World}) {
 		let mask = Direction.None;
 		const location = world.locationOfZone(zone);
-		if (!location) {
+		if (!location || !world) {
 			this._locationView.mask = mask;
 			return;
 		}
