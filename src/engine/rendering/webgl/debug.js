@@ -162,7 +162,7 @@ class WebGLDebug {
 		// gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 256, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, palette);
 
 		gl.drawArrays(gl.TRIANGLES, 0, 12 / 2);
-		requestAnimationFrame(() => this.render());
+		window.requestAnimationFrame(() => this.render());
 	}
 }
 

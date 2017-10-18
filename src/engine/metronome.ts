@@ -1,4 +1,4 @@
-import { cancelAnimationFrame, performance, requestAnimationFrame } from "src/std";
+import { cancelAnimationFrame, performance } from "src/std";
 import { identity } from "src/util";
 
 const TICKLENGTH = 100;
@@ -31,7 +31,7 @@ class Metronome {
 	_tick(time = 0) {
 		if (this._stopped) return;
 
-		this._mainLoop = requestAnimationFrame(this._tick.bind(this));
+		this._mainLoop = window.requestAnimationFrame(this._tick.bind(this));
 		if (time === 0)
 			time = performance.now();
 
