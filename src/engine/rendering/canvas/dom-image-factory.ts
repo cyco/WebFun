@@ -39,7 +39,7 @@ class DOMImageFactory extends AbstractImageFactory {
 		const context = canvas.getContext("2d");
 		context.putImageData(imageData, 0, 0);
 
-		const imageElement = <HTMLImageElement>document.createElement("image");
+		const imageElement = <HTMLImageElement>new (<any>window).Image(width, height);
 		imageElement.classList.add("pixelated");
 		imageElement.src = canvas.toDataURL();
 
