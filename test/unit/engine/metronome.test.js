@@ -1,4 +1,3 @@
-import * as Std from "std";
 import Metronome from "src/engine/metronome";
 
 describe("Metronome", () => {
@@ -15,20 +14,20 @@ describe("Metronome", () => {
 	});
 
 	it("uses requestAnimationFrame to allow for smooth rendering", () => {
-		spyOn(Std, "requestAnimationFrame").and.returnValue(1);
+		spyOn(window, "requestAnimationFrame").and.returnValue(1);
 
 		metronome.start();
 
-		expect(Std.requestAnimationFrame).toHaveBeenCalled();
+		expect(window.requestAnimationFrame).toHaveBeenCalled();
 	});
 
 	it("properly cancels animation frame requests when stopped", () => {
-		spyOn(Std, "requestAnimationFrame").and.returnValue(1);
-		spyOn(Std, "cancelAnimationFrame");
+		spyOn(window, "requestAnimationFrame").and.returnValue(1);
+		spyOn(window, "cancelAnimationFrame");
 
 		metronome.start();
 		metronome.stop();
 
-		expect(Std.cancelAnimationFrame).toHaveBeenCalled();
+		expect(window.cancelAnimationFrame).toHaveBeenCalled();
 	});
 });
