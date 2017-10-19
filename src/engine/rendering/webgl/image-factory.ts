@@ -1,14 +1,17 @@
-import AbstractImageFactory from "../abstract-image-factory.ts";
+import AbstractImageFactory from "../abstract-image-factory";
 import Image from "../image";
+import ColorPalette from "../color-palette";
 
 class ImageFactory extends AbstractImageFactory {
-	constructor(gl) {
+	private _gl: any;
+	private _palette: ColorPalette;
+
+	constructor(gl: any) {
 		super();
 		this._gl = gl;
-		this._palette = null;
 	}
 
-	buildImage(width, height, pixels) {
+	buildImage(width: number, height: number, pixels: Uint8Array): Image {
 		const gl = this._gl;
 
 		gl.activeTexture(gl.TEXTURE0);
