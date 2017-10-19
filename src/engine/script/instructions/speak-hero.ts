@@ -9,5 +9,5 @@ export const Arguments = 0;
 export const UsesText = true;
 export const Description = "Show speech bubble next to hero. _Uses `text` attribute_.";
 export default (instruction: Instruction, engine: Engine, action: Action): InstructionResult => {
-	return SpeakText(instruction, engine.hero.location, action);
+	return SpeakText(instruction.text, engine.hero.location, engine);
 };
