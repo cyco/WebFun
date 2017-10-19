@@ -1,10 +1,11 @@
 import ColorPalette from "./color-palette";
+import Image from "./image";
 
 abstract class AbstractImageFactory {
 	public palette: ColorPalette;
+	public onpalettechange: Function;
 
-	buildImage(width: number, height: number, pixelData: Uint8Array) {
-	}
+	abstract buildImage(width: number, height: number, pixelData: Uint8Array): Image;
 }
 
 export default AbstractImageFactory;
