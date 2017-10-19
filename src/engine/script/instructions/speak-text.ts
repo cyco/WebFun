@@ -1,14 +1,13 @@
 import SpeechScene from "src/engine/scenes/speech-scene";
 import * as Result from "../result";
 import { InstructionResult } from "../arguments";
-import Instruction from "../../objects/instruction";
 import Engine from "../../engine";
-import Action from "../../objects/action";
+import Point from "../../../util/point";
 
-export default (instruction: Instruction, engine: Engine, action: Action): InstructionResult => {
+export default (text: string, point: Point, engine: Engine): InstructionResult => {
 	const speechScene = new SpeechScene(engine);
-	speechScene.text = instruction.text;
-	speechScene.location = location;
+	speechScene.text = text;
+	speechScene.location = point;
 	engine.sceneManager.pushScene(speechScene);
 
 	return Result.UpdateText;
