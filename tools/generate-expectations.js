@@ -108,16 +108,15 @@ const main = (...args) => {
 
 		if (options.p) process.stdout.write("\n\n");
 
-		for (let seed = 0; seed < 100; seed++)
-			for (let size = 1;; ; ;
-		;
-		;
-		size <= 3;
-		size++;
-	)
-		for (let planet = 1; planet <= 3; planet++)
-			if (!expectations[key({seed, planet, size})])
-				process.stdout.write(`dumpWorld(${seed}, ${planet}, ${size});\n`);
+		for (let seed = 0; seed < 100; seed++) {
+			for (let size = 1; size <= 3; size++) {
+				for (let planet = 1; planet <= 3; planet++) {
+					if (!expectations[key({seed, planet, size})]) {
+						process.stdout.write(`dumpWorld(${seed}, ${planet}, ${size});\n`);
+					}
+				}
+			}
+		}
 	} catch (error) {
 		process.stderr.write(`${error}\n`);
 		exit(Exit.Error);
