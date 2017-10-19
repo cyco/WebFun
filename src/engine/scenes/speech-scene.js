@@ -24,6 +24,8 @@ class SpeechScene extends Scene {
 		this._bubble = bubble;
 	}
 
+	render() {}
+
 	willShow() {
 		this.engine.inputManager.mouseDownHandler = () => null;
 		this._modalSession = new ModalSession();
