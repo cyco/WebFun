@@ -35,7 +35,6 @@ describe("DOMImageFactory", () => {
 		expect(image.height).toBe(2);
 
 		const representation = image.representation;
-		console.log("representation; ", representation);
 		expect(representation).toHaveClass("pixelated");
 
 		/* for visual inspection

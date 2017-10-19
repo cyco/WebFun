@@ -1,4 +1,4 @@
-import { cancelAnimationFrame, performance } from "src/std";
+import { performance } from "src/std";
 import { identity } from "src/util";
 
 const TICKLENGTH = 100;
@@ -47,7 +47,7 @@ class Metronome {
 		if (!this._mainLoop) return;
 
 		this._stopped = true;
-		cancelAnimationFrame(this._mainLoop);
+		window.cancelAnimationFrame(this._mainLoop);
 		this._mainLoop = null;
 	}
 }
