@@ -77,7 +77,7 @@ class Engine extends EventTarget {
 	}
 
 	// TODO: remove calls and method
-	setCursor() {
+	setCursor(cursor: any) {
 	}
 }
 

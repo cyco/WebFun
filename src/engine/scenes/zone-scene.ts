@@ -5,19 +5,20 @@ import MapScene from "./map-scene";
 import TransitionScene from "./transition-scene";
 import { HotspotType, Tile, Zone } from "src/engine/objects";
 import Camera from "src/engine/camera";
-import { Direction, Point, rgba } from "src/util";
+import { Direction, Point, rgba, Size } from "src/util";
+import Executor from "../script/executor";
+import NPC from "../objects/npc";
+import AbstractRenderer from "../rendering/abstract-renderer";
+import Hotspot from "../objects/hotspot";
 
 class ZoneScene extends Scene {
-	constructor() {
-		super();
+	private _camera = new Camera();
+	private _actionEvaluator: Executor = null;
+	private _objects: any[] = [];
+	private _bullet: NPC = null;
+	private _zone: Zone;
 
-		this._camera = new Camera();
-		this._actionEvaluator = null;
-		this._objects = [];
-		this._bullet = null;
-	}
-
-	async update(ticks) {
+	async update(ticks: number) {
 		const engine = this.engine;
 		const hero = engine.hero;
 		hero.isWalking = false;
@@ -33,8 +34,6 @@ class ZoneScene extends Scene {
 
 			stop = this._handleKeys();
 			if (stop) return;
-		} else if (hero._actionFrames >= hero.weapon.attackDuration) {
-			this._removeBullet();
 		}
 
 		this._camera.hero = hero;
@@ -43,48 +42,16 @@ class ZoneScene extends Scene {
 		this._objects.forEach((go) => go.update(ticks));
 
 		await engine.scriptExecutor.runActions(engine);
-
-		this._handleBullet();
 	}
 
-	_handleBullet() {
-		const bullet = this._bullet;
-		if (!bullet) return;
-
-		const engine = this.engine;
-		const zone = engine.currentZone;
-		const hero = this.engine.hero;
-
-		if (!bullet.location.isInBounds(zone.size)) {
-			this._removeBullet();
-			return;
-		}
-
-		if (!zone.placeWalkable(bullet.location.x, bullet.location.y)) {
-			// TODO: damage thing at bullet.location;
-			this._removeBullet();
-			return;
-		}
-
-		if (hero._actionFrames >= hero.weapon.attackDuration) {
-			this._removeBullet();
-
-		}
-	}
-
-	_removeBullet() {
-		this._objects.splice(this._objects.indexOf(this._bullet), 1);
-		this._bullet = null;
-	}
-
-	render(renderer) {
+	render(renderer: AbstractRenderer) {
 		renderer.clear();
 
 		const zone = this.zone;
 		const offset = this._camera.offset;
 		const hero = this.engine.hero;
 
-		const renderObject = (object) => object.render(offset, renderer);
+		const renderObject = (object: any) => object.render(offset, renderer);
 		for (let z = 0; z < Zone.LAYERS; z++) {
 			for (let y = 0; y < zone.height; y++) {
 				for (let x = 0; x < zone.width; x++) {
@@ -98,17 +65,17 @@ class ZoneScene extends Scene {
 			if (z === 1) {
 				if (hero.visible) hero.render(offset, renderer);
 				// always show hero while debugging
-				else if (Settings.drawHeroTile && renderer.fillRect instanceof Function) {
-					renderer.fillRect((hero.location.x + offset.x) * Tile.WIDTH, (hero.location.y + offset.y) * Tile.HEIGHT, Tile.WIDTH, Tile.HEIGHT, rgba(0, 0, 255, 0.3));
+				else if (Settings.drawHeroTile && (<any>renderer).fillRect instanceof Function) {
+					(<any>renderer).fillRect((hero.location.x + offset.x) * Tile.WIDTH, (hero.location.y + offset.y) * Tile.HEIGHT, Tile.WIDTH, Tile.HEIGHT, rgba(0, 0, 255, 0.3));
 				}
 				this._objects.forEach(renderObject);
 			}
 		}
 
 		// show hotspots while debugging
-		if (Settings.drawHotspots && renderer.fillRect instanceof Function)
-			zone.hotspots.forEach((h) => {
-				renderer.fillRect((h.x + offset.x) * Tile.WIDTH, (h.y + offset.y) * Tile.HEIGHT, Tile.WIDTH, Tile.HEIGHT, h.enabled ? rgba(0, 255, 0, 0.3) : rgba(255, 0, 0, 0.3));
+		if (Settings.drawHotspots && (<any>renderer).fillRect instanceof Function)
+			zone.hotspots.forEach((h: Hotspot): void => {
+				(<any>renderer).fillRect((h.x + offset.x) * Tile.WIDTH, (h.y + offset.y) * Tile.HEIGHT, Tile.WIDTH, Tile.HEIGHT, h.enabled ? rgba(0, 255, 0, 0.3) : rgba(255, 0, 0, 0.3));
 			});
 	}
 
@@ -200,7 +167,7 @@ class ZoneScene extends Scene {
 		hero._actionFrames = 0;
 	}
 
-	async _moveHero(direction) {
+	async _moveHero(direction: number) {
 		const engine = this.engine;
 		const state = engine.state;
 		const hero = engine.hero;
@@ -219,7 +186,7 @@ class ZoneScene extends Scene {
 			//TODO: handle result
 		}
 
-		if (!hero.move(p, this._zone)) {
+		if (!hero.move(p, this.zone)) {
 			const doTransition = this._tryTransition(p);
 			if (doTransition === false) {
 				// TODO: play blocked sound
@@ -232,12 +199,12 @@ class ZoneScene extends Scene {
 		const zone = this.zone;
 		const hero = this.engine.hero;
 
-		const hotspotIsTriggered = (h) => h.enabled && h.x === hero.location.x && h.y === hero.location.y;
+		const hotspotIsTriggered = (h: Hotspot) => h.enabled && h.x === hero.location.x && h.y === hero.location.y;
 		const self = this;
-		zone.hotspots.filter(hotspotIsTriggered).forEach((h) => self._hotspotTriggered(h));
+		zone.hotspots.filter(hotspotIsTriggered).forEach((h: Hotspot) => self._hotspotTriggered(h));
 	}
 
-	_hotspotTriggered(hotspot) {
+	_hotspotTriggered(hotspot: Hotspot) {
 		console.log("trigger hotspot", hotspot);
 		const engine = this.engine;
 		const zone = engine.currentZone;
@@ -245,7 +212,7 @@ class ZoneScene extends Scene {
 		switch (hotspot.type) {
 			case HotspotType.DoorIn: {
 				const targetZone = engine.data.zones[hotspot.arg];
-				let waysOut = targetZone.hotspots.filter((h) => h.type === HotspotType.DoorOut);
+				let waysOut = targetZone.hotspots.filter((h: Hotspot) => h.type === HotspotType.DoorOut);
 
 				if (waysOut.length !== 1) console.warn("Found multiple doors out");
 
@@ -263,9 +230,9 @@ class ZoneScene extends Scene {
 				}
 				transitionScene.targetWorld = world;
 
-				targetZone.hotspots.filter((hotspot) => {
+				targetZone.hotspots.filter((hotspot: Hotspot) => {
 					return hotspot.type === HotspotType.DoorOut && hotspot.arg === -1;
-				}).forEach((hotspot) => hotspot.arg = zone.id);
+				}).forEach((hotspot: Hotspot) => hotspot.arg = zone.id);
 
 				if (!location) {
 					world = null;
@@ -284,7 +251,7 @@ class ZoneScene extends Scene {
 					return hotspot.type === HotspotType.DoorOut;
 				}).forEach((hotspot) => hotspot.arg = -1);
 
-				const waysIn = targetZone.hotspots.filter((hotspot) => hotspot.type === HotspotType.DoorIn && hotspot.arg === zone.id);
+				const waysIn = targetZone.hotspots.filter((hotspot: Hotspot) => hotspot.type === HotspotType.DoorIn && hotspot.arg === zone.id);
 				if (waysIn.length !== 1) console.warn("Found multiple doors we might have come through!");
 
 				const transitionScene = new TransitionScene();
@@ -357,7 +324,7 @@ class ZoneScene extends Scene {
 		}
 	}
 
-	_tryTransition(direction) {
+	_tryTransition(direction: Point): boolean|undefined {
 		const engine = this.engine;
 		const state = engine.state;
 		const hero = engine.hero;
@@ -366,7 +333,7 @@ class ZoneScene extends Scene {
 		const targetLocation = Point.add(hero.location, direction);
 		if (currentZone.containsPoint(targetLocation)) {
 			// console.log('target is on same zone!');
-			return;
+			return false;
 		}
 
 		const zoneDirection = new Point(targetLocation.x, targetLocation.y);
@@ -386,7 +353,7 @@ class ZoneScene extends Scene {
 
 		if (!zoneDirection.isUnidirectional()) {
 			console.log("can't move two zones at once!");
-			return;
+			return false;
 		}
 
 		const zoneLocation = state.worldLocation;
@@ -443,10 +410,7 @@ class ZoneScene extends Scene {
 
 	set zone(z) {
 		this._zone = z;
-		this._camera.zoneSize = {
-			width: z.width,
-			height: z.height
-		};
+		this._camera.zoneSize = new Size(z.width, z.height);
 	}
 
 	get camera() {

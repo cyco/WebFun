@@ -1,7 +1,10 @@
 import Scene from "./scene";
 import { Tile } from "src/engine/objects";
+import AbstractRenderer from "../rendering/abstract-renderer";
 
 class PauseScene extends Scene {
+	private _image: HTMLImageElement;
+
 	constructor() {
 		super();
 
@@ -12,7 +15,7 @@ class PauseScene extends Scene {
 		this._image = image;
 	}
 
-	render(renderer) {
+	render(renderer: AbstractRenderer): void {
 		for (let x = 0; x < 9; x++) {
 			for (let y = 0; y < 9; y++) {
 				renderer.renderImage({representation: this._image}, x * Tile.WIDTH, y * Tile.HEIGHT);
