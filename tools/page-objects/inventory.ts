@@ -1,4 +1,3 @@
-import MainWindow from "./main-window";
 import PageObject from "./page-object";
 
 class Inventory extends PageObject {

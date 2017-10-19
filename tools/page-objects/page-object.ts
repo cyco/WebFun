@@ -1,14 +1,14 @@
 abstract class PageObject {
-	public get selector(): string {
-		return "";
-	};
-
 	protected element: any;
 	protected parent: PageObject;
 
 	constructor(parent: PageObject) {
 		this.parent = parent;
 	}
+
+	public get selector(): string {
+		return "";
+	};
 
 	async click() {
 		await this.element.click();

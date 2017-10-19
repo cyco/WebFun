@@ -22,7 +22,7 @@ class RootPageObject extends PageObject {
 		return this.page.$$(selector);
 	}
 
-	async evaluate(code: Function, selector:string = ""): Promise<any> {
+	async evaluate(code: Function, selector: string = ""): Promise<any> {
 		return this.page.$eval(selector, code);
 	}
 }

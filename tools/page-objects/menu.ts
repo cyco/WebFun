@@ -3,6 +3,7 @@ import MenuItem from "./menu-item";
 
 class Menu extends PageObject {
 	items: MenuItem[];
+
 	public get selector() {
 		return "wf-menu-window";
 	}

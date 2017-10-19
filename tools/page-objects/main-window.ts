@@ -19,10 +19,6 @@ class MainWindow extends RootPageObject {
 
 	public element: any;
 
-	public get selector() {
-		return "wf-main-window";
-	}
-
 	constructor(page: any) {
 		super(page);
 
@@ -33,6 +29,10 @@ class MainWindow extends RootPageObject {
 		this.locationView = new LocationView(this);
 		this.ammoView = new AmmoView(this);
 		this.healthView = new HealthView(this);
+	}
+
+	public get selector() {
+		return "wf-main-window";
 	}
 
 	async setup() {
