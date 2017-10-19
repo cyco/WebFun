@@ -102,6 +102,6 @@ describe("PickupScene", () => {
 		spyOn(renderer, "renderTile");
 		scene.render(renderer);
 
-		expect(renderer.renderTile).toHaveBeenCalledWith(item, 2, 7);
+		expect(renderer.renderTile).toHaveBeenCalledWith(item, 2, 7, 1);
 	});
 });
