@@ -1,4 +1,2 @@
-import { setTimeout } from "src/std";
-
-const dispatch = (fn: Function, t: number = 0) => setTimeout(fn, t);
+const dispatch = (fn: Function, t: number = 0) => window.setTimeout(fn, t);
 export default dispatch;
