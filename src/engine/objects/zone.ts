@@ -70,7 +70,7 @@ class Zone {
 		return this._type;
 	}
 
-	get hotspots() {
+	get hotspots(): Hotspot[] {
 		return this._hotspots;
 	}
 
@@ -177,7 +177,7 @@ class Zone {
 		return !object;
 	}
 
-	containsPoint(x: number|PointLike, y: number): boolean {
+	containsPoint(x: number|PointLike, y?: number): boolean {
 		if (typeof x === "object") {
 			y = x.y;
 			x = x.x;

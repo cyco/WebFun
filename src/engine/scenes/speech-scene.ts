@@ -4,17 +4,19 @@ import { SpeechBubble } from "src/ui";
 import { ModalSession } from "src/ux";
 import { Point, Size } from "src/util";
 import Settings from "src/settings";
+import Engine from "../engine";
 
 class SpeechScene extends Scene {
-	constructor(engine = null) {
+	public engine: Engine;
+	public location: Point;
+	public tileSize: Size = new Size(Tile.WIDTH, Tile.HEIGHT);
+	private _modalSession: ModalSession = null;
+	private _bubble: SpeechBubble;
+
+	constructor(engine: Engine = null) {
 		super();
 
 		this.engine = engine;
-		this.location = null;
-
-		this.tileSize = new Size(Tile.WIDTH, Tile.HEIGHT);
-		this._modalSession = null;
-
 		this._setupBubble();
 	}
 
@@ -27,7 +29,7 @@ class SpeechScene extends Scene {
 	render() {}
 
 	willShow() {
-		this.engine.inputManager.mouseDownHandler = () => null;
+		this.engine.inputManager.mouseDownHandler = (p: Point): void => null;
 		this._modalSession = new ModalSession();
 		this._modalSession.run();
 

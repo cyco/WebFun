@@ -1,24 +1,23 @@
 import Scene from "./scene";
 import { Tile } from "src/engine/objects";
-import { Point, Size } from "src/util";
+import { Point } from "src/util";
+import AbstractRenderer from "../rendering/abstract-renderer";
+import Engine from "../engine";
 
 class DetonatorScene extends Scene {
-	constructor() {
-		super();
-		this._detonatorLocation = null;
-		this._detonatorFrames = null;
-		this._ticks = -1;
-		this.tileSize = new Size(Tile.WIDTH, Tile.HEIGHT);
-	}
+	private _detonatorLocation: Point = null;
+	private _detonatorFrames: Tile[] = null;
+	private _ticks: number = -1;
+	private _engine: Engine = null;
 
 	willShow() {
 		const self = this;
-		this.engine.inputManager.mouseDownHandler = (p) => self.mouseDown(p);
+		this.engine.inputManager.mouseDownHandler = (p: Point) => self.mouseDown(p);
 	}
 
-	mouseDown(p) {
+	mouseDown(p: Point): void {
 		this._ticks = 0;
-		this._detonatorLocation = (new Point(p)).scaleBy(9).floor();
+		this._detonatorLocation = p.clone().scaleBy(9).floor();
 		this.engine.inputManager.mouseDownHandler = null;
 	}
 
@@ -37,14 +36,14 @@ class DetonatorScene extends Scene {
 		}
 	}
 
-	render(renderer) {
+	render(renderer: AbstractRenderer) {
 		for (let i = 0; i <= this._ticks && i <= this._detonatorFrames.length; i++) {
 			const frame = this._detonatorFrames[i];
-			renderer.renderTile(frame, this._detonatorLocation.x, this._detonatorLocation.y);
+			renderer.renderTile(frame, this._detonatorLocation.x, this._detonatorLocation.y, 3);
 		}
 	}
 
-	get engine() {
+	get engine(): Engine {
 		return this._engine;
 	}
 

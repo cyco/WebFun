@@ -6,31 +6,22 @@ import { CheatCodeInput, Invincibility, UnlimitedAmmo, Weapons } from "src/engin
 import SpeechScene from "./speech-scene";
 import { Size } from "src/util";
 import Settings from "src/settings";
+import Point from "../../util/point";
+import AbstractRenderer from "../rendering/abstract-renderer";
+import Zone from "../objects/zone";
 
 const TileWidth = 28;
 const TileHeight = 28;
 
 class MapScene extends Scene {
-	static get LOCATOR_TICKS() {
-		return 10;
-	}
-
-	constructor() {
-		super();
-
-		this.engine = null;
-		this._ticks = 0;
-		this._location = null;
-
-		const cheats = [
-			new Weapons(),
-			new UnlimitedAmmo(),
-			new Invincibility()
-		];
-		this._cheatInput = new CheatCodeInput(cheats);
-
-		Object.seal(this);
-	}
+	static readonly LOCATOR_TICKS = 10;
+	private _ticks: number = 0;
+	private _location: Tile = null;
+	private _cheatInput = new CheatCodeInput([
+		new Weapons(),
+		new UnlimitedAmmo(),
+		new Invincibility()
+	]);
 
 	isOpaque() {
 		return true;
@@ -40,12 +31,10 @@ class MapScene extends Scene {
 		this._cheatInput.reset();
 
 		this._ticks = 4;
-
-		const self = this;
 		this._location = this.engine.data.tiles[0x345];
-		this.engine.inputManager.mouseDownHandler = (p) => self.mouseDown(p);
-		this.engine.inputManager.keyDownHandler = (e) => {
-			self._cheatInput.addCharacter(String.fromCharCode(e.keyCode).toLowerCase());
+		this.engine.inputManager.mouseDownHandler = (p: Point) => this.mouseDown(p);
+		this.engine.inputManager.keyDownHandler = (e: KeyboardEvent) => {
+			this._cheatInput.addCharacter(String.fromCharCode(e.keyCode).toLowerCase());
 		};
 	}
 
@@ -70,7 +59,7 @@ class MapScene extends Scene {
 		this._ticks++;
 	}
 
-	_showText(text, location) {
+	_showText(text: string, location: Point): void {
 		const speechScene = new SpeechScene(this.engine);
 		speechScene.text = text;
 		speechScene.location = location;
@@ -79,7 +68,7 @@ class MapScene extends Scene {
 		this.engine.sceneManager.pushScene(speechScene);
 	}
 
-	mouseDown(p) {
+	mouseDown(p: Point): void {
 		const viewWidth = 288,
 			viewHeight = 288;
 
@@ -125,7 +114,7 @@ class MapScene extends Scene {
 		this.engine.sceneManager.popScene();
 	}
 
-	render(renderer) {
+	render(renderer: AbstractRenderer): void {
 		renderer.clear();
 
 		const engine = this.engine;
@@ -159,7 +148,7 @@ class MapScene extends Scene {
 		}
 	}
 
-	_tileForZone(zone) {
+	private _tileForZone(zone: Zone): Tile {
 		let tile = LocatorTile.ForZone(zone);
 		if (tile instanceof Array)
 			tile = tile[zone.solved ? 1 : 0];

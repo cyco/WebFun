@@ -16,7 +16,7 @@ export default (instruction: Instruction, engine: Engine, action: Action): Instr
 	pickupScene.location = new Point(args[1], args[2]);
 	pickupScene.tile = engine.data.tiles[args[0]];
 	if (pickupScene.tile === null) {
-		pickupScene.tile = zone.puzzleGain;
+		pickupScene.tile = engine.data.tiles[zone.puzzleGain];
 		zone.solved = true;
 	}
 	engine.sceneManager.pushScene(pickupScene);

@@ -1,7 +1,10 @@
 import Scene from "./scene";
 import { Tile, Zone } from "src/engine/objects";
 import { Point } from "src/util";
-import { WebGLTexture } from "std.webgl";
+import { WebGLTexture } from "src/std.webgl";
+import World from "../generation/world";
+import ZoneScene from "./zone-scene";
+import AbstractRenderer from "../rendering/abstract-renderer";
 
 class TransitionScene extends Scene {
 	static get TRANSITION_TYPE() {
@@ -11,30 +14,20 @@ class TransitionScene extends Scene {
 		};
 	}
 
-	constructor() {
-		super();
-
-		this.type = -1;
-		this.scene = null;
-		this.engine = null;
-		this.targetHeroLocation = null;
-		this.targetZoneLocation = null;
-		this.sourceZoneLocation = null;
-
-		this.targetZone = null;
-		this.targetWorld = null;
-
-		this.state = Infinity;
-		this._source = null;
-		this._target = null;
-		this._startTime = Infinity;
-		this._duration = Infinity;
-		this._zoneSwapTime = Infinity;
-		this._snapAnimationToTiles = false;
-		this._startTime = null;
-
-		Object.seal(this);
-	}
+	public type = -1;
+	public scene: ZoneScene = null;
+	public targetHeroLocation: Point = null;
+	public targetZoneLocation: Point = null;
+	public sourceZoneLocation: Point = null;
+	public targetZone: Zone = null;
+	public targetWorld: World = null;
+	private state: number = Infinity;
+	private _source: ImageData = null;
+	private _target: ImageData = null;
+	private _startTime: number = Infinity;
+	private _duration: number = Infinity;
+	private _zoneSwapTime: number = Infinity;
+	private _snapAnimationToTiles: boolean = false;
 
 	willShow() {
 		console.log("willShow()");
@@ -108,7 +101,7 @@ class TransitionScene extends Scene {
 		// state.dispatchEvent(Event.ZoneLocationDidChange);
 	}
 
-	render(renderer) {
+	render(renderer: AbstractRenderer): void {
 		this.state = (performance.now() - this._startTime);
 
 		switch (this.type) {
@@ -122,7 +115,7 @@ class TransitionScene extends Scene {
 		}
 	}
 
-	_renderZoneAnimation(renderer) {
+	private _renderZoneAnimation(renderer: AbstractRenderer): void {
 		const w = 9.0;
 		const h = 9.0;
 
@@ -166,7 +159,7 @@ class TransitionScene extends Scene {
 		renderer.renderImageData(this._target, offsetX - xDir * w * tileWidth, offsetY - yDir * h * tileHeight);
 	}
 
-	_renderRoomAnimation(renderer) {
+	private _renderRoomAnimation(renderer: AbstractRenderer): void {
 		const fadeIn = this.state > this._duration / 2.0;
 		const directionAdjustedState = this.state - (fadeIn ? this._duration / 2.0 : 0.0);
 
@@ -192,7 +185,7 @@ class TransitionScene extends Scene {
 		renderer.fillBlackRect(0, (h - t) * tileHeight, h * tileWidth, t * tileHeight);
 	}
 
-	_takeSnapshot(zone, xOffset, yOffset) {
+	_takeSnapshot(zone: Zone, xOffset: number, yOffset: number): ImageData {
 		const canvas = document.createElement("canvas");
 		const viewWidth = 9,
 			viewHeight = 9;

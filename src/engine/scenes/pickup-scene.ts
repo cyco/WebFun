@@ -1,21 +1,27 @@
 import Scene from "./scene";
+import Engine from "../engine";
+import Tile from "../objects/tile";
+import Point from "../../util/point";
+import AbstractRenderer from "../rendering/abstract-renderer";
 
 class PickupScene extends Scene {
-	constructor(engine = null) {
+	public engine: Engine;
+	public tile: Tile;
+	public location: Point = null;
+	private _ticks: number = 0;
+
+	constructor(engine: Engine = null) {
 		super();
 
 		this.engine = engine;
-		this.tile = null;
-		this.location = null;
-		this._ticks = 0;
 	}
 
-	render(renderer) {
+	render(renderer: AbstractRenderer): void {
 		if (this._ticks % 10 >= 5) {
 			const cameraOffset = this.cameraOffset;
 			const x = this.location.x + cameraOffset.x;
 			const y = this.location.y + cameraOffset.y;
-			renderer.renderTile(this.tile, x, y);
+			renderer.renderTile(this.tile, x, y, 1);
 		}
 	}
 
