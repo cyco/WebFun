@@ -29,7 +29,7 @@ class Char {
 		return 4;
 	}
 
-	getFace(direction: Direction, frameIdx: number): number {
+	getFace(direction: number, frameIdx: number): number {
 		if (this.isHero()) {
 			frameIdx = frameIdx % 3;
 		} else {

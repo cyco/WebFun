@@ -37,7 +37,7 @@ class Loader extends EventTarget {
 		this._dataUrl = Settings.url.data;
 		this._paletteUrl = Settings.url.palette;
 
-		this.registerEvents(Event);
+		this.registerEvents(Events);
 	}
 
 	load(factory: AbstractImageFactory) {

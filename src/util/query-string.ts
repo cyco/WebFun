@@ -1,5 +1,5 @@
-export default class QueryString {
-	static Compose(data) {
+class QueryString {
+	static Compose(data: {[_: string]: string}) {
 		let result = "";
 
 		for (const key of Object.keys(data)) {
@@ -12,3 +12,5 @@ export default class QueryString {
 		return result;
 	}
 }
+
+export default QueryString;
