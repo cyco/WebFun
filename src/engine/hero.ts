@@ -16,7 +16,7 @@ class Hero extends EventTarget {
 	private invincible: boolean = false;
 	private unlimitedAmmo: boolean = false;
 	private _actionFrames: number = 0;
-	private _direction: Direction = Direction.South;
+	private _direction: number = Direction.South;
 	private _walking: boolean = false;
 	private _attacking: boolean = false;
 	private _dragging: boolean = false;
@@ -129,7 +129,7 @@ class Hero extends EventTarget {
 			this._actionFrames = 0;
 	}
 
-	face(direction: Direction): void {
+	face(direction: number): void {
 		this._direction = direction;
 	}
 

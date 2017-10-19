@@ -1,13 +1,14 @@
-import { console } from "std";
-import { sprintf } from "libs";
+import { console } from "src/std";
+import { sprintf } from "src/libs";
 
 let messagesEnabled = false;
 
 export const Enable = () => messagesEnabled = true;
 export const Disable = () => messagesEnabled = false;
-export const Finalize = () => {/**/};
+export const Finalize = () => {/**/
+};
 
-export default (...args) => {
+export default (...args: any[]) => {
 	if (!messagesEnabled) return;
 
 	let formatString = args[0];
@@ -15,7 +16,7 @@ export default (...args) => {
 
 	for (let i = 1; i < args.length; i++) {
 		let value = args[i];
-		let currentArgumentPosition = formatString.indexOf("%", lastArgumentPosition);
+		let currentArgumentPosition: number = formatString.indexOf("%", lastArgumentPosition);
 		if (currentArgumentPosition === -1) continue;
 
 		let formatArg = formatString[currentArgumentPosition + 1];

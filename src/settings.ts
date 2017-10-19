@@ -1,6 +1,6 @@
 import { persistent } from "src/util";
 
-export const Settings = {
+const Settings = {
 	AllowWebGL: false,
 
 	debug: true,
@@ -22,4 +22,5 @@ export const Settings = {
 	}
 };
 
+export { Settings };
 export default persistent(Settings, "settings");

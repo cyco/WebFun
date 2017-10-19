@@ -44,7 +44,7 @@ class DesktopInputManager extends InputManager {
 		document.removeEventListener("contextmenu", (event) => event.preventDefault());
 	}
 
-	keyDown(e: KeyEvent) {
+	keyDown(e: KeyboardEvent) {
 		let directionMask = 0;
 		switch (e.which) {
 			case KeyEvent.DOM_VK_UP:
@@ -90,7 +90,7 @@ class DesktopInputManager extends InputManager {
 		}
 	}
 
-	keyUp(e: KeyEvent) {
+	keyUp(e: KeyboardEvent) {
 		let mask = 0xFF;
 
 		switch (e.which) {
