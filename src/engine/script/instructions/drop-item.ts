@@ -3,11 +3,11 @@ import { Point } from "src/util";
 import Engine from "../../engine";
 import Action from "../../objects/action";
 import Instruction from "../../objects/instruction";
-import { Flags, InstructionResult } from "../arguments";
+import { Result, ResultFlags } from "../arguments";
 
 export const Opcode = 0x1b;
 export const Arguments = 3;
-export default (instruction: Instruction, engine: Engine, action: Action): InstructionResult => {
+export default (instruction: Instruction, engine: Engine, action: Action): Result => {
 	// TODO: validate against original implementation
 	const args = instruction.arguments;
 	const zone = engine.currentZone;
@@ -21,5 +21,5 @@ export default (instruction: Instruction, engine: Engine, action: Action): Instr
 	}
 	engine.sceneManager.pushScene(pickupScene);
 
-	return Flags.OK;
+	return ResultFlags.OK;
 };
