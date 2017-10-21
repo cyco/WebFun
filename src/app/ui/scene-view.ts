@@ -1,6 +1,8 @@
+import { SceneManager } from "src/engine";
+import Settings from "src/settings";
 import { View } from "src/ui";
 import { rgb } from "src/util";
-import { SceneManager } from "src/engine";
+import DebugInfoSceneManager from "../../debug/debug-info-scene-manager";
 
 class SceneView extends View {
 	private _manager: SceneManager;
@@ -8,8 +10,13 @@ class SceneView extends View {
 	constructor() {
 		super(document.createElement("canvas"));
 
-		this._manager = new SceneManager();
+		this._manager = this._buildSceneManager();
 		this._setupCanvas();
+	}
+
+	private _buildSceneManager() {
+		if (Settings.debug) return new DebugInfoSceneManager();
+		return new SceneManager();
 	}
 
 	get canvas() {
