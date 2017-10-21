@@ -1,5 +1,5 @@
-import Engine from "../engine";
 import { Point } from "src/util";
+import Engine from "../engine";
 import { Renderer } from "../rendering";
 
 abstract class Scene {
@@ -10,9 +10,9 @@ abstract class Scene {
 		return this.engine.sceneManager._stack[0].camera.offset;
 	}
 
-	abstract render(renderer: Renderer): void;
+	public abstract render(renderer: Renderer): void;
 
-	abstract update(ticks: number): void;
+	public abstract update(ticks: number): void;
 
 	willShow(): void {
 	}

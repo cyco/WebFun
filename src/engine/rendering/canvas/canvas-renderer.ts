@@ -1,9 +1,8 @@
-import AbstractRenderer from "../abstract-renderer";
-import DOMImageFactory from "./dom-image-factory";
-import Image from "../image";
-
-import { rgb } from "src/util";
+import { Point, rgb } from "src/util";
 import Tile from "../../objects/tile";
+import AbstractRenderer from "../abstract-renderer";
+import Image from "../image";
+import DOMImageFactory from "./dom-image-factory";
 
 const TILE_WIDTH = 32.0;
 const TILE_HEIGHT = 32.0;
@@ -70,6 +69,20 @@ class CanvasRenderer extends AbstractRenderer {
 
 	fillTile(x: number, y: number, color: string) {
 		this.fillRect(x * TILE_WIDTH, y * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT, color);
+	}
+
+	renderText(text: string, location: Point) {
+		this._ctx.save();
+		this._ctx.textAlign = "left";
+		this._ctx.shadowColor = "black";
+		this._ctx.shadowBlur = 1;
+		this._ctx.shadowOffsetX = 0;
+		this._ctx.shadowOffsetY = 1;
+		this._ctx.font = "13px \"Anonymous Pro\", monospace";
+		this._ctx.fillStyle = "white";
+
+		this._ctx.fillText(text, location.x, location.y + 13 / 2);
+		this._ctx.restore();
 	}
 }
 
