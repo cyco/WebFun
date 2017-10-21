@@ -1,7 +1,7 @@
-import Action from "src/engine/objects/action";
 import AbstractActionItem from "src/engine/objects/abstract-action-item";
-import Instruction from "src/engine/objects/instruction";
+import Action from "src/engine/objects/action";
 import Condition from "src/engine/objects/condition";
+import Instruction from "src/engine/objects/instruction";
 
 describe("Action", () => {
 	let action;

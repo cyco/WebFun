@@ -1,8 +1,8 @@
+import { twgl } from "libs";
 import AbstractRenderer from "../abstract-renderer.ts";
+import FragmentShader from "./fragment.glsl";
 import ImageFactory from "./image-factory";
 import VertexShader from "./vertex.glsl";
-import FragmentShader from "./fragment.glsl";
-import { twgl } from "libs";
 
 class WebGLRenderer extends AbstractRenderer {
 	static isSupported() {

@@ -1,6 +1,6 @@
+import { KaitaiStream } from "src/libs";
 import EventTarget from "./event-target";
 import InputStream from "./input-stream";
-import { KaitaiStream } from "src/libs";
 
 export const Event = {
 	Start: "start",

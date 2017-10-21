@@ -1,6 +1,6 @@
+import MenuItem, { State } from "src/ui/menu-item";
 import Component from "../component";
 import "./menu-item.scss";
-import MenuItem, { State } from "src/ui/menu-item";
 
 class MenuItemComponent extends Component {
 	public static TagName: string = "wf-menu-item";

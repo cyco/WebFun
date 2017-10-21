@@ -1,11 +1,11 @@
-import "./inventory.scss";
-import { ModalSession } from "src/ux";
 import Inventory, { Events as InventoryEvent } from "src/engine/inventory";
-import InventoryRow from "./inventory-row";
-import { Component } from "src/ui";
-import Yoda from "src/engine/yoda";
 import { Tile, TileAttribute, TileSubtype } from "src/engine/objects";
+import Yoda from "src/engine/yoda";
+import { Component } from "src/ui";
 import { Point } from "src/util";
+import { ModalSession } from "src/ux";
+import InventoryRow from "./inventory-row";
+import "./inventory.scss";
 
 export const Event = {
 	PlacedItem: "PlacedItem",

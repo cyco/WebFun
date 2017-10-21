@@ -1,5 +1,5 @@
-import PageObject from "./page-object";
 import MenuItem from "./menu-item";
+import PageObject from "./page-object";
 
 class Menu extends PageObject {
 	items: MenuItem[];

@@ -1,7 +1,7 @@
+import { IconButton } from "src/ui/components";
+import { dispatch } from "src/util";
 import "./speech-bubble.scss";
 import View from "./view";
-import { dispatch } from "src/util";
-import { IconButton } from "src/ui/components";
 
 export const Event = {
 	End: "end"

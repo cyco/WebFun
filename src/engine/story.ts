@@ -1,7 +1,7 @@
-import { Message, rand } from "src/util";
 import { DagobahGenerator, WorldGenerationError, WorldGenerator } from "src/engine/generation";
-import World from "./generation/world";
+import { Message, rand } from "src/util";
 import Engine from "./engine";
+import World from "./generation/world";
 import { Planet, WorldSize } from "./types";
 
 class Story {

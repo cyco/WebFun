@@ -1,10 +1,10 @@
-import Scene from "./scene";
 import { Tile } from "src/engine/objects";
-import { SpeechBubble } from "src/ui";
-import { ModalSession } from "src/ux";
-import { Point, Size } from "src/util";
 import Settings from "src/settings";
+import { SpeechBubble } from "src/ui";
+import { Point, Size } from "src/util";
+import { ModalSession } from "src/ux";
 import Engine from "../engine";
+import Scene from "./scene";
 
 class SpeechScene extends Scene {
 	public engine: Engine;
@@ -20,13 +20,22 @@ class SpeechScene extends Scene {
 		this._setupBubble();
 	}
 
+	get text() {
+		return this._bubble.text;
+	}
+
+	set text(t) {
+		this._bubble.text = t;
+	}
+
 	_setupBubble() {
 		const bubble = new SpeechBubble();
 		bubble.onend = () => this.engine.sceneManager.popScene();
 		this._bubble = bubble;
 	}
 
-	render() {}
+	render() {
+	}
 
 	willShow() {
 		this.engine.inputManager.mouseDownHandler = (p: Point): void => null;
@@ -60,14 +69,6 @@ class SpeechScene extends Scene {
 		const box = canvas.getBoundingClientRect();
 
 		return new Point(box.left, box.top, 0);
-	}
-
-	get text() {
-		return this._bubble.text;
-	}
-
-	set text(t) {
-		this._bubble.text = t;
 	}
 }
 

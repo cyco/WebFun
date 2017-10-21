@@ -1,6 +1,6 @@
 import { Point } from "src/util";
-import MenuView from "./menu-view";
 import MenuStack from "../menu-stack";
+import MenuView from "./menu-view";
 import "./menu-window.scss";
 
 class MenuWindow extends MenuView {

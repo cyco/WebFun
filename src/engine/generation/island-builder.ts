@@ -1,6 +1,6 @@
 import { HorizontalPointRange, Point, rand, VerticalPointRange } from "src/util";
-import WorldItemType from "./world-item-type";
 import PointRange from "../../util/point-range";
+import WorldItemType from "./world-item-type";
 
 const Island = {
 	East: 3,

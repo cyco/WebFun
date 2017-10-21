@@ -1,7 +1,7 @@
 import PersistentState from "src/engine/persistent-state";
-import Conditions from "./conditions";
 import Engine from "../engine";
 import Condition from "../objects/condition";
+import Conditions from "./conditions";
 
 export default class ConditionChecker {
 	public engine: Engine;

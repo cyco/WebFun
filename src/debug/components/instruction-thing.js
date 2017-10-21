@@ -1,6 +1,6 @@
 import { Component } from "src/ui";
-import BreakpointButton from "./breakpoint-button";
 import { LocationBreakpoint } from "../breakpoint";
+import BreakpointButton from "./breakpoint-button";
 
 export default class extends Component {
 	static get TagName() {

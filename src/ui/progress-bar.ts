@@ -1,5 +1,5 @@
-import View from "./view";
 import "./progress-bar.scss";
+import View from "./view";
 
 class ProgressBar extends View {
 	private _value: number = 0;

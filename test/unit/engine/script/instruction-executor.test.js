@@ -1,5 +1,5 @@
-import InstructionExecutor from "src/engine/script/instruction-executor";
 import { Opcode } from "src/engine/objects/instruction";
+import InstructionExecutor from "src/engine/script/instruction-executor";
 
 describe("InstructionExecutor", () => {
 	let executor, engine;

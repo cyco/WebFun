@@ -1,6 +1,6 @@
-import MenuView from "src/ui/components/menu-view";
-import { MenuItem as MenuItemComponent, MenuItemSeparator as MenuItemSeparatorComponent } from "src/ui/components";
 import { Menu, MenuItemSeparator } from "src/ui";
+import { MenuItem as MenuItemComponent, MenuItemSeparator as MenuItemSeparatorComponent } from "src/ui/components";
+import MenuView from "src/ui/components/menu-view";
 import { or } from "test-helpers/css";
 
 describeComponent(MenuView, () => {

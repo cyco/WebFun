@@ -1,14 +1,14 @@
-import Scene from "./scene";
-import { Tile, ZoneType } from "src/engine/objects";
-import { World } from "src/engine/generation";
-import { LocatorTile, Planet } from "src/engine/types";
 import { CheatCodeInput, Invincibility, UnlimitedAmmo, Weapons } from "src/engine/cheats";
-import SpeechScene from "./speech-scene";
-import { Size } from "src/util";
+import { World } from "src/engine/generation";
+import { Tile, ZoneType } from "src/engine/objects";
+import { LocatorTile, Planet } from "src/engine/types";
 import Settings from "src/settings";
+import { Size } from "src/util";
 import Point from "../../util/point";
-import AbstractRenderer from "../rendering/abstract-renderer";
 import Zone from "../objects/zone";
+import AbstractRenderer from "../rendering/abstract-renderer";
+import Scene from "./scene";
+import SpeechScene from "./speech-scene";
 
 const TileWidth = 28;
 const TileHeight = 28;

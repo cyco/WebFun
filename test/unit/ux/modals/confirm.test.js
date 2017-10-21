@@ -1,5 +1,5 @@
-import Confirm, { Result } from "src/ux/modals/confirm";
 import { ConfirmationWindow } from "src/ui/components";
+import Confirm, { Result } from "src/ux/modals/confirm";
 
 describe("Confirm", () => {
 	beforeAll(() => {

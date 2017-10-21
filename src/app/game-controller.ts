@@ -1,6 +1,3 @@
-import { LoadingView, SceneView } from "./ui";
-import Settings from "src/settings";
-import { MainMenu, MainWindow } from "./windows";
 import {
 	CanvasRenderer,
 	Engine,
@@ -12,16 +9,19 @@ import {
 	Story,
 	WebGLRenderer
 } from "src/engine";
-import { ZoneScene } from "src/engine/scenes";
 import { DesktopInputManager } from "src/engine/input";
-import Loader, { LoaderEventDetails } from "./loader";
-import { ScriptExecutor } from "src/engine/script";
 import { Char, Zone } from "src/engine/objects";
-import { ConfirmationResult, ModalConfirm } from "src/ux";
-import GameState from "../engine/game-state";
+import { ZoneScene } from "src/engine/scenes";
+import { ScriptExecutor } from "src/engine/script";
 import { Planet, WorldSize } from "src/engine/types";
+import Settings from "src/settings";
 import { FilePicker } from "src/ui";
 import { InputStream } from "src/util";
+import { ConfirmationResult, ModalConfirm } from "src/ux";
+import GameState from "../engine/game-state";
+import Loader, { LoaderEventDetails } from "./loader";
+import { LoadingView, SceneView } from "./ui";
+import { MainMenu, MainWindow } from "./windows";
 
 class GameController {
 	private _window: MainWindow;

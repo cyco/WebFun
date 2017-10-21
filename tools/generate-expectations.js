@@ -1,8 +1,8 @@
-import "./test/helpers/polyfill";
 import "/extension";
-import { ParseExpectation, PrepareExpectations } from "src/debug/expectation";
-import Path from "path";
 import FS from "fs";
+import Path from "path";
+import { ParseExpectation, PrepareExpectations } from "src/debug/expectation";
+import "./test/helpers/polyfill";
 
 const Exit = {
 	Normal: 0,

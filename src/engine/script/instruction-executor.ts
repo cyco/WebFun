@@ -1,7 +1,7 @@
-import Instructions from "./instructions";
-import Instruction from "../objects/instruction";
 import Engine from "../engine";
 import Action from "../objects/action";
+import Instruction from "../objects/instruction";
+import Instructions from "./instructions";
 
 class InstructionExecutor {
 	public engine: Engine;

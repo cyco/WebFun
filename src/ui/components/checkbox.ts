@@ -8,10 +8,6 @@ declare global {
 }
 
 class Checkbox extends Component {
-	static get TagName() {
-		return "wf-checkbox";
-	}
-
 	private _label: HTMLLabelElement;
 	private _box: HTMLInputElement;
 
@@ -30,17 +26,8 @@ class Checkbox extends Component {
 		this._label = label;
 	}
 
-	connectedCallback() {
-		super.connectedCallback();
-
-		this.appendChild(this._box);
-		this.appendChild(this._label);
-	}
-
-	disconnectedCallback() {
-		this.clear();
-
-		super.disconnectedCallback();
+	static get TagName() {
+		return "wf-checkbox";
 	}
 
 	get title() {
@@ -66,6 +53,19 @@ class Checkbox extends Component {
 
 	set onchange(f) {
 		this._box.onchange = f;
+	}
+
+	connectedCallback() {
+		super.connectedCallback();
+
+		this.appendChild(this._box);
+		this.appendChild(this._label);
+	}
+
+	disconnectedCallback() {
+		this.clear();
+
+		super.disconnectedCallback();
 	}
 }
 

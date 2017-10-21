@@ -1,5 +1,5 @@
-import MenuWindow from "src/ui/components/menu-window";
 import { Menu, MenuStack } from "src/ui";
+import MenuWindow from "src/ui/components/menu-window";
 import { Point } from "src/util";
 
 describeComponent(MenuWindow, () => {

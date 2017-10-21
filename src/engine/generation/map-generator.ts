@@ -1,8 +1,8 @@
 import { HorizontalPointRange, Point, rand, randmod, Range, srand, VerticalPointRange } from "src/util";
-import IslandBuilder from "./island-builder";
-import GetDistanceToCenter from "./distance-to-center";
-import WorldItemType from "./world-item-type";
 import { WorldSize } from "../types";
+import GetDistanceToCenter from "./distance-to-center";
+import IslandBuilder from "./island-builder";
+import WorldItemType from "./world-item-type";
 
 const IslandOrientation = {
 	Left: 1,

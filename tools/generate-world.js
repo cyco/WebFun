@@ -1,14 +1,14 @@
 import "babel-polyfill";
-import "../test/helpers/polyfill";
-import "src/extension";
-import Yodesk from "src/engine/file-format/yodesk.ksy";
-import { GameData, Story } from "src/engine";
-import { Enable as EnabledMessages, Finalize as FinalizeMessages } from "src/util/message";
-import { CompareWorldItems, ComparisonResult, ParseExpectation, PrepareExpectations } from "src/debug/expectation";
+import FS from "fs";
 import KaitaiStream from "kaitai-struct/KaitaiStream";
 import Path from "path";
-import FS from "fs";
+import { CompareWorldItems, ComparisonResult, ParseExpectation, PrepareExpectations } from "src/debug/expectation";
+import { GameData, Story } from "src/engine";
+import Yodesk from "src/engine/file-format/yodesk.ksy";
+import "src/extension";
+import { Enable as EnabledMessages, Finalize as FinalizeMessages } from "src/util/message";
 import { Planet, WorldSize } from "../src/engine/types";
+import "../test/helpers/polyfill";
 
 const Exit = {
 	Normal: 0,

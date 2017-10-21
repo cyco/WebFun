@@ -1,5 +1,5 @@
-import * as Type from "../../types";
 import { Type as HotspotType } from "../../objects/hotspot";
+import * as Type from "../../types";
 
 const toHotspotType = function () {
 	if (this & Type.TILE_SPEC_THE_FORCE) {

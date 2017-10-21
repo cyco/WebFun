@@ -1,5 +1,5 @@
-import WorldItem from "./world-item";
 import { Point, Rectangle, Size } from "../../util";
+import WorldItem from "./world-item";
 
 class World {
 	_world: WorldItem[];

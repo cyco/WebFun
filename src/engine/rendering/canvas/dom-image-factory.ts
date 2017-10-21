@@ -1,6 +1,6 @@
 import AbstractImageFactory from "../abstract-image-factory";
-import Image from "../image";
 import ColorPalette from "../color-palette";
+import Image from "../image";
 
 class DOMImageFactory extends AbstractImageFactory {
 	private _palette: ColorPalette = null;

@@ -1,5 +1,5 @@
-import { console } from "src/std";
 import { sprintf } from "src/libs";
+import { console } from "src/std";
 
 let messagesEnabled = false;
 

@@ -1,6 +1,6 @@
 import AbstractImageFactory from "../abstract-image-factory";
-import Image from "../image";
 import ColorPalette from "../color-palette";
+import Image from "../image";
 
 class ImageFactory extends AbstractImageFactory {
 	private _gl: any;
@@ -9,6 +9,17 @@ class ImageFactory extends AbstractImageFactory {
 	constructor(gl: any) {
 		super();
 		this._gl = gl;
+	}
+
+	get palette() {
+		return this._palette;
+	}
+
+	set palette(palette) {
+		this._palette = palette;
+		if (this.onpalettechange instanceof Function) {
+			this.onpalettechange(palette);
+		}
 	}
 
 	buildImage(width: number, height: number, pixels: Uint8Array): Image {
@@ -24,17 +35,6 @@ class ImageFactory extends AbstractImageFactory {
 		gl.texImage2D(gl.TEXTURE_2D, 0, gl.ALPHA, width, height, 0, gl.ALPHA, gl.UNSIGNED_BYTE, pixels);
 
 		return new Image(width, height, texture);
-	}
-
-	get palette() {
-		return this._palette;
-	}
-
-	set palette(palette) {
-		this._palette = palette;
-		if (this.onpalettechange instanceof Function) {
-			this.onpalettechange(palette);
-		}
 	}
 }
 

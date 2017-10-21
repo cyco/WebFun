@@ -1,6 +1,6 @@
-import Scene from "./scenes/scene";
 import Engine from "./engine";
 import { Renderer } from "./rendering";
+import Scene from "./scenes/scene";
 
 class SceneManager {
 	public engine: Engine = null;

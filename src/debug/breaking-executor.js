@@ -1,6 +1,6 @@
-import { Promise } from "std";
-import { EventTarget } from "src/util";
 import { ConditionChecker, InstructionExecutor } from "src/engine/script";
+import { EventTarget } from "src/util";
+import { Promise } from "std";
 import { LocationBreakpoint } from "./breakpoint";
 import BreakpointStore from "./breakpoint-store";
 

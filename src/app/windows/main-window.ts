@@ -1,12 +1,12 @@
-import { Group, Window } from "src/ui/components";
 import { Ammo, Health, Inventory, Location, Weapon } from "src/app/ui/components";
 import { Direction } from "src/app/ui/components/location";
 import { default as Engine, Events } from "src/engine/engine";
 import Hero from "src/engine/hero";
-import "./main-window.scss";
+import { Group, Window } from "src/ui/components";
 import World from "../../engine/generation/world";
 import Zone from "../../engine/objects/zone";
 import InventoryComponent from "../ui/components/inventory";
+import "./main-window.scss";
 
 class MainWindow extends Window {
 	public static TagName = "wf-main-window";

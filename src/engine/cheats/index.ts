@@ -1,5 +1,5 @@
-import CheatCodeInput from "./cheat-code-input";
 import Cheat from "./cheat";
+import CheatCodeInput from "./cheat-code-input";
 import Invincibility from "./invincibility";
 import UnlimitedAmmo from "./unlimited-ammo";
 import Weapons from "./weapons";

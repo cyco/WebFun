@@ -1,6 +1,6 @@
-import { getFixtureData } from "../helpers/fixture-loading";
 import KaitaiStream from "kaitai-struct/KaitaiStream";
 import Yodesk from "../../src/engine/file-format/yodesk.ksy";
+import { getFixtureData } from "../helpers/fixture-loading";
 
 describe("Kaitai-Struct parsing", () => {
 	let gameDataBuffer;

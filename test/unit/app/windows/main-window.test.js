@@ -1,7 +1,7 @@
-import MainWindow from "src/app/windows/main-window";
 import { Ammo, Health, Inventory, Location, Weapon } from "src/app/ui/components";
-import { Events as HeroEvents } from "src/engine/hero";
+import MainWindow from "src/app/windows/main-window";
 import { Events as EngineEvents } from "src/engine/engine";
+import { Events as HeroEvents } from "src/engine/hero";
 import { EventTarget } from "src/util";
 
 describeComponent(MainWindow, () => {

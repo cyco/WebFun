@@ -1,19 +1,12 @@
-import Scene from "./scene";
 import { Tile, Zone } from "src/engine/objects";
-import { Point } from "src/util";
 import { WebGLTexture } from "src/std.webgl";
+import { Point } from "src/util";
 import World from "../generation/world";
-import ZoneScene from "./zone-scene";
 import AbstractRenderer from "../rendering/abstract-renderer";
+import Scene from "./scene";
+import ZoneScene from "./zone-scene";
 
 class TransitionScene extends Scene {
-	static get TRANSITION_TYPE() {
-		return {
-			ZONE: 0,
-			ROOM: 1
-		};
-	}
-
 	public type = -1;
 	public scene: ZoneScene = null;
 	public targetHeroLocation: Point = null;
@@ -28,6 +21,13 @@ class TransitionScene extends Scene {
 	private _duration: number = Infinity;
 	private _zoneSwapTime: number = Infinity;
 	private _snapAnimationToTiles: boolean = false;
+
+	static get TRANSITION_TYPE() {
+		return {
+			ZONE: 0,
+			ROOM: 1
+		};
+	}
 
 	willShow() {
 		console.log("willShow()");
@@ -115,6 +115,51 @@ class TransitionScene extends Scene {
 		}
 	}
 
+	_takeSnapshot(zone: Zone, xOffset: number, yOffset: number): ImageData {
+		const canvas = document.createElement("canvas");
+		const viewWidth = 9,
+			viewHeight = 9;
+		const tileWidth = Tile.WIDTH,
+			tileHeight = Tile.HEIGHT;
+
+		canvas.width = viewWidth * tileWidth;
+		canvas.height = viewHeight * tileHeight;
+		const ctx = canvas.getContext("2d");
+
+
+		for (let l = 0; l < Zone.LAYERS; l++) {
+			for (let y = 0; y < viewHeight; y++) {
+				for (let x = 0; x < viewWidth; x++) {
+					const tile = zone.getTile(x - xOffset, y - yOffset, l);
+					if (!tile) continue;
+
+					if (tile.image.representation instanceof WebGLTexture) {
+						continue;
+					}
+					ctx.drawImage(tile.image.representation, x * tileWidth, y * tileHeight);
+				}
+			}
+
+			if (l === 1 && zone === this.engine.currentZone) {
+				const hero = this.engine.hero;
+				if (!hero.visible) continue;
+
+				const tile = hero._appearance.getFace(hero._direction, hero._actionFrames);
+				if (!tile) continue;
+
+				const x1 = (hero._location.x + xOffset) * tileWidth;
+				const y1 = (hero._location.y + yOffset) * tileHeight;
+
+				if (tile.image.representation instanceof WebGLTexture) {
+					continue;
+				}
+				ctx.drawImage(tile.image.representation, x1, y1);
+			}
+		}
+
+		return ctx.getImageData(0, 0, viewWidth * tileWidth, viewHeight * tileHeight);
+	}
+
 	private _renderZoneAnimation(renderer: AbstractRenderer): void {
 		const w = 9.0;
 		const h = 9.0;
@@ -183,51 +228,6 @@ class TransitionScene extends Scene {
 		renderer.fillBlackRect(0, 0, t * tileWidth, h * tileHeight);
 		renderer.fillBlackRect((w - t) * tileWidth, 0, t * tileWidth, h * tileHeight);
 		renderer.fillBlackRect(0, (h - t) * tileHeight, h * tileWidth, t * tileHeight);
-	}
-
-	_takeSnapshot(zone: Zone, xOffset: number, yOffset: number): ImageData {
-		const canvas = document.createElement("canvas");
-		const viewWidth = 9,
-			viewHeight = 9;
-		const tileWidth = Tile.WIDTH,
-			tileHeight = Tile.HEIGHT;
-
-		canvas.width = viewWidth * tileWidth;
-		canvas.height = viewHeight * tileHeight;
-		const ctx = canvas.getContext("2d");
-
-
-		for (let l = 0; l < Zone.LAYERS; l++) {
-			for (let y = 0; y < viewHeight; y++) {
-				for (let x = 0; x < viewWidth; x++) {
-					const tile = zone.getTile(x - xOffset, y - yOffset, l);
-					if (!tile) continue;
-
-					if (tile.image.representation instanceof WebGLTexture) {
-						continue;
-					}
-					ctx.drawImage(tile.image.representation, x * tileWidth, y * tileHeight);
-				}
-			}
-
-			if (l === 1 && zone === this.engine.currentZone) {
-				const hero = this.engine.hero;
-				if (!hero.visible) continue;
-
-				const tile = hero._appearance.getFace(hero._direction, hero._actionFrames);
-				if (!tile) continue;
-
-				const x1 = (hero._location.x + xOffset) * tileWidth;
-				const y1 = (hero._location.y + yOffset) * tileHeight;
-
-				if (tile.image.representation instanceof WebGLTexture) {
-					continue;
-				}
-				ctx.drawImage(tile.image.representation, x1, y1);
-			}
-		}
-
-		return ctx.getImageData(0, 0, viewWidth * tileWidth, viewHeight * tileHeight);
 	}
 }
 

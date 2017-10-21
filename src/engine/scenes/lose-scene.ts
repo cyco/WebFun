@@ -1,5 +1,5 @@
-import Scene from "./scene";
 import { Renderer } from "../rendering";
+import Scene from "./scene";
 
 class LoseScene extends Scene {
 	update(ticks: number) {

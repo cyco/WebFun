@@ -1,8 +1,9 @@
 import "babel-polyfill";
 
 import "src/extension";
-import "./matchers";
 import { describeComponent, fdescribeComponent, xdescribeComponent } from "./component";
+import "./matchers";
+import render from "./render";
 import {
 	describeCondition,
 	describeInstruction,
@@ -11,7 +12,6 @@ import {
 	xdescribeCondition,
 	xdescribeInstruction
 } from "./script";
-import render from "./render";
 
 global.render = render;
 

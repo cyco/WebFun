@@ -8,6 +8,10 @@ class DiscardingOutputStream extends OutputStream {
 		this.endianess = Stream.ENDIAN.LITTLE;
 	}
 
+	get buffer(): ArrayBuffer {
+		return null;
+	}
+
 	writeUint8(value: number) {
 		this._offset += Uint8Array.BYTES_PER_ELEMENT;
 	}
@@ -76,10 +80,6 @@ class DiscardingOutputStream extends OutputStream {
 		for (let i = 0, len = array.length; i < len; i++) {
 			this.writeUint32(array[i]);
 		}
-	}
-
-	get buffer(): ArrayBuffer {
-		return null;
 	}
 }
 

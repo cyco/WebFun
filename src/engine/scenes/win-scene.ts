@@ -1,5 +1,5 @@
-import Scene from "./scene";
 import { Renderer } from "../rendering";
+import Scene from "./scene";
 
 class WinScene extends Scene {
 	update(ticks: number) {

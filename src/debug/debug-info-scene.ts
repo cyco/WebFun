@@ -17,6 +17,10 @@ class DebugInfoScene extends Scene {
 		renderer.renderText(`${this._ticks} ticks`, new Point(10, 265));
 	}
 
+	public update(ticks: number): void {
+		this._ticks += ticks;
+	}
+
 	private calculateFPS() {
 		const smoothing = 0.9;
 		const now = performance.now();
@@ -24,10 +28,6 @@ class DebugInfoScene extends Scene {
 
 		this._fps = (this._fps * smoothing) + (1 / secondsSinceLastFrame * (1.0 - smoothing));
 		this._lastFrame = now;
-	}
-
-	public update(ticks: number): void {
-		this._ticks += ticks;
 	}
 }
 

@@ -1,6 +1,6 @@
 import { Direction, Point } from "src/util";
-import Type from "./char-type";
 import CharFrame from "./char-frame";
+import Type from "./char-type";
 
 export { Type };
 

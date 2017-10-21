@@ -1,17 +1,13 @@
-import Component from "../component";
-import Menubar from "./menubar";
 import { identity } from "src/util";
-import View from "../view";
-import "./window-titlebar.scss";
-import Window from "./window";
 import Point from "../../util/point";
+import Component from "../component";
 import Menu from "../menu";
+import View from "../view";
+import Menubar from "./menubar";
+import Window from "./window";
+import "./window-titlebar.scss";
 
 class WindowTitlebar extends Component {
-	static get TagName() {
-		return "wf-window-titlebar";
-	}
-
 	private _menu: Menu = null;
 	private _menubar: Menubar = null;
 	private _titleNode: HTMLElement = null;
@@ -26,33 +22,8 @@ class WindowTitlebar extends Component {
 		this._closeButton.element.classList.add("close-button");
 	}
 
-	connectedCallback() {
-		super.connectedCallback();
-
-		this.appendChild(this._closeButton.element);
-		if (this._menubar) this.appendChild(this._menubar);
-	}
-
-	private _setupDragging(win: Window) {
-		let dragLocation: Point;
-		const mouseMove = (event: MouseEvent) => {
-			win.x = event.clientX - dragLocation.x;
-			win.y = event.clientY - dragLocation.y;
-		};
-
-		const mouseUp = () => {
-			window.removeEventListener("mouseup", mouseUp);
-			window.removeEventListener("mousemove", mouseMove);
-		};
-
-		const mouseDown = (event: MouseEvent) => {
-			if (event.target !== this) return;
-			dragLocation = new Point(event.clientX - win.x, event.clientY - win.y);
-			window.addEventListener("mouseup", mouseUp);
-			window.addEventListener("mousemove", mouseMove);
-		};
-
-		this.addEventListener("mousedown", mouseDown);
+	static get TagName() {
+		return "wf-window-titlebar";
 	}
 
 	get window() {
@@ -114,6 +85,35 @@ class WindowTitlebar extends Component {
 
 	set closable(flag) {
 		this._closeButton.element.style.display = flag ? "" : "none";
+	}
+
+	connectedCallback() {
+		super.connectedCallback();
+
+		this.appendChild(this._closeButton.element);
+		if (this._menubar) this.appendChild(this._menubar);
+	}
+
+	private _setupDragging(win: Window) {
+		let dragLocation: Point;
+		const mouseMove = (event: MouseEvent) => {
+			win.x = event.clientX - dragLocation.x;
+			win.y = event.clientY - dragLocation.y;
+		};
+
+		const mouseUp = () => {
+			window.removeEventListener("mouseup", mouseUp);
+			window.removeEventListener("mousemove", mouseMove);
+		};
+
+		const mouseDown = (event: MouseEvent) => {
+			if (event.target !== this) return;
+			dragLocation = new Point(event.clientX - win.x, event.clientY - win.y);
+			window.addEventListener("mouseup", mouseUp);
+			window.addEventListener("mousemove", mouseMove);
+		};
+
+		this.addEventListener("mousedown", mouseDown);
 	}
 }
 
