@@ -26,7 +26,7 @@ class DesktopInputManager extends InputManager {
 		return this._lastMouse;
 	}
 
-	addListeners() {
+	public addListeners() {
 		document.addEventListener("keydown", this.keyDown.bind(this));
 		document.addEventListener("keyup", this.keyUp.bind(this));
 		document.addEventListener("mousemove", this.mouseMove.bind(this));
@@ -35,7 +35,7 @@ class DesktopInputManager extends InputManager {
 		document.addEventListener("contextmenu", (event) => event.preventDefault());
 	}
 
-	removeListeners() {
+	public removeListeners() {
 		document.removeEventListener("keydown", this.keyDown.bind(this));
 		document.removeEventListener("keyup", this.keyUp.bind(this));
 		document.removeEventListener("mousemove", this.mouseMove.bind(this));

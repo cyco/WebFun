@@ -16,8 +16,8 @@ class Metronome {
 	private _tickCallback = (t: number = 0) => this._performTick(t);
 	private _updatesSuspended: boolean = false;
 
-	private ontick: Function = identity;
-	private onrender: Function = identity;
+	public ontick: Function = identity;
+	public onrender: Function = identity;
 
 	constructor() {
 		this._nextTick = performance.now();

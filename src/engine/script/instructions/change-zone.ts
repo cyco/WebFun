@@ -1,4 +1,5 @@
 import { TransitionScene } from "src/engine/scenes";
+import ZoneScene from "src/engine/scenes/zone-scene";
 import { Point } from "src/util";
 import Engine from "../../engine";
 import Action from "../../objects/action";
@@ -15,7 +16,8 @@ export default (instruction: Instruction, engine: Engine, action: Action): Resul
 	transitionScene.type = TransitionScene.TRANSITION_TYPE.ROOM;
 	transitionScene.targetHeroLocation = new Point(args[1], args[2]);
 	transitionScene.targetZone = engine.data.zones[args[0]];
-	transitionScene.scene = engine.sceneManager.currentScene;
+	console.assert(engine.sceneManager.currentScene instanceof ZoneScene);
+	transitionScene.scene = <ZoneScene>engine.sceneManager.currentScene;
 
 	let world = engine.dagobah;
 	let location = world.locationOfZone(transitionScene.targetZone);

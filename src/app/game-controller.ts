@@ -106,6 +106,7 @@ class GameController {
 		}
 
 		const story = new Story(0x0000, Planet.ENDOR, WorldSize.Large);
+		this._engine.inventory.removeAllItems();
 		await story.generateWorld(this._engine);
 		this._engine.story = story;
 

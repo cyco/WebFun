@@ -1,7 +1,9 @@
-class CharFrame {
-	private _tiles: number[];
+import Tile from "src/engine/objects/tile";
 
-	constructor(tiles: number[]) {
+class CharFrame {
+	private _tiles: Tile[];
+
+	constructor(tiles: Tile[]) {
 		this._tiles = tiles;
 	}
 

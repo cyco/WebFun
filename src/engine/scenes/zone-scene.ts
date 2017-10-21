@@ -245,7 +245,8 @@ class ZoneScene extends Scene {
 				transitionScene.type = TransitionScene.TRANSITION_TYPE.ROOM;
 				transitionScene.targetHeroLocation = new Point(waysOut.first().x, waysOut.first().y);
 				transitionScene.targetZone = targetZone;
-				transitionScene.scene = engine.sceneManager.currentScene;
+				console.assert(engine.sceneManager.currentScene instanceof ZoneScene);
+				transitionScene.scene = <ZoneScene>engine.sceneManager.currentScene;
 
 				let world = engine.dagobah;
 				let location = world.locationOfZone(targetZone);
@@ -283,7 +284,8 @@ class ZoneScene extends Scene {
 				transitionScene.type = TransitionScene.TRANSITION_TYPE.ROOM;
 				transitionScene.targetHeroLocation = new Point(waysIn.first().x, waysIn.first().y);
 				transitionScene.targetZone = targetZone;
-				transitionScene.scene = engine.sceneManager.currentScene;
+				console.assert(engine.sceneManager.currentScene instanceof ZoneScene);
+				transitionScene.scene = <ZoneScene>engine.sceneManager.currentScene;
 
 				let world = engine.dagobah;
 				let location = world.locationOfZone(targetZone);
@@ -310,7 +312,8 @@ class ZoneScene extends Scene {
 				transitionScene.type = TransitionScene.TRANSITION_TYPE.ROOM;
 				transitionScene.targetHeroLocation = new Point(0, 0);
 				transitionScene.targetZone = targetZone;
-				transitionScene.scene = engine.sceneManager.currentScene;
+				console.assert(engine.sceneManager.currentScene instanceof ZoneScene);
+				transitionScene.scene = <ZoneScene>engine.sceneManager.currentScene;
 
 				const world = engine.world;
 				const location = world.locationOfZone(targetZone);
@@ -333,7 +336,8 @@ class ZoneScene extends Scene {
 				transitionScene.type = TransitionScene.TRANSITION_TYPE.ROOM;
 				transitionScene.targetHeroLocation = new Point(0, 0);
 				transitionScene.targetZone = targetZone;
-				transitionScene.scene = engine.sceneManager.currentScene;
+				console.assert(engine.sceneManager.currentScene instanceof ZoneScene);
+				transitionScene.scene = <ZoneScene>engine.sceneManager.currentScene;
 
 				const location = engine.dagobah.locationOfZone(targetZone);
 				if (!location) {
