@@ -11,6 +11,7 @@ export default {
 	title: "Debug",
 	mnemonic: 0,
 	submenu: [
+		SettingsItem("Draw Debug Stats", "drawDebugStats"),
 		SettingsItem("Draw invisible Hero", "drawHeroTile"),
 		SettingsItem("Reveal World", "revealWorld"),
 		SettingsItem("Show Hotspots", "drawHotspots"),
