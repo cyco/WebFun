@@ -111,9 +111,8 @@ async function start() {
 		const newStoryItem = fileMenu.itemWithTitle("New World");
 		await newStoryItem.hover();
 		await TakeScreenshot(page, "on new world item");
-		await newStoryItem.click();
+		newStoryItem.click();
 		await record(page, 120);
-		await TakeScreenshot(page, "running game");
 
 		/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 		await TakeScreenshot(page, "end");
