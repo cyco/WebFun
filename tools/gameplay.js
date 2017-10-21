@@ -1,6 +1,6 @@
 import "babel-polyfill";
-import Path from "path";
 import Fs from "fs";
+import Path from "path";
 import Puppeteer from "puppeteer";
 import MainWindow from "./page-objects/main-window";
 import Menu from "./page-objects/menu";
@@ -37,11 +37,15 @@ async function TakeScreenshot(page, name) {
 let recordIndex = 1;
 
 async function record(page, frames) {
-	let index = recordIndex++;
-	for (let i = 0; i < frames; i++) {
-		await sleep(100);
-		await TakeScreenshot(page, "recording_" + index);
-	}
+	return new Promise(async (resolve, reject) => {
+		await page.exposeFunction("onMetronomeTick", async () => {
+			await TakeScreenshot(page, "recording_" + (++recordIndex));
+			if (recordIndex === frames) {
+				resolve();
+				await page.evaluate(() => window.onMetronomeTick = null);
+			}
+		});
+	});
 }
 
 async function inject(page) {
@@ -109,7 +113,7 @@ async function start() {
 		await TakeScreenshot(page, "on new world item");
 		await newStoryItem.click();
 		await TakeScreenshot(page, "clicked new world item");
-		await record(page, 30);
+		await record(page, 120);
 		await TakeScreenshot(page, "running game");
 
 		/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
