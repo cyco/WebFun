@@ -1,8 +1,8 @@
 import SpeechScene from "src/engine/scenes/speech-scene";
-import * as Result from "../result";
-import { InstructionResult } from "../arguments";
-import Engine from "../../engine";
 import Point from "../../../util/point";
+import Engine from "../../engine";
+
+import { Flags as Result, InstructionResult } from "../arguments";
 
 export default (text: string, point: Point, engine: Engine): InstructionResult => {
 	const speechScene = new SpeechScene(engine);

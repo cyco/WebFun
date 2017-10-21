@@ -1,9 +1,9 @@
 import ZoneScene from "src/engine/scenes/zone-scene";
-import * as Result from "../result";
-import { InstructionResult } from "../arguments";
-import Instruction from "../../objects/instruction";
 import Engine from "../../engine";
 import Action from "../../objects/action";
+import Instruction from "../../objects/instruction";
+
+import { Flags as Result, InstructionResult } from "../arguments";
 
 export const Opcode = 0x12;
 export const Arguments = 2;
