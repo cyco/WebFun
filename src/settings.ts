@@ -7,6 +7,7 @@ const Settings = {
 	debugWorldGeneration: false,
 	debugActions: false,
 
+	drawDebugStats: true,
 	drawHotspots: true,
 	drawHeroTile: true,
 	identifyTranslucentScenes: true,
@@ -22,5 +23,4 @@ const Settings = {
 	}
 };
 
-export { Settings };
 export default persistent(Settings, "settings");
