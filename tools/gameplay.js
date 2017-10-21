@@ -112,7 +112,6 @@ async function start() {
 		await newStoryItem.hover();
 		await TakeScreenshot(page, "on new world item");
 		await newStoryItem.click();
-		await TakeScreenshot(page, "clicked new world item");
 		await record(page, 120);
 		await TakeScreenshot(page, "running game");
 
