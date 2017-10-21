@@ -5,10 +5,6 @@ import Group from "./radio-group";
 export { Group };
 
 class RadioButton extends Component {
-	static get TagName() {
-		return "wf-radio-button";
-	}
-
 	private _radio: HTMLInputElement;
 	private _label: HTMLLabelElement;
 
@@ -26,16 +22,8 @@ class RadioButton extends Component {
 		this._label = label;
 	}
 
-	connectedCallback() {
-		super.connectedCallback();
-
-		this.appendChild(this._radio);
-		this.appendChild(this._label);
-	}
-
-	disconnectedCallback() {
-		super.disconnectedCallback();
-		this.clear();
+	static get TagName() {
+		return "wf-radio-button";
 	}
 
 	get title() {
@@ -70,6 +58,18 @@ class RadioButton extends Component {
 
 	set groupID(id) {
 		this._radio.name = id;
+	}
+
+	connectedCallback() {
+		super.connectedCallback();
+
+		this.appendChild(this._radio);
+		this.appendChild(this._label);
+	}
+
+	disconnectedCallback() {
+		super.disconnectedCallback();
+		this.clear();
 	}
 }
 

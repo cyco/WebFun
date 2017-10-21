@@ -1,8 +1,8 @@
-import { dispatch, EventTarget, FileLoader, InputStream } from "src/util";
 import { ColorPalette, DataFileReader, GameData } from "src/engine";
 import { Tile } from "src/engine/objects";
-import Settings from "src/settings";
 import { AbstractImageFactory } from "src/engine/rendering";
+import Settings from "src/settings";
+import { dispatch, EventTarget, FileLoader, InputStream } from "src/util";
 
 export const Events = {
 	Progress: "progress",

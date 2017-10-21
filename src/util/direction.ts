@@ -10,6 +10,10 @@ class Direction {
 	public static readonly North = 270;
 	public static readonly NorthEast = 315;
 
+	constructor() {
+		throw "static class";
+	}
+
 	static Normalize(direction: number): number {
 		let result = direction % 360.0;
 		if (result < 0)
@@ -31,10 +35,6 @@ class Direction {
 	static CalculateRelativeCoordinates(direction: number, distance: number): Point {
 		let rad = direction * Math.PI / 180.0;
 		return new Point(distance * Math.round(Math.cos(rad)), distance * Math.round(Math.sin(rad)));
-	}
-
-	constructor() {
-		throw "static class";
 	}
 }
 

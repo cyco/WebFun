@@ -1,5 +1,5 @@
-import View from "./view";
 import "./textbox.scss";
+import View from "./view";
 
 class Textbox extends View {
 	constructor() {

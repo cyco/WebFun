@@ -1,15 +1,15 @@
-import Settings from "src/settings";
-import Scene from "./scene";
-import PauseScene from "./pause-scene";
-import MapScene from "./map-scene";
-import TransitionScene from "./transition-scene";
-import { HotspotType, Tile, Zone } from "src/engine/objects";
 import Camera from "src/engine/camera";
+import { HotspotType, Tile, Zone } from "src/engine/objects";
+import Settings from "src/settings";
 import { Direction, Point, rgba, Size } from "src/util";
-import Executor from "../script/executor";
+import Hotspot from "../objects/hotspot";
 import NPC from "../objects/npc";
 import AbstractRenderer from "../rendering/abstract-renderer";
-import Hotspot from "../objects/hotspot";
+import Executor from "../script/executor";
+import MapScene from "./map-scene";
+import PauseScene from "./pause-scene";
+import Scene from "./scene";
+import TransitionScene from "./transition-scene";
 
 class ZoneScene extends Scene {
 	private _camera = new Camera();
@@ -17,6 +17,31 @@ class ZoneScene extends Scene {
 	private _objects: any[] = [];
 	private _bullet: NPC = null;
 	private _zone: Zone;
+
+	get zone() {
+		return this._zone;
+	}
+
+	set zone(z) {
+		this._zone = z;
+		this._camera.zoneSize = new Size(z.width, z.height);
+	}
+
+	get camera() {
+		return this._camera;
+	}
+
+	get currentOffset() {
+		return this._camera.offset;
+	}
+
+	get objects() {
+		return this._objects;
+	}
+
+	set objects(o) {
+		this._objects = o;
+	}
 
 	async update(ticks: number) {
 		const engine = this.engine;
@@ -402,31 +427,6 @@ class ZoneScene extends Scene {
 
 	willHide() {
 		this.engine.setCursor(null);
-	}
-
-	get zone() {
-		return this._zone;
-	}
-
-	set zone(z) {
-		this._zone = z;
-		this._camera.zoneSize = new Size(z.width, z.height);
-	}
-
-	get camera() {
-		return this._camera;
-	}
-
-	get currentOffset() {
-		return this._camera.offset;
-	}
-
-	get objects() {
-		return this._objects;
-	}
-
-	set objects(o) {
-		this._objects = o;
 	}
 }
 

@@ -1,6 +1,6 @@
-import "./inventory-row.scss";
-import { Component } from "src/ui";
 import { Tile } from "src/engine/objects";
+import { Component } from "src/ui";
+import "./inventory-row.scss";
 
 class InventoryRow extends Component {
 	public static TagName = "wf-inventory-row";

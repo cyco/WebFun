@@ -1,5 +1,5 @@
-import "./ammo.scss";
 import { Component } from "src/ui";
+import "./ammo.scss";
 
 class AmmoComponent extends Component {
 	public static TagName = "wf-ammo";

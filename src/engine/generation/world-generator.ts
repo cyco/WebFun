@@ -1,15 +1,15 @@
-import { constantly, HorizontalPointRange, identity, Point, rand, srand, VerticalPointRange } from "src/util";
-import MapGenerator from "./map-generator";
-import WorldItemType from "./world-item-type";
-import World from "./world";
-import { Planet, WorldSize } from "src/engine/types";
-import GetDistanceToCenter from "./distance-to-center";
 import { Hotspot, HotspotType, Puzzle, PuzzleType, Tile, Zone, ZoneType } from "src/engine/objects";
+import { Planet, WorldSize } from "src/engine/types";
+import { constantly, HorizontalPointRange, identity, Point, rand, srand, VerticalPointRange } from "src/util";
 import { and, not } from "src/util/functional";
-import WorldGenerationError from "./world-generation-error";
 import Engine from "../engine";
-import WorldItem from "./world-item";
 import * as Type from "../types";
+import GetDistanceToCenter from "./distance-to-center";
+import MapGenerator from "./map-generator";
+import World from "./world";
+import WorldGenerationError from "./world-generation-error";
+import WorldItem from "./world-item";
+import WorldItemType from "./world-item-type";
 
 type Map = Uint16Array;
 

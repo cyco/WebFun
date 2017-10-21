@@ -14,13 +14,13 @@ class RadioGroup extends EventTarget {
 		buttons.forEach((b) => self.addButton(b));
 	}
 
+	get buttons() {
+		return this._buttons;
+	}
+
 	addButton(button: RadioButton) {
 		this._buttons.push(button);
 		button.groupID = this._id;
-	}
-
-	get buttons() {
-		return this._buttons;
 	}
 }
 

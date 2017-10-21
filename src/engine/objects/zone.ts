@@ -1,11 +1,11 @@
 import { PointLike, Size } from "src/util";
-import { default as Hotspot, Type as HotspotType } from "./hotspot";
-import Type from "./zone-type";
-import Layer from "./zone-layer";
-import NPC from "./npc";
-import Action from "./action";
-import Tile from "./tile";
 import { Planet } from "../types";
+import Action from "./action";
+import { default as Hotspot, Type as HotspotType } from "./hotspot";
+import NPC from "./npc";
+import Tile from "./tile";
+import Layer from "./zone-layer";
+import Type from "./zone-type";
 
 export { Type, Layer };
 

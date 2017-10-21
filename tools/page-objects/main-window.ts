@@ -1,12 +1,12 @@
-import RootPageObject from "./root-page-object";
-
-import Menubar from "./menubar";
+import AmmoView from "./ammo-view";
 import GameView from "./game-view";
 import HealthView from "./health-view";
 import Inventory from "./inventory";
-import WeaponView from "./weapon-view";
-import AmmoView from "./ammo-view";
 import LocationView from "./location-view";
+
+import Menubar from "./menubar";
+import RootPageObject from "./root-page-object";
+import WeaponView from "./weapon-view";
 
 class MainWindow extends RootPageObject {
 	menubar: Menubar;

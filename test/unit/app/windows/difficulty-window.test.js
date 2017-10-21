@@ -1,5 +1,5 @@
-import DifficultyWindow from "src/app/windows/difficulty-window";
 import { SettingsWindow } from "src/app/ui/components";
+import DifficultyWindow from "src/app/windows/difficulty-window";
 
 describeComponent(DifficultyWindow, () => {
 	let subject;

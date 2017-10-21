@@ -1,9 +1,9 @@
-import "./debugger.scss";
 import { ComponentRegistry, Textbox } from "src/ui";
 import { Window } from "src/ui/components";
-import SteppingMetronome, { Status as MetronomeStatus } from "./stepping-metronome";
 import BreakingExecutor, { Continuation as ContinuationMode } from "./breaking-executor";
 import * as Components from "./components";
+import "./debugger.scss";
+import SteppingMetronome, { Status as MetronomeStatus } from "./stepping-metronome";
 
 export default class {
 	constructor(engine) {

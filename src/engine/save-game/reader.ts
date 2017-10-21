@@ -1,10 +1,10 @@
-import GameData from "../game-data";
 import { InputStream, Point } from "../../util";
+import GameData from "../game-data";
+import { Action, Hotspot, HotspotType, NPC, Tile, Zone } from "../objects";
 import { Planet, WorldSize } from "../types";
+import SaveState from "./save-state";
 import World from "./world";
 import WorldItem from "./world-item";
-import { Action, Hotspot, HotspotType, NPC, Tile, Zone } from "../objects";
-import SaveState from "./save-state";
 
 class Reader {
 	_data: GameData;

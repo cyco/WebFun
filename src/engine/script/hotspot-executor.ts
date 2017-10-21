@@ -1,7 +1,7 @@
 import { HotspotType, ZoneLayer } from "src/engine/objects";
 import Engine from "../engine";
-import Zone from "../objects/zone";
 import Hotspot from "../objects/hotspot";
+import Zone from "../objects/zone";
 
 class HotspotExecutor {
 	private _engine: Engine;

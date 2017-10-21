@@ -1,6 +1,6 @@
-import Cheat from "./cheat";
 import Yoda from "src/engine/yoda";
 import Engine from "../engine";
+import Cheat from "./cheat";
 
 class WeaponsCheat extends Cheat {
 	get code() {

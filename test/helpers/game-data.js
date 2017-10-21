@@ -1,6 +1,6 @@
-import { getFixtureData } from "./fixture-loading";
-import Yodesk from "../../src/engine/file-format/yodesk.ksy";
 import KaitaiStream from "kaitai-struct/KaitaiStream";
+import Yodesk from "../../src/engine/file-format/yodesk.ksy";
+import { getFixtureData } from "./fixture-loading";
 
 export default (callback) => {
 	getFixtureData("yoda.data", function (file) {

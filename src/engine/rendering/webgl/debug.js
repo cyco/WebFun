@@ -1,9 +1,9 @@
+import { twgl } from "libs";
+import Settings from "src/settings";
 import { Window } from "src/ui/components";
 import { FileLoader } from "src/util";
-import Settings from "src/settings";
-import { twgl } from "libs";
-import VertexShader from "./vertex.glsl";
 import FragmentShader from "./fragment.glsl";
+import VertexShader from "./vertex.glsl";
 
 class WebGLDebug {
 	constructor() {

@@ -14,11 +14,6 @@ class SceneView extends View {
 		this._setupCanvas();
 	}
 
-	private _buildSceneManager() {
-		if (Settings.debug) return new DebugInfoSceneManager();
-		return new SceneManager();
-	}
-
 	get canvas() {
 		return this.element;
 	}
@@ -37,6 +32,11 @@ class SceneView extends View {
 		canvas.classList.add("pixelated");
 		canvas.width = 288;
 		canvas.height = 288;
+	}
+
+	private _buildSceneManager() {
+		if (Settings.debug) return new DebugInfoSceneManager();
+		return new SceneManager();
 	}
 }
 

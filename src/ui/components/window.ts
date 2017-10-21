@@ -1,6 +1,6 @@
 import Component from "../component";
-import WindowTitlebar from "./window-titlebar";
 import View from "../view";
+import WindowTitlebar from "./window-titlebar";
 import "./window.scss";
 
 class Window extends Component {

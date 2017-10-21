@@ -1,8 +1,8 @@
+import contains from "./contains";
 import padEnd from "./pad-end";
 import padStart from "./pad-start";
-import uuid from "./uuid";
 import trimCharacter from "./trim-character";
-import contains from "./contains";
+import uuid from "./uuid";
 
 export {
 	padEnd,

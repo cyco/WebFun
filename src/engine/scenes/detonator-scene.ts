@@ -1,14 +1,26 @@
-import Scene from "./scene";
 import { Tile } from "src/engine/objects";
 import { Point } from "src/util";
-import AbstractRenderer from "../rendering/abstract-renderer";
 import Engine from "../engine";
+import AbstractRenderer from "../rendering/abstract-renderer";
+import Scene from "./scene";
 
 class DetonatorScene extends Scene {
 	private _detonatorLocation: Point = null;
 	private _detonatorFrames: Tile[] = null;
 	private _ticks: number = -1;
 	private _engine: Engine = null;
+
+	get engine(): Engine {
+		return this._engine;
+	}
+
+	set engine(e) {
+		this._engine = e;
+		if (!e) return;
+
+		const data = e.data;
+		this._detonatorFrames = [0x202, 0x431, 0x432, 0x433].map((id) => data.getTile(id));
+	}
 
 	willShow() {
 		const self = this;
@@ -41,18 +53,6 @@ class DetonatorScene extends Scene {
 			const frame = this._detonatorFrames[i];
 			renderer.renderTile(frame, this._detonatorLocation.x, this._detonatorLocation.y, 3);
 		}
-	}
-
-	get engine(): Engine {
-		return this._engine;
-	}
-
-	set engine(e) {
-		this._engine = e;
-		if (!e) return;
-
-		const data = e.data;
-		this._detonatorFrames = [0x202, 0x431, 0x432, 0x433].map((id) => data.getTile(id));
 	}
 }
 

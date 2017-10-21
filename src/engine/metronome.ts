@@ -43,13 +43,6 @@ class Metronome {
 		}
 	}
 
-	private _performUpdate(now: number): boolean {
-		this._nextTick = now + TICKLENGTH;
-		if (this._updatesSuspended) return false;
-		this.ontick(1);
-		return true;
-	}
-
 	public stop() {
 		if (this._stopped) return;
 		if (!this._mainLoop) return;
@@ -72,6 +65,13 @@ class Metronome {
 		}
 
 		this._updatesSuspended = false;
+	}
+
+	private _performUpdate(now: number): boolean {
+		this._nextTick = now + TICKLENGTH;
+		if (this._updatesSuspended) return false;
+		this.ontick(1);
+		return true;
 	}
 }
 

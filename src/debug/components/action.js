@@ -1,11 +1,11 @@
-import "./action.scss";
 import { Component } from "src/ui";
 import { IconButton } from "src/ui/components";
+import { localStorage } from "std.dom";
+import { LocationBreakpoint } from "../breakpoint";
+import "./action.scss";
 import BreakpointButton from "./breakpoint-button";
 import Condition from "./condition";
 import Instruction from "./instruction";
-import { LocationBreakpoint } from "../breakpoint";
-import { localStorage } from "std.dom";
 
 export default class extends Component {
 	static get TagName() {

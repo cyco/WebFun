@@ -1,6 +1,6 @@
 import { identity, Point, PointLike } from "src/util";
-import WorldItem from "./world-item";
 import { Zone } from "../objects";
+import WorldItem from "./world-item";
 
 export const width = 10;
 export const height = 10;

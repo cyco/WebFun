@@ -1,6 +1,6 @@
-import Scene from "./scene";
 import { Tile } from "src/engine/objects";
 import AbstractRenderer from "../rendering/abstract-renderer";
+import Scene from "./scene";
 
 class PauseScene extends Scene {
 	private _image: HTMLImageElement;

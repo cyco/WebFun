@@ -1,6 +1,6 @@
 import { KeyEvent, Point } from "src/util";
-import InputManager, { Direction } from "./input-manager";
 import Engine from "../engine";
+import InputManager, { Direction } from "./input-manager";
 
 class DesktopInputManager extends InputManager {
 	private _element: HTMLElement;

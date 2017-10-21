@@ -1,7 +1,6 @@
+import GameData from "src/engine/game-data";
 import { Component } from "src/ui";
 import "./weapon.scss";
-
-import GameData from "src/engine/game-data";
 
 class Weapon extends Component {
 	public static TagName = "wf-weapon";

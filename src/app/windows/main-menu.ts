@@ -1,14 +1,14 @@
+import { Menu as DebugMenu } from "src/debug";
+import Settings from "src/settings";
 import { Menu, MenuItemSeparator as Separator } from "src/ui";
 import { WindowModalSession } from "src/ux";
-import Settings from "src/settings";
-import { Menu as DebugMenu } from "src/debug";
-import StatisticsWindow from "./statistics-window";
+import { document } from "../../std.dom";
+import Window from "../../ui/components/window";
+import GameController from "../game-controller";
 import DifficultyWindow from "./difficulty-window";
 import GameSpeedWindow from "./game-speed-window";
-import GameController from "../game-controller";
+import StatisticsWindow from "./statistics-window";
 import WorldSizeWindow from "./world-size-window";
-import Window from "../../ui/components/window";
-import { document } from "../../std.dom";
 
 export default class extends Menu {
 	constructor(gameController: GameController) {

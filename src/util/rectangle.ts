@@ -1,5 +1,5 @@
-import Size from "./size";
 import Point from "./point";
+import Size from "./size";
 
 class Rectangle {
 	origin: Point;

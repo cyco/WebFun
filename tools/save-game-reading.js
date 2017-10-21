@@ -1,12 +1,12 @@
-import "../test/helpers/^";
-import "src/extension";
-import { InputStream } from "src/util";
-import Yodesk from "src/engine/file-format/yodesk.ksy";
-import { GameData, SaveGameReader, SaveGameWriter } from "src/engine";
+import FS from "fs";
 import KaitaiStream from "kaitai-struct/KaitaiStream";
 import Path from "path";
-import FS from "fs";
+import { GameData, SaveGameReader, SaveGameWriter } from "src/engine";
+import Yodesk from "src/engine/file-format/yodesk.ksy";
+import "src/extension";
+import { InputStream } from "src/util";
 import DiscardingOutputStream from "../src/util/discarding-output-stream";
+import "../test/helpers/^";
 
 const readFile = (path) => {
 	const buffer = FS.readFileSync(path);

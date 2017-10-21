@@ -1,6 +1,7 @@
 import * as Array from "./array";
 import * as ArrayBuffer from "./array-buffer";
 import * as Element from "./element";
+import * as HTMLCollection from "./html-collection";
 import * as Image from "./image";
 import * as NodeList from "./node-list";
 import * as Number from "./number";
@@ -10,7 +11,6 @@ import * as Storage from "./storage";
 import * as String from "./string";
 import * as Uint16Array from "./uint16-array";
 import * as Uint8Array from "./uint8-array";
-import * as HTMLCollection from "./html-collection";
 
 export {
 	Array,

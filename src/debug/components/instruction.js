@@ -1,5 +1,5 @@
-import EnumName from "../enum-name";
 import { Opcode } from "src/engine/script/instructions";
+import EnumName from "../enum-name";
 import InstructionThing from "./instruction-thing";
 
 export default class extends InstructionThing {

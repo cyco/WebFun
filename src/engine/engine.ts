@@ -1,9 +1,9 @@
 import { EventTarget } from "src/util";
-import Story from "./story";
-import PersistentState from "./persistent-state";
-import GameState from "./game-state";
 import Events from "./engine-events";
+import GameState from "./game-state";
 import Zone from "./objects/zone";
+import PersistentState from "./persistent-state";
+import Story from "./story";
 
 export { Events };
 

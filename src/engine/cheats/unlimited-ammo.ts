@@ -1,5 +1,5 @@
-import Cheat from "./cheat";
 import Engine from "../engine";
+import Cheat from "./cheat";
 
 class UnlimitedAmmoCheat extends Cheat {
 	get code(): string {

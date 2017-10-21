@@ -1,9 +1,9 @@
 import { CompareWorldItems, ComparisonResult, ParseExpectation, PrepareExpectations } from "src/debug/expectation";
+import { getFixtureContent } from "test-helpers/fixture-loading";
 
 import loadGameData from "test-helpers/game-data";
-import { getFixtureContent } from "test-helpers/fixture-loading";
-import Story from "../../src/engine/story";
 import GameData from "../../src/engine/game-data";
+import Story from "../../src/engine/story";
 import { Planet, WorldSize } from "../../src/engine/types";
 
 let rawData = null;

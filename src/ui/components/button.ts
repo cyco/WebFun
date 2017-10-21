@@ -1,5 +1,5 @@
-import IconButton from "./icon-button";
 import "./button.scss";
+import IconButton from "./icon-button";
 
 class Button extends IconButton {
 	public static TagName = "wf-button";

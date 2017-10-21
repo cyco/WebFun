@@ -1,5 +1,5 @@
-import render from "test-helpers/render";
 import Group from "src/ui/components/group";
+import render from "test-helpers/render";
 
 describe("group", () => {
 	let subject;

@@ -1,13 +1,9 @@
-import Component from "../component";
-import "./slider.scss";
 import { document } from "src/std.dom";
 import { dispatch } from "src/util";
+import Component from "../component";
+import "./slider.scss";
 
 class Slider extends Component {
-	static get TagName() {
-		return "wf-slider";
-	}
-
 	private _value = 0;
 	private _min = 0;
 	private _max = 0;
@@ -21,6 +17,93 @@ class Slider extends Component {
 	private _minText: string;
 	private _midText: string;
 	private _maxText: string;
+
+	static get TagName() {
+		return "wf-slider";
+	}
+
+	get min() {
+		return this._min;
+	}
+
+	set min(v) {
+		this._min = v;
+		this.layout();
+	}
+
+	get value() {
+		return this._value;
+	}
+
+	set value(v) {
+		this._value = Math.max(this._min, Math.min(v, this._max));
+		this.layout();
+	}
+
+	get max() {
+		return this._max;
+	}
+
+	set max(v) {
+		this._max = v;
+		this.layout();
+	}
+
+	get minText() {
+		return this._minText;
+	}
+
+	set minText(t) {
+		this._minText = t;
+	}
+
+	get midText() {
+		return this._midText;
+	}
+
+	set midText(t) {
+		this._midText = t;
+	}
+
+	get maxText() {
+		return this._maxText;
+	}
+
+	set maxText(t) {
+		this._maxText = t;
+	}
+
+	get continuous() {
+		return this._continuous;
+	}
+
+	set continuous(c) {
+		this._continuous = c;
+	}
+
+	get onChange() {
+		return this._onChange;
+	}
+
+	set onChange(fn) {
+		this._onChange = fn;
+	}
+
+	get snapToIntegers() {
+		return this._snapToIntegers;
+	}
+
+	set snapToIntegers(s) {
+		this._snapToIntegers = s;
+	}
+
+	get steps() {
+		return this._steps;
+	}
+
+	set steps(s) {
+		this._steps = s;
+	}
 
 	connectedCallback() {
 		super.connectedCallback();
@@ -176,89 +259,6 @@ class Slider extends Component {
 		if (this._onChange instanceof Function) {
 			this._onChange(this);
 		}
-	}
-
-	get min() {
-		return this._min;
-	}
-
-	set min(v) {
-		this._min = v;
-		this.layout();
-	}
-
-	get value() {
-		return this._value;
-	}
-
-	set value(v) {
-		this._value = Math.max(this._min, Math.min(v, this._max));
-		this.layout();
-	}
-
-	get max() {
-		return this._max;
-	}
-
-	set max(v) {
-		this._max = v;
-		this.layout();
-	}
-
-	get minText() {
-		return this._minText;
-	}
-
-	set minText(t) {
-		this._minText = t;
-	}
-
-	get midText() {
-		return this._midText;
-	}
-
-	set midText(t) {
-		this._midText = t;
-	}
-
-	get maxText() {
-		return this._maxText;
-	}
-
-	set maxText(t) {
-		this._maxText = t;
-	}
-
-	get continuous() {
-		return this._continuous;
-	}
-
-	set continuous(c) {
-		this._continuous = c;
-	}
-
-	get onChange() {
-		return this._onChange;
-	}
-
-	set onChange(fn) {
-		this._onChange = fn;
-	}
-
-	get snapToIntegers() {
-		return this._snapToIntegers;
-	}
-
-	set snapToIntegers(s) {
-		this._snapToIntegers = s;
-	}
-
-	get steps() {
-		return this._steps;
-	}
-
-	set steps(s) {
-		this._steps = s;
 	}
 }
 

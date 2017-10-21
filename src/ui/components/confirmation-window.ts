@@ -1,7 +1,7 @@
-import "./confirmation-window.scss";
-import Button from "./button";
-import Window from "./window";
 import { Description } from "../../description";
+import Button from "./button";
+import "./confirmation-window.scss";
+import Window from "./window";
 
 class ConfirmationWindow extends Window {
 	public static TagName = "wf-confirmation-window";

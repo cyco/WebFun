@@ -1,8 +1,8 @@
 import { Point } from "src/util";
 import { ModalSession } from "src/ux";
+import MenuStack from "../menu-stack";
 import MenuView from "./menu-view";
 import MenuWindow from "./menu-window";
-import MenuStack from "../menu-stack";
 import "./menubar.scss";
 
 class Menubar extends MenuView {

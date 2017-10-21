@@ -1,6 +1,6 @@
+import { Window } from "src/ui/components";
 import { dispatch } from "src/util";
 import ModalSession from "./modal-session";
-import { Window } from "src/ui/components";
 
 class WindowModalSession extends ModalSession {
 	private _window: Window;

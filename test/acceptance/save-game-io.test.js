@@ -1,10 +1,10 @@
 import "src/engine";
-import loadGameData from "test-helpers/game-data";
-import { getFixtureData } from "test-helpers/fixture-loading";
+import GameData from "src/engine/game-data";
 import SaveGameReader from "src/engine/save-game/reader.ts";
 import SaveGameWriter from "src/engine/save-game/writer.ts";
-import GameData from "src/engine/game-data";
 import { InputStream, OutputStream } from "src/util";
+import { getFixtureData } from "test-helpers/fixture-loading";
+import loadGameData from "test-helpers/game-data";
 
 xdescribe("Save Game IO", () => {
 	let data, state, inputStream;

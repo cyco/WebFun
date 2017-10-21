@@ -1,5 +1,5 @@
-import Renderer from "./renderer";
 import ImageFactory from "./image-factory";
+import Renderer from "./renderer";
 
 export {
 	Renderer,

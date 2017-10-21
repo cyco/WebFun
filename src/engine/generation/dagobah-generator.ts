@@ -1,10 +1,10 @@
-import { randmod } from "src/util";
-import World from "./world";
 import { HotspotType, ZoneType } from "src/engine/objects";
+import { randmod } from "src/util";
 import Engine from "../engine";
-import WorldGenerator from "./world-generator";
-import Hotspot from "../objects/hotspot";
 import GameData from "../game-data";
+import Hotspot from "../objects/hotspot";
+import World from "./world";
+import WorldGenerator from "./world-generator";
 
 const TILE_YODA = 0x30c;
 const TILE_YODAS_SEAT = 2034;

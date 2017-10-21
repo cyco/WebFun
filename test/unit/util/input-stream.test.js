@@ -1,6 +1,6 @@
-import { getFixtureData } from "test-helpers/fixture-loading";
-import Stream from "src/util/stream";
 import InputStream from "src/util/input-stream";
+import Stream from "src/util/stream";
+import { getFixtureData } from "test-helpers/fixture-loading";
 
 describe("InputStream", () => {
 	let buffer;

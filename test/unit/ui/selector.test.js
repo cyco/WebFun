@@ -1,5 +1,5 @@
-import sandboxed from "test-helpers/dom-sandbox";
 import Selector from "src/ui/selector";
+import sandboxed from "test-helpers/dom-sandbox";
 
 describe("Selector", sandboxed((sand) => {
 	let selector;

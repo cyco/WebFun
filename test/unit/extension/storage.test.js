@@ -1,5 +1,5 @@
-import storeFn from "src/extension/storage/store";
 import loadFn from "src/extension/storage/load";
+import storeFn from "src/extension/storage/store";
 
 describe("Storage", () => {
 	let originalSetItem, originalGetItem, originalConsoleWarn;

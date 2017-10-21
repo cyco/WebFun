@@ -1,7 +1,7 @@
-import ConditionChecker from "./condition-checker";
-import InstructionExecutor from "./instruction-executor";
 import Engine from "../engine";
 import Action from "../objects/action";
+import ConditionChecker from "./condition-checker";
+import InstructionExecutor from "./instruction-executor";
 
 class ScriptExecutor {
 	private _engine: Engine = null;
