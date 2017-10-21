@@ -29,6 +29,11 @@ class Inventory extends EventTarget {
 		});
 	}
 
+	removeAllItems(): void {
+		this._items = [];
+		this.dispatchEvent(Events.ItemsDidChange);
+	}
+
 	removeItem(item: Tile): void {
 		const index = this._items.indexOf(item);
 		if (index === -1) return;

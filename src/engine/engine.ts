@@ -1,8 +1,16 @@
 import { EventTarget } from "src/util";
 import Events from "./engine-events";
 import GameState from "./game-state";
-import Zone from "./objects/zone";
+import { World } from "./generation";
+import Hero from "./hero";
+import { InputManager } from "./input";
+import Inventory from "./inventory";
+import Metronome from "./metronome";
+import { Zone } from "./objects";
 import PersistentState from "./persistent-state";
+import { AbstractImageFactory, Renderer } from "./rendering";
+import SceneManager from "./scene-manager";
+import { ScriptExecutor } from "./script";
 import Story from "./story";
 
 export { Events };
@@ -10,21 +18,21 @@ export { Events };
 class Engine extends EventTarget {
 	static readonly Event = Events;
 
-	public metronome: any = null;
-	public inputManager: any = null;
-	public sceneManager: any = null;
-	public renderer: any = null;
-	public imageFactory: any = null;
+	public metronome: Metronome = null;
+	public inputManager: InputManager = null;
+	public sceneManager: SceneManager = null;
+	public renderer: Renderer = null;
+	public imageFactory: AbstractImageFactory = null;
 	public data: any = null;
-	public hero: any = null;
-	public inventory: any = null;
-	public scriptExecutor: any = null;
+	public hero: Hero = null;
+	public inventory: Inventory = null;
+	public scriptExecutor: ScriptExecutor = null;
 	public story: Story = null;
 	public persistentState: PersistentState = null;
 	public state: any = null;
 	public gameState: GameState = GameState.Stopped;
 	private _currentZone: Zone = null;
-	private _currentWorld: any = null;
+	private _currentWorld: World = null;
 
 	constructor() {
 		super();

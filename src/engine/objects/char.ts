@@ -1,6 +1,7 @@
 import { Direction, Point } from "src/util";
 import CharFrame from "./char-frame";
 import Type from "./char-type";
+import Tile from "./tile";
 
 export { Type };
 
@@ -29,7 +30,7 @@ class Char {
 		return 4;
 	}
 
-	getFace(direction: number, frameIdx: number): number {
+	getFace(direction: number, frameIdx: number): Tile {
 		if (this.isHero()) {
 			frameIdx = frameIdx % 3;
 		} else {
@@ -85,7 +86,7 @@ class Char {
 		 */
 	}
 
-	_getBullettile(inertia: Point): number {
+	_getBullettile(inertia: Point): Tile {
 		const frame = this._frames.first();
 
 		if (inertia.x) return inertia.x === 1 ? frame.right : frame.left;

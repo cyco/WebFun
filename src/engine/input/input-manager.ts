@@ -14,12 +14,18 @@ class InputManager {
 	protected _drag: boolean = false;
 	protected _attack: boolean = false;
 	protected _walk: boolean = false;
-	protected pause: boolean = false;
-	protected locator: boolean = false;
-	protected scrollDown: boolean = false;
-	protected scrollUp: boolean = false;
-	protected endDialog: boolean = false;
-	protected pickUp: boolean = false;
+	public pause: boolean = false;
+	public locator: boolean = false;
+	public scrollDown: boolean = false;
+	public scrollUp: boolean = false;
+	public endDialog: boolean = false;
+	public pickUp: boolean = false;
+
+	public addListeners(): void {
+	}
+
+	public removeListeners(): void {
+	}
 
 	get directions() {
 		return this._direction;

@@ -11,17 +11,17 @@ export const Events = {
 
 class Hero extends EventTarget {
 	public visible: boolean = false;
-	private _location: Point = new Point(0, 0, 1);
+	public _location: Point = new Point(0, 0, 1); // TODO: make private again
 	private _health: number = MAX_HEALTH;
-	private invincible: boolean = false;
-	private unlimitedAmmo: boolean = false;
-	private _actionFrames: number = 0;
-	private _direction: number = Direction.South;
+	public invincible: boolean = false;
+	public unlimitedAmmo: boolean = false;
+	public _actionFrames: number = 0; // TODO: make private again
+	public _direction: number = Direction.South; // TODO: make private again
 	private _walking: boolean = false;
 	private _attacking: boolean = false;
 	private _dragging: boolean = false;
 	private _weapon: Char = null;
-	private _appearance: Char = null;
+	public _appearance: Char = null;// TODO: make private again
 	private _ammo: number;
 
 	static get Event() {

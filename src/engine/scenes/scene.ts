@@ -7,7 +7,7 @@ abstract class Scene {
 
 	get cameraOffset(): Point {
 		// TODO: remove access to private variable stack and dependency on stack order
-		return this.engine.sceneManager._stack[0].camera.offset;
+		return (<any>this.engine.sceneManager)._stack[0].camera.offset;
 	}
 
 	public abstract render(renderer: Renderer): void;
