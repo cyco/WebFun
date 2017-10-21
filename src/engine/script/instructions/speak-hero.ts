@@ -1,7 +1,7 @@
-import { InstructionResult } from "../arguments";
-import Instruction from "../../objects/instruction";
 import Engine from "../../engine";
 import Action from "../../objects/action";
+import Instruction from "../../objects/instruction";
+import { InstructionResult } from "../arguments";
 import SpeakText from "./speak-text";
 
 export const Opcode = 0x04;

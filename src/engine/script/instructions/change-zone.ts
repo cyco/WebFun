@@ -1,9 +1,9 @@
 import { TransitionScene } from "src/engine/scenes";
 import { Point } from "src/util";
-import { InstructionResult } from "../arguments";
-import Instruction from "../../objects/instruction";
 import Engine from "../../engine";
 import Action from "../../objects/action";
+import Instruction from "../../objects/instruction";
+import { Flags, InstructionResult } from "../arguments";
 
 export const Opcode = 0x21;
 export const Arguments = 3;
@@ -31,5 +31,5 @@ export default (instruction: Instruction, engine: Engine, action: Action): Instr
 	}
 	transitionScene.targetZoneLocation = location;
 	engine.sceneManager.pushScene(transitionScene);
-	return true;
+	return Flags.OK;
 };
