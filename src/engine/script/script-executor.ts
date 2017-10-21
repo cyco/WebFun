@@ -1,3 +1,4 @@
+import { ResultFlags } from "src/engine/script/arguments";
 import Engine from "../engine";
 import Action from "../objects/action";
 import ConditionChecker from "./condition-checker";
@@ -54,8 +55,9 @@ class ScriptExecutor {
 		this._executor.action = action;
 		for (let i = action.instructionPointer | 0, len = action.instructions.length; i < len; i++) {
 			action.instructionPointer = i + 1;
-			const wait = this._executor.execute(action.instructions[i]);
-			if (wait === true) return true;
+			const result = this._executor.execute(action.instructions[i]);
+			if ((result & ResultFlags.Wait)) return true;
+			if ((result & ResultFlags.UpdateZone)) break;
 		}
 		this._executor.action = null;
 		action.instructionPointer = 0;
