@@ -12,56 +12,66 @@ class Metronome {
 	public static Event = Event;
 	private _stopped: boolean = false;
 	private _mainLoop: number = null;
-	private _lastTick: number;
 	private _nextTick: number;
-	private _onTick = (t: number = 0) => this._tick(t);
-	private _ticked: boolean = false;
+	private _tickCallback = (t: number = 0) => this._performTick(t);
+	private _updatesSuspended: boolean = false;
 
 	private ontick: Function = identity;
 	private onrender: Function = identity;
 
 	constructor() {
-		this._lastTick = performance.now();
 		this._nextTick = performance.now();
 	}
 
 	start() {
 		this._stopped = false;
-		this._tick();
+		this._nextTick = 0;
+		this._performTick();
 	}
 
-	async _tick(time = 0) {
+	async _performTick(now = performance.now()) {
 		if (this._stopped) return;
 
-		this._mainLoop = window.requestAnimationFrame(this._onTick);
-		if (time === 0)
-			time = performance.now();
-
-		let ticked = false;
-		if (time >= this._nextTick) {
-			this.ontick(1);
-			this._nextTick = time + TICKLENGTH;
-			ticked = true;
-		}
-
+		this._mainLoop = window.requestAnimationFrame(this._tickCallback);
+		const updated = now >= this._nextTick && this._performUpdate(now);
 		this.onrender();
 
-		if (ticked && (<any>window).onMetronomeTick instanceof Function) {
-			window.cancelAnimationFrame(this._mainLoop);
-			dispatch(async () => {
-				await(<any>window).onMetronomeTick();
-				this._mainLoop = window.requestAnimationFrame(this._onTick);
-			});
+		if (updated && (<any>window).onMetronomeTick instanceof Function) {
+			this.withSuspendedUpdates(dispatch(async () => {
+				await (<any>window).onMetronomeTick();
+			}));
 		}
 	}
 
-	stop() {
+	private _performUpdate(now: number): boolean {
+		this._nextTick = now + TICKLENGTH;
+		if (this._updatesSuspended) return false;
+		this.ontick(1);
+		return true;
+	}
+
+	public stop() {
 		if (this._stopped) return;
 		if (!this._mainLoop) return;
 
 		this._stopped = true;
 		window.cancelAnimationFrame(this._mainLoop);
 		this._mainLoop = null;
+	}
+
+	public async withSuspendedUpdates<T>(thing: Function|Promise<T>) {
+		console.assert(!this._updatesSuspended, "withSuspendedUpdates does not support reentry");
+		this._updatesSuspended = true;
+
+		if (thing instanceof Promise) {
+			await thing;
+		}
+
+		if (thing instanceof Function) {
+			await thing();
+		}
+
+		this._updatesSuspended = false;
 	}
 }
 
