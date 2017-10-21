@@ -1,11 +1,11 @@
 import Engine from "../../engine";
 import Action from "../../objects/action";
 import Instruction from "../../objects/instruction";
-import { Flags as Result, InstructionResult } from "../arguments";
+import { Result, ResultFlags } from "../arguments";
 
 export const Opcode = 0x13;
 export const Arguments = -1;
-export default (instruction: Instruction, engine: Engine, action: Action): InstructionResult => {
+export default (instruction: Instruction, engine: Engine, action: Action): Result => {
 	/*
 	 v37 = instruction->arg4;
 	 v78 = instruction->arg3;
@@ -68,5 +68,5 @@ export default (instruction: Instruction, engine: Engine, action: Action): Instr
 	 */
 
 	// original implementation actually has a hard break here
-	return Result.UpdateViewport;
+	return ResultFlags.UpdateViewport;
 };

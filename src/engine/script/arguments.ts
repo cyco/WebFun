@@ -1,7 +1,13 @@
-type int16 = number;
-type InstructionResult = number;
+import Engine from "../engine";
+import { Action, Instruction, Zone } from "../objects";
 
-enum Flags {
+type int16 = number;
+type Result = number;
+
+type ConditionImplementation = (args: int16[], zone: Zone, engine: Engine) => boolean;
+type InstructionImplementation = () => (instruction: Instruction, engine: Engine, action: Action) => Result;
+
+enum ResultFlags {
 	OK = 0,
 	UpdateTiles = 1 << 0,
 	UpdateText = 1 << 1,
@@ -18,4 +24,4 @@ enum Flags {
 	Wait = 1 << 12
 }
 
-export { int16, Flags, InstructionResult };
+export { int16, ResultFlags, Result };

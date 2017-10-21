@@ -3,12 +3,12 @@ import Engine from "../../engine";
 import Action from "../../objects/action";
 import Instruction from "../../objects/instruction";
 
-import { Flags as Result, InstructionResult } from "../arguments";
+import { Result, ResultFlags } from "../arguments";
 
 export const Opcode = 0x12;
 export const Arguments = 2;
 export const Description = "Set hero's position to `arg_0`x`arg_1` ignoring impassable tiles. Execute hotspot actions, redraw the current scene and move camera if the hero is not hidden.";
-export default (instruction: Instruction, engine: Engine, action: Action): InstructionResult => {
+export default (instruction: Instruction, engine: Engine, action: Action): Result => {
 	/*
 	 YodaView::RedrawTile(view, document->hero_x / 32, document->hero_y / 32);
 	 if ( !view->needs_redraw? ) YodaDocument::RedrawCurrentZone(document);
@@ -27,5 +27,5 @@ export default (instruction: Instruction, engine: Engine, action: Action): Instr
 		engine.sceneManager.currentScene._executeHotspots();
 
 	// original implementation actually has a hard break here
-	return Result.OK;
+	return ResultFlags.OK;
 };

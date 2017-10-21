@@ -1,12 +1,12 @@
 import Engine from "../../engine";
 import Action from "../../objects/action";
 import Instruction from "../../objects/instruction";
-import { Flags, InstructionResult } from "../arguments";
+import { Result, ResultFlags } from "../arguments";
 
 export const Opcode = 0x08;
 export const Arguments = -1;
 export const Description = "Pause script execution for 100 * `arg_0` milliseconds.";
-export default (instruction: Instruction, engine: Engine, action: Action): InstructionResult => {
+export default (instruction: Instruction, engine: Engine, action: Action): Result => {
 	/*
 	 now = clock();
 	 duration = 100 * instruction->arg1;
@@ -19,5 +19,5 @@ export default (instruction: Instruction, engine: Engine, action: Action): Instr
 	 goto fetch_next_instruction;
 	 */
 
-	return Flags.Wait;
+	return ResultFlags.Wait;
 };

@@ -8,7 +8,6 @@ class ScriptExecutor {
 	private _checker: ConditionChecker = new ConditionChecker();
 	private _executor: InstructionExecutor = new InstructionExecutor();
 
-
 	async continueActions(engine: Engine) {
 		this._engine = engine;
 		this._checker.engine = engine;
