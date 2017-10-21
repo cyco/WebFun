@@ -1,5 +1,6 @@
 import { performance } from "src/std";
 import { identity } from "src/util";
+import dispatch from "src/util/dispatch";
 
 const TICKLENGTH = 100;
 
@@ -36,22 +37,22 @@ class Metronome {
 		if (time === 0)
 			time = performance.now();
 
+		let ticked = false;
 		if (time >= this._nextTick) {
-			if (this._ticked) {
-				console.log("tick in progress, skipping tick");
-			}
-
 			this.ontick(1);
 			this._nextTick = time + TICKLENGTH;
-			this._ticked = true;
+			ticked = true;
 		}
 
 		this.onrender();
 
-		if ((<any>window).onMetronomeTick instanceof Function) {
-			await (<any>window).onMetronomeTick();
+		if (ticked && (<any>window).onMetronomeTick instanceof Function) {
+			window.cancelAnimationFrame(this._mainLoop);
+			dispatch(async () => {
+				await(<any>window).onMetronomeTick();
+				this._mainLoop = window.requestAnimationFrame(this._onTick);
+			});
 		}
-		this._ticked = false;
 	}
 
 	stop() {
