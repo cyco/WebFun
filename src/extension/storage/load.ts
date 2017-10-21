@@ -1,6 +1,6 @@
-import { Storage } from "std.dom";
+import { Storage } from "src/std.dom";
 
-const load = function (key) {
+const load = function (key: string): JSONValue {
 	try {
 		if (this.has(key)) return JSON.parse(this.getItem(key));
 	} catch (e) {
