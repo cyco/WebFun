@@ -2,7 +2,7 @@ import { Instruction } from "src/engine/objects";
 import * as ChangeZone from "src/engine/script/instructions/change-zone";
 
 describeInstruction("ChangeZone", (execute, engine) => {
-	it("Switches to a differnt zone using the room animation", () => {
+	it("Switches to a differnt zone using the room animation", async (done) => {
 		const zone = {};
 		engine.data.zones = [null, null, zone, null];
 		engine.dagobah = {locationOfZone: () => true};
@@ -16,20 +16,22 @@ describeInstruction("ChangeZone", (execute, engine) => {
 		instruction._opcode = ChangeZone.Opcode;
 		instruction._arguments = [2];
 
-		execute(instruction);
+		await execute(instruction);
 
 		expect(engine.sceneManager.pushScene).toHaveBeenCalled();
 
 		engine.dagobah = {locationOfZone: () => false};
 		engine.world = {locationOfZone: () => true};
 
-		execute(instruction);
+		await execute(instruction);
 		expect(engine.sceneManager.pushScene).toHaveBeenCalledTimes(2);
 
 		engine.dagobah = {locationOfZone: () => false};
 		engine.world = {locationOfZone: () => false};
 
-		execute(instruction);
+		await execute(instruction);
 		expect(engine.sceneManager.pushScene).toHaveBeenCalledTimes(3);
+
+		done();
 	});
 });

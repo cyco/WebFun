@@ -5,7 +5,7 @@ import Action from "src/engine/objects/action";
 class LocationBreakpoint extends Breakpoint {
 	protected _path: any[];
 
-	constructor(zone: Zone, action: Action, type: any = null, idx: number = null) {
+	constructor(zone: any, action: any, type: any = null, idx: any = null) {
 		super();
 
 		this._path = [zone, action];

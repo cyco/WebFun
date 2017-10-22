@@ -1,10 +1,12 @@
 import ConditionChecker from "../../src/engine/script/condition-checker";
 import InstructionExecutor from "../../src/engine/script/instruction-executor";
+import Conditions from "src/engine/script/conditions";
+import Instructions from "src/engine/script/instructions";
 
 const makeConditionDescription = (desc) => (Name, block) => {
 	desc(`Condition ${Name}`, () => {
 		let engine = {};
-		let checker = new ConditionChecker(engine);
+		let checker = new ConditionChecker(Conditions, engine);
 
 		beforeEach(() => {
 			engine.currentZone = {};
@@ -25,7 +27,7 @@ const makeInstructionDescription = (desc) => (Name, block) => {
 			state: {},
 			data: {}
 		};
-		let executor = new InstructionExecutor(engine);
+		let executor = new InstructionExecutor(Instructions, engine);
 
 		beforeEach(() => {
 			engine.currentZone = {};

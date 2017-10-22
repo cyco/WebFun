@@ -1,5 +1,6 @@
 import { Opcode } from "src/engine/objects/instruction";
 import InstructionExecutor from "src/engine/script/instruction-executor";
+import Instructions from "src/engine/script/instructions";
 
 describe("InstructionExecutor", () => {
 	let executor, engine;
@@ -11,7 +12,7 @@ describe("InstructionExecutor", () => {
 			data: {}
 		};
 
-		executor = new InstructionExecutor(engine);
+		executor = new InstructionExecutor(Instructions, engine);
 	});
 
 	it("has a function to execute a single instruction", () => {

@@ -1,5 +1,6 @@
 import Condition from "src/engine/objects/condition";
 import ConditionChecker from "src/engine/script/condition-checker";
+import Conditions from 'src/engine/script/conditions';
 
 describe("ConditionChecker", () => {
 	let checker, engine, condition;
@@ -11,7 +12,7 @@ describe("ConditionChecker", () => {
 			state: {}
 		};
 		condition = new Condition({});
-		checker = new ConditionChecker(engine);
+		checker = new ConditionChecker(Conditions, engine);
 	});
 
 	it("can be instantiated with or without an engine", () => {

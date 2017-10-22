@@ -2,7 +2,7 @@ import { Condition } from "src/engine/objects";
 import * as TileAtIsAgain from "src/engine/script/conditions/tile-at-is-again";
 
 describeCondition("TileAtIsAgain", (check, engine) => {
-	it("checks if a specific tile is found at the given location", () => {
+	it("checks if a specific tile is found at the given location", async (done) => {
 		const condition = new Condition();
 		condition._opcode = TileAtIsAgain.Opcode;
 		condition._arguments = [10, 5, 7, 2];
@@ -11,9 +11,11 @@ describeCondition("TileAtIsAgain", (check, engine) => {
 			if (x === 5 && y === 7 && z === 2) return 10;
 			return 7;
 		};
-		expect(check(condition)).toBeTrue();
+		expect(await check(condition)).toBeTrue();
 
 		condition._arguments = [3, 5, 7, 2];
-		expect(check(condition)).toBeFalse();
+		expect(await check(condition)).toBeFalse();
+
+		done();
 	});
 });
