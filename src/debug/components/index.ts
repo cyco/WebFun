@@ -1,4 +1,4 @@
-import Action from "./action";
+import Action from "./action-component";
 import BreakpointButton from "./breakpoint-button";
 import Condition from "./condition";
 import Controls from "./controls";

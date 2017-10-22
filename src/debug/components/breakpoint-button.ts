@@ -1,6 +1,7 @@
 import { Component } from "src/ui";
 import BreakpointStore from "../breakpoint-store";
 import "./breakpoint-button.scss";
+import { Breakpoint } from "../breakpoint";
 
 export const Events = {
 	DidSet: "DidSet",
@@ -8,17 +9,14 @@ export const Events = {
 };
 
 export default class extends Component {
-	static get Event() {
-		return Events;
-	}
+	static readonly Event = Events;
+	static readonly TagName = "wf-breakpoint-button";
+	static readonly observedAttributes = ["active"];
 
-	static get TagName() {
-		return "wf-breakpoint-button";
-	}
-
-	static get observedAttributes() {
-		return ["active"];
-	}
+	private _store: BreakpointStore;
+	public breakpoint: Breakpoint;
+	private _removeHandler: (_: {detail: {breakpoint: Breakpoint}}) => void;
+	private _addHandler: (_: {detail: {breakpoint: Breakpoint}}) => void;
 
 	constructor() {
 		super();

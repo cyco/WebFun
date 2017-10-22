@@ -1,33 +1,29 @@
 import { Component } from "src/ui";
 import { IconButton } from "src/ui/components";
-import { localStorage } from "std.dom";
+import { localStorage } from "src/std.dom";
 import { LocationBreakpoint } from "../breakpoint";
-import "./action.scss";
+import "./action-component.scss";
 import BreakpointButton from "./breakpoint-button";
 import Condition from "./condition";
 import Instruction from "./instruction";
+import { Action } from "src/engine/objects";
+import Zone from "src/engine/objects/zone";
 
-export default class extends Component {
-	static get TagName() {
-		return "wf-debug-action";
-	}
+class ActionComponent extends Component {
+	public static readonly TagName = "wf-debug-action";
+	public static readonly observedAttributes = ["current"];
 
-	static get observedAttributes() {
-		return ["current"];
-	}
+	private _action: Action = null;
+	private zone: Zone = null;
+	private index: number = null;
+	private _title = document.createElement("span");
+	private _conditionContainer = document.createElement("div");
+	private _instructionContainer = document.createElement("div");
 
 	constructor() {
 		super();
 
-		this._action = null;
-
-		this.zone = null;
-		this.index = null;
-
-		this._title = document.createElement("span");
-		this._conditionContainer = document.createElement("div");
 		this._conditionContainer.style.marginBottom = "10px";
-		this._instructionContainer = document.createElement("div");
 	}
 
 	connectedCallback() {
@@ -35,7 +31,7 @@ export default class extends Component {
 		container.classList.add("container");
 
 		const breakpointButton = new BreakpointButton();
-		breakpointButton.breakpoint = new LocationBreakpoint(this.zone, this.index);
+		breakpointButton.breakpoint = new LocationBreakpoint(this.zone, this._action);
 
 		container.appendChild(breakpointButton);
 		container.appendChild(this._title);
@@ -49,9 +45,6 @@ export default class extends Component {
 		this.expanded = localStorage.load(this._storageId);
 	}
 
-	attributeChangedCallback(attribute) {
-	}
-
 	get action() {
 		return this._action;
 	}
@@ -60,7 +53,7 @@ export default class extends Component {
 		this._action = action;
 		this._title.innerText = `Action ${action.id}`;
 
-		const makeComponent = (ComponentClass, container) => (desc, index) => {
+		const makeComponent = (ComponentClass: any, container: Element) => (desc: any, index: number) => {
 			const component = new ComponentClass(desc);
 			component.zone = this.zone;
 			component.action = this.index;
@@ -104,3 +97,5 @@ export default class extends Component {
 		return `debug.action.epanded.${this.zone}.${this.index}`;
 	}
 }
+
+export default ActionComponent;
