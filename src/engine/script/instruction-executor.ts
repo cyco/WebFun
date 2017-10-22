@@ -1,3 +1,4 @@
+import Logger from "src/util/logger";
 import Engine from "../engine";
 import Action from "../objects/action";
 import Instruction from "../objects/instruction";
@@ -14,7 +15,6 @@ class InstructionExecutor {
 	execute(instruction: Instruction) {
 		const handler = Instructions[instruction.opcode];
 		console.assert(!!handler, `Unknown instruction opcode 0x${instruction.opcode.toString(0x10)}!`);
-
 		return handler(instruction, this.engine, this.action);
 	}
 }

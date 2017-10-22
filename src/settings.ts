@@ -1,6 +1,6 @@
-import { persistent } from "src/util";
+import { LogLevel, persistent } from "src/util";
 
-const Settings = {
+let Settings = {
 	AllowWebGL: false,
 
 	debug: true,
@@ -16,6 +16,8 @@ const Settings = {
 	autostartEngine: true,
 	revealWorld: true,
 
+	logLevel: LogLevel.Debug,
+
 	url: {
 		data: "./game-data/yoda.data",
 		palette: "./game-data/yoda.pal",
@@ -23,4 +25,5 @@ const Settings = {
 	}
 };
 
-export default persistent(Settings, "settings");
+export const loadSettings = () => Settings = persistent(Settings, "settings");
+export default Settings;
