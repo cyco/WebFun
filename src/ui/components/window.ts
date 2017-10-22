@@ -2,22 +2,19 @@ import Component from "../component";
 import View from "../view";
 import WindowTitlebar from "./window-titlebar";
 import "./window.scss";
+import Menu from "src/ui/menu";
 
 class Window extends Component {
 	public static TagName = "wf-window";
-	private _titlebar: any;
-	private _content: any;
-	private _x: any;
-	private _y: any;
+	private _titlebar: WindowTitlebar;
+	private _content: View;
+	private _x: number = 0;
+	private _y: number = 0;
 
 	constructor() {
 		super();
 
-		this.x = 0;
-		this.y = 0;
-
-		this._titlebar = document.createElement(WindowTitlebar.TagName);
-
+		this._titlebar = <WindowTitlebar>document.createElement(WindowTitlebar.TagName);
 		this._content = new View();
 		this._content.element.classList.add("content");
 	}
@@ -26,24 +23,24 @@ class Window extends Component {
 		return this._content.element;
 	}
 
-	get x() {
+	get x(): number {
 		if (!this.isConnected) return this._x;
 
 		return parseFloat(this.style.left);
 	}
 
-	set x(x) {
+	set x(x: number) {
 		this._x = x;
 		this._update();
 	}
 
-	get y() {
+	get y(): number {
 		if (!this.isConnected) return this._y;
 
 		return parseFloat(this.style.top);
 	}
 
-	set y(y) {
+	set y(y: number) {
 		this._y = y;
 		this._update();
 	}
@@ -52,7 +49,7 @@ class Window extends Component {
 		return this._titlebar.menu;
 	}
 
-	set menu(menu) {
+	set menu(menu: Menu) {
 		this._titlebar.menu = menu;
 	}
 
@@ -60,7 +57,7 @@ class Window extends Component {
 		return this._titlebar.closable;
 	}
 
-	set closable(flag) {
+	set closable(flag: boolean) {
 		this._titlebar.closable = flag;
 	}
 
@@ -68,7 +65,7 @@ class Window extends Component {
 		return this._titlebar.title;
 	}
 
-	set title(t) {
+	set title(t: string) {
 		this._titlebar.title = t;
 	}
 
@@ -87,9 +84,11 @@ class Window extends Component {
 
 		this.appendChild(this._titlebar);
 		this.appendChild(this._content.element);
+
+		this._update();
 	}
 
-	center() {
+	public center(): void {
 		const windowWidth = window.document.documentElement.clientWidth;
 		const windowHeight = window.document.documentElement.clientHeight;
 
@@ -98,14 +97,14 @@ class Window extends Component {
 		this.y = (windowHeight - parseFloat(style.height)) / 2.0;
 	}
 
-	_update() {
+	private _update() {
 		if (!this.isConnected) return;
 
 		this.style.top = `${this._y | 0}px`;
 		this.style.left = `${this._x | 0}px`;
 	}
 
-	close() {
+	public close() {
 		this.remove();
 		this.onclose();
 	}
