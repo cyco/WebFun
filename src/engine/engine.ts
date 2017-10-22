@@ -12,6 +12,7 @@ import { AbstractImageFactory, Renderer } from "./rendering";
 import SceneManager from "./scene-manager";
 import { ScriptExecutor } from "./script";
 import Story from "./story";
+import GameData from './game-data';
 
 export { Events };
 
@@ -23,7 +24,7 @@ class Engine extends EventTarget {
 	public sceneManager: SceneManager = null;
 	public renderer: Renderer = null;
 	public imageFactory: AbstractImageFactory = null;
-	public data: any = null;
+	public data: GameData = null;
 	public hero: Hero = null;
 	public inventory: Inventory = null;
 	public scriptExecutor: ScriptExecutor = null;
