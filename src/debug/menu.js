@@ -15,6 +15,7 @@ export default {
 		SettingsItem("Draw invisible Hero", "drawHeroTile"),
 		SettingsItem("Reveal World", "revealWorld"),
 		SettingsItem("Show Hotspots", "drawHotspots"),
-		SettingsItem("Skip Dialogs", "skipDialogs")
+		SettingsItem("Skip Dialogs", "skipDialogs"),
+		SettingsItem("Debug Scripts", "debugScripts")
 	]
 };

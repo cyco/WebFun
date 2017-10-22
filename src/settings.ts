@@ -6,6 +6,7 @@ let Settings = {
 	debug: true,
 	debugWorldGeneration: false,
 	debugActions: false,
+	debugScripts: true,
 
 	drawDebugStats: true,
 	drawHotspots: true,
