@@ -1,9 +1,10 @@
 import { ResultFlags } from "src/engine/script/arguments";
+import Logger from "src/util/logger";
+import Point from "src/util/point";
 import Engine from "../engine";
 import Action from "../objects/action";
 import ConditionChecker from "./condition-checker";
 import InstructionExecutor from "./instruction-executor";
-import Point from "src/util/point";
 
 class ScriptExecutor {
 	private _engine: Engine = null;
@@ -57,12 +58,12 @@ class ScriptExecutor {
 		for (let i = action.instructionPointer | 0, len = action.instructions.length; i < len; i++) {
 			action.instructionPointer = i + 1;
 			const result = this._executor.execute(action.instructions[i]);
-			if ((result & ResultFlags.Wait)) return true;
-			if ((result & ResultFlags.UpdateZone)) break;
+			if ((result & ResultFlags.Wait)) {
+				return true;
+			}
 		}
 		this._executor.action = null;
 		action.instructionPointer = 0;
-
 		return false;
 	}
 

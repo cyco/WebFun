@@ -9,6 +9,8 @@ import HorizontalPointRange from "./horizontal-point-range";
 import identity from "./identity";
 import InputStream from "./input-stream";
 import KeyEvent from "./key-event";
+import LogLevel from "./log-level";
+import Logger from "./logger";
 import Message from "./message";
 import OutputStream from "./output-stream";
 import persistent from "./persistent";
@@ -35,6 +37,8 @@ export {
 	identity,
 	InputStream,
 	KeyEvent,
+	Logger,
+	LogLevel,
 	Message,
 	OutputStream,
 	persistent,

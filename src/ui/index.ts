@@ -1,3 +1,4 @@
+import * as Components from "src/ui/components";
 import Component from "./component";
 import ComponentRegistry from "./component-registry";
 import FilePicker from "./file-picker";
@@ -13,6 +14,7 @@ import View from "./view";
 export {
 	Component,
 	ComponentRegistry,
+	Components,
 	FilePicker,
 	Menu,
 	MenuItem,
