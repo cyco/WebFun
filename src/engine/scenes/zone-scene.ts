@@ -3,9 +3,7 @@ import { HotspotType, Tile, Zone } from "src/engine/objects";
 import Settings from "src/settings";
 import { Direction, Point, rgba, Size } from "src/util";
 import Hotspot from "../objects/hotspot";
-import NPC from "../objects/npc";
 import AbstractRenderer from "../rendering/abstract-renderer";
-import Executor from "../script/executor";
 import MapScene from "./map-scene";
 import PauseScene from "./pause-scene";
 import Scene from "./scene";
@@ -13,9 +11,6 @@ import TransitionScene from "./transition-scene";
 
 class ZoneScene extends Scene {
 	private _camera = new Camera();
-	private _actionEvaluator: Executor = null;
-	private _objects: any[] = [];
-	private _bullet: NPC = null;
 	private _zone: Zone;
 
 	get zone() {
@@ -35,36 +30,23 @@ class ZoneScene extends Scene {
 		return this._camera.offset;
 	}
 
-	get objects() {
-		return this._objects;
-	}
-
-	set objects(o) {
-		this._objects = o;
-	}
-
 	async update(ticks: number) {
 		const engine = this.engine;
 		const hero = engine.hero;
 		hero.isWalking = false;
 
-		let stop = false;
-
-		stop = await engine.scriptExecutor.continueActions(engine);
+		let stop = await engine.scriptExecutor.continueActions(engine);
 		if (stop) return;
 
-		if (!this._bullet) {
-			stop = await this._handleMouse();
-			if (stop) return;
+		stop = await this._handleMouse();
+		if (stop) return;
 
-			stop = this._handleKeys();
-			if (stop) return;
-		}
+		stop = this._handleKeys();
+		if (stop) return;
 
 		this._camera.hero = hero;
 		this._camera.update(ticks);
 		hero.update(ticks);
-		this._objects.forEach((go) => go.update(ticks));
 
 		await engine.scriptExecutor.runActions(engine);
 	}
@@ -93,7 +75,6 @@ class ZoneScene extends Scene {
 				else if (Settings.drawHeroTile && (<any>renderer).fillRect instanceof Function) {
 					(<any>renderer).fillRect((hero.location.x + offset.x) * Tile.WIDTH, (hero.location.y + offset.y) * Tile.HEIGHT, Tile.WIDTH, Tile.HEIGHT, rgba(0, 0, 255, 0.3));
 				}
-				this._objects.forEach(renderObject);
 			}
 		}
 
@@ -183,13 +164,6 @@ class ZoneScene extends Scene {
 			hero.isAttacking = false;
 			return;
 		}
-
-		// place bullet
-		const bullet = weapon.produceBullet(inertia);
-		bullet.location = new Point(hero.location);
-		this._bullet = bullet;
-		this._objects.push(bullet);
-		hero._actionFrames = 0;
 	}
 
 	async _moveHero(direction: number) {
