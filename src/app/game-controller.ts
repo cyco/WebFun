@@ -60,7 +60,7 @@ class GameController {
 	}
 
 	_determineRenderer(): typeof WebGLRenderer|typeof CanvasRenderer {
-		if (WebGLRenderer.isSupported() && Settings.AllowWebGL) {
+		if (WebGLRenderer.isSupported() && Settings.allowWebGL) {
 			console.log("Using WebGL renderer");
 			return WebGLRenderer;
 		}

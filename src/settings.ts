@@ -1,21 +1,18 @@
 import { LogLevel, persistent } from "src/util";
 
 let Settings = {
-	AllowWebGL: false,
+	allowWebGL: false,
 
 	debug: true,
-	debugWorldGeneration: false,
-	debugActions: false,
 	debugScripts: true,
 
 	drawDebugStats: true,
 	drawHotspots: true,
 	drawHeroTile: true,
-	identifyTranslucentScenes: true,
-	skipDialogs: true,
+	skipDialogs: false,
 
 	autostartEngine: true,
-	revealWorld: true,
+	revealWorld: false,
 
 	logLevel: LogLevel.Debug,
 
