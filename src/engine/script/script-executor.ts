@@ -17,7 +17,7 @@ class ScriptExecutor {
 
 		const previousActions = engine.currentZone.actions.filter(
 			action => action.instructionPointer);
-		return this._evaluateActions(previousActions, false);
+		return await this._evaluateActions(previousActions, false);
 	}
 
 	async runActions(engine: Engine) {
@@ -25,15 +25,15 @@ class ScriptExecutor {
 		this._checker.engine = engine;
 		this._executor.engine = engine;
 
-		return this._evaluateActions(engine.currentZone.actions, false);
+		return await this._evaluateActions(engine.currentZone.actions, false);
 	}
 
-	private _evaluateActions(actions: Action[], check = true) {
+	private async _evaluateActions(actions: Action[], check = true) {
 		const hasActions = actions.length;
 		actions = actions.slice();
 		while (actions.length) {
 			let action = actions.shift();
-			if ((!check || this.actionDoesApply(action)) && this.executeInstructions(action))
+			if ((!check || await this.actionDoesApply(action)) && await this.executeInstructions(action))
 				return true;
 		}
 
@@ -47,16 +47,24 @@ class ScriptExecutor {
 		return false;
 	}
 
-	private actionDoesApply(action: Action): boolean {
-		return (action.enabled || action.instructionPointer !== 0) && action.conditions.every(
-			(condition) => this._checker.check(condition), this);
+	private async actionDoesApply(action: Action): Promise<boolean> {
+		if (!action.enabled) return false;
+		if (action.instructionPointer !== 0) return true;
+
+		for (const condition of action.conditions) {
+			if (!await this._checker.check(condition)) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
-	private executeInstructions(action: Action): boolean {
+	private async executeInstructions(action: Action): Promise<boolean> {
 		this._executor.action = action;
 		for (let i = action.instructionPointer | 0, len = action.instructions.length; i < len; i++) {
 			action.instructionPointer = i + 1;
-			const result = this._executor.execute(action.instructions[i]);
+			const result = await this._executor.execute(action.instructions[i]);
 			if ((result & ResultFlags.Wait)) {
 				return true;
 			}

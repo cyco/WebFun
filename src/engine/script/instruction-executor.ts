@@ -1,8 +1,8 @@
-import Logger from "src/util/logger";
 import Engine from "../engine";
 import Action from "../objects/action";
 import Instruction from "../objects/instruction";
 import Instructions from "./instructions";
+import { Result } from "src/engine/script/arguments";
 
 class InstructionExecutor {
 	public engine: Engine;
@@ -12,10 +12,10 @@ class InstructionExecutor {
 		this.engine = engine;
 	}
 
-	execute(instruction: Instruction) {
+	async execute(instruction: Instruction): Promise<Result> {
 		const handler = Instructions[instruction.opcode];
 		console.assert(!!handler, `Unknown instruction opcode 0x${instruction.opcode.toString(0x10)}!`);
-		return handler(instruction, this.engine, this.action);
+		return await handler(instruction, this.engine, this.action);
 	}
 }
 
