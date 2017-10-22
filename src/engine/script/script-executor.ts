@@ -79,6 +79,14 @@ class ScriptExecutor {
 	public bump(location: Point) {
 		// TODO: implement?
 	}
+
+	public set checker(c: ConditionChecker) {
+		this._checker = c;
+	}
+
+	public set executor(e: InstructionExecutor) {
+		this._executor = e;
+	}
 }
 
 export default ScriptExecutor;
