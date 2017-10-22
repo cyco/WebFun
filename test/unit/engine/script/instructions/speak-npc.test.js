@@ -2,7 +2,7 @@ import { Instruction } from "src/engine/objects";
 import * as SpeakNPC from "src/engine/script/instructions/speak-npc";
 
 describeInstruction("SpeakNPC", (execute, engine) => {
-	it("shows a speech bubble next to an npc", () => {
+	it("shows a speech bubble next to an npc", async (done) => {
 		let scene = null;
 		engine.sceneManager = {
 			pushScene(s) {
@@ -15,8 +15,10 @@ describeInstruction("SpeakNPC", (execute, engine) => {
 		instruction._arguments = [0, 1];
 		instruction._additionalData = "test text";
 
-		execute(instruction);
+		await execute(instruction);
 
 		expect(scene.text).toEqual("test text");
+
+		done();
 	});
 });

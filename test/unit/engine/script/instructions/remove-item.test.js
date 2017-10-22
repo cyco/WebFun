@@ -2,7 +2,7 @@ import { Instruction } from "src/engine/objects";
 import * as RemoveItem from "src/engine/script/instructions/remove-item";
 
 describeInstruction("RemoveItem", (execute, engine) => {
-	it("removes an item from the inventory", () => {
+	it("removes an item from the inventory", async (done) => {
 		engine.data.tiles = [null, "fake-tile"];
 		engine.inventory = {
 			removeItem() {
@@ -15,8 +15,10 @@ describeInstruction("RemoveItem", (execute, engine) => {
 		instruction._opcode = RemoveItem.Opcode;
 		instruction._arguments = [1];
 
-		execute(instruction);
+		await execute(instruction);
 		expect(engine.inventory.removeItem).toHaveBeenCalledWith("fake-tile");
+
+		done();
 	});
 });
 

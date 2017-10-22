@@ -12,7 +12,7 @@ class EventTarget {
 		globalInstance.removeEventListener(type, listener);
 	}
 
-	static dispatchEvent(type: string, detail: any): void {
+	static dispatchEvent(type: string|Event, detail?: any): void {
 		globalInstance.dispatchEvent(type, detail);
 	}
 
@@ -36,17 +36,17 @@ class EventTarget {
 			delete this.listeners[type];
 	}
 
-	dispatchEvent(type: string, detail: any = {}): void {
+	dispatchEvent(type: string|Event, detail: any = {}): void {
 		detail.target = detail.target || this;
 
-		const event = new CustomEvent(type, {
+		const event = type instanceof Event ? type : new CustomEvent(type, {
 			detail: detail
 		});
 
 		if ((<any>this)["on" + type] instanceof Function && (<any>this)["on" + type](event) === false)
 			return;
 
-		let listeners = this.listeners[type];
+		let listeners = this.listeners[type instanceof Event ? event.type : type];
 		for (let i in listeners) {
 			if (!listeners.hasOwnProperty(i)) continue;
 			listeners[i].call(this, event);

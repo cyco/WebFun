@@ -1,2 +1,2 @@
-describeInstruction("MoveHeroBy", () => {
+describeInstruction("MoveHeroBy", async (done) => {
 });

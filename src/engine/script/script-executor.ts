@@ -50,7 +50,7 @@ class ScriptExecutor {
 	}
 
 	private async actionDoesApply(action: Action): Promise<boolean> {
-		if (!action.enabled) return false;
+		if (!action.enabled && action.instructionPointer === 0) return false;
 		if (action.instructionPointer !== 0) return true;
 
 		for (const condition of action.conditions) {
