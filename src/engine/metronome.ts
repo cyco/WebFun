@@ -33,10 +33,15 @@ class Metronome {
 		if (this._stopped) return;
 
 		this._mainLoop = window.requestAnimationFrame(this._tickCallback);
-		const updated = now >= this._nextTick && this._performUpdate(now);
+		const update = now >= this._nextTick;
+		if (update) {
+			this._nextTick = now + TICKLENGTH;
+			if (!this._updatesSuspended)
+				this.withSuspendedUpdates(async () => this.ontick(1));
+		}
 		this.onrender();
 
-		if (updated && (<any>window).onMetronomeTick instanceof Function) {
+		if (update && (<any>window).onMetronomeTick instanceof Function) {
 			this.withSuspendedUpdates(dispatch(async () => {
 				await (<any>window).onMetronomeTick();
 			}));
@@ -65,13 +70,6 @@ class Metronome {
 		}
 
 		this._updatesSuspended = false;
-	}
-
-	private _performUpdate(now: number): boolean {
-		this._nextTick = now + TICKLENGTH;
-		if (this._updatesSuspended) return false;
-		this.ontick(1);
-		return true;
 	}
 }
 
