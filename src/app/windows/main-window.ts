@@ -52,6 +52,8 @@ class MainWindow extends Window {
 		this.content.appendChild(this._sidebar);
 
 		this._buildEventHandlers();
+
+		this.onclose = () => this._engine && this._engine.metronome.stop();
 	}
 
 	get engine(): Engine {
