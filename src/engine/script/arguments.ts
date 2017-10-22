@@ -4,8 +4,8 @@ import { Action, Instruction, Zone } from "../objects";
 type int16 = number;
 type Result = number;
 
-export type ConditionImplementation = (args: int16[], zone: Zone, engine: Engine) => boolean;
-export type InstructionImplementation = (instruction: Instruction, engine: Engine, action: Action) => Result;
+export type ConditionImplementation = (args: int16[], zone: Zone, engine: Engine) => Promise<boolean>;
+export type InstructionImplementation = (instruction: Instruction, engine: Engine, action: Action) => Promise<Result>;
 
 enum ResultFlags {
 	OK = 0,

@@ -2,6 +2,17 @@ import { ComponentRegistry } from "src/ui";
 import { Window } from "src/ui/components";
 import { Engine } from "src/engine";
 import * as Components from "./components";
+import {
+	ConditionChecker,
+	Conditions,
+	ConditionStore,
+	InstructionExecutor,
+	InstructionResult,
+	Instructions,
+	InstructionStore
+} from "src/engine/script";
+import { Action, Instruction } from "src/engine/objects";
+import Zone from "src/engine/objects/zone";
 
 class ScriptDebugger {
 	private static _sharedDebugger: ScriptDebugger;
@@ -27,7 +38,6 @@ class ScriptDebugger {
 		const controls = new Components.Controls();
 		controls.onstep = (): void => null;
 		controls.ontogglepause = (): void => null;
-		// this._metronome.onstatuschange = () => controls.running = this._metronome.status === MetronomeStatus.Running;
 		this._window.content.appendChild(controls);
 	}
 
@@ -41,13 +51,55 @@ class ScriptDebugger {
 		if (this._isActive) return;
 		if (!this._engine) return;
 
+		const conditions = this._buildConditionStore(<ConditionStore>Conditions);
+		this._engine.scriptExecutor.checker = new ConditionChecker(conditions, this._engine);
+		const instructions = this._buildInstructionStore(<InstructionStore>Instructions);
+		this._engine.scriptExecutor.executor = new InstructionExecutor(instructions, this._engine);
+
 		this._isActive = true;
 	}
 
 	private _teardownDebugger() {
 		if (!this._isActive) return;
 
+		const conditions = <ConditionStore>Conditions;
+		this._engine.scriptExecutor.checker = new ConditionChecker(conditions, this._engine);
+		const instructions = <InstructionStore>Instructions;
+		this._engine.scriptExecutor.executor = new InstructionExecutor(instructions, this._engine);
+
 		this._isActive = false;
+	}
+
+	private _buildConditionStore(originalStore: ConditionStore): ConditionStore {
+		const store: ConditionStore = {};
+
+		for (const opcode in originalStore) {
+			if (!originalStore.hasOwnProperty(opcode)) continue;
+
+			const handler = originalStore[opcode];
+			store[opcode] = async (args: number[], zone: Zone, engine: Engine): Promise<boolean> => {
+				console.log("condition evaluated");
+				return await handler(args, zone, engine);
+			};
+		}
+
+		return store;
+	}
+
+	private _buildInstructionStore(originalStore: InstructionStore): InstructionStore {
+		const store: InstructionStore = {};
+
+		for (const opcode in originalStore) {
+			if (!originalStore.hasOwnProperty(opcode)) continue;
+
+			const handler = originalStore[opcode];
+			store[opcode] = async (instruction: Instruction, engine: Engine, action: Action): Promise<InstructionResult> => {
+				console.log("instruction executed");
+				return await handler(instruction, engine, action);
+			};
+		}
+
+		return store;
 	}
 
 	set engine(e: Engine) {
