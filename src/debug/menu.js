@@ -1,10 +1,16 @@
 import Settings from "src/settings";
 import { MenuItemState } from "src/ui";
+import ScriptDebugger from "./script-debugger";
 
 const SettingsItem = (label, key) => ({
 	title: label,
 	callback: () => Settings[key] = !Settings[key],
 	state: () => Settings[key] ? MenuItemState.On : MenuItemState.Off
+});
+
+const SettingsAction = (label, callback) => ({
+	title: label,
+	callback: callback
 });
 
 export default {
@@ -16,6 +22,6 @@ export default {
 		SettingsItem("Reveal World", "revealWorld"),
 		SettingsItem("Show Hotspots", "drawHotspots"),
 		SettingsItem("Skip Dialogs", "skipDialogs"),
-		SettingsItem("Debug Scripts", "debugScripts")
+		SettingsAction("Debug Scripts", () => ScriptDebugger.sharedDebugger.show())
 	]
 };

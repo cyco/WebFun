@@ -22,6 +22,7 @@ import GameState from "../engine/game-state";
 import Loader, { LoaderEventDetails } from "./loader";
 import { LoadingView, SceneView } from "./ui";
 import { MainMenu, MainWindow } from "./windows";
+import { ScriptDebugger, Debugger } from "src/debug";
 
 class GameController {
 	private _window: MainWindow;
@@ -74,6 +75,10 @@ class GameController {
 		this._window.menu = new MainMenu(this);
 
 		this._load();
+
+		if (Settings.debug) {
+			ScriptDebugger.sharedDebugger.engine = this._engine;
+		}
 
 		document.body.appendChild(this._window);
 		this._window.center();

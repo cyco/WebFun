@@ -5,7 +5,7 @@ import * as Components from "./components";
 import "./debugger.scss";
 import SteppingMetronome, { Status as MetronomeStatus } from "./stepping-metronome";
 
-export default class {
+class Debugger {
 	constructor(engine) {
 		ComponentRegistry.sharedRegistry.registerComponents(Components);
 
@@ -107,3 +107,5 @@ export default class {
 		});
 	}
 }
+
+export default Debugger;
