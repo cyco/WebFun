@@ -34,13 +34,13 @@ async function TakeScreenshot(page, name) {
 	await page.screenshot({path: Path.resolve(ScreenShotDirectory, (screenshotIdx++) + "_" + name + ".png")});
 }
 
-let recordIndex = 1;
+let recordIndex = 0;
 
 async function record(page, frames) {
 	return new Promise(async (resolve, reject) => {
 		await page.exposeFunction("onMetronomeTick", async () => {
-			await TakeScreenshot(page, "recording_" + (++recordIndex));
-			if (recordIndex === frames) {
+			await TakeScreenshot(page, "tick_" + (++recordIndex));
+			if (recordIndex > frames) {
 				resolve();
 				await page.evaluate(() => window.onMetronomeTick = null);
 			}
