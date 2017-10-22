@@ -1,19 +1,23 @@
 import Engine from "../engine";
 import Action from "../objects/action";
 import Instruction from "../objects/instruction";
-import Instructions from "./instructions";
 import { Result } from "src/engine/script/arguments";
+import { InstructionImplementation } from "./arguments";
+
+export type InstructionStore = {[opcode: number]: InstructionImplementation};
 
 class InstructionExecutor {
 	public engine: Engine;
 	public action: Action = null;
+	private _instructions: InstructionStore;
 
-	constructor(engine: Engine = null) {
+	constructor(instructions: InstructionStore, engine: Engine = null) {
+		this._instructions = instructions;
 		this.engine = engine;
 	}
 
 	async execute(instruction: Instruction): Promise<Result> {
-		const handler = Instructions[instruction.opcode];
+		const handler = this._instructions[instruction.opcode];
 		console.assert(!!handler, `Unknown instruction opcode 0x${instruction.opcode.toString(0x10)}!`);
 		return await handler(instruction, this.engine, this.action);
 	}
