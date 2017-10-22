@@ -13,7 +13,7 @@ class WindowTitlebar extends Component {
 	private _titleNode: HTMLElement = null;
 	private _window: Window;
 	private _closeButton: View;
-	private onclose = identity;
+	public onclose: Function = identity;
 
 	constructor() {
 		super();
