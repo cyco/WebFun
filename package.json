@@ -18,11 +18,12 @@
     "test:unit:cont": "cross-env coverage=1 scope=unit karma start config/karma.conf.js",
     "test:full": "cross-env coverage=1 scope=unit,acceptance,performance karma start config/karma.conf.js",
     "test:gameplay": "cross-env TOOL_NAME=gameplay yarn build-tool && node tools/bin/gameplay.bin.js",
+    "test:dump-scripts": "cross-env TOOL_NAME=dump-scripts yarn build-tool && node tools/bin/dump-scripts.bin.js -d \"build/game-data/yoda.data\"",
     "gen-coverage": "genhtml test/coverage/unit.lcov test/coverage/acceptance/lcov.info -o test/coverage/html",
     "test:performance": "cross-env scope=performance karma start karma.conf.js --single-run",
-    "world": "node -- tools/bin/generate-world.bin.js -v -d \"game-data/yoda.data\"",
-    "world:validate": "node -- tools/bin/generate-world.bin.js -c -d \"game-data/yoda.data\" -e \"game-data/worlds.txt\"",
-    "world:validate:all": "node -- tools/bin/generate-world.bin.js -c -d \"./game-data/yoda.data\" -e \"./game-data/full.txt\" -a",
+    "world": "node -- tools/bin/generate-world.bin.js -v -d \"build/game-data/yoda.data\"",
+    "world:validate": "node -- tools/bin/generate-world.bin.js -c -d \"build/game-data/yoda.data\" -e \"game-data/worlds.txt\"",
+    "world:validate:all": "node -- tools/bin/generate-world.bin.js -c -d \"./build/game-data/yoda.data\" -e \"./game-data/full.txt\" -a",
     "build-tool": "webpack --config config/webpack.tool.js",
     "build-tool:cont": "webpack --config config/webpack.tool.js --watch"
   },
@@ -48,6 +49,7 @@
   "dependencies": {
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-polyfill": "^6.26.0",
+    "dasherize": "^2.0.0",
     "kaitai-struct": "^0.8.0-SNAPSHOT.2",
     "sprintf-js": "^1.1.1",
     "twgl.js": "^3.8.0"

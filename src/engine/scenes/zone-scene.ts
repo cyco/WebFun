@@ -1,13 +1,15 @@
 import Camera from "src/engine/camera";
 import { HotspotType, Tile, Zone } from "src/engine/objects";
 import Settings from "src/settings";
-import { Direction, Point, rgba, Size } from "src/util";
+import { Direction, Logger, Point, rgba, Size } from "src/util";
 import Hotspot from "../objects/hotspot";
 import AbstractRenderer from "../rendering/abstract-renderer";
 import MapScene from "./map-scene";
 import PauseScene from "./pause-scene";
 import Scene from "./scene";
 import TransitionScene from "./transition-scene";
+
+const log = Logger.declare("ZoneScene");
 
 class ZoneScene extends Scene {
 	private _camera = new Camera();
@@ -30,7 +32,7 @@ class ZoneScene extends Scene {
 		return this._camera.offset;
 	}
 
-	async update(ticks: number) {
+	public async update(ticks: number) {
 		const engine = this.engine;
 		const hero = engine.hero;
 		hero.isWalking = false;
@@ -38,27 +40,24 @@ class ZoneScene extends Scene {
 		let stop = await engine.scriptExecutor.continueActions(engine);
 		if (stop) return;
 
-		stop = await this._handleMouse();
-		if (stop) return;
+		await this._handleMouse();
 
 		stop = this._handleKeys();
 		if (stop) return;
 
-		this._camera.hero = hero;
 		this._camera.update(ticks);
 		hero.update(ticks);
 
 		await engine.scriptExecutor.runActions(engine);
 	}
 
-	render(renderer: AbstractRenderer) {
+	public render(renderer: AbstractRenderer) {
 		renderer.clear();
 
 		const zone = this.zone;
 		const offset = this._camera.offset;
 		const hero = this.engine.hero;
 
-		const renderObject = (object: any) => object.render(offset, renderer);
 		for (let z = 0; z < Zone.LAYERS; z++) {
 			for (let y = 0; y < zone.height; y++) {
 				for (let x = 0; x < zone.width; x++) {
@@ -85,7 +84,7 @@ class ZoneScene extends Scene {
 			});
 	}
 
-	async _handleMouse() {
+	private async _handleMouse(): Promise<void> {
 		const engine = this.engine;
 
 		const inputManager = engine.inputManager;
@@ -94,7 +93,6 @@ class ZoneScene extends Scene {
 		const camera = this._camera;
 		const offset = camera.offset;
 		const size = camera.size;
-
 		const hero = engine.hero;
 
 		const mouseLocationOnZone = new Point(mouseLocationInView.x * size.width - offset.x - 0.5,
@@ -111,17 +109,17 @@ class ZoneScene extends Scene {
 			this.engine.setCursor(Direction.Confine(direction));
 
 			// TODO: set cursor
-			if (isNaN(direction)) return false;
+			if (isNaN(direction)) return;
 
 			hero.face(direction);
 			if (inputManager.walk)
 				await this._moveHero(direction);
 		}
 
-		return false;
+		return;
 	}
 
-	_handleKeys() {
+	private _handleKeys(): boolean {
 		const engine = this.engine;
 		const inputManager = engine.inputManager;
 		const hero = engine.hero;
@@ -146,7 +144,7 @@ class ZoneScene extends Scene {
 		return false;
 	}
 
-	_attackTriggered() {
+	private _attackTriggered() {
 		const hero = this.engine.hero;
 		const weapon = hero.weapon;
 		const zone = this.engine.currentZone;
@@ -166,7 +164,7 @@ class ZoneScene extends Scene {
 		}
 	}
 
-	async _moveHero(direction: number) {
+	private async _moveHero(direction: number): Promise<void> {
 		const engine = this.engine;
 		const state = engine.state;
 		const hero = engine.hero;
@@ -401,6 +399,7 @@ class ZoneScene extends Scene {
 	willShow() {
 		this.engine.inputManager.locator = false;
 		this.engine.inputManager.pause = false;
+		this.camera.hero = this.engine.hero;
 	}
 
 	willHide() {
