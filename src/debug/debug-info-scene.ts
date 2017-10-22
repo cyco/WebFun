@@ -19,7 +19,7 @@ class DebugInfoScene extends Scene {
 		renderer.renderText(`${this._fps.toFixed(0)} fps, ${this._tps.toFixed(0)} tps`, new Point(10, 265));
 	}
 
-	public update(ticks: number): void {
+	public async update(ticks: number): Promise<void> {
 		this._ticks += ticks;
 		this.recalculateTPS();
 	}
