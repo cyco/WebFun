@@ -18,8 +18,11 @@ class ComponentRegistry {
 		console.assert(!!ComponentDefinition.TagName, `ComponentDefinitions must define a tag to be used!`);
 		console.assert(!this.components[ComponentDefinition.TagName], `A component with tag '${ComponentDefinition.TagName}' is already registered!`);
 
-		window.customElements.define(ComponentDefinition.TagName, ComponentDefinition, ComponentDefinition.Options);
-		this.components[ComponentDefinition.TagName] = ComponentDefinition;
+		try {
+			window.customElements.define(ComponentDefinition.TagName, ComponentDefinition, ComponentDefinition.Options);
+			this.components[ComponentDefinition.TagName] = ComponentDefinition;
+		} catch (e) {
+		}
 	}
 }
 
