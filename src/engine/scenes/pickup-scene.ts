@@ -25,7 +25,7 @@ class PickupScene extends Scene {
 		}
 	}
 
-	update() {
+	async update() {
 		const engine = this.engine;
 		if (engine.inputManager.pickUp) {
 			engine.sceneManager.popScene();

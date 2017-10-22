@@ -12,7 +12,7 @@ abstract class Scene {
 
 	public abstract render(renderer: Renderer): void;
 
-	public abstract update(ticks: number): void;
+	public abstract async update(ticks: number): Promise<void>;
 
 	willShow(): void {
 	}

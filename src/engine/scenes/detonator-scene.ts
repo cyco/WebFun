@@ -37,7 +37,7 @@ class DetonatorScene extends Scene {
 		this.engine.inputManager.mouseDownHandler = null;
 	}
 
-	update(/*ticks*/) {
+	async update(/*ticks*/) {
 		if (this._ticks === -1) return;
 
 		this._ticks++;

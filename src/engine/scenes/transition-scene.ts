@@ -68,7 +68,7 @@ class TransitionScene extends Scene {
 		console.log("willHide()");
 	}
 
-	update(/*ticks*/) {
+	async update(/*ticks*/) {
 		if (this._zoneSwapTime !== Infinity && this.state > this._zoneSwapTime) {
 			// make sure we don't swap again
 			this._zoneSwapTime = Infinity;

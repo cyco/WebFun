@@ -43,7 +43,7 @@ class MapScene extends Scene {
 		this.engine.inputManager.keyDownHandler = null;
 	}
 
-	update(/*ticks*/) {
+	async update(/*ticks*/) {
 		const engine = this.engine;
 		const inputManager = engine.inputManager;
 		if (!inputManager.locator) {

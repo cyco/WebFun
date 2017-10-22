@@ -1,5 +1,4 @@
 import { ResultFlags } from "src/engine/script/arguments";
-import Logger from "src/util/logger";
 import Point from "src/util/point";
 import Engine from "../engine";
 import Action from "../objects/action";
@@ -29,7 +28,7 @@ class ScriptExecutor {
 		return this._evaluateActions(engine.currentZone.actions, false);
 	}
 
-	_evaluateActions(actions: Action[], check = true) {
+	private _evaluateActions(actions: Action[], check = true) {
 		const hasActions = actions.length;
 		actions = actions.slice();
 		while (actions.length) {
@@ -48,12 +47,12 @@ class ScriptExecutor {
 		return false;
 	}
 
-	actionDoesApply(action: Action): boolean {
+	private actionDoesApply(action: Action): boolean {
 		return (action.enabled || action.instructionPointer !== 0) && action.conditions.every(
 			(condition) => this._checker.check(condition), this);
 	}
 
-	executeInstructions(action: Action): boolean {
+	private executeInstructions(action: Action): boolean {
 		this._executor.action = action;
 		for (let i = action.instructionPointer | 0, len = action.instructions.length; i < len; i++) {
 			action.instructionPointer = i + 1;

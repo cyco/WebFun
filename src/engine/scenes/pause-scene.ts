@@ -23,7 +23,7 @@ class PauseScene extends Scene {
 		}
 	}
 
-	update(/*ticks*/) {
+	async update(/*ticks*/) {
 		const engine = this.engine;
 		const inputManager = engine.inputManager;
 		if (!inputManager.pause) {

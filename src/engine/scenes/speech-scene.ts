@@ -53,7 +53,7 @@ class SpeechScene extends Scene {
 		this._bubble.show();
 	}
 
-	update() {
+	async update() {
 		if (Settings.skipDialogs || this.engine.inputManager.endDialog) {
 			this._bubble.end();
 		}
