@@ -1,7 +1,10 @@
 import Breakpoint from "./breakpoint";
 
-export default class extends Breakpoint {
-	constructor(symbolType, symbol) {
+class SymbolicBreakpoint extends Breakpoint {
+	private _symbolType: any;
+	private _symbol: any;
+
+	constructor(symbolType: any, symbol: any) {
 		super();
 
 		this._symbolType = symbolType;
@@ -12,3 +15,4 @@ export default class extends Breakpoint {
 		return `SYM:${this._symbolType}:${this._symbol}`;
 	}
 }
+export default SymbolicBreakpoint;
