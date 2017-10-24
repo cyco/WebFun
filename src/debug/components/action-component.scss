@@ -2,11 +2,13 @@
 
 wf-debug-action {
 	@extend .inset-border-inverted;
+	white-space: pre;
+	tab-size: 3;
 
 	border-width: 1px;
-	padding-left: 5px;
-	padding-top: 5px;
-	padding-bottom: 5px;
+	padding: 5px;
+	font-family: "Anonymous Pro", monospace;
+	font-size: 12px;
 
 	> .container {
 		display: flex;
@@ -34,23 +36,35 @@ wf-debug-action {
 	}
 
 	wf-debug-condition, wf-debug-instruction {
-		@extend .inset-border;
-
-		border-width: 1px;
-		display: block;
+		display: inline-block;
 		white-space: nowrap;
 		overflow: hidden;
-		line-height: 24px;
-		font-size: 13px;
-		font-family: 'Anonymous Pro';
 
 		&[current] {
 			font-weight: bold;
 		}
 
-		wf-breakpoint-button {
-			margin-left: 5px;
-			margin-right: 5px;
+		&[truthy] .paren-open {
+			color: darkgreen;
 		}
+	}
+
+	.paren-close {
+		opacity: 0.8;
+	}
+
+	.command {
+		color: #07216C;
+	}
+
+	.key {
+		color: #660E7A;
+	}
+
+	.head {
+		font-size: 11px;
+		float: right;
+		margin-bottom: 4px;
+		display: block;
 	}
 }

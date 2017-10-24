@@ -78,7 +78,7 @@ class Engine extends EventTarget {
 	}
 
 	update(ticks: number) {
-		this.sceneManager.update(ticks);
+		return this.sceneManager.update(ticks);
 	}
 
 	render() {

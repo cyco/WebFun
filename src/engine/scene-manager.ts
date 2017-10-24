@@ -5,6 +5,7 @@ import Scene from "./scenes/scene";
 class SceneManager {
 	public engine: Engine = null;
 	private _stack: Scene[] = [];
+	private _ticking: boolean = false;
 
 	get currentScene() {
 		return this._stack.last();
@@ -22,9 +23,9 @@ class SceneManager {
 		scene.didShow();
 	}
 
-	update(ticks: number): void {
+	async update(ticks: number): Promise<void> {
 		try {
-			this.currentScene.update(ticks);
+			await this.currentScene.update(ticks);
 		} catch (e) {
 			console.error(e);
 		}

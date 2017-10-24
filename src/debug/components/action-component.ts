@@ -1,49 +1,20 @@
 import { Component } from "src/ui";
-import { IconButton } from "src/ui/components";
-import { localStorage } from "src/std.dom";
-import { LocationBreakpoint } from "../breakpoint";
 import "./action-component.scss";
-import BreakpointButton from "./breakpoint-button";
-import Condition from "./condition";
-import Instruction from "./instruction";
-import { Action } from "src/engine/objects";
-import Zone from "src/engine/objects/zone";
+import { Action, Zone } from "src/engine/objects";
+import Engine from "src/engine/engine";
+import ConditionComponent from "src/debug/components/condition";
+import InstructionComponent from "src/debug/components/instruction";
+import ConditionChecker from "src/engine/script/condition-checker";
+import Conditions from "src/engine/script/conditions";
 
 class ActionComponent extends Component {
 	public static readonly TagName = "wf-debug-action";
 	public static readonly observedAttributes = ["current"];
 
 	private _action: Action = null;
-	private zone: Zone = null;
-	private index: number = null;
-	private _title = document.createElement("span");
-	private _conditionContainer = document.createElement("div");
-	private _instructionContainer = document.createElement("div");
-
-	constructor() {
-		super();
-
-		this._conditionContainer.style.marginBottom = "10px";
-	}
-
-	connectedCallback() {
-		const container = document.createElement("div");
-		container.classList.add("container");
-
-		const breakpointButton = new BreakpointButton();
-		breakpointButton.breakpoint = new LocationBreakpoint(this.zone, this._action);
-
-		container.appendChild(breakpointButton);
-		container.appendChild(this._title);
-
-		const expandButton = new IconButton("caret-right");
-		expandButton.classList.add("expand");
-		expandButton.onclick = () => this.expanded = !this.expanded;
-		container.appendChild(expandButton);
-
-		this.appendChild(container);
-		this.expanded = localStorage.load(this._storageId);
-	}
+	public zone: Zone = null;
+	public index: number = null;
+	public engine: Engine = null;
 
 	get action() {
 		return this._action;
@@ -51,18 +22,55 @@ class ActionComponent extends Component {
 
 	set action(action) {
 		this._action = action;
-		this._title.innerText = `Action ${action.id}`;
 
-		const makeComponent = (ComponentClass: any, container: Element) => (desc: any, index: number) => {
-			const component = new ComponentClass(desc);
-			component.zone = this.zone;
-			component.action = this.index;
-			component.index = index;
-			container.appendChild(component);
-		};
+		const headline = document.createElement("span");
+		headline.classList.add("head");
+		const intro = document.createElement("span");
+		intro.classList.add("key");
+		intro.textContent = `actn ${action.id}`;
+		headline.appendChild(intro);
+		this.appendChild(headline);
 
-		action.conditions.forEach(makeComponent(Condition, this._conditionContainer));
-		action.instructions.forEach(makeComponent(Instruction, this._instructionContainer));
+		this.append(`(`);
+		this._append(`and`, "key");
+		this.append(`\t`);
+
+		action.conditions.forEach((condition, index) => {
+			const component = <ConditionComponent>document.createElement(ConditionComponent.TagName);
+			component.action = this._action;
+			component.engine = this.engine;
+			component.condition = condition;
+			if (index !== 0) {
+				this.append("\n\t\t");
+			}
+			this.appendChild(component);
+		});
+		this._append(")", "paren-close");
+		this.append("\n");
+		this.append(`\t(`);
+		this._append(`do`, "key");
+
+		action.instructions.forEach((instruction) => {
+			const component = <InstructionComponent>document.createElement(InstructionComponent.TagName);
+			component.action = this._action;
+			component.engine = this.engine;
+			component.instruction = instruction;
+			this.append("\n\t\t");
+			this.appendChild(component);
+		});
+		this._append(")", "paren-close");
+		this._append(")", "paren-close");
+	}
+
+	public evaluateConditions() {
+		const checker = new ConditionChecker(<any>Conditions, this.engine);
+		Array.from(this.querySelectorAll(ConditionComponent.TagName)).forEach((condition: ConditionComponent) => {
+			if (checker.check(condition.condition)) {
+				condition.setAttribute("truthy", "");
+			} else {
+				condition.removeAttribute("truthy");
+			}
+		});
 	}
 
 	get current() {
@@ -74,27 +82,22 @@ class ActionComponent extends Component {
 		else this.removeAttribute("current");
 	}
 
-	get expanded() {
-		return this.classList.contains("expanded");
-	}
-
-	set expanded(flag) {
-		if (flag) this.classList.add("expanded");
-		else this.classList.remove("expanded");
-
-		if (flag) {
-			this.appendChild(this._conditionContainer);
-			this.appendChild(this._instructionContainer);
-		} else {
-			this._conditionContainer.remove();
-			this._instructionContainer.remove();
-		}
-
-		localStorage.store(this._storageId, !!flag);
-	}
-
 	get _storageId() {
-		return `debug.action.epanded.${this.zone}.${this.index}`;
+		return `debug.action.expanded.${this.zone}.${this.index}`;
+	}
+
+	protected _append(thing: string|Element|Element[], className: string) {
+		const element = document.createElement("span");
+		element.classList.add(className);
+		if (typeof thing === "string")
+			element.innerText = thing;
+		else if (thing instanceof Element) {
+			element.appendChild(thing);
+		} else {
+			thing.forEach((t) => element.appendChild(t));
+		}
+		this.appendChild(element);
+		return element;
 	}
 }
 

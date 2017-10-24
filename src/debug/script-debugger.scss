@@ -1,6 +1,16 @@
 @import "border";
 
-.debugger {
+wf-window.script-debugger-window {
+	z-index: 1001;
+
+	.content {
+		flex-direction: column;
+	}
+
+	wf-debug-controls {
+		padding-bottom: 8px;
+	}
+
 	.action-list {
 		@extend .inset-border;
 
