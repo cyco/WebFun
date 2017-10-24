@@ -1,8 +1,7 @@
-const dispatch = (fn: Function, t: number = 0): Promise<void> => new Promise((res, rej) => {
+const dispatch = <T>(fn: () => T, t: number = 0): Promise<T> => new Promise((res, rej) => {
 	window.setTimeout(async () => {
 		try {
-			await fn();
-			res();
+			res(await fn());
 		} catch (e) {
 			rej(e);
 		}

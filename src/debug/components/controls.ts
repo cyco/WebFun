@@ -39,6 +39,15 @@ class Controls extends Component {
 		this._playButton = playButton;
 	}
 
+	get running() {
+		return this.hasAttribute("running");
+	}
+
+	set running(flag: boolean) {
+		if (flag) this.setAttribute("running", "");
+		else this.removeAttribute("running");
+	}
+
 	connectedCallback() {
 		if (this.children.length) return;
 
@@ -54,15 +63,6 @@ class Controls extends Component {
 			this._stepButton.disabled = isRunning;
 			this._fastForwardButton.disabled = isRunning;
 		}
-	}
-
-	get running() {
-		return this.hasAttribute("running");
-	}
-
-	set running(flag: boolean) {
-		if (flag) this.setAttribute("running", "");
-		else this.removeAttribute("running");
 	}
 }
 

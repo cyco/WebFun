@@ -6,9 +6,9 @@ import DebugInfoScene from "./debug-info-scene";
 class DebugInfoSceneManager extends SceneManager {
 	private _debugInfoScene = new DebugInfoScene();
 
-	update(ticks: number): void {
-		super.update(ticks);
-		this._debugInfoScene.update(ticks);
+	async update(ticks: number): Promise<void> {
+		await super.update(ticks);
+		await this._debugInfoScene.update(ticks);
 	}
 
 	render(renderer: Renderer): void {

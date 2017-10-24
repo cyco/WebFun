@@ -12,9 +12,8 @@ export default class extends Component {
 	static readonly Event = Events;
 	static readonly TagName = "wf-breakpoint-button";
 	static readonly observedAttributes = ["active"];
-
-	private _store: BreakpointStore;
 	public breakpoint: Breakpoint;
+	private _store: BreakpointStore;
 	private _removeHandler: (_: {detail: {breakpoint: Breakpoint}}) => void;
 	private _addHandler: (_: {detail: {breakpoint: Breakpoint}}) => void;
 
@@ -25,6 +24,15 @@ export default class extends Component {
 		this.breakpoint = null;
 		this._removeHandler = ({detail: {breakpoint}}) => breakpoint === this.breakpoint && (this.active = false);
 		this._addHandler = ({detail: {breakpoint}}) => breakpoint === this.breakpoint && (this.active = true);
+	}
+
+	get active() {
+		return this.hasAttribute("active");
+	}
+
+	set active(flag) {
+		if (flag) this.setAttribute("active", "");
+		else this.removeAttribute("active");
 	}
 
 	connectedCallback() {
@@ -43,14 +51,5 @@ export default class extends Component {
 		this.active = !this.active;
 		if (this.active) this._store.addBreakpoint(this.breakpoint);
 		else this._store.removeBreakpoint(this.breakpoint);
-	}
-
-	get active() {
-		return this.hasAttribute("active");
-	}
-
-	set active(flag) {
-		if (flag) this.setAttribute("active", "");
-		else this.removeAttribute("active");
 	}
 }

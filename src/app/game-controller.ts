@@ -22,7 +22,7 @@ import GameState from "../engine/game-state";
 import Loader, { LoaderEventDetails } from "./loader";
 import { LoadingView, SceneView } from "./ui";
 import { MainMenu, MainWindow } from "./windows";
-import { ScriptDebugger, Debugger } from "src/debug";
+import { ScriptDebugger } from "src/debug";
 
 class GameController {
 	private _window: MainWindow;

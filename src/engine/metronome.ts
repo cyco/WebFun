@@ -36,8 +36,9 @@ class Metronome {
 		const update = now >= this._nextTick;
 		if (update) {
 			this._nextTick = now + TICKLENGTH;
-			if (!this._updatesSuspended)
+			if (!this._updatesSuspended) {
 				await this.withSuspendedUpdates(async () => await this.ontick(1));
+			}
 		}
 		this.onrender();
 
