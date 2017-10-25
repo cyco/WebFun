@@ -55,7 +55,7 @@
     "twgl.js": "^3.8.0"
   },
   "devDependencies": {
-    "@types/jasmine": "^2.6.1",
+    "@types/jasmine": "^2.6.2",
     "@types/jasmine-matchers": "^0.2.30",
     "@types/sprintf-js": "^1.1.0",
     "@types/webcomponents.js": "^0.6.32",
