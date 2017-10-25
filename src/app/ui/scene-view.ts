@@ -3,6 +3,7 @@ import Settings from "src/settings";
 import { rgb } from "src/util";
 import DebugInfoSceneManager from "../../debug/debug-info-scene-manager";
 import Component from "src/ui/component";
+import "./scene-view.scss";
 
 class SceneView extends Component {
 	public static readonly TagName = "wf-scene-view";
