@@ -1,7 +1,7 @@
 import { IconButton } from "src/ui/components";
 import { dispatch } from "src/util";
 import "./speech-bubble.scss";
-import View from "./view";
+import Component from "../component";
 
 export const Event = {
 	End: "end"
@@ -13,7 +13,18 @@ declare global {
 	}
 }
 
-class SpeechBubble extends View {
+class SpeechBubble extends Component {
+	public static readonly TagName = "wf-speech-bubble";
+	public static readonly Event = Event;
+	public static readonly ARROW_STYLE = {
+		MODIFIED: 1,
+
+		BOTTOM: 2,
+		LEFT: 4,
+		RIGHT: 6,
+		TOP: 8
+	};
+
 	public onend: (e: CustomEvent) => void;
 	private _lineHeight: number = 16;
 	private _maxNumberOfLines: number = 5;
@@ -21,44 +32,27 @@ class SpeechBubble extends View {
 	private _width: number = 170;
 	private _arrowWidth: number = 16;
 	private _arrowStyle: number = SpeechBubble.ARROW_STYLE.TOP;
-	private _text: HTMLElement;
 	private _upButton: IconButton;
 	private _downButton: IconButton;
 	private _endButton: IconButton;
+	private _text = document.createElement("div");
 
-	constructor() {
-		super();
+	connectedCallback() {
+		super.connectedCallback();
 
-		this.element.style.width = this._width + "px";
-		this.element.style.position = "absolute";
+		this.style.width = this._width + "px";
+		this.style.position = "absolute";
 
-		this.element.classList.add("speech-bubble");
+		this.classList.add("speech-bubble");
 
 		const textContainer = document.createElement("div");
 		textContainer.classList.add("text-container");
 
-		const text = document.createElement("div");
-		text.classList.add("text");
-		textContainer.appendChild(text);
-		this._text = text;
+		this._text.classList.add("text");
+		textContainer.appendChild(this._text);
 
-		this.element.appendChild(textContainer);
+		this.appendChild(textContainer);
 		this._setupButtons();
-	}
-
-	static get Event() {
-		return Event;
-	}
-
-	static get ARROW_STYLE() {
-		return {
-			MODIFIED: 1,
-
-			BOTTOM: 2,
-			LEFT: 4,
-			RIGHT: 6,
-			TOP: 8
-		};
 	}
 
 	get text() {
@@ -74,39 +68,36 @@ class SpeechBubble extends View {
 			this._text.appendChild(document.createElement("br"));
 		});
 
-		const self = this;
 		dispatch(() => {
-			self._setupBackground();
-			self._scrollTo(0);
+			this._setupBackground();
+			this._scrollTo(0);
 		});
 	}
 
 	get x() {
-		return parseInt(this.element.style.left);
+		return parseInt(this.style.left);
 	}
 
 	set x(v) {
-		this.element.style.left = (v - parseInt(this._width + "") / 2) + "px";
+		this.style.left = (v - parseInt(this._width + "") / 2) + "px";
 	}
 
 	get y() {
-		return parseInt(this.element.style.top);
+		return parseInt(this.style.top);
 	}
 
 	set y(v) {
-		this.element.style.top = v + "px";
+		this.style.top = v + "px";
 	}
 
 	_setupButtons() {
-		const self = this;
-
 		const buttonBar = document.createElement("div");
 		buttonBar.classList.add("controls");
 
 		const up = <IconButton>document.createElement(IconButton.TagName);
 		up.classList.add("bordered");
 		up.classList.add("up");
-		up.onclick = () => self.scrollUp();
+		up.onclick = () => this.scrollUp();
 		up.icon = "caret-up";
 		buttonBar.appendChild(up);
 		this._upButton = up;
@@ -114,7 +105,7 @@ class SpeechBubble extends View {
 		const down = <IconButton>document.createElement(IconButton.TagName);
 		down.classList.add("bordered");
 		down.classList.add("down");
-		down.onclick = () => self.scrollDown();
+		down.onclick = () => this.scrollDown();
 		down.icon = "caret-down";
 		buttonBar.appendChild(down);
 		this._downButton = down;
@@ -122,21 +113,21 @@ class SpeechBubble extends View {
 		const end = <IconButton>document.createElement(IconButton.TagName);
 		end.classList.add("bordered");
 		end.classList.add("end");
-		end.onclick = () => self.end();
+		end.onclick = () => this.end();
 		end.icon = "circle";
 		buttonBar.appendChild(end);
 		this._endButton = end;
 
-		this.element.appendChild(buttonBar);
+		this.appendChild(buttonBar);
 	}
 
 	_setupBackground() {
-		const previousBackground = this.element.querySelector("svg");
+		const previousBackground = this.querySelector("svg");
 		if (previousBackground) previousBackground.remove();
 
 		const numberOfLines = this._calculateNumberOfLines(false);
-		if (numberOfLines === 1) this.element.classList.add("singleline");
-		else this.element.classList.remove("singleline");
+		if (numberOfLines === 1) this.classList.add("singleline");
+		else this.classList.remove("singleline");
 
 		const width = this._width;
 		const height = this._calculateHeight();
@@ -151,19 +142,19 @@ class SpeechBubble extends View {
 		p.setAttribute("d", this._buildPath());
 		background.appendChild(p);
 
-		this.element.insertBefore(background, this.element.firstChild);
+		this.insertBefore(background, this.firstChild);
 
 		if (this._arrowStyle & SpeechBubble.ARROW_STYLE.TOP ||
 			this._arrowStyle & SpeechBubble.ARROW_STYLE.BOTTOM) {
-			this.element.style.height = height + arrowWidth + "px";
-			this.element.style.width = width + "px";
+			this.style.height = height + arrowWidth + "px";
+			this.style.width = width + "px";
 			background.setAttribute("height", "" + height + arrowWidth);
 			background.setAttribute("width", "" + width);
 
 		} else if (this._arrowStyle & SpeechBubble.ARROW_STYLE.LEFT ||
 			this._arrowStyle & SpeechBubble.ARROW_STYLE.RIGHT) {
-			this.element.style.height = height + "px";
-			this.element.style.width = width + arrowWidth + "px";
+			this.style.height = height + "px";
+			this.style.width = width + arrowWidth + "px";
 			background.setAttribute("height", "" + height);
 			background.setAttribute("width", "" + width + arrowWidth);
 		}
@@ -237,12 +228,13 @@ class SpeechBubble extends View {
 	}
 
 	end() {
-		this.element.remove();
-		this.dispatchEvent(SpeechBubble.Event.End);
+		this.remove();
+		this.dispatchEvent(new CustomEvent(SpeechBubble.Event.End));
+		if (this.onend) this.onend(new CustomEvent(SpeechBubble.Event.End));
 	}
 
 	show() {
-		document.body.appendChild(this.element);
+		document.body.appendChild(this);
 	}
 
 	private _scrollBy(l: number): void {
@@ -258,8 +250,6 @@ class SpeechBubble extends View {
 			line = 0;
 
 		this._text.style.top = -1 * line * 16 + "px";
-
-		//        this._endButton.enabled = line === totalLineCount - this._maxNumberOfLines || totalLineCount === 1;
 	}
 
 	private _calculateHeight() {

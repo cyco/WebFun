@@ -1,5 +1,5 @@
-import InventoryComponent, { Event as InventoryEvent } from "src/app/ui/components/inventory";
-import InventoryRow from "src/app/ui/components/inventory-row";
+import InventoryComponent, { Event as InventoryEvent } from "src/app/ui/inventory";
+import InventoryRow from "src/app/ui/inventory-row";
 import Inventory from "src/engine/inventory";
 import Yoda from "src/engine/yoda";
 

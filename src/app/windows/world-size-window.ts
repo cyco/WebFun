@@ -1,4 +1,4 @@
-import { SettingsWindow } from "src/app/ui/components";
+import { SettingsWindow } from "../ui";
 import "./world-size-window.scss";
 
 class DifficultyWindow extends SettingsWindow {

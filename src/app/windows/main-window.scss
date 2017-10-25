@@ -1,6 +1,6 @@
 @import "variables";
 @import "border";
-@import "src/ui/components/window.scss";
+@import "../ui/settings-window.scss";
 
 wf-main-window {
 	@extend wf-window;

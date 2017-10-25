@@ -2,7 +2,7 @@ import { Menu as DebugMenu } from "src/debug";
 import Settings from "src/settings";
 import { Menu, MenuItemSeparator as Separator } from "src/ui";
 import { WindowModalSession } from "src/ux";
-import { document } from "../../std.dom";
+import { document } from "src/std.dom";
 import Window from "../../ui/components/window";
 import GameController from "../game-controller";
 import DifficultyWindow from "./difficulty-window";

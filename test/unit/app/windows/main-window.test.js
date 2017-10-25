@@ -1,4 +1,4 @@
-import { Ammo, Health, Inventory, Location, Weapon } from "src/app/ui/components";
+import { Ammo, Health, Inventory, Location, Weapon } from "src/app/ui";
 import MainWindow from "src/app/windows/main-window";
 import { Events as EngineEvents } from "src/engine/engine";
 import { Events as HeroEvents } from "src/engine/hero";
@@ -30,7 +30,7 @@ describeComponent(MainWindow, () => {
 		});
 	});
 
-	describe("updating components", () => {
+	describe("updating ui", () => {
 		beforeAll(() => subject = render(MainWindow));
 
 		let engine;

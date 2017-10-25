@@ -1,4 +1,4 @@
-import SettingsWindow from "src/app/ui/components/settings-window";
+import SettingsWindow from "src/app/ui/settings-window";
 import { Slider } from "src/ui/components";
 
 describeComponent(SettingsWindow, () => {

@@ -1,6 +1,6 @@
 import { Tile } from "src/engine/objects";
 import Settings from "src/settings";
-import { SpeechBubble } from "src/ui";
+import { SpeechBubble } from "src/ui/components";
 import { Point, Size } from "src/util";
 import { ModalSession } from "src/ux";
 import Engine from "../engine";
@@ -29,7 +29,7 @@ class SpeechScene extends Scene {
 	}
 
 	_setupBubble() {
-		const bubble = new SpeechBubble();
+		const bubble = <SpeechBubble>document.createElement(SpeechBubble.TagName);
 		bubble.onend = () => this.engine.sceneManager.popScene();
 		this._bubble = bubble;
 	}

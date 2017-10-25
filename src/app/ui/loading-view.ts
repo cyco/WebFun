@@ -1,15 +1,16 @@
 import { CanvasRenderer, ColorPalette } from "src/engine";
-import { ProgressBar, View } from "src/ui";
+import { ProgressBar } from "src/ui/components";
 import "./loading-view.scss";
+import Component from "src/ui/component";
 
-class LoadingView extends View {
+class LoadingView extends Component {
+	public static readonly TagName = 'wf-loading-view';
+
 	private _imageCanvas: HTMLCanvasElement;
 	private _progressBar: ProgressBar;
 
 	constructor() {
 		super();
-
-		this.element.classList.add("loading-view");
 
 		this._imageCanvas = document.createElement("canvas");
 		this._imageCanvas.ondragstart = (event) => {
@@ -18,10 +19,14 @@ class LoadingView extends View {
 		};
 		this._imageCanvas.width = 288;
 		this._imageCanvas.height = 288;
-		this.element.appendChild(this._imageCanvas);
-
 		this._progressBar = new ProgressBar();
-		this.element.appendChild(this._progressBar.element);
+	}
+
+	connectedCallback() {
+		super.connectedCallback();
+
+		this.appendChild(this._imageCanvas);
+		this.appendChild(this._progressBar);
 	}
 
 	get progress() {

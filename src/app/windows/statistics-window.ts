@@ -1,9 +1,8 @@
 import { PersistentState } from "src/engine";
-import { Textbox } from "src/ui";
-import { Window } from "src/ui/components";
+import { Textbox,Window } from "src/ui/components";
 import "./statistics-window.scss";
 
-export default class extends Window {
+class StatisticsWindow extends Window {
 	public static TagName = "wf-statistics-window";
 
 	private _state: PersistentState;
@@ -38,7 +37,7 @@ export default class extends Window {
 		const label = document.createElement("span");
 		label.textContent = name;
 
-		const textbox = new Textbox();
+		const textbox = <Textbox>document.createElement(Textbox.TagName);
 		textbox.editable = false;
 		textbox.align = "right";
 		textbox.width = 60;
@@ -47,8 +46,9 @@ export default class extends Window {
 
 		const row = document.createElement("li");
 		row.appendChild(label);
-		row.appendChild(textbox.element);
+		row.appendChild(textbox);
 
 		this._list.appendChild(row);
 	}
 }
+export default StatisticsWindow;

@@ -1,12 +1,11 @@
-import Selector from "src/ui/selector";
-import sandboxed from "test-helpers/dom-sandbox";
+import Selector from "src/ui/components/selector";
 
-describe("Selector", sandboxed((sand) => {
+describeComponent(Selector, () => {
 	let selector;
-	it("displays a drop down menu with a selection", () => {
-		selector = new Selector();
-		sand.box.appendChild(selector.element);
-		expect(sand.box.querySelector("select")).not.toBe(0);
+	beforeEach(() => selector = render(Selector));
+
+	it("is class that displays a drop down menu with a selection", () => {
+		expect(Selector).toBeClass();
 	});
 
 	it("has a method to add options", () => {
@@ -14,13 +13,17 @@ describe("Selector", sandboxed((sand) => {
 		selector.addOption("test", 10);
 		selector.addOption("labelAndValue");
 
-		expect(selector.element.querySelectorAll("option").length).toBe(3);
+		expect(selector.querySelectorAll("option").length).toBe(3);
 	});
 
 	it("has a method to remove an option by value", () => {
+		selector.addOption("label", "value");
+		selector.addOption("test", 10);
+		selector.addOption("labelAndValue");
+
 		selector.removeOption("value");
 
-		let optionNodes = selector.element.querySelectorAll("option");
+		let optionNodes = selector.querySelectorAll("option");
 
 		expect(optionNodes.length).toBe(2);
 		expect(optionNodes[0].value).toBe("10");
@@ -36,6 +39,8 @@ describe("Selector", sandboxed((sand) => {
 	});
 
 	it("can return the currently selected value", () => {
-		expect(selector.value).toBe("10");
+		selector.addOption("label", "value");
+
+		expect(selector.value).toBe("value");
 	});
-}));
+});

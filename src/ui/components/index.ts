@@ -13,6 +13,10 @@ import Slider from "./slider";
 import SubmenuWindow from "./submenu-window";
 import Window from "./window";
 import WindowTitlebar from "./window-titlebar";
+import Textbox from "./textbox";
+import ProgressBar from "./progress-bar";
+import SpeechBubble from "./speech-bubble";
+import Selector from './selector';
 
 export {
 	ConfirmationWindow,
@@ -29,5 +33,9 @@ export {
 	SubmenuWindow,
 	Window,
 	WindowTitlebar,
-	Slider
+	Slider,
+	Textbox,
+	ProgressBar,
+	SpeechBubble,
+	Selector
 };

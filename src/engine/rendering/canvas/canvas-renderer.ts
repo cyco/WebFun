@@ -14,7 +14,6 @@ class CanvasRenderer extends AbstractRenderer {
 
 	constructor(canvas: HTMLCanvasElement) {
 		super();
-
 		this._canvas = canvas;
 
 		this._ctx = canvas.getContext("2d");
