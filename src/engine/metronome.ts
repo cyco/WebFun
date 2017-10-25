@@ -10,14 +10,13 @@ export const Event = {
 
 class Metronome {
 	public static Event = Event;
+	public ontick: Function = identity;
+	public onrender: Function = identity;
 	private _stopped: boolean = false;
 	private _mainLoop: number = null;
 	private _nextTick: number;
 	private _tickCallback = (t: number = 0) => this._performTick(t);
 	private _updatesSuspended: boolean = false;
-
-	public ontick: Function = identity;
-	public onrender: Function = identity;
 
 	constructor() {
 		this._nextTick = performance.now();

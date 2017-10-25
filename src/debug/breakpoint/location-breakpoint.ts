@@ -1,6 +1,4 @@
 import Breakpoint from "./breakpoint";
-import Zone from "src/engine/objects/zone";
-import Action from "src/engine/objects/action";
 
 class LocationBreakpoint extends Breakpoint {
 	protected _path: any[];
@@ -18,4 +16,5 @@ class LocationBreakpoint extends Breakpoint {
 		return `@${this._path.join(":")}`;
 	}
 }
+
 export default LocationBreakpoint;

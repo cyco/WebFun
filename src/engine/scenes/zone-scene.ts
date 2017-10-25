@@ -84,113 +84,6 @@ class ZoneScene extends Scene {
 			});
 	}
 
-	private async _handleMouse(): Promise<void> {
-		const engine = this.engine;
-
-		const inputManager = engine.inputManager;
-		const mouseLocationInView = inputManager.mouseLocationInView;
-
-		const camera = this._camera;
-		const offset = camera.offset;
-		const size = camera.size;
-		const hero = engine.hero;
-
-		const mouseLocationOnZone = new Point(mouseLocationInView.x * size.width - offset.x - 0.5,
-			mouseLocationInView.y * size.height - offset.y - 0.5);
-
-		const relativeLocation = Point.subtract(mouseLocationOnZone, hero.location);
-
-		const onHero = Math.abs(relativeLocation.x) < 0.5 && Math.abs(relativeLocation.y) < 0.5;
-		const closeToViewEdge = mouseLocationInView.x < 1 / 18 || mouseLocationInView.y < 1 / 18 || mouseLocationInView.x > 17 / 18 || mouseLocationInView.y > 17 / 18;
-		if (onHero && !closeToViewEdge) {
-			this.engine.setCursor("blocking");
-		} else {
-			let direction = Direction.CalculateAngleFromRelativePoint(relativeLocation);
-			this.engine.setCursor(Direction.Confine(direction));
-
-			// TODO: set cursor
-			if (isNaN(direction)) return;
-
-			hero.face(direction);
-			if (inputManager.walk)
-				await this._moveHero(direction);
-		}
-
-		return;
-	}
-
-	private _handleKeys(): boolean {
-		const engine = this.engine;
-		const inputManager = engine.inputManager;
-		const hero = engine.hero;
-
-		if (inputManager.pause) {
-			const pauseScene = new PauseScene();
-			this.engine.sceneManager.pushScene(pauseScene);
-			return true;
-		}
-
-		if (inputManager.locator) // && hero.hasLocator();
-		{
-			const mapScene = new MapScene();
-			this.engine.sceneManager.pushScene(mapScene);
-			return true;
-		}
-
-		hero.isDragging = inputManager.drag;
-
-		hero.isAttacking = inputManager.attack; // TOOD: check if hero can attack right now
-		if (hero.isAttacking) this._attackTriggered();
-		return false;
-	}
-
-	private _attackTriggered() {
-		const hero = this.engine.hero;
-		const weapon = hero.weapon;
-		const zone = this.engine.currentZone;
-
-		// do nothing if no weapon is equipped
-		if (!weapon) {
-			hero.isAttacking = false;
-			return;
-		}
-
-		// do nothing if hero is looking away from the zone
-		const point = Direction.CalculateRelativeCoordinates(hero.direction, 1);
-		const inertia = new Point(point.x, point.y, 0);
-		if (!Point.add(hero.location, inertia).isInBounds(zone.size)) {
-			hero.isAttacking = false;
-			return;
-		}
-	}
-
-	private async _moveHero(direction: number): Promise<void> {
-		const engine = this.engine;
-		const state = engine.state;
-		const hero = engine.hero;
-		const zone = engine.currentZone;
-
-		let diri = Direction.Confine(direction);
-		let point = Direction.CalculateRelativeCoordinates(diri, 1);
-		let p = new Point(point.x, point.y, 0);
-
-		hero.isWalking = true;
-
-		const targetPoint = Point.add(hero.location, p);
-		const targetTile = zone.containsPoint(targetPoint) && zone.getTile(targetPoint.x, targetPoint.y, 1);
-		if (targetTile) {
-			const result = await this.engine.scriptExecutor.bump(targetPoint);
-			//TODO: handle result
-		}
-
-		if (!hero.move(p, this.zone)) {
-			const doTransition = this._tryTransition(p);
-			if (doTransition === false) {
-				// TODO: play blocked sound
-			}
-		} else this._executeHotspots();
-	}
-
 	_executeHotspots() {
 		if (this.engine.state.justEntered) return;
 		const zone = this.zone;
@@ -403,6 +296,113 @@ class ZoneScene extends Scene {
 
 	willHide() {
 		this.engine.setCursor(null);
+	}
+
+	private async _handleMouse(): Promise<void> {
+		const engine = this.engine;
+
+		const inputManager = engine.inputManager;
+		const mouseLocationInView = inputManager.mouseLocationInView;
+
+		const camera = this._camera;
+		const offset = camera.offset;
+		const size = camera.size;
+		const hero = engine.hero;
+
+		const mouseLocationOnZone = new Point(mouseLocationInView.x * size.width - offset.x - 0.5,
+			mouseLocationInView.y * size.height - offset.y - 0.5);
+
+		const relativeLocation = Point.subtract(mouseLocationOnZone, hero.location);
+
+		const onHero = Math.abs(relativeLocation.x) < 0.5 && Math.abs(relativeLocation.y) < 0.5;
+		const closeToViewEdge = mouseLocationInView.x < 1 / 18 || mouseLocationInView.y < 1 / 18 || mouseLocationInView.x > 17 / 18 || mouseLocationInView.y > 17 / 18;
+		if (onHero && !closeToViewEdge) {
+			this.engine.setCursor("blocking");
+		} else {
+			let direction = Direction.CalculateAngleFromRelativePoint(relativeLocation);
+			this.engine.setCursor(Direction.Confine(direction));
+
+			// TODO: set cursor
+			if (isNaN(direction)) return;
+
+			hero.face(direction);
+			if (inputManager.walk)
+				await this._moveHero(direction);
+		}
+
+		return;
+	}
+
+	private _handleKeys(): boolean {
+		const engine = this.engine;
+		const inputManager = engine.inputManager;
+		const hero = engine.hero;
+
+		if (inputManager.pause) {
+			const pauseScene = new PauseScene();
+			this.engine.sceneManager.pushScene(pauseScene);
+			return true;
+		}
+
+		if (inputManager.locator) // && hero.hasLocator();
+		{
+			const mapScene = new MapScene();
+			this.engine.sceneManager.pushScene(mapScene);
+			return true;
+		}
+
+		hero.isDragging = inputManager.drag;
+
+		hero.isAttacking = inputManager.attack; // TOOD: check if hero can attack right now
+		if (hero.isAttacking) this._attackTriggered();
+		return false;
+	}
+
+	private _attackTriggered() {
+		const hero = this.engine.hero;
+		const weapon = hero.weapon;
+		const zone = this.engine.currentZone;
+
+		// do nothing if no weapon is equipped
+		if (!weapon) {
+			hero.isAttacking = false;
+			return;
+		}
+
+		// do nothing if hero is looking away from the zone
+		const point = Direction.CalculateRelativeCoordinates(hero.direction, 1);
+		const inertia = new Point(point.x, point.y, 0);
+		if (!Point.add(hero.location, inertia).isInBounds(zone.size)) {
+			hero.isAttacking = false;
+			return;
+		}
+	}
+
+	private async _moveHero(direction: number): Promise<void> {
+		const engine = this.engine;
+		const state = engine.state;
+		const hero = engine.hero;
+		const zone = engine.currentZone;
+
+		let diri = Direction.Confine(direction);
+		let point = Direction.CalculateRelativeCoordinates(diri, 1);
+		let p = new Point(point.x, point.y, 0);
+
+		hero.isWalking = true;
+
+		const targetPoint = Point.add(hero.location, p);
+		const targetTile = zone.containsPoint(targetPoint) && zone.getTile(targetPoint.x, targetPoint.y, 1);
+		if (targetTile) {
+			const result = await this.engine.scriptExecutor.bump(targetPoint);
+			//TODO: handle result
+		}
+
+		if (!hero.move(p, this.zone)) {
+			const doTransition = this._tryTransition(p);
+			if (doTransition === false) {
+				// TODO: play blocked sound
+			}
+		} else this._executeHotspots();
 	}
 }
 

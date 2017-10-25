@@ -8,12 +8,12 @@ import Window from "./window";
 import "./window-titlebar.scss";
 
 class WindowTitlebar extends Component {
+	public onclose: Function = identity;
 	private _menu: Menu = null;
 	private _menubar: Menubar = null;
 	private _titleNode: HTMLElement = null;
 	private _window: Window;
 	private _closeButton: View;
-	public onclose: Function = identity;
 
 	constructor() {
 		super();

@@ -15,4 +15,5 @@ class SymbolicBreakpoint extends Breakpoint {
 		return `SYM:${this._symbolType}:${this._symbol}`;
 	}
 }
+
 export default SymbolicBreakpoint;

@@ -25,23 +25,23 @@ abstract class InstructionThing extends Component {
 	abstract get type(): string;
 
 	protected _open(): Element {
-		const element = document.createElement('span');
-		element.innerText = '(';
-		element.classList.add('paren-open');
+		const element = document.createElement("span");
+		element.innerText = "(";
+		element.classList.add("paren-open");
 		return element;
 	}
 
-	protected _command(name: string){
-		const element = document.createElement('span');
+	protected _command(name: string) {
+		const element = document.createElement("span");
 		element.innerText = name.dasherize();
-		element.classList.add('command');
+		element.classList.add("command");
 		return element;
 	}
 
 	protected _close(): Element {
-		const element = document.createElement('span');
-		element.innerText = ')';
-		element.classList.add('paren-close');
+		const element = document.createElement("span");
+		element.innerText = ")";
+		element.classList.add("paren-close");
 		return element;
 	}
 }

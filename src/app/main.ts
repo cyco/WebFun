@@ -2,7 +2,7 @@ import { ComponentRegistry, Components } from "src/ui";
 import GameController from "./game-controller";
 import * as AppComponents from "./ui/components";
 import * as WindowComponents from "./windows";
-import {loadSettings} from "src/settings";
+import { loadSettings } from "src/settings";
 
 export default () => {
 	loadSettings();
