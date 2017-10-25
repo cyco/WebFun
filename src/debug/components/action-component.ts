@@ -10,11 +10,10 @@ import Conditions from "src/engine/script/conditions";
 class ActionComponent extends Component {
 	public static readonly TagName = "wf-debug-action";
 	public static readonly observedAttributes = ["current"];
-
-	private _action: Action = null;
 	public zone: Zone = null;
 	public index: number = null;
 	public engine: Engine = null;
+	private _action: Action = null;
 
 	get action() {
 		return this._action;
@@ -62,17 +61,6 @@ class ActionComponent extends Component {
 		this._append(")", "paren-close");
 	}
 
-	public evaluateConditions() {
-		const checker = new ConditionChecker(<any>Conditions, this.engine);
-		Array.from(this.querySelectorAll(ConditionComponent.TagName)).forEach((condition: ConditionComponent) => {
-			if (checker.check(condition.condition)) {
-				condition.setAttribute("truthy", "");
-			} else {
-				condition.removeAttribute("truthy");
-			}
-		});
-	}
-
 	get current() {
 		return this.hasAttribute("current");
 	}
@@ -84,6 +72,17 @@ class ActionComponent extends Component {
 
 	get _storageId() {
 		return `debug.action.expanded.${this.zone}.${this.index}`;
+	}
+
+	public evaluateConditions() {
+		const checker = new ConditionChecker(<any>Conditions, this.engine);
+		Array.from(this.querySelectorAll(ConditionComponent.TagName)).forEach((condition: ConditionComponent) => {
+			if (checker.check(condition.condition)) {
+				condition.setAttribute("truthy", "");
+			} else {
+				condition.removeAttribute("truthy");
+			}
+		});
 	}
 
 	protected _append(thing: string|Element|Element[], className: string) {

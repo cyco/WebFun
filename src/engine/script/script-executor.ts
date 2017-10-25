@@ -12,6 +12,14 @@ class ScriptExecutor {
 	private _checker: ConditionChecker = new ConditionChecker(<ConditionStore>Conditions);
 	private _executor: InstructionExecutor = new InstructionExecutor(<InstructionStore>Instructions);
 
+	public set checker(c: ConditionChecker) {
+		this._checker = c;
+	}
+
+	public set executor(e: InstructionExecutor) {
+		this._executor = e;
+	}
+
 	continueActions(engine: Engine): Promise<Boolean> {
 		this._engine = engine;
 		this._checker.engine = engine;
@@ -19,9 +27,6 @@ class ScriptExecutor {
 
 		const previousActions = engine.currentZone.actions.filter(
 			action => action.instructionPointer);
-		if (previousActions.length) {
-			console.log("Continue actions: ", previousActions);
-		}
 		return this._evaluateActions(previousActions, false);
 	}
 
@@ -30,13 +35,14 @@ class ScriptExecutor {
 		this._checker.engine = engine;
 		this._executor.engine = engine;
 
-		console.log(`run ${engine.currentZone.actions.length} actions`);
 		return this._evaluateActions(engine.currentZone.actions, true);
 	}
 
-	private async _evaluateActions(actions: Action[], check = true): Promise<boolean> {
-		if (check) console.log("skip condition checks");
+	public bump(location: Point) {
+		// TODO: implement?
+	}
 
+	private async _evaluateActions(actions: Action[], check = true): Promise<boolean> {
 		const hasActions = actions.length;
 		actions = actions.slice();
 		while (actions.length) {
@@ -56,8 +62,6 @@ class ScriptExecutor {
 	}
 
 	private async actionDoesApply(action: Action): Promise<boolean> {
-		console.log(`actn-${action.id} -doesApply`);
-
 		if (!action.enabled && action.instructionPointer === 0) return false;
 		if (action.instructionPointer !== 0) return true;
 
@@ -71,41 +75,23 @@ class ScriptExecutor {
 	}
 
 	private async executeInstructions(action: Action): Promise<boolean> {
-		console.log(`actn-${action.id} - execute starting at ${action.instructionPointer | 0}`);
 		this._executor.action = action;
 		for (let i = action.instructionPointer | 0, len = action.instructions.length; i < len; i++) {
 			action.instructionPointer = i + 1;
-			console.log(`actn-${action.id} - exec instruction ${i}, ${action.instructions.length} total`);
 			const result = await this._executor.execute(action.instructions[i]);
 			if ((result & ResultFlags.Wait)) {
-				console.log("suspending execution", "Wait");
 				return true;
 			}
 			if ((result & ResultFlags.UpdateText)) {
-				console.log("suspending execution", "UpdateText");
 				return true;
 			}
 			if ((result & ResultFlags.UpdateZone)) {
-				console.log("suspending execution", "UpdateZone");
 				return true;
 			}
 		}
-		console.log(`actn-${action.id} - execution finished`);
 		action.instructionPointer = 0;
 		this._executor.action = null;
 		return false;
-	}
-
-	public bump(location: Point) {
-		// TODO: implement?
-	}
-
-	public set checker(c: ConditionChecker) {
-		this._checker = c;
-	}
-
-	public set executor(e: InstructionExecutor) {
-		this._executor = e;
 	}
 }
 

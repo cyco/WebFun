@@ -97,16 +97,16 @@ class Window extends Component {
 		this.y = (windowHeight - parseFloat(style.height)) / 2.0;
 	}
 
+	public close() {
+		this.remove();
+		this.onclose();
+	}
+
 	private _update() {
 		if (!this.isConnected) return;
 
 		this.style.top = `${this._y | 0}px`;
 		this.style.left = `${this._x | 0}px`;
-	}
-
-	public close() {
-		this.remove();
-		this.onclose();
 	}
 }
 

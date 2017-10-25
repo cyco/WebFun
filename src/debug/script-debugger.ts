@@ -29,10 +29,6 @@ class ScriptDebugger {
 		"zoneChange": () => this._rebuildActionList()
 	};
 
-	public static get sharedDebugger() {
-		return this._sharedDebugger = this._sharedDebugger || new ScriptDebugger();
-	}
-
 	constructor() {
 		this._window = <Window>document.createElement(Window.TagName);
 		this._window.classList.add("script-debugger-window");
@@ -43,6 +39,28 @@ class ScriptDebugger {
 
 		this._setupDebuggerControls();
 		this._setupActionList();
+	}
+
+	public static get sharedDebugger() {
+		return this._sharedDebugger = this._sharedDebugger || new ScriptDebugger();
+	}
+
+	get engine() {
+		return this._engine;
+	}
+
+	set engine(e: Engine) {
+		const isDebugging = this._isActive;
+
+		if (this._engine) {
+			this._teardownDebugger();
+		}
+
+		this._engine = e;
+
+		if (this._engine && isDebugging) {
+			this._setupDebugger();
+		}
 	}
 
 	_setupDebuggerControls() {
@@ -139,24 +157,6 @@ class ScriptDebugger {
 
 	private _updateEvaluation() {
 		Array.from(this._actionList.querySelectorAll(ActionComponent.TagName)).forEach((action: ActionComponent) => action.evaluateConditions());
-	}
-
-	set engine(e: Engine) {
-		const isDebugging = this._isActive;
-
-		if (this._engine) {
-			this._teardownDebugger();
-		}
-
-		this._engine = e;
-
-		if (this._engine && isDebugging) {
-			this._setupDebugger();
-		}
-	}
-
-	get engine() {
-		return this._engine;
 	}
 }
 

@@ -21,15 +21,6 @@ class Logger {
 		facility.call(console, this.prefix, ...args);
 	}
 
-	private _pickLoggingFacility(level: LogLevel){
-		switch (level) {
-			case LogLevel.Off: return identity;
-			case LogLevel.Warning: return console.warn;
-			case LogLevel.Error: return console.error;
-			default: return console.log;
-		}
-	}
-
 	public off(...args: any[]): void {
 		this.log(LogLevel.Off, ...args);
 	}
@@ -48,6 +39,19 @@ class Logger {
 
 	public error(...args: any[]): void {
 		this.log(LogLevel.Error, ...args);
+	}
+
+	private _pickLoggingFacility(level: LogLevel) {
+		switch (level) {
+			case LogLevel.Off:
+				return identity;
+			case LogLevel.Warning:
+				return console.warn;
+			case LogLevel.Error:
+				return console.error;
+			default:
+				return console.log;
+		}
 	}
 }
 

@@ -12,7 +12,7 @@ import { AbstractImageFactory, Renderer } from "./rendering";
 import SceneManager from "./scene-manager";
 import { ScriptExecutor } from "./script";
 import Story from "./story";
-import GameData from './game-data';
+import GameData from "./game-data";
 
 export { Events };
 

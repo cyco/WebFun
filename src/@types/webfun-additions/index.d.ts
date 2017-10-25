@@ -11,9 +11,9 @@ interface Array<T> {
 }
 
 interface String {
-	padStart(length: number, character: string): string
-
 	dasherize: () => string;
+
+	padStart(length: number, character: string): string
 }
 
 declare interface ObjectConstructor {
