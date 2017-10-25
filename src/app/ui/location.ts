@@ -11,7 +11,7 @@ export const Direction = {
 	West: 1 << 4
 };
 
-export default class extends Component {
+class Location extends Component {
 	public static TagName = "wf-location";
 	private _mask: number = Direction.None;
 	private _svg: SVGElement = null;
@@ -42,3 +42,5 @@ export default class extends Component {
 		set(this._mask & Direction.East, "right");
 	}
 }
+
+export default Location;

@@ -8,7 +8,7 @@ export const Events = {
 	DidUnset: "DidUnset"
 };
 
-export default class extends Component {
+class BreakpointButton extends Component {
 	static readonly Event = Events;
 	static readonly TagName = "wf-breakpoint-button";
 	static readonly observedAttributes = ["active"];
@@ -53,3 +53,5 @@ export default class extends Component {
 		else this._store.removeBreakpoint(this.breakpoint);
 	}
 }
+
+export default BreakpointButton;

@@ -9,7 +9,7 @@ export const Event = {
 	Fail: "fail"
 };
 
-export default class extends EventTarget {
+class FileLoader extends EventTarget {
 	public onfail: (_: CustomEvent) => void;
 	public onprogress: (_: CustomEvent) => void;
 	public onload: (_: CustomEvent) => void;
@@ -56,3 +56,5 @@ export default class extends EventTarget {
 		});
 	}
 }
+
+export default FileLoader;
