@@ -1,4 +1,4 @@
-import { SettingsWindow } from "src/app/ui/components";
+import { SettingsWindow } from "src/app/ui";
 import DifficultyWindow from "src/app/windows/difficulty-window";
 
 describeComponent(DifficultyWindow, () => {

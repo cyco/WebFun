@@ -1,5 +1,4 @@
 import Component from "../component";
-import View from "../view";
 import WindowTitlebar from "./window-titlebar";
 import "./window.scss";
 import Menu from "src/ui/menu";
@@ -7,7 +6,7 @@ import Menu from "src/ui/menu";
 class Window extends Component {
 	public static TagName = "wf-window";
 	private _titlebar: WindowTitlebar;
-	private _content: View;
+	private _content: HTMLElement;
 	private _x: number = 0;
 	private _y: number = 0;
 
@@ -15,12 +14,12 @@ class Window extends Component {
 		super();
 
 		this._titlebar = <WindowTitlebar>document.createElement(WindowTitlebar.TagName);
-		this._content = new View();
-		this._content.element.classList.add("content");
+		this._content = document.createElement("div");
+		this._content.classList.add("content");
 	}
 
 	get content() {
-		return this._content.element;
+		return this._content;
 	}
 
 	get x(): number {
@@ -83,7 +82,7 @@ class Window extends Component {
 		this._titlebar.window = this;
 
 		this.appendChild(this._titlebar);
-		this.appendChild(this._content.element);
+		this.appendChild(this._content);
 
 		this._update();
 	}

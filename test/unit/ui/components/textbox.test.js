@@ -1,23 +1,19 @@
-import Textbox from "src/ui/textbox";
-import sandboxed from "test-helpers/dom-sandbox";
+import Textbox from "src/ui/components/textbox";
 
-describe("Textbox", sandboxed(function (sand) {
-	let subject, node;
-	beforeEach(() => {
-		subject = new Textbox();
-		sand.box.appendChild(subject.element);
-	});
+describeComponent(Textbox, () => {
+	let subject;
+	beforeEach(() => subject = render(Textbox));
 
 	it("can be editable", () => {
 		expect(subject.editable).toBeTrue();
 
 		subject.editable = false;
 		expect(subject.editable).toBeFalse();
-		expect(subject.element.hasAttribute("readonly")).toBeTrue();
+		expect(subject._element.hasAttribute("readonly")).toBeTrue();
 
 		subject.editable = true;
 		expect(subject.editable).toBeTrue();
-		expect(subject.element.hasAttribute("readonly")).toBeFalse();
+		expect(subject._element.hasAttribute("readonly")).toBeFalse();
 	});
 
 	it("can have a fixed size", () => {
@@ -43,7 +39,7 @@ describe("Textbox", sandboxed(function (sand) {
 
 		subject.align = "right";
 		expect(subject.align).toEqual("right");
-		expect(subject.element.style.textAlign).toEqual("right");
+		expect(subject._element.style.textAlign).toEqual("right");
 	});
 
 	it("can have an onchange event", () => {
@@ -53,7 +49,7 @@ describe("Textbox", sandboxed(function (sand) {
 		subject.onchange = handler;
 		expect(subject.onchange).toBe(handler);
 
-		subject.element.onchange();
+		subject._element.onchange();
 		expect(handlerCalled).toBeTrue();
 	});
-}));
+});

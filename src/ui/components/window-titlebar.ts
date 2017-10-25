@@ -2,7 +2,6 @@ import { identity } from "src/util";
 import Point from "../../util/point";
 import Component from "../component";
 import Menu from "../menu";
-import View from "../view";
 import Menubar from "./menubar";
 import Window from "./window";
 import "./window-titlebar.scss";
@@ -13,13 +12,13 @@ class WindowTitlebar extends Component {
 	private _menubar: Menubar = null;
 	private _titleNode: HTMLElement = null;
 	private _window: Window;
-	private _closeButton: View;
+	private _closeButton: HTMLElement;
 
 	constructor() {
 		super();
 
-		this._closeButton = new View();
-		this._closeButton.element.classList.add("close-button");
+		this._closeButton = document.createElement("div");
+		this._closeButton.classList.add("close-button");
 	}
 
 	static get TagName() {
@@ -32,7 +31,7 @@ class WindowTitlebar extends Component {
 
 	set window(window: Window) {
 		this._window = window;
-		this._closeButton.element.onclick = () => this._window.close();
+		this._closeButton.onclick = () => this._window.close();
 		this._setupDragging(window);
 	}
 
@@ -80,17 +79,17 @@ class WindowTitlebar extends Component {
 	}
 
 	get closable() {
-		return this._closeButton.element.style.display !== "none";
+		return this._closeButton.style.display !== "none";
 	}
 
 	set closable(flag) {
-		this._closeButton.element.style.display = flag ? "" : "none";
+		this._closeButton.style.display = flag ? "" : "none";
 	}
 
 	connectedCallback() {
 		super.connectedCallback();
 
-		this.appendChild(this._closeButton.element);
+		this.appendChild(this._closeButton);
 		if (this._menubar) this.appendChild(this._menubar);
 	}
 

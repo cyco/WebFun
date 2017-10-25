@@ -1,33 +1,25 @@
 import { SceneManager } from "src/engine";
 import Settings from "src/settings";
-import { View } from "src/ui";
 import { rgb } from "src/util";
 import DebugInfoSceneManager from "../../debug/debug-info-scene-manager";
+import Component from "src/ui/component";
 
-class SceneView extends View {
-	private _manager: SceneManager;
+class SceneView extends Component {
+	public static readonly TagName = "wf-scene-view";
+	private _manager: SceneManager = this._buildSceneManager();
+	public readonly canvas: HTMLCanvasElement = document.createElement("canvas");
 
-	constructor() {
-		super(document.createElement("canvas"));
-
-		this._manager = this._buildSceneManager();
+	connectedCallback() {
+		this.appendChild(this.canvas);
 		this._setupCanvas();
-	}
-
-	get canvas() {
-		return this.element;
 	}
 
 	get manager() {
 		return this._manager;
 	}
 
-	get element(): HTMLCanvasElement {
-		return <HTMLCanvasElement>super.element;
-	}
-
 	_setupCanvas() {
-		const canvas = this.element;
+		const canvas = this.canvas;
 		canvas.style.backgroundColor = rgb(0, 0, 0);
 		canvas.classList.add("pixelated");
 		canvas.width = 288;

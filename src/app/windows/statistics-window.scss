@@ -1,4 +1,4 @@
-@import "src/ui/components/window.scss";
+@import "../ui/settings-window.scss";
 
 wf-statistics-window {
 	@extend wf-window;
@@ -8,7 +8,7 @@ wf-statistics-window {
 		flex-wrap: nowrap;
 		justify-content: space-between;
 
-		span + .textbox {
+		span + wf-textbox {
 			margin-left: 5px;
 		}
 	}

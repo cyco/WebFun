@@ -1,4 +1,4 @@
-import Location, { Direction } from "src/app/ui/components/location";
+import Location, { Direction } from "src/app/ui/location";
 
 describeComponent(Location, () => {
 	let subject;

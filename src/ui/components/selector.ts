@@ -1,8 +1,12 @@
-import View from "./view";
+import Component from "src/ui/component";
 
-class Selector extends View {
-	constructor(element: HTMLSelectElement) {
-		super(element || document.createElement("select"));
+class Selector extends Component {
+	public static readonly TagName = "wf-selector";
+	private element: HTMLSelectElement = document.createElement("select");
+
+	public connectedCallback() {
+		super.connectedCallback();
+		this.appendChild(this.element);
 	}
 
 	get onchange() {
@@ -15,10 +19,6 @@ class Selector extends View {
 
 	get value() {
 		return this.element.value;
-	}
-
-	get element(): HTMLSelectElement {
-		return <HTMLSelectElement>super.element;
 	}
 
 	addOption(label: string, value: string) {

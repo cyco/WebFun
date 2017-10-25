@@ -1,11 +1,11 @@
-import { Ammo, Health, Inventory, Location, Weapon } from "src/app/ui/components";
-import { Direction } from "src/app/ui/components/location";
+import { Ammo, Health, Inventory, Location, Weapon } from "../ui";
+import { Direction } from "../ui/location";
 import { default as Engine, Events } from "src/engine/engine";
-import Hero from "src/engine/hero";
+import { Hero } from "src/engine";
 import { Group, Window } from "src/ui/components";
-import World from "../../engine/generation/world";
-import Zone from "../../engine/objects/zone";
-import InventoryComponent from "../ui/components/inventory";
+import World from "src/engine/generation/world";
+import { Zone } from "src/engine/objects";
+import InventoryComponent from "../ui/inventory";
 import "./main-window.scss";
 
 class MainWindow extends Window {

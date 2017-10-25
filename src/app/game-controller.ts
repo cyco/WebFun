@@ -33,7 +33,7 @@ class GameController {
 	private _palette: Uint8Array;
 
 	constructor() {
-		this._sceneView = new SceneView();
+		this._sceneView = <SceneView>document.createElement(SceneView.TagName);
 		this._engine = this._buildEngine();
 		this._sceneView.manager.engine = this._engine;
 
@@ -51,7 +51,7 @@ class GameController {
 		engine.renderer = new (<any>renderer)(this._sceneView.canvas);
 		engine.imageFactory = engine.renderer.imageFactory;
 		engine.sceneManager = this._sceneView.manager;
-		engine.inputManager = new DesktopInputManager(this._sceneView.element);
+		engine.inputManager = new DesktopInputManager(this._sceneView);
 		engine.metronome = new Metronome();
 		engine.inventory = new Inventory();
 		engine.scriptExecutor = new ScriptExecutor();
@@ -85,10 +85,10 @@ class GameController {
 	}
 
 	_load() {
-		const loadingView = new LoadingView();
+		const loadingView = <LoadingView>document.createElement(LoadingView.TagName);
 		const windowContent = this._window.mainContent;
 		windowContent.clear();
-		windowContent.appendChild(loadingView.element);
+		windowContent.appendChild(loadingView);
 
 		const loader = new Loader();
 		loader.onfail = (event) => console.log("fail", event);
@@ -181,7 +181,7 @@ class GameController {
 
 		const windowContent = this._window.mainContent;
 		windowContent.clear();
-		windowContent.appendChild(this._sceneView.element);
+		windowContent.appendChild(this._sceneView);
 
 		engine.inputManager.addListeners();
 		this._window.engine = engine;

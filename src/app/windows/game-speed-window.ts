@@ -1,4 +1,4 @@
-import { SettingsWindow } from "src/app/ui/components";
+import { SettingsWindow } from "../ui";
 import "./game-speed-window.scss";
 
 class GameSpeedWindow extends SettingsWindow {
