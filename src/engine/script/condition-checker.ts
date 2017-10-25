@@ -4,7 +4,7 @@ import { ConditionImplementation } from "./arguments";
 
 export type ConditionStore = {[opcode: number]: ConditionImplementation};
 
-export default class ConditionChecker {
+class ConditionChecker {
 	public engine: Engine;
 	private _conditions: ConditionStore;
 
@@ -20,3 +20,4 @@ export default class ConditionChecker {
 		return await handler(condition.arguments, this.engine.currentZone, this.engine);
 	}
 }
+export default ConditionChecker;

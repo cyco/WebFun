@@ -7,7 +7,7 @@ import { FileLoader } from "src/util";
 import { CompareWorldItems, ComparisonResult, ParseExpectation, PrepareExpectations } from "./expectation";
 import "./world-generation.scss";
 
-export default class {
+class WorldGeneration {
 	constructor(engine) {
 		this._engine = engine;
 		this._window = document.createElement(Window.TagName);
@@ -329,3 +329,5 @@ export default class {
 		return this._showDagobahCheckbox.checked;
 	}
 }
+
+export default WorldGeneration;

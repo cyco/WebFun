@@ -10,7 +10,7 @@ import GameSpeedWindow from "./game-speed-window";
 import StatisticsWindow from "./statistics-window";
 import WorldSizeWindow from "./world-size-window";
 
-export default class extends Menu {
+class MainMenu extends Menu {
 	constructor(gameController: GameController) {
 		const menuItems: any[] = [{
 			title: "File",
@@ -107,3 +107,5 @@ export default class extends Menu {
 		session.run();
 	}
 }
+
+export default MainMenu;

@@ -1,7 +1,7 @@
 import Point from "./point";
 import PointRange from "./point-range";
 
-export default class VerticalPointRange extends PointRange {
+class VerticalPointRange extends PointRange {
 	constructor(from: number, to: number, x: number) {
 		super(x, from, x, to);
 	}
@@ -14,3 +14,5 @@ export default class VerticalPointRange extends PointRange {
 		return super.find(callback, new Point(0, step));
 	}
 }
+
+export default VerticalPointRange;
