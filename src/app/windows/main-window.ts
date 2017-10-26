@@ -23,6 +23,7 @@ class MainWindow extends Window {
 	constructor() {
 		super();
 
+		this.autosaveName = "main-window";
 		this._main = <Group>document.createElement(Group.TagName);
 		this._main.classList.add("main");
 		this.content.appendChild(this._main);

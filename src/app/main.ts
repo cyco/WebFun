@@ -2,7 +2,8 @@ import { ComponentRegistry, Components } from "src/ui";
 import GameController from "./game-controller";
 import * as AppComponents from "./ui";
 import * as WindowComponents from "./windows";
-import { loadSettings } from "src/settings";
+import Settings, { loadSettings } from "src/settings";
+import ScriptDebugger from "src/debug/script-debugger";
 
 export default () => {
 	loadSettings();
@@ -13,4 +14,8 @@ export default () => {
 
 	const gameController = new GameController();
 	gameController.start();
+
+	if(Settings.debuggerActive) {
+		ScriptDebugger.sharedDebugger.show();
+	}
 };

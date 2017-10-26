@@ -16,6 +16,7 @@ import Zone from "src/engine/objects/zone";
 import Group from "src/ui/components/group";
 import ActionComponent from "src/debug/components/action-component";
 import "./script-debugger.scss";
+import Settings from "src/settings";
 
 ComponentRegistry.sharedRegistry.registerComponents(<any>Components);
 
@@ -35,6 +36,7 @@ class ScriptDebugger {
 		this._window.title = "Script Debugger";
 		this._window.x = 10;
 		this._window.y = 10;
+		this._window.autosaveName = 'script-debugger';
 		this._window.content.style.minWidth = "200px";
 
 		this._setupDebuggerControls();
@@ -96,10 +98,12 @@ class ScriptDebugger {
 		this._engine.addEventListener(EngineEvents.CurrentZoneChange, this._handlers.zoneChange);
 
 		this._isActive = true;
+		Settings.debuggerActive = true;
 	}
 
 	private _teardownDebugger() {
 		if (!this._isActive) return;
+		Settings.debuggerActive = false;
 
 		this._engine.removeEventListener(EngineEvents.CurrentZoneChange, this._handlers.zoneChange);
 

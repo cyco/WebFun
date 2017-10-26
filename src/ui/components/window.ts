@@ -2,9 +2,11 @@ import Component from "../component";
 import WindowTitlebar from "./window-titlebar";
 import "./window.scss";
 import Menu from "src/ui/menu";
+import PointLike from "src/util/point-like";
 
 class Window extends Component {
 	public static TagName = "wf-window";
+	private _autosaveName: string;
 	private _titlebar: WindowTitlebar;
 	private _content: HTMLElement;
 	private _x: number = 0;
@@ -106,6 +108,31 @@ class Window extends Component {
 
 		this.style.top = `${this._y | 0}px`;
 		this.style.left = `${this._x | 0}px`;
+
+		localStorage.store(this.stateKey, {x: this._x, y: this._y});
+	}
+
+	set autosaveName(name: string) {
+		this._autosaveName = name;
+
+		const storedState = <PointLike>localStorage.load(this.stateKey);
+		if (storedState) {
+			this._x = storedState.x;
+			this._y = storedState.y;
+			this._update();
+		}
+	}
+
+	get autosaveName(): string {
+		return this._autosaveName;
+	}
+
+	protected get hasStoredState(): boolean {
+		return localStorage.has(this.stateKey);
+	}
+
+	private get stateKey(): string {
+		return `window-state.${this._autosaveName}`;
 	}
 }
 
