@@ -52,7 +52,7 @@
     "dasherize": "^2.0.0",
     "kaitai-struct": "^0.8.0-SNAPSHOT.2",
     "sprintf-js": "^1.1.1",
-    "twgl.js": "^3.8.0"
+    "twgl.js": "^4.0.0"
   },
   "devDependencies": {
     "@types/jasmine": "^2.6.2",
