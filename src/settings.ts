@@ -19,7 +19,9 @@ let Settings = {
 		data: "./game-data/yoda.data",
 		palette: "./game-data/yoda.pal",
 		sfx: (file: string) => `./game-data/sfx-yoda/${encodeURIComponent(file)}.wav`
-	}
+	},
+	// app state
+	debuggerActive: false
 };
 
 export const loadSettings = () => Settings = persistent(Settings, "settings");

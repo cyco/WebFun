@@ -81,7 +81,10 @@ class GameController {
 		}
 
 		document.body.appendChild(this._window);
-		this._window.center();
+
+		if (!this._window.x && !this._window.y) {
+			this._window.center();
+		}
 	}
 
 	_load() {
