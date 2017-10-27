@@ -1,4 +1,5 @@
 import { Menu as DebugMenu } from "src/debug";
+import { Menu as EditorMenu } from "src/editor";
 import Settings from "src/settings";
 import { Menu, MenuItemSeparator as Separator } from "src/ui";
 import { WindowModalSession } from "src/ux";
@@ -92,6 +93,7 @@ class MainMenu extends Menu {
 		}];
 
 		if (Settings.debug) menuItems.push(DebugMenu);
+		if (Settings.editor) menuItems.push(EditorMenu);
 
 		super(menuItems);
 	}

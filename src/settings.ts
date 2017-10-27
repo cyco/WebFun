@@ -4,6 +4,7 @@ let Settings = {
 	allowWebGL: false,
 
 	debug: true,
+	editor: true,
 
 	drawDebugStats: true,
 	drawHotspots: true,
