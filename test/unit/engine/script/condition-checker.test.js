@@ -1,6 +1,6 @@
 import Condition from "src/engine/objects/condition";
 import ConditionChecker from "src/engine/script/condition-checker";
-import Conditions from 'src/engine/script/conditions';
+import Conditions from "src/engine/script/conditions";
 
 describe("ConditionChecker", () => {
 	let checker, engine, condition;

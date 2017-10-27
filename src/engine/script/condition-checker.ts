@@ -20,4 +20,5 @@ class ConditionChecker {
 		return await handler(condition.arguments, this.engine.currentZone, this.engine);
 	}
 }
+
 export default ConditionChecker;

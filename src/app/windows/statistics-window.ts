@@ -1,5 +1,5 @@
 import { PersistentState } from "src/engine";
-import { Textbox,Window } from "src/ui/components";
+import { Textbox, Window } from "src/ui/components";
 import "./statistics-window.scss";
 
 class StatisticsWindow extends Window {
@@ -51,4 +51,5 @@ class StatisticsWindow extends Window {
 		this._list.appendChild(row);
 	}
 }
+
 export default StatisticsWindow;

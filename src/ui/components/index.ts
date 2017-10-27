@@ -16,7 +16,7 @@ import WindowTitlebar from "./window-titlebar";
 import Textbox from "./textbox";
 import ProgressBar from "./progress-bar";
 import SpeechBubble from "./speech-bubble";
-import Selector from './selector';
+import Selector from "./selector";
 
 export {
 	ConfirmationWindow,

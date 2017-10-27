@@ -4,7 +4,7 @@ import "./loading-view.scss";
 import Component from "src/ui/component";
 
 class LoadingView extends Component {
-	public static readonly TagName = 'wf-loading-view';
+	public static readonly TagName = "wf-loading-view";
 
 	private _imageCanvas: HTMLCanvasElement;
 	private _progressBar: ProgressBar;

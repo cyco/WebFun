@@ -36,7 +36,7 @@ class ScriptDebugger {
 		this._window.title = "Script Debugger";
 		this._window.x = 10;
 		this._window.y = 10;
-		this._window.autosaveName = 'script-debugger';
+		this._window.autosaveName = "script-debugger";
 		this._window.content.style.minWidth = "200px";
 
 		this._setupDebuggerControls();
