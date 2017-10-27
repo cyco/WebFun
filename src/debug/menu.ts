@@ -2,13 +2,13 @@ import Settings from "src/settings";
 import { MenuItemState } from "src/ui";
 import ScriptDebugger from "./script-debugger";
 
-const SettingsItem = (label, key) => ({
+const SettingsItem = (label: string, key: string) => ({
 	title: label,
-	callback: () => Settings[key] = !Settings[key],
-	state: () => Settings[key] ? MenuItemState.On : MenuItemState.Off
+	callback: () => (<any>Settings)[key] = !(<any>Settings)[key],
+	state: () => (<any>Settings)[key] ? MenuItemState.On : MenuItemState.Off
 });
 
-const SettingsAction = (label, callback) => ({
+const SettingsAction = (label: string, callback: Function) => ({
 	title: label,
 	callback: callback
 });
