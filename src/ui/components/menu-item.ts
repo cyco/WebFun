@@ -1,10 +1,12 @@
-import MenuItem, { State } from "src/ui/menu-item";
+import MenuItem from "src/ui/menu-item";
 import Component from "../component";
 import "./menu-item.scss";
+import MenuItemState from "src/ui/menu-item-state";
 
 class MenuItemComponent extends Component {
 	public static TagName: string = "wf-menu-item";
 	private _item: MenuItem = null;
+	private _state: MenuItemState;
 
 	get item() {
 		return this._item;
@@ -18,71 +20,90 @@ class MenuItemComponent extends Component {
 
 	_reset() {
 		this.onmouseup = null;
+		this._state = MenuItemState.Off;
 	}
 
 	_rebuild() {
-		this._reset();
+		const item = this.item || <Partial<MenuItem>>{};
 
-		const menuItem = this.item;
-		const document = this.ownerDocument;
-
-		const stateNode = this._makeStateNode(menuItem.state);
+		const stateNode = document.createElement("span");
+		stateNode.classList.add("state");
 		this.appendChild(stateNode);
 
-		if (menuItem.mnemonic !== undefined) {
-			const title = menuItem.title;
-			const mnemonicIndex = menuItem.mnemonic;
-			const preMnemonic = title.substring(0, mnemonicIndex);
-			const mnemonic = title.substring(mnemonicIndex, mnemonicIndex + 1);
-			const postMnemonic = title.substring(mnemonicIndex + 1);
+		const state = this.evaluate(item.state, MenuItemState.Off);
+		this._reflectState(state);
 
-			const mnemonicHighlight = document.createElement("span");
-			mnemonicHighlight.classList.add("mnemonic");
-			mnemonicHighlight.appendChild(document.createTextNode(mnemonic));
+		const enabled = this.evaluate<boolean>(item.enabled, true);
+		if (enabled) this.removeAttribute("disabled");
+		else this.setAttribute("disabled", "");
 
-			this.appendChild(document.createTextNode(preMnemonic));
-			this.appendChild(mnemonicHighlight);
-			this.appendChild(document.createTextNode(postMnemonic));
+		if (enabled && item.callback) this.onmouseup = () => item.callback();
+
+		const title = this.buildTitle(item.title, item.mnemonic);
+		title.classList.add("title");
+		this.appendChild(title);
+
+		if (item.submenu) {
+			this.setAttribute("submenu", "");
+			this._buildSubmenuIndicator();
 		} else {
-			this.appendChild(document.createTextNode(menuItem.title));
+			this.removeAttribute("submenu");
 		}
-
-		const stateClass = menuItem.enabled ? "enabled" : "disabled";
-		this.classList.add(stateClass);
-
-		if (menuItem.enabled && menuItem.callback)
-			this.onmouseup = () => menuItem.callback();
 	}
 
-	_makeStateNode(state: any): HTMLSpanElement {
-		const node = document.createElement("span");
-		node.classList.add("state");
-
-		if (state === undefined) return node;
-
-		if (state instanceof Function) try {
-			state = state();
-		} catch (e) {
-		}
-
-		const className = this._classNameForState(state);
-		if (className) node.classList.add(className);
-
-		return node;
+	private _buildSubmenuIndicator() {
+		const submenuIndicator = document.createElement("span");
+		submenuIndicator.classList.add("submenu");
+		const icon = document.createElement("i");
+		icon.classList.add("fa");
+		icon.classList.add("fa-caret-right");
+		submenuIndicator.appendChild(icon);
+		this.appendChild(submenuIndicator);
 	}
 
-	_classNameForState(state: number) {
+	private buildTitle(t: string|(() => string), mnemonicIndex: number) {
+		const title = this.evaluate(t, "");
+		const titleNode = document.createElement("span");
+
+		if (mnemonicIndex === undefined) {
+			titleNode.innerText = title;
+			return titleNode;
+		}
+
+		const preMnemonic = title.substring(0, mnemonicIndex);
+		const mnemonic = title.substring(mnemonicIndex, mnemonicIndex + 1);
+		const postMnemonic = title.substring(mnemonicIndex + 1);
+
+		const mnemonicHighlight = document.createElement("span");
+		mnemonicHighlight.classList.add("mnemonic");
+		mnemonicHighlight.appendChild(document.createTextNode(mnemonic));
+
+		titleNode.appendChild(document.createTextNode(preMnemonic));
+		titleNode.appendChild(mnemonicHighlight);
+		titleNode.appendChild(document.createTextNode(postMnemonic));
+		return titleNode;
+	}
+
+	private _reflectState(state: MenuItemState) {
 		switch (state) {
-			case State.On:
-				return "on";
-			case State.Off:
-				return "off";
-			case State.Mixed:
-				return "mixed";
-			case State.None: /* intentional fallthrough */
+			case MenuItemState.Mixed:
+				this.setAttribute("state", "mixed");
+				break;
+			case MenuItemState.On:
+				this.setAttribute("state", "on");
+				break;
 			default:
-				return null;
+				this.removeAttribute("state");
+				break;
 		}
+	}
+
+	private evaluate<T>(thing: T|(() => T), def: T): T {
+		if (thing instanceof Function) {
+			return thing();
+		}
+
+		return thing !== undefined ? thing : def;
 	}
 }
 
