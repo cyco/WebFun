@@ -17,7 +17,7 @@ wf-menu-window {
 		padding: 3px 10px 3px 6px;
 	}
 
-	> wf-menu-item:hover:not([data-disabled], .disabled) {
+	> wf-menu-item:not([disabled]):hover {
 		color: $menu-item-selection-text;
 		background-color: $menu-item-selection-background;
 	}

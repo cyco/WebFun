@@ -17,17 +17,11 @@ export default {
 	title: "Debug",
 	mnemonic: 0,
 	submenu: [
-		{
-			title: "Settings",
-			mnemonic: 0,
-			submenu: [
-				SettingsItem("Draw Debug Stats", "drawDebugStats"),
-				SettingsItem("Draw invisible Hero", "drawHeroTile"),
-				SettingsItem("Reveal World", "revealWorld"),
-				SettingsItem("Show Hotspots", "drawHotspots"),
-				SettingsItem("Skip Dialogs", "skipDialogs")
-			]
-		},
+		SettingsItem("Draw Debug Stats", "drawDebugStats"),
+		SettingsItem("Draw invisible Hero", "drawHeroTile"),
+		SettingsItem("Reveal World", "revealWorld"),
+		SettingsItem("Show Hotspots", "drawHotspots"),
+		SettingsItem("Skip Dialogs", "skipDialogs"),
 		MenuItemSeparator,
 		SettingsAction("Debug Scripts", () => ScriptDebugger.sharedDebugger.show())
 	]
