@@ -21,3 +21,4 @@ tools/*.bin.js
 test/screenshots
 build
 game-data/*
+bin

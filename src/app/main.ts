@@ -15,7 +15,7 @@ export default () => {
 	const gameController = new GameController();
 	gameController.start();
 
-	if(Settings.debuggerActive) {
+	if (Settings.debuggerActive) {
 		ScriptDebugger.sharedDebugger.show();
 	}
 };
