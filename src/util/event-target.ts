@@ -1,4 +1,3 @@
-const LISTENERS = "" + Math.random() + " ";
 let globalInstance: EventTarget;
 
 class EventTarget {
