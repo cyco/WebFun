@@ -17,6 +17,7 @@ class SoundInspector extends AbstractInspector {
 		this.window.autosaveName = "sound-inspector";
 		this.window.style.width = "200px";
 		this.window.content.style.maxHeight = "450px";
+		this.window.content.style.flexDirection = "column";
 
 		this._list = <List<Sound>>document.createElement(List.TagName);
 		this._list.cell = <SoundInspectorCell>document.createElement(SoundInspectorCell.TagName);
