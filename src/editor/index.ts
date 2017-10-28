@@ -19,7 +19,7 @@ const initialize = () => {
 		"sound": new SoundInspector(),
 		"puzzle": new PuzzleInspector(),
 		"character": new CharacterInspector(),
-		"setup": new SetupImageInspector()
+		"setup-image": new SetupImageInspector()
 	};
 
 	Editor.sharedEditor = new Editor(inspectors);
