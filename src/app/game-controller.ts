@@ -15,7 +15,7 @@ import { ZoneScene } from "src/engine/scenes";
 import { ScriptExecutor } from "src/engine/script";
 import { Planet, WorldSize } from "src/engine/types";
 import Settings from "src/settings";
-import { FilePicker } from "src/ui";
+import { FilePicker, WindowManager } from "src/ui";
 import { InputStream } from "src/util";
 import { ConfirmationResult, ModalConfirm } from "src/ux";
 import GameState from "../engine/game-state";
@@ -80,7 +80,7 @@ class GameController {
 			ScriptDebugger.sharedDebugger.engine = this._engine;
 		}
 
-		document.body.appendChild(this._window);
+		WindowManager.defaultManager.showWindow(this._window);
 
 		if (!this._window.x && !this._window.y) {
 			this._window.center();
