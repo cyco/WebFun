@@ -1,0 +1,17 @@
+wf-sound-inspector-cell {
+	display: block;
+
+	span:first-child {
+		display: inline-block;
+		min-width: 20px;
+		text-align: right;
+	}
+
+	span:last-child {
+		text-align: left;
+	}
+
+	span + span {
+		margin-left: 10px;
+	}
+}
