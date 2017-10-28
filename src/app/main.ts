@@ -3,8 +3,8 @@ import GameController from "./game-controller";
 import * as AppComponents from "./ui";
 import * as WindowComponents from "./windows";
 import Settings, { loadSettings } from "src/settings";
-import ScriptDebugger from "src/debug/script-debugger";
 import { initialize as initializeEditor } from "src/editor";
+import { initialize as initializeDebug } from "src/debug";
 
 export default () => {
 	loadSettings();
@@ -16,8 +16,8 @@ export default () => {
 	const gameController = new GameController();
 	gameController.start();
 
-	if (Settings.debuggerActive) {
-		ScriptDebugger.sharedDebugger.show();
+	if (Settings.debug) {
+		initializeDebug();
 	}
 	if (Settings.editor) {
 		initializeEditor();
