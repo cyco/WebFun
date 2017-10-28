@@ -4,6 +4,7 @@ import * as Components from "./components";
 import Editor from "./editor";
 import {
 	CharacterInspector,
+	PaletteInspector,
 	PuzzleInspector,
 	SetupImageInspector,
 	SoundInspector,
@@ -23,7 +24,8 @@ const initialize = (gameController: GameController) => {
 		"sound": new SoundInspector(),
 		"puzzle": new PuzzleInspector(),
 		"character": new CharacterInspector(),
-		"setup-image": new SetupImageInspector()
+		"setup-image": new SetupImageInspector(),
+		"palette": new PaletteInspector()
 	};
 
 	Editor.sharedEditor = new Editor(inspectors);
