@@ -43,6 +43,7 @@ class GameData {
 		this._getCategory("TNAM").names
 			.filter(({tileId}) => tileId !== -1)
 			.forEach((obj, idx) => obj.name && (this._tiles[obj.tileId]._name = obj.name));
+		this._setup = this._getCategory("STUP").pixels;
 	}
 
 	copy() {
@@ -180,6 +181,10 @@ class GameData {
 
 	get characters() {
 		return this._characters;
+	}
+
+	get setupImageData() {
+		return this._setup;
 	}
 }
 
