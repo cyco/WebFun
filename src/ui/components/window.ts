@@ -4,13 +4,19 @@ import "./window.scss";
 import Menu from "src/ui/menu";
 import PointLike from "src/util/point-like";
 
+export const Event = {
+	DidClose: "didClose"
+};
+
 class Window extends Component {
 	public static TagName = "wf-window";
+	public static readonly Event = Event;
 	private _autosaveName: string;
 	private _titlebar: WindowTitlebar;
 	private _content: HTMLElement;
 	private _x: number = 0;
 	private _y: number = 0;
+
 
 	constructor() {
 		super();
@@ -101,6 +107,7 @@ class Window extends Component {
 	public close() {
 		this.remove();
 		this.onclose();
+		this.dispatchEvent(new CustomEvent(Event.DidClose));
 	}
 
 	private _update() {

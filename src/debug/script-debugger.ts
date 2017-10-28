@@ -1,6 +1,6 @@
 import { Window } from "src/ui/components";
 import { Engine, EngineEvents } from "src/engine";
-import * as Components from "./components";
+import { Controls } from "./components";
 import {
 	ConditionChecker,
 	Conditions,
@@ -16,6 +16,7 @@ import Group from "src/ui/components/group";
 import ActionComponent from "src/debug/components/action-component";
 import "./script-debugger.scss";
 import Settings from "src/settings";
+import { WindowManager } from "src/ui";
 
 class ScriptDebugger {
 	private static _sharedDebugger: ScriptDebugger;
@@ -63,7 +64,7 @@ class ScriptDebugger {
 	}
 
 	_setupDebuggerControls() {
-		const controls = new Components.Controls();
+		const controls = <Controls>document.createElement(Controls.TagName);
 		controls.classList.add("script-debugger-window");
 		controls.onstep = (): void => null;
 		controls.ontogglepause = (): void => null;
@@ -80,7 +81,7 @@ class ScriptDebugger {
 	public show() {
 		this._setupDebugger();
 		this._window.onclose = () => this._teardownDebugger();
-		document.body.appendChild(this._window);
+		WindowManager.defaultManager.showWindow(this._window);
 	}
 
 	private _setupDebugger() {

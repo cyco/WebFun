@@ -5,6 +5,7 @@ import Menu from "../menu";
 import Menubar from "./menubar";
 import Window from "./window";
 import "./window-titlebar.scss";
+import WindowManager from "src/ui/window-manager";
 
 class WindowTitlebar extends Component {
 	public onclose: Function = identity;
@@ -110,6 +111,8 @@ class WindowTitlebar extends Component {
 			dragLocation = new Point(event.clientX - win.x, event.clientY - win.y);
 			window.addEventListener("mouseup", mouseUp);
 			window.addEventListener("mousemove", mouseMove);
+
+			WindowManager.defaultManager.focus(this._window);
 		};
 
 		this.addEventListener("mousedown", mouseDown);
