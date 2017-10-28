@@ -1,0 +1,9 @@
+wf-zone-inspector-cell {
+	display: block;
+
+	span:first-child {
+		display: inline-block;
+		min-width: 20px;
+		text-align: right;
+	}
+}
