@@ -16,6 +16,8 @@ class PaletteInspector extends AbstractInspector {
 		this.window.content.style.flexDirection = "row";
 
 		this._paletteView.size = new Size(16, 16);
+		this._paletteView.style.width = "128px";
+		this._paletteView.style.height = "128px";
 		this.window.content.appendChild(this._paletteView);
 
 		this._colorPicker.style.width = "128px";
