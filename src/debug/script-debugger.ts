@@ -1,4 +1,3 @@
-import { ComponentRegistry } from "src/ui";
 import { Window } from "src/ui/components";
 import { Engine, EngineEvents } from "src/engine";
 import * as Components from "./components";
@@ -17,8 +16,6 @@ import Group from "src/ui/components/group";
 import ActionComponent from "src/debug/components/action-component";
 import "./script-debugger.scss";
 import Settings from "src/settings";
-
-ComponentRegistry.sharedRegistry.registerComponents(<any>Components);
 
 class ScriptDebugger {
 	private static _sharedDebugger: ScriptDebugger;
