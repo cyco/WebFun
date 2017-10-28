@@ -16,20 +16,7 @@ class DOMImageFactory extends AbstractImageFactory {
 
 	buildImage(width: number, height: number, pixelData: ArrayLike<number>): Image {
 		console.assert(!!this._palette, "Can not build images before a palette is set.");
-
-		const palette = this._palette;
-		const size = width * height;
-		const imageData = new ImageData(width, height);
-		const rawImageData = imageData.data;
-
-		for (let i = 0; i < size; i++) {
-			const paletteIndex = pixelData[i] * 4;
-
-			rawImageData[4 * i + 0] = palette[paletteIndex + 2];
-			rawImageData[4 * i + 1] = palette[paletteIndex + 1];
-			rawImageData[4 * i + 2] = palette[paletteIndex + 0];
-			rawImageData[4 * i + 3] = paletteIndex === 0 ? 0x00 : 0xFF;
-		}
+		const imageData = this.createImageData(width, height, pixelData);
 
 		const canvas = document.createElement("canvas");
 		canvas.classList.add("pixelated");
@@ -44,6 +31,24 @@ class DOMImageFactory extends AbstractImageFactory {
 		imageElement.src = canvas.toDataURL();
 
 		return new Image(width, height, imageElement);
+	}
+
+	public createImageData(width: number, height: number, pixelData: ArrayLike<number>): ImageData {
+		const palette = this._palette;
+		const size = width * height;
+		const imageData = new ImageData(width, height);
+		const rawImageData = imageData.data;
+
+		for (let i = 0; i < size; i++) {
+			const paletteIndex = pixelData[i] * 4;
+
+			rawImageData[4 * i + 0] = palette[paletteIndex + 2];
+			rawImageData[4 * i + 1] = palette[paletteIndex + 1];
+			rawImageData[4 * i + 2] = palette[paletteIndex + 0];
+			rawImageData[4 * i + 3] = paletteIndex === 0 ? 0x00 : 0xFF;
+		}
+
+		return imageData;
 	}
 }
 

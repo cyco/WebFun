@@ -1,0 +1,11 @@
+@import "pixelated";
+
+wf-palette-view {
+	display: block;
+
+	canvas {
+		@extend .pixelated;
+		height: 128px;
+		width: 128px;
+	}
+}
