@@ -1,5 +1,5 @@
 import { Cell } from "src/ui/components";
-import './sound-inspector-cell.scss';
+import "./sound-inspector-cell.scss";
 
 type Sound = {
 	id: number
@@ -10,15 +10,15 @@ class SoundInspectorCell extends Cell<Sound> {
 	public static readonly TagName: string = "wf-sound-inspector-cell";
 	public static readonly observedAttributes: string[] = [];
 
+	private _id = document.createElement("span");
+	private _file = document.createElement("span");
 
 	connectedCallback() {
-		const id = document.createElement("span");
-		id.textContent = `${this.data.id}`;
-		this.appendChild(id);
+		this._id.textContent = `${this.data.id}`;
+		this.appendChild(this._id);
 
-		const file = document.createElement("span");
-		file.textContent = `${this.data.file}`;
-		this.appendChild(file);
+		this._file.textContent = `${this.data.file}`;
+		this.appendChild(this._file);
 	}
 }
 

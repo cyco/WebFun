@@ -1,6 +1,6 @@
 import Component from "../component";
 import Cell from "./cell";
-import './list.scss';
+import "./list.scss";
 
 class List<T> extends Component {
 	public static readonly TagName = "wf-list";
@@ -8,6 +8,10 @@ class List<T> extends Component {
 
 	public cell: Cell<T>;
 	private _items: T[] = [];
+
+	connectedCallback() {
+		this.rebuild();
+	}
 
 	private rebuild() {
 		this.textContent = "";
