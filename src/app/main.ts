@@ -4,6 +4,7 @@ import * as AppComponents from "./ui";
 import * as WindowComponents from "./windows";
 import Settings, { loadSettings } from "src/settings";
 import ScriptDebugger from "src/debug/script-debugger";
+import { initialize as initializeEditor } from "src/editor";
 
 export default () => {
 	loadSettings();
@@ -17,5 +18,8 @@ export default () => {
 
 	if (Settings.debuggerActive) {
 		ScriptDebugger.sharedDebugger.show();
+	}
+	if (Settings.editor) {
+		initializeEditor();
 	}
 };

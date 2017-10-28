@@ -1,3 +1,7 @@
 import Menu from "./menu";
 
-export { Menu };
+const initialize = () => {
+
+};
+
+export { initialize, Menu };
