@@ -1,16 +1,20 @@
 import Menu from "./menu";
 import { ComponentRegistry } from "src/ui";
 import * as Components from "./components";
-import Editor from "src/editor/editor";
-import TileInspector from "src/editor/inspectors/tile-inspector";
-import ZoneInspector from "src/editor/inspectors/zone-inspector";
-import SoundInspector from "src/editor/inspectors/sound-inspector";
-import PuzzleInspector from "src/editor/inspectors/puzzle-inspector";
-import CharacterInspector from "src/editor/inspectors/character-inspector";
-import SetupImageInspector from "src/editor/inspectors/setup-image-inspector";
+import Editor from "./editor";
+import {
+	CharacterInspector,
+	PuzzleInspector,
+	SetupImageInspector,
+	SoundInspector,
+	TileInspector,
+	ZoneInspector
+} from "./inspectors";
 import PrefixedStorage from "src/util/prefixed-storage";
+import GameController from "src/app/game-controller";
+import DataManager from "./data-manager";
 
-const initialize = () => {
+const initialize = (gameController: GameController) => {
 	ComponentRegistry.sharedRegistry.registerComponents(<any>Components);
 
 	const inspectors = {
@@ -24,6 +28,13 @@ const initialize = () => {
 
 	Editor.sharedEditor = new Editor(inspectors);
 	Editor.sharedEditor.storage = new PrefixedStorage(localStorage, "editor");
+
+	gameController.addEventListener(GameController.Event.DidLoadData, (e: CustomEvent) => {
+		const gameData = e.detail.data;
+		const palette = e.detail.palette;
+
+		Editor.sharedEditor.data = new DataManager(gameData, palette);
+	});
 };
 
 export { initialize, Menu };

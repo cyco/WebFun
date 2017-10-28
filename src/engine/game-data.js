@@ -45,6 +45,10 @@ class GameData {
 			.forEach((obj, idx) => obj.name && (this._tiles[obj.tileId]._name = obj.name));
 	}
 
+	copy() {
+		return new GameData(this._rawInput);
+	}
+
 	_getCategory(category) {
 		const catalogEntry = this._rawInput.catalog.find(c => c.type === category);
 		if (!catalogEntry) throw `Category ${category} not found in game file!`;

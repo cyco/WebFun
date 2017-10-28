@@ -7,6 +7,8 @@ class PuzzleInspector extends AbstractInspector {
 		this.window.title = "Puzzles";
 		this.window.autosaveName = "puzzle-inspector";
 	}
+
+	build(){}
 }
 
 export default PuzzleInspector;

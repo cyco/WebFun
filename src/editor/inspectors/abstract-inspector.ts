@@ -13,6 +13,8 @@ abstract class AbstractInspector {
 		this.window.addEventListener(Window.Event.DidClose, this._handlers.windowDidClose);
 	}
 
+	abstract build(): void;
+
 	show() {
 		document.body.appendChild(this.window);
 		this.state.store("visible", true);
@@ -20,6 +22,7 @@ abstract class AbstractInspector {
 
 	set data(manager: DataManager) {
 		this._data = manager;
+		this.build();
 		this.restoreState();
 	}
 

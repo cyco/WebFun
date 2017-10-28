@@ -20,6 +20,6 @@ export default () => {
 		initializeDebug();
 	}
 	if (Settings.editor) {
-		initializeEditor();
+		initializeEditor(gameController);
 	}
 };
