@@ -20,6 +20,10 @@ declare interface ObjectConstructor {
 	values: (thing: any) => any[];
 }
 
+declare interface Object {
+	each<T>(callback: ((key: string, value: T) => void)): void
+}
+
 
 // by @ahejlsberg
 // As seen on https://github.com/Microsoft/TypeScript/issues/3496#issuecomment-128553540

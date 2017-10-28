@@ -25,6 +25,7 @@ import Size from "./size";
 import SizeLike from "./size-like";
 import Stream from "./stream";
 import VerticalPointRange from "./vertical-point-range";
+import PrefixedStorage from "./prefixed-storage";
 
 export {
 	add,
@@ -56,5 +57,6 @@ export {
 	SizeLike,
 	srand,
 	Stream,
-	VerticalPointRange
+	VerticalPointRange,
+	PrefixedStorage
 };
