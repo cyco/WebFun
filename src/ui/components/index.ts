@@ -17,6 +17,8 @@ import Textbox from "./textbox";
 import ProgressBar from "./progress-bar";
 import SpeechBubble from "./speech-bubble";
 import Selector from "./selector";
+import List from "./list";
+import Cell from "./cell";
 
 export {
 	ConfirmationWindow,
@@ -37,5 +39,7 @@ export {
 	Textbox,
 	ProgressBar,
 	SpeechBubble,
-	Selector
+	Selector,
+	List,
+	Cell
 };
