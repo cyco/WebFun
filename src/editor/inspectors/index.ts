@@ -5,6 +5,7 @@ import SetupImageInspector from "./setup-image-inspector";
 import SoundInspector from "./sound-inspector";
 import TileInspector from "./tile-inspector";
 import ZoneInspector from "./zone-inspector";
+import PaletteInspector from "./palette-inspector";
 
 export {
 	AbstractInspector,
@@ -13,5 +14,6 @@ export {
 	SetupImageInspector,
 	SoundInspector,
 	TileInspector,
-	ZoneInspector
+	ZoneInspector,
+	PaletteInspector
 };

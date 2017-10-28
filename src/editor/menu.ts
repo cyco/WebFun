@@ -17,6 +17,7 @@ export default {
 		SettingsAction("Puzzles", (): void => Editor.sharedEditor.show("puzzle")),
 		SettingsAction("Sound", (): void => Editor.sharedEditor.show("sound")),
 		SettingsAction("Setup Image", (): void => Editor.sharedEditor.show("setup-image")),
+		SettingsAction("Palette", (): void => Editor.sharedEditor.show("palette")),
 		MenuItemSeparator,
 		SettingsAction("Load Data", (): void => null),
 		SettingsAction("Save Data", (): void => null)
