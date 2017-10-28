@@ -23,7 +23,7 @@ class WindowManager {
 		const window = <Window>e.target;
 
 		this._windows.splice(this._windows.indexOf(window), 1);
-		if (window == this._topMostWindow) {
+		if (window === this._topMostWindow) {
 			const newTopMostWindow = this._windows.reduce((a: Window, b: Window) => {
 				if (!a) return b;
 				if (!b) return a;
@@ -35,6 +35,8 @@ class WindowManager {
 	}
 
 	public focus(window: Window) {
+		if (window === this._topMostWindow) return;
+
 		window.style.zIndex = `${this._topIndex++}`;
 		this._topMostWindow = window;
 	}
