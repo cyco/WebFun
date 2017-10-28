@@ -16,7 +16,7 @@ import { ScriptExecutor } from "src/engine/script";
 import { Planet, WorldSize } from "src/engine/types";
 import Settings from "src/settings";
 import { FilePicker, WindowManager } from "src/ui";
-import { InputStream } from "src/util";
+import { EventTarget, InputStream } from "src/util";
 import { ConfirmationResult, ModalConfirm } from "src/ux";
 import GameState from "../engine/game-state";
 import Loader, { LoaderEventDetails } from "./loader";
@@ -24,7 +24,12 @@ import { LoadingView, SceneView } from "./ui";
 import { MainMenu, MainWindow } from "./windows";
 import { ScriptDebugger } from "src/debug";
 
-class GameController {
+export const Event = {
+	DidLoadData: "didLoadData"
+};
+
+class GameController extends EventTarget {
+	public static readonly Event = Event;
 	private _window: MainWindow;
 	private _sceneView: SceneView;
 	private _engine: Engine;
@@ -33,6 +38,8 @@ class GameController {
 	private _palette: Uint8Array;
 
 	constructor() {
+		super();
+
 		this._sceneView = <SceneView>document.createElement(SceneView.TagName);
 		this._engine = this._buildEngine();
 		this._sceneView.manager.engine = this._engine;
@@ -103,6 +110,13 @@ class GameController {
 			this._data = details.data;
 			this._palette = details.palette;
 			this._engine.data = this._data;
+
+			this.dispatchEvent(new CustomEvent(Event.DidLoadData, {
+				detail: {
+					data: this._data,
+					palette: this._palette
+				}
+			}));
 		};
 		loader.load(this._engine.imageFactory);
 	}
@@ -152,7 +166,6 @@ class GameController {
 		const stream = await readFile(file);
 		const reader = new SaveGameReader(this._data);
 		const state = reader.read(stream);
-		console.log("state: ", state);
 	}
 
 	async save() {

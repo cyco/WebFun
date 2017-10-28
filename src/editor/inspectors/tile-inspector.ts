@@ -7,6 +7,8 @@ class TileInspector extends AbstractInspector {
 		this.window.title = "Tiles";
 		this.window.autosaveName = "tile-inspector";
 	}
+
+	build(){}
 }
 
 export default TileInspector;

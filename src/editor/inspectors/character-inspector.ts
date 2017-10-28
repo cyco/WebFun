@@ -7,6 +7,8 @@ class CharacterInspector extends AbstractInspector {
 		this.window.title = "Characters";
 		this.window.autosaveName = "character-inspector";
 	}
+
+	build(){}
 }
 
 export default CharacterInspector;

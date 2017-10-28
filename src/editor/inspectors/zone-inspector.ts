@@ -7,6 +7,8 @@ class ZoneInspector extends AbstractInspector {
 		this.window.title = "Zones";
 		this.window.autosaveName = "zone-inspector";
 	}
+
+	build(){}
 }
 
 export default ZoneInspector;

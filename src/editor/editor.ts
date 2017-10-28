@@ -1,5 +1,6 @@
 import AbstractInspector from "src/editor/inspectors/abstract-inspector";
 import PrefixedStorage from "src/util/prefixed-storage";
+import DataManager from "src/editor/data-manager";
 
 class Editor {
 	private static _sharedEditor: Editor;
@@ -13,6 +14,7 @@ class Editor {
 
 	private _stateStorage: Storage;
 	private _inspectors: {[_: string]: AbstractInspector};
+	private _data: DataManager;
 
 	constructor(inspectors: {[_: string]: AbstractInspector}) {
 		this._inspectors = inspectors;
@@ -28,6 +30,17 @@ class Editor {
 		this._inspectors.each<AbstractInspector>((key: string, inspector: AbstractInspector): void => {
 			inspector.state = new PrefixedStorage(storage, key);
 		});
+	}
+
+	set data(dm) {
+		this._data = dm;
+		this._inspectors.each<AbstractInspector>((key: string, inspector: AbstractInspector): void => {
+			inspector.data = dm;
+		});
+	}
+
+	get data() {
+		return this._data;
 	}
 }
 
