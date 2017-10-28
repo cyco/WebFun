@@ -1,4 +1,3 @@
-import DataManager from "./data-manager";
 import AbstractInspector from "src/editor/inspectors/abstract-inspector";
 import PrefixedStorage from "src/util/prefixed-storage";
 
@@ -17,6 +16,10 @@ class Editor {
 
 	constructor(inspectors: {[_: string]: AbstractInspector}) {
 		this._inspectors = inspectors;
+	}
+
+	public show(key: string) {
+		this._inspectors[key].show();
 	}
 
 	public set storage(storage: Storage) {

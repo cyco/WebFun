@@ -1,4 +1,5 @@
 import { MenuItemSeparator } from "src/ui";
+import Editor from "src/editor/editor";
 
 const SettingsAction = (label: string, callback: Function) => ({
 	title: label,
@@ -9,14 +10,13 @@ export default {
 	title: "Editor",
 	mnemonic: 0,
 	submenu: [
-		SettingsAction("Tiles", (): void => null),
-		SettingsAction("Zones", (): void => null),
-		SettingsAction("Items", (): void => null),
-		SettingsAction("Sound", (): void => null),
-		SettingsAction("Chars", (): void => null),
-		SettingsAction("Puzzles", (): void => null),
-		SettingsAction("Sound", (): void => null),
-		SettingsAction("Setup Image", (): void => null),
+		SettingsAction("Tiles", (): void => Editor.sharedEditor.show("tile")),
+		SettingsAction("Zones", (): void => Editor.sharedEditor.show("zone")),
+		SettingsAction("Sound", (): void => Editor.sharedEditor.show("sound")),
+		SettingsAction("Chars", (): void => Editor.sharedEditor.show("character")),
+		SettingsAction("Puzzles", (): void => Editor.sharedEditor.show("puzzle")),
+		SettingsAction("Sound", (): void => Editor.sharedEditor.show("sound")),
+		SettingsAction("Setup Image", (): void => Editor.sharedEditor.show("setup-image")),
 		MenuItemSeparator,
 		SettingsAction("Load Data", (): void => null),
 		SettingsAction("Save Data", (): void => null)
