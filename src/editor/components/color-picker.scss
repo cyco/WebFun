@@ -1,0 +1,18 @@
+wf-color-picker {
+	display: flex;
+	position: relative;
+
+	> .gradient {
+		position: absolute;
+	}
+
+	.highlighter {
+		position: absolute;;
+		display: block;
+		width: 16px;
+		height: 16px;
+
+		border: 1px dashed grey;
+		box-shadow: #3D3D3D 1px 1px 0px;
+	}
+}
