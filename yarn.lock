@@ -1167,12 +1167,12 @@ caniuse-api@^1.5.2:
     lodash.uniq "^4.5.0"
 
 caniuse-db@^1.0.30000529, caniuse-db@^1.0.30000634, caniuse-db@^1.0.30000639:
-  version "1.0.30000752"
-  resolved "https://registry.yarnpkg.com/caniuse-db/-/caniuse-db-1.0.30000752.tgz#daa129d54ce700e94ad14388bdef514ec1e2dd54"
+  version "1.0.30000755"
+  resolved "https://registry.yarnpkg.com/caniuse-db/-/caniuse-db-1.0.30000755.tgz#a08c547c39dbe4ad07dcca9763fcbbff0c891de0"
 
 caniuse-lite@^1.0.30000744:
-  version "1.0.30000752"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000752.tgz#0a79df520669d92ddc7f57406eed935948263130"
+  version "1.0.30000755"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000755.tgz#9ce5f6e06bd75ec8209abe8853c3beef02248d65"
 
 canvas@^1.6.7:
   version "1.6.7"
