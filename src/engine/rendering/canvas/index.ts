@@ -1,8 +1,5 @@
-export
-Renderer;
-from;
-"./canvas-renderer";
-export
-ImageFactory;
-from;
-"./dom-image-factory";
+import Renderer from "./canvas-renderer";
+import ImageFactory from "./dom-image-factory";
+
+
+export { Renderer, ImageFactory };
