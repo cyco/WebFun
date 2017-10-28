@@ -8,7 +8,8 @@ class SetupImageInspector extends AbstractInspector {
 		this.window.autosaveName = "setup-image-inspector";
 	}
 
-	build(){}
+	build() {
+	}
 }
 
 export default SetupImageInspector;
