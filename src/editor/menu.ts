@@ -1,7 +1,7 @@
 import { MenuItemSeparator } from "src/ui";
 import Editor from "src/editor/editor";
 
-const SettingsAction = (label: string, callback: Function) => ({
+const SettingsAction = (label: string, callback: (() => void)) => ({
 	title: label,
 	callback: callback
 });

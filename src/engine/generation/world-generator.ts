@@ -1,3 +1,4 @@
+
 import { Hotspot, HotspotType, Puzzle, PuzzleType, Tile, Zone, ZoneType } from "src/engine/objects";
 import { Planet, WorldSize } from "src/engine/types";
 import { constantly, HorizontalPointRange, identity, Point, rand, srand, VerticalPointRange } from "src/util";
@@ -58,7 +59,7 @@ class WorldGenerator {
 		this._size = size;
 		this._planet = planet;
 		const data = engine && engine.data;
-		this._zones = data._zones;
+		this._zones = data.zones;
 		this._tiles = data.tiles;
 		this._puzzles = data.puzzles;
 
