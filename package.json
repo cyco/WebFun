@@ -19,6 +19,7 @@
     "test:full": "cross-env coverage=1 scope=unit,acceptance,performance karma start config/karma.conf.js",
     "test:gameplay": "cross-env TOOL_NAME=gameplay yarn build-tool && node tools/bin/gameplay.bin.js",
     "test:dump-scripts": "cross-env TOOL_NAME=dump-scripts yarn build-tool && node tools/bin/dump-scripts.bin.js -d \"build/game-data/yoda.data\"",
+    "test:dump-data": "cross-env TOOL_NAME=dump-data yarn build-tool && node tools/bin/dump-data.bin.js -d \"build/game-data/yoda.data\"",
     "gen-coverage": "genhtml test/coverage/unit.lcov test/coverage/acceptance/lcov.info -o test/coverage/html",
     "test:performance": "cross-env scope=performance karma start karma.conf.js --single-run",
     "world": "node -- tools/bin/generate-world.bin.js -v -d \"build/game-data/yoda.data\"",
