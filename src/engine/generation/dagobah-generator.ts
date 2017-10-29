@@ -69,7 +69,7 @@ class DagobahGenerator {
 				worldItem.zoneType = ZoneType.Use;
 				worldItem.zoneID = ZONE_DAGOBAH_NORTH_WEST;
 				worldItem.npcID = TILE_YODA;
-				worldItem.findItemID = startingItem;
+				worldItem.findItemID = startingItem.id;
 				break;
 			case 1:
 				this._setupSpawnHotspot(ZONE_YODAS_HUT, TILE_YODA, data);
@@ -77,7 +77,7 @@ class DagobahGenerator {
 				worldItem.zoneType = ZoneType.Use;
 				worldItem.zoneID = ZONE_YODAS_HUT;
 				worldItem.npcID = TILE_YODA;
-				worldItem.findItemID = startingItem;
+				worldItem.findItemID = startingItem.id;
 				break;
 			case 2:
 				this._setupSpawnHotspot(ZONE_DAGOBAH_SOUTH_EAST, TILE_YODA, data);
@@ -85,7 +85,7 @@ class DagobahGenerator {
 				worldItem.zoneType = ZoneType.Use;
 				worldItem.zoneID = ZONE_DAGOBAH_SOUTH_EAST;
 				worldItem.npcID = TILE_YODA;
-				worldItem.findItemID = startingItem;
+				worldItem.findItemID = startingItem.id;
 				break;
 			case 3:
 				this._setupSpawnHotspot(ZONE_DAGOBAH_SOUTH_WEST, TILE_YODA, data);
@@ -93,7 +93,7 @@ class DagobahGenerator {
 				worldItem.zoneType = ZoneType.Use;
 				worldItem.zoneID = ZONE_DAGOBAH_SOUTH_WEST;
 				worldItem.npcID = TILE_YODA;
-				worldItem.findItemID = startingItem;
+				worldItem.findItemID = startingItem.id;
 				break;
 			case 4:
 				this._setupSpawnHotspot(ZONE_YODAS_HUT, TILE_YODAS_SEAT, data);
@@ -101,7 +101,7 @@ class DagobahGenerator {
 				worldItem.zoneType = ZoneType.Use;
 				worldItem.zoneID = ZONE_DAGOBAH_SOUTH_WEST;
 				worldItem.npcID = TILE_YODA;
-				worldItem.findItemID = startingItem;
+				worldItem.findItemID = startingItem.id;
 				break;
 
 			default:

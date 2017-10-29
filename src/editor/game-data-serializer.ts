@@ -180,8 +180,8 @@ class GameDataSerializer {
 			puzzle.strings.forEach((string) => {
 				stream.writeLengthPrefixedString(string);
 			});
-			stream.writeUint16(puzzle.item_1);
-			stream.writeUint16(puzzle.item_2);
+			stream.writeUint16(puzzle.item_1.id);
+			stream.writeUint16(puzzle.item_2 ? puzzle.item_2.id : -1);
 		});
 
 		stream.writeUint16(-1);
