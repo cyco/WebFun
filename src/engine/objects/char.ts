@@ -8,11 +8,14 @@ export { Type };
 class Char {
 	private _frames: CharFrame[] = [];
 	private _name: string = null;
-	private _data: any = null;
-	private rawData: any = null;
-	private rawAuxData: any = null;
-	private rawWeaponData: any = null;
 	private _type: number = null;
+	public _movementType: number;
+	public _garbage1: number;
+	public _garbage2: number;
+
+	public reference: number;
+	public health: number;
+	public damage: number;
 
 	get frames() {
 		return this._frames;
@@ -73,24 +76,6 @@ class Char {
 
 	isWeapon(): boolean {
 		return !!(this.type & Type.Weapon);
-	}
-
-	produceBullet(inertia: Point): any {
-		return null;
-		// TODO: implement shooting
-		/*
-		 const tile = this._getBullettile(inertia);
-		 const tile = window.engine.data.tiles[tile]; // TODO: fix global referene
-		 const bullet = new Bullet([tile], inertia);
-		 return bullet;
-		 */
-	}
-
-	_getBullettile(inertia: Point): Tile {
-		const frame = this._frames.first();
-
-		if (inertia.x) return inertia.x === 1 ? frame.right : frame.left;
-		else return inertia.y === 1 ? frame.down : frame.up;
 	}
 }
 

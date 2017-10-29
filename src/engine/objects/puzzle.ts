@@ -12,9 +12,9 @@ class Puzzle {
 	private _strings: string[] = ["", "", "", "", ""];
 	private _name: string = "";
 	private _type: PuzzleType = null;
-	private _unknown1: any = null;
-	private _unknown2: any = null;
-	private _unknown3: any = null;
+	public _unknown1: number = null;
+	public _unknown2: number = null;
+	public _unknown3: number = null;
 
 	get type(): PuzzleType {
 		return this._type;

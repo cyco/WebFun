@@ -29,8 +29,8 @@ class Zone {
 	public requiredItemIDs: number[] = [];
 	public providedItemIDs: number[] = [];
 	public puzzleNPCTileIDs: number[] = [];
-	public izx4Unknown: any = null;
-	public izaxUnknown: any = null;
+	public izx4Unknown: number;
+	public izaxUnknown: number;
 	public _actions: Action[] = [];
 	public actionsInitialized: boolean = false;
 	public counter: number = 0;
@@ -42,13 +42,9 @@ class Zone {
 	public puzzleGain: number = null;
 	public puzzleRequired: number = null;
 
-	static get LAYERS() {
-		return 3;
-	}
-
-	static get Type() {
-		return Type;
-	}
+	public static readonly LAYERS = 3;
+	public static readonly Type = Type;
+	public static readonly Layer = Layer;
 
 	get tileIDs() {
 		return this._tileIDs;
@@ -56,10 +52,6 @@ class Zone {
 
 	set tileIDs(tileIDs) {
 		this._tileIDs = tileIDs;
-	}
-
-	get LAYERS() {
-		return 3;
 	}
 
 	get name() {

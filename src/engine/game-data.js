@@ -36,10 +36,14 @@ class GameData {
 
 		this._getCategory("CAUX").auxiliaries
 			.filter(({index}) => index !== -1)
-			.forEach(({data}, idx) => this._characters[idx].rawAuxData = data);
+			.forEach(({damage}, idx) => this._characters[idx].damage = damage);
 		this._getCategory("CHWP").weapons
 			.filter(({index}) => index !== -1)
-			.forEach(({data}, idx) => this._characters[idx].rawWeaponData = data);
+			.forEach(({reference, health}, idx) => {
+				const char = this._characters[idx];
+				char.reference = reference;
+				char.health = health;
+			});
 		this._getCategory("TNAM").names
 			.filter(({tileId}) => tileId !== -1)
 			.forEach((obj, idx) => obj.name && (this._tiles[obj.tileId]._name = obj.name));
@@ -66,7 +70,7 @@ class GameData {
 		puzzle._unknown2 = data.unknown2;
 		puzzle._unknown3 = data.unknown3;
 
-		puzzle._strings = data.strings;
+		puzzle._strings = data.strings.map(s => s.content);
 		puzzle.item_1 = data.item1;
 		puzzle.item_2 = data.item2;
 
@@ -91,7 +95,7 @@ class GameData {
 		zone.requiredItemIDs = data.izax.requiredItems;
 		zone.providedItemIDs = data.izx2.providedItems;
 		zone.puzzleNPCTileIDs = data.izx3.puzzleNpc;
-		zone.izaxUnknown = data.izax.count1;
+		zone.izaxUnknown = data.izax.unknownCount;
 		zone.izx4Unknown = data.izx4.unknown;
 
 		zone._actions = data.actions.map((data, i) => this._makeAction(data, i));
@@ -155,6 +159,9 @@ class GameData {
 		char._frames.push(new CharFrame(data.frame2.tiles.map(i => this.tiles[i])));
 		char._frames.push(new CharFrame(data.frame3.tiles.map(i => this.tiles[i])));
 		char._type = data.type;
+		char._movementType = data.movementType;
+		char._garbage1 = data.probablyGarbage1;
+		char._garbage2 = data.probablyGarbage2;
 
 		return char;
 	}
