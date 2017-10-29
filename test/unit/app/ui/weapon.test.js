@@ -23,7 +23,7 @@ describeComponent(Weapon, () => {
 
 	it("shows the correct image if a weapon is set", () => {
 		const weapon = {frames: [{extensionRight: 3}]};
-		subject.data = {tiles: [, , , {image: {dataURL: "image-data-url"}}]};
+		subject.data = {tiles: [, , , {image: {representation: {dataURL: "image-data-url"}}}]};
 
 		subject.weapon = weapon;
 
