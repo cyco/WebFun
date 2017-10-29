@@ -1,6 +1,8 @@
-import AbstractInspector from "src/editor/inspectors/abstract-inspector";
-import PrefixedStorage from "src/util/prefixed-storage";
-import DataManager from "src/editor/data-manager";
+import AbstractInspector from "./inspectors/abstract-inspector";
+import { DiscardingOutputStream, download, PrefixedStorage } from "src/util";
+import DataManager from "./data-manager";
+import GameDataSerializer from "./game-data-serializer";
+import OutputStream from "src/util/output-stream";
 
 class Editor {
 	private static _sharedEditor: Editor;
@@ -30,6 +32,19 @@ class Editor {
 		this._inspectors.each<AbstractInspector>((key: string, inspector: AbstractInspector): void => {
 			inspector.state = new PrefixedStorage(storage, key);
 		});
+	}
+
+	public save() {
+		const serializer = new GameDataSerializer();
+		const sizeCalculationStream = new DiscardingOutputStream();
+		serializer.serialize(this.data.currentData, sizeCalculationStream);
+		const outputStream = new OutputStream(sizeCalculationStream.offset);
+		serializer.serialize(this.data.currentData, outputStream);
+
+		download(outputStream.buffer, "yoda.data");
+	}
+
+	public load() {
 	}
 
 	set data(dm) {
