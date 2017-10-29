@@ -64,9 +64,9 @@ class Tile {
 	public _name: string;
 	public _attributes: any;
 	public _image: Image;
-	public _imageData: any;
+	public _imageData: Uint8Array;
 
-	constructor(id: number = -1, attributes: number = 0, pixelData: any = null) {
+	constructor(id: number = -1, attributes: number = 0, pixelData: Uint8Array = null) {
 		this.id = id;
 		this._name = null;
 		this._attributes = attributes;
