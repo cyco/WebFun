@@ -104,10 +104,10 @@ class GameData {
 		zone._tileIDs = data.tileIds;
 		zone._hotspots = data.hotspots.map((d: any) => this._makeHotspot(d));
 		zone._npcs = data.izax.npcs.map((d: any) => new NPC(d));
-		zone.assignedItemIDs = data.izax.assignedItems.map((id: number) => this._tiles[id]);
-		zone.requiredItemIDs = data.izax.requiredItems.map((id: number) => this._tiles[id]);
-		zone.providedItemIDs = data.izx2.providedItems.map((id: number) => this._tiles[id]);
-		zone.puzzleNPCTileIDs = data.izx3.puzzleNpc.map((id: number) => this._tiles[id]);
+		zone.assignedItems = data.izax.assignedItems.map((id: number) => this._tiles[id]);
+		zone.requiredItems = data.izax.requiredItems.map((id: number) => this._tiles[id]);
+		zone.providedItems = data.izx2.providedItems.map((id: number) => this._tiles[id]);
+		zone.puzzleNPCs = data.izx3.puzzleNpc.map((id: number) => this._tiles[id]);
 		zone.izaxUnknown = data.izax.unknownCount;
 		zone.izx4Unknown = data.izx4.unknown;
 
