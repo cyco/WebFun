@@ -13,7 +13,8 @@ interface Array<T> {
 interface String {
 	dasherize: () => string;
 
-	padStart(length: number, character: string): string
+	padStart(length: number, character?: string): string
+	padEnd(length: number, character?: string): string
 }
 
 declare interface ObjectConstructor {
