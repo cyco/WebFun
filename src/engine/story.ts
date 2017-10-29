@@ -3,9 +3,10 @@ import { Message, rand } from "src/util";
 import Engine from "./engine";
 import World from "./generation/world";
 import { Planet, WorldSize } from "./types";
+import Puzzle from "src/engine/objects/puzzle";
 
 class Story {
-	public goal: any;
+	public goal: Puzzle;
 	private _seed: number;
 	private _planet: Planet;
 	private _size: WorldSize;
@@ -63,8 +64,7 @@ class Story {
 			}
 		} while (!success);
 
-		const goalID = generator.goalPuzzleID;
-		this.goal = engine.data.puzzles[goalID];
+		this.goal = generator.goalPuzzleID;
 
 		this._setupWorld(generator, engine);
 		this._setupDagobah(generator, engine);

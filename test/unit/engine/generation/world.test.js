@@ -22,7 +22,7 @@ describe("World", () => {
 		expect(subject.getZone(9, 9)).toBe(null);
 		expect(subject.getZone(new Point(0, 0))).toBe(null);
 
-		subject.setZone(5, 5, 0);
+		subject.setZone(5, 5, zone);
 		expect(subject.getZone(5, 5)).toBe(zone);
 	});
 
@@ -33,30 +33,16 @@ describe("World", () => {
 
 	describe("locationOfZone", () => {
 		it("it returns a point specify where the zone is", () => {
-			subject.setZone(5, 2, 0);
+		const mockZone = {};
+			subject.setZone(5, 2, mockZone);
 
-			let point = subject.locationOfZone(zone);
+			let point = subject.locationOfZone(mockZone);
 			expect(point.x).toBe(5);
 			expect(point.y).toBe(2);
 		});
 
 		it("returns null if the world does not contain the zone", () => {
 			let point = subject.locationOfZone(zone);
-			expect(point).toBe(null);
-		});
-	});
-
-	describe("locationOfZoneWithID", () => {
-		it("returns the same as locationOfZone but takes an id instead of zone", () => {
-			subject.setZone(5, 2, 0);
-
-			let point = subject.locationOfZoneWithID(0);
-			expect(point.x).toBe(5);
-			expect(point.y).toBe(2);
-		});
-
-		it("returns the same as locationOfZone but takes an id instead of zone", () => {
-			let point = subject.locationOfZoneWithID(3);
 			expect(point).toBe(null);
 		});
 	});
