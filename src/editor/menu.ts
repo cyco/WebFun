@@ -19,7 +19,7 @@ export default {
 		SettingsAction("Setup Image", (): void => Editor.sharedEditor.show("setup-image")),
 		SettingsAction("Palette", (): void => Editor.sharedEditor.show("palette")),
 		MenuItemSeparator,
-		SettingsAction("Load Data", (): void => null),
-		SettingsAction("Save Data", (): void => null)
+		SettingsAction("Load Data", (): void => Editor.sharedEditor.load()),
+		SettingsAction("Save Data", (): void => Editor.sharedEditor.save())
 	]
 };
