@@ -119,19 +119,19 @@ class GameDataSerializer {
 			});
 
 			stream.writeUint16(zone.requiredItemIDs.length);
-			stream.writeUint16Array(zone.requiredItemIDs); // TODO: use tile objects instead
+			stream.writeUint16Array(zone.requiredItemIDs.map(i => i.id)); // TODO: use tile objects instead
 			stream.writeUint16(zone.assignedItemIDs.length);
-			stream.writeUint16Array(zone.assignedItemIDs); // TODO: use tile objects instead
+			stream.writeUint16Array(zone.assignedItemIDs.map(i => i.id)); // TODO: use tile objects instead
 
 			stream.writeCharacters("IZX2");
 			stream.writeUint32(izx2Size);
 			stream.writeUint16(zone.providedItemIDs.length);
-			stream.writeUint16Array(zone.providedItemIDs); // TODO: use tile objects instead
+			stream.writeUint16Array(zone.providedItemIDs.map(i => i.id)); // TODO: use tile objects instead
 
 			stream.writeCharacters("IZX3");
 			stream.writeUint32(izx3Size);
 			stream.writeUint16(zone.puzzleNPCTileIDs.length);
-			stream.writeUint16Array(zone.puzzleNPCTileIDs); // TODO: use tile objects instead
+			stream.writeUint16Array(zone.puzzleNPCTileIDs.map(i => i.id)); // TODO: use tile objects instead
 
 			stream.writeCharacters("IZX4");
 			stream.writeUint32(izx4Size);

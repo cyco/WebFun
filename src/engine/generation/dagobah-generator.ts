@@ -122,7 +122,7 @@ class DagobahGenerator {
 		const hotspots = zone.hotspots;
 
 		if (zoneID !== ZONE_YODAS_HUT) {
-			const index = zone.puzzleNPCTileIDs.indexOf(npcID);
+			const index = zone.puzzleNPCTileIDs.findIndex(i => i.id === npcID);
 			if (index === -1) return;
 
 			const candidates = zone.hotspots.filter((hotspot: Hotspot) => hotspot.type === HotspotType.SpawnLocation);
@@ -136,7 +136,7 @@ class DagobahGenerator {
 		}
 
 		if (npcID === TILE_YODA) {
-			const index = zone.puzzleNPCTileIDs.indexOf(TILE_YODA);
+			const index = zone.puzzleNPCTileIDs.findIndex(i => i.id === TILE_YODA);
 			if (index === -1) return;
 
 			let hotspot = hotspots.filter((hotspot: Hotspot) => hotspot.x === 3 && hotspot.y === 3).last();
@@ -149,7 +149,7 @@ class DagobahGenerator {
 		}
 
 		if (npcID === TILE_YODAS_SEAT) {
-			const index = zone.puzzleNPCTileIDs.indexOf(npcID);
+			const index = zone.puzzleNPCTileIDs.findIndex(i => i.id === npcID);
 			if (index === -1) return;
 
 			let hotspot = hotspots.filter((hotspot: Hotspot) => hotspot.x === 3 && hotspot.y === 2).last();

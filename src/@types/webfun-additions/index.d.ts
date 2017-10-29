@@ -7,7 +7,7 @@ interface Array<T> {
 
 	last(): T|null;
 
-	contains(T: any): boolean
+	contains(_: T): boolean
 }
 
 interface String {
