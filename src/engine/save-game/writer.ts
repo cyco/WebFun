@@ -90,7 +90,7 @@ class Writer {
 		doors.forEach((hotspot: Hotspot) => {
 			const zone = this._data.zones[hotspot.arg];
 			stream.writeInt16(zone.id);
-			stream.writeUint32(zone.visited);
+			stream.writeUint32(zone.visited ? 1 : 0);
 			this._writeRoom(zone, visited, stream);
 		});
 	}

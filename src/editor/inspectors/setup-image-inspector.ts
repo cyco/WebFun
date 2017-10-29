@@ -1,10 +1,9 @@
 import AbstractInspector from "./abstract-inspector";
-import { ColorPicker, PaletteView } from "../components";
+import { PaletteView } from "../components";
 import Size from "src/util/size";
 
 class PaletteInspector extends AbstractInspector {
 	private _paletteView: PaletteView = <PaletteView>document.createElement(PaletteView.TagName);
-	private _colorPicker: ColorPicker = <ColorPicker>document.createElement(ColorPicker.TagName);
 
 	constructor() {
 		super();

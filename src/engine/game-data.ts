@@ -16,37 +16,50 @@ import {
 
 import { Planet } from "./types";
 
+declare interface RawGameData {
+	catalog: any[]
+}
+
 class GameData {
-	constructor(raw) {
+	private _rawInput: RawGameData;
+	private _version: number;
+	private _sounds: string[];
+	private _tiles: Tile[];
+	private _puzzles: Puzzle[];
+	private _zones: Zone[];
+	private _characters: Char[];
+	private _setup: Uint8Array;
+
+	constructor(raw: RawGameData) {
 		this._rawInput = raw;
 		this._version = this._getCategory("VERS").version;
 		this._sounds = this._getCategory("SNDS").sounds
-			.map((i) => i.content);
+		.map((i: {content: string}) => i.content);
 		this._tiles = this._getCategory("TILE").tiles
-			.map((t, i) => new Tile(i, t.attributes, t.pixels));
+		.map((t: {attributes: number, pixels: Uint8Array}, i: number) => new Tile(i, t.attributes, t.pixels));
 		this._puzzles = this._getCategory("PUZ2").puzzles
-			.filter(({index}) => index !== -1)
-			.map((data, index) => this._makePuzzle(data, index));
+		.filter(({index}: {index: number}) => index !== -1)
+		.map((data: any, index: number) => this._makePuzzle(data, index));
 		this._zones = [];
 		this._getCategory("ZONE").zones
-			.map((data, index) => this._makeZone(data, index)).forEach(z => this._zones.push(z));
+		.map((data: any, index: number) => this._makeZone(data)).forEach((z: Zone) => this._zones.push(z));
 		this._characters = this._getCategory("CHAR").characters
-			.filter(({index}) => index !== -1)
-			.map((data, index) => this._makeCharacter(data, index));
+		.filter(({index}: {index: number}) => index !== -1)
+		.map((data: any, index: number) => this._makeCharacter(data, index));
 
 		this._getCategory("CAUX").auxiliaries
-			.filter(({index}) => index !== -1)
-			.forEach(({damage}, idx) => this._characters[idx].damage = damage);
+		.filter(({index}: {index: number}) => index !== -1)
+		.forEach(({damage}: {damage: number}, idx: number) => this._characters[idx].damage = damage);
 		this._getCategory("CHWP").weapons
-			.filter(({index}) => index !== -1)
-			.forEach(({reference, health}, idx) => {
-				const char = this._characters[idx];
-				char.reference = reference;
-				char.health = health;
-			});
+		.filter(({index}: {index: number}) => index !== -1)
+		.forEach(({reference, health}: {reference: number, health: number}, idx: number) => {
+			const char = this._characters[idx];
+			char.reference = reference;
+			char.health = health;
+		});
 		this._getCategory("TNAM").names
-			.filter(({tileId}) => tileId !== -1)
-			.forEach((obj, idx) => obj.name && (this._tiles[obj.tileId]._name = obj.name));
+		.filter(({tileId}: {tileId: number}) => tileId !== -1)
+		.forEach((obj: any, idx: number) => obj.name && (this._tiles[obj.tileId]._name = obj.name));
 		this._setup = this._getCategory("STUP").pixels;
 	}
 
@@ -54,33 +67,33 @@ class GameData {
 		return new GameData(this._rawInput);
 	}
 
-	_getCategory(category) {
+	_getCategory(category: string) {
 		const catalogEntry = this._rawInput.catalog.find(c => c.type === category);
 		if (!catalogEntry) throw `Category ${category} not found in game file!`;
 
 		return catalogEntry.content;
 	}
 
-	_makePuzzle(data, index) {
+	_makePuzzle(data: any, index: number): Puzzle {
 		const puzzle = new Puzzle();
 
 		puzzle.id = index;
-		puzzle._type = PuzzleType.fromNumber(data.type);
+		(<any>puzzle)._type = PuzzleType.fromNumber(data.type);
 		puzzle._unknown1 = data.unknown1;
 		puzzle._unknown2 = data.unknown2;
 		puzzle._unknown3 = data.unknown3;
 
-		puzzle._strings = data.strings.map(s => s.content);
-		puzzle.item_1 = data.item1;
-		puzzle.item_2 = data.item2;
+		(<any>puzzle)._strings = data.strings.map((s: {content: string}) => s.content);
+		(<any>puzzle).item_1 = data.item1;
+		(<any>puzzle).item_2 = data.item2;
 
 		if (index === 0xBD || index === 0xC5)
-			puzzle._type = PuzzleType.Disabled;
+			(<any>puzzle)._type = PuzzleType.Disabled;
 
 		return puzzle;
 	}
 
-	_makeZone(data) {
+	_makeZone(data: any): Zone {
 		const zone = new Zone();
 
 		zone.id = data.index;
@@ -89,8 +102,8 @@ class GameData {
 		zone._height = data.height;
 		zone._type = ZoneType.fromNumber(data.type);
 		zone._tileIDs = data.tileIds;
-		zone._hotspots = data.hotspots.map((d) => this._makeHotspot(d));
-		zone._npcs = data.izax.npcs.map((d) => new NPC(d));
+		zone._hotspots = data.hotspots.map((d: any) => this._makeHotspot(d));
+		zone._npcs = data.izax.npcs.map((d: any) => new NPC(d));
 		zone.assignedItemIDs = data.izax.assignedItems;
 		zone.requiredItemIDs = data.izax.requiredItems;
 		zone.providedItemIDs = data.izx2.providedItems;
@@ -98,14 +111,14 @@ class GameData {
 		zone.izaxUnknown = data.izax.unknownCount;
 		zone.izx4Unknown = data.izx4.unknown;
 
-		zone._actions = data.actions.map((data, i) => this._makeAction(data, i));
+		zone._actions = data.actions.map((data: any, i: number) => this._makeAction(data, i));
 		zone._tileStore = this.tiles;
 		zone._zoneStore = this.zones;
 
 		return zone;
 	}
 
-	_makeHotspot(data) {
+	_makeHotspot(data: any): Hotspot {
 		const hotspot = new Hotspot();
 		hotspot._x = data.x;
 		hotspot._y = data.y;
@@ -141,24 +154,24 @@ class GameData {
 		return hotspot;
 	}
 
-	_makeAction(data, idx) {
+	_makeAction(data: any, idx: number): Action {
 		const action = new Action();
 
-		action._id = idx;
-		action._conditions = data.conditions.map((data) => new Condition(data));
-		action._instructions = data.instructions.map((data) => new Instruction(data));
+		(<any>action)._id = idx;
+		(<any>action)._conditions = data.conditions.map((data: any) => new Condition(data));
+		(<any>action)._instructions = data.instructions.map((data: any) => new Instruction(data));
 
 		return action;
 	}
 
-	_makeCharacter(data, idx) {
+	_makeCharacter(data: any, idx: number): Char {
 		const char = new Char();
-		char._id = idx;
-		char._name = data.name;
-		char._frames.push(new CharFrame(data.frame1.tiles.map(i => this.tiles[i])));
-		char._frames.push(new CharFrame(data.frame2.tiles.map(i => this.tiles[i])));
-		char._frames.push(new CharFrame(data.frame3.tiles.map(i => this.tiles[i])));
-		char._type = data.type;
+		(<any>char)._id = idx;
+		(<any>char)._name = data.name;
+		(<any>char)._frames.push(new CharFrame(data.frame1.tiles.map((i: number) => this.tiles[i])));
+		(<any>char)._frames.push(new CharFrame(data.frame2.tiles.map((i: number) => this.tiles[i])));
+		(<any>char)._frames.push(new CharFrame(data.frame3.tiles.map((i: number) => this.tiles[i])));
+		(<any>char)._type = data.type;
 		char._movementType = data.movementType;
 		char._garbage1 = data.probablyGarbage1;
 		char._garbage2 = data.probablyGarbage2;
@@ -166,31 +179,31 @@ class GameData {
 		return char;
 	}
 
-	get version() {
+	get version(): number {
 		return this._version;
 	}
 
-	get sounds() {
+	get sounds(): string[] {
 		return this._sounds;
 	}
 
-	get tiles() {
+	get tiles(): Tile[] {
 		return this._tiles;
 	}
 
-	get puzzles() {
+	get puzzles(): Puzzle[] {
 		return this._puzzles;
 	}
 
-	get zones() {
+	get zones(): Zone[] {
 		return this._zones;
 	}
 
-	get characters() {
+	get characters(): Char[] {
 		return this._characters;
 	}
 
-	get setupImageData() {
+	get setupImageData(): Uint8Array {
 		return this._setup;
 	}
 }

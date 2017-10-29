@@ -22,7 +22,7 @@ class PuzzleInspector extends AbstractInspector {
 	}
 
 	build() {
-		this._list.items = this.data.currentData.tiles;
+		this._list.items = this.data.currentData.puzzles;
 	}
 }
 

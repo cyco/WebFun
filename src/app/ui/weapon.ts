@@ -44,7 +44,7 @@ class Weapon extends Component {
 			const tileID = this._weapon.frames[0].extensionRight;
 			if (tileID !== 0xFFFF && tileID !== -1) {
 				const tile = this.data.tiles[tileID];
-				url = tile.image.dataURL;
+				url = tile.image.representation.dataURL;
 				this._tileContainer.style.backgroundImage = url;
 			}
 		}
