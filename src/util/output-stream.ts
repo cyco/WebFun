@@ -68,7 +68,7 @@ class OutputStream extends Stream {
 		this.writeUint8(0);
 	}
 
-	writeUint8Array(array: number[]|Int8Array): void {
+	writeUint8Array(array: number[]|Uint8Array): void {
 		for (let i = 0, len = array.length; i < len; i++) {
 			this.writeUint8(array[i]);
 		}
