@@ -25,10 +25,10 @@ class Zone {
 	public _hotspots: Hotspot[] = [];
 	public _tileStore: any = null;
 	public _zoneStore: any = null;
-	public assignedItemIDs: Tile[] = [];
-	public requiredItemIDs: Tile[] = [];
-	public providedItemIDs: Tile[] = [];
-	public puzzleNPCTileIDs: Tile[] = [];
+	public assignedItems: Tile[] = [];
+	public requiredItems: Tile[] = [];
+	public providedItems: Tile[] = [];
+	public puzzleNPCs: Tile[] = [];
 	public izx4Unknown: number;
 	public izaxUnknown: number;
 	public _actions: Action[] = [];

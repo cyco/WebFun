@@ -62,9 +62,9 @@ class GameDataSerializer {
 		stream.writeUint16(data.zones.length);
 
 		data.zones.forEach((zone: Zone, index: number) => {
-			const izaxSize = 8 + 2 + 2 + zone.npcs.length * 44 + 2 + 2 * zone.requiredItemIDs.length + 2 + 2 * zone.assignedItemIDs.length;
-			const izx2Size = 8 + 2 + 2 * zone.providedItemIDs.length;
-			const izx3Size = 8 + 2 + 2 * zone.puzzleNPCTileIDs.length;
+			const izaxSize = 8 + 2 + 2 + zone.npcs.length * 44 + 2 + 2 * zone.requiredItems.length + 2 + 2 * zone.assignedItems.length;
+			const izx2Size = 8 + 2 + 2 * zone.providedItems.length;
+			const izx3Size = 8 + 2 + 2 * zone.puzzleNPCs.length;
 			const izx4Size = 2;
 			const calculateActionSize = (action: Action) => action.conditions.map((condition: Condition) => 0xE + condition.text.length).reduce(add, 2) + action.instructions.map((condition: Condition) => 0xE + condition.text.length).reduce(add, 2);
 			const izonSize = 20 + zone.height * zone.width * Zone.LAYERS * 2;
@@ -118,20 +118,20 @@ class GameDataSerializer {
 				stream.writeUint8Array(npc.unknown3);
 			});
 
-			stream.writeUint16(zone.requiredItemIDs.length);
-			stream.writeUint16Array(zone.requiredItemIDs.map(i => i.id)); // TODO: use tile objects instead
-			stream.writeUint16(zone.assignedItemIDs.length);
-			stream.writeUint16Array(zone.assignedItemIDs.map(i => i.id)); // TODO: use tile objects instead
+			stream.writeUint16(zone.requiredItems.length);
+			stream.writeUint16Array(zone.requiredItems.map(i => i.id)); // TODO: use tile objects instead
+			stream.writeUint16(zone.assignedItems.length);
+			stream.writeUint16Array(zone.assignedItems.map(i => i.id)); // TODO: use tile objects instead
 
 			stream.writeCharacters("IZX2");
 			stream.writeUint32(izx2Size);
-			stream.writeUint16(zone.providedItemIDs.length);
-			stream.writeUint16Array(zone.providedItemIDs.map(i => i.id)); // TODO: use tile objects instead
+			stream.writeUint16(zone.providedItems.length);
+			stream.writeUint16Array(zone.providedItems.map(i => i.id)); // TODO: use tile objects instead
 
 			stream.writeCharacters("IZX3");
 			stream.writeUint32(izx3Size);
-			stream.writeUint16(zone.puzzleNPCTileIDs.length);
-			stream.writeUint16Array(zone.puzzleNPCTileIDs.map(i => i.id)); // TODO: use tile objects instead
+			stream.writeUint16(zone.puzzleNPCs.length);
+			stream.writeUint16Array(zone.puzzleNPCs.map(i => i.id)); // TODO: use tile objects instead
 
 			stream.writeCharacters("IZX4");
 			stream.writeUint32(izx4Size);
