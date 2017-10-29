@@ -1,13 +1,13 @@
 import * as ItemType from "../types";
 import { Planet } from "../types";
 import Type, { default as PuzzleType } from "./puzzle-type";
-
+import Tile from './tile';
 export { Type };
 
 class Puzzle {
 	public id: number = -1;
-	public readonly item_1 = -1;
-	public readonly item_2 = -1;
+	public readonly item_1: Tile;
+	public readonly item_2: Tile;
 	public hasPuzzleNPC: boolean = false;
 	private _strings: string[] = ["", "", "", "", ""];
 	private _name: string = "";
