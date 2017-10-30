@@ -1,15 +1,6 @@
 import { GameData } from "src/engine";
 import { add, OutputStream } from "src/util";
-import Tile from "src/engine/objects/tile";
-import Zone from "src/engine/objects/zone";
-import Hotspot from "src/engine/objects/hotspot";
-import Action from "src/engine/objects/action";
-import Condition from "src/engine/objects/condition";
-import Instruction from "src/engine/objects/instruction";
-import NPC from "src/engine/objects/npc";
-import Puzzle from "src/engine/objects/puzzle";
-import PuzzleType from "src/engine/objects/puzzle-type";
-import Char from "src/engine/objects/char";
+import { Action, Char, Condition, Hotspot, Instruction, NPC, Puzzle, PuzzleType, Tile, Zone } from "src/engine/objects";
 
 class GameDataSerializer {
 	public serialize(data: GameData, stream: OutputStream): void {
