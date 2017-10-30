@@ -120,8 +120,6 @@ class Slider extends Component {
 		this._knob.classList.add("thumb");
 		this.appendChild(this._knob);
 
-		const self = this;
-
 		let mouseCoordinates = {
 			x: 0,
 			y: 0
@@ -134,8 +132,8 @@ class Slider extends Component {
 			mouseCoordinates.x = e.pageX;
 			mouseCoordinates.y = e.pageY;
 
-			buttonCoordinates.x = parseInt(self._knob.style.left);
-			buttonCoordinates.y = parseInt(self._knob.style.top);
+			buttonCoordinates.x = parseInt(this._knob.style.left);
+			buttonCoordinates.y = parseInt(this._knob.style.top);
 
 			window.addEventListener("mouseup", mouseUp);
 			window.addEventListener("mousemove", mouseMove);
@@ -152,7 +150,7 @@ class Slider extends Component {
 			pos = Math.max(buttonWidth, pos);
 			pos = Math.min(width, pos);
 
-			self._knob.style.left = pos + "px";
+			this._knob.style.left = pos + "px";
 
 			this._value = this._min + (pos - buttonWidth) / (this.getBoundingClientRect().width - 3 * buttonWidth) * (this._max - this._min);
 			if (this._snapToIntegers) {
@@ -180,32 +178,28 @@ class Slider extends Component {
 	}
 
 	_setupLeftButton() {
-		const self = this;
-
 		this._left = this._makeButton();
 		this._left.classList.add("left");
 		this._left.onmousedown = () => {
-			self._left.classList.add("active");
-			self._tickLeft();
+			this._left.classList.add("active");
+			this._tickLeft();
 		};
 		this._left.onmouseup = () => {
-			self._left.classList.remove("active");
+			this._left.classList.remove("active");
 		};
 
 		this.appendChild(this._left);
 	}
 
 	_setupRightButton() {
-		const self = this;
-
 		this._right = this._makeButton();
 		this._right.classList.add("right");
 		this._right.onmousedown = () => {
-			self._right.classList.add("active");
-			self._tickRight();
+			this._right.classList.add("active");
+			this._tickRight();
 		};
 		this._right.onmouseup = () => {
-			self._right.classList.remove("active");
+			this._right.classList.remove("active");
 		};
 
 		this.appendChild(this._right);
@@ -223,23 +217,21 @@ class Slider extends Component {
 
 	_tickLeft() {
 		const tickWidth = this._snapToIntegers ? 1 : 0.02;
-
 		this.value -= tickWidth;
-		const self = this;
+
 		dispatch(() => {
 			if (this._left.classList.contains("active"))
-				self._tickLeft();
+				this._tickLeft();
 		}, 80);
 	}
 
 	_tickRight() {
 		const tickWidth = this._snapToIntegers ? 1 : 0.02;
-
 		this.value += tickWidth;
-		const self = this;
+
 		dispatch(() => {
 			if (this._right.classList.contains("active"))
-				self._tickRight();
+				this._tickRight();
 		}, 80);
 	}
 

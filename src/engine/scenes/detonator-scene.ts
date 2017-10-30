@@ -23,8 +23,7 @@ class DetonatorScene extends Scene {
 	}
 
 	willShow() {
-		const self = this;
-		this.engine.inputManager.mouseDownHandler = (p: Point) => self.mouseDown(p);
+		this.engine.inputManager.mouseDownHandler = (p: Point) => this.mouseDown(p);
 	}
 
 	mouseDown(p: Point): void {

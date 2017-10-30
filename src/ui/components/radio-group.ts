@@ -8,10 +8,9 @@ class RadioGroup extends EventTarget {
 	constructor(buttons: RadioButton[] = []) {
 		super();
 
-		const self = this;
 		this._buttons = [];
 		this._id = String.UUID();
-		buttons.forEach((b) => self.addButton(b));
+		buttons.forEach((b) => this.addButton(b));
 	}
 
 	get buttons() {
