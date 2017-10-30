@@ -3,14 +3,14 @@ import Zone from "src/engine/objects/zone";
 import Tile from "src/engine/objects/tile";
 
 class WorldItem {
-	public zoneID: Zone = null;
+	public zone: Zone = null;
 	public zoneType: ZoneType = null;
 	public puzzleIdx: number = -1;
-	public requiredItemID: Tile = null;
-	public additionalRequiredItemID: Tile = null;
+	public requiredItem: Tile = null;
+	public additionalRequiredItem: Tile = null;
 	public puzzleIndex: number = -1;
-	public npcID: Tile = null;
-	public findItemID: Tile = null;
+	public npc: Tile = null;
+	public findItem: Tile = null;
 }
 
 export default WorldItem;

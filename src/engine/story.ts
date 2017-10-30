@@ -64,7 +64,7 @@ class Story {
 			}
 		} while (!success);
 
-		this.goal = generator.goalPuzzleID;
+		this.goal = generator.goalPuzzle;
 
 		this._setupWorld(generator, engine);
 		this._setupDagobah(generator, engine);

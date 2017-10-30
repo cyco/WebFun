@@ -5,6 +5,7 @@ import GameData from "../game-data";
 import Hotspot from "../objects/hotspot";
 import World from "./world";
 import WorldGenerator from "./world-generator";
+import { WorldItem } from "src/engine/generation";
 
 const TILE_YODA = 0x30c;
 const TILE_YODAS_SEAT = 2034;
@@ -44,13 +45,13 @@ class DagobahGenerator {
 		dagobah.at(5, 5).zoneType = ZoneType.Town; // data.zones[ZONE_DAGOBAH_SOUTH_EAST].type;
 
 		let mode = randmod(4);
-		if (generator.goalPuzzleID === data.puzzles[GOAL_IMPERIAL_BATTLE_CODE]) {
+		if (generator.goalPuzzle === data.puzzles[GOAL_IMPERIAL_BATTLE_CODE]) {
 			mode = 3;
-		} else if (generator.goalPuzzleID === data.puzzles[GOAL_RESCUE_YODA]) {
+		} else if (generator.goalPuzzle === data.puzzles[GOAL_RESCUE_YODA]) {
 			mode = 4;
 		}
 
-		const startingItem = generator.puzzleIDs2[0].item_1;
+		const startingItem = generator.puzzles2[0].item_1;
 
 		//* temporarily copy zone types over from main world for easy comparison against original
 		// FIXME: remove this section when comparisons are not necessary anymore
@@ -61,57 +62,57 @@ class DagobahGenerator {
 		dagobah.at(5, 5).zoneType = world.at(5, 5).zoneType;
 		//*/
 
-		let worldItem = null;
+		let worldItem: WorldItem = null;
 		switch (mode) {
 			case 0:
 				this._setupSpawnHotspot(ZONE_DAGOBAH_NORTH_WEST, TILE_YODA, data);
 				worldItem = dagobah.at(4, 4);
 				worldItem.zoneType = ZoneType.Use;
-				worldItem.zoneID = data.zones[ZONE_DAGOBAH_NORTH_WEST];
-				worldItem.npcID = data.tiles[TILE_YODA];
-				worldItem.findItemID = startingItem;
+				worldItem.zone = data.zones[ZONE_DAGOBAH_NORTH_WEST];
+				worldItem.npc = data.tiles[TILE_YODA];
+				worldItem.findItem = startingItem;
 				break;
 			case 1:
 				this._setupSpawnHotspot(ZONE_YODAS_HUT, TILE_YODA, data);
 				worldItem = dagobah.at(5, 4);
 				worldItem.zoneType = ZoneType.Use;
-				worldItem.zoneID = data.zones[ZONE_YODAS_HUT];
-				worldItem.npcID = data.tiles[TILE_YODA];
-				worldItem.findItemID = startingItem;
+				worldItem.zone = data.zones[ZONE_YODAS_HUT];
+				worldItem.npc = data.tiles[TILE_YODA];
+				worldItem.findItem = startingItem;
 				break;
 			case 2:
 				this._setupSpawnHotspot(ZONE_DAGOBAH_SOUTH_EAST, TILE_YODA, data);
 				worldItem = dagobah.at(5, 5);
 				worldItem.zoneType = ZoneType.Use;
-				worldItem.zoneID = data.zones[ZONE_DAGOBAH_SOUTH_EAST];
-				worldItem.npcID = data.tiles[TILE_YODA];
-				worldItem.findItemID = startingItem;
+				worldItem.zone = data.zones[ZONE_DAGOBAH_SOUTH_EAST];
+				worldItem.npc = data.tiles[TILE_YODA];
+				worldItem.findItem = startingItem;
 				break;
 			case 3:
 				this._setupSpawnHotspot(ZONE_DAGOBAH_SOUTH_WEST, TILE_YODA, data);
 				worldItem = dagobah.at(4, 5);
 				worldItem.zoneType = ZoneType.Use;
-				worldItem.zoneID = data.zones[ZONE_DAGOBAH_SOUTH_WEST];
-				worldItem.npcID = data.tiles[TILE_YODA];
-				worldItem.findItemID = startingItem;
+				worldItem.zone = data.zones[ZONE_DAGOBAH_SOUTH_WEST];
+				worldItem.npc = data.tiles[TILE_YODA];
+				worldItem.findItem = startingItem;
 				break;
 			case 4:
 				this._setupSpawnHotspot(ZONE_YODAS_HUT, TILE_YODAS_SEAT, data);
 				worldItem = dagobah.at(5, 4);
 				worldItem.zoneType = ZoneType.Use;
-				worldItem.zoneID = data.zones[ZONE_DAGOBAH_SOUTH_WEST];
-				worldItem.npcID = data.tiles[TILE_YODA];
-				worldItem.findItemID = startingItem;
+				worldItem.zone = data.zones[ZONE_DAGOBAH_SOUTH_WEST];
+				worldItem.npc = data.tiles[TILE_YODA];
+				worldItem.findItem = startingItem;
 				break;
 
 			default:
 				break;
 		}
 
-		dagobah.at(4, 4).zoneID = data.zones[ZONE_DAGOBAH_NORTH_WEST];
-		dagobah.at(5, 4).zoneID = data.zones[ZONE_DAGOBAH_NORTH_EAST];
-		dagobah.at(4, 5).zoneID = data.zones[ZONE_DAGOBAH_SOUTH_WEST];
-		dagobah.at(5, 5).zoneID = data.zones[ZONE_DAGOBAH_SOUTH_EAST];
+		dagobah.at(4, 4).zone = data.zones[ZONE_DAGOBAH_NORTH_WEST];
+		dagobah.at(5, 4).zone = data.zones[ZONE_DAGOBAH_NORTH_EAST];
+		dagobah.at(4, 5).zone = data.zones[ZONE_DAGOBAH_SOUTH_WEST];
+		dagobah.at(5, 5).zone = data.zones[ZONE_DAGOBAH_SOUTH_EAST];
 
 		return (this._world = dagobah);
 	}

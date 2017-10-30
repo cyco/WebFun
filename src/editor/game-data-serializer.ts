@@ -119,19 +119,19 @@ class GameDataSerializer {
 			});
 
 			stream.writeUint16(zone.requiredItems.length);
-			stream.writeUint16Array(zone.requiredItems.map(i => i.id)); // TODO: use tile objects instead
+			stream.writeUint16Array(zone.requiredItems.map(i => i.id));
 			stream.writeUint16(zone.assignedItems.length);
-			stream.writeUint16Array(zone.assignedItems.map(i => i.id)); // TODO: use tile objects instead
+			stream.writeUint16Array(zone.assignedItems.map(i => i.id));
 
 			stream.writeCharacters("IZX2");
 			stream.writeUint32(izx2Size);
 			stream.writeUint16(zone.providedItems.length);
-			stream.writeUint16Array(zone.providedItems.map(i => i.id)); // TODO: use tile objects instead
+			stream.writeUint16Array(zone.providedItems.map(i => i.id));
 
 			stream.writeCharacters("IZX3");
 			stream.writeUint32(izx3Size);
 			stream.writeUint16(zone.puzzleNPCs.length);
-			stream.writeUint16Array(zone.puzzleNPCs.map(i => i.id)); // TODO: use tile objects instead
+			stream.writeUint16Array(zone.puzzleNPCs.map(i => i.id));
 
 			stream.writeCharacters("IZX4");
 			stream.writeUint32(izx4Size);
@@ -189,7 +189,7 @@ class GameDataSerializer {
 
 	private writeCharacters(data: GameData, stream: OutputStream) {
 		stream.writeCharacters("CHAR");
-		stream.writeUint32(2 + data.characters.length * (10 + 26 + 3 * 2 * 8)); // TODO
+		stream.writeUint32(2 + data.characters.length * (10 + 26 + 3 * 2 * 8));
 
 		data.characters.forEach((c: Char, index: number) => {
 			stream.writeUint16(index);
@@ -210,7 +210,7 @@ class GameDataSerializer {
 
 	private writeCharacterWeapons(data: GameData, stream: OutputStream) {
 		stream.writeCharacters("CHWP");
-		stream.writeUint32(data.characters.length * 6 + 2); // TODO
+		stream.writeUint32(data.characters.length * 6 + 2);
 
 		data.characters.forEach((c: Char, index: number) => {
 			stream.writeUint16(index);
@@ -222,7 +222,7 @@ class GameDataSerializer {
 
 	private writeCharacterAuxiliary(data: GameData, stream: OutputStream) {
 		stream.writeCharacters("CAUX");
-		stream.writeUint32(data.characters.length * 4 + 2); // TODO
+		stream.writeUint32(data.characters.length * 4 + 2);
 
 		data.characters.forEach((c: Char, index: number) => {
 			stream.writeUint16(index);

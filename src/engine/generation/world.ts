@@ -35,20 +35,20 @@ class World {
 		const index = this._pointToIndex(x, y);
 		const worldItem = this._items[index];
 
-		return  worldItem.zoneID;
+		return  worldItem.zone;
 	}
 
 	setZone(x: number, y: number, zoneID: Zone) {
 		const index = this._pointToIndex(x, y);
 		const worldItem = this._items[index];
-		worldItem.zoneID = zoneID;
+		worldItem.zone = zoneID;
 	}
 
 	locationOfZone(zone: Zone): Point {
 		for (let y = 0; y < World.HEIGHT; y++) {
 			for (let x = 0; x < World.HEIGHT; x++) {
 				let index = this._pointToIndex(x, y);
-				if (this._items[index].zoneID === zone) {
+				if (this._items[index].zone === zone) {
 					return new Point(x, y);
 				}
 			}
