@@ -8,6 +8,8 @@ interface Array<T> {
 	last(): T|null;
 
 	contains(_: T): boolean
+
+	shuffle(): T[];
 }
 
 interface String {
