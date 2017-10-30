@@ -123,8 +123,8 @@ class Writer {
 
 	_writeNPC(npc: NPC, stream: OutputStream): void {
 		stream.writeInt16(npc._face);
-		stream.writeInt16(npc._x);
-		stream.writeInt16(npc._y);
+		stream.writeInt16(npc.position.x);
+		stream.writeInt16(npc.position.y);
 		stream.writeInt16(0); // TODO: field_A
 		stream.writeUint32(+npc._enabled);
 		stream.writeInt16(0); // TODO: field_10

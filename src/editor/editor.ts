@@ -1,8 +1,7 @@
 import AbstractInspector from "./inspectors/abstract-inspector";
-import { DiscardingOutputStream, download, PrefixedStorage } from "src/util";
+import { DiscardingOutputStream, download, OutputStream, PrefixedStorage } from "src/util";
 import DataManager from "./data-manager";
 import GameDataSerializer from "./game-data-serializer";
-import OutputStream from "src/util/output-stream";
 
 class Editor {
 	private static _sharedEditor: Editor;

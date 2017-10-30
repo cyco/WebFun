@@ -2,7 +2,7 @@ import Component from "../component";
 import WindowTitlebar from "./window-titlebar";
 import "./window.scss";
 import Menu from "src/ui/menu";
-import PointLike from "src/util/point-like";
+import { PointLike } from "src/util";
 
 export const Event = {
 	DidClose: "didClose"

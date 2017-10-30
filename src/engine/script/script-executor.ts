@@ -1,5 +1,5 @@
 import { ResultFlags } from "src/engine/script/arguments";
-import Point from "src/util/point";
+import { Point } from "src/util";
 import Engine from "../engine";
 import Action from "../objects/action";
 import ConditionChecker, { ConditionStore } from "./condition-checker";

@@ -1,8 +1,9 @@
+import { Point } from "src/util";
+
 class NPC {
 	public _enabled = true;
 	public _face: number;
-	public _x: number;
-	public _y: number;
+	public _position: Point;
 	public _unknown1: any;
 	public _unknown2: any;
 	public _data: any;
@@ -10,8 +11,8 @@ class NPC {
 	constructor({face, x, y, unknown1, unknown2, unknown3}: {face: number, x: number, y: number, unknown1: any, unknown2: any, unknown3: any}) {
 		this._enabled = true;
 		this._face = face;
-		this._x = x;
-		this._y = y;
+
+		this._position = new Point(x, y);
 
 		this._unknown1 = unknown1;
 		this._unknown2 = unknown2;
@@ -35,14 +36,6 @@ class NPC {
 		return this._face;
 	}
 
-	get x() {
-		return this._x;
-	}
-
-	get y() {
-		return this._y;
-	}
-
 	get unknown1() {
 		return this._unknown1;
 	}
@@ -53,6 +46,10 @@ class NPC {
 
 	get unknown3() {
 		return this._data;
+	}
+
+	get position() {
+		return this._position;
 	}
 }
 

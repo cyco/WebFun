@@ -2,12 +2,10 @@ import { identity, Point, PointLike } from "src/util";
 import { Zone } from "../objects";
 import WorldItem from "./world-item";
 
-export const width = 10;
-export const height = 10;
-
 class World {
-	static readonly WIDTH = 10;
-	static readonly HEIGHT = 10;
+	public static readonly WIDTH = 10;
+	public static readonly HEIGHT = 10;
+
 	public zones: Zone[] = null;
 	private _items: WorldItem[];
 
@@ -35,7 +33,7 @@ class World {
 		const index = this._pointToIndex(x, y);
 		const worldItem = this._items[index];
 
-		return  worldItem.zone;
+		return worldItem.zone;
 	}
 
 	setZone(x: number, y: number, zoneID: Zone) {

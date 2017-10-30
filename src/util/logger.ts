@@ -1,5 +1,5 @@
 import Settings from "src/settings";
-import identity from "src/util/identity";
+import { identity } from "src/util";
 import LogLevel from "./log-level";
 
 class Logger {

@@ -1,6 +1,6 @@
 import AbstractInspector from "./abstract-inspector";
 import { PaletteView } from "../components";
-import Size from "src/util/size";
+import { Size } from "src/util";
 
 class PaletteInspector extends AbstractInspector {
 	private _paletteView: PaletteView = <PaletteView>document.createElement(PaletteView.TagName);

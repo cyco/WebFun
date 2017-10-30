@@ -1,6 +1,5 @@
 import { performance } from "src/std";
-import { identity } from "src/util";
-import dispatch from "src/util/dispatch";
+import { dispatch, identity } from "src/util";
 
 const TICKLENGTH = 100;
 

@@ -1,5 +1,5 @@
 import { EventTarget } from "src/util";
-import Events from "./engine-events";
+import Events from "./events";
 import GameState from "./game-state";
 import { World } from "./generation";
 import Hero from "./hero";

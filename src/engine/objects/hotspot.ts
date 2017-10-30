@@ -1,4 +1,4 @@
-import Point from "src/util/point";
+import { Point } from "src/util";
 import Type from "./hotspot-type";
 
 export { Type };

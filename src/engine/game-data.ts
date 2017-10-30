@@ -15,6 +15,7 @@ import {
 } from "./objects";
 
 import { Planet } from "./types";
+import { Size } from "src/util";
 
 declare interface RawGameData {
 	catalog: any[]
@@ -98,10 +99,9 @@ class GameData {
 
 		zone.id = data.index;
 		zone._planet = Planet.fromNumber(data.planet);
-		zone._width = data.width;
-		zone._height = data.height;
+		(<any>zone)._size = new Size(data.width, data.height);
 		zone._type = ZoneType.fromNumber(data.type);
-		zone._tileIDs = data.tileIds;
+		zone.tileIDs = data.tileIds;
 		zone._hotspots = data.hotspots.map((d: any) => this._makeHotspot(d));
 		zone._npcs = data.izax.npcs.map((d: any) => new NPC(d));
 		zone.assignedItems = data.izax.assignedItems.map((id: number) => this._tiles[id]);

@@ -1,6 +1,6 @@
 import { Component } from "src/ui";
 import { ColorPalette } from "src/engine";
-import Size from "src/util/size";
+import { Size } from "src/util";
 import { ImageFactory } from "src/engine/rendering/canvas";
 import "./palette-view.scss";
 

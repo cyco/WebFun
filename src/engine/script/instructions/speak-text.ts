@@ -1,5 +1,5 @@
 import SpeechScene from "src/engine/scenes/speech-scene";
-import Point from "../../../util/point";
+import { Point } from "src/util";
 import Engine from "../../engine";
 
 import { Result, ResultFlags } from "../arguments";

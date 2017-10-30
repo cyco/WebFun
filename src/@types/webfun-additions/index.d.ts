@@ -16,6 +16,7 @@ interface String {
 	dasherize: () => string;
 
 	padStart(length: number, character?: string): string
+
 	padEnd(length: number, character?: string): string
 }
 

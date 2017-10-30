@@ -8,7 +8,6 @@ class Quest {
 		this.item = item;
 		this.distance = distance;
 	}
-
 }
 
 export default Quest;
