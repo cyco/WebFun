@@ -51,7 +51,7 @@ class DagobahGenerator {
 			mode = 4;
 		}
 
-		const startingItem = generator.puzzles2[0].item_1;
+		const startingItem = generator.initialItem;
 
 		//* temporarily copy zone types over from main world for easy comparison against original
 		// FIXME: remove this section when comparisons are not necessary anymore

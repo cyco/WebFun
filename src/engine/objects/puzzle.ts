@@ -6,8 +6,8 @@ export { Type };
 
 class Puzzle {
 	public id: number = -1;
-	public readonly item_1: Tile;
-	public readonly item_2: Tile;
+	public readonly item1: Tile;
+	public readonly item2: Tile;
 	public hasPuzzleNPC: boolean = false;
 	private _strings: string[] = ["", "", "", "", ""];
 	private _name: string = "";
