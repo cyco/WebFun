@@ -90,8 +90,7 @@ class ZoneScene extends Scene {
 		const hero = this.engine.hero;
 
 		const hotspotIsTriggered = (h: Hotspot) => h.enabled && h.x === hero.location.x && h.y === hero.location.y;
-		const self = this;
-		zone.hotspots.filter(hotspotIsTriggered).forEach((h: Hotspot) => self._hotspotTriggered(h));
+		zone.hotspots.filter(hotspotIsTriggered).forEach((h: Hotspot) => this._hotspotTriggered(h));
 	}
 
 	_hotspotTriggered(hotspot: Hotspot) {
