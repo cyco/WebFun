@@ -3,6 +3,7 @@ import { WorldSize } from "../types";
 import GetDistanceToCenter from "./distance-to-center";
 import IslandBuilder from "./island-builder";
 import WorldItemType from "./world-item-type";
+import Map from "./map";
 
 const IslandOrientation = {
 	Left: 1,
@@ -12,17 +13,6 @@ const IslandOrientation = {
 };
 
 type IslandOrientationType = number;
-type Map = Uint16Array;
-
-declare interface Uint16Array {
-	readonly length: number;
-
-	set(x: number, y: number, value: number): void;
-
-	get(x: number, y: number): number;
-
-	[_: number]: number;
-}
 
 let min_x: number;
 let alternate_x: number;
@@ -42,7 +32,6 @@ let placedTravels: number;
 let puzzles: number;
 let orderMap: Map;
 let config;
-
 
 function blockadeTypeFor(xdiff: number, ydiff: number): WorldItemType {
 	if (xdiff === 0 && ydiff === 1) {

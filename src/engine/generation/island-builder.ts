@@ -1,15 +1,15 @@
 import { HorizontalPointRange, Point, rand, VerticalPointRange } from "src/util";
 import PointRange from "../../util/point-range";
 import WorldItemType from "./world-item-type";
+import Map from "./map";
 
-const Island = {
-	East: 3,
-	North: 1,
-	South: 2,
-	West: 0
-};
+const enum Island {
+	East = 3,
+	North = 1,
+	South = 2,
+	West = 0
+}
 
-type Map = Uint16Array;
 type Run = {length: number, start: number};
 
 class IslandBuilder {
@@ -17,7 +17,7 @@ class IslandBuilder {
 	private stepY: Point;
 	private typeMap: Map;
 
-	constructor(world: Uint16Array) {
+	constructor(world: Map) {
 		this.typeMap = world;
 
 		this.stepX = new Point(1, 0);
@@ -62,10 +62,9 @@ class IslandBuilder {
 			currentRun = 0;
 
 		let i = 0;
-		const self = this;
 		range.iterate((point: Point) => {
-			const currentItem = self.at(point);
-			const neighborItem = self.at(Point.add(point, neighbor));
+			const currentItem = this.at(point);
+			const neighborItem = this.at(Point.add(point, neighbor));
 			if (currentItem || neighborItem && neighborItem !== WorldItemType.KeptFree.rawValue) {
 				if (length < currentRun) {
 					length = currentRun;
@@ -88,10 +87,7 @@ class IslandBuilder {
 	}
 
 	private _buildIsland(range: PointRange) {
-		const self = this;
-		range.iterate((point: Point) => {
-			self.at(point, WorldItemType.Island.rawValue);
-		});
+		range.iterate((point: Point) => this.at(point, WorldItemType.Island.rawValue));
 		const end = rand() % 2 ? range.from : range.to;
 		this.at(end, WorldItemType.TravelEnd.rawValue);
 	}

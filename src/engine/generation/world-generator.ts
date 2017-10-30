@@ -11,18 +11,11 @@ import WorldGenerationError from "./world-generation-error";
 import WorldItem from "./world-item";
 import WorldItemType from "./world-item-type";
 import GameData from "src/engine/game-data";
-
-type Map = Uint16Array;
+import Map from "./map";
+import Quest from "./quest";
 
 declare global {
-	interface Quest {
-		item: Tile;
-		distance: number;
-	}
-
 	interface Array<T> {
-		shuffle(): T[];
-
 		withType(type: HotspotType): Hotspot[];
 	}
 }
@@ -690,13 +683,13 @@ class WorldGenerator {
 	}
 
 	AddProvidedItemQuest(item: Tile, maximumDistance: number): Quest {
-		let quest = {item: item, distance: maximumDistance};
+		const quest = new Quest(item, maximumDistance);
 		this.providedItemQuests.unshift(quest);
 		return quest;
 	}
 
 	AddRequiredItemQuest(item: Tile, maximumDistance: number): Quest {
-		let quest = {item: item, distance: maximumDistance};
+		const quest = new Quest(item, maximumDistance);
 		this.requiredItemQuests.push(quest);
 		return quest;
 	}
