@@ -1,4 +1,4 @@
-import Point from "../../util/point";
+import { Point } from "src/util";
 import Engine from "../engine";
 import Tile from "../objects/tile";
 import AbstractRenderer from "../rendering/abstract-renderer";

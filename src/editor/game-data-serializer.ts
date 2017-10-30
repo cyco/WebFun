@@ -67,7 +67,7 @@ class GameDataSerializer {
 			const izx3Size = 8 + 2 + 2 * zone.puzzleNPCs.length;
 			const izx4Size = 2;
 			const calculateActionSize = (action: Action) => action.conditions.map((condition: Condition) => 0xE + condition.text.length).reduce(add, 2) + action.instructions.map((condition: Condition) => 0xE + condition.text.length).reduce(add, 2);
-			const izonSize = 20 + zone.height * zone.width * Zone.LAYERS * 2;
+			const izonSize = 20 + zone.size.height * zone.size.width * Zone.LAYERS * 2;
 			const hotspotSize = zone.hotspots.length * 0xC;
 			const actionSize = zone.actions.map(calculateActionSize).reduce(add, 0) + 8 * zone.actions.length;
 			const size = izonSize + izaxSize + izx2Size + izx3Size + izx4Size + hotspotSize + actionSize + 14;
@@ -85,8 +85,8 @@ class GameDataSerializer {
 			stream.writeInt16(-1);
 			stream.writeUint16(zone.planet.rawValue);
 
-			for (let y = 0; y < zone.height; y++) {
-				for (let x = 0; x < zone.width; x++) {
+			for (let y = 0; y < zone.size.height; y++) {
+				for (let x = 0; x < zone.size.width; x++) {
 					for (let l = 0; l < Zone.LAYERS; l++) {
 						const tile = zone.getTile(x, y, l);
 						if (!tile) stream.writeUint16(-1);
@@ -111,8 +111,8 @@ class GameDataSerializer {
 			stream.writeUint16(zone.npcs.length);
 			zone.npcs.forEach((npc: NPC) => {
 				stream.writeUint16(npc.face);
-				stream.writeUint16(npc.x);
-				stream.writeUint16(npc.y);
+				stream.writeUint16(npc.position.x);
+				stream.writeUint16(npc.position.y);
 				stream.writeUint16(npc.unknown1);
 				stream.writeUint32(npc.unknown2);
 				stream.writeUint8Array(npc.unknown3);

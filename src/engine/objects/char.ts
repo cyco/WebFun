@@ -1,4 +1,4 @@
-import { Direction, Point } from "src/util";
+import { Direction } from "src/util";
 import CharFrame from "./char-frame";
 import Type from "./char-type";
 import Tile from "./tile";

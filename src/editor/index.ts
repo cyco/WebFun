@@ -11,7 +11,7 @@ import {
 	TileInspector,
 	ZoneInspector
 } from "./inspectors";
-import PrefixedStorage from "src/util/prefixed-storage";
+import { PrefixedStorage } from "src/util";
 import GameController from "src/app/game-controller";
 import DataManager from "./data-manager";
 

@@ -13,8 +13,8 @@ describe("NPC", () => {
 
 		const npc = new NPC(intValues);
 
-		expect(npc.x).toBe(4);
-		expect(npc.y).toBe(3);
+		expect(npc.position.x).toBe(4);
+		expect(npc.position.y).toBe(3);
 		expect(npc.enabled).toBeTrue();
 	});
 });

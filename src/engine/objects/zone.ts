@@ -1,4 +1,4 @@
-import { PointLike, Size } from "src/util";
+import { Point, PointLike, Rectangle, Size } from "src/util";
 import { Planet } from "../types";
 import Action from "./action";
 import { default as Hotspot, Type as HotspotType } from "./hotspot";
@@ -12,16 +12,19 @@ export { Type, Layer };
 const TILE_ADEGAN_CRYSTAL = 12;
 
 class Zone {
+	public static readonly LAYERS = 3;
+	public static readonly Type = Type;
+	public static readonly Layer = Layer;
+
 	public visited: boolean = false;
 	public solved: boolean = false;
 	public _npcs: NPC[] = [];
 	public id: number = -1;
 	public _name: string = "";
 	public _planet: Planet = Planet.NONE;
-	public _width: number = 0;
-	public _height: number = 0;
+	private _size: Size;
 	public _type: Type;
-	public _tileIDs: Int16Array = new Int16Array(0);
+	public tileIDs: Int16Array = new Int16Array(0);
 	public _hotspots: Hotspot[] = [];
 	public _tileStore: any = null;
 	public _zoneStore: any = null;
@@ -36,22 +39,6 @@ class Zone {
 	public counter: number = 0;
 	public random: number = 0;
 	public padding: number = 0;
-	public puzzle: number = null;
-	public puzzleNPC: number = null;
-	public puzzleGain: number = null;
-	public puzzleRequired: number = null;
-
-	public static readonly LAYERS = 3;
-	public static readonly Type = Type;
-	public static readonly Layer = Layer;
-
-	get tileIDs() {
-		return this._tileIDs;
-	}
-
-	set tileIDs(tileIDs) {
-		this._tileIDs = tileIDs;
-	}
 
 	get name() {
 		return this._name;
@@ -65,24 +52,12 @@ class Zone {
 		return this._hotspots;
 	}
 
-	get size() {
-		return new Size(this.width, this.height);
-	}
-
 	get actions() {
 		return this._actions;
 	}
 
 	get npcs() {
 		return this._npcs;
-	}
-
-	get width() {
-		return this._width;
-	}
-
-	get height() {
-		return this._height;
 	}
 
 	get doors(): Hotspot[] {
@@ -112,11 +87,11 @@ class Zone {
 	}
 
 	getTileID(x: number, y: number, z: number): number {
-		if (x < 0 || x >= this._width) debugger;
-		if (y < 0 || y >= this._height) debugger;
+		if (x < 0 || x >= this._size.width) debugger;
+		if (y < 0 || y >= this._size.height) debugger;
 		if (z < 0 || z >= 3) debugger;
 
-		const index = Zone.LAYERS * (y * this.width + x) + z;
+		const index = Zone.LAYERS * (y * this._size.width + x) + z;
 		return this.tileIDs[index];
 	}
 
@@ -141,7 +116,7 @@ class Zone {
 			x = x.x;
 		}
 
-		const index = Zone.LAYERS * (y * this.width + x) + z;
+		const index = Zone.LAYERS * (y * this._size.width + x) + z;
 		this.tileIDs[index] = tile === null ? -1 : tile.id;
 	}
 
@@ -166,14 +141,6 @@ class Zone {
 
 		let object = this.getTile(x, y, 1);
 		return !object;
-	}
-
-	containsPoint(x: number|PointLike, y?: number): boolean {
-		if (typeof x === "object") {
-			y = x.y;
-			x = x.x;
-		}
-		return x >= 0 && y >= 0 && x < this.width && y < this.height;
 	}
 
 	leadsTo(needleZone: Zone, allZones: Zone[]): boolean {
@@ -221,8 +188,16 @@ class Zone {
 		});
 	}
 
-	isRoom() {
-		return this.width === 9;
+	public isRoom() {
+		return this._size.width === 9;
+	}
+
+	public get size() {
+		return this._size;
+	}
+
+	public get bounds() {
+		return new Rectangle(new Point(0, 0), this._size);
 	}
 }
 

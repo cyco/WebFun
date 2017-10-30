@@ -1,7 +1,7 @@
 import Camera from "src/engine/camera";
 import { HotspotType, Tile, Zone } from "src/engine/objects";
 import Settings from "src/settings";
-import { Direction, Logger, Point, rgba, Size } from "src/util";
+import { Direction, Logger, Point, rgba } from "src/util";
 import Hotspot from "../objects/hotspot";
 import AbstractRenderer from "../rendering/abstract-renderer";
 import MapScene from "./map-scene";
@@ -21,7 +21,7 @@ class ZoneScene extends Scene {
 
 	set zone(z) {
 		this._zone = z;
-		this._camera.zoneSize = new Size(z.width, z.height);
+		this._camera.zoneSize = z.size;
 	}
 
 	get camera() {
@@ -58,9 +58,10 @@ class ZoneScene extends Scene {
 		const offset = this._camera.offset;
 		const hero = this.engine.hero;
 
+		const size = zone.size;
 		for (let z = 0; z < Zone.LAYERS; z++) {
-			for (let y = 0; y < zone.height; y++) {
-				for (let x = 0; x < zone.width; x++) {
+			for (let y = 0; y < size.height; y++) {
+				for (let x = 0; x < size.width; x++) {
 					const tile = zone.getTile(x, y, z);
 					if (tile) {
 						renderer.renderTile(tile, x + offset.x, y + offset.y, z);
@@ -223,7 +224,7 @@ class ZoneScene extends Scene {
 		const currentZone = engine.currentZone;
 
 		const targetLocation = Point.add(hero.location, direction);
-		if (currentZone.containsPoint(targetLocation)) {
+		if (currentZone.bounds.contains(targetLocation)) {
 			// console.log('target is on same zone!');
 			return false;
 		}
@@ -261,7 +262,7 @@ class ZoneScene extends Scene {
 		if (!targetZone) return false;
 
 		const targetLocationOnCurrentZone = Point.add(hero.location, direction);
-		if (currentZone.containsPoint(targetLocationOnCurrentZone)) return false;
+		if (currentZone.bounds.contains(targetLocationOnCurrentZone)) return false;
 
 		const targetHeroLocation = Point.add(hero.location, direction);
 		targetHeroLocation.subtract(zoneDirection.x * 18, zoneDirection.y * 18);
@@ -390,7 +391,7 @@ class ZoneScene extends Scene {
 		hero.isWalking = true;
 
 		const targetPoint = Point.add(hero.location, p);
-		const targetTile = zone.containsPoint(targetPoint) && zone.getTile(targetPoint.x, targetPoint.y, 1);
+		const targetTile = zone.bounds.contains(targetPoint) && zone.getTile(targetPoint.x, targetPoint.y, 1);
 		if (targetTile) {
 			const result = await this.engine.scriptExecutor.bump(targetPoint);
 			//TODO: handle result

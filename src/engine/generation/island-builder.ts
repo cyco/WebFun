@@ -1,5 +1,4 @@
-import { HorizontalPointRange, Point, rand, VerticalPointRange } from "src/util";
-import PointRange from "../../util/point-range";
+import { HorizontalPointRange, Point, PointRange, rand, VerticalPointRange } from "src/util";
 import WorldItemType from "./world-item-type";
 import Map from "./map";
 

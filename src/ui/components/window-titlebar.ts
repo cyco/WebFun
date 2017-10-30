@@ -1,5 +1,4 @@
-import { identity } from "src/util";
-import Point from "../../util/point";
+import { identity, Point } from "src/util";
 import Component from "../component";
 import Menu from "../menu";
 import Menubar from "./menubar";

@@ -3,8 +3,7 @@ import { World } from "src/engine/generation";
 import { Tile, ZoneType } from "src/engine/objects";
 import { LocatorTile, Planet } from "src/engine/types";
 import Settings from "src/settings";
-import { Size } from "src/util";
-import Point from "../../util/point";
+import { Point, Size } from "src/util";
 import Zone from "../objects/zone";
 import AbstractRenderer from "../rendering/abstract-renderer";
 import Scene from "./scene";
@@ -69,13 +68,11 @@ class MapScene extends Scene {
 	}
 
 	mouseDown(p: Point): void {
-		const viewWidth = 288,
-			viewHeight = 288;
+		const viewWidth = 288;
+		const viewHeight = 288;
 
-		const worldWidth = World.WIDTH,
-			worldHeight = World.HEIGHT;
-		const worldHeightPx = worldHeight * Tile.HEIGHT;
-		const worldWidthPx = worldWidth * Tile.WIDTH;
+		const worldHeightPx = World.HEIGHT * Tile.HEIGHT;
+		const worldWidthPx = World.WIDTH * Tile.WIDTH;
 
 		const offsetX = (viewWidth - worldWidthPx) / (2 * viewWidth);
 		const offsetY = (viewHeight - worldHeightPx) / (2 * viewHeight);

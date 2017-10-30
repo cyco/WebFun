@@ -117,7 +117,7 @@ class Reader {
 			zone.padding = stream.getUint16();
 			zone._planet = Planet.fromNumber(stream.getUint16());
 
-			zone._tileIDs = stream.getInt16Array(zone.size.area * Zone.LAYERS);
+			zone.tileIDs = stream.getInt16Array(zone.size.area * Zone.LAYERS);
 		}
 
 		zone.visited = !!stream.getUint32();
@@ -139,8 +139,8 @@ class Reader {
 
 	_readNPC(npc: NPC, stream: InputStream): void {
 		npc._face = stream.getInt16();
-		npc._x = stream.getInt16();
-		npc._y = stream.getInt16();
+		npc.position.x = stream.getInt16();
+		npc.position.y = stream.getInt16();
 		stream.getInt16(); // field_A
 		npc._enabled = !!stream.getUint32();
 		stream.getInt16(); // field_10
