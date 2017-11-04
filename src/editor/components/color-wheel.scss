@@ -1,0 +1,15 @@
+wf-color-wheel {
+	display: block;
+	border-radius: 50%;
+	position: relative;
+
+	canvas {
+		position: absolute;
+		display: block;
+	}
+
+	canvas:first-child {
+		border-radius: 50%;
+		border: 1px solid rgb(158, 158, 158);
+	}
+}

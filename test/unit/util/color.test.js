@@ -12,10 +12,18 @@ describe("Color", () => {
 			expect(result).toBe("rgb(255,255,255)");
 		});
 	});
+
 	describe("rgba", () => {
 		it("does the same as rgb but contains an alpha component", () => {
 			let result = rgba(255, 255, 255, 1.0);
 			expect(result).toBe("rgba(255,255,255,1)");
 		});
+	});
+
+	describe("rgb2rgba", () => {
+	});
+	describe("hsv2rgb", () => {
+	});
+	describe("rgb2hsv", () => {
 	});
 });
