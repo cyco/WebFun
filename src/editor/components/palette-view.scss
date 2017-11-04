@@ -5,9 +5,24 @@ wf-palette-view {
 	display: block;
 	@extend .inset-border-1px;
 
+	position: relative;
+
 	canvas {
 		@extend .pixelated;
 		width: 192px;
 		height: 192px;
+	}
+
+	.highlighter {
+		display: block;
+		position: absolute;
+		pointer-events: none;
+		border: 1px solid rgba(190, 190, 190, 0.8);
+		box-shadow: rgba(90, 90, 90, 0.8) 1px 1px 1px inset;
+
+		width: #{192px / 16 + 2px};
+		height: #{192px / 16 + 2px};
+
+		transition: all 0.10s linear;
 	}
 }
