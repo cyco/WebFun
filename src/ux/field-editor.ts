@@ -1,5 +1,5 @@
-import {KeyEvent} from "src/std.dom";
-import {EventTarget} from "src/util";
+import { KeyEvent } from "src/std.dom";
+import { EventTarget } from "src/util";
 
 export const Event = {
 	DidConfirm: "DidConfirm",
@@ -41,9 +41,26 @@ class FieldEditor extends EventTarget {
 			const text = e.clipboardData.getData("text/plain");
 			document.execCommand("insertHTML", false, text);
 		};
+		node.style.textOverflow = "clip";
 		node.focus();
 
 		this._node = node;
+	}
+
+
+	private _restoreNode() {
+		this._node.removeAttribute("contenteditable");
+		this._node.onblur = this._originalOnBlur;
+		this._node.onpaste = this._originalOnPaste;
+		this._node.onkeydown = this._originalOnKeyDown;
+		this._node.onkeyup = this._originalOnKeyUp;
+		this._node.style.textOverflow = "";
+
+		this._node.blur();
+	}
+
+	private _restoreNodeContents() {
+		this._node.innerHTML = this._originalContent;
 	}
 
 	private _setFocus() {
@@ -62,20 +79,6 @@ class FieldEditor extends EventTarget {
 		} else if (e.which === KeyEvent.DOM_VK_ESCAPE) {
 			this.cancel(e);
 		}
-	}
-
-	private _restoreNode() {
-		this._node.removeAttribute("contenteditable");
-		this._node.onblur = this._originalOnBlur;
-		this._node.onpaste = this._originalOnPaste;
-		this._node.onkeydown = this._originalOnKeyDown;
-		this._node.onkeyup = this._originalOnKeyUp;
-
-		this._node.blur();
-	}
-
-	private _restoreNodeContents() {
-		this._node.innerHTML = this._originalContent;
 	}
 
 	private confirm(event: Event) {
