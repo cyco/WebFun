@@ -9,8 +9,12 @@ class Size implements SizeLike {
 		this.height = height;
 	}
 
-	get area() {
+	get area(): number {
 		return this.width * this.height;
+	}
+
+	scaleBy(a: number): Size {
+		return new Size(this.width * a, this.height * a);
 	}
 
 	toString() {
