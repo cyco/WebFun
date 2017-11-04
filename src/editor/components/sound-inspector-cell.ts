@@ -1,4 +1,4 @@
-import {Cell, Label} from "src/ui/components";
+import { Cell, Label } from "src/ui/components";
 import "./sound-inspector-cell.scss";
 import Settings from "../../settings";
 
