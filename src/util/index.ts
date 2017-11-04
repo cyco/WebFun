@@ -28,12 +28,15 @@ import SizeLike from "./size-like";
 import Stream from "./stream";
 import VerticalPointRange from "./vertical-point-range";
 import xy2polar from "./xy2polar";
-import { hsv2rgb, rgb, rgb2hsv, rgb2rgba, rgba } from "./color";
-import { rand, randmod, srand } from "./random";
+import Color, {hsv2rgb, rgb, rgb2hsv, rgb2rgba, rgba} from "./color";
+import {rand, randmod, srand} from "./random";
 import polar2xy from "./polar2xy";
+import deg2rad from './deg2rad';
 
 export {
+	Color,
 	add,
+	deg2rad,
 	constantly,
 	Direction,
 	DiscardingOutputStream,

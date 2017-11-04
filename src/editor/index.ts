@@ -39,4 +39,4 @@ const initialize = (gameController: GameController) => {
 	});
 };
 
-export { initialize, Menu };
+export { initialize, Components, Menu };
