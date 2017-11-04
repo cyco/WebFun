@@ -1,27 +1,37 @@
 import {Component} from "src/ui";
 import "./color-wheel.scss";
-import {hsv2rgb, polar2xy, rad2deg, rgba, xy2polar} from "src/util";
-import Size from "src/util/size";
+import {Color, deg2rad, hsv2rgb, polar2xy, rad2deg, rgba, Size, xy2polar} from "src/util";
 
 class ColorWheel extends Component implements EventListenerObject {
 	public static readonly TagName = "wf-color-wheel";
-	public static readonly observedAttributes = ["color"];
-	private _canvas = <HTMLCanvasElement>document.createElement("canvas");
-	private _crosshair = <HTMLCanvasElement>document.createElement("canvas");
+	public static readonly observedAttributes: string[] = ["color"];
+	private _canvas: HTMLCanvasElement;
+	private _crosshair: HTMLCanvasElement;
 	private size = new Size(200, 200);
 	private radius = this.size.width / 2;
 	private crosshairColor = rgba(0, 0, 0, 0.9);
-	private _brightness: number = 1.0;
 	private _image: ImageData;
+	private _hue: number;
+	private _saturation: number;
+	private _brightness: number;
 
-	connectedCallback() {
-		this.appendChild(this._canvas);
-		this.appendChild(this._crosshair);
+	constructor() {
+		super();
+
+		this._canvas = <HTMLCanvasElement>document.createElement("canvas");
+		this._crosshair = <HTMLCanvasElement>document.createElement("canvas");
 
 		this._crosshair.width = 30;
 		this._crosshair.height = 30;
 		this._crosshair.style.width = "15px";
 		this._crosshair.style.height = "15px";
+
+		this.color = new Color(0, 0, 0, 0);
+	}
+
+	connectedCallback() {
+		this.appendChild(this._canvas);
+		this.appendChild(this._crosshair);
 
 		this.drawCrosshair();
 		this.update();
@@ -30,6 +40,7 @@ class ColorWheel extends Component implements EventListenerObject {
 	}
 
 	private update() {
+		if (!this.isConnected) return;
 		const ctx = this._canvas.getContext("2d");
 		const drawnSize = this.size.scaleBy(window.devicePixelRatio);
 
@@ -75,12 +86,20 @@ class ColorWheel extends Component implements EventListenerObject {
 
 	private _moveCrosshair(x: number, y: number): void {
 		let [rho, theta] = xy2polar(x - this.size.width / 2, y - this.size.height / 2);
-		rho = Math.min(rho, this.radius);
+		rho = Math.min(rho / this.radius, 1);
 
-		[x, y] = polar2xy(rho, theta);
+		this._hue = rad2deg(theta);
+		this._saturation = rho;
+
+		this._moveCrosshairToCurrentColor();
+		this.dispatchEvent(new Event('change'));
+	}
+
+	private _moveCrosshairToCurrentColor() {
+		const [x, y] = polar2xy(this._saturation * this.radius, deg2rad(this._hue));
 
 		this._crosshair.style.left = (x + this.size.width / 2 - 7.5) + "px";
-		this._crosshair.style.top = (y + this.size.height / 2 - 7.5) + "px";
+		this._crosshair.style.top = (y + this.size.height / 2 - 7.5) + "px"
 	}
 
 	private createColorWheelImage(ctx: CanvasRenderingContext2D, size: Size) {
@@ -103,7 +122,7 @@ class ColorWheel extends Component implements EventListenerObject {
 				if (rho > radius) continue;
 
 				const [r, g, b] = hsv2rgb(rad2deg(theta), rho / radius, 1);
-				const index = y * width + (width - x - 1);
+				const index = y * width + x;
 
 				data[4 * index] = r;
 				data[4 * index + 1] = g;
@@ -132,14 +151,33 @@ class ColorWheel extends Component implements EventListenerObject {
 		this.removeEventListener("mousedown", this);
 	}
 
-	set brightness(b: number) {
-		this._brightness = b;
+	public attributeChangedCallback(attr: string, old: string, newValue: string) {
+		if (attr === 'color') this.color = newValue;
+	}
 
+	public adjustBrightness(value: number): void {
+		if (value === this._brightness) return;
+
+		this._brightness = value;
 		this.update();
 	}
 
-	get brightness() {
-		return this._brightness;
+	set color(c: string | Color) {
+		const color = new Color(c);
+
+		const [hue, saturation, brightness] = color.hsvComponents;
+		this._hue = hue;
+		this._saturation = saturation;
+
+		if (brightness !== this._brightness) {
+			this._brightness = brightness;
+			this.update();
+		}
+		this._moveCrosshairToCurrentColor();
+	}
+
+	get color(): Color | string {
+		return Color.FromHSV(this._hue, this._saturation, this._brightness);
 	}
 }
 
