@@ -19,7 +19,7 @@ let Settings = {
 	url: {
 		data: "./game-data/yoda.data",
 		palette: "./game-data/yoda.pal",
-		sfx: (file: string) => `./game-data/sfx-yoda/${encodeURIComponent(file)}.wav`
+		sfx: (file: string) => `./game-data/sfx-yoda/${encodeURIComponent(file)}`
 	},
 	// app state
 	debuggerActive: false

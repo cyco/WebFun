@@ -10,6 +10,10 @@
 	animation: fadeOut 0.6s ease-in both;
 }
 
+.spinning-animation {
+	animation: spin 4s linear infinite;
+}
+
 @keyframes fadeIn {
 	0% {
 		opacity: 0;
@@ -56,5 +60,11 @@
 	100% {
 		opacity: 1;
 		transform: translateY(0px);
+	}
+}
+
+@keyframes spin {
+	100% {
+		transform: rotate(360deg);
 	}
 }

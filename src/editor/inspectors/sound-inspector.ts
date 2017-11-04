@@ -20,6 +20,7 @@ class SoundInspector extends AbstractInspector {
 		this.window.content.style.flexDirection = "column";
 
 		this._list = <List<Sound>>document.createElement(List.TagName);
+		this._list.classList.add('sound-inspector-list');
 		this._list.cell = <SoundInspectorCell>document.createElement(SoundInspectorCell.TagName);
 
 		this.window.content.appendChild(this._list);
