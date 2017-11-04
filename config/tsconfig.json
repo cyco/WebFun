@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "allowUnreachableCode": true,
     "module": "commonjs",
     "noImplicitAny": true,
     "removeComments": true,
