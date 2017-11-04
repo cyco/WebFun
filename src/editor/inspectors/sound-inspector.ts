@@ -1,6 +1,6 @@
 import AbstractInspector from "src/editor/inspectors/abstract-inspector";
-import {List} from "src/ui/components";
-import {SoundInspectorCell} from "../components";
+import { List } from "src/ui/components";
+import { SoundInspectorCell } from "../components";
 
 type Sound = {
 	id: number

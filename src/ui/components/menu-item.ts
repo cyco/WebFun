@@ -61,7 +61,7 @@ class MenuItemComponent extends Component {
 		this.appendChild(submenuIndicator);
 	}
 
-	private buildTitle(t: string | (() => string), mnemonicIndex: number) {
+	private buildTitle(t: string|(() => string), mnemonicIndex: number) {
 		const title = this.evaluate(t, "");
 		const titleNode = document.createElement("span");
 
@@ -98,7 +98,7 @@ class MenuItemComponent extends Component {
 		}
 	}
 
-	private evaluate<T>(thing: T | (() => T), def: T): T {
+	private evaluate<T>(thing: T|(() => T), def: T): T {
 		if (thing instanceof Function) {
 			return thing();
 		}

@@ -35,32 +35,32 @@ class GameData {
 		this._rawInput = raw;
 		this._version = this._getCategory("VERS").version;
 		this._sounds = this._getCategory("SNDS").sounds
-		.map((i: {content: string}) => i.content);
+			.map((i: {content: string}) => i.content);
 		this._tiles = this._getCategory("TILE").tiles
-		.map((t: {attributes: number, pixels: Uint8Array}, i: number) => new Tile(i, t.attributes, t.pixels));
+			.map((t: {attributes: number, pixels: Uint8Array}, i: number) => new Tile(i, t.attributes, t.pixels));
 		this._puzzles = this._getCategory("PUZ2").puzzles
-		.filter(({index}: {index: number}) => index !== -1)
-		.map((data: any, index: number) => this._makePuzzle(data, index));
+			.filter(({index}: {index: number}) => index !== -1)
+			.map((data: any, index: number) => this._makePuzzle(data, index));
 		this._zones = [];
 		this._getCategory("ZONE").zones
-		.map((data: any, index: number) => this._makeZone(data)).forEach((z: Zone) => this._zones.push(z));
+			.map((data: any, index: number) => this._makeZone(data)).forEach((z: Zone) => this._zones.push(z));
 		this._characters = this._getCategory("CHAR").characters
-		.filter(({index}: {index: number}) => index !== -1)
-		.map((data: any, index: number) => this._makeCharacter(data, index));
+			.filter(({index}: {index: number}) => index !== -1)
+			.map((data: any, index: number) => this._makeCharacter(data, index));
 
 		this._getCategory("CAUX").auxiliaries
-		.filter(({index}: {index: number}) => index !== -1)
-		.forEach(({damage}: {damage: number}, idx: number) => this._characters[idx].damage = damage);
+			.filter(({index}: {index: number}) => index !== -1)
+			.forEach(({damage}: {damage: number}, idx: number) => this._characters[idx].damage = damage);
 		this._getCategory("CHWP").weapons
-		.filter(({index}: {index: number}) => index !== -1)
-		.forEach(({reference, health}: {reference: number, health: number}, idx: number) => {
-			const char = this._characters[idx];
-			char.reference = reference;
-			char.health = health;
-		});
+			.filter(({index}: {index: number}) => index !== -1)
+			.forEach(({reference, health}: {reference: number, health: number}, idx: number) => {
+				const char = this._characters[idx];
+				char.reference = reference;
+				char.health = health;
+			});
 		this._getCategory("TNAM").names
-		.filter(({tileId}: {tileId: number}) => tileId !== -1)
-		.forEach((obj: any, idx: number) => obj.name && (this._tiles[obj.tileId]._name = obj.name));
+			.filter(({tileId}: {tileId: number}) => tileId !== -1)
+			.forEach((obj: any, idx: number) => obj.name && (this._tiles[obj.tileId]._name = obj.name));
 		this._setup = this._getCategory("STUP").pixels;
 	}
 

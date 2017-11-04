@@ -10,8 +10,8 @@ class ComponentRegistry {
 
 	registerComponents(components: {[_: string]: Component}|Component[]) {
 		Object.values(components)
-		.filter(x => x.TagName)
-		.forEach(c => this.registerComponent(c));
+			.filter(x => x.TagName)
+			.forEach(c => this.registerComponent(c));
 	}
 
 	registerComponent(ComponentDefinition: typeof Component) {

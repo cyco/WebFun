@@ -44,7 +44,7 @@ const rgb2hsv = (r: number, g: number, b: number): [number, number, number] => {
 	const h = (r === min) ? 3 : (b === min ? 1 : 5);
 	return [60 * (h - d / (max - min)), (max - min) / max, max];
 };
-export {rgba, rgb, rgb2rgba, hsv2rgb, rgb2hsv};
+export { rgba, rgb, rgb2rgba, hsv2rgb, rgb2hsv };
 
 const HexRegex = /^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i;
 const RGBRegex = /^rgb\((\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)$/i;
@@ -62,8 +62,8 @@ class Color {
 		return new Color(r, g, b);
 	}
 
-	constructor(red: number | string | Color, green?: number, blue?: number, alpha: number = 1.0) {
-		if (typeof red === 'string') {
+	constructor(red: number|string|Color, green?: number, blue?: number, alpha: number = 1.0) {
+		if (typeof red === "string") {
 			[red, green, blue, alpha] = this._parseColor(<string>red);
 		}
 

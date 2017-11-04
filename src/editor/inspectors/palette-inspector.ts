@@ -1,6 +1,6 @@
 import AbstractInspector from "./abstract-inspector";
-import {ColorPicker, PaletteView} from "../components";
-import {Color, Point, Size} from "src/util";
+import { ColorPicker, PaletteView } from "../components";
+import { Color, Point, Size } from "src/util";
 
 class PaletteInspector extends AbstractInspector {
 	private _paletteView: PaletteView = <PaletteView>document.createElement(PaletteView.TagName);
@@ -22,7 +22,7 @@ class PaletteInspector extends AbstractInspector {
 		this._paletteView.onclick = (e: MouseEvent) => this._onPaletteClick(e);
 		this.window.content.appendChild(this._paletteView);
 
-		this._colorPicker.style.height = '194px';
+		this._colorPicker.style.height = "194px";
 		this._colorPicker.style.minWidth = "182px";
 		this._colorPicker.style.marginLeft = "12px";
 		this.window.content.appendChild(this._colorPicker);
