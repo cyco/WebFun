@@ -1,5 +1,6 @@
 import Component from "../component";
-import FieldEditor from "../../ux/field-editor";
+import { FieldEditor } from "src/ux";
+import "./label.scss";
 
 class Label extends Component implements EventListenerObject {
 	public static readonly TagName = "wf-label";

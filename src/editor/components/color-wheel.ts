@@ -1,6 +1,6 @@
-import {Component} from "src/ui";
+import { Component } from "src/ui";
 import "./color-wheel.scss";
-import {Color, deg2rad, dispatch, hsv2rgb, polar2xy, rad2deg, rgba, Size, xy2polar} from "src/util";
+import { Color, deg2rad, dispatch, hsv2rgb, polar2xy, rad2deg, rgba, Size, xy2polar } from "src/util";
 
 class ColorWheel extends Component implements EventListenerObject {
 	public static readonly TagName = "wf-color-wheel";
@@ -63,7 +63,7 @@ class ColorWheel extends Component implements EventListenerObject {
 		ctx.fillStyle = rgba(0, 0, 0, 1 - this._brightness);
 		ctx.fillRect(0, 0, drawnSize.width, drawnSize.height);
 
-		this._crosshair.style.filter = this._brightness <= 0.5 ? 'invert()' : '';
+		this._crosshair.style.filter = this._brightness <= 0.5 ? "invert()" : "";
 	}
 
 	public handleEvent(e: Event) {
@@ -98,14 +98,14 @@ class ColorWheel extends Component implements EventListenerObject {
 		this._saturation = rho;
 
 		this._moveCrosshairToCurrentColor();
-		this.dispatchEvent(new Event('change'));
+		this.dispatchEvent(new Event("change"));
 	}
 
 	private _moveCrosshairToCurrentColor() {
 		const [x, y] = polar2xy(this._saturation * this.radius, deg2rad(this._hue));
 
 		this._crosshair.style.left = (x + this.size.width / 2 - 7.5) + "px";
-		this._crosshair.style.top = (y + this.size.height / 2 - 7.5) + "px"
+		this._crosshair.style.top = (y + this.size.height / 2 - 7.5) + "px";
 	}
 
 	private createColorWheelImage(ctx: CanvasRenderingContext2D, size: Size) {
@@ -158,7 +158,7 @@ class ColorWheel extends Component implements EventListenerObject {
 	}
 
 	public attributeChangedCallback(attr: string, old: string, newValue: string) {
-		if (attr === 'color') this.color = newValue;
+		if (attr === "color") this.color = newValue;
 	}
 
 	public adjustBrightness(value: number): void {
@@ -168,7 +168,7 @@ class ColorWheel extends Component implements EventListenerObject {
 		this.update();
 	}
 
-	set color(c: string | Color) {
+	set color(c: string|Color) {
 		const color = new Color(c);
 
 		const [hue, saturation, brightness] = color.hsvComponents;
@@ -181,18 +181,18 @@ class ColorWheel extends Component implements EventListenerObject {
 		}
 
 		if (!this._interactionInProgress) {
-			this._crosshair.classList.add('animated');
+			this._crosshair.classList.add("animated");
 			const transitionEnd = () => {
-				this._crosshair.classList.remove('animated');
-				this._crosshair.removeEventListener('transitionend', transitionEnd);
+				this._crosshair.classList.remove("animated");
+				this._crosshair.removeEventListener("transitionend", transitionEnd);
 			};
-			this._crosshair.addEventListener('transitionend', transitionEnd);
+			this._crosshair.addEventListener("transitionend", transitionEnd);
 		}
 
 		this._moveCrosshairToCurrentColor();
 	}
 
-	get color(): Color | string {
+	get color(): Color|string {
 		return Color.FromHSV(this._hue, this._saturation, this._brightness);
 	}
 }

@@ -1,7 +1,7 @@
-import {Component} from "src/ui";
-import {ColorPalette} from "src/engine";
-import {Point, Size} from "src/util";
-import {ImageFactory} from "src/engine/rendering/canvas";
+import { Component } from "src/ui";
+import { ColorPalette } from "src/engine";
+import { Point, Size } from "src/util";
+import { ImageFactory } from "src/engine/rendering/canvas";
 import "./palette-view.scss";
 
 class PaletteView extends Component {
@@ -13,14 +13,14 @@ class PaletteView extends Component {
 	private _canvas: HTMLCanvasElement = document.createElement("canvas");
 	private _ctx: CanvasRenderingContext2D = null;
 	private _size: Size;
-	private highlighter: HTMLElement = document.createElement('div');
+	private highlighter: HTMLElement = document.createElement("div");
 
 	connectedCallback() {
 		this.appendChild(this._canvas);
 		this._ctx = this._canvas.getContext("2d");
 		this.redraw();
 
-		this.highlighter.classList.add('highlighter');
+		this.highlighter.classList.add("highlighter");
 		this.appendChild(this.highlighter);
 	}
 
@@ -34,8 +34,8 @@ class PaletteView extends Component {
 	}
 
 	public moveHighlighterTo(point: Point) {
-		this.highlighter.style.left = `${point.x-1}px`;
-		this.highlighter.style.top = `${point.y-1}px`;
+		this.highlighter.style.left = `${point.x - 1}px`;
+		this.highlighter.style.top = `${point.y - 1}px`;
 	}
 
 	set size(s) {

@@ -2,7 +2,7 @@ import Component from "../component";
 
 import Group from "./radio-group";
 
-export {Group};
+export { Group };
 
 class RadioButton extends Component {
 	private _radio: HTMLInputElement;

@@ -1,8 +1,8 @@
-import {Component} from "src/ui";
+import { Component } from "src/ui";
 import ColorWheel from "./color-wheel";
-import {Color} from 'src/util';
-import {Group} from 'src/ui/components';
-import "./color-picker.scss"
+import { Color } from "src/util";
+import { Group } from "src/ui/components";
+import "./color-picker.scss";
 
 class ColorPicker extends Component {
 	public static readonly TagName = "wf-color-picker";
@@ -42,20 +42,20 @@ class ColorPicker extends Component {
 	}
 
 	private _buildColorPreview() {
-		this._rgbPreview = document.createElement('div');
-		this._rgbPreview.classList.add('preview');
+		this._rgbPreview = document.createElement("div");
+		this._rgbPreview.classList.add("preview");
 	}
 
 	private _buildWheel() {
 		this._wheel = <ColorWheel>document.createElement(ColorWheel.TagName);
-		this._wheel.style.height = '100px';
-		this._wheel.style.width = '100px';
+		this._wheel.style.height = "100px";
+		this._wheel.style.width = "100px";
 		this._wheel.onchange = () => this.color = this._wheel.color;
 	}
 
 	private _buildBrightnessSlider() {
-		this._brightnessInput = document.createElement('input');
-		this._brightnessInput.type = 'range';
+		this._brightnessInput = document.createElement("input");
+		this._brightnessInput.type = "range";
 		this._brightnessInput.min = "0";
 		this._brightnessInput.max = "255";
 		this._brightnessInput.onchange = (e) => this._updateBrightness(+this._brightnessInput.value / 255.0);
@@ -95,12 +95,12 @@ class ColorPicker extends Component {
 		if (attr === "color" && oldValue !== newValue) this.color = newValue;
 	}
 
-	set color(c: string | Color) {
+	set color(c: string|Color) {
 		this._color = new Color(c);
 
 		const [h, s, v] = this._color.hsvComponents;
 		this._brightnessInput.value = `${Math.round(v * 255)}`;
-		this._wheel.setAttribute('color', `${this._color}`);
+		this._wheel.setAttribute("color", `${this._color}`);
 
 		this.updateState();
 	}

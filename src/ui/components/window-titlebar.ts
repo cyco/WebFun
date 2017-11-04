@@ -1,4 +1,4 @@
-import {identity, Point} from "src/util";
+import { identity, Point } from "src/util";
 import Component from "../component";
 import Menu from "../menu";
 import Menubar from "./menubar";

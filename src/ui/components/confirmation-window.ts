@@ -1,4 +1,4 @@
-import {Description} from "../../description";
+import { Description } from "../../description";
 import Button from "./button";
 import "./confirmation-window.scss";
 import Window from "./window";
