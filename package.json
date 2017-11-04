@@ -87,7 +87,7 @@
     "karma-jasmine-matchers": "^3.7.0",
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^2.0.5",
-    "node-sass": "^4.5.3",
+    "node-sass": "^4.6.0",
     "puppeteer": "^0.12.0",
     "sass-loader": "^6.0.6",
     "shelljs": "^0.7.8",
