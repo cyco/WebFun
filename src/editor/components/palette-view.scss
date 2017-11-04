@@ -1,9 +1,13 @@
 @import "pixelated";
+@import "border";
 
 wf-palette-view {
 	display: block;
+	@extend .inset-border-1px;
 
 	canvas {
 		@extend .pixelated;
+		width: 192px;
+		height: 192px;
 	}
 }
