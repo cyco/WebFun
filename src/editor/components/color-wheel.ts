@@ -5,15 +5,17 @@ import {Color, deg2rad, hsv2rgb, polar2xy, rad2deg, rgba, Size, xy2polar} from "
 class ColorWheel extends Component implements EventListenerObject {
 	public static readonly TagName = "wf-color-wheel";
 	public static readonly observedAttributes: string[] = ["color"];
-	private _canvas: HTMLCanvasElement;
-	private _crosshair: HTMLCanvasElement;
+
 	private size = new Size(200, 200);
 	private radius = this.size.width / 2;
-	private crosshairColor = rgba(0, 0, 0, 0.9);
-	private _image: ImageData;
 	private _hue: number;
 	private _saturation: number;
 	private _brightness: number;
+
+	private _canvas: HTMLCanvasElement;
+	private _image: ImageData;
+	private _crosshair: HTMLCanvasElement;
+	private _crosshairColor = rgba(0, 0, 0, 0.9);
 
 	constructor() {
 		super();
@@ -136,7 +138,7 @@ class ColorWheel extends Component implements EventListenerObject {
 	private drawCrosshair() {
 		const ctx = this._crosshair.getContext("2d");
 
-		ctx.strokeStyle = this.crosshairColor;
+		ctx.strokeStyle = this._crosshairColor;
 		ctx.beginPath();
 		ctx.ellipse(15, 15, 15 - 4, 15 - 4, 0, 0, 2 * Math.PI);
 		ctx.moveTo(0, 15);
