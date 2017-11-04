@@ -10,4 +10,8 @@ wf-color-wheel {
 	canvas:first-child {
 		border-radius: 50%;
 	}
+
+	canvas:last-child {
+		transition: filter 500ms ease-in-out;
+	}
 }

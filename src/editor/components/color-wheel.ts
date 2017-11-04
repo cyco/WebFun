@@ -6,7 +6,7 @@ class ColorWheel extends Component implements EventListenerObject {
 	public static readonly TagName = "wf-color-wheel";
 	public static readonly observedAttributes: string[] = ["color"];
 
-	private size = new Size(200, 200);
+	private size = new Size(100, 100);
 	private radius = this.size.width / 2;
 	private _hue: number;
 	private _saturation: number;
@@ -61,6 +61,8 @@ class ColorWheel extends Component implements EventListenerObject {
 		ctx.putImageData(this._image, 0, 0);
 		ctx.fillStyle = rgba(0, 0, 0, 1 - this._brightness);
 		ctx.fillRect(0, 0, drawnSize.width, drawnSize.height);
+
+		this._crosshair.style.filter = this._brightness <= 0.5 ? 'invert()' : '';
 	}
 
 	public handleEvent(e: Event) {
