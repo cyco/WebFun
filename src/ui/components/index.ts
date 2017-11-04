@@ -19,8 +19,10 @@ import SpeechBubble from "./speech-bubble";
 import Selector from "./selector";
 import List from "./list";
 import Cell from "./cell";
+import Label from "./label";
 
 export {
+	Label,
 	ConfirmationWindow,
 	Button,
 	Checkbox,

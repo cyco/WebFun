@@ -1,5 +1,5 @@
-import { IconButton } from "src/ui/components";
-import { dispatch } from "src/util";
+import {IconButton} from "src/ui/components";
+import {dispatch} from "src/util";
 import "./speech-bubble.scss";
 import Component from "../component";
 
