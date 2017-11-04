@@ -1,4 +1,4 @@
-import {Cell} from "src/ui/components";
+import {Cell, Label} from "src/ui/components";
 import "./sound-inspector-cell.scss";
 import Settings from "../../settings";
 
@@ -22,16 +22,27 @@ class SoundInspectorCell extends Cell<Sound> {
 		super();
 
 		this._id = document.createElement("span");
-		this._id.classList.add('id');
+		this._id.classList.add("id");
 
-		this._file = document.createElement("span");
-		this._file.classList.add('file');
+		this._file = document.createElement(Label.TagName);
+		this._file.onchange = () => {
+			this.data.file = this._file.textContent;
+			if (!this._sound) return;
+
+			this._sound.pause();
+			this._sound = null;
+			this._playing = false;
+			this._playButton.classList.remove("fa-spinner-circle");
+			this._playButton.classList.remove("fa-pause-circle");
+			this._playButton.classList.add("fa-play-circle");
+		};
+		this._file.classList.add("file");
 
 		this._play = document.createElement("span");
-		this._play.classList.add('play');
-		this._playButton = document.createElement('i');
-		this._playButton.classList.add('fa');
-		this._playButton.classList.add('fa-play-circle');
+		this._play.classList.add("play");
+		this._playButton = document.createElement("i");
+		this._playButton.classList.add("fa");
+		this._playButton.classList.add("fa-play-circle");
 		this._playButton.onclick = () => this.togglePlaying();
 		this._play.appendChild(this._playButton);
 	}
@@ -51,19 +62,19 @@ class SoundInspectorCell extends Cell<Sound> {
 			const url = Settings.url.sfx(this.data.file);
 			this._sound = new Audio(url);
 			this._sound.autoplay = true;
-			this._playButton.classList.remove('fa-play-circle');
-			this._playButton.classList.remove('fa-pause-circle');
-			this._playButton.classList.add('fa-spinner');
+			this._playButton.classList.remove("fa-play-circle");
+			this._playButton.classList.remove("fa-pause-circle");
+			this._playButton.classList.add("fa-spinner");
 			this._sound.onplay = () => {
 				this._playing = true;
-				this._playButton.classList.remove('fa-play-circle');
-				this._playButton.classList.remove('fa-spinner');
-				this._playButton.classList.add('fa-pause-circle');
+				this._playButton.classList.remove("fa-play-circle");
+				this._playButton.classList.remove("fa-spinner");
+				this._playButton.classList.add("fa-pause-circle");
 			};
 			this._sound.onended = () => {
 				this._playing = false;
-				this._playButton.classList.add('fa-play-circle');
-				this._playButton.classList.remove('fa-pause-circle');
+				this._playButton.classList.add("fa-play-circle");
+				this._playButton.classList.remove("fa-pause-circle");
 			};
 
 			return;
@@ -77,7 +88,7 @@ class SoundInspectorCell extends Cell<Sound> {
 			this._sound.currentTime = 0;
 			this._playing = true;
 			this._sound.play();
-			this._playButton.classList.add('fa-pause-circle');
+			this._playButton.classList.add("fa-pause-circle");
 		}
 	}
 }

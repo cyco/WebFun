@@ -8,21 +8,21 @@ wf-sound-inspector-cell {
 	height: 25px;
 	line-height: 25px;
 
-	span.id {
+	& > * + * {
+		margin-left: 10px;
+	}
+
+	.id {
 		display: inline-block;
 		min-width: 20px;
 		text-align: right;
 	}
 
-	span + span {
-		margin-left: 10px;
-	}
-
-	&:hover span.play i {
+	&:hover .play i {
 		visibility: visible;
 	}
 
-	span.play {
+	.play {
 		float: right;
 
 		i {

@@ -1,6 +1,6 @@
 import AbstractInspector from "src/editor/inspectors/abstract-inspector";
-import { List } from "src/ui/components";
-import { SoundInspectorCell } from "../components";
+import {List} from "src/ui/components";
+import {SoundInspectorCell} from "../components";
 
 type Sound = {
 	id: number
@@ -20,7 +20,7 @@ class SoundInspector extends AbstractInspector {
 		this.window.content.style.flexDirection = "column";
 
 		this._list = <List<Sound>>document.createElement(List.TagName);
-		this._list.classList.add('sound-inspector-list');
+		this._list.classList.add("sound-inspector-list");
 		this._list.cell = <SoundInspectorCell>document.createElement(SoundInspectorCell.TagName);
 
 		this.window.content.appendChild(this._list);
