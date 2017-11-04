@@ -1,6 +1,7 @@
 import {Component} from "src/ui";
 import ColorWheel from "./color-wheel";
 import {Color} from 'src/util';
+import {Group} from 'src/ui/components';
 import "./color-picker.scss"
 
 class ColorPicker extends Component {
@@ -26,8 +27,10 @@ class ColorPicker extends Component {
 	}
 
 	connectedCallback() {
-		this.appendChild(this._wheel);
-		this.appendChild(this._brightnessInput);
+		const container = document.createElement(Group.TagName);
+		container.appendChild(this._wheel);
+		container.appendChild(this._brightnessInput);
+		this.appendChild(container);
 
 		this.appendChild(this._redInput.parentElement);
 		this.appendChild(this._greenInput.parentElement);
@@ -40,10 +43,7 @@ class ColorPicker extends Component {
 
 	private _buildColorPreview() {
 		this._rgbPreview = document.createElement('div');
-		this._rgbPreview.style.display = 'block';
-		this._rgbPreview.style.clear = 'both';
-		this._rgbPreview.style.width = '50px';
-		this._rgbPreview.style.height = '50px';
+		this._rgbPreview.classList.add('preview');
 	}
 
 	private _buildWheel() {

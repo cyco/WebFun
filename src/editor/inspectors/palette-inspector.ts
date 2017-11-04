@@ -11,16 +11,17 @@ class PaletteInspector extends AbstractInspector {
 
 		this.window.title = "Palette";
 		this.window.autosaveName = "palette-inspector";
-		this.window.style.width = "278px";
-		this.window.content.style.height = "148px";
+		this.window.style.width = "408px";
+		this.window.content.style.height = "212px";
 		this.window.content.style.flexDirection = "row";
 
 		this._paletteView.size = new Size(16, 16);
-		this._paletteView.style.width = "128px";
-		this._paletteView.style.height = "128px";
+		this._paletteView.style.width = "194px";
+		this._paletteView.style.height = "194px";
 		this.window.content.appendChild(this._paletteView);
 
-		this._colorPicker.style.width = "142px";
+		this._colorPicker.style.height = '194px';
+		this._colorPicker.style.minWidth = "182px";
 		this._colorPicker.style.marginLeft = "12px";
 		this.window.content.appendChild(this._colorPicker);
 	}
