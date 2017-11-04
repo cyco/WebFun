@@ -1,17 +1,49 @@
+@import "border";
+@import "animation";
+
 wf-sound-inspector-cell {
 	display: block;
+	@extend .inset-border-1px;
+	@extend .inset-border-inverted;
+	height: 25px;
+	line-height: 25px;
 
-	span:first-child {
+	span.id {
 		display: inline-block;
 		min-width: 20px;
 		text-align: right;
 	}
 
-	span:last-child {
-		text-align: left;
-	}
-
 	span + span {
 		margin-left: 10px;
 	}
+
+	&:hover span.play i {
+		visibility: visible;
+	}
+
+	span.play {
+		float: right;
+
+		i {
+			visibility: hidden;
+			padding: 3px;
+			color: rgb(96, 96, 96);
+			cursor: pointer;
+
+			&:hover {
+				color: rgb(38, 38, 38);
+			}
+		}
+
+		i.fa-spinner {
+			@extend .spinning-animation;
+			visibility: visible;
+			cursor: default;
+		}
+	}
+}
+
+.sound-inspector-list {
+	@extend .inset-border-1px;
 }
