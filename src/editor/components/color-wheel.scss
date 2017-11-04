@@ -1,6 +1,5 @@
 wf-color-wheel {
-	display: block;
-	border-radius: 50%;
+	display: inline-block;
 	position: relative;
 
 	canvas {
@@ -10,6 +9,5 @@ wf-color-wheel {
 
 	canvas:first-child {
 		border-radius: 50%;
-		border: 1px solid rgb(158, 158, 158);
 	}
 }
