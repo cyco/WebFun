@@ -13,5 +13,9 @@ wf-color-wheel {
 
 	canvas:last-child {
 		transition: filter 500ms ease-in-out;
+
+		&.animated {
+			transition: filter 500ms ease-in-out, left .1s linear, top .1s linear;
+		}
 	}
 }

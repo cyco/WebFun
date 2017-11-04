@@ -1,6 +1,6 @@
 import {Component} from "src/ui";
 import "./color-wheel.scss";
-import {Color, deg2rad, hsv2rgb, polar2xy, rad2deg, rgba, Size, xy2polar} from "src/util";
+import {Color, deg2rad, dispatch, hsv2rgb, polar2xy, rad2deg, rgba, Size, xy2polar} from "src/util";
 
 class ColorWheel extends Component implements EventListenerObject {
 	public static readonly TagName = "wf-color-wheel";
@@ -16,6 +16,7 @@ class ColorWheel extends Component implements EventListenerObject {
 	private _image: ImageData;
 	private _crosshair: HTMLCanvasElement;
 	private _crosshairColor = rgba(0, 0, 0, 0.9);
+	private _interactionInProgress = false;
 
 	constructor() {
 		super();
@@ -68,20 +69,21 @@ class ColorWheel extends Component implements EventListenerObject {
 	public handleEvent(e: Event) {
 		if (!(e instanceof MouseEvent)) return;
 
-		const box = this.getBoundingClientRect();
-		const x = e.clientX - box.left;
-		const y = e.clientY - box.top;
-
 		if (e.type === "mousedown") {
+			this._interactionInProgress = true;
 			document.addEventListener("mousemove", this);
 			document.addEventListener("mouseup", this);
 		}
 
 		if (e.type === "mouseup") {
+			dispatch(() => this._interactionInProgress = false);
 			document.removeEventListener("mousemove", this);
 			document.removeEventListener("mouseup", this);
 		}
 
+		const box = this.getBoundingClientRect();
+		const x = e.clientX - box.left;
+		const y = e.clientY - box.top;
 		this._moveCrosshair(x, y);
 
 		e.preventDefault();
@@ -177,6 +179,16 @@ class ColorWheel extends Component implements EventListenerObject {
 			this._brightness = brightness;
 			this.update();
 		}
+
+		if (!this._interactionInProgress) {
+			this._crosshair.classList.add('animated');
+			const transitionEnd = () => {
+				this._crosshair.classList.remove('animated');
+				this._crosshair.removeEventListener('transitionend', transitionEnd);
+			};
+			this._crosshair.addEventListener('transitionend', transitionEnd);
+		}
+
 		this._moveCrosshairToCurrentColor();
 	}
 

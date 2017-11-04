@@ -1,5 +1,5 @@
 import PointLike from "./point-like";
-import SizeLinke from "./size-like";
+import SizeLike from "./size-like";
 
 class Point implements PointLike {
 	public x: number;
@@ -68,6 +68,10 @@ class Point implements PointLike {
 		return this;
 	}
 
+	dividedBy(size: SizeLike): Point {
+		return new Point(this.x/size.width, this.y/size.height);
+	}
+
 	byScalingBy(a: number): Point {
 		return (new Point(this)).scaleBy(a);
 	}
@@ -115,7 +119,7 @@ class Point implements PointLike {
 		return this.x === 0 || this.y === 0;
 	}
 
-	isInBounds(size: SizeLinke): boolean {
+	isInBounds(size: SizeLike): boolean {
 		return this.x >= 0 && this.y >= 0 && this.x < size.width && this.y < size.height;
 	}
 
