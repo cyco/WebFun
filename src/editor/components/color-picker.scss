@@ -1,11 +1,10 @@
-$wheel-width: 200px;
+$wheel-width: 100px;
 $slider-width: 20px;
-$slider-margin: 10px;
+$slider-margin: 8px;
 
 wf-color-picker {
 	display: flex;
-	width: $wheel-width + $slider-width + $slider-margin + 2 * 20px;
-	padding: 20px;
+	width: $wheel-width + $slider-width + $slider-margin + 2;
 	position: relative;
 
 	flex-direction: row;
@@ -22,6 +21,7 @@ wf-color-picker {
 
 	input[type=range] {
 		width: $slider-width;
+		max-height: $wheel-width;
 		margin: 0 0 0 $slider-margin;
 		padding: 0;
 		writing-mode: bt-lr; /* IE */
@@ -29,11 +29,11 @@ wf-color-picker {
 	}
 
 	label {
-		margin-top: 10px;
+		margin-top: 5px;
 		flex-grow: 0;
 	}
 	label+label {
-		margin-left: 10px;
+		margin-left: 2px;
 	}
 
 	label:last-child {

@@ -20,8 +20,7 @@ class PaletteInspector extends AbstractInspector {
 		this._paletteView.style.height = "128px";
 		this.window.content.appendChild(this._paletteView);
 
-		this._colorPicker.style.width = "128px";
-		this._colorPicker.style.height = "128px";
+		this._colorPicker.style.width = "142px";
 		this._colorPicker.style.marginLeft = "12px";
 		this.window.content.appendChild(this._colorPicker);
 	}
