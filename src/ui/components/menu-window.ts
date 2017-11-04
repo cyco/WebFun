@@ -1,4 +1,4 @@
-import { Point } from "src/util";
+import {Point} from "src/util";
 import MenuStack from "../menu-stack";
 import MenuView from "./menu-view";
 import "./menu-window.scss";
@@ -6,7 +6,7 @@ import "./menu-window.scss";
 class MenuWindow extends MenuView {
 	public static TagName = "wf-menu-window";
 
-	show(location: Point|Element, stack = MenuStack.sharedStack) {
+	show(location: Point | Element, stack = MenuStack.sharedStack) {
 		let minWidth: number = null;
 		let origin: Point;
 

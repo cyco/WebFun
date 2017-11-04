@@ -1,6 +1,6 @@
 import Component from "../component";
 import Menu from "../menu";
-import MenuItem, { Separator } from "../menu-item";
+import MenuItem, {Separator} from "../menu-item";
 import MenuItemComponent from "./menu-item";
 import MenuItemSeparator from "./menu-item-separator";
 import "./menu-view.scss";

@@ -1,4 +1,4 @@
-import { EventTarget } from "src/util";
+import {EventTarget} from "src/util";
 import RadioButton from "./radio-button";
 
 class RadioGroup extends EventTarget {
