@@ -22,6 +22,14 @@ wf-puzzle-inspector-cell {
 		flex-shrink: 0;
 	}
 
+	.tile.double {
+		width: 2 * $cell-height;
+		padding-left: $cell-height / 2;
+		padding-right: $cell-height / 2;
+		background-clip: content-box;
+		background-origin: content-box;
+	}
+
 	.text {
 		flex-grow: 1;
 

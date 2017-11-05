@@ -55,7 +55,9 @@ class TileSheet {
 	private _buildPositionRules(count: number): void {
 		const sheet = this._styleSheet;
 		const baseName = this.className;
-		const baseStyle = `display: block; width: ${this._tileSize.width}px; height: ${this._tileSize.height}px`;
+		const baseStyle = `display: block; 
+							 width: ${this._tileSize.width}px; 
+							height: ${this._tileSize.height}px;`;
 
 		for (let i = 0; i < count; i++) {
 			const className = `${baseName}-tile-${i}`;

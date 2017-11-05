@@ -2,6 +2,7 @@ import { Cell } from "src/ui/components";
 import { Puzzle, PuzzleType } from "src/engine/objects";
 import "./puzzle-inspector-cell.scss";
 import TileSheet from "../tile-sheet";
+import Tile from "src/engine/objects/tile";
 
 class PuzzleInspectorCell extends Cell<Puzzle> {
 	public static readonly TagName: string = "wf-puzzle-inspector-cell";
@@ -41,19 +42,32 @@ class PuzzleInspectorCell extends Cell<Puzzle> {
 		this._id.textContent = `${this.data.id}`;
 		this._type.textContent = this.formatType(this.data.type);
 
-		this._tile1.className = "tile";
-		if (this.data.item1) {
-			this._tile1.className += " " + this.tileSheet.cssClassesForTile(this.data.item1.id).join(" ");
-		}
-
-		this._tile2.className = "tile";
-		if (this.data.item2) {
-			this._tile2.className += " " + this.tileSheet.cssClassesForTile(this.data.item2.id).join(" ");
-		}
-
+		this._prepareTile(this.data.item1, this._tile1);
 		this.appendChild(this._tile1);
-		this.appendChild(this._tile2);
+
+		this._prepareTile(this.data.item2, this._tile2);
+		if (this.data.item2) {
+			this.appendChild(this._tile2);
+		} else this._tile1.classList.add("double");
+
 		this.appendChild(this._text);
+	}
+
+	private _prepareTile(tile: Tile, node: HTMLElement) {
+		node.className = "tile";
+		node.title = "";
+		if (!tile) return;
+
+		node.title = tile.name;
+		node.className += " " + this.tileSheet.cssClassesForTile(this.data.item1.id).join(" ");
+	}
+
+	disconnectedCallback() {
+		this._id.remove();
+		this._type.remove();
+		this._tile1.remove();
+		this._tile2.remove();
+		this._text.remove();
 	}
 
 	private formatType(type: PuzzleType): string {
