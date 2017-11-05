@@ -130,6 +130,10 @@ class TileSheet {
 		return "wf-tile-sheet-" + this._sheetIndex;
 	}
 
+	public cssClassesForTile(id: number) {
+		return [this.className, `${this.className}-tile-${id}`];
+	}
+
 	get sheetImage(): HTMLCanvasElement {
 		return this._image;
 	}
