@@ -86,7 +86,7 @@ class GameData {
 
 		(<any>puzzle)._strings = data.strings.map((s: {content: string}) => s.content);
 		(<any>puzzle).item1 = this._tiles[data.item1] ? this._tiles[data.item1] : null;
-		(<any>puzzle).item2 = this._tiles[data.item2] ? this._tiles[data.item1] : null;
+		(<any>puzzle).item2 = this._tiles[data.item2] ? this._tiles[data.item2] : null;
 
 		if (index === 0xBD || index === 0xC5)
 			(<any>puzzle)._type = PuzzleType.Disabled;
