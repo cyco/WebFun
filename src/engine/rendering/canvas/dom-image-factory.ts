@@ -5,6 +5,11 @@ import Image from "../image";
 class DOMImageFactory extends AbstractImageFactory {
 	private _palette: ColorPalette = null;
 
+	constructor(palette: ColorPalette = null) {
+		super();
+		this._palette = palette;
+	}
+
 	get palette() {
 		return this._palette;
 	}
