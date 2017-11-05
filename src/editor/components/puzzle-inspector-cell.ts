@@ -11,9 +11,12 @@ class PuzzleInspectorCell extends Cell<Puzzle> {
 	public tileSheet: TileSheet;
 	private _tile1: HTMLElement;
 	private _tile2: HTMLElement;
-	private _text: HTMLElement;
+	private _title: HTMLElement;
 	private _id: HTMLElement;
 	private _type: HTMLElement;
+	private _button: HTMLElement;
+
+	private _text: HTMLElement;
 
 	constructor() {
 		super();
@@ -22,14 +25,23 @@ class PuzzleInspectorCell extends Cell<Puzzle> {
 		this._tile1.classList.add("tile");
 		this._tile2 = document.createElement("div");
 		this._tile2.classList.add("tile");
-		this._text = document.createElement("span");
-		this._text.classList.add("text");
+		this._title = document.createElement("span");
+		this._title.classList.add("title");
 		this._id = document.createElement("span");
 		this._id.classList.add("id");
-		this._text.appendChild(this._id);
+		this._title.appendChild(this._id);
 		this._type = document.createElement("span");
 		this._type.classList.add("type");
-		this._text.appendChild(this._type);
+		this._title.appendChild(this._type);
+
+		this._button = document.createElement("i");
+		this._button.classList.add("fa");
+		this._button.classList.add("fa-chevron-right");
+		this._button.onclick = () => this.toggleExpansion();
+		this._title.appendChild(this._button);
+
+		this._text = document.createElement("span");
+		this._text.classList.add("text");
 	}
 
 	public cloneNode(): Node {
@@ -50,7 +62,20 @@ class PuzzleInspectorCell extends Cell<Puzzle> {
 			this.appendChild(this._tile2);
 		} else this._tile1.classList.add("double");
 
+		this.appendChild(this._title);
+
+		this.data.strings.forEach(s => {
+			if (!s.length) return;
+
+			const container = document.createElement("div");
+			container.textContent = s;
+			this._text.appendChild(container);
+		});
+
+		this.appendChild(document.createElement("br"));
 		this.appendChild(this._text);
+
+		this.style.setProperty("--text-height", this._text.getBoundingClientRect().height + "px");
 	}
 
 	private _prepareTile(tile: Tile, node: HTMLElement) {
@@ -60,14 +85,6 @@ class PuzzleInspectorCell extends Cell<Puzzle> {
 
 		node.title = tile.name;
 		node.className += " " + this.tileSheet.cssClassesForTile(this.data.item1.id).join(" ");
-	}
-
-	disconnectedCallback() {
-		this._id.remove();
-		this._type.remove();
-		this._tile1.remove();
-		this._tile2.remove();
-		this._text.remove();
 	}
 
 	private formatType(type: PuzzleType): string {
@@ -85,6 +102,22 @@ class PuzzleInspectorCell extends Cell<Puzzle> {
 		}
 
 		return "";
+	}
+
+	private toggleExpansion() {
+		if (this.classList.contains("expanded")) {
+			this.classList.remove("expanded");
+		} else {
+			this.classList.add("expanded");
+		}
+	}
+
+	disconnectedCallback() {
+		this._id.remove();
+		this._type.remove();
+		this._tile1.remove();
+		this._tile2.remove();
+		this._title.remove();
 	}
 }
 
