@@ -1,9 +1,41 @@
-wf-puzzle-inspector-cell {
-	display: block;
+@import "border";
 
-	span:first-child {
+$cell-height: 34px;
+wf-puzzle-inspector-cell {
+	height: $cell-height;
+	line-height: $cell-height;
+	display: flex;
+	flex-direction: row;
+
+	& > * {
+		@extend .inset-border-1px;
+		@extend .inset-border-inverted;
+
 		display: inline-block;
-		min-width: 20px;
-		text-align: right;
+		height: $cell-height;
 	}
+
+	.tile {
+		width: $cell-height;
+		flex-grow: 0;
+		flex-shrink: 0;
+	}
+
+	.text {
+		flex-grow: 1;
+
+		& > * + * {
+			margin-left: 10px;
+		}
+
+		.id {
+			display: inline-block;
+			width: 27px;
+			text-align: right;
+		}
+	}
+}
+
+.puzzle-inspector-list {
+	@extend .inset-border-1px;
 }
