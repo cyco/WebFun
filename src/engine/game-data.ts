@@ -88,6 +88,10 @@ class GameData {
 		(<any>puzzle).item1 = this._tiles[data.item1] ? this._tiles[data.item1] : null;
 		(<any>puzzle).item2 = this._tiles[data.item2] ? this._tiles[data.item2] : null;
 
+		if (puzzle.type !== PuzzleType.End && puzzle.type !== PuzzleType.Disabled) {
+			(<any>puzzle).item2 = null;
+		}
+
 		if (index === 0xBD || index === 0xC5)
 			(<any>puzzle)._type = PuzzleType.Disabled;
 
