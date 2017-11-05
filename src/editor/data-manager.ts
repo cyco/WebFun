@@ -13,6 +13,7 @@ class DataManager {
 		this._currentData = originalData.copy();
 		this._palette = palette;
 		this._tileSheet = new TileSheet(this._originalData.tiles.length);
+		this._originalData.tiles.forEach(t => this._tileSheet.add(t._imageData));
 		this._tileSheet.draw(new ImageFactory(palette));
 	}
 
@@ -30,6 +31,10 @@ class DataManager {
 
 	get palette() {
 		return this._palette;
+	}
+
+	get tileSheet() {
+		return this._tileSheet;
 	}
 }
 
