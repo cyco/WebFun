@@ -4,7 +4,6 @@ import { Action, Char, Condition, Hotspot, Instruction, NPC, Puzzle, PuzzleType,
 
 class GameDataSerializer {
 	public serialize(data: GameData, stream: OutputStream): void {
-
 		this.writeVersion(data, stream);
 		this.writeSetupImage(data, stream);
 		this.writeSounds(data, stream);

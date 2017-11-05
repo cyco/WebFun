@@ -1,14 +1,19 @@
 import { ColorPalette, GameData } from "src/engine";
+import TileSheet from "./tile-sheet";
+import { ImageFactory } from "src/engine/rendering/canvas";
 
 class DataManager {
 	private _originalData: GameData;
 	private _currentData: GameData;
 	private _palette: ColorPalette;
+	private _tileSheet: TileSheet;
 
 	constructor(originalData: GameData, palette: ColorPalette) {
 		this._originalData = originalData.copy();
 		this._currentData = originalData.copy();
 		this._palette = palette;
+		this._tileSheet = new TileSheet(this._originalData.tiles.length);
+		this._tileSheet.draw(new ImageFactory(palette));
 	}
 
 	write(data: GameData, target: ArrayBuffer): number {
