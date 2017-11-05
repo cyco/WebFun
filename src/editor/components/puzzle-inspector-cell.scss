@@ -17,6 +17,7 @@ wf-puzzle-inspector-cell {
 
 	.tile {
 		width: $cell-height;
+		height: $cell-height;
 		flex-grow: 0;
 		flex-shrink: 0;
 	}

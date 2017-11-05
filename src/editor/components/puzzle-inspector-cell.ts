@@ -1,11 +1,13 @@
 import { Cell } from "src/ui/components";
 import { Puzzle, PuzzleType } from "src/engine/objects";
 import "./puzzle-inspector-cell.scss";
+import TileSheet from "../tile-sheet";
 
 class PuzzleInspectorCell extends Cell<Puzzle> {
 	public static readonly TagName: string = "wf-puzzle-inspector-cell";
 	public static readonly observedAttributes: string[] = [];
 
+	public tileSheet: TileSheet;
 	private _tile1: HTMLElement;
 	private _tile2: HTMLElement;
 	private _text: HTMLElement;
@@ -15,9 +17,9 @@ class PuzzleInspectorCell extends Cell<Puzzle> {
 	constructor() {
 		super();
 
-		this._tile1 = document.createElement("span");
+		this._tile1 = document.createElement("div");
 		this._tile1.classList.add("tile");
-		this._tile2 = document.createElement("span");
+		this._tile2 = document.createElement("div");
 		this._tile2.classList.add("tile");
 		this._text = document.createElement("span");
 		this._text.classList.add("text");
@@ -29,9 +31,25 @@ class PuzzleInspectorCell extends Cell<Puzzle> {
 		this._text.appendChild(this._type);
 	}
 
+	public cloneNode(): Node {
+		const node = <PuzzleInspectorCell>super.cloneNode();
+		node.tileSheet = this.tileSheet;
+		return node;
+	}
+
 	connectedCallback() {
 		this._id.textContent = `${this.data.id}`;
 		this._type.textContent = this.formatType(this.data.type);
+
+		this._tile1.className = "tile";
+		if (this.data.item1) {
+			this._tile1.className += " " + this.tileSheet.cssClassesForTile(this.data.item1.id).join(" ");
+		}
+
+		this._tile2.className = "tile";
+		if (this.data.item2) {
+			this._tile2.className += " " + this.tileSheet.cssClassesForTile(this.data.item2.id).join(" ");
+		}
 
 		this.appendChild(this._tile1);
 		this.appendChild(this._tile2);
