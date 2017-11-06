@@ -25,6 +25,7 @@ class List<T> extends Component {
 	public searchDelegate: SearchDelegate<T, RegExp>;
 	private _filterTimeout: number;
 	private _lastSearchValue: string = "";
+	private _closeSearchbarShortcut: Shortcut;
 
 	constructor() {
 		super();
@@ -42,7 +43,8 @@ class List<T> extends Component {
 		const shortcutManager = ShortcutManager.sharedManager;
 		this._shortcut = shortcutManager.registerShortcut(() => this.showBar(), {
 			keyCode: 70,
-			node: this
+			node: this,
+			metaKey: true
 		});
 	}
 
@@ -51,6 +53,13 @@ class List<T> extends Component {
 		this._bar.onsearch = () => this.setNeedsRefiltering();
 		this._bar.onclose = () => this.hideBar();
 		this._bar.focus();
+
+		const shortcutManager = ShortcutManager.sharedManager;
+		this._closeSearchbarShortcut = shortcutManager.registerShortcut(() => this.hideBar(), {
+			keyCode: 27,
+			node: this._bar
+		});
+
 		this.refilter();
 	}
 
@@ -58,6 +67,10 @@ class List<T> extends Component {
 		this._bar.removeAttribute("visible");
 		this._bar.onsearch = null;
 		this._bar.onclose = null;
+
+		const shortcutManager = ShortcutManager.sharedManager;
+		shortcutManager.unregisterShortcut(this._closeSearchbarShortcut);
+
 		this.refilter();
 	}
 
@@ -92,6 +105,7 @@ class List<T> extends Component {
 		const delegate = this.searchDelegate;
 		const searchValue = this._bar.searchString;
 		if (!searchValue || !delegate || !this._bar.isVisible) {
+			this._lastSearchValue = "";
 			this._cells.forEach(c => c.style.display = "");
 			return;
 		}
