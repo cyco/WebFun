@@ -16,12 +16,13 @@ class SoundInspector extends AbstractInspector {
 		this.window.title = "Sounds";
 		this.window.autosaveName = "sound-inspector";
 		this.window.style.width = "200px";
-		this.window.content.style.maxHeight = "450px";
+		this.window.content.style.height = "450px";
 		this.window.content.style.flexDirection = "column";
 
 		this._list = <List<Sound>>document.createElement(List.TagName);
 		this._list.classList.add("sound-inspector-list");
 		this._list.cell = <SoundInspectorCell>document.createElement(SoundInspectorCell.TagName);
+		this._list.searchDelegate = this;
 
 		this.window.content.appendChild(this._list);
 	}
@@ -31,6 +32,14 @@ class SoundInspector extends AbstractInspector {
 			id: index,
 			file: name
 		}));
+	}
+
+	prepareListSearch(searchValue: string, list: List<Sound>): RegExp {
+		return new RegExp(searchValue.split(" ").filter(p => p.length).map(p => `(${p})`).join("|"), "i");
+	}
+
+	includeListItem(searchValue: RegExp, item: Sound, cell: SoundInspectorCell, list: List<Sound>): boolean {
+		return searchValue.test(item.id + item.file);
 	}
 }
 

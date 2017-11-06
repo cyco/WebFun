@@ -2,6 +2,7 @@ wf-list {
 	position: relative;
 	display: flex;
 	flex-direction: column;
+	min-height: 100%;
 
 	> div {
 		overflow-y: auto;
@@ -13,9 +14,11 @@ wf-list {
 		top: 0px;
 		width: 100%;
 		opacity: 0;
+		pointer-events: none;
 
 		&[visible] {
 			opacity: 1;
+			pointer-events: initial;
 		}
 
 		transition: opacity 0.25s ease-out;

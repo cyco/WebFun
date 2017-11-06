@@ -11,6 +11,7 @@ import * as Storage from "./storage";
 import * as String from "./string";
 import * as Uint16Array from "./uint16-array";
 import * as Uint8Array from "./uint8-array";
+import * as RegExp from "./regexp";
 
 export {
 	Array,
@@ -24,5 +25,6 @@ export {
 	String,
 	Uint16Array,
 	Uint8Array,
-	HTMLCollection
+	HTMLCollection,
+	RegExp
 };
