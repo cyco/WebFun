@@ -20,7 +20,11 @@ interface String {
 	padEnd(length: number, character?: string): string
 }
 
-declare interface ObjectConstructor {
+interface RegExpConstructor {
+	escape: (_: string) => string;
+}
+
+interface ObjectConstructor {
 	values: (thing: any) => any[];
 }
 

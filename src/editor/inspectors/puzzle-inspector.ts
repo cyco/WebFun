@@ -12,7 +12,7 @@ class PuzzleInspector extends AbstractInspector {
 		this.window.title = "Puzzles";
 		this.window.autosaveName = "puzzle-inspector";
 		this.window.style.width = "300px";
-		this.window.content.style.maxHeight = "396px";
+		this.window.content.style.height = "396px";
 		this.window.content.style.flexDirection = "column";
 
 		this._list = <List<Puzzle>>document.createElement(List.TagName);
