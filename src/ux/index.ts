@@ -3,6 +3,7 @@ import ModalConfirm, { Options as ConfirmationOptions, Result as ConfirmationRes
 import ResetCursor from "./reset-cursor";
 import WindowModalSession from "./window-modal-session";
 import FieldEditor from "./field-editor";
+import ShortcutManager, { Shortcut } from "./shortcut-manager";
 
 export {
 	FieldEditor,
@@ -11,5 +12,7 @@ export {
 	WindowModalSession,
 	ModalConfirm,
 	ConfirmationResult,
-	ConfirmationOptions
+	ConfirmationOptions,
+	ShortcutManager,
+	Shortcut
 };

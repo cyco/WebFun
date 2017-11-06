@@ -20,8 +20,10 @@ import Selector from "./selector";
 import List from "./list";
 import Cell from "./cell";
 import Label from "./label";
+import SearchBar from "./search-bar";
 
 export {
+	SearchBar,
 	Label,
 	ConfirmationWindow,
 	Button,

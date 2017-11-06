@@ -1,0 +1,31 @@
+@import "border";
+
+wf-search-bar {
+	position: fixed;
+	display: flex;
+	align-items: center;
+
+	background-color: rgb(225, 222, 208);
+	border-bottom: 1px solid $border-dark;
+	padding: 2px;
+	height: 29px;
+
+	input[type=search] {
+		flex-grow: 1;
+		flex-shrink: 1;
+		width: 1%;
+	}
+
+	button {
+		flex-grow: 0;
+		flex-shrink: 0;
+		border: 1px solid #505050;
+		border-radius: 4px;
+		background-color: white;
+		padding-top: 1px;
+		padding-right: 5px;
+		padding-bottom: 2px;
+		margin-top: 3px;
+		padding-left: 5px;
+	}
+}

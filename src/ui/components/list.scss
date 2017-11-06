@@ -1,3 +1,32 @@
 wf-list {
-	overflow-y: auto;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+
+	> div {
+		overflow-y: auto;
+		max-height: 100%;
+	}
+
+	wf-search-bar {
+		position: absolute;
+		top: 0px;
+		width: 100%;
+		opacity: 0;
+
+		&[visible] {
+			opacity: 1;
+		}
+
+		transition: opacity 0.25s ease-out;
+	}
+
+	wf-search-bar[visible] + * {
+		margin-top: 29px;
+	}
+
+	wf-search-bar + * {
+		margin-top: 0px;
+		transition: margin-top 0.25s ease-out;
+	}
 }
