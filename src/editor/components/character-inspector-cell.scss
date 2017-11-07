@@ -1,0 +1,45 @@
+@import "border";
+@import "animation";
+
+wf-character-inspector-cell {
+	display: flex;
+
+	height: 34px;
+	line-height: 34px;
+
+	.tile {
+		@extend .inset-border-1px;
+		@extend .inset-border-inverted;
+		width: 34px;
+		height: 34px;
+	}
+
+	.text {
+		@extend .inset-border-1px;
+		@extend .inset-border-inverted;
+
+		flex-grow: 1;
+
+		& > * + * {
+			margin-left: 10px;
+		}
+
+		.id {
+			display: inline-block;
+			min-width: 20px;
+			text-align: right;
+		}
+
+		.name {
+			max-width: calc(100% - 34px - 20px - 10px - 10px);
+			max-height: 25px;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			overflow: hidden;
+		}
+	}
+}
+
+.character-inspector-list {
+	@extend .inset-border-1px;
+}
