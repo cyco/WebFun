@@ -22,7 +22,7 @@ class List<T> extends Component {
 	private _items: T[] = [];
 	private _cells: Cell<T>[] = [];
 	private _shortcut: Shortcut;
-	public searchDelegate: SearchDelegate<T, RegExp>;
+	public searchDelegate: SearchDelegate<T, any>;
 	private _filterTimeout: number;
 	private _lastSearchValue: string = "";
 	private _closeSearchbarShortcut: Shortcut;
