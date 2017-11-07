@@ -32,6 +32,7 @@ import Color, { hsv2rgb, rgb, rgb2hsv, rgb2rgba, rgba } from "./color";
 import { rand, randmod, srand } from "./random";
 import polar2xy from "./polar2xy";
 import deg2rad from "./deg2rad";
+import DiscardingStorage from "./discarding-storage";
 
 export {
 	Color,
@@ -74,5 +75,6 @@ export {
 	srand,
 	Stream,
 	VerticalPointRange,
-	xy2polar
+	xy2polar,
+	DiscardingStorage
 };

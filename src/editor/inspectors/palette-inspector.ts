@@ -7,8 +7,8 @@ class PaletteInspector extends AbstractInspector {
 	private _colorPicker: ColorPicker = <ColorPicker>document.createElement(ColorPicker.TagName);
 	private _paletteEntrySize = new Size(192 / 16, 192 / 16);
 
-	constructor() {
-		super();
+	constructor(state: Storage) {
+		super(state);
 
 		this.window.title = "Palette";
 		this.window.autosaveName = "palette-inspector";

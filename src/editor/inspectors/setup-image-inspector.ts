@@ -5,8 +5,8 @@ import { Size } from "src/util";
 class PaletteInspector extends AbstractInspector {
 	private _paletteView: PaletteView = <PaletteView>document.createElement(PaletteView.TagName);
 
-	constructor() {
-		super();
+	constructor(state: Storage) {
+		super(state);
 
 		this.window.title = "Setup Image";
 		this.window.autosaveName = "setup-image-inspector";

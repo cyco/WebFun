@@ -18,18 +18,18 @@ import DataManager from "./data-manager";
 const initialize = (gameController: GameController) => {
 	ComponentRegistry.sharedRegistry.registerComponents(<any>Components);
 
+	const state = new PrefixedStorage(localStorage, "editor");
 	const inspectors = {
-		"tile": new TileInspector(),
-		"zone": new ZoneInspector(),
-		"sound": new SoundInspector(),
-		"puzzle": new PuzzleInspector(),
-		"character": new CharacterInspector(),
-		"setup-image": new SetupImageInspector(),
-		"palette": new PaletteInspector()
+		"tile": new TileInspector(state.prefixedWith("tile")),
+		"zone": new ZoneInspector(state.prefixedWith("zone")),
+		"sound": new SoundInspector(state.prefixedWith("sound")),
+		"puzzle": new PuzzleInspector(state.prefixedWith("puzzle")),
+		"character": new CharacterInspector(state.prefixedWith("character")),
+		"setup-image": new SetupImageInspector(state.prefixedWith("setup-image")),
+		"palette": new PaletteInspector(state.prefixedWith("palette"))
 	};
 
 	Editor.sharedEditor = new Editor(inspectors);
-	Editor.sharedEditor.storage = new PrefixedStorage(localStorage, "editor");
 
 	gameController.addEventListener(GameController.Event.DidLoadData, (e: CustomEvent) => {
 		const gameData = e.detail.data;

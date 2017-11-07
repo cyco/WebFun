@@ -12,6 +12,10 @@ interface Array<T> {
 	shuffle(): T[];
 }
 
+interface Storage {
+	prefixedWith(s: string): Storage;
+}
+
 interface String {
 	dasherize: () => string;
 
