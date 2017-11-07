@@ -1,5 +1,6 @@
 @import "border";
 @import "animation";
+@import "colors";
 
 wf-character-inspector-cell {
 	display: flex;
@@ -22,7 +23,7 @@ wf-character-inspector-cell {
 
 		flex-grow: 1;
 
-		& > * + * {
+		& > *:first-child, & > * + * {
 			margin-left: 10px;
 		}
 
@@ -33,11 +34,20 @@ wf-character-inspector-cell {
 		}
 
 		.name {
-			max-width: calc(100% - 34px - 20px - 10px);
+			max-width: calc(100% - 34px - 10px);
 			max-height: 25px;
 			white-space: nowrap;
 			text-overflow: ellipsis;
 			overflow: hidden;
+		}
+	}
+
+	&[selected] {
+		color: $menu-item-selection-text;
+		background-color: $menu-item-selection-background;
+
+		.tile {
+			filter: brightness(1.1);
 		}
 	}
 }

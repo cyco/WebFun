@@ -22,7 +22,6 @@ class CharacterInspectorCell extends Cell<Char> {
 		this._text = document.createElement("div");
 		this._text.classList.add("text");
 
-
 		this._id = document.createElement("span");
 		this._id.classList.add("id");
 
@@ -36,10 +35,10 @@ class CharacterInspectorCell extends Cell<Char> {
 		this._text.appendChild(this._name);
 	}
 
-
 	public cloneNode(): Node {
 		const node = <CharacterInspectorCell>super.cloneNode();
 		node.tileSheet = this.tileSheet;
+		node.onclick = this.onclick;
 		return node;
 	}
 

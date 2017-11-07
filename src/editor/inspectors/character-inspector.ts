@@ -17,11 +17,18 @@ class CharacterInspector extends AbstractInspector {
 
 		this._list = <List<Char>>document.createElement(List.TagName);
 		this._list.cell = <CharacterInspectorCell>document.createElement(CharacterInspectorCell.TagName);
+		this._list.cell.onclick = (e: MouseEvent) => this._onCellClicked(<CharacterInspectorCell>e.currentTarget);
 		this._list.classList.add("character-inspector-list");
 		this._list.searchDelegate = this;
 		this._list.state = state.prefixedWith("list");
 
 		this.window.content.appendChild(this._list);
+	}
+
+	private _onCellClicked(cell: CharacterInspectorCell) {
+		const selectedCell = this._list.querySelector("[selected]");
+		if (selectedCell) selectedCell.removeAttribute("selected");
+		cell.setAttribute("selected", "");
 	}
 
 	public build() {
