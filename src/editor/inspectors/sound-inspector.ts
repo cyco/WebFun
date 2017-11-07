@@ -34,12 +34,13 @@ class SoundInspector extends AbstractInspector {
 		}));
 	}
 
-	prepareListSearch(searchValue: string, list: List<Sound>): RegExp {
-		return new RegExp(searchValue.split(" ").filter(p => p.length).map(p => `(${p})`).join("|"), "i");
+	prepareListSearch(searchValue: string, list: List<Sound>): RegExp[] {
+		return searchValue.split(" ").map(s => new RegExp(s, "i"));
 	}
 
-	includeListItem(searchValue: RegExp, item: Sound, cell: SoundInspectorCell, list: List<Sound>): boolean {
-		return searchValue.test(item.id + item.file);
+	includeListItem(searchValue: RegExp[], item: Sound, cell: SoundInspectorCell, list: List<Sound>): boolean {
+		const string = item.id + " " + item.file;
+		return searchValue.every(r => r.test(string));
 	}
 }
 

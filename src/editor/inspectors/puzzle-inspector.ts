@@ -28,12 +28,13 @@ class PuzzleInspector extends AbstractInspector {
 		this._list.items = this.data.currentData.puzzles;
 	}
 
-	prepareListSearch(searchValue: string, list: List<Puzzle>): RegExp {
-		return new RegExp(searchValue.split(" ").filter(p => p.length).map(p => `(${p})`).join("|"), "i");
+	prepareListSearch(searchValue: string, list: List<Puzzle>): RegExp[] {
+		return searchValue.split(" ").map(s => new RegExp(s, "i"));
 	}
 
-	includeListItem(searchValue: RegExp, puzzle: Puzzle, cell: PuzzleInspectorCell, list: List<Puzzle>): boolean {
-		return searchValue.test(puzzle.id + " " + puzzle.strings.join(" ") + puzzle.item1.name + (puzzle.item2 ? puzzle.item2.name : ""));
+	includeListItem(searchValue: RegExp[], puzzle: Puzzle, cell: PuzzleInspectorCell, list: List<Puzzle>): boolean {
+		const string = puzzle.id + " " + puzzle.strings.join(" ") + puzzle.item1.name + (puzzle.item2 ? puzzle.item2.name : "");
+		return searchValue.every(r => r.test(string));
 	}
 }
 
