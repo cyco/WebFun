@@ -1,5 +1,5 @@
 import AbstractInspector from "./inspectors/abstract-inspector";
-import { DiscardingOutputStream, download, OutputStream, PrefixedStorage } from "src/util";
+import { DiscardingOutputStream, download, OutputStream } from "src/util";
 import DataManager from "./data-manager";
 import GameDataSerializer from "./game-data-serializer";
 
@@ -13,7 +13,6 @@ class Editor {
 		return this._sharedEditor;
 	}
 
-	private _stateStorage: Storage;
 	private _inspectors: {[_: string]: AbstractInspector};
 	private _data: DataManager;
 
@@ -23,14 +22,6 @@ class Editor {
 
 	public show(key: string) {
 		this._inspectors[key].show();
-	}
-
-	public set storage(storage: Storage) {
-		this._stateStorage = storage;
-
-		this._inspectors.each<AbstractInspector>((key: string, inspector: AbstractInspector): void => {
-			inspector.state = new PrefixedStorage(storage, key);
-		});
 	}
 
 	public save() {

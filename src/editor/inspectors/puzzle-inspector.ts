@@ -6,8 +6,8 @@ import { List } from "src/ui/components";
 class PuzzleInspector extends AbstractInspector {
 	private _list: List<Puzzle>;
 
-	constructor() {
-		super();
+	constructor(state: Storage) {
+		super(state);
 
 		this.window.title = "Puzzles";
 		this.window.autosaveName = "puzzle-inspector";
@@ -19,6 +19,7 @@ class PuzzleInspector extends AbstractInspector {
 		this._list.cell = <PuzzleInspectorCell>document.createElement(PuzzleInspectorCell.TagName);
 		this._list.classList.add("puzzle-inspector-list");
 		this._list.searchDelegate = this;
+		this._list.state = state.prefixedWith("list");
 		this.window.content.appendChild(this._list);
 	}
 
@@ -29,6 +30,7 @@ class PuzzleInspector extends AbstractInspector {
 	}
 
 	prepareListSearch(searchValue: string, list: List<Puzzle>): RegExp[] {
+		this.stateDidChange();
 		return searchValue.split(" ").map(s => new RegExp(s, "i"));
 	}
 

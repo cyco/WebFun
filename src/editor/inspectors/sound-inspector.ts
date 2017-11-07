@@ -10,8 +10,8 @@ type Sound = {
 class SoundInspector extends AbstractInspector {
 	private _list: List<Sound>;
 
-	constructor() {
-		super();
+	constructor(state: Storage) {
+		super(state);
 
 		this.window.title = "Sounds";
 		this.window.autosaveName = "sound-inspector";
@@ -23,6 +23,7 @@ class SoundInspector extends AbstractInspector {
 		this._list.classList.add("sound-inspector-list");
 		this._list.cell = <SoundInspectorCell>document.createElement(SoundInspectorCell.TagName);
 		this._list.searchDelegate = this;
+		this._list.state = state.prefixedWith("list");
 
 		this.window.content.appendChild(this._list);
 	}
@@ -35,6 +36,7 @@ class SoundInspector extends AbstractInspector {
 	}
 
 	prepareListSearch(searchValue: string, list: List<Sound>): RegExp[] {
+		this.stateDidChange();
 		return searchValue.split(" ").map(s => new RegExp(s, "i"));
 	}
 

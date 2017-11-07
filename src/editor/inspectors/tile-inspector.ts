@@ -5,8 +5,8 @@ class TileInspector extends AbstractInspector {
 	private _list: HTMLElement;
 	private _tileSheet: TileSheet;
 
-	constructor() {
-		super();
+	constructor(state: Storage) {
+		super(state);
 
 		this.window.title = "Tiles";
 		this.window.autosaveName = "tile-inspector";

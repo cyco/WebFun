@@ -7,8 +7,8 @@ class ZoneInspector extends AbstractInspector {
 	private _list: List<Zone>;
 	private _editor: ZoneEditor;
 
-	constructor() {
-		super();
+	constructor(state: Storage) {
+		super(state);
 
 		this.window.title = "Zones";
 		this.window.autosaveName = "zone-inspector";

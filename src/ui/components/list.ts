@@ -3,6 +3,7 @@ import Cell from "./cell";
 import "./list.scss";
 import SearchBar from "./search-bar";
 import { Shortcut, ShortcutManager } from "src/ux";
+import { DiscardingStorage } from "src/util";
 
 export declare interface SearchDelegate<T, PreparedSearchValue> {
 	prepareListSearch(searchValue: string, list: List<T>): PreparedSearchValue
@@ -11,6 +12,8 @@ export declare interface SearchDelegate<T, PreparedSearchValue> {
 }
 
 const FILTER_DELAY = 100;
+const SearchBarVisibleStateKey = "searchbar-visible";
+const SearchValueStateKey = "search";
 
 class List<T> extends Component {
 	public static readonly TagName = "wf-list";
@@ -26,6 +29,7 @@ class List<T> extends Component {
 	private _filterTimeout: number;
 	private _lastSearchValue: string = "";
 	private _closeSearchbarShortcut: Shortcut;
+	private _state: Storage = new DiscardingStorage();
 
 	constructor() {
 		super();
@@ -40,30 +44,38 @@ class List<T> extends Component {
 		this.appendChild(this._content);
 
 		if (!this.searchDelegate) return;
+
 		const shortcutManager = ShortcutManager.sharedManager;
-		this._shortcut = shortcutManager.registerShortcut(() => this.showBar(), {
+		this._shortcut = shortcutManager.registerShortcut(() => this.showBar(true), {
 			keyCode: 70,
 			node: this,
 			metaKey: true
 		});
+
+		if (this.state.load(SearchBarVisibleStateKey)) {
+			this.showBar(false);
+		}
 	}
 
-	private showBar() {
+	private showBar(updateState: boolean) {
 		this._bar.setAttribute("visible", "");
 		this._bar.onsearch = () => this.setNeedsRefiltering();
-		this._bar.onclose = () => this.hideBar();
+		this._bar.onclose = () => this.hideBar(true);
 		this._bar.focus();
 
 		const shortcutManager = ShortcutManager.sharedManager;
-		this._closeSearchbarShortcut = shortcutManager.registerShortcut(() => this.hideBar(), {
+		this._closeSearchbarShortcut = shortcutManager.registerShortcut(() => this.hideBar(true), {
 			keyCode: 27,
 			node: this._bar
 		});
 
+		if (!updateState) return;
+
+		this.state.store(SearchBarVisibleStateKey, true);
 		this.refilter();
 	}
 
-	private hideBar() {
+	private hideBar(updateState: boolean) {
 		this._bar.removeAttribute("visible");
 		this._bar.onsearch = null;
 		this._bar.onclose = null;
@@ -71,11 +83,15 @@ class List<T> extends Component {
 		const shortcutManager = ShortcutManager.sharedManager;
 		shortcutManager.unregisterShortcut(this._closeSearchbarShortcut);
 
+		if (!updateState) return;
+
+		this.state.store(SearchBarVisibleStateKey, false);
 		this.refilter();
 	}
 
 	disconnectedCallback() {
 		this._bar.remove();
+		this.hideBar(false);
 
 		this._cells.forEach(c => c.remove());
 		this._cells = [];
@@ -104,6 +120,9 @@ class List<T> extends Component {
 
 		const delegate = this.searchDelegate;
 		const searchValue = this._bar.searchString;
+
+		this.state.store(SearchValueStateKey, searchValue);
+
 		if (!searchValue || !delegate || !this._bar.isVisible) {
 			this._lastSearchValue = "";
 			this._cells.forEach(c => c.style.display = "");
@@ -128,13 +147,28 @@ class List<T> extends Component {
 		return cell;
 	}
 
-	public set items(items: T[]) {
+	set items(items: T[]) {
 		this._items = items;
 		this.rebuild();
 	}
 
-	public get items() {
+	get items() {
 		return this._items;
+	}
+
+	set state(s: Storage) {
+		this._state = s;
+		this._bar.searchString = s.load(SearchValueStateKey) || "";
+
+		if (s.load(SearchBarVisibleStateKey)) {
+			this._bar.setAttribute("visible", "");
+		} else {
+			this._bar.removeAttribute("visible");
+		}
+	}
+
+	get state() {
+		return this._state;
 	}
 }
 

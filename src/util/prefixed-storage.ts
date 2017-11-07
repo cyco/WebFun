@@ -43,6 +43,10 @@ class PrefixedStorage implements Storage {
 	get prefix() {
 		return this._prefix;
 	}
+
+	prefixedWith(prefix: string): PrefixedStorage {
+		return new PrefixedStorage(this._storage, this._buildKey(prefix));
+	}
 }
 
 export default PrefixedStorage;
