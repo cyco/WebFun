@@ -6,6 +6,7 @@ import Tile from "./tile";
 export { Type };
 
 class Char {
+	private _id: number;
 	private _frames: CharFrame[] = [];
 	private _name: string = null;
 	private _type: number = null;
@@ -16,6 +17,10 @@ class Char {
 	public reference: number;
 	public health: number;
 	public damage: number;
+
+	get id() {
+		return this._id;
+	}
 
 	get frames() {
 		return this._frames;
