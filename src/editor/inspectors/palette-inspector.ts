@@ -20,11 +20,14 @@ class PaletteInspector extends AbstractInspector {
 		this._paletteView.style.width = "194px";
 		this._paletteView.style.height = "194px";
 		this._paletteView.onclick = (e: MouseEvent) => this._onPaletteClick(e);
+		const highlight = new Point(state.load("tile-x") | 0, state.load("tile-y", 0));
+		this._paletteView.moveHighlighterTo(highlight);
 		this.window.content.appendChild(this._paletteView);
 
 		this._colorPicker.style.height = "194px";
 		this._colorPicker.style.minWidth = "182px";
 		this._colorPicker.style.marginLeft = "12px";
+		this._colorPicker.color = state.load("color") || "rgb(0, 255, 0)";
 		this.window.content.appendChild(this._colorPicker);
 	}
 
@@ -39,10 +42,13 @@ class PaletteInspector extends AbstractInspector {
 	public editColor(index: number): void {
 		const point = new Point(index % 16, Math.floor(index / 16)).scaleBy(this._paletteEntrySize.width);
 		this._paletteView.moveHighlighterTo(point);
+		this.state.store("tile-x", point.x);
+		this.state.store("tile-y", point.y);
 
 		const palette = this._paletteView.palette;
 		const [b, g, r] = palette.slice(4 * index, 4 * index + 3);
 		this._colorPicker.color = new Color(r, g, b);
+		this.state.store("color", this._colorPicker.color);
 	}
 
 	public build() {
