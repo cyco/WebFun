@@ -1,7 +1,7 @@
 import { Cell, Label } from "src/ui/components";
-import "./character-inspector-cell.scss";
 import { Char } from "src/engine/objects";
 import TileSheet from "../tile-sheet";
+import "./character-inspector-cell.scss";
 
 class CharacterInspectorCell extends Cell<Char> {
 	public static readonly TagName: string = "wf-character-inspector-cell";
@@ -43,7 +43,7 @@ class CharacterInspectorCell extends Cell<Char> {
 	}
 
 	connectedCallback() {
-		const tile = this.data.frames[0].down;
+		const tile = this.data.frames[0].extensionRight;
 		this._tile.className = "tile " + (tile ? this.tileSheet.cssClassesForTile(tile.id).join(" ") : "");
 		this._id.textContent = `${this.data.id}`;
 		this._name.textContent = `${this.data.name}`;

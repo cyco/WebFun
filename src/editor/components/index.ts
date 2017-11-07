@@ -7,8 +7,12 @@ import ZoneEditor from "./zone-editor";
 import ZoneLayer from "./zone-layer";
 import ColorWheel from "./color-wheel";
 import CharacterInspectorCell from "./character-inspector-cell";
+import CharacterFramePreview from "./character-frame-preview";
+import CharacterDetails from "./character-details";
 
 export {
+	CharacterFramePreview,
+	CharacterDetails,
 	CharacterInspectorCell,
 	ColorWheel,
 	ZoneEditor,

@@ -1,0 +1,18 @@
+@import "variables";
+
+wf-character-frame-preview {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+
+	width: $tile-size * 4;
+	height: $tile-size * 2;
+
+	> div {
+		flex-grow: 0;
+		flex-shrink: 0;
+
+		height: $tile-size;
+		width: $tile-size;
+	}
+}
