@@ -7,7 +7,7 @@ export { Type };
 
 class Char {
 	private _id: number;
-	private _frames: CharFrame[] = [];
+	private _frames: [CharFrame, CharFrame, CharFrame];
 	private _name: string = null;
 	private _type: number = null;
 	public _movementType: number;
@@ -22,7 +22,7 @@ class Char {
 		return this._id;
 	}
 
-	get frames() {
+	get frames(): [CharFrame, CharFrame, CharFrame] {
 		return this._frames;
 	}
 

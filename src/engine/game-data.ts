@@ -172,9 +172,11 @@ class GameData {
 		const char = new Char();
 		(<any>char)._id = idx;
 		(<any>char)._name = data.name;
-		(<any>char)._frames.push(new CharFrame(data.frame1.tiles.map((i: number) => this.tiles[i])));
-		(<any>char)._frames.push(new CharFrame(data.frame2.tiles.map((i: number) => this.tiles[i])));
-		(<any>char)._frames.push(new CharFrame(data.frame3.tiles.map((i: number) => this.tiles[i])));
+		(<any>char)._frames = [
+			new CharFrame(data.frame1.tiles.map((i: number) => this.tiles[i])),
+			new CharFrame(data.frame2.tiles.map((i: number) => this.tiles[i])),
+			new CharFrame(data.frame3.tiles.map((i: number) => this.tiles[i]))
+		];
 		(<any>char)._type = data.type;
 		char._movementType = data.movementType;
 		char._garbage1 = data.probablyGarbage1;
