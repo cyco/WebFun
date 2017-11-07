@@ -20,6 +20,7 @@ class PuzzleInspector extends AbstractInspector {
 		this._list.classList.add("puzzle-inspector-list");
 		this._list.searchDelegate = this;
 		this._list.state = state.prefixedWith("list");
+
 		this.window.content.appendChild(this._list);
 	}
 

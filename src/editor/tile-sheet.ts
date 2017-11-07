@@ -109,6 +109,7 @@ class TileSheet {
 
 		const context = this._image.getContext("2d");
 		context.putImageData(imageData, 0, 0);
+		this._rule.style.setProperty("image-rendering", "pixelated");
 		this._rule.style.backgroundImage = `url(${this._image.toDataURL()})`;
 	}
 
