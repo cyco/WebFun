@@ -6,8 +6,10 @@ import ColorPicker from "./color-picker";
 import ZoneEditor from "./zone-editor";
 import ZoneLayer from "./zone-layer";
 import ColorWheel from "./color-wheel";
+import CharacterInspectorCell from "./character-inspector-cell";
 
 export {
+	CharacterInspectorCell,
 	ColorWheel,
 	ZoneEditor,
 	ZoneLayer,
