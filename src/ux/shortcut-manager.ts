@@ -51,10 +51,12 @@ class ShortcutManager implements EventListenerObject {
 		if (!e.metaKey && this._nonMetaShortcutCount === 0) return;
 
 		const currentKeyCode = e.keyCode;
+		const currentMetaKey = e.metaKey;
 
 		let [_, callback] = this._shortcuts
 			.filter(s => s)
 			.filter(([{keyCode}]) => keyCode === undefined || keyCode === currentKeyCode)
+			.filter(([{metaKey}]) => metaKey === undefined || metaKey === currentMetaKey)
 			.filter(([{node}]) => !node || this._node && node.contains(this._node))
 			.first() || [null, null];
 
