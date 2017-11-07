@@ -1,8 +1,7 @@
-import { Cell } from "src/ui/components";
+import { Cell, Label } from "src/ui/components";
 import "./character-inspector-cell.scss";
 import { Char } from "src/engine/objects";
 import TileSheet from "../tile-sheet";
-import Direction from "src/util/direction";
 
 class CharacterInspectorCell extends Cell<Char> {
 	public static readonly TagName: string = "wf-character-inspector-cell";
@@ -23,11 +22,15 @@ class CharacterInspectorCell extends Cell<Char> {
 		this._text = document.createElement("div");
 		this._text.classList.add("text");
 
+
 		this._id = document.createElement("span");
 		this._id.classList.add("id");
 
-		this._name = document.createElement("span");
+		this._name = document.createElement(Label.TagName);
 		this._name.classList.add("name");
+		this._name.onchange = () => {
+			(<any>this.data)._name = this._name.textContent;
+		};
 
 		this._text.appendChild(this._id);
 		this._text.appendChild(this._name);

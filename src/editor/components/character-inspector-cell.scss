@@ -12,6 +12,8 @@ wf-character-inspector-cell {
 		@extend .inset-border-inverted;
 		width: 34px;
 		height: 34px;
+		flex-shrink: 0;
+		flex-grow: 0;
 	}
 
 	.text {
@@ -31,7 +33,7 @@ wf-character-inspector-cell {
 		}
 
 		.name {
-			max-width: calc(100% - 34px - 20px - 10px - 10px);
+			max-width: calc(100% - 34px - 20px - 10px);
 			max-height: 25px;
 			white-space: nowrap;
 			text-overflow: ellipsis;
