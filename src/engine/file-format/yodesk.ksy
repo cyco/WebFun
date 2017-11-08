@@ -367,7 +367,7 @@ types:
       - id: index
         type: s2
       - id: damage
-        type: u2
+        type: s2
         if: index != -1
   character_weapons:
     seq:
