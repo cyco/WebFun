@@ -32,4 +32,23 @@ wf-character-details {
 		width: $tile-size;
 		height: $tile-size;
 	}
+
+	label {
+		position: relative;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	label > .tile {
+		position: absolute;
+		top: 5px;
+		left: 15px;
+	}
+
+	input[type=text], select.type, select.movement-type, select.weapon, select.sound {
+		width: 125px;
+		align-self: flex-end;
+	}
 }

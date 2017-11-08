@@ -12,8 +12,8 @@ class CharacterInspector extends AbstractInspector {
 
 		this.window.title = "Characters";
 		this.window.autosaveName = "character-inspector";
-		this.window.style.width = "460px";
-		this.window.content.style.height = "450px";
+		this.window.style.width = "430px";
+		this.window.content.style.height = "280px";
 
 		this._list = <List<Char>>document.createElement(List.TagName);
 		this._list.cell = <CharacterInspectorCell>document.createElement(CharacterInspectorCell.TagName);

@@ -31,12 +31,18 @@ class CharacterDetails extends Component {
 		this._stepButton = document.createElement("button");
 		this._stepButton.textContent = "Step";
 		this._typeSelector = document.createElement("select");
+		this._typeSelector.classList.add("type");
 		this._movementTypeSelector = document.createElement("select");
+		this._movementTypeSelector.classList.add("movement-type");
 		this._damageInput = document.createElement("input");
+		this._damageInput.type = "text";
 		this._healthInput = document.createElement("input");
+		this._healthInput.type = "text";
 		this._weaponPreview = document.createElement("div");
 		this._sound = document.createElement("select");
+		this._sound.classList.add("sound");
 		this._weapon = document.createElement("select");
+		this._weapon.classList.add("sound");
 
 		this._populateTypeSelector();
 		this._populateMovementTypeSelector();
@@ -73,13 +79,28 @@ class CharacterDetails extends Component {
 	connectedCallback() {
 		this.appendChild(this._framePreview);
 		this.appendChild(this._stepButton);
-		this.appendChild(this._typeSelector);
-		this.appendChild(this._movementTypeSelector);
-		this.appendChild(this._damageInput);
-		this.appendChild(this._healthInput);
-		this.appendChild(this._weaponPreview);
-		this.appendChild(this._sound);
-		this.appendChild(this._weapon);
+		this.appendLabel("Type:", this._typeSelector);
+		this.appendLabel("Move:", this._movementTypeSelector);
+		this.appendLabel("Damage:", this._damageInput);
+		this.appendLabel("Health:", this._healthInput);
+		const separator = document.createElement("div");
+		separator.style.height = "10px";
+		this.appendChild(separator);
+		this.appendLabel("Reference:");
+		this.appendLabel(this._weaponPreview, this._weapon);
+		this.appendLabel(" ", this._sound);
+	}
+
+	private appendLabel(text: string|HTMLElement, node?: HTMLElement) {
+		const label = document.createElement("label");
+
+		const firstNode = document.createElement("span");
+		label.appendChild(firstNode);
+		if (typeof text === "string") {
+			firstNode.textContent = text;
+		} else label.appendChild(text);
+		if (node) label.appendChild(node);
+		this.appendChild(label);
 	}
 
 	disconnectedCallback() {
