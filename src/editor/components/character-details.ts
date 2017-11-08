@@ -30,6 +30,7 @@ class CharacterDetails extends Component {
 		this._framePreview = <CharacterFramePreview>document.createElement(CharacterFramePreview.TagName);
 		this._stepButton = document.createElement("button");
 		this._stepButton.textContent = "Step";
+		this._stepButton.onclick = () => this._framePreview.frame = this._character.frames[++this._currentPreviewFrame % 3];
 		this._typeSelector = document.createElement("select");
 		this._typeSelector.classList.add("type");
 		this._movementTypeSelector = document.createElement("select");
@@ -156,6 +157,7 @@ class CharacterDetails extends Component {
 
 	set character(c: Char) {
 		this._character = c;
+		this._currentPreviewFrame = 0;
 		this._rebuild();
 	}
 
