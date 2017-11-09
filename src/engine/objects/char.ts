@@ -6,17 +6,16 @@ import Tile from "./tile";
 export { Type };
 
 class Char {
-	private _id: number;
-	private _frames: [CharFrame, CharFrame, CharFrame];
-	private _name: string = null;
-	private _type: number = null;
-	public _movementType: number;
-	public _garbage1: number;
-	public _garbage2: number;
-
-	public reference: number;
-	public health: number;
-	public damage: number;
+	protected _id: number;
+	protected _frames: [CharFrame, CharFrame, CharFrame];
+	protected _name: string = null;
+	protected _type: number = null;
+	protected _movementType: number;
+	protected _garbage1: number;
+	protected _garbage2: number;
+	protected _reference: number;
+	protected _health: number;
+	protected _damage: number;
 
 	get id() {
 		return this._id;
@@ -81,6 +80,26 @@ class Char {
 
 	isWeapon(): boolean {
 		return !!(this.type & Type.Weapon);
+	}
+
+	get movementType() {
+		return this._movementType;
+	}
+
+	get garbage1() {
+		return this._garbage1;
+	}
+
+	get garbage2() {
+		return this._garbage2;
+	}
+
+	public get damage() {
+		return this._damage;
+	}
+
+	public get health() {
+		return this._health;
 	}
 }
 
