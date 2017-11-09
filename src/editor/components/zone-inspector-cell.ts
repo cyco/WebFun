@@ -21,7 +21,6 @@ class ZoneInspectorCell extends Cell<Zone> {
 		this._id = document.createElement("span");
 		this._id.classList.add("id");
 		this._type = document.createElement("span");
-		this._type.classList.add("type");
 		this._size = document.createElement("span");
 		this._size.classList.add("size");
 		this._planet = document.createElement("span");
