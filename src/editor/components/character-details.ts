@@ -3,12 +3,13 @@ import { Char, CharMovementType, CharType } from "src/engine/objects";
 import CharacterFramePreview from "./character-frame-preview";
 import TileSheet from "../tile-sheet";
 import "./character-details.scss";
+import { MutableChar } from "src/editor/objects";
 
 class CharacterDetails extends Component {
 	public static readonly TagName = "wf-character-details";
 	public static readonly observedAttributes: string[] = [];
 
-	private _character: Char;
+	private _character: MutableChar;
 	private _weapons: Char[];
 
 	private _currentPreviewFrame: number = 0;
@@ -33,17 +34,35 @@ class CharacterDetails extends Component {
 		this._stepButton.onclick = () => this._framePreview.frame = this._character.frames[++this._currentPreviewFrame % 3];
 		this._typeSelector = document.createElement("select");
 		this._typeSelector.classList.add("type");
+		this._typeSelector.onchange = () => {
+			this._character.type = parseInt(this._typeSelector.value);
+			this._rebuild();
+		};
 		this._movementTypeSelector = document.createElement("select");
 		this._movementTypeSelector.classList.add("movement-type");
+		this._movementTypeSelector.onchange = () => {
+			this._character.movementType = parseInt(this._movementTypeSelector.value);
+			this._rebuild();
+		};
 		this._damageInput = document.createElement("input");
 		this._damageInput.type = "text";
+		this._damageInput.onchange = () => this._character.damage = parseInt(this._damageInput.value);
 		this._healthInput = document.createElement("input");
 		this._healthInput.type = "text";
+		this._healthInput.onchange = () => this._character.health = parseInt(this._damageInput.value);
 		this._weaponPreview = document.createElement("div");
 		this._sound = document.createElement("select");
 		this._sound.classList.add("sound");
+		this._sound.onchange = () => {
+			this._character.reference = parseInt(this._sound.value);
+			this._rebuild();
+		};
 		this._weapon = document.createElement("select");
-		this._weapon.classList.add("sound");
+		this._weapon.classList.add("weapon");
+		this._weapon.onchange = () => {
+			this._character.reference = parseInt(this._weapon.value);
+			this._rebuild();
+		};
 
 		this._populateTypeSelector();
 		this._populateMovementTypeSelector();
@@ -120,7 +139,7 @@ class CharacterDetails extends Component {
 		const char = this._character;
 		this._framePreview.frame = this._character.frames[this._currentPreviewFrame];
 		this._typeSelector.value = char.type.toString();
-		this._movementTypeSelector.value = char._movementType.toString();
+		this._movementTypeSelector.value = char.movementType.toString();
 		this._damageInput.value = char.damage.toString();
 		this._healthInput.value = char.health.toString();
 
@@ -155,7 +174,9 @@ class CharacterDetails extends Component {
 		return this._tileSheet;
 	}
 
-	set character(c: Char) {
+	set character(c: MutableChar|Char) {
+		if (!(c instanceof MutableChar))
+			c = new MutableChar(c);
 		this._character = c;
 		this._currentPreviewFrame = 0;
 		this._rebuild();
