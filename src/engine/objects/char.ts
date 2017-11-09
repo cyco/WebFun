@@ -2,6 +2,7 @@ import { Direction } from "src/util";
 import CharFrame from "./char-frame";
 import Type from "./char-type";
 import Tile from "./tile";
+import CharMovementType from "./char-movement-type";
 
 export { Type };
 
@@ -10,7 +11,7 @@ class Char {
 	protected _frames: [CharFrame, CharFrame, CharFrame];
 	protected _name: string = null;
 	protected _type: number = null;
-	protected _movementType: number;
+	protected _movementType: CharMovementType;
 	protected _garbage1: number;
 	protected _garbage2: number;
 	protected _reference: number;

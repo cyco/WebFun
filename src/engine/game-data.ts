@@ -2,6 +2,7 @@ import {
 	Action,
 	Char,
 	CharFrame,
+	CharMovementType,
 	Condition,
 	Hotspot,
 	HotspotType,
@@ -184,7 +185,7 @@ class GameData {
 			new CharFrame(data.frame3.tiles.map((i: number) => this.tiles[i]))
 		];
 		char.type = data.type;
-		char.movementType = data.movementType;
+		char.movementType = CharMovementType.fromNumber(data.movementType);
 		char.garbage1 = data.probablyGarbage1;
 		char.garbage2 = data.probablyGarbage2;
 

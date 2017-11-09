@@ -42,7 +42,8 @@ class CharacterDetails extends Component {
 		this._movementTypeSelector = document.createElement("select");
 		this._movementTypeSelector.classList.add("movement-type");
 		this._movementTypeSelector.onchange = () => {
-			this._character.movementType = parseInt(this._movementTypeSelector.value);
+			const rawValue = parseInt(this._movementTypeSelector.value);
+			this._character.movementType = CharMovementType.fromNumber(rawValue);
 			this._rebuild();
 		};
 		this._damageInput = document.createElement("input");
@@ -140,7 +141,7 @@ class CharacterDetails extends Component {
 		const char = this._character;
 		this._framePreview.frame = this._character.frames[this._currentPreviewFrame];
 		this._typeSelector.value = char.type.toString();
-		this._movementTypeSelector.value = char.movementType.toString();
+		this._movementTypeSelector.value = char.movementType.rawValue.toString();
 		this._damageInput.value = char.damage.toString();
 		this._healthInput.value = char.health.toString();
 
