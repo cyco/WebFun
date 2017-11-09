@@ -1,11 +1,14 @@
 import { Cell } from "src/ui/components";
-import { Zone } from "src/engine/objects";
+import { Zone, ZoneType } from "src/engine/objects";
 import "./zone-inspector-cell.scss";
+import TileSheet from "../tile-sheet";
+import HotspotType from "src/engine/objects/hotspot-type";
 
 class ZoneInspectorCell extends Cell<Zone> {
 	public static readonly TagName: string = "wf-zone-inspector-cell";
 	public static readonly observedAttributes: string[] = [];
 
+	public tileSheet: TileSheet;
 	private _icon: HTMLElement;
 	private _id: HTMLElement;
 	private _type: HTMLElement;
@@ -32,6 +35,9 @@ class ZoneInspectorCell extends Cell<Zone> {
 		this._type.textContent = this.data.type.name;
 		this._planet.textContent = this.data.planet.name;
 
+		const classes = this._cssClassesForIcon(this.data.type);
+		this._icon.className = "icon" + (classes ? " " + classes.join(" ") : "");
+
 		this.appendChild(this._icon);
 		const content = document.createElement("div");
 		content.classList.add("content");
@@ -40,6 +46,55 @@ class ZoneInspectorCell extends Cell<Zone> {
 		content.appendChild(this._planet);
 		content.appendChild(this._size);
 		this.appendChild(content);
+	}
+
+	private _cssClassesForIcon(zoneType: ZoneType) {
+		const tileId = this.tileIdForZoneType(zoneType);
+		if (tileId === -1) return [];
+
+		return this.tileSheet.cssClassesForTile(tileId);
+	}
+
+	private tileIdForZoneType(zoneType: ZoneType) {
+		switch (zoneType) {
+			case ZoneType.Town:
+				return 829;
+			case ZoneType.Goal:
+				return 830;
+			case ZoneType.BlockadeWest:
+				return 827;
+			case ZoneType.BlockadeEast:
+				return 823;
+			case ZoneType.BlockadeNorth:
+				return 821;
+			case ZoneType.BlockadeSouth:
+				return 825;
+			case ZoneType.Find:
+			case ZoneType.FindTheForce:
+			case ZoneType.Trade:
+			case ZoneType.Use:
+				return 818;
+			case ZoneType.TravelStart:
+			case ZoneType.TravelEnd:
+				return 820;
+			case ZoneType.Empty:
+				if (this.data.hotspots.withType(HotspotType.Teleporter).length)
+					return 834;
+				return 832;
+			case ZoneType.Room:
+				return 835;
+			case ZoneType.None:
+			case ZoneType.Load:
+			case ZoneType.Unknown:
+				return 836;
+		}
+		return -1;
+	}
+
+	public cloneNode(deep?: boolean): ZoneInspectorCell {
+		const node = <ZoneInspectorCell>super.cloneNode(deep);
+		node.tileSheet = this.tileSheet;
+		return node;
 	}
 
 	disconnectedCallback() {

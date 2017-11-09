@@ -35,8 +35,8 @@ class CharacterInspectorCell extends Cell<Char> {
 		this._text.appendChild(this._name);
 	}
 
-	public cloneNode(): Node {
-		const node = <CharacterInspectorCell>super.cloneNode();
+	public cloneNode(deep?: boolean): Node {
+		const node = <CharacterInspectorCell>super.cloneNode(deep);
 		node.tileSheet = this.tileSheet;
 		node.onclick = this.onclick;
 		return node;
