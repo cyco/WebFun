@@ -1,6 +1,6 @@
 import { Direction } from "src/util";
 import CharFrame from "./char-frame";
-import Type from "./char-type";
+import Type, { default as CharType } from "./char-type";
 import Tile from "./tile";
 import CharMovementType from "./char-movement-type";
 
@@ -10,13 +10,13 @@ class Char {
 	protected _id: number;
 	protected _frames: [CharFrame, CharFrame, CharFrame];
 	protected _name: string = null;
-	protected _type: number = null;
+	protected _type: CharType = null;
 	protected _movementType: CharMovementType;
-	protected _garbage1: number;
-	protected _garbage2: number;
-	protected _reference: number;
-	protected _health: number;
-	protected _damage: number;
+	protected _garbage1: number = null;
+	protected _garbage2: number = null;
+	protected _reference: number = null;
+	protected _health: number = null;
+	protected _damage: number = null;
 
 	get id() {
 		return this._id;
@@ -72,15 +72,15 @@ class Char {
 	}
 
 	isHero(): boolean {
-		return !!(this.type & Type.Hero);
+		return this.type === CharType.Hero;
 	}
 
 	isEnemy(): boolean {
-		return !!(this.type & Type.Enemy);
+		return this.type === CharType.Enemy;
 	}
 
 	isWeapon(): boolean {
-		return !!(this.type & Type.Weapon);
+		return this.type === CharType.Weapon;
 	}
 
 	get movementType() {

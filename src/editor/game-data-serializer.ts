@@ -186,7 +186,7 @@ class GameDataSerializer {
 			stream.writeCharacters("ICHA");
 			stream.writeUint32(26 + c.frames.length * 2 * 8);
 			stream.writeNullTerminatedString(c.name.padEnd(15, "\0"));
-			stream.writeUint16(c.type);
+			stream.writeUint16(c.type.rawValue);
 			stream.writeUint16(c.movementType.rawValue);
 			stream.writeUint16(c.garbage1);
 			stream.writeUint32(c.garbage2);
