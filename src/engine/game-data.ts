@@ -14,6 +14,8 @@ import {
 	ZoneType
 } from "./objects";
 
+import { MutableChar } from "src/editor/objects";
+
 import { Planet } from "./types";
 import { Size } from "src/util";
 
@@ -50,11 +52,15 @@ class GameData {
 
 		this._getCategory("CAUX").auxiliaries
 			.filter(({index}: {index: number}) => index !== -1)
-			.forEach(({damage}: {damage: number}, idx: number) => this._characters[idx].damage = damage);
+			.forEach(({damage}: {damage: number}, idx: number) => {
+				const char = <MutableChar>this._characters[idx];
+				char.damage = damage;
+			});
+
 		this._getCategory("CHWP").weapons
 			.filter(({index}: {index: number}) => index !== -1)
 			.forEach(({reference, health}: {reference: number, health: number}, idx: number) => {
-				const char = this._characters[idx];
+				const char = <MutableChar>this._characters[idx];
 				char.reference = reference;
 				char.health = health;
 			});
@@ -169,18 +175,18 @@ class GameData {
 	}
 
 	_makeCharacter(data: any, idx: number): Char {
-		const char = new Char();
-		(<any>char)._id = idx;
-		(<any>char)._name = data.name;
-		(<any>char)._frames = [
+		const char = new MutableChar();
+		char.id = idx;
+		char.name = data.name;
+		char.frames = [
 			new CharFrame(data.frame1.tiles.map((i: number) => this.tiles[i])),
 			new CharFrame(data.frame2.tiles.map((i: number) => this.tiles[i])),
 			new CharFrame(data.frame3.tiles.map((i: number) => this.tiles[i]))
 		];
-		(<any>char)._type = data.type;
-		char._movementType = data.movementType;
-		char._garbage1 = data.probablyGarbage1;
-		char._garbage2 = data.probablyGarbage2;
+		char.type = data.type;
+		char.movementType = data.movementType;
+		char.garbage1 = data.probablyGarbage1;
+		char.garbage2 = data.probablyGarbage2;
 
 		return char;
 	}
