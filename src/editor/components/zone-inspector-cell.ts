@@ -2,7 +2,6 @@ import { Cell } from "src/ui/components";
 import { Zone, ZoneType } from "src/engine/objects";
 import "./zone-inspector-cell.scss";
 import TileSheet from "../tile-sheet";
-import HotspotType from "src/engine/objects/hotspot-type";
 
 class ZoneInspectorCell extends Cell<Zone> {
 	public static readonly TagName: string = "wf-zone-inspector-cell";
@@ -32,7 +31,7 @@ class ZoneInspectorCell extends Cell<Zone> {
 	connectedCallback() {
 		this._id.textContent = `${this.data.id}`;
 		this._size.textContent = `${this.data.size.width}x${this.data.size.height}`;
-		this._type.textContent = this.data.type.name;
+		this._type.textContent = this.data.hasTeleporter ? "Teleporter" : this.data.type.name;
 		this._planet.textContent = this.data.planet.name;
 
 		const classes = this._cssClassesForIcon(this.data.type);
@@ -78,8 +77,7 @@ class ZoneInspectorCell extends Cell<Zone> {
 			case ZoneType.TravelEnd:
 				return 820;
 			case ZoneType.Empty:
-				if (this.data.hotspots.withType(HotspotType.Teleporter).length)
-					return 834;
+				if (this.data.hasTeleporter) return 834;
 				return 832;
 			case ZoneType.Room:
 				return 835;

@@ -5,7 +5,7 @@ import { default as Hotspot, Type as HotspotType } from "./hotspot";
 import NPC from "./npc";
 import Tile from "./tile";
 import Layer from "./zone-layer";
-import Type from "./zone-type";
+import Type, { default as ZoneType } from "./zone-type";
 
 export { Type, Layer };
 
@@ -190,6 +190,11 @@ class Zone {
 
 	public isRoom() {
 		return this._size.width === 9;
+	}
+
+	get hasTeleporter() {
+		return this._type === ZoneType.Empty && this.hotspots.withType(HotspotType.Teleporter).length !== 0;
+
 	}
 
 	public get size() {

@@ -43,9 +43,10 @@ class ZoneInspector extends AbstractInspector {
 			item.id,
 			item.size.width,
 			item.size.height,
-			item.type.name,
+			item.hasTeleporter ? "Teleporter" : item.type.name,
 			item.planet.name
 		];
+
 		const string = searchableAttributes.join(" ");
 		return searchValue.every(r => r.test(string));
 	}
