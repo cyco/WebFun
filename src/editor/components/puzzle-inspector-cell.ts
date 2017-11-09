@@ -44,8 +44,8 @@ class PuzzleInspectorCell extends Cell<Puzzle> {
 		this._text.classList.add("text");
 	}
 
-	public cloneNode(): Node {
-		const node = <PuzzleInspectorCell>super.cloneNode();
+	public cloneNode(deep?: boolean): Node {
+		const node = <PuzzleInspectorCell>super.cloneNode(deep);
 		node.tileSheet = this.tileSheet;
 		return node;
 	}

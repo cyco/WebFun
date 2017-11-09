@@ -26,6 +26,8 @@ class ZoneInspector extends AbstractInspector {
 	}
 
 	build() {
+		const cell = <ZoneInspectorCell>this._list.cell;
+		cell.tileSheet = this.data.tileSheet;
 		this._list.items = this.data.currentData.zones;
 	}
 }
