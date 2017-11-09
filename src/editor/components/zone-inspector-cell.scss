@@ -48,3 +48,7 @@ wf-zone-inspector-cell {
 		}
 	}
 }
+
+.zone-inspector-list {
+	@extend .inset-border-1px;
+}

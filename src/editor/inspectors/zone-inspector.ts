@@ -18,6 +18,7 @@ class ZoneInspector extends AbstractInspector {
 
 		this._list = <List<Zone>>document.createElement(List.TagName);
 		this._list.cell = <ZoneInspectorCell>document.createElement(ZoneInspectorCell.TagName);
+		this._list.classList.add("zone-inspector-list");
 		this._list.searchDelegate = this;
 		this._list.state = state.prefixedWith("list");
 
