@@ -36,6 +36,7 @@ class CharacterDetails extends Component {
 		this._typeSelector.classList.add("type");
 		this._typeSelector.onchange = () => {
 			this._character.type = parseInt(this._typeSelector.value);
+			this._character.reference = -1;
 			this._rebuild();
 		};
 		this._movementTypeSelector = document.createElement("select");
