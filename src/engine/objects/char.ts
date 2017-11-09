@@ -94,12 +94,16 @@ class Char {
 		return this._garbage2;
 	}
 
-	public get damage() {
+	get damage() {
 		return this._damage;
 	}
 
-	public get health() {
+	get health() {
 		return this._health;
+	}
+
+	get reference() {
+		return this._reference;
 	}
 }
 
