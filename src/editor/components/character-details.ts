@@ -35,7 +35,8 @@ class CharacterDetails extends Component {
 		this._typeSelector = document.createElement("select");
 		this._typeSelector.classList.add("type");
 		this._typeSelector.onchange = () => {
-			this._character.type = parseInt(this._typeSelector.value);
+			const rawValue = parseInt(this._typeSelector.value);
+			this._character.type = CharType.fromNumber(rawValue);
 			this._character.reference = -1;
 			this._rebuild();
 		};

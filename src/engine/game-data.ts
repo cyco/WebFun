@@ -19,6 +19,7 @@ import { MutableChar } from "src/editor/objects";
 
 import { Planet } from "./types";
 import { Size } from "src/util";
+import CharType from "src/engine/objects/char-type";
 
 declare interface RawGameData {
 	catalog: any[]
@@ -184,7 +185,7 @@ class GameData {
 			new CharFrame(data.frame2.tiles.map((i: number) => this.tiles[i])),
 			new CharFrame(data.frame3.tiles.map((i: number) => this.tiles[i]))
 		];
-		char.type = data.type;
+		char.type = CharType.fromNumber(data.type);
 		char.movementType = CharMovementType.fromNumber(data.movementType);
 		char.garbage1 = data.probablyGarbage1;
 		char.garbage2 = data.probablyGarbage2;
