@@ -51,24 +51,24 @@ class ZoneType {
 		return ZoneType.knownTypes.indexOf(this);
 	}
 
-	private get name() {
+	get name() {
 		switch (this) {
 			case ZoneType.None:
 				return "None";
 			case ZoneType.Empty:
 				return "Empty";
 			case ZoneType.BlockadeNorth:
-				return "BlockadeNorth";
+				return "Blockade North";
 			case ZoneType.BlockadeSouth:
-				return "BlockadeSouth";
+				return "Blockade South";
 			case ZoneType.BlockadeEast:
-				return "BlockadeEast";
+				return "Blockade East";
 			case ZoneType.BlockadeWest:
-				return "BlockadeWest";
+				return "Blockade West";
 			case ZoneType.TravelStart:
-				return "TravelStart";
+				return "Travel Start";
 			case ZoneType.TravelEnd:
-				return "TravelEnd";
+				return "Travel End";
 			case ZoneType.Room:
 				return "Room";
 			case ZoneType.Load:
@@ -88,7 +88,7 @@ class ZoneType {
 			case ZoneType.Find:
 				return "Find";
 			case ZoneType.FindTheForce:
-				return "FindTheForce";
+				return "Find The Force";
 
 			default:
 				return "Unknown";
@@ -134,7 +134,7 @@ class ZoneType {
 	};
 
 	public toString(): string {
-		return `ZoneType{${this.name}}`;
+		return `ZoneType{${this.name.split(" ").join("")}}`;
 	}
 }
 

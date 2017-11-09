@@ -1,9 +1,50 @@
-wf-zone-inspector-cell {
-	display: block;
+@import "border";
 
-	span:first-child {
-		display: inline-block;
-		min-width: 20px;
-		text-align: right;
+wf-zone-inspector-cell {
+	display: flex;
+	flex-direction: row;
+
+	.icon {
+		@extend .inset-border-1px;
+		@extend .inset-border-inverted;
+
+		height: 32px;
+		width: 32px;
+	}
+
+	.content {
+		@extend .inset-border-1px;
+		@extend .inset-border-inverted;
+
+		height: 32px;
+		flex-grow: 1;
+
+		line-height: 30px;
+		.id {
+			display: inline-block;
+			height: 30px;
+			margin-left: 5px;
+			width: 30px;
+			float: left;
+		}
+
+		.type {
+		}
+
+		.planet {
+			display: inline-block;
+			color: #585858;
+			font-size: 11px;
+			margin-left: 5px;
+			text-shadow: 0 1px rgba(255, 255, 255, 0.5);
+			vertical-align: middle;
+		}
+
+		.size {
+			float: right;
+			margin-right: 10px;
+			display: inline-block;
+			text-align: right;
+		}
 	}
 }
