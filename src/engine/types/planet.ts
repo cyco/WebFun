@@ -21,6 +21,25 @@ class Planet {
 		if (!this.isPlanet(number)) throw RangeError(`Invalid planet ${number} specified!`);
 		return Planet.knownPlanets[number];
 	}
+
+	get name() {
+		switch (this) {
+			case Planet.NONE:
+				return "None";
+			case Planet.TATOOINE:
+				return "Tatooine";
+			case Planet.HOTH:
+				return "Hoth";
+			case Planet.ENDOR:
+				return "Endor";
+			case Planet.DAGOBAH:
+				return "Dagobah";
+			case Planet.UNKNOWN:
+				return "Unknown";
+			default:
+				console.assert(false, "Unknown planet encountered!");
+		}
+	}
 }
 
 export default Planet;
