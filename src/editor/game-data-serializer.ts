@@ -14,7 +14,7 @@ class GameDataSerializer {
 		this.writeCharacterWeapons(data, stream);
 		this.writeCharacterAuxiliary(data, stream);
 		this.writeTileNames(data, stream);
-		this.writeEndOfFile(data, stream);
+		this.writeEndOfFile(stream);
 	}
 
 	private writeVersion(data: GameData, stream: OutputStream) {
@@ -187,9 +187,9 @@ class GameDataSerializer {
 			stream.writeUint32(26 + c.frames.length * 2 * 8);
 			stream.writeNullTerminatedString(c.name.padEnd(15, "\0"));
 			stream.writeUint16(c.type);
-			stream.writeUint16(c._movementType);
-			stream.writeUint16(c._garbage1);
-			stream.writeUint32(c._garbage2);
+			stream.writeUint16(c.movementType);
+			stream.writeUint16(c.garbage1);
+			stream.writeUint32(c.garbage2);
 
 			c.frames.forEach(frame => {
 				stream.writeUint16Array(frame.tiles.map(t => t ? t.id : -1));
@@ -234,7 +234,7 @@ class GameDataSerializer {
 		stream.writeUint16(-1);
 	}
 
-	private writeEndOfFile(data: GameData, stream: OutputStream) {
+	private writeEndOfFile(stream: OutputStream) {
 		stream.writeCharacters("ENDF");
 		stream.writeUint32(0);
 	}
