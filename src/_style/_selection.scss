@@ -11,7 +11,7 @@ textarea,
 [contenteditable], [contenteditable] * {
 	user-select: text;
 	-webkit-user-select: text;
-	cursor: text;
+	cursor: initial;
 }
 
 a {
