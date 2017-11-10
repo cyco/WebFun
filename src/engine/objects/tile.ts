@@ -1,107 +1,81 @@
-import { Image } from "../rendering";
+import { Image } from "src/engine/rendering";
 
-class Tile {
-	static readonly WIDTH = 32;
-	static readonly HEIGHT = 32;
-	static readonly SIZE = 32 * 32;
-	static readonly Attribute = {
-		Transparent: 0,
-		Floor: 1,
-		Object: 2,
-		Draggable: 3,
-		Roof: 4,
+export const WIDTH = 32;
+export const HEIGHT = 32;
+export const SIZE = WIDTH * HEIGHT;
 
-		Locator: 5,
-		Weapon: 6,
-		Item: 7,
-		Character: 8
-	};
-	static readonly Subtype = {
-		Weapon: { // Weapon
-			BlasterLow: 16,
-			BlasterHigh: 17,
-			Lightsaber: 18,
-			TheForce: 19
-		},
-		Locator: { // Locator
-			Town: 1,
+export const Attribute = {
+	Transparent: 0,
+	Floor: 1,
+	Object: 2,
+	Draggable: 3,
+	Roof: 4,
 
-			PuzzleUnsolved: 2,
-			PuzzleSolved: 3,
-			TravelUnsolved: 4,
-			TravelSolved: 5,
+	Locator: 5,
+	Weapon: 6,
+	Item: 7,
+	Character: 8
+};
 
-			NorthUnsolved: 6,
-			SouthUnsolved: 7,
-			WestUnsolved: 8,
-			EastUnsolved: 9,
+export const Subtype = {
+	Weapon: { // Weapon
+		BlasterLow: 16,
+		BlasterHigh: 17,
+		Lightsaber: 18,
+		TheForce: 19
+	},
+	Locator: { // Locator
+		Town: 1,
 
-			NorthSolved: 10,
-			SouthSolved: 11,
-			WestSolved: 12,
-			EastSolved: 13,
+		PuzzleUnsolved: 2,
+		PuzzleSolved: 3,
+		TravelUnsolved: 4,
+		TravelSolved: 5,
 
-			Goal: 14,
-			YouAreHere: 15
-		},
-		Item: { // Item
-			Locator: 4,
+		NorthUnsolved: 6,
+		SouthUnsolved: 7,
+		WestUnsolved: 8,
+		EastUnsolved: 9,
 
-			Keycard: 0,
-			PuzzleTool: 1,
-			PuzzleGoal: 2,
-			PuzzleValuable: 3,
-			Consumeable: 6
-		},
-		Character: { // Character
-			Hero: 16,
-			Enemy: 17,
-			NPC: 18
-		}
-	};
+		NorthSolved: 10,
+		SouthSolved: 11,
+		WestSolved: 12,
+		EastSolved: 13,
 
-	public id: number;
-	public _name: string;
-	public _attributes: any;
-	public _image: Image;
-	public _imageData: Uint8Array;
+		Goal: 14,
+		YouAreHere: 15
+	},
+	Item: { // Item
+		Locator: 4,
 
-	constructor(id: number = -1, attributes: number = 0, pixelData: Uint8Array = null) {
-		this.id = id;
-		this._name = null;
-		this._attributes = attributes;
-		this._image = null;
-		this._imageData = pixelData;
-
-		Object.seal(this);
+		Keycard: 0,
+		PuzzleTool: 1,
+		PuzzleGoal: 2,
+		PuzzleValuable: 3,
+		Consumeable: 6
+	},
+	Character: { // Character
+		Hero: 16,
+		Enemy: 17,
+		NPC: 18
 	}
+};
 
-	get name() {
-		return this._name;
-	}
+export class Tile {
+	static readonly WIDTH = WIDTH;
+	static readonly HEIGHT = HEIGHT;
+	static readonly SIZE = SIZE;
+	static readonly Attribute = Attribute;
+	static readonly Subtype = Subtype;
 
-	get specs() {
-		return this._attributes;
-	}
-
-	get imageData() {
-		return (<any>this._image).data;
-	}
-
-	get image() {
-		return this._image;
-	}
-
-	get pixelData() {
-		return this._imageData;
-	}
+	protected _id: number;
+	protected _name: string;
+	protected _attributes: any;
+	protected _imageData: Uint8Array;
+	public image: Image;
 
 	get walkable() {
 		return !this.getAttribute(Tile.Attribute.Object) && !this.getAttribute(Tile.Attribute.Character);
-	}
-
-	get attributes() {
-		return this._attributes;
 	}
 
 	get subtype() {
@@ -127,8 +101,22 @@ class Tile {
 	getSubtype(attr: number): boolean {
 		return !!(this.subtype & (1 << attr));
 	}
+
+	public get id() {
+		return this._id;
+	}
+
+	public get name() {
+		return this._name;
+	}
+
+	public get attributes() {
+		return this._attributes;
+	}
+
+	public get imageData() {
+		return this._imageData;
+	}
 }
 
-export const Attribute = Tile.Attribute;
-export const Subtype = Tile.Subtype;
 export default Tile;

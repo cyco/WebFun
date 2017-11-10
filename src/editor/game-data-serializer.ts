@@ -43,7 +43,7 @@ class GameDataSerializer {
 
 		data.tiles.forEach((tile: Tile) => {
 			stream.writeUint32(tile.attributes);
-			stream.writeUint8Array(tile.pixelData);
+			stream.writeUint8Array(tile.imageData);
 		});
 	}
 
