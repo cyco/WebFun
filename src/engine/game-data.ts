@@ -15,7 +15,7 @@ import {
 	ZoneType
 } from "./objects";
 
-import { MutableChar } from "src/editor/objects";
+import { MutableChar, MutableTile } from "src/editor/objects";
 
 import { Planet } from "./types";
 import { Size } from "src/util";
@@ -41,7 +41,13 @@ class GameData {
 		this._sounds = this._getCategory("SNDS").sounds
 			.map((i: {content: string}) => i.content);
 		this._tiles = this._getCategory("TILE").tiles
-			.map((t: {attributes: number, pixels: Uint8Array}, i: number) => new Tile(i, t.attributes, t.pixels));
+			.map((t: {attributes: number, pixels: Uint8Array}, i: number) => {
+				const tile = new MutableTile();
+				tile.id = i;
+				tile.attributes = t.attributes;
+				tile.imageData = t.pixels;
+				return tile;
+			});
 		this._puzzles = this._getCategory("PUZ2").puzzles
 			.filter(({index}: {index: number}) => index !== -1)
 			.map((data: any, index: number) => this._makePuzzle(data, index));
@@ -68,7 +74,12 @@ class GameData {
 			});
 		this._getCategory("TNAM").names
 			.filter(({tileId}: {tileId: number}) => tileId !== -1)
-			.forEach((obj: any, idx: number) => obj.name && (this._tiles[obj.tileId]._name = obj.name));
+			.forEach((nameSpecification: any) => {
+				if (!nameSpecification.name) return;
+
+				const tile = <MutableTile>this._tiles[nameSpecification.tileId];
+				tile.name = nameSpecification.name;
+			});
 		this._setup = this._getCategory("STUP").pixels;
 	}
 

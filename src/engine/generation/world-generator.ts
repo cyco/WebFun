@@ -863,7 +863,7 @@ class WorldGenerator {
 
 		return this._traverseZoneUntil(zone, (zone) => {
 			if (!zone.providedItems.find(t => t === item)) return false;
-			const hotspotType = item.specs.toHotspotType();
+			const hotspotType = item.attributes.toHotspotType();
 			const candidates = zone.hotspots.withType(hotspotType);
 			return this.placeItemAtHotspotRandomly(candidates, item);
 		}, false, identity);

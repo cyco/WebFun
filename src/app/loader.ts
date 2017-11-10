@@ -108,7 +108,7 @@ class Loader extends EventTarget {
 			const max = Math.min(idx + TileImageBatchSize, tileCount);
 			for (; idx < max; idx++) {
 				const tile = tiles[idx];
-				tile._image = imageFactory.buildImage(tileWidth, tileHeight, tile._imageData);
+				tile.image = imageFactory.buildImage(tileWidth, tileHeight, tile.imageData);
 				if (tile.image && tile.name) tile.image.representation.title = tile.name;
 				this._progress(5, 4 * (idx / tileCount));
 			}
