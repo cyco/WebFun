@@ -68,6 +68,22 @@ class Window extends Component {
 		this._titlebar.closable = flag;
 	}
 
+	get pinnable() {
+		return this._titlebar.pinnable;
+	}
+
+	set pinnable(flag) {
+		this._titlebar.pinnable = flag;
+	}
+
+	set pinned(flag) {
+		this._titlebar.pinned = flag;
+	}
+
+	get pinned() {
+		return this._titlebar.pinned;
+	}
+
 	get title() {
 		return this._titlebar.title;
 	}

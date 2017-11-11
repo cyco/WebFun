@@ -13,6 +13,7 @@ class WindowTitlebar extends Component {
 	private _titleNode: HTMLElement = null;
 	private _window: Window;
 	private _closeButton: HTMLElement;
+	private _pinButton: HTMLElement;
 
 	constructor() {
 		super();
@@ -90,6 +91,7 @@ class WindowTitlebar extends Component {
 		super.connectedCallback();
 
 		this.appendChild(this._closeButton);
+		if (this.pinnable) this.appendChild(this._pinButton);
 		if (this._menubar) this.appendChild(this._menubar);
 	}
 
@@ -115,6 +117,36 @@ class WindowTitlebar extends Component {
 		};
 
 		this.addEventListener("mousedown", mouseDown);
+	}
+
+	set pinnable(flag: boolean) {
+		if (flag === !!this._pinButton) return;
+
+		if (flag) {
+			this._pinButton = document.createElement("i");
+			this._pinButton.classList.add("fa");
+			this._pinButton.classList.add("fa-thumb-tack");
+			this._pinButton.classList.add("pin");
+			this._pinButton.onclick = () => this.pinned = !this.pinned;
+			if (this.isConnected) this.appendChild(this._pinButton);
+		} else {
+			this._pinButton.remove();
+			this._pinButton = null;
+		}
+	}
+
+	get pinnable() {
+		return !!this._pinButton;
+	}
+
+	set pinned(flag: boolean) {
+		if (!this.pinnable) return;
+		if (flag) this._pinButton.classList.add("on");
+		else this._pinButton.classList.remove("on");
+	}
+
+	get pinned() {
+		return this.pinnable && this._pinButton.classList.contains("on");
 	}
 }
 
