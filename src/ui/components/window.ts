@@ -100,6 +100,14 @@ class Window extends Component {
 		this._titlebar.onclose = cb;
 	}
 
+	set onpin(cb) {
+		this._titlebar.onpin = cb;
+	}
+
+	get onpin() {
+		return this._titlebar.onpin;
+	}
+
 	connectedCallback() {
 		super.connectedCallback();
 
