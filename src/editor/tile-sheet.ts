@@ -79,7 +79,7 @@ class TileSheet {
 		this._image = canvas;
 	}
 
-	add(data: Uint8Array): TileSheetEntry {
+	public add(data: Uint8Array): TileSheetEntry {
 		let freeSpace = this._entries.indexOf(null, this._lastClearedIndex);
 		if (freeSpace === -1) freeSpace = this._entries.slice(0, this._lastClearedIndex).indexOf(null);
 		if (freeSpace === -1) throw new Error("No space to put tile.");
@@ -96,7 +96,7 @@ class TileSheet {
 		return entry;
 	}
 
-	remove(entry: TileSheetEntry) {
+	public remove(entry: TileSheetEntry) {
 		const index = this._entries.indexOf(entry);
 		if (~index) return;
 		this.placeData(new Uint8Array(this._tileSize.area), entry.rectangle);
@@ -104,7 +104,7 @@ class TileSheet {
 		this._entries[index] = null;
 	}
 
-	draw(factory: ImageFactory): void {
+	public draw(factory: ImageFactory): void {
 		const imageData = factory.createImageData(this._sheetSize.width, this._sheetSize.height, this._data);
 
 		const context = this._image.getContext("2d");
@@ -113,7 +113,7 @@ class TileSheet {
 		this._rule.style.backgroundImage = `url(${this._image.toDataURL()})`;
 	}
 
-	private rectangleForEntry(index: number): Rectangle {
+	public rectangleForEntry(index: number): Rectangle {
 		return new Rectangle(new Point(index * this._tileSize.width, 0), this._tileSize);
 	}
 

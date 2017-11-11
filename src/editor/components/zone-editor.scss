@@ -1,3 +1,8 @@
-wd-zone-editor {
+wf-zone-editor {
 	display: block;
+	position: relative;
+
+	wf-zone-layer {
+		position: absolute;
+	}
 }
