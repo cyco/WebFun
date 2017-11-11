@@ -19,7 +19,6 @@ class ZoneEditorController {
 
 	public show() {
 		document.body.appendChild(this._window);
-		this._window.center();
 	}
 
 	set zone(zone: Zone) {

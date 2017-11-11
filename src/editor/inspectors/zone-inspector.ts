@@ -30,10 +30,10 @@ class ZoneInspector extends AbstractInspector {
 	private _onCellClicked(cell: ZoneInspectorCell) {
 		if (!this._controller) {
 			this._controller = new ZoneEditorController(this.data.tileSheet);
-			this._controller.show();
 		}
 
 		this._controller.zone = cell.data;
+		this._controller.show();
 	}
 
 	build() {
