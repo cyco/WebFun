@@ -1,3 +1,7 @@
+@import "pixelated";
+
 wf-zone-layer {
+	@extend .pixelated;
+
 	display: block;
 }
