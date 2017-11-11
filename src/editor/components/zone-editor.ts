@@ -3,6 +3,8 @@ import ZoneLayer from "src/editor/components/zone-layer";
 import "./zone-editor.scss";
 import { Zone } from "src/engine/objects";
 import TileSheet from "src/editor/tile-sheet";
+import { HEIGHT as TileHeight, WIDTH as TileWidth } from "src/engine/objects/tile";
+import { AbstractTool, NoTool } from "src/editor/tools";
 
 class ZoneEditor extends Component {
 	public static readonly TagName = "wf-zone-editor";
@@ -11,7 +13,9 @@ class ZoneEditor extends Component {
 	private _floor: ZoneLayer;
 	private _objects: ZoneLayer;
 	private _roof: ZoneLayer;
+	private _overlay: HTMLCanvasElement;
 	private _tileSheet: TileSheet;
+	private _tool: AbstractTool;
 
 	constructor() {
 		super();
@@ -22,25 +26,41 @@ class ZoneEditor extends Component {
 		this._objects.layer = Zone.Layer.Object;
 		this._roof = <ZoneLayer>document.createElement(ZoneLayer.TagName);
 		this._roof.layer = Zone.Layer.Roof;
+
+		this._overlay = document.createElement("canvas");
+		this._overlay.classList.add("overlay");
+
+		this.tool = new NoTool();
 	}
 
 	connectedCallback() {
 		this.appendChild(this._floor);
 		this.appendChild(this._objects);
 		this.appendChild(this._roof);
+		this.appendChild(this._overlay);
 	}
 
 	disconnectedCallback() {
 		this._floor.remove();
 		this._objects.remove();
 		this._roof.remove();
+		this._overlay.remove();
 	}
 
 	set zone(zone: Zone) {
+		if (this._tool) this._tool.deactivate();
+
 		this._zone = zone;
 		this._floor.zone = zone;
 		this._objects.zone = zone;
 		this._roof.zone = zone;
+
+		this._overlay.style.width = zone.size.width * TileWidth + "px";
+		this._overlay.style.height = zone.size.height * TileHeight + "px";
+		this._overlay.width = zone.size.width * TileWidth * window.devicePixelRatio;
+		this._overlay.height = zone.size.height * TileHeight * window.devicePixelRatio;
+
+		if (this._tool) this._tool.activate(this._zone, this._overlay);
 	}
 
 	get zone() {
@@ -56,6 +76,22 @@ class ZoneEditor extends Component {
 
 	get tileSheet() {
 		return this._tileSheet;
+	}
+
+	set tool(tool: AbstractTool) {
+		if (this._tool) {
+			this._tool.deactivate();
+		}
+
+		this._tool = tool;
+
+		if (this._tool) {
+			this._tool.activate(this._zone, this._overlay);
+		}
+	}
+
+	get tool() {
+		return this._tool;
 	}
 }
 
