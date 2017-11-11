@@ -91,6 +91,7 @@ class ZoneInspectorCell extends Cell<Zone> {
 	public cloneNode(deep?: boolean): ZoneInspectorCell {
 		const node = <ZoneInspectorCell>super.cloneNode(deep);
 		node.tileSheet = this.tileSheet;
+		node.onclick = this.onclick;
 		return node;
 	}
 
