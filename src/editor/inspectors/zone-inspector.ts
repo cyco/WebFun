@@ -7,9 +7,12 @@ import ZoneEditorController from "./zone-editor-controller";
 class ZoneInspector extends AbstractInspector {
 	private _list: List<Zone>;
 	private _controllers: ZoneEditorController[] = [];
+	private _state: Storage;
 
 	constructor(state: Storage) {
 		super(state);
+
+		this._state = state;
 
 		this.window.title = "Zones";
 		this.window.autosaveName = "zone-inspector";
@@ -23,7 +26,6 @@ class ZoneInspector extends AbstractInspector {
 		this._list.classList.add("zone-inspector-list");
 		this._list.searchDelegate = this;
 		this._list.state = state.prefixedWith("list");
-
 		this.window.content.appendChild(this._list);
 	}
 
@@ -31,18 +33,31 @@ class ZoneInspector extends AbstractInspector {
 		let controller = this._controllers.find((c) => c.canBeReused());
 
 		if (!controller) {
-			controller = new ZoneEditorController(this.data.tileSheet);
+			controller = new ZoneEditorController(this.data.tileSheet, this._state.prefixedWith("editor-" + this._controllers.length));
 			this._controllers.push(controller);
 		}
 
 		controller.zone = cell.data;
 		controller.show();
+		this._storeZones();
+	}
+
+	private _storeZones() {
+		this._state.store("zones", this._controllers.map(c => c.zone.id));
 	}
 
 	build() {
 		const cell = <ZoneInspectorCell>this._list.cell;
 		cell.tileSheet = this.data.tileSheet;
 		this._list.items = this.data.currentData.zones;
+
+		const zones = <number[]>this._state.load("zones") || [];
+		zones.forEach(id => {
+			const state = this._state.prefixedWith("editor-" + this._controllers.length);
+			const controller = new ZoneEditorController(this.data.tileSheet, state);
+			controller.zone = this.data.currentData.zones[id];
+			this._controllers.push(controller);
+		});
 	}
 
 	prepareListSearch(searchValue: string, list: List<Zone>): RegExp[] {

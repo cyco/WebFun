@@ -8,18 +8,29 @@ class ZoneEditorController {
 	private _zone: Zone;
 	private _editor: ZoneEditor;
 	private _tileSheet: TileSheet;
+	private _state: Storage;
 
-	constructor(tileSheet: TileSheet) {
+	constructor(tileSheet: TileSheet, state: Storage) {
+		this._state = state;
 		this._tileSheet = tileSheet;
 		this._window = <Window>document.createElement(Window.TagName);
 		this._window.pinnable = true;
+		this._window.pinned = state.load("pinned");
+		this._window.autosaveName = state.load("window-name") || state.store("window-name", String.UUID());
+		this._window.onclose = () => this._state.store("visible", false);
+		this._window.onpin = () => state.store("pinned", this._window.pinned);
 		this._editor = <ZoneEditor>document.createElement(ZoneEditor.TagName);
 		this._editor.tileSheet = tileSheet;
 		this._window.content.appendChild(this._editor);
+
+		if (this._state.load("visible")) {
+			this.show();
+		}
 	}
 
 	public show() {
 		document.body.appendChild(this._window);
+		this._state.store("visible", true);
 	}
 
 	public canBeReused(): boolean {

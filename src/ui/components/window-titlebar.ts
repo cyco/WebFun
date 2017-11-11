@@ -8,6 +8,7 @@ import WindowManager from "src/ui/window-manager";
 
 class WindowTitlebar extends Component {
 	public onclose: Function = identity;
+	public onpin: Function = identity;
 	private _menu: Menu = null;
 	private _menubar: Menubar = null;
 	private _titleNode: HTMLElement = null;
@@ -143,6 +144,8 @@ class WindowTitlebar extends Component {
 		if (!this.pinnable) return;
 		if (flag) this._pinButton.classList.add("on");
 		else this._pinButton.classList.remove("on");
+
+		if (this.onpin instanceof Function) this.onpin();
 	}
 
 	get pinned() {
