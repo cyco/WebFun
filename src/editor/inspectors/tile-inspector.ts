@@ -22,7 +22,6 @@ class TileInspector extends AbstractInspector {
 	}
 
 	build() {
-		console.log("tile inspector build");
 		this._tileSheet = this.data.tileSheet;
 		this.window.content.textContent = "";
 		this._list.textContent = "";
