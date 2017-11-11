@@ -5,16 +5,14 @@ class Planet {
 	public static readonly ENDOR = new Planet();
 	public static readonly DAGOBAH = new Planet();
 
-	public static readonly UNKNOWN = new Planet();
-
-	private static readonly knownPlanets = [Planet.NONE, Planet.TATOOINE, Planet.HOTH, Planet.ENDOR, Planet.DAGOBAH, Planet.UNKNOWN];
+	private static readonly knownPlanets = [Planet.NONE, Planet.TATOOINE, Planet.HOTH, Planet.ENDOR, undefined, Planet.DAGOBAH];
 
 	get rawValue(): number {
 		return Planet.knownPlanets.indexOf(this);
 	}
 
 	static isPlanet(number: number): boolean {
-		return number >= 0 && number < Planet.knownPlanets.length;
+		return number >= 0 && number < Planet.knownPlanets.length && Planet.knownPlanets[number] !== undefined;
 	}
 
 	static fromNumber(number: number): Planet {
@@ -34,8 +32,6 @@ class Planet {
 				return "Endor";
 			case Planet.DAGOBAH:
 				return "Dagobah";
-			case Planet.UNKNOWN:
-				return "Unknown";
 			default:
 				console.assert(false, "Unknown planet encountered!");
 		}
