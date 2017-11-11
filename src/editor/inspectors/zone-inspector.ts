@@ -6,7 +6,7 @@ import ZoneEditorController from "./zone-editor-controller";
 
 class ZoneInspector extends AbstractInspector {
 	private _list: List<Zone>;
-	private _controller: ZoneEditorController;
+	private _controllers: ZoneEditorController[] = [];
 
 	constructor(state: Storage) {
 		super(state);
@@ -28,12 +28,15 @@ class ZoneInspector extends AbstractInspector {
 	}
 
 	private _onCellClicked(cell: ZoneInspectorCell) {
-		if (!this._controller) {
-			this._controller = new ZoneEditorController(this.data.tileSheet);
+		let controller = this._controllers.find((c) => c.canBeReused());
+
+		if (!controller) {
+			controller = new ZoneEditorController(this.data.tileSheet);
+			this._controllers.push(controller);
 		}
 
-		this._controller.zone = cell.data;
-		this._controller.show();
+		controller.zone = cell.data;
+		controller.show();
 	}
 
 	build() {
@@ -50,8 +53,7 @@ class ZoneInspector extends AbstractInspector {
 	includeListItem(searchValue: RegExp[], item: Zone, cell: ZoneInspectorCell, list: List<Zone>): boolean {
 		const searchableAttributes = [
 			item.id,
-			item.size.width,
-			item.size.height,
+			item.size.width + "x" + item.size.height,
 			item.hasTeleporter ? "Teleporter" : item.type.name,
 			item.planet.name
 		];
