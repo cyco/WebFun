@@ -2,17 +2,12 @@
 
 wf-window {
 	position: absolute;
-	z-index: 10;
 	border-radius: 3px;
 	border: 1px solid #FFFFFF;
 	box-shadow: 1px 2px 6px rgba(0, 0, 0, 0.5);
 	background: $window-background-color;
 	margin: 0 auto;
 	min-width: 2px;
-
-	&.active {
-		z-index: 10001;
-	}
 
 	> .content {
 		padding: 10px 10px 10px 10px;
