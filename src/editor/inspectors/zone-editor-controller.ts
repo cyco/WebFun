@@ -12,6 +12,7 @@ class ZoneEditorController {
 	constructor(tileSheet: TileSheet) {
 		this._tileSheet = tileSheet;
 		this._window = <Window>document.createElement(Window.TagName);
+		this._window.pinnable = true;
 		this._editor = <ZoneEditor>document.createElement(ZoneEditor.TagName);
 		this._editor.tileSheet = tileSheet;
 		this._window.content.appendChild(this._editor);
@@ -19,6 +20,10 @@ class ZoneEditorController {
 
 	public show() {
 		document.body.appendChild(this._window);
+	}
+
+	public canBeReused(): boolean {
+		return !this._window.pinned;
 	}
 
 	set zone(zone: Zone) {
