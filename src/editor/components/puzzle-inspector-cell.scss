@@ -50,17 +50,9 @@ wf-puzzle-inspector-cell {
 			width: 27px;
 			text-align: right;
 		}
-
-		i.fa-chevron-right {
-			padding: 3px;
-			font-size: 12px;
-			margin-top: 8px;
-			margin-right: 8px;
-			transition: transform 0.25s ease;
-		}
 	}
 
-	&.expanded .title i.fa-chevron-right {
+	&.expanded .title wf-editor-expand-button {
 		transform: rotate(90deg);
 	}
 
