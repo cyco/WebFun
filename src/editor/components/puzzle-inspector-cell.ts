@@ -3,6 +3,7 @@ import { Puzzle, PuzzleType } from "src/engine/objects";
 import "./puzzle-inspector-cell.scss";
 import TileSheet from "../tile-sheet";
 import Tile from "src/engine/objects/tile";
+import { ExpandButton } from "src/editor/components";
 
 class PuzzleInspectorCell extends Cell<Puzzle> {
 	public static readonly TagName: string = "wf-puzzle-inspector-cell";
@@ -14,7 +15,7 @@ class PuzzleInspectorCell extends Cell<Puzzle> {
 	private _title: HTMLElement;
 	private _id: HTMLElement;
 	private _type: HTMLElement;
-	private _button: HTMLElement;
+	private _button: ExpandButton;
 
 	private _text: HTMLElement;
 
@@ -34,10 +35,8 @@ class PuzzleInspectorCell extends Cell<Puzzle> {
 		this._type.classList.add("type");
 		this._title.appendChild(this._type);
 
-		this._button = document.createElement("i");
-		this._button.classList.add("fa");
-		this._button.classList.add("fa-chevron-right");
-		this._button.onclick = () => this.toggleExpansion();
+		this._button = <ExpandButton>document.createElement(ExpandButton.TagName);
+		this._button.element = this;
 		this._title.appendChild(this._button);
 
 		this._text = document.createElement("span");
@@ -102,14 +101,6 @@ class PuzzleInspectorCell extends Cell<Puzzle> {
 		}
 
 		return "";
-	}
-
-	private toggleExpansion() {
-		if (this.classList.contains("expanded")) {
-			this.classList.remove("expanded");
-		} else {
-			this.classList.add("expanded");
-		}
 	}
 
 	disconnectedCallback() {
