@@ -11,12 +11,16 @@ import ExpandButton from "./expand-button";
 import {
 	Sidebar as ZoneEditorSidebar,
 	SidebarCell as ZoneEditorSidebarCell,
+	SidebarLayer as ZoneEditorSidebarLayer,
+	SidebarLayersCell as ZoneEditorSidebarLayerCell,
 	View as ZoneEditorView,
 	Window as ZoneEditorWindow,
 	ZoneLayer
 } from "./zone-editor";
 
 export {
+	ZoneEditorSidebarLayer,
+	ZoneEditorSidebarLayerCell,
 	ZoneEditorSidebarCell,
 	ExpandButton,
 	CharacterDetails,

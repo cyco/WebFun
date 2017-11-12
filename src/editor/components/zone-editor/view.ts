@@ -95,6 +95,18 @@ class View extends Component {
 	get tool() {
 		return this._tool;
 	}
+
+	public setLayerVisible(layerIdx: number, flag: boolean) {
+		const layer = this._layerByIdx(layerIdx);
+		layer.style.display = flag ? "" : "none";
+	}
+
+	private _layerByIdx(idx: number) {
+		if (idx === Zone.Layer.Roof) return this._roof;
+		if (idx === Zone.Layer.Object) return this._objects;
+		if (idx === Zone.Layer.Floor) return this._floor;
+		console.assert(false, "Invalid layer encountered");
+	}
 }
 
 export default View;
