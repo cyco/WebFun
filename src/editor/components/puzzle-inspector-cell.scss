@@ -50,6 +50,11 @@ wf-puzzle-inspector-cell {
 			width: 27px;
 			text-align: right;
 		}
+
+		wf-editor-expand-button {
+			margin-top: 8px;
+			margin-right: 8px;
+		}
 	}
 
 	&.expanded .title wf-editor-expand-button {
