@@ -1,6 +1,9 @@
-wf-zone-editor {
+@import "border";
+
+wf-zone-editor-view {
 	display: block;
 	position: relative;
+	@extend .inset-border-1px;
 
 	wf-zone-layer {
 		position: absolute;

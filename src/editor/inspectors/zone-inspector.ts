@@ -2,7 +2,7 @@ import AbstractInspector from "./abstract-inspector";
 import { ZoneInspectorCell } from "../components";
 import { Zone } from "src/engine/objects";
 import { List } from "src/ui/components";
-import ZoneEditorController from "./zone-editor-controller";
+import ZoneEditorController from "../components/zone-editor/window";
 
 class ZoneInspector extends AbstractInspector {
 	private _list: List<Zone>;
@@ -33,7 +33,9 @@ class ZoneInspector extends AbstractInspector {
 		let controller = this._controllers.find((c) => c.canBeReused());
 
 		if (!controller) {
-			controller = new ZoneEditorController(this.data.tileSheet, this._state.prefixedWith("editor-" + this._controllers.length));
+			controller = <ZoneEditorController>document.createElement(ZoneEditorController.TagName);
+			controller.tileSheet = this.data.tileSheet;
+			controller.state = this._state.prefixedWith("editor-" + this._controllers.length);
 			this._controllers.push(controller);
 		}
 
@@ -53,9 +55,10 @@ class ZoneInspector extends AbstractInspector {
 
 		const zones = <number[]>this._state.load("zones") || [];
 		zones.forEach(id => {
-			const state = this._state.prefixedWith("editor-" + this._controllers.length);
-			const controller = new ZoneEditorController(this.data.tileSheet, state);
+			const controller = <ZoneEditorController>document.createElement(ZoneEditorController.TagName);
+			controller.tileSheet = this.data.tileSheet;
 			controller.zone = this.data.currentData.zones[id];
+			controller.state = this._state.prefixedWith("editor-" + this._controllers.length);
 			this._controllers.push(controller);
 		});
 	}

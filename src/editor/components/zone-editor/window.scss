@@ -1,0 +1,13 @@
+@import "border";
+@import "~src/ui/components/window.scss";
+
+wf-zone-editor-window {
+	@extend wf-window;
+
+	> .content {
+		wf-zone-editor-sidebar {
+			width: 160px;
+			margin-right: 10px;
+		}
+	}
+}

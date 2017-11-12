@@ -1,13 +1,13 @@
 import Component from "src/ui/component";
-import ZoneLayer from "src/editor/components/zone-layer";
-import "./zone-editor.scss";
+import ZoneLayer from "./zone-layer";
 import { Zone } from "src/engine/objects";
 import TileSheet from "src/editor/tile-sheet";
 import { HEIGHT as TileHeight, WIDTH as TileWidth } from "src/engine/objects/tile";
 import { AbstractTool, NoTool } from "src/editor/tools";
+import "./view.scss";
 
-class ZoneEditor extends Component {
-	public static readonly TagName = "wf-zone-editor";
+class View extends Component {
+	public static readonly TagName = "wf-zone-editor-view";
 	public static readonly observedAttributes: string[] = [];
 	private _zone: Zone;
 	private _floor: ZoneLayer;
@@ -59,6 +59,8 @@ class ZoneEditor extends Component {
 		this._overlay.style.height = zone.size.height * TileHeight + "px";
 		this._overlay.width = zone.size.width * TileWidth * window.devicePixelRatio;
 		this._overlay.height = zone.size.height * TileHeight * window.devicePixelRatio;
+		this.style.width = 2 + zone.size.width * TileWidth + "px";
+		this.style.height = 2 + zone.size.height * TileHeight + "px";
 
 		if (this._tool) this._tool.activate(this._zone, this._overlay);
 	}
@@ -95,4 +97,4 @@ class ZoneEditor extends Component {
 	}
 }
 
-export default ZoneEditor;
+export default View;

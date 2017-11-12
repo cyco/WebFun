@@ -1,0 +1,9 @@
+@import "border";
+
+wf-zone-editor-sidebar {
+	@extend .inset-border-1px;
+
+	display: flex;
+	flex-direction: column;
+	overflow-y: auto;
+}

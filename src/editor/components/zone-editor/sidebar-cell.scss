@@ -1,0 +1,22 @@
+@import "border";
+
+wf-zone-editor-sidebar-cell {
+	@extend .inset-border-1px;
+	@extend .inset-border-inverted;
+
+	header {
+		height: 20px;
+		padding: 2px;
+		line-height: 14px;
+		font-size: 13px;
+
+		wf-editor-expand-button {
+			float: right;
+			font-size: 11px !important;
+		}
+	}
+
+	&.expanded header wf-editor-expand-button {
+		transform: rotate(90deg);
+	}
+}
