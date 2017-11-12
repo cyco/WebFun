@@ -1,0 +1,20 @@
+@import "./sidebar-cell";
+
+wf-zone-editor-sidebar-layers-cell {
+	@extend wf-zone-editor-sidebar-cell;
+	display: flex;
+	flex-direction: column;
+
+	header {
+		margin-bottom: 5px;
+	}
+
+	wf-zone-editor-sidebar-layer {
+		margin-left: 15px;
+	}
+
+	wf-list {
+		min-height: unset;
+		height: 72px;
+	}
+}

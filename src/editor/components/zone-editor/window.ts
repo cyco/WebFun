@@ -5,6 +5,8 @@ import TileSheet from "src/editor/tile-sheet";
 import { WindowManager } from "src/ui";
 import "./window.scss";
 import Sidebar from "./sidebar";
+import SidebarLayer from "src/editor/components/zone-editor/sidebar-layer";
+import Layer from "src/editor/components/zone-editor/layer";
 
 class Window extends WindowComponent {
 	public static readonly TagName = "wf-zone-editor-window";
@@ -20,6 +22,10 @@ class Window extends WindowComponent {
 		this.pinnable = true;
 
 		this._sidebar = <Sidebar>document.createElement(Sidebar.TagName);
+		this._sidebar.addEventListener(SidebarLayer.Event.DidToggleVisibility, (e: CustomEvent) => {
+			const layer = <Layer>e.detail.layer;
+			this._editor.setLayerVisible(layer.layer, layer.visible);
+		});
 		this._editor = <ZoneEditor>document.createElement(ZoneEditor.TagName);
 	}
 

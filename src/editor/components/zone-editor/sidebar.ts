@@ -1,7 +1,7 @@
 import "./sidebar.scss";
 import Component from "src/ui/component";
-import SidebarCell from "src/editor/components/zone-editor/sidebar-cell";
-
+import SidebarCell from "./sidebar-cell";
+import SidebarLayersCell from "./sidebar-layers-cell";
 
 class Sidebar extends Component {
 	static readonly TagName = "wf-zone-editor-sidebar";
@@ -15,8 +15,7 @@ class Sidebar extends Component {
 	constructor() {
 		super();
 
-		this._layers = <SidebarCell>document.createElement(SidebarCell.TagName);
-		this._layers.label = "Layers";
+		this._layers = <SidebarLayersCell>document.createElement(SidebarLayersCell.TagName);
 		this._tools = <SidebarCell>document.createElement(SidebarCell.TagName);
 		this._tools.label = "Tools";
 		this._tiles = <SidebarCell>document.createElement(SidebarCell.TagName);

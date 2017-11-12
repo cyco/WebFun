@@ -3,7 +3,7 @@ import ExpandButton from "src/editor/components/expand-button";
 import "./sidebar-cell.scss";
 
 class SidebarCell extends Component {
-	static readonly TagName = "wf-zone-editor-sidebar-cell";
+	static readonly TagName: string = "wf-zone-editor-sidebar-cell";
 	public expanded: boolean;
 	protected _state: Storage;
 	public content: void;
@@ -23,7 +23,7 @@ class SidebarCell extends Component {
 
 	connectedCallback() {
 		super.connectedCallback();
-		this.appendChild(this._header);
+		this.insertBefore(this._header, this.firstElementChild);
 	}
 
 	disconnectedCallback() {

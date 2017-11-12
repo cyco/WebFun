@@ -1,0 +1,28 @@
+@import "./sidebar-cell";
+@import "border";
+
+wf-zone-editor-sidebar-layer {
+	display: block;
+	@extend .inset-border-1px;
+
+	padding: 2px;
+
+	i.fa {
+		float: right;
+		font-size: 13px;
+		padding: 2px 5px;
+		color: #333333;
+
+		&:hover, &.on {
+			background-color: #9D9D9D;
+		}
+
+		&:active {
+			background-color: #696969;
+		}
+	}
+
+	&.selected {
+
+	}
+}
