@@ -722,7 +722,7 @@ class WorldGenerator {
 
 	ChooseItemFromZone(zone: Zone, item: Tile, fromAssignedItems: boolean) {
 		return this._traverseZoneUntil(zone, zone => {
-			const items = fromAssignedItems ? zone.assignedItems : zone.requiredItems;
+			const items = fromAssignedItems ? zone.goalItems : zone.requiredItems;
 			return items.contains(item);
 		}, false, identity);
 	}
@@ -742,7 +742,7 @@ class WorldGenerator {
 
 	GetUnusedRequiredItemForZoneRandomly(zone: Zone, isGoal: boolean): Tile {
 		return this._traverseZoneUntil(zone, (zone) => {
-			const items = isGoal ? zone.assignedItems : zone.requiredItems;
+			const items = isGoal ? zone.goalItems : zone.requiredItems;
 			const item = items.filter(id => !this.HasQuestRequiringItem(id));
 			if (!item.length) return null;
 

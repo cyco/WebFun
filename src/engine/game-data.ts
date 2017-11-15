@@ -15,7 +15,7 @@ import {
 	ZoneType
 } from "./objects";
 
-import { MutableChar, MutableTile } from "src/editor/objects";
+import { MutableAction, MutableChar, MutableTile } from "src/editor/objects";
 
 import { Planet } from "./types";
 import { Size } from "src/util";
@@ -127,7 +127,7 @@ class GameData {
 		zone.tileIDs = data.tileIds;
 		zone._hotspots = data.hotspots.map((d: any) => this._makeHotspot(d));
 		zone._npcs = data.izax.npcs.map((d: any) => new NPC(d));
-		zone.assignedItems = data.izax.assignedItems.map((id: number) => this._tiles[id]);
+		zone.goalItems = data.izax.goalItems.map((id: number) => this._tiles[id]);
 		zone.requiredItems = data.izax.requiredItems.map((id: number) => this._tiles[id]);
 		zone.providedItems = data.izx2.providedItems.map((id: number) => this._tiles[id]);
 		zone.puzzleNPCs = data.izx3.puzzleNpc.map((id: number) => this._tiles[id]);
@@ -178,11 +178,11 @@ class GameData {
 	}
 
 	_makeAction(data: any, idx: number): Action {
-		const action = new Action();
+		const action = new MutableAction();
 
-		(<any>action)._id = idx;
-		(<any>action)._conditions = data.conditions.map((data: any) => new Condition(data));
-		(<any>action)._instructions = data.instructions.map((data: any) => new Instruction(data));
+		action.id = idx;
+		action.conditions = data.conditions.map((data: any) => new Condition(data));
+		action.instructions = data.instructions.map((data: any) => new Instruction(data));
 
 		return action;
 	}

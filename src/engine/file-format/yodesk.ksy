@@ -213,12 +213,12 @@ types:
         type: u2
         repeat: expr
         repeat-expr: required_item_count
-      - id: assigned_item_count
+      - id: goal_item_count
         type: u2
-      - id: assigned_items
+      - id: goal_items
         type: u2
         repeat: expr
-        repeat-expr: assigned_item_count
+        repeat-expr: goal_item_count
   zone_auxiliary_2:
      seq:
       - id: marker

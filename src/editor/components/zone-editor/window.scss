@@ -9,5 +9,14 @@ wf-zone-editor-window {
 			width: 160px;
 			margin-right: 10px;
 		}
+
+		.tile {
+			display: inline-block;
+		}
+
+		.action {
+			@extend .inset-border-1px;
+			display: block;
+		}
 	}
 }

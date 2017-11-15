@@ -19,7 +19,6 @@ class WindowManager {
 	}
 
 	_onWindowClose(e: CustomEvent) {
-		console.log(e.target);
 		const window = <Window>e.target;
 
 		this._windows.splice(this._windows.indexOf(window), 1);

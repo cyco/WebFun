@@ -1,11 +1,11 @@
-import SidebarCell from "src/editor/components/zone-editor/sidebar-cell";
 import { Zone } from "src/engine/objects";
 import { List } from "src/ui/components";
 import "./sidebar-layers-cell.scss";
 import SidebarLayer from "./sidebar-layer";
 import Layer from "./layer";
+import Component from "src/ui/component";
 
-class SidebarLayersCell extends SidebarCell {
+class SidebarLayersCell extends Component {
 	static readonly TagName = "wf-zone-editor-sidebar-layers-cell";
 	private _layers: Layer[];
 	private _list: List<Layer>;
@@ -13,7 +13,6 @@ class SidebarLayersCell extends SidebarCell {
 	constructor() {
 		super();
 
-		this.label = "Layers";
 		this._list = <List<Layer>>document.createElement(List.TagName);
 		this._list.cell = <SidebarLayer>document.createElement(SidebarLayer.TagName);
 

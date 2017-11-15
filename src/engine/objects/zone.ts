@@ -28,7 +28,7 @@ class Zone {
 	public _hotspots: Hotspot[] = [];
 	public _tileStore: any = null;
 	public _zoneStore: any = null;
-	public assignedItems: Tile[] = [];
+	public goalItems: Tile[] = [];
 	public requiredItems: Tile[] = [];
 	public providedItems: Tile[] = [];
 	public puzzleNPCs: Tile[] = [];
