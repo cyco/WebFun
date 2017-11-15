@@ -15,7 +15,7 @@ import {
 	ZoneType
 } from "./objects";
 
-import { MutableAction, MutableChar, MutableTile } from "src/editor/objects";
+import { MutableAction, MutableChar, MutablePuzzle, MutableTile } from "src/editor/objects";
 
 import { Planet } from "./types";
 import { Size } from "src/util";
@@ -95,24 +95,24 @@ class GameData {
 	}
 
 	_makePuzzle(data: any, index: number): Puzzle {
-		const puzzle = new Puzzle();
+		const puzzle = new MutablePuzzle();
 
 		puzzle.id = index;
-		(<any>puzzle)._type = PuzzleType.fromNumber(data.type);
-		puzzle._unknown1 = data.unknown1;
-		puzzle._unknown2 = data.unknown2;
-		puzzle._unknown3 = data.unknown3;
+		puzzle.type = PuzzleType.fromNumber(data.type);
+		puzzle.unknown1 = data.unknown1;
+		puzzle.unknown2 = data.unknown2;
+		puzzle.unknown3 = data.unknown3;
 
-		(<any>puzzle)._strings = data.strings.map((s: {content: string}) => s.content);
-		(<any>puzzle).item1 = this._tiles[data.item1] ? this._tiles[data.item1] : null;
-		(<any>puzzle).item2 = this._tiles[data.item2] ? this._tiles[data.item2] : null;
+		puzzle.strings = data.strings.map((s: {content: string}) => s.content);
+		puzzle.item1 = this._tiles[data.item1] ? this._tiles[data.item1] : null;
+		puzzle.item2 = this._tiles[data.item2] ? this._tiles[data.item2] : null;
 
 		if (puzzle.type !== PuzzleType.End && puzzle.type !== PuzzleType.Disabled) {
-			(<any>puzzle).item2 = null;
+			puzzle.item2 = null;
 		}
 
 		if (index === 0xBD || index === 0xC5)
-			(<any>puzzle)._type = PuzzleType.Disabled;
+			puzzle.type = PuzzleType.Disabled;
 
 		return puzzle;
 	}
