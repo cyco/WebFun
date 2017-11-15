@@ -52,7 +52,7 @@ class GameDataSerializer {
 		stream.writeUint16(data.zones.length);
 
 		data.zones.forEach((zone: Zone, index: number) => {
-			const izaxSize = 8 + 2 + 2 + zone.npcs.length * 44 + 2 + 2 * zone.requiredItems.length + 2 + 2 * zone.assignedItems.length;
+			const izaxSize = 8 + 2 + 2 + zone.npcs.length * 44 + 2 + 2 * zone.requiredItems.length + 2 + 2 * zone.goalItems.length;
 			const izx2Size = 8 + 2 + 2 * zone.providedItems.length;
 			const izx3Size = 8 + 2 + 2 * zone.puzzleNPCs.length;
 			const izx4Size = 2;
@@ -110,8 +110,8 @@ class GameDataSerializer {
 
 			stream.writeUint16(zone.requiredItems.length);
 			stream.writeUint16Array(zone.requiredItems.map(i => i.id));
-			stream.writeUint16(zone.assignedItems.length);
-			stream.writeUint16Array(zone.assignedItems.map(i => i.id));
+			stream.writeUint16(zone.goalItems.length);
+			stream.writeUint16Array(zone.goalItems.map(i => i.id));
 
 			stream.writeCharacters("IZX2");
 			stream.writeUint32(izx2Size);

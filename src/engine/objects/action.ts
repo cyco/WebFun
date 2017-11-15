@@ -4,11 +4,14 @@ import Instruction from "./instruction";
 class Action {
 	public instructionPointer: number = 0;
 	public enabled: boolean = true;
-	public name: string = "";
-	public debug: any = {};
-	private _id: number = -1;
-	private _conditions: Condition[] = [];
-	private _instructions: Instruction[] = [];
+	protected _name: string = "";
+	protected _id: number = -1;
+	protected _conditions: Condition[] = [];
+	protected _instructions: Instruction[] = [];
+
+	get name() {
+		return this._name;
+	}
 
 	get id() {
 		return this._id;

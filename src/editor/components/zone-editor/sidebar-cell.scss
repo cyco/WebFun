@@ -1,6 +1,6 @@
 @import "border";
 
-$header-height: 20px;
+$header-height: 25px;
 
 wf-zone-editor-sidebar-cell {
 	@extend .inset-border-1px;
@@ -8,7 +8,7 @@ wf-zone-editor-sidebar-cell {
 
 	header {
 		height: $header-height;
-		padding: 2px;
+		padding: 4px 2px;
 		line-height: 14px;
 
 		wf-editor-expand-button {

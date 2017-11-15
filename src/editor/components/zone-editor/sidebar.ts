@@ -1,49 +1,30 @@
 import "./sidebar.scss";
 import Component from "src/ui/component";
 import SidebarCell from "./sidebar-cell";
-import SidebarLayersCell from "./sidebar-layers-cell";
 
 class Sidebar extends Component {
 	static readonly TagName = "wf-zone-editor-sidebar";
 	private _state: Storage;
 
-	private _layers: SidebarCell;
-	private _tools: SidebarCell;
-	private _tiles: SidebarCell;
-	private _actions: SidebarCell;
+	addEntry(node: HTMLElement|HTMLElement[], name: string): SidebarCell {
+		const cell = <SidebarCell>document.createElement(SidebarCell.TagName);
+		cell.name = name;
 
-	constructor() {
-		super();
+		if (this.state) cell.expanded = this.state.load("name") || false;
 
-		this._layers = <SidebarLayersCell>document.createElement(SidebarLayersCell.TagName);
-		this._tools = <SidebarCell>document.createElement(SidebarCell.TagName);
-		this._tools.label = "Tools";
-		this._tiles = <SidebarCell>document.createElement(SidebarCell.TagName);
-		this._tiles.label = "Tiles";
-		this._actions = <SidebarCell>document.createElement(SidebarCell.TagName);
-		this._actions.label = "Actions";
+		if (node instanceof HTMLElement) {
+			cell.appendChild(node);
+		} else node.forEach(node => cell.appendChild(node));
+
+		this.appendChild(cell);
+		return cell;
 	}
 
-	connectedCallback() {
-		this.appendChild(this._layers);
-		this.appendChild(this._tools);
-		this.appendChild(this._tiles);
-		this.appendChild(this._actions);
-	}
-
-	disconnectedCallback() {
-		this._layers.remove();
-		this._tools.remove();
-		this._tiles.remove();
-		this._actions.remove();
-	}
-
-	set state(state) {
+	set state(state: Storage) {
 		this._state = state;
-		this._layers.state = state.prefixedWith("layers");
-		this._tools.state = state.prefixedWith("tools");
-		this._tiles.state = state.prefixedWith("tiles");
-		this._actions.state = state.prefixedWith("ations");
+
+		const cells = <SidebarCell[]>Array.from(this.children).filter(c => c instanceof SidebarCell);
+		cells.forEach(c => c.state = this.state.prefixedWith(c.name));
 	}
 
 	get state() {

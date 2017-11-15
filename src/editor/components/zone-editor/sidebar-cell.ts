@@ -31,11 +31,11 @@ class SidebarCell extends Component {
 		super.disconnectedCallback();
 	}
 
-	public set label(label: string) {
-		this._header.firstElementChild.textContent = label;
+	public set name(name: string) {
+		this._header.firstElementChild.textContent = name;
 	}
 
-	public get label() {
+	public get name() {
 		return this._header.firstElementChild.textContent;
 	}
 
@@ -49,6 +49,11 @@ class SidebarCell extends Component {
 
 	public get state() {
 		return this._state;
+	}
+
+	clear() {
+		this.textContent = "";
+		this.appendChild(this._header);
 	}
 }
 
