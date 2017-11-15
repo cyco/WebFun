@@ -11,6 +11,9 @@ import SidebarLayersCell from "src/editor/components/zone-editor/sidebar-layers-
 import Tile from "src/engine/objects/tile";
 import SidebarCell from "src/editor/components/zone-editor/sidebar-cell";
 import Action from "src/engine/objects/action";
+import NoTool from "src/editor/tools/no-tool";
+import PencilTool from "src/editor/tools/pencil-tool";
+import AbstractTool from "src/editor/tools/abstract-tool";
 
 class Window extends WindowComponent {
 	public static readonly TagName = "wf-zone-editor-window";
@@ -28,6 +31,7 @@ class Window extends WindowComponent {
 	private _goalItemsCell: SidebarCell;
 	private _puzzleNPCsCell: SidebarCell;
 	private _actionsCell: SidebarCell;
+	private _toolsCell: SidebarCell;
 
 	constructor() {
 		super();
@@ -43,6 +47,12 @@ class Window extends WindowComponent {
 		const layers = document.createElement(SidebarLayersCell.TagName);
 		this._sidebar.addEntry(layers, "Layers");
 
+		const tools = [
+			this._buildToolItem("None", "", new NoTool()),
+			this._buildToolItem("Pencil", "fa-pencil", new PencilTool())
+		];
+		this._toolsCell = this._sidebar.addEntry(tools, "Tools");
+
 		this._requiredItems = document.createElement("div");
 		this._requiredItemsCell = this._sidebar.addEntry(this._requiredItems, "Required Items");
 		this._providedItems = document.createElement("div");
@@ -52,6 +62,7 @@ class Window extends WindowComponent {
 		this._puzzleNPCs = document.createElement("div");
 		this._puzzleNPCsCell = this._sidebar.addEntry(this._puzzleNPCs, "NPCs");
 		this._actionsCell = this._sidebar.addEntry([], "Actions");
+
 
 		this._editor = <ZoneEditor>document.createElement(ZoneEditor.TagName);
 	}
@@ -141,6 +152,18 @@ class Window extends WindowComponent {
 		const node = document.createElement("div");
 		node.className = "tile " + this._tileSheet.cssClassesForTile(tile.id).join(" ");
 		return node;
+	}
+
+	private _buildToolItem(name: string, faIconClass: string, tool: AbstractTool) {
+		const thing = document.createElement("i");
+		thing.className = "fa tool-item-thing";
+		if (faIconClass) thing.classList.add(faIconClass);
+		thing.title = name;
+		thing.onclick = () => this._editor.activateTool(tool);
+		tool.addEventListener(AbstractTool.Event.DidActivate, () => thing.classList.add("active"));
+		tool.addEventListener(AbstractTool.Event.DidDeactivate, () => thing.classList.remove("active"));
+
+		return thing;
 	}
 
 	get zone() {

@@ -3,13 +3,23 @@
 $border-size: 2px;
 
 .inset-border {
-	border: solid $border-dark;
+	border-style: solid;
+}
+
+.inset-border {
+	@extend .inset-border;
+
+	border-left-color: $border-dark;
+	border-top-color: $border-dark;
 	border-right-color: $border-light;
 	border-bottom-color: $border-light;
 }
 
 .inset-border-inverted {
-	border: solid $border-light;
+	@extend .inset-border;
+
+	border-left-color: $border-light;
+	border-top-color: $border-light;
 	border-right-color: $border-dark;
 	border-bottom-color: $border-dark;
 }
