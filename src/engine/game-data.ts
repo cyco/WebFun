@@ -15,7 +15,7 @@ import {
 	ZoneType
 } from "./objects";
 
-import { MutableAction, MutableChar, MutablePuzzle, MutableTile } from "src/editor/objects";
+import { MutableAction, MutableChar, MutablePuzzle, MutableTile, MutableZone } from "src/editor/objects";
 
 import { Planet } from "./types";
 import { Size } from "src/util";
@@ -118,15 +118,15 @@ class GameData {
 	}
 
 	_makeZone(data: any): Zone {
-		const zone = new Zone();
+		const zone = new MutableZone();
 
 		zone.id = data.index;
-		zone._planet = Planet.fromNumber(data.planet);
-		(<any>zone)._size = new Size(data.width, data.height);
-		zone._type = ZoneType.fromNumber(data.type);
+		zone.planet = Planet.fromNumber(data.planet);
+		zone.size = new Size(data.width, data.height);
+		zone.type = ZoneType.fromNumber(data.type);
 		zone.tileIDs = data.tileIds;
-		zone._hotspots = data.hotspots.map((d: any) => this._makeHotspot(d));
-		zone._npcs = data.izax.npcs.map((d: any) => new NPC(d));
+		zone.hotspots = data.hotspots.map((d: any) => this._makeHotspot(d));
+		zone.npcs = data.izax.npcs.map((d: any) => new NPC(d));
 		zone.goalItems = data.izax.goalItems.map((id: number) => this._tiles[id]);
 		zone.requiredItems = data.izax.requiredItems.map((id: number) => this._tiles[id]);
 		zone.providedItems = data.izx2.providedItems.map((id: number) => this._tiles[id]);
@@ -134,9 +134,9 @@ class GameData {
 		zone.izaxUnknown = data.izax.unknownCount;
 		zone.izx4Unknown = data.izx4.unknown;
 
-		zone._actions = data.actions.map((data: any, i: number) => this._makeAction(data, i));
-		zone._tileStore = this.tiles;
-		zone._zoneStore = this.zones;
+		zone.actions = data.actions.map((data: any, i: number) => this._makeAction(data, i));
+		zone.tileStore = this.tiles;
+		zone.zoneStore = this.zones;
 
 		return zone;
 	}

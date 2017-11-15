@@ -18,58 +18,31 @@ class Zone {
 
 	public visited: boolean = false;
 	public solved: boolean = false;
-	public _npcs: NPC[] = [];
-	public id: number = -1;
-	public _name: string = "";
-	public _planet: Planet = Planet.NONE;
-	private _size: Size;
-	public _type: Type;
-	public tileIDs: Int16Array = new Int16Array(0);
-	public _hotspots: Hotspot[] = [];
-	public _tileStore: any = null;
-	public _zoneStore: any = null;
-	public goalItems: Tile[] = [];
-	public requiredItems: Tile[] = [];
-	public providedItems: Tile[] = [];
-	public puzzleNPCs: Tile[] = [];
-	public izx4Unknown: number;
-	public izaxUnknown: number;
-	public _actions: Action[] = [];
 	public actionsInitialized: boolean = false;
 	public counter: number = 0;
 	public random: number = 0;
 	public padding: number = 0;
 
-	get name() {
-		return this._name;
-	}
-
-	get type() {
-		return this._type;
-	}
-
-	get hotspots(): Hotspot[] {
-		return this._hotspots;
-	}
-
-	get actions() {
-		return this._actions;
-	}
-
-	get npcs() {
-		return this._npcs;
-	}
+	protected _npcs: NPC[] = [];
+	protected _id: number = -1;
+	protected _name: string = "";
+	protected _planet: Planet = Planet.NONE;
+	protected _size: Size;
+	protected _type: Type;
+	protected _tileIDs: Int16Array = new Int16Array(0);
+	protected _hotspots: Hotspot[] = [];
+	protected _tileStore: any = null;
+	protected _zoneStore: any = null;
+	protected _goalItems: Tile[] = [];
+	protected _requiredItems: Tile[] = [];
+	protected _providedItems: Tile[] = [];
+	protected _puzzleNPCs: Tile[] = [];
+	protected _izx4Unknown: number;
+	protected _izaxUnknown: number;
+	protected _actions: Action[] = [];
 
 	get doors(): Hotspot[] {
 		return this._hotspots.filter((hotspot) => hotspot.type === HotspotType.DoorIn && hotspot.arg !== -1);
-	}
-
-	get planet() {
-		return this._planet;
-	}
-
-	set planet(p) {
-		this._planet = p;
 	}
 
 	getLocatorDescription() {
@@ -197,12 +170,76 @@ class Zone {
 
 	}
 
-	public get size() {
+	public get bounds() {
+		return new Rectangle(new Point(0, 0), this._size);
+	}
+
+	get npcs() {
+		return this._npcs;
+	}
+
+	get id() {
+		return this._id;
+	}
+
+	get name() {
+		return this._name;
+	}
+
+	get planet() {
+		return this._planet;
+	}
+
+	get size() {
 		return this._size;
 	}
 
-	public get bounds() {
-		return new Rectangle(new Point(0, 0), this._size);
+	get type() {
+		return this._type;
+	}
+
+	get tileIDs() {
+		return this._tileIDs;
+	}
+
+	get hotspots() {
+		return this._hotspots;
+	}
+
+	get tileStore() {
+		return this._tileStore;
+	}
+
+	get zoneStore() {
+		return this._zoneStore;
+	}
+
+	get goalItems() {
+		return this._goalItems;
+	}
+
+	get requiredItems() {
+		return this._requiredItems;
+	}
+
+	get providedItems() {
+		return this._providedItems;
+	}
+
+	get puzzleNPCs() {
+		return this._puzzleNPCs;
+	}
+
+	get izx4Unknown() {
+		return this._izx4Unknown;
+	}
+
+	get izaxUnknown() {
+		return this._izaxUnknown;
+	}
+
+	get actions() {
+		return this._actions;
 	}
 }
 
