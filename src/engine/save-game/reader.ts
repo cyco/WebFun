@@ -5,6 +5,7 @@ import { Planet, WorldSize } from "../types";
 import SaveState from "./save-state";
 import World from "./world";
 import WorldItem from "./world-item";
+import MutableZone from "src/editor/objects/mutable-zone";
 
 class Reader {
 	_data: GameData;
@@ -108,14 +109,14 @@ class Reader {
 		});
 	}
 
-	_readZone(zone: Zone, visited: boolean, stream: InputStream): void {
+	_readZone(zone: MutableZone, visited: boolean, stream: InputStream): void {
 		if (visited) {
 			zone.counter = stream.getUint32();
 			zone.random = stream.getUint32();
 			stream.getUint32(); // field_83C
 			stream.getUint32(); // field_840
 			zone.padding = stream.getUint16();
-			zone._planet = Planet.fromNumber(stream.getUint16());
+			zone.planet = Planet.fromNumber(stream.getUint16());
 
 			zone.tileIDs = stream.getInt16Array(zone.size.area * Zone.LAYERS);
 		}
