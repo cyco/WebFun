@@ -1,5 +1,5 @@
 import AbstractTool from "./abstract-tool";
 import NoTool from "./no-tool";
-import TileTool from "./tile-tool";
+import PencilTool from "./pencil-tool";
 
-export { AbstractTool, NoTool, TileTool };
+export { AbstractTool, NoTool, PencilTool };

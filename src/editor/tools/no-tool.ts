@@ -17,6 +17,13 @@ class NoTool extends AbstractTool {
 	}
 
 	public deactivate(): void {
+		const zone = this.zone;
+		if (zone) {
+			const ctx = this.canvas.getContext("2d");
+			ctx.setTransform(window.devicePixelRatio, 0, 0, window.devicePixelRatio, 0, 0);
+			ctx.clearRect(0, 0, zone.size.width * TileWidth, zone.size.height * TileHeight);
+		}
+
 		this.canvas.removeEventListener("mousemove", this.mouseMoveHandler);
 		this.canvas.removeEventListener("mouseenter", this.mouseMoveHandler);
 		this.canvas.removeEventListener("mouveleave", this.mouseMoveHandler);

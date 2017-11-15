@@ -107,6 +107,18 @@ class View extends Component {
 		if (idx === Zone.Layer.Floor) return this._floor;
 		console.assert(false, "Invalid layer encountered");
 	}
+
+	public activateTool(tool: AbstractTool) {
+		if (this._tool) {
+			this._tool.deactivate();
+		}
+
+		this._tool = tool;
+
+		if (this._tool) {
+			this._tool.activate(this._zone, this._overlay);
+		}
+	}
 }
 
 export default View;
