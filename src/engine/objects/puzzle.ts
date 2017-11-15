@@ -6,23 +6,15 @@ import Tile from "./tile";
 export { Type };
 
 class Puzzle {
-	public id: number = -1;
-	public readonly item1: Tile;
-	public readonly item2: Tile;
-	private _strings: string[] = ["", "", "", "", ""];
-	private _name: string = "";
-	private _type: PuzzleType = null;
-	public _unknown1: number = null;
-	public _unknown2: number = null;
-	public _unknown3: number = null;
-
-	get type(): PuzzleType {
-		return this._type;
-	}
-
-	get strings(): string[] {
-		return this._strings;
-	}
+	protected _id: number = -1;
+	protected _item1: Tile;
+	protected _item2: Tile;
+	protected _strings: string[] = ["", "", "", "", ""];
+	protected _name: string = "";
+	protected _type: PuzzleType = null;
+	protected _unknown1: number = null;
+	protected _unknown2: number = null;
+	protected _unknown3: number = null;
 
 	public isGoalOnPlanet(planet: Planet): boolean {
 		const id = this.id;
@@ -66,6 +58,43 @@ class Puzzle {
 		}
 
 		return false;
+	}
+
+
+	get id() {
+		return this._id;
+	}
+
+	get item1() {
+		return this._item1;
+	}
+
+	get item2() {
+		return this._item2;
+	}
+
+	get strings() {
+		return this._strings;
+	}
+
+	get name() {
+		return this._name;
+	}
+
+	get type() {
+		return this._type;
+	}
+
+	get unknown1() {
+		return this._unknown1;
+	}
+
+	get unknown2() {
+		return this._unknown2;
+	}
+
+	get unknown3() {
+		return this._unknown3;
 	}
 }
 
