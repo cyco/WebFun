@@ -14,6 +14,9 @@ import Action from "src/engine/objects/action";
 import NoTool from "src/editor/tools/no-tool";
 import PencilTool from "src/editor/tools/pencil-tool";
 import AbstractTool from "src/editor/tools/abstract-tool";
+import RectangleTool from "src/editor/tools/rectangle-tool";
+import PaintBucketTool from "src/editor/tools/paint-bucket-tool";
+import HotspotTool from "src/editor/tools/hotspot-tool";
 
 class Window extends WindowComponent {
 	public static readonly TagName = "wf-zone-editor-window";
@@ -49,7 +52,10 @@ class Window extends WindowComponent {
 
 		const tools = [
 			this._buildToolItem("None", "", new NoTool()),
-			this._buildToolItem("Pencil", "fa-pencil", new PencilTool())
+			this._buildToolItem("Pencil", "fa-pencil", new PencilTool()),
+			this._buildToolItem("Rectangle", "fa-rectangle", new RectangleTool()),
+			this._buildToolItem("Paint Bucket", "fa-pencil", new PaintBucketTool()),
+			this._buildToolItem("Hotspots", "fa-mouse-pointer", new HotspotTool())
 		];
 		this._toolsCell = this._sidebar.addEntry(tools, "Tools");
 
