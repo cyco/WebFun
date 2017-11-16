@@ -3,6 +3,7 @@ import { default as Zone } from "src/engine/objects/zone";
 import { HEIGHT as TileHeight, WIDTH as TileWidth } from "src/engine/objects/tile";
 import TileSheet from "src/editor/tile-sheet";
 import "./zone-layer.scss";
+import { Point } from "src/util";
 
 class ZoneLayer extends Component {
 	public static readonly TagName = "wf-zone-layer";
@@ -46,6 +47,26 @@ class ZoneLayer extends Component {
 				ctx.drawImage(image, rect.minX, rect.minY, rect.size.width, rect.size.height, x * TileWidth, y * TileHeight, TileWidth, TileHeight);
 			}
 		}
+	}
+
+	public update(points: Point[]) {
+		if (this._layer === undefined) return;
+		if (!this._zone) return;
+		if (!this._tileSheet) return;
+
+		const tileSheet = this._tileSheet;
+		const image = tileSheet.sheetImage;
+		const zone = this._zone;
+		const ctx = this._canvas.getContext("2d");
+		points.forEach(p => {
+			const tile = zone.getTile(p.x, p.y, this._layer);
+			ctx.clearRect(p.x * TileWidth, p.y * TileHeight, TileWidth, TileHeight);
+
+			if (!tile) return;
+
+			const rect = tileSheet.rectangleForEntry(tile.id);
+			ctx.drawImage(image, rect.minX, rect.minY, rect.size.width, rect.size.height, p.x * TileWidth, p.y * TileHeight, TileWidth, TileHeight);
+		});
 	}
 
 	get zone() {

@@ -4,6 +4,7 @@ import { Zone } from "src/engine/objects";
 import TileSheet from "src/editor/tile-sheet";
 import { HEIGHT as TileHeight, WIDTH as TileWidth } from "src/engine/objects/tile";
 import { AbstractTool, NoTool } from "src/editor/tools";
+import { Point } from "src/util";
 import "./view.scss";
 
 class View extends Component {
@@ -117,8 +118,13 @@ class View extends Component {
 		this._tool = tool;
 
 		if (this._tool) {
+			this._tool.layer = this._currentLayer;
 			this._tool.activate(this._zone, this._overlay);
 		}
+	}
+
+	public redraw(points: Point[]): void {
+		points.forEach(p => this._layerByIdx(p.z).update([p]));
 	}
 
 	set currentLayer(s: number) {
