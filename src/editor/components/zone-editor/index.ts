@@ -5,8 +5,10 @@ import Sidebar from "./sidebar";
 import SidebarCell from "./sidebar-cell";
 import SidebarLayersCell from "./sidebar-layers-cell";
 import SidebarLayer from "./sidebar-layer";
+import Tool from "./tool";
 
 export {
+	Tool,
 	View,
 	ZoneLayer,
 	Window,

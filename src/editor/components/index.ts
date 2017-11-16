@@ -13,12 +13,14 @@ import {
 	SidebarCell as ZoneEditorSidebarCell,
 	SidebarLayer as ZoneEditorSidebarLayer,
 	SidebarLayersCell as ZoneEditorSidebarLayerCell,
+	Tool as ZoneEditorTool,
 	View as ZoneEditorView,
 	Window as ZoneEditorWindow,
 	ZoneLayer
 } from "./zone-editor";
 
 export {
+	ZoneEditorTool,
 	ZoneEditorSidebarLayer,
 	ZoneEditorSidebarLayerCell,
 	ZoneEditorSidebarCell,
