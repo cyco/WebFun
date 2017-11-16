@@ -12,7 +12,7 @@ class MainWindow extends Window {
 	public static TagName = "wf-main-window";
 	private _ammoView: Ammo;
 	private _engine: Engine = null;
-	private _handlers: {[_: string]: Function};
+	private _handlers: {[_: string]: EventListener};
 	private _healthView: Health;
 	private _inventory: InventoryComponent;
 	private _locationView: Location;
@@ -84,7 +84,7 @@ class MainWindow extends Window {
 		this._handlers = {};
 		this._handlers[Events.AmmoChanged] = () => this._updateAmmo();
 		this._handlers[Events.WeaponChanged] = () => this._updateWeapon();
-		this._handlers[Events.LocationChanged] = ({detail}: {detail: any}) => this._updateLocation(detail);
+		this._handlers[Events.LocationChanged] = ({detail}: CustomEvent) => this._updateLocation(detail);
 
 		this._handlers.healthChanged = () => this._updateHealth();
 	}
