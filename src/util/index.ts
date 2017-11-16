@@ -33,6 +33,7 @@ import { rand, randmod, srand } from "./random";
 import polar2xy from "./polar2xy";
 import deg2rad from "./deg2rad";
 import DiscardingStorage from "./discarding-storage";
+import Event from "./event";
 
 export {
 	Color,
@@ -76,5 +77,6 @@ export {
 	Stream,
 	VerticalPointRange,
 	xy2polar,
-	DiscardingStorage
+	DiscardingStorage,
+	Event
 };
