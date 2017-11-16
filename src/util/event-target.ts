@@ -1,13 +1,13 @@
 let globalInstance: EventTarget;
 
 class EventTarget {
-	private listeners: {[_: string]: Function[]} = {};
+	private listeners: {[_: string]: (EventListener|EventListenerObject)[]} = {};
 
-	static addEventListener(type: string, listener: Function): void {
+	static addEventListener(type: string, listener: EventListener|EventListenerObject): void {
 		globalInstance.addEventListener(type, listener);
 	}
 
-	static removeEventListener(type: string, listener: Function): void {
+	static removeEventListener(type: string, listener: EventListener|EventListenerObject): void {
 		globalInstance.removeEventListener(type, listener);
 	}
 
@@ -15,14 +15,14 @@ class EventTarget {
 		globalInstance.dispatchEvent(type, detail);
 	}
 
-	addEventListener(type: string, listener: Function): void {
+	addEventListener(type: string, listener: EventListener|EventListenerObject): void {
 		let place = this.listeners[type];
 		if (!place)
 			place = this.listeners[type] = [];
 		place.splice(0, 0, listener);
 	}
 
-	removeEventListener(type: string, listener: Function): void {
+	removeEventListener(type: string, listener: EventListener|EventListenerObject): void {
 		if (!type) return;
 
 		if (listener) {
@@ -48,7 +48,10 @@ class EventTarget {
 		let listeners = this.listeners[type instanceof Event ? event.type : type];
 		for (let i in listeners) {
 			if (!listeners.hasOwnProperty(i)) continue;
-			listeners[i].call(this, event);
+			const listener = listeners[i];
+			if (listener instanceof Function) {
+				listener.call(this, event);
+			} else listener.handleEvent(event);
 		}
 
 		if (this !== globalInstance) {
