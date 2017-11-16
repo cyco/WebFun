@@ -20,7 +20,7 @@ const MinRows = 7;
 class InventoryComponent extends Component {
 	public static TagName = "wf-inventory";
 	private _inventory: Inventory;
-	private _inventoryChangedHandler: Function;
+	private _inventoryChangedHandler: EventListener;
 
 	constructor() {
 		super();
