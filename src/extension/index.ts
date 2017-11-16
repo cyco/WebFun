@@ -12,6 +12,7 @@ import * as String from "./string";
 import * as Uint16Array from "./uint16-array";
 import * as Uint8Array from "./uint8-array";
 import * as RegExp from "./regexp";
+import * as MouseEvent from "./mouse-event";
 
 export {
 	Array,
@@ -26,5 +27,6 @@ export {
 	Uint16Array,
 	Uint8Array,
 	HTMLCollection,
-	RegExp
+	RegExp,
+	MouseEvent
 };

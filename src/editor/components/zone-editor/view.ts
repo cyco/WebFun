@@ -16,6 +16,7 @@ class View extends Component {
 	private _overlay: HTMLCanvasElement;
 	private _tileSheet: TileSheet;
 	private _tool: AbstractTool;
+	private _currentLayer: number = 0;
 
 	constructor() {
 		super();
@@ -118,6 +119,15 @@ class View extends Component {
 		if (this._tool) {
 			this._tool.activate(this._zone, this._overlay);
 		}
+	}
+
+	set currentLayer(s: number) {
+		this._currentLayer = s;
+		if (this._tool) this._tool.layer = this._currentLayer;
+	}
+
+	get currentLayer(): number {
+		return this._currentLayer;
 	}
 }
 

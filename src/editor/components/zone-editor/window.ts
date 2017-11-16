@@ -17,6 +17,7 @@ import AbstractTool from "src/editor/tools/abstract-tool";
 import RectangleTool from "src/editor/tools/rectangle-tool";
 import PaintBucketTool from "src/editor/tools/paint-bucket-tool";
 import HotspotTool from "src/editor/tools/hotspot-tool";
+import ToolComponent from "./tool";
 
 class Window extends WindowComponent {
 	public static readonly TagName = "wf-zone-editor-window";
@@ -50,12 +51,15 @@ class Window extends WindowComponent {
 		const layers = document.createElement(SidebarLayersCell.TagName);
 		this._sidebar.addEntry(layers, "Layers");
 
+		this._editor = <ZoneEditor>document.createElement(ZoneEditor.TagName);
+
+		const initialTool = new NoTool();
 		const tools = [
-			this._buildToolItem("None", "", new NoTool()),
-			this._buildToolItem("Pencil", "fa-pencil", new PencilTool()),
-			this._buildToolItem("Rectangle", "fa-rectangle", new RectangleTool()),
-			this._buildToolItem("Paint Bucket", "fa-pencil", new PaintBucketTool()),
-			this._buildToolItem("Hotspots", "fa-mouse-pointer", new HotspotTool())
+			this._buildToolItem(initialTool),
+			this._buildToolItem(new PencilTool()),
+			this._buildToolItem(new RectangleTool()),
+			this._buildToolItem(new PaintBucketTool()),
+			this._buildToolItem(new HotspotTool())
 		];
 		this._toolsCell = this._sidebar.addEntry(tools, "Tools");
 
@@ -69,8 +73,7 @@ class Window extends WindowComponent {
 		this._puzzleNPCsCell = this._sidebar.addEntry(this._puzzleNPCs, "NPCs");
 		this._actionsCell = this._sidebar.addEntry([], "Actions");
 
-
-		this._editor = <ZoneEditor>document.createElement(ZoneEditor.TagName);
+		this._editor.activateTool(initialTool);
 	}
 
 	connectedCallback() {
@@ -160,15 +163,10 @@ class Window extends WindowComponent {
 		return node;
 	}
 
-	private _buildToolItem(name: string, faIconClass: string, tool: AbstractTool) {
-		const thing = document.createElement("i");
-		thing.className = "fa tool-item-thing";
-		if (faIconClass) thing.classList.add(faIconClass);
-		thing.title = name;
-		thing.onclick = () => this._editor.activateTool(tool);
-		tool.addEventListener(AbstractTool.Event.DidActivate, () => thing.classList.add("active"));
-		tool.addEventListener(AbstractTool.Event.DidDeactivate, () => thing.classList.remove("active"));
-
+	private _buildToolItem(tool: AbstractTool) {
+		const thing = <ToolComponent>document.createElement(ToolComponent.TagName);
+		thing.tool = tool;
+		thing.editor = this._editor;
 		return thing;
 	}
 

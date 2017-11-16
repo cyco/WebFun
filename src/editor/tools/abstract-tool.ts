@@ -10,8 +10,12 @@ export const Event = {
 
 abstract class AbstractTool extends EventTarget {
 	public static readonly Event = Event;
+	public abstract readonly name: string;
+	public abstract readonly icon: string;
+
 	protected zone: Zone;
 	protected canvas: HTMLCanvasElement;
+	public layer: number;
 
 	public activate(zone: Zone, overlay: HTMLCanvasElement): void {
 		this.dispatchEvent(new CustomEvent(Event.WillActivate));
