@@ -15,7 +15,7 @@ import {
 	ZoneType
 } from "./objects";
 
-import { MutableAction, MutableChar, MutablePuzzle, MutableTile, MutableZone } from "src/editor/objects";
+import { MutableAction, MutableChar, MutablePuzzle, MutableTile, MutableZone } from "src/engine/mutable-objects";
 
 import { Planet } from "./types";
 import { Size } from "src/util";

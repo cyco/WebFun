@@ -3,7 +3,7 @@ import { Char, CharMovementType, CharType } from "src/engine/objects";
 import CharacterFramePreview from "./character-frame-preview";
 import TileSheet from "../tile-sheet";
 import "./character-details.scss";
-import { MutableChar } from "src/editor/objects";
+import { MutableChar } from "src/engine/mutable-objects";
 
 class CharacterDetails extends Component {
 	public static readonly TagName = "wf-character-details";
