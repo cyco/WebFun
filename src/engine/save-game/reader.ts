@@ -5,7 +5,7 @@ import { Planet, WorldSize } from "../types";
 import SaveState from "./save-state";
 import World from "./world";
 import WorldItem from "./world-item";
-import MutableZone from "src/editor/objects/mutable-zone";
+import { MutableZone } from "src/engine/mutable-objects";
 
 class Reader {
 	_data: GameData;
