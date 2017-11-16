@@ -10,8 +10,14 @@ class ZoneLayer extends Component {
 	public static readonly observedAttributes: string[] = [];
 	private _zone: Zone;
 	private _layer: number;
-	private _canvas = <HTMLCanvasElement>document.createElement("canvas");
+	private _canvas: HTMLCanvasElement;
 	private _tileSheet: TileSheet;
+
+	constructor() {
+		super();
+
+		this._canvas = document.createElement("canvas");
+	}
 
 	connectedCallback() {
 		this.appendChild(this._canvas);
@@ -26,6 +32,9 @@ class ZoneLayer extends Component {
 		this._canvas.style.width = zone.size.width * TileWidth + "px";
 		this._canvas.style.height = zone.size.height * TileHeight + "px";
 
+		const ctx = this._canvas.getContext("2d");
+		ctx.setTransform(TileWidth, 0, 0, TileHeight, 0, 0);
+
 		if (this.isConnected) this.draw();
 	}
 
@@ -38,13 +47,14 @@ class ZoneLayer extends Component {
 		const image = tileSheet.sheetImage;
 		const zone = this._zone;
 		const ctx = this._canvas.getContext("2d");
+
 		for (let y = 0; y < zone.size.height; y++) {
 			for (let x = 0; x < zone.size.width; x++) {
 				const tile = zone.getTile(x, y, this._layer);
 				if (!tile) continue;
 
 				const rect = tileSheet.rectangleForEntry(tile.id);
-				ctx.drawImage(image, rect.minX, rect.minY, rect.size.width, rect.size.height, x * TileWidth, y * TileHeight, TileWidth, TileHeight);
+				ctx.drawImage(image, rect.minX, rect.minY, rect.size.width, rect.size.height, x, y, 1, 1);
 			}
 		}
 	}
@@ -60,12 +70,12 @@ class ZoneLayer extends Component {
 		const ctx = this._canvas.getContext("2d");
 		points.forEach(p => {
 			const tile = zone.getTile(p.x, p.y, this._layer);
-			ctx.clearRect(p.x * TileWidth, p.y * TileHeight, TileWidth, TileHeight);
+			ctx.clearRect(p.x, p.y, 1, 1);
 
 			if (!tile) return;
 
 			const rect = tileSheet.rectangleForEntry(tile.id);
-			ctx.drawImage(image, rect.minX, rect.minY, rect.size.width, rect.size.height, p.x * TileWidth, p.y * TileHeight, TileWidth, TileHeight);
+			ctx.drawImage(image, rect.minX, rect.minY, rect.size.width, rect.size.height, p.x, p.y, 1, 1);
 		});
 	}
 
