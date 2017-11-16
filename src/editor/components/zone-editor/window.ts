@@ -11,13 +11,16 @@ import SidebarLayersCell from "src/editor/components/zone-editor/sidebar-layers-
 import Tile from "src/engine/objects/tile";
 import SidebarCell from "src/editor/components/zone-editor/sidebar-cell";
 import Action from "src/engine/objects/action";
-import NoTool from "src/editor/tools/no-tool";
-import PencilTool from "src/editor/tools/pencil-tool";
-import AbstractTool from "src/editor/tools/abstract-tool";
-import RectangleTool from "src/editor/tools/rectangle-tool";
-import PaintBucketTool from "src/editor/tools/paint-bucket-tool";
-import HotspotTool from "src/editor/tools/hotspot-tool";
 import ToolComponent from "./tool";
+import {
+	AbstractTool,
+	HotspotTool,
+	NoTool,
+	PaintBucketTool,
+	PencilTool,
+	RectangleTool,
+	TileChangeEvent
+} from "src/editor/tools";
 
 class Window extends WindowComponent {
 	public static readonly TagName = "wf-zone-editor-window";
@@ -167,6 +170,7 @@ class Window extends WindowComponent {
 		const thing = <ToolComponent>document.createElement(ToolComponent.TagName);
 		thing.tool = tool;
 		thing.editor = this._editor;
+		tool.addEventListener(AbstractTool.Event.ChangedTiles, (e: TileChangeEvent) => this._editor.redraw(e.affectedPoints));
 		return thing;
 	}
 
