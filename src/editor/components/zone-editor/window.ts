@@ -7,7 +7,7 @@ import "./window.scss";
 import Sidebar from "./sidebar";
 import SidebarLayer from "src/editor/components/zone-editor/sidebar-layer";
 import Layer from "src/editor/components/zone-editor/layer";
-import SidebarLayersCell from "src/editor/components/zone-editor/sidebar-layers-cell";
+import SidebarLayersCell, { Events as LayerChangeEvents } from "src/editor/components/zone-editor/sidebar-layers-cell";
 import Tile from "src/engine/objects/tile";
 import SidebarCell from "src/editor/components/zone-editor/sidebar-cell";
 import Action from "src/engine/objects/action";
@@ -21,6 +21,7 @@ import {
 	RectangleTool,
 	TileChangeEvent
 } from "src/editor/tools";
+import TilePicker from "src/editor/components/tile-picker";
 
 class Window extends WindowComponent {
 	public static readonly TagName = "wf-zone-editor-window";
@@ -39,6 +40,7 @@ class Window extends WindowComponent {
 	private _puzzleNPCsCell: SidebarCell;
 	private _actionsCell: SidebarCell;
 	private _toolsCell: SidebarCell;
+	private _tilePicker: TilePicker;
 
 	constructor() {
 		super();
@@ -52,6 +54,7 @@ class Window extends WindowComponent {
 		});
 
 		const layers = document.createElement(SidebarLayersCell.TagName);
+		layers.addEventListener(LayerChangeEvents.LayerDidChange, (e: CustomEvent) => this._editor.currentLayer = e.detail.layer);
 		this._sidebar.addEntry(layers, "Layers");
 
 		this._editor = <ZoneEditor>document.createElement(ZoneEditor.TagName);
@@ -65,6 +68,9 @@ class Window extends WindowComponent {
 			this._buildToolItem(new HotspotTool())
 		];
 		this._toolsCell = this._sidebar.addEntry(tools, "Tools");
+
+		this._tilePicker = <TilePicker>document.createElement(TilePicker.TagName);
+		this._sidebar.addEntry(this._tilePicker, "Tiles");
 
 		this._requiredItems = document.createElement("div");
 		this._requiredItemsCell = this._sidebar.addEntry(this._requiredItems, "Required Items");
@@ -121,6 +127,7 @@ class Window extends WindowComponent {
 	set tileSheet(sheet) {
 		this._tileSheet = sheet;
 		this._editor.tileSheet = sheet;
+		this._tilePicker.tileSheet = sheet;
 	}
 
 	get tileSheet() {
