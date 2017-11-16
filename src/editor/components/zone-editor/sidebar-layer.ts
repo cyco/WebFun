@@ -21,17 +21,22 @@ class SidebarLayer extends Cell<Layer> {
 		this._name = document.createElement("span");
 
 		this._visible = document.createElement("i");
-		this._visible.onclick = () => {
+		this._visible.onclick = (e: MouseEvent) => {
 			this.data.visible = !this.data.visible;
 			this.dispatchEvent(new CustomEvent(Event.DidToggleVisibility, {detail: {layer: this.data}, bubbles: true}));
 			this.rebuild();
+			e.preventDefault();
+			e.stopImmediatePropagation();
 		};
 
 		this._locked = document.createElement("i");
-		this._locked.onclick = () => {
+		this._locked.onclick = (e: MouseEvent) => {
 			this.dispatchEvent(new CustomEvent(Event.DidToggleLock, {detail: {layer: this.data}, bubbles: true}));
 			this.data.locked = !this.data.locked;
 			this.rebuild();
+
+			e.preventDefault();
+			e.stopImmediatePropagation();
 		};
 	}
 
@@ -43,6 +48,12 @@ class SidebarLayer extends Cell<Layer> {
 		this.appendChild(this._locked);
 
 		this.rebuild();
+	}
+
+	public cloneNode(deep?: boolean): SidebarLayer {
+		const copy = <SidebarLayer>super.cloneNode(deep);
+		copy.onclick = this.onclick;
+		return copy;
 	}
 
 	private rebuild() {

@@ -22,7 +22,7 @@ class PencilTool extends AbstractDrawingTool {
 
 		const point = new Point(p.x, p.y, this.layer);
 
-		this.zone.setTile(this.tile, p);
+		this.zone.setTile(this.tile, point);
 		const event = new TileChangeEvent({affectedPoints: [point]});
 		this.dispatchEvent(event);
 	}

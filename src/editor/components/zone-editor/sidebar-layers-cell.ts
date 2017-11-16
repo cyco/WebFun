@@ -5,6 +5,10 @@ import SidebarLayer from "./sidebar-layer";
 import Layer from "./layer";
 import Component from "src/ui/component";
 
+export const Events = {
+	LayerDidChange: "LayerDidChange"
+};
+
 class SidebarLayersCell extends Component {
 	static readonly TagName = "wf-zone-editor-sidebar-layers-cell";
 	private _layers: Layer[];
@@ -15,6 +19,7 @@ class SidebarLayersCell extends Component {
 
 		this._list = <List<Layer>>document.createElement(List.TagName);
 		this._list.cell = <SidebarLayer>document.createElement(SidebarLayer.TagName);
+		this._list.cell.onclick = (e: MouseEvent) => this.activateLayerForCell(<SidebarLayer>e.currentTarget);
 
 		this._buildLayers();
 	}
@@ -55,6 +60,17 @@ class SidebarLayersCell extends Component {
 		this._list.remove();
 
 		super.disconnectedCallback();
+	}
+
+	public activateLayerForCell(cell: SidebarLayer) {
+
+		const currentLayer = this._list.querySelector(SidebarLayer.TagName + ".active");
+		if (currentLayer) currentLayer.classList.remove("active");
+
+		cell.classList.add("active");
+
+		const layerIdx = cell.data.layer;
+		this.dispatchEvent(new CustomEvent(Events.LayerDidChange, {detail: {layer: layerIdx}, bubbles: true}));
 	}
 }
 

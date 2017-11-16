@@ -1,3 +1,4 @@
+@import "colors";
 @import "./sidebar-cell";
 
 wf-zone-editor-sidebar-layers-cell {
@@ -6,6 +7,11 @@ wf-zone-editor-sidebar-layers-cell {
 
 	wf-zone-editor-sidebar-layer {
 		margin-left: 15px;
+
+		&.active {
+			color: $menu-item-selection-text;
+			background-color: $menu-item-selection-background;
+		}
 	}
 
 	wf-list {

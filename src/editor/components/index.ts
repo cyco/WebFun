@@ -1,13 +1,15 @@
-import SoundInspectorCell from "./sound-inspector-cell";
-import ZoneInspectorCell from "./zone-inspector-cell";
-import PuzzleInspectorCell from "./puzzle-inspector-cell";
-import PaletteView from "./palette-view";
+import CharacterDetails from "./character-details";
+import CharacterFramePreview from "./character-frame-preview";
+import CharacterInspectorCell from "./character-inspector-cell";
 import ColorPicker from "./color-picker";
 import ColorWheel from "./color-wheel";
-import CharacterInspectorCell from "./character-inspector-cell";
-import CharacterFramePreview from "./character-frame-preview";
-import CharacterDetails from "./character-details";
 import ExpandButton from "./expand-button";
+import PaletteView from "./palette-view";
+import PuzzleInspectorCell from "./puzzle-inspector-cell";
+import SoundInspectorCell from "./sound-inspector-cell";
+import TilePicker from "./tile-picker";
+import ZoneInspectorCell from "./zone-inspector-cell";
+import TilePickerCell from "./tile-picker-cell";
 import {
 	Sidebar as ZoneEditorSidebar,
 	SidebarCell as ZoneEditorSidebarCell,
@@ -20,6 +22,8 @@ import {
 } from "./zone-editor";
 
 export {
+	TilePickerCell,
+	TilePicker,
 	ZoneEditorTool,
 	ZoneEditorSidebarLayer,
 	ZoneEditorSidebarLayerCell,
