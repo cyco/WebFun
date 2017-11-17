@@ -34,7 +34,7 @@ class ZoneInspector extends AbstractInspector {
 
 		if (!controller) {
 			controller = <ZoneEditorController>document.createElement(ZoneEditorController.TagName);
-			controller.tileSheet = this.data.tileSheet;
+			controller.data = this.data;
 			controller.state = this._state.prefixedWith("editor-" + this._controllers.length);
 			this._controllers.push(controller);
 		}
@@ -56,7 +56,7 @@ class ZoneInspector extends AbstractInspector {
 		const zones = <number[]>this._state.load("zones") || [];
 		zones.forEach(id => {
 			const controller = <ZoneEditorController>document.createElement(ZoneEditorController.TagName);
-			controller.tileSheet = this.data.tileSheet;
+			controller.data = this.data;
 			controller.zone = this.data.currentData.zones[id];
 			controller.state = this._state.prefixedWith("editor-" + this._controllers.length);
 			this._controllers.push(controller);

@@ -1,0 +1,14 @@
+@import "variables";
+
+wf-tile-picker-cell {
+	display: inline-block !important;
+
+	&.active {
+		border: 1px solid black;
+	}
+
+	&.empty {
+		width: $tile-size;
+		height: $tile-size;
+	}
+}
