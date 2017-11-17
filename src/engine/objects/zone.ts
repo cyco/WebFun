@@ -83,14 +83,12 @@ class Zone {
 	}
 
 	setTile(tile: Tile, x: number|PointLike, y: number = null, z: number = null): void {
-		console.log(x);
 		if (typeof x === "object") {
 			y = x.y;
 			z = x.z;
 			x = x.x;
 		}
 
-		console.log(x, y, z);
 		const index = Zone.LAYERS * (y * this._size.width + x) + z;
 		this.tileIDs[index] = tile === null ? -1 : tile.id;
 	}

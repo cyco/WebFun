@@ -33,7 +33,6 @@ class TileInspector extends AbstractInspector {
 			cell.style.height = "34px";
 			cell.classList.add("inset-border-1px");
 			cell.classList.add("inset-border-inverted");
-			cell.onclick = () => console.log("Tile: ", tile.id);
 
 			const classes = this._tileSheet.cssClassesForTile(tile.id);
 			classes.forEach(c => cell.classList.add(c));
