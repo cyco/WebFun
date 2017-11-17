@@ -68,7 +68,7 @@
     "babel-plugin-syntax-async-functions": "^6.13.0",
     "babel-plugin-transform-regenerator": "^6.26.0",
     "babel-preset-env": "^1.6.1",
-    "canvas": "^2.0.0-alpha.6",
+    "canvas": "^1.6.7",
     "cross-env": "^5.1.1",
     "css-loader": "^0.28.7",
     "file-loader": "^1.1.5",
