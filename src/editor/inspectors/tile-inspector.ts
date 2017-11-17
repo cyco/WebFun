@@ -1,8 +1,8 @@
 import AbstractInspector from "./abstract-inspector";
 import TileSheet from "../tile-sheet";
+import "./tile-inspector.scss";
 
 class TileInspector extends AbstractInspector {
-	private _list: HTMLElement;
 	private _tileSheet: TileSheet;
 
 	constructor(state: Storage) {
@@ -10,35 +10,59 @@ class TileInspector extends AbstractInspector {
 
 		this.window.title = "Tiles";
 		this.window.autosaveName = "tile-inspector";
-		this.window.style.width = "294px";
+		this.window.style.width = "502px";
 		this.window.content.style.maxHeight = "300px";
 		this.window.content.style.flexDirection = "column";
-
-		this._list = document.createElement("div");
-		this._list.style.height = "300px";
-		this._list.style.width = "274px";
-		this._list.style.overflow = "auto";
-		this._list.classList.add("inset-border-1px");
 	}
 
 	build() {
 		this._tileSheet = this.data.tileSheet;
 		this.window.content.textContent = "";
-		this._list.textContent = "";
 
+		const titles: {[_: number]: string} = {
+			0: "transparent"
+		};
+
+		const table = document.createElement("table");
+		table.classList.add("tile-inspector-table");
+		table.setAttribute("cellspacing", "0");
+		table.setAttribute("cellpadding", "0");
+		const head = document.createElement("thead");
+		const headRow = document.createElement("tr");
+
+		const tileCell = document.createElement("th");
+		headRow.appendChild(tileCell);
+
+		for (let i = 31; i >= 0; i--) {
+			const bitCell = document.createElement("th");
+			bitCell.title = `Bit ${i}` + (titles[i] ? (": " + titles[i]) : "");
+			headRow.appendChild(bitCell);
+		}
+		head.appendChild(headRow);
+		table.appendChild(head);
+
+		const body = document.createElement("tbody");
 		this.data.currentData.tiles.forEach(tile => {
-			const cell = document.createElement("div");
-			cell.style.display = "inline-block";
-			cell.style.width = "34px";
-			cell.style.height = "34px";
-			cell.classList.add("inset-border-1px");
-			cell.classList.add("inset-border-inverted");
+			const row = document.createElement("tr");
+			const tileCell = document.createElement("td");
 
+			const tilePreview = document.createElement("div");
 			const classes = this._tileSheet.cssClassesForTile(tile.id);
-			classes.forEach(c => cell.classList.add(c));
-			this._list.appendChild(cell);
+			tilePreview.className = classes.join(" ");
+			tileCell.appendChild(tilePreview);
+			if (tile.name) tileCell.title = tile.name;
+			row.appendChild(tileCell);
+
+			for (let i = 31; i >= 0; i--) {
+				const bitCell = document.createElement("td");
+				bitCell.textContent = `${(tile.attributes & (1 << i)) ? 1 : 0}`;
+				bitCell.title = `Bit ${i}` + (titles[i] ? (": " + titles[i]) : "");
+				row.appendChild(bitCell);
+			}
+			body.appendChild(row);
 		});
-		this.window.content.appendChild(this._list);
+		table.appendChild(body);
+		this.window.content.appendChild(table);
 	}
 }
 

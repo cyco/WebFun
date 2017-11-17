@@ -79,7 +79,7 @@ export class Tile {
 	}
 
 	get subtype() {
-		return this._attributes & 0xFFFF;
+		return this._attributes;
 	}
 
 	isObject() {
@@ -99,7 +99,7 @@ export class Tile {
 	}
 
 	getSubtype(attr: number): boolean {
-		return !!(this.subtype & (1 << attr));
+		return !!(this.subtype & (1 << (attr + 8)));
 	}
 
 	public get id() {
