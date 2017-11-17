@@ -20,14 +20,14 @@ class UndoManager extends EventTarget {
 	}
 
 	undo() {
-		if (this.isAtStart()) return;
+		if (!this.canUndo()) return;
 
 		const operation = this._stack[this._stackPointer--];
 		operation.undo();
 	}
 
 	redo() {
-		if (this.isAtEnd()) return;
+		if (!this.canRedo()) return;
 
 		const operation = this._stack[++this._stackPointer];
 		operation.redo();
@@ -42,6 +42,7 @@ class UndoManager extends EventTarget {
 		if (currentBatch) {
 			currentBatch.add(op);
 		} else {
+			this._stack.splice(this._stackPointer, this._stack.length);
 			this._stack.push(op);
 			this._stackPointer++;
 		}
@@ -62,12 +63,12 @@ class UndoManager extends EventTarget {
 		this._stack.push(currentBatch);
 	}
 
-	private isAtStart() {
-		return this._stackPointer === 0;
+	private canUndo() {
+		return this._stackPointer !== -1;
 	}
 
-	private isAtEnd() {
-		return this._stackPointer === this._stack.length - 2;
+	private canRedo() {
+		return this._stackPointer + 1 !== this._stack.length - 1;
 	}
 }
 
