@@ -87,6 +87,27 @@ class TileInspector extends AbstractInspector {
 
 		const tileCell = document.createElement("th");
 		tileCell.innerHTML = "&nbsp;";
+		tileCell.onclick = () => {
+			const cells = headRow.querySelectorAll("th");
+			const currentValue = cells[1].textContent;
+			let targetValue = "";
+			if (currentValue === "") {
+				targetValue = "1";
+				this._requiredAttributes = -1;
+				this._prohibitedAttributes = 0;
+			} else if (currentValue === "1") {
+				targetValue = "0";
+				this._requiredAttributes = 0;
+				this._prohibitedAttributes = -1;
+			} else {
+				targetValue = "";
+				this._requiredAttributes = 0;
+				this._prohibitedAttributes = 0;
+			}
+
+			Array.from(cells).slice(1).forEach(c => c.textContent = targetValue);
+			this.updateFilter();
+		};
 		headRow.appendChild(tileCell);
 
 		for (let i = 31; i >= 0; i--) {
