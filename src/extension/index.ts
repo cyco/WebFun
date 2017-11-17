@@ -14,8 +14,10 @@ import * as Uint8Array from "./uint8-array";
 import * as RegExp from "./regexp";
 import * as MouseEvent from "./mouse-event";
 import * as Set from "./set";
+import * as File from "./file";
 
 export {
+	File,
 	Set,
 	Array,
 	ArrayBuffer,

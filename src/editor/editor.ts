@@ -2,6 +2,10 @@ import AbstractInspector from "./inspectors/abstract-inspector";
 import { DiscardingOutputStream, download, OutputStream } from "src/util";
 import DataManager from "./data-manager";
 import GameDataSerializer from "./game-data-serializer";
+import FilePicker from "src/ui/file-picker";
+import DataFileReader from "src/engine/file-format/yodesk.js";
+import { KaitaiStream } from "src/libs";
+import GameData from "src/engine/game-data";
 
 class Editor {
 	private static _sharedEditor: Editor;
@@ -34,7 +38,17 @@ class Editor {
 		download(outputStream.buffer, "yoda.data");
 	}
 
-	public load() {
+	public async load() {
+		const filePicker = new FilePicker();
+		const [file] = await filePicker.pickFile();
+		if (!file) return;
+
+		const buffer = await file.readAsArrayBuffer();
+		const stream = new KaitaiStream(buffer);
+		const rawData = new DataFileReader(stream);
+		const data = new GameData(rawData);
+
+		this.data = new DataManager(data, this.data.palette);
 	}
 
 	set data(dm) {
