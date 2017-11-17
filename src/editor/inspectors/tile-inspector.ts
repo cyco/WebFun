@@ -5,7 +5,7 @@ import "./tile-inspector.scss";
 class TileInspector extends AbstractInspector {
 	private _tileSheet: TileSheet;
 	private _requiredAttributes: number = 0;
-	private _prohibitedAttribtues: number = 0;
+	private _prohibitedAttributes: number = 0;
 
 	constructor(state: Storage) {
 		super(state);
@@ -21,7 +21,7 @@ class TileInspector extends AbstractInspector {
 		if (cell.textContent === "") {
 			cell.textContent = "1";
 			this._requiredAttributes |= (1 << bit);
-			this._prohibitedAttribtues &= ~(1 << bit);
+			this._prohibitedAttributes &= ~(1 << bit);
 
 			this.updateFilter();
 			return;
@@ -30,7 +30,7 @@ class TileInspector extends AbstractInspector {
 		if (cell.textContent === "1") {
 			cell.textContent = "0";
 			this._requiredAttributes &= ~(1 << bit);
-			this._prohibitedAttribtues |= (1 << bit);
+			this._prohibitedAttributes |= (1 << bit);
 
 			this.updateFilter();
 			return;
@@ -39,7 +39,7 @@ class TileInspector extends AbstractInspector {
 		if (cell.textContent === "0") {
 			cell.textContent = "";
 			this._requiredAttributes &= ~(1 << bit);
-			this._prohibitedAttribtues &= ~(1 << bit);
+			this._prohibitedAttributes &= ~(1 << bit);
 
 			this.updateFilter();
 			return;
@@ -55,7 +55,7 @@ class TileInspector extends AbstractInspector {
 			const row = <HTMLElement>rows[i];
 			const rowAttributes = parseInt(row.dataset.attributes);
 
-			const show = (rowAttributes & this._requiredAttributes) === this._requiredAttributes && (rowAttributes & this._prohibitedAttribtues) === 0;
+			const show = (rowAttributes & this._requiredAttributes) === this._requiredAttributes && (rowAttributes & this._prohibitedAttributes) === 0;
 
 			row.style.display = show ? "" : "none";
 		}
