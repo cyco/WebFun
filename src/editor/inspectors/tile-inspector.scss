@@ -1,0 +1,28 @@
+@import "border";
+
+.tile-inspector-table {
+	table-layout: fixed;
+	width: 100%;
+	border-collapse: separate;
+	margin: 0px;
+
+	> thead, tbody > tr {
+		height: 34px;
+
+		> td, th {
+			@extend .inset-border-1px;
+			@extend .inset-border-inverted;
+
+			width: 14px;
+			text-align: center;
+			font-weight: normal;
+
+			margin: 0px;
+			padding: 0px;
+
+			&:first-child {
+				width: 34px;
+			}
+		}
+	}
+}
