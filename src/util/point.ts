@@ -127,6 +127,13 @@ class Point implements PointLike {
 		return this.x === 0 && this.y === 0;
 	}
 
+	distanceTo(point: Point): number {
+		const x = this.x - point.x;
+		const y = this.y - point.y;
+
+		return Math.sqrt(x ** 2 + y ** 2);
+	}
+
 	toString(): string {
 		return `Point {${this.x}x${this.y}}`;
 	}

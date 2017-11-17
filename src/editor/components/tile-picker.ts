@@ -1,9 +1,9 @@
 import { Component } from "src/ui";
 import { List } from "src/ui/components";
 import { Tile } from "src/engine/objects";
-import "./tile-picker.scss";
 import TilePickerCell from "./tile-picker-cell";
 import DataManager from "src/editor/data-manager";
+import "./tile-picker.scss";
 
 export const Events = {
 	TileDidChange: "TileDidChange"
