@@ -1,13 +1,24 @@
 @import "border";
+@import "colors";
 
 .tile-inspector-table {
 	table-layout: fixed;
 	width: 100%;
+	height: calc(100%);
+	max-height: calc(100%);
 	border-collapse: separate;
 	margin: 0px;
+	overflow-y: auto;
+
+	> thead {
+		position: sticky;
+		position: -webkit-sticky;
+		top: 0px;
+	}
 
 	> thead, tbody > tr {
 		height: 34px;
+		background-color: $window-background-color;
 
 		> td, th {
 			@extend .inset-border-1px;
@@ -22,6 +33,9 @@
 
 			&:first-child {
 				width: 34px;
+			}
+			&:nth-child(25), &:nth-child(29) {
+				border-left-width: 2px;
 			}
 		}
 	}
