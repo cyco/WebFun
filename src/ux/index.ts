@@ -4,6 +4,9 @@ import ResetCursor from "./reset-cursor";
 import WindowModalSession from "./window-modal-session";
 import FieldEditor from "./field-editor";
 import ShortcutManager, { Shortcut } from "./shortcut-manager";
+import UndoManager from "./undo-manager";
+import UndoOperation from "./undo-operation";
+import UndoBatchOperation from "./undo-batch-operation";
 
 export {
 	FieldEditor,
@@ -14,5 +17,8 @@ export {
 	ConfirmationResult,
 	ConfirmationOptions,
 	ShortcutManager,
-	Shortcut
+	Shortcut,
+	UndoManager,
+	UndoOperation,
+	UndoBatchOperation
 };
