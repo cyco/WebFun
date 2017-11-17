@@ -10,7 +10,6 @@ export const Attribute = {
 	Object: 2,
 	Draggable: 3,
 	Roof: 4,
-
 	Locator: 5,
 	Weapon: 6,
 	Item: 7,
@@ -79,7 +78,7 @@ export class Tile {
 	}
 
 	get subtype() {
-		return this._attributes;
+		return this._attributes & ~0xFF;
 	}
 
 	isObject() {
@@ -99,7 +98,7 @@ export class Tile {
 	}
 
 	getSubtype(attr: number): boolean {
-		return !!(this.subtype & (1 << (attr + 8)));
+		return !!(this.subtype & (1 << attr));
 	}
 
 	public get id() {
