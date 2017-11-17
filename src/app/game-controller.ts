@@ -156,14 +156,7 @@ class GameController extends EventTarget {
 		if (!file) return;
 		if (!file.name.endsWith(".wld")) return;
 
-		const readFile = async (file: File) => {
-			return new Promise<InputStream>((resolve) => {
-				const fileReader = new FileReader();
-				fileReader.onload = (e: any) => resolve(new InputStream(e.target.result));
-				fileReader.readAsArrayBuffer(file);
-			});
-		};
-		const stream = await readFile(file);
+		const stream = await file.provideInputStream();
 		const reader = new SaveGameReader(this._data);
 		const state = reader.read(stream);
 	}
