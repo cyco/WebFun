@@ -20,8 +20,10 @@ import {
 	Window as ZoneEditorWindow,
 	ZoneLayer
 } from "./zone-editor";
+import { Editor as ActionEditor } from "./action-editor";
 
 export {
+	ActionEditor,
 	TilePickerCell,
 	TilePicker,
 	ZoneEditorTool,

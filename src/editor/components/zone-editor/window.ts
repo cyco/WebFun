@@ -23,6 +23,7 @@ import {
 import TilePicker, { Events as TilePickerEvents } from "src/editor/components/tile-picker";
 import DataManager from "src/editor/data-manager";
 import AbstractDrawingTool from "src/editor/tools/abstract-drawing-tool";
+import { ActionEditor } from "src/editor/components";
 
 class Window extends WindowComponent {
 	public static readonly TagName = "wf-zone-editor-window";
@@ -166,7 +167,20 @@ class Window extends WindowComponent {
 		const node = document.createElement("div");
 		node.classList.add("action");
 		node.textContent = `Action ${action.id} (${action.conditions.length} / ${action.instructions.length})`;
+		node.onclick = () => this._editAction(action);
 		container.appendChild(node);
+	}
+
+	private _editAction(action: Action) {
+		const window = <WindowComponent>document.createElement(WindowComponent.TagName);
+		window.style.width = "300px";
+		window.content.style.maxHeight = "300px";
+
+		const editor = <ActionEditor>document.createElement(ActionEditor.TagName);
+		editor.action = action;
+		window.content.appendChild(editor);
+
+		WindowManager.defaultManager.showWindow(window);
 	}
 
 	private _buildTileNode(tile: Tile) {
