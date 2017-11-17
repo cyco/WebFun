@@ -4,6 +4,7 @@ import { Tile } from "src/engine/objects";
 import TilePickerCell from "./tile-picker-cell";
 import DataManager from "src/editor/data-manager";
 import "./tile-picker.scss";
+import TileFilter from "src/editor/components/tile-filter";
 
 export const Events = {
 	TileDidChange: "TileDidChange"
@@ -23,6 +24,7 @@ class TilePicker extends Component {
 		this._list = <List<Tile>>document.createElement(List.TagName);
 		this._list.cell = <TilePickerCell>document.createElement(TilePickerCell.TagName);
 		this._list.cell.onclick = (e: MouseEvent) => this._cellClicked(<TilePickerCell>e.currentTarget);
+		this._list.searchDelegate = new TileFilter();
 	}
 
 	connectedCallback() {
