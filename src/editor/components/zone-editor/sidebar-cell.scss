@@ -5,6 +5,7 @@ $header-height: 25px;
 wf-zone-editor-sidebar-cell {
 	@extend .inset-border-1px;
 	@extend .inset-border-inverted;
+	flex-shrink: 0;
 
 	header {
 		height: $header-height;

@@ -9,8 +9,11 @@ wf-zone-editor-sidebar-layers-cell {
 		margin-left: 15px;
 
 		&.active {
-			color: $menu-item-selection-text;
 			background-color: $menu-item-selection-background;
+
+			* {
+				filter: invert(1);
+			}
 		}
 	}
 

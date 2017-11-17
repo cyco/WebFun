@@ -1,7 +1,6 @@
 import { Window as WindowComponent } from "src/ui/components";
 import { Zone } from "src/engine/objects";
 import ZoneEditor from "src/editor/components/zone-editor/view";
-import TileSheet from "src/editor/tile-sheet";
 import { WindowManager } from "src/ui";
 import "./window.scss";
 import Sidebar from "./sidebar";
@@ -21,13 +20,14 @@ import {
 	RectangleTool,
 	TileChangeEvent
 } from "src/editor/tools";
-import TilePicker from "src/editor/components/tile-picker";
+import TilePicker, { Events as TilePickerEvents } from "src/editor/components/tile-picker";
+import DataManager from "src/editor/data-manager";
+import AbstractDrawingTool from "src/editor/tools/abstract-drawing-tool";
 
 class Window extends WindowComponent {
 	public static readonly TagName = "wf-zone-editor-window";
 	private _zone: Zone;
 	private _editor: ZoneEditor;
-	private _tileSheet: TileSheet;
 	private _state: Storage;
 	private _sidebar: Sidebar;
 	private _providedItems: HTMLElement;
@@ -41,6 +41,8 @@ class Window extends WindowComponent {
 	private _actionsCell: SidebarCell;
 	private _toolsCell: SidebarCell;
 	private _tilePicker: TilePicker;
+	private _data: DataManager;
+	private _tools: AbstractTool[];
 
 	constructor() {
 		super();
@@ -59,17 +61,21 @@ class Window extends WindowComponent {
 
 		this._editor = <ZoneEditor>document.createElement(ZoneEditor.TagName);
 
-		const initialTool = new NoTool();
-		const tools = [
-			this._buildToolItem(initialTool),
-			this._buildToolItem(new PencilTool()),
-			this._buildToolItem(new RectangleTool()),
-			this._buildToolItem(new PaintBucketTool()),
-			this._buildToolItem(new HotspotTool())
+		this._tools = [
+			new NoTool(),
+			new PencilTool(),
+			new RectangleTool(),
+			new PaintBucketTool(),
+			new HotspotTool()
 		];
-		this._toolsCell = this._sidebar.addEntry(tools, "Tools");
+		this._toolsCell = this._sidebar.addEntry(this._tools.map(t => this._buildToolItem(t)), "Tools");
 
 		this._tilePicker = <TilePicker>document.createElement(TilePicker.TagName);
+		this._tilePicker.addEventListener(TilePickerEvents.TileDidChange, (e: CustomEvent) => {
+			this._tilePickerTileChanged();
+			e.stopImmediatePropagation();
+			e.preventDefault();
+		});
 		this._sidebar.addEntry(this._tilePicker, "Tiles");
 
 		this._requiredItems = document.createElement("div");
@@ -82,7 +88,7 @@ class Window extends WindowComponent {
 		this._puzzleNPCsCell = this._sidebar.addEntry(this._puzzleNPCs, "NPCs");
 		this._actionsCell = this._sidebar.addEntry([], "Actions");
 
-		this._editor.activateTool(initialTool);
+		this._editor.activateTool(this._tools[0]);
 	}
 
 	connectedCallback() {
@@ -90,6 +96,12 @@ class Window extends WindowComponent {
 
 		this.content.appendChild(this._sidebar);
 		this.content.appendChild(this._editor);
+	}
+
+	private _tilePickerTileChanged() {
+		const tile = this._tilePicker.currentTile;
+		this._tools.filter(t => t instanceof AbstractDrawingTool)
+			.forEach((t: AbstractDrawingTool) => t.tile = tile);
 	}
 
 	public show() {
@@ -122,16 +134,6 @@ class Window extends WindowComponent {
 
 	get state() {
 		return this._state;
-	}
-
-	set tileSheet(sheet) {
-		this._tileSheet = sheet;
-		this._editor.tileSheet = sheet;
-		this._tilePicker.tileSheet = sheet;
-	}
-
-	get tileSheet() {
-		return this._tileSheet;
 	}
 
 	set zone(zone: Zone) {
@@ -169,7 +171,7 @@ class Window extends WindowComponent {
 
 	private _buildTileNode(tile: Tile) {
 		const node = document.createElement("div");
-		node.className = "tile " + this._tileSheet.cssClassesForTile(tile.id).join(" ");
+		node.className = "tile " + this.data.tileSheet.cssClassesForTile(tile.id).join(" ");
 		return node;
 	}
 
@@ -183,6 +185,16 @@ class Window extends WindowComponent {
 
 	get zone() {
 		return this._zone;
+	}
+
+	public set data(d) {
+		this._data = d;
+		this._editor.tileSheet = d.tileSheet;
+		this._tilePicker.data = this.data;
+	}
+
+	public get data() {
+		return this._data;
 	}
 }
 

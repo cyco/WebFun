@@ -1,7 +1,7 @@
 import AbstractDrawingTool from "./abstract-drawing-tool";
 import { rgba } from "src/util";
 import Point from "src/util/point";
-import { Tile, Zone } from "src/engine/objects";
+import { Zone } from "src/engine/objects";
 import TileChangeEvent from "./tile-change-event";
 
 const HighlightColor = rgba(255, 0, 0, 0.3);
@@ -9,7 +9,6 @@ const HighlightColor = rgba(255, 0, 0, 0.3);
 class PencilTool extends AbstractDrawingTool {
 	public readonly name = "Pencil";
 	public readonly icon = "fa-pencil";
-	public tile: Tile = null;
 
 	activate(zone: Zone, overlay: HTMLCanvasElement): void {
 		super.activate(zone, overlay);
