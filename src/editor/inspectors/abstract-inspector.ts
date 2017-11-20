@@ -1,5 +1,6 @@
 import { Window } from "src/ui/components";
 import DataManager from "src/editor/data-manager";
+import WindowManager from "src/ui/window-manager";
 
 const StateStorageDelay = 1.0;
 
@@ -20,7 +21,7 @@ abstract class AbstractInspector {
 	abstract build(): void;
 
 	show() {
-		document.body.appendChild(this.window);
+		WindowManager.defaultManager.showWindow(this.window);
 		this.state.store("visible", true);
 	}
 

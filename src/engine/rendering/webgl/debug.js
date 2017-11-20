@@ -4,6 +4,7 @@ import { Window } from "src/ui/components";
 import { FileLoader } from "src/util";
 import FragmentShader from "./fragment.glsl";
 import VertexShader from "./vertex.glsl";
+import WindowManager from "../../../ui/window-manager";
 
 class WebGLDebug {
 	constructor() {
@@ -30,7 +31,7 @@ class WebGLDebug {
 		this._loadPalette(gl);
 		this._determineSpecs(gl);
 
-		document.body.appendChild(this._window);
+		WindowManager.defaultManager.showWindow(this._window);
 		this._window.center();
 	}
 
