@@ -52,7 +52,7 @@ class Printer {
 		}
 
 		if (action instanceof Array) {
-			const fn = action.shift();
+			const fn = action.first();
 			let chopAfter = 0;
 			let indent = 0;
 			if (fn instanceof Symbol) {
@@ -71,7 +71,7 @@ class Printer {
 				}
 			}
 
-			this.putList([fn, ...action], chopAfter, indent);
+			this.putList(action.slice(), chopAfter, indent);
 		}
 	}
 
@@ -103,34 +103,6 @@ class Printer {
 
 	private isKeyword(symbol: AST): boolean {
 		return symbol instanceof Symbol && Keywords.contains(symbol.name);
-	}
-
-	print(action: AST, indent: number = 0): string {
-		if (typeof action === "boolean") {
-			return action ? "T" : "NIL";
-		}
-
-		if (typeof action === "number") {
-			return `${action}`;
-		}
-
-		if (typeof action === "string") {
-			return JSON.stringify(action);
-		}
-
-		if (action instanceof Symbol) {
-			return action.name;
-		}
-
-		if (action instanceof Array && action.length === 0) {
-			return "[]" + "\n";
-		}
-
-		if (action instanceof Array) {
-			return "(" + action.map(i => this.print(i, indent + this.indent)).join("\n" + " ".repeat(indent)) + ")";
-		}
-
-		console.assert(false, "Unknown type encountered");
 	}
 }
 
