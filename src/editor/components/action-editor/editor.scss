@@ -1,3 +1,42 @@
+@import "border";
+
 wf-action-editor {
+	@extend .inset-border-1px;
 	white-space: pre;
+	font-size: 12px;
+	font-family: "Anonymous Pro", monospace;
+
+	background-color: white;
+	width: 100%;
+	padding: 5px;
+	overflow-y: auto;
+
+	div {
+		outline: none;
+	}
+
+	span {
+		display: inline;
+	}
+
+	.keyword {
+		color: #660E7A;
+	}
+
+	.symbol {
+		color: #000080;
+	}
+
+	.string {
+		color: #008000;
+	}
+
+	.boolean {
+		color: #0000FF;
+		font-weight: bold;
+	}
+
+	.number {
+		color: #0000FF;
+	}
 }

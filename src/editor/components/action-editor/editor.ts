@@ -24,7 +24,12 @@ class Editor extends Component {
 		const ast = parser.parse(action);
 		const printer = new Printer();
 
-		this.innerText = printer.print(ast);
+		this.textContent = "";
+		const div = document.createElement("div");
+		div.innerHTML = printer.pprint(ast);
+		div.setAttribute("contenteditable", "");
+		div.spellcheck = false;
+		this.appendChild(div);
 	}
 
 	get action() {
