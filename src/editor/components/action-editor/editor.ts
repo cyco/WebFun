@@ -39,7 +39,7 @@ class Editor extends Component {
 	private updateWindowTitle() {
 		if (!this._action) return;
 		const window = <Window>this.closest(Window.TagName);
-		if (window) window.title = `Action ${this._action.id}`;
+		if (window) window.title = `Zone ${this._action.zone.id}: Action ${this._action.id}`;
 	}
 
 	get action() {
