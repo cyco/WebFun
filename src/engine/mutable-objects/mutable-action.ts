@@ -33,6 +33,14 @@ class MutableAction extends Action {
 		return this._instructions;
 	}
 
+	get zone() {
+		return this._zone;
+	}
+
+	set zone(value) {
+		this._zone = value;
+	}
+
 }
 
 export default MutableAction;
