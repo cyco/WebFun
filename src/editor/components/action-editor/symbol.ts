@@ -12,6 +12,10 @@ class Symbol {
 	get name() {
 		return this._name;
 	}
+
+	public toString() {
+		return `Symbol(${this.name})`;
+	}
 }
 
 export default Symbol;
