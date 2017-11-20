@@ -111,7 +111,7 @@ types:
       - id: opcode
         type: u2
       - id: arguments
-        type: u2
+        type: s2
         repeat: expr
         repeat-expr: 5
       - id: text_length
