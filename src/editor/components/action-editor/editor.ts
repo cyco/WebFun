@@ -2,8 +2,9 @@ import Component from "src/ui/component";
 import { Window } from "src/ui/components";
 import { Action } from "src/engine/objects";
 import "./editor.scss";
-import Parser from "src/editor/components/action-editor/parser";
 import Printer from "src/editor/components/action-editor/printer";
+import Disassembler from "src/editor/components/action-editor/disassembler";
+import Assembler from "src/editor/components/action-editor/assembler";
 
 class Editor extends Component {
 	static readonly TagName = "wf-action-editor";
@@ -22,15 +23,24 @@ class Editor extends Component {
 	set action(action: Action) {
 		this._action = action;
 
-		const parser = new Parser();
-		const ast = parser.parse(action);
+		const div = document.createElement("div");
+		div.spellcheck = false;
+
 		const printer = new Printer();
+		const disassembler = new Disassembler();
+		const assembler = new Assembler();
+
+		try {
+			let ast = disassembler.disassemble(action);
+			ast = disassembler.disassemble(assembler.assemble(ast));
+
+			div.innerHTML = printer.pprint(ast);
+			div.setAttribute("contenteditable", "");
+		} catch (e) {
+			div.innerHTML = `<span class="error">${e.message}</span><br>${printer.pprint(e.input)}`;
+		}
 
 		this.textContent = "";
-		const div = document.createElement("div");
-		div.innerHTML = printer.pprint(ast);
-		div.setAttribute("contenteditable", "");
-		div.spellcheck = false;
 		this.appendChild(div);
 
 		this.updateWindowTitle();
