@@ -134,7 +134,7 @@ class GameData {
 		zone.izaxUnknown = data.izax.unknownCount;
 		zone.izx4Unknown = data.izx4.unknown;
 
-		zone.actions = data.actions.map((data: any, i: number) => this._makeAction(data, i));
+		zone.actions = data.actions.map((data: any, i: number) => this._makeAction(data, i, zone));
 		zone.tileStore = this.tiles;
 		zone.zoneStore = this.zones;
 
@@ -177,12 +177,13 @@ class GameData {
 		return hotspot;
 	}
 
-	_makeAction(data: any, idx: number): Action {
+	_makeAction(data: any, idx: number, zone: Zone): Action {
 		const action = new MutableAction();
 
 		action.id = idx;
 		action.conditions = data.conditions.map((data: any) => new Condition(data));
 		action.instructions = data.instructions.map((data: any) => new Instruction(data));
+		action.zone = zone;
 
 		return action;
 	}
