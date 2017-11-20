@@ -101,6 +101,9 @@ class WindowTitlebar extends Component {
 		const mouseMove = (event: MouseEvent) => {
 			win.x = event.clientX - dragLocation.x;
 			win.y = event.clientY - dragLocation.y;
+
+			event.preventDefault();
+			event.stopImmediatePropagation();
 		};
 
 		const mouseUp = () => {
@@ -113,6 +116,9 @@ class WindowTitlebar extends Component {
 			dragLocation = new Point(event.clientX - win.x, event.clientY - win.y);
 			window.addEventListener("mouseup", mouseUp);
 			window.addEventListener("mousemove", mouseMove);
+
+			event.preventDefault();
+			event.stopImmediatePropagation();
 
 			WindowManager.defaultManager.focus(this._window);
 		};
