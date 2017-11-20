@@ -4,6 +4,7 @@ import padStart from "./pad-start";
 import trimCharacter from "./trim-character";
 import uuid from "./uuid";
 import dasherize from "./dasherize";
+import camelize from "./camelize";
 
 export {
 	padEnd,
@@ -11,5 +12,6 @@ export {
 	uuid,
 	trimCharacter,
 	contains,
-	dasherize
+	dasherize,
+	camelize
 };

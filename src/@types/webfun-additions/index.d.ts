@@ -16,14 +16,6 @@ interface Storage {
 	prefixedWith(s: string): Storage;
 }
 
-interface String {
-	dasherize: () => string;
-
-	padStart(length: number, character?: string): string
-
-	padEnd(length: number, character?: string): string
-}
-
 interface RegExpConstructor {
 	escape: (_: string) => string;
 }

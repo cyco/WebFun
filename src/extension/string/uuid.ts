@@ -8,4 +8,11 @@ const uuid = () => {
 };
 
 String.UUID = String.UUID || uuid;
+
+declare global {
+	interface StringConstructor {
+		UUID(): string;
+	}
+}
+
 export default uuid;
