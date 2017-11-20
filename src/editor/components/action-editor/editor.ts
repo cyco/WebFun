@@ -1,4 +1,5 @@
 import Component from "src/ui/component";
+import { Window } from "src/ui/components";
 import { Action } from "src/engine/objects";
 import "./editor.scss";
 import Parser from "src/editor/components/action-editor/parser";
@@ -11,6 +12,7 @@ class Editor extends Component {
 
 	connectedCallback() {
 		super.connectedCallback();
+		this.updateWindowTitle();
 	}
 
 	disconnectedCallback() {
@@ -30,6 +32,14 @@ class Editor extends Component {
 		div.setAttribute("contenteditable", "");
 		div.spellcheck = false;
 		this.appendChild(div);
+
+		this.updateWindowTitle();
+	}
+
+	private updateWindowTitle() {
+		if (!this._action) return;
+		const window = <Window>this.closest(Window.TagName);
+		if (window) window.title = `Action ${this._action.id}`;
 	}
 
 	get action() {
