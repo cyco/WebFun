@@ -1,7 +1,7 @@
 import "src/extension";
 import { rand } from "src/util";
 
-Array.prototype.shuffle = function () {
+const shuffle = function () {
 	const count = this.length;
 	if (count === 0) return this;
 
@@ -40,4 +40,13 @@ Array.prototype.shuffle = function () {
 
 	return this;
 };
+
+Array.prototype.shuffle = Array.prototype.shuffle || shuffle;
+
+declare global {
+	interface Array<T> {
+		shuffle(): this;
+	}
+}
+
 export default Array.prototype.shuffle;

@@ -3,4 +3,11 @@ const flatten = function () {
 };
 
 Array.prototype.flatten = Array.prototype.flatten || flatten;
+
+declare global {
+	interface Array<T> {
+		flatten<T>(): any[];
+	}
+}
+
 export default flatten;

@@ -11,5 +11,6 @@ import resize from "./resize";
 import rest from "./rest";
 import shuffle from "./shuffle";
 import unique from "./unique";
+import padEnd from "./pad-end";
 
-export { clear, contains, erase, first, flatten, from, insert, last, repeat, resize, rest, shuffle, unique };
+export { padEnd, clear, contains, erase, first, flatten, from, insert, last, repeat, resize, rest, shuffle, unique };
