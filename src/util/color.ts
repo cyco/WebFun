@@ -27,7 +27,7 @@ const hsv2rgb = (h: number, s: number, v: number): number[] => {
 		case 5:
 			return rgbf2rgbi(v, b, vb * (60 - hm) / 60 + b);
 		default:
-			debugger;
+			console.assert(false);
 	}
 };
 
