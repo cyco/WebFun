@@ -6,7 +6,7 @@ class ParserError extends Error {
 }
 
 class Parser {
-	public parse(input: string): AST {
+	public parse(input: string): AST[] {
 		let scanner = new Scanner(input);
 
 		const tokens = [];
@@ -154,3 +154,4 @@ class Parser {
 }
 
 export default Parser;
+export { ParserError };

@@ -145,3 +145,4 @@ class Assembler {
 }
 
 export default Assembler;
+export { AssemblerInputError };
