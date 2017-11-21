@@ -27,7 +27,7 @@ class WindowManager {
 				if (!a) return b;
 				if (!b) return a;
 				if (a.style.zIndex >= b.style.zIndex) return a;
-				return a;
+				return b;
 			}, null);
 			if (newTopMostWindow) this.focus(newTopMostWindow);
 		}
