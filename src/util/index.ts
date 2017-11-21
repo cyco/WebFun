@@ -34,6 +34,7 @@ import polar2xy from "./polar2xy";
 import deg2rad from "./deg2rad";
 import DiscardingStorage from "./discarding-storage";
 import Event from "./event";
+import Scanner from "./scanner";
 
 export {
 	Color,
@@ -78,5 +79,6 @@ export {
 	VerticalPointRange,
 	xy2polar,
 	DiscardingStorage,
-	Event
+	Event,
+	Scanner
 };
