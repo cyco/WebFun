@@ -8,6 +8,7 @@ import Assembler, { AssemblerInputError } from "src/editor/components/action-edi
 import Parser, { ParserError } from "src/editor/components/action-editor/parser";
 import { Shortcut } from "src/ux";
 import ShortcutManager from "src/ux/shortcut-manager";
+import MutableAction from "src/engine/mutable-objects/mutable-action";
 
 class Editor extends Component {
 	static readonly TagName = "wf-action-editor";
@@ -32,10 +33,14 @@ class Editor extends Component {
 	}
 
 	private registerShortcuts() {
+		this._shortcuts = [];
 		const manager = ShortcutManager.sharedManager;
-		const shortcut = manager.registerShortcut(() => this.save(), {node: this, metaKey: true, keyCode: 83});
+		let shortcut;
+		shortcut = manager.registerShortcut(() => this.save(), {node: this, metaKey: true, keyCode: 83});
+		this._shortcuts.push(shortcut);
 
-		this._shortcuts = [shortcut];
+		shortcut = manager.registerShortcut(() => this.indent(), {node: this, keyCode: 9});
+		this._shortcuts.push(shortcut);
 	}
 
 	public save() {
@@ -47,9 +52,18 @@ class Editor extends Component {
 		try {
 			const input = this._editorArea.textContent;
 			const ast = parser.parse(input);
-			if (ast.length !== 1)
+			if (ast.length !== 1) {
 				throw new Error(ast.length ? "Too many defintions found!" : "Not enough defintions found!");
-			const action = assembler.assemble(ast.first());
+			}
+
+			const zone = this._action.zone;
+			const action = new MutableAction(assembler.assemble(ast.first()));
+			action.id = this._action.id;
+			action.zone = this._action.zone;
+			action.name = this._action.name;
+
+			zone.actions.splice(zone.actions.indexOf(this._action), 1, action);
+			this.action = action;
 
 			this._errorArea.style.display = "none";
 			this.style.setProperty("--error-height", "0px");
@@ -64,6 +78,10 @@ class Editor extends Component {
 			this._errorArea.style.display = "";
 			this.style.setProperty("--error-height", this._errorArea.getBoundingClientRect().height + "px");
 		}
+	}
+
+	public indent() {
+
 	}
 
 	private unregisterShortcuts() {

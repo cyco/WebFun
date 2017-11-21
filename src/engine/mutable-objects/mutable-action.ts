@@ -1,6 +1,18 @@
 import { Action } from "src/engine/objects";
 
 class MutableAction extends Action {
+	constructor(action?: Action) {
+		super();
+
+		if (!action) return;
+
+		this._id = action.id;
+		this._zone = action.zone;
+		this._conditions = action.conditions;
+		this._instructions = action.instructions;
+		this._name = action.name;
+	}
+
 	get id() {
 		return this._id;
 	}
