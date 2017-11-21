@@ -5,6 +5,7 @@ import "./editor.scss";
 import Printer from "src/editor/components/action-editor/printer";
 import Disassembler from "src/editor/components/action-editor/disassembler";
 import Assembler from "src/editor/components/action-editor/assembler";
+import Parser from "src/editor/components/action-editor/parser";
 
 class Editor extends Component {
 	static readonly TagName = "wf-action-editor";
@@ -29,6 +30,7 @@ class Editor extends Component {
 		const printer = new Printer();
 		const disassembler = new Disassembler();
 		const assembler = new Assembler();
+		const parser = new Parser();
 
 		try {
 			let ast = disassembler.disassemble(action);
@@ -36,6 +38,12 @@ class Editor extends Component {
 
 			div.innerHTML = printer.pprint(ast);
 			div.setAttribute("contenteditable", "");
+
+			try {
+				parser.parse(div.textContent);
+			} catch (e) {
+				div.innerHTML += `<br><span class="error">${e.message}</span><br>${printer.pprint(e.input)}`;
+			}
 		} catch (e) {
 			div.innerHTML = `<span class="error">${e.message}</span><br>${printer.pprint(e.input)}`;
 		}
