@@ -11,36 +11,51 @@ wf-action-editor {
 	padding: 5px;
 	overflow-y: auto;
 
-	div {
-		outline: none;
-	}
-
-	span {
-		display: inline;
-	}
-
-	.keyword {
-		color: #660E7A;
-	}
-
-	.symbol {
-		color: #000080;
-	}
-
-	.string {
-		color: #008000;
-	}
-
-	.boolean {
-		color: #0000FF;
-		font-weight: bold;
-	}
-
-	.number {
-		color: #0000FF;
-	}
-
-	.error {
+	.error-area {
 		color: #FF0000;
+		white-space: normal;
+		border-bottom: 1px solid #c1c1c1;
+		padding-bottom: 3px;
+		position: absolute;
+		background: white;
+		margin: -5px 12px 3px;
+		padding-top: 3px;
+		left: 0px;
+		right: 0px;
+	}
+
+	.editor-area {
+		position: relative;
+		top: var(--error-height);
+		outline: none;
+
+		span {
+			display: inline;
+		}
+
+		.keyword {
+			color: #660E7A;
+		}
+
+		.symbol {
+			color: #000080;
+		}
+
+		.string {
+			color: #008000;
+		}
+
+		.boolean {
+			color: #0000FF;
+			font-weight: bold;
+		}
+
+		.number {
+			color: #0000FF;
+		}
+
+		.error {
+			color: #FF0000;
+		}
 	}
 }
