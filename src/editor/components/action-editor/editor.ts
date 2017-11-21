@@ -1,7 +1,6 @@
 import Component from "src/ui/component";
 import { Window } from "src/ui/components";
 import { Action } from "src/engine/objects";
-import "./editor.scss";
 import Printer from "src/editor/components/action-editor/printer";
 import Disassembler from "src/editor/components/action-editor/disassembler";
 import Assembler, { AssemblerInputError } from "src/editor/components/action-editor/assembler";
@@ -9,6 +8,7 @@ import Parser, { ParserError } from "src/editor/components/action-editor/parser"
 import { Shortcut } from "src/ux";
 import ShortcutManager from "src/ux/shortcut-manager";
 import MutableAction from "src/engine/mutable-objects/mutable-action";
+import "./editor.scss";
 
 class Editor extends Component {
 	static readonly TagName = "wf-action-editor";
