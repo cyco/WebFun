@@ -46,18 +46,14 @@ class Printer {
 			return;
 		}
 
-		if (action instanceof Array && action.length === 0) {
-			this._buffer.put("[]");
-			return;
-		}
-
 		if (action instanceof Array) {
 			const fn = action.first();
 			let chopAfter = 0;
 			let indent = 0;
 			if (fn instanceof Symbol) {
-				if (fn.name === "defn") {
-					chopAfter = 3;
+				if (fn.name === "defaction") {
+					const hasName = typeof action[1] === "string";
+					chopAfter = hasName ? 2 : 1;
 					indent = 2;
 				}
 

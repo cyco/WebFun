@@ -66,8 +66,10 @@ class Editor extends Component {
 			}
 		});
 		this._showErrors(errors);
-		if (!errors.length) (<MutableZone>this._zone).actions = actions;
-		this.actions = actions;
+		if (!errors.length) {
+			(<MutableZone>this._zone).actions = actions;
+			this.actions = actions;
+		}
 	}
 
 	public indent() {
