@@ -29,9 +29,12 @@ class Assembler {
 	public assemble(input: AST): Action {
 		const result = new MutableAction();
 
-		let [defn, name, args, ...body] = this.validateInputStructure(input);
-
-		result.id = this.parseActionID(name);
+		let [defaction, name, ...body] = this.validateInputStructure(input);
+		if (typeof name === "string") {
+			result.name = name;
+		} else {
+			body = [name, ...body];
+		}
 
 		if (body.length === 1) {
 			body = <Array<AST>>body.first();
@@ -54,32 +57,14 @@ class Assembler {
 	}
 
 	private validateInputStructure(input: AST): ASTFunctionDefinition {
-		let valid = true;
 		let inputArray = <Array<AST>>input;
 
 		if (!(input instanceof Array))
-			throw new AssemblerInputError("Input must be an array", input);
-		if (inputArray[0] !== s`defn`)
-			throw new AssemblerInputError("Input must be a function definition", input);
-		if (!(inputArray[1] instanceof Symbol))
-			throw new AssemblerInputError("Input must be a function definition", input);
-		if (!(inputArray[2] instanceof Array))
-			throw new AssemblerInputError("Input must be a function definition", input);
-		if ((<Array<AST>>inputArray[2]).length !== 0)
-			throw new AssemblerInputError("Action function can not take any arguments", input);
-		if (inputArray.length <= 3)
-			throw new AssemblerInputError("Function must have at least one instruction", input);
-		if (this.parseActionID(<Symbol><any>inputArray[1]) === null)
-			throw new AssemblerInputError("Function name must start with action-", input);
+			throw new AssemblerInputError("Input must be an array.", input);
+		if (inputArray[0] !== s`defaction`)
+			throw new AssemblerInputError("Input must be an action definition using defaction.", input);
 
 		return <ASTFunctionDefinition>input.slice();
-	}
-
-	private parseActionID(name: Symbol): number {
-		const idMatch = /action-(\d+)/gi.exec(name.name);
-		if (idMatch.length !== 2) return null;
-
-		return parseInt(idMatch[1]);
 	}
 
 	private parseAnd(body: Array<AST>): [Condition[], Instruction[]] {

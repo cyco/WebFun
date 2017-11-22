@@ -6,10 +6,10 @@ import * as Instructions from "src/engine/script/instructions";
 
 class Disassembler {
 	public disassemble(input: Action): AST {
-		return [s`defn`, s`action-${input.id}`, [],
+		return [s`defaction`, ...(input.name.length ? [input.name] : []),
 			[s`and`,
 				...input.conditions.map(c => this._disassembleCondition(c)),
-				[s`progn`, ...input.instructions.map(c => this._disassebleInstruction(c))]
+				[s`progn`, ...input.instructions.map(c => this._disassembleInstruction(c))]
 			]];
 	}
 
@@ -23,14 +23,14 @@ class Disassembler {
 		return [s`${name.dasherize()}`, ...usedArguments];
 	}
 
-	private _disassebleInstruction(instruction: Instruction): AST[] {
+	private _disassembleInstruction(instruction: Instruction): AST[] {
 		const name = Object.keys(Instructions).find(key => (<any>Instructions)[key].Opcode === instruction.opcode) || `${instruction.opcode}`;
 		const Instruction = name ? (<any>Instructions)[name] : null;
 
 		const argCount = Math.max(Instruction.Arguments, 0);
 		const usedArguments = instruction.arguments.slice(0, argCount);
 
-		return [s`${name.dasherize()}`, ...usedArguments, ...(Instruction.UsesText ? [`${instruction.text}`] : [])];
+		return [s`${name.dasherize()}`, ...usedArguments, ...(Instruction.UsesText ? [instruction.text] : [])];
 	}
 
 }
