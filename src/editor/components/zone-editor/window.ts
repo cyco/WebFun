@@ -173,11 +173,11 @@ class Window extends WindowComponent {
 
 	private _editAction(action: Action) {
 		const window = <WindowComponent>document.createElement(WindowComponent.TagName);
-		window.style.width = "300px";
-		window.content.style.maxHeight = "300px";
+		window.style.width = "500px";
+		window.content.style.maxHeight = "650px";
 
 		const editor = <ActionEditor>document.createElement(ActionEditor.TagName);
-		editor.action = action;
+		editor.zone = this.zone;
 		window.content.appendChild(editor);
 
 		WindowManager.defaultManager.showWindow(window);

@@ -3,20 +3,23 @@ import { Window } from "src/ui/components";
 import { Action } from "src/engine/objects";
 import Printer from "src/editor/components/action-editor/printer";
 import Disassembler from "src/editor/components/action-editor/disassembler";
-import Assembler, { AssemblerInputError } from "src/editor/components/action-editor/assembler";
-import Parser, { ParserError } from "src/editor/components/action-editor/parser";
 import { Shortcut } from "src/ux";
 import ShortcutManager from "src/ux/shortcut-manager";
-import MutableAction from "src/engine/mutable-objects/mutable-action";
 import "./editor.scss";
+import Zone from "src/engine/objects/zone";
+import { AssemblerInputError, default as Assembler } from "src/editor/components/action-editor/assembler";
+import { default as Parser, ParserError } from "src/editor/components/action-editor/parser";
+import MutableAction from "src/engine/mutable-objects/mutable-action";
+import MutableZone from "src/engine/mutable-objects/mutable-zone";
 
 class Editor extends Component {
 	static readonly TagName = "wf-action-editor";
 	static readonly observedAttributes: string[] = [];
-	private _action: Action;
+	private _actions: Action[];
 	private _shortcuts: Shortcut[];
 	private _errorArea: HTMLDivElement;
 	private _editorArea: HTMLDivElement;
+	private _zone: Zone;
 
 	constructor() {
 		super();
@@ -44,40 +47,27 @@ class Editor extends Component {
 	}
 
 	public save() {
-		this._errorArea.textContent = "";
-
 		const parser = new Parser();
 		const assembler = new Assembler();
 
-		try {
-			const input = this._editorArea.textContent;
-			const ast = parser.parse(input);
-			if (ast.length !== 1) {
-				throw new Error(ast.length ? "Too many defintions found!" : "Not enough defintions found!");
+		const input = this._editorArea.textContent;
+		const ast = parser.parse(input);
+
+		const errors: Error[] = [];
+		const actions = ast.map((ast, idx) => {
+			try {
+				const action = new MutableAction(assembler.assemble(ast));
+				action.id = idx;
+				action.zone = this._zone;
+				return action;
+			} catch (e) {
+				errors.push(e);
+				return null;
 			}
-
-			const zone = this._action.zone;
-			const action = new MutableAction(assembler.assemble(ast.first()));
-			action.id = this._action.id;
-			action.zone = this._action.zone;
-			action.name = this._action.name;
-
-			zone.actions.splice(zone.actions.indexOf(this._action), 1, action);
-			this.action = action;
-
-			this._errorArea.style.display = "none";
-			this.style.setProperty("--error-height", "0px");
-		} catch (e) {
-			if (e instanceof ParserError) {
-				this._errorArea.textContent = "SyntaxError: " + e.message;
-			} else if (e instanceof AssemblerInputError) {
-				this._errorArea.textContent = "Assembler Error: " + e.message;
-			} else {
-				this._errorArea.textContent = "Error: " + e.message;
-			}
-			this._errorArea.style.display = "";
-			this.style.setProperty("--error-height", this._errorArea.getBoundingClientRect().height + "px");
-		}
+		});
+		this._showErrors(errors);
+		if (!errors.length) (<MutableZone>this._zone).actions = actions;
+		this.actions = actions;
 	}
 
 	public indent() {
@@ -91,9 +81,9 @@ class Editor extends Component {
 	}
 
 	private updateWindowTitle() {
-		if (!this._action) return;
+		if (!this._actions) return;
 		const window = <Window>this.closest(Window.TagName);
-		if (window) window.title = `Zone ${this._action.zone.id}: Action ${this._action.id}`;
+		if (window) window.title = `Actions of zone ${this._zone.id}`;
 	}
 
 	disconnectedCallback() {
@@ -101,23 +91,37 @@ class Editor extends Component {
 		this.unregisterShortcuts();
 	}
 
-	set action(action: Action) {
-		this._action = action;
+	set zone(zone: Zone) {
+		this._zone = zone;
+		this.actions = zone.actions;
+	}
+
+	get zone() {
+		return this._zone;
+	}
+
+	private set actions(actions: Action[]) {
+		this._actions = actions;
 
 		const div = document.createElement("div");
 		div.classList.add("editor-area");
 		div.spellcheck = false;
+		div.setAttribute("contenteditable", "");
 
 		const printer = new Printer();
 		const disassembler = new Disassembler();
 
-		try {
-			let ast = disassembler.disassemble(action);
-			div.innerHTML = printer.pprint(ast);
-			div.setAttribute("contenteditable", "");
-		} catch (e) {
-			div.innerHTML = `<span class="error">${e.message}</span><br>${printer.pprint(e.input)}`;
-		}
+		const errors: Error[] = [];
+		this._actions.forEach((action, idx) => {
+			try {
+				let ast = disassembler.disassemble(action);
+				div.innerHTML += (idx === 0 ? "" : "<br><br>") + printer.pprint(ast);
+			} catch (e) {
+				errors.push(e);
+			}
+		});
+
+		this._showErrors(errors);
 
 		this.textContent = "";
 		this._editorArea = div;
@@ -126,8 +130,28 @@ class Editor extends Component {
 		this.updateWindowTitle();
 	}
 
-	get action() {
-		return this._action;
+	private _showErrors(errors: Error[]) {
+		if (!errors || errors.length === 0) {
+			this._errorArea.style.display = "none";
+			this.style.setProperty("--error-height", "0px");
+			return;
+		}
+
+		this._errorArea.textContent = errors.map(e => {
+			console.log(e);
+			if (e instanceof ParserError) {
+				return "SyntaxError: " + e.message;
+			} else if (e instanceof AssemblerInputError) {
+				return "Assembler Error: " + e.message;
+			}
+			return "Error: " + e.message;
+		}).join("\n");
+		this._errorArea.style.display = "";
+		this.style.setProperty("--error-height", this._errorArea.getBoundingClientRect().height + "px");
+	}
+
+	private get actions() {
+		return this._actions;
 	}
 }
 
