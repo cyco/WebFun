@@ -17,7 +17,7 @@ class Disassembler {
 		const name = Object.keys(Conditions).find(key => (<any>Conditions)[key].Opcode === condition.opcode) || `${condition.opcode}`;
 		const Condition = name ? (<any>Conditions)[name] : null;
 
-		const argCount = Math.max(Condition.Arguments, 0);
+		const argCount = Math.max(Condition.Arguments, 5);
 		const usedArguments = condition.arguments.slice(0, argCount);
 
 		return [s`${name.dasherize()}`, ...usedArguments];
@@ -27,7 +27,7 @@ class Disassembler {
 		const name = Object.keys(Instructions).find(key => (<any>Instructions)[key].Opcode === instruction.opcode) || `${instruction.opcode}`;
 		const Instruction = name ? (<any>Instructions)[name] : null;
 
-		const argCount = Math.max(Instruction.Arguments, 0);
+		const argCount = Math.max(Instruction.Arguments, 5);
 		const usedArguments = instruction.arguments.slice(0, argCount);
 
 		return [s`${name.dasherize()}`, ...usedArguments, ...(Instruction.UsesText ? [instruction.text] : [])];
