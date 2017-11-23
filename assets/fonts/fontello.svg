@@ -1,0 +1,31 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg">
+    <metadata>Copyright (C) 2017 by original authors @ fontello.com</metadata>
+    <defs>
+        <font id="fontello" horiz-adv-x="1000">
+            <font-face font-family="fontello" font-weight="400" font-stretch="normal" units-per-em="1000" ascent="850"
+                       descent="-150"/>
+            <missing-glyph horiz-adv-x="1000"/>
+            <glyph glyph-name="pencil" unicode="&#xe800;"
+                   d="M795 731c50-46 44-118-4-165l-46-46s35 53-37 123c-64 64-124 37-124 37l49 48c43 45 120 45 162 3z m-89-250l-492-493-210-51-4 4 55 210 493 490c8 2 30 9 60 2l-523-522-15-55 60-60 56 15 25 24 3 56-40 40 479 479c7-7 7-7 15-15 71-70 38-124 38-124z"
+                   horiz-adv-x="830"/>
+
+            <glyph glyph-name="eyedropper" unicode="&#xe801;"
+                   d="M845 415l-16-16 81-81-80-78-80 81-415-418-208 0-109 113 0 201 418 418-83 84 78 78 83-83 16 17q65 65 158 65t157-65q66-65 66-158t-66-158z m-539-381l366 365-158 158-360-361q63-3 106-46 48-48 46-116z"
+                   horiz-adv-x="928"/>
+
+            <glyph glyph-name="layers" unicode="&#xe802;"
+                   d="M18 183l446-112 447 112 0-112-447-112-446 112 0 112z m0 223l446-112 447 112 0-112-447-111-446 111 0 112z m0 223l446 112 447-112 0-111-447-112-446 112 0 111z"
+                   horiz-adv-x="928"/>
+
+            <glyph glyph-name="bucket" unicode="&#xe803;"
+                   d="M522 780q174 0 286-49t104-105q-6-38-48-307t-44-281q-2-18-37-44t-107-50-154-24-153 24-106 50-37 44q0 2-4 30 82-6 163 35t139 117q28 0 48 20t20 50q0 28-20 49t-50 21q-28 0-49-21t-21-49q0-20 10-36-48-58-115-89t-131-27q-102 10-157 57t-59 109q-8 122 156 184-18 94-22 138-8 56 104 105t284 49z m-452-470q4-32 37-59t91-39l-32 204q-100-44-96-106z m452 212q82 0 157 18t113 39 38 35-38 35-112 39-158 18q-82 0-156-18t-112-39-38-35 38-35 112-39 156-18z"
+                   horiz-adv-x="913"/>
+
+            <glyph glyph-name="unknown-2" unicode="&#xe804;"
+                   d="M900 140a20 20 0 0 1 20 20l0 380a20 20 0 0 1-20 20l-800 0a20 20 0 0 1-20-20l0-380a20 20 0 0 1 20-20l800 0z m-20 40l-760 0 0 340 760 0 0-340z"
+                   horiz-adv-x="1000"/>
+        </font>
+    </defs>
+</svg>
