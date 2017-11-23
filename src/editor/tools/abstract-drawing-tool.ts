@@ -49,14 +49,17 @@ abstract class AbstractDrawingTool extends AbstractTool implements EventListener
 		this.drawPreview(point);
 	}
 
-	protected abstract drawPreview(point: Point): void;
-
 	private _applyTo(point: Point, continous: boolean) {
 		this._ctx.clearRect(0, 0, this.zone.size.width, this.zone.size.height);
 		this.applyTo(point, continous);
 	}
 
+	protected abstract drawPreview(point: Point): void;
+
 	protected abstract applyTo(point: Point, continous: boolean): void;
+
+	protected finalize(point: Point): void {
+	}
 
 	public handleEvent(event: MouseEvent): void {
 		if (event.type === "mouseup") {
@@ -100,6 +103,8 @@ abstract class AbstractDrawingTool extends AbstractTool implements EventListener
 	}
 
 	protected _mouseReleased(event: MouseEvent) {
+		this.finalize(this._currentTile);
+
 		this._isApplying = false;
 		document.removeEventListener("mousemove", this);
 		document.removeEventListener("mouseup", this);
