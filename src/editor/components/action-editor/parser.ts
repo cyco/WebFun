@@ -27,7 +27,7 @@ class Parser {
 
 		const c = scanner.peek();
 		if (c === "\"") return this.readString(scanner);
-		if (/\d/.test(c)) return this.readNumber(scanner);
+		if (c === "-" || /\d/.test(c)) return this.readNumber(scanner);
 		if (c === "(") return this.readList(scanner);
 		if (c === "[") return this.readArray(scanner);
 
