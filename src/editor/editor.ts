@@ -6,8 +6,27 @@ import FilePicker from "src/ui/file-picker";
 import DataFileReader from "src/engine/file-format/yodesk.js";
 import { KaitaiStream } from "src/libs";
 import GameData from "src/engine/game-data";
+import "./editor.scss";
+import { FullscreenWindow } from "src/ui/components";
+import { Menu } from "src/ui";
+import buildEditorMenu from "./menu";
 
-class Editor {
+class Editor extends FullscreenWindow {
+	public static readonly TagName = "wf-editor";
+
+	connectedCallback() {
+		this.closable = false;
+		this.movable = false;
+
+		super.connectedCallback();
+
+		this.menu = new Menu(buildEditorMenu(this));
+	}
+
+	disconnectedCallback() {
+		super.disconnectedCallback();
+	}
+
 	private static _sharedEditor: Editor;
 	public static set sharedEditor(e: Editor) {
 		this._sharedEditor = e;
@@ -20,12 +39,17 @@ class Editor {
 	private _inspectors: {[_: string]: AbstractInspector};
 	private _data: DataManager;
 
-	constructor(inspectors: {[_: string]: AbstractInspector}) {
-		this._inspectors = inspectors;
+	constructor() {
+		super();
+		this._inspectors = {};
+	}
+
+	addInspector(name: string, inspector: AbstractInspector) {
+		this._inspectors[name] = inspector;
 	}
 
 	public show(key: string) {
-		this._inspectors[key].show();
+		this.appendChild(this._inspectors[key].window);
 	}
 
 	public save() {

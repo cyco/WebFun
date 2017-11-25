@@ -3,8 +3,8 @@ import GameController from "./game-controller";
 import * as AppComponents from "./ui";
 import * as WindowComponents from "./windows";
 import Settings, { loadSettings } from "src/settings";
-import { initialize as initializeEditor } from "src/editor";
 import { initialize as initializeDebug } from "src/debug";
+import { initialize as initializeEditor } from "src/editor";
 
 export default () => {
 	loadSettings();
@@ -17,8 +17,9 @@ export default () => {
 	gameController.start();
 
 	if (Settings.debug) {
-		initializeDebug();
+		initializeDebug(gameController);
 	}
+
 	if (Settings.editor) {
 		initializeEditor(gameController);
 	}

@@ -2,7 +2,7 @@ import AbstractInspector from "./abstract-inspector";
 import { PaletteView } from "../components";
 import { Size } from "src/util";
 
-class PaletteInspector extends AbstractInspector {
+class SetupImageInspector extends AbstractInspector {
 	private _paletteView: PaletteView = <PaletteView>document.createElement(PaletteView.TagName);
 
 	constructor(state: Storage) {
@@ -28,4 +28,4 @@ class PaletteInspector extends AbstractInspector {
 	}
 }
 
-export default PaletteInspector;
+export default SetupImageInspector;

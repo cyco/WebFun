@@ -195,9 +195,13 @@ class GameController extends EventTarget {
 		engine.inputManager.addListeners();
 		this._window.engine = engine;
 
-		if (Settings.autostartEngine) {
+		if (this.settings.autostartEngine) {
 			engine.metronome.start();
 		}
+	}
+
+	get settings() {
+		return Settings;
 	}
 }
 

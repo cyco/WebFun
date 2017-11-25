@@ -1,0 +1,5 @@
+@import "../ui/components/fullscreen-window";
+
+wf-editor {
+	@extend wf-fullscreen-window;
+}

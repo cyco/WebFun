@@ -6,20 +6,26 @@ const SettingsAction = (label: string, callback: (() => void)) => ({
 	callback: callback
 });
 
-export default {
+export default (editor: Editor) => [{
 	title: "Editor",
 	mnemonic: 0,
 	submenu: [
-		SettingsAction("Tiles", (): void => Editor.sharedEditor.show("tile")),
-		SettingsAction("Zones", (): void => Editor.sharedEditor.show("zone")),
-		SettingsAction("Sound", (): void => Editor.sharedEditor.show("sound")),
-		SettingsAction("Chars", (): void => Editor.sharedEditor.show("character")),
-		SettingsAction("Puzzles", (): void => Editor.sharedEditor.show("puzzle")),
-		SettingsAction("Sound", (): void => Editor.sharedEditor.show("sound")),
-		SettingsAction("Setup Image", (): void => Editor.sharedEditor.show("setup-image")),
-		SettingsAction("Palette", (): void => Editor.sharedEditor.show("palette")),
+		SettingsAction("Load Data", () => editor.load()),
+		SettingsAction("Save Data", () => editor.save()),
 		MenuItemSeparator,
-		SettingsAction("Load Data", (): void => (void Editor.sharedEditor.load())),
-		SettingsAction("Save Data", (): void => Editor.sharedEditor.save())
+		SettingsAction("Close", () => editor.remove())
 	]
-};
+}, {
+	title: "Views",
+	mnemonic: 0,
+	submenu: [
+		SettingsAction("Tiles", () => editor.show("tile")),
+		SettingsAction("Zones", () => editor.show("zone")),
+		SettingsAction("Sound", () => editor.show("sound")),
+		SettingsAction("Chars", () => editor.show("character")),
+		SettingsAction("Puzzles", () => editor.show("puzzle")),
+		SettingsAction("Sound", () => editor.show("sound")),
+		SettingsAction("Setup Image", () => editor.show("setup-image")),
+		SettingsAction("Palette", () => editor.show("palette"))
+	]
+}];

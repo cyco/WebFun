@@ -68,6 +68,14 @@ class Window extends Component {
 		this._titlebar.closable = flag;
 	}
 
+	get movable() {
+		return this._titlebar.movable;
+	}
+
+	set movable(flag: boolean) {
+		this._titlebar.movable = flag;
+	}
+
 	get pinnable() {
 		return this._titlebar.pinnable;
 	}
