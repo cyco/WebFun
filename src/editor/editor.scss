@@ -2,7 +2,8 @@
 
 wf-editor {
 	@extend wf-fullscreen-window;
-	.content {
+
+	> .content {
 		display: block;
 	}
 }

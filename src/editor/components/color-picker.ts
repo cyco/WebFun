@@ -27,6 +27,7 @@ class ColorPicker extends Component {
 	}
 
 	connectedCallback() {
+		super.connectedCallback();
 		const container = document.createElement(Group.TagName);
 		container.appendChild(this._wheel);
 		container.appendChild(this._brightnessInput);
@@ -39,6 +40,11 @@ class ColorPicker extends Component {
 		this.appendChild(this._rgbPreview);
 
 		this.color = this._color;
+	}
+
+	disconnectedCallback() {
+		this.textContent = "";
+		super.disconnectedCallback();
 	}
 
 	private _buildColorPreview() {

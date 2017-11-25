@@ -11,6 +11,13 @@ wf-puzzle-inspector-cell {
 	transition: height 0.25s ease;
 	overflow: hidden;
 
+	&:first-child > * {
+		border-top-width: 0;
+	}
+	&:last-child > * {
+		border-bottom-width: 0;
+	}
+
 	&.expanded {
 		height: calc(#{$cell-height} + var(--text-height, 0));
 	}
@@ -28,10 +35,15 @@ wf-puzzle-inspector-cell {
 		height: $cell-height;
 		flex-grow: 0;
 		flex-shrink: 0;
+
+		&:first-child {
+			border-left-width: 0;
+			width: $cell-height - 1px;
+		}
 	}
 
 	.tile.double {
-		width: 2 * $cell-height;
+		width: 2 * $cell-height - 1px;
 		padding-left: $cell-height / 2;
 		padding-right: $cell-height / 2;
 		background-clip: content-box;
