@@ -4,7 +4,6 @@ import Menu from "../menu";
 import Menubar from "./menubar";
 import Window from "./window";
 import "./window-titlebar.scss";
-import WindowManager from "src/ui/window-manager";
 
 class WindowTitlebar extends Component {
 	public onclose: Function = identity;
@@ -122,7 +121,8 @@ class WindowTitlebar extends Component {
 			event.preventDefault();
 			event.stopImmediatePropagation();
 
-			WindowManager.defaultManager.focus(this._window);
+			const manager = this.windowManager;
+			if (manager) manager.focus(this._window);
 		};
 
 		this.addEventListener("mousedown", mouseDown);
@@ -158,6 +158,10 @@ class WindowTitlebar extends Component {
 
 	get pinned() {
 		return this.pinnable && this._pinButton.classList.contains("on");
+	}
+
+	private get windowManager() {
+		return this._window.manager;
 	}
 }
 

@@ -19,15 +19,19 @@ class Editor extends FullscreenWindow {
 	private _inspectors: {[_: string]: AbstractInspector} = {};
 	private _data: DataManager;
 
+	constructor() {
+		super();
+
+		if (!this._windowManager) {
+			this._windowManager = new WindowManager(this.content);
+		}
+	}
+
 	connectedCallback() {
 		this.closable = false;
 		this.movable = false;
 
 		super.connectedCallback();
-
-		if (!this._windowManager) {
-			this._windowManager = new WindowManager(this.content);
-		}
 
 		const menuItems = <MenuItemInit[]>buildEditorMenu(this);
 		menuItems.push(new WindowMenuItem(this._windowManager));
@@ -39,6 +43,7 @@ class Editor extends FullscreenWindow {
 	}
 
 	addInspector(name: string, inspector: AbstractInspector) {
+		inspector.windowManager = this._windowManager;
 		this._inspectors[name] = inspector;
 	}
 
