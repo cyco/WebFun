@@ -22,8 +22,10 @@ import Cell from "./cell";
 import Label from "./label";
 import SearchBar from "./search-bar";
 import FullscreenWindow from "./fullscreen-window";
+import Panel from "./panel";
 
 export {
+	Panel,
 	FullscreenWindow,
 	SearchBar,
 	Label,

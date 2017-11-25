@@ -1,4 +1,4 @@
-import { Window } from "src/ui/components";
+import { Panel, Window } from "src/ui/components";
 import DataManager from "src/editor/data-manager";
 import WindowManager from "src/ui/window-manager";
 
@@ -6,7 +6,7 @@ const StateStorageDelay = 1.0;
 
 abstract class AbstractInspector {
 	public state: Storage;
-	public window: Window = <Window>document.createElement(Window.TagName);
+	public window: Window = <Window>document.createElement(Panel.TagName);
 	private _data: DataManager;
 	private _stateUpdateDelay: number;
 	private _handlers = {
