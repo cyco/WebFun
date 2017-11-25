@@ -155,6 +155,8 @@ class ColorWheel extends Component implements EventListenerObject {
 	disconnectedCallback() {
 		this._canvas.remove();
 		this.removeEventListener("mousedown", this);
+
+		this.textContent = "";
 	}
 
 	public attributeChangedCallback(attr: string, old: string, newValue: string) {

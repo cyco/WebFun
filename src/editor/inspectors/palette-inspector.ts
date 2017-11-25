@@ -12,8 +12,8 @@ class PaletteInspector extends AbstractInspector {
 
 		this.window.title = "Palette";
 		this.window.autosaveName = "palette-inspector";
-		this.window.style.width = "408px";
-		this.window.content.style.height = "212px";
+		this.window.style.width = "398px";
+		this.window.content.style.height = "194px";
 		this.window.content.style.flexDirection = "row";
 
 		this._paletteView.size = new Size(16, 16);
@@ -24,7 +24,7 @@ class PaletteInspector extends AbstractInspector {
 		this._paletteView.moveHighlighterTo(highlight);
 		this.window.content.appendChild(this._paletteView);
 
-		this._colorPicker.style.height = "194px";
+		this._colorPicker.style.height = "184px";
 		this._colorPicker.style.minWidth = "182px";
 		this._colorPicker.style.marginLeft = "12px";
 		this._colorPicker.color = state.load("color") || "rgb(0, 255, 0)";

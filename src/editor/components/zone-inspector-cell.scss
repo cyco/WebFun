@@ -7,9 +7,10 @@ wf-zone-inspector-cell {
 	.icon {
 		@extend .inset-border-1px;
 		@extend .inset-border-inverted;
+		border-left-width: 0;
 
 		height: 30px;
-		width: 30px;
+		width: 29px;
 	}
 
 	.content {
@@ -42,6 +43,17 @@ wf-zone-inspector-cell {
 			margin-right: 10px;
 			display: inline-block;
 			text-align: right;
+		}
+	}
+
+	&:first-child {
+		.icon, .content {
+			border-top-width: 0;
+		}
+	}
+	&:last-child {
+		.icon, .content {
+			border-bottom-width: 0;
 		}
 	}
 }

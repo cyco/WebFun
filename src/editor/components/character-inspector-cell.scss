@@ -8,10 +8,23 @@ wf-character-inspector-cell {
 	height: 34px;
 	line-height: 34px;
 
+	&:first-child {
+		.title, .text, .tile {
+			border-top-width: 0;
+		}
+	}
+	&:last-child > * {
+		.title, .text, .tile {
+			border-bottom-width: 0;
+		}
+	}
+
 	.tile {
 		@extend .inset-border-1px;
 		@extend .inset-border-inverted;
-		width: 34px;
+		border-left-width: 0;
+
+		width: 34px - 1px;
 		height: 34px;
 		flex-shrink: 0;
 		flex-grow: 0;
