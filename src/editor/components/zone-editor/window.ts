@@ -55,7 +55,7 @@ class Window extends Panel {
 			this._editor.setLayerVisible(layer, layer.visible);
 		});
 
-		const layers = document.createElement(SidebarLayersCell.TagName);
+		const layers = <SidebarLayersCell>document.createElement(SidebarLayersCell.TagName);
 		layers.addEventListener(LayerChangeEvents.LayerDidChange, (e: CustomEvent) => this._editor.currentLayer = e.detail.layer);
 		this._sidebar.addEntry(layers, "Layers");
 
@@ -89,6 +89,8 @@ class Window extends Panel {
 		this._actionsCell = this._sidebar.addEntry([], "Actions");
 
 		this._editor.activateTool(this._tools[0]);
+		this._tilePicker.currentTile = null;
+		layers.activateLayer(0);
 	}
 
 	connectedCallback() {
