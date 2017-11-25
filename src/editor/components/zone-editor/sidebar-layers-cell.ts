@@ -26,6 +26,7 @@ class SidebarLayersCell extends Component {
 		this._list.cell.onclick = (e: MouseEvent) => this.activateLayerForCell(<SidebarLayer>e.currentTarget);
 
 		this._buildLayers();
+		this._list.items = this._layers;
 	}
 
 	private _buildLayers() {
@@ -57,7 +58,6 @@ class SidebarLayersCell extends Component {
 		super.connectedCallback();
 
 		this.appendChild(this._list);
-		this._list.items = this._layers;
 
 		this._registerShortcuts();
 	}
@@ -76,17 +76,17 @@ class SidebarLayersCell extends Component {
 
 		const node = this.closest(Window.TagName);
 		const manager = ShortcutManager.sharedManager;
-		this._shortcuts.push(manager.registerShortcut(() => this._activateLayer(2), {
+		this._shortcuts.push(manager.registerShortcut(() => this.activateLayer(2), {
 			ctrlKey: true,
 			keyCode: 51,
 			node
 		}));
-		this._shortcuts.push(manager.registerShortcut(() => this._activateLayer(1), {
+		this._shortcuts.push(manager.registerShortcut(() => this.activateLayer(1), {
 			ctrlKey: true,
 			keyCode: 50,
 			node
 		}));
-		this._shortcuts.push(manager.registerShortcut(() => this._activateLayer(0), {
+		this._shortcuts.push(manager.registerShortcut(() => this.activateLayer(0), {
 			ctrlKey: true,
 			keyCode: 49,
 			node
@@ -124,8 +124,8 @@ class SidebarLayersCell extends Component {
 		return <SidebarLayer>this.querySelector(SidebarLayer.TagName + ".active");
 	}
 
-	private _activateLayer(idx: number) {
-		const layer = <SidebarLayer>this.querySelectorAll(SidebarLayer.TagName)[idx];
+	public activateLayer(idx: number) {
+		const layer = <SidebarLayer>this._list.querySelectorAll(SidebarLayer.TagName)[idx];
 		if (layer.classList.contains("active")) return;
 		this.activateLayerForCell(layer);
 	}

@@ -39,9 +39,8 @@ class List<T> extends Component {
 	}
 
 	connectedCallback() {
-		this.appendChild(this._bar);
+		if (!this._bar.parentElement) this.insertBefore(this._bar, this.firstElementChild);
 		this.rebuild();
-		this.appendChild(this._content);
 
 		if (!this.searchDelegate) return;
 
@@ -93,18 +92,19 @@ class List<T> extends Component {
 		this._bar.remove();
 		this.hideBar(false);
 
-		this._cells.forEach(c => c.remove());
-		this._cells = [];
-
 		const shortcutManager = ShortcutManager.sharedManager;
 		shortcutManager.unregisterShortcut(this._shortcut);
 	}
 
 	private rebuild() {
+		const oldContent = this._content;
+		this._content = document.createElement("div");
 		this._lastSearchValue = "";
 		this._cells.forEach(c => c.remove());
 		this._cells = this._items.map((i) => this.addItem(i));
 		this.refilter();
+		if (oldContent.parentElement) oldContent.parentElement.replaceChild(this._content, oldContent);
+		else this.appendChild(this._content);
 	}
 
 	private setNeedsRefiltering() {
