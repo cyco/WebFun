@@ -17,7 +17,7 @@ class CanvasRenderer extends AbstractRenderer {
 		this._canvas = canvas;
 
 		this._ctx = canvas.getContext("2d");
-		this._ctx.globalCompositeOperation = "source-over";
+		this._ctx.globalCompositeOperation = "copy";
 		this._ctx.webkitImageSmoothingEnabled = false;
 		this._ctx.fillStyle = rgb(0, 0, 0);
 		this._ctx.fillRect(0, 0, 288, 288);
@@ -65,6 +65,7 @@ class CanvasRenderer extends AbstractRenderer {
 	// debug
 	fillRect(x: number, y: number, width: number, height: number, color: string) {
 		this._ctx.save();
+		this._ctx.globalCompositeOperation = "source-over";
 		this._ctx.fillStyle = color;
 		this._ctx.fillRect(x, y, width, height);
 		this._ctx.restore();
@@ -76,6 +77,7 @@ class CanvasRenderer extends AbstractRenderer {
 
 	renderText(text: string, location: Point) {
 		this._ctx.save();
+		this._ctx.globalCompositeOperation = "source-over";
 		this._ctx.textAlign = "left";
 		this._ctx.shadowColor = "black";
 		this._ctx.shadowBlur = 1;

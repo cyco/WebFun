@@ -1,9 +1,9 @@
 import Component from "src/ui/component";
 import { default as Zone } from "src/engine/objects/zone";
 import { HEIGHT as TileHeight, WIDTH as TileWidth } from "src/engine/objects/tile";
-import TileSheet from "src/editor/tile-sheet";
-import "./zone-layer.scss";
+import CSSTileSheet from "src/editor/css-tile-sheet";
 import { Point } from "src/util";
+import "./zone-layer.scss";
 
 class ZoneLayer extends Component {
 	public static readonly TagName = "wf-zone-layer";
@@ -11,7 +11,7 @@ class ZoneLayer extends Component {
 	private _zone: Zone;
 	private _layer: number;
 	private _canvas: HTMLCanvasElement;
-	private _tileSheet: TileSheet;
+	private _tileSheet: CSSTileSheet;
 
 	constructor() {
 		super();

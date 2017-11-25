@@ -1,7 +1,7 @@
 import { Cell } from "src/ui/components";
 import { Puzzle, PuzzleType } from "src/engine/objects";
 import "./puzzle-inspector-cell.scss";
-import TileSheet from "../tile-sheet";
+import CSSTileSheet from "../css-tile-sheet";
 import Tile from "src/engine/objects/tile";
 import { ExpandButton } from "src/editor/components";
 
@@ -9,7 +9,7 @@ class PuzzleInspectorCell extends Cell<Puzzle> {
 	public static readonly TagName: string = "wf-puzzle-inspector-cell";
 	public static readonly observedAttributes: string[] = [];
 
-	public tileSheet: TileSheet;
+	public tileSheet: CSSTileSheet;
 	private _tile1: HTMLElement;
 	private _tile2: HTMLElement;
 	private _title: HTMLElement;

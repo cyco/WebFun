@@ -1,7 +1,7 @@
 import { Cell } from "src/ui/components";
 import { Zone, ZoneType } from "src/engine/objects";
 import "./zone-inspector-cell.scss";
-import TileSheet from "../tile-sheet";
+import CSSTileSheet from "../css-tile-sheet";
 
 const Events = {
 	RevealReferences: "RevealReferences"
@@ -12,7 +12,7 @@ class ZoneInspectorCell extends Cell<Zone> {
 	public static readonly TagName: string = "wf-zone-inspector-cell";
 	public static readonly observedAttributes: string[] = [];
 
-	public tileSheet: TileSheet;
+	public tileSheet: CSSTileSheet;
 	private _icon: HTMLElement;
 	private _id: HTMLElement;
 	private _type: HTMLElement;

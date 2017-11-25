@@ -1,9 +1,9 @@
 import AbstractInspector from "./abstract-inspector";
-import TileSheet from "../tile-sheet";
+import CSSTileSheet from "../css-tile-sheet";
 import "./tile-inspector.scss";
 
 class TileInspector extends AbstractInspector {
-	private _tileSheet: TileSheet;
+	private _tileSheet: CSSTileSheet;
 	private _requiredAttributes: number = 0;
 	private _prohibitedAttributes: number = 0;
 

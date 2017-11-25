@@ -1,13 +1,13 @@
 import { Cell } from "src/ui/components";
 import { Tile } from "src/engine/objects";
 import "./tile-picker-cell.scss";
-import TileSheet from "src/editor/tile-sheet";
+import CSSTileSheet from "src/editor/css-tile-sheet";
 
 class TilePickerCell extends Cell<Tile> {
 	public static readonly TagName = "wf-tile-picker-cell";
 	public static readonly observedAttributes: string[] = [];
 
-	public tileSheet: TileSheet;
+	public tileSheet: CSSTileSheet;
 
 	connectedCallback() {
 		super.connectedCallback();
