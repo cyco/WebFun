@@ -22,6 +22,7 @@ abstract class AbstractInspector {
 
 	show() {
 		this.state.store("visible", true);
+		WindowManager.defaultManager.showWindow(this.window);
 	}
 
 	set data(manager: DataManager) {

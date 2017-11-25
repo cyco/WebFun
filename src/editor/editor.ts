@@ -8,11 +8,14 @@ import { KaitaiStream } from "src/libs";
 import GameData from "src/engine/game-data";
 import "./editor.scss";
 import { FullscreenWindow } from "src/ui/components";
-import { Menu } from "src/ui";
+import { Menu, WindowMenuItem } from "src/ui";
 import buildEditorMenu from "./menu";
+import MenuItemInit from "src/ui/menu-item-init";
+import WindowManager from "src/ui/window-manager";
 
 class Editor extends FullscreenWindow {
 	public static readonly TagName = "wf-editor";
+	private windowManager: WindowManager;
 
 	connectedCallback() {
 		this.closable = false;
@@ -20,7 +23,13 @@ class Editor extends FullscreenWindow {
 
 		super.connectedCallback();
 
-		this.menu = new Menu(buildEditorMenu(this));
+		if (!this.windowManager) {
+			this.windowManager = new WindowManager(this.content);
+		}
+
+		const menuItems = <MenuItemInit[]>buildEditorMenu(this);
+		menuItems.push(new WindowMenuItem(this.windowManager));
+		this.menu = new Menu(menuItems);
 	}
 
 	disconnectedCallback() {
@@ -49,7 +58,7 @@ class Editor extends FullscreenWindow {
 	}
 
 	public show(key: string) {
-		this.appendChild(this._inspectors[key].window);
+		this.windowManager.asDefaultManager(() => this._inspectors[key].show());
 	}
 
 	public save() {

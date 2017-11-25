@@ -1,7 +1,8 @@
 import { Window } from "src/ui/components";
 
 class WindowManager {
-	public static readonly defaultManager = new WindowManager();
+	private static _defaultManager: WindowManager;
+	private _container: HTMLElement;
 	private _windows: Window[] = [];
 	private _topIndex = 0;
 	private _topMostWindow: Window;
@@ -10,10 +11,25 @@ class WindowManager {
 		windowDidClose: (e: CustomEvent) => this._onWindowClose(e)
 	};
 
+	public static get defaultManager(): WindowManager {
+		return this._defaultManager = this._defaultManager || new WindowManager(document.body);
+	}
+
+	constructor(container: HTMLElement) {
+		this._container = container;
+	}
+
+	asDefaultManager(block: () => void) {
+		const globalManager = WindowManager._defaultManager;
+		WindowManager._defaultManager = this;
+		block();
+		WindowManager._defaultManager = globalManager;
+	}
+
 	showWindow(window: Window) {
 		this._windows.push(window);
 		window.addEventListener(Window.Event.DidClose, this._handlers.windowDidClose);
-		document.body.appendChild(window);
+		this._container.appendChild(window);
 
 		this.focus(window);
 	}
@@ -38,6 +54,14 @@ class WindowManager {
 
 		window.style.zIndex = `${this._topIndex++}`;
 		this._topMostWindow = window;
+	}
+
+	public get windows() {
+		return this._windows;
+	}
+
+	public get topMostWindow() {
+		return this._topMostWindow;
 	}
 }
 
