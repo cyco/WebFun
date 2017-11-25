@@ -1,7 +1,7 @@
 import Component from "src/ui/component";
 import ZoneLayer from "./zone-layer";
 import { Zone } from "src/engine/objects";
-import TileSheet from "src/editor/tile-sheet";
+import CSSTileSheet from "src/editor/css-tile-sheet";
 import { HEIGHT as TileHeight, WIDTH as TileWidth } from "src/engine/objects/tile";
 import { AbstractTool, NoTool } from "src/editor/tools";
 import { Point } from "src/util";
@@ -15,7 +15,7 @@ class View extends Component {
 	private _objects: ZoneLayer;
 	private _roof: ZoneLayer;
 	private _overlay: HTMLCanvasElement;
-	private _tileSheet: TileSheet;
+	private _tileSheet: CSSTileSheet;
 	private _tool: AbstractTool;
 	private _currentLayer: number = 0;
 
@@ -71,7 +71,7 @@ class View extends Component {
 		return this._zone;
 	}
 
-	set tileSheet(tileSheet: TileSheet) {
+	set tileSheet(tileSheet: CSSTileSheet) {
 		this._tileSheet = tileSheet;
 		this._floor.tileSheet = tileSheet;
 		this._objects.tileSheet = tileSheet;

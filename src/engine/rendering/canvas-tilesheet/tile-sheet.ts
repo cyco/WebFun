@@ -8,13 +8,13 @@ export declare interface TileSheetEntry {
 }
 
 class TileSheet {
-	private _entries: TileSheetEntry[];
-	private _capacity: number;
-	private _tileSize: Size;
-	private _sheetSize: Size;
-	private _data: Uint8Array;
-	private _lastClearedIndex: number;
-	private _image: HTMLCanvasElement;
+	protected _entries: TileSheetEntry[];
+	protected _capacity: number;
+	protected _tileSize: Size;
+	protected _sheetSize: Size;
+	protected _data: Uint8Array;
+	protected _lastClearedIndex: number;
+	protected _canvas: HTMLCanvasElement;
 
 	constructor(capacity: number, tileSize: Size = new Size(Tile.WIDTH, Tile.HEIGHT)) {
 		this._tileSize = tileSize;
@@ -33,7 +33,7 @@ class TileSheet {
 		canvas.classList.add("pixelated");
 		canvas.width = this._sheetSize.width;
 		canvas.height = this._sheetSize.height;
-		this._image = canvas;
+		this._canvas = canvas;
 	}
 
 	public add(data: Uint8Array): TileSheetEntry {
@@ -64,7 +64,7 @@ class TileSheet {
 	public draw(factory: ImageFactory): void {
 		const imageData = factory.createImageData(this._sheetSize.width, this._sheetSize.height, this._data);
 
-		const context = this._image.getContext("2d");
+		const context = this._canvas.getContext("2d");
 		context.putImageData(imageData, 0, 0);
 	}
 
@@ -85,7 +85,7 @@ class TileSheet {
 	}
 
 	get sheetImage(): HTMLCanvasElement {
-		return this._image;
+		return this._canvas;
 	}
 }
 

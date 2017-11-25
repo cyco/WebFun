@@ -1,13 +1,13 @@
 import { Cell, Label } from "src/ui/components";
 import { Char } from "src/engine/objects";
-import TileSheet from "../tile-sheet";
+import CSSTileSheet from "../css-tile-sheet";
 import "./character-inspector-cell.scss";
 
 class CharacterInspectorCell extends Cell<Char> {
 	public static readonly TagName: string = "wf-character-inspector-cell";
 	public static readonly observedAttributes: string[] = [];
 
-	public tileSheet: TileSheet;
+	public tileSheet: CSSTileSheet;
 	private _id: HTMLElement;
 	private _name: HTMLElement;
 	private _tile: HTMLElement;

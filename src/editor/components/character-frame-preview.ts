@@ -1,13 +1,13 @@
 import Component from "src/ui/component";
 import { CharFrame } from "src/engine/objects";
-import TileSheet from "../tile-sheet";
+import CSSTileSheet from "../css-tile-sheet";
 import "./character-frame-preview.scss";
 
 class CharacterFramePreview extends Component {
 	public static readonly TagName = "wf-character-frame-preview";
 	public static readonly observedAttributes: string[] = [];
 
-	public tileSheet: TileSheet;
+	public tileSheet: CSSTileSheet;
 	private _frame: CharFrame;
 
 	constructor() {

@@ -1,7 +1,7 @@
 import { Component } from "src/ui";
 import { Char, CharMovementType, CharType } from "src/engine/objects";
 import CharacterFramePreview from "./character-frame-preview";
-import TileSheet from "../tile-sheet";
+import CSSTileSheet from "../css-tile-sheet";
 import "./character-details.scss";
 import { MutableChar } from "src/engine/mutable-objects";
 
@@ -23,7 +23,7 @@ class CharacterDetails extends Component {
 	private _sound: HTMLSelectElement;
 	private _weapon: HTMLSelectElement;
 
-	private _tileSheet: TileSheet;
+	private _tileSheet: CSSTileSheet;
 
 	constructor() {
 		super();
@@ -168,7 +168,7 @@ class CharacterDetails extends Component {
 		}
 	}
 
-	set tileSheet(s: TileSheet) {
+	set tileSheet(s: CSSTileSheet) {
 		this._framePreview.tileSheet = s;
 		this._tileSheet = s;
 	}
