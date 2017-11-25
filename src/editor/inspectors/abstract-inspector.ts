@@ -21,7 +21,6 @@ abstract class AbstractInspector {
 	abstract build(): void;
 
 	show() {
-		WindowManager.defaultManager.showWindow(this.window);
 		this.state.store("visible", true);
 	}
 

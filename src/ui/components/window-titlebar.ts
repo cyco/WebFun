@@ -9,6 +9,7 @@ import WindowManager from "src/ui/window-manager";
 class WindowTitlebar extends Component {
 	public onclose: Function = identity;
 	public onpin: Function = identity;
+	public movable: boolean = true;
 	private _menu: Menu = null;
 	private _menubar: Menubar = null;
 	private _titleNode: HTMLElement = null;
@@ -34,7 +35,8 @@ class WindowTitlebar extends Component {
 	set window(window: Window) {
 		this._window = window;
 		this._closeButton.onclick = () => this._window.close();
-		this._setupDragging(window);
+
+		if (this.movable) this._setupDragging(window);
 	}
 
 	get menu() {

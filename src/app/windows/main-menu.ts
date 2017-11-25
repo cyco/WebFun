@@ -1,5 +1,4 @@
-import { Menu as DebugMenu } from "src/debug";
-import { Menu as EditorMenu } from "src/editor";
+import { buildMenu as buildDebugMenu } from "src/debug";
 import Settings from "src/settings";
 import { Menu, MenuItemSeparator as Separator } from "src/ui";
 import { WindowModalSession } from "src/ux";
@@ -92,8 +91,7 @@ class MainMenu extends Menu {
 			}]
 		}];
 
-		if (Settings.debug) menuItems.push(DebugMenu);
-		if (Settings.editor) menuItems.push(EditorMenu);
+		if (Settings.debug) menuItems.push(buildDebugMenu(gameController));
 
 		super(menuItems);
 	}

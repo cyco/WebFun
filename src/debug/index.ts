@@ -1,14 +1,15 @@
 import { CompareWorldItems, ComparisonResult, ParseExpectation, PrepareExpectations } from "./expectation";
-import Menu from "./menu";
+import buildMenu from "./menu";
 import ScriptDebugger from "./script-debugger";
 import Settings from "src/settings";
 import { ComponentRegistry } from "src/ui";
 import * as Components from "./components";
+import GameController from "src/app/game-controller";
 
-const initialize = () => {
+const initialize = (gameController: GameController) => {
 	ComponentRegistry.sharedRegistry.registerComponents(<any>Components);
 
-	if (Settings.debuggerActive) {
+	if (gameController.settings.debuggerActive) {
 		ScriptDebugger.sharedDebugger.show();
 	}
 };
@@ -16,7 +17,7 @@ const initialize = () => {
 export {
 	initialize,
 	ScriptDebugger,
-	Menu,
+	buildMenu,
 	PrepareExpectations,
 	ParseExpectation,
 	ComparisonResult,
