@@ -1,7 +1,6 @@
 import { Window as WindowComponent } from "src/ui/components";
 import { Zone } from "src/engine/objects";
 import ZoneEditor from "src/editor/components/zone-editor/view";
-import { WindowManager } from "src/ui";
 import "./window.scss";
 import Sidebar from "./sidebar";
 import SidebarLayer from "src/editor/components/zone-editor/sidebar-layer";
@@ -107,7 +106,7 @@ class Window extends WindowComponent {
 
 	public show() {
 		this._state.store("visible", true);
-		WindowManager.defaultManager.showWindow(this);
+		this.manager.showWindow(this);
 	}
 
 	public close() {
@@ -180,7 +179,7 @@ class Window extends WindowComponent {
 		editor.zone = this.zone;
 		window.content.appendChild(editor);
 
-		WindowManager.defaultManager.showWindow(window);
+		this.manager.showWindow(window);
 	}
 
 	private _buildTileNode(tile: Tile) {

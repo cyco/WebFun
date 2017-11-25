@@ -28,6 +28,7 @@ class WindowManager {
 
 	showWindow(window: Window) {
 		this._windows.push(window);
+		window.manager = this;
 		window.addEventListener(Window.Event.DidClose, this._handlers.windowDidClose);
 		this._container.appendChild(window);
 
@@ -37,6 +38,7 @@ class WindowManager {
 	_onWindowClose(e: CustomEvent) {
 		const window = <Window>e.target;
 
+		window.manager = null;
 		this._windows.splice(this._windows.indexOf(window), 1);
 		if (window === this._topMostWindow) {
 			const newTopMostWindow = this._windows.reduce((a: Window, b: Window) => {

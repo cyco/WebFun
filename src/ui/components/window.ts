@@ -3,6 +3,7 @@ import WindowTitlebar from "./window-titlebar";
 import "./window.scss";
 import Menu from "src/ui/menu";
 import { PointLike } from "src/util";
+import WindowManager from "src/ui/window-manager";
 
 export const Event = {
 	DidClose: "didClose"
@@ -11,12 +12,12 @@ export const Event = {
 class Window extends Component {
 	public static TagName = "wf-window";
 	public static readonly Event = Event;
+	public manager: WindowManager;
 	private _autosaveName: string;
 	private _titlebar: WindowTitlebar;
 	private _content: HTMLElement;
 	private _x: number = 0;
 	private _y: number = 0;
-
 
 	constructor() {
 		super();

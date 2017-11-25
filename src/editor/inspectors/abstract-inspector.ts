@@ -7,6 +7,7 @@ const StateStorageDelay = 1.0;
 abstract class AbstractInspector {
 	public state: Storage;
 	public window: Window = <Window>document.createElement(Panel.TagName);
+	public windowManager: WindowManager;
 	private _data: DataManager;
 	private _stateUpdateDelay: number;
 	private _handlers = {
@@ -22,7 +23,7 @@ abstract class AbstractInspector {
 
 	show() {
 		this.state.store("visible", true);
-		WindowManager.defaultManager.showWindow(this.window);
+		this.windowManager.showWindow(this.window);
 	}
 
 	set data(manager: DataManager) {
