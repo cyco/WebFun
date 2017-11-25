@@ -10,6 +10,7 @@ import PersistentState from "./persistent-state";
 import { ColorPalette } from "./rendering";
 import CanvasRenderer from "./rendering/canvas/canvas-renderer";
 import WebGLRenderer from "./rendering/webgl/renderer";
+import TileSheetCanvasRenderer from "./rendering/canvas-tilesheet/renderer";
 import SaveGameReader from "./save-game/reader";
 import SaveGameWriter from "./save-game/writer";
 import SceneManager from "./scene-manager";
@@ -17,6 +18,7 @@ import Story from "./story";
 import Yoda from "./yoda";
 
 export {
+	TileSheetCanvasRenderer,
 	EngineEvents,
 	Engine,
 	ColorPalette,

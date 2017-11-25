@@ -8,9 +8,9 @@ const TILE_WIDTH = 32.0;
 const TILE_HEIGHT = 32.0;
 
 class CanvasRenderer extends AbstractRenderer {
-	private _canvas: HTMLCanvasElement;
-	private _ctx: CanvasRenderingContext2D;
-	private _imageFactory: DOMImageFactory;
+	protected _canvas: HTMLCanvasElement;
+	protected _ctx: CanvasRenderingContext2D;
+	protected _imageFactory: DOMImageFactory;
 
 	constructor(canvas: HTMLCanvasElement) {
 		super();
@@ -43,11 +43,15 @@ class CanvasRenderer extends AbstractRenderer {
 	renderTile(tile: Tile, x: number, y: number, z: number) {
 		if (!tile) return;
 
-		this._ctx.drawImage(tile.image.representation, x * TILE_WIDTH, y * TILE_HEIGHT);
+		this.drawImage(tile.image.representation, x * TILE_WIDTH, y * TILE_HEIGHT);
 	}
 
 	renderImage(image: Image, x: number, y: number) {
-		this._ctx.drawImage(image.representation, x, y);
+		this.drawImage(image.representation, x, y);
+	}
+
+	protected drawImage(image: HTMLImageElement, atX: number, atY: number) {
+		this._ctx.drawImage(image, atX, atY);
 	}
 
 	renderImageData(image: ImageData, x: number, y: number) {

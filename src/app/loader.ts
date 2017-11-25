@@ -104,6 +104,8 @@ class Loader extends EventTarget {
 		const tileWidth = Tile.WIDTH;
 		const tileCount = tiles.length;
 
+		imageFactory.prepare(tileCount);
+
 		const loadBatch = (idx: number) => {
 			const max = Math.min(idx + TileImageBatchSize, tileCount);
 			for (; idx < max; idx++) {
@@ -116,6 +118,7 @@ class Loader extends EventTarget {
 
 		const loadTileImage = (idx: number) => {
 			if (idx >= tileCount) {
+				this._imageFactory.finalize();
 				this._progress(9, 1);
 				this._load();
 				return;
