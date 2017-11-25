@@ -140,7 +140,7 @@ class Window extends Component {
 	public close() {
 		this.remove();
 		this.onclose();
-		this.dispatchEvent(new CustomEvent(Event.DidClose));
+		this.dispatchEvent(new CustomEvent(Event.DidClose, {bubbles: false}));
 	}
 
 	private _update() {
