@@ -12,6 +12,7 @@ import PaletteInspector from "src/editor/inspectors/palette-inspector";
 import SetupImageInspector from "src/editor/inspectors/setup-image-inspector";
 import DataManager from "src/editor/data-manager";
 import GameController from "src/app/game-controller";
+import WindowManager from "src/ui/window-manager";
 
 const SettingsItem = (label: string, key: string, settings: typeof Settings) => ({
 	title: label,
@@ -56,7 +57,7 @@ export default (gameController: GameController) => ({
 					editor.data = new DataManager(gameData, palette);
 				});
 
-				document.body.appendChild(editor);
+				WindowManager.defaultManager.showWindow(editor);
 			})] : [])
 	]
 });
