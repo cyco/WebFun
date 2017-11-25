@@ -3,7 +3,12 @@ import { Zone, ZoneType } from "src/engine/objects";
 import "./zone-inspector-cell.scss";
 import TileSheet from "../tile-sheet";
 
+const Events = {
+	RevealReferences: "RevealReferences"
+};
+
 class ZoneInspectorCell extends Cell<Zone> {
+	public static readonly Events = Events;
 	public static readonly TagName: string = "wf-zone-inspector-cell";
 	public static readonly observedAttributes: string[] = [];
 
@@ -12,6 +17,7 @@ class ZoneInspectorCell extends Cell<Zone> {
 	private _id: HTMLElement;
 	private _type: HTMLElement;
 	private _planet: HTMLElement;
+	private _reveal: HTMLElement;
 	private _size: HTMLElement;
 
 	constructor() {
@@ -23,6 +29,18 @@ class ZoneInspectorCell extends Cell<Zone> {
 		this._type = document.createElement("span");
 		this._size = document.createElement("span");
 		this._size.classList.add("size");
+		this._reveal = document.createElement("span");
+		const revealButton = document.createElement("i");
+		revealButton.className = "fa fa-search";
+		revealButton.onclick = (e) => {
+			this.dispatchEvent(new CustomEvent(Events.RevealReferences, {
+				detail: {zone: this.data},
+				bubbles: true
+			}));
+			e.preventDefault();
+			e.stopPropagation();
+		};
+		this._reveal.appendChild(revealButton);
 		this._planet = document.createElement("span");
 		this._planet.classList.add("planet");
 	}
@@ -42,6 +60,7 @@ class ZoneInspectorCell extends Cell<Zone> {
 		content.appendChild(this._id);
 		content.appendChild(this._type);
 		content.appendChild(this._planet);
+		content.appendChild(this._reveal);
 		content.appendChild(this._size);
 		this.appendChild(content);
 	}

@@ -1,6 +1,7 @@
 import AbstractInspector from "src/editor/inspectors/abstract-inspector";
 import { List } from "src/ui/components";
 import { SoundInspectorCell } from "../components";
+import ReferenceResolver from "src/editor/reference-resolver";
 
 type Sound = {
 	id: number
@@ -23,7 +24,7 @@ class SoundInspector extends AbstractInspector {
 		this._list.cell = <SoundInspectorCell>document.createElement(SoundInspectorCell.TagName);
 		this._list.searchDelegate = this;
 		this._list.state = state.prefixedWith("list");
-
+		this._list.addEventListener(SoundInspectorCell.Events.RevealReferences, (e: CustomEvent) => this._revealReferences(e.detail.sound));
 		this.window.content.appendChild(this._list);
 	}
 
@@ -42,6 +43,12 @@ class SoundInspector extends AbstractInspector {
 	includeListItem(searchValue: RegExp[], item: Sound, cell: SoundInspectorCell, list: List<Sound>): boolean {
 		const string = item.id + " " + item.file;
 		return searchValue.every(r => r.test(string));
+	}
+
+	private _revealReferences(sound: string) {
+		const resolver = new ReferenceResolver(this.data.currentData);
+		const references = resolver.findReferencesTo(sound);
+		console.log("references", references);
 	}
 }
 

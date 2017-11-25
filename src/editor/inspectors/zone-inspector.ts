@@ -3,6 +3,7 @@ import { ZoneInspectorCell } from "../components";
 import { Zone } from "src/engine/objects";
 import { List } from "src/ui/components";
 import ZoneEditorController from "../components/zone-editor/window";
+import ReferenceResolver from "src/editor/reference-resolver";
 
 class ZoneInspector extends AbstractInspector {
 	private _list: List<Zone>;
@@ -25,6 +26,7 @@ class ZoneInspector extends AbstractInspector {
 		this._list.cell.onclick = (e: MouseEvent) => this._onCellClicked(<ZoneInspectorCell>e.currentTarget);
 		this._list.searchDelegate = this;
 		this._list.state = state.prefixedWith("list");
+		this._list.addEventListener(ZoneInspectorCell.Events.RevealReferences, (e: CustomEvent) => this._revealReferences(e.detail.zone));
 		this.window.content.appendChild(this._list);
 	}
 
@@ -41,6 +43,11 @@ class ZoneInspector extends AbstractInspector {
 		controller.zone = cell.data;
 		controller.show();
 		this._storeZones();
+	}
+
+	private _revealReferences(zone: Zone) {
+		const resolver = new ReferenceResolver(this.data.currentData);
+		console.log("references", resolver.findReferencesTo(zone));
 	}
 
 	private _storeZones() {

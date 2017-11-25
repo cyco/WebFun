@@ -7,7 +7,12 @@ type Sound = {
 	file: string
 }
 
+export const Events = {
+	RevealReferences: "RevealReferences"
+};
+
 class SoundInspectorCell extends Cell<Sound> {
+	public static readonly Events = Events;
 	public static readonly TagName: string = "wf-sound-inspector-cell";
 	public static readonly observedAttributes: string[] = [];
 
@@ -15,6 +20,7 @@ class SoundInspectorCell extends Cell<Sound> {
 	private _file: HTMLElement;
 	private _play: HTMLElement;
 	private _playButton: HTMLElement;
+	private _revealButton: HTMLElement;
 	private _sound: HTMLAudioElement;
 	private _playing: boolean = false;
 
@@ -45,6 +51,15 @@ class SoundInspectorCell extends Cell<Sound> {
 		this._playButton.classList.add("fa-play-circle");
 		this._playButton.onclick = () => this.togglePlaying();
 		this._play.appendChild(this._playButton);
+
+		this._revealButton = document.createElement("i");
+		this._revealButton.classList.add("fa");
+		this._revealButton.classList.add("fa-search");
+		this._revealButton.onclick = () => this.dispatchEvent(new CustomEvent(Events.RevealReferences, {
+			detail: {sound: this.data.file},
+			bubbles: true
+		}));
+		this._play.appendChild(this._revealButton);
 	}
 
 	connectedCallback() {
