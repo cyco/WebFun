@@ -31,7 +31,7 @@ class MenuItem extends EventTarget {
 	}
 
 	get enabled(): boolean {
-		if (!this.callback && !this.submenu) return false;
+		if (!this.callback && !this.hasSubmenu) return false;
 
 		if (this._enabled instanceof Function)
 			return this._enabled();

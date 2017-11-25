@@ -6,6 +6,7 @@ import Menu from "./menu";
 import MenuItem, { Separator as MenuItemSeparator, State as MenuItemState } from "./menu-item";
 import MenuStack from "./menu-stack";
 import WindowManager from "./window-manager";
+import WindowMenuItem from "./window-menu-item";
 
 export {
 	Component,
@@ -17,5 +18,6 @@ export {
 	MenuItemSeparator,
 	MenuItemState,
 	MenuStack,
-	WindowManager
+	WindowManager,
+	WindowMenuItem
 };
