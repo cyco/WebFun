@@ -13,6 +13,8 @@ import SetupImageInspector from "src/editor/inspectors/setup-image-inspector";
 import DataManager from "src/editor/data-manager";
 import GameController from "src/app/game-controller";
 import WindowManager from "src/ui/window-manager";
+import GameData from "src/engine/game-data";
+import ColorPalette from "src/engine/rendering/color-palette";
 
 const SettingsItem = (label: string, key: string, settings: typeof Settings) => ({
 	title: label,
@@ -50,12 +52,12 @@ export default (gameController: GameController) => ({
 				editor.addInspector("setup-image", new SetupImageInspector(state.prefixedWith("setup-image")));
 				editor.addInspector("palette", new PaletteInspector(state.prefixedWith("palette")));
 
-				gameController.addEventListener(GameController.Event.DidLoadData, (e: CustomEvent) => {
-					const gameData = e.detail.data;
-					const palette = e.detail.palette;
-
-					editor.data = new DataManager(gameData, palette);
-				});
+				const setupData = (g: GameData, p: ColorPalette) => editor.data = new DataManager(g, p);
+				if (gameController.isDataLoaded()) {
+					setupData(gameController.data, gameController.palette);
+				} else {
+					gameController.addEventListener(GameController.Event.DidLoadData, (e: CustomEvent) => setupData(e.detail.data, e.detail.palette));
+				}
 
 				WindowManager.defaultManager.showWindow(editor);
 			})] : [])

@@ -16,7 +16,7 @@ import { ScriptExecutor } from "src/engine/script";
 import { Planet, WorldSize } from "src/engine/types";
 import Settings from "src/settings";
 import { FilePicker, WindowManager } from "src/ui";
-import { EventTarget, InputStream } from "src/util";
+import { EventTarget } from "src/util";
 import { ConfirmationResult, ModalConfirm } from "src/ux";
 import GameState from "../engine/game-state";
 import Loader, { LoaderEventDetails } from "./loader";
@@ -202,6 +202,14 @@ class GameController extends EventTarget {
 
 	get settings() {
 		return Settings;
+	}
+
+	get data() {
+		return this._data;
+	}
+
+	get palette() {
+		return this._palette;
 	}
 }
 
