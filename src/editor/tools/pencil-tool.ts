@@ -17,10 +17,12 @@ class PencilTool extends AbstractDrawingTool {
 	}
 
 	protected applyTo(p: Point, continous: boolean) {
+		if (this.layer.locked) return;
+
 		this._ctx.fillStyle = rgba(0, 255, 0, 0.3);
 		this._ctx.fillRect(p.x, p.y, 1, 1);
 
-		const point = new Point(p.x, p.y, this.layer);
+		const point = new Point(p.x, p.y, this.layer.id);
 
 		this.zone.setTile(this.tile, point);
 		const event = new TileChangeEvent({affectedPoints: [point]});

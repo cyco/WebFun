@@ -44,8 +44,8 @@ class SidebarLayer extends Cell<Layer> {
 		super.connectedCallback();
 
 		this.appendChild(this._name);
-		this.appendChild(this._visible);
 		this.appendChild(this._locked);
+		this.appendChild(this._visible);
 
 		this.rebuild();
 	}
