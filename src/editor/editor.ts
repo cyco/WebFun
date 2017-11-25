@@ -15,7 +15,9 @@ import WindowManager from "src/ui/window-manager";
 
 class Editor extends FullscreenWindow {
 	public static readonly TagName = "wf-editor";
-	private windowManager: WindowManager;
+	private _windowManager: WindowManager;
+	private _inspectors: {[_: string]: AbstractInspector} = {};
+	private _data: DataManager;
 
 	connectedCallback() {
 		this.closable = false;
@@ -23,12 +25,12 @@ class Editor extends FullscreenWindow {
 
 		super.connectedCallback();
 
-		if (!this.windowManager) {
-			this.windowManager = new WindowManager(this.content);
+		if (!this._windowManager) {
+			this._windowManager = new WindowManager(this.content);
 		}
 
 		const menuItems = <MenuItemInit[]>buildEditorMenu(this);
-		menuItems.push(new WindowMenuItem(this.windowManager));
+		menuItems.push(new WindowMenuItem(this._windowManager));
 		this.menu = new Menu(menuItems);
 	}
 
@@ -36,29 +38,12 @@ class Editor extends FullscreenWindow {
 		super.disconnectedCallback();
 	}
 
-	private static _sharedEditor: Editor;
-	public static set sharedEditor(e: Editor) {
-		this._sharedEditor = e;
-	}
-
-	public static get sharedEditor() {
-		return this._sharedEditor;
-	}
-
-	private _inspectors: {[_: string]: AbstractInspector};
-	private _data: DataManager;
-
-	constructor() {
-		super();
-		this._inspectors = {};
-	}
-
 	addInspector(name: string, inspector: AbstractInspector) {
 		this._inspectors[name] = inspector;
 	}
 
 	public show(key: string) {
-		this.windowManager.asDefaultManager(() => this._inspectors[key].show());
+		this._windowManager.asDefaultManager(() => this._inspectors[key].show());
 	}
 
 	public save() {
