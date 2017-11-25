@@ -1,4 +1,4 @@
-declare interface ShortcutDescription {
+export declare interface ShortcutDescription {
 	node?: Node;
 	keyCode?: number;
 	metaKey?: boolean;
