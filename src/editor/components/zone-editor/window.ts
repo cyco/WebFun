@@ -1,4 +1,4 @@
-import { Window as WindowComponent } from "src/ui/components";
+import { Panel } from "src/ui/components";
 import { Zone } from "src/engine/objects";
 import ZoneEditor from "src/editor/components/zone-editor/view";
 import "./window.scss";
@@ -24,7 +24,7 @@ import DataManager from "src/editor/data-manager";
 import AbstractDrawingTool from "src/editor/tools/abstract-drawing-tool";
 import { ActionEditor } from "src/editor/components";
 
-class Window extends WindowComponent {
+class Window extends Panel {
 	public static readonly TagName = "wf-zone-editor-window";
 	private _zone: Zone;
 	private _editor: ZoneEditor;
@@ -171,7 +171,7 @@ class Window extends WindowComponent {
 	}
 
 	private _editAction(action: Action) {
-		const window = <WindowComponent>document.createElement(WindowComponent.TagName);
+		const window = <Panel>document.createElement(Panel.TagName);
 		window.style.width = "500px";
 		window.content.style.maxHeight = "650px";
 
