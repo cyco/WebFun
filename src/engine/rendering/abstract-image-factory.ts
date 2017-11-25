@@ -6,6 +6,12 @@ abstract class AbstractImageFactory {
 	public onpalettechange: Function;
 
 	abstract buildImage(width: number, height: number, pixelData: Uint8Array): Image;
+
+	prepare(count: number) {
+	}
+
+	finalize() {
+	}
 }
 
 export default AbstractImageFactory;

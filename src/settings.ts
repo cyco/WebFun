@@ -2,6 +2,7 @@ import { LogLevel, persistent } from "src/util";
 
 let Settings: {[_: string]: any} = {
 	allowWebGL: false,
+	allowTileSheet: true,
 
 	debug: true,
 	editor: true,

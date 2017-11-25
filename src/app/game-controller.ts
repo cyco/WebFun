@@ -7,6 +7,7 @@ import {
 	Metronome,
 	SaveGameReader,
 	Story,
+	TileSheetCanvasRenderer,
 	WebGLRenderer
 } from "src/engine";
 import { DesktopInputManager } from "src/engine/input";
@@ -67,10 +68,15 @@ class GameController extends EventTarget {
 		return engine;
 	}
 
-	_determineRenderer(): typeof WebGLRenderer|typeof CanvasRenderer {
+	_determineRenderer(): typeof WebGLRenderer|typeof CanvasRenderer|typeof TileSheetCanvasRenderer {
 		if (WebGLRenderer.isSupported() && Settings.allowWebGL) {
 			console.log("Using WebGL renderer");
 			return WebGLRenderer;
+		}
+
+		if (Settings.allowTileSheet) {
+			console.log("Using TileSheet Canvas renderer");
+			return TileSheetCanvasRenderer;
 		}
 
 		console.log("Using Canvas renderer");

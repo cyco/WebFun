@@ -124,18 +124,15 @@ class TransitionScene extends Scene {
 		canvas.width = viewWidth * tileWidth;
 		canvas.height = viewHeight * tileHeight;
 		const ctx = canvas.getContext("2d");
-
-
 		for (let l = 0; l < Zone.LAYERS; l++) {
 			for (let y = 0; y < viewHeight; y++) {
 				for (let x = 0; x < viewWidth; x++) {
 					const tile = zone.getTile(x - xOffset, y - yOffset, l);
 					if (!tile) continue;
 
-					if (tile.image.representation instanceof WebGLTexture) {
-						continue;
+					if (tile.image.representation instanceof HTMLImageElement) {
+						ctx.drawImage(tile.image.representation, x * tileWidth, y * tileHeight);
 					}
-					ctx.drawImage(tile.image.representation, x * tileWidth, y * tileHeight);
 				}
 			}
 
@@ -149,10 +146,9 @@ class TransitionScene extends Scene {
 				const x1 = (hero._location.x + xOffset) * tileWidth;
 				const y1 = (hero._location.y + yOffset) * tileHeight;
 
-				if (tile.image.representation instanceof WebGLTexture) {
-					continue;
+				if (tile.image.representation instanceof HTMLImageElement) {
+					ctx.drawImage(tile.image.representation, x1, y1);
 				}
-				ctx.drawImage(tile.image.representation, x1, y1);
 			}
 		}
 
