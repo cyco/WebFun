@@ -20,6 +20,7 @@ module.exports = {
 	},
 	cache: true,
 	devtool: "inline-source-map",
+	plugins: [],
 	module: {
 		rules: [ {
 			/* JavaScript / Babel */
