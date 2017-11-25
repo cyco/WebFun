@@ -1,8 +1,6 @@
 import AbstractDrawingTool from "./abstract-drawing-tool";
-import { Point, rgba } from "src/util";
-import Rectangle from "src/util/rectangle";
-import Size from "src/util/size";
-import TileChangeEvent from "src/editor/tools/tile-change-event";
+import { Point, Rectangle, rgba, Size } from "src/util";
+import TileChangeEvent from "./tile-change-event";
 
 const HighlightColor = rgba(255, 0, 0, 0.3);
 
@@ -22,19 +20,22 @@ class RectangleTool extends AbstractDrawingTool {
 	}
 
 	protected finalize(point: Point) {
+		if (this.layer.locked) {
+			this._startingPoint = null;
+			return;
+		}
 		const rect = this.calculateRectFromStartTo(point);
-
+		const layer = this.layer.id;
 		const points: Point[] = [];
 		for (let y = rect.minY; y < rect.maxY; y++) {
 			for (let x = rect.minX; x < rect.maxX; x++) {
-				const point = new Point(x, y, this.layer);
+				const point = new Point(x, y, layer);
 				this.zone.setTile(this.tile, point);
 				points.push(point);
 			}
 		}
 		const event = new TileChangeEvent({affectedPoints: points});
 		this.dispatchEvent(event);
-
 		this._startingPoint = null;
 	}
 

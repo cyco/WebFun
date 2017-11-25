@@ -1,32 +1,33 @@
 import Component from "src/ui/component";
-import ZoneLayer from "./zone-layer";
+import LayerComponent from "./zone-layer";
 import { Zone } from "src/engine/objects";
 import CSSTileSheet from "src/editor/css-tile-sheet";
 import { HEIGHT as TileHeight, WIDTH as TileWidth } from "src/engine/objects/tile";
 import { AbstractTool, NoTool } from "src/editor/tools";
 import { Point } from "src/util";
 import "./view.scss";
+import Layer from "src/editor/components/zone-editor/layer";
 
 class View extends Component {
 	public static readonly TagName = "wf-zone-editor-view";
 	public static readonly observedAttributes: string[] = [];
 	private _zone: Zone;
-	private _floor: ZoneLayer;
-	private _objects: ZoneLayer;
-	private _roof: ZoneLayer;
+	private _floor: LayerComponent;
+	private _objects: LayerComponent;
+	private _roof: LayerComponent;
 	private _overlay: HTMLCanvasElement;
 	private _tileSheet: CSSTileSheet;
 	private _tool: AbstractTool;
-	private _currentLayer: number = 0;
+	private _currentLayer: Layer;
 
 	constructor() {
 		super();
 
-		this._floor = <ZoneLayer>document.createElement(ZoneLayer.TagName);
+		this._floor = <LayerComponent>document.createElement(LayerComponent.TagName);
 		this._floor.layer = Zone.Layer.Floor;
-		this._objects = <ZoneLayer>document.createElement(ZoneLayer.TagName);
+		this._objects = <LayerComponent>document.createElement(LayerComponent.TagName);
 		this._objects.layer = Zone.Layer.Object;
-		this._roof = <ZoneLayer>document.createElement(ZoneLayer.TagName);
+		this._roof = <LayerComponent>document.createElement(LayerComponent.TagName);
 		this._roof.layer = Zone.Layer.Roof;
 
 		this._overlay = document.createElement("canvas");
@@ -98,15 +99,15 @@ class View extends Component {
 		return this._tool;
 	}
 
-	public setLayerVisible(layerIdx: number, flag: boolean) {
-		const layer = this._layerByIdx(layerIdx);
-		layer.style.display = flag ? "" : "none";
+	public setLayerVisible(layer: Layer, flag: boolean) {
+		const layerNode = this.nodeForLayer(layer.id);
+		layerNode.style.display = flag ? "" : "none";
 	}
 
-	private _layerByIdx(idx: number) {
-		if (idx === Zone.Layer.Roof) return this._roof;
-		if (idx === Zone.Layer.Object) return this._objects;
-		if (idx === Zone.Layer.Floor) return this._floor;
+	private nodeForLayer(id: number) {
+		if (id === Zone.Layer.Roof) return this._roof;
+		if (id === Zone.Layer.Object) return this._objects;
+		if (id === Zone.Layer.Floor) return this._floor;
 		console.assert(false, "Invalid layer encountered");
 	}
 
@@ -124,15 +125,15 @@ class View extends Component {
 	}
 
 	public redraw(points: Point[]): void {
-		points.forEach(p => this._layerByIdx(p.z).update([p]));
+		points.forEach(p => this.nodeForLayer(p.z).update([p]));
 	}
 
-	set currentLayer(s: number) {
-		this._currentLayer = s;
-		if (this._tool) this._tool.layer = this._currentLayer;
+	set currentLayer(layer: Layer) {
+		this._currentLayer = layer;
+		if (this._tool) this._tool.layer = layer;
 	}
 
-	get currentLayer(): number {
+	get currentLayer(): Layer {
 		return this._currentLayer;
 	}
 }

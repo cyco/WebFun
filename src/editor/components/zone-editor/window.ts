@@ -52,7 +52,7 @@ class Window extends Panel {
 		this._sidebar = <Sidebar>document.createElement(Sidebar.TagName);
 		this._sidebar.addEventListener(SidebarLayer.Event.DidToggleVisibility, (e: CustomEvent) => {
 			const layer = <Layer>e.detail.layer;
-			this._editor.setLayerVisible(layer.layer, layer.visible);
+			this._editor.setLayerVisible(layer, layer.visible);
 		});
 
 		const layers = document.createElement(SidebarLayersCell.TagName);

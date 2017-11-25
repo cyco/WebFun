@@ -11,6 +11,7 @@ class PaintBucketTool extends AbstractDrawingTool {
 
 	protected applyTo(point: Point, continous: boolean) {
 		if (continous) return;
+		if (this.layer.locked) return;
 
 		const points = this.findConnectedPoints(point);
 		points.forEach(p => {
@@ -29,16 +30,17 @@ class PaintBucketTool extends AbstractDrawingTool {
 	}
 
 	private findConnectedPoints(point: Point): Point[] {
-		const tile = this.zone.getTile(point.x, point.y, this.layer);
+		const layer = this.layer.id;
+		const tile = this.zone.getTile(point.x, point.y, layer);
 		const graphs: Set<Point>[] = [];
-		const graph = new Set<Point>([new Point(point.x, point.y, this.layer)]);
+		const graph = new Set<Point>([new Point(point.x, point.y, layer)]);
 
 		for (let y = 0; y < this.zone.size.height; y++) {
 			for (let x = 0; x < this.zone.size.width; x++) {
 				if (x === point.x && y === point.y) continue;
-				if (this.zone.getTile(x, y, this.layer) !== tile) continue;
+				if (this.zone.getTile(x, y, layer) !== tile) continue;
 
-				graphs.push(new Set<Point>([new Point(x, y, this.layer)]));
+				graphs.push(new Set<Point>([new Point(x, y, layer)]));
 			}
 		}
 

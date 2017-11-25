@@ -32,22 +32,22 @@ class SidebarLayersCell extends Component {
 		this._layers = [];
 
 		const roof = new Layer();
+		roof.id = Zone.Layer.Roof;
 		roof.name = "Roof";
-		roof.layer = Zone.Layer.Roof;
 		roof.visible = true;
 		roof.locked = false;
 		this._layers.push(roof);
 
 		const objects = new Layer();
+		objects.id = Zone.Layer.Object;
 		objects.name = "Objects";
-		objects.layer = Zone.Layer.Object;
 		objects.visible = true;
 		objects.locked = false;
 		this._layers.push(objects);
 
 		const floor = new Layer();
+		floor.id = Zone.Layer.Floor;
 		floor.name = "Floor";
-		floor.layer = Zone.Layer.Floor;
 		floor.visible = true;
 		floor.locked = false;
 		this._layers.push(floor);
@@ -76,7 +76,7 @@ class SidebarLayersCell extends Component {
 
 		const node = this.closest(Window.TagName);
 		const manager = ShortcutManager.sharedManager;
-		this._shortcuts.push(manager.registerShortcut(() => this._activateLayer(0), {
+		this._shortcuts.push(manager.registerShortcut(() => this._activateLayer(2), {
 			ctrlKey: true,
 			keyCode: 51,
 			node
@@ -86,7 +86,7 @@ class SidebarLayersCell extends Component {
 			keyCode: 50,
 			node
 		}));
-		this._shortcuts.push(manager.registerShortcut(() => this._activateLayer(2), {
+		this._shortcuts.push(manager.registerShortcut(() => this._activateLayer(0), {
 			ctrlKey: true,
 			keyCode: 49,
 			node
@@ -136,8 +136,8 @@ class SidebarLayersCell extends Component {
 
 		cell.classList.add("active");
 
-		const layerIdx = cell.data.layer;
-		this.dispatchEvent(new CustomEvent(Events.LayerDidChange, {detail: {layer: layerIdx}, bubbles: true}));
+		const layer = cell.data;
+		this.dispatchEvent(new CustomEvent(Events.LayerDidChange, {detail: {layer: layer}, bubbles: true}));
 	}
 }
 

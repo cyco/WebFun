@@ -1,7 +1,7 @@
 import { EventTarget } from "src/util";
 import { Zone } from "src/engine/objects";
 import { ShortcutDescription } from "src/ux/shortcut-manager";
-import { Shortcut } from "src/ux";
+import Layer from "src/editor/components/zone-editor/layer";
 
 export const Events = {
 	DidActivate: "DidActivate",
@@ -20,7 +20,7 @@ abstract class AbstractTool extends EventTarget {
 
 	protected zone: Zone;
 	protected canvas: HTMLCanvasElement;
-	public layer: number;
+	public layer: Layer;
 
 	public activate(zone: Zone, overlay: HTMLCanvasElement): void {
 		this.dispatchEvent(new CustomEvent(Events.WillActivate));
