@@ -1,5 +1,7 @@
 import { EventTarget } from "src/util";
 import { Zone } from "src/engine/objects";
+import { ShortcutDescription } from "src/ux/shortcut-manager";
+import { Shortcut } from "src/ux";
 
 export const Events = {
 	DidActivate: "DidActivate",
@@ -14,6 +16,7 @@ abstract class AbstractTool extends EventTarget {
 	public static readonly Event = Events;
 	public abstract readonly name: string;
 	public abstract readonly icon: string;
+	public readonly shortcut: ShortcutDescription;
 
 	protected zone: Zone;
 	protected canvas: HTMLCanvasElement;

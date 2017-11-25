@@ -9,6 +9,7 @@ const HighlightColor = rgba(255, 0, 0, 0.3);
 class RectangleTool extends AbstractDrawingTool {
 	public readonly name = "Rectangle";
 	public readonly icon = "icon-unknown-2";
+	public readonly shortcut = {keyCode: 85};
 	private _startingPoint: Point = null;
 
 	protected applyTo(point: Point, continous: boolean) {

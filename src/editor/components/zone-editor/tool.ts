@@ -2,6 +2,9 @@ import Component from "src/ui/component";
 import { AbstractTool, Events } from "src/editor/tools";
 import Editor from "./view";
 import "./tool.scss";
+import { Shortcut } from "src/ux";
+import ShortcutManager from "src/ux/shortcut-manager";
+import Window from "./window";
 
 class ToolComponent extends Component implements EventListenerObject {
 	public static readonly TagName = "wf-zone-editor-tool";
@@ -9,16 +12,28 @@ class ToolComponent extends Component implements EventListenerObject {
 
 	private _tool: AbstractTool;
 	public editor: Editor;
+	private _shortcut: Shortcut = null;
 
 	connectedCallback() {
 		super.connectedCallback();
 
+		const activateTool = () => this.editor.activateTool(this.tool);
+		if (this.tool && this.tool.shortcut) {
+			const window = this.closest(Window.TagName);
+			const description = Object.assign({}, this.tool.shortcut, {node: window});
+
+			this._shortcut = ShortcutManager.sharedManager.registerShortcut(activateTool, description);
+		}
+
 		this.classList.add("fa");
-		this.onclick = () => this.editor.activateTool(this.tool);
+		this.onclick = activateTool;
 	}
 
 	disconnectedCallback() {
 		this.onclick = () => null;
+
+		if (this._shortcut) ShortcutManager.sharedManager.unregisterShortcut(this._shortcut);
+		this._shortcut = null;
 	}
 
 	public handleEvent(evt: Event): void {
