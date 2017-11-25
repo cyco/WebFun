@@ -23,3 +23,4 @@ test/screenshots
 build
 game-data/*
 bin
+assets/game-data/full.txt
