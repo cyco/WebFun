@@ -4,7 +4,7 @@ import Instruction from "../../objects/instruction";
 import { Result, ResultFlags } from "../arguments";
 
 export const Opcode = 0x08;
-export const Arguments = -1;
+export const Arguments = 1;
 export const Description = "Pause script execution for 100 * `arg_0` milliseconds.";
 export default (instruction: Instruction, engine: Engine, action: Action): Result => {
 	/*
