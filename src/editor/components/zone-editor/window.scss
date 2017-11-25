@@ -1,8 +1,8 @@
 @import "border";
-@import "~src/ui/components/window.scss";
+@import "~src/ui/components/panel.scss";
 
 wf-zone-editor-window {
-	@extend wf-window;
+	@extend wf-panel;
 
 	> .content {
 		wf-zone-editor-sidebar {
