@@ -20,7 +20,9 @@ class WindowMenuItem extends MenuItem {
 	}
 
 	get submenu(): Menu {
-		return new Menu(this.windowManager.windows.map(w => this._buildWindowItem(w)));
+		let windows = this.windowManager.windows.map(w => this._buildWindowItem(w));
+		if (!windows.length) windows = [new MenuItem({title: "No Windows", mnemonic: -1})];
+		return new Menu(windows);
 	}
 
 	_buildWindowItem(window: Window): MenuItem {
