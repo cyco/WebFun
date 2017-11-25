@@ -35,13 +35,13 @@ class ZoneInspector extends AbstractInspector {
 
 		if (!controller) {
 			controller = <ZoneEditorController>document.createElement(ZoneEditorController.TagName);
-			controller.manager = this.windowManager;
 			controller.data = this.data;
 			controller.state = this._state.prefixedWith("editor-" + this._controllers.length);
 			this._controllers.push(controller);
 		}
 
 		controller.zone = cell.data;
+		controller.manager = this.windowManager;
 		controller.show();
 		this._storeZones();
 	}

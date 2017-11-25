@@ -2,6 +2,8 @@
 
 wf-zone-editor-sidebar {
 	@extend .inset-border-1px;
+	border-width: 0;
+	border-right-width: 1px;
 
 	display: flex;
 	flex-direction: column;

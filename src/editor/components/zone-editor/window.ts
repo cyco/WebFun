@@ -138,8 +138,8 @@ class Window extends Panel {
 
 	set zone(zone: Zone) {
 		this.title = `Zone ${zone.id} (${zone.type.name}, ${zone.planet.name})`;
-		this.content.style.width = 2 + 170 + 20 + zone.size.width * 32 + "px";
-		this.content.style.height = 2 + 20 + zone.size.height * 32 + "px";
+		this.content.style.width = 2 + 160 + zone.size.width * 32 + "px";
+		this.content.style.height = 2 + zone.size.height * 32 + "px";
 
 		this._providedItems.textContent = "";
 		zone.providedItems.forEach(tile => this._providedItems.appendChild(this._buildTileNode(tile)));
@@ -172,8 +172,8 @@ class Window extends Panel {
 
 	private _editAction(action: Action) {
 		const window = <Panel>document.createElement(Panel.TagName);
-		window.style.width = "500px";
-		window.content.style.maxHeight = "650px";
+		window.style.width = "480px";
+		window.content.style.maxHeight = "630px";
 
 		const editor = <ActionEditor>document.createElement(ActionEditor.TagName);
 		editor.zone = this.zone;
