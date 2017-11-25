@@ -23,7 +23,6 @@ class ZoneInspector extends AbstractInspector {
 		this._list = <List<Zone>>document.createElement(List.TagName);
 		this._list.cell = <ZoneInspectorCell>document.createElement(ZoneInspectorCell.TagName);
 		this._list.cell.onclick = (e: MouseEvent) => this._onCellClicked(<ZoneInspectorCell>e.currentTarget);
-		this._list.classList.add("zone-inspector-list");
 		this._list.searchDelegate = this;
 		this._list.state = state.prefixedWith("list");
 		this.window.content.appendChild(this._list);
