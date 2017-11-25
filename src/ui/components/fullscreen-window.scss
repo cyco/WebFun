@@ -11,4 +11,9 @@ wf-fullscreen-window {
 
 	border-top-left-radius: 0;
 	border-top-right-radius: 0;
+
+	> wf-window-titlebar > wf-menubar {
+		margin-left: 0px;
+		margin-right: 0px;
+	}
 }
