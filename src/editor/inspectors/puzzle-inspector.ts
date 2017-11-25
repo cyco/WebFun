@@ -17,7 +17,6 @@ class PuzzleInspector extends AbstractInspector {
 
 		this._list = <List<Puzzle>>document.createElement(List.TagName);
 		this._list.cell = <PuzzleInspectorCell>document.createElement(PuzzleInspectorCell.TagName);
-		this._list.classList.add("puzzle-inspector-list");
 		this._list.searchDelegate = this;
 		this._list.state = state.prefixedWith("list");
 

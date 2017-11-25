@@ -54,6 +54,9 @@ wf-character-inspector-cell {
 
 .character-inspector-list {
 	@extend .inset-border-1px;
+	border-width: 0px;
+	border-right-width: 1px;
+
 	width: 210px;
 	flex-shrink: 0;
 }
