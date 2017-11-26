@@ -16,7 +16,7 @@ class WindowMenuItem extends MenuItem {
 	}
 
 	set submenu(s) {
-		/* disable overwriting submenu*/
+		/* disable external submenu overwriting */
 	}
 
 	get submenu(): Menu {

@@ -1,4 +1,4 @@
-import { Panel } from "src/ui/components";
+import { Panel, Window as WindowComponent } from "src/ui/components";
 import { Zone } from "src/engine/objects";
 import ZoneEditor from "src/editor/components/zone-editor/view";
 import "./window.scss";
@@ -8,8 +8,8 @@ import Layer from "src/editor/components/zone-editor/layer";
 import SidebarLayersCell, { Events as LayerChangeEvents } from "src/editor/components/zone-editor/sidebar-layers-cell";
 import Tile from "src/engine/objects/tile";
 import SidebarCell from "src/editor/components/zone-editor/sidebar-cell";
-import Action from "src/engine/objects/action";
 import ToolComponent from "./tool";
+import ActionComponent from "./action";
 import {
 	AbstractTool,
 	HotspotTool,
@@ -23,6 +23,7 @@ import TilePicker, { Events as TilePickerEvents } from "src/editor/components/ti
 import DataManager from "src/editor/data-manager";
 import AbstractDrawingTool from "src/editor/tools/abstract-drawing-tool";
 import { ActionEditor } from "src/editor/components";
+import { ActionDescription } from "src/editor/components/zone-editor/action";
 
 class Window extends Panel {
 	public static readonly TagName = "wf-zone-editor-window";
@@ -42,6 +43,7 @@ class Window extends Panel {
 	private _tilePicker: TilePicker;
 	private _data: DataManager;
 	private _tools: AbstractTool[];
+	private _actionsWindow: WindowComponent;
 
 	constructor() {
 		super();
@@ -67,7 +69,16 @@ class Window extends Panel {
 			new PaintBucketTool(),
 			new HotspotTool()
 		];
-		this._toolsCell = this._sidebar.addEntry(this._tools.map(t => this._buildToolItem(t)), "Tools");
+		const toolComponents = <HTMLElement[]>this._tools.map(t => this._buildToolItem(t));
+		const actionComponents = [
+			{
+				name: "Edit Scripts",
+				icon: "fa-code",
+				command: () => this._editActions()
+			}
+		].map(a => this._buildActionItem(a));
+
+		this._toolsCell = this._sidebar.addEntry(toolComponents.concat(actionComponents), "Tools");
 
 		this._tilePicker = <TilePicker>document.createElement(TilePicker.TagName);
 		this._tilePicker.addEventListener(TilePickerEvents.TileDidChange, (e: CustomEvent) => {
@@ -158,24 +169,20 @@ class Window extends Panel {
 		this._editor.zone = zone;
 	}
 
-	private _createAction(action: Action, container: HTMLElement) {
-		const node = document.createElement("div");
-		node.classList.add("action");
-		node.textContent = `Action ${action.id} (${action.conditions.length} / ${action.instructions.length})`;
-		node.onclick = () => this._editAction(action);
-		container.appendChild(node);
-	}
+	private _editActions() {
+		if (!this._actionsWindow) {
+			const window = <Panel>document.createElement(Panel.TagName);
+			window.style.width = "480px";
+			window.content.style.maxHeight = "630px";
+			const editor = <ActionEditor>document.createElement(ActionEditor.TagName);
+			window.content.appendChild(editor);
+			this._actionsWindow = window;
+		}
 
-	private _editAction(action: Action) {
-		const window = <Panel>document.createElement(Panel.TagName);
-		window.style.width = "480px";
-		window.content.style.maxHeight = "630px";
-
-		const editor = <ActionEditor>document.createElement(ActionEditor.TagName);
+		const editor = <ActionEditor>this._actionsWindow.content.firstElementChild;
 		editor.zone = this.zone;
-		window.content.appendChild(editor);
-
-		this.manager.showWindow(window);
+		this._actionsWindow.title = `Zone ${this.zone.id}: Actions`;
+		this.manager.showWindow(this._actionsWindow);
 	}
 
 	private _buildTileNode(tile: Tile) {
@@ -190,6 +197,12 @@ class Window extends Panel {
 		thing.editor = this._editor;
 		tool.addEventListener(AbstractTool.Event.ChangedTiles, (e: TileChangeEvent) => this._editor.redraw(e.affectedPoints));
 		return thing;
+	}
+
+	private _buildActionItem(a: ActionDescription) {
+		const component = <ActionComponent>document.createElement(ActionComponent.TagName);
+		component.action = a;
+		return component;
 	}
 
 	get zone() {
