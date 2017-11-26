@@ -27,7 +27,7 @@ class WindowManager {
 	}
 
 	showWindow(window: Window) {
-		this._windows.push(window);
+		if (!~this._windows.indexOf(window)) this._windows.push(window);
 		window.manager = this;
 		window.addEventListener(Window.Event.DidClose, this._handlers.windowDidClose);
 		this._container.appendChild(window);
