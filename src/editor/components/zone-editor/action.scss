@@ -1,0 +1,9 @@
+@import "border";
+@import "./tool";
+
+wf-zone-editor-action {
+	@extend wf-zone-editor-tool;
+	&:active {
+		@extend .inset-border
+	}
+}

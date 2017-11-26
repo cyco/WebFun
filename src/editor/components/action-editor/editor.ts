@@ -31,7 +31,6 @@ class Editor extends Component {
 
 	connectedCallback() {
 		super.connectedCallback();
-		this.updateWindowTitle();
 		this.registerShortcuts();
 	}
 
@@ -82,12 +81,6 @@ class Editor extends Component {
 		this._shortcuts = [];
 	}
 
-	private updateWindowTitle() {
-		if (!this._actions) return;
-		const window = <Window>this.closest(Window.TagName);
-		if (window) window.title = `Actions of zone ${this._zone.id}`;
-	}
-
 	disconnectedCallback() {
 		super.disconnectedCallback();
 		this.unregisterShortcuts();
@@ -129,7 +122,6 @@ class Editor extends Component {
 		this._editorArea = div;
 		this.appendChild(this._errorArea);
 		this.appendChild(div);
-		this.updateWindowTitle();
 	}
 
 	private _showErrors(errors: Error[]) {

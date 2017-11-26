@@ -6,6 +6,7 @@ import SidebarCell from "./sidebar-cell";
 import SidebarLayersCell from "./sidebar-layers-cell";
 import SidebarLayer from "./sidebar-layer";
 import Tool from "./tool";
+import Action from "./action";
 
 export {
 	Tool,
@@ -15,5 +16,6 @@ export {
 	Sidebar,
 	SidebarCell,
 	SidebarLayer,
-	SidebarLayersCell
+	SidebarLayersCell,
+	Action
 };
