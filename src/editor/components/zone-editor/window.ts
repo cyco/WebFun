@@ -38,7 +38,6 @@ class Window extends Panel {
 	private _requiredItemsCell: SidebarCell;
 	private _goalItemsCell: SidebarCell;
 	private _puzzleNPCsCell: SidebarCell;
-	private _actionsCell: SidebarCell;
 	private _toolsCell: SidebarCell;
 	private _tilePicker: TilePicker;
 	private _data: DataManager;
@@ -86,7 +85,6 @@ class Window extends Panel {
 		this._goalItemsCell = this._sidebar.addEntry(this._goalItems, "Goal Items");
 		this._puzzleNPCs = document.createElement("div");
 		this._puzzleNPCsCell = this._sidebar.addEntry(this._puzzleNPCs, "NPCs");
-		this._actionsCell = this._sidebar.addEntry([], "Actions");
 
 		this._editor.activateTool(this._tools[0]);
 		this._tilePicker.currentTile = null;
@@ -155,10 +153,6 @@ class Window extends Panel {
 		this._puzzleNPCs.textContent = "";
 		zone.puzzleNPCs.forEach(tile => this._puzzleNPCs.appendChild(this._buildTileNode(tile)));
 		this._puzzleNPCsCell.style.display = zone.puzzleNPCs.length ? "" : "none";
-
-		this._actionsCell.clear();
-		zone.actions.forEach(action => this._createAction(action, this._actionsCell));
-		this._actionsCell.style.display = zone.actions.length ? "" : "none";
 
 		this._zone = zone;
 		this._editor.zone = zone;
