@@ -1,6 +1,6 @@
 import Engine from "../engine";
 import Condition from "../objects/condition";
-import { ConditionImplementation } from "./arguments";
+import { ConditionImplementation } from "./types";
 
 export type ConditionStore = {[opcode: number]: ConditionImplementation};
 

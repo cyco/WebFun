@@ -24,4 +24,20 @@ enum ResultFlags {
 	Wait = 1 << 12
 }
 
-export { int16, ResultFlags, Result };
+
+class Type {
+	public static readonly Number = new Type();
+	public static readonly TileID = new Type();
+	public static readonly ZoneX = new Type();
+	public static readonly ZoneY = new Type();
+	public static readonly ZoneZ = new Type();
+	public static readonly NPCID = new Type();
+	public static readonly ZoneID = new Type();
+	public static readonly HotspotID = new Type();
+	public static readonly SoundID = new Type();
+	public static readonly Unused = new Type();
+}
+
+export { int16, ResultFlags, Result, Type };
+
+

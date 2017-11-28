@@ -1,5 +1,5 @@
 import ScriptExecutor from "src/engine/script/script-executor";
-import { ResultFlags } from "src/engine/script/arguments";
+import { ResultFlags } from "src/engine/script/types";
 
 describe("ScriptExecutor", () => {
 	let evaluator, engine, action;

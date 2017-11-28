@@ -1,4 +1,4 @@
-import { ResultFlags } from "src/engine/script/arguments";
+import { ResultFlags } from "src/engine/script/types";
 import { Point } from "src/util";
 import Engine from "../engine";
 import Action from "../objects/action";

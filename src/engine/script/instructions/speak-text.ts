@@ -1,10 +1,9 @@
 import SpeechScene from "src/engine/scenes/speech-scene";
 import { Point } from "src/util";
 import Engine from "../../engine";
+import { Result, ResultFlags } from "../types";
 
-import { Result, ResultFlags } from "../arguments";
-
-export default (text: string, point: Point, engine: Engine): Result => {
+export default async (text: string, point: Point, engine: Engine): Promise<Result> => {
 	const speechScene = new SpeechScene(engine);
 	speechScene.text = text;
 	speechScene.location = point;

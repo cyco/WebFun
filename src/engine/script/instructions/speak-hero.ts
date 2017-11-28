@@ -1,13 +1,16 @@
 import Engine from "../../engine";
 import Action from "../../objects/action";
 import Instruction from "../../objects/instruction";
-import { Result } from "../arguments";
+import { Result } from "../types";
 import SpeakText from "./speak-text";
+import InstructionType from "../instruction";
 
-export const Opcode = 0x04;
-export const Arguments = 0;
-export const UsesText = true;
-export const Description = "Show speech bubble next to hero. _Uses `text` attribute_.";
-export default (instruction: Instruction, engine: Engine, action: Action): Result => {
-	return SpeakText(instruction.text, engine.hero.location, engine);
+export default <InstructionType>{
+	Opcode: 0x04,
+	Arguments: [],
+	UsesText: true,
+	Description: "Show speech bubble next to hero. _Uses `text` attribute_.",
+	Implementation: (instruction: Instruction, engine: Engine, action: Action): Promise<Result> => {
+		return SpeakText(instruction.text, engine.hero.location, engine);
+	}
 };

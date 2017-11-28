@@ -1,7 +1,10 @@
 import Engine from "../../engine";
 import Zone from "../../objects/zone";
-import { int16 } from "../arguments";
+import { int16, Type } from "../types";
+import Condition from "src/engine/script/condition";
 
-export const Opcode = 0x12;
-export const Arguments = -1;
-export default (args: int16[], zone: Zone, engine: Engine): boolean => false;
+export default <Condition>{
+	Opcode: 0x12,
+	Arguments: [Type.Number, Type.Number, Type.Number, Type.Number, Type.Number],
+	Implementation: async (args: int16[], zone: Zone, engine: Engine): Promise<boolean> => false
+};
