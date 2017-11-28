@@ -2,7 +2,7 @@ import Engine from "../engine";
 import Condition from "../objects/condition";
 import { ConditionImplementation } from "./types";
 
-export type ConditionStore = {[opcode: number]: ConditionImplementation};
+export type ConditionStore = ConditionImplementation[];
 
 class ConditionChecker {
 	public engine: Engine;

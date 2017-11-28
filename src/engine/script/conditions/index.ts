@@ -79,6 +79,7 @@ registerCondition("GamesWonIsGreaterThan", GamesWonIsGreaterThan);
 const ConditionsByOpcode: Condition[] = new Array(Object.values(ConditionsByName).sort((a, b) => b.Opcode - a.Opcode).first().Opcode);
 ConditionsByName.each<Condition>((_, c) => ConditionsByOpcode[c.Opcode] = c);
 
-console.log(ConditionsByOpcode);
+const ConditionImplementations = ConditionsByOpcode.map(c => c.Implementation);
+console.log(ConditionImplementations);
 
-export { ConditionsByName, ConditionsByOpcode };
+export { ConditionsByName, ConditionsByOpcode, ConditionImplementations };

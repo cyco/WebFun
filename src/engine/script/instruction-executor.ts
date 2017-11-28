@@ -4,7 +4,7 @@ import Instruction from "../objects/instruction";
 import { Result } from "src/engine/script/types";
 import { InstructionImplementation } from "./types";
 
-export type InstructionStore = {[opcode: number]: InstructionImplementation};
+export type InstructionStore = InstructionImplementation[];
 
 class InstructionExecutor {
 	public engine: Engine;
