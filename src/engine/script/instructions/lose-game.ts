@@ -1,10 +1,13 @@
 import Engine from "../../engine";
 import Action from "../../objects/action";
 import Instruction from "../../objects/instruction";
-import { Result } from "../arguments";
+import { Result } from "../types";
+import InstructionType from "../instruction";
 
-export const Opcode = 0x20;
-export const Arguments = -1;
-export default (instruction: Instruction, engine: Engine, action: Action): Result => {
-	throw "Game Lost!";
+export default <InstructionType>{
+	Opcode: 0x20,
+	Arguments: [],
+	Implementation: async (instruction: Instruction, engine: Engine, action: Action): Promise<Result> => {
+		throw "Game Lost!";
+	}
 };

@@ -1,8 +1,8 @@
 import Engine from "../engine";
 import Action from "../objects/action";
 import Instruction from "../objects/instruction";
-import { Result } from "src/engine/script/arguments";
-import { InstructionImplementation } from "./arguments";
+import { Result } from "src/engine/script/types";
+import { InstructionImplementation } from "./types";
 
 export type InstructionStore = {[opcode: number]: InstructionImplementation};
 

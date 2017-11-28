@@ -1,8 +1,12 @@
 import Engine from "../../engine";
 import Zone from "../../objects/zone";
-import { int16 } from "../arguments";
+import { int16, Type } from "../types";
+import Condition from "src/engine/script/condition";
 
-export const Opcode = 0x1f;
-export const Arguments = 1;
-export const Description = "Current zone's `counter` value is not equal to `arg_0`";
-export default (args: int16[], zone: Zone, engine: Engine): boolean => zone.counter !== args[0];
+export default <Condition>{
+	Opcode: 0x1f,
+	Arguments: [Type.Number],
+	Description: "Current zone's `counter` value is not equal to `arg_0`",
+	Implementation: async (args: int16[], zone: Zone, engine: Engine): Promise<boolean> =>
+		zone.counter !== args[0]
+};
