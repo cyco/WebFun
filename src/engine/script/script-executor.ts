@@ -2,15 +2,15 @@ import { ResultFlags } from "src/engine/script/types";
 import { Point } from "src/util";
 import Engine from "../engine";
 import Action from "../objects/action";
-import ConditionChecker, { ConditionStore } from "./condition-checker";
-import InstructionExecutor, { InstructionStore } from "./instruction-executor";
-import Conditions from "./conditions";
-import Instructions from "./instructions";
+import ConditionChecker from "./condition-checker";
+import InstructionExecutor from "./instruction-executor";
+import { ConditionImplementations as Conditions } from "./conditions";
+import { InstructionImplementations as Instructions } from "./instructions";
 
 class ScriptExecutor {
 	private _engine: Engine = null;
-	private _checker: ConditionChecker = new ConditionChecker(<ConditionStore>Conditions);
-	private _executor: InstructionExecutor = new InstructionExecutor(<InstructionStore>Instructions);
+	private _checker: ConditionChecker = new ConditionChecker(Conditions);
+	private _executor: InstructionExecutor = new InstructionExecutor(Instructions);
 
 	public set checker(c: ConditionChecker) {
 		this._checker = c;

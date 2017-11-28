@@ -81,8 +81,9 @@ registerInstruction("MarkAsSolved", MarkAsSolved);
 registerInstruction("MoveHeroBy", MoveHeroBy);
 
 const InstructionsByOpcode: Instruction[] = new Array(Object.values(InstructionsByName).sort((a, b) => b.Opcode - a.Opcode).first().Opcode);
-InstructionsByName.each<Instruction>((_, c) => InstructionsByOpcode[c.Opcode] = c);
+InstructionsByName.each<Instruction>((_, i) => InstructionsByOpcode[i.Opcode] = i);
+const InstructionImplementations = InstructionsByOpcode.map(i => i.Implementation);
 
-console.log(InstructionsByOpcode);
+console.log(InstructionImplementations);
 
-export { InstructionsByName, InstructionsByOpcode };
+export { InstructionsByName, InstructionsByOpcode, InstructionImplementations };
