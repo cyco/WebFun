@@ -3,11 +3,9 @@ import { Engine, EngineEvents } from "src/engine";
 import { Controls } from "./components";
 import {
 	ConditionChecker,
-	Conditions,
 	ConditionStore,
 	InstructionExecutor,
 	InstructionResult,
-	Instructions,
 	InstructionStore
 } from "src/engine/script";
 import { Action, Instruction } from "src/engine/objects";
@@ -17,6 +15,8 @@ import ActionComponent from "src/debug/components/action-component";
 import "./script-debugger.scss";
 import Settings from "src/settings";
 import { WindowManager } from "src/ui";
+import { ConditionImplementations } from "src/engine/script/conditions";
+import { InstructionImplementations } from "src/engine/script/instructions";
 
 class ScriptDebugger {
 	private static _sharedDebugger: ScriptDebugger;
@@ -88,9 +88,9 @@ class ScriptDebugger {
 		if (this._isActive) return;
 		if (!this._engine) return;
 
-		const conditions = this._buildConditionStore(<ConditionStore>Conditions);
+		const conditions = this._buildConditionStore(ConditionImplementations);
 		this._engine.scriptExecutor.checker = new ConditionChecker(conditions, this._engine);
-		const instructions = this._buildInstructionStore(<InstructionStore>Instructions);
+		const instructions = this._buildInstructionStore(InstructionImplementations);
 		this._engine.scriptExecutor.executor = new InstructionExecutor(instructions, this._engine);
 
 		this._engine.addEventListener(EngineEvents.CurrentZoneChange, this._handlers.zoneChange);
@@ -104,44 +104,27 @@ class ScriptDebugger {
 		Settings.debuggerActive = false;
 
 		this._engine.removeEventListener(EngineEvents.CurrentZoneChange, this._handlers.zoneChange);
-
-		const conditions = <ConditionStore>Conditions;
-		this._engine.scriptExecutor.checker = new ConditionChecker(conditions, this._engine);
-		const instructions = <InstructionStore>Instructions;
-		this._engine.scriptExecutor.executor = new InstructionExecutor(instructions, this._engine);
+		this._engine.scriptExecutor.checker = new ConditionChecker(ConditionImplementations, this._engine);
+		this._engine.scriptExecutor.executor = new InstructionExecutor(InstructionImplementations, this._engine);
 
 		this._isActive = false;
 	}
 
 	private _buildConditionStore(originalStore: ConditionStore): ConditionStore {
-		const store: ConditionStore = {};
-
-		for (const opcode in originalStore) {
-			if (!originalStore.hasOwnProperty(opcode)) continue;
-			store[opcode] = (args: number[], zone: Zone, engine: Engine): Promise<boolean> =>
-				this._handleConditionCall(<number><any>opcode, args, zone, engine);
-		}
-
-		return store;
+		return originalStore.map((_, c) => (args: number[], zone: Zone, engine: Engine): Promise<boolean> => this._handleConditionCall(c, args, zone, engine));
 	}
 
 	private _handleConditionCall(opcode: number, args: number[], zone: Zone, engine: Engine): Promise<boolean> {
-		return Conditions[opcode](args, zone, engine);
+		return ConditionImplementations[opcode](args, zone, engine);
 	}
 
 	private _buildInstructionStore(originalStore: InstructionStore): InstructionStore {
-		const store: InstructionStore = {};
-
-		for (const opcode in originalStore) {
-			if (!originalStore.hasOwnProperty(opcode)) continue;
-			store[opcode] = (instruction: Instruction, engine: Engine, action: Action): Promise<InstructionResult> => this._handleInstructionCall(<number><any>opcode, instruction, engine, action);
-		}
-
-		return store;
+		return originalStore.map((_, i) => (instruction: Instruction, engine: Engine, action: Action): Promise<InstructionResult> => this._handleInstructionCall(i, instruction, engine, action));
 	}
 
 	private _handleInstructionCall(opcode: number, instruction: Instruction, engine: Engine, action: Action): Promise<InstructionResult> {
-		return Instructions[opcode](instruction, engine, action);
+		if (!opcode) return;
+		return InstructionImplementations[opcode](instruction, engine, action);
 	}
 
 	private _rebuildActionList() {

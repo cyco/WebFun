@@ -5,7 +5,7 @@ import Engine from "src/engine/engine";
 import ConditionComponent from "src/debug/components/condition";
 import InstructionComponent from "src/debug/components/instruction";
 import ConditionChecker from "src/engine/script/condition-checker";
-import Conditions from "src/engine/script/conditions";
+import { ConditionImplementations } from "src/engine/script/conditions";
 
 class ActionComponent extends Component {
 	public static readonly TagName = "wf-debug-action";
@@ -75,7 +75,7 @@ class ActionComponent extends Component {
 	}
 
 	public evaluateConditions() {
-		const checker = new ConditionChecker(<any>Conditions, this.engine);
+		const checker = new ConditionChecker(ConditionImplementations, this.engine);
 		Array.from(this.querySelectorAll(ConditionComponent.TagName)).forEach((condition: ConditionComponent) => {
 			if (checker.check(condition.condition)) {
 				condition.setAttribute("truthy", "");
