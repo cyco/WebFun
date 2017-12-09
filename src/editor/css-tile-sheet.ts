@@ -40,8 +40,8 @@ class CSSTileSheet extends TileSheet {
 	private _buildPositionRules(count: number): void {
 		const sheet = this._styleSheet;
 		const baseName = this.className;
-		const baseStyle = `display: inline-block; 
-							 width: ${this._tileSize.width}px; 
+		const baseStyle = `display: inline-block;
+							 width: ${this._tileSize.width}px;
 							height: ${this._tileSize.height}px;`;
 
 		for (let i = 0; i < count; i++) {

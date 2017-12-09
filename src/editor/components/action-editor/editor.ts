@@ -1,5 +1,4 @@
 import Component from "src/ui/component";
-import { Window } from "src/ui/components";
 import { Action } from "src/engine/objects";
 import Printer from "src/editor/components/action-editor/printer";
 import Disassembler from "src/editor/components/action-editor/disassembler";
@@ -11,6 +10,9 @@ import { AssemblerInputError, default as Assembler } from "src/editor/components
 import { default as Parser, ParserError } from "src/editor/components/action-editor/parser";
 import MutableAction from "src/engine/mutable-objects/mutable-action";
 import MutableZone from "src/engine/mutable-objects/mutable-zone";
+import ArgumentProcessor from "./argument-processor";
+import Token from "src/editor/components/action-editor/token";
+import GameData from "src/engine/game-data";
 
 class Editor extends Component {
 	static readonly TagName = "wf-action-editor";
@@ -20,6 +22,7 @@ class Editor extends Component {
 	private _errorArea: HTMLDivElement;
 	private _editorArea: HTMLDivElement;
 	private _zone: Zone;
+	public data: GameData;
 
 	constructor() {
 		super();
@@ -104,7 +107,9 @@ class Editor extends Component {
 		div.setAttribute("contenteditable", "");
 
 		const printer = new Printer();
+		printer.tagName = Token.TagName;
 		const disassembler = new Disassembler();
+		const argumentProcessor = new ArgumentProcessor(this.data);
 
 		const errors: Error[] = [];
 		this._actions.forEach((action, idx) => {
@@ -119,7 +124,7 @@ class Editor extends Component {
 		this._showErrors(errors);
 
 		this.textContent = "";
-		this._editorArea = div;
+		this._editorArea = argumentProcessor.process(div);
 		this.appendChild(this._errorArea);
 		this.appendChild(div);
 	}

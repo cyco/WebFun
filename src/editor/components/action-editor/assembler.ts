@@ -4,10 +4,10 @@ import { Action } from "src/engine/objects";
 import { MutableAction } from "src/engine/mutable-objects";
 import Condition from "src/engine/objects/condition";
 import Instruction from "src/engine/objects/instruction";
-
-import * as ConditionImport from "src/engine/script/conditions";
-import * as InstructionImport from "src/engine/script/instructions";
 import { AbstractActionItemInit } from "src/engine/objects/abstract-action-item";
+import { ConditionsByName } from "src/engine/script/conditions";
+import { InstructionsByName } from "src/engine/script/instructions";
+import { Type } from "src/engine/script/types";
 
 class AssemblerInputError extends Error {
 	public readonly input: AST;
@@ -19,11 +19,11 @@ class AssemblerInputError extends Error {
 }
 
 type ASTFunctionDefinition = [Symbol, Symbol, AST, Array<AST>];
-type Opcode = {Opcode: number, Arguments: number, UsesText?: boolean, Description: string};
+type Opcode = {Opcode: number, Arguments: Type[], UsesText?: boolean, Description: string};
 type OpcodeMap = {[_: string]: Opcode};
 
-const Conditions = <OpcodeMap><any>ConditionImport;
-const Instructions = <OpcodeMap><any>InstructionImport;
+const Conditions = <OpcodeMap>ConditionsByName;
+const Instructions = <OpcodeMap>InstructionsByName;
 
 class Assembler {
 	public assemble(input: AST): Action {
@@ -105,7 +105,7 @@ class Assembler {
 
 		const text = opcode.UsesText ? args.pop() : "";
 
-		if (false && ~opcode.Arguments && args.length !== opcode.Arguments) {
+		if (false && ~opcode.Arguments && args.length !== opcode.Arguments.length) {
 			throw new AssemblerInputError(`Expected ${opcode.Arguments} arguments but found ${args.length}.`, input);
 		}
 
