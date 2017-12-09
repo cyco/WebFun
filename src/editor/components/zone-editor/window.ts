@@ -26,6 +26,7 @@ import { ActionEditor } from "src/editor/components";
 import { ActionDescription } from "src/editor/components/zone-editor/action";
 import NPC from "src/engine/objects/npc";
 import NPCComponent from "src/editor/components/zone-editor/npc";
+import List from "src/ui/components/list";
 
 class Window extends Panel {
 	public static readonly TagName = "wf-zone-editor-window";
@@ -37,7 +38,7 @@ class Window extends Panel {
 	private _requiredItems: HTMLElement;
 	private _goalItems: HTMLElement;
 	private _puzzleNPCs: HTMLElement;
-	private _npcs: HTMLElement;
+	private _npcs: List<NPC>;
 	private _providedItemsCell: SidebarCell;
 	private _requiredItemsCell: SidebarCell;
 	private _goalItemsCell: SidebarCell;
@@ -100,7 +101,7 @@ class Window extends Panel {
 		this._goalItemsCell = this._sidebar.addEntry(this._goalItems, "Goal Items");
 		this._puzzleNPCs = document.createElement("div");
 		this._puzzleNPCsCell = this._sidebar.addEntry(this._puzzleNPCs, "NPCs");
-		this._npcs = document.createElement("div");
+		this._npcs = this._buildNPCList();
 		this._npcsCell = this._sidebar.addEntry(this._npcs, "Enemies");
 
 		this._editor.activateTool(this._tools[0]);
@@ -143,6 +144,7 @@ class Window extends Panel {
 		this.onpin = () => this._state.store("pinned", this.pinned);
 
 		this._sidebar.state = state.prefixedWith("sidebar");
+		this._npcs.state = state.prefixedWith("npc-list");
 
 		if (state.load("visible")) {
 			this.show();
@@ -170,8 +172,7 @@ class Window extends Panel {
 		this._puzzleNPCs.textContent = "";
 		zone.puzzleNPCs.forEach(npc => this._puzzleNPCs.appendChild(this._buildTileNode(npc)));
 		this._puzzleNPCsCell.style.display = zone.puzzleNPCs.length ? "" : "none";
-		this._npcs.textContent = "";
-		zone.npcs.forEach(npc => this._npcs.appendChild(this._buildNPCNode(npc)));
+		this._npcs.items = zone.npcs;
 		this._npcsCell.style.display = zone.npcs.length ? "" : "none";
 
 		this._zone = zone;
@@ -215,13 +216,12 @@ class Window extends Panel {
 		return component;
 	}
 
-	private _buildNPCNode(npc: NPC) {
-		const thing = <NPCComponent>document.createElement(NPCComponent.TagName);
-		thing.data = this.data.currentData;
-		thing.tileSheet = this.data.tileSheet;
-		thing.npc = npc;
+	private _buildNPCList() {
+		const list = <List<NPC>>document.createElement(List.TagName);
+		list.classList.add("wf-zone-editor-npc-list");
+		list.cell = <NPCComponent>document.createElement(NPCComponent.TagName);
 
-		return thing;
+		return list;
 	}
 
 	get zone() {
@@ -232,6 +232,10 @@ class Window extends Panel {
 		this._data = d;
 		this._editor.tileSheet = d.tileSheet;
 		this._tilePicker.data = this.data;
+
+		const cell = <NPCComponent>this._npcs.cell;
+		cell.gameData = this.data.currentData;
+		cell.tileSheet = this.data.tileSheet;
 	}
 
 	public get data() {
