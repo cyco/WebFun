@@ -51,12 +51,13 @@ class GameData {
 		this._puzzles = this._getCategory("PUZ2").puzzles
 			.filter(({index}: {index: number}) => index !== -1)
 			.map((data: any, index: number) => this._makePuzzle(data, index));
-		this._zones = [];
-		this._getCategory("ZONE").zones
-			.map((data: any, index: number) => this._makeZone(data)).forEach((z: Zone) => this._zones.push(z));
 		this._characters = this._getCategory("CHAR").characters
 			.filter(({index}: {index: number}) => index !== -1)
 			.map((data: any, index: number) => this._makeCharacter(data, index));
+
+		this._zones = [];
+		this._getCategory("ZONE").zones
+			.map((data: any, index: number) => this._makeZone(data)).forEach((z: Zone) => this._zones.push(z));
 
 		this._getCategory("CAUX").auxiliaries
 			.filter(({index}: {index: number}) => index !== -1)
@@ -126,7 +127,7 @@ class GameData {
 		zone.type = ZoneType.fromNumber(data.type);
 		zone.tileIDs = data.tileIds;
 		zone.hotspots = data.hotspots.map((d: any) => this._makeHotspot(d));
-		zone.npcs = data.izax.npcs.map((d: any) => new NPC(d));
+		zone.npcs = data.izax.npcs.map((d: any) => this._makeNPC(d));
 		zone.goalItems = data.izax.goalItems.map((id: number) => this._tiles[id]);
 		zone.requiredItems = data.izax.requiredItems.map((id: number) => this._tiles[id]);
 		zone.providedItems = data.izx2.providedItems.map((id: number) => this._tiles[id]);
@@ -203,6 +204,13 @@ class GameData {
 		char.garbage2 = data.probablyGarbage2;
 
 		return char;
+	}
+
+	private _makeNPC(npc: any) {
+		const data = Object.assign({}, npc);
+		data.face = this._characters[data.face];
+
+		return new NPC(data);
 	}
 
 	get version(): number {

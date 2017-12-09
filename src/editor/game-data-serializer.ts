@@ -100,7 +100,7 @@ class GameDataSerializer {
 
 			stream.writeUint16(zone.npcs.length);
 			zone.npcs.forEach((npc: NPC) => {
-				stream.writeUint16(npc.face);
+				stream.writeUint16(npc.face.id);
 				stream.writeUint16(npc.position.x);
 				stream.writeUint16(npc.position.y);
 				stream.writeUint16(npc.unknown1);
