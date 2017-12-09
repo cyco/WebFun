@@ -3,17 +3,16 @@ import Component from "src/ui/component";
 import NPC from "src/engine/objects/npc";
 import GameData from "src/engine/game-data";
 import CSSTileSheet from "src/editor/css-tile-sheet";
-import { Label } from "src/ui/components";
+import Cell from "src/ui/components/cell";
 
-class NPCComponent extends Component {
-	static readonly TagName = "wf-zone-editor-npc";
-	public data: GameData;
+class NPCComponent extends Cell<NPC> {
+	public static readonly TagName = "wf-zone-editor-npc";
+	public gameData: GameData;
 	public tileSheet: CSSTileSheet;
+	public _npc: NPC;
 
-	private _npc: NPC;
-
-	private _id: HTMLElement;
 	private _name: HTMLElement;
+	private _position: HTMLElement;
 	private _tile: HTMLElement;
 	private _text: HTMLElement;
 
@@ -26,31 +25,38 @@ class NPCComponent extends Component {
 		this._text = document.createElement("div");
 		this._text.classList.add("text");
 
-		this._id = document.createElement("span");
-		this._id.classList.add("id");
-
-		this._name = document.createElement(Label.TagName);
+		this._name = document.createElement("div");
 		this._name.classList.add("name");
-		this._name.onchange = () => {
-			(<any>this.data)._name = this._name.textContent;
-		};
-
-		this._text.appendChild(this._id);
 		this._text.appendChild(this._name);
+
+		this._position = document.createElement("div");
+		this._position.classList.add("position");
+		this._text.appendChild(this._position);
 	}
 
+	connectedCallback() {
+		this.appendChild(this._tile);
+		this.appendChild(this._text);
+	}
 
-	public set npc(npc: NPC) {
-		this._npc = npc;
+	cloneNode(deep?: boolean) {
+		const node = <NPCComponent><any>super.cloneNode(deep);
+		node.tileSheet = this.tileSheet;
+		node.gameData = this.gameData;
+		return node;
+	}
 
+	public set data(npc: NPC) {
 		const char = npc.face;
 		this._name.textContent = char.name;
 
 		const tile = char.frames[0].extensionRight;
 		this._tile.className = `tile ${this.tileSheet.cssClassNameForTile(tile.id)}`;
+
+		this._position.textContent = `${npc.position.x}x${npc.position.y}`;
 	}
 
-	public get npc() {
+	public get data() {
 		return this._npc;
 	}
 }
