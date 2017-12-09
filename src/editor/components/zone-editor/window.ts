@@ -180,6 +180,7 @@ class Window extends Panel {
 		}
 
 		const editor = <ActionEditor>this._actionsWindow.content.firstElementChild;
+		editor.data = this._data.currentData;
 		editor.zone = this.zone;
 		this._actionsWindow.title = `Zone ${this.zone.id}: Actions`;
 		this.manager.showWindow(this._actionsWindow);

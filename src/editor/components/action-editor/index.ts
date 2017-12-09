@@ -1,3 +1,4 @@
 import Editor from "./editor";
+import Token from "./token";
 
-export { Editor };
+export { Editor, Token };

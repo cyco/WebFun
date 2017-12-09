@@ -7,9 +7,11 @@ const Keywords = ["defn", "and", "progn"];
 class Printer {
 	public indent = 4;
 	private _buffer: TaggedLineBuffer;
+	public tagName: string = "span";
 
 	pprint(action: AST): string {
 		this._buffer = new TaggedLineBuffer();
+		this._buffer.tagName = this.tagName;
 
 		this.putSimple(action, 0);
 		this._buffer.endLine();

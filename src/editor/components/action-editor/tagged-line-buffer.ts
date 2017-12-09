@@ -1,6 +1,7 @@
 import LineBuffer from "src/editor/components/action-editor/line-buffer";
 
 class TaggedLineBuffer extends LineBuffer {
+	public tagName: string = "span";
 	private _tagLines: string[] = [];
 	private _currentTagLine: string = "";
 
@@ -10,7 +11,7 @@ class TaggedLineBuffer extends LineBuffer {
 		const parts = string.split("\n");
 		while (parts.length) {
 			const part = parts.shift();
-			this._currentTagLine += className ? `<span class="${className}">${part.split(" ").join("&nbsp;")}</span>` : part;
+			this._currentTagLine += className ? `<${this.tagName} class="${className}">${part.split(" ").join("&nbsp;")}</${this.tagName}>` : part;
 			if (parts.length) this.endLine();
 		}
 	}
