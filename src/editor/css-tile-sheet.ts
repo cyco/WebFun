@@ -77,6 +77,10 @@ class CSSTileSheet extends TileSheet {
 	public cssClassesForTile(id: number) {
 		return [this.className, `${this.className}-tile-${id}`];
 	}
+
+	public cssClassNameForTile(id: number) {
+		return this.cssClassesForTile(id).join(" ");
+	}
 }
 
 export default CSSTileSheet;
