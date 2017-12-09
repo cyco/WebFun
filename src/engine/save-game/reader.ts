@@ -139,7 +139,8 @@ class Reader {
 	}
 
 	_readNPC(npc: NPC, stream: InputStream): void {
-		npc._face = stream.getInt16();
+		const characterId = stream.getInt16();
+		npc._character = this._data.characters[characterId];
 		npc.position.x = stream.getInt16();
 		npc.position.y = stream.getInt16();
 		stream.getInt16(); // field_A

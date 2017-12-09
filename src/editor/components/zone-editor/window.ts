@@ -24,6 +24,7 @@ import DataManager from "src/editor/data-manager";
 import AbstractDrawingTool from "src/editor/tools/abstract-drawing-tool";
 import { ActionEditor } from "src/editor/components";
 import { ActionDescription } from "src/editor/components/zone-editor/action";
+import NPC from "src/engine/objects/npc";
 
 class Window extends Panel {
 	public static readonly TagName = "wf-zone-editor-window";
@@ -35,10 +36,12 @@ class Window extends Panel {
 	private _requiredItems: HTMLElement;
 	private _goalItems: HTMLElement;
 	private _puzzleNPCs: HTMLElement;
+	private _npcs: HTMLElement;
 	private _providedItemsCell: SidebarCell;
 	private _requiredItemsCell: SidebarCell;
 	private _goalItemsCell: SidebarCell;
 	private _puzzleNPCsCell: SidebarCell;
+	private _npcsCell: SidebarCell;
 	private _toolsCell: SidebarCell;
 	private _tilePicker: TilePicker;
 	private _data: DataManager;
@@ -96,6 +99,8 @@ class Window extends Panel {
 		this._goalItemsCell = this._sidebar.addEntry(this._goalItems, "Goal Items");
 		this._puzzleNPCs = document.createElement("div");
 		this._puzzleNPCsCell = this._sidebar.addEntry(this._puzzleNPCs, "NPCs");
+		this._npcs = document.createElement("div");
+		this._npcsCell = this._sidebar.addEntry(this._npcs, "Enemies");
 
 		this._editor.activateTool(this._tools[0]);
 		this._tilePicker.currentTile = null;
@@ -162,8 +167,11 @@ class Window extends Panel {
 		zone.goalItems.forEach(tile => this._goalItems.appendChild(this._buildTileNode(tile)));
 		this._goalItemsCell.style.display = zone.goalItems.length ? "" : "none";
 		this._puzzleNPCs.textContent = "";
-		zone.puzzleNPCs.forEach(tile => this._puzzleNPCs.appendChild(this._buildTileNode(tile)));
+		zone.puzzleNPCs.forEach(npc => this._puzzleNPCs.appendChild(this._buildTileNode(npc)));
 		this._puzzleNPCsCell.style.display = zone.puzzleNPCs.length ? "" : "none";
+		this._npcs.textContent = "";
+		zone.npcs.forEach(npc => this._npcs.appendChild(this._buildNPCNode(npc)));
+		this._npcsCell.style.display = zone.npcs.length ? "" : "none";
 
 		this._zone = zone;
 		this._editor.zone = zone;
@@ -204,6 +212,12 @@ class Window extends Panel {
 		const component = <ActionComponent>document.createElement(ActionComponent.TagName);
 		component.action = a;
 		return component;
+	}
+
+	private _buildNPCNode(npc: NPC) {
+		const thing = document.createElement("div");
+		thing.textContent = `Character: ${npc.face.name} @ ${npc.position}`;
+		return thing;
 	}
 
 	get zone() {

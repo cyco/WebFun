@@ -122,7 +122,7 @@ class Writer {
 	}
 
 	_writeNPC(npc: NPC, stream: OutputStream): void {
-		stream.writeInt16(npc._face);
+		stream.writeInt16(npc.face.id);
 		stream.writeInt16(npc.position.x);
 		stream.writeInt16(npc.position.y);
 		stream.writeInt16(0); // TODO: field_A
