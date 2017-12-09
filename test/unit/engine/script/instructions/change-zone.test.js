@@ -1,5 +1,5 @@
 import { Instruction } from "src/engine/objects";
-import * as ChangeZone from "src/engine/script/instructions/change-zone";
+import ChangeZone from "src/engine/script/instructions/change-zone";
 
 describeInstruction("ChangeZone", (execute, engine) => {
 	it("Switches to a differnt zone using the room animation", async (done) => {

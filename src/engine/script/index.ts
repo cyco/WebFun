@@ -3,9 +3,13 @@ import { ConditionImplementations, ConditionsByName, ConditionsByOpcode } from "
 import InstructionExecutor, { InstructionStore } from "./instruction-executor";
 import { InstructionImplementations, InstructionsByName, InstructionsByOpcode } from "./instructions";
 import ScriptExecutor from "./script-executor";
-import { ConditionImplementation, InstructionImplementation, Result, ResultFlags } from "./types";
+import { ConditionImplementation, InstructionImplementation, Result, ResultFlags, Type } from "./types";
+import Condition from "./condition";
+import Instruction from "./instruction";
 
 export {
+	Type,
+	Condition, Instruction,
 	ResultFlags as InstructionResultFlags,
 	Result as InstructionResult,
 	ConditionStore,

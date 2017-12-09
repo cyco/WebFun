@@ -1,5 +1,5 @@
 import { Instruction } from "src/engine/objects";
-import * as SetTileNeedsDisplay from "src/engine/script/instructions/set-tile-needs-display";
+import SetTileNeedsDisplay from "src/engine/script/instructions/set-tile-needs-display";
 
 describeInstruction("SetTileNeedsDisplay", (execute, engine) => {
 	it("Marks the specified tile as dirty", async (done) => {

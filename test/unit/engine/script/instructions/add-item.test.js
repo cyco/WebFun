@@ -1,5 +1,5 @@
 import { Instruction } from "src/engine/objects";
-import * as AddItem from "src/engine/script/instructions/add-item";
+import AddItem from "src/engine/script/instructions/add-item";
 
 describeInstruction("AddItem", (execute, engine) => {
 	it("adds an item to the inventory", async (done) => {
@@ -21,4 +21,3 @@ describeInstruction("AddItem", (execute, engine) => {
 		done();
 	});
 });
-

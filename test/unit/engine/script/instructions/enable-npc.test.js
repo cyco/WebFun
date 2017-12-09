@@ -1,5 +1,5 @@
 import { Instruction } from "src/engine/objects";
-import * as EnableNPC from "src/engine/script/instructions/enable-npc";
+import EnableNPC from "src/engine/script/instructions/enable-npc";
 
 describeInstruction("EnableNPC", (execute, engine) => {
 	it("enables the specified npc in the current zone", async (done) => {
@@ -15,4 +15,3 @@ describeInstruction("EnableNPC", (execute, engine) => {
 		done();
 	});
 });
-

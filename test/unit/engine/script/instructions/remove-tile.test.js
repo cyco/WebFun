@@ -1,5 +1,5 @@
 import { Instruction } from "src/engine/objects";
-import * as RemoveTile from "src/engine/script/instructions/remove-tile";
+import RemoveTile from "src/engine/script/instructions/remove-tile";
 
 describeInstruction("RemoveTile", (execute, engine) => {
 	it("removes a tile from the current zone", async (done) => {

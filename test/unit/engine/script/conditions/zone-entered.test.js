@@ -1,5 +1,5 @@
 import { Condition } from "src/engine/objects";
-import * as ZoneEntered from "src/engine/script/conditions/zone-entered";
+import ZoneEntered from "src/engine/script/conditions/zone-entered";
 
 describeCondition("ZoneEntered", (check, engine) => {
 	it("checks if the zone has just been entered", async (done) => {

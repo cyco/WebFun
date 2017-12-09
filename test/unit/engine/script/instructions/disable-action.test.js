@@ -1,7 +1,7 @@
 import { Instruction } from "src/engine/objects";
 import { InstructionExecutor } from "src/engine/script";
-import * as DisableAction from "src/engine/script/instructions/disable-action";
-import Instructions from "src/engine/script/instructions";
+import DisableAction from "src/engine/script/instructions/disable-action";
+import { InstructionImplementations } from "src/engine/script/instructions";
 
 describeInstruction("DisableAction", () => {
 	it("disables the action that's currently executing", async (done) => {
@@ -11,7 +11,7 @@ describeInstruction("DisableAction", () => {
 			state: {},
 			data: {}
 		};
-		let executor = new InstructionExecutor(Instructions, engine);
+		let executor = new InstructionExecutor(InstructionImplementations, engine);
 
 		beforeEach(() => {
 			engine.currentZone = {};

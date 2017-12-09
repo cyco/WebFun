@@ -1,5 +1,5 @@
 import { Condition } from "src/engine/objects";
-import * as PaddingIsNot from "src/engine/script/conditions/padding-is-not";
+import PaddingIsNot from "src/engine/script/conditions/padding-is-not";
 
 describeCondition("", (check, engine) => {
 	it("checks if the current zone's padding value is not equal to the given value", async (done) => {

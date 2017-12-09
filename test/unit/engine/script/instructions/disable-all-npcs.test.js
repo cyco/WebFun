@@ -1,5 +1,5 @@
 import { Instruction } from "src/engine/objects";
-import * as DiableAllNPCs from "src/engine/script/instructions/disable-all-npcs";
+import DiableAllNPCs from "src/engine/script/instructions/disable-all-npcs";
 
 describeInstruction("DiableAllNPCs", (execute, engine) => {
 	it("enables all npcs in the current zone", async (done) => {
@@ -17,4 +17,3 @@ describeInstruction("DiableAllNPCs", (execute, engine) => {
 		done();
 	});
 });
-

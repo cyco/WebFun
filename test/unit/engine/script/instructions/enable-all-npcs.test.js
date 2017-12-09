@@ -1,5 +1,5 @@
 import { Instruction } from "src/engine/objects";
-import * as EnableAllNPCs from "src/engine/script/instructions/enable-all-npcs";
+import EnableAllNPCs from "src/engine/script/instructions/enable-all-npcs";
 
 describeInstruction("EnableAllNPCs", (execute, engine) => {
 	it("enables all npcs in the current zone", async (done) => {
@@ -17,4 +17,3 @@ describeInstruction("EnableAllNPCs", (execute, engine) => {
 		done();
 	});
 });
-

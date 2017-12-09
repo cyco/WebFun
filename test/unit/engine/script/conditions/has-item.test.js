@@ -1,5 +1,5 @@
 import { Condition } from "src/engine/objects";
-import * as HasItem from "src/engine/script/conditions/has-item";
+import HasItem from "src/engine/script/conditions/has-item";
 
 describeCondition("HasItem", (check, engine) => {
 	it("checks if the inventory contains the specified item", async (done) => {

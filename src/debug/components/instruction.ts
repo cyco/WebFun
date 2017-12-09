@@ -1,7 +1,7 @@
 import InstructionThing from "./instruction-thing";
 import { Instruction } from "src/engine/objects";
 import Engine from "src/engine/engine";
-import * as Instructions from "src/engine/script/instructions";
+import { InstructionsByName as Instructions } from "src/engine/script/instructions";
 
 class InstructionComponent extends InstructionThing {
 	public static readonly TagName = "wf-debug-instruction";

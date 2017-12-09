@@ -1,5 +1,5 @@
 import { Condition } from "src/engine/objects";
-import * as RandomIsNot from "src/engine/script/conditions/random-is-not";
+import RandomIsNot from "src/engine/script/conditions/random-is-not";
 
 describeCondition("RandomIsNot", (check, engine) => {
 	it("tests is the current zone's random value is not equal to the supplied value", async (done) => {

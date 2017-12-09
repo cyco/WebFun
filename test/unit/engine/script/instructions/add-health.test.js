@@ -1,5 +1,5 @@
 import { Instruction } from "src/engine/objects";
-import * as AddHealth from "src/engine/script/instructions/add-health";
+import AddHealth from "src/engine/script/instructions/add-health";
 
 describeInstruction("AddHealth", (execute, engine) => {
 	it("replenishes the hero's health", async (done) => {
@@ -15,4 +15,3 @@ describeInstruction("AddHealth", (execute, engine) => {
 		done();
 	});
 });
-

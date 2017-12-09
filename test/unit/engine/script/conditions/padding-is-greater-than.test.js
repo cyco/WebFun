@@ -1,5 +1,5 @@
 import { Condition } from "src/engine/objects";
-import * as PaddingIsGreaterThan from "src/engine/script/conditions/padding-is-greater-than";
+import PaddingIsGreaterThan from "src/engine/script/conditions/padding-is-greater-than";
 
 describeCondition("PaddingIsGreaterThan", (check, engine) => {
 	it("checks if the current zone's padding value is greater than the given value", async (done) => {
