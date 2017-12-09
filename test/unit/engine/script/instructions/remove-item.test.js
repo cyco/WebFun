@@ -1,5 +1,5 @@
 import { Instruction } from "src/engine/objects";
-import * as RemoveItem from "src/engine/script/instructions/remove-item";
+import RemoveItem from "src/engine/script/instructions/remove-item";
 
 describeInstruction("RemoveItem", (execute, engine) => {
 	it("removes an item from the inventory", async (done) => {
@@ -21,4 +21,3 @@ describeInstruction("RemoveItem", (execute, engine) => {
 		done();
 	});
 });
-

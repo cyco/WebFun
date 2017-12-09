@@ -1,5 +1,5 @@
 import { Instruction } from "src/engine/objects";
-import * as SetPadding from "src/engine/script/instructions/set-padding";
+import SetPadding from "src/engine/script/instructions/set-padding";
 
 describeInstruction("SetPadding", (execute, engine) => {
 	it("set the current zone's padding to the specified value", async (done) => {

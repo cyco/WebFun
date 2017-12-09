@@ -1,5 +1,5 @@
 import { Instruction } from "src/engine/objects";
-import * as PlaceTile from "src/engine/script/instructions/place-tile";
+import PlaceTile from "src/engine/script/instructions/place-tile";
 
 describeInstruction("PlaceTile", (execute, engine) => {
 	it("Places a tile at the specified coordinates", async (done) => {

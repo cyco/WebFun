@@ -1,5 +1,5 @@
 import { Instruction } from "src/engine/objects";
-import * as DisableHotspot from "src/engine/script/instructions/disable-hotspot";
+import DisableHotspot from "src/engine/script/instructions/disable-hotspot";
 
 describeInstruction("DisableHotspot", (execute, engine) => {
 	it("disables the specified hotspot in the current zone", async (done) => {
@@ -15,4 +15,3 @@ describeInstruction("DisableHotspot", (execute, engine) => {
 		done();
 	});
 });
-

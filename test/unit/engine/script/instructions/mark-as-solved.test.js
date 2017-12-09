@@ -1,5 +1,5 @@
 import { Instruction } from "src/engine/objects";
-import * as MarkAsSolved from "src/engine/script/instructions/mark-as-solved";
+import MarkAsSolved from "src/engine/script/instructions/mark-as-solved";
 
 describeInstruction("MarkAsSolved", (execute, engine) => {
 	it("marks the current zone as solved", async (done) => {

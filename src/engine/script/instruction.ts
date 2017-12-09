@@ -5,5 +5,6 @@ export type Instruction = {
 	Implementation: InstructionImplementation;
 	Description?: string;
 	Arguments?: Type[];
+	UsesText?: boolean
 }
 export default Instruction;

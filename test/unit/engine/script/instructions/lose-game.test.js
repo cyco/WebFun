@@ -1,5 +1,5 @@
 import { Instruction } from "src/engine/objects";
-import * as LoseGame from "src/engine/script/instructions/lose-game";
+import LoseGame from "src/engine/script/instructions/lose-game";
 
 describeInstruction("LoseGame", (execute, engine) => {
 	it("ends the current story by losing", async (done) => {

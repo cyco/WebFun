@@ -1,5 +1,5 @@
 import { Instruction } from "src/engine/objects";
-import * as SpeakHero from "src/engine/script/instructions/speak-hero";
+import SpeakHero from "src/engine/script/instructions/speak-hero";
 import * as SpeakText from "src/engine/script/instructions/speak-text";
 
 xdescribeInstruction("SpeakHero", (execute, engine) => {

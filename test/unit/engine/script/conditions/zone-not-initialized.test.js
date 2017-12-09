@@ -1,5 +1,5 @@
 import { Condition } from "src/engine/objects";
-import * as ZoneNotInitialized from "src/engine/script/conditions/zone-not-initialized";
+import ZoneNotInitialized from "src/engine/script/conditions/zone-not-initialized";
 
 describeCondition("ZoneNotInitialized", (check, engine) => {
 	it("checks if the zone has been initialized yet", async (done) => {

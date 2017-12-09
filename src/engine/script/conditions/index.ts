@@ -80,6 +80,5 @@ const ConditionsByOpcode: Condition[] = new Array(Object.values(ConditionsByName
 ConditionsByName.each<Condition>((_, c) => ConditionsByOpcode[c.Opcode] = c);
 
 const ConditionImplementations = ConditionsByOpcode.map(c => c.Implementation);
-console.log(ConditionImplementations);
 
 export { ConditionsByName, ConditionsByOpcode, ConditionImplementations };

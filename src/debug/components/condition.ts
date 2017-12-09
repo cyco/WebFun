@@ -1,4 +1,4 @@
-import * as Conditions from "src/engine/script/conditions";
+import { ConditionsByName as Conditions } from "src/engine/script/conditions";
 import InstructionThing from "./instruction-thing";
 import Condition from "src/engine/objects/condition";
 import Engine from "src/engine/engine";

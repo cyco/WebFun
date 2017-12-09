@@ -84,6 +84,4 @@ const InstructionsByOpcode: Instruction[] = new Array(Object.values(Instructions
 InstructionsByName.each<Instruction>((_, i) => InstructionsByOpcode[i.Opcode] = i);
 const InstructionImplementations = InstructionsByOpcode.map(i => i.Implementation);
 
-console.log(InstructionImplementations);
-
 export { InstructionsByName, InstructionsByOpcode, InstructionImplementations };

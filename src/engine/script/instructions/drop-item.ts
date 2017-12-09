@@ -8,7 +8,7 @@ import InstructionType from "../instruction";
 
 export default <InstructionType>{
 	Opcode: 0x1b,
-	Arguments: [Type.ZoneID, Type.ZoneX, Type.ZoneY],
+	Arguments: [Type.TileID, Type.ZoneX, Type.ZoneY],
 	Implementation: async (instruction: Instruction, engine: Engine, action: Action): Promise<Result> => {
 		// TODO: validate against original implementation
 		const args = instruction.arguments;
