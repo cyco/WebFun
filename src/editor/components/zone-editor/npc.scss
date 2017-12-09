@@ -1,0 +1,55 @@
+@import "border";
+
+wf-zone-editor-npc {
+	display: flex;
+
+	height: 34px;
+	line-height: 34px;
+
+	&:first-child {
+		.title, .text, .tile {
+			border-top-width: 0;
+		}
+	}
+	&:last-child > * {
+		.title, .text, .tile {
+			border-bottom-width: 0;
+		}
+	}
+
+	.tile {
+		@extend .inset-border-1px;
+		@extend .inset-border-inverted;
+		border-left-width: 0;
+
+		width: 34px - 1px;
+		height: 34px;
+		flex-shrink: 0;
+		flex-grow: 0;
+	}
+
+	.text {
+		@extend .inset-border-1px;
+		@extend .inset-border-inverted;
+
+		flex-grow: 1;
+
+		& > *:first-child, & > * + * {
+			margin-left: 10px;
+		}
+
+		.id {
+			display: inline-block;
+			min-width: 20px;
+			text-align: right;
+		}
+
+		.name {
+			max-width: calc(100% - 34px - 10px);
+			max-height: 25px;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			overflow: hidden;
+		}
+	}
+}

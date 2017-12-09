@@ -12,6 +12,7 @@ import ZoneInspectorCell from "./zone-inspector-cell";
 import TilePickerCell from "./tile-picker-cell";
 import {
 	Action as ZoneEditorAction,
+	NPC as ZoneEditorNPC,
 	Sidebar as ZoneEditorSidebar,
 	SidebarCell as ZoneEditorSidebarCell,
 	SidebarLayer as ZoneEditorSidebarLayer,
@@ -33,6 +34,7 @@ export {
 	ZoneEditorSidebarLayerCell,
 	ZoneEditorSidebarCell,
 	ZoneEditorAction,
+	ZoneEditorNPC,
 	ExpandButton,
 	CharacterDetails,
 	CharacterFramePreview,

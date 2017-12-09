@@ -25,6 +25,7 @@ import AbstractDrawingTool from "src/editor/tools/abstract-drawing-tool";
 import { ActionEditor } from "src/editor/components";
 import { ActionDescription } from "src/editor/components/zone-editor/action";
 import NPC from "src/engine/objects/npc";
+import NPCComponent from "src/editor/components/zone-editor/npc";
 
 class Window extends Panel {
 	public static readonly TagName = "wf-zone-editor-window";
@@ -215,8 +216,11 @@ class Window extends Panel {
 	}
 
 	private _buildNPCNode(npc: NPC) {
-		const thing = document.createElement("div");
-		thing.textContent = `Character: ${npc.face.name} @ ${npc.position}`;
+		const thing = <NPCComponent>document.createElement(NPCComponent.TagName);
+		thing.data = this.data.currentData;
+		thing.tileSheet = this.data.tileSheet;
+		thing.npc = npc;
+
 		return thing;
 	}
 
