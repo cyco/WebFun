@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "allowUnreachableCode": true,
-    "module": "commonjs",
+    "moduleResolution": "node",
     "noImplicitAny": true,
     "removeComments": true,
     "preserveConstEnums": true,
@@ -10,7 +10,7 @@
     "inlineSources": true,
     "allowJs": true,
     "target": "es2015",
-    "sourceRoot": "./",
+    "sourceRoot": ".",
     "baseUrl": ".",
     "rootDir": ".",
     "typeRoots": [
