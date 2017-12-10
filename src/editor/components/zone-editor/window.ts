@@ -49,6 +49,7 @@ class Window extends Panel {
 	private _data: DataManager;
 	private _tools: AbstractTool[];
 	private _actionsWindow: WindowComponent;
+	private _removeNPCHandler = (e: CustomEvent) => this._removeNPC(<NPCComponent>e.target);
 
 	constructor() {
 		super();
@@ -220,8 +221,17 @@ class Window extends Panel {
 		const list = <List<NPC>>document.createElement(List.TagName);
 		list.classList.add("wf-zone-editor-npc-list");
 		list.cell = <NPCComponent>document.createElement(NPCComponent.TagName);
+		list.addEventListener(NPCComponent.Events.RequestRemoval, this._removeNPCHandler);
 
 		return list;
+	}
+
+	private _removeNPC(component: NPCComponent): void {
+		const allNPCNodes = Array.from(component.parentElement.childNodes);
+		const index = allNPCNodes.indexOf(component);
+
+		this._zone.npcs.splice(index, 1);
+		this._npcs.items = this._zone.npcs;
 	}
 
 	get zone() {

@@ -1,11 +1,16 @@
 import "./npc.scss";
-import Component from "src/ui/component";
-import NPC from "src/engine/objects/npc";
+import { Component } from "src/ui";
+import { NPC } from "src/engine/objects";
 import GameData from "src/engine/game-data";
 import CSSTileSheet from "src/editor/css-tile-sheet";
-import Cell from "src/ui/components/cell";
+import { Cell } from "src/ui/components";
+
+export const Events = {
+	RequestRemoval: 'RequestRemoval'
+};
 
 class NPCComponent extends Cell<NPC> {
+	public static readonly Events = Events;
 	public static readonly TagName = "wf-zone-editor-npc";
 	public gameData: GameData;
 	public tileSheet: CSSTileSheet;
@@ -15,6 +20,7 @@ class NPCComponent extends Cell<NPC> {
 	private _position: HTMLElement;
 	private _tile: HTMLElement;
 	private _text: HTMLElement;
+	private _remove: HTMLElement;
 
 	constructor() {
 		super();
@@ -32,6 +38,15 @@ class NPCComponent extends Cell<NPC> {
 		this._position = document.createElement("div");
 		this._position.classList.add("position");
 		this._text.appendChild(this._position);
+
+		this._remove = document.createElement('i');
+		this._remove.classList.add('fa');
+		this._remove.classList.add('fa-remove');
+		this._remove.onclick = () => {
+			const event = new CustomEvent(Events.RequestRemoval, { bubbles: true });
+			this.dispatchEvent(event);
+		}
+		this._text.appendChild(this._remove);
 	}
 
 	connectedCallback() {
