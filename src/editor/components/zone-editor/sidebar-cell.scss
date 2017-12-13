@@ -1,22 +1,23 @@
 @import "border";
-
 $header-height: 25px;
 
 wf-zone-editor-sidebar-cell {
 	@extend .inset-border-1px;
 	@extend .inset-border-inverted;
 	border-left-width: 0;
+
 	&:first-child {
 		border-top-width: 0;
 	}
-
 	flex-shrink: 0;
+
 	header {
 		height: $header-height;
 		padding: 4px 2px 4px 4px;
 		line-height: 14px;
 
-		wf-editor-expand-button {
+		wf-editor-expand-button,
+		wf-icon-button {
 			float: right;
 		}
 	}

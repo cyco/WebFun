@@ -1,5 +1,6 @@
 import Component from "src/ui/component";
 import ExpandButton from "src/editor/components/expand-button";
+import { IconButton } from 'src/ui/components';
 import "./sidebar-cell.scss";
 
 class SidebarCell extends Component {
@@ -9,7 +10,7 @@ class SidebarCell extends Component {
 	public content: void;
 	protected _header: HTMLElement;
 	protected _expandButton: ExpandButton;
-	protected _newButton: HTMLElement;
+	protected _newButton: IconButton;
 	private _newItemCallback: () => void;
 
 	constructor() {
@@ -18,16 +19,16 @@ class SidebarCell extends Component {
 		this._header = document.createElement("header");
 		this._header.appendChild(document.createElement("span"));
 
-		this._newButton = document.createElement("i");
-		this._newButton.classList.add("fa");
-		this._newButton.classList.add("fa-plus-circle");
-		this._newButton.onclick = () => this.newItemCallback();
-		this._header.appendChild(this._newButton);
-
 		this._expandButton = <ExpandButton>document.createElement(ExpandButton.TagName);
 		this._expandButton.element = this;
 		this._expandButton.ontoggle = () => this._state.store("expanded", this.classList.contains("expanded"));
 		this._header.appendChild(this._expandButton);
+
+		this._newButton = <IconButton>document.createElement(IconButton.TagName);
+		this._newButton.icon = 'plus-circle';
+		this._newButton.style.display = 'none';
+		this._newButton.onclick = () => this.newItemCallback();
+		this._header.appendChild(this._newButton);
 	}
 
 	connectedCallback() {

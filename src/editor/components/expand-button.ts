@@ -1,17 +1,17 @@
-import Component from "src/ui/component";
+import { IconButton } from "src/ui/components";
 import "./expand-button.scss";
 
-class ExpandButton extends Component {
+class ExpandButton extends IconButton {
 	public static readonly TagName = "wf-editor-expand-button";
 	public onexpand: () => void = () => null;
 	public oncollapse: () => void = () => null;
 	public ontoggle: () => void = () => null;
 	public element: HTMLElement = null;
 
-	connectedCallback() {
-		this.classList.add("fa");
-		this.classList.add("fa-chevron-right");
+	constructor() {
+		super();
 
+		this.icon = "chevron-right";
 		this.onclick = () => this.toggle();
 	}
 
