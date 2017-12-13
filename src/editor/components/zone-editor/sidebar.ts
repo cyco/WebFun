@@ -6,7 +6,7 @@ class Sidebar extends Component {
 	static readonly TagName = "wf-zone-editor-sidebar";
 	private _state: Storage;
 
-	addEntry(node: HTMLElement|HTMLElement[], name: string): SidebarCell {
+	addEntry(node: HTMLElement|HTMLElement[], name: string, newItemCallback?: () => void): SidebarCell {
 		const cell = <SidebarCell>document.createElement(SidebarCell.TagName);
 		cell.name = name;
 
@@ -15,6 +15,8 @@ class Sidebar extends Component {
 		if (node instanceof HTMLElement) {
 			cell.appendChild(node);
 		} else node.forEach(node => cell.appendChild(node));
+
+		if (newItemCallback) cell.newItemCallback = newItemCallback;
 
 		this.appendChild(cell);
 		return cell;

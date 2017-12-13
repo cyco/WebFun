@@ -24,7 +24,10 @@ import DataManager from "src/editor/data-manager";
 import AbstractDrawingTool from "src/editor/tools/abstract-drawing-tool";
 import { ActionEditor } from "src/editor/components";
 import { ActionDescription } from "src/editor/components/zone-editor/action";
-import NPC from "src/engine/objects/npc";
+import { NPC } from "src/engine/objects";
+import { MutableNPC } from "src/engine/mutable-objects";
+import { Point } from "src/util";
+
 import NPCComponent from "src/editor/components/zone-editor/npc";
 import List from "src/ui/components/list";
 
@@ -103,7 +106,7 @@ class Window extends Panel {
 		this._puzzleNPCs = document.createElement("div");
 		this._puzzleNPCsCell = this._sidebar.addEntry(this._puzzleNPCs, "NPCs");
 		this._npcs = this._buildNPCList();
-		this._npcsCell = this._sidebar.addEntry(this._npcs, "Enemies");
+		this._npcsCell = this._sidebar.addEntry(this._npcs, "Enemies", () => this._addNPC());
 
 		this._editor.activateTool(this._tools[0]);
 		this._tilePicker.currentTile = null;
@@ -174,7 +177,6 @@ class Window extends Panel {
 		zone.puzzleNPCs.forEach(npc => this._puzzleNPCs.appendChild(this._buildTileNode(npc)));
 		this._puzzleNPCsCell.style.display = zone.puzzleNPCs.length ? "" : "none";
 		this._npcs.items = zone.npcs;
-		this._npcsCell.style.display = zone.npcs.length ? "" : "none";
 
 		this._zone = zone;
 		this._editor.zone = zone;
@@ -231,6 +233,14 @@ class Window extends Panel {
 		const index = allNPCNodes.indexOf(component);
 
 		this._zone.npcs.splice(index, 1);
+		this._npcs.items = this._zone.npcs;
+	}
+
+	private _addNPC(): void {
+		const npc = new MutableNPC();
+		npc.position = new Point(0, 0);
+		npc.character = this.data.currentData.characters.find(c => c.isEnemy());
+		this.zone.npcs.push(npc);
 		this._npcs.items = this._zone.npcs;
 	}
 
