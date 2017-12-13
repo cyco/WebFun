@@ -1,7 +1,8 @@
+@import "src/ui/components/icon-button";
+
 wf-editor-expand-button {
-	display: inline-block;
-	padding: 3px;
-	font-size: 12px !important;
+	@extend wf-icon-button;
+	
 	transition: transform 0.25s ease;
 }
 
