@@ -6,6 +6,7 @@ import SaveState from "./save-state";
 import World from "./world";
 import WorldItem from "./world-item";
 import { MutableZone } from "src/engine/mutable-objects";
+import MutableNPC from "src/engine/mutable-objects/mutable-npc";
 
 class Reader {
 	_data: GameData;
@@ -130,7 +131,7 @@ class Reader {
 		if (visited) {
 			const npcCount = stream.getUint32();
 			console.assert(npcCount === zone.npcs.length, "NPC counts must be equal!");
-			zone.npcs.forEach((npc: NPC) => this._readNPC(npc, stream));
+			zone.npcs.forEach((npc: NPC) => this._readNPC(<MutableNPC>npc, stream));
 
 			const actionCount = stream.getUint32();
 			console.assert(actionCount === zone.actions.length, "Action counts must be equal!");
@@ -138,13 +139,14 @@ class Reader {
 		}
 	}
 
-	_readNPC(npc: NPC, stream: InputStream): void {
+	_readNPC(npc: MutableNPC, stream: InputStream): void {
 		const characterId = stream.getInt16();
-		npc._character = this._data.characters[characterId];
-		npc.position.x = stream.getInt16();
-		npc.position.y = stream.getInt16();
+		npc.character = this._data.characters[characterId];
+		const x = stream.getInt16();
+		const y = stream.getInt16();
+		npc.position = new Point(x, y);
 		stream.getInt16(); // field_A
-		npc._enabled = !!stream.getUint32();
+		npc.enabled = !!stream.getUint32();
 		stream.getInt16(); // field_10
 		stream.getInt16(); // y__
 		stream.getInt16(); // x__
