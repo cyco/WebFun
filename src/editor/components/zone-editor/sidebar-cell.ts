@@ -9,12 +9,21 @@ class SidebarCell extends Component {
 	public content: void;
 	protected _header: HTMLElement;
 	protected _expandButton: ExpandButton;
+	protected _newButton: HTMLElement;
+	private _newItemCallback: () => void;
 
 	constructor() {
 		super();
 
 		this._header = document.createElement("header");
 		this._header.appendChild(document.createElement("span"));
+
+		this._newButton = document.createElement("i");
+		this._newButton.classList.add("fa");
+		this._newButton.classList.add("fa-plus-circle");
+		this._newButton.onclick = () => this.newItemCallback();
+		this._header.appendChild(this._newButton);
+
 		this._expandButton = <ExpandButton>document.createElement(ExpandButton.TagName);
 		this._expandButton.element = this;
 		this._expandButton.ontoggle = () => this._state.store("expanded", this.classList.contains("expanded"));
@@ -54,6 +63,15 @@ class SidebarCell extends Component {
 	clear() {
 		this.textContent = "";
 		this.appendChild(this._header);
+	}
+
+	set newItemCallback(thing) {
+		this._newItemCallback = thing;
+		this._newButton.style.display = thing ? "" : "none";
+	}
+
+	get newItemCallback() {
+		return this._newItemCallback;
 	}
 }
 
