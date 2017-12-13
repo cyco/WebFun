@@ -15,10 +15,17 @@ import {
 	ZoneType
 } from "./objects";
 
-import { MutableAction, MutableChar, MutablePuzzle, MutableTile, MutableZone } from "src/engine/mutable-objects";
+import {
+	MutableNPC,
+	MutableAction,
+	MutableChar,
+	MutablePuzzle,
+	MutableTile,
+	MutableZone
+} from "src/engine/mutable-objects";
 
 import { Planet } from "./types";
-import { Size } from "src/util";
+import { Size, Point } from "src/util";
 import CharType from "src/engine/objects/char-type";
 
 declare interface RawGameData {
@@ -57,7 +64,7 @@ class GameData {
 
 		this._zones = [];
 		this._getCategory("ZONE").zones
-			.map((data: any, index: number) => this._makeZone(data)).forEach((z: Zone) => this._zones.push(z));
+			.map((data: any) => this._makeZone(data)).forEach((z: Zone) => this._zones.push(z));
 
 		this._getCategory("CAUX").auxiliaries
 			.filter(({index}: {index: number}) => index !== -1)
@@ -127,7 +134,7 @@ class GameData {
 		zone.type = ZoneType.fromNumber(data.type);
 		zone.tileIDs = data.tileIds;
 		zone.hotspots = data.hotspots.map((d: any) => this._makeHotspot(d));
-		zone.npcs = data.izax.npcs.map((d: any) => this._makeNPC(d));
+		zone.npcs = data.izax.npcs.map((d: any, idx: number) => this._makeNPC(d, idx));
 		zone.goalItems = data.izax.goalItems.map((id: number) => this._tiles[id]);
 		zone.requiredItems = data.izax.requiredItems.map((id: number) => this._tiles[id]);
 		zone.providedItems = data.izx2.providedItems.map((id: number) => this._tiles[id]);
@@ -206,11 +213,17 @@ class GameData {
 		return char;
 	}
 
-	private _makeNPC(npc: any) {
-		const data = Object.assign({}, npc);
-		data.face = this._characters[data.face];
+	private _makeNPC(data: any, idx: number) {
+		const npc = new MutableNPC();
+		npc.id = idx;
+		npc.character = this._characters[data.face];
+		npc.enabled = data.enabled;
+		npc.position = new Point(data.x, data.y);
+		npc.unknown1 = data.unknown1;
+		npc.unknown2 = data.unknown2;
+		npc.data = data.unknown3;
 
-		return new NPC(data);
+		return npc;
 	}
 
 	get version(): number {

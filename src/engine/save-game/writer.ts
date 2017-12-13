@@ -126,7 +126,7 @@ class Writer {
 		stream.writeInt16(npc.position.x);
 		stream.writeInt16(npc.position.y);
 		stream.writeInt16(0); // TODO: field_A
-		stream.writeUint32(+npc._enabled);
+		stream.writeUint32(+npc.enabled);
 		stream.writeInt16(0); // TODO: field_10
 		stream.writeInt16(0); // TODO: y__
 		stream.writeInt16(0); // TODO: x__
