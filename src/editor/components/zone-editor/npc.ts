@@ -4,9 +4,8 @@ import { NPC } from "src/engine/objects";
 import { MutableNPC } from 'src/engine/mutable-objects';
 import GameData from "src/engine/game-data";
 import CSSTileSheet from "src/editor/css-tile-sheet";
-import { Cell, Label } from "src/ui/components";
+import { Cell, Label, Selector } from "src/ui/components";
 import { Point } from 'src/util';
-
 
 export const Events = {
 	RequestRemoval: 'RequestRemoval'
@@ -19,7 +18,7 @@ class NPCComponent extends Cell<NPC> {
 	public tileSheet: CSSTileSheet;
 	public _npc: NPC;
 
-	private _name: HTMLElement;
+	private _name: Selector;
 	private _position: HTMLElement;
 	private _tile: HTMLElement;
 	private _text: HTMLElement;
@@ -34,8 +33,14 @@ class NPCComponent extends Cell<NPC> {
 		this._text = document.createElement("div");
 		this._text.classList.add("text");
 
-		this._name = document.createElement("div");
+		this._name = <Selector>document.createElement(Selector.TagName);
 		this._name.classList.add("name");
+		this._name.onchange = () => {
+			const mutableNPC = <MutableNPC>this._npc;
+			mutableNPC.character = this.gameData.characters[+this._name.value];
+			this._updateTilePreview();
+		}
+		this._name.borderless = true;
 		this._text.appendChild(this._name);
 
 		this._position = document.createElement(Label.TagName);
@@ -44,7 +49,7 @@ class NPCComponent extends Cell<NPC> {
 			const [rawX, rawY] = this._position.innerText.split('x');
 			const mutableNPC = <MutableNPC>this._npc;
 			mutableNPC.position = new Point(parseInt(rawX), parseInt(rawY));
-			this._position.textContent = `${mutableNPC.position.x}x${mutableNPC.position.y}`;
+			this._updatePositionContents();
 		}
 		this._text.appendChild(this._position);
 
@@ -71,15 +76,29 @@ class NPCComponent extends Cell<NPC> {
 	}
 
 	public set data(npc: NPC) {
-		const char = npc.face;
-		this._name.textContent = char.name;
+		this._setupNameSelector();
 
+		this._npc = npc;
+
+		this._updateTilePreview();
+		this._updatePositionContents();
+	}
+
+	private _updatePositionContents() {
+		this._position.textContent = `${this._npc.position.x}x${this._npc.position.y}`;
+	}
+
+	private _updateTilePreview() {
+		const char = this._npc.face;
 		const frame = char.frames[0];
 		const tile = frame.extensionRight || frame.down;
 		this._tile.className = `tile ${this.tileSheet.cssClassNameForTile(tile.id)}`;
+		this._name.value = `${char.id}`;
+	}
 
-		this._position.textContent = `${npc.position.x}x${npc.position.y}`;
-		this._npc = npc;
+	private _setupNameSelector() {
+		this._name.removeAllOptions();
+		this.gameData.characters.filter(c => c.isEnemy()).forEach(c => this._name.addOption(c.name, `${c.id}`));
 	}
 
 	public get data() {
