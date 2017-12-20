@@ -1,0 +1,13 @@
+wf-selector {
+	display: inline-block;
+
+	&[borderless] select {
+		-webkit-appearance: none;
+		border-radius: 0;
+		border: 0;
+		background: none;
+		padding: 0;
+		margin: 0;
+		display: inline-block;
+	}
+}
