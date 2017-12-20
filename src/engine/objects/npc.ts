@@ -14,7 +14,7 @@ class NPC {
 		this._enabled = true;
 		this._data = Array.Repeat(-1, 0x20);
 		this._unknown1 = 0;
-		this._unknown2 = 0;
+		this._unknown2 = 0; 
 	}
 
 	get id() {
