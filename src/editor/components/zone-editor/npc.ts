@@ -65,7 +65,8 @@ class NPCComponent extends Cell<NPC> {
 		const char = npc.face;
 		this._name.textContent = char.name;
 
-		const tile = char.frames[0].extensionRight;
+		const frame = char.frames[0];
+		const tile = frame.extensionRight || frame.down;
 		this._tile.className = `tile ${this.tileSheet.cssClassNameForTile(tile.id)}`;
 
 		this._position.textContent = `${npc.position.x}x${npc.position.y}`;
