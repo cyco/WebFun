@@ -103,9 +103,9 @@ class GameDataSerializer {
 				stream.writeUint16(npc.face.id);
 				stream.writeUint16(npc.position.x);
 				stream.writeUint16(npc.position.y);
-				stream.writeUint16(npc.unknown1);
-				stream.writeUint32(npc.unknown2);
-				stream.writeUint8Array(npc.unknown3);
+				stream.writeInt16(npc.unknown1);
+				stream.writeInt32(npc.unknown2);
+				stream.writeInt8Array(npc.unknown3);
 			});
 
 			stream.writeUint16(zone.requiredItems.length);

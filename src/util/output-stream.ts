@@ -68,25 +68,31 @@ class OutputStream extends Stream {
 		this.writeUint8(0);
 	}
 
-	writeUint8Array(array: number[]|Uint8Array): void {
+	writeUint8Array(array: number[] | Uint8Array): void {
 		for (let i = 0, len = array.length; i < len; i++) {
 			this.writeUint8(array[i]);
 		}
 	}
 
-	writeUint16Array(array: number[]|Uint16Array|Int16Array): void {
+	writeInt8Array(array: number[] | Int8Array): void {
+		for (let i = 0, len = array.length; i < len; i++) {
+			this.writeInt8(array[i]);
+		}
+	}
+
+	writeUint16Array(array: number[] | Uint16Array | Int16Array): void {
 		for (let i = 0, len = array.length; i < len; i++) {
 			this.writeUint16(array[i]);
 		}
 	}
 
-	writeInt16Array(array: number[]|Int16Array): void {
+	writeInt16Array(array: number[] | Int16Array): void {
 		for (let i = 0, len = array.length; i < len; i++) {
 			this.writeInt16(array[i]);
 		}
 	}
 
-	writeUint32Array(array: number[]|Uint32Array): void {
+	writeUint32Array(array: number[] | Uint32Array): void {
 		for (let i = 0, len = array.length; i < len; i++) {
 			this.writeUint32(array[i]);
 		}
