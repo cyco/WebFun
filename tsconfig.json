@@ -2,6 +2,7 @@
   "compilerOptions": {
     "allowUnreachableCode": true,
     "moduleResolution": "node",
+    "module": "commonjs",
     "noImplicitAny": true,
     "removeComments": true,
     "preserveConstEnums": true,
