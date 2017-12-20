@@ -121,18 +121,20 @@ types:
         size: text_length
   npc:
     seq:
-      - id: face
+      - id: character
         type: u2
       - id: x
         type: u2
       - id: y
         type: u2
       - id: unknown1
-        type: u2
+        type: s2
       - id: unknown2
-        type: u4
+        type: s4
       - id: unknown3
-        size: 0x20
+        type: s1
+        repeat: expr
+        repeat-expr: 0x20
 
   zone:
     seq:

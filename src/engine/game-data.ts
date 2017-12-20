@@ -46,9 +46,9 @@ class GameData {
 		this._rawInput = raw;
 		this._version = this._getCategory("VERS").version;
 		this._sounds = this._getCategory("SNDS").sounds
-			.map((i: {content: string}) => i.content);
+			.map((i: { content: string }) => i.content);
 		this._tiles = this._getCategory("TILE").tiles
-			.map((t: {attributes: number, pixels: Uint8Array}, i: number) => {
+			.map((t: { attributes: number, pixels: Uint8Array }, i: number) => {
 				const tile = new MutableTile();
 				tile.id = i;
 				tile.attributes = t.attributes;
@@ -56,10 +56,10 @@ class GameData {
 				return tile;
 			});
 		this._puzzles = this._getCategory("PUZ2").puzzles
-			.filter(({index}: {index: number}) => index !== -1)
+			.filter(({ index }: { index: number }) => index !== -1)
 			.map((data: any, index: number) => this._makePuzzle(data, index));
 		this._characters = this._getCategory("CHAR").characters
-			.filter(({index}: {index: number}) => index !== -1)
+			.filter(({ index }: { index: number }) => index !== -1)
 			.map((data: any, index: number) => this._makeCharacter(data, index));
 
 		this._zones = [];
@@ -67,21 +67,21 @@ class GameData {
 			.map((data: any) => this._makeZone(data)).forEach((z: Zone) => this._zones.push(z));
 
 		this._getCategory("CAUX").auxiliaries
-			.filter(({index}: {index: number}) => index !== -1)
-			.forEach(({damage}: {damage: number}, idx: number) => {
+			.filter(({ index }: { index: number }) => index !== -1)
+			.forEach(({ damage }: { damage: number }, idx: number) => {
 				const char = <MutableChar>this._characters[idx];
 				char.damage = damage;
 			});
 
 		this._getCategory("CHWP").weapons
-			.filter(({index}: {index: number}) => index !== -1)
-			.forEach(({reference, health}: {reference: number, health: number}, idx: number) => {
+			.filter(({ index }: { index: number }) => index !== -1)
+			.forEach(({ reference, health }: { reference: number, health: number }, idx: number) => {
 				const char = <MutableChar>this._characters[idx];
 				char.reference = reference;
 				char.health = health;
 			});
 		this._getCategory("TNAM").names
-			.filter(({tileId}: {tileId: number}) => tileId !== -1)
+			.filter(({ tileId }: { tileId: number }) => tileId !== -1)
 			.forEach((nameSpecification: any) => {
 				if (!nameSpecification.name) return;
 
@@ -111,7 +111,7 @@ class GameData {
 		puzzle.unknown2 = data.unknown2;
 		puzzle.unknown3 = data.unknown3;
 
-		puzzle.strings = data.strings.map((s: {content: string}) => s.content);
+		puzzle.strings = data.strings.map((s: { content: string }) => s.content);
 		puzzle.item1 = this._tiles[data.item1] ? this._tiles[data.item1] : null;
 		puzzle.item2 = this._tiles[data.item2] ? this._tiles[data.item2] : null;
 
@@ -216,7 +216,7 @@ class GameData {
 	private _makeNPC(data: any, idx: number) {
 		const npc = new MutableNPC();
 		npc.id = idx;
-		npc.character = this._characters[data.face];
+		npc.character = this._characters[data.character];
 		npc.enabled = data.enabled;
 		npc.position = new Point(data.x, data.y);
 		npc.unknown1 = data.unknown1;

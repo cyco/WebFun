@@ -148,7 +148,7 @@ class Writer {
 		stream.writeInt16(0);
 
 		for (let i = 0; i < 4; i++) {
-			stream.writeUint32(0); // TODO;
+			stream.writeInt32(0); // TODO;
 		}
 	}
 
