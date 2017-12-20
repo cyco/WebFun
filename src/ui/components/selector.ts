@@ -1,10 +1,11 @@
 import Component from "src/ui/component";
+import './selector.scss';
 
 class Selector extends Component {
 	public static readonly TagName = "wf-selector";
 	private element: HTMLSelectElement = document.createElement("select");
 
-	public connectedCallback() {
+	connectedCallback() {
 		super.connectedCallback();
 		this.appendChild(this.element);
 	}
@@ -21,16 +22,33 @@ class Selector extends Component {
 		return this.element.value;
 	}
 
-	addOption(label: string, value: string) {
+	set value(v) {
+		this.element.value = v;
+	}
+
+	public addOption(label: string, value: string) {
 		const option = document.createElement("option");
 		option.append(label || value);
 		option.value = value !== undefined ? value : label;
 		this.element.appendChild(option);
 	}
 
-	removeOption(value: string) {
+	public removeAllOptions() {
+		this.element.textContent = '';
+	}
+
+	public removeOption(value: string) {
 		const option = this.element.querySelector("option[value=" + value + "]");
 		if (option) this.element.removeChild(option);
+	}
+
+	set borderless(flag: boolean) {
+		if (flag) this.setAttribute('borderless', '');
+		else this.removeAttribute('borderless');
+	}
+
+	get borderless() {
+		return this.hasAttribute('borderless');
 	}
 }
 
