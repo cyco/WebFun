@@ -1,9 +1,12 @@
 import "./npc.scss";
 import { Component } from "src/ui";
 import { NPC } from "src/engine/objects";
+import { MutableNPC } from 'src/engine/mutable-objects';
 import GameData from "src/engine/game-data";
 import CSSTileSheet from "src/editor/css-tile-sheet";
-import { Cell } from "src/ui/components";
+import { Cell, Label } from "src/ui/components";
+import { Point } from 'src/util';
+
 
 export const Events = {
 	RequestRemoval: 'RequestRemoval'
@@ -35,8 +38,14 @@ class NPCComponent extends Cell<NPC> {
 		this._name.classList.add("name");
 		this._text.appendChild(this._name);
 
-		this._position = document.createElement("div");
+		this._position = document.createElement(Label.TagName);
 		this._position.classList.add("position");
+		this._position.onchange = (e: Event) => {
+			const [rawX, rawY] = this._position.innerText.split('x');
+			const mutableNPC = <MutableNPC>this._npc;
+			mutableNPC.position = new Point(parseInt(rawX), parseInt(rawY));
+			this._position.textContent = `${mutableNPC.position.x}x${mutableNPC.position.y}`;
+		}
 		this._text.appendChild(this._position);
 
 		this._remove = document.createElement('i');
@@ -70,6 +79,7 @@ class NPCComponent extends Cell<NPC> {
 		this._tile.className = `tile ${this.tileSheet.cssClassNameForTile(tile.id)}`;
 
 		this._position.textContent = `${npc.position.x}x${npc.position.y}`;
+		this._npc = npc;
 	}
 
 	public get data() {
