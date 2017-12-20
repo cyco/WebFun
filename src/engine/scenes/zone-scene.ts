@@ -75,6 +75,13 @@ class ZoneScene extends Scene {
 				else if (Settings.drawHeroTile && (<any>renderer).fillRect instanceof Function) {
 					(<any>renderer).fillRect((hero.location.x + offset.x) * Tile.WIDTH, (hero.location.y + offset.y) * Tile.HEIGHT, Tile.WIDTH, Tile.HEIGHT, rgba(0, 0, 255, 0.3));
 				}
+
+				zone.npcs.forEach(npc => {
+					const tile = npc.face.frames[0].down;
+					if (tile) {
+						renderer.renderTile(tile, npc.position.x + offset.x, npc.position.y + offset.y, z);
+					}
+				});
 			}
 		}
 
@@ -217,7 +224,7 @@ class ZoneScene extends Scene {
 		}
 	}
 
-	_tryTransition(direction: Point): boolean|undefined {
+	_tryTransition(direction: Point): boolean | undefined {
 		const engine = this.engine;
 		const state = engine.state;
 		const hero = engine.hero;
