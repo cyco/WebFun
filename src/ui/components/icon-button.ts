@@ -40,6 +40,7 @@ class IconButton extends Component {
 		if (attributeName === "icon") {
 			this._icon.classList.remove(`fa-${oldValue}`);
 			this._icon.classList.add(`fa-${newValue}`);
+			this._iconName = newValue;
 		}
 	}
 }
