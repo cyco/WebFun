@@ -330,10 +330,10 @@ types:
         size: 16
         if: index != -1
       - id: type
-        type: u2
+        type: s2
         if: index != -1
       - id: movement_type
-        type: u2
+        type: s2
         if: index != -1
       - id: probably_garbage_1
         type: s2

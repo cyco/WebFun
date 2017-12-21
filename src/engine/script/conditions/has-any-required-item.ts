@@ -1,0 +1,16 @@
+import Engine from "../../engine";
+import Zone from "../../objects/zone";
+import { int16, Type } from "../types";
+import Condition from "src/engine/script/condition";
+
+export default <Condition>{
+	Opcode: 0x1e,
+	Arguments: [Type.Number, Type.Number, Type.Number, Type.Number, Type.Number],
+	Description: "Determines if inventory contains any of the required items needed for current zone",
+	Implementation: async (args: int16[], zone: Zone, engine: Engine): Promise<boolean> => {
+		const worldPosition = engine.currentWorld.locationOfZone(zone);
+		const {requiredItem, additionalRequiredItem} = engine.currentWorld.at(worldPosition);
+
+		return engine.inventory.contains(requiredItem) || engine.inventory.contains(additionalRequiredItem);
+	}
+};
