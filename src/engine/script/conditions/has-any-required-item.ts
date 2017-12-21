@@ -5,7 +5,7 @@ import Condition from "src/engine/script/condition";
 
 export default <Condition>{
 	Opcode: 0x1e,
-	Arguments: [Type.Number, Type.Number, Type.Number, Type.Number, Type.Number],
+	Arguments: [],
 	Description: "Determines if inventory contains any of the required items needed for current zone",
 	Implementation: async (args: int16[], zone: Zone, engine: Engine): Promise<boolean> => {
 		const worldPosition = engine.currentWorld.locationOfZone(zone);
