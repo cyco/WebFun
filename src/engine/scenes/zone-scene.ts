@@ -1,5 +1,5 @@
 import Camera from "src/engine/camera";
-import { HotspotType, Tile, Zone } from "src/engine/objects";
+import { HotspotType, Tile, Zone, NPC, CharMovementType } from "src/engine/objects";
 import Settings from "src/settings";
 import { Direction, Logger, Point, rgba } from "src/util";
 import Hotspot from "../objects/hotspot";
@@ -39,6 +39,8 @@ class ZoneScene extends Scene {
 
 		let stop = await engine.scriptExecutor.continueActions(engine);
 		if (stop) return;
+
+		this._moveNPCs();
 
 		await this._handleMouse();
 
@@ -289,6 +291,22 @@ class ZoneScene extends Scene {
 		engine.sceneManager.pushScene(transitionScene);
 
 		return true;
+	}
+
+	private _moveNPCs() {
+		this._zone.npcs.forEach(npc => this._moveNPC(npc));
+	}
+
+	private _moveNPC(npc: NPC) {
+		const char = npc.face;
+		const hero = this.engine.hero.location;
+		const position = npc.position;
+		switch (char.movementType) {
+			case CharMovementType.Sit:
+				let direction = new Point(hero.x - npc.position.x, hero.y - npc.position.y);
+				break;
+			default: break;
+		}
 	}
 
 	prepareCamera() {

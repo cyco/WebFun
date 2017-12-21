@@ -17,7 +17,7 @@ class World {
 		this._items = items;
 	}
 
-	getZone(x: number|PointLike, y?: number): Zone {
+	getZone(x: number | PointLike, y?: number): Zone {
 		console.assert(!!this.zones, "Data has not been set");
 
 		if (typeof x === "object") {
@@ -63,7 +63,7 @@ class World {
 		return zone.leadsTo(needleZone, this.zones);
 	}
 
-	public at(x: number, y?: number): WorldItem {
+	public at(x: number | PointLike, y?: number): WorldItem {
 		return this._items[this._pointToIndex(x, y)];
 	}
 
@@ -75,8 +75,12 @@ class World {
 		this.zones.filter(identity).forEach(zone => zone.layDownHotspotItems());
 	}
 
-	private _pointToIndex(x: number, y: number) {
-		return y * World.WIDTH + x;
+	private _pointToIndex(x: number | PointLike, y?: number) {
+		if (typeof x === 'number') {
+			return y * World.WIDTH + x;
+		}
+
+		return x.y * World.WIDTH + x.x;
 	}
 }
 
