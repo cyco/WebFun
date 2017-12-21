@@ -45,13 +45,34 @@ class CharacterInspector extends AbstractInspector {
 		this._list.items = this.data.currentData.characters;
 	}
 
-	public prepareListSearch(searchValue: string, list: List<Char>): any {
-		return null;
+	prepareListSearch(searchValue: string, list: List<Char>): RegExp[] {
+		this.stateDidChange();
+		return searchValue.split(" ").map(s => new RegExp(s, "i"));
 	}
 
-	public includeListItem(searchValue: any, item: Char, cell: CharacterInspectorCell, list: List<Char>): boolean {
-		return true;
+	includeListItem(searchValue: RegExp[], item: Char, cell: CharacterInspectorCell, list: List<Char>): boolean {
+		const searchableAttributes = [
+			item.id,
+			item.name,
+			item.movementType.name,
+		];
+
+		if (item.isWeapon()) {
+			const sound = this.data.currentData.sounds[item.reference];
+			if (sound) {
+				searchableAttributes.push(sound);
+			}
+		} else {
+			const weapon = this.data.currentData.characters[item.reference];
+			if (weapon) {
+				searchableAttributes.push(weapon.name);
+			}
+		}
+
+		const string = searchableAttributes.join(" ");
+		return searchValue.every(r => r.test(string));
 	}
+
 }
 
 export default CharacterInspector;
