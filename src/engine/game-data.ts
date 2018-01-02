@@ -219,7 +219,7 @@ class GameData {
 		npc.character = this._characters[data.character];
 		npc.enabled = data.enabled;
 		npc.position = new Point(data.x, data.y);
-		
+
 		return npc;
 	}
 

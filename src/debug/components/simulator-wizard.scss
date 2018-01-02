@@ -1,0 +1,24 @@
+@import "border";
+
+wf-debug-simulator-wizard {
+	height: 250px;
+	display: flex;
+	flex-direction: row;
+
+	wf-list {
+		display: inline-block;
+		@extend .inset-border-1px;
+
+		&:first-child {
+			width: 270px;
+		}
+
+		&:not(:first-child) {
+			width: 34px;
+		}
+	}
+
+	wf-zone-inspector-cell i.fa-search {
+		display: none;
+	}
+}

@@ -167,7 +167,6 @@ class Zone {
 
 	get hasTeleporter() {
 		return this._type === ZoneType.Empty && this.hotspots.withType(HotspotType.Teleporter).length !== 0;
-
 	}
 
 	public get bounds() {

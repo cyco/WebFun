@@ -1,0 +1,94 @@
+import { Component } from 'src/ui';
+import { List, Cell } from 'src/ui/components';
+import { ZoneInspectorCell } from 'src/editor/components';
+import { Zone, Tile } from 'src/engine/objects';
+import DataManager from 'src/editor/data-manager';
+import TileCell from './tile-cell';
+
+import "./simulator-wizard.scss";
+
+class SimulatorWizard extends Component {
+	public static readonly TagName = 'wf-debug-simulator-wizard';
+	public readonly observedAttribtues: string[] = [];
+
+	private _zoneList: List<Zone>;
+	private _requiredItemList: List<Tile>;
+	private _additionallyRequiredItemList: List<Tile>;
+	private _providedItemList: List<Tile>;
+	private _npcList: List<Tile>;
+
+	private _data: DataManager;
+	private _state: Storage;
+
+	constructor() {
+		super();
+		this._state = localStorage.prefixedWith('simulator-wizard');
+
+		this._zoneList = <List<Zone>>document.createElement(List.TagName);
+		const cell = <ZoneInspectorCell>document.createElement(ZoneInspectorCell.TagName);
+		cell.onclick = (e: Event) => this._onCellClicked(<ZoneInspectorCell>e.currentTarget);
+		this._zoneList.cell = cell;
+		this._zoneList.state = this._state.prefixedWith('zone-list');
+
+		this._requiredItemList = this._makeTileList('required-items');
+		this._additionallyRequiredItemList = this._makeTileList('additionally-required-items');
+		this._providedItemList = this._makeTileList('provided-items');
+		this._npcList = this._makeTileList('npc');
+	}
+
+	private _onCellClicked(cell: ZoneInspectorCell) {
+		const selectedCell = this._zoneList.querySelector("[selected]");
+		if (selectedCell) selectedCell.removeAttribute("selected");
+
+		let zone: Zone = null;
+
+		if (cell) {
+			cell.setAttribute("selected", "");
+			zone = cell.data;
+		}
+
+		this._requiredItemList.items = zone ? zone.requiredItems : [];
+		this._npcList.items = zone ? zone.puzzleNPCs : [];
+		this._providedItemList.items = zone ? zone.providedItems : [];
+		this._additionallyRequiredItemList.items = zone ? zone.goalItems : [];
+	}
+
+	private _makeTileList(name: string) {
+		const list = <List<Tile>>document.createElement(List.TagName);
+		list.cell = <TileCell>document.createElement(TileCell.TagName);
+		list.state = this._state.prefixedWith(name + '-list');
+		return list;
+	}
+
+	connectedCallback() {
+		this.appendChild(this._zoneList);
+		this.appendChild(this._requiredItemList);
+		this.appendChild(this._additionallyRequiredItemList);
+		this.appendChild(this._providedItemList);
+		this.appendChild(this._npcList);
+	}
+
+	disconnectedCallback() { }
+
+	set data(d: DataManager) {
+		this._data = d;
+
+		this._assignTileSheet(<ZoneInspectorCell>this._zoneList.cell);
+		this._assignTileSheet(<TileCell>this._providedItemList.cell);
+		this._assignTileSheet(<TileCell>this._npcList.cell);
+		this._assignTileSheet(<TileCell>this._requiredItemList.cell);
+		this._assignTileSheet(<TileCell>this._additionallyRequiredItemList.cell);
+
+		this._zoneList.items = d.currentData.zones;
+	}
+
+	private _assignTileSheet(cell: ZoneInspectorCell | TileCell) {
+		cell.tileSheet = this._data.tileSheet;
+	}
+
+	get data() {
+		return this._data;
+	}
+}
+
+export default SimulatorWizard;
