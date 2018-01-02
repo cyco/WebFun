@@ -109,6 +109,7 @@ class List<T> extends Component {
 
 	private setNeedsRefiltering() {
 		if (this._filterTimeout) return;
+		
 		this._filterTimeout = setTimeout(() => this.refilter(), FILTER_DELAY);
 	}
 

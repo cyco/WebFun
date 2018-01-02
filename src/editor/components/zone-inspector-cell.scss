@@ -1,4 +1,6 @@
 @import "border";
+@import "animation";
+@import "colors";
 
 wf-zone-inspector-cell {
 	display: flex;
@@ -8,7 +10,6 @@ wf-zone-inspector-cell {
 		@extend .inset-border-1px;
 		@extend .inset-border-inverted;
 		border-left-width: 0;
-
 		height: 30px;
 		width: 29px;
 	}
@@ -16,7 +17,6 @@ wf-zone-inspector-cell {
 	.content {
 		@extend .inset-border-1px;
 		@extend .inset-border-inverted;
-
 		height: 30px;
 		flex-grow: 1;
 		line-height: 28px;
@@ -64,14 +64,33 @@ wf-zone-inspector-cell {
 		visibility: visible;
 	}
 
-	&:first-child {
-		.icon, .content {
-			border-top-width: 0;
+	&.inline {
+		&:first-child {
+			.content,
+			.icon {
+				border-top-width: 0;
+			}
+		}
+
+		&:last-child {
+			.content,
+			.icon {
+				border-bottom-width: 0;
+			}
 		}
 	}
-	&:last-child {
-		.icon, .content {
-			border-bottom-width: 0;
+
+	&[selected] {
+		color: $menu-item-selection-text;
+		background-color: $menu-item-selection-background;
+
+		.planet {
+			color: #878787;
+			text-shadow: 0 1px rgba(0, 0, 0, 0.5);
+		}
+
+		.icon {
+			filter: brightness(1.1);
 		}
 	}
 }

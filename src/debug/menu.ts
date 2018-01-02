@@ -15,6 +15,7 @@ import GameController from "src/app/game-controller";
 import WindowManager from "src/ui/window-manager";
 import GameData from "src/engine/game-data";
 import ColorPalette from "src/engine/rendering/color-palette";
+import Simulator from './simulator';
 
 const SettingsItem = (label: string, key: string, settings: typeof Settings) => ({
 	title: label,
@@ -42,7 +43,7 @@ export default (gameController: GameController) => ({
 		...(gameController.settings.editor ? [
 			SettingsAction("Switch to Editor", () => {
 				const editor = <Editor>document.createElement(Editor.TagName);
-				const state = new PrefixedStorage(localStorage, "editor");
+				const state = localStorage.prefixedWith("editor");
 
 				editor.addInspector("tile", new TileInspector(state.prefixedWith("tile")));
 				editor.addInspector("zone", new ZoneInspector(state.prefixedWith("zone")));
@@ -60,6 +61,20 @@ export default (gameController: GameController) => ({
 				}
 
 				WindowManager.defaultManager.showWindow(editor);
-			})] : [])
+			})] : []),
+
+		...[SettingsAction('Simulate Zone', () => {
+			const setupData = (g: GameData, p: ColorPalette) => {
+				const simulator = new Simulator();
+				simulator.data = new DataManager(g, p);
+				simulator.start();
+			}
+
+			if (gameController.isDataLoaded()) {
+				setupData(gameController.data, gameController.palette);
+			} else {
+				gameController.addEventListener(GameController.Event.DidLoadData, (e: CustomEvent) => setupData(e.detail.data, e.detail.palette));
+			}
+		})]
 	]
 });

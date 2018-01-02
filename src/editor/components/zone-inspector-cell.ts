@@ -34,7 +34,7 @@ class ZoneInspectorCell extends Cell<Zone> {
 		revealButton.className = "fa fa-search";
 		revealButton.onclick = (e) => {
 			this.dispatchEvent(new CustomEvent(Events.RevealReferences, {
-				detail: {zone: this.data},
+				detail: { zone: this.data },
 				bubbles: true
 			}));
 			e.preventDefault();
