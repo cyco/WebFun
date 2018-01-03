@@ -27,6 +27,7 @@ class SimulatorWizard extends Component {
 		this._zoneList = <List<Zone>>document.createElement(List.TagName);
 		const cell = <ZoneInspectorCell>document.createElement(ZoneInspectorCell.TagName);
 		cell.onclick = (e: Event) => this._onCellClicked(<ZoneInspectorCell>e.currentTarget);
+		this._zoneList.searchDelegate = this;
 		this._zoneList.cell = cell;
 		this._zoneList.state = this._state.prefixedWith('zone-list');
 
@@ -95,6 +96,22 @@ class SimulatorWizard extends Component {
 
 	get data() {
 		return this._data;
+	}
+
+	prepareListSearch(searchValue: string, list: List<Zone>): RegExp[] {
+		return searchValue.split(" ").map(s => new RegExp(s, "i"));
+	}
+
+	includeListItem(searchValue: RegExp[], item: Zone, cell: ZoneInspectorCell, list: List<Zone>): boolean {
+		const searchableAttributes = [
+			item.id,
+			item.size.width + "x" + item.size.height,
+			item.hasTeleporter ? "Teleporter" : item.type.name,
+			item.planet.name
+		];
+
+		const string = searchableAttributes.join(" ");
+		return searchValue.every(r => r.test(string));
 	}
 }
 
