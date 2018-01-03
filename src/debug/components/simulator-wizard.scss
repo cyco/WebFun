@@ -10,6 +10,10 @@ wf-debug-simulator-wizard {
 		display: inline-block;
 		@extend .inset-border-1px;
 
+		> div {
+			max-height: calc(100% - 2px);
+		}
+
 		&:first-child {
 			width: 270px;
 		}
