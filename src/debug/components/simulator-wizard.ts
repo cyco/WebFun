@@ -1,7 +1,7 @@
 import { Component } from 'src/ui';
 import { List, Cell } from 'src/ui/components';
 import { ZoneInspectorCell } from 'src/editor/components';
-import { Zone, Tile } from 'src/engine/objects';
+import { Zone, Tile, Hotspot, ZoneType } from 'src/engine/objects';
 import DataManager from 'src/editor/data-manager';
 import TileCell from './tile-cell';
 
@@ -47,10 +47,12 @@ class SimulatorWizard extends Component {
 			zone = cell.data;
 		}
 
-		this._requiredItemList.items = zone ? zone.requiredItems : [];
-		this._npcList.items = zone ? zone.puzzleNPCs : [];
-		this._providedItemList.items = zone ? zone.providedItems : [];
-		this._additionallyRequiredItemList.items = zone ? zone.goalItems : [];
+		const collectItems = (key: string, zone: any) => zone[key].slice().concat(zone.doors.map((door: Hotspot) => collectItems(key, this.data.currentData.zones[door.arg])).flatten());
+
+		this._requiredItemList.items = zone ? collectItems('requiredItems', zone) : [];
+		this._npcList.items = zone ? collectItems('puzzleNPCs', zone) : [];
+		this._providedItemList.items = zone ? collectItems('providedItems', zone) : [];
+		this._additionallyRequiredItemList.items = zone ? collectItems('goalItems', zone) : [];
 	}
 
 	private _makeTileList(name: string) {
@@ -79,7 +81,12 @@ class SimulatorWizard extends Component {
 		this._assignTileSheet(<TileCell>this._requiredItemList.cell);
 		this._assignTileSheet(<TileCell>this._additionallyRequiredItemList.cell);
 
-		this._zoneList.items = d.currentData.zones;
+		this._zoneList.items = d.currentData.zones.filter(zone => ![
+			ZoneType.Room,
+			ZoneType.Load,
+			ZoneType.Lose,
+			ZoneType.Win
+		].contains(zone.type));
 	}
 
 	private _assignTileSheet(cell: ZoneInspectorCell | TileCell) {
