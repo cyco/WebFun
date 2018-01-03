@@ -1,4 +1,5 @@
 @import "border";
+@import "colors";
 
 wf-debug-tile-cell {
 	@extend .inset-border-1px;
@@ -7,5 +8,14 @@ wf-debug-tile-cell {
 	div {
 		width: 32px;
 		height: 32px;
+	}
+
+	&[selected] {
+		color: $menu-item-selection-text;
+		background-color: $menu-item-selection-background;
+
+		.icon {
+			filter: brightness(1.1);
+		}
 	}
 }

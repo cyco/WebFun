@@ -26,7 +26,7 @@ class SimulatorWizard extends Component {
 
 		this._zoneList = <List<Zone>>document.createElement(List.TagName);
 		const cell = <ZoneInspectorCell>document.createElement(ZoneInspectorCell.TagName);
-		cell.onclick = (e: Event) => this._onCellClicked(<ZoneInspectorCell>e.currentTarget);
+		cell.onclick = (e: Event) => this._onZoneCellClicked(<ZoneInspectorCell>e.currentTarget);
 		this._zoneList.searchDelegate = this;
 		this._zoneList.cell = cell;
 		this._zoneList.state = this._state.prefixedWith('zone-list');
@@ -37,7 +37,7 @@ class SimulatorWizard extends Component {
 		this._npcList = this._makeTileList('npc');
 	}
 
-	private _onCellClicked(cell: ZoneInspectorCell) {
+	private _onZoneCellClicked(cell: ZoneInspectorCell) {
 		const selectedCell = this._zoneList.querySelector("[selected]");
 		if (selectedCell) selectedCell.removeAttribute("selected");
 
@@ -50,17 +50,24 @@ class SimulatorWizard extends Component {
 
 		const collectItems = (key: string, zone: any) => zone[key].slice().concat(zone.doors.map((door: Hotspot) => collectItems(key, this.data.currentData.zones[door.arg])).flatten());
 
-		this._requiredItemList.items = zone ? collectItems('requiredItems', zone) : [];
-		this._npcList.items = zone ? collectItems('puzzleNPCs', zone) : [];
-		this._providedItemList.items = zone ? collectItems('providedItems', zone) : [];
-		this._additionallyRequiredItemList.items = zone ? collectItems('goalItems', zone) : [];
+		this._requiredItemList.items = zone ? collectItems('requiredItems', zone).unique() : [];
+		this._npcList.items = zone ? collectItems('puzzleNPCs', zone).unique() : [];
+		this._providedItemList.items = zone ? collectItems('providedItems', zone).unique() : [];
+		this._additionallyRequiredItemList.items = zone ? collectItems('goalItems', zone).unique() : [];
 	}
 
 	private _makeTileList(name: string) {
 		const list = <List<Tile>>document.createElement(List.TagName);
 		list.cell = <TileCell>document.createElement(TileCell.TagName);
+		list.cell.onclick = (e: MouseEvent) => this._onTileCellClicked(<TileCell>e.currentTarget);
 		list.state = this._state.prefixedWith(name + '-list');
 		return list;
+	}
+
+	private _onTileCellClicked(cell: TileCell) {
+		const list = cell.closest(List.TagName);
+		Array.from(list.querySelectorAll('[selected]')).forEach((c: Element) => c.removeAttribute('selected'));
+		cell.setAttribute("selected", "");
 	}
 
 	connectedCallback() {

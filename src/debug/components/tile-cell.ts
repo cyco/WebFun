@@ -9,6 +9,7 @@ class TileCell extends Cell<Tile> {
 
 	cloneNode(deep?: boolean): TileCell {
 		const clone = <TileCell>super.cloneNode(deep);
+		clone.onclick = this.onclick;
 		clone.tileSheet = this.tileSheet;
 		return clone;
 	}
