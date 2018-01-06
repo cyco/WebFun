@@ -120,6 +120,22 @@ class SimulatorWizard extends Component {
 		const string = searchableAttributes.join(" ");
 		return searchValue.every(r => r.test(string));
 	}
+
+	get chosenSettings() {
+		const zoneCell = <Cell<Zone>>this._zoneList.querySelector('[selected]');
+		const requiredItemCell = <Cell<Tile>>this._requiredItemList.querySelector('[selected]');
+		const providedItemCell = <Cell<Tile>>this._providedItemList.querySelector('[selected]');
+		const additionallyRequiredItemCell = <Cell<Tile>>this._additionallyRequiredItemList.querySelector('[selected]');
+		const puzzleNPCCell = <Cell<Tile>>this._npcList.querySelector('[selected]');
+
+		return {
+			zone: zoneCell ? zoneCell.data : null,
+			requiredItem: requiredItemCell ? requiredItemCell.data : null,
+			providedItem: providedItemCell ? providedItemCell.data : null,
+			additionallyRequiredItem: additionallyRequiredItemCell ? additionallyRequiredItemCell.data : null,
+			puzzleNPC: puzzleNPCCell ? puzzleNPCCell.data : null,
+		};
+	}
 }
 
 export default SimulatorWizard;

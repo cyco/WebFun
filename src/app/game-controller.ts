@@ -8,7 +8,8 @@ import {
 	SaveGameReader,
 	Story,
 	TileSheetCanvasRenderer,
-	WebGLRenderer
+	WebGLRenderer,
+	ColorPalette
 } from "src/engine";
 import { DesktopInputManager } from "src/engine/input";
 import { Char, Zone } from "src/engine/objects";
@@ -36,7 +37,7 @@ class GameController extends EventTarget {
 	private _engine: Engine;
 
 	private _data: GameData;
-	private _palette: Uint8Array;
+	private _palette: ColorPalette;
 
 	constructor() {
 		super();
@@ -68,7 +69,7 @@ class GameController extends EventTarget {
 		return engine;
 	}
 
-	_determineRenderer(): typeof WebGLRenderer|typeof CanvasRenderer|typeof TileSheetCanvasRenderer {
+	_determineRenderer(): typeof WebGLRenderer | typeof CanvasRenderer | typeof TileSheetCanvasRenderer {
 		if (WebGLRenderer.isSupported() && Settings.allowWebGL) {
 			console.log("Using WebGL renderer");
 			return WebGLRenderer;
@@ -83,11 +84,17 @@ class GameController extends EventTarget {
 		return CanvasRenderer;
 	}
 
-	start() {
+	start(data?: GameData, palette?: ColorPalette, story?: Story) {
 		this._window = <MainWindow>document.createElement(MainWindow.TagName);
 		this._window.menu = new MainMenu(this);
 
-		this._load();
+		if (data && palette) {
+			this._data = data;
+			this._palette = palette;
+			this._engine.data = this._data;
+		} else {
+			this._load();
+		}
 
 		if (Settings.debug) {
 			ScriptDebugger.sharedDebugger.engine = this._engine;
@@ -97,6 +104,13 @@ class GameController extends EventTarget {
 
 		if (!this._window.x && !this._window.y) {
 			this._window.center();
+		}
+
+		if (story) {
+			this._engine.inventory.removeAllItems();
+			this._engine.story = story;
+
+			this._showSceneView();
 		}
 	}
 
@@ -108,8 +122,8 @@ class GameController extends EventTarget {
 
 		const loader = new Loader();
 		loader.onfail = (event) => console.log("fail", event);
-		loader.onprogress = ({detail: {progress}}) => loadingView.progress = progress;
-		loader.onloadsetupimage = ({detail: {pixels, palette}}) => loadingView.showImage(pixels, palette);
+		loader.onprogress = ({ detail: { progress } }) => loadingView.progress = progress;
+		loader.onloadsetupimage = ({ detail: { pixels, palette } }) => loadingView.showImage(pixels, palette);
 		loader.onload = (e) => {
 			const details = e.detail as LoaderEventDetails;
 			loadingView.progress = 1.0;
