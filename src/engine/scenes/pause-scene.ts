@@ -11,7 +11,6 @@ class PauseScene extends Scene {
 		const image = new Image();
 		image.width = Tile.WIDTH;
 		image.height = Tile.HEIGHT;
-		image.src = "rsrc/img/pause.gif";
 		this._image = image;
 	}
 
