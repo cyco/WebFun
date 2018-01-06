@@ -2,8 +2,8 @@ import { ConfirmationWindow, Window } from "src/ui/components";
 import WindowModalSession from "../window-modal-session";
 
 export enum Result {
-	Confirmed,
 	Aborted,
+	Confirmed,
 	Other
 }
 

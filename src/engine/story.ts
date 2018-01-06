@@ -7,12 +7,12 @@ import Puzzle from "src/engine/objects/puzzle";
 
 class Story {
 	public goal: Puzzle;
-	private _seed: number;
-	private _planet: Planet;
-	private _size: WorldSize;
-	private _world: World;
-	private _dagobah: World;
-	private _reseeded: boolean;
+	protected _seed: number;
+	protected _planet: Planet;
+	protected _size: WorldSize;
+	protected _world: World;
+	protected _dagobah: World;
+	protected _reseeded: boolean;
 
 	constructor(seed: number, planet: Planet, size: WorldSize) {
 		this._seed = seed;

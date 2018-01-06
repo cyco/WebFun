@@ -30,6 +30,9 @@
       "webfun-additions"
     ]
   },
+  "files": [
+      "src/extension/index.ts"
+  ],
   "include": [
     "src/**/*.ts"
   ],

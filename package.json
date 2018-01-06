@@ -53,7 +53,7 @@
     "dasherize": "^2.0.0",
     "kaitai-struct": "^0.8.0-SNAPSHOT.2",
     "sprintf-js": "^1.1.1",
-    "twgl.js": "^4.2.0"
+    "twgl.js": "^4.4.0"
   },
   "devDependencies": {
     "@types/jasmine": "^2.8.3",
@@ -95,7 +95,7 @@
     "typescript": "^2.6.2",
     "url-loader": "^0.6.2",
     "webpack": "^3.10.0",
-    "webpack-dev-server": "^2.9.7",
+    "webpack-dev-server": "^2.10.0",
     "webpack-glsl-loader": "^1.0.1",
     "webpack-node-externals": "^1.6.0"
   }

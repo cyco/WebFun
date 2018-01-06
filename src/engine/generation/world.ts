@@ -6,7 +6,7 @@ class World {
 	public static readonly WIDTH = 10;
 	public static readonly HEIGHT = 10;
 
-	public zones: Zone[] = null;
+	public zones: Zone[] = [];
 	private _items: WorldItem[];
 
 	constructor() {
