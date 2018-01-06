@@ -23,7 +23,7 @@ describe("Confirm", () => {
 
 		const component = document.querySelector(ConfirmationWindow.TagName);
 		expect(component).not.toBeNull();
-		expect(component.getAttribute("text")).toEqual("Please confirm something!");
+		expect(component.textContent).toContain("Please confirm something!");
 		expect(component.getAttribute("confirm-text")).toEqual("Ok");
 		expect(component.getAttribute("abort-text")).toEqual("Nope!");
 
