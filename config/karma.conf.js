@@ -51,7 +51,8 @@ const config = {
 		}
 	},
 	watch: false,
-	singleRun: true
+	singleRun: true,
+	logLevel: "error"
 };
 
 delete config.webpack.entry;
