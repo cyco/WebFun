@@ -4,7 +4,7 @@ import DataManager from 'src/editor/data-manager';
 import { SimulatorWizard } from './components';
 import { Planet, WorldSize } from 'src/engine/types';
 import { World } from 'src/engine/generation';
-import MutableStory from './mutable-story';
+import SimulatedStory from './simulated-story';
 import GameController from 'src/app/game-controller';
 
 class Simulator {
@@ -44,7 +44,7 @@ class Simulator {
 		item.additionalRequiredItem = additionallyRequiredItem;
 		item.npc = puzzleNPC;
 
-		const story = new MutableStory(0, zone.planet, WorldSize.Small);
+		const story = new SimulatedStory(0, zone.planet, WorldSize.Small);
 		story.world = world;
 		story.world.layDownHotspotItems();
 
