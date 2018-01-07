@@ -18,7 +18,7 @@ import { ScriptExecutor } from "src/engine/script";
 import { Planet, WorldSize } from "src/engine/types";
 import Settings from "src/settings";
 import { FilePicker, WindowManager } from "src/ui";
-import { EventTarget } from "src/util";
+import { EventTarget, Point } from "src/util";
 import { ConfirmationResult, ModalConfirm } from "src/ux";
 import GameState from "../engine/game-state";
 import Loader, { LoaderEventDetails } from "./loader";
@@ -106,7 +106,11 @@ class GameController extends EventTarget {
 			this._engine.inventory.removeAllItems();
 			await story.generateWorld(this._engine);
 			this._engine.story = story;
-			this._showSceneView();
+			this._engine.currentWorld = story.world;
+			this._engine.hero.visible = true;
+			this._engine.state.worldLocation = new Point(5,4);
+			this._showSceneView(story.world.at(5, 4).zone);
+			(<any>window).engine = this._engine;
 		}
 	}
 
@@ -193,16 +197,16 @@ class GameController extends EventTarget {
 		return this._data !== null;
 	}
 
-	_showSceneView() {
+	_showSceneView(zone: Zone = this._engine.data.zones.find(z => z.isLoadingZone())) {
 		const engine = this._engine;
 		engine.metronome.stop();
 		engine.metronome.ontick = (delta: number) => engine.update(delta);
 		engine.metronome.onrender = () => engine.render();
 
-		const loadingZone = engine.data.zones.find((z: Zone) => z.isLoadingZone());
 		const zoneScene = new ZoneScene();
-		zoneScene.zone = loadingZone;
-		engine.currentZone = loadingZone;
+		zoneScene.zone = zone;
+		engine.currentZone = zone;
+		engine.currentWorld = engine.world.locationOfZone(zone) ? engine.world : null;
 		engine.hero.appearance = engine.data.characters.find((c: Char) => c.isHero());
 
 		engine.sceneManager.clear();
