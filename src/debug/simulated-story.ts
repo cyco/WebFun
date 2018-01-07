@@ -2,7 +2,7 @@ import { Story, Engine } from 'src/engine';
 import { World } from 'src/engine/generation';
 import { Tile, Zone } from 'src/engine/objects';
 
-class MutableStory extends Story {
+class SimulatedStory extends Story {
 	generateWorld(engine: Engine): void {
 		const copy = new World();
 
@@ -37,4 +37,4 @@ class MutableStory extends Story {
 	}
 }
 
-export default MutableStory;
+export default SimulatedStory;
