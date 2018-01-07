@@ -26,6 +26,7 @@ class SimulatedStory extends Story {
 		copy.zones = this._world.zones.map(mapZone);
 
 		this._world = copy;
+		this._dagobah = copy;
 	}
 
 	set world(w) {
