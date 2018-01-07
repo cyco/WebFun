@@ -84,17 +84,11 @@ class GameController extends EventTarget {
 		return CanvasRenderer;
 	}
 
-	start(data?: GameData, palette?: ColorPalette, story?: Story) {
+	async start(story?: Story) {
 		this._window = <MainWindow>document.createElement(MainWindow.TagName);
 		this._window.menu = new MainMenu(this);
 
-		if (data && palette) {
-			this._data = data;
-			this._palette = palette;
-			this._engine.data = this._data;
-		} else {
-			this._load();
-		}
+		const loading = this._load();
 
 		if (Settings.debug) {
 			ScriptDebugger.sharedDebugger.engine = this._engine;
@@ -107,38 +101,44 @@ class GameController extends EventTarget {
 		}
 
 		if (story) {
-			this._engine.inventory.removeAllItems();
-			this._engine.story = story;
+			await loading;
 
+			this._engine.inventory.removeAllItems();
+			await story.generateWorld(this._engine);
+			this._engine.story = story;
 			this._showSceneView();
 		}
 	}
 
-	_load() {
-		const loadingView = <LoadingView>document.createElement(LoadingView.TagName);
-		const windowContent = this._window.mainContent;
-		windowContent.clear();
-		windowContent.appendChild(loadingView);
+	_load(): Promise<void> {
+		return new Promise((resolve, reject) => {
+			const loadingView = <LoadingView>document.createElement(LoadingView.TagName);
+			const windowContent = this._window.mainContent;
+			windowContent.clear();
+			windowContent.appendChild(loadingView);
 
-		const loader = new Loader();
-		loader.onfail = (event) => console.log("fail", event);
-		loader.onprogress = ({ detail: { progress } }) => loadingView.progress = progress;
-		loader.onloadsetupimage = ({ detail: { pixels, palette } }) => loadingView.showImage(pixels, palette);
-		loader.onload = (e) => {
-			const details = e.detail as LoaderEventDetails;
-			loadingView.progress = 1.0;
-			this._data = details.data;
-			this._palette = details.palette;
-			this._engine.data = this._data;
+			const loader = new Loader();
+			loader.onfail = (event) => reject(event);
+			loader.onprogress = ({ detail: { progress } }) => loadingView.progress = progress;
+			loader.onloadsetupimage = ({ detail: { pixels, palette } }) => loadingView.showImage(pixels, palette);
+			loader.onload = (e) => {
+				const details = e.detail as LoaderEventDetails;
+				loadingView.progress = 1.0;
+				this._data = details.data;
+				this._palette = details.palette;
+				this._engine.data = this._data;
 
-			this.dispatchEvent(new CustomEvent(Event.DidLoadData, {
-				detail: {
-					data: this._data,
-					palette: this._palette
-				}
-			}));
-		};
-		loader.load(this._engine.imageFactory);
+				this.dispatchEvent(new CustomEvent(Event.DidLoadData, {
+					detail: {
+						data: this._data,
+						palette: this._palette
+					}
+				}));
+
+				resolve();
+			};
+			loader.load(this._engine.imageFactory);
+		});
 	}
 
 	async newStory() {

@@ -49,7 +49,7 @@ class Simulator {
 		story.world.layDownHotspotItems();
 
 		const gameController = new GameController();
-		gameController.start(this._data.currentData, this._data.palette, story);
+		gameController.start(story);
 	}
 
 	private surroundingZoneIDsForPlanet(planet: Planet) {
