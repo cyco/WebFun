@@ -6,6 +6,7 @@ import ScriptExecutor from "./script-executor";
 import { ConditionImplementation, InstructionImplementation, Result, ResultFlags, Type } from "./types";
 import Condition from "./condition";
 import Instruction from "./instruction";
+import EvaluationMode from "./evaluation-mode";
 
 export {
 	Type,
@@ -20,5 +21,6 @@ export {
 	InstructionExecutor,
 	InstructionsByOpcode, InstructionsByName, InstructionImplementations,
 	ConditionsByOpcode, ConditionsByName, ConditionImplementations,
-	ScriptExecutor
+	ScriptExecutor,
+	EvaluationMode
 };
