@@ -8,6 +8,7 @@ import MapScene from "./map-scene";
 import PauseScene from "./pause-scene";
 import Scene from "./scene";
 import TransitionScene from "./transition-scene";
+import {EvaluationMode} from '../script';
 
 const log = Logger.declare("ZoneScene");
 
@@ -37,7 +38,7 @@ class ZoneScene extends Scene {
 		const hero = engine.hero;
 		hero.isWalking = false;
 
-		let stop = await engine.scriptExecutor.continueActions(engine);
+		let stop = await engine.scriptExecutor.continueActions(engine, EvaluationMode.Walk);
 		if (stop) return;
 
 		this._moveNPCs();
@@ -50,7 +51,7 @@ class ZoneScene extends Scene {
 		this._camera.update(ticks);
 		hero.update(ticks);
 
-		await engine.scriptExecutor.runActions(engine);
+		await engine.scriptExecutor.runActions(engine, EvaluationMode.Walk);
 	}
 
 	public render(renderer: AbstractRenderer) {

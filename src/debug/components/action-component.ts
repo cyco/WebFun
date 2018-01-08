@@ -6,6 +6,7 @@ import ConditionComponent from "src/debug/components/condition";
 import InstructionComponent from "src/debug/components/instruction";
 import ConditionChecker from "src/engine/script/condition-checker";
 import { ConditionImplementations } from "src/engine/script/conditions";
+import {EvaluationMode} from "src/engine/script";
 
 class ActionComponent extends Component {
 	public static readonly TagName = "wf-debug-action";
@@ -77,7 +78,7 @@ class ActionComponent extends Component {
 	public evaluateConditions() {
 		const checker = new ConditionChecker(ConditionImplementations, this.engine);
 		Array.from(this.querySelectorAll(ConditionComponent.TagName)).forEach((condition: ConditionComponent) => {
-			if (checker.check(condition.condition)) {
+			if (checker.check(condition.condition, EvaluationMode.Walk)) {
 				condition.setAttribute("truthy", "");
 			} else {
 				condition.removeAttribute("truthy");

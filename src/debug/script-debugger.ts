@@ -6,7 +6,8 @@ import {
 	ConditionStore,
 	InstructionExecutor,
 	InstructionResult,
-	InstructionStore
+	InstructionStore,
+	EvaluationMode
 } from "src/engine/script";
 import { Action, Instruction } from "src/engine/objects";
 import Zone from "src/engine/objects/zone";
@@ -115,7 +116,7 @@ class ScriptDebugger {
 	}
 
 	private _handleConditionCall(opcode: number, args: number[], zone: Zone, engine: Engine): Promise<boolean> {
-		return ConditionImplementations[opcode](args, zone, engine);
+		return ConditionImplementations[opcode](args, zone, engine, EvaluationMode.Walk);
 	}
 
 	private _buildInstructionStore(originalStore: InstructionStore): InstructionStore {
