@@ -1,10 +1,11 @@
 import Engine from "../engine";
 import { Action, Instruction, Zone } from "../objects";
+import EvaluationMode from './evaluation-mode';
 
 type int16 = number;
 type Result = number;
 
-export type ConditionImplementation = (args: int16[], zone: Zone, engine: Engine) => Promise<boolean>;
+export type ConditionImplementation = (args: int16[], zone: Zone, engine: Engine, mode:EvaluationMode) => Promise<boolean>;
 export type InstructionImplementation = (instruction: Instruction, engine: Engine, action: Action) => Promise<Result>;
 
 enum ResultFlags {
@@ -39,5 +40,3 @@ class Type {
 }
 
 export { int16, ResultFlags, Result, Type };
-
-

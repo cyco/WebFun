@@ -1,4 +1,5 @@
 import { ResultFlags } from "src/engine/script/types";
+import EvaluationMode from './evaluation-mode';
 import { Point } from "src/util";
 import Engine from "../engine";
 import Action from "../objects/action";
@@ -20,34 +21,34 @@ class ScriptExecutor {
 		this._executor = e;
 	}
 
-	continueActions(engine: Engine): Promise<Boolean> {
+	continueActions(engine: Engine, mode: EvaluationMode): Promise<Boolean> {
 		this._engine = engine;
 		this._checker.engine = engine;
 		this._executor.engine = engine;
 
 		const previousActions = engine.currentZone.actions.filter(
 			action => action.instructionPointer);
-		return this._evaluateActions(previousActions, false);
+		return this._evaluateActions(previousActions, mode, false);
 	}
 
-	runActions(engine: Engine): Promise<boolean> {
+	runActions(engine: Engine, mode: EvaluationMode): Promise<boolean> {
 		this._engine = engine;
 		this._checker.engine = engine;
 		this._executor.engine = engine;
 
-		return this._evaluateActions(engine.currentZone.actions, true);
+		return this._evaluateActions(engine.currentZone.actions, mode, true);
 	}
 
 	public bump(location: Point) {
 		// TODO: implement?
 	}
 
-	private async _evaluateActions(actions: Action[], check = true): Promise<boolean> {
+	private async _evaluateActions(actions: Action[], mode: EvaluationMode, check = true): Promise<boolean> {
 		const hasActions = actions.length;
 		actions = actions.slice();
 		while (actions.length) {
 			let action = actions.shift();
-			if ((!check || await this.actionDoesApply(action)) && await this.executeInstructions(action))
+			if ((!check || await this.actionDoesApply(action, mode)) && await this.executeInstructions(action))
 				return true;
 		}
 
@@ -61,12 +62,12 @@ class ScriptExecutor {
 		return false;
 	}
 
-	private async actionDoesApply(action: Action): Promise<boolean> {
+	private async actionDoesApply(action: Action, mode: EvaluationMode): Promise<boolean> {
 		if (!action.enabled && action.instructionPointer === 0) return false;
 		if (action.instructionPointer !== 0) return true;
 
 		for (const condition of action.conditions) {
-			if (!(await this._checker.check(condition))) {
+			if (!(await this._checker.check(condition, mode))) {
 				return false;
 			}
 		}
