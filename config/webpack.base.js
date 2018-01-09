@@ -70,5 +70,6 @@ module.exports = {
 			loader: "file-loader",
 			exclude: ["node_modules"]
 		}]
-	}
+	},
+	stats: false
 };
