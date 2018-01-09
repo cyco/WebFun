@@ -109,6 +109,10 @@ if (runAcceptanceTests) {
 	config.webpack.plugins.push(environment);
 }
 
+config.webpack.stats = false;
+config.webpack.devServer.stats = false;
+config.webpackServer = config.webpack.devServer;
+
 module.exports = function (c) {
 	c.set(config);
 };
