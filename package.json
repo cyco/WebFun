@@ -73,6 +73,7 @@
     "css-loader": "^0.28.8",
     "file-loader": "^1.1.6",
     "font-loader": "^0.1.2",
+    "hard-source-webpack-plugin": "^0.5.15",
     "istanbul-instrumenter-loader": "^3.0.0",
     "jasmine-core": "^2.8.0",
     "jsdom": "^11.5.1",
