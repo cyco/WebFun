@@ -18,6 +18,7 @@ yarn-error.log
 /stats.json
 .idea/
 config/.typescript
+config/.hard-source
 tools/*.bin.js
 test/screenshots
 build

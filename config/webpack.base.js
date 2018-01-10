@@ -1,5 +1,6 @@
 const Path = require("path");
 const Paths = require("./paths");
+const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 
 module.exports = {
 	resolve: {
@@ -20,7 +21,12 @@ module.exports = {
 	},
 	cache: true,
 	devtool: "inline-source-map",
-	plugins: [],
+	plugins: [
+		new HardSourceWebpackPlugin({
+			cacheDirectory: Path.resolve(Paths.configRoot, ".hard-source/[confighash]"),
+			recordsPath: Path.resolve(Paths.configRoot, ".hard-source/[confighash]/records.json")
+		})
+	],
 	module: {
 		rules: [{
 			/* JavaScript / Babel */
