@@ -24,11 +24,12 @@ import DataManager from "src/editor/data-manager";
 import AbstractDrawingTool from "src/editor/tools/abstract-drawing-tool";
 import { ActionEditor } from "src/editor/components";
 import { ActionDescription } from "src/editor/components/zone-editor/action";
-import { NPC } from "src/engine/objects";
-import { MutableNPC } from "src/engine/mutable-objects";
+import { NPC, Hotspot } from "src/engine/objects";
+import { MutableNPC, MutableHotspot } from "src/engine/mutable-objects";
 import { Point } from "src/util";
 
 import NPCComponent from "src/editor/components/zone-editor/npc";
+import HotspotComponent from 'src/editor/components/zone-editor/hotspot';
 import List from "src/ui/components/list";
 
 class Window extends Panel {
@@ -53,6 +54,9 @@ class Window extends Panel {
 	private _tools: AbstractTool[];
 	private _actionsWindow: WindowComponent;
 	private _removeNPCHandler = (e: CustomEvent) => this._removeNPC(<NPCComponent>e.target);
+	private _removeHotspotHandler = (e: CustomEvent) => this._removeHotspot(<HotspotComponent>e.target);
+	private _hotspots: List<Hotspot>;
+	private _hotspotsCell: SidebarCell;
 
 	constructor() {
 		super();
@@ -96,6 +100,9 @@ class Window extends Panel {
 			e.preventDefault();
 		});
 		this._sidebar.addEntry(this._tilePicker, "Tiles");
+
+		this._hotspots = this._buildHotspotList();
+		this._hotspotsCell = this._sidebar.addEntry(this._hotspots, "Hotspots");
 
 		this._requiredItems = document.createElement("div");
 		this._requiredItemsCell = this._sidebar.addEntry(this._requiredItems, "Required Items");
@@ -176,7 +183,9 @@ class Window extends Panel {
 		this._puzzleNPCs.textContent = "";
 		zone.puzzleNPCs.forEach(npc => this._puzzleNPCs.appendChild(this._buildTileNode(npc)));
 		this._puzzleNPCsCell.style.display = zone.puzzleNPCs.length ? "" : "none";
+
 		this._npcs.items = zone.npcs;
+		this._hotspots.items = zone.hotspots;
 
 		this._zone = zone;
 		this._editor.zone = zone;
@@ -205,6 +214,12 @@ class Window extends Panel {
 		return node;
 	}
 
+	private _buildHotspotNode(hotspot: Hotspot) {
+		const node = document.createElement("div");
+		node.textContent = `${hotspot.type.name} at ${hotspot.x}x${hotspot.y}`;
+		return node;
+	}
+
 	private _buildToolItem(tool: AbstractTool) {
 		const thing = <ToolComponent>document.createElement(ToolComponent.TagName);
 		thing.tool = tool;
@@ -228,6 +243,16 @@ class Window extends Panel {
 		return list;
 	}
 
+
+	private _buildHotspotList() {
+		const list = <List<Hotspot>>document.createElement(List.TagName);
+		list.classList.add("wf-zone-editor-hotspot-list");
+		list.cell = <HotspotComponent>document.createElement(HotspotComponent.TagName);
+		list.addEventListener(HotspotComponent.Events.RequestRemoval, this._removeHotspotHandler);
+
+		return list;
+	}
+
 	private _removeNPC(component: NPCComponent): void {
 		const allNPCNodes = Array.from(component.parentElement.childNodes);
 		const index = allNPCNodes.indexOf(component);
@@ -244,6 +269,25 @@ class Window extends Panel {
 		this._npcs.items = this._zone.npcs;
 	}
 
+	private _removeHotspot(component: HotspotComponent): void {
+		const allHotspotNodes = Array.from(component.parentElement.childNodes);
+		const index = allHotspotNodes.indexOf(component);
+
+		this._zone.hotspots.splice(index, 1);
+		this._hotspots.items = this.zone.hotspots;
+	}
+
+	private _addHotspot(): void {
+		const hotspot = new MutableHotspot();
+		hotspot.x = 0;
+		hotspot.y = 0;
+		hotspot.type = Hotspot.Type.TriggerLocation;
+
+		this.zone.hotspots.push(hotspot);
+		this._hotspots.items = this._zone.hotspots;
+	}
+
+
 	get zone() {
 		return this._zone;
 	}
@@ -253,7 +297,12 @@ class Window extends Panel {
 		this._editor.tileSheet = d.tileSheet;
 		this._tilePicker.data = this.data;
 
-		const cell = <NPCComponent>this._npcs.cell;
+		let cell;
+		cell = <NPCComponent>this._npcs.cell;
+		cell.gameData = this.data.currentData;
+		cell.tileSheet = this.data.tileSheet;
+
+		cell = <HotspotComponent>this._hotspots.cell;
 		cell.gameData = this.data.currentData;
 		cell.tileSheet = this.data.tileSheet;
 	}
