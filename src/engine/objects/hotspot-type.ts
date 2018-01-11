@@ -16,7 +16,7 @@ class HotspotType {
 	public static readonly xWingFromD = new HotspotType();
 	public static readonly xWingToD = new HotspotType();
 
-	private static readonly knownTypes = [
+	public static readonly knownTypes = [
 		HotspotType.TriggerLocation,
 		HotspotType.SpawnLocation,
 		HotspotType.ForceLocation,
@@ -39,7 +39,7 @@ class HotspotType {
 		return HotspotType.knownTypes.indexOf(this);
 	}
 
-	private get name() {
+	get name() {
 		switch (this) {
 			case HotspotType.TriggerLocation:
 				return "TriggerLocation";

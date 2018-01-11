@@ -20,7 +20,8 @@ import {
 	Tool as ZoneEditorTool,
 	View as ZoneEditorView,
 	Window as ZoneEditorWindow,
-	ZoneLayer
+	ZoneLayer,
+	Hotspot as ZoneEditorHotspot
 } from "./zone-editor";
 import { Editor as ActionEditor, Token as ActionEditorToken } from "./action-editor";
 
@@ -35,6 +36,7 @@ export {
 	ZoneEditorSidebarCell,
 	ZoneEditorAction,
 	ZoneEditorNPC,
+	ZoneEditorHotspot,
 	ExpandButton,
 	CharacterDetails,
 	CharacterFramePreview,
