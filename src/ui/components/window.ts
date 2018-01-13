@@ -2,7 +2,7 @@ import Component from "../component";
 import WindowTitlebar from "./window-titlebar";
 import "./window.scss";
 import Menu from "src/ui/menu";
-import { PointLike } from "src/util";
+import { PointLike, Point } from "src/util";
 import WindowManager from "src/ui/window-manager";
 
 export const Event = {
@@ -37,20 +37,20 @@ class Window extends Component {
 		return parseFloat(this.style.left);
 	}
 
-	set x(x: number) {
-		this._x = x;
+	set origin(p: PointLike) {
+		this._x = p.x;
+		this._y = p.y;
 		this._update();
+	}
+
+	get origin(){
+		return new Point(this._x, this._y);
 	}
 
 	get y(): number {
 		if (!this.isConnected) return this._y;
 
 		return parseFloat(this.style.top);
-	}
-
-	set y(y: number) {
-		this._y = y;
-		this._update();
 	}
 
 	get menu() {
@@ -133,14 +133,15 @@ class Window extends Component {
 		const windowHeight = window.document.documentElement.clientHeight;
 
 		const style = window.getComputedStyle(this);
-		this.x = (windowWidth - parseFloat(style.width)) / 2.0;
-		this.y = (windowHeight - parseFloat(style.height)) / 2.0;
+		this._x = (windowWidth - parseFloat(style.width)) / 2.0;
+		this._y = (windowHeight - parseFloat(style.height)) / 2.0;
+		this._update();
 	}
 
 	public close() {
 		this.remove();
 		this.onclose();
-		this.dispatchEvent(new CustomEvent(Event.DidClose, {bubbles: false}));
+		this.dispatchEvent(new CustomEvent(Event.DidClose, { bubbles: false }));
 	}
 
 	private _update() {
@@ -149,7 +150,7 @@ class Window extends Component {
 		this.style.top = `${this._y | 0}px`;
 		this.style.left = `${this._x | 0}px`;
 
-		localStorage.store(this.stateKey, {x: this._x, y: this._y});
+		localStorage.store(this.stateKey, { x: this._x, y: this._y });
 	}
 
 	set autosaveName(name: string) {

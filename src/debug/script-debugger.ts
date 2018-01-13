@@ -18,6 +18,7 @@ import Settings from "src/settings";
 import { WindowManager } from "src/ui";
 import { ConditionImplementations } from "src/engine/script/conditions";
 import { InstructionImplementations } from "src/engine/script/instructions";
+import {Point} from 'src/util';
 
 class ScriptDebugger {
 	private static _sharedDebugger: ScriptDebugger;
@@ -33,8 +34,7 @@ class ScriptDebugger {
 		this._window = <Window>document.createElement(Window.TagName);
 		this._window.classList.add("script-debugger-window");
 		this._window.title = "Script Debugger";
-		this._window.x = 10;
-		this._window.y = 10;
+		this._window.origin = new Point(10, 10);
 		this._window.autosaveName = "script-debugger";
 		this._window.content.style.minWidth = "200px";
 
