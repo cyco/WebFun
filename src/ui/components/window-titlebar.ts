@@ -98,25 +98,25 @@ class WindowTitlebar extends Component {
 	}
 
 	private _setupDragging(win: Window) {
+		console.log('setup dragging');
 		let dragLocation: Point;
 		const mouseMove = (event: MouseEvent) => {
-			win.x = event.clientX - dragLocation.x;
-			win.y = event.clientY - dragLocation.y;
+			win.origin = new Point(event.clientX - dragLocation.x, event.clientY - dragLocation.y);
 
 			event.preventDefault();
 			event.stopImmediatePropagation();
 		};
 
 		const mouseUp = () => {
-			window.removeEventListener("mouseup", mouseUp);
-			window.removeEventListener("mousemove", mouseMove);
+			document.removeEventListener("mouseup", mouseUp);
+			document.removeEventListener("mousemove", mouseMove);
 		};
 
 		const mouseDown = (event: MouseEvent) => {
 			if (event.target !== this) return;
 			dragLocation = new Point(event.clientX - win.x, event.clientY - win.y);
-			window.addEventListener("mouseup", mouseUp);
-			window.addEventListener("mousemove", mouseMove);
+			document.addEventListener("mouseup", mouseUp);
+			document.addEventListener("mousemove", mouseMove);
 
 			event.preventDefault();
 			event.stopImmediatePropagation();
