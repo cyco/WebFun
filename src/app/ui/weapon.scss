@@ -10,7 +10,7 @@ wf-weapon {
 	width: $tile-size + 2 * $border-size;
 
 	> .background {
-		@extend .full-size;
+		@include fullsize();
 
 		@extend .inset-border-inverted;
 
@@ -20,7 +20,7 @@ wf-weapon {
 	}
 
 	> img {
-		@extend .full-size;
+		@include fullsize();
 
 		position: absolute;
 		width: $tile-size;

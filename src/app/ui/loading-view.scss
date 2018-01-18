@@ -2,13 +2,13 @@
 @import "pixelated";
 
 wf-loading-view {
-	@extend .full-size;
+	@include fullsize();
 
 	position: absolute;
 	background-color: #000000;
 
 	> canvas {
-		@extend .full-size;
+		@include fullsize();
 
 		@extend .pixelated;
 

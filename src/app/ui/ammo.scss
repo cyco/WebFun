@@ -15,8 +15,7 @@ wf-ammo {
 
 	> .background {
 		@extend .inset-border-inverted;
-
-		@extend .full-size;
+		@include fullsize();
 
 		border-width: 1px;
 		width: auto;
