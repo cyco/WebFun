@@ -1,4 +1,5 @@
 @import "colors";
+@import "./window-titlebar";
 
 wf-window {
 	position: absolute;
@@ -14,6 +15,12 @@ wf-window {
 		overflow-y: auto;
 		display: flex;
 		flex-wrap: nowrap;
+		position: relative;
+
+		&.fullsize {
+			height: calc(100% - #{$titlebar-height + 1px});
+			padding: 0;
+		}
 
 		h1 {
 			font-size: 16px;

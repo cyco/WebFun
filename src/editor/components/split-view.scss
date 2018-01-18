@@ -1,0 +1,7 @@
+@import "sizing";
+
+wf-split-view {
+	background-color: darkgray;
+	position: absolute;
+	@include fullsize();
+}

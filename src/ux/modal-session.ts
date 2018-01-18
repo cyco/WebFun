@@ -1,5 +1,6 @@
 import { dispatch, Point } from "src/util";
 import ResetCursor from "./reset-cursor";
+import './modal-session.scss';
 
 class ModalSession {
 	protected _overlay: HTMLDivElement;
@@ -10,10 +11,6 @@ class ModalSession {
 	constructor() {
 		const overlay = document.createElement("div");
 		overlay.classList.add("modal-session");
-		overlay.classList.add("full-size");
-		overlay.style.position = "fixed";
-		overlay.style.zIndex = "1000";
-
 		this._overlay = overlay;
 	}
 

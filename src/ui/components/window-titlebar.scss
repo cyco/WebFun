@@ -1,14 +1,16 @@
 @import "sizing";
 
+$titlebar-height: 27px;
+
 wf-window-titlebar {
 	display: block;
 	right: 0px;
 	width: auto;
-	min-height: 27px;
+	min-height: $titlebar-height;
 	padding-bottom: 1px;
 	border-bottom: solid 1px rgba(0, 0, 0, 0.4);
 	box-shadow: 0px 1px 0px 0px #FFFFFF;
-	line-height: 26px;
+	line-height: $titlebar-height - 1px;
 	white-space: nowrap;
 	margin-bottom: 1px;
 
@@ -60,7 +62,7 @@ wf-window-titlebar {
 		pointer-events: none;
 		position: absolute;
 
-		@extend .full-size;
+		@include fullsize();
 
 		width: auto;
 		text-align: center;
