@@ -12,7 +12,7 @@ BaseConfig.devServer = {
 	publicPath: "/",
 	contentBase: Paths.buildRoot,
 	hot: true,
-	stats: "none"
+	stats: "errors-only"
 };
 
 BaseConfig.plugins.push(new Webpack.NamedModulesPlugin());
