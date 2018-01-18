@@ -23,8 +23,7 @@ wf-puzzle-inspector-cell {
 	}
 
 	& > * {
-		@extend .inset-border-1px;
-		@extend .inset-border-inverted;
+		@include inset-border-inverted(1px);
 
 		display: inline-block;
 		height: $cell-height;
@@ -85,4 +84,3 @@ wf-puzzle-inspector-cell {
 		}
 	}
 }
-

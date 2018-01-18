@@ -7,16 +7,14 @@ wf-zone-inspector-cell {
 	flex-direction: row;
 
 	.icon {
-		@extend .inset-border-1px;
-		@extend .inset-border-inverted;
+		@include inset-border-inverted(1px);
 		border-left-width: 0;
 		height: 30px;
 		width: 29px;
 	}
 
 	.content {
-		@extend .inset-border-1px;
-		@extend .inset-border-inverted;
+		@include inset-border-inverted(1px);
 		height: 30px;
 		flex-grow: 1;
 		line-height: 28px;

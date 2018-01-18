@@ -3,19 +3,16 @@
 @import "variables";
 
 wf-weapon {
-	@extend .inset-border;
+	@include inset-border(2px);
 
 	position: relative;
-	border-width: 2px;
 	width: $tile-size + 2 * $border-size;
 
 	> .background {
 		@include fullsize();
-
-		@extend .inset-border-inverted;
+		@include inset-border-inverted(1px);
 
 		position: absolute;
-		border-width: 1px;
 		margin: 0;
 	}
 

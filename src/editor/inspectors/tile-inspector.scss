@@ -21,8 +21,7 @@
 		background-color: $window-background-color;
 
 		> td, th {
-			@extend .inset-border-1px;
-			@extend .inset-border-inverted;
+			@include inset-border-inverted(1px);
 			&:first-child {
 				border-left-width: 0;
 			}

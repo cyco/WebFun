@@ -2,7 +2,7 @@
 @import "colors";
 
 wf-debug-tile-cell {
-	@extend .inset-border-1px;
+	@include inset-border(1px);
 	display: inline-block;
 
 	div {

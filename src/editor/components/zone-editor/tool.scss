@@ -1,8 +1,7 @@
 @import "border";
 
 wf-zone-editor-tool {
-	@extend .inset-border-1px;
-	@extend .inset-border-inverted;
+	@include inset-border-inverted(1px);
 
 	display: inline-block;
 	text-align: center;
@@ -14,6 +13,6 @@ wf-zone-editor-tool {
 	width: 24px;
 
 	&[active] {
-		@extend .inset-border
+		@include inset-border(1px);
 	}
 }

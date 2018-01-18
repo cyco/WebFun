@@ -14,7 +14,7 @@ wf-zone-editor-window {
 		}
 
 		.action {
-			@extend .inset-border-1px;
+			@include inset-border(1px);
 			display: block;
 		}
 	}

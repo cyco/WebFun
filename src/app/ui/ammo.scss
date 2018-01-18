@@ -3,10 +3,9 @@
 @import "colors";
 
 wf-ammo {
-	@extend .inset-border;
+	@include inset-border(2px);
 
 	position: relative;
-	border-width: 2px;
 	width: 10px + 2 * $border-size;
 
 	> * {
@@ -14,10 +13,9 @@ wf-ammo {
 	}
 
 	> .background {
-		@extend .inset-border-inverted;
+		@include inset-border-inverted(1px);
 		@include fullsize();
 
-		border-width: 1px;
 		width: auto;
 		height: auto;
 	}

@@ -8,7 +8,7 @@ wf-debug-simulator-wizard {
 
 	wf-list {
 		display: inline-block;
-		@extend .inset-border-1px;
+		@include inset-border(1px);
 
 		> div {
 			max-height: calc(100% - 2px);

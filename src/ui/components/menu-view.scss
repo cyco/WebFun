@@ -1,7 +1,7 @@
 @import "border";
 
 wf-menu-view {
-	@extend .inset-border-inverted;
+	@include inset-border-inverted(2px);
 
 	margin: 0px;
 	padding: 0px;

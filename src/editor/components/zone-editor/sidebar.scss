@@ -1,8 +1,7 @@
 @import "border";
 
 wf-zone-editor-sidebar {
-	@extend .inset-border-1px;
-	border-width: 0;
+	@include inset-border(0px);
 	border-right-width: 1px;
 
 	display: flex;

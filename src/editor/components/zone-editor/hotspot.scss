@@ -18,8 +18,7 @@ wf-zone-editor-hotspot {
 	}
 
 	.tile {
-		@extend .inset-border-1px;
-		@extend .inset-border-inverted;
+		@include inset-border-inverted(1px);
 		border-left-width: 0;
 
 		width: 34px - 1px;
@@ -29,8 +28,7 @@ wf-zone-editor-hotspot {
 	}
 
 	.text {
-		@extend .inset-border-1px;
-		@extend .inset-border-inverted;
+		@include inset-border-inverted(1px);
 		border-right-width: 0px;
 
 		flex-grow: 1;
@@ -72,7 +70,7 @@ wf-zone-editor-hotspot {
 }
 
 .wf-zone-editor-npc-list {
-	@extend .inset-border-1px;
+	@include inset-border(1px);
 	border-right-width: 0px;
 	min-height: auto;
 }

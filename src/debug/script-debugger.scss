@@ -12,9 +12,8 @@ wf-window.script-debugger-window {
 	}
 
 	.action-list {
-		@extend .inset-border;
+		@include inset-border(2px);
 
-		border-width: 2px;
 		display: flex;
 		flex-direction: column;
 		max-height: 500px;

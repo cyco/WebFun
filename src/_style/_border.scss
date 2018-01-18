@@ -5,35 +5,17 @@ $border-size: 2px;
 @mixin inset-border($width: 1px) {
 	border-style: solid;
 	border-width: $width;
-
 	border-left-color: $border-dark;
 	border-top-color: $border-dark;
 	border-right-color: $border-light;
 	border-bottom-color: $border-light;
 }
 
-@mixin inset-border-inverted ($width: $border-size){
+@mixin inset-border-inverted ($width: $border-size) {
 	border-style: solid;
 	border-width: $width;
-
 	border-left-color: $border-light;
 	border-top-color: $border-light;
 	border-right-color: $border-dark;
 	border-bottom-color: $border-dark;
-}
-
-.inset-border-inverted {
-	@include inset-border-inverted();
-}
-
-.inset-border {
-	@include inset-border();
-}
-
-.inset-border-1px {
-	@include inset-border(1px);
-}
-
-.inset-border-2px {
-	@include inset-border(2px);
 }

@@ -1,5 +1,6 @@
 @import "colors";
 @import "border";
+@import "sizing";
 
 wf-button {
 	display: block;
@@ -16,14 +17,9 @@ wf-button {
 	background-color: $window-background-color;
 
 	> div {
-		@extend .inset-border-inverted;
+		@include inset-border-inverted(1px);
+		@include fullsize();
 		position: absolute;
-		border-width: 1px;
-
-		left: 0px;
-		right: 0px;
-		top: 0px;
-		bottom: 0px;
 	}
 
 	&.disabled {
@@ -36,8 +32,7 @@ wf-button {
 
 	&:active:not(.disabled) {
 		> div {
-			@extend .inset-border;
-			border-width: 1px;
+			@include inset-border(1px);
 		}
 
 		i {

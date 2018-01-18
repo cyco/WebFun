@@ -1,10 +1,9 @@
 @import "border";
 
 wf-debug-action {
-	@extend .inset-border-inverted;
+	@include inset-border-inverted(1px);
 	white-space: pre;
 
-	border-width: 1px;
 	padding: 5px;
 	font-family: "Anonymous Pro", monospace;
 	font-size: 12px;

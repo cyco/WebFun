@@ -3,7 +3,7 @@
 
 wf-palette-view {
 	display: block;
-	@extend .inset-border-1px;
+	@include inset-border(1px);
 
 	position: relative;
 
