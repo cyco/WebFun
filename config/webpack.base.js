@@ -21,12 +21,7 @@ module.exports = {
 	},
 	cache: true,
 	devtool: "inline-source-map",
-	plugins: [
-		new HardSourceWebpackPlugin({
-			cacheDirectory: Path.resolve(Paths.configRoot, ".hard-source/[confighash]"),
-			recordsPath: Path.resolve(Paths.configRoot, ".hard-source/[confighash]/records.json")
-		})
-	],
+	plugins: [],
 	module: {
 		rules: [{
 			/* JavaScript / Babel */
