@@ -9,8 +9,7 @@ wf-slider {
 	display: block;
 
 	> div.knob {
-		@extend .inset-border-inverted;
-		border-width: 1px;
+		@include inset-border-inverted(1px);
 
 		display: block;
 		position: absolute;

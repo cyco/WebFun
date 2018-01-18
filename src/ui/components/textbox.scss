@@ -1,9 +1,8 @@
 @import "border";
 
 wf-textbox {
-	@extend .inset-border;
-
-	border-width: $border-size;
+	@include inset-border(2px);
+	
 	background: none;
 	outline: none;
 	min-width: 0px;

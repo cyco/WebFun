@@ -7,7 +7,7 @@ wf-main-window {
 	@extend wf-window;
 
 	> .content > .main {
-		@extend .inset-border-2px;
+		@include inset-border(2px);
 
 		position: relative;
 		width: 288px + 2 * 2px;

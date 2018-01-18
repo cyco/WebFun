@@ -38,7 +38,7 @@ wf-color-picker {
 	}
 
 	.preview {
-		@extend .inset-border-1px;
+		@include inset-border(1px);
 
 		display: block;
 		width: 100%;

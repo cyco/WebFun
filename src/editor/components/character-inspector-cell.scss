@@ -20,8 +20,7 @@ wf-character-inspector-cell {
 	}
 
 	.tile {
-		@extend .inset-border-1px;
-		@extend .inset-border-inverted;
+		@include inset-border-inverted(1px);
 		border-left-width: 0;
 
 		width: 34px - 1px;
@@ -31,8 +30,7 @@ wf-character-inspector-cell {
 	}
 
 	.text {
-		@extend .inset-border-1px;
-		@extend .inset-border-inverted;
+		@include inset-border-inverted(1px);
 
 		flex-grow: 1;
 
@@ -66,8 +64,7 @@ wf-character-inspector-cell {
 }
 
 .character-inspector-list {
-	@extend .inset-border-1px;
-	border-width: 0px;
+	@include inset-border(0px);
 	border-right-width: 1px;
 
 	width: 210px;

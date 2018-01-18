@@ -26,11 +26,10 @@ wf-menubar {
 		}
 
 		&.open {
-			@extend .inset-border;
+			@include inset-border(1px);
 
 			cursor: default;
 			padding: 0px 4px 0px 4px;
-			border-width: 1px;
 		}
 
 		.state, .submenu {

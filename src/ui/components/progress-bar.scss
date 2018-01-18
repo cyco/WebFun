@@ -1,11 +1,10 @@
 @import "border";
 
 wf-progress-bar {
-	@extend .inset-border;
+	@include inset-border(1px);
 
 	width: auto;
 	height: 15px;
-	border-width: 1px;
 	padding: 1px;
 	position: absolute;
 	left: 12px;

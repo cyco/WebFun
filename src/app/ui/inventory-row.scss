@@ -9,10 +9,9 @@ wf-inventory-row {
 	flex-grow: 0;
 
 	> span {
-		@extend .inset-border-inverted;
+		@include inset-border-inverted(1px);
 
 		position: relative;
-		border-width: 1px;
 		display: inline-block;
 		height: inherit;
 	}

@@ -3,7 +3,7 @@
 
 wf-zone-editor-sidebar-layer {
 	display: block;
-	@extend .inset-border-1px;
+	@include inset-border(1px);
 
 	padding: 2px;
 
