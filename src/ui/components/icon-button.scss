@@ -1,4 +1,5 @@
 @import "border";
+@import "./button.scss";
 
 wf-icon-button {
 	display: inline-block;
@@ -12,9 +13,5 @@ wf-icon-button {
 
 	&[disabled] {
 		color: rgb(127, 127, 127);
-	}
-
-	&[bordered] {
-		@include inset-border(1px);
 	}
 }

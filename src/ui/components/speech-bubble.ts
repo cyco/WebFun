@@ -1,4 +1,4 @@
-import { IconButton } from "src/ui/components";
+import { Button } from "src/ui/components";
 import { dispatch } from "src/util";
 import "./speech-bubble.scss";
 import Component from "../component";
@@ -26,9 +26,9 @@ class SpeechBubble extends Component {
 	private _width: number = 170;
 	private _arrowWidth: number = 16;
 	private _arrowStyle: number = SpeechBubble.ARROW_STYLE.TOP;
-	private _upButton: IconButton;
-	private _downButton: IconButton;
-	private _endButton: IconButton;
+	private _upButton: Button;
+	private _downButton: Button;
+	private _endButton: Button;
 	private _text = document.createElement("div");
 
 	connectedCallback() {
@@ -82,33 +82,27 @@ class SpeechBubble extends Component {
 		this.style.top = v + "px";
 	}
 
+	private _buildButton(className: string, icon: string, callback: (() => void)): Button {
+		const button = <Button>document.createElement(Button.TagName);
+		button.setAttribute("bordered", '');
+		button.classList.add(className);
+		button.onclick = callback;
+		button.icon = icon;
+		return button;
+	}
+
 	_setupButtons() {
 		const buttonBar = document.createElement("div");
 		buttonBar.classList.add("controls");
 
-		const up = <IconButton>document.createElement(IconButton.TagName);
-		up.setAttribute("bordered", '');
-		up.classList.add("up");
-		up.onclick = () => this.scrollUp();
-		up.icon = "caret-up";
-		buttonBar.appendChild(up);
-		this._upButton = up;
+		this._upButton = this._buildButton('up', 'caret-up', () => this.scrollUp());
+		buttonBar.appendChild(this._upButton);
 
-		const down = <IconButton>document.createElement(IconButton.TagName);
-		down.setAttribute("bordered", '');
-		down.classList.add("down");
-		down.onclick = () => this.scrollDown();
-		down.icon = "caret-down";
-		buttonBar.appendChild(down);
-		this._downButton = down;
+		this._downButton = this._buildButton('down', 'caret-down', () => this.scrollDown());
+		buttonBar.appendChild(this._downButton);
 
-		const end = <IconButton>document.createElement(IconButton.TagName);
-		end.setAttribute("bordered", '');
-		end.classList.add("end");
-		end.onclick = () => this.end();
-		end.icon = "circle";
-		buttonBar.appendChild(end);
-		this._endButton = end;
+		this._endButton = this._buildButton('end', 'circle', () => this.end());
+		buttonBar.appendChild(this._endButton);
 
 		this.appendChild(buttonBar);
 	}
