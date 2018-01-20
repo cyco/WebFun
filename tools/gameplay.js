@@ -16,9 +16,9 @@ const deleteFolderRecursive = function (path) {
 	if (Fs.existsSync(path)) {
 		Fs.readdirSync(path).forEach(function (file, index) {
 			const curPath = path + "/" + file;
-			if (Fs.lstatSync(curPath).isDirectory()) { // recurse
+			if (Fs.lstatSync(curPath).isDirectory()) {
 				deleteFolderRecursive(curPath);
-			} else { // delete file
+			} else {
 				Fs.unlinkSync(curPath);
 			}
 		});
@@ -60,7 +60,7 @@ async function inject(page) {
 	};
 
 	page.game = async () => {
-		await page.waitForSelector(".progress-bar[data-value=\"1\"]");
+		await page.waitForSelector("wf-progress-bar[data-value=\"1\"]");
 
 		await sleep(2300); // wait through fade out
 		await TakeScreenshot(page, "after loading");
@@ -95,7 +95,7 @@ async function start() {
 
 		await page.evaluate(() => localStorage.clear());
 
-		await page.waitForSelector("wf-main-window .progress-bar");
+		await page.waitForSelector("wf-main-window wf-progress-bar");
 		await page.game();
 		const mainWindow = new MainWindow(page);
 		await mainWindow.setup();
