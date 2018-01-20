@@ -25,3 +25,4 @@ build
 game-data/*
 bin
 assets/game-data/full.txt
+todo.md
