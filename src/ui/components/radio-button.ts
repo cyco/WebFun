@@ -32,7 +32,7 @@ class RadioButton extends Component {
 
 	set title(t) {
 		this._label.clear();
-		this._label.append(t);
+		this._label.appendChild(document.createTextNode(t));
 	}
 
 	get checked() {

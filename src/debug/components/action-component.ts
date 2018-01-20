@@ -31,9 +31,9 @@ class ActionComponent extends Component {
 		headline.appendChild(intro);
 		this.appendChild(headline);
 
-		this.append(`(`);
+		this.appendChild(document.createTextNode(`(`));
 		this._append(`and`, "key");
-		this.append(`\t`);
+		this.appendChild(document.createTextNode(`\t`));
 
 		action.conditions.forEach((condition, index) => {
 			const component = <ConditionComponent>document.createElement(ConditionComponent.TagName);
@@ -41,13 +41,13 @@ class ActionComponent extends Component {
 			component.engine = this.engine;
 			component.condition = condition;
 			if (index !== 0) {
-				this.append("\n\t\t");
+				this.appendChild(document.createTextNode("\n\t\t"));
 			}
 			this.appendChild(component);
 		});
 		this._append(")", "paren-close");
-		this.append("\n");
-		this.append(`\t(`);
+		this.appendChild(document.createTextNode("\n"));
+		this.appendChild(document.createTextNode(`\t(`));
 		this._append(`do`, "key");
 
 		action.instructions.forEach((instruction) => {
@@ -55,7 +55,7 @@ class ActionComponent extends Component {
 			component.action = this._action;
 			component.engine = this.engine;
 			component.instruction = instruction;
-			this.append("\n\t\t");
+			this.appendChild(document.createTextNode("\n\t\t"));
 			this.appendChild(component);
 		});
 		this._append(")", "paren-close");
