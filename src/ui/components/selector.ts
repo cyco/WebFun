@@ -28,7 +28,7 @@ class Selector extends Component {
 
 	public addOption(label: string, value: string) {
 		const option = document.createElement("option");
-		option.append(label || value);
+		option.appendChild(document.createTextNode(label || value));
 		option.value = value !== undefined ? value : label;
 		this.element.appendChild(option);
 	}
