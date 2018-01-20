@@ -7,12 +7,6 @@ export const Event = {
 	End: "end"
 };
 
-declare global {
-	interface HTMLElement {
-		append(_: string): void;
-	}
-}
-
 class SpeechBubble extends Component {
 	public static readonly TagName = "wf-speech-bubble";
 	public static readonly Event = Event;
@@ -43,8 +37,6 @@ class SpeechBubble extends Component {
 		this.style.width = this._width + "px";
 		this.style.position = "absolute";
 
-		this.classList.add("speech-bubble");
-
 		const textContainer = document.createElement("div");
 		textContainer.classList.add("text-container");
 
@@ -64,7 +56,7 @@ class SpeechBubble extends Component {
 
 		const lines = t.split("\n");
 		lines.forEach((line) => {
-			this._text.append(line.replace("/\r//", ""));
+			this._text.appendChild(document.createTextNode(line.replace("/\r//", "")));
 			this._text.appendChild(document.createElement("br"));
 		});
 
@@ -95,7 +87,7 @@ class SpeechBubble extends Component {
 		buttonBar.classList.add("controls");
 
 		const up = <IconButton>document.createElement(IconButton.TagName);
-		up.classList.add("bordered");
+		up.setAttribute("bordered", '');
 		up.classList.add("up");
 		up.onclick = () => this.scrollUp();
 		up.icon = "caret-up";
@@ -103,7 +95,7 @@ class SpeechBubble extends Component {
 		this._upButton = up;
 
 		const down = <IconButton>document.createElement(IconButton.TagName);
-		down.classList.add("bordered");
+		down.setAttribute("bordered", '');
 		down.classList.add("down");
 		down.onclick = () => this.scrollDown();
 		down.icon = "caret-down";
@@ -111,7 +103,7 @@ class SpeechBubble extends Component {
 		this._downButton = down;
 
 		const end = <IconButton>document.createElement(IconButton.TagName);
-		end.classList.add("bordered");
+		end.setAttribute("bordered", '');
 		end.classList.add("end");
 		end.onclick = () => this.end();
 		end.icon = "circle";
@@ -214,9 +206,7 @@ class SpeechBubble extends Component {
 		path.push(["A", b, b, 0, 0, 1, left + b, top]);
 		path.push(["Z"]);
 
-		return path.map(([first, ...rest]) => {
-			return first + rest.join(",");
-		}).join(" ");
+		return path.map(([first, ...rest]) => first + rest.join(",")).join(" ");
 	}
 
 	scrollDown() {
