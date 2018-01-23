@@ -18,15 +18,15 @@ wf-button {
 		position: absolute;
 	}
 
-	&.disabled {
+	&[disabled] {
 		color: $disabled-color;
 	}
 
-	&:not(.disabled) i {
+	&:not([disabled]) i {
 		text-shadow: 1px 1px #828282;
 	}
 
-	&:active:not(.disabled) {
+	&:active:not([disabled]) {
 		> div {
 			@include inset-border(1px);
 		}
