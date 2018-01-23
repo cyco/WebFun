@@ -47,9 +47,9 @@ class SpeechScene extends Scene {
 		const windowOffset = this._determineGlobalOffset();
 
 		// TODO: fix posiitoning
-		this._bubble.x = anchor.x * this.tileSize.width + windowOffset.x + 32;
-		this._bubble.y = anchor.y * this.tileSize.height + windowOffset.y + 2 * 32;
-
+		const x = anchor.x * this.tileSize.width + windowOffset.x + 32;
+		const y = anchor.y * this.tileSize.height + windowOffset.y + 2 * 32;
+		this._bubble.origin = new Point(x, y);
 		this._bubble.show();
 	}
 

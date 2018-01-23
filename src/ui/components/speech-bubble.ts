@@ -1,5 +1,5 @@
-import { Button } from "src/ui/components";
-import { dispatch } from "src/util";
+import Button from "./button";
+import { dispatch, Point } from "src/util";
 import "./speech-bubble.scss";
 import Component from "../component";
 
@@ -11,11 +11,11 @@ const FontSize = '11px';
 const LineHeight = '12px';
 const FontFamily = 'Microsoft Sans Serif,sans';
 const Padding = '7px';
+const MaxLineCount = 5;
+const ArrowWidth = 16;
 
 const MODIFIED = 1;
 const enum ArrowStyle {
-
-
 	Top = 1 << 1,
 	Bottom = 1 << 2,
 
@@ -32,11 +32,7 @@ class SpeechBubble extends Component {
 	public static readonly observedAttributes = ["text"];
 
 	public onend: (e: CustomEvent) => void;
-	private _lineHeight: number = 16;
-	private _maxNumberOfLines: number = 5;
-	private _border: number = 5;
 	private _width: number = 170;
-	private _arrowWidth: number = 16;
 	private _arrowStyle: number = ArrowStyle.Top;
 	private _upButton: Button;
 	private _downButton: Button;
@@ -96,20 +92,13 @@ class SpeechBubble extends Component {
 		this._scrollTo(0);
 	}
 
-	get x() {
-		return parseInt(this.style.left);
+	set origin(p: Point) {
+		this.style.left = (p.x - parseInt(this._width + "") / 2) + "px";
+		this.style.top = p.x + "px";
 	}
 
-	set x(v) {
-		this.style.left = (v - parseInt(this._width + "") / 2) + "px";
-	}
-
-	get y() {
-		return parseInt(this.style.top);
-	}
-
-	set y(v) {
-		this.style.top = v + "px";
+	get origin(): Point {
+		return new Point(parseInt(this.style.left), parseInt(this.style.top));
 	}
 
 	private _buildButton(className: string, icon: string, callback: (() => void)): Button {
@@ -140,7 +129,6 @@ class SpeechBubble extends Component {
 
 		const width = this._width;
 		const height = this._calculateHeight();
-		const arrowWidth = this._arrowWidth;
 
 		const ns = "http://www.w3.org/2000/svg";
 		const background = document.createElementNS(ns, "svg");
@@ -154,21 +142,21 @@ class SpeechBubble extends Component {
 		this.insertBefore(background, this.firstChild);
 
 		if (this._arrowStyle & ArrowStyle.Vertical) {
-			this.style.height = height + arrowWidth + "px";
+			this.style.height = height + ArrowWidth + "px";
 			this.style.width = width + "px";
-			background.setAttribute("height", `${height + arrowWidth}`);
+			background.setAttribute("height", `${height + ArrowWidth}`);
 			background.setAttribute("width", "" + width);
 		} else if (this._arrowStyle & ArrowStyle.Horizontal) {
 			this.style.height = height + "px";
-			this.style.width = width + arrowWidth + "px";
+			this.style.width = width + ArrowWidth + "px";
 			background.setAttribute("height", "" + height);
-			background.setAttribute("width", `${width + arrowWidth}`);
+			background.setAttribute("width", `${width + ArrowWidth}`);
 		}
 
-		const leftArrowWidth = (this._arrowStyle & ArrowStyle.Left ? arrowWidth : 0);
-		const rightArrowWidth = (this._arrowStyle & ArrowStyle.Right ? arrowWidth : 0);
-		const topArrowWidth = (this._arrowStyle & ArrowStyle.Top ? arrowWidth : 0);
-		const bottomArrowWidth = (this._arrowStyle & ArrowStyle.Bottom ? arrowWidth : 0);
+		const leftArrowWidth = (this._arrowStyle & ArrowStyle.Left ? ArrowWidth : 0);
+		const rightArrowWidth = (this._arrowStyle & ArrowStyle.Right ? ArrowWidth : 0);
+		const topArrowWidth = (this._arrowStyle & ArrowStyle.Top ? ArrowWidth : 0);
+		const bottomArrowWidth = (this._arrowStyle & ArrowStyle.Bottom ? ArrowWidth : 0);
 
 		const padding = parseInt(Padding);
 		this._text.parentElement.style.left = padding + leftArrowWidth + "px";
@@ -182,11 +170,10 @@ class SpeechBubble extends Component {
 	_buildPath() {
 		const width = this._width;
 		const height = this._calculateHeight();
-		const arrowWidth = this._arrowWidth;
-		const b = this._border;
+		const b = 5;
 
-		const top = this._arrowStyle & ArrowStyle.Top ? 0 + arrowWidth : 0;
-		const left = this._arrowStyle & ArrowStyle.Right ? 0 + arrowWidth : 0;
+		const top = this._arrowStyle & ArrowStyle.Top ? 0 + ArrowWidth : 0;
+		const left = this._arrowStyle & ArrowStyle.Right ? 0 + ArrowWidth : 0;
 		const bottom = top + height;
 		const right = left + width;
 
@@ -195,12 +182,12 @@ class SpeechBubble extends Component {
 		path.push(["M", left + b, top]);
 		if (this._arrowStyle & ArrowStyle.Top) {
 			const arrowLeft = !!(this._arrowStyle & MODIFIED);
-			const arrowStart = (right - left) / 2 - arrowWidth / 2;
-			const arrowTipX = arrowLeft ? arrowStart : arrowStart + arrowWidth;
+			const arrowStart = (right - left) / 2 - ArrowWidth / 2;
+			const arrowTipX = arrowLeft ? arrowStart : arrowStart + ArrowWidth;
 
 			path.push(["L", arrowStart, top]);
-			path.push(["L", arrowTipX, top - arrowWidth]);
-			path.push(["L", arrowStart + arrowWidth, top]);
+			path.push(["L", arrowTipX, top - ArrowWidth]);
+			path.push(["L", arrowStart + ArrowWidth, top]);
 		}
 
 		path.push(["L", right - b, top]);
@@ -208,12 +195,12 @@ class SpeechBubble extends Component {
 		path.push(["L", right, bottom - b]);
 		path.push(["A", b, b, 0, 0, 1, width - b, bottom]);
 		if (this._arrowStyle & ArrowStyle.Bottom) {
-			const arrowStart = (right - left) / 2 - arrowWidth / 2;
+			const arrowStart = (right - left) / 2 - ArrowWidth / 2;
 			const arrowLeft = !!(this._arrowStyle & MODIFIED);
-			const arrowTipX = arrowLeft ? arrowStart : arrowStart + arrowWidth;
+			const arrowTipX = arrowLeft ? arrowStart : arrowStart + ArrowWidth;
 
-			path.push(["L", arrowStart + arrowWidth, height]);
-			path.push(["L", arrowTipX, bottom + arrowWidth]);
+			path.push(["L", arrowStart + ArrowWidth, height]);
+			path.push(["L", arrowTipX, bottom + ArrowWidth]);
 			path.push(["L", arrowStart, bottom]);
 		}
 		path.push(["L", left + b, bottom]);
@@ -225,22 +212,22 @@ class SpeechBubble extends Component {
 		return path.map(([first, ...rest]) => first + rest.join(",")).join(" ");
 	}
 
-	scrollDown() {
+	public scrollDown() {
 		this._scrollBy(1);
 	}
 
-	scrollUp() {
+	public scrollUp() {
 		this._scrollBy(-1);
 	}
 
-	end() {
+	public end() {
 		this.remove();
 		this.dispatchEvent(new CustomEvent(SpeechBubble.Event.End));
 		if (this.onend) this.onend(new CustomEvent(SpeechBubble.Event.End));
 	}
 
-	show() {
-		document.body.appendChild(this);
+	public show(container: HTMLElement = document.body) {
+		container.appendChild(this);
 	}
 
 	private _scrollBy(l: number): void {
@@ -251,7 +238,7 @@ class SpeechBubble extends Component {
 	private _scrollTo(line: number = 0) {
 		const totalLineCount = this._calculateNumberOfLines(true);
 
-		line = Math.min(line, totalLineCount - this._maxNumberOfLines);
+		line = Math.min(line, totalLineCount - MaxLineCount);
 		line = Math.max(line, 0);
 
 		this._text.style.setProperty('--current-line', `${line}`);
