@@ -103,7 +103,6 @@ class SpeechBubble extends Component {
 
 	private _buildButton(className: string, icon: string, callback: (() => void)): Button {
 		const button = <Button>document.createElement(Button.TagName);
-		button.setAttribute("bordered", '');
 		button.classList.add(className);
 		button.onclick = callback;
 		button.icon = icon;
@@ -233,6 +232,7 @@ class SpeechBubble extends Component {
 	private _scrollBy(l: number): void {
 		const currentScroll = parseInt(this._text.style.getPropertyValue('--current-line')) | 0;
 		this._scrollTo(currentScroll + l);
+		this._updateButtonStates();
 	}
 
 	private _scrollTo(line: number = 0) {
@@ -267,6 +267,22 @@ class SpeechBubble extends Component {
 		} else {
 			this._upButton.removeAttribute('hidden');
 			this._downButton.removeAttribute('hidden');
+		}
+	}
+
+	private _updateButtonStates() {
+		const currentLine = parseInt(this._text.style.getPropertyValue('--current-line'))
+		const maxLine = this._calculateNumberOfLines(true) - MaxLineCount;
+
+		this._upButton.removeAttribute('disabled');
+		this._downButton.removeAttribute('disabled');
+
+		if (currentLine === 0) {
+			this._upButton.setAttribute('disabled', '');
+		}
+
+		if (currentLine === maxLine) {
+			this._downButton.setAttribute('disabled', '');
 		}
 	}
 }
