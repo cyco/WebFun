@@ -8,6 +8,10 @@ wf-speech-bubble {
 	}
 
 	.text {
+		white-space: pre-line;
+		position: relative;
+		font-family: var(--font-family);
+		top: calc(var(--line-height, 0px) * -1 * var(--current-line, 0));
 	}
 
 	.singleline {

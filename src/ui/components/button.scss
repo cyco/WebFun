@@ -5,14 +5,10 @@
 wf-button {
 	display: block;
 	border: 1px solid black;
-
 	position: relative;
-
 	min-height: 16px;
 	min-width: 16px;
-
 	text-align: center;
-
 	color: $control-text-color;
 	background-color: $window-background-color;
 
@@ -50,5 +46,9 @@ wf-button {
 
 	> span {
 		padding: 0 8px;
+	}
+
+	&[hidden] {
+		display: none;
 	}
 }

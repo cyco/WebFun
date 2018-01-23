@@ -7,17 +7,29 @@ export const Event = {
 	End: "end"
 };
 
+const FontSize = '11px';
+const LineHeight = '12px';
+const FontFamily = 'Microsoft Sans Serif,sans';
+const Padding = '7px';
+
+const MODIFIED = 1;
+const enum ArrowStyle {
+
+
+	Top = 1 << 1,
+	Bottom = 1 << 2,
+
+	Left = 1 << 3,
+	Right = 1 << 4,
+
+	Horizontal = ArrowStyle.Left | ArrowStyle.Right,
+	Vertical = ArrowStyle.Top | ArrowStyle.Left
+}
+
 class SpeechBubble extends Component {
 	public static readonly TagName = "wf-speech-bubble";
 	public static readonly Event = Event;
-	public static readonly ARROW_STYLE = {
-		MODIFIED: 1,
-
-		BOTTOM: 2,
-		LEFT: 4,
-		RIGHT: 6,
-		TOP: 8
-	};
+	public static readonly observedAttributes = ["text"];
 
 	public onend: (e: CustomEvent) => void;
 	private _lineHeight: number = 16;
@@ -25,26 +37,47 @@ class SpeechBubble extends Component {
 	private _border: number = 5;
 	private _width: number = 170;
 	private _arrowWidth: number = 16;
-	private _arrowStyle: number = SpeechBubble.ARROW_STYLE.TOP;
+	private _arrowStyle: number = ArrowStyle.Top;
 	private _upButton: Button;
 	private _downButton: Button;
 	private _endButton: Button;
-	private _text = document.createElement("div");
+	private _text: HTMLElement;
+
+	constructor() {
+		super();
+
+		this._text = document.createElement("div");
+		this._text.style.fontSize = FontSize;
+		this._text.style.fontFamily = FontFamily;
+		this._text.style.lineHeight = LineHeight;
+		this._text.classList.add("text");
+
+		const textContainer = document.createElement("div");
+		textContainer.classList.add("text-container");
+		textContainer.appendChild(this._text);
+
+		this._upButton = this._buildButton('up', 'caret-up', () => this.scrollUp());
+		this._downButton = this._buildButton('down', 'caret-down', () => this.scrollDown());
+		this._endButton = this._buildButton('end', 'circle', () => this.end());
+	}
 
 	connectedCallback() {
 		super.connectedCallback();
 
+		this.style.setProperty('--font-family', FontFamily);
+		this.style.setProperty('--line-height', LineHeight);
+		this.style.setProperty('--current-line', '0');
+
 		this.style.width = this._width + "px";
 		this.style.position = "absolute";
 
-		const textContainer = document.createElement("div");
-		textContainer.classList.add("text-container");
+		this.appendChild(this._text.parentNode);
 
-		this._text.classList.add("text");
-		textContainer.appendChild(this._text);
+		this.text = this.text;
+	}
 
-		this.appendChild(textContainer);
-		this._setupButtons();
+	attributeChangedCallback(attribute: string, oldValue: string, newValue: string): void {
+		this.text = newValue;
 	}
 
 	get text() {
@@ -52,18 +85,15 @@ class SpeechBubble extends Component {
 	}
 
 	set text(t) {
-		this._text.textContent = "";
+		this._text.textContent = t;
 
-		const lines = t.split("\n");
-		lines.forEach((line) => {
-			this._text.appendChild(document.createTextNode(line.replace("/\r//", "")));
-			this._text.appendChild(document.createElement("br"));
-		});
+		if (!this.isConnected) return;
 
-		dispatch(() => {
-			this._setupBackground();
-			this._scrollTo(0);
-		});
+		this.appendChild(this._text.parentNode);
+		this._setupButtons();
+		this._setupBackground();
+		this._udpateButtonVisibility();
+		this._scrollTo(0);
 	}
 
 	get x() {
@@ -94,16 +124,9 @@ class SpeechBubble extends Component {
 	_setupButtons() {
 		const buttonBar = document.createElement("div");
 		buttonBar.classList.add("controls");
-
-		this._upButton = this._buildButton('up', 'caret-up', () => this.scrollUp());
 		buttonBar.appendChild(this._upButton);
-
-		this._downButton = this._buildButton('down', 'caret-down', () => this.scrollDown());
 		buttonBar.appendChild(this._downButton);
-
-		this._endButton = this._buildButton('end', 'circle', () => this.end());
 		buttonBar.appendChild(this._endButton);
-
 		this.appendChild(buttonBar);
 	}
 
@@ -130,31 +153,30 @@ class SpeechBubble extends Component {
 
 		this.insertBefore(background, this.firstChild);
 
-		if (this._arrowStyle & SpeechBubble.ARROW_STYLE.TOP ||
-			this._arrowStyle & SpeechBubble.ARROW_STYLE.BOTTOM) {
+		if (this._arrowStyle & ArrowStyle.Vertical) {
 			this.style.height = height + arrowWidth + "px";
 			this.style.width = width + "px";
-			background.setAttribute("height", "" + height + arrowWidth);
+			background.setAttribute("height", `${height + arrowWidth}`);
 			background.setAttribute("width", "" + width);
-
-		} else if (this._arrowStyle & SpeechBubble.ARROW_STYLE.LEFT ||
-			this._arrowStyle & SpeechBubble.ARROW_STYLE.RIGHT) {
+		} else if (this._arrowStyle & ArrowStyle.Horizontal) {
 			this.style.height = height + "px";
 			this.style.width = width + arrowWidth + "px";
 			background.setAttribute("height", "" + height);
-			background.setAttribute("width", "" + width + arrowWidth);
+			background.setAttribute("width", `${width + arrowWidth}`);
 		}
 
-		const leftArrowWidth = (this._arrowStyle & SpeechBubble.ARROW_STYLE.LEFT ? arrowWidth : 0);
-		const rightArrowWidth = (this._arrowStyle & SpeechBubble.ARROW_STYLE.RIGHT ? arrowWidth : 0);
-		const topArrowWidth = (this._arrowStyle & SpeechBubble.ARROW_STYLE.TOP ? arrowWidth : 0);
-		const bottomArrowWidth = (this._arrowStyle & SpeechBubble.ARROW_STYLE.BOTTOM ? arrowWidth : 0);
-		this._text.parentElement.style.left = 5 + leftArrowWidth + "px";
-		this._text.parentElement.style.top = 5 + topArrowWidth + "px";
-		this._text.parentElement.style.bottom = 5 + bottomArrowWidth + "px";
-		this._text.parentElement.style.right = 21 + 5 + rightArrowWidth + "px";
+		const leftArrowWidth = (this._arrowStyle & ArrowStyle.Left ? arrowWidth : 0);
+		const rightArrowWidth = (this._arrowStyle & ArrowStyle.Right ? arrowWidth : 0);
+		const topArrowWidth = (this._arrowStyle & ArrowStyle.Top ? arrowWidth : 0);
+		const bottomArrowWidth = (this._arrowStyle & ArrowStyle.Bottom ? arrowWidth : 0);
 
-		this._endButton.parentElement.style.bottom = 5 + bottomArrowWidth + "px";
+		const padding = parseInt(Padding);
+		this._text.parentElement.style.left = padding + leftArrowWidth + "px";
+		this._text.parentElement.style.top = padding + topArrowWidth + "px";
+		this._text.parentElement.style.bottom = padding + bottomArrowWidth + "px";
+		this._text.parentElement.style.right = 21 + padding + rightArrowWidth + "px";
+
+		this._endButton.parentElement.style.bottom = (padding - 2) + bottomArrowWidth + "px";
 	}
 
 	_buildPath() {
@@ -163,16 +185,16 @@ class SpeechBubble extends Component {
 		const arrowWidth = this._arrowWidth;
 		const b = this._border;
 
-		const top = this._arrowStyle & SpeechBubble.ARROW_STYLE.TOP ? 0 + arrowWidth : 0;
-		const left = this._arrowStyle & SpeechBubble.ARROW_STYLE.LEFT ? 0 + arrowWidth : 0;
+		const top = this._arrowStyle & ArrowStyle.Top ? 0 + arrowWidth : 0;
+		const left = this._arrowStyle & ArrowStyle.Right ? 0 + arrowWidth : 0;
 		const bottom = top + height;
 		const right = left + width;
 
 		let path = [];
 
 		path.push(["M", left + b, top]);
-		if (this._arrowStyle & SpeechBubble.ARROW_STYLE.TOP) {
-			const arrowLeft = !!(this._arrowStyle & SpeechBubble.ARROW_STYLE.MODIFIED);
+		if (this._arrowStyle & ArrowStyle.Top) {
+			const arrowLeft = !!(this._arrowStyle & MODIFIED);
 			const arrowStart = (right - left) / 2 - arrowWidth / 2;
 			const arrowTipX = arrowLeft ? arrowStart : arrowStart + arrowWidth;
 
@@ -185,9 +207,9 @@ class SpeechBubble extends Component {
 		path.push(["A", b, b, 0, 0, 1, right, top + b]);
 		path.push(["L", right, bottom - b]);
 		path.push(["A", b, b, 0, 0, 1, width - b, bottom]);
-		if (this._arrowStyle & SpeechBubble.ARROW_STYLE.BOTTOM) {
+		if (this._arrowStyle & ArrowStyle.Bottom) {
 			const arrowStart = (right - left) / 2 - arrowWidth / 2;
-			const arrowLeft = !!(this._arrowStyle & SpeechBubble.ARROW_STYLE.MODIFIED);
+			const arrowLeft = !!(this._arrowStyle & MODIFIED);
 			const arrowTipX = arrowLeft ? arrowStart : arrowStart + arrowWidth;
 
 			path.push(["L", arrowStart + arrowWidth, height]);
@@ -222,31 +244,43 @@ class SpeechBubble extends Component {
 	}
 
 	private _scrollBy(l: number): void {
-		const currentScroll = (-1 * parseInt(this._text.style.top) | 0) / this._lineHeight;
+		const currentScroll = parseInt(this._text.style.getPropertyValue('--current-line')) | 0;
 		this._scrollTo(currentScroll + l);
 	}
 
 	private _scrollTo(line: number = 0) {
 		const totalLineCount = this._calculateNumberOfLines(true);
-		if (line > totalLineCount - this._maxNumberOfLines)
-			line = totalLineCount - this._maxNumberOfLines;
-		if (line < 0)
-			line = 0;
 
-		this._text.style.top = -1 * line * 16 + "px";
+		line = Math.min(line, totalLineCount - this._maxNumberOfLines);
+		line = Math.max(line, 0);
+
+		this._text.style.setProperty('--current-line', `${line}`);
 	}
 
 	private _calculateHeight() {
 		const lineCount = this._calculateNumberOfLines(false);
-		return 5 + lineCount * 16 + 5;
+
+		const padding = parseInt(Padding);
+		return padding + lineCount * parseInt(LineHeight) + padding;
 	}
 
 	private _calculateNumberOfLines(skipClipping: boolean): number {
-		const lineCount = this._text.getBoundingClientRect().height / 16;
+		const lineCount = Math.ceil(this._text.getBoundingClientRect().height / parseInt(LineHeight));
 		let line = Math.max(1, lineCount);
 
 		if (skipClipping) return line;
 		return Math.min(line, 5);
+	}
+
+	private _udpateButtonVisibility() {
+		const canScroll = this._calculateNumberOfLines(true) > 5;
+		if (!canScroll) {
+			this._upButton.setAttribute('hidden', '');
+			this._downButton.setAttribute('hidden', '');
+		} else {
+			this._upButton.removeAttribute('hidden');
+			this._downButton.removeAttribute('hidden');
+		}
 	}
 }
 
