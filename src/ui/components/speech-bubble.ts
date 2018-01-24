@@ -13,6 +13,7 @@ const FontFamily = 'Microsoft Sans Serif,sans';
 const Padding = '7px';
 const MaxLineCount = 5;
 const ArrowWidth = 16;
+const ScrollRepeatInterval = 100;
 
 const MODIFIED = 1;
 const enum ArrowStyle {
@@ -38,6 +39,7 @@ class SpeechBubble extends Component {
 	private _downButton: Button;
 	private _endButton: Button;
 	private _text: HTMLElement;
+	private _keepScrolling: number;
 
 	constructor() {
 		super();
@@ -52,9 +54,21 @@ class SpeechBubble extends Component {
 		textContainer.classList.add("text-container");
 		textContainer.appendChild(this._text);
 
-		this._upButton = this._buildButton('up', 'caret-up', () => this.scrollUp());
-		this._downButton = this._buildButton('down', 'caret-down', () => this.scrollDown());
-		this._endButton = this._buildButton('end', 'circle', () => this.end());
+		this._upButton = this._buildButton('up', 'caret-up');
+		this._upButton.onmousedown = () => {
+			this.scrollUp();
+
+			document.addEventListener('mouseup', () => clearTimeout(this._keepScrolling), { capture: true, passive: true, once: true });
+		}
+		this._downButton = this._buildButton('down', 'caret-down');
+		this._downButton.onmousedown = () => {
+			this.scrollDown();
+
+			document.addEventListener('mouseup', () => clearTimeout(this._keepScrolling), { capture: true, passive: true, once: true });
+		}
+
+		this._endButton = this._buildButton('end', 'circle');
+		this._endButton.onclick = () => this.end();
 	}
 
 	connectedCallback() {
@@ -101,10 +115,9 @@ class SpeechBubble extends Component {
 		return new Point(parseInt(this.style.left), parseInt(this.style.top));
 	}
 
-	private _buildButton(className: string, icon: string, callback: (() => void)): Button {
+	private _buildButton(className: string, icon: string): Button {
 		const button = <Button>document.createElement(Button.TagName);
 		button.classList.add(className);
-		button.onclick = callback;
 		button.icon = icon;
 		return button;
 	}
@@ -213,13 +226,16 @@ class SpeechBubble extends Component {
 
 	public scrollDown() {
 		this._scrollBy(1);
+		this._keepScrolling = setTimeout(() => this.scrollDown(), ScrollRepeatInterval);
 	}
 
 	public scrollUp() {
 		this._scrollBy(-1);
+		this._keepScrolling = setTimeout(() => this.scrollUp(), ScrollRepeatInterval)
 	}
 
 	public end() {
+		clearTimeout(this._keepScrolling);
 		this.remove();
 		this.dispatchEvent(new CustomEvent(SpeechBubble.Event.End));
 		if (this.onend) this.onend(new CustomEvent(SpeechBubble.Event.End));
@@ -232,7 +248,6 @@ class SpeechBubble extends Component {
 	private _scrollBy(l: number): void {
 		const currentScroll = parseInt(this._text.style.getPropertyValue('--current-line')) | 0;
 		this._scrollTo(currentScroll + l);
-		this._updateButtonStates();
 	}
 
 	private _scrollTo(line: number = 0) {
@@ -242,6 +257,7 @@ class SpeechBubble extends Component {
 		line = Math.max(line, 0);
 
 		this._text.style.setProperty('--current-line', `${line}`);
+		this._updateButtonStates();
 	}
 
 	private _calculateHeight() {
