@@ -5,23 +5,15 @@ import { InstructionImplementations } from "src/engine/script/instructions";
 
 describeInstruction("DisableAction", () => {
 	it("disables the action that's currently executing", async (done) => {
-		let engine = {
+		const engine = {
 			currentZone: {},
 			hero: {},
 			state: {},
 			data: {}
 		};
-		let executor = new InstructionExecutor(InstructionImplementations, engine);
 
-		beforeEach(() => {
-			engine.currentZone = {};
-			engine.hero = {};
-			engine.state = {};
-			engine.data = {};
-		});
-
-
-		let instruction = new Instruction({});
+		const executor = new InstructionExecutor(InstructionImplementations, engine);
+		const instruction = new Instruction({});
 		instruction._opcode = DisableAction.Opcode;
 		instruction._arguments = [];
 
