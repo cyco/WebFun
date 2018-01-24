@@ -17,4 +17,5 @@ BaseConfig.devServer = {
 
 BaseConfig.plugins.push(new Webpack.NamedModulesPlugin());
 BaseConfig.plugins.push(new Webpack.HotModuleReplacementPlugin());
+
 module.exports = BaseConfig;

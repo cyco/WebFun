@@ -31,50 +31,47 @@
   "babel": {
     "presets": [
       [
-        "env",
+        "@babel/preset-env",
         {
           "targets": {
             "node": "current",
             "browsers": [
-              "last 1 versions"
+              "last 1 version"
             ]
           }
         }
       ]
     ],
     "plugins": [
-      "syntax-async-functions",
-      "transform-regenerator"
+      "@babel/transform-regenerator"
     ]
   },
   "dependencies": {
-    "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-polyfill": "^6.26.0",
+    "@babel/polyfill": "^7.0.0-beta.38",
+    "@babel/runtime": "^7.0.0-beta.38",
     "dasherize": "^2.0.0",
     "kaitai-struct": "^0.8.0-SNAPSHOT.2",
     "sprintf-js": "^1.1.1",
     "twgl.js": "^4.4.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.0.0-beta.38",
+    "@babel/plugin-transform-regenerator": "^7.0.0-beta.38",
+    "@babel/plugin-transform-runtime": "^7.0.0-beta.38",
+    "@babel/preset-env": "^7.0.0-beta.38",
     "@types/jasmine": "^2.8.5",
     "@types/jasmine-matchers": "^0.2.30",
     "@types/sprintf-js": "^1.1.0",
     "@types/webcomponents.js": "^0.6.32",
     "add-matchers": "^0.5.0",
     "awesome-typescript-loader": "^3.4.1",
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.0",
-    "babel-loader": "^7.1.2",
+    "babel-loader": "8.0.0-beta.0",
     "babel-plugin-istanbul": "^4.1.5",
-    "babel-plugin-syntax-async-functions": "^6.13.0",
-    "babel-plugin-transform-regenerator": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
     "canvas": "^1.6.9",
     "cross-env": "^5.1.3",
     "css-loader": "^0.28.9",
     "file-loader": "^1.1.6",
     "font-loader": "^0.1.2",
-    "hard-source-webpack-plugin": "^0.5.16",
     "istanbul-instrumenter-loader": "^3.0.0",
     "jasmine-core": "^2.9.1",
     "jsdom": "^11.6.0",

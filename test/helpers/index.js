@@ -1,4 +1,4 @@
-import "babel-polyfill";
+import "@babel/polyfill";
 
 import "src/extension";
 import { describeComponent, fdescribeComponent, xdescribeComponent } from "./component";

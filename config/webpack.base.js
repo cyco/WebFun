@@ -1,6 +1,5 @@
 const Path = require("path");
 const Paths = require("./paths");
-const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 
 module.exports = {
 	resolve: {
@@ -35,7 +34,8 @@ module.exports = {
 			exclude: ["node_modules"],
 			options: {
 				configFileName: Path.resolve(Paths.configRoot, "tsconfig.json"),
-				silent: true
+				silent: true,
+				babelCore: "@babel/core"
 			}
 		}, {
 			/* Styles */
