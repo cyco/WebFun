@@ -3,9 +3,9 @@ declare interface Node {
 }
 
 interface Array<T> {
-	first(): T|null;
+	first(): T | null;
 
-	last(): T|null;
+	last(): T | null;
 
 	contains(_: T): boolean
 
@@ -28,10 +28,17 @@ declare interface Object {
 	each<T>(callback: ((key: string, value: T) => void)): void
 }
 
+interface Document {
+	addEventListener(event: 'mouseup', listener: (event: MouseEvent) => void, options?: {
+		passive?: boolean;
+		once?: boolean;
+		capture?: boolean;
+	}): void;
+}
 
 // by @ahejlsberg
 // As seen on https://github.com/Microsoft/TypeScript/issues/3496#issuecomment-128553540
-type JSONValue = string|number|boolean|JSONObject|JSONArray;
+type JSONValue = string | number | boolean | JSONObject | JSONArray;
 
 interface JSONObject {
 	[x: string]: JSONValue;
