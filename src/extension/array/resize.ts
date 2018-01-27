@@ -1,3 +1,5 @@
+import { Array } from 'src/std';
+
 const resize = function <T>(targetSize: number, element: T) {
 	this.splice(0, this.length);
 	for (let i = 0; i < targetSize; i++) {
@@ -13,4 +15,4 @@ declare global {
 	}
 }
 
-export default Array.prototype.resize;
+export default resize;

@@ -1,3 +1,5 @@
+import { Array } from 'src/std';
+
 const From = <T>(thing: T) => {
 	return Array.prototype.slice.call(thing);
 };

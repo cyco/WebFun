@@ -1,3 +1,5 @@
+import { Array } from 'src/std';
+
 const rest = function <T>() {
 	return this.slice(1);
 };
@@ -10,4 +12,4 @@ declare global {
 	}
 }
 
-export default Array.prototype.rest;
+export default rest;

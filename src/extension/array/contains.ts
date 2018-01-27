@@ -1,13 +1,9 @@
-const contains = function <T>(candidate: T) {
+import { Array } from 'src/std';
+
+const contains = function <T>(candidate: T): boolean {
 	return !!~this.indexOf(candidate);
 };
 
 Array.prototype.contains = Array.prototype.contains || contains;
 
-declare global {
-	interface Array<T> {
-		contains(item: T): boolean;
-	}
-}
-
-export default Array.prototype.contains;
+export default contains;

@@ -1,3 +1,5 @@
+import { Array } from 'src/std';
+
 const padEnd = function <T>(length: number, item: T): T[] {
 	const result = this.slice();
 	while (result.length < length)

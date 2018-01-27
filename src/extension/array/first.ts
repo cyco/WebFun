@@ -1,3 +1,5 @@
+import { Array } from 'src/std';
+
 const first = function () {
 	return this.length ? this[0] : null;
 };
@@ -10,4 +12,4 @@ declare global {
 	}
 }
 
-export default Array.prototype.first;
+export default first;

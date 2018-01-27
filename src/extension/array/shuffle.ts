@@ -1,4 +1,5 @@
 import "src/extension";
+import { Array } from 'src/std';
 import { rand } from "src/util";
 
 const shuffle = function () {
@@ -49,4 +50,4 @@ declare global {
 	}
 }
 
-export default Array.prototype.shuffle;
+export default shuffle;
