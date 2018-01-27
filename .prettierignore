@@ -1,0 +1,7 @@
+test/fixtures
+src/_style/font-awesome
+src/_style/fontello
+node_modules
+assets/
+build
+tools/bin
