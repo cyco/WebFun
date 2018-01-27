@@ -1,3 +1,5 @@
+import { Array } from 'src/std';
+
 const erase = function <T>(pos: T) {
 	this.splice(pos, 1);
 };
@@ -10,4 +12,4 @@ declare global {
 	}
 }
 
-export default Array.prototype.erase;
+export default erase;

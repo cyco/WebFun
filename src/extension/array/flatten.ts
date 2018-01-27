@@ -1,3 +1,5 @@
+import { Array } from 'src/std';
+
 const flatten = function () {
 	return Array.prototype.concat.apply([], this);
 };

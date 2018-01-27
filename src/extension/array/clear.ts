@@ -1,3 +1,5 @@
+import { Array } from 'src/std';
+
 const clear = function (): void {
 	this.splice(0, this.length);
 };

@@ -1,3 +1,4 @@
+import { Array } from 'src/std';
 import { constantly } from "src/util";
 
 const repeat = <T>(item: T, count: number) => Array.apply(null, Array(count)).map(constantly(item));
@@ -10,4 +11,4 @@ declare global {
 	}
 }
 
-export default Array.Repeat;
+export default repeat;

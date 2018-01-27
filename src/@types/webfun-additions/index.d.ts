@@ -4,11 +4,8 @@ declare interface Node {
 
 interface Array<T> {
 	first(): T | null;
-
 	last(): T | null;
-
 	contains(_: T): boolean
-
 	shuffle(): T[];
 }
 
@@ -24,7 +21,7 @@ interface ObjectConstructor {
 	values: (thing: any) => any[];
 }
 
-declare interface Object {
+interface Object {
 	each<T>(callback: ((key: string, value: T) => void)): void
 }
 
