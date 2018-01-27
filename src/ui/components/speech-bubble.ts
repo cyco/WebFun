@@ -123,6 +123,8 @@ class SpeechBubble extends Component {
 	}
 
 	_setupButtons() {
+		this._endButton.setAttribute('disabled', '');
+
 		const buttonBar = document.createElement("div");
 		buttonBar.classList.add("controls");
 		buttonBar.appendChild(this._upButton);
@@ -293,12 +295,13 @@ class SpeechBubble extends Component {
 		this._upButton.removeAttribute('disabled');
 		this._downButton.removeAttribute('disabled');
 
-		if (currentLine === 0) {
+		if (currentLine <= 0) {
 			this._upButton.setAttribute('disabled', '');
 		}
 
-		if (currentLine === maxLine) {
+		if (currentLine >= maxLine) {
 			this._downButton.setAttribute('disabled', '');
+			this._endButton.removeAttribute('disabled');
 		}
 	}
 }
