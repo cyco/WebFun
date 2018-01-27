@@ -26,7 +26,8 @@
     "world:validate": "node -- tools/bin/generate-world.bin.js -c -d \"build/game-data/yoda.data\" -e \"game-data/worlds.txt\"",
     "world:validate:all": "node -- tools/bin/generate-world.bin.js -c -d \"./build/game-data/yoda.data\" -e \"./game-data/full.txt\" -a",
     "build-tool": "webpack --config config/webpack.tool.js",
-    "build-tool:cont": "webpack --config config/webpack.tool.js --watch"
+    "build-tool:cont": "webpack --config config/webpack.tool.js --watch",
+    "format": "prettier --write '{src,config,docs,test,tools}/**/*.{ts,js,json,scss}'"
   },
   "babel": {
     "presets": [
@@ -87,6 +88,7 @@
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^2.0.9",
     "node-sass": "^4.7.2",
+    "prettier": "^1.10.2",
     "puppeteer": "^1.0.0",
     "sass-loader": "^6.0.6",
     "shelljs": "^0.8.1",
