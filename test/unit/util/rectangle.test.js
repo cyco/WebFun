@@ -35,5 +35,6 @@ describe("Rectangle", () => {
 		const subject = new Rectangle(new Point(1, 1), new Size(2, 2));
 		expect(subject.contains(new Point(0, 0))).toBeFalse();
 		expect(subject.contains(new Point(1, 2))).toBeTrue();
+		expect(subject.contains(new Point(3, 1))).toBeFalse();
 	});
 });
