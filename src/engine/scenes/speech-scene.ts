@@ -28,7 +28,7 @@ class SpeechScene extends Scene {
 		this._bubble.text = t;
 	}
 
-	_setupBubble() {
+	private _setupBubble() {
 		const bubble = <SpeechBubble>document.createElement(SpeechBubble.TagName);
 		bubble.onend = () => this.engine.sceneManager.popScene();
 		this._bubble = bubble;
@@ -45,7 +45,7 @@ class SpeechScene extends Scene {
 
 		const windowOffset = this._determineGlobalOffset();
 
-		// TODO: fix posiitoning
+		// TODO: fix positioning
 		const x = anchor.x * this.tileSize.width + windowOffset.x + 32;
 		const y = anchor.y * this.tileSize.height + windowOffset.y + 2 * 32;
 		this._bubble.origin = new Point(x, y);
@@ -63,7 +63,7 @@ class SpeechScene extends Scene {
 		this._modalSession.end(0);
 	}
 
-	_determineGlobalOffset() {
+	private _determineGlobalOffset(): Point {
 		const canvas = document.querySelector('canvas[width="288"][height="288"]');
 		const box = canvas.getBoundingClientRect();
 
