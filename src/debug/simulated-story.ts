@@ -1,6 +1,6 @@
-import { Story, Engine } from 'src/engine';
-import { World } from 'src/engine/generation';
-import { Tile, Zone } from 'src/engine/objects';
+import { Story, Engine } from "src/engine";
+import { World } from "src/engine/generation";
+import { Tile, Zone } from "src/engine/objects";
 
 class SimulatedStory extends Story {
 	generateWorld(engine: Engine): void {

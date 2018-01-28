@@ -7,7 +7,7 @@ describe("Menu", () => {
 	});
 
 	it("converts all items to MenuItem instances if necessary", () => {
-		const items = [new MenuItem({title: "item 1"}), {title: "item 2"}];
+		const items = [new MenuItem({ title: "item 1" }), { title: "item 2" }];
 		const menu = new Menu(items);
 
 		expect(menu.items.length).toBe(2);
@@ -17,7 +17,7 @@ describe("Menu", () => {
 
 	it("also allows for items to be set directly (without conversion)", () => {
 		const menu = new Menu();
-		const items = [new MenuItem({title: "item 1"}), {title: "item 2"}];
+		const items = [new MenuItem({ title: "item 1" }), { title: "item 2" }];
 
 		menu.items = items;
 		expect(menu.items).toBe(items);

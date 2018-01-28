@@ -31,7 +31,8 @@ class CharacterDetails extends Component {
 		this._framePreview = <CharacterFramePreview>document.createElement(CharacterFramePreview.TagName);
 		this._stepButton = document.createElement("button");
 		this._stepButton.textContent = "Step";
-		this._stepButton.onclick = () => this._framePreview.frame = this._character.frames[++this._currentPreviewFrame % 3];
+		this._stepButton.onclick = () =>
+			(this._framePreview.frame = this._character.frames[++this._currentPreviewFrame % 3]);
 		this._typeSelector = document.createElement("select");
 		this._typeSelector.classList.add("type");
 		this._typeSelector.onchange = () => {
@@ -49,10 +50,10 @@ class CharacterDetails extends Component {
 		};
 		this._damageInput = document.createElement("input");
 		this._damageInput.type = "text";
-		this._damageInput.onchange = () => this._character.damage = parseInt(this._damageInput.value);
+		this._damageInput.onchange = () => (this._character.damage = parseInt(this._damageInput.value));
 		this._healthInput = document.createElement("input");
 		this._healthInput.type = "text";
-		this._healthInput.onchange = () => this._character.health = parseInt(this._damageInput.value);
+		this._healthInput.onchange = () => (this._character.health = parseInt(this._damageInput.value));
 		this._weaponPreview = document.createElement("div");
 		this._sound = document.createElement("select");
 		this._sound.classList.add("sound");
@@ -114,7 +115,7 @@ class CharacterDetails extends Component {
 		this.appendLabel(" ", this._sound);
 	}
 
-	private appendLabel(text: string|HTMLElement, node?: HTMLElement) {
+	private appendLabel(text: string | HTMLElement, node?: HTMLElement) {
 		const label = document.createElement("label");
 
 		const firstNode = document.createElement("span");
@@ -156,7 +157,8 @@ class CharacterDetails extends Component {
 			if (weapon) {
 				this._weapon.value = char.reference.toString();
 				const tile = weapon.frames[0].extensionRight;
-				this._weaponPreview.className += " " + (tile ? this.tileSheet.cssClassesForTile(tile.id).join(" ") : "");
+				this._weaponPreview.className +=
+					" " + (tile ? this.tileSheet.cssClassesForTile(tile.id).join(" ") : "");
 			}
 		}
 
@@ -177,9 +179,8 @@ class CharacterDetails extends Component {
 		return this._tileSheet;
 	}
 
-	set character(c: MutableChar|Char) {
-		if (!(c instanceof MutableChar))
-			c = new MutableChar(c);
+	set character(c: MutableChar | Char) {
+		if (!(c instanceof MutableChar)) c = new MutableChar(c);
 		this._character = c;
 		this._currentPreviewFrame = 0;
 		this._rebuild();

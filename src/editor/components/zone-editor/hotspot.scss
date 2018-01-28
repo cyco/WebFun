@@ -7,12 +7,16 @@ wf-zone-editor-hotspot {
 	line-height: 14px;
 
 	&:first-child {
-		.title, .text, .tile {
+		.title,
+		.text,
+		.tile {
 			border-top-width: 0;
 		}
 	}
 	&:last-child > * {
-		.title, .text, .tile {
+		.title,
+		.text,
+		.tile {
 			border-bottom-width: 0;
 		}
 	}
@@ -34,7 +38,8 @@ wf-zone-editor-hotspot {
 		flex-grow: 1;
 		position: relative;
 
-		& > *:first-child, & > * + * {
+		& > *:first-child,
+		& > * + * {
 			margin-left: 10px;
 		}
 
@@ -49,7 +54,7 @@ wf-zone-editor-hotspot {
 
 		.position {
 			font-size: 11px;
-			color: #3D3D3D;
+			color: #3d3d3d;
 		}
 
 		i.fa-remove {

@@ -1,14 +1,14 @@
-import { Component } from 'src/ui';
-import { List, Cell } from 'src/ui/components';
-import { ZoneInspectorCell } from 'src/editor/components';
-import { Zone, Tile, Hotspot, ZoneType } from 'src/engine/objects';
-import DataManager from 'src/editor/data-manager';
-import TileCell from './tile-cell';
+import { Component } from "src/ui";
+import { List, Cell } from "src/ui/components";
+import { ZoneInspectorCell } from "src/editor/components";
+import { Zone, Tile, Hotspot, ZoneType } from "src/engine/objects";
+import DataManager from "src/editor/data-manager";
+import TileCell from "./tile-cell";
 
 import "./simulator-wizard.scss";
 
 class SimulatorWizard extends Component {
-	public static readonly TagName = 'wf-debug-simulator-wizard';
+	public static readonly TagName = "wf-debug-simulator-wizard";
 	public readonly observedAttribtues: string[] = [];
 
 	private _zoneList: List<Zone>;
@@ -22,19 +22,19 @@ class SimulatorWizard extends Component {
 
 	constructor() {
 		super();
-		this._state = localStorage.prefixedWith('simulator-wizard');
+		this._state = localStorage.prefixedWith("simulator-wizard");
 
 		this._zoneList = <List<Zone>>document.createElement(List.TagName);
 		const cell = <ZoneInspectorCell>document.createElement(ZoneInspectorCell.TagName);
 		cell.onclick = (e: Event) => this._onZoneCellClicked(<ZoneInspectorCell>e.currentTarget);
 		this._zoneList.searchDelegate = this;
 		this._zoneList.cell = cell;
-		this._zoneList.state = this._state.prefixedWith('zone-list');
+		this._zoneList.state = this._state.prefixedWith("zone-list");
 
-		this._requiredItemList = this._makeTileList('required-items');
-		this._additionallyRequiredItemList = this._makeTileList('additionally-required-items');
-		this._providedItemList = this._makeTileList('provided-items');
-		this._npcList = this._makeTileList('npc');
+		this._requiredItemList = this._makeTileList("required-items");
+		this._additionallyRequiredItemList = this._makeTileList("additionally-required-items");
+		this._providedItemList = this._makeTileList("provided-items");
+		this._npcList = this._makeTileList("npc");
 	}
 
 	private _onZoneCellClicked(cell: ZoneInspectorCell) {
@@ -48,25 +48,32 @@ class SimulatorWizard extends Component {
 			zone = cell.data;
 		}
 
-		const collectItems = (key: string, zone: any) => zone[key].slice().concat(zone.doors.map((door: Hotspot) => collectItems(key, this.data.currentData.zones[door.arg])).flatten());
+		const collectItems = (key: string, zone: any) =>
+			zone[key]
+				.slice()
+				.concat(
+					zone.doors
+						.map((door: Hotspot) => collectItems(key, this.data.currentData.zones[door.arg]))
+						.flatten()
+				);
 
-		this._requiredItemList.items = zone ? collectItems('requiredItems', zone).unique() : [];
-		this._npcList.items = zone ? collectItems('puzzleNPCs', zone).unique() : [];
-		this._providedItemList.items = zone ? collectItems('providedItems', zone).unique() : [];
-		this._additionallyRequiredItemList.items = zone ? collectItems('goalItems', zone).unique() : [];
+		this._requiredItemList.items = zone ? collectItems("requiredItems", zone).unique() : [];
+		this._npcList.items = zone ? collectItems("puzzleNPCs", zone).unique() : [];
+		this._providedItemList.items = zone ? collectItems("providedItems", zone).unique() : [];
+		this._additionallyRequiredItemList.items = zone ? collectItems("goalItems", zone).unique() : [];
 	}
 
 	private _makeTileList(name: string) {
 		const list = <List<Tile>>document.createElement(List.TagName);
 		list.cell = <TileCell>document.createElement(TileCell.TagName);
 		list.cell.onclick = (e: MouseEvent) => this._onTileCellClicked(<TileCell>e.currentTarget);
-		list.state = this._state.prefixedWith(name + '-list');
+		list.state = this._state.prefixedWith(name + "-list");
 		return list;
 	}
 
 	private _onTileCellClicked(cell: TileCell) {
 		const list = cell.closest(List.TagName);
-		Array.from(list.querySelectorAll('[selected]')).forEach((c: Element) => c.removeAttribute('selected'));
+		Array.from(list.querySelectorAll("[selected]")).forEach((c: Element) => c.removeAttribute("selected"));
 		cell.setAttribute("selected", "");
 	}
 
@@ -78,7 +85,7 @@ class SimulatorWizard extends Component {
 		this.appendChild(this._npcList);
 	}
 
-	disconnectedCallback() { }
+	disconnectedCallback() {}
 
 	set data(d: DataManager) {
 		this._data = d;
@@ -89,12 +96,9 @@ class SimulatorWizard extends Component {
 		this._assignTileSheet(<TileCell>this._requiredItemList.cell);
 		this._assignTileSheet(<TileCell>this._additionallyRequiredItemList.cell);
 
-		this._zoneList.items = d.currentData.zones.filter(zone => ![
-			ZoneType.Room,
-			ZoneType.Load,
-			ZoneType.Lose,
-			ZoneType.Win
-		].contains(zone.type));
+		this._zoneList.items = d.currentData.zones.filter(
+			zone => ![ZoneType.Room, ZoneType.Load, ZoneType.Lose, ZoneType.Win].contains(zone.type)
+		);
 	}
 
 	private _assignTileSheet(cell: ZoneInspectorCell | TileCell) {
@@ -122,18 +126,18 @@ class SimulatorWizard extends Component {
 	}
 
 	get chosenSettings() {
-		const zoneCell = <Cell<Zone>>this._zoneList.querySelector('[selected]');
-		const requiredItemCell = <Cell<Tile>>this._requiredItemList.querySelector('[selected]');
-		const providedItemCell = <Cell<Tile>>this._providedItemList.querySelector('[selected]');
-		const additionallyRequiredItemCell = <Cell<Tile>>this._additionallyRequiredItemList.querySelector('[selected]');
-		const puzzleNPCCell = <Cell<Tile>>this._npcList.querySelector('[selected]');
+		const zoneCell = <Cell<Zone>>this._zoneList.querySelector("[selected]");
+		const requiredItemCell = <Cell<Tile>>this._requiredItemList.querySelector("[selected]");
+		const providedItemCell = <Cell<Tile>>this._providedItemList.querySelector("[selected]");
+		const additionallyRequiredItemCell = <Cell<Tile>>this._additionallyRequiredItemList.querySelector("[selected]");
+		const puzzleNPCCell = <Cell<Tile>>this._npcList.querySelector("[selected]");
 
 		return {
 			zone: zoneCell ? zoneCell.data : null,
 			requiredItem: requiredItemCell ? requiredItemCell.data : null,
 			providedItem: providedItemCell ? providedItemCell.data : null,
 			additionallyRequiredItem: additionallyRequiredItemCell ? additionallyRequiredItemCell.data : null,
-			puzzleNPC: puzzleNPCCell ? puzzleNPCCell.data : null,
+			puzzleNPC: puzzleNPCCell ? puzzleNPCCell.data : null
 		};
 	}
 }

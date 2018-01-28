@@ -1,4 +1,2 @@
-global.requestAnimationFrame = () => {
-};
-global.cancelAnimationFrame = () => {
-};
+global.requestAnimationFrame = () => {};
+global.cancelAnimationFrame = () => {};

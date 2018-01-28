@@ -21,5 +21,14 @@ export {
 	Instruction,
 	Puzzle,
 	PuzzleType,
-	Tile, Action, Zone, ZoneType, TileAttribute, ZoneLayer, TileSubtype, Hotspot, HotspotType, NPC
+	Tile,
+	Action,
+	Zone,
+	ZoneType,
+	TileAttribute,
+	ZoneLayer,
+	TileSubtype,
+	Hotspot,
+	HotspotType,
+	NPC
 };

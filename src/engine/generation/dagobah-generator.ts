@@ -10,7 +10,7 @@ import { WorldItem } from "src/engine/generation";
 const TILE_YODA = 0x30c;
 const TILE_YODAS_SEAT = 2034;
 const GOAL_IMPERIAL_BATTLE_CODE = 0x84;
-const GOAL_RESCUE_YODA = 0xBD;
+const GOAL_RESCUE_YODA = 0xbd;
 const ZONE_YODAS_HUT = 535;
 const ZONE_DAGOBAH_NORTH_WEST = 94;
 const ZONE_DAGOBAH_NORTH_EAST = 95;

@@ -1,6 +1,6 @@
 import { LogLevel, persistent } from "src/util";
 
-let Settings: {[_: string]: any} = {
+let Settings: { [_: string]: any } = {
 	allowWebGL: false,
 	allowTileSheet: false,
 
@@ -26,5 +26,5 @@ let Settings: {[_: string]: any} = {
 	debuggerActive: false
 };
 
-export const loadSettings = () => Settings = persistent(Settings, "settings");
+export const loadSettings = () => (Settings = persistent(Settings, "settings"));
 export default Settings;

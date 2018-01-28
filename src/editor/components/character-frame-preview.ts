@@ -26,7 +26,7 @@ class CharacterFramePreview extends Component {
 		if (!this.isConnected || !this._frame) return;
 
 		this.textContent = "";
-		this._frame.tiles.forEach((tile) => {
+		this._frame.tiles.forEach(tile => {
 			const tileNode = document.createElement("div");
 			tileNode.className = tile ? this.tileSheet.cssClassesForTile(tile.id).join(" ") : "";
 			tileNode.classList.add("tile");

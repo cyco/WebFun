@@ -2,7 +2,7 @@ enum MenuItemState {
 	None,
 	On,
 	Off,
-	Mixed,
+	Mixed
 }
 
 export default MenuItemState;

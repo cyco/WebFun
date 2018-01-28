@@ -86,7 +86,9 @@ class Writer {
 
 	_writeRoom(zone: Zone, visited: boolean, stream: OutputStream): void {
 		this._writeZone(zone, visited, stream);
-		const doors = zone.hotspots.filter((hotspot: Hotspot) => hotspot.type === HotspotType.DoorIn && hotspot.arg !== -1);
+		const doors = zone.hotspots.filter(
+			(hotspot: Hotspot) => hotspot.type === HotspotType.DoorIn && hotspot.arg !== -1
+		);
 		doors.forEach((hotspot: Hotspot) => {
 			const zone = this._data.zones[hotspot.arg];
 			stream.writeInt16(zone.id);
@@ -132,19 +134,19 @@ class Writer {
 		stream.writeInt16(0); // TODO: x__
 		stream.writeInt16(0); // TODO: current_frame
 		stream.writeUint32(0); // field_18
-		stream.writeUint32(0);// field_1C
-		stream.writeUint32(0);// field_20
+		stream.writeUint32(0); // field_1C
+		stream.writeUint32(0); // field_20
 		stream.writeInt16(0); // TODO: x_
 		stream.writeInt16(0); // TODO: y_
-		stream.writeInt16(0);// TODO: field_3C
-		stream.writeInt16(0);// TODO: field_3E
-		stream.writeInt16(0);// TODO: field_60
-		stream.writeInt16(0);// TODO: field_26
+		stream.writeInt16(0); // TODO: field_3C
+		stream.writeInt16(0); // TODO: field_3E
+		stream.writeInt16(0); // TODO: field_60
+		stream.writeInt16(0); // TODO: field_26
 
 		stream.writeUint32(0); // TODO: field_2C
 		stream.writeUint32(0); // TODO: field_34
 		stream.writeUint32(0); // TODO: field_28
-		stream.writeInt16(0);// TODO: field_24
+		stream.writeInt16(0); // TODO: field_24
 		stream.writeInt16(0);
 
 		for (let i = 0; i < 4; i++) {

@@ -4,7 +4,7 @@ class InputStream extends Stream {
 	private _arrayBuffer: ArrayBuffer;
 	private _dataView: DataView;
 
-	constructor(data: ArrayBuffer|string) {
+	constructor(data: ArrayBuffer | string) {
 		super();
 
 		this.endianess = Stream.ENDIAN.LITTLE;
@@ -16,16 +16,14 @@ class InputStream extends Stream {
 		return this._arrayBuffer.byteLength;
 	}
 
-	_makeArrayBuffer(data: ArrayBuffer|string) {
-		if (data instanceof ArrayBuffer)
-			return data;
+	_makeArrayBuffer(data: ArrayBuffer | string) {
+		if (data instanceof ArrayBuffer) return data;
 
 		if (typeof data === "string") {
 			let binaryString = atob(data);
 			let len = binaryString.length;
 			let bytes = new Uint8Array(len);
-			for (let i = 0; i < len; i++)
-				bytes[i] = binaryString.charCodeAt(i);
+			for (let i = 0; i < len; i++) bytes[i] = binaryString.charCodeAt(i);
 
 			return bytes.buffer;
 		}
@@ -85,7 +83,7 @@ class InputStream extends Stream {
 		const uint8Array = new Uint8Array(this._arrayBuffer, this._offset, maxLength);
 
 		let length = -1;
-		while (uint8Array[++length]) ;
+		while (uint8Array[++length]);
 
 		return this.getCharacters(length);
 	}

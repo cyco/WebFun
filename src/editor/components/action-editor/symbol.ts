@@ -1,5 +1,5 @@
 class Symbol {
-	private static symbols: {[name: string]: Symbol} = {};
+	private static symbols: { [name: string]: Symbol } = {};
 	private _name: string;
 
 	constructor(name: string) {

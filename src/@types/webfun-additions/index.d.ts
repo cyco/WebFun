@@ -5,7 +5,7 @@ declare interface Node {
 interface Array<T> {
 	first(): T | null;
 	last(): T | null;
-	contains(_: T): boolean
+	contains(_: T): boolean;
 	shuffle(): T[];
 }
 
@@ -22,15 +22,19 @@ interface ObjectConstructor {
 }
 
 interface Object {
-	each<T>(callback: ((key: string, value: T) => void)): void
+	each<T>(callback: ((key: string, value: T) => void)): void;
 }
 
 interface Document {
-	addEventListener(event: 'mouseup', listener: (event: MouseEvent) => void, options?: {
-		passive?: boolean;
-		once?: boolean;
-		capture?: boolean;
-	}): void;
+	addEventListener(
+		event: "mouseup",
+		listener: (event: MouseEvent) => void,
+		options?: {
+			passive?: boolean;
+			once?: boolean;
+			capture?: boolean;
+		}
+	): void;
 }
 
 // by @ahejlsberg
@@ -41,5 +45,4 @@ interface JSONObject {
 	[x: string]: JSONValue;
 }
 
-interface JSONArray extends Array<JSONValue> {
-}
+interface JSONArray extends Array<JSONValue> {}

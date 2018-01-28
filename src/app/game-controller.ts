@@ -108,7 +108,7 @@ class GameController extends EventTarget {
 			this._engine.story = story;
 			this._engine.currentWorld = story.world;
 			this._engine.hero.visible = true;
-			this._engine.state.worldLocation = new Point(5,4);
+			this._engine.state.worldLocation = new Point(5, 4);
 			this._showSceneView(story.world.at(5, 4).zone);
 			(<any>window).engine = this._engine;
 		}
@@ -122,22 +122,24 @@ class GameController extends EventTarget {
 			windowContent.appendChild(loadingView);
 
 			const loader = new Loader();
-			loader.onfail = (event) => reject(event);
-			loader.onprogress = ({ detail: { progress } }) => loadingView.progress = progress;
+			loader.onfail = event => reject(event);
+			loader.onprogress = ({ detail: { progress } }) => (loadingView.progress = progress);
 			loader.onloadsetupimage = ({ detail: { pixels, palette } }) => loadingView.showImage(pixels, palette);
-			loader.onload = (e) => {
+			loader.onload = e => {
 				const details = e.detail as LoaderEventDetails;
 				loadingView.progress = 1.0;
 				this._data = details.data;
 				this._palette = details.palette;
 				this._engine.data = this._data;
 
-				this.dispatchEvent(new CustomEvent(Event.DidLoadData, {
-					detail: {
-						data: this._data,
-						palette: this._palette
-					}
-				}));
+				this.dispatchEvent(
+					new CustomEvent(Event.DidLoadData, {
+						detail: {
+							data: this._data,
+							palette: this._palette
+						}
+					})
+				);
 
 				resolve();
 			};
@@ -147,7 +149,11 @@ class GameController extends EventTarget {
 
 	async newStory() {
 		const gameState = this.engine.gameState;
-		if (gameState === GameState.Running && await ModalConfirm("This command will discard the current world.\nBuild a new world anyway?") !== ConfirmationResult.Confirmed) {
+		if (
+			gameState === GameState.Running &&
+			(await ModalConfirm("This command will discard the current world.\nBuild a new world anyway?")) !==
+				ConfirmationResult.Confirmed
+		) {
 			return;
 		}
 
@@ -162,14 +168,22 @@ class GameController extends EventTarget {
 	async replayStory() {
 		console.log("Replay Story");
 		const gameState = this.engine.gameState;
-		if (gameState === GameState.Running && await ModalConfirm("This command will discard the current world.\nReplay anyway?") !== ConfirmationResult.Confirmed) {
+		if (
+			gameState === GameState.Running &&
+			(await ModalConfirm("This command will discard the current world.\nReplay anyway?")) !==
+				ConfirmationResult.Confirmed
+		) {
 			return;
 		}
 	}
 
 	async load() {
 		const gameState = this.engine.gameState;
-		if (gameState === GameState.Running && await ModalConfirm("This command will discard the current world.\nLoad anyway?") !== ConfirmationResult.Confirmed) {
+		if (
+			gameState === GameState.Running &&
+			(await ModalConfirm("This command will discard the current world.\nLoad anyway?")) !==
+				ConfirmationResult.Confirmed
+		) {
 			return;
 		}
 

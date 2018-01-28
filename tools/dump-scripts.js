@@ -48,7 +48,7 @@ const parseIntegerArgument = (input, name) => {
 	return result;
 };
 
-const parseArguments = (args) => {
+const parseArguments = args => {
 	const options = {
 		d: "yoda.data"
 	};
@@ -71,9 +71,7 @@ const parseArguments = (args) => {
 
 const readArguments = (node, self, ...args) => {
 	try {
-		let {
-			options
-		} = parseArguments(args);
+		let { options } = parseArguments(args);
 
 		return {
 			options
@@ -85,7 +83,7 @@ const readArguments = (node, self, ...args) => {
 	return null;
 };
 
-const readGameData = (path) => {
+const readGameData = path => {
 	const fullPath = Path.resolve(path);
 	if (!FS.existsSync(path)) {
 		throw `Game file ${fullPath} does not exist`;
@@ -102,8 +100,9 @@ const readGameData = (path) => {
 	}
 };
 
-const conditionToList = (condition) => {
-	const name = Object.keys(Conditions).find(key => Conditions[key].Opcode === condition.opcode) || `${condition.opcode}`;
+const conditionToList = condition => {
+	const name =
+		Object.keys(Conditions).find(key => Conditions[key].Opcode === condition.opcode) || `${condition.opcode}`;
 	const Condition = name ? Conditions[name] : null;
 
 	const argCount = Math.max(Condition.Arguments, 0);
@@ -112,8 +111,10 @@ const conditionToList = (condition) => {
 	return [dasherize(name), ...usedArguments];
 };
 
-const instructionToList = (instruction) => {
-	const name = Object.keys(Instructions).find(key => Instructions[key].Opcode === instruction.opcode) || `${instruction.opcode}`;
+const instructionToList = instruction => {
+	const name =
+		Object.keys(Instructions).find(key => Instructions[key].Opcode === instruction.opcode) ||
+		`${instruction.opcode}`;
 	const Instruction = name ? Instructions[name] : null;
 
 	const argCount = Math.max(Instruction.Arguments, 0);
@@ -126,23 +127,32 @@ const actionToList = (action, name) => {
 	const conditions = action.conditions.map(conditionToList);
 	const instructions = action.instructions.map(instructionToList);
 
-	return ["defn", name, [],
-		["and", ...conditions, ["progn", ...instructions]]
-	];
+	return ["defn", name, [], ["and", ...conditions, ["progn", ...instructions]]];
 };
 
-const toEdn = (thing) => {
-	if (thing instanceof Array && thing.length === 0)
-		return "[]";
+const toEdn = thing => {
+	if (thing instanceof Array && thing.length === 0) return "[]";
 
 	if (thing instanceof Array) {
 		if (thing[0] === "defn") {
 			return `(${thing[0]} ${thing[1]} [${thing[2].map(toEdn).join(" ")}]
-    ${thing.slice(3).map(toEdn).join("\n\t")})`;
+    ${thing
+		.slice(3)
+		.map(toEdn)
+		.join("\n\t")})`;
 		}
 
 		if (thing[0] === "and") {
-			return "(" + thing[0] + " " + thing.slice(1).map(toEdn).join("\n\t\t") + ")";
+			return (
+				"(" +
+				thing[0] +
+				" " +
+				thing
+					.slice(1)
+					.map(toEdn)
+					.join("\n\t\t") +
+				")"
+			);
 		}
 
 		if (thing[0] === "progn") {
@@ -161,7 +171,7 @@ const dumpAction = (zone, action, index) => {
 	process.stdout.write(toEdn(actionlist) + "\n\n");
 };
 
-const dumpZone = (zone) => {
+const dumpZone = zone => {
 	zone.actions.forEach((action, idx) => dumpAction(zone, action, idx));
 	process.stdout.write("\n");
 };
@@ -171,7 +181,14 @@ const dumpBaseDefinition = (thing, name) => {
 	const description = thing.Description || "";
 	if (argCount < 0) argCount = 0;
 
-	const functionDefinition = ["defn", dasherize(name), Array(argCount).fill("").map((_, idx) => `arg${idx}`), `"${description}"`];
+	const functionDefinition = [
+		"defn",
+		dasherize(name),
+		Array(argCount)
+			.fill("")
+			.map((_, idx) => `arg${idx}`),
+		`"${description}"`
+	];
 	process.stdout.write(toEdn(functionDefinition));
 	process.stdout.write("\n");
 };
@@ -192,16 +209,13 @@ const dumpBase = () => {
 };
 
 const main = (node, self, ...args) => {
-	let {
-		options
-	} = readArguments(node, self, ...args);
+	let { options } = readArguments(node, self, ...args);
 
 	try {
 		const gameData = readGameData(options.d);
 
 		dumpBase();
 		gameData.zones.forEach(dumpZone);
-
 	} catch (error) {
 		process.stderr.write(`${error}\n`);
 		exit(Exit.Error);

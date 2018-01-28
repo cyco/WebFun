@@ -1,4 +1,4 @@
-const some = function <T>(predicate: (item: T) => boolean): boolean {
+const some = function<T>(predicate: (item: T) => boolean): boolean {
 	return [...this.values()].some(predicate);
 };
 

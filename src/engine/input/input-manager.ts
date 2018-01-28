@@ -41,11 +41,9 @@ class InputManager {
 		return new Point(NaN, NaN);
 	}
 
-	public addListeners(): void {
-	}
+	public addListeners(): void {}
 
-	public removeListeners(): void {
-	}
+	public removeListeners(): void {}
 }
 
 export default InputManager;

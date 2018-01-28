@@ -24,7 +24,7 @@ class Printer {
 		this._buffer.put(indentation);
 
 		if (typeof action === "boolean") {
-			this._buffer.put((action ? "T" : "NIL"), "boolean");
+			this._buffer.put(action ? "T" : "NIL", "boolean");
 			return;
 		}
 
@@ -77,7 +77,7 @@ class Printer {
 		this._buffer.put("(");
 
 		const chop = unchopped !== 0;
-		let indent = chop ? (this._buffer.currentLineLength + indentation) : 1;
+		let indent = chop ? this._buffer.currentLineLength + indentation : 1;
 
 		while (unchopped > 1) {
 			this.putSimple(action.shift(), 0);
@@ -85,8 +85,7 @@ class Printer {
 			unchopped--;
 		}
 
-		if (chop && indentation === 0)
-			indent = this._buffer.currentLineLength;
+		if (chop && indentation === 0) indent = this._buffer.currentLineLength;
 
 		this.putSimple(action.shift(), 0);
 		if (chop) this._buffer.endLine();

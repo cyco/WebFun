@@ -19,7 +19,7 @@ class DetonatorScene extends Scene {
 		if (!e) return;
 
 		const data = e.data;
-		this._detonatorFrames = [0x202, 0x431, 0x432, 0x433].map((id) => data.tiles[id]);
+		this._detonatorFrames = [0x202, 0x431, 0x432, 0x433].map(id => data.tiles[id]);
 	}
 
 	willShow() {
@@ -28,7 +28,10 @@ class DetonatorScene extends Scene {
 
 	mouseDown(p: Point): void {
 		this._ticks = 0;
-		this._detonatorLocation = p.clone().scaleBy(9).floor();
+		this._detonatorLocation = p
+			.clone()
+			.scaleBy(9)
+			.floor();
 		this.engine.inputManager.mouseDownHandler = null;
 	}
 

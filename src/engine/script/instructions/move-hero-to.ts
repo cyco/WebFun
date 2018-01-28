@@ -9,7 +9,8 @@ import InstructionType from "../instruction";
 export default <InstructionType>{
 	Opcode: 0x12,
 	Arguments: [Type.ZoneX, Type.ZoneY],
-	Description: "Set hero's position to `arg_0`x`arg_1` ignoring impassable tiles. Execute hotspot actions, redraw the current scene and move camera if the hero is not hidden.",
+	Description:
+		"Set hero's position to `arg_0`x`arg_1` ignoring impassable tiles. Execute hotspot actions, redraw the current scene and move camera if the hero is not hidden.",
 	Implementation: async (instruction: Instruction, engine: Engine, action: Action): Promise<Result> => {
 		/*
 		 YodaView::RedrawTile(view, document->hero_x / 32, document->hero_y / 32);

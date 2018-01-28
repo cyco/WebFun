@@ -2,7 +2,7 @@ import Location, { Direction } from "src/app/ui/location";
 
 describeComponent(Location, () => {
 	let subject;
-	beforeAll(() => subject = render(Location));
+	beforeAll(() => (subject = render(Location)));
 
 	it("shows which adjacent zones can be accessed, by default all directions are inaccessible", () => {
 		expect(subject.mask).toBe(Direction.None);

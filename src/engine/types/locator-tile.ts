@@ -3,11 +3,9 @@ import Settings from "src/settings";
 
 class LocatorTile {
 	static ForZone(zone: Zone) {
-		if (!zone)
-			return 0x344;
+		if (!zone) return 0x344;
 
-		if (!zone.visited && !Settings.revealWorld)
-			return 0x343;
+		if (!zone.visited && !Settings.revealWorld) return 0x343;
 
 		switch (zone.type) {
 			case ZoneType.Empty:
@@ -42,7 +40,7 @@ class LocatorTile {
 	}
 
 	static _hasTeleporterHotspot(zone: Zone): boolean {
-		return !!zone.hotspots.find(({type}) => type === HotspotType.Teleporter);
+		return !!zone.hotspots.find(({ type }) => type === HotspotType.Teleporter);
 	}
 }
 

@@ -6,7 +6,7 @@ import ConditionComponent from "src/debug/components/condition";
 import InstructionComponent from "src/debug/components/instruction";
 import ConditionChecker from "src/engine/script/condition-checker";
 import { ConditionImplementations } from "src/engine/script/conditions";
-import {EvaluationMode} from "src/engine/script";
+import { EvaluationMode } from "src/engine/script";
 
 class ActionComponent extends Component {
 	public static readonly TagName = "wf-debug-action";
@@ -50,7 +50,7 @@ class ActionComponent extends Component {
 		this.appendChild(document.createTextNode(`\t(`));
 		this._append(`do`, "key");
 
-		action.instructions.forEach((instruction) => {
+		action.instructions.forEach(instruction => {
 			const component = <InstructionComponent>document.createElement(InstructionComponent.TagName);
 			component.action = this._action;
 			component.engine = this.engine;
@@ -86,15 +86,14 @@ class ActionComponent extends Component {
 		});
 	}
 
-	protected _append(thing: string|Element|Element[], className: string) {
+	protected _append(thing: string | Element | Element[], className: string) {
 		const element = document.createElement("span");
 		element.classList.add(className);
-		if (typeof thing === "string")
-			element.innerText = thing;
+		if (typeof thing === "string") element.innerText = thing;
 		else if (thing instanceof Element) {
 			element.appendChild(thing);
 		} else {
-			thing.forEach((t) => element.appendChild(t));
+			thing.forEach(t => element.appendChild(t));
 		}
 		this.appendChild(element);
 		return element;

@@ -2,9 +2,9 @@ import { Condition } from "src/engine/objects";
 import HasItem from "src/engine/script/conditions/has-item";
 
 describeCondition("HasItem", (check, engine) => {
-	it("checks if the inventory contains the specified item", async (done) => {
+	it("checks if the inventory contains the specified item", async done => {
 		engine.inventory = {
-			contains: function (itemID) {
+			contains: function(itemID) {
 				return itemID === 13;
 			}
 		};

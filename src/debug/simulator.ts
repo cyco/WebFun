@@ -1,11 +1,11 @@
-import { ModalConfirm, WindowModalSession } from 'src/ux';
-import { Window } from 'src/ui/components';
-import DataManager from 'src/editor/data-manager';
-import { SimulatorWizard } from './components';
-import { Planet, WorldSize } from 'src/engine/types';
-import { World } from 'src/engine/generation';
-import SimulatedStory from './simulated-story';
-import GameController from 'src/app/game-controller';
+import { ModalConfirm, WindowModalSession } from "src/ux";
+import { Window } from "src/ui/components";
+import DataManager from "src/editor/data-manager";
+import { SimulatorWizard } from "./components";
+import { Planet, WorldSize } from "src/engine/types";
+import { World } from "src/engine/generation";
+import SimulatedStory from "./simulated-story";
+import GameController from "src/app/game-controller";
 
 class Simulator {
 	private _data: DataManager;
@@ -14,13 +14,15 @@ class Simulator {
 		const wizard = <SimulatorWizard>document.createElement(SimulatorWizard.TagName);
 		wizard.data = this.data;
 
-		if (!await ModalConfirm(wizard, { confirmText: 'Simulate', abortText: 'Cancel' })) {
+		if (!await ModalConfirm(wizard, { confirmText: "Simulate", abortText: "Cancel" })) {
 			return;
 		}
 
 		const { zone, requiredItem, providedItem, additionallyRequiredItem, puzzleNPC } = wizard.chosenSettings;
 
-		const surroundingsZones = this.surroundingZoneIDsForPlanet(zone.planet).map(id => this.data.currentData.zones[id]).shuffle();
+		const surroundingsZones = this.surroundingZoneIDsForPlanet(zone.planet)
+			.map(id => this.data.currentData.zones[id])
+			.shuffle();
 		const world = new World();
 
 		for (let y = 4; y <= 6; y++) {
@@ -54,9 +56,12 @@ class Simulator {
 
 	private surroundingZoneIDsForPlanet(planet: Planet) {
 		switch (planet) {
-			case Planet.TATOOINE: return [60, 61, 62, 63, 24, 11, 30, 43];
-			case Planet.ENDOR: return [655, 653, 648, 647, 608, 602, 601, 592, 591];
-			case Planet.HOTH: return [262, 260, 232, 225, 226, 223, 222, 204];
+			case Planet.TATOOINE:
+				return [60, 61, 62, 63, 24, 11, 30, 43];
+			case Planet.ENDOR:
+				return [655, 653, 648, 647, 608, 602, 601, 592, 591];
+			case Planet.HOTH:
+				return [262, 260, 232, 225, 226, 223, 222, 204];
 		}
 	}
 

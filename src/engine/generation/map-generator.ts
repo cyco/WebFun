@@ -114,19 +114,16 @@ function is_less_than_candidate(type: number): boolean {
 }
 
 function neighbors(map: Map, x: number, y: number) {
-	return [
-		map.get(x - 1, y),
-		map.get(x + 1, y),
-		map.get(x, y - 1),
-		map.get(x, y + 1)
-	];
+	return [map.get(x - 1, y), map.get(x + 1, y), map.get(x, y - 1), map.get(x, y + 1)];
 }
 
 function is_blockade(type: WorldItemType): boolean {
-	return type === WorldItemType.BlockWest ||
+	return (
+		type === WorldItemType.BlockWest ||
 		type === WorldItemType.BlockEast ||
 		type === WorldItemType.BlockNorth ||
-		type === WorldItemType.BlockSouth;
+		type === WorldItemType.BlockSouth
+	);
 }
 
 function handle_neighbor(x: number, y: number, iteration: number, xdif: number, ydif: number): boolean {
@@ -142,7 +139,7 @@ function handle_neighbor(x: number, y: number, iteration: number, xdif: number, 
 
 	const BlockadeType = blockadeTypeForCheck(xdif, ydif);
 	const canPlaceBlockade = is_free(neighborOtherAxisBefore) && is_free(neighborOtherAxisAfter);
-	if (canPlaceBlockade && neighbor === WorldItemType.Candidate || neighbor === BlockadeType) {
+	if ((canPlaceBlockade && neighbor === WorldItemType.Candidate) || neighbor === BlockadeType) {
 		extend_blockade(x, y, xdif, ydif);
 	}
 
@@ -161,9 +158,7 @@ function handle_neighbor(x: number, y: number, iteration: number, xdif: number, 
 
 	if (!all_neighbors_are_free) return true;
 
-	if (!should_place_blockade ||
-		(ydif && !canPlaceBlockade) ||
-		(xdif && is_within_blockade_range)) {
+	if (!should_place_blockade || (ydif && !canPlaceBlockade) || (xdif && is_within_blockade_range)) {
 		typeMap[item_idx] = WorldItemType.Empty.rawValue;
 		++placedPuzzles;
 		--remaining_count_to_place;
@@ -172,7 +167,6 @@ function handle_neighbor(x: number, y: number, iteration: number, xdif: number, 
 
 	return true;
 }
-
 
 function constructor() {
 	travels = 0;
@@ -198,14 +192,12 @@ function _initializeTypeMap(spaceportX: number, spaceportY: number) {
 	typeMap[spaceportX + 10 * spaceportY] = WorldItemType.Spaceport.rawValue;
 }
 
-
 function _initializeOrderMap() {
 	orderMap = <any>new Int16Array(100);
 	for (let i = 0, len = orderMap.length; i < len; i++) {
 		orderMap[i] = -1;
 	}
 }
-
 
 function generate(seed: number, size: WorldSize) {
 	if (seed >= 0) srand(seed);
@@ -279,14 +271,15 @@ function _choosePuzzlesBehindBlockades() {
 					continue;
 			}
 
-
 			let point = new Point(x, y);
 			const smallStepped = Point.add(point, smallStep);
 			const largeStepped = Point.add(point, largeStep);
-			if (typeMap.get(smallStepped.x, smallStepped.y) !== WorldItemType.Candidate.rawValue)
-				continue;
+			if (typeMap.get(smallStepped.x, smallStepped.y) !== WorldItemType.Candidate.rawValue) continue;
 
-			if (!largeStepped.isInBounds(bounds) || typeMap.get(largeStepped.x, largeStepped.y) !== WorldItemType.Candidate.rawValue) {
+			if (
+				!largeStepped.isInBounds(bounds) ||
+				typeMap.get(largeStepped.x, largeStepped.y) !== WorldItemType.Candidate.rawValue
+			) {
 				point = smallStepped;
 			} else {
 				point = largeStepped;
@@ -309,18 +302,15 @@ function _choosePuzzlesOnIslands() {
 	let puzzleLocation;
 	const iteration = (point: Point, control: any) => {
 		const nextPoint = Point.add(point, control.step);
-		if (!nextPoint.isInBounds(bounds) ||
-			typeMap.get(nextPoint.x, nextPoint.y) !== WorldItemType.Island.rawValue) {
+		if (!nextPoint.isInBounds(bounds) || typeMap.get(nextPoint.x, nextPoint.y) !== WorldItemType.Island.rawValue) {
 			control.stop = true;
 			puzzleLocation = point;
 		}
 	};
 
-
 	for (let y = 0; y < 10; y++) {
 		for (let x = 0; x < 10; x++) {
-			if (typeMap.get(x, y) !== WorldItemType.TravelEnd.rawValue)
-				continue;
+			if (typeMap.get(x, y) !== WorldItemType.TravelEnd.rawValue) continue;
 
 			switch (getIslandOrientation(x, y, typeMap)) {
 				case IslandOrientation.Left:
@@ -350,12 +340,10 @@ function _choosePuzzlesOnIslands() {
 	}
 }
 
-
 function _chooseAdditionalPuzzles(total_puzzle_count: number): void {
 	let do_break = 0;
 	for (let i = 0; i <= 200; i++) {
-		let x,
-			y;
+		let x, y;
 
 		if (i > 200) {
 			do_break = 1;
@@ -372,20 +360,23 @@ function _chooseAdditionalPuzzles(total_puzzle_count: number): void {
 		}
 
 		// asm compares something against 400, 150 and maybe blockade_count
-		if (placedPuzzles >= total_puzzle_count)
-			break;
+		if (placedPuzzles >= total_puzzle_count) break;
 
 		let distance = GetDistanceToCenter(x, y);
 		if (distance >= 3 || i >= 150) {
 			let item = WorldItemType.fromNumber(typeMap.get(x, y));
-			if ((item === WorldItemType.Empty || item === WorldItemType.Candidate) && (x === 0 || typeMap.get(x - 1, y) !== WorldItemType.Puzzle.rawValue) && (x === 9 || typeMap.get(x + 1, y) !== WorldItemType.Puzzle.rawValue) && (y === 0 || typeMap.get(x, y - 1) !== WorldItemType.Puzzle.rawValue) && (y === 9 || typeMap.get(x, y + 1) !== WorldItemType.Puzzle.rawValue)) {
-
+			if (
+				(item === WorldItemType.Empty || item === WorldItemType.Candidate) &&
+				(x === 0 || typeMap.get(x - 1, y) !== WorldItemType.Puzzle.rawValue) &&
+				(x === 9 || typeMap.get(x + 1, y) !== WorldItemType.Puzzle.rawValue) &&
+				(y === 0 || typeMap.get(x, y - 1) !== WorldItemType.Puzzle.rawValue) &&
+				(y === 9 || typeMap.get(x, y + 1) !== WorldItemType.Puzzle.rawValue)
+			) {
 				typeMap.set(x, y, WorldItemType.Puzzle.rawValue);
 				orderMap.set(x, y, placedPuzzles++);
 			}
 
-			if (placedPuzzles >= total_puzzle_count)
-				break;
+			if (placedPuzzles >= total_puzzle_count) break;
 		}
 
 		if (distance < 3 && i < 150) i--;
@@ -427,7 +418,11 @@ function _makeSureLastPuzzleIsNotTooCloseToCenter(): void {
 	if (getDistanceToCenter(lastPuzzle.x, lastPuzzle.y) < 3) {
 		for (let y = 0; y < 10; y++) {
 			for (let x = 0; x < 10; x++) {
-				if (orderMap.get(x, y) >= 0 && getDistanceToCenter(x, y) >= 3 && (x !== lastPuzzle.x || y !== lastPuzzle.y)) {
+				if (
+					orderMap.get(x, y) >= 0 &&
+					getDistanceToCenter(x, y) >= 3 &&
+					(x !== lastPuzzle.x || y !== lastPuzzle.y)
+				) {
 					let replacement_puzzle = orderMap.get(x, y);
 					orderMap.set(lastPuzzle.x, lastPuzzle.y, replacement_puzzle);
 					orderMap.set(x, y, placedPuzzles - 1);
@@ -448,9 +443,13 @@ function _placeIntermediateWorldThing(): number {
 	let travel_count = travels;
 	let blockades_count = blockades;
 
-	let total_puzzle_count = Math.floor(puzzles_count / 4) + rand() % (Math.floor(puzzles_count / 5) + 1) - blockades_count - travel_count - 2;
-	if (total_puzzle_count < 4)
-		total_puzzle_count = 4;
+	let total_puzzle_count =
+		Math.floor(puzzles_count / 4) +
+		rand() % (Math.floor(puzzles_count / 5) + 1) -
+		blockades_count -
+		travel_count -
+		2;
+	if (total_puzzle_count < 4) total_puzzle_count = 4;
 
 	placedPuzzles = 0;
 
@@ -466,7 +465,7 @@ function _tryPlacingTravel(item_idx: number, iteration: number, last_item: World
 	if (typeMap[item_idx] !== WorldItemType.Empty.rawValue) return;
 
 	if (travels <= placedTravels) return;
-	if (((rand()) & 7) >= travel_threshold) return;
+	if ((rand() & 7) >= travel_threshold) return;
 	if (last_item === WorldItemType.TravelStart) return;
 	if (iteration <= 2) return;
 
@@ -513,8 +512,7 @@ function _determinePuzzleLocations(iteration: number, puzzle_count_to_place: num
 	}
 
 	for (let i = 0; i <= 144 && remaining_count_to_place > 0; i++) {
-		let x,
-			y;
+		let x, y;
 		if (rand() % 2) {
 			x = rand() % 2 ? min_x : alternate_x;
 			y = rand() % variance + min_y;
@@ -527,9 +525,9 @@ function _determinePuzzleLocations(iteration: number, puzzle_count_to_place: num
 		if (typeMap[item_idx]) continue;
 
 		handle_neighbor(x, y, iteration, -1, 0) ||
-		handle_neighbor(x, y, iteration, 1, 0) ||
-		handle_neighbor(x, y, iteration, 0, -1) ||
-		handle_neighbor(x, y, iteration, 0, 1);
+			handle_neighbor(x, y, iteration, 1, 0) ||
+			handle_neighbor(x, y, iteration, 0, -1) ||
+			handle_neighbor(x, y, iteration, 0, 1);
 
 		_tryPlacingTravel(item_idx, iteration, last_item);
 	}
@@ -537,8 +535,7 @@ function _determinePuzzleLocations(iteration: number, puzzle_count_to_place: num
 
 function _determineAdditionalPuzzleLocations(travels_to_place: number) {
 	for (let i = 0; i <= 400 && travels_to_place > 0; i++) {
-		let x,
-			y;
+		let x, y;
 		let is_vertical = rand() % 2;
 		if (is_vertical) {
 			x = rand() % 2 ? 0 : 9;
@@ -549,8 +546,7 @@ function _determineAdditionalPuzzleLocations(travels_to_place: number) {
 		}
 
 		let world_idx = x + 10 * y;
-		if (typeMap[world_idx] !== 0)
-			continue;
+		if (typeMap[world_idx] !== 0) continue;
 
 		let item_before = WorldItemType.fromNumber(typeMap.get(x - 1, y));
 		let item_after = WorldItemType.fromNumber(typeMap.get(x + 1, y));
@@ -576,10 +572,8 @@ function _determineAdditionalPuzzleLocations(travels_to_place: number) {
 		if (x_diff === 0 && y_diff === 0) continue;
 
 		let item_neighbor = WorldItemType.fromNumber(typeMap.get(x - x_diff, y - y_diff));
-		if (item_neighbor === WorldItemType.None)
-			continue;
-		if (item_neighbor === WorldItemType.Invalid)
-			continue;
+		if (item_neighbor === WorldItemType.None) continue;
+		if (item_neighbor === WorldItemType.Invalid) continue;
 
 		switch (item_neighbor) {
 			case WorldItemType.Empty:

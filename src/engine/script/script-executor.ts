@@ -1,5 +1,5 @@
 import { ResultFlags } from "src/engine/script/types";
-import EvaluationMode from './evaluation-mode';
+import EvaluationMode from "./evaluation-mode";
 import { Point } from "src/util";
 import Engine from "../engine";
 import Action from "../objects/action";
@@ -26,8 +26,7 @@ class ScriptExecutor {
 		this._checker.engine = engine;
 		this._executor.engine = engine;
 
-		const previousActions = engine.currentZone.actions.filter(
-			action => action.instructionPointer);
+		const previousActions = engine.currentZone.actions.filter(action => action.instructionPointer);
 		return this._evaluateActions(previousActions, mode, false);
 	}
 
@@ -48,7 +47,7 @@ class ScriptExecutor {
 		actions = actions.slice();
 		while (actions.length) {
 			let action = actions.shift();
-			if ((!check || await this.actionDoesApply(action, mode)) && await this.executeInstructions(action))
+			if ((!check || (await this.actionDoesApply(action, mode))) && (await this.executeInstructions(action)))
 				return true;
 		}
 
@@ -67,7 +66,7 @@ class ScriptExecutor {
 		if (action.instructionPointer !== 0) return true;
 
 		for (const condition of action.conditions) {
-			if (!(await this._checker.check(condition, mode))) {
+			if (!await this._checker.check(condition, mode)) {
 				return false;
 			}
 		}
@@ -80,13 +79,13 @@ class ScriptExecutor {
 		for (let i = action.instructionPointer | 0, len = action.instructions.length; i < len; i++) {
 			action.instructionPointer = i + 1;
 			const result = await this._executor.execute(action.instructions[i]);
-			if ((result & ResultFlags.Wait)) {
+			if (result & ResultFlags.Wait) {
 				return true;
 			}
-			if ((result & ResultFlags.UpdateText)) {
+			if (result & ResultFlags.UpdateText) {
 				return true;
 			}
-			if ((result & ResultFlags.UpdateZone)) {
+			if (result & ResultFlags.UpdateZone) {
 				return true;
 			}
 		}

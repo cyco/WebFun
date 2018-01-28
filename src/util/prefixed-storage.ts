@@ -17,14 +17,13 @@ class PrefixedStorage implements Storage {
 		this._prefix = prefix;
 	}
 
-	clear() {
-	};
+	clear() {}
 
-	getItem(key: string): string|null {
+	getItem(key: string): string | null {
 		return this._storage.getItem(this._buildKey(key));
 	}
 
-	key(index: number): string|null {
+	key(index: number): string | null {
 		return null;
 	}
 

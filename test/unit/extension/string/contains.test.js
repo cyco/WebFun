@@ -16,6 +16,5 @@ describe("String.contains", () => {
 	it("returns false if the string does not container another string", () => {
 		expect("my-string".contains(".")).toBeFalse();
 		expect("my-fancy-string".contains("z")).toBeFalse();
-
 	});
 });

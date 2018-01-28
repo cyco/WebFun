@@ -4,8 +4,8 @@ import { getFixtureData } from "test-helpers/fixture-loading";
 
 describe("InputStream", () => {
 	let buffer;
-	beforeAll((done) => {
-		getFixtureData("someData", function (b) {
+	beforeAll(done => {
+		getFixtureData("someData", function(b) {
 			buffer = b;
 			done();
 		});
@@ -34,73 +34,65 @@ describe("InputStream", () => {
 		}).toThrow(new TypeError());
 	});
 
-	it("getUint8 returns 1 byte of unsigned data at the current position and advances the offset",
-		() => {
-			let stream = new InputStream(buffer);
+	it("getUint8 returns 1 byte of unsigned data at the current position and advances the offset", () => {
+		let stream = new InputStream(buffer);
 
-			expect(stream.offset).toBe(0);
-			expect(stream.getUint8()).toBe(0x23);
-			expect(stream.getUint8()).toBe(0x42);
-			expect(stream.getUint8()).toBe(0xFF);
-			expect(stream.offset).toBe(3);
-		});
+		expect(stream.offset).toBe(0);
+		expect(stream.getUint8()).toBe(0x23);
+		expect(stream.getUint8()).toBe(0x42);
+		expect(stream.getUint8()).toBe(0xff);
+		expect(stream.offset).toBe(3);
+	});
 
-	it("getUint16 returns 2 byte of unsigned data at the current position and advances the offset",
-		() => {
-			let stream = new InputStream(buffer);
+	it("getUint16 returns 2 byte of unsigned data at the current position and advances the offset", () => {
+		let stream = new InputStream(buffer);
 
-			expect(stream.offset).toBe(0);
-			expect(stream.getUint16()).toBe(0x4223);
-			expect(stream.offset).toBe(2);
-			expect(stream.getUint16()).toBe(0xFFFF);
-			expect(stream.offset).toBe(4);
-		});
+		expect(stream.offset).toBe(0);
+		expect(stream.getUint16()).toBe(0x4223);
+		expect(stream.offset).toBe(2);
+		expect(stream.getUint16()).toBe(0xffff);
+		expect(stream.offset).toBe(4);
+	});
 
+	it("getUint32 returns 4 byte of unsigned data at the current position and advances the offset", () => {
+		let stream = new InputStream(buffer);
 
-	it("getUint32 returns 4 byte of unsigned data at the current position and advances the offset",
-		() => {
-			let stream = new InputStream(buffer);
+		expect(stream.offset).toBe(0);
+		expect(stream.getUint32()).toBe(0xffff4223);
+		expect(stream.offset).toBe(4);
+	});
 
-			expect(stream.offset).toBe(0);
-			expect(stream.getUint32()).toBe(0xFFFF4223);
-			expect(stream.offset).toBe(4);
-		});
+	it("getInt8 returns 1 byte of signed data at the current position and advances the offset", () => {
+		let stream = new InputStream(buffer);
 
-	it("getInt8 returns 1 byte of signed data at the current position and advances the offset",
-		() => {
-			let stream = new InputStream(buffer);
+		expect(stream.offset).toBe(0);
+		expect(stream.getInt8()).toBe(0x23);
+		expect(stream.getInt8()).toBe(0x42);
+		expect(stream.getInt8()).toBe(-1);
+		expect(stream.offset).toBe(3);
+	});
 
-			expect(stream.offset).toBe(0);
-			expect(stream.getInt8()).toBe(0x23);
-			expect(stream.getInt8()).toBe(0x42);
-			expect(stream.getInt8()).toBe(-1);
-			expect(stream.offset).toBe(3);
-		});
+	it("getInt16 returns 2 byte of signed data at the current position and advances the offset", () => {
+		let stream = new InputStream(buffer);
 
-	it("getInt16 returns 2 byte of signed data at the current position and advances the offset",
-		() => {
-			let stream = new InputStream(buffer);
+		expect(stream.offset).toBe(0);
+		expect(stream.getInt16()).toBe(0x4223);
+		expect(stream.offset).toBe(2);
+		expect(stream.getInt16()).toBe(-1);
+		expect(stream.offset).toBe(4);
+	});
 
-			expect(stream.offset).toBe(0);
-			expect(stream.getInt16()).toBe(0x4223);
-			expect(stream.offset).toBe(2);
-			expect(stream.getInt16()).toBe(-1);
-			expect(stream.offset).toBe(4);
-		});
+	it("getInt32 returns 4 byte of signed data at the current position and advances the offset", () => {
+		let stream = new InputStream(buffer);
 
-
-	it("getInt32 returns 4 byte of signed data at the current position and advances the offset",
-		() => {
-			let stream = new InputStream(buffer);
-
-			expect(stream.offset).toBe(0);
-			expect(stream.getInt32()).toBe(-48605);
-			expect(stream.offset).toBe(4);
-		});
+		expect(stream.offset).toBe(0);
+		expect(stream.getInt32()).toBe(-48605);
+		expect(stream.offset).toBe(4);
+	});
 
 	describe("string reading", () => {
-		beforeAll((done) => {
-			getFixtureData("asciiString", function (b) {
+		beforeAll(done => {
+			getFixtureData("asciiString", function(b) {
 				buffer = b;
 				done();
 			});
@@ -124,7 +116,6 @@ describe("InputStream", () => {
 			expect(stream.offset).toBe(7);
 		});
 
-
 		it("getCharacters returns an empty string if length is zero", () => {
 			let stream = new InputStream(buffer);
 
@@ -135,7 +126,6 @@ describe("InputStream", () => {
 
 		it("getNullTerminatedString collects all characters up to a null byte into a string, it does not consume the null byte", () => {
 			let stream = new InputStream(buffer);
-
 
 			stream.seek(2, Stream.SEEK.SET);
 			expect(stream.offset).toBe(2);
@@ -154,8 +144,8 @@ describe("InputStream", () => {
 	});
 
 	describe("array reading", () => {
-		beforeAll((done) => {
-			getFixtureData("arrayReading", function (b) {
+		beforeAll(done => {
+			getFixtureData("arrayReading", function(b) {
 				buffer = b;
 				done();
 			});
@@ -189,7 +179,7 @@ describe("InputStream", () => {
 
 			let data = stream.getUint16Array(2);
 			expect(data.length).toBe(2);
-			expect(data[0]).toBe(0x232A);
+			expect(data[0]).toBe(0x232a);
 			expect(data[1]).toBe(0x4242);
 		});
 
@@ -200,7 +190,7 @@ describe("InputStream", () => {
 
 			let data = stream.getUint32Array(1);
 			expect(data.length).toBe(1);
-			expect(data[0]).toBe(0x4242232A);
+			expect(data[0]).toBe(0x4242232a);
 
 			expect(stream.offset).toBe(5);
 		});
@@ -211,7 +201,7 @@ describe("InputStream", () => {
 
 			let data = stream.getUint32Array(1);
 			expect(data.length).toBe(1);
-			expect(data[0]).toBe(0x42232A17);
+			expect(data[0]).toBe(0x42232a17);
 
 			expect(stream.offset).toBe(4);
 		});

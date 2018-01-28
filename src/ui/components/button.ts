@@ -11,7 +11,7 @@ class Button extends IconButton {
 		super();
 
 		this._label = document.createElement("span");
-		this._label.style.display = 'none';
+		this._label.style.display = "none";
 	}
 
 	connectedCallback(): void {
@@ -26,7 +26,7 @@ class Button extends IconButton {
 	attributeChangedCallback(attrName: string, newValue: string, oldValue: string): void {
 		if (attrName === "label") {
 			this._label.textContent = newValue;
-			this._label.style.display = this._label.textContent.length ? '' : 'none';
+			this._label.style.display = this._label.textContent.length ? "" : "none";
 		}
 
 		super.attributeChangedCallback(attrName, newValue, oldValue);

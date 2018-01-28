@@ -2,8 +2,7 @@ import AST, { s } from "./ast";
 import { Scanner } from "src/util";
 import Symbol from "./symbol";
 
-class ParserError extends Error {
-}
+class ParserError extends Error {}
 
 class Parser {
 	public parse(input: string): AST[] {
@@ -26,7 +25,7 @@ class Parser {
 		scanner.skipWhitespace();
 
 		const c = scanner.peek();
-		if (c === "\"") return this.readString(scanner);
+		if (c === '"') return this.readString(scanner);
 		if (c === "-" || /\d/.test(c)) return this.readNumber(scanner);
 		if (c === "(") return this.readList(scanner);
 		if (c === "[") return this.readArray(scanner);
@@ -35,13 +34,15 @@ class Parser {
 	}
 
 	private readString(scanner: Scanner): string {
-		let c, result = "", startingOffset = scanner.offset;
+		let c,
+			result = "",
+			startingOffset = scanner.offset;
 
 		scanner.poke();
 
 		do {
 			c = scanner.poke();
-			if (c === "\"") break;
+			if (c === '"') break;
 			if (!c) throw new ParserError(`Unterminated string, starting at ${startingOffset}.`);
 
 			if (c === "\\") {
@@ -58,13 +59,15 @@ class Parser {
 		if (c === "t") return "\t";
 		if (c === "r") return "\r";
 		if (c === "n") return "\n";
-		if (c === "\"") return "\"";
+		if (c === '"') return '"';
 
 		throw new ParserError(`Invalid escape sequence \\${c} encountered`);
 	}
 
 	private readNumber(scanner: Scanner): number {
-		let c, result = "", startingOffset = scanner.offset;
+		let c,
+			result = "",
+			startingOffset = scanner.offset;
 		let factor = 1;
 
 		c = scanner.peek();
@@ -89,7 +92,9 @@ class Parser {
 	}
 
 	private readList(scanner: Scanner): AST[] {
-		let c, result: AST[] = [], startingOffset = scanner.offset;
+		let c,
+			result: AST[] = [],
+			startingOffset = scanner.offset;
 
 		scanner.poke();
 
@@ -109,7 +114,9 @@ class Parser {
 	}
 
 	private readArray(scanner: Scanner): AST[] {
-		let c, result: AST[] = [], startingOffset = scanner.offset;
+		let c,
+			result: AST[] = [],
+			startingOffset = scanner.offset;
 		scanner.poke();
 
 		do {
@@ -128,8 +135,10 @@ class Parser {
 		return result;
 	}
 
-	private readSymbol(scanner: Scanner): Symbol|boolean {
-		let c, name: string = "", startingOffset = scanner.offset;
+	private readSymbol(scanner: Scanner): Symbol | boolean {
+		let c,
+			name: string = "",
+			startingOffset = scanner.offset;
 
 		do {
 			c = scanner.peek();

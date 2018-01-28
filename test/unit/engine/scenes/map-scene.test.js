@@ -5,4 +5,3 @@ describe("MapScene", () => {
 		expect(() => new MapScene()).not.toThrow();
 	});
 });
-

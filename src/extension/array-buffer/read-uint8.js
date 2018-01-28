@@ -1,4 +1,4 @@
-const readUint8 = function (offset) {
+const readUint8 = function(offset) {
 	let buffer = new Uint8Array(this, offset, Uint8Array.BYTES_PER_ELEMENT);
 	return buffer[0];
 };

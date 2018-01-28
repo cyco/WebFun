@@ -16,7 +16,7 @@ class Hero extends EventTarget {
 	public unlimitedAmmo: boolean = false;
 	public _actionFrames: number = 0; // TODO: make private again
 	public _direction: number = Direction.South; // TODO: make private again
-	public _appearance: Char = null;// TODO: make private again
+	public _appearance: Char = null; // TODO: make private again
 	private _health: number = MAX_HEALTH;
 	private _walking: boolean = false;
 	private _attacking: boolean = false;
@@ -123,10 +123,8 @@ class Hero extends EventTarget {
 	}
 
 	update(ticks: number): void {
-		if (this.isWalking || this.isAttacking)
-			this._actionFrames += ticks;
-		else
-			this._actionFrames = 0;
+		if (this.isWalking || this.isAttacking) this._actionFrames += ticks;
+		else this._actionFrames = 0;
 	}
 
 	face(direction: number): void {
@@ -145,30 +143,26 @@ class Hero extends EventTarget {
 			return (this._walking = false);
 		}
 
-		if (this._doMove(relative, zone, relative.isUnidirectional() && this._dragging))
-			return (this._walking = true);
+		if (this._doMove(relative, zone, relative.isUnidirectional() && this._dragging)) return (this._walking = true);
 
 		let y = relative.y;
 		let x = relative.x;
 
 		// try moving horizontally only
 		relative.y = 0;
-		if (this._doMove(relative, zone, this._dragging))
-			return (this._walking = true);
+		if (this._doMove(relative, zone, this._dragging)) return (this._walking = true);
 
 		// try moving vertically only
 		relative.y = y;
 		relative.x = 0;
-		if (this._doMove(relative, zone, this._dragging))
-			return (this._walking = true);
+		if (this._doMove(relative, zone, this._dragging)) return (this._walking = true);
 
 		// restore original motion
 		relative.x = x;
 		relative.y = y;
 
 		// don't move diagonally if the hero tries to drag or push something
-		if (this._dragging)
-			return (this._walking = false);
+		if (this._dragging) return (this._walking = false);
 
 		// try to avoid the object by moving diagonally
 		if (y !== 0 && x === 0) {
@@ -194,8 +188,7 @@ class Hero extends EventTarget {
 	}
 
 	_doMove(rel: Point, z: Zone, dragging: boolean) {
-		if (rel.isZeroPoint())
-			return false;
+		if (rel.isZeroPoint()) return false;
 
 		let source = this._location;
 		let target = Point.add(source, rel);
@@ -219,11 +212,9 @@ class Hero extends EventTarget {
 
 	_doDrag(src: Point, target: Point, z: Zone): boolean {
 		let t = z.getTile(src);
-		if (!t || !t.isDraggable())
-			return false;
+		if (!t || !t.isDraggable()) return false;
 
-		if (z.getTile(target.x, target.y, 1) !== null)
-			return false;
+		if (z.getTile(target.x, target.y, 1) !== null) return false;
 
 		z.setTile(null, src);
 		z.setTile(t, target);

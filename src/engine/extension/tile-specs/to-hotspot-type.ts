@@ -1,7 +1,7 @@
 import { Type as HotspotType } from "../../objects/hotspot";
 import * as Type from "../../types";
 
-const toHotspotType = function () {
+const toHotspotType = function() {
 	if (this & Type.TILE_SPEC_THE_FORCE) {
 		return HotspotType.ForceLocation;
 	} else if (this & Type.TILE_SPEC_MAP) {

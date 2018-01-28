@@ -2,7 +2,7 @@ import { Instruction } from "src/engine/objects";
 import AddToPadding from "src/engine/script/instructions/add-to-padding";
 
 describeInstruction("AddToPadding", (execute, engine) => {
-	it("adds a value to the current zone's padding", async (done) => {
+	it("adds a value to the current zone's padding", async done => {
 		engine.currentZone.padding = 5;
 
 		let instruction = new Instruction({});

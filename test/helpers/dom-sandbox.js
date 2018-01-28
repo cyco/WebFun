@@ -1,6 +1,6 @@
 import { document } from "std.dom";
 
-export const sandboxed = (description) => {
+export const sandboxed = description => {
 	return () => {
 		let sand = {
 			box: null

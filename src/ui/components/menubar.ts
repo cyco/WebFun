@@ -33,7 +33,7 @@ class Menubar extends MenuView {
 		}
 
 		const modalSession = new ModalSession();
-		modalSession.onmousemove = (e) => this._mouseMoved(e);
+		modalSession.onmousemove = e => this._mouseMoved(e);
 		modalSession.onend = () => {
 			window.removeEventListener("mouseup", this._mouseDownHandler);
 			this._mouseDownHandler = null;
@@ -57,12 +57,10 @@ class Menubar extends MenuView {
 
 	_mouseMoved(event: MouseEvent): void {
 		const location = new Point(event.pageX, event.pageY);
-		if (!this._elementContainsPoint(this, location))
-			return;
+		if (!this._elementContainsPoint(this, location)) return;
 
 		const itemIdx = this._findItemAt(location);
-		if (itemIdx === this._currentItem || itemIdx === -1)
-			return;
+		if (itemIdx === this._currentItem || itemIdx === -1) return;
 
 		this._closeMenuForItem(this._currentItem);
 		this._showMenuForItem(itemIdx);
@@ -102,7 +100,7 @@ class Menubar extends MenuView {
 	}
 
 	_findItemAt(location: Point): number {
-		return Array.from(this.children).findIndex((child) => this._elementContainsPoint(child, location));
+		return Array.from(this.children).findIndex(child => this._elementContainsPoint(child, location));
 	}
 }
 

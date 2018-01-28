@@ -33,7 +33,7 @@ class ConfirmationWindow extends Window {
 		buttons.appendChild(this._abortButton);
 		this.content.appendChild(buttons);
 
-		if (typeof this._customContent === 'string') {
+		if (typeof this._customContent === "string") {
 			const label = document.createElement("div");
 			label.classList.add("text");
 			label.textContent = this._customContent;

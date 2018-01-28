@@ -16,8 +16,7 @@ class Direction {
 
 	static Normalize(direction: number): number {
 		let result = direction % 360.0;
-		if (result < 0)
-			result += 360.0;
+		if (result < 0) result += 360.0;
 		return result;
 	}
 
@@ -26,10 +25,8 @@ class Direction {
 	}
 
 	static CalculateAngleFromRelativePoint(relative: Point): number {
-		if (relative.x < 0)
-			return 180.0 - Math.atan(relative.y / -relative.x) * 180.0 / Math.PI;
-		else
-			return Math.atan(relative.y / relative.x) * 180.0 / Math.PI;
+		if (relative.x < 0) return 180.0 - Math.atan(relative.y / -relative.x) * 180.0 / Math.PI;
+		else return Math.atan(relative.y / relative.x) * 180.0 / Math.PI;
 	}
 
 	static CalculateRelativeCoordinates(direction: number, distance: number): Point {

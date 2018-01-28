@@ -3,8 +3,8 @@ import { getFixtureData } from "test-helpers/fixture-loading";
 
 describe("Uint8Array.asString", () => {
 	let buffer;
-	beforeEach((done) => {
-		getFixtureData("asciiString", function (b) {
+	beforeEach(done => {
+		getFixtureData("asciiString", function(b) {
 			buffer = b;
 			done();
 		});

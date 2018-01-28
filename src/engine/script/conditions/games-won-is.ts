@@ -7,5 +7,6 @@ export default <Condition>{
 	Opcode: 0x1c,
 	Arguments: [Type.Number],
 	Description: "Total games won is equal to `arg_0`",
-	Implementation: async (args: int16[], zone: Zone, engine: Engine): Promise<boolean> => engine.persistentState.gamesWon === args[0]
+	Implementation: async (args: int16[], zone: Zone, engine: Engine): Promise<boolean> =>
+		engine.persistentState.gamesWon === args[0]
 };

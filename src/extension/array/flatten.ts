@@ -1,6 +1,6 @@
-import { Array } from 'src/std';
+import { Array } from "src/std";
 
-const flatten = function () {
+const flatten = function() {
 	return Array.prototype.concat.apply([], this);
 };
 

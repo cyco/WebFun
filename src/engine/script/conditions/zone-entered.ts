@@ -9,7 +9,7 @@ export default <Condition>{
 	Description: "Evalutes to true if hero just entered the zone",
 	Implementation: async (args: int16[], zone: Zone, engine: Engine): Promise<boolean> => engine.state.justEntered
 
-// TODO: validate against original implementation
+	// TODO: validate against original implementation
 	/*
 	 case JUST_ENTERED:
 	 if ( mode != JustEntered )

@@ -66,7 +66,7 @@ class Engine extends EventTarget {
 	set currentZone(z) {
 		this._currentZone = z;
 		this.dispatchEvent(Events.CurrentZoneChange);
-		this.dispatchEvent(Events.LocationChanged, {zone: z, world: this._currentWorld});
+		this.dispatchEvent(Events.LocationChanged, { zone: z, world: this._currentWorld });
 	}
 
 	get currentWorld() {
@@ -86,8 +86,7 @@ class Engine extends EventTarget {
 	}
 
 	// TODO: remove calls and method
-	setCursor(cursor: any) {
-	}
+	setCursor(cursor: any) {}
 }
 
 export default Engine;

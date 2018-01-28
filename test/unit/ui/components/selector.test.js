@@ -2,7 +2,7 @@ import Selector from "src/ui/components/selector";
 
 describeComponent(Selector, () => {
 	let selector;
-	beforeEach(() => selector = render(Selector));
+	beforeEach(() => (selector = render(Selector)));
 
 	it("is class that displays a drop down menu with a selection", () => {
 		expect(Selector).toBeClass();

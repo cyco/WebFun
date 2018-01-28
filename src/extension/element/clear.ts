@@ -1,4 +1,4 @@
-const clear = function (): void {
+const clear = function(): void {
 	while (this.firstChild) {
 		this.removeChild(this.firstChild);
 	}
@@ -11,6 +11,5 @@ declare global {
 		clear(): void;
 	}
 }
-
 
 export default clear;

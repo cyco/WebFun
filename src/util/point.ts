@@ -6,7 +6,7 @@ class Point implements PointLike {
 	public y: number;
 	public z: number;
 
-	constructor(x: number|PointLike, y: number = null, z: number = null) {
+	constructor(x: number | PointLike, y: number = null, z: number = null) {
 		if (typeof x === "object") {
 			y = x.y;
 			z = x.z;
@@ -29,7 +29,7 @@ class Point implements PointLike {
 		return new Point(this.x, this.y, this.z);
 	}
 
-	add(x: number|PointLike, y: number = null): this {
+	add(x: number | PointLike, y: number = null): this {
 		if (typeof x === "object") {
 			y = x.y;
 			x = x.x;
@@ -42,10 +42,10 @@ class Point implements PointLike {
 	}
 
 	byAdding(x: number, y: number): Point {
-		return (new Point(this)).add(x, y);
+		return new Point(this).add(x, y);
 	}
 
-	subtract(x: number|PointLike, y: number): this {
+	subtract(x: number | PointLike, y: number): this {
 		if (typeof x === "object") {
 			y = x.y;
 			x = x.x;
@@ -58,7 +58,7 @@ class Point implements PointLike {
 	}
 
 	bySubtracting(x: number, y: number): Point {
-		return (new Point(this)).subtract(x, y);
+		return new Point(this).subtract(x, y);
 	}
 
 	scaleBy(a: number): this {
@@ -73,7 +73,7 @@ class Point implements PointLike {
 	}
 
 	byScalingBy(a: number): Point {
-		return (new Point(this)).scaleBy(a);
+		return new Point(this).scaleBy(a);
 	}
 
 	floor(): this {
@@ -85,7 +85,7 @@ class Point implements PointLike {
 	}
 
 	byFlooring(): Point {
-		return (new Point(this)).floor();
+		return new Point(this).floor();
 	}
 
 	ceil(): this {
@@ -97,7 +97,7 @@ class Point implements PointLike {
 	}
 
 	byCeiling(): Point {
-		return (new Point(this)).ceil();
+		return new Point(this).ceil();
 	}
 
 	abs(): this {
@@ -108,7 +108,7 @@ class Point implements PointLike {
 	}
 
 	byAbsing(): Point {
-		return (new Point(this)).abs();
+		return new Point(this).abs();
 	}
 
 	isEqualTo(point: PointLike): boolean {

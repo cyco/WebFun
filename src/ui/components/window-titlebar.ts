@@ -51,8 +51,7 @@ class WindowTitlebar extends Component {
 		if (m) {
 			this._menubar = <Menubar>document.createElement(Menubar.TagName);
 			this._menubar.menu = m;
-			if (this.isConnected)
-				this.appendChild(this._menubar);
+			if (this.isConnected) this.appendChild(this._menubar);
 		}
 
 		if (this._menubar && this._titleNode) {
@@ -98,7 +97,7 @@ class WindowTitlebar extends Component {
 	}
 
 	private _setupDragging(win: Window) {
-		console.log('setup dragging');
+		console.log("setup dragging");
 		let dragLocation: Point;
 		const mouseMove = (event: MouseEvent) => {
 			win.origin = new Point(event.clientX - dragLocation.x, event.clientY - dragLocation.y);
@@ -136,7 +135,7 @@ class WindowTitlebar extends Component {
 			this._pinButton.classList.add("fa");
 			this._pinButton.classList.add("fa-thumb-tack");
 			this._pinButton.classList.add("pin");
-			this._pinButton.onclick = () => this.pinned = !this.pinned;
+			this._pinButton.onclick = () => (this.pinned = !this.pinned);
 			if (this.isConnected) this.appendChild(this._pinButton);
 		} else {
 			this._pinButton.remove();

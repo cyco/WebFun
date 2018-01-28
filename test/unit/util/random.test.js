@@ -4,7 +4,6 @@ describe("Random", () => {
 	it("defines the functions srand and rand", () => {
 		expect(typeof srand).toBe("function");
 		expect(typeof rand).toBe("function");
-
 	});
 
 	it("implements a prng spitting out 16-bit values", () => {

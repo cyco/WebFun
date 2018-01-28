@@ -26,12 +26,14 @@ class ZoneInspector extends AbstractInspector {
 		this._list.cell.onclick = (e: MouseEvent) => this._onCellClicked(<ZoneInspectorCell>e.currentTarget);
 		this._list.searchDelegate = this;
 		this._list.state = state.prefixedWith("list");
-		this._list.addEventListener(ZoneInspectorCell.Events.RevealReferences, (e: CustomEvent) => this._revealReferences(e.detail.zone));
+		this._list.addEventListener(ZoneInspectorCell.Events.RevealReferences, (e: CustomEvent) =>
+			this._revealReferences(e.detail.zone)
+		);
 		this.window.content.appendChild(this._list);
 	}
 
 	private _onCellClicked(cell: ZoneInspectorCell) {
-		let controller = this._controllers.find((c) => c.canBeReused());
+		let controller = this._controllers.find(c => c.canBeReused());
 
 		if (!controller) {
 			controller = <ZoneEditorController>document.createElement(ZoneEditorController.TagName);

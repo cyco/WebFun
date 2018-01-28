@@ -9,7 +9,7 @@ const HighlightColor = rgba(255, 0, 0, 0.3);
 class PencilTool extends AbstractDrawingTool {
 	public readonly name = "Pencil";
 	public readonly icon = "fa-pencil";
-	public readonly shortcut = {keyCode: 66};
+	public readonly shortcut = { keyCode: 66 };
 
 	activate(zone: Zone, overlay: HTMLCanvasElement): void {
 		super.activate(zone, overlay);
@@ -25,7 +25,7 @@ class PencilTool extends AbstractDrawingTool {
 		const point = new Point(p.x, p.y, this.layer.id);
 
 		this.zone.setTile(this.tile, point);
-		const event = new TileChangeEvent({affectedPoints: [point]});
+		const event = new TileChangeEvent({ affectedPoints: [point] });
 		this.dispatchEvent(event);
 	}
 

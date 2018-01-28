@@ -12,7 +12,7 @@ class WindowManager {
 	};
 
 	public static get defaultManager(): WindowManager {
-		return this._defaultManager = this._defaultManager || new WindowManager(document.body);
+		return (this._defaultManager = this._defaultManager || new WindowManager(document.body));
 	}
 
 	constructor(container: HTMLElement) {

@@ -17,7 +17,7 @@ class PauseScene extends Scene {
 	render(renderer: AbstractRenderer): void {
 		for (let x = 0; x < 9; x++) {
 			for (let y = 0; y < 9; y++) {
-				renderer.renderImage({representation: this._image}, x * Tile.WIDTH, y * Tile.HEIGHT);
+				renderer.renderImage({ representation: this._image }, x * Tile.WIDTH, y * Tile.HEIGHT);
 			}
 		}
 	}

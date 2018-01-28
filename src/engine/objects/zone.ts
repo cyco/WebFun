@@ -42,7 +42,7 @@ class Zone {
 	protected _actions: Action[] = [];
 
 	get doors(): Hotspot[] {
-		return this._hotspots.filter((hotspot) => hotspot.type === HotspotType.DoorIn && hotspot.arg !== -1);
+		return this._hotspots.filter(hotspot => hotspot.type === HotspotType.DoorIn && hotspot.arg !== -1);
 	}
 
 	getLocatorDescription() {
@@ -68,7 +68,7 @@ class Zone {
 		return this.tileIDs[index];
 	}
 
-	getTile(x: number|PointLike, y?: number, z?: number): Tile {
+	getTile(x: number | PointLike, y?: number, z?: number): Tile {
 		if (typeof x === "object") {
 			y = x.y;
 			z = x.z;
@@ -76,13 +76,12 @@ class Zone {
 		}
 
 		const index = this.getTileID(x, y, z);
-		if (index === -1 || index === 0xFFFF || index >= this._tileStore.length)
-			return null;
+		if (index === -1 || index === 0xffff || index >= this._tileStore.length) return null;
 
 		return this._tileStore[index];
 	}
 
-	setTile(tile: Tile, x: number|PointLike, y: number = null, z: number = null): void {
+	setTile(tile: Tile, x: number | PointLike, y: number = null, z: number = null): void {
 		if (typeof x === "object") {
 			y = x.y;
 			z = x.z;
@@ -103,7 +102,7 @@ class Zone {
 		this.setTile(null, sourceX, sourceY, z);
 	}
 
-	placeWalkable(x: number|PointLike, y?: number): boolean {
+	placeWalkable(x: number | PointLike, y?: number): boolean {
 		if (typeof x === "object") {
 			y = x.y;
 			x = x.x;
@@ -134,7 +133,7 @@ class Zone {
 	}
 
 	layDownHotspotItems(): void {
-		this.hotspots.filter((htsp) => htsp.enabled).forEach((hotspot) => {
+		this.hotspots.filter(htsp => htsp.enabled).forEach(hotspot => {
 			switch (hotspot.type) {
 				case HotspotType.Unused:
 					hotspot.arg = TILE_ADEGAN_CRYSTAL;
@@ -148,7 +147,7 @@ class Zone {
 				case HotspotType.CrateWeapon:
 					if (hotspot.arg < 0) break;
 					if (this.getTile(hotspot.x, hotspot.y, 1)) return;
-					this.setTile(<Tile>{id: hotspot.arg}, hotspot.x, hotspot.y, 1);
+					this.setTile(<Tile>{ id: hotspot.arg }, hotspot.x, hotspot.y, 1);
 					break;
 				case HotspotType.DoorIn:
 					if (hotspot.arg < 0) break;

@@ -13,7 +13,7 @@ describe("HorizontalPointRange", () => {
 		let visited = {};
 		let range = new HorizontalPointRange(3, 8, 4);
 
-		range.iterate(function (point) {
+		range.iterate(function(point) {
 			visited[point.x + "x" + point.y] = true;
 		});
 
@@ -31,7 +31,7 @@ describe("HorizontalPointRange", () => {
 		let visited = {};
 		let range = new HorizontalPointRange(2, 0, 4);
 
-		range.iterate(function (point) {
+		range.iterate(function(point) {
 			visited[point.x + "x" + point.y] = true;
 		}, -1);
 

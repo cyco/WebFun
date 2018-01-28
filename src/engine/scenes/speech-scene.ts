@@ -34,8 +34,7 @@ class SpeechScene extends Scene {
 		this._bubble = bubble;
 	}
 
-	render() {
-	}
+	render() {}
 
 	willShow() {
 		this.engine.inputManager.mouseDownHandler = (p: Point): void => null;
@@ -65,7 +64,7 @@ class SpeechScene extends Scene {
 	}
 
 	_determineGlobalOffset() {
-		const canvas = document.querySelector("canvas[width=\"288\"][height=\"288\"]");
+		const canvas = document.querySelector('canvas[width="288"][height="288"]');
 		const box = canvas.getBoundingClientRect();
 
 		return new Point(box.left, box.top, 0);

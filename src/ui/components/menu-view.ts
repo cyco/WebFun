@@ -15,8 +15,7 @@ class MenuView extends Component {
 	}
 
 	set menu(menu) {
-		if (menu && !(menu instanceof Menu))
-			menu = new Menu(menu);
+		if (menu && !(menu instanceof Menu)) menu = new Menu(menu);
 
 		this._menu = menu;
 
@@ -32,8 +31,7 @@ class MenuView extends Component {
 
 	close() {
 		this.remove();
-		if (this.onclose instanceof Function)
-			this.onclose();
+		if (this.onclose instanceof Function) this.onclose();
 	}
 
 	addItemNodes() {

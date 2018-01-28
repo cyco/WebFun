@@ -20,7 +20,7 @@ describe("ScriptExecutor", () => {
 	});
 
 	describe("actionDoesApply is a function to check if an action should be considered for execution", () => {
-		it("returns false for actions that are neither enabled nor have been partly executed ", async (done) => {
+		it("returns false for actions that are neither enabled nor have been partly executed ", async done => {
 			action.enabled = false;
 			action.instructionPointer = 0;
 
@@ -29,7 +29,7 @@ describe("ScriptExecutor", () => {
 			done();
 		});
 
-		it("returns true if enabled and all conditions check out", async (done) => {
+		it("returns true if enabled and all conditions check out", async done => {
 			action.conditions = [];
 			action.enabled = true;
 			expect(await evaluator.actionDoesApply(action)).toBeTrue();
@@ -37,7 +37,7 @@ describe("ScriptExecutor", () => {
 			done();
 		});
 
-		it("returns true if it has been partly executed and all conditions check out", async (done) => {
+		it("returns true if it has been partly executed and all conditions check out", async done => {
 			action.enabled = false;
 			action.instructionPointer = 1;
 			action.conditions = [];
@@ -46,13 +46,12 @@ describe("ScriptExecutor", () => {
 			done();
 		});
 
-		it("uses a condition checker to test all conditions", async (done) => {
+		it("uses a condition checker to test all conditions", async done => {
 			action.enabled = true;
 			action.instructionPointer = 0;
 
 			const checker = {
-				check() {
-				}
+				check() {}
 			};
 			evaluator._checker = checker;
 
@@ -65,10 +64,9 @@ describe("ScriptExecutor", () => {
 			done();
 		});
 
-		it("returns false if one condition check fails", async (done) => {
+		it("returns false if one condition check fails", async done => {
 			const checker = {
-				check() {
-				}
+				check() {}
 			};
 			evaluator._checker = checker;
 
@@ -80,10 +78,9 @@ describe("ScriptExecutor", () => {
 			done();
 		});
 
-		it("stops execution early if one condition fails", async (done) => {
+		it("stops execution early if one condition fails", async done => {
 			const checker = {
-				check() {
-				}
+				check() {}
 			};
 			evaluator._checker = checker;
 
@@ -106,8 +103,8 @@ describe("ScriptExecutor", () => {
 			evaluator._executor = executor;
 		});
 
-		it("executes all instructions in an action", async (done) => {
-			const action = {instructions: ["instruction1", "instruction2"]};
+		it("executes all instructions in an action", async done => {
+			const action = { instructions: ["instruction1", "instruction2"] };
 			spyOn(executor, "execute").and.returnValue(ResultFlags.OK);
 
 			await evaluator.executeInstructions(action);
@@ -117,8 +114,8 @@ describe("ScriptExecutor", () => {
 			done();
 		});
 
-		it("starts execution at the instruction pointer", async (done) => {
-			const action = {instructions: ["instruction1", "instruction2"], instructionPointer: 1};
+		it("starts execution at the instruction pointer", async done => {
+			const action = { instructions: ["instruction1", "instruction2"], instructionPointer: 1 };
 			spyOn(executor, "execute");
 
 			await evaluator.executeInstructions(action);
@@ -128,8 +125,8 @@ describe("ScriptExecutor", () => {
 			done();
 		});
 
-		it("stops executing instructions when an instruction returns wait", async (done) => {
-			const action = {instructions: ["instruction1", "instruction2"], instructionPointer: 0};
+		it("stops executing instructions when an instruction returns wait", async done => {
+			const action = { instructions: ["instruction1", "instruction2"], instructionPointer: 0 };
 			spyOn(executor, "execute").and.returnValue(ResultFlags.Wait);
 
 			await evaluator.executeInstructions(action);

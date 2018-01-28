@@ -1,6 +1,6 @@
-import { Array } from 'src/std';
+import { Array } from "src/std";
 
-const clear = function (): void {
+const clear = function(): void {
 	this.splice(0, this.length);
 };
 
@@ -11,6 +11,5 @@ declare global {
 		clear(): void;
 	}
 }
-
 
 export default clear;

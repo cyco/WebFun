@@ -1,4 +1,4 @@
-export const PrepareExpectations = (string) => {
+export const PrepareExpectations = string => {
 	return string.split("\n");
 };
 
@@ -6,12 +6,10 @@ export const ParseExpectation = (expectation, line) => {
 	try {
 		return JSON.parse(expectation);
 	} catch (e) {
-		if (line !== undefined)
-			console.warn(`Unable to parse expectation at line ${line}!`);
-		else
-			console.warn(`Unable to parse expectation!`);
+		if (line !== undefined) console.warn(`Unable to parse expectation at line ${line}!`);
+		else console.warn(`Unable to parse expectation!`);
 	}
-	return {seed: -1};
+	return { seed: -1 };
 };
 
 export const ComparisonResult = {
@@ -29,7 +27,8 @@ export const CompareWorldItems = (item1, item2) => {
 	if ((item1.findItem ? item1.findItem.id : -1) !== item2.findItemID) return ComparisonResult.Different;
 	if ((item1.requiredItem ? item1.requiredItem.id : -1) !== item2.requiredItemID) return ComparisonResult.Different;
 	if ((item1.npc ? item1.npc.id : -1) !== item2.npcID) return ComparisonResult.Different;
-	if ((item1.additionalRequiredItem ? item1.additionalRequiredItem.id : -1) !== item2.additionalRequiredItemID) return ComparisonResult.Different;
+	if ((item1.additionalRequiredItem ? item1.additionalRequiredItem.id : -1) !== item2.additionalRequiredItemID)
+		return ComparisonResult.Different;
 
 	return ComparisonResult.Equal;
 };

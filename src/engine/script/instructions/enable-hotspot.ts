@@ -11,8 +11,7 @@ export default <InstructionType>{
 	Implementation: async (instruction: Instruction, engine: Engine, action: Action): Promise<Result> => {
 		const zone = engine.currentZone;
 		const hotspot = zone.hotspots[instruction.arguments[0]];
-		if (hotspot)
-			hotspot.enabled = true;
+		if (hotspot) hotspot.enabled = true;
 
 		return ResultFlags.UpdateHotspot;
 	}

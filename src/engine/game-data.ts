@@ -29,7 +29,7 @@ import { Size, Point } from "src/util";
 import CharType from "src/engine/objects/char-type";
 
 declare interface RawGameData {
-	catalog: any[]
+	catalog: any[];
 }
 
 class GameData {
@@ -45,43 +45,44 @@ class GameData {
 	constructor(raw: RawGameData) {
 		this._rawInput = raw;
 		this._version = this._getCategory("VERS").version;
-		this._sounds = this._getCategory("SNDS").sounds
-			.map((i: { content: string }) => i.content);
-		this._tiles = this._getCategory("TILE").tiles
-			.map((t: { attributes: number, pixels: Uint8Array }, i: number) => {
+		this._sounds = this._getCategory("SNDS").sounds.map((i: { content: string }) => i.content);
+		this._tiles = this._getCategory("TILE").tiles.map(
+			(t: { attributes: number; pixels: Uint8Array }, i: number) => {
 				const tile = new MutableTile();
 				tile.id = i;
 				tile.attributes = t.attributes;
 				tile.imageData = t.pixels;
 				return tile;
-			});
-		this._puzzles = this._getCategory("PUZ2").puzzles
-			.filter(({ index }: { index: number }) => index !== -1)
+			}
+		);
+		this._puzzles = this._getCategory("PUZ2")
+			.puzzles.filter(({ index }: { index: number }) => index !== -1)
 			.map((data: any, index: number) => this._makePuzzle(data, index));
-		this._characters = this._getCategory("CHAR").characters
-			.filter(({ index }: { index: number }) => index !== -1)
+		this._characters = this._getCategory("CHAR")
+			.characters.filter(({ index }: { index: number }) => index !== -1)
 			.map((data: any, index: number) => this._makeCharacter(data, index));
 
 		this._zones = [];
-		this._getCategory("ZONE").zones
-			.map((data: any) => this._makeZone(data)).forEach((z: Zone) => this._zones.push(z));
+		this._getCategory("ZONE")
+			.zones.map((data: any) => this._makeZone(data))
+			.forEach((z: Zone) => this._zones.push(z));
 
-		this._getCategory("CAUX").auxiliaries
-			.filter(({ index }: { index: number }) => index !== -1)
+		this._getCategory("CAUX")
+			.auxiliaries.filter(({ index }: { index: number }) => index !== -1)
 			.forEach(({ damage }: { damage: number }, idx: number) => {
 				const char = <MutableChar>this._characters[idx];
 				char.damage = damage;
 			});
 
-		this._getCategory("CHWP").weapons
-			.filter(({ index }: { index: number }) => index !== -1)
-			.forEach(({ reference, health }: { reference: number, health: number }, idx: number) => {
+		this._getCategory("CHWP")
+			.weapons.filter(({ index }: { index: number }) => index !== -1)
+			.forEach(({ reference, health }: { reference: number; health: number }, idx: number) => {
 				const char = <MutableChar>this._characters[idx];
 				char.reference = reference;
 				char.health = health;
 			});
-		this._getCategory("TNAM").names
-			.filter(({ tileId }: { tileId: number }) => tileId !== -1)
+		this._getCategory("TNAM")
+			.names.filter(({ tileId }: { tileId: number }) => tileId !== -1)
 			.forEach((nameSpecification: any) => {
 				if (!nameSpecification.name) return;
 
@@ -119,8 +120,7 @@ class GameData {
 			puzzle.item2 = null;
 		}
 
-		if (index === 0xBD || index === 0xC5)
-			puzzle.type = PuzzleType.Disabled;
+		if (index === 0xbd || index === 0xc5) puzzle.type = PuzzleType.Disabled;
 
 		return puzzle;
 	}

@@ -31,7 +31,6 @@ class Token extends Component {
 		}
 
 		if (this.sound) {
-
 		}
 
 		if (this._details) {
@@ -70,7 +69,6 @@ class Token extends Component {
 	get sound() {
 		return this._sound;
 	}
-
 }
 
 export default Token;

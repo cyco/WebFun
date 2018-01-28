@@ -20,7 +20,6 @@ class Action extends Component {
 			this.classList.add(this._action.icon);
 		}
 		this.onclick = () => this._action.command();
-
 	}
 
 	get action() {

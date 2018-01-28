@@ -5,7 +5,7 @@ import Yoda from "src/engine/yoda";
 
 describeComponent(InventoryComponent, () => {
 	let subject;
-	beforeEach(() => subject = render(InventoryComponent));
+	beforeEach(() => (subject = render(InventoryComponent)));
 
 	it("renders at least 7 rows", () => {
 		expect(subject.querySelectorAll(InventoryRow.TagName).length).toBe(7);
@@ -13,7 +13,7 @@ describeComponent(InventoryComponent, () => {
 
 	describe("showing inventory contents", () => {
 		let inventory = new Inventory();
-		let tileMock = {image: {representation: {}}};
+		let tileMock = { image: { representation: {} } };
 
 		beforeEach(() => {
 			inventory = new Inventory();
@@ -57,12 +57,12 @@ describeComponent(InventoryComponent, () => {
 		});
 
 		describe("row click handlers", () => {
-			it("are used to start the locator", (done) => {
+			it("are used to start the locator", done => {
 				let inventory = new Inventory();
 				inventory.addItem(mockTile(Yoda.ItemIDs.Locator));
 				subject.inventory = inventory;
 
-				subject.addEventListener(InventoryEvent.PlacedLocator, (e) => {
+				subject.addEventListener(InventoryEvent.PlacedLocator, e => {
 					expect(e.detail.item.id).toBe(Yoda.ItemIDs.Locator);
 					expect(e.detail.row).toBe(0);
 
@@ -73,13 +73,12 @@ describeComponent(InventoryComponent, () => {
 				firstRow.dispatchEvent(new MouseEvent("click"));
 			});
 
-
-			it("are used to throw thermal detonators", (done) => {
+			it("are used to throw thermal detonators", done => {
 				let inventory = new Inventory();
 				inventory.addItem(mockTile(Yoda.ItemIDs.ThermalDetonator));
 				subject.inventory = inventory;
 
-				subject.addEventListener(InventoryEvent.ThrowDetonator, (e) => {
+				subject.addEventListener(InventoryEvent.ThrowDetonator, e => {
 					expect(e.detail.item.id).toBe(Yoda.ItemIDs.ThermalDetonator);
 					expect(e.detail.row).toBe(0);
 
@@ -104,9 +103,9 @@ describeComponent(InventoryComponent, () => {
 					firstRow.dispatchEvent(new MouseEvent("click"));
 				});
 
-				it("triggers simple place item events", (done) => {
+				it("triggers simple place item events", done => {
 					tileMock.getAttribute = () => false;
-					subject.addEventListener(InventoryEvent.PlacedItem, (e) => {
+					subject.addEventListener(InventoryEvent.PlacedItem, e => {
 						done();
 					});
 
@@ -118,6 +117,6 @@ describeComponent(InventoryComponent, () => {
 	});
 
 	function mockTile(id) {
-		return {id, image: {representation: {}}};
+		return { id, image: { representation: {} } };
 	}
 });

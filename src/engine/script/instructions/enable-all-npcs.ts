@@ -10,7 +10,7 @@ export default <InstructionType>{
 	Description: "Enable all NPCs",
 	Implementation: async (instruction: Instruction, engine: Engine, action: Action): Promise<Result> => {
 		const zone = engine.currentZone;
-		zone.npcs.forEach((npc) => npc.enabled = false);
+		zone.npcs.forEach(npc => (npc.enabled = false));
 
 		return zone.npcs.length ? ResultFlags.UpdateNPC : ResultFlags.OK;
 	}

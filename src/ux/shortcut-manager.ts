@@ -14,7 +14,7 @@ type RegisteredShortcut = [ShortcutDescription, () => void];
 class ShortcutManager implements EventListenerObject {
 	private static _sharedManager: ShortcutManager;
 	public static get sharedManager() {
-		return this._sharedManager = this._sharedManager || new ShortcutManager();
+		return (this._sharedManager = this._sharedManager || new ShortcutManager());
 	}
 
 	private _plainKeyShortcutCount = 0;
@@ -47,7 +47,7 @@ class ShortcutManager implements EventListenerObject {
 		this._shortcuts[shortcut] = null;
 	}
 
-	handleEvent(e: FocusEvent|MouseEvent|KeyboardEvent) {
+	handleEvent(e: FocusEvent | MouseEvent | KeyboardEvent) {
 		if (e instanceof MouseEvent || e instanceof FocusEvent) {
 			this._node = e.target instanceof Node ? e.target : null;
 			return;
@@ -59,13 +59,17 @@ class ShortcutManager implements EventListenerObject {
 
 		if (!currentCtrlKey && !currentMetaKey && this._plainKeyShortcutCount === 0) return;
 
-		const keyCodeMatches = ([{keyCode}]: RegisteredShortcut) => keyCode === undefined || keyCode === currentKeyCode;
-		const ctrlKeyMatches = ([{ctrlKey}]: RegisteredShortcut) => ctrlKey === undefined || ctrlKey === currentCtrlKey;
-		const metaKeyMatches = ([{metaKey}]: RegisteredShortcut) => metaKey === undefined || metaKey === currentMetaKey;
-		const isInNode = ([{node}]: RegisteredShortcut) => !node || this._node && node.contains(this._node);
+		const keyCodeMatches = ([{ keyCode }]: RegisteredShortcut) =>
+			keyCode === undefined || keyCode === currentKeyCode;
+		const ctrlKeyMatches = ([{ ctrlKey }]: RegisteredShortcut) =>
+			ctrlKey === undefined || ctrlKey === currentCtrlKey;
+		const metaKeyMatches = ([{ metaKey }]: RegisteredShortcut) =>
+			metaKey === undefined || metaKey === currentMetaKey;
+		const isInNode = ([{ node }]: RegisteredShortcut) => !node || (this._node && node.contains(this._node));
 
-		let [_, callback] = this._shortcuts
-			.find(and(identity, keyCodeMatches, ctrlKeyMatches, metaKeyMatches, isInNode)) || [null, null];
+		let [_, callback] = this._shortcuts.find(
+			and(identity, keyCodeMatches, ctrlKeyMatches, metaKeyMatches, isInNode)
+		) || [null, null];
 
 		if (callback instanceof Function) {
 			callback();

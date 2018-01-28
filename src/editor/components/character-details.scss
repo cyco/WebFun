@@ -47,7 +47,11 @@ wf-character-details {
 		left: 15px;
 	}
 
-	input[type=text], select.type, select.movement-type, select.weapon, select.sound {
+	input[type="text"],
+	select.type,
+	select.movement-type,
+	select.weapon,
+	select.sound {
 		width: 125px;
 		align-self: flex-end;
 	}

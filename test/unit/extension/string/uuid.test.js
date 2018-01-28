@@ -6,7 +6,6 @@ describe("String.UUID", () => {
 		expect(typeof String.UUID).toBe("function");
 	});
 
-
 	it("returns a uuid with components separated by strings", () => {
 		let uuid = String.UUID();
 		expect(uuid.split("-").length).toBe(5);

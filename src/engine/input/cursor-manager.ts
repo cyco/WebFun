@@ -8,7 +8,7 @@ class CursorManager {
 		Object.seal(this);
 	}
 
-	changeCursor(cursor: string|number): void {
+	changeCursor(cursor: string | number): void {
 		let cursorName = cursor;
 		if (typeof cursor === "string") {
 			cursorName = cursor;

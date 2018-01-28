@@ -5,6 +5,6 @@ enum EvaluationMode {
 	Bump,
 	Walk,
 	PlaceItem
-};
+}
 
 export default EvaluationMode;

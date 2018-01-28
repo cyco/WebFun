@@ -2,11 +2,10 @@ import { Instruction } from "src/engine/objects";
 import RemoveItem from "src/engine/script/instructions/remove-item";
 
 describeInstruction("RemoveItem", (execute, engine) => {
-	it("removes an item from the inventory", async (done) => {
+	it("removes an item from the inventory", async done => {
 		engine.data.tiles = [null, "fake-tile"];
 		engine.inventory = {
-			removeItem() {
-			}
+			removeItem() {}
 		};
 
 		spyOn(engine.inventory, "removeItem");

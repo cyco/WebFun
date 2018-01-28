@@ -24,7 +24,7 @@ export declare interface ConfirmableWindow extends Window {
 const MergeDefaultOptions = (options: Options): Options => ({
 	component: options.component || ConfirmationWindow.TagName,
 	confirmText: options.confirmText || "Yes",
-	abortText: options.abortText || "No",
+	abortText: options.abortText || "No"
 });
 
 export default async (content: ConfirmDialogContent, o: Options = {}): Promise<Result> => {
@@ -39,8 +39,8 @@ export default async (content: ConfirmDialogContent, o: Options = {}): Promise<R
 	window.onconfirm = () => session.end(Result.Confirmed);
 	window.onabort = () => session.end(Result.Aborted);
 
-	return new Promise<Result>((resolve) => {
-		session.onend = (code) => setTimeout(() => resolve(<Result>code), 0);
+	return new Promise<Result>(resolve => {
+		session.onend = code => setTimeout(() => resolve(<Result>code), 0);
 		session.run();
 	});
-}
+};

@@ -21,16 +21,16 @@ describe("Color", () => {
 		});
 	});
 
-	describe('Color-Class', () => {
+	describe("Color-Class", () => {
 		let subject;
-		it('can be constructed using rgb(a) components', () => {
+		it("can be constructed using rgb(a) components", () => {
 			subject = new Color(1, 2, 3, 0.75);
 
 			expect(subject.rgbComponents).toEqual([1, 2, 3]);
 			expect(subject.rgbaComponents).toEqual([1, 2, 3, 0.75]);
 		});
 
-		it('can be constructed using a different color object', () => {
+		it("can be constructed using a different color object", () => {
 			const aColor = new Color(1, 2, 3, 0.75);
 
 			subject = new Color(aColor);
@@ -38,7 +38,7 @@ describe("Color", () => {
 			expect(subject.rgbaComponents).toEqual([1, 2, 3, 0.75]);
 		});
 
-		it('can be created from HSV components', () => {
+		it("can be created from HSV components", () => {
 			const aColor = new Color(1, 2, 3);
 
 			subject = Color.FromHSV(...aColor.hsvComponents);
@@ -46,7 +46,7 @@ describe("Color", () => {
 			expect(subject.rgbaComponents).toEqual([1, 2, 3, 1.0]);
 		});
 
-		it('can be constructed using css-like strings components', () => {
+		it("can be constructed using css-like strings components", () => {
 			subject = new Color("rgba(1,2,3, 0.74)");
 			expect(subject.rgbComponents).toEqual([1, 2, 3]);
 			expect(subject.rgbaComponents).toEqual([1, 2, 3, 0.74]);
@@ -59,7 +59,7 @@ describe("Color", () => {
 			expect(subject.rgbComponents).toEqual([0, 255, 0]);
 		});
 
-		it('can be used to convert between color spaces', () => {
+		it("can be used to convert between color spaces", () => {
 			subject = new Color(1, 2, 3, 0.75);
 			expect(subject.hsvComponents).toEqual([210.0, 0.6666666666666666, 0.011764705882352941]);
 
@@ -76,15 +76,15 @@ describe("Color", () => {
 			expect(subject.hsvComponents).toEqual([0, 0, 0]);
 		});
 
-		it('prints nicely as a string so it can be parsed again later', () => {
+		it("prints nicely as a string so it can be parsed again later", () => {
 			const aColor = new Color(1, 2, 3, 0.75);
-			const subject = new Color('' + aColor);
+			const subject = new Color("" + aColor);
 
 			expect(subject.rgbaComponents).toEqual(aColor.rgbaComponents);
 		});
 
-		it('throws an exception when the string can\'t be parsed', () => {
-			expect(() => new Color('garbage')).toThrow();
+		it("throws an exception when the string can't be parsed", () => {
+			expect(() => new Color("garbage")).toThrow();
 		});
 	});
 });

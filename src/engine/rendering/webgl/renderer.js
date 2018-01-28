@@ -21,7 +21,7 @@ class WebGLRenderer extends AbstractRenderer {
 		this._context = canvas.getContext("webgl");
 
 		this._imageFactory = new ImageFactory(this._context);
-		this._imageFactory.onpalettechange = (palette) => this._setupPalette(palette);
+		this._imageFactory.onpalettechange = palette => this._setupPalette(palette);
 
 		this._setupShaders(this._context);
 		this._setupVertexBuffer(this._context);
@@ -48,11 +48,11 @@ class WebGLRenderer extends AbstractRenderer {
 
 	_convertToRGBA(bgrPalette) {
 		const rgbaPalette = new Uint8Array(bgrPalette.length);
-		for (let i = 0; i <= 0xFF; i++) {
+		for (let i = 0; i <= 0xff; i++) {
 			rgbaPalette[4 * i + 0] = bgrPalette[4 * i + 2];
 			rgbaPalette[4 * i + 1] = bgrPalette[4 * i + 1];
 			rgbaPalette[4 * i + 2] = bgrPalette[4 * i + 0];
-			rgbaPalette[4 * i + 3] = 0xFF;
+			rgbaPalette[4 * i + 3] = 0xff;
 		}
 
 		// make sure color 0 is transparent
@@ -66,12 +66,18 @@ class WebGLRenderer extends AbstractRenderer {
 		const gl = this._context;
 
 		const positions = [
-			x + 1, 8 - y + 1,
-			x + 0, 8 - y + 1,
-			x + 0, 8 - y + 0,
-			x + 1, 8 - y + 1,
-			x + 0, 8 - y + 0,
-			x + 1, 8 - y + 0
+			x + 1,
+			8 - y + 1,
+			x + 0,
+			8 - y + 1,
+			x + 0,
+			8 - y + 0,
+			x + 1,
+			8 - y + 1,
+			x + 0,
+			8 - y + 0,
+			x + 1,
+			8 - y + 0
 		];
 
 		const vertBuffer = gl.createBuffer();
@@ -94,21 +100,15 @@ class WebGLRenderer extends AbstractRenderer {
 		const program = twgl.createProgramFromSources(
 			gl,
 			[VertexShader, FragmentShader],
-			["a_position", "a_textureIndex", "a_palette_position"]);
+			["a_position", "a_textureIndex", "a_palette_position"]
+		);
 		gl.useProgram(program);
 		gl.uniform1i(gl.getUniformLocation(program, "u_image"), 0);
 		gl.uniform1i(gl.getUniformLocation(program, "u_palette"), 1);
 	}
 
 	_setupVertexBuffer(gl) {
-		const palette_positions = [
-			1, 1,
-			-1, 1,
-			-1, -1,
-			1, 1,
-			-1, -1,
-			1, -1
-		];
+		const palette_positions = [1, 1, -1, 1, -1, -1, 1, 1, -1, -1, 1, -1];
 		const vertBuffer2 = gl.createBuffer();
 		gl.bindBuffer(gl.ARRAY_BUFFER, vertBuffer2);
 		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(palette_positions), gl.STATIC_DRAW);

@@ -101,7 +101,7 @@ class TransitionScene extends Scene {
 	}
 
 	render(renderer: AbstractRenderer): void {
-		this.state = (performance.now() - this._startTime);
+		this.state = performance.now() - this._startTime;
 
 		switch (this.type) {
 			case TransitionScene.TRANSITION_TYPE.ZONE:
@@ -175,20 +175,14 @@ class TransitionScene extends Scene {
 
 		if (!this._target) {
 			let x2;
-			if (xDir === -1)
-				x2 = 0;
-			else if (xDir === 1)
-				x2 = -9;
-			else
-				x2 = this.scene.currentOffset.x;
+			if (xDir === -1) x2 = 0;
+			else if (xDir === 1) x2 = -9;
+			else x2 = this.scene.currentOffset.x;
 
 			let y2;
-			if (yDir === -1)
-				y2 = 0;
-			else if (yDir === 1)
-				y2 = -9;
-			else
-				y2 = this.scene.currentOffset.y;
+			if (yDir === -1) y2 = 0;
+			else if (yDir === 1) y2 = -9;
+			else y2 = this.scene.currentOffset.y;
 			this._target = this._takeSnapshot(this.targetZone, x2, y2);
 		}
 
@@ -203,11 +197,9 @@ class TransitionScene extends Scene {
 		const fadeIn = this.state > this._duration / 2.0;
 		const directionAdjustedState = this.state - (fadeIn ? this._duration / 2.0 : 0.0);
 
-		let t = (directionAdjustedState / (this._duration / 2.0)) * 7;
-		if (fadeIn)
-			t = 5 - t;
-		if (this._snapAnimationToTiles)
-			t = Math.floor(t);
+		let t = directionAdjustedState / (this._duration / 2.0) * 7;
+		if (fadeIn) t = 5 - t;
+		if (this._snapAnimationToTiles) t = Math.floor(t);
 
 		const w = 9.0; // viewport width
 		const h = 9.0; // viewport height

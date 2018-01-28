@@ -4,7 +4,7 @@ import { ImageFactory } from "src/engine/rendering/canvas";
 
 export declare interface TileSheetEntry {
 	rectangle: Rectangle;
-	sheet: TileSheet
+	sheet: TileSheet;
 }
 
 class TileSheet {

@@ -17,7 +17,7 @@ export const GOAL_RESCUE_YODA = 0x0bd;
 export const GOAL_LANTERN_OF_SACRED_LIGHT = 0x0c6;
 export const GOAL_ADEGAN_CRYSTAL = 0x0c7;
 export const GOAL_THREEPIOS_PARTS = 0x0c9;
-export const GOAL_CAR = 0x0C5;
+export const GOAL_CAR = 0x0c5;
 
 import LocatorTile from "./locator-tile";
 import Planet from "./planet";

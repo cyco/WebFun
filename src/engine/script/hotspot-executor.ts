@@ -11,7 +11,7 @@ class HotspotExecutor {
 	}
 
 	laydownHotspotItems(zone: Zone): void {
-		zone.hotspots.forEach((hotspot) => this._laydownHotspotItem(zone, hotspot));
+		zone.hotspots.forEach(hotspot => this._laydownHotspotItem(zone, hotspot));
 	}
 
 	_laydownHotspotItem(zone: Zone, hotspot: Hotspot): void {
@@ -31,10 +31,12 @@ class HotspotExecutor {
 		if (type === HotspotType.SpawnLocation) {
 			if (hotspot.arg !== zone.puzzleNPC) console.warn("NPC ID mismatch");
 			zone.setTile(tile, location);
-		} else if ((hotspot.type === HotspotType.TriggerLocation)
-			|| (hotspot.type === HotspotType.CrateItem)
-			|| (hotspot.type === HotspotType.CrateWeapon)
-			|| (hotspot.type === HotspotType.ForceLocation)) {
+		} else if (
+			hotspot.type === HotspotType.TriggerLocation ||
+			hotspot.type === HotspotType.CrateItem ||
+			hotspot.type === HotspotType.CrateWeapon ||
+			hotspot.type === HotspotType.ForceLocation
+		) {
 			zone.setTile(tile, location);
 		} else return;
 
@@ -43,11 +45,10 @@ class HotspotExecutor {
 	}
 
 	pickUpHotspotItems(zone: Zone) {
-		zone.hotspots.forEach((hotspot) => this._pickUpHotspotItem(zone, hotspot));
+		zone.hotspots.forEach(hotspot => this._pickUpHotspotItem(zone, hotspot));
 	}
 
-	_pickUpHotspotItem(zone: Zone, hotspot: Hotspot) {
-	}
+	_pickUpHotspotItem(zone: Zone, hotspot: Hotspot) {}
 }
 
 export default HotspotExecutor;

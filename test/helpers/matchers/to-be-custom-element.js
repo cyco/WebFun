@@ -1,7 +1,7 @@
 import addMatchers from "add-matchers";
 import { HTMLElement } from "std.dom";
 
-const toBeCustomElement = (thing) => {
+const toBeCustomElement = thing => {
 	return thing.prototype instanceof HTMLElement;
 };
 

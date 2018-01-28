@@ -10,7 +10,7 @@ const hsv2rgb = (h: number, s: number, v: number): number[] => {
 		h += 360;
 	}
 
-	const b = ((1 - s) * v);
+	const b = (1 - s) * v;
 	const vb = v - b;
 	const hm = h % 60;
 	switch (Math.floor(h / 60)) {
@@ -37,11 +37,10 @@ const rgb2hsv = (r: number, g: number, b: number): [number, number, number] => {
 	const min = Math.min(r, g, b);
 	const max = Math.max(r, g, b);
 
-	if (min === max)
-		return [0, 0, min];
+	if (min === max) return [0, 0, min];
 
-	const d = (r === min) ? g - b : (b === min ? r - g : b - r);
-	const h = (r === min) ? 3 : (b === min ? 1 : 5);
+	const d = r === min ? g - b : b === min ? r - g : b - r;
+	const h = r === min ? 3 : b === min ? 1 : 5;
 	return [60 * (h - d / (max - min)), (max - min) / max, max];
 };
 export { rgba, rgb, rgb2rgba, hsv2rgb, rgb2hsv };
@@ -62,7 +61,7 @@ class Color {
 		return new Color(r, g, b);
 	}
 
-	constructor(red: number|string|Color, green?: number, blue?: number, alpha: number = 1.0) {
+	constructor(red: number | string | Color, green?: number, blue?: number, alpha: number = 1.0) {
 		if (typeof red === "string") {
 			[red, green, blue, alpha] = this._parseColor(<string>red);
 		}

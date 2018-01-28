@@ -4,9 +4,9 @@ import { SoundInspectorCell } from "../components";
 import ReferenceResolver from "src/editor/reference-resolver";
 
 type Sound = {
-	id: number
-	file: string
-}
+	id: number;
+	file: string;
+};
 
 class SoundInspector extends AbstractInspector {
 	private _list: List<Sound>;
@@ -24,7 +24,9 @@ class SoundInspector extends AbstractInspector {
 		this._list.cell = <SoundInspectorCell>document.createElement(SoundInspectorCell.TagName);
 		this._list.searchDelegate = this;
 		this._list.state = state.prefixedWith("list");
-		this._list.addEventListener(SoundInspectorCell.Events.RevealReferences, (e: CustomEvent) => this._revealReferences(e.detail.sound));
+		this._list.addEventListener(SoundInspectorCell.Events.RevealReferences, (e: CustomEvent) =>
+			this._revealReferences(e.detail.sound)
+		);
 		this.window.content.appendChild(this._list);
 	}
 

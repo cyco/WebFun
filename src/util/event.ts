@@ -6,11 +6,10 @@ function BaseEvent(type: string, init: EventInit) {
 Object.setPrototypeOf(BaseEvent, Event);
 Object.setPrototypeOf(BaseEvent.prototype, Event.prototype);
 
-
 declare interface BaseEvent extends Event {
 	prototype: Event;
 
-	new(): Event;
+	new (): Event;
 }
 
-export default <typeof Event><any>BaseEvent;
+export default <typeof Event>(<any>BaseEvent);

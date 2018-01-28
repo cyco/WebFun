@@ -18,7 +18,7 @@ export default (text, attributes = {}, flags = []) => {
 	container.clear();
 	const node = document.createElement(textIsString ? text : text.TagName);
 	attributes.each((key, value) => node.setAttribute(key, value));
-	flags.forEach((flag) => node.setAttribute(flag, ""));
+	flags.forEach(flag => node.setAttribute(flag, ""));
 	container.appendChild(node);
 	return node;
 };

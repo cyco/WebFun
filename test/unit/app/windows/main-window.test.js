@@ -8,7 +8,7 @@ describeComponent(MainWindow, () => {
 	let subject;
 
 	describe("it contains all the main UI elements", () => {
-		beforeAll(() => subject = render(MainWindow));
+		beforeAll(() => (subject = render(MainWindow)));
 		it("such as the inventory", () => {
 			expect(subject.querySelector(Inventory.TagName)).not.toBeNull();
 		});
@@ -31,7 +31,7 @@ describeComponent(MainWindow, () => {
 	});
 
 	describe("updating ui", () => {
-		beforeAll(() => subject = render(MainWindow));
+		beforeAll(() => (subject = render(MainWindow)));
 
 		let engine;
 		beforeEach(() => {
@@ -64,15 +64,14 @@ describeComponent(MainWindow, () => {
 		});
 
 		it("registers for location change events (can go every where)", () => {
-			engine.triggerLocationChange(0xFFFF);
+			engine.triggerLocationChange(0xffff);
 			const location = subject.querySelector(Location.TagName);
 			expect(location.mask).toBe(30);
 		});
 	});
 
 	function mockEngine() {
-		class MockHero extends EventTarget {
-		}
+		class MockHero extends EventTarget {}
 
 		const hero = new MockHero();
 
@@ -94,11 +93,13 @@ describeComponent(MainWindow, () => {
 				const detail = {
 					world: {
 						locationOfZone() {
-							return mask ? {
-								byAdding() {
-									return 5;
-								}
-							} : null;
+							return mask
+								? {
+										byAdding() {
+											return 5;
+										}
+									}
+								: null;
 						},
 						getZone() {
 							return {};

@@ -3,8 +3,8 @@ import { getFixtureData } from "test-helpers/fixture-loading";
 
 describe("ArrayBuffer reading", () => {
 	let sampleBuffer;
-	beforeAll((done) => {
-		getFixtureData("someData", function (buffer) {
+	beforeAll(done => {
+		getFixtureData("someData", function(buffer) {
 			sampleBuffer = buffer;
 			done();
 		});
@@ -28,7 +28,7 @@ describe("ArrayBuffer reading", () => {
 			expect(byte).toBe(255);
 
 			byte = readUint8.call(sampleBuffer, 3);
-			expect(byte).toBe(0xFF);
+			expect(byte).toBe(0xff);
 		});
 	});
 });

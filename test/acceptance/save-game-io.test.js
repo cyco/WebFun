@@ -10,11 +10,11 @@ xdescribe("Save Game IO", () => {
 	let data, state, inputStream;
 
 	describe("simple world", () => {
-		beforeAll((done) => {
+		beforeAll(done => {
 			loadGameData(rawData => {
 				data = new GameData(rawData);
 
-				getFixtureData("savegame.wld", function (file) {
+				getFixtureData("savegame.wld", function(file) {
 					inputStream = new InputStream(file);
 					done();
 				});
@@ -39,11 +39,11 @@ xdescribe("Save Game IO", () => {
 	});
 
 	xdescribe("world including npcs", () => {
-		beforeAll((done) => {
+		beforeAll(done => {
 			loadGameData(rawData => {
 				data = new GameData(rawData);
 
-				getFixtureData("savegame_including_npcs.wld", function (file) {
+				getFixtureData("savegame_including_npcs.wld", function(file) {
 					inputStream = new InputStream(file);
 					done();
 				});

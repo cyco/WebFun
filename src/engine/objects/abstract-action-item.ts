@@ -1,4 +1,4 @@
-export type AbstractActionItemInit = Partial<{opcode: number, arguments: any[], text: string}>;
+export type AbstractActionItemInit = Partial<{ opcode: number; arguments: any[]; text: string }>;
 
 class AbstractActionItem {
 	protected _opcode: number;

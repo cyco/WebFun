@@ -3,8 +3,8 @@ import { getFixtureData } from "test-helpers/fixture-loading";
 
 describe("ArrayBuffer.readString", () => {
 	let sampleBuffer;
-	beforeAll((done) => {
-		getFixtureData("asciiString", function (buffer) {
+	beforeAll(done => {
+		getFixtureData("asciiString", function(buffer) {
 			sampleBuffer = buffer;
 			done();
 		});
@@ -20,7 +20,7 @@ describe("ArrayBuffer.readString", () => {
 		string = sampleBuffer.readString(2, 5);
 		expect(string).toBe("ASCII");
 
-		string = readString.call(sampleBuffer, 2, 0xC);
+		string = readString.call(sampleBuffer, 2, 0xc);
 		expect(string).toBe("ASCII STRING");
 
 		string = sampleBuffer.readString(8, 6);

@@ -9,14 +9,14 @@ BaseConfig.output = {
 	filename: toolName + ".bin.js",
 	path: Paths.toolsRootBin
 };
-const babelLoader = BaseConfig.module.rules.find(({loader}) => loader === "babel-loader");
+const babelLoader = BaseConfig.module.rules.find(({ loader }) => loader === "babel-loader");
 if (babelLoader) {
 	babelLoader.options = babelLoader.options || {};
 	babelLoader.options.plugins = babelLoader.options.plugins || [];
 	babelLoader.options.plugins.push("transform-runtime");
 }
 
-const atLoader = BaseConfig.module.rules.find(({loader}) => loader === "awesome-typescript-loader");
+const atLoader = BaseConfig.module.rules.find(({ loader }) => loader === "awesome-typescript-loader");
 if (atLoader) {
 	atLoader.options = atLoader.options || {};
 	atLoader.options.babelOptions = atLoader.options.babelOptions || {};

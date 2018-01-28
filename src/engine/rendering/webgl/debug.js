@@ -41,7 +41,8 @@ class WebGLDebug {
 		const program = twgl.createProgramFromSources(
 			gl,
 			[VertexShader, FragmentShader],
-			["a_position", "a_textureIndex", "a_palette_position"]);
+			["a_position", "a_textureIndex", "a_palette_position"]
+		);
 		gl.useProgram(program);
 		const imageLoc = gl.getUniformLocation(program, "u_image");
 		const paletteLoc = gl.getUniformLocation(program, "u_palette");
@@ -52,29 +53,14 @@ class WebGLDebug {
 
 	_setupVertexBuffer(gl) {
 		// Setup a unit quad
-		const positions = [
-			0.5, 0.5,
-			-0.5, 0.5,
-			-0.5, -0.5,
-			0.5, 0.5,
-			-0.5, -0.5,
-			0.5, -0.5
-		];
+		const positions = [0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5];
 		const vertBuffer = gl.createBuffer();
 		gl.bindBuffer(gl.ARRAY_BUFFER, vertBuffer);
 		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
 		gl.enableVertexAttribArray(0);
 		gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
 
-
-		const palette_positions = [
-			1, 1,
-			-1, 1,
-			-1, -1,
-			1, 1,
-			-1, -1,
-			1, -1
-		];
+		const palette_positions = [1, 1, -1, 1, -1, -1, 1, 1, -1, -1, 1, -1];
 		const vertBuffer2 = gl.createBuffer();
 		gl.bindBuffer(gl.ARRAY_BUFFER, vertBuffer2);
 		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(palette_positions), gl.STATIC_DRAW);
@@ -96,11 +82,11 @@ class WebGLDebug {
 
 		// Setup a palette.
 		const palette = new Uint8Array(buffer);
-		for (let i = 0; i <= 0xFF; i++) {
+		for (let i = 0; i <= 0xff; i++) {
 			const temp = palette[4 * i + 0];
 			palette[4 * i + 0] = palette[4 * i + 2];
 			palette[4 * i + 2] = temp;
-			palette[4 * i + 3] = 0xFF;
+			palette[4 * i + 3] = 0xff;
 		}
 		palette[3] = 0;
 
@@ -128,7 +114,7 @@ class WebGLDebug {
 		const width = 16;
 		const height = 16;
 		const image = new Uint8Array(width * height);
-		for (let i = 0; i <= 0xFF; i++) {
+		for (let i = 0; i <= 0xff; i++) {
 			image[i] = i;
 		}
 

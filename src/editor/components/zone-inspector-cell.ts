@@ -32,11 +32,13 @@ class ZoneInspectorCell extends Cell<Zone> {
 		this._reveal = document.createElement("span");
 		const revealButton = document.createElement("i");
 		revealButton.className = "fa fa-search";
-		revealButton.onclick = (e) => {
-			this.dispatchEvent(new CustomEvent(Events.RevealReferences, {
-				detail: { zone: this.data },
-				bubbles: true
-			}));
+		revealButton.onclick = e => {
+			this.dispatchEvent(
+				new CustomEvent(Events.RevealReferences, {
+					detail: { zone: this.data },
+					bubbles: true
+				})
+			);
 			e.preventDefault();
 			e.stopPropagation();
 		};

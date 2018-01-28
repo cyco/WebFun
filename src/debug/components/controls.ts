@@ -25,17 +25,17 @@ class Controls extends Component {
 
 		const stepButton = new IconButton();
 		stepButton.icon = "step-forward";
-		stepButton.onclick = () => this.onstep instanceof Function ? this.onstep() : null;
+		stepButton.onclick = () => (this.onstep instanceof Function ? this.onstep() : null);
 		this._stepButton = stepButton;
 
 		const fastForward = new IconButton();
 		fastForward.icon = "fast-forward";
-		fastForward.onclick = () => this.onfastforward instanceof Function ? this.onfastforward() : null;
+		fastForward.onclick = () => (this.onfastforward instanceof Function ? this.onfastforward() : null);
 		this._fastForwardButton = fastForward;
 
 		const playButton = new IconButton();
 		playButton.icon = "play";
-		playButton.onclick = () => this.ontogglepause instanceof Function ? this.ontogglepause() : null;
+		playButton.onclick = () => (this.ontogglepause instanceof Function ? this.ontogglepause() : null);
 		this._playButton = playButton;
 	}
 

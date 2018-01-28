@@ -51,11 +51,7 @@ class CharacterInspector extends AbstractInspector {
 	}
 
 	includeListItem(searchValue: RegExp[], item: Char, cell: CharacterInspectorCell, list: List<Char>): boolean {
-		const searchableAttributes = [
-			item.id,
-			item.name,
-			item.movementType.name,
-		];
+		const searchableAttributes = [item.id, item.name, item.movementType.name];
 
 		if (item.isWeapon()) {
 			const sound = this.data.currentData.sounds[item.reference];
@@ -72,7 +68,6 @@ class CharacterInspector extends AbstractInspector {
 		const string = searchableAttributes.join(" ");
 		return searchValue.every(r => r.test(string));
 	}
-
 }
 
 export default CharacterInspector;

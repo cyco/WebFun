@@ -5,4 +5,3 @@ describe("DetonatorScene", () => {
 		expect(() => new DetonatorScene()).not.toThrow();
 	});
 });
-

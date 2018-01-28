@@ -3,13 +3,7 @@ class CharType {
 	public static readonly Enemy = new CharType();
 	public static readonly Weapon = new CharType();
 
-	public static readonly knownTypes = [
-		undefined,
-		CharType.Hero,
-		CharType.Enemy,
-		undefined,
-		CharType.Weapon
-	];
+	public static readonly knownTypes = [undefined, CharType.Hero, CharType.Enemy, undefined, CharType.Weapon];
 
 	get rawValue(): number {
 		return CharType.knownTypes.indexOf(this);

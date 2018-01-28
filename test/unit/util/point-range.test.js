@@ -22,10 +22,9 @@ describe("PointRange", () => {
 		let visited = {};
 		let range = new PointRange(new Point(3, 6), new Point(4, 7));
 
-		range.iterate(function (point) {
+		range.iterate(function(point) {
 			visited[point.x + "x" + point.y] = true;
 		}, new Point(0, 1));
-
 
 		expect(visited).toEqual({
 			"3x6": true,
@@ -34,7 +33,7 @@ describe("PointRange", () => {
 
 		visited = {};
 
-		range.iterate(function (point) {
+		range.iterate(function(point) {
 			visited[point.x + "x" + point.y] = true;
 		}, new Point(1, 0));
 
@@ -48,7 +47,7 @@ describe("PointRange", () => {
 		let visited = {};
 		let range = new PointRange(new Point(3, 6), new Point(4, 7));
 
-		range.iterate(function (point, control) {
+		range.iterate(function(point, control) {
 			visited[point.x + "x" + point.y] = true;
 			control.stop = true;
 		}, new Point(0, 1));

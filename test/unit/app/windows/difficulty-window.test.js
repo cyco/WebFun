@@ -3,7 +3,7 @@ import DifficultyWindow from "src/app/windows/difficulty-window";
 
 describeComponent(DifficultyWindow, () => {
 	let subject;
-	beforeEach(() => subject = render(DifficultyWindow));
+	beforeEach(() => (subject = render(DifficultyWindow)));
 
 	it("is a settings window", () => {
 		expect(subject instanceof SettingsWindow).toBeTrue();

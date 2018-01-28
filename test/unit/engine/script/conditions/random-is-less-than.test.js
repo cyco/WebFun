@@ -2,7 +2,7 @@ import { Condition } from "src/engine/objects";
 import RandomIsLessThan from "src/engine/script/conditions/random-is-less-than";
 
 describeCondition("RandomIsLessThan", (check, engine) => {
-	it("checks if the current zone's random value is less than the argument", async (done) => {
+	it("checks if the current zone's random value is less than the argument", async done => {
 		const condition = new Condition();
 		condition._opcode = RandomIsLessThan.Opcode;
 		condition._arguments = [5];

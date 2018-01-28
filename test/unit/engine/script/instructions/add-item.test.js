@@ -2,11 +2,10 @@ import { Instruction } from "src/engine/objects";
 import AddItem from "src/engine/script/instructions/add-item";
 
 describeInstruction("AddItem", (execute, engine) => {
-	it("adds an item to the inventory", async (done) => {
+	it("adds an item to the inventory", async done => {
 		engine.data.tiles = [null, "fake-tile"];
 		engine.inventory = {
-			addItem() {
-			}
+			addItem() {}
 		};
 
 		spyOn(engine.inventory, "addItem");

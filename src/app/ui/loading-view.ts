@@ -13,7 +13,7 @@ class LoadingView extends Component {
 		super();
 
 		this._imageCanvas = document.createElement("canvas");
-		this._imageCanvas.ondragstart = (event) => {
+		this._imageCanvas.ondragstart = event => {
 			event.preventDefault();
 			return false;
 		};
@@ -42,7 +42,7 @@ class LoadingView extends Component {
 		const imageFactory = renderer.imageFactory;
 		imageFactory.palette = palette;
 		const image = imageFactory.buildImage(288, 288, pixels);
-		const representation = <HTMLImageElement><any>image.representation;
+		const representation = <HTMLImageElement>(<any>image.representation);
 		if (representation.complete) renderer.renderImage(image, 0, 0);
 		else representation.onload = () => renderer.renderImage(image, 0, 0);
 	}

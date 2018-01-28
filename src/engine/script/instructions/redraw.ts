@@ -8,7 +8,8 @@ export default <InstructionType>{
 	Opcode: 0x09,
 	Arguments: [],
 	Description: "Redraw the whole scene immediately",
-	Implementation: async (instruction: Instruction, engine: Engine, action: Action): Promise<Result> => ResultFlags.DidRedraw
+	Implementation: async (instruction: Instruction, engine: Engine, action: Action): Promise<Result> =>
+		ResultFlags.DidRedraw
 	/*
 	 YodaView::Draw_(view, context);
 	 result_1 |= 0x80u;

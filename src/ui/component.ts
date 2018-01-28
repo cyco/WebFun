@@ -5,17 +5,13 @@ abstract class Component extends BabelHTMLElement {
 	public static observedAttributes: string[];
 	public static Options: any = undefined;
 
-	adoptedCallback(): void {
-	}
+	adoptedCallback(): void {}
 
-	connectedCallback(): void {
-	}
+	connectedCallback(): void {}
 
-	disconnectedCallback(): void {
-	}
+	disconnectedCallback(): void {}
 
-	attributeChangedCallback(attributeName: string, oldValue: string, newValue: string): void {
-	}
+	attributeChangedCallback(attributeName: string, oldValue: string, newValue: string): void {}
 }
 
 export default Component;

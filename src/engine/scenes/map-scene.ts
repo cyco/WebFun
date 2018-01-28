@@ -16,11 +16,7 @@ class MapScene extends Scene {
 	static readonly LOCATOR_TICKS = 10;
 	private _ticks: number = 0;
 	private _location: Tile = null;
-	private _cheatInput = new CheatCodeInput([
-		new Weapons(),
-		new UnlimitedAmmo(),
-		new Invincibility()
-	]);
+	private _cheatInput = new CheatCodeInput([new Weapons(), new UnlimitedAmmo(), new Invincibility()]);
 
 	isOpaque() {
 		return true;
@@ -132,23 +128,20 @@ class MapScene extends Scene {
 				let tile = this._tileForZone(zone);
 
 				if (tile && tile.image && tile.image)
-					renderer.renderImage(tile.image,
-						offsetX + x * TileWidth, offsetY + y * TileHeight);
+					renderer.renderImage(tile.image, offsetX + x * TileWidth, offsetY + y * TileHeight);
 			}
 		}
 
-		if (this._ticks % (2 * MapScene.LOCATOR_TICKS) / MapScene.LOCATOR_TICKS < 1) {
+		if ((this._ticks % (2 * MapScene.LOCATOR_TICKS)) / MapScene.LOCATOR_TICKS < 1) {
 			const x = offsetX + TileWidth * state.worldLocation.x;
 			const y = offsetY + TileHeight * state.worldLocation.y;
-			if (this._location && this._location.image)
-				renderer.renderImage(this._location.image, x, y);
+			if (this._location && this._location.image) renderer.renderImage(this._location.image, x, y);
 		}
 	}
 
 	private _tileForZone(zone: Zone): Tile {
 		let tile = LocatorTile.ForZone(zone);
-		if (tile instanceof Array)
-			tile = tile[zone.solved ? 1 : 0];
+		if (tile instanceof Array) tile = tile[zone.solved ? 1 : 0];
 
 		return this.engine.data.tiles[tile];
 	}

@@ -1,6 +1,6 @@
 import { dispatch, Point } from "src/util";
 import ResetCursor from "./reset-cursor";
-import './modal-session.scss';
+import "./modal-session.scss";
 
 class ModalSession {
 	protected _overlay: HTMLDivElement;
@@ -28,7 +28,7 @@ class ModalSession {
 
 		// HACK: get WebKit to change the cursor without further mouse events
 		// should have been fixed in https://bugs.webkit.org/show_bug.cgi?id=101857
-		dispatch(() => style.cursor = cursorStyle);
+		dispatch(() => (style.cursor = cursorStyle));
 	}
 
 	set onclick(h: (this: HTMLElement, ev: MouseEvent) => any) {
@@ -57,15 +57,16 @@ class ModalSession {
 
 	run(): void {
 		document.body.appendChild(this._overlay);
-		this._locationHandler = (e) => (this._lastMouseLocation = new Point(e.clientX, e.clientY));
-		["mouseup", "mousedown", "mousemove", "mousedrag"].forEach(
-			(eventName) => window.addEventListener(eventName, this._locationHandler));
-
+		this._locationHandler = e => (this._lastMouseLocation = new Point(e.clientX, e.clientY));
+		["mouseup", "mousedown", "mousemove", "mousedrag"].forEach(eventName =>
+			window.addEventListener(eventName, this._locationHandler)
+		);
 	}
 
 	end(code: number): void {
-		["mouseup", "mousedown", "mousemove", "mousedrag"].forEach(
-			(eventName) => window.removeEventListener(eventName, this._locationHandler));
+		["mouseup", "mousedown", "mousemove", "mousedrag"].forEach(eventName =>
+			window.removeEventListener(eventName, this._locationHandler)
+		);
 		ResetCursor(window.document);
 		this._overlay.remove();
 		this._whenOverlayIsGone(() => {

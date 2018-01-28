@@ -41,9 +41,11 @@ class Metronome {
 		this.onrender();
 
 		if (update && (<any>window).onMetronomeTick instanceof Function) {
-			this.withSuspendedUpdates(dispatch(async () => {
-				await (<any>window).onMetronomeTick();
-			}));
+			this.withSuspendedUpdates(
+				dispatch(async () => {
+					await (<any>window).onMetronomeTick();
+				})
+			);
 		}
 	}
 
@@ -56,7 +58,7 @@ class Metronome {
 		this._mainLoop = null;
 	}
 
-	public async withSuspendedUpdates<T>(thing: Function|Promise<T>) {
+	public async withSuspendedUpdates<T>(thing: Function | Promise<T>) {
 		console.assert(!this._updatesSuspended, "withSuspendedUpdates does not support reentry");
 		this._updatesSuspended = true;
 

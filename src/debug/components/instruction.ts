@@ -22,7 +22,9 @@ class InstructionComponent extends InstructionThing {
 	}
 
 	private _rebuild() {
-		const name = Object.keys(Instructions).find(key => (<any>Instructions)[key].Opcode === this._instruction.opcode);
+		const name = Object.keys(Instructions).find(
+			key => (<any>Instructions)[key].Opcode === this._instruction.opcode
+		);
 		const definition = (<any>Instructions)[name];
 		const argCount = Math.max(definition.Arguments, 0);
 		const usedArguments = this._instruction.arguments.slice(0, argCount);

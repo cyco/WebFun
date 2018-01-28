@@ -2,7 +2,7 @@ import { XMLHttpRequest } from "std.dom";
 
 const base = "base/test/fixtures/";
 
-let getFixtureContent = (name) => {
+let getFixtureContent = name => {
 	const url = buildFixtureUrl(name);
 	const xhr = new XMLHttpRequest();
 	xhr.open("GET", url, false);
@@ -28,8 +28,8 @@ if (!process.browser) {
 	const fs = require("fs");
 	const path = require("path");
 
-	getFixtureContent = (name) => {
-		return fs.readFileSync(path.resolve("./assets/game-data") + "/" + name, {encoding: "utf8"});
+	getFixtureContent = name => {
+		return fs.readFileSync(path.resolve("./assets/game-data") + "/" + name, { encoding: "utf8" });
 	};
 
 	getFixtureData = (name, callback) => {

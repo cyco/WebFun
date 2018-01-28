@@ -23,11 +23,11 @@ class AmmoComponent extends Component {
 
 	set ammo(value: number) {
 		let color = "";
-		if (value === 0xFF || value === -1) value = 0;
+		if (value === 0xff || value === -1) value = 0;
 		else color = "#000000";
 
 		this._background.style.backgroundColor = color;
-		this._indicator.style.height = ((value > 1 ? 1 : value) * 95) + "%";
+		this._indicator.style.height = (value > 1 ? 1 : value) * 95 + "%";
 	}
 
 	connectedCallback() {

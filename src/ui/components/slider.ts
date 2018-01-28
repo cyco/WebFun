@@ -152,7 +152,9 @@ class Slider extends Component {
 
 			this._knob.style.left = pos + "px";
 
-			this._value = this._min + (pos - buttonWidth) / (this.getBoundingClientRect().width - 3 * buttonWidth) * (this._max - this._min);
+			this._value =
+				this._min +
+				(pos - buttonWidth) / (this.getBoundingClientRect().width - 3 * buttonWidth) * (this._max - this._min);
 			if (this._snapToIntegers) {
 				this._value = Math.round(this._value);
 			}
@@ -220,8 +222,7 @@ class Slider extends Component {
 		this.value -= tickWidth;
 
 		dispatch(() => {
-			if (this._left.classList.contains("active"))
-				this._tickLeft();
+			if (this._left.classList.contains("active")) this._tickLeft();
 		}, 80);
 	}
 
@@ -230,8 +231,7 @@ class Slider extends Component {
 		this.value += tickWidth;
 
 		dispatch(() => {
-			if (this._right.classList.contains("active"))
-				this._tickRight();
+			if (this._right.classList.contains("active")) this._tickRight();
 		}, 80);
 	}
 
@@ -244,7 +244,7 @@ class Slider extends Component {
 		const relativeValue = (this._value - this._min) / (this._max - this._min);
 		const knobWidth = 16;
 		const width = this.getBoundingClientRect().width - 3 * knobWidth;
-		this._knob.style.left = (knobWidth + width * relativeValue) + "px";
+		this._knob.style.left = knobWidth + width * relativeValue + "px";
 	}
 
 	_postChangeNotification() {

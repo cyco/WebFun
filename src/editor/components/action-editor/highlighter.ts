@@ -1,4 +1,3 @@
-class Highlighter {
-}
+class Highlighter {}
 
 export default Highlighter;

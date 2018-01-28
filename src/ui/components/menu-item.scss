@@ -26,15 +26,15 @@ wf-menu-item {
 		filter: invert(1);
 	}
 
-	&[state=on] .state {
+	&[state="on"] .state {
 		background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 16 16" x="0" y="0"><path d="M13 .156l-1.406 1.438-5.594 5.594-1.594-1.594-1.406-1.438-2.844 2.844 1.438 1.406 3 3 1.406 1.438 1.406-1.438 7-7 1.438-1.406-2.844-2.844z"></path></svg>');
 	}
 
-	&[state=off] .state {
+	&[state="off"] .state {
 		background-image: url("");
 	}
 
-	&[state=mixed] .state {
+	&[state="mixed"] .state {
 		//    background-image: url('mixed.svg');
 	}
 

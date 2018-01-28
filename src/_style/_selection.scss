@@ -4,11 +4,12 @@
 	cursor: default;
 }
 
-input[type=text],
-input[type=number],
-input[type=search],
+input[type="text"],
+input[type="number"],
+input[type="search"],
 textarea,
-[contenteditable], [contenteditable] * {
+[contenteditable],
+[contenteditable] * {
 	user-select: text;
 	-webkit-user-select: text;
 	cursor: initial;

@@ -3,8 +3,8 @@ import { getFixtureData } from "test-helpers/fixture-loading";
 
 describe("ArrayBuffer reading", () => {
 	let sampleBuffer;
-	beforeAll((done) => {
-		getFixtureData("someData", function (buffer) {
+	beforeAll(done => {
+		getFixtureData("someData", function(buffer) {
 			sampleBuffer = buffer;
 			done();
 		});
@@ -19,13 +19,13 @@ describe("ArrayBuffer reading", () => {
 			let dword;
 
 			dword = readUint32.call(sampleBuffer, 0);
-			expect(dword).toBe(0xFFFF4223);
+			expect(dword).toBe(0xffff4223);
 		});
 
 		it("reads double words that are not aligned", () => {
 			let dword;
 			dword = readUint32.call(sampleBuffer, 1);
-			expect(dword).toBe(0x00FFFF42);
+			expect(dword).toBe(0x00ffff42);
 		});
 	});
 });

@@ -41,10 +41,10 @@ class Editor extends Component {
 		this._shortcuts = [];
 		const manager = ShortcutManager.sharedManager;
 		let shortcut;
-		shortcut = manager.registerShortcut(() => this.save(), {node: this, metaKey: true, keyCode: 83});
+		shortcut = manager.registerShortcut(() => this.save(), { node: this, metaKey: true, keyCode: 83 });
 		this._shortcuts.push(shortcut);
 
-		shortcut = manager.registerShortcut(() => this.indent(), {node: this, keyCode: 9});
+		shortcut = manager.registerShortcut(() => this.indent(), { node: this, keyCode: 9 });
 		this._shortcuts.push(shortcut);
 	}
 
@@ -74,9 +74,7 @@ class Editor extends Component {
 		}
 	}
 
-	public indent() {
-
-	}
+	public indent() {}
 
 	private unregisterShortcuts() {
 		const manager = ShortcutManager.sharedManager;
@@ -136,15 +134,17 @@ class Editor extends Component {
 			return;
 		}
 
-		this._errorArea.textContent = errors.map(e => {
-			console.log(e);
-			if (e instanceof ParserError) {
-				return "SyntaxError: " + e.message;
-			} else if (e instanceof AssemblerInputError) {
-				return "Assembler Error: " + e.message;
-			}
-			return "Error: " + e.message;
-		}).join("\n");
+		this._errorArea.textContent = errors
+			.map(e => {
+				console.log(e);
+				if (e instanceof ParserError) {
+					return "SyntaxError: " + e.message;
+				} else if (e instanceof AssemblerInputError) {
+					return "Assembler Error: " + e.message;
+				}
+				return "Error: " + e.message;
+			})
+			.join("\n");
 		this._errorArea.style.display = "";
 		this.style.setProperty("--error-height", this._errorArea.getBoundingClientRect().height + "px");
 	}

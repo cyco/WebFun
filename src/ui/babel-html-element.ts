@@ -9,7 +9,7 @@ Object.setPrototypeOf(BabelHTMLElement.prototype, HTMLElement.prototype);
 declare interface CustomHTMLElement extends HTMLElement {
 	prototype: HTMLElement;
 
-	new(): HTMLElement;
+	new (): HTMLElement;
 }
 
-export default <CustomHTMLElement><any>BabelHTMLElement;
+export default <CustomHTMLElement>(<any>BabelHTMLElement);

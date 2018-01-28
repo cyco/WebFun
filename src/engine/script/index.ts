@@ -10,7 +10,8 @@ import EvaluationMode from "./evaluation-mode";
 
 export {
 	Type,
-	Condition, Instruction,
+	Condition,
+	Instruction,
 	ResultFlags as InstructionResultFlags,
 	Result as InstructionResult,
 	ConditionStore,
@@ -19,8 +20,12 @@ export {
 	InstructionImplementation,
 	ConditionChecker,
 	InstructionExecutor,
-	InstructionsByOpcode, InstructionsByName, InstructionImplementations,
-	ConditionsByOpcode, ConditionsByName, ConditionImplementations,
+	InstructionsByOpcode,
+	InstructionsByName,
+	InstructionImplementations,
+	ConditionsByOpcode,
+	ConditionsByName,
+	ConditionImplementations,
 	ScriptExecutor,
 	EvaluationMode
 };

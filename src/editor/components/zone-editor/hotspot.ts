@@ -1,14 +1,14 @@
 import "./npc.scss";
 import { Component } from "src/ui";
 import { Hotspot } from "src/engine/objects";
-import { MutableHotspot } from 'src/engine/mutable-objects';
+import { MutableHotspot } from "src/engine/mutable-objects";
 import GameData from "src/engine/game-data";
 import CSSTileSheet from "src/editor/css-tile-sheet";
 import { Cell, Label, Selector } from "src/ui/components";
-import { Point } from 'src/util';
+import { Point } from "src/util";
 
 export const Events = {
-	RequestRemoval: 'RequestRemoval'
+	RequestRemoval: "RequestRemoval"
 };
 
 class HotspotComponent extends Cell<Hotspot> {
@@ -39,28 +39,28 @@ class HotspotComponent extends Cell<Hotspot> {
 			const mutableHotspot = <MutableHotspot>this._hotspot;
 			mutableHotspot.type = Hotspot.Type.fromNumber(+this._name.value);
 			this._updateTilePreview();
-		}
+		};
 		this._name.borderless = true;
 		this._text.appendChild(this._name);
 
 		this._position = document.createElement(Label.TagName);
 		this._position.classList.add("position");
 		this._position.onchange = (e: Event) => {
-			const [rawX, rawY] = this._position.innerText.split('x');
+			const [rawX, rawY] = this._position.innerText.split("x");
 			const mutableHotspot = <MutableHotspot>this._hotspot;
 			mutableHotspot.x = parseInt(rawX);
 			mutableHotspot.y = parseInt(rawY);
 			this._updatePositionContents();
-		}
+		};
 		this._text.appendChild(this._position);
 
-		this._remove = document.createElement('i');
-		this._remove.classList.add('fa');
-		this._remove.classList.add('fa-remove');
+		this._remove = document.createElement("i");
+		this._remove.classList.add("fa");
+		this._remove.classList.add("fa-remove");
 		this._remove.onclick = () => {
 			const event = new CustomEvent(Events.RequestRemoval, { bubbles: true });
 			this.dispatchEvent(event);
-		}
+		};
 		this._text.appendChild(this._remove);
 	}
 
@@ -70,7 +70,7 @@ class HotspotComponent extends Cell<Hotspot> {
 	}
 
 	cloneNode(deep?: boolean) {
-		const node = <HotspotComponent><any>super.cloneNode(deep);
+		const node = <HotspotComponent>(<any>super.cloneNode(deep));
 		node.tileSheet = this.tileSheet;
 		node.gameData = this.gameData;
 		return node;

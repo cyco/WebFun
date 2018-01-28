@@ -19,13 +19,12 @@ describe("EventTarget", () => {
 		expect(typeof EventTarget.dispatchEvent).toBe("function");
 	});
 
-	it("calls all registered event handlers when an event is dispatched", (done) => {
+	it("calls all registered event handlers when an event is dispatched", done => {
 		let directCallbackExecuted = false;
 		let globalCallbackExecuted = false;
 		let callbackPropertyExecuted = false;
 		let continueWhenAllCallbacksAreExecuted = () => {
-			if (directCallbackExecuted && globalCallbackExecuted && callbackPropertyExecuted)
-				done();
+			if (directCallbackExecuted && globalCallbackExecuted && callbackPropertyExecuted) done();
 		};
 
 		target.ontestEvent = () => {
@@ -44,7 +43,7 @@ describe("EventTarget", () => {
 		target.dispatchEvent("testEvent");
 	});
 
-	it("event handlers can be unregistered per event type", (done) => {
+	it("event handlers can be unregistered per event type", done => {
 		let executedCallbacks = [];
 
 		target.addEventListener("testEvent", () => {
@@ -65,7 +64,7 @@ describe("EventTarget", () => {
 		}, 10);
 	});
 
-	it("event handlers can be unregistered per type & callback ", (done) => {
+	it("event handlers can be unregistered per type & callback ", done => {
 		let executedCallbacks = [];
 		let fn1 = () => {
 			executedCallbacks[0] = true;
@@ -86,7 +85,7 @@ describe("EventTarget", () => {
 		}, 10);
 	});
 
-	it("global event handlers can be unregistered in the same way ", (done) => {
+	it("global event handlers can be unregistered in the same way ", done => {
 		let executedCallbacks = [];
 		let fn1 = () => {
 			executedCallbacks[0] = true;
@@ -107,7 +106,7 @@ describe("EventTarget", () => {
 		}, 10);
 	});
 
-	it("won't do anything if removeEventListener is called without arguments", (done) => {
+	it("won't do anything if removeEventListener is called without arguments", done => {
 		EventTarget.addEventListener("testEvent", done);
 		expect(() => {
 			EventTarget.removeEventListener();
@@ -117,12 +116,10 @@ describe("EventTarget", () => {
 
 	it("removeEventListener won't do anything if the callback is not registered", () => {
 		expect(() => {
-			target.removeEventListener("testEvent", () => {
-			});
+			target.removeEventListener("testEvent", () => {});
 		}).not.toThrow();
 
-		target.addEventListener("testEvent", () => {
-		});
+		target.addEventListener("testEvent", () => {});
 		expect(() => {
 			target.removeEventListener("testEvent", () => {
 				return 15;
@@ -130,7 +127,7 @@ describe("EventTarget", () => {
 		}).not.toThrow();
 	});
 
-	it("event handling can be stopped by returning false from the callback property", (done) => {
+	it("event handling can be stopped by returning false from the callback property", done => {
 		let eventListenerExecuted = false;
 		target.ontestEvent = () => {
 			return false;
@@ -147,7 +144,7 @@ describe("EventTarget", () => {
 		}, 10);
 	});
 
-	it("dispatch events also works on the class itself", (done) => {
+	it("dispatch events also works on the class itself", done => {
 		EventTarget.addEventListener("testEvent", done);
 		EventTarget.dispatchEvent("testEvent");
 	});
@@ -155,7 +152,7 @@ describe("EventTarget", () => {
 	it("has a method to register all events to make it compatible with sealed objects", () => {
 		expect(target.registerEvents).not.toBe(undefined);
 
-		target.registerEvents({E1: "testEvent1", E2: "testEvent2"});
+		target.registerEvents({ E1: "testEvent1", E2: "testEvent2" });
 
 		expect(target.ontestEvent1).toBe(null);
 		expect(target.ontestEvent2).toBe(null);

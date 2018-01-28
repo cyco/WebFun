@@ -5,7 +5,7 @@ import UndoBatchOperation from "src/ux/undo-batch-operation";
 class UndoManager extends EventTarget {
 	private static _sharedManager: UndoManager;
 	private static get sharedManager() {
-		return this._sharedManager = this._sharedManager || new UndoManager();
+		return (this._sharedManager = this._sharedManager || new UndoManager());
 	}
 
 	private _stack: UndoOperation[];
@@ -33,7 +33,7 @@ class UndoManager extends EventTarget {
 		operation.redo();
 	}
 
-	note(op: UndoOperation|(() => void), redo?: () => void) {
+	note(op: UndoOperation | (() => void), redo?: () => void) {
 		if (!(op instanceof UndoOperation)) {
 			op = new UndoOperation(op, redo);
 		}

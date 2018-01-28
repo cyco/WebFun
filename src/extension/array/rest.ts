@@ -1,6 +1,6 @@
-import { Array } from 'src/std';
+import { Array } from "src/std";
 
-const rest = function <T>() {
+const rest = function<T>() {
 	return this.slice(1);
 };
 

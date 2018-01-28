@@ -4,7 +4,9 @@ import render from "test-helpers/render";
 describe("HTMLCollection.map", () => {
 	let subject;
 	beforeAll(() => {
-		subject = render(`<div><span class="first"></span><span class="second"></span><span class="third"></span></div>`).children;
+		subject = render(
+			`<div><span class="first"></span><span class="second"></span><span class="third"></span></div>`
+		).children;
 	});
 
 	it("is a function extending the HTMLCollection prototype", () => {
@@ -17,4 +19,3 @@ describe("HTMLCollection.map", () => {
 		expect(result).toEqual(["first", "second", "third"]);
 	});
 });
-

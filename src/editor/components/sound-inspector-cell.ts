@@ -3,9 +3,9 @@ import "./sound-inspector-cell.scss";
 import Settings from "../../settings";
 
 type Sound = {
-	id: number
-	file: string
-}
+	id: number;
+	file: string;
+};
 
 export const Events = {
 	RevealReferences: "RevealReferences"
@@ -55,10 +55,13 @@ class SoundInspectorCell extends Cell<Sound> {
 		this._revealButton = document.createElement("i");
 		this._revealButton.classList.add("fa");
 		this._revealButton.classList.add("fa-search");
-		this._revealButton.onclick = () => this.dispatchEvent(new CustomEvent(Events.RevealReferences, {
-			detail: {sound: this.data.file},
-			bubbles: true
-		}));
+		this._revealButton.onclick = () =>
+			this.dispatchEvent(
+				new CustomEvent(Events.RevealReferences, {
+					detail: { sound: this.data.file },
+					bubbles: true
+				})
+			);
 		this._play.appendChild(this._revealButton);
 	}
 

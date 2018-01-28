@@ -5,4 +5,3 @@ describe("TransitionScene", () => {
 		expect(() => new TransitionScene()).not.toThrow();
 	});
 });
-

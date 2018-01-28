@@ -9,10 +9,12 @@ export default <Condition>{
 	Arguments: [Type.ZoneX, Type.ZoneY],
 	Implementation: async (args: int16[], zone: Zone, engine: Engine): Promise<boolean> => {
 		for (let hotspot of zone.hotspots) {
-			if (hotspot.type === HotspotType.TriggerLocation &&
+			if (
+				hotspot.type === HotspotType.TriggerLocation &&
 				hotspot.x === args[0] &&
 				hotspot.y === args[1] &&
-				hotspot.enabled) {
+				hotspot.enabled
+			) {
 				return true;
 			}
 		}
