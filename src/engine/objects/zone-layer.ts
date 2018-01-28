@@ -5,9 +5,12 @@ export default {
 
 	NameFromNumber(layer: number) {
 		switch (layer) {
-			case 0: return 'floor';
-			case 1: return 'object';
-			case 2: return 'roof';
+			case 0:
+				return "floor";
+			case 1:
+				return "object";
+			case 2:
+				return "roof";
 		}
 	}
 };

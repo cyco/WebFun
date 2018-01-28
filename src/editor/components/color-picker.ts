@@ -56,7 +56,7 @@ class ColorPicker extends Component {
 		this._wheel = <ColorWheel>document.createElement(ColorWheel.TagName);
 		this._wheel.style.height = "100px";
 		this._wheel.style.width = "100px";
-		this._wheel.onchange = () => this.color = this._wheel.color;
+		this._wheel.onchange = () => (this.color = this._wheel.color);
 	}
 
 	private _buildBrightnessSlider() {
@@ -64,8 +64,8 @@ class ColorPicker extends Component {
 		this._brightnessInput.type = "range";
 		this._brightnessInput.min = "0";
 		this._brightnessInput.max = "255";
-		this._brightnessInput.onchange = (e) => this._updateBrightness(+this._brightnessInput.value / 255.0);
-		this._brightnessInput.oninput = (e) => this._updateBrightness(+this._brightnessInput.value / 255.0);
+		this._brightnessInput.onchange = e => this._updateBrightness(+this._brightnessInput.value / 255.0);
+		this._brightnessInput.oninput = e => this._updateBrightness(+this._brightnessInput.value / 255.0);
 	}
 
 	private _updateBrightness(newValue: number) {
@@ -101,7 +101,7 @@ class ColorPicker extends Component {
 		if (attr === "color" && oldValue !== newValue) this.color = newValue;
 	}
 
-	set color(c: string|Color) {
+	set color(c: string | Color) {
 		this._color = new Color(c);
 
 		const [h, s, v] = this._color.hsvComponents;

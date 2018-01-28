@@ -1,6 +1,6 @@
-import { Array } from 'src/std';
+import { Array } from "src/std";
 
-const erase = function <T>(pos: T) {
+const erase = function<T>(pos: T) {
 	this.splice(pos, 1);
 };
 

@@ -30,7 +30,7 @@ class PuzzleType {
 	}
 
 	public static isPuzzleType(number: number): boolean {
-		if (number === -1 || number === 0xFFFF) return true;
+		if (number === -1 || number === 0xffff) return true;
 		if (number < PuzzleType.knownTypes.length) return true;
 
 		return false;
@@ -39,7 +39,7 @@ class PuzzleType {
 	public static fromNumber(number: number): PuzzleType {
 		if (!PuzzleType.isPuzzleType(number)) throw new RangeError(`Value ${number} does not specify a puzzle type`);
 
-		if (number === -1 || number === 0xFFFF) return PuzzleType.Disabled;
+		if (number === -1 || number === 0xffff) return PuzzleType.Disabled;
 		return this.knownTypes[number];
 	}
 

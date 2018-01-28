@@ -9,7 +9,7 @@ wf-action-editor {
 	overflow-y: auto;
 
 	.error-area {
-		color: #FF0000;
+		color: #ff0000;
 		white-space: normal;
 		border-bottom: 1px solid #c1c1c1;
 		padding-bottom: 3px;
@@ -32,7 +32,7 @@ wf-action-editor {
 		}
 
 		.keyword {
-			color: #660E7A;
+			color: #660e7a;
 		}
 
 		.symbol {
@@ -44,16 +44,16 @@ wf-action-editor {
 		}
 
 		.boolean {
-			color: #0000FF;
+			color: #0000ff;
 			font-weight: bold;
 		}
 
 		.number {
-			color: #0000FF;
+			color: #0000ff;
 		}
 
 		.error {
-			color: #FF0000;
+			color: #ff0000;
 		}
 	}
 }

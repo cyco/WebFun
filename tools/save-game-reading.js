@@ -8,14 +8,14 @@ import { InputStream } from "src/util";
 import DiscardingOutputStream from "../src/util/discarding-output-stream";
 import "../test/helpers/^";
 
-const readFile = (path) => {
+const readFile = path => {
 	const buffer = FS.readFileSync(path);
 	const arrayBuffer = buffer.buffer.slice(buffer.byteOffset, buffer.byteOffset + buffer.byteLength);
 
 	return new InputStream(arrayBuffer);
 };
 
-const readGameData = (path) => {
+const readGameData = path => {
 	const fullPath = Path.resolve(path);
 	if (!FS.existsSync(path)) {
 		throw `Game file ${fullPath} does not exist`;

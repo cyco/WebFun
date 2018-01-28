@@ -13,7 +13,7 @@ describe("VerticalPointRange", () => {
 		let visited = {};
 		let range = new VerticalPointRange(3, 8, 4);
 
-		range.iterate(function (point) {
+		range.iterate(function(point) {
 			visited[point.x + "x" + point.y] = true;
 		});
 

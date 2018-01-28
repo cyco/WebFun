@@ -4,10 +4,4 @@ import Invincibility from "./invincibility";
 import UnlimitedAmmo from "./unlimited-ammo";
 import Weapons from "./weapons";
 
-export {
-	CheatCodeInput,
-	Cheat,
-	Invincibility,
-	UnlimitedAmmo,
-	Weapons
-};
+export { CheatCodeInput, Cheat, Invincibility, UnlimitedAmmo, Weapons };

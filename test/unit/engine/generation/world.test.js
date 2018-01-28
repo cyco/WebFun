@@ -33,7 +33,7 @@ describe("World", () => {
 
 	describe("locationOfZone", () => {
 		it("it returns a point specify where the zone is", () => {
-		const mockZone = {};
+			const mockZone = {};
 			subject.setZone(5, 2, mockZone);
 
 			let point = subject.locationOfZone(mockZone);

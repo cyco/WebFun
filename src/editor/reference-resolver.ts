@@ -15,7 +15,7 @@ class ReferenceResolver {
 		this.data = gameData;
 	}
 
-	public findReferencesTo(type: Tile|string|Zone|Char|Action|Hotspot|Point|NPC) {
+	public findReferencesTo(type: Tile | string | Zone | Char | Action | Hotspot | Point | NPC) {
 		if (type instanceof Tile) {
 			return this.findReferencesToTile(type);
 		}
@@ -56,9 +56,12 @@ class ReferenceResolver {
 	private findReferencesToZone(zone: Zone): any[] {
 		const isDoorToZone = (htsp: Hotspot) => htsp.type === HotspotType.DoorIn && htsp.arg === zone.id;
 		const isDoorFromZone = (htsp: Hotspot) => htsp.type === HotspotType.DoorOut && htsp.arg === zone.id;
-		const isChangeZoneInstruction = (i: Instruction) => i.opcode === ChangeZone.Opcode && i.arguments[0] === zone.id;
-		const findReferencesInZone = (z: Zone) => z.hotspots.filter(or(isDoorToZone, isDoorFromZone))
-			.concat(z.actions.map(a => a.instructions.filter(isChangeZoneInstruction)).flatten());
+		const isChangeZoneInstruction = (i: Instruction) =>
+			i.opcode === ChangeZone.Opcode && i.arguments[0] === zone.id;
+		const findReferencesInZone = (z: Zone) =>
+			z.hotspots
+				.filter(or(isDoorToZone, isDoorFromZone))
+				.concat(z.actions.map(a => a.instructions.filter(isChangeZoneInstruction)).flatten());
 
 		return this.data.zones.map(findReferencesInZone).flatten();
 	}
@@ -76,7 +79,10 @@ class ReferenceResolver {
 		const findReferencesInZone = (zone: Zone) => zone.actions.map(findReferencesInAction).flatten();
 		const charIsReferenceToSound = (c: Char) => c.type === CharType.Weapon && c.reference === id;
 
-		return this.data.zones.map(findReferencesInZone).flatten().concat(this.data.characters.filter(charIsReferenceToSound));
+		return this.data.zones
+			.map(findReferencesInZone)
+			.flatten()
+			.concat(this.data.characters.filter(charIsReferenceToSound));
 	}
 
 	private findReferencesToAction(action: Action): any[] {

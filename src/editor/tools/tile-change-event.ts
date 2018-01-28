@@ -2,7 +2,7 @@ import { Events } from "./abstract-tool";
 import { Event, Point } from "src/util";
 
 declare interface TileChangeEventInitDict extends EventInit {
-	affectedPoints: Point[]
+	affectedPoints: Point[];
 }
 
 class TileChangeEvent extends Event {

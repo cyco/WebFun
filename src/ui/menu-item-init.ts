@@ -5,8 +5,8 @@ declare interface MenuItemInit {
 	title: string;
 	state: number;
 	callback: Function;
-	enabled: boolean|Function,
-	submenu: Menu|MenuItem[]|Partial<MenuItemInit>[];
+	enabled: boolean | Function;
+	submenu: Menu | MenuItem[] | Partial<MenuItemInit>[];
 	mnemonic: number;
 }
 

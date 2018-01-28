@@ -8,20 +8,16 @@ describe("SceneManager", () => {
 	});
 
 	it("is in charge of managing the stack of scenes visible during gameplay", () => {
-		const scene1 = new (class extends Scene {
-			render() {
-			}
+		const scene1 = new class extends Scene {
+			render() {}
 
-			update() {
-			}
-		})();
-		const scene2 = new (class extends Scene {
-			render() {
-			}
+			update() {}
+		}();
+		const scene2 = new class extends Scene {
+			render() {}
 
-			update() {
-			}
-		})();
+			update() {}
+		}();
 
 		subject.pushScene(scene1);
 		subject.pushScene(scene2);
@@ -35,11 +31,9 @@ describe("SceneManager", () => {
 	describe("clear", () => {
 		it("just pops off all scenes", () => {
 			const AScene = class extends Scene {
-				render() {
-				}
+				render() {}
 
-				update() {
-				}
+				update() {}
 			};
 
 			subject.pushScene(new AScene());
@@ -54,11 +48,9 @@ describe("SceneManager", () => {
 
 	it("passes calls to update to the current scene", () => {
 		const AScene = class extends Scene {
-			render() {
-			}
+			render() {}
 
-			update() {
-			}
+			update() {}
 		};
 
 		const scene1 = new AScene();
@@ -78,22 +70,18 @@ describe("SceneManager", () => {
 
 	it("passes 'render' calls to all scenes until an opaque scene is encountered", () => {
 		const AScene = class extends Scene {
-			render() {
-			}
+			render() {}
 
-			update() {
-			}
+			update() {}
 
 			isOpaque() {
 				return false;
 			}
 		};
 		const OpaqueScene = class extends Scene {
-			render() {
-			}
+			render() {}
 
-			update() {
-			}
+			update() {}
 
 			isOpaque() {
 				return true;

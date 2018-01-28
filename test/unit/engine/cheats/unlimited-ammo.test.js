@@ -2,7 +2,7 @@ import UnlimitedAmmoCheat from "src/engine/cheats/unlimited-ammo";
 
 describe("UnlimitedAmmoCheat", () => {
 	let subject;
-	beforeEach(() => subject = new UnlimitedAmmoCheat());
+	beforeEach(() => (subject = new UnlimitedAmmoCheat()));
 
 	it("is activated by the code `gohan`", () => {
 		expect(subject.code).toEqual("gohan");
@@ -13,7 +13,7 @@ describe("UnlimitedAmmoCheat", () => {
 	});
 
 	it("grants unlimited ammo when executed", () => {
-		const mockEngine = {hero: {}};
+		const mockEngine = { hero: {} };
 		subject.execute(mockEngine);
 		expect(mockEngine.hero.unlimitedAmmo).toBeTrue();
 	});

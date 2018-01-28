@@ -16,7 +16,7 @@ const TileImageBatchSize = 100;
 
 export declare interface LoaderEventDetails {
 	data: GameData;
-	palette: ColorPalette
+	palette: ColorPalette;
 }
 
 class Loader extends EventTarget {
@@ -44,9 +44,9 @@ class Loader extends EventTarget {
 		this._imageFactory = factory;
 
 		const loader = new FileLoader(this._dataUrl);
-		loader.onprogress = ({detail: {progress}}) => this._progress(0, progress);
-		loader.onfail = (reason) => this._fail(reason);
-		loader.onload = ({detail: {kaitaiStream}}) => this._readGameData(kaitaiStream);
+		loader.onprogress = ({ detail: { progress } }) => this._progress(0, progress);
+		loader.onfail = reason => this._fail(reason);
+		loader.onload = ({ detail: { kaitaiStream } }) => this._readGameData(kaitaiStream);
 		loader.load();
 	}
 
@@ -59,9 +59,9 @@ class Loader extends EventTarget {
 
 	_loadPalette() {
 		const loader = new FileLoader(this._paletteUrl);
-		loader.onprogress = ({detail: {progress}}) => this._progress(2, progress);
-		loader.onfail = (reason) => this._fail(reason);
-		loader.onload = ({detail: {arraybuffer}}) => {
+		loader.onprogress = ({ detail: { progress } }) => this._progress(2, progress);
+		loader.onfail = reason => this._fail(reason);
+		loader.onload = ({ detail: { arraybuffer } }) => {
 			const palette = new Uint8Array(arraybuffer);
 			this._imageFactory.palette = palette;
 			this._palette = palette;
@@ -145,7 +145,7 @@ class Loader extends EventTarget {
 	}
 
 	_load() {
-		this.dispatchEvent(Events.Load, <LoaderEventDetails>{palette: this._palette, data: this._data});
+		this.dispatchEvent(Events.Load, <LoaderEventDetails>{ palette: this._palette, data: this._data });
 	}
 }
 

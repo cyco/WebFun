@@ -5,43 +5,34 @@ import { or } from "test-helpers/css";
 
 describeComponent(MenuView, () => {
 	let subject;
-	beforeEach(() => subject = render(MenuView));
+	beforeEach(() => (subject = render(MenuView)));
 
 	it("draws all items of a menu", () => {
-		subject.menu = new Menu([
-			{label: "Test"},
-			MenuItemSeparator,
-			{label: "Test 2"}
-		]);
-		expect(subject.querySelectorAll(or(MenuItemComponent.TagName, MenuItemSeparatorComponent.TagName)).length).toBe(3);
+		subject.menu = new Menu([{ label: "Test" }, MenuItemSeparator, { label: "Test 2" }]);
+		expect(subject.querySelectorAll(or(MenuItemComponent.TagName, MenuItemSeparatorComponent.TagName)).length).toBe(
+			3
+		);
 
 		subject.menu = null;
-		expect(subject.querySelectorAll(or(MenuItemComponent.TagName, MenuItemSeparatorComponent.TagName)).length).toBe(0);
+		expect(subject.querySelectorAll(or(MenuItemComponent.TagName, MenuItemSeparatorComponent.TagName)).length).toBe(
+			0
+		);
 	});
 
 	it("redraws if the menu changes", () => {
-		subject.menu = new Menu([
-			{label: "Test"},
-			{label: "Test 2"},
-			{label: "Test 3"},
-			{label: "Test 4"}
-		]);
+		subject.menu = new Menu([{ label: "Test" }, { label: "Test 2" }, { label: "Test 3" }, { label: "Test 4" }]);
 		expect(subject.querySelectorAll(MenuItemComponent.TagName).length).toBe(4);
 	});
 
 	it("can be closed, removing it from the dom", () => {
-		subject.menu = new Menu([
-			{label: "Test"}
-		]);
+		subject.menu = new Menu([{ label: "Test" }]);
 		document.body.appendChild(subject);
 		subject.close();
 		expect(subject.isConnected).toBeFalse();
 	});
 
-	it("executes a callback when closed", (done) => {
-		subject.menu = new Menu([
-			{label: "Test"}
-		]);
+	it("executes a callback when closed", done => {
+		subject.menu = new Menu([{ label: "Test" }]);
 		subject.onclose = () => {
 			expect(true).toBeTrue();
 			done();

@@ -1,8 +1,8 @@
 import "src/extension";
-import { Array } from 'src/std';
+import { Array } from "src/std";
 import { rand } from "src/util";
 
-const shuffle = function () {
+const shuffle = function() {
 	const count = this.length;
 	if (count === 0) return this;
 
@@ -20,9 +20,7 @@ const shuffle = function () {
 	for (let i = count - 1; i !== 0; i--) {
 		let did_find_free_spot = 0;
 		while (true) {
-			for (let i = 0; i < count; i++)
-				if (tempArray[i] === -1)
-					did_find_free_spot = 1;
+			for (let i = 0; i < count; i++) if (tempArray[i] === -1) did_find_free_spot = 1;
 
 			if (!did_find_free_spot) break;
 

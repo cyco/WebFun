@@ -8,7 +8,7 @@ abstract class PageObject {
 
 	public get selector(): string {
 		return "";
-	};
+	}
 
 	async click() {
 		await this.element.click();
@@ -20,7 +20,7 @@ abstract class PageObject {
 
 	async setup(): Promise<any> {
 		this.element = await this.parent.$(this.selector);
-		return new Promise((r) => r(null));
+		return new Promise(r => r(null));
 	}
 
 	async $(selector: string): Promise<any> {

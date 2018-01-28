@@ -8,6 +8,5 @@ export default <Condition>{
 	Name: "counter-is",
 	Description: "Current zone's `counter` value is equal to `arg_0`",
 	Arguments: [Type.Number],
-	Implementation: async (args: int16[], zone: Zone, engine: Engine): Promise<boolean> =>
-		zone.counter === args[0]
+	Implementation: async (args: int16[], zone: Zone, engine: Engine): Promise<boolean> => zone.counter === args[0]
 };

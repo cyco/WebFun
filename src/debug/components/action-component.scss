@@ -33,7 +33,8 @@ wf-debug-action {
 		transform: rotate(90deg);
 	}
 
-	wf-debug-condition, wf-debug-instruction {
+	wf-debug-condition,
+	wf-debug-instruction {
 		display: inline-block;
 		white-space: nowrap;
 		overflow: hidden;
@@ -52,11 +53,11 @@ wf-debug-action {
 	}
 
 	.command {
-		color: #07216C;
+		color: #07216c;
 	}
 
 	.key {
-		color: #660E7A;
+		color: #660e7a;
 	}
 
 	.head {

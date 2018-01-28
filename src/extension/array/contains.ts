@@ -1,6 +1,6 @@
-import { Array } from 'src/std';
+import { Array } from "src/std";
 
-const contains = function <T>(candidate: T): boolean {
+const contains = function<T>(candidate: T): boolean {
 	return !!~this.indexOf(candidate);
 };
 

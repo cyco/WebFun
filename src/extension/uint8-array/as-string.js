@@ -1,4 +1,4 @@
-const asString = function () {
+const asString = function() {
 	return String.fromCharCode.apply(null, this);
 };
 

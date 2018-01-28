@@ -15,7 +15,7 @@ wf-color-wheel {
 		transition: filter 500ms ease-in-out;
 
 		&.animated {
-			transition: filter 500ms ease-in-out, left .1s linear, top .1s linear;
+			transition: filter 500ms ease-in-out, left 0.1s linear, top 0.1s linear;
 		}
 	}
 }

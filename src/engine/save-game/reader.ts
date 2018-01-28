@@ -47,8 +47,7 @@ class Reader {
 
 		state.currentWeapon = stream.getInt16();
 		state.currentAmmo = -1;
-		if (state.currentWeapon !== -1)
-			state.currentAmmo = stream.getInt16();
+		if (state.currentWeapon !== -1) state.currentAmmo = stream.getInt16();
 		state.forceAmmo = stream.getInt16();
 		state.blasterAmmo = stream.getInt16();
 		state.blasterRifleAmmo = stream.getInt16();
@@ -135,7 +134,7 @@ class Reader {
 
 			const actionCount = stream.getUint32();
 			console.assert(actionCount === zone.actions.length, "Action counts must be equal!");
-			zone.actions.forEach((action: Action) => action.enabled = !!stream.getUint32());
+			zone.actions.forEach((action: Action) => (action.enabled = !!stream.getUint32()));
 		}
 	}
 
@@ -152,23 +151,22 @@ class Reader {
 		stream.getInt16(); // x__
 		stream.getInt16(); // current_frame
 		stream.getUint32(); // field_18
-		stream.getUint32();// field_1C
-		stream.getUint32();// field_20
+		stream.getUint32(); // field_1C
+		stream.getUint32(); // field_20
 		stream.getInt16(); // x_
 		stream.getInt16(); // y_
-		stream.getInt16();// field_3C
-		stream.getInt16();// field_3E
-		stream.getInt16();// field_60
-		stream.getInt16();// field_26
+		stream.getInt16(); // field_3C
+		stream.getInt16(); // field_3E
+		stream.getInt16(); // field_60
+		stream.getInt16(); // field_26
 
 		stream.getUint32(); // field_2C
 		stream.getUint32(); // field_34
 		stream.getUint32(); // field_28
-		stream.getInt16();// field_24
+		stream.getInt16(); // field_24
 		stream.getInt16();
 
-		for (let i = 0; i < 4; i++)
-			stream.getUint32();
+		for (let i = 0; i < 4; i++) stream.getUint32();
 	}
 
 	_readHotspot(hotspot: Hotspot, stream: InputStream): void {

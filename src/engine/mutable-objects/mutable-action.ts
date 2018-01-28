@@ -52,7 +52,6 @@ class MutableAction extends Action {
 	set zone(value) {
 		this._zone = value;
 	}
-
 }
 
 export default MutableAction;

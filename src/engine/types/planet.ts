@@ -5,7 +5,14 @@ class Planet {
 	public static readonly ENDOR = new Planet();
 	public static readonly DAGOBAH = new Planet();
 
-	private static readonly knownPlanets = [Planet.NONE, Planet.TATOOINE, Planet.HOTH, Planet.ENDOR, undefined, Planet.DAGOBAH];
+	private static readonly knownPlanets = [
+		Planet.NONE,
+		Planet.TATOOINE,
+		Planet.HOTH,
+		Planet.ENDOR,
+		undefined,
+		Planet.DAGOBAH
+	];
 
 	get rawValue(): number {
 		return Planet.knownPlanets.indexOf(this);

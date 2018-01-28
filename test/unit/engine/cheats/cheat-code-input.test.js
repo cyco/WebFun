@@ -12,7 +12,7 @@ describe("CheatCodeInput", () => {
 		}
 	};
 
-	beforeEach(() => cheatExecuted = false);
+	beforeEach(() => (cheatExecuted = false));
 
 	it("takes pressed keys and executes matching cheats", () => {
 		const subject = new CheatCodeInput([mockCheat]);

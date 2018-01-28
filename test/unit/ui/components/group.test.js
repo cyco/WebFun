@@ -5,7 +5,7 @@ describe("group", () => {
 	let subject;
 
 	beforeAll(() => customElements.define(Group.TagName, Group, Group.Options));
-	beforeEach(() => subject = render("<wf-group></wf-group>"));
+	beforeEach(() => (subject = render("<wf-group></wf-group>")));
 
 	it("is a custom element", () => {
 		expect(Group).toBeCustomElement();

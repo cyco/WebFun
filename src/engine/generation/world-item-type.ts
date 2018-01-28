@@ -54,7 +54,7 @@ class WorldItemType {
 	public static isWorldItemType(number: number): boolean {
 		switch (number) {
 			case -1:
-			case 0xFFFF:
+			case 0xffff:
 			case 0:
 			case 1:
 			case 101:
@@ -75,11 +75,12 @@ class WorldItemType {
 	}
 
 	public static fromNumber(number: number): WorldItemType {
-		if (!WorldItemType.isWorldItemType(number)) throw new RangeError(`Value ${number} does not specify a world item type`);
+		if (!WorldItemType.isWorldItemType(number))
+			throw new RangeError(`Value ${number} does not specify a world item type`);
 		switch (number) {
 			case -1:
 				return WorldItemType.Invalid;
-			case 0xFFFF:
+			case 0xffff:
 				return WorldItemType.Invalid;
 			case 0:
 				return WorldItemType.None;
@@ -125,7 +126,7 @@ class WorldItemType {
 			default:
 				return ZoneType.Empty;
 		}
-	};
+	}
 
 	public toString() {
 		return `WorldItemType {}`;

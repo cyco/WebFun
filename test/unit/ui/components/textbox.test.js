@@ -2,7 +2,7 @@ import Textbox from "src/ui/components/textbox";
 
 describeComponent(Textbox, () => {
 	let subject;
-	beforeEach(() => subject = render(Textbox));
+	beforeEach(() => (subject = render(Textbox)));
 
 	it("can be editable", () => {
 		expect(subject.editable).toBeTrue();
@@ -44,7 +44,7 @@ describeComponent(Textbox, () => {
 
 	it("can have an onchange event", () => {
 		let handlerCalled = false;
-		const handler = () => handlerCalled = true;
+		const handler = () => (handlerCalled = true);
 
 		subject.onchange = handler;
 		expect(subject.onchange).toBe(handler);

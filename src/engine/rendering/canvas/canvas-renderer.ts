@@ -37,8 +37,7 @@ class CanvasRenderer extends AbstractRenderer {
 		this._ctx.clearRect(0, 0, this._canvas.width, this._canvas.height);
 	}
 
-	clearTile(x: number, y: number, z: number) {
-	}
+	clearTile(x: number, y: number, z: number) {}
 
 	renderTile(tile: Tile, x: number, y: number, z: number) {
 		if (!tile) return;
@@ -83,7 +82,7 @@ class CanvasRenderer extends AbstractRenderer {
 		this._ctx.shadowBlur = 1;
 		this._ctx.shadowOffsetX = 0;
 		this._ctx.shadowOffsetY = 1;
-		this._ctx.font = "13px \"Anonymous Pro\", monospace";
+		this._ctx.font = '13px "Anonymous Pro", monospace';
 		this._ctx.fillStyle = "white";
 
 		this._ctx.fillText(text, location.x, location.y + 13 / 2);

@@ -1,5 +1,5 @@
 import Component from "src/ui/component";
-import './selector.scss';
+import "./selector.scss";
 
 class Selector extends Component {
 	public static readonly TagName = "wf-selector";
@@ -34,7 +34,7 @@ class Selector extends Component {
 	}
 
 	public removeAllOptions() {
-		this.element.textContent = '';
+		this.element.textContent = "";
 	}
 
 	public removeOption(value: string) {
@@ -43,12 +43,12 @@ class Selector extends Component {
 	}
 
 	set borderless(flag: boolean) {
-		if (flag) this.setAttribute('borderless', '');
-		else this.removeAttribute('borderless');
+		if (flag) this.setAttribute("borderless", "");
+		else this.removeAttribute("borderless");
 	}
 
 	get borderless() {
-		return this.hasAttribute('borderless');
+		return this.hasAttribute("borderless");
 	}
 }
 

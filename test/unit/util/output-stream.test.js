@@ -67,7 +67,7 @@ describe("OutputStream", () => {
 		outputStream.writeInt8(-1);
 		outputStream.writeInt8(0x23);
 
-		expect(getByte(0)).toBe(0xFF);
+		expect(getByte(0)).toBe(0xff);
 		expect(getByte(1)).toBe(0x23);
 	});
 
@@ -76,8 +76,8 @@ describe("OutputStream", () => {
 
 		outputStream.writeInt16(-1);
 
-		expect(getByte(0)).toBe(0xFF);
-		expect(getByte(1)).toBe(0xFF);
+		expect(getByte(0)).toBe(0xff);
+		expect(getByte(1)).toBe(0xff);
 	});
 
 	it("has a function to write a signed double word", () => {
@@ -85,10 +85,10 @@ describe("OutputStream", () => {
 
 		outputStream.writeInt32(-1);
 
-		expect(getByte(0)).toBe(0xFF);
-		expect(getByte(1)).toBe(0xFF);
-		expect(getByte(2)).toBe(0xFF);
-		expect(getByte(3)).toBe(0xFF);
+		expect(getByte(0)).toBe(0xff);
+		expect(getByte(1)).toBe(0xff);
+		expect(getByte(2)).toBe(0xff);
+		expect(getByte(3)).toBe(0xff);
 	});
 
 	it("has a function to write a bunch of characters to the stream", () => {
@@ -171,6 +171,6 @@ describe("OutputStream", () => {
 	});
 
 	function getByte(offset) {
-		return (new DataView(outputStream._arrayBuffer, offset)).getUint8(0);
+		return new DataView(outputStream._arrayBuffer, offset).getUint8(0);
 	}
 });

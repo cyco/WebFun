@@ -32,7 +32,7 @@ class DesktopInputManager extends InputManager {
 		document.addEventListener("mousemove", this.mouseMove.bind(this));
 		document.addEventListener("mousedown", this.mouseDown.bind(this));
 		document.addEventListener("mouseup", this.mouseUp.bind(this));
-		document.addEventListener("contextmenu", (event) => event.preventDefault());
+		document.addEventListener("contextmenu", event => event.preventDefault());
 	}
 
 	public removeListeners() {
@@ -41,7 +41,7 @@ class DesktopInputManager extends InputManager {
 		document.removeEventListener("mousemove", this.mouseMove.bind(this));
 		document.removeEventListener("mousedown", this.mouseDown.bind(this));
 		document.removeEventListener("mouseup", this.mouseUp.bind(this));
-		document.removeEventListener("contextmenu", (event) => event.preventDefault());
+		document.removeEventListener("contextmenu", event => event.preventDefault());
 	}
 
 	keyDown(e: KeyboardEvent) {
@@ -82,8 +82,7 @@ class DesktopInputManager extends InputManager {
 		}
 
 		this._direction |= directionMask;
-		if (this._direction)
-			this._walk = true;
+		if (this._direction) this._walk = true;
 
 		if (this.keyDownHandler instanceof Function) {
 			this.keyDownHandler(e);
@@ -91,7 +90,7 @@ class DesktopInputManager extends InputManager {
 	}
 
 	keyUp(e: KeyboardEvent) {
-		let mask = 0xFF;
+		let mask = 0xff;
 
 		switch (e.which) {
 			case KeyEvent.DOM_VK_UP:
@@ -122,21 +121,17 @@ class DesktopInputManager extends InputManager {
 		}
 
 		this._direction &= mask;
-		if (!this._direction)
-			this._walk = false;
+		if (!this._direction) this._walk = false;
 	}
 
 	mouseDown(e: MouseEvent) {
 		const mouseLocation = new Point(e.clientX, e.clientY);
 		const point = this._getPointInViewCoordinates(mouseLocation);
 		const pointIsInView = point.x > 0 && point.y > 0 && point.x < 1 && point.y < 1;
-		if (!pointIsInView)
-			return;
+		if (!pointIsInView) return;
 
-		if (e.button === 0)
-			this._walk = true;
-		if (e.button === 1)
-			this._attack = true;
+		if (e.button === 0) this._walk = true;
+		if (e.button === 1) this._attack = true;
 
 		if (this.mouseDownHandler instanceof Function) {
 			this.mouseDownHandler(point);
@@ -149,10 +144,8 @@ class DesktopInputManager extends InputManager {
 	}
 
 	mouseUp(e: MouseEvent) {
-		if (e.button === 0)
-			this._walk = false;
-		if (e.button === 1)
-			this._attack = false;
+		if (e.button === 0) this._walk = false;
+		if (e.button === 1) this._attack = false;
 	}
 
 	_getPointInViewCoordinates(location: Point): Point {

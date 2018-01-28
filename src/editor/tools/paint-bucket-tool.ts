@@ -7,7 +7,7 @@ const HighlightColor = rgba(255, 0, 0, 0.3);
 class PaintBucketTool extends AbstractDrawingTool {
 	public readonly name = "Paint Bucket";
 	public readonly icon = "";
-	public readonly shortcut = {keyCode: 71};
+	public readonly shortcut = { keyCode: 71 };
 
 	protected applyTo(point: Point, continous: boolean) {
 		if (continous) return;
@@ -18,7 +18,7 @@ class PaintBucketTool extends AbstractDrawingTool {
 			this.zone.setTile(this.tile, p);
 		});
 
-		const event = new TileChangeEvent({affectedPoints: points});
+		const event = new TileChangeEvent({ affectedPoints: points });
 		this.dispatchEvent(event);
 	}
 

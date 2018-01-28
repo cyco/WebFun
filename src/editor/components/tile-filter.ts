@@ -2,7 +2,7 @@ import { SearchDelegate } from "src/ui/components/list";
 import Tile, { Attribute, Subtype } from "src/engine/objects/tile";
 
 class TileFilter implements SearchDelegate<Tile, RegExp[]> {
-	private _cache: {[_: number]: string} = {};
+	private _cache: { [_: number]: string } = {};
 
 	prepareListSearch(searchValue: string): RegExp[] {
 		return searchValue.split(" ").map(s => new RegExp(s, "i"));
@@ -19,10 +19,7 @@ class TileFilter implements SearchDelegate<Tile, RegExp[]> {
 		const cachedValue = this._cache[tile.id];
 		if (cachedValue) return cachedValue;
 
-		const components: string[] = [
-			tile.name,
-			`${tile.id}`
-		];
+		const components: string[] = [tile.name, `${tile.id}`];
 
 		if (tile.isDraggable()) {
 			components.push("draggable");
@@ -69,7 +66,7 @@ class TileFilter implements SearchDelegate<Tile, RegExp[]> {
 			if (tile.getSubtype(Subtype.Character.NPC)) components.push("npc");
 		}
 
-		return this._cache[tile.id] = components.join(" ");
+		return (this._cache[tile.id] = components.join(" "));
 	}
 }
 

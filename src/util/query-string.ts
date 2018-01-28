@@ -1,5 +1,5 @@
 class QueryString {
-	static Compose(data: {[_: string]: string}) {
+	static Compose(data: { [_: string]: string }) {
 		let result = "";
 
 		for (const key of Object.keys(data)) {

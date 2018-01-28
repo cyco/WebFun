@@ -16,11 +16,13 @@
 		top: 0px;
 	}
 
-	> thead, tbody > tr {
+	> thead,
+	tbody > tr {
 		height: 34px;
 		background-color: $window-background-color;
 
-		> td, th {
+		> td,
+		th {
 			@include inset-border-inverted(1px);
 			&:first-child {
 				border-left-width: 0;
@@ -36,14 +38,16 @@
 			&:first-child {
 				width: 34px;
 			}
-			&:nth-child(25), &:nth-child(29) {
+			&:nth-child(25),
+			&:nth-child(29) {
 				border-left-width: 2px;
 			}
 		}
 	}
 
 	thead > tr:first-child {
-		> td, th {
+		> td,
+		th {
 			border-top-width: 0;
 		}
 	}

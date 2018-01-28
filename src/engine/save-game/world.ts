@@ -7,7 +7,7 @@ class World {
 
 	constructor(size = new Size(10, 10)) {
 		this._bounds = new Rectangle(new Point(0, 0), size);
-		this._world = (new Array(size.area)).fill(null);
+		this._world = new Array(size.area).fill(null);
 	}
 
 	get size(): Size {
@@ -25,8 +25,7 @@ class World {
 	}
 
 	_toIndex(p: Point): number {
-		if (!this._bounds.contains(p))
-			throw new RangeError(`Index ${p} does not lie within rect ${this._bounds}`);
+		if (!this._bounds.contains(p)) throw new RangeError(`Index ${p} does not lie within rect ${this._bounds}`);
 
 		return p.y * 10 + p.x;
 	}

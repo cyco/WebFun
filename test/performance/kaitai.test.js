@@ -4,10 +4,12 @@ import { getFixtureData } from "../helpers/fixture-loading";
 
 describe("Kaitai-Struct parsing", () => {
 	let gameDataBuffer;
-	beforeAll((done) => getFixtureData("yoda.data", (buffer) => {
-		gameDataBuffer = buffer;
-		done();
-	}));
+	beforeAll(done =>
+		getFixtureData("yoda.data", buffer => {
+			gameDataBuffer = buffer;
+			done();
+		})
+	);
 
 	it("parses the file correctly without taking too long", () => {
 		const start = performance.now();

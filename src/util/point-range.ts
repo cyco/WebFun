@@ -4,7 +4,7 @@ class PointRange {
 	public from: Point;
 	public to: Point;
 
-	constructor(fromX: number|Point, fromY: number|Point, toX: number = null, toY: number = null) {
+	constructor(fromX: number | Point, fromY: number | Point, toX: number = null, toY: number = null) {
 		if (typeof fromX !== "object") {
 			fromX = new Point(fromX, <number>fromY);
 			fromY = new Point(toX, toY);

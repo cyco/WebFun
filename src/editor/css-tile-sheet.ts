@@ -62,7 +62,6 @@ class CSSTileSheet extends TileSheet {
 		return entry;
 	}
 
-
 	public draw(factory: ImageFactory): void {
 		super.draw(factory);
 

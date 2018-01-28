@@ -19,8 +19,8 @@ class AssemblerInputError extends Error {
 }
 
 type ASTFunctionDefinition = [Symbol, Symbol, AST, Array<AST>];
-type Opcode = {Opcode: number, Arguments: Type[], UsesText?: boolean, Description: string};
-type OpcodeMap = {[_: string]: Opcode};
+type Opcode = { Opcode: number; Arguments: Type[]; UsesText?: boolean; Description: string };
+type OpcodeMap = { [_: string]: Opcode };
 
 const Conditions = <OpcodeMap>ConditionsByName;
 const Instructions = <OpcodeMap>InstructionsByName;
@@ -59,8 +59,7 @@ class Assembler {
 	private validateInputStructure(input: AST): ASTFunctionDefinition {
 		let inputArray = <Array<AST>>input;
 
-		if (!(input instanceof Array))
-			throw new AssemblerInputError("Input must be an array.", input);
+		if (!(input instanceof Array)) throw new AssemblerInputError("Input must be an array.", input);
 		if (inputArray[0] !== s`defaction`)
 			throw new AssemblerInputError("Input must be an action definition using defaction.", input);
 
@@ -81,7 +80,7 @@ class Assembler {
 			instructions = progn.slice(1).map(input => this.parseInstruction(input));
 		}
 
-		const conditions = body.map((input) => this.parseCondition(input));
+		const conditions = body.map(input => this.parseCondition(input));
 		return [conditions, instructions];
 	}
 
@@ -93,7 +92,7 @@ class Assembler {
 		return this.parseOpcode(input, Conditions, Condition);
 	}
 
-	private parseOpcode<T>(input: AST, map: OpcodeMap, itemClass: {new(data: AbstractActionItemInit): T}): T {
+	private parseOpcode<T>(input: AST, map: OpcodeMap, itemClass: { new (data: AbstractActionItemInit): T }): T {
 		if (!(input instanceof Array)) throw new AssemblerInputError("Invalid input.", input);
 
 		const [name, ...args] = input;

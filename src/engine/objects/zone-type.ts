@@ -96,7 +96,7 @@ class ZoneType {
 	}
 
 	static isZoneType(number: number): boolean {
-		return number >= 0 && number < ZoneType.knownTypes.length || number === 9999;
+		return (number >= 0 && number < ZoneType.knownTypes.length) || number === 9999;
 	}
 
 	static fromNumber(number: number): ZoneType {
@@ -131,7 +131,7 @@ class ZoneType {
 			default:
 				throw `Zone type ${this} does not match any puzzle type!`;
 		}
-	};
+	}
 
 	public toString(): string {
 		return `ZoneType{${this.name.split(" ").join("")}}`;

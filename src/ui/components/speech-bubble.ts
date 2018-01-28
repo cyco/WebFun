@@ -7,10 +7,10 @@ export const Event = {
 	End: "end"
 };
 
-const FontSize = '11px';
-const LineHeight = '12px';
-const FontFamily = 'Microsoft Sans Serif,sans';
-const Padding = '7px';
+const FontSize = "11px";
+const LineHeight = "12px";
+const FontFamily = "Microsoft Sans Serif,sans";
+const Padding = "7px";
 const MaxLineCount = 5;
 const ArrowWidth = 16;
 const ScrollRepeatInterval = 100;
@@ -54,29 +54,37 @@ class SpeechBubble extends Component {
 		textContainer.classList.add("text-container");
 		textContainer.appendChild(this._text);
 
-		this._upButton = this._buildButton('up', 'caret-up');
+		this._upButton = this._buildButton("up", "caret-up");
 		this._upButton.onmousedown = () => {
 			this.scrollUp();
 
-			document.addEventListener('mouseup', () => clearTimeout(this._keepScrolling), { capture: true, passive: true, once: true });
-		}
-		this._downButton = this._buildButton('down', 'caret-down');
+			document.addEventListener("mouseup", () => clearTimeout(this._keepScrolling), {
+				capture: true,
+				passive: true,
+				once: true
+			});
+		};
+		this._downButton = this._buildButton("down", "caret-down");
 		this._downButton.onmousedown = () => {
 			this.scrollDown();
 
-			document.addEventListener('mouseup', () => clearTimeout(this._keepScrolling), { capture: true, passive: true, once: true });
-		}
+			document.addEventListener("mouseup", () => clearTimeout(this._keepScrolling), {
+				capture: true,
+				passive: true,
+				once: true
+			});
+		};
 
-		this._endButton = this._buildButton('end', 'circle');
+		this._endButton = this._buildButton("end", "circle");
 		this._endButton.onclick = () => this.end();
 	}
 
 	connectedCallback() {
 		super.connectedCallback();
 
-		this.style.setProperty('--font-family', FontFamily);
-		this.style.setProperty('--line-height', LineHeight);
-		this.style.setProperty('--current-line', '0');
+		this.style.setProperty("--font-family", FontFamily);
+		this.style.setProperty("--line-height", LineHeight);
+		this.style.setProperty("--current-line", "0");
 
 		this.style.width = this._width + "px";
 		this.style.position = "absolute";
@@ -107,7 +115,7 @@ class SpeechBubble extends Component {
 	}
 
 	set origin(p: Point) {
-		this.style.left = (p.x - parseInt(this._width + "") / 2) + "px";
+		this.style.left = p.x - parseInt(this._width + "") / 2 + "px";
 		this.style.top = p.x + "px";
 	}
 
@@ -123,7 +131,7 @@ class SpeechBubble extends Component {
 	}
 
 	_setupButtons() {
-		this._endButton.setAttribute('disabled', '');
+		this._endButton.setAttribute("disabled", "");
 
 		const buttonBar = document.createElement("div");
 		buttonBar.classList.add("controls");
@@ -167,10 +175,10 @@ class SpeechBubble extends Component {
 			background.setAttribute("width", `${width + ArrowWidth}`);
 		}
 
-		const leftArrowWidth = (this._arrowStyle & ArrowStyle.Left ? ArrowWidth : 0);
-		const rightArrowWidth = (this._arrowStyle & ArrowStyle.Right ? ArrowWidth : 0);
-		const topArrowWidth = (this._arrowStyle & ArrowStyle.Top ? ArrowWidth : 0);
-		const bottomArrowWidth = (this._arrowStyle & ArrowStyle.Bottom ? ArrowWidth : 0);
+		const leftArrowWidth = this._arrowStyle & ArrowStyle.Left ? ArrowWidth : 0;
+		const rightArrowWidth = this._arrowStyle & ArrowStyle.Right ? ArrowWidth : 0;
+		const topArrowWidth = this._arrowStyle & ArrowStyle.Top ? ArrowWidth : 0;
+		const bottomArrowWidth = this._arrowStyle & ArrowStyle.Bottom ? ArrowWidth : 0;
 
 		const padding = parseInt(Padding);
 		this._text.parentElement.style.left = padding + leftArrowWidth + "px";
@@ -178,7 +186,7 @@ class SpeechBubble extends Component {
 		this._text.parentElement.style.bottom = padding + bottomArrowWidth + "px";
 		this._text.parentElement.style.right = 21 + padding + rightArrowWidth + "px";
 
-		this._endButton.parentElement.style.bottom = (padding - 2) + bottomArrowWidth + "px";
+		this._endButton.parentElement.style.bottom = padding - 2 + bottomArrowWidth + "px";
 	}
 
 	_buildPath() {
@@ -233,7 +241,7 @@ class SpeechBubble extends Component {
 
 	public scrollUp() {
 		this._scrollBy(-1);
-		this._keepScrolling = setTimeout(() => this.scrollUp(), ScrollRepeatInterval)
+		this._keepScrolling = setTimeout(() => this.scrollUp(), ScrollRepeatInterval);
 	}
 
 	public end() {
@@ -248,7 +256,7 @@ class SpeechBubble extends Component {
 	}
 
 	private _scrollBy(l: number): void {
-		const currentScroll = parseInt(this._text.style.getPropertyValue('--current-line')) | 0;
+		const currentScroll = parseInt(this._text.style.getPropertyValue("--current-line")) | 0;
 		this._scrollTo(currentScroll + l);
 	}
 
@@ -258,7 +266,7 @@ class SpeechBubble extends Component {
 		line = Math.min(line, totalLineCount - MaxLineCount);
 		line = Math.max(line, 0);
 
-		this._text.style.setProperty('--current-line', `${line}`);
+		this._text.style.setProperty("--current-line", `${line}`);
 		this._updateButtonStates();
 	}
 
@@ -280,28 +288,28 @@ class SpeechBubble extends Component {
 	private _udpateButtonVisibility() {
 		const canScroll = this._calculateNumberOfLines(true) > 5;
 		if (!canScroll) {
-			this._upButton.setAttribute('hidden', '');
-			this._downButton.setAttribute('hidden', '');
+			this._upButton.setAttribute("hidden", "");
+			this._downButton.setAttribute("hidden", "");
 		} else {
-			this._upButton.removeAttribute('hidden');
-			this._downButton.removeAttribute('hidden');
+			this._upButton.removeAttribute("hidden");
+			this._downButton.removeAttribute("hidden");
 		}
 	}
 
 	private _updateButtonStates() {
-		const currentLine = parseInt(this._text.style.getPropertyValue('--current-line'))
+		const currentLine = parseInt(this._text.style.getPropertyValue("--current-line"));
 		const maxLine = this._calculateNumberOfLines(true) - MaxLineCount;
 
-		this._upButton.removeAttribute('disabled');
-		this._downButton.removeAttribute('disabled');
+		this._upButton.removeAttribute("disabled");
+		this._downButton.removeAttribute("disabled");
 
 		if (currentLine <= 0) {
-			this._upButton.setAttribute('disabled', '');
+			this._upButton.setAttribute("disabled", "");
 		}
 
 		if (currentLine >= maxLine) {
-			this._downButton.setAttribute('disabled', '');
-			this._endButton.removeAttribute('disabled');
+			this._downButton.setAttribute("disabled", "");
+			this._endButton.removeAttribute("disabled");
 		}
 	}
 }

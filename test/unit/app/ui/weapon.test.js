@@ -2,7 +2,7 @@ import Weapon from "src/app/ui/weapon";
 
 describeComponent(Weapon, () => {
 	let subject = null;
-	beforeEach(() => subject = render(Weapon));
+	beforeEach(() => (subject = render(Weapon)));
 
 	it("shows which weapon is currently equipped", () => {
 		expect(subject).not.toBeNull();
@@ -11,7 +11,7 @@ describeComponent(Weapon, () => {
 	it("has a setter / getter for the equipped weapon", () => {
 		const weapon = {};
 
-		expect(() => subject.weapon = weapon).not.toThrow();
+		expect(() => (subject.weapon = weapon)).not.toThrow();
 		expect(subject.weapon).toBe(weapon);
 	});
 
@@ -22,8 +22,8 @@ describeComponent(Weapon, () => {
 	});
 
 	it("shows the correct image if a weapon is set", () => {
-		const weapon = {frames: [{extensionRight: 3}]};
-		subject.data = {tiles: [, , , {image: {representation: {dataURL: "image-data-url"}}}]};
+		const weapon = { frames: [{ extensionRight: 3 }] };
+		subject.data = { tiles: [, , , { image: { representation: { dataURL: "image-data-url" } } }] };
 
 		subject.weapon = weapon;
 
@@ -31,7 +31,7 @@ describeComponent(Weapon, () => {
 	});
 
 	it("also shows no image if the weapon does not supply one", () => {
-		subject.weapon = {frames: [{extensionRight: 0xFFFF}]};
+		subject.weapon = { frames: [{ extensionRight: 0xffff }] };
 		expect(subject.querySelector("img").src).toEqual(Image.blankImage);
 	});
 });

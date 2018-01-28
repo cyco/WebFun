@@ -73,7 +73,7 @@ class TilePicker extends Component {
 
 	set currentTile(tile: Tile) {
 		this._currentTile = tile;
-		this.dispatchEvent(new CustomEvent(Events.TileDidChange, {detail: {tile}, bubbles: true}));
+		this.dispatchEvent(new CustomEvent(Events.TileDidChange, { detail: { tile }, bubbles: true }));
 	}
 
 	get currentTile() {

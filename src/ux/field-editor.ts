@@ -34,9 +34,9 @@ class FieldEditor extends EventTarget {
 		this._originalOnPaste = node.onpaste;
 
 		node.setAttribute("contenteditable", "true");
-		node.onblur = (e) => this.confirm(e);
-		node.onkeydown = (e) => this._onKeyDown(e);
-		node.onpaste = (e) => {
+		node.onblur = e => this.confirm(e);
+		node.onkeydown = e => this._onKeyDown(e);
+		node.onpaste = e => {
 			e.preventDefault();
 			const text = e.clipboardData.getData("text/plain");
 			document.execCommand("insertHTML", false, text);
@@ -46,7 +46,6 @@ class FieldEditor extends EventTarget {
 
 		this._node = node;
 	}
-
 
 	private _restoreNode() {
 		this._node.removeAttribute("contenteditable");

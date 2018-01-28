@@ -2,7 +2,7 @@ import { Condition } from "src/engine/objects";
 import PaddingIsGreaterThan from "src/engine/script/conditions/padding-is-greater-than";
 
 describeCondition("PaddingIsGreaterThan", (check, engine) => {
-	it("checks if the current zone's padding value is greater than the given value", async (done) => {
+	it("checks if the current zone's padding value is greater than the given value", async done => {
 		const condition = new Condition();
 		condition._opcode = PaddingIsGreaterThan.Opcode;
 		condition._arguments = [5];

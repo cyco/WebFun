@@ -39,7 +39,7 @@ class DebugInfoScene extends Scene {
 	}
 
 	private smoothen(value: number, lastValue: number, weight = 0.1) {
-		return value * weight + (lastValue * (1 - weight));
+		return value * weight + lastValue * (1 - weight);
 	}
 }
 

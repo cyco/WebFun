@@ -3,7 +3,7 @@ import Health from "src/app/ui/health";
 describeComponent(Health, () => {
 	let subject;
 
-	beforeAll(() => subject = render(Health));
+	beforeAll(() => (subject = render(Health)));
 
 	it("displays the hero's health in a circle", () => {
 		expect(subject.querySelector("svg")).not.toBe(null);

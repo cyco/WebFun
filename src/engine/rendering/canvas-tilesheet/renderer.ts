@@ -9,7 +9,7 @@ class Renderer extends CanvasRenderer {
 		this._imageFactory = new ImageFactory();
 	}
 
-	protected drawImage(image: HTMLImageElement|TileSheetEntry, atX: number, atY: number) {
+	protected drawImage(image: HTMLImageElement | TileSheetEntry, atX: number, atY: number) {
 		if (image instanceof HTMLImageElement) {
 			this._ctx.drawImage(image, atX, atY);
 		} else {

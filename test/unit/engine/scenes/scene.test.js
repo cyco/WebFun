@@ -21,7 +21,7 @@ describe("Scene", () => {
 
 	it("has a method for accessing the current camera's offset", () => {
 		const fakeOffset = {};
-		subject.engine = {sceneManager: {_stack: [{camera: {offset: fakeOffset}}]}};
+		subject.engine = { sceneManager: { _stack: [{ camera: { offset: fakeOffset } }] } };
 		expect(subject.cameraOffset).toBe(fakeOffset);
 	});
 });

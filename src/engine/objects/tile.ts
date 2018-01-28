@@ -17,13 +17,15 @@ export const Attribute = {
 };
 
 export const Subtype = {
-	Weapon: { // Weapon
+	Weapon: {
+		// Weapon
 		BlasterLow: 16,
 		BlasterHigh: 17,
 		Lightsaber: 18,
 		TheForce: 19
 	},
-	Locator: { // Locator
+	Locator: {
+		// Locator
 		Town: 1,
 
 		PuzzleUnsolved: 2,
@@ -44,7 +46,8 @@ export const Subtype = {
 		Goal: 14,
 		YouAreHere: 15
 	},
-	Item: { // Item
+	Item: {
+		// Item
 		Locator: 4,
 
 		Keycard: 0,
@@ -53,7 +56,8 @@ export const Subtype = {
 		PuzzleValuable: 3,
 		Consumeable: 6
 	},
-	Character: { // Character
+	Character: {
+		// Character
 		Hero: 16,
 		Enemy: 17,
 		NPC: 18
@@ -78,7 +82,7 @@ export class Tile {
 	}
 
 	get subtype() {
-		return this._attributes & ~0xFF;
+		return this._attributes & ~0xff;
 	}
 
 	isObject() {

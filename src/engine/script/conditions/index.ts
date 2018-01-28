@@ -37,8 +37,8 @@ import ZoneEntered from "./zone-entered";
 import ZoneIsSolved from "./zone-is-solved";
 import ZoneNotInitialized from "./zone-not-initialized";
 
-const ConditionsByName: {[name: string]: Condition} = {};
-const registerCondition = (name: string, c: Condition) => ConditionsByName[name] = c;
+const ConditionsByName: { [name: string]: Condition } = {};
+const registerCondition = (name: string, c: Condition) => (ConditionsByName[name] = c);
 registerCondition("ZoneNotInitialized", ZoneNotInitialized);
 registerCondition("ZoneEntered", ZoneEntered);
 registerCondition("Bump", Bump);
@@ -76,8 +76,12 @@ registerCondition("PaddingIsNot", PaddingIsNot);
 registerCondition("TileAtIsAgain", TileAtIsAgain);
 registerCondition("GamesWonIsGreaterThan", GamesWonIsGreaterThan);
 
-const ConditionsByOpcode: Condition[] = new Array(Object.values(ConditionsByName).sort((a, b) => b.Opcode - a.Opcode).first().Opcode);
-ConditionsByName.each<Condition>((_, c) => ConditionsByOpcode[c.Opcode] = c);
+const ConditionsByOpcode: Condition[] = new Array(
+	Object.values(ConditionsByName)
+		.sort((a, b) => b.Opcode - a.Opcode)
+		.first().Opcode
+);
+ConditionsByName.each<Condition>((_, c) => (ConditionsByOpcode[c.Opcode] = c));
 
 const ConditionImplementations = ConditionsByOpcode.map(c => c.Implementation);
 

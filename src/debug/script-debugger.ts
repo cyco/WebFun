@@ -18,7 +18,7 @@ import Settings from "src/settings";
 import { WindowManager } from "src/ui";
 import { ConditionImplementations } from "src/engine/script/conditions";
 import { InstructionImplementations } from "src/engine/script/instructions";
-import {Point} from 'src/util';
+import { Point } from "src/util";
 
 class ScriptDebugger {
 	private static _sharedDebugger: ScriptDebugger;
@@ -27,7 +27,7 @@ class ScriptDebugger {
 	private _isActive: boolean = false;
 	private _actionList: Group;
 	private _handlers = {
-		"zoneChange": () => this._rebuildActionList()
+		zoneChange: () => this._rebuildActionList()
 	};
 
 	constructor() {
@@ -43,7 +43,7 @@ class ScriptDebugger {
 	}
 
 	public static get sharedDebugger() {
-		return this._sharedDebugger = this._sharedDebugger || new ScriptDebugger();
+		return (this._sharedDebugger = this._sharedDebugger || new ScriptDebugger());
 	}
 
 	get engine() {
@@ -112,7 +112,9 @@ class ScriptDebugger {
 	}
 
 	private _buildConditionStore(originalStore: ConditionStore): ConditionStore {
-		return originalStore.map((_, c) => (args: number[], zone: Zone, engine: Engine): Promise<boolean> => this._handleConditionCall(c, args, zone, engine));
+		return originalStore.map((_, c) => (args: number[], zone: Zone, engine: Engine): Promise<boolean> =>
+			this._handleConditionCall(c, args, zone, engine)
+		);
 	}
 
 	private _handleConditionCall(opcode: number, args: number[], zone: Zone, engine: Engine): Promise<boolean> {
@@ -120,10 +122,17 @@ class ScriptDebugger {
 	}
 
 	private _buildInstructionStore(originalStore: InstructionStore): InstructionStore {
-		return originalStore.map((_, i) => (instruction: Instruction, engine: Engine, action: Action): Promise<InstructionResult> => this._handleInstructionCall(i, instruction, engine, action));
+		return originalStore.map((_, i) => (instruction: Instruction, engine: Engine, action: Action): Promise<
+			InstructionResult
+		> => this._handleInstructionCall(i, instruction, engine, action));
 	}
 
-	private _handleInstructionCall(opcode: number, instruction: Instruction, engine: Engine, action: Action): Promise<InstructionResult> {
+	private _handleInstructionCall(
+		opcode: number,
+		instruction: Instruction,
+		engine: Engine,
+		action: Action
+	): Promise<InstructionResult> {
 		if (!opcode) return;
 		return InstructionImplementations[opcode](instruction, engine, action);
 	}
@@ -142,7 +151,9 @@ class ScriptDebugger {
 	}
 
 	private _updateEvaluation() {
-		Array.from(this._actionList.querySelectorAll(ActionComponent.TagName)).forEach((action: ActionComponent) => action.evaluateConditions());
+		Array.from(this._actionList.querySelectorAll(ActionComponent.TagName)).forEach((action: ActionComponent) =>
+			action.evaluateConditions()
+		);
 	}
 }
 

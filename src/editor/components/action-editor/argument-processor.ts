@@ -4,7 +4,11 @@ import Token from "./token";
 import GameData from "src/engine/game-data";
 
 class ArgumentProcessor {
-	private definitions: {[_: string]: Condition|Instruction} = Object.assign({}, ConditionsByName, InstructionsByName);
+	private definitions: { [_: string]: Condition | Instruction } = Object.assign(
+		{},
+		ConditionsByName,
+		InstructionsByName
+	);
 	private _data: GameData;
 
 	constructor(data: GameData) {
@@ -39,15 +43,27 @@ class ArgumentProcessor {
 			}
 
 			if (type === Type.ZoneX) {
-				argumentNode.point = new Point(+argumentNode.textContent, +argumentNode.nextElementSibling.textContent, 0);
+				argumentNode.point = new Point(
+					+argumentNode.textContent,
+					+argumentNode.nextElementSibling.textContent,
+					0
+				);
 			}
 
 			if (type === Type.ZoneY) {
-				argumentNode.point = new Point(+argumentNode.previousElementSibling.textContent, +argumentNode.textContent, 0);
+				argumentNode.point = new Point(
+					+argumentNode.previousElementSibling.textContent,
+					+argumentNode.textContent,
+					0
+				);
 			}
 
 			if (type === Type.ZoneZ) {
-				argumentNode.point = new Point(+argumentNode.previousElementSibling.previousElementSibling.textContent, +argumentNode.previousElementSibling.textContent, +argumentNode.textContent);
+				argumentNode.point = new Point(
+					+argumentNode.previousElementSibling.previousElementSibling.textContent,
+					+argumentNode.previousElementSibling.textContent,
+					+argumentNode.textContent
+				);
 			}
 		}
 	}

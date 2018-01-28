@@ -83,8 +83,7 @@ describe("MenuStack", () => {
 
 	function mockMenuWindow() {
 		const mockedMenuWindow = document.createElement("div");
-		mockedMenuWindow.close = () => {
-		};
+		mockedMenuWindow.close = () => {};
 		return mockedMenuWindow;
 	}
 });

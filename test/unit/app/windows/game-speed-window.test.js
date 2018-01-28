@@ -2,7 +2,7 @@ import GameSpeedWindow from "src/app/windows/game-speed-window";
 
 describeComponent(GameSpeedWindow, () => {
 	let subject;
-	beforeEach(() => subject = render(GameSpeedWindow));
+	beforeEach(() => (subject = render(GameSpeedWindow)));
 
 	it("is a settings window", () => {
 		expect(subject instanceof GameSpeedWindow).toBeTrue();

@@ -1,4 +1,3 @@
 describeCondition("", (check, engine) => {
-	it("", () => {
-	});
+	it("", () => {});
 });

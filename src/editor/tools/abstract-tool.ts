@@ -11,7 +11,6 @@ export const Events = {
 	ChangedTiles: "ChangedTiles"
 };
 
-
 abstract class AbstractTool extends EventTarget {
 	public static readonly Event = Events;
 	public abstract readonly name: string;

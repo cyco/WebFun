@@ -39,8 +39,8 @@ import StopSound from "./stop-sound";
 import Wait from "./wait";
 import WinGame from "./win-game";
 
-const InstructionsByName: {[name: string]: Instruction} = {};
-const registerInstruction = (name: string, c: Instruction) => InstructionsByName[name] = c;
+const InstructionsByName: { [name: string]: Instruction } = {};
+const registerInstruction = (name: string, c: Instruction) => (InstructionsByName[name] = c);
 registerInstruction("PlaceTile", PlaceTile);
 registerInstruction("RemoveTile", RemoveTile);
 registerInstruction("MoveTile", MoveTile);
@@ -80,8 +80,12 @@ registerInstruction("LoseGame", LoseGame);
 registerInstruction("MarkAsSolved", MarkAsSolved);
 registerInstruction("MoveHeroBy", MoveHeroBy);
 
-const InstructionsByOpcode: Instruction[] = new Array(Object.values(InstructionsByName).sort((a, b) => b.Opcode - a.Opcode).first().Opcode);
-InstructionsByName.each<Instruction>((_, i) => InstructionsByOpcode[i.Opcode] = i);
+const InstructionsByOpcode: Instruction[] = new Array(
+	Object.values(InstructionsByName)
+		.sort((a, b) => b.Opcode - a.Opcode)
+		.first().Opcode
+);
+InstructionsByName.each<Instruction>((_, i) => (InstructionsByOpcode[i.Opcode] = i));
 const InstructionImplementations = InstructionsByOpcode.map(i => i.Implementation);
 
 export { InstructionsByName, InstructionsByOpcode, InstructionImplementations };

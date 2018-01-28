@@ -1,5 +1,5 @@
 class PersistentState {
-	[_: string]: number|Storage|Function;
+	[_: string]: number | Storage | Function;
 	private _storage: Storage;
 
 	constructor(storage = localStorage) {

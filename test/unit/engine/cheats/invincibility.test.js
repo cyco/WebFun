@@ -2,7 +2,7 @@ import InvincibilityCheat from "src/engine/cheats/invincibility";
 
 describe("InvincibilityCheat", () => {
 	let subject;
-	beforeEach(() => subject = new InvincibilityCheat());
+	beforeEach(() => (subject = new InvincibilityCheat()));
 
 	it("is activated by the code `goyoda`", () => {
 		expect(subject.code).toEqual("goyoda");
@@ -13,7 +13,7 @@ describe("InvincibilityCheat", () => {
 	});
 
 	it("makes the hero invinicible when executed", () => {
-		const mockEngine = {hero: {}};
+		const mockEngine = { hero: {} };
 		subject.execute(mockEngine);
 		expect(mockEngine.hero.invincible).toBeTrue();
 	});

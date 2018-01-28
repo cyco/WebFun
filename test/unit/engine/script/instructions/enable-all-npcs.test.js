@@ -2,7 +2,7 @@ import { Instruction } from "src/engine/objects";
 import EnableAllNPCs from "src/engine/script/instructions/enable-all-npcs";
 
 describeInstruction("EnableAllNPCs", (execute, engine) => {
-	it("enables all npcs in the current zone", async (done) => {
+	it("enables all npcs in the current zone", async done => {
 		engine.currentZone.npcs = [{}, {}, {}];
 
 		let instruction = new Instruction({});

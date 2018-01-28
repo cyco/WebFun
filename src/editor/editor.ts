@@ -16,7 +16,7 @@ import WindowManager from "src/ui/window-manager";
 class Editor extends FullscreenWindow {
 	public static readonly TagName = "wf-editor";
 	private _windowManager: WindowManager;
-	private _inspectors: {[_: string]: AbstractInspector} = {};
+	private _inspectors: { [_: string]: AbstractInspector } = {};
 	private _data: DataManager;
 
 	constructor() {

@@ -29,7 +29,7 @@ import { MutableNPC, MutableHotspot } from "src/engine/mutable-objects";
 import { Point } from "src/util";
 
 import NPCComponent from "src/editor/components/zone-editor/npc";
-import HotspotComponent from 'src/editor/components/zone-editor/hotspot';
+import HotspotComponent from "src/editor/components/zone-editor/hotspot";
 import List from "src/ui/components/list";
 
 class Window extends Panel {
@@ -70,18 +70,15 @@ class Window extends Panel {
 		});
 
 		const layers = <SidebarLayersCell>document.createElement(SidebarLayersCell.TagName);
-		layers.addEventListener(LayerChangeEvents.LayerDidChange, (e: CustomEvent) => this._editor.currentLayer = e.detail.layer);
+		layers.addEventListener(
+			LayerChangeEvents.LayerDidChange,
+			(e: CustomEvent) => (this._editor.currentLayer = e.detail.layer)
+		);
 		this._sidebar.addEntry(layers, "Layers");
 
 		this._editor = <ZoneEditor>document.createElement(ZoneEditor.TagName);
 
-		this._tools = [
-			new NoTool(),
-			new PencilTool(),
-			new RectangleTool(),
-			new PaintBucketTool(),
-			new HotspotTool()
-		];
+		this._tools = [new NoTool(), new PencilTool(), new RectangleTool(), new PaintBucketTool(), new HotspotTool()];
 		const toolComponents = <HTMLElement[]>this._tools.map(t => this._buildToolItem(t));
 		const actionComponents = [
 			{
@@ -129,8 +126,7 @@ class Window extends Panel {
 
 	private _tilePickerTileChanged() {
 		const tile = this._tilePicker.currentTile;
-		this._tools.filter(t => t instanceof AbstractDrawingTool)
-			.forEach((t: AbstractDrawingTool) => t.tile = tile);
+		this._tools.filter(t => t instanceof AbstractDrawingTool).forEach((t: AbstractDrawingTool) => (t.tile = tile));
 	}
 
 	public show() {
@@ -224,7 +220,9 @@ class Window extends Panel {
 		const thing = <ToolComponent>document.createElement(ToolComponent.TagName);
 		thing.tool = tool;
 		thing.editor = this._editor;
-		tool.addEventListener(AbstractTool.Event.ChangedTiles, (e: TileChangeEvent) => this._editor.redraw(e.affectedPoints));
+		tool.addEventListener(AbstractTool.Event.ChangedTiles, (e: TileChangeEvent) =>
+			this._editor.redraw(e.affectedPoints)
+		);
 		return thing;
 	}
 
@@ -242,7 +240,6 @@ class Window extends Panel {
 
 		return list;
 	}
-
 
 	private _buildHotspotList() {
 		const list = <List<Hotspot>>document.createElement(List.TagName);
@@ -286,7 +283,6 @@ class Window extends Panel {
 		this.zone.hotspots.push(hotspot);
 		this._hotspots.items = this._zone.hotspots;
 	}
-
 
 	get zone() {
 		return this._zone;

@@ -1,6 +1,6 @@
 import Component from "src/ui/component";
 import ExpandButton from "src/editor/components/expand-button";
-import { IconButton } from 'src/ui/components';
+import { IconButton } from "src/ui/components";
 import "./sidebar-cell.scss";
 
 class SidebarCell extends Component {
@@ -25,8 +25,8 @@ class SidebarCell extends Component {
 		this._header.appendChild(this._expandButton);
 
 		this._newButton = <IconButton>document.createElement(IconButton.TagName);
-		this._newButton.icon = 'plus-circle';
-		this._newButton.style.display = 'none';
+		this._newButton.icon = "plus-circle";
+		this._newButton.style.display = "none";
 		this._newButton.onclick = () => this.newItemCallback();
 		this._header.appendChild(this._newButton);
 	}

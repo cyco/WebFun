@@ -7,7 +7,7 @@ export const srand = (seed: number): void => {
 	global.lastRandom = seed;
 };
 export const rand = (): number => {
-	global.lastRandom = Math.imul(global.lastRandom, 214013) + 2531011 & 0xFFFFFFFF;
-	return global.lastRandom >> 16 & 0x7fff;
+	global.lastRandom = (Math.imul(global.lastRandom, 214013) + 2531011) & 0xffffffff;
+	return (global.lastRandom >> 16) & 0x7fff;
 };
 export const randmod = (mod: number): number => rand() % mod;

@@ -17,7 +17,7 @@ class Menu extends PageObject {
 	}
 
 	itemWithTitle(title: string) {
-		return this.items.find((itm) => itm.title === title);
+		return this.items.find(itm => itm.title === title);
 	}
 }
 

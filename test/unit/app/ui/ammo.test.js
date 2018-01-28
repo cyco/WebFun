@@ -3,7 +3,7 @@ import Ammo from "src/app/ui/ammo";
 describeComponent(Ammo, () => {
 	let subject;
 
-	beforeAll(() => subject = render(Ammo));
+	beforeAll(() => (subject = render(Ammo)));
 
 	it("shows a simple bar inidcating how much ammo is left", () => {
 		expect(subject).not.toBeNull();
@@ -28,7 +28,7 @@ describeComponent(Ammo, () => {
 	it("a value of 0xFF or -1 indicates that there is no current weapon", () => {
 		let background = subject.querySelector(".background");
 
-		subject.ammo = 0xFF;
+		subject.ammo = 0xff;
 		expect(background.style.backgroundColor).toBe("");
 
 		subject.ammo = 0;

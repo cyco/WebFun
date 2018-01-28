@@ -7,7 +7,7 @@ describe("ConditionChecker", () => {
 	beforeEach(() => {
 		engine = {
 			currentZone: {},
-			hero: {location: {}},
+			hero: { location: {} },
 			persistentState: {},
 			state: {}
 		};

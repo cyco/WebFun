@@ -9,7 +9,7 @@ const enum Island {
 	West = 0
 }
 
-type Run = {length: number, start: number};
+type Run = { length: number; start: number };
 
 class IslandBuilder {
 	private stepX: Point;
@@ -31,8 +31,7 @@ class IslandBuilder {
 
 	private at(point: Point, value?: number) {
 		const index = point.x + 10 * point.y;
-		if (value !== undefined)
-			this.typeMap[index] = value;
+		if (value !== undefined) this.typeMap[index] = value;
 		else return this.typeMap[index];
 	}
 
@@ -64,7 +63,7 @@ class IslandBuilder {
 		range.iterate((point: Point) => {
 			const currentItem = this.at(point);
 			const neighborItem = this.at(Point.add(point, neighbor));
-			if (currentItem || neighborItem && neighborItem !== WorldItemType.KeptFree.rawValue) {
+			if (currentItem || (neighborItem && neighborItem !== WorldItemType.KeptFree.rawValue)) {
 				if (length < currentRun) {
 					length = currentRun;
 					start = i - currentRun;
@@ -95,12 +94,9 @@ class IslandBuilder {
 		if (run.length < 3) return false;
 		else if (run.length === 3) {
 			if (0 < run.start && run.start < 7) return false;
-			if (run.start === 0)
-				run.length = 2;
-			if (run.start === 7)
-				run.length = 2;
-		} else if (run.length >= 4)
-			run.length = Math.min(run.length - 2, 4);
+			if (run.start === 0) run.length = 2;
+			if (run.start === 7) run.length = 2;
+		} else if (run.length >= 4) run.length = Math.min(run.length - 2, 4);
 
 		if (run.start > 0 && run.start + run.length < 10) run.start++;
 

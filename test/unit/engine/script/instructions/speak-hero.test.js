@@ -3,7 +3,7 @@ import SpeakHero from "src/engine/script/instructions/speak-hero";
 import * as SpeakText from "src/engine/script/instructions/speak-text";
 
 xdescribeInstruction("SpeakHero", (execute, engine) => {
-	it("shows a speech bubble next to the hero", async (done) => {
+	it("shows a speech bubble next to the hero", async done => {
 		const location = {};
 		engine.hero.location = location;
 		spyOn(SpeakText, "default");

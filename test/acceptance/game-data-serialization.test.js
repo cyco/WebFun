@@ -7,7 +7,7 @@ import DiscardingOutputStream from "src/util/discarding-output-stream";
 describe("Game Data Serialization", () => {
 	let data;
 
-	beforeAll((done) => {
+	beforeAll(done => {
 		loadGameData(rawData => {
 			data = new GameData(rawData);
 			done();

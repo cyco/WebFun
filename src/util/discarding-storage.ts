@@ -9,25 +9,21 @@ class DiscardingStorage implements Storage {
 	[key: string]: any;
 	[index: number]: string;
 
-	constructor() {
-	}
+	constructor() {}
 
-	clear() {
-	};
+	clear() {}
 
-	getItem(key: string): string|null {
+	getItem(key: string): string | null {
 		return null;
 	}
 
-	key(index: number): string|null {
+	key(index: number): string | null {
 		return null;
 	}
 
-	removeItem(key: string): void {
-	}
+	removeItem(key: string): void {}
 
-	setItem(key: string, data: string): void {
-	}
+	setItem(key: string, data: string): void {}
 
 	prefixedWith(s: string): Storage {
 		return this;

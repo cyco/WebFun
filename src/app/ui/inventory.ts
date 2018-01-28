@@ -75,22 +75,26 @@ class InventoryComponent extends Component {
 
 	rowClicked(item: Tile, row: number) {
 		if (item.id === Yoda.ItemIDs.Locator) {
-			this.dispatchEvent(new CustomEvent(Event.PlacedLocator, {
-				detail: {
-					item: item,
-					row: row
-				}
-			}));
+			this.dispatchEvent(
+				new CustomEvent(Event.PlacedLocator, {
+					detail: {
+						item: item,
+						row: row
+					}
+				})
+			);
 			return;
 		}
 
 		if (item.id === Yoda.ItemIDs.ThermalDetonator) {
-			this.dispatchEvent(new CustomEvent(Event.ThrowDetonator, {
-				detail: {
-					item: item,
-					row: row
-				}
-			}));
+			this.dispatchEvent(
+				new CustomEvent(Event.ThrowDetonator, {
+					detail: {
+						item: item,
+						row: row
+					}
+				})
+			);
 			return;
 		}
 
@@ -117,12 +121,11 @@ class InventoryComponent extends Component {
 		let eventName = Event.PlacedItem;
 		if (item.getAttribute(TileAttribute.Weapon)) {
 			eventName = Event.PlacedWeapon;
-		} else if (item.getAttribute(TileAttribute.Item) &&
-			item.getSubtype(TileSubtype.Item.Consumeable)) {
+		} else if (item.getAttribute(TileAttribute.Item) && item.getSubtype(TileSubtype.Item.Consumeable)) {
 			eventName = Event.PlacedConsumeable;
 		}
 
-		this.dispatchEvent(new CustomEvent(eventName, {detail: eventDetail}));
+		this.dispatchEvent(new CustomEvent(eventName, { detail: eventDetail }));
 	}
 
 	addRow(model: Tile) {

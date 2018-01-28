@@ -1,6 +1,6 @@
 import { InputStream } from "src/util";
 
-const provideInputStream = async function (): Promise<InputStream> {
+const provideInputStream = async function(): Promise<InputStream> {
 	const buffer = await this.readAsArrayBuffer();
 	return new InputStream(buffer);
 };

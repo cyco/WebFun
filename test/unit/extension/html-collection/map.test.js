@@ -21,4 +21,3 @@ describe("HTMLCollection.find", () => {
 		expect(subject.find(() => false)).toBe(null);
 	});
 });
-

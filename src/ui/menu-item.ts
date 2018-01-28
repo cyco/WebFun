@@ -12,7 +12,7 @@ class MenuItem extends EventTarget {
 	public submenu: Menu;
 	public mnemonic: number;
 	public isSeparator: boolean = false;
-	private _enabled: boolean|Function;
+	private _enabled: boolean | Function;
 
 	constructor(item: Partial<MenuItemInit> = {}) {
 		super();
@@ -33,8 +33,7 @@ class MenuItem extends EventTarget {
 	get enabled(): boolean {
 		if (!this.callback && !this.hasSubmenu) return false;
 
-		if (this._enabled instanceof Function)
-			return this._enabled();
+		if (this._enabled instanceof Function) return this._enabled();
 
 		return this._enabled;
 	}
@@ -47,7 +46,6 @@ class MenuItem extends EventTarget {
 		return !!this.submenu;
 	}
 }
-
 
 const Separator = new MenuItem();
 Separator.isSeparator = true;

@@ -17,5 +17,4 @@ class UndoBatchOperation extends UndoOperation {
 	}
 }
 
-
 export default UndoBatchOperation;

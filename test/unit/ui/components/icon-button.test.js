@@ -15,7 +15,7 @@ describe("icon-button", () => {
 	});
 
 	it("takes a font-awesome icon name in the icon attribute", () => {
-		subject = render(IconButton, {icon: "test"});
+		subject = render(IconButton, { icon: "test" });
 		expect(subject.icon).toBe("test");
 		expect(subject.querySelector(".fa-test")).not.toBeNull();
 

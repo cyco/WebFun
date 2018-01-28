@@ -7,7 +7,7 @@ describe("Array.from", () => {
 	});
 
 	it("creates an array from an array-like object (like a node list)", () => {
-		const arrayLike = {0: "test", 1: "values", length: 2};
+		const arrayLike = { 0: "test", 1: "values", length: 2 };
 		const array = From(arrayLike);
 
 		expect(array instanceof Array).toBeTrue();

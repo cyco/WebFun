@@ -25,8 +25,8 @@ class Camera {
 
 	update(timeDelta: number): void {
 		// center
-		this._offset.x = (this._size.width / 2.0) - this.hero.location.x;
-		this._offset.y = (this._size.height / 2.0) - this.hero.location.y;
+		this._offset.x = this._size.width / 2.0 - this.hero.location.x;
+		this._offset.y = this._size.height / 2.0 - this.hero.location.y;
 
 		// be digital
 		this._offset.x = Math.floor(this._offset.x);

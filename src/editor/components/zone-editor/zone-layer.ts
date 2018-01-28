@@ -27,8 +27,8 @@ class ZoneLayer extends Component {
 	set zone(zone: Zone) {
 		this._zone = zone;
 
-		this._canvas.width = (zone.size.width * TileWidth);
-		this._canvas.height = (zone.size.height * TileHeight);
+		this._canvas.width = zone.size.width * TileWidth;
+		this._canvas.height = zone.size.height * TileHeight;
 		this._canvas.style.width = zone.size.width * TileWidth + "px";
 		this._canvas.style.height = zone.size.height * TileHeight + "px";
 

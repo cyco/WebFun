@@ -12,7 +12,6 @@ describe("String.padStart", () => {
 
 		result = padStart.call("test", 10);
 		expect(result).toBe("      test");
-
 	});
 
 	it("the fill character can be specified as the second paramter", () => {

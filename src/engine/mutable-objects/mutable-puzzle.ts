@@ -72,7 +72,6 @@ class MutablePuzzle extends Puzzle {
 	set unknown3(value) {
 		this._unknown3 = value;
 	}
-
 }
 
 export default MutablePuzzle;

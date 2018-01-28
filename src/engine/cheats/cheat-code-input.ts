@@ -19,9 +19,9 @@ class CheatCodeInput {
 	}
 
 	execute(engine: Engine): string[] {
-		const completedCheats = this._cheats.filter((c) => c.code === this._input);
-		completedCheats.forEach((c) => c.execute(engine));
-		return completedCheats.map((c) => c.message);
+		const completedCheats = this._cheats.filter(c => c.code === this._input);
+		completedCheats.forEach(c => c.execute(engine));
+		return completedCheats.map(c => c.message);
 	}
 }
 

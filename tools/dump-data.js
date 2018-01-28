@@ -14,14 +14,14 @@ import DiscardingOutputStream from "../src/util/discarding-output-stream";
 import GameDataSerializer from "src/editor/game-data-serializer";
 import OutputStream from "src/util/output-stream";
 
-const readFile = (path) => {
+const readFile = path => {
 	const buffer = FS.readFileSync(path);
 	const arrayBuffer = buffer.buffer.slice(buffer.byteOffset, buffer.byteOffset + buffer.byteLength);
 
 	return new InputStream(arrayBuffer);
 };
 
-const readGameData = (path) => {
+const readGameData = path => {
 	const fullPath = Path.resolve(path);
 	if (!FS.existsSync(path)) {
 		throw `Game file ${fullPath} does not exist`;
@@ -46,4 +46,3 @@ serializer.serialize(gameData, outputStream);
 outputStream = new OutputStream(outputStream.offset);
 serializer.serialize(gameData, outputStream);
 FS.writeFileSync("/Users/chris/Desktop/yoda-new.data", new Buffer(outputStream.buffer));
-

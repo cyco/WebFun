@@ -2,11 +2,10 @@ import { Instruction } from "src/engine/objects";
 import PlaceTile from "src/engine/script/instructions/place-tile";
 
 describeInstruction("PlaceTile", (execute, engine) => {
-	it("Places a tile at the specified coordinates", async (done) => {
+	it("Places a tile at the specified coordinates", async done => {
 		const tile = {};
 		engine.data.tiles = [null, null, tile, null];
-		engine.currentZone.setTile = () => {
-		};
+		engine.currentZone.setTile = () => {};
 		spyOn(engine.currentZone, "setTile");
 
 		let instruction = new Instruction({});

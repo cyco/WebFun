@@ -5,5 +5,5 @@ type Condition = {
 	Implementation: ConditionImplementation;
 	Description?: string;
 	Arguments?: Type[];
-}
+};
 export default Condition;

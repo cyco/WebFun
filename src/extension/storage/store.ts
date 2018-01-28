@@ -1,6 +1,10 @@
-const store = function (key: string, object: JSONValue): JSONValue {
+const store = function(key: string, object: JSONValue): JSONValue {
 	try {
-		if (typeof object === "object" && object.toString !== Array.prototype.toString && object.toString !== Object.prototype.toString) {
+		if (
+			typeof object === "object" &&
+			object.toString !== Array.prototype.toString &&
+			object.toString !== Object.prototype.toString
+		) {
 			this.setItem(key, JSON.stringify(object.toString()));
 		} else {
 			this.setItem(key, JSON.stringify(object));

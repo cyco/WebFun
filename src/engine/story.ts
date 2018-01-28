@@ -53,8 +53,7 @@ class Story {
 				generator = new WorldGenerator(effectiveSeed, this.size, this.planet, engine);
 				success = generator.generate(effectiveSeed);
 			} catch (e) {
-				if (e instanceof WorldGenerationError)
-					success = false;
+				if (e instanceof WorldGenerationError) success = false;
 			} finally {
 				if (!success) {
 					Message("--== YodaDocument::Reseed ==--");

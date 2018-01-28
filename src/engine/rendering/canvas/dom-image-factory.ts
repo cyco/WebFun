@@ -50,7 +50,7 @@ class DOMImageFactory extends AbstractImageFactory {
 			rawImageData[4 * i + 0] = palette[paletteIndex + 2];
 			rawImageData[4 * i + 1] = palette[paletteIndex + 1];
 			rawImageData[4 * i + 2] = palette[paletteIndex + 0];
-			rawImageData[4 * i + 3] = paletteIndex === 0 ? 0x00 : 0xFF;
+			rawImageData[4 * i + 3] = paletteIndex === 0 ? 0x00 : 0xff;
 		}
 
 		return imageData;

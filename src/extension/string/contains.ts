@@ -1,4 +1,4 @@
-const contains = function (something: string): boolean {
+const contains = function(something: string): boolean {
 	return this.indexOf(something) !== -1;
 };
 

@@ -1,6 +1,6 @@
 let eventMatchers = {
-	"HTMLEvents": /^(?:load|unload|abort|error|select|change|submit|reset|focus|blur|resize|scroll)$/,
-	"MouseEvents": /^(?:click|dblclick|mouse(?:down|up|over|move|out))$/
+	HTMLEvents: /^(?:load|unload|abort|error|select|change|submit|reset|focus|blur|resize|scroll)$/,
+	MouseEvents: /^(?:click|dblclick|mouse(?:down|up|over|move|out))$/
 };
 
 let defaultOptions = {
@@ -25,7 +25,8 @@ function extend(destination, source) {
 // found at http://stackoverflow.com/questions/6157929/how-to-simulate-a-mouse-click-using-javascript
 function simulateEvent(element, eventName) {
 	let options = extend(defaultOptions, arguments[2] || {});
-	let oEvent, eventType = null;
+	let oEvent,
+		eventType = null;
 
 	for (let name in eventMatchers) {
 		if (eventMatchers[name].test(eventName)) {
@@ -34,17 +35,30 @@ function simulateEvent(element, eventName) {
 		}
 	}
 
-	if (!eventType)
-		throw new SyntaxError("Only HTMLEvents and MouseEvents interfaces are supported");
+	if (!eventType) throw new SyntaxError("Only HTMLEvents and MouseEvents interfaces are supported");
 
 	if (document.createEvent) {
 		oEvent = document.createEvent(eventType);
 		if (eventType === "HTMLEvents") {
 			oEvent.initEvent(eventName, options.bubbles, options.cancelable);
 		} else {
-			oEvent.initMouseEvent(eventName, options.bubbles, options.cancelable, document.defaultView,
-				options.button, options.pointerX, options.pointerY, options.pointerX, options.pointerY,
-				options.ctrlKey, options.altKey, options.shiftKey, options.metaKey, options.button, element);
+			oEvent.initMouseEvent(
+				eventName,
+				options.bubbles,
+				options.cancelable,
+				document.defaultView,
+				options.button,
+				options.pointerX,
+				options.pointerY,
+				options.pointerX,
+				options.pointerY,
+				options.ctrlKey,
+				options.altKey,
+				options.shiftKey,
+				options.metaKey,
+				options.button,
+				element
+			);
 		}
 		element.dispatchEvent(oEvent);
 	} else {

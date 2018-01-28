@@ -35,7 +35,8 @@ class PuzzleInspector extends AbstractInspector {
 	}
 
 	includeListItem(searchValue: RegExp[], puzzle: Puzzle, cell: PuzzleInspectorCell, list: List<Puzzle>): boolean {
-		const string = puzzle.id + " " + puzzle.strings.join(" ") + puzzle.item1.name + (puzzle.item2 ? puzzle.item2.name : "");
+		const string =
+			puzzle.id + " " + puzzle.strings.join(" ") + puzzle.item1.name + (puzzle.item2 ? puzzle.item2.name : "");
 		return searchValue.every(r => r.test(string));
 	}
 }

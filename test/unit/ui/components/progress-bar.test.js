@@ -3,7 +3,7 @@ import ProgressBar from "src/ui/components/progress-bar";
 describeComponent(ProgressBar, () => {
 	let progressBar;
 
-	beforeEach(() => progressBar = render(ProgressBar));
+	beforeEach(() => (progressBar = render(ProgressBar)));
 
 	it("is a class that displays a bar indicating the current progress of an operation", () => {
 		expect(ProgressBar).toBeClass();

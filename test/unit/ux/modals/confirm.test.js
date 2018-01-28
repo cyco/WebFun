@@ -31,9 +31,9 @@ describe("Confirm", () => {
 		component.onabort();
 	});
 
-	it("resolves to Result.Confirmed when onconfirm is executed on the component", (done) => {
+	it("resolves to Result.Confirmed when onconfirm is executed on the component", done => {
 		const promise = Confirm("");
-		promise.then((result) => {
+		promise.then(result => {
 			expect(result).toBe(Result.Confirmed);
 			done();
 		});
@@ -42,9 +42,9 @@ describe("Confirm", () => {
 		component.onconfirm();
 	});
 
-	it("resolves to Result.Aborted when onabort is executed on the component", (done) => {
+	it("resolves to Result.Aborted when onabort is executed on the component", done => {
 		const promise = Confirm("");
-		promise.then((result) => {
+		promise.then(result => {
 			expect(result).toBe(Result.Aborted);
 			done();
 		});

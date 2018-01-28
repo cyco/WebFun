@@ -43,7 +43,7 @@ class Window extends Component {
 		this._update();
 	}
 
-	get origin(){
+	get origin() {
 		return new Point(this._x, this._y);
 	}
 

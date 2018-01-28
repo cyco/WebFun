@@ -4,7 +4,7 @@ import simulateEvent from "test-helpers/dom-events";
 describeComponent(Checkbox, () => {
 	let subject;
 
-	beforeEach(() => subject = render(Checkbox));
+	beforeEach(() => (subject = render(Checkbox)));
 
 	it("can have a title", () => {
 		let labelNode = subject.querySelector("label");
@@ -26,7 +26,7 @@ describeComponent(Checkbox, () => {
 		expect(inputNode.checked).toBeFalse();
 	});
 
-	it("when changed it calls it\s onclick callback", (done) => {
+	it("when changed it calls its onclick callback", done => {
 		let callback = () => {
 			expect(true).toBeTrue();
 			done();

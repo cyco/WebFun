@@ -14,10 +14,7 @@ abstract class AbstractDrawingTool extends AbstractTool implements EventListener
 
 		this._ctx = overlay.getContext("2d");
 		this._ctx.save();
-		this._ctx.setTransform(
-			window.devicePixelRatio * TileWidth, 0,
-			0, window.devicePixelRatio * TileHeight, 0, 0
-		);
+		this._ctx.setTransform(window.devicePixelRatio * TileWidth, 0, 0, window.devicePixelRatio * TileHeight, 0, 0);
 
 		this.canvas.addEventListener("mousedown", this);
 		this.canvas.addEventListener("mousemove", this);
@@ -58,8 +55,7 @@ abstract class AbstractDrawingTool extends AbstractTool implements EventListener
 
 	protected abstract applyTo(point: Point, continous: boolean): void;
 
-	protected finalize(point: Point): void {
-	}
+	protected finalize(point: Point): void {}
 
 	public handleEvent(event: MouseEvent): void {
 		if (event.type === "mouseup") {

@@ -1,7 +1,7 @@
 import Engine from "../engine";
 import Condition from "../objects/condition";
 import { ConditionImplementation } from "./types";
-import EvaluationMode from './evaluation-mode';
+import EvaluationMode from "./evaluation-mode";
 
 export type ConditionStore = ConditionImplementation[];
 

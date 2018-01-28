@@ -76,23 +76,29 @@ class SidebarLayersCell extends Component {
 
 		const node = this.closest(Window.TagName);
 		const manager = ShortcutManager.sharedManager;
-		this._shortcuts.push(manager.registerShortcut(() => this.activateLayer(2), {
-			ctrlKey: true,
-			keyCode: 51,
-			node
-		}));
-		this._shortcuts.push(manager.registerShortcut(() => this.activateLayer(1), {
-			ctrlKey: true,
-			keyCode: 50,
-			node
-		}));
-		this._shortcuts.push(manager.registerShortcut(() => this.activateLayer(0), {
-			ctrlKey: true,
-			keyCode: 49,
-			node
-		}));
-		this._shortcuts.push(manager.registerShortcut(() => this._toggleVisiblilty(), {ctrlKey: true, keyCode: 188}));
-		this._shortcuts.push(manager.registerShortcut(() => this._toggleLock(), {ctrlKey: true, keyCode: 190}));
+		this._shortcuts.push(
+			manager.registerShortcut(() => this.activateLayer(2), {
+				ctrlKey: true,
+				keyCode: 51,
+				node
+			})
+		);
+		this._shortcuts.push(
+			manager.registerShortcut(() => this.activateLayer(1), {
+				ctrlKey: true,
+				keyCode: 50,
+				node
+			})
+		);
+		this._shortcuts.push(
+			manager.registerShortcut(() => this.activateLayer(0), {
+				ctrlKey: true,
+				keyCode: 49,
+				node
+			})
+		);
+		this._shortcuts.push(manager.registerShortcut(() => this._toggleVisiblilty(), { ctrlKey: true, keyCode: 188 }));
+		this._shortcuts.push(manager.registerShortcut(() => this._toggleLock(), { ctrlKey: true, keyCode: 190 }));
 	}
 
 	_unregisterShortcuts() {
@@ -137,7 +143,7 @@ class SidebarLayersCell extends Component {
 		cell.classList.add("active");
 
 		const layer = cell.data;
-		this.dispatchEvent(new CustomEvent(Events.LayerDidChange, {detail: {layer: layer}, bubbles: true}));
+		this.dispatchEvent(new CustomEvent(Events.LayerDidChange, { detail: { layer: layer }, bubbles: true }));
 	}
 }
 

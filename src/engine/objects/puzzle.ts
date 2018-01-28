@@ -60,7 +60,6 @@ class Puzzle {
 		return false;
 	}
 
-
 	get id() {
 		return this._id;
 	}

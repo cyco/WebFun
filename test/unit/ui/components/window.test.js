@@ -5,7 +5,7 @@ import { describeComponent } from "../../../helpers/component";
 
 describeComponent(Window, () => {
 	let subject;
-	beforeEach(() => subject = render(Window));
+	beforeEach(() => (subject = render(Window)));
 
 	it("displays what is known as a window in the desktop world", () => {
 		expect(subject.querySelector(WindowTitlebar.TagName)).not.toBeNull();

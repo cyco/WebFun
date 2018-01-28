@@ -6,7 +6,7 @@ import { Shortcut, ShortcutManager } from "src/ux";
 import { DiscardingStorage } from "src/util";
 
 export declare interface SearchDelegate<T, PreparedSearchValue> {
-	prepareListSearch(searchValue: string, list: List<T>): PreparedSearchValue
+	prepareListSearch(searchValue: string, list: List<T>): PreparedSearchValue;
 
 	includeListItem(searchValue: PreparedSearchValue, item: T, cell: Cell<T>, list: List<T>): boolean;
 }
@@ -101,7 +101,7 @@ class List<T> extends Component {
 		this._content = document.createElement("div");
 		this._lastSearchValue = "";
 		this._cells.forEach(c => c.remove());
-		this._cells = this._items.map((i) => this.addItem(i));
+		this._cells = this._items.map(i => this.addItem(i));
 		this.refilter();
 		if (oldContent.parentElement) oldContent.parentElement.replaceChild(this._content, oldContent);
 		else this.appendChild(this._content);
@@ -109,7 +109,7 @@ class List<T> extends Component {
 
 	private setNeedsRefiltering() {
 		if (this._filterTimeout) return;
-		
+
 		this._filterTimeout = setTimeout(() => this.refilter(), FILTER_DELAY);
 	}
 
@@ -126,7 +126,7 @@ class List<T> extends Component {
 
 		if (!searchValue || !delegate || !this._bar.isVisible) {
 			this._lastSearchValue = "";
-			this._cells.forEach(c => c.style.display = "");
+			this._cells.forEach(c => (c.style.display = ""));
 			return;
 		}
 
@@ -135,7 +135,7 @@ class List<T> extends Component {
 		this._lastSearchValue = searchValue;
 		const preparedSearchValue = delegate.prepareListSearch(searchValue, this);
 
-		this._cells.forEach((cell) => {
+		this._cells.forEach(cell => {
 			const included = delegate.includeListItem(preparedSearchValue, cell.data, cell, this);
 			cell.style.display = included ? "" : "none";
 		});

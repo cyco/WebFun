@@ -42,11 +42,11 @@ describe("Inventory", () => {
 	});
 
 	it("has a method for easy enumeration", () => {
-		inventory.addItem({id: 3});
-		inventory.addItem({id: 4});
+		inventory.addItem({ id: 3 });
+		inventory.addItem({ id: 4 });
 
 		let enumeratedItemIds = [];
-		inventory.forEach(function (item) {
+		inventory.forEach(function(item) {
 			enumeratedItemIds.push(item.id);
 		});
 
@@ -58,9 +58,9 @@ describe("Inventory", () => {
 			inventory.removeEventListener(Events.ItemsDidChange);
 		});
 
-		it("sends an event when an item is added", (done) => {
-			let mockItem = {id: 3};
-			inventory.addEventListener(Events.ItemsDidChange, function (event) {
+		it("sends an event when an item is added", done => {
+			let mockItem = { id: 3 };
+			inventory.addEventListener(Events.ItemsDidChange, function(event) {
 				expect(event.detail.mode).toEqual("add");
 				expect(event.detail.item).toBe(mockItem);
 
@@ -69,11 +69,11 @@ describe("Inventory", () => {
 			inventory.addItem(mockItem);
 		});
 
-		it("sends an event when an item is removed", (done) => {
-			let mockItem = {id: 3};
+		it("sends an event when an item is removed", done => {
+			let mockItem = { id: 3 };
 			inventory.addItem(mockItem);
 
-			inventory.addEventListener(Events.ItemsDidChange, function (event) {
+			inventory.addEventListener(Events.ItemsDidChange, function(event) {
 				expect(event.detail.mode).toEqual("remove");
 				expect(event.detail.item).toBe(mockItem);
 

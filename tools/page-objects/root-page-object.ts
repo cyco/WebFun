@@ -11,7 +11,7 @@ class RootPageObject extends PageObject {
 	}
 
 	async setup(): Promise<any> {
-		return new Promise((r) => r(null));
+		return new Promise(r => r(null));
 	}
 
 	async $(selector: string): Promise<any> {

@@ -37,13 +37,11 @@ class SceneManager {
 			let visibleScenes: Scene[] = [];
 			for (let i = 0, len = this._stack.length; i < len; i++) {
 				const scene = this._stack[i];
-				if (scene.isOpaque())
-					visibleScenes = [scene];
+				if (scene.isOpaque()) visibleScenes = [scene];
 				else visibleScenes.push(scene);
 			}
 
-			for (let i = 0, len = visibleScenes.length; i < len; i++)
-				visibleScenes[i].render(renderer);
+			for (let i = 0, len = visibleScenes.length; i < len; i++) visibleScenes[i].render(renderer);
 		} catch (e) {
 			console.error(e);
 		}
@@ -64,7 +62,7 @@ class SceneManager {
 	}
 
 	clear() {
-		while (this.popScene()) ;
+		while (this.popScene());
 	}
 }
 

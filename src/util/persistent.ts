@@ -1,9 +1,9 @@
 import { localStorage } from "src/std.dom";
 
 export default <T>(object: T, key: string, storage: Storage = localStorage): T => {
-	const result: {[_: string]: string} = {};
+	const result: { [_: string]: string } = {};
 
-	let iterableObject = <{[_: string]: any}>object;
+	let iterableObject = <{ [_: string]: any }>object;
 	Object.keys(iterableObject).forEach(publicKey => {
 		const storageKey = `${key}.${publicKey}`;
 		const privateKey = `_${publicKey}`;
@@ -14,7 +14,7 @@ export default <T>(object: T, key: string, storage: Storage = localStorage): T =
 		// define getter / setter that immediately writes to storage
 		Object.defineProperty(result, publicKey, {
 			configurable: false,
-			set: (value) => {
+			set: value => {
 				result[privateKey] = value;
 				storage.store(storageKey, value);
 			},
@@ -22,5 +22,5 @@ export default <T>(object: T, key: string, storage: Storage = localStorage): T =
 		});
 	});
 
-	return <T><any>result;
-}
+	return <T>(<any>result);
+};

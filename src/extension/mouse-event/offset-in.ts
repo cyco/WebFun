@@ -1,6 +1,6 @@
 import { Point } from "src/util";
 
-const offsetIn = function (node: HTMLElement): Point {
+const offsetIn = function(node: HTMLElement): Point {
 	if (this.target === node) {
 		return new Point(this.offsetX, this.offsetY);
 	}

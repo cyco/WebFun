@@ -9,7 +9,7 @@ export default <Condition>{
 	Description: "Determines if inventory contains any of the required items needed for current zone",
 	Implementation: async (args: int16[], zone: Zone, engine: Engine): Promise<boolean> => {
 		const worldPosition = engine.currentWorld.locationOfZone(zone);
-		const {requiredItem, additionalRequiredItem} = engine.currentWorld.at(worldPosition);
+		const { requiredItem, additionalRequiredItem } = engine.currentWorld.at(worldPosition);
 
 		return engine.inventory.contains(requiredItem) || engine.inventory.contains(additionalRequiredItem);
 	}

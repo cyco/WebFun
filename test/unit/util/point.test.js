@@ -68,7 +68,6 @@ describe("Point", () => {
 
 	describe("add", () => {
 		it("adds one point to another", () => {
-
 			let firstPoint = new Point(1, 2, 3);
 			let secondPoint = new Point(-5, 3, 3);
 
@@ -95,10 +94,8 @@ describe("Point", () => {
 		});
 	});
 
-
 	describe("subtract", () => {
 		it("subtract one point from another", () => {
-
 			let firstPoint = new Point(1, 2, 3);
 			let secondPoint = new Point(-5, 3, 3);
 

@@ -1,4 +1,3 @@
-declare interface ColorPalette extends Uint8Array {
-}
+declare interface ColorPalette extends Uint8Array {}
 
 export default ColorPalette;

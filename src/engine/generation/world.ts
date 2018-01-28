@@ -25,8 +25,7 @@ class World {
 			x = x.x;
 		}
 
-		if (x < 0 || x >= World.WIDTH ||
-			y < 0 || y >= World.HEIGHT) {
+		if (x < 0 || x >= World.WIDTH || y < 0 || y >= World.HEIGHT) {
 			return null;
 		}
 
@@ -76,7 +75,7 @@ class World {
 	}
 
 	private _pointToIndex(x: number | PointLike, y?: number) {
-		if (typeof x === 'number') {
+		if (typeof x === "number") {
 			return y * World.WIDTH + x;
 		}
 

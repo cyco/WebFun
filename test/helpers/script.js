@@ -3,14 +3,14 @@ import InstructionExecutor from "../../src/engine/script/instruction-executor";
 import { ConditionImplementations } from "src/engine/script/conditions";
 import { InstructionImplementations } from "src/engine/script/instructions";
 
-const makeConditionDescription = (desc) => (Name, block) => {
+const makeConditionDescription = desc => (Name, block) => {
 	desc(`Condition ${Name}`, () => {
 		let engine = {};
 		let checker = new ConditionChecker(ConditionImplementations, engine);
 
 		beforeEach(() => {
 			engine.currentZone = {};
-			engine.hero = {location: {}};
+			engine.hero = { location: {} };
 			engine.persistentState = {};
 			engine.state = {};
 		});
@@ -19,7 +19,7 @@ const makeConditionDescription = (desc) => (Name, block) => {
 	});
 };
 
-const makeInstructionDescription = (desc) => (Name, block) => {
+const makeInstructionDescription = desc => (Name, block) => {
 	desc(`Instruction ${Name}`, () => {
 		let engine = {
 			currentZone: {},

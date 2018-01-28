@@ -13,7 +13,7 @@ describe("ComponentRegistry", () => {
 
 	describe("registerComponent", () => {
 		it("passes the call on to customElements ", () => {
-			const componentMock = {TagName: "test-component-1"};
+			const componentMock = { TagName: "test-component-1" };
 			spyOn(window.customElements, "define");
 			let subject = new ComponentRegistry();
 			subject.registerComponent(componentMock);
@@ -24,8 +24,8 @@ describe("ComponentRegistry", () => {
 	describe("registerComponents", () => {
 		it("can be called using an object of components", () => {
 			const components = {
-				"test-component-1": {TagName: "test-component-1"},
-				"test-component-2": {TagName: "test-component-2"}
+				"test-component-1": { TagName: "test-component-1" },
+				"test-component-2": { TagName: "test-component-2" }
 			};
 			spyOn(window.customElements, "define");
 
@@ -35,7 +35,7 @@ describe("ComponentRegistry", () => {
 		});
 
 		it("can be called using an array of components", () => {
-			const components = [{TagName: "test-component-1"}, {TagName: "test-component-2"}];
+			const components = [{ TagName: "test-component-1" }, { TagName: "test-component-2" }];
 			spyOn(window.customElements, "define");
 
 			let subject = new ComponentRegistry();

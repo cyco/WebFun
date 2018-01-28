@@ -12,7 +12,8 @@ const compareItem = (actual, expected) => {
 	const result = CompareWorldItems(actual, expected);
 	if (result !== ComparisonResult.Different) return;
 
-	if ((actual.zone ? actual.zone.id : -1) !== expected.zoneID) throw `Difference in zone ids detected! ${actual.zone ? actual.zone.id : -1} !== ${expected.zoneID}`;
+	if ((actual.zone ? actual.zone.id : -1) !== expected.zoneID)
+		throw `Difference in zone ids detected! ${actual.zone ? actual.zone.id : -1} !== ${expected.zoneID}`;
 	// if (actual.zoneType.rawValue !== expected.zoneType) throw `Difference in zone types detected! ${actual.zoneType.rawValue} !== ${expected.zoneType}`;
 	throw `Difference detected`;
 };
@@ -41,18 +42,18 @@ const compare = (story, expectation) => {
 	}
 };
 
-const runTest = ({seed, planet, size, world, dagobah}) => {
+const runTest = ({ seed, planet, size, world, dagobah }) => {
 	describe(`World ${seed} ${planet.toString()} ${size.toString()}`, () => {
-		it("is generated correctly", (done) => {
+		it("is generated correctly", done => {
 			const story = new Story(seed, Planet.fromNumber(planet), WorldSize.fromNumber(size));
-			story.generateWorld({data: new GameData(rawData)});
-			expect(() => compare(story, {seed, planet, size, world, dagobah})).not.toThrow();
+			story.generateWorld({ data: new GameData(rawData) });
+			expect(() => compare(story, { seed, planet, size, world, dagobah })).not.toThrow();
 			done();
 		});
 	});
 };
 
-const runnerFilter = (map) => {
+const runnerFilter = map => {
 	const values = process.acceptance;
 	if (values.seed !== undefined && map.seed !== values.seed) {
 		return false;
@@ -71,7 +72,7 @@ const runnerFilter = (map) => {
 const identity = (i, idx) => idx === 0;
 
 describe("World Generation", () => {
-	beforeAll((done) => {
+	beforeAll(done => {
 		loadGameData(data => {
 			rawData = data;
 			done();
@@ -79,6 +80,8 @@ describe("World Generation", () => {
 	});
 
 	const worldsFixture = getFixtureContent("worlds.txt");
-	const maps = PrepareExpectations(worldsFixture).map(ParseExpectation).filter(process.acceptance ? runnerFilter : identity);
+	const maps = PrepareExpectations(worldsFixture)
+		.map(ParseExpectation)
+		.filter(process.acceptance ? runnerFilter : identity);
 	maps.forEach(runTest);
 });

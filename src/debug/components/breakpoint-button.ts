@@ -22,8 +22,10 @@ class BreakpointButton extends Component {
 
 		this._store = BreakpointStore.sharedStore;
 		this.breakpoint = null;
-		this._removeHandler = ({detail: {breakpoint}}: CustomEvent) => breakpoint === this.breakpoint && (this.active = false);
-		this._addHandler = ({detail: {breakpoint}}: CustomEvent) => breakpoint === this.breakpoint && (this.active = true);
+		this._removeHandler = ({ detail: { breakpoint } }: CustomEvent) =>
+			breakpoint === this.breakpoint && (this.active = false);
+		this._addHandler = ({ detail: { breakpoint } }: CustomEvent) =>
+			breakpoint === this.breakpoint && (this.active = true);
 	}
 
 	get active() {

@@ -14,17 +14,13 @@ abstract class Scene_not_builtin {
 
 	public abstract async update(ticks: number): Promise<void>;
 
-	willShow(): void {
-	}
+	willShow(): void {}
 
-	didShow(): void {
-	}
+	didShow(): void {}
 
-	willHide(): void {
-	}
+	willHide(): void {}
 
-	didHide(): void {
-	}
+	didHide(): void {}
 
 	isOpaque(): boolean {
 		return true;
