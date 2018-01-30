@@ -26,7 +26,6 @@ class SpeechScene extends Scene {
 	}
 
 	set text(t) {
-		const zone = this.engine.currentZone;
 		const world = this.engine.currentWorld;
 		const quest = world.at(this.engine.state.worldLocation);
 

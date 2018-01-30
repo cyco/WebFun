@@ -91,7 +91,7 @@ class SpeechBubble extends Component {
 
 		this.appendChild(this._text.parentNode);
 
-		this.text = this.text;
+		this.text = this.text || '';
 	}
 
 	attributeChangedCallback(attribute: string, oldValue: string, newValue: string): void {
