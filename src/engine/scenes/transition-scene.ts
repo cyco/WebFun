@@ -86,7 +86,7 @@ class TransitionScene extends Scene {
 		const hero = this.engine.hero;
 		const engine = this.engine;
 		hero.location = this.targetHeroLocation;
-		state.worldLocation = this.targetZoneLocation;
+		state.worldLocation = this.targetZoneLocation || state.worldLocation;
 		engine.currentWorld = this.targetWorld;
 		engine.currentZone = this.targetZone;
 		engine.currentZone.visited = true;

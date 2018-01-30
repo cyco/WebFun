@@ -45,7 +45,8 @@ class World {
 		for (let y = 0; y < World.HEIGHT; y++) {
 			for (let x = 0; x < World.HEIGHT; x++) {
 				let index = this._pointToIndex(x, y);
-				if (this._items[index].zone === zone) {
+				const currentZone = this._items[index].zone;
+				if (currentZone === zone) {
 					return new Point(x, y);
 				}
 			}

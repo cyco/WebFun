@@ -5,6 +5,7 @@ import { Point, Size } from "src/util";
 import { ModalSession } from "src/ux";
 import Engine from "../engine";
 import Scene from "./scene";
+import { WorldItem } from 'src/engine/generation';
 
 class SpeechScene extends Scene {
 	public engine: Engine;
@@ -25,7 +26,18 @@ class SpeechScene extends Scene {
 	}
 
 	set text(t) {
-		this._bubble.text = t;
+		const zone = this.engine.currentZone;
+		const world = this.engine.currentWorld;
+		const quest = world.at(this.engine.state.worldLocation);
+
+		this._bubble.text = this.resolveVariables(t, quest);
+	}
+
+	private resolveVariables(text: string, quest: WorldItem) {
+		if (quest.findItem) text = text.replace(/¢/g, quest.findItem.name);
+		if (quest.requiredItem) text = text.replace(/¥/g, quest.requiredItem.name);
+
+		return text;
 	}
 
 	private _setupBubble() {
@@ -34,7 +46,7 @@ class SpeechScene extends Scene {
 		this._bubble = bubble;
 	}
 
-	render() {}
+	render() { }
 
 	willShow() {
 		this.engine.inputManager.mouseDownHandler = (p: Point): void => null;
