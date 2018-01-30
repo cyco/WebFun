@@ -25,6 +25,8 @@ class Editor extends FullscreenWindow {
 		if (!this._windowManager) {
 			this._windowManager = new WindowManager(this.content);
 		}
+
+		this.content.classList.add('fullsize');
 	}
 
 	connectedCallback() {
