@@ -38,8 +38,11 @@ class ScriptExecutor {
 		return this._evaluateActions(engine.currentZone.actions, mode, true);
 	}
 
-	public bump(location: Point) {
-		// TODO: implement?
+	public async bump(location: Point) {
+		this._engine.state.bump = location;
+		const result = await this._evaluateActions(this._engine.currentZone.actions, EvaluationMode.Bump, true);
+		this._engine.state.bump = null;
+		return result;
 	}
 
 	private async _evaluateActions(actions: Action[], mode: EvaluationMode, check = true): Promise<boolean> {
