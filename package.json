@@ -48,18 +48,18 @@
     ]
   },
   "dependencies": {
-    "@babel/polyfill": "^7.0.0-beta.38",
-    "@babel/runtime": "^7.0.0-beta.38",
+    "@babel/polyfill": "^7.0.0-beta.39",
+    "@babel/runtime": "^7.0.0-beta.39",
     "dasherize": "^2.0.0",
     "kaitai-struct": "^0.8.0-SNAPSHOT.2",
     "sprintf-js": "^1.1.1",
     "twgl.js": "^4.4.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.0.0-beta.38",
-    "@babel/plugin-transform-regenerator": "^7.0.0-beta.38",
-    "@babel/plugin-transform-runtime": "^7.0.0-beta.38",
-    "@babel/preset-env": "^7.0.0-beta.38",
+    "@babel/core": "^7.0.0-beta.39",
+    "@babel/plugin-transform-regenerator": "^7.0.0-beta.39",
+    "@babel/plugin-transform-runtime": "^7.0.0-beta.39",
+    "@babel/preset-env": "^7.0.0-beta.39",
     "@types/jasmine": "^2.8.6",
     "@types/jasmine-matchers": "^0.2.30",
     "@types/sprintf-js": "^1.1.0",
@@ -93,7 +93,7 @@
     "sass-loader": "^6.0.6",
     "shelljs": "^0.8.1",
     "style-loader": "^0.20.1",
-    "typescript": "^2.6.2",
+    "typescript": "^2.7.1",
     "url-loader": "^0.6.2",
     "webpack": "^3.10.0",
     "webpack-dev-server": "^2.11.1",
