@@ -6,6 +6,7 @@ let Settings: { [_: string]: any } = {
 
 	debug: true,
 	editor: true,
+	saveGameEditor: true,
 
 	drawDebugStats: true,
 	drawHotspots: true,

@@ -5,6 +5,7 @@ import * as WindowComponents from "./windows";
 import Settings, { loadSettings } from "src/settings";
 import { initialize as initializeDebug } from "src/debug";
 import { initialize as initializeEditor } from "src/editor";
+import { initialize as initializeSaveGameEditor } from 'src/save-game-editor';
 
 export default () => {
 	loadSettings();
@@ -22,5 +23,9 @@ export default () => {
 
 	if (Settings.editor) {
 		initializeEditor(gameController);
+	}
+
+	if (Settings.saveGameEditor) {
+		initializeSaveGameEditor(gameController);
 	}
 };

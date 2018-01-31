@@ -1,0 +1,9 @@
+@import "../ui/components/window";
+
+wf-save-game-editor {
+	@extend wf-window;
+
+	> .content {
+		flex-direction: column;
+	}
+}

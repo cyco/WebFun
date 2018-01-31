@@ -16,6 +16,8 @@ import WindowManager from "src/ui/window-manager";
 import GameData from "src/engine/game-data";
 import ColorPalette from "src/engine/rendering/color-palette";
 import Simulator from "./simulator";
+import SaveGameEditor from 'src/save-game-editor/save-game-editor';
+import {FilePicker} from 'src/ui';
 
 const SettingsItem = (label: string, key: string, settings: typeof Settings) => ({
 	title: label,
@@ -42,30 +44,30 @@ export default (gameController: GameController) => ({
 
 		...(gameController.settings.editor
 			? [
-					SettingsAction("Switch to Editor", () => {
-						const editor = <Editor>document.createElement(Editor.TagName);
-						const state = localStorage.prefixedWith("editor");
+				SettingsAction("Switch to Editor", () => {
+					const editor = <Editor>document.createElement(Editor.TagName);
+					const state = localStorage.prefixedWith("editor");
 
-						editor.addInspector("tile", new TileInspector(state.prefixedWith("tile")));
-						editor.addInspector("zone", new ZoneInspector(state.prefixedWith("zone")));
-						editor.addInspector("sound", new SoundInspector(state.prefixedWith("sound")));
-						editor.addInspector("puzzle", new PuzzleInspector(state.prefixedWith("puzzle")));
-						editor.addInspector("character", new CharacterInspector(state.prefixedWith("character")));
-						editor.addInspector("setup-image", new SetupImageInspector(state.prefixedWith("setup-image")));
-						editor.addInspector("palette", new PaletteInspector(state.prefixedWith("palette")));
+					editor.addInspector("tile", new TileInspector(state.prefixedWith("tile")));
+					editor.addInspector("zone", new ZoneInspector(state.prefixedWith("zone")));
+					editor.addInspector("sound", new SoundInspector(state.prefixedWith("sound")));
+					editor.addInspector("puzzle", new PuzzleInspector(state.prefixedWith("puzzle")));
+					editor.addInspector("character", new CharacterInspector(state.prefixedWith("character")));
+					editor.addInspector("setup-image", new SetupImageInspector(state.prefixedWith("setup-image")));
+					editor.addInspector("palette", new PaletteInspector(state.prefixedWith("palette")));
 
-						const setupData = (g: GameData, p: ColorPalette) => (editor.data = new DataManager(g, p));
-						if (gameController.isDataLoaded()) {
-							setupData(gameController.data, gameController.palette);
-						} else {
-							gameController.addEventListener(GameController.Event.DidLoadData, (e: CustomEvent) =>
-								setupData(e.detail.data, e.detail.palette)
-							);
-						}
+					const setupData = (g: GameData, p: ColorPalette) => (editor.data = new DataManager(g, p));
+					if (gameController.isDataLoaded()) {
+						setupData(gameController.data, gameController.palette);
+					} else {
+						gameController.addEventListener(GameController.Event.DidLoadData, (e: CustomEvent) =>
+							setupData(e.detail.data, e.detail.palette)
+						);
+					}
 
-						WindowManager.defaultManager.showWindow(editor);
-					})
-				]
+					WindowManager.defaultManager.showWindow(editor);
+				})
+			]
 			: []),
 
 		...[
@@ -74,6 +76,29 @@ export default (gameController: GameController) => ({
 					const simulator = new Simulator();
 					simulator.data = new DataManager(g, p);
 					simulator.start();
+				};
+
+				if (gameController.isDataLoaded()) {
+					setupData(gameController.data, gameController.palette);
+				} else {
+					gameController.addEventListener(GameController.Event.DidLoadData, (e: CustomEvent) =>
+						setupData(e.detail.data, e.detail.palette)
+					);
+				}
+			})
+		],
+		...[
+			SettingsAction("Edit Save Game", () => {
+				const setupData = async (g: GameData, p: ColorPalette) => {
+					const [file = null] = await FilePicker.Pick();
+					if(!file) {
+						return;
+					}
+
+					const saveGameEditor = <SaveGameEditor>document.createElement(SaveGameEditor.TagName);
+					saveGameEditor.gameDataManager = new DataManager(g, p);
+					saveGameEditor.file = file;
+					WindowManager.defaultManager.showWindow(saveGameEditor);
 				};
 
 				if (gameController.isDataLoaded()) {

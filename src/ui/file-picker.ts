@@ -15,7 +15,7 @@ class FilePicker implements FilePickerOptions {
 		}
 	}
 
-	static async Pick(options: FilePickerOptions) {
+	static async Pick(options?: FilePickerOptions) {
 		const picker = new FilePicker(options);
 		return await picker.pickFile();
 	}
