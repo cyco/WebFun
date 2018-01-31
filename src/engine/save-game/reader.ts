@@ -18,7 +18,7 @@ class Reader {
 	read(stream: InputStream): SaveState {
 		const state = new SaveState();
 		const magic = stream.getCharacters(9);
-		console.assert(magic === "YODASAV44");
+		console.assert(magic === "YODASAV44", 'Header magic must be present', magic);
 
 		state.seed = stream.getUint32();
 		state.planet = Planet.fromNumber(stream.getUint32());
@@ -69,7 +69,7 @@ class Reader {
 
 		state.goalPuzzle = stream.getUint32();
 		const goalPuzzleAgain = stream.getUint32();
-		console.assert(state.goalPuzzle === goalPuzzleAgain, "Puzzle ID must be the same!");
+		console.assert(state.goalPuzzle === goalPuzzleAgain, "Puzzle ID must be repeated!", state.goalPuzzle, goalPuzzleAgain);
 		return state;
 	}
 
@@ -104,7 +104,7 @@ class Reader {
 		doors.forEach((hotspot: Hotspot) => {
 			const zoneId = stream.getInt16();
 			const visited = !!stream.getUint32();
-			console.assert(hotspot.arg === zoneId, "Zone IDs should be equal");
+			console.assert(hotspot.arg === zoneId, "Zone IDs should be equal", hotspot.arg, zoneId);
 			this._readRoom(zoneId, visited, stream);
 		});
 	}
@@ -116,7 +116,7 @@ class Reader {
 			stream.getUint32(); // field_83C
 			stream.getUint32(); // field_840
 			zone.padding = stream.getUint16();
-			zone.planet = Planet.fromNumber(stream.getUint16());
+			zone.planet = Planet.fromNumber(stream.getInt16());
 
 			zone.tileIDs = stream.getInt16Array(zone.size.area * Zone.LAYERS);
 		}
@@ -124,16 +124,16 @@ class Reader {
 		zone.visited = !!stream.getUint32();
 
 		const hotspotCount = stream.getUint32();
-		console.assert(hotspotCount === zone.hotspots.length, "Hotspot counts must be equal!");
+		console.assert(hotspotCount === zone.hotspots.length, "Hotspot counts must be equal!", hotspotCount, zone.hotspots.length);
 		zone.hotspots.forEach((hotspot: Hotspot) => this._readHotspot(hotspot, stream));
 
 		if (visited) {
 			const npcCount = stream.getUint32();
-			console.assert(npcCount === zone.npcs.length, "NPC counts must be equal!");
+			console.assert(npcCount === zone.npcs.length, "NPC counts must be equal!", npcCount, zone.npcs.length);
 			zone.npcs.forEach((npc: NPC) => this._readNPC(<MutableNPC>npc, stream));
 
 			const actionCount = stream.getUint32();
-			console.assert(actionCount === zone.actions.length, "Action counts must be equal!");
+			console.assert(actionCount === zone.actions.length, "Action counts must be equal!", actionCount, zone.actions.length);
 			zone.actions.forEach((action: Action) => (action.enabled = !!stream.getUint32()));
 		}
 	}
