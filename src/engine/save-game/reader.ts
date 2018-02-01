@@ -25,7 +25,7 @@ class Reader {
 		const magic = stream.getCharacters(9);
 		console.assert(magic === "YODASAV44", 'Header magic must be present', magic);
 
-		state.seed = stream.getUint32();
+		state.seed = stream.getUint32() & 0xFFFF;
 		state.planet = Planet.fromNumber(stream.getUint32());
 
 		state.onDagobah = !!stream.getUint32();
