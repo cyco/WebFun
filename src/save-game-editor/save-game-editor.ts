@@ -65,15 +65,21 @@ class SaveGameEditor extends Window {
 		}
 
 		for (var [key, value] of it(state)) {
-			console.log(key, value);
-			let row: Element;
-
-			if (typeof value === 'number' || typeof value === 'string') {
-				row = this._buildTextboxRow(key, `${value}`);
-			}
-
+			let row: Element = this._buildRow(key, value);
 			if (row) this._save.appendChild(row);
 		}
+	}
+
+	private _buildRow(key: string, value: any) {
+		if (key === 'seed') {
+			return this._buildTextboxRow(key, `0x${value.toString(0x10).padStart(4, 0)}`);
+		}
+
+		if (typeof value === 'number' || typeof value === 'string') {
+			return this._buildTextboxRow(key, `${value}`);
+		}
+
+		return null;
 	}
 
 	private _buildTextboxRow(text: string, value: string) {
