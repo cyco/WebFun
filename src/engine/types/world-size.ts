@@ -22,16 +22,18 @@ class WorldSize {
 	}
 
 	public toString() {
-		return `WorldSize {${(() => {
-			switch (this) {
-				case WorldSize.Small:
-					return "Small";
-				case WorldSize.Medium:
-					return "Medium";
-				case WorldSize.Large:
-					return "Large";
-			}
-		})()}}`;
+		return `WorldSize {${this.name}}`;
+	}
+
+	get name() {
+		switch (this) {
+			case WorldSize.Small:
+				return "Small";
+			case WorldSize.Medium:
+				return "Medium";
+			case WorldSize.Large:
+				return "Large";
+		}
 	}
 }
 
