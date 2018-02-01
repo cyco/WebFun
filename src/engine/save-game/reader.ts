@@ -9,14 +9,19 @@ import { MutableZone } from "src/engine/mutable-objects";
 import MutableNPC from "src/engine/mutable-objects/mutable-npc";
 
 class Reader {
-	_data: GameData;
+	private _data: GameData;
+	private _partialState: SaveState;
 
 	constructor(data: GameData) {
 		this._data = data;
 	}
 
-	read(stream: InputStream): SaveState {
-		const state = new SaveState();
+	get partialState(): SaveState {
+		return this._partialState;
+	}
+
+	public read(stream: InputStream): SaveState {
+		const state = this._partialState = new SaveState();
 		const magic = stream.getCharacters(9);
 		console.assert(magic === "YODASAV44", 'Header magic must be present', magic);
 
@@ -35,10 +40,11 @@ class Reader {
 		state.world = this._readWorld(stream);
 
 		const inventoryCount = stream.getInt16();
-		const inventoryIDs = stream.getUint32Array(inventoryCount);
+		const inventoryIDs = stream.getUint16Array(inventoryCount);
 		state.inventoryIDs = new Int16Array(inventoryIDs);
 
 		state.currentZoneID = stream.getInt16();
+		console.log('current zone', state.currentZoneID);
 
 		const positionOnWorld = new Point(0, 0);
 		positionOnWorld.x = stream.getUint32();
@@ -46,6 +52,7 @@ class Reader {
 		state.positionOnWorld = positionOnWorld;
 
 		state.currentWeapon = stream.getInt16();
+		console.log('state.currentWeapon', state.currentWeapon);
 		state.currentAmmo = -1;
 		if (state.currentWeapon !== -1) state.currentAmmo = stream.getInt16();
 		state.forceAmmo = stream.getInt16();
@@ -56,13 +63,23 @@ class Reader {
 		positionOnZone.x = stream.getUint32() / Tile.WIDTH;
 		positionOnZone.y = stream.getUint32() / Tile.HEIGHT;
 		state.positionOnZone = positionOnZone;
+		console.log('positionOnZone', state.positionOnZone);
 
 		state.damageTaken = stream.getUint32();
+		console.log('damageTaken', state.damageTaken);
 		state.livesLeft = stream.getUint32();
+		console.log('livesLeft', state.livesLeft);
 
 		state.difficulty = stream.getUint32();
+		console.log('difficulty', state.difficulty);
 		state.timeElapsed = stream.getUint32();
-		state.worldSize = WorldSize.fromNumber(stream.getInt16());
+		console.log('timeElapsed', state.timeElapsed);
+		try {
+			state.worldSize = WorldSize.fromNumber(stream.getInt16());
+		} catch (e) {
+			console.warn(e);
+			state.worldSize = WorldSize.Medium;
+		}
 		state.unknownCount = stream.getInt16();
 		state.unknownSum = stream.getInt16();
 		state.unknownThing = stream.getInt16();
@@ -70,10 +87,11 @@ class Reader {
 		state.goalPuzzle = stream.getUint32();
 		const goalPuzzleAgain = stream.getUint32();
 		console.assert(state.goalPuzzle === goalPuzzleAgain, "Puzzle ID must be repeated!", state.goalPuzzle, goalPuzzleAgain);
+
 		return state;
 	}
 
-	_readDagobah(stream: InputStream): World {
+	private _readDagobah(stream: InputStream): World {
 		const world = new World();
 		for (let y = 4; y <= 5; y++) {
 			for (let x = 4; x <= 5; x++) {
@@ -85,7 +103,7 @@ class Reader {
 		return world;
 	}
 
-	_readWorld(stream: InputStream): World {
+	private _readWorld(stream: InputStream): World {
 		const world = new World();
 		for (let y = 0; y < 10; y++) {
 			for (let x = 0; x < 10; x++) {
@@ -97,7 +115,7 @@ class Reader {
 		return world;
 	}
 
-	_readRoom(zoneId: number, visited: boolean, stream: InputStream): void {
+	private _readRoom(zoneId: number, visited: boolean, stream: InputStream): void {
 		const zone = this._data.zones[zoneId];
 		this._readZone(zone, visited, stream);
 		const doors = zone.hotspots.withType(HotspotType.DoorIn).filter((hotspot: Hotspot) => hotspot.arg !== -1);
@@ -109,7 +127,7 @@ class Reader {
 		});
 	}
 
-	_readZone(zone: MutableZone, visited: boolean, stream: InputStream): void {
+	private _readZone(zone: MutableZone, visited: boolean, stream: InputStream): void {
 		if (visited) {
 			zone.counter = stream.getUint32();
 			zone.random = stream.getUint32();
@@ -138,7 +156,7 @@ class Reader {
 		}
 	}
 
-	_readNPC(npc: MutableNPC, stream: InputStream): void {
+	private _readNPC(npc: MutableNPC, stream: InputStream): void {
 		const characterId = stream.getInt16();
 		npc.character = this._data.characters[characterId];
 		const x = stream.getInt16();
@@ -169,7 +187,7 @@ class Reader {
 		for (let i = 0; i < 4; i++) stream.getUint32();
 	}
 
-	_readHotspot(hotspot: Hotspot, stream: InputStream): void {
+	private _readHotspot(hotspot: Hotspot, stream: InputStream): void {
 		hotspot.enabled = !!stream.getUint16();
 		hotspot.arg = stream.getInt16();
 		hotspot.type = HotspotType.fromNumber(stream.getUint32());
@@ -177,7 +195,7 @@ class Reader {
 		hotspot._y = stream.getInt16();
 	}
 
-	_readWorldDetails(stream: InputStream): void {
+	private _readWorldDetails(stream: InputStream): void {
 		let x: number, y: number;
 		do {
 			x = stream.getInt32();
@@ -191,7 +209,7 @@ class Reader {
 		} while (x !== -1 && y !== -1);
 	}
 
-	_readWorldItem(stream: InputStream): WorldItem {
+	private _readWorldItem(stream: InputStream): WorldItem {
 		const item = new WorldItem();
 
 		item.visited = !!stream.getUint32();
