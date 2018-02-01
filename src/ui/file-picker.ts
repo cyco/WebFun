@@ -1,6 +1,6 @@
 declare interface FilePickerOptions {
-	allowsMultipleFiles: boolean;
-	allowedTypes: string[];
+	allowsMultipleFiles?: boolean;
+	allowedTypes?: string[];
 }
 
 class FilePicker implements FilePickerOptions {
