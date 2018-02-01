@@ -44,7 +44,6 @@ class Reader {
 		state.inventoryIDs = new Int16Array(inventoryIDs);
 
 		state.currentZoneID = stream.getInt16();
-		console.log('current zone', state.currentZoneID);
 
 		const positionOnWorld = new Point(0, 0);
 		positionOnWorld.x = stream.getUint32();
@@ -52,7 +51,6 @@ class Reader {
 		state.positionOnWorld = positionOnWorld;
 
 		state.currentWeapon = stream.getInt16();
-		console.log('state.currentWeapon', state.currentWeapon);
 		state.currentAmmo = -1;
 		if (state.currentWeapon !== -1) state.currentAmmo = stream.getInt16();
 		state.forceAmmo = stream.getInt16();
@@ -63,22 +61,17 @@ class Reader {
 		positionOnZone.x = stream.getUint32() / Tile.WIDTH;
 		positionOnZone.y = stream.getUint32() / Tile.HEIGHT;
 		state.positionOnZone = positionOnZone;
-		console.log('positionOnZone', state.positionOnZone);
 
 		state.damageTaken = stream.getUint32();
-		console.log('damageTaken', state.damageTaken);
 		state.livesLeft = stream.getUint32();
-		console.log('livesLeft', state.livesLeft);
 
 		state.difficulty = stream.getUint32();
-		console.log('difficulty', state.difficulty);
 		state.timeElapsed = stream.getUint32();
-		console.log('timeElapsed', state.timeElapsed);
+
 		try {
 			state.worldSize = WorldSize.fromNumber(stream.getInt16());
 		} catch (e) {
 			console.warn(e);
-			state.worldSize = WorldSize.Medium;
 		}
 		state.unknownCount = stream.getInt16();
 		state.unknownSum = stream.getInt16();
