@@ -5,5 +5,25 @@ wf-save-game-editor {
 
 	> .content {
 		flex-direction: column;
+
+		> .errors {
+			color: red;
+		}
+
+		> .save {
+			> div {
+				label {
+					width: 120px;
+					text-align: right;
+					margin-right: 10px;
+					display: inline-block;
+				}
+
+				input {
+					width: 80px;
+					background-color: rgba(255,255,255,0.4);
+				}
+			}
+		}
 	}
 }
