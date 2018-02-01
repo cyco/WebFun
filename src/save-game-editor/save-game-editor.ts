@@ -1,6 +1,7 @@
 import { Window } from 'src/ui/components';
+import { SaveGameReader, SaveState } from 'src/engine/save-game';
+import { InputStream } from 'src/util';
 import DataManager from 'src/editor/data-manager';
-import { SaveGameReader } from 'src/engine/save-game';
 import "./save-game-editor.scss";
 
 class SaveGameEditor extends Window {
@@ -8,6 +9,8 @@ class SaveGameEditor extends Window {
 	public gameDataManager: DataManager;
 	public file: File;
 	private _label: Element = document.createElement('div');
+	private _errors: Element = document.createElement('div');
+	private _save: Element = document.createElement('div');
 
 	constructor() {
 		super();
@@ -16,23 +19,84 @@ class SaveGameEditor extends Window {
 		this.autosaveName = "save-game-editor";
 		this.closable = true;
 
+		this._label.classList.add('label');
+		this._errors.classList.add('errors');
+		this._save.classList.add('save');
+
 		this.content.appendChild(this._label);
+		this.content.appendChild(this._errors);
+		this.content.appendChild(this._save);
 	}
 
-	connectedCallback() {
+	async connectedCallback() {
 		super.connectedCallback();
-		this._label.textContent = this.file.name;
-		this._loadFile();
+
+		this._presentFile(this.file);
 	}
 
-	private async _loadFile() {
+	private async _presentFile(file: File) {
+		this.title = file.name;
+		const { save, error } = await this._loadFile(file);
+		this._presentError(error);
+		this._presentState(save);
+	}
+
+	private _presentFileName(name: string) {
+		this._label.textContent = name;
+	}
+
+	private _presentError(error?: Error) {
+		if (!error) {
+			this._errors.textContent = '';
+			return;
+		}
+
+		this._errors.textContent = error.message;
+	}
+
+	private _presentState(state: SaveState) {
+		this._save.textContent = '';
+
+		function* it(o: any) {
+			var keys = Object.keys(o);
+			for (var i = 0; i < keys.length; i++) {
+				yield [keys[i], o[keys[i]]];
+			}
+		}
+
+		for (var [key, value] of it(state)) {
+			console.log(key, value);
+			let row: Element;
+
+			if (typeof value === 'number' || typeof value === 'string') {
+				row = this._buildTextboxRow(key, `${value}`);
+			}
+
+			if (row) this._save.appendChild(row);
+		}
+	}
+
+	private _buildTextboxRow(text: string, value: string) {
+		const row = document.createElement('div');
+		const label = document.createElement('label');
+		label.textContent = text;
+		row.appendChild(label);
+
+		const input = document.createElement('input');
+		input.value = value;
+		row.appendChild(input);
+
+		return row;
+	}
+
+	private async _loadFile(file: File) {
+		let stream: InputStream, reader: SaveGameReader, result: SaveState;
 		try {
-			const stream = await this.file.provideInputStream();
-			const reader = new SaveGameReader(this.gameDataManager.currentData);
-			const result = await reader.read(stream);
-			console.log('result: ', result);
-		} catch (e) {
-			console.error(e);
+			stream = await file.provideInputStream();
+			reader = new SaveGameReader(this.gameDataManager.currentData);
+			return { save: await reader.read(stream), error: null };
+		} catch (error) {
+			return { error, save: reader.partialState };
 		}
 	}
 
