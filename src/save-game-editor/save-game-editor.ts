@@ -2,6 +2,7 @@ import { Window } from 'src/ui/components';
 import { SaveGameReader, SaveState } from 'src/engine/save-game';
 import { InputStream } from 'src/util';
 import DataManager from 'src/editor/data-manager';
+import { Planet, WorldSize } from 'src/engine/types';
 import "./save-game-editor.scss";
 
 class SaveGameEditor extends Window {
@@ -16,7 +17,7 @@ class SaveGameEditor extends Window {
 		super();
 
 		this.title = 'Save Game Editor';
-		this.autosaveName = "save-game-editor";
+		// this.autosaveName = "save-game-editor";
 		this.closable = true;
 
 		this._label.classList.add('label');
@@ -75,8 +76,16 @@ class SaveGameEditor extends Window {
 			return this._buildTextboxRow(key, `0x${value.toString(0x10).padStart(4, 0)}`);
 		}
 
+		if (value instanceof WorldSize || value instanceof Planet) {
+			return this._buildTextboxRow(key, value.name);
+		}
+
 		if (typeof value === 'number' || typeof value === 'string') {
 			return this._buildTextboxRow(key, `${value}`);
+		}
+
+		if(value === null || value === undefined) {
+			return this._buildTextboxRow(key, ``);
 		}
 
 		return null;
