@@ -26,7 +26,7 @@
     "world:validate": "node -- tools/bin/generate-world.bin.js -c -d \"build/game-data/yoda.data\" -e \"game-data/worlds.txt\"",
     "world:validate:all": "node -- tools/bin/generate-world.bin.js -c -d \"./build/game-data/yoda.data\" -e \"./game-data/full.txt\" -a",
     "build-tool": "webpack --config config/webpack.tool.js",
-    "build-tool:cont": "webpack --config config/webpack.tool.js --watch",
+    "build-tool:cont": "webpack --progress --config config/webpack.tool.js --watch",
     "format": "prettier --write '{src,config,docs,test,tools}/**/*.{ts,js,json,scss}'"
   },
   "babel": {
