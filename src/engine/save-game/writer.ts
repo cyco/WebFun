@@ -54,11 +54,11 @@ class Writer {
 		stream.writeUint32(state.difficulty);
 		stream.writeUint32(state.timeElapsed);
 
-		stream.writeInt32(state.worldSize.rawValue);
+		stream.writeInt32(state.worldSize);
 
 		stream.writeInt16(state.unknownCount);
 		stream.writeInt16(state.unknownSum);
-		stream.writeInt16(state.unknownThing);
+		// stream.writeInt16(state.unknownThing);
 
 		stream.writeUint32(state.goalPuzzle);
 		stream.writeUint32(state.goalPuzzle);
@@ -101,8 +101,8 @@ class Writer {
 		if (visited) {
 			stream.writeUint32(zone.counter);
 			stream.writeUint32(zone.random);
-			stream.writeUint32(0); // TODO: field_83C
-			stream.writeUint32(0); // TODO: field_840
+			stream.writeInt32(zone.doorInLocation.x);
+			stream.writeInt32(zone.doorInLocation.y);
 			stream.writeUint16(zone.padding);
 			stream.writeUint16(zone.planet.rawValue);
 

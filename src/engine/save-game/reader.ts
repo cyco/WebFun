@@ -1,12 +1,11 @@
 import { InputStream, Point } from "../../util";
 import GameData from "../game-data";
-import { Action, Hotspot, HotspotType, NPC, Tile, Zone } from "../objects";
+import { Action, Hotspot, HotspotType, NPC, Tile, Zone } from "src/engine/objects";
+import { MutableHotspot, MutableNPC, MutableZone } from "src/engine/mutable-objects";
 import { Planet, WorldSize } from "../types";
 import SaveState from "./save-state";
 import World from "./world";
 import WorldItem from "./world-item";
-import { MutableZone } from "src/engine/mutable-objects";
-import MutableNPC from "src/engine/mutable-objects/mutable-npc";
 
 class Reader {
 	private _data: GameData;
@@ -39,7 +38,8 @@ class Reader {
 		state.dagobah = this._readDagobah(stream);
 		state.world = this._readWorld(stream);
 
-		const inventoryCount = stream.getInt16();
+		const inventoryCount = stream.getInt32();
+		console.assert(inventoryCount >= 0, 'Inventory can\'t contain less than no items.');
 		const inventoryIDs = stream.getUint16Array(inventoryCount);
 		state.inventoryIDs = new Int16Array(inventoryIDs);
 
@@ -52,7 +52,8 @@ class Reader {
 
 		state.currentWeapon = stream.getInt16();
 		state.currentAmmo = -1;
-		if (state.currentWeapon !== -1) state.currentAmmo = stream.getInt16();
+		if (state.currentWeapon >= 0) state.currentAmmo = stream.getInt16();
+		else state.currentWeapon = 0;
 		state.forceAmmo = stream.getInt16();
 		state.blasterAmmo = stream.getInt16();
 		state.blasterRifleAmmo = stream.getInt16();
@@ -68,11 +69,7 @@ class Reader {
 		state.difficulty = stream.getUint32();
 		state.timeElapsed = stream.getUint32();
 
-		try {
-			state.worldSize = WorldSize.fromNumber(stream.getInt16());
-		} catch (e) {
-			console.warn(e);
-		}
+		state.worldSize = stream.getInt16(); // WorldSize.fromNumber(stream.getInt16());
 		state.unknownCount = stream.getInt16();
 		state.unknownSum = stream.getInt16();
 		state.unknownThing = stream.getInt16();
@@ -80,6 +77,8 @@ class Reader {
 		state.goalPuzzle = stream.getUint32();
 		const goalPuzzleAgain = stream.getUint32();
 		console.assert(state.goalPuzzle === goalPuzzleAgain, "Puzzle ID must be repeated!", state.goalPuzzle, goalPuzzleAgain);
+
+		console.assert(stream.isAtEnd(), `Encountered ${stream.length - stream.offset} unknown bytes at end of stream`);
 
 		return state;
 	}
@@ -124,28 +123,38 @@ class Reader {
 		if (visited) {
 			zone.counter = stream.getUint32();
 			zone.random = stream.getUint32();
-			stream.getUint32(); // field_83C
-			stream.getUint32(); // field_840
+			const doorInX = stream.getInt32();
+			const doorInY = stream.getInt32();
+			zone.doorInLocation = new Point(doorInX, doorInY);
 			zone.padding = stream.getUint16();
-			zone.planet = Planet.fromNumber(stream.getInt16());
 
+			try {
+				zone.planet = Planet.fromNumber(stream.getInt16());
+			} catch (e) {
+				console.log('Invalid planet in zone', zone.id, zone.type.name, e.message);
+			}
 			zone.tileIDs = stream.getInt16Array(zone.size.area * Zone.LAYERS);
 		}
 
 		zone.visited = !!stream.getUint32();
 
-		const hotspotCount = stream.getUint32();
-		console.assert(hotspotCount === zone.hotspots.length, "Hotspot counts must be equal!", hotspotCount, zone.hotspots.length);
-		zone.hotspots.forEach((hotspot: Hotspot) => this._readHotspot(hotspot, stream));
+		const hotspotCount = stream.getInt32();
+		if (hotspotCount > 0) {
+			zone.hotspots = hotspotCount.times(() => new MutableHotspot());
+			zone.hotspots.forEach((hotspot: Hotspot) => this._readHotspot(hotspot, stream));
+		}
 
 		if (visited) {
-			const npcCount = stream.getUint32();
-			console.assert(npcCount === zone.npcs.length, "NPC counts must be equal!", npcCount, zone.npcs.length);
-			zone.npcs.forEach((npc: NPC) => this._readNPC(<MutableNPC>npc, stream));
+			const npcCount = stream.getInt32();
+			if (npcCount > 0) {
+				zone.npcs.forEach((npc: NPC) => this._readNPC(<MutableNPC>npc, stream));
+			}
 
-			const actionCount = stream.getUint32();
-			console.assert(actionCount === zone.actions.length, "Action counts must be equal!", actionCount, zone.actions.length);
-			zone.actions.forEach((action: Action) => (action.enabled = !!stream.getUint32()));
+			const actionCount = stream.getInt32();
+			if (actionCount > 0) {
+				console.assert(actionCount === zone.actions.length, 'Action count must be equal', actionCount, zone.actions.length);
+				zone.actions.forEach((action: Action) => (action.enabled = !!stream.getUint32()));
+			}
 		}
 	}
 
@@ -163,21 +172,25 @@ class Reader {
 		stream.getInt16(); // current_frame
 		stream.getUint32(); // field_18
 		stream.getUint32(); // field_1C
-		stream.getUint32(); // field_20
+		stream.getUint32(); // field_2
+		0
 		stream.getInt16(); // x_
 		stream.getInt16(); // y_
 		stream.getInt16(); // field_3C
 		stream.getInt16(); // field_3E
 		stream.getInt16(); // field_60
 		stream.getInt16(); // field_26
-
 		stream.getUint32(); // field_2C
 		stream.getUint32(); // field_34
 		stream.getUint32(); // field_28
+
 		stream.getInt16(); // field_24
 		stream.getInt16();
 
-		for (let i = 0; i < 4; i++) stream.getUint32();
+		for (let i = 0; i < 4; i++) {
+			stream.getUint32();
+			stream.getUint32();
+		}
 	}
 
 	private _readHotspot(hotspot: Hotspot, stream: InputStream): void {

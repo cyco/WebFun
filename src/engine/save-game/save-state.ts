@@ -31,7 +31,7 @@ class SaveState {
 
 	difficulty: number;
 	timeElapsed: number;
-	worldSize: WorldSize;
+	worldSize: number;
 
 	unknownCount: number;
 	unknownSum: number;

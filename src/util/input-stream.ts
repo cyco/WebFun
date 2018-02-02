@@ -16,6 +16,10 @@ class InputStream extends Stream {
 		return this._arrayBuffer.byteLength;
 	}
 
+	public isAtEnd(){
+		return this.offset === this.length;
+	}
+
 	_makeArrayBuffer(data: ArrayBuffer | string) {
 		if (data instanceof ArrayBuffer) return data;
 
