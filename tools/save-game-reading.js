@@ -1,3 +1,4 @@
+import "./std.dom";
 import FS from "fs";
 import KaitaiStream from "kaitai-struct/KaitaiStream";
 import Path from "path";
@@ -6,7 +7,6 @@ import Yodesk from "src/engine/file-format/yodesk.ksy";
 import "src/extension";
 import { InputStream } from "src/util";
 import DiscardingOutputStream from "../src/util/discarding-output-stream";
-import "../test/helpers/^";
 
 const readFile = path => {
 	const buffer = FS.readFileSync(path);
@@ -32,7 +32,7 @@ const readGameData = path => {
 	}
 };
 
-const gameData = readGameData("game-data/yoda.data");
+const gameData = readGameData("assets/game-data/yoda.data");
 const inputStream = readFile(process.argv.last());
 const saveGameReader = new SaveGameReader(gameData);
 const state = saveGameReader.read(inputStream);
@@ -41,7 +41,6 @@ const outputStream = new DiscardingOutputStream(100);
 const saveGameWriter = new SaveGameWriter(gameData);
 saveGameWriter.write(state, outputStream);
 
-console.log("");
 if (outputStream.offset !== inputStream.offset) {
 	console.warn(`Expected to write ${inputStream.offset} bytes but ${outputStream.offset} written!`);
 } else {
