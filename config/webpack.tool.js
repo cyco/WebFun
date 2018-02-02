@@ -13,7 +13,7 @@ const babelLoader = BaseConfig.module.rules.find(({ loader }) => loader === "bab
 if (babelLoader) {
 	babelLoader.options = babelLoader.options || {};
 	babelLoader.options.plugins = babelLoader.options.plugins || [];
-	babelLoader.options.plugins.push("transform-runtime");
+	babelLoader.options.plugins.push("@babel/transform-runtime");
 }
 
 const atLoader = BaseConfig.module.rules.find(({ loader }) => loader === "awesome-typescript-loader");
@@ -21,7 +21,7 @@ if (atLoader) {
 	atLoader.options = atLoader.options || {};
 	atLoader.options.babelOptions = atLoader.options.babelOptions || {};
 	atLoader.options.babelOptions.plugins = atLoader.options.babelOptions.plugins || [];
-	atLoader.options.babelOptions.plugins.push("transform-runtime");
+	atLoader.options.babelOptions.plugins.push("@babel/transform-runtime");
 }
 
 module.exports = BaseConfig;
