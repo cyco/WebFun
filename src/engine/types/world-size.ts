@@ -14,10 +14,7 @@ class WorldSize {
 	}
 
 	public static fromNumber(number: number): WorldSize {
-		if (!WorldSize.isWorldSize(number)) {
-			throw `Value ${number} does not specify a valid world size!`;
-		}
-
+		console.assert(WorldSize.isWorldSize(number), `Value ${number} does not specify a valid world size!`);
 		return WorldSize.knownSizes[number - 1];
 	}
 
