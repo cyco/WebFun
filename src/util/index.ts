@@ -35,6 +35,7 @@ import deg2rad from "./deg2rad";
 import DiscardingStorage from "./discarding-storage";
 import Event from "./event";
 import Scanner from "./scanner";
+import iterate from './iterate';
 
 export {
 	Color,
@@ -80,5 +81,6 @@ export {
 	xy2polar,
 	DiscardingStorage,
 	Event,
-	Scanner
+	Scanner,
+	iterate
 };
