@@ -18,6 +18,12 @@ declare global {
 	module JSX {
 		export interface IntrinsicElements {
 			div: Partial<HTMLDivElement>;
+			label: Partial<HTMLLabelElement>;
+			span: Partial<HTMLSpanElement>;
+			input: Partial<HTMLInputElement>;
+			canvas: Partial<HTMLCanvasElement>;
+			img: Partial<HTMLImageElement>;
+			i: Partial<HTMLElement>;
 		}
 		interface Element extends Component { }
 		/*

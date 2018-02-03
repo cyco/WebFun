@@ -12,6 +12,7 @@ export const KeyEvent: { [_: string]: number } = global.KeyEvent || {};
 export const HTMLElement = global.HTMLElement;
 export const HTMLCollection = global.HTMLCollection;
 export const Event = global.Event;
+export const File = global.File;
 
 export { window };
 export const document = <Document>window.document;

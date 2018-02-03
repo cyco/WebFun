@@ -1,0 +1,15 @@
+@import "pixelated";
+@import "border";
+
+wf-save-game-editor-map {
+	@include inset-border(1px);
+	border-radius: 3px;
+	display: inline-block;
+
+	canvas {
+		@extend .pixelated;
+		width: 280px;
+		height: 280px;
+		border-radius: 3px;
+	}
+}
