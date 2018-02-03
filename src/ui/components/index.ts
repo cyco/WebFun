@@ -23,8 +23,12 @@ import Label from "./label";
 import SearchBar from "./search-bar";
 import FullscreenWindow from "./fullscreen-window";
 import Panel from "./panel";
+import SegmentControl from './segment-control';
+import Segment from './segment';
 
 export {
+	SegmentControl,
+	Segment,
 	Panel,
 	FullscreenWindow,
 	SearchBar,

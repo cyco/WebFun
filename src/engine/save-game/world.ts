@@ -7,7 +7,7 @@ class World {
 
 	constructor(size = new Size(10, 10)) {
 		this._bounds = new Rectangle(new Point(0, 0), size);
-		this._world = new Array(size.area).fill(null);
+		this._world = new Array(size.area).fill(new WorldItem());
 	}
 
 	get size(): Size {

@@ -1,0 +1,7 @@
+@import "border";
+
+wf-segmented-control {
+	@include inset-border(1px);
+	display: flex;
+	align-content: stretch;
+}
