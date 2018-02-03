@@ -14,6 +14,7 @@
     "sourceRoot": ".",
     "baseUrl": ".",
     "rootDir": ".",
+    "jsx": "preserve",
     "typeRoots": [
       "src/@types"
     ],
@@ -34,7 +35,7 @@
       "src/extension/index.ts"
   ],
   "include": [
-    "src/**/*.ts"
+    "src/**/*.{ts,tsx}"
   ],
   "exclude": [
     "node_modules"

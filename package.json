@@ -1,103 +1,108 @@
 {
-  "name": "WebFun",
-  "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT",
-  "scripts": {
-    "build": "webpack --config config/webpack.config.js",
-    "build:cont": "webpack --config config/webpack.config.js --watch",
-    "start": "webpack-dev-server --config config/webpack.config.js",
-    "test": "karma start config/karma.conf.js --single-run",
-    "test:cont": "karma start config/karma.conf.js",
-    "test:cov": "cross-env coverage=1 karma start config/karma.conf.js --single-run",
-    "test:cov:cont": "cross-env coverage=1 karma start config/karma.conf.js",
-    "test:cont:cov": "cross-env coverage=1 karma start config/karma.conf.js",
-    "test:acceptance": "cross-env scope=acceptance karma start config/karma.conf.js --single-run --",
-    "test:unit": "cross-env coverage=1 scope=unit karma start config/karma.conf.js --single-run",
-    "test:coverage": "cross-env coverage=1 scope=unit,acceptance,performance karma start config/karma.conf.js --single-run",
-    "test:unit:cont": "cross-env coverage=1 scope=unit karma start config/karma.conf.js",
-    "test:full": "cross-env coverage=1 scope=unit,acceptance,performance karma start config/karma.conf.js",
-    "test:gameplay": "cross-env TOOL_NAME=gameplay yarn build-tool && node tools/bin/gameplay.bin.js",
-    "test:dump-scripts": "cross-env TOOL_NAME=dump-scripts yarn build-tool && node tools/bin/dump-scripts.bin.js -d \"build/game-data/yoda.data\"",
-    "test:dump-data": "cross-env TOOL_NAME=dump-data yarn build-tool && node tools/bin/dump-data.bin.js -d \"build/game-data/yoda.data\"",
-    "gen-coverage": "genhtml test/coverage/unit.lcov test/coverage/acceptance/lcov.info -o test/coverage/html",
-    "test:performance": "cross-env scope=performance karma start karma.conf.js --single-run",
-    "world": "node -- tools/bin/generate-world.bin.js -v -d \"build/game-data/yoda.data\"",
-    "world:validate": "node -- tools/bin/generate-world.bin.js -c -d \"build/game-data/yoda.data\" -e \"game-data/worlds.txt\"",
-    "world:validate:all": "node -- tools/bin/generate-world.bin.js -c -d \"./build/game-data/yoda.data\" -e \"./game-data/full.txt\" -a",
-    "build-tool": "webpack --config config/webpack.tool.js",
-    "build-tool:cont": "webpack --progress --config config/webpack.tool.js --watch",
-    "format": "prettier --write '{src,config,docs,test,tools}/**/*.{ts,js,json,scss}'"
-  },
-  "babel": {
-    "presets": [
-      [
-        "@babel/preset-env",
-        {
-          "targets": {
-            "node": "current",
-            "browsers": [
-              "last 1 version"
-            ]
-          }
-        }
-      ]
-    ],
-    "plugins": [
-      "@babel/transform-regenerator"
-    ]
-  },
-  "dependencies": {
-    "@babel/polyfill": "^7.0.0-beta.39",
-    "@babel/runtime": "^7.0.0-beta.39",
-    "dasherize": "^2.0.0",
-    "kaitai-struct": "^0.8.0-SNAPSHOT.2",
-    "sprintf-js": "^1.1.1",
-    "twgl.js": "^4.4.0"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.0.0-beta.39",
-    "@babel/plugin-transform-regenerator": "^7.0.0-beta.39",
-    "@babel/plugin-transform-runtime": "^7.0.0-beta.39",
-    "@babel/preset-env": "^7.0.0-beta.39",
-    "@types/jasmine": "^2.8.6",
-    "@types/jasmine-matchers": "^0.2.30",
-    "@types/sprintf-js": "^1.1.0",
-    "@types/webcomponents.js": "^0.6.32",
-    "add-matchers": "^0.5.0",
-    "awesome-typescript-loader": "^3.4.1",
-    "babel-loader": "8.0.0-beta.0",
-    "babel-plugin-istanbul": "^4.1.5",
-    "canvas": "^1.6.9",
-    "cross-env": "^5.1.3",
-    "css-loader": "^0.28.9",
-    "file-loader": "^1.1.6",
-    "font-loader": "^0.1.2",
-    "istanbul-instrumenter-loader": "^3.0.0",
-    "jasmine-core": "^2.9.1",
-    "jsdom": "^11.6.2",
-    "kaitai-struct-compiler": "^0.7.1",
-    "kaitai-struct-loader": "^0.1.2",
-    "karma": "^2.0.0",
-    "karma-chrome-launcher": "^2.2.0",
-    "karma-coverage": "^1.1.1",
-    "karma-coverage-istanbul-reporter": "^1.4.1",
-    "karma-firefox-launcher": "^1.1.0",
-    "karma-jasmine": "^1.1.1",
-    "karma-jasmine-matchers": "^3.7.0",
-    "karma-sourcemap-loader": "^0.3.7",
-    "karma-webpack": "^2.0.9",
-    "node-sass": "^4.7.2",
-    "prettier": "^1.10.2",
-    "puppeteer": "^1.0.0",
-    "sass-loader": "^6.0.6",
-    "shelljs": "^0.8.1",
-    "style-loader": "^0.20.1",
-    "typescript": "^2.7.1",
-    "url-loader": "^0.6.2",
-    "webpack": "^3.10.0",
-    "webpack-dev-server": "^2.11.1",
-    "webpack-glsl-loader": "^1.0.1",
-    "webpack-node-externals": "^1.6.0"
-  }
+	"name": "WebFun",
+	"version": "1.0.0",
+	"main": "index.js",
+	"license": "MIT",
+	"scripts": {
+		"build": "webpack --config config/webpack.config.js",
+		"build:cont": "webpack --config config/webpack.config.js --watch",
+		"start": "webpack-dev-server --config config/webpack.config.js",
+		"test": "karma start config/karma.conf.js --single-run",
+		"test:cont": "karma start config/karma.conf.js",
+		"test:cov": "cross-env coverage=1 karma start config/karma.conf.js --single-run",
+		"test:cov:cont": "cross-env coverage=1 karma start config/karma.conf.js",
+		"test:cont:cov": "cross-env coverage=1 karma start config/karma.conf.js",
+		"test:acceptance": "cross-env scope=acceptance karma start config/karma.conf.js --single-run --",
+		"test:unit": "cross-env coverage=1 scope=unit karma start config/karma.conf.js --single-run",
+		"test:coverage": "cross-env coverage=1 scope=unit,acceptance,performance karma start config/karma.conf.js --single-run",
+		"test:unit:cont": "cross-env coverage=1 scope=unit karma start config/karma.conf.js",
+		"test:full": "cross-env coverage=1 scope=unit,acceptance,performance karma start config/karma.conf.js",
+		"test:gameplay": "cross-env TOOL_NAME=gameplay yarn build-tool && node tools/bin/gameplay.bin.js",
+		"test:dump-scripts": "cross-env TOOL_NAME=dump-scripts yarn build-tool && node tools/bin/dump-scripts.bin.js -d \"build/game-data/yoda.data\"",
+		"test:dump-data": "cross-env TOOL_NAME=dump-data yarn build-tool && node tools/bin/dump-data.bin.js -d \"build/game-data/yoda.data\"",
+		"gen-coverage": "genhtml test/coverage/unit.lcov test/coverage/acceptance/lcov.info -o test/coverage/html",
+		"test:performance": "cross-env scope=performance karma start karma.conf.js --single-run",
+		"world": "node -- tools/bin/generate-world.bin.js -v -d \"build/game-data/yoda.data\"",
+		"world:validate": "node -- tools/bin/generate-world.bin.js -c -d \"build/game-data/yoda.data\" -e \"game-data/worlds.txt\"",
+		"world:validate:all": "node -- tools/bin/generate-world.bin.js -c -d \"./build/game-data/yoda.data\" -e \"./game-data/full.txt\" -a",
+		"build-tool": "webpack --config config/webpack.tool.js",
+		"build-tool:cont": "webpack --progress --config config/webpack.tool.js --watch",
+		"format": "prettier --write '{src,config,docs,test,tools}/**/*.{ts,js,json,scss}'"
+	},
+	"babel": {
+		"presets": [
+			[
+				"@babel/preset-env",
+				{
+					"targets": {
+						"node": "current",
+						"browsers": [
+							"last 1 version"
+						]
+					}
+				}
+			]
+		],
+		"plugins": [
+			"@babel/transform-regenerator", ["@babel/plugin-transform-react-jsx",
+				{
+					"pragma": "WebFunJSX.render"
+				}
+			]
+		]
+	},
+	"dependencies": {
+		"@babel/polyfill": "^7.0.0-beta.39",
+		"@babel/runtime": "^7.0.0-beta.39",
+		"dasherize": "^2.0.0",
+		"kaitai-struct": "^0.8.0-SNAPSHOT.2",
+		"sprintf-js": "^1.1.1",
+		"twgl.js": "^4.4.0"
+	},
+	"devDependencies": {
+		"@babel/core": "^7.0.0-beta.39",
+		"@babel/plugin-transform-react-jsx": "^7.0.0-beta.39",
+		"@babel/plugin-transform-regenerator": "^7.0.0-beta.39",
+		"@babel/plugin-transform-runtime": "^7.0.0-beta.39",
+		"@babel/preset-env": "^7.0.0-beta.39",
+		"@types/jasmine": "^2.8.6",
+		"@types/jasmine-matchers": "^0.2.30",
+		"@types/sprintf-js": "^1.1.0",
+		"@types/webcomponents.js": "^0.6.32",
+		"add-matchers": "^0.5.0",
+		"awesome-typescript-loader": "^3.4.1",
+		"babel-loader": "8.0.0-beta.0",
+		"babel-plugin-istanbul": "^4.1.5",
+		"canvas": "^1.6.9",
+		"cross-env": "^5.1.3",
+		"css-loader": "^0.28.9",
+		"file-loader": "^1.1.6",
+		"font-loader": "^0.1.2",
+		"istanbul-instrumenter-loader": "^3.0.0",
+		"jasmine-core": "^2.9.1",
+		"jsdom": "^11.6.2",
+		"kaitai-struct-compiler": "^0.7.1",
+		"kaitai-struct-loader": "^0.1.2",
+		"karma": "^2.0.0",
+		"karma-chrome-launcher": "^2.2.0",
+		"karma-coverage": "^1.1.1",
+		"karma-coverage-istanbul-reporter": "^1.4.1",
+		"karma-firefox-launcher": "^1.1.0",
+		"karma-jasmine": "^1.1.1",
+		"karma-jasmine-matchers": "^3.7.0",
+		"karma-sourcemap-loader": "^0.3.7",
+		"karma-webpack": "^2.0.9",
+		"node-sass": "^4.7.2",
+		"prettier": "^1.10.2",
+		"puppeteer": "^1.0.0",
+		"sass-loader": "^6.0.6",
+		"shelljs": "^0.8.1",
+		"style-loader": "^0.20.1",
+		"typescript": "^2.7.1",
+		"url-loader": "^0.6.2",
+		"webpack": "^3.10.0",
+		"webpack-dev-server": "^2.11.1",
+		"webpack-glsl-loader": "^1.0.1",
+		"webpack-node-externals": "^1.6.0"
+	}
 }

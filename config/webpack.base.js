@@ -3,7 +3,7 @@ const Paths = require("./paths");
 
 module.exports = {
 	resolve: {
-		extensions: [".js", ".ts"],
+		extensions: [".js", ".ts", ".tsx"],
 		alias: {
 			src: Paths.sourceRoot,
 			std: Path.resolve(Paths.sourceRoot, "std"),
@@ -25,13 +25,13 @@ module.exports = {
 		rules: [
 			{
 				/* JavaScript / Babel */
-				test: /\.js$/,
+				test: /\.jsx?$/,
 				loader: "babel-loader",
 				exclude: ["node_modules"]
 			},
 			{
 				/* TypeScript */
-				test: /\.ts$/,
+				test: /\.tsx?$/,
 				loader: "awesome-typescript-loader",
 				exclude: ["node_modules"],
 				options: {
