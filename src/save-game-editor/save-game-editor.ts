@@ -3,6 +3,7 @@ import { SaveGameReader, SaveState } from 'src/engine/save-game';
 import { InputStream } from 'src/util';
 import DataManager from 'src/editor/data-manager';
 import { Planet, WorldSize } from 'src/engine/types';
+import { AmmoControl } from './components';
 import "./save-game-editor.scss";
 
 class SaveGameEditor extends Window {
@@ -76,6 +77,22 @@ class SaveGameEditor extends Window {
 			return this._buildTextboxRow(key, `0x${value.toString(0x10).padStart(4, 0)}`);
 		}
 
+		if (key === 'currentAmmo') {
+			return this._buildAmmoRow(key, value, 30);
+		}
+
+		if (key === 'blasterAmmo') {
+			return this._buildAmmoRow(key, value, 30);
+		}
+
+		if (key === 'blasterRifleAmmo') {
+			return this._buildAmmoRow(key, value, 15);
+		}
+
+		if (key === 'forceAmmo') {
+			return this._buildAmmoRow(key, value, 15);
+		}
+
 		if (value instanceof WorldSize || value instanceof Planet) {
 			return this._buildTextboxRow(key, value.name);
 		}
@@ -84,7 +101,7 @@ class SaveGameEditor extends Window {
 			return this._buildTextboxRow(key, `${value}`);
 		}
 
-		if(value === null || value === undefined) {
+		if (value === null || value === undefined) {
 			return this._buildTextboxRow(key, ``);
 		}
 
@@ -99,6 +116,19 @@ class SaveGameEditor extends Window {
 
 		const input = document.createElement('input');
 		input.value = value;
+		row.appendChild(input);
+
+		return row;
+	}
+
+	private _buildAmmoRow(text: string, value: number, total: number) {
+		const row = document.createElement('div');
+		const label = document.createElement('label');
+		label.textContent = text;
+		row.appendChild(label);
+
+		const input = <AmmoControl>document.createElement(AmmoControl.TagName);
+		input.value = value / total;
 		row.appendChild(input);
 
 		return row;
