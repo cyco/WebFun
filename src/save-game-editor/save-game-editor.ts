@@ -1,29 +1,33 @@
-import { Window } from 'src/ui/components';
-import { SaveGameReader, SaveState } from 'src/engine/save-game';
-import { InputStream } from 'src/util';
-import DataManager from 'src/editor/data-manager';
-import { Planet, WorldSize } from 'src/engine/types';
-import { AmmoControl } from './components';
+import { Window } from "src/ui/components";
+import { SaveGameReader, SaveState } from "src/engine/save-game";
+import { InputStream } from "src/util";
+import DataManager from "src/editor/data-manager";
+import { Planet, WorldSize } from "src/engine/types";
+import { AmmoControl, Tile as TileComponent } from "./components";
+import { Ammo, Health } from "src/app/ui";
+import { Tile } from "src/engine/objects";
+import { Yoda } from "src/engine";
+
 import "./save-game-editor.scss";
 
 class SaveGameEditor extends Window {
-	public static TagName: string = 'wf-save-game-editor';
-	public gameDataManager: DataManager;
+	public static TagName: string = "wf-save-game-editor";
+	private _gameDataManager: DataManager;
 	public file: File;
-	private _label: Element = document.createElement('div');
-	private _errors: Element = document.createElement('div');
-	private _save: Element = document.createElement('div');
+	private _state: SaveState;
+	private _label: Element = document.createElement("div");
+	private _errors: Element = document.createElement("div");
+	private _save: Element = document.createElement("div");
 
 	constructor() {
 		super();
 
-		this.title = 'Save Game Editor';
-		// this.autosaveName = "save-game-editor";
+		this.title = "Save Game Editor";
 		this.closable = true;
 
-		this._label.classList.add('label');
-		this._errors.classList.add('errors');
-		this._save.classList.add('save');
+		this._label.classList.add("label");
+		this._errors.classList.add("errors");
+		this._save.classList.add("save");
 
 		this.content.appendChild(this._label);
 		this.content.appendChild(this._errors);
@@ -38,9 +42,10 @@ class SaveGameEditor extends Window {
 
 	private async _presentFile(file: File) {
 		this.title = file.name;
-		const { save, error } = await this._loadFile(file);
+		const {save, error} = await this._loadFile(file);
 		this._presentError(error);
 		this._presentState(save);
+		this._state = save;
 	}
 
 	private _presentFileName(name: string) {
@@ -49,7 +54,7 @@ class SaveGameEditor extends Window {
 
 	private _presentError(error?: Error) {
 		if (!error) {
-			this._errors.textContent = '';
+			this._errors.textContent = "";
 			return;
 		}
 
@@ -57,7 +62,7 @@ class SaveGameEditor extends Window {
 	}
 
 	private _presentState(state: SaveState) {
-		this._save.textContent = '';
+		this._save.textContent = "";
 
 		function* it(o: any) {
 			var keys = Object.keys(o);
@@ -66,38 +71,63 @@ class SaveGameEditor extends Window {
 			}
 		}
 
+		const row = document.createElement("div");
+		row.classList.add("weapon-and-helath");
+		const equipment = document.createElement("div");
+		equipment.classList.add("equipment");
+		const ammoView = <Ammo>document.createElement(Ammo.TagName);
+		equipment.appendChild(ammoView);
+		const weaponView = this._buildTileComponent(this._findWeaponFace(state.currentWeapon));
+		equipment.appendChild(weaponView);
+		row.appendChild(equipment);
+		const health = <Health>document.createElement(Health.TagName);
+		row.appendChild(health);
+		this._save.appendChild(row);
+
+		this._save.appendChild(this._buildAmmoRow(this._findWeaponFace(Yoda.WeaponID.Blaster), state["blasterAmmo"], 30));
+		this._save.appendChild(this._buildAmmoRow(this._findWeaponFace(Yoda.WeaponID.BlasterRifle), state["blasterRifleAmmo"], 15));
+		this._save.appendChild(this._buildAmmoRow(this._findWeaponFace(Yoda.WeaponID.TheForce), state["forceAmmo"], 15));
+
 		for (var [key, value] of it(state)) {
 			let row: Element = this._buildRow(key, value);
 			if (row) this._save.appendChild(row);
 		}
 	}
 
+	private _buildTileComponent(tile: Tile): TileComponent {
+		const component = <TileComponent>document.createElement(TileComponent.TagName);
+		component.tileSheet = this.gameDataManager.tileSheet;
+		component.tile = tile;
+		return component;
+	}
+
+	private _findWeaponFace(id: number): Tile {
+		if (!id) return null;
+
+		const character = this.gameDataManager.currentData.characters[id];
+		if (!character) return null;
+		console.assert(character.isWeapon());
+		return character.frames[0].extensionRight;
+	}
+
 	private _buildRow(key: string, value: any) {
-		if (key === 'seed') {
+		if (key === "currentWeapon") return;
+		if (key === "currentAmmo") return;
+		if (key === "damageTaken") return;
+		if (key === "livesLeft") return;
+		if (key === "blasterAmmo") return;
+		if (key === "blasterRifleAmmo") return;
+		if (key === "forceAmmo") return;
+
+		if (key === "seed") {
 			return this._buildTextboxRow(key, `0x${value.toString(0x10).padStart(4, 0)}`);
-		}
-
-		if (key === 'currentAmmo') {
-			return this._buildAmmoRow(key, value, 30);
-		}
-
-		if (key === 'blasterAmmo') {
-			return this._buildAmmoRow(key, value, 30);
-		}
-
-		if (key === 'blasterRifleAmmo') {
-			return this._buildAmmoRow(key, value, 15);
-		}
-
-		if (key === 'forceAmmo') {
-			return this._buildAmmoRow(key, value, 15);
 		}
 
 		if (value instanceof WorldSize || value instanceof Planet) {
 			return this._buildTextboxRow(key, value.name);
 		}
 
-		if (typeof value === 'number' || typeof value === 'string') {
+		if (typeof value === "number" || typeof value === "string") {
 			return this._buildTextboxRow(key, `${value}`);
 		}
 
@@ -109,23 +139,23 @@ class SaveGameEditor extends Window {
 	}
 
 	private _buildTextboxRow(text: string, value: string) {
-		const row = document.createElement('div');
-		const label = document.createElement('label');
+		const row = document.createElement("div");
+		const label = document.createElement("label");
 		label.textContent = text;
 		row.appendChild(label);
 
-		const input = document.createElement('input');
+		const input = document.createElement("input");
 		input.value = value;
 		row.appendChild(input);
 
 		return row;
 	}
 
-	private _buildAmmoRow(text: string, value: number, total: number) {
-		const row = document.createElement('div');
-		const label = document.createElement('label');
-		label.textContent = text;
-		row.appendChild(label);
+	private _buildAmmoRow(tile: Tile, value: number, total: number) {
+		const row = document.createElement("div");
+		row.classList.add("ammo");
+		const preview = this._buildTileComponent(tile);
+		row.appendChild(preview);
 
 		const input = <AmmoControl>document.createElement(AmmoControl.TagName);
 		input.value = value / total;
@@ -139,14 +169,22 @@ class SaveGameEditor extends Window {
 		try {
 			stream = await file.provideInputStream();
 			reader = new SaveGameReader(this.gameDataManager.currentData);
-			return { save: await reader.read(stream), error: null };
+			return {save: await reader.read(stream), error: null};
 		} catch (error) {
-			return { error, save: reader.partialState };
+			return {error, save: reader.partialState};
 		}
 	}
 
 	disconnectedCallback() {
 		super.disconnectedCallback();
+	}
+
+	public set gameDataManager(dataManager: DataManager) {
+		this._gameDataManager = dataManager;
+	}
+
+	public get gameDataManager() {
+		return this._gameDataManager;
 	}
 }
 
