@@ -1,0 +1,19 @@
+@import "border";
+@import "sizing";
+@import "colors";
+
+wf-save-game-editor-ammo {
+	@include inset-border(1px);
+	position: relative;
+	display: inline-block;
+	height: 12px;
+
+	div {
+		background-color: $indicator-color;
+		border: 0;
+		left: 1px;
+		right: 1px;
+		bottom: 1px;
+		height: 100%;
+	}
+}
