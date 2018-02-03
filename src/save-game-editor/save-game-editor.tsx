@@ -3,11 +3,12 @@ import { SaveGameReader, SaveState } from "src/engine/save-game";
 import { InputStream } from "src/util";
 import DataManager from "src/editor/data-manager";
 import { Planet, WorldSize } from "src/engine/types";
-import { AmmoControl, Tile as TileComponent, InventoryRow } from "./components";
+import { AmmoControl, Tile as TileComponent, Map, InventoryRow } from "./components";
 import { Ammo, Health } from "src/app/ui";
 import { Tile } from "src/engine/objects";
 import { Yoda } from "src/engine";
 import {iterate}from 'src/util';
+import {File} from 'src/std.dom';
 
 import "./save-game-editor.scss";
 
@@ -16,19 +17,15 @@ class SaveGameEditor extends Window {
 	private _gameDataManager: DataManager;
 	public file: File;
 	private _state: SaveState;
-	private _label: Element = <div />;
-	private _errors: Element = <div />;
-	private _save: Element = <div />;
+	private _label: Element = <div className="label" />;
+	private _errors: Element = <div className="errors" />;
+	private _save: Element = <div className="save" />;
 
 	constructor() {
 		super();
 
 		this.title = "Save Game Editor";
 		this.closable = true;
-
-		this._label.classList.add("label");
-		this._errors.classList.add("errors");
-		this._save.classList.add("save");
 
 		this.content.appendChild(this._label);
 		this.content.appendChild(this._errors);
@@ -37,7 +34,6 @@ class SaveGameEditor extends Window {
 
 	async connectedCallback() {
 		super.connectedCallback();
-
 		this._presentFile(this.file);
 	}
 
@@ -65,14 +61,24 @@ class SaveGameEditor extends Window {
 	private _presentState(state: SaveState) {
 		this._save.textContent = "";
 
+		this._save.appendChild(<div className="row">
+			<span><label>Seed</label><input value={state.seed.toHex(4)} /></span>
+			<span><label>Planet</label><input value={state.planet.name} /></span>
+		</div>);
+
+		this._save.appendChild(<Map
+			dataProvider={this._gameDataManager}
+			world={state.world}
+			location={state.positionOnWorld}
+			/>);
+
 		// health, current weapon, current ammo
-		const row = <div className="weapon-and-health">
-			<div className="equipment">
-				{this._buildAmmoRow(this._findWeaponFace(state.currentWeapon), state.blasterAmmo, 30)}
+		const currentWeapon = this._findWeaponFace(state.currentWeapon);
+		this._save.appendChild(
+			<div className="weapon-and-health">
+				{this._buildAmmoRow(currentWeapon, state.currentAmmo, 30)}
 				<Health />
-			</div>
-		</div>;
-		this._save.appendChild(row);
+			</div>);
 
 		// ammo supply
 		this._save.appendChild(this._buildAmmoRow(this._findWeaponFace(Yoda.WeaponID.Blaster), state.blasterAmmo, 30));
@@ -82,14 +88,8 @@ class SaveGameEditor extends Window {
 		// items
 		const tileSheet = this.gameDataManager.tileSheet;
 		const inventory = <List className="inset-border-1px"
-		cell={<InventoryRow tileSheet={tileSheet}/>} items={Array.from(state.inventoryIDs).map(id => this._gameDataManager.currentData.tiles[id])} />
+						cell={<InventoryRow tileSheet={tileSheet}/>} items={Array.from(state.inventoryIDs).map(id => this._gameDataManager.currentData.tiles[id])} />
 		this._save.appendChild(inventory);
-
-		// rest
-		for (var [key, value] of iterate(state)) {
-			let row: Element = this._buildRow(key, value);
-			if (row) this._save.appendChild(row);
-		}
 	}
 
 	private _buildTileComponent(tile: Tile): TileComponent {
@@ -104,47 +104,6 @@ class SaveGameEditor extends Window {
 		if (!character) return null;
 		console.assert(character.isWeapon());
 		return character.frames[0].extensionRight;
-	}
-
-	private _buildRow(key: string, value: any) {
-		if (key === "currentWeapon") return;
-		if (key === "currentAmmo") return;
-		if (key === "damageTaken") return;
-		if (key === "livesLeft") return;
-		if (key === "blasterAmmo") return;
-		if (key === "blasterRifleAmmo") return;
-		if (key === "forceAmmo") return;
-
-		if (key === "seed") {
-			return this._buildTextboxRow(key, `0x${value.toString(0x10).padStart(4, 0)}`);
-		}
-
-		if (value instanceof WorldSize || value instanceof Planet) {
-			return this._buildTextboxRow(key, value.name);
-		}
-
-		if (typeof value === "number" || typeof value === "string") {
-			return this._buildTextboxRow(key, `${value}`);
-		}
-
-		if (value === null || value === undefined) {
-			return this._buildTextboxRow(key, ``);
-		}
-
-		return null;
-	}
-
-	private _buildTextboxRow(text: string, value: string) {
-		const row = document.createElement("div");
-		const label = document.createElement("label");
-		label.textContent = text;
-		row.appendChild(label);
-
-		const input = document.createElement("input");
-		input.value = value;
-		row.appendChild(input);
-
-		return row;
 	}
 
 	private _buildAmmoRow(tile: Tile, value: number, total: number) {

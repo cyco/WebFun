@@ -59,20 +59,26 @@ wf-save-game-editor {
 				}
 			}
 
+			wf-save-game-editor-map {
+				margin: 5px 0;
+			}
+
 			wf-list {
 				margin-top: 5px;
 			}
 
-			> div {
+			> div.row {
+				display: flex;
+				justify-content: space-between;
+
 				label {
-					width: 120px;
 					text-align: right;
 					margin-right: 10px;
 					display: inline-block;
 				}
 
 				input {
-					width: 80px;
+					width: 60px;
 					background-color: rgba(255,255,255,0.4);
 				}
 			}

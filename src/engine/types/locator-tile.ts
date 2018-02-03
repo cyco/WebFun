@@ -2,10 +2,11 @@ import { HotspotType, Zone, ZoneType } from "src/engine/objects";
 import Settings from "src/settings";
 
 class LocatorTile {
-	static ForZone(zone: Zone) {
+	static ForZone(zone: Zone, visited?: boolean) {
 		if (!zone) return 0x344;
 
-		if (!zone.visited && !Settings.revealWorld) return 0x343;
+		if (visited === false || visited === undefined && !zone.visited && !Settings.revealWorld)
+			return 0x343;
 
 		switch (zone.type) {
 			case ZoneType.Empty:

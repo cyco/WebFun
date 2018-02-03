@@ -1,3 +1,5 @@
+import './extension';
+
 export const global = (function() {
 	"use strict";
 	let get = eval;

@@ -18,7 +18,7 @@ class ComponentJSXRenderer {
 		}
 
 		if (children) {
-			children.forEach((c: any) => node.appendChild(c));
+			children.forEach((c: any) => node.appendChild(typeof c === 'string' ? document.createTextNode(c) : c))
 		}
 
 		return node;
