@@ -19,7 +19,8 @@ wf-save-game-editor {
 					display: inline-block;
 				}
 
-				input {
+				input,
+				wf-save-game-editor-ammo {
 					width: 80px;
 					background-color: rgba(255,255,255,0.4);
 				}
