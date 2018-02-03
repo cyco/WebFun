@@ -5,11 +5,19 @@ wf-save-game-editor-map {
 	@include inset-border(1px);
 	border-radius: 3px;
 	display: inline-block;
+	position: relative;
 
 	canvas {
 		@extend .pixelated;
 		width: 280px;
 		height: 280px;
 		border-radius: 3px;
+	}
+
+	.here {
+		position: absolute;
+		display: block;
+		width: 32px;
+		height: 32px;
 	}
 }

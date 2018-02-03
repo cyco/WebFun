@@ -2,6 +2,10 @@ import { HotspotType, Zone, ZoneType } from "src/engine/objects";
 import Settings from "src/settings";
 
 class LocatorTile {
+	static get Here() {
+		return 0x345;
+	}
+
 	static ForZone(zone: Zone, visited?: boolean) {
 		if (!zone) return 0x344;
 
