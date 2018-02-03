@@ -97,7 +97,6 @@ class WindowTitlebar extends Component {
 	}
 
 	private _setupDragging(win: Window) {
-		console.log("setup dragging");
 		let dragLocation: Point;
 		const mouseMove = (event: MouseEvent) => {
 			win.origin = new Point(event.clientX - dragLocation.x, event.clientY - dragLocation.y);
