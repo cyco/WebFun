@@ -1,3 +1,6 @@
+@import "colors";
+@import "variables";
+@import "border";
 @import "../ui/components/window";
 
 wf-save-game-editor {
@@ -12,6 +15,55 @@ wf-save-game-editor {
 
 		> .save {
 			> div {
+				width: 100%;
+				display: flex;
+				align-items: center;
+			}
+
+			> .weapon-and-helath {
+				justify-content: center;
+
+				.equipment {
+					height: $tile-size + 2 * $border-size;
+
+					> * {
+						height: $tile-size + 2 * $border-size;
+						display: inline-block;
+						position: relative;
+					}
+
+					wf-ammo + wf-weapon {
+						margin-left: 2px;
+					}
+				}
+
+				.equipment + wf-health {
+					margin-left: 20px;
+				}
+			}
+
+			.ammo {
+				justify-content: center;
+				margin-top: 5px;
+
+				.tile {
+					$border-size: 1px;
+					@include inset-border($border-size);
+					height: $tile-size + 2 * $border-size;
+					width: $tile-size + 2 * $border-size;
+				}
+
+				.tile + wf-save-game-editor-ammo {
+					margin-left: 10px;
+				}
+
+				wf-save-game-editor-ammo {
+					width: 80px;
+					background-color: rgba(255, 255, 255, 0.4);
+				}
+			}
+
+			> div {
 				label {
 					width: 120px;
 					text-align: right;
@@ -19,8 +71,7 @@ wf-save-game-editor {
 					display: inline-block;
 				}
 
-				input,
-				wf-save-game-editor-ammo {
+				input {
 					width: 80px;
 					background-color: rgba(255,255,255,0.4);
 				}
