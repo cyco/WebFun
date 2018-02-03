@@ -1,12 +1,13 @@
-import { Window } from "src/ui/components";
+import { Window, List } from "src/ui/components";
 import { SaveGameReader, SaveState } from "src/engine/save-game";
 import { InputStream } from "src/util";
 import DataManager from "src/editor/data-manager";
 import { Planet, WorldSize } from "src/engine/types";
-import { AmmoControl, Tile as TileComponent } from "./components";
+import { AmmoControl, Tile as TileComponent, InventoryRow } from "./components";
 import { Ammo, Health } from "src/app/ui";
 import { Tile } from "src/engine/objects";
 import { Yoda } from "src/engine";
+import {iterate}from 'src/util';
 
 import "./save-game-editor.scss";
 
@@ -15,9 +16,9 @@ class SaveGameEditor extends Window {
 	private _gameDataManager: DataManager;
 	public file: File;
 	private _state: SaveState;
-	private _label: Element = document.createElement("div");
-	private _errors: Element = document.createElement("div");
-	private _save: Element = document.createElement("div");
+	private _label: Element = <div />;
+	private _errors: Element = <div />;
+	private _save: Element = <div />;
 
 	constructor() {
 		super();
@@ -42,7 +43,7 @@ class SaveGameEditor extends Window {
 
 	private async _presentFile(file: File) {
 		this.title = file.name;
-		const {save, error} = await this._loadFile(file);
+		const { save, error } = await this._loadFile(file);
 		this._presentError(error);
 		this._presentState(save);
 		this._state = save;
@@ -64,41 +65,36 @@ class SaveGameEditor extends Window {
 	private _presentState(state: SaveState) {
 		this._save.textContent = "";
 
-		function* it(o: any) {
-			var keys = Object.keys(o);
-			for (var i = 0; i < keys.length; i++) {
-				yield [keys[i], o[keys[i]]];
-			}
-		}
-
-		const row = document.createElement("div");
-		row.classList.add("weapon-and-helath");
-		const equipment = document.createElement("div");
-		equipment.classList.add("equipment");
-		const ammoView = <Ammo>document.createElement(Ammo.TagName);
-		equipment.appendChild(ammoView);
-		const weaponView = this._buildTileComponent(this._findWeaponFace(state.currentWeapon));
-		equipment.appendChild(weaponView);
-		row.appendChild(equipment);
-		const health = <Health>document.createElement(Health.TagName);
-		row.appendChild(health);
+		// health, current weapon, current ammo
+		const row = <div className="weapon-and-health">
+			<div className="equipment">
+				{this._buildAmmoRow(this._findWeaponFace(state.currentWeapon), state.blasterAmmo, 30)}
+				<Health />
+			</div>
+		</div>;
 		this._save.appendChild(row);
 
-		this._save.appendChild(this._buildAmmoRow(this._findWeaponFace(Yoda.WeaponID.Blaster), state["blasterAmmo"], 30));
-		this._save.appendChild(this._buildAmmoRow(this._findWeaponFace(Yoda.WeaponID.BlasterRifle), state["blasterRifleAmmo"], 15));
-		this._save.appendChild(this._buildAmmoRow(this._findWeaponFace(Yoda.WeaponID.TheForce), state["forceAmmo"], 15));
+		// ammo supply
+		this._save.appendChild(this._buildAmmoRow(this._findWeaponFace(Yoda.WeaponID.Blaster), state.blasterAmmo, 30));
+		this._save.appendChild(this._buildAmmoRow(this._findWeaponFace(Yoda.WeaponID.BlasterRifle), state.blasterRifleAmmo, 15));
+		this._save.appendChild(this._buildAmmoRow(this._findWeaponFace(Yoda.WeaponID.TheForce), state.forceAmmo, 15));
 
-		for (var [key, value] of it(state)) {
+		// items
+		const tileSheet = this.gameDataManager.tileSheet;
+		const inventory = <List className="inset-border-1px"
+		cell={<InventoryRow tileSheet={tileSheet}/>} items={Array.from(state.inventoryIDs).map(id => this._gameDataManager.currentData.tiles[id])} />
+		this._save.appendChild(inventory);
+
+		// rest
+		for (var [key, value] of iterate(state)) {
 			let row: Element = this._buildRow(key, value);
 			if (row) this._save.appendChild(row);
 		}
 	}
 
 	private _buildTileComponent(tile: Tile): TileComponent {
-		const component = <TileComponent>document.createElement(TileComponent.TagName);
-		component.tileSheet = this.gameDataManager.tileSheet;
-		component.tile = tile;
-		return component;
+		const tileSheet = this.gameDataManager.tileSheet;
+		return <TileComponent tile={tile} tileSheet={tileSheet} /> as TileComponent;
 	}
 
 	private _findWeaponFace(id: number): Tile {
@@ -152,16 +148,10 @@ class SaveGameEditor extends Window {
 	}
 
 	private _buildAmmoRow(tile: Tile, value: number, total: number) {
-		const row = document.createElement("div");
-		row.classList.add("ammo");
-		const preview = this._buildTileComponent(tile);
-		row.appendChild(preview);
-
-		const input = <AmmoControl>document.createElement(AmmoControl.TagName);
-		input.value = value / total;
-		row.appendChild(input);
-
-		return row;
+		return <div className="ammo">
+			{this._buildTileComponent(tile)}
+			<AmmoControl vertical value={value} />
+		</div>;
 	}
 
 	private async _loadFile(file: File) {
@@ -169,9 +159,9 @@ class SaveGameEditor extends Window {
 		try {
 			stream = await file.provideInputStream();
 			reader = new SaveGameReader(this.gameDataManager.currentData);
-			return {save: await reader.read(stream), error: null};
+			return { save: await reader.read(stream), error: null };
 		} catch (error) {
-			return {error, save: reader.partialState};
+			return { error, save: reader.partialState };
 		}
 	}
 

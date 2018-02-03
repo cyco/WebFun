@@ -5,8 +5,8 @@ class AmmoControl extends Component implements EventListenerObject {
 	public static readonly TagName = 'wf-save-game-editor-ammo';
 	public static readonly observedAttributes = ['vertical'];
 	private _value: number = 1;
-	private _bar: HTMLElement = document.createElement('div');
 	private _vertical: boolean = false;
+	private _bar: HTMLElement = <div />;
 
 	connectedCallback() {
 		super.connectedCallback();
@@ -14,21 +14,18 @@ class AmmoControl extends Component implements EventListenerObject {
 		this.addEventListener('mousedown', this);
 	}
 
-	attributeChangedCallback(attributeName: string, oldValue: string, newValue: string): void {
-		this._vertical = this.hasAttribute('vertical');
-		this._bar.style.removeProperty('width');
-		this._bar.style.removeProperty('height');
-		this.value = this._value;
+	attributeValueChanged() {
+		this.vertical = this.hasAttribute('vertical');
 	}
 
 	handleEvent(event: MouseEvent) {
 		if (event.type === 'mouseup') {
-			document.removeEventListener('mousemove', this, <any>{ capture: true });
+			document.removeEventListener('mousemove', this, { capture: true } as any);
 		}
 
 		if (event.type === 'mousedown') {
-			document.addEventListener('mousemove', this, <any>{ capture: true });
-			document.addEventListener('mouseup', this, <any>{ once: true, capture: true });
+			document.addEventListener('mousemove', this,{ capture: true } as any);
+			document.addEventListener('mouseup', this,{ once: true, capture: true } as any);
 		}
 
 		const { clientX, clientY } = event;
@@ -47,8 +44,25 @@ class AmmoControl extends Component implements EventListenerObject {
 		super.disconnectedCallback();
 
 		this.removeEventListener('mouseup', this);
-		document.removeEventListener('mousemove', this, <any>{ capture: true });
-		document.removeEventListener('mouseup', this, <any>{ once: true, capture: true });
+		document.removeEventListener('mousemove', this, { capture: true } as any);
+		document.removeEventListener('mouseup', this, { once: true, capture: true } as any);
+	}
+
+	set vertical(flag: boolean) {
+		if(this._vertical === flag) return;
+
+		this._vertical = flag;
+
+		if(this._vertical) this.setAttribute('vertical', '');
+		else this.removeAttribute('vertical');
+
+		this._bar.style.removeProperty('width');
+		this._bar.style.removeProperty('height');
+		this.value = this._value;
+	}
+
+	get vertical(){
+		return this._vertical;
 	}
 
 	get value() {

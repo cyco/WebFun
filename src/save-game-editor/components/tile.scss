@@ -3,8 +3,11 @@
 wf-save-game-editor-tile {
 	position: relative;
 	display: inline-block;
+	text-align: left;
 
 	> div {
+		position: absolute;
+
 		width: $tile-size;
 		height: $tile-size;
 	}
