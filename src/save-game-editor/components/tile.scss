@@ -1,0 +1,11 @@
+@import "variables";
+
+wf-save-game-editor-tile {
+	position: relative;
+	display: inline-block;
+
+	> div {
+		width: $tile-size;
+		height: $tile-size;
+	}
+}
