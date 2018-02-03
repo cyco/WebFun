@@ -6,82 +6,50 @@
 wf-save-game-editor {
 	@extend wf-window;
 
-	> .content {
-		flex-direction: column;
+	.save {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
 
-		> .errors {
-			color: red;
+		wf-segmented-control {
+			grid-column: 1 / 3;
 		}
 
-		> .save {
-			text-align: center;
-
-			> div {
-				width: 100%;
-				display: flex;
-				align-items: center;
-			}
-
-			> .weapon-and-health {
-				justify-content: center;
-
-				.ammo {
-					margin-top: 0;
-				}
-
-				.ammo + wf-health {
-					margin-left: 20px;
-				}
-			}
-
-			.ammo {
-				$border-size: 1px;
-				display: inline-block;
-				justify-content: center;
-				margin-top: 5px;
-				width: unset;
-				height: $tile-size + 2 * $border-size;
-
-				& + .ammo {
-					margin-left: 5px;
-				}
-
-				wf-save-game-editor-ammo {
-					margin-left: 1px;
-					height: 100%;
-				}
-
-				wf-save-game-editor-tile {
-					$border-size: 1px;
-					@include inset-border($border-size);
-					height: $tile-size + 2 * $border-size;
-					width: $tile-size + 2 * $border-size;
-				}
-			}
-
-			wf-save-game-editor-map {
-				margin: 5px 0;
-			}
-
-			wf-list {
-				margin-top: 5px;
-			}
-
-			> div.row {
-				display: flex;
-				justify-content: space-between;
-
-				label {
-					text-align: right;
-					margin-right: 10px;
-					display: inline-block;
-				}
-
-				input {
-					width: 60px;
-					background-color: rgba(255,255,255,0.4);
-				}
-			}
+		.content {
+			grid-column: 1 / 3;
+			grid-row: 4 / 5;
+			width: 282px;
+			height: 282px;
 		}
+	}
+
+	.current-weapon {
+		$border-size: 1px;
+		display: inline-block;
+		justify-content: center;
+		margin-top: 5px;
+		width: unset;
+		height: $tile-size + 2 * $border-size;
+
+		& + .ammo {
+			margin-left: 5px;
+		}
+
+		wf-save-game-editor-ammo {
+			margin-left: 1px;
+			height: 100%;
+		}
+
+		wf-save-game-editor-tile {
+			$border-size: 1px;
+			@include inset-border($border-size);
+			height: $tile-size + 2 * $border-size;
+			width: $tile-size + 2 * $border-size;
+		}
+	}
+
+	input {
+		margin-left: 5px;
+		width: 60px;
+		background-color: rgba(255,255,255,0.4);
 	}
 }

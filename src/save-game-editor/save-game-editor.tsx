@@ -1,13 +1,12 @@
-import { Window, List } from "src/ui/components";
+import { Window, List, Segment, SegmentControl } from "src/ui/components";
 import { SaveGameReader, SaveState } from "src/engine/save-game";
-import { InputStream } from "src/util";
+import { InputStream , iterate} from "src/util";
 import DataManager from "src/editor/data-manager";
 import { Planet, WorldSize } from "src/engine/types";
 import { AmmoControl, Tile as TileComponent, Map, InventoryRow } from "./components";
 import { Ammo, Health } from "src/app/ui";
 import { Tile } from "src/engine/objects";
 import { Yoda } from "src/engine";
-import {iterate}from 'src/util';
 import {File} from 'src/std.dom';
 
 import "./save-game-editor.scss";
@@ -17,8 +16,6 @@ class SaveGameEditor extends Window {
 	private _gameDataManager: DataManager;
 	public file: File;
 	private _state: SaveState;
-	private _label: Element = <div className="label" />;
-	private _errors: Element = <div className="errors" />;
 	private _save: Element = <div className="save" />;
 
 	constructor() {
@@ -27,8 +24,6 @@ class SaveGameEditor extends Window {
 		this.title = "Save Game Editor";
 		this.closable = true;
 
-		this.content.appendChild(this._label);
-		this.content.appendChild(this._errors);
 		this.content.appendChild(this._save);
 	}
 
@@ -40,56 +35,67 @@ class SaveGameEditor extends Window {
 	private async _presentFile(file: File) {
 		this.title = file.name;
 		const { save, error } = await this._loadFile(file);
-		this._presentError(error);
 		this._presentState(save);
 		this._state = save;
 	}
 
-	private _presentFileName(name: string) {
-		this._label.textContent = name;
-	}
-
-	private _presentError(error?: Error) {
-		if (!error) {
-			this._errors.textContent = "";
-			return;
-		}
-
-		this._errors.textContent = error.message;
-	}
 
 	private _presentState(state: SaveState) {
-		this._save.textContent = "";
+		const node = this._buildNodes(state);
+		const oldSave = this._save;
+		this._save = node;
 
-		this._save.appendChild(<div className="row">
+		oldSave.parentElement.replaceChild(node, oldSave);
+	}
+
+	private _showSegment(segment: Segment): void {
+		Array.from(this._save.querySelectorAll('.content')).forEach((c:HTMLElement) => c.style.display = 'none');
+		const r = this._save.querySelector('.content.'+segment.textContent) as HTMLElement;
+		r.style.display = '';
+	}
+
+	private _buildNodes(state: SaveState) {
+		const currentWeapon = this._findWeaponFace(state.currentWeapon);
+		const tileSheet = this.gameDataManager.tileSheet;
+
+		return <div className="save">
 			<span><label>Seed</label><input value={state.seed.toHex(4)} /></span>
 			<span><label>Planet</label><input value={state.planet.name} /></span>
-		</div>);
 
-		this._save.appendChild(<Map
-			dataProvider={this._gameDataManager}
-			world={state.world}
-			location={state.positionOnWorld}
-			/>);
+			<div className="current-weapon">
+				<TileComponent tile={currentWeapon} tileSheet={tileSheet} />
+				<AmmoControl vertical value={state.currentAmmo} />
+			</div>
 
-		// health, current weapon, current ammo
-		const currentWeapon = this._findWeaponFace(state.currentWeapon);
-		this._save.appendChild(
-			<div className="weapon-and-health">
-				{this._buildAmmoRow(currentWeapon, state.currentAmmo, 30)}
-				<Health />
-			</div>);
+			<Health />
 
-		// ammo supply
-		this._save.appendChild(this._buildAmmoRow(this._findWeaponFace(Yoda.WeaponID.Blaster), state.blasterAmmo, 30));
-		this._save.appendChild(this._buildAmmoRow(this._findWeaponFace(Yoda.WeaponID.BlasterRifle), state.blasterRifleAmmo, 15));
-		this._save.appendChild(this._buildAmmoRow(this._findWeaponFace(Yoda.WeaponID.TheForce), state.forceAmmo, 15));
+			<SegmentControl onsegmentchange={(segment:Segment) => this._showSegment(segment)}>
+				<Segment selected>World</Segment>
+				<Segment>Dagobah</Segment>
+				<Segment>Inventory</Segment>
+				<Segment>Score</Segment>
+			</SegmentControl>
 
-		// items
-		const tileSheet = this.gameDataManager.tileSheet;
-		const inventory = <List className="inset-border-1px"
-						cell={<InventoryRow tileSheet={tileSheet}/>} items={Array.from(state.inventoryIDs).map(id => this._gameDataManager.currentData.tiles[id])} />
-		this._save.appendChild(inventory);
+			<Map
+				className='content World'
+				dataProvider={this._gameDataManager}
+				world={state.world}
+				location={!state.onDagobah ? state.positionOnWorld : null}
+				/>
+
+			<Map
+				className='content Dagobah'
+				dataProvider={this._gameDataManager}
+				world={state.dagobah}
+				location={state.onDagobah ? state.positionOnWorld : null}
+				/>
+
+			<List className="content Inventory inset-border-1px"
+					   cell={<InventoryRow tileSheet={tileSheet}/>}
+				      items={Array.from(state.inventoryIDs).map(id => this._gameDataManager.currentData.tiles[id])} />
+
+			<div className='content Score inset-border-1px' />
+		</div>;
 	}
 
 	private _buildTileComponent(tile: Tile): TileComponent {

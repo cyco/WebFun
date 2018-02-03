@@ -34,7 +34,8 @@ class Map extends Component {
 
 		this._drawWorld();
 		this.appendChild(this._canvas);
-		this.appendChild(this._here);
+
+		if(this.location) this.appendChild(this._here);
 	}
 
 	disconnectedCallback(){
@@ -43,11 +44,14 @@ class Map extends Component {
 	}
 
 	private _buildURHere(){
+		if(!this.location) return;
+
 		this._here = <div
 			className={'here '+ this.dataProvider.tileSheet.cssClassNameForTile(LocatorTile.Here)}
 		 />;
-		 this._here.style.left = `${this.location.x * TileSize}px`;
-		 this._here.style.top = `${this.location.y * TileSize}px`;
+
+		this._here.style.left = `${this.location.x * TileSize}px`;
+		this._here.style.top = `${this.location.y * TileSize}px`;
  		this._hereInterval = setInterval(() => this._here.style.display = this._here.style.display === 'none' ? '' : 'none', HereInteval);
 	}
 
