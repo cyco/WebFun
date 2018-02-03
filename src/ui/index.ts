@@ -7,10 +7,12 @@ import MenuItem, { Separator as MenuItemSeparator, State as MenuItemState } from
 import MenuStack from "./menu-stack";
 import WindowManager from "./window-manager";
 import WindowMenuItem from "./window-menu-item";
+import ComponentJSXRenderer from './component-jsx-factory';
 
 export {
 	Component,
 	ComponentRegistry,
+	ComponentJSXRenderer,
 	Components,
 	FilePicker,
 	Menu,
