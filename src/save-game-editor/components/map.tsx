@@ -9,6 +9,8 @@ import {LocatorTile} from 'src/engine/types';
 import {Renderer, ImageFactory} from 'src/engine/rendering/canvas';
 
 const TileSize = 28;
+const HereInteval = 1000;
+
 class Map extends Component {
 	public static readonly TagName = 'wf-save-game-editor-map';
 	public world: World;
@@ -18,17 +20,35 @@ class Map extends Component {
 	 width={280} height={280} /> as any as HTMLCanvasElement;
  	private _imageMap: {[_:number]: Image};
 	private _renderer: Renderer;
+	private _here: HTMLElement;
+	private _hereInterval: number;
 
 	connectedCallback() {
 		super.connectedCallback();
 
 		if(!this._renderer) {
+			this._buildURHere();
 			this._buildRenderer();
 			this._buildImageMap();
 		}
 
 		this._drawWorld();
 		this.appendChild(this._canvas);
+		this.appendChild(this._here);
+	}
+
+	disconnectedCallback(){
+		clearInterval(this._hereInterval);
+		super.disconnectedCallback();
+	}
+
+	private _buildURHere(){
+		this._here = <div
+			className={'here '+ this.dataProvider.tileSheet.cssClassNameForTile(LocatorTile.Here)}
+		 />;
+		 this._here.style.left = `${this.location.x * TileSize}px`;
+		 this._here.style.top = `${this.location.y * TileSize}px`;
+ 		this._hereInterval = setInterval(() => this._here.style.display = this._here.style.display === 'none' ? '' : 'none', HereInteval);
 	}
 
 	private _buildRenderer(){

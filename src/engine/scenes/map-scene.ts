@@ -26,7 +26,7 @@ class MapScene extends Scene {
 		this._cheatInput.reset();
 
 		this._ticks = 4;
-		this._location = this.engine.data.tiles[0x345];
+		this._location = this.engine.data.tiles[LocatorTile.Here];
 		this.engine.inputManager.mouseDownHandler = (p: Point) => this.mouseDown(p);
 		this.engine.inputManager.keyDownHandler = (e: KeyboardEvent) => {
 			this._cheatInput.addCharacter(String.fromCharCode(e.keyCode).toLowerCase());
