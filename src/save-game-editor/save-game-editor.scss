@@ -14,53 +14,53 @@ wf-save-game-editor {
 		}
 
 		> .save {
+			text-align: center;
+
 			> div {
 				width: 100%;
 				display: flex;
 				align-items: center;
 			}
 
-			> .weapon-and-helath {
+			> .weapon-and-health {
 				justify-content: center;
 
-				.equipment {
-					height: $tile-size + 2 * $border-size;
-
-					> * {
-						height: $tile-size + 2 * $border-size;
-						display: inline-block;
-						position: relative;
-					}
-
-					wf-ammo + wf-weapon {
-						margin-left: 2px;
-					}
+				.ammo {
+					margin-top: 0;
 				}
 
-				.equipment + wf-health {
+				.ammo + wf-health {
 					margin-left: 20px;
 				}
 			}
 
 			.ammo {
+				$border-size: 1px;
+				display: inline-block;
 				justify-content: center;
 				margin-top: 5px;
+				width: unset;
+				height: $tile-size + 2 * $border-size;
 
-				.tile {
+				& + .ammo {
+					margin-left: 5px;
+				}
+
+				wf-save-game-editor-ammo {
+					margin-left: 1px;
+					height: 100%;
+				}
+
+				wf-save-game-editor-tile {
 					$border-size: 1px;
 					@include inset-border($border-size);
 					height: $tile-size + 2 * $border-size;
 					width: $tile-size + 2 * $border-size;
 				}
+			}
 
-				.tile + wf-save-game-editor-ammo {
-					margin-left: 10px;
-				}
-
-				wf-save-game-editor-ammo {
-					width: 80px;
-					background-color: rgba(255, 255, 255, 0.4);
-				}
+			wf-list {
+				margin-top: 5px;
 			}
 
 			> div {

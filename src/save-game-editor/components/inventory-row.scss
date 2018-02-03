@@ -1,0 +1,37 @@
+@import "variables";
+@import "border";
+
+wf-save-game-editor-inventory-row {
+	text-align: left;
+	display: flex;
+	height: $tile-size;
+	flex-shrink: 0;
+	flex-grow: 0;
+
+	> wf-save-game-editor-tile {
+		@include inset-border-inverted(1px);
+		position: relative;
+		display: inline-block;
+		height: inherit;
+	}
+
+	> wf-save-game-editor-tile:nth-child(1) {
+		width: $tile-size;
+	}
+
+	> span {
+		@include inset-border-inverted(1px);
+		position: relative;
+		display: inline-block;
+		height: inherit;
+		flex-grow: 2;
+		padding: 0 5px;
+		line-height: $tile-size;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	> wf-save-game-editor-tile + span {
+		margin-left: 0;
+	}
+}
