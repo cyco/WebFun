@@ -19,3 +19,7 @@ $border-size: 2px;
 	border-right-color: $border-dark;
 	border-bottom-color: $border-dark;
 }
+
+.inset-border-1px {
+	@include inset-border(1px);
+}
