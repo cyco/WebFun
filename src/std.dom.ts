@@ -7,6 +7,7 @@ export const XMLHttpRequest = global.XMLHttpRequest;
 export const Element = global.Element;
 export const Image = global.Image;
 export const NodeList = global.NodeList;
+export const Node = global.Node;
 export const ImageData = global.ImageData;
 export const KeyEvent: { [_: string]: number } = global.KeyEvent || {};
 export const HTMLElement = global.HTMLElement;
