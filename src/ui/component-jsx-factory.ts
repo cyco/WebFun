@@ -1,12 +1,12 @@
-import Component from './component';
-import { iterate } from 'src/util';
+import Component from "./component";
+import { iterate } from "src/util";
 
 class ComponentJSXRenderer {
 	render(thing: string | (typeof Component) | Node, props: any, ...children: any[]) {
 		let node: Node;
 
-		if (typeof thing === 'string') {
-			node = document.createElement(thing)
+		if (typeof thing === "string") {
+			node = document.createElement(thing);
 		} else if (thing instanceof Function) {
 			node = document.createElement(thing.TagName);
 		} else if (thing instanceof Node) return Node;
@@ -18,7 +18,7 @@ class ComponentJSXRenderer {
 		}
 
 		if (children) {
-			children.forEach((c: any) => node.appendChild(typeof c === 'string' ? document.createTextNode(c) : c))
+			children.forEach((c: any) => node.appendChild(typeof c === "string" ? document.createTextNode(c) : c));
 		}
 
 		return node;

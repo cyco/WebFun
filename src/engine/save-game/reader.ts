@@ -20,11 +20,11 @@ class Reader {
 	}
 
 	public read(stream: InputStream): SaveState {
-		const state = this._partialState = new SaveState();
+		const state = (this._partialState = new SaveState());
 		const magic = stream.getCharacters(9);
-		console.assert(magic === "YODASAV44", 'Header magic must be present', magic);
+		console.assert(magic === "YODASAV44", "Header magic must be present", magic);
 
-		state.seed = stream.getUint32() & 0xFFFF;
+		state.seed = stream.getUint32() & 0xffff;
 		state.planet = Planet.fromNumber(stream.getUint32());
 
 		state.onDagobah = !!stream.getUint32();
@@ -39,7 +39,7 @@ class Reader {
 		state.world = this._readWorld(stream);
 
 		const inventoryCount = stream.getInt32();
-		console.assert(inventoryCount >= 0, 'Inventory can\'t contain less than no items.');
+		console.assert(inventoryCount >= 0, "Inventory can't contain less than no items.");
 		const inventoryIDs = stream.getUint16Array(inventoryCount);
 		state.inventoryIDs = new Int16Array(inventoryIDs);
 
@@ -76,7 +76,12 @@ class Reader {
 
 		state.goalPuzzle = stream.getUint32();
 		const goalPuzzleAgain = stream.getUint32();
-		console.assert(state.goalPuzzle === goalPuzzleAgain, "Puzzle ID must be repeated!", state.goalPuzzle, goalPuzzleAgain);
+		console.assert(
+			state.goalPuzzle === goalPuzzleAgain,
+			"Puzzle ID must be repeated!",
+			state.goalPuzzle,
+			goalPuzzleAgain
+		);
 
 		console.assert(stream.isAtEnd(), `Encountered ${stream.length - stream.offset} unknown bytes at end of stream`);
 
@@ -131,7 +136,7 @@ class Reader {
 			try {
 				zone.planet = Planet.fromNumber(stream.getInt16());
 			} catch (e) {
-				console.log('Invalid planet in zone', zone.id, zone.type.name, e.message);
+				console.log("Invalid planet in zone", zone.id, zone.type.name, e.message);
 			}
 			zone.tileIDs = stream.getInt16Array(zone.size.area * Zone.LAYERS);
 		}
@@ -152,7 +157,12 @@ class Reader {
 
 			const actionCount = stream.getInt32();
 			if (actionCount > 0) {
-				console.assert(actionCount === zone.actions.length, 'Action count must be equal', actionCount, zone.actions.length);
+				console.assert(
+					actionCount === zone.actions.length,
+					"Action count must be equal",
+					actionCount,
+					zone.actions.length
+				);
 				zone.actions.forEach((action: Action) => (action.enabled = !!stream.getUint32()));
 			}
 		}
@@ -173,7 +183,7 @@ class Reader {
 		stream.getUint32(); // field_18
 		stream.getUint32(); // field_1C
 		stream.getUint32(); // field_2
-		0
+		0;
 		stream.getInt16(); // x_
 		stream.getInt16(); // y_
 		stream.getInt16(); // field_3C

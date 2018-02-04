@@ -1,7 +1,7 @@
 import { Cell } from "src/ui/components";
 import { Tile } from "src/engine/objects";
-import { CSSTileSheet } from 'src/editor';
-import TileComponent from './tile';
+import { CSSTileSheet } from "src/editor";
+import TileComponent from "./tile";
 import "./inventory-row.scss";
 
 class InventoryRow extends Cell<Tile> {
@@ -38,7 +38,7 @@ class InventoryRow extends Cell<Tile> {
 	set data(tile: Tile) {
 		this._tile = tile;
 
-		this._icon.className = tile ? this.tileSheet.cssClassNameForTile(tile.id) : '';
+		this._icon.className = tile ? this.tileSheet.cssClassNameForTile(tile.id) : "";
 		this._label.innerText = tile ? tile.name : "";
 	}
 

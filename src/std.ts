@@ -1,4 +1,4 @@
-import './extension';
+import "./extension";
 
 export const global = (function() {
 	"use strict";

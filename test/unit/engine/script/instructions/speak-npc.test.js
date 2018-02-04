@@ -1,10 +1,6 @@
-import {
-	Instruction
-} from "src/engine/objects";
+import { Instruction } from "src/engine/objects";
 import SpeakNPC from "src/engine/script/instructions/speak-npc";
-import {
-	Point
-} from 'src/util';
+import { Point } from "src/util";
 
 describeInstruction("SpeakNPC", (execute, engine) => {
 	it("shows a speech bubble next to an npc", async done => {

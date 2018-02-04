@@ -10,7 +10,8 @@ export default <InstructionType>{
 	Opcode: 0x05,
 	Arguments: [Type.ZoneX, Type.ZoneY],
 	UsesText: true,
-	Description: "Show speech bubble at `arg_0`x`arg_1`. _Uses `text` attribute_. The characters `¢` and `¥` are used as placeholders for provided and required items of the current zone, respectively.",
+	Description:
+		"Show speech bubble at `arg_0`x`arg_1`. _Uses `text` attribute_. The characters `¢` and `¥` are used as placeholders for provided and required items of the current zone, respectively.",
 	Implementation: async (instruction: Instruction, engine: Engine, action: Action): Promise<Result> => {
 		const args = instruction.arguments;
 		return SpeakText(instruction.text, new Point(args[0], args[1]), engine);

@@ -35,7 +35,7 @@ import deg2rad from "./deg2rad";
 import DiscardingStorage from "./discarding-storage";
 import Event from "./event";
 import Scanner from "./scanner";
-import iterate from './iterate';
+import iterate from "./iterate";
 
 export {
 	Color,

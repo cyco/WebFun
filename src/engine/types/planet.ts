@@ -20,7 +20,10 @@ class Planet {
 	}
 
 	static isPlanet(number: number): boolean {
-		return number === -1 || number >= 0 && number < Planet.knownPlanets.length && Planet.knownPlanets[number] !== undefined;
+		return (
+			number === -1 ||
+			(number >= 0 && number < Planet.knownPlanets.length && Planet.knownPlanets[number] !== undefined)
+		);
 	}
 
 	static fromNumber(number: number): Planet {

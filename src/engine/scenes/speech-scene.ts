@@ -5,7 +5,7 @@ import { Point, Size } from "src/util";
 import { ModalSession } from "src/ux";
 import Engine from "../engine";
 import Scene from "./scene";
-import { WorldItem } from 'src/engine/generation';
+import { WorldItem } from "src/engine/generation";
 
 class SpeechScene extends Scene {
 	public engine: Engine;
@@ -45,7 +45,7 @@ class SpeechScene extends Scene {
 		this._bubble = bubble;
 	}
 
-	render() { }
+	render() {}
 
 	willShow() {
 		this.engine.inputManager.mouseDownHandler = (p: Point): void => null;
