@@ -1,4 +1,4 @@
-const times = function <T>(fn: ((i: number) => T)): T[] {
+const times = function<T>(fn: ((i: number) => T)): T[] {
 	const result = new Array(this);
 	for (let i = 0; i < this; i++) {
 		result[i] = fn(i);

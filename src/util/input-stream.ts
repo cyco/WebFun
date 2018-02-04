@@ -16,7 +16,7 @@ class InputStream extends Stream {
 		return this._arrayBuffer.byteLength;
 	}
 
-	public isAtEnd(){
+	public isAtEnd() {
 		return this.offset === this.length;
 	}
 

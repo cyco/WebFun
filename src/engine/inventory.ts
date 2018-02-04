@@ -1,6 +1,6 @@
 import { EventTarget } from "src/util";
 import { Tile } from "./objects";
-import Yoda from './yoda';
+import Yoda from "./yoda";
 
 export const Events = {
 	ItemsDidChange: "ItemsDidChange"

@@ -9,8 +9,7 @@ class LocatorTile {
 	static ForZone(zone: Zone, visited?: boolean) {
 		if (!zone) return 0x344;
 
-		if (visited === false || visited === undefined && !zone.visited && !Settings.revealWorld)
-			return 0x343;
+		if (visited === false || (visited === undefined && !zone.visited && !Settings.revealWorld)) return 0x343;
 
 		switch (zone.type) {
 			case ZoneType.Empty:

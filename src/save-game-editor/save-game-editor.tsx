@@ -1,13 +1,13 @@
 import { Window, List, Segment, SegmentControl } from "src/ui/components";
 import { SaveGameReader, SaveState } from "src/engine/save-game";
-import { InputStream , iterate} from "src/util";
+import { InputStream, iterate } from "src/util";
 import DataManager from "src/editor/data-manager";
 import { Planet, WorldSize } from "src/engine/types";
 import { AmmoControl, Tile as TileComponent, Map, InventoryRow } from "./components";
 import { Ammo, Health } from "src/app/ui";
 import { Tile } from "src/engine/objects";
 import { Yoda } from "src/engine";
-import {File} from 'src/std.dom';
+import { File } from "src/std.dom";
 
 import "./save-game-editor.scss";
 
@@ -39,7 +39,6 @@ class SaveGameEditor extends Window {
 		this._state = save;
 	}
 
-
 	private _presentState(state: SaveState) {
 		const node = this._buildNodes(state);
 		const oldSave = this._save;
@@ -49,53 +48,63 @@ class SaveGameEditor extends Window {
 	}
 
 	private _showSegment(segment: Segment): void {
-		Array.from(this._save.querySelectorAll('.content')).forEach((c:HTMLElement) => c.style.display = 'none');
-		const r = this._save.querySelector('.content.'+segment.textContent) as HTMLElement;
-		r.style.display = '';
+		Array.from(this._save.querySelectorAll(".content")).forEach((c: HTMLElement) => (c.style.display = "none"));
+		const r = this._save.querySelector(".content." + segment.textContent) as HTMLElement;
+		r.style.display = "";
 	}
 
 	private _buildNodes(state: SaveState) {
 		const currentWeapon = this._findWeaponFace(state.currentWeapon);
 		const tileSheet = this.gameDataManager.tileSheet;
 
-		return <div className="save">
-			<span className="seed"><label>Seed</label><input value={state.seed.toHex(4)} /></span>
-			<span className="planet"><label>Planet</label><input value={state.planet.name} /></span>
+		return (
+			<div className="save">
+				<span className="seed">
+					<label>Seed</label>
+					<input value={state.seed.toHex(4)} />
+				</span>
+				<span className="planet">
+					<label>Planet</label>
+					<input value={state.planet.name} />
+				</span>
 
-			<div className="current-weapon">
-				<TileComponent tile={currentWeapon} tileSheet={tileSheet} />
-				<AmmoControl vertical value={state.currentAmmo} />
+				<div className="current-weapon">
+					<TileComponent tile={currentWeapon} tileSheet={tileSheet} />
+					<AmmoControl vertical value={state.currentAmmo} />
+				</div>
+
+				<Health />
+
+				<SegmentControl onsegmentchange={(segment: Segment) => this._showSegment(segment)}>
+					<Segment selected>World</Segment>
+					<Segment>Dagobah</Segment>
+					<Segment>Inventory</Segment>
+					<Segment>Score</Segment>
+				</SegmentControl>
+
+				<Map
+					className="content World"
+					dataProvider={this._gameDataManager}
+					world={state.world}
+					location={!state.onDagobah ? state.positionOnWorld : null}
+				/>
+
+				<Map
+					className="content Dagobah"
+					dataProvider={this._gameDataManager}
+					world={state.dagobah}
+					location={state.onDagobah ? state.positionOnWorld : null}
+				/>
+
+				<List
+					className="content Inventory inset-border-1px"
+					cell={<InventoryRow tileSheet={tileSheet} />}
+					items={Array.from(state.inventoryIDs).map(id => this._gameDataManager.currentData.tiles[id])}
+				/>
+
+				<div className="content Score inset-border-1px" />
 			</div>
-
-			<Health />
-
-			<SegmentControl onsegmentchange={(segment:Segment) => this._showSegment(segment)}>
-				<Segment selected>World</Segment>
-				<Segment>Dagobah</Segment>
-				<Segment>Inventory</Segment>
-				<Segment>Score</Segment>
-			</SegmentControl>
-
-			<Map
-				className='content World'
-				dataProvider={this._gameDataManager}
-				world={state.world}
-				location={!state.onDagobah ? state.positionOnWorld : null}
-				/>
-
-			<Map
-				className='content Dagobah'
-				dataProvider={this._gameDataManager}
-				world={state.dagobah}
-				location={state.onDagobah ? state.positionOnWorld : null}
-				/>
-
-			<List className="content Inventory inset-border-1px"
-					   cell={<InventoryRow tileSheet={tileSheet}/>}
-				      items={Array.from(state.inventoryIDs).map(id => this._gameDataManager.currentData.tiles[id])} />
-
-			<div className='content Score inset-border-1px' />
-		</div>;
+		);
 	}
 
 	private _buildTileComponent(tile: Tile): TileComponent {
@@ -113,10 +122,12 @@ class SaveGameEditor extends Window {
 	}
 
 	private _buildAmmoRow(tile: Tile, value: number, total: number) {
-		return <div className="ammo">
-			{this._buildTileComponent(tile)}
-			<AmmoControl vertical value={value} />
-		</div>;
+		return (
+			<div className="ammo">
+				{this._buildTileComponent(tile)}
+				<AmmoControl vertical value={value} />
+			</div>
+		);
 	}
 
 	private async _loadFile(file: File) {

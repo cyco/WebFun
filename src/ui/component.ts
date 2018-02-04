@@ -5,17 +5,17 @@ abstract class Component extends BabelHTMLElement {
 	public static observedAttributes: string[];
 	public static Options: any = undefined;
 
-	adoptedCallback(): void { }
+	adoptedCallback(): void {}
 
-	connectedCallback(): void { }
+	connectedCallback(): void {}
 
-	disconnectedCallback(): void { }
+	disconnectedCallback(): void {}
 
-	attributeChangedCallback(attributeName: string, oldValue: string, newValue: string): void { }
+	attributeChangedCallback(attributeName: string, oldValue: string, newValue: string): void {}
 }
 
 declare global {
-	module JSX {
+	namespace JSX {
 		export interface IntrinsicElements {
 			div: Partial<HTMLDivElement>;
 			label: Partial<HTMLLabelElement>;
@@ -25,7 +25,7 @@ declare global {
 			img: Partial<HTMLImageElement>;
 			i: Partial<HTMLElement>;
 		}
-		interface Element extends Component { }
+		interface Element extends Component {}
 		/*
 			interface ElementClass { }
 			interface HtmlElementInstance { }
