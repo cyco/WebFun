@@ -44,7 +44,9 @@
 			]
 		],
 		"plugins": [
-			"@babel/transform-regenerator", ["@babel/plugin-transform-react-jsx",
+			"@babel/transform-regenerator",
+			[
+				"@babel/plugin-transform-react-jsx",
 				{
 					"pragma": "WebFunJSX.render"
 				}
