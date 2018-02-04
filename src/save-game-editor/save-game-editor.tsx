@@ -59,8 +59,8 @@ class SaveGameEditor extends Window {
 		const tileSheet = this.gameDataManager.tileSheet;
 
 		return <div className="save">
-			<span><label>Seed</label><input value={state.seed.toHex(4)} /></span>
-			<span><label>Planet</label><input value={state.planet.name} /></span>
+			<span className="seed"><label>Seed</label><input value={state.seed.toHex(4)} /></span>
+			<span className="planet"><label>Planet</label><input value={state.planet.name} /></span>
 
 			<div className="current-weapon">
 				<TileComponent tile={currentWeapon} tileSheet={tileSheet} />
