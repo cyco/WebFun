@@ -5,6 +5,7 @@ const merge = require("webpack-merge");
 const UglifyJSPlugin = require("uglifyjs-webpack-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 const BaseConfig = require("./webpack.common");
 
@@ -12,7 +13,7 @@ module.exports = merge(BaseConfig, {
 	entry: Path.resolve(Paths.sourceRoot, "index.ts"),
 	devtool: "source-map",
 	output: {
-		filename: "webfun.js",
+		filename: "webfun.[hash].js",
 		path: Paths.buildRoot
 	},
 	devServer: {
@@ -22,6 +23,17 @@ module.exports = merge(BaseConfig, {
 		stats: "errors-only"
 	},
 	cache: false,
+	module: {
+		rules: [
+			{
+				test: /\.css$/,
+				use: ExtractTextPlugin.extract({
+					fallback: "style-loader",
+					use: "css-loader"
+				})
+			}
+		]
+	},
 	plugins: [
 		new CleanWebpackPlugin(Paths.buildRoot, {
 			root: Paths.projectRoot,
@@ -33,6 +45,7 @@ module.exports = merge(BaseConfig, {
 		new Webpack.DefinePlugin({
 			"process.env.NODE_ENV": JSON.stringify("production")
 		}),
+		new ExtractTextPlugin("webfun.[hash].css"),
 		new HtmlWebpackPlugin({ template: "./src/app/index.html" })
 	]
 });
