@@ -18,7 +18,7 @@ class TileComponent extends Component {
 		this._tile = tile;
 
 		let className = "";
-		if (this._tile && this.tileSheet) {
+		if (this._tile && this._tileSheet) {
 			className = this.tileSheet.cssClassNameForTile(this.tile.id);
 		}
 		this._image.className = className;
