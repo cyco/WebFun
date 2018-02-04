@@ -1,4 +1,4 @@
-import { Cell, IconButton } from "src/ui/components";
+import { Cell, IconButton, Selector } from "src/ui/components";
 import { Tile } from "src/engine/objects";
 import { CSSTileSheet } from "src/editor";
 import TileComponent from "./tile";
@@ -7,14 +7,24 @@ import "./inventory-row.scss";
 class InventoryRow extends Cell<Tile> {
 	public static TagName = "wf-save-game-editor-inventory-row";
 	private _icon: TileComponent = <TileComponent /> as TileComponent;
-	private _label = <span />;
+	private _label = (
+		<Selector
+			borderless
+			onchange={() =>
+				(this.data = this.tiles.find(t => t.id === +this._label.value))
+			}
+		/>
+	) as Selector;
 	private _tile: Tile;
 	public ondelete: (row: InventoryRow) => void;
 	public onadd: () => void;
+	public tiles: Tile[];
 
 	connectedCallback() {
 		super.connectedCallback();
 		if (this.data) {
+			this.tiles.forEach(t => this._label.addOption(t.name, `${t.id}`));
+			this._label.value = `${this.data.id}`;
 			this.appendChild(this._icon);
 			this.appendChild(this._label);
 
@@ -44,6 +54,7 @@ class InventoryRow extends Cell<Tile> {
 		copy.onadd = this.onadd;
 		copy.tileSheet = this.tileSheet;
 		copy.data = this.data;
+		copy.tiles = this.tiles;
 
 		return copy;
 	}
@@ -54,9 +65,9 @@ class InventoryRow extends Cell<Tile> {
 
 	set data(tile: Tile) {
 		this._tile = tile;
+		this._label.value = `${this.data && this.data.id}`;
 
 		this._icon.className = tile ? this.tileSheet.cssClassNameForTile(tile.id) : "";
-		this._label.innerText = tile ? tile.name : "";
 	}
 
 	set tileSheet(sheet: CSSTileSheet) {
