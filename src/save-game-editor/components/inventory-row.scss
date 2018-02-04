@@ -8,6 +8,19 @@ wf-save-game-editor-inventory-row {
 	flex-shrink: 0;
 	flex-grow: 0;
 
+	wf-icon-button.new {
+		position: relative;
+		width: 100%;
+		text-align: center;
+		cursor: pointer;
+		margin-top: 5px;
+
+		i {
+			font-size: 1.3em !important;
+			color: rgba(135, 135, 135, 0.6);
+		}
+	}
+
 	> wf-save-game-editor-tile {
 		@include inset-border-inverted(1px);
 		position: relative;
@@ -35,7 +48,7 @@ wf-save-game-editor-inventory-row {
 		margin-left: 0;
 	}
 
-	wf-icon-button {
+	wf-icon-button.remove {
 		display: none;
 		float: right;
 		position: relative;

@@ -3,7 +3,13 @@ import { SaveGameReader, SaveState } from "src/engine/save-game";
 import { InputStream, iterate } from "src/util";
 import DataManager from "src/editor/data-manager";
 import { Planet, WorldSize } from "src/engine/types";
-import { AmmoControl, Tile as TileComponent, Map, InteractiveHealth as Health, InventoryRow } from "./components";
+import {
+	AmmoControl,
+	Tile as TileComponent,
+	Map,
+	InteractiveHealth as Health,
+	InventoryRow
+} from "./components";
 import { Ammo } from "src/app/ui";
 import { Tile, PuzzleType } from "src/engine/objects";
 import { Yoda } from "src/engine";
@@ -48,8 +54,12 @@ class SaveGameEditor extends Window {
 	}
 
 	private _showSegment(segment: Segment): void {
-		Array.from(this._save.querySelectorAll(".content")).forEach((c: HTMLElement) => (c.style.display = "none"));
-		const r = this._save.querySelector(".content." + segment.textContent) as HTMLElement;
+		Array.from(this._save.querySelectorAll(".content")).forEach(
+			(c: HTMLElement) => (c.style.display = "none")
+		);
+		const r = this._save.querySelector(
+			".content." + segment.textContent
+		) as HTMLElement;
 		r.style.display = "";
 	}
 
@@ -66,6 +76,7 @@ class SaveGameEditor extends Window {
 					<label>Seed</label>
 					<input value={state.seed.toHex(4)} />
 				</span>
+
 				<span className="planet">
 					<label>Planet</label>
 					<input value={state.planet.name} />
@@ -80,7 +91,9 @@ class SaveGameEditor extends Window {
 
 				<span className="mission">{missionStatement}</span>
 
-				<SegmentControl onsegmentchange={(segment: Segment) => this._showSegment(segment)}>
+				<SegmentControl
+					onsegmentchange={(segment: Segment) => this._showSegment(segment)}
+				>
 					<Segment selected>World</Segment>
 					<Segment>Dagobah</Segment>
 					<Segment>Inventory</Segment>
@@ -105,10 +118,14 @@ class SaveGameEditor extends Window {
 					cell={
 						<InventoryRow
 							tileSheet={tileSheet}
-							ondelete={(row: InventoryRow) => this._removeInventoryRow(row)}
+							ondelete={(row: InventoryRow) =>
+								this._removeInventoryRow(row)
+							}
 						/>
 					}
-					items={Array.from(state.inventoryIDs).map(id => this._gameDataManager.currentData.tiles[id])}
+					items={Array.from(state.inventoryIDs)
+						.map(id => this._gameDataManager.currentData.tiles[id])
+						.concat([null])}
 				/>
 			</div>
 		);
