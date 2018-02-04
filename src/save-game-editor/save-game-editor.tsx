@@ -5,7 +5,7 @@ import DataManager from "src/editor/data-manager";
 import { Planet, WorldSize } from "src/engine/types";
 import { AmmoControl, Tile as TileComponent, Map, InteractiveHealth as Health, InventoryRow } from "./components";
 import { Ammo } from "src/app/ui";
-import { Tile } from "src/engine/objects";
+import { Tile, PuzzleType } from "src/engine/objects";
 import { Yoda } from "src/engine";
 import { File } from "src/std.dom";
 
@@ -57,6 +57,9 @@ class SaveGameEditor extends Window {
 		const currentWeapon = this._findWeaponFace(state.currentWeapon);
 		const tileSheet = this.gameDataManager.tileSheet;
 
+		const puzzle = this.gameDataManager.currentData.puzzles[state.goalPuzzle];
+		const missionStatement = puzzle.strings[2];
+
 		return (
 			<div className="save">
 				<span className="seed">
@@ -74,6 +77,8 @@ class SaveGameEditor extends Window {
 				</div>
 
 				<Health health={state.livesLeft * 100 - state.damageTaken} />
+
+				<span className="mission">{missionStatement}</span>
 
 				<SegmentControl onsegmentchange={(segment: Segment) => this._showSegment(segment)}>
 					<Segment selected>World</Segment>

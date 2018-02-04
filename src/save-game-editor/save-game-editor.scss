@@ -17,7 +17,7 @@ wf-save-game-editor {
 
 		.content {
 			grid-column: 1 / 4;
-			grid-row: 4 / 5;
+			grid-row: 5 / 6;
 			width: 282px;
 			height: 282px;
 		}
@@ -32,6 +32,17 @@ wf-save-game-editor {
 			align-self: bottom;
 			grid-row: 1;
 			grid-column: 1;
+		}
+
+		.mission {
+			margin-top: 5px;
+			align-self: center;
+			grid-row: 3;
+			grid-column: 1 / 4;
+			text-align: center;
+			font-size: 0.95em;
+			max-width: 280px;
+			text-shadow: 0 2px 0 rgba(255, 255, 255, 0.4);
 		}
 
 		wf-save-game-editor-health {
