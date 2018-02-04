@@ -66,8 +66,7 @@ class InventoryRow extends Cell<Tile> {
 	set data(tile: Tile) {
 		this._tile = tile;
 		this._label.value = `${this.data && this.data.id}`;
-
-		this._icon.className = tile ? this.tileSheet.cssClassNameForTile(tile.id) : "";
+		this._icon.tile = tile;
 	}
 
 	set tileSheet(sheet: CSSTileSheet) {
