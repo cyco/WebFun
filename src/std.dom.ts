@@ -14,6 +14,7 @@ export const HTMLElement = global.HTMLElement;
 export const HTMLCollection = global.HTMLCollection;
 export const Event = global.Event;
 export const File = global.File;
+export const MouseEvent = global.MouseEvent;
 
 export { window };
 export const document = <Document>window.document;

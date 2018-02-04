@@ -7,9 +7,10 @@ import {
   AmmoControl,
   Tile as TileComponent,
   Map,
+  InteractiveHealth as Health,
   InventoryRow
 } from "./components";
-import { Ammo, Health } from "src/app/ui";
+import { Ammo } from "src/app/ui";
 import { Tile } from "src/engine/objects";
 import { Yoda } from "src/engine";
 import { File } from "src/std.dom";
