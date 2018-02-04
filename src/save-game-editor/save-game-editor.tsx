@@ -111,7 +111,7 @@ class SaveGameEditor extends Window {
           cell={
             <InventoryRow
               tileSheet={tileSheet}
-              ondelete={() => console.log("delete")}
+              ondelete={(row: InventoryRow) => this._removeInventoryRow(row)}
             />
           }
           items={Array.from(state.inventoryIDs).map(
@@ -120,6 +120,17 @@ class SaveGameEditor extends Window {
         />
       </div>
     );
+  }
+
+  private _removeInventoryRow(row: InventoryRow) {
+    const list = row.closest(List.TagName) as List<Tile>;
+    if (!row.parentElement) return;
+    const index = row.parentElement.children.indexOf(row);
+    if (index === -1) return;
+
+    const items = list.items;
+    items.splice(index, 1);
+    list.items = items;
   }
 
   private _buildTileComponent(tile: Tile): TileComponent {

@@ -9,7 +9,7 @@ class InventoryRow extends Cell<Tile> {
   private _icon: TileComponent = <TileComponent /> as TileComponent;
   private _label = <span />;
   private _tile: Tile;
-  public ondelete: (() => void);
+  public ondelete: ((row: InventoryRow) => void);
 
   connectedCallback() {
     super.connectedCallback();
@@ -18,7 +18,7 @@ class InventoryRow extends Cell<Tile> {
 
     if (this.ondelete instanceof Function) {
       this._label.appendChild(
-        <IconButton onclick={() => this.ondelete()} icon="trash" />
+        <IconButton onclick={() => this.ondelete(this)} icon="trash" />
       );
     }
   }
