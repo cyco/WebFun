@@ -1,40 +1,48 @@
 declare interface Node {
-	readonly isConnected: boolean;
+  readonly isConnected: boolean;
 }
 
 interface Array<T> {
-	first(): T | null;
-	last(): T | null;
-	contains(_: T): boolean;
-	shuffle(): T[];
+  first(): T | null;
+  last(): T | null;
+  contains(_: T): boolean;
+  shuffle(): T[];
 }
 
 interface Storage {
-	prefixedWith(s: string): Storage;
+  prefixedWith(s: string): Storage;
 }
 
 interface RegExpConstructor {
-	escape: (_: string) => string;
+  escape: (_: string) => string;
 }
 
 interface ObjectConstructor {
-	values: (thing: any) => any[];
+  values: (thing: any) => any[];
 }
 
 interface Object {
-	each<T>(callback: ((key: string, value: T) => void)): void;
+  each<T>(callback: ((key: string, value: T) => void)): void;
 }
 
 interface Document {
-	addEventListener(
-		event: "mouseup",
-		listener: (event: MouseEvent) => void,
-		options?: {
-			passive?: boolean;
-			once?: boolean;
-			capture?: boolean;
-		}
-	): void;
+  addEventListener(
+    event: "mouseup",
+    listener: (event: MouseEvent) => void,
+    options?: {
+      passive?: boolean;
+      once?: boolean;
+      capture?: boolean;
+    }
+  ): void;
+}
+
+interface NodeList {
+  indexOf(_: Node): number;
+}
+
+interface HTMLCollection {
+  indexOf(_: Node): number;
 }
 
 // by @ahejlsberg
@@ -42,7 +50,7 @@ interface Document {
 type JSONValue = string | number | boolean | JSONObject | JSONArray;
 
 interface JSONObject {
-	[x: string]: JSONValue;
+  [x: string]: JSONValue;
 }
 
 interface JSONArray extends Array<JSONValue> {}
