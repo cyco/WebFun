@@ -121,6 +121,7 @@ class SaveGameEditor extends Window {
 							ondelete={(row: InventoryRow) =>
 								this._removeInventoryRow(row)
 							}
+							onadd={() => this._addInventoryRow()}
 						/>
 					}
 					items={Array.from(state.inventoryIDs)
@@ -129,6 +130,17 @@ class SaveGameEditor extends Window {
 				/>
 			</div>
 		);
+	}
+
+	private _addInventoryRow() {
+		const tile = this._gameDataManager.currentData.tiles.find(
+			t => t.name && t.name.length !== 0
+		);
+		const list = this.querySelector(List.TagName) as List<Tile>;
+		list.items.splice(list.items.length - 1, 0, tile);
+		list.items = list.items;
+		const newRow = list.lastElementChild.lastElementChild as any;
+		newRow.scrollIntoViewIfNeeded && newRow.scrollIntoViewIfNeeded(true);
 	}
 
 	private _removeInventoryRow(row: InventoryRow) {

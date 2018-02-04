@@ -9,7 +9,8 @@ class InventoryRow extends Cell<Tile> {
 	private _icon: TileComponent = <TileComponent /> as TileComponent;
 	private _label = <span />;
 	private _tile: Tile;
-	public ondelete: ((row: InventoryRow) => void);
+	public ondelete: (row: InventoryRow) => void;
+	public onadd: () => void;
 
 	connectedCallback() {
 		super.connectedCallback();
@@ -32,12 +33,15 @@ class InventoryRow extends Cell<Tile> {
 	}
 
 	private _setupAsNewItem() {
-		this.appendChild(<IconButton className="new" icon="plus" />);
+		this.appendChild(
+			<IconButton className="new" icon="plus" onclick={() => this.onadd()} />
+		);
 	}
 
 	cloneNode(deep?: boolean): InventoryRow {
 		const copy = super.cloneNode(deep) as InventoryRow;
 		copy.ondelete = this.ondelete;
+		copy.onadd = this.onadd;
 		copy.tileSheet = this.tileSheet;
 		copy.data = this.data;
 
