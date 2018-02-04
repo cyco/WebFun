@@ -3,11 +3,12 @@ const Paths = require("./paths");
 
 module.exports = {
 	resolve: {
-		extensions: [".js", ".ts", ".tsx"],
+		extensions: [".js", ".ts", ".tsx", ".jsx"],
 		alias: {
 			src: Paths.sourceRoot,
 			std: Path.resolve(Paths.sourceRoot, "std"),
 			"std.dom": Path.resolve(Paths.sourceRoot, "std.dom"),
+			"std.math": Path.resolve(Paths.sourceRoot, "std.math"),
 			"std.webgl": Path.resolve(Paths.sourceRoot, "std.webgl"),
 			libs: Path.resolve(Paths.sourceRoot, "libs"),
 			"test-helpers": Path.resolve(Paths.projectRoot, "test/helpers"),
@@ -19,7 +20,6 @@ module.exports = {
 		unsafeCache: true
 	},
 	cache: true,
-	devtool: "inline-source-map",
 	plugins: [],
 	module: {
 		rules: [

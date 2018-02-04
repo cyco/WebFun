@@ -1,7 +1,7 @@
 const NodeExternals = require("webpack-node-externals");
+const BaseConfig = require("./webpack.common");
 
-const BaseConfig = require("./webpack.base");
-BaseConfig.externals = [NodeExternals()];
-BaseConfig.target = "node";
-
-module.exports = BaseConfig;
+module.exports = merge(BaseConfig, {
+	target: "node",
+	externals: [NodeExternals()]
+});
