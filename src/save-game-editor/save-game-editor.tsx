@@ -108,7 +108,12 @@ class SaveGameEditor extends Window {
 
         <List
           className="content Inventory inset-border-1px"
-          cell={<InventoryRow tileSheet={tileSheet} />}
+          cell={
+            <InventoryRow
+              tileSheet={tileSheet}
+              ondelete={() => console.log("delete")}
+            />
+          }
           items={Array.from(state.inventoryIDs).map(
             id => this._gameDataManager.currentData.tiles[id]
           )}
