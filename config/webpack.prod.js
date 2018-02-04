@@ -6,6 +6,8 @@ const UglifyJSPlugin = require("uglifyjs-webpack-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const CSSNano = require("cssnano");
 
 const BaseConfig = require("./webpack.common");
 
@@ -46,6 +48,10 @@ module.exports = merge(BaseConfig, {
 			"process.env.NODE_ENV": JSON.stringify("production")
 		}),
 		new ExtractTextPlugin("webfun.[hash].css"),
+		new OptimizeCssAssetsPlugin({
+			cssProcessor: CSSNano,
+			cssProcessorOptions: { discardComments: { removeAll: true } }
+		}),
 		new HtmlWebpackPlugin({ template: "./src/app/index.html" })
 	]
 });
