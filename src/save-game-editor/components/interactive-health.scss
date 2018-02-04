@@ -1,0 +1,10 @@
+@import "../../app/ui/health";
+
+wf-save-game-editor-health {
+	@extend wf-health;
+
+	svg,
+	svg * {
+		cursor: pointer;
+	}
+}

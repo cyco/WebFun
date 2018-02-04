@@ -8,8 +8,13 @@ wf-save-game-editor-ammo {
 	display: inline-block;
 	height: 12px;
 
+	&,
 	div {
-		@include fullsize(0px);
+		cursor: pointer;
+	}
+
+	div {
+		@include fullsize(0);
 		position: absolute;
 		background-color: $indicator-color;
 	}
