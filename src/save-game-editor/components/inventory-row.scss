@@ -32,7 +32,7 @@ wf-save-game-editor-inventory-row {
 		width: $tile-size;
 	}
 
-	> span {
+	> wf-selector {
 		@include inset-border-inverted(1px);
 		position: relative;
 		display: inline-block;

@@ -122,6 +122,9 @@ class SaveGameEditor extends Window {
 								this._removeInventoryRow(row)
 							}
 							onadd={() => this._addInventoryRow()}
+							tiles={this._gameDataManager.currentData.tiles.filter(
+								t => t.name && t.name.length
+							)}
 						/>
 					}
 					items={Array.from(state.inventoryIDs)
@@ -137,8 +140,12 @@ class SaveGameEditor extends Window {
 			t => t.name && t.name.length !== 0
 		);
 		const list = this.querySelector(List.TagName) as List<Tile>;
-		list.items.splice(list.items.length - 1, 0, tile);
-		list.items = list.items;
+		const rows = Array.from(
+			list.querySelectorAll(InventoryRow.TagName)
+		) as InventoryRow[];
+		const items = rows.map(t => t.data);
+		items.splice(items.length - 1, 0, tile);
+		list.items = items;
 		const newRow = list.lastElementChild.lastElementChild as any;
 		newRow.scrollIntoViewIfNeeded && newRow.scrollIntoViewIfNeeded(true);
 	}
@@ -149,7 +156,10 @@ class SaveGameEditor extends Window {
 		const index = row.parentElement.children.indexOf(row);
 		if (index === -1) return;
 
-		const items = list.items;
+		const rows = Array.from(
+			list.querySelectorAll(InventoryRow.TagName)
+		) as InventoryRow[];
+		const items = rows.map(t => t.data);
 		items.splice(index, 1);
 		list.items = items;
 	}
