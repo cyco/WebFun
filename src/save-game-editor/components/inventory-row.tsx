@@ -13,12 +13,26 @@ class InventoryRow extends Cell<Tile> {
 
 	connectedCallback() {
 		super.connectedCallback();
-		this.appendChild(this._icon);
-		this.appendChild(this._label);
+		if (this.data) {
+			this.appendChild(this._icon);
+			this.appendChild(this._label);
 
-		if (this.ondelete instanceof Function) {
-			this._label.appendChild(<IconButton onclick={() => this.ondelete(this)} icon="trash" />);
+			if (this.ondelete instanceof Function) {
+				this._label.appendChild(
+					<IconButton
+						className="remove"
+						onclick={() => this.ondelete(this)}
+						icon="trash"
+					/>
+				);
+			}
+		} else {
+			this._setupAsNewItem();
 		}
+	}
+
+	private _setupAsNewItem() {
+		this.appendChild(<IconButton className="new" icon="plus" />);
 	}
 
 	cloneNode(deep?: boolean): InventoryRow {
