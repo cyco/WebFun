@@ -8,34 +8,18 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const CSSNano = require("cssnano");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 const BaseConfig = require("./webpack.common");
 
 module.exports = merge(BaseConfig, {
-	entry: Path.resolve(Paths.sourceRoot, "index.ts"),
+	entry: Path.resolve(Paths.sourceRoot, "app/main.ts"),
 	devtool: "source-map",
 	output: {
-		filename: "webfun.[hash].js",
+		filename: "webfun.js",
 		path: Paths.buildRoot
 	},
-	devServer: {
-		publicPath: "/",
-		contentBase: Paths.buildRoot,
-		hot: true,
-		stats: "errors-only"
-	},
 	cache: false,
-	module: {
-		rules: [
-			{
-				test: /\.css$/,
-				use: ExtractTextPlugin.extract({
-					fallback: "style-loader",
-					use: "css-loader"
-				})
-			}
-		]
-	},
 	plugins: [
 		new CleanWebpackPlugin(Paths.buildRoot, {
 			root: Paths.projectRoot,
@@ -47,11 +31,47 @@ module.exports = merge(BaseConfig, {
 		new Webpack.DefinePlugin({
 			"process.env.NODE_ENV": JSON.stringify("production")
 		}),
-		new ExtractTextPlugin("webfun.[hash].css"),
+		new ExtractTextPlugin("webfun.css"),
 		new OptimizeCssAssetsPlugin({
 			cssProcessor: CSSNano,
 			cssProcessorOptions: { discardComments: { removeAll: true } }
 		}),
-		new HtmlWebpackPlugin({ template: "./src/app/index.html" })
-	]
+		new HtmlWebpackPlugin({ template: "./src/app/index.html" }),
+
+		new CopyWebpackPlugin([
+			{
+				from: Path.resolve(Paths.assetsRoot, "game-data"),
+				to: "game-data"
+			}
+		])
+	],
+	module: {
+		rules: [
+			{
+				/* Styles */
+				test: /\.scss$/,
+				exclude: /node_modules/,
+				use: ExtractTextPlugin.extract({
+					fallback: "style-loader",
+					use: [
+						{
+							loader: "css-loader",
+							options: {
+								minimize: true
+							}
+						},
+						{
+							loader: "sass-loader",
+							options: {
+								includePaths: [
+									Path.resolve(Paths.sourceRoot, "_style"),
+									"./"
+								]
+							}
+						}
+					]
+				})
+			}
+		]
+	}
 });
