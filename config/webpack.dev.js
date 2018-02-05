@@ -31,6 +31,9 @@ module.exports = merge(BaseConfig, {
 				exclude: /node_modules/,
 				use: [
 					{
+						loader: "style-loader"
+					},
+					{
 						loader: "css-loader",
 						options: {
 							minimize: true
