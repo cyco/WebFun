@@ -8,6 +8,7 @@ const toolsRootBin = Path.resolve(toolsRoot, "bin");
 const buildRoot = Path.resolve(projectRoot, "build");
 const configRoot = Path.resolve(projectRoot, "config");
 const coverageRoot = Path.resolve(testRoot, "coverage");
+const assetsRoot = Path.resolve(projectRoot, "assets");
 
 module.exports = {
 	projectRoot,
@@ -17,5 +18,6 @@ module.exports = {
 	toolsRootBin,
 	buildRoot,
 	configRoot,
-	coverageRoot
+	coverageRoot,
+	assetsRoot
 };

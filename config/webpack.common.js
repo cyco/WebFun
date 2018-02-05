@@ -21,20 +21,24 @@ module.exports = {
 		unsafeCache: true
 	},
 	cache: true,
+	stats: "errors-only",
 	plugins: [],
 	module: {
 		rules: [
 			{
-				/* JavaScript / Babel */
-				test: /\.jsx?$/,
-				loader: "babel-loader",
-				exclude: ["node_modules"]
+				/* HACK: Uglify can't handle KaitaiStream's backticks */
+				test: /KaitaiStream\.js$/,
+				loader: "babel-loader"
 			},
 			{
-				/* TypeScript */
+				test: /\.jsx?$/,
+				exclude: /node_modules/,
+				loader: "babel-loader"
+			},
+			{
 				test: /\.tsx?$/,
+				exclude: /node_modules/,
 				loader: "awesome-typescript-loader",
-				exclude: ["node_modules"],
 				options: {
 					configFileName: Path.resolve(Paths.configRoot, "tsconfig.json"),
 					silent: true,
@@ -42,58 +46,29 @@ module.exports = {
 				}
 			},
 			{
-				/* Styles */
-				test: /\.scss$/,
-				use: ExtractTextPlugin.extract({
-					fallback: "style-loader",
-					use: [
-						{
-							loader: "css-loader",
-							options: {
-								minimize: true
-							}
-						},
-						{
-							loader: "sass-loader",
-							options: {
-								includePaths: [
-									Path.resolve(Paths.sourceRoot, "_style"),
-									"./"
-								]
-							}
-						}
-					]
-				}),
-				exclude: ["node_modules"]
-			},
-			{
-				/* Shader */
 				test: /\.glsl?$/,
 				loader: "webpack-glsl-loader",
-				exclude: ["node_modules"]
+				exclude: /node_modules/
 			},
 			{
-				/* Kaitai-Struct definitions */
 				test: /\.ksy$/,
-				loader: "kaitai-struct-loader",
-				exclude: ["node_modules"]
+				exclude: /node_modules/,
+				loader: "kaitai-struct-loader"
 			},
 			{
-				/** fonts **/
 				test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+				exclude: /node_modules/,
 				loader: "url-loader",
 				options: {
 					limit: 10000,
 					mimetype: "application/font-woff"
-				},
-				exclude: ["node_modules"]
+				}
 			},
 			{
 				test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-				loader: "file-loader",
-				exclude: ["node_modules"]
+				exclude: /node_modules/,
+				loader: "file-loader"
 			}
 		]
-	},
-	stats: "errors-only"
+	}
 };
