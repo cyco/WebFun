@@ -9,6 +9,7 @@
       "webpack --optimize-minimize --config config/webpack.prod.js --progress",
     "build:cont": "webpack --config config/webpack.dev.js --watch",
     "start": "webpack-dev-server --config config/webpack.dev.js",
+    "start:sge": "webpack-dev-server --config config/webpack.save-game-editor.dev.js",
     "test": "karma start config/karma.conf.js --single-run",
     "test:cont": "karma start config/karma.conf.js",
     "test:cov": "cross-env coverage=1 karma start config/karma.conf.js --single-run",
