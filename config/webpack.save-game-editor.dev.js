@@ -7,11 +7,11 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const BaseConfig = require("./webpack.common");
 
 module.exports = merge(BaseConfig, {
-	entry: Path.resolve(Paths.sourceRoot, "app/main.ts"),
+	entry: Path.resolve(Paths.sourceRoot, "save-game-editor/main.ts"),
 
 	devtool: "inline-source-map",
 	output: {
-		filename: "webfun.js",
+		filename: "save-game-editor.js",
 		path: Paths.buildRoot
 	},
 	devServer: {
