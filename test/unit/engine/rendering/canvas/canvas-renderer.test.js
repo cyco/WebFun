@@ -23,7 +23,7 @@ describe("CanvasRenderer", () => {
 	});
 
 	it("sets up the context for pixelated rendering", () => {
-		expect(context.globalCompositeOperation).toBe("copy");
+		expect(context.globalCompositeOperation).toBe("source-over");
 		expect(context.webkitImageSmoothingEnabled).toBeFalse();
 	});
 
