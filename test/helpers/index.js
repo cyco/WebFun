@@ -1,6 +1,7 @@
 import "@babel/polyfill";
 
 import "src/extension";
+import { console } from "src/std";
 import { describeComponent, fdescribeComponent, xdescribeComponent } from "./component";
 import "./matchers";
 import render from "./render";
@@ -26,3 +27,7 @@ global.fdescribeCondition = fdescribeCondition;
 global.describeInstruction = describeInstruction;
 global.xdescribeInstruction = xdescribeInstruction;
 global.fdescribeInstruction = fdescribeInstruction;
+
+console.assert = (condition, message) => {
+	if (!condition) throw message;
+};
