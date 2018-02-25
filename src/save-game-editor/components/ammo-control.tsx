@@ -25,7 +25,10 @@ class AmmoControl extends Component implements EventListenerObject {
 
 		if (event.type === "mousedown") {
 			document.addEventListener("mousemove", this, { capture: true } as any);
-			document.addEventListener("mouseup", this, { once: true, capture: true } as any);
+			document.addEventListener("mouseup", this, {
+				once: true,
+				capture: true
+			} as any);
 		}
 
 		const { clientX, clientY } = event;
@@ -45,7 +48,10 @@ class AmmoControl extends Component implements EventListenerObject {
 
 		this.removeEventListener("mouseup", this);
 		document.removeEventListener("mousemove", this, { capture: true } as any);
-		document.removeEventListener("mouseup", this, { once: true, capture: true } as any);
+		document.removeEventListener("mouseup", this, {
+			once: true,
+			capture: true
+		} as any);
 	}
 
 	set vertical(flag: boolean) {

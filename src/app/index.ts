@@ -1,1 +1,3 @@
-console.log("index");
+import GameController from "./game-controller";
+
+export { GameController };

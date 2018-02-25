@@ -36,8 +36,10 @@ import DiscardingStorage from "./discarding-storage";
 import Event from "./event";
 import Scanner from "./scanner";
 import iterate from "./iterate";
+import Ajax from "./ajax";
 
 export {
+	Ajax,
 	Color,
 	add,
 	deg2rad,

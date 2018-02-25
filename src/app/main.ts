@@ -9,7 +9,7 @@ import * as WindowComponents from "./windows";
 import Settings, { loadSettings } from "src/settings";
 import { initialize as initializeDebug } from "src/debug";
 import { initialize as initializeEditor } from "src/editor";
-import SaveGameEditor from "src/save-game-editor/save-game-editor";
+import { SaveGameEditor, initialize as initializeSaveGameEditor } from "src/save-game-editor";
 import DataManager from "src/editor/data-manager";
 import { GameData, ColorPalette } from "src/engine";
 import { InputStream } from "src/util";
@@ -38,6 +38,10 @@ const main = () => {
 
 	if (Settings.editor) {
 		initializeEditor(gameController);
+	}
+
+	if (Settings.saveGameEditor) {
+		initializeSaveGameEditor(gameController);
 	}
 };
 

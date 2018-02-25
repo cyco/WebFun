@@ -16,7 +16,9 @@ if (babelLoader) {
 	babelLoader.options.plugins.push("@babel/transform-runtime");
 }
 
-const atLoader = BaseConfig.module.rules.find(({ loader }) => loader === "awesome-typescript-loader");
+const atLoader = BaseConfig.module.rules.find(
+	({ loader }) => loader === "awesome-typescript-loader"
+);
 if (atLoader) {
 	atLoader.options = atLoader.options || {};
 	atLoader.options.babelOptions = atLoader.options.babelOptions || {};

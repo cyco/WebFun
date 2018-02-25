@@ -50,18 +50,35 @@ export default (gameController: GameController) => ({
 
 						editor.addInspector("tile", new TileInspector(state.prefixedWith("tile")));
 						editor.addInspector("zone", new ZoneInspector(state.prefixedWith("zone")));
-						editor.addInspector("sound", new SoundInspector(state.prefixedWith("sound")));
-						editor.addInspector("puzzle", new PuzzleInspector(state.prefixedWith("puzzle")));
-						editor.addInspector("character", new CharacterInspector(state.prefixedWith("character")));
-						editor.addInspector("setup-image", new SetupImageInspector(state.prefixedWith("setup-image")));
-						editor.addInspector("palette", new PaletteInspector(state.prefixedWith("palette")));
+						editor.addInspector(
+							"sound",
+							new SoundInspector(state.prefixedWith("sound"))
+						);
+						editor.addInspector(
+							"puzzle",
+							new PuzzleInspector(state.prefixedWith("puzzle"))
+						);
+						editor.addInspector(
+							"character",
+							new CharacterInspector(state.prefixedWith("character"))
+						);
+						editor.addInspector(
+							"setup-image",
+							new SetupImageInspector(state.prefixedWith("setup-image"))
+						);
+						editor.addInspector(
+							"palette",
+							new PaletteInspector(state.prefixedWith("palette"))
+						);
 
-						const setupData = (g: GameData, p: ColorPalette) => (editor.data = new DataManager(g, p));
+						const setupData = (g: GameData, p: ColorPalette) =>
+							(editor.data = new DataManager(g, p));
 						if (gameController.isDataLoaded()) {
 							setupData(gameController.data, gameController.palette);
 						} else {
-							gameController.addEventListener(GameController.Event.DidLoadData, (e: CustomEvent) =>
-								setupData(e.detail.data, e.detail.palette)
+							gameController.addEventListener(
+								GameController.Event.DidLoadData,
+								(e: CustomEvent) => setupData(e.detail.data, e.detail.palette)
 							);
 						}
 
@@ -81,8 +98,9 @@ export default (gameController: GameController) => ({
 				if (gameController.isDataLoaded()) {
 					setupData(gameController.data, gameController.palette);
 				} else {
-					gameController.addEventListener(GameController.Event.DidLoadData, (e: CustomEvent) =>
-						setupData(e.detail.data, e.detail.palette)
+					gameController.addEventListener(
+						GameController.Event.DidLoadData,
+						(e: CustomEvent) => setupData(e.detail.data, e.detail.palette)
 					);
 				}
 			})
@@ -91,9 +109,11 @@ export default (gameController: GameController) => ({
 			SettingsAction("Edit Save Game", () => {
 				const setupData = async (g: GameData, p: ColorPalette) => {
 					const files = await FilePicker.Pick({ allowsMultipleFiles: true });
-
+					console.log("setup save game data");
 					files.forEach(file => {
-						const saveGameEditor = <SaveGameEditor>document.createElement(SaveGameEditor.TagName);
+						const saveGameEditor = <SaveGameEditor>document.createElement(
+							SaveGameEditor.TagName
+						);
 						saveGameEditor.gameDataManager = new DataManager(g, p);
 						saveGameEditor.file = file;
 						WindowManager.defaultManager.showWindow(saveGameEditor);
@@ -103,8 +123,9 @@ export default (gameController: GameController) => ({
 				if (gameController.isDataLoaded()) {
 					setupData(gameController.data, gameController.palette);
 				} else {
-					gameController.addEventListener(GameController.Event.DidLoadData, (e: CustomEvent) =>
-						setupData(e.detail.data, e.detail.palette)
+					gameController.addEventListener(
+						GameController.Event.DidLoadData,
+						(e: CustomEvent) => setupData(e.detail.data, e.detail.palette)
 					);
 				}
 			})

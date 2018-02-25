@@ -27,7 +27,7 @@ class Inventory extends EventTarget {
 		if (item.id === Yoda.ItemIDs.Locator) {
 			index = 0;
 		}
-		this._items.splice(0, 0, item);
+		this._items.splice(index, 0, item);
 		this.dispatchEvent(Events.ItemsDidChange, {
 			mode: "add",
 			item: item
@@ -52,7 +52,8 @@ class Inventory extends EventTarget {
 
 	contains(item: Tile | number): boolean {
 		if (typeof item === "number") {
-			for (let i = 0, len = this._items.length; i < len; i++) if (this._items[i].id === item) return true;
+			for (let i = 0, len = this._items.length; i < len; i++)
+				if (this._items[i].id === item) return true;
 		} else {
 			return this._items.indexOf(item) !== -1;
 		}

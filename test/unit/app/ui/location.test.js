@@ -2,7 +2,7 @@ import Location, { Direction } from "src/app/ui/location";
 
 describeComponent(Location, () => {
 	let subject;
-	beforeAll(() => (subject = render(Location)));
+	beforeEach(() => (subject = render(Location)));
 
 	it("shows which adjacent zones can be accessed, by default all directions are inaccessible", () => {
 		expect(subject.mask).toBe(Direction.None);
@@ -15,7 +15,8 @@ describeComponent(Location, () => {
 		});
 
 		it("can deactivate the left arrow", () => {
-			subject.mask ^= Direction.West;
+			subject.mask = Direction.West;
+			subject.mask &= ~Direction.West;
 			expect(subject._svg.classList).not.toContain("left");
 		});
 
@@ -25,7 +26,8 @@ describeComponent(Location, () => {
 		});
 
 		it("can deactivate the down arrow", () => {
-			subject.mask ^= Direction.South;
+			subject.mask = Direction.South;
+			subject.mask &= ~Direction.South;
 			expect(subject._svg.classList).not.toContain("down");
 		});
 
@@ -35,7 +37,8 @@ describeComponent(Location, () => {
 		});
 
 		it("can deactivate the right arrow", () => {
-			subject.mask ^= Direction.East;
+			subject.mask = Direction.East;
+			subject.mask &= ~Direction.East;
 			expect(subject._svg.classList).not.toContain("right");
 		});
 
@@ -45,7 +48,8 @@ describeComponent(Location, () => {
 		});
 
 		it("can deactivate the up arrow", () => {
-			subject.mask ^= Direction.North;
+			subject.mask = Direction.North;
+			subject.mask &= ~Direction.North;
 			expect(subject._svg.classList).not.toContain("up");
 		});
 	});

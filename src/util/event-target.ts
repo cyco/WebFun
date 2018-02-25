@@ -43,7 +43,7 @@ class EventTarget_not_builtin {
 						detail: detail
 					});
 
-		if ((<any>this)["on" + type] instanceof Function && (<any>this)["on" + type](event) === false) return;
+		(<any>this)["on" + type] instanceof Function && (<any>this)["on" + type](event);
 
 		let listeners = this.listeners[type instanceof Event ? event.type : type];
 		for (let i in listeners) {

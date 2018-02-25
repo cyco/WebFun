@@ -1,4 +1,5 @@
 import { default as Inventory, Events } from "src/engine/inventory";
+import { Yoda } from "src/engine";
 
 describe("Inventory", () => {
 	let inventory = null;
@@ -46,11 +47,16 @@ describe("Inventory", () => {
 		inventory.addItem({ id: 4 });
 
 		let enumeratedItemIds = [];
-		inventory.forEach(function(item) {
-			enumeratedItemIds.push(item.id);
-		});
-
+		inventory.forEach(item => enumeratedItemIds.push(item.id));
 		expect(enumeratedItemIds).toEqual([3, 4]);
+	});
+
+	it("keeps the locator on top", () => {
+		inventory.addItem({ id: 3 });
+		inventory.addItem({ id: 4 });
+		inventory.addItem({ id: Yoda.ItemIDs.Locator });
+
+		expect(inventory._items[0].id).toEqual(Yoda.ItemIDs.Locator);
 	});
 
 	describe("Events", () => {

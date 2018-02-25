@@ -16,7 +16,9 @@ class Map extends Component {
 	public world: World;
 	public dataProvider: DataManager;
 	public location: Point;
-	private _canvas: HTMLCanvasElement = (<canvas width={280} height={280} /> as any) as HTMLCanvasElement;
+	private _canvas: HTMLCanvasElement = ((
+		<canvas width={280} height={280} />
+	) as any) as HTMLCanvasElement;
 	private _imageMap: { [_: number]: Image };
 	private _renderer: Renderer;
 	private _here: HTMLElement;
@@ -45,7 +47,13 @@ class Map extends Component {
 	private _buildURHere() {
 		if (!this.location) return;
 
-		this._here = <div className={"here " + this.dataProvider.tileSheet.cssClassNameForTile(LocatorTile.Here)} />;
+		this._here = (
+			<div
+				className={
+					"here " + this.dataProvider.tileSheet.cssClassNameForTile(LocatorTile.Here)
+				}
+			/>
+		);
 
 		this._here.style.left = `${this.location.x * TileSize}px`;
 		this._here.style.top = `${this.location.y * TileSize}px`;
