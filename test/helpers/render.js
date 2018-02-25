@@ -1,5 +1,5 @@
 export default (text, attributes = {}, flags = []) => {
-	const id = "WebFun Container";
+	const id = "WebFun Test Container";
 	let container = document.getElementById(id);
 	if (!container) {
 		container = document.createElement("div");

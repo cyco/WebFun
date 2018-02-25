@@ -29,7 +29,9 @@ if (!process.browser) {
 	const path = require("path");
 
 	getFixtureContent = name => {
-		return fs.readFileSync(path.resolve("./assets/game-data") + "/" + name, { encoding: "utf8" });
+		return fs.readFileSync(path.resolve("./assets/game-data") + "/" + name, {
+			encoding: "utf8"
+		});
 	};
 
 	getFixtureData = (name, callback) => {

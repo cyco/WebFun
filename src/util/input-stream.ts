@@ -1,4 +1,5 @@
 import Stream from "./stream";
+import { ArrayBuffer, DataView } from "src/std";
 
 class InputStream extends Stream {
 	private _arrayBuffer: ArrayBuffer;
@@ -20,8 +21,10 @@ class InputStream extends Stream {
 		return this.offset === this.length;
 	}
 
-	_makeArrayBuffer(data: ArrayBuffer | string) {
-		if (data instanceof ArrayBuffer) return data;
+	_makeArrayBuffer(data: ArrayBuffer | string): ArrayBuffer {
+		if (typeof data !== "string") {
+			return data;
+		}
 
 		if (typeof data === "string") {
 			let binaryString = atob(data);

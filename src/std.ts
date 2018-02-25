@@ -1,5 +1,3 @@
-import "./extension";
-
 export const global = (function() {
 	"use strict";
 	let get = eval;
@@ -11,7 +9,9 @@ if (!global.window) {
 export const setTimeout = global.setTimeout;
 export const console = global.console;
 export const Array = global.Array;
+export const ArrayBuffer = global.ArrayBuffer;
 export const Promise = global.Promise;
+export const DataView = global.DataView;
 export const Uint8Array = global.Uint8Array;
 export const requestAnimationFrame = global.requestAnimationFrame;
 export const cancelAnimationFrame = global.cancelAnimationFrame;

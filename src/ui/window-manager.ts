@@ -39,7 +39,8 @@ class WindowManager {
 		const window = <Window>e.target;
 
 		window.manager = null;
-		this._windows.splice(this._windows.indexOf(window), 1);
+		const index = this._windows.indexOf(window);
+		if (index !== -1) this._windows.splice(index, 1);
 		if (window === this._topMostWindow) {
 			const newTopMostWindow = this._windows.reduce((a: Window, b: Window) => {
 				if (!a) return b;

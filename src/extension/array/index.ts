@@ -1,6 +1,5 @@
 import clear from "./clear";
 import contains from "./contains";
-import erase from "./erase";
 import first from "./first";
 import flatten from "./flatten";
 import from from "./from";
@@ -13,4 +12,18 @@ import shuffle from "./shuffle";
 import unique from "./unique";
 import padEnd from "./pad-end";
 
-export { padEnd, clear, contains, erase, first, flatten, from, insert, last, repeat, resize, rest, shuffle, unique };
+export {
+	padEnd,
+	clear,
+	contains,
+	first,
+	flatten,
+	from,
+	insert,
+	last,
+	repeat,
+	resize,
+	rest,
+	shuffle,
+	unique
+};

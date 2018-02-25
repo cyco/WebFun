@@ -10,15 +10,19 @@ import InstructionType from "../instruction";
 export default <InstructionType>{
 	Opcode: 0x21,
 	Arguments: [Type.ZoneID, Type.ZoneX, Type.ZoneY],
-	Description: "Change current zone to `arg_0`. Hero will be placed at `arg_1`x`arg_2` in the new zone.",
-	Implementation: async (instruction: Instruction, engine: Engine, action: Action): Promise<Result> => {
+	Description:
+		"Change current zone to `arg_0`. Hero will be placed at `arg_1`x`arg_2` in the new zone.",
+	Implementation: async (
+		instruction: Instruction,
+		engine: Engine,
+		action: Action
+	): Promise<Result> => {
 		const args = instruction.arguments;
 
 		const transitionScene = new TransitionScene();
 		transitionScene.type = TransitionScene.TRANSITION_TYPE.ROOM;
 		transitionScene.targetHeroLocation = new Point(args[1], args[2]);
 		transitionScene.targetZone = engine.data.zones[args[0]];
-		console.assert(engine.sceneManager.currentScene instanceof ZoneScene);
 		transitionScene.scene = <ZoneScene>engine.sceneManager.currentScene;
 
 		let world = engine.dagobah;

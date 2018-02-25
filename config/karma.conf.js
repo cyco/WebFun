@@ -1,6 +1,6 @@
 const Path = require("path");
 const Webpack = require("webpack");
-const webpackConfig = require("./webpack.config.js");
+const webpackConfig = require("./webpack.test.js");
 
 const Paths = require("./paths");
 
@@ -34,25 +34,26 @@ const config = {
 		"test/context/*.js": ["webpack"]
 	},
 	frameworks: ["jasmine", "jasmine-matchers"],
-	reporters: ["dots"],
-	webpack: webpackConfig,
+	reporters: ["dots", "touchbar"],
 	browsers: ["ChromeHeadless"],
+	webpack: webpackConfig,
 	customLaunchers: {
 		ChromeHeadless: {
 			base: "ChromeCanary",
-			flags: ["--no-sandbox", "--headless", "--disable-gpu", " --remote-debugging-port=9222"]
+			flags: ["--no-sandbox", "--disable-gpu", "--headless", " --remote-debugging-port=9222"]
 		},
 		FirefoxHeadless: {
 			base: "FirefoxNightly",
 			flags: ["--headless"]
 		}
 	},
-	watch: false,
-	singleRun: true,
+	watch: true,
+	singleRun: false,
 	logLevel: "error"
 };
 
 delete config.webpack.entry;
+config.webpack.devServer.contentBase.push(Path.resolve(Paths.testRoot, "fixtures"));
 
 if (includeCoverage) {
 	let fileName = "lcov.info";
@@ -69,8 +70,6 @@ if (includeCoverage) {
 		},
 		file: fileName
 	};
-
-	console.log(config.coverageIstanbulReporter.dir);
 
 	config.webpack.module.rules.push({
 		test: /\.(ts|js)$/,
@@ -108,7 +107,7 @@ if (runAcceptanceTests) {
 
 config.webpack.stats = false;
 config.webpack.devServer.stats = false;
-config.webpackServer = config.webpack.devServer;
+config.webpackDevServer = config.webpack.devServer;
 
 module.exports = function(c) {
 	c.set(config);

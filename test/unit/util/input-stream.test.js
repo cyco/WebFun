@@ -4,8 +4,8 @@ import { getFixtureData } from "test-helpers/fixture-loading";
 
 describe("InputStream", () => {
 	let buffer;
-	beforeAll(done => {
-		getFixtureData("someData", function(b) {
+	beforeEach(done => {
+		getFixtureData("someData", b => {
 			buffer = b;
 			done();
 		});
@@ -31,7 +31,7 @@ describe("InputStream", () => {
 		let stream;
 		expect(() => {
 			stream = new InputStream(5);
-		}).toThrow(new TypeError());
+		}).toThrow();
 	});
 
 	it("getUint8 returns 1 byte of unsigned data at the current position and advances the offset", () => {
@@ -91,6 +91,7 @@ describe("InputStream", () => {
 	});
 
 	describe("string reading", () => {
+		let buffer;
 		beforeAll(done => {
 			getFixtureData("asciiString", function(b) {
 				buffer = b;
@@ -144,6 +145,7 @@ describe("InputStream", () => {
 	});
 
 	describe("array reading", () => {
+		let buffer;
 		beforeAll(done => {
 			getFixtureData("arrayReading", function(b) {
 				buffer = b;

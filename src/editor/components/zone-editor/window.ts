@@ -5,7 +5,9 @@ import "./window.scss";
 import Sidebar from "./sidebar";
 import SidebarLayer from "src/editor/components/zone-editor/sidebar-layer";
 import Layer from "src/editor/components/zone-editor/layer";
-import SidebarLayersCell, { Events as LayerChangeEvents } from "src/editor/components/zone-editor/sidebar-layers-cell";
+import SidebarLayersCell, {
+	Events as LayerChangeEvents
+} from "src/editor/components/zone-editor/sidebar-layers-cell";
 import Tile from "src/engine/objects/tile";
 import SidebarCell from "src/editor/components/zone-editor/sidebar-cell";
 import ToolComponent from "./tool";
@@ -54,7 +56,8 @@ class Window extends Panel {
 	private _tools: AbstractTool[];
 	private _actionsWindow: WindowComponent;
 	private _removeNPCHandler = (e: CustomEvent) => this._removeNPC(<NPCComponent>e.target);
-	private _removeHotspotHandler = (e: CustomEvent) => this._removeHotspot(<HotspotComponent>e.target);
+	private _removeHotspotHandler = (e: CustomEvent) =>
+		this._removeHotspot(<HotspotComponent>e.target);
 	private _hotspots: List<Hotspot>;
 	private _hotspotsCell: SidebarCell;
 
@@ -78,7 +81,13 @@ class Window extends Panel {
 
 		this._editor = <ZoneEditor>document.createElement(ZoneEditor.TagName);
 
-		this._tools = [new NoTool(), new PencilTool(), new RectangleTool(), new PaintBucketTool(), new HotspotTool()];
+		this._tools = [
+			new NoTool(),
+			new PencilTool(),
+			new RectangleTool(),
+			new PaintBucketTool(),
+			new HotspotTool()
+		];
 		const toolComponents = <HTMLElement[]>this._tools.map(t => this._buildToolItem(t));
 		const actionComponents = [
 			{
@@ -126,7 +135,9 @@ class Window extends Panel {
 
 	private _tilePickerTileChanged() {
 		const tile = this._tilePicker.currentTile;
-		this._tools.filter(t => t instanceof AbstractDrawingTool).forEach((t: AbstractDrawingTool) => (t.tile = tile));
+		this._tools
+			.filter(t => t instanceof AbstractDrawingTool)
+			.forEach((t: AbstractDrawingTool) => (t.tile = tile));
 	}
 
 	public show() {
@@ -168,10 +179,14 @@ class Window extends Panel {
 		this.content.style.height = 2 + zone.size.height * 32 + "px";
 
 		this._providedItems.textContent = "";
-		zone.providedItems.forEach(tile => this._providedItems.appendChild(this._buildTileNode(tile)));
+		zone.providedItems.forEach(tile =>
+			this._providedItems.appendChild(this._buildTileNode(tile))
+		);
 		this._providedItemsCell.style.display = zone.providedItems.length ? "" : "none";
 		this._requiredItems.textContent = "";
-		zone.requiredItems.forEach(tile => this._requiredItems.appendChild(this._buildTileNode(tile)));
+		zone.requiredItems.forEach(tile =>
+			this._requiredItems.appendChild(this._buildTileNode(tile))
+		);
 		this._requiredItemsCell.style.display = zone.requiredItems.length ? "" : "none";
 		this._goalItems.textContent = "";
 		zone.goalItems.forEach(tile => this._goalItems.appendChild(this._buildTileNode(tile)));
@@ -254,7 +269,7 @@ class Window extends Panel {
 		const allNPCNodes = Array.from(component.parentElement.childNodes);
 		const index = allNPCNodes.indexOf(component);
 
-		this._zone.npcs.splice(index, 1);
+		if (index !== -1) this._zone.npcs.splice(index, 1);
 		this._npcs.items = this._zone.npcs;
 	}
 
@@ -270,7 +285,7 @@ class Window extends Panel {
 		const allHotspotNodes = Array.from(component.parentElement.childNodes);
 		const index = allHotspotNodes.indexOf(component);
 
-		this._zone.hotspots.splice(index, 1);
+		if (index !== -1) this._zone.hotspots.splice(index, 1);
 		this._hotspots.items = this.zone.hotspots;
 	}
 

@@ -1,6 +1,7 @@
 import "@babel/polyfill";
 import "../extension";
 import "../_style/global.scss";
+import "./styles.scss";
 
 import { ComponentRegistry } from "src/ui";
 import * as Components from "src/ui/components";
@@ -9,29 +10,62 @@ import * as EditorComponents from "../editor/components";
 import { DataManager } from "src/editor";
 import { GameData, ColorPalette } from "src/engine";
 import SaveGameEditor from "./save-game-editor";
-import { InputStream } from "src/util";
+import { InputStream, Ajax } from "src/util";
 import { XMLHttpRequest } from "src/std.dom";
 import { WindowManager } from "src/ui";
+import Input from "./input";
+
+const SampleFiles = [
+	"save-games/sample-1.wld",
+	"save-games/sample-2.wld",
+	"save-games/sample-3.wld"
+];
+
+const useSample = async (idx: number) => {
+	try {
+		console.log("use sample", idx, SampleFiles[idx]);
+		const input = new Input(SampleFiles[idx], SampleFiles[idx].split("/").last());
+		const result = await input.inputStream;
+		console.log("done", result);
+	} catch (e) {
+		console.warn(e);
+	}
+};
+
+const useArchiveOrgGameData = async () => {
+	try {
+		console.log("use archive.org gmae data");
+		const url = "";
+		const ajax = new Ajax();
+		ajax.method = "GET";
+		ajax.url =
+			"https://cors.archive.org/compress/Star_Wars_-_Yoda_Stories_1997_LucasArts/Star%20Wars%20-%20Yoda%20Stories%20%281997%29%28LucasArts%29.iso";
+		ajax.setRequestHeader("Range", "bytes=502538240-507140230");
+		console.log("start", performance.now());
+		ajax.onprogress = (p: number) => console.log("p", p);
+		const result = await ajax.send();
+		console.log("done", result);
+		console.log("end", performance.now());
+	} catch (e) {
+		console.warn(e);
+	}
+};
 
 const main = () => {
-	console.log("thing");
-	try {
-		ComponentRegistry.sharedRegistry.registerComponents(<any>Components);
-	} catch (e) {}
-	try {
-		ComponentRegistry.sharedRegistry.registerComponents(<any>EditorComponents);
-	} catch (e) {}
-	try {
-		ComponentRegistry.sharedRegistry.registerComponent(<any>SaveGameEditorComponents);
-	} catch (e) {}
+	ComponentRegistry.sharedRegistry.registerComponents(<any>Components);
+	ComponentRegistry.sharedRegistry.registerComponents(<any>EditorComponents);
+	ComponentRegistry.sharedRegistry.registerComponents(<any>SaveGameEditorComponents);
 
+	const sampleButtons = ["sample-1", "sample-2", "sample-3"]
+		.map(i => document.getElementById(i))
+		.forEach((btn, idx) => (btn.onclick = () => useSample(idx)));
+	document.getElementById("game-data-archive").onclick = () => useArchiveOrgGameData();
+	/*
 	const ajax = new XMLHttpRequest();
 	ajax.responseType = "arraybuffer";
 	ajax.onload = () => {
 		const setupData = async (g: GameData, p: ColorPalette) => {
-			const saveGameEditor = <SaveGameEditor>document.createElement(
-				SaveGameEditor.TagName
-			);
+			const saveGameEditor = <SaveGameEditor>document.createElement(SaveGameEditor.TagName);
 			saveGameEditor.gameDataManager = new DataManager(g, p);
 			saveGameEditor.file = <any>{
 				name: "weapon-blaster-2.wld",
@@ -51,10 +85,10 @@ const main = () => {
 				(e: CustomEvent) => setupData(e.detail.data, e.detail.palette)
 			);
 		}
-*/
 	};
 	ajax.open("GET", "weapon-blaster-2.wld", true);
 	ajax.send();
+*/
 };
 
 window.addEventListener("load", main, { once: true } as any);

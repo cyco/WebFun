@@ -9,6 +9,7 @@ describeComponent(MainWindow, () => {
 
 	describe("it contains all the main UI elements", () => {
 		beforeAll(() => (subject = render(MainWindow)));
+
 		it("such as the inventory", () => {
 			expect(subject.querySelector(Inventory.TagName)).not.toBeNull();
 		});
@@ -66,7 +67,7 @@ describeComponent(MainWindow, () => {
 		it("registers for location change events (can go every where)", () => {
 			engine.triggerLocationChange(0xffff);
 			const location = subject.querySelector(Location.TagName);
-			expect(location.mask).toBe(30);
+			expect(location.mask).toBe(15);
 		});
 	});
 

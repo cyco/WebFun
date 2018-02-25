@@ -19,6 +19,11 @@ module.exports = merge(BaseConfig, {
 	devServer: {
 		publicPath: "/",
 		contentBase: [Paths.buildRoot, Paths.assetsRoot, Path.resolve(Paths.sourceRoot, "app")],
+		headers: {
+			"Access-Control-Allow-Origin": "*",
+			"Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
+			"Access-Control-Allow-Headers": "X-Requested-With, range, content-type, Authorization"
+		},
 		hot: true,
 		stats: "errors-only"
 	},

@@ -57,9 +57,7 @@ class SaveGameEditor extends Window {
 		Array.from(this._save.querySelectorAll(".content")).forEach(
 			(c: HTMLElement) => (c.style.display = "none")
 		);
-		const r = this._save.querySelector(
-			".content." + segment.textContent
-		) as HTMLElement;
+		const r = this._save.querySelector(".content." + segment.textContent) as HTMLElement;
 		r.style.display = "";
 	}
 
@@ -91,9 +89,7 @@ class SaveGameEditor extends Window {
 
 				<span className="mission">{missionStatement}</span>
 
-				<SegmentControl
-					onsegmentchange={(segment: Segment) => this._showSegment(segment)}
-				>
+				<SegmentControl onsegmentchange={(segment: Segment) => this._showSegment(segment)}>
 					<Segment selected>World</Segment>
 					<Segment>Dagobah</Segment>
 					<Segment>Inventory</Segment>
@@ -118,9 +114,7 @@ class SaveGameEditor extends Window {
 					cell={
 						<InventoryRow
 							tileSheet={tileSheet}
-							ondelete={(row: InventoryRow) =>
-								this._removeInventoryRow(row)
-							}
+							ondelete={(row: InventoryRow) => this._removeInventoryRow(row)}
 							onadd={() => this._addInventoryRow()}
 							tiles={this._gameDataManager.currentData.tiles.filter(
 								t => t.name && t.name.length
@@ -140,9 +134,7 @@ class SaveGameEditor extends Window {
 			t => t.name && t.name.length !== 0
 		);
 		const list = this.querySelector(List.TagName) as List<Tile>;
-		const rows = Array.from(
-			list.querySelectorAll(InventoryRow.TagName)
-		) as InventoryRow[];
+		const rows = Array.from(list.querySelectorAll(InventoryRow.TagName)) as InventoryRow[];
 		const items = rows.map(t => t.data);
 		items.splice(items.length - 1, 0, tile);
 		list.items = items;
@@ -156,9 +148,7 @@ class SaveGameEditor extends Window {
 		const index = row.parentElement.children.indexOf(row);
 		if (index === -1) return;
 
-		const rows = Array.from(
-			list.querySelectorAll(InventoryRow.TagName)
-		) as InventoryRow[];
+		const rows = Array.from(list.querySelectorAll(InventoryRow.TagName)) as InventoryRow[];
 		const items = rows.map(t => t.data);
 		items.splice(index, 1);
 		list.items = items;
