@@ -1,7 +1,7 @@
-import { Renderer } from "../engine/rendering";
-import CanvasRenderer from "../engine/rendering/canvas/canvas-renderer";
-import { Scene } from "../engine/scenes";
-import { Point } from "../util";
+import { Renderer } from "src/engine/rendering";
+import CanvasRenderer from "src/engine/rendering/canvas/canvas-renderer";
+import { Scene } from "src/engine/scenes";
+import { Point } from "src/util";
 
 class DebugInfoScene extends Scene {
 	private _ticks = 0;
@@ -16,7 +16,10 @@ class DebugInfoScene extends Scene {
 		this.recalculateFPS();
 
 		renderer.renderText(`${this._ticks} ticks`, new Point(10, 246));
-		renderer.renderText(`${this._fps.toFixed(0)} fps, ${this._tps.toFixed(0)} tps`, new Point(10, 265));
+		renderer.renderText(
+			`${this._fps.toFixed(0)} fps, ${this._tps.toFixed(0)} tps`,
+			new Point(10, 265)
+		);
 	}
 
 	public async update(ticks: number): Promise<void> {

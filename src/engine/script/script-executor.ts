@@ -21,12 +21,14 @@ class ScriptExecutor {
 		this._executor = e;
 	}
 
-	continueActions(engine: Engine, mode: EvaluationMode): Promise<Boolean> {
+	continueActions(engine: Engine, mode: EvaluationMode): Promise<boolean> {
 		this._engine = engine;
 		this._checker.engine = engine;
 		this._executor.engine = engine;
 
-		const previousActions = engine.currentZone.actions.filter(action => action.instructionPointer);
+		const previousActions = engine.currentZone.actions.filter(
+			action => action.instructionPointer
+		);
 		return this._evaluateActions(previousActions, mode, false);
 	}
 
@@ -40,17 +42,28 @@ class ScriptExecutor {
 
 	public async bump(location: Point) {
 		this._engine.state.bump = location;
-		const result = await this._evaluateActions(this._engine.currentZone.actions, EvaluationMode.Bump, true);
+		const result = await this._evaluateActions(
+			this._engine.currentZone.actions,
+			EvaluationMode.Bump,
+			true
+		);
 		this._engine.state.bump = null;
 		return result;
 	}
 
-	private async _evaluateActions(actions: Action[], mode: EvaluationMode, check = true): Promise<boolean> {
+	private async _evaluateActions(
+		actions: Action[],
+		mode: EvaluationMode,
+		check = true
+	): Promise<boolean> {
 		const hasActions = actions.length;
 		actions = actions.slice();
 		while (actions.length) {
 			let action = actions.shift();
-			if ((!check || (await this.actionDoesApply(action, mode))) && (await this.executeInstructions(action)))
+			if (
+				(!check || (await this.actionDoesApply(action, mode))) &&
+				(await this.executeInstructions(action))
+			)
 				return true;
 		}
 
@@ -79,7 +92,11 @@ class ScriptExecutor {
 
 	private async executeInstructions(action: Action): Promise<boolean> {
 		this._executor.action = action;
-		for (let i = action.instructionPointer | 0, len = action.instructions.length; i < len; i++) {
+		for (
+			let i = action.instructionPointer | 0, len = action.instructions.length;
+			i < len;
+			i++
+		) {
 			action.instructionPointer = i + 1;
 			const result = await this._executor.execute(action.instructions[i]);
 			if (result & ResultFlags.Wait) {

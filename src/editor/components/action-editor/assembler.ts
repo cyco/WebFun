@@ -30,6 +30,8 @@ class Assembler {
 		const result = new MutableAction();
 
 		let [defaction, name, ...body] = this.validateInputStructure(input);
+		console.assert(defaction === s`defaction`);
+
 		if (typeof name === "string") {
 			result.name = name;
 		} else {
@@ -59,9 +61,13 @@ class Assembler {
 	private validateInputStructure(input: AST): ASTFunctionDefinition {
 		let inputArray = <Array<AST>>input;
 
-		if (!(input instanceof Array)) throw new AssemblerInputError("Input must be an array.", input);
+		if (!(input instanceof Array))
+			throw new AssemblerInputError("Input must be an array.", input);
 		if (inputArray[0] !== s`defaction`)
-			throw new AssemblerInputError("Input must be an action definition using defaction.", input);
+			throw new AssemblerInputError(
+				"Input must be an action definition using defaction.",
+				input
+			);
 
 		return <ASTFunctionDefinition>input.slice();
 	}
@@ -92,7 +98,11 @@ class Assembler {
 		return this.parseOpcode(input, Conditions, Condition);
 	}
 
-	private parseOpcode<T>(input: AST, map: OpcodeMap, itemClass: { new (data: AbstractActionItemInit): T }): T {
+	private parseOpcode<T>(
+		input: AST,
+		map: OpcodeMap,
+		itemClass: { new (data: AbstractActionItemInit): T }
+	): T {
 		if (!(input instanceof Array)) throw new AssemblerInputError("Invalid input.", input);
 
 		const [name, ...args] = input;
@@ -105,7 +115,10 @@ class Assembler {
 		const text = opcode.UsesText ? args.pop() : "";
 
 		if (false && ~opcode.Arguments && args.length !== opcode.Arguments.length) {
-			throw new AssemblerInputError(`Expected ${opcode.Arguments} arguments but found ${args.length}.`, input);
+			throw new AssemblerInputError(
+				`Expected ${opcode.Arguments} arguments but found ${args.length}.`,
+				input
+			);
 		}
 
 		if (!(typeof text === "string")) {

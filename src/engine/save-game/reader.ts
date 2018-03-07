@@ -83,7 +83,10 @@ class Reader {
 			goalPuzzleAgain
 		);
 
-		console.assert(stream.isAtEnd(), `Encountered ${stream.length - stream.offset} unknown bytes at end of stream`);
+		console.assert(
+			stream.isAtEnd(),
+			`Encountered ${stream.length - stream.offset} unknown bytes at end of stream`
+		);
 
 		return state;
 	}
@@ -115,7 +118,9 @@ class Reader {
 	private _readRoom(zoneId: number, visited: boolean, stream: InputStream): void {
 		const zone = this._data.zones[zoneId];
 		this._readZone(zone, visited, stream);
-		const doors = zone.hotspots.withType(HotspotType.DoorIn).filter((hotspot: Hotspot) => hotspot.arg !== -1);
+		const doors = zone.hotspots
+			.withType(HotspotType.DoorIn)
+			.filter((hotspot: Hotspot) => hotspot.arg !== -1);
 		doors.forEach((hotspot: Hotspot) => {
 			const zoneId = stream.getInt16();
 			const visited = !!stream.getUint32();
@@ -183,7 +188,6 @@ class Reader {
 		stream.getUint32(); // field_18
 		stream.getUint32(); // field_1C
 		stream.getUint32(); // field_2
-		0;
 		stream.getInt16(); // x_
 		stream.getInt16(); // y_
 		stream.getInt16(); // field_3C

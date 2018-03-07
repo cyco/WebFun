@@ -29,8 +29,8 @@ class ExpandButton extends IconButton {
 		}
 
 		this.expandableElement.classList.add("expanded");
-		this.onexpand() && this.onexpand();
-		this.ontoggle && this.ontoggle();
+		if (this.onexpand instanceof Function) this.onexpand();
+		if (this.ontoggle instanceof Function) this.ontoggle();
 	}
 
 	public collapse() {
@@ -39,8 +39,8 @@ class ExpandButton extends IconButton {
 		}
 
 		this.expandableElement.classList.remove("expanded");
-		this.oncollapse && this.oncollapse();
-		this.ontoggle && this.ontoggle();
+		if (this.oncollapse instanceof Function) this.oncollapse();
+		if (this.ontoggle instanceof Function) this.ontoggle();
 	}
 
 	private get expandableElement() {

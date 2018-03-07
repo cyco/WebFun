@@ -56,39 +56,10 @@ const main = () => {
 	ComponentRegistry.sharedRegistry.registerComponents(<any>EditorComponents);
 	ComponentRegistry.sharedRegistry.registerComponents(<any>SaveGameEditorComponents);
 
-	const sampleButtons = ["sample-1", "sample-2", "sample-3"]
+	["sample-1", "sample-2", "sample-3"]
 		.map(i => document.getElementById(i))
 		.forEach((btn, idx) => (btn.onclick = () => useSample(idx)));
 	document.getElementById("game-data-archive").onclick = () => useArchiveOrgGameData();
-	/*
-	const ajax = new XMLHttpRequest();
-	ajax.responseType = "arraybuffer";
-	ajax.onload = () => {
-		const setupData = async (g: GameData, p: ColorPalette) => {
-			const saveGameEditor = <SaveGameEditor>document.createElement(SaveGameEditor.TagName);
-			saveGameEditor.gameDataManager = new DataManager(g, p);
-			saveGameEditor.file = <any>{
-				name: "weapon-blaster-2.wld",
-				provideInputStream() {
-					return new InputStream(ajax.response);
-				}
-			};
-			WindowManager.defaultManager.showWindow(saveGameEditor);
-		};
-
-		/*
-		if (gameController.isDataLoaded()) {
-			setupData(gameController.data, gameController.palette);
-		} else {
-			gameController.addEventListener(
-				GameController.Event.DidLoadData,
-				(e: CustomEvent) => setupData(e.detail.data, e.detail.palette)
-			);
-		}
-	};
-	ajax.open("GET", "weapon-blaster-2.wld", true);
-	ajax.send();
-*/
 };
 
 window.addEventListener("load", main, { once: true } as any);

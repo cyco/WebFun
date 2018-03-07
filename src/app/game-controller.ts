@@ -69,7 +69,10 @@ class GameController extends EventTarget {
 		return engine;
 	}
 
-	_determineRenderer(): typeof WebGLRenderer | typeof CanvasRenderer | typeof TileSheetCanvasRenderer {
+	_determineRenderer():
+		| typeof WebGLRenderer
+		| typeof CanvasRenderer
+		| typeof TileSheetCanvasRenderer {
 		if (WebGLRenderer.isSupported() && Settings.allowWebGL) {
 			console.log("Using WebGL renderer");
 			return WebGLRenderer;
@@ -104,7 +107,7 @@ class GameController extends EventTarget {
 			await loading;
 
 			this._engine.inventory.removeAllItems();
-			await story.generateWorld(this._engine);
+			story.generateWorld(this._engine);
 			this._engine.story = story;
 			this._engine.currentWorld = story.world;
 			this._engine.hero.visible = true;
@@ -124,7 +127,8 @@ class GameController extends EventTarget {
 			const loader = new Loader();
 			loader.onfail = event => reject(event);
 			loader.onprogress = ({ detail: { progress } }) => (loadingView.progress = progress);
-			loader.onloadsetupimage = ({ detail: { pixels, palette } }) => loadingView.showImage(pixels, palette);
+			loader.onloadsetupimage = ({ detail: { pixels, palette } }) =>
+				loadingView.showImage(pixels, palette);
 			loader.onload = e => {
 				const details = e.detail as LoaderEventDetails;
 				loadingView.progress = 1.0;
@@ -151,15 +155,16 @@ class GameController extends EventTarget {
 		const gameState = this.engine.gameState;
 		if (
 			gameState === GameState.Running &&
-			(await ModalConfirm("This command will discard the current world.\nBuild a new world anyway?")) !==
-				ConfirmationResult.Confirmed
+			(await ModalConfirm(
+				"This command will discard the current world.\nBuild a new world anyway?"
+			)) !== ConfirmationResult.Confirmed
 		) {
 			return;
 		}
 
 		const story = new Story(0x0000, Planet.ENDOR, WorldSize.Large);
 		this._engine.inventory.removeAllItems();
-		await story.generateWorld(this._engine);
+		story.generateWorld(this._engine);
 		this._engine.story = story;
 
 		this._showSceneView();
@@ -196,7 +201,7 @@ class GameController extends EventTarget {
 
 		const stream = await file.provideInputStream();
 		const reader = new SaveGameReader(this._data);
-		const state = reader.read(stream);
+		reader.read(stream);
 	}
 
 	async save() {

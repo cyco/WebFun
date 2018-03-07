@@ -1,4 +1,10 @@
-import { Condition, ConditionsByName, Instruction, InstructionsByName, Type } from "src/engine/script";
+import {
+	Condition,
+	ConditionsByName,
+	Instruction,
+	InstructionsByName,
+	Type
+} from "src/engine/script";
 import { Point } from "src/util";
 import Token from "./token";
 import GameData from "src/engine/game-data";
@@ -17,7 +23,7 @@ class ArgumentProcessor {
 
 	process(container: HTMLDivElement): HTMLDivElement {
 		const functions = Array.from(container.querySelectorAll(".symbol"));
-		functions.map((thing: HTMLElement) => {
+		functions.forEach((thing: HTMLElement) => {
 			const name = thing.textContent.camelize();
 			const definition = this.definitions[name];
 			if (!definition) return;
@@ -72,7 +78,7 @@ class ArgumentProcessor {
 		const args = [];
 		let node = thing;
 		while (count) {
-			node = thing.nextElementSibling;
+			node = node.nextElementSibling;
 			args.push(node);
 			count--;
 		}
