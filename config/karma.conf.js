@@ -11,6 +11,7 @@ const customCoverageDirectory = intellijCoverageArg
 	: null;
 
 const includeCoverage = !!process.env.coverage || customCoverageDirectory;
+const includeJunit = !!process.env.coverage || customCoverageDirectory;
 const runUnitTests = !process.env.scope || ~process.env.scope.indexOf("unit");
 const runAcceptanceTests = process.env.scope && ~process.env.scope.indexOf("acceptance");
 const runPerformanceTests = process.env.scope && ~process.env.scope.indexOf("performance");
@@ -62,7 +63,7 @@ if (includeCoverage) {
 	config.coverageIstanbulReporter = {
 		reports: ["lcovonly", "html"],
 		fixWebpackSourcePaths: true,
-		dir: customCoverageDirectory ? customCoverageDirectory : Paths.coverageRoot,
+		dir: customCoverageDirectory ? customCoverageDirectory : Paths.testReportRoot,
 		"report-config": {
 			lcovonly: {
 				file: fileName
@@ -80,6 +81,15 @@ if (includeCoverage) {
 		exclude: /(debug|test\.js)/,
 		enforce: "post"
 	});
+}
+
+if (includeJunit) {
+	config.reporters.push("junit");
+	config.junitReporter = {
+		outputDir: Paths.testReportRoot,
+		outputFile: "junit.xml",
+		useBrowserName: false
+	};
 }
 
 if (runUnitTests) {

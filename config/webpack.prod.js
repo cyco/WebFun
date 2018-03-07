@@ -13,6 +13,7 @@ const CopyWebpackPlugin = require("copy-webpack-plugin");
 const BaseConfig = require("./webpack.common");
 
 module.exports = merge(BaseConfig, {
+	mode: "production",
 	entry: Path.resolve(Paths.sourceRoot, "app/main.ts"),
 	devtool: "source-map",
 	output: {
@@ -63,10 +64,7 @@ module.exports = merge(BaseConfig, {
 						{
 							loader: "sass-loader",
 							options: {
-								includePaths: [
-									Path.resolve(Paths.sourceRoot, "_style"),
-									"./"
-								]
+								includePaths: [Path.resolve(Paths.sourceRoot, "_style"), "./"]
 							}
 						}
 					]
