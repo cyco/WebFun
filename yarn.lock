@@ -5216,22 +5216,17 @@ karma-jasmine@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/karma-jasmine/-/karma-jasmine-1.1.1.tgz#6fe840e75a11600c9d91e84b33c458e1c46a3529"
 
-karma-junit-reporter@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/karma-junit-reporter/-/karma-junit-reporter-1.2.0.tgz#4f9c40cedfb1a395f8aef876abf96189917c6396"
+karma-junit-sonarqube-reporter@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/karma-junit-sonarqube-reporter/-/karma-junit-sonarqube-reporter-0.0.1.tgz#1355f30981f4ae5b6c8fd9d60cb2fa4445d55654"
   dependencies:
-    path-is-absolute "^1.0.0"
-    xmlbuilder "8.2.2"
+    xmlbuilder "0.4.2"
 
 karma-sourcemap-loader@^0.3.7:
   version "0.3.7"
   resolved "https://registry.yarnpkg.com/karma-sourcemap-loader/-/karma-sourcemap-loader-0.3.7.tgz#91322c77f8f13d46fed062b042e1009d4c4505d8"
   dependencies:
     graceful-fs "^4.1.2"
-
-karma-touchbar-reporter@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/karma-touchbar-reporter/-/karma-touchbar-reporter-0.1.0.tgz#818287341fb9dd8ba4eeb3bda2e1b6ef71469149"
 
 karma-webpack@^2.0.13:
   version "2.0.13"
@@ -9367,9 +9362,9 @@ xml-name-validator@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/xml-name-validator/-/xml-name-validator-3.0.0.tgz#6ae73e06de4d8c6e47f9fb181f78d648ad457c6a"
 
-xmlbuilder@8.2.2:
-  version "8.2.2"
-  resolved "https://registry.yarnpkg.com/xmlbuilder/-/xmlbuilder-8.2.2.tgz#69248673410b4ba42e1a6136551d2922335aa773"
+xmlbuilder@0.4.2:
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/xmlbuilder/-/xmlbuilder-0.4.2.tgz#1776d65f3fdbad470a08d8604cdeb1c4e540ff83"
 
 xmldom@~0.1.16:
   version "0.1.27"
