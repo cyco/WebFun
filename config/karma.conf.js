@@ -35,7 +35,7 @@ const config = {
 		"test/context/*.js": ["webpack"]
 	},
 	frameworks: ["jasmine", "jasmine-matchers"],
-	reporters: ["dots", "touchbar"],
+	reporters: ["dots"],
 	browsers: ["ChromeHeadless"],
 	webpack: webpackConfig,
 	customLaunchers: {
@@ -86,8 +86,7 @@ if (includeCoverage) {
 if (includeJunit) {
 	config.reporters.push("junit");
 	config.junitReporter = {
-		outputDir: Paths.testReportRoot,
-		outputFile: "junit.xml",
+		outputFile: Path.resolve(Paths.testReportRoot, "junit.xml"),
 		useBrowserName: false
 	};
 }
