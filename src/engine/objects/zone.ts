@@ -43,7 +43,9 @@ class Zone {
 	public doorInLocation: Point;
 
 	get doors(): Hotspot[] {
-		return this._hotspots.filter(hotspot => hotspot.type === HotspotType.DoorIn && hotspot.arg !== -1);
+		return this._hotspots.filter(
+			hotspot => hotspot.type === HotspotType.DoorIn && hotspot.arg !== -1
+		);
 	}
 
 	getLocatorDescription() {
@@ -61,12 +63,7 @@ class Zone {
 	}
 
 	getTileID(x: number, y: number, z: number): number {
-		if (x < 0 || x >= this._size.width) debugger;
-		if (y < 0 || y >= this._size.height) debugger;
-		if (z < 0 || z >= 3) debugger;
-
-		const index = Zone.LAYERS * (y * this._size.width + x) + z;
-		return this.tileIDs[index];
+		return this.tileIDs[Zone.LAYERS * (y * this._size.width + x) + z];
 	}
 
 	getTile(x: number | PointLike, y?: number, z?: number): Tile {
@@ -166,7 +163,10 @@ class Zone {
 	}
 
 	get hasTeleporter() {
-		return this._type === ZoneType.Empty && this.hotspots.withType(HotspotType.Teleporter).length !== 0;
+		return (
+			this._type === ZoneType.Empty &&
+			this.hotspots.withType(HotspotType.Teleporter).length !== 0
+		);
 	}
 
 	public get bounds() {

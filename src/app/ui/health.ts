@@ -92,7 +92,7 @@ class Health extends Component {
 		this._pie.setAttribute("d", "M100,100 L" + this._buildArc(value) + "Z");
 	}
 
-	_buildArc(value: number): String {
+	_buildArc(value: number): string {
 		const c = {
 			x: 100,
 			y: 100

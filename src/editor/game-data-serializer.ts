@@ -1,6 +1,17 @@
 import { GameData } from "src/engine";
 import { add, OutputStream } from "src/util";
-import { Action, Char, Condition, Hotspot, Instruction, NPC, Puzzle, PuzzleType, Tile, Zone } from "src/engine/objects";
+import {
+	Action,
+	Char,
+	Condition,
+	Hotspot,
+	Instruction,
+	NPC,
+	Puzzle,
+	PuzzleType,
+	Tile,
+	Zone
+} from "src/engine/objects";
 
 class GameDataSerializer {
 	public serialize(data: GameData, stream: OutputStream): void {
@@ -53,17 +64,37 @@ class GameDataSerializer {
 
 		data.zones.forEach((zone: Zone, index: number) => {
 			const izaxSize =
-				8 + 2 + 2 + zone.npcs.length * 44 + 2 + 2 * zone.requiredItems.length + 2 + 2 * zone.goalItems.length;
+				8 +
+				2 +
+				2 +
+				zone.npcs.length * 44 +
+				2 +
+				2 * zone.requiredItems.length +
+				2 +
+				2 * zone.goalItems.length;
 			const izx2Size = 8 + 2 + 2 * zone.providedItems.length;
 			const izx3Size = 8 + 2 + 2 * zone.puzzleNPCs.length;
 			const izx4Size = 2;
 			const calculateActionSize = (action: Action) =>
-				action.conditions.map((condition: Condition) => 0xe + condition.text.length).reduce(add, 2) +
-				action.instructions.map((condition: Condition) => 0xe + condition.text.length).reduce(add, 2);
+				action.conditions
+					.map((condition: Condition) => 0xe + condition.text.length)
+					.reduce(add, 2) +
+				action.instructions
+					.map((condition: Condition) => 0xe + condition.text.length)
+					.reduce(add, 2);
 			const izonSize = 20 + zone.size.height * zone.size.width * Zone.LAYERS * 2;
 			const hotspotSize = zone.hotspots.length * 0xc;
-			const actionSize = zone.actions.map(calculateActionSize).reduce(add, 0) + 8 * zone.actions.length;
-			const size = izonSize + izaxSize + izx2Size + izx3Size + izx4Size + hotspotSize + actionSize + 14;
+			const actionSize =
+				zone.actions.map(calculateActionSize).reduce(add, 0) + 8 * zone.actions.length;
+			const size =
+				izonSize +
+				izaxSize +
+				izx2Size +
+				izx3Size +
+				izx4Size +
+				hotspotSize +
+				actionSize +
+				14;
 
 			stream.writeUint16(zone.planet.rawValue);
 
@@ -93,7 +124,7 @@ class GameDataSerializer {
 				stream.writeUint32(hotspot.type.rawValue);
 				stream.writeUint16(hotspot.x);
 				stream.writeUint16(hotspot.y);
-				stream.writeUint16(hotspot.enabled ? 1 : 1);
+				stream.writeUint16(1); // hotspot.enabled ? 1 : 0
 				stream.writeInt16(hotspot.arg);
 			});
 
@@ -157,7 +188,9 @@ class GameDataSerializer {
 		stream.writeCharacters("PUZ2");
 		stream.writeUint32(
 			data.puzzles.length * 28 +
-				data.puzzles.map((p: Puzzle) => p.strings.map(p => 2 + p.length).reduce(add, 0)).reduce(add, 0) +
+				data.puzzles
+					.map((p: Puzzle) => p.strings.map(p => 2 + p.length).reduce(add, 0))
+					.reduce(add, 0) +
 				2
 		);
 

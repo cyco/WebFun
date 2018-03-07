@@ -6,7 +6,7 @@ import FragmentShader from "./fragment.glsl";
 import VertexShader from "./vertex.glsl";
 import WindowManager from "../../../ui/window-manager";
 
-class WebGLDebug {
+class Debug {
 	constructor() {
 		this._palette = null;
 
@@ -28,7 +28,7 @@ class WebGLDebug {
 
 		this._context = gl;
 
-		this._loadPalette(gl);
+		this._loadPalette();
 		this._determineSpecs(gl);
 
 		WindowManager.defaultManager.showWindow(this._window);
@@ -126,14 +126,26 @@ class WebGLDebug {
 		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
 		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
 		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
-		gl.texImage2D(gl.TEXTURE_2D, 0, gl.ALPHA, width, height, 0, gl.ALPHA, gl.UNSIGNED_BYTE, image);
+		gl.texImage2D(
+			gl.TEXTURE_2D,
+			0,
+			gl.ALPHA,
+			width,
+			height,
+			0,
+			gl.ALPHA,
+			gl.UNSIGNED_BYTE,
+			image
+		);
 	}
 
 	_determineSpecs(gl) {
 		this._window.content.appendChild(document.createElement("br"));
 
 		const textureImageUnits = document.createElement("div");
-		textureImageUnits.textContent = `MAX_TEXTURE_IMAGE_UNITS: ${gl.getParameter(gl.MAX_TEXTURE_IMAGE_UNITS)}`;
+		textureImageUnits.textContent = `MAX_TEXTURE_IMAGE_UNITS: ${gl.getParameter(
+			gl.MAX_TEXTURE_IMAGE_UNITS
+		)}`;
 		this._window.content.appendChild(textureImageUnits);
 
 		const maxTextureSize = document.createElement("div");
@@ -153,4 +165,4 @@ class WebGLDebug {
 	}
 }
 
-export default WebGLDebug;
+export default Debug;
