@@ -14,4 +14,15 @@ describe("Size", () => {
 		expect(size.toString()).toBe("Size {2x3}");
 		expect("" + size).toBe("Size {2x3}");
 	});
+
+	it("can be scaled, leaving the original object untouched", () => {
+		const size = new Size(2, 3);
+		const scaledSize = size.scaleBy(3);
+
+		expect(scaledSize.width).toEqual(6);
+		expect(scaledSize.height).toEqual(9);
+
+		expect(size.width).toEqual(2);
+		expect(size.height).toEqual(3);
+	});
 });
