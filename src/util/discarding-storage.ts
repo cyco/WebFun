@@ -9,8 +9,6 @@ class DiscardingStorage implements Storage {
 	[key: string]: any;
 	[index: number]: string;
 
-	constructor() {}
-
 	clear() {}
 
 	getItem(key: string): string | null {

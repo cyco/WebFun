@@ -14,4 +14,15 @@ describe("dispatch", () => {
 			done();
 		}, 0);
 	});
+
+	it("timeout can be awaited", async done => {
+		try {
+			await dispatch(() => {
+				throw false;
+			}, 0);
+		} catch (e) {
+			expect(e).toBeFalse();
+			done();
+		}
+	});
 });

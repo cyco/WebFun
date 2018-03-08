@@ -1,4 +1,4 @@
-import { InputStream, Ajax } from "src/util";
+import { InputStream } from "src/util";
 
 class Input {
 	public readonly name: string;
@@ -16,7 +16,7 @@ class Input {
 			return this.file.provideInputStream();
 		}
 
-		return Ajax.Get(this.url, (p: number) => console.log("progress: ", p));
+		return null;
 	}
 }
 

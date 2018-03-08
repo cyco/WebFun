@@ -12,6 +12,7 @@ class Point implements PointLike {
 			z = x.z;
 			x = x.x;
 		}
+
 		this.x = x;
 		this.y = y;
 		this.z = z;
@@ -69,7 +70,7 @@ class Point implements PointLike {
 	}
 
 	dividedBy(size: SizeLike): Point {
-		return new Point(this.x / size.width, this.y / size.height);
+		return new Point(this.x / size.width, this.y / size.height, this.z);
 	}
 
 	byScalingBy(a: number): Point {

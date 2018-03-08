@@ -29,7 +29,8 @@ class HotspotExecutor {
 
 		const type = hotspot.type;
 		if (type === HotspotType.SpawnLocation) {
-			if (hotspot.arg !== zone.puzzleNPC) console.warn("NPC ID mismatch");
+			// TODO: grab puzzle NPC from world
+			// if (hotspot.arg !== zone.puzzleNPC) console.warn("NPC ID mismatch");
 			zone.setTile(tile, location);
 		} else if (
 			hotspot.type === HotspotType.TriggerLocation ||

@@ -1,6 +1,6 @@
 import { Window, List, Segment, SegmentControl } from "src/ui/components";
 import { SaveGameReader, SaveState } from "src/engine/save-game";
-import { InputStream, iterate } from "src/util";
+import { InputStream } from "src/util";
 import DataManager from "src/editor/data-manager";
 import { Planet, WorldSize } from "src/engine/types";
 import {

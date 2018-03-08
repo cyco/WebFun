@@ -10,7 +10,7 @@ import * as EditorComponents from "../editor/components";
 import { DataManager } from "src/editor";
 import { GameData, ColorPalette } from "src/engine";
 import SaveGameEditor from "./save-game-editor";
-import { InputStream, Ajax } from "src/util";
+import { InputStream } from "src/util";
 import { XMLHttpRequest } from "src/std.dom";
 import { WindowManager } from "src/ui";
 import Input from "./input";
@@ -32,24 +32,7 @@ const useSample = async (idx: number) => {
 	}
 };
 
-const useArchiveOrgGameData = async () => {
-	try {
-		console.log("use archive.org gmae data");
-		const url = "";
-		const ajax = new Ajax();
-		ajax.method = "GET";
-		ajax.url =
-			"https://cors.archive.org/compress/Star_Wars_-_Yoda_Stories_1997_LucasArts/Star%20Wars%20-%20Yoda%20Stories%20%281997%29%28LucasArts%29.iso";
-		ajax.setRequestHeader("Range", "bytes=502538240-507140230");
-		console.log("start", performance.now());
-		ajax.onprogress = (p: number) => console.log("p", p);
-		const result = await ajax.send();
-		console.log("done", result);
-		console.log("end", performance.now());
-	} catch (e) {
-		console.warn(e);
-	}
-};
+const useArchiveOrgGameData = async () => {};
 
 const main = () => {
 	ComponentRegistry.sharedRegistry.registerComponents(<any>Components);

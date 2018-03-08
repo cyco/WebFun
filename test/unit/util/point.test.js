@@ -1,4 +1,5 @@
 import Point from "src/util/point";
+import Size from "src/util/size";
 
 describe("Point", () => {
 	it("defines a point in space with up to 3 coordinates", () => {
@@ -66,6 +67,15 @@ describe("Point", () => {
 		expect(result.z).toBe(7);
 	});
 
+	describe("clone", () => {
+		it("just creates a copy", () => {
+			const original = new Point(3, 4);
+			const clone = original.clone();
+			expect(clone.x).toBe(3);
+			expect(clone.y).toBe(4);
+		});
+	});
+
 	describe("add", () => {
 		it("adds one point to another", () => {
 			let firstPoint = new Point(1, 2, 3);
@@ -91,6 +101,19 @@ describe("Point", () => {
 			let secondPoint = new Point(-5, 3, 3);
 			firstPoint.add(secondPoint);
 			expect(firstPoint.z).toBe(3);
+		});
+
+		it("has an non-mutating equivalent called byAdding", () => {
+			const firstPoint = new Point(1, 2, 3);
+			const secondPoint = new Point(-5, 3, 3);
+
+			const result = firstPoint.byAdding(secondPoint);
+
+			expect(result.x).toBe(-4);
+			expect(result.y).toBe(5);
+
+			expect(firstPoint.x).toBe(1);
+			expect(firstPoint.y).toBe(2);
 		});
 	});
 
@@ -120,6 +143,19 @@ describe("Point", () => {
 			firstPoint.subtract(secondPoint);
 			expect(firstPoint.z).toBe(3);
 		});
+
+		it("has an non-mutating equivalent called bySubtracting", () => {
+			const firstPoint = new Point(1, 2, 3);
+			const secondPoint = new Point(-5, 3, 3);
+
+			const result = firstPoint.bySubtracting(secondPoint);
+
+			expect(result.x).toBe(6);
+			expect(result.y).toBe(-1);
+
+			expect(firstPoint.x).toBe(1);
+			expect(firstPoint.y).toBe(2);
+		});
 	});
 
 	describe("abs", () => {
@@ -142,6 +178,17 @@ describe("Point", () => {
 			point.abs();
 			expect(point.z).toBe(-5);
 		});
+
+		it("has an non-mutating equivalent called byAbsing", () => {
+			const input = new Point(-5, -3, 3);
+			const result = input.byAbsing();
+
+			expect(result.x).toBe(5);
+			expect(result.y).toBe(3);
+
+			expect(input.x).toBe(-5);
+			expect(input.y).toBe(-3);
+		});
 	});
 
 	it("has a method to floor all coordinates", () => {
@@ -152,6 +199,18 @@ describe("Point", () => {
 		expect(point.z).toBe(7);
 	});
 
+	it("has an non-mutating method to floor components", () => {
+		const point = new Point(1.2, 3.2, 7.9);
+		const result = point.byFlooring();
+		expect(result.x).toBe(1);
+		expect(result.y).toBe(3);
+		expect(result.z).toBe(7);
+
+		expect(point.x).toBe(1.2);
+		expect(point.y).toBe(3.2);
+		expect(point.z).toBe(7.9);
+	});
+
 	it("has a method to ceil all coordinates", () => {
 		let point = new Point(1.2, 3.2, 7.9);
 		point.ceil();
@@ -160,11 +219,49 @@ describe("Point", () => {
 		expect(point.z).toBe(8);
 	});
 
+	it("has an non-mutating method to ceil components", () => {
+		const point = new Point(1.2, 3.2, 7.9);
+		const result = point.byCeiling();
+		expect(result.x).toBe(2);
+		expect(result.y).toBe(4);
+		expect(result.z).toBe(8);
+
+		expect(point.x).toBe(1.2);
+		expect(point.y).toBe(3.2);
+		expect(point.z).toBe(7.9);
+	});
+
 	it("has a method to scale x,y coordinates", () => {
-		let point = new Point(1, 3, 7);
+		const point = new Point(1, 3, 7);
 		point.scaleBy(3);
 		expect(point.x).toBe(3);
 		expect(point.y).toBe(9);
+		expect(point.z).toBe(7);
+	});
+
+	it("has an non-mutating method to scale components", () => {
+		const point = new Point(1, 3, 7);
+		const result = point.byScalingBy(3);
+
+		expect(result.x).toBe(3);
+		expect(result.y).toBe(9);
+		expect(result.z).toBe(7);
+
+		expect(point.x).toBe(1);
+		expect(point.y).toBe(3);
+		expect(point.z).toBe(7);
+	});
+
+	it("has an non-mutating method to create a point by dividing components by a size", () => {
+		const point = new Point(6, 8, 7);
+		const result = point.dividedBy(new Size(3, 2));
+
+		expect(result.x).toBe(2);
+		expect(result.y).toBe(4);
+		expect(result.z).toBe(7);
+
+		expect(point.x).toBe(6);
+		expect(point.y).toBe(8);
 		expect(point.z).toBe(7);
 	});
 
@@ -249,5 +346,12 @@ describe("Point", () => {
 
 		expect(pointA.isEqualTo(pointC)).toBeFalse();
 		expect(pointA.isEqualTo(null)).toBeFalse();
+	});
+
+	it("has a method to calculate the distance to another point", () => {
+		const p1 = new Point(3, 4, 5);
+		const p2 = new Point(4, -2, 2);
+
+		expect(p1.distanceTo(p2)).toBeCloseTo(6, 0.1);
 	});
 });

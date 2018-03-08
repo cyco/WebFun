@@ -1,4 +1,4 @@
-const PI = Math.PI;
+import { PI } from "src/std.math";
 
 const deg2rad = (deg: number): number => deg * PI / 180;
 
