@@ -13,6 +13,7 @@ module.exports = {
 			"std.webgl": Path.resolve(Paths.sourceRoot, "std.webgl"),
 			libs: Path.resolve(Paths.sourceRoot, "libs"),
 			"test-helpers": Path.resolve(Paths.projectRoot, "test/helpers"),
+			"test-fixtures": Path.resolve(Paths.projectRoot, "test/fixtures"),
 			fs: Path.resolve(Paths.projectRoot, "test/helpers/polyfill/fs.js"),
 			path: Path.resolve(Paths.projectRoot, "test/helpers/polyfill/path.js"),
 			// disable zlib (imported from KaitaiStream)
@@ -41,7 +42,7 @@ module.exports = {
 				exclude: /node_modules/,
 				loader: "awesome-typescript-loader",
 				options: {
-					configFileName: Path.resolve(Paths.configRoot, "tsconfig.json"),
+					configFileName: Path.resolve(Paths.projectRoot, "tsconfig.json"),
 					silent: true,
 					babelCore: "@babel/core"
 				}
