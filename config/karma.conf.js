@@ -16,13 +16,9 @@ const runUnitTests = !process.env.scope || ~process.env.scope.indexOf("unit");
 const runAcceptanceTests = process.env.scope && ~process.env.scope.indexOf("acceptance");
 const runPerformanceTests = process.env.scope && ~process.env.scope.indexOf("performance");
 
-const projectRoot = Path.resolve(__dirname, "../");
-process.chdir(projectRoot);
-
 const config = {
-	basePath: projectRoot,
+	basePath: Paths.projectRoot,
 	files: [
-		"test/helpers/index.js",
 		{
 			pattern: "test/fixtures/**",
 			watched: false,
@@ -31,7 +27,6 @@ const config = {
 		}
 	],
 	preprocessors: {
-		"test/helpers/index.js": ["webpack"],
 		"test/context/*.js": ["webpack"]
 	},
 	frameworks: ["jasmine", "jasmine-matchers"],
@@ -50,11 +45,25 @@ const config = {
 	},
 	watch: true,
 	singleRun: false,
-	logLevel: "error"
+	logLevel: "error",
+	webpackMiddleware: {
+		stats: {
+			chunks: false
+		}
+	},
+	reportSlowerThan: 250
 };
 
 delete config.webpack.entry;
 config.webpack.devServer.contentBase.push(Path.resolve(Paths.testRoot, "fixtures"));
+config.webpack.stats = "errors-only";
+config.webpack.devServer.stats = "errors-only";
+
+var scopes = [];
+runUnitTests && scopes.push("unit");
+runAcceptanceTests && scopes.push("acceptance");
+runPerformanceTests && scopes.push("performance");
+config.files.push({ pattern: "test/context/" + scopes.join("_") + ".js", watched: false });
 
 if (includeCoverage) {
 	let fileName = "lcov.info";
@@ -91,17 +100,7 @@ if (includeJunit) {
 	};
 }
 
-if (runUnitTests) {
-	config.files.push({ pattern: "test/context/unit.js", watched: false });
-}
-
-if (runPerformanceTests) {
-	config.files.push({ pattern: "test/context/performance.js", watched: false });
-}
-
 if (runAcceptanceTests) {
-	config.files.push({ pattern: "test/context/acceptance.js", watched: false });
-
 	const environment = new Webpack.DefinePlugin({
 		"process.acceptance": JSON.stringify({
 			size: process.env.size !== undefined ? +process.env.size : undefined,
@@ -113,10 +112,6 @@ if (runAcceptanceTests) {
 	config.webpack.plugins = config.webpack.plugins || [];
 	config.webpack.plugins.push(environment);
 }
-
-config.webpack.stats = false;
-config.webpack.devServer.stats = false;
-config.webpackDevServer = config.webpack.devServer;
 
 module.exports = function(c) {
 	c.set(config);

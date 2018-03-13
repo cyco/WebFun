@@ -1,10 +1,16 @@
-import { CompareWorldItems, ComparisonResult, ParseExpectation, PrepareExpectations } from "src/debug/expectation";
+import {
+	CompareWorldItems,
+	ComparisonResult,
+	ParseExpectation,
+	PrepareExpectations
+} from "src/debug/expectation";
 import { getFixtureContent } from "test-helpers/fixture-loading";
 
 import loadGameData from "test-helpers/game-data";
 import GameData from "../../src/engine/game-data";
 import Story from "../../src/engine/story";
 import { Planet, WorldSize } from "../../src/engine/types";
+import Worlds from "test-fixtures/worlds.txt";
 
 let rawData = null;
 
@@ -13,7 +19,9 @@ const compareItem = (actual, expected) => {
 	if (result !== ComparisonResult.Different) return;
 
 	if ((actual.zone ? actual.zone.id : -1) !== expected.zoneID)
-		throw `Difference in zone ids detected! ${actual.zone ? actual.zone.id : -1} !== ${expected.zoneID}`;
+		throw `Difference in zone ids detected! ${actual.zone ? actual.zone.id : -1} !== ${
+			expected.zoneID
+		}`;
 	// if (actual.zoneType.rawValue !== expected.zoneType) throw `Difference in zone types detected! ${actual.zoneType.rawValue} !== ${expected.zoneType}`;
 	throw `Difference detected`;
 };
@@ -70,7 +78,6 @@ const runnerFilter = map => {
 	return true;
 };
 const identity = (i, idx) => idx === 0;
-
 describe("World Generation", () => {
 	beforeAll(done => {
 		loadGameData(data => {
@@ -79,8 +86,7 @@ describe("World Generation", () => {
 		});
 	});
 
-	const worldsFixture = getFixtureContent("worlds.txt");
-	const maps = PrepareExpectations(worldsFixture)
+	const maps = PrepareExpectations(Worlds)
 		.map(ParseExpectation)
 		.filter(process.acceptance ? runnerFilter : identity);
 	maps.forEach(runTest);

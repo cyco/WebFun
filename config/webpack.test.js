@@ -7,10 +7,6 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const BaseConfig = require("./webpack.common");
 
 module.exports = merge(BaseConfig, {
-	entry: {
-		webfun: Path.resolve(Paths.sourceRoot, "app/main.ts"),
-		"save-game-editor": Path.resolve(Paths.sourceRoot, "save-game-editor/main.ts")
-	},
 	devtool: "inline-source-map",
 	output: {
 		filename: "[name].js",
@@ -19,11 +15,6 @@ module.exports = merge(BaseConfig, {
 	devServer: {
 		publicPath: "/",
 		contentBase: [Paths.buildRoot, Paths.assetsRoot, Path.resolve(Paths.sourceRoot, "app")],
-		headers: {
-			"Access-Control-Allow-Origin": "*",
-			"Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
-			"Access-Control-Allow-Headers": "X-Requested-With, range, content-type, Authorization"
-		},
 		hot: true,
 		stats: "errors-only"
 	},
@@ -33,23 +24,12 @@ module.exports = merge(BaseConfig, {
 			{
 				test: /\.scss$/,
 				exclude: /node_modules/,
-				use: [
-					{
-						loader: "style-loader"
-					},
-					{
-						loader: "css-loader",
-						options: {
-							minimize: true
-						}
-					},
-					{
-						loader: "sass-loader",
-						options: {
-							includePaths: [Path.resolve(Paths.sourceRoot, "_style"), "./"]
-						}
-					}
-				]
+				loader: "ignore-loader"
+			},
+			{
+				test: /\.txt/,
+				exclude: /node_modules/,
+				loader: "raw-loader"
 			}
 		]
 	}

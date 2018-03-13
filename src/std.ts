@@ -3,9 +3,11 @@ export const global = (function() {
 	let get = eval;
 	return get("this");
 })();
+
 if (!global.window) {
 	global.window = global;
 }
+
 export const setTimeout = global.setTimeout;
 export const console = global.console;
 export const Array = global.Array;
