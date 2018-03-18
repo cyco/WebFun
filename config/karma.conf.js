@@ -58,6 +58,9 @@ delete config.webpack.entry;
 config.webpack.devServer.contentBase.push(Path.resolve(Paths.testRoot, "fixtures"));
 config.webpack.stats = "errors-only";
 config.webpack.devServer.stats = "errors-only";
+config.webpackMiddleware = {
+	stats: "errors-only"
+};
 
 var scopes = [];
 runUnitTests && scopes.push("unit");
