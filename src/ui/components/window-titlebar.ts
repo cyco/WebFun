@@ -23,6 +23,7 @@ class WindowTitlebar extends Component {
 
 		this._closeButton = document.createElement("div");
 		this._closeButton.classList.add("close-button");
+		this._closeButton.style.display = "";
 	}
 
 	get window() {
