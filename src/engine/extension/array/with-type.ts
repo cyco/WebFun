@@ -2,7 +2,7 @@ const withType = function<T>(searchType: T) {
 	return this.filter(({ type }: { type: T }) => type === searchType);
 };
 
-Array.prototype.withType = withType;
+Array.prototype.withType = Array.prototype.withType || withType;
 
 declare global {
 	interface Array<T> {
