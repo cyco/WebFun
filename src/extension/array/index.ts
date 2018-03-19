@@ -11,8 +11,10 @@ import rest from "./rest";
 import shuffle from "./shuffle";
 import unique from "./unique";
 import padEnd from "./pad-end";
+import remove from "./remove";
 
 export {
+	remove,
 	padEnd,
 	clear,
 	contains,
