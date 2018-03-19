@@ -1,10 +1,8 @@
 import IconButton from "src/ui/components/icon-button.ts";
 import render from "test-helpers/render";
 
-describe("icon-button", () => {
+describeComponent(IconButton, () => {
 	let subject;
-
-	beforeAll(() => customElements.define(IconButton.TagName, IconButton, IconButton.Options));
 
 	it("is a custom element", () => {
 		expect(IconButton).toBeCustomElement();
