@@ -3,6 +3,7 @@ import WindowTitlebar from "src/ui/components/window-titlebar";
 describeComponent(WindowTitlebar, () => {
 	let subject;
 	beforeEach(() => (subject = render(WindowTitlebar)));
+	afterEach(() => subject.remove());
 
 	it("is used to draw the title of a window", () => {
 		expect(WindowTitlebar).toBeCustomElement();
@@ -44,6 +45,7 @@ describeComponent(WindowTitlebar, () => {
 			const mockWindow = { close() {} };
 			spyOn(mockWindow, "close");
 			subject.window = mockWindow;
+			expect(subject.window).toEqual(mockWindow);
 
 			subject._closeButton.dispatchEvent(new MouseEvent("click"));
 			expect(mockWindow.close).toHaveBeenCalled();
@@ -59,6 +61,14 @@ describeComponent(WindowTitlebar, () => {
 			expect(subject._pinButton).not.toBeNull();
 			subject.pinnable = false;
 			expect(subject._pinButton).toBeNull();
+		});
+
+		it("works if the attribute is set before inserting the titlebar into the dom", () => {
+			subject = document.createElement(WindowTitlebar.TagName);
+			subject.pinnable = true;
+			const container = document.createElement("div");
+			document.body.appendChild(subject);
+			expect(subject._pinButton.isConnected).toBeTrue();
 		});
 	});
 });
