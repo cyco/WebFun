@@ -84,7 +84,7 @@ export default (gameController: GameController) => ({
 
 						WindowManager.defaultManager.showWindow(editor);
 					})
-				]
+			  ]
 			: []),
 
 		...[
@@ -109,7 +109,6 @@ export default (gameController: GameController) => ({
 			SettingsAction("Edit Save Game", () => {
 				const setupData = async (g: GameData, p: ColorPalette) => {
 					const files = await FilePicker.Pick({ allowsMultipleFiles: true });
-					console.log("setup save game data");
 					files.forEach(file => {
 						const saveGameEditor = <SaveGameEditor>document.createElement(
 							SaveGameEditor.TagName

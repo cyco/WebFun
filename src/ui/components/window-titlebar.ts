@@ -6,6 +6,7 @@ import Window from "./window";
 import "./window-titlebar.scss";
 
 class WindowTitlebar extends Component {
+	public static readonly TagName = "wf-window-titlebar";
 	public onclose: Function = identity;
 	public onpin: Function = identity;
 	public movable: boolean = true;
@@ -15,16 +16,13 @@ class WindowTitlebar extends Component {
 	private _window: Window;
 	private _closeButton: HTMLElement;
 	private _pinButton: HTMLElement;
+	private _buttons: HTMLElement[] = [];
 
 	constructor() {
 		super();
 
 		this._closeButton = document.createElement("div");
 		this._closeButton.classList.add("close-button");
-	}
-
-	static get TagName() {
-		return "wf-window-titlebar";
 	}
 
 	get window() {
@@ -92,8 +90,8 @@ class WindowTitlebar extends Component {
 		super.connectedCallback();
 
 		this.appendChild(this._closeButton);
-		if (this.pinnable) this.appendChild(this._pinButton);
 		if (this._menubar) this.appendChild(this._menubar);
+		this._buttons.forEach(btn => this.appendChild(btn));
 	}
 
 	private _setupDragging(win: Window) {
@@ -135,9 +133,10 @@ class WindowTitlebar extends Component {
 			this._pinButton.classList.add("fa-thumb-tack");
 			this._pinButton.classList.add("pin");
 			this._pinButton.onclick = () => (this.pinned = !this.pinned);
-			if (this.isConnected) this.appendChild(this._pinButton);
+			this.addButton(this._pinButton);
 		} else {
 			this._pinButton.remove();
+			this._buttons.remove(this._pinButton);
 			this._pinButton = null;
 		}
 	}
@@ -156,6 +155,13 @@ class WindowTitlebar extends Component {
 
 	get pinned() {
 		return this.pinnable && this._pinButton.classList.contains("on");
+	}
+
+	public addButton(button: HTMLElement) {
+		this._buttons.push(button);
+		if (this.isConnected) {
+			this.appendChild(button);
+		}
 	}
 
 	private get windowManager() {
