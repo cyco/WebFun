@@ -5,53 +5,47 @@ class CursorManager {
 
 	constructor(node: HTMLElement) {
 		this._node = node;
-		Object.seal(this);
 	}
 
-	changeCursor(cursor: string | number): void {
-		let cursorName = cursor;
+	public changeCursor(cursor: string | number): void {
+		let cursorName = null;
+
 		if (typeof cursor === "string") {
 			cursorName = cursor;
-		} else if (typeof cursor === "number") {
+		}
+
+		if (typeof cursor === "number") {
 			cursorName = this._cursorNameForDirection(cursor);
 		}
 
 		if (cursorName !== null) {
 			this._node.dataset.cursor = `${cursorName}`;
-		} else if (this._node.dataset.cursor === undefined) {
+		} else {
 			delete this._node.dataset.cursor;
 		}
 	}
 
-	_cursorNameForDirection(direction: Direction) {
-		let cursorName = "";
+	private _cursorNameForDirection(direction: Direction) {
 		switch (direction) {
 			case Direction.East:
-				cursorName = "east";
-				break;
+				return "east";
 			case Direction.SouthEast:
-				cursorName = "south-east";
-				break;
+				return "south-east";
 			case Direction.South:
-				cursorName = "south";
-				break;
+				return "south";
 			case Direction.SouthWest:
-				cursorName = "south-west";
-				break;
+				return "south-west";
 			case Direction.West:
-				cursorName = "west";
-				break;
+				return "west";
 			case Direction.NorthWest:
-				cursorName = "north-west";
-				break;
+				return "north-west";
 			case Direction.North:
-				cursorName = "north";
-				break;
+				return "north";
 			case Direction.NorthEast:
-				cursorName = "north-east";
-				break;
+				return "north-east";
+			default:
+				console.assert(false, "Invalid direction given!");
 		}
-		return cursorName;
 	}
 }
 

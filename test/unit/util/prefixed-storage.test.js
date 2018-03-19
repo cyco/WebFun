@@ -46,8 +46,12 @@ describe("PrefixedStorage", () => {
 	});
 
 	describe("method clear", () => {
-		it(" is not implemented yet", () => {
+		it("clear is not implemented yet", () => {
 			expect(() => subject.clear()).not.toThrow();
+		});
+
+		it("key is not implemented yet", () => {
+			expect(() => subject.key()).not.toThrow();
 		});
 	});
 
