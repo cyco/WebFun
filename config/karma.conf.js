@@ -43,8 +43,8 @@ const config = {
 			flags: ["--headless"]
 		}
 	},
-	watch: true,
-	singleRun: false,
+	watch: false,
+	singleRun: true,
 	logLevel: "error",
 	webpackMiddleware: {
 		stats: {
