@@ -28,3 +28,4 @@ todo.md
 .scannerwork
 sonar-project.properties
 test/reports
+.vscode/
