@@ -8,7 +8,7 @@ describe("InvincibilityCheat", () => {
 		expect(subject.code).toEqual("goyoda");
 	});
 
-	it("show the message `Super Smuggler!`", () => {
+	it("show the message `Invincible!`", () => {
 		expect(subject.message).toEqual("Invincible!");
 	});
 

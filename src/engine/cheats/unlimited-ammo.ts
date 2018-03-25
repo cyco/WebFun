@@ -10,7 +10,7 @@ class UnlimitedAmmoCheat extends Cheat {
 		return "Super Smuggler!";
 	}
 
-	execute(engine: Engine): void {
+	public execute(engine: Engine): void {
 		engine.hero.unlimitedAmmo = true;
 	}
 }
