@@ -2,23 +2,22 @@ import Engine from "../engine";
 import Cheat from "./cheat";
 
 class CheatCodeInput {
-	private _input: string;
+	private _input: string = "";
 	private _cheats: Cheat[];
 
 	constructor(cheats: Cheat[]) {
-		this._input = "";
 		this._cheats = cheats;
 	}
 
-	addCharacter(c: string): void {
+	public addCharacter(c: string): void {
 		this._input += c;
 	}
 
-	reset(): void {
+	public reset(): void {
 		this._input = "";
 	}
 
-	execute(engine: Engine): string[] {
+	public execute(engine: Engine): string[] {
 		const completedCheats = this._cheats.filter(c => c.code === this._input);
 		completedCheats.forEach(c => c.execute(engine));
 		return completedCheats.map(c => c.message);

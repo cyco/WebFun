@@ -10,7 +10,7 @@ class InvincibilityCheat extends Cheat {
 		return "Invincible!";
 	}
 
-	execute(engine: Engine): void {
+	public execute(engine: Engine): void {
 		engine.hero.invincible = true;
 	}
 }
