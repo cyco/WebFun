@@ -25,8 +25,10 @@ import FullscreenWindow from "./fullscreen-window";
 import Panel from "./panel";
 import SegmentControl from "./segment-control";
 import Segment from "./segment";
+import ProgressIndicator from "./progress-indicator";
 
 export {
+	ProgressIndicator,
 	SegmentControl,
 	Segment,
 	Panel,
