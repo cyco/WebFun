@@ -36,8 +36,12 @@ import DiscardingStorage from "./discarding-storage";
 import Event from "./event";
 import Scanner from "./scanner";
 import iterate from "./iterate";
+import PromiseProxy from "./promise-proxy";
+import PromiseProgress from "./promise-progress";
 
 export {
+	PromiseProgress,
+	PromiseProxy,
 	Color,
 	add,
 	deg2rad,
