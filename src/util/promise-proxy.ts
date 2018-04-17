@@ -6,6 +6,15 @@ type Executor<T> = (resolve: Resolve<T>, reject: Reject) => void;
 
 class PromiseProxy<T> {
 	private _promise: Promise<T>;
+
+	public static resolve<T>(value?: T): PromiseProxy<T> {
+		return new this(resolve => resolve(value));
+	}
+
+	public static reject<never>(reason?: any): PromiseProxy<never> {
+		return new this((resolve, reject) => reject(reason));
+	}
+
 	constructor(executor: Executor<T>) {
 		this._promise = new Promise(executor);
 	}
