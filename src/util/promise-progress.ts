@@ -5,6 +5,15 @@ type Executor<T> = (resolve: Resolve<T>, reject: Reject, progress: Progress) => 
 
 export class PromiseProgress<T> extends PromiseProxy<T> {
 	private _progress: Progress[];
+
+	public static resolve<T>(value?: T): PromiseProgress<T> {
+		return new this(resolve => resolve(value));
+	}
+
+	public static reject<never>(reason?: any): PromiseProgress<never> {
+		return new this((resolve, reject) => reject(reason));
+	}
+
 	constructor(callback: Executor<T>) {
 		super((resolve, reject) => {
 			callback(resolve, reject, (h: number) => {
