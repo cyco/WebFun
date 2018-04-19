@@ -16,8 +16,8 @@ import WindowManager from "src/ui/window-manager";
 import GameData from "src/engine/game-data";
 import ColorPalette from "src/engine/rendering/color-palette";
 import Simulator from "./simulator";
-import SaveGameEditor from "src/save-game-editor/save-game-editor";
 import { FilePicker } from "src/ui";
+import { main as RunSaveGameEditor } from "src/save-game-editor";
 
 const SettingsItem = (label: string, key: string, settings: typeof Settings) => ({
 	title: label,
@@ -105,29 +105,6 @@ export default (gameController: GameController) => ({
 				}
 			})
 		],
-		...[
-			SettingsAction("Edit Save Game", () => {
-				const setupData = async (g: GameData, p: ColorPalette) => {
-					const files = await FilePicker.Pick({ allowsMultipleFiles: true });
-					files.forEach(file => {
-						const saveGameEditor = <SaveGameEditor>document.createElement(
-							SaveGameEditor.TagName
-						);
-						saveGameEditor.gameDataManager = new DataManager(g, p);
-						saveGameEditor.file = file;
-						WindowManager.defaultManager.showWindow(saveGameEditor);
-					});
-				};
-
-				if (gameController.isDataLoaded()) {
-					setupData(gameController.data, gameController.palette);
-				} else {
-					gameController.addEventListener(
-						GameController.Event.DidLoadData,
-						(e: CustomEvent) => setupData(e.detail.data, e.detail.palette)
-					);
-				}
-			})
-		]
+		SettingsAction("Edit Save Game", RunSaveGameEditor)
 	]
 });

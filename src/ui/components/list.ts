@@ -8,7 +8,12 @@ import { DiscardingStorage } from "src/util";
 export declare interface SearchDelegate<T, PreparedSearchValue> {
 	prepareListSearch(searchValue: string, list: List<T>): PreparedSearchValue;
 
-	includeListItem(searchValue: PreparedSearchValue, item: T, cell: Cell<T>, list: List<T>): boolean;
+	includeListItem(
+		searchValue: PreparedSearchValue,
+		item: T,
+		cell: Cell<T>,
+		list: List<T>
+	): boolean;
 }
 
 const FILTER_DELAY = 100;
@@ -16,7 +21,7 @@ const SearchBarVisibleStateKey = "searchbar-visible";
 const SearchValueStateKey = "search";
 
 class List<T> extends Component {
-	public static readonly TagName = "wf-list";
+	public static readonly TagName: string = "wf-list";
 	public static readonly observedAttributes: string[] = [];
 
 	public cell: Cell<T>;
@@ -39,7 +44,8 @@ class List<T> extends Component {
 	}
 
 	connectedCallback() {
-		if (!this._bar.parentElement) this.insertBefore(this._bar, this.firstElementChild);
+		if (this.searchDelegate && !this._bar.parentElement)
+			this.insertBefore(this._bar, this.firstElementChild);
 		this.rebuild();
 
 		if (!this.searchDelegate) return;
@@ -103,7 +109,8 @@ class List<T> extends Component {
 		this._cells.forEach(c => c.remove());
 		this._cells = this._items.map(i => this.addItem(i));
 		this.refilter();
-		if (oldContent.parentElement) oldContent.parentElement.replaceChild(this._content, oldContent);
+		if (oldContent.parentElement)
+			oldContent.parentElement.replaceChild(this._content, oldContent);
 		else this.appendChild(this._content);
 	}
 

@@ -1,0 +1,6 @@
+@import "border";
+
+wf-save-game-editor-inventory {
+	@include inset-border(1px);
+	display: block;
+}

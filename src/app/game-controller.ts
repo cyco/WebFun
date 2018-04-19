@@ -5,12 +5,12 @@ import {
 	Hero,
 	Inventory,
 	Metronome,
-	SaveGameReader,
 	Story,
 	TileSheetCanvasRenderer,
 	WebGLRenderer,
 	ColorPalette
 } from "src/engine";
+import { Reader } from "src/engine/save-game";
 import { DesktopInputManager } from "src/engine/input";
 import { Char, Zone } from "src/engine/objects";
 import { ZoneScene } from "src/engine/scenes";
@@ -200,8 +200,8 @@ class GameController extends EventTarget {
 		if (!file.name.endsWith(".wld")) return;
 
 		const stream = await file.provideInputStream();
-		const reader = new SaveGameReader(this._data);
-		reader.read(stream);
+		const { read } = Reader.build(stream);
+		read(this._data);
 	}
 
 	async save() {

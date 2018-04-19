@@ -15,6 +15,24 @@ class FileLoader extends EventTarget {
 	public onload: (_: CustomEvent) => void;
 	private _path: string;
 
+	public static async loadAsKaitaiStream(path: string): Promise<KaitaiStream> {
+		return new Promise<KaitaiStream>((resolve, reject) => {
+			const loader = new this(path);
+			loader.onload = (e: any) => resolve(e.detail.kaitaiStream);
+			loader.onfail = reject;
+			loader.load();
+		});
+	}
+
+	public static async loadAsStream(path: string): Promise<InputStream> {
+		return new Promise<InputStream>((resolve, reject) => {
+			const loader = new this(path);
+			loader.onload = (e: any) => resolve(e.detail.stream);
+			loader.onfail = reject;
+			loader.load();
+		});
+	}
+
 	constructor(path: string) {
 		super();
 		this.registerEvents(Event);

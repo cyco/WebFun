@@ -1,7 +1,8 @@
-import SaveGameReader from "./reader";
+import ReaderFactory from "./reader-factory";
 import SaveState from "./save-state";
+import Writer from "./writer";
 import World from "./world";
 import WorldItem from "./world-item";
-import SaveGameWriter from "./writer";
+import SaveGameReader from "./reader";
 
-export { SaveGameReader, SaveGameWriter, WorldItem, World, SaveState };
+export { World, WorldItem, Writer, ReaderFactory as Reader, SaveState, SaveGameReader };

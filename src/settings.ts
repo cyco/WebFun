@@ -21,7 +21,17 @@ let Settings: { [_: string]: any } = {
 	url: {
 		data: "./game-data/yoda.data",
 		palette: "./game-data/yoda.pal",
-		sfx: (file: string) => `./game-data/sfx-yoda/${encodeURIComponent(file)}`
+		sfx: (file: string) => `./game-data/sfx-yoda/${encodeURIComponent(file)}`,
+
+		yoda: {
+			data: "./game-data/yoda.data",
+			palette: "./game-data/yoda.pal"
+		},
+
+		indy: {
+			data: "./game-data/indy.data",
+			palette: "./game-data/indy.pal"
+		}
 	},
 	// app state
 	debuggerActive: false
