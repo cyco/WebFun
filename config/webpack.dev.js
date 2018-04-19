@@ -8,8 +8,7 @@ const BaseConfig = require("./webpack.common");
 
 module.exports = merge(BaseConfig, {
 	entry: {
-		webfun: Path.resolve(Paths.sourceRoot, "app/main.ts"),
-		"save-game-editor": Path.resolve(Paths.sourceRoot, "save-game-editor/main.ts")
+		webfun: Path.resolve(Paths.sourceRoot, "app/main.ts")
 	},
 	devtool: "inline-source-map",
 	output: {
