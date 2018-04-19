@@ -145,7 +145,10 @@ class Loader extends EventTarget {
 	}
 
 	_load() {
-		this.dispatchEvent(Events.Load, <LoaderEventDetails>{ palette: this._palette, data: this._data });
+		this.dispatchEvent(Events.Load, <LoaderEventDetails>{
+			palette: this._palette,
+			data: this._data
+		});
 	}
 }
 

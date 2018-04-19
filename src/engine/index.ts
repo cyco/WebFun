@@ -11,13 +11,16 @@ import { ColorPalette } from "./rendering";
 import CanvasRenderer from "./rendering/canvas/canvas-renderer";
 import WebGLRenderer from "./rendering/webgl/renderer";
 import TileSheetCanvasRenderer from "./rendering/canvas-tilesheet/renderer";
-import SaveGameReader from "./save-game/reader";
-import SaveGameWriter from "./save-game/writer";
+import { SaveGameReader, Writer as SaveGameWriter } from "./save-game";
 import SceneManager from "./scene-manager";
 import Story from "./story";
 import Yoda from "./yoda";
+import { GameType, Indy as GameTypeIndy, Yoda as GameTypeYoda } from "./type";
 
 export {
+	GameType,
+	GameTypeIndy,
+	GameTypeYoda,
 	TileSheetCanvasRenderer,
 	EngineEvents,
 	Engine,

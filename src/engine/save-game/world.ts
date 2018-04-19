@@ -1,4 +1,4 @@
-import { Point, Rectangle, Size } from "../../util";
+import { Point, Rectangle, Size } from "src/util";
 import WorldItem from "./world-item";
 
 class World {
@@ -25,7 +25,8 @@ class World {
 	}
 
 	_toIndex(p: Point): number {
-		if (!this._bounds.contains(p)) throw new RangeError(`Index ${p} does not lie within rect ${this._bounds}`);
+		if (!this._bounds.contains(p))
+			throw new RangeError(`Index ${p} does not lie within rect ${this._bounds}`);
 
 		return p.y * 10 + p.x;
 	}
