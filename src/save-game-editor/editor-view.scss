@@ -3,9 +3,7 @@
 @import "border";
 @import "../ui/components/window";
 
-wf-save-game-editor {
-	@extend wf-window;
-
+wf-save-game-editor-view {
 	.save {
 		display: grid;
 		grid-template-columns: 1/3fr 1/3fr 1/3fr;
@@ -75,6 +73,11 @@ wf-save-game-editor {
 				height: $tile-size + 2 * $border-size;
 				width: $tile-size + 2 * $border-size;
 			}
+		}
+
+		wf-save-game-editor-inventory {
+			width: 282px;
+			height: 282px;
 		}
 
 		label {

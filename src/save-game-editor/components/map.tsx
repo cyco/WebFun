@@ -1,12 +1,12 @@
 import { Component } from "src/ui";
-import "./map.scss";
-import { DataManager } from "src/editor";
 import { World, WorldItem } from "src/engine/save-game";
-import { Tile, TileAttribute } from "src/engine/objects";
+import { Zone, Tile, TileAttribute } from "src/engine/objects";
 import { Point, rgb } from "src/util";
-import { Image } from "src/engine/rendering";
+import { Image, ColorPalette } from "src/engine/rendering";
 import { LocatorTile } from "src/engine/types";
 import { Renderer, ImageFactory } from "src/engine/rendering/canvas";
+import { CSSTileSheet } from "src/editor";
+import "./map.scss";
 
 const TileSize = 28;
 const HereInteval = 1000;
@@ -14,8 +14,12 @@ const HereInteval = 1000;
 class Map extends Component {
 	public static readonly TagName = "wf-save-game-editor-map";
 	public world: World;
-	public dataProvider: DataManager;
+	public tileSheet: CSSTileSheet;
+	public tiles: Tile[];
+	public zones: Zone[];
+	public palette: ColorPalette;
 	public location: Point;
+
 	private _canvas: HTMLCanvasElement = ((
 		<canvas width={280} height={280} />
 	) as any) as HTMLCanvasElement;
@@ -37,6 +41,7 @@ class Map extends Component {
 		this.appendChild(this._canvas);
 
 		if (this.location) this.appendChild(this._here);
+		if (this.location) this._buildInterval();
 	}
 
 	disconnectedCallback() {
@@ -48,30 +53,29 @@ class Map extends Component {
 		if (!this.location) return;
 
 		this._here = (
-			<div
-				className={
-					"here " + this.dataProvider.tileSheet.cssClassNameForTile(LocatorTile.Here)
-				}
-			/>
+			<div className={"here " + this.tileSheet.cssClassNameForTile(LocatorTile.Here)} />
 		);
 
 		this._here.style.left = `${this.location.x * TileSize}px`;
 		this._here.style.top = `${this.location.y * TileSize}px`;
-		this._hereInterval = setInterval(
-			() => (this._here.style.display = this._here.style.display === "none" ? "" : "none"),
-			HereInteval
-		);
+	}
+
+	private _buildInterval() {
+		this._hereInterval = setInterval(() => {
+			this._here.style.display = this._here.style.display === "none" ? "" : "none";
+			this._canvas.getBoundingClientRect();
+		}, HereInteval);
 	}
 
 	private _buildRenderer() {
 		this._renderer = new Renderer(this._canvas);
-		this._renderer.imageFactory.palette = this.dataProvider.palette;
+		this._renderer.imageFactory.palette = this.palette;
 	}
 
 	private _buildImageMap() {
 		this._imageMap = {};
 		const factory = this._renderer.imageFactory;
-		this.dataProvider.currentData.tiles.forEach(tile => {
+		this.tiles.forEach(tile => {
 			this._imageMap[tile.id] = factory.buildImage(Tile.WIDTH, Tile.HEIGHT, tile.imageData);
 		});
 	}
@@ -90,11 +94,10 @@ class Map extends Component {
 	}
 
 	private _tileForWorldItem({ visited, solved_1, zoneId }: WorldItem): Tile {
-		const { tiles, zones } = this.dataProvider.currentData;
-		let tile = LocatorTile.ForZone(zones[zoneId], visited);
+		let tile = LocatorTile.ForZone(this.zones[zoneId], visited);
 		if (tile instanceof Array) tile = tile[solved_1 ? 1 : 0];
 
-		return tiles[tile];
+		return this.tiles[tile];
 	}
 }
 

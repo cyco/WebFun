@@ -1,28 +1,30 @@
-import { InputStream, Point } from "../../util";
+import { Indy, Yoda, GameType } from "../type";
+import { InputStream, Point } from "src/util";
+import identify from "./identify";
+import SaveState from "./save-state";
 import GameData from "../game-data";
 import { Action, Hotspot, HotspotType, NPC, Tile, Zone } from "src/engine/objects";
 import { MutableHotspot, MutableNPC, MutableZone } from "src/engine/mutable-objects";
 import { Planet, WorldSize } from "../types";
-import SaveState from "./save-state";
 import World from "./world";
 import WorldItem from "./world-item";
 
-class Reader {
-	private _data: GameData;
-	private _partialState: SaveState;
+abstract class Reader {
+	protected _stream: InputStream;
+	protected _state: SaveState;
+	protected _data: GameData;
 
-	constructor(data: GameData) {
-		this._data = data;
+	abstract read(gameData: GameData): SaveState;
+
+	constructor(stream: InputStream) {
+		this._stream = stream;
+		this._state = new SaveState();
+		this._data = null;
 	}
 
-	get partialState(): SaveState {
-		return this._partialState;
-	}
-
-	public read(stream: InputStream): SaveState {
-		const state = (this._partialState = new SaveState());
-		const magic = stream.getCharacters(9);
-		console.assert(magic === "YODASAV44", "Header magic must be present", magic);
+	protected _doRead() {
+		const stream = this._stream;
+		const state = this._state;
 
 		state.seed = stream.getUint32() & 0xffff;
 		state.planet = Planet.fromNumber(stream.getUint32());
@@ -91,7 +93,7 @@ class Reader {
 		return state;
 	}
 
-	private _readDagobah(stream: InputStream): World {
+	protected _readDagobah(stream: InputStream): World {
 		const world = new World();
 		for (let y = 4; y <= 5; y++) {
 			for (let x = 4; x <= 5; x++) {
@@ -103,7 +105,7 @@ class Reader {
 		return world;
 	}
 
-	private _readWorld(stream: InputStream): World {
+	protected _readWorld(stream: InputStream): World {
 		const world = new World();
 		for (let y = 0; y < 10; y++) {
 			for (let x = 0; x < 10; x++) {
@@ -115,7 +117,7 @@ class Reader {
 		return world;
 	}
 
-	private _readRoom(zoneId: number, visited: boolean, stream: InputStream): void {
+	protected _readRoom(zoneId: number, visited: boolean, stream: InputStream): void {
 		const zone = this._data.zones[zoneId];
 		this._readZone(zone, visited, stream);
 		const doors = zone.hotspots
@@ -129,7 +131,7 @@ class Reader {
 		});
 	}
 
-	private _readZone(zone: MutableZone, visited: boolean, stream: InputStream): void {
+	protected _readZone(zone: MutableZone, visited: boolean, stream: InputStream): void {
 		if (visited) {
 			zone.counter = stream.getUint32();
 			zone.random = stream.getUint32();
@@ -150,6 +152,9 @@ class Reader {
 
 		const hotspotCount = stream.getInt32();
 		if (hotspotCount > 0) {
+			if (hotspotCount !== zone.hotspots.length) {
+				console.log(`-- change hotspots from ${hotspotCount} to ${zone.hotspots.length}`);
+			}
 			zone.hotspots = hotspotCount.times(() => new MutableHotspot());
 			zone.hotspots.forEach((hotspot: Hotspot) => this._readHotspot(hotspot, stream));
 		}
@@ -173,7 +178,7 @@ class Reader {
 		}
 	}
 
-	private _readNPC(npc: MutableNPC, stream: InputStream): void {
+	protected _readNPC(npc: MutableNPC, stream: InputStream): void {
 		const characterId = stream.getInt16();
 		npc.character = this._data.characters[characterId];
 		const x = stream.getInt16();
@@ -207,7 +212,7 @@ class Reader {
 		}
 	}
 
-	private _readHotspot(hotspot: Hotspot, stream: InputStream): void {
+	protected _readHotspot(hotspot: Hotspot, stream: InputStream): void {
 		hotspot.enabled = !!stream.getUint16();
 		hotspot.arg = stream.getInt16();
 		hotspot.type = HotspotType.fromNumber(stream.getUint32());
@@ -215,7 +220,7 @@ class Reader {
 		hotspot._y = stream.getInt16();
 	}
 
-	private _readWorldDetails(stream: InputStream): void {
+	protected _readWorldDetails(stream: InputStream): void {
 		let x: number, y: number;
 		do {
 			x = stream.getInt32();
@@ -229,7 +234,7 @@ class Reader {
 		} while (x !== -1 && y !== -1);
 	}
 
-	private _readWorldItem(stream: InputStream): WorldItem {
+	protected _readWorldItem(stream: InputStream): WorldItem {
 		const item = new WorldItem();
 
 		item.visited = !!stream.getUint32();
