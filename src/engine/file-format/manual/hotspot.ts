@@ -1,16 +1,17 @@
 import ParseError from "./parse-error";
 import { InputStream } from "src/util";
-import RawData from "./raw-data";
 
-export const parseHotspot = (stream: InputStream, data: RawData) => {
+export const parseHotspot = (stream: InputStream) => {
 	let type = stream.getUint32();
 	let x = stream.getInt16();
 	let y = stream.getInt16();
 	let enabled = stream.getUint16() != 0;
 	let argument = stream.getInt16();
+
+	return { type, x, y, enabled, argument };
 };
 
-export const parseHotspots = (stream: InputStream, data: RawData) => {
+export const parseHotspots = (stream: InputStream, data: any) => {
 	let count = stream.getUint32();
 	do {
 		let zoneId = stream.getInt16();
@@ -19,8 +20,10 @@ export const parseHotspots = (stream: InputStream, data: RawData) => {
 		}
 
 		let count = stream.getUint16();
+		let hotspots = new Array(count);
 		for (let i = 0; i < count; i++) {
-			parseHotspot(stream, data);
+			hotspots.push(parseHotspot(stream));
 		}
+		data.zones[zoneId].hotspots = hotspots;
 	} while (true);
 };
