@@ -3,6 +3,7 @@ import { InputStream } from "src/util";
 import RawData from "./raw-data";
 import { Tile } from "src/engine/objects";
 import { assert } from "../error";
+import { GameType, Yoda } from "src/engine/type";
 
 const ICHA = "ICHA";
 const parseCharacterFrame = (stream: InputStream, data: RawData) => {
@@ -12,14 +13,14 @@ const parseStringWithLength = (stream: InputStream, length: number): String => {
 	return stream.getCharacters(length).split("\0")[0];
 };
 
-const parseCharacter = (stream: InputStream, data: RawData) => {
+const parseCharacter = (stream: InputStream, data: RawData, gameType: GameType) => {
 	const marker = stream.getCharacters(4);
 	assert(marker === ICHA, "Expected to find ICHAR marker.", stream);
 	let size = stream.getUint32();
 	let name = parseStringWithLength(stream, 16);
 	let type = stream.getInt16();
 	let movement_type = stream.getInt16();
-	if (true /* game_type === 'yoda'*/) {
+	if (gameType === Yoda) {
 		let probablyGarbage1 = stream.getInt16();
 		let probablyGarbage2 = stream.getUint32();
 	}
@@ -29,13 +30,13 @@ const parseCharacter = (stream: InputStream, data: RawData) => {
 	let frame3 = parseCharacterFrame(stream, data);
 };
 
-export const parseCharacters = (stream: InputStream, data: RawData) => {
+export const parseCharacters = (stream: InputStream, data: RawData, type: GameType) => {
 	let size = stream.getUint32();
 	do {
 		let index = stream.getInt16();
 		if (index === -1) break;
 
-		parseCharacter(stream, data);
+		parseCharacter(stream, data, type);
 	} while (true);
 };
 

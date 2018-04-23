@@ -2,6 +2,7 @@ import Engine from "./engine";
 import EngineEvents from "./events";
 import "./extension";
 import DataFileReader from "./file-format/yodesk.js";
+import ManualDataFileReader from "./file-format/yodesk-manual";
 import GameData from "./game-data";
 import Hero from "./hero";
 import Inventory from "./inventory";
@@ -36,6 +37,7 @@ export {
 	CanvasRenderer,
 	WebGLRenderer,
 	DataFileReader,
+	ManualDataFileReader,
 	SaveGameReader,
 	SaveGameWriter
 };

@@ -1,4 +1,5 @@
 import { InputStream } from "src/util";
+import { GameType } from "src/engine";
 import ParseError from "./manual/parse-error";
 import {
 	parseActions,
@@ -15,10 +16,10 @@ import {
 	parseTileNames,
 	parseVersion,
 	parseZones,
-	parseZoneAux,
-	parseZoneAux2,
-	parseZoneAux3,
-	parseZoneAux4,
+	parseZaux,
+	parseZax2,
+	parseZax3,
+	parseZax4,
 	parseZoneNames,
 	parseEndOfFile
 } from "./manual";
@@ -26,7 +27,7 @@ import { error } from "./error";
 
 const ENDF = "ENDF";
 
-export default (input: InputStream): any => {
+export default (input: InputStream, type: GameType): any => {
 	const dispatch: any = {
 		VERS: parseVersion,
 		STUP: parseSetupImage,
@@ -38,10 +39,10 @@ export default (input: InputStream): any => {
 		CHWP: parseCharacterWeapons,
 		CAUX: parseCharacterAux,
 		TNAM: parseTileNames,
-		ZAUX: parseZoneAux,
-		ZAX2: parseZoneAux2,
-		ZAX3: parseZoneAux3,
-		ZAX4: parseZoneAux4,
+		ZAUX: parseZaux,
+		ZAX2: parseZax2,
+		ZAX3: parseZax3,
+		ZAX4: parseZax4,
 		HTSP: parseHotspots,
 		ACTN: parseActions,
 		ZNAM: parseZoneNames,
@@ -56,7 +57,7 @@ export default (input: InputStream): any => {
 		category = input.getCharacters(4);
 		console.log("category", category);
 		const parse = dispatch[category] || (() => error(`Invalid category ${category} found.`));
-		parse(input);
+		parse(input, data, type);
 	} while (category !== ENDF);
 
 	return data;

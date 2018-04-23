@@ -6,14 +6,7 @@ import { parseSetupImage } from "./setup-image";
 import { parseSounds } from "./sound";
 import { parseTiles, parseTileNames } from "./tile";
 import { parseVersion } from "./version";
-import {
-	parseZones,
-	parseZoneAux,
-	parseZoneAux2,
-	parseZoneAux3,
-	parseZoneAux4,
-	parseZoneNames
-} from "./zone";
+import { parseZones, parseZaux, parseZax2, parseZax3, parseZax4, parseZoneNames } from "./zone";
 import { parseEndOfFile } from "./end-of-file";
 
 export {
@@ -31,10 +24,10 @@ export {
 	parseTileNames,
 	parseVersion,
 	parseZones,
-	parseZoneAux,
-	parseZoneAux2,
-	parseZoneAux3,
-	parseZoneAux4,
+	parseZaux,
+	parseZax2,
+	parseZax3,
+	parseZax4,
 	parseZoneNames,
 	parseEndOfFile
 };
