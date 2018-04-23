@@ -76,11 +76,13 @@ class GameData {
 
 		this._getCategory("CHWP")
 			.weapons.filter(({ index }: { index: number }) => index !== -1)
-			.forEach(({ reference, health }: { reference: number; health: number }, idx: number) => {
-				const char = <MutableChar>this._characters[idx];
-				char.reference = reference;
-				char.health = health;
-			});
+			.forEach(
+				({ reference, health }: { reference: number; health: number }, idx: number) => {
+					const char = <MutableChar>this._characters[idx];
+					char.reference = reference;
+					char.health = health;
+				}
+			);
 		this._getCategory("TNAM")
 			.names.filter(({ tileId }: { tileId: number }) => tileId !== -1)
 			.forEach((nameSpecification: any) => {

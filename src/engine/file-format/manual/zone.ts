@@ -6,6 +6,7 @@ import { Tile } from "src/engine/objects";
 import { parseHotspot } from "./hotspot";
 import { parseAction } from "./action";
 import { parseNPC } from "./npc";
+import { GameType, Yoda, Indy } from "src/engine/type";
 
 const IZON = "IZON";
 const IZAX = "IZAX";
@@ -13,9 +14,9 @@ const IZX2 = "IZX2";
 const IZX3 = "IZX3";
 const IZX4 = "IZX4";
 
-const parseZone = (stream: InputStream, data: RawData) => {
+const parseZone = (stream: InputStream, data: RawData, gameType: GameType) => {
 	let planet;
-	if (true /* game_Type == 'yoda'*/) {
+	if (gameType === Yoda) {
 		planet = stream.getUint16();
 		let size = stream.getUint32();
 		let index = stream.getUint16();
@@ -28,14 +29,14 @@ const parseZone = (stream: InputStream, data: RawData) => {
 	let width = stream.getUint16();
 	let height = stream.getUint16();
 	let zoneType = stream.getUint32();
-	if (true /* game_type == GameType::Yoda*/) {
+	if (gameType === Yoda) {
 		let padding = stream.getUint16();
 		let planet_again = stream.getUint16();
 		assert(planet == planet_again, "Expected to find the same planet again", stream);
 	}
 
 	let tileIDs = stream.getInt16Array(3 * width * height);
-	if (false /*game_type == GameType::Indy*/) {
+	if (gameType === Indy) {
 		return;
 	}
 
@@ -57,18 +58,19 @@ const parseZone = (stream: InputStream, data: RawData) => {
 	}
 };
 
-export const parseZones = (stream: InputStream, data: RawData) => {
+export const parseZones = (stream: InputStream, data: RawData, gameType: GameType) => {
 	let count = stream.getUint16();
-	if (false /*game_type === 'indy' */) {
+	if (gameType === Indy) {
 		let unknown = stream.getUint16();
 		count = stream.getUint16();
 	}
 
 	for (let i = 0; i < count; i++) {
-		parseZone(stream, data);
+		parseZone(stream, data, gameType);
 	}
 };
-export const parseZoneAux = (stream: InputStream, data: RawData) => {
+
+const parseZoneAux = (stream: InputStream, data: RawData) => {
 	let marker = stream.getCharacters(4);
 	console.log("marker", marker);
 	assert(marker === IZAX, `Expected to find category ${IZAX}.`, stream);
@@ -87,7 +89,8 @@ export const parseZoneAux = (stream: InputStream, data: RawData) => {
 	let goalItemCount = stream.getUint16();
 	let goalItemIDs = stream.getUint16Array(goalItemCount);
 };
-export const parseZoneAux2 = (stream: InputStream, data: RawData) => {
+
+const parseZoneAux2 = (stream: InputStream, data: RawData) => {
 	let marker = stream.getCharacters(4);
 	assert(marker === IZX2, `Expected to find category ${IZX2}.`, stream);
 	let size = stream.getUint32();
@@ -96,7 +99,7 @@ export const parseZoneAux2 = (stream: InputStream, data: RawData) => {
 	let providedItemIDs = stream.getUint16Array(providedItemCount);
 };
 
-export const parseZoneAux3 = (stream: InputStream, data: RawData) => {
+const parseZoneAux3 = (stream: InputStream, data: RawData) => {
 	let marker = stream.getCharacters(4);
 	assert(marker === IZX3, `Expected to find category ${IZX3}.`, stream);
 	let size = stream.getUint32();
@@ -105,7 +108,7 @@ export const parseZoneAux3 = (stream: InputStream, data: RawData) => {
 	let puzzleNPCIDs = stream.getUint16Array(puzzleNPCCount);
 };
 
-export const parseZoneAux4 = (stream: InputStream, data: RawData) => {
+const parseZoneAux4 = (stream: InputStream, data: RawData) => {
 	let marker = stream.getCharacters(4);
 	assert(marker === IZX4, `Expected to find category ${IZX4}.`, stream);
 	let size = stream.getUint32();
@@ -113,46 +116,27 @@ export const parseZoneAux4 = (stream: InputStream, data: RawData) => {
 	let unknown = stream.getUint16();
 };
 
-export const parseZoneNames = (stream: InputStream, data: RawData) => {};
+export const parseZoneNames = (stream: InputStream) => {
+	let size = stream.getUint32();
+	let data = stream.getUint8Array(size);
+};
 
-/*
-fn read_zaux(&mut self) -> io::Result<()> {
-        let size = self.read_u32::<LE>()? as usize;
-        let mut buf = vec!(0; size);
-        self.read_exact(&mut buf)?;
+export const parseZaux = (stream: InputStream) => {
+	let size = stream.getUint32();
+	let data = stream.getUint8Array(size);
+};
 
-        Ok(())
-    }
+export const parseZax2 = (stream: InputStream) => {
+	let size = stream.getUint32();
+	let data = stream.getUint8Array(size);
+};
 
-    fn read_zax2(&mut self) -> io::Result<()> {
-        let size = self.read_u32::<LE>()? as usize;
-        let mut buf = vec!(0; size);
-        self.read_exact(&mut buf)?;
+export const parseZax3 = (stream: InputStream) => {
+	let size = stream.getUint32();
+	let data = stream.getUint8Array(size);
+};
 
-        Ok(())
-    }
-
-    fn read_zax3(&mut self) -> io::Result<()> {
-        let size = self.read_u32::<LE>()? as usize;
-        let mut buf = vec!(0; size);
-        self.read_exact(&mut buf)?;
-
-        Ok(())
-    }
-
-    fn read_zax4(&mut self) -> io::Result<()> {
-        let size = self.read_u32::<LE>()? as usize;
-        let mut buf = vec!(0; size);
-        self.read_exact(&mut buf)?;
-
-        Ok(())
-    }
-
-    fn read_zone_names(&mut self, zones: &mut Vec<Zone>) -> io::Result<()> {
-        let size = self.read_u32::<LE>()? as usize;
-        let mut buf = vec!(0; size);
-        self.read_exact(&mut buf)?;
-
-        Ok(())
-    }
-	*/
+export const parseZax4 = (stream: InputStream) => {
+	let size = stream.getUint32();
+	let data = stream.getUint8Array(size);
+};

@@ -45,4 +45,7 @@ export const parseActions = (stream: InputStream, data: RawData) => {
 		}
 	} while (true);
 };
-export const parseActionNames = (stream: InputStream, data: RawData, error: ParseError) => {};
+export const parseActionNames = (stream: InputStream) => {
+	let size = stream.getUint32();
+	let data = stream.getUint8Array(size);
+};
