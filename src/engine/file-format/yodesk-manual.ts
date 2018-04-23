@@ -51,11 +51,19 @@ export default (input: InputStream, type: GameType): any => {
 		ENDF: parseEndOfFile
 	};
 
-	let data: any = {};
+	let data: any = {
+		version: 0,
+		setup: new Uint8Array(0),
+		sounds: [],
+		tiles: [],
+		zones: [],
+		puzzles: [],
+		characters: [],
+		end: 0
+	};
 	let category: string;
 	do {
 		category = input.getCharacters(4);
-		console.log("category", category);
 		const parse = dispatch[category] || (() => error(`Invalid category ${category} found.`));
 		parse(input, data, type);
 	} while (category !== ENDF);

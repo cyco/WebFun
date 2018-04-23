@@ -1,7 +1,6 @@
 import ParseError from "./parse-error";
 import { InputStream } from "src/util";
-import RawData from "./raw-data";
 
-export const parseEndOfFile = (stream: InputStream, data: RawData, error: ParseError) => {
-	const value = stream.getUint32();
+export const parseEndOfFile = (stream: InputStream, data: any) => {
+	data.end = stream.getUint32();
 };

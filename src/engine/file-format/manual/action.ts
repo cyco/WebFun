@@ -1,50 +1,58 @@
 import ParseError from "./parse-error";
 import { InputStream } from "src/util";
-import RawData from "./raw-data";
 import { error, assert } from "../error";
 
 const IACT = "IACT";
 
-const parseActionItem = (stream: InputStream, data: RawData) => {
+const parseActionItem = (stream: InputStream) => {
 	let opcode = stream.getUint16();
 	let args = stream.getInt16Array(5);
 	let textLength = stream.getUint16();
 	// ISO_8859_1
 	let text = stream.getCharacters(textLength);
-};
-const parseCondition = (stream: InputStream, data: RawData) => {
-	parseActionItem(stream, data);
-};
-const parseInstruction = (stream: InputStream, data: RawData) => {
-	parseActionItem(stream, data);
+
+	return { opcode, args, text };
 };
 
-export const parseAction = (stream: InputStream, data: RawData) => {
+const parseCondition = parseActionItem;
+const parseInstruction = parseActionItem;
+
+export const parseAction = (stream: InputStream, data: any) => {
 	const category = stream.getCharacters(4);
 	assert(category === IACT, `Expected to find category ${IACT}.`, stream);
 	let size = stream.getUint32();
+
 	let conditionCount = stream.getUint16();
+	const conditions = new Array(conditionCount);
 	for (let i = 0; i < conditionCount; i++) {
-		parseCondition(stream, data);
+		conditions[i] = parseCondition(stream);
 	}
-	let instructionConunt = stream.getUint16();
-	for (let i = 0; i < instructionConunt; i++) {
-		parseInstruction(stream, data);
+
+	let instructionCount = stream.getUint16();
+	const instructions = new Array(conditionCount);
+	for (let i = 0; i < instructionCount; i++) {
+		instructions[i] = parseInstruction(stream);
 	}
+
+	return { conditions, instructions };
 };
 
-export const parseActions = (stream: InputStream, data: RawData) => {
+export const parseActions = (stream: InputStream, data: any) => {
 	let size = stream.getUint32();
 	do {
-		let idx = stream.getInt16();
-		if (idx === -1) break;
+		let zoneID = stream.getInt16();
+		if (zoneID === -1) break;
 
 		let count = stream.getUint16();
+		let actions = new Array(count);
 		for (let i = 0; i < count; i++) {
-			parseAction(stream, data);
+			actions[i] = parseAction(stream, data);
 		}
+
+		data.zones[zoneID].actions = actions;
 	} while (true);
 };
+
 export const parseActionNames = (stream: InputStream) => {
 	let size = stream.getUint32();
 	let data = stream.getUint8Array(size);

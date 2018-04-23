@@ -1,19 +1,18 @@
 import ParseError from "./parse-error";
 import { InputStream } from "src/util";
-import RawData from "./raw-data";
 import { Tile } from "src/engine/objects";
 import { assert } from "../error";
 import { GameType, Yoda } from "src/engine/type";
 
 const ICHA = "ICHA";
-const parseCharacterFrame = (stream: InputStream, data: RawData) => {
+const parseCharacterFrame = (stream: InputStream, data: any) => {
 	stream.getInt16Array(0x8);
 };
 const parseStringWithLength = (stream: InputStream, length: number): String => {
 	return stream.getCharacters(length).split("\0")[0];
 };
 
-const parseCharacter = (stream: InputStream, data: RawData, gameType: GameType) => {
+const parseCharacter = (stream: InputStream, data: any, gameType: GameType) => {
 	const marker = stream.getCharacters(4);
 	assert(marker === ICHA, "Expected to find ICHAR marker.", stream);
 	let size = stream.getUint32();
@@ -30,7 +29,7 @@ const parseCharacter = (stream: InputStream, data: RawData, gameType: GameType) 
 	let frame3 = parseCharacterFrame(stream, data);
 };
 
-export const parseCharacters = (stream: InputStream, data: RawData, type: GameType) => {
+export const parseCharacters = (stream: InputStream, data: any, type: GameType) => {
 	let size = stream.getUint32();
 	do {
 		let index = stream.getInt16();
@@ -40,7 +39,7 @@ export const parseCharacters = (stream: InputStream, data: RawData, type: GameTy
 	} while (true);
 };
 
-export const parseCharacterAux = (stream: InputStream, data: RawData) => {
+export const parseCharacterAux = (stream: InputStream, data: any) => {
 	let size = stream.getUint32();
 	let success: boolean;
 	do {
@@ -51,16 +50,16 @@ export const parseCharacterAux = (stream: InputStream, data: RawData) => {
 	} while (true);
 };
 
-export const parseCharacterAux1 = (stream: InputStream, data: RawData) => {
+export const parseCharacterAux1 = (stream: InputStream, data: any) => {
 	let damage = stream.getInt16();
 };
 
-export const parseCharacterWeapon = (stream: InputStream, data: RawData) => {
+export const parseCharacterWeapon = (stream: InputStream, data: any) => {
 	let reference = stream.getInt16();
 	let health = stream.getInt16();
 };
 
-export const parseCharacterWeapons = (stream: InputStream, data: RawData): void => {
+export const parseCharacterWeapons = (stream: InputStream, data: any): void => {
 	let size = stream.getUint32();
 	do {
 		let index = stream.getInt16();
