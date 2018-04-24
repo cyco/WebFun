@@ -6,8 +6,9 @@ import { GameType, Yoda } from "src/engine/type";
 
 const ICHA = "ICHA";
 const parseCharacterFrame = (stream: InputStream, data: any) => {
-	stream.getInt16Array(0x8);
+	return stream.getInt16Array(0x8);
 };
+
 const parseStringWithLength = (stream: InputStream, length: number): String => {
 	return stream.getCharacters(length).split("\0")[0];
 };
@@ -18,25 +19,42 @@ const parseCharacter = (stream: InputStream, data: any, gameType: GameType) => {
 	let size = stream.getUint32();
 	let name = parseStringWithLength(stream, 16);
 	let type = stream.getInt16();
-	let movement_type = stream.getInt16();
+	let movementType = stream.getInt16();
+	let probablyGarbage1 = 0;
+	let probablyGarbage2 = 0;
 	if (gameType === Yoda) {
-		let probablyGarbage1 = stream.getInt16();
-		let probablyGarbage2 = stream.getUint32();
+		probablyGarbage1 = stream.getInt16();
+		probablyGarbage2 = stream.getUint32();
 	}
 
 	let frame1 = parseCharacterFrame(stream, data);
 	let frame2 = parseCharacterFrame(stream, data);
 	let frame3 = parseCharacterFrame(stream, data);
+
+	return {
+		name,
+		type,
+		movementType,
+		probablyGarbage1,
+		probablyGarbage2,
+		frame1,
+		frame2,
+		frame3
+	};
 };
 
 export const parseCharacters = (stream: InputStream, data: any, type: GameType) => {
 	let size = stream.getUint32();
+	let characters = [];
+
 	do {
 		let index = stream.getInt16();
 		if (index === -1) break;
 
-		parseCharacter(stream, data, type);
+		characters.push(parseCharacter(stream, data, type));
 	} while (true);
+
+	data.characters = characters;
 };
 
 export const parseCharacterAux = (stream: InputStream, data: any) => {
