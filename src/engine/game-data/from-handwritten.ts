@@ -34,6 +34,7 @@ const makeTile = (t: any, idx: number) => {
 	tile.id = idx;
 	tile.attributes = t.attributes;
 	tile.imageData = t.pixels;
+	tile.name = t.name;
 
 	return tile;
 };
