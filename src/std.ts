@@ -18,3 +18,4 @@ export const Uint8Array = global.Uint8Array;
 export const requestAnimationFrame = global.requestAnimationFrame;
 export const cancelAnimationFrame = global.cancelAnimationFrame;
 export const performance = global.performance;
+export const Error = global.Error;
