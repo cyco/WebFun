@@ -102,7 +102,6 @@ export const parseZones = (stream: InputStream, data: any, gameType: GameType) =
 
 const parseZoneAux = (stream: InputStream, data: any): any => {
 	let marker = stream.getCharacters(4);
-	console.log("marker", marker);
 	assert(marker === IZAX, `Expected to find category ${IZAX}.`, stream);
 	let size = stream.getUint32();
 	let unknownCount = stream.getUint16();
