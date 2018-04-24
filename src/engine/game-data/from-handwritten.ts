@@ -169,28 +169,4 @@ export default (data: any, raw: any) => {
 	data._characters = raw.characters.map((r: any, i: number) => makeCharacter(r, i, data));
 	data._puzzles = raw.puzzles.map((r: any, i: number) => makePuzzle(r, i, data));
 	data._zones = raw.zones.map((r: any, i: number) => makeZone(r, i, data));
-	/*
-	_getCategory("CAUX", data)
-		.auxiliaries.filter(({ index }: { index: number }) => index !== -1)
-		.forEach(({ damage }: { damage: number }, idx: number) => {
-			const char = <MutableChar>data._characters[idx];
-			char.damage = damage;
-		});
-
-	_getCategory("CHWP", data)
-		.weapons.filter(({ index }: { index: number }) => index !== -1)
-		.forEach(({ reference, health }: { reference: number; health: number }, idx: number) => {
-			const char = <MutableChar>data._characters[idx];
-			char.reference = reference;
-			char.health = health;
-		});
-	_getCategory("TNAM", data)
-		.names.filter(({ tileId }: { tileId: number }) => tileId !== -1)
-		.forEach((nameSpecification: any) => {
-			if (!nameSpecification.name) return;
-
-			const tile = <MutableTile>data._tiles[nameSpecification.tileId];
-			tile.name = nameSpecification.name;
-		});
-*/
 };
