@@ -24,6 +24,7 @@ import {
 	MutableTile,
 	MutableZone
 } from "src/engine/mutable-objects";
+import { Yoda } from "src/engine/type";
 
 import { Planet } from "../types";
 import { Size, Point } from "src/util";
@@ -162,6 +163,7 @@ function _makeNPC(raw: any, idx: number, data: any) {
 
 export default (data: any, raw: any) => {
 	data._rawInput = raw;
+	data._type = Yoda;
 	data._version = _getCategory("VERS", data).version;
 	data._sounds = _getCategory("SNDS", data).sounds.map((i: { content: string }) => i.content);
 	data._tiles = _getCategory("TILE", data).tiles.map(

@@ -13,7 +13,7 @@ const IZX3 = "IZX3";
 const IZX4 = "IZX4";
 
 const parseZone = (stream: InputStream, data: any, gameType: GameType) => {
-	let planet;
+	let planet = 0;
 	if (gameType === Yoda) {
 		planet = stream.getUint16();
 		let size = stream.getUint32();
@@ -36,6 +36,7 @@ const parseZone = (stream: InputStream, data: any, gameType: GameType) => {
 	let tileIDs = stream.getInt16Array(3 * width * height);
 	if (gameType === Indy) {
 		return {
+			planet,
 			width,
 			height,
 			zoneType,
@@ -44,12 +45,15 @@ const parseZone = (stream: InputStream, data: any, gameType: GameType) => {
 			npcs: [] as any[],
 			actions: [] as any[],
 			requiredItemIDs: new Int16Array(0),
-			goalItemIDs: new Int16Array(0)
+			goalItemIDs: new Int16Array(0),
+			providedItemIDs: new Int16Array(0),
+			puzzleNPCIDs: new Int16Array(0),
+			unknown: 0
 		};
 	}
 
 	let hotspotCount = stream.getUint16();
-	let hotspots = new Array(hotspotCount);
+	let hotspots = [];
 	for (let i = 0; i < hotspotCount; i++) {
 		hotspots.push(parseHotspot(stream));
 	}
@@ -66,6 +70,7 @@ const parseZone = (stream: InputStream, data: any, gameType: GameType) => {
 	}
 
 	return {
+		planet,
 		width,
 		height,
 		zoneType,
@@ -88,9 +93,9 @@ export const parseZones = (stream: InputStream, data: any, gameType: GameType) =
 		count = stream.getUint16();
 	}
 
-	let zones = new Array(count);
+	let zones = [];
 	for (let i = 0; i < count; i++) {
-		zones[i] = parseZone(stream, data, gameType);
+		zones.push(parseZone(stream, data, gameType));
 	}
 	data.zones = zones;
 };

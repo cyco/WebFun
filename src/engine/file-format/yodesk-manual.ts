@@ -59,8 +59,10 @@ export default (input: InputStream, type: GameType): any => {
 		zones: [],
 		puzzles: [],
 		characters: [],
-		end: 0
+		end: 0,
+		type
 	};
+
 	let category: string;
 	do {
 		category = input.getCharacters(4);

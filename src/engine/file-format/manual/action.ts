@@ -11,7 +11,7 @@ const parseActionItem = (stream: InputStream) => {
 	// ISO_8859_1
 	let text = stream.getCharacters(textLength);
 
-	return { opcode, args, text };
+	return { opcode, arguments: args, text };
 };
 
 const parseCondition = parseActionItem;
