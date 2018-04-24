@@ -35,6 +35,9 @@ class Map extends Component {
 			this._buildURHere();
 			this._buildRenderer();
 			this._buildImageMap();
+			this._imageMap[this.tiles.length - 1].representation.addEventListener("load", () =>
+				this._drawWorld()
+			);
 		}
 
 		this._drawWorld();
