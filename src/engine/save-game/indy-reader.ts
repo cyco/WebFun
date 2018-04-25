@@ -21,21 +21,20 @@ class IndyReader extends Reader {
 
 	protected _doRead(): SaveState {
 		const stream = this._stream;
-		const state = this._state;
 
 		let seed = stream.getUint32() & 0xffff;
 
-		this.readPuzzles(stream);
-		this.readWorld(stream, { start: 0, end: 10 }, { start: 0, end: 10 });
-		this.readInventory(stream);
+		const puzzleIDs1 = this.readPuzzles(stream);
+		const world = this.readWorld(stream, { start: 0, end: 10 }, { start: 0, end: 10 });
+		const inventoryIDs = this.readInventory(stream);
 
 		let current_zone_id = stream.getUint16();
 		let pos_x_on_world = stream.getUint16();
 		let pos_y_on_world = stream.getUint16();
 
 		let _unknown1 = stream.getUint16();
-		let x = stream.getUint16();
-		let y = stream.getUint16();
+		let pos_x_on_zone = stream.getUint16();
+		let pos_y_on_zone = stream.getUint16();
 		let u2 = stream.getInt16();
 		let u3 = stream.getInt16();
 		let u4 = stream.getInt16();
@@ -50,6 +49,37 @@ class IndyReader extends Reader {
 			stream.isAtEnd(),
 			`Encountered ${stream.length - stream.offset} unknown bytes at end of stream`
 		);
+
+		const state = new SaveState();
+		state.type = Indy;
+		state.planet = Planet.NONE;
+		state.seed = seed;
+		state.puzzleIDs1 = puzzleIDs1;
+		state.puzzleIDs2 = null;
+		state.inventoryIDs = inventoryIDs;
+		state.onDagobah = false;
+		state.currentZoneID = current_zone_id;
+		state.positionOnZone = new Point(pos_x_on_zone, pos_y_on_zone);
+		state.positionOnWorld = new Point(pos_x_on_world, pos_y_on_world);
+		state.goalPuzzle = u9;
+		state.world = world;
+
+		state.damageTaken = 0;
+		state.livesLeft = 3;
+
+		/*
+		state.currentWeapon = current_weapon;
+		state.currentAmmo = currentAmmo;
+		state.blasterAmmo = blaster_ammo;
+		state.blasterRifleAmmo = blaster_rifle_ammo;
+		state.forceAmmo = force_ammo;
+		state.dagobah = dagobah;
+		state.timeElapsed = time_elapsed;
+		state.difficulty = difficulty;
+		state.unknownCount = unknown_count;
+		state.unknownSum = unknown_sum;
+		state.unknownThing = unknown_thing;
+		*/
 
 		return state;
 	}
