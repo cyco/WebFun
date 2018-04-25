@@ -9,252 +9,188 @@ import { Planet, WorldSize } from "../types";
 import World from "./world";
 import WorldItem from "./world-item";
 
+type MyRange = { start: number; end: number };
+
 abstract class Reader {
 	protected _stream: InputStream;
 	protected _state: SaveState;
 	protected _data: GameData;
+	private _type: GameType;
 
 	abstract read(gameData: GameData): SaveState;
 
-	constructor(stream: InputStream) {
+	constructor(stream: InputStream, type: GameType) {
 		this._stream = stream;
 		this._state = new SaveState();
 		this._data = null;
+		this._type = type;
 	}
 
-	protected _doRead() {
-		const stream = this._stream;
-		const state = this._state;
+	protected abstract _doRead(): SaveState;
+	protected abstract readInt(stream: InputStream): number;
+	protected abstract readWorldItem(stram: InputStream, x: number, y: number): WorldItem;
+	protected abstract readNPC(stream: InputStream): void;
+	protected abstract readHotspot(stream: InputStream, hottspot: Hotspot): Hotspot;
 
-		state.seed = stream.getUint32() & 0xffff;
-		state.planet = Planet.fromNumber(stream.getUint32());
-
-		state.onDagobah = !!stream.getUint32();
-
-		const puzzles1Count = stream.getUint16();
-		state.puzzleIDs1 = stream.getInt16Array(puzzles1Count);
-
-		const puzzles2Count = stream.getUint16();
-		state.puzzleIDs2 = stream.getInt16Array(puzzles2Count);
-
-		state.dagobah = this._readDagobah(stream);
-		state.world = this._readWorld(stream);
-
-		const inventoryCount = stream.getInt32();
-		console.assert(inventoryCount >= 0, "Inventory can't contain less than no items.");
-		const inventoryIDs = stream.getUint16Array(inventoryCount);
-		state.inventoryIDs = new Int16Array(inventoryIDs);
-
-		state.currentZoneID = stream.getInt16();
-
-		const positionOnWorld = new Point(0, 0);
-		positionOnWorld.x = stream.getUint32();
-		positionOnWorld.y = stream.getUint32();
-		state.positionOnWorld = positionOnWorld;
-
-		state.currentWeapon = stream.getInt16();
-		state.currentAmmo = -1;
-		if (state.currentWeapon >= 0) state.currentAmmo = stream.getInt16();
-		else state.currentWeapon = 0;
-		state.forceAmmo = stream.getInt16();
-		state.blasterAmmo = stream.getInt16();
-		state.blasterRifleAmmo = stream.getInt16();
-
-		const positionOnZone = new Point(0, 0);
-		positionOnZone.x = stream.getUint32() / Tile.WIDTH;
-		positionOnZone.y = stream.getUint32() / Tile.HEIGHT;
-		state.positionOnZone = positionOnZone;
-
-		state.damageTaken = stream.getUint32();
-		state.livesLeft = stream.getUint32();
-
-		state.difficulty = stream.getUint32();
-		state.timeElapsed = stream.getUint32();
-
-		state.worldSize = stream.getInt16(); // WorldSize.fromNumber(stream.getInt16());
-		state.unknownCount = stream.getInt16();
-		state.unknownSum = stream.getInt16();
-		state.unknownThing = stream.getInt16();
-
-		state.goalPuzzle = stream.getUint32();
-		const goalPuzzleAgain = stream.getUint32();
-		console.assert(
-			state.goalPuzzle === goalPuzzleAgain,
-			"Puzzle ID must be repeated!",
-			state.goalPuzzle,
-			goalPuzzleAgain
-		);
-
-		console.assert(
-			stream.isAtEnd(),
-			`Encountered ${stream.length - stream.offset} unknown bytes at end of stream`
-		);
-
-		return state;
+	protected readBool(stream: InputStream): boolean {
+		return this.readInt(stream) != 0;
 	}
 
-	protected _readDagobah(stream: InputStream): World {
-		const world = new World();
-		for (let y = 4; y <= 5; y++) {
-			for (let x = 4; x <= 5; x++) {
-				world.setWorldItem(x, y, this._readWorldItem(stream));
-			}
-		}
+	protected readWorldDetails(stream: InputStream, zones: Zone[]): void {
+		let x: number;
+		let y: number;
 
-		this._readWorldDetails(stream);
-		return world;
-	}
-
-	protected _readWorld(stream: InputStream): World {
-		const world = new World();
-		for (let y = 0; y < 10; y++) {
-			for (let x = 0; x < 10; x++) {
-				world.setWorldItem(x, y, this._readWorldItem(stream));
-			}
-		}
-
-		this._readWorldDetails(stream);
-		return world;
-	}
-
-	protected _readRoom(zoneId: number, visited: boolean, stream: InputStream): void {
-		const zone = this._data.zones[zoneId];
-		this._readZone(zone, visited, stream);
-		const doors = zone.hotspots
-			.withType(HotspotType.DoorIn)
-			.filter((hotspot: Hotspot) => hotspot.arg !== -1);
-		doors.forEach((hotspot: Hotspot) => {
-			const zoneId = stream.getInt16();
-			const visited = !!stream.getUint32();
-			console.assert(hotspot.arg === zoneId, "Zone IDs should be equal", hotspot.arg, zoneId);
-			this._readRoom(zoneId, visited, stream);
-		});
-	}
-
-	protected _readZone(zone: MutableZone, visited: boolean, stream: InputStream): void {
-		if (visited) {
-			zone.counter = stream.getUint32();
-			zone.random = stream.getUint32();
-			const doorInX = stream.getInt32();
-			const doorInY = stream.getInt32();
-			zone.doorInLocation = new Point(doorInX, doorInY);
-			zone.padding = stream.getUint16();
-
-			try {
-				zone.planet = Planet.fromNumber(stream.getInt16());
-			} catch (e) {
-				console.log("Invalid planet in zone", zone.id, zone.type.name, e.message);
-			}
-			zone.tileIDs = stream.getInt16Array(zone.size.area * Zone.LAYERS);
-		}
-
-		zone.visited = !!stream.getUint32();
-
-		const hotspotCount = stream.getInt32();
-		if (hotspotCount > 0) {
-			if (hotspotCount !== zone.hotspots.length) {
-				console.log(`-- change hotspots from ${hotspotCount} to ${zone.hotspots.length}`);
-			}
-			zone.hotspots = hotspotCount.times(() => new MutableHotspot());
-			zone.hotspots.forEach((hotspot: Hotspot) => this._readHotspot(hotspot, stream));
-		}
-
-		if (visited) {
-			const npcCount = stream.getInt32();
-			if (npcCount > 0) {
-				zone.npcs.forEach((npc: NPC) => this._readNPC(<MutableNPC>npc, stream));
-			}
-
-			const actionCount = stream.getInt32();
-			if (actionCount > 0) {
-				console.assert(
-					actionCount === zone.actions.length,
-					"Action count must be equal",
-					actionCount,
-					zone.actions.length
-				);
-				zone.actions.forEach((action: Action) => (action.enabled = !!stream.getUint32()));
-			}
-		}
-	}
-
-	protected _readNPC(npc: MutableNPC, stream: InputStream): void {
-		const characterId = stream.getInt16();
-		npc.character = this._data.characters[characterId];
-		const x = stream.getInt16();
-		const y = stream.getInt16();
-		npc.position = new Point(x, y);
-		stream.getInt16(); // field_A
-		npc.enabled = !!stream.getUint32();
-		stream.getInt16(); // field_10
-		stream.getInt16(); // y__
-		stream.getInt16(); // x__
-		stream.getInt16(); // current_frame
-		stream.getUint32(); // field_18
-		stream.getUint32(); // field_1C
-		stream.getUint32(); // field_2
-		stream.getInt16(); // x_
-		stream.getInt16(); // y_
-		stream.getInt16(); // field_3C
-		stream.getInt16(); // field_3E
-		stream.getInt16(); // field_60
-		stream.getInt16(); // field_26
-		stream.getUint32(); // field_2C
-		stream.getUint32(); // field_34
-		stream.getUint32(); // field_28
-
-		stream.getInt16(); // field_24
-		stream.getInt16();
-
-		for (let i = 0; i < 4; i++) {
-			stream.getUint32();
-			stream.getUint32();
-		}
-	}
-
-	protected _readHotspot(hotspot: Hotspot, stream: InputStream): void {
-		hotspot.enabled = !!stream.getUint16();
-		hotspot.arg = stream.getInt16();
-		hotspot.type = HotspotType.fromNumber(stream.getUint32());
-		hotspot._x = stream.getInt16();
-		hotspot._y = stream.getInt16();
-	}
-
-	protected _readWorldDetails(stream: InputStream): void {
-		let x: number, y: number;
 		do {
-			x = stream.getInt32();
-			y = stream.getInt32();
-			if (x !== -1 || y !== -1) {
-				const zoneId = stream.getInt16();
-				const visited = !!stream.getUint32();
+			y = this.readInt(stream);
+			x = this.readInt(stream);
 
-				this._readRoom(zoneId, visited, stream);
+			if (x == -1 || y == -1) {
+				break;
 			}
-		} while (x !== -1 && y !== -1);
+
+			let zoneID = stream.getInt16();
+			let visited = this.readBool(stream);
+
+			this.readRoom(stream, zoneID, visited, zones);
+		} while (true);
 	}
 
-	protected _readWorldItem(stream: InputStream): WorldItem {
-		const item = new WorldItem();
+	protected readRooms(stream: InputStream, zoneID: number, zones: Zone[], start: number): void {
+		let count: number;
+		let zoneIDs: [number, boolean][] = [];
+		{
+			let zone = zones[zoneID];
+			let hotspots = zone.hotspots;
+			count = hotspots.length;
 
-		item.visited = !!stream.getUint32();
-		item.solved_1 = stream.getUint32();
-		item.solved_3 = stream.getUint32();
-		item.solved_2 = stream.getUint32();
-		item.solved_4 = stream.getUint32();
-		item.zoneId = stream.getInt16();
-		item.field_C = stream.getInt16();
-		item.required_item_id = stream.getInt16();
-		item.find_item_id = stream.getInt16();
-		item.field_Ea = stream.getInt16();
-		item.additionalRequiredItem = stream.getInt16();
-		item.field_16 = stream.getInt16();
-		item.npc_id = stream.getInt16();
+			for (let i = start; i < count; i++) {
+				start = i;
+				let door;
+				{
+					let hotspot = hotspots[i];
+					if (HotspotType.DoorIn === hotspot.type) {
+						if (hotspot.arg === -1) {
+							continue;
+						}
 
-		stream.getInt32(); // unknown
-		stream.getInt16(); // unknown
+						door = hotspot.arg;
+					} else {
+						continue;
+					}
+				}
 
-		return item;
+				let zoneID = stream.getInt16();
+				let visited = this.readBool(stream);
+
+				console.assert(
+					zoneID == door,
+					"Expected door to lead to zone {} instead of {}",
+					zoneID,
+					door
+				);
+				zoneIDs.push([door, visited]);
+				break;
+			}
+		}
+
+		for (const [zoneID, visited] of zoneIDs) {
+			this.readRoom(stream, zoneID, visited, zones);
+		}
+
+		if (start + 1 < count) {
+			this.readRooms(stream, zoneID, zones, start + 1);
+		}
+	}
+
+	protected readRoom(stream: InputStream, zoneID: number, visited: boolean, zones: Zone[]): void {
+		let zone: Zone = zones[zoneID];
+		this.readZone(stream, zone, visited);
+		this.readRooms(stream, zoneID, zones, 0);
+	}
+
+	protected readZone(stream: InputStream, zone: MutableZone, visited: boolean) {
+		if (visited) {
+			let counter = this.readInt(stream);
+			let random = this.readInt(stream);
+			let doorInX = this.readInt(stream);
+			let doorInY = this.readInt(stream);
+
+			if (this._type == Yoda) {
+				let padding = stream.getUint16();
+				let planet = stream.getInt16();
+			}
+
+			let tile_count = zone.size.width * zone.size.height * Zone.LAYERS;
+			zone.tileIDs = stream.getInt16Array(tile_count);
+		}
+
+		let __visited = this.readBool(stream);
+		this.readHotspots(stream, zone);
+
+		if (visited) {
+			this.readNPCs(stream, zone);
+			this.readActions(stream, zone);
+		}
+	}
+
+	protected readHotspots(stream: InputStream, zone: MutableZone) {
+		let count = this.readInt(stream);
+		if (count < 0) return;
+		if (count !== zone.hotspots.length) {
+			console.warn(`change hotspots from ${zone.hotspots.length} to ${count}`);
+			zone.hotspots = Array.Repeat(new Hotspot(), count);
+		}
+		zone.hotspots = zone.hotspots.map(htsp => this.readHotspot(stream, htsp));
+	}
+
+	protected readNPCs(stream: InputStream, zone: MutableZone) {
+		let count = this.readInt(stream);
+		if (count < 0) return;
+
+		if (this._type === Indy) zone.npcs = new Array(count);
+
+		console.assert(
+			count === zone.npcs.length,
+			`Number of npcs can't be change from ${zone.npcs.length} to ${count}`
+		);
+
+		for (const npc of zone.npcs) {
+			this.readNPC(stream);
+		}
+	}
+
+	protected readActions(stream: InputStream, zone: Zone): void {
+		let count = this.readInt(stream);
+		if (count < 0) return;
+		console.assert(
+			count === zone.actions.length,
+			`Number of actions can't be change from ${zone.actions.length} to ${count}`
+		);
+
+		for (const action of zone.actions) {
+			action.enabled = this.readBool(stream);
+		}
+	}
+
+	protected readInventory(stream: InputStream): Int16Array {
+		let count = this.readInt(stream);
+		if (count < 0) return new Int16Array([]);
+		const result = stream.getInt16Array(count);
+		return result;
+	}
+
+	protected readWorld(stream: InputStream, zones: Zone[], xRange: MyRange, yRange: MyRange) {
+		for (let y = yRange.start; y < yRange.end; y++) {
+			for (let x = xRange.start; x < xRange.end; x++) {
+				this.readWorldItem(stream, x, y);
+			}
+		}
+		this.readWorldDetails(stream, zones);
+	}
+
+	protected readPuzzles(stream: InputStream): Uint16Array {
+		let count = stream.getUint16();
+		return stream.getUint16Array(count);
 	}
 }
 
