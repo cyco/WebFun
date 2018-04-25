@@ -22,7 +22,6 @@ class YodaReader extends Reader {
 	protected _doRead(): SaveState {
 		const stream = this._stream;
 		const state = this._state;
-		const zones = this._data.zones;
 
 		let seed = stream.getUint32() & 0xffff;
 
@@ -31,8 +30,8 @@ class YodaReader extends Reader {
 
 		this.readPuzzles(stream);
 		this.readPuzzles(stream);
-		this.readWorld(stream, zones, { start: 4, end: 6 }, { start: 4, end: 6 });
-		this.readWorld(stream, zones, { start: 0, end: 10 }, { start: 0, end: 10 });
+		this.readWorld(stream, { start: 4, end: 6 }, { start: 4, end: 6 });
+		this.readWorld(stream, { start: 0, end: 10 }, { start: 0, end: 10 });
 		this.readInventory(stream);
 
 		let current_zone_id = stream.getUint16();

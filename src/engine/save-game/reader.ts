@@ -36,7 +36,7 @@ abstract class Reader {
 		return this.readInt(stream) != 0;
 	}
 
-	protected readWorldDetails(stream: InputStream, zones: Zone[]): void {
+	protected readWorldDetails(stream: InputStream): void {
 		let x: number;
 		let y: number;
 
@@ -51,15 +51,15 @@ abstract class Reader {
 			let zoneID = stream.getInt16();
 			let visited = this.readBool(stream);
 
-			this.readRoom(stream, zoneID, visited, zones);
+			this.readRoom(stream, zoneID, visited);
 		} while (true);
 	}
 
-	protected readRooms(stream: InputStream, zoneID: number, zones: Zone[], start: number): void {
+	protected readRooms(stream: InputStream, zoneID: number, start: number): void {
 		let count: number;
 		let zoneIDs: [number, boolean][] = [];
 		{
-			let zone = zones[zoneID];
+			let zone = this._data.zones[zoneID];
 			let hotspots = zone.hotspots;
 			count = hotspots.length;
 
@@ -94,18 +94,18 @@ abstract class Reader {
 		}
 
 		for (const [zoneID, visited] of zoneIDs) {
-			this.readRoom(stream, zoneID, visited, zones);
+			this.readRoom(stream, zoneID, visited);
 		}
 
 		if (start + 1 < count) {
-			this.readRooms(stream, zoneID, zones, start + 1);
+			this.readRooms(stream, zoneID, start + 1);
 		}
 	}
 
-	protected readRoom(stream: InputStream, zoneID: number, visited: boolean, zones: Zone[]): void {
-		let zone: Zone = zones[zoneID];
+	protected readRoom(stream: InputStream, zoneID: number, visited: boolean): void {
+		let zone: Zone = this._data.zones[zoneID];
 		this.readZone(stream, zone, visited);
-		this.readRooms(stream, zoneID, zones, 0);
+		this.readRooms(stream, zoneID, 0);
 	}
 
 	protected readZone(stream: InputStream, zone: MutableZone, visited: boolean) {
@@ -179,13 +179,13 @@ abstract class Reader {
 		return result;
 	}
 
-	protected readWorld(stream: InputStream, zones: Zone[], xRange: MyRange, yRange: MyRange) {
+	protected readWorld(stream: InputStream, xRange: MyRange, yRange: MyRange) {
 		for (let y = yRange.start; y < yRange.end; y++) {
 			for (let x = xRange.start; x < xRange.end; x++) {
 				this.readWorldItem(stream, x, y);
 			}
 		}
-		this.readWorldDetails(stream, zones);
+		this.readWorldDetails(stream);
 	}
 
 	protected readPuzzles(stream: InputStream): Uint16Array {
