@@ -28,13 +28,13 @@ class IndyReader extends Reader {
 		const world = this.readWorld(stream, { start: 0, end: 10 }, { start: 0, end: 10 });
 		const inventoryIDs = this.readInventory(stream);
 
-		let current_zone_id = stream.getUint16();
-		let pos_x_on_world = stream.getUint16();
-		let pos_y_on_world = stream.getUint16();
+		let currentZoneID = stream.getUint16();
+		let posXOnWorld = stream.getUint16();
+		let posYOnWorld = stream.getUint16();
 
-		let _unknown1 = stream.getUint16();
-		let pos_x_on_zone = stream.getUint16();
-		let pos_y_on_zone = stream.getUint16();
+		let unknown1 = stream.getUint16();
+		let posXOnZone = stream.getUint16();
+		let posYOnZone = stream.getUint16();
 		let u2 = stream.getInt16();
 		let u3 = stream.getInt16();
 		let u4 = stream.getInt16();
@@ -58,9 +58,9 @@ class IndyReader extends Reader {
 		state.puzzleIDs2 = null;
 		state.inventoryIDs = inventoryIDs;
 		state.onDagobah = false;
-		state.currentZoneID = current_zone_id;
-		state.positionOnZone = new Point(pos_x_on_zone, pos_y_on_zone);
-		state.positionOnWorld = new Point(pos_x_on_world, pos_y_on_world);
+		state.currentZoneID = currentZoneID;
+		state.positionOnZone = new Point(posXOnZone, posYOnZone);
+		state.positionOnWorld = new Point(posXOnWorld, posYOnWorld);
 		state.goalPuzzle = u9;
 		state.world = world;
 
@@ -89,13 +89,13 @@ class IndyReader extends Reader {
 		let solved_1 = this.readBool(stream);
 		let solved_2 = this.readBool(stream);
 
-		let zone_id = stream.getInt16();
+		let zoneID = stream.getInt16();
 		let field_c = stream.getInt16();
 
-		let required_item_id = stream.getInt16();
-		let find_item_id = stream.getInt16();
+		let requiredItemID = stream.getInt16();
+		let findItemID = stream.getInt16();
 
-		let npc_id = stream.getInt16();
+		let npcID = stream.getInt16();
 		// possibly zone or puzzle type
 		let unkonwn = stream.getInt16();
 

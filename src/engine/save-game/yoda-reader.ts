@@ -33,22 +33,22 @@ class YodaReader extends Reader {
 		const world = this.readWorld(stream, { start: 0, end: 10 }, { start: 0, end: 10 });
 		const inventoryIDs = this.readInventory(stream);
 
-		let current_zone_id = stream.getUint16();
-		let pos_x_on_world = stream.getUint32();
-		let pos_y_on_world = stream.getUint32();
+		let currentZoneID = stream.getUint16();
+		let posXOnWorld = stream.getUint32();
+		let posYOnWorld = stream.getUint32();
 
-		let current_weapon = stream.getInt16();
-		let currentAmmo = current_weapon >= 0 ? stream.getInt16() : -1;
+		let currentWeapon = stream.getInt16();
+		let currentAmmo = currentWeapon >= 0 ? stream.getInt16() : -1;
 
-		let force_ammo = stream.getInt16();
-		let blaster_ammo = stream.getInt16();
-		let blaster_rifle_ammo = stream.getInt16();
+		let forceAmmo = stream.getInt16();
+		let blasterAmmo = stream.getInt16();
+		let blasterRifleAmmo = stream.getInt16();
 
-		let pos_x_on_zone = stream.getUint32() / Tile.WIDTH;
-		let pos_y_on_zone = stream.getUint32() / Tile.HEIGHT;
+		let posXOnZone = stream.getUint32() / Tile.WIDTH;
+		let posYOnZone = stream.getUint32() / Tile.HEIGHT;
 
-		let damage_taken = stream.getUint32();
-		let lives_left = stream.getUint32();
+		let damageTaken = stream.getUint32();
+		let livesLeft = stream.getUint32();
 		let difficulty = stream.getUint32();
 		let time_elapsed = stream.getUint32();
 
@@ -57,9 +57,13 @@ class YodaReader extends Reader {
 		let unknown_sum = stream.getInt16();
 		let unknown_thing = stream.getInt16();
 
-		let goal_puzzle = stream.getUint32();
-		let goal_puzzle_again = stream.getUint32();
+		let goalPuzzle = stream.getUint32();
+		let goalPuzzleAgain = stream.getUint32();
 
+		console.assert(
+			goalPuzzle === goalPuzzleAgain,
+			`Expected goal ${goalPuzzle} to be reapeted. Found ${goalPuzzleAgain} instead`
+		);
 		console.assert(
 			stream.isAtEnd(),
 			`Encountered ${stream.length - stream.offset} unknown bytes at end of stream`
@@ -73,17 +77,17 @@ class YodaReader extends Reader {
 		state.puzzleIDs2 = puzzleIDs2;
 		state.inventoryIDs = inventoryIDs;
 		state.onDagobah = on_dagobah;
-		state.currentZoneID = current_zone_id;
-		state.positionOnZone = new Point(pos_x_on_zone, pos_y_on_zone);
-		state.positionOnWorld = new Point(pos_x_on_world, pos_y_on_world);
-		state.goalPuzzle = goal_puzzle;
-		state.currentWeapon = current_weapon;
+		state.currentZoneID = currentZoneID;
+		state.positionOnZone = new Point(posXOnZone, posYOnZone);
+		state.positionOnWorld = new Point(posXOnWorld, posYOnWorld);
+		state.goalPuzzle = goalPuzzle;
+		state.currentWeapon = currentWeapon;
 		state.currentAmmo = currentAmmo;
-		state.blasterAmmo = blaster_ammo;
-		state.blasterRifleAmmo = blaster_rifle_ammo;
-		state.forceAmmo = force_ammo;
-		state.damageTaken = damage_taken;
-		state.livesLeft = lives_left;
+		state.blasterAmmo = blasterAmmo;
+		state.blasterRifleAmmo = blasterRifleAmmo;
+		state.forceAmmo = forceAmmo;
+		state.damageTaken = damageTaken;
+		state.livesLeft = livesLeft;
 		state.dagobah = dagobah;
 		state.world = world;
 		state.timeElapsed = time_elapsed;
@@ -103,12 +107,12 @@ class YodaReader extends Reader {
 		let solved_3 = stream.getUint32() != 0;
 		let solved_4 = stream.getUint32() != 0;
 
-		let zone_id = stream.getInt16();
+		let zoneId = stream.getInt16();
 		let field_c = stream.getInt16();
 		let required_item_id = stream.getInt16();
 		let find_item_id = stream.getInt16();
 		let field_ea = stream.getInt16();
-		let additional_required_item_id = stream.getInt16();
+		let additionalRequiredItem = stream.getInt16();
 		let field_16 = stream.getInt16();
 		let npc_id = stream.getInt16();
 
@@ -121,12 +125,12 @@ class YodaReader extends Reader {
 		worldItem.solved_2 = solved_2 ? 1 : 0;
 		worldItem.solved_3 = solved_3 ? 1 : 0;
 		worldItem.solved_4 = solved_4 ? 1 : 0;
-		worldItem.zoneId = zone_id;
+		worldItem.zoneId = zoneId;
 		worldItem.field_C = field_c;
 		worldItem.required_item_id = required_item_id;
 		worldItem.find_item_id = find_item_id;
 		worldItem.field_Ea = field_ea;
-		worldItem.additionalRequiredItem = additional_required_item_id;
+		worldItem.additionalRequiredItem = additionalRequiredItem;
 		worldItem.field_16 = worldItem.field_16;
 		worldItem.npc_id = worldItem.npc_id;
 
