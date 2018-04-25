@@ -20,7 +20,7 @@ export const parseHotspots = (stream: InputStream, data: any) => {
 		}
 
 		let count = stream.getUint16();
-		let hotspots = new Array(count);
+		let hotspots = [];
 		for (let i = 0; i < count; i++) {
 			hotspots.push(parseHotspot(stream));
 		}

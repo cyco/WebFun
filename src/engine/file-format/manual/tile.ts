@@ -6,7 +6,7 @@ export const parseTile = (stream: InputStream, data: any) => {
 	let attributes = stream.getUint32();
 	let pixels = stream.getUint8Array(Tile.SIZE);
 
-	return { attributes, pixels };
+	return { attributes, pixels, name: "" };
 };
 
 export const parseTiles = (stream: InputStream, data: any) => {
