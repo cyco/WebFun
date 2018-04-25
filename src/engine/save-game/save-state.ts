@@ -1,8 +1,10 @@
 import { Point } from "../../util";
 import { Planet, WorldSize } from "../types";
 import World from "./world";
+import { GameType } from "../type";
 
 class SaveState {
+	type: GameType;
 	seed: number;
 	planet: Planet;
 	puzzleIDs1: Int16Array;
