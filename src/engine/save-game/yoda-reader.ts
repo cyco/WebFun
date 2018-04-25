@@ -21,24 +21,22 @@ class YodaReader extends Reader {
 
 	protected _doRead(): SaveState {
 		const stream = this._stream;
-		const state = this._state;
 
 		let seed = stream.getUint32() & 0xffff;
 
 		let planet = stream.getUint32();
 		let on_dagobah = stream.getUint32() != 0;
 
-		this.readPuzzles(stream);
-		this.readPuzzles(stream);
-		this.readWorld(stream, { start: 4, end: 6 }, { start: 4, end: 6 });
-		this.readWorld(stream, { start: 0, end: 10 }, { start: 0, end: 10 });
-		this.readInventory(stream);
+		const puzzleIDs1 = this.readPuzzles(stream);
+		const puzzleIDs2 = this.readPuzzles(stream);
+		const dagobah = this.readWorld(stream, { start: 4, end: 6 }, { start: 4, end: 6 });
+		const world = this.readWorld(stream, { start: 0, end: 10 }, { start: 0, end: 10 });
+		const inventoryIDs = this.readInventory(stream);
 
 		let current_zone_id = stream.getUint16();
 		let pos_x_on_world = stream.getUint32();
 		let pos_y_on_world = stream.getUint32();
 
-		let point: Point = new Point(0, 0);
 		let current_weapon = stream.getInt16();
 		let currentAmmo = current_weapon >= 0 ? stream.getInt16() : -1;
 
@@ -62,12 +60,37 @@ class YodaReader extends Reader {
 		let goal_puzzle = stream.getUint32();
 		let goal_puzzle_again = stream.getUint32();
 
-		point = new Point(pos_x_on_zone, pos_y_on_zone);
-
 		console.assert(
 			stream.isAtEnd(),
 			`Encountered ${stream.length - stream.offset} unknown bytes at end of stream`
 		);
+
+		const state = new SaveState();
+		state.type = Yoda;
+		state.planet = Planet.fromNumber(planet);
+		state.seed = seed;
+		state.puzzleIDs1 = puzzleIDs1;
+		state.puzzleIDs2 = puzzleIDs2;
+		state.inventoryIDs = inventoryIDs;
+		state.onDagobah = on_dagobah;
+		state.currentZoneID = current_zone_id;
+		state.positionOnZone = new Point(pos_x_on_zone, pos_y_on_zone);
+		state.positionOnWorld = new Point(pos_x_on_world, pos_y_on_world);
+		state.goalPuzzle = goal_puzzle;
+		state.currentWeapon = current_weapon;
+		state.currentAmmo = currentAmmo;
+		state.blasterAmmo = blaster_ammo;
+		state.blasterRifleAmmo = blaster_rifle_ammo;
+		state.forceAmmo = force_ammo;
+		state.damageTaken = damage_taken;
+		state.livesLeft = lives_left;
+		state.dagobah = dagobah;
+		state.world = world;
+		state.timeElapsed = time_elapsed;
+		state.difficulty = difficulty;
+		state.unknownCount = unknown_count;
+		state.unknownSum = unknown_sum;
+		state.unknownThing = unknown_thing;
 
 		return state;
 	}

@@ -179,18 +179,22 @@ abstract class Reader {
 		return result;
 	}
 
-	protected readWorld(stream: InputStream, xRange: MyRange, yRange: MyRange) {
+	protected readWorld(stream: InputStream, xRange: MyRange, yRange: MyRange): World {
+		const world = new World();
+
 		for (let y = yRange.start; y < yRange.end; y++) {
 			for (let x = xRange.start; x < xRange.end; x++) {
-				this.readWorldItem(stream, x, y);
+				const item = this.readWorldItem(stream, x, y);
+				world.setWorldItem(x, y, item);
 			}
 		}
 		this.readWorldDetails(stream);
+		return world;
 	}
 
-	protected readPuzzles(stream: InputStream): Uint16Array {
+	protected readPuzzles(stream: InputStream): Int16Array {
 		let count = stream.getUint16();
-		return stream.getUint16Array(count);
+		return stream.getInt16Array(count);
 	}
 }
 
