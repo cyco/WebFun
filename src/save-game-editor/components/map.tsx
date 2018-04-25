@@ -19,6 +19,7 @@ class Map extends Component {
 	public zones: Zone[];
 	public palette: ColorPalette;
 	public location: Point;
+	public locatorTile: LocatorTile;
 
 	private _canvas: HTMLCanvasElement = ((
 		<canvas width={280} height={280} />
@@ -56,7 +57,7 @@ class Map extends Component {
 		if (!this.location) return;
 
 		this._here = (
-			<div className={"here " + this.tileSheet.cssClassNameForTile(LocatorTile.Here)} />
+			<div className={"here " + this.tileSheet.cssClassNameForTile(this.locatorTile.here)} />
 		);
 
 		this._here.style.left = `${this.location.x * TileSize}px`;
@@ -97,7 +98,7 @@ class Map extends Component {
 	}
 
 	private _tileForWorldItem({ visited, solved_1, zoneId }: WorldItem): Tile {
-		let tile = LocatorTile.ForZone(this.zones[zoneId], visited);
+		let tile = this.locatorTile.forZone(this.zones[zoneId], visited);
 		if (tile instanceof Array) tile = tile[solved_1 ? 1 : 0];
 
 		return this.tiles[tile];

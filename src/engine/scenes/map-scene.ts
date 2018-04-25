@@ -1,7 +1,8 @@
 import { CheatCodeInput, Invincibility, UnlimitedAmmo, Weapons } from "src/engine/cheats";
 import { World } from "src/engine/generation";
 import { Tile, ZoneType } from "src/engine/objects";
-import { LocatorTile, Planet } from "src/engine/types";
+import { Planet } from "src/engine/types";
+import LocatorTile from "src/engine/type/yoda/locator-tile";
 import Settings from "src/settings";
 import { Point, Size } from "src/util";
 import Zone from "../objects/zone";
@@ -16,7 +17,12 @@ class MapScene extends Scene {
 	static readonly LOCATOR_TICKS = 10;
 	private _ticks: number = 0;
 	private _location: Tile = null;
-	private _cheatInput = new CheatCodeInput([new Weapons(), new UnlimitedAmmo(), new Invincibility()]);
+	private _cheatInput = new CheatCodeInput([
+		new Weapons(),
+		new UnlimitedAmmo(),
+		new Invincibility()
+	]);
+	private _locatorTile = new LocatorTile();
 
 	isOpaque() {
 		return true;
@@ -26,7 +32,7 @@ class MapScene extends Scene {
 		this._cheatInput.reset();
 
 		this._ticks = 4;
-		this._location = this.engine.data.tiles[LocatorTile.Here];
+		this._location = this.engine.data.tiles[this._locatorTile.here];
 		this.engine.inputManager.mouseDownHandler = (p: Point) => this.mouseDown(p);
 		this.engine.inputManager.keyDownHandler = (e: KeyboardEvent) => {
 			this._cheatInput.addCharacter(String.fromCharCode(e.keyCode).toLowerCase());
@@ -128,19 +134,24 @@ class MapScene extends Scene {
 				let tile = this._tileForZone(zone);
 
 				if (tile && tile.image && tile.image)
-					renderer.renderImage(tile.image, offsetX + x * TileWidth, offsetY + y * TileHeight);
+					renderer.renderImage(
+						tile.image,
+						offsetX + x * TileWidth,
+						offsetY + y * TileHeight
+					);
 			}
 		}
 
 		if ((this._ticks % (2 * MapScene.LOCATOR_TICKS)) / MapScene.LOCATOR_TICKS < 1) {
 			const x = offsetX + TileWidth * state.worldLocation.x;
 			const y = offsetY + TileHeight * state.worldLocation.y;
-			if (this._location && this._location.image) renderer.renderImage(this._location.image, x, y);
+			if (this._location && this._location.image)
+				renderer.renderImage(this._location.image, x, y);
 		}
 	}
 
 	private _tileForZone(zone: Zone): Tile {
-		let tile = LocatorTile.ForZone(zone);
+		let tile = this._locatorTile.forZone(zone);
 		if (tile instanceof Array) tile = tile[zone.solved ? 1 : 0];
 
 		return this.engine.data.tiles[tile];
