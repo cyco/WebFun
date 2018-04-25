@@ -13,7 +13,6 @@ type MyRange = { start: number; end: number };
 
 abstract class Reader {
 	protected _stream: InputStream;
-	protected _state: SaveState;
 	protected _data: GameData;
 	private _type: GameType;
 
@@ -21,7 +20,6 @@ abstract class Reader {
 
 	constructor(stream: InputStream, type: GameType) {
 		this._stream = stream;
-		this._state = new SaveState();
 		this._data = null;
 		this._type = type;
 	}
