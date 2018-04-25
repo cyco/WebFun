@@ -11,6 +11,7 @@ class CharMovementType {
 	public static readonly Patrol = new CharMovementType();
 	public static readonly Unspecific7 = new CharMovementType();
 	public static readonly Unspecific8 = new CharMovementType();
+	public static readonly UnknownIndyOnly = new CharMovementType();
 
 	public static readonly knownTypes = [
 		CharMovementType.None,
@@ -18,7 +19,7 @@ class CharMovementType {
 		CharMovementType.Unspecific2,
 		CharMovementType.Unspecific3,
 		CharMovementType.Sit,
-		undefined,
+		CharMovementType.UnknownIndyOnly,
 		CharMovementType.Unspecific4,
 		CharMovementType.Unspecific5,
 		CharMovementType.Unspecific6,
@@ -58,6 +59,8 @@ class CharMovementType {
 				return "Unspecific7";
 			case CharMovementType.Unspecific8:
 				return "Unspecific";
+			case CharMovementType.UnknownIndyOnly:
+				return "Unknown (Indy)";
 			default:
 				return "None";
 		}
