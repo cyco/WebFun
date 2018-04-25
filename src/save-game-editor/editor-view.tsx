@@ -19,6 +19,7 @@ import { Reader as SaveGameReaderFactory, SaveState } from "src/engine/save-game
 import { Component } from "src/ui";
 import { CSSTileSheet } from "src/editor";
 import { ImageFactory } from "src/engine/rendering/canvas";
+import { Yoda as GameTypeYoda } from "src/engine/type";
 
 import "./editor-view.scss";
 
@@ -92,7 +93,7 @@ class EditorView extends Component {
 
 				<SegmentControl onsegmentchange={(segment: Segment) => this._showSegment(segment)}>
 					<Segment selected>World</Segment>
-					<Segment>Dagobah</Segment>
+					{state.type === GameTypeYoda && <Segment>Dagobah</Segment>}
 					<Segment>Inventory</Segment>
 				</SegmentControl>
 
@@ -106,15 +107,17 @@ class EditorView extends Component {
 					tileSheet={this._tileSheet}
 				/>
 
-				<Map
-					className="content Dagobah"
-					world={state.dagobah}
-					location={state.onDagobah ? state.positionOnWorld : null}
-					tiles={this._gameData.tiles}
-					zones={this._gameData.zones}
-					palette={this._palette}
-					tileSheet={this._tileSheet}
-				/>
+				{state.type === GameTypeYoda && (
+					<Map
+						className="content Dagobah"
+						world={state.dagobah}
+						location={state.onDagobah ? state.positionOnWorld : null}
+						tiles={this._gameData.tiles}
+						zones={this._gameData.zones}
+						palette={this._palette}
+						tileSheet={this._tileSheet}
+					/>
+				)}
 
 				<Inventory
 					className="content Inventory"
