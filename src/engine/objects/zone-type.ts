@@ -7,6 +7,7 @@ class ZoneType {
 	public static readonly BlockadeSouth = new ZoneType();
 	public static readonly BlockadeEast = new ZoneType();
 	public static readonly BlockadeWest = new ZoneType();
+	public static readonly UnknownIndyOnly = new ZoneType();
 	public static readonly TravelStart = new ZoneType();
 	public static readonly TravelEnd = new ZoneType();
 	public static readonly Room = new ZoneType();
@@ -36,7 +37,7 @@ class ZoneType {
 		ZoneType.Goal,
 		ZoneType.Town,
 
-		undefined,
+		ZoneType.UnknownIndyOnly,
 
 		ZoneType.Win,
 		ZoneType.Lose,
@@ -89,6 +90,8 @@ class ZoneType {
 				return "Find";
 			case ZoneType.FindTheForce:
 				return "Find The Force";
+			case ZoneType.UnknownIndyOnly:
+				return "Unknown (indy)";
 
 			default:
 				return "Unknown";
