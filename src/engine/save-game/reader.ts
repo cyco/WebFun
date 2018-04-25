@@ -9,7 +9,7 @@ import { Planet, WorldSize } from "../types";
 import World from "./world";
 import WorldItem from "./world-item";
 
-type MyRange = { start: number; end: number };
+type Range = { start: number; end: number };
 
 abstract class Reader {
 	protected _stream: InputStream;
@@ -56,39 +56,34 @@ abstract class Reader {
 	protected readRooms(stream: InputStream, zoneID: number, start: number): void {
 		let count: number;
 		let zoneIDs: [number, boolean][] = [];
-		{
-			let zone = this._data.zones[zoneID];
-			let hotspots = zone.hotspots;
-			count = hotspots.length;
 
-			for (let i = start; i < count; i++) {
-				start = i;
-				let door;
-				{
-					let hotspot = hotspots[i];
-					if (HotspotType.DoorIn === hotspot.type) {
-						if (hotspot.arg === -1) {
-							continue;
-						}
+		let zone = this._data.zones[zoneID];
+		let hotspots = zone.hotspots;
+		count = hotspots.length;
 
-						door = hotspot.arg;
-					} else {
-						continue;
-					}
+		for (let i = start; i < count; i++) {
+			start = i;
+			let door;
+			let hotspot = hotspots[i];
+			if (HotspotType.DoorIn === hotspot.type) {
+				if (hotspot.arg === -1) {
+					continue;
 				}
 
-				let zoneID = stream.getInt16();
-				let visited = this.readBool(stream);
+				door = hotspot.arg;
+			} else continue;
 
-				console.assert(
-					zoneID == door,
-					"Expected door to lead to zone {} instead of {}",
-					zoneID,
-					door
-				);
-				zoneIDs.push([door, visited]);
-				break;
-			}
+			let zoneID = stream.getInt16();
+			let visited = this.readBool(stream);
+
+			console.assert(
+				zoneID == door,
+				"Expected door to lead to zone {} instead of {}",
+				zoneID,
+				door
+			);
+			zoneIDs.push([door, visited]);
+			break;
 		}
 
 		for (const [zoneID, visited] of zoneIDs) {
@@ -118,8 +113,8 @@ abstract class Reader {
 				let planet = stream.getInt16();
 			}
 
-			let tile_count = zone.size.width * zone.size.height * Zone.LAYERS;
-			zone.tileIDs = stream.getInt16Array(tile_count);
+			let tileCount = zone.size.width * zone.size.height * Zone.LAYERS;
+			zone.tileIDs = stream.getInt16Array(tileCount);
 		}
 
 		let __visited = this.readBool(stream);
@@ -177,7 +172,7 @@ abstract class Reader {
 		return result;
 	}
 
-	protected readWorld(stream: InputStream, xRange: MyRange, yRange: MyRange): World {
+	protected readWorld(stream: InputStream, xRange: Range, yRange: Range): World {
 		const world = new World();
 
 		for (let y = yRange.start; y < yRange.end; y++) {
