@@ -90,7 +90,7 @@ class IndyReader extends Reader {
 		let solved_2 = this.readBool(stream);
 
 		let zoneID = stream.getInt16();
-		let field_c = stream.getInt16();
+		let field_C = stream.getInt16();
 
 		let requiredItemID = stream.getInt16();
 		let findItemID = stream.getInt16();
@@ -99,7 +99,21 @@ class IndyReader extends Reader {
 		// possibly zone or puzzle type
 		let unkonwn = stream.getInt16();
 
-		return new WorldItem();
+		const worldItem = new WorldItem();
+		worldItem.visited = visited;
+		worldItem.solved_1 = solved_1 ? 1 : 0;
+		worldItem.solved_2 = solved_2 ? 1 : 0;
+		// worldItem.solved_3 = solved_3 ? 1 : 0;
+		// worldItem.solved_4 = solved_4 ? 1 : 0;
+		worldItem.zoneId = zoneID;
+		worldItem.field_C = field_C;
+		worldItem.required_item_id = requiredItemID;
+		worldItem.find_item_id = findItemID;
+		// worldItem.field_Ea = field_ea;
+		// worldItem.additionalRequiredItem = additionalRequiredItem;
+		// worldItem.field_16 = field_16;
+		worldItem.npc_id = npcID;
+		return worldItem;
 	}
 
 	protected readHotspot(stream: InputStream, oldHotspot: Hotspot): Hotspot {
