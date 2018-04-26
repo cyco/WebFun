@@ -32,6 +32,8 @@ class Map extends Component {
 	connectedCallback() {
 		super.connectedCallback();
 
+		this.style.backgroundColor = this.locatorTile.backgroundColor;
+
 		if (!this._renderer) {
 			this._buildURHere();
 			this._buildRenderer();
@@ -90,6 +92,7 @@ class Map extends Component {
 			for (let x = 0; x < 10; x++) {
 				const worldItem = this.world.getWorldItem(x, y);
 				const tile = this._tileForWorldItem(worldItem);
+				if (!tile) continue;
 				const tileImage = this._imageMap[tile.id];
 
 				this._renderer.renderImage(tileImage, x * TileSize, y * TileSize);
@@ -99,6 +102,7 @@ class Map extends Component {
 
 	private _tileForWorldItem({ visited, solved_1, zoneId }: WorldItem): Tile {
 		let tile = this.locatorTile.forZone(this.zones[zoneId], visited);
+		if (!tile) return null;
 		if (tile instanceof Array) tile = tile[solved_1 ? 1 : 0];
 
 		return this.tiles[tile];
