@@ -84,7 +84,9 @@ class EditorView extends Component {
 
 				<div className="current-weapon">
 					<TileComponent tile={currentWeapon} tileSheet={tileSheet} />
-					<AmmoControl vertical value={state.currentAmmo} />
+					{state.type === GameTypeYoda && (
+						<AmmoControl vertical value={state.currentAmmo} />
+					)}
 				</div>
 
 				<Health health={state.livesLeft * 100 - state.damageTaken} />
