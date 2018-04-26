@@ -1,10 +1,15 @@
 import { HotspotType, Zone, ZoneType } from "src/engine/objects";
 import Settings from "src/settings";
 import LocatorTile from "src/engine/types/locator-tile";
+import { rgb } from "src/util";
 
 export default class extends LocatorTile {
 	get here() {
 		return 639;
+	}
+
+	get backgroundColor() {
+		return rgb(79, 79, 15);
 	}
 
 	forZone(zone: Zone, visited?: boolean): number | [number] | [number, number] {
