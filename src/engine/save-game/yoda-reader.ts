@@ -131,8 +131,8 @@ class YodaReader extends Reader {
 		worldItem.find_item_id = find_item_id;
 		worldItem.field_Ea = field_ea;
 		worldItem.additionalRequiredItem = additionalRequiredItem;
-		worldItem.field_16 = worldItem.field_16;
-		worldItem.npc_id = worldItem.npc_id;
+		worldItem.field_16 = field_16;
+		worldItem.npc_id = npc_id;
 
 		return worldItem;
 	}
