@@ -8,13 +8,16 @@ export default class extends LocatorTile {
 	}
 
 	forZone(zone: Zone, visited?: boolean): number | [number] | [number, number] {
-		if (!zone) return 378;
+		if (!zone) return -1;
 
 		if (visited === false || (visited === undefined && !zone.visited && !Settings.revealWorld))
-			return 378;
+			return 1138;
 
 		switch (zone.type) {
 			case ZoneType.Empty:
+				if (this._hasTeleporterHotspot(zone)) {
+					return [1139, 1131];
+				}
 				return 377;
 			case ZoneType.Town:
 				return [375];
