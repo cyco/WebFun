@@ -17,10 +17,6 @@ interface RegExpConstructor {
 	escape: (_: string) => string;
 }
 
-interface ObjectConstructor {
-	values: (thing: any) => any[];
-}
-
 interface Object {
 	each<T>(callback: ((key: string, value: T) => void)): void;
 }

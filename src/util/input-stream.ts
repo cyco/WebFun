@@ -2,10 +2,10 @@ import Stream from "./stream";
 import { ArrayBuffer, DataView } from "src/std";
 
 class InputStream extends Stream {
-	private _arrayBuffer: ArrayBuffer;
+	private _arrayBuffer: ArrayBuffer | SharedArrayBuffer;
 	private _dataView: DataView;
 
-	constructor(data: ArrayBuffer | string) {
+	constructor(data: ArrayBuffer | SharedArrayBuffer | string) {
 		super();
 
 		this.endianess = Stream.ENDIAN.LITTLE;
@@ -21,7 +21,9 @@ class InputStream extends Stream {
 		return this.offset === this.length;
 	}
 
-	_makeArrayBuffer(data: ArrayBuffer | string): ArrayBuffer {
+	_makeArrayBuffer(
+		data: ArrayBuffer | SharedArrayBuffer | string
+	): ArrayBuffer | SharedArrayBuffer {
 		if (typeof data !== "string") {
 			return data;
 		}
