@@ -1,10 +1,4 @@
-import {
-	ColorPalette,
-	DataFileReader,
-	GameData,
-	ManualDataFileReader,
-	GameTypeYoda
-} from "src/engine";
+import { ColorPalette, GameData, ManualDataFileReader, GameTypeYoda } from "src/engine";
 import { Tile } from "src/engine/objects";
 import { AbstractImageFactory } from "src/engine/rendering";
 import Settings from "src/settings";

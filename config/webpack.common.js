@@ -15,9 +15,7 @@ module.exports = {
 			"test-helpers": Path.resolve(Paths.projectRoot, "test/helpers"),
 			"test-fixtures": Path.resolve(Paths.projectRoot, "test/fixtures"),
 			fs: Path.resolve(Paths.projectRoot, "test/helpers/polyfill/fs.js"),
-			path: Path.resolve(Paths.projectRoot, "test/helpers/polyfill/path.js"),
-			// disable zlib (imported from KaitaiStream)
-			zlib: Path.resolve(Paths.sourceRoot, "util/empty.js")
+			path: Path.resolve(Paths.projectRoot, "test/helpers/polyfill/path.js")
 		},
 		unsafeCache: true
 	},
@@ -27,11 +25,6 @@ module.exports = {
 	plugins: [],
 	module: {
 		rules: [
-			{
-				/* HACK: Uglify can't handle KaitaiStream's backticks */
-				test: /KaitaiStream\.js$/,
-				loader: "babel-loader"
-			},
 			{
 				test: /\.jsx?$/,
 				exclude: /node_modules/,
@@ -51,11 +44,6 @@ module.exports = {
 				test: /\.glsl?$/,
 				loader: "webpack-glsl-loader",
 				exclude: /node_modules/
-			},
-			{
-				test: /\.ksy$/,
-				exclude: /node_modules/,
-				loader: "kaitai-struct-loader"
 			},
 			{
 				test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,

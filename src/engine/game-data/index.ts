@@ -1,7 +1,6 @@
 import { Uint8Array } from "src/std";
 import { Tile, Puzzle, Zone, Char } from "src/engine/objects";
 
-import fromKaitai from "./from-kaitai";
 import fromHandwritten from "./from-handwritten";
 
 class GameData {
@@ -15,8 +14,7 @@ class GameData {
 	private _setup: Uint8Array;
 
 	constructor(raw: any) {
-		if (raw.catalog) fromKaitai(this, raw);
-		else fromHandwritten(this, raw);
+		fromHandwritten(this, raw);
 	}
 
 	copy() {
