@@ -29,7 +29,7 @@ export const parseAction = (stream: InputStream, data: any) => {
 	}
 
 	let instructionCount = stream.getUint16();
-	const instructions = new Array(conditionCount);
+	const instructions = new Array(instructionCount);
 	for (let i = 0; i < instructionCount; i++) {
 		instructions[i] = parseInstruction(stream);
 	}
