@@ -158,7 +158,6 @@ const makeZone = (raw: any, idx: number, data: any) => {
 
 	zone.actions = raw.actions.map((raw: any, i: number) => makeAction(raw, i, zone, data));
 	zone.tileStore = data.tiles;
-	zone.zoneStore = data.zones;
 
 	return zone;
 };
@@ -173,4 +172,5 @@ export default (data: any, raw: any) => {
 	data._characters = raw.characters.map((r: any, i: number) => makeCharacter(r, i, data));
 	data._puzzles = raw.puzzles.map((r: any, i: number) => makePuzzle(r, i, data));
 	data._zones = raw.zones.map((r: any, i: number) => makeZone(r, i, data));
+	data._zones.forEach((z: Zone, idx: number, store: Zone[]) => ((z as any).zoneStore = store));
 };
