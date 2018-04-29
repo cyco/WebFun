@@ -170,14 +170,14 @@ class GameDataSerializer {
 				stream.writeUint16(action.conditions.length);
 				action.conditions.forEach((condition: Condition) => {
 					stream.writeUint16(condition.opcode);
-					stream.writeInt16Array(condition.arguments.padEnd(5, 0));
+					stream.writeInt16Array(Array.from(condition.arguments).padEnd(5, 0));
 					stream.writeLengthPrefixedString(condition.text);
 				});
 
 				stream.writeUint16(action.instructions.length);
 				action.instructions.forEach((instruction: Instruction) => {
 					stream.writeUint16(instruction.opcode);
-					stream.writeInt16Array(instruction.arguments.padEnd(5, 0));
+					stream.writeInt16Array(Array.from(instruction.arguments).padEnd(5, 0));
 					stream.writeLengthPrefixedString(instruction.text);
 				});
 			});
