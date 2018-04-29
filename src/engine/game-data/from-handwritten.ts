@@ -149,10 +149,10 @@ const makeZone = (raw: any, idx: number, data: any) => {
 	zone.tileIDs = raw.tileIDs;
 	zone.hotspots = raw.hotspots.map((d: any) => makeHotspot(d, data));
 	zone.npcs = raw.npcs.map((d: any, idx: number) => makeNPC(d, idx, data));
-	zone.goalItems = raw.goalItemIDs.map((id: number) => data._tiles[id]);
-	zone.requiredItems = raw.requiredItemIDs.map((id: number) => data._tiles[id]);
-	zone.providedItems = raw.providedItemIDs.map((id: number) => data._tiles[id]);
-	zone.puzzleNPCs = raw.puzzleNPCIDs.map((id: number) => data._tiles[id]);
+	zone.goalItems = Array.from(raw.goalItemIDs).map((id: number) => data._tiles[id]);
+	zone.requiredItems = Array.from(raw.requiredItemIDs).map((id: number) => data._tiles[id]);
+	zone.providedItems = Array.from(raw.providedItemIDs).map((id: number) => data._tiles[id]);
+	zone.puzzleNPCs = Array.from(raw.puzzleNPCIDs).map((id: number) => data._tiles[id]);
 	zone.izaxUnknown = raw.unknown.length;
 	zone.izx4Unknown = raw.unknown;
 
