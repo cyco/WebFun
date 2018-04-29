@@ -1,4 +1,10 @@
-import { ColorPalette, DataFileReader, GameData } from "src/engine";
+import {
+	ColorPalette,
+	DataFileReader,
+	GameData,
+	ManualDataFileReader,
+	GameTypeYoda
+} from "src/engine";
 import { Tile } from "src/engine/objects";
 import { AbstractImageFactory } from "src/engine/rendering";
 import Settings from "src/settings";
@@ -46,13 +52,13 @@ class Loader extends EventTarget {
 		const loader = new FileLoader(this._dataUrl);
 		loader.onprogress = ({ detail: { progress } }) => this._progress(0, progress);
 		loader.onfail = reason => this._fail(reason);
-		loader.onload = ({ detail: { kaitaiStream } }) => this._readGameData(kaitaiStream);
+		loader.onload = ({ detail: { stream } }) => this._readGameData(stream);
 		loader.load();
 	}
 
 	_readGameData(stream: InputStream) {
 		this._progress(1, 0);
-		this._rawData = new DataFileReader(stream);
+		this._rawData = ManualDataFileReader(stream, GameTypeYoda);
 		this._progress(1, 1);
 		this._loadPalette();
 	}
@@ -73,13 +79,12 @@ class Loader extends EventTarget {
 	_loadSetupImage(palette: Uint8Array) {
 		this._progress(3, 0);
 
-		const setupImageCategory = this._rawData.catalog.find((c: any) => c.type === "STUP");
-		if (!setupImageCategory) {
+		const pixels = this._rawData.setup;
+		if (!pixels) {
 			this._fail("Setup image not found in game file!");
 			return;
 		}
 
-		const pixels = setupImageCategory.content.pixels;
 		this.dispatchEvent(Events.DidLoadSetupImage, {
 			pixels,
 			palette
