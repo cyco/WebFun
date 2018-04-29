@@ -1,4 +1,3 @@
-import { KaitaiStream } from "src/libs";
 import EventTarget from "./event-target";
 import InputStream from "./input-stream";
 
@@ -14,15 +13,6 @@ class FileLoader extends EventTarget {
 	public onprogress: (_: CustomEvent) => void;
 	public onload: (_: CustomEvent) => void;
 	private _path: string;
-
-	public static async loadAsKaitaiStream(path: string): Promise<KaitaiStream> {
-		return new Promise<KaitaiStream>((resolve, reject) => {
-			const loader = new this(path);
-			loader.onload = (e: any) => resolve(e.detail.kaitaiStream);
-			loader.onfail = reject;
-			loader.load();
-		});
-	}
 
 	public static async loadAsStream(path: string): Promise<InputStream> {
 		return new Promise<InputStream>((resolve, reject) => {
@@ -54,10 +44,8 @@ class FileLoader extends EventTarget {
 
 	_didLoad(reader: XMLHttpRequest) {
 		const stream = new InputStream(reader.response);
-		const kaitaiStream = new KaitaiStream(reader.response);
 		this.dispatchEvent(Event.Load, {
 			stream,
-			kaitaiStream,
 			arraybuffer: reader.response
 		});
 	}

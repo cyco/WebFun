@@ -3,8 +3,7 @@ import { DiscardingOutputStream, download, OutputStream } from "src/util";
 import DataManager from "./data-manager";
 import GameDataSerializer from "./game-data-serializer";
 import FilePicker from "src/ui/file-picker";
-import DataFileReader from "src/engine/file-format/yodesk.js";
-import { KaitaiStream } from "src/libs";
+import { ManualDataFileReader, GameTypeYoda } from "src/engine";
 import GameData from "src/engine/game-data";
 import "./editor.scss";
 import { FullscreenWindow } from "src/ui/components";
@@ -68,9 +67,8 @@ class Editor extends FullscreenWindow {
 		const [file] = await filePicker.pickFile();
 		if (!file) return;
 
-		const buffer = await file.readAsArrayBuffer();
-		const stream = new KaitaiStream(buffer);
-		const rawData = new DataFileReader(stream);
+		const stream = await file.provideInputStream();
+		const rawData = ManualDataFileReader(stream, GameTypeYoda);
 		const data = new GameData(rawData);
 
 		this.data = new DataManager(data, this.data.palette);
@@ -78,9 +76,11 @@ class Editor extends FullscreenWindow {
 
 	set data(dm) {
 		this._data = dm;
-		this._inspectors.each<AbstractInspector>((key: string, inspector: AbstractInspector): void => {
-			inspector.data = dm;
-		});
+		this._inspectors.each<AbstractInspector>(
+			(key: string, inspector: AbstractInspector): void => {
+				inspector.data = dm;
+			}
+		);
 	}
 
 	get data() {
