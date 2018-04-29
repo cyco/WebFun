@@ -17,6 +17,7 @@ let getFixtureData = (name, callback) => {
 	xhr.responseType = "arraybuffer";
 	xhr.open("GET", url, true);
 	xhr.onload = () => callback(xhr.response);
+	xhr.onerror = () => callback(null);
 	xhr.send();
 };
 
