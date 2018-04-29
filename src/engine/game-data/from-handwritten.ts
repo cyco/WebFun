@@ -53,6 +53,10 @@ const makeCharacter = (raw: any, idx: number, data: any) => {
 	char.garbage1 = raw.probablyGarbage1;
 	char.garbage2 = raw.probablyGarbage2;
 
+	char.damage = raw.damage;
+	char.health = raw.health;
+	char.reference = raw.reference;
+
 	return char;
 };
 
@@ -138,7 +142,7 @@ const makeNPC = (raw: any, idx: number, data: any) => {
 const makeZone = (raw: any, idx: number, data: any) => {
 	const zone = new MutableZone();
 
-	zone.id = raw.idx;
+	zone.id = idx;
 	zone.planet = Planet.fromNumber(raw.planet);
 	zone.size = new Size(raw.width, raw.height);
 	zone.type = ZoneType.fromNumber(raw.zoneType);

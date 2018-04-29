@@ -39,7 +39,10 @@ const parseCharacter = (stream: InputStream, data: any, gameType: GameType) => {
 		probablyGarbage2,
 		frame1,
 		frame2,
-		frame3
+		frame3,
+		damage: -1,
+		health: -1,
+		reference: -1
 	};
 };
 
@@ -64,17 +67,21 @@ export const parseCharacterAux = (stream: InputStream, data: any) => {
 		let index = stream.getInt16();
 		if (index === -1) break;
 
-		parseCharacterAux1(stream, data);
+		parseCharacterAux1(stream, data, index);
 	} while (true);
 };
 
-export const parseCharacterAux1 = (stream: InputStream, data: any) => {
+export const parseCharacterAux1 = (stream: InputStream, data: any, index: number) => {
 	let damage = stream.getInt16();
+	data.characters[index].damage = damage;
 };
 
-export const parseCharacterWeapon = (stream: InputStream, data: any) => {
+export const parseCharacterWeapon = (stream: InputStream, data: any, index: number) => {
 	let reference = stream.getInt16();
 	let health = stream.getInt16();
+
+	data.characters[index].health = health;
+	data.characters[index].reference = reference;
 };
 
 export const parseCharacterWeapons = (stream: InputStream, data: any): void => {
@@ -83,6 +90,6 @@ export const parseCharacterWeapons = (stream: InputStream, data: any): void => {
 		let index = stream.getInt16();
 		if (index === -1) break;
 
-		parseCharacterWeapon(stream, data);
+		parseCharacterWeapon(stream, data, index);
 	} while (true);
 };
