@@ -9,11 +9,19 @@ describe("Settings", () => {
 		expect(Settings.autostartEngine).toBeBoolean();
 	});
 
-	it("also provides access to urls for game data", () => {
-		expect(Settings.url.data).toContain("yoda.data");
-		expect(Settings.url.palette).toContain("yoda.pal");
+	it("also provides access to urls for yoda's game data", () => {
+		expect(Settings.url.yoda.data).toContain("yoda.data");
+		expect(Settings.url.yoda.palette).toContain("yoda.pal");
 
-		expect(Settings.url.sfx("youwin.wav")).toContain("youwin");
-		expect(Settings.url.sfx("youwin.wav")).toContain("game-data");
+		expect(Settings.url.yoda.sfx("youwin.wav")).toContain("youwin");
+		expect(Settings.url.yoda.sfx("youwin.wav")).toContain("game-data");
+	});
+
+	it("also provides access to urls for indy's game data", () => {
+		expect(Settings.url.indy.data).toContain("indy.data");
+		expect(Settings.url.indy.palette).toContain("indy.pal");
+
+		expect(Settings.url.indy.sfx("youwin.wav")).toContain("youwin");
+		expect(Settings.url.indy.sfx("youwin.wav")).toContain("game-data");
 	});
 });

@@ -19,18 +19,16 @@ let Settings: { [_: string]: any } = {
 	logLevel: LogLevel.Debug,
 
 	url: {
-		data: "./game-data/yoda.data",
-		palette: "./game-data/yoda.pal",
-		sfx: (file: string) => `./game-data/sfx-yoda/${encodeURIComponent(file)}`,
-
 		yoda: {
 			data: "./game-data/yoda.data",
-			palette: "./game-data/yoda.pal"
+			palette: "./game-data/yoda.pal",
+			sfx: (file: string) => `./game-data/sfx-yoda/${encodeURIComponent(file)}`
 		},
 
 		indy: {
 			data: "./game-data/indy.data",
-			palette: "./game-data/indy.pal"
+			palette: "./game-data/indy.pal",
+			sfx: (file: string) => `./game-data/sfx-indy/${encodeURIComponent(file)}`
 		}
 	},
 	// app state

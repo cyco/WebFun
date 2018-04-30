@@ -34,8 +34,8 @@ class Loader extends EventTarget {
 	constructor() {
 		super();
 
-		this._dataUrl = Settings.url.data;
-		this._paletteUrl = Settings.url.palette;
+		this._dataUrl = Settings.url.yoda.data;
+		this._paletteUrl = Settings.url.yoda.palette;
 
 		this.registerEvents(Events);
 	}
