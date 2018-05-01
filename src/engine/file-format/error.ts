@@ -4,10 +4,6 @@ import { InputStream } from "src/util";
 export const error = (message: string | Error | ParseError, stream?: InputStream) => {
 	let error: ParseError = null;
 
-	if (stream) {
-		console.log(`at 0x${stream.offset.toString(0x10).padStart(2)}`);
-	}
-
 	if (message instanceof ParseError) {
 		error = message;
 	} else if (message instanceof Error) {
