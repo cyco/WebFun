@@ -20,4 +20,22 @@ describe("Object.each", () => {
 		expect(keys).toEqual(["key1", "key2"]);
 		expect(values).toEqual(["test", "test"]);
 	});
+
+	it("is protected against stupid prototype modifications", () => {
+		Object.prototype.stupidExtension = true;
+
+		const object = {};
+		const keys = [];
+		const values = [];
+
+		object.each((key, value) => {
+			keys.push(key);
+			values.push(value);
+		});
+
+		expect(keys).toEqual([]);
+		expect(values).toEqual([]);
+
+		delete Object.prototype.stupidExtension;
+	});
 });

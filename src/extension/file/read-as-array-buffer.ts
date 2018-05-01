@@ -1,3 +1,5 @@
+import { FileReader } from "src/std.dom";
+
 const readAsArrayBuffer = function(): Promise<ArrayBuffer> {
 	return new Promise<ArrayBuffer>((resolve, reject) => {
 		const fileReader = new FileReader();
