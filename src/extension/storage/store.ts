@@ -16,8 +16,6 @@ const store = function(key: string, object: JSONValue): JSONValue {
 	return object;
 };
 
-if (typeof Storage !== "undefined") {
-	Storage.prototype.store = Storage.prototype.store || store;
-}
+Storage.prototype.store = Storage.prototype.store || store;
 
 export default store;
