@@ -9,7 +9,6 @@ import Metronome from "./metronome";
 import PersistentState from "./persistent-state";
 import { ColorPalette } from "./rendering";
 import CanvasRenderer from "./rendering/canvas/canvas-renderer";
-import WebGLRenderer from "./rendering/webgl/renderer";
 import TileSheetCanvasRenderer from "./rendering/canvas-tilesheet/renderer";
 import { SaveGameReader, Writer as SaveGameWriter } from "./save-game";
 import SceneManager from "./scene-manager";
@@ -34,7 +33,6 @@ export {
 	Story,
 	Yoda,
 	CanvasRenderer,
-	WebGLRenderer,
 	ManualDataFileReader,
 	SaveGameReader,
 	SaveGameWriter
