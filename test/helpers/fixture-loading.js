@@ -12,13 +12,28 @@ let getFixtureContent = name => {
 };
 
 let getFixtureData = (name, callback) => {
-	const url = buildFixtureUrl(name);
-	const xhr = new XMLHttpRequest();
-	xhr.responseType = "arraybuffer";
-	xhr.open("GET", url, true);
-	xhr.onload = () => callback(xhr.response);
-	xhr.onerror = () => callback(null);
-	xhr.send();
+	return new Promise(resolve => {
+		const url = buildFixtureUrl(name);
+		const xhr = new XMLHttpRequest();
+		xhr.responseType = "arraybuffer";
+		xhr.open("GET", url, true);
+		xhr.onload = () => {
+			const response = xhr.response;
+			if (!response) {
+				callback && callback(null);
+				resolve(null);
+				return;
+			}
+
+			callback && callback(response);
+			resolve(response);
+		};
+		xhr.onerror = () => {
+			callback && callback(null);
+			resolve(null);
+		};
+		xhr.send();
+	});
 };
 
 function buildFixtureUrl(name) {
