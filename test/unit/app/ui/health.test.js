@@ -4,6 +4,7 @@ describeComponent(Health, () => {
 	let subject;
 
 	beforeEach(() => (subject = render(Health)));
+	afterEach(() => subject.remove());
 
 	it("displays the hero's health in a circle", () => {
 		expect(subject.querySelector("svg")).not.toBe(null);
