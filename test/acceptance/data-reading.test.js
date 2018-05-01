@@ -29,4 +29,10 @@ describe("DataReading", () => {
 	it("reads indy's demo data without errors", parsesWithoutError(GameTypeIndy, "indy-demo.data"));
 	it("reads yoda's data without errors", parsesWithoutError(GameTypeYoda, "yoda.data"));
 	it("reads yoda's demo data without errors", parsesWithoutError(GameTypeYoda, "yoda-demo.data"));
+	it("throws an error when the data can not be parsed", async done => {
+		const data = await getFixtureData("someData");
+		expect(() => ManualDataFileReader(new InputStream(data), GameTypeYoda)).toThrow();
+		expect(() => ManualDataFileReader(new InputStream(data), GameTypeIndy)).toThrow();
+		done();
+	});
 });
