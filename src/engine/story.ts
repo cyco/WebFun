@@ -1,5 +1,5 @@
 import { DagobahGenerator, WorldGenerationError, WorldGenerator } from "src/engine/generation";
-import { Message, rand } from "src/util";
+import { rand } from "src/util";
 import Engine from "./engine";
 import World from "./generation/world";
 import { Planet, WorldSize } from "./types";
@@ -56,7 +56,6 @@ class Story {
 				if (e instanceof WorldGenerationError) success = false;
 			} finally {
 				if (!success) {
-					Message("--== YodaDocument::Reseed ==--");
 					this._reseeded = true;
 					effectiveSeed = rand();
 				}
