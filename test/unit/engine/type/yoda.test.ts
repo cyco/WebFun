@@ -13,6 +13,6 @@ describe("WebFun.Engine.Type.Yoda", () => {
 	});
 
 	it("is used to determine which tiles to show in map view", () => {
-		expect(subject.locatorTile.here).toEqual(639);
+		expect(subject.locatorTile.here).toEqual(0x345);
 	});
 });
