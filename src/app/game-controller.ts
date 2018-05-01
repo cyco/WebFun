@@ -7,7 +7,6 @@ import {
 	Metronome,
 	Story,
 	TileSheetCanvasRenderer,
-	WebGLRenderer,
 	ColorPalette
 } from "src/engine";
 import { Reader } from "src/engine/save-game";
@@ -69,15 +68,7 @@ class GameController extends EventTarget {
 		return engine;
 	}
 
-	_determineRenderer():
-		| typeof WebGLRenderer
-		| typeof CanvasRenderer
-		| typeof TileSheetCanvasRenderer {
-		if (WebGLRenderer.isSupported() && Settings.allowWebGL) {
-			console.log("Using WebGL renderer");
-			return WebGLRenderer;
-		}
-
+	_determineRenderer(): typeof CanvasRenderer | typeof TileSheetCanvasRenderer {
 		if (Settings.allowTileSheet) {
 			console.log("Using TileSheet Canvas renderer");
 			return TileSheetCanvasRenderer;

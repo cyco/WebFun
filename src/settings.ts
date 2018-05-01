@@ -1,7 +1,6 @@
 import { LogLevel, persistent } from "src/util";
 
 let Settings: { [_: string]: any } = {
-	allowWebGL: false,
 	allowTileSheet: false,
 
 	debug: true,
