@@ -41,7 +41,7 @@ class EventTarget_not_builtin {
 				? type
 				: new CustomEvent(type, {
 						detail: detail
-					});
+				  });
 
 		(<any>this)["on" + type] instanceof Function && (<any>this)["on" + type](event);
 
@@ -60,10 +60,9 @@ class EventTarget_not_builtin {
 	}
 
 	protected registerEvents(events: { [_: string]: string }): void {
-		for (let i in events) {
-			if (!events.hasOwnProperty(i)) continue;
-			(<any>this)["on" + events[i]] = null;
-		}
+		events.each(key => {
+			(<any>this)["on" + events[key]] = null;
+		});
 	}
 }
 

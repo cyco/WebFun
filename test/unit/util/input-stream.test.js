@@ -27,11 +27,15 @@ describe("InputStream", () => {
 		expect(stream.length).toBe(3);
 	});
 
+	it("has a method to check if more bytes are available", () => {
+		let stream = new InputStream("test");
+		expect(stream.isAtEnd()).toBeFalse();
+		stream.seek(stream.length, Stream.SEEK.SET);
+		expect(stream.isAtEnd()).toBeTrue();
+	});
+
 	it("throws a TypeError if the constructor argument can't be transformed into an array buffer", () => {
-		let stream;
-		expect(() => {
-			stream = new InputStream(5);
-		}).toThrow();
+		expect(() => new InputStream(5)).toThrow();
 	});
 
 	it("getUint8 returns 1 byte of unsigned data at the current position and advances the offset", () => {
@@ -172,6 +176,19 @@ describe("InputStream", () => {
 			expect(data[1]).toBe(0x4223);
 			expect(data[2]).toBe(0x2342);
 			expect(data[3]).toBe(0x172a);
+		});
+
+		it("getInt16Array reads an array of signed words (length is specified in elements)", () => {
+			let stream = new InputStream(buffer);
+
+			let data = stream.getInt16Array(2);
+			expect(data[0]).toBe(10775);
+			expect(data[1]).toBe(16931);
+
+			stream.seek(1, Stream.SEEK.SET);
+			data = stream.getInt16Array(2);
+			expect(data[0]).toBe(0x232a);
+			expect(data[1]).toBe(0x4242);
 		});
 
 		it("getUint16Array can be used even if the offset is not word aligned", () => {
