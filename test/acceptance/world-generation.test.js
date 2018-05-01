@@ -11,6 +11,7 @@ import GameData from "../../src/engine/game-data";
 import Story from "../../src/engine/story";
 import { Planet, WorldSize } from "../../src/engine/types";
 import Worlds from "test-fixtures/worlds.txt";
+import { Yoda } from "src/engine/type";
 
 let rawData = null;
 
@@ -79,11 +80,9 @@ const runnerFilter = map => {
 };
 const identity = (i, idx) => idx === 0;
 describe("World Generation", () => {
-	beforeAll(done => {
-		loadGameData(data => {
-			rawData = data;
-			done();
-		});
+	beforeAll(async done => {
+		rawData = await loadGameData(Yoda);
+		done();
 	});
 
 	const maps = PrepareExpectations(Worlds)
