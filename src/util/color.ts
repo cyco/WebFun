@@ -26,8 +26,6 @@ const hsv2rgb = (h: number, s: number, v: number): number[] => {
 			return rgbf2rgbi(vb * hm / 60 + b, b, v);
 		case 5:
 			return rgbf2rgbi(v, b, vb * (60 - hm) / 60 + b);
-		default:
-			console.assert(false);
 	}
 };
 
@@ -80,7 +78,13 @@ class Color {
 		c = c.toLowerCase();
 
 		let matches = HexRegex.exec(c);
-		if (matches) return [parseInt(matches[1], 0x10), parseInt(matches[2], 0x10), parseInt(matches[3], 0x10), 1];
+		if (matches)
+			return [
+				parseInt(matches[1], 0x10),
+				parseInt(matches[2], 0x10),
+				parseInt(matches[3], 0x10),
+				1
+			];
 
 		matches = RGBRegex.exec(c);
 		if (matches) {
@@ -89,7 +93,12 @@ class Color {
 
 		matches = RGBARegex.exec(c);
 		if (matches) {
-			return [parseInt(matches[1]), parseInt(matches[2]), parseInt(matches[3]), parseFloat(matches[4])];
+			return [
+				parseInt(matches[1]),
+				parseInt(matches[2]),
+				parseInt(matches[3]),
+				parseFloat(matches[4])
+			];
 		}
 
 		matches = HSVRegex.exec(c);

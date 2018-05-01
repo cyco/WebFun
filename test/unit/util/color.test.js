@@ -36,6 +36,7 @@ describe("Color", () => {
 			expect(hsv2rgb(180, 1, 1)).toEqual([0, 0xff, 0xff]);
 			expect(hsv2rgb(300, 1, 1)).toEqual([0xff, 0, 0xff]);
 			expect(hsv2rgb(60, 1, 1)).toEqual([0xff, 0xff, 0]);
+			expect(hsv2rgb(-420, 1, 1)).toEqual([0xff, 0, 0xff]);
 		});
 	});
 

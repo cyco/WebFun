@@ -24,10 +24,6 @@ class InputStream extends Stream {
 	_makeArrayBuffer(
 		data: ArrayBuffer | SharedArrayBuffer | string
 	): ArrayBuffer | SharedArrayBuffer {
-		if (typeof data !== "string") {
-			return data;
-		}
-
 		if (typeof data === "string") {
 			let binaryString = atob(data);
 			let len = binaryString.length;
@@ -37,7 +33,7 @@ class InputStream extends Stream {
 			return bytes.buffer;
 		}
 
-		throw new TypeError();
+		return data;
 	}
 
 	getCharacter(): string {

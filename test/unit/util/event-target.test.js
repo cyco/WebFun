@@ -23,8 +23,14 @@ describe("EventTarget", () => {
 		let directCallbackExecuted = false;
 		let globalCallbackExecuted = false;
 		let callbackPropertyExecuted = false;
+		let eventListenerObjectExecuted = false;
 		let continueWhenAllCallbacksAreExecuted = () => {
-			if (directCallbackExecuted && globalCallbackExecuted && callbackPropertyExecuted)
+			if (
+				directCallbackExecuted &&
+				globalCallbackExecuted &&
+				callbackPropertyExecuted &&
+				eventListenerObjectExecuted
+			)
 				done();
 		};
 
@@ -35,6 +41,12 @@ describe("EventTarget", () => {
 		subject.addEventListener("testEvent", () => {
 			directCallbackExecuted = true;
 			continueWhenAllCallbacksAreExecuted();
+		});
+		subject.addEventListener("testEvent", {
+			handleEvent() {
+				eventListenerObjectExecuted = true;
+				continueWhenAllCallbacksAreExecuted();
+			}
 		});
 		EventTarget.addEventListener("testEvent", () => {
 			globalCallbackExecuted = true;
@@ -108,9 +120,8 @@ describe("EventTarget", () => {
 	});
 
 	it("removeEventListener won't do anything if the callback is not registered", () => {
-		expect(() => {
-			subject.removeEventListener("testEvent", () => {});
-		}).not.toThrow();
+		expect(() => subject.removeEventListener("testEvent-2", () => {})).not.toThrow();
+		expect(() => subject.removeEventListener()).not.toThrow();
 
 		subject.addEventListener("testEvent", () => {});
 		expect(() => {
