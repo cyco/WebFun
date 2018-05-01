@@ -12,7 +12,6 @@ import identity from "./identity";
 import InputStream from "./input-stream";
 import KeyEvent from "./key-event";
 import Logger from "./logger";
-import Message from "./message";
 import OutputStream from "./output-stream";
 import persistent from "./persistent";
 import Point from "./point";
@@ -59,7 +58,6 @@ export {
 	KeyEvent,
 	Logger,
 	LogLevel,
-	Message,
 	OutputStream,
 	persistent,
 	Point,
