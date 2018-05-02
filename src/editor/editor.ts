@@ -3,7 +3,7 @@ import { DiscardingOutputStream, download, OutputStream } from "src/util";
 import DataManager from "./data-manager";
 import GameDataSerializer from "./game-data-serializer";
 import FilePicker from "src/ui/file-picker";
-import { ManualDataFileReader, GameTypeYoda } from "src/engine";
+import { ManualDataFileReader, GameTypeYoda, GameTypeIndy } from "src/engine";
 import GameData from "src/engine/game-data";
 import "./editor.scss";
 import { FullscreenWindow } from "src/ui/components";
@@ -11,6 +11,8 @@ import { Menu, WindowMenuItem } from "src/ui";
 import buildEditorMenu from "./menu";
 import MenuItemInit from "src/ui/menu-item-init";
 import WindowManager from "src/ui/window-manager";
+import PaletteProvider from "src/save-game-editor/data/palette-provider";
+import Settings from "src/settings";
 
 class Editor extends FullscreenWindow {
 	public static readonly TagName = "wf-editor";
@@ -68,10 +70,17 @@ class Editor extends FullscreenWindow {
 		if (!file) return;
 
 		const stream = await file.provideInputStream();
-		const rawData = ManualDataFileReader(stream, GameTypeYoda);
+		const type = file.name.toLowerCase().indexOf("yoda") === -1 ? GameTypeIndy : GameTypeYoda;
+		const rawData = ManualDataFileReader(stream, type);
 		const data = new GameData(rawData);
 
-		this.data = new DataManager(data, this.data.palette);
+		const paletteProvider = new PaletteProvider(
+			Settings.url.yoda.palette,
+			Settings.url.indy.palette
+		);
+		const palette = await paletteProvider.provide(type);
+
+		this.data = new DataManager(data, palette);
 	}
 
 	set data(dm) {
