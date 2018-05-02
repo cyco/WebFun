@@ -1,5 +1,4 @@
 const Path = require("path");
-
 const Paths = require("./paths");
 const BaseConfig = require("./webpack.node.js");
 

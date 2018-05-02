@@ -41,11 +41,6 @@ module.exports = {
 				}
 			},
 			{
-				test: /\.glsl?$/,
-				loader: "webpack-glsl-loader",
-				exclude: /node_modules/
-			},
-			{
 				test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
 				exclude: /node_modules/,
 				loader: "url-loader",
