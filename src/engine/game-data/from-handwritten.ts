@@ -64,6 +64,7 @@ const makePuzzle = (raw: any, idx: number, data: any) => {
 	const puzzle = new MutablePuzzle();
 
 	puzzle.id = idx;
+	puzzle.name = raw.name || "";
 	puzzle.type = PuzzleType.fromNumber(raw.type);
 	puzzle.unknown1 = raw.unknown1;
 	puzzle.unknown2 = raw.unknown2;
