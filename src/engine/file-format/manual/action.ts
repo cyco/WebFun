@@ -53,7 +53,21 @@ export const parseActions = (stream: InputStream, data: any) => {
 	} while (true);
 };
 
-export const parseActionNames = (stream: InputStream) => {
+export const parseActionNames = (stream: InputStream, data: any) => {
 	let size = stream.getUint32();
-	let data = stream.getUint8Array(size);
+	do {
+		let zoneID = stream.getInt16();
+		if (zoneID === -1) {
+			break;
+		}
+		const actions = data.zones[zoneID].actions;
+		do {
+			let actionId = stream.getInt16();
+			if (actionId === -1) {
+				break;
+			}
+
+			actions[actionId].name = stream.getCharacters(0x10);
+		} while (true);
+	} while (true);
 };
