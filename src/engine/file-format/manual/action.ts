@@ -62,12 +62,15 @@ export const parseActionNames = (stream: InputStream, data: any) => {
 		}
 		const actions = data.zones[zoneID].actions;
 		do {
-			let actionId = stream.getInt16();
-			if (actionId === -1) {
+			let actionID = stream.getInt16();
+			if (actionID === -1) {
 				break;
 			}
 
-			actions[actionId].name = stream.getCharacters(0x10);
+			let raw = stream.getCharacters(0x10);
+			let length = 0;
+			while (raw[length] !== "\0" && raw[length]) length++;
+			actions[actionID].name = raw.substr(0, length);
 		} while (true);
 	} while (true);
 };
