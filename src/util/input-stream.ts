@@ -1,5 +1,5 @@
 import Stream from "./stream";
-import { ArrayBuffer, DataView } from "src/std";
+import { ArrayBuffer, DataView, TextDecoder } from "src/std";
 
 class InputStream extends Stream {
 	private _arrayBuffer: ArrayBuffer | SharedArrayBuffer;
@@ -76,26 +76,37 @@ class InputStream extends Stream {
 		return result;
 	}
 
-	getCharacters(length: number): string {
+	getCharacters(length: number, encoding: string = "utf-8"): string {
 		if (length === 0) return "";
 
-		const characterCodes = new Uint8Array(this._arrayBuffer, this._offset, length);
+		const data = new Uint8Array(this._arrayBuffer, this._offset, length);
 		this._offset += length;
-		return String.fromCharCode.apply(null, characterCodes);
+
+		const decoder = new TextDecoder(encoding);
+		return decoder.decode(data);
 	}
 
-	getNullTerminatedString(maxLength: number): string {
+	getCStringWithLength(fixedLength: number, encoding: string = "utf-8"): string {
+		let raw = this.getUint8Array(fixedLength);
+		let length = 0;
+		while (raw.length < length && raw[length] !== 0) length++;
+
+		const decoder = new TextDecoder(encoding);
+		return decoder.decode(raw.slice(0, length));
+	}
+
+	getNullTerminatedString(maxLength: number, encoding: string = "utf-8"): string {
 		const uint8Array = new Uint8Array(this._arrayBuffer, this._offset, maxLength);
 
 		let length = -1;
 		while (uint8Array[++length]);
 
-		return this.getCharacters(length);
+		return this.getCharacters(length, encoding);
 	}
 
-	getLengthPrefixedString(): string {
+	getLengthPrefixedString(encoding: string = "utf-8"): string {
 		const length = this.getUint16();
-		return this.getCharacters(length);
+		return this.getCharacters(length, encoding);
 	}
 
 	getUint8Array(length: number): Uint8Array {

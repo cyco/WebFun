@@ -17,7 +17,13 @@
     "jsx": "preserve",
     "typeRoots": ["src/@types"],
     "lib": ["es2017", "dom", "es6", "es2015.promise"],
-    "types": ["jasmine", "jasmine-matchers", "webcomponents.js", "webfun-additions"]
+    "types": [
+      "jasmine",
+      "jasmine-matchers",
+      "webcomponents.js",
+      "webfun-additions",
+      "text-encoding"
+    ]
   },
   "exclude": ["node_modules"],
   "awesomeTypescriptLoaderOptions": {
