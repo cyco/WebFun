@@ -19,8 +19,7 @@ const parsePuzzle = (stream: InputStream, data: any, gameType: GameType) => {
 
 	let texts = new Array(5);
 	for (let i = 0; i < 5; i++) {
-		let length = stream.getUint16();
-		texts[i] = stream.getCharacters(length);
+		texts[i] = stream.getLengthPrefixedString("iso-8859-2");
 	}
 
 	let item1 = stream.getUint16();
@@ -57,9 +56,6 @@ export const parsePuzzleNames = (stream: InputStream, data: any) => {
 	let size = stream.getUint32();
 	let count = stream.getInt16();
 	for (let i = 0; i < count; i++) {
-		let raw = stream.getCharacters(0x10);
-		let length = 0;
-		while (raw[length] !== "\0" && raw[length]) length++;
-		data.puzzles[i].name = raw.substr(0, length);
+		data.puzzles[i].name = stream.getCStringWithLength(0x10, "iso-8859-2");
 	}
 };

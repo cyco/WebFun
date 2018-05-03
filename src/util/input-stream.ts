@@ -1,7 +1,7 @@
 import Stream from "./stream";
 import { ArrayBuffer, DataView, TextDecoder } from "src/std";
 
-export let DefaultEncoding = "utf-8";
+const DefaultEncoding = "utf-8";
 
 class InputStream extends Stream {
 	private _arrayBuffer: ArrayBuffer | SharedArrayBuffer;
@@ -91,7 +91,7 @@ class InputStream extends Stream {
 	getCStringWithLength(fixedLength: number, encoding: string = DefaultEncoding): string {
 		let raw = this.getUint8Array(fixedLength);
 		let length = 0;
-		while (raw.length < length && raw[length] !== 0) length++;
+		while (length < raw.length && raw[length] !== 0) length++;
 
 		const decoder = new TextDecoder(encoding);
 		return decoder.decode(raw.slice(0, length));

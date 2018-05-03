@@ -159,10 +159,8 @@ export const parseZoneNames = (stream: InputStream, data: any) => {
 		if (zoneID === -1) {
 			break;
 		}
-		let raw = stream.getCharacters(0x10);
-		let length = 0;
-		while (raw[length] !== "\0" && raw[length]) length++;
-		data.zones[zoneID].name = raw.substr(0, length);
+
+		data.zones[zoneID].name = stream.getCStringWithLength(0x10, "iso-8859-2");
 	} while (true);
 };
 
