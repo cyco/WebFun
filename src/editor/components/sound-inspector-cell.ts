@@ -77,7 +77,7 @@ class SoundInspectorCell extends Cell<Sound> {
 
 	public togglePlaying() {
 		if (!this._sound) {
-			const url = Settings.url.sfx(this.data.file);
+			const url = Settings.url.yoda.sfx(this.data.file);
 			this._sound = new Audio(url);
 			this._sound.autoplay = true;
 			this._playButton.classList.remove("fa-play-circle");
