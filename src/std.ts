@@ -19,3 +19,4 @@ export const requestAnimationFrame = global.requestAnimationFrame;
 export const cancelAnimationFrame = global.cancelAnimationFrame;
 export const performance = global.performance;
 export const Error = global.Error;
+export const TextDecoder = global.TextDecoder;
