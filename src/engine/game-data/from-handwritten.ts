@@ -144,6 +144,7 @@ const makeZone = (raw: any, idx: number, data: any) => {
 	const zone = new MutableZone();
 
 	zone.id = idx;
+	zone.name = raw.name || "";
 	zone.planet = Planet.fromNumber(raw.planet);
 	zone.size = new Size(raw.width, raw.height);
 	zone.type = ZoneType.fromNumber(raw.zoneType);
