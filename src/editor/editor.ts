@@ -69,6 +69,10 @@ class Editor extends FullscreenWindow {
 		const [file] = await filePicker.pickFile();
 		if (!file) return;
 
+		await this.loadFile(file);
+	}
+
+	public async loadFile(file: File) {
 		const stream = await file.provideInputStream();
 		const type = file.name.toLowerCase().indexOf("yoda") === -1 ? GameTypeIndy : GameTypeYoda;
 		const rawData = ManualDataFileReader(stream, type);
