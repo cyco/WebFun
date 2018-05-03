@@ -152,9 +152,19 @@ const parseZoneAux4 = (stream: InputStream, data: any): any => {
 	return { unknown };
 };
 
-export const parseZoneNames = (stream: InputStream) => {
+export const parseZoneNames = (stream: InputStream, data: any) => {
 	let size = stream.getUint32();
-	let data = stream.getUint8Array(size);
+	do {
+		let zoneID = stream.getInt16();
+		if (zoneID === -1) {
+			break;
+		}
+		let raw = stream.getCharacters(0x10);
+		let length = 0;
+		while (raw[length] !== "\0" && raw[length]) length++;
+		data.zones[zoneID].name = raw.substr(0, length);
+		console.log(data.zones[zoneID].name);
+	} while (true);
 };
 
 export const parseZaux = (stream: InputStream) => {
