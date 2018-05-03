@@ -122,6 +122,7 @@ const makeAction = (raw: any, idx: number, zone: Zone, data: any): Action => {
 	const action = new MutableAction();
 
 	action.id = idx;
+	action.name = raw.name || "";
 	action.conditions = raw.conditions.map((raw: any) => new Condition(raw));
 	action.instructions = raw.instructions.map((raw: any) => new Instruction(raw));
 	action.zone = zone;
