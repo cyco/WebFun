@@ -20,10 +20,6 @@ export const parseTiles = (stream: InputStream, data: any) => {
 	data.tiles = tiles;
 };
 
-const parseISOCStringWithLength = (length: number, stream: InputStream): string => {
-	return stream.getCharacters(length);
-};
-
 export const parseTileNames = (stream: InputStream, data: any, gameType: GameType) => {
 	let size = stream.getUint32();
 	do {
@@ -31,6 +27,6 @@ export const parseTileNames = (stream: InputStream, data: any, gameType: GameTyp
 		if (index === -1) break;
 
 		let length = gameType === Yoda ? 0x18 : 0x10;
-		data.tiles[index].name = parseISOCStringWithLength(length, stream);
+		data.tiles[index].name = stream.getCStringWithLength(length, "iso-8859-2");
 	} while (true);
 };

@@ -9,15 +9,11 @@ const parseCharacterFrame = (stream: InputStream, data: any) => {
 	return stream.getInt16Array(0x8);
 };
 
-const parseStringWithLength = (stream: InputStream, length: number): String => {
-	return stream.getCharacters(length).split("\0")[0];
-};
-
 const parseCharacter = (stream: InputStream, data: any, gameType: GameType) => {
 	const marker = stream.getCharacters(4);
 	assert(marker === ICHA, "Expected to find ICHAR marker.", stream);
 	let size = stream.getUint32();
-	let name = parseStringWithLength(stream, 16);
+	let name = stream.getCStringWithLength(0x10, "iso-8859-2");
 	let type = stream.getInt16();
 	let movementType = stream.getInt16();
 	let probablyGarbage1 = 0;

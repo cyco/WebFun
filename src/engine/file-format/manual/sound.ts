@@ -8,10 +8,7 @@ export const parseSounds = (stream: InputStream, data: any) => {
 	for (let i = 0; i < count; i++) {
 		let size = stream.getUint16();
 		assert(size > 0, `Expected at least as null byte to terminate an empty string!`, stream);
-		const name = stream.getCharacters(size - 1);
-		const stringTerminator = stream.getUint8();
-		assert(stringTerminator === 0, `Expected string to be null terminated!`, stream);
-		sounds[i] = name;
+		sounds[i] = stream.getCStringWithLength(size, "iso-8859-2");
 	}
 	data.sounds = sounds;
 };

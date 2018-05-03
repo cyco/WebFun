@@ -8,8 +8,7 @@ const parseActionItem = (stream: InputStream) => {
 	let opcode = stream.getUint16();
 	let args = stream.getInt16Array(5);
 	let textLength = stream.getUint16();
-	// ISO_8859_1
-	let text = stream.getCharacters(textLength);
+	let text = stream.getCharacters(textLength, "iso-8859-2");
 
 	return { opcode, arguments: args, text };
 };
@@ -67,10 +66,7 @@ export const parseActionNames = (stream: InputStream, data: any) => {
 				break;
 			}
 
-			let raw = stream.getCharacters(0x10);
-			let length = 0;
-			while (raw[length] !== "\0" && raw[length]) length++;
-			actions[actionID].name = raw.substr(0, length);
+			actions[actionID].name = stream.getCStringWithLength(0x10, "iso-8859-2");
 		} while (true);
 	} while (true);
 };
