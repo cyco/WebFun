@@ -163,7 +163,6 @@ export const parseZoneNames = (stream: InputStream, data: any) => {
 		let length = 0;
 		while (raw[length] !== "\0" && raw[length]) length++;
 		data.zones[zoneID].name = raw.substr(0, length);
-		console.log(data.zones[zoneID].name);
 	} while (true);
 };
 
