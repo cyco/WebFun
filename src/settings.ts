@@ -4,8 +4,6 @@ let Settings: { [_: string]: any } = {
 	allowTileSheet: false,
 
 	debug: true,
-	editor: true,
-	saveGameEditor: true,
 
 	drawDebugStats: true,
 	drawHotspots: true,
