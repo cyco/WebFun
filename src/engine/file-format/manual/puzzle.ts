@@ -53,7 +53,13 @@ export const parsePuzzles = (stream: InputStream, data: any, gameType: GameType)
 	data.puzzles = puzzles;
 };
 
-export const parsePuzzleNames = (stream: InputStream) => {
+export const parsePuzzleNames = (stream: InputStream, data: any) => {
 	let size = stream.getUint32();
-	let data = stream.getUint8Array(size);
+	let count = stream.getInt16();
+	for (let i = 0; i < count; i++) {
+		let raw = stream.getCharacters(0x10);
+		let length = 0;
+		while (raw[length] !== "\0" && raw[length]) length++;
+		data.puzzles[i].name = raw.substr(0, length);
+	}
 };
