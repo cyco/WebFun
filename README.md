@@ -1,6 +1,10 @@
 # WebFun
 An unfinished web based reimplementation of the desktop adventures game engine.
 
+### similar efforts
+  * https://github.com/shinyquagsire23/DesktopAdventures - reimplementation in c
+  * https://github.com/IceReaper/DesktopAdventuresToolkit - packer / unpacker for game files
+  * https://github.com/digitall/scummvm-deskadv - reimplementation for use in ScummVM
 
 ## Usage
 ### Prerequisites
