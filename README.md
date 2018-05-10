@@ -33,3 +33,19 @@ yarn start
 yarn test:full
 ```
 Check the `scripts` section of `package.json` for other commands.
+
+## Screenshots
+### Loading Screen
+![Loading screen](docs/screenshots/game.png)
+### In-Game view with active debug overlays
+![Loading screen](docs/screenshots/in-game-debug.png)
+### Save Game Inspector
+![Save Game Inspector](docs/screenshots/save-game-inspector.png)
+
+
+### Character view of resource editor
+![Character view of resource editor](docs/screenshots/character-inspector-2.png)
+### Puzzle view of resource editor
+![Puzzle view of resource editor](docs/screenshots/puzzle-inspector.png)
+### Zone & action editor
+![Zone & action editor](docs/screenshots/zone-editor.png)
