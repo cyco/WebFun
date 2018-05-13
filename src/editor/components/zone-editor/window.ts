@@ -21,7 +21,9 @@ import {
 	RectangleTool,
 	TileChangeEvent
 } from "src/editor/tools";
-import TilePicker, { Events as TilePickerEvents } from "src/editor/components/tile-picker";
+import PopoverTilePicker, {
+	Events as PopoverTilePickerEvents
+} from "src/editor/components/popover-tile-picker";
 import DataManager from "src/editor/data-manager";
 import AbstractDrawingTool from "src/editor/tools/abstract-drawing-tool";
 import { ActionEditor } from "src/editor/components";
@@ -51,7 +53,7 @@ class Window extends Panel {
 	private _puzzleNPCsCell: SidebarCell;
 	private _npcsCell: SidebarCell;
 	private _toolsCell: SidebarCell;
-	private _tilePicker: TilePicker;
+	private _tilePicker: PopoverTilePicker;
 	private _data: DataManager;
 	private _tools: AbstractTool[];
 	private _actionsWindow: WindowComponent;
@@ -99,12 +101,15 @@ class Window extends Panel {
 
 		this._toolsCell = this._sidebar.addEntry(toolComponents.concat(actionComponents), "Tools");
 
-		this._tilePicker = <TilePicker>document.createElement(TilePicker.TagName);
-		this._tilePicker.addEventListener(TilePickerEvents.TileDidChange, (e: CustomEvent) => {
-			this._tilePickerTileChanged();
-			e.stopImmediatePropagation();
-			e.preventDefault();
-		});
+		this._tilePicker = <PopoverTilePicker>document.createElement(PopoverTilePicker.TagName);
+		this._tilePicker.addEventListener(
+			PopoverTilePickerEvents.TileDidChange,
+			(e: CustomEvent) => {
+				this._tilePickerTileChanged();
+				e.stopImmediatePropagation();
+				e.preventDefault();
+			}
+		);
 		this._sidebar.addEntry(this._tilePicker, "Tiles");
 
 		this._hotspots = this._buildHotspotList();

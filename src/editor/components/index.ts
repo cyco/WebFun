@@ -10,6 +10,7 @@ import SoundInspectorCell from "./sound-inspector-cell";
 import TilePicker from "./tile-picker";
 import ZoneInspectorCell from "./zone-inspector-cell";
 import TilePickerCell from "./tile-picker-cell";
+import PopoverTilePicker from "./popover-tile-picker";
 import {
 	Action as ZoneEditorAction,
 	NPC as ZoneEditorNPC,
@@ -41,6 +42,7 @@ export {
 	CharacterDetails,
 	CharacterFramePreview,
 	CharacterInspectorCell,
+	PopoverTilePicker,
 	ColorPicker,
 	ColorWheel,
 	PaletteView,
