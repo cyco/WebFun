@@ -26,8 +26,10 @@ import Panel from "./panel";
 import SegmentControl from "./segment-control";
 import Segment from "./segment";
 import ProgressIndicator from "./progress-indicator";
+import Popover from "./popover";
 
 export {
+	Popover,
 	ProgressIndicator,
 	SegmentControl,
 	Segment,
