@@ -62,7 +62,7 @@ class List<T> extends Component {
 		}
 	}
 
-	private showBar(updateState: boolean) {
+	public showBar(updateState: boolean) {
 		this._bar.setAttribute("visible", "");
 		this._bar.onsearch = () => this.setNeedsRefiltering();
 		this._bar.onclose = () => this.hideBar(true);
@@ -80,7 +80,7 @@ class List<T> extends Component {
 		this.refilter();
 	}
 
-	private hideBar(updateState: boolean) {
+	public hideBar(updateState: boolean) {
 		this._bar.removeAttribute("visible");
 		this._bar.onsearch = null;
 		this._bar.onclose = null;
