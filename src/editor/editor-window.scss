@@ -1,0 +1,17 @@
+@import "colors";
+@import "variables";
+@import "border";
+@import "../ui/components/window";
+
+wf-resource-editor-window {
+	@extend wf-window;
+	width: 304px;
+	min-height: 304px;
+
+	> .content {
+		min-height: 302px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+}

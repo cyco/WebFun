@@ -4,6 +4,7 @@ import Editor from "./editor";
 import GameController from "src/app/game-controller";
 import CSSTileSheet from "./css-tile-sheet";
 import DataManager from "./data-manager";
+import EditorWindow from "./editor-window";
 import {
 	TileInspector,
 	ZoneInspector,
@@ -16,6 +17,7 @@ import {
 
 let Initialize = () => {
 	ComponentRegistry.sharedRegistry.registerComponents(<any>Components);
+	ComponentRegistry.sharedRegistry.registerComponent(EditorWindow);
 	ComponentRegistry.sharedRegistry.registerComponent(Editor);
 
 	Initialize = () => {};
@@ -25,21 +27,12 @@ Initialize();
 const main = async (windowManager: WindowManager = WindowManager.defaultManager) => {
 	Initialize();
 
-	const [file] = await FilePicker.Pick({ allowedTypes: ["wld"] });
+	const [file] = await FilePicker.Pick({ allowedTypes: ["data", "dta"] });
 	if (!file) return;
 
-	const editor = <Editor>document.createElement(Editor.TagName);
-	const state = localStorage.prefixedWith("editor");
-
-	editor.addInspector("tile", new TileInspector(state.prefixedWith("tile")));
-	editor.addInspector("zone", new ZoneInspector(state.prefixedWith("zone")));
-	editor.addInspector("sound", new SoundInspector(state.prefixedWith("sound")));
-	editor.addInspector("puzzle", new PuzzleInspector(state.prefixedWith("puzzle")));
-	editor.addInspector("character", new CharacterInspector(state.prefixedWith("character")));
-	editor.addInspector("setup-image", new SetupImageInspector(state.prefixedWith("setup-image")));
-	editor.addInspector("palette", new PaletteInspector(state.prefixedWith("palette")));
-	await editor.loadFile(file);
+	const editor = <EditorWindow>document.createElement(EditorWindow.TagName);
 	windowManager.showWindow(editor);
+	await editor.loadFile(file);
 };
 
 export { main, CSSTileSheet, DataManager };

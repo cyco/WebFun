@@ -11,7 +11,6 @@ import { Menu, WindowMenuItem } from "src/ui";
 import buildEditorMenu from "./menu";
 import MenuItemInit from "src/ui/menu-item-init";
 import WindowManager from "src/ui/window-manager";
-import PaletteProvider from "src/save-game-editor/data/palette-provider";
 import Settings from "src/settings";
 
 class Editor extends FullscreenWindow {
@@ -77,14 +76,6 @@ class Editor extends FullscreenWindow {
 		const type = file.name.toLowerCase().indexOf("yoda") === -1 ? GameTypeIndy : GameTypeYoda;
 		const rawData = ManualDataFileReader(stream, type);
 		const data = new GameData(rawData);
-
-		const paletteProvider = new PaletteProvider(
-			Settings.url.yoda.palette,
-			Settings.url.indy.palette
-		);
-		const palette = await paletteProvider.provide(type);
-
-		this.data = new DataManager(data, palette);
 	}
 
 	set data(dm) {
