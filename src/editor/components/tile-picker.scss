@@ -1,7 +1,11 @@
-wf-tile-picker {
-	text-align: right;
+@import "variables";
 
-	wf-list wf-tile-picker-cell {
-		display: inline-block;
+wf-tile-picker {
+	display: block;
+
+	wf-list > div {
+		display: grid;
+		grid-template-columns: repeat(9, $tile-size);
+		justify-content: center;
 	}
 }
