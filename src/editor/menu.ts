@@ -1,12 +1,12 @@
 import { MenuItemSeparator } from "src/ui";
-import Editor from "src/editor/editor";
+import EditorView from "src/editor/editor-view";
 
 const SettingsAction = (label: string, callback: (() => void)) => ({
 	title: label,
 	callback: callback
 });
 
-export default (editor: Editor) => [
+export default (editor: EditorView) => [
 	{
 		title: "Editor",
 		mnemonic: 0,
