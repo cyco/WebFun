@@ -32,6 +32,7 @@ const main = async (windowManager: WindowManager = WindowManager.defaultManager)
 
 	const editor = <EditorWindow>document.createElement(EditorWindow.TagName);
 	windowManager.showWindow(editor);
+	editor.center();
 	await editor.loadFile(file);
 };
 
