@@ -1,2 +1,10 @@
+@import "border";
+@import "colors";
+
 wf-popover {
+	@include inset-border(1px);
+	display: inline-block;
+	border-radius: 5px;
+	box-shadow: 2px 0 0 rgba(0, 0, 0, 0.8);
+	background-color: $window-background-color;
 }

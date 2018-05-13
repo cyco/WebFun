@@ -12,4 +12,8 @@ wf-resource-editor-popover-tile-picker {
 	&:hover {
 		border-color: black;
 	}
+
+	> * {
+		cursor: pointer;
+	}
 }

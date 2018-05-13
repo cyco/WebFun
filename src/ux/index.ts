@@ -1,5 +1,8 @@
 import ModalSession from "./modal-session";
-import ModalConfirm, { Options as ConfirmationOptions, Result as ConfirmationResult } from "./modals/confirm";
+import ModalConfirm, {
+	Options as ConfirmationOptions,
+	Result as ConfirmationResult
+} from "./modals/confirm";
 import ResetCursor from "./reset-cursor";
 import WindowModalSession from "./window-modal-session";
 import FieldEditor from "./field-editor";
@@ -7,6 +10,7 @@ import ShortcutManager, { Shortcut } from "./shortcut-manager";
 import UndoManager from "./undo-manager";
 import UndoOperation from "./undo-operation";
 import UndoBatchOperation from "./undo-batch-operation";
+import PopoverModalSession from "./popover-modal-session";
 
 export {
 	FieldEditor,
@@ -20,5 +24,6 @@ export {
 	Shortcut,
 	UndoManager,
 	UndoOperation,
-	UndoBatchOperation
+	UndoBatchOperation,
+	PopoverModalSession
 };
