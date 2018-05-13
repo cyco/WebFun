@@ -15,7 +15,6 @@ import GameController from "src/app/game-controller";
 import WindowManager from "src/ui/window-manager";
 import GameData from "src/engine/game-data";
 import ColorPalette from "src/engine/rendering/color-palette";
-import Simulator from "./simulator";
 import { FilePicker } from "src/ui";
 import { main as RunSaveGameEditor } from "src/save-game-editor";
 import { main as RunGameDataEditor } from "src/editor";
@@ -42,23 +41,6 @@ export default (gameController: GameController) => ({
 		SettingsItem("Skip Dialogs", "skipDialogs", gameController.settings),
 		MenuItemSeparator,
 		SettingsAction("Debug Scripts", () => ScriptDebugger.sharedDebugger.show()),
-
-		SettingsAction("Simulate Zone", () => {
-			const setupData = (g: GameData, p: ColorPalette) => {
-				const simulator = new Simulator();
-				simulator.data = new DataManager(g, p);
-				simulator.start();
-			};
-
-			if (gameController.isDataLoaded()) {
-				setupData(gameController.data, gameController.palette);
-			} else {
-				gameController.addEventListener(
-					GameController.Event.DidLoadData,
-					(e: CustomEvent) => setupData(e.detail.data, e.detail.palette)
-				);
-			}
-		}),
 		SettingsAction("Edit Game Data", RunGameDataEditor),
 		SettingsAction("Edit Save Game", RunSaveGameEditor)
 	]
