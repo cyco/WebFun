@@ -15,15 +15,18 @@ class CharacterInspector extends AbstractInspector {
 		this.window.style.width = "430px";
 		this.window.content.style.height = "280px";
 
-		this._list = <List<Char>>document.createElement(List.TagName);
-		this._list.cell = <CharacterInspectorCell>document.createElement(CharacterInspectorCell.TagName);
-		this._list.cell.onclick = (e: MouseEvent) => this._onCellClicked(<CharacterInspectorCell>e.currentTarget);
+		this._list = <List<Char>>document.createElement(List.tagName);
+		this._list.cell = <CharacterInspectorCell>document.createElement(
+			CharacterInspectorCell.tagName
+		);
+		this._list.cell.onclick = (e: MouseEvent) =>
+			this._onCellClicked(<CharacterInspectorCell>e.currentTarget);
 		this._list.classList.add("character-inspector-list");
 		this._list.searchDelegate = this;
 		this._list.state = state.prefixedWith("list");
 		this.window.content.appendChild(this._list);
 
-		this._details = <CharacterDetails>document.createElement(CharacterDetails.TagName);
+		this._details = <CharacterDetails>document.createElement(CharacterDetails.tagName);
 		this.window.content.appendChild(this._details);
 	}
 
@@ -38,7 +41,9 @@ class CharacterInspector extends AbstractInspector {
 	public build() {
 		this._details.tileSheet = this.data.tileSheet;
 		this._details.sounds = this.data.currentData.sounds;
-		this._details.weapons = this.data.currentData.characters.filter(c => c.type === CharType.Weapon);
+		this._details.weapons = this.data.currentData.characters.filter(
+			c => c.type === CharType.Weapon
+		);
 
 		const cell = <CharacterInspectorCell>this._list.cell;
 		cell.tileSheet = this.data.tileSheet;
@@ -50,7 +55,12 @@ class CharacterInspector extends AbstractInspector {
 		return searchValue.split(" ").map(s => new RegExp(s, "i"));
 	}
 
-	includeListItem(searchValue: RegExp[], item: Char, cell: CharacterInspectorCell, list: List<Char>): boolean {
+	includeListItem(
+		searchValue: RegExp[],
+		item: Char,
+		cell: CharacterInspectorCell,
+		list: List<Char>
+	): boolean {
 		const searchableAttributes = [item.id, item.name, item.movementType.name];
 
 		if (item.isWeapon()) {

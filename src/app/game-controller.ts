@@ -41,7 +41,7 @@ class GameController extends EventTarget {
 	constructor() {
 		super();
 
-		this._sceneView = <SceneView>document.createElement(SceneView.TagName);
+		this._sceneView = <SceneView>document.createElement(SceneView.tagName);
 		this._engine = this._buildEngine();
 		this._sceneView.manager.engine = this._engine;
 
@@ -79,7 +79,7 @@ class GameController extends EventTarget {
 	}
 
 	async start(story?: Story) {
-		this._window = <MainWindow>document.createElement(MainWindow.TagName);
+		this._window = <MainWindow>document.createElement(MainWindow.tagName);
 		this._window.menu = new MainMenu(this);
 
 		const loading = this._load();
@@ -110,7 +110,7 @@ class GameController extends EventTarget {
 
 	_load(): Promise<void> {
 		return new Promise((resolve, reject) => {
-			const loadingView = <LoadingView>document.createElement(LoadingView.TagName);
+			const loadingView = <LoadingView>document.createElement(LoadingView.tagName);
 			const windowContent = this._window.mainContent;
 			windowContent.clear();
 			windowContent.appendChild(loadingView);

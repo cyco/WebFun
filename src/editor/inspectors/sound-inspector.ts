@@ -20,8 +20,8 @@ class SoundInspector extends AbstractInspector {
 		this.window.content.style.height = "450px";
 		this.window.content.style.flexDirection = "column";
 
-		this._list = <List<Sound>>document.createElement(List.TagName);
-		this._list.cell = <SoundInspectorCell>document.createElement(SoundInspectorCell.TagName);
+		this._list = <List<Sound>>document.createElement(List.tagName);
+		this._list.cell = <SoundInspectorCell>document.createElement(SoundInspectorCell.tagName);
 		this._list.searchDelegate = this;
 		this._list.state = state.prefixedWith("list");
 		this._list.addEventListener(SoundInspectorCell.Events.RevealReferences, (e: CustomEvent) =>
@@ -31,10 +31,12 @@ class SoundInspector extends AbstractInspector {
 	}
 
 	build() {
-		this._list.items = this.data.currentData.sounds.map((name: string, index: number): Sound => ({
-			id: index,
-			file: name
-		}));
+		this._list.items = this.data.currentData.sounds.map(
+			(name: string, index: number): Sound => ({
+				id: index,
+				file: name
+			})
+		);
 	}
 
 	prepareListSearch(searchValue: string, list: List<Sound>): RegExp[] {
@@ -42,7 +44,12 @@ class SoundInspector extends AbstractInspector {
 		return searchValue.split(" ").map(s => new RegExp(s, "i"));
 	}
 
-	includeListItem(searchValue: RegExp[], item: Sound, cell: SoundInspectorCell, list: List<Sound>): boolean {
+	includeListItem(
+		searchValue: RegExp[],
+		item: Sound,
+		cell: SoundInspectorCell,
+		list: List<Sound>
+	): boolean {
 		const string = item.id + " " + item.file;
 		return searchValue.every(r => r.test(string));
 	}

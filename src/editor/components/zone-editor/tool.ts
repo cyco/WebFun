@@ -7,7 +7,7 @@ import ShortcutManager from "src/ux/shortcut-manager";
 import Window from "./window";
 
 class ToolComponent extends Component implements EventListenerObject {
-	public static readonly TagName = "wf-zone-editor-tool";
+	public static readonly tagName = "wf-zone-editor-tool";
 	public static readonly observedAttributes: string[] = [];
 
 	private _tool: AbstractTool;
@@ -19,7 +19,7 @@ class ToolComponent extends Component implements EventListenerObject {
 
 		const activateTool = () => this.editor.activateTool(this.tool);
 		if (this.tool && this.tool.shortcut) {
-			const window = this.closest(Window.TagName);
+			const window = this.closest(Window.tagName);
 			const description = Object.assign({}, this.tool.shortcut, { node: window });
 
 			this._shortcut = ShortcutManager.sharedManager.registerShortcut(

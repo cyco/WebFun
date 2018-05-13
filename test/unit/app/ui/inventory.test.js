@@ -8,7 +8,7 @@ describeComponent(InventoryComponent, () => {
 	beforeEach(() => (subject = render(InventoryComponent)));
 
 	it("renders at least 7 rows", () => {
-		expect(subject.querySelectorAll(InventoryRow.TagName).length).toBe(7);
+		expect(subject.querySelectorAll(InventoryRow.tagName).length).toBe(7);
 	});
 
 	describe("showing inventory contents", () => {
@@ -25,35 +25,35 @@ describeComponent(InventoryComponent, () => {
 			subject.inventory = inventory;
 			expect(subject.inventory).toBe(inventory);
 
-			let firstRow = subject.querySelector(InventoryRow.TagName);
+			let firstRow = subject.querySelector(InventoryRow.tagName);
 			expect(firstRow.tile).toBe(tileMock);
-			expect(subject.querySelectorAll(InventoryRow.TagName).length).toBe(7);
+			expect(subject.querySelectorAll(InventoryRow.tagName).length).toBe(7);
 
 			// replace with empty inventory
 			inventory = new Inventory();
 			subject.inventory = inventory;
-			firstRow = subject.querySelector(InventoryRow.TagName);
+			firstRow = subject.querySelector(InventoryRow.tagName);
 			expect(firstRow.tile).toBeFalsy();
 
 			subject.inventory = null;
-			expect(subject.querySelectorAll(InventoryRow.TagName).length).toBe(7);
+			expect(subject.querySelectorAll(InventoryRow.tagName).length).toBe(7);
 		});
 
 		it("updates when the inventory changes", () => {
 			inventory.addItem(tileMock);
 
 			subject.inventory = inventory;
-			let firstRow = subject.querySelector(InventoryRow.TagName);
+			let firstRow = subject.querySelector(InventoryRow.tagName);
 			expect(firstRow.tile).toBe(tileMock);
 
 			inventory.removeItem(tileMock);
-			firstRow = subject.querySelector(InventoryRow.TagName);
+			firstRow = subject.querySelector(InventoryRow.tagName);
 			expect(firstRow.tile).toBeFalsy();
 
 			for (let i = 0; i < 10; i++) {
 				inventory.addItem(tileMock);
 			}
-			expect(subject.querySelectorAll(InventoryRow.TagName).length).toBe(10);
+			expect(subject.querySelectorAll(InventoryRow.tagName).length).toBe(10);
 		});
 
 		describe("row click handlers", () => {
@@ -69,7 +69,7 @@ describeComponent(InventoryComponent, () => {
 					done();
 				});
 
-				const firstRow = subject.querySelector(InventoryRow.TagName);
+				const firstRow = subject.querySelector(InventoryRow.tagName);
 				firstRow.dispatchEvent(new MouseEvent("click"));
 			});
 
@@ -85,7 +85,7 @@ describeComponent(InventoryComponent, () => {
 					done();
 				});
 
-				const firstRow = subject.querySelector(InventoryRow.TagName);
+				const firstRow = subject.querySelector(InventoryRow.tagName);
 				firstRow.dispatchEvent(new MouseEvent("click"));
 			});
 
@@ -97,7 +97,7 @@ describeComponent(InventoryComponent, () => {
 					inventory.addItem(tileMock);
 					subject.inventory = inventory;
 
-					const firstRow = subject.querySelector(InventoryRow.TagName);
+					const firstRow = subject.querySelector(InventoryRow.tagName);
 					const fakeImageNode = document.createElement("img");
 					firstRow.appendChild(fakeImageNode);
 					firstRow.dispatchEvent(new MouseEvent("click"));

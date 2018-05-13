@@ -4,7 +4,7 @@ import "./tile-picker-cell.scss";
 import CSSTileSheet from "src/editor/css-tile-sheet";
 
 class TilePickerCell extends Cell<Tile> {
-	public static readonly TagName = "wf-tile-picker-cell";
+	public static readonly tagName = "wf-tile-picker-cell";
 	public static readonly observedAttributes: string[] = [];
 
 	public tileSheet: CSSTileSheet;

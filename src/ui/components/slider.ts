@@ -18,7 +18,7 @@ class Slider extends Component {
 	private _midText: string;
 	private _maxText: string;
 
-	static get TagName() {
+	static get tagName() {
 		return "wf-slider";
 	}
 

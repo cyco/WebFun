@@ -9,7 +9,7 @@ import { ConditionImplementations } from "src/engine/script/conditions";
 import { EvaluationMode } from "src/engine/script";
 
 class ActionComponent extends Component {
-	public static readonly TagName = "wf-debug-action";
+	public static readonly tagName = "wf-debug-action";
 	public static readonly observedAttributes = ["current"];
 	public zone: Zone = null;
 	public index: number = null;
@@ -36,7 +36,9 @@ class ActionComponent extends Component {
 		this.appendChild(document.createTextNode(`\t`));
 
 		action.conditions.forEach((condition, index) => {
-			const component = <ConditionComponent>document.createElement(ConditionComponent.TagName);
+			const component = <ConditionComponent>document.createElement(
+				ConditionComponent.tagName
+			);
 			component.action = this._action;
 			component.engine = this.engine;
 			component.condition = condition;
@@ -51,7 +53,9 @@ class ActionComponent extends Component {
 		this._append(`do`, "key");
 
 		action.instructions.forEach(instruction => {
-			const component = <InstructionComponent>document.createElement(InstructionComponent.TagName);
+			const component = <InstructionComponent>document.createElement(
+				InstructionComponent.tagName
+			);
 			component.action = this._action;
 			component.engine = this.engine;
 			component.instruction = instruction;
@@ -77,13 +81,15 @@ class ActionComponent extends Component {
 
 	public evaluateConditions() {
 		const checker = new ConditionChecker(ConditionImplementations, this.engine);
-		Array.from(this.querySelectorAll(ConditionComponent.TagName)).forEach((condition: ConditionComponent) => {
-			if (checker.check(condition.condition, EvaluationMode.Walk)) {
-				condition.setAttribute("truthy", "");
-			} else {
-				condition.removeAttribute("truthy");
+		Array.from(this.querySelectorAll(ConditionComponent.tagName)).forEach(
+			(condition: ConditionComponent) => {
+				if (checker.check(condition.condition, EvaluationMode.Walk)) {
+					condition.setAttribute("truthy", "");
+				} else {
+					condition.removeAttribute("truthy");
+				}
 			}
-		});
+		);
 	}
 
 	protected _append(thing: string | Element | Element[], className: string) {

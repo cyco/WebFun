@@ -4,7 +4,7 @@ import "./confirmation-window.scss";
 import Window from "./window";
 
 class ConfirmationWindow extends Window {
-	public static TagName = "wf-confirmation-window";
+	public static tagName = "wf-confirmation-window";
 	public static observedAttributes = ["confirm-text", "abort-text"];
 	public onconfirm: () => void;
 	public onabort: () => void;
@@ -15,10 +15,10 @@ class ConfirmationWindow extends Window {
 	constructor() {
 		super();
 
-		this._confirmButton = <Button>document.createElement(Button.TagName);
+		this._confirmButton = <Button>document.createElement(Button.tagName);
 		this._confirmButton.onclick = () => this.onconfirm();
 
-		this._abortButton = <Button>document.createElement(Button.TagName);
+		this._abortButton = <Button>document.createElement(Button.tagName);
 		this._abortButton.onclick = () => this.onabort();
 
 		this.onclose = () => this.onabort();

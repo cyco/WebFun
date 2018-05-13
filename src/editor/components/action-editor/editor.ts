@@ -18,7 +18,7 @@ import Token from "src/editor/components/action-editor/token";
 import GameData from "src/engine/game-data";
 
 class Editor extends Component {
-	static readonly TagName = "wf-action-editor";
+	static readonly tagName = "wf-action-editor";
 	static readonly observedAttributes: string[] = [];
 	private _actions: Action[];
 	private _shortcuts: Shortcut[];
@@ -112,7 +112,7 @@ class Editor extends Component {
 		div.setAttribute("contenteditable", "");
 
 		const printer = new Printer();
-		printer.tagName = Token.TagName;
+		printer.tagName = Token.tagName;
 		const disassembler = new Disassembler();
 		const argumentProcessor = new ArgumentProcessor(this.data);
 

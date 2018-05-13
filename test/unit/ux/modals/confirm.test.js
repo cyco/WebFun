@@ -3,11 +3,15 @@ import Confirm, { Result } from "src/ux/modals/confirm";
 
 describe("Confirm", () => {
 	beforeAll(() => {
-		customElements.define(ConfirmationWindow.TagName, ConfirmationWindow, ConfirmationWindow.options);
+		customElements.define(
+			ConfirmationWindow.tagName,
+			ConfirmationWindow,
+			ConfirmationWindow.options
+		);
 	});
 
 	afterEach(() => {
-		const component = document.querySelector(ConfirmationWindow.TagName);
+		const component = document.querySelector(ConfirmationWindow.tagName);
 		if (component && component.onabort) component.onabort();
 	});
 
@@ -21,7 +25,7 @@ describe("Confirm", () => {
 			abortText: "Nope!"
 		});
 
-		const component = document.querySelector(ConfirmationWindow.TagName);
+		const component = document.querySelector(ConfirmationWindow.tagName);
 		expect(component).not.toBeNull();
 		expect(component.textContent).toContain("Please confirm something!");
 		expect(component.getAttribute("confirm-text")).toEqual("Ok");
@@ -38,7 +42,7 @@ describe("Confirm", () => {
 			done();
 		});
 
-		const component = document.querySelector(ConfirmationWindow.TagName);
+		const component = document.querySelector(ConfirmationWindow.tagName);
 		component.onconfirm();
 	});
 
@@ -49,7 +53,7 @@ describe("Confirm", () => {
 			done();
 		});
 
-		const component = document.querySelector(ConfirmationWindow.TagName);
+		const component = document.querySelector(ConfirmationWindow.tagName);
 		component.onabort();
 	});
 });

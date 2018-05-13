@@ -9,7 +9,7 @@ describeComponent(IconButton, () => {
 	});
 
 	it("uses the tag name 'wf-icon-button'", () => {
-		expect(IconButton.TagName).toBe("wf-icon-button");
+		expect(IconButton.tagName).toBe("wf-icon-button");
 	});
 
 	it("takes a font-awesome icon name in the icon attribute", () => {

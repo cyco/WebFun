@@ -2,7 +2,7 @@ import Component from "../component";
 import "./segment.scss";
 
 class Segment extends Component {
-	public static readonly TagName = "wf-segment";
+	public static readonly tagName = "wf-segment";
 	public static readonly observedAttributes = ["selected"];
 	private _selected: boolean = false;
 

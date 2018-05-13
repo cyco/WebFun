@@ -7,8 +7,8 @@ const buildName = tagName =>
 		.join("");
 
 const makeFunction = desc => (Component, block) => {
-	desc(`Component ${buildName(Component.TagName || "")}`, () => {
-		beforeAll(() => customElements.define(Component.TagName, Component, Component.options));
+	desc(`Component ${buildName(Component.tagName || "")}`, () => {
+		beforeAll(() => customElements.define(Component.tagName, Component, Component.options));
 		block();
 	});
 };

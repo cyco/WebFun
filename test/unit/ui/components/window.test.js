@@ -8,6 +8,6 @@ describeComponent(Window, () => {
 	beforeEach(() => (subject = render(Window)));
 
 	it("displays what is known as a window in the desktop world", () => {
-		expect(subject.querySelector(WindowTitlebar.TagName)).not.toBeNull();
+		expect(subject.querySelector(WindowTitlebar.tagName)).not.toBeNull();
 	});
 });

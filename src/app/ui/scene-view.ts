@@ -6,7 +6,7 @@ import Component from "src/ui/component";
 import "./scene-view.scss";
 
 class SceneView extends Component {
-	public static readonly TagName = "wf-scene-view";
+	public static readonly tagName = "wf-scene-view";
 	private _manager: SceneManager = this._buildSceneManager();
 	public readonly canvas: HTMLCanvasElement = document.createElement("canvas");
 

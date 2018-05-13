@@ -4,7 +4,7 @@ import { Tile } from "src/engine/objects";
 import "./token.scss";
 
 class Token extends Component {
-	static readonly TagName = "wf-action-editor-token";
+	static readonly tagName = "wf-action-editor-token";
 	private _point: Point;
 	private _sound: string;
 	private _tile: Tile;

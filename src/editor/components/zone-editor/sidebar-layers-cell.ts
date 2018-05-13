@@ -13,7 +13,7 @@ export const Events = {
 };
 
 class SidebarLayersCell extends Component {
-	static readonly TagName = "wf-zone-editor-sidebar-layers-cell";
+	static readonly tagName = "wf-zone-editor-sidebar-layers-cell";
 	private _layers: Layer[];
 	private _list: List<Layer>;
 	private _shortcuts: Shortcut[];
@@ -21,8 +21,8 @@ class SidebarLayersCell extends Component {
 	constructor() {
 		super();
 
-		this._list = <List<Layer>>document.createElement(List.TagName);
-		this._list.cell = <SidebarLayer>document.createElement(SidebarLayer.TagName);
+		this._list = <List<Layer>>document.createElement(List.tagName);
+		this._list.cell = <SidebarLayer>document.createElement(SidebarLayer.tagName);
 		this._list.cell.onclick = (e: MouseEvent) =>
 			this.activateLayerForCell(<SidebarLayer>e.currentTarget);
 
@@ -75,7 +75,7 @@ class SidebarLayersCell extends Component {
 		console.log("Register Shortcuts");
 		this._shortcuts = [];
 
-		const node = this.closest(Window.TagName);
+		const node = this.closest(Window.tagName);
 		const manager = ShortcutManager.sharedManager;
 		this._shortcuts.push(
 			manager.registerShortcut(() => this.activateLayer(2), {
@@ -135,17 +135,17 @@ class SidebarLayersCell extends Component {
 	}
 
 	private get activeLayer() {
-		return <SidebarLayer>this.querySelector(SidebarLayer.TagName + ".active");
+		return <SidebarLayer>this.querySelector(SidebarLayer.tagName + ".active");
 	}
 
 	public activateLayer(idx: number) {
-		const layer = <SidebarLayer>this._list.querySelectorAll(SidebarLayer.TagName)[idx];
+		const layer = <SidebarLayer>this._list.querySelectorAll(SidebarLayer.tagName)[idx];
 		if (layer.classList.contains("active")) return;
 		this.activateLayerForCell(layer);
 	}
 
 	public activateLayerForCell(cell: SidebarLayer) {
-		const currentLayer = this._list.querySelector(SidebarLayer.TagName + ".active");
+		const currentLayer = this._list.querySelector(SidebarLayer.tagName + ".active");
 		if (currentLayer) currentLayer.classList.remove("active");
 
 		cell.classList.add("active");

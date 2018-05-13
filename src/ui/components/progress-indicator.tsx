@@ -2,7 +2,7 @@ import Component from "../component";
 import "./progress-indicator.scss";
 
 class ProgressIndicator extends Component {
-	public static readonly TagName = "wf-progress-indicator";
+	public static readonly tagName = "wf-progress-indicator";
 
 	public connectedCallback() {
 		super.connectedCallback();

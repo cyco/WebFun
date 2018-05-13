@@ -31,7 +31,7 @@ class ScriptDebugger {
 	};
 
 	constructor() {
-		this._window = <Window>document.createElement(Window.TagName);
+		this._window = <Window>document.createElement(Window.tagName);
 		this._window.classList.add("script-debugger-window");
 		this._window.title = "Script Debugger";
 		this._window.origin = new Point(10, 10);
@@ -65,7 +65,7 @@ class ScriptDebugger {
 	}
 
 	_setupDebuggerControls() {
-		const controls = <Controls>document.createElement(Controls.TagName);
+		const controls = <Controls>document.createElement(Controls.tagName);
 		controls.classList.add("script-debugger-window");
 		controls.onstep = (): void => null;
 		controls.ontogglepause = (): void => null;
@@ -73,7 +73,7 @@ class ScriptDebugger {
 	}
 
 	_setupActionList() {
-		const actionList = <Group>document.createElement(Group.TagName);
+		const actionList = <Group>document.createElement(Group.tagName);
 		actionList.classList.add("action-list");
 		this._window.content.appendChild(actionList);
 		this._actionList = actionList;
@@ -105,26 +105,42 @@ class ScriptDebugger {
 		Settings.debuggerActive = false;
 
 		this._engine.removeEventListener(EngineEvents.CurrentZoneChange, this._handlers.zoneChange);
-		this._engine.scriptExecutor.checker = new ConditionChecker(ConditionImplementations, this._engine);
-		this._engine.scriptExecutor.executor = new InstructionExecutor(InstructionImplementations, this._engine);
+		this._engine.scriptExecutor.checker = new ConditionChecker(
+			ConditionImplementations,
+			this._engine
+		);
+		this._engine.scriptExecutor.executor = new InstructionExecutor(
+			InstructionImplementations,
+			this._engine
+		);
 
 		this._isActive = false;
 	}
 
 	private _buildConditionStore(originalStore: ConditionStore): ConditionStore {
-		return originalStore.map((_, c) => (args: number[], zone: Zone, engine: Engine): Promise<boolean> =>
-			this._handleConditionCall(c, args, zone, engine)
-		);
+		return originalStore.map((_, c) => (args: number[], zone: Zone, engine: Engine): Promise<
+			boolean
+		> => this._handleConditionCall(c, args, zone, engine));
 	}
 
-	private _handleConditionCall(opcode: number, args: number[], zone: Zone, engine: Engine): Promise<boolean> {
+	private _handleConditionCall(
+		opcode: number,
+		args: number[],
+		zone: Zone,
+		engine: Engine
+	): Promise<boolean> {
 		return ConditionImplementations[opcode](args, zone, engine, EvaluationMode.Walk);
 	}
 
 	private _buildInstructionStore(originalStore: InstructionStore): InstructionStore {
-		return originalStore.map((_, i) => (instruction: Instruction, engine: Engine, action: Action): Promise<
-			InstructionResult
-		> => this._handleInstructionCall(i, instruction, engine, action));
+		return originalStore.map(
+			(_, i) => (
+				instruction: Instruction,
+				engine: Engine,
+				action: Action
+			): Promise<InstructionResult> =>
+				this._handleInstructionCall(i, instruction, engine, action)
+		);
 	}
 
 	private _handleInstructionCall(
@@ -140,7 +156,7 @@ class ScriptDebugger {
 	private _rebuildActionList() {
 		this._actionList.clear();
 		this._engine.currentZone.actions.forEach((action, idx) => {
-			const component = <ActionComponent>document.createElement(ActionComponent.TagName);
+			const component = <ActionComponent>document.createElement(ActionComponent.tagName);
 			component.engine = this._engine;
 			component.zone = this._engine.currentZone;
 			component.index = idx;
@@ -151,8 +167,8 @@ class ScriptDebugger {
 	}
 
 	private _updateEvaluation() {
-		Array.from(this._actionList.querySelectorAll(ActionComponent.TagName)).forEach((action: ActionComponent) =>
-			action.evaluateConditions()
+		Array.from(this._actionList.querySelectorAll(ActionComponent.tagName)).forEach(
+			(action: ActionComponent) => action.evaluateConditions()
 		);
 	}
 }

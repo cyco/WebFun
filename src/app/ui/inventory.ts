@@ -18,7 +18,7 @@ export const Event = {
 const MinRows = 7;
 
 class InventoryComponent extends Component {
-	public static TagName = "wf-inventory";
+	public static tagName = "wf-inventory";
 	private _inventory: Inventory;
 	private _inventoryChangedHandler: EventListener;
 
@@ -30,7 +30,7 @@ class InventoryComponent extends Component {
 	}
 
 	get rowCount() {
-		return this.querySelectorAll(InventoryRow.TagName).length;
+		return this.querySelectorAll(InventoryRow.tagName).length;
 	}
 
 	get inventory() {
@@ -104,7 +104,7 @@ class InventoryComponent extends Component {
 			return;
 		}
 
-		const imgNode = this.querySelectorAll(InventoryRow.TagName)[row].querySelector("img");
+		const imgNode = this.querySelectorAll(InventoryRow.tagName)[row].querySelector("img");
 		imgNode.src = (<any>Image).blankImage;
 
 		const modalSession = new ModalSession();
@@ -138,7 +138,7 @@ class InventoryComponent extends Component {
 	}
 
 	addRow(model: Tile) {
-		const row = <InventoryRow>document.createElement(InventoryRow.TagName);
+		const row = <InventoryRow>document.createElement(InventoryRow.tagName);
 		row.tile = model;
 		this.appendChild(row);
 

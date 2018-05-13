@@ -13,7 +13,7 @@ export const Direction = {
 };
 
 class Location extends Component {
-	public static TagName = "wf-location";
+	public static tagName = "wf-location";
 	private _mask: number = Direction.None;
 	private _svg: SVGElement = null;
 

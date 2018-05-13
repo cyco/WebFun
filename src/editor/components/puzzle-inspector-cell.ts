@@ -6,7 +6,7 @@ import Tile from "src/engine/objects/tile";
 import { ExpandButton } from "src/editor/components";
 
 class PuzzleInspectorCell extends Cell<Puzzle> {
-	public static readonly TagName: string = "wf-puzzle-inspector-cell";
+	public static readonly tagName: string = "wf-puzzle-inspector-cell";
 	public static readonly observedAttributes: string[] = [];
 
 	public tileSheet: CSSTileSheet;
@@ -35,7 +35,7 @@ class PuzzleInspectorCell extends Cell<Puzzle> {
 		this._type.classList.add("type");
 		this._title.appendChild(this._type);
 
-		this._button = <ExpandButton>document.createElement(ExpandButton.TagName);
+		this._button = <ExpandButton>document.createElement(ExpandButton.tagName);
 		this._button.element = this;
 		this._title.appendChild(this._button);
 

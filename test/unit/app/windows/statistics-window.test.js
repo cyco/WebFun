@@ -6,6 +6,6 @@ describeComponent(StatisticsWindow, () => {
 	beforeEach(() => (subject = render(StatisticsWindow)));
 
 	it("renders serveral text boxes", () => {
-		expect(subject.querySelector(Textbox.TagName)).not.toBeNull();
+		expect(subject.querySelector(Textbox.tagName)).not.toBeNull();
 	});
 });

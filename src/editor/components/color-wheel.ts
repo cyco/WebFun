@@ -13,7 +13,7 @@ import {
 } from "src/util";
 
 class ColorWheel extends Component implements EventListenerObject {
-	public static readonly TagName = "wf-color-wheel";
+	public static readonly tagName = "wf-color-wheel";
 	public static readonly observedAttributes: string[] = ["color"];
 
 	private size = new Size(100, 100);

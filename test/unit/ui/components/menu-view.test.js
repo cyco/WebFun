@@ -1,5 +1,8 @@
 import { Menu, MenuItemSeparator } from "src/ui";
-import { MenuItem as MenuItemComponent, MenuItemSeparator as MenuItemSeparatorComponent } from "src/ui/components";
+import {
+	MenuItem as MenuItemComponent,
+	MenuItemSeparator as MenuItemSeparatorComponent
+} from "src/ui/components";
 import MenuView from "src/ui/components/menu-view";
 import { or } from "test-helpers/css";
 
@@ -9,19 +12,28 @@ describeComponent(MenuView, () => {
 
 	it("draws all items of a menu", () => {
 		subject.menu = new Menu([{ label: "Test" }, MenuItemSeparator, { label: "Test 2" }]);
-		expect(subject.querySelectorAll(or(MenuItemComponent.TagName, MenuItemSeparatorComponent.TagName)).length).toBe(
-			3
-		);
+		expect(
+			subject.querySelectorAll(
+				or(MenuItemComponent.tagName, MenuItemSeparatorComponent.tagName)
+			).length
+		).toBe(3);
 
 		subject.menu = null;
-		expect(subject.querySelectorAll(or(MenuItemComponent.TagName, MenuItemSeparatorComponent.TagName)).length).toBe(
-			0
-		);
+		expect(
+			subject.querySelectorAll(
+				or(MenuItemComponent.tagName, MenuItemSeparatorComponent.tagName)
+			).length
+		).toBe(0);
 	});
 
 	it("redraws if the menu changes", () => {
-		subject.menu = new Menu([{ label: "Test" }, { label: "Test 2" }, { label: "Test 3" }, { label: "Test 4" }]);
-		expect(subject.querySelectorAll(MenuItemComponent.TagName).length).toBe(4);
+		subject.menu = new Menu([
+			{ label: "Test" },
+			{ label: "Test 2" },
+			{ label: "Test 3" },
+			{ label: "Test 4" }
+		]);
+		expect(subject.querySelectorAll(MenuItemComponent.tagName).length).toBe(4);
 	});
 
 	it("can be closed, removing it from the dom", () => {

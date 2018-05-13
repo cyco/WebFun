@@ -13,7 +13,7 @@ export const Events = {
 
 class NPCComponent extends Cell<NPC> {
 	public static readonly Events = Events;
-	public static readonly TagName = "wf-zone-editor-npc";
+	public static readonly tagName = "wf-zone-editor-npc";
 	public gameData: GameData;
 	public tileSheet: CSSTileSheet;
 	public _npc: NPC;
@@ -33,7 +33,7 @@ class NPCComponent extends Cell<NPC> {
 		this._text = document.createElement("div");
 		this._text.classList.add("text");
 
-		this._name = <Selector>document.createElement(Selector.TagName);
+		this._name = <Selector>document.createElement(Selector.tagName);
 		this._name.classList.add("name");
 		this._name.onchange = () => {
 			const mutableNPC = <MutableNPC>this._npc;
@@ -43,7 +43,7 @@ class NPCComponent extends Cell<NPC> {
 		this._name.borderless = true;
 		this._text.appendChild(this._name);
 
-		this._position = document.createElement(Label.TagName);
+		this._position = document.createElement(Label.tagName);
 		this._position.classList.add("position");
 		this._position.onchange = (e: Event) => {
 			const [rawX, rawY] = this._position.innerText.split("x");

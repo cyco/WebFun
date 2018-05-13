@@ -10,23 +10,23 @@ class ComponentRegistry {
 
 	registerComponents(components: { [_: string]: typeof Component } | typeof Component[]) {
 		Object.values(components)
-			.filter(x => x.TagName)
+			.filter(x => x.tagName)
 			.forEach(c => this.registerComponent(c));
 	}
 
 	registerComponent(ComponentDefinition: typeof Component) {
 		console.assert(
-			!!ComponentDefinition.TagName,
+			!!ComponentDefinition.tagName,
 			`ComponentDefinitions must define a tag to be used!`
 		);
 		console.assert(
-			!this.components[ComponentDefinition.TagName],
-			`A component with tag '${ComponentDefinition.TagName}' is already registered!`
+			!this.components[ComponentDefinition.tagName],
+			`A component with tag '${ComponentDefinition.tagName}' is already registered!`
 		);
 
 		try {
-			window.customElements.define(ComponentDefinition.TagName, ComponentDefinition);
-			this.components[ComponentDefinition.TagName] = ComponentDefinition;
+			window.customElements.define(ComponentDefinition.tagName, ComponentDefinition);
+			this.components[ComponentDefinition.tagName] = ComponentDefinition;
 		} catch (e) {}
 	}
 }

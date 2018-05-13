@@ -19,7 +19,7 @@ const main = async (windowManager: WindowManager = WindowManager.defaultManager)
 	if (!file) return;
 
 	const stream = await file.provideInputStream();
-	const editor = <EditorWindow>document.createElement(EditorWindow.TagName);
+	const editor = <EditorWindow>document.createElement(EditorWindow.tagName);
 	editor.title = file.name;
 	windowManager.showWindow(editor);
 	editor.center();

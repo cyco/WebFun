@@ -2,7 +2,7 @@ import Component from "../component";
 import "./textbox.scss";
 
 class Textbox extends Component {
-	public static readonly TagName = "wf-textbox";
+	public static readonly tagName = "wf-textbox";
 	public static readonly observedAttributes = ["readonly"];
 	private _element: HTMLInputElement = document.createElement("input");
 

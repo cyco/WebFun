@@ -13,7 +13,7 @@ import Settings from "src/settings";
 import "./editor-view.scss";
 
 class EditorView extends Component {
-	public static readonly TagName = "wf-editor-view";
+	public static readonly tagName = "wf-editor-view";
 	private _windowManager: WindowManager;
 	private _inspectors: { [_: string]: AbstractInspector } = {};
 	private _data: DataManager;

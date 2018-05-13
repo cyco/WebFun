@@ -2,7 +2,7 @@ import { Component } from "src/ui";
 import "./ammo.scss";
 
 class AmmoComponent extends Component {
-	public static TagName = "wf-ammo";
+	public static tagName = "wf-ammo";
 	private _background: HTMLDivElement;
 	private _indicator: HTMLDivElement;
 

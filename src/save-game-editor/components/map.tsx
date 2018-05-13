@@ -12,7 +12,7 @@ const TileSize = 28;
 const HereInteval = 1000;
 
 class Map extends Component {
-	public static readonly TagName = "wf-save-game-editor-map";
+	public static readonly tagName = "wf-save-game-editor-map";
 	public world: World;
 	public tileSheet: CSSTileSheet;
 	public tiles: Tile[];

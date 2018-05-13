@@ -3,7 +3,7 @@ import { IconButton } from "src/ui/components";
 import "./controls.scss";
 
 class Controls extends Component {
-	public static readonly TagName = "wf-debug-controls";
+	public static readonly tagName = "wf-debug-controls";
 	public static readonly observedAttributes = ["running"];
 
 	public ontogglepause: () => void;

@@ -14,7 +14,7 @@ export const Events = {
 };
 
 class PopoverTilePicker extends Component implements EventListenerObject {
-	public static readonly TagName = "wf-resource-editor-popover-tile-picker";
+	public static readonly tagName = "wf-resource-editor-popover-tile-picker";
 	public static readonly observedAttributes: string[] = [];
 	private _tiles: Tile[];
 	private _data: DataManager;
@@ -33,9 +33,9 @@ class PopoverTilePicker extends Component implements EventListenerObject {
 	}
 
 	public handleEvent(e: MouseEvent) {
-		const popover = document.createElement(Popover.TagName) as Popover;
+		const popover = document.createElement(Popover.tagName) as Popover;
 		const session = new PopoverModalSession(popover);
-		const picker = document.createElement(TilePicker.TagName) as TilePicker;
+		const picker = document.createElement(TilePicker.tagName) as TilePicker;
 		picker.data = this._data;
 		picker.style.width = "300px";
 		picker.style.height = "400px";

@@ -2,7 +2,7 @@ import Component from "src/ui/component";
 import "./search-bar.scss";
 
 class SearchBar extends Component {
-	public static readonly TagName = "wf-search-bar";
+	public static readonly tagName = "wf-search-bar";
 	public static readonly observedAttributes: string[] = [];
 
 	public onclose: () => void;

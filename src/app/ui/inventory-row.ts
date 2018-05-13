@@ -3,7 +3,7 @@ import { Component } from "src/ui";
 import "./inventory-row.scss";
 
 class InventoryRow extends Component {
-	public static TagName = "wf-inventory-row";
+	public static tagName = "wf-inventory-row";
 	private _emptyIcon: HTMLImageElement;
 	private _icon: HTMLSpanElement;
 	private _label: HTMLSpanElement;

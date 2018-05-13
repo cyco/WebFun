@@ -6,7 +6,7 @@ const StateStorageDelay = 1.0;
 
 abstract class AbstractInspector {
 	public state: Storage;
-	public window: Window = <Window>document.createElement(Panel.TagName);
+	public window: Window = <Window>document.createElement(Panel.tagName);
 	public windowManager: WindowManager;
 	private _data: DataManager;
 	private _stateUpdateDelay: number;

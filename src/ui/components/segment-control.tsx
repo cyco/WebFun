@@ -3,7 +3,7 @@ import Segment from "./segment";
 import "./segment-control.scss";
 
 class SegmentControl extends Component implements EventListenerObject {
-	public static readonly TagName = "wf-segmented-control";
+	public static readonly tagName = "wf-segmented-control";
 	private _currentSegment: Element;
 	public onsegmentchange: ((segment: Segment) => void);
 

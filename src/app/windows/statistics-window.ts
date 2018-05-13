@@ -3,7 +3,7 @@ import { Textbox, Window } from "src/ui/components";
 import "./statistics-window.scss";
 
 class StatisticsWindow extends Window {
-	public static TagName = "wf-statistics-window";
+	public static tagName = "wf-statistics-window";
 
 	private _state: PersistentState;
 	private icon: HTMLDivElement;
@@ -37,7 +37,7 @@ class StatisticsWindow extends Window {
 		const label = document.createElement("span");
 		label.textContent = name;
 
-		const textbox = <Textbox>document.createElement(Textbox.TagName);
+		const textbox = <Textbox>document.createElement(Textbox.tagName);
 		textbox.editable = false;
 		textbox.align = "right";
 		textbox.width = 60;

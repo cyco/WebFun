@@ -9,7 +9,7 @@ import "./view.scss";
 import Layer from "src/editor/components/zone-editor/layer";
 
 class View extends Component {
-	public static readonly TagName = "wf-zone-editor-view";
+	public static readonly tagName = "wf-zone-editor-view";
 	public static readonly observedAttributes: string[] = [];
 	private _zone: Zone;
 	private _floor: LayerComponent;
@@ -23,11 +23,11 @@ class View extends Component {
 	constructor() {
 		super();
 
-		this._floor = <LayerComponent>document.createElement(LayerComponent.TagName);
+		this._floor = <LayerComponent>document.createElement(LayerComponent.tagName);
 		this._floor.layer = Zone.Layer.Floor;
-		this._objects = <LayerComponent>document.createElement(LayerComponent.TagName);
+		this._objects = <LayerComponent>document.createElement(LayerComponent.tagName);
 		this._objects.layer = Zone.Layer.Object;
-		this._roof = <LayerComponent>document.createElement(LayerComponent.TagName);
+		this._roof = <LayerComponent>document.createElement(LayerComponent.tagName);
 		this._roof.layer = Zone.Layer.Roof;
 
 		this._overlay = document.createElement("canvas");

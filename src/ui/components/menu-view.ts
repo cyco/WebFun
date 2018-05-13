@@ -6,7 +6,7 @@ import MenuItemSeparator from "./menu-item-separator";
 import "./menu-view.scss";
 
 class MenuView extends Component {
-	public static TagName = "wf-menu-view";
+	public static tagName = "wf-menu-view";
 	public onclose: Function = null;
 	private _menu: Menu = null;
 
@@ -43,14 +43,14 @@ class MenuView extends Component {
 	}
 
 	addItemNode(menuItem: MenuItem) {
-		const node = <MenuItemComponent>document.createElement(MenuItemComponent.TagName);
+		const node = <MenuItemComponent>document.createElement(MenuItemComponent.tagName);
 		node.item = menuItem;
 		this.appendChild(node);
 		return node;
 	}
 
 	addSeparatorNode() {
-		const node = document.createElement(MenuItemSeparator.TagName);
+		const node = document.createElement(MenuItemSeparator.tagName);
 		this.appendChild(node);
 		return node;
 	}

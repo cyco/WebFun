@@ -7,7 +7,7 @@ import "./interactive-health.scss";
 const FlipThreshold = 180;
 
 class InteractiveHealth extends Health implements EventListenerObject {
-	public static readonly TagName = "wf-save-game-editor-health";
+	public static readonly tagName = "wf-save-game-editor-health";
 	private lastAngle: number = null;
 
 	protected connectedCallback() {

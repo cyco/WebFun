@@ -21,9 +21,10 @@ class ZoneInspector extends AbstractInspector {
 		this.window.content.style.maxHeight = "300px";
 		this.window.content.style.flexDirection = "column";
 
-		this._list = <List<Zone>>document.createElement(List.TagName);
-		this._list.cell = <ZoneInspectorCell>document.createElement(ZoneInspectorCell.TagName);
-		this._list.cell.onclick = (e: MouseEvent) => this._onCellClicked(<ZoneInspectorCell>e.currentTarget);
+		this._list = <List<Zone>>document.createElement(List.tagName);
+		this._list.cell = <ZoneInspectorCell>document.createElement(ZoneInspectorCell.tagName);
+		this._list.cell.onclick = (e: MouseEvent) =>
+			this._onCellClicked(<ZoneInspectorCell>e.currentTarget);
 		this._list.searchDelegate = this;
 		this._list.state = state.prefixedWith("list");
 		this._list.addEventListener(ZoneInspectorCell.Events.RevealReferences, (e: CustomEvent) =>
@@ -36,7 +37,7 @@ class ZoneInspector extends AbstractInspector {
 		let controller = this._controllers.find(c => c.canBeReused());
 
 		if (!controller) {
-			controller = <ZoneEditorController>document.createElement(ZoneEditorController.TagName);
+			controller = <ZoneEditorController>document.createElement(ZoneEditorController.tagName);
 			controller.data = this.data;
 			controller.state = this._state.prefixedWith("editor-" + this._controllers.length);
 			this._controllers.push(controller);
@@ -64,7 +65,9 @@ class ZoneInspector extends AbstractInspector {
 
 		const zones = <number[]>this._state.load("zones") || [];
 		zones.forEach(id => {
-			const controller = <ZoneEditorController>document.createElement(ZoneEditorController.TagName);
+			const controller = <ZoneEditorController>document.createElement(
+				ZoneEditorController.tagName
+			);
 			controller.manager = this.windowManager;
 			controller.data = this.data;
 			controller.zone = this.data.currentData.zones[id];
@@ -78,7 +81,12 @@ class ZoneInspector extends AbstractInspector {
 		return searchValue.split(" ").map(s => new RegExp(s, "i"));
 	}
 
-	includeListItem(searchValue: RegExp[], item: Zone, cell: ZoneInspectorCell, list: List<Zone>): boolean {
+	includeListItem(
+		searchValue: RegExp[],
+		item: Zone,
+		cell: ZoneInspectorCell,
+		list: List<Zone>
+	): boolean {
 		const searchableAttributes = [
 			item.id,
 			item.size.width + "x" + item.size.height,

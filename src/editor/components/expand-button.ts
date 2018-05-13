@@ -2,7 +2,7 @@ import { IconButton } from "src/ui/components";
 import "./expand-button.scss";
 
 class ExpandButton extends IconButton {
-	public static readonly TagName = "wf-editor-expand-button";
+	public static readonly tagName = "wf-editor-expand-button";
 	public onexpand: () => void = () => null;
 	public oncollapse: () => void = () => null;
 	public ontoggle: () => void = () => null;
