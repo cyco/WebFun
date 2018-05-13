@@ -9,7 +9,7 @@ class TileComponent extends Component {
 	private _tile: Tile = null;
 	private _image: HTMLElement = document.createElement("div");
 
-	connectedCallback() {
+	protected connectedCallback() {
 		super.connectedCallback();
 		this.appendChild(this._image);
 	}

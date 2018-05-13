@@ -22,7 +22,7 @@ class LoadingView extends Component {
 		this._progressBar = new ProgressBar();
 	}
 
-	connectedCallback() {
+	protected connectedCallback() {
 		super.connectedCallback();
 
 		this.appendChild(this._imageCanvas);

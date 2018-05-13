@@ -26,7 +26,7 @@ class ConfirmationWindow extends Window {
 		this.title = Description.Name;
 	}
 
-	connectedCallback(): void {
+	protected connectedCallback(): void {
 		const buttons = document.createElement("div");
 		buttons.classList.add("buttons");
 		buttons.appendChild(this._confirmButton);
@@ -45,7 +45,7 @@ class ConfirmationWindow extends Window {
 		super.connectedCallback();
 	}
 
-	disconnectedCallback() {
+	protected disconnectedCallback() {
 		while (this.content.firstChild) {
 			this.content.removeChild(this.content.firstChild);
 		}
@@ -53,7 +53,7 @@ class ConfirmationWindow extends Window {
 		super.disconnectedCallback();
 	}
 
-	attributeChangedCallback(attr: string, oldValue: string, newValue: string) {
+	protected attributeChangedCallback(attr: string, oldValue: string, newValue: string) {
 		if (attr === "confirm-text") {
 			this._confirmButton.setAttribute("label", newValue);
 		} else if (attr === "abort-text") {

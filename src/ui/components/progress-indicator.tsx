@@ -25,7 +25,7 @@ class ProgressIndicator extends Component {
 		);
 	}
 
-	disconnectedCallback() {
+	protected disconnectedCallback() {
 		this.textContent = "";
 		super.disconnectedCallback();
 	}

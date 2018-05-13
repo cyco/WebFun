@@ -14,11 +14,11 @@ class CharacterFramePreview extends Component {
 		super();
 	}
 
-	connectedCallback() {
+	protected connectedCallback() {
 		this._rebuild();
 	}
 
-	disconnectedCallback() {
+	protected disconnectedCallback() {
 		this.textContent = "";
 	}
 

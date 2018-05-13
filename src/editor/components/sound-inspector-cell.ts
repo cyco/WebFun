@@ -65,7 +65,7 @@ class SoundInspectorCell extends Cell<Sound> {
 		this._play.appendChild(this._revealButton);
 	}
 
-	connectedCallback() {
+	protected connectedCallback() {
 		this._id.textContent = `${this.data.id}`;
 		this.appendChild(this._id);
 

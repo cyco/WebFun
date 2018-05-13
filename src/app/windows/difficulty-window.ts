@@ -4,7 +4,7 @@ import "./difficulty-window.scss";
 class DifficultyWindow extends SettingsWindow {
 	public static TagName = "wf-difficulty-window";
 
-	connectedCallback(): void {
+	protected connectedCallback(): void {
 		this.setAttribute("title", "Difficulty");
 		this.setAttribute("key", "difficulty");
 		this.setAttribute("min-label", "Easy");

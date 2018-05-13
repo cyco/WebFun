@@ -87,7 +87,7 @@ class WindowTitlebar extends Component {
 		this._closeButton.style.display = flag ? "" : "none";
 	}
 
-	connectedCallback() {
+	protected connectedCallback() {
 		super.connectedCallback();
 
 		this.appendChild(this._closeButton);

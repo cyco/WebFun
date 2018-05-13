@@ -79,7 +79,7 @@ class SpeechBubble extends Component {
 		this._endButton.onclick = () => this.end();
 	}
 
-	connectedCallback() {
+	protected connectedCallback() {
 		super.connectedCallback();
 
 		this.style.setProperty("--font-family", FontFamily);
@@ -94,7 +94,11 @@ class SpeechBubble extends Component {
 		this.text = this.text || "";
 	}
 
-	attributeChangedCallback(attribute: string, oldValue: string, newValue: string): void {
+	protected attributeChangedCallback(
+		attribute: string,
+		oldValue: string,
+		newValue: string
+	): void {
 		this.text = newValue;
 	}
 
@@ -278,7 +282,9 @@ class SpeechBubble extends Component {
 	}
 
 	private _calculateNumberOfLines(skipClipping: boolean): number {
-		const lineCount = Math.ceil(this._text.getBoundingClientRect().height / parseInt(LineHeight));
+		const lineCount = Math.ceil(
+			this._text.getBoundingClientRect().height / parseInt(LineHeight)
+		);
 		let line = Math.max(1, lineCount);
 
 		if (skipClipping) return line;

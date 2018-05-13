@@ -30,7 +30,7 @@ class AmmoComponent extends Component {
 		this._indicator.style.height = (value > 1 ? 1 : value) * 95 + "%";
 	}
 
-	connectedCallback() {
+	protected connectedCallback() {
 		super.connectedCallback();
 
 		this.appendChild(this._background);

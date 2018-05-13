@@ -63,7 +63,7 @@ class NPCComponent extends Cell<NPC> {
 		this._text.appendChild(this._remove);
 	}
 
-	connectedCallback() {
+	protected connectedCallback() {
 		this.appendChild(this._tile);
 		this.appendChild(this._text);
 	}
@@ -98,7 +98,9 @@ class NPCComponent extends Cell<NPC> {
 
 	private _setupNameSelector() {
 		this._name.removeAllOptions();
-		this.gameData.characters.filter(c => c.isEnemy()).forEach(c => this._name.addOption(c.name, `${c.id}`));
+		this.gameData.characters
+			.filter(c => c.isEnemy())
+			.forEach(c => this._name.addOption(c.name, `${c.id}`));
 	}
 
 	public get data() {

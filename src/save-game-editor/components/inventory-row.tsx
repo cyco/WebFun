@@ -10,9 +10,7 @@ class InventoryRow extends Cell<Tile> {
 	private _label = (
 		<Selector
 			borderless
-			onchange={() =>
-				(this.data = this.tiles.find(t => t.id === +this._label.value))
-			}
+			onchange={() => (this.data = this.tiles.find(t => t.id === +this._label.value))}
 		/>
 	) as Selector;
 	private _tile: Tile;
@@ -20,7 +18,7 @@ class InventoryRow extends Cell<Tile> {
 	public onadd: () => void;
 	public tiles: Tile[];
 
-	connectedCallback() {
+	protected connectedCallback() {
 		super.connectedCallback();
 		if (this.data) {
 			this.tiles.forEach(t => this._label.addOption(t.name, `${t.id}`));
@@ -43,9 +41,7 @@ class InventoryRow extends Cell<Tile> {
 	}
 
 	private _setupAsNewItem() {
-		this.appendChild(
-			<IconButton className="new" icon="plus" onclick={() => this.onadd()} />
-		);
+		this.appendChild(<IconButton className="new" icon="plus" onclick={() => this.onadd()} />);
 	}
 
 	cloneNode(deep?: boolean): InventoryRow {

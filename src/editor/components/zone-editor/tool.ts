@@ -14,7 +14,7 @@ class ToolComponent extends Component implements EventListenerObject {
 	public editor: Editor;
 	private _shortcut: Shortcut = null;
 
-	connectedCallback() {
+	protected connectedCallback() {
 		super.connectedCallback();
 
 		const activateTool = () => this.editor.activateTool(this.tool);
@@ -22,14 +22,17 @@ class ToolComponent extends Component implements EventListenerObject {
 			const window = this.closest(Window.TagName);
 			const description = Object.assign({}, this.tool.shortcut, { node: window });
 
-			this._shortcut = ShortcutManager.sharedManager.registerShortcut(activateTool, description);
+			this._shortcut = ShortcutManager.sharedManager.registerShortcut(
+				activateTool,
+				description
+			);
 		}
 
 		this.classList.add("fa");
 		this.onclick = activateTool;
 	}
 
-	disconnectedCallback() {
+	protected disconnectedCallback() {
 		this.onclick = () => null;
 
 		if (this._shortcut) ShortcutManager.sharedManager.unregisterShortcut(this._shortcut);

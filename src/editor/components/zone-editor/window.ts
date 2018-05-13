@@ -131,7 +131,7 @@ class Window extends Panel {
 		layers.activateLayer(0);
 	}
 
-	connectedCallback() {
+	protected connectedCallback() {
 		super.connectedCallback();
 
 		this.content.appendChild(this._sidebar);

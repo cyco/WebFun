@@ -29,7 +29,7 @@ class Map extends Component {
 	private _here: HTMLElement;
 	private _hereInterval: number;
 
-	connectedCallback() {
+	protected connectedCallback() {
 		super.connectedCallback();
 
 		this.style.backgroundColor = this.locatorTile.backgroundColor;
@@ -50,7 +50,7 @@ class Map extends Component {
 		if (this.location) this._buildInterval();
 	}
 
-	disconnectedCallback() {
+	protected disconnectedCallback() {
 		clearInterval(this._hereInterval);
 		super.disconnectedCallback();
 	}

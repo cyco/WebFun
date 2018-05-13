@@ -4,11 +4,11 @@ import "./split-view.scss";
 class SplitView extends Component {
 	public static readonly TagName = "wf-split-view";
 
-	connectedCallback() {
+	protected connectedCallback() {
 		console.log("connected");
 	}
 
-	disconnectedCallback() {
+	protected disconnectedCallback() {
 		console.log("disconnected");
 	}
 }

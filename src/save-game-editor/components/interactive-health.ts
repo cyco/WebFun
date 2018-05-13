@@ -10,7 +10,7 @@ class InteractiveHealth extends Health implements EventListenerObject {
 	public static readonly TagName = "wf-save-game-editor-health";
 	private lastAngle: number = null;
 
-	connectedCallback() {
+	protected connectedCallback() {
 		super.connectedCallback();
 		this.addEventListener("mousedown", this);
 	}
@@ -52,7 +52,7 @@ class InteractiveHealth extends Health implements EventListenerObject {
 		this.lastAngle = normangle;
 	}
 
-	disconnectedCallback() {
+	protected disconnectedCallback() {
 		super.disconnectedCallback();
 
 		this.removeEventListener("mousedown", this);

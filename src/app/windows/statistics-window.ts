@@ -9,7 +9,7 @@ class StatisticsWindow extends Window {
 	private icon: HTMLDivElement;
 	private _list: HTMLUListElement;
 
-	connectedCallback(): void {
+	protected connectedCallback(): void {
 		super.connectedCallback();
 
 		this._setupWindow();

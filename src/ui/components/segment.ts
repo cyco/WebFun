@@ -6,7 +6,7 @@ class Segment extends Component {
 	public static readonly observedAttributes = ["selected"];
 	private _selected: boolean = false;
 
-	attributeChangedCallback() {
+	protected attributeChangedCallback() {
 		this.selected = this.hasAttribute("selected");
 	}
 

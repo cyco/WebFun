@@ -60,14 +60,14 @@ class RadioButton extends Component {
 		this._radio.name = id;
 	}
 
-	connectedCallback() {
+	protected connectedCallback() {
 		super.connectedCallback();
 
 		this.appendChild(this._radio);
 		this.appendChild(this._label);
 	}
 
-	disconnectedCallback() {
+	protected disconnectedCallback() {
 		super.disconnectedCallback();
 		this.clear();
 	}

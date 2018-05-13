@@ -23,7 +23,8 @@ class SidebarLayersCell extends Component {
 
 		this._list = <List<Layer>>document.createElement(List.TagName);
 		this._list.cell = <SidebarLayer>document.createElement(SidebarLayer.TagName);
-		this._list.cell.onclick = (e: MouseEvent) => this.activateLayerForCell(<SidebarLayer>e.currentTarget);
+		this._list.cell.onclick = (e: MouseEvent) =>
+			this.activateLayerForCell(<SidebarLayer>e.currentTarget);
 
 		this._buildLayers();
 		this._list.items = this._layers;
@@ -54,7 +55,7 @@ class SidebarLayersCell extends Component {
 		this._layers.push(floor);
 	}
 
-	connectedCallback() {
+	protected connectedCallback() {
 		super.connectedCallback();
 
 		this.appendChild(this._list);
@@ -62,7 +63,7 @@ class SidebarLayersCell extends Component {
 		this._registerShortcuts();
 	}
 
-	disconnectedCallback() {
+	protected disconnectedCallback() {
 		this._list.remove();
 
 		super.disconnectedCallback();
@@ -97,8 +98,15 @@ class SidebarLayersCell extends Component {
 				node
 			})
 		);
-		this._shortcuts.push(manager.registerShortcut(() => this._toggleVisiblilty(), { ctrlKey: true, keyCode: 188 }));
-		this._shortcuts.push(manager.registerShortcut(() => this._toggleLock(), { ctrlKey: true, keyCode: 190 }));
+		this._shortcuts.push(
+			manager.registerShortcut(() => this._toggleVisiblilty(), {
+				ctrlKey: true,
+				keyCode: 188
+			})
+		);
+		this._shortcuts.push(
+			manager.registerShortcut(() => this._toggleLock(), { ctrlKey: true, keyCode: 190 })
+		);
 	}
 
 	_unregisterShortcuts() {
@@ -143,7 +151,9 @@ class SidebarLayersCell extends Component {
 		cell.classList.add("active");
 
 		const layer = cell.data;
-		this.dispatchEvent(new CustomEvent(Events.LayerDidChange, { detail: { layer: layer }, bubbles: true }));
+		this.dispatchEvent(
+			new CustomEvent(Events.LayerDidChange, { detail: { layer: layer }, bubbles: true })
+		);
 	}
 }
 

@@ -7,7 +7,7 @@ class SegmentControl extends Component implements EventListenerObject {
 	private _currentSegment: Element;
 	public onsegmentchange: ((segment: Segment) => void);
 
-	connectedCallback() {
+	protected connectedCallback() {
 		super.connectedCallback();
 		Array.from(this.children).forEach(c => c.addEventListener("click", this));
 		this.currentSegment = this.querySelector("[selected]");
@@ -17,7 +17,7 @@ class SegmentControl extends Component implements EventListenerObject {
 		this.currentSegment = e.currentTarget as Element;
 	}
 
-	disconnectedCallback() {
+	protected disconnectedCallback() {
 		Array.from(this.children).forEach(c => c.removeEventListener("click", this));
 		super.disconnectedCallback();
 	}
@@ -35,7 +35,8 @@ class SegmentControl extends Component implements EventListenerObject {
 			this._currentSegment.setAttribute("selected", "");
 		}
 
-		if (this.onsegmentchange instanceof Function) this.onsegmentchange(this._currentSegment as Segment);
+		if (this.onsegmentchange instanceof Function)
+			this.onsegmentchange(this._currentSegment as Segment);
 	}
 }
 

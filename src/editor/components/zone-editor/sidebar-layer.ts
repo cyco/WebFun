@@ -24,7 +24,10 @@ class SidebarLayer extends Cell<Layer> {
 		this._visible.onclick = (e: MouseEvent) => {
 			this.data.visible = !this.data.visible;
 			this.dispatchEvent(
-				new CustomEvent(Event.DidToggleVisibility, { detail: { layer: this.data }, bubbles: true })
+				new CustomEvent(Event.DidToggleVisibility, {
+					detail: { layer: this.data },
+					bubbles: true
+				})
 			);
 			this.rebuild();
 			e.preventDefault();
@@ -33,7 +36,12 @@ class SidebarLayer extends Cell<Layer> {
 
 		this._locked = document.createElement("i");
 		this._locked.onclick = (e: MouseEvent) => {
-			this.dispatchEvent(new CustomEvent(Event.DidToggleLock, { detail: { layer: this.data }, bubbles: true }));
+			this.dispatchEvent(
+				new CustomEvent(Event.DidToggleLock, {
+					detail: { layer: this.data },
+					bubbles: true
+				})
+			);
 			this.data.locked = !this.data.locked;
 			this.rebuild();
 
@@ -42,7 +50,7 @@ class SidebarLayer extends Cell<Layer> {
 		};
 	}
 
-	connectedCallback() {
+	protected connectedCallback() {
 		super.connectedCallback();
 
 		this.appendChild(this._name);
@@ -70,7 +78,7 @@ class SidebarLayer extends Cell<Layer> {
 		else this._locked.classList.add("fa-unlock-alt");
 	}
 
-	disconnectedCallback() {
+	protected disconnectedCallback() {
 		super.disconnectedCallback();
 		this.textContent = "";
 	}

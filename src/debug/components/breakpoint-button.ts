@@ -37,16 +37,22 @@ class BreakpointButton extends Component {
 		else this.removeAttribute("active");
 	}
 
-	connectedCallback() {
+	protected connectedCallback() {
 		this.onclick = () => this.toggle();
 		this.active = this._store.hasBreakpoint(this.breakpoint.id);
 		this._store.addEventListener(BreakpointStore.Event.DidAddBreakpoint, this._addHandler);
-		this._store.addEventListener(BreakpointStore.Event.DidRemoveBreakpoint, this._removeHandler);
+		this._store.addEventListener(
+			BreakpointStore.Event.DidRemoveBreakpoint,
+			this._removeHandler
+		);
 	}
 
-	disconnectedCallback() {
+	protected disconnectedCallback() {
 		this._store.removeEventListener(BreakpointStore.Event.DidAddBreakpoint, this._addHandler);
-		this._store.removeEventListener(BreakpointStore.Event.DidRemoveBreakpoint, this._removeHandler);
+		this._store.removeEventListener(
+			BreakpointStore.Event.DidRemoveBreakpoint,
+			this._removeHandler
+		);
 	}
 
 	toggle() {

@@ -21,12 +21,12 @@ class SearchBar extends Component {
 		this._button.onclick = () => this.onclose && this.onclose();
 	}
 
-	connectedCallback() {
+	protected connectedCallback() {
 		this.appendChild(this._inputField);
 		this.appendChild(this._button);
 	}
 
-	disconnectedCallback() {
+	protected disconnectedCallback() {
 		this._inputField.remove();
 		this._button.remove();
 	}

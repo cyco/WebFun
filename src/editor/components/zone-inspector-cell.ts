@@ -47,7 +47,7 @@ class ZoneInspectorCell extends Cell<Zone> {
 		this._planet.classList.add("planet");
 	}
 
-	connectedCallback() {
+	protected connectedCallback() {
 		this._id.textContent = `${this.data.id}`;
 		this._size.textContent = `${this.data.size.width}x${this.data.size.height}`;
 		this._type.textContent = this.data.hasTeleporter ? "Teleporter" : this.data.type.name;
@@ -116,7 +116,7 @@ class ZoneInspectorCell extends Cell<Zone> {
 		return node;
 	}
 
-	disconnectedCallback() {
+	protected disconnectedCallback() {
 		this.textContent = "";
 
 		this._icon.remove();

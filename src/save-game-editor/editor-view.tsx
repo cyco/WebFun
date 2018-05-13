@@ -31,7 +31,7 @@ class EditorView extends Component {
 	private _tileSheet: CSSTileSheet;
 	private _save: Element = <div className="save" />;
 
-	connectedCallback() {
+	protected connectedCallback() {
 		super.connectedCallback();
 		this.appendChild(this._save);
 	}

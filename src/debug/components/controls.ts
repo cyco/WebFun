@@ -30,12 +30,14 @@ class Controls extends Component {
 
 		const fastForward = new IconButton();
 		fastForward.icon = "fast-forward";
-		fastForward.onclick = () => (this.onfastforward instanceof Function ? this.onfastforward() : null);
+		fastForward.onclick = () =>
+			this.onfastforward instanceof Function ? this.onfastforward() : null;
 		this._fastForwardButton = fastForward;
 
 		const playButton = new IconButton();
 		playButton.icon = "play";
-		playButton.onclick = () => (this.ontogglepause instanceof Function ? this.ontogglepause() : null);
+		playButton.onclick = () =>
+			this.ontogglepause instanceof Function ? this.ontogglepause() : null;
 		this._playButton = playButton;
 	}
 
@@ -48,7 +50,7 @@ class Controls extends Component {
 		else this.removeAttribute("running");
 	}
 
-	connectedCallback() {
+	protected connectedCallback() {
 		if (this.children.length) return;
 
 		this.appendChild(this._playButton);
@@ -56,7 +58,7 @@ class Controls extends Component {
 		this.appendChild(this._fastForwardButton);
 	}
 
-	attributeChangedCallback(attribute: string) {
+	protected attributeChangedCallback(attribute: string) {
 		if (attribute === "running") {
 			const isRunning = this.hasAttribute("running");
 			this._playButton.icon = isRunning ? "pause" : "play";

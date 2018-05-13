@@ -26,11 +26,11 @@ class EditorView extends Component {
 		}
 	}
 
-	connectedCallback() {
+	protected connectedCallback() {
 		super.connectedCallback();
 	}
 
-	disconnectedCallback() {
+	protected disconnectedCallback() {
 		super.disconnectedCallback();
 	}
 

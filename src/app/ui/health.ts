@@ -70,7 +70,7 @@ class Health extends Component {
 		return Math.floor(this._health % HealthPerColor);
 	}
 
-	connectedCallback() {
+	protected connectedCallback() {
 		super.connectedCallback();
 		this.innerHTML = HealthSVG;
 		this._condition = <SVGCircleElement>this.querySelector("#health-condition");

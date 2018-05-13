@@ -8,7 +8,7 @@ class AmmoControl extends Component implements EventListenerObject {
 	private _vertical: boolean = false;
 	private _bar: HTMLElement = <div />;
 
-	connectedCallback() {
+	protected connectedCallback() {
 		super.connectedCallback();
 		this.appendChild(this._bar);
 		this.addEventListener("mousedown", this);
@@ -43,7 +43,7 @@ class AmmoControl extends Component implements EventListenerObject {
 		event.preventDefault();
 	}
 
-	disconnectedCallback() {
+	protected disconnectedCallback() {
 		super.disconnectedCallback();
 
 		this.removeEventListener("mouseup", this);

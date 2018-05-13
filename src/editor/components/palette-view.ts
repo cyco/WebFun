@@ -15,7 +15,7 @@ class PaletteView extends Component {
 	private _size: Size;
 	private highlighter: HTMLElement = document.createElement("div");
 
-	connectedCallback() {
+	protected connectedCallback() {
 		this.appendChild(this._canvas);
 		this._ctx = this._canvas.getContext("2d");
 		this.redraw();
