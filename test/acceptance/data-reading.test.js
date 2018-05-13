@@ -1,5 +1,5 @@
 import { getFixtureData } from "test-helpers/fixture-loading";
-import { ManualDataFileReader, GameTypeYoda, GameTypeIndy } from "src/engine";
+import { readGameDataFile, GameTypeYoda, GameTypeIndy } from "src/engine";
 import { InputStream } from "src/util";
 
 describe("DataReading", () => {
@@ -21,7 +21,7 @@ describe("DataReading", () => {
 			return;
 		}
 
-		expect(() => ManualDataFileReader(data, type)).not.toThrow();
+		expect(() => readGameDataFile(data, type)).not.toThrow();
 		done();
 	};
 
@@ -31,8 +31,8 @@ describe("DataReading", () => {
 	it("reads yoda's demo data without errors", parsesWithoutError(GameTypeYoda, "yoda-demo.data"));
 	it("throws an error when the data can not be parsed", async done => {
 		const data = await getFixtureData("someData");
-		expect(() => ManualDataFileReader(new InputStream(data), GameTypeYoda)).toThrow();
-		expect(() => ManualDataFileReader(new InputStream(data), GameTypeIndy)).toThrow();
+		expect(() => readGameDataFile(new InputStream(data), GameTypeYoda)).toThrow();
+		expect(() => readGameDataFile(new InputStream(data), GameTypeIndy)).toThrow();
 		done();
 	});
 });

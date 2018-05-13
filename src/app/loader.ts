@@ -1,4 +1,4 @@
-import { ColorPalette, GameData, ManualDataFileReader, GameTypeYoda } from "src/engine";
+import { ColorPalette, GameData, readGameDataFile, GameTypeYoda } from "src/engine";
 import { Tile } from "src/engine/objects";
 import { AbstractImageFactory } from "src/engine/rendering";
 import Settings from "src/settings";
@@ -52,7 +52,7 @@ class Loader extends EventTarget {
 
 	_readGameData(stream: InputStream) {
 		this._progress(1, 0);
-		this._rawData = ManualDataFileReader(stream, GameTypeYoda);
+		this._rawData = readGameDataFile(stream, GameTypeYoda);
 		this._progress(1, 1);
 		this._loadPalette();
 	}

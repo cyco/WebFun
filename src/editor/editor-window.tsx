@@ -1,11 +1,5 @@
 import { Window, ProgressIndicator } from "src/ui/components";
-import {
-	ManualDataFileReader,
-	GameData,
-	ColorPalette,
-	GameTypeYoda,
-	GameTypeIndy
-} from "src/engine";
+import { readGameDataFile, GameData, ColorPalette, GameTypeYoda, GameTypeIndy } from "src/engine";
 import { InputStream, PromiseProgress } from "src/util";
 import { PaletteProvider } from "src/app/data";
 import DataManager from "./data-manager";
@@ -27,7 +21,7 @@ class EditorWindow extends Window {
 	public async loadFile(file: File) {
 		const stream = await file.provideInputStream();
 		const type = file.name.toLowerCase().indexOf("yod") === -1 ? GameTypeIndy : GameTypeYoda;
-		const rawData = ManualDataFileReader(stream, type);
+		const rawData = readGameDataFile(stream, type);
 		const data = new GameData(rawData);
 		const palette = await new PaletteProvider().provide(type);
 		const tileSheet = new CSSTileSheet(data.tiles.length);

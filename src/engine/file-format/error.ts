@@ -1,4 +1,4 @@
-import ParseError from "./manual/parse-error";
+import ParseError from "./parse-error";
 import { InputStream } from "src/util";
 
 export const error = (message: string | Error | ParseError, stream?: InputStream) => {

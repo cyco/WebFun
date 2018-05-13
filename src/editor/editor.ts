@@ -3,7 +3,7 @@ import { DiscardingOutputStream, download, OutputStream } from "src/util";
 import DataManager from "./data-manager";
 import GameDataSerializer from "./game-data-serializer";
 import FilePicker from "src/ui/file-picker";
-import { ManualDataFileReader, GameTypeYoda, GameTypeIndy } from "src/engine";
+import { readGameDataFile, GameTypeYoda, GameTypeIndy } from "src/engine";
 import GameData from "src/engine/game-data";
 import "./editor.scss";
 import { FullscreenWindow } from "src/ui/components";
@@ -74,7 +74,7 @@ class Editor extends FullscreenWindow {
 	public async loadFile(file: File) {
 		const stream = await file.provideInputStream();
 		const type = file.name.toLowerCase().indexOf("yoda") === -1 ? GameTypeIndy : GameTypeYoda;
-		const rawData = ManualDataFileReader(stream, type);
+		const rawData = readGameDataFile(stream, type);
 		const data = new GameData(rawData);
 	}
 

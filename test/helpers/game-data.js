@@ -1,5 +1,5 @@
 import { getFixtureData } from "./fixture-loading";
-import Parse from "../../src/engine/file-format/yodesk-manual";
+import { readGameDataFile } from "src/engine";
 import { Yoda } from "../../src/engine/type";
 import { InputStream } from "../../src/util";
 
@@ -14,7 +14,7 @@ export default (type, callback) => {
 			}
 
 			let stream = new InputStream(file);
-			const result = Parse(stream, type);
+			const result = readGameDataFile(stream, type);
 			callback && callback(result);
 			resolve(result);
 		});
