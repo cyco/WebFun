@@ -3,7 +3,6 @@ import "./icon-button.scss";
 
 class IconButton extends Component {
 	public static TagName = "wf-icon-button";
-	public static Options = { extends: "button" };
 	public static observedAttributes = ["icon"];
 	private _icon: HTMLElement;
 	private _iconName: string;
