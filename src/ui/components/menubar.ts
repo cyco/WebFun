@@ -13,7 +13,7 @@ class Menubar extends MenuView {
 	private _modalSession: ModalSession;
 	private _registerMouseUpHandler: () => void;
 
-	connectedCallback() {
+	protected connectedCallback() {
 		super.connectedCallback();
 
 		this.classList.add("menubar");
@@ -96,11 +96,18 @@ class Menubar extends MenuView {
 
 	_elementContainsPoint(element: Element, point: Point): boolean {
 		const frame = element.getBoundingClientRect();
-		return point.x >= frame.left && point.x <= frame.right && point.y >= frame.top && point.y <= frame.bottom;
+		return (
+			point.x >= frame.left &&
+			point.x <= frame.right &&
+			point.y >= frame.top &&
+			point.y <= frame.bottom
+		);
 	}
 
 	_findItemAt(location: Point): number {
-		return Array.from(this.children).findIndex(child => this._elementContainsPoint(child, location));
+		return Array.from(this.children).findIndex(child =>
+			this._elementContainsPoint(child, location)
+		);
 	}
 }
 

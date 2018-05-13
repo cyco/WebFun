@@ -4,7 +4,7 @@ import "./game-speed-window.scss";
 class GameSpeedWindow extends SettingsWindow {
 	public static TagName = "wf-game-speed-window";
 
-	connectedCallback() {
+	protected connectedCallback() {
 		this.setAttribute("title", "Game Speed");
 		this.setAttribute("key", "speed");
 		this.setAttribute("min-label", "Slow");

@@ -36,14 +36,14 @@ class View extends Component {
 		this.tool = new NoTool();
 	}
 
-	connectedCallback() {
+	protected connectedCallback() {
 		this.appendChild(this._floor);
 		this.appendChild(this._objects);
 		this.appendChild(this._roof);
 		this.appendChild(this._overlay);
 	}
 
-	disconnectedCallback() {
+	protected disconnectedCallback() {
 		this._floor.remove();
 		this._objects.remove();
 		this._roof.remove();

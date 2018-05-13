@@ -12,7 +12,7 @@ class EditorWindow extends Window {
 	private _progressIndicator: HTMLElement = <ProgressIndicator />;
 	private _editorView: EditorView = <EditorView /> as EditorView;
 
-	connectedCallback() {
+	protected connectedCallback() {
 		super.connectedCallback();
 		this.content.appendChild(this._progressIndicator);
 	}

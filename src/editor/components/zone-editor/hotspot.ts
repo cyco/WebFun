@@ -64,7 +64,7 @@ class HotspotComponent extends Cell<Hotspot> {
 		this._text.appendChild(this._remove);
 	}
 
-	connectedCallback() {
+	protected connectedCallback() {
 		this.appendChild(this._tile);
 		this.appendChild(this._text);
 	}
@@ -95,7 +95,9 @@ class HotspotComponent extends Cell<Hotspot> {
 
 	private _setupNameSelector() {
 		this._name.removeAllOptions();
-		Hotspot.Type.knownTypes.filter(c => c).forEach(c => this._name.addOption(c.name, `${c.rawValue}`));
+		Hotspot.Type.knownTypes
+			.filter(c => c)
+			.forEach(c => this._name.addOption(c.name, `${c.rawValue}`));
 	}
 
 	public get data() {

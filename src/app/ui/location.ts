@@ -26,7 +26,7 @@ class Location extends Component {
 		this._updateClassList();
 	}
 
-	connectedCallback() {
+	protected connectedCallback() {
 		super.connectedCallback();
 
 		this.innerHTML = LocationSVG;

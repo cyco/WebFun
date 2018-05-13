@@ -1,6 +1,16 @@
 import { Component } from "src/ui";
 import "./color-wheel.scss";
-import { Color, deg2rad, dispatch, hsv2rgb, polar2xy, rad2deg, rgba, Size, xy2polar } from "src/util";
+import {
+	Color,
+	deg2rad,
+	dispatch,
+	hsv2rgb,
+	polar2xy,
+	rad2deg,
+	rgba,
+	Size,
+	xy2polar
+} from "src/util";
 
 class ColorWheel extends Component implements EventListenerObject {
 	public static readonly TagName = "wf-color-wheel";
@@ -32,7 +42,7 @@ class ColorWheel extends Component implements EventListenerObject {
 		this.color = new Color(0, 0, 0, 0);
 	}
 
-	connectedCallback() {
+	protected connectedCallback() {
 		this.appendChild(this._canvas);
 		this.appendChild(this._crosshair);
 
@@ -152,7 +162,7 @@ class ColorWheel extends Component implements EventListenerObject {
 		ctx.stroke();
 	}
 
-	disconnectedCallback() {
+	protected disconnectedCallback() {
 		this._canvas.remove();
 		this.removeEventListener("mousedown", this);
 

@@ -43,7 +43,7 @@ class List<T> extends Component {
 		this._content = document.createElement("div");
 	}
 
-	connectedCallback() {
+	protected connectedCallback() {
 		if (this.searchDelegate && !this._bar.parentElement)
 			this.insertBefore(this._bar, this.firstElementChild);
 		this.rebuild();
@@ -94,7 +94,7 @@ class List<T> extends Component {
 		this.refilter();
 	}
 
-	disconnectedCallback() {
+	protected disconnectedCallback() {
 		this._bar.remove();
 		this.hideBar(false);
 

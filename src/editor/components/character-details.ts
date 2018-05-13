@@ -28,7 +28,9 @@ class CharacterDetails extends Component {
 	constructor() {
 		super();
 
-		this._framePreview = <CharacterFramePreview>document.createElement(CharacterFramePreview.TagName);
+		this._framePreview = <CharacterFramePreview>document.createElement(
+			CharacterFramePreview.TagName
+		);
 		this._stepButton = document.createElement("button");
 		this._stepButton.textContent = "Step";
 		this._stepButton.onclick = () =>
@@ -50,10 +52,12 @@ class CharacterDetails extends Component {
 		};
 		this._damageInput = document.createElement("input");
 		this._damageInput.type = "text";
-		this._damageInput.onchange = () => (this._character.damage = parseInt(this._damageInput.value));
+		this._damageInput.onchange = () =>
+			(this._character.damage = parseInt(this._damageInput.value));
 		this._healthInput = document.createElement("input");
 		this._healthInput.type = "text";
-		this._healthInput.onchange = () => (this._character.health = parseInt(this._damageInput.value));
+		this._healthInput.onchange = () =>
+			(this._character.health = parseInt(this._damageInput.value));
 		this._weaponPreview = document.createElement("div");
 		this._sound = document.createElement("select");
 		this._sound.classList.add("sound");
@@ -100,7 +104,7 @@ class CharacterDetails extends Component {
 		});
 	}
 
-	connectedCallback() {
+	protected connectedCallback() {
 		this.appendChild(this._framePreview);
 		this.appendChild(this._stepButton);
 		this.appendLabel("Type:", this._typeSelector);
@@ -127,7 +131,7 @@ class CharacterDetails extends Component {
 		this.appendChild(label);
 	}
 
-	disconnectedCallback() {
+	protected disconnectedCallback() {
 		this._framePreview.remove();
 		this._stepButton.remove();
 		this._typeSelector.remove();

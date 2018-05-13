@@ -32,11 +32,15 @@ class IconButton extends Component {
 		else this.removeAttribute("disabled");
 	}
 
-	connectedCallback() {
+	protected connectedCallback() {
 		if (!this._icon.parentNode) this.appendChild(this._icon);
 	}
 
-	attributeChangedCallback(attributeName: string, oldValue: string, newValue: string): void {
+	protected attributeChangedCallback(
+		attributeName: string,
+		oldValue: string,
+		newValue: string
+	): void {
 		if (attributeName === "icon") {
 			this._icon.classList.remove(`fa-${oldValue}`);
 			this._icon.classList.add(`fa-${newValue}`);

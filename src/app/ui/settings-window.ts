@@ -3,7 +3,15 @@ import "./settings-window.scss";
 
 class SettingsWindow extends Window {
 	public static TagName = "wf-settings-window";
-	public static observedAttributes = ["title", "text", "key", "min-label", "mid-label", "max-label", "steps"];
+	public static observedAttributes = [
+		"title",
+		"text",
+		"key",
+		"min-label",
+		"mid-label",
+		"max-label",
+		"steps"
+	];
 
 	private _store: Storage;
 	private _minLabel: HTMLLabelElement;
@@ -66,7 +74,11 @@ class SettingsWindow extends Window {
 		this._slider.value = localStorage.load(this._key);
 	}
 
-	attributeChangedCallback(attributeName: string, oldValue: string, newValue: string): void {
+	protected attributeChangedCallback(
+		attributeName: string,
+		oldValue: string,
+		newValue: string
+	): void {
 		if (attributeName === "title") {
 			this.title = newValue;
 		}

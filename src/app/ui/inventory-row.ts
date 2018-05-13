@@ -37,7 +37,7 @@ class InventoryRow extends Component {
 		this._label.innerText = label;
 	}
 
-	connectedCallback() {
+	protected connectedCallback() {
 		super.connectedCallback();
 		this.appendChild(this._icon);
 		this.appendChild(this._label);

@@ -4,7 +4,7 @@ import "./world-size-window.scss";
 class DifficultyWindow extends SettingsWindow {
 	public static TagName = "wf-world-size-window";
 
-	connectedCallback(): void {
+	protected connectedCallback(): void {
 		this.setAttribute("title", "World Size");
 		this.setAttribute("key", "world-size");
 		this.setAttribute("min-label", "Small");

@@ -10,7 +10,7 @@ class Token extends Component {
 	private _tile: Tile;
 	private _details: HTMLElement;
 
-	connectedCallback() {
+	protected connectedCallback() {
 		super.connectedCallback();
 
 		this.addEventListener("mouseenter", this);
@@ -38,7 +38,7 @@ class Token extends Component {
 		}
 	}
 
-	disconnectedCallback() {
+	protected disconnectedCallback() {
 		super.disconnectedCallback();
 
 		this.removeEventListener("mouseover", this);

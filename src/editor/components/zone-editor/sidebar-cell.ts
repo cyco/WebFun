@@ -21,7 +21,8 @@ class SidebarCell extends Component {
 
 		this._expandButton = <ExpandButton>document.createElement(ExpandButton.TagName);
 		this._expandButton.element = this;
-		this._expandButton.ontoggle = () => this._state.store("expanded", this.classList.contains("expanded"));
+		this._expandButton.ontoggle = () =>
+			this._state.store("expanded", this.classList.contains("expanded"));
 		this._header.appendChild(this._expandButton);
 
 		this._newButton = <IconButton>document.createElement(IconButton.TagName);
@@ -31,12 +32,12 @@ class SidebarCell extends Component {
 		this._header.appendChild(this._newButton);
 	}
 
-	connectedCallback() {
+	protected connectedCallback() {
 		super.connectedCallback();
 		this.insertBefore(this._header, this.firstElementChild);
 	}
 
-	disconnectedCallback() {
+	protected disconnectedCallback() {
 		this._header.remove();
 		super.disconnectedCallback();
 	}

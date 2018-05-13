@@ -24,7 +24,7 @@ class MenuView extends Component {
 		this.addItemNodes();
 	}
 
-	connectedCallback() {
+	protected connectedCallback() {
 		this.removeItemNodes();
 		this.addItemNodes();
 	}

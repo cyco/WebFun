@@ -14,16 +14,20 @@ class Button extends IconButton {
 		this._label.style.display = "none";
 	}
 
-	connectedCallback(): void {
+	protected connectedCallback(): void {
 		super.connectedCallback();
 
 		this.appendChild(document.createElement("div"));
 		this.appendChild(this._label);
 
-		this.attributeChangedCallback("label", this.getAttribute("label"), this.getAttribute("label"));
+		this.attributeChangedCallback(
+			"label",
+			this.getAttribute("label"),
+			this.getAttribute("label")
+		);
 	}
 
-	attributeChangedCallback(attrName: string, newValue: string, oldValue: string): void {
+	protected attributeChangedCallback(attrName: string, newValue: string, oldValue: string): void {
 		if (attrName === "label") {
 			this._label.textContent = newValue;
 			this._label.style.display = this._label.textContent.length ? "" : "none";

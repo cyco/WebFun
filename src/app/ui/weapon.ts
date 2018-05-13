@@ -32,7 +32,7 @@ class Weapon extends Component {
 		this._update();
 	}
 
-	connectedCallback() {
+	protected connectedCallback() {
 		this.appendChild(this._background);
 		this.appendChild(this._tileContainer);
 	}

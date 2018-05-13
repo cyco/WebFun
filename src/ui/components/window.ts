@@ -117,7 +117,7 @@ class Window extends Component {
 		return this._titlebar.onpin;
 	}
 
-	connectedCallback() {
+	protected connectedCallback() {
 		super.connectedCallback();
 
 		this._titlebar.window = this;

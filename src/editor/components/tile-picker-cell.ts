@@ -9,7 +9,7 @@ class TilePickerCell extends Cell<Tile> {
 
 	public tileSheet: CSSTileSheet;
 
-	connectedCallback() {
+	protected connectedCallback() {
 		super.connectedCallback();
 
 		if (this.data) {

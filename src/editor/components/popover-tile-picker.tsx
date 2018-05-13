@@ -21,13 +21,13 @@ class PopoverTilePicker extends Component implements EventListenerObject {
 	private _currentTile: Tile;
 	private _currentTileView = <TileComponent /> as TileComponent;
 
-	connectedCallback() {
+	protected connectedCallback() {
 		super.connectedCallback();
 		this._currentTileView.addEventListener("click", this);
 		this.appendChild(this._currentTileView);
 	}
 
-	disconnectedCallback() {
+	protected disconnectedCallback() {
 		this._currentTileView.removeEventListener("click", this);
 		super.disconnectedCallback();
 	}

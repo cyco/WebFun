@@ -10,7 +10,7 @@ class SceneView extends Component {
 	private _manager: SceneManager = this._buildSceneManager();
 	public readonly canvas: HTMLCanvasElement = document.createElement("canvas");
 
-	connectedCallback() {
+	protected connectedCallback() {
 		this.appendChild(this.canvas);
 		this._setupCanvas();
 	}

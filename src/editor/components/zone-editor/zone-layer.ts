@@ -19,7 +19,7 @@ class ZoneLayer extends Component {
 		this._canvas = document.createElement("canvas");
 	}
 
-	connectedCallback() {
+	protected connectedCallback() {
 		this.appendChild(this._canvas);
 		this.draw();
 	}
@@ -54,7 +54,17 @@ class ZoneLayer extends Component {
 				if (!tile) continue;
 
 				const rect = tileSheet.rectangleForEntry(tile.id);
-				ctx.drawImage(image, rect.minX, rect.minY, rect.size.width, rect.size.height, x, y, 1, 1);
+				ctx.drawImage(
+					image,
+					rect.minX,
+					rect.minY,
+					rect.size.width,
+					rect.size.height,
+					x,
+					y,
+					1,
+					1
+				);
 			}
 		}
 	}
@@ -75,7 +85,17 @@ class ZoneLayer extends Component {
 			if (!tile) return;
 
 			const rect = tileSheet.rectangleForEntry(tile.id);
-			ctx.drawImage(image, rect.minX, rect.minY, rect.size.width, rect.size.height, p.x, p.y, 1, 1);
+			ctx.drawImage(
+				image,
+				rect.minX,
+				rect.minY,
+				rect.size.width,
+				rect.size.height,
+				p.x,
+				p.y,
+				1,
+				1
+			);
 		});
 	}
 

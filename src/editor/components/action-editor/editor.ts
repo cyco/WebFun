@@ -6,7 +6,10 @@ import { Shortcut } from "src/ux";
 import ShortcutManager from "src/ux/shortcut-manager";
 import "./editor.scss";
 import Zone from "src/engine/objects/zone";
-import { AssemblerInputError, default as Assembler } from "src/editor/components/action-editor/assembler";
+import {
+	AssemblerInputError,
+	default as Assembler
+} from "src/editor/components/action-editor/assembler";
 import { default as Parser, ParserError } from "src/editor/components/action-editor/parser";
 import MutableAction from "src/engine/mutable-objects/mutable-action";
 import MutableZone from "src/engine/mutable-objects/mutable-zone";
@@ -32,7 +35,7 @@ class Editor extends Component {
 		this._errorArea.style.display = "none";
 	}
 
-	connectedCallback() {
+	protected connectedCallback() {
 		super.connectedCallback();
 		this.registerShortcuts();
 	}
@@ -41,7 +44,11 @@ class Editor extends Component {
 		this._shortcuts = [];
 		const manager = ShortcutManager.sharedManager;
 		let shortcut;
-		shortcut = manager.registerShortcut(() => this.save(), { node: this, metaKey: true, keyCode: 83 });
+		shortcut = manager.registerShortcut(() => this.save(), {
+			node: this,
+			metaKey: true,
+			keyCode: 83
+		});
 		this._shortcuts.push(shortcut);
 
 		shortcut = manager.registerShortcut(() => this.indent(), { node: this, keyCode: 9 });
@@ -82,7 +89,7 @@ class Editor extends Component {
 		this._shortcuts = [];
 	}
 
-	disconnectedCallback() {
+	protected disconnectedCallback() {
 		super.disconnectedCallback();
 		this.unregisterShortcuts();
 	}
@@ -146,7 +153,10 @@ class Editor extends Component {
 			})
 			.join("\n");
 		this._errorArea.style.display = "";
-		this.style.setProperty("--error-height", this._errorArea.getBoundingClientRect().height + "px");
+		this.style.setProperty(
+			"--error-height",
+			this._errorArea.getBoundingClientRect().height + "px"
+		);
 	}
 
 	private get actions() {
