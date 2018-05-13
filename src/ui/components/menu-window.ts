@@ -4,7 +4,7 @@ import MenuView from "./menu-view";
 import "./menu-window.scss";
 
 class MenuWindow extends MenuView {
-	public static TagName = "wf-menu-window";
+	public static tagName = "wf-menu-window";
 
 	show(location: Point | Element, stack = MenuStack.sharedStack) {
 		let minWidth: number = null;

@@ -10,7 +10,7 @@ export const Event = {
 };
 
 class Window extends Component {
-	public static TagName = "wf-window";
+	public static tagName = "wf-window";
 	public static readonly Event = Event;
 	public manager: WindowManager;
 	private _autosaveName: string;
@@ -22,7 +22,7 @@ class Window extends Component {
 	constructor() {
 		super();
 
-		this._titlebar = <WindowTitlebar>document.createElement(WindowTitlebar.TagName);
+		this._titlebar = <WindowTitlebar>document.createElement(WindowTitlebar.tagName);
 		this._content = document.createElement("div");
 		this._content.classList.add("content");
 	}

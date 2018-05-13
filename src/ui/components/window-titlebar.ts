@@ -6,7 +6,7 @@ import Window from "./window";
 import "./window-titlebar.scss";
 
 class WindowTitlebar extends Component {
-	public static readonly TagName = "wf-window-titlebar";
+	public static readonly tagName = "wf-window-titlebar";
 	public onclose: Function = identity;
 	public onpin: Function = identity;
 	public movable: boolean = true;
@@ -48,7 +48,7 @@ class WindowTitlebar extends Component {
 		}
 
 		if (m) {
-			this._menubar = <Menubar>document.createElement(Menubar.TagName);
+			this._menubar = <Menubar>document.createElement(Menubar.tagName);
 			this._menubar.menu = m;
 			if (this.isConnected) this.appendChild(this._menubar);
 		}

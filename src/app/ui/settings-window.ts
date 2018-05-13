@@ -2,7 +2,7 @@ import { Button, Slider, Window } from "src/ui/components";
 import "./settings-window.scss";
 
 class SettingsWindow extends Window {
-	public static TagName = "wf-settings-window";
+	public static tagName = "wf-settings-window";
 	public static observedAttributes = [
 		"title",
 		"text",
@@ -29,7 +29,7 @@ class SettingsWindow extends Window {
 	}
 
 	_setupContents() {
-		const slider = <Slider>document.createElement(Slider.TagName);
+		const slider = <Slider>document.createElement(Slider.tagName);
 		slider.min = 0;
 		slider.value = 0.5;
 		slider.max = 1;
@@ -48,7 +48,7 @@ class SettingsWindow extends Window {
 
 		const buttons = document.createElement("div");
 		buttons.style.justifyContent = "center";
-		const okButton = document.createElement(Button.TagName);
+		const okButton = document.createElement(Button.tagName);
 		okButton.setAttribute("label", "OK");
 		okButton.onclick = () => {
 			this._storeValue();
@@ -56,7 +56,7 @@ class SettingsWindow extends Window {
 		};
 		buttons.appendChild(okButton);
 
-		const cancelButton = document.createElement(Button.TagName);
+		const cancelButton = document.createElement(Button.tagName);
 		cancelButton.setAttribute("label", "Cancel");
 		cancelButton.onclick = () => this.close();
 		buttons.appendChild(cancelButton);

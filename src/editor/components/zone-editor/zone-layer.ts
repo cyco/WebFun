@@ -6,7 +6,7 @@ import { Point } from "src/util";
 import "./zone-layer.scss";
 
 class ZoneLayer extends Component {
-	public static readonly TagName = "wf-zone-layer";
+	public static readonly tagName = "wf-zone-layer";
 	public static readonly observedAttributes: string[] = [];
 	private _zone: Zone;
 	private _layer: number;

@@ -3,7 +3,7 @@ import { Component } from "src/ui";
 import "./weapon.scss";
 
 class Weapon extends Component {
-	public static TagName = "wf-weapon";
+	public static tagName = "wf-weapon";
 	public data: GameData;
 	private _weapon: any;
 	private _background: HTMLDivElement;

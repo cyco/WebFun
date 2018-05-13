@@ -5,7 +5,7 @@ import "./tile-cell.scss";
 
 class TileCell extends Cell<Tile> {
 	public tileSheet: CSSTileSheet;
-	public static readonly TagName = "wf-debug-tile-cell";
+	public static readonly tagName = "wf-debug-tile-cell";
 
 	cloneNode(deep?: boolean): TileCell {
 		const clone = <TileCell>super.cloneNode(deep);

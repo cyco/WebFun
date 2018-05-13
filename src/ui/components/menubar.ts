@@ -6,7 +6,7 @@ import MenuWindow from "./menu-window";
 import "./menubar.scss";
 
 class Menubar extends MenuView {
-	public static TagName: string = "wf-menubar";
+	public static tagName: string = "wf-menubar";
 
 	private _currentItem: number = -1;
 	private _mouseDownHandler: (_: MouseEvent) => void;
@@ -87,7 +87,7 @@ class Menubar extends MenuView {
 			return;
 		}
 
-		const menuWindow = <MenuWindow>document.createElement(MenuWindow.TagName);
+		const menuWindow = <MenuWindow>document.createElement(MenuWindow.tagName);
 		menuWindow.menu = menuItem.submenu;
 		menuWindow.show(itemNode);
 

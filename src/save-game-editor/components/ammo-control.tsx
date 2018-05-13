@@ -2,7 +2,7 @@ import { Component } from "src/ui";
 import "./ammo-control.scss";
 
 class AmmoControl extends Component implements EventListenerObject {
-	public static readonly TagName = "wf-save-game-editor-ammo";
+	public static readonly tagName = "wf-save-game-editor-ammo";
 	public static readonly observedAttributes = ["vertical"];
 	private _value: number = 1;
 	private _vertical: boolean = false;

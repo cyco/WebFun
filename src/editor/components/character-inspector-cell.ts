@@ -4,7 +4,7 @@ import CSSTileSheet from "../css-tile-sheet";
 import "./character-inspector-cell.scss";
 
 class CharacterInspectorCell extends Cell<Char> {
-	public static readonly TagName: string = "wf-character-inspector-cell";
+	public static readonly tagName: string = "wf-character-inspector-cell";
 	public static readonly observedAttributes: string[] = [];
 
 	public tileSheet: CSSTileSheet;
@@ -25,7 +25,7 @@ class CharacterInspectorCell extends Cell<Char> {
 		this._id = document.createElement("span");
 		this._id.classList.add("id");
 
-		this._name = document.createElement(Label.TagName);
+		this._name = document.createElement(Label.tagName);
 		this._name.classList.add("name");
 		this._name.onchange = () => {
 			(<any>this.data)._name = this._name.textContent;

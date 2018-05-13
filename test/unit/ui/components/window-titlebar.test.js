@@ -64,7 +64,7 @@ describeComponent(WindowTitlebar, () => {
 		});
 
 		it("works if the attribute is set before inserting the titlebar into the dom", () => {
-			subject = document.createElement(WindowTitlebar.TagName);
+			subject = document.createElement(WindowTitlebar.tagName);
 			subject.pinnable = true;
 			const container = document.createElement("div");
 			document.body.appendChild(subject);

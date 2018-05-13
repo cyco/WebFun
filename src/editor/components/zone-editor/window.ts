@@ -37,7 +37,7 @@ import HotspotComponent from "src/editor/components/zone-editor/hotspot";
 import List from "src/ui/components/list";
 
 class Window extends Panel {
-	public static readonly TagName = "wf-zone-editor-window";
+	public static readonly tagName = "wf-zone-editor-window";
 	private _zone: Zone;
 	private _editor: ZoneEditor;
 	private _state: Storage;
@@ -68,20 +68,20 @@ class Window extends Panel {
 
 		this.pinnable = true;
 
-		this._sidebar = <Sidebar>document.createElement(Sidebar.TagName);
+		this._sidebar = <Sidebar>document.createElement(Sidebar.tagName);
 		this._sidebar.addEventListener(SidebarLayer.Event.DidToggleVisibility, (e: CustomEvent) => {
 			const layer = <Layer>e.detail.layer;
 			this._editor.setLayerVisible(layer, layer.visible);
 		});
 
-		const layers = <SidebarLayersCell>document.createElement(SidebarLayersCell.TagName);
+		const layers = <SidebarLayersCell>document.createElement(SidebarLayersCell.tagName);
 		layers.addEventListener(
 			LayerChangeEvents.LayerDidChange,
 			(e: CustomEvent) => (this._editor.currentLayer = e.detail.layer)
 		);
 		this._sidebar.addEntry(layers, "Layers");
 
-		this._editor = <ZoneEditor>document.createElement(ZoneEditor.TagName);
+		this._editor = <ZoneEditor>document.createElement(ZoneEditor.tagName);
 
 		this._tools = [
 			new NoTool(),
@@ -101,7 +101,7 @@ class Window extends Panel {
 
 		this._toolsCell = this._sidebar.addEntry(toolComponents.concat(actionComponents), "Tools");
 
-		this._tilePicker = <PopoverTilePicker>document.createElement(PopoverTilePicker.TagName);
+		this._tilePicker = <PopoverTilePicker>document.createElement(PopoverTilePicker.tagName);
 		this._tilePicker.addEventListener(
 			PopoverTilePickerEvents.TileDidChange,
 			(e: CustomEvent) => {
@@ -209,10 +209,10 @@ class Window extends Panel {
 
 	private _editActions() {
 		if (!this._actionsWindow) {
-			const window = <Panel>document.createElement(Panel.TagName);
+			const window = <Panel>document.createElement(Panel.tagName);
 			window.style.width = "480px";
 			window.content.style.maxHeight = "630px";
-			const editor = <ActionEditor>document.createElement(ActionEditor.TagName);
+			const editor = <ActionEditor>document.createElement(ActionEditor.tagName);
 			window.content.appendChild(editor);
 			this._actionsWindow = window;
 		}
@@ -237,7 +237,7 @@ class Window extends Panel {
 	}
 
 	private _buildToolItem(tool: AbstractTool) {
-		const thing = <ToolComponent>document.createElement(ToolComponent.TagName);
+		const thing = <ToolComponent>document.createElement(ToolComponent.tagName);
 		thing.tool = tool;
 		thing.editor = this._editor;
 		tool.addEventListener(AbstractTool.Event.ChangedTiles, (e: TileChangeEvent) =>
@@ -247,24 +247,24 @@ class Window extends Panel {
 	}
 
 	private _buildActionItem(a: ActionDescription) {
-		const component = <ActionComponent>document.createElement(ActionComponent.TagName);
+		const component = <ActionComponent>document.createElement(ActionComponent.tagName);
 		component.action = a;
 		return component;
 	}
 
 	private _buildNPCList() {
-		const list = <List<NPC>>document.createElement(List.TagName);
+		const list = <List<NPC>>document.createElement(List.tagName);
 		list.classList.add("wf-zone-editor-npc-list");
-		list.cell = <NPCComponent>document.createElement(NPCComponent.TagName);
+		list.cell = <NPCComponent>document.createElement(NPCComponent.tagName);
 		list.addEventListener(NPCComponent.Events.RequestRemoval, this._removeNPCHandler);
 
 		return list;
 	}
 
 	private _buildHotspotList() {
-		const list = <List<Hotspot>>document.createElement(List.TagName);
+		const list = <List<Hotspot>>document.createElement(List.tagName);
 		list.classList.add("wf-zone-editor-hotspot-list");
-		list.cell = <HotspotComponent>document.createElement(HotspotComponent.TagName);
+		list.cell = <HotspotComponent>document.createElement(HotspotComponent.tagName);
 		list.addEventListener(HotspotComponent.Events.RequestRemoval, this._removeHotspotHandler);
 
 		return list;

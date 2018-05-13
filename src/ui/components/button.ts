@@ -2,7 +2,7 @@ import "./button.scss";
 import IconButton from "./icon-button";
 
 class Button extends IconButton {
-	public static TagName = "wf-button";
+	public static tagName = "wf-button";
 	public static observedAttributes = ["label"];
 
 	private _label: HTMLSpanElement;

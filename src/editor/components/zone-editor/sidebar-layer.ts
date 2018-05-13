@@ -9,7 +9,7 @@ export const Event = {
 
 class SidebarLayer extends Cell<Layer> {
 	static readonly Event = Event;
-	static readonly TagName = "wf-zone-editor-sidebar-layer";
+	static readonly tagName = "wf-zone-editor-sidebar-layer";
 
 	private _name: HTMLElement;
 	private _visible: HTMLElement;

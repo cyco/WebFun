@@ -19,7 +19,7 @@ declare interface SimplePoint {
 }
 
 class Health extends Component {
-	public static TagName = "wf-health";
+	public static tagName = "wf-health";
 	private _condition: SVGCircleElement = null;
 	private _pie: SVGPathElement = null;
 	private _health: number;

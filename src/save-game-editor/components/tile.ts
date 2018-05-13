@@ -4,7 +4,7 @@ import { CSSTileSheet } from "src/editor";
 import "./tile.scss";
 
 class TileComponent extends Component {
-	public static readonly TagName = "wf-save-game-editor-tile";
+	public static readonly tagName = "wf-save-game-editor-tile";
 	private _tileSheet: CSSTileSheet;
 	private _tile: Tile = null;
 	private _image: HTMLElement = document.createElement("div");

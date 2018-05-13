@@ -4,7 +4,7 @@ import Engine from "src/engine/engine";
 import { InstructionsByName as Instructions } from "src/engine/script/instructions";
 
 class InstructionComponent extends InstructionThing {
-	public static readonly TagName = "wf-debug-instruction";
+	public static readonly tagName = "wf-debug-instruction";
 	public engine: Engine;
 	private _instruction: Instruction;
 
@@ -32,7 +32,11 @@ class InstructionComponent extends InstructionThing {
 		this.textContent = "";
 		this.appendChild(this._open());
 		this.appendChild(this._command(name));
-		this.appendChild(document.createTextNode((usedArguments.length ? " " : "") + `${usedArguments.join(" ")}`));
+		this.appendChild(
+			document.createTextNode(
+				(usedArguments.length ? " " : "") + `${usedArguments.join(" ")}`
+			)
+		);
 		this.appendChild(this._close());
 	}
 }

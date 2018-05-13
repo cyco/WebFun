@@ -10,7 +10,7 @@ export const Events = {
 
 class BreakpointButton extends Component {
 	static readonly Event = Events;
-	static readonly TagName = "wf-breakpoint-button";
+	static readonly tagName = "wf-breakpoint-button";
 	static readonly observedAttributes = ["active"];
 	public breakpoint: Breakpoint;
 	private _store: BreakpointStore;

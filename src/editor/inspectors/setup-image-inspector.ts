@@ -3,7 +3,7 @@ import { PaletteView } from "../components";
 import { Size } from "src/util";
 
 class SetupImageInspector extends AbstractInspector {
-	private _paletteView: PaletteView = <PaletteView>document.createElement(PaletteView.TagName);
+	private _paletteView: PaletteView = <PaletteView>document.createElement(PaletteView.tagName);
 
 	constructor(state: Storage) {
 		super(state);

@@ -5,7 +5,7 @@ import { ImageFactory } from "src/engine/rendering/canvas";
 import "./palette-view.scss";
 
 class PaletteView extends Component {
-	public static readonly TagName = "wf-palette-view";
+	public static readonly tagName = "wf-palette-view";
 	public static readonly observedAttributes: string[] = [];
 
 	public palette: ColorPalette;

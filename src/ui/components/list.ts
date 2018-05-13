@@ -21,7 +21,7 @@ const SearchBarVisibleStateKey = "searchbar-visible";
 const SearchValueStateKey = "search";
 
 class List<T> extends Component {
-	public static readonly TagName: string = "wf-list";
+	public static readonly tagName: string = "wf-list";
 	public static readonly observedAttributes: string[] = [];
 
 	public cell: Cell<T>;
@@ -39,7 +39,7 @@ class List<T> extends Component {
 	constructor() {
 		super();
 
-		this._bar = <SearchBar>document.createElement(SearchBar.TagName);
+		this._bar = <SearchBar>document.createElement(SearchBar.tagName);
 		this._content = document.createElement("div");
 	}
 

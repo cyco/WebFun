@@ -1,7 +1,7 @@
 import BabelHTMLElement from "./babel-html-element";
 
 abstract class Component extends BabelHTMLElement {
-	public static TagName: string;
+	public static tagName: string;
 	public static observedAttributes: string[];
 
 	protected adoptedCallback(): void {}

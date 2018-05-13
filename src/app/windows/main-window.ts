@@ -9,7 +9,7 @@ import InventoryComponent from "../ui/inventory";
 import "./main-window.scss";
 
 class MainWindow extends Window {
-	public static TagName = "wf-main-window";
+	public static tagName = "wf-main-window";
 	private _ammoView: Ammo;
 	private _engine: Engine = null;
 	private _handlers: { [_: string]: EventListener };
@@ -24,29 +24,29 @@ class MainWindow extends Window {
 		super();
 
 		this.autosaveName = "main-window";
-		this._main = <Group>document.createElement(Group.TagName);
+		this._main = <Group>document.createElement(Group.tagName);
 		this._main.classList.add("main");
 		this.content.appendChild(this._main);
 
-		this._sidebar = <Group>document.createElement(Group.TagName);
+		this._sidebar = <Group>document.createElement(Group.tagName);
 		this._sidebar.classList.add("sidebar");
 
-		this._inventory = <Inventory>document.createElement(Inventory.TagName);
+		this._inventory = <Inventory>document.createElement(Inventory.tagName);
 		this._sidebar.appendChild(this._inventory);
 
-		const group = document.createElement(Group.TagName);
-		this._locationView = <Location>document.createElement(Location.TagName);
+		const group = document.createElement(Group.tagName);
+		this._locationView = <Location>document.createElement(Location.tagName);
 		group.appendChild(this._locationView);
 
-		const equipment = document.createElement(Group.TagName);
+		const equipment = document.createElement(Group.tagName);
 		equipment.classList.add("equipment");
-		this._ammoView = <Ammo>document.createElement(Ammo.TagName);
+		this._ammoView = <Ammo>document.createElement(Ammo.tagName);
 		equipment.appendChild(this._ammoView);
-		this._weaponView = <Weapon>document.createElement(Weapon.TagName);
+		this._weaponView = <Weapon>document.createElement(Weapon.tagName);
 		equipment.appendChild(this._weaponView);
 		group.appendChild(equipment);
 
-		this._healthView = <Health>document.createElement(Health.TagName);
+		this._healthView = <Health>document.createElement(Health.tagName);
 		group.appendChild(this._healthView);
 
 		this._sidebar.appendChild(group);
@@ -63,16 +63,26 @@ class MainWindow extends Window {
 
 	set engine(e) {
 		if (this._engine) {
-			this._handlers.each((event: any, handler: any) => this._engine.removeEventListener(event, handler));
-			this._engine.hero.removeEventListener(Hero.Event.HealthChanged, this._handlers.healthChanged);
+			this._handlers.each((event: any, handler: any) =>
+				this._engine.removeEventListener(event, handler)
+			);
+			this._engine.hero.removeEventListener(
+				Hero.Event.HealthChanged,
+				this._handlers.healthChanged
+			);
 		}
 
 		this._engine = e;
 		this._inventory.inventory = this._engine.inventory;
 
 		if (this._engine) {
-			this._engine.hero.addEventListener(Hero.Event.HealthChanged, this._handlers.healthChanged);
-			this._handlers.each((event: any, handler: any) => this._engine.addEventListener(event, handler));
+			this._engine.hero.addEventListener(
+				Hero.Event.HealthChanged,
+				this._handlers.healthChanged
+			);
+			this._handlers.each((event: any, handler: any) =>
+				this._engine.addEventListener(event, handler)
+			);
 		}
 	}
 
@@ -84,7 +94,8 @@ class MainWindow extends Window {
 		this._handlers = {};
 		this._handlers[Events.AmmoChanged] = () => this._updateAmmo();
 		this._handlers[Events.WeaponChanged] = () => this._updateWeapon();
-		this._handlers[Events.LocationChanged] = ({ detail }: CustomEvent) => this._updateLocation(detail);
+		this._handlers[Events.LocationChanged] = ({ detail }: CustomEvent) =>
+			this._updateLocation(detail);
 
 		this._handlers.healthChanged = () => this._updateHealth();
 	}

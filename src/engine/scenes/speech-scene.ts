@@ -40,7 +40,7 @@ class SpeechScene extends Scene {
 	}
 
 	private _setupBubble() {
-		const bubble = <SpeechBubble>document.createElement(SpeechBubble.TagName);
+		const bubble = <SpeechBubble>document.createElement(SpeechBubble.tagName);
 		bubble.onend = () => this.engine.sceneManager.popScene();
 		this._bubble = bubble;
 	}

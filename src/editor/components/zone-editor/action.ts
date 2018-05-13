@@ -8,7 +8,7 @@ export type ActionDescription = {
 };
 
 class Action extends Component {
-	static readonly TagName: string = "wf-zone-editor-action";
+	static readonly tagName: string = "wf-zone-editor-action";
 	private _action: ActionDescription;
 
 	set action(a: ActionDescription) {

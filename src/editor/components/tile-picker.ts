@@ -11,7 +11,7 @@ export const Events = {
 };
 
 class TilePicker extends Component {
-	public static readonly TagName = "wf-tile-picker";
+	public static readonly tagName = "wf-tile-picker";
 	public static readonly observedAttributes: string[] = [];
 	private _tiles: Tile[];
 	private _list: List<Tile>;
@@ -21,8 +21,8 @@ class TilePicker extends Component {
 	constructor() {
 		super();
 
-		this._list = <List<Tile>>document.createElement(List.TagName);
-		this._list.cell = <TilePickerCell>document.createElement(TilePickerCell.TagName);
+		this._list = <List<Tile>>document.createElement(List.tagName);
+		this._list.cell = <TilePickerCell>document.createElement(TilePickerCell.tagName);
 		this._list.cell.onclick = (e: MouseEvent) =>
 			this._cellClicked(<TilePickerCell>e.currentTarget);
 		this._list.searchDelegate = new TileFilter();
@@ -35,7 +35,7 @@ class TilePicker extends Component {
 	}
 
 	private _cellClicked(cell: TilePickerCell) {
-		const previousCell = this._list.querySelector(TilePickerCell.TagName + ".active");
+		const previousCell = this._list.querySelector(TilePickerCell.tagName + ".active");
 		if (previousCell) previousCell.classList.remove("active");
 
 		this.currentTile = cell.data;

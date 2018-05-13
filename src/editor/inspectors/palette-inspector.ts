@@ -3,8 +3,8 @@ import { ColorPicker, PaletteView } from "../components";
 import { Color, Point, Size } from "src/util";
 
 class PaletteInspector extends AbstractInspector {
-	private _paletteView: PaletteView = <PaletteView>document.createElement(PaletteView.TagName);
-	private _colorPicker: ColorPicker = <ColorPicker>document.createElement(ColorPicker.TagName);
+	private _paletteView: PaletteView = <PaletteView>document.createElement(PaletteView.tagName);
+	private _colorPicker: ColorPicker = <ColorPicker>document.createElement(ColorPicker.tagName);
 	private _paletteEntrySize = new Size(192 / 16, 192 / 16);
 
 	constructor(state: Storage) {
@@ -41,7 +41,9 @@ class PaletteInspector extends AbstractInspector {
 	}
 
 	public editColor(index: number): void {
-		const point = new Point(index % 16, Math.floor(index / 16)).scaleBy(this._paletteEntrySize.width);
+		const point = new Point(index % 16, Math.floor(index / 16)).scaleBy(
+			this._paletteEntrySize.width
+		);
 		this._paletteView.moveHighlighterTo(point);
 		this.state.store("tile-x", point.x);
 		this.state.store("tile-y", point.y);

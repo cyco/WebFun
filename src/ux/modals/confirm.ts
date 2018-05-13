@@ -22,7 +22,7 @@ export declare interface ConfirmableWindow extends Window {
 }
 
 const MergeDefaultOptions = (options: Options): Options => ({
-	component: options.component || ConfirmationWindow.TagName,
+	component: options.component || ConfirmationWindow.tagName,
 	confirmText: options.confirmText || "Yes",
 	abortText: options.abortText || "No"
 });

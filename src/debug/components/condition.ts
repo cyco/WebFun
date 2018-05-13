@@ -4,7 +4,7 @@ import Condition from "src/engine/objects/condition";
 import Engine from "src/engine/engine";
 
 class ConditionComponent extends InstructionThing {
-	public static readonly TagName = "wf-debug-condition";
+	public static readonly tagName = "wf-debug-condition";
 	public engine: Engine;
 	private _condition: Condition;
 
@@ -22,7 +22,9 @@ class ConditionComponent extends InstructionThing {
 	}
 
 	private _rebuild() {
-		const name = Object.keys(Conditions).find(key => (<any>Conditions)[key].Opcode === this._condition.opcode);
+		const name = Object.keys(Conditions).find(
+			key => (<any>Conditions)[key].Opcode === this._condition.opcode
+		);
 		const definition = (<any>Conditions)[name];
 		const argCount = Math.max(definition.Arguments, 0);
 		const usedArguments = this._condition.arguments.slice(0, argCount);
@@ -30,7 +32,11 @@ class ConditionComponent extends InstructionThing {
 		this.textContent = "";
 		this.appendChild(this._open());
 		this.appendChild(this._command(name));
-		this.appendChild(document.createTextNode((usedArguments.length ? " " : "") + `${usedArguments.join(" ")}`));
+		this.appendChild(
+			document.createTextNode(
+				(usedArguments.length ? " " : "") + `${usedArguments.join(" ")}`
+			)
+		);
 		this.appendChild(this._close());
 	}
 }

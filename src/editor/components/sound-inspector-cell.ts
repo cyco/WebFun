@@ -13,7 +13,7 @@ export const Events = {
 
 class SoundInspectorCell extends Cell<Sound> {
 	public static readonly Events = Events;
-	public static readonly TagName: string = "wf-sound-inspector-cell";
+	public static readonly tagName: string = "wf-sound-inspector-cell";
 	public static readonly observedAttributes: string[] = [];
 
 	private _id: HTMLElement;
@@ -30,7 +30,7 @@ class SoundInspectorCell extends Cell<Sound> {
 		this._id = document.createElement("span");
 		this._id.classList.add("id");
 
-		this._file = document.createElement(Label.TagName);
+		this._file = document.createElement(Label.tagName);
 		this._file.onchange = () => {
 			this.data.file = this._file.textContent;
 			if (!this._sound) return;

@@ -30,7 +30,7 @@ const main = async (windowManager: WindowManager = WindowManager.defaultManager)
 	const [file] = await FilePicker.Pick({ allowedTypes: ["data", "dta"] });
 	if (!file) return;
 
-	const editor = <EditorWindow>document.createElement(EditorWindow.TagName);
+	const editor = <EditorWindow>document.createElement(EditorWindow.tagName);
 	windowManager.showWindow(editor);
 	editor.center();
 	await editor.loadFile(file);

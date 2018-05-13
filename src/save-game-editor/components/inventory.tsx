@@ -5,7 +5,7 @@ import { CSSTileSheet } from "src/editor";
 import "./inventory.scss";
 
 class Inventory extends List<Tile> {
-	public static TagName: string = "wf-save-game-editor-inventory";
+	public static tagName: string = "wf-save-game-editor-inventory";
 	public cell: InventoryRow;
 
 	constructor() {
@@ -21,7 +21,7 @@ class Inventory extends List<Tile> {
 
 	private _addInventoryRow() {
 		const tile = this.cell.tiles.find(t => t.name && t.name.length !== 0);
-		const rows = Array.from(this.querySelectorAll(InventoryRow.TagName)) as InventoryRow[];
+		const rows = Array.from(this.querySelectorAll(InventoryRow.tagName)) as InventoryRow[];
 		const items = rows.map(t => t.data);
 		items.splice(items.length - 1, 0, tile);
 		this.items = items;
@@ -33,7 +33,7 @@ class Inventory extends List<Tile> {
 		const index = this.lastElementChild.children.indexOf(row);
 		if (index === -1) return;
 
-		const rows = Array.from(this.querySelectorAll(InventoryRow.TagName)) as InventoryRow[];
+		const rows = Array.from(this.querySelectorAll(InventoryRow.tagName)) as InventoryRow[];
 		const items = rows.map(t => t.data);
 		items.splice(index, 1);
 		this.items = items;

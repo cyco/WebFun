@@ -5,7 +5,7 @@ import { Group } from "src/ui/components";
 import "./color-picker.scss";
 
 class ColorPicker extends Component {
-	public static readonly TagName = "wf-color-picker";
+	public static readonly tagName = "wf-color-picker";
 	public static readonly observedAttributes: string[] = ["color"];
 
 	private _color: Color = new Color(255, 255, 255, 1.0);
@@ -28,7 +28,7 @@ class ColorPicker extends Component {
 
 	protected connectedCallback() {
 		super.connectedCallback();
-		const container = document.createElement(Group.TagName);
+		const container = document.createElement(Group.tagName);
 		container.appendChild(this._wheel);
 		container.appendChild(this._brightnessInput);
 		this.appendChild(container);
@@ -53,7 +53,7 @@ class ColorPicker extends Component {
 	}
 
 	private _buildWheel() {
-		this._wheel = <ColorWheel>document.createElement(ColorWheel.TagName);
+		this._wheel = <ColorWheel>document.createElement(ColorWheel.tagName);
 		this._wheel.style.height = "100px";
 		this._wheel.style.width = "100px";
 		this._wheel.onchange = () => (this.color = this._wheel.color);

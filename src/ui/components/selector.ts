@@ -2,7 +2,7 @@ import Component from "src/ui/component";
 import "./selector.scss";
 
 class Selector extends Component {
-	public static readonly TagName = "wf-selector";
+	public static readonly tagName = "wf-selector";
 	private element: HTMLSelectElement = document.createElement("select");
 
 	protected connectedCallback() {

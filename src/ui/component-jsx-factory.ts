@@ -8,7 +8,7 @@ class ComponentJSXRenderer {
 		if (typeof thing === "string") {
 			node = document.createElement(thing);
 		} else if (thing instanceof Function) {
-			node = document.createElement(thing.TagName);
+			node = document.createElement(thing.tagName);
 		} else if (thing instanceof Node) return Node;
 
 		if (props) {

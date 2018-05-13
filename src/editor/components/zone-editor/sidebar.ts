@@ -3,11 +3,15 @@ import Component from "src/ui/component";
 import SidebarCell from "./sidebar-cell";
 
 class Sidebar extends Component {
-	static readonly TagName = "wf-zone-editor-sidebar";
+	static readonly tagName = "wf-zone-editor-sidebar";
 	private _state: Storage;
 
-	addEntry(node: HTMLElement | HTMLElement[], name: string, newItemCallback?: () => void): SidebarCell {
-		const cell = <SidebarCell>document.createElement(SidebarCell.TagName);
+	addEntry(
+		node: HTMLElement | HTMLElement[],
+		name: string,
+		newItemCallback?: () => void
+	): SidebarCell {
+		const cell = <SidebarCell>document.createElement(SidebarCell.tagName);
 		cell.name = name;
 
 		if (this.state) cell.expanded = this.state.load("name") || false;
@@ -25,7 +29,9 @@ class Sidebar extends Component {
 	set state(state: Storage) {
 		this._state = state;
 
-		const cells = <SidebarCell[]>Array.from(this.children).filter(c => c instanceof SidebarCell);
+		const cells = <SidebarCell[]>Array.from(this.children).filter(
+			c => c instanceof SidebarCell
+		);
 		cells.forEach(c => (c.state = this.state.prefixedWith(c.name)));
 	}
 

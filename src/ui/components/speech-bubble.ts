@@ -28,7 +28,7 @@ const enum ArrowStyle {
 }
 
 class SpeechBubble extends Component {
-	public static readonly TagName = "wf-speech-bubble";
+	public static readonly tagName = "wf-speech-bubble";
 	public static readonly Event = Event;
 	public static readonly observedAttributes = ["text"];
 
@@ -128,7 +128,7 @@ class SpeechBubble extends Component {
 	}
 
 	private _buildButton(className: string, icon: string): Button {
-		const button = <Button>document.createElement(Button.TagName);
+		const button = <Button>document.createElement(Button.tagName);
 		button.classList.add(className);
 		button.icon = icon;
 		return button;

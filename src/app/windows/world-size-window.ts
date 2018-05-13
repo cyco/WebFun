@@ -2,7 +2,7 @@ import { SettingsWindow } from "../ui";
 import "./world-size-window.scss";
 
 class DifficultyWindow extends SettingsWindow {
-	public static TagName = "wf-world-size-window";
+	public static tagName = "wf-world-size-window";
 
 	protected connectedCallback(): void {
 		this.setAttribute("title", "World Size");

@@ -26,7 +26,7 @@ class Checkbox extends Component {
 		this._label = label;
 	}
 
-	static get TagName() {
+	static get tagName() {
 		return "wf-checkbox";
 	}
 

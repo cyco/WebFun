@@ -7,7 +7,7 @@ import EditorView from "./editor-view";
 import "./editor-window.scss";
 
 class EditorWindow extends Window {
-	static readonly TagName = "wf-save-game-editor-window";
+	static readonly tagName = "wf-save-game-editor-window";
 	title: string = "Save Game Editor";
 	private _progressIndicator: HTMLElement = <ProgressIndicator />;
 	private _editorView: EditorView = <EditorView /> as EditorView;

@@ -6,6 +6,6 @@ describeComponent(SettingsWindow, () => {
 	beforeEach(() => (subject = render(SettingsWindow)));
 
 	it("shows a slider", () => {
-		expect(subject.querySelector(Slider.TagName)).not.toBeNull();
+		expect(subject.querySelector(Slider.tagName)).not.toBeNull();
 	});
 });

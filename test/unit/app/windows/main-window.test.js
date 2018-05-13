@@ -11,23 +11,23 @@ describeComponent(MainWindow, () => {
 		beforeAll(() => (subject = render(MainWindow)));
 
 		it("such as the inventory", () => {
-			expect(subject.querySelector(Inventory.TagName)).not.toBeNull();
+			expect(subject.querySelector(Inventory.tagName)).not.toBeNull();
 		});
 
 		it("such as the ammo meter", () => {
-			expect(subject.querySelector(Ammo.TagName)).not.toBeNull();
+			expect(subject.querySelector(Ammo.tagName)).not.toBeNull();
 		});
 
 		it("such as the currently equipped weapon", () => {
-			expect(subject.querySelector(Weapon.TagName)).not.toBeNull();
+			expect(subject.querySelector(Weapon.tagName)).not.toBeNull();
 		});
 
 		it("such as the location indicator", () => {
-			expect(subject.querySelector(Location.TagName)).not.toBeNull();
+			expect(subject.querySelector(Location.tagName)).not.toBeNull();
 		});
 
 		it("such as the health meter", () => {
-			expect(subject.querySelector(Health.TagName)).not.toBeNull();
+			expect(subject.querySelector(Health.tagName)).not.toBeNull();
 		});
 	});
 
@@ -42,31 +42,31 @@ describeComponent(MainWindow, () => {
 
 		it("registers for hero's health change events", () => {
 			engine.triggerHealthChange(200);
-			const healthComponent = subject.querySelector(Health.TagName);
+			const healthComponent = subject.querySelector(Health.tagName);
 			expect(healthComponent.health).toBe(200);
 		});
 
 		xit("registers for ammo change events", () => {
 			engine.triggerAmmoChange(3);
-			const ammo = subject.querySelector(Ammo.TagName);
+			const ammo = subject.querySelector(Ammo.tagName);
 			expect(ammo.health).toBe(3);
 		});
 
 		xit("registers for weapon change events", () => {
 			engine.triggerWeaponChange({});
-			const weapon = subject.querySelector(Weapon.TagName);
+			const weapon = subject.querySelector(Weapon.tagName);
 			expect(weapon.weapon).not.toBeNull();
 		});
 
 		it("registers for location change events (no world)", () => {
 			engine.triggerLocationChange(0);
-			const location = subject.querySelector(Location.TagName);
+			const location = subject.querySelector(Location.tagName);
 			expect(location.mask).toBe(0);
 		});
 
 		it("registers for location change events (can go every where)", () => {
 			engine.triggerLocationChange(0xffff);
-			const location = subject.querySelector(Location.TagName);
+			const location = subject.querySelector(Location.tagName);
 			expect(location.mask).toBe(15);
 		});
 	});
@@ -99,7 +99,7 @@ describeComponent(MainWindow, () => {
 										byAdding() {
 											return 5;
 										}
-									}
+								  }
 								: null;
 						},
 						getZone() {

@@ -3,7 +3,7 @@ import { FieldEditor } from "src/ux";
 import "./label.scss";
 
 class Label extends Component implements EventListenerObject {
-	public static readonly TagName = "wf-label";
+	public static readonly tagName = "wf-label";
 	public static readonly observedAttributes: string[] = [];
 	private _editor: FieldEditor;
 

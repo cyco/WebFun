@@ -20,7 +20,7 @@ import SetupImageInspector from "src/editor/inspectors/setup-image-inspector";
 import "./editor-window.scss";
 
 class EditorWindow extends Window {
-	static readonly TagName = "wf-resource-editor-window";
+	static readonly tagName = "wf-resource-editor-window";
 	title: string = "Resource Editor";
 	private _progressIndicator: HTMLElement = <ProgressIndicator />;
 	private _editorView: HTMLElement = <div /> as HTMLElement;
@@ -41,7 +41,7 @@ class EditorWindow extends Window {
 		tileSheet.draw(new ImageFactory(palette));
 
 		this._gotoFullscreen();
-		const editor = document.createElement(EditorView.TagName) as EditorView;
+		const editor = document.createElement(EditorView.tagName) as EditorView;
 		const state = localStorage.prefixedWith("editor");
 		editor.addInspector("tile", new TileInspector(state.prefixedWith("tile")));
 		editor.addInspector("zone", new ZoneInspector(state.prefixedWith("zone")));

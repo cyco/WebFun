@@ -24,7 +24,7 @@ import { Yoda as GameTypeYoda } from "src/engine/type";
 import "./editor-view.scss";
 
 class EditorView extends Component {
-	public static TagName: string = "wf-save-game-editor-view";
+	public static tagName: string = "wf-save-game-editor-view";
 	private _gameData: GameData;
 	private _palette: ColorPalette;
 	private _state: SaveState;

@@ -6,7 +6,7 @@ import "./character-details.scss";
 import { MutableChar } from "src/engine/mutable-objects";
 
 class CharacterDetails extends Component {
-	public static readonly TagName = "wf-character-details";
+	public static readonly tagName = "wf-character-details";
 	public static readonly observedAttributes: string[] = [];
 
 	private _character: MutableChar;
@@ -29,7 +29,7 @@ class CharacterDetails extends Component {
 		super();
 
 		this._framePreview = <CharacterFramePreview>document.createElement(
-			CharacterFramePreview.TagName
+			CharacterFramePreview.tagName
 		);
 		this._stepButton = document.createElement("button");
 		this._stepButton.textContent = "Step";

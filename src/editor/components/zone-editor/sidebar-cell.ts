@@ -4,7 +4,7 @@ import { IconButton } from "src/ui/components";
 import "./sidebar-cell.scss";
 
 class SidebarCell extends Component {
-	static readonly TagName: string = "wf-zone-editor-sidebar-cell";
+	static readonly tagName: string = "wf-zone-editor-sidebar-cell";
 	public expanded: boolean;
 	protected _state: Storage;
 	public content: void;
@@ -19,13 +19,13 @@ class SidebarCell extends Component {
 		this._header = document.createElement("header");
 		this._header.appendChild(document.createElement("span"));
 
-		this._expandButton = <ExpandButton>document.createElement(ExpandButton.TagName);
+		this._expandButton = <ExpandButton>document.createElement(ExpandButton.tagName);
 		this._expandButton.element = this;
 		this._expandButton.ontoggle = () =>
 			this._state.store("expanded", this.classList.contains("expanded"));
 		this._header.appendChild(this._expandButton);
 
-		this._newButton = <IconButton>document.createElement(IconButton.TagName);
+		this._newButton = <IconButton>document.createElement(IconButton.tagName);
 		this._newButton.icon = "plus-circle";
 		this._newButton.style.display = "none";
 		this._newButton.onclick = () => this.newItemCallback();

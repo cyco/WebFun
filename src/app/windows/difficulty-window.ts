@@ -2,7 +2,7 @@ import { SettingsWindow } from "../ui";
 import "./difficulty-window.scss";
 
 class DifficultyWindow extends SettingsWindow {
-	public static TagName = "wf-difficulty-window";
+	public static tagName = "wf-difficulty-window";
 
 	protected connectedCallback(): void {
 		this.setAttribute("title", "Difficulty");

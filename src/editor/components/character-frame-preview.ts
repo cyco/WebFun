@@ -4,7 +4,7 @@ import CSSTileSheet from "../css-tile-sheet";
 import "./character-frame-preview.scss";
 
 class CharacterFramePreview extends Component {
-	public static readonly TagName = "wf-character-frame-preview";
+	public static readonly tagName = "wf-character-frame-preview";
 	public static readonly observedAttributes: string[] = [];
 
 	public tileSheet: CSSTileSheet;
