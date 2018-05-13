@@ -26,6 +26,7 @@ class TilePicker extends Component {
 		this._list.cell.onclick = (e: MouseEvent) =>
 			this._cellClicked(<TilePickerCell>e.currentTarget);
 		this._list.searchDelegate = new TileFilter();
+		this._list.showBar(true);
 	}
 
 	protected connectedCallback() {

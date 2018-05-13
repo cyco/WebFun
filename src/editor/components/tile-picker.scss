@@ -7,5 +7,7 @@ wf-tile-picker {
 		display: grid;
 		grid-template-columns: repeat(9, $tile-size);
 		justify-content: center;
+		padding-top: 5px;
+		padding-bottom: 5px;
 	}
 }
