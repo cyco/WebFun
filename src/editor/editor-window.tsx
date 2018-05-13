@@ -6,7 +6,7 @@ import DataManager from "./data-manager";
 import CSSTileSheet from "./css-tile-sheet";
 import { ImageFactory } from "src/engine/rendering/canvas";
 import buildEditorMenu from "./menu";
-import { Menu, WindowMenuItem, WindowManager, MenuItemInit } from "src/ui";
+import { Menu, WindowMenuItem, WindowManager } from "src/ui";
 import EditorView from "./editor-view";
 
 import TileInspector from "src/editor/inspectors/tile-inspector";
@@ -68,8 +68,9 @@ class EditorWindow extends Window {
 		this.classList.add("fullsize");
 		this.content.classList.add("fullsize");
 	}
+
 	private _showMenu(editor: EditorView) {
-		const menuItems = buildEditorMenu(editor) as MenuItemInit[];
+		const menuItems = buildEditorMenu(editor, this);
 		menuItems.push(new WindowMenuItem(editor.windowManager));
 		this.menu = new Menu(menuItems);
 	}
