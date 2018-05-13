@@ -1,2 +1,15 @@
+@import "border";
+@import "variables";
+
 wf-resource-editor-popover-tile-picker {
+	$border-width: 1px;
+	cursor: pointer;
+	@include inset-border($border-width);
+	display: block;
+	width: $tile-size + 2 * $border-width;
+	height: $tile-size + 2 * $border-width;
+
+	&:hover {
+		border-color: black;
+	}
 }
