@@ -25,11 +25,7 @@ class ComponentRegistry {
 		);
 
 		try {
-			window.customElements.define(
-				ComponentDefinition.TagName,
-				ComponentDefinition,
-				ComponentDefinition.Options
-			);
+			window.customElements.define(ComponentDefinition.TagName, ComponentDefinition);
 			this.components[ComponentDefinition.TagName] = ComponentDefinition;
 		} catch (e) {}
 	}
