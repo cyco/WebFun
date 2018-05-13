@@ -2,7 +2,7 @@ import { Window, ProgressIndicator } from "src/ui/components";
 import { Reader as SaveGameReaderFactory, SaveState } from "src/engine/save-game";
 import { GameData, ColorPalette } from "src/engine";
 import { InputStream, PromiseProgress } from "src/util";
-import { DataProvider, PaletteProvider } from "./data";
+import { DataProvider, PaletteProvider } from "src/app/data";
 import EditorView from "./editor-view";
 import "./editor-window.scss";
 
