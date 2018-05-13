@@ -5,16 +5,15 @@ import GameDataSerializer from "./game-data-serializer";
 import FilePicker from "src/ui/file-picker";
 import { readGameDataFile, GameTypeYoda, GameTypeIndy } from "src/engine";
 import GameData from "src/engine/game-data";
-import "./editor.scss";
-import { FullscreenWindow } from "src/ui/components";
-import { Menu, WindowMenuItem } from "src/ui";
+import { Menu, Component } from "src/ui";
 import buildEditorMenu from "./menu";
 import MenuItemInit from "src/ui/menu-item-init";
 import WindowManager from "src/ui/window-manager";
 import Settings from "src/settings";
+import "./editor-view.scss";
 
-class Editor extends FullscreenWindow {
-	public static readonly TagName = "wf-editor";
+class EditorView extends Component {
+	public static readonly TagName = "wf-editor-view";
 	private _windowManager: WindowManager;
 	private _inspectors: { [_: string]: AbstractInspector } = {};
 	private _data: DataManager;
@@ -23,21 +22,12 @@ class Editor extends FullscreenWindow {
 		super();
 
 		if (!this._windowManager) {
-			this._windowManager = new WindowManager(this.content);
+			this._windowManager = new WindowManager(this);
 		}
-
-		this.content.classList.add("fullsize");
 	}
 
 	connectedCallback() {
-		this.closable = false;
-		this.movable = false;
-
 		super.connectedCallback();
-
-		const menuItems = <MenuItemInit[]>buildEditorMenu(this);
-		menuItems.push(new WindowMenuItem(this._windowManager));
-		this.menu = new Menu(menuItems);
 	}
 
 	disconnectedCallback() {
@@ -90,6 +80,10 @@ class Editor extends FullscreenWindow {
 	get data() {
 		return this._data;
 	}
+
+	get windowManager() {
+		return this._windowManager;
+	}
 }
 
-export default Editor;
+export default EditorView;

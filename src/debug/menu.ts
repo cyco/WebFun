@@ -1,15 +1,7 @@
 import Settings from "src/settings";
 import { MenuItemSeparator, MenuItemState } from "src/ui";
 import ScriptDebugger from "./script-debugger";
-import Editor from "src/editor/editor";
 import PrefixedStorage from "src/util/prefixed-storage";
-import TileInspector from "src/editor/inspectors/tile-inspector";
-import ZoneInspector from "src/editor/inspectors/zone-inspector";
-import SoundInspector from "src/editor/inspectors/sound-inspector";
-import PuzzleInspector from "src/editor/inspectors/puzzle-inspector";
-import CharacterInspector from "src/editor/inspectors/character-inspector";
-import PaletteInspector from "src/editor/inspectors/palette-inspector";
-import SetupImageInspector from "src/editor/inspectors/setup-image-inspector";
 import DataManager from "src/editor/data-manager";
 import GameController from "src/app/game-controller";
 import WindowManager from "src/ui/window-manager";

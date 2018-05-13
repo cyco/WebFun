@@ -14,4 +14,25 @@ wf-resource-editor-window {
 		align-items: center;
 		justify-content: center;
 	}
+
+	&.fullsize {
+		width: auto;
+		min-height: auto;
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		border-top-left-radius: 0;
+		border-top-right-radius: 0;
+
+		> wf-window-titlebar > wf-menubar {
+			margin-left: 0;
+			margin-right: 0;
+		}
+
+		.content {
+			min-height: auto;
+		}
+	}
 }
