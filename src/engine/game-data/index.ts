@@ -1,7 +1,7 @@
 import { Uint8Array } from "src/std";
 import { Tile, Puzzle, Zone, Char } from "src/engine/objects";
 
-import fromHandwritten from "./from-handwritten";
+import fromFileContents from "./from-file-contents";
 
 class GameData {
 	private _rawInput: any;
@@ -14,7 +14,7 @@ class GameData {
 	private _setup: Uint8Array;
 
 	constructor(raw: any) {
-		fromHandwritten(this, raw);
+		fromFileContents(this, raw);
 	}
 
 	copy() {
