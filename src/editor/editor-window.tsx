@@ -43,6 +43,17 @@ class EditorWindow extends Window {
 		this._gotoFullscreen();
 		const editor = document.createElement(EditorView.TagName) as EditorView;
 		const state = localStorage.prefixedWith("editor");
+		editor.addInspector("tile", new TileInspector(state.prefixedWith("tile")));
+		editor.addInspector("zone", new ZoneInspector(state.prefixedWith("zone")));
+		editor.addInspector("sound", new SoundInspector(state.prefixedWith("sound")));
+		editor.addInspector("puzzle", new PuzzleInspector(state.prefixedWith("puzzle")));
+		editor.addInspector("character", new CharacterInspector(state.prefixedWith("character")));
+		editor.addInspector(
+			"setup-image",
+			new SetupImageInspector(state.prefixedWith("setup-image"))
+		);
+		editor.addInspector("palette", new PaletteInspector(state.prefixedWith("palette")));
+		editor.data = new DataManager(data, palette, tileSheet);
 		this._showMenu(editor);
 		this.content.textContent = "";
 		this.content.appendChild(editor);
