@@ -1,7 +1,7 @@
 import Engine from "./engine";
 import EngineEvents from "./events";
 import "./extension";
-import ManualDataFileReader from "./file-format/yodesk-manual";
+import readGameDataFile from "./file-format";
 import GameData from "./game-data";
 import Hero from "./hero";
 import Inventory from "./inventory";
@@ -33,7 +33,7 @@ export {
 	Story,
 	Yoda,
 	CanvasRenderer,
-	ManualDataFileReader,
+	readGameDataFile,
 	SaveGameReader,
 	SaveGameWriter
 };

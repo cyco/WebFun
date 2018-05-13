@@ -1,4 +1,4 @@
-import ParseError from "./parse-error";
+import ParseError from "../parse-error";
 import { InputStream } from "src/util";
 import { assert } from "../error";
 import { GameType, Yoda } from "src/engine/type";

@@ -1,4 +1,4 @@
-import ParseError from "./parse-error";
+import ParseError from "../parse-error";
 import { InputStream } from "src/util";
 
 export const parseHotspot = (stream: InputStream) => {

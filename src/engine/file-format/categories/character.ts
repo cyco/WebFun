@@ -1,4 +1,4 @@
-import ParseError from "./parse-error";
+import ParseError from "../parse-error";
 import { InputStream } from "src/util";
 import { Tile } from "src/engine/objects";
 import { assert } from "../error";

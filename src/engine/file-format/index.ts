@@ -1,6 +1,6 @@
 import { InputStream } from "src/util";
 import { GameType } from "src/engine";
-import ParseError from "./manual/parse-error";
+import ParseError from "./parse-error";
 import {
 	parseActions,
 	parseActionNames,
@@ -22,7 +22,7 @@ import {
 	parseZax4,
 	parseZoneNames,
 	parseEndOfFile
-} from "./manual";
+} from "./categories";
 import { error } from "./error";
 
 const ENDF = "ENDF";
