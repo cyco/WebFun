@@ -23,12 +23,12 @@ class PopoverTilePicker extends Component implements EventListenerObject {
 
 	protected connectedCallback() {
 		super.connectedCallback();
-		this._currentTileView.addEventListener("click", this);
+		this.addEventListener("click", this);
 		this.appendChild(this._currentTileView);
 	}
 
 	protected disconnectedCallback() {
-		this._currentTileView.removeEventListener("click", this);
+		this.removeEventListener("click", this);
 		super.disconnectedCallback();
 	}
 
@@ -46,6 +46,8 @@ class PopoverTilePicker extends Component implements EventListenerObject {
 		});
 		popover.content.appendChild(picker);
 		session.run();
+
+		e.stopPropagation();
 	}
 
 	set data(d) {

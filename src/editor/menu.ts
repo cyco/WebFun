@@ -2,9 +2,14 @@ import { MenuItemSeparator, MenuItemInit } from "src/ui";
 import { Window } from "src/ui/components";
 import EditorView from "src/editor/editor-view";
 
-const SettingsAction = (label: string, callback: (() => void)) => ({
+const SettingsAction = (
+	label: string,
+	callback: (() => void),
+	enabled: boolean | (() => boolean) = true
+) => ({
 	title: label,
-	callback: callback
+	callback: callback,
+	enabled: enabled
 });
 
 export default (editor: EditorView, window: Window) =>
@@ -15,6 +20,7 @@ export default (editor: EditorView, window: Window) =>
 			submenu: [
 				SettingsAction("Load Data", () => editor.load()),
 				SettingsAction("Save Data", () => editor.save()),
+				SettingsAction("Load Save Game", () => editor.loadSaveGame()),
 				MenuItemSeparator,
 				SettingsAction("Close", () => window.close())
 			]
@@ -30,7 +36,12 @@ export default (editor: EditorView, window: Window) =>
 				SettingsAction("Puzzles", () => editor.show("puzzle")),
 				SettingsAction("Sound", () => editor.show("sound")),
 				SettingsAction("Setup Image", () => editor.show("setup-image")),
-				SettingsAction("Palette", () => editor.show("palette"))
+				SettingsAction("Palette", () => editor.show("palette")),
+				SettingsAction(
+					"Save Game",
+					() => editor.show("save-game"),
+					() => !!editor.data.state
+				)
 			]
 		}
 	] as MenuItemInit[];

@@ -1,0 +1,5 @@
+@import "src/save-game-editor/editor-window";
+
+.wf-resource-editor-save-game-inspector {
+	@extend wf-save-game-editor-window;
+}

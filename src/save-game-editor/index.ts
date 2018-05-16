@@ -26,4 +26,4 @@ const main = async (windowManager: WindowManager = WindowManager.defaultManager)
 	await editor.loadGameFromStream(stream);
 };
 
-export { main };
+export { main, EditorView };

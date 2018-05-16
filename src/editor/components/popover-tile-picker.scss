@@ -13,7 +13,7 @@ wf-resource-editor-popover-tile-picker {
 		border-color: black;
 	}
 
-	> * {
-		cursor: pointer;
+	* {
+		cursor: pointer !important;
 	}
 }

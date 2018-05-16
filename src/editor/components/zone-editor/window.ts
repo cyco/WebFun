@@ -14,7 +14,6 @@ import ToolComponent from "./tool";
 import ActionComponent from "./action";
 import {
 	AbstractTool,
-	HotspotTool,
 	NoTool,
 	PaintBucketTool,
 	PencilTool,
@@ -83,13 +82,7 @@ class Window extends Panel {
 
 		this._editor = <ZoneEditor>document.createElement(ZoneEditor.tagName);
 
-		this._tools = [
-			new NoTool(),
-			new PencilTool(),
-			new RectangleTool(),
-			new PaintBucketTool(),
-			new HotspotTool()
-		];
+		this._tools = [new NoTool(), new PencilTool(), new RectangleTool(), new PaintBucketTool()];
 		const toolComponents = <HTMLElement[]>this._tools.map(t => this._buildToolItem(t));
 		const actionComponents = [
 			{
@@ -98,8 +91,6 @@ class Window extends Panel {
 				command: () => this._editActions()
 			}
 		].map(a => this._buildActionItem(a));
-
-		this._toolsCell = this._sidebar.addEntry(toolComponents.concat(actionComponents), "Tools");
 
 		this._tilePicker = <PopoverTilePicker>document.createElement(PopoverTilePicker.tagName);
 		this._tilePicker.addEventListener(
@@ -110,7 +101,10 @@ class Window extends Panel {
 				e.preventDefault();
 			}
 		);
-		this._sidebar.addEntry(this._tilePicker, "Tiles");
+		this._toolsCell = this._sidebar.addEntry(
+			[this._tilePicker as HTMLElement].concat(toolComponents.concat(actionComponents)),
+			"Tools"
+		);
 
 		this._hotspots = this._buildHotspotList();
 		this._hotspotsCell = this._sidebar.addEntry(this._hotspots, "Hotspots");
