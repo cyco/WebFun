@@ -10,13 +10,14 @@ import PersistentState from "./persistent-state";
 import { ColorPalette } from "./rendering";
 import CanvasRenderer from "./rendering/canvas/canvas-renderer";
 import TileSheetCanvasRenderer from "./rendering/canvas-tilesheet/renderer";
-import { SaveGameReader, Writer as SaveGameWriter } from "./save-game";
+import { Reader as SaveGameReader, Writer as SaveGameWriter, SaveState } from "./save-game";
 import SceneManager from "./scene-manager";
 import Story from "./story";
 import Yoda from "./yoda";
 import { GameType, Indy as GameTypeIndy, Yoda as GameTypeYoda } from "./type";
 
 export {
+	SaveState,
 	GameType,
 	GameTypeIndy,
 	GameTypeYoda,

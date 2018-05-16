@@ -23,7 +23,13 @@ class MenuItemComponent extends Component {
 		this._state = MenuItemState.Off;
 	}
 
+	connectedCallback() {
+		super.connectedCallback();
+		this._rebuild();
+	}
+
 	_rebuild() {
+		this.textContent = "";
 		const item = this.item || <Partial<MenuItem>>{};
 
 		const stateNode = document.createElement("span");

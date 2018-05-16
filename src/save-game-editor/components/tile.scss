@@ -6,10 +6,6 @@ wf-save-game-editor-tile {
 	text-align: left;
 
 	> div {
-		position: absolute;
-		top: -1px;
-		left: 0px;
-
 		width: $tile-size;
 		height: $tile-size;
 	}

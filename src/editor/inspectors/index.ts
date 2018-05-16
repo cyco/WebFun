@@ -6,6 +6,7 @@ import SoundInspector from "./sound-inspector";
 import TileInspector from "./tile-inspector";
 import ZoneInspector from "./zone-inspector";
 import PaletteInspector from "./palette-inspector";
+import SaveGameInspector from "./save-game-inspector";
 
 export {
 	AbstractInspector,
@@ -15,5 +16,6 @@ export {
 	SoundInspector,
 	TileInspector,
 	ZoneInspector,
-	PaletteInspector
+	PaletteInspector,
+	SaveGameInspector
 };
