@@ -2,16 +2,16 @@ import { Point, Rectangle, Size } from "src/util";
 import WorldItem from "./world-item";
 
 class World {
-	_world: WorldItem[];
-	_bounds: Rectangle;
+	private _world: WorldItem[];
+	public readonly bounds: Rectangle;
 
 	constructor(size = new Size(10, 10)) {
-		this._bounds = new Rectangle(new Point(0, 0), size);
+		this.bounds = new Rectangle(new Point(0, 0), size);
 		this._world = new Array(size.area).fill(new WorldItem());
 	}
 
 	get size(): Size {
-		return this._bounds.size;
+		return this.bounds.size;
 	}
 
 	setWorldItem(x: number, y: number, item: WorldItem): void {
@@ -25,8 +25,8 @@ class World {
 	}
 
 	_toIndex(p: Point): number {
-		if (!this._bounds.contains(p))
-			throw new RangeError(`Index ${p} does not lie within rect ${this._bounds}`);
+		if (!this.bounds.contains(p))
+			throw new RangeError(`Index ${p} does not lie within rect ${this.bounds}`);
 
 		return p.y * 10 + p.x;
 	}
