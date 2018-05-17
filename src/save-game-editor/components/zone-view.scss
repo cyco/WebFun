@@ -1,0 +1,10 @@
+@import "pixelated";
+
+wf-editor-zone {
+	display: block;
+
+	canvas {
+		@extend .pixelated;
+		border-radius: 3px;
+	}
+}

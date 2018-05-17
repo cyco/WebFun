@@ -1,0 +1,5 @@
+@import "./map.scss";
+
+wf-resource-editor-map-interactive {
+	@extend wf-save-game-editor-map;
+}
