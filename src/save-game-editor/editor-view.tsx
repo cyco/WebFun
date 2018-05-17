@@ -6,7 +6,7 @@ import { Planet, WorldSize } from "src/engine/types";
 import {
 	AmmoControl,
 	Tile as TileComponent,
-	Map,
+	InteractiveMap as Map,
 	InteractiveHealth as Health,
 	InventoryRow,
 	Inventory
