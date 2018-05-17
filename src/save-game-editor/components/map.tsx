@@ -2,9 +2,8 @@ import { Component } from "src/ui";
 import { World, WorldItem } from "src/engine/save-game";
 import { Zone, Tile, TileAttribute } from "src/engine/objects";
 import { Point, rgb } from "src/util";
-import { Image, ColorPalette } from "src/engine/rendering";
+import { ColorPalette } from "src/engine/rendering";
 import { LocatorTile } from "src/engine/types";
-import { Renderer, ImageFactory } from "src/engine/rendering/canvas";
 import { CSSTileSheet } from "src/editor";
 import "./map.scss";
 
@@ -12,20 +11,18 @@ const TileSize = 28;
 const HereInteval = 1000;
 
 class Map extends Component {
-	public static readonly tagName = "wf-save-game-editor-map";
+	public static tagName = "wf-save-game-editor-map";
 	public world: World;
-	public tileSheet: CSSTileSheet;
 	public tiles: Tile[];
 	public zones: Zone[];
 	public palette: ColorPalette;
+	public tileSheet: CSSTileSheet;
 	public location: Point;
 	public locatorTile: LocatorTile;
 
 	private _canvas: HTMLCanvasElement = ((
-		<canvas width={280} height={280} />
+		<canvas width={280} height={280} className="pixelated" />
 	) as any) as HTMLCanvasElement;
-	private _imageMap: { [_: number]: Image };
-	private _renderer: Renderer;
 	private _here: HTMLElement;
 	private _hereInterval: number;
 
@@ -34,13 +31,8 @@ class Map extends Component {
 
 		this.style.backgroundColor = this.locatorTile.backgroundColor;
 
-		if (!this._renderer) {
+		if (!this._here) {
 			this._buildURHere();
-			this._buildRenderer();
-			this._buildImageMap();
-			this._imageMap[this.tiles.length - 1].representation.addEventListener("load", () =>
-				this._drawWorld()
-			);
 		}
 
 		this._drawWorld();
@@ -73,31 +65,50 @@ class Map extends Component {
 		}, HereInteval);
 	}
 
-	private _buildRenderer() {
-		this._renderer = new Renderer(this._canvas);
-		this._renderer.imageFactory.palette = this.palette;
-	}
-
-	private _buildImageMap() {
-		this._imageMap = {};
-		const factory = this._renderer.imageFactory;
-		this.tiles.forEach(tile => {
-			this._imageMap[tile.id] = factory.buildImage(Tile.WIDTH, Tile.HEIGHT, tile.imageData);
-		});
-	}
-
 	private _drawWorld() {
-		this._renderer.clear();
-		for (let y = 0; y < 10; y++) {
-			for (let x = 0; x < 10; x++) {
-				const worldItem = this.world.getWorldItem(x, y);
+		const image = this.buildWorldImage(this.world, this.palette);
+		const ctx = this._canvas.getContext("2d");
+		ctx.putImageData(image, 0, 0);
+	}
+
+	private buildWorldImage(world: World, palette: ColorPalette) {
+		const WorldWidth = world.size.width;
+		const WorldHeight = world.size.height;
+
+		const imageData = new ImageData(WorldWidth * TileSize, WorldHeight * TileSize);
+		const rawImageData = imageData.data;
+
+		const bpr = 4 * WorldWidth * TileSize;
+
+		for (let y = 0; y < WorldHeight; y++) {
+			for (let x = 0; x < WorldWidth; x++) {
+				const worldItem = world.getWorldItem(x, y);
 				const tile = this._tileForWorldItem(worldItem);
 				if (!tile) continue;
-				const tileImage = this._imageMap[tile.id];
 
-				this._renderer.renderImage(tileImage, x * TileSize, y * TileSize);
+				const pixels = tile.imageData;
+				const sy = y * TileSize;
+				const sx = x * TileSize;
+				let j = sy * bpr + sx * 4;
+
+				for (let ty = 0; ty < TileSize; ty++) {
+					for (let tx = 0; tx < TileSize; tx++) {
+						const i = ty * Tile.WIDTH + tx;
+						const paletteIndex = pixels[i] * 4;
+						if (paletteIndex === 0) continue;
+
+						rawImageData[j + 4 * tx + 0] = palette[paletteIndex + 2];
+						rawImageData[j + 4 * tx + 1] = palette[paletteIndex + 1];
+						rawImageData[j + 4 * tx + 2] = palette[paletteIndex + 0];
+						rawImageData[j + 4 * tx + 3] = paletteIndex === 0 ? 0x00 : 0xff;
+					}
+
+					j += bpr;
+				}
 			}
 		}
+
+		return imageData;
 	}
 
 	private _tileForWorldItem({ visited, solved_1, zoneId }: WorldItem): Tile {
@@ -106,6 +117,10 @@ class Map extends Component {
 		if (tile instanceof Array) tile = tile[solved_1 ? 1 : 0];
 
 		return this.tiles[tile];
+	}
+
+	protected tileAtPoint(point: Point): Point {
+		return point.dividedBy({ width: TileSize, height: TileSize }).byFlooring();
 	}
 }
 
