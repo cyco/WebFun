@@ -1,4 +1,4 @@
-import "babel-polyfill";
+import "@babel/polyfill";
 import Fs from "fs";
 import Path from "path";
 import Puppeteer from "puppeteer";
@@ -31,7 +31,9 @@ let screenshotIdx = 1;
 async function TakeScreenshot(page, name) {
 	if (!page) return;
 
-	await page.screenshot({ path: Path.resolve(ScreenShotDirectory, screenshotIdx++ + "_" + name + ".png") });
+	await page.screenshot({
+		path: Path.resolve(ScreenShotDirectory, screenshotIdx++ + "_" + name + ".png")
+	});
 }
 
 let recordIndex = 0;
