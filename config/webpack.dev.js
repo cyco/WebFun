@@ -16,12 +16,7 @@ module.exports = merge(BaseConfig, {
 	},
 	devServer: {
 		publicPath: "/",
-		contentBase: [
-			Paths.projectRoot,
-			Paths.buildRoot,
-			Paths.assetsRoot,
-			Path.resolve(Paths.sourceRoot, "app")
-		],
+		contentBase: [Paths.projectRoot, Paths.assetsRoot, Path.resolve(Paths.sourceRoot, "app")],
 		hot: true,
 		stats: "errors-only"
 	},
