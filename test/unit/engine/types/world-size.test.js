@@ -21,6 +21,16 @@ describe("WorldSize", () => {
 		expect(WorldSize.fromNumber(WorldSize.Large.rawValue)).toBe(WorldSize.Large);
 	});
 
+	it("defines names for each size", () => {
+		expect(WorldSize.Small.name).toBe("Small");
+		expect(WorldSize.Medium.name).toBe("Medium");
+		expect(WorldSize.Large.name).toBe("Large");
+	});
+
+	it("defines a custom string representation", () => {
+		expect(WorldSize.Small.toString()).toBe("WorldSize {Small}");
+	});
+
 	it("throws if invalid values are given as input", () => {
 		expect(() => WorldSize.fromNumber(4)).toThrow();
 	});

@@ -1,8 +1,20 @@
 import NPC from "src/engine/objects/npc";
 
-describe("NPC", () => {
+describe("WebFun.Engine.Objects.NPC", () => {
+	let subject;
+	beforeEach(() => (subject = new NPC()));
+
 	it("is a class representing an npc", () => {
-		const npc = new NPC();
-		expect(npc.enabled).toBeTrue();
+		expect(subject.enabled).toBeTrue();
+	});
+
+	it("initializes all properties", () => {
+		expect(subject.id).toBe(-1);
+		expect(subject.enabled).toBeTrue();
+		expect(subject.face).toBeNull();
+		expect(subject.unknown1).toBe(0);
+		expect(subject.unknown2).toBe(0);
+		expect(subject.unknown3).toBeArray();
+		expect(subject.position).toBeNull();
 	});
 });

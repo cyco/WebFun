@@ -7,8 +7,8 @@ export { Type };
 
 class Puzzle {
 	protected _id: number = -1;
-	protected _item1: Tile;
-	protected _item2: Tile;
+	protected _item1: Tile = null;
+	protected _item2: Tile = null;
 	protected _strings: string[] = ["", "", "", "", ""];
 	protected _name: string = "";
 	protected _type: PuzzleType = null;

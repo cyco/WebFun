@@ -31,6 +31,9 @@ describe("Inventory", () => {
 		let mockItem = {
 			id: 5
 		};
+		inventory.addItem({
+			id: 10
+		});
 		inventory.addItem(mockItem);
 
 		expect(inventory.contains(mockItem)).toBeTrue();
@@ -40,6 +43,23 @@ describe("Inventory", () => {
 
 		expect(inventory.contains(mockItem)).toBeFalse();
 		expect(inventory.contains(5)).toBeFalse();
+	});
+
+	it("has a method to remove all items", () => {
+		let mockItem1 = {
+			id: 5
+		};
+		let mockItem2 = {
+			id: 7
+		};
+		inventory.addItem(mockItem1);
+		inventory.addItem(mockItem2);
+		let eventFired = false;
+		inventory.addEventListener(Events.ItemsDidChange, () => (eventFired = true));
+		inventory.removeAllItems();
+		expect(eventFired).toBeTrue();
+		expect(inventory.contains(mockItem1)).toBeFalse();
+		expect(inventory.contains(mockItem2)).toBeFalse();
 	});
 
 	it("has a method for easy enumeration", () => {

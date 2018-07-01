@@ -30,4 +30,8 @@ describe("Metronome", () => {
 
 		expect(window.cancelAnimationFrame).toHaveBeenCalled();
 	});
+
+	it("can be stopped multiple times", () => {
+		expect(() => metronome.stop()).not.toThrow();
+	});
 });

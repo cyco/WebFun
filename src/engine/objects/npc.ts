@@ -2,16 +2,15 @@ import { Point } from "src/util";
 import Char from "./char";
 
 class NPC {
-	protected _id: number;
+	protected _id: number = -1;
 	protected _enabled = true;
-	protected _character: Char;
-	protected _position: Point;
+	protected _character: Char = null;
+	protected _position: Point = null;
 	protected _unknown1: any;
 	protected _unknown2: any;
 	protected _data: any;
 
 	constructor() {
-		this._enabled = true;
 		this._data = Array.Repeat(-1, 0x20);
 		this._unknown1 = 0;
 		this._unknown2 = 0;

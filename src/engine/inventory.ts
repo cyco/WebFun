@@ -18,10 +18,6 @@ class Inventory extends EventTarget {
 		Object.seal(this);
 	}
 
-	static get Event() {
-		return Events;
-	}
-
 	addItem(item: Tile): void {
 		let index = this._items.length;
 		if (item.id === Yoda.ItemIDs.Locator) {
