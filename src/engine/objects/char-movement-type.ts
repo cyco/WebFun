@@ -58,7 +58,7 @@ class CharMovementType {
 			case CharMovementType.Unspecific7:
 				return "Unspecific7";
 			case CharMovementType.Unspecific8:
-				return "Unspecific";
+				return "Unspecific8";
 			case CharMovementType.UnknownIndyOnly:
 				return "Unknown (Indy)";
 			default:

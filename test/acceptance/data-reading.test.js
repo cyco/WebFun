@@ -1,5 +1,5 @@
 import { getFixtureData } from "test-helpers/fixture-loading";
-import { readGameDataFile, GameTypeYoda, GameTypeIndy } from "src/engine";
+import { GameData, readGameDataFile, GameTypeYoda, GameTypeIndy } from "src/engine";
 import { InputStream } from "src/util";
 
 describe("DataReading", () => {
@@ -25,7 +25,21 @@ describe("DataReading", () => {
 		done();
 	};
 
-	it("reads indy's data without errors", parsesWithoutError(GameTypeIndy, "indy.data"));
+	it("reads indy's data without errors", async done => {
+		const file = await loadData("indy.data");
+		const data = new GameData(readGameDataFile(file, GameTypeIndy));
+
+		expect(data.version).toEqual(512);
+		expect(data.sounds.length).toBe(18);
+		expect(data.tiles.length).toBe(1144);
+		expect(data.puzzles.length).toBe(157);
+		expect(data.zones.length).toBe(366);
+		expect(data.characters.length).toBe(27);
+		expect(data.setupImageData.length).toBe(82944);
+		expect(data.copy()).toBeInstanceOf(GameData);
+		done();
+	});
+
 	it("reads indy's demo data without errors", parsesWithoutError(GameTypeIndy, "indy-demo.data"));
 	it("reads yoda's data without errors", parsesWithoutError(GameTypeYoda, "yoda.data"));
 	it("reads yoda's demo data without errors", parsesWithoutError(GameTypeYoda, "yoda-demo.data"));

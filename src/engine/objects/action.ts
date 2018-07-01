@@ -5,7 +5,7 @@ import Zone from "./zone";
 class Action {
 	public instructionPointer: number = 0;
 	public enabled: boolean = true;
-	protected _zone: Zone;
+	protected _zone: Zone = null;
 	protected _name: string = "";
 	protected _id: number = -1;
 	protected _conditions: Condition[] = [];

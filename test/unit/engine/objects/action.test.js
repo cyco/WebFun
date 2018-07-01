@@ -3,26 +3,36 @@ import Action from "src/engine/objects/action";
 import Condition from "src/engine/objects/condition";
 import Instruction from "src/engine/objects/instruction";
 
-describe("Action", () => {
-	let action;
-	beforeEach(() => {
-		action = new Action();
-	});
+describe("WebFun.Engine.Objects.Action", () => {
+	let subject;
+	beforeEach(() => (subject = new Action()));
 
 	it("can have several conditions", () => {
-		expect(action.conditions).toEqual([]);
+		expect(subject.conditions).toEqual([]);
 	});
 
 	it("can have several instructions", () => {
-		expect(action.instructions).toEqual([]);
+		expect(subject.instructions).toEqual([]);
 	});
 
 	it("has an instruction pointer that is initially set to 0", () => {
-		expect(action.instructionPointer).toBe(0);
+		expect(subject.instructionPointer).toBe(0);
+	});
+
+	it("has an id", () => {
+		expect(subject.id).toBe(-1);
 	});
 
 	it("is initially enabled", () => {
-		expect(action.enabled).toBeTrue();
+		expect(subject.enabled).toBeTrue();
+	});
+
+	it("holds a reference to its zone", () => {
+		expect(subject.zone).toBeNull();
+	});
+
+	it("has a name (eventhough it's only used in indy)", () => {
+		expect(subject.name).toBe("");
 	});
 
 	describe("AbstractActionItem", () => {

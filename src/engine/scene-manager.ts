@@ -24,27 +24,19 @@ class SceneManager {
 	}
 
 	async update(ticks: number): Promise<void> {
-		try {
-			await this.currentScene.update(ticks);
-		} catch (e) {
-			console.error(e);
-		}
+		await this.currentScene.update(ticks);
 	}
 
 	render(renderer: Renderer): void {
 		// TODO: determine visible scenes at push/pop time
-		try {
-			let visibleScenes: Scene[] = [];
-			for (let i = 0, len = this._stack.length; i < len; i++) {
-				const scene = this._stack[i];
-				if (scene.isOpaque()) visibleScenes = [scene];
-				else visibleScenes.push(scene);
-			}
-
-			for (let i = 0, len = visibleScenes.length; i < len; i++) visibleScenes[i].render(renderer);
-		} catch (e) {
-			console.error(e);
+		let visibleScenes: Scene[] = [];
+		for (let i = 0, len = this._stack.length; i < len; i++) {
+			const scene = this._stack[i];
+			if (scene.isOpaque()) visibleScenes = [scene];
+			else visibleScenes.push(scene);
 		}
+
+		for (let i = 0, len = visibleScenes.length; i < len; i++) visibleScenes[i].render(renderer);
 	}
 
 	popScene() {

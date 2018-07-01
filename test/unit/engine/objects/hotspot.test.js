@@ -1,13 +1,25 @@
 import Hotspot from "src/engine/objects/hotspot";
+import HotspotType from "src/engine/objects/hotspot-type";
+import { Point } from "src/util";
 
-describe("Hotspot", () => {
-	it("right now it's a very simple class", () => {
-		const hotspot = new Hotspot();
+describe("WebFun.Engine.Objects.Hotspot", () => {
+	let subject;
+	beforeEach(() => (subject = new Hotspot()));
 
-		expect(hotspot.enabled).toBeFalse();
-		expect(hotspot.type).toBe(null);
-		expect(hotspot.arg).toBe(-1);
-		expect(hotspot.x).toBe(-1);
-		expect(hotspot.y).toBe(-1);
+	it("marks a point of interest on a zone", () => {
+		expect(subject.location).toBeInstanceOf(Point);
+	});
+
+	it("defines all possible types", () => {
+		expect(Hotspot.Type).toBe(HotspotType);
+	});
+
+	it("can be disabled (and is by default)", () => {
+		expect(subject.enabled).toBeFalse();
+	});
+
+	it("holds one argument (16-bit signed, not enforced)", () => {
+		expect(subject.arg).toBe(-1);
+		expect(() => (subject.arg = 0x10000)).not.toThrow();
 	});
 });

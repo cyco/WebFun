@@ -44,9 +44,9 @@ const makeCharacter = (raw: any, idx: number, data: any) => {
 	char.id = idx;
 	char.name = raw.name;
 	char.frames = [
-		new CharFrame(Array.from(raw.frame1).map((i: number) => data.tiles[i])),
-		new CharFrame(Array.from(raw.frame2).map((i: number) => data.tiles[i])),
-		new CharFrame(Array.from(raw.frame3).map((i: number) => data.tiles[i]))
+		new CharFrame(Array.from(raw.frame1).map((i: number) => data._tiles[i] || null)),
+		new CharFrame(Array.from(raw.frame2).map((i: number) => data._tiles[i] || null)),
+		new CharFrame(Array.from(raw.frame3).map((i: number) => data._tiles[i] || null))
 	];
 	char.type = CharType.fromNumber(raw.type);
 	char.movementType = CharMovementType.fromNumber(raw.movementType);
@@ -71,8 +71,8 @@ const makePuzzle = (raw: any, idx: number, data: any) => {
 	puzzle.unknown3 = raw.unknown3;
 
 	puzzle.strings = raw.texts.slice();
-	puzzle.item1 = data._tiles[raw.item1] ? data._tiles[raw.item1] : null;
-	puzzle.item2 = data._tiles[raw.item2] ? data._tiles[raw.item2] : null;
+	puzzle.item1 = data._tiles[raw.item1] || null;
+	puzzle.item2 = data._tiles[raw.item2] || null;
 
 	if (puzzle.type !== PuzzleType.End && puzzle.type !== PuzzleType.Disabled) {
 		puzzle.item2 = null;

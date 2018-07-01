@@ -6,7 +6,13 @@ class PuzzleType {
 	public static readonly U4 = new PuzzleType();
 
 	public static readonly Disabled = new PuzzleType();
-	private static knownTypes = [PuzzleType.U1, PuzzleType.U2, PuzzleType.U3, PuzzleType.End, PuzzleType.U4];
+	private static knownTypes = [
+		PuzzleType.U1,
+		PuzzleType.U2,
+		PuzzleType.U3,
+		PuzzleType.End,
+		PuzzleType.U4
+	];
 
 	public get rawValue() {
 		if (this === PuzzleType.Disabled) return -1;
@@ -31,13 +37,14 @@ class PuzzleType {
 
 	public static isPuzzleType(number: number): boolean {
 		if (number === -1 || number === 0xffff) return true;
-		if (number < PuzzleType.knownTypes.length) return true;
+		if (0 <= number && number < PuzzleType.knownTypes.length) return true;
 
 		return false;
 	}
 
 	public static fromNumber(number: number): PuzzleType {
-		if (!PuzzleType.isPuzzleType(number)) throw new RangeError(`Value ${number} does not specify a puzzle type`);
+		if (!PuzzleType.isPuzzleType(number))
+			throw new RangeError(`Value ${number} does not specify a puzzle type`);
 
 		if (number === -1 || number === 0xffff) return PuzzleType.Disabled;
 		return this.knownTypes[number];
