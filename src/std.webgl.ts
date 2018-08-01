@@ -1,3 +1,3 @@
 import { global } from "./std";
 
-export const WebGLTexture = global.WebGLTexture;
+export const { WebGLTexture } = global;
