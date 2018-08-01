@@ -50,7 +50,7 @@ class FileLoader extends EventTarget {
 		});
 	}
 
-	_didFail(event: ErrorEvent) {
+	_didFail(event: ProgressEvent) {
 		this.dispatchEvent(Event.Fail, {
 			reason: event
 		});

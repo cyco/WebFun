@@ -20,7 +20,7 @@ class PaletteInspector extends AbstractInspector {
 		this._paletteView.style.width = "194px";
 		this._paletteView.style.height = "194px";
 		this._paletteView.onclick = (e: MouseEvent) => this._onPaletteClick(e);
-		const highlight = new Point(state.load("tile-x") | 0, state.load("tile-y", 0));
+		const highlight = new Point(state.load("tile-x") | 0, state.load("tile-y") | 0);
 		this._paletteView.moveHighlighterTo(highlight);
 		this.window.content.appendChild(this._paletteView);
 
