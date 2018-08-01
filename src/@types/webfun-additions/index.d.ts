@@ -11,6 +11,9 @@ interface Array<T> {
 
 interface Storage {
 	prefixedWith(s: string): Storage;
+	has(s: string): boolean;
+	load(s: string): any;
+	store(s: string, v: any): void;
 }
 
 interface RegExpConstructor {
@@ -55,8 +58,10 @@ declare namespace JSX {
 	}
 
 	interface Element extends Component {}
+	interface IntrinsicClassAttributes<T> {
+		[_: string]: any;
+	}
 	/*
-	interface ElementClass { }
 	interface HtmlElementInstance { }
 	interface ElementAttributesProperty { __props: any; }
 	interface ElementTypeProperty { __elementType: any; }
