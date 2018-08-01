@@ -1,4 +1,4 @@
-@import "border";
+@import "border.scss";
 
 wf-zone-editor-tool {
 	@include inset-border-inverted(1px);

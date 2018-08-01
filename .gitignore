@@ -18,6 +18,7 @@ yarn-error.log
 .idea/
 config/.typescript
 config/.hard-source
+config/.babel
 tools/*.bin.js
 test/screenshots
 build

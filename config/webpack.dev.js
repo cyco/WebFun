@@ -10,17 +10,20 @@ module.exports = merge(BaseConfig, {
 		webfun: Path.resolve(Paths.sourceRoot, "app/main.ts")
 	},
 	devtool: "inline-source-map",
+	mode: "development",
 	output: {
 		filename: "[name].js",
 		path: Paths.buildRoot
 	},
-	devServer: {
-		publicPath: "/",
-		contentBase: [Paths.projectRoot, Paths.assetsRoot, Path.resolve(Paths.sourceRoot, "app")],
-		hot: true,
-		stats: "errors-only"
+	serve: {
+		content: [
+			Paths.buildRoot,
+			Paths.projectRoot,
+			Paths.assetsRoot,
+			Path.resolve(Paths.sourceRoot, "app")
+		]
 	},
-	plugins: [new Webpack.NamedModulesPlugin(), new Webpack.HotModuleReplacementPlugin()],
+	plugins: [],
 	module: {
 		rules: [
 			{

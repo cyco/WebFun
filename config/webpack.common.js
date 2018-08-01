@@ -1,6 +1,6 @@
 const Path = require("path");
 const Paths = require("./paths");
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 
 module.exports = {
 	resolve: {
@@ -22,23 +22,35 @@ module.exports = {
 	mode: "development",
 	cache: true,
 	stats: "errors-only",
-	plugins: [],
+	plugins: [new ForkTsCheckerWebpackPlugin()],
 	module: {
 		rules: [
 			{
 				test: /\.jsx?$/,
 				exclude: /node_modules/,
-				loader: "babel-loader"
+				loader: "babel-loader",
+				options: {
+					cacheDirectory: Path.resolve(Paths.configRoot, ".babel")
+				}
 			},
 			{
 				test: /\.tsx?$/,
 				exclude: /node_modules/,
-				loader: "awesome-typescript-loader",
-				options: {
-					configFileName: Path.resolve(Paths.projectRoot, "tsconfig.json"),
-					silent: true,
-					babelCore: "@babel/core"
-				}
+				use: [
+					{
+						loader: "babel-loader",
+						options: {
+							cacheDirectory: Path.resolve(Paths.configRoot, ".babel")
+						}
+					},
+					{
+						loader: "ts-loader",
+						options: {
+							configFile: Path.resolve(Paths.projectRoot, "tsconfig.json"),
+							transpileOnly: true
+						}
+					}
+				]
 			},
 			{
 				test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,

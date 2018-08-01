@@ -1,5 +1,5 @@
-@import "pixelated";
-@import "border";
+@import "pixelated.scss";
+@import "border.scss";
 
 wf-save-game-editor-map {
 	@include inset-border(1px);

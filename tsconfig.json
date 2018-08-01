@@ -25,10 +25,5 @@
       "text-encoding"
     ]
   },
-  "exclude": ["node_modules"],
-  "awesomeTypescriptLoaderOptions": {
-    "useBabel": true,
-    "useCache": true,
-    "cacheDirectory": "./config/.typescript"
-  }
+  "exclude": ["node_modules"]
 }

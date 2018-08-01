@@ -31,7 +31,7 @@ class RadioButton extends Component {
 	}
 
 	set title(t) {
-		this._label.clear();
+		this._label.textContent = "";
 		this._label.appendChild(document.createTextNode(t));
 	}
 
@@ -69,7 +69,7 @@ class RadioButton extends Component {
 
 	protected disconnectedCallback() {
 		super.disconnectedCallback();
-		this.clear();
+		this.textContent = "";
 	}
 }
 

@@ -1,6 +1,6 @@
-@import "border";
-@import "sizing";
-@import "variables";
+@import "border.scss";
+@import "sizing.scss";
+@import "variables.scss";
 
 wf-weapon {
 	@include inset-border(2px);

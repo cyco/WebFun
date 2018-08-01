@@ -1,4 +1,4 @@
-@import "border";
+@import "border.scss";
 
 wf-menu-view {
 	@include inset-border-inverted(2px);

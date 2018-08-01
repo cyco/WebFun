@@ -112,7 +112,7 @@ class GameController extends EventTarget {
 		return new Promise((resolve, reject) => {
 			const loadingView = <LoadingView>document.createElement(LoadingView.tagName);
 			const windowContent = this._window.mainContent;
-			windowContent.clear();
+			windowContent.textContent = "";
 			windowContent.appendChild(loadingView);
 
 			const loader = new Loader();
@@ -223,7 +223,7 @@ class GameController extends EventTarget {
 		engine.sceneManager.pushScene(zoneScene);
 
 		const windowContent = this._window.mainContent;
-		windowContent.clear();
+		windowContent.textContent = "";
 		windowContent.appendChild(this._sceneView);
 
 		engine.inputManager.addListeners();

@@ -58,7 +58,7 @@ class InventoryComponent extends Component {
 	}
 
 	_rebuildTable() {
-		this.clear();
+		this.textContent = "";
 
 		if (this._inventory) {
 			this._inventory.forEach((item: Tile, rowIdx: number) => {

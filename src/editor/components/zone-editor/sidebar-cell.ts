@@ -62,10 +62,10 @@ class SidebarCell extends Component {
 		return this._state;
 	}
 
-	clear() {
+	public clear = () => {
 		this.textContent = "";
 		this.appendChild(this._header);
-	}
+	};
 
 	set newItemCallback(thing) {
 		this._newItemCallback = thing;

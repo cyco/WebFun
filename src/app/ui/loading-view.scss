@@ -1,5 +1,5 @@
-@import "sizing";
-@import "pixelated";
+@import "sizing.scss";
+@import "pixelated.scss";
 
 wf-loading-view {
 	@include fullsize();

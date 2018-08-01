@@ -1,9 +1,9 @@
-@import "reset";
-@import "selection";
-@import "colors";
+@import "reset.scss";
+@import "selection.scss";
+@import "colors.scss";
 
 $fa-font-path: "./font-awesome/fonts/";
-@import "font-awesome/scss/font-awesome";
+@import "font-awesome/scss/font-awesome.scss";
 @import "fontello/css/fontello.css";
 
 body {
@@ -12,4 +12,4 @@ body {
 	padding: 0;
 }
 
-// @import "old/global";
+// @import "old/global.scss";
