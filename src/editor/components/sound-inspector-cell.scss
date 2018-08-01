@@ -1,5 +1,5 @@
-@import "border";
-@import "animation";
+@import "border.scss";
+@import "animation.scss";
 
 wf-sound-inspector-cell {
 	@include inset-border-inverted(1px);

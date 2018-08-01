@@ -4,14 +4,8 @@ const webpackConfig = require("./webpack.test.js");
 
 const Paths = require("./paths");
 
-const intellijCoverageParameterName = "--coverageTempDir=";
-const intellijCoverageArg = process.argv.find(s => s.indexOf(intellijCoverageParameterName) === 0);
-const customCoverageDirectory = intellijCoverageArg
-	? intellijCoverageArg.substr(intellijCoverageParameterName.length)
-	: null;
-
-const includeCoverage = !!process.env.coverage || customCoverageDirectory;
-const includeJunit = !!process.env.coverage || customCoverageDirectory;
+const includeCoverage = !!process.env.coverage;
+const includeJunit = !!process.env.coverage;
 const runUnitTests = !process.env.scope || ~process.env.scope.indexOf("unit");
 const runAcceptanceTests = process.env.scope && ~process.env.scope.indexOf("acceptance");
 const runPerformanceTests = process.env.scope && ~process.env.scope.indexOf("performance");
@@ -35,7 +29,7 @@ const config = {
 	webpack: webpackConfig,
 	customLaunchers: {
 		ChromeHeadless: {
-			base: "ChromeCanary",
+			base: "Chrome",
 			flags: ["--no-sandbox", "--disable-gpu", "--headless", " --remote-debugging-port=9222"]
 		},
 		FirefoxHeadless: {
@@ -55,9 +49,7 @@ const config = {
 };
 
 delete config.webpack.entry;
-config.webpack.devServer.contentBase.push(Path.resolve(Paths.testRoot, "fixtures"));
 config.webpack.stats = "errors-only";
-config.webpack.devServer.stats = "errors-only";
 config.webpackMiddleware = {
 	stats: "errors-only"
 };
@@ -75,7 +67,7 @@ if (includeCoverage) {
 	config.coverageIstanbulReporter = {
 		reports: ["lcovonly", "html"],
 		fixWebpackSourcePaths: true,
-		dir: customCoverageDirectory ? customCoverageDirectory : Paths.testReportRoot,
+		dir: Paths.testReportRoot,
 		"report-config": {
 			lcovonly: {
 				file: fileName

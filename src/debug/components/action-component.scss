@@ -1,4 +1,4 @@
-@import "border";
+@import "border.scss";
 
 wf-debug-action {
 	@include inset-border-inverted(1px);

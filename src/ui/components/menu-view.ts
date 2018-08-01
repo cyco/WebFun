@@ -56,7 +56,7 @@ class MenuView extends Component {
 	}
 
 	removeItemNodes() {
-		this.clear();
+		this.textContent = "";
 	}
 }
 

@@ -11,17 +11,10 @@ module.exports = merge(BaseConfig, {
 		filename: "[name].js",
 		path: Paths.buildRoot
 	},
-	devServer: {
-		publicPath: "/",
-		contentBase: [Paths.buildRoot, Paths.assetsRoot, Path.resolve(Paths.sourceRoot, "app")],
-		hot: true,
-		stats: "errors-only"
-	},
-	plugins: [new Webpack.NamedModulesPlugin(), new Webpack.HotModuleReplacementPlugin()],
 	module: {
 		rules: [
 			{
-				test: /\.scss$/,
+				test: /\.scss/,
 				exclude: /node_modules/,
 				loader: "ignore-loader"
 			},

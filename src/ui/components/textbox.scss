@@ -1,4 +1,4 @@
-@import "border";
+@import "border.scss";
 
 wf-textbox {
 	@include inset-border(2px);

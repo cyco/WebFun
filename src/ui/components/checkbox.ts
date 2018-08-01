@@ -35,7 +35,7 @@ class Checkbox extends Component {
 	}
 
 	set title(t) {
-		this._label.clear();
+		this._label.textContent = "";
 		this._label.appendChild(document.createTextNode(t));
 	}
 
@@ -63,7 +63,7 @@ class Checkbox extends Component {
 	}
 
 	protected disconnectedCallback() {
-		this.clear();
+		this.textContent = "";
 
 		super.disconnectedCallback();
 	}

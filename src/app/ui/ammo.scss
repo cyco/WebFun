@@ -1,6 +1,6 @@
-@import "border";
-@import "sizing";
-@import "colors";
+@import "border.scss";
+@import "sizing.scss";
+@import "colors.scss";
 
 wf-ammo {
 	@include inset-border(2px);

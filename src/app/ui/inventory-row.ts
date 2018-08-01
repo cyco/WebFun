@@ -32,7 +32,7 @@ class InventoryRow extends Component {
 		const icon = rep && rep.cloneNode ? rep.cloneNode() : this._emptyIcon;
 		const label = tile ? tile.name : "";
 
-		this._icon.clear();
+		this._icon.textContent = "";
 		this._icon.appendChild(icon);
 		this._label.innerText = label;
 	}

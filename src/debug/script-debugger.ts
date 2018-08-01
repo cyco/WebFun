@@ -154,7 +154,7 @@ class ScriptDebugger {
 	}
 
 	private _rebuildActionList() {
-		this._actionList.clear();
+		this._actionList.textContent = "";
 		this._engine.currentZone.actions.forEach((action, idx) => {
 			const component = <ActionComponent>document.createElement(ActionComponent.tagName);
 			component.engine = this._engine;

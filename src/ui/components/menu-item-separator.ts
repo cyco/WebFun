@@ -9,7 +9,7 @@ class MenuItemSeparator extends Component {
 	protected connectedCallback() {
 		super.connectedCallback();
 
-		this.clear();
+		this.textContent = "";
 		this.appendChild(document.createElement("div"));
 	}
 }

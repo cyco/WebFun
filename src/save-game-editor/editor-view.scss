@@ -1,6 +1,6 @@
-@import "colors";
-@import "variables";
-@import "border";
+@import "colors.scss";
+@import "variables.scss";
+@import "border.scss";
 @import "../ui/components/window";
 
 wf-save-game-editor-view {

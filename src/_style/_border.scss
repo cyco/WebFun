@@ -1,4 +1,4 @@
-@import "colors";
+@import "colors.scss";
 
 $border-size: 2px;
 
@@ -11,7 +11,7 @@ $border-size: 2px;
 	border-bottom-color: $border-light;
 }
 
-@mixin inset-border-inverted ($width: $border-size) {
+@mixin inset-border-inverted($width: $border-size) {
 	border-style: solid;
 	border-width: $width;
 	border-left-color: $border-light;
