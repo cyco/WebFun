@@ -29,6 +29,10 @@ describeComponent(MainWindow, () => {
 		it("such as the health meter", () => {
 			expect(subject.querySelector(Health.tagName)).not.toBeNull();
 		});
+
+		it("shows game view and loading view in the left part", () => {
+			expect(subject.mainContent).toBe(subject.content.firstElementChild);
+		});
 	});
 
 	describe("updating ui", () => {
@@ -40,22 +44,16 @@ describeComponent(MainWindow, () => {
 			subject.engine = engine;
 		});
 
+		afterEach(() => (subject.engine = null));
+
+		it("can return the engine", () => {
+			expect(subject.engine).toBe(engine);
+		});
+
 		it("registers for hero's health change events", () => {
 			engine.triggerHealthChange(200);
 			const healthComponent = subject.querySelector(Health.tagName);
 			expect(healthComponent.health).toBe(200);
-		});
-
-		xit("registers for ammo change events", () => {
-			engine.triggerAmmoChange(3);
-			const ammo = subject.querySelector(Ammo.tagName);
-			expect(ammo.health).toBe(3);
-		});
-
-		xit("registers for weapon change events", () => {
-			engine.triggerWeaponChange({});
-			const weapon = subject.querySelector(Weapon.tagName);
-			expect(weapon.weapon).not.toBeNull();
 		});
 
 		it("registers for location change events (no world)", () => {
@@ -69,12 +67,21 @@ describeComponent(MainWindow, () => {
 			const location = subject.querySelector(Location.tagName);
 			expect(location.mask).toBe(15);
 		});
+
+		it("stops the engine when closed", () => {
+			spyOn(engine.metronome, "stop");
+
+			subject.close();
+
+			expect(engine.metronome.stop).toHaveBeenCalled();
+		});
 	});
 
 	function mockEngine() {
 		class MockHero extends EventTarget {}
 
 		const hero = new MockHero();
+		const metronome = { stop() {} };
 
 		class MockEngine extends EventTarget {
 			triggerHealthChange(value) {
@@ -112,6 +119,10 @@ describeComponent(MainWindow, () => {
 
 			get hero() {
 				return hero;
+			}
+
+			get metronome() {
+				return metronome;
 			}
 		}
 

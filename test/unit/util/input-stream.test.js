@@ -146,6 +146,23 @@ describe("InputStream", () => {
 			let string = stream.getLengthPrefixedString();
 			expect(string).toBe("ASCII STRING");
 		});
+
+		it("getCStringWithLength reads a null terminated string consuming exactly n bytes", () => {
+			let string;
+			let stream = new InputStream(buffer);
+
+			stream.seek(0x12, Stream.SEEK.SET);
+			string = stream.getCStringWithLength(1);
+			expect(string).toBe("c");
+
+			stream.seek(0x12, Stream.SEEK.SET);
+			string = stream.getCStringWithLength(8);
+			expect(string).toBe("c-string");
+
+			stream.seek(0x12, Stream.SEEK.SET);
+			string = stream.getCStringWithLength(9);
+			expect(string).toBe("c-string");
+		});
 	});
 
 	describe("array reading", () => {

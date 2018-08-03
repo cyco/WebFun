@@ -4,6 +4,7 @@ describe("AbstractRenderer", () => {
 	it("is an abstract class used to define the interface a renderer must implement", () => {
 		const renderer = new AbstractRenderer();
 
+		expect(AbstractRenderer.isSupported()).toBeFalse();
 		expect(() => renderer.redisplayTile()).not.toThrow();
 		expect(() => renderer.redisplayRect()).not.toThrow();
 		expect(() => renderer.redisplay()).not.toThrow();

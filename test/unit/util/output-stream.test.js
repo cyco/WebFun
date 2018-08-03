@@ -6,6 +6,7 @@ describe("OutputStream", () => {
 	it("is a class used to write data", () => {
 		outputStream = new OutputStream(1);
 		expect(typeof outputStream.writeUint8).toBe("function");
+		expect(outputStream.buffer).toBeInstanceOf(ArrayBuffer);
 	});
 
 	it("defaults to using little endian", () => {
@@ -115,11 +116,24 @@ describe("OutputStream", () => {
 	});
 
 	it("has a function to write a length-prefixed string", () => {
-		outputStream = new OutputStream(7);
+		outputStream = new OutputStream(6);
 
 		outputStream.writeLengthPrefixedString("test");
 
 		expect(getByte(0)).toBe(0x04);
+		expect(getByte(1)).toBe(0x00);
+		expect(getByte(2)).toBe(0x74);
+		expect(getByte(3)).toBe(0x65);
+		expect(getByte(4)).toBe(0x73);
+		expect(getByte(5)).toBe(0x74);
+	});
+
+	it("has a function to write a length-prefixed string with null termiantor", () => {
+		outputStream = new OutputStream(7);
+
+		outputStream.writeLengthPrefixedNullTerminatedString("test");
+
+		expect(getByte(0)).toBe(0x05);
 		expect(getByte(1)).toBe(0x00);
 		expect(getByte(2)).toBe(0x74);
 		expect(getByte(3)).toBe(0x65);
@@ -139,6 +153,17 @@ describe("OutputStream", () => {
 		expect(getByte(1)).toBe(0x42);
 	});
 
+	it("has a function to write a signed byte array to the stream", () => {
+		outputStream = new OutputStream(2);
+		let array = new Int8Array(2);
+		array[0] = -1;
+		array[1] = 0x42;
+		outputStream.writeInt8Array(array);
+
+		expect(getByte(0)).toBe(0xff);
+		expect(getByte(1)).toBe(0x42);
+	});
+
 	it("has a function to write a word array to the stream", () => {
 		outputStream = new OutputStream(2);
 		let array = new Uint16Array(1);
@@ -147,6 +172,16 @@ describe("OutputStream", () => {
 
 		expect(getByte(0)).toBe(0x42);
 		expect(getByte(1)).toBe(0x23);
+	});
+
+	it("has a function to write a signed word array to the stream", () => {
+		outputStream = new OutputStream(2);
+		let array = new Int16Array(1);
+		array[0] = -1;
+		outputStream.writeInt16Array(array);
+
+		expect(getByte(0)).toBe(0xff);
+		expect(getByte(1)).toBe(0xff);
 	});
 
 	it("has a function to write a double word array to the stream", () => {
