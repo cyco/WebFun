@@ -1,4 +1,5 @@
-import Settings from "src/settings";
+import Settings, { loadSettings } from "src/settings";
+import * as DOM from "src/std.dom";
 
 describe("Settings", () => {
 	it("is a simple obejct", () => {

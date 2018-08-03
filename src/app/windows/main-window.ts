@@ -73,7 +73,7 @@ class MainWindow extends Window {
 		}
 
 		this._engine = e;
-		this._inventory.inventory = this._engine.inventory;
+		this._inventory.inventory = this._engine ? this._engine.inventory : null;
 
 		if (this._engine) {
 			this._engine.hero.addEventListener(
