@@ -17,7 +17,9 @@ class PaletteProvider {
 
 	provide(type: GameType): Promise<ColorPalette> {
 		const url = this.url.get(type);
-		return FileLoader.loadAsStream(url).then(stream => stream.getUint8Array(ColorPaletteSize));
+		return FileLoader.loadAsStream(url).then(
+			stream => stream.getUint8Array(ColorPaletteSize) as ColorPalette
+		);
 	}
 }
 

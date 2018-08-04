@@ -63,7 +63,7 @@ class Loader extends EventTarget {
 		loader.onfail = reason => this._fail(reason);
 		loader.onload = ({ detail: { arraybuffer } }) => {
 			const palette = new Uint8Array(arraybuffer);
-			this._imageFactory.palette = palette;
+			this._imageFactory.palette = palette as ColorPalette;
 			this._palette = palette;
 			this._loadSetupImage(palette);
 		};

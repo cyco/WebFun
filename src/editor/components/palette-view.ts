@@ -51,8 +51,6 @@ class PaletteView extends Component {
 		this._size = s;
 		this._canvas.width = s.width;
 		this._canvas.height = s.height;
-		this._canvas.style.width = `${s.width + 2}px`;
-		this._canvas.style.height = `${s.height + 2}px`;
 	}
 
 	get size() {

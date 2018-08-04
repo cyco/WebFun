@@ -1,10 +1,12 @@
 import AbstractInspector from "./abstract-inspector";
 import { ColorPicker, PaletteView } from "../components";
-import { Color, Point, Size } from "src/util";
+import { IconButton } from "src/ui/components";
+import { Color, Point, Size, download } from "src/util";
 
 class PaletteInspector extends AbstractInspector {
 	private _paletteView: PaletteView = <PaletteView>document.createElement(PaletteView.tagName);
 	private _colorPicker: ColorPicker = <ColorPicker>document.createElement(ColorPicker.tagName);
+	private _download: IconButton = <IconButton>document.createElement(IconButton.tagName);
 	private _paletteEntrySize = new Size(192 / 16, 192 / 16);
 
 	constructor(state: Storage) {
@@ -30,6 +32,11 @@ class PaletteInspector extends AbstractInspector {
 		this._colorPicker.style.marginTop = "10px";
 		this._colorPicker.color = state.load("color") || "rgb(0, 255, 0)";
 		this.window.content.appendChild(this._colorPicker);
+
+		this._download.icon = "download";
+		this._download.onclick = () =>
+			download(this._paletteView.palette.toGIMP("Yoda Stories"), "Yoda Stories.gpl");
+		(this.window as any)._titlebar.addButton(this._download);
 	}
 
 	private _onPaletteClick(event: MouseEvent) {

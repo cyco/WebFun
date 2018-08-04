@@ -44,6 +44,19 @@ interface HTMLCollection {
 	indexOf(_: Node): number;
 }
 
+interface Image {
+	toImageData(): ImageData;
+}
+
+interface HTMLImageElement {
+	toImageData(): ImageData;
+}
+
+interface Uint8Array {
+	findColor(r: number, g: number, b: number, a?: number): number;
+	toGIMP(name: string): string;
+}
+
 declare interface Component extends HTMLElement {}
 
 declare namespace JSX {
