@@ -14,6 +14,7 @@ class PaletteView extends Component {
 	private _ctx: CanvasRenderingContext2D = null;
 	private _size: Size;
 	private highlighter: HTMLElement = document.createElement("div");
+	private _imageData: ImageData;
 
 	protected connectedCallback() {
 		this.appendChild(this._canvas);
@@ -29,8 +30,16 @@ class PaletteView extends Component {
 
 		const imageFactory = new ImageFactory();
 		imageFactory.palette = this.palette;
-		const image = imageFactory.createImageData(this._size.width, this._size.height, this.image);
-		this._ctx.putImageData(image, 0, 0);
+		this._imageData = imageFactory.createImageData(
+			this._size.width,
+			this._size.height,
+			this.image
+		);
+		this._ctx.putImageData(this._imageData, 0, 0);
+	}
+
+	public get renderedImage() {
+		return this._imageData;
 	}
 
 	public moveHighlighterTo(point: Point) {
@@ -42,6 +51,8 @@ class PaletteView extends Component {
 		this._size = s;
 		this._canvas.width = s.width;
 		this._canvas.height = s.height;
+		this._canvas.style.width = `${s.width + 2}px`;
+		this._canvas.style.height = `${s.height + 2}px`;
 	}
 
 	get size() {

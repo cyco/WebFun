@@ -37,6 +37,7 @@ import Scanner from "./scanner";
 import iterate from "./iterate";
 import PromiseProxy from "./promise-proxy";
 import PromiseProgress from "./promise-progress";
+import downloadImage from "./download-image";
 
 export {
 	PromiseProgress,
@@ -58,6 +59,7 @@ export {
 	KeyEvent,
 	Logger,
 	LogLevel,
+	downloadImage,
 	OutputStream,
 	persistent,
 	Point,
