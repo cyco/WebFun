@@ -1,9 +1,10 @@
 import AbstractInspector from "./abstract-inspector";
 import { PaletteView } from "../components";
-import { Size } from "src/util";
+import { Size, downloadImage } from "src/util";
+import { Button } from "src/ui/components";
 
 class SetupImageInspector extends AbstractInspector {
-	private _paletteView: PaletteView = <PaletteView>document.createElement(PaletteView.tagName);
+	private _paletteView: PaletteView = document.createElement(PaletteView.tagName) as PaletteView;
 
 	constructor(state: Storage) {
 		super(state);
@@ -11,13 +12,21 @@ class SetupImageInspector extends AbstractInspector {
 		this.window.title = "Setup Image";
 		this.window.autosaveName = "setup-image-inspector";
 		this.window.style.width = "288px";
-		this.window.content.style.height = "288px";
-		this.window.content.style.flexDirection = "row";
+		this.window.content.style.height = "338px";
+		this.window.content.style.flexDirection = "column";
 
 		this._paletteView.size = new Size(288, 288);
-		this._paletteView.style.width = "288px";
-		this._paletteView.style.height = "288px";
 		this.window.content.appendChild(this._paletteView);
+
+		this.window.content.appendChild(
+			<div>
+				<Button label="Download" onclick={() => this.saveImage()} />
+			</div>
+		);
+	}
+
+	public saveImage() {
+		downloadImage(this._paletteView.renderedImage, "setup-image.png", "png");
 	}
 
 	build() {

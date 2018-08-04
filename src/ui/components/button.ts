@@ -3,7 +3,7 @@ import IconButton from "./icon-button";
 
 class Button extends IconButton {
 	public static tagName = "wf-button";
-	public static observedAttributes = ["label"];
+	public static observedAttributes = ["icon", "label"];
 
 	private _label: HTMLSpanElement;
 
@@ -34,6 +34,14 @@ class Button extends IconButton {
 		}
 
 		super.attributeChangedCallback(attrName, newValue, oldValue);
+	}
+
+	set label(l: string) {
+		this.setAttribute("label", l);
+	}
+
+	get label(): string {
+		return this.getAttribute("label");
 	}
 }
 

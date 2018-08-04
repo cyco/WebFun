@@ -1,4 +1,8 @@
-const download = (content: ArrayBuffer, filename: string, type: string = "application/octet-stream") => {
+const download = (
+	content: ArrayBuffer | Uint8ClampedArray,
+	filename: string,
+	type: string = "application/octet-stream"
+) => {
 	const decoder = new (<any>window).TextDecoder("ascii");
 
 	const downloadLink = document.createElement("a");
