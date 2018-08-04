@@ -13,8 +13,8 @@ class Window extends Component {
 	public static tagName = "wf-window";
 	public static readonly Event = Event;
 	public manager: WindowManager;
-	private _autosaveName: string;
-	private _titlebar: WindowTitlebar;
+	protected _autosaveName: string;
+	protected _titlebar: WindowTitlebar;
 	private _content: HTMLElement;
 	private _x: number = 0;
 	private _y: number = 0;
@@ -174,6 +174,10 @@ class Window extends Component {
 
 	private get stateKey(): string {
 		return `window-state.${this._autosaveName}`;
+	}
+
+	addTitlebarButton(element: HTMLElement) {
+		this._titlebar.addButton(element);
 	}
 }
 

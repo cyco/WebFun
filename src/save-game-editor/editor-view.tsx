@@ -189,6 +189,14 @@ class EditorView extends Component {
 			}
 		]);
 	}
+
+	get saveGame(): SaveState {
+		return this._state;
+	}
+
+	get data(): GameData {
+		return this._gameData;
+	}
 }
 
 export default EditorView;
