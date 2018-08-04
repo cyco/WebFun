@@ -33,7 +33,13 @@ class ZoneView extends Component implements EventListenerObject {
 	}
 
 	private redraw() {
+		const ctx = this._canvas.getContext("2d");
 		const zone = this._zone;
+		if (!zone) {
+			ctx.clearRect(0, 0, 576, 576);
+			return;
+		}
+
 		const TileWidth = Tile.WIDTH;
 		const TileHeight = Tile.HEIGHT;
 		const PreviewHeight = this.size.height;
@@ -47,7 +53,6 @@ class ZoneView extends Component implements EventListenerObject {
 		this.style.height = `${PreviewHeight}px`;
 
 		const image = this.buildImageData(zone, this.palette);
-		const ctx = this._canvas.getContext("2d");
 		ctx.clearRect(0, 0, zone.size.width * TileWidth, zone.size.height * TileHeight);
 		ctx.putImageData(image, 0, 0);
 	}
