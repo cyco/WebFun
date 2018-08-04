@@ -5,6 +5,7 @@ import "./menu-window.scss";
 
 class MenuWindow extends MenuView {
 	public static tagName = "wf-menu-window";
+	protected stack: MenuStack = null;
 
 	show(location: Point | Element, stack = MenuStack.sharedStack) {
 		let minWidth: number = null;
@@ -32,6 +33,12 @@ class MenuWindow extends MenuView {
 		}
 
 		stack.push(this);
+		this.stack = stack;
+	}
+
+	close() {
+		super.close();
+		this.stack = null;
 	}
 }
 

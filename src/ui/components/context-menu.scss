@@ -1,0 +1,6 @@
+@import "./menu-window.scss";
+
+wf-context-menu {
+	@extend wf-menu-window;
+	border-radius: 2px;
+}

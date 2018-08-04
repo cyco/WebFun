@@ -14,6 +14,10 @@ import { InputStream, FileLoader } from "src/util";
 import { WindowManager, ComponentJSXRenderer } from "src/ui";
 import { Yoda } from "src/engine/type";
 import EditorWindow from "src/editor/editor-window";
+import { Point } from "src/util";
+import { Window } from "src/ui/components";
+import { Menu, MenuItemInit, MenuItemSeparator } from "src/ui";
+import { ContextMenu } from "src/ui/components";
 
 declare global {
 	interface Window {
@@ -23,9 +27,9 @@ declare global {
 
 const main = async () => {
 	window.WebFunJSX = new ComponentJSXRenderer();
-	ComponentRegistry.sharedRegistry.registerComponents(<any>Components);
-	ComponentRegistry.sharedRegistry.registerComponents(<any>AppComponents);
-	ComponentRegistry.sharedRegistry.registerComponents(<any>WindowComponents);
+	ComponentRegistry.sharedRegistry.registerComponents(Components as any);
+	ComponentRegistry.sharedRegistry.registerComponents(AppComponents as any);
+	ComponentRegistry.sharedRegistry.registerComponents(WindowComponents as any);
 
 	loadSettings();
 
