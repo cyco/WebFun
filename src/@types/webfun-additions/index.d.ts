@@ -52,6 +52,10 @@ interface HTMLImageElement {
 	toImageData(): ImageData;
 }
 
+interface ImageData {
+	toImage(): HTMLImageElement;
+}
+
 interface Uint8Array {
 	findColor(r: number, g: number, b: number, a?: number): number;
 	toGIMP(name: string): string;

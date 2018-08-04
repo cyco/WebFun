@@ -108,6 +108,7 @@ class EditorView extends Component {
 					palette={this._palette}
 					tileSheet={this._tileSheet}
 					locatorTile={state.type.locatorTile}
+					reveal={true}
 				/>
 
 				{state.type === GameTypeYoda && (
@@ -120,6 +121,7 @@ class EditorView extends Component {
 						palette={this._palette}
 						tileSheet={this._tileSheet}
 						locatorTile={state.type.locatorTile}
+						reveal={true}
 					/>
 				)}
 

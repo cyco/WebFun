@@ -12,6 +12,7 @@ export const {
 	ImageData,
 	HTMLElement,
 	HTMLCollection,
+	HTMLImageElement,
 	Event,
 	File,
 	FileReader,

@@ -19,6 +19,7 @@ class Map extends Component {
 	public tileSheet: CSSTileSheet;
 	public location: Point;
 	public locatorTile: LocatorTile;
+	public reveal: boolean = false;
 
 	private _canvas: HTMLCanvasElement = ((
 		<canvas width={280} height={280} className="pixelated" />
@@ -112,7 +113,7 @@ class Map extends Component {
 	}
 
 	private _tileForWorldItem({ visited, solved_1, zoneId }: WorldItem): Tile {
-		let tile = this.locatorTile.forZone(this.zones[zoneId], visited);
+		let tile = this.locatorTile.forZone(this.zones[zoneId], visited, this.reveal);
 		if (!tile) return null;
 		if (tile instanceof Array) tile = tile[solved_1 ? 1 : 0];
 
