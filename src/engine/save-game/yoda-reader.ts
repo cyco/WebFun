@@ -8,6 +8,7 @@ import { Planet, WorldSize } from "../types";
 import World from "./world";
 import WorldItem from "./world-item";
 import { Yoda } from "../type";
+import { floor } from "src/std.math";
 
 class YodaReader extends Reader {
 	constructor(stream: InputStream) {
@@ -44,18 +45,17 @@ class YodaReader extends Reader {
 		let blasterAmmo = stream.getInt16();
 		let blasterRifleAmmo = stream.getInt16();
 
-		let posXOnZone = stream.getUint32() / Tile.WIDTH;
-		let posYOnZone = stream.getUint32() / Tile.HEIGHT;
+		let posXOnZone = floor(stream.getUint32() / Tile.WIDTH);
+		let posYOnZone = floor(stream.getUint32() / Tile.HEIGHT);
 
 		let damageTaken = stream.getUint32();
 		let livesLeft = stream.getUint32();
 		let difficulty = stream.getUint32();
 		let time_elapsed = stream.getUint32();
 
-		let world_size = stream.getInt16();
+		let world_size = stream.getInt32();
 		let unknown_count = stream.getInt16();
 		let unknown_sum = stream.getInt16();
-		let unknown_thing = stream.getInt16();
 
 		let goalPuzzle = stream.getUint32();
 		let goalPuzzleAgain = stream.getUint32();
@@ -94,7 +94,6 @@ class YodaReader extends Reader {
 		state.difficulty = difficulty;
 		state.unknownCount = unknown_count;
 		state.unknownSum = unknown_sum;
-		state.unknownThing = unknown_thing;
 
 		return state;
 	}
@@ -116,7 +115,7 @@ class YodaReader extends Reader {
 		let field_16 = stream.getInt16();
 		let npc_id = stream.getInt16();
 
-		let unknown_1 = stream.getInt32();
+		let zoneType = stream.getInt32();
 		let unknown_2 = stream.getInt16();
 
 		const worldItem = new WorldItem();
@@ -133,6 +132,7 @@ class YodaReader extends Reader {
 		worldItem.additionalRequiredItem = additionalRequiredItem;
 		worldItem.field_16 = field_16;
 		worldItem.npc_id = npc_id;
+		worldItem.zoneType = zoneType;
 
 		return worldItem;
 	}

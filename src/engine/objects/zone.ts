@@ -40,7 +40,7 @@ class Zone {
 	protected _izx4Unknown: number;
 	protected _izaxUnknown: number;
 	protected _actions: Action[] = [];
-	public doorInLocation: Point;
+	public doorInLocation: Point = new Point(0, 0);
 
 	get doors(): Hotspot[] {
 		return this._hotspots.filter(

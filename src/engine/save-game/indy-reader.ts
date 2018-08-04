@@ -78,7 +78,6 @@ class IndyReader extends Reader {
 		state.difficulty = difficulty;
 		state.unknownCount = unknown_count;
 		state.unknownSum = unknown_sum;
-		state.unknownThing = unknown_thing;
 		*/
 
 		return state;
