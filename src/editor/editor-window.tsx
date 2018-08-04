@@ -31,6 +31,7 @@ class EditorWindow extends Window {
 	title: string = "Resource Editor";
 	private _progressIndicator: HTMLElement = <ProgressIndicator />;
 	private _editorView: HTMLElement = <div /> as HTMLElement;
+	private _editor: EditorView = null;
 
 	protected connectedCallback() {
 		super.connectedCallback();
@@ -69,6 +70,7 @@ class EditorWindow extends Window {
 		this._showMenu(editor);
 		this.content.textContent = "";
 		this.content.appendChild(editor);
+		this._editor = editor;
 	}
 
 	private _gotoFullscreen() {
@@ -85,6 +87,10 @@ class EditorWindow extends Window {
 		const menuItems = buildEditorMenu(editor, this);
 		menuItems.push(new WindowMenuItem(editor.windowManager));
 		this.menu = new Menu(menuItems);
+	}
+
+	public get editor() {
+		return this._editor;
 	}
 }
 
