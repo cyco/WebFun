@@ -1,4 +1,4 @@
-import { Action, Hotspot, HotspotType, NPC, Zone } from "src/engine/objects";
+import { Action, Hotspot, HotspotType, NPC, Zone, Tile } from "src/engine/objects";
 import { OutputStream } from "src/util";
 import GameData from "../game-data";
 import SaveState from "./save-state";
@@ -28,7 +28,7 @@ class Writer {
 		this._writeDagobah(state.dagobah, stream);
 		this._writeWorld(state.world, stream);
 
-		stream.writeInt16(state.inventoryIDs.length);
+		stream.writeInt32(state.inventoryIDs.length);
 		stream.writeInt16Array(state.inventoryIDs);
 
 		stream.writeInt16(state.currentZoneID);
@@ -45,8 +45,8 @@ class Writer {
 		stream.writeInt16(state.blasterAmmo);
 		stream.writeInt16(state.blasterRifleAmmo);
 
-		stream.writeUint32(state.positionOnZone.x);
-		stream.writeUint32(state.positionOnZone.y);
+		stream.writeUint32(state.positionOnZone.x * Tile.WIDTH);
+		stream.writeUint32(state.positionOnZone.y * Tile.HEIGHT);
 
 		stream.writeUint32(state.damageTaken);
 		stream.writeUint32(state.livesLeft);
@@ -58,7 +58,6 @@ class Writer {
 
 		stream.writeInt16(state.unknownCount);
 		stream.writeInt16(state.unknownSum);
-		// stream.writeInt16(state.unknownThing);
 
 		stream.writeUint32(state.goalPuzzle);
 		stream.writeUint32(state.goalPuzzle);
@@ -166,7 +165,7 @@ class Writer {
 		for (let y = 0; y < world.size.height; y++) {
 			for (let x = 0; x < world.size.width; x++) {
 				const item = world.getWorldItem(x, y);
-				if (!item || item.zoneId === -1) continue;
+				if (!item || item.zoneId === -1 || item.zoneId === undefined) continue;
 
 				stream.writeInt32(x);
 				stream.writeInt32(y);
@@ -200,7 +199,7 @@ class Writer {
 		stream.writeInt16(item.npc_id);
 
 		// TODO: fix unknown values
-		stream.writeInt32(0);
+		stream.writeInt32(item.zoneType);
 		stream.writeInt16(0);
 	}
 }

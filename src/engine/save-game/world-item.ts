@@ -12,6 +12,7 @@ class WorldItem {
 	additionalRequiredItem: number;
 	field_16: number;
 	npc_id: number;
+	zoneType: number;
 }
 
 export default WorldItem;
