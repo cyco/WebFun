@@ -1,0 +1,9 @@
+wf-save-game-editor-canvas {
+	position: relative;
+	display: inline-block;
+
+	> canvas {
+		width: 100%;
+		left: 100%;
+	}
+}

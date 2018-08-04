@@ -30,6 +30,10 @@ class World {
 
 		return p.y * 10 + p.x;
 	}
+
+	public map<T>(callback: (_: WorldItem, idx: number) => T) {
+		return this._world.map(callback);
+	}
 }
 
 export default World;

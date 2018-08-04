@@ -12,11 +12,14 @@ export default class extends LocatorTile {
 		return rgb(79, 79, 15);
 	}
 
-	forZone(zone: Zone, visited?: boolean): number | [number] | [number, number] {
+	forZone(
+		zone: Zone,
+		visited?: boolean,
+		reveal: boolean = false
+	): number | [number] | [number, number] {
 		if (!zone) return -1;
 
-		if (visited === false || (visited === undefined && !zone.visited && !Settings.revealWorld))
-			return 1138;
+		if (!reveal && (visited === false || (visited === undefined && !zone.visited))) return 1138;
 
 		switch (zone.type) {
 			case ZoneType.Empty:

@@ -1,0 +1,11 @@
+wf-save-game-editor-world-view {
+	display: block;
+	position: relative;
+	overflow: scroll;
+
+	> * {
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+}

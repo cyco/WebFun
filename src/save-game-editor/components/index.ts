@@ -6,6 +6,8 @@ import InteractiveHealth from "./interactive-health";
 import Inventory from "./inventory";
 import InteractiveMap from "./interactive-map";
 import ZoneView from "./zone-view";
+import WorldView from "./world-view";
+import TransformCanvas from "./transform-canvas";
 
 export {
 	ZoneView,
@@ -15,5 +17,7 @@ export {
 	InventoryRow,
 	Map,
 	InteractiveHealth,
-	Inventory
+	Inventory,
+	WorldView,
+	TransformCanvas
 };
