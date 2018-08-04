@@ -6,9 +6,11 @@ interface ColorPalette extends Uint8Array {
 }
 
 function findColor(r: number, g: number, b: number, a: number = 255): number {
+	if (a == 0) return 0;
+
 	for (let i = 0; i < this.length; i += 4) {
-		if (r === this[i + 0] && g === this[i + 1] && b === this[i + 2] && a === this[i + 3]) {
-			return floor(i / 3);
+		if (r === this[i + 2] && g === this[i + 1] && b === this[i + 0] && (a === 255 && i != 0)) {
+			return floor(i / 4);
 		}
 	}
 
@@ -22,7 +24,6 @@ function toGIMP(name: string): string {
 	out += `Name: ${name}` + "\n";
 	out += `#` + "\n";
 
-	console.log("size: ", this.length);
 	for (let i = 0; i < this.length; i += 4) {
 		out +=
 			`${this[i + 2]} ${this[i + 1]} ${this[i + 0]}${i === 0 ? " transparent" : ""}` + "\n";
