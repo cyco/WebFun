@@ -3,7 +3,6 @@
 
 wf-menubar {
 	@extend wf-menu-view;
-
 	margin-left: 16px;
 	margin-right: 16px;
 	height: 22px;
@@ -12,12 +11,12 @@ wf-menubar {
 	top: 2px;
 	display: block;
 	pointer-events: none;
-	border: 0px;
+	border: 0;
 
 	> wf-menu-item {
 		display: inline-block;
-		border-width: 0px;
-		padding: 1px 5px 1px 5px;
+		border-width: 0;
+		padding: 1px 5px;
 		margin-left: 1px;
 		pointer-events: all;
 
@@ -25,11 +24,11 @@ wf-menubar {
 			margin-left: 4px;
 		}
 
-		&.open {
+		&[active],
+		&[open] {
 			@include inset-border(1px);
-
 			cursor: default;
-			padding: 0px 4px 0px 4px;
+			padding: 0 4px;
 		}
 
 		.state,

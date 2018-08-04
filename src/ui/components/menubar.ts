@@ -3,6 +3,7 @@ import { ModalSession } from "src/ux";
 import MenuStack from "../menu-stack";
 import MenuView from "./menu-view";
 import MenuWindow from "./menu-window";
+import MenuItem from "./menu-item";
 import "./menubar.scss";
 
 class Menubar extends MenuView {
@@ -15,8 +16,6 @@ class Menubar extends MenuView {
 
 	protected connectedCallback() {
 		super.connectedCallback();
-
-		this.classList.add("menubar");
 		this.onmousedown = (e: MouseEvent) => this.startMouseHandling(e);
 	}
 
@@ -38,7 +37,8 @@ class Menubar extends MenuView {
 			window.removeEventListener("mouseup", this._mouseDownHandler);
 			this._mouseDownHandler = null;
 
-			this.querySelector(".open").classList.remove("open");
+			const openItem = this.querySelector("[open]");
+			if (openItem) openItem.removeAttribute("open");
 			MenuStack.sharedStack.clear();
 		};
 		this._modalSession = modalSession;
@@ -70,9 +70,27 @@ class Menubar extends MenuView {
 		if (idx === -1) return;
 
 		const itemNode = this.children[idx];
+		this._currentItem = -1;
 
-		itemNode.classList.remove("open");
+		itemNode.removeAttribute("open");
 		MenuStack.sharedStack.clear();
+	}
+
+	handleEvent(e: MouseEvent) {
+		if (e.type === "mouseup") {
+			const node = (e.target as Element).closest(MenuItem.tagName) as MenuItem;
+			if (!node) return;
+			const item = node.item;
+			if (!item || !item.enabled) return;
+
+			this._closeMenuForItem(this._currentItem);
+			this._modalSession.end(0);
+
+			if (item.callback) item.callback();
+
+			e.preventDefault();
+			e.stopPropagation();
+		}
 	}
 
 	_showMenuForItem(idx: number): void {
@@ -80,7 +98,7 @@ class Menubar extends MenuView {
 
 		const itemNode = this.children[idx];
 		const menuItem = this.menu.items[idx];
-		itemNode.classList.add("open");
+		itemNode.setAttribute("open", "");
 
 		if (!menuItem || !menuItem.submenu) {
 			this._currentItem = -1;
@@ -90,6 +108,7 @@ class Menubar extends MenuView {
 		const menuWindow = <MenuWindow>document.createElement(MenuWindow.tagName);
 		menuWindow.menu = menuItem.submenu;
 		menuWindow.show(itemNode);
+		menuWindow.addEventListener("mouseup", this);
 
 		this._currentItem = idx;
 	}

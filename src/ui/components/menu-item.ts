@@ -2,6 +2,7 @@ import MenuItem from "src/ui/menu-item";
 import Component from "../component";
 import "./menu-item.scss";
 import MenuItemState from "src/ui/menu-item-state";
+import MenuView from "./menu-view";
 
 class MenuItemComponent extends Component {
 	public static tagName: string = "wf-menu-item";
@@ -42,8 +43,6 @@ class MenuItemComponent extends Component {
 		const enabled = this.evaluate<boolean>(item.enabled, true);
 		if (enabled) this.removeAttribute("disabled");
 		else this.setAttribute("disabled", "");
-
-		if (enabled && item.callback) this.onmouseup = () => item.callback();
 
 		const title = this.buildTitle(item.title, item.mnemonic);
 		title.classList.add("title");

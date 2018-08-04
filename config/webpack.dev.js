@@ -7,7 +7,7 @@ const BaseConfig = require("./webpack.common");
 
 module.exports = merge(BaseConfig, {
 	entry: {
-		webfun: Path.resolve(Paths.sourceRoot, "app/main.ts")
+		webfun: Path.resolve(Paths.sourceRoot, "app/main")
 	},
 	devtool: "inline-source-map",
 	mode: "development",

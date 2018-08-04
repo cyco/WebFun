@@ -1,6 +1,6 @@
 import { Window, List, Segment, SegmentControl } from "src/ui/components";
 import { SaveGameReader } from "src/engine/save-game";
-import { InputStream } from "src/util";
+import { InputStream, Point } from "src/util";
 import DataManager from "src/editor/data-manager";
 import { Planet, WorldSize } from "src/engine/types";
 import {
@@ -16,10 +16,13 @@ import { Tile, PuzzleType } from "src/engine/objects";
 import { Yoda, GameData, ColorPalette } from "src/engine";
 import { File } from "src/std.dom";
 import { Reader as SaveGameReaderFactory, SaveState } from "src/engine/save-game";
-import { Component } from "src/ui";
+import { Menu, Component } from "src/ui";
 import { CSSTileSheet } from "src/editor";
 import { ImageFactory } from "src/engine/rendering/canvas";
+
 import { Yoda as GameTypeYoda } from "src/engine/type";
+import WorldItem from "./world-item";
+import { World } from "src/engine/save-game";
 
 import "./editor-view.scss";
 
@@ -109,6 +112,7 @@ class EditorView extends Component {
 					tileSheet={this._tileSheet}
 					locatorTile={state.type.locatorTile}
 					reveal={true}
+					contextMenuProvider={this}
 				/>
 
 				{state.type === GameTypeYoda && (
@@ -122,6 +126,7 @@ class EditorView extends Component {
 						tileSheet={this._tileSheet}
 						locatorTile={state.type.locatorTile}
 						reveal={true}
+						contextMenuProvider={this}
 					/>
 				)}
 
@@ -157,6 +162,32 @@ class EditorView extends Component {
 				<AmmoControl vertical value={value} />
 			</div>
 		);
+	}
+
+	contextMenuForWorldItem(item: WorldItem, at: Point, i: World, of: Map): Menu {
+		if (item.zoneId === undefined || item.zoneId === -1) return null;
+
+		return new Menu([
+			{
+				title: "Clear",
+				callback: () => {
+					item.field_16 = -1;
+					item.field_C = -1;
+					item.field_Ea = -1;
+					item.find_item_id = -1;
+					item.npc_id = -1;
+					item.required_item_id = -1;
+					item.solved_1 = 0;
+					item.solved_2 = 0;
+					item.solved_3 = 0;
+					item.solved_4 = 0;
+					item.visited = false;
+					item.zoneId = -1;
+
+					of.redraw();
+				}
+			}
+		]);
 	}
 }
 

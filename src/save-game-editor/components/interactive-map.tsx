@@ -1,12 +1,21 @@
 import Map from "./map";
 import { Point } from "src/util";
 import ZoneView from "./zone-view";
+import { Menu, MenuItemInit } from "src/ui";
+import { MenuWindow, ContextMenu } from "src/ui/components";
+import WorldItem from "../world-item";
+import { World } from "src/engine/save-game";
 import "./interactive-map.scss";
+
+interface MapContextMenuProvider {
+	contextMenuForWorldItem(item: WorldItem, at: Point, i: World, of: Map): Menu;
+}
 
 class InteractiveMap extends Map implements EventListenerObject {
 	public static readonly tagName = "wf-resource-editor-map-interactive";
 	private _highlight: ZoneView = <ZoneView /> as ZoneView;
 	private _highlightTile: Point = null;
+	public contextMenuProvider: MapContextMenuProvider;
 
 	protected connectedCallback() {
 		super.connectedCallback();
@@ -17,6 +26,7 @@ class InteractiveMap extends Map implements EventListenerObject {
 
 		this.addEventListener("mousemove", this);
 		this.addEventListener("mouseleave", this);
+		this.addEventListener("contextmenu", this);
 	}
 
 	public handleEvent(event: MouseEvent) {
@@ -24,11 +34,43 @@ class InteractiveMap extends Map implements EventListenerObject {
 		const y = event.offsetY;
 
 		let tile = this.tileAtPoint(new Point(x, y));
+		if (event.type === "contextmenu") {
+			const { top, left } = this.getBoundingClientRect();
+			this._showMenuForTile(tile, new Point(x + left, y + top));
+			event.preventDefault();
+			event.stopPropagation();
+			return;
+		}
+
 		if (event.type === "mouseleave" || !this.world.bounds.contains(tile)) {
 			tile = null;
 		}
 
 		this.highlightTile = tile;
+	}
+
+	private _showMenuForTile(tile: Point, raw: Point) {
+		const worldItem = this.world.getWorldItem(tile.x, tile.y);
+		if (!this.contextMenuProvider) return;
+		const menu = this.contextMenuProvider.contextMenuForWorldItem(
+			worldItem,
+			tile,
+			this.world,
+			this
+		);
+		if (!menu || menu.items.length === 0) return;
+
+		this.highlightTile = null;
+		this.removeEventListener("mousemove", this);
+		this.removeEventListener("mouseleave", this);
+
+		const menuNode = document.createElement(ContextMenu.tagName) as ContextMenu;
+		menuNode.menu = menu;
+		menuNode.onclose = () => {
+			this.addEventListener("mousemove", this);
+			this.addEventListener("mouseleave", this);
+		};
+		menuNode.show(raw);
 	}
 
 	protected disconnectedCallback() {

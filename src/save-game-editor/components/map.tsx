@@ -123,6 +123,10 @@ class Map extends Component {
 	protected tileAtPoint(point: Point): Point {
 		return point.dividedBy({ width: TileSize, height: TileSize }).byFlooring();
 	}
+
+	public redraw() {
+		this._drawWorld();
+	}
 }
 
 export default Map;
