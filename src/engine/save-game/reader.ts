@@ -130,7 +130,6 @@ abstract class Reader {
 		let count = this.readInt(stream);
 		if (count < 0) return;
 		if (count !== zone.hotspots.length) {
-			console.warn(`change hotspots from ${zone.hotspots.length} to ${count}`);
 			zone.hotspots = Array.Repeat(new Hotspot(), count);
 		}
 		zone.hotspots = zone.hotspots.map(htsp => this.readHotspot(stream, htsp));
