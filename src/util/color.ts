@@ -15,17 +15,17 @@ const hsv2rgb = (h: number, s: number, v: number): number[] => {
 	const hm = h % 60;
 	switch (Math.floor(h / 60)) {
 		case 0:
-			return rgbf2rgbi(v, vb * h / 60 + b, b);
+			return rgbf2rgbi(v, (vb * h) / 60 + b, b);
 		case 1:
-			return rgbf2rgbi(vb * (60 - hm) / 60 + b, v, b);
+			return rgbf2rgbi((vb * (60 - hm)) / 60 + b, v, b);
 		case 2:
-			return rgbf2rgbi(b, v, vb * hm / 60 + b);
+			return rgbf2rgbi(b, v, (vb * hm) / 60 + b);
 		case 3:
-			return rgbf2rgbi(b, vb * (60 - hm) / 60 + b, v);
+			return rgbf2rgbi(b, (vb * (60 - hm)) / 60 + b, v);
 		case 4:
-			return rgbf2rgbi(vb * hm / 60 + b, b, v);
+			return rgbf2rgbi((vb * hm) / 60 + b, b, v);
 		case 5:
-			return rgbf2rgbi(v, b, vb * (60 - hm) / 60 + b);
+			return rgbf2rgbi(v, b, (vb * (60 - hm)) / 60 + b);
 	}
 };
 
@@ -66,6 +66,10 @@ class Color {
 
 		if (red instanceof Color) {
 			[red, green, blue, alpha] = red.rgbaComponents;
+		}
+
+		if (red === null) {
+			[red, green, blue, alpha] = [0, 0, 0, 1];
 		}
 
 		this._red = <number>red;

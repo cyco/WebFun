@@ -12,14 +12,13 @@ class SetupImageInspector extends AbstractInspector {
 
 		this.window.title = "Setup Image";
 		this.window.autosaveName = "setup-image-inspector";
-		this.window.style.width = "288px";
+		this.window.style.width = "290px";
 		this.window.content.style.height = "338px";
 		this.window.content.style.flexDirection = "column";
 
 		this._paletteView.size = new Size(288, 288);
-		(this._paletteView as any)._canvas.style.width = `${288 + 2}px`;
-		(this._paletteView as any)._canvas.style.height = `${288 + 2}px`;
-
+		this._paletteView.style.width = "288px";
+		this._paletteView.style.height = "288px";
 		this.window.content.appendChild(this._paletteView);
 
 		this.window.content.appendChild(

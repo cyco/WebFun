@@ -204,7 +204,7 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 					if (id === null) return;
 
 					const newId = id.parseInt();
-					if (this._state.currentZoneID === item.zoneId) {
+					if (true || this._state.currentZoneID === item.zoneId) {
 						this._state.currentZoneID = newId;
 					}
 					item.zoneId = newId;

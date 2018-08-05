@@ -156,7 +156,7 @@ const makeZone = (raw: any, idx: number, data: any) => {
 	zone.requiredItems = Array.from(raw.requiredItemIDs).map((id: number) => data._tiles[id]);
 	zone.providedItems = Array.from(raw.providedItemIDs).map((id: number) => data._tiles[id]);
 	zone.puzzleNPCs = Array.from(raw.puzzleNPCIDs).map((id: number) => data._tiles[id]);
-	zone.izaxUnknown = raw.unknown.length;
+	zone.izaxUnknown = raw.unknown;
 	zone.izx4Unknown = raw.unknown;
 
 	zone.actions = raw.actions.map((raw: any, i: number) => makeAction(raw, i, zone, data));
