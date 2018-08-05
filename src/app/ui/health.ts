@@ -1,5 +1,5 @@
 import { Component } from "src/ui";
-import { PI, cos, sin, min, max, floor, ceil } from "src/std.math";
+import { PI, cos, sin, min, max, floor } from "src/std.math";
 import "./health.scss";
 
 const HealthSVG =
