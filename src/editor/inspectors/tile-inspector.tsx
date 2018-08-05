@@ -1,5 +1,7 @@
 import AbstractInspector from "./abstract-inspector";
 import CSSTileSheet from "../css-tile-sheet";
+import { IconButton } from "src/ui/components";
+import { MutableTile } from "src/engine/mutable-objects";
 import "./tile-inspector.scss";
 
 class TileInspector extends AbstractInspector {
@@ -15,6 +17,7 @@ class TileInspector extends AbstractInspector {
 		this.window.style.width = "502px";
 		this.window.content.style.maxHeight = "300px";
 		this.window.content.style.flexDirection = "column";
+		this.window.addTitlebarButton(<IconButton icon="plus" onclick={() => this.addTile()} />);
 	}
 
 	private toggleBit(bit: number, cell: HTMLElement) {
@@ -62,6 +65,17 @@ class TileInspector extends AbstractInspector {
 			row.style.display = show ? "" : "none";
 		}
 		this.window.content.appendChild(table);
+	}
+
+	protected addTile() {
+		const tile = new MutableTile();
+		tile.id = this.data.currentData.tiles.length;
+		tile.imageData = new Uint8Array(MutableTile.WIDTH * MutableTile.HEIGHT);
+		tile.attributes = 0;
+		tile.name = "New Tile";
+
+		this.data.currentData.tiles.push(tile);
+		this.build();
 	}
 
 	build() {
