@@ -75,9 +75,11 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 					<label>Seed</label>
 					<input
 						value={state.seed.toHex(4)}
-						onchange={e =>
-							(this._state.seed = (e.target as HTMLInputElement).value.parseInt())
-						}
+						onchange={e => {
+							const input = e.target as HTMLInputElement;
+							this._state.seed = input.value.parseInt();
+							input.value = this._state.seed.toHex(4);
+						}}
 					/>
 				</span>
 
