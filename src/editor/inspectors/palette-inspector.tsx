@@ -4,9 +4,9 @@ import { IconButton } from "src/ui/components";
 import { Color, Point, Size, download } from "src/util";
 
 class PaletteInspector extends AbstractInspector {
-	private _paletteView: PaletteView = <PaletteView>document.createElement(PaletteView.tagName);
-	private _colorPicker: ColorPicker = <ColorPicker>document.createElement(ColorPicker.tagName);
-	private _download: IconButton = <IconButton>document.createElement(IconButton.tagName);
+	private _paletteView: PaletteView = document.createElement(PaletteView.tagName) as PaletteView;
+	private _colorPicker: ColorPicker = document.createElement(ColorPicker.tagName) as ColorPicker;
+	private _download: IconButton = document.createElement(IconButton.tagName) as IconButton;
 	private _paletteEntrySize = new Size(192 / 16, 192 / 16);
 
 	constructor(state: Storage) {
