@@ -1,5 +1,4 @@
 import { HotspotType, Zone, ZoneType } from "src/engine/objects";
-import Settings from "src/settings";
 import LocatorTile from "src/engine/types/locator-tile";
 import { rgb } from "src/util";
 
@@ -50,7 +49,7 @@ export default class extends LocatorTile {
 			case ZoneType.FindTheForce:
 				return [0x331, 0x332];
 			default:
-				throw new Error(`Invalid zone type ${zone.type} supplied`);
+				return 0x340;
 		}
 	}
 
