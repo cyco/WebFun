@@ -1,13 +1,16 @@
-import { Panel } from "src/ui/components";
+import { Panel, Button } from "src/ui/components";
 import PaletteImageEditor from "../palette-image-editor";
 import PaletteColorPicker from "../palette-color-picker";
 import { ColorPalette } from "src/engine/rendering";
-import { Size, rgba } from "src/util";
+import { Size, rgba, downloadImage } from "src/util";
+import { FilePicker } from "src/ui";
+import { MutableTile } from "src/engine/mutable-objects";
 import "./editor.scss";
 
 class Editor extends Panel {
 	static tagName = "wf-editor-tile-editor";
 	public title = "Tile Editor";
+	public tile: MutableTile;
 	private _imageEditor = (
 		<PaletteImageEditor size={new Size(32, 32)} style={{ width: "128px", height: "128px" }} />
 	) as PaletteImageEditor;
@@ -28,6 +31,45 @@ class Editor extends Panel {
 				{this._colorPicker}
 			</div>
 		);
+		this.content.appendChild(
+			<div>
+				<Button label="Read from file" onclick={() => this.loadImageFromFile()} />
+				<Button label="Download" onclick={() => this.downloadImage()} />
+			</div>
+		);
+	}
+
+	private downloadImage() {
+		const imageName = `Tile ${this.tile.id}.png`;
+		downloadImage(this._imageEditor.renderedImage, imageName);
+	}
+
+	private async loadImageFromFile() {
+		const [imageFile] = await FilePicker.Pick();
+		const image = await imageFile.readAsImage();
+		document.body.appendChild(image as HTMLImageElement);
+		const imageData = image.toImageData();
+
+		const size = imageData.width * imageData.height;
+		const pixels = new Uint8Array(size);
+		const palette = this._imageEditor.palette;
+
+		for (let i = 0; i < size; i++) {
+			const j = i * 4;
+			const [r, g, b, a] = [
+				imageData.data[j + 0],
+				imageData.data[j + 1],
+				imageData.data[j + 2],
+				imageData.data[j + 3]
+			];
+
+			const color = palette.findColor(r, g, b, a);
+			pixels[i] = color;
+		}
+
+		this._imageEditor.image = pixels;
+		this.tile.imageData = pixels;
+		this._imageEditor.redraw();
 	}
 
 	set pixels(p: Uint8Array) {

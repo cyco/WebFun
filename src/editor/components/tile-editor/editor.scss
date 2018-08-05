@@ -3,12 +3,20 @@
 wf-editor-tile-editor {
 	@extend wf-panel;
 
-	.content > div {
-		display: flex;
-		flex-direction: row;
+	.content {
+		flex-direction: column;
 
-		wf-palette-view + wf-palette-view {
-			margin-left: 20px;
+		> div {
+			display: flex;
+			flex-direction: row;
+
+			wf-palette-view + wf-palette-view {
+				margin-left: 20px;
+			}
+
+			wf-button {
+				flex-grow: 1;
+			}
 		}
 	}
 }
