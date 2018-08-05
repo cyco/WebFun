@@ -5,5 +5,6 @@ import trimCharacter from "./trim-character";
 import uuid from "./uuid";
 import dasherize from "./dasherize";
 import camelize from "./camelize";
+import parseInt from "./parse-int";
 
-export { padEnd, padStart, uuid, trimCharacter, contains, dasherize, camelize };
+export { parseInt, padEnd, padStart, uuid, trimCharacter, contains, dasherize, camelize };
