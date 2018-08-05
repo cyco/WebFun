@@ -10,12 +10,16 @@ class InventoryRow extends Cell<Tile> {
 	private _label = (
 		<Selector
 			borderless
-			onchange={() => (this.data = this.tiles.find(t => t.id === +this._label.value))}
+			onchange={() => {
+				this.data = this.tiles.find(t => t.id === +this._label.value);
+				this.onchange();
+			}}
 		/>
 	) as Selector;
 	private _tile: Tile;
 	public ondelete: (row: InventoryRow) => void;
 	public onadd: () => void;
+	public onchange: () => void;
 	public tiles: Tile[];
 
 	protected connectedCallback() {
@@ -47,6 +51,7 @@ class InventoryRow extends Cell<Tile> {
 	cloneNode(deep?: boolean): InventoryRow {
 		const copy = super.cloneNode(deep) as InventoryRow;
 		copy.ondelete = this.ondelete;
+		copy.onchange = this.onchange;
 		copy.onadd = this.onadd;
 		copy.tileSheet = this.tileSheet;
 		copy.data = this.data;

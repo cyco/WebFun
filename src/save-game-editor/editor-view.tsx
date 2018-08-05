@@ -1,21 +1,15 @@
-import { Window, List, Segment, SegmentControl } from "src/ui/components";
-import { SaveGameReader } from "src/engine/save-game";
-import { InputStream, Point } from "src/util";
-import DataManager from "src/editor/data-manager";
-import { Planet, WorldSize } from "src/engine/types";
 import {
 	AmmoControl,
 	Tile as TileComponent,
 	InteractiveMap as Map,
 	InteractiveHealth as Health,
-	InventoryRow,
 	Inventory
 } from "./components";
-import { Ammo } from "src/app/ui";
-import { Tile, PuzzleType } from "src/engine/objects";
-import { Yoda, GameData, ColorPalette } from "src/engine";
-import { File } from "src/std.dom";
-import { Reader as SaveGameReaderFactory, SaveState } from "src/engine/save-game";
+import { InventoryDelegate } from "./components/inventory";
+import { InteractiveMapContextMenuProvider } from "./components/interactive-map";
+import { Tile } from "src/engine/objects";
+import { GameData, ColorPalette } from "src/engine";
+import { SaveState } from "src/engine/save-game";
 import { Menu, Component } from "src/ui";
 import { CSSTileSheet } from "src/editor";
 import { ImageFactory } from "src/engine/rendering/canvas";
@@ -23,10 +17,12 @@ import { ImageFactory } from "src/engine/rendering/canvas";
 import { Yoda as GameTypeYoda } from "src/engine/type";
 import WorldItem from "./world-item";
 import { World } from "src/engine/save-game";
+import { Segment, SegmentControl } from "src/ui/components";
+import { Point, identity } from "src/util";
 
 import "./editor-view.scss";
 
-class EditorView extends Component {
+class EditorView extends Component implements InventoryDelegate, InteractiveMapContextMenuProvider {
 	public static tagName: string = "wf-save-game-editor-view";
 	private _gameData: GameData;
 	private _palette: ColorPalette;
@@ -137,13 +133,10 @@ class EditorView extends Component {
 					items={Array.from(state.inventoryIDs)
 						.map(t => tiles[t])
 						.concat(null)}
+					delegate={this}
 				/>
 			</div>
 		);
-	}
-
-	private _buildTileComponent(tile: Tile): TileComponent {
-		return <TileComponent tile={tile} tileSheet={this._tileSheet} /> as TileComponent;
 	}
 
 	private _findWeaponFace(id: number): Tile {
@@ -155,16 +148,15 @@ class EditorView extends Component {
 		return character.frames[0].extensionRight;
 	}
 
-	private _buildAmmoRow(tile: Tile, value: number, total: number) {
-		return (
-			<div className="ammo">
-				{this._buildTileComponent(tile)}
-				<AmmoControl vertical value={value} />
-			</div>
-		);
+	get saveGame(): SaveState {
+		return this._state;
 	}
 
-	contextMenuForWorldItem(item: WorldItem, at: Point, i: World, of: Map): Menu {
+	get data(): GameData {
+		return this._gameData;
+	}
+
+	public contextMenuForWorldItem(item: WorldItem, _at: Point, _i: World, of: Map): Menu {
 		if (item.zoneId === undefined || item.zoneId === -1) return null;
 
 		return new Menu([
@@ -190,12 +182,20 @@ class EditorView extends Component {
 		]);
 	}
 
-	get saveGame(): SaveState {
-		return this._state;
+	public inventoryDidAddItem(inventory: Inventory): void {
+		this._state.inventoryIDs = new Int16Array(
+			inventory.items.filter(identity).map(({ id }) => id)
+		);
 	}
-
-	get data(): GameData {
-		return this._gameData;
+	public inventoryDidChangeItem(inventory: Inventory): void {
+		this._state.inventoryIDs = new Int16Array(
+			inventory.items.filter(identity).map(({ id }) => id)
+		);
+	}
+	public inventoryDidRemoveItem(inventory: Inventory): void {
+		this._state.inventoryIDs = new Int16Array(
+			inventory.items.filter(identity).map(({ id }) => id)
+		);
 	}
 }
 

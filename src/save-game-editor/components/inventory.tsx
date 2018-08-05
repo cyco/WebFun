@@ -4,9 +4,16 @@ import { Tile } from "src/engine/objects";
 import { CSSTileSheet } from "src/editor";
 import "./inventory.scss";
 
+export interface InventoryDelegate {
+	inventoryDidAddItem(inventory: Inventory): void;
+	inventoryDidChangeItem(inventory: Inventory): void;
+	inventoryDidRemoveItem(inventory: Inventory): void;
+}
+
 class Inventory extends List<Tile> {
 	public static tagName: string = "wf-save-game-editor-inventory";
 	public cell: InventoryRow;
+	public delegate: InventoryDelegate;
 
 	constructor() {
 		super();
@@ -15,6 +22,7 @@ class Inventory extends List<Tile> {
 			<InventoryRow
 				ondelete={(row: InventoryRow) => this._removeInventoryRow(row)}
 				onadd={() => this._addInventoryRow()}
+				onchange={() => this.delegate && this.delegate.inventoryDidChangeItem(this)}
 			/>
 		) as InventoryRow;
 	}
@@ -27,6 +35,8 @@ class Inventory extends List<Tile> {
 		this.items = items;
 		const newRow = this.lastElementChild.lastElementChild as any;
 		newRow.scrollIntoViewIfNeeded && newRow.scrollIntoViewIfNeeded(true);
+
+		if (this.delegate) this.delegate.inventoryDidAddItem(this);
 	}
 
 	private _removeInventoryRow(row: InventoryRow) {
@@ -37,6 +47,8 @@ class Inventory extends List<Tile> {
 		const items = rows.map(t => t.data);
 		items.splice(index, 1);
 		this.items = items;
+
+		if (this.delegate) this.delegate.inventoryDidRemoveItem(this);
 	}
 
 	set tiles(t: Tile[]) {
@@ -50,6 +62,7 @@ class Inventory extends List<Tile> {
 	set tileSheet(t: CSSTileSheet) {
 		this.cell.tileSheet = t;
 	}
+
 	get tileSheet() {
 		return this.cell.tileSheet;
 	}

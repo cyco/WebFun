@@ -1,13 +1,13 @@
 import Map from "./map";
 import { Point } from "src/util";
 import ZoneView from "./zone-view";
-import { Menu, MenuItemInit } from "src/ui";
-import { MenuWindow, ContextMenu } from "src/ui/components";
+import { Menu } from "src/ui";
+import { ContextMenu } from "src/ui/components";
 import WorldItem from "../world-item";
 import { World } from "src/engine/save-game";
 import "./interactive-map.scss";
 
-interface MapContextMenuProvider {
+export interface InteractiveMapContextMenuProvider {
 	contextMenuForWorldItem(item: WorldItem, at: Point, i: World, of: Map): Menu;
 }
 
@@ -15,7 +15,7 @@ class InteractiveMap extends Map implements EventListenerObject {
 	public static readonly tagName = "wf-resource-editor-map-interactive";
 	private _highlight: ZoneView = <ZoneView /> as ZoneView;
 	private _highlightTile: Point = null;
-	public contextMenuProvider: MapContextMenuProvider;
+	public contextMenuProvider: InteractiveMapContextMenuProvider;
 
 	protected connectedCallback() {
 		super.connectedCallback();
