@@ -13,6 +13,6 @@ describeComponent(Health, () => {
 	it("starts off with full health", () => {
 		expect(subject.health).toBe(300);
 		expect(subject.lives).toBe(3);
-		expect(subject.damage).toBe(0);
+		expect(subject.damage).toBe(99);
 	});
 });
