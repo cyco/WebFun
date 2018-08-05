@@ -2,6 +2,8 @@ declare interface Node {
 	readonly isConnected: boolean;
 }
 
+declare let module: any;
+
 interface Array<T> {
 	first(): T | null;
 	last(): T | null;
