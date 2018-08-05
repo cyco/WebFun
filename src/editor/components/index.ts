@@ -11,6 +11,8 @@ import TilePicker from "./tile-picker";
 import ZoneInspectorCell from "./zone-inspector-cell";
 import TilePickerCell from "./tile-picker-cell";
 import PopoverTilePicker from "./popover-tile-picker";
+import PaletteColorPicker from "./palette-color-picker";
+import PaletteImageEditor from "./palette-image-editor";
 import {
 	Action as ZoneEditorAction,
 	NPC as ZoneEditorNPC,
@@ -25,6 +27,7 @@ import {
 	Hotspot as ZoneEditorHotspot
 } from "./zone-editor";
 import { Editor as ActionEditor, Token as ActionEditorToken } from "./action-editor";
+import { Editor as TileEditor } from "./tile-editor";
 
 export {
 	ActionEditorToken,
@@ -52,5 +55,8 @@ export {
 	ZoneEditorWindow,
 	ZoneInspectorCell,
 	ZoneEditorSidebar,
-	ZoneLayer
+	ZoneLayer,
+	PaletteColorPicker,
+	PaletteImageEditor,
+	TileEditor
 };

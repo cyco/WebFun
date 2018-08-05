@@ -1,0 +1,14 @@
+@import "src/ui/components/panel.scss";
+
+wf-editor-tile-editor {
+	@extend wf-panel;
+
+	.content > div {
+		display: flex;
+		flex-direction: row;
+
+		wf-palette-view + wf-palette-view {
+			margin-left: 20px;
+		}
+	}
+}

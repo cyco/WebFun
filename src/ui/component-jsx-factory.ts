@@ -13,7 +13,11 @@ class ComponentJSXRenderer {
 
 		if (props) {
 			for (const [key, value] of iterate(props)) {
-				(<any>node)[key] = value;
+				if (key === "style") {
+					for (const [key, style] of iterate(value)) {
+						(node as any).style[key] = style;
+					}
+				} else (node as any)[key] = value;
 			}
 		}
 

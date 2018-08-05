@@ -2,12 +2,14 @@ import AbstractInspector from "./abstract-inspector";
 import CSSTileSheet from "../css-tile-sheet";
 import { IconButton } from "src/ui/components";
 import { MutableTile } from "src/engine/mutable-objects";
+import { TileEditor } from "../components";
 import "./tile-inspector.scss";
 
 class TileInspector extends AbstractInspector {
 	private _tileSheet: CSSTileSheet;
 	private _requiredAttributes: number = 0;
 	private _prohibitedAttributes: number = 0;
+	protected _editor: TileEditor = null;
 
 	constructor(state: Storage) {
 		super(state);
@@ -72,7 +74,6 @@ class TileInspector extends AbstractInspector {
 		tile.id = this.data.currentData.tiles.length;
 		tile.imageData = new Uint8Array(MutableTile.WIDTH * MutableTile.HEIGHT);
 		tile.attributes = 0;
-		tile.name = "New Tile";
 
 		this.data.currentData.tiles.push(tile);
 		this.build();
@@ -146,6 +147,8 @@ class TileInspector extends AbstractInspector {
 			const tilePreview = document.createElement("div");
 			const classes = this._tileSheet.cssClassesForTile(tile.id);
 			tilePreview.className = classes.join(" ");
+			tilePreview.style.cursor = "pointer";
+			tileCell.onclick = () => this.editTile(tile);
 			tileCell.appendChild(tilePreview);
 			if (tile.name) tileCell.title = tile.name;
 			row.appendChild(tileCell);
@@ -160,6 +163,24 @@ class TileInspector extends AbstractInspector {
 		});
 		table.appendChild(body);
 		this.window.content.appendChild(table);
+	}
+
+	public editTile(tile: MutableTile) {
+		if (this._editor) {
+			this._editor.remove();
+		}
+
+		const editor = (
+			<TileEditor
+				palette={this.data.palette}
+				pixels={tile.imageData}
+				tile={tile}
+				autosaveName="tile-editor"
+			/>
+		) as TileEditor;
+
+		this.windowManager.showWindow(editor);
+		this._editor = editor;
 	}
 }
 

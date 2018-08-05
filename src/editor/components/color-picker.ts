@@ -56,7 +56,10 @@ class ColorPicker extends Component {
 		this._wheel = <ColorWheel>document.createElement(ColorWheel.tagName);
 		this._wheel.style.height = "100px";
 		this._wheel.style.width = "100px";
-		this._wheel.onchange = () => (this.color = this._wheel.color);
+		this._wheel.onchange = () => {
+			this.color = this._wheel.color;
+			this.dispatchEvent(new CustomEvent("change"));
+		};
 	}
 
 	private _buildBrightnessSlider() {
@@ -64,9 +67,9 @@ class ColorPicker extends Component {
 		this._brightnessInput.type = "range";
 		this._brightnessInput.min = "0";
 		this._brightnessInput.max = "255";
-		this._brightnessInput.onchange = e =>
+		this._brightnessInput.onchange = _ =>
 			this._updateBrightness(+this._brightnessInput.value / 255.0);
-		this._brightnessInput.oninput = e =>
+		this._brightnessInput.oninput = _ =>
 			this._updateBrightness(+this._brightnessInput.value / 255.0);
 	}
 
@@ -74,6 +77,7 @@ class ColorPicker extends Component {
 		this._wheel.adjustBrightness(newValue);
 		this._color = new Color(this._wheel.color);
 		this.updateState();
+		this.dispatchEvent(new CustomEvent("change"));
 	}
 
 	private _buildRGBFields() {
@@ -99,6 +103,7 @@ class ColorPicker extends Component {
 		this.color = `rgb(${this._redInput.value}, ${this._greenInput.value}, ${
 			this._blueInput.value
 		})`;
+		this.dispatchEvent(new CustomEvent("change"));
 	}
 
 	public attributeChangedCallback(attr: string, oldValue: string, newValue: string) {

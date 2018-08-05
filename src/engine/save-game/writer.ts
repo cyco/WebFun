@@ -31,6 +31,7 @@ class Writer {
 		stream.writeInt32(state.inventoryIDs.length);
 		stream.writeInt16Array(state.inventoryIDs);
 
+		console.log("currentZoneID", state.currentZoneID);
 		stream.writeInt16(state.currentZoneID);
 
 		stream.writeUint32(state.positionOnWorld.x);
@@ -97,6 +98,7 @@ class Writer {
 	}
 
 	_writeZone(zone: Zone, visited: boolean, stream: OutputStream): void {
+		console.log("write zone", zone.id, visited ? "full" : "minimal");
 		if (visited) {
 			stream.writeUint32(zone.counter);
 			stream.writeUint32(zone.random);

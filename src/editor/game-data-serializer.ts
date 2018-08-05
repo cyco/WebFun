@@ -51,7 +51,7 @@ class GameDataSerializer {
 	private writeTiles(data: GameData, stream: OutputStream) {
 		stream.writeCharacters("TILE");
 		stream.writeUint32(data.tiles.length * (32 * 32 + 4));
-
+		console.log("tile count", data.tiles.length);
 		data.tiles.forEach((tile: Tile) => {
 			stream.writeUint32(tile.attributes);
 			stream.writeUint8Array(tile.imageData);
