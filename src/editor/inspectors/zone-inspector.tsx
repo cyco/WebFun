@@ -1,9 +1,12 @@
 import AbstractInspector from "./abstract-inspector";
 import { ZoneInspectorCell } from "../components";
-import { Zone } from "src/engine/objects";
-import { List } from "src/ui/components";
+import { Zone, ZoneType } from "src/engine/objects";
+import { MutableZone } from "src/engine/mutable-objects";
+import { List, IconButton } from "src/ui/components";
 import ZoneEditorController from "../components/zone-editor/window";
 import ReferenceResolver from "src/editor/reference-resolver";
+import { Size } from "src/util";
+import { Planet } from "src/engine/types";
 
 class ZoneInspector extends AbstractInspector {
 	private _list: List<Zone>;
@@ -20,6 +23,7 @@ class ZoneInspector extends AbstractInspector {
 		this.window.style.width = "300px";
 		this.window.content.style.maxHeight = "300px";
 		this.window.content.style.flexDirection = "column";
+		this.window.addTitlebarButton(<IconButton icon="plus" onclick={() => this.addZone()} />);
 
 		this._list = document.createElement(List.tagName) as List<Zone>;
 		this._list.cell = document.createElement(ZoneInspectorCell.tagName) as ZoneInspectorCell;
@@ -76,6 +80,33 @@ class ZoneInspector extends AbstractInspector {
 			controller.state = this._state.prefixedWith("editor-" + this._controllers.length);
 			this._controllers.push(controller);
 		});
+	}
+
+	private addZone() {
+		console.log("add zone");
+		const zone = new MutableZone();
+		zone.id = this.data.currentData.zones.length;
+		zone.type = ZoneType.Empty;
+		zone.size = new Size(9, 9);
+		zone.name = "New Zone";
+		zone.planet = Planet.NONE;
+		zone.npcs = [];
+		zone.goalItems = [];
+		zone.requiredItems = [];
+		zone.providedItems = [];
+		zone.puzzleNPCs = [];
+		zone.izaxUnknown = 0;
+		zone.izaxUnknown = 0;
+		zone.actions = [];
+		zone.hotspots = [];
+
+		zone.tileIDs = new Int16Array(zone.size.width * zone.size.height).map(_ => -1);
+
+		zone.tileStore = this.data.currentData.tiles;
+		zone.zoneStore = this.data.currentData.zones;
+
+		this.data.currentData.zones.push(zone);
+		this._list.items = this.data.currentData.zones;
 	}
 
 	prepareListSearch(searchValue: string, _: List<Zone>): RegExp[] {
