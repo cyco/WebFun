@@ -1,5 +1,5 @@
 import AbstractInspector from "./abstract-inspector";
-import { List, IconButton } from "src/ui/components";
+import { IconButton } from "src/ui/components";
 import { EditorView } from "src/save-game-editor";
 import { Writer } from "src/engine/save-game";
 import { download, OutputStream, DiscardingOutputStream } from "src/util";

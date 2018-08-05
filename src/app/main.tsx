@@ -8,16 +8,11 @@ import * as AppComponents from "./ui";
 import * as WindowComponents from "./windows";
 import Settings, { loadSettings } from "src/settings";
 import { initialize as initializeDebug } from "src/debug";
-import DataManager from "src/editor/data-manager";
-import { GameData, ColorPalette } from "src/engine";
-import { InputStream, FileLoader } from "src/util";
+import { FileLoader } from "src/util";
 import { WindowManager, ComponentJSXRenderer } from "src/ui";
 import { Yoda } from "src/engine/type";
 import EditorWindow from "src/editor/editor-window";
-import { Point } from "src/util";
-import { Window } from "src/ui/components";
-import { Menu, MenuItemInit, MenuItemSeparator } from "src/ui";
-import { ContextMenu } from "src/ui/components";
+import SaveGameInspector from "src/editor/inspectors/save-game-inspector";
 
 declare global {
 	interface Window {
@@ -25,6 +20,7 @@ declare global {
 	}
 }
 
+let editorWindow: EditorWindow;
 const main = async () => {
 	window.WebFunJSX = new ComponentJSXRenderer();
 	ComponentRegistry.sharedRegistry.registerComponents(Components as any);
@@ -40,7 +36,7 @@ const main = async () => {
 		initializeDebug(gameController);
 	}
 
-	const editorWindow = document.createElement(EditorWindow.tagName) as EditorWindow;
+	editorWindow = document.createElement(EditorWindow.tagName) as EditorWindow;
 	WindowManager.defaultManager.showWindow(editorWindow);
 	editorWindow.center();
 	const dataStreams = await FileLoader.loadAsStream("game-data/construct.dta");
@@ -49,5 +45,31 @@ const main = async () => {
 	const saveGameStream = await FileLoader.loadAsStream("save-games/construct.wld");
 	await editorWindow.editor.loadSaveGameStream(saveGameStream);
 };
+
+const rescueData = () => {
+	editorWindow.editor.save();
+	(editorWindow.editor.inspectors.find(
+		i => i instanceof SaveGameInspector
+	) as SaveGameInspector).saveGame();
+};
+
+window.document.addEventListener("keydown", (e: KeyboardEvent) => {
+	if (e.metaKey && e.keyCode === 83) {
+		e.preventDefault();
+		e.stopPropagation();
+
+		rescueData();
+	}
+});
+
+if (module.hot) {
+	if (module.hot.addStatusHandler) {
+		if (module.hot.status() === "idle") {
+			module.hot.addStatusHandler((status: any) => {
+				if (status === "prepare") rescueData();
+			});
+		}
+	}
+}
 
 window.addEventListener("load", main, { once: true } as any);

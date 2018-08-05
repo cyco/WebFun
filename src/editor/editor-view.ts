@@ -5,13 +5,9 @@ import GameDataSerializer from "./game-data-serializer";
 import FilePicker from "src/ui/file-picker";
 import { readGameDataFile, GameTypeYoda, GameTypeIndy, SaveGameReader } from "src/engine";
 import GameData from "src/engine/game-data";
-import { Menu, Component } from "src/ui";
-import buildEditorMenu from "./menu";
-import MenuItemInit from "src/ui/menu-item-init";
+import { Component } from "src/ui";
 import WindowManager from "src/ui/window-manager";
-import Settings from "src/settings";
 import { SaveGameInspector } from "./inspectors";
-import { Storage } from "src/std.dom";
 import "./editor-view.scss";
 
 class EditorView extends Component {
@@ -94,10 +90,14 @@ class EditorView extends Component {
 	set data(dm) {
 		this._data = dm;
 		this._inspectors.each<AbstractInspector>(
-			(key: string, inspector: AbstractInspector): void => {
+			(_: string, inspector: AbstractInspector): void => {
 				inspector.data = dm;
 			}
 		);
+	}
+
+	get inspectors() {
+		return Object.values(this._inspectors) as AbstractInspector[];
 	}
 
 	get data() {
