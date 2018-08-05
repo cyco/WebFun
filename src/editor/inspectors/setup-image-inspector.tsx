@@ -1,25 +1,44 @@
 import AbstractInspector from "./abstract-inspector";
-import { PaletteView } from "../components";
-import { Size, downloadImage, rgba } from "src/util";
+import { PaletteImageEditor, PaletteColorPicker } from "../components";
+import { Size, downloadImage } from "src/util";
 import { FilePicker } from "src/ui";
 import { Button } from "src/ui/components";
 
 class SetupImageInspector extends AbstractInspector {
-	private _paletteView: PaletteView = document.createElement(PaletteView.tagName) as PaletteView;
+	private _imageEditor = (
+		<PaletteImageEditor
+			size={new Size(288, 288)}
+			style={{ width: "230px", height: "230px", display: "inline-block" }}
+		/>
+	) as PaletteImageEditor;
+	private _colorPicker = (
+		<PaletteColorPicker
+			size={new Size(16, 16)}
+			style={{
+				width: "128px",
+				height: "128px",
+				"margin-left": "20px",
+				display: "inline-block"
+			}}
+			onchange={() => (this._imageEditor.colorIndex = this._colorPicker.colorIndex)}
+		/>
+	) as PaletteColorPicker;
 
 	constructor(state: Storage) {
 		super(state);
 
 		this.window.title = "Setup Image";
 		this.window.autosaveName = "setup-image-inspector";
-		this.window.style.width = "290px";
-		this.window.content.style.height = "338px";
+		this.window.style.width = "380px";
+		this.window.content.style.height = "270px";
 		this.window.content.style.flexDirection = "column";
 
-		this._paletteView.size = new Size(288, 288);
-		this._paletteView.style.width = "288px";
-		this._paletteView.style.height = "288px";
-		this.window.content.appendChild(this._paletteView);
+		this.window.content.appendChild(
+			<div>
+				{this._imageEditor}
+				{this._colorPicker}
+			</div>
+		);
 
 		this.window.content.appendChild(
 			<div>
@@ -30,7 +49,7 @@ class SetupImageInspector extends AbstractInspector {
 	}
 
 	public saveImage() {
-		downloadImage(this._paletteView.renderedImage, "setup-image.png", "png");
+		downloadImage(this._imageEditor.renderedImage, "setup-image.png", "png");
 	}
 
 	public async loadImage() {
@@ -41,7 +60,7 @@ class SetupImageInspector extends AbstractInspector {
 
 		const size = imageData.width * imageData.height;
 		const paletteImage = new Uint8Array(size);
-		const palette = this._paletteView.palette;
+		const palette = this._imageEditor.palette;
 
 		for (let i = 0; i < size; i++) {
 			const j = i * 4;
@@ -56,16 +75,17 @@ class SetupImageInspector extends AbstractInspector {
 			paletteImage[i] = color;
 		}
 
-		this._paletteView.image = paletteImage;
+		this._imageEditor.image = paletteImage;
 		(this.data.currentData as any)._setup = paletteImage;
-		this._paletteView.redraw();
+		this._imageEditor.redraw();
 	}
 
 	build() {
-		this._paletteView.palette = this.data.palette;
-		this._paletteView.image = this.data.currentData.setupImageData;
+		this._colorPicker.palette = this.data.palette;
+		this._imageEditor.palette = this.data.palette;
+		this._imageEditor.image = this.data.currentData.setupImageData;
 
-		this._paletteView.redraw();
+		this._imageEditor.redraw();
 	}
 }
 
