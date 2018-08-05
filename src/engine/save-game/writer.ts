@@ -31,7 +31,6 @@ class Writer {
 		stream.writeInt32(state.inventoryIDs.length);
 		stream.writeInt16Array(state.inventoryIDs);
 
-		console.log("currentZoneID", state.currentZoneID);
 		stream.writeInt16(state.currentZoneID);
 
 		stream.writeUint32(state.positionOnWorld.x);
