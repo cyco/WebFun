@@ -29,12 +29,12 @@ class InteractiveHealth extends Health implements EventListenerObject {
 		const { left, width, top, height } = this.getBoundingClientRect();
 		const center = new Point(left + width / 2, top + height / 2);
 		const point = new Point(event.clientX, event.clientY).subtract(center);
-		const [distance, angle] = xy2polar(point.x, point.y);
+		const [_, angle] = xy2polar(point.x, point.y);
 
 		let normangle = rad2deg(360 - angle) % 360;
 		let base = ceil(this.health / 100) * 100;
 		if (this.lastAngle === null) {
-			this.health = base - normangle / 360 * 100;
+			this.health = base - (normangle / 360) * 100;
 			this.lastAngle = normangle;
 			return;
 		}
@@ -48,8 +48,9 @@ class InteractiveHealth extends Health implements EventListenerObject {
 			base += sign(diff) * 100;
 		}
 
-		this.health = base - normangle / 360 * 100;
+		this.health = base - (normangle / 360) * 100;
 		this.lastAngle = normangle;
+		this.dispatchEvent(new CustomEvent("change"));
 	}
 
 	protected disconnectedCallback() {

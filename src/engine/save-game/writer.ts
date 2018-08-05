@@ -49,7 +49,7 @@ class Writer {
 		stream.writeUint32(state.positionOnZone.y * Tile.HEIGHT);
 
 		stream.writeUint32(state.damageTaken);
-		stream.writeUint32(state.livesLeft);
+		stream.writeUint32(state.livesLost);
 
 		stream.writeUint32(state.difficulty);
 		stream.writeUint32(state.timeElapsed);

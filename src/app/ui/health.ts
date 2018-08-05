@@ -1,4 +1,5 @@
 import { Component } from "src/ui";
+import { PI, cos, sin, min, max, floor, ceil } from "src/std.math";
 import "./health.scss";
 
 const HealthSVG =
@@ -19,6 +20,11 @@ declare interface SimplePoint {
 }
 
 class Health extends Component {
+	static readonly GoodColor = GoodColor;
+	static readonly MediumColor = MediumColor;
+	static readonly BadColor = BadColor;
+	static readonly CriticalColor = CriticalColor;
+	static readonly Conditions = Conditions;
 	public static tagName = "wf-health";
 	private _condition: SVGCircleElement = null;
 	private _pie: SVGPathElement = null;
@@ -33,41 +39,21 @@ class Health extends Component {
 		this.health = 300;
 	}
 
-	static get GoodColor() {
-		return GoodColor;
-	}
-
-	static get MediumColor() {
-		return MediumColor;
-	}
-
-	static get BadColor() {
-		return BadColor;
-	}
-
-	static get CriticalColor() {
-		return CriticalColor;
-	}
-
-	static get Conditions() {
-		return Conditions;
-	}
-
 	get health() {
 		return this._health;
 	}
 
 	set health(value) {
-		this._health = Math.max(0, Math.min(value, MaxHealth));
+		this._health = max(0, min(value, MaxHealth));
 		this._update();
 	}
 
 	get lives() {
-		return Math.floor(this._health / HealthPerColor);
+		return floor(this._health / HealthPerColor);
 	}
 
 	get damage() {
-		return Math.floor(this._health % HealthPerColor);
+		return 100 - (floor(this._health % HealthPerColor) || 1);
 	}
 
 	protected connectedCallback() {
@@ -84,7 +70,7 @@ class Health extends Component {
 
 		const health = this.health === MaxHealth - 1 ? MaxHealth : this.health;
 
-		const condition = Math.floor(health / HealthPerColor);
+		const condition = floor(health / HealthPerColor);
 		this._condition.style.fill = Conditions[condition];
 
 		const value = (health % HealthPerColor) / HealthPerColor;
@@ -107,13 +93,13 @@ class Health extends Component {
 	}
 
 	_toRadians(angle: number): number {
-		return Math.PI * angle / 180;
+		return (PI * angle) / 180;
 	}
 
 	_pointWithAngle(angle: number, c: SimplePoint, r: number): SimplePoint {
 		return {
-			x: c.x + r * Math.cos(this._toRadians(270 - angle)),
-			y: c.y + r * Math.sin(this._toRadians(270 - angle))
+			x: c.x + r * cos(this._toRadians(270 - angle)),
+			y: c.y + r * sin(this._toRadians(270 - angle))
 		};
 	}
 }

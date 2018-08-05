@@ -2,10 +2,9 @@ import Reader from "./reader";
 import SaveState from "./save-state";
 import GameData from "../game-data";
 import { InputStream, Point } from "src/util";
-import { Action, Hotspot, HotspotType, NPC, Tile, Zone } from "src/engine/objects";
-import { MutableHotspot, MutableNPC, MutableZone } from "src/engine/mutable-objects";
-import { Planet, WorldSize } from "../types";
-import World from "./world";
+import { Hotspot, HotspotType, Tile } from "src/engine/objects";
+import { MutableHotspot } from "src/engine/mutable-objects";
+import { Planet } from "../types";
 import WorldItem from "./world-item";
 import { Yoda } from "../type";
 import { floor } from "src/std.math";
@@ -48,8 +47,9 @@ class YodaReader extends Reader {
 		let posXOnZone = floor(stream.getUint32() / Tile.WIDTH);
 		let posYOnZone = floor(stream.getUint32() / Tile.HEIGHT);
 
-		let damageTaken = stream.getUint32();
-		let livesLeft = stream.getUint32();
+		let damageTaken = stream.getInt32();
+		let livesLost = stream.getInt32();
+
 		let difficulty = stream.getUint32();
 		let time_elapsed = stream.getUint32();
 
@@ -87,7 +87,7 @@ class YodaReader extends Reader {
 		state.blasterRifleAmmo = blasterRifleAmmo;
 		state.forceAmmo = forceAmmo;
 		state.damageTaken = damageTaken;
-		state.livesLeft = livesLeft;
+		state.livesLost = livesLost;
 		state.dagobah = dagobah;
 		state.world = world;
 		state.timeElapsed = time_elapsed;

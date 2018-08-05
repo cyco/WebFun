@@ -73,7 +73,12 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 			<div className="save">
 				<span className="seed">
 					<label>Seed</label>
-					<input value={state.seed.toHex(4)} />
+					<input
+						value={state.seed.toHex(4)}
+						onchange={e =>
+							(this._state.seed = (e.target as HTMLInputElement).value.parseInt())
+						}
+					/>
 				</span>
 
 				<span className="planet">
@@ -88,7 +93,14 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 					)}
 				</div>
 
-				<Health health={state.livesLeft * 100 - state.damageTaken} />
+				<Health
+					health={(4 - state.livesLost) * 100 - state.damageTaken}
+					onchange={(e: Event) => {
+						const health = e.target as Health;
+						this._state.livesLost = 3 - health.lives;
+						this._state.damageTaken = health.damage;
+					}}
+				/>
 
 				<span className="mission">{missionStatement}</span>
 
@@ -183,19 +195,17 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 	}
 
 	public inventoryDidAddItem(inventory: Inventory): void {
-		this._state.inventoryIDs = new Int16Array(
-			inventory.items.filter(identity).map(({ id }) => id)
-		);
+		this._updateInventory(inventory.items);
 	}
 	public inventoryDidChangeItem(inventory: Inventory): void {
-		this._state.inventoryIDs = new Int16Array(
-			inventory.items.filter(identity).map(({ id }) => id)
-		);
+		this._updateInventory(inventory.items);
 	}
 	public inventoryDidRemoveItem(inventory: Inventory): void {
-		this._state.inventoryIDs = new Int16Array(
-			inventory.items.filter(identity).map(({ id }) => id)
-		);
+		this._updateInventory(inventory.items);
+	}
+
+	private _updateInventory(items: Tile[]) {
+		this._state.inventoryIDs = new Int16Array(items.filter(identity).map(({ id }) => id));
 	}
 }
 
