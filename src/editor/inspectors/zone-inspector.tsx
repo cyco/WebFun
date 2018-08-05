@@ -21,10 +21,10 @@ class ZoneInspector extends AbstractInspector {
 		this.window.content.style.maxHeight = "300px";
 		this.window.content.style.flexDirection = "column";
 
-		this._list = <List<Zone>>document.createElement(List.tagName);
-		this._list.cell = <ZoneInspectorCell>document.createElement(ZoneInspectorCell.tagName);
+		this._list = document.createElement(List.tagName) as List<Zone>;
+		this._list.cell = document.createElement(ZoneInspectorCell.tagName) as ZoneInspectorCell;
 		this._list.cell.onclick = (e: MouseEvent) =>
-			this._onCellClicked(<ZoneInspectorCell>e.currentTarget);
+			this._onCellClicked(e.currentTarget as ZoneInspectorCell);
 		this._list.searchDelegate = this;
 		this._list.state = state.prefixedWith("list");
 		this._list.addEventListener(ZoneInspectorCell.Events.RevealReferences, (e: CustomEvent) =>
@@ -37,7 +37,9 @@ class ZoneInspector extends AbstractInspector {
 		let controller = this._controllers.find(c => c.canBeReused());
 
 		if (!controller) {
-			controller = <ZoneEditorController>document.createElement(ZoneEditorController.tagName);
+			controller = document.createElement(
+				ZoneEditorController.tagName
+			) as ZoneEditorController;
 			controller.data = this.data;
 			controller.state = this._state.prefixedWith("editor-" + this._controllers.length);
 			this._controllers.push(controller);
@@ -59,15 +61,15 @@ class ZoneInspector extends AbstractInspector {
 	}
 
 	build() {
-		const cell = <ZoneInspectorCell>this._list.cell;
+		const cell = this._list.cell as ZoneInspectorCell;
 		cell.tileSheet = this.data.tileSheet;
 		this._list.items = this.data.currentData.zones;
 
-		const zones = <number[]>this._state.load("zones") || [];
+		const zones = (this._state.load("zones") as number[]) || [];
 		zones.forEach(id => {
-			const controller = <ZoneEditorController>document.createElement(
+			const controller = document.createElement(
 				ZoneEditorController.tagName
-			);
+			) as ZoneEditorController;
 			controller.manager = this.windowManager;
 			controller.data = this.data;
 			controller.zone = this.data.currentData.zones[id];
@@ -76,7 +78,7 @@ class ZoneInspector extends AbstractInspector {
 		});
 	}
 
-	prepareListSearch(searchValue: string, list: List<Zone>): RegExp[] {
+	prepareListSearch(searchValue: string, _: List<Zone>): RegExp[] {
 		this.stateDidChange();
 		return searchValue.split(" ").map(s => new RegExp(s, "i"));
 	}
@@ -84,8 +86,8 @@ class ZoneInspector extends AbstractInspector {
 	includeListItem(
 		searchValue: RegExp[],
 		item: Zone,
-		cell: ZoneInspectorCell,
-		list: List<Zone>
+		_1: ZoneInspectorCell,
+		_2: List<Zone>
 	): boolean {
 		const searchableAttributes = [
 			item.id,

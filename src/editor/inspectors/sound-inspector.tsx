@@ -20,8 +20,8 @@ class SoundInspector extends AbstractInspector {
 		this.window.content.style.height = "450px";
 		this.window.content.style.flexDirection = "column";
 
-		this._list = <List<Sound>>document.createElement(List.tagName);
-		this._list.cell = <SoundInspectorCell>document.createElement(SoundInspectorCell.tagName);
+		this._list = document.createElement(List.tagName) as List<Sound>;
+		this._list.cell = document.createElement(SoundInspectorCell.tagName) as SoundInspectorCell;
 		this._list.searchDelegate = this;
 		this._list.state = state.prefixedWith("list");
 		this._list.addEventListener(SoundInspectorCell.Events.RevealReferences, (e: CustomEvent) =>
@@ -39,7 +39,7 @@ class SoundInspector extends AbstractInspector {
 		);
 	}
 
-	prepareListSearch(searchValue: string, list: List<Sound>): RegExp[] {
+	prepareListSearch(searchValue: string, _: List<Sound>): RegExp[] {
 		this.stateDidChange();
 		return searchValue.split(" ").map(s => new RegExp(s, "i"));
 	}

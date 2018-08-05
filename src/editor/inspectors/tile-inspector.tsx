@@ -49,10 +49,10 @@ class TileInspector extends AbstractInspector {
 	private updateFilter() {
 		const table = this.window.content.firstElementChild;
 		table.remove();
-		const rows = Array.from(table.querySelectorAll("tbody > tr"));
+		const rows = Array.from(table.querySelectorAll("tbody > tr")) as HTMLElement[];
 
 		for (let i = 0; i < rows.length; i++) {
-			const row = <HTMLElement>rows[i];
+			const row = rows[i];
 			const rowAttributes = parseInt(row.dataset.attributes);
 
 			const show =
@@ -117,7 +117,7 @@ class TileInspector extends AbstractInspector {
 		for (let i = 31; i >= 0; i--) {
 			const bitCell = document.createElement("th");
 			bitCell.title = `Bit ${i}` + (titles[i] ? ": " + titles[i] : "");
-			bitCell.onclick = (e: MouseEvent) => this.toggleBit(i, <HTMLElement>e.currentTarget);
+			bitCell.onclick = (e: MouseEvent) => this.toggleBit(i, e.currentTarget as HTMLElement);
 			headRow.appendChild(bitCell);
 		}
 		head.appendChild(headRow);

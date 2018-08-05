@@ -15,8 +15,10 @@ class PuzzleInspector extends AbstractInspector {
 		this.window.content.style.height = "396px";
 		this.window.content.style.flexDirection = "column";
 
-		this._list = <List<Puzzle>>document.createElement(List.tagName);
-		this._list.cell = <PuzzleInspectorCell>document.createElement(PuzzleInspectorCell.tagName);
+		this._list = document.createElement(List.tagName) as List<Puzzle>;
+		this._list.cell = document.createElement(
+			PuzzleInspectorCell.tagName
+		) as PuzzleInspectorCell;
 		this._list.searchDelegate = this;
 		this._list.state = state.prefixedWith("list");
 
@@ -24,12 +26,12 @@ class PuzzleInspector extends AbstractInspector {
 	}
 
 	build() {
-		const cell = <PuzzleInspectorCell>this._list.cell;
+		const cell = this._list.cell as PuzzleInspectorCell;
 		cell.tileSheet = this.data.tileSheet;
 		this._list.items = this.data.currentData.puzzles;
 	}
 
-	prepareListSearch(searchValue: string, list: List<Puzzle>): RegExp[] {
+	prepareListSearch(searchValue: string, _: List<Puzzle>): RegExp[] {
 		this.stateDidChange();
 		return searchValue.split(" ").map(s => new RegExp(s, "i"));
 	}
@@ -37,8 +39,8 @@ class PuzzleInspector extends AbstractInspector {
 	includeListItem(
 		searchValue: RegExp[],
 		puzzle: Puzzle,
-		cell: PuzzleInspectorCell,
-		list: List<Puzzle>
+		_1: PuzzleInspectorCell,
+		_2: List<Puzzle>
 	): boolean {
 		const string =
 			puzzle.id +
