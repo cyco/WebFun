@@ -75,6 +75,7 @@ declare namespace JSX {
 		img: Partial<HTMLImageElement>;
 		i: Partial<HTMLElement>;
 		button: Partial<HTMLButtonElement>;
+		br: Partial<HTMLBRElement>;
 	}
 
 	interface Element extends Component {}

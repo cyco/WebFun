@@ -19,6 +19,7 @@ import WorldItem from "./world-item";
 import { World } from "src/engine/save-game";
 import { Segment, SegmentControl } from "src/ui/components";
 import { Point, identity } from "src/util";
+import { ModalPrompt } from "src/ux";
 
 import "./editor-view.scss";
 
@@ -189,6 +190,42 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 					item.solved_4 = 0;
 					item.visited = false;
 					item.zoneId = -1;
+					item.additionalRequiredItem = -1;
+
+					of.redraw();
+				}
+			},
+			{
+				title: "Change Zone",
+				callback: async () => {
+					const id = await ModalPrompt("New Zone ID", {
+						defaultValue: item.zoneId.toHex(2)
+					});
+					if (id === null) return;
+
+					const newId = id.parseInt();
+					if (this._state.currentZoneID === item.zoneId) {
+						this._state.currentZoneID = newId;
+					}
+					item.zoneId = newId;
+					of.redraw();
+				}
+			},
+			{
+				title: item.visited ? "Mark unvisted" : "Mark visited",
+				callback: () => {
+					item.visited = !item.visited;
+					item.additionalRequiredItem = -1;
+					item.field_16 = -1;
+					item.field_C = -1;
+					item.field_Ea = -1;
+					item.find_item_id = -1;
+					item.npc_id = -1;
+					item.required_item_id = -1;
+					item.solved_1 = !item.visited ? 0 : item.solved_1;
+					item.solved_2 = !item.visited ? 0 : item.solved_2;
+					item.solved_3 = !item.visited ? 0 : item.solved_3;
+					item.solved_4 = !item.visited ? 0 : item.solved_4;
 
 					of.redraw();
 				}

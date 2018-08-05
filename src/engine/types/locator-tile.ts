@@ -1,5 +1,4 @@
-import { HotspotType, Zone, ZoneType } from "src/engine/objects";
-import Settings from "src/settings";
+import { Zone } from "src/engine/objects";
 
 abstract class LocatorTile {
 	abstract get here(): number;
