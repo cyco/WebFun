@@ -65,7 +65,7 @@ class IndyReader extends Reader {
 		state.world = world;
 
 		state.damageTaken = 0;
-		state.livesLeft = 3;
+		state.livesLost = 0;
 
 		/*
 		state.currentWeapon = current_weapon;

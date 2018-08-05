@@ -1,5 +1,5 @@
 import { Point } from "../../util";
-import { Planet, WorldSize } from "../types";
+import { Planet } from "../types";
 import World from "./world";
 import { GameType } from "../type";
 
@@ -20,7 +20,7 @@ class SaveState {
 	positionOnZone: Point;
 
 	damageTaken: number;
-	livesLeft: number;
+	livesLost: number;
 
 	inventoryIDs: Int16Array;
 
