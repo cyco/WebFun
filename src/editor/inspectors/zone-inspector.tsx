@@ -34,6 +34,13 @@ class ZoneInspector extends AbstractInspector {
 		this._list.addEventListener(ZoneInspectorCell.Events.RevealReferences, (e: CustomEvent) =>
 			this._revealReferences(e.detail.zone)
 		);
+		this._list.addEventListener(ZoneInspectorCell.Events.RemoveZone, (e: CustomEvent) => {
+			if (confirm(`Remove zone ${e.detail.zone.id}?`))
+				this.data.currentData.zones.splice(
+					this.data.currentData.zones.indexOf(e.detail.zone.id, 1)
+				);
+			this.build();
+		});
 		this.window.content.appendChild(this._list);
 	}
 
@@ -71,6 +78,12 @@ class ZoneInspector extends AbstractInspector {
 
 		const zones = (this._state.load("zones") as number[]) || [];
 		zones.forEach(id => {
+			const zone = this.data.currentData.zones[id];
+			if (!zone) {
+				console.warn(`inspector for zone ${id.toHex(4)} could not be restored.`);
+				return;
+			}
+
 			const controller = document.createElement(
 				ZoneEditorController.tagName
 			) as ZoneEditorController;
@@ -83,24 +96,31 @@ class ZoneInspector extends AbstractInspector {
 	}
 
 	private addZone() {
-		console.log("add zone");
+		const template = this.data.currentData.zones.last();
 		const zone = new MutableZone();
 		zone.id = this.data.currentData.zones.length;
-		zone.type = ZoneType.Empty;
-		zone.size = new Size(9, 9);
+		zone.type = template.type;
+		zone.size = template.size;
 		zone.name = "New Zone";
-		zone.planet = Planet.NONE;
-		zone.npcs = [];
-		zone.goalItems = [];
-		zone.requiredItems = [];
-		zone.providedItems = [];
-		zone.puzzleNPCs = [];
-		zone.izaxUnknown = 0;
-		zone.izaxUnknown = 0;
-		zone.actions = [];
-		zone.hotspots = [];
+		zone.planet = template.planet;
+		zone.npcs = template.npcs;
+		zone.goalItems = template.goalItems;
+		zone.requiredItems = template.requiredItems;
+		zone.providedItems = template.providedItems;
+		zone.puzzleNPCs = template.puzzleNPCs;
+		zone.izaxUnknown = template.izaxUnknown;
+		zone.izx4Unknown = template.izx4Unknown;
+		zone.actions = template.actions;
+		zone.hotspots = template.hotspots;
 
-		zone.tileIDs = new Int16Array(zone.size.width * zone.size.height).map(_ => -1);
+		zone.visited = template.visited;
+		zone.solved = template.solved;
+		zone.actionsInitialized = template.actionsInitialized;
+		zone.counter = template.counter;
+		zone.random = template.random;
+		zone.padding = template.padding;
+
+		zone.tileIDs = template.tileIDs;
 
 		zone.tileStore = this.data.currentData.tiles;
 		zone.zoneStore = this.data.currentData.zones;

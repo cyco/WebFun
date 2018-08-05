@@ -4,7 +4,8 @@ import "./zone-inspector-cell.scss";
 import CSSTileSheet from "../css-tile-sheet";
 
 const Events = {
-	RevealReferences: "RevealReferences"
+	RevealReferences: "RevealReferences",
+	RemoveZone: "RemoveZone"
 };
 
 class ZoneInspectorCell extends Cell<Zone> {
@@ -17,7 +18,7 @@ class ZoneInspectorCell extends Cell<Zone> {
 	private _id: HTMLElement;
 	private _type: HTMLElement;
 	private _planet: HTMLElement;
-	private _reveal: HTMLElement;
+	private _actions: HTMLElement;
 	private _size: HTMLElement;
 
 	constructor() {
@@ -29,7 +30,7 @@ class ZoneInspectorCell extends Cell<Zone> {
 		this._type = document.createElement("span");
 		this._size = document.createElement("span");
 		this._size.classList.add("size");
-		this._reveal = document.createElement("span");
+		this._actions = document.createElement("span");
 		const revealButton = document.createElement("i");
 		revealButton.className = "fa fa-search";
 		revealButton.onclick = e => {
@@ -42,7 +43,20 @@ class ZoneInspectorCell extends Cell<Zone> {
 			e.preventDefault();
 			e.stopPropagation();
 		};
-		this._reveal.appendChild(revealButton);
+		this._actions.appendChild(revealButton);
+		const deleteButton = document.createElement("i");
+		deleteButton.className = "fa fa-remove";
+		deleteButton.onclick = e => {
+			this.dispatchEvent(
+				new CustomEvent(Events.RemoveZone, {
+					detail: { zone: this.data },
+					bubbles: true
+				})
+			);
+			e.preventDefault();
+			e.stopPropagation();
+		};
+		this._actions.appendChild(deleteButton);
 		this._planet = document.createElement("span");
 		this._planet.classList.add("planet");
 	}
@@ -62,7 +76,7 @@ class ZoneInspectorCell extends Cell<Zone> {
 		content.appendChild(this._id);
 		content.appendChild(this._type);
 		content.appendChild(this._planet);
-		content.appendChild(this._reveal);
+		content.appendChild(this._actions);
 		content.appendChild(this._size);
 		this.appendChild(content);
 	}
