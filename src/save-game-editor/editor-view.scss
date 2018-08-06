@@ -18,6 +18,25 @@ wf-save-game-editor-view {
 			grid-row: 5 / 6;
 			width: 282px;
 			height: 282px;
+
+			&.Props {
+				padding: 6px;
+				overflow-y: auto;
+				@include inset-border(1px);
+				display: flex;
+				flex-direction: column;
+
+				label {
+					display: block;
+					width: unset;
+				}
+
+				input {
+					width: 100px;
+					float: right;
+					margin-right: 4px;
+				}
+			}
 		}
 
 		.planet {

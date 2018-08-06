@@ -111,6 +111,7 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 					<Segment selected>World</Segment>
 					{state.type === GameTypeYoda && <Segment>Dagobah</Segment>}
 					<Segment>Inventory</Segment>
+					<Segment>Props</Segment>
 				</SegmentControl>
 
 				<Map
@@ -150,6 +151,168 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 						.concat(null)}
 					delegate={this}
 				/>
+
+				{this._buildProps()}
+			</div>
+		);
+	}
+
+	private _buildProps() {
+		return (
+			<div className="content Props">
+				<label>
+					onDagobah{" "}
+					<input
+						value={`${this._state.onDagobah}`}
+						onchange={e =>
+							(this._state.onDagobah = !!+(e.target as HTMLInputElement).value)
+						}
+					/>
+				</label>
+				<label>
+					positionOnWorld.x{" "}
+					<input
+						value={`${this._state.positionOnWorld.x}`}
+						onchange={e =>
+							(this._state.positionOnWorld.x = +(e.target as HTMLInputElement).value)
+						}
+					/>
+				</label>
+				<label>
+					positionOnWorld.y{" "}
+					<input
+						value={`${this._state.positionOnWorld.y}`}
+						onchange={e =>
+							(this._state.positionOnWorld.y = +(e.target as HTMLInputElement).value)
+						}
+					/>
+				</label>
+				<label>
+					currentZoneID{" "}
+					<input
+						value={`${this._state.currentZoneID}`}
+						onchange={e =>
+							(this._state.currentZoneID = +(e.target as HTMLInputElement).value)
+						}
+					/>
+				</label>
+				<label>
+					positionOnZone.x{" "}
+					<input
+						value={`${this._state.positionOnZone.x}`}
+						onchange={e =>
+							(this._state.positionOnZone.x = +(e.target as HTMLInputElement).value)
+						}
+					/>
+				</label>
+				<label>
+					positionOnZone.y{" "}
+					<input
+						value={`${this._state.positionOnZone.y}`}
+						onchange={e =>
+							(this._state.positionOnZone.y = +(e.target as HTMLInputElement).value)
+						}
+					/>
+				</label>
+				<label>
+					currentWeapon{" "}
+					<input
+						value={`${this._state.currentWeapon}`}
+						onchange={e =>
+							(this._state.currentWeapon = +(e.target as HTMLInputElement).value)
+						}
+					/>
+				</label>
+				<label>
+					currentAmmo{" "}
+					<input
+						value={`${this._state.currentAmmo}`}
+						onchange={e =>
+							(this._state.currentAmmo = +(e.target as HTMLInputElement).value)
+						}
+					/>
+				</label>
+				<label>
+					forceAmmo{" "}
+					<input
+						value={`${this._state.forceAmmo}`}
+						onchange={e =>
+							(this._state.forceAmmo = +(e.target as HTMLInputElement).value)
+						}
+					/>
+				</label>
+				<label>
+					blasterAmmo{" "}
+					<input
+						value={`${this._state.blasterAmmo}`}
+						onchange={e =>
+							(this._state.blasterAmmo = +(e.target as HTMLInputElement).value)
+						}
+					/>
+				</label>
+				<label>
+					blasterRifleAmmo{" "}
+					<input
+						value={`${this._state.blasterRifleAmmo}`}
+						onchange={e =>
+							(this._state.blasterRifleAmmo = +(e.target as HTMLInputElement).value)
+						}
+					/>
+				</label>
+				<label>
+					difficulty{" "}
+					<input
+						value={`${this._state.difficulty}`}
+						onchange={e =>
+							(this._state.difficulty = +(e.target as HTMLInputElement).value)
+						}
+					/>
+				</label>
+				<label>
+					timeElapsed{" "}
+					<input
+						value={`${this._state.timeElapsed}`}
+						onchange={e =>
+							(this._state.timeElapsed = +(e.target as HTMLInputElement).value)
+						}
+					/>
+				</label>
+				<label>
+					worldSize{" "}
+					<input
+						value={`${this._state.worldSize}`}
+						onchange={e =>
+							(this._state.worldSize = +(e.target as HTMLInputElement).value)
+						}
+					/>
+				</label>
+				<label>
+					unknownCount{" "}
+					<input
+						value={`${this._state.unknownCount}`}
+						onchange={e =>
+							(this._state.unknownCount = +(e.target as HTMLInputElement).value)
+						}
+					/>
+				</label>
+				<label>
+					unknownSum{" "}
+					<input
+						value={`${this._state.unknownSum}`}
+						onchange={e =>
+							(this._state.unknownSum = +(e.target as HTMLInputElement).value)
+						}
+					/>
+				</label>
+				<label>
+					unknownThing{" "}
+					<input
+						value={`${this._state.unknownThing}`}
+						onchange={e =>
+							(this._state.unknownThing = +(e.target as HTMLInputElement).value)
+						}
+					/>
+				</label>
 			</div>
 		);
 	}
