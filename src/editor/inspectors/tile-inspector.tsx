@@ -3,6 +3,8 @@ import CSSTileSheet from "../css-tile-sheet";
 import { IconButton } from "src/ui/components";
 import { MutableTile } from "src/engine/mutable-objects";
 import { TileEditor } from "../components";
+import { sqrt, ceil } from "src/std.math";
+import { downloadImage } from "src/util";
 import "./tile-inspector.scss";
 
 class TileInspector extends AbstractInspector {
@@ -20,6 +22,9 @@ class TileInspector extends AbstractInspector {
 		this.window.content.style.maxHeight = "300px";
 		this.window.content.style.flexDirection = "column";
 		this.window.addTitlebarButton(<IconButton icon="plus" onclick={() => this.addTile()} />);
+		this.window.addTitlebarButton(
+			<IconButton icon="download" onclick={() => this.downloadTileset()} />
+		);
 	}
 
 	private toggleBit(bit: number, cell: HTMLElement) {
@@ -181,6 +186,46 @@ class TileInspector extends AbstractInspector {
 
 		this.windowManager.showWindow(editor);
 		this._editor = editor;
+	}
+
+	public downloadTileset() {
+		const size = ceil(sqrt(this.data.currentData.tiles.length));
+
+		const TileWidth = MutableTile.WIDTH;
+		const TileHeight = MutableTile.HEIGHT;
+		const imageData = new ImageData(size * TileWidth, size * TileHeight);
+		const rawImageData = imageData.data;
+		const palette = this.data.palette;
+
+		const bpr = 4 * size * TileWidth;
+		for (let y = 0; y < size; y++) {
+			for (let x = 0; x < size; x++) {
+				const tile = this.data.currentData.tiles[x + y * size];
+				if (!tile) break;
+
+				const pixels = tile.imageData;
+				const sy = y * TileHeight;
+				const sx = x * TileWidth;
+				let j = sy * bpr + sx * 4;
+
+				for (let ty = 0; ty < TileHeight; ty++) {
+					for (let tx = 0; tx < TileWidth; tx++) {
+						const i = ty * TileWidth + tx;
+						const paletteIndex = pixels[i] * 4;
+						if (paletteIndex === 0) continue;
+
+						rawImageData[j + 4 * tx + 0] = palette[paletteIndex + 2];
+						rawImageData[j + 4 * tx + 1] = palette[paletteIndex + 1];
+						rawImageData[j + 4 * tx + 2] = palette[paletteIndex + 0];
+						rawImageData[j + 4 * tx + 3] = paletteIndex === 0 ? 0x00 : 0xff;
+					}
+
+					j += bpr;
+				}
+			}
+		}
+
+		downloadImage(imageData, `${this.data.type.name} tileset.png`);
 	}
 }
 
