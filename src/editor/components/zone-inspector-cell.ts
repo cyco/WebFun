@@ -127,6 +127,7 @@ class ZoneInspectorCell extends Cell<Zone> {
 		const node = <ZoneInspectorCell>super.cloneNode(deep);
 		node.tileSheet = this.tileSheet;
 		node.onclick = this.onclick;
+		node.oncontextmenu = this.oncontextmenu;
 		return node;
 	}
 
