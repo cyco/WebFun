@@ -2,6 +2,7 @@ import AbstractInspector from "./abstract-inspector";
 import { ColorPicker, PaletteColorPicker } from "../components";
 import { IconButton } from "src/ui/components";
 import { Color, Size, download, rgba } from "src/util";
+import { ModalPrompt } from "src/ux";
 
 class PaletteInspector extends AbstractInspector {
 	private _paletteView: PaletteColorPicker = document.createElement(
@@ -36,8 +37,23 @@ class PaletteInspector extends AbstractInspector {
 		this.window.content.appendChild(this._colorPicker);
 
 		this._download.icon = "download";
-		this._download.onclick = () =>
-			download(this._paletteView.palette.toGIMP("Yoda Stories"), "Yoda Stories.gpl");
+		this._download.onclick = async () => {
+			const type = await ModalPrompt("Pick file format:", {
+				defaultValue: "gpl",
+				options: [
+					{ label: "GIMP Palette", value: "gpl" },
+					{ label: "Adobe Color Table", value: "act" }
+				]
+			});
+			if (type === null) return;
+
+			const name = "Yoda Stories";
+			const data =
+				type === "gpl"
+					? this._paletteView.palette.toGIMP(name)
+					: this._paletteView.palette.toAdobeColorTable();
+			download(data, `${name}.${type}`);
+		};
 		(this.window as any)._titlebar.addButton(this._download);
 	}
 
