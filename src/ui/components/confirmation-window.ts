@@ -71,6 +71,22 @@ class ConfirmationWindow extends Window {
 		} else super.attributeChangedCallback(attr, oldValue, newValue);
 	}
 
+	set confirmText(t: string) {
+		this.setAttribute("confirm-text", t);
+	}
+
+	get confirmText() {
+		return this.getAttribute("confirm-text");
+	}
+
+	set abortText(t: string) {
+		this.setAttribute("abort-text", t);
+	}
+
+	get abortText() {
+		return this.getAttribute("abort-text");
+	}
+
 	set customContent(c: string | HTMLElement | HTMLDivElement[]) {
 		this._customContent = c;
 	}

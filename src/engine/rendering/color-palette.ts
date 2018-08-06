@@ -1,8 +1,10 @@
 import { floor } from "src/std.math";
+import { OutputStream } from "src/util";
 
 interface ColorPalette extends Uint8Array {
 	findColor(r: number, g: number, b: number, a?: number): number;
 	toGIMP(name: string): string;
+	toAdobeColorTable(): Uint8Array;
 }
 
 function findColor(r: number, g: number, b: number, a: number = 255): number {
@@ -32,7 +34,23 @@ function toGIMP(name: string): string {
 	return out;
 }
 
+function toAdobeColorTable(transparentColorIndex: number = 0): Uint8Array {
+	const stream = new OutputStream((this.length / 4) * 3 + 2 + 2);
+	for (let i = 0; i < this.length; i += 4) {
+		stream.writeUint8(this[i + 2]);
+		stream.writeUint8(this[i + 1]);
+		stream.writeUint8(this[i]);
+	}
+	stream.endianess = OutputStream.ENDIAN.BIG;
+	stream.writeUint16(floor(this.length / 4));
+	stream.writeUint16(transparentColorIndex);
+
+	return new Uint8Array(stream.buffer);
+}
+
 Uint8Array.prototype.findColor = Uint8Array.prototype.findColor || findColor;
 Uint8Array.prototype.toGIMP = Uint8Array.prototype.toGIMP || toGIMP;
+Uint8Array.prototype.toAdobeColorTable =
+	Uint8Array.prototype.toAdobeColorTable || toAdobeColorTable;
 
 export default ColorPalette;

@@ -1,4 +1,4 @@
-import { ConfirmationWindow, Window, Textbox } from "src/ui/components";
+import { ConfirmationWindow, Textbox, Selector } from "src/ui/components";
 import WindowModalSession from "../window-modal-session";
 import { dispatch } from "src/util";
 
@@ -7,11 +7,12 @@ export declare interface Options {
 	confirmText?: string;
 	abortText?: string;
 	defaultValue?: string;
+	options?: string[] | { label: string; value: string }[];
 }
 
 type ConfirmDialogContent = string | HTMLElement | HTMLDivElement[];
 
-export declare interface ConfirmableWindow extends Window {
+export declare interface ConfirmableWindow extends ConfirmationWindow {
 	onconfirm: () => void;
 	onabort: () => void;
 	customContent: ConfirmDialogContent;
@@ -27,23 +28,34 @@ const MergeDefaultOptions = (options: Options): Options => ({
 export default async (prompt: string, o: Options = {}): Promise<string> => {
 	const options = MergeDefaultOptions(o);
 
-	const window = document.createElement(options.component) as ConfirmableWindow;
-	window.setAttribute("confirm-text", options.confirmText);
-	window.setAttribute("abort-text", options.abortText);
-	window.customContent = (
-		<div>
-			{prompt}
-			<br />
-			<Textbox value={o.defaultValue} />
-		</div>
-	);
-	const inputField = window.customContent.querySelector(Textbox.tagName) as Textbox;
+	const window = (
+		<ConfirmationWindow
+			confirmText={options.confirmText}
+			abortText={options.abortText}
+			customContent={
+				<div>
+					{prompt}
+					<br />
+					{o.options ? (
+						<Selector value={o.defaultValue} options={o.options} />
+					) : (
+						<Textbox value={o.defaultValue} />
+					)}
+				</div>
+			}
+		/>
+	) as ConfirmationWindow;
+
+	const input = (window.customContent as HTMLElement).querySelector(
+		[Textbox.tagName, Selector.tagName].join(",")
+	) as Textbox;
 
 	const session = new WindowModalSession(window);
 	window.onconfirm = () => session.end(1);
 	window.onabort = () => session.end(0);
 
-	dispatch(() => (inputField.focus(), inputField.select()));
+	if (input instanceof Textbox) dispatch(() => (input.focus(), input.select()));
+	if (input instanceof Selector) dispatch(() => input.focus());
 
 	return new Promise<string>(resolve => {
 		session.onend = code =>
@@ -51,7 +63,7 @@ export default async (prompt: string, o: Options = {}): Promise<string> => {
 				if (code === 0) {
 					resolve(null);
 				}
-				resolve(inputField.value);
+				resolve(input.value);
 			});
 		session.run();
 	});
