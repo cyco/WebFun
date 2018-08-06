@@ -2,8 +2,14 @@
 
 wf-textbox {
 	@include inset-border(2px);
-
 	background: none;
 	outline: none;
-	min-width: 0px;
+	min-width: 0;
+
+	input {
+		background-color: transparent;
+		border: 0;
+		-webkit-appearance: none;
+		outline: 0;
+	}
 }
