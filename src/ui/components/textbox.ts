@@ -12,6 +12,14 @@ class Textbox extends Component {
 		this.appendChild(this._element);
 	}
 
+	public focus() {
+		this._element.focus();
+	}
+
+	public select() {
+		this._element.select();
+	}
+
 	get editable() {
 		return !this._element.hasAttribute("readonly");
 	}
