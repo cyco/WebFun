@@ -1,12 +1,13 @@
 import AbstractInspector from "./abstract-inspector";
 import { ZoneInspectorCell } from "../components";
-import { Zone, ZoneType } from "src/engine/objects";
+import { Zone } from "src/engine/objects";
 import { MutableZone } from "src/engine/mutable-objects";
-import { List, IconButton } from "src/ui/components";
+import { List, IconButton, ContextMenu } from "src/ui/components";
 import ZoneEditorController from "../components/zone-editor/window";
 import ReferenceResolver from "src/editor/reference-resolver";
-import { Size } from "src/util";
-import { Planet } from "src/engine/types";
+import { Point, Size } from "src/util";
+import { Menu } from "src/ui";
+import { ModalPrompt } from "src/ux";
 
 class ZoneInspector extends AbstractInspector {
 	private _list: List<Zone>;
@@ -25,12 +26,18 @@ class ZoneInspector extends AbstractInspector {
 		this.window.content.style.flexDirection = "column";
 		this.window.addTitlebarButton(<IconButton icon="plus" onclick={() => this.addZone()} />);
 
-		this._list = document.createElement(List.tagName) as List<Zone>;
-		this._list.cell = document.createElement(ZoneInspectorCell.tagName) as ZoneInspectorCell;
-		this._list.cell.onclick = (e: MouseEvent) =>
-			this._onCellClicked(e.currentTarget as ZoneInspectorCell);
-		this._list.searchDelegate = this;
-		this._list.state = state.prefixedWith("list");
+		this._list = <List /> as List<Zone>;
+		this._list.cell = (
+			<ZoneInspectorCell
+				onclick={(e: MouseEvent) =>
+					this._onCellClicked(e.currentTarget as ZoneInspectorCell)
+				}
+				searchDelegate={this}
+				state={state.prefixedWith("list")}
+				oncontextmenu={(e: MouseEvent) => this._onCellContextMenu(e)}
+			/>
+		) as ZoneInspectorCell;
+
 		this._list.addEventListener(ZoneInspectorCell.Events.RevealReferences, (e: CustomEvent) =>
 			this._revealReferences(e.detail.zone)
 		);
@@ -60,6 +67,47 @@ class ZoneInspector extends AbstractInspector {
 		controller.manager = this.windowManager;
 		controller.show();
 		this._storeZones();
+	}
+
+	private _onCellContextMenu(e: MouseEvent) {
+		console.log("_onCellContextMenu");
+		const cell = e.currentTarget as ZoneInspectorCell;
+		const zone = cell.data;
+		console.log(cell, zone);
+
+		const contextMenu = (
+			<ContextMenu
+				menu={
+					new Menu([
+						{
+							title: "Reisze…",
+							callback: async () => {
+								const value = await ModalPrompt("", {
+									defaultValue: `${zone.size.width}x${zone.size.height}`
+								});
+								if (!value) return;
+								const [xstr, ystr] = value.split("x");
+								if (!xstr || !ystr) return;
+								const x = xstr.parseInt();
+								const y = ystr.parseInt();
+								if (isNaN(x) || isNaN(y)) return;
+
+								console.log("resize to", x, y);
+								const size = new Size(x, y);
+								(zone as MutableZone).size = size;
+								(zone as MutableZone).tileIDs = new Int16Array(size.area * 3).map(
+									_ => -1
+								);
+							}
+						}
+					])
+				}
+			/>
+		) as ContextMenu;
+		contextMenu.show(new Point(e.clientX, e.clientY));
+
+		e.preventDefault();
+		e.stopPropagation();
 	}
 
 	private _revealReferences(zone: Zone) {
