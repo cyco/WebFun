@@ -42,6 +42,7 @@ export default async (prompt: string, o: Options = {}): Promise<string> => {
 	const session = new WindowModalSession(window);
 	window.onconfirm = () => session.end(1);
 	window.onabort = () => session.end(0);
+
 	dispatch(() => (inputField.focus(), inputField.select()));
 
 	return new Promise<string>(resolve => {
