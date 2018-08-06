@@ -33,6 +33,15 @@ class ConfirmationWindow extends Window {
 		buttons.appendChild(this._abortButton);
 		this.content.appendChild(buttons);
 
+		this.onkeydown = (e: KeyboardEvent) => {
+			if (e.keyCode === 13) this.onconfirm();
+			if (e.keyCode === 27) this.onabort();
+			if (e.keyCode !== 13 && e.keyCode !== 27) return;
+
+			e.preventDefault();
+			e.stopPropagation();
+		};
+
 		if (typeof this._customContent === "string") {
 			const label = document.createElement("div");
 			label.classList.add("text");
@@ -50,6 +59,7 @@ class ConfirmationWindow extends Window {
 			this.content.removeChild(this.content.firstChild);
 		}
 
+		this.onkeydown = () => void 0;
 		super.disconnectedCallback();
 	}
 
