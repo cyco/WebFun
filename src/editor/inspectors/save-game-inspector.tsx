@@ -16,7 +16,11 @@ class SaveGameInspector extends AbstractInspector {
 		this.window.content.style.flexDirection = "column";
 		this.window.classList.add("wf-resource-editor-save-game-inspector");
 		this.window.addTitlebarButton(
-			<IconButton icon="download" onclick={() => this.saveGame()} />
+			<IconButton
+				icon="download"
+				title="Download modified save game"
+				onclick={() => this.downloadSaveGame()}
+			/>
 		);
 	}
 
@@ -25,7 +29,7 @@ class SaveGameInspector extends AbstractInspector {
 		this.window.content.appendChild(this._editorView);
 	}
 
-	public saveGame(): void {
+	public downloadSaveGame(): void {
 		const state = this._editorView.saveGame;
 		const writer = new Writer(this._editorView.data);
 

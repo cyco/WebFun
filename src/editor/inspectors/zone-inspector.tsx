@@ -24,7 +24,9 @@ class ZoneInspector extends AbstractInspector {
 		this.window.style.width = "300px";
 		this.window.content.style.maxHeight = "300px";
 		this.window.content.style.flexDirection = "column";
-		this.window.addTitlebarButton(<IconButton icon="plus" onclick={() => this.addZone()} />);
+		this.window.addTitlebarButton(
+			<IconButton icon="plus" title="Add new zone" onclick={() => this.addZone()} />
+		);
 
 		this._list = <List /> as List<Zone>;
 		this._list.cell = (
@@ -175,6 +177,7 @@ class ZoneInspector extends AbstractInspector {
 
 		this.data.currentData.zones.push(zone);
 		this._list.items = this.data.currentData.zones;
+		this._list.firstElementChild.lastElementChild.scrollIntoView();
 	}
 
 	prepareListSearch(searchValue: string, _: List<Zone>): RegExp[] {

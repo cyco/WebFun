@@ -50,7 +50,7 @@ const rescueData = () => {
 	editorWindow.editor.save();
 	(editorWindow.editor.inspectors.find(
 		i => i instanceof SaveGameInspector
-	) as SaveGameInspector).saveGame();
+	) as SaveGameInspector).downloadSaveGame();
 };
 
 window.document.addEventListener("keydown", (e: KeyboardEvent) => {

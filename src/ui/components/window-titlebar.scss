@@ -37,6 +37,17 @@ wf-window-titlebar {
 		}
 	}
 
+	> wf-icon-button {
+		float: right;
+		color: #555555;
+		position: relative;
+		top: 2px;
+
+		&:hover {
+			color: #333333;
+		}
+	}
+
 	> .pin {
 		float: right;
 		margin-top: 2px;
