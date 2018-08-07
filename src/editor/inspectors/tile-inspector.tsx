@@ -21,9 +21,22 @@ class TileInspector extends AbstractInspector {
 		this.window.style.width = "502px";
 		this.window.content.style.maxHeight = "300px";
 		this.window.content.style.flexDirection = "column";
-		this.window.addTitlebarButton(<IconButton icon="plus" onclick={() => this.addTile()} />);
 		this.window.addTitlebarButton(
-			<IconButton icon="download" onclick={() => this.downloadTileset()} />
+			<IconButton icon="plus" title="Add new tile" onclick={() => this.addTile()} />
+		);
+		this.window.addTitlebarButton(
+			<IconButton
+				icon="download"
+				title="Download tileset image"
+				onclick={() => this.downloadTileset()}
+			/>
+		);
+		this.window.addTitlebarButton(
+			<IconButton
+				icon="upload"
+				title="Upload tileset image"
+				onclick={() => this.uploadTileset()}
+			/>
 		);
 	}
 
@@ -82,6 +95,7 @@ class TileInspector extends AbstractInspector {
 
 		this.data.currentData.tiles.push(tile);
 		this.build();
+		this.window.content.scrollTop = this.window.content.scrollHeight;
 	}
 
 	build() {
@@ -226,6 +240,10 @@ class TileInspector extends AbstractInspector {
 		}
 
 		downloadImage(imageData, `${this.data.type.name} tileset.png`);
+	}
+
+	public uploadTileset() {
+		console.log("uploadTileset");
 	}
 }
 
