@@ -3,8 +3,9 @@ import CSSTileSheet from "../css-tile-sheet";
 import { IconButton } from "src/ui/components";
 import { MutableTile } from "src/engine/mutable-objects";
 import { TileEditor } from "../components";
-import { sqrt, ceil } from "src/std.math";
+import { sqrt, ceil, floor } from "src/std.math";
 import { downloadImage } from "src/util";
+import { FilePicker } from "src/ui";
 import "./tile-inspector.scss";
 
 class TileInspector extends AbstractInspector {
@@ -242,8 +243,44 @@ class TileInspector extends AbstractInspector {
 		downloadImage(imageData, `${this.data.type.name} tileset.png`);
 	}
 
-	public uploadTileset() {
-		console.log("uploadTileset");
+	public async uploadTileset() {
+		const [file] = await FilePicker.Pick({ allowedTypes: ["png"] });
+		if (!file) return;
+
+		const image = await file.readAsImage();
+		const { width, height, data: rawImageData } = image.toImageData();
+		const bpr = 4 * width;
+
+		const tilesPerColumn = floor(height / MutableTile.HEIGHT);
+		const tilesPerRow = floor(width / MutableTile.WIDTH);
+
+		for (let y = 0; y < tilesPerColumn; y++) {
+			for (let x = 0; x < tilesPerRow; x++) {
+				let j = 4 * MutableTile.WIDTH * x + MutableTile.HEIGHT * y * bpr;
+				const tileIdx = x + y * tilesPerRow;
+
+				if (tileIdx >= this.data.currentData.tiles.length) break;
+				const tile = this.data.currentData.tiles[tileIdx];
+				const pixels = new Uint8Array(MutableTile.WIDTH * MutableTile.HEIGHT);
+
+				for (let ty = 0; ty < MutableTile.HEIGHT; ty++) {
+					for (let tx = 0; tx < MutableTile.WIDTH; tx++) {
+						const i = ty * MutableTile.WIDTH + tx;
+						const [r, g, b, a] = [
+							rawImageData[j + 4 * tx + 0],
+							rawImageData[j + 4 * tx + 1],
+							rawImageData[j + 4 * tx + 2],
+							rawImageData[j + 4 * tx + 3]
+						];
+						pixels[i] = this.data.palette.findColor(r, g, b, a);
+					}
+
+					j += bpr;
+				}
+
+				(tile as MutableTile).imageData = pixels;
+			}
+		}
 	}
 }
 
