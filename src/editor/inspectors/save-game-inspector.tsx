@@ -6,7 +6,9 @@ import { download, OutputStream, DiscardingOutputStream } from "src/util";
 import "./save-game-inspector.scss";
 
 class SaveGameInspector extends AbstractInspector {
-	private _editorView: EditorView = <EditorView /> as EditorView;
+	private _editorView: EditorView = (
+		<EditorView state={this.state.prefixedWith("editor-view")} />
+	) as EditorView;
 
 	constructor(state: Storage) {
 		super(state);

@@ -1,16 +1,19 @@
 import Component from "../component";
 import Segment from "./segment";
+import { DiscardingStorage } from "src/util";
 import "./segment-control.scss";
 
 class SegmentControl extends Component implements EventListenerObject {
 	public static readonly tagName = "wf-segmented-control";
 	private _currentSegment: Element;
 	public onsegmentchange: ((segment: Segment) => void);
+	public state: Storage = new DiscardingStorage();
 
 	protected connectedCallback() {
 		super.connectedCallback();
 		Array.from(this.children).forEach(c => c.addEventListener("click", this));
-		this.currentSegment = this.querySelector("[selected]");
+		this.currentSegment = (this.childNodes[this.state.load("active-segment")] ||
+			this.firstElementChild) as Segment;
 	}
 
 	handleEvent(e: Event) {
@@ -30,6 +33,7 @@ class SegmentControl extends Component implements EventListenerObject {
 		}
 
 		this._currentSegment = s;
+		this.state.store("active-segment", this.childNodes.indexOf(s));
 
 		if (this._currentSegment) {
 			this._currentSegment.setAttribute("selected", "");

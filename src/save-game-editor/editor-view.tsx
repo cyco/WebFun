@@ -18,7 +18,7 @@ import { Yoda as GameTypeYoda } from "src/engine/type";
 import WorldItem from "./world-item";
 import { World } from "src/engine/save-game";
 import { Segment, SegmentControl } from "src/ui/components";
-import { Point, identity } from "src/util";
+import { Point, identity, DiscardingStorage } from "src/util";
 import { ModalPrompt } from "src/ux";
 
 import "./editor-view.scss";
@@ -30,6 +30,7 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 	private _state: SaveState;
 	private _tileSheet: CSSTileSheet;
 	private _save: Element = <div className="save" />;
+	public state: Storage = new DiscardingStorage();
 
 	protected connectedCallback() {
 		super.connectedCallback();
@@ -58,7 +59,8 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 		Array.from(this._save.querySelectorAll(".content")).forEach(
 			(c: HTMLElement) => (c.style.display = "none")
 		);
-		const r = this._save.querySelector(".content." + segment.textContent) as HTMLElement;
+		let r = this._save.querySelector(".content." + segment.textContent) as Segment;
+		if (!r) r = this._save.querySelector(".content") as Segment;
 		r.style.display = "";
 	}
 
@@ -107,8 +109,11 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 
 				<span className="mission">{missionStatement}</span>
 
-				<SegmentControl onsegmentchange={(segment: Segment) => this._showSegment(segment)}>
-					<Segment selected>World</Segment>
+				<SegmentControl
+					onsegmentchange={(segment: Segment) => this._showSegment(segment)}
+					state={this.state.prefixedWith("content")}
+				>
+					<Segment>World</Segment>
 					{state.type === GameTypeYoda && <Segment>Dagobah</Segment>}
 					<Segment>Inventory</Segment>
 					<Segment>Props</Segment>
