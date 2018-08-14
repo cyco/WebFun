@@ -41,7 +41,7 @@ class TileInspector extends AbstractInspector {
 		);
 	}
 
-	private toggleBit(bit: number, cell: HTMLElement) {
+	private toggleBitFilter(bit: number, cell: HTMLElement) {
 		if (cell.textContent === "") {
 			cell.textContent = "1";
 			this._requiredAttributes |= 1 << bit;
@@ -68,6 +68,11 @@ class TileInspector extends AbstractInspector {
 			this.updateFilter();
 			return;
 		}
+	}
+
+	private toggleBit(tile: MutableTile, bit: number, cell: HTMLElement) {
+		tile.attributes ^= 1 << bit;
+		cell.textContent = tile.attributes & (1 << bit) ? "1" : "0";
 	}
 
 	private updateFilter() {
@@ -152,7 +157,8 @@ class TileInspector extends AbstractInspector {
 		for (let i = 31; i >= 0; i--) {
 			const bitCell = document.createElement("th");
 			bitCell.title = `Bit ${i}` + (titles[i] ? ": " + titles[i] : "");
-			bitCell.onclick = (e: MouseEvent) => this.toggleBit(i, e.currentTarget as HTMLElement);
+			bitCell.onclick = (e: MouseEvent) =>
+				this.toggleBitFilter(i, e.currentTarget as HTMLElement);
 			headRow.appendChild(bitCell);
 		}
 		head.appendChild(headRow);
@@ -177,6 +183,8 @@ class TileInspector extends AbstractInspector {
 				const bitCell = document.createElement("td");
 				bitCell.textContent = `${tile.attributes & (1 << i) ? 1 : 0}`;
 				bitCell.title = `Bit ${i}` + (titles[i] ? ": " + titles[i] : "");
+				bitCell.onclick = (e: MouseEvent) =>
+					this.toggleBit(tile, i, e.currentTarget as HTMLElement);
 				row.appendChild(bitCell);
 			}
 			body.appendChild(row);
