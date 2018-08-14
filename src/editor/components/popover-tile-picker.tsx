@@ -45,6 +45,7 @@ class PopoverTilePicker extends Component implements EventListenerObject {
 			session.end(5);
 		});
 		popover.content.appendChild(picker);
+		picker.state = localStorage.prefixedWith("popover-tile-picker");
 		session.run();
 
 		e.stopPropagation();

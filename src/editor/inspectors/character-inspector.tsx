@@ -16,6 +16,7 @@ class CharacterInspector extends AbstractInspector {
 		this.window.content.style.height = "280px";
 
 		this._list = document.createElement(List.tagName) as List<Char>;
+		this._list.state = state.prefixedWith("list");
 		this._list.cell = <CharacterInspectorCell /> as CharacterInspectorCell;
 		this._list.cell.onclick = (e: MouseEvent) =>
 			this._onCellClicked(e.currentTarget as CharacterInspectorCell);

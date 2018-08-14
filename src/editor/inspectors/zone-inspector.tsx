@@ -28,14 +28,13 @@ class ZoneInspector extends AbstractInspector {
 			<IconButton icon="plus" title="Add new zone" onclick={() => this.addZone()} />
 		);
 
-		this._list = <List /> as List<Zone>;
+		this._list = <List state={state.prefixedWith("list")} /> as List<Zone>;
 		this._list.cell = (
 			<ZoneInspectorCell
 				onclick={(e: MouseEvent) =>
 					this._onCellClicked(e.currentTarget as ZoneInspectorCell)
 				}
 				searchDelegate={this}
-				state={state.prefixedWith("list")}
 				oncontextmenu={(e: MouseEvent) => this._onCellContextMenu(e)}
 			/>
 		) as ZoneInspectorCell;
