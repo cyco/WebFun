@@ -191,6 +191,18 @@ class TileInspector extends AbstractInspector {
 		});
 		table.appendChild(body);
 		this.window.content.appendChild(table);
+		this.window.content.addEventListener(
+			"scroll",
+			() => this.state.store("scroll", this.window.content.scrollTop),
+			{
+				passive: true
+			}
+		);
+	}
+
+	show() {
+		super.show();
+		setTimeout(() => (this.window.content.scrollTop = this.state.load("scroll") | 0));
 	}
 
 	public editTile(tile: MutableTile) {
