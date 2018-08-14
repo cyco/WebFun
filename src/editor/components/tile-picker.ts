@@ -75,6 +75,7 @@ class TilePicker extends Component {
 
 	set currentTile(tile: Tile) {
 		this._currentTile = tile;
+
 		this.dispatchEvent(
 			new CustomEvent(Events.TileDidChange, { detail: { tile }, bubbles: true })
 		);
@@ -82,6 +83,14 @@ class TilePicker extends Component {
 
 	get currentTile() {
 		return this._currentTile;
+	}
+
+	set state(s: Storage) {
+		this._list.state = s.prefixedWith("list");
+	}
+
+	get state() {
+		return this._list.state;
 	}
 }
 

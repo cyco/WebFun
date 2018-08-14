@@ -21,6 +21,7 @@ class SoundInspector extends AbstractInspector {
 		this.window.content.style.flexDirection = "column";
 
 		this._list = document.createElement(List.tagName) as List<Sound>;
+		this._list.state = state.prefixedWith("list");
 		this._list.cell = document.createElement(SoundInspectorCell.tagName) as SoundInspectorCell;
 		this._list.searchDelegate = this;
 		this._list.state = state.prefixedWith("list");

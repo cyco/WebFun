@@ -19,6 +19,7 @@ export declare interface SearchDelegate<T, PreparedSearchValue> {
 const FILTER_DELAY = 100;
 const SearchBarVisibleStateKey = "searchbar-visible";
 const SearchValueStateKey = "search";
+const ScrollTopStateKey = "scroll";
 
 class List<T> extends Component {
 	public static readonly tagName: string = "wf-list";
@@ -46,6 +47,7 @@ class List<T> extends Component {
 	protected connectedCallback() {
 		if (this.searchDelegate && !this._bar.parentElement)
 			this.insertBefore(this._bar, this.firstElementChild);
+
 		this.rebuild();
 
 		if (!this.searchDelegate) return;
@@ -60,6 +62,8 @@ class List<T> extends Component {
 		if (this.state.load(SearchBarVisibleStateKey)) {
 			this.showBar(false);
 		}
+
+		this._content.scrollTop = this._state.load(ScrollTopStateKey);
 	}
 
 	public showBar(updateState: boolean) {
@@ -104,7 +108,16 @@ class List<T> extends Component {
 
 	private rebuild() {
 		const oldContent = this._content;
+		const offset = this._state.load(ScrollTopStateKey);
+
 		this._content = document.createElement("div");
+		this._content.addEventListener(
+			"scroll",
+			() => {
+				this.state.store(ScrollTopStateKey, this._content.scrollTop);
+			},
+			{ passive: true }
+		);
 		this._lastSearchValue = "";
 		this._cells.forEach(c => c.remove());
 		this._cells = this._items.map(i => this.addItem(i));
@@ -112,6 +125,8 @@ class List<T> extends Component {
 		if (oldContent.parentElement)
 			oldContent.parentElement.replaceChild(this._content, oldContent);
 		else this.appendChild(this._content);
+
+		this._content.scrollTop = offset;
 	}
 
 	private setNeedsRefiltering() {
@@ -172,6 +187,10 @@ class List<T> extends Component {
 			this._bar.setAttribute("visible", "");
 		} else {
 			this._bar.removeAttribute("visible");
+		}
+
+		if (this.isConnected && this.items.length) {
+			this._content.scrollTop = s.load(ScrollTopStateKey);
 		}
 	}
 
