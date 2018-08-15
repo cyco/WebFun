@@ -1,8 +1,8 @@
 import Component from "src/ui/component";
 import { default as Zone } from "src/engine/objects/zone";
-import { HEIGHT as TileHeight, WIDTH as TileWidth } from "src/engine/objects/tile";
-import CSSTileSheet from "src/editor/css-tile-sheet";
+import Tile, { HEIGHT as TileHeight, WIDTH as TileWidth } from "src/engine/objects/tile";
 import { Point } from "src/util";
+import { ColorPalette } from "src/engine/rendering";
 import "./zone-layer.scss";
 
 class ZoneLayer extends Component {
@@ -11,7 +11,8 @@ class ZoneLayer extends Component {
 	private _zone: Zone;
 	private _layer: number;
 	private _canvas: HTMLCanvasElement;
-	private _tileSheet: CSSTileSheet;
+	private _palette: ColorPalette;
+	private _imageData: ImageData;
 
 	constructor() {
 		super();
@@ -24,6 +25,120 @@ class ZoneLayer extends Component {
 		this.draw();
 	}
 
+	private draw(): void {
+		if (this._layer === undefined) return;
+		if (!this._zone) return;
+		if (!this._palette) return;
+
+		const ctx = this._canvas.getContext("2d");
+		if (!this._imageData) {
+			this._imageData = this.drawLayer();
+		}
+
+		ctx.putImageData(this._imageData, 0, 0);
+	}
+
+	private drawLayer() {
+		const layer = this._layer;
+		const zone = this._zone;
+		const palette = this._palette;
+
+		const TileWidth = Tile.WIDTH;
+		const TileHeight = Tile.HEIGHT;
+		const ZoneWidth = zone.size.width;
+		const ZoneHeight = zone.size.height;
+
+		const imageData = new ImageData(ZoneWidth * TileWidth, ZoneHeight * TileHeight);
+		const rawImageData = imageData.data;
+
+		const bpr = 4 * ZoneWidth * TileWidth;
+
+		for (let y = 0; y < ZoneHeight; y++) {
+			for (let x = 0; x < ZoneWidth; x++) {
+				let tile = zone.getTile(x, y, layer);
+				if (!tile) continue;
+
+				const pixels = tile.imageData;
+				const sy = y * TileHeight;
+				const sx = x * TileWidth;
+				let j = sy * bpr + sx * 4;
+
+				for (let ty = 0; ty < TileHeight; ty++) {
+					for (let tx = 0; tx < TileWidth; tx++) {
+						const i = ty * TileWidth + tx;
+						const paletteIndex = pixels[i] * 4;
+						if (paletteIndex === 0) continue;
+
+						rawImageData[j + 4 * tx + 0] = palette[paletteIndex + 2];
+						rawImageData[j + 4 * tx + 1] = palette[paletteIndex + 1];
+						rawImageData[j + 4 * tx + 2] = palette[paletteIndex + 0];
+						rawImageData[j + 4 * tx + 3] = paletteIndex === 0 ? 0x00 : 0xff;
+					}
+
+					j += bpr;
+				}
+			}
+		}
+
+		return imageData;
+	}
+
+	private _updateTile(tile: Tile, at: Point): void {
+		if (!this._imageData) return;
+
+		const zone = this._zone;
+		const palette = this._palette;
+
+		const TileWidth = Tile.WIDTH;
+		const TileHeight = Tile.HEIGHT;
+		const ZoneWidth = zone.size.width;
+
+		const imageData = this._imageData;
+		const rawImageData = imageData.data;
+
+		const bpr = 4 * ZoneWidth * TileWidth;
+
+		const pixels = tile ? tile.imageData : null;
+		const sy = at.y * TileHeight;
+		const sx = at.x * TileWidth;
+		let j = sy * bpr + sx * 4;
+
+		for (let ty = 0; ty < TileHeight; ty++) {
+			for (let tx = 0; tx < TileWidth; tx++) {
+				const i = ty * TileWidth + tx;
+				const paletteIndex = pixels ? pixels[i] * 4 : 0;
+				if (paletteIndex === 0) {
+					rawImageData[j + 4 * tx + 0] = 0;
+					rawImageData[j + 4 * tx + 1] = 0;
+					rawImageData[j + 4 * tx + 2] = 0;
+					rawImageData[j + 4 * tx + 3] = 0;
+					continue;
+				}
+
+				rawImageData[j + 4 * tx + 0] = palette[paletteIndex + 2];
+				rawImageData[j + 4 * tx + 1] = palette[paletteIndex + 1];
+				rawImageData[j + 4 * tx + 2] = palette[paletteIndex + 0];
+				rawImageData[j + 4 * tx + 3] = paletteIndex === 0 ? 0x00 : 0xff;
+			}
+
+			j += bpr;
+		}
+	}
+
+	public update(points: Point[]) {
+		if (this._layer === undefined) return;
+		if (!this._zone) return;
+
+		const zone = this._zone;
+		const ctx = this._canvas.getContext("2d");
+		points.forEach(p => {
+			const tile = zone.getTile(p.x, p.y, this._layer);
+			ctx.clearRect(p.x, p.y, 1, 1);
+			this._updateTile(tile, p);
+			this.draw();
+		});
+	}
+
 	set zone(zone: Zone) {
 		this._zone = zone;
 
@@ -32,71 +147,8 @@ class ZoneLayer extends Component {
 		this._canvas.style.width = zone.size.width * TileWidth + "px";
 		this._canvas.style.height = zone.size.height * TileHeight + "px";
 
-		const ctx = this._canvas.getContext("2d");
-		ctx.setTransform(TileWidth, 0, 0, TileHeight, 0, 0);
-
+		this._imageData = null;
 		if (this.isConnected) this.draw();
-	}
-
-	private draw() {
-		if (this._layer === undefined) return;
-		if (!this._zone) return;
-		if (!this._tileSheet) return;
-
-		const tileSheet = this._tileSheet;
-		const image = tileSheet.sheetImage;
-		const zone = this._zone;
-		const ctx = this._canvas.getContext("2d");
-
-		for (let y = 0; y < zone.size.height; y++) {
-			for (let x = 0; x < zone.size.width; x++) {
-				const tile = zone.getTile(x, y, this._layer);
-				if (!tile) continue;
-
-				const rect = tileSheet.rectangleForEntry(tile.id);
-				ctx.drawImage(
-					image,
-					rect.minX,
-					rect.minY,
-					rect.size.width,
-					rect.size.height,
-					x,
-					y,
-					1,
-					1
-				);
-			}
-		}
-	}
-
-	public update(points: Point[]) {
-		if (this._layer === undefined) return;
-		if (!this._zone) return;
-		if (!this._tileSheet) return;
-
-		const tileSheet = this._tileSheet;
-		const image = tileSheet.sheetImage;
-		const zone = this._zone;
-		const ctx = this._canvas.getContext("2d");
-		points.forEach(p => {
-			const tile = zone.getTile(p.x, p.y, this._layer);
-			ctx.clearRect(p.x, p.y, 1, 1);
-
-			if (!tile) return;
-
-			const rect = tileSheet.rectangleForEntry(tile.id);
-			ctx.drawImage(
-				image,
-				rect.minX,
-				rect.minY,
-				rect.size.width,
-				rect.size.height,
-				p.x,
-				p.y,
-				1,
-				1
-			);
-		});
 	}
 
 	get zone() {
@@ -106,6 +158,7 @@ class ZoneLayer extends Component {
 	set layer(zoneLayer: number) {
 		this._layer = zoneLayer;
 
+		this._imageData = null;
 		if (this.isConnected) this.draw();
 	}
 
@@ -113,13 +166,15 @@ class ZoneLayer extends Component {
 		return this._layer;
 	}
 
-	set tileSheet(s) {
-		this._tileSheet = s;
+	set palette(p: ColorPalette) {
+		this._palette = p;
+
+		this._imageData = null;
 		if (this.isConnected) this.draw();
 	}
 
-	get tileSheet() {
-		return this._tileSheet;
+	get palette() {
+		return this._palette;
 	}
 }
 

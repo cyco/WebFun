@@ -1,12 +1,11 @@
 import Component from "src/ui/component";
 import LayerComponent from "./zone-layer";
 import { Zone } from "src/engine/objects";
-import CSSTileSheet from "src/editor/css-tile-sheet";
 import { HEIGHT as TileHeight, WIDTH as TileWidth } from "src/engine/objects/tile";
 import { AbstractTool, NoTool } from "src/editor/tools";
 import { Point } from "src/util";
 import "./view.scss";
-import Layer from "src/editor/components/zone-editor/layer";
+import Layer from "./layer";
 
 class View extends Component {
 	public static readonly tagName = "wf-zone-editor-view";
@@ -16,22 +15,20 @@ class View extends Component {
 	private _objects: LayerComponent;
 	private _roof: LayerComponent;
 	private _overlay: HTMLCanvasElement;
-	private _tileSheet: CSSTileSheet;
 	private _tool: AbstractTool;
 	private _currentLayer: Layer;
 
 	constructor() {
 		super();
 
-		this._floor = <LayerComponent>document.createElement(LayerComponent.tagName);
+		this._floor = <LayerComponent /> as LayerComponent;
 		this._floor.layer = Zone.Layer.Floor;
-		this._objects = <LayerComponent>document.createElement(LayerComponent.tagName);
+		this._objects = <LayerComponent /> as LayerComponent;
 		this._objects.layer = Zone.Layer.Object;
-		this._roof = <LayerComponent>document.createElement(LayerComponent.tagName);
+		this._roof = <LayerComponent /> as LayerComponent;
 		this._roof.layer = Zone.Layer.Roof;
 
-		this._overlay = document.createElement("canvas");
-		this._overlay.classList.add("overlay");
+		this._overlay = <canvas className="overlay" /> as HTMLCanvasElement;
 
 		this.tool = new NoTool();
 	}
@@ -70,17 +67,6 @@ class View extends Component {
 
 	get zone() {
 		return this._zone;
-	}
-
-	set tileSheet(tileSheet: CSSTileSheet) {
-		this._tileSheet = tileSheet;
-		this._floor.tileSheet = tileSheet;
-		this._objects.tileSheet = tileSheet;
-		this._roof.tileSheet = tileSheet;
-	}
-
-	get tileSheet() {
-		return this._tileSheet;
 	}
 
 	set tool(tool: AbstractTool) {
@@ -135,6 +121,16 @@ class View extends Component {
 
 	get currentLayer(): Layer {
 		return this._currentLayer;
+	}
+
+	public set palette(p) {
+		this._floor.palette = p;
+		this._roof.palette = p;
+		this._objects.palette = p;
+	}
+
+	public get palette() {
+		return this._floor.palette;
 	}
 }
 
