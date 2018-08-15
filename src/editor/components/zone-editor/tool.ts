@@ -17,7 +17,7 @@ class ToolComponent extends Component implements EventListenerObject {
 	protected connectedCallback() {
 		super.connectedCallback();
 
-		const activateTool = () => this.editor.activateTool(this.tool);
+		const activateTool = () => (this.editor.tool = this.tool);
 		if (this.tool && this.tool.shortcut) {
 			const window = this.closest(Window.tagName);
 			const description = Object.assign({}, this.tool.shortcut, { node: window });

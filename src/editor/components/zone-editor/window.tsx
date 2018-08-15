@@ -27,13 +27,6 @@ import DataManager from "src/editor/data-manager";
 import AbstractDrawingTool from "src/editor/tools/abstract-drawing-tool";
 import { ActionEditor } from "src/editor/components";
 import { ActionDescription } from "src/editor/components/zone-editor/action";
-import { NPC, Hotspot } from "src/engine/objects";
-import { MutableNPC, MutableHotspot } from "src/engine/mutable-objects";
-import { Point } from "src/util";
-
-import NPCComponent from "src/editor/components/zone-editor/npc";
-import HotspotComponent from "src/editor/components/zone-editor/hotspot";
-import List from "src/ui/components/list";
 
 class Window extends Panel {
 	public static readonly tagName = "wf-zone-editor-window";
@@ -45,45 +38,37 @@ class Window extends Panel {
 	private _requiredItems: HTMLElement;
 	private _goalItems: HTMLElement;
 	private _puzzleNPCs: HTMLElement;
-	private _npcs: List<NPC>;
 	private _providedItemsCell: SidebarCell;
 	private _requiredItemsCell: SidebarCell;
 	private _goalItemsCell: SidebarCell;
 	private _puzzleNPCsCell: SidebarCell;
-	private _npcsCell: SidebarCell;
-	private _toolsCell: SidebarCell;
 	private _tilePicker: PopoverTilePicker;
 	private _data: DataManager;
 	private _tools: AbstractTool[];
 	private _actionsWindow: WindowComponent;
-	private _removeNPCHandler = (e: CustomEvent) => this._removeNPC(<NPCComponent>e.target);
-	private _removeHotspotHandler = (e: CustomEvent) =>
-		this._removeHotspot(<HotspotComponent>e.target);
-	private _hotspots: List<Hotspot>;
-	private _hotspotsCell: SidebarCell;
 
 	constructor() {
 		super();
 
 		this.pinnable = true;
 
-		this._sidebar = <Sidebar>document.createElement(Sidebar.tagName);
+		this._sidebar = <Sidebar /> as Sidebar;
 		this._sidebar.addEventListener(SidebarLayer.Event.DidToggleVisibility, (e: CustomEvent) => {
-			const layer = <Layer>e.detail.layer;
+			const layer = e.detail.layer as Layer;
 			this._editor.setLayerVisible(layer, layer.visible);
 		});
 
-		const layers = <SidebarLayersCell>document.createElement(SidebarLayersCell.tagName);
+		const layers = <SidebarLayersCell /> as SidebarLayersCell;
 		layers.addEventListener(
 			LayerChangeEvents.LayerDidChange,
 			(e: CustomEvent) => (this._editor.currentLayer = e.detail.layer)
 		);
 		this._sidebar.addEntry(layers, "Layers");
 
-		this._editor = <ZoneEditor>document.createElement(ZoneEditor.tagName);
+		this._editor = <ZoneEditor /> as ZoneEditor;
 
 		this._tools = [new NoTool(), new PencilTool(), new RectangleTool(), new PaintBucketTool()];
-		const toolComponents = <HTMLElement[]>this._tools.map(t => this._buildToolItem(t));
+		const toolComponents = this._tools.map(t => this._buildToolItem(t)) as HTMLElement[];
 		const actionComponents = [
 			{
 				name: "Edit Scripts",
@@ -92,7 +77,7 @@ class Window extends Panel {
 			}
 		].map(a => this._buildActionItem(a));
 
-		this._tilePicker = <PopoverTilePicker>document.createElement(PopoverTilePicker.tagName);
+		this._tilePicker = <PopoverTilePicker /> as PopoverTilePicker;
 		this._tilePicker.addEventListener(
 			PopoverTilePickerEvents.TileDidChange,
 			(e: CustomEvent) => {
@@ -101,26 +86,21 @@ class Window extends Panel {
 				e.preventDefault();
 			}
 		);
-		this._toolsCell = this._sidebar.addEntry(
+		this._sidebar.addEntry(
 			[this._tilePicker as HTMLElement].concat(toolComponents.concat(actionComponents)),
 			"Tools"
 		);
 
-		this._hotspots = this._buildHotspotList();
-		this._hotspotsCell = this._sidebar.addEntry(this._hotspots, "Hotspots");
-
-		this._requiredItems = document.createElement("div");
+		this._requiredItems = <div />;
 		this._requiredItemsCell = this._sidebar.addEntry(this._requiredItems, "Required Items");
-		this._providedItems = document.createElement("div");
+		this._providedItems = <div />;
 		this._providedItemsCell = this._sidebar.addEntry(this._providedItems, "Provided Items");
-		this._goalItems = document.createElement("div");
+		this._goalItems = <div />;
 		this._goalItemsCell = this._sidebar.addEntry(this._goalItems, "Goal Items");
-		this._puzzleNPCs = document.createElement("div");
+		this._puzzleNPCs = <div />;
 		this._puzzleNPCsCell = this._sidebar.addEntry(this._puzzleNPCs, "NPCs");
-		this._npcs = this._buildNPCList();
-		this._npcsCell = this._sidebar.addEntry(this._npcs, "Enemies", () => this._addNPC());
 
-		this._editor.activateTool(this._tools[0]);
+		this._editor.tool = this._tools[0];
 		this._tilePicker.currentTile = null;
 		layers.activateLayer(0);
 	}
@@ -153,6 +133,39 @@ class Window extends Panel {
 		return !this.pinned;
 	}
 
+	private _editActions() {
+		if (!this._actionsWindow) {
+			const window = <Panel style={{ width: "480px", maxHeight: "630px" }} /> as Panel;
+			window.content.appendChild(<ActionEditor />);
+
+			this._actionsWindow = window;
+		}
+
+		const editor = this._actionsWindow.content.firstElementChild as ActionEditor;
+		editor.data = this._data.currentData;
+		editor.zone = this.zone;
+		this._actionsWindow.title = `Zone ${this.zone.id}: Actions`;
+		this.manager.showWindow(this._actionsWindow);
+	}
+
+	private _buildTileNode(tile: Tile) {
+		return (
+			<div className={"tile " + this.data.tileSheet.cssClassesForTile(tile.id).join(" ")} />
+		);
+	}
+
+	private _buildToolItem(tool: AbstractTool) {
+		const thing = <ToolComponent tool={tool} editor={this._editor} /> as ToolComponent;
+		tool.addEventListener(AbstractTool.Event.ChangedTiles, (e: TileChangeEvent) =>
+			this._editor.redraw(e.affectedPoints)
+		);
+		return thing;
+	}
+
+	private _buildActionItem(a: ActionDescription) {
+		return <ActionComponent action={a} /> as ActionComponent;
+	}
+
 	set state(state) {
 		this._state = state;
 
@@ -161,7 +174,6 @@ class Window extends Panel {
 		this.onpin = () => this._state.store("pinned", this.pinned);
 
 		this._sidebar.state = state.prefixedWith("sidebar");
-		this._npcs.state = state.prefixedWith("npc-list");
 
 		if (state.load("visible")) {
 			this.show();
@@ -194,108 +206,8 @@ class Window extends Panel {
 		zone.puzzleNPCs.forEach(npc => this._puzzleNPCs.appendChild(this._buildTileNode(npc)));
 		this._puzzleNPCsCell.style.display = zone.puzzleNPCs.length ? "" : "none";
 
-		this._npcs.items = zone.npcs;
-		this._hotspots.items = zone.hotspots;
-
 		this._zone = zone;
 		this._editor.zone = zone;
-	}
-
-	private _editActions() {
-		if (!this._actionsWindow) {
-			const window = <Panel>document.createElement(Panel.tagName);
-			window.style.width = "480px";
-			window.content.style.maxHeight = "630px";
-			const editor = <ActionEditor>document.createElement(ActionEditor.tagName);
-			window.content.appendChild(editor);
-			this._actionsWindow = window;
-		}
-
-		const editor = <ActionEditor>this._actionsWindow.content.firstElementChild;
-		editor.data = this._data.currentData;
-		editor.zone = this.zone;
-		this._actionsWindow.title = `Zone ${this.zone.id}: Actions`;
-		this.manager.showWindow(this._actionsWindow);
-	}
-
-	private _buildTileNode(tile: Tile) {
-		const node = document.createElement("div");
-		node.className = "tile " + this.data.tileSheet.cssClassesForTile(tile.id).join(" ");
-		return node;
-	}
-
-	private _buildHotspotNode(hotspot: Hotspot) {
-		const node = document.createElement("div");
-		node.textContent = `${hotspot.type.name} at ${hotspot.x}x${hotspot.y}`;
-		return node;
-	}
-
-	private _buildToolItem(tool: AbstractTool) {
-		const thing = <ToolComponent>document.createElement(ToolComponent.tagName);
-		thing.tool = tool;
-		thing.editor = this._editor;
-		tool.addEventListener(AbstractTool.Event.ChangedTiles, (e: TileChangeEvent) =>
-			this._editor.redraw(e.affectedPoints)
-		);
-		return thing;
-	}
-
-	private _buildActionItem(a: ActionDescription) {
-		const component = <ActionComponent>document.createElement(ActionComponent.tagName);
-		component.action = a;
-		return component;
-	}
-
-	private _buildNPCList() {
-		const list = <List<NPC>>document.createElement(List.tagName);
-		list.classList.add("wf-zone-editor-npc-list");
-		list.cell = <NPCComponent>document.createElement(NPCComponent.tagName);
-		list.addEventListener(NPCComponent.Events.RequestRemoval, this._removeNPCHandler);
-
-		return list;
-	}
-
-	private _buildHotspotList() {
-		const list = <List<Hotspot>>document.createElement(List.tagName);
-		list.classList.add("wf-zone-editor-hotspot-list");
-		list.cell = <HotspotComponent>document.createElement(HotspotComponent.tagName);
-		list.addEventListener(HotspotComponent.Events.RequestRemoval, this._removeHotspotHandler);
-
-		return list;
-	}
-
-	private _removeNPC(component: NPCComponent): void {
-		const allNPCNodes = Array.from(component.parentElement.childNodes);
-		const index = allNPCNodes.indexOf(component);
-
-		if (index !== -1) this._zone.npcs.splice(index, 1);
-		this._npcs.items = this._zone.npcs;
-	}
-
-	private _addNPC(): void {
-		const npc = new MutableNPC();
-		npc.position = new Point(0, 0);
-		npc.character = this.data.currentData.characters.find(c => c.isEnemy());
-		this.zone.npcs.push(npc);
-		this._npcs.items = this._zone.npcs;
-	}
-
-	private _removeHotspot(component: HotspotComponent): void {
-		const allHotspotNodes = Array.from(component.parentElement.childNodes);
-		const index = allHotspotNodes.indexOf(component);
-
-		if (index !== -1) this._zone.hotspots.splice(index, 1);
-		this._hotspots.items = this.zone.hotspots;
-	}
-
-	private _addHotspot(): void {
-		const hotspot = new MutableHotspot();
-		hotspot.x = 0;
-		hotspot.y = 0;
-		hotspot.type = Hotspot.Type.TriggerLocation;
-
-		this.zone.hotspots.push(hotspot);
-		this._hotspots.items = this._zone.hotspots;
 	}
 
 	get zone() {
@@ -306,15 +218,6 @@ class Window extends Panel {
 		this._data = d;
 		this._editor.palette = d.palette;
 		this._tilePicker.data = this.data;
-
-		let cell;
-		cell = <NPCComponent>this._npcs.cell;
-		cell.gameData = this.data.currentData;
-		cell.tileSheet = this.data.tileSheet;
-
-		cell = <HotspotComponent>this._hotspots.cell;
-		cell.gameData = this.data.currentData;
-		cell.tileSheet = this.data.tileSheet;
 	}
 
 	public get data() {

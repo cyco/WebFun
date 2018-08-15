@@ -15,7 +15,6 @@ import PaletteColorPicker from "./palette-color-picker";
 import PaletteImageEditor from "./palette-image-editor";
 import {
 	Action as ZoneEditorAction,
-	NPC as ZoneEditorNPC,
 	Sidebar as ZoneEditorSidebar,
 	SidebarCell as ZoneEditorSidebarCell,
 	SidebarLayer as ZoneEditorSidebarLayer,
@@ -23,8 +22,7 @@ import {
 	Tool as ZoneEditorTool,
 	View as ZoneEditorView,
 	Window as ZoneEditorWindow,
-	ZoneLayer,
-	Hotspot as ZoneEditorHotspot
+	ZoneLayer
 } from "./zone-editor";
 import { Editor as ActionEditor, Token as ActionEditorToken } from "./action-editor";
 import { Editor as TileEditor } from "./tile-editor";
@@ -39,8 +37,6 @@ export {
 	ZoneEditorSidebarLayerCell,
 	ZoneEditorSidebarCell,
 	ZoneEditorAction,
-	ZoneEditorNPC,
-	ZoneEditorHotspot,
 	ExpandButton,
 	CharacterDetails,
 	CharacterFramePreview,
