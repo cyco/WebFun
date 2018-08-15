@@ -21,12 +21,9 @@ class View extends Component {
 	constructor() {
 		super();
 
-		this._floor = <LayerComponent /> as LayerComponent;
-		this._floor.layer = Zone.Layer.Floor;
-		this._objects = <LayerComponent /> as LayerComponent;
-		this._objects.layer = Zone.Layer.Object;
-		this._roof = <LayerComponent /> as LayerComponent;
-		this._roof.layer = Zone.Layer.Roof;
+		this._floor = <LayerComponent layer={Zone.Layer.Floor} /> as LayerComponent;
+		this._objects = <LayerComponent layer={Zone.Layer.Object} /> as LayerComponent;
+		this._roof = <LayerComponent layer={Zone.Layer.Roof} /> as LayerComponent;
 
 		this._overlay = <canvas className="overlay" /> as HTMLCanvasElement;
 
@@ -77,6 +74,7 @@ class View extends Component {
 		this._tool = tool;
 
 		if (this._tool) {
+			this._tool.layer = this._currentLayer;
 			this._tool.activate(this._zone, this._overlay);
 		}
 	}
@@ -95,19 +93,6 @@ class View extends Component {
 		if (id === Zone.Layer.Object) return this._objects;
 		if (id === Zone.Layer.Floor) return this._floor;
 		console.assert(false, "Invalid layer encountered");
-	}
-
-	public activateTool(tool: AbstractTool) {
-		if (this._tool) {
-			this._tool.deactivate();
-		}
-
-		this._tool = tool;
-
-		if (this._tool) {
-			this._tool.layer = this._currentLayer;
-			this._tool.activate(this._zone, this._overlay);
-		}
 	}
 
 	public redraw(points: Point[]): void {
