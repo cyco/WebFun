@@ -304,7 +304,7 @@ class Window extends Panel {
 
 	public set data(d) {
 		this._data = d;
-		this._editor.tileSheet = d.tileSheet;
+		this._editor.palette = d.palette;
 		this._tilePicker.data = this.data;
 
 		let cell;
