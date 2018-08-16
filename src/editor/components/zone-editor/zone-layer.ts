@@ -3,6 +3,7 @@ import { default as Zone } from "src/engine/objects/zone";
 import Tile, { HEIGHT as TileHeight, WIDTH as TileWidth } from "src/engine/objects/tile";
 import { Point } from "src/util";
 import { ColorPalette } from "src/engine/rendering";
+import { MenuItemInit } from "src/ui";
 import "./zone-layer.scss";
 
 class ZoneLayer extends Component {
@@ -175,6 +176,10 @@ class ZoneLayer extends Component {
 
 	get palette() {
 		return this._palette;
+	}
+
+	public getMenuForTile(_: Point): Partial<MenuItemInit>[] {
+		return [];
 	}
 }
 

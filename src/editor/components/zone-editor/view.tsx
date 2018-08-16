@@ -4,16 +4,19 @@ import { Zone } from "src/engine/objects";
 import { HEIGHT as TileHeight, WIDTH as TileWidth } from "src/engine/objects/tile";
 import { AbstractTool, NoTool } from "src/editor/tools";
 import { Point } from "src/util";
-import "./view.scss";
+import { ContextMenu } from "src/ui/components";
 import Layer from "./layer";
+import HotspotLayerComponent from "./hotspot-layer";
+import "./view.scss";
 
-class View extends Component {
+class View extends Component implements EventListenerObject {
 	public static readonly tagName = "wf-zone-editor-view";
 	public static readonly observedAttributes: string[] = [];
 	private _zone: Zone;
 	private _floor: LayerComponent;
 	private _objects: LayerComponent;
 	private _roof: LayerComponent;
+	private _hotspots: HotspotLayerComponent;
 	private _overlay: HTMLCanvasElement;
 	private _tool: AbstractTool;
 	private _currentLayer: Layer;
@@ -21,6 +24,7 @@ class View extends Component {
 	constructor() {
 		super();
 
+		this._hotspots = <HotspotLayerComponent /> as HotspotLayerComponent;
 		this._floor = <LayerComponent layer={Zone.Layer.Floor} /> as LayerComponent;
 		this._objects = <LayerComponent layer={Zone.Layer.Object} /> as LayerComponent;
 		this._roof = <LayerComponent layer={Zone.Layer.Roof} /> as LayerComponent;
@@ -34,10 +38,38 @@ class View extends Component {
 		this.appendChild(this._floor);
 		this.appendChild(this._objects);
 		this.appendChild(this._roof);
+		this.appendChild(this._hotspots);
 		this.appendChild(this._overlay);
+		this._overlay.addEventListener("contextmenu", this);
+	}
+
+	public handleEvent(event: MouseEvent) {
+		if (event.type === "contextmenu") {
+			event.preventDefault();
+
+			const point = this.extractTileCoordinates(event);
+			if (!point) return;
+			const items = this.currentLayerNode.getMenuForTile(point);
+			if (items.length === 0) return;
+
+			const menu = <ContextMenu menu={items} /> as ContextMenu;
+			menu.show(new Point(event.clientX, event.clientY));
+		}
+	}
+
+	protected extractTileCoordinates(event: MouseEvent) {
+		const zone = this.zone;
+
+		const offset = event.offsetIn(this);
+		const point = offset.scaleBy(1 / TileWidth).floor();
+		if (point.x < 0 || point.y < 0 || point.x >= zone.size.width || point.y >= zone.size.height)
+			return null;
+
+		return point;
 	}
 
 	protected disconnectedCallback() {
+		this._overlay.removeEventListener("contextmenu", this);
 		this._floor.remove();
 		this._objects.remove();
 		this._roof.remove();
@@ -51,6 +83,7 @@ class View extends Component {
 		this._floor.zone = zone;
 		this._objects.zone = zone;
 		this._roof.zone = zone;
+		this._hotspots.zone = zone;
 
 		this._overlay.style.width = zone.size.width * TileWidth + "px";
 		this._overlay.style.height = zone.size.height * TileHeight + "px";
@@ -92,7 +125,14 @@ class View extends Component {
 		if (id === Zone.Layer.Roof) return this._roof;
 		if (id === Zone.Layer.Object) return this._objects;
 		if (id === Zone.Layer.Floor) return this._floor;
+
+		if (id === -1) return this._hotspots;
+
 		console.assert(false, "Invalid layer encountered");
+	}
+
+	private get currentLayerNode() {
+		return this.nodeForLayer(this.currentLayer.id);
 	}
 
 	public redraw(points: Point[]): void {
@@ -109,6 +149,7 @@ class View extends Component {
 	}
 
 	public set palette(p) {
+		this._hotspots.palette = p;
 		this._floor.palette = p;
 		this._roof.palette = p;
 		this._objects.palette = p;
