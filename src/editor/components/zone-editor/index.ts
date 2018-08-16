@@ -7,6 +7,7 @@ import SidebarLayersCell from "./sidebar-layers-cell";
 import SidebarLayer from "./sidebar-layer";
 import Tool from "./tool";
 import Action from "./action";
+import HotspotLayer from "./hotspot-layer";
 
 export {
 	Tool,
@@ -17,5 +18,6 @@ export {
 	SidebarCell,
 	SidebarLayer,
 	SidebarLayersCell,
-	Action
+	Action,
+	HotspotLayer
 };

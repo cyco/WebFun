@@ -33,6 +33,13 @@ class SidebarLayersCell extends Component {
 	private _buildLayers() {
 		this._layers = [];
 
+		const hotspots = new Layer();
+		hotspots.id = -1;
+		hotspots.name = "Hotspots";
+		hotspots.visible = true;
+		hotspots.locked = false;
+		this._layers.push(hotspots);
+
 		const roof = new Layer();
 		roof.id = Zone.Layer.Roof;
 		roof.name = "Roof";
@@ -72,11 +79,17 @@ class SidebarLayersCell extends Component {
 	}
 
 	_registerShortcuts() {
-		console.log("Register Shortcuts");
 		this._shortcuts = [];
 
 		const node = this.closest(Window.tagName);
 		const manager = ShortcutManager.sharedManager;
+		this._shortcuts.push(
+			manager.registerShortcut(() => this.activateLayer(3), {
+				ctrlKey: true,
+				keyCode: 52,
+				node
+			})
+		);
 		this._shortcuts.push(
 			manager.registerShortcut(() => this.activateLayer(2), {
 				ctrlKey: true,

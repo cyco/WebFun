@@ -22,7 +22,8 @@ import {
 	Tool as ZoneEditorTool,
 	View as ZoneEditorView,
 	Window as ZoneEditorWindow,
-	ZoneLayer
+	ZoneLayer,
+	HotspotLayer
 } from "./zone-editor";
 import { Editor as ActionEditor, Token as ActionEditorToken } from "./action-editor";
 import { Editor as TileEditor } from "./tile-editor";
@@ -52,6 +53,7 @@ export {
 	ZoneInspectorCell,
 	ZoneEditorSidebar,
 	ZoneLayer,
+	HotspotLayer,
 	PaletteColorPicker,
 	PaletteImageEditor,
 	TileEditor

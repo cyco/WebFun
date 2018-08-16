@@ -12,6 +12,7 @@ import shuffle from "./shuffle";
 import unique from "./unique";
 import padEnd from "./pad-end";
 import remove from "./remove";
+import groupedBy from "./grouped-by";
 
 export {
 	remove,
@@ -27,5 +28,6 @@ export {
 	resize,
 	rest,
 	shuffle,
-	unique
+	unique,
+	groupedBy
 };

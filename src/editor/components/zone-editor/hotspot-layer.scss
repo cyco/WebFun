@@ -1,0 +1,18 @@
+@import "variables.scss";
+
+wf-hotspot-layer {
+	position: relative;
+
+	.wf-hotspot-layer-hotspot {
+		position: absolute;
+		box-sizing: border-box;
+		width: $tile-size;
+		height: $tile-size;
+		border: 1px dashed #ff00ff;
+		transition: left 0.2s, top 0.2s;
+		line-height: $tile-size;
+		text-align: center;
+		color: #ff00ff;
+		textshadow: 0 1px 0 rgba(0, 0, 0, 0.4);
+	}
+}
