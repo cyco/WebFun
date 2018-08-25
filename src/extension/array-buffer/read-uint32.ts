@@ -1,4 +1,6 @@
-const readUint32 = function(offset) {
+import { ArrayBuffer, Uint32Array } from "src/std";
+
+const readUint32 = function(offset: number) {
 	let buffer;
 	if (offset % Uint32Array.BYTES_PER_ELEMENT !== 0)
 		buffer = new Uint32Array(this.slice(offset, offset + Uint32Array.BYTES_PER_ELEMENT));

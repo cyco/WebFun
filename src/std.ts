@@ -16,6 +16,8 @@ export const {
 	Promise,
 	DataView,
 	Uint8Array,
+	Uint16Array,
+	Uint32Array,
 	requestAnimationFrame,
 	cancelAnimationFrame,
 	performance,
