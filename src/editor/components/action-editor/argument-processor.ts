@@ -1,10 +1,4 @@
-import {
-	Condition,
-	ConditionsByName,
-	Instruction,
-	InstructionsByName,
-	Type
-} from "src/engine/script";
+import { Condition, ConditionsByName, Instruction, InstructionsByName, Type } from "src/engine/script";
 import { Point } from "src/util";
 import Token from "./token";
 import GameData from "src/engine/game-data";

@@ -25,8 +25,7 @@ class MenuItem extends EventTarget {
 		this._enabled = options.enabled;
 		this.submenu = null;
 		if (options.submenu) {
-			this.submenu =
-				options.submenu instanceof Menu ? options.submenu : new Menu(options.submenu);
+			this.submenu = options.submenu instanceof Menu ? options.submenu : new Menu(options.submenu);
 		}
 		this.mnemonic = options.mnemonic;
 	}

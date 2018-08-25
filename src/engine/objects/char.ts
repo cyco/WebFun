@@ -42,7 +42,7 @@ class Char {
 		if (this.isHero()) {
 			frameIdx = frameIdx % 3;
 		} else {
-			frameIdx = 1 + frameIdx % 2;
+			frameIdx = 1 + (frameIdx % 2);
 		}
 
 		let tile = null;

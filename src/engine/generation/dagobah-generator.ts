@@ -126,7 +126,9 @@ class DagobahGenerator {
 			const index = zone.puzzleNPCs.findIndex(i => i.id === npcID);
 			if (index === -1) return;
 
-			const candidates = zone.hotspots.filter((hotspot: Hotspot) => hotspot.type === HotspotType.SpawnLocation);
+			const candidates = zone.hotspots.filter(
+				(hotspot: Hotspot) => hotspot.type === HotspotType.SpawnLocation
+			);
 			if (candidates.length) {
 				let hotspot = candidates[randmod(candidates.length)];
 				hotspot.arg = npcID;

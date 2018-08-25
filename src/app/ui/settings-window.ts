@@ -74,11 +74,7 @@ class SettingsWindow extends Window {
 		this._slider.value = localStorage.load(this._key);
 	}
 
-	protected attributeChangedCallback(
-		attributeName: string,
-		oldValue: string,
-		newValue: string
-	): void {
+	protected attributeChangedCallback(attributeName: string, oldValue: string, newValue: string): void {
 		if (attributeName === "title") {
 			this.title = newValue;
 		}

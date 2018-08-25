@@ -83,12 +83,7 @@ class Color {
 
 		let matches = HexRegex.exec(c);
 		if (matches)
-			return [
-				parseInt(matches[1], 0x10),
-				parseInt(matches[2], 0x10),
-				parseInt(matches[3], 0x10),
-				1
-			];
+			return [parseInt(matches[1], 0x10), parseInt(matches[2], 0x10), parseInt(matches[3], 0x10), 1];
 
 		matches = RGBRegex.exec(c);
 		if (matches) {
@@ -97,12 +92,7 @@ class Color {
 
 		matches = RGBARegex.exec(c);
 		if (matches) {
-			return [
-				parseInt(matches[1]),
-				parseInt(matches[2]),
-				parseInt(matches[3]),
-				parseFloat(matches[4])
-			];
+			return [parseInt(matches[1]), parseInt(matches[2]), parseInt(matches[3]), parseFloat(matches[4])];
 		}
 
 		matches = HSVRegex.exec(c);

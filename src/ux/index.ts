@@ -1,8 +1,5 @@
 import ModalSession from "./modal-session";
-import ModalConfirm, {
-	Options as ConfirmationOptions,
-	Result as ConfirmationResult
-} from "./modals/confirm";
+import ModalConfirm, { Options as ConfirmationOptions, Result as ConfirmationResult } from "./modals/confirm";
 import ModalPrompt from "./modals/prompt";
 import ResetCursor from "./reset-cursor";
 import WindowModalSession from "./window-modal-session";

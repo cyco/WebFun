@@ -27,7 +27,9 @@ class FilePicker implements FilePickerOptions {
 			input.style.opacity = "0.0";
 
 			if (this.allowedTypes.length) {
-				input.accept = this.allowedTypes.map(type => (type.indexOf("/") === -1 ? type : "." + type)).join(",");
+				input.accept = this.allowedTypes
+					.map(type => (type.indexOf("/") === -1 ? type : "." + type))
+					.join(",");
 			}
 
 			if (this.allowsMultipleFiles) {

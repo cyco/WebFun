@@ -8,12 +8,7 @@ import { DiscardingStorage } from "src/util";
 export declare interface SearchDelegate<T, PreparedSearchValue> {
 	prepareListSearch(searchValue: string, list: List<T>): PreparedSearchValue;
 
-	includeListItem(
-		searchValue: PreparedSearchValue,
-		item: T,
-		cell: Cell<T>,
-		list: List<T>
-	): boolean;
+	includeListItem(searchValue: PreparedSearchValue, item: T, cell: Cell<T>, list: List<T>): boolean;
 }
 
 const FILTER_DELAY = 100;
@@ -122,8 +117,7 @@ class List<T> extends Component {
 		this._cells.forEach(c => c.remove());
 		this._cells = this._items.map(i => this.addItem(i));
 		this.refilter();
-		if (oldContent.parentElement)
-			oldContent.parentElement.replaceChild(this._content, oldContent);
+		if (oldContent.parentElement) oldContent.parentElement.replaceChild(this._content, oldContent);
 		else this.appendChild(this._content);
 
 		this._content.scrollTop = offset;

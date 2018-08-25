@@ -36,9 +36,7 @@ class ActionComponent extends Component {
 		this.appendChild(document.createTextNode(`\t`));
 
 		action.conditions.forEach((condition, index) => {
-			const component = <ConditionComponent>document.createElement(
-				ConditionComponent.tagName
-			);
+			const component = <ConditionComponent>document.createElement(ConditionComponent.tagName);
 			component.action = this._action;
 			component.engine = this.engine;
 			component.condition = condition;
@@ -53,9 +51,7 @@ class ActionComponent extends Component {
 		this._append(`do`, "key");
 
 		action.instructions.forEach(instruction => {
-			const component = <InstructionComponent>document.createElement(
-				InstructionComponent.tagName
-			);
+			const component = <InstructionComponent>document.createElement(InstructionComponent.tagName);
 			component.action = this._action;
 			component.engine = this.engine;
 			component.instruction = instruction;

@@ -43,9 +43,7 @@ class Zone {
 	public doorInLocation: Point = new Point(0, 0);
 
 	get doors(): Hotspot[] {
-		return this._hotspots.filter(
-			hotspot => hotspot.type === HotspotType.DoorIn && hotspot.arg !== -1
-		);
+		return this._hotspots.filter(hotspot => hotspot.type === HotspotType.DoorIn && hotspot.arg !== -1);
 	}
 
 	getLocatorDescription() {
@@ -163,10 +161,7 @@ class Zone {
 	}
 
 	get hasTeleporter() {
-		return (
-			this._type === ZoneType.Empty &&
-			this.hotspots.withType(HotspotType.Teleporter).length !== 0
-		);
+		return this._type === ZoneType.Empty && this.hotspots.withType(HotspotType.Teleporter).length !== 0;
 	}
 
 	public get bounds() {

@@ -40,9 +40,7 @@ class CharacterInspector extends AbstractInspector {
 	public build() {
 		this._details.tileSheet = this.data.tileSheet;
 		this._details.sounds = this.data.currentData.sounds;
-		this._details.weapons = this.data.currentData.characters.filter(
-			c => c.type === CharType.Weapon
-		);
+		this._details.weapons = this.data.currentData.characters.filter(c => c.type === CharType.Weapon);
 
 		const cell = this._list.cell as CharacterInspectorCell;
 		cell.tileSheet = this.data.tileSheet;
@@ -54,12 +52,7 @@ class CharacterInspector extends AbstractInspector {
 		return searchValue.split(" ").map(s => new RegExp(s, "i"));
 	}
 
-	includeListItem(
-		searchValue: RegExp[],
-		item: Char,
-		_1: CharacterInspectorCell,
-		_2: List<Char>
-	): boolean {
+	includeListItem(searchValue: RegExp[], item: Char, _1: CharacterInspectorCell, _2: List<Char>): boolean {
 		const searchableAttributes = [item.id, item.name, item.movementType.name];
 
 		if (item.isWeapon()) {

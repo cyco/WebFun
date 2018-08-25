@@ -35,11 +35,7 @@ class IconButton extends Component {
 		if (!this._icon.parentNode) this.appendChild(this._icon);
 	}
 
-	protected attributeChangedCallback(
-		attributeName: string,
-		oldValue: string,
-		newValue: string
-	): void {
+	protected attributeChangedCallback(attributeName: string, oldValue: string, newValue: string): void {
 		if (attributeName === "icon") {
 			this._icon.classList.remove(`fa-${oldValue}`);
 			this._icon.classList.add(`fa-${newValue}`);

@@ -27,8 +27,7 @@ function toGIMP(name: string): string {
 	out += `#` + "\n";
 
 	for (let i = 0; i < this.length; i += 4) {
-		out +=
-			`${this[i + 2]} ${this[i + 1]} ${this[i + 0]}${i === 0 ? " transparent" : ""}` + "\n";
+		out += `${this[i + 2]} ${this[i + 1]} ${this[i + 0]}${i === 0 ? " transparent" : ""}` + "\n";
 	}
 
 	return out;
@@ -50,7 +49,6 @@ function toAdobeColorTable(transparentColorIndex: number = 0): Uint8Array {
 
 Uint8Array.prototype.findColor = Uint8Array.prototype.findColor || findColor;
 Uint8Array.prototype.toGIMP = Uint8Array.prototype.toGIMP || toGIMP;
-Uint8Array.prototype.toAdobeColorTable =
-	Uint8Array.prototype.toAdobeColorTable || toAdobeColorTable;
+Uint8Array.prototype.toAdobeColorTable = Uint8Array.prototype.toAdobeColorTable || toAdobeColorTable;
 
 export default ColorPalette;

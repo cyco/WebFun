@@ -302,7 +302,10 @@ function _choosePuzzlesOnIslands() {
 	let puzzleLocation;
 	const iteration = (point: Point, control: any) => {
 		const nextPoint = Point.add(point, control.step);
-		if (!nextPoint.isInBounds(bounds) || typeMap.get(nextPoint.x, nextPoint.y) !== WorldItemType.Island.rawValue) {
+		if (
+			!nextPoint.isInBounds(bounds) ||
+			typeMap.get(nextPoint.x, nextPoint.y) !== WorldItemType.Island.rawValue
+		) {
 			control.stop = true;
 			puzzleLocation = point;
 		}
@@ -445,7 +448,7 @@ function _placeIntermediateWorldThing(): number {
 
 	let total_puzzle_count =
 		Math.floor(puzzles_count / 4) +
-		rand() % (Math.floor(puzzles_count / 5) + 1) -
+		(rand() % (Math.floor(puzzles_count / 5) + 1)) -
 		blockades_count -
 		travel_count -
 		2;
@@ -515,10 +518,10 @@ function _determinePuzzleLocations(iteration: number, puzzle_count_to_place: num
 		let x, y;
 		if (rand() % 2) {
 			x = rand() % 2 ? min_x : alternate_x;
-			y = rand() % variance + min_y;
+			y = (rand() % variance) + min_y;
 		} else {
 			y = rand() % 2 ? min_y : alternate_y;
-			x = rand() % variance + min_x;
+			x = (rand() % variance) + min_x;
 		}
 
 		let item_idx = x + 10 * y;

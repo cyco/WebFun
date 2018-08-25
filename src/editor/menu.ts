@@ -37,11 +37,7 @@ export default (editor: EditorView, window: Window) =>
 				SettingsAction("Sound", () => editor.show("sound")),
 				SettingsAction("Setup Image", () => editor.show("setup-image")),
 				SettingsAction("Palette", () => editor.show("palette")),
-				SettingsAction(
-					"Save Game",
-					() => editor.show("save-game"),
-					() => !!editor.data.state
-				)
+				SettingsAction("Save Game", () => editor.show("save-game"), () => !!editor.data.state)
 			]
 		}
 	] as MenuItemInit[];

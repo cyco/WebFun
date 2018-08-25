@@ -10,7 +10,7 @@ class Range {
 	}
 
 	randomElement(): number {
-		return this.min + rand() % (this.max - this.min + 1);
+		return this.min + (rand() % (this.max - this.min + 1));
 	}
 }
 

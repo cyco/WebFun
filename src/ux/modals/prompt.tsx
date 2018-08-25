@@ -22,7 +22,7 @@ const MergeDefaultOptions = (options: Options): Options => ({
 	component: options.component || ConfirmationWindow.tagName,
 	confirmText: options.confirmText || "OK",
 	abortText: options.abortText || "No",
-	defaultValue: options.defaultValue || ":"
+	defaultValue: options.defaultValue || ""
 });
 
 export default async (prompt: string, o: Options = {}): Promise<string> => {

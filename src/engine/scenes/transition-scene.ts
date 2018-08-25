@@ -190,14 +190,18 @@ class TransitionScene extends Scene {
 		const offsetY = animatedY * tileHeight;
 
 		renderer.renderImageData(this._source, offsetX, offsetY);
-		renderer.renderImageData(this._target, offsetX - xDir * w * tileWidth, offsetY - yDir * h * tileHeight);
+		renderer.renderImageData(
+			this._target,
+			offsetX - xDir * w * tileWidth,
+			offsetY - yDir * h * tileHeight
+		);
 	}
 
 	private _renderRoomAnimation(renderer: AbstractRenderer): void {
 		const fadeIn = this.state > this._duration / 2.0;
 		const directionAdjustedState = this.state - (fadeIn ? this._duration / 2.0 : 0.0);
 
-		let t = directionAdjustedState / (this._duration / 2.0) * 7;
+		let t = (directionAdjustedState / (this._duration / 2.0)) * 7;
 		if (fadeIn) t = 5 - t;
 		if (this._snapAnimationToTiles) t = Math.floor(t);
 

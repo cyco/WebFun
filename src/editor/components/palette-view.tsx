@@ -34,11 +34,7 @@ class PaletteView extends Component {
 
 		const imageFactory = new ImageFactory();
 		imageFactory.palette = this.palette;
-		this.imageData = imageFactory.createImageData(
-			this._size.width,
-			this._size.height,
-			this.image
-		);
+		this.imageData = imageFactory.createImageData(this._size.width, this._size.height, this.image);
 		this.ctx.putImageData(this.imageData, 0, 0);
 	}
 

@@ -23,8 +23,7 @@ class SidebarLayersCell extends Component {
 
 		this._list = <List<Layer>>document.createElement(List.tagName);
 		this._list.cell = <SidebarLayer>document.createElement(SidebarLayer.tagName);
-		this._list.cell.onclick = (e: MouseEvent) =>
-			this.activateLayerForCell(<SidebarLayer>e.currentTarget);
+		this._list.cell.onclick = (e: MouseEvent) => this.activateLayerForCell(<SidebarLayer>e.currentTarget);
 
 		this._buildLayers();
 		this._list.items = this._layers;

@@ -39,19 +39,13 @@ class InventoryComponent extends Component {
 
 	set inventory(i) {
 		if (this._inventory) {
-			this._inventory.removeEventListener(
-				InventoryEvent.ItemsDidChange,
-				this._inventoryChangedHandler
-			);
+			this._inventory.removeEventListener(InventoryEvent.ItemsDidChange, this._inventoryChangedHandler);
 		}
 
 		this._inventory = i;
 
 		if (this._inventory) {
-			this._inventory.addEventListener(
-				InventoryEvent.ItemsDidChange,
-				this._inventoryChangedHandler
-			);
+			this._inventory.addEventListener(InventoryEvent.ItemsDidChange, this._inventoryChangedHandler);
 		}
 
 		this._rebuildTable();
@@ -127,10 +121,7 @@ class InventoryComponent extends Component {
 		let eventName = Event.PlacedItem;
 		if (item.getAttribute(TileAttribute.Weapon)) {
 			eventName = Event.PlacedWeapon;
-		} else if (
-			item.getAttribute(TileAttribute.Item) &&
-			item.getSubtype(TileSubtype.Item.Consumeable)
-		) {
+		} else if (item.getAttribute(TileAttribute.Item) && item.getSubtype(TileSubtype.Item.Consumeable)) {
 			eventName = Event.PlacedConsumeable;
 		}
 

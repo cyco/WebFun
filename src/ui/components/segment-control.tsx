@@ -39,8 +39,7 @@ class SegmentControl extends Component implements EventListenerObject {
 			this._currentSegment.setAttribute("selected", "");
 		}
 
-		if (this.onsegmentchange instanceof Function)
-			this.onsegmentchange(this._currentSegment as Segment);
+		if (this.onsegmentchange instanceof Function) this.onsegmentchange(this._currentSegment as Segment);
 	}
 }
 

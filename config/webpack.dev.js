@@ -16,12 +16,7 @@ module.exports = merge(BaseConfig, {
 		path: Paths.buildRoot
 	},
 	serve: {
-		content: [
-			Paths.buildRoot,
-			Paths.projectRoot,
-			Paths.assetsRoot,
-			Path.resolve(Paths.sourceRoot, "app")
-		]
+		content: [Paths.projectRoot, Paths.assetsRoot, Path.resolve(Paths.sourceRoot, "app")]
 	},
 	plugins: [],
 	module: {

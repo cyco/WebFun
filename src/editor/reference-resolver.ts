@@ -74,7 +74,8 @@ class ReferenceResolver {
 		const id = this.data.sounds.indexOf(sound);
 		if (id === -1) return [];
 
-		const zoneIsReferenceToSound = (i: Instruction) => i.opcode === PlaySound.Opcode && i.arguments[0] === id;
+		const zoneIsReferenceToSound = (i: Instruction) =>
+			i.opcode === PlaySound.Opcode && i.arguments[0] === id;
 		const findReferencesInAction = (a: Action) => a.instructions.filter(zoneIsReferenceToSound);
 		const findReferencesInZone = (zone: Zone) => zone.actions.map(findReferencesInAction).flatten();
 		const charIsReferenceToSound = (c: Char) => c.type === CharType.Weapon && c.reference === id;

@@ -61,13 +61,9 @@ class Assembler {
 	private validateInputStructure(input: AST): ASTFunctionDefinition {
 		let inputArray = <Array<AST>>input;
 
-		if (!(input instanceof Array))
-			throw new AssemblerInputError("Input must be an array.", input);
+		if (!(input instanceof Array)) throw new AssemblerInputError("Input must be an array.", input);
 		if (inputArray[0] !== s`defaction`)
-			throw new AssemblerInputError(
-				"Input must be an action definition using defaction.",
-				input
-			);
+			throw new AssemblerInputError("Input must be an action definition using defaction.", input);
 
 		return <ASTFunctionDefinition>input.slice();
 	}

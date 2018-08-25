@@ -52,12 +52,7 @@ class InteractiveMap extends Map implements EventListenerObject {
 	private _showMenuForTile(tile: Point, raw: Point) {
 		const worldItem = this.world.getWorldItem(tile.x, tile.y);
 		if (!this.contextMenuProvider) return;
-		const menu = this.contextMenuProvider.contextMenuForWorldItem(
-			worldItem,
-			tile,
-			this.world,
-			this
-		);
+		const menu = this.contextMenuProvider.contextMenuForWorldItem(worldItem, tile, this.world, this);
 		if (!menu || menu.items.length === 0) return;
 
 		this.highlightTile = null;
