@@ -8,8 +8,8 @@ const indexOf = function(node: Node) {
 HTMLCollection.prototype.indexOf = HTMLCollection.prototype.indexOf || indexOf;
 
 declare global {
-	interface HTMLCollection {
-		indexOf(_: Node): number;
+	interface HTMLCollectionOf<T> {
+		indexOf(_: T): number;
 	}
 }
 
