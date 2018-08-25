@@ -98,7 +98,17 @@ class HotspotLayer extends Component {
 						}
 					},
 					{
-						title: "change type",
+						title: "Change Argument",
+						callback: async () => {
+							const raw = await ModalPrompt("Set new argument", {
+								defaultValue: htsp.arg.toHex(2)
+							});
+							if (raw === null) return;
+							htsp.arg = +raw;
+						}
+					},
+					{
+						title: "Change Type",
 						callback: async () => {
 							const raw = await ModalPrompt("Pick new type", {
 								defaultValue: `${htsp.type.rawValue}`,
