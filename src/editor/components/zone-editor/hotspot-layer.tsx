@@ -3,7 +3,8 @@ import { Zone, Tile, Hotspot } from "src/engine/objects";
 import { MutableHotspot, MutableZone } from "src/engine/mutable-objects";
 import { ColorPalette } from "src/engine/rendering";
 import { Point } from "src/util";
-import { MenuItemInit } from "src/ui";
+import { MenuItemInit, MenuItemSeparator } from "src/ui";
+import { ModalPrompt } from "src/ux";
 import "./hotspot-layer.scss";
 
 class HotspotLayer extends Component {
@@ -77,20 +78,42 @@ class HotspotLayer extends Component {
 					this.draw();
 				}
 			},
-			...(hotspots.length
-				? [
-						{
-							title: "Remove Hotspot",
-							callback: () => {
-								this.zone.hotspots.splice(
-									this.zone.hotspots.indexOf(hotspots[0]),
-									1
-								);
-								this.draw();
-							}
+			...hotspots
+				.map((htsp, i) => [
+					MenuItemSeparator,
+					{
+						title: htsp.type.name + (htsp.enabled ? "" : " (disabled)")
+					},
+					{
+						title: `${htsp.x}x${htsp.y}`
+					},
+					{
+						title: htsp.arg.toHex(2)
+					},
+					{
+						title: "change type",
+						callback: async () => {
+							const raw = await ModalPrompt("Pick new type", {
+								defaultValue: `${htsp.type.rawValue}`,
+								options: Hotspot.Type.knownTypes.map(type => ({
+									value: `${type.rawValue}`,
+									label: type.name
+								}))
+							});
+							if (raw === null) return;
+
+							htsp.type = Hotspot.Type.fromNumber(+raw);
 						}
-				  ]
-				: [])
+					},
+					{
+						title: "remove",
+						callback: () => {
+							this.zone.hotspots.splice(this.zone.hotspots.indexOf(hotspots[0]), 1);
+							this.draw();
+						}
+					}
+				])
+				.flatten()
 		];
 	}
 
