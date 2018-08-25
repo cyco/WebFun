@@ -5,7 +5,7 @@ const MenuItemDefaults: MenuItemInit = {
 	title: "",
 	state: State.Off,
 	callback: null,
-	mnemonic: 0,
+	mnemonic: undefined,
 	submenu: null,
 	enabled: true
 };
