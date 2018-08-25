@@ -39,6 +39,7 @@ const config = {
 	},
 	watch: false,
 	singleRun: true,
+	jasmine: { random: false },
 	logLevel: "error",
 	webpackMiddleware: {
 		stats: {
