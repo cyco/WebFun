@@ -2,7 +2,9 @@ declare interface Node {
 	readonly isConnected: boolean;
 }
 
-declare let module: any;
+interface NodeModule {
+	hot: any;
+}
 
 interface Array<T> {
 	first(): T | null;
@@ -24,18 +26,6 @@ interface RegExpConstructor {
 
 interface Object {
 	each<T>(callback: ((key: string, value: T) => void)): void;
-}
-
-interface Document {
-	addEventListener(
-		event: "mouseup",
-		listener: (event: MouseEvent) => void,
-		options?: {
-			passive?: boolean;
-			once?: boolean;
-			capture?: boolean;
-		}
-	): void;
 }
 
 interface NodeList {
