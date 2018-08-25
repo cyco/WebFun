@@ -91,6 +91,13 @@ class HotspotLayer extends Component {
 						title: htsp.arg.toHex(2)
 					},
 					{
+						title: () => (htsp.enabled ? "Disable" : "Enable"),
+						callback: () => {
+							htsp.enabled = !htsp.enabled;
+							this.draw();
+						}
+					},
+					{
 						title: "change type",
 						callback: async () => {
 							const raw = await ModalPrompt("Pick new type", {
