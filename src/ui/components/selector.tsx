@@ -3,7 +3,7 @@ import "./selector.scss";
 
 class Selector extends Component {
 	public static readonly tagName = "wf-selector";
-	private element: HTMLSelectElement = document.createElement("select");
+	private element: HTMLSelectElement = <select /> as HTMLSelectElement;
 
 	protected connectedCallback() {
 		super.connectedCallback();
@@ -28,13 +28,17 @@ class Selector extends Component {
 
 	set value(v) {
 		this.element.value = v;
+		this.element.options.forEach(c => (c.selected = false));
+		const option = this.element.options.find(c => c.value === v);
+		if (option) option.selected = true;
 	}
 
 	public addOption(label: string, value: string): void {
-		const option = document.createElement("option");
-		option.appendChild(document.createTextNode(label || value));
-		option.value = value !== undefined ? value : label;
-		this.element.appendChild(option);
+		this.element.appendChild(
+			<option selected={value === this.value} value={value !== undefined ? value : label}>
+				{label || value}
+			</option>
+		);
 	}
 
 	set options(options: string[] | ({ label: string; value: string })[]) {
@@ -51,7 +55,7 @@ class Selector extends Component {
 	}
 
 	public removeOption(value: string) {
-		const option = this.element.querySelector("option[value=" + value + "]");
+		const option = this.element.options.find(c => c.value === value);
 		if (option) this.element.removeChild(option);
 	}
 
