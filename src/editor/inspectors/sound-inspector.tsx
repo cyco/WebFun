@@ -24,7 +24,6 @@ class SoundInspector extends AbstractInspector {
 		this._list.state = state.prefixedWith("list");
 		this._list.cell = document.createElement(SoundInspectorCell.tagName) as SoundInspectorCell;
 		this._list.searchDelegate = this;
-		this._list.state = state.prefixedWith("list");
 		this._list.addEventListener(SoundInspectorCell.Events.RevealReferences, (e: CustomEvent) =>
 			this._revealReferences(e.detail.sound)
 		);
