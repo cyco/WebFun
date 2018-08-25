@@ -66,23 +66,15 @@ class MainWindow extends Window {
 			this._handlers.each((event: any, handler: any) =>
 				this._engine.removeEventListener(event, handler)
 			);
-			this._engine.hero.removeEventListener(
-				Hero.Event.HealthChanged,
-				this._handlers.healthChanged
-			);
+			this._engine.hero.removeEventListener(Hero.Event.HealthChanged, this._handlers.healthChanged);
 		}
 
 		this._engine = e;
 		this._inventory.inventory = this._engine ? this._engine.inventory : null;
 
 		if (this._engine) {
-			this._engine.hero.addEventListener(
-				Hero.Event.HealthChanged,
-				this._handlers.healthChanged
-			);
-			this._handlers.each((event: any, handler: any) =>
-				this._engine.addEventListener(event, handler)
-			);
+			this._engine.hero.addEventListener(Hero.Event.HealthChanged, this._handlers.healthChanged);
+			this._handlers.each((event: any, handler: any) => this._engine.addEventListener(event, handler));
 		}
 	}
 
@@ -94,8 +86,7 @@ class MainWindow extends Window {
 		this._handlers = {};
 		this._handlers[Events.AmmoChanged] = () => this._updateAmmo();
 		this._handlers[Events.WeaponChanged] = () => this._updateWeapon();
-		this._handlers[Events.LocationChanged] = ({ detail }: CustomEvent) =>
-			this._updateLocation(detail);
+		this._handlers[Events.LocationChanged] = ({ detail }: CustomEvent) => this._updateLocation(detail);
 
 		this._handlers.healthChanged = () => this._updateHealth();
 	}

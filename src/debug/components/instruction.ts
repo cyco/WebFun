@@ -33,9 +33,7 @@ class InstructionComponent extends InstructionThing {
 		this.appendChild(this._open());
 		this.appendChild(this._command(name));
 		this.appendChild(
-			document.createTextNode(
-				(usedArguments.length ? " " : "") + `${usedArguments.join(" ")}`
-			)
+			document.createTextNode((usedArguments.length ? " " : "") + `${usedArguments.join(" ")}`)
 		);
 		this.appendChild(this._close());
 	}

@@ -26,9 +26,7 @@ class ScriptExecutor {
 		this._checker.engine = engine;
 		this._executor.engine = engine;
 
-		const previousActions = engine.currentZone.actions.filter(
-			action => action.instructionPointer
-		);
+		const previousActions = engine.currentZone.actions.filter(action => action.instructionPointer);
 		return this._evaluateActions(previousActions, mode, false);
 	}
 
@@ -51,11 +49,7 @@ class ScriptExecutor {
 		return result;
 	}
 
-	private async _evaluateActions(
-		actions: Action[],
-		mode: EvaluationMode,
-		check = true
-	): Promise<boolean> {
+	private async _evaluateActions(actions: Action[], mode: EvaluationMode, check = true): Promise<boolean> {
 		const hasActions = actions.length;
 		actions = actions.slice();
 		while (actions.length) {
@@ -82,7 +76,7 @@ class ScriptExecutor {
 		if (action.instructionPointer !== 0) return true;
 
 		for (const condition of action.conditions) {
-			if (!await this._checker.check(condition, mode)) {
+			if (!(await this._checker.check(condition, mode))) {
 				return false;
 			}
 		}
@@ -92,11 +86,7 @@ class ScriptExecutor {
 
 	private async executeInstructions(action: Action): Promise<boolean> {
 		this._executor.action = action;
-		for (
-			let i = action.instructionPointer | 0, len = action.instructions.length;
-			i < len;
-			i++
-		) {
+		for (let i = action.instructionPointer | 0, len = action.instructions.length; i < len; i++) {
 			action.instructionPointer = i + 1;
 			const result = await this._executor.execute(action.instructions[i]);
 			if (result & ResultFlags.Wait) {

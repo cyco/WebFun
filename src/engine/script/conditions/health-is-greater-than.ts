@@ -7,5 +7,6 @@ export default <Condition>{
 	Opcode: 0x14,
 	Arguments: [Type.Number],
 	Description: "Hero's health is greater than `arg_0`.",
-	Implementation: async (args: int16[], zone: Zone, engine: Engine): Promise<boolean> => engine.hero.health > args[0]
+	Implementation: async (args: int16[], zone: Zone, engine: Engine): Promise<boolean> =>
+		engine.hero.health > args[0]
 };

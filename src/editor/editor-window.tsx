@@ -1,12 +1,5 @@
 import { Window, ProgressIndicator } from "src/ui/components";
-import {
-	readGameDataFile,
-	GameData,
-	ColorPalette,
-	GameType,
-	GameTypeYoda,
-	GameTypeIndy
-} from "src/engine";
+import { readGameDataFile, GameData, ColorPalette, GameType, GameTypeYoda, GameTypeIndy } from "src/engine";
 import { InputStream, PromiseProgress } from "src/util";
 import { PaletteProvider } from "src/app/data";
 import DataManager from "./data-manager";
@@ -60,10 +53,7 @@ class EditorWindow extends Window {
 		editor.addInspector("sound", new SoundInspector(state.prefixedWith("sound")));
 		editor.addInspector("puzzle", new PuzzleInspector(state.prefixedWith("puzzle")));
 		editor.addInspector("character", new CharacterInspector(state.prefixedWith("character")));
-		editor.addInspector(
-			"setup-image",
-			new SetupImageInspector(state.prefixedWith("setup-image"))
-		);
+		editor.addInspector("setup-image", new SetupImageInspector(state.prefixedWith("setup-image")));
 		editor.addInspector("palette", new PaletteInspector(state.prefixedWith("palette")));
 		editor.data = new DataManager(data, palette, tileSheet, type);
 		editor.state = state;

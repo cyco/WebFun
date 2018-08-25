@@ -25,12 +25,12 @@ class Direction {
 	}
 
 	static CalculateAngleFromRelativePoint(relative: Point): number {
-		if (relative.x < 0) return 180.0 - Math.atan(relative.y / -relative.x) * 180.0 / Math.PI;
-		else return Math.atan(relative.y / relative.x) * 180.0 / Math.PI;
+		if (relative.x < 0) return 180.0 - (Math.atan(relative.y / -relative.x) * 180.0) / Math.PI;
+		else return (Math.atan(relative.y / relative.x) * 180.0) / Math.PI;
 	}
 
 	static CalculateRelativeCoordinates(direction: number, distance: number): Point {
-		let rad = direction * Math.PI / 180.0;
+		let rad = (direction * Math.PI) / 180.0;
 		return new Point(distance * Math.round(Math.cos(rad)), distance * Math.round(Math.sin(rad)));
 	}
 }

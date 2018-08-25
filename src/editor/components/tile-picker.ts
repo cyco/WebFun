@@ -23,8 +23,7 @@ class TilePicker extends Component {
 
 		this._list = <List<Tile>>document.createElement(List.tagName);
 		this._list.cell = <TilePickerCell>document.createElement(TilePickerCell.tagName);
-		this._list.cell.onclick = (e: MouseEvent) =>
-			this._cellClicked(<TilePickerCell>e.currentTarget);
+		this._list.cell.onclick = (e: MouseEvent) => this._cellClicked(<TilePickerCell>e.currentTarget);
 		this._list.searchDelegate = new TileFilter();
 		this._list.showBar(true);
 	}
@@ -76,9 +75,7 @@ class TilePicker extends Component {
 	set currentTile(tile: Tile) {
 		this._currentTile = tile;
 
-		this.dispatchEvent(
-			new CustomEvent(Events.TileDidChange, { detail: { tile }, bubbles: true })
-		);
+		this.dispatchEvent(new CustomEvent(Events.TileDidChange, { detail: { tile }, bubbles: true }));
 	}
 
 	get currentTile() {

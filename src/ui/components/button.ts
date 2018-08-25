@@ -20,11 +20,7 @@ class Button extends IconButton {
 		this.appendChild(document.createElement("div"));
 		this.appendChild(this._label);
 
-		this.attributeChangedCallback(
-			"label",
-			this.getAttribute("label"),
-			this.getAttribute("label")
-		);
+		this.attributeChangedCallback("label", this.getAttribute("label"), this.getAttribute("label"));
 	}
 
 	protected attributeChangedCallback(attrName: string, newValue: string, oldValue: string): void {

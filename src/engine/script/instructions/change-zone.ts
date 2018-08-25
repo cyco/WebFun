@@ -10,13 +10,8 @@ import InstructionType from "../instruction";
 export default <InstructionType>{
 	Opcode: 0x21,
 	Arguments: [Type.ZoneID, Type.ZoneX, Type.ZoneY],
-	Description:
-		"Change current zone to `arg_0`. Hero will be placed at `arg_1`x`arg_2` in the new zone.",
-	Implementation: async (
-		instruction: Instruction,
-		engine: Engine,
-		action: Action
-	): Promise<Result> => {
+	Description: "Change current zone to `arg_0`. Hero will be placed at `arg_1`x`arg_2` in the new zone.",
+	Implementation: async (instruction: Instruction, engine: Engine, action: Action): Promise<Result> => {
 		const args = instruction.arguments;
 
 		const transitionScene = new TransitionScene();

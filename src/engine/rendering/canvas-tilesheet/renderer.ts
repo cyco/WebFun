@@ -18,7 +18,17 @@ class Renderer extends CanvasRenderer {
 
 			const width = rectangle.size.width;
 			const height = rectangle.size.height;
-			this._ctx.drawImage(sheetImage, rectangle.minX, rectangle.minY, width, height, atX, atY, width, height);
+			this._ctx.drawImage(
+				sheetImage,
+				rectangle.minX,
+				rectangle.minY,
+				width,
+				height,
+				atX,
+				atY,
+				width,
+				height
+			);
 		}
 	}
 }

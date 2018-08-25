@@ -105,10 +105,7 @@ class ScriptDebugger {
 		Settings.debuggerActive = false;
 
 		this._engine.removeEventListener(EngineEvents.CurrentZoneChange, this._handlers.zoneChange);
-		this._engine.scriptExecutor.checker = new ConditionChecker(
-			ConditionImplementations,
-			this._engine
-		);
+		this._engine.scriptExecutor.checker = new ConditionChecker(ConditionImplementations, this._engine);
 		this._engine.scriptExecutor.executor = new InstructionExecutor(
 			InstructionImplementations,
 			this._engine
@@ -118,9 +115,9 @@ class ScriptDebugger {
 	}
 
 	private _buildConditionStore(originalStore: ConditionStore): ConditionStore {
-		return originalStore.map((_, c) => (args: number[], zone: Zone, engine: Engine): Promise<
-			boolean
-		> => this._handleConditionCall(c, args, zone, engine));
+		return originalStore.map((_, c) => (args: number[], zone: Zone, engine: Engine): Promise<boolean> =>
+			this._handleConditionCall(c, args, zone, engine)
+		);
 	}
 
 	private _handleConditionCall(
@@ -138,8 +135,7 @@ class ScriptDebugger {
 				instruction: Instruction,
 				engine: Engine,
 				action: Action
-			): Promise<InstructionResult> =>
-				this._handleInstructionCall(i, instruction, engine, action)
+			): Promise<InstructionResult> => this._handleInstructionCall(i, instruction, engine, action)
 		);
 	}
 

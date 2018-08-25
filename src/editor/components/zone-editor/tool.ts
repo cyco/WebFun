@@ -22,10 +22,7 @@ class ToolComponent extends Component implements EventListenerObject {
 			const window = this.closest(Window.tagName);
 			const description = Object.assign({}, this.tool.shortcut, { node: window });
 
-			this._shortcut = ShortcutManager.sharedManager.registerShortcut(
-				activateTool,
-				description
-			);
+			this._shortcut = ShortcutManager.sharedManager.registerShortcut(activateTool, description);
 		}
 
 		this.classList.add("fa");

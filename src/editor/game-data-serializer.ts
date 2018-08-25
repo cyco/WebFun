@@ -75,25 +75,12 @@ class GameDataSerializer {
 			const izx3Size = 8 + 2 + 2 * zone.puzzleNPCs.length;
 			const izx4Size = 2;
 			const calculateActionSize = (action: Action) =>
-				action.conditions
-					.map((condition: Condition) => 0xe + condition.text.length)
-					.reduce(add, 2) +
-				action.instructions
-					.map((condition: Condition) => 0xe + condition.text.length)
-					.reduce(add, 2);
+				action.conditions.map((condition: Condition) => 0xe + condition.text.length).reduce(add, 2) +
+				action.instructions.map((condition: Condition) => 0xe + condition.text.length).reduce(add, 2);
 			const izonSize = 20 + zone.size.height * zone.size.width * Zone.LAYERS * 2;
 			const hotspotSize = zone.hotspots.length * 0xc;
-			const actionSize =
-				zone.actions.map(calculateActionSize).reduce(add, 0) + 8 * zone.actions.length;
-			const size =
-				izonSize +
-				izaxSize +
-				izx2Size +
-				izx3Size +
-				izx4Size +
-				hotspotSize +
-				actionSize +
-				14;
+			const actionSize = zone.actions.map(calculateActionSize).reduce(add, 0) + 8 * zone.actions.length;
+			const size = izonSize + izaxSize + izx2Size + izx3Size + izx4Size + hotspotSize + actionSize + 14;
 
 			stream.writeUint16(zone.planet.rawValue);
 

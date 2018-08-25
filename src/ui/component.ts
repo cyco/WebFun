@@ -10,11 +10,7 @@ abstract class Component extends BabelHTMLElement {
 
 	protected disconnectedCallback(): void {}
 
-	protected attributeChangedCallback(
-		attributeName: string,
-		oldValue: string,
-		newValue: string
-	): void {}
+	protected attributeChangedCallback(attributeName: string, oldValue: string, newValue: string): void {}
 }
 
 export default Component;

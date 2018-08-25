@@ -63,9 +63,7 @@ class PopoverTilePicker extends Component implements EventListenerObject {
 	set currentTile(tile: Tile) {
 		this._currentTile = tile;
 		this._currentTileView.tile = tile;
-		this.dispatchEvent(
-			new CustomEvent(Events.TileDidChange, { detail: { tile }, bubbles: true })
-		);
+		this.dispatchEvent(new CustomEvent(Events.TileDidChange, { detail: { tile }, bubbles: true }));
 	}
 
 	get currentTile() {

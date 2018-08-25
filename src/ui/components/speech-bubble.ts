@@ -94,11 +94,7 @@ class SpeechBubble extends Component {
 		this.text = this.text || "";
 	}
 
-	protected attributeChangedCallback(
-		attribute: string,
-		oldValue: string,
-		newValue: string
-	): void {
+	protected attributeChangedCallback(attribute: string, oldValue: string, newValue: string): void {
 		this.text = newValue;
 	}
 
@@ -282,9 +278,7 @@ class SpeechBubble extends Component {
 	}
 
 	private _calculateNumberOfLines(skipClipping: boolean): number {
-		const lineCount = Math.ceil(
-			this._text.getBoundingClientRect().height / parseInt(LineHeight)
-		);
+		const lineCount = Math.ceil(this._text.getBoundingClientRect().height / parseInt(LineHeight));
 		let line = Math.max(1, lineCount);
 
 		if (skipClipping) return line;

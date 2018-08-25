@@ -11,7 +11,11 @@ export type ConditionImplementation = (
 	engine: Engine,
 	mode: EvaluationMode
 ) => Promise<boolean>;
-export type InstructionImplementation = (instruction: Instruction, engine: Engine, action: Action) => Promise<Result>;
+export type InstructionImplementation = (
+	instruction: Instruction,
+	engine: Engine,
+	action: Action
+) => Promise<Result>;
 
 enum ResultFlags {
 	OK = 0,

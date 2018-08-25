@@ -78,10 +78,7 @@ export class Tile {
 	public image: Image;
 
 	get walkable() {
-		return (
-			!this.getAttribute(Tile.Attribute.Object) &&
-			!this.getAttribute(Tile.Attribute.Character)
-		);
+		return !this.getAttribute(Tile.Attribute.Object) && !this.getAttribute(Tile.Attribute.Character);
 	}
 
 	get subtype() {

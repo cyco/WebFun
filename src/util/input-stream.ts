@@ -23,9 +23,7 @@ class InputStream extends Stream {
 		return this.offset === this.length;
 	}
 
-	_makeArrayBuffer(
-		data: ArrayBuffer | SharedArrayBuffer | string
-	): ArrayBuffer | SharedArrayBuffer {
+	_makeArrayBuffer(data: ArrayBuffer | SharedArrayBuffer | string): ArrayBuffer | SharedArrayBuffer {
 		if (typeof data === "string") {
 			let binaryString = atob(data);
 			let len = binaryString.length;

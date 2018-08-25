@@ -6,13 +6,7 @@ class PuzzleType {
 	public static readonly U4 = new PuzzleType();
 
 	public static readonly Disabled = new PuzzleType();
-	private static knownTypes = [
-		PuzzleType.U1,
-		PuzzleType.U2,
-		PuzzleType.U3,
-		PuzzleType.End,
-		PuzzleType.U4
-	];
+	private static knownTypes = [PuzzleType.U1, PuzzleType.U2, PuzzleType.U3, PuzzleType.End, PuzzleType.U4];
 
 	public get rawValue() {
 		if (this === PuzzleType.Disabled) return -1;

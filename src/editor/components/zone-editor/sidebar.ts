@@ -6,11 +6,7 @@ class Sidebar extends Component {
 	static readonly tagName = "wf-zone-editor-sidebar";
 	private _state: Storage;
 
-	addEntry(
-		node: HTMLElement | HTMLElement[],
-		name: string,
-		newItemCallback?: () => void
-	): SidebarCell {
+	addEntry(node: HTMLElement | HTMLElement[], name: string, newItemCallback?: () => void): SidebarCell {
 		const cell = <SidebarCell>document.createElement(SidebarCell.tagName);
 		cell.name = name;
 
@@ -29,9 +25,7 @@ class Sidebar extends Component {
 	set state(state: Storage) {
 		this._state = state;
 
-		const cells = <SidebarCell[]>Array.from(this.children).filter(
-			c => c instanceof SidebarCell
-		);
+		const cells = <SidebarCell[]>Array.from(this.children).filter(c => c instanceof SidebarCell);
 		cells.forEach(c => (c.state = this.state.prefixedWith(c.name)));
 	}
 

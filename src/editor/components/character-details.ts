@@ -28,9 +28,7 @@ class CharacterDetails extends Component {
 	constructor() {
 		super();
 
-		this._framePreview = <CharacterFramePreview>document.createElement(
-			CharacterFramePreview.tagName
-		);
+		this._framePreview = <CharacterFramePreview>document.createElement(CharacterFramePreview.tagName);
 		this._stepButton = document.createElement("button");
 		this._stepButton.textContent = "Step";
 		this._stepButton.onclick = () =>
@@ -52,12 +50,10 @@ class CharacterDetails extends Component {
 		};
 		this._damageInput = document.createElement("input");
 		this._damageInput.type = "text";
-		this._damageInput.onchange = () =>
-			(this._character.damage = parseInt(this._damageInput.value));
+		this._damageInput.onchange = () => (this._character.damage = parseInt(this._damageInput.value));
 		this._healthInput = document.createElement("input");
 		this._healthInput.type = "text";
-		this._healthInput.onchange = () =>
-			(this._character.health = parseInt(this._damageInput.value));
+		this._healthInput.onchange = () => (this._character.health = parseInt(this._damageInput.value));
 		this._weaponPreview = document.createElement("div");
 		this._sound = document.createElement("select");
 		this._sound.classList.add("sound");

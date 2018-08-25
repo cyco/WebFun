@@ -29,9 +29,7 @@ class BreakpointStore extends EventTarget {
 	addBreakpoint(bpt: Breakpoint) {
 		this._breakpoints[bpt.id] = bpt;
 		this._store();
-		this.dispatchEvent(
-			new CustomEvent(Events.DidAddBreakpoint, { detail: { breakpoint: bpt } })
-		);
+		this.dispatchEvent(new CustomEvent(Events.DidAddBreakpoint, { detail: { breakpoint: bpt } }));
 	}
 
 	hasBreakpoint(id: string) {
@@ -45,9 +43,7 @@ class BreakpointStore extends EventTarget {
 	removeBreakpoint(bpt: Breakpoint) {
 		delete this._breakpoints[bpt.id];
 		this._store();
-		this.dispatchEvent(
-			new CustomEvent(Events.DidRemoveBreakpoint, { detail: { breakpoint: bpt } })
-		);
+		this.dispatchEvent(new CustomEvent(Events.DidRemoveBreakpoint, { detail: { breakpoint: bpt } }));
 	}
 
 	_store() {

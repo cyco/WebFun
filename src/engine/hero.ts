@@ -143,7 +143,8 @@ class Hero extends EventTarget {
 			return (this._walking = false);
 		}
 
-		if (this._doMove(relative, zone, relative.isUnidirectional() && this._dragging)) return (this._walking = true);
+		if (this._doMove(relative, zone, relative.isUnidirectional() && this._dragging))
+			return (this._walking = true);
 
 		let y = relative.y;
 		let x = relative.x;

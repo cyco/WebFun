@@ -90,9 +90,7 @@ class PaletteColorPicker extends PaletteView implements EventListenerObject {
 	public updateCurrentColor(color: Color | string) {
 		const { palette: p, _colorIndex: i } = this;
 		[p[i * 4 + 2], p[i * 4 + 1], p[i * 4 + 0], p[i * 4 + 3]] = new Color(color).rgbaComponents;
-		this.redraw(
-			new Point(this._colorIndex % this.size.width, floor(this._colorIndex / this.size.width))
-		);
+		this.redraw(new Point(this._colorIndex % this.size.width, floor(this._colorIndex / this.size.width)));
 	}
 
 	private _highlightCurrentColor() {

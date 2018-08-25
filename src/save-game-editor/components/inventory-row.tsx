@@ -32,11 +32,7 @@ class InventoryRow extends Cell<Tile> {
 
 			if (this.ondelete instanceof Function) {
 				this._label.appendChild(
-					<IconButton
-						className="remove"
-						onclick={() => this.ondelete(this)}
-						icon="trash"
-					/>
+					<IconButton className="remove" onclick={() => this.ondelete(this)} icon="trash" />
 				);
 			}
 		} else {

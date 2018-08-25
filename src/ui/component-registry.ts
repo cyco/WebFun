@@ -15,10 +15,7 @@ class ComponentRegistry {
 	}
 
 	registerComponent(ComponentDefinition: typeof Component) {
-		console.assert(
-			!!ComponentDefinition.tagName,
-			`ComponentDefinitions must define a tag to be used!`
-		);
+		console.assert(!!ComponentDefinition.tagName, `ComponentDefinitions must define a tag to be used!`);
 		console.assert(
 			!this.components[ComponentDefinition.tagName],
 			`A component with tag '${ComponentDefinition.tagName}' is already registered!`

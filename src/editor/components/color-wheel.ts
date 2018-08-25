@@ -1,16 +1,6 @@
 import { Component } from "src/ui";
 import "./color-wheel.scss";
-import {
-	Color,
-	deg2rad,
-	dispatch,
-	hsv2rgb,
-	polar2xy,
-	rad2deg,
-	rgba,
-	Size,
-	xy2polar
-} from "src/util";
+import { Color, deg2rad, dispatch, hsv2rgb, polar2xy, rad2deg, rgba, Size, xy2polar } from "src/util";
 
 class ColorWheel extends Component implements EventListenerObject {
 	public static readonly tagName = "wf-color-wheel";

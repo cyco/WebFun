@@ -6,10 +6,7 @@ import { Shortcut } from "src/ux";
 import ShortcutManager from "src/ux/shortcut-manager";
 import "./editor.scss";
 import Zone from "src/engine/objects/zone";
-import {
-	AssemblerInputError,
-	default as Assembler
-} from "src/editor/components/action-editor/assembler";
+import { AssemblerInputError, default as Assembler } from "src/editor/components/action-editor/assembler";
 import { default as Parser, ParserError } from "src/editor/components/action-editor/parser";
 import MutableAction from "src/engine/mutable-objects/mutable-action";
 import MutableZone from "src/engine/mutable-objects/mutable-zone";
@@ -153,10 +150,7 @@ class Editor extends Component {
 			})
 			.join("\n");
 		this._errorArea.style.display = "";
-		this.style.setProperty(
-			"--error-height",
-			this._errorArea.getBoundingClientRect().height + "px"
-		);
+		this.style.setProperty("--error-height", this._errorArea.getBoundingClientRect().height + "px");
 	}
 
 	private get actions() {

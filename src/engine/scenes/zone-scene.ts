@@ -88,12 +88,7 @@ class ZoneScene extends Scene {
 				zone.npcs.forEach(npc => {
 					const tile = npc.face.frames[0].down;
 					if (tile) {
-						renderer.renderTile(
-							tile,
-							npc.position.x + offset.x,
-							npc.position.y + offset.y,
-							z
-						);
+						renderer.renderTile(tile, npc.position.x + offset.x, npc.position.y + offset.y, z);
 					}
 				});
 			}
@@ -101,15 +96,17 @@ class ZoneScene extends Scene {
 
 		// show hotspots while debugging
 		if (Settings.drawHotspots && (<any>renderer).fillRect instanceof Function)
-			zone.hotspots.forEach((h: Hotspot): void => {
-				(<any>renderer).fillRect(
-					(h.x + offset.x) * Tile.WIDTH,
-					(h.y + offset.y) * Tile.HEIGHT,
-					Tile.WIDTH,
-					Tile.HEIGHT,
-					h.enabled ? rgba(0, 255, 0, 0.3) : rgba(255, 0, 0, 0.3)
-				);
-			});
+			zone.hotspots.forEach(
+				(h: Hotspot): void => {
+					(<any>renderer).fillRect(
+						(h.x + offset.x) * Tile.WIDTH,
+						(h.y + offset.y) * Tile.HEIGHT,
+						Tile.WIDTH,
+						Tile.HEIGHT,
+						h.enabled ? rgba(0, 255, 0, 0.3) : rgba(255, 0, 0, 0.3)
+					);
+				}
+			);
 	}
 
 	_executeHotspots() {
@@ -129,18 +126,13 @@ class ZoneScene extends Scene {
 		switch (hotspot.type) {
 			case HotspotType.DoorIn: {
 				const targetZone = engine.data.zones[hotspot.arg];
-				let waysOut = targetZone.hotspots.filter(
-					(h: Hotspot) => h.type === HotspotType.DoorOut
-				);
+				let waysOut = targetZone.hotspots.filter((h: Hotspot) => h.type === HotspotType.DoorOut);
 
 				if (waysOut.length !== 1) console.warn("Found multiple doors out");
 
 				const transitionScene = new TransitionScene();
 				transitionScene.type = TransitionScene.TRANSITION_TYPE.ROOM;
-				transitionScene.targetHeroLocation = new Point(
-					waysOut.first().x,
-					waysOut.first().y
-				);
+				transitionScene.targetHeroLocation = new Point(waysOut.first().x, waysOut.first().y);
 				transitionScene.targetZone = targetZone;
 				console.assert(engine.sceneManager.currentScene instanceof ZoneScene);
 				transitionScene.scene = <ZoneScene>engine.sceneManager.currentScene;
@@ -179,11 +171,9 @@ class ZoneScene extends Scene {
 					.forEach(hotspot => (hotspot.arg = -1));
 
 				const waysIn = targetZone.hotspots.filter(
-					(hotspot: Hotspot) =>
-						hotspot.type === HotspotType.DoorIn && hotspot.arg === zone.id
+					(hotspot: Hotspot) => hotspot.type === HotspotType.DoorIn && hotspot.arg === zone.id
 				);
-				if (waysIn.length !== 1)
-					console.warn("Found multiple doors we might have come through!");
+				if (waysIn.length !== 1) console.warn("Found multiple doors we might have come through!");
 
 				const transitionScene = new TransitionScene();
 				transitionScene.type = TransitionScene.TRANSITION_TYPE.ROOM;
@@ -454,8 +444,7 @@ class ZoneScene extends Scene {
 		hero.isWalking = true;
 
 		const targetPoint = Point.add(hero.location, p);
-		const targetTile =
-			zone.bounds.contains(targetPoint) && zone.getTile(targetPoint.x, targetPoint.y, 1);
+		const targetTile = zone.bounds.contains(targetPoint) && zone.getTile(targetPoint.x, targetPoint.y, 1);
 		if (targetTile) {
 			const result = await this.engine.scriptExecutor.bump(targetPoint);
 			//TODO: handle result

@@ -55,26 +55,22 @@ class MainMenu extends Menu {
 					{
 						title: "Combat Difficulty...",
 						mnemonic: 0,
-						callback: () =>
-							this._runModalSessionForWindowComponent(DifficultyWindow.tagName)
+						callback: () => this._runModalSessionForWindowComponent(DifficultyWindow.tagName)
 					},
 					{
 						title: "Game Speed...",
-						callback: () =>
-							this._runModalSessionForWindowComponent(GameSpeedWindow.tagName),
+						callback: () => this._runModalSessionForWindowComponent(GameSpeedWindow.tagName),
 						mnemonic: 0
 					},
 					{
 						title: "World Control...",
-						callback: () =>
-							this._runModalSessionForWindowComponent(WorldSizeWindow.tagName),
+						callback: () => this._runModalSessionForWindowComponent(WorldSizeWindow.tagName),
 						mnemonic: 0
 					},
 					{
 						title: "Statistics...",
 						mnemonic: 0,
-						callback: () =>
-							this._runModalSessionForWindowComponent(StatisticsWindow.tagName)
+						callback: () => this._runModalSessionForWindowComponent(StatisticsWindow.tagName)
 					},
 					Separator,
 					{

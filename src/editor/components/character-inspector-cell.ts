@@ -44,8 +44,7 @@ class CharacterInspectorCell extends Cell<Char> {
 
 	protected connectedCallback() {
 		const tile = this.data.frames[0].extensionRight;
-		this._tile.className =
-			"tile " + (tile ? this.tileSheet.cssClassesForTile(tile.id).join(" ") : "");
+		this._tile.className = "tile " + (tile ? this.tileSheet.cssClassesForTile(tile.id).join(" ") : "");
 		this._id.textContent = `${this.data.id}`;
 		this._name.textContent = `${this.data.name}`;
 

@@ -33,11 +33,7 @@ class TileInspector extends AbstractInspector {
 			/>
 		);
 		this.window.addTitlebarButton(
-			<IconButton
-				icon="upload"
-				title="Upload tileset image"
-				onclick={() => this.uploadTileset()}
-			/>
+			<IconButton icon="upload" title="Upload tileset image" onclick={() => this.uploadTileset()} />
 		);
 	}
 
@@ -157,8 +153,7 @@ class TileInspector extends AbstractInspector {
 		for (let i = 31; i >= 0; i--) {
 			const bitCell = document.createElement("th");
 			bitCell.title = `Bit ${i}` + (titles[i] ? ": " + titles[i] : "");
-			bitCell.onclick = (e: MouseEvent) =>
-				this.toggleBitFilter(i, e.currentTarget as HTMLElement);
+			bitCell.onclick = (e: MouseEvent) => this.toggleBitFilter(i, e.currentTarget as HTMLElement);
 			headRow.appendChild(bitCell);
 		}
 		head.appendChild(headRow);
@@ -183,8 +178,7 @@ class TileInspector extends AbstractInspector {
 				const bitCell = document.createElement("td");
 				bitCell.textContent = `${tile.attributes & (1 << i) ? 1 : 0}`;
 				bitCell.title = `Bit ${i}` + (titles[i] ? ": " + titles[i] : "");
-				bitCell.onclick = (e: MouseEvent) =>
-					this.toggleBit(tile, i, e.currentTarget as HTMLElement);
+				bitCell.onclick = (e: MouseEvent) => this.toggleBit(tile, i, e.currentTarget as HTMLElement);
 				row.appendChild(bitCell);
 			}
 			body.appendChild(row);

@@ -31,9 +31,7 @@ class ZoneInspector extends AbstractInspector {
 		this._list = <List state={state.prefixedWith("list")} /> as List<Zone>;
 		this._list.cell = (
 			<ZoneInspectorCell
-				onclick={(e: MouseEvent) =>
-					this._onCellClicked(e.currentTarget as ZoneInspectorCell)
-				}
+				onclick={(e: MouseEvent) => this._onCellClicked(e.currentTarget as ZoneInspectorCell)}
 				searchDelegate={this}
 				oncontextmenu={(e: MouseEvent) => this._onCellContextMenu(e)}
 			/>
@@ -44,9 +42,7 @@ class ZoneInspector extends AbstractInspector {
 		);
 		this._list.addEventListener(ZoneInspectorCell.Events.RemoveZone, (e: CustomEvent) => {
 			if (confirm(`Remove zone ${e.detail.zone.id}?`))
-				this.data.currentData.zones.splice(
-					this.data.currentData.zones.indexOf(e.detail.zone.id, 1)
-				);
+				this.data.currentData.zones.splice(this.data.currentData.zones.indexOf(e.detail.zone.id, 1));
 			this.build();
 		});
 		this.window.content.appendChild(this._list);
@@ -56,9 +52,7 @@ class ZoneInspector extends AbstractInspector {
 		let controller = this._controllers.find(c => c.canBeReused());
 
 		if (!controller) {
-			controller = document.createElement(
-				ZoneEditorController.tagName
-			) as ZoneEditorController;
+			controller = document.createElement(ZoneEditorController.tagName) as ZoneEditorController;
 			controller.data = this.data;
 			controller.state = this._state.prefixedWith("editor-" + this._controllers.length);
 			this._controllers.push(controller);
@@ -96,9 +90,7 @@ class ZoneInspector extends AbstractInspector {
 								console.log("resize to", x, y);
 								const size = new Size(x, y);
 								(zone as MutableZone).size = size;
-								(zone as MutableZone).tileIDs = new Int16Array(size.area * 3).map(
-									_ => -1
-								);
+								(zone as MutableZone).tileIDs = new Int16Array(size.area * 3).map(_ => -1);
 							}
 						}
 					])
@@ -133,9 +125,7 @@ class ZoneInspector extends AbstractInspector {
 				return;
 			}
 
-			const controller = document.createElement(
-				ZoneEditorController.tagName
-			) as ZoneEditorController;
+			const controller = document.createElement(ZoneEditorController.tagName) as ZoneEditorController;
 			controller.manager = this.windowManager;
 			controller.data = this.data;
 			controller.zone = this.data.currentData.zones[id];
@@ -184,12 +174,7 @@ class ZoneInspector extends AbstractInspector {
 		return searchValue.split(" ").map(s => new RegExp(s, "i"));
 	}
 
-	includeListItem(
-		searchValue: RegExp[],
-		item: Zone,
-		_1: ZoneInspectorCell,
-		_2: List<Zone>
-	): boolean {
+	includeListItem(searchValue: RegExp[], item: Zone, _1: ZoneInspectorCell, _2: List<Zone>): boolean {
 		const searchableAttributes = [
 			item.id,
 			item.size.width + "x" + item.size.height,

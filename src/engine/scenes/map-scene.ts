@@ -17,11 +17,7 @@ class MapScene extends Scene {
 	static readonly LOCATOR_TICKS = 10;
 	private _ticks: number = 0;
 	private _location: Tile = null;
-	private _cheatInput = new CheatCodeInput([
-		new Weapons(),
-		new UnlimitedAmmo(),
-		new Invincibility()
-	]);
+	private _cheatInput = new CheatCodeInput([new Weapons(), new UnlimitedAmmo(), new Invincibility()]);
 	private _locatorTile = new LocatorTile();
 
 	isOpaque() {
@@ -134,19 +130,14 @@ class MapScene extends Scene {
 				let tile = this._tileForZone(zone);
 
 				if (tile && tile.image && tile.image)
-					renderer.renderImage(
-						tile.image,
-						offsetX + x * TileWidth,
-						offsetY + y * TileHeight
-					);
+					renderer.renderImage(tile.image, offsetX + x * TileWidth, offsetY + y * TileHeight);
 			}
 		}
 
 		if ((this._ticks % (2 * MapScene.LOCATOR_TICKS)) / MapScene.LOCATOR_TICKS < 1) {
 			const x = offsetX + TileWidth * state.worldLocation.x;
 			const y = offsetY + TileHeight * state.worldLocation.y;
-			if (this._location && this._location.image)
-				renderer.renderImage(this._location.image, x, y);
+			if (this._location && this._location.image) renderer.renderImage(this._location.image, x, y);
 		}
 	}
 

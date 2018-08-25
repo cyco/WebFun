@@ -12,13 +12,9 @@ class ProgressBar extends Component {
 	set value(progress) {
 		const maxNumberOfSegments = 24;
 
-		const numberOfSegments = Math.min(
-			Math.round(progress * maxNumberOfSegments),
-			maxNumberOfSegments
-		);
+		const numberOfSegments = Math.min(Math.round(progress * maxNumberOfSegments), maxNumberOfSegments);
 
-		while (this.children.length < numberOfSegments)
-			this.appendChild(document.createElement("div"));
+		while (this.children.length < numberOfSegments) this.appendChild(document.createElement("div"));
 
 		while (this.children.length > numberOfSegments) this.firstElementChild.remove();
 

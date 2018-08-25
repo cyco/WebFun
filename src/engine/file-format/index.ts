@@ -66,8 +66,7 @@ export default (input: InputStream, type: GameType): any => {
 	let category: string;
 	do {
 		category = input.getCharacters(4);
-		const parse =
-			dispatch[category] || (() => error(`Invalid category ${category} found.`, input));
+		const parse = dispatch[category] || (() => error(`Invalid category ${category} found.`, input));
 		parse(input, data, type);
 	} while (category !== ENDF);
 
