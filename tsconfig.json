@@ -9,7 +9,6 @@
     "sourceMap": false,
     "inlineSourceMap": true,
     "inlineSources": true,
-    "allowJs": true,
     "target": "es2017",
     "sourceRoot": ".",
     "baseUrl": ".",
@@ -17,13 +16,7 @@
     "jsx": "preserve",
     "typeRoots": ["src/@types"],
     "lib": ["es2017", "dom", "es6", "es2015.promise"],
-    "types": [
-      "jasmine",
-      "jasmine-matchers",
-      "webcomponents.js",
-      "webfun-additions",
-      "text-encoding"
-    ]
+    "types": ["jasmine", "jasmine-matchers", "webcomponents.js", "webfun-additions", "text-encoding"]
   },
   "exclude": ["node_modules"]
 }

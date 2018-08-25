@@ -1,6 +1,6 @@
-import { Element } from "std.dom";
+import { Element } from "src/std.dom";
 
-const append = function(e) {
+const append = function(e: Node) {
 	this.appendChild(this.ownerDocument.createTextNode(e));
 };
 
