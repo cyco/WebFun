@@ -17,10 +17,7 @@ describe("ComponentRegistry", () => {
 			spyOn(window.customElements, "define");
 			let subject = new ComponentRegistry();
 			subject.registerComponent(componentMock);
-			expect(window.customElements.define).toHaveBeenCalledWith(
-				"test-component-1",
-				componentMock
-			);
+			expect(window.customElements.define).toHaveBeenCalledWith("test-component-1", componentMock);
 		});
 	});
 

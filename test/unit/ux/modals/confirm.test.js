@@ -3,11 +3,7 @@ import Confirm, { Result } from "src/ux/modals/confirm";
 
 describe("Confirm", () => {
 	beforeAll(() => {
-		customElements.define(
-			ConfirmationWindow.tagName,
-			ConfirmationWindow,
-			ConfirmationWindow.options
-		);
+		customElements.define(ConfirmationWindow.tagName, ConfirmationWindow, ConfirmationWindow.options);
 	});
 
 	afterEach(() => {

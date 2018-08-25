@@ -15,16 +15,12 @@ describeComponent(Menubar, () => {
 
 	it("is a menu view that's attached to the top of a window", () => {
 		expect(
-			subject.querySelectorAll(
-				or(MenuItemComponent.tagName, MenuItemSeparatorComponent.tagName)
-			).length
+			subject.querySelectorAll(or(MenuItemComponent.tagName, MenuItemSeparatorComponent.tagName)).length
 		).toBe(3);
 
 		subject.menu = null;
 		expect(
-			subject.querySelectorAll(
-				or(MenuItemComponent.tagName, MenuItemSeparatorComponent.tagName)
-			).length
+			subject.querySelectorAll(or(MenuItemComponent.tagName, MenuItemSeparatorComponent.tagName)).length
 		).toBe(0);
 	});
 

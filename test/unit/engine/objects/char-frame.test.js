@@ -7,7 +7,16 @@ describe("CharFrame", () => {
 	});
 
 	it("basically wraps an array and offers a more expressive interface", () => {
-		let tiles = ["up", "down", "extensionUp", "left", "extensionDown", "extensionLeft", "right", "extensionRight"];
+		let tiles = [
+			"up",
+			"down",
+			"extensionUp",
+			"left",
+			"extensionDown",
+			"extensionLeft",
+			"right",
+			"extensionRight"
+		];
 
 		let charFrame = new CharFrame();
 		charFrame._tiles = tiles;

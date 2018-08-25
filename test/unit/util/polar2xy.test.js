@@ -17,7 +17,7 @@ describe("WebFun.Util.polar2xy", () => {
 		expect(x).toBeCloseTo(-1, 0.1);
 		expect(y).toBeCloseTo(0, 0.1);
 
-		[x, y] = polar2xy(1, 1 / 2 * PI);
+		[x, y] = polar2xy(1, (1 / 2) * PI);
 		expect(x).toBeCloseTo(0, 0.1);
 		expect(y).toBeCloseTo(-1, 0.1);
 
