@@ -2,7 +2,12 @@ import "babel-polyfill";
 import FS from "fs";
 import KaitaiStream from "kaitai-struct/KaitaiStream";
 import Path from "path";
-import { CompareWorldItems, ComparisonResult, ParseExpectation, PrepareExpectations } from "src/debug/expectation";
+import {
+	CompareWorldItems,
+	ComparisonResult,
+	ParseExpectation,
+	PrepareExpectations
+} from "src/debug/expectation";
 import { GameData, Story } from "src/engine";
 import Yodesk from "src/engine/file-format/yodesk.ksy";
 import "src/extension";
@@ -230,17 +235,23 @@ const main = (...args) => {
 				try {
 					compare(story, e);
 					process.stdout.write(
-						`[OK]   0x${seed.toString(0x10)} 0x${planet.toString(0x10)} 0x${size.toString(0x10)}\n`
+						`[OK]   0x${seed.toString(0x10)} 0x${planet.toString(0x10)} 0x${size.toString(
+							0x10
+						)}\n`
 					);
 				} catch (err) {
 					process.stdout.write(
-						`[FAIL] 0x${seed.toString(0x10)} 0x${planet.toString(0x10)} 0x${size.toString(0x10)}\n`
+						`[FAIL] 0x${seed.toString(0x10)} 0x${planet.toString(0x10)} 0x${size.toString(
+							0x10
+						)}\n`
 					);
 					failed++;
 				}
 			});
 
-			process.stdout.write(`${tested - failed} of ${tested} world combinations were generated correctly!\n`);
+			process.stdout.write(
+				`${tested - failed} of ${tested} world combinations were generated correctly!\n`
+			);
 		}
 	} catch (error) {
 		process.stderr.write(`${error}\n`);

@@ -102,7 +102,8 @@ const readGameData = path => {
 
 const conditionToList = condition => {
 	const name =
-		Object.keys(Conditions).find(key => Conditions[key].Opcode === condition.opcode) || `${condition.opcode}`;
+		Object.keys(Conditions).find(key => Conditions[key].Opcode === condition.opcode) ||
+		`${condition.opcode}`;
 	const Condition = name ? Conditions[name] : null;
 
 	const argCount = Math.max(Condition.Arguments, 0);

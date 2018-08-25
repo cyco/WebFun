@@ -13,16 +13,12 @@ describeComponent(MenuView, () => {
 	it("draws all items of a menu", () => {
 		subject.menu = new Menu([{ label: "Test" }, MenuItemSeparator, { label: "Test 2" }]);
 		expect(
-			subject.querySelectorAll(
-				or(MenuItemComponent.tagName, MenuItemSeparatorComponent.tagName)
-			).length
+			subject.querySelectorAll(or(MenuItemComponent.tagName, MenuItemSeparatorComponent.tagName)).length
 		).toBe(3);
 
 		subject.menu = null;
 		expect(
-			subject.querySelectorAll(
-				or(MenuItemComponent.tagName, MenuItemSeparatorComponent.tagName)
-			).length
+			subject.querySelectorAll(or(MenuItemComponent.tagName, MenuItemSeparatorComponent.tagName)).length
 		).toBe(0);
 	});
 

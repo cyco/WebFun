@@ -14,9 +14,7 @@ describe("DataReading", () => {
 	const parsesWithoutError = (type, file) => async done => {
 		const data = await loadData(file);
 		if (!data) {
-			console.warn(
-				`Unable to find fixture data. Place ${file} into test/fixtures to run this test.`
-			);
+			console.warn(`Unable to find fixture data. Place ${file} into test/fixtures to run this test.`);
 			done();
 			return;
 		}

@@ -20,9 +20,7 @@ const compareItem = (actual, expected) => {
 	if (result !== ComparisonResult.Different) return;
 
 	if ((actual.zone ? actual.zone.id : -1) !== expected.zoneID)
-		throw `Difference in zone ids detected! ${actual.zone ? actual.zone.id : -1} !== ${
-			expected.zoneID
-		}`;
+		throw `Difference in zone ids detected! ${actual.zone ? actual.zone.id : -1} !== ${expected.zoneID}`;
 	// if (actual.zoneType.rawValue !== expected.zoneType) throw `Difference in zone types detected! ${actual.zoneType.rawValue} !== ${expected.zoneType}`;
 	throw `Difference detected`;
 };

@@ -99,11 +99,7 @@ describe("Color", () => {
 
 		it("can be used to convert between color spaces", () => {
 			subject = new Color(1, 2, 3, 0.75);
-			expect(subject.hsvComponents).toEqual([
-				210.0,
-				0.6666666666666666,
-				0.011764705882352941
-			]);
+			expect(subject.hsvComponents).toEqual([210.0, 0.6666666666666666, 0.011764705882352941]);
 
 			subject = new Color(255, 255, 255);
 			expect(subject.hsvComponents).toEqual([0, 0, 1]);
