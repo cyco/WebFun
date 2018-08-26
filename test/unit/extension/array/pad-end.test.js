@@ -1,6 +1,6 @@
 import padEnd from "src/extension/array/pad-end";
 
-describe("Array.padEnd", () => {
+describe("WebFun.Extension.Array.padEnd", () => {
 	it("extends the Array prototype", () => {
 		let array = [1, 2, 3];
 		expect(array.padEnd).toBeFunction();

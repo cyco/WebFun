@@ -1,4 +1,4 @@
-describe("Array.remove", () => {
+describe("WebFun.Extension.Array.remove", () => {
 	it("it extends the Array prototype", () => {
 		let array = [];
 		expect(array.remove).toBeFunction();

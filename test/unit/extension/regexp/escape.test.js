@@ -1,6 +1,6 @@
 import escape from "src/extension/regexp/escape";
 
-describe("WebFun.Extension.RegExp", () => {
+describe("WebFun.Extension.RegExp.escape", () => {
 	it("adds a method to RegExps ", () => {
 		expect(RegExp.escape).toBeFunction();
 	});

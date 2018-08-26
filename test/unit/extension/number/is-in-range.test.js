@@ -1,6 +1,6 @@
 import isInRange from "src/extension/number/is-in-range";
 
-describe("Number.isInRange", () => {
+describe("WebFun.Extension.Number.isInRange", () => {
 	it("is an extension of the number prototype that executes a callback n-times", () => {
 		expect(typeof isInRange).toBe("function");
 		expect(typeof Number.prototype.isInRange).toBe("function");

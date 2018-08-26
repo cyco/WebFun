@@ -1,7 +1,7 @@
 import asString from "src/extension/uint8-array/as-string";
 import { getFixtureData } from "test-helpers/fixture-loading";
 
-describe("Uint8Array.asString", () => {
+describe("WebFun.Extension.Uint8Array.asString", () => {
 	let buffer;
 	beforeEach(done => {
 		getFixtureData("asciiString", function(b) {

@@ -1,6 +1,6 @@
 import trimCharacter from "src/extension/string/trim-character";
 
-describe("String.trimCharacter", () => {
+describe("WebFun.Extension.String.trimCharacter", () => {
 	let subject;
 
 	it("is a function extending the String prototype", () => {

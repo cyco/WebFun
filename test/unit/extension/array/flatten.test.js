@@ -1,6 +1,6 @@
 import flatten from "src/extension/array/flatten";
 
-describe("Array.flatten", () => {
+describe("WebFun.Extension.Array.flatten", () => {
 	it("it extends the Array prototype", () => {
 		let array = [];
 		expect(array.flatten).toBeFunction();

@@ -1,4 +1,4 @@
-describe("Array.last", () => {
+describe("WebFun.Extension.Array.last", () => {
 	it("it extends the Array prototype", () => {
 		let array = [];
 		expect(typeof array.last).toBe("function");

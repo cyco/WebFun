@@ -3,7 +3,7 @@ import { NodeList } from "std.dom";
 import sandboxed from "test-helpers/dom-sandbox";
 
 describe(
-	"NodeList.map",
+	"WebFun.Extension.NodeList.map",
 	sandboxed(sand => {
 		it("extends the NodeList prototype", () => {
 			expect(typeof map).toBe("function");

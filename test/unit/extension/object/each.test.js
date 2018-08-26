@@ -1,4 +1,4 @@
-describe("Object.each", () => {
+describe("WebFun.Extension.Object.each", () => {
 	it("extends the Object prototype", () => {
 		let object = {};
 		expect(typeof object.each).toBe("function");

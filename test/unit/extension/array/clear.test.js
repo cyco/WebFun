@@ -1,6 +1,6 @@
 import clear from "src/extension/array/clear";
 
-describe("Array.clear", () => {
+describe("WebFun.Extension.Array.clear", () => {
 	it("it extends the Array prototype", () => {
 		let array = [];
 		expect(typeof clear).toBe("function");

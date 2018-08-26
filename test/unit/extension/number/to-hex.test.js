@@ -1,6 +1,6 @@
 import toHex from "src/extension/number/to-hex";
 
-describe("Number.toHex", () => {
+describe("WebFun.Extension.Number.toHex", () => {
 	it("is an extension of the number prototype", () => {
 		expect(typeof Number.prototype.toHex).toBe("function");
 		expect(typeof toHex).toBe("function");

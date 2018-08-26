@@ -97,6 +97,11 @@ describe("Color", () => {
 			expect(subject.rgbaComponents).toEqual([0xff, 0xff, 0, 1]);
 		});
 
+		it("is initialized to black if no proper initialization options are given", () => {
+			subject = new Color(null);
+			expect(subject.rgbaComponents).toEqual([0, 0, 0, 1]);
+		});
+
 		it("can be used to convert between color spaces", () => {
 			subject = new Color(1, 2, 3, 0.75);
 			expect(subject.hsvComponents).toEqual([210.0, 0.6666666666666666, 0.011764705882352941]);
