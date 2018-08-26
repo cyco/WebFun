@@ -1,4 +1,4 @@
-describe("Array.contains", () => {
+describe("WebFun.Extension.Array.contains", () => {
 	it("extends the Array prototype", () => {
 		expect(typeof Array.prototype.contains).toBe("function");
 	});

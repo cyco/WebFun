@@ -1,6 +1,6 @@
 import append from "src/extension/element/append";
 
-describe("Element.append", () => {
+describe("WebFun.Extension.Element.append", () => {
 	it("is a function", () => {
 		expect(typeof append).toBe("function");
 	});

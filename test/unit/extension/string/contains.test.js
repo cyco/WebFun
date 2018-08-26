@@ -1,6 +1,6 @@
 import contains from "src/extension/string/contains";
 
-describe("String.contains", () => {
+describe("WebFun.Extension.String.contains", () => {
 	it("extends the String prototype", () => {
 		let string = "test";
 		expect(string.contains).toBeFunction();

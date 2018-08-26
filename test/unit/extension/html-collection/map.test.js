@@ -1,24 +1,21 @@
 import { HTMLCollection } from "std.dom";
 import render from "test-helpers/render";
 
-describe("HTMLCollection.find", () => {
+describe("WebFun.Extension.HTMLCollection.map", () => {
 	let subject;
 	beforeAll(() => {
-		subject = render(`<div><span></span><span class="second"></span><span class="third"></span></div>`)
-			.children;
+		subject = render(
+			`<div><span class="first"></span><span class="second"></span><span class="third"></span></div>`
+		).children;
 	});
 
 	it("is a function extending the HTMLCollection prototype", () => {
 		expect(subject).toBeInstanceOf(HTMLCollection);
-		expect(subject.find).toBeFunction();
+		expect(subject.map).toBeFunction();
 	});
 
-	it("is used to find the first node in the collection to satisfy a predicate", () => {
-		const node = subject.find(node => node.classList.contains("second"));
-		expect(node).toBe(subject[1]);
-	});
-
-	it("returns null if no element in the collection matches the predicate", () => {
-		expect(subject.find(() => false)).toBe(null);
+	it("is used to create an array by applying a funtion to each node in a collection", () => {
+		const result = subject.map(node => node.className);
+		expect(result).toEqual(["first", "second", "third"]);
 	});
 });

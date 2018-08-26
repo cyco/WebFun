@@ -1,6 +1,6 @@
 import uuid from "src/extension/string/uuid";
 
-describe("String.UUID", () => {
+describe("WebFun.Extension.String.UUID", () => {
 	it("defines a static function on String that generates new UUIDs", () => {
 		expect(typeof uuid).toBe("function");
 		expect(typeof String.UUID).toBe("function");

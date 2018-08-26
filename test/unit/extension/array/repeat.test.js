@@ -1,6 +1,6 @@
 import Repeat from "src/extension/array/repeat";
 
-describe("Array.Repeat", () => {
+describe("WebFun.Extension.Array.Repeat", () => {
 	it("is a static function", () => {
 		expect(typeof Repeat).toBe("function");
 		expect(typeof Array.Repeat).toBe("function");

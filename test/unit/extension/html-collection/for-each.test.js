@@ -1,13 +1,13 @@
-import forEach from "src/extension/node-list/for-each";
+import forEach from "src/extension/html-collection/for-each";
 import { NodeList } from "std.dom";
 import sandboxed from "test-helpers/dom-sandbox";
 
 describe(
-	"WebFun.Extension.NodeList.forEach",
+	"WebFun.Extension.HTMLCollection.forEach",
 	sandboxed(sand => {
 		it("extends the NodeList prototype", () => {
 			expect(typeof forEach).toBe("function");
-			expect(typeof NodeList.prototype.forEach).toBe("function");
+			expect(typeof HTMLCollection.prototype.forEach).toBe("function");
 		});
 
 		it("works just like forEach on an Array", () => {
@@ -18,15 +18,15 @@ describe(
 			e2.className = "selectMe";
 			sand.box.appendChild(e2);
 
-			let nodeList = sand.box.querySelectorAll(".selectMe");
-			expect(nodeList.forEach).toBeFunction();
-			expect(nodeList.length).toBe(2);
+			let collection = sand.box.children;
+			expect(collection.forEach).toBeFunction();
+			expect(collection.length).toBe(2);
 
 			let callCount = 0;
-			forEach.call(nodeList, () => {
+			forEach.call(collection, () => {
 				callCount++;
 			});
-			expect(callCount).toBe(nodeList.length);
+			expect(callCount).toBe(collection.length);
 		});
 	})
 );

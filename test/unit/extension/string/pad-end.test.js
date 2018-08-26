@@ -1,6 +1,6 @@
 import padEnd from "src/extension/string/pad-end";
 
-describe("String.padEnd", () => {
+describe("WebFun.Extension.String.padEnd", () => {
 	it("extends the String prototype", () => {
 		let string = "test";
 		expect(string.padEnd).toBeFunction();

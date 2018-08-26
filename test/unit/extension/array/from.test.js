@@ -1,6 +1,6 @@
 import From from "src/extension/array/from";
 
-describe("Array.from", () => {
+describe("WebFun.Extension.Array.from", () => {
 	it("is a static function on Array, polyfilled if necessary", () => {
 		expect(typeof From).toBe("function");
 		expect(typeof Array.from).toBe("function");

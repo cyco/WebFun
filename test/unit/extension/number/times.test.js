@@ -1,6 +1,6 @@
 import times from "src/extension/number/times";
 
-describe("Number.times", () => {
+describe("WebFun.Extension.Number.times", () => {
 	it("is an extension of the number prototype that executes a callback n-times", () => {
 		expect(typeof times).toBe("function");
 		expect(typeof Number.prototype.times).toBe("function");
