@@ -15,17 +15,17 @@ class CharacterInspector extends AbstractInspector {
 		this.window.style.width = "430px";
 		this.window.content.style.height = "280px";
 
-		this._list = document.createElement(List.tagName) as List<Char>;
-		this._list.state = state.prefixedWith("list");
-		this._list.cell = <CharacterInspectorCell /> as CharacterInspectorCell;
-		this._list.cell.onclick = (e: MouseEvent) =>
-			this._onCellClicked(e.currentTarget as CharacterInspectorCell);
-		this._list.classList.add("character-inspector-list");
-		this._list.searchDelegate = this;
-		this._list.state = state.prefixedWith("list");
+		this._list = <List state={state.prefixedWith("list")} /> as List<Char>;
+		this._list.cell = (
+			<CharacterInspectorCell
+				className="character-inspector-list"
+				searchDelegate={this}
+				onclick={(e: MouseEvent) => this._onCellClicked(e.currentTarget as CharacterInspectorCell)}
+			/>
+		) as CharacterInspectorCell;
 		this.window.content.appendChild(this._list);
 
-		this._details = document.createElement(CharacterDetails.tagName) as CharacterDetails;
+		this._details = <CharacterDetails /> as CharacterDetails;
 		this.window.content.appendChild(this._details);
 	}
 
