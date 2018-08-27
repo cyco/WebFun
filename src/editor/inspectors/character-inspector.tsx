@@ -25,6 +25,12 @@ class CharacterInspector extends AbstractInspector {
 				className="character-inspector-list"
 				searchDelegate={this}
 				onclick={(e: MouseEvent) => this._onCellClicked(e.currentTarget as CharacterInspectorCell)}
+				onchange={(e: CustomEvent) =>
+					this.renameCharacter((e.detail.cell as CharacterInspectorCell).data, e.detail.name)
+				}
+				onremove={(e: CustomEvent) =>
+					this.removeCharacter((e.detail.cell as CharacterInspectorCell).data)
+				}
 			/>
 		) as CharacterInspectorCell;
 		this.window.content.appendChild(this._list);
@@ -45,6 +51,20 @@ class CharacterInspector extends AbstractInspector {
 		const newCharacter = new MutableChar(this.data.currentData.characters.last());
 		newCharacter.name = "New Character";
 		this.data.currentData.characters.push(newCharacter);
+		this._list.items = this.data.currentData.characters;
+	}
+
+	public renameCharacter(character: MutableChar, name: string) {
+		character.name = name;
+	}
+
+	public removeCharacter(character: Char) {
+		const index = this.data.currentData.characters.indexOf(character);
+		if (index === -1) return;
+		if (!confirm(`Delete character ${character.id} (${character.name})?`)) {
+			return;
+		}
+		this.data.currentData.characters.splice(index, 1);
 		this._list.items = this.data.currentData.characters;
 	}
 
