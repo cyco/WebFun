@@ -1,7 +1,8 @@
 import AbstractInspector from "src/editor/inspectors/abstract-inspector";
-import { List } from "src/ui/components";
+import { List, IconButton } from "src/ui/components";
 import { CharacterDetails, CharacterInspectorCell } from "../components";
 import { Char, CharType } from "src/engine/objects";
+import { MutableChar } from "src/engine/mutable-objects";
 
 class CharacterInspector extends AbstractInspector {
 	private _list: List<Char>;
@@ -14,6 +15,9 @@ class CharacterInspector extends AbstractInspector {
 		this.window.autosaveName = "character-inspector";
 		this.window.style.width = "430px";
 		this.window.content.style.height = "280px";
+		this.window.addTitlebarButton(
+			<IconButton icon="plus" title="Add new zone" onclick={() => this.addCharacter()} />
+		);
 
 		this._list = <List state={state.prefixedWith("list")} /> as List<Char>;
 		this._list.cell = (
@@ -35,6 +39,13 @@ class CharacterInspector extends AbstractInspector {
 		cell.setAttribute("selected", "");
 
 		this._details.character = cell.data;
+	}
+
+	public addCharacter() {
+		const newCharacter = new MutableChar(this.data.currentData.characters.last());
+		newCharacter.name = "New Character";
+		this.data.currentData.characters.push(newCharacter);
+		this._list.items = this.data.currentData.characters;
 	}
 
 	public build() {
