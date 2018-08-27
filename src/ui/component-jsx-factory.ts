@@ -23,7 +23,9 @@ class ComponentJSXRenderer {
 
 		if (children) {
 			const append = (c: any) => {
-				if (typeof c === "string") {
+				if (typeof c === "number") {
+					node.appendChild(document.createTextNode(c.toString(10)));
+				} else if (typeof c === "string") {
 					node.appendChild(document.createTextNode(c));
 				} else if (c instanceof Node) {
 					node.appendChild(c);

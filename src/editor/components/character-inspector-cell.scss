@@ -66,6 +66,24 @@ wf-character-inspector-cell {
 			filter: brightness(1.1);
 		}
 	}
+
+	.fa.fa-remove {
+		display: none;
+		cursor: pointer;
+		line-height: 34px;
+		color: rgb(96, 96, 96);
+		font-size: 0.9em;
+		margin: 0 3px;
+		&:hover {
+			color: rgb(38, 38, 38);
+		}
+	}
+
+	&:hover {
+		.fa.fa-remove {
+			display: inline-block;
+		}
+	}
 }
 
 .character-inspector-list {
