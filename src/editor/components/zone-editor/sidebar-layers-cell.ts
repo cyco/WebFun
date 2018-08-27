@@ -39,6 +39,13 @@ class SidebarLayersCell extends Component {
 		hotspots.locked = false;
 		this._layers.push(hotspots);
 
+		const npcs = new Layer();
+		npcs.id = -2;
+		npcs.name = "NPCs";
+		npcs.visible = true;
+		npcs.locked = false;
+		this._layers.push(npcs);
+
 		const roof = new Layer();
 		roof.id = Zone.Layer.Roof;
 		roof.name = "Roof";
@@ -82,6 +89,13 @@ class SidebarLayersCell extends Component {
 
 		const node = this.closest(Window.tagName);
 		const manager = ShortcutManager.sharedManager;
+		this._shortcuts.push(
+			manager.registerShortcut(() => this.activateLayer(4), {
+				ctrlKey: true,
+				keyCode: 53,
+				node
+			})
+		);
 		this._shortcuts.push(
 			manager.registerShortcut(() => this.activateLayer(3), {
 				ctrlKey: true,

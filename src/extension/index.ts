@@ -16,6 +16,7 @@ import * as MouseEvent from "./mouse-event";
 import * as Set from "./set";
 import * as File from "./file";
 import * as ImageData from "./image-data";
+import * as Console from "./console";
 
 export {
 	File,
@@ -34,5 +35,6 @@ export {
 	HTMLCollection,
 	RegExp,
 	MouseEvent,
-	ImageData
+	ImageData,
+	Console
 };
