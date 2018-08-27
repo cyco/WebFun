@@ -23,12 +23,16 @@ import {
 	View as ZoneEditorView,
 	Window as ZoneEditorWindow,
 	ZoneLayer,
-	HotspotLayer
+	HotspotLayer,
+	NPCLayer,
+	NPCLayerNPC
 } from "./zone-editor";
 import { Editor as ActionEditor, Token as ActionEditorToken } from "./action-editor";
 import { Editor as TileEditor } from "./tile-editor";
 
 export {
+	NPCLayer,
+	NPCLayerNPC,
 	ActionEditorToken,
 	ActionEditor,
 	TilePickerCell,

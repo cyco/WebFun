@@ -8,6 +8,8 @@ import SidebarLayer from "./sidebar-layer";
 import Tool from "./tool";
 import Action from "./action";
 import HotspotLayer from "./hotspot-layer";
+import NPCLayer from "./npc-layer";
+import NPCLayerNPC from "./npc-layer-npc";
 
 export {
 	Tool,
@@ -19,5 +21,7 @@ export {
 	SidebarLayer,
 	SidebarLayersCell,
 	Action,
-	HotspotLayer
+	HotspotLayer,
+	NPCLayer,
+	NPCLayerNPC
 };

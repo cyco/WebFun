@@ -1,5 +1,5 @@
 import { Array } from "src/std";
-import { NodeList, Node } from "src/std.dom";
+import { NodeList } from "src/std.dom";
 
 const indexOf = function(node: Node) {
 	return Array.from(this).indexOf(node);
@@ -8,8 +8,8 @@ const indexOf = function(node: Node) {
 NodeList.prototype.indexOf = NodeList.prototype.indexOf || indexOf;
 
 declare global {
-	interface NodeList {
-		indexOf(_: Node): number;
+	interface NodeListOf<TNode extends Node> {
+		indexOf(_: TNode): number;
 	}
 }
 
