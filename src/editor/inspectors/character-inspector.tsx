@@ -16,7 +16,7 @@ class CharacterInspector extends AbstractInspector {
 		this.window.style.width = "430px";
 		this.window.content.style.height = "280px";
 		this.window.addTitlebarButton(
-			<IconButton icon="plus" title="Add new zone" onclick={() => this.addCharacter()} />
+			<IconButton icon="plus" title="Add new character" onclick={() => this.addCharacter()} />
 		);
 
 		this._list = <List state={state.prefixedWith("list")} /> as List<Char>;
