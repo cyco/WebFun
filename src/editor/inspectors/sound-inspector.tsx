@@ -1,5 +1,5 @@
 import AbstractInspector from "src/editor/inspectors/abstract-inspector";
-import { List } from "src/ui/components";
+import { List, IconButton } from "src/ui/components";
 import { SoundInspectorCell } from "../components";
 import ReferenceResolver from "src/editor/reference-resolver";
 
@@ -19,18 +19,23 @@ class SoundInspector extends AbstractInspector {
 		this.window.style.width = "200px";
 		this.window.content.style.height = "450px";
 		this.window.content.style.flexDirection = "column";
+		this.window.addTitlebarButton(
+			<IconButton icon="plus" title="Add new zone" onclick={() => this.addSound()} />
+		);
 
-		this._list = document.createElement(List.tagName) as List<Sound>;
-		this._list.state = state.prefixedWith("list");
-		this._list.cell = document.createElement(SoundInspectorCell.tagName) as SoundInspectorCell;
-		this._list.searchDelegate = this;
+		this._list = (
+			<List
+				state={state.prefixedWith("list")}
+				cell={<SoundInspectorCell searchDelegate={this} /> as SoundInspectorCell}
+			/>
+		) as List<Sound>;
 		this._list.addEventListener(SoundInspectorCell.Events.RevealReferences, (e: CustomEvent) =>
 			this._revealReferences(e.detail.sound)
 		);
 		this.window.content.appendChild(this._list);
 	}
 
-	build() {
+	public build() {
 		this._list.items = this.data.currentData.sounds.map(
 			(name: string, index: number): Sound => ({
 				id: index,
@@ -39,17 +44,17 @@ class SoundInspector extends AbstractInspector {
 		);
 	}
 
+	public addSound() {
+		this.data.currentData.sounds.push("New Sound");
+		this.build();
+	}
+
 	prepareListSearch(searchValue: string, _: List<Sound>): RegExp[] {
 		this.stateDidChange();
 		return searchValue.split(" ").map(s => new RegExp(s, "i"));
 	}
 
-	includeListItem(
-		searchValue: RegExp[],
-		item: Sound,
-		cell: SoundInspectorCell,
-		list: List<Sound>
-	): boolean {
+	includeListItem(searchValue: RegExp[], item: Sound, _: SoundInspectorCell, __: List<Sound>): boolean {
 		const string = item.id + " " + item.file;
 		return searchValue.every(r => r.test(string));
 	}
