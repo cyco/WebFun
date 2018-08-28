@@ -26,12 +26,18 @@ class SoundInspector extends AbstractInspector {
 		this._list = (
 			<List
 				state={state.prefixedWith("list")}
-				cell={<SoundInspectorCell searchDelegate={this} /> as SoundInspectorCell}
+				cell={
+					(
+						<SoundInspectorCell
+							onrevealreferences={(e: CustomEvent) => this.revealReferences(e.detail.sound)}
+							onchange={(e: CustomEvent) => this.renameSound(e.detail.sound, e.detail.label)}
+							onremove={(e: CustomEvent) => this.removeSound(e.detail.sound)}
+						/>
+					) as SoundInspectorCell
+				}
+				searchDelegate={this}
 			/>
 		) as List<Sound>;
-		this._list.addEventListener(SoundInspectorCell.Events.RevealReferences, (e: CustomEvent) =>
-			this._revealReferences(e.detail.sound)
-		);
 		this.window.content.appendChild(this._list);
 	}
 
@@ -49,6 +55,27 @@ class SoundInspector extends AbstractInspector {
 		this.build();
 	}
 
+	public removeSound(sound: Sound) {
+		const index = this._list.items.indexOf(sound);
+		if (index === -1) return;
+		if (!confirm(`Do you really want to delete sound ${sound.id} (${sound.file})`)) return;
+		this.data.currentData.sounds.splice(index, 1);
+		this.build();
+	}
+
+	public renameSound(sound: Sound, name: string) {
+		const index = this._list.items.indexOf(sound);
+		if (index === -1) return;
+		this.data.currentData.sounds.splice(index, 1, name);
+		this.build();
+	}
+
+	private revealReferences(sound: Sound) {
+		const resolver = new ReferenceResolver(this.data.currentData);
+		const references = resolver.findReferencesTo(sound.file);
+		console.log("references", references);
+	}
+
 	prepareListSearch(searchValue: string, _: List<Sound>): RegExp[] {
 		this.stateDidChange();
 		return searchValue.split(" ").map(s => new RegExp(s, "i"));
@@ -57,12 +84,6 @@ class SoundInspector extends AbstractInspector {
 	includeListItem(searchValue: RegExp[], item: Sound, _: SoundInspectorCell, __: List<Sound>): boolean {
 		const string = item.id + " " + item.file;
 		return searchValue.every(r => r.test(string));
-	}
-
-	private _revealReferences(sound: string) {
-		const resolver = new ReferenceResolver(this.data.currentData);
-		const references = resolver.findReferencesTo(sound);
-		console.log("references", references);
 	}
 }
 

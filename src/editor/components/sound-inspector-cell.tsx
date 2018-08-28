@@ -7,62 +7,82 @@ type Sound = {
 	file: string;
 };
 
-export const Events = {
-	RevealReferences: "RevealReferences"
-};
-
 class SoundInspectorCell extends Cell<Sound> {
-	public static readonly Events = Events;
 	public static readonly tagName: string = "wf-sound-inspector-cell";
 	public static readonly observedAttributes: string[] = [];
+
+	public onchange: (_: Event) => void = () => void 0;
+	public onrevealreferences: (_: Event) => void = () => void 0;
+	public onremove: (_: Event) => void = () => void 0;
 
 	private _id: HTMLElement;
 	private _file: HTMLElement;
 	private _play: HTMLElement;
 	private _playButton: HTMLElement;
 	private _revealButton: HTMLElement;
+	private _removeButton: HTMLElement;
 	private _sound: HTMLAudioElement;
 	private _playing: boolean = false;
 
 	constructor() {
 		super();
 
-		this._id = document.createElement("span");
-		this._id.classList.add("id");
+		this._id = <span className="id" />;
 
-		this._file = document.createElement(Label.tagName);
-		this._file.onchange = () => {
-			this.data.file = this._file.textContent;
-			if (!this._sound) return;
-
-			this._sound.pause();
-			this._sound = null;
-			this._playing = false;
-			this._playButton.classList.remove("fa-spinner-circle");
-			this._playButton.classList.remove("fa-pause-circle");
-			this._playButton.classList.add("fa-play-circle");
-		};
-		this._file.classList.add("file");
-
-		this._play = document.createElement("span");
-		this._play.classList.add("play");
-		this._playButton = document.createElement("i");
-		this._playButton.classList.add("fa");
-		this._playButton.classList.add("fa-play-circle");
-		this._playButton.onclick = () => this.togglePlaying();
+		this._file = (
+			<Label
+				className="file"
+				onchange={(_: CustomEvent) =>
+					this.onchange(
+						new CustomEvent("change", {
+							detail: { sound: this.data, cell: this, label: this._file.textContent },
+							bubbles: true
+						})
+					)
+				}
+			/>
+		);
+		this._play = <span className="play" />;
+		this._playButton = <i className="fa fa-play-circle" onclick={() => this.togglePlaying()} />;
 		this._play.appendChild(this._playButton);
 
-		this._revealButton = document.createElement("i");
-		this._revealButton.classList.add("fa");
-		this._revealButton.classList.add("fa-search");
-		this._revealButton.onclick = () =>
-			this.dispatchEvent(
-				new CustomEvent(Events.RevealReferences, {
-					detail: { sound: this.data.file },
-					bubbles: true
-				})
-			);
+		this._revealButton = (
+			<i
+				className="fa fa-search"
+				onclick={() =>
+					this.onrevealreferences(
+						new CustomEvent("RevealReferences", {
+							detail: { sound: this.data, cell: this },
+							bubbles: true
+						})
+					)
+				}
+			/>
+		);
 		this._play.appendChild(this._revealButton);
+
+		this._removeButton = (
+			<i
+				className="fa fa-remove"
+				onclick={() =>
+					this.onremove(
+						new CustomEvent("Remove", {
+							detail: { sound: this.data, cell: this },
+							bubbles: true
+						})
+					)
+				}
+			/>
+		);
+		this._play.appendChild(this._removeButton);
+	}
+
+	public cloneNode(deep: boolean): SoundInspectorCell {
+		const result = super.cloneNode(deep) as SoundInspectorCell;
+		result.onchange = this.onchange;
+		result.onrevealreferences = this.onrevealreferences;
+		result.onremove = this.onremove;
+		return result;
 	}
 
 	protected connectedCallback() {
@@ -108,6 +128,10 @@ class SoundInspectorCell extends Cell<Sound> {
 			this._sound.play();
 			this._playButton.classList.add("fa-pause-circle");
 		}
+	}
+
+	get label() {
+		return this._file.textContent;
 	}
 }
 
