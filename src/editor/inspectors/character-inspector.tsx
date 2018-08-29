@@ -13,7 +13,7 @@ class CharacterInspector extends AbstractInspector {
 
 		this.window.title = "Characters";
 		this.window.autosaveName = "character-inspector";
-		this.window.style.width = "430px";
+		this.window.style.width = "416px";
 		this.window.content.style.height = "280px";
 		this.window.addTitlebarButton(
 			<IconButton icon="plus" title="Add new character" onclick={() => this.addCharacter()} />
@@ -72,6 +72,7 @@ class CharacterInspector extends AbstractInspector {
 		this._details.tileSheet = this.data.tileSheet;
 		this._details.sounds = this.data.currentData.sounds;
 		this._details.weapons = this.data.currentData.characters.filter(c => c.type === CharType.Weapon);
+		this._details.tiles = this.data.currentData.tiles;
 
 		const cell = this._list.cell as CharacterInspectorCell;
 		cell.tileSheet = this.data.tileSheet;

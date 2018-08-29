@@ -44,7 +44,7 @@ class Window extends Panel {
 		this._setupSidebar();
 
 		this._editor.tool = this._tools[0];
-		this._tilePicker.currentTile = null;
+		this._tilePicker.tile = null;
 	}
 
 	private _setupSidebar() {
@@ -92,7 +92,7 @@ class Window extends Panel {
 	}
 
 	private _tilePickerTileChanged() {
-		const tile = this._tilePicker.currentTile;
+		const tile = this._tilePicker.tile;
 		this._tools
 			.filter(t => t instanceof AbstractDrawingTool)
 			.forEach((t: AbstractDrawingTool) => (t.tile = tile));
@@ -171,7 +171,9 @@ class Window extends Panel {
 	public set data(d) {
 		this._data = d;
 		this._editor.palette = d.palette;
-		this._tilePicker.data = this.data;
+		this._tilePicker.palette = this._data.palette;
+		this._tilePicker.tileSheet = this._data.tileSheet;
+		this._tilePicker.tiles = this._data.currentData.tiles;
 	}
 
 	public get data() {

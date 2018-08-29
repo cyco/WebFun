@@ -1,9 +1,9 @@
 import { Component } from "src/ui";
-import { Char, CharMovementType, CharType } from "src/engine/objects";
+import { Char, CharMovementType, CharType, CharFrame, Tile } from "src/engine/objects";
 import CharacterFramePreview from "./character-frame-preview";
 import CSSTileSheet from "../css-tile-sheet";
-import "./character-details.scss";
 import { MutableChar } from "src/engine/mutable-objects";
+import "./character-details.scss";
 
 class CharacterDetails extends Component {
 	public static readonly tagName = "wf-character-details";
@@ -12,6 +12,7 @@ class CharacterDetails extends Component {
 	private _character: MutableChar;
 	private _weapons: Char[];
 	private _sounds: string[];
+	private _tiles: Tile[];
 
 	private _currentPreviewFrame: number = 0;
 	private _framePreview: CharacterFramePreview;
@@ -29,25 +30,30 @@ class CharacterDetails extends Component {
 		this.textContent = "";
 		const container = this.render();
 		this._framePreview = container.querySelector(CharacterFramePreview.tagName);
-
-		this.appendChild(this.render());
+		this.appendChild(container);
 	}
 
 	private render(): Element {
 		const weapons = this.weapons || [];
 		const sounds = this.sounds || [];
+		const tiles = this.tiles || [];
 
-		const { reference, health, damage, type, movementType } = this._character || {
+		const { reference, health, damage, type, movementType, frames } = this._character || {
 			reference: -1,
 			health: -1,
 			damage: -1,
 			type: CharType.Hero,
-			movementType: CharMovementType.None
+			movementType: CharMovementType.None,
+			frames: [null, null, null] as CharFrame[]
 		};
 
 		return (
 			<div>
-				<CharacterFramePreview tileSheet={this._tileSheet} />
+				<CharacterFramePreview
+					frame={frames[this._currentPreviewFrame]}
+					tileSheet={this._tileSheet}
+					tiles={tiles}
+				/>
 				<button
 					onclick={() =>
 						(this._framePreview.frame = this._character.frames[++this._currentPreviewFrame % 3])
@@ -206,6 +212,15 @@ class CharacterDetails extends Component {
 
 	get weapons() {
 		return this._weapons;
+	}
+
+	set tiles(tiles: Tile[]) {
+		this._tiles = tiles;
+		this._rebuild();
+	}
+
+	get tiles() {
+		return this._tiles;
 	}
 }
 

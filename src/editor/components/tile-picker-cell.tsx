@@ -24,7 +24,7 @@ class TilePickerCell extends Cell<Tile> {
 
 	private draw() {
 		if (this.tileSheet) {
-			this._canvas.className = this.tileSheet.cssClassNameForTile(this.data.id);
+			this._canvas.className = this.data ? this.tileSheet.cssClassNameForTile(this.data.id) : "";
 		} else if (this.palette) {
 			const context = this._canvas.getContext("2d");
 			context.clearRect(0, 0, Tile.WIDTH, Tile.HEIGHT);
