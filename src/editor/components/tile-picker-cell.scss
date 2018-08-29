@@ -11,4 +11,9 @@ wf-tile-picker-cell {
 		width: $tile-size;
 		height: $tile-size;
 	}
+
+	> canvas {
+		width: $tile-size;
+		height: $tile-size;
+	}
 }

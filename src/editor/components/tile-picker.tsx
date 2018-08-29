@@ -71,6 +71,7 @@ class TilePicker extends Component {
 
 		const cell = this._list.cell as TilePickerCell;
 		cell.tileSheet = this._data.tileSheet;
+		cell.palette = this._data.palette;
 		const tiles = d.currentData.tiles.slice();
 		tiles.splice(0, 0, null);
 		this._list.items = tiles;
