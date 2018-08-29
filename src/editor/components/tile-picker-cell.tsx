@@ -20,7 +20,7 @@ class TilePickerCell extends Cell<Tile> {
 	}
 
 	public cloneNode(deep?: boolean): TilePickerCell {
-		const node = <TilePickerCell>super.cloneNode(deep);
+		const node = super.cloneNode(deep) as TilePickerCell;
 		node.tileSheet = this.tileSheet;
 		node.onclick = this.onclick;
 		return node;

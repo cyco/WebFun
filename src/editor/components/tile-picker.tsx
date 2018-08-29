@@ -3,8 +3,8 @@ import { List } from "src/ui/components";
 import { Tile } from "src/engine/objects";
 import TilePickerCell from "./tile-picker-cell";
 import DataManager from "src/editor/data-manager";
-import "./tile-picker.scss";
 import TileFilter from "src/editor/components/tile-filter";
+import "./tile-picker.scss";
 
 export const Events = {
 	TileDidChange: "TileDidChange"
@@ -21,10 +21,18 @@ class TilePicker extends Component {
 	constructor() {
 		super();
 
-		this._list = <List<Tile>>document.createElement(List.tagName);
-		this._list.cell = <TilePickerCell>document.createElement(TilePickerCell.tagName);
-		this._list.cell.onclick = (e: MouseEvent) => this._cellClicked(<TilePickerCell>e.currentTarget);
-		this._list.searchDelegate = new TileFilter();
+		this._list = (
+			<List
+				searchDelegate={new TileFilter()}
+				cell={
+					<TilePickerCell
+						onclick={({ currentTarget }: MouseEvent) =>
+							this._cellClicked(currentTarget as TilePickerCell)
+						}
+					/>
+				}
+			/>
+		) as List<Tile>;
 		this._list.showBar(true);
 	}
 
@@ -61,7 +69,7 @@ class TilePicker extends Component {
 	set data(d) {
 		this._data = d;
 
-		const cell = <TilePickerCell>this._list.cell;
+		const cell = this._list.cell as TilePickerCell;
 		cell.tileSheet = this._data.tileSheet;
 		const tiles = d.currentData.tiles.slice();
 		tiles.splice(0, 0, null);
