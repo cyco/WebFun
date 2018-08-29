@@ -10,10 +10,6 @@ class CharacterFramePreview extends Component {
 	public tileSheet: CSSTileSheet;
 	private _frame: CharFrame;
 
-	constructor() {
-		super();
-	}
-
 	protected connectedCallback() {
 		this._rebuild();
 	}
@@ -26,12 +22,11 @@ class CharacterFramePreview extends Component {
 		if (!this.isConnected || !this._frame) return;
 
 		this.textContent = "";
-		this._frame.tiles.forEach(tile => {
-			const tileNode = document.createElement("div");
-			tileNode.className = tile ? this.tileSheet.cssClassesForTile(tile.id).join(" ") : "";
-			tileNode.classList.add("tile");
-			this.appendChild(tileNode);
-		});
+		this._frame.tiles
+			.map(tile => (
+				<div className={"tile" + (tile ? this.tileSheet.cssClassesForTile(tile.id).join(" ") : "")} />
+			))
+			.forEach(t => this.appendChild(t));
 	}
 
 	set frame(f: CharFrame) {
