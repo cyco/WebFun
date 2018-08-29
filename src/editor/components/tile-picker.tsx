@@ -2,7 +2,6 @@ import { Component } from "src/ui";
 import { List } from "src/ui/components";
 import { Tile } from "src/engine/objects";
 import TilePickerCell from "./tile-picker-cell";
-import DataManager from "src/editor/data-manager";
 import TileFilter from "src/editor/components/tile-filter";
 import "./tile-picker.scss";
 
@@ -15,8 +14,7 @@ class TilePicker extends Component {
 	public static readonly observedAttributes: string[] = [];
 	private _tiles: Tile[];
 	private _list: List<Tile>;
-	private _data: DataManager;
-	private _currentTile: Tile;
+	private _tile: Tile;
 
 	constructor() {
 		super();
@@ -46,7 +44,7 @@ class TilePicker extends Component {
 		const previousCell = this._list.querySelector(TilePickerCell.tagName + ".active");
 		if (previousCell) previousCell.classList.remove("active");
 
-		this.currentTile = cell.data;
+		this.tile = cell.data;
 
 		cell.classList.add("active");
 	}
@@ -59,36 +57,44 @@ class TilePicker extends Component {
 
 	set tiles(s) {
 		this._tiles = s;
-		this._list.items = s;
+
+		const tiles = s.slice();
+		tiles.splice(0, 0, null);
+		this._list.items = tiles;
 	}
 
 	get tiles() {
 		return this._tiles;
 	}
 
-	set data(d) {
-		this._data = d;
-
+	set palette(p) {
 		const cell = this._list.cell as TilePickerCell;
-		cell.tileSheet = this._data.tileSheet;
-		cell.palette = this._data.palette;
-		const tiles = d.currentData.tiles.slice();
-		tiles.splice(0, 0, null);
-		this._list.items = tiles;
+		cell.palette = p;
 	}
 
-	get data() {
-		return this._data;
+	get palette() {
+		const cell = this._list.cell as TilePickerCell;
+		return cell.palette;
 	}
 
-	set currentTile(tile: Tile) {
-		this._currentTile = tile;
+	set tileSheet(p) {
+		const cell = this._list.cell as TilePickerCell;
+		cell.tileSheet = p;
+	}
+
+	get tileSheet() {
+		const cell = this._list.cell as TilePickerCell;
+		return cell.tileSheet;
+	}
+
+	set tile(tile: Tile) {
+		this._tile = tile;
 
 		this.dispatchEvent(new CustomEvent(Events.TileDidChange, { detail: { tile }, bubbles: true }));
 	}
 
-	get currentTile() {
-		return this._currentTile;
+	get tile() {
+		return this._tile;
 	}
 
 	set state(s: Storage) {

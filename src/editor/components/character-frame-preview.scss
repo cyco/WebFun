@@ -5,8 +5,8 @@ wf-character-frame-preview {
 	flex-direction: row;
 	flex-wrap: wrap;
 
-	width: $tile-size * 4;
-	height: $tile-size * 2;
+	width: ($tile-size + 2) * 4;
+	height: ($tile-size + 2) * 2;
 
 	> div {
 		flex-grow: 0;
