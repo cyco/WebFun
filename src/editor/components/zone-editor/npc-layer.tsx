@@ -4,6 +4,7 @@ import { MutableNPC } from "src/engine/mutable-objects";
 import { ColorPalette } from "src/engine/rendering";
 import { Point } from "src/util";
 import { MenuItemInit, MenuItemSeparator } from "src/ui";
+import { ModalPrompt } from "src/ux";
 import NPCLayerNPC from "./npc-layer-npc";
 import "./npc-layer.scss";
 
@@ -11,6 +12,7 @@ class NPCLayer extends Component {
 	public static readonly tagName = "wf-npc-layer";
 	public static readonly observedAttributes: string[] = [];
 	public palette: ColorPalette;
+	public characters: Char[];
 	private _zone: Zone;
 
 	protected connectedCallback() {
@@ -65,14 +67,18 @@ class NPCLayer extends Component {
 	}
 
 	public getMenuForTile(point: Point): Partial<MenuItemInit>[] {
-		const npcs = this._findNPCsAt(point);
+		const npcs = this._findNPCsAt(point) as MutableNPC[];
 
 		return [
 			{
 				title: "Place NPC",
 				callback: (): void => {
 					const npc = new MutableNPC();
+					npc.character = this.enemies.first();
 					npc.position = point;
+					npc.unknown1 = 0;
+					npc.unknown2 = 0;
+					npc.data = new Int8Array(Array.Repeat(-1, 32));
 					this.zone.npcs.push(npc);
 					this.draw();
 				}
@@ -82,6 +88,21 @@ class NPCLayer extends Component {
 					MenuItemSeparator,
 					{
 						title: npc.face.name + (npc.enabled ? "" : " (disabled)")
+					},
+					{
+						title: "Change Type",
+						callback: async () => {
+							const t = await ModalPrompt("Pick enemy type:", {
+								defaultValue: npc.face.id.toString(),
+								options: this.enemies.map(e => ({
+									label: e.name,
+									value: e.id.toString()
+								}))
+							});
+							if (!t) return;
+							npc.character = this.enemies.find(e => e.id === +t);
+							this.draw();
+						}
 					},
 					{
 						title: "remove",
@@ -97,6 +118,10 @@ class NPCLayer extends Component {
 
 	private _findNPCsAt(point: Point) {
 		return this.zone.npcs.filter(({ position: { x, y } }) => x === point.x && y === point.y);
+	}
+
+	private get enemies() {
+		return this.characters.withType(Char.Type.Enemy);
 	}
 }
 

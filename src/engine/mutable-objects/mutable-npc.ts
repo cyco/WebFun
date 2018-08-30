@@ -55,12 +55,12 @@ class MutableNPC extends NPC {
 		this._unknown1 = unknown1;
 	}
 
-	get unknown2() {
-		return this._unknown2;
-	}
-
 	set unknown2(unknown2) {
 		this._unknown2 = unknown2;
+	}
+
+	get unknown2() {
+		return this._unknown2;
 	}
 
 	get data() {

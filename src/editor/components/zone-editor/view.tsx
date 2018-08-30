@@ -167,6 +167,14 @@ class View extends Component implements EventListenerObject {
 	public get palette() {
 		return this._floor.palette;
 	}
+
+	public set characters(c) {
+		this._npcs.characters = c;
+	}
+
+	public get characters() {
+		return this._npcs.characters;
+	}
 }
 
 export default View;
