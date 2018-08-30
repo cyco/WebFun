@@ -7,6 +7,7 @@ import CharMovementType from "./char-movement-type";
 export { Type };
 
 class Char {
+	public static readonly Type = Type;
 	protected _id: number;
 	protected _frames: [CharFrame, CharFrame, CharFrame];
 	protected _name: string = null;
