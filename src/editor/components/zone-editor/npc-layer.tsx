@@ -1,8 +1,9 @@
 import Component from "src/ui/component";
 import { Zone, Tile, Char } from "src/engine/objects";
+import { MutableNPC } from "src/engine/mutable-objects";
 import { ColorPalette } from "src/engine/rendering";
 import { Point } from "src/util";
-import { MenuItemInit } from "src/ui";
+import { MenuItemInit, MenuItemSeparator } from "src/ui";
 import NPCLayerNPC from "./npc-layer-npc";
 import "./npc-layer.scss";
 
@@ -63,8 +64,39 @@ class NPCLayer extends Component {
 		return this._zone;
 	}
 
-	public getMenuForTile(_: Point): Partial<MenuItemInit>[] {
-		return [];
+	public getMenuForTile(point: Point): Partial<MenuItemInit>[] {
+		const npcs = this._findNPCsAt(point);
+
+		return [
+			{
+				title: "Place NPC",
+				callback: (): void => {
+					const npc = new MutableNPC();
+					npc.position = point;
+					this.zone.npcs.push(npc);
+					this.draw();
+				}
+			},
+			...npcs
+				.map((npc, _) => [
+					MenuItemSeparator,
+					{
+						title: npc.face.name + (npc.enabled ? "" : " (disabled)")
+					},
+					{
+						title: "remove",
+						callback: () => {
+							this.zone.npcs.splice(this.zone.npcs.indexOf(npcs[0]), 1);
+							this.draw();
+						}
+					}
+				])
+				.flatten()
+		];
+	}
+
+	private _findNPCsAt(point: Point) {
+		return this.zone.npcs.filter(({ position: { x, y } }) => x === point.x && y === point.y);
 	}
 }
 
