@@ -53,6 +53,9 @@ class CharacterDetails extends Component {
 					frame={frames[this._currentPreviewFrame]}
 					tileSheet={this._tileSheet}
 					tiles={tiles}
+					onchange={({ detail: { idx, tile } }: CustomEvent) =>
+						(this._character.frames[this._currentPreviewFrame % 3].tiles[idx] = tile)
+					}
 				/>
 				<button
 					onclick={() =>

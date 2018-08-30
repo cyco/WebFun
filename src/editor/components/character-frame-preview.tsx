@@ -7,8 +7,22 @@ class CharacterFramePreview extends Component {
 	public static readonly tagName = "wf-character-frame-preview";
 	public static readonly observedAttributes: string[] = [];
 
+	public onchange: (e: CustomEvent) => void = () => void 0;
 	private _frame: CharFrame;
-	private _pickers: PopoverTilePicker[] = (8).times(() => <PopoverTilePicker /> as PopoverTilePicker);
+	private _pickers: PopoverTilePicker[] = (8).times(
+		idx =>
+			(
+				<PopoverTilePicker
+					onchange={({ currentTarget }: CustomEvent) =>
+						this.dispatchEvent(
+							new CustomEvent("change", {
+								detail: { idx: idx, tile: (currentTarget as PopoverTilePicker).tile }
+							})
+						)
+					}
+				/>
+			) as PopoverTilePicker
+	);
 
 	protected connectedCallback() {
 		super.connectedCallback();

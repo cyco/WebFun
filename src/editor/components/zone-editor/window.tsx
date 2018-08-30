@@ -18,9 +18,7 @@ import {
 	RectangleTool,
 	TileChangeEvent
 } from "src/editor/tools";
-import PopoverTilePicker, {
-	Events as PopoverTilePickerEvents
-} from "src/editor/components/popover-tile-picker";
+import PopoverTilePicker from "src/editor/components/popover-tile-picker";
 import DataManager from "src/editor/data-manager";
 import AbstractDrawingTool from "src/editor/tools/abstract-drawing-tool";
 import { ActionEditor } from "src/editor/components";
@@ -70,12 +68,15 @@ class Window extends Panel {
 			}
 		].map(a => this._buildActionItem(a));
 
-		this._tilePicker = <PopoverTilePicker /> as PopoverTilePicker;
-		this._tilePicker.addEventListener(PopoverTilePickerEvents.TileDidChange, (e: CustomEvent) => {
-			this._tilePickerTileChanged();
-			e.stopImmediatePropagation();
-			e.preventDefault();
-		});
+		this._tilePicker = (
+			<PopoverTilePicker
+				onchange={(e: CustomEvent) => {
+					this._tilePickerTileChanged();
+					e.stopImmediatePropagation();
+					e.preventDefault();
+				}}
+			/>
+		) as PopoverTilePicker;
 		this._sidebar.addEntry(
 			<div style={{ display: "flex", alignItems: "center" } as CSSStyleDeclaration}>
 				{[this._tilePicker, ...toolComponents, ...actionComponents]}

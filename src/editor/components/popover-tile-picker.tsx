@@ -8,10 +8,6 @@ import { ColorPalette } from "src/engine/rendering";
 import { CSSTileSheet } from "src/editor";
 import "./popover-tile-picker.scss";
 
-export const Events = {
-	TileDidChange: "TileDidChange"
-};
-
 class PopoverTilePicker extends Component implements EventListenerObject {
 	public static readonly tagName = "wf-resource-editor-popover-tile-picker";
 	public static readonly observedAttributes: string[] = [];
@@ -52,6 +48,7 @@ class PopoverTilePicker extends Component implements EventListenerObject {
 		picker.addEventListener(TilePickerEvents.TileDidChange, (e: CustomEvent) => {
 			this.tile = e.detail.tile as Tile;
 			session.end(5);
+			this.dispatchEvent(new CustomEvent("change", { detail: { tile: this.tile }, bubbles: true }));
 		});
 		popover.content.appendChild(picker);
 		session.run();
@@ -70,7 +67,6 @@ class PopoverTilePicker extends Component implements EventListenerObject {
 	set tile(tile: Tile) {
 		this._tile = tile;
 		this._tileView.tile = tile;
-		this.dispatchEvent(new CustomEvent(Events.TileDidChange, { detail: { tile }, bubbles: true }));
 	}
 
 	get tile() {
