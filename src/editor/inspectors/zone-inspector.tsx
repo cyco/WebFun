@@ -21,7 +21,7 @@ class ZoneInspector extends AbstractInspector {
 
 		this.window.title = "Zones";
 		this.window.autosaveName = "zone-inspector";
-		this.window.style.width = "322px";
+		this.window.style.width = "326px";
 		this.window.content.style.maxHeight = "300px";
 		this.window.content.style.flexDirection = "column";
 		this.window.addTitlebarButton(
