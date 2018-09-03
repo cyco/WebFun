@@ -1,7 +1,7 @@
 import { Instruction } from "src/engine/objects";
 import SetRandom from "src/engine/script/instructions/set-random";
 
-describeInstruction("SetCounter", (execute, engine) => {
+describeInstruction("SetRandom", (execute, engine) => {
 	it("set the current zone's random register to the specified value", async done => {
 		let instruction = new Instruction({});
 		instruction._opcode = SetRandom.Opcode;

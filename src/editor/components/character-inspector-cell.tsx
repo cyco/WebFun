@@ -25,7 +25,7 @@ class CharacterInspectorCell extends Cell<Char> {
 		[
 			<div className={"tile " + (tile ? this.tileSheet.cssClassesForTile(tile.id).join(" ") : "")} />,
 			<div className="text">
-				<span className="id">{this.data.id}</span>
+				<span className="id">{this.data.id.toString()}</span>
 				<Label
 					className="name"
 					onchange={(e: CustomEvent) =>

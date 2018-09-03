@@ -105,7 +105,11 @@ class NPCLayer extends Component {
 						}
 					},
 					{
-						title: "remove",
+						title: () => (npc.enabled ? "Disable" : "Enable"),
+						callback: (): void => void (npc.enabled = !npc.enabled)
+					},
+					{
+						title: "Remove",
 						callback: () => {
 							this.zone.npcs.splice(this.zone.npcs.indexOf(npcs[0]), 1);
 							this.draw();

@@ -4,7 +4,7 @@ import GameData from "../game-data";
 import { InputStream, Point } from "src/util";
 import { Hotspot, HotspotType, Tile } from "src/engine/objects";
 import { MutableHotspot } from "src/engine/mutable-objects";
-import { Planet } from "../types";
+import { Planet, WorldSize } from "../types";
 import WorldItem from "./world-item";
 import { Yoda } from "../type";
 import { floor } from "src/std.math";
@@ -94,7 +94,11 @@ class YodaReader extends Reader {
 		state.difficulty = difficulty;
 		state.unknownCount = unknown_count;
 		state.unknownSum = unknown_sum;
-
+		try {
+			state.worldSize = WorldSize.fromNumber(1 + world_size);
+		} catch (_) {
+			state.worldSize = WorldSize.Small;
+		}
 		return state;
 	}
 

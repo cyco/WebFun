@@ -1,3 +1,4 @@
-xdescribe("Missing test", () => {
-	it("must still be written", () => {});
-});
+import { Condition } from "src/engine/objects";
+import EndingIs from "src/engine/script/conditions/ending-is";
+
+describeCondition("EndingIs", (check, engine) => {});

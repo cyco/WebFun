@@ -19,7 +19,7 @@ class SceneView extends Component {
 		return this._manager;
 	}
 
-	_setupCanvas() {
+	private _setupCanvas() {
 		const canvas = this.canvas;
 		canvas.style.backgroundColor = rgb(0, 0, 0);
 		canvas.classList.add("pixelated");

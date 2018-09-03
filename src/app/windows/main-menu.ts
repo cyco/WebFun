@@ -1,9 +1,8 @@
 import { buildMenu as buildDebugMenu } from "src/debug";
-import Settings from "src/settings";
 import { Menu, MenuItemSeparator as Separator } from "src/ui";
 import { WindowModalSession } from "src/ux";
 import { document } from "src/std.dom";
-import Window from "../../ui/components/window";
+import { Window } from "src/ui/components";
 import GameController from "../game-controller";
 import DifficultyWindow from "./difficulty-window";
 import GameSpeedWindow from "./game-speed-window";
@@ -11,8 +10,8 @@ import StatisticsWindow from "./statistics-window";
 import WorldSizeWindow from "./world-size-window";
 
 class MainMenu extends Menu {
-	constructor(gameController: GameController) {
-		const menuItems: any[] = [
+	constructor(controller: GameController) {
+		super([
 			{
 				title: "File",
 				mnemonic: 0,
@@ -20,26 +19,26 @@ class MainMenu extends Menu {
 					{
 						title: "New World",
 						mnemonic: 0,
-						callback: () => gameController.newStory(),
-						enabled: () => gameController.isDataLoaded()
+						callback: () => controller.newStory(),
+						enabled: () => controller.data !== null
 					},
 					{
 						title: "Replay Story",
 						mnemonic: 0,
-						callback: () => gameController.replayStory(),
-						enabled: () => gameController.isGameInProgress()
+						callback: () => controller.replayStory(),
+						enabled: () => controller.engine !== null
 					},
 					{
 						title: "Load World",
 						mnemonic: 0,
-						callback: () => gameController.load(),
-						enabled: () => gameController.isDataLoaded()
+						callback: () => controller.load(),
+						enabled: () => controller.data !== null
 					},
 					{
 						title: "Save World",
 						mnemonic: 0,
-						callback: () => gameController.save(),
-						enabled: () => gameController.isGameInProgress()
+						callback: () => controller.save(),
+						enabled: () => controller.engine !== null
 					},
 					Separator,
 					{
@@ -85,7 +84,7 @@ class MainMenu extends Menu {
 					{
 						title: "Pause",
 						mnemonic: 0,
-						enabled: () => gameController.isGameInProgress()
+						enabled: () => controller.engine !== null
 					}
 				]
 			},
@@ -117,20 +116,17 @@ class MainMenu extends Menu {
 						mnemonic: 0
 					}
 				]
-			}
-		];
-
-		if (Settings.debug) menuItems.push(buildDebugMenu(gameController));
-
-		super(menuItems);
+			},
+			...(controller.settings.debug ? [buildDebugMenu(controller)] : [])
+		]);
 	}
 
-	_runModalSessionForWindowComponent(tagName: string) {
-		const window = <Window>document.createElement(tagName);
+	private _runModalSessionForWindowComponent(tagName: string) {
+		const window = document.createElement(tagName) as Window;
 		this._runModalSession(window);
 	}
 
-	_runModalSession(window: Window) {
+	private _runModalSession(window: Window) {
 		const session = new WindowModalSession(window);
 		window.onclose = () => session.end(0);
 		session.run();

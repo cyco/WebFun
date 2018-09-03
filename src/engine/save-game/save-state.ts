@@ -1,5 +1,5 @@
 import { Point } from "../../util";
-import { Planet } from "../types";
+import { Planet, WorldSize } from "../types";
 import World from "./world";
 import { GameType } from "../type";
 
@@ -33,7 +33,7 @@ class SaveState {
 
 	difficulty: number;
 	timeElapsed: number;
-	worldSize: number;
+	worldSize: WorldSize;
 
 	unknownCount: number;
 	unknownSum: number;

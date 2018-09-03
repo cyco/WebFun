@@ -42,7 +42,6 @@ class Window extends Panel {
 		this._setupSidebar();
 
 		this._editor.tool = this._tools[0];
-		this._tilePicker.tile = null;
 	}
 
 	private _setupSidebar() {
@@ -75,6 +74,7 @@ class Window extends Panel {
 					e.stopImmediatePropagation();
 					e.preventDefault();
 				}}
+				tile={null}
 			/>
 		) as PopoverTilePicker;
 		this._sidebar.addEntry(

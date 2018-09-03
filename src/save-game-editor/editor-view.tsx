@@ -13,7 +13,7 @@ import { SaveState } from "src/engine/save-game";
 import { Menu, Component } from "src/ui";
 import { CSSTileSheet } from "src/editor";
 import { ImageFactory } from "src/engine/rendering/canvas";
-
+import { WorldSize } from "src/engine/types";
 import { Yoda as GameTypeYoda } from "src/engine/type";
 import WorldItem from "./world-item";
 import { World } from "src/engine/save-game";
@@ -262,7 +262,11 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 					worldSize{" "}
 					<input
 						value={`${this._state.worldSize}`}
-						onchange={e => (this._state.worldSize = +(e.target as HTMLInputElement).value)}
+						onchange={e =>
+							(this._state.worldSize = WorldSize.fromNumber(
+								+(e.target as HTMLInputElement).value
+							))
+						}
 					/>
 				</label>
 				<label>

@@ -1,12 +1,6 @@
 import Component from "../component";
 import "./checkbox.scss";
 
-declare global {
-	interface StringConstructor {
-		UUID(): string;
-	}
-}
-
 class Checkbox extends Component {
 	private _label: HTMLLabelElement;
 	private _box: HTMLInputElement;
