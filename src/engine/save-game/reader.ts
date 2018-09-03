@@ -1,11 +1,9 @@
 import { Indy, Yoda, GameType } from "../type";
-import { InputStream, Point } from "src/util";
-import identify from "./identify";
+import { InputStream } from "src/util";
 import SaveState from "./save-state";
 import GameData from "../game-data";
-import { Action, Hotspot, HotspotType, NPC, Tile, Zone } from "src/engine/objects";
-import { MutableHotspot, MutableNPC, MutableZone } from "src/engine/mutable-objects";
-import { Planet, WorldSize } from "../types";
+import { Zone, Hotspot, HotspotType } from "src/engine/objects";
+import { MutableZone } from "src/engine/mutable-objects";
 import World from "./world";
 import WorldItem from "./world-item";
 

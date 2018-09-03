@@ -7,7 +7,7 @@ abstract class AbstractImageFactory {
 
 	abstract buildImage(width: number, height: number, pixelData: Uint8Array): Image;
 
-	prepare(count: number) {}
+	prepare(_: number) {}
 
 	finalize() {}
 }

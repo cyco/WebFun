@@ -1,3 +1,0 @@
-describeCondition("", (check, engine) => {
-	it("", () => {});
-});

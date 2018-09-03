@@ -2,10 +2,9 @@ import Reader from "./reader";
 import SaveState from "./save-state";
 import GameData from "../game-data";
 import { InputStream, Point } from "src/util";
-import { Action, Hotspot, HotspotType, NPC, Tile, Zone } from "src/engine/objects";
-import { MutableHotspot, MutableNPC, MutableZone } from "src/engine/mutable-objects";
-import { Planet, WorldSize } from "../types";
-import World from "./world";
+import { Hotspot } from "src/engine/objects";
+import { MutableHotspot } from "src/engine/mutable-objects";
+import { Planet } from "../types";
 import WorldItem from "./world-item";
 import { Indy } from "src/engine/type";
 

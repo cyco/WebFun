@@ -2,7 +2,7 @@ import { Array } from "src/std";
 import { NodeList } from "src/std.dom";
 
 const find = function<TNode extends Node>(predicate: (_: TNode) => boolean) {
-	return Array.from(this).find(predicate);
+	return Array.from(this).find(predicate) || null;
 };
 
 NodeList.prototype.find = NodeList.prototype.find || find;

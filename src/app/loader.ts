@@ -40,7 +40,7 @@ class Loader extends EventTarget {
 		this.registerEvents(Events);
 	}
 
-	load(factory: AbstractImageFactory) {
+	public load(factory: AbstractImageFactory) {
 		this._imageFactory = factory;
 
 		const loader = new FileLoader(this._dataUrl);
@@ -50,14 +50,14 @@ class Loader extends EventTarget {
 		loader.load();
 	}
 
-	_readGameData(stream: InputStream) {
+	private _readGameData(stream: InputStream) {
 		this._progress(1, 0);
 		this._rawData = readGameDataFile(stream, GameTypeYoda);
 		this._progress(1, 1);
 		this._loadPalette();
 	}
 
-	_loadPalette() {
+	private _loadPalette() {
 		const loader = new FileLoader(this._paletteUrl);
 		loader.onprogress = ({ detail: { progress } }) => this._progress(2, progress);
 		loader.onfail = reason => this._fail(reason);
@@ -70,7 +70,7 @@ class Loader extends EventTarget {
 		loader.load();
 	}
 
-	_loadSetupImage(palette: Uint8Array) {
+	private _loadSetupImage(palette: Uint8Array) {
 		this._progress(3, 0);
 
 		const pixels = this._rawData.setup;
@@ -87,7 +87,7 @@ class Loader extends EventTarget {
 		this._loadGameData();
 	}
 
-	_loadGameData() {
+	private _loadGameData() {
 		this._progress(4, 0);
 		this._data = new GameData(this._rawData);
 		this._progress(4, 1);
@@ -95,7 +95,7 @@ class Loader extends EventTarget {
 		this._loadTileImages();
 	}
 
-	_loadTileImages() {
+	private _loadTileImages() {
 		this._progress(5, 0);
 		const tiles = this._data.tiles;
 		const imageFactory = this._imageFactory;
@@ -131,19 +131,19 @@ class Loader extends EventTarget {
 		loadTileImage(0);
 	}
 
-	_fail(reason: any) {
+	private _fail(reason: any) {
 		this.dispatchEvent(Events.Fail, {
 			reason
 		});
 	}
 
-	_progress(state: number, progress: number) {
+	private _progress(state: number, progress: number) {
 		this.dispatchEvent(Events.Progress, {
 			progress: (state + progress) / StageCount
 		});
 	}
 
-	_load() {
+	private _load() {
 		this.dispatchEvent(Events.Load, <LoaderEventDetails>{
 			palette: this._palette,
 			data: this._data

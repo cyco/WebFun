@@ -71,7 +71,7 @@ class Story {
 		this._dagobah.layDownHotspotItems();
 	}
 
-	_setupWorld(generator: WorldGenerator, engine: Engine): void {
+	_setupWorld(generator: WorldGenerator, _: Engine): void {
 		this._world = generator.world;
 	}
 

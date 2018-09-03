@@ -24,6 +24,7 @@ import Loader, { LoaderEventDetails } from "./loader";
 import { LoadingView, SceneView } from "./ui";
 import { MainMenu, MainWindow } from "./windows";
 import { ScriptDebugger } from "src/debug";
+import { global } from "src/std";
 
 export const Event = {
 	DidLoadData: "didLoadData"
@@ -31,32 +32,27 @@ export const Event = {
 
 class GameController extends EventTarget {
 	public static readonly Event = Event;
-	private _window: MainWindow;
-	private _sceneView: SceneView;
-	private _engine: Engine;
+	public settings: typeof Settings = Settings;
+	public data: GameData;
+	public palette: ColorPalette;
 
-	private _data: GameData;
-	private _palette: ColorPalette;
+	private _window: MainWindow;
+	private _windowManager: WindowManager;
+	private _sceneView: SceneView = <SceneView /> as SceneView;
+	private _engine: Engine;
 
 	constructor() {
 		super();
 
-		this._sceneView = <SceneView>document.createElement(SceneView.tagName);
 		this._engine = this._buildEngine();
 		this._sceneView.manager.engine = this._engine;
-
-		this._data = null;
 	}
 
-	get engine() {
-		return this._engine;
-	}
-
-	_buildEngine() {
+	private _buildEngine() {
 		const engine = new Engine();
-		const renderer = this._determineRenderer();
+		const Renderer = this._determineRenderer();
 
-		engine.renderer = new (<any>renderer)(this._sceneView.canvas);
+		engine.renderer = new Renderer(this._sceneView.canvas);
 		engine.imageFactory = engine.renderer.imageFactory;
 		engine.sceneManager = this._sceneView.manager;
 		engine.inputManager = new DesktopInputManager(this._sceneView);
@@ -68,19 +64,16 @@ class GameController extends EventTarget {
 		return engine;
 	}
 
-	_determineRenderer(): typeof CanvasRenderer | typeof TileSheetCanvasRenderer {
+	private _determineRenderer(): typeof CanvasRenderer | typeof TileSheetCanvasRenderer {
 		if (Settings.allowTileSheet) {
-			console.log("Using TileSheet Canvas renderer");
 			return TileSheetCanvasRenderer;
 		}
 
-		console.log("Using Canvas renderer");
 		return CanvasRenderer;
 	}
 
-	async start(story?: Story) {
-		this._window = <MainWindow>document.createElement(MainWindow.tagName);
-		this._window.menu = new MainMenu(this);
+	public async start(story?: Story) {
+		this._window = <MainWindow menu={new MainMenu(this)} /> as MainWindow;
 
 		const loading = this._load();
 
@@ -88,7 +81,7 @@ class GameController extends EventTarget {
 			ScriptDebugger.sharedDebugger.engine = this._engine;
 		}
 
-		WindowManager.defaultManager.showWindow(this._window);
+		this.windowManager.showWindow(this._window);
 
 		if (!this._window.x && !this._window.y) {
 			this._window.center();
@@ -104,13 +97,14 @@ class GameController extends EventTarget {
 			this._engine.hero.visible = true;
 			this._engine.state.worldLocation = new Point(5, 4);
 			this._showSceneView(story.world.at(5, 4).zone);
-			(<any>window).engine = this._engine;
+
+			(global as any).engine = this._engine;
 		}
 	}
 
-	_load(): Promise<void> {
+	private _load(): Promise<void> {
 		return new Promise((resolve, reject) => {
-			const loadingView = <LoadingView>document.createElement(LoadingView.tagName);
+			const loadingView = <LoadingView /> as LoadingView;
 			const windowContent = this._window.mainContent;
 			windowContent.textContent = "";
 			windowContent.appendChild(loadingView);
@@ -123,15 +117,15 @@ class GameController extends EventTarget {
 			loader.onload = e => {
 				const details = e.detail as LoaderEventDetails;
 				loadingView.progress = 1.0;
-				this._data = details.data;
-				this._palette = details.palette;
-				this._engine.data = this._data;
+				this.data = details.data;
+				this.palette = details.palette;
+				this._engine.data = this.data;
 
 				this.dispatchEvent(
 					new CustomEvent(Event.DidLoadData, {
 						detail: {
-							data: this._data,
-							palette: this._palette
+							data: this.data,
+							palette: this.palette
 						}
 					})
 				);
@@ -142,7 +136,7 @@ class GameController extends EventTarget {
 		});
 	}
 
-	async newStory() {
+	public async newStory() {
 		const gameState = this.engine.gameState;
 		if (
 			gameState === GameState.Running &&
@@ -161,7 +155,7 @@ class GameController extends EventTarget {
 		this._showSceneView();
 	}
 
-	async replayStory() {
+	public async replayStory() {
 		console.log("Replay Story");
 		const gameState = this.engine.gameState;
 		if (
@@ -173,7 +167,7 @@ class GameController extends EventTarget {
 		}
 	}
 
-	async load() {
+	public async load() {
 		const gameState = this.engine.gameState;
 		if (
 			gameState === GameState.Running &&
@@ -192,22 +186,14 @@ class GameController extends EventTarget {
 
 		const stream = await file.provideInputStream();
 		const { read } = Reader.build(stream);
-		read(this._data);
+		read(this.data);
 	}
 
-	async save() {
+	public async save() {
 		console.log("Save");
 	}
 
-	isGameInProgress() {
-		return false;
-	}
-
-	isDataLoaded() {
-		return this._data !== null;
-	}
-
-	_showSceneView(zone: Zone = this._engine.data.zones.find(z => z.isLoadingZone())) {
+	private _showSceneView(zone: Zone = this._engine.data.zones.find(z => z.isLoadingZone())) {
 		const engine = this._engine;
 		engine.metronome.stop();
 		engine.metronome.ontick = (delta: number) => engine.update(delta);
@@ -234,16 +220,16 @@ class GameController extends EventTarget {
 		}
 	}
 
-	get settings() {
-		return Settings;
+	public get engine() {
+		return this._engine;
 	}
 
-	get data() {
-		return this._data;
+	public set windowManager(w: WindowManager) {
+		this._windowManager = w;
 	}
 
-	get palette() {
-		return this._palette;
+	public get windowManager() {
+		return this._windowManager || WindowManager.defaultManager;
 	}
 }
 

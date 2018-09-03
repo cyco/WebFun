@@ -67,7 +67,6 @@ class ZoneInspector extends AbstractInspector {
 	private _onCellContextMenu(e: MouseEvent) {
 		const cell = e.currentTarget as ZoneInspectorCell;
 		const zone = cell.data;
-		console.log(cell, zone);
 
 		const contextMenu = (
 			<ContextMenu
