@@ -2,7 +2,10 @@ import AbstractInspector from "./abstract-inspector";
 import { IconButton } from "src/ui/components";
 import { EditorView } from "src/save-game-editor";
 import { Writer } from "src/engine/save-game";
+import { Story } from "src/engine";
 import { download, OutputStream, DiscardingOutputStream } from "src/util";
+import GameController from "src/app/game-controller";
+import { Planet, WorldSize } from "src/engine/types";
 import "./save-game-inspector.scss";
 
 class SaveGameInspector extends AbstractInspector {
@@ -24,6 +27,13 @@ class SaveGameInspector extends AbstractInspector {
 				onclick={() => this.downloadSaveGame()}
 			/>
 		);
+		this.window.addTitlebarButton(
+			<IconButton
+				icon="play"
+				title="Load and play this save game"
+				onclick={() => this.playSaveGame()}
+			/>
+		);
 	}
 
 	build() {
@@ -41,6 +51,17 @@ class SaveGameInspector extends AbstractInspector {
 		writer.write(state, stream);
 
 		download(stream.buffer, "savegame.wld");
+	}
+
+	public playSaveGame(): void {
+		const controller = new GameController();
+		controller.windowManager = this.window.manager;
+		controller.data = this.data.currentData.copy();
+		controller.palette = new Uint8Array(this.data.palette);
+
+		const state = this.data.state;
+		const story = new Story(state.seed, state.planet, state.worldSize);
+		controller.start(story);
 	}
 }
 
