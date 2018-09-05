@@ -50,13 +50,13 @@ class MapScene extends Scene {
 		let cheatMessages = this._cheatInput.execute(engine);
 		if (cheatMessages.length) {
 			this._cheatInput.reset();
-			this._showText(cheatMessages.first(), this.engine.state.worldLocation);
+			this._showText(cheatMessages.first(), this.engine.temporaryState.worldLocation);
 		}
 
 		this._ticks++;
 	}
 
-	_showText(text: string, location: Point): void {
+	private _showText(text: string, location: Point): void {
 		const speechScene = new SpeechScene(this.engine);
 		speechScene.text = text;
 		speechScene.location = location;
@@ -105,7 +105,7 @@ class MapScene extends Scene {
 		console.log(message);
 	}
 
-	_exitScene() {
+	private _exitScene() {
 		this.engine.sceneManager.popScene();
 	}
 
@@ -113,7 +113,7 @@ class MapScene extends Scene {
 		renderer.clear();
 
 		const engine = this.engine;
-		const state = engine.state;
+		const state = engine.temporaryState;
 		const currentZone = engine.currentZone;
 		let world = engine.world;
 

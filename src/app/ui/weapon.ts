@@ -37,7 +37,7 @@ class Weapon extends Component {
 		this.appendChild(this._tileContainer);
 	}
 
-	_update() {
+	private _update() {
 		let url = (<any>Image).blankImage;
 		this._tileContainer.style.backgroundPosition = "";
 		if (this._weapon && this._weapon.frames && this._weapon.frames.length) {

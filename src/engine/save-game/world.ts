@@ -24,7 +24,7 @@ class World {
 		return this._world[index];
 	}
 
-	_toIndex(p: Point): number {
+	private _toIndex(p: Point): number {
 		if (!this.bounds.contains(p))
 			throw new RangeError(`Index ${p} does not lie within rect ${this.bounds}`);
 

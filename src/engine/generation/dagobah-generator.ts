@@ -6,16 +6,7 @@ import Hotspot from "../objects/hotspot";
 import World from "./world";
 import WorldGenerator from "./world-generator";
 import { WorldItem } from "src/engine/generation";
-
-const TILE_YODA = 0x30c;
-const TILE_YODAS_SEAT = 2034;
-const GOAL_IMPERIAL_BATTLE_CODE = 0x84;
-const GOAL_RESCUE_YODA = 0xbd;
-const ZONE_YODAS_HUT = 535;
-const ZONE_DAGOBAH_NORTH_WEST = 94;
-const ZONE_DAGOBAH_NORTH_EAST = 95;
-const ZONE_DAGOBAH_SOUTH_WEST = 93;
-const ZONE_DAGOBAH_SOUTH_EAST = 96;
+import Yoda from "../yoda";
 
 class DagobahGenerator {
 	private _engine: Engine;
@@ -35,19 +26,19 @@ class DagobahGenerator {
 		const dagobah = new World();
 		dagobah.zones = data.zones;
 
-		dagobah.setZone(4, 4, data.zones[ZONE_DAGOBAH_NORTH_WEST]);
-		dagobah.at(4, 4).zoneType = ZoneType.Find; // data.zones[ZONE_DAGOBAH_NORTH_WEST].type;
-		dagobah.setZone(5, 4, data.zones[ZONE_DAGOBAH_NORTH_EAST]);
-		dagobah.at(5, 4).zoneType = ZoneType.Find; // data.zones[ZONE_DAGOBAH_NORTH_EAST].type;
-		dagobah.setZone(4, 5, data.zones[ZONE_DAGOBAH_SOUTH_WEST]);
-		dagobah.at(4, 5).zoneType = data.zones[ZONE_DAGOBAH_SOUTH_WEST].type;
-		dagobah.setZone(5, 5, data.zones[ZONE_DAGOBAH_SOUTH_EAST]);
-		dagobah.at(5, 5).zoneType = ZoneType.Town; // data.zones[ZONE_DAGOBAH_SOUTH_EAST].type;
+		dagobah.setZone(4, 4, data.zones[Yoda.Zone.DagobahNorthWest]);
+		dagobah.at(4, 4).zoneType = ZoneType.Find; // data.zones[Yoda.Zone.DagobahNorthWest].type;
+		dagobah.setZone(5, 4, data.zones[Yoda.Zone.DagobahNorthEast]);
+		dagobah.at(5, 4).zoneType = ZoneType.Find; // data.zones[Yoda.Zone.DagobahNorthEast].type;
+		dagobah.setZone(4, 5, data.zones[Yoda.Zone.DagobahSouthWest]);
+		dagobah.at(4, 5).zoneType = data.zones[Yoda.Zone.DagobahSouthWest].type;
+		dagobah.setZone(5, 5, data.zones[Yoda.Zone.DagobahSouthEast]);
+		dagobah.at(5, 5).zoneType = ZoneType.Town; // data.zones[Yoda.Zone.DagobahSouthEast].type;
 
 		let mode = randmod(4);
-		if (generator.goalPuzzle === data.puzzles[GOAL_IMPERIAL_BATTLE_CODE]) {
+		if (generator.goalPuzzle === data.puzzles[Yoda.Goal.ImperialBattleCode]) {
 			mode = 3;
-		} else if (generator.goalPuzzle === data.puzzles[GOAL_RESCUE_YODA]) {
+		} else if (generator.goalPuzzle === data.puzzles[Yoda.Goal.RescueYoda]) {
 			mode = 4;
 		}
 
@@ -65,43 +56,43 @@ class DagobahGenerator {
 		let worldItem: WorldItem = null;
 		switch (mode) {
 			case 0:
-				this._setupSpawnHotspot(ZONE_DAGOBAH_NORTH_WEST, TILE_YODA, data);
+				this._setupSpawnHotspot(Yoda.Zone.DagobahNorthWest, Yoda.Tile.Yoda, data);
 				worldItem = dagobah.at(4, 4);
 				worldItem.zoneType = ZoneType.Use;
-				worldItem.zone = data.zones[ZONE_DAGOBAH_NORTH_WEST];
-				worldItem.npc = data.tiles[TILE_YODA];
+				worldItem.zone = data.zones[Yoda.Zone.DagobahNorthWest];
+				worldItem.npc = data.tiles[Yoda.Tile.Yoda];
 				worldItem.findItem = startingItem;
 				break;
 			case 1:
-				this._setupSpawnHotspot(ZONE_YODAS_HUT, TILE_YODA, data);
+				this._setupSpawnHotspot(Yoda.Zone.YodasHut, Yoda.Tile.Yoda, data);
 				worldItem = dagobah.at(5, 4);
 				worldItem.zoneType = ZoneType.Use;
-				worldItem.zone = data.zones[ZONE_YODAS_HUT];
-				worldItem.npc = data.tiles[TILE_YODA];
+				worldItem.zone = data.zones[Yoda.Zone.YodasHut];
+				worldItem.npc = data.tiles[Yoda.Tile.Yoda];
 				worldItem.findItem = startingItem;
 				break;
 			case 2:
-				this._setupSpawnHotspot(ZONE_DAGOBAH_SOUTH_EAST, TILE_YODA, data);
+				this._setupSpawnHotspot(Yoda.Zone.DagobahSouthEast, Yoda.Tile.Yoda, data);
 				worldItem = dagobah.at(5, 5);
 				worldItem.zoneType = ZoneType.Use;
-				worldItem.zone = data.zones[ZONE_DAGOBAH_SOUTH_EAST];
-				worldItem.npc = data.tiles[TILE_YODA];
+				worldItem.zone = data.zones[Yoda.Zone.DagobahSouthEast];
+				worldItem.npc = data.tiles[Yoda.Tile.Yoda];
 				worldItem.findItem = startingItem;
 				break;
 			case 3:
-				this._setupSpawnHotspot(ZONE_DAGOBAH_SOUTH_WEST, TILE_YODA, data);
+				this._setupSpawnHotspot(Yoda.Zone.DagobahSouthWest, Yoda.Tile.Yoda, data);
 				worldItem = dagobah.at(4, 5);
 				worldItem.zoneType = ZoneType.Use;
-				worldItem.zone = data.zones[ZONE_DAGOBAH_SOUTH_WEST];
-				worldItem.npc = data.tiles[TILE_YODA];
+				worldItem.zone = data.zones[Yoda.Zone.DagobahSouthWest];
+				worldItem.npc = data.tiles[Yoda.Tile.Yoda];
 				worldItem.findItem = startingItem;
 				break;
 			case 4:
-				this._setupSpawnHotspot(ZONE_YODAS_HUT, TILE_YODAS_SEAT, data);
+				this._setupSpawnHotspot(Yoda.Zone.YodasHut, Yoda.Tile.YodasSeat, data);
 				worldItem = dagobah.at(5, 4);
 				worldItem.zoneType = ZoneType.Use;
-				worldItem.zone = data.zones[ZONE_DAGOBAH_SOUTH_WEST];
-				worldItem.npc = data.tiles[TILE_YODA];
+				worldItem.zone = data.zones[Yoda.Zone.DagobahSouthWest];
+				worldItem.npc = data.tiles[Yoda.Tile.Yoda];
 				worldItem.findItem = startingItem;
 				break;
 
@@ -109,20 +100,20 @@ class DagobahGenerator {
 				break;
 		}
 
-		dagobah.at(4, 4).zone = data.zones[ZONE_DAGOBAH_NORTH_WEST];
-		dagobah.at(5, 4).zone = data.zones[ZONE_DAGOBAH_NORTH_EAST];
-		dagobah.at(4, 5).zone = data.zones[ZONE_DAGOBAH_SOUTH_WEST];
-		dagobah.at(5, 5).zone = data.zones[ZONE_DAGOBAH_SOUTH_EAST];
+		dagobah.at(4, 4).zone = data.zones[Yoda.Zone.DagobahNorthWest];
+		dagobah.at(5, 4).zone = data.zones[Yoda.Zone.DagobahNorthEast];
+		dagobah.at(4, 5).zone = data.zones[Yoda.Zone.DagobahSouthWest];
+		dagobah.at(5, 5).zone = data.zones[Yoda.Zone.DagobahSouthEast];
 
 		return (this._world = dagobah);
 	}
 
-	_setupSpawnHotspot(zoneID: number, npcID: number, data: GameData) {
+	private _setupSpawnHotspot(zoneID: number, npcID: number, data: GameData) {
 		const zones = data.zones;
 		const zone = zones[zoneID];
 		const hotspots = zone.hotspots;
 
-		if (zoneID !== ZONE_YODAS_HUT) {
+		if (zoneID !== Yoda.Zone.YodasHut) {
 			const index = zone.puzzleNPCs.findIndex(i => i.id === npcID);
 			if (index === -1) return;
 
@@ -138,20 +129,20 @@ class DagobahGenerator {
 			return;
 		}
 
-		if (npcID === TILE_YODA) {
-			const index = zone.puzzleNPCs.findIndex(i => i.id === TILE_YODA);
+		if (npcID === Yoda.Tile.Yoda) {
+			const index = zone.puzzleNPCs.findIndex(i => i.id === Yoda.Tile.Yoda);
 			if (index === -1) return;
 
 			let hotspot = hotspots.filter((hotspot: Hotspot) => hotspot.x === 3 && hotspot.y === 3).last();
 			if (!hotspot) return;
 
-			hotspot.arg = TILE_YODA;
+			hotspot.arg = Yoda.Tile.Yoda;
 			hotspot.enabled = true;
 
 			return;
 		}
 
-		if (npcID === TILE_YODAS_SEAT) {
+		if (npcID === Yoda.Tile.YodasSeat) {
 			const index = zone.puzzleNPCs.findIndex(i => i.id === npcID);
 			if (index === -1) return;
 

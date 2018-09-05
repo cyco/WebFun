@@ -27,7 +27,7 @@ class SpeechScene extends Scene {
 
 	set text(t) {
 		const world = this.engine.currentWorld;
-		const quest = world.at(this.engine.state.worldLocation);
+		const quest = world.at(this.engine.temporaryState.worldLocation);
 
 		this._bubble.text = this.resolveVariables(t, quest);
 	}
@@ -48,7 +48,7 @@ class SpeechScene extends Scene {
 	render() {}
 
 	willShow() {
-		this.engine.inputManager.mouseDownHandler = (p: Point): void => null;
+		this.engine.inputManager.mouseDownHandler = (_: Point): void => null;
 		this._modalSession = new ModalSession();
 		this._modalSession.run();
 

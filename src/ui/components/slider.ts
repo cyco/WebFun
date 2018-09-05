@@ -115,7 +115,7 @@ class Slider extends Component {
 		this.layout();
 	}
 
-	_setupThumb() {
+	private _setupThumb() {
 		this._knob = this._makeButton();
 		this._knob.classList.add("thumb");
 		this.appendChild(this._knob);
@@ -141,7 +141,7 @@ class Slider extends Component {
 
 		const mouseMove = (e: MouseEvent) => {
 			let difX = e.pageX - mouseCoordinates.x;
-			let difY = e.pageY - mouseCoordinates.y;
+			let _ = e.pageY - mouseCoordinates.y;
 
 			const buttonWidth = 16;
 			const width = this.getBoundingClientRect().width - 2 * buttonWidth;
@@ -180,7 +180,7 @@ class Slider extends Component {
 		this._knob.addEventListener("mousedown", mouseDown);
 	}
 
-	_setupLeftButton() {
+	private _setupLeftButton() {
 		this._left = this._makeButton();
 		this._left.classList.add("left");
 		this._left.onmousedown = () => {
@@ -194,7 +194,7 @@ class Slider extends Component {
 		this.appendChild(this._left);
 	}
 
-	_setupRightButton() {
+	private _setupRightButton() {
 		this._right = this._makeButton();
 		this._right.classList.add("right");
 		this._right.onmousedown = () => {
@@ -208,7 +208,7 @@ class Slider extends Component {
 		this.appendChild(this._right);
 	}
 
-	_makeButton() {
+	private _makeButton() {
 		const button = document.createElement("div");
 		button.classList.add("knob");
 
@@ -218,7 +218,7 @@ class Slider extends Component {
 		return button;
 	}
 
-	_tickLeft() {
+	private _tickLeft() {
 		const tickWidth = this._snapToIntegers ? 1 : 0.02;
 		this.value -= tickWidth;
 
@@ -227,7 +227,7 @@ class Slider extends Component {
 		}, 80);
 	}
 
-	_tickRight() {
+	private _tickRight() {
 		const tickWidth = this._snapToIntegers ? 1 : 0.02;
 		this.value += tickWidth;
 
@@ -248,7 +248,7 @@ class Slider extends Component {
 		this._knob.style.left = knobWidth + width * relativeValue + "px";
 	}
 
-	_postChangeNotification() {
+	private _postChangeNotification() {
 		if (this._onChange instanceof Function) {
 			this._onChange(this);
 		}

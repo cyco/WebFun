@@ -6,10 +6,10 @@ describeCondition("EnterByPlane", (check, engine) => {
 		const condition = new Condition();
 		condition._opcode = EnterByPlane.Opcode;
 
-		engine.state.enteredByPlane = true;
+		engine.temporaryState.enteredByPlane = true;
 		expect(await check(condition)).toBeTrue();
 
-		engine.state.enteredByPlane = false;
+		engine.temporaryState.enteredByPlane = false;
 		expect(await check(condition)).toBeFalse();
 
 		done();

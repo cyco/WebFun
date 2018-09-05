@@ -62,6 +62,7 @@ window.document.addEventListener("keydown", (e: KeyboardEvent) => {
 	}
 });
 
+var module: any;
 if (module.hot) {
 	if (module.hot.addStatusHandler) {
 		if (module.hot.status() === "idle") {

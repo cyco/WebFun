@@ -55,7 +55,7 @@ class Menubar extends MenuView {
 		this._showMenuForItem(itemIndex);
 	}
 
-	_mouseMoved(event: MouseEvent): void {
+	private _mouseMoved(event: MouseEvent): void {
 		const location = new Point(event.pageX, event.pageY);
 		if (!this._elementContainsPoint(this, location)) return;
 
@@ -66,7 +66,7 @@ class Menubar extends MenuView {
 		this._showMenuForItem(itemIdx);
 	}
 
-	_closeMenuForItem(idx: number): void {
+	private _closeMenuForItem(idx: number): void {
 		if (idx === -1) return;
 
 		const itemNode = this.children[idx];
@@ -93,7 +93,7 @@ class Menubar extends MenuView {
 		}
 	}
 
-	_showMenuForItem(idx: number): void {
+	private _showMenuForItem(idx: number): void {
 		if (idx === -1) return;
 
 		const itemNode = this.children[idx];
@@ -113,14 +113,14 @@ class Menubar extends MenuView {
 		this._currentItem = idx;
 	}
 
-	_elementContainsPoint(element: Element, point: Point): boolean {
+	private _elementContainsPoint(element: Element, point: Point): boolean {
 		const frame = element.getBoundingClientRect();
 		return (
 			point.x >= frame.left && point.x <= frame.right && point.y >= frame.top && point.y <= frame.bottom
 		);
 	}
 
-	_findItemAt(location: Point): number {
+	private _findItemAt(location: Point): number {
 		return Array.from(this.children).findIndex(child => this._elementContainsPoint(child, location));
 	}
 }

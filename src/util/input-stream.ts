@@ -1,5 +1,5 @@
 import Stream from "./stream";
-import { ArrayBuffer, DataView, TextDecoder } from "src/std";
+import { DataView, TextDecoder } from "src/std";
 
 const DefaultEncoding = "utf-8";
 
@@ -23,7 +23,9 @@ class InputStream extends Stream {
 		return this.offset === this.length;
 	}
 
-	_makeArrayBuffer(data: ArrayBuffer | SharedArrayBuffer | string): ArrayBuffer | SharedArrayBuffer {
+	private _makeArrayBuffer(
+		data: ArrayBuffer | SharedArrayBuffer | string
+	): ArrayBuffer | SharedArrayBuffer {
 		if (typeof data === "string") {
 			let binaryString = atob(data);
 			let len = binaryString.length;

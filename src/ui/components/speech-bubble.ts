@@ -94,7 +94,7 @@ class SpeechBubble extends Component {
 		this.text = this.text || "";
 	}
 
-	protected attributeChangedCallback(attribute: string, oldValue: string, newValue: string): void {
+	protected attributeChangedCallback(_: string, _2: string, newValue: string): void {
 		this.text = newValue;
 	}
 
@@ -130,7 +130,7 @@ class SpeechBubble extends Component {
 		return button;
 	}
 
-	_setupButtons() {
+	private _setupButtons() {
 		this._endButton.setAttribute("disabled", "");
 
 		const buttonBar = document.createElement("div");
@@ -141,7 +141,7 @@ class SpeechBubble extends Component {
 		this.appendChild(buttonBar);
 	}
 
-	_setupBackground() {
+	private _setupBackground() {
 		const previousBackground = this.querySelector("svg");
 		if (previousBackground) previousBackground.remove();
 
@@ -189,7 +189,7 @@ class SpeechBubble extends Component {
 		this._endButton.parentElement.style.bottom = padding - 2 + bottomArrowWidth + "px";
 	}
 
-	_buildPath() {
+	private _buildPath() {
 		const width = this._width;
 		const height = this._calculateHeight();
 		const b = 5;

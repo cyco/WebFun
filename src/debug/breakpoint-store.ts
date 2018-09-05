@@ -26,31 +26,31 @@ class BreakpointStore extends EventTarget {
 		return (this._sharedStore = this._sharedStore || new BreakpointStore());
 	}
 
-	addBreakpoint(bpt: Breakpoint) {
+	public addBreakpoint(bpt: Breakpoint) {
 		this._breakpoints[bpt.id] = bpt;
 		this._store();
 		this.dispatchEvent(new CustomEvent(Events.DidAddBreakpoint, { detail: { breakpoint: bpt } }));
 	}
 
-	hasBreakpoint(id: string) {
+	public hasBreakpoint(id: string) {
 		return !!this.getBreakpoint(id);
 	}
 
-	getBreakpoint(id: string) {
+	public getBreakpoint(id: string) {
 		return this._breakpoints[id];
 	}
 
-	removeBreakpoint(bpt: Breakpoint) {
+	public removeBreakpoint(bpt: Breakpoint) {
 		delete this._breakpoints[bpt.id];
 		this._store();
 		this.dispatchEvent(new CustomEvent(Events.DidRemoveBreakpoint, { detail: { breakpoint: bpt } }));
 	}
 
-	_store() {
+	private _store() {
 		localStorage.setItem(StorageKey, Object.keys(this._breakpoints).join(","));
 	}
 
-	_load() {
+	private _load() {
 		const storedValue = localStorage.getItem(StorageKey);
 		if (!storedValue) return;
 

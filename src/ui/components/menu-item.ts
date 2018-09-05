@@ -2,12 +2,10 @@ import MenuItem from "src/ui/menu-item";
 import Component from "../component";
 import "./menu-item.scss";
 import MenuItemState from "src/ui/menu-item-state";
-import MenuView from "./menu-view";
 
 class MenuItemComponent extends Component {
 	public static tagName: string = "wf-menu-item";
 	private _item: MenuItem = null;
-	private _state: MenuItemState;
 
 	get item() {
 		return this._item;
@@ -19,9 +17,8 @@ class MenuItemComponent extends Component {
 		if (this._item) this._rebuild();
 	}
 
-	_reset() {
+	private _reset() {
 		this.onmouseup = null;
-		this._state = MenuItemState.Off;
 	}
 
 	connectedCallback() {
@@ -29,7 +26,7 @@ class MenuItemComponent extends Component {
 		this._rebuild();
 	}
 
-	_rebuild() {
+	private _rebuild() {
 		this.textContent = "";
 		const item = this.item || <Partial<MenuItem>>{};
 

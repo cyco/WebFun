@@ -69,6 +69,8 @@ declare namespace JSX {
 		br: Partial<HTMLBRElement>;
 		select: Partial<HTMLSelectElement>;
 		option: Partial<HTMLOptionElement>;
+		ul: Partial<HTMLUListElement>;
+		li: Partial<HTMLLIElement>;
 	}
 
 	interface Element extends Component {}

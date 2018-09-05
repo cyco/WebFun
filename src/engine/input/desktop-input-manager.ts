@@ -148,7 +148,7 @@ class DesktopInputManager extends InputManager {
 		if (e.button === 1) this._attack = false;
 	}
 
-	_getPointInViewCoordinates(location: Point): Point {
+	private _getPointInViewCoordinates(location: Point): Point {
 		const boundingRect = this._element.getBoundingClientRect();
 		const viewOffset = new Point(boundingRect.left, boundingRect.top);
 

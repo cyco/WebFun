@@ -188,7 +188,7 @@ class Hero extends EventTarget {
 		return (this._walking = false);
 	}
 
-	_doMove(rel: Point, z: Zone, dragging: boolean) {
+	private _doMove(rel: Point, z: Zone, dragging: boolean) {
 		if (rel.isZeroPoint()) return false;
 
 		let source = this._location;
@@ -211,7 +211,7 @@ class Hero extends EventTarget {
 		return false;
 	}
 
-	_doDrag(src: Point, target: Point, z: Zone): boolean {
+	private _doDrag(src: Point, target: Point, z: Zone): boolean {
 		let t = z.getTile(src);
 		if (!t || !t.isDraggable()) return false;
 

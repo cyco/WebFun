@@ -51,7 +51,7 @@ class InventoryComponent extends Component {
 		this._rebuildTable();
 	}
 
-	_rebuildTable() {
+	private _rebuildTable() {
 		this.textContent = "";
 
 		if (this._inventory) {

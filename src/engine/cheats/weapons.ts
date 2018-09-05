@@ -22,7 +22,7 @@ class WeaponsCheat extends Cheat {
 
 	private addItem(engine: Engine, id: number): void {
 		const tile = engine.data.tiles[id];
-		engine.state.inventory.addItem(tile);
+		engine.inventory.addItem(tile);
 	}
 }
 

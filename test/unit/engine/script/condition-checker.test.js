@@ -9,7 +9,7 @@ describe("ConditionChecker", () => {
 			currentZone: {},
 			hero: { location: {} },
 			persistentState: {},
-			state: {}
+			temporaryState: {}
 		};
 		condition = new Condition({});
 		checker = new ConditionChecker(Conditions, engine);

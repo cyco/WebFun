@@ -82,7 +82,7 @@ class MainWindow extends Window {
 		return this._main;
 	}
 
-	_buildEventHandlers() {
+	private _buildEventHandlers() {
 		this._handlers = {};
 		this._handlers[Events.AmmoChanged] = () => this._updateAmmo();
 		this._handlers[Events.WeaponChanged] = () => this._updateWeapon();
@@ -91,11 +91,11 @@ class MainWindow extends Window {
 		this._handlers.healthChanged = () => this._updateHealth();
 	}
 
-	_updateAmmo() {}
+	private _updateAmmo() {}
 
-	_updateWeapon() {}
+	private _updateWeapon() {}
 
-	_updateLocation({ zone, world }: { zone: Zone; world: World }) {
+	private _updateLocation({ zone, world }: { zone: Zone; world: World }) {
 		let mask = Direction.None;
 		const location = world.locationOfZone(zone);
 		if (!location || !world) {
@@ -110,7 +110,7 @@ class MainWindow extends Window {
 		this._locationView.mask = mask;
 	}
 
-	_updateHealth() {
+	private _updateHealth() {
 		this._healthView.health = this._engine.hero.health;
 	}
 }

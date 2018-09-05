@@ -8,7 +8,7 @@ export default <Condition>{
 	Name: "bump",
 	Arguments: [Type.Number, Type.Number, Type.Number],
 	Implementation: async (args: int16[], zone: Zone, engine: Engine): Promise<boolean> => {
-		const state = engine.state;
+		const state = engine.temporaryState;
 		const bump = state.bump;
 		if (!bump || bump.x !== args[0] || bump.y !== args[1]) {
 			return false;
