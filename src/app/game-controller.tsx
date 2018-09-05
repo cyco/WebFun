@@ -95,7 +95,7 @@ class GameController extends EventTarget {
 			this._engine.story = story;
 			this._engine.currentWorld = story.world;
 			this._engine.hero.visible = true;
-			this._engine.state.worldLocation = new Point(5, 4);
+			this._engine.temporaryState.worldLocation = new Point(5, 4);
 			this._showSceneView(story.world.at(5, 4).zone);
 
 			(global as any).engine = this._engine;

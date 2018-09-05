@@ -39,13 +39,13 @@ class ScriptExecutor {
 	}
 
 	public async bump(location: Point) {
-		this._engine.state.bump = location;
+		this._engine.temporaryState.bump = location;
 		const result = await this._evaluateActions(
 			this._engine.currentZone.actions,
 			EvaluationMode.Bump,
 			true
 		);
-		this._engine.state.bump = null;
+		this._engine.temporaryState.bump = null;
 		return result;
 	}
 
@@ -63,9 +63,9 @@ class ScriptExecutor {
 
 		if (hasActions) {
 			this._engine.currentZone.actionsInitialized = true;
-			this._engine.state.justEntered = false;
-			this._engine.state.enteredByPlane = false;
-			this._engine.state.bump = null;
+			this._engine.temporaryState.justEntered = false;
+			this._engine.temporaryState.enteredByPlane = false;
+			this._engine.temporaryState.bump = null;
 		}
 
 		return false;

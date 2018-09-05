@@ -12,15 +12,10 @@ const enum Island {
 type Run = { length: number; start: number };
 
 class IslandBuilder {
-	private stepX: Point;
-	private stepY: Point;
 	private typeMap: Map;
 
 	constructor(world: Map) {
 		this.typeMap = world;
-
-		this.stepX = new Point(1, 0);
-		this.stepY = new Point(0, 1);
 	}
 
 	public placeIslands(count: number) {

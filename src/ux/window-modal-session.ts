@@ -16,7 +16,7 @@ class WindowModalSession extends ModalSession {
 		this._window.center();
 	}
 
-	_whenOverlayIsGone(callback: Function) {
+	protected _whenOverlayIsGone(callback: Function) {
 		// HACK: give WebKit time to remove the overlay, so elementFromPoint works correctly
 		if (document.elementFromPoint(0, 0) === this._overlay) {
 			dispatch(() => this._whenOverlayIsGone(callback), 1);

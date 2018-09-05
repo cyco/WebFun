@@ -65,7 +65,7 @@ class Health extends Component {
 		this._update();
 	}
 
-	_update() {
+	private _update() {
 		if (!this.isConnected) return;
 
 		const health = this.health === MaxHealth - 1 ? MaxHealth : this.health;
@@ -78,7 +78,7 @@ class Health extends Component {
 		this._pie.setAttribute("d", "M100,100 L" + this._buildArc(value) + "Z");
 	}
 
-	_buildArc(value: number): string {
+	private _buildArc(value: number): string {
 		const c = {
 			x: 100,
 			y: 100
@@ -92,11 +92,11 @@ class Health extends Component {
 		return `${start.x},${start.y} A${r},${r},0,${sweep},0,${end.x},${end.y} `;
 	}
 
-	_toRadians(angle: number): number {
+	private _toRadians(angle: number): number {
 		return (PI * angle) / 180;
 	}
 
-	_pointWithAngle(angle: number, c: SimplePoint, r: number): SimplePoint {
+	private _pointWithAngle(angle: number, c: SimplePoint, r: number): SimplePoint {
 		return {
 			x: c.x + r * cos(this._toRadians(270 - angle)),
 			y: c.y + r * sin(this._toRadians(270 - angle))

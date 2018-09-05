@@ -35,7 +35,7 @@ class WindowManager {
 		this.focus(window);
 	}
 
-	_onWindowClose(e: CustomEvent) {
+	private _onWindowClose(e: CustomEvent) {
 		const window = <Window>e.target;
 
 		window.manager = null;

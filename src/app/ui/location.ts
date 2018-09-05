@@ -34,7 +34,7 @@ class Location extends Component {
 		this._updateClassList();
 	}
 
-	_updateClassList() {
+	private _updateClassList() {
 		const classList = this._svg.classList;
 		const set = (on: number, c: string) => (on ? classList.add(c) : classList.remove(c));
 

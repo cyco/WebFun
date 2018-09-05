@@ -109,8 +109,8 @@ class ZoneScene extends Scene {
 			);
 	}
 
-	_executeHotspots() {
-		if (this.engine.state.justEntered) return;
+	public _executeHotspots() {
+		if (this.engine.temporaryState.justEntered) return;
 		const zone = this.zone;
 		const hero = this.engine.hero;
 
@@ -119,7 +119,7 @@ class ZoneScene extends Scene {
 		zone.hotspots.filter(hotspotIsTriggered).forEach((h: Hotspot) => this._hotspotTriggered(h));
 	}
 
-	_hotspotTriggered(hotspot: Hotspot) {
+	private _hotspotTriggered(hotspot: Hotspot) {
 		const engine = this.engine;
 		const zone = engine.currentZone;
 
@@ -222,7 +222,7 @@ class ZoneScene extends Scene {
 				transitionScene.targetWorld = world;
 				transitionScene.targetZoneLocation = location;
 				engine.sceneManager.pushScene(transitionScene);
-				this.engine.state.enteredByPlane = true;
+				this.engine.temporaryState.enteredByPlane = true;
 				return true;
 			}
 			case HotspotType.xWingToD: {
@@ -248,15 +248,15 @@ class ZoneScene extends Scene {
 				transitionScene.targetWorld = engine.dagobah;
 				transitionScene.targetZoneLocation = location;
 				engine.sceneManager.pushScene(transitionScene);
-				this.engine.state.enteredByPlane = true;
+				this.engine.temporaryState.enteredByPlane = true;
 				return true;
 			}
 		}
 	}
 
-	_tryTransition(direction: Point): boolean | undefined {
+	private _tryTransition(direction: Point): boolean | undefined {
 		const engine = this.engine;
-		const state = engine.state;
+		const state = engine.temporaryState;
 		const hero = engine.hero;
 		const currentZone = engine.currentZone;
 
@@ -342,9 +342,7 @@ class ZoneScene extends Scene {
 		this.camera.hero = this.engine.hero;
 	}
 
-	willHide() {
-		this.engine.setCursor(null);
-	}
+	willHide() {}
 
 	private async _handleMouse(): Promise<void> {
 		const engine = this.engine;
@@ -370,13 +368,9 @@ class ZoneScene extends Scene {
 			mouseLocationInView.y < 1 / 18 ||
 			mouseLocationInView.x > 17 / 18 ||
 			mouseLocationInView.y > 17 / 18;
-		if (onHero && !closeToViewEdge) {
-			this.engine.setCursor("blocking");
-		} else {
+		if (!onHero || closeToViewEdge) {
 			let direction = Direction.CalculateAngleFromRelativePoint(relativeLocation);
-			this.engine.setCursor(Direction.Confine(direction));
 
-			// TODO: set cursor
 			if (isNaN(direction)) return;
 
 			hero.face(direction);
@@ -433,7 +427,6 @@ class ZoneScene extends Scene {
 
 	private async _moveHero(direction: number): Promise<void> {
 		const engine = this.engine;
-		const state = engine.state;
 		const hero = engine.hero;
 		const zone = engine.currentZone;
 
@@ -446,7 +439,7 @@ class ZoneScene extends Scene {
 		const targetPoint = Point.add(hero.location, p);
 		const targetTile = zone.bounds.contains(targetPoint) && zone.getTile(targetPoint.x, targetPoint.y, 1);
 		if (targetTile) {
-			const result = await this.engine.scriptExecutor.bump(targetPoint);
+			await this.engine.scriptExecutor.bump(targetPoint);
 			//TODO: handle result
 		}
 

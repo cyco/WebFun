@@ -7,7 +7,7 @@ import { InputManager } from "./input";
 import Inventory from "./inventory";
 import Metronome from "./metronome";
 import { Zone } from "./objects";
-import PersistentState from "./persistent-state";
+import State from "./persistent-state";
 import { AbstractImageFactory, Renderer } from "./rendering";
 import SceneManager from "./scene-manager";
 import { ScriptExecutor } from "./script";
@@ -29,8 +29,8 @@ class Engine extends EventTarget {
 	public inventory: Inventory = null;
 	public scriptExecutor: ScriptExecutor = null;
 	public story: Story = null;
-	public persistentState: PersistentState = null;
-	public state: any = null;
+	public persistentState: typeof State = State;
+	public temporaryState: any = null;
 	public gameState: GameState = GameState.Stopped;
 	private _currentZone: Zone = null;
 	private _currentWorld: World = null;
@@ -39,15 +39,11 @@ class Engine extends EventTarget {
 		super();
 
 		// TODO: remove state
-		this.state = {
+		this.temporaryState = {
 			justEntered: true,
 			enteredByPlane: true,
 			bump: false
 		};
-		this.persistentState = <PersistentState>{
-			gamesWon: 0
-		};
-
 		this.registerEvents(Events);
 	}
 
@@ -84,9 +80,6 @@ class Engine extends EventTarget {
 	render() {
 		this.sceneManager.render(this.renderer);
 	}
-
-	// TODO: remove calls and method
-	setCursor(cursor: any) {}
 }
 
 export default Engine;

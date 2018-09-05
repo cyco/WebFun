@@ -1,5 +1,4 @@
 import { Tile, Zone } from "src/engine/objects";
-import { WebGLTexture } from "src/std.webgl";
 import { Point } from "src/util";
 import World from "../generation/world";
 import AbstractRenderer from "../rendering/abstract-renderer";
@@ -49,7 +48,7 @@ class TransitionScene extends Scene {
 		return true;
 	}
 
-	_setupAnimationAttributes() {
+	private _setupAnimationAttributes() {
 		switch (this.type) {
 			case TransitionScene.TRANSITION_TYPE.ZONE:
 				this._duration = 1000.0;
@@ -80,9 +79,9 @@ class TransitionScene extends Scene {
 		}
 	}
 
-	_swapZones() {
+	private _swapZones() {
 		console.warn("_swapZones()");
-		const state = this.engine.state;
+		const state = this.engine.temporaryState;
 		const hero = this.engine.hero;
 		const engine = this.engine;
 		hero.location = this.targetHeroLocation;
@@ -114,7 +113,7 @@ class TransitionScene extends Scene {
 		}
 	}
 
-	_takeSnapshot(zone: Zone, xOffset: number, yOffset: number): ImageData {
+	private _takeSnapshot(zone: Zone, xOffset: number, yOffset: number): ImageData {
 		const canvas = document.createElement("canvas");
 		const viewWidth = 9,
 			viewHeight = 9;

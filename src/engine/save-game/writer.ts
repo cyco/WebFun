@@ -6,13 +6,13 @@ import World from "./world";
 import WorldItem from "./world-item";
 
 class Writer {
-	_data: GameData;
+	private _data: GameData;
 
 	constructor(data: GameData) {
 		this._data = data;
 	}
 
-	write(state: SaveState, stream: OutputStream): void {
+	public write(state: SaveState, stream: OutputStream): void {
 		stream.writeCharacters("YODASAV44");
 		stream.writeUint32(state.seed);
 		stream.writeUint32(state.planet.rawValue);
@@ -63,7 +63,7 @@ class Writer {
 		stream.writeUint32(state.goalPuzzle);
 	}
 
-	_writeDagobah(world: World, stream: OutputStream): void {
+	private _writeDagobah(world: World, stream: OutputStream): void {
 		for (let y = 4; y <= 5; y++) {
 			for (let x = 4; x <= 5; x++) {
 				this._writeWorldItem(world.getWorldItem(x, y), stream);
@@ -73,7 +73,7 @@ class Writer {
 		this._writeWorldDetails(world, stream);
 	}
 
-	_writeWorld(world: World, stream: OutputStream): void {
+	private _writeWorld(world: World, stream: OutputStream): void {
 		for (let y = 0; y < 10; y++) {
 			for (let x = 0; x < 10; x++) {
 				this._writeWorldItem(world.getWorldItem(x, y), stream);
@@ -83,7 +83,7 @@ class Writer {
 		this._writeWorldDetails(world, stream);
 	}
 
-	_writeRoom(zone: Zone, visited: boolean, stream: OutputStream): void {
+	private _writeRoom(zone: Zone, visited: boolean, stream: OutputStream): void {
 		this._writeZone(zone, visited, stream);
 		const doors = zone.hotspots.filter(
 			(hotspot: Hotspot) => hotspot.type === HotspotType.DoorIn && hotspot.arg !== -1
@@ -96,7 +96,7 @@ class Writer {
 		});
 	}
 
-	_writeZone(zone: Zone, visited: boolean, stream: OutputStream): void {
+	private _writeZone(zone: Zone, visited: boolean, stream: OutputStream): void {
 		console.log("write zone", zone.id, visited ? "full" : "minimal");
 		if (visited) {
 			stream.writeUint32(zone.counter);
@@ -123,7 +123,7 @@ class Writer {
 		}
 	}
 
-	_writeNPC(npc: NPC, stream: OutputStream): void {
+	private _writeNPC(npc: NPC, stream: OutputStream): void {
 		stream.writeInt16(npc.face.id);
 		stream.writeInt16(npc.position.x);
 		stream.writeInt16(npc.position.y);
@@ -154,7 +154,7 @@ class Writer {
 		}
 	}
 
-	_writeHotspot(hotspot: Hotspot, stream: OutputStream): void {
+	private _writeHotspot(hotspot: Hotspot, stream: OutputStream): void {
 		stream.writeUint16(+hotspot.enabled);
 		stream.writeInt16(hotspot.arg);
 		stream.writeUint32(hotspot.type.rawValue);
@@ -162,7 +162,7 @@ class Writer {
 		stream.writeInt16(hotspot._y);
 	}
 
-	_writeWorldDetails(world: World, stream: OutputStream): void {
+	private _writeWorldDetails(world: World, stream: OutputStream): void {
 		for (let y = 0; y < world.size.height; y++) {
 			for (let x = 0; x < world.size.width; x++) {
 				const item = world.getWorldItem(x, y);
@@ -182,7 +182,7 @@ class Writer {
 		stream.writeInt32(-1);
 	}
 
-	_writeWorldItem(item: WorldItem, stream: OutputStream): void {
+	private _writeWorldItem(item: WorldItem, stream: OutputStream): void {
 		stream.writeUint32(+item.visited);
 
 		stream.writeUint32(item.solved_1);

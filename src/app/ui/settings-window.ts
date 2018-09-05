@@ -13,7 +13,6 @@ class SettingsWindow extends Window {
 		"steps"
 	];
 
-	private _store: Storage;
 	private _minLabel: HTMLLabelElement;
 	private _midLabel: HTMLLabelElement;
 	private _maxLabel: HTMLLabelElement;
@@ -28,7 +27,7 @@ class SettingsWindow extends Window {
 		this._setupContents();
 	}
 
-	_setupContents() {
+	private _setupContents() {
 		const slider = <Slider>document.createElement(Slider.tagName);
 		slider.min = 0;
 		slider.value = 0.5;
@@ -63,18 +62,18 @@ class SettingsWindow extends Window {
 		this.content.appendChild(buttons);
 	}
 
-	_storeValue() {
+	private _storeValue() {
 		if (!this._key) return;
 		localStorage.store(this._key, this._slider.value);
 	}
 
-	_updateValue() {
+	private _updateValue() {
 		if (!this._key) return;
 
 		this._slider.value = localStorage.load(this._key);
 	}
 
-	protected attributeChangedCallback(attributeName: string, oldValue: string, newValue: string): void {
+	protected attributeChangedCallback(attributeName: string, _: string, newValue: string): void {
 		if (attributeName === "title") {
 			this.title = newValue;
 		}

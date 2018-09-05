@@ -14,7 +14,7 @@ class HotspotExecutor {
 		zone.hotspots.forEach(hotspot => this._laydownHotspotItem(zone, hotspot));
 	}
 
-	_laydownHotspotItem(zone: Zone, hotspot: Hotspot): void {
+	private _laydownHotspotItem(zone: Zone, hotspot: Hotspot): void {
 		if (!hotspot.enabled) return;
 		if (hotspot.arg === -1) return;
 
@@ -49,7 +49,7 @@ class HotspotExecutor {
 		zone.hotspots.forEach(hotspot => this._pickUpHotspotItem(zone, hotspot));
 	}
 
-	_pickUpHotspotItem(zone: Zone, hotspot: Hotspot) {}
+	private _pickUpHotspotItem(zone: Zone, hotspot: Hotspot) {}
 }
 
 export default HotspotExecutor;

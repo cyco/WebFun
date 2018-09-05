@@ -84,7 +84,7 @@ class SidebarLayersCell extends Component {
 		this._unregisterShortcuts();
 	}
 
-	_registerShortcuts() {
+	private _registerShortcuts() {
 		this._shortcuts = [];
 
 		const node = this.closest(Window.tagName);
@@ -135,7 +135,7 @@ class SidebarLayersCell extends Component {
 		);
 	}
 
-	_unregisterShortcuts() {
+	private _unregisterShortcuts() {
 		this._shortcuts.forEach(sc => ShortcutManager.sharedManager.unregisterShortcut(sc));
 		this._shortcuts = [];
 	}

@@ -42,7 +42,7 @@ class FileLoader extends EventTarget {
 		this.dispatchEvent(Event.Start);
 	}
 
-	_didLoad(reader: XMLHttpRequest) {
+	private _didLoad(reader: XMLHttpRequest) {
 		const stream = new InputStream(reader.response);
 		this.dispatchEvent(Event.Load, {
 			stream,
@@ -50,13 +50,13 @@ class FileLoader extends EventTarget {
 		});
 	}
 
-	_didFail(event: ProgressEvent) {
+	private _didFail(event: ProgressEvent) {
 		this.dispatchEvent(Event.Fail, {
 			reason: event
 		});
 	}
 
-	_didProgress(progress: number) {
+	private _didProgress(progress: number) {
 		this.dispatchEvent(Event.Progress, {
 			progress: progress
 		});

@@ -75,7 +75,7 @@ class ModalSession {
 		});
 	}
 
-	_whenOverlayIsGone(callback: Function): void {
+	protected _whenOverlayIsGone(callback: Function): void {
 		// HACK: give webkit time to remove the overlay, so elementFromPoint works correctly
 		if (document.elementFromPoint(0, 0) === this._overlay) {
 			dispatch(() => this._whenOverlayIsGone(callback), 1);

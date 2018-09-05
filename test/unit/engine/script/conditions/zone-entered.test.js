@@ -6,10 +6,10 @@ describeCondition("ZoneEntered", (check, engine) => {
 		const condition = new Condition();
 		condition._opcode = ZoneEntered.Opcode;
 
-		engine.state.justEntered = true;
+		engine.temporaryState.justEntered = true;
 		expect(await check(condition)).toBeTrue();
 
-		engine.state.justEntered = false;
+		engine.temporaryState.justEntered = false;
 		expect(await check(condition)).toBeFalse();
 
 		done();

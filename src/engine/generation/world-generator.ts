@@ -699,7 +699,7 @@ class WorldGenerator {
 
 	WritePlanetValues() {}
 
-	PuzzleUsedInLastGame(puzzle: Puzzle, planet: Planet) {
+	PuzzleUsedInLastGame(_: Puzzle, _2: Planet) {
 		return false;
 	}
 
@@ -820,7 +820,7 @@ class WorldGenerator {
 		);
 	}
 
-	_traverseZoneUntil<T>(
+	private _traverseZoneUntil<T>(
 		zone: Zone,
 		callback: ((_: Zone) => T),
 		defaultReturn: T,

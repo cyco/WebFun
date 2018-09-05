@@ -12,7 +12,7 @@ const makeConditionDescription = desc => (Name, block) => {
 			engine.currentZone = {};
 			engine.hero = { location: {} };
 			engine.persistentState = {};
-			engine.state = {};
+			engine.temporaryState = {};
 		});
 
 		block(checker.check.bind(checker), engine);
@@ -24,7 +24,7 @@ const makeInstructionDescription = desc => (Name, block) => {
 		let engine = {
 			currentZone: {},
 			hero: {},
-			state: {},
+			temporaryState: {},
 			data: {}
 		};
 		let executor = new InstructionExecutor(InstructionImplementations, engine);
@@ -32,7 +32,7 @@ const makeInstructionDescription = desc => (Name, block) => {
 		beforeEach(() => {
 			engine.currentZone = {};
 			engine.hero = {};
-			engine.state = {};
+			engine.temporaryState = {};
 			engine.data = {};
 		});
 

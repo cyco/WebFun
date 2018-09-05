@@ -15,7 +15,7 @@ class WindowMenuItem extends MenuItem {
 		this.windowManager = windowManager;
 	}
 
-	set submenu(s) {
+	set submenu(_) {
 		/* disable external submenu overwriting */
 	}
 
@@ -25,7 +25,7 @@ class WindowMenuItem extends MenuItem {
 		return new Menu(windows);
 	}
 
-	_buildWindowItem(window: Window): MenuItem {
+	private _buildWindowItem(window: Window): MenuItem {
 		return new MenuItem({
 			title: window.title,
 			state: window === this.windowManager.topMostWindow ? MenuItemState.On : MenuItemState.Off,

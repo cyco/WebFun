@@ -31,7 +31,6 @@ let travels: number;
 let placedTravels: number;
 let puzzles: number;
 let orderMap: Map;
-let config;
 
 function blockadeTypeFor(xdiff: number, ydiff: number): WorldItemType {
 	if (xdiff === 0 && ydiff === 1) {
@@ -178,8 +177,6 @@ function constructor() {
 
 	typeMap = null;
 	orderMap = null;
-
-	config = [];
 }
 
 function _initializeTypeMap(spaceportX: number, spaceportY: number) {

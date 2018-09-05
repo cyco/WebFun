@@ -13,7 +13,7 @@ describeInstruction("SpeakNPC", (execute, engine) => {
 		engine.currentWorld = {
 			at: () => ({})
 		};
-		engine.state = {
+		engine.temporaryState = {
 			worldLocation: new Point(0, 0)
 		};
 

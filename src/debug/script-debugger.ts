@@ -64,7 +64,7 @@ class ScriptDebugger {
 		}
 	}
 
-	_setupDebuggerControls() {
+	private _setupDebuggerControls() {
 		const controls = <Controls>document.createElement(Controls.tagName);
 		controls.classList.add("script-debugger-window");
 		controls.onstep = (): void => null;
@@ -72,7 +72,7 @@ class ScriptDebugger {
 		this._window.content.appendChild(controls);
 	}
 
-	_setupActionList() {
+	private _setupActionList() {
 		const actionList = <Group>document.createElement(Group.tagName);
 		actionList.classList.add("action-list");
 		this._window.content.appendChild(actionList);
@@ -160,12 +160,6 @@ class ScriptDebugger {
 			component.evaluateConditions();
 			this._actionList.appendChild(component);
 		});
-	}
-
-	private _updateEvaluation() {
-		Array.from(this._actionList.querySelectorAll(ActionComponent.tagName)).forEach(
-			(action: ActionComponent) => action.evaluateConditions()
-		);
 	}
 }
 

@@ -8,7 +8,7 @@ describe("InstructionExecutor", () => {
 		engine = {
 			currentZone: {},
 			hero: {},
-			state: {},
+			temporaryState: {},
 			data: {}
 		};
 

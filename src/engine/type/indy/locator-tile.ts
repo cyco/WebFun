@@ -48,7 +48,7 @@ export default class extends LocatorTile {
 		}
 	}
 
-	_hasTeleporterHotspot(zone: Zone): boolean {
+	private _hasTeleporterHotspot(zone: Zone): boolean {
 		return !!zone.hotspots.find(({ type }) => type === HotspotType.Teleporter);
 	}
 }
