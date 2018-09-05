@@ -17,6 +17,7 @@ import * as Set from "./set";
 import * as File from "./file";
 import * as ImageData from "./image-data";
 import * as Console from "./console";
+import * as HTMLSelectElement from "./html-select-element";
 
 export {
 	File,
@@ -33,6 +34,7 @@ export {
 	Uint16Array,
 	Uint8Array,
 	HTMLCollection,
+	HTMLSelectElement,
 	RegExp,
 	MouseEvent,
 	ImageData,

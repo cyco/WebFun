@@ -11,9 +11,23 @@ wf-selector {
 		margin: 0;
 		display: inline-block;
 		outline: none;
+
+		font: inherit;
+		color: inherit;
+		text-shadow: inherit;
+	}
+
+	i.fa-caret-down {
+		visibility: hidden;
 		position: absolute;
-		left: 5;
-		right: 5;
-		font: normal normal normal normal 16px/32px -webkit-standard;
+		right: 10px;
+		top: 50%;
+		transform: translateY(-50%);
+		color: #222;
+		pointer-events: none;
+	}
+
+	&[borderless]:hover i.fa-caret-down {
+		// visibility: visible;
 	}
 }

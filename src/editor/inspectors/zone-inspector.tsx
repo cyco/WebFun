@@ -45,6 +45,16 @@ class ZoneInspector extends AbstractInspector {
 				this.data.currentData.zones.splice(this.data.currentData.zones.indexOf(e.detail.zone.id, 1));
 			this.build();
 		});
+		this._list.addEventListener(ZoneInspectorCell.Events.ChangeType, (e: CustomEvent) => {
+			console.log("ChangeType", e.detail.zone.type, e.detail.type);
+			e.detail.zone.type = e.detail.type;
+			this.build();
+		});
+		this._list.addEventListener(ZoneInspectorCell.Events.ChangePlanet, (e: CustomEvent) => {
+			console.log("ChangePlanet", e.detail.zone.planet, e.detail.planet);
+			e.detail.zone.planet = e.detail.planet;
+			this.build();
+		});
 		this.window.content.appendChild(this._list);
 	}
 
@@ -85,7 +95,6 @@ class ZoneInspector extends AbstractInspector {
 								const y = ystr.parseInt();
 								if (isNaN(x) || isNaN(y)) return;
 
-								console.log("resize to", x, y);
 								const size = new Size(x, y);
 								(zone as MutableZone).size = size;
 								(zone as MutableZone).tileIDs = new Int16Array(size.area * 3).map(_ => -1);

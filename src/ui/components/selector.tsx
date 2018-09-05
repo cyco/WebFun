@@ -8,6 +8,7 @@ class Selector extends Component {
 	protected connectedCallback() {
 		super.connectedCallback();
 		this.appendChild(this.element);
+		this.appendChild(<i className="fa fa-caret-down" />);
 	}
 
 	public focus() {

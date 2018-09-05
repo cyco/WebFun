@@ -1,0 +1,21 @@
+wf-inline-selector {
+	position: relative;
+	select {
+		position: absolute;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		right: 0;
+
+		visibility: hidden;
+
+		-webkit-appearance: none;
+		border-radius: 0;
+		border: 0;
+		background: none;
+		padding: 0;
+		margin: 0;
+		display: inline-block;
+		outline: none;
+	}
+}
