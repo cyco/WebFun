@@ -28,8 +28,6 @@ class WorldGenerator {
 	private _data: GameData;
 
 	private usedZones: Zone[];
-	private requiredItems: Tile[];
-	private providedItems: Tile[];
 	private mapGenerator: MapGenerator;
 	private additionalRequiredItem: Tile;
 	private providedItemQuests: Quest[];
@@ -51,8 +49,6 @@ class WorldGenerator {
 		this._data = engine && engine.data;
 
 		this.usedZones = [];
-		this.requiredItems = [];
-		this.providedItems = [];
 
 		this.world = null;
 
