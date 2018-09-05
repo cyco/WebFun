@@ -70,8 +70,6 @@ class WorldGenerator {
 		this.somethingWithTeleporters = -1;
 
 		this.puzzles_can_be_reused = 0;
-
-		Object.seal(this);
 	}
 
 	generate(seed?: number) {

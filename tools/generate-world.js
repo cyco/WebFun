@@ -69,7 +69,6 @@ const parseArguments = args => {
 	};
 	const optionNames = Object.keys(options);
 	const flagNames = optionNames.filter(o => typeof options[o] === "boolean");
-	Object.seal(options);
 
 	const nonOptionArguments = [];
 
