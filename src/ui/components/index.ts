@@ -28,9 +28,11 @@ import Segment from "./segment";
 import ProgressIndicator from "./progress-indicator";
 import Popover from "./popover";
 import ContextMenu from "./context-menu";
+import InlineSelector from "./inline-selector";
 
 export {
 	ContextMenu,
+	InlineSelector,
 	Popover,
 	ProgressIndicator,
 	SegmentControl,

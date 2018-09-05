@@ -42,6 +42,17 @@ wf-save-game-editor-inventory-row {
 		line-height: $tile-size;
 		overflow: hidden;
 		text-overflow: ellipsis;
+		font: normal normal normal normal 16px/32px -webkit-standard;
+
+		i.fa-caret-down {
+			right: 30px;
+		}
+
+		select {
+			position: absolute;
+			left: 5;
+			right: 5;
+		}
 	}
 
 	> wf-save-game-editor-tile + span {

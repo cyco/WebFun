@@ -13,6 +13,7 @@ export const {
 	HTMLElement,
 	HTMLCollection,
 	HTMLImageElement,
+	HTMLSelectElement,
 	Event,
 	File,
 	FileReader,
