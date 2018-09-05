@@ -15,7 +15,6 @@ class Inventory extends EventTarget {
 		this._items = [];
 
 		this.registerEvents(Events);
-		Object.seal(this);
 	}
 
 	addItem(item: Tile): void {
