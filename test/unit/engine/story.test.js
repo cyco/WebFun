@@ -30,12 +30,7 @@ describe("Story", () => {
 			spyOn(worldGeneratorMock, "generate").and.returnValue(true);
 			subject.generateWorld(mockEngine);
 
-			expect(Generation.WorldGenerator).toHaveBeenCalledWith(
-				subject.seed,
-				subject.size,
-				subject.planet,
-				mockEngine
-			);
+			expect(Generation.WorldGenerator).toHaveBeenCalledWith(subject.size, subject.planet, mockEngine);
 			expect(worldGeneratorMock.generate).toHaveBeenCalledWith(subject.seed);
 		});
 

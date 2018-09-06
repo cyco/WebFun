@@ -21,55 +21,35 @@ declare global {
 }
 
 class WorldGenerator {
-	public world: World;
-	private _seed: number;
+	public world: World = null;
+	private _seed: number = 0;
 	private _size: WorldSize;
 	private _planet: Planet;
 	private _data: GameData;
 
-	private usedZones: Zone[];
-	private mapGenerator: MapGenerator;
-	private additionalRequiredItem: Tile;
-	private providedItemQuests: Quest[];
-	private usedPuzzles: Puzzle[];
-	private puzzleStrain1: Puzzle[];
-	private puzzleStrain2: Puzzle[];
-	private requiredItemQuests: Quest[];
-	private currentPuzzleIndex: number;
-	private requiredItem: Tile;
-	private findItem: Tile;
-	private npc: Tile;
-	private somethingWithTeleporters: number;
-	private puzzles_can_be_reused: number;
+	private usedZones: Zone[] = [];
+	private mapGenerator: MapGenerator = null;
+	private additionalRequiredItem: Tile = null;
+	private providedItemQuests: Quest[] = [];
+	private usedPuzzles: Puzzle[] = [];
+	private puzzleStrain1: Puzzle[] = [];
+	private puzzleStrain2: Puzzle[] = [];
+	private requiredItemQuests: Quest[] = [];
+	private currentPuzzleIndex: number = -1;
+	private requiredItem: Tile = null;
+	private findItem: Tile = null;
+	private npc: Tile = null;
+	private somethingWithTeleporters: number = -1;
+	private puzzles_can_be_reused: number = 0;
 
-	constructor(seed: number, size: WorldSize, planet: Planet, engine: Engine) {
-		this._seed = seed | 0;
+	constructor(size: WorldSize, planet: Planet, engine: Engine) {
 		this._size = size;
 		this._planet = planet;
 		this._data = engine && engine.data;
-
-		this.usedZones = [];
-
-		this.world = null;
-
-		this.mapGenerator = null;
-		this.additionalRequiredItem = null;
-		this.providedItemQuests = [];
-		this.usedPuzzles = [];
-		this.puzzleStrain1 = [];
-		this.puzzleStrain2 = [];
-		this.requiredItemQuests = [];
-		this.currentPuzzleIndex = -1;
-		this.requiredItem = null;
-		this.findItem = null;
-		this.npc = null;
-		this.somethingWithTeleporters = -1;
-
-		this.puzzles_can_be_reused = 0;
 	}
 
-	generate(seed?: number) {
-		if (seed !== undefined) this._seed = seed;
+	generate(seed: number) {
+		this._seed = seed;
 		srand(this._seed);
 
 		const mapGenerator = (this.mapGenerator = new MapGenerator());

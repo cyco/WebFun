@@ -50,7 +50,7 @@ class Story {
 		let effectiveSeed = this.seed;
 		do {
 			try {
-				generator = new WorldGenerator(effectiveSeed, this.size, this.planet, engine);
+				generator = new WorldGenerator(this.size, this.planet, engine);
 				success = generator.generate(effectiveSeed);
 			} catch (e) {
 				if (e instanceof WorldGenerationError) success = false;
