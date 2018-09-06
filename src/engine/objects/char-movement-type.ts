@@ -10,7 +10,7 @@ class CharMovementType {
 	public static readonly Wander = new CharMovementType();
 	public static readonly Patrol = new CharMovementType();
 	public static readonly Unspecific7 = new CharMovementType();
-	public static readonly Unspecific8 = new CharMovementType();
+	public static readonly Animation = new CharMovementType();
 	public static readonly UnknownIndyOnly = new CharMovementType();
 
 	public static readonly knownTypes = [
@@ -26,7 +26,7 @@ class CharMovementType {
 		CharMovementType.Wander,
 		CharMovementType.Patrol,
 		CharMovementType.Unspecific7,
-		CharMovementType.Unspecific8
+		CharMovementType.Animation
 	];
 
 	get rawValue(): number {
@@ -57,8 +57,8 @@ class CharMovementType {
 				return "Patrol";
 			case CharMovementType.Unspecific7:
 				return "Unspecific7";
-			case CharMovementType.Unspecific8:
-				return "Unspecific8";
+			case CharMovementType.Animation:
+				return "Animation";
 			case CharMovementType.UnknownIndyOnly:
 				return "Unknown (Indy)";
 			default:
