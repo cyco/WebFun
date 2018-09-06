@@ -1,25 +1,14 @@
 import { Tile } from "src/engine/objects";
+import { Image } from "src/std.dom";
 import { Component } from "src/ui";
 import "./inventory-row.scss";
 
 class InventoryRow extends Component {
 	public static tagName = "wf-inventory-row";
-	private _emptyIcon: HTMLImageElement;
-	private _icon: HTMLSpanElement;
-	private _label: HTMLSpanElement;
-	private _tile: Tile;
-
-	constructor() {
-		super();
-
-		this._emptyIcon = document.createElement("img");
-		this._emptyIcon.src = (<any>Image).blankImage;
-
-		this._icon = document.createElement("span");
-		this._label = document.createElement("span");
-
-		this.tile = null;
-	}
+	private _emptyIcon: HTMLImageElement = <img src={Image.blankImage} /> as HTMLImageElement;
+	private _icon: HTMLSpanElement = <span />;
+	private _label: HTMLSpanElement = <span />;
+	private _tile: Tile = null;
 
 	get tile() {
 		return this._tile;
@@ -39,6 +28,7 @@ class InventoryRow extends Component {
 
 	protected connectedCallback() {
 		super.connectedCallback();
+
 		this.appendChild(this._icon);
 		this.appendChild(this._label);
 	}

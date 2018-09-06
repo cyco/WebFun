@@ -1,21 +1,10 @@
 import { Component } from "src/ui";
 import "./ammo.scss";
 
-class AmmoComponent extends Component {
+class Ammo extends Component {
 	public static tagName = "wf-ammo";
-	private _background: HTMLDivElement;
-	private _indicator: HTMLDivElement;
-
-	constructor() {
-		super();
-
-		const background = document.createElement("div");
-		background.classList.add("background");
-		this._background = background;
-
-		this._indicator = document.createElement("div");
-		this._indicator.classList.add("value");
-	}
+	private _background: HTMLDivElement = <div className="background" /> as HTMLDivElement;
+	private _indicator: HTMLDivElement = <div className="value" /> as HTMLDivElement;
 
 	get ammo() {
 		return parseInt(this._indicator.style.height) / 95 || 0;
@@ -38,4 +27,4 @@ class AmmoComponent extends Component {
 	}
 }
 
-export default AmmoComponent;
+export default Ammo;

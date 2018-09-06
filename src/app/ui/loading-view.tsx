@@ -6,21 +6,10 @@ import Component from "src/ui/component";
 class LoadingView extends Component {
 	public static readonly tagName = "wf-loading-view";
 
-	private _imageCanvas: HTMLCanvasElement;
-	private _progressBar: ProgressBar;
-
-	constructor() {
-		super();
-
-		this._imageCanvas = document.createElement("canvas");
-		this._imageCanvas.ondragstart = event => {
-			event.preventDefault();
-			return false;
-		};
-		this._imageCanvas.width = 288;
-		this._imageCanvas.height = 288;
-		this._progressBar = new ProgressBar();
-	}
+	private _imageCanvas: HTMLCanvasElement = (
+		<canvas width={288} height={288} ondragstart={e => (e.preventDefault(), false)} />
+	) as HTMLCanvasElement;
+	private _progressBar: ProgressBar = <ProgressBar /> as ProgressBar;
 
 	protected connectedCallback() {
 		super.connectedCallback();
@@ -42,7 +31,7 @@ class LoadingView extends Component {
 		const imageFactory = renderer.imageFactory;
 		imageFactory.palette = palette;
 		const image = imageFactory.buildImage(288, 288, pixels);
-		const representation = <HTMLImageElement>(<any>image.representation);
+		const representation = (image.representation as any) as HTMLImageElement;
 		if (representation.complete) renderer.renderImage(image, 0, 0);
 		else representation.onload = () => renderer.renderImage(image, 0, 0);
 	}

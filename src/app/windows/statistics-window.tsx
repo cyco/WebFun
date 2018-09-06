@@ -3,9 +3,9 @@ import { Textbox, Window } from "src/ui/components";
 import "./statistics-window.scss";
 
 class StatisticsWindow extends Window {
-	public static tagName = "wf-statistics-window";
-	public title = "Player Statistics";
-	public closable = true;
+	public static readonly tagName = "wf-statistics-window";
+	public readonly title = "Player Statistics";
+	public readonly closable = true;
 
 	private _state: typeof PersistentState = PersistentState;
 

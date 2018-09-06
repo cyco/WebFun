@@ -5,14 +5,7 @@ class Button extends IconButton {
 	public static tagName = "wf-button";
 	public static observedAttributes = ["icon", "label"];
 
-	private _label: HTMLSpanElement;
-
-	constructor() {
-		super();
-
-		this._label = document.createElement("span");
-		this._label.style.display = "none";
-	}
+	private _label: HTMLSpanElement = <span style={{ display: "none" } as CSSStyleDeclaration} />;
 
 	protected connectedCallback(): void {
 		super.connectedCallback();
