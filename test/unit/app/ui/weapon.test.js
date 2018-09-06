@@ -9,7 +9,9 @@ describeComponent(Weapon, () => {
 	});
 
 	it("has a setter / getter for the equipped weapon", () => {
-		const weapon = {};
+		const weapon = {
+			frames: [{ extensionRight: { image: { representation: { dataURL: "image-data-url" } } } }]
+		};
 
 		expect(() => (subject.weapon = weapon)).not.toThrow();
 		expect(subject.weapon).toBe(weapon);
@@ -22,16 +24,16 @@ describeComponent(Weapon, () => {
 	});
 
 	it("shows the correct image if a weapon is set", () => {
-		const weapon = { frames: [{ extensionRight: 3 }] };
-		subject.data = { tiles: [, , , { image: { representation: { dataURL: "image-data-url" } } }] };
-
+		const weapon = {
+			frames: [{ extensionRight: { image: { representation: { dataURL: "image-data-url" } } } }]
+		};
 		subject.weapon = weapon;
 
 		expect(subject.querySelector("img").src).toEndWith("image-data-url");
 	});
 
 	it("also shows no image if the weapon does not supply one", () => {
-		subject.weapon = { frames: [{ extensionRight: 0xffff }] };
+		subject.weapon = { frames: [{ extensionRight: null }] };
 		expect(subject.querySelector("img").src).toEqual(Image.blankImage);
 	});
 });

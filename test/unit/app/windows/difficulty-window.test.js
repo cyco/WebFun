@@ -10,10 +10,10 @@ describeComponent(DifficultyWindow, () => {
 	});
 
 	it("sets automatically sets up default attributes", () => {
-		expect(subject.getAttribute("title")).toBe("Difficulty");
-		expect(subject.getAttribute("key")).toBe("difficulty");
-		expect(subject.getAttribute("min-label")).toBe("Easy");
-		expect(subject.getAttribute("mid-label")).toBe("Medium");
-		expect(subject.getAttribute("max-label")).toBe("Hard");
+		expect(subject.title).toBe("Difficulty");
+		expect(subject.key).toBe("difficulty");
+		expect(subject.minLabel).toBe("Easy");
+		expect(subject.midLabel).toBe("Medium");
+		expect(subject.maxLabel).toBe("Hard");
 	});
 });
