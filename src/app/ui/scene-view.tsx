@@ -7,24 +7,22 @@ import "./scene-view.scss";
 
 class SceneView extends Component {
 	public static readonly tagName = "wf-scene-view";
+	public readonly canvas: HTMLCanvasElement = (
+		<canvas
+			className="pixelated"
+			width={288}
+			height={288}
+			style={{ background: rgb(0, 0, 0) } as CSSStyleDeclaration}
+		/>
+	) as HTMLCanvasElement;
 	private _manager: SceneManager = this._buildSceneManager();
-	public readonly canvas: HTMLCanvasElement = document.createElement("canvas");
 
 	protected connectedCallback() {
 		this.appendChild(this.canvas);
-		this._setupCanvas();
 	}
 
 	get manager() {
 		return this._manager;
-	}
-
-	private _setupCanvas() {
-		const canvas = this.canvas;
-		canvas.style.backgroundColor = rgb(0, 0, 0);
-		canvas.classList.add("pixelated");
-		canvas.width = 288;
-		canvas.height = 288;
 	}
 
 	private _buildSceneManager() {

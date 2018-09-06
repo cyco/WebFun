@@ -35,8 +35,7 @@ class GameController extends EventTarget {
 	public settings: typeof Settings = Settings;
 	public data: GameData;
 	public palette: ColorPalette;
-
-	private _window: MainWindow;
+	private _window: MainWindow = <MainWindow menu={new MainMenu(this)} /> as MainWindow;
 	private _windowManager: WindowManager;
 	private _sceneView: SceneView = <SceneView /> as SceneView;
 	private _engine: Engine;
@@ -73,8 +72,6 @@ class GameController extends EventTarget {
 	}
 
 	public async start(story?: Story) {
-		this._window = <MainWindow menu={new MainMenu(this)} /> as MainWindow;
-
 		const loading = this._load();
 
 		if (Settings.debug) {
