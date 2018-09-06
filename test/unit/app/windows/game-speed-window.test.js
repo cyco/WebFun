@@ -9,9 +9,9 @@ describeComponent(GameSpeedWindow, () => {
 	});
 
 	it("sets automatically sets up default attributes", () => {
-		expect(subject.getAttribute("title")).toBe("Game Speed");
-		expect(subject.getAttribute("key")).toBe("speed");
-		expect(subject.getAttribute("min-label")).toBe("Slow");
-		expect(subject.getAttribute("max-label")).toBe("Fast");
+		expect(subject.title).toBe("Game Speed");
+		expect(subject.key).toBe("speed");
+		expect(subject.minLabel).toBe("Slow");
+		expect(subject.maxLabel).toBe("Fast");
 	});
 });
