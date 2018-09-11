@@ -5,9 +5,11 @@ async function toImage(pixelated: boolean = true): Promise<HTMLImageElement> {
 		const canvas = document.createElement("canvas");
 		canvas.width = this.width;
 		canvas.height = this.height;
+
 		const ctx = canvas.getContext("2d");
 		if (pixelated) ctx.imageSmoothingEnabled = false;
 		ctx.putImageData(this, 0, 0);
+
 		const image = document.createElement("img");
 		image.onload = () => resolve(image);
 		image.onerror = e => reject(e);

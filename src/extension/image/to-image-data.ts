@@ -11,6 +11,5 @@ const toImageData = function(pixelated: boolean = true) {
 };
 
 HTMLImageElement.prototype.toImageData = HTMLImageElement.prototype.toImageData || toImageData;
-Image.prototype.toImageData = Image.prototype.toImageData || toImageData;
 
 export default toImageData;

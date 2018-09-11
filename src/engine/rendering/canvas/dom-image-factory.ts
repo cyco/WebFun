@@ -1,6 +1,8 @@
 import AbstractImageFactory from "../abstract-image-factory";
 import ColorPalette from "../color-palette";
 import Image from "../image";
+import drawImage from "./draw-image";
+import { Size } from "src/util";
 
 class DOMImageFactory extends AbstractImageFactory {
 	private _palette: ColorPalette = null;
@@ -21,39 +23,12 @@ class DOMImageFactory extends AbstractImageFactory {
 
 	buildImage(width: number, height: number, pixelData: ArrayLike<number>): Image {
 		console.assert(!!this._palette, "Can not build images before a palette is set.");
-		const imageData = this.createImageData(width, height, pixelData);
-
-		const canvas = document.createElement("canvas");
-		canvas.classList.add("pixelated");
-		canvas.width = width;
-		canvas.height = height;
-
-		const context = canvas.getContext("2d");
-		context.putImageData(imageData, 0, 0);
-
-		const imageElement = <HTMLImageElement>new (<any>window).Image(width, height);
-		imageElement.classList.add("pixelated");
-		imageElement.src = canvas.toDataURL();
-
-		return new Image(width, height, imageElement);
+		const image = drawImage(pixelData as Uint8Array, new Size(width, height), this.palette).toImage();
+		return new Image(width, height, image);
 	}
 
 	public createImageData(width: number, height: number, pixelData: ArrayLike<number>): ImageData {
-		const palette = this._palette;
-		const size = width * height;
-		const imageData = new ImageData(width, height);
-		const rawImageData = imageData.data;
-
-		for (let i = 0; i < size; i++) {
-			const paletteIndex = pixelData[i] * 4;
-
-			rawImageData[4 * i + 0] = palette[paletteIndex + 2];
-			rawImageData[4 * i + 1] = palette[paletteIndex + 1];
-			rawImageData[4 * i + 2] = palette[paletteIndex + 0];
-			rawImageData[4 * i + 3] = paletteIndex === 0 ? 0x00 : 0xff;
-		}
-
-		return imageData;
+		return drawImage(pixelData as Uint8Array, new Size(width, height), this.palette);
 	}
 }
 

@@ -109,8 +109,10 @@ class GameController extends EventTarget {
 			const loader = new Loader();
 			loader.onfail = event => reject(event);
 			loader.onprogress = ({ detail: { progress } }) => (loadingView.progress = progress);
-			loader.onloadsetupimage = ({ detail: { pixels, palette } }) =>
-				loadingView.showImage(pixels, palette);
+			loader.onloadsetupimage = ({ detail: { pixels, palette } }) => {
+				loadingView.palette = palette;
+				loadingView.image = pixels;
+			};
 			loader.onload = e => {
 				const details = e.detail as LoaderEventDetails;
 				loadingView.progress = 1.0;

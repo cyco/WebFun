@@ -2,17 +2,19 @@ import ConditionChecker from "../../src/engine/script/condition-checker";
 import InstructionExecutor from "../../src/engine/script/instruction-executor";
 import { ConditionImplementations } from "src/engine/script/conditions";
 import { InstructionImplementations } from "src/engine/script/instructions";
+import { Point } from "src/util";
 
 const makeConditionDescription = desc => (Name, block) => {
-	desc(`Condition ${Name}`, () => {
+	desc(`WebFun.Engine.Script.Condition.${Name}`, () => {
 		let engine = {};
 		let checker = new ConditionChecker(ConditionImplementations, engine);
 
 		beforeEach(() => {
 			engine.currentZone = {};
-			engine.hero = { location: {} };
+			engine.hero = { location: new Point(0, 0) };
 			engine.persistentState = {};
 			engine.temporaryState = {};
+			engine.sceneManager = { pushScene() {} };
 		});
 
 		block(checker.check.bind(checker), engine);
@@ -20,7 +22,7 @@ const makeConditionDescription = desc => (Name, block) => {
 };
 
 const makeInstructionDescription = desc => (Name, block) => {
-	desc(`Instruction ${Name}`, () => {
+	desc(`WebFun.Engine.Script.Instruction.${Name}`, () => {
 		let engine = {
 			currentZone: {},
 			hero: {},
@@ -31,9 +33,10 @@ const makeInstructionDescription = desc => (Name, block) => {
 
 		beforeEach(() => {
 			engine.currentZone = {};
-			engine.hero = {};
+			engine.hero = { location: new Point(0, 0) };
 			engine.temporaryState = {};
 			engine.data = {};
+			engine.sceneManager = { pushScene() {} };
 		});
 
 		block(executor.execute.bind(executor), engine);

@@ -945,13 +945,23 @@ class WorldGenerator {
 			zone,
 			zone => {
 				if (!zone.providedItems.find(t => t === item)) return false;
-				const hotspotType = item.attributes.toHotspotType();
+				const hotspotType = this.hotspotTypeForTileAttributes(item.attributes);
 				const candidates = zone.hotspots.withType(hotspotType);
 				return this.placeItemAtHotspotRandomly(candidates, item);
 			},
 			false,
 			identity
 		);
+	}
+
+	private hotspotTypeForTileAttributes(input: number): HotspotType {
+		if ((input & Type.TILE_SPEC_THE_FORCE) !== 0) {
+			return HotspotType.ForceLocation;
+		} else if ((input & Type.TILE_SPEC_MAP) !== 0) {
+			return HotspotType.LocatorThingy;
+		} else if ((input & Type.TILE_SPEC_USEFUL) !== 0) {
+			return HotspotType.TriggerLocation;
+		}
 	}
 
 	placeZone(x: number, y: number, zone: Zone, type: ZoneType, options: Partial<WorldItem> = {}) {

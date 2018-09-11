@@ -2,7 +2,7 @@ import { Cell } from "src/ui/components";
 import { Tile } from "src/engine/objects";
 import CSSTileSheet from "src/editor/css-tile-sheet";
 import { ColorPalette } from "src/engine/rendering";
-import drawTileImageData from "src/save-game-editor/drawing/draw-tile-image-data";
+import { drawTileImageData } from "src/engine/rendering/canvas";
 import "./tile-picker-cell.scss";
 
 class TilePickerCell extends Cell<Tile> {

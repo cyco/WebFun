@@ -9,19 +9,12 @@ import InstructionType from "../instruction";
 export default <InstructionType>{
 	Opcode: 0x1b,
 	Arguments: [Type.TileID, Type.ZoneX, Type.ZoneY],
-	Implementation: async (instruction: Instruction, engine: Engine, action: Action): Promise<Result> => {
-		// TODO: validate against original implementation
+	Implementation: async (instruction: Instruction, engine: Engine, _: Action): Promise<Result> => {
 		const args = instruction.arguments;
-		const zone = engine.currentZone;
 
 		const pickupScene = new PickupScene(engine);
 		pickupScene.location = new Point(args[1], args[2]);
 		pickupScene.tile = engine.data.tiles[args[0]];
-		if (pickupScene.tile === null) {
-			// TODO: fix implementation
-			// pickupScene.tile = engine.data.tiles[zone.puzzleGain];
-			zone.solved = true;
-		}
 		engine.sceneManager.pushScene(pickupScene);
 
 		return ResultFlags.OK;

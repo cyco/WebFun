@@ -8,7 +8,7 @@ export default <InstructionType>{
 	Opcode: 0x0f,
 	Arguments: [Type.ZoneX, Type.ZoneY, Type.ZoneZ, Type.TileID],
 	Description: "Place tile `arg_3` at `arg_0`x`arg_1`x`arg_2`. To remove a tile the id -1 is used.",
-	Implementation: async (instruction: Instruction, engine: Engine, action: Action): Promise<Result> => {
+	Implementation: async (instruction: Instruction, engine: Engine, _: Action): Promise<Result> => {
 		const args = instruction.arguments;
 		const zone = engine.currentZone;
 

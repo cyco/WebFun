@@ -1,26 +1,14 @@
 import Engine from "../../engine";
 import Action from "../../objects/action";
 import Instruction from "../../objects/instruction";
-import { Result, ResultFlags, Type } from "../types";
+import { Result, ResultFlags } from "../types";
 import InstructionType from "../instruction";
 
 export default <InstructionType>{
 	Opcode: 0x08,
-	Arguments: [Type.Unused, Type.Number],
-	Description: "Pause script execution for 100 * `arg_0` milliseconds.",
-	Implementation: async (instruction: Instruction, engine: Engine, action: Action): Promise<Result> => {
-		/*
-		 now = clock();
-		 duration = 100 * instruction->arg1;
-		 end = duration + now;
-		 if ( duration + now > now )
-		 {
-		 while ( end > clock() )
-		 ;
-		 }
-		 goto fetch_next_instruction;
-		 */
-
+	Arguments: [],
+	Description: "Pause script execution for one tick.",
+	Implementation: async (_1: Instruction, _2: Engine, _3: Action): Promise<Result> => {
 		return ResultFlags.Wait;
 	}
 };

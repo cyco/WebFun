@@ -13,8 +13,10 @@ import unique from "./unique";
 import padEnd from "./pad-end";
 import remove from "./remove";
 import groupedBy from "./grouped-by";
+import withType from "./with-type";
 
 export {
+	withType,
 	remove,
 	padEnd,
 	clear,
