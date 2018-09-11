@@ -45,7 +45,7 @@ interface HTMLImageElement {
 }
 
 interface ImageData {
-	toImage(): HTMLImageElement;
+	toImage(): Promise<HTMLImageElement>;
 }
 
 interface Uint8Array {

@@ -62,10 +62,28 @@ describeComponent(MainWindow, () => {
 			expect(location.mask).toBe(0);
 		});
 
+		it("registers for location change events (no world)", () => {
+			engine.triggerLocationChange(0);
+			const location = subject.querySelector(Location.tagName);
+			expect(location.mask).toBe(0);
+		});
+
 		it("registers for location change events (can go every where)", () => {
 			engine.triggerLocationChange(0xffff);
 			const location = subject.querySelector(Location.tagName);
 			expect(location.mask).toBe(15);
+		});
+
+		it("registers for ammo change events", () => {
+			spyOn(subject, "_updateAmmo");
+			engine.triggerAmmoChange();
+			expect(subject._updateAmmo).toHaveBeenCalled();
+		});
+
+		it("registers for weapon change events", () => {
+			spyOn(subject, "_updateWeapon");
+			engine.triggerWeaponChange();
+			expect(subject._updateWeapon).toHaveBeenCalled();
 		});
 
 		it("stops the engine when closed", () => {
@@ -89,11 +107,11 @@ describeComponent(MainWindow, () => {
 				hero.dispatchEvent(HeroEvents.HealthChanged);
 			}
 
-			triggerAmmoChange(value) {
+			triggerAmmoChange() {
 				this.dispatchEvent(EngineEvents.AmmoChanged);
 			}
 
-			triggerWeaponChange(value) {
+			triggerWeaponChange() {
 				this.dispatchEvent(EngineEvents.WeaponChanged);
 			}
 

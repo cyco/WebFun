@@ -1,4 +1,4 @@
-import InventoryComponent, { Event as InventoryEvent } from "src/app/ui/inventory";
+import InventoryComponent, { Events as InventoryEvent } from "src/app/ui/inventory";
 import InventoryRow from "src/app/ui/inventory-row";
 import Inventory from "src/engine/inventory";
 import Yoda from "src/engine/yoda";
@@ -12,12 +12,10 @@ describeComponent(InventoryComponent, () => {
 	});
 
 	describe("showing inventory contents", () => {
-		let inventory = new Inventory();
+		let inventory;
 		let tileMock = { image: { representation: {} } };
 
-		beforeEach(() => {
-			inventory = new Inventory();
-		});
+		beforeEach(() => (inventory = new Inventory()));
 
 		it("updates when the inventory is set, replaced or removed", () => {
 			inventory.addItem(tileMock);
@@ -57,12 +55,12 @@ describeComponent(InventoryComponent, () => {
 		});
 
 		describe("row click handlers", () => {
-			it("are used to start the locator", done => {
+			it("notifies when an item is clicked", done => {
 				let inventory = new Inventory();
 				inventory.addItem(mockTile(Yoda.ItemIDs.Locator));
 				subject.inventory = inventory;
 
-				subject.addEventListener(InventoryEvent.PlacedLocator, e => {
+				subject.addEventListener(InventoryEvent.ItemActivated, e => {
 					expect(e.detail.item.id).toBe(Yoda.ItemIDs.Locator);
 					expect(e.detail.row).toBe(0);
 
@@ -73,23 +71,7 @@ describeComponent(InventoryComponent, () => {
 				firstRow.dispatchEvent(new MouseEvent("click"));
 			});
 
-			it("are used to throw thermal detonators", done => {
-				let inventory = new Inventory();
-				inventory.addItem(mockTile(Yoda.ItemIDs.ThermalDetonator));
-				subject.inventory = inventory;
-
-				subject.addEventListener(InventoryEvent.ThrowDetonator, e => {
-					expect(e.detail.item.id).toBe(Yoda.ItemIDs.ThermalDetonator);
-					expect(e.detail.row).toBe(0);
-
-					done();
-				});
-
-				const firstRow = subject.querySelector(InventoryRow.tagName);
-				firstRow.dispatchEvent(new MouseEvent("click"));
-			});
-
-			describe("are used to place normal items", () => {
+			describe("are used to place items", () => {
 				let tileMock;
 				beforeEach(() => {
 					tileMock = mockTile(0);
@@ -105,9 +87,7 @@ describeComponent(InventoryComponent, () => {
 
 				it("triggers simple place item events", done => {
 					tileMock.getAttribute = () => false;
-					subject.addEventListener(InventoryEvent.PlacedItem, e => {
-						done();
-					});
+					subject.addEventListener(InventoryEvent.ItemPlaced, e => done());
 
 					const sessionOverlay = document.querySelector(".modal-session");
 					sessionOverlay.dispatchEvent(new MouseEvent("mouseup"));

@@ -1,10 +1,14 @@
-import { CanvasRenderer, ColorPalette } from "src/engine";
+import { ColorPalette } from "src/engine";
 import { ProgressBar } from "src/ui/components";
-import "./loading-view.scss";
+import { drawImage } from "src/engine/rendering/canvas";
+import { Size } from "src/util";
 import Component from "src/ui/component";
+import "./loading-view.scss";
 
 class LoadingView extends Component {
 	public static readonly tagName = "wf-loading-view";
+	private _image: Uint8Array;
+	private _palette: ColorPalette;
 
 	private _imageCanvas: HTMLCanvasElement = (
 		<canvas width={288} height={288} ondragstart={e => (e.preventDefault(), false)} />
@@ -26,14 +30,29 @@ class LoadingView extends Component {
 		this._progressBar.value = p;
 	}
 
-	showImage(pixels: Uint8Array, palette: ColorPalette) {
-		const renderer = new CanvasRenderer(this._imageCanvas);
-		const imageFactory = renderer.imageFactory;
-		imageFactory.palette = palette;
-		const image = imageFactory.buildImage(288, 288, pixels);
-		const representation = (image.representation as any) as HTMLImageElement;
-		if (representation.complete) renderer.renderImage(image, 0, 0);
-		else representation.onload = () => renderer.renderImage(image, 0, 0);
+	private _redraw() {
+		if (!this.palette || !this.image) return;
+		const imageData = drawImage(this.image, new Size(288, 288), this.palette);
+		const ctx = this._imageCanvas.getContext("2d");
+		ctx.clearRect(0, 0, 288, 288);
+		ctx.putImageData(imageData, 0, 0);
+	}
+
+	set palette(p) {
+		this._palette = p;
+		this._redraw();
+	}
+
+	get palette() {
+		return this._palette;
+	}
+
+	set image(p) {
+		this._image = p;
+		this._redraw();
+	}
+	get image() {
+		return this._image;
 	}
 }
 

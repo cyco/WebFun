@@ -1,7 +1,7 @@
 import { Component } from "src/ui";
 import { Char } from "src/engine/objects";
 import { ColorPalette } from "src/engine/rendering";
-import drawTileImageData from "src/save-game-editor/drawing/draw-tile-image-data";
+import { drawTileImageData } from "src/engine/rendering/canvas";
 import "./npc-layer-npc.scss";
 
 class NPCLayerNPC extends Component {

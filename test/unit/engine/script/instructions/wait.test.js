@@ -1,13 +1,13 @@
 import { Instruction } from "src/engine/objects";
-import Wait from "src/engine/script/instructions/stop-sound";
+import Wait from "src/engine/script/instructions/wait";
 
 describeInstruction("Wait", (execute, engine) => {
-	it("wait a few milliseconds before executing the next instruction", async done => {
+	it("waits a few milliseconds before executing the next instruction", async done => {
 		let instruction = new Instruction({});
 		instruction._opcode = Wait.Opcode;
 		instruction._arguments = [];
 
-		expect(() => execute(instruction)).not.toThrow();
+		await execute(instruction);
 
 		done();
 	});

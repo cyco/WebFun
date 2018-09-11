@@ -1,8 +1,4 @@
-export const global = (function() {
-	"use strict";
-	let get = eval;
-	return get("this");
-})();
+export const global = self as any;
 
 if (!global.window) {
 	global.window = global;
