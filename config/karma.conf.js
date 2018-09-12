@@ -78,7 +78,7 @@ if (includeCoverage) {
 	};
 
 	config.webpack.module.rules.push({
-		test: /\.(ts|js)$/,
+		test: /\.(ts|tsx|ts|js)$/,
 		use: {
 			loader: "istanbul-instrumenter-loader"
 		},
