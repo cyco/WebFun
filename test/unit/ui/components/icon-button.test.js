@@ -26,11 +26,22 @@ describeComponent(IconButton, () => {
 		expect(subject).toHaveAttribute("disabled");
 		expect(subject.disabled).toBeTrue();
 
+		subject.remove();
+		document.body.appendChild(subject);
+
 		subject.disabled = false;
 		expect(subject).not.toHaveAttribute("disabled");
 		expect(subject.disabled).toBeFalse();
 
 		subject.setAttribute("disabled", "");
 		expect(subject.disabled).toBeTrue();
+
+		subject.disabled = false;
+		expect(subject).not.toHaveAttribute("disabled");
+
+		subject.disabled = true;
+		expect(subject).toHaveAttribute("disabled");
+
+		subject.remove();
 	});
 });

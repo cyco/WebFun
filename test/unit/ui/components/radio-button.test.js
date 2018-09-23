@@ -1,81 +1,47 @@
 import RadioButton from "src/ui/components/radio-button";
-import sandboxed from "test-helpers/dom-sandbox";
 
-xdescribe(
-	"RadioButton",
-	sandboxed(function(sand) {
-		it("manages a radio input element", () => {
-			let radio = new RadioButton();
-			sand.box.appendChild(radio.element);
-			expect(sand.box.querySelector("input[type=radio]")).toBeTruthy();
-		});
+describeComponent(RadioButton, () => {
+	let subject;
+	beforeEach(() => (subject = render(RadioButton)));
+	afterEach(() => subject.remove());
 
-		it("can be created with a pre-set title", () => {
-			let title = "a radio button title";
-			let radio = new RadioButton(title);
-			sand.box.appendChild(radio.element);
+	it("manages a radio input element", () => {
+		expect(subject.querySelector("input[type=radio]")).toBeTruthy();
+	});
 
-			expect(radio.element.innerHTML.indexOf(title)).not.toBe(-1);
-		});
+	it("the title can be changed", () => {
+		let newTitle = "new button title";
 
-		it("the title can also be changed later", () => {
-			let title = "button title";
-			let newTitle = "new button title";
+		subject.title = newTitle;
+		expect(subject.title).toBe(newTitle);
+		expect(subject.textContent).toContain(newTitle);
+	});
 
-			let radio = new RadioButton(title);
-			sand.box.appendChild(radio.element);
-			expect(radio.title).toBe(title);
+	it("can be checked", () => {
+		expect(subject.checked).toBeFalse();
+		expect(subject.querySelector("input[checked]")).toBeFalsy();
 
-			radio.title = newTitle;
-			expect(radio.title).toBe(newTitle);
-			expect(radio.element.innerHTML.indexOf(newTitle)).not.toBe(-1);
-		});
+		subject.checked = true;
+		expect(subject.checked).toBeTrue();
+		expect(subject.querySelector("input[checked]")).toBeTruthy();
 
-		it("can be checked", () => {
-			let radio = new RadioButton();
-			sand.box.appendChild(radio.element);
+		subject.checked = false;
+		expect(subject.checked).toBeFalse();
+		expect(subject.querySelector("input[checked]")).toBeFalsy();
+	});
 
-			expect(radio.checked).toBeFalse();
-			expect(sand.box.querySelector("input[checked]")).toBeFalsy();
+	it("can be assigned to a group", () => {
+		const groupID = "someid";
 
-			radio.checked = true;
-			expect(radio.checked).toBeTrue();
-			expect(sand.box.querySelector("input[checked]")).toBeTruthy();
+		subject.groupID = groupID;
+		expect(subject.groupID).toBe(groupID);
+		expect(subject.querySelector("input[name=" + groupID + "]")).toBeTruthy();
+	});
 
-			radio.checked = false;
-			expect(radio.checked).toBeFalse();
-			expect(sand.box.querySelector("input[checked]")).toBeFalsy();
-		});
+	it("triggers an on change event when the button's state changes", done => {
+		subject.onchange = done;
 
-		it("can be assigned to a group", () => {
-			let radio = new RadioButton();
-			sand.box.appendChild(radio.element);
-
-			let groupID = "someid";
-
-			radio.groupID = groupID;
-			expect(radio.groupID).toBe(groupID);
-			expect(sand.box.querySelector("input[name=" + groupID + "]")).toBeTruthy();
-		});
-
-		it("can be created and assigned to a group at the same time", done => {
-			let groupMock = {
-				addButton: () => {
-					expect(true).toBeTrue();
-					done();
-				}
-			};
-
-			new RadioButton("", groupMock);
-		});
-
-		xit("an on change event is triggered when the button's physical state changes", done => {
-			let radio = new RadioButton();
-			radio.onchange = done;
-			sand.box.appendChild(radio.element);
-
-			expect(radio.onchange).toBe(done);
-			sand.box.querySelector("input[type=radio]").click();
-		});
-	})
-);
+		expect(subject.onchange).toBe(done);
+		subject.querySelector("input[type=radio]").click();
+	});
+});

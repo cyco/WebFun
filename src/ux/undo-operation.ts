@@ -1,6 +1,6 @@
 class UndoOperation {
-	public undo: () => void;
-	public redo: () => void;
+	public readonly undo: () => void;
+	public readonly redo: () => void;
 
 	constructor(undo: () => void, redo: () => void) {
 		this.undo = undo;

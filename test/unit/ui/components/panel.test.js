@@ -1,3 +1,3 @@
-xdescribe("Missing test", () => {
-	it("must still be written", () => {});
-});
+import Panel from "src/ui/components/panel";
+
+describeComponent(Panel, () => {});

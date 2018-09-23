@@ -1,5 +1,5 @@
 import { ColorPalette } from "src/engine";
-import { ProgressBar } from "src/ui/components";
+import { SegmentedProgressBar } from "src/ui/components";
 import { drawImage } from "src/engine/rendering/canvas";
 import { Size } from "src/util";
 import Component from "src/ui/component";
@@ -13,7 +13,7 @@ class LoadingView extends Component {
 	private _imageCanvas: HTMLCanvasElement = (
 		<canvas width={288} height={288} ondragstart={e => (e.preventDefault(), false)} />
 	) as HTMLCanvasElement;
-	private _progressBar: ProgressBar = <ProgressBar /> as ProgressBar;
+	private _progressBar: SegmentedProgressBar = <SegmentedProgressBar /> as SegmentedProgressBar;
 
 	protected connectedCallback() {
 		super.connectedCallback();

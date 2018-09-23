@@ -1,24 +1,21 @@
 import ProgressBar from "src/ui/components/progress-bar";
 
 describeComponent(ProgressBar, () => {
-	let progressBar;
+	let subject;
+	beforeEach(() => (subject = render(ProgressBar)));
 
-	beforeEach(() => (progressBar = render(ProgressBar)));
+	it("displays bar representing a value between 0 and 1", () => {
+		subject.value = 0;
+		expect(subject.firstChild.style.width).toBe("0%");
 
-	it("is a class that displays a bar indicating the current progress of an operation", () => {
-		expect(ProgressBar).toBeClass();
-	});
+		subject.value = 0.1;
+		expect(subject.firstChild.style.width).toBe("10%");
 
-	it("shows the progress in the form of blue segments", () => {
-		expect(progressBar.querySelectorAll("div").length).toBe(0);
-		expect(progressBar.value).toBe(0);
+		subject.value = 0.5;
+		expect(subject.firstChild.style.width).toBe("50%");
 
-		progressBar.value = 1;
-		expect(progressBar.querySelectorAll("div").length).toBe(24);
-		expect(progressBar.value).toBe(1);
-
-		progressBar.value = 0;
-		expect(progressBar.querySelectorAll("div").length).toBe(0);
-		expect(progressBar.value).toBe(0);
+		subject.value = 1;
+		expect(subject.firstChild.style.width).toBe("100%");
+		expect(subject.value).toBe(1);
 	});
 });

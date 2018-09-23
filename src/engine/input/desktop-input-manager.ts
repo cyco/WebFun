@@ -1,11 +1,10 @@
 import { KeyEvent, Point } from "src/util";
-import Engine from "../engine";
 import InputManager, { Direction } from "./input-manager";
+import { document } from "src/std.dom";
 
-class DesktopInputManager extends InputManager {
+class DesktopInputManager extends InputManager implements EventListenerObject {
 	private _element: HTMLElement;
 	private _lastMouse: Point;
-	private _engine: Engine;
 
 	constructor(gameViewElement: HTMLElement) {
 		super();
@@ -14,37 +13,47 @@ class DesktopInputManager extends InputManager {
 		this._lastMouse = new Point(NaN, NaN);
 	}
 
-	get engine(): Engine {
-		return this._engine;
-	}
-
-	set engine(engine: Engine) {
-		this._engine = engine;
-	}
-
 	get mouseLocationInView(): Point {
 		return this._lastMouse;
 	}
 
 	public addListeners() {
-		document.addEventListener("keydown", this.keyDown.bind(this));
-		document.addEventListener("keyup", this.keyUp.bind(this));
-		document.addEventListener("mousemove", this.mouseMove.bind(this));
-		document.addEventListener("mousedown", this.mouseDown.bind(this));
-		document.addEventListener("mouseup", this.mouseUp.bind(this));
-		document.addEventListener("contextmenu", event => event.preventDefault());
+		document.addEventListener("keydown", this);
+		document.addEventListener("keyup", this);
+		document.addEventListener("mousemove", this);
+		document.addEventListener("mousedown", this);
+		document.addEventListener("mouseup", this);
+		document.addEventListener("contextmenu", this);
+	}
+
+	public handleEvent(event: MouseEvent | KeyboardEvent) {
+		switch (event.type) {
+			case "keydown":
+				return this._keyDown(event as KeyboardEvent);
+			case "keyup":
+				return this._keyUp(event as KeyboardEvent);
+			case "mouseup":
+				return this._mouseUp(event as MouseEvent);
+			case "mousedown":
+				return this._mouseDown(event as MouseEvent);
+			case "mousemove":
+				return this._mouseMove(event as MouseEvent);
+			case "contextmenu":
+				event.stopPropagation();
+				event.preventDefault();
+		}
 	}
 
 	public removeListeners() {
-		document.removeEventListener("keydown", this.keyDown.bind(this));
-		document.removeEventListener("keyup", this.keyUp.bind(this));
-		document.removeEventListener("mousemove", this.mouseMove.bind(this));
-		document.removeEventListener("mousedown", this.mouseDown.bind(this));
-		document.removeEventListener("mouseup", this.mouseUp.bind(this));
-		document.removeEventListener("contextmenu", event => event.preventDefault());
+		document.removeEventListener("keydown", this);
+		document.removeEventListener("keyup", this);
+		document.removeEventListener("mousemove", this);
+		document.removeEventListener("mousedown", this);
+		document.removeEventListener("mouseup", this);
+		document.removeEventListener("contextmenu", this);
 	}
 
-	keyDown(e: KeyboardEvent) {
+	private _keyDown(e: KeyboardEvent) {
 		let directionMask = 0;
 		switch (e.which) {
 			case KeyEvent.DOM_VK_UP:
@@ -84,12 +93,10 @@ class DesktopInputManager extends InputManager {
 		this._direction |= directionMask;
 		if (this._direction) this._walk = true;
 
-		if (this.keyDownHandler instanceof Function) {
-			this.keyDownHandler(e);
-		}
+		this.keyDownHandler(e);
 	}
 
-	keyUp(e: KeyboardEvent) {
+	private _keyUp(e: KeyboardEvent) {
 		let mask = 0xff;
 
 		switch (e.which) {
@@ -124,7 +131,7 @@ class DesktopInputManager extends InputManager {
 		if (!this._direction) this._walk = false;
 	}
 
-	mouseDown(e: MouseEvent) {
+	private _mouseDown(e: MouseEvent) {
 		const mouseLocation = new Point(e.clientX, e.clientY);
 		const point = this._getPointInViewCoordinates(mouseLocation);
 		const pointIsInView = point.x > 0 && point.y > 0 && point.x < 1 && point.y < 1;
@@ -133,17 +140,15 @@ class DesktopInputManager extends InputManager {
 		if (e.button === 0) this._walk = true;
 		if (e.button === 1) this._attack = true;
 
-		if (this.mouseDownHandler instanceof Function) {
-			this.mouseDownHandler(point);
-		}
+		this.mouseDownHandler(point);
 	}
 
-	mouseMove(e: MouseEvent) {
+	private _mouseMove(e: MouseEvent) {
 		const mouseLocation = new Point(e.clientX, e.clientY);
 		this._lastMouse = this._getPointInViewCoordinates(mouseLocation);
 	}
 
-	mouseUp(e: MouseEvent) {
+	private _mouseUp(e: MouseEvent) {
 		if (e.button === 0) this._walk = false;
 		if (e.button === 1) this._attack = false;
 	}
@@ -152,10 +157,7 @@ class DesktopInputManager extends InputManager {
 		const boundingRect = this._element.getBoundingClientRect();
 		const viewOffset = new Point(boundingRect.left, boundingRect.top);
 
-		let point = Point.subtract(location, viewOffset);
-		point.x /= boundingRect.width;
-		point.y /= boundingRect.height;
-		return point;
+		return Point.subtract(location, viewOffset).dividedBy(boundingRect);
 	}
 }
 

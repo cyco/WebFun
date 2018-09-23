@@ -99,6 +99,11 @@ class FieldEditor extends EventTarget {
 		this.dispatchEvent(new CustomEvent(Event.DidEnd));
 		if (this.onend instanceof Function) this.onend();
 	}
+
+	public abort() {
+		this._restoreNode();
+		this._restoreNodeContents();
+	}
 }
 
 export default FieldEditor;

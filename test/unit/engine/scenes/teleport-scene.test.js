@@ -1,3 +1,3 @@
-xdescribe("Missing test", () => {
-	it("must still be written", () => {});
-});
+import TeleportScene from "src/engine/scenes/teleport-scene";
+
+describe("WebFun.Engine.Scenes.TeleportScene", () => {});

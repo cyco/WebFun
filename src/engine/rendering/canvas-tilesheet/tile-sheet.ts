@@ -55,7 +55,7 @@ class TileSheet {
 
 	public remove(entry: TileSheetEntry) {
 		const index = this._entries.indexOf(entry);
-		if (~index) return;
+		if (index === -1) return;
 		this.placeData(new Uint8Array(this._tileSize.area), entry.rectangle);
 		this._lastClearedIndex = index;
 		this._entries[index] = null;

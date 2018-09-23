@@ -7,7 +7,7 @@ const buildName = tagName =>
 		.join("");
 
 const makeFunction = desc => (Component, block) => {
-	desc(`Component ${buildName(Component.tagName || "")}`, () => {
+	desc(`WebFun.Unit.UI.Component ${buildName(Component.tagName || "")}`, () => {
 		beforeAll(() => customElements.define(Component.tagName, Component, Component.options));
 		block();
 	});

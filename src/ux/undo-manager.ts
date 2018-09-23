@@ -4,36 +4,29 @@ import UndoBatchOperation from "src/ux/undo-batch-operation";
 
 class UndoManager extends EventTarget {
 	private static _sharedManager: UndoManager;
-	private static get sharedManager() {
+	public static get sharedManager() {
 		return (this._sharedManager = this._sharedManager || new UndoManager());
 	}
 
-	private _stack: UndoOperation[];
-	private _stackPointer: number;
-	private _batchStack: UndoBatchOperation[];
+	private _stack: UndoOperation[] = [];
+	private _stackPointer: number = -1;
+	private _batchStack: UndoBatchOperation[] = [];
 
-	constructor() {
-		super();
-
-		this._stack = [];
-		this._stackPointer = -1;
-	}
-
-	undo() {
+	public undo() {
 		if (!this.canUndo()) return;
 
 		const operation = this._stack[this._stackPointer--];
 		operation.undo();
 	}
 
-	redo() {
+	public redo() {
 		if (!this.canRedo()) return;
 
 		const operation = this._stack[++this._stackPointer];
 		operation.redo();
 	}
 
-	note(op: UndoOperation | (() => void), redo?: () => void) {
+	public note(op: UndoOperation | (() => void), redo?: () => void) {
 		if (!(op instanceof UndoOperation)) {
 			op = new UndoOperation(op, redo);
 		}
@@ -48,16 +41,16 @@ class UndoManager extends EventTarget {
 		}
 	}
 
-	beginBatch() {
+	public beginBatch() {
 		this._batchStack.push(new UndoBatchOperation([]));
 	}
 
-	cancelBatch() {
+	public cancelBatch() {
 		const currentBatch = this._batchStack.pop();
 		console.assert(!!currentBatch, "No batch operation in progress!");
 	}
 
-	endBatch() {
+	public endBatch() {
 		const currentBatch = this._batchStack.pop();
 		console.assert(!!currentBatch, "No batch operation in progress!");
 		this._stack.push(currentBatch);

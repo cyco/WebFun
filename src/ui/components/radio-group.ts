@@ -2,22 +2,20 @@ import { EventTarget } from "src/util";
 import RadioButton from "./radio-button";
 
 class RadioGroup extends EventTarget {
-	private _buttons: RadioButton[];
-	private _id: string;
+	private _buttons: RadioButton[] = [];
+	private _id = String.UUID();
 
 	constructor(buttons: RadioButton[] = []) {
 		super();
 
-		this._buttons = [];
-		this._id = String.UUID();
 		buttons.forEach(b => this.addButton(b));
 	}
 
-	get buttons() {
+	public get buttons() {
 		return this._buttons;
 	}
 
-	addButton(button: RadioButton) {
+	public addButton(button: RadioButton) {
 		this._buttons.push(button);
 		button.groupID = this._id;
 	}
