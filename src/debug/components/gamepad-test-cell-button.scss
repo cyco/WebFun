@@ -1,0 +1,13 @@
+wf-debug-gamepad-test-cell-button {
+	display: block;
+	padding-left: 10px;
+
+	wf-progress-bar {
+		display: block;
+		width: 100%;
+	}
+
+	& + & {
+		margin-top: 5px;
+	}
+}
