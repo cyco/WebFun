@@ -4,7 +4,11 @@ class UndoBatchOperation extends UndoOperation {
 	private _operations: UndoOperation[];
 
 	constructor(operations: UndoOperation[]) {
-		const undo = () => this._operations.forEach(op => op.undo());
+		const undo = () =>
+			this._operations
+				.slice()
+				.reverse()
+				.forEach(op => op.undo());
 		const redo = () => this._operations.forEach(op => op.redo());
 
 		super(undo, redo);

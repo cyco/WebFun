@@ -1,4 +1,5 @@
 import { Point } from "src/util";
+import Engine from "../engine";
 
 export const Direction = {
 	Up: 1 << 0,
@@ -7,15 +8,18 @@ export const Direction = {
 	Right: 1 << 3
 };
 
-class InputManager {
-	public mouseDownHandler: Function;
-	public keyDownHandler: Function;
+abstract class InputManager {
+	public mouseDownHandler = (_: Point): void => void 0;
+	public keyDownHandler = (_: KeyboardEvent): void => void 0;
 	public pause: boolean = false;
 	public locator: boolean = false;
 	public scrollDown: boolean = false;
 	public scrollUp: boolean = false;
 	public endDialog: boolean = false;
 	public pickUp: boolean = false;
+
+	public engine: Engine = null;
+
 	protected _direction: number = 0;
 	protected _drag: boolean = false;
 	protected _attack: boolean = false;
@@ -37,13 +41,11 @@ class InputManager {
 		return this._attack;
 	}
 
-	get mouseLocationInView() {
-		return new Point(NaN, NaN);
-	}
+	abstract readonly mouseLocationInView: Point;
 
-	public addListeners(): void {}
+	public abstract addListeners(): void;
 
-	public removeListeners(): void {}
+	public abstract removeListeners(): void;
 }
 
 export default InputManager;

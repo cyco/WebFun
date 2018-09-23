@@ -1,6 +1,6 @@
 import Scene from "src/engine/scenes/scene";
 
-describe("Scene", () => {
+describe("WebFun.Engine.Scenes.Scene", () => {
 	let subject = null;
 
 	beforeEach(() => {

@@ -77,7 +77,7 @@ const runnerFilter = map => {
 	return true;
 };
 const identity = (i, idx) => idx === 0;
-describe("World Generation", () => {
+describe("WebFun.Acceptance.World Generation", () => {
 	beforeAll(async done => {
 		rawData = await loadGameData(Yoda);
 		done();

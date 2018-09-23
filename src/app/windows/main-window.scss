@@ -36,7 +36,7 @@ wf-main-window {
 		margin-left: 6px;
 		height: 288px + 2 * $border-size;
 
-		> wf-group {
+		> div {
 			display: flex;
 			flex-direction: row;
 			margin-top: 12px;

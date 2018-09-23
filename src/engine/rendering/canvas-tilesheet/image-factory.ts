@@ -6,19 +6,15 @@ import DOMImageFactory from "../canvas/dom-image-factory";
 class ImageFactory extends DOMImageFactory {
 	private sheet: TileSheet;
 
-	constructor() {
-		super();
-	}
-
-	prepare(count: number) {
+	public prepare(count: number) {
 		this.sheet = new TileSheet(count);
 	}
 
-	finalize() {
+	public finalize() {
 		this.sheet.draw(this);
 	}
 
-	buildImage(width: number, height: number, pixelData: Uint8Array): Image {
+	public buildImage(width: number, height: number, pixelData: Uint8Array): Image {
 		if (width === Tile.WIDTH && height === Tile.HEIGHT) {
 			const entry = this.sheet.add(pixelData);
 			return new Image(width, height, entry);

@@ -2,114 +2,259 @@ import DesktopInputManager from "src/engine/input/desktop-input-manager";
 import { Direction } from "src/engine/input/input-manager";
 import { KeyEvent } from "src/util";
 
-describe("DesktopInputManager", () => {
-	let manager = null;
-
+describe("WebFun.Engine.Input.DesktopInputManager", () => {
+	let subject = null;
+	let element = null;
 	beforeAll(() => {
-		manager = new DesktopInputManager();
-	});
-
-	afterEach(() => {
-		manager.removeListeners();
+		element = document.createElement("div");
+		subject = new DesktopInputManager(element);
 	});
 
 	it("collects game input from keyboard and mouse", () => {
-		let manager = new DesktopInputManager();
-
-		expect(typeof manager.keyDown).toBe("function");
-		expect(typeof manager.keyUp).toBe("function");
-		expect(typeof manager.mouseDown).toBe("function");
-		expect(typeof manager.mouseMove).toBe("function");
-		expect(typeof manager.mouseUp).toBe("function");
+		expect(subject._keyDown).toBeFunction();
+		expect(subject._keyUp).toBeFunction();
+		expect(subject._mouseDown).toBeFunction();
+		expect(subject._mouseMove).toBeFunction();
+		expect(subject._mouseUp).toBeFunction();
 	});
 
 	describe("keyboard input", () => {
+		beforeEach(() => subject.addListeners());
+		afterEach(() => subject.removeListeners());
+
 		it("toggles locator when the l-key is pressed", () => {
-			manager.keyDown({ which: KeyEvent.DOM_VK_L });
-			expect(manager.locator).toBeTrue();
+			fakeKeyEvent(KeyEvent.DOM_VK_L, true);
+			expect(subject.locator).toBeTrue();
 
-			manager.keyDown({ which: KeyEvent.DOM_VK_L });
-			expect(manager.locator).toBeFalse();
+			fakeKeyEvent(KeyEvent.DOM_VK_L, true);
+			expect(subject.locator).toBeFalse();
 
-			manager.keyDown({ which: KeyEvent.DOM_VK_L });
-			expect(manager.locator).toBeTrue();
+			fakeKeyEvent(KeyEvent.DOM_VK_L, true);
+			expect(subject.locator).toBeTrue();
 		});
 
 		it("toggles pause when the p-key is pressed", () => {
-			manager.keyDown({ which: KeyEvent.DOM_VK_P });
-			expect(manager.pause).toBeTrue();
+			fakeKeyEvent(KeyEvent.DOM_VK_P, true);
+			expect(subject.pause).toBeTrue();
 
-			manager.keyDown({ which: KeyEvent.DOM_VK_P });
-			expect(manager.pause).toBeFalse();
+			fakeKeyEvent(KeyEvent.DOM_VK_P, true);
+			expect(subject.pause).toBeFalse();
 
-			manager.keyDown({ which: KeyEvent.DOM_VK_P });
-			expect(manager.pause).toBeTrue();
+			fakeKeyEvent(KeyEvent.DOM_VK_P, true);
+			expect(subject.pause).toBeTrue();
 		});
 
 		it("activates dragging while shift key is pressed", () => {
-			manager.keyDown({ which: KeyEvent.DOM_VK_SHIFT });
-			expect(manager._drag).toBeTrue();
-			manager.keyDown({ which: KeyEvent.DOM_VK_SHIFT });
-			expect(manager._drag).toBeTrue();
+			fakeKeyEvent(KeyEvent.DOM_VK_SHIFT, true);
+			expect(subject.drag).toBeTrue();
+			fakeKeyEvent(KeyEvent.DOM_VK_SHIFT, true);
+			expect(subject.drag).toBeTrue();
 
-			manager.keyUp({ which: KeyEvent.DOM_VK_SHIFT });
-			expect(manager._drag).toBeFalse();
+			fakeKeyEvent(KeyEvent.DOM_VK_SHIFT, false);
+			expect(subject.drag).toBeFalse();
 		});
 
 		it("keeps track of directional input", () => {
 			let Mask = Direction;
 
-			let upKey = { which: KeyEvent.DOM_VK_UP };
-			let downKey = { which: KeyEvent.DOM_VK_DOWN };
-			let leftKey = { which: KeyEvent.DOM_VK_LEFT };
-			let rightKey = { which: KeyEvent.DOM_VK_RIGHT };
+			const upKey = KeyEvent.DOM_VK_UP;
+			const downKey = KeyEvent.DOM_VK_DOWN;
+			const leftKey = KeyEvent.DOM_VK_LEFT;
+			const rightKey = KeyEvent.DOM_VK_RIGHT;
 
-			manager.keyDown(upKey);
-			expect(manager._direction & Mask.Up).toBeTruthy();
-			manager.keyDown(downKey);
-			expect(manager._direction & Mask.Down).toBeTruthy();
-			manager.keyDown(leftKey);
-			expect(manager._direction & Mask.Left).toBeTruthy();
-			manager.keyDown(rightKey);
-			expect(manager._direction & Mask.Right).toBeTruthy();
+			fakeKeyEvent(upKey, true);
+			expect(subject.directions & Mask.Up).toBeTruthy();
+			fakeKeyEvent(downKey, true);
+			expect(subject.directions & Mask.Down).toBeTruthy();
+			fakeKeyEvent(leftKey, true);
+			expect(subject.directions & Mask.Left).toBeTruthy();
+			fakeKeyEvent(rightKey, true);
+			expect(subject.directions & Mask.Right).toBeTruthy();
+			expect(subject.walk).toBeTrue();
 
-			manager.keyUp(upKey);
-			expect(manager._direction & Mask.Up).toBeFalsy();
-			manager.keyUp(downKey);
-			expect(manager._direction & Mask.Down).toBeFalsy();
-			manager.keyUp(leftKey);
-			expect(manager._direction & Mask.Left).toBeFalsy();
-			manager.keyUp(rightKey);
-			expect(manager._direction & Mask.Right).toBeFalsy();
+			fakeKeyEvent(upKey, false);
+			expect(subject.directions & Mask.Up).toBeFalsy();
+			fakeKeyEvent(downKey, false);
+			expect(subject.directions & Mask.Down).toBeFalsy();
+			fakeKeyEvent(leftKey, false);
+			expect(subject.directions & Mask.Left).toBeFalsy();
+			fakeKeyEvent(rightKey, false);
+			expect(subject.directions & Mask.Right).toBeFalsy();
+			expect(subject.walk).toBeFalse();
 		});
 
 		it("tracks the 'attack' key", () => {
-			let attackKey = { which: KeyEvent.DOM_VK_SPACE };
-			manager.keyDown(attackKey);
-			expect(manager._attack).toBeTrue();
-			manager.keyUp(attackKey);
-			expect(manager._attack).toBeFalse();
+			const attackKey = KeyEvent.DOM_VK_SPACE;
+			fakeKeyEvent(attackKey, true);
+			expect(subject.attack).toBeTrue();
+			fakeKeyEvent(attackKey, false);
+			expect(subject.attack).toBeFalse();
 		});
 
 		it("tracks the 'end dialog' key", () => {
-			let endDialogKey = { which: KeyEvent.DOM_VK_SPACE };
-			manager.keyDown(endDialogKey);
-			expect(manager.endDialog).toBeTrue();
+			const endDialogKey = KeyEvent.DOM_VK_SPACE;
+			fakeKeyEvent(endDialogKey, true);
+			expect(subject.endDialog).toBeTrue();
+		});
+
+		it("maps up-key presses to scrollUp", () => {
+			const scrollUpKey = KeyEvent.DOM_VK_UP;
+			fakeKeyEvent(scrollUpKey, true);
+			expect(subject.scrollUp).toBeTrue();
+		});
+
+		it("maps down-key presses to scrollDown", () => {
+			const scrollDownKey = KeyEvent.DOM_VK_DOWN;
+			fakeKeyEvent(scrollDownKey, true);
+			expect(subject.scrollDown).toBeTrue();
 		});
 
 		it("tracks the 'pick up' key", () => {
-			let pickUpKey = { which: KeyEvent.DOM_VK_SPACE };
-			manager.keyDown(pickUpKey);
-			expect(manager.pickUp).toBeTrue();
+			const pickUpKey = KeyEvent.DOM_VK_SPACE;
+			fakeKeyEvent(pickUpKey, true);
+			expect(subject.pickUp).toBeTrue();
 		});
 
 		it("ignores unknown keys", () => {
-			let unknownKey = { which: 12 };
-
 			expect(() => {
-				manager.keyDown(unknownKey);
-				manager.keyUp(unknownKey);
+				fakeKeyEvent(12, true);
+				fakeKeyEvent(12, false);
 			}).not.toThrow();
 		});
+
+		it("does not react to keyboard events after being deactivated", () => {
+			let event = new CustomEvent("keydown");
+			event.which = KeyEvent.DOM_VK_SPACE;
+			document.dispatchEvent(event);
+			expect(subject.attack).toBeTrue();
+
+			event = new CustomEvent("keyup");
+			event.which = KeyEvent.DOM_VK_SPACE;
+			document.dispatchEvent(event);
+			expect(subject.attack).toBeFalse();
+
+			subject.removeListeners();
+			event = new CustomEvent("keydown");
+			event.which = KeyEvent.DOM_VK_SPACE;
+			document.dispatchEvent(event);
+			expect(subject.attack).not.toBeTrue();
+		});
 	});
+
+	describe("contextmenu event", () => {
+		beforeEach(() => subject.addListeners());
+		afterEach(() => subject.removeListeners());
+
+		it("overrides the browsers context menu", () => {
+			const event = { type: "contextmenu", preventDefault() {}, stopPropagation() {} };
+			spyOn(event, "preventDefault");
+			subject.handleEvent(event);
+			expect(event.preventDefault).toHaveBeenCalled();
+		});
+	});
+
+	describe("mouse events", () => {
+		beforeEach(() => {
+			element.style.width = "288px";
+			element.style.height = "288px";
+			element.style.position = "absolute";
+			element.style.left = "10px";
+			element.style.top = "10px";
+
+			document.body.appendChild(element);
+			subject.addListeners();
+		});
+
+		it("tracks the mouse location in view coordinates", () => {
+			fakeMouse("move", { x: 0, y: 0 });
+			expect(subject.mouseLocationInView.x).toBeLessThan(0);
+			expect(subject.mouseLocationInView.y).toBeLessThan(0);
+
+			fakeMouse("move", { x: 10, y: 0 });
+			expect(subject.mouseLocationInView.x).toBe(0);
+			expect(subject.mouseLocationInView.y).toBeLessThan(0);
+
+			fakeMouse("move", { x: 10, y: 10 });
+			expect(subject.mouseLocationInView.x).toBe(0);
+			expect(subject.mouseLocationInView.y).toBe(0);
+
+			fakeMouse("move", { x: 298, y: 298 });
+			expect(subject.mouseLocationInView.x).toBe(1);
+			expect(subject.mouseLocationInView.y).toBe(1);
+
+			fakeMouse("move", { x: 10 + 288 / 2, y: 10 + 288 / 2 });
+			expect(subject.mouseLocationInView.x).toBe(0.5);
+			expect(subject.mouseLocationInView.y).toBe(0.5);
+		});
+
+		describe("when the left mouse is pressed inside the element", () => {
+			beforeEach(() => fakeMouse("down", { x: 15, y: 15, button: 0 }));
+
+			it("starts walking", () => {
+				expect(subject.walk).toBeTrue();
+			});
+
+			describe("and the right button is released", () => {
+				beforeEach(() => fakeMouse("up", { x: 10, y: 10, button: 1 }));
+
+				it("does not stop walking", () => {
+					expect(subject.walk).toBeTrue();
+				});
+			});
+
+			describe("and it is released", () => {
+				beforeEach(() => fakeMouse("up", { x: 10, y: 10, button: 0 }));
+
+				it("stops walking", () => {
+					expect(subject.walk).toBeFalse();
+				});
+			});
+		});
+
+		describe("when the left mouse is pressed outside the element", () => {
+			beforeEach(() => {
+				subject._walk = false;
+				fakeMouse("down", { x: 0, y: 0, button: 0 });
+			});
+
+			it("start does not initiate walking", () => {
+				expect(subject.walk).toBeFalse();
+			});
+		});
+
+		describe("when the right mouse is pressed inside the element", () => {
+			beforeEach(() => fakeMouse("down", { x: 15, y: 15, button: 1 }));
+
+			it("starts attacking", () => {
+				expect(subject.attack).toBeTrue();
+			});
+
+			describe("and it is released", () => {
+				beforeEach(() => fakeMouse("up", { x: 0, y: 0, button: 1 }));
+
+				it("stops attacking", () => {
+					expect(subject.attack).toBeFalse();
+				});
+			});
+		});
+
+		afterEach(() => {
+			element.remove();
+			subject.removeListeners();
+		});
+	});
+
+	function fakeKeyEvent(code, pressed) {
+		const event = new CustomEvent(pressed ? "keydown" : "keyup");
+		event.which = code;
+		subject.handleEvent(event);
+	}
+
+	function fakeMouse(type, options) {
+		const event = new CustomEvent("mouse" + type);
+		event.clientX = options.x;
+		event.clientY = options.y;
+		event.button = options.button;
+		subject.handleEvent(event);
+	}
 });

@@ -29,6 +29,7 @@ import ProgressIndicator from "./progress-indicator";
 import Popover from "./popover";
 import ContextMenu from "./context-menu";
 import InlineSelector from "./inline-selector";
+import SegmentedProgressBar from "./segmented-progress-bar";
 
 export {
 	ContextMenu,
@@ -61,5 +62,6 @@ export {
 	SpeechBubble,
 	Selector,
 	List,
-	Cell
+	Cell,
+	SegmentedProgressBar
 };

@@ -1,24 +1,36 @@
 @import "border.scss";
 
-wf-progress-bar {
+wf-segmented-progress-bar {
 	@include inset-border(1px);
 
-	min-width: 150px;
+	width: auto;
 	height: 15px;
 	padding: 1px;
-	position: relative;
+	position: absolute;
+	left: 12px;
+	right: 13px;
+	bottom: 10px;
 	background: #cac6bc;
 	line-height: 0px;
 	text-align: left;
 	overflow: hidden;
 	white-space: nowrap;
 	opacity: 1;
+	transition: opacity 3s cubic-bezier(1, -0.04, 0.41, 0.96);
+
+	&[data-value="1"] {
+		opacity: 0;
+	}
 
 	> div {
 		display: inline-block;
 		background: #0a246a;
+		width: 9px;
 		height: 11px;
 		margin-bottom: 1px;
-		transition: width 0.1s cubic-bezier(1, -0.04, 0.41, 0.96);
+	}
+
+	> div + div {
+		margin-left: 2px;
 	}
 }

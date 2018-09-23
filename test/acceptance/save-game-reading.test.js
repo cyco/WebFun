@@ -5,7 +5,7 @@ import { InputStream } from "src/util";
 import { Reader } from "src/engine/save-game";
 import { GameData } from "src/engine";
 
-describe("Save Game Reading", () => {
+describe("WebFun.Acceptance.Save game reading", () => {
 	it("reads yoda's save game format correctly", async done => {
 		const rawGameData = await loadGameData(Yoda);
 		const gameData = new GameData(rawGameData);

@@ -1,3 +1,3 @@
-xdescribe("Missing test", () => {
-	it("must still be written", () => {});
-});
+import SubmenuWindow from "src/ui/components/submenu-window";
+
+describeComponent(SubmenuWindow, () => {});

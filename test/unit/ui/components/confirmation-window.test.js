@@ -1,3 +1,3 @@
-xdescribe("Missing test", () => {
-	it("must still be written", () => {});
-});
+import ConfirmationWindow from "src/ui/components/confirmation-window";
+
+describeComponent(ConfirmationWindow, () => {});

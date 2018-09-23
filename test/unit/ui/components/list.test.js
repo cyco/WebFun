@@ -1,3 +1,3 @@
-xdescribe("Missing test", () => {
-	it("must still be written", () => {});
-});
+import List from "src/ui/components/list";
+
+describeComponent(List, () => {});

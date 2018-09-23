@@ -1,6 +1,6 @@
 import PauseScene from "src/engine/scenes/pause-scene";
 
-describe("PauseScene", () => {
+describe("WebFun.Engine.Scenes.PauseScene", () => {
 	it("can be instantiated without throwing exceptions", () => {
 		expect(() => new PauseScene()).not.toThrow();
 	});

@@ -1,3 +1,3 @@
-xdescribe("Missing test", () => {
-	it("must still be written", () => {});
-});
+import LoseScene from "src/engine/scenes/lose-scene";
+
+describe("WebFun.Engine.Scenes.LoseScene", () => {});

@@ -1,6 +1,6 @@
 import PickupScene from "src/engine/scenes/pickup-scene";
 
-describe("PickupScene", () => {
+describe("WebFun.Engine.Scenes.PickupScene", () => {
 	it("can be instantiated without throwing exceptions", () => {
 		expect(() => new PickupScene()).not.toThrow();
 	});

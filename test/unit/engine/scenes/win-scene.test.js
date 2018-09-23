@@ -1,3 +1,3 @@
-xdescribe("Missing test", () => {
-	it("must still be written", () => {});
-});
+import WinScene from "src/engine/scenes/win-scene";
+
+describe("WebFun.Engine.Scenes.WinScene", () => {});
