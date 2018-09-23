@@ -1,4 +1,8 @@
 pipeline {
+ agent {
+        docker { image 'alpine' }
+    }
+
 	stages {
 		stage("Prepare") {
 			steps {
