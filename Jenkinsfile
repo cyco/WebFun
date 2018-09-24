@@ -1,13 +1,10 @@
 pipeline {
- agent {
-        docker { image 'alpine' }
-    }
-
+    agent { dockerfile { filename 'Dockerfile.CI' } }
 	stages {
-		stage("Prepare") {
-			steps {
-				echo "Prepare environment"
-			}
+		stage("Install dependencies") {
+            steps {
+                sh 'yarn'
+            }
 		}
 
 		stage("Build") {
@@ -17,9 +14,25 @@ pipeline {
 		}
 
 		stage("Test") {
-			steps {
-				echo "Execute Tests"
-			}
+            parallel {
+                stage("Run Unit Tests") {
+                    steps {
+                        sh 'yarn test:unit'
+                    }
+                }
+
+                stage("Run Acceptance Tests") {
+                    steps {
+                        sh 'yarn test:acceptance'
+                    }
+                }
+
+                stage("Run Performance Tests") {
+                    steps {
+                        sh 'yarn test:performance'
+                    }
+                }
+            }
 		}
 	}
 }
