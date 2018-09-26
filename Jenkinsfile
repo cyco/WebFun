@@ -17,19 +17,19 @@ pipeline {
             parallel {
                 stage("Run Unit Tests") {
                     steps {
-                        sh 'yarn test:unit'
+                        sh 'ci=1 yarn test:unit'
                     }
                 }
 
                 stage("Run Acceptance Tests") {
                     steps {
-                        sh 'yarn test:acceptance'
+                        sh 'ci=1 yarn test:acceptance'
                     }
                 }
 
                 stage("Run Performance Tests") {
                     steps {
-                        sh 'yarn test:performance'
+                        sh 'ci=1 yarn test:performance'
                     }
                 }
             }
