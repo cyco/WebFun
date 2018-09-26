@@ -1,5 +1,8 @@
 pipeline {
-    agent { dockerfile { filename 'Dockerfile.CI' } }
+    agent {
+        dockerfile { filename 'Dockerfile.CI' }
+    }
+
 	stages {
 		stage("Install dependencies") {
             steps {
@@ -23,13 +26,15 @@ pipeline {
 
                 stage("Run Acceptance Tests") {
                     steps {
-                        sh 'ci=1 yarn test:acceptance'
+                        echo "skip"
+                        // sh 'ci=1 yarn test:acceptance'
                     }
                 }
 
                 stage("Run Performance Tests") {
                     steps {
-                        sh 'ci=1 yarn test:performance'
+                        echo "skip"
+                        // sh 'ci=1 yarn test:performance'
                     }
                 }
             }
@@ -37,9 +42,11 @@ pipeline {
 
         stage("Collect metrics") {
             steps {
-                def scannerHome = tool 'SonarQubeScanner3'
-                withSonarQubeEnv('sonar') {
-                    sh "${scannerHome}/bin/sonar-scanner"
+                script {
+                    def scannerHome = tool 'SonarQube Scanner';
+                    withSonarQubeEnv('sonar') {
+                        sh "${scannerHome}/bin/sonar-scanner"
+                    }
                 }
             }
         }
