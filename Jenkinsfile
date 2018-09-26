@@ -34,5 +34,14 @@ pipeline {
                 }
             }
 		}
+
+        stage("Collect metrics") {
+            steps {
+                def scannerHome = tool 'SonarQubeScanner3'
+                withSonarQubeEnv('sonar') {
+                    sh "${scannerHome}/bin/sonar-scanner"
+                }
+            }
+        }
 	}
 }
