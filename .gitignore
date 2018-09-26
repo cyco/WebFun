@@ -27,6 +27,5 @@ bin
 assets/game-data/full.txt
 todo.md
 .scannerwork
-sonar-project.properties
 test/reports
 .vscode/
