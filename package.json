@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "build": "webpack --config config/webpack.dev.js",
-    "build:prod": "webpack --optimize-minimize --config config/webpack.prod.js --progress",
+    "build:prod": "webpack --production --optimize-minimize --config config/webpack.dev.js --progress",
     "build:cont": "webpack --config config/webpack.dev.js --watch",
     "start": "webpack-serve --config config/webpack.dev.js",
     "test": "karma start config/karma.conf.js --single-run",
@@ -23,7 +23,7 @@
     "test:dump-scripts": "cross-env TOOL_NAME=dump-scripts yarn build-tool && node tools/bin/dump-scripts.bin.js -d \"build/game-data/yoda.data\"",
     "test:dump-data": "cross-env TOOL_NAME=dump-data yarn build-tool && node tools/bin/dump-data.bin.js -d \"build/game-data/yoda.data\"",
     "gen-coverage": "genhtml test/coverage/unit.lcov test/coverage/acceptance/lcov.info -o test/coverage/html",
-    "test:performance": "cross-env scope=performance karma start karma.conf.js --single-run",
+    "test:performance": "cross-env scope=performance karma start config/karma.conf.js --single-run",
     "world": "node -- tools/bin/generate-world.bin.js -v -d \"build/game-data/yoda.data\"",
     "world:validate": "node -- tools/bin/generate-world.bin.js -c -d \"build/game-data/yoda.data\" -e \"game-data/worlds.txt\"",
     "world:validate:all": "node -- tools/bin/generate-world.bin.js -c -d \"./build/game-data/yoda.data\" -e \"./game-data/full.txt\" -a",
