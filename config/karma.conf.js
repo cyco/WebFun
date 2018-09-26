@@ -4,8 +4,9 @@ const webpackConfig = require("./webpack.test.js");
 
 const Paths = require("./paths");
 
-const includeCoverage = !!process.env.coverage;
-const includeJunit = !!process.env.coverage;
+const ci = !!process.env.ci;
+const includeCoverage = !!process.env.coverage || ci;
+const includeJunit = !!process.env.junit || ci;
 const runUnitTests = !process.env.scope || ~process.env.scope.indexOf("unit");
 const runAcceptanceTests = process.env.scope && ~process.env.scope.indexOf("acceptance");
 const runPerformanceTests = process.env.scope && ~process.env.scope.indexOf("performance");
@@ -61,12 +62,23 @@ runAcceptanceTests && scopes.push("acceptance");
 runPerformanceTests && scopes.push("performance");
 config.files.push({ pattern: "test/context/" + scopes.join("_") + ".js", watched: false });
 
+let name;
+if (runUnitTests && runAcceptanceTests && runPerformanceTests) {
+	name = "full";
+} else if (runAcceptanceTests) {
+	name = "acceptance";
+} else if (runPerformanceTests) {
+	name = "performance";
+} else {
+	name = "unit";
+}
+
 if (includeCoverage) {
-	let fileName = "lcov.info";
+	let fileName = name + ".locv";
 
 	config.reporters.push("coverage-istanbul");
 	config.coverageIstanbulReporter = {
-		reports: ["lcovonly", "html"],
+		reports: ["lcovonly", ...(!ci ? ["html"] : [])],
 		fixWebpackSourcePaths: true,
 		dir: Paths.testReportRoot,
 		"report-config": {
@@ -91,7 +103,7 @@ if (includeCoverage) {
 if (includeJunit) {
 	config.reporters.push("junit");
 	config.junitReporter = {
-		outputFile: Path.resolve(Paths.testReportRoot, "junit.xml"),
+		outputFile: Path.resolve(Paths.testReportRoot, name + ".xml"),
 		useBrowserName: false
 	};
 }
