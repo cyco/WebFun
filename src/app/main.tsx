@@ -13,8 +13,6 @@ import { WindowManager, ComponentJSXRenderer } from "src/ui";
 import { Yoda } from "src/engine/type";
 import EditorWindow from "src/editor/editor-window";
 import SaveGameInspector from "src/editor/inspectors/save-game-inspector";
-import GamepadTest from "src/debug/components/gamepad-test";
-import { Window } from "src/ui/components";
 
 declare global {
 	interface Window {
