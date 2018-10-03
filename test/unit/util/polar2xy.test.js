@@ -1,5 +1,5 @@
 import polar2xy from "src/util/polar2xy";
-import { PI } from "src/std.math";
+import { PI } from "src/std/math";
 
 describe("WebFun.Util.polar2xy", () => {
 	it("converts coordinates from polar to cartesian coordinates", () => {

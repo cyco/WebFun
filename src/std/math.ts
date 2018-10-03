@@ -1,4 +1,4 @@
-import { global } from "./std";
+import { global } from "./index";
 
 export const {
 	DEG_PER_RAD,

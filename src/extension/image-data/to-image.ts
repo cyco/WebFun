@@ -1,4 +1,4 @@
-import { ImageData, HTMLImageElement } from "src/std.dom";
+import { ImageData, HTMLImageElement } from "src/std/dom";
 
 async function toImage(pixelated: boolean = true): Promise<HTMLImageElement> {
 	return new Promise<HTMLImageElement>((resolve, reject) => {

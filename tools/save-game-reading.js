@@ -1,4 +1,4 @@
-import "./std.dom";
+import "./std/dom";
 import FS from "fs";
 import KaitaiStream from "kaitai-struct/KaitaiStream";
 import Path from "path";

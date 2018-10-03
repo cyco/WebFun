@@ -1,3 +1,3 @@
-xdescribe("Missing test", () => {
-	it("must still be written", () => {});
-});
+import Zone from "src/engine/mutable-objects/mutable-zone";
+
+describe("WebFun.Engine.MutableObjecs.MutableZone", () => {});

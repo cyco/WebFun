@@ -1,5 +1,5 @@
 import { Tile } from "src/engine/objects";
-import { Image } from "src/std.dom";
+import { Image } from "src/std/dom";
 import { Component } from "src/ui";
 import "./inventory-row.scss";
 

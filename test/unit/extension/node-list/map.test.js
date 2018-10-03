@@ -1,5 +1,5 @@
 import map from "src/extension/node-list/map";
-import { NodeList } from "std.dom";
+import { NodeList } from "std/dom";
 import sandboxed from "test-helpers/dom-sandbox";
 
 describe(

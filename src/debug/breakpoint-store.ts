@@ -1,5 +1,5 @@
 import { EventTarget } from "src/util";
-import { localStorage } from "src/std.dom";
+import { localStorage } from "src/std/dom";
 import { LocationBreakpoint, SymbolicBreakpoint } from "./breakpoint";
 import Breakpoint from "src/debug/breakpoint/breakpoint";
 

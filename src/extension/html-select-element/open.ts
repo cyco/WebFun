@@ -1,4 +1,4 @@
-import { window, document, HTMLSelectElement } from "src/std.dom";
+import { window, document, HTMLSelectElement } from "src/std/dom";
 
 function open() {
 	return new Promise((resolve, reject) =>

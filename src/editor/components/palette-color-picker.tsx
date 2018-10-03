@@ -1,6 +1,6 @@
 import PaletteView from "./palette-view";
 import { Rectangle, Point, Size, Color } from "src/util";
-import { floor } from "src/std.math";
+import { floor } from "src/std/math";
 import "./palette-color-picker.scss";
 
 class PaletteColorPicker extends PaletteView implements EventListenerObject {

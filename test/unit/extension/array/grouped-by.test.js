@@ -1,5 +1,5 @@
 import groupedBy from "src/extension/array/grouped-by";
-import { floor } from "std.math";
+import { floor } from "std/math";
 
 describe("WebFun.Extension.Array.groupedBy", () => {
 	it("extends to arra prototype to group elements in an array", () => {

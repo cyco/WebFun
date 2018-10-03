@@ -5,7 +5,6 @@ import { Writer } from "src/engine/save-game";
 import { Story } from "src/engine";
 import { download, OutputStream, DiscardingOutputStream } from "src/util";
 import GameController from "src/app/game-controller";
-import { Planet, WorldSize } from "src/engine/types";
 import "./save-game-inspector.scss";
 
 class SaveGameInspector extends AbstractInspector {

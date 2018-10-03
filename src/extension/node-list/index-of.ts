@@ -1,5 +1,5 @@
 import { Array } from "src/std";
-import { NodeList } from "src/std.dom";
+import { NodeList } from "src/std/dom";
 
 const indexOf = function(node: Node) {
 	return Array.from(this).indexOf(node);

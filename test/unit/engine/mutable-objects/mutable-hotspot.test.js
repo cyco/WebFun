@@ -1,3 +1,3 @@
-xdescribe("Missing test", () => {
-	it("must still be written", () => {});
-});
+import Hotspot from "src/engine/mutable-objects/mutable-hotspot";
+
+describe("WebFun.Engine.MutableObjecs.MutableHotspot", () => {});

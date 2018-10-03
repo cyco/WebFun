@@ -1,4 +1,4 @@
-import { PI } from "src/std.math";
+import { PI } from "src/std/math";
 import rad2deg from "src/util/rad2deg";
 
 describe("rad2deg", () => {

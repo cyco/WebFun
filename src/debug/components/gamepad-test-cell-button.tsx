@@ -1,6 +1,6 @@
 import { Component } from "src/ui";
 import { ProgressBar } from "src/ui/components";
-import { Gamepad, GamepadButton } from "src/std.gamepad";
+import { Gamepad, GamepadButton } from "src/std/gamepad";
 import "./gamepad-test-cell-button.scss";
 
 class GamepadTestCellButton extends Component {

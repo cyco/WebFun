@@ -1,3 +1,3 @@
-xdescribe("Missing test", () => {
-	it("must still be written", () => {});
-});
+import Puzzle from "src/engine/mutable-objects/mutable-puzzle";
+
+describe("WebFun.Engine.MutableObjecs.MutablePuzzle", () => {});

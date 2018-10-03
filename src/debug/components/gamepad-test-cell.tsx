@@ -1,6 +1,6 @@
 import { Component } from "src/ui";
 import { Cell } from "src/ui/components";
-import { Gamepad } from "src/std.gamepad";
+import { Gamepad } from "src/std/gamepad";
 import GamepadTestCellButton from "./gamepad-test-cell-button";
 import GamepadTestCellAxis from "./gamepad-test-cell-axis";
 

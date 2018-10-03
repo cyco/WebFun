@@ -8,9 +8,6 @@ module.exports = {
 		alias: {
 			src: Paths.sourceRoot,
 			std: Path.resolve(Paths.sourceRoot, "std"),
-			"std.dom": Path.resolve(Paths.sourceRoot, "std.dom"),
-			"std.math": Path.resolve(Paths.sourceRoot, "std.math"),
-			"std.webgl": Path.resolve(Paths.sourceRoot, "std.webgl"),
 			libs: Path.resolve(Paths.sourceRoot, "libs"),
 			"test-helpers": Path.resolve(Paths.projectRoot, "test/helpers"),
 			"test-fixtures": Path.resolve(Paths.projectRoot, "test/fixtures"),

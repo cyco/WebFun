@@ -1,4 +1,4 @@
-import { XMLHttpRequest } from "std.dom";
+import { XMLHttpRequest } from "std/dom";
 
 const base = "base/test/fixtures/";
 

@@ -1,2 +1,3 @@
-import { global } from "src/std";
+import { global } from "./index";
+
 export const { SVGPoint, SVGTransform, SVGMatrix } = global;

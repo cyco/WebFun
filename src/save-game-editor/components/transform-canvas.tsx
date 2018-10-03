@@ -1,6 +1,6 @@
 import { Component } from "src/ui";
 import { Point } from "src/util";
-import { SVGPoint, SVGTransform, SVGMatrix } from "src/std.svg";
+import { SVGPoint, SVGTransform, SVGMatrix } from "src/std/svg";
 import "./transform-canvas.scss";
 
 export interface TransformCanvasRenderingContext2D extends CanvasRenderingContext2D {

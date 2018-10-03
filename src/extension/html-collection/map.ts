@@ -1,4 +1,4 @@
-import { HTMLCollection } from "src/std.dom";
+import { HTMLCollection } from "src/std/dom";
 
 const map = function<T extends Element, U>(cb: (_: T, idx: number, collection: HTMLCollectionOf<T>) => U) {
 	let result = [];

@@ -1,4 +1,4 @@
-import { NodeList } from "src/std.dom";
+import { NodeList } from "src/std/dom";
 
 const forEach = function(callback: (_: Node, idx: number, list: NodeList) => void): void {
 	for (let i = 0; i < this.length; i++) {

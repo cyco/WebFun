@@ -1,5 +1,5 @@
 import MenuStack from "src/ui/menu-stack";
-import { document } from "../../../src/std.dom";
+import { document } from "../../../src/std/dom";
 
 describe("MenuStack", () => {
 	it("is a class that manages z-order of a menu hierarchy", () => {
