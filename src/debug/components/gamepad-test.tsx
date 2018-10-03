@@ -1,6 +1,6 @@
 import { Component } from "src/ui";
 import { List } from "src/ui/components";
-import { Gamepad, GamepadEvent, Events } from "src/std.gamepad";
+import { Gamepad, GamepadEvent, Events } from "src/std/gamepad";
 import GamepadTestCell from "./gamepad-test-cell";
 import "./gamepad-test.scss";
 

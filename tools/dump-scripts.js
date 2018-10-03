@@ -2,7 +2,7 @@ import "babel-polyfill";
 import "canvas";
 import "src/std";
 import "../test/helpers/polyfill";
-import "src/std.dom";
+import "src/std/dom";
 import "src/extension";
 import FS from "fs";
 import KaitaiStream from "kaitai-struct/KaitaiStream";

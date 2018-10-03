@@ -1,4 +1,4 @@
-import { Storage } from "src/std.dom";
+import { Storage } from "src/std/dom";
 
 const load = function(key: string): JSONValue {
 	try {

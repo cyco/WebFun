@@ -1,6 +1,6 @@
 import { KeyEvent, Point } from "src/util";
 import InputManager, { Direction } from "./input-manager";
-import { document } from "src/std.dom";
+import { document } from "src/std/dom";
 
 class DesktopInputManager extends InputManager implements EventListenerObject {
 	private _element: HTMLElement;

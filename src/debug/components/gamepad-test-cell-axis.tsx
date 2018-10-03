@@ -1,5 +1,5 @@
 import { Component } from "src/ui";
-import { Gamepad } from "src/std.gamepad";
+import { Gamepad } from "src/std/gamepad";
 import { ProgressBar } from "src/ui/components";
 import "./gamepad-test-cell-axis.scss";
 

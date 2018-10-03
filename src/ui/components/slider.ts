@@ -1,4 +1,4 @@
-import { document } from "src/std.dom";
+import { document } from "src/std/dom";
 import { dispatch } from "src/util";
 import Component from "../component";
 import "./slider.scss";

@@ -4,40 +4,40 @@ import World from "./world";
 import { GameType } from "../type";
 
 class SaveState {
-	type: GameType;
-	seed: number;
-	planet: Planet;
-	puzzleIDs1: Int16Array;
-	puzzleIDs2: Int16Array;
-	goalPuzzle: number;
+	public type: GameType;
+	public seed: number;
+	public planet: Planet;
+	public puzzleIDs1: Int16Array;
+	public puzzleIDs2: Int16Array;
+	public goalPuzzle: number;
 
-	dagobah: World;
-	world: World;
+	public dagobah: World;
+	public world: World;
 
-	onDagobah: boolean;
-	positionOnWorld: Point;
-	currentZoneID: number;
-	positionOnZone: Point;
+	public onDagobah: boolean;
+	public positionOnWorld: Point;
+	public currentZoneID: number;
+	public positionOnZone: Point;
 
-	damageTaken: number;
-	livesLost: number;
+	public damageTaken: number;
+	public livesLost: number;
 
-	inventoryIDs: Int16Array;
+	public inventoryIDs: Int16Array;
 
-	currentWeapon: number;
-	currentAmmo: number;
+	public currentWeapon: number;
+	public currentAmmo: number;
 
-	forceAmmo: number;
-	blasterAmmo: number;
-	blasterRifleAmmo: number;
+	public forceAmmo: number;
+	public blasterAmmo: number;
+	public blasterRifleAmmo: number;
 
-	difficulty: number;
-	timeElapsed: number;
-	worldSize: WorldSize;
+	public difficulty: number;
+	public timeElapsed: number;
+	public worldSize: WorldSize;
 
-	unknownCount: number;
-	unknownSum: number;
-	unknownThing: number;
+	public unknownCount: number;
+	public unknownSum: number;
+	public unknownThing: number;
 }
 
 export default SaveState;

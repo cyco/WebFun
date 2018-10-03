@@ -5,7 +5,7 @@ import "babel-polyfill";
 import "canvas";
 import "src/std";
 import "../test/helpers/polyfill";
-import "src/std.dom";
+import "src/std/dom";
 import "src/extension";
 import { GameData, SaveGameReader } from "src/engine";
 import Yodesk from "src/engine/file-format/yodesk.ksy";

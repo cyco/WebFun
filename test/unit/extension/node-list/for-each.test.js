@@ -1,5 +1,5 @@
 import forEach from "src/extension/node-list/for-each";
-import { NodeList } from "std.dom";
+import { NodeList } from "std/dom";
 import sandboxed from "test-helpers/dom-sandbox";
 
 describe(

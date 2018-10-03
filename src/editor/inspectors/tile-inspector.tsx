@@ -3,7 +3,7 @@ import CSSTileSheet from "../css-tile-sheet";
 import { IconButton } from "src/ui/components";
 import { MutableTile } from "src/engine/mutable-objects";
 import { TileEditor } from "../components";
-import { sqrt, ceil, floor } from "src/std.math";
+import { sqrt, ceil, floor } from "src/std/math";
 import { downloadImage } from "src/util";
 import { FilePicker } from "src/ui";
 import "./tile-inspector.scss";

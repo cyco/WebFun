@@ -1,3 +1,3 @@
-xdescribe("Missing test", () => {
-	it("must still be written", () => {});
-});
+import Tile from "src/engine/mutable-objects/mutable-tile";
+
+describe("WebFun.Engine.MutableObjecs.MutableTile", () => {});

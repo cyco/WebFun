@@ -5,7 +5,7 @@ import { Component } from "src/ui";
 import { Point } from "src/util";
 import { ModalSession } from "src/ux";
 import InventoryRow from "./inventory-row";
-import { Image } from "src/std.dom";
+import { Image } from "src/std/dom";
 import "./inventory.scss";
 
 export const Events = {

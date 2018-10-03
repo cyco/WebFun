@@ -1,5 +1,5 @@
-import { File } from "src/std.dom";
-import * as DOM from "src/std.dom";
+import { File } from "src/std/dom";
+import * as DOM from "src/std/dom";
 import readAsArrayBuffer from "src/extension/file/read-as-array-buffer";
 
 describe("WebFun.Extension.File.readAsArrayBuffer", () => {

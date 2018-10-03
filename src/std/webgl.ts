@@ -1,3 +1,3 @@
-import { global } from "./std";
+import { global } from "./index";
 
 export const { WebGLTexture } = global;

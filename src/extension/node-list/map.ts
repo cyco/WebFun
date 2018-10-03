@@ -1,4 +1,4 @@
-import { NodeList } from "src/std.dom";
+import { NodeList } from "src/std/dom";
 
 const map = function<T>(callback: (node: Node, idx: number, list: NodeList) => T): T[] {
 	let results = [];

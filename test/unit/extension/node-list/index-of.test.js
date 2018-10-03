@@ -1,5 +1,5 @@
 import indexOf from "src/extension/node-list/index-of";
-import { NodeList } from "std.dom";
+import { NodeList } from "std/dom";
 import render from "test-helpers/render";
 
 describe("WebFun.Extension.NodeList.indexOf", () => {

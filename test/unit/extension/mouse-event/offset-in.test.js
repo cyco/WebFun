@@ -1,4 +1,4 @@
-import { MouseEvent } from "std.dom";
+import { MouseEvent } from "std/dom";
 import offsetIn from "src/extension/mouse-event/offset-in";
 
 describe("WebFun.Extension.MouseEvent.offsetIn", () => {

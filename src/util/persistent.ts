@@ -1,4 +1,4 @@
-import { localStorage } from "src/std.dom";
+import { localStorage } from "src/std/dom";
 
 export default <T>(object: T, key: string, storage: Storage = localStorage): T => {
 	const result: { [_: string]: string } = {};

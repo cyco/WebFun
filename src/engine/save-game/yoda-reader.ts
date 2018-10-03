@@ -7,7 +7,7 @@ import { MutableHotspot } from "src/engine/mutable-objects";
 import { Planet, WorldSize } from "../types";
 import WorldItem from "./world-item";
 import { Yoda } from "../type";
-import { floor } from "src/std.math";
+import { floor } from "src/std/math";
 
 class YodaReader extends Reader {
 	constructor(stream: InputStream) {

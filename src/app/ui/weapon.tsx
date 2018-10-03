@@ -1,7 +1,7 @@
 import GameData from "src/engine/game-data";
 import { Char } from "src/engine/objects";
 import { Component } from "src/ui";
-import { Image } from "src/std.dom";
+import { Image } from "src/std/dom";
 import "./weapon.scss";
 
 class Weapon extends Component {

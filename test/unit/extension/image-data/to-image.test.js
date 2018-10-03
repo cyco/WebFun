@@ -1,5 +1,5 @@
 import toImage from "src/extension/image-data/to-image";
-import { Image, HTMLImageElement, ImageData } from "src/std.dom";
+import { Image, HTMLImageElement, ImageData } from "src/std/dom";
 
 describe("WebFun.Extension.ImageData.toImage", () => {
 	it("is an extension of ImageData to allow conversion to an HTMLImageElement", () => {

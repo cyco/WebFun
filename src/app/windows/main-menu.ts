@@ -1,7 +1,7 @@
 import { buildMenu as buildDebugMenu } from "src/debug";
 import { Menu, MenuItemSeparator as Separator } from "src/ui";
 import { WindowModalSession } from "src/ux";
-import { document } from "src/std.dom";
+import { document } from "src/std/dom";
 import { Window } from "src/ui/components";
 import GameController from "../game-controller";
 import DifficultyWindow from "./difficulty-window";

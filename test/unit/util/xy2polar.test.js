@@ -1,4 +1,4 @@
-import { PI, sqrt } from "src/std.math";
+import { PI, sqrt } from "src/std/math";
 import xy2polar from "src/util/xy2polar";
 
 describe("xy2polar", () => {

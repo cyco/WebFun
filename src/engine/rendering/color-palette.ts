@@ -1,4 +1,4 @@
-import { floor } from "src/std.math";
+import { floor } from "src/std/math";
 import { OutputStream } from "src/util";
 
 interface ColorPalette extends Uint8Array {

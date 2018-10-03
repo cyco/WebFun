@@ -1,4 +1,4 @@
-import { KeyEvent } from "src/std.dom";
+import { KeyEvent } from "src/std/dom";
 import { EventTarget } from "src/util";
 
 export const Event = {

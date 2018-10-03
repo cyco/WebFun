@@ -1,4 +1,4 @@
-import { HTMLCollection } from "src/std.dom";
+import { HTMLCollection } from "src/std/dom";
 
 const find = function(cb: (_: Element) => boolean) {
 	for (let i = 0, len = this.length; i < len; i++) {
