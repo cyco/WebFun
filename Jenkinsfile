@@ -30,7 +30,7 @@ pipeline {
                 stage("Run Acceptance Tests") {
                     steps {
                         echo "skip"
-                        // sh 'ci=1 yarn test:acceptance'
+                        sh 'ci=1 yarn test:acceptance'
                     }
                 }
 
