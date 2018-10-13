@@ -1,6 +1,9 @@
 pipeline {
     agent {
-        dockerfile { filename 'Dockerfile.CI' }
+        dockerfile {
+            filename 'Dockerfile.CI'
+            args  '--network=webfunci_default --link webfunci_sonarqube_1:sonarqube'
+        }
     }
 
 	stages {
