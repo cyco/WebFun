@@ -39,10 +39,9 @@ wf-save-game-editor-inventory-row {
 		height: inherit;
 		flex-grow: 2;
 		padding: 0 5px;
-		line-height: $tile-size;
 		overflow: hidden;
 		text-overflow: ellipsis;
-		font: normal normal normal normal 16px/32px -webkit-standard;
+		font: normal normal normal normal 16px/32px -webkit-standard, sans-serif;
 
 		i.fa-caret-down {
 			right: 30px;

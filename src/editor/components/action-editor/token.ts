@@ -23,15 +23,7 @@ class Token extends Component {
 			this._details = null;
 			return;
 		}
-
-		if (this.point) {
-		}
-
-		if (this.tile) {
-		}
-
-		if (this.sound) {
-		}
+		// TODO: handle this.point, this.tile, this.sound
 
 		if (this._details) {
 			this.appendChild(this._details);

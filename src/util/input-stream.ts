@@ -101,7 +101,7 @@ class InputStream extends Stream {
 		const uint8Array = new Uint8Array(this._arrayBuffer, this._offset, maxLength);
 
 		let length = -1;
-		while (uint8Array[++length]);
+		while (uint8Array[++length]) true /* nop */;
 
 		return this.getCharacters(length, encoding);
 	}

@@ -81,9 +81,9 @@ class SaveGameInspector extends AbstractInspector {
 
 				result.setZone(x, y, zones[input.zoneId] || null);
 				out.additionalRequiredItem = tiles[input.additionalRequiredItem] || null;
-				input.field_16;
-				input.field_C;
-				input.field_Ea;
+				// input.field_16;
+				// input.field_C;
+				// input.field_Ea;
 				// TODO: puzzle idx and puzzle index are missing
 				out.findItem = tiles[input.find_item_id] || null;
 				out.npc = tiles[input.npc_id] || null;
