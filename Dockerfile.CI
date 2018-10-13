@@ -18,7 +18,9 @@ RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
 	&& apt-get update -y && apt-get install -y --no-install-recommends yarn \
 	&& rm -rf /etc/apt/sources.list.d/yarn.list \
 	&& mkdir -p /.cache/yarn 2 > /dev/null \
-	&& chmod oug+rw /.cache/yarn
+	&& chmod oug+rw /.cache/yarn \
+	&& mkdir -p /.yarn 2 > /dev/null \
+	&& chmod oug+rw /.yarn
 
 # libraries for 'canvas' npm modules
 RUN apt install -y pkg-config libjpeg-dev libcairo2-dev libgif-dev
