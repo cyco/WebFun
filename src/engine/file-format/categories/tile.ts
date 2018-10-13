@@ -2,7 +2,7 @@ import { InputStream } from "src/util";
 import { Tile } from "src/engine/objects";
 import { GameType, Yoda } from "src/engine/type";
 
-export const parseTile = (stream: InputStream, data: any) => {
+export const parseTile = (stream: InputStream, _: any) => {
 	let attributes = stream.getUint32();
 	let pixels = stream.getUint8Array(Tile.SIZE);
 
@@ -21,7 +21,9 @@ export const parseTiles = (stream: InputStream, data: any) => {
 };
 
 export const parseTileNames = (stream: InputStream, data: any, gameType: GameType) => {
-	let size = stream.getUint32();
+	// skip over size
+	stream.getUint32();
+
 	do {
 		let index = stream.getInt16();
 		if (index === -1) break;

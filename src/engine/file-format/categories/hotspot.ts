@@ -1,4 +1,3 @@
-import ParseError from "../parse-error";
 import { InputStream } from "src/util";
 
 export const parseHotspot = (stream: InputStream) => {
@@ -12,7 +11,9 @@ export const parseHotspot = (stream: InputStream) => {
 };
 
 export const parseHotspots = (stream: InputStream, data: any) => {
-	let count = stream.getUint32();
+	// skip over count
+	stream.getUint32();
+
 	do {
 		let zoneId = stream.getInt16();
 		if (zoneId === -1) {

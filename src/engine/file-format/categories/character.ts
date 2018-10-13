@@ -1,18 +1,17 @@
-import ParseError from "../parse-error";
 import { InputStream } from "src/util";
-import { Tile } from "src/engine/objects";
 import { assert } from "../error";
 import { GameType, Yoda } from "src/engine/type";
 
 const ICHA = "ICHA";
-const parseCharacterFrame = (stream: InputStream, data: any) => {
+const parseCharacterFrame = (stream: InputStream, _: any) => {
 	return stream.getInt16Array(0x8);
 };
 
 const parseCharacter = (stream: InputStream, data: any, gameType: GameType) => {
 	const marker = stream.getCharacters(4);
 	assert(marker === ICHA, "Expected to find ICHAR marker.", stream);
-	let size = stream.getUint32();
+	// skip over size
+	stream.getUint32();
 	let name = stream.getCStringWithLength(0x10, "iso-8859-2");
 	let type = stream.getInt16();
 	let movementType = stream.getInt16();
@@ -43,7 +42,8 @@ const parseCharacter = (stream: InputStream, data: any, gameType: GameType) => {
 };
 
 export const parseCharacters = (stream: InputStream, data: any, type: GameType) => {
-	let size = stream.getUint32();
+	// skip over size
+	stream.getUint32();
 	let characters = [];
 
 	do {
@@ -57,8 +57,9 @@ export const parseCharacters = (stream: InputStream, data: any, type: GameType) 
 };
 
 export const parseCharacterAux = (stream: InputStream, data: any) => {
-	let size = stream.getUint32();
-	let success: boolean;
+	// skip over size
+	stream.getUint32();
+
 	do {
 		let index = stream.getInt16();
 		if (index === -1) break;
@@ -81,7 +82,9 @@ export const parseCharacterWeapon = (stream: InputStream, data: any, index: numb
 };
 
 export const parseCharacterWeapons = (stream: InputStream, data: any): void => {
-	let size = stream.getUint32();
+	// skip over size
+	stream.getUint32();
+
 	do {
 		let index = stream.getInt16();
 		if (index === -1) break;

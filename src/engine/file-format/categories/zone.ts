@@ -16,19 +16,24 @@ const parseZone = (stream: InputStream, data: any, gameType: GameType) => {
 	let planet = 0;
 	if (gameType === Yoda) {
 		planet = stream.getUint16();
-		let size = stream.getUint32();
-		let index = stream.getUint16();
+		// skip over size
+		stream.getUint32();
+		// skip over zone index
+		stream.getUint16();
 	}
 
 	let marker = stream.getCharacters(4);
 	assert(marker === IZON, `Expected to find category ${IZON}.`, stream);
 
-	let size = stream.getUint32();
+	// skip over size
+	stream.getUint32();
 	let width = stream.getUint16();
 	let height = stream.getUint16();
 	let zoneType = stream.getUint32();
 	if (gameType === Yoda) {
-		let padding = stream.getUint16();
+		// skip over padding value
+		stream.getUint16();
+
 		let planet_again = stream.getUint16();
 		assert(planet == planet_again, "Expected to find the same planet again", stream);
 	}
@@ -89,7 +94,8 @@ const parseZone = (stream: InputStream, data: any, gameType: GameType) => {
 export const parseZones = (stream: InputStream, data: any, gameType: GameType) => {
 	let count = stream.getUint16();
 	if (gameType === Indy) {
-		let unknown = stream.getUint16();
+		// skip over unknown value
+		stream.getUint16();
 		count = stream.getUint16();
 	}
 
@@ -100,11 +106,13 @@ export const parseZones = (stream: InputStream, data: any, gameType: GameType) =
 	data.zones = zones;
 };
 
-const parseZoneAux = (stream: InputStream, data: any): any => {
+const parseZoneAux = (stream: InputStream, _: any): any => {
 	let marker = stream.getCharacters(4);
 	assert(marker === IZAX, `Expected to find category ${IZAX}.`, stream);
-	let size = stream.getUint32();
-	let unknownCount = stream.getUint16();
+	// skip over size
+	stream.getUint32();
+	// skip over unknown value
+	stream.getUint16();
 
 	let npcCount = stream.getUint16();
 	let npcs = [];
@@ -121,10 +129,11 @@ const parseZoneAux = (stream: InputStream, data: any): any => {
 	return { npcs, requiredItemIDs, goalItemIDs };
 };
 
-const parseZoneAux2 = (stream: InputStream, data: any): any => {
+const parseZoneAux2 = (stream: InputStream, _: any): any => {
 	let marker = stream.getCharacters(4);
 	assert(marker === IZX2, `Expected to find category ${IZX2}.`, stream);
-	let size = stream.getUint32();
+	// skip over size
+	stream.getUint32();
 
 	let providedItemCount = stream.getUint16();
 	let providedItemIDs = stream.getUint16Array(providedItemCount);
@@ -132,10 +141,11 @@ const parseZoneAux2 = (stream: InputStream, data: any): any => {
 	return { providedItemIDs };
 };
 
-const parseZoneAux3 = (stream: InputStream, data: any): any => {
+const parseZoneAux3 = (stream: InputStream, _: any): any => {
 	let marker = stream.getCharacters(4);
 	assert(marker === IZX3, `Expected to find category ${IZX3}.`, stream);
-	let size = stream.getUint32();
+	// skip over size
+	stream.getUint32();
 
 	let puzzleNPCCount = stream.getUint16();
 	let puzzleNPCIDs = stream.getUint16Array(puzzleNPCCount);
@@ -143,17 +153,20 @@ const parseZoneAux3 = (stream: InputStream, data: any): any => {
 	return { puzzleNPCIDs };
 };
 
-const parseZoneAux4 = (stream: InputStream, data: any): any => {
+const parseZoneAux4 = (stream: InputStream, _: any): any => {
 	let marker = stream.getCharacters(4);
 	assert(marker === IZX4, `Expected to find category ${IZX4}.`, stream);
-	let size = stream.getUint32();
+	// skip over size
+	stream.getUint32();
 
 	let unknown = stream.getUint16();
 	return { unknown };
 };
 
 export const parseZoneNames = (stream: InputStream, data: any) => {
-	let size = stream.getUint32();
+	// skip over size
+	stream.getUint32();
+
 	do {
 		let zoneID = stream.getInt16();
 		if (zoneID === -1) {
@@ -166,20 +179,24 @@ export const parseZoneNames = (stream: InputStream, data: any) => {
 
 export const parseZaux = (stream: InputStream) => {
 	let size = stream.getUint32();
-	let data = stream.getUint8Array(size);
+	stream.getUint8Array(size);
+	// TODO: use aux data
 };
 
 export const parseZax2 = (stream: InputStream) => {
 	let size = stream.getUint32();
-	let data = stream.getUint8Array(size);
+	stream.getUint8Array(size);
+	// TODO: use aux data
 };
 
 export const parseZax3 = (stream: InputStream) => {
 	let size = stream.getUint32();
-	let data = stream.getUint8Array(size);
+	stream.getUint8Array(size);
+	// TODO: use aux data
 };
 
 export const parseZax4 = (stream: InputStream) => {
 	let size = stream.getUint32();
-	let data = stream.getUint8Array(size);
+	stream.getUint8Array(size);
+	// TODO: use aux data
 };

@@ -2,7 +2,9 @@ import { InputStream } from "src/util";
 import { assert } from "../error";
 
 export const parseSounds = (stream: InputStream, data: any) => {
-	let size = stream.getUint32();
+	// skip over size
+	stream.getUint32();
+
 	let count = -stream.getInt16();
 	let sounds = new Array(count);
 	for (let i = 0; i < count; i++) {
