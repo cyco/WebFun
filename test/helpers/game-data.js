@@ -8,6 +8,7 @@ export default (type, callback) => {
 		const file = type === Yoda ? "yoda.data" : "indy.data";
 		getFixtureData(file, function(file) {
 			if (!file) {
+				console.warn(`Game data could not be found.`);
 				callback && callback(null);
 				resolve(null);
 				return;
