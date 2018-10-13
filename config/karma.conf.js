@@ -4,7 +4,7 @@ const webpackConfig = require("./webpack.test.js");
 
 const Paths = require("./paths");
 
-const ci = !!process.env.ci;
+const ci = !!+process.env.ci;
 const includeCoverage = !!process.env.coverage || ci;
 const includeJunit = !!process.env.junit || ci;
 const runUnitTests = !process.env.scope || ~process.env.scope.indexOf("unit");
