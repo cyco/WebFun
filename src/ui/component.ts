@@ -1,6 +1,4 @@
-import BabelHTMLElement from "./babel-html-element";
-
-abstract class Component extends BabelHTMLElement {
+abstract class Component extends HTMLElement {
 	public static tagName: string;
 	public static observedAttributes: string[];
 
