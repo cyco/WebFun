@@ -4600,6 +4600,13 @@ karma-junit-reporter@^1.2.0:
     path-is-absolute "^1.0.0"
     xmlbuilder "8.2.2"
 
+karma-sonarqube-unit-reporter@^0.0.18:
+  version "0.0.18"
+  resolved "https://registry.yarnpkg.com/karma-sonarqube-unit-reporter/-/karma-sonarqube-unit-reporter-0.0.18.tgz#86a550afaac8c853a9c52fb1a75735279e29f431"
+  integrity sha512-JucHngf83yAQn+n1YDwFGL43HvxVLW+fHnmLoMMzm2P7rCkk4ATLU7x1nEl/to5fqGbx4RCazFAlXJpDH72M5Q==
+  dependencies:
+    xmlbuilder "3.1.0"
+
 karma-sourcemap-loader@^0.3.7:
   version "0.3.7"
   resolved "https://registry.yarnpkg.com/karma-sourcemap-loader/-/karma-sourcemap-loader-0.3.7.tgz#91322c77f8f13d46fed062b042e1009d4c4505d8"
@@ -4917,7 +4924,7 @@ lodash.uniq@^4.5.0:
   resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
   integrity sha1-0CJTc662Uq3BvILklFM5qEJ1R3M=
 
-lodash@^3.6.0, lodash@^3.8.0:
+lodash@^3.5.0, lodash@^3.6.0, lodash@^3.8.0:
   version "3.10.1"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-3.10.1.tgz#5bf45e8e49ba4189e17d482789dfd15bd140b7b6"
   integrity sha1-W/Rejkm6QYnhfUgnid/RW9FAt7Y=
@@ -8440,6 +8447,13 @@ xml-name-validator@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/xml-name-validator/-/xml-name-validator-3.0.0.tgz#6ae73e06de4d8c6e47f9fb181f78d648ad457c6a"
   integrity sha512-A5CUptxDsvxKJEU3yO6DuWBSJz/qizqzJKOMIfUJHETbBw/sFaDxgd6fxm1ewUaM0jZ444Fc5vC5ROYurg/4Pw==
+
+xmlbuilder@3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/xmlbuilder/-/xmlbuilder-3.1.0.tgz#2c86888f2d4eade850fa38ca7f7223f7209516e1"
+  integrity sha1-LIaIjy1OrehQ+jjKf3Ij9yCVFuE=
+  dependencies:
+    lodash "^3.5.0"
 
 xmlbuilder@8.2.2:
   version "8.2.2"
