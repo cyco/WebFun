@@ -11,19 +11,19 @@ class DiscardingStorage implements Storage {
 
 	clear() {}
 
-	getItem(key: string): string | null {
+	getItem(_: string): string | null {
 		return null;
 	}
 
-	key(index: number): string | null {
+	key(_: number): string | null {
 		return null;
 	}
 
-	removeItem(key: string): void {}
+	removeItem(_: string): void {}
 
-	setItem(key: string, data: string): void {}
+	setItem(_: string, __: string): void {}
 
-	prefixedWith(s: string): Storage {
+	prefixedWith(_: string): Storage {
 		return this;
 	}
 }

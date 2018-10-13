@@ -27,11 +27,11 @@ describe("DOMImageFactory", () => {
 		factory.palette = colorPalette;
 
 		const pixelData = [0, 1, 2, 3, 4, 5];
-		const image = factory.buildImage(3, 2, pixelData);
+		const image = await factory.buildImage(3, 2, pixelData);
 		expect(image.width).toBe(3);
 		expect(image.height).toBe(2);
 
-		const representation = await image.representation;
+		const representation = image.representation;
 		expect(representation).toBeInstanceOf(HTMLImageElement);
 		done();
 	});

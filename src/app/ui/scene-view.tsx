@@ -1,6 +1,6 @@
 import { SceneManager } from "src/engine";
 import Settings from "src/settings";
-import { rgb } from "src/util";
+import { rgb, Point, Size, Rectangle } from "src/util";
 import DebugInfoSceneManager from "../../debug/debug-info-scene-manager";
 import Component from "src/ui/component";
 import "./scene-view.scss";
@@ -26,8 +26,13 @@ class SceneView extends Component {
 	}
 
 	private _buildSceneManager() {
-		if (Settings.debug) return new DebugInfoSceneManager();
-		return new SceneManager();
+		const determineBounds = () => {
+			const { left, top, width, height } = this.getBoundingClientRect();
+			return new Rectangle(new Point(left, top), new Size(width, height));
+		};
+
+		if (Settings.debug) return new DebugInfoSceneManager(determineBounds);
+		return new SceneManager(determineBounds);
 	}
 }
 

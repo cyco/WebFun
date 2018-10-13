@@ -1,7 +1,7 @@
 import { Tile } from "src/engine/objects";
 import Settings from "src/settings";
 import { SpeechBubble } from "src/ui/components";
-import { Point, Size } from "src/util";
+import { Point, Size, Rectangle } from "src/util";
 import { ModalSession } from "src/ux";
 import Engine from "../engine";
 import Scene from "./scene";
@@ -12,13 +12,14 @@ class SpeechScene extends Scene {
 	public location: Point;
 	public tileSize: Size = new Size(Tile.WIDTH, Tile.HEIGHT);
 	private _modalSession: ModalSession = null;
-	private _bubble: SpeechBubble;
+	private _bubble: SpeechBubble = (
+		<SpeechBubble onend={() => this.engine.sceneManager.popScene()} />
+	) as SpeechBubble;
 
 	constructor(engine: Engine = null) {
 		super();
 
 		this.engine = engine;
-		this._setupBubble();
 	}
 
 	get text() {
@@ -39,12 +40,6 @@ class SpeechScene extends Scene {
 		return text;
 	}
 
-	private _setupBubble() {
-		const bubble = <SpeechBubble>document.createElement(SpeechBubble.tagName);
-		bubble.onend = () => this.engine.sceneManager.popScene();
-		this._bubble = bubble;
-	}
-
 	render() {}
 
 	willShow() {
@@ -53,12 +48,10 @@ class SpeechScene extends Scene {
 		this._modalSession.run();
 
 		const anchor = Point.add(this.location, this.cameraOffset);
+		const { origin } = this.engine.sceneManager.bounds;
 
-		const windowOffset = this._determineGlobalOffset();
-
-		// TODO: fix positioning
-		const x = anchor.x * this.tileSize.width + windowOffset.x + 32;
-		const y = anchor.y * this.tileSize.height + windowOffset.y + 2 * 32;
+		const x = anchor.x * this.tileSize.width + origin.x + 16;
+		const y = anchor.y * this.tileSize.height + origin.y + 32 + 32;
 		this._bubble.origin = new Point(x, y);
 		this._bubble.show();
 	}
@@ -70,15 +63,8 @@ class SpeechScene extends Scene {
 	}
 
 	willHide() {
-		this.engine.inputManager.mouseDownHandler = null;
+		this.engine.inputManager.mouseDownHandler = () => void 0;
 		this._modalSession.end(0);
-	}
-
-	private _determineGlobalOffset(): Point {
-		const canvas = document.querySelector('canvas[width="288"][height="288"]');
-		const box = canvas.getBoundingClientRect();
-
-		return new Point(box.left, box.top, 0);
 	}
 }
 

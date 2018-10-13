@@ -30,7 +30,7 @@ class Location extends Component {
 		super.connectedCallback();
 
 		this.innerHTML = LocationSVG;
-		this._svg = <SVGElement>this.querySelector("svg");
+		this._svg = this.querySelector("svg");
 		this._updateClassList();
 	}
 

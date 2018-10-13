@@ -95,7 +95,7 @@ class Loader extends EventTarget {
 		this._loadTileImages();
 	}
 
-	private _loadTileImages() {
+	private async _loadTileImages() {
 		this._progress(5, 0);
 		const tiles = this._data.tiles;
 		const imageFactory = this._imageFactory;
@@ -105,17 +105,17 @@ class Loader extends EventTarget {
 
 		imageFactory.prepare(tileCount);
 
-		const loadBatch = (idx: number) => {
+		const loadBatch = async (idx: number) => {
 			const max = Math.min(idx + TileImageBatchSize, tileCount);
 			for (; idx < max; idx++) {
 				const tile = tiles[idx];
-				tile.image = imageFactory.buildImage(tileWidth, tileHeight, tile.imageData);
+				tile.image = await imageFactory.buildImage(tileWidth, tileHeight, tile.imageData);
 				if (tile.image && tile.name) tile.image.representation.title = tile.name;
 				this._progress(5, 4 * (idx / tileCount));
 			}
 		};
 
-		const loadTileImage = (idx: number) => {
+		const loadTileImage = async (idx: number) => {
 			if (idx >= tileCount) {
 				this._imageFactory.finalize();
 				this._progress(9, 1);
@@ -123,7 +123,7 @@ class Loader extends EventTarget {
 				return;
 			}
 
-			loadBatch(idx);
+			await loadBatch(idx);
 
 			dispatch(() => loadTileImage(idx + TileImageBatchSize));
 		};

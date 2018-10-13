@@ -1,5 +1,5 @@
 import Button from "./button";
-import { dispatch, Point } from "src/util";
+import { Point } from "src/util";
 import "./speech-bubble.scss";
 import Component from "../component";
 
@@ -116,7 +116,7 @@ class SpeechBubble extends Component {
 
 	set origin(p: Point) {
 		this.style.left = p.x - parseInt(this._width + "") / 2 + "px";
-		this.style.top = p.x + "px";
+		this.style.top = p.y + "px";
 	}
 
 	get origin(): Point {

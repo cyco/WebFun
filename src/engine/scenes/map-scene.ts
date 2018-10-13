@@ -36,8 +36,8 @@ class MapScene extends Scene {
 	}
 
 	willHide() {
-		this.engine.inputManager.mouseDownHandler = null;
-		this.engine.inputManager.keyDownHandler = null;
+		this.engine.inputManager.mouseDownHandler = () => void 0;
+		this.engine.inputManager.keyDownHandler = () => void 0;
 	}
 
 	async update(/*ticks*/) {

@@ -13,7 +13,7 @@ class DebugInfoScene extends Scene {
 	public render(renderer: Renderer): void {
 		if (!(renderer instanceof CanvasRenderer)) return;
 
-		this.recalculateFPS();
+		this.calculateFPS();
 
 		renderer.renderText(`${this._ticks} ticks`, new Point(10, 246));
 		renderer.renderText(`${this._fps.toFixed(0)} fps, ${this._tps.toFixed(0)} tps`, new Point(10, 265));
@@ -21,17 +21,17 @@ class DebugInfoScene extends Scene {
 
 	public async update(ticks: number): Promise<void> {
 		this._ticks += ticks;
-		this.recalculateTPS();
+		this.calculateTPS();
 	}
 
-	private recalculateTPS() {
+	private calculateTPS() {
 		const now = performance.now();
 		const currentTPS = 1000 / (now - this._lastTick);
 		this._tps = this.smoothen(currentTPS, this._tps, 0.1);
 		this._lastTick = now;
 	}
 
-	private recalculateFPS() {
+	private calculateFPS() {
 		const now = performance.now();
 		const currentFPS = 1000 / (now - this._lastFrame);
 		this._fps = this.smoothen(currentFPS, this._fps);

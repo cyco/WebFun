@@ -12,27 +12,27 @@ class DiscardingOutputStream extends OutputStream {
 		return null;
 	}
 
-	writeUint8(value: number) {
+	writeUint8(_: number) {
 		this._offset += Uint8Array.BYTES_PER_ELEMENT;
 	}
 
-	writeUint16(value: number) {
+	writeUint16(_: number) {
 		this._offset += Uint16Array.BYTES_PER_ELEMENT;
 	}
 
-	writeUint32(value: number) {
+	writeUint32(_: number) {
 		this._offset += Uint32Array.BYTES_PER_ELEMENT;
 	}
 
-	writeInt8(value: number) {
+	writeInt8(_: number) {
 		this._offset += Uint8Array.BYTES_PER_ELEMENT;
 	}
 
-	writeInt16(value: number) {
+	writeInt16(_: number) {
 		this._offset += Uint16Array.BYTES_PER_ELEMENT;
 	}
 
-	writeInt32(value: number) {
+	writeInt32(_: number) {
 		this._offset += Uint32Array.BYTES_PER_ELEMENT;
 	}
 

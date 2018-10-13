@@ -48,13 +48,18 @@ export default async (prompt: string, o: Options = {}): Promise<string> => {
 
 	const input = (window.customContent as HTMLElement).querySelector(
 		[Textbox.tagName, Selector.tagName].join(",")
-	) as Textbox;
+	);
 
 	const session = new WindowModalSession(window);
 	window.onconfirm = () => session.end(1);
 	window.onabort = () => session.end(0);
 
-	if (input instanceof Textbox) dispatch(() => (input.focus(), input.select()));
+	if (input instanceof Textbox)
+		dispatch(() => {
+			input.focus();
+			input.select();
+		});
+
 	if (input instanceof Selector) dispatch(() => input.focus());
 
 	return new Promise<string>(resolve => {
@@ -63,7 +68,7 @@ export default async (prompt: string, o: Options = {}): Promise<string> => {
 				if (code === 0) {
 					resolve(null);
 				}
-				resolve(input.value);
+				resolve((input as Textbox | Selector).value);
 			});
 		session.run();
 	});

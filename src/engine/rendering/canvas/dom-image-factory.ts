@@ -21,9 +21,13 @@ class DOMImageFactory extends AbstractImageFactory {
 		this._palette = palette;
 	}
 
-	buildImage(width: number, height: number, pixelData: ArrayLike<number>): Image {
+	async buildImage(width: number, height: number, pixelData: ArrayLike<number>): Promise<Image> {
 		console.assert(!!this._palette, "Can not build images before a palette is set.");
-		const image = drawImage(pixelData as Uint8Array, new Size(width, height), this.palette).toImage();
+		const image = await drawImage(
+			pixelData as Uint8Array,
+			new Size(width, height),
+			this.palette
+		).toImage();
 		return new Image(width, height, image);
 	}
 
