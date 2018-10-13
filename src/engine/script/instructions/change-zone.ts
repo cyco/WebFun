@@ -11,7 +11,7 @@ export default <InstructionType>{
 	Opcode: 0x21,
 	Arguments: [Type.ZoneID, Type.ZoneX, Type.ZoneY],
 	Description: "Change current zone to `arg_0`. Hero will be placed at `arg_1`x`arg_2` in the new zone.",
-	Implementation: async (instruction: Instruction, engine: Engine, action: Action): Promise<Result> => {
+	Implementation: async (instruction: Instruction, engine: Engine, _: Action): Promise<Result> => {
 		const args = instruction.arguments;
 
 		const transitionScene = new TransitionScene();
@@ -29,7 +29,6 @@ export default <InstructionType>{
 		transitionScene.targetWorld = world;
 
 		if (!location) {
-			world = null;
 			location = null;
 		}
 		transitionScene.targetZoneLocation = location;
