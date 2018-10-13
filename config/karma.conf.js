@@ -101,21 +101,17 @@ if (includeCoverage) {
 }
 
 if (includeJunit) {
-	config.reporters.push("junit");
-	config.junitReporter = {
-		outputFile: Path.resolve(Paths.testReportRoot, name + ".xml"),
-		useBrowserName: false
-	};
+	config.reporters.push("sonarqube");
 
-	config.reporters.push("sonarqubeUnit");
-
-	config.sonarQubeUnitReporter = {
-		outputFile:
-			"." + Path.resolve(Paths.testReportRoot, name + "-sq.xml").substring(Paths.projectRoot.length),
-		//		overrideTestDescription: true,
-		testPaths: [Paths.testRoot],
-		testFilePattern: "*.test.*",
-		useBrowserName: false
+	config.sonarqubeReporter = {
+		basePath: "test", // test files folder
+		filePattern: "**/*.test.*", // test files glob pattern
+		encoding: "utf-8", // test files encoding
+		outputFolder: "test/reports", // report destination
+		legacyMode: false, // report for Sonarqube < 6.2 (disabled)
+		reportName: metadata => {
+			return [name].concat("xml").join(".");
+		}
 	};
 }
 
