@@ -110,6 +110,7 @@
     "karma-jasmine": "^1.1.1",
     "karma-jasmine-matchers": "^3.8.3",
     "karma-junit-reporter": "^1.2.0",
+    "karma-sonarqube-unit-reporter": "^0.0.18",
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^3.0.5",
     "node-sass": "4.9.3",
