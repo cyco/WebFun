@@ -96,21 +96,28 @@ abstract class Reader {
 
 	protected readZone(stream: InputStream, zone: MutableZone, visited: boolean) {
 		if (visited) {
-			let counter = this.readInt(stream);
-			let random = this.readInt(stream);
-			let doorInX = this.readInt(stream);
-			let doorInY = this.readInt(stream);
+			// skip over counter register
+			this.readInt(stream);
+			// skip over random register
+			this.readInt(stream);
+			// skip over door-in (x)
+			this.readInt(stream);
+			// skip over door-in (y)
+			this.readInt(stream);
 
 			if (this._type == Yoda) {
-				let padding = stream.getUint16();
-				let planet = stream.getInt16();
+				// skip over padding register
+				stream.getUint16();
+				// skip over planet
+				stream.getInt16();
 			}
 
 			let tileCount = zone.size.width * zone.size.height * Zone.LAYERS;
 			zone.tileIDs = stream.getInt16Array(tileCount);
 		}
 
-		let __visited = this.readBool(stream);
+		// skip over visited flag
+		this.readBool(stream);
 		this.readHotspots(stream, zone);
 
 		if (visited) {
@@ -139,7 +146,7 @@ abstract class Reader {
 			`Number of npcs can't be change from ${zone.npcs.length} to ${count}`
 		);
 
-		for (const npc of zone.npcs) {
+		for (const _ of zone.npcs) {
 			this.readNPC(stream);
 		}
 	}

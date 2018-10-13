@@ -31,18 +31,21 @@ class IndyReader extends Reader {
 		let posXOnWorld = stream.getUint16();
 		let posYOnWorld = stream.getUint16();
 
-		let unknown1 = stream.getUint16();
+		// skip over unknown value
+		stream.getUint16();
 		let posXOnZone = stream.getUint16();
 		let posYOnZone = stream.getUint16();
-		let u2 = stream.getInt16();
-		let u3 = stream.getInt16();
-		let u4 = stream.getInt16();
-		let u5 = stream.getInt16();
+		// skip over unknown values
+		stream.getInt16();
+		stream.getInt16();
+		stream.getInt16();
+		stream.getInt16();
 
-		let u6 = stream.getInt16();
-		let u7 = stream.getInt16();
-		let u8 = stream.getInt16();
-		let u9 = stream.getInt16();
+		stream.getInt16();
+		stream.getInt16();
+		stream.getInt16();
+
+		let goalPuzzle = stream.getInt16();
 
 		console.assert(
 			stream.isAtEnd(),
@@ -60,7 +63,7 @@ class IndyReader extends Reader {
 		state.currentZoneID = currentZoneID;
 		state.positionOnZone = new Point(posXOnZone, posYOnZone);
 		state.positionOnWorld = new Point(posXOnWorld, posYOnWorld);
-		state.goalPuzzle = u9;
+		state.goalPuzzle = goalPuzzle;
 		state.world = world;
 
 		state.damageTaken = 0;
@@ -94,8 +97,8 @@ class IndyReader extends Reader {
 		let findItemID = stream.getInt16();
 
 		let npcID = stream.getInt16();
-		// possibly zone or puzzle type
-		let unkonwn = stream.getInt16();
+		// possibly zone or puzzle type, skip over it
+		stream.getInt16();
 
 		const worldItem = new WorldItem();
 		worldItem.visited = visited;
