@@ -141,7 +141,6 @@ class Slider extends Component {
 
 		const mouseMove = (e: MouseEvent) => {
 			let difX = e.pageX - mouseCoordinates.x;
-			let _ = e.pageY - mouseCoordinates.y;
 
 			const buttonWidth = 16;
 			const width = this.getBoundingClientRect().width - 2 * buttonWidth;

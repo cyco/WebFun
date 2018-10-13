@@ -24,10 +24,6 @@
 		> td,
 		th {
 			@include inset-border-inverted(1px);
-			&:first-child {
-				border-left-width: 0;
-			}
-
 			width: 14px;
 			text-align: center;
 			font-weight: normal;
@@ -35,12 +31,14 @@
 			margin: 0px;
 			padding: 0px;
 
-			&:first-child {
-				width: 34px;
-			}
-			&:nth-child(25),
-			&:nth-child(29) {
+			&:nth-child(29),
+			&:nth-child(25) {
 				border-left-width: 2px;
+			}
+
+			&:first-child {
+				border-left-width: 0;
+				width: 34px;
 			}
 		}
 	}

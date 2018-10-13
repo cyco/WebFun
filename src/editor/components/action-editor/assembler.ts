@@ -117,7 +117,7 @@ class Assembler {
 			);
 		}
 
-		if (!(typeof text === "string")) {
+		if (typeof text !== "string") {
 			throw new AssemblerInputError("Expected last argument to be a string.", input);
 		}
 
