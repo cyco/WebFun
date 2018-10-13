@@ -26,6 +26,8 @@ const Conditions = <OpcodeMap>ConditionsByName;
 const Instructions = <OpcodeMap>InstructionsByName;
 
 class Assembler {
+	private checkArgumentCount: boolean = false;
+
 	public assemble(input: AST): Action {
 		const result = new MutableAction();
 
@@ -110,7 +112,7 @@ class Assembler {
 
 		const text = opcode.UsesText ? args.pop() : "";
 
-		if (false && ~opcode.Arguments && args.length !== opcode.Arguments.length) {
+		if (this.checkArgumentCount && ~opcode.Arguments && args.length !== opcode.Arguments.length) {
 			throw new AssemblerInputError(
 				`Expected ${opcode.Arguments} arguments but found ${args.length}.`,
 				input
