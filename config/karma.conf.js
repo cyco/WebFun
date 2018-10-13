@@ -106,6 +106,17 @@ if (includeJunit) {
 		outputFile: Path.resolve(Paths.testReportRoot, name + ".xml"),
 		useBrowserName: false
 	};
+
+	config.reporters.push("sonarqubeUnit");
+
+	config.sonarQubeUnitReporter = {
+		outputFile:
+			"." + Path.resolve(Paths.testReportRoot, name + "-sq.xml").substring(Paths.projectRoot.length),
+		//		overrideTestDescription: true,
+		testPaths: [Paths.testRoot],
+		testFilePattern: "*.test.*",
+		useBrowserName: false
+	};
 }
 
 if (runAcceptanceTests) {
