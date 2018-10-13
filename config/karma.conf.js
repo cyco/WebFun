@@ -74,7 +74,7 @@ if (runUnitTests && runAcceptanceTests && runPerformanceTests) {
 }
 
 if (includeCoverage) {
-	let fileName = name + ".locv";
+	let fileName = name + ".lcov";
 
 	config.reporters.push("coverage-istanbul");
 	config.coverageIstanbulReporter = {
