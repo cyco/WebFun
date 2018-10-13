@@ -3,7 +3,7 @@ import SaveState from "./save-state";
 import GameData from "../game-data";
 import { InputStream, Point } from "src/util";
 import { Hotspot, HotspotType, Tile } from "src/engine/objects";
-import { MutableHotspot } from "src/engine/mutable-objects";
+import { MutableHotspot, MutableNPC } from "src/engine/mutable-objects";
 import { Planet, WorldSize } from "../types";
 import WorldItem from "./world-item";
 import { Yoda } from "../type";
@@ -102,7 +102,7 @@ class YodaReader extends Reader {
 		return state;
 	}
 
-	protected readWorldItem(stream: InputStream, x: number, y: number): WorldItem {
+	protected readWorldItem(stream: InputStream, _x: number, _y: number): WorldItem {
 		let visited = this.readBool(stream);
 		let solved_1 = this.readBool(stream);
 		let solved_2 = this.readBool(stream);
@@ -120,7 +120,8 @@ class YodaReader extends Reader {
 		let npc_id = stream.getInt16();
 
 		let zoneType = stream.getInt32();
-		let unknown_2 = stream.getInt16();
+		// skip over unknown value
+		stream.getInt16();
 
 		const worldItem = new WorldItem();
 		worldItem.visited = visited;
@@ -142,38 +143,63 @@ class YodaReader extends Reader {
 	}
 
 	protected readNPC(stream: InputStream): void {
-		let character_id = stream.getInt16();
+		// skip over char id
+		stream.getInt16();
 		let x = stream.getInt16();
 		let y = stream.getInt16();
-		let field_a = stream.getInt16();
+		// skip over unknown value (field_a)
+		stream.getInt16();
 		let enabled = stream.getUint32() != 0;
-		let field_10 = stream.getInt16();
-		let field_x__ = stream.getInt16();
-		let field_y__ = stream.getInt16();
-		let current_frame = stream.getInt16();
-		let field_18 = stream.getUint32();
-		let field_1c = stream.getUint32();
-		let field_2 = stream.getUint32();
-		let field_x_ = stream.getInt16();
-		let field_y_ = stream.getInt16();
-		let field_3c = stream.getInt16();
-		let field_3e = stream.getInt16();
-		let field_60 = stream.getInt16();
-		let field_26 = stream.getInt16();
-		let field_2c = stream.getUint32();
-		let field_34 = stream.getUint32();
-		let field_28 = stream.getUint32();
+		// skip over unknown value (field_10)
+		stream.getInt16();
 
-		let field_24 = stream.getInt16();
-		let unknown = stream.getInt16();
+		// skip over unknown value (field_x__)
+		stream.getInt16();
+		// skip over unknown value (field_y__)
+		stream.getInt16();
+		// skip over current frame
+		stream.getInt16();
+		// skip over unknown value (field_18)
+		stream.getUint32();
+		// skip over unknown value (field_1c)
+		stream.getUint32();
+		// skip over unknown value (field_2)
+		stream.getUint32();
+		// skip over unknown value (field_x_)
+		stream.getInt16();
+		// skip over unknown value (field_y_)
+		stream.getInt16();
+		// skip over unknown value (field_3c)
+		stream.getInt16();
+		// skip over unknown value (field_3e)
+		stream.getInt16();
+		// skip over unknown value (field_60)
+		stream.getInt16();
+		// skip over unknown value (field_26)
+		stream.getInt16();
+		// skip over unknown value (field_2c)
+		stream.getUint32();
+		// skip over unknown value (field_34)
+		stream.getUint32();
+		// skip over unknown value (field_28)
+		stream.getUint32();
+
+		// skip over unknown value (field_24)
+		stream.getInt16();
+		// skip over unknown value (
+		stream.getInt16();
 
 		for (let i = 0; i < 4; i++) {
 			stream.getUint32();
 			stream.getUint32();
 		}
+
+		const npc = new MutableNPC();
+		npc.enabled = enabled;
+		npc.position = new Point(x, y);
 	}
 
-	protected readHotspot(stream: InputStream, oldHotspot: Hotspot): Hotspot {
+	protected readHotspot(stream: InputStream, _: Hotspot): Hotspot {
 		let enabled = stream.getUint16() != 0;
 		let argument = stream.getInt16();
 		let type = HotspotType.fromNumber(stream.getUint32());
