@@ -1,13 +1,14 @@
-import ParseError from "../parse-error";
 import { InputStream } from "src/util";
 import { assert } from "../error";
 import { GameType, Yoda } from "src/engine/type";
 
 const IPUZ = "IPUZ";
-const parsePuzzle = (stream: InputStream, data: any, gameType: GameType) => {
+const parsePuzzle = (stream: InputStream, _: any, gameType: GameType) => {
 	let marker = stream.getCharacters(4);
 	assert(marker == IPUZ, "Expected to find category marker IPUZ", stream);
-	let size = stream.getUint32();
+	// skip over size
+	stream.getUint32();
+
 	let type = 0;
 	if (gameType === Yoda) {
 		type = stream.getUint32();
@@ -41,7 +42,9 @@ const parsePuzzle = (stream: InputStream, data: any, gameType: GameType) => {
 };
 
 export const parsePuzzles = (stream: InputStream, data: any, gameType: GameType) => {
-	let size = stream.getUint32();
+	// skip over size
+	stream.getUint32();
+
 	let puzzles = [];
 	do {
 		let index = stream.getInt16();
@@ -53,7 +56,9 @@ export const parsePuzzles = (stream: InputStream, data: any, gameType: GameType)
 };
 
 export const parsePuzzleNames = (stream: InputStream, data: any) => {
-	let size = stream.getUint32();
+	// skip over size
+	stream.getUint32();
+
 	let count = stream.getInt16();
 	for (let i = 0; i < count; i++) {
 		data.puzzles[i].name = stream.getCStringWithLength(0x10, "iso-8859-2");

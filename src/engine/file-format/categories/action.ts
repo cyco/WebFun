@@ -1,6 +1,5 @@
-import ParseError from "../parse-error";
 import { InputStream } from "src/util";
-import { error, assert } from "../error";
+import { assert } from "../error";
 
 const IACT = "IACT";
 
@@ -16,10 +15,11 @@ const parseActionItem = (stream: InputStream) => {
 const parseCondition = parseActionItem;
 const parseInstruction = parseActionItem;
 
-export const parseAction = (stream: InputStream, data: any) => {
+export const parseAction = (stream: InputStream, _: any) => {
 	const category = stream.getCharacters(4);
 	assert(category === IACT, `Expected to find category ${IACT}.`, stream);
-	let size = stream.getUint32();
+	// ignore size
+	stream.getUint32();
 
 	let conditionCount = stream.getUint16();
 	const conditions = new Array(conditionCount);
@@ -37,7 +37,9 @@ export const parseAction = (stream: InputStream, data: any) => {
 };
 
 export const parseActions = (stream: InputStream, data: any) => {
-	let size = stream.getUint32();
+	// skip over size
+	stream.getUint32();
+
 	do {
 		let zoneID = stream.getInt16();
 		if (zoneID === -1) break;
@@ -53,7 +55,9 @@ export const parseActions = (stream: InputStream, data: any) => {
 };
 
 export const parseActionNames = (stream: InputStream, data: any) => {
-	let size = stream.getUint32();
+	// skip over size
+	stream.getUint32();
+
 	do {
 		let zoneID = stream.getInt16();
 		if (zoneID === -1) {

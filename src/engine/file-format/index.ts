@@ -1,6 +1,7 @@
 import { InputStream } from "src/util";
 import { GameType } from "src/engine";
 import ParseError from "./parse-error";
+
 import {
 	parseActions,
 	parseActionNames,
@@ -77,3 +78,5 @@ export default (input: InputStream, type: GameType): any => {
 
 	return data;
 };
+
+export { ParseError };
