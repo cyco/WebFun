@@ -59,7 +59,7 @@ class SceneManager {
 	}
 
 	clear() {
-		while (this.popScene());
+		while (this.popScene()) true; /* nop */
 	}
 
 	get bounds() {

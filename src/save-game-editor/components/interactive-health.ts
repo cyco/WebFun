@@ -29,7 +29,7 @@ class InteractiveHealth extends Health implements EventListenerObject {
 		const { left, width, top, height } = this.getBoundingClientRect();
 		const center = new Point(left + width / 2, top + height / 2);
 		const point = new Point(event.clientX, event.clientY).subtract(center);
-		const [_, angle] = xy2polar(point.x, point.y);
+		const [, angle] = xy2polar(point.x, point.y);
 
 		let normangle = rad2deg(360 - angle) % 360;
 		let base = ceil(this.health / 100) * 100;

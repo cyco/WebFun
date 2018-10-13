@@ -16,15 +16,13 @@ class ContextMenu extends MenuWindow implements EventListenerObject {
 	}
 
 	public handleEvent(e: MouseEvent | KeyboardEvent) {
-		switch (e.type) {
-			case "mouseup":
-				const node = (e.target as Element).closest(MenuItem.tagName) as MenuItem;
-				if (node && node.item.enabled) {
-					this.stack.clear();
+		if (e.type === "mouseup") {
+			const node = (e.target as Element).closest(MenuItem.tagName) as MenuItem;
+			if (node && node.item.enabled) {
+				this.stack.clear();
 
-					if (node.item.callback) node.item.callback();
-				}
-				break;
+				if (node.item.callback) node.item.callback();
+			}
 		}
 
 		e.stopPropagation();

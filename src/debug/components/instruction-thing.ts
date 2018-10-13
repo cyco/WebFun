@@ -25,10 +25,7 @@ abstract class InstructionThing extends Component {
 	abstract get type(): string;
 
 	protected _open(): Element {
-		const element = document.createElement("span");
-		element.innerText = "(";
-		element.classList.add("paren-open");
-		return element;
+		return this._paren("open");
 	}
 
 	protected _command(name: string) {
@@ -39,9 +36,13 @@ abstract class InstructionThing extends Component {
 	}
 
 	protected _close(): Element {
+		return this._paren("close");
+	}
+
+	private _paren(type: "open" | "close") {
 		const element = document.createElement("span");
 		element.innerText = ")";
-		element.classList.add("paren-close");
+		element.classList.add(type === "close" ? "paren-close" : "paren-open");
 		return element;
 	}
 }

@@ -141,20 +141,18 @@ class SidebarLayersCell extends Component {
 	}
 
 	private _toggleVisiblilty() {
-		const layer = this.activeLayer;
-		if (!layer) return;
-
-		const iconButton = <HTMLElement>layer.querySelector("i.fa-eye,i.fa-eye-slash");
-		if (!iconButton) return;
-
-		iconButton.onclick(new MouseEvent("click"));
+		this._toggle(["i.fa-eye", "i.fa-eye-slash"].join(","));
 	}
 
 	private _toggleLock() {
+		this._toggle(["i.fa-lock", "i.fa-unlock-alt"].join(","));
+	}
+
+	private _toggle(iconButtonSelector: string) {
 		const layer = this.activeLayer;
 		if (!layer) return;
 
-		const iconButton = <HTMLElement>layer.querySelector("i.fa-lock,i.fa-unlock-alt");
+		const iconButton = <HTMLElement>layer.querySelector(iconButtonSelector);
 		if (!iconButton) return;
 
 		iconButton.onclick(new MouseEvent("click"));
