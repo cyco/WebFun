@@ -29,15 +29,13 @@ pipeline {
 
                 stage("Run Acceptance Tests") {
                     steps {
-                        echo "skip"
                         sh 'ci=1 yarn test:acceptance'
                     }
                 }
 
                 stage("Run Performance Tests") {
                     steps {
-                        echo "skip"
-                        // sh 'ci=1 yarn test:performance'
+                        sh 'ci=1 yarn test:performance'
                     }
                 }
             }
