@@ -5,7 +5,7 @@ abstract class AbstractImageFactory {
 	public palette: ColorPalette;
 	public onpalettechange: Function;
 
-	abstract buildImage(width: number, height: number, pixelData: Uint8Array): Image;
+	abstract buildImage(width: number, height: number, pixelData: Uint8Array): Promise<Image>;
 
 	prepare(_: number) {}
 

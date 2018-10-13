@@ -32,11 +32,11 @@ class DetonatorScene extends Scene {
 			.clone()
 			.scaleBy(9)
 			.floor();
-		this.engine.inputManager.mouseDownHandler = null;
+		this.engine.inputManager.mouseDownHandler = () => void 0;
 	}
 
 	willHide() {
-		this.engine.inputManager.mouseDownHandler = null;
+		this.engine.inputManager.mouseDownHandler = () => void 0;
 	}
 
 	async update(/*ticks*/) {

@@ -11,7 +11,14 @@ class LoadingView extends Component {
 	private _palette: ColorPalette;
 
 	private _imageCanvas: HTMLCanvasElement = (
-		<canvas width={288} height={288} ondragstart={e => (e.preventDefault(), false)} />
+		<canvas
+			width={288}
+			height={288}
+			ondragstart={e => {
+				e.preventDefault();
+				return false;
+			}}
+		/>
 	) as HTMLCanvasElement;
 	private _progressBar: SegmentedProgressBar = <SegmentedProgressBar /> as SegmentedProgressBar;
 

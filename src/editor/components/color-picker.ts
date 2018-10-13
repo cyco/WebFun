@@ -109,7 +109,7 @@ class ColorPicker extends Component {
 	set color(c: string | Color) {
 		this._color = new Color(c);
 
-		const [h, s, v] = this._color.hsvComponents;
+		const [_, __, v] = this._color.hsvComponents;
 		this._brightnessInput.value = `${Math.round(v * 255)}`;
 		this._wheel.setAttribute("color", `${this._color}`);
 

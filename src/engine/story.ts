@@ -44,7 +44,7 @@ class Story {
 		return this._dagobah;
 	}
 
-	generateWorld(engine: Engine): void {
+	public generateWorld(engine: Engine): void {
 		let generator = null;
 		let success = false;
 		let effectiveSeed = this.seed;

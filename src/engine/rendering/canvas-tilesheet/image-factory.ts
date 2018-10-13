@@ -14,10 +14,10 @@ class ImageFactory extends DOMImageFactory {
 		this.sheet.draw(this);
 	}
 
-	public buildImage(width: number, height: number, pixelData: Uint8Array): Image {
+	public buildImage(width: number, height: number, pixelData: Uint8Array): Promise<Image> {
 		if (width === Tile.WIDTH && height === Tile.HEIGHT) {
 			const entry = this.sheet.add(pixelData);
-			return new Image(width, height, entry);
+			return Promise.resolve(new Image(width, height, entry));
 		}
 
 		return super.buildImage(width, height, pixelData);

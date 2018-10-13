@@ -1,6 +1,5 @@
 import { Component } from "src/ui";
 import { Point } from "src/util";
-import { SVGPoint, SVGTransform, SVGMatrix } from "src/std/svg";
 import "./transform-canvas.scss";
 
 export interface TransformCanvasRenderingContext2D extends CanvasRenderingContext2D {
@@ -63,7 +62,7 @@ class TransformCanvas extends Component implements EventListenerObject {
 						? -event.detail
 						: 0;
 				if (delta) this.zoom(delta);
-				return event.preventDefault() && false;
+				event.preventDefault();
 				break;
 			case "mousedown":
 				console.log("mouse down");

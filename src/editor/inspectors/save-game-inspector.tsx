@@ -2,9 +2,12 @@ import AbstractInspector from "./abstract-inspector";
 import { IconButton } from "src/ui/components";
 import { EditorView } from "src/save-game-editor";
 import { Writer } from "src/engine/save-game";
-import { Story } from "src/engine";
+import MutableStory from "src/engine/mutable-story";
 import { download, OutputStream, DiscardingOutputStream } from "src/util";
 import GameController from "src/app/game-controller";
+import { World } from "src/engine/generation";
+import SaveGameWorld from "src/engine/save-game/world";
+import { ZoneType } from "src/engine/objects";
 import "./save-game-inspector.scss";
 
 class SaveGameInspector extends AbstractInspector {
@@ -15,7 +18,7 @@ class SaveGameInspector extends AbstractInspector {
 	constructor(state: Storage) {
 		super(state);
 
-		this.window.title = "SaveGame Inspector";
+		this.window.title = "Save Game Inspector";
 		this.window.autosaveName = "save-game-inspector";
 		this.window.content.style.flexDirection = "column";
 		this.window.classList.add("wf-resource-editor-save-game-inspector");
@@ -54,13 +57,50 @@ class SaveGameInspector extends AbstractInspector {
 
 	public playSaveGame(): void {
 		const controller = new GameController();
-		controller.windowManager = this.window.manager;
 		controller.data = this.data.currentData.copy();
 		controller.palette = new Uint8Array(this.data.palette);
 
 		const state = this.data.state;
-		const story = new Story(state.seed, state.planet, state.worldSize);
-		controller.start(story);
+		const story = new MutableStory(state.seed, state.planet, state.worldSize);
+		story.world = this._createWorld(state.world);
+		story.dagobah = this._createWorld(state.dagobah);
+
+		controller.show(this.window.manager);
+	}
+
+	private _createWorld(world: SaveGameWorld): World {
+		const result = new World();
+
+		const zones = this.data.currentData.zones;
+		const tiles = this.data.currentData.tiles;
+
+		for (let y = 0; y < 10; y++) {
+			for (let x = 0; x < 10; x++) {
+				const input = world.getWorldItem(x, y);
+				const out = result.at(x, y);
+
+				result.setZone(x, y, zones[input.zoneId] || null);
+				out.additionalRequiredItem = tiles[input.additionalRequiredItem] || null;
+				input.field_16;
+				input.field_C;
+				input.field_Ea;
+				// TODO: puzzle idx and puzzle index are missing
+				out.findItem = tiles[input.find_item_id] || null;
+				out.npc = tiles[input.npc_id] || null;
+				out.requiredItem = tiles[input.required_item_id] || null;
+				out.zone = zones[input.zoneId] || null;
+				out.zoneType = ZoneType.fromNumber(input.zoneType);
+				if (out.zone) out.zone.visited = input.visited;
+				if (out.zone) out.zone.solved = input.solved_1 !== 0;
+				console.assert(
+					input.solved_1 === input.solved_2 &&
+						input.solved_2 === input.solved_3 &&
+						input.solved_3 === input.solved_4
+				);
+			}
+		}
+
+		return result;
 	}
 }
 

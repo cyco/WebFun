@@ -59,8 +59,8 @@ class Health extends Component {
 	protected connectedCallback() {
 		super.connectedCallback();
 		this.innerHTML = HealthSVG;
-		this._condition = <SVGCircleElement>this.querySelector("#health-condition");
-		this._pie = <SVGPathElement>this.querySelector("#health-pie");
+		this._condition = this.querySelector("#health-condition");
+		this._pie = this.querySelector("#health-pie");
 
 		this._update();
 	}

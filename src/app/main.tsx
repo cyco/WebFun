@@ -29,12 +29,15 @@ const main = async () => {
 
 	loadSettings();
 
+	/*
 	const gameController = new GameController();
-	// gameController.start();
+	gameController.newStory();
+	gameController.show();
 
 	if (Settings.debug) {
 		initializeDebug(gameController);
 	}
+	*/
 
 	editorWindow = document.createElement(EditorWindow.tagName) as EditorWindow;
 	WindowManager.defaultManager.showWindow(editorWindow);
