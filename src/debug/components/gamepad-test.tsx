@@ -5,7 +5,7 @@ import GamepadTestCell from "./gamepad-test-cell";
 import "./gamepad-test.scss";
 
 class GamepadTest extends Component implements EventListenerObject {
-	public static tagName = "wf-debug-gamepad-test";
+	public static readonly tagName = "wf-debug-gamepad-test";
 	private _pads: Gamepad[] = Array.from(navigator.getGamepads()) || [];
 
 	private _list = <List cell={<GamepadTestCell />} items={this._pads.map((p, idx) => [p, idx])} /> as List<

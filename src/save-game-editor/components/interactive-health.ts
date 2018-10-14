@@ -1,4 +1,4 @@
-import { Health } from "src/app/ui";
+import { AbstractHealth } from "src/app/ui";
 import { Point, xy2polar, rad2deg } from "src/util";
 import { abs, ceil, sign } from "src/std/math";
 import { MouseEvent } from "src/std/dom";
@@ -6,7 +6,7 @@ import "./interactive-health.scss";
 
 const FlipThreshold = 180;
 
-class InteractiveHealth extends Health implements EventListenerObject {
+class InteractiveHealth extends AbstractHealth implements EventListenerObject {
 	public static readonly tagName = "wf-save-game-editor-health";
 	private lastAngle: number = null;
 

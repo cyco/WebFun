@@ -1,12 +1,12 @@
-import { Window, ProgressIndicator } from "src/ui/components";
-import { readGameDataFile, GameData, ColorPalette, GameType, GameTypeYoda, GameTypeIndy } from "src/engine";
-import { InputStream, PromiseProgress } from "src/util";
+import { AbstractWindow, ProgressIndicator } from "src/ui/components";
+import { readGameDataFile, GameData, GameType, GameTypeYoda, GameTypeIndy } from "src/engine";
+import { InputStream } from "src/util";
 import { PaletteProvider } from "src/app/data";
 import DataManager from "./data-manager";
 import CSSTileSheet from "./css-tile-sheet";
 import { ImageFactory } from "src/engine/rendering/canvas";
 import buildEditorMenu from "./menu";
-import { Menu, WindowMenuItem, WindowManager } from "src/ui";
+import { Menu, WindowMenuItem } from "src/ui";
 import EditorView from "./editor-view";
 
 import TileInspector from "src/editor/inspectors/tile-inspector";
@@ -19,11 +19,10 @@ import SetupImageInspector from "src/editor/inspectors/setup-image-inspector";
 
 import "./editor-window.scss";
 
-class EditorWindow extends Window {
+class EditorWindow extends AbstractWindow {
 	static readonly tagName = "wf-resource-editor-window";
 	title: string = "Resource Editor";
 	private _progressIndicator: HTMLElement = <ProgressIndicator />;
-	private _editorView: HTMLElement = <div /> as HTMLElement;
 	private _editor: EditorView = null;
 
 	protected connectedCallback() {

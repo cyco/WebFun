@@ -1,10 +1,10 @@
 import { Description } from "../../description";
 import Button from "./button";
 import "./confirmation-window.scss";
-import Window from "./window";
+import AbstractWindow from "./abstract-window";
 
-class ConfirmationWindow extends Window {
-	public static tagName = "wf-confirmation-window";
+class ConfirmationWindow extends AbstractWindow {
+	public static readonly tagName = "wf-confirmation-window";
 	public static observedAttributes = ["confirm-text", "abort-text"];
 	public onconfirm: () => void;
 	public onabort: () => void;

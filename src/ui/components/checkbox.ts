@@ -2,6 +2,7 @@ import Component from "../component";
 import "./checkbox.scss";
 
 class Checkbox extends Component {
+	public static readonly tagName = "wf-checkbox";
 	private _label: HTMLLabelElement;
 	private _box: HTMLInputElement;
 
@@ -18,10 +19,6 @@ class Checkbox extends Component {
 		const label = document.createElement("label");
 		label.setAttribute("for", boxID);
 		this._label = label;
-	}
-
-	static get tagName() {
-		return "wf-checkbox";
 	}
 
 	get title() {

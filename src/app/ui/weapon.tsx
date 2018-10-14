@@ -5,7 +5,7 @@ import { Image } from "src/std/dom";
 import "./weapon.scss";
 
 class Weapon extends Component {
-	public static tagName = "wf-weapon";
+	public static readonly tagName = "wf-weapon";
 	public data: GameData = null;
 	private _weapon: Char = null;
 	private _background: HTMLDivElement = <div className="background" /> as HTMLDivElement;

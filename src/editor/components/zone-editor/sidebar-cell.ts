@@ -4,7 +4,7 @@ import { IconButton } from "src/ui/components";
 import "./sidebar-cell.scss";
 
 class SidebarCell extends Component {
-	static readonly tagName: string = "wf-zone-editor-sidebar-cell";
+	static readonly tagName = "wf-zone-editor-sidebar-cell";
 	public expanded: boolean;
 	protected _state: Storage;
 	public content: void;

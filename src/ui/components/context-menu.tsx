@@ -1,9 +1,9 @@
-import MenuWindow from "./menu-window";
+import AbstractMenuWindow from "./abstract-menu-window";
 import MenuItem from "./menu-item";
 import "./context-menu.scss";
 
-class ContextMenu extends MenuWindow implements EventListenerObject {
-	static tagName = "wf-context-menu";
+class ContextMenu extends AbstractMenuWindow implements EventListenerObject {
+	public static readonly tagName = "wf-context-menu";
 
 	protected connectedCallback() {
 		super.connectedCallback();

@@ -1,17 +1,6 @@
 @import "border.scss";
-@import "./button.scss";
+@import "./abstract-icon-button.scss";
 
 wf-icon-button {
-	display: inline-block;
-
-	i.fa {
-		cursor: pointer;
-		display: inline-block;
-		padding: 3px;
-		font-size: 12px;
-	}
-
-	&[disabled] {
-		color: rgb(127, 127, 127);
-	}
+	@extend wf-abstract-icon-button;
 }

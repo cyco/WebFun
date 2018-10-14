@@ -4,7 +4,7 @@ import "./menu-item.scss";
 import MenuItemState from "src/ui/menu-item-state";
 
 class MenuItemComponent extends Component {
-	public static tagName: string = "wf-menu-item";
+	public static readonly tagName = "wf-menu-item";
 	private _item: MenuItem = null;
 
 	get item() {

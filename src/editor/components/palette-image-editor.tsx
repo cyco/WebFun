@@ -3,7 +3,7 @@ import { Point, Rectangle, Size } from "src/util";
 import "./palette-image-editor.scss";
 
 class PaletteImageEditor extends PaletteView {
-	public static tagName = "wf-editor-palette-image-editor";
+	public static readonly tagName = "wf-editor-palette-image-editor";
 	public colorIndex: number = 0;
 
 	protected connectedCallback() {

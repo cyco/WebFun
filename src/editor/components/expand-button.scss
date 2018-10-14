@@ -1,7 +1,7 @@
-@import "src/ui/components/icon-button.scss";
+@import "src/ui/components/abstract-icon-button.scss";
 
 wf-editor-expand-button {
-	@extend wf-icon-button;
+	@extend wf-abstract-icon-button;
 
 	transition: transform 0.25s ease;
 }

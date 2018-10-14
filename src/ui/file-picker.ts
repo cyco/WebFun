@@ -38,7 +38,7 @@ class FilePicker implements FilePickerOptions {
 
 			const handler = () => {
 				const fileList = input.files;
-				const files = Array.from(fileList || []);
+				const files = Array.from(fileList || []) as File[];
 				resolve(files);
 
 				input.remove();

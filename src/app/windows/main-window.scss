@@ -1,10 +1,10 @@
 @import "variables.scss";
 @import "border.scss";
 @import "../ui/settings-window.scss";
-@import "../../ui/components/window";
+@import "../../ui/components/abstract-window";
 
 wf-main-window {
-	@extend wf-window;
+	@extend wf-abstract-window;
 
 	> .content > .main {
 		@include inset-border(2px);

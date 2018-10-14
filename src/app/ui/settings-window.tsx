@@ -1,8 +1,7 @@
-import { Button, Slider, Window } from "src/ui/components";
+import { Button, Slider, AbstractWindow } from "src/ui/components";
 import "./settings-window.scss";
 
-class SettingsWindow extends Window {
-	public static tagName = "wf-settings-window";
+abstract class SettingsWindow extends AbstractWindow {
 	public closable = false;
 	private _minLabel: HTMLLabelElement = <label /> as HTMLLabelElement;
 	private _midLabel: HTMLLabelElement = <label /> as HTMLLabelElement;

@@ -1,4 +1,4 @@
-import { Panel, Window as WindowComponent } from "src/ui/components";
+import { Panel, AbstractPanel, Window as WindowComponent } from "src/ui/components";
 import { Zone } from "src/engine/objects";
 import ZoneEditor from "src/editor/components/zone-editor/view";
 import "./window.scss";
@@ -24,7 +24,7 @@ import AbstractDrawingTool from "src/editor/tools/abstract-drawing-tool";
 import { ActionEditor } from "src/editor/components";
 import { ActionDescription } from "src/editor/components/zone-editor/action";
 
-class Window extends Panel {
+class Window extends AbstractPanel {
 	public static readonly tagName = "wf-zone-editor-window";
 	private _zone: Zone;
 	private _editor: ZoneEditor = <ZoneEditor /> as ZoneEditor;

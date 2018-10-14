@@ -1,11 +1,11 @@
-import { Window } from "src/ui/components";
+import { AbstractWindow } from "src/ui/components";
 
 class WindowManager {
 	private static _defaultManager: WindowManager;
 	private _container: HTMLElement;
-	private _windows: Window[] = [];
+	private _windows: AbstractWindow[] = [];
 	private _topIndex = 0;
-	private _topMostWindow: Window;
+	private _topMostWindow: AbstractWindow;
 
 	private _handlers = {
 		windowDidClose: (e: CustomEvent) => this._onWindowClose(e)
@@ -26,23 +26,23 @@ class WindowManager {
 		WindowManager._defaultManager = globalManager;
 	}
 
-	showWindow(window: Window) {
+	showWindow(window: AbstractWindow) {
 		if (!~this._windows.indexOf(window)) this._windows.push(window);
 		window.manager = this;
-		window.addEventListener(Window.Event.DidClose, this._handlers.windowDidClose);
+		window.addEventListener(AbstractWindow.Event.DidClose, this._handlers.windowDidClose);
 		this._container.appendChild(window);
 
 		this.focus(window);
 	}
 
 	private _onWindowClose(e: CustomEvent) {
-		const window = <Window>e.target;
+		const window = <AbstractWindow>e.target;
 
 		window.manager = null;
 		const index = this._windows.indexOf(window);
 		if (index !== -1) this._windows.splice(index, 1);
 		if (window === this._topMostWindow) {
-			const newTopMostWindow = this._windows.reduce((a: Window, b: Window) => {
+			const newTopMostWindow = this._windows.reduce((a: AbstractWindow, b: AbstractWindow) => {
 				if (!a) return b;
 				if (!b) return a;
 				if (a.style.zIndex >= b.style.zIndex) return a;
@@ -52,7 +52,7 @@ class WindowManager {
 		}
 	}
 
-	public focus(window: Window) {
+	public focus(window: AbstractWindow) {
 		if (window === this._topMostWindow) return;
 
 		window.style.zIndex = `${this._topIndex++}`;

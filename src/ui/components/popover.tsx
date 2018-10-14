@@ -2,7 +2,7 @@ import Component from "../component";
 import "./popover.scss";
 
 class Popover extends Component {
-	public static tagName = "wf-popover";
+	public static readonly tagName = "wf-popover";
 	public content: HTMLElement = <div />;
 
 	protected connectedCallback() {

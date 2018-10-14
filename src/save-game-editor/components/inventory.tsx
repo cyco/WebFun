@@ -1,4 +1,4 @@
-import { List } from "src/ui/components";
+import { AbstractList } from "src/ui/components";
 import InventoryRow from "./inventory-row";
 import { Tile } from "src/engine/objects";
 import { CSSTileSheet } from "src/editor";
@@ -10,8 +10,8 @@ export interface InventoryDelegate {
 	inventoryDidRemoveItem(inventory: Inventory): void;
 }
 
-class Inventory extends List<Tile> {
-	public static tagName: string = "wf-save-game-editor-inventory";
+class Inventory extends AbstractList<Tile> {
+	public static readonly tagName = "wf-save-game-editor-inventory";
 	public cell: InventoryRow;
 	public delegate: InventoryDelegate;
 

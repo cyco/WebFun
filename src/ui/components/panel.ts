@@ -1,8 +1,8 @@
-import Window from "./window";
+import AbstractWindow from "./abstract-window";
 import "./panel.scss";
 
-class Panel extends Window {
-	static readonly tagName: string = "wf-panel";
+class Panel extends AbstractWindow {
+	public static readonly tagName = "wf-panel";
 }
 
 export default Panel;

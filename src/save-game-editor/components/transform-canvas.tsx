@@ -168,7 +168,16 @@ class TransformCanvas extends Component implements EventListenerObject {
 		};
 
 		const setTransform = ctx.setTransform;
-		ctx.setTransform = function(a, b, c, d, e, f) {
+		ctx.setTransform = function(
+			a?: DOMMatrix2DInit | number,
+			b?: number,
+			c?: number,
+			d?: number,
+			e?: number,
+			f?: number
+		): void {
+			if (typeof a !== "number") return;
+
 			xform.a = a;
 			xform.b = b;
 			xform.c = c;

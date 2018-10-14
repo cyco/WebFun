@@ -1,7 +1,7 @@
-@import "./window";
+@import "./abstract-window";
 
 wf-fullscreen-window {
-	@extend wf-window;
+	@extend wf-abstract-window;
 
 	position: absolute;
 	top: 0;

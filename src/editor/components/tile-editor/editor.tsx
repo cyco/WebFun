@@ -1,4 +1,4 @@
-import { Panel, Button } from "src/ui/components";
+import { AbstractPanel, Button } from "src/ui/components";
 import PaletteImageEditor from "../palette-image-editor";
 import PaletteColorPicker from "../palette-color-picker";
 import { ColorPalette } from "src/engine/rendering";
@@ -7,7 +7,7 @@ import { FilePicker } from "src/ui";
 import { MutableTile } from "src/engine/mutable-objects";
 import "./editor.scss";
 
-class Editor extends Panel {
+class Editor extends AbstractPanel {
 	static tagName = "wf-editor-tile-editor";
 	public title = "Tile Editor";
 	public tile: MutableTile;

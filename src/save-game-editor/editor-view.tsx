@@ -24,7 +24,7 @@ import { ModalPrompt } from "src/ux";
 import "./editor-view.scss";
 
 class EditorView extends Component implements InventoryDelegate, InteractiveMapContextMenuProvider {
-	public static tagName: string = "wf-save-game-editor-view";
+	public static readonly tagName = "wf-save-game-editor-view";
 	private _gameData: GameData;
 	private _palette: ColorPalette;
 	private _state: SaveState;

@@ -1,7 +1,7 @@
 @import "../ui/settings-window.scss";
 
 wf-statistics-window {
-	@extend wf-window;
+	@extend wf-abstract-window;
 
 	li {
 		display: flex;

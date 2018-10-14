@@ -4,7 +4,7 @@ import { Component } from "src/ui";
 import "./inventory-row.scss";
 
 class InventoryRow extends Component {
-	public static tagName = "wf-inventory-row";
+	public static readonly tagName = "wf-inventory-row";
 	private _emptyIcon: HTMLImageElement = <img src={Image.blankImage} /> as HTMLImageElement;
 	private _icon: HTMLSpanElement = <span />;
 	private _label: HTMLSpanElement = <span />;

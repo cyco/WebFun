@@ -4,6 +4,8 @@ import Component from "../component";
 import "./slider.scss";
 
 class Slider extends Component {
+	public static readonly tagName = "wf-slider";
+
 	private _value = 0;
 	private _min = 0;
 	private _max = 0;
@@ -17,10 +19,6 @@ class Slider extends Component {
 	private _minText: string;
 	private _midText: string;
 	private _maxText: string;
-
-	static get tagName() {
-		return "wf-slider";
-	}
 
 	get min() {
 		return this._min;

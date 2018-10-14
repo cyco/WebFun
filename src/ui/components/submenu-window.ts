@@ -1,9 +1,7 @@
-import MenuWindow from "./menu-window";
+import AbstractMenuWindow from "./abstract-menu-window";
 
-class SubmenuWindow extends MenuWindow {
-	static get tagName() {
-		return "wf-submenu-window";
-	}
+class SubmenuWindow extends AbstractMenuWindow {
+	public static readonly tagName = "wf-submenu-window";
 }
 
 export default SubmenuWindow;

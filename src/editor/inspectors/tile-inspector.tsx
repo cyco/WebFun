@@ -143,7 +143,7 @@ class TileInspector extends AbstractInspector {
 				this._prohibitedAttributes = 0;
 			}
 
-			Array.from(cells)
+			(Array.from(cells) as HTMLTableHeaderCellElement[])
 				.slice(1)
 				.forEach(c => (c.textContent = targetValue));
 			this.updateFilter();
