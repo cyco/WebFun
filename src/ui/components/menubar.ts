@@ -1,13 +1,13 @@
 import { Point } from "src/util";
 import { ModalSession } from "src/ux";
 import MenuStack from "../menu-stack";
-import MenuView from "./menu-view";
+import AbstractMenuView from "./abstract-menu-view";
 import MenuWindow from "./menu-window";
 import MenuItem from "./menu-item";
 import "./menubar.scss";
 
-class Menubar extends MenuView {
-	public static tagName: string = "wf-menubar";
+class Menubar extends AbstractMenuView {
+	public static readonly tagName = "wf-menubar";
 
 	private _currentItem: number = -1;
 	private _mouseDownHandler: (_: MouseEvent) => void;

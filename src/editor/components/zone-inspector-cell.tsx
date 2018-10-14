@@ -13,7 +13,7 @@ const Events = {
 
 class ZoneInspectorCell extends Cell<Zone> {
 	public static readonly Events = Events;
-	public static readonly tagName: string = "wf-zone-inspector-cell";
+	public static readonly tagName = "wf-zone-inspector-cell";
 	public static readonly observedAttributes: string[] = [];
 
 	public tileSheet: CSSTileSheet;

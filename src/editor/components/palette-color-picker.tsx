@@ -4,7 +4,7 @@ import { floor } from "src/std/math";
 import "./palette-color-picker.scss";
 
 class PaletteColorPicker extends PaletteView implements EventListenerObject {
-	public static tagName = "wf-editor-palette-color-picker";
+	public static readonly tagName = "wf-editor-palette-color-picker";
 	public readonly image = new Uint8Array(16 * 16).map((_, idx) => idx);
 	private highlighter: HTMLElement = <div className="highlighter" />;
 	private _colorIndex: number = 0;

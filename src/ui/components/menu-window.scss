@@ -1,24 +1,6 @@
 @import "colors.scss";
-@import "./menu-view";
+@import "./abstract-menu-window.scss";
 
 wf-menu-window {
-	@extend wf-menu-view;
-
-	position: absolute;
-	display: inline-block;
-	background: rgba(202, 198, 188, 0.98);
-	border-width: 1px;
-	padding: 1px;
-	min-width: 50px;
-	box-shadow: 0px 5px 6px 0px rgba(0, 0, 0, 0.4);
-	white-space: nowrap;
-
-	> wf-menu-item {
-		padding: 3px 10px 3px 6px;
-	}
-
-	> wf-menu-item:not([disabled]):hover {
-		color: $menu-item-selection-text;
-		background-color: $menu-item-selection-background;
-	}
+	@extend wf-abstract-menu-window;
 }

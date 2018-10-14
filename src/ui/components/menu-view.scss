@@ -1,9 +1,5 @@
-@import "border.scss";
+@import "./abstract-menu-view.scss";
 
 wf-menu-view {
-	@include inset-border-inverted(2px);
-
-	margin: 0px;
-	padding: 0px;
-	list-style-type: none;
+	@extend wf-abstract-menu-view;
 }

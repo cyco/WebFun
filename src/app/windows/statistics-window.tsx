@@ -1,8 +1,8 @@
 import { PersistentState } from "src/engine";
-import { Textbox, Window } from "src/ui/components";
+import { Textbox, AbstractWindow } from "src/ui/components";
 import "./statistics-window.scss";
 
-class StatisticsWindow extends Window {
+class StatisticsWindow extends AbstractWindow {
 	public static readonly tagName = "wf-statistics-window";
 	public readonly title = "Player Statistics";
 	public readonly closable = true;

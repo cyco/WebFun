@@ -2,14 +2,14 @@ import { Ammo, Health, Inventory, Location, Weapon } from "../ui";
 import { Direction } from "../ui/location";
 import { default as Engine, Events } from "src/engine/engine";
 import { Hero } from "src/engine";
-import { Window } from "src/ui/components";
+import { AbstractWindow } from "src/ui/components";
 import World from "src/engine/generation/world";
 import { Zone } from "src/engine/objects";
 import InventoryComponent from "../ui/inventory";
 import "./main-window.scss";
 
-class MainWindow extends Window {
-	public static tagName = "wf-main-window";
+class MainWindow extends AbstractWindow {
+	public static readonly tagName = "wf-main-window";
 	private _engine: Engine = null;
 	private _handlers = {
 		[Events.AmmoChanged]: () => this._updateAmmo(),

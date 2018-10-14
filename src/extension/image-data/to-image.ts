@@ -1,4 +1,4 @@
-import { ImageData, HTMLImageElement } from "src/std/dom";
+import { ImageData } from "src/std/dom";
 
 async function toImage(pixelated: boolean = true): Promise<HTMLImageElement> {
 	return new Promise<HTMLImageElement>((resolve, reject) => {
@@ -12,7 +12,7 @@ async function toImage(pixelated: boolean = true): Promise<HTMLImageElement> {
 
 		const image = document.createElement("img");
 		image.onload = () => resolve(image);
-		image.onerror = e => reject(e);
+		image.onerror = (e: ErrorEvent) => reject(e);
 		image.src = canvas.toDataURL("image/png");
 	});
 }

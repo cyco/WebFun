@@ -1,3 +1,4 @@
+import AbstractHealth from "./abstract-health";
 import Ammo from "./ammo";
 import Health from "./health";
 import Inventory from "./inventory";
@@ -8,4 +9,15 @@ import Weapon from "./weapon";
 import LoadingView from "./loading-view";
 import SceneView from "./scene-view";
 
-export { InventoryRow, Inventory, Ammo, Weapon, Health, Location, SettingsWindow, LoadingView, SceneView };
+export {
+	AbstractHealth,
+	InventoryRow,
+	Inventory,
+	Ammo,
+	Weapon,
+	Health,
+	Location,
+	SettingsWindow,
+	LoadingView,
+	SceneView
+};

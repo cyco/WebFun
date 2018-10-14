@@ -17,7 +17,7 @@ const MinRows = 7;
 
 class InventoryComponent extends Component {
 	public static Events = Events;
-	public static tagName = "wf-inventory";
+	public static readonly tagName = "wf-inventory";
 	private _inventory: Inventory = null;
 	private _inventoryChangedHandler: EventListener = () => this._rebuildTable();
 

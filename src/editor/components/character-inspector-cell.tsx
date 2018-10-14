@@ -4,7 +4,7 @@ import CSSTileSheet from "../css-tile-sheet";
 import "./character-inspector-cell.scss";
 
 class CharacterInspectorCell extends Cell<Char> {
-	public static readonly tagName: string = "wf-character-inspector-cell";
+	public static readonly tagName = "wf-character-inspector-cell";
 	public static readonly observedAttributes: string[] = [];
 
 	public onremove = (_: Event): void => void 0;

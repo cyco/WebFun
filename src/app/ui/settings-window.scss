@@ -1,7 +1,7 @@
-@import "src/ui/components/window.scss";
+@import "src/ui/components/abstract-window.scss";
 
 wf-settings-window {
-	@extend wf-window;
+	@extend wf-abstract-window;
 
 	> .content {
 		flex-direction: column;

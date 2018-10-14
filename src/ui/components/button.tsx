@@ -1,8 +1,8 @@
 import "./button.scss";
-import IconButton from "./icon-button";
+import AbstractIconButton from "./abstract-icon-button";
 
-class Button extends IconButton {
-	public static tagName = "wf-button";
+class Button extends AbstractIconButton {
+	public static readonly tagName = "wf-button";
 	public static observedAttributes = ["icon", "label"];
 
 	private _label: HTMLSpanElement = <span style={{ display: "none" } as CSSStyleDeclaration} />;

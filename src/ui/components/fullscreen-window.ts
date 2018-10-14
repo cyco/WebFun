@@ -1,8 +1,8 @@
-import Window from "src/ui/components/window";
+import AbstractWindow from "src/ui/components/abstract-window";
 import "./fullscreen-window.scss";
 
-class FullscreenWindow extends Window {
-	public static readonly tagName: string = "wf-fullscreen-window";
+class FullscreenWindow extends AbstractWindow {
+	public static readonly tagName = "wf-fullscreen-window";
 }
 
 export default FullscreenWindow;

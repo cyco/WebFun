@@ -2,18 +2,18 @@ import { identity, Point } from "src/util";
 import Component from "../component";
 import Menu from "../menu";
 import Menubar from "./menubar";
-import Window from "./window";
+import AbstractWindow from "./abstract-window";
 import "./window-titlebar.scss";
 
 class WindowTitlebar extends Component {
 	public static readonly tagName = "wf-window-titlebar";
-	public onclose: Function = identity;
-	public onpin: Function = identity;
+	public onclose: (_: Event) => void = identity;
+	public onpin: (_: Event) => void = identity;
 	public movable: boolean = true;
 	private _menu: Menu = null;
 	private _menubar: Menubar = null;
 	private _titleNode: HTMLElement = null;
-	private _window: Window;
+	private _window: AbstractWindow;
 	private _closeButton: HTMLElement;
 	private _pinButton: HTMLElement;
 	private _buttons: HTMLElement[] = [];
@@ -30,7 +30,7 @@ class WindowTitlebar extends Component {
 		return this._window;
 	}
 
-	set window(window: Window) {
+	set window(window: AbstractWindow) {
 		this._window = window;
 		this._closeButton.onclick = () => this._window.close();
 
@@ -95,7 +95,7 @@ class WindowTitlebar extends Component {
 		this._buttons.forEach(btn => this.appendChild(btn));
 	}
 
-	private _setupDragging(win: Window) {
+	private _setupDragging(win: AbstractWindow) {
 		let dragLocation: Point;
 		const mouseMove = (event: MouseEvent) => {
 			win.origin = new Point(event.clientX - dragLocation.x, event.clientY - dragLocation.y);
@@ -151,7 +151,7 @@ class WindowTitlebar extends Component {
 		if (flag) this._pinButton.classList.add("on");
 		else this._pinButton.classList.remove("on");
 
-		if (this.onpin instanceof Function) this.onpin();
+		if (this.onpin instanceof Function) this.onpin(new CustomEvent("pin"));
 	}
 
 	get pinned() {

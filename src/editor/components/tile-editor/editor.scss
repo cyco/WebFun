@@ -1,7 +1,7 @@
-@import "src/ui/components/panel.scss";
+@import "src/ui/components/abstract-panel.scss";
 
 wf-editor-tile-editor {
-	@extend wf-panel;
+	@extend wf-abstract-panel;
 
 	.content {
 		flex-direction: column;

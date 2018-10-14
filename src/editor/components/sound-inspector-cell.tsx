@@ -8,7 +8,7 @@ type Sound = {
 };
 
 class SoundInspectorCell extends Cell<Sound> {
-	public static readonly tagName: string = "wf-sound-inspector-cell";
+	public static readonly tagName = "wf-sound-inspector-cell";
 	public static readonly observedAttributes: string[] = [];
 
 	public onchange: (_: Event) => void = () => void 0;

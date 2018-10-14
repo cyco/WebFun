@@ -9,7 +9,7 @@ import "./gamepad-test-cell.scss";
 const UPDATE_INTERVAL = 50;
 
 class GamepadTestCell extends Cell<[Gamepad, number]> {
-	public static tagName = "wf-debug-gamepad-test-cell";
+	public static readonly tagName = "wf-debug-gamepad-test-cell";
 	private _gamepadIdx: number;
 	private _gamepad: Gamepad;
 	private timer: any;

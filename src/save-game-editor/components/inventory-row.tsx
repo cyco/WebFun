@@ -5,7 +5,7 @@ import TileComponent from "./tile";
 import "./inventory-row.scss";
 
 class InventoryRow extends Cell<Tile> {
-	public static tagName = "wf-save-game-editor-inventory-row";
+	public static readonly tagName = "wf-save-game-editor-inventory-row";
 	private _icon: TileComponent = <TileComponent /> as TileComponent;
 	private _label = (
 		<Selector

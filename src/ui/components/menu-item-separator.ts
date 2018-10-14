@@ -3,7 +3,7 @@ import Component from "../component";
 import "./menu-item-separator.scss";
 
 class MenuItemSeparator extends Component {
-	public static tagName: string = "wf-menu-item-separator";
+	public static readonly tagName = "wf-menu-item-separator";
 	public menu: Menu = null;
 
 	protected connectedCallback() {

@@ -8,7 +8,7 @@ import "./world-view.scss";
 import { drawZoneImageData as drawZone } from "src/engine/rendering/canvas";
 
 class WorldView extends Component {
-	public static tagName = "wf-save-game-editor-world-view";
+	public static readonly tagName = "wf-save-game-editor-world-view";
 
 	private _canvas: TransformCanvas = (
 		<TransformCanvas className="pixelated" width={288} height={288} />

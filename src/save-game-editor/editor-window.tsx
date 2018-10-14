@@ -1,12 +1,12 @@
-import { Window, ProgressIndicator } from "src/ui/components";
+import { AbstractWindow, ProgressIndicator } from "src/ui/components";
 import { Reader as SaveGameReaderFactory, SaveState } from "src/engine/save-game";
 import { GameData, ColorPalette } from "src/engine";
-import { InputStream, PromiseProgress } from "src/util";
+import { InputStream } from "src/util";
 import { DataProvider, PaletteProvider } from "src/app/data";
 import EditorView from "./editor-view";
 import "./editor-window.scss";
 
-class EditorWindow extends Window {
+class EditorWindow extends AbstractWindow {
 	static readonly tagName = "wf-save-game-editor-window";
 	title: string = "Save Game Editor";
 	private _progressIndicator: HTMLElement = <ProgressIndicator />;

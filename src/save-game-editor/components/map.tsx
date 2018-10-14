@@ -1,7 +1,7 @@
 import { Component } from "src/ui";
 import { World, WorldItem } from "src/engine/save-game";
-import { Zone, Tile, TileAttribute } from "src/engine/objects";
-import { Point, rgb } from "src/util";
+import { Zone, Tile } from "src/engine/objects";
+import { Point } from "src/util";
 import { ColorPalette } from "src/engine/rendering";
 import { LocatorTile } from "src/engine/types";
 import { CSSTileSheet } from "src/editor";

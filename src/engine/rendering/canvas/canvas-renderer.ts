@@ -18,7 +18,7 @@ class CanvasRenderer extends AbstractRenderer {
 
 		this._ctx = canvas.getContext("2d");
 		this._ctx.globalCompositeOperation = "source-over";
-		this._ctx.webkitImageSmoothingEnabled = false;
+		(this._ctx as any).webkitImageSmoothingEnabled = false;
 		this._ctx.fillStyle = rgb(0, 0, 0);
 		this._ctx.fillRect(0, 0, 288, 288);
 		this._imageFactory = new DOMImageFactory();
