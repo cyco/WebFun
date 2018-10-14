@@ -54,36 +54,6 @@ interface Uint8Array {
 	toAdobeColorTable(): Uint8Array;
 }
 
-declare interface Component extends HTMLElement {}
-
-declare namespace JSX {
-	export interface IntrinsicElements {
-		div: Partial<HTMLDivElement>;
-		label: Partial<HTMLLabelElement>;
-		span: Partial<HTMLSpanElement>;
-		input: Partial<HTMLInputElement>;
-		canvas: Partial<HTMLCanvasElement>;
-		img: Partial<HTMLImageElement>;
-		i: Partial<HTMLElement>;
-		button: Partial<HTMLButtonElement>;
-		br: Partial<HTMLBRElement>;
-		select: Partial<HTMLSelectElement>;
-		option: Partial<HTMLOptionElement>;
-		ul: Partial<HTMLUListElement>;
-		li: Partial<HTMLLIElement>;
-	}
-
-	interface Element extends Component {}
-	interface IntrinsicClassAttributes<T> {
-		[_: string]: any;
-	}
-	/*
-	interface HtmlElementInstance { }
-	interface ElementAttributesProperty { __props: any; }
-	interface ElementTypeProperty { __elementType: any; }
-	*/
-}
-
 // by @ahejlsberg
 // As seen on https://github.com/Microsoft/TypeScript/issues/3496#issuecomment-128553540
 type JSONValue = string | number | boolean | JSONObject | JSONArray;
