@@ -15,7 +15,7 @@ pipeline {
 
 		stage("Build") {
 			steps {
-				echo "Build program"
+				sh "ci=1 yarn build"
 			}
 		}
 
