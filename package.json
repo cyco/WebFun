@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "build": "webpack --production --optimize-minimize --config config/webpack.prod.js --progress",
+    "build": "webpack --production --optimize-minimize --config config/webpack.prod.js",
     "start": "webpack-serve --config config/webpack.dev.js",
     "test": "karma start config/karma.conf.js --single-run",
     "test:cont": "karma start config/karma.conf.js --watch --single-run=false",
