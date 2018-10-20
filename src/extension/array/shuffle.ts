@@ -5,29 +5,32 @@ import { rand } from "src/util";
 const shuffle = function() {
 	const count = this.length;
 	if (count === 0) return this;
+	if (count === 1) {
+		rand();
+		return this;
+	}
 
-	let tempArray = Array.Repeat(-1, count);
+	let tempArray = new Array(count);
 
 	let idx = 0;
 	for (let i = 0; i < count; i++) {
 		idx = rand() % count;
-		if (tempArray[idx] === -1) {
+		if (tempArray[idx] === undefined) {
 			tempArray[idx] = this[i];
-			this[i] = -1;
+			this[i] = undefined;
 		}
 	}
 
 	for (let i = count - 1; i !== 0; i--) {
-		let did_find_free_spot = 0;
 		while (true) {
-			for (let i = 0; i < count; i++) if (tempArray[i] === -1) did_find_free_spot = 1;
-
-			if (!did_find_free_spot) break;
+			let didFindFreeSpot = false;
+			for (let j = 0; !didFindFreeSpot && j < count; j++) didFindFreeSpot = tempArray[j] === undefined;
+			if (!didFindFreeSpot) break;
 
 			idx = rand() % count;
-			if (tempArray[idx] === -1) {
+			if (tempArray[idx] === undefined) {
 				tempArray[idx] = this[i];
-				this[i] = -1;
+				this[i] = undefined;
 				break;
 			}
 		}
