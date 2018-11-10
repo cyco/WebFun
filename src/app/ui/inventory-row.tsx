@@ -17,6 +17,12 @@ class InventoryRow extends Cell<Tile> {
 		this.appendChild(this._label);
 	}
 
+	public cloneNode(deep: boolean) {
+		const clone = super.cloneNode(deep) as InventoryRow;
+		clone.onclick = this.onclick;
+		return clone;
+	}
+
 	get data() {
 		return this._tile;
 	}
