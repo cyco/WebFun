@@ -2,6 +2,7 @@ import AbstractInspector from "./abstract-inspector";
 import { IconButton } from "src/ui/components";
 import { EditorView } from "src/save-game-editor";
 import { Writer } from "src/engine/save-game";
+import { Inventory } from "src/engine";
 import MutableStory from "src/engine/mutable-story";
 import { download, OutputStream, DiscardingOutputStream } from "src/util";
 import GameController from "src/app/game-controller";
@@ -61,16 +62,22 @@ class SaveGameInspector extends AbstractInspector {
 		controller.data = this.data.currentData.copy();
 		controller.palette = new Uint8Array(this.data.palette);
 
+		const data = controller.data;
+		const engine = controller.engine;
 		const state = this.data.state;
 		const story = new MutableStory(state.seed, state.planet, state.worldSize);
 		story.world = this._createWorld(state.world);
 		story.dagobah = this._createWorld(state.dagobah);
 
-		controller.engine.story = story;
-		controller.engine.data = controller.data;
+		engine.inventory.removeAllItems();
+		Array.from(state.inventoryIDs).map(id => engine.inventory.addItem(data.tiles[id]));
+
+		engine.story = story;
+		engine.data = data;
+		engine.renderer.imageFactory.palette = controller.palette;
+
 		controller.show(this.window.manager);
 
-		controller.engine.renderer.imageFactory.palette = controller.palette;
 		const imageLoader = new TileImageLoader();
 		imageLoader.load(
 			controller.data.tiles,
