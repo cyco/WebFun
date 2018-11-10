@@ -45,6 +45,7 @@ class TilePicker extends Component {
 		if (previousCell) previousCell.classList.remove("active");
 
 		this.tile = cell.data;
+		this.changeTile(this.tile, this._list.querySelectorAll(TilePickerCell.tagName).indexOf(cell) - 1);
 
 		cell.classList.add("active");
 	}
@@ -89,8 +90,11 @@ class TilePicker extends Component {
 
 	set tile(tile: Tile) {
 		this._tile = tile;
+	}
 
-		this.dispatchEvent(new CustomEvent(Events.TileDidChange, { detail: { tile }, bubbles: true }));
+	private changeTile(tile: Tile, index: number) {
+		this.tile = tile;
+		this.dispatchEvent(new CustomEvent(Events.TileDidChange, { detail: { tile, index }, bubbles: true }));
 	}
 
 	get tile() {

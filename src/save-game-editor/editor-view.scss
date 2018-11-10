@@ -86,7 +86,8 @@ wf-save-game-editor-view {
 				height: 100%;
 			}
 
-			wf-save-game-editor-tile {
+			wf-resource-editor-popover-character-picker {
+				display: inline-block;
 				$border-size: 1px;
 				@include inset-border($border-size);
 				height: $tile-size + 2 * $border-size;

@@ -1,10 +1,5 @@
-import {
-	AmmoControl,
-	Tile as TileComponent,
-	InteractiveMap as Map,
-	InteractiveHealth as Health,
-	Inventory
-} from "./components";
+import { AmmoControl, InteractiveMap as Map, InteractiveHealth as Health, Inventory } from "./components";
+import { PopoverCharacterPicker } from "src/editor/components";
 import { InventoryDelegate } from "./components/inventory";
 import { InteractiveMapContextMenuProvider } from "./components/interactive-map";
 import { Tile } from "src/engine/objects";
@@ -65,7 +60,6 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 	}
 
 	private _buildNodes(state: SaveState) {
-		const currentWeapon = this._findWeaponFace(state.currentWeapon);
 		const tileSheet = this._tileSheet;
 
 		const puzzle = this._gameData.puzzles[state.goalPuzzle];
@@ -92,7 +86,15 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 				</span>
 
 				<div className="current-weapon">
-					<TileComponent tile={currentWeapon} tileSheet={tileSheet} />
+					<PopoverCharacterPicker
+						palette={this._palette}
+						tileSheet={this._tileSheet}
+						characters={this.data.characters.filter(c => c.isWeapon())}
+						character={this.data.characters[this._state.currentWeapon]}
+						onchange={(e: CustomEvent) =>
+							(this._state.currentWeapon = e.detail.character ? e.detail.character.id : -1)
+						}
+					/>
 					{state.type === GameTypeYoda && <AmmoControl vertical value={state.currentAmmo} />}
 				</div>
 
