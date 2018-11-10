@@ -2,7 +2,6 @@ import AbstractInspector from "./abstract-inspector";
 import { IconButton } from "src/ui/components";
 import { EditorView } from "src/save-game-editor";
 import { Writer } from "src/engine/save-game";
-import { Inventory } from "src/engine";
 import MutableStory from "src/engine/mutable-story";
 import { download, OutputStream, DiscardingOutputStream } from "src/util";
 import GameController from "src/app/game-controller";
@@ -70,11 +69,13 @@ class SaveGameInspector extends AbstractInspector {
 		story.dagobah = this._createWorld(state.dagobah);
 
 		engine.inventory.removeAllItems();
-		Array.from(state.inventoryIDs).map(id => engine.inventory.addItem(data.tiles[id]));
+		Array.from(state.inventoryIDs).forEach(id => engine.inventory.addItem(data.tiles[id]));
 
 		engine.hero.ammo = state.currentAmmo;
 		engine.hero.weapon = state.currentWeapon !== -1 ? data.characters[state.currentWeapon] : null;
 		engine.hero.location = state.positionOnZone;
+
+		engine.hero.health = (3 - state.livesLost) * 100 - state.damageTaken;
 
 		engine.story = story;
 		engine.data = data;
