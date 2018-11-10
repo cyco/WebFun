@@ -23,23 +23,23 @@ class Zone {
 	public random: number = 0;
 	public padding: number = 0;
 
-	protected _npcs: NPC[] = [];
+	protected _npcs: NPC[] = null;
 	protected _id: number = -1;
 	protected _name: string = "";
 	protected _planet: Planet = Planet.NONE;
-	protected _size: Size;
-	protected _type: Type;
+	protected _size: Size = null;
+	protected _type: Type = null;
 	protected _tileIDs: Int16Array = new Int16Array(0);
-	protected _hotspots: Hotspot[] = [];
+	protected _hotspots: Hotspot[] = null;
 	protected _tileStore: any = null;
 	protected _zoneStore: any = null;
 	protected _goalItems: Tile[] = [];
 	protected _requiredItems: Tile[] = [];
 	protected _providedItems: Tile[] = [];
 	protected _puzzleNPCs: Tile[] = [];
-	protected _izx4Unknown: number;
-	protected _izaxUnknown: number;
-	protected _actions: Action[] = [];
+	protected _izx4Unknown: number = 0;
+	protected _izaxUnknown: number = 0;
+	protected _actions: Action[] = null;
 	public doorInLocation: Point = new Point(0, 0);
 
 	get doors(): Hotspot[] {
@@ -129,31 +129,33 @@ class Zone {
 	}
 
 	layDownHotspotItems(): void {
-		this.hotspots.filter(htsp => htsp.enabled).forEach(hotspot => {
-			switch (hotspot.type) {
-				case HotspotType.Unused:
-					hotspot.arg = TILE_ADEGAN_CRYSTAL;
-				/* intentional fallthrough */
-				case HotspotType.TriggerLocation:
-				case HotspotType.SpawnLocation:
-				case HotspotType.ForceLocation:
-				case HotspotType.LocatorThingy:
-				case HotspotType.CrateItem:
-				case HotspotType.PuzzleNPC:
-				case HotspotType.CrateWeapon:
-					if (hotspot.arg < 0) break;
-					if (this.getTile(hotspot.x, hotspot.y, 1)) return;
-					this.setTile(<Tile>{ id: hotspot.arg }, hotspot.x, hotspot.y, 1);
-					break;
-				case HotspotType.DoorIn:
-					if (hotspot.arg < 0) break;
-					const zone = this._zoneStore[hotspot.arg];
-					zone.layDownHotspotItems();
-					break;
-				default:
-					break;
-			}
-		});
+		this.hotspots
+			.filter(htsp => htsp.enabled)
+			.forEach(hotspot => {
+				switch (hotspot.type) {
+					case HotspotType.Unused:
+						hotspot.arg = TILE_ADEGAN_CRYSTAL;
+					/* intentional fallthrough */
+					case HotspotType.TriggerLocation:
+					case HotspotType.SpawnLocation:
+					case HotspotType.ForceLocation:
+					case HotspotType.LocatorThingy:
+					case HotspotType.CrateItem:
+					case HotspotType.PuzzleNPC:
+					case HotspotType.CrateWeapon:
+						if (hotspot.arg < 0) break;
+						if (this.getTile(hotspot.x, hotspot.y, 1)) return;
+						this.setTile(<Tile>{ id: hotspot.arg }, hotspot.x, hotspot.y, 1);
+						break;
+					case HotspotType.DoorIn:
+						if (hotspot.arg < 0) break;
+						const zone = this._zoneStore[hotspot.arg];
+						zone.layDownHotspotItems();
+						break;
+					default:
+						break;
+				}
+			});
 	}
 
 	public isRoom() {

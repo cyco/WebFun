@@ -1,7 +1,6 @@
 import { Array } from "src/std";
-import { constantly } from "src/util";
 
-const repeat = <T>(item: T, count: number) => Array.apply(null, Array(count)).map(constantly(item));
+const repeat = <T>(item: T, count: number) => Array(count).fill(item);
 
 Array.Repeat = Array.Repeat || repeat;
 
