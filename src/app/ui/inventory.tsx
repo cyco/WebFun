@@ -20,7 +20,7 @@ class InventoryComponent extends AbstractList<Tile> {
 	public static Events = Events;
 	public static readonly tagName = "wf-inventory";
 	public cell = (
-		<InventoryRow onclick={(e: MouseEvent) => this.rowClicked(e.target as InventoryRow)} />
+		<InventoryRow onclick={(e: MouseEvent) => this.rowClicked(e.currentTarget as InventoryRow)} />
 	) as InventoryRow;
 	private _inventory: Inventory = null;
 	private _inventoryChangedHandler = () => this._rebuildTable();
@@ -47,13 +47,12 @@ class InventoryComponent extends AbstractList<Tile> {
 			return;
 		}
 
-		const imgNode = this.querySelectorAll(InventoryRow.tagName)[row].querySelector("img");
-		imgNode.src = Image.blankImage;
+		cell.pickedUp = true;
 
 		const modalSession = new ModalSession();
 		modalSession.onmouseup = () => modalSession.end(0);
 		modalSession.onend = () => {
-			imgNode.src = item.image.representation.dataURL;
+			cell.pickedUp = false;
 			this._placeItem(item, row, modalSession.lastMouseLocation);
 		};
 		modalSession.cursor = item.image.representation.dataURL;
