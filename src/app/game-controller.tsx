@@ -7,13 +7,12 @@ import {
 	Metronome,
 	Story,
 	TileSheetCanvasRenderer,
-	ColorPalette,
-	SaveState
+	ColorPalette
 } from "src/engine";
 import { Reader } from "src/engine/save-game";
 import { DesktopInputManager } from "src/engine/input";
 import { Char, Zone } from "src/engine/objects";
-import { ZoneScene } from "src/engine/scenes";
+import { ZoneScene, LoseScene } from "src/engine/scenes";
 import { ScriptExecutor } from "src/engine/script";
 import { Planet, WorldSize } from "src/engine/types";
 import Settings from "src/settings";
@@ -56,6 +55,14 @@ class GameController extends EventTarget {
 		engine.inventory = new Inventory();
 		engine.scriptExecutor = new ScriptExecutor();
 		engine.hero = new Hero();
+		engine.hero.addEventListener(Hero.Event.HealthChanged, () => {
+			if (engine.hero.health > 0) {
+				return;
+			}
+
+			this._engine.gameState = GameState.Lost;
+			this._engine.sceneManager.pushScene(new LoseScene());
+		});
 
 		return engine;
 	}
@@ -203,6 +210,7 @@ class GameController extends EventTarget {
 
 	public jumpStartEngine(zone: Zone) {
 		this._showSceneView(zone);
+		this._window.engine = this.engine;
 	}
 
 	public get engine() {

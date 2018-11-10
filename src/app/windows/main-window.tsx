@@ -45,21 +45,26 @@ class MainWindow extends AbstractWindow {
 	}
 
 	set engine(e) {
+		const inventoryView = this.content.querySelector(InventoryComponent.tagName) as InventoryComponent;
+		const ammoView = this.content.querySelector(Ammo.tagName) as Ammo;
+		const weaponView = this.content.querySelector(Weapon.tagName) as Weapon;
+
 		if (this._engine) {
 			this._handlers.each((event: any, handler: any) =>
 				this._engine.removeEventListener(event, handler)
 			);
 			this._engine.hero.removeEventListener(Hero.Event.HealthChanged, this._handlers.healthChanged);
+			inventoryView.inventory = null;
 		}
 
 		this._engine = e;
 
-		const inventoryView = this.content.querySelector(InventoryComponent.tagName) as InventoryComponent;
-		inventoryView.inventory = this._engine ? this._engine.inventory : null;
-
 		if (this._engine) {
 			this._engine.hero.addEventListener(Hero.Event.HealthChanged, this._handlers.healthChanged);
 			this._handlers.each((event: any, handler: any) => this._engine.addEventListener(event, handler));
+			inventoryView.inventory = this._engine ? this._engine.inventory : null;
+			ammoView.ammo = e.hero.ammo;
+			weaponView.weapon = e.hero.weapon;
 		}
 	}
 
