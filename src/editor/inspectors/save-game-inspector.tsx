@@ -103,7 +103,6 @@ class SaveGameInspector extends AbstractInspector {
 				out.npc = tiles[input.npc_id] || null;
 				out.requiredItem = tiles[input.required_item_id] || null;
 				out.zone = zones[input.zoneId] || null;
-				console.log("input.zoneType", input, input.zoneType);
 				out.zoneType = ZoneType.fromNumber(input.zoneType);
 				if (out.zone) out.zone.visited = input.visited;
 				if (out.zone) out.zone.solved = input.solved_1 !== 0;
