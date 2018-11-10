@@ -5,7 +5,6 @@ import { AbstractList } from "src/ui/components";
 import { Point } from "src/util";
 import { ModalSession } from "src/ux";
 import InventoryRow from "./inventory-row";
-import { Image } from "src/std/dom";
 import { max } from "src/std/math";
 import "./inventory.scss";
 
@@ -34,16 +33,9 @@ class InventoryComponent extends AbstractList<Tile> {
 		const row = this._cells.indexOf(cell);
 		const item = cell.data;
 
-		this.dispatchEvent(
-			new CustomEvent(Events.ItemActivated, {
-				detail: {
-					item: item,
-					row: row
-				}
-			})
-		);
+		this.dispatchEvent(new CustomEvent(Events.ItemActivated, { detail: { item, row } }));
 
-		if (item.id === Yoda.ItemIDs.Locator) {
+		if (!this._canPlaceItem(item)) {
 			return;
 		}
 
@@ -71,10 +63,6 @@ class InventoryComponent extends AbstractList<Tile> {
 		);
 	}
 
-	get inventory() {
-		return this._inventory;
-	}
-
 	set inventory(i) {
 		if (this._inventory) {
 			this._inventory.removeEventListener(InventoryEvent.ItemsDidChange, this._inventoryChangedHandler);
@@ -89,9 +77,17 @@ class InventoryComponent extends AbstractList<Tile> {
 		}
 	}
 
+	get inventory() {
+		return this._inventory;
+	}
+
 	private _rebuildTable() {
 		const items = this._inventory ? this._inventory.items : [];
 		this.items = items.concat(...Array.Repeat(null, max(0, MinRows - items.length)));
+	}
+
+	private _canPlaceItem(item: Tile): boolean {
+		return item.id !== Yoda.ItemIDs.Locator;
 	}
 }
 
