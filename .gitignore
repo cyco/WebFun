@@ -1,6 +1,7 @@
 dist
 node_modules
 .tm_properties
+.sonarlint
 game-data/tiles
 game-data/zones
 yoda.data
