@@ -55,7 +55,7 @@ const main = async () => {
 	editorWindow = document.createElement(EditorWindow.tagName) as EditorWindow;
 	WindowManager.defaultManager.showWindow(editorWindow);
 	editorWindow.center();
-	const dataStreams = await FileLoader.loadAsStream("game-data/construct.dta");
+	const dataStreams = await FileLoader.loadAsStream("game-data/construct.data");
 	await editorWindow.loadStream(dataStreams, Yoda);
 
 	const saveGameStream = await FileLoader.loadAsStream("save-games/construct.wld");
