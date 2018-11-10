@@ -59,6 +59,10 @@ class Inventory extends EventTarget {
 	forEach(fn: (tile: Tile, index: number, items: Tile[]) => void): void {
 		this._items.forEach(fn);
 	}
+
+	get items() {
+		return this._items.slice();
+	}
 }
 
 export default Inventory;

@@ -1,15 +1,19 @@
 @import "variables.scss";
 @import "border.scss";
+@import "../../ui/components/abstract-list";
 
 wf-inventory {
 	@include inset-border(2px);
+	@extend wf-abstract-list;
 
-	display: flex;
-	flex-direction: column;
-	position: relative;
 	height: 7 * $tile-size + 2 * $border-size;
+	min-height: 7 * $tile-size + 2 * $border-size;
+	max-height: 7 * $tile-size + 2 * $border-size;
 	width: 206px;
-	padding: 0;
-	overflow-y: scroll;
-	list-style-type: none;
+
+	overflow-y: auto;
+	> div {
+		overflow-y: unset;
+		max-height: unset;
+	}
 }
