@@ -14,13 +14,13 @@ class InventoryRow extends Cell<Tile> {
 	private _paletteView: PaletteView = (
 		<PaletteView size={new Size(Tile.WIDTH, Tile.HEIGHT)} />
 	) as PaletteView;
-	private _icon: HTMLSpanElement = <span />;
+	private _iconBorder: HTMLSpanElement = <span />;
 
 	protected connectedCallback() {
 		super.connectedCallback();
 
-		this._icon.appendChild(this._paletteView);
-		this.appendChild(this._icon);
+		this.appendChild(this._paletteView);
+		this.appendChild(this._iconBorder);
 		this.appendChild(this._label);
 	}
 
