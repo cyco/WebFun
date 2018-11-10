@@ -58,6 +58,10 @@ class InventoryRow extends Cell<Tile> {
 	public get palette() {
 		return this._paletteView.palette;
 	}
+
+	public get imageDataURL() {
+		return this._paletteView.imageDataURL;
+	}
 }
 
 export default InventoryRow;

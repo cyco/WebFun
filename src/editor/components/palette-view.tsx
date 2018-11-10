@@ -69,6 +69,10 @@ class PaletteView extends Component {
 	get image() {
 		return this._image;
 	}
+
+	get imageDataURL() {
+		return this.canvas.toDataURL();
+	}
 }
 
 export default PaletteView;
