@@ -52,7 +52,7 @@ abstract class AbstractHealth extends Component {
 	}
 
 	get damage() {
-		return 100 - (floor(this._health % HealthPerColor) || 1);
+		return HealthPerColor - (floor(this._health % HealthPerColor) || 1);
 	}
 
 	protected connectedCallback() {
