@@ -4,7 +4,7 @@
 wf-inventory-row {
 	display: flex;
 	height: $tile-size;
-
+	position: relative;
 	flex-shrink: 0;
 	flex-grow: 0;
 
@@ -16,11 +16,7 @@ wf-inventory-row {
 		height: inherit;
 	}
 
-	> span:nth-child(1) {
-		width: $tile-size;
-	}
-
-	> span:nth-child(2) {
+	> span:nth-child(3) {
 		flex-grow: 2;
 		padding: 0 5px;
 		line-height: $tile-size;
@@ -32,12 +28,17 @@ wf-inventory-row {
 		margin-left: 0px;
 	}
 
+	> span:nth-child(2) {
+		display: inline-block;
+		width: $tile-size;
+		height: $tile-size;
+	}
+
 	wf-palette-view {
 		border: none;
 		position: absolute;
-		top: 0;
-		left: 0;
-		bottom: 0;
+		top: 0px;
+		left: 0px;
 		width: $tile-size;
 		height: $tile-size;
 	}
