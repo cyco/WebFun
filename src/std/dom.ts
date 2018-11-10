@@ -17,7 +17,8 @@ export const {
 	Event,
 	File,
 	FileReader,
-	MouseEvent
+	MouseEvent,
+	CustomEvent
 } = global;
 
 export { window };

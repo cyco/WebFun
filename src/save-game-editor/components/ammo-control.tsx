@@ -1,9 +1,11 @@
 import { Component } from "src/ui";
+import { CustomEvent } from "src/std/dom";
 import "./ammo-control.scss";
 
 class AmmoControl extends Component implements EventListenerObject {
 	public static readonly tagName = "wf-save-game-editor-ammo";
 	public static readonly observedAttributes = ["vertical"];
+	public continous = true;
 	private _value: number = 1;
 	private _vertical: boolean = false;
 	private _bar: HTMLElement = <div />;
@@ -37,6 +39,10 @@ class AmmoControl extends Component implements EventListenerObject {
 			this.value = (bottom - clientY) / height;
 		} else {
 			this.value = (clientX - left) / width;
+		}
+
+		if (this.continous || event.type === "mouseup") {
+			this.dispatchEvent(new CustomEvent("change", { detail: { value: this.value } }));
 		}
 
 		event.stopPropagation();
