@@ -1,0 +1,6 @@
+.cursor-reset {
+	*,
+	& {
+		cursor: default !important;
+	}
+}

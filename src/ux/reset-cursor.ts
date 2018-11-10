@@ -1,8 +1,7 @@
 import { dispatch } from "src/util";
+import "./reset-cursor";
 
-export default (document: Document) => {
-	dispatch(() => {
-		document.body.classList.add("cursor-reset");
-		dispatch(() => document.body.classList.remove("cursor-reset"));
-	});
+export default async (node: Element = document.body): Promise<void> => {
+	await dispatch(() => node.classList.add("cursor-reset"));
+	await dispatch(() => node.classList.remove("cursor-reset"));
 };

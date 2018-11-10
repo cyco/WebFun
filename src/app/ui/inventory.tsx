@@ -40,6 +40,7 @@ class InventoryComponent extends AbstractList<Tile> {
 			return;
 		}
 
+		const imageDataURL = cell.imageDataURL;
 		cell.pickedUp = true;
 
 		const modalSession = new ModalSession();
@@ -48,7 +49,7 @@ class InventoryComponent extends AbstractList<Tile> {
 			cell.pickedUp = false;
 			this._placeItem(item, row, modalSession.lastMouseLocation);
 		};
-		modalSession.cursor = item.image.representation.dataURL;
+		modalSession.cursor = imageDataURL;
 		modalSession.run();
 	}
 
