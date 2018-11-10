@@ -77,6 +77,8 @@ class SaveGameInspector extends AbstractInspector {
 
 		engine.hero.health = (3 - state.livesLost) * 100 - state.damageTaken;
 
+		engine.currentWorld = state.onDagobah ? story.dagobah : story.world;
+
 		engine.story = story;
 		engine.data = data;
 		engine.renderer.imageFactory.palette = controller.palette;
