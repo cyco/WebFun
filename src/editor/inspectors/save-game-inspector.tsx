@@ -74,7 +74,7 @@ class SaveGameInspector extends AbstractInspector {
 		engine.hero.ammo = state.currentAmmo;
 		engine.hero.weapon = state.currentWeapon !== -1 ? data.characters[state.currentWeapon] : null;
 		engine.hero.location = state.positionOnZone;
-		engine.hero.health = (3 - state.livesLost) * 100 - state.damageTaken;
+		engine.hero.health = (4 - state.livesLost) * 100 - state.damageTaken;
 		engine.currentWorld = state.onDagobah ? story.dagobah : story.world;
 
 		engine.story = story;

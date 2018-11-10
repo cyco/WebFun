@@ -13,6 +13,7 @@ import TilePickerCell from "./tile-picker-cell";
 import PopoverTilePicker from "./popover-tile-picker";
 import PaletteColorPicker from "./palette-color-picker";
 import PaletteImageEditor from "./palette-image-editor";
+import PopoverCharacterPicker from "./popover-character-picker";
 import {
 	Action as ZoneEditorAction,
 	Sidebar as ZoneEditorSidebar,
@@ -44,6 +45,7 @@ export {
 	ZoneEditorAction,
 	ExpandButton,
 	CharacterDetails,
+	PopoverCharacterPicker,
 	CharacterFramePreview,
 	CharacterInspectorCell,
 	PopoverTilePicker,
