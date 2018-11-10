@@ -10,17 +10,13 @@ import CharType from "src/engine/objects/char-type";
 
 import {
 	Action,
-	Char,
 	CharFrame,
 	CharMovementType,
 	Condition,
 	Hotspot,
 	HotspotType,
 	Instruction,
-	NPC,
-	Puzzle,
 	PuzzleType,
-	Tile,
 	Zone,
 	ZoneType
 } from "../objects";
@@ -83,7 +79,7 @@ const makePuzzle = (raw: any, idx: number, data: any) => {
 	return puzzle;
 };
 
-const makeHotspot = (raw: any, data: any): Hotspot => {
+const makeHotspot = (raw: any, _: any): Hotspot => {
 	const hotspot = new Hotspot();
 	hotspot._x = raw.x;
 	hotspot._y = raw.y;
@@ -119,7 +115,7 @@ const makeHotspot = (raw: any, data: any): Hotspot => {
 	return hotspot;
 };
 
-const makeAction = (raw: any, idx: number, zone: Zone, data: any): Action => {
+const makeAction = (raw: any, idx: number, zone: Zone, _: any): Action => {
 	const action = new MutableAction();
 
 	action.id = idx;
@@ -175,5 +171,5 @@ export default (data: any, raw: any) => {
 	data._characters = raw.characters.map((r: any, i: number) => makeCharacter(r, i, data));
 	data._puzzles = raw.puzzles.map((r: any, i: number) => makePuzzle(r, i, data));
 	data._zones = raw.zones.map((r: any, i: number) => makeZone(r, i, data));
-	data._zones.forEach((z: Zone, idx: number, store: Zone[]) => ((z as any).zoneStore = store));
+	data._zones.forEach((z: Zone, _: number, store: Zone[]) => ((z as any).zoneStore = store));
 };

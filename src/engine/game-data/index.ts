@@ -1,4 +1,3 @@
-import { Uint8Array } from "src/std";
 import { Tile, Puzzle, Zone, Char } from "src/engine/objects";
 
 import fromFileContents from "./from-file-contents";

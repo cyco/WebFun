@@ -1,19 +1,18 @@
-import "babel-polyfill";
+import "@babel/polyfill";
 import FS from "fs";
-import KaitaiStream from "kaitai-struct/KaitaiStream";
 import Path from "path";
+import "../test/helpers/polyfill";
+import "src/extension";
 import {
 	CompareWorldItems,
 	ComparisonResult,
 	ParseExpectation,
 	PrepareExpectations
 } from "src/debug/expectation";
-import { GameData, Story } from "src/engine";
-import Yodesk from "src/engine/file-format/yodesk.ksy";
-import "src/extension";
-import { Enable as EnabledMessages, Finalize as FinalizeMessages } from "src/util/message";
+import { GameData, Story, GameType, GameTypeYoda } from "src/engine";
 import { Planet, WorldSize } from "../src/engine/types";
-import "../test/helpers/polyfill";
+import { InputStream, srand, rand, randmod } from "src/util";
+import ReadFile from "src/engine/file-format";
 
 const Exit = {
 	Normal: 0,
@@ -31,7 +30,6 @@ const help = (node, self) => {
 
 	process.stdout.write("\n");
 	process.stdout.write("options:\n");
-	process.stdout.write(`\t-v       enable logging\n`);
 	process.stdout.write(`\t-c       compare with original\n`);
 	process.stdout.write(`\t-a       generate all worlds in expection file\n`);
 	process.stdout.write(`\t-d path  game file (default: ./yoda.data)\n`);
@@ -61,11 +59,13 @@ const parseIntegerArgument = (input, name) => {
 
 const parseArguments = args => {
 	const options = {
-		d: "yoda.data",
-		e: "world.txt",
+		d: "assets/game-data/yoda.data",
+		e: "worlds.txt",
 		v: false,
 		c: false,
-		a: false
+		a: false,
+
+		r: false
 	};
 	const optionNames = Object.keys(options);
 	const flagNames = optionNames.filter(o => typeof options[o] === "boolean");
@@ -133,6 +133,7 @@ const readArguments = (node, self, ...args) => {
 	return null;
 };
 
+let rawData = null;
 const readGameData = path => {
 	const fullPath = Path.resolve(path);
 	if (!FS.existsSync(path)) {
@@ -140,12 +141,16 @@ const readGameData = path => {
 	}
 
 	try {
-		const buffer = FS.readFileSync(fullPath);
-		const arrayBuffer = buffer.buffer.slice(buffer.byteOffset, buffer.byteOffset + buffer.byteLength);
-		const stream = new KaitaiStream(arrayBuffer);
-		const rawData = new Yodesk(stream);
+		if (!rawData) {
+			const buffer = FS.readFileSync(fullPath);
+			const arrayBuffer = buffer.buffer.slice(buffer.byteOffset, buffer.byteOffset + buffer.byteLength);
+			const stream = new InputStream(arrayBuffer);
+			rawData = ReadFile(stream, GameTypeYoda);
+		}
+
 		return new GameData(rawData);
 	} catch (e) {
+		throw e;
 		throw `Game file ${fullPath} could not be parsed!`;
 	}
 };
@@ -199,14 +204,28 @@ const main = (...args) => {
 	let { options, seed, planet, size } = readArguments(...args);
 
 	try {
+		if (options.r) {
+			srand(10);
+			for (let i = 0; i < 1000; i++) {
+				const gameData = readGameData(options.d);
+				let seed = rand();
+				let planet = Planet.fromNumber(1 + randmod(3));
+				let size = WorldSize.fromNumber(1 + randmod(3));
+				const story = new Story(seed, planet, size);
+				story.generateWorld({ data: gameData });
+				process.stdout.write(
+					`[DONE]   0x${story.seed.toString(0x10)} ${story.planet.name} ${story.size.name}\n`
+				);
+			}
+			return;
+		}
+
 		if (!options.a) {
 			const gameData = readGameData(options.d);
 			const story = new Story(seed, planet, size);
 
 			try {
-				if (options.v) EnabledMessages();
 				story.generateWorld({ data: gameData });
-				if (options.v) FinalizeMessages("==>");
 			} catch (e) {
 				throw `Unexpected failure in world generation. ${e}`;
 			}
