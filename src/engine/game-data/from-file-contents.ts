@@ -29,7 +29,7 @@ const makeTile = (t: any, idx: number) => {
 	const tile = new MutableTile();
 	tile.id = idx;
 	tile.attributes = t.attributes;
-	tile.imageData = t.pixels;
+	tile.imageData = t.imageData || t.pixels;
 	tile.name = t.name;
 
 	return tile;

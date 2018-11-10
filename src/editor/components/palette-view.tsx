@@ -26,7 +26,7 @@ class PaletteView extends Component {
 		return new Size(totalWidth / this.size.width, totalHeight / this.size.height);
 	}
 
-	public redraw(dirty: Point = null) {
+	public redraw(_: Point = null) {
 		if (!this.ctx) return;
 		if (!this.size) return;
 		if (!this.palette) return;

@@ -97,6 +97,10 @@ class MainWindow extends AbstractWindow {
 		const healthView = this.content.querySelector(Health.tagName) as Health;
 		healthView.health = this._engine.hero.health;
 	}
+
+	public get inventory() {
+		return this.querySelector(Inventory.tagName) as Inventory;
+	}
 }
 
 export default MainWindow;

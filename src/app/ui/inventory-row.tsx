@@ -1,19 +1,25 @@
 import { Tile } from "src/engine/objects";
-import { Image } from "src/std/dom";
 import { Cell } from "src/ui/components";
+import { PaletteView } from "src/editor/components";
+import { Size } from "src/util";
 import "./inventory-row.scss";
+
+const EmptyImageData = new Uint8Array(Tile.WIDTH * Tile.HEIGHT);
 
 class InventoryRow extends Cell<Tile> {
 	public static readonly tagName = "wf-inventory-row";
-	private _emptyIcon: HTMLImageElement = <img src={Image.blankImage} /> as HTMLImageElement;
-	private _icon: HTMLSpanElement = <span />;
 	private _label: HTMLSpanElement = <span />;
 	private _tile: Tile = null;
 	private _pickedUp: boolean = false;
+	private _paletteView: PaletteView = (
+		<PaletteView size={new Size(Tile.WIDTH, Tile.HEIGHT)} />
+	) as PaletteView;
+	private _icon: HTMLSpanElement = <span />;
 
 	protected connectedCallback() {
 		super.connectedCallback();
 
+		this._icon.appendChild(this._paletteView);
 		this.appendChild(this._icon);
 		this.appendChild(this._label);
 	}
@@ -21,6 +27,7 @@ class InventoryRow extends Cell<Tile> {
 	public cloneNode(deep: boolean) {
 		const clone = super.cloneNode(deep) as InventoryRow;
 		clone.onclick = this.onclick;
+		clone.palette = this.palette;
 		return clone;
 	}
 
@@ -31,29 +38,25 @@ class InventoryRow extends Cell<Tile> {
 	set data(tile) {
 		this._tile = tile;
 
-		const rep = tile ? tile.image.representation : null;
-		const icon = rep && rep.cloneNode ? rep.cloneNode() : this._emptyIcon;
-		const label = tile ? tile.name : "";
-
-		this._icon.textContent = "";
-		this._icon.appendChild(icon);
-		this._label.innerText = label;
+		this._label.innerText = tile ? tile.name : "";
+		this._paletteView.image = tile ? tile.imageData : EmptyImageData;
 	}
 
 	public set pickedUp(flag: boolean) {
 		this._pickedUp = flag;
-
-		const image = this._icon.querySelector("img");
-		if (flag) {
-			image.replaceWith(this._emptyIcon);
-		} else {
-			const rep = this._tile ? this._tile.image.representation : null;
-			image.replaceWith(rep && rep.cloneNode ? rep.cloneNode() : this._emptyIcon);
-		}
+		this._paletteView.image = flag ? EmptyImageData : this._tile ? this._tile.imageData : EmptyImageData;
 	}
 
 	public get pickedUp() {
 		return this._pickedUp;
+	}
+
+	public set palette(p) {
+		this._paletteView.palette = p;
+	}
+
+	public get palette() {
+		return this._paletteView.palette;
 	}
 }
 

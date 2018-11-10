@@ -5,6 +5,7 @@ import { AbstractList } from "src/ui/components";
 import { Point } from "src/util";
 import { ModalSession } from "src/ux";
 import InventoryRow from "./inventory-row";
+import { ColorPalette } from "src/engine/rendering";
 import { max } from "src/std/math";
 import "./inventory.scss";
 
@@ -88,6 +89,15 @@ class InventoryComponent extends AbstractList<Tile> {
 
 	private _canPlaceItem(item: Tile): boolean {
 		return item.id !== Yoda.ItemIDs.Locator;
+	}
+
+	public set palette(palette: ColorPalette) {
+		this._cells.forEach((c: InventoryRow) => (c.palette = palette));
+		this.cell.palette = palette;
+	}
+
+	public get palette() {
+		return this.cell.palette;
 	}
 }
 
