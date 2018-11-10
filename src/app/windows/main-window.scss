@@ -6,12 +6,35 @@
 wf-main-window {
 	@extend wf-abstract-window;
 
+	> .content {
+		display: grid;
+		grid-column-gap: 14px;
+		grid-row-gap: 14px;
+		grid-template-columns: 288px + 2 * 2px 206px;
+		grid-template-rows: 228px 64px - 14px;
+		grid-template-areas:
+			"main inventory"
+			"main equipment";
+	}
+
 	> .content > .main {
 		@include inset-border(2px);
 
 		position: relative;
-		width: 288px + 2 * 2px;
-		height: 288px + 2 * 2px;
+		grid-area: main;
+	}
+
+	wf-inventory {
+		grid-area: inventory;
+	}
+
+	.status {
+		grid-area: status;
+		display: flex;
+		grid-column: 2;
+		grid-row: 2;
+		align-items: center;
+		justify-content: space-around;
 	}
 
 	.equipment {
@@ -27,21 +50,6 @@ wf-main-window {
 
 		wf-ammo + wf-weapon {
 			margin-left: 2px;
-		}
-	}
-
-	.sidebar {
-		display: flex;
-		flex-direction: column;
-		margin-left: 6px;
-		height: 288px + 2 * $border-size;
-
-		> div {
-			display: flex;
-			flex-direction: row;
-			margin-top: 12px;
-			justify-content: space-around;
-			align-items: center;
 		}
 	}
 }
