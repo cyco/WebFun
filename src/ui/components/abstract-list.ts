@@ -22,8 +22,8 @@ abstract class AbstractList<T> extends Component {
 	public cell: Cell<T>;
 	private _bar: SearchBar;
 	private _content: HTMLElement;
-	private _items: T[] = [];
-	private _cells: Cell<T>[] = [];
+	protected _items: T[] = [];
+	protected _cells: Cell<T>[] = [];
 	private _shortcut: Shortcut;
 	public searchDelegate: SearchDelegate<T, any>;
 	private _filterTimeout: number;
