@@ -193,6 +193,8 @@ class GameController extends EventTarget {
 				this.palette = details.palette;
 				this._engine.data = this.data;
 
+				this._window.inventory.palette = details.palette;
+
 				this.dispatchEvent(
 					new CustomEvent(Event.DidLoadData, {
 						detail: {
@@ -210,6 +212,7 @@ class GameController extends EventTarget {
 
 	public jumpStartEngine(zone: Zone) {
 		this._showSceneView(zone);
+		this._window.inventory.palette = this.palette;
 		this._window.engine = this.engine;
 	}
 
