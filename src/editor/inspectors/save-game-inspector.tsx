@@ -72,6 +72,9 @@ class SaveGameInspector extends AbstractInspector {
 		engine.inventory.removeAllItems();
 		Array.from(state.inventoryIDs).map(id => engine.inventory.addItem(data.tiles[id]));
 
+		engine.hero.ammo = state.currentAmmo;
+		engine.hero.weapon = state.currentWeapon !== -1 ? data.characters[state.currentWeapon] : null;
+
 		engine.story = story;
 		engine.data = data;
 		engine.renderer.imageFactory.palette = controller.palette;
