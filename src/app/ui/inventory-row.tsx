@@ -9,6 +9,7 @@ class InventoryRow extends Cell<Tile> {
 	private _icon: HTMLSpanElement = <span />;
 	private _label: HTMLSpanElement = <span />;
 	private _tile: Tile = null;
+	private _pickedUp: boolean = false;
 
 	protected connectedCallback() {
 		super.connectedCallback();
@@ -37,6 +38,22 @@ class InventoryRow extends Cell<Tile> {
 		this._icon.textContent = "";
 		this._icon.appendChild(icon);
 		this._label.innerText = label;
+	}
+
+	public set pickedUp(flag: boolean) {
+		this._pickedUp = flag;
+
+		const image = this._icon.querySelector("img");
+		if (flag) {
+			image.replaceWith(this._emptyIcon);
+		} else {
+			const rep = this._tile ? this._tile.image.representation : null;
+			image.replaceWith(rep && rep.cloneNode ? rep.cloneNode() : this._emptyIcon);
+		}
+	}
+
+	public get pickedUp() {
+		return this._pickedUp;
 	}
 }
 
