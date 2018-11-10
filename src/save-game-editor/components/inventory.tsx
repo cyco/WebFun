@@ -22,9 +22,16 @@ class Inventory extends AbstractList<Tile> {
 			<InventoryRow
 				ondelete={(row: InventoryRow) => this._removeInventoryRow(row)}
 				onadd={() => this._addInventoryRow()}
-				onchange={() => this.delegate && this.delegate.inventoryDidChangeItem(this)}
+				onchange={() => {
+					this._reloadItemsFromCells();
+					this.delegate && this.delegate.inventoryDidChangeItem(this);
+				}}
 			/>
 		) as InventoryRow;
+	}
+
+	private _reloadItemsFromCells() {
+		this._items = this._cells.map(c => c.data);
 	}
 
 	private _addInventoryRow() {
