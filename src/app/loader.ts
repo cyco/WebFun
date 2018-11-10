@@ -1,8 +1,8 @@
 import { ColorPalette, GameData, readGameDataFile, GameTypeYoda } from "src/engine";
-import { Tile } from "src/engine/objects";
 import { AbstractImageFactory } from "src/engine/rendering";
 import Settings from "src/settings";
-import { dispatch, EventTarget, FileLoader, InputStream } from "src/util";
+import { EventTarget, FileLoader, InputStream } from "src/util";
+import TileImageLoader from "./tile-image-loader";
 
 export const Events = {
 	Progress: "progress",
@@ -12,7 +12,6 @@ export const Events = {
 };
 
 export const StageCount = 10;
-const TileImageBatchSize = 100;
 
 export declare interface LoaderEventDetails {
 	data: GameData;
@@ -97,38 +96,13 @@ class Loader extends EventTarget {
 
 	private async _loadTileImages() {
 		this._progress(5, 0);
-		const tiles = this._data.tiles;
-		const imageFactory = this._imageFactory;
-		const tileHeight = Tile.HEIGHT;
-		const tileWidth = Tile.WIDTH;
-		const tileCount = tiles.length;
-
-		imageFactory.prepare(tileCount);
-
-		const loadBatch = async (idx: number) => {
-			const max = Math.min(idx + TileImageBatchSize, tileCount);
-			for (; idx < max; idx++) {
-				const tile = tiles[idx];
-				tile.image = await imageFactory.buildImage(tileWidth, tileHeight, tile.imageData);
-				if (tile.image && tile.name) tile.image.representation.title = tile.name;
-				this._progress(5, 4 * (idx / tileCount));
-			}
-		};
-
-		const loadTileImage = async (idx: number) => {
-			if (idx >= tileCount) {
-				this._imageFactory.finalize();
-				this._progress(9, 1);
-				this._load();
-				return;
-			}
-
-			await loadBatch(idx);
-
-			dispatch(() => loadTileImage(idx + TileImageBatchSize));
-		};
-
-		loadTileImage(0);
+		const loader = new TileImageLoader();
+		loader.load(
+			this._data.tiles,
+			this._imageFactory,
+			(state: number, progress: number) => this._progress(state, progress),
+			() => this._load()
+		);
 	}
 
 	private _fail(reason: any) {

@@ -9,6 +9,7 @@ import { World } from "src/engine/generation";
 import SaveGameWorld from "src/engine/save-game/world";
 import { ZoneType } from "src/engine/objects";
 import "./save-game-inspector.scss";
+import TileImageLoader from "src/app/tile-image-loader";
 
 class SaveGameInspector extends AbstractInspector {
 	private _editorView: EditorView = (
@@ -65,7 +66,20 @@ class SaveGameInspector extends AbstractInspector {
 		story.world = this._createWorld(state.world);
 		story.dagobah = this._createWorld(state.dagobah);
 
+		controller.engine.story = story;
+		controller.engine.data = controller.data;
 		controller.show(this.window.manager);
+
+		controller.engine.renderer.imageFactory.palette = controller.palette;
+		const imageLoader = new TileImageLoader();
+		imageLoader.load(
+			controller.data.tiles,
+			controller.engine.renderer.imageFactory,
+			(): void => void 0,
+			() => {
+				controller.jumpStartEngine(controller.data.zones[state.currentZoneID]);
+			}
+		);
 	}
 
 	private _createWorld(world: SaveGameWorld): World {
@@ -89,6 +103,7 @@ class SaveGameInspector extends AbstractInspector {
 				out.npc = tiles[input.npc_id] || null;
 				out.requiredItem = tiles[input.required_item_id] || null;
 				out.zone = zones[input.zoneId] || null;
+				console.log("input.zoneType", input, input.zoneType);
 				out.zoneType = ZoneType.fromNumber(input.zoneType);
 				if (out.zone) out.zone.visited = input.visited;
 				if (out.zone) out.zone.solved = input.solved_1 !== 0;

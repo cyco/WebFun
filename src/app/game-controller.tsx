@@ -201,6 +201,10 @@ class GameController extends EventTarget {
 		});
 	}
 
+	public jumpStartEngine(zone: Zone) {
+		this._showSceneView(zone);
+	}
+
 	public get engine() {
 		return this._engine;
 	}

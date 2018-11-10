@@ -28,8 +28,9 @@ class SpeechScene extends Scene {
 
 	set text(t) {
 		const world = this.engine.currentWorld;
-		const quest = world.at(this.engine.temporaryState.worldLocation);
-
+		const quest = this.engine.temporaryState.worldLocation
+			? world.at(this.engine.temporaryState.worldLocation)
+			: new WorldItem();
 		this._bubble.text = this.resolveVariables(t, quest);
 	}
 
