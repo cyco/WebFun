@@ -25,17 +25,15 @@ class MainWindow extends AbstractWindow {
 		super();
 
 		this.content.appendChild(<div className="main" />);
+		this.content.appendChild(<Inventory />);
 		this.content.appendChild(
-			<div className="sidebar">
-				<Inventory />
-				<div>
-					<Location />
-					<div className="equipment">
-						<Ammo />
-						<Weapon />
-					</div>
-					<Health />
+			<div className="status">
+				<Location />
+				<div className="equipment">
+					<Ammo />
+					<Weapon />
 				</div>
+				<Health />
 			</div>
 		);
 	}
