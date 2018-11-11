@@ -116,7 +116,7 @@ class MapScene extends Scene {
 	private _locatorDescriptionId(at: Point): (number | string) | (number | string)[] {
 		const worldItem = this.engine.currentWorld.at(at.x, at.y);
 		if (!worldItem || !worldItem.zone) return -1;
-		if (!worldItem.zone.visited) return -2;
+		if (!worldItem.zone.visited && !Settings.revealWorld) return -2;
 
 		const requires = 57358;
 		const find = 57359;
