@@ -152,6 +152,7 @@ class MapScene extends Scene {
 			case ZoneType.BlockadeWest:
 			case ZoneType.TravelStart:
 			case ZoneType.TravelEnd:
+				if (!worldItem.requiredItem) return -1;
 				if (worldItem.zone.solved) return 57370;
 				return [requires, typeForTile(worldItem.requiredItem)];
 			case ZoneType.Goal:
@@ -159,15 +160,18 @@ class MapScene extends Scene {
 				return 57365;
 			case ZoneType.Find:
 			case ZoneType.FindTheForce:
+				if (!worldItem.findItem) return -1;
 				if (worldItem.zone.solved) return 57357;
-				if (worldItem.findItem.attributes & 0x10000) return 57360;
-				if (worldItem.findItem.attributes & 0x40) return 57362;
-				if (worldItem.findItem.attributes & 0x80) return 57361;
+				if (worldItem.findItem.attributes & 0x10000) return [find, 57360];
+				if (worldItem.findItem.attributes & 0x40) return [find, 57362];
+				if (worldItem.findItem.attributes & 0x80) return [find, 57361];
 				console.assert(false, "Unknown find item!");
 			case ZoneType.Trade:
+				if (!worldItem.requiredItem) return -1;
 				if (worldItem.zone.solved) return 57357;
 				return [requires, typeForTile(worldItem.requiredItem)];
 			case ZoneType.Use:
+				if (!worldItem.requiredItem) return -1;
 				if (worldItem.zone.solved) return 57357;
 				return [find, worldItem.requiredItem.name];
 
