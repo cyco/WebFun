@@ -219,8 +219,8 @@ class MapScene extends Scene {
 	}
 
 	private _tileForZone(zone: Zone): Tile {
-		let tile = this._locatorTile.forZone(zone, zone.visited, Settings.revealWorld);
-		if (tile instanceof Array) tile = tile[zone.solved ? 1 : 0];
+		let tile = this._locatorTile.forZone(zone, zone && zone.visited, Settings.revealWorld);
+		if (tile instanceof Array) tile = tile[zone && zone.solved ? 1 : 0];
 
 		return this.engine.data.tiles[tile];
 	}

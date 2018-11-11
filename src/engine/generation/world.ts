@@ -32,7 +32,7 @@ class World {
 		const index = this._pointToIndex(x, y);
 		const worldItem = this._items[index];
 
-		return worldItem.zone;
+		return worldItem && worldItem.zone;
 	}
 
 	setZone(x: number, y: number, zoneID: Zone) {
