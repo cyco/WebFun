@@ -54,7 +54,6 @@ class ModalSession {
 	}
 
 	run(): void {
-		console.log("run modal session");
 		document.body.appendChild(this._overlay);
 		this._locationHandler = e => (this._lastMouseLocation = new Point(e.clientX, e.clientY));
 		["mouseup", "mousedown", "mousemove", "mousedrag"].forEach(eventName =>
@@ -63,7 +62,6 @@ class ModalSession {
 	}
 
 	async end(code: number): Promise<void> {
-		console.log("end modal session");
 		["mouseup", "mousedown", "mousemove", "mousedrag"].forEach(eventName =>
 			window.removeEventListener(eventName, this._locationHandler)
 		);
