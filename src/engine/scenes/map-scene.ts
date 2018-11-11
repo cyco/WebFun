@@ -100,8 +100,11 @@ class MapScene extends Scene {
 			return;
 		}
 
-		let message = this._locatorDescription(new Point(tileX, tileY));
-		console.log(message);
+		const location = new Point(tileX, tileY);
+		const message = this._locatorDescription(location);
+		if (message) {
+			this._showText(message, location);
+		}
 	}
 
 	private _locatorDescription(at: Point): string {
