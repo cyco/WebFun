@@ -5,7 +5,7 @@ const indexOf = function(node: Node) {
 	return Array.from(this).indexOf(node);
 };
 
-HTMLCollection.prototype.indexOf = HTMLCollection.prototype.indexOf || indexOf;
+if (HTMLCollection) HTMLCollection.prototype.indexOf = HTMLCollection.prototype.indexOf || indexOf;
 
 declare global {
 	interface HTMLCollectionOf<T> {

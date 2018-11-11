@@ -1,4 +1,5 @@
 import { FileReader } from "src/std/dom";
+import { File } from "src/std/dom";
 
 const readAsArrayBuffer = function(): Promise<ArrayBuffer> {
 	return new Promise<ArrayBuffer>((resolve, reject) => {
@@ -9,7 +10,7 @@ const readAsArrayBuffer = function(): Promise<ArrayBuffer> {
 	});
 };
 
-File.prototype.readAsArrayBuffer = File.prototype.readAsArrayBuffer || readAsArrayBuffer;
+if (File) File.prototype.readAsArrayBuffer = File.prototype.readAsArrayBuffer || readAsArrayBuffer;
 
 declare global {
 	interface File {

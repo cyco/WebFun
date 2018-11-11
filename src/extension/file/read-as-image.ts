@@ -1,4 +1,5 @@
 import { Image } from "src/std/dom";
+import { File } from "src/std/dom";
 
 const readAsImage = async function(): Promise<Image> {
 	const buffer = await this.readAsArrayBuffer();
@@ -11,7 +12,7 @@ const readAsImage = async function(): Promise<Image> {
 	});
 };
 
-File.prototype.readAsImage = File.prototype.readAsImage || readAsImage;
+if (File) File.prototype.readAsImage = File.prototype.readAsImage || readAsImage;
 
 declare global {
 	interface File {

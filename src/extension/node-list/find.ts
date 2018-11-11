@@ -5,7 +5,7 @@ const find = function<TNode extends Node>(predicate: (_: TNode) => boolean) {
 	return Array.from(this).find(predicate) || null;
 };
 
-NodeList.prototype.find = NodeList.prototype.find || find;
+if (NodeList) NodeList.prototype.find = NodeList.prototype.find || find;
 
 declare global {
 	interface NodeListOf<TNode extends Node> {

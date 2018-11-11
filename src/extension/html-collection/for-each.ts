@@ -12,6 +12,6 @@ declare global {
 	}
 }
 
-HTMLCollection.prototype.forEach = HTMLCollection.prototype.forEach || forEach;
+if (HTMLCollection) HTMLCollection.prototype.forEach = HTMLCollection.prototype.forEach || forEach;
 
 export default forEach;

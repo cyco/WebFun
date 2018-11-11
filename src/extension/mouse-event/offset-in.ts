@@ -1,4 +1,5 @@
 import { Point } from "src/util";
+import { MouseEvent } from "src/std/dom";
 
 const offsetIn = function(node: HTMLElement): Point {
 	if (this.target === node) {
@@ -9,7 +10,7 @@ const offsetIn = function(node: HTMLElement): Point {
 	return new Point(this.clientX - rect.left, this.clientY - rect.top);
 };
 
-MouseEvent.prototype.offsetIn = MouseEvent.prototype.offsetIn || offsetIn;
+if (MouseEvent) MouseEvent.prototype.offsetIn = MouseEvent.prototype.offsetIn || offsetIn;
 
 declare global {
 	interface MouseEvent {

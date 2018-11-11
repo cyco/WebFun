@@ -14,6 +14,6 @@ declare global {
 	}
 }
 
-HTMLCollection.prototype.map = HTMLCollection.prototype.map || map;
+if (HTMLCollection) HTMLCollection.prototype.map = HTMLCollection.prototype.map || map;
 
 export default map;

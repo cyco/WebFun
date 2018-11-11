@@ -4,5 +4,5 @@ const append = function(e: Node) {
 	this.appendChild(this.ownerDocument.createTextNode(e));
 };
 
-Element.prototype.append = Element.prototype.append || append;
+if (Element) Element.prototype.append = Element.prototype.append || append;
 export default append;

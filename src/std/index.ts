@@ -1,4 +1,4 @@
-export const global = Function("return this")();
+export const global: any = Function("return this")();
 
 if (!global.window) {
 	global.window = global;
