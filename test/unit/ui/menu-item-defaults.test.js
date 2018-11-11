@@ -1,3 +1,3 @@
-xdescribe("Missing test", () => {
+xdescribe("WebFun.UI.MenuItemDefaults", () => {
 	it("must still be written", () => {});
 });

@@ -1,6 +1,6 @@
 import PrefixedStorage from "src/util/prefixed-storage";
 
-describe("PrefixedStorage", () => {
+describe("WebFun.Util.PrefixedStorage", () => {
 	let subject, backing;
 	beforeEach(() => {
 		backing = {

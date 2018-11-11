@@ -1,6 +1,6 @@
 import add from "src/util/add";
 
-describe("add", () => {
+describe("WebFun.Util.add", () => {
 	it("is a function", () => {
 		expect(add).toBeFunction();
 	});

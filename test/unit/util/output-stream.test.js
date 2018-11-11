@@ -1,7 +1,7 @@
 import OutputStream from "src/util/output-stream";
 import Stream from "src/util/stream";
 
-describe("OutputStream", () => {
+describe("WebFun.Util.OutputStream", () => {
 	let outputStream;
 	it("is a class used to write data", () => {
 		outputStream = new OutputStream(1);

@@ -1,6 +1,6 @@
 import HorizontalPointRange from "src/util/horizontal-point-range";
 
-describe("HorizontalPointRange", () => {
+describe("WebFun.Util.HorizontalPointRange", () => {
 	it("is a range of points that only extends in y-dimension", () => {
 		let range = new HorizontalPointRange(3, 8, 4);
 		expect(range.from.x).toBe(3);

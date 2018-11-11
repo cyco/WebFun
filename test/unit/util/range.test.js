@@ -1,7 +1,7 @@
 import { srand } from "src/util/random";
 import Range from "src/util/range";
 
-describe("Range", () => {
+describe("WebFun.Util.Range", () => {
 	it("describes a simple 1 dimensional range of numbers", () => {
 		let range = new Range(5, 7);
 

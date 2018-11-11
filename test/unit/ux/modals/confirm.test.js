@@ -1,7 +1,7 @@
 import { ConfirmationWindow } from "src/ui/components";
 import Confirm, { Result } from "src/ux/modals/confirm";
 
-describe("Confirm", () => {
+describe("WebFun.UX.Modal.Confirm", () => {
 	beforeAll(() => {
 		customElements.define(ConfirmationWindow.tagName, ConfirmationWindow, ConfirmationWindow.options);
 	});
@@ -15,8 +15,10 @@ describe("Confirm", () => {
 		expect(Confirm).toBeFunction();
 	});
 
-	it("uses a component to render the UI", () => {
-		Confirm("Please confirm something!", {
+	it("uses a component to render the UI", done => {
+		expect(document.querySelector(ConfirmationWindow.tagName)).toBeNull();
+
+		const promise = Confirm("Please confirm something!", {
 			confirmText: "Ok",
 			abortText: "Nope!"
 		});
@@ -29,9 +31,12 @@ describe("Confirm", () => {
 
 		// clean up
 		component.onabort();
+		promise.then(done);
 	});
 
 	it("resolves to Result.Confirmed when onconfirm is executed on the component", done => {
+		expect(document.querySelector(ConfirmationWindow.tagName)).toBeNull();
+
 		const promise = Confirm("");
 		promise.then(result => {
 			expect(result).toBe(Result.Confirmed);
@@ -43,6 +48,8 @@ describe("Confirm", () => {
 	});
 
 	it("resolves to Result.Aborted when onabort is executed on the component", done => {
+		expect(document.querySelector(ConfirmationWindow.tagName)).toBeNull();
+
 		const promise = Confirm("");
 		promise.then(result => {
 			expect(result).toBe(Result.Aborted);

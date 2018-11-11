@@ -1,14 +1,19 @@
 import InventoryRow from "src/app/ui/inventory-row";
+import { Tile } from "src/engine/objects";
+import { PaletteView } from "src/editor/components";
 
 describeComponent(InventoryRow, () => {
 	it("is a row that shows a tile's image and name", () => {
-		const image = document.createElement("img");
-		image.src = "tile%20image%20data%20url";
-		const item = { name: "Test Item Name", image: { representation: image } };
+		const palette = new Uint8Array(0x400);
+		const item = { name: "Test Item Name", imageData: new Uint8Array(Tile.WIDTH * Tile.HEIGHT) };
 
 		const row = render(InventoryRow);
-		row.tile = item;
+		row.palette = palette;
+		row.data = item;
 
-		expect(row.querySelector("img").src).toEndWith("tile%20image%20data%20url");
+		const paletteView = row.querySelector(PaletteView.tagName);
+		expect(paletteView.image).toBe(item.imageData);
+		expect(paletteView.palette).toBe(palette);
+		expect(row.textContent).toContain("Test Item Name");
 	});
 });

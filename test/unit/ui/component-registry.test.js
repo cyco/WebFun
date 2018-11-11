@@ -1,6 +1,6 @@
 import ComponentRegistry from "../../../src/ui/component-registry";
 
-describe("ComponentRegistry", () => {
+describe("WebFun.UI.ComponentRegistry", () => {
 	it("is a class", () => {
 		expect(ComponentRegistry).toBeClass();
 		expect(ComponentRegistry.sharedRegistry).toBeInstanceOf(ComponentRegistry);

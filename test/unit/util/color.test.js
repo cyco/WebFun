@@ -1,6 +1,6 @@
 import { default as Color, rgb, rgba, rgb2rgba, hsv2rgb, rgb2hsv } from "src/util/color";
 
-describe("Color", () => {
+describe("WebFun.Util.Color", () => {
 	it("defines two funtions in the global namespace", () => {
 		expect(typeof rgb).toBe("function");
 		expect(typeof rgba).toBe("function");

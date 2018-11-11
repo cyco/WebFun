@@ -1,6 +1,6 @@
 import DiscardingStorage from "src/util/discarding-storage";
 
-describe("DiscardingStorage", () => {
+describe("WebFun.Util.DiscardingStorage", () => {
 	let subject = null;
 	beforeEach(() => (subject = new DiscardingStorage()));
 

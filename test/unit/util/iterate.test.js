@@ -1,6 +1,6 @@
 import iterate from "src/util/iterate";
 
-describe("iterate", () => {
+describe("WebFun.Util.iterate", () => {
 	it("is an iterator for standard objects", () => {
 		const object = {
 			a: 1,

@@ -1,7 +1,7 @@
 import Point from "src/util/point";
 import PointRange from "src/util/point-range";
 
-describe("PointRange", () => {
+describe("WebFun.Util.PointRange", () => {
 	it("describes a of points", () => {
 		let range = new PointRange(new Point(3, 6), new Point(4, 7));
 		expect(range.from.x).toBe(3);

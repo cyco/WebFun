@@ -1,7 +1,7 @@
 import MenuStack from "src/ui/menu-stack";
 import { document } from "../../../src/std/dom";
 
-describe("MenuStack", () => {
+describe("WebFun.UI.MenuStack", () => {
 	it("is a class that manages z-order of a menu hierarchy", () => {
 		expect(MenuStack).toBeClass();
 	});

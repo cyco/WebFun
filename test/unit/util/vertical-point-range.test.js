@@ -1,6 +1,6 @@
 import VerticalPointRange from "src/util/vertical-point-range";
 
-describe("VerticalPointRange", () => {
+describe("WebFun.Util.VerticalPointRange", () => {
 	it("is a range of points that only extends in y-dimension", () => {
 		let range = new VerticalPointRange(3, 8, 4);
 		expect(range.from.y).toBe(3);

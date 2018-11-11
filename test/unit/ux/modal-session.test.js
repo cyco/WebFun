@@ -1,6 +1,6 @@
 import ModalSession from "src/ux/modal-session";
 
-describe("ModalSession", () => {
+describe("WebFun.UX.ModalSession", () => {
 	let subject;
 	let window;
 	beforeEach(() => {
