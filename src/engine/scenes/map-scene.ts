@@ -10,8 +10,8 @@ import AbstractRenderer from "../rendering/abstract-renderer";
 import Scene from "./scene";
 import SpeechScene from "./speech-scene";
 
-const TileWidth = 28;
-const TileHeight = 28;
+const MapTileWidth = 28;
+const MapTileHeight = 28;
 
 class MapScene extends Scene {
 	static readonly LOCATOR_TICKS = 10;
@@ -60,7 +60,7 @@ class MapScene extends Scene {
 		const speechScene = new SpeechScene(this.engine);
 		speechScene.text = text;
 		speechScene.location = location;
-		speechScene.tileSize = new Size(Tile.WIDTH, Tile.HEIGHT);
+		speechScene.tileSize = new Size(MapTileWidth, MapTileHeight);
 
 		this.engine.sceneManager.pushScene(speechScene);
 	}
@@ -69,8 +69,8 @@ class MapScene extends Scene {
 		const viewWidth = 288;
 		const viewHeight = 288;
 
-		const worldHeightPx = World.HEIGHT * Tile.HEIGHT;
-		const worldWidthPx = World.WIDTH * Tile.WIDTH;
+		const worldHeightPx = World.HEIGHT * MapTileHeight;
+		const worldWidthPx = World.WIDTH * MapTileWidth;
 
 		const offsetX = (viewWidth - worldWidthPx) / (2 * viewWidth);
 		const offsetY = (viewHeight - worldHeightPx) / (2 * viewHeight);
@@ -202,8 +202,8 @@ class MapScene extends Scene {
 			world = engine.dagobah;
 		}
 
-		const offsetX = (288 - World.WIDTH * TileWidth) / 2;
-		const offsetY = (288 - World.HEIGHT * TileHeight) / 2;
+		const offsetX = (288 - World.WIDTH * MapTileWidth) / 2;
+		const offsetY = (288 - World.HEIGHT * MapTileHeight) / 2;
 
 		for (let y = 0; y < World.HEIGHT; y++) {
 			for (let x = 0; x < World.WIDTH; x++) {
@@ -211,13 +211,13 @@ class MapScene extends Scene {
 				let tile = this._tileForZone(zone);
 
 				if (tile && tile.image && tile.image)
-					renderer.renderImage(tile.image, offsetX + x * TileWidth, offsetY + y * TileHeight);
+					renderer.renderImage(tile.image, offsetX + x * MapTileWidth, offsetY + y * MapTileHeight);
 			}
 		}
 
 		if ((this._ticks % (2 * MapScene.LOCATOR_TICKS)) / MapScene.LOCATOR_TICKS < 1) {
-			const x = offsetX + TileWidth * state.worldLocation.x;
-			const y = offsetY + TileHeight * state.worldLocation.y;
+			const x = offsetX + MapTileWidth * state.worldLocation.x;
+			const y = offsetY + MapTileHeight * state.worldLocation.y;
 			if (this._location && this._location.image) renderer.renderImage(this._location.image, x, y);
 		}
 	}
