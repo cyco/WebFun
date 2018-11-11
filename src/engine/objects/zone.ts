@@ -46,20 +46,6 @@ class Zone {
 		return this._hotspots.filter(hotspot => hotspot.type === HotspotType.DoorIn && hotspot.arg !== -1);
 	}
 
-	getLocatorDescription() {
-		if (this.solved) return "...solved!";
-		switch (this.type) {
-			case Type.Find:
-				return "find something useful...";
-			case Type.FindTheForce:
-				return "find the Force...";
-			case Type.Goal:
-				return "unknown...";
-			case Type.Town:
-				return "Spaceport";
-		}
-	}
-
 	getTileID(x: number, y: number, z: number): number {
 		return this.tileIDs[Zone.LAYERS * (y * this._size.width + x) + z];
 	}

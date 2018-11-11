@@ -42,7 +42,7 @@ const main = async () => {
 
 	loadSettings();
 
-	if (false) {
+	if (true) {
 		const gameController = new GameController();
 		gameController.newStory();
 		gameController.show();
@@ -50,6 +50,8 @@ const main = async () => {
 		if (Settings.debug) {
 			initializeDebug(gameController);
 		}
+
+		return;
 	}
 
 	editorWindow = document.createElement(EditorWindow.tagName) as EditorWindow;

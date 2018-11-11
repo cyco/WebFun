@@ -23,6 +23,7 @@ import GameState from "../engine/game-state";
 import Loader, { LoaderEventDetails } from "./loader";
 import { LoadingView, SceneView } from "./ui";
 import { MainMenu, MainWindow } from "./windows";
+import { GameTypeYoda } from "src/engine";
 export const Event = {
 	DidLoadData: "didLoadData"
 };
@@ -44,7 +45,7 @@ class GameController extends EventTarget {
 	}
 
 	private _buildEngine() {
-		const engine = new Engine();
+		const engine = new Engine(GameTypeYoda);
 		const Renderer = this._determineRenderer();
 
 		engine.renderer = new Renderer(this._sceneView.canvas);
