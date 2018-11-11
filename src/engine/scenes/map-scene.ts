@@ -9,6 +9,8 @@ import Zone from "../objects/zone";
 import AbstractRenderer from "../rendering/abstract-renderer";
 import Scene from "./scene";
 import SpeechScene from "./speech-scene";
+import TransitionScene from "./transition-scene";
+import ZoneScene from "./zone-scene";
 
 const MapTileWidth = 28;
 const MapTileHeight = 28;
@@ -107,6 +109,32 @@ class MapScene extends Scene {
 			world = this.engine.dagobah;
 		}
 		const zone = world.getZone(tileX, tileY);
+		if (Settings.debug && this.engine.inputManager.drag) {
+			this._exitScene();
+
+			const transitionScene = new TransitionScene();
+			transitionScene.type = TransitionScene.TRANSITION_TYPE.ROOM;
+			transitionScene.targetHeroLocation = engine.hero.location;
+			transitionScene.targetZone = zone;
+			transitionScene.scene = engine.sceneManager.currentScene as ZoneScene;
+
+			let world = engine.dagobah;
+			let location = world.locationOfZone(transitionScene.targetZone);
+			if (!location) {
+				world = engine.world;
+				location = world.locationOfZone(transitionScene.targetZone);
+			}
+			transitionScene.targetWorld = world;
+
+			if (!location) {
+				location = null;
+			}
+			transitionScene.targetZoneLocation = location;
+			engine.sceneManager.pushScene(transitionScene);
+
+			return;
+		}
+
 		if (!zone || (!Settings.revealWorld && !zone.visited) || zone.type === ZoneType.Empty) {
 			this._exitScene();
 			return;
