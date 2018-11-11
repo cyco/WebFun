@@ -3,7 +3,7 @@ import { default as MenuItem, Separator, State } from "src/ui/menu-item";
 import sandboxed from "test-helpers/dom-sandbox";
 
 describe(
-	"MenuItem",
+	"WebFun.UI.MenuItem",
 	sandboxed(sand => {
 		it("represents an item in a menu", () => {
 			let menuItem = new MenuItem();

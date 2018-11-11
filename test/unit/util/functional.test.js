@@ -1,6 +1,6 @@
 import { and, or, not } from "src/util/functional";
 
-describe("functional", () => {
+describe("WebFun.Util.functional", () => {
 	describe("and", () => {
 		it("returns a function that evalutes to true if all inputs evaluate to true", () => {
 			const evenp = n => n % 2 === 0;

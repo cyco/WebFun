@@ -1,6 +1,6 @@
 import FileLoader from "src/util/file-loader";
 
-describe("FileLoader", () => {
+describe("WebFun.Util.FileLoader", () => {
 	let subject = null;
 	beforeEach(() => {
 		subject = new FileLoader();

@@ -1,5 +1,6 @@
 import { ConfirmationWindow, Window } from "src/ui/components";
 import WindowModalSession from "../window-modal-session";
+import { dispatch } from "src/util";
 
 export enum Result {
 	Aborted,
@@ -40,7 +41,7 @@ export default async (content: ConfirmDialogContent, o: Options = {}): Promise<R
 	window.onabort = () => session.end(Result.Aborted);
 
 	return new Promise<Result>(resolve => {
-		session.onend = code => setTimeout(() => resolve(<Result>code), 0);
+		session.onend = code => dispatch(() => resolve(<Result>code));
 		session.run();
 	});
 };

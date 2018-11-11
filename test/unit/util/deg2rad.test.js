@@ -1,7 +1,7 @@
 import { PI } from "src/std/math";
 import deg2rad from "src/util/deg2rad";
 
-describe("deg2rad", () => {
+describe("WebFun.Util.deg2rad", () => {
 	it("is a function that converts degrees to radians", () => {
 		expect(typeof deg2rad).toBe("function");
 	});

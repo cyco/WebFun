@@ -1,7 +1,7 @@
 import { dispatch } from "src/util";
 import EventTarget from "src/util/event-target";
 
-describe("EventTarget", () => {
+describe("WebFun.Util.EventTarget", () => {
 	let subject;
 	beforeAll(() => {
 		subject = new EventTarget();

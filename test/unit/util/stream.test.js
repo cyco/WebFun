@@ -1,6 +1,6 @@
 import Stream from "src/util/stream";
 
-describe("Stream", () => {
+describe("WebFun.Util.Stream", () => {
 	let stream;
 	beforeEach(() => {
 		stream = new Stream();

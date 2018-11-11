@@ -1,6 +1,6 @@
 import Size from "src/util/size";
 
-describe("Size", () => {
+describe("WebFun.Util.Size", () => {
 	it("is a simple that represents a size", () => {
 		expect(typeof Size).toBe("function");
 

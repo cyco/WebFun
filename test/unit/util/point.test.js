@@ -1,7 +1,7 @@
 import Point from "src/util/point";
 import Size from "src/util/size";
 
-describe("Point", () => {
+describe("WebFun.Util.Point", () => {
 	it("defines a point in space with up to 3 coordinates", () => {
 		let point = new Point(1, 2, 3);
 		expect(point.x).toBe(1);

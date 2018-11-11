@@ -1,6 +1,6 @@
 import FilePicker from "src/ui/file-picker";
 
-describe("FilePicker", () => {
+describe("WebFun.UI.FilePicker", () => {
 	afterEach(() => {
 		if (document.body.onfocus) document.body.onfocus();
 	});

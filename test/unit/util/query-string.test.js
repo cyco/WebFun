@@ -1,6 +1,6 @@
 import QueryString from "src/util/query-string";
 
-describe("QueryString", () => {
+describe("WebFun.Util.QueryString", () => {
 	it("has a method to create a query string from an object", () => {
 		expect(typeof QueryString.Compose).toBe("function");
 

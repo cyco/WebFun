@@ -1,6 +1,6 @@
 import { rand, srand, randmod } from "src/util/random";
 
-describe("Random", () => {
+describe("WebFun.Util.Random", () => {
 	it("defines the functions srand and rand", () => {
 		expect(typeof srand).toBe("function");
 		expect(typeof rand).toBe("function");

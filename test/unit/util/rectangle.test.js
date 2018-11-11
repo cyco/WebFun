@@ -2,7 +2,7 @@ import Point from "src/util/point";
 import Rectangle from "src/util/rectangle";
 import Size from "src/util/size";
 
-describe("Rectangle", () => {
+describe("WebFun.Util.Rectangle", () => {
 	it("is a class", () => {
 		expect(Rectangle).toBeClass();
 	});

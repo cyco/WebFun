@@ -1,7 +1,7 @@
 import Menu from "src/ui/menu";
 import MenuItem from "src/ui/menu-item";
 
-describe("Menu", () => {
+describe("WebFun.UI.Menu", () => {
 	it("is a class representing a menu", () => {
 		expect(Menu).toBeClass();
 	});

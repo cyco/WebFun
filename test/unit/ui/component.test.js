@@ -1,3 +1,3 @@
-xdescribe("Missing test", () => {
+xdescribe("WebFun.UI.Component", () => {
 	it("must still be written", () => {});
 });

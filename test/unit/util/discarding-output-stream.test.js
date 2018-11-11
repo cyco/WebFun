@@ -1,6 +1,6 @@
 import DiscardingOutputStream from "src/util/discarding-output-stream";
 
-describe("DiscardingOutputStream", () => {
+describe("WebFun.Util.DiscardingOutputStream", () => {
 	let subject;
 	beforeEach(() => (subject = new DiscardingOutputStream()));
 

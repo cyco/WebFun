@@ -1,6 +1,6 @@
 import dispatch from "src/util/dispatch";
 
-describe("dispatch", () => {
+describe("WebFun.Util.dispatch", () => {
 	it("dispatch is an alias for setTimeout", done => {
 		dispatch(() => {
 			expect(true).toBeTrue();

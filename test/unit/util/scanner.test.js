@@ -1,6 +1,6 @@
 import Scanner from "src/util/scanner";
 
-describe("Scanner", () => {
+describe("WebFun.Util.Scanner", () => {
 	let subject;
 
 	it("is a class used in string parsing", () => {

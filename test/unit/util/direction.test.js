@@ -1,6 +1,6 @@
 import Direction from "src/util/direction";
 
-describe("Direction", () => {
+describe("WebFun.Util.Direction", () => {
 	it("is a static class that can't be initlaized", () => {
 		expect(() => {
 			let x = new Direction();
