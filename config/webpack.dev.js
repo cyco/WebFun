@@ -15,7 +15,8 @@ module.exports = merge(BaseConfig, {
 	mode: "development",
 	output: {
 		filename: "[name].js",
-		path: Paths.buildRoot
+		path: Paths.buildRoot,
+		globalObject: "(typeof self !== 'undefined' ? self : this)"
 	},
 	serve: {
 		content: [Paths.projectRoot, Paths.assetsRoot, Path.resolve(Paths.sourceRoot, "app")]
