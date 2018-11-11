@@ -13,8 +13,11 @@ import SpeechScene from "./speech-scene";
 const MapTileWidth = 28;
 const MapTileHeight = 28;
 
+const ViewWidth = 288;
+const ViewHeight = 288;
+
 class MapScene extends Scene {
-	static readonly LOCATOR_TICKS = 10;
+	static readonly LOCATOR_ANIMATION_TICKS = 10;
 	private _ticks: number = 0;
 	private _location: Tile = null;
 	private _cheatInput = new CheatCodeInput([new Weapons(), new UnlimitedAmmo(), new Invincibility()]);
@@ -59,21 +62,30 @@ class MapScene extends Scene {
 	private _showText(text: string, location: Point): void {
 		const speechScene = new SpeechScene(this.engine);
 		speechScene.text = text;
+
+		// HACK: Work against camera offset correction
+		location = location.bySubtracting(this.cameraOffset.x, this.cameraOffset.y);
+
 		speechScene.location = location;
 		speechScene.tileSize = new Size(MapTileWidth, MapTileHeight);
+
+		const worldHeightPx = World.HEIGHT * MapTileHeight;
+		const worldWidthPx = World.WIDTH * MapTileWidth;
+
+		let offsetX = (ViewWidth - worldWidthPx) / (2 * ViewWidth);
+		let offsetY = (ViewHeight - worldHeightPx) / (2 * ViewHeight) - 1.5 * Tile.HEIGHT;
+
+		speechScene.offset = new Point(offsetX, offsetY);
 
 		this.engine.sceneManager.pushScene(speechScene);
 	}
 
 	mouseDown(p: Point): void {
-		const viewWidth = 288;
-		const viewHeight = 288;
-
 		const worldHeightPx = World.HEIGHT * MapTileHeight;
 		const worldWidthPx = World.WIDTH * MapTileWidth;
 
-		const offsetX = (viewWidth - worldWidthPx) / (2 * viewWidth);
-		const offsetY = (viewHeight - worldHeightPx) / (2 * viewHeight);
+		const offsetX = (ViewWidth - worldWidthPx) / (2 * ViewWidth);
+		const offsetY = (ViewHeight - worldHeightPx) / (2 * ViewHeight);
 
 		p.x -= offsetX;
 		p.y -= offsetY;
@@ -218,7 +230,7 @@ class MapScene extends Scene {
 			}
 		}
 
-		if ((this._ticks % (2 * MapScene.LOCATOR_TICKS)) / MapScene.LOCATOR_TICKS < 1) {
+		if ((this._ticks % (2 * MapScene.LOCATOR_ANIMATION_TICKS)) / MapScene.LOCATOR_ANIMATION_TICKS < 1) {
 			const x = offsetX + MapTileWidth * state.worldLocation.x;
 			const y = offsetY + MapTileHeight * state.worldLocation.y;
 			if (this._location && this._location.image) renderer.renderImage(this._location.image, x, y);

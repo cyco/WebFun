@@ -1,7 +1,7 @@
 import { Tile } from "src/engine/objects";
 import Settings from "src/settings";
 import { SpeechBubble } from "src/ui/components";
-import { Point, Size, Rectangle } from "src/util";
+import { Point, Size } from "src/util";
 import { ModalSession } from "src/ux";
 import Engine from "../engine";
 import Scene from "./scene";
@@ -11,6 +11,7 @@ class SpeechScene extends Scene {
 	public engine: Engine;
 	public location: Point;
 	public tileSize: Size = new Size(Tile.WIDTH, Tile.HEIGHT);
+	public offset = new Point(0, 0);
 	private _modalSession: ModalSession = null;
 	private _bubble: SpeechBubble = (
 		<SpeechBubble onend={() => this.engine.sceneManager.popScene()} />
@@ -35,6 +36,7 @@ class SpeechScene extends Scene {
 	}
 
 	private resolveVariables(text: string, quest: WorldItem) {
+		if (!quest) return text;
 		if (quest.findItem) text = text.replace(/¢/g, quest.findItem.name);
 		if (quest.requiredItem) text = text.replace(/¥/g, quest.requiredItem.name);
 
@@ -51,8 +53,8 @@ class SpeechScene extends Scene {
 		const anchor = Point.add(this.location, this.cameraOffset);
 		const { origin } = this.engine.sceneManager.bounds;
 
-		const x = anchor.x * this.tileSize.width + origin.x + 16;
-		const y = anchor.y * this.tileSize.height + origin.y + 32 + 32;
+		const x = anchor.x * this.tileSize.width + origin.x + 16 + this.offset.x;
+		const y = anchor.y * this.tileSize.height + origin.y + 32 + 32 + this.offset.y;
 		this._bubble.origin = new Point(x, y);
 		this._bubble.show();
 	}
