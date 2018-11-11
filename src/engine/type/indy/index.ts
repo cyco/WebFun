@@ -13,6 +13,10 @@ class Indy extends GameType {
 	get locatorTile() {
 		return new LocatorTile();
 	}
+
+	get strings() {
+		return {};
+	}
 }
 
 export default Indy;
