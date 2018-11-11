@@ -100,9 +100,86 @@ class MapScene extends Scene {
 			return;
 		}
 
-		let message = zone.getLocatorDescription();
-		// TODO: push speech zone
+		let message = this._locatorDescription(new Point(tileX, tileY));
 		console.log(message);
+	}
+
+	private _locatorDescription(at: Point): string {
+		const strings = this.engine.type.strings;
+		const string = this._locatorDescriptionId(at);
+		if (typeof string === "number") return strings[string];
+		if (typeof string === "string") return string;
+
+		return string.map(string => (typeof string === "string" ? string : strings[string])).join(" ");
+	}
+
+	private _locatorDescriptionId(at: Point): (number | string) | (number | string)[] {
+		const worldItem = this.engine.currentWorld.at(at.x, at.y);
+		if (!worldItem || !worldItem.zone) return -1;
+		if (!worldItem.zone.visited) return -2;
+
+		const requires = 57358;
+		const find = 57359;
+		const typeForTile = (tile: Tile): number => {
+			const aPart = 57367;
+			const aValuable = 57368;
+			const aKeyCard = 57369;
+			const aTool = 57366;
+			const aUnknown = 57365;
+
+			const attributes = tile.attributes;
+			if (attributes & 0x20000) return aTool;
+			if (attributes & 0x40000) return aPart;
+			if (attributes & 0x80000) return aValuable;
+			if (attributes & 0x10000) {
+				if (tile.id == 531 || tile.id == 645 || tile.id == 1087 || tile.id == 1075) {
+					return aTool;
+				}
+				return aKeyCard;
+			}
+
+			return aUnknown;
+		};
+
+		switch (worldItem.zone.type) {
+			case ZoneType.Empty:
+				return -1;
+			case ZoneType.Town:
+				return 57363;
+			case ZoneType.BlockadeNorth:
+			case ZoneType.BlockadeSouth:
+			case ZoneType.BlockadeEast:
+			case ZoneType.BlockadeWest:
+			case ZoneType.TravelStart:
+			case ZoneType.TravelEnd:
+				if (worldItem.zone.solved) return 57370;
+				return [requires, typeForTile(worldItem.requiredItem)];
+			case ZoneType.Goal:
+				if (worldItem.zone.solved) return 57364;
+				return 57365;
+			case ZoneType.Find:
+			case ZoneType.FindTheForce:
+				if (worldItem.zone.solved) return 57357;
+				if (worldItem.findItem.attributes & 0x10000) return 57360;
+				if (worldItem.findItem.attributes & 0x40) return 57362;
+				if (worldItem.findItem.attributes & 0x80) return 57361;
+				console.assert(false, "Unknown find item!");
+			case ZoneType.Trade:
+				if (worldItem.zone.solved) return 57357;
+				return [requires, typeForTile(worldItem.requiredItem)];
+			case ZoneType.Use:
+				if (worldItem.zone.solved) return 57357;
+				return [find, worldItem.requiredItem.name];
+
+			case ZoneType.Load:
+			case ZoneType.Room:
+			case ZoneType.Win:
+			case ZoneType.Lose:
+			case ZoneType.None:
+			default:
+				console.assert(false, "Zone does not appear on map!");
+				return -1;
+		}
 	}
 
 	private _exitScene() {

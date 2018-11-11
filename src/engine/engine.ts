@@ -13,12 +13,14 @@ import SceneManager from "./scene-manager";
 import { ScriptExecutor } from "./script";
 import Story from "./story";
 import GameData from "./game-data";
+import { GameType as Type } from "./type";
 
 export { Events };
 
 class Engine extends EventTarget {
 	static readonly Event = Events;
 
+	public readonly type: Type = null;
 	public metronome: Metronome = null;
 	public inputManager: InputManager = null;
 	public sceneManager: SceneManager = null;
@@ -35,9 +37,10 @@ class Engine extends EventTarget {
 	private _currentZone: Zone = null;
 	private _currentWorld: World = null;
 
-	constructor() {
+	constructor(type: Type) {
 		super();
 
+		this.type = type;
 		// TODO: remove state
 		this.temporaryState = {
 			justEntered: true,

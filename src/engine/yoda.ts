@@ -5,7 +5,15 @@ export default {
 		TheForce: 0x1ff,
 		Blaster: 0x200,
 		BlasterRifle: 0x201,
-		ThermalDetonator: 0x202
+		ThermalDetonator: 0x202,
+
+		QRations: 0x1fb,
+		IceMushroom: 0x4ac,
+		ScrubRoot: 0x4ae,
+		RebelFirstAidKit: 0x1f9,
+		ImperialFirstAidKit: 0x1fa,
+		BactaFluid: 0x1e0,
+		CharkRoot: 0x1e2
 	},
 	WeaponID: {
 		TheForce: 13,
