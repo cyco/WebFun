@@ -11,7 +11,7 @@ module.exports = merge(BaseConfig, {
 	entry: {
 		webfun: Path.resolve(Paths.sourceRoot, "app/main")
 	},
-	devtool: "inline-source-map",
+	devtool: "eval-source-map",
 	mode: "development",
 	output: {
 		filename: "[name].js",
