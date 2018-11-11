@@ -13,7 +13,7 @@ import { WindowManager, ComponentJSXRenderer } from "src/ui";
 import { Yoda } from "src/engine/type";
 import EditorWindow from "src/editor/editor-window";
 import SaveGameInspector from "src/editor/inspectors/save-game-inspector";
-import Worker from "src/worker";
+import { Listener as WebWorkerListener, demo as WebWorkerDemo } from "src/worker";
 
 declare global {
 	interface Window {
@@ -97,7 +97,8 @@ if (window && window.document) {
 	});
 
 	window.addEventListener("load", main, { once: true } as any);
-	(window as any).MyWorker = Worker;
+
+	WebWorkerDemo();
 } else {
-	Worker.ListenForMessages();
+	WebWorkerListener.Initialize();
 }
