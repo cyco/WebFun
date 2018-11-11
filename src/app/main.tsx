@@ -13,6 +13,7 @@ import { WindowManager, ComponentJSXRenderer } from "src/ui";
 import { Yoda } from "src/engine/type";
 import EditorWindow from "src/editor/editor-window";
 import SaveGameInspector from "src/editor/inspectors/save-game-inspector";
+import Worker from "src/worker";
 
 declare global {
 	interface Window {
@@ -71,27 +72,32 @@ const rescueData = () => {
 	) as SaveGameInspector).downloadSaveGame();
 };
 
-window.document.addEventListener("keydown", (e: KeyboardEvent) => {
-	if (e.metaKey && e.keyCode === 83) {
-		e.preventDefault();
-		e.stopPropagation();
-
-		rescueData();
-	}
-});
-
 declare global {
 	var module: any;
 }
 
-if (module.hot) {
-	if (module.hot.addStatusHandler) {
-		if (module.hot.status() === "idle") {
-			module.hot.addStatusHandler((status: any) => {
-				if (status === "prepare") rescueData();
-			});
+if (window && window.document) {
+	if (module.hot) {
+		if (module.hot.addStatusHandler) {
+			if (module.hot.status() === "idle") {
+				module.hot.addStatusHandler((status: any) => {
+					if (status === "prepare") rescueData();
+				});
+			}
 		}
 	}
-}
 
-window.addEventListener("load", main, { once: true } as any);
+	window.document.addEventListener("keydown", (e: KeyboardEvent) => {
+		if (e.metaKey && e.keyCode === 83) {
+			e.preventDefault();
+			e.stopPropagation();
+
+			rescueData();
+		}
+	});
+
+	window.addEventListener("load", main, { once: true } as any);
+	(window as any).MyWorker = Worker;
+} else {
+	Worker.ListenForMessages();
+}
