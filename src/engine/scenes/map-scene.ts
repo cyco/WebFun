@@ -110,7 +110,7 @@ class MapScene extends Scene {
 		if (typeof string === "number") return strings[string];
 		if (typeof string === "string") return string;
 
-		return string.map(string => (typeof string === "string" ? string : strings[string])).join(" ");
+		return string.map(string => (typeof string === "string" ? string : strings[string])).join("") + "!";
 	}
 
 	private _locatorDescriptionId(at: Point): (number | string) | (number | string)[] {
