@@ -6,6 +6,6 @@ const forEach = function(callback: (_: Node, idx: number, list: NodeList) => voi
 	}
 };
 
-NodeList.prototype.forEach = NodeList.prototype.forEach || forEach;
+if (NodeList) NodeList.prototype.forEach = NodeList.prototype.forEach || forEach;
 
 export default forEach;

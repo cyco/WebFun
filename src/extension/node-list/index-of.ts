@@ -5,7 +5,7 @@ const indexOf = function(node: Node) {
 	return Array.from(this).indexOf(node);
 };
 
-NodeList.prototype.indexOf = NodeList.prototype.indexOf || indexOf;
+if (NodeList) NodeList.prototype.indexOf = NodeList.prototype.indexOf || indexOf;
 
 declare global {
 	interface NodeListOf<TNode extends Node> {

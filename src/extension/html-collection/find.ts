@@ -13,6 +13,6 @@ declare global {
 	}
 }
 
-HTMLCollection.prototype.find = HTMLCollection.prototype.find || find;
+if (HTMLCollection) HTMLCollection.prototype.find = HTMLCollection.prototype.find || find;
 
 export default find;

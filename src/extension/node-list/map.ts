@@ -8,6 +8,6 @@ const map = function<T>(callback: (node: Node, idx: number, list: NodeList) => T
 	return results;
 };
 
-NodeList.prototype.map = NodeList.prototype.map || map;
+if (NodeList) NodeList.prototype.map = NodeList.prototype.map || map;
 
 export default map;

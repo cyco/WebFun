@@ -17,6 +17,6 @@ async function toImage(pixelated: boolean = true): Promise<HTMLImageElement> {
 	});
 }
 
-ImageData.prototype.toImage = ImageData.prototype.toImage || toImage;
+if (ImageData) ImageData.prototype.toImage = ImageData.prototype.toImage || toImage;
 
 export default toImage;

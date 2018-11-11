@@ -32,7 +32,7 @@ function open() {
 	);
 }
 
-HTMLSelectElement.prototype.open = HTMLSelectElement.prototype.open || open;
+if (HTMLSelectElement) HTMLSelectElement.prototype.open = HTMLSelectElement.prototype.open || open;
 
 declare global {
 	interface HTMLSelectElement {

@@ -1,3 +1,5 @@
+import { Image } from "src/std/dom";
+
 const toImageData = function(pixelated: boolean = true) {
 	const canvas = document.createElement("canvas");
 	canvas.width = this.width;
@@ -10,6 +12,6 @@ const toImageData = function(pixelated: boolean = true) {
 	return ctx.getImageData(0, 0, canvas.width, canvas.height);
 };
 
-HTMLImageElement.prototype.toImageData = HTMLImageElement.prototype.toImageData || toImageData;
+if (Image) Image.prototype.toImageData = Image.prototype.toImageData || toImageData;
 
 export default toImageData;
