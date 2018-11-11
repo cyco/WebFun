@@ -38,7 +38,7 @@ class SpeechScene extends Scene {
 	private resolveVariables(text: string, quest: WorldItem) {
 		if (!quest) return text;
 		if (quest.findItem) text = text.replace(/¢/g, quest.findItem.name);
-		if (quest.requiredItem) text = text.replace(/¥/g, quest.requiredItem.name);
+		if (quest.requiredItem) text = text.replace(/[¥|˘]/g, quest.requiredItem.name);
 
 		return text;
 	}
