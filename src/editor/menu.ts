@@ -2,7 +2,7 @@ import { MenuItemSeparator, MenuItemInit } from "src/ui";
 import { Window } from "src/ui/components";
 import EditorView from "src/editor/editor-view";
 
-const SettingsAction = (
+const MenuItemAction = (
 	label: string,
 	callback: (() => void),
 	enabled: boolean | (() => boolean) = true
@@ -18,26 +18,26 @@ export default (editor: EditorView, window: Window) =>
 			title: "Editor",
 			mnemonic: 0,
 			submenu: [
-				SettingsAction("Load Data", () => editor.load()),
-				SettingsAction("Save Data", () => editor.save()),
-				SettingsAction("Load Save Game", () => editor.loadSaveGame()),
+				MenuItemAction("Load Data", () => editor.load()),
+				MenuItemAction("Save Data", () => editor.save()),
+				MenuItemAction("Load Save Game", () => editor.loadSaveGame()),
 				MenuItemSeparator,
-				SettingsAction("Close", () => window.close())
+				MenuItemAction("Close", () => window.close())
 			]
 		},
 		{
 			title: "Views",
 			mnemonic: 0,
 			submenu: [
-				SettingsAction("Tiles", () => editor.show("tile")),
-				SettingsAction("Zones", () => editor.show("zone")),
-				SettingsAction("Sound", () => editor.show("sound")),
-				SettingsAction("Chars", () => editor.show("character")),
-				SettingsAction("Puzzles", () => editor.show("puzzle")),
-				SettingsAction("Sound", () => editor.show("sound")),
-				SettingsAction("Setup Image", () => editor.show("setup-image")),
-				SettingsAction("Palette", () => editor.show("palette")),
-				SettingsAction("Save Game", () => editor.show("save-game"), () => !!editor.data.state)
+				MenuItemAction("Tiles", () => editor.show("tile")),
+				MenuItemAction("Zones", () => editor.show("zone")),
+				MenuItemAction("Sound", () => editor.show("sound")),
+				MenuItemAction("Chars", () => editor.show("character")),
+				MenuItemAction("Puzzles", () => editor.show("puzzle")),
+				MenuItemAction("Sound", () => editor.show("sound")),
+				MenuItemAction("Setup Image", () => editor.show("setup-image")),
+				MenuItemAction("Palette", () => editor.show("palette")),
+				MenuItemAction("Save Game", () => editor.show("save-game"), () => !!editor.data.state)
 			]
 		}
 	] as MenuItemInit[];
