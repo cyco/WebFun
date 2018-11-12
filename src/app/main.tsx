@@ -6,14 +6,14 @@ import { ComponentRegistry, Components } from "src/ui";
 import GameController from "./game-controller";
 import * as AppComponents from "./ui";
 import * as WindowComponents from "./windows";
-import Settings, { loadSettings } from "src/settings";
+import Settings from "src/settings";
 import { initialize as initializeDebug } from "src/debug";
 import { FileLoader } from "src/util";
 import { WindowManager, ComponentJSXRenderer } from "src/ui";
 import { Yoda } from "src/engine/type";
 import EditorWindow from "src/editor/editor-window";
 import SaveGameInspector from "src/editor/inspectors/save-game-inspector";
-import { Listener as WebWorkerListener, demo as WebWorkerDemo } from "src/worker";
+import { Listener as WebWorkerListener } from "src/worker";
 
 declare global {
 	interface Window {
@@ -40,8 +40,6 @@ const main = async () => {
 	ComponentRegistry.sharedRegistry.registerComponents(Components as any);
 	ComponentRegistry.sharedRegistry.registerComponents(AppComponents as any);
 	ComponentRegistry.sharedRegistry.registerComponents(WindowComponents as any);
-
-	loadSettings();
 
 	if (true) {
 		const gameController = new GameController();

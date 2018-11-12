@@ -1,4 +1,4 @@
-import { PrefixedStorage } from "src/util";
+import PrefixedStorage from "src/util/prefixed-storage";
 
 const prefixedWith = function(prefix: string): PrefixedStorage {
 	return new PrefixedStorage(this, prefix);
