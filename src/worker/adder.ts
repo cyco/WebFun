@@ -1,3 +1,6 @@
+import { WebWorkerProxy } from "src/worker";
+
+@WebWorkerProxy
 class Adder {
 	private a: number;
 	private b: number;

@@ -97,8 +97,6 @@ if (window && window.document) {
 	});
 
 	window.addEventListener("load", main, { once: true } as any);
-
-	WebWorkerDemo();
 } else {
 	WebWorkerListener.Initialize();
 }

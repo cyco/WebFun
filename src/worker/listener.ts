@@ -1,9 +1,15 @@
 import Commands from "./commands";
-import Adder from "./adder";
 
 let globalWebWorkerListener: WebWorkerListener = null;
 class WebWorkerListener {
+	private static targetClasses: { [_: number]: any } = {};
+	private static nextId = 10;
 	private target: any;
+	static Register(thing: { __webfun_worker_class__: number; new (...args: any[]): {} }) {
+		thing.__webfun_worker_class__ = this.nextId++;
+		this.targetClasses[thing.__webfun_worker_class__] = thing;
+	}
+
 	static Initialize() {
 		if (globalWebWorkerListener) throw new Error("Global WebWorkerListener already exists");
 		globalWebWorkerListener = new WebWorkerListener();
@@ -38,15 +44,15 @@ class WebWorkerListener {
 		}
 	}
 
-	private setupProxy(name: string) {
+	private setupProxy(id: number) {
 		if (this.target) throw new Error("Proxy is already set up");
-		const targetClass = this.resolveTargetClass(name);
-		if (!targetClass) throw new Error(`Unknown class ${name} can't be proxied`);
+		const targetClass = this.resolveTargetClass(id);
+		if (!targetClass) throw new Error(`Unknown class ${id} can't be proxied`);
 		this.target = new targetClass();
 	}
 
-	private resolveTargetClass(_: string) {
-		return Adder;
+	private resolveTargetClass(id: number) {
+		return WebWorkerListener.targetClasses[id];
 	}
 }
 
