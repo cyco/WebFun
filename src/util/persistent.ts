@@ -1,26 +1,19 @@
 import { localStorage } from "src/std/dom";
 
-export default <T>(object: T, key: string, storage: Storage = localStorage): T => {
-	const result: { [_: string]: string } = {};
+function persistent<T extends object>(object: T, prefix: string = null, storage: Storage = localStorage): T {
+	const buildKey = (k: string) => (prefix ? `${prefix}.${k}` : k);
+	return new Proxy(object, {
+		get(target: T, p: PropertyKey, _: any): any {
+			if (typeof p === "string")
+				return storage.has(buildKey(p)) ? storage.load(buildKey(p)) : (target as any)[p];
+			return (target as any)[p];
+		},
+		set(target: T, p: PropertyKey, value: any, _: any): boolean {
+			if (typeof p === "string") storage.store(buildKey(p), value);
+			else (target as any)[p] = value;
+			return true;
+		}
+	} as T);
+}
 
-	let iterableObject = <{ [_: string]: any }>object;
-	Object.keys(iterableObject).forEach(publicKey => {
-		const storageKey = `${key}.${publicKey}`;
-		const privateKey = `_${publicKey}`;
-
-		// load default value
-		result[privateKey] = storage.has(storageKey) ? storage.load(storageKey) : iterableObject[publicKey];
-
-		// define getter / setter that immediately writes to storage
-		Object.defineProperty(result, publicKey, {
-			configurable: false,
-			set: value => {
-				result[privateKey] = value;
-				storage.store(storageKey, value);
-			},
-			get: () => result[privateKey]
-		});
-	});
-
-	return <T>(<any>result);
-};
+export default persistent;
