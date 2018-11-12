@@ -15,7 +15,10 @@ class WebWorkerFactory {
 			};
 			backend.onmessage = e => {
 				console.assert(e.data === Commands.Ready, "Expected initial ready message!");
-				backend.postMessage([Commands.Instantiate, targetClass.name]);
+				backend.postMessage([
+					Commands.Instantiate,
+					(targetClass as any).constructor.__webfun_worker_class__
+				]);
 				backend.onmessage = e => {
 					console.assert(e.data[0] === Commands.Instantiate, "Expected instantiation response!");
 					const target = new targetClass();
