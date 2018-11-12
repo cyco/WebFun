@@ -1,17 +1,11 @@
 import Settings from "src/settings";
 import { MenuItemSeparator, MenuItemState } from "src/ui";
 import ScriptDebugger from "./script-debugger";
-import PrefixedStorage from "src/util/prefixed-storage";
-import DataManager from "src/editor/data-manager";
 import GameController from "src/app/game-controller";
-import WindowManager from "src/ui/window-manager";
-import GameData from "src/engine/game-data";
-import ColorPalette from "src/engine/rendering/color-palette";
-import { FilePicker } from "src/ui";
 import { main as RunSaveGameEditor } from "src/save-game-editor";
 import { main as RunGameDataEditor } from "src/editor";
 
-const SettingsItem = (label: string, key: string, settings: typeof Settings) => ({
+const SettingsItem = (label: string, key: keyof typeof Settings, settings: typeof Settings) => ({
 	title: label,
 	callback: () => (settings[key] = !settings[key]),
 	state: () => (settings[key] ? MenuItemState.On : MenuItemState.Off)
