@@ -8,6 +8,7 @@ function persistent<T extends object>(object: T, prefix: string = null, storage:
 				return storage.has(buildKey(p)) ? storage.load(buildKey(p)) : (target as any)[p];
 			return (target as any)[p];
 		},
+
 		set(target: T, p: PropertyKey, value: any, _: any): boolean {
 			if (typeof p === "string") storage.store(buildKey(p), value);
 			else (target as any)[p] = value;
