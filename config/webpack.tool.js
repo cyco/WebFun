@@ -1,6 +1,7 @@
 const Path = require("path");
 const Paths = require("./paths");
 const BaseConfig = require("./webpack.node.js");
+const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 
 const toolName = process.env.TOOL_NAME;
 BaseConfig.entry = Path.resolve(Paths.toolsRoot, toolName + ".js");
@@ -21,6 +22,11 @@ if (atLoader) {
 	atLoader.options.babelOptions = atLoader.options.babelOptions || {};
 	atLoader.options.babelOptions.plugins = atLoader.options.babelOptions.plugins || [];
 	atLoader.options.babelOptions.plugins.push("@babel/transform-runtime");
+}
+
+if (+process.env.ci) {
+	// skip type checking entirely
+	BaseConfig.plugins = BaseConfig.plugins.filter(plugin => !(plugin instanceof ForkTsCheckerWebpackPlugin));
 }
 
 module.exports = BaseConfig;
