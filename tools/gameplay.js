@@ -62,7 +62,7 @@ async function inject(page) {
 	};
 
 	page.game = async () => {
-		await page.waitForSelector('wf-progress-bar[data-value="1"]');
+		await page.waitForSelector('wf-segmented-progress-bar[data-value="1"]');
 
 		await sleep(2300); // wait through fade out
 		await TakeScreenshot(page, "after loading");
@@ -96,7 +96,7 @@ async function start() {
 
 		await page.evaluate(() => localStorage.clear());
 
-		await page.waitForSelector("wf-main-window wf-progress-bar");
+		await page.waitForSelector("wf-main-window wf-segmented-progress-bar");
 		await page.game();
 		const mainWindow = new MainWindow(page);
 		await mainWindow.setup();
@@ -114,7 +114,6 @@ async function start() {
 		await TakeScreenshot(page, "on new world item");
 		newStoryItem.click();
 		await record(page, 120);
-
 		/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 		await TakeScreenshot(page, "end");
 		browser.close();
