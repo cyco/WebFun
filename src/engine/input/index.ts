@@ -1,4 +1,3 @@
-import DesktopInputManager from "./desktop-input-manager";
-import InputManager from "./input-manager";
+import InputManager, { Direction } from "./input-manager";
 
-export { InputManager, DesktopInputManager };
+export { InputManager, Direction };

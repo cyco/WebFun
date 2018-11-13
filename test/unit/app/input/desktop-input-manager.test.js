@@ -2,7 +2,7 @@ import DesktopInputManager from "src/engine/input/desktop-input-manager";
 import { Direction } from "src/engine/input/input-manager";
 import { KeyEvent } from "src/util";
 
-describe("WebFun.Engine.Input.DesktopInputManager", () => {
+describe("WebFun.App.Input.DesktopInputManager", () => {
 	let subject = null;
 	let element = null;
 	beforeAll(() => {

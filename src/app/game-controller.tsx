@@ -10,7 +10,7 @@ import {
 	ColorPalette
 } from "src/engine";
 import { Reader } from "src/engine/save-game";
-import { DesktopInputManager } from "src/engine/input";
+import { DesktopInputManager } from "./input";
 import { Char, Zone } from "src/engine/objects";
 import { ZoneScene, LoseScene } from "src/engine/scenes";
 import { ScriptExecutor } from "src/engine/script";
@@ -21,9 +21,16 @@ import { EventTarget } from "src/util";
 import { ConfirmationResult, ModalConfirm } from "src/ux";
 import GameState from "../engine/game-state";
 import Loader, { LoaderEventDetails } from "./loader";
-import { LoadingView, SceneView } from "./ui";
 import { MainMenu, MainWindow } from "./windows";
 import { GameTypeYoda } from "src/engine";
+import {
+	LoadingView,
+	SceneView,
+	Inventory as InventoryComponent,
+	Ammo as AmmoComponet,
+	Weapon as WeaponComponent,
+	Health as HealthComponent
+} from "./ui";
 export const Event = {
 	DidLoadData: "didLoadData"
 };
@@ -96,7 +103,7 @@ class GameController extends EventTarget {
 		}
 
 		await this._loadGameData();
-		const story = new Story(0x0000, Planet.ENDOR, WorldSize.Large);
+		const story = new Story(0xdead, Planet.ENDOR, WorldSize.Large);
 		this._engine.inventory.removeAllItems();
 		story.generateWorld(this._engine);
 		this._engine.story = story;
@@ -166,6 +173,25 @@ class GameController extends EventTarget {
 		windowContent.appendChild(this._sceneView);
 
 		engine.inputManager.addListeners();
+		this._window.inventory.addEventListener(InventoryComponent.Events.ItemActivated, (_: CustomEvent) => {
+			engine.metronome.stop();
+		});
+		this._window.inventory.addEventListener(InventoryComponent.Events.ItemPlaced, (e: CustomEvent) => {
+			const location = e.detail.location;
+			const item = e.detail.item;
+
+			const element = document.elementFromPoint(location.x, location.y);
+			if (
+				element &&
+				element.closest(
+					[AmmoComponet.tagName, WeaponComponent.tagName, HealthComponent.tagName].join(",")
+				)
+			) {
+				console.log("redirect to hero");
+			}
+			console.log(location, item, element);
+			engine.metronome.start();
+		});
 		this._window.engine = engine;
 
 		if (this.settings.autostartEngine) {
