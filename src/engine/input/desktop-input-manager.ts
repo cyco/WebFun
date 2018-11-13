@@ -1,5 +1,6 @@
 import { KeyEvent, Point } from "src/util";
 import InputManager, { Direction } from "./input-manager";
+import { SceneView } from "src/app/ui";
 import { document } from "src/std/dom";
 
 class DesktopInputManager extends InputManager implements EventListenerObject {
@@ -133,6 +134,11 @@ class DesktopInputManager extends InputManager implements EventListenerObject {
 
 	private _mouseDown(e: MouseEvent) {
 		const mouseLocation = new Point(e.clientX, e.clientY);
+
+		const element = document.elementFromPoint(mouseLocation.x, mouseLocation.y);
+		// HACK: this is a cheap way way to find out if scene view is front most
+		if (!element.closest(SceneView.tagName)) return;
+
 		const point = this._getPointInViewCoordinates(mouseLocation);
 		const pointIsInView = point.x > 0 && point.y > 0 && point.x < 1 && point.y < 1;
 		if (!pointIsInView) return;
