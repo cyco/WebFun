@@ -1,7 +1,7 @@
 import CursorManager from "src/engine/input/cursor-manager";
 import { Direction } from "src/util";
 
-describe("CursorManager", () => {
+describe("WebFun.App.Input.CursorManager", () => {
 	let subject, container;
 	beforeEach(() => {
 		container = document.createElement("div");

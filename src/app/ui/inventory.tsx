@@ -36,7 +36,7 @@ class InventoryComponent extends AbstractList<Tile> {
 
 		this.dispatchEvent(new CustomEvent(Events.ItemActivated, { detail: { item, row } }));
 
-		if (item && !this._canPlaceItem(item)) {
+		if (!item || !this._canPlaceItem(item)) {
 			return;
 		}
 

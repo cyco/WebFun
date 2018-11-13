@@ -1,7 +1,8 @@
 import { KeyEvent, Point } from "src/util";
-import InputManager, { Direction } from "./input-manager";
+import { InputManager, Direction } from "src/engine/input";
 import { SceneView } from "src/app/ui";
 import { document } from "src/std/dom";
+import TilePlacedEvent from "src/engine/input/tile-placed-event";
 
 class DesktopInputManager extends InputManager implements EventListenerObject {
 	private _element: HTMLElement;
@@ -142,6 +143,12 @@ class DesktopInputManager extends InputManager implements EventListenerObject {
 		const point = this._getPointInViewCoordinates(mouseLocation);
 		const pointIsInView = point.x > 0 && point.y > 0 && point.x < 1 && point.y < 1;
 		if (!pointIsInView) return;
+
+		if (this.currentItem) {
+			this.placeTileHandler(new TilePlacedEvent(this.currentItem, point));
+			this.currentItem = null;
+			return;
+		}
 
 		if (e.button === 0) this._walk = true;
 		if (e.button === 1) this._attack = true;
