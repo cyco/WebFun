@@ -109,7 +109,7 @@ class MapScene extends Scene {
 			world = this.engine.dagobah;
 		}
 		const zone = world.getZone(tileX, tileY);
-		if (Settings.debug && this.engine.inputManager.drag) {
+		if (Settings.debug && this.engine.inputManager.drag && zone) {
 			this._exitScene();
 
 			const transitionScene = new TransitionScene();
