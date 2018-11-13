@@ -1,13 +1,14 @@
-import DesktopInputManager from "src/engine/input/desktop-input-manager";
+import DesktopInputManager from "src/app/input/desktop-input-manager";
 import { Direction } from "src/engine/input/input-manager";
 import { KeyEvent } from "src/util";
 
 describe("WebFun.App.Input.DesktopInputManager", () => {
-	let subject = null;
-	let element = null;
+	let subject, element, mockElement;
 	beforeAll(() => {
 		element = document.createElement("div");
 		subject = new DesktopInputManager(element);
+		mockElement = { closest: () => true };
+		spyOn(document, "elementFromPoint").and.returnValue(mockElement);
 	});
 
 	it("collects game input from keyboard and mouse", () => {

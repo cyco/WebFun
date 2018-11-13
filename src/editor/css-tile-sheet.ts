@@ -1,7 +1,7 @@
 import { Size } from "src/util";
 import { Tile } from "src/engine/objects";
-import { ImageFactory } from "src/engine/rendering/canvas";
-import TileSheet, { TileSheetEntry } from "src/engine/rendering/canvas-tilesheet/tile-sheet";
+import { ImageFactory } from "src/app/rendering/canvas";
+import TileSheet, { TileSheetEntry } from "src/app/rendering/canvas-tilesheet/tile-sheet";
 
 export declare interface CSSTileSheetEntry extends TileSheetEntry {
 	className: string;

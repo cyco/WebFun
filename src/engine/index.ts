@@ -7,8 +7,6 @@ import Inventory from "./inventory";
 import Metronome from "./metronome";
 import PersistentState from "./persistent-state";
 import { ColorPalette } from "./rendering";
-import CanvasRenderer from "./rendering/canvas/canvas-renderer";
-import TileSheetCanvasRenderer from "./rendering/canvas-tilesheet/renderer";
 import { Reader as SaveGameReader, Writer as SaveGameWriter, SaveState } from "./save-game";
 import SceneManager from "./scene-manager";
 import Story from "./story";
@@ -20,7 +18,6 @@ export {
 	GameType,
 	GameTypeIndy,
 	GameTypeYoda,
-	TileSheetCanvasRenderer,
 	EngineEvents,
 	Engine,
 	ColorPalette,
@@ -32,7 +29,6 @@ export {
 	SceneManager,
 	Story,
 	Yoda,
-	CanvasRenderer,
 	readGameDataFile,
 	SaveGameReader,
 	SaveGameWriter

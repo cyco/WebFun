@@ -1,4 +1,4 @@
-import CursorManager from "src/engine/input/cursor-manager";
+import CursorManager from "src/app/input/cursor-manager";
 import { Direction } from "src/util";
 
 describe("WebFun.App.Input.CursorManager", () => {

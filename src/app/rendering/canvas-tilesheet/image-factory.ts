@@ -1,6 +1,6 @@
-import Image from "src/engine/rendering/image";
+import { Image } from "src/engine/rendering";
+import { Tile } from "src/engine/objects";
 import TileSheet from "./tile-sheet";
-import Tile from "src/engine/objects/tile";
 import DOMImageFactory from "../canvas/dom-image-factory";
 
 class ImageFactory extends DOMImageFactory {

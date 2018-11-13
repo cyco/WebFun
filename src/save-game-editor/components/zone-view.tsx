@@ -1,6 +1,6 @@
 import { Component } from "src/ui";
 import { Zone, Tile } from "src/engine/objects";
-import { drawZoneImageData } from "src/engine/rendering/canvas";
+import { drawZoneImageData } from "src/app/rendering/canvas";
 import { ColorPalette } from "src/engine";
 import { Size } from "src/util";
 import "./zone-view.scss";

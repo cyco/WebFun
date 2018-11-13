@@ -1,6 +1,6 @@
-import TileSheet from "src/engine/rendering/canvas-tilesheet/tile-sheet";
+import TileSheet from "src/app/rendering/canvas-tilesheet/tile-sheet";
 
-describe("WebFun.Unit.Engine.Rendering.CanvasTilesheet.TileSheet", () => {
+describe("WebFun.App.CanvasTilesheet.TileSheet", () => {
 	let subject;
 	beforeEach(() => (subject = new TileSheet(12)));
 

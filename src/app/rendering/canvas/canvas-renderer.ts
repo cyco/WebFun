@@ -1,13 +1,12 @@
 import { Point, rgb } from "src/util";
-import Tile from "../../objects/tile";
-import AbstractRenderer from "../abstract-renderer";
-import Image from "../image";
+import { Tile } from "src/engine/objects";
+import { Renderer, Image } from "src/engine/rendering";
 import DOMImageFactory from "./dom-image-factory";
 
 const TILE_WIDTH = 32.0;
 const TILE_HEIGHT = 32.0;
 
-class CanvasRenderer extends AbstractRenderer {
+class CanvasRenderer extends Renderer {
 	protected _canvas: HTMLCanvasElement;
 	protected _ctx: CanvasRenderingContext2D;
 	protected _imageFactory: DOMImageFactory;

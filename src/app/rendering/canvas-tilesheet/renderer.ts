@@ -1,6 +1,6 @@
-import CanvasRenderer from "src/engine/rendering/canvas/canvas-renderer";
-import ImageFactory from "src/engine/rendering/canvas-tilesheet/image-factory";
-import { TileSheetEntry } from "src/engine/rendering/canvas-tilesheet/tile-sheet";
+import CanvasRenderer from "../canvas/canvas-renderer";
+import ImageFactory from "../canvas-tilesheet/image-factory";
+import { TileSheetEntry } from "../canvas-tilesheet/tile-sheet";
 
 class Renderer extends CanvasRenderer {
 	constructor(canvas: HTMLCanvasElement) {

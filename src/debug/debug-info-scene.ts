@@ -1,5 +1,5 @@
 import { Renderer } from "src/engine/rendering";
-import CanvasRenderer from "src/engine/rendering/canvas/canvas-renderer";
+import CanvasRenderer from "src/app/rendering/canvas/canvas-renderer";
 import { Scene } from "src/engine/scenes";
 import { Point } from "src/util";
 
