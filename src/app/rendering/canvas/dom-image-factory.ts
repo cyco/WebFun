@@ -1,6 +1,4 @@
-import AbstractImageFactory from "../abstract-image-factory";
-import ColorPalette from "../color-palette";
-import Image from "../image";
+import { AbstractImageFactory, ColorPalette, Image } from "src/engine/rendering";
 import drawImage from "./draw-image";
 import { Size } from "src/util";
 

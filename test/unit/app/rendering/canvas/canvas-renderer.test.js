@@ -1,7 +1,7 @@
 import AbstractRenderer from "src/engine/rendering/abstract-renderer";
-import CanvasRenderer from "src/engine/rendering/canvas/canvas-renderer";
+import CanvasRenderer from "src/app/rendering/canvas/canvas-renderer";
 
-describe("CanvasRenderer", () => {
+describe("WebFun.App.Rendering.Canvas.Renderer", () => {
 	let subject = null;
 	let context, canvas;
 

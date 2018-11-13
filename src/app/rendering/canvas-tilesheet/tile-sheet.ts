@@ -1,6 +1,6 @@
 import { Point, Rectangle, Size } from "src/util";
 import { Tile } from "src/engine/objects";
-import { ImageFactory } from "src/engine/rendering/canvas";
+import { ImageFactory } from "../canvas";
 
 export declare interface TileSheetEntry {
 	rectangle: Rectangle;

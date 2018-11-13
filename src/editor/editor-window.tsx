@@ -4,7 +4,7 @@ import { InputStream } from "src/util";
 import { PaletteProvider } from "src/app/data";
 import DataManager from "./data-manager";
 import CSSTileSheet from "./css-tile-sheet";
-import { ImageFactory } from "src/engine/rendering/canvas";
+import { ImageFactory } from "src/app/rendering/canvas";
 import buildEditorMenu from "./menu";
 import { Menu, WindowMenuItem } from "src/ui";
 import EditorView from "./editor-view";

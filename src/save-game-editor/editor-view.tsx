@@ -7,7 +7,7 @@ import { GameData, ColorPalette } from "src/engine";
 import { SaveState } from "src/engine/save-game";
 import { Menu, Component } from "src/ui";
 import { CSSTileSheet } from "src/editor";
-import { ImageFactory } from "src/engine/rendering/canvas";
+import { ImageFactory } from "src/app/rendering/canvas";
 import { WorldSize } from "src/engine/types";
 import { Yoda as GameTypeYoda } from "src/engine/type";
 import WorldItem from "./world-item";

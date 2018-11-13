@@ -1,14 +1,5 @@
-import {
-	CanvasRenderer,
-	Engine,
-	GameData,
-	Hero,
-	Inventory,
-	Metronome,
-	Story,
-	TileSheetCanvasRenderer,
-	ColorPalette
-} from "src/engine";
+import { Engine, GameData, Hero, Inventory, Metronome, Story, ColorPalette } from "src/engine";
+import { CanvasRenderer, CanvasTileSheetRenderer } from "./rendering";
 import { Reader } from "src/engine/save-game";
 import { DesktopInputManager } from "./input";
 import { Char, Zone } from "src/engine/objects";
@@ -75,12 +66,12 @@ class GameController extends EventTarget {
 		return engine;
 	}
 
-	private _determineRenderer(): typeof CanvasRenderer | typeof TileSheetCanvasRenderer {
+	private _determineRenderer(): typeof CanvasRenderer.Renderer | typeof CanvasTileSheetRenderer.Renderer {
 		if (Settings.allowTileSheet) {
-			return TileSheetCanvasRenderer;
+			return CanvasTileSheetRenderer.Renderer;
 		}
 
-		return CanvasRenderer;
+		return CanvasRenderer.Renderer;
 	}
 
 	public show(windowManager: WindowManager = WindowManager.defaultManager) {

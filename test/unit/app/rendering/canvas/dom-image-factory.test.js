@@ -1,7 +1,7 @@
-import DOMImageFactory from "src/engine/rendering/canvas/dom-image-factory";
+import DOMImageFactory from "src/app/rendering/canvas/dom-image-factory";
 import { Image } from "std/dom";
 
-describe("DOMImageFactory", () => {
+describe("WebFun.App.Rendering.Canvas.DOMImageFactory", () => {
 	const colorPalette = [
 		...[0, 0, 0, 0], // transparent
 		...[0, 0, 0, 0], // black

@@ -1,6 +1,6 @@
 import { ColorPalette, GameData } from "src/engine";
 import CSSTileSheet from "./css-tile-sheet";
-import { ImageFactory } from "src/engine/rendering/canvas";
+import { ImageFactory } from "src/app/rendering/canvas";
 import { GameType, SaveState } from "src/engine";
 
 class DataManager {

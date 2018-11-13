@@ -1,7 +1,7 @@
 import { Component } from "src/ui";
 import { ColorPalette } from "src/engine";
 import { Size, Point } from "src/util";
-import { ImageFactory } from "src/engine/rendering/canvas";
+import { ImageFactory } from "src/app/rendering/canvas";
 import "./palette-view.scss";
 
 class PaletteView extends Component {
