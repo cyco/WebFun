@@ -29,8 +29,6 @@ class TransitionScene extends Scene {
 	}
 
 	willShow() {
-		console.log("willShow()");
-
 		this._setupAnimationAttributes();
 		this.state = 0;
 
@@ -63,10 +61,6 @@ class TransitionScene extends Scene {
 		}
 	}
 
-	willHide() {
-		console.log("willHide()");
-	}
-
 	async update(/*ticks*/) {
 		if (this._zoneSwapTime !== Infinity && this.state > this._zoneSwapTime) {
 			// make sure we don't swap again
@@ -80,7 +74,6 @@ class TransitionScene extends Scene {
 	}
 
 	private _swapZones() {
-		console.warn("_swapZones()");
 		const state = this.engine.temporaryState;
 		const hero = this.engine.hero;
 		const engine = this.engine;
