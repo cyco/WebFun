@@ -76,11 +76,11 @@
     "console.image": "^1.0.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.1.5",
-    "@babel/plugin-transform-react-jsx": "^7.0.0",
+    "@babel/core": "^7.1.6",
+    "@babel/plugin-transform-react-jsx": "^7.1.6",
     "@babel/plugin-transform-regenerator": "^7.0.0",
     "@babel/plugin-transform-runtime": "^7.1.0",
-    "@babel/preset-env": "^7.1.5",
+    "@babel/preset-env": "^7.1.6",
     "@types/jasmine-matchers": "^0.2.32",
     "@types/text-encoding": "^0.0.34",
     "@types/webcomponents.js": "^0.6.33",
