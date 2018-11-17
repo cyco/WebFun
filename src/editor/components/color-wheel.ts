@@ -159,7 +159,7 @@ class ColorWheel extends Component implements EventListenerObject {
 		this.textContent = "";
 	}
 
-	public attributeChangedCallback(attr: string, old: string, newValue: string) {
+	public attributeChangedCallback(attr: string, _: string, newValue: string) {
 		if (attr === "color") this.color = newValue;
 	}
 

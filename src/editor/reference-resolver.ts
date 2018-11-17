@@ -49,7 +49,7 @@ class ReferenceResolver {
 		}
 	}
 
-	private findReferencesToTile(tile: Tile): any[] {
+	private findReferencesToTile(_: Tile): any[] {
 		return [];
 	}
 
@@ -66,7 +66,7 @@ class ReferenceResolver {
 		return this.data.zones.map(findReferencesInZone).flatten();
 	}
 
-	private findReferencesToCharacter(char: Char): any[] {
+	private findReferencesToCharacter(_: Char): any[] {
 		return [];
 	}
 
@@ -86,19 +86,19 @@ class ReferenceResolver {
 			.concat(this.data.characters.filter(charIsReferenceToSound));
 	}
 
-	private findReferencesToAction(action: Action): any[] {
+	private findReferencesToAction(_: Action): any[] {
 		return [];
 	}
 
-	private findReferencesToHotspot(hotspot: Hotspot): any[] {
+	private findReferencesToHotspot(_: Hotspot): any[] {
 		return [];
 	}
 
-	private findReferencesToNPC(npc: NPC): any[] {
+	private findReferencesToNPC(_: NPC): any[] {
 		return [];
 	}
 
-	private findReferencesToPoint(point: Point): any[] {
+	private findReferencesToPoint(_: Point): any[] {
 		return [];
 	}
 }

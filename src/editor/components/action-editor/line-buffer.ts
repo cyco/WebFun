@@ -2,7 +2,7 @@ class LineBuffer {
 	protected _lines: string[] = [];
 	protected _currentLine: string = "";
 
-	put(string: string, ...rest: any[]) {
+	put(string: string, ..._rest: any[]) {
 		const parts = string.split("\n");
 		while (parts.length) {
 			this._currentLine += parts.shift();

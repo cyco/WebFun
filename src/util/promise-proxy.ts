@@ -11,8 +11,8 @@ class PromiseProxy<T> {
 		return new this(resolve => resolve(value));
 	}
 
-	public static reject<never>(reason?: any): PromiseProxy<never> {
-		return new this((resolve, reject) => reject(reason));
+	public static reject<T>(reason?: any): PromiseProxy<T> {
+		return new this((_, reject) => reject(reason));
 	}
 
 	constructor(executor: Executor<T>) {
@@ -23,7 +23,7 @@ class PromiseProxy<T> {
 		return this._promise.then(<any>onfulfilled);
 	}
 
-	public catch(onrejected?: (reason: any) => PromiseLike<never>): Promise<T> {
+	public async catch(onrejected?: (reason: any) => PromiseLike<never>): Promise<T> {
 		return this._promise.catch(onrejected);
 	}
 }

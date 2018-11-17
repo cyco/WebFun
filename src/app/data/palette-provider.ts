@@ -12,11 +12,10 @@ class PaletteProvider {
 		this.url.set(GameTypeIndy, indyUrl);
 	}
 
-	provide(type: GameType): Promise<ColorPalette> {
+	async provide(type: GameType): Promise<ColorPalette> {
 		const url = this.url.get(type);
-		return FileLoader.loadAsStream(url).then(
-			stream => stream.getUint8Array(ColorPaletteSize) as ColorPalette
-		);
+		const stream = await FileLoader.loadAsStream(url);
+		return stream.getUint8Array(ColorPaletteSize) as ColorPalette;
 	}
 }
 

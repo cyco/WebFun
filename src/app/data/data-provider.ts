@@ -10,11 +10,11 @@ class DataProvider {
 		this.url.set(GameTypeIndy, indyUrl);
 	}
 
-	provide(type: GameType): Promise<GameData> {
+	async provide(type: GameType): Promise<GameData> {
 		const url = this.url.get(type);
-		return FileLoader.loadAsStream(url)
-			.then((stream: any) => readGameDataFile(stream, type))
-			.then((rawData: any) => new GameData(rawData));
+		const stream = await FileLoader.loadAsStream(url);
+		const rawData = await readGameDataFile(stream, type);
+		return new GameData(rawData);
 	}
 }
 

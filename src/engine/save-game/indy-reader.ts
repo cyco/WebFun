@@ -85,7 +85,7 @@ class IndyReader extends Reader {
 		return state;
 	}
 
-	protected readWorldItem(stream: InputStream, x: number, y: number): WorldItem {
+	protected readWorldItem(stream: InputStream, _x: number, _y: number): WorldItem {
 		let visited = this.readBool(stream);
 		let solved_1 = this.readBool(stream);
 		let solved_2 = this.readBool(stream);

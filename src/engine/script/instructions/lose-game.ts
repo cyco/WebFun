@@ -7,7 +7,7 @@ import InstructionType from "../instruction";
 export default <InstructionType>{
 	Opcode: 0x20,
 	Arguments: [],
-	Implementation: async (instruction: Instruction, engine: Engine, action: Action): Promise<Result> => {
+	Implementation: async (_instruction: Instruction, _engine: Engine, _: Action): Promise<Result> => {
 		throw "Game Lost!";
 	}
 };

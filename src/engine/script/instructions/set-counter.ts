@@ -8,7 +8,7 @@ export default <InstructionType>{
 	Opcode: 0x0d,
 	Arguments: [Type.Number],
 	Description: "Set current zone's `counter` value to a `arg_0`",
-	Implementation: async (instruction: Instruction, engine: Engine, action: Action): Promise<Result> => {
+	Implementation: async (instruction: Instruction, engine: Engine, _: Action): Promise<Result> => {
 		engine.currentZone.counter = instruction.arguments[0];
 
 		return ResultFlags.OK;

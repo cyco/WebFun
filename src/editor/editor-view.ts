@@ -3,8 +3,7 @@ import { InputStream, DiscardingOutputStream, download, OutputStream } from "src
 import DataManager from "./data-manager";
 import GameDataSerializer from "./game-data-serializer";
 import FilePicker from "src/ui/file-picker";
-import { readGameDataFile, GameTypeYoda, GameTypeIndy, SaveGameReader } from "src/engine";
-import GameData from "src/engine/game-data";
+import { SaveGameReader } from "src/engine";
 import { Component } from "src/ui";
 import WindowManager from "src/ui/window-manager";
 import { SaveGameInspector } from "./inspectors";
@@ -52,12 +51,7 @@ class EditorView extends Component {
 		await this.loadFile(file);
 	}
 
-	public async loadFile(file: File) {
-		const stream = await file.provideInputStream();
-		const type = file.name.toLowerCase().indexOf("yoda") === -1 ? GameTypeIndy : GameTypeYoda;
-		const rawData = readGameDataFile(stream, type);
-		const data = new GameData(rawData);
-	}
+	public async loadFile(_: File) {}
 
 	public async loadSaveGame() {
 		const filePicker = new FilePicker();

@@ -8,7 +8,7 @@ export default <InstructionType>{
 	Opcode: 0x18,
 	Arguments: [Type.NPCID],
 	Description: "Disable NPC `arg_0`",
-	Implementation: async (instruction: Instruction, engine: Engine, action: Action): Promise<Result> => {
+	Implementation: async (instruction: Instruction, engine: Engine, _: Action): Promise<Result> => {
 		const zone = engine.currentZone;
 		const npc = zone.npcs[instruction.arguments[0]];
 		if (npc) {

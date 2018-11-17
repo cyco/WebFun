@@ -2,9 +2,9 @@ import { Renderer } from "../rendering";
 import Scene from "./scene";
 
 class WinScene extends Scene {
-	async update(ticks: number) {}
+	async update(_: number) {}
 
-	render(renderer: Renderer) {}
+	render(_: Renderer) {}
 }
 
 export default WinScene;

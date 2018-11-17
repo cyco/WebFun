@@ -20,19 +20,19 @@ class Yoda extends GameType {
 		return Strings;
 	}
 
-	public isEdible(item: Tile): boolean {
+	public isEdible(_: Tile): boolean {
 		return false;
 	}
 
-	public getHealthBonus(item: Tile): number {
+	public getHealthBonus(_: Tile): number {
 		return 0;
 	}
 
-	public getMaxAmmo(weapon: Char): number {
+	public getMaxAmmo(_: Char): number {
 		return 0;
 	}
 
-	public getEquipSound(weapon: Char): number {
+	public getEquipSound(_: Char): number {
 		return 0;
 	}
 }

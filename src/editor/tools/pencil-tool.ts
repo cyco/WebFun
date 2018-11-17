@@ -16,7 +16,7 @@ class PencilTool extends AbstractDrawingTool {
 		this._ctx.fillStyle = HighlightColor;
 	}
 
-	protected applyTo(p: Point, continous: boolean) {
+	protected applyTo(p: Point, _: boolean) {
 		if (this.layer.locked) return;
 
 		this._ctx.fillStyle = rgba(0, 255, 0, 0.3);
