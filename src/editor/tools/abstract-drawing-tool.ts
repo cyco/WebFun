@@ -62,7 +62,7 @@ abstract class AbstractDrawingTool extends AbstractTool implements EventListener
 
 	protected abstract applyTo(point: Point, continous: boolean): void;
 
-	protected finalize(point: Point): void {}
+	protected finalize(_: Point): void {}
 
 	public handleEvent(event: MouseEvent): void {
 		if (event.type === "mouseup") {

@@ -1,7 +1,7 @@
 import Camera from "src/engine/camera";
-import { HotspotType, Tile, Zone, NPC, CharMovementType } from "src/engine/objects";
+import { HotspotType, Tile, Zone, NPC } from "src/engine/objects";
 import Settings from "src/settings";
-import { Direction, Logger, Point, rgba } from "src/util";
+import { Direction, rgba, Point } from "src/util";
 import Hotspot from "../objects/hotspot";
 import AbstractRenderer from "../rendering/abstract-renderer";
 import MapScene from "./map-scene";
@@ -9,8 +9,6 @@ import PauseScene from "./pause-scene";
 import Scene from "./scene";
 import TransitionScene from "./transition-scene";
 import { EvaluationMode } from "../script";
-
-const log = Logger.declare("ZoneScene");
 
 class ZoneScene extends Scene {
 	private _camera = new Camera();
@@ -319,18 +317,7 @@ class ZoneScene extends Scene {
 		this._zone.npcs.forEach(npc => this._moveNPC(npc));
 	}
 
-	private _moveNPC(npc: NPC) {
-		const char = npc.face;
-		const hero = this.engine.hero.location;
-		const position = npc.position;
-		switch (char.movementType) {
-			case CharMovementType.Sit:
-				let direction = new Point(hero.x - npc.position.x, hero.y - npc.position.y);
-				break;
-			default:
-				break;
-		}
-	}
+	private _moveNPC(_: NPC) {}
 
 	prepareCamera() {
 		this._camera.update(Infinity);

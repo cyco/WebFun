@@ -6,5 +6,5 @@ import Condition from "src/engine/script/condition";
 export default <Condition>{
 	Opcode: 0x11,
 	Arguments: [Type.Number, Type.Number, Type.Number, Type.Number, Type.Number],
-	Implementation: async (args: int16[], zone: Zone, engine: Engine): Promise<boolean> => false
+	Implementation: async (_args: int16[], _zone: Zone, _engine: Engine): Promise<boolean> => false
 };

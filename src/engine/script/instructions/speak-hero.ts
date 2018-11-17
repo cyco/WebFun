@@ -10,7 +10,7 @@ export default <InstructionType>{
 	Arguments: [],
 	UsesText: true,
 	Description: "Show speech bubble next to hero. _Uses `text` attribute_.",
-	Implementation: (instruction: Instruction, engine: Engine, action: Action): Promise<Result> => {
+	Implementation: (instruction: Instruction, engine: Engine, _: Action): Promise<Result> => {
 		return SpeakText(instruction.text, engine.hero.location, engine);
 	}
 };

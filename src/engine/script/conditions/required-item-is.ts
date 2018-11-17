@@ -6,5 +6,5 @@ import Condition from "src/engine/script/condition";
 export default <Condition>{
 	Opcode: 0x0e,
 	Arguments: [Type.TileID],
-	Implementation: async (args: int16[], zone: Zone, engine: Engine): Promise<boolean> => false
+	Implementation: async (_: int16[], _zone: Zone, _engine: Engine): Promise<boolean> => false
 };

@@ -8,7 +8,7 @@ export default <InstructionType>{
 	Opcode: 0x14,
 	Arguments: [],
 	Description: "Disable current action",
-	Implementation: async (instruction: Instruction, engine: Engine, action: Action): Promise<Result> => {
+	Implementation: async (_: Instruction, _engine: Engine, action: Action): Promise<Result> => {
 		// original implementation disables action only if no redraw occurs
 		action.enabled = false;
 		return ResultFlags.OK;

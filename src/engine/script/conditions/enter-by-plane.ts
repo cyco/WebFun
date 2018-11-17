@@ -6,6 +6,6 @@ import Condition from "src/engine/script/condition";
 export default <Condition>{
 	Opcode: 0x09,
 	Arguments: [],
-	Implementation: async (args: int16[], zone: Zone, engine: Engine): Promise<boolean> =>
+	Implementation: async (_: int16[], _zone: Zone, engine: Engine): Promise<boolean> =>
 		engine.temporaryState.enteredByPlane
 };

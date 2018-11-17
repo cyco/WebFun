@@ -7,7 +7,7 @@ import Condition from "src/engine/script/condition";
 export default <Condition>{
 	Opcode: 0x1d,
 	Arguments: [Type.ZoneX, Type.ZoneY],
-	Implementation: async (args: int16[], zone: Zone, engine: Engine): Promise<boolean> => {
+	Implementation: async (args: int16[], zone: Zone, _engine: Engine): Promise<boolean> => {
 		for (let hotspot of zone.hotspots) {
 			if (
 				hotspot.type === HotspotType.TriggerLocation &&

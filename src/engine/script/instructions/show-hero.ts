@@ -8,7 +8,7 @@ export default <InstructionType>{
 	Opcode: 0x11,
 	Arguments: [],
 	Description: "Show hero",
-	Implementation: async (instruction: Instruction, engine: Engine, action: Action): Promise<Result> => {
+	Implementation: async (_instruction: Instruction, engine: Engine, _: Action): Promise<Result> => {
 		engine.hero.visible = true;
 		return ResultFlags.UpdateHero;
 	}

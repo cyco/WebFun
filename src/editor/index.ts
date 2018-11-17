@@ -1,19 +1,9 @@
 import { ComponentRegistry, FilePicker, WindowManager } from "src/ui";
 import * as Components from "./components";
 import EditorView from "./editor-view";
-import GameController from "src/app/game-controller";
 import CSSTileSheet from "./css-tile-sheet";
 import DataManager from "./data-manager";
 import EditorWindow from "./editor-window";
-import {
-	TileInspector,
-	ZoneInspector,
-	SetupImageInspector,
-	SoundInspector,
-	PaletteInspector,
-	PuzzleInspector,
-	CharacterInspector
-} from "./inspectors";
 
 let Initialize = () => {
 	ComponentRegistry.sharedRegistry.registerComponents(<any>Components);

@@ -152,10 +152,6 @@ class Editor extends Component {
 		this._errorArea.style.display = "";
 		this.style.setProperty("--error-height", this._errorArea.getBoundingClientRect().height + "px");
 	}
-
-	private get actions() {
-		return this._actions;
-	}
 }
 
 export default Editor;

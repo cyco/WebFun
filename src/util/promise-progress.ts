@@ -10,8 +10,8 @@ export class PromiseProgress<T> extends PromiseProxy<T> {
 		return new this(resolve => resolve(value));
 	}
 
-	public static reject<never>(reason?: any): PromiseProgress<never> {
-		return new this((resolve, reject) => reject(reason));
+	public static reject<T>(reason?: any): PromiseProgress<T> {
+		return new this((_, reject) => reject(reason));
 	}
 
 	constructor(callback: Executor<T>) {

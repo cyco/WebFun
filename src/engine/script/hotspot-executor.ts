@@ -49,7 +49,7 @@ class HotspotExecutor {
 		zone.hotspots.forEach(hotspot => this._pickUpHotspotItem(zone, hotspot));
 	}
 
-	private _pickUpHotspotItem(zone: Zone, hotspot: Hotspot) {}
+	private _pickUpHotspotItem(_zone: Zone, _hotspot: Hotspot) {}
 }
 
 export default HotspotExecutor;

@@ -1,10 +1,8 @@
 import { ColorPalette, GameData } from "src/engine";
 import CSSTileSheet from "./css-tile-sheet";
-import { ImageFactory } from "src/app/rendering/canvas";
 import { GameType, SaveState } from "src/engine";
 
 class DataManager {
-	private _data: GameData;
 	private _currentData: GameData;
 	private _palette: ColorPalette;
 	private _tileSheet: CSSTileSheet;
@@ -13,7 +11,6 @@ class DataManager {
 	private _stateData: GameData;
 
 	constructor(data: GameData, palette: ColorPalette, tilesheet: CSSTileSheet, type: GameType) {
-		this._data = data.copy();
 		this._currentData = data.copy();
 		this._palette = palette;
 		this._tileSheet = tilesheet;

@@ -14,7 +14,7 @@ abstract class Component extends HTMLElement {
 
 	protected disconnectedCallback(): void {}
 
-	protected attributeChangedCallback(attributeName: string, oldValue: string, newValue: string): void {}
+	protected attributeChangedCallback(_attributeName: string, _oldValue: string, _newValue: string): void {}
 }
 
 declare global {

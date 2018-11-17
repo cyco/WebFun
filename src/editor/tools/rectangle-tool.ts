@@ -10,7 +10,7 @@ class RectangleTool extends AbstractDrawingTool {
 	public readonly shortcut = { keyCode: 85 };
 	private _startingPoint: Point = null;
 
-	protected applyTo(point: Point, continous: boolean) {
+	protected applyTo(point: Point, _: boolean) {
 		if (!this._startingPoint) this._startingPoint = point;
 
 		const rect = this.calculateRectFromStartTo(point);

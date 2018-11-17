@@ -7,7 +7,7 @@ import InstructionType from "../instruction";
 export default <InstructionType>{
 	Opcode: 0x03,
 	Arguments: [Type.Number, Type.Number, Type.Number, Type.Number, Type.Number],
-	Implementation: async (instruction: Instruction, engine: Engine, action: Action): Promise<Result> => {
+	Implementation: async (_: Instruction, _engine: Engine, _action: Action): Promise<Result> => {
 		/*
 		 case DrawTileNow:
 		 tile_2 = document->tiles.ptrs[instruction->arg3];

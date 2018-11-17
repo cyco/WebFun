@@ -8,7 +8,7 @@ export default <InstructionType>{
 	Opcode: 0x19,
 	Arguments: [],
 	Description: "Enable all NPCs",
-	Implementation: async (instruction: Instruction, engine: Engine, action: Action): Promise<Result> => {
+	Implementation: async (_: Instruction, engine: Engine, _action: Action): Promise<Result> => {
 		const zone = engine.currentZone;
 		zone.npcs.forEach(npc => (npc.enabled = false));
 

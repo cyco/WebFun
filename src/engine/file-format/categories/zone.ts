@@ -1,6 +1,5 @@
 import { InputStream } from "src/util";
 import { assert } from "../error";
-import { Tile } from "src/engine/objects";
 import { parseHotspot } from "./hotspot";
 import { parseAction } from "./action";
 import { parseNPC } from "./npc";

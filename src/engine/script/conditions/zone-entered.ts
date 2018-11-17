@@ -7,7 +7,7 @@ export default <Condition>{
 	Opcode: 0x01,
 	Arguments: [],
 	Description: "Evalutes to true if hero just entered the zone",
-	Implementation: async (args: int16[], zone: Zone, engine: Engine): Promise<boolean> =>
+	Implementation: async (_args: int16[], _: Zone, engine: Engine): Promise<boolean> =>
 		engine.temporaryState.justEntered
 
 	// TODO: validate against original implementation

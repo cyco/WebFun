@@ -28,7 +28,7 @@ class GameDataSerializer {
 		this.writeEndOfFile(stream);
 	}
 
-	private writeVersion(data: GameData, stream: OutputStream) {
+	private writeVersion(_: GameData, stream: OutputStream) {
 		stream.writeCharacters("VERS");
 		stream.writeUint32(512);
 	}

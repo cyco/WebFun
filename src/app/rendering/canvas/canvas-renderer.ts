@@ -36,9 +36,9 @@ class CanvasRenderer extends Renderer {
 		this._ctx.clearRect(0, 0, this._canvas.width, this._canvas.height);
 	}
 
-	clearTile(x: number, y: number, z: number) {}
+	clearTile(_: number, _1: number, _2: number) {}
 
-	renderTile(tile: Tile, x: number, y: number, z: number) {
+	renderTile(tile: Tile, x: number, y: number, _: number) {
 		if (!tile) return;
 
 		this.drawImage(tile.image.representation, x * TILE_WIDTH, y * TILE_HEIGHT);

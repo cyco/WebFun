@@ -1,7 +1,6 @@
 import { AbstractHealth } from "src/app/ui";
 import { Point, xy2polar, rad2deg } from "src/util";
 import { abs, ceil, sign } from "src/std/math";
-import { MouseEvent } from "src/std/dom";
 import "./interactive-health.scss";
 
 const FlipThreshold = 180;

@@ -27,7 +27,7 @@ class PrefixedStorage implements Storage {
 		return this._storage.getItem(this._buildKey(key));
 	}
 
-	key(index: number): string | null {
+	key(_: number): string | null {
 		return null;
 	}
 
