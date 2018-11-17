@@ -14,6 +14,8 @@ import GameState from "../engine/game-state";
 import Loader, { LoaderEventDetails } from "./loader";
 import { MainMenu, MainWindow } from "./windows";
 import { GameTypeYoda } from "src/engine";
+import { DOMSoundLoader, DOMAudioChannel } from "./audio";
+import { Mixer } from "src/engine/audio";
 import {
 	LoadingView,
 	SceneView,
@@ -45,6 +47,14 @@ class GameController extends EventTarget {
 	private _buildEngine() {
 		const engine = new Engine(GameTypeYoda);
 		const Renderer = this._determineRenderer();
+
+		const soundLoader = new DOMSoundLoader("/game-data/sfx-yoda/");
+		const effectsChannel = new DOMAudioChannel();
+		effectsChannel.muted = !Settings.playSound;
+		const musicChannel = new DOMAudioChannel();
+		musicChannel.muted = !Settings.playMusic;
+		console.log(Settings.playSound, Settings.playMusic);
+		engine.mixer = new Mixer(soundLoader, musicChannel, effectsChannel);
 
 		engine.renderer = new Renderer(this._sceneView.canvas);
 		engine.imageFactory = engine.renderer.imageFactory;
