@@ -1,5 +1,5 @@
 import { buildMenu as buildDebugMenu } from "src/debug";
-import { Menu, MenuItemSeparator as Separator } from "src/ui";
+import { Menu, MenuItemSeparator as Separator, MenuItemInit } from "src/ui";
 import { WindowModalSession } from "src/ux";
 import { document } from "src/std/dom";
 import { Window } from "src/ui/components";
@@ -8,6 +8,34 @@ import DifficultyWindow from "./difficulty-window";
 import GameSpeedWindow from "./game-speed-window";
 import StatisticsWindow from "./statistics-window";
 import WorldSizeWindow from "./world-size-window";
+import Settings from "src/settings";
+
+function SoundMenuItem(
+	controller: GameController,
+	name: string,
+	settingsName: "playSound" | "playMusic",
+	channelName: "effectChannel" | "musicChannel"
+): MenuItemInit {
+	return {
+		title: `${name} On`,
+		mnemonic: 0,
+		enabled: () => controller.engine !== null,
+		state: () =>
+			(controller.engine
+			? !controller.engine.mixer[channelName].muted
+			: Settings[settingsName])
+				? +1
+				: +0,
+		callback: (): void => {
+			const audible = controller.engine
+				? !controller.engine.mixer[channelName].muted
+				: Settings[settingsName];
+
+			if (controller.engine) controller.engine.mixer[channelName].muted = audible;
+			Settings[settingsName] = !audible;
+		}
+	};
+}
 
 class MainMenu extends Menu {
 	constructor(controller: GameController) {
@@ -72,14 +100,8 @@ class MainMenu extends Menu {
 						callback: () => this._runModalSessionForWindowComponent(StatisticsWindow.tagName)
 					},
 					Separator,
-					{
-						title: "Music On",
-						mnemonic: 0
-					},
-					{
-						title: "Sound On",
-						mnemonic: 0
-					},
+					SoundMenuItem(controller, "Music", "playMusic", "musicChannel"),
+					SoundMenuItem(controller, "Sound", "playSound", "effectChannel"),
 					Separator,
 					{
 						title: "Pause",

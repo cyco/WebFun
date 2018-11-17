@@ -3,11 +3,11 @@ import MenuItem from "./menu-item";
 
 declare interface MenuItemInit {
 	title: string;
-	state: number;
+	state: number | Function;
 	callback: Function;
 	enabled: boolean | Function;
-	submenu: Menu | MenuItem[] | Partial<MenuItemInit>[];
 	mnemonic: number;
+	submenu?: Menu | MenuItem[] | Partial<MenuItemInit>[];
 }
 
 export default MenuItemInit;
