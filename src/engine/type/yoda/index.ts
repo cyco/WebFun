@@ -1,5 +1,6 @@
 import GameType from "../type";
 import LocatorTile from "./locator-tile";
+import TileId from "./tile-ids";
 import { Tile, Char } from "src/engine/objects";
 import Strings from "./strings";
 
@@ -20,12 +21,23 @@ class Yoda extends GameType {
 		return Strings;
 	}
 
-	public isEdible(_: Tile): boolean {
-		return false;
-	}
-
-	public getHealthBonus(_: Tile): number {
-		return 0;
+	public getHealthBonus(tile: Tile): number {
+		switch (tile.id) {
+			case TileId.QRations:
+				return 25;
+			case TileId.IceMushroom:
+			case TileId.ScrubRoot:
+			case TileId.Mushroom:
+			case TileId.BactaFluid:
+			case TileId.Chakroot:
+				return 50;
+			case TileId.RebelFirstAidKit:
+				return 100;
+			case TileId.ImperialFirstAidKit:
+				return 100;
+			default:
+				return null;
+		}
 	}
 
 	public getMaxAmmo(_: Char): number {

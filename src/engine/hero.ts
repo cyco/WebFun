@@ -10,6 +10,7 @@ export const Events = {
 };
 
 class Hero extends EventTarget {
+	static readonly MAX_HEALTH = MAX_HEALTH;
 	public visible: boolean = false;
 	public _location: Point = new Point(0, 0, 1); // TODO: make private again
 	public invincible: boolean = false;
