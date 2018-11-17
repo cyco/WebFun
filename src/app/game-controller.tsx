@@ -2,7 +2,7 @@ import { Engine, GameData, Hero, Inventory, Metronome, Story, ColorPalette } fro
 import { CanvasRenderer, CanvasTileSheetRenderer } from "./rendering";
 import { Reader } from "src/engine/save-game";
 import { DesktopInputManager } from "./input";
-import { Char, Zone } from "src/engine/objects";
+import { Char, Zone, Tile } from "src/engine/objects";
 import { ZoneScene, LoseScene } from "src/engine/scenes";
 import { ScriptExecutor } from "src/engine/script";
 import { Planet, WorldSize } from "src/engine/types";
@@ -179,7 +179,7 @@ class GameController extends EventTarget {
 		});
 		this._window.inventory.addEventListener(InventoryComponent.Events.ItemPlaced, (e: CustomEvent) => {
 			const location = e.detail.location;
-			const item = e.detail.item;
+			const item = e.detail.item as Tile;
 
 			const element = document.elementFromPoint(location.x, location.y);
 			if (
@@ -188,8 +188,10 @@ class GameController extends EventTarget {
 					[AmmoComponet.tagName, WeaponComponent.tagName, HealthComponent.tagName].join(",")
 				)
 			) {
-				console.log("redirect to hero");
+				this.engine.consume(item);
+				engine.metronome.start();
 			}
+
 			console.log(location, item, element);
 			engine.metronome.start();
 		});

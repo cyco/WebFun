@@ -4,6 +4,20 @@ export const WIDTH = 32;
 export const HEIGHT = 32;
 export const SIZE = WIDTH * HEIGHT;
 
+export const enum Attributes {
+	Transparent = 1 << 0,
+	Floor = 1 << 1,
+	Objecvt = 1 << 2,
+	Draggabe = 1 << 3,
+	Roof = 1 << 4,
+	Locator = 1 << 5,
+	Weapon = 1 << 6,
+	Item = 1 << 7,
+	Character = 1 << 8,
+
+	Edible = Character & (1 << 22)
+}
+
 export const Attribute = {
 	Transparent: 0,
 	Floor: 1,
@@ -119,6 +133,14 @@ export class Tile {
 
 	public get imageData() {
 		return this._imageData;
+	}
+
+	public get isWeapon() {
+		return this.attributes & Attributes.Weapon;
+	}
+
+	public get isEdible() {
+		return this.attributes & Attributes.Edible;
 	}
 }
 

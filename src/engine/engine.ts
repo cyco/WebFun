@@ -6,7 +6,7 @@ import Hero from "./hero";
 import { InputManager } from "./input";
 import Inventory from "./inventory";
 import Metronome from "./metronome";
-import { Zone } from "./objects";
+import { Zone, Tile } from "./objects";
 import State from "./persistent-state";
 import { AbstractImageFactory, Renderer } from "./rendering";
 import SceneManager from "./scene-manager";
@@ -21,6 +21,7 @@ class Engine extends EventTarget {
 	static readonly Event = Events;
 
 	public readonly type: Type = null;
+	public mixer: any = null;
 	public metronome: Metronome = null;
 	public inputManager: InputManager = null;
 	public sceneManager: SceneManager = null;
@@ -82,6 +83,33 @@ class Engine extends EventTarget {
 
 	render() {
 		this.sceneManager.render(this.renderer);
+	}
+
+	public consume(tile: Tile) {
+		if (tile.isEdible) {
+			const healthBonus = this.type.getHealthBonus(tile);
+			if (healthBonus > 0 && this.hero.health >= Hero.MAX_HEALTH) {
+				// TODO: play sound <nogo>
+				return;
+			}
+			this.hero.health += healthBonus;
+			this.inventory.removeItem(tile);
+			if (healthBonus < 0) {
+				// TODO: play sound <hurt>
+			}
+			return;
+		}
+
+		if (tile.isWeapon) {
+			// check throwable
+			// determine ammo
+			// find character
+			// equip weapon
+			// play equip sound
+			return;
+		}
+
+		// TODO: play sound <nogo>
 	}
 }
 
