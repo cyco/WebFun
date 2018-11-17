@@ -7,7 +7,7 @@ import State from "./menu-item-state";
 
 class MenuItem extends EventTarget {
 	public title: string;
-	public state: number;
+	public _state: number | Function;
 	public callback: Function;
 	public submenu: Menu;
 	public mnemonic: number;
@@ -20,7 +20,7 @@ class MenuItem extends EventTarget {
 		const options = Object.assign({}, MenuItemDefaults, item);
 
 		this.title = options.title;
-		this.state = options.state;
+		this._state = options.state;
 		this.callback = options.callback;
 		this._enabled = options.enabled;
 		this.submenu = null;
@@ -43,6 +43,11 @@ class MenuItem extends EventTarget {
 
 	get hasSubmenu(): boolean {
 		return !!this.submenu;
+	}
+
+	get state() {
+		if (this._state instanceof Function) return this._state();
+		return this._state;
 	}
 }
 

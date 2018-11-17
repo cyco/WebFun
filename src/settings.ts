@@ -15,7 +15,7 @@ const Settings = persistent(
 		autostartEngine: true,
 		revealWorld: false,
 
-		playEffects: true,
+		playSound: true,
 		playMusic: true,
 
 		logLevel: LogLevel.Debug,
