@@ -1,0 +1,22 @@
+'menu': [
+	{
+		'label': 'Packages',
+		'submenu': [
+			'label': 'WebFun',
+			'submenu': [
+				{
+					'label': 'Run',
+					'command': 'webfun:run'
+				},
+				{
+					'label': 'Build',
+					'command': 'webfun:build'
+				},
+				{
+					'label': 'Test',
+					'command': 'webfun:test'
+				}
+		]
+		]
+	}
+]
