@@ -24,7 +24,7 @@ class Indy extends GameType {
 	}
 
 	public getMaxAmmo(_: Char): number {
-		return 0;
+		return -1;
 	}
 
 	public getEquipSound(_: Char): number {
