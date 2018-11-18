@@ -75,11 +75,13 @@ class CharacterDetails extends Component {
 							this._rebuild();
 						}}
 					>
-						{CharType.knownTypes.filter(t => t).map(t => (
-							<option value={t.rawValue.toString()} selected={type === t}>
-								{t.name}
-							</option>
-						))}
+						{CharType.knownTypes
+							.filter(t => t)
+							.map(t => (
+								<option value={t.rawValue.toString()} selected={type === t}>
+									{t.name}
+								</option>
+							))}
 					</select>
 				</label>
 				<label>
