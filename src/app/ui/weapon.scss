@@ -6,7 +6,7 @@ wf-weapon {
 	@include inset-border(2px);
 
 	position: relative;
-	width: $tile-size + 2 * $border-size;
+	width: $tile-size + 2 * 2px;
 
 	> .background {
 		@include fullsize();
@@ -16,8 +16,10 @@ wf-weapon {
 		margin: 0;
 	}
 
-	> img {
+	> wf-palette-view {
 		@include fullsize();
+
+		border: none;
 
 		position: absolute;
 		width: $tile-size;

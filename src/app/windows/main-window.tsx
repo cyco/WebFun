@@ -99,6 +99,10 @@ class MainWindow extends AbstractWindow {
 	public get inventory() {
 		return this.querySelector(Inventory.tagName) as Inventory;
 	}
+
+	public get weapon() {
+		return this.querySelector(Weapon.tagName) as Weapon;
+	}
 }
 
 export default MainWindow;
