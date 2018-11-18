@@ -52,6 +52,10 @@ class MainWindow extends AbstractWindow {
 				this._engine.removeEventListener(event, handler)
 			);
 			this._engine.hero.removeEventListener(Hero.Event.HealthChanged, this._handlers.healthChanged);
+			this._engine.hero.removeEventListener(
+				Hero.Event.WeaponChanged,
+				this._handlers[Events.WeaponChanged]
+			);
 			inventoryView.inventory = null;
 		}
 
@@ -59,6 +63,10 @@ class MainWindow extends AbstractWindow {
 
 		if (this._engine) {
 			this._engine.hero.addEventListener(Hero.Event.HealthChanged, this._handlers.healthChanged);
+			this._engine.hero.addEventListener(
+				Hero.Event.WeaponChanged,
+				this._handlers[Events.WeaponChanged]
+			);
 			this._handlers.each((event: any, handler: any) => this._engine.addEventListener(event, handler));
 			inventoryView.inventory = this._engine ? this._engine.inventory : null;
 			ammoView.ammo = e.hero.ammo;
@@ -72,7 +80,9 @@ class MainWindow extends AbstractWindow {
 
 	private _updateAmmo() {}
 
-	private _updateWeapon() {}
+	private _updateWeapon() {
+		this.weapon.weapon = this.engine ? this.engine.hero.weapon : null;
+	}
 
 	private _updateLocation({ zone, world }: { zone: Zone; world: World }) {
 		const locationView = this.content.querySelector(Location.tagName) as Location;
