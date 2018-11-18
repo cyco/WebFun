@@ -45,7 +45,7 @@ class Yoda extends GameType {
 	}
 
 	public getMaxAmmo(weapon: Char): number {
-		const tile = weapon.frames[0].extension_right;
+		const tile = weapon.frames[0].extensionRight;
 		switch (tile.id) {
 			case TileID.BlasterRifle:
 				return 10;
