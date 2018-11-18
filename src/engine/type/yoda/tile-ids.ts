@@ -9,6 +9,11 @@ const enum TileIDs {
 	Chakroot = 0x1e2,
 	Mushroom = 0x4ad,
 	// Weapons
+	TheForce = 0x1ff,
+	Blaster = 0x200,
+	BlasterRifle = 0x201,
+	LightsaberGreen = 0x1fe,
+	LightsaberBlue = 0x12,
 	ThermalDetonator = 0x202
 }
 
