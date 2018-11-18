@@ -21,6 +21,10 @@ class Yoda extends GameType {
 		return Strings;
 	}
 
+	public canBeEquipped(tile: Tile): boolean {
+		return super.canBeEquipped(tile) && tile.id !== TileId.ThermalDetonator;
+	}
+
 	public getHealthBonus(tile: Tile): number {
 		switch (tile.id) {
 			case TileId.QRations:

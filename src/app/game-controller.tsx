@@ -53,7 +53,6 @@ class GameController extends EventTarget {
 		effectsChannel.muted = !Settings.playSound;
 		const musicChannel = new DOMAudioChannel();
 		musicChannel.muted = !Settings.playMusic;
-		console.log(Settings.playSound, Settings.playMusic);
 		engine.mixer = new Mixer(soundLoader, musicChannel, effectsChannel);
 
 		engine.renderer = new Renderer(this._sceneView.canvas);
@@ -181,18 +180,26 @@ class GameController extends EventTarget {
 			const location = e.detail.location;
 			const item = e.detail.item as Tile;
 
-			const element = document.elementFromPoint(location.x, location.y);
-			if (
-				element &&
-				element.closest(
-					[AmmoComponet.tagName, WeaponComponent.tagName, HealthComponent.tagName].join(",")
-				)
-			) {
+			const targetElement = document.elementFromPoint(location.x, location.y);
+			const element =
+				targetElement &&
+				targetElement.closest(
+					[
+						AmmoComponet.tagName,
+						WeaponComponent.tagName,
+						HealthComponent.tagName,
+						SceneView.tagName
+					].join(",")
+				);
+
+			if (element instanceof HealthComponent && item.isEdible) {
 				this.engine.consume(item);
-				engine.metronome.start();
 			}
 
-			console.log(location, item, element);
+			if (item.isWeapon && (element instanceof AmmoComponet || element instanceof WeaponComponent)) {
+				this.engine.equip(item);
+			}
+
 			engine.metronome.start();
 		});
 		this._window.engine = engine;
@@ -222,8 +229,8 @@ class GameController extends EventTarget {
 				this.data = details.data;
 				this.palette = details.palette;
 				this._engine.data = this.data;
-  					
-  				this._window.inventory.palette = details.palette;
+
+				this._window.inventory.palette = details.palette;
 				this._window.weapon.palette = details.palette;
 
 				this.dispatchEvent(
