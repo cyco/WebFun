@@ -24,6 +24,7 @@ class Hero extends EventTarget {
 	private _dragging: boolean = false;
 	private _weapon: Char = null;
 	private _ammo: number;
+	private _ammoByWeapon: WeakMap<Char, number> = new WeakMap();
 
 	static get Event() {
 		return Events;
@@ -104,8 +105,6 @@ class Hero extends EventTarget {
 	}
 
 	set weapon(w) {
-		if (this.unlimitedAmmo) return;
-
 		this._weapon = w;
 		this.dispatchEvent(Events.WeaponChanged, {
 			weapon: w
@@ -117,10 +116,20 @@ class Hero extends EventTarget {
 	}
 
 	set ammo(a) {
+		if (this.unlimitedAmmo) return;
+
 		this._ammo = a;
+		if (this.weapon) {
+			this._ammoByWeapon.set(this.weapon, this._ammo);
+		}
+
 		this.dispatchEvent(Events.AmmoChanged, {
 			ammo: a
 		});
+	}
+
+	public getAmmoForWeapon(weapon: Char) {
+		return this._ammoByWeapon.has(weapon) ? this._ammoByWeapon.get(weapon) : -1;
 	}
 
 	update(ticks: number): void {
