@@ -4,14 +4,16 @@ import readAsImage from "src/extension/file/read-as-image";
 
 describe("WebFun.Extension.File.readAsImage", () => {
 	let imageBuffer;
-	beforeEach(() =>
-		(imageBuffer = Uint8Array.from(
-			atob(
-				"iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAF0lEQVQYVwXBAQEAAACCIPs/mmAVtMR0Q+wH/DyFmbQAAAAASUVORK5CYII="
-			)
-				.split("")
-				.map(i => i.charCodeAt(0))
-		)));
+	beforeEach(
+		() =>
+			(imageBuffer = Uint8Array.from(
+				atob(
+					"iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAF0lEQVQYVwXBAQEAAACCIPs/mmAVtMR0Q+wH/DyFmbQAAAAASUVORK5CYII="
+				)
+					.split("")
+					.map(i => i.charCodeAt(0))
+			))
+	);
 
 	it("extends the File class to allow reading HTMLImageElements from files", () => {
 		expect(new File(imageBuffer, "b").readAsImage).toBe(readAsImage);

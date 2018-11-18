@@ -53,8 +53,8 @@ describe("WebFun.Extension.ImageData.toImage", () => {
 		}();
 
 		const originalCreateElement = document.createElement;
-		spyOn(document, "createElement").and.callFake(
-			tag => (tag === "img" ? imageMock : originalCreateElement.call(document, tag))
+		spyOn(document, "createElement").and.callFake(tag =>
+			tag === "img" ? imageMock : originalCreateElement.call(document, tag)
 		);
 
 		try {
