@@ -222,8 +222,9 @@ class GameController extends EventTarget {
 				this.data = details.data;
 				this.palette = details.palette;
 				this._engine.data = this.data;
-
-				this._window.inventory.palette = details.palette;
+  					
+  				this._window.inventory.palette = details.palette;
+				this._window.weapon.palette = details.palette;
 
 				this.dispatchEvent(
 					new CustomEvent(Event.DidLoadData, {
