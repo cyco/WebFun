@@ -136,11 +136,11 @@ export class Tile {
 	}
 
 	public get isWeapon() {
-		return this.attributes & Attributes.Weapon;
+		return (this.attributes & Attributes.Weapon) !== 0;
 	}
 
 	public get isEdible() {
-		return this.attributes & Attributes.Edible;
+		return (this.attributes & Attributes.Edible) !== 0;
 	}
 }
 

@@ -7,6 +7,10 @@ abstract class GameType {
 	abstract get locatorTile(): LocatorTile;
 	abstract get strings(): { [_: number]: string };
 
+	canBeEquipped(tile: Tile): boolean {
+		return tile.isWeapon;
+	}
+
 	abstract getHealthBonus(_: Tile): number;
 	abstract getMaxAmmo(_: Char): number;
 	abstract getEquipSound(_: Char): number;

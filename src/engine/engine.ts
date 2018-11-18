@@ -86,30 +86,44 @@ class Engine extends EventTarget {
 	}
 
 	public consume(tile: Tile) {
-		if (tile.isEdible) {
-			const healthBonus = this.type.getHealthBonus(tile);
-			if (healthBonus > 0 && this.hero.health >= Hero.MAX_HEALTH) {
-				// TODO: play sound <nogo>
-				return;
-			}
-			this.hero.health += healthBonus;
-			this.inventory.removeItem(tile);
-			if (healthBonus < 0) {
-				// TODO: play sound <hurt>
-			}
+		if (!tile.isEdible) {
+			// TODO: play sound <nogo>
+		}
+
+		const healthBonus = this.type.getHealthBonus(tile);
+		if (healthBonus > 0 && this.hero.health >= Hero.MAX_HEALTH) {
+			// TODO: play sound <nogo>
+			return;
+		}
+		this.hero.health += healthBonus;
+		this.inventory.removeItem(tile);
+		if (healthBonus < 0) {
+			// TODO: play sound <hurt>
+		}
+	}
+
+	public equip(tile: Tile) {
+		if (!tile.isWeapon) {
+			// TODO: play sound <nogo>
 			return;
 		}
 
-		if (tile.isWeapon) {
-			// check throwable
-			// determine ammo
-			// find character
-			// equip weapon
-			// play equip sound
+		if (!this.type.canBeEquipped(tile)) {
+			// TODO: play sound <nogo>
 			return;
 		}
 
-		// TODO: play sound <nogo>
+		const weaponChar = this.data.characters.find(c => c.isWeapon && c.frames[0].extensionRight === tile);
+		if (this.hero.weapon === weaponChar) return;
+
+		this.hero.weapon = weaponChar;
+
+		let ammo = this.hero.getAmmoForWeapon(weaponChar);
+		if (ammo === -1) ammo = this.type.getMaxAmmo(weaponChar);
+		this.hero.ammo = ammo;
+
+		const equipSoundID = this.type.getEquipSound(weaponChar);
+		// TODO: play sound equipSoundID
 	}
 }
 
