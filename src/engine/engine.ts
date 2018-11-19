@@ -119,7 +119,7 @@ class Engine extends EventTarget {
 		this.hero.weapon = weaponChar;
 
 		let ammo = this.hero.getAmmoForWeapon(weaponChar);
-		if (ammo === -1) ammo = this.type.getMaxAmmo(weaponChar);
+		if (!ammo) ammo = this.type.getMaxAmmo(weaponChar);
 		this.hero.ammo = ammo;
 
 		const equipSoundID = this.type.getEquipSound(weaponChar);
