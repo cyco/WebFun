@@ -5,9 +5,10 @@ class Ammo extends Component {
 	public static readonly tagName = "wf-ammo";
 	private _background: HTMLDivElement = <div className="background" /> as HTMLDivElement;
 	private _indicator: HTMLDivElement = <div className="value" /> as HTMLDivElement;
+	private _value: number = -1;
 
 	get ammo() {
-		return parseInt(this._indicator.style.height) / 95 || 0;
+		return this._value;
 	}
 
 	set ammo(value: number) {
@@ -16,7 +17,8 @@ class Ammo extends Component {
 		else color = "#000000";
 
 		this._background.style.backgroundColor = color;
-		this._indicator.style.height = (value > 1 ? 1 : value) * 95 + "%";
+		this._indicator.style.height = (value > 1 ? 1 : value) * 94 + "%";
+		this._value = value;
 	}
 
 	protected connectedCallback() {
@@ -24,6 +26,8 @@ class Ammo extends Component {
 
 		this.appendChild(this._background);
 		this.appendChild(this._indicator);
+
+		this.ammo = this.ammo;
 	}
 }
 

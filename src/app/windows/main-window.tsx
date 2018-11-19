@@ -67,6 +67,7 @@ class MainWindow extends AbstractWindow {
 				Hero.Event.WeaponChanged,
 				this._handlers[Events.WeaponChanged]
 			);
+			this._engine.hero.addEventListener(Hero.Event.AmmoChanged, this._handlers[Events.AmmoChanged]);
 			this._handlers.each((event: any, handler: any) => this._engine.addEventListener(event, handler));
 			inventoryView.inventory = this._engine ? this._engine.inventory : null;
 			ammoView.ammo = e.hero.ammo;
@@ -78,7 +79,12 @@ class MainWindow extends AbstractWindow {
 		return this.content.querySelector(".main");
 	}
 
-	private _updateAmmo() {}
+	private _updateAmmo() {
+		const weapon = this.engine ? this.engine.hero.weapon : null;
+		let current = weapon ? this.engine.hero.ammo : -1;
+		const max = this.engine ? this.engine.type.getMaxAmmo(this.engine.hero.weapon) : 0;
+		this.ammo.ammo = current / max;
+	}
 
 	private _updateWeapon() {
 		this.weapon.weapon = this.engine ? this.engine.hero.weapon : null;
@@ -112,6 +118,10 @@ class MainWindow extends AbstractWindow {
 
 	public get weapon() {
 		return this.querySelector(Weapon.tagName) as Weapon;
+	}
+
+	public get ammo() {
+		return this.querySelector(Ammo.tagName) as Ammo;
 	}
 }
 
