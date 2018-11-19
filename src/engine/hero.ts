@@ -130,7 +130,7 @@ class Hero extends EventTarget {
 	}
 
 	public getAmmoForWeapon(weapon: Char) {
-		return this._ammoByWeapon.has(weapon) ? this._ammoByWeapon.get(weapon) : -1;
+		return this._ammoByWeapon.has(weapon) ? this._ammoByWeapon.get(weapon) : 0;
 	}
 
 	update(ticks: number): void {
