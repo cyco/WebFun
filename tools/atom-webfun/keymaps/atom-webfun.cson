@@ -1,3 +1,8 @@
+'atom-text-editor:not([mini]).typescript-editor':
+    'cmd-r': 'webfun:run'
+    'cmd-b': 'webfun:build'
+    'cmd-u': 'webfun:test'
+
 '.platform-darwin atom-text-editor':
     'cmd-r': 'webfun:run'
     'cmd-b': 'webfun:build'
