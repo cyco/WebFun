@@ -107,7 +107,7 @@ class ZoneScene extends Scene {
 			);
 	}
 
-	public _executeHotspots() {
+	public executeHotspots() {
 		if (this.engine.temporaryState.justEntered) return;
 		const zone = this.zone;
 		const hero = this.engine.hero;
@@ -435,7 +435,7 @@ class ZoneScene extends Scene {
 			if (doTransition === false) {
 				// TODO: play blocked sound
 			}
-		} else this._executeHotspots();
+		} else this.executeHotspots();
 	}
 }
 

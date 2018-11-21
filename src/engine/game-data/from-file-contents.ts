@@ -81,8 +81,8 @@ const makePuzzle = (raw: any, idx: number, data: any) => {
 
 const makeHotspot = (raw: any, _: any): Hotspot => {
 	const hotspot = new Hotspot();
-	hotspot._x = raw.x;
-	hotspot._y = raw.y;
+	hotspot.x = raw.x;
+	hotspot.y = raw.y;
 
 	hotspot.enabled = !!raw.enabled;
 	hotspot.arg = raw.argument;

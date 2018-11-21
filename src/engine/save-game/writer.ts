@@ -158,8 +158,8 @@ class Writer {
 		stream.writeUint16(+hotspot.enabled);
 		stream.writeInt16(hotspot.arg);
 		stream.writeUint32(hotspot.type.rawValue);
-		stream.writeInt16(hotspot._x);
-		stream.writeInt16(hotspot._y);
+		stream.writeInt16(hotspot.x);
+		stream.writeInt16(hotspot.y);
 	}
 
 	private _writeWorldDetails(world: World, stream: OutputStream): void {

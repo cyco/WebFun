@@ -7,7 +7,7 @@ import State from "./menu-item-state";
 
 class MenuItem extends EventTarget {
 	public title: string;
-	public _state: number | Function;
+	private _state: number | Function;
 	public callback: Function;
 	public submenu: Menu;
 	public mnemonic: number;
