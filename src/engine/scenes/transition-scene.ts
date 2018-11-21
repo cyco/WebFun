@@ -135,8 +135,8 @@ class TransitionScene extends Scene {
 				const tile = hero._appearance.getFace(hero._direction, hero._actionFrames);
 				if (!tile) continue;
 
-				const x1 = (hero._location.x + xOffset) * tileWidth;
-				const y1 = (hero._location.y + yOffset) * tileHeight;
+				const x1 = (hero.location.x + xOffset) * tileWidth;
+				const y1 = (hero.location.y + yOffset) * tileHeight;
 
 				if (tile.image.representation instanceof HTMLImageElement) {
 					ctx.drawImage(tile.image.representation, x1, y1);
