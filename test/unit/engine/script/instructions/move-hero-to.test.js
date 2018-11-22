@@ -20,7 +20,7 @@ describeInstruction("MoveHeroTo", (execute, engine) => {
 
 	it("executes hotspots if the hero is hidden", async done => {
 		engine.sceneManager = { currentScene: new ZoneScene() };
-		spyOn(engine.sceneManager.currentScene, "_executeHotspots");
+		spyOn(engine.sceneManager.currentScene, "executeHotspots");
 		engine.hero.visible = false;
 
 		let instruction = new Instruction({});
@@ -29,7 +29,7 @@ describeInstruction("MoveHeroTo", (execute, engine) => {
 
 		await execute(instruction);
 
-		expect(engine.sceneManager.currentScene._executeHotspots).toHaveBeenCalled();
+		expect(engine.sceneManager.currentScene.executeHotspots).toHaveBeenCalled();
 
 		done();
 	});
