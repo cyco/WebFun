@@ -4,6 +4,7 @@ class DOMAudioChannel extends Channel<HTMLAudioElement> {
 	private _sounds: HTMLAudioElement[] = [];
 	private _muted = false;
 	private _volume = 1.0;
+	public provider: (id: number) => HTMLAudioElement;
 
 	playSound(sound: HTMLAudioElement): void {
 		sound = sound.cloneNode(true) as HTMLAudioElement;
