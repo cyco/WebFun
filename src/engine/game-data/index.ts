@@ -1,11 +1,11 @@
-import { Tile, Puzzle, Zone, Char } from "src/engine/objects";
+import { Tile, Puzzle, Zone, Char, Sound } from "src/engine/objects";
 
 import fromFileContents from "./from-file-contents";
 
 class GameData {
 	private _rawInput: any;
 	private _version: number;
-	private _sounds: string[];
+	private _sounds: Sound[];
 	private _tiles: Tile[];
 	private _puzzles: Puzzle[];
 	private _zones: Zone[];
@@ -24,7 +24,7 @@ class GameData {
 		return this._version;
 	}
 
-	get sounds(): string[] {
+	get sounds(): Sound[] {
 		return this._sounds;
 	}
 

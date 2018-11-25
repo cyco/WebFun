@@ -2,11 +2,7 @@ import AbstractInspector from "src/editor/inspectors/abstract-inspector";
 import { List, IconButton } from "src/ui/components";
 import { SoundInspectorCell } from "../components";
 import ReferenceResolver from "src/editor/reference-resolver";
-
-type Sound = {
-	id: number;
-	file: string;
-};
+import { Sound } from "src/engine/objects";
 
 class SoundInspector extends AbstractInspector {
 	private _list: List<Sound>;
@@ -42,16 +38,11 @@ class SoundInspector extends AbstractInspector {
 	}
 
 	public build() {
-		this._list.items = this.data.currentData.sounds.map(
-			(name: string, index: number): Sound => ({
-				id: index,
-				file: name
-			})
-		);
+		this._list.items = this.data.currentData.sounds;
 	}
 
 	public addSound() {
-		this.data.currentData.sounds.push("New Sound");
+		this.data.currentData.sounds.push(new Sound(this.data.currentData.sounds.length, "New Sound"));
 		this.build();
 	}
 
@@ -66,13 +57,13 @@ class SoundInspector extends AbstractInspector {
 	public renameSound(sound: Sound, name: string) {
 		const index = this._list.items.indexOf(sound);
 		if (index === -1) return;
-		this.data.currentData.sounds.splice(index, 1, name);
+		this.data.currentData.sounds.splice(index, 1, new Sound(index, name));
 		this.build();
 	}
 
 	private revealReferences(sound: Sound) {
 		const resolver = new ReferenceResolver(this.data.currentData);
-		const references = resolver.findReferencesTo(sound.file);
+		const references = resolver.findReferencesTo(sound);
 		console.log("references", references);
 	}
 

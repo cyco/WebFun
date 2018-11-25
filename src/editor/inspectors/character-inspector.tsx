@@ -70,7 +70,7 @@ class CharacterInspector extends AbstractInspector {
 
 	public build() {
 		this._details.tileSheet = this.data.tileSheet;
-		this._details.sounds = this.data.currentData.sounds;
+		this._details.sounds = this.data.currentData.sounds.map(s => s.file);
 		this._details.weapons = this.data.currentData.characters.filter(c => c.type === CharType.Weapon);
 		this._details.tiles = this.data.currentData.tiles;
 
@@ -90,7 +90,7 @@ class CharacterInspector extends AbstractInspector {
 		if (item.isWeapon()) {
 			const sound = this.data.currentData.sounds[item.reference];
 			if (sound) {
-				searchableAttributes.push(sound);
+				searchableAttributes.push(sound.file);
 			}
 		} else {
 			const weapon = this.data.currentData.characters[item.reference];
