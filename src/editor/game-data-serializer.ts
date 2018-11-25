@@ -10,6 +10,7 @@ import {
 	Puzzle,
 	PuzzleType,
 	Tile,
+	Sound,
 	Zone
 } from "src/engine/objects";
 
@@ -41,11 +42,11 @@ class GameDataSerializer {
 
 	private writeSounds(data: GameData, stream: OutputStream) {
 		stream.writeCharacters("SNDS");
-		const size = data.sounds.map((snd: string) => 2 + snd.length + 1).reduce(add, 0);
+		const size = data.sounds.map((snd: Sound) => 2 + snd.file.length + 1).reduce(add, 0);
 		stream.writeUint32(2 + size);
 		stream.writeUint16(-data.sounds.length);
 
-		data.sounds.forEach((snd: string) => stream.writeLengthPrefixedNullTerminatedString(snd));
+		data.sounds.forEach((snd: Sound) => stream.writeLengthPrefixedNullTerminatedString(snd.file));
 	}
 
 	private writeTiles(data: GameData, stream: OutputStream) {

@@ -11,6 +11,7 @@ import Tile, { Attribute as TileAttribute, Subtype as TileSubtype } from "./tile
 import Zone, { Layer as ZoneLayer, Type as ZoneType } from "./zone";
 import CharType from "./char-type";
 import CharMovementType from "./char-movement-type";
+import Sound from "./sound";
 
 export {
 	Char,
@@ -30,5 +31,6 @@ export {
 	TileSubtype,
 	Hotspot,
 	HotspotType,
-	NPC
+	NPC,
+	Sound
 };

@@ -1,5 +1,5 @@
 import GameData from "src/engine/game-data";
-import { Action, Char, Hotspot, NPC, Tile, Zone } from "src/engine/objects";
+import { Action, Char, Hotspot, NPC, Tile, Zone, Sound } from "src/engine/objects";
 import { Point } from "src/util";
 import HotspotType from "src/engine/objects/hotspot-type";
 import ChangeZone from "src/engine/script/instructions/change-zone";
@@ -15,7 +15,7 @@ class ReferenceResolver {
 		this.data = gameData;
 	}
 
-	public findReferencesTo(type: Tile | string | Zone | Char | Action | Hotspot | Point | NPC) {
+	public findReferencesTo(type: Tile | Sound | Zone | Char | Action | Hotspot | Point | NPC) {
 		if (type instanceof Tile) {
 			return this.findReferencesToTile(type);
 		}
@@ -24,7 +24,7 @@ class ReferenceResolver {
 			return this.findReferencesToZone(type);
 		}
 
-		if (typeof type === "string") {
+		if (type instanceof Sound) {
 			return this.findReferencesToSound(type);
 		}
 
@@ -70,7 +70,7 @@ class ReferenceResolver {
 		return [];
 	}
 
-	private findReferencesToSound(sound: string): any[] {
+	private findReferencesToSound(sound: Sound): any[] {
 		const id = this.data.sounds.indexOf(sound);
 		if (id === -1) return [];
 

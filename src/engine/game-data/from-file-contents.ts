@@ -18,7 +18,8 @@ import {
 	Instruction,
 	PuzzleType,
 	Zone,
-	ZoneType
+	ZoneType,
+	Sound
 } from "../objects";
 
 import { Planet } from "../types";
@@ -166,7 +167,7 @@ export default (data: any, raw: any) => {
 	data._rawInput = raw;
 	data._version = raw.version;
 	data._setup = raw.setup;
-	data._sounds = raw.sounds.slice();
+	data._sounds = raw.sounds.map((name: string, id: number) => new Sound(id, name));
 	data._tiles = raw.tiles.map(makeTile);
 	data._characters = raw.characters.map((r: any, i: number) => makeCharacter(r, i, data));
 	data._puzzles = raw.puzzles.map((r: any, i: number) => makePuzzle(r, i, data));

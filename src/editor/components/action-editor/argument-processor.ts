@@ -36,7 +36,7 @@ class ArgumentProcessor {
 			const type = argumentTypes[i];
 
 			if (type === Type.SoundID) {
-				argumentNode.sound = +argumentNode === -1 ? null : this._data.sounds[+argumentNode];
+				argumentNode.sound = +argumentNode === -1 ? null : this._data.sounds[+argumentNode].file;
 			}
 			if (type === Type.TileID) {
 				argumentNode.tile = +argumentNode === -1 ? null : this._data.tiles[+argumentNode];
