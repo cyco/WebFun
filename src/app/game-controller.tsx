@@ -48,12 +48,15 @@ class GameController extends EventTarget {
 		const engine = new Engine(GameTypeYoda);
 		const Renderer = this._determineRenderer();
 
-		const soundLoader = new DOMSoundLoader("/game-data/sfx-yoda/");
 		const effectsChannel = new DOMAudioChannel();
 		effectsChannel.muted = !Settings.playSound;
 		const musicChannel = new DOMAudioChannel();
 		musicChannel.muted = !Settings.playMusic;
-		engine.mixer = new Mixer(soundLoader, musicChannel, effectsChannel);
+		engine.mixer = new Mixer(
+			(id: number) => this.data.sounds[id].representation,
+			musicChannel,
+			effectsChannel
+		);
 
 		engine.renderer = new Renderer(this._sceneView.canvas);
 		engine.imageFactory = engine.renderer.imageFactory;

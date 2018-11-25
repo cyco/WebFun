@@ -1,17 +1,22 @@
 import Channel from "./channel";
-import SoundLoader from "./sound-loader";
 
 class Mixer<Sound> {
-	readonly loader: SoundLoader<Sound>;
+	readonly provider: (id: number) => Sound;
 	readonly musicChannel: Channel<Sound>;
 	readonly effectChannel: Channel<Sound>;
 	protected _volume: number;
 	protected _muted: boolean;
 
-	constructor(loader: SoundLoader<Sound>, musicChannel: Channel<Sound>, effectChannel: Channel<Sound>) {
-		this.loader = loader;
+	constructor(
+		provider: (id: number) => Sound,
+		musicChannel: Channel<Sound>,
+		effectChannel: Channel<Sound>
+	) {
+		this.provider = provider;
 		this.musicChannel = musicChannel;
+		this.musicChannel.provider = provider;
 		this.effectChannel = effectChannel;
+		this.effectChannel.provider = provider;
 	}
 
 	public set volume(v: number) {

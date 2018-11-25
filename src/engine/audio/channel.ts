@@ -3,6 +3,7 @@ abstract class Channel<Sound> {
 	abstract stop(): void;
 	muted: boolean;
 	volume: number;
+	provider: (id: number) => Sound;
 
 	public mute() {
 		this.muted = true;
