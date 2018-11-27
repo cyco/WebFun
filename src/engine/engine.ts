@@ -14,6 +14,7 @@ import { ScriptExecutor } from "./script";
 import Story from "./story";
 import GameData from "./game-data";
 import { GameType as Type } from "./type";
+import { Mixer } from "./audio";
 
 export { Events };
 
@@ -21,7 +22,7 @@ class Engine extends EventTarget {
 	static readonly Event = Events;
 
 	public readonly type: Type = null;
-	public mixer: any = null;
+	public mixer: Mixer<any> = null;
 	public metronome: Metronome = null;
 	public inputManager: InputManager = null;
 	public sceneManager: SceneManager = null;
@@ -87,29 +88,31 @@ class Engine extends EventTarget {
 
 	public consume(tile: Tile) {
 		if (!tile.isEdible) {
-			// TODO: play sound <nogo>
+			this.mixer.effectChannel.playSound(this.type.sounds.NoGo);
+			return;
 		}
 
 		const healthBonus = this.type.getHealthBonus(tile);
 		if (healthBonus > 0 && this.hero.health >= Hero.MAX_HEALTH) {
-			// TODO: play sound <nogo>
+			this.mixer.effectChannel.playSound(this.type.sounds.NoGo);
 			return;
 		}
 		this.hero.health += healthBonus;
 		this.inventory.removeItem(tile);
 		if (healthBonus < 0) {
-			// TODO: play sound <hurt>
+			this.mixer.effectChannel.playSound(this.type.sounds.Hurt);
+			return;
 		}
 	}
 
 	public equip(tile: Tile) {
 		if (!tile.isWeapon) {
-			// TODO: play sound <nogo>
+			this.mixer.effectChannel.playSound(this.type.sounds.NoGo);
 			return;
 		}
 
 		if (!this.type.canBeEquipped(tile)) {
-			// TODO: play sound <nogo>
+			this.mixer.effectChannel.playSound(this.type.sounds.NoGo);
 			return;
 		}
 
@@ -123,7 +126,7 @@ class Engine extends EventTarget {
 		this.hero.ammo = ammo;
 
 		const equipSoundID = this.type.getEquipSound(weaponChar);
-		// TODO: play sound equipSoundID
+		this.mixer.effectChannel.playSound(equipSoundID);
 	}
 }
 
