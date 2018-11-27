@@ -8,8 +8,13 @@ $fa-font-path: "./font-awesome/fonts/";
 
 body {
 	background-color: $background-color;
+	transition: background-color 0.25s ease-in-out;
 	margin: 0;
 	padding: 0;
 }
 
-// @import "old/global.scss";
+@media (prefers-color-scheme: light) {
+	body {
+		background-color: #a6aab9;
+	}
+}
