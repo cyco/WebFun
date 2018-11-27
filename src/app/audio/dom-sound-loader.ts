@@ -9,10 +9,10 @@ class DOMSoundLoader extends SoundLoader<HTMLAudioElement> {
 
 	loadSound(file: string) {
 		return new Promise<HTMLAudioElement>((resolve, reject) => {
-			const url = this.baseURL + encodeURIComponent(file);
+			const url = this.baseURL + encodeURIComponent(file + ".mp3");
 			const audio = new Audio(url);
-			audio.addEventListener("load", () => resolve(audio));
-			audio.addEventListener("errror", reject);
+			audio.addEventListener("loadeddata", () => resolve(audio));
+			audio.addEventListener("error", reject);
 			audio.load();
 		});
 	}
