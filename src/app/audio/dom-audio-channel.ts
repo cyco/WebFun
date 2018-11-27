@@ -7,7 +7,6 @@ class DOMAudioChannel extends Channel<HTMLAudioElement> {
 	public provider: (id: number) => HTMLAudioElement;
 
 	playSound(sound: HTMLAudioElement | number): void {
-		console.log("play sound");
 		let soundNode = sound instanceof HTMLAudioElement ? sound : this.provider(sound);
 
 		soundNode = soundNode.cloneNode(true) as HTMLAudioElement;
