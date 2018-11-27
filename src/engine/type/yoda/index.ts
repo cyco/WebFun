@@ -3,6 +3,7 @@ import LocatorTile from "./locator-tile";
 import TileID from "./tile-ids";
 import { Tile, Char } from "src/engine/objects";
 import Strings from "./strings";
+import Sounds from "./sounds";
 
 class Yoda extends GameType {
 	get name() {
@@ -19,6 +20,10 @@ class Yoda extends GameType {
 
 	get strings() {
 		return Strings;
+	}
+
+	get sounds() {
+		return Sounds;
 	}
 
 	public canBeEquipped(tile: Tile): boolean {

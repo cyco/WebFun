@@ -1,6 +1,7 @@
 import GameType from "../type";
 import LocatorTile from "./locator-tile";
 import { Tile, Char } from "../../objects";
+import Sounds from "./sounds";
 
 class Indy extends GameType {
 	get name() {
@@ -17,6 +18,10 @@ class Indy extends GameType {
 
 	get strings() {
 		return {};
+	}
+
+	get sounds() {
+		return Sounds;
 	}
 
 	public getHealthBonus(_: Tile): number {
