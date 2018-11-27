@@ -3,6 +3,7 @@ import { AbstractImageFactory } from "src/engine/rendering";
 import Settings from "src/settings";
 import { EventTarget, FileLoader, InputStream } from "src/util";
 import TileImageLoader from "./tile-image-loader";
+import { DOMSoundLoader } from "./audio";
 
 export const Events = {
 	Progress: "progress",
@@ -26,6 +27,7 @@ class Loader extends EventTarget {
 	private _dataUrl: string;
 	private _paletteUrl: string;
 	private _rawData: any;
+	private _buildSoundUrl: (name: string) => string;
 	private _data: GameData;
 	private _palette: Uint8Array;
 	private _imageFactory: AbstractImageFactory;
@@ -35,6 +37,7 @@ class Loader extends EventTarget {
 
 		this._dataUrl = Settings.url.yoda.data;
 		this._paletteUrl = Settings.url.yoda.palette;
+		this._buildSoundUrl = Settings.url.yoda.sfx;
 
 		this.registerEvents(Events);
 	}
@@ -101,8 +104,26 @@ class Loader extends EventTarget {
 			this._data.tiles,
 			this._imageFactory,
 			(state: number, progress: number) => this._progress(state, progress),
-			() => this._load()
+			() => this._loadSounds()
 		);
+	}
+
+	private async _loadSounds() {
+		this._progress(10, 0);
+
+		const loader = new DOMSoundLoader(this._buildSoundUrl(""));
+		let i = 0;
+		const count = this._data.sounds.length;
+		for (const sound of this._data.sounds) {
+			try {
+				sound.representation = await loader.loadSound(sound.file);
+				i++;
+				this._progress(10, i / count);
+			} catch (e) {
+				console.warn("Unable to load sound", i, e);
+			}
+		}
+		this._finishLoading();
 	}
 
 	private _fail(reason: any) {
@@ -117,7 +138,7 @@ class Loader extends EventTarget {
 		});
 	}
 
-	private _load() {
+	private _finishLoading() {
 		this.dispatchEvent(Events.Load, <LoaderEventDetails>{
 			palette: this._palette,
 			data: this._data
