@@ -2,13 +2,14 @@ import { Instruction } from "src/engine/objects";
 import PlaySound from "src/engine/script/instructions/play-sound";
 
 describeInstruction("PlaySound", (execute, engine) => {
-	it("play a sound", async done => {
+	it("play a sound", () => {
+		spyOn(engine.mixer.effectChannel, "playSound");
+
 		let instruction = new Instruction({});
 		instruction._opcode = PlaySound.Opcode;
-		instruction._arguments = [];
+		instruction._arguments = [5];
 
-		expect(() => execute(instruction)).not.toThrow();
-
-		done();
+		execute(instruction);
+		expect(engine.mixer.effectChannel.playSound).toHaveBeenCalledWith(5);
 	});
 });

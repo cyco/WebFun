@@ -37,6 +37,10 @@ const makeInstructionDescription = desc => (Name, block) => {
 			engine.temporaryState = {};
 			engine.data = {};
 			engine.sceneManager = { pushScene() {} };
+			engine.mixer = {
+				effectChannel: { playSound: () => void 0 },
+				musicChannel: { playSound: () => void 0 }
+			};
 		});
 
 		block(executor.execute.bind(executor), engine);
