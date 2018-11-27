@@ -66,8 +66,20 @@ class Yoda extends GameType {
 		}
 	}
 
-	public getEquipSound(_: Char): number {
-		return 0;
+	public getEquipSound(weapon: Char): number {
+		const tile = weapon.frames[0].extensionRight;
+		switch (tile.id) {
+			case TileID.BlasterRifle:
+			case TileID.Blaster:
+				return Sounds.Armed;
+			case TileID.LightsaberGreen:
+			case TileID.LightsaberBlue:
+				return Sounds.SaberOut;
+			case TileID.TheForce:
+				return Sounds.ArmForce;
+			default:
+				return -1;
+		}
 	}
 }
 
