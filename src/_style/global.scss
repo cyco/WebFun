@@ -2,8 +2,8 @@
 @import "selection.scss";
 @import "colors.scss";
 
-$fa-font-path: "./font-awesome/fonts/";
-@import "font-awesome/scss/font-awesome.scss";
+$fa-font-path: "~font-awesome/fonts/";
+@import "~font-awesome/scss/font-awesome.scss";
 @import "fontello/css/fontello.css";
 
 body {
