@@ -6,15 +6,19 @@ class DOMAudioChannel extends Channel<HTMLAudioElement> {
 	private _volume = 1.0;
 	public provider: (id: number) => HTMLAudioElement;
 
-	playSound(sound: HTMLAudioElement | number): void {
-		let soundNode = sound instanceof HTMLAudioElement ? sound : this.provider(sound);
+	async playSound(sound: HTMLAudioElement | number): Promise<void> {
+		try {
+			let soundNode = sound instanceof HTMLAudioElement ? sound : this.provider(sound);
 
-		soundNode = soundNode.cloneNode(true) as HTMLAudioElement;
-		soundNode.muted = this.muted;
-		soundNode.volume = this.volume;
-		soundNode.onended = () => this._sounds.splice(this._sounds.indexOf(soundNode), 1);
-		this._sounds.push(soundNode);
-		soundNode.play();
+			soundNode = soundNode.cloneNode(true) as HTMLAudioElement;
+			soundNode.muted = this.muted;
+			soundNode.volume = this.volume;
+			soundNode.onended = () => this._sounds.splice(this._sounds.indexOf(soundNode), 1);
+			this._sounds.push(soundNode);
+			await soundNode.play();
+		} catch (e) {
+			console.warn(e);
+		}
 	}
 
 	stop(): void {
