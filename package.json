@@ -75,7 +75,8 @@
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
     "@babel/runtime": "^7.1.5",
-    "console.image": "^1.0.2"
+    "console.image": "^1.0.2",
+    "font-awesome": "^4.7.0"
   },
   "devDependencies": {
     "@babel/core": "^7.1.6",
