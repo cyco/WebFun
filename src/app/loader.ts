@@ -12,7 +12,7 @@ export const Events = {
 	DidLoadSetupImage: "loadsetupimage"
 };
 
-export const StageCount = 10;
+export const StageCount = 11;
 
 export declare interface LoaderEventDetails {
 	data: GameData;

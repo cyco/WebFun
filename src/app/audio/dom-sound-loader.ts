@@ -11,9 +11,13 @@ class DOMSoundLoader extends SoundLoader<HTMLAudioElement> {
 		return new Promise<HTMLAudioElement>((resolve, reject) => {
 			const url = this.baseURL + encodeURIComponent(file + ".mp3");
 			const audio = new Audio(url);
-			audio.addEventListener("loadeddata", () => resolve(audio));
-			audio.addEventListener("error", reject);
 			audio.load();
+			if (audio.readyState === 4) {
+				resolve(audio);
+			} else {
+				audio.addEventListener("loadeddata", () => resolve(audio));
+				audio.addEventListener("error", reject);
+			}
 		});
 	}
 }
