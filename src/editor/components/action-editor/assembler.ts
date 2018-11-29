@@ -31,7 +31,7 @@ class Assembler {
 	public assemble(input: AST): Action {
 		const result = new MutableAction();
 
-		let [defaction, name, ...body] = this.validateInputStructure(input);
+		let [defaction, name, ...body] = this.validateInputStructure(input) as [Symbol, Symbol, ...AST[]];
 		console.assert(defaction === s`defaction`);
 
 		if (typeof name === "string") {
@@ -41,7 +41,7 @@ class Assembler {
 		}
 
 		if (body.length === 1) {
-			body = <Array<AST>>body.first();
+			body = body.first() as AST[];
 		}
 
 		let conditions: Condition[] = [];
