@@ -19,20 +19,21 @@ abstract class Component extends HTMLElement {
 
 declare global {
 	namespace JSX {
+		type Styleable<T extends HTMLElement> = Partial<T | { style: Partial<CSSStyleDeclaration> }>;
 		export interface IntrinsicElements {
-			div: Partial<HTMLDivElement>;
-			label: Partial<HTMLLabelElement>;
-			span: Partial<HTMLSpanElement>;
-			input: Partial<HTMLInputElement>;
-			canvas: Partial<HTMLCanvasElement>;
-			img: Partial<HTMLImageElement>;
-			i: Partial<HTMLElement>;
-			button: Partial<HTMLButtonElement>;
-			br: Partial<HTMLBRElement>;
-			select: Partial<HTMLSelectElement>;
-			option: Partial<HTMLOptionElement>;
-			ul: Partial<HTMLUListElement>;
-			li: Partial<HTMLLIElement>;
+			div: Styleable<HTMLDivElement>;
+			label: Styleable<HTMLLabelElement>;
+			span: Styleable<HTMLSpanElement>;
+			input: Styleable<HTMLInputElement>;
+			canvas: Styleable<HTMLCanvasElement>;
+			img: Styleable<HTMLImageElement>;
+			i: Styleable<HTMLElement>;
+			button: Styleable<HTMLButtonElement>;
+			br: Styleable<HTMLBRElement>;
+			select: Styleable<HTMLSelectElement>;
+			option: Styleable<HTMLOptionElement>;
+			ul: Styleable<HTMLUListElement>;
+			li: Styleable<HTMLLIElement>;
 		}
 
 		interface Element extends HTMLElement {}
