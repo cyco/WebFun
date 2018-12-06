@@ -1,0 +1,14 @@
+@import "variables.scss";
+
+wf-debug-zone-picker {
+	display: block;
+
+	wf-list > div {
+		display: grid;
+		grid-template-columns: repeat(9, $tile-size);
+		grid-template-rows: repeat(9, 32px);
+		justify-content: center;
+		padding-top: 5px;
+		padding-bottom: 5px;
+	}
+}

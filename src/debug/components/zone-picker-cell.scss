@@ -1,0 +1,19 @@
+@import "variables.scss";
+
+wf-debug-zone-picker-cell {
+	display: inline-block;
+
+	&.active {
+		border: 1px solid black;
+	}
+
+	&.empty {
+		width: $tile-size;
+		height: $tile-size;
+	}
+
+	> canvas {
+		width: $tile-size * 4;
+		height: $tile-size * 4;
+	}
+}

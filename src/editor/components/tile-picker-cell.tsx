@@ -25,12 +25,12 @@ class TilePickerCell extends Cell<Tile> {
 	private draw() {
 		if (this.tileSheet) {
 			this._canvas.className = this.data ? this.tileSheet.cssClassNameForTile(this.data.id) : "";
-		} else if (this.palette) {
+		} else if (this.palette && this.data) {
 			const context = this._canvas.getContext("2d");
 			context.clearRect(0, 0, Tile.WIDTH, Tile.HEIGHT);
 			const imageData = drawTileImageData(this.data, this.palette);
 			context.putImageData(imageData, 0, 0);
-		} else console.warn("Tile picker cell can't be drawn without palette or tilesheet");
+		} else if (this.data) console.warn("Tile picker cell can't be drawn without palette or tilesheet");
 	}
 
 	protected disconnectedCallback() {
