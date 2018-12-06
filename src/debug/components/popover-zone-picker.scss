@@ -1,0 +1,14 @@
+wf-debug-popover-zone-picker {
+	display: block;
+	background: black;
+	border: 1px solid gray;
+	:hover {
+		border: 1px solid black;
+	}
+
+	> canvas {
+		float: left;
+		width: 100%;
+		height: 100%;
+	}
+}
