@@ -8,6 +8,10 @@ import GamepadTest from "./gamepad-test";
 import GamepadTestCell from "./gamepad-test-cell";
 import GamepadTestCellButton from "./gamepad-test-cell-button";
 import GamepadTestCellAxis from "./gamepad-test-cell-axis";
+import SimulatorWindow from "./simulator-window";
+import PopoverZonePicker from "./popover-zone-picker";
+import ZonePicker from "./zone-picker";
+import ZonePickerCell from "./zone-picker-cell";
 
 export {
 	TileCell,
@@ -19,5 +23,9 @@ export {
 	GamepadTest,
 	GamepadTestCell,
 	GamepadTestCellButton,
-	GamepadTestCellAxis
+	GamepadTestCellAxis,
+	SimulatorWindow,
+	PopoverZonePicker,
+	ZonePicker,
+	ZonePickerCell
 };
