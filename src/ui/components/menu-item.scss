@@ -31,7 +31,7 @@ wf-menu-item {
 	}
 
 	&[state="off"] .state {
-		background-image: url("");
+		background-image: none;
 	}
 
 	&[state="mixed"] .state {
