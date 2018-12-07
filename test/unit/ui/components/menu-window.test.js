@@ -5,7 +5,10 @@ import { Point } from "src/util";
 describeComponent(MenuWindow, () => {
 	let subject;
 	beforeEach(() => (subject = render(MenuWindow)));
-	afterEach(() => MenuStack.sharedStack.clear());
+	afterEach(() => {
+		MenuStack.sharedStack.clear();
+		subject.remove();
+	});
 
 	it("is a menu view that can be shown at a desired location", () => {
 		expect(subject.show).toBeFunction();

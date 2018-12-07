@@ -1,5 +1,4 @@
-import { Image } from "src/std/dom";
-import { File } from "src/std/dom";
+import { File, Image } from "src/std/dom";
 
 const readAsImage = async function(): Promise<Image> {
 	const buffer = await this.readAsArrayBuffer();
