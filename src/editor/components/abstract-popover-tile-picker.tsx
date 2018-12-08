@@ -12,7 +12,7 @@ abstract class PopoverTilePicker extends Component implements EventListenerObjec
 	public static readonly observedAttributes: string[] = [];
 
 	protected tiles: Tile[];
-	public palette: ColorPalette;
+	private _palette: ColorPalette;
 	public onchange: (e: CustomEvent) => void = () => void 0;
 	public state: Storage = localStorage.prefixedWith("popover-tile-picker");
 
@@ -38,7 +38,7 @@ abstract class PopoverTilePicker extends Component implements EventListenerObjec
 			<TilePicker
 				tileSheet={this.tileSheet}
 				tiles={this.tiles}
-				palette={this.palette}
+				palette={this._palette}
 				tile={this.tile}
 				style={{ width: "300px", height: "400px" }}
 				state={this.state}
@@ -64,6 +64,15 @@ abstract class PopoverTilePicker extends Component implements EventListenerObjec
 
 	get tileSheet() {
 		return this._tileSheet;
+	}
+
+	set pallet(s) {
+		this._tileView.palette = s;
+		this._palette = s;
+	}
+
+	get pallet() {
+		return this._palette;
 	}
 
 	protected set tile(tile: Tile) {

@@ -1,0 +1,4 @@
+@include "./abstract-tile-view";
+wf-debug-tile-view {
+	@extend wf-debug-abstract-tile-view;
+}
