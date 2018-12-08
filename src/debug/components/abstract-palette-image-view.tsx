@@ -1,6 +1,7 @@
 import AbstractPaletteView from "./abstract-palette-view";
 import { Size } from "src/util";
 import { drawImage } from "src/app/rendering/canvas";
+import "./abstract-palette-image-view.scss";
 
 abstract class AbstractPaletteImageView extends AbstractPaletteView {
 	private _pixels: Uint8Array;
