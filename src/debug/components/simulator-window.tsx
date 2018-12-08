@@ -4,7 +4,7 @@ import { GameController } from "src/app";
 import { DiscardingStorage } from "src/util";
 import PopoverZonePicker from "./popover-zone-picker";
 import { PopoverTilePicker } from "src/editor/components";
-import { Zone, ZoneType } from "src/engine/objects";
+import { Zone, ZoneType, Hotspot } from "src/engine/objects";
 import { srand } from "src/util";
 
 class SimulatorWindow extends AbstractWindow {
@@ -65,20 +65,31 @@ class SimulatorWindow extends AbstractWindow {
 	}
 
 	private set currentZone(s: Zone) {
+		const connectedZones = this.connectedZones(s);
 		this._zonePickers[4].zone = s;
-		this._findTile.tiles = s.providedItems;
+		this._findTile.tiles = s.providedItems.concat(...connectedZones.map(z => z.providedItems)).unique();
 		this._findTile.tile = this._findTile.tiles.first();
-		this._npcTile.tiles = s.puzzleNPCs;
+		this._npcTile.tiles = s.puzzleNPCs.concat(...connectedZones.map(z => z.puzzleNPCs)).unique();
 		this._npcTile.tile = this._npcTile.tiles.first();
-		this._requiredTile.tiles = s.requiredItems;
+		this._requiredTile.tiles = s.requiredItems
+			.concat(...connectedZones.map(z => z.requiredItems))
+			.unique();
 		this._requiredTile.tile = this._requiredTile.tiles.first();
-		this._required2Tile.tiles = s.goalItems;
+		this._required2Tile.tiles = s.goalItems.concat(...connectedZones.map(z => z.goalItems)).unique();
 		this._required2Tile.tile = this._required2Tile.tiles.first();
 
 		srand(s.id);
 		this._zonePickers
 			.filter((_, idx) => idx !== 4)
 			.forEach(p => (p.zone = p.filteredZones.shuffle().first()));
+	}
+
+	private connectedZones(main: Zone): Zone[] {
+		return main.doors
+			.filter(({ arg }: Hotspot) => arg !== -1)
+			.map(({ arg }) => this._gameController.data.zones[arg])
+			.map(z => [z, ...this.connectedZones(z)])
+			.flatten();
 	}
 
 	public get gameController() {
