@@ -2,7 +2,6 @@ import { ColorPalette, GameData, readGameDataFile, GameTypeYoda } from "src/engi
 import { AbstractImageFactory } from "src/engine/rendering";
 import Settings from "src/settings";
 import { EventTarget, FileLoader, InputStream } from "src/util";
-import TileImageLoader from "./tile-image-loader";
 import { DOMSoundLoader } from "./audio";
 
 export const Events = {
@@ -12,7 +11,7 @@ export const Events = {
 	DidLoadSetupImage: "loadsetupimage"
 };
 
-export const StageCount = 11;
+export const StageCount = 9;
 
 export declare interface LoaderEventDetails {
 	data: GameData;
@@ -98,14 +97,7 @@ class Loader extends EventTarget {
 	}
 
 	private async _loadTileImages() {
-		this._progress(5, 0);
-		const loader = new TileImageLoader();
-		loader.load(
-			this._data.tiles,
-			this._imageFactory,
-			(state: number, progress: number) => this._progress(state, progress),
-			() => this._loadSounds()
-		);
+		this._loadSounds();
 	}
 
 	private async _loadSounds() {
