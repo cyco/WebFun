@@ -109,6 +109,10 @@ class Loader extends EventTarget {
 	}
 
 	private async _loadSounds() {
+		if (true) {
+			this._finishLoading();
+			return;
+		}
 		this._progress(10, 0);
 
 		const loader = new DOMSoundLoader(this._buildSoundUrl(""));
