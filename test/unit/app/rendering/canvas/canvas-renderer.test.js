@@ -1,5 +1,6 @@
 import AbstractRenderer from "src/engine/rendering/abstract-renderer";
 import CanvasRenderer from "src/app/rendering/canvas/canvas-renderer";
+import { dispatch } from "src/util";
 
 describe("WebFun.App.Rendering.Canvas.Renderer", () => {
 	let subject = null;
@@ -41,23 +42,65 @@ describe("WebFun.App.Rendering.Canvas.Renderer", () => {
 		expect(() => subject.clearTile()).not.toThrow();
 	});
 
-	it("implements renderTile", () => {
-		spyOn(context, "drawImage");
+	describe("renderTile", () => {
+		it("builds images on first render", () => {
+			let resolve;
+			spyOn(context, "drawImage");
+			spyOn(subject._imageFactory, "buildImage").and.returnValue(
+				new Promise((r, reject) => (resolve = r))
+			);
 
-		subject.renderTile(null, 0, 0);
-		expect(context.drawImage).not.toHaveBeenCalled();
+			const tile = { id: 5 };
+			subject.renderTile(tile, 1, 2);
 
-		const tile = { image: { representation: "image-rep" } };
-		subject.renderTile(tile, 1, 2);
-		expect(context.drawImage).toHaveBeenCalledWith("image-rep", 32, 64);
-	});
+			expect(context.drawImage).not.toHaveBeenCalled();
+			expect(subject._imageFactory.buildImage).toHaveBeenCalled();
 
-	it("implements renderImage", () => {
-		spyOn(context, "drawImage");
+			resolve({});
+		});
 
-		const tile = { representation: "image-rep" };
-		subject.renderImage(tile, 1, 2);
-		expect(context.drawImage).toHaveBeenCalledWith("image-rep", 1, 2);
+		it("only builds images once", () => {
+			let resolve;
+			spyOn(subject._imageFactory, "buildImage").and.returnValue(
+				new Promise((r, reject) => (resolve = r))
+			);
+
+			const tile = { id: 6 };
+			subject.renderTile(tile, 1, 2);
+			subject.renderTile(tile, 1, 2);
+
+			expect(subject._imageFactory.buildImage.calls.count()).toBe(1);
+
+			resolve({});
+
+			subject.renderTile(tile, 1, 2);
+			expect(subject._imageFactory.buildImage.calls.count()).toBe(1);
+		});
+
+		it("renders a tile only after the image has been built, potentially missing for several frames", async done => {
+			const imageMock = { representation: "mocked-representation" };
+			let resolve;
+			const tile = { id: 9 };
+			spyOn(subject._imageFactory, "buildImage").and.returnValue(
+				new Promise((r, reject) => (resolve = r))
+			);
+			spyOn(context, "drawImage");
+
+			subject.renderTile(tile, 1, 2);
+			expect(context.drawImage).not.toHaveBeenCalled();
+			subject.renderTile(tile, 1, 2);
+			expect(context.drawImage).not.toHaveBeenCalled();
+
+			resolve(imageMock);
+
+			await dispatch(() => void 0);
+
+			subject.renderTile(tile, 1, 2);
+
+			expect(context.drawImage).toHaveBeenCalledWith("mocked-representation", 32, 64);
+
+			done();
+		});
 	});
 
 	it("implements renderImageData", () => {

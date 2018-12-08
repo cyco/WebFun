@@ -45,7 +45,9 @@ class CanvasRenderer extends Renderer {
 
 		let image = this._imageCache.get(tile.id);
 		if (!image) {
-			if (this._imageLoaders.has(tile.id)) return;
+			if (this._imageLoaders.has(tile.id)) {
+				return;
+			}
 
 			const p = this.imageFactory.buildImage(TILE_WIDTH, TILE_HEIGHT, tile.imageData);
 			this._imageLoaders.set(tile.id, p);
@@ -55,6 +57,7 @@ class CanvasRenderer extends Renderer {
 			});
 			return;
 		}
+
 		this.drawImage(image.representation, x * TILE_WIDTH, y * TILE_HEIGHT);
 	}
 
