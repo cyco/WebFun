@@ -1,9 +1,10 @@
 import { Component } from "src/ui";
 import { ColorPalette } from "src/engine/rendering";
+import "./abstract-palette-view.scss";
 
 abstract class AbstractTileView extends Component {
 	protected _palette: ColorPalette;
-	protected _canvas = <canvas className="pixelated" /> as HTMLCanvasElement;
+	protected _canvas = <canvas /> as HTMLCanvasElement;
 
 	public abstract draw(): void;
 

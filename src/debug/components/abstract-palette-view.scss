@@ -1,7 +1,11 @@
+@import "pixelated";
+
 wf-debug-abstract-palette-view {
 	position: relative;
 
 	> canvas {
+		@extend .pixelated;
+
 		width: 100%;
 		height: 100%;
 		float: left;
