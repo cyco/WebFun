@@ -39,6 +39,8 @@ class SimulatorWindow extends AbstractWindow {
 			type !== ZoneType.Room &&
 			type !== ZoneType.Win &&
 			type !== ZoneType.None;
+		this._zonePickers[4].onchange = ({ detail: { zone } }: CustomEvent) => (this.currentZone = zone);
+
 		this.content.appendChild(<div className="zone-container">{this._zonePickers}</div>);
 		this.content.appendChild(
 			<div className="tile-container">
