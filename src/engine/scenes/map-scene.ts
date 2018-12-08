@@ -253,15 +253,14 @@ class MapScene extends Scene {
 				const zone = world.getZone(x, y);
 				let tile = this._tileForZone(zone);
 
-				if (tile && tile.image && tile.image)
-					renderer.renderImage(tile.image, offsetX + x * MapTileWidth, offsetY + y * MapTileHeight);
+				renderer.renderTile(tile, offsetX + x * MapTileWidth, offsetY + y * MapTileHeight, 0);
 			}
 		}
 
 		if ((this._ticks % (2 * MapScene.LOCATOR_ANIMATION_TICKS)) / MapScene.LOCATOR_ANIMATION_TICKS < 1) {
 			const x = offsetX + MapTileWidth * state.worldLocation.x;
 			const y = offsetY + MapTileHeight * state.worldLocation.y;
-			if (this._location && this._location.image) renderer.renderImage(this._location.image, x, y);
+			if (this._location) renderer.renderTile(this._location, x, y, 1);
 		}
 	}
 

@@ -122,9 +122,7 @@ class TransitionScene extends Scene {
 					const tile = zone.getTile(x - xOffset, y - yOffset, l);
 					if (!tile) continue;
 
-					if (tile.image.representation instanceof HTMLImageElement) {
-						ctx.drawImage(tile.image.representation, x * tileWidth, y * tileHeight);
-					}
+					// ctx.drawTile(tile, x * tileWidth, y * tileHeight);
 				}
 			}
 
@@ -138,9 +136,7 @@ class TransitionScene extends Scene {
 				const x1 = (hero.location.x + xOffset) * tileWidth;
 				const y1 = (hero.location.y + yOffset) * tileHeight;
 
-				if (tile.image.representation instanceof HTMLImageElement) {
-					ctx.drawImage(tile.image.representation, x1, y1);
-				}
+				// ctx.drawImage(tile, x1, y1);
 			}
 		}
 

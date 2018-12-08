@@ -1,5 +1,3 @@
-import { Image } from "src/engine/rendering";
-
 export const WIDTH = 32;
 export const HEIGHT = 32;
 export const SIZE = WIDTH * HEIGHT;
@@ -89,7 +87,6 @@ export class Tile {
 	protected _name: string;
 	protected _attributes: any;
 	protected _imageData: Uint8Array;
-	public image: Image;
 
 	get walkable() {
 		return !this.getAttribute(Tile.Attribute.Object) && !this.getAttribute(Tile.Attribute.Character);

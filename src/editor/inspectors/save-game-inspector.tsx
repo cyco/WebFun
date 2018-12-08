@@ -9,7 +9,6 @@ import { World } from "src/engine/generation";
 import SaveGameWorld from "src/engine/save-game/world";
 import { ZoneType } from "src/engine/objects";
 import "./save-game-inspector.scss";
-import TileImageLoader from "src/app/tile-image-loader";
 
 class SaveGameInspector extends AbstractInspector {
 	private _editorView: EditorView = (
@@ -82,16 +81,7 @@ class SaveGameInspector extends AbstractInspector {
 		engine.renderer.imageFactory.palette = controller.palette;
 
 		controller.show(this.window.manager);
-
-		const imageLoader = new TileImageLoader();
-		imageLoader.load(
-			controller.data.tiles,
-			controller.engine.renderer.imageFactory,
-			(): void => void 0,
-			() => {
-				controller.jumpStartEngine(controller.data.zones[state.currentZoneID]);
-			}
-		);
+		controller.jumpStartEngine(controller.data.zones[state.currentZoneID]);
 	}
 
 	private _createWorld(world: SaveGameWorld): World {

@@ -3,13 +3,15 @@ import { Tile } from "src/engine/objects";
 import { Renderer, Image } from "src/engine/rendering";
 import DOMImageFactory from "./dom-image-factory";
 
-const TILE_WIDTH = 32.0;
-const TILE_HEIGHT = 32.0;
+const TILE_WIDTH = Tile.WIDTH;
+const TILE_HEIGHT = Tile.HEIGHT;
 
 class CanvasRenderer extends Renderer {
 	protected _canvas: HTMLCanvasElement;
 	protected _ctx: CanvasRenderingContext2D;
 	protected _imageFactory: DOMImageFactory;
+	protected _imageCache: Map<number, Image> = new Map();
+	protected _imageLoaders: Map<number, Promise<Image>> = new Map();
 
 	constructor(canvas: HTMLCanvasElement) {
 		super();
@@ -41,11 +43,23 @@ class CanvasRenderer extends Renderer {
 	renderTile(tile: Tile, x: number, y: number, _: number) {
 		if (!tile) return;
 
-		this.drawImage(tile.image.representation, x * TILE_WIDTH, y * TILE_HEIGHT);
+		let image = this._imageCache.get(tile.id);
+		if (!image) {
+			if (this._imageLoaders.has(tile.id)) return;
+
+			const p = this.imageFactory.buildImage(TILE_WIDTH, TILE_HEIGHT, tile.imageData);
+			this._imageLoaders.set(tile.id, p);
+			p.then(img => {
+				this._imageCache.set(tile.id, img);
+				this._imageLoaders.delete(tile.id);
+			});
+			return;
+		}
+		this.drawImage(image.representation, x * TILE_WIDTH, y * TILE_HEIGHT);
 	}
 
-	renderImage(image: Image, x: number, y: number) {
-		this.drawImage(image.representation, x, y);
+	renderImage(image: HTMLImageElement, x: number, y: number) {
+		this.drawImage(image, x, y);
 	}
 
 	protected drawImage(image: HTMLImageElement, atX: number, atY: number) {
