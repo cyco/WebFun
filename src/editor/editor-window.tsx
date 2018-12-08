@@ -3,7 +3,6 @@ import { readGameDataFile, GameData, GameType, GameTypeYoda, GameTypeIndy } from
 import { InputStream } from "src/util";
 import { PaletteProvider } from "src/app/data";
 import DataManager from "./data-manager";
-import CSSTileSheet from "./css-tile-sheet";
 import { ImageFactory } from "src/app/rendering/canvas";
 import buildEditorMenu from "./menu";
 import { Menu, WindowMenuItem } from "src/ui";
@@ -40,9 +39,6 @@ class EditorWindow extends AbstractWindow {
 		const rawData = readGameDataFile(stream, type);
 		const data = new GameData(rawData);
 		const palette = await new PaletteProvider().provide(type);
-		const tileSheet = new CSSTileSheet(data.tiles.length);
-		data.tiles.forEach(t => tileSheet.add(t.imageData));
-		tileSheet.draw(new ImageFactory(palette));
 
 		this._gotoFullscreen();
 		const editor = document.createElement(EditorView.tagName) as EditorView;
@@ -54,7 +50,7 @@ class EditorWindow extends AbstractWindow {
 		editor.addInspector("character", new CharacterInspector(state.prefixedWith("character")));
 		editor.addInspector("setup-image", new SetupImageInspector(state.prefixedWith("setup-image")));
 		editor.addInspector("palette", new PaletteInspector(state.prefixedWith("palette")));
-		editor.data = new DataManager(data, palette, tileSheet, type);
+		editor.data = new DataManager(data, palette, type);
 		editor.state = state;
 		this._showMenu(editor);
 		this.content.textContent = "";

@@ -69,13 +69,13 @@ class CharacterInspector extends AbstractInspector {
 	}
 
 	public build() {
-		this._details.tileSheet = this.data.tileSheet;
+		this._details.palette = this.data.palette;
 		this._details.sounds = this.data.currentData.sounds.map(s => s.file);
 		this._details.weapons = this.data.currentData.characters.filter(c => c.type === CharType.Weapon);
 		this._details.tiles = this.data.currentData.tiles;
 
 		const cell = this._list.cell as CharacterInspectorCell;
-		cell.tileSheet = this.data.tileSheet;
+		cell.palette = this.data.palette;
 		this._list.items = this.data.currentData.characters;
 	}
 

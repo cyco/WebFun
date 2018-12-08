@@ -1,6 +1,7 @@
 import { Cell, Label, IconButton } from "src/ui/components";
 import { Char } from "src/engine/objects";
-import CSSTileSheet from "../css-tile-sheet";
+import { ColorPalette } from "src/engine/rendering";
+import { TileView } from "src/debug/components";
 import "./character-inspector-cell.scss";
 
 class CharacterInspectorCell extends Cell<Char> {
@@ -8,11 +9,11 @@ class CharacterInspectorCell extends Cell<Char> {
 	public static readonly observedAttributes: string[] = [];
 
 	public onremove = (_: Event): void => void 0;
-	public tileSheet: CSSTileSheet;
+	public palette: ColorPalette;
 
 	public cloneNode(deep?: boolean): Node {
 		const node = super.cloneNode(deep) as CharacterInspectorCell;
-		node.tileSheet = this.tileSheet;
+		node.palette = this.palette;
 		node.onclick = this.onclick;
 		node.onchange = this.onchange;
 		node.onremove = this.onremove;
@@ -23,7 +24,7 @@ class CharacterInspectorCell extends Cell<Char> {
 	protected connectedCallback() {
 		const tile = this.data.frames[0].extensionRight;
 		[
-			<div className={"tile " + (tile ? this.tileSheet.cssClassesForTile(tile.id).join(" ") : "")} />,
+			<TileView palette={this.palette} tile={tile} />,
 			<div className="text">
 				<span className="id">{this.data.id.toString()}</span>
 				<Label

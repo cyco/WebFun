@@ -121,7 +121,7 @@ class ZoneInspector extends AbstractInspector {
 
 	build() {
 		const cell = this._list.cell as ZoneInspectorCell;
-		cell.tileSheet = this.data.tileSheet;
+		cell.palette = this.data.palette;
 		this._list.items = this.data.currentData.zones;
 
 		const zones = (this._state.load("zones") as number[]) || [];

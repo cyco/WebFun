@@ -1,19 +1,15 @@
-import { ColorPalette, GameData } from "src/engine";
-import CSSTileSheet from "./css-tile-sheet";
-import { GameType, SaveState } from "src/engine";
+import { ColorPalette, GameData, GameType, SaveState } from "src/engine";
 
 class DataManager {
 	private _currentData: GameData;
 	private _palette: ColorPalette;
-	private _tileSheet: CSSTileSheet;
 	private _type: GameType;
 	private _state: SaveState;
 	private _stateData: GameData;
 
-	constructor(data: GameData, palette: ColorPalette, tilesheet: CSSTileSheet, type: GameType) {
+	constructor(data: GameData, palette: ColorPalette, type: GameType) {
 		this._currentData = data.copy();
 		this._palette = palette;
-		this._tileSheet = tilesheet;
 		this._type = type;
 	}
 
@@ -23,10 +19,6 @@ class DataManager {
 
 	get palette() {
 		return this._palette;
-	}
-
-	get tileSheet() {
-		return this._tileSheet;
 	}
 
 	get type() {

@@ -1,15 +1,17 @@
 import AbstractInspector from "./abstract-inspector";
-import CSSTileSheet from "../css-tile-sheet";
 import { IconButton } from "src/ui/components";
 import { MutableTile } from "src/engine/mutable-objects";
 import { TileEditor } from "../components";
 import { sqrt, ceil, floor } from "src/std/math";
 import { downloadImage } from "src/util";
 import { FilePicker } from "src/ui";
+import { ColorPalette } from "src/engine/rendering";
+import { TileView } from "src/debug/components";
+
 import "./tile-inspector.scss";
 
 class TileInspector extends AbstractInspector {
-	private _tileSheet: CSSTileSheet;
+	private _palette: ColorPalette;
 	private _requiredAttributes: number = 0;
 	private _prohibitedAttributes: number = 0;
 	protected _editor: TileEditor = null;
@@ -101,7 +103,7 @@ class TileInspector extends AbstractInspector {
 	}
 
 	build() {
-		this._tileSheet = this.data.tileSheet;
+		this._palette = this.data.palette;
 		this.window.content.textContent = "";
 
 		const titles: { [_: number]: string } = {
@@ -165,9 +167,9 @@ class TileInspector extends AbstractInspector {
 			row.dataset.attributes = tile.attributes;
 			const tileCell = document.createElement("td");
 
-			const tilePreview = document.createElement("div");
-			const classes = this._tileSheet.cssClassesForTile(tile.id);
-			tilePreview.className = classes.join(" ");
+			const tilePreview = document.createElement(TileView.tagName) as TileView;
+			tilePreview.palette = this._palette;
+			tilePreview.tile = tile;
 			tilePreview.style.cursor = "pointer";
 			tileCell.onclick = () => this.editTile(tile);
 			tileCell.appendChild(tilePreview);

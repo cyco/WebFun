@@ -1,7 +1,6 @@
 import { ComponentRegistry, FilePicker, WindowManager } from "src/ui";
 import * as Components from "./components";
 import EditorView from "./editor-view";
-import CSSTileSheet from "./css-tile-sheet";
 import DataManager from "./data-manager";
 import EditorWindow from "./editor-window";
 
@@ -26,4 +25,4 @@ const main = async (windowManager: WindowManager = WindowManager.defaultManager)
 	await editor.loadFile(file);
 };
 
-export { main, CSSTileSheet, DataManager };
+export { main, DataManager };

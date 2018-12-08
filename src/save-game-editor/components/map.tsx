@@ -4,7 +4,7 @@ import { Zone, Tile } from "src/engine/objects";
 import { Point } from "src/util";
 import { ColorPalette } from "src/engine/rendering";
 import { LocatorTile } from "src/engine/types";
-import { CSSTileSheet } from "src/editor";
+import { TileView } from "src/debug/components";
 import "./map.scss";
 
 const TileSize = 28;
@@ -16,7 +16,6 @@ class Map extends Component {
 	public tiles: Tile[];
 	public zones: Zone[];
 	public palette: ColorPalette;
-	public tileSheet: CSSTileSheet;
 	public location: Point;
 	public locatorTile: LocatorTile;
 	public reveal: boolean = false;
@@ -51,8 +50,7 @@ class Map extends Component {
 	private _buildURHere() {
 		if (!this.location) return;
 
-		this._here = <div className={"here " + this.tileSheet.cssClassNameForTile(this.locatorTile.here)} />;
-
+		this._here = <TileView palette={this.palette} tile={this.locatorTile.here} />;
 		this._here.style.left = `${this.location.x * TileSize}px`;
 		this._here.style.top = `${this.location.y * TileSize}px`;
 	}
