@@ -78,16 +78,6 @@ class TilePicker extends Component {
 		return cell.palette;
 	}
 
-	set tileSheet(p) {
-		const cell = this._list.cell as TilePickerCell;
-		cell.tileSheet = p;
-	}
-
-	get tileSheet() {
-		const cell = this._list.cell as TilePickerCell;
-		return cell.tileSheet;
-	}
-
 	set tile(tile: Tile) {
 		this._tile = tile;
 	}
