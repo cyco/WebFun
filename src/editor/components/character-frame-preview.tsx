@@ -48,14 +48,6 @@ class CharacterFramePreview extends Component {
 		return this._pickers.first().tiles;
 	}
 
-	set tileSheet(s) {
-		this._pickers.forEach(p => (p.tileSheet = s));
-	}
-
-	get tileSheet() {
-		return this._pickers.first().tileSheet;
-	}
-
 	set frame(f: CharFrame) {
 		this._frame = f;
 		this._rebuild();

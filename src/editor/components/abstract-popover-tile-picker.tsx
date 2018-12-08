@@ -1,7 +1,7 @@
 import { Component } from "src/ui";
 import { Popover } from "src/ui/components";
 import { Tile } from "src/engine/objects";
-import { Tile as TileComponent } from "src/save-game-editor/components";
+import { TileView as TileComponent } from "src/debug/components";
 import { PopoverModalSession } from "src/ux";
 import TilePicker, { Events as TilePickerEvents } from "./tile-picker";
 import { ColorPalette } from "src/engine/rendering";
@@ -36,7 +36,6 @@ abstract class PopoverTilePicker extends Component implements EventListenerObjec
 		const session = new PopoverModalSession(popover);
 		const picker = (
 			<TilePicker
-				tileSheet={this.tileSheet}
 				tiles={this.tiles}
 				palette={this._palette}
 				tile={this.tile}
@@ -56,15 +55,6 @@ abstract class PopoverTilePicker extends Component implements EventListenerObjec
 	}
 
 	protected abstract pickerOnChange(picker: TilePicker, e: CustomEvent): void;
-
-	set tileSheet(s) {
-		this._tileView.tileSheet = s;
-		this._tileSheet = s;
-	}
-
-	get tileSheet() {
-		return this._tileSheet;
-	}
 
 	set pallet(s) {
 		this._tileView.palette = s;
