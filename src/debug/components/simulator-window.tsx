@@ -87,8 +87,10 @@ class SimulatorWindow extends AbstractWindow {
 	private connectedZones(main: Zone): Zone[] {
 		return main.doors
 			.filter(({ arg }: Hotspot) => arg !== -1)
-			.map(({ arg }) => this._gameController.data.zones[arg])
-			.map(z => [z, ...this.connectedZones(z)])
+			.map(({ arg }) => {
+				const zone = this._gameController.data.zones[arg];
+				return [zone, ...this.connectedZones(zone)];
+			})
 			.flatten();
 	}
 
@@ -120,11 +122,11 @@ class SimulatorWindow extends AbstractWindow {
 	public set state(s) {
 		this._state = s;
 
+		this._zonePickers.forEach((p, idx) => (p.state = s.prefixedWith(`state-${idx}`)));
 		this._findTile.state = s.prefixedWith("find-tile");
 		this._npcTile.state = s.prefixedWith("npc-tile");
 		this._requiredTile.state = s.prefixedWith("required-tile");
 		this._required2Tile.state = s.prefixedWith("goal-tile");
-		this._zonePickers.forEach((p, idx) => (p.state = s.prefixedWith(`state-${idx}`)));
 	}
 }
 

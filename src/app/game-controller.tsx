@@ -1,5 +1,5 @@
 import { Engine, GameData, Hero, Inventory, Metronome, Story, ColorPalette } from "src/engine";
-import { CanvasRenderer, CanvasTileSheetRenderer } from "./rendering";
+import { CanvasRenderer } from "./rendering";
 import { Reader } from "src/engine/save-game";
 import { DesktopInputManager } from "./input";
 import { Char, Zone, Tile } from "src/engine/objects";
@@ -14,7 +14,7 @@ import GameState from "../engine/game-state";
 import Loader, { LoaderEventDetails } from "./loader";
 import { MainMenu, MainWindow } from "./windows";
 import { GameTypeYoda } from "src/engine";
-import { DOMSoundLoader, DOMAudioChannel } from "./audio";
+import { DOMAudioChannel } from "./audio";
 import { Mixer } from "src/engine/audio";
 import {
 	LoadingView,
@@ -78,11 +78,7 @@ class GameController extends EventTarget {
 		return engine;
 	}
 
-	private _determineRenderer(): typeof CanvasRenderer.Renderer | typeof CanvasTileSheetRenderer.Renderer {
-		if (Settings.allowTileSheet) {
-			return CanvasTileSheetRenderer.Renderer;
-		}
-
+	private _determineRenderer(): typeof CanvasRenderer.Renderer {
 		return CanvasRenderer.Renderer;
 	}
 

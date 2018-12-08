@@ -5,7 +5,6 @@ import { TileView as TileComponent } from "src/debug/components";
 import { PopoverModalSession } from "src/ux";
 import TilePicker, { Events as TilePickerEvents } from "./tile-picker";
 import { ColorPalette } from "src/engine/rendering";
-import { CSSTileSheet } from "src/editor";
 import "./abstract-popover-tile-picker.scss";
 
 abstract class PopoverTilePicker extends Component implements EventListenerObject {
@@ -18,7 +17,6 @@ abstract class PopoverTilePicker extends Component implements EventListenerObjec
 
 	protected _tile: Tile;
 	protected _tileView = <TileComponent /> as TileComponent;
-	protected _tileSheet: CSSTileSheet;
 
 	protected connectedCallback() {
 		super.connectedCallback();

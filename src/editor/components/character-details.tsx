@@ -1,7 +1,7 @@
 import { Component } from "src/ui";
 import { Char, CharMovementType, CharType, CharFrame, Tile } from "src/engine/objects";
 import CharacterFramePreview from "./character-frame-preview";
-import CSSTileSheet from "../css-tile-sheet";
+import { ColorPalette } from "src/engine/rendering";
 import { MutableChar } from "src/engine/mutable-objects";
 import "./character-details.scss";
 
@@ -17,7 +17,7 @@ class CharacterDetails extends Component {
 	private _currentPreviewFrame: number = 0;
 	private _framePreview: CharacterFramePreview;
 
-	private _tileSheet: CSSTileSheet;
+	private _palette: ColorPalette;
 
 	protected connectedCallback() {
 		super.connectedCallback();
@@ -51,7 +51,7 @@ class CharacterDetails extends Component {
 			<div>
 				<CharacterFramePreview
 					frame={frames[this._currentPreviewFrame]}
-					tileSheet={this._tileSheet}
+					palette={this._palette}
 					tiles={tiles}
 					onchange={({ detail: { idx, tile } }: CustomEvent) =>
 						(this._character.frames[this._currentPreviewFrame % 3].tiles[idx] = tile)
@@ -181,13 +181,13 @@ class CharacterDetails extends Component {
 		super.disconnectedCallback();
 	}
 
-	set tileSheet(s: CSSTileSheet) {
-		this._tileSheet = s;
+	set palette(s: ColorPalette) {
+		this._palette = s;
 		this._rebuild();
 	}
 
-	get tileSheet() {
-		return this._tileSheet;
+	get palette() {
+		return this._palette;
 	}
 
 	set character(c: MutableChar | Char) {

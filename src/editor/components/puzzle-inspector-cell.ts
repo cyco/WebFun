@@ -1,17 +1,18 @@
 import { Cell } from "src/ui/components";
 import { Puzzle, PuzzleType } from "src/engine/objects";
 import "./puzzle-inspector-cell.scss";
-import CSSTileSheet from "../css-tile-sheet";
 import Tile from "src/engine/objects/tile";
 import { ExpandButton } from "src/editor/components";
+import { ColorPalette } from "src/engine/rendering";
+import { TileView } from "src/debug/components";
 
 class PuzzleInspectorCell extends Cell<Puzzle> {
 	public static readonly tagName = "wf-puzzle-inspector-cell";
 	public static readonly observedAttributes: string[] = [];
 
-	public tileSheet: CSSTileSheet;
-	private _tile1: HTMLElement;
-	private _tile2: HTMLElement;
+	public palette: ColorPalette;
+	private _tile1: TileView;
+	private _tile2: TileView;
 	private _title: HTMLElement;
 	private _id: HTMLElement;
 	private _type: HTMLElement;
@@ -22,9 +23,9 @@ class PuzzleInspectorCell extends Cell<Puzzle> {
 	constructor() {
 		super();
 
-		this._tile1 = document.createElement("div");
+		this._tile1 = document.createElement(TileView.tagName) as TileView;
 		this._tile1.classList.add("tile");
-		this._tile2 = document.createElement("div");
+		this._tile2 = document.createElement(TileView.tagName) as TileView;
 		this._tile2.classList.add("tile");
 		this._title = document.createElement("span");
 		this._title.classList.add("title");
@@ -45,7 +46,7 @@ class PuzzleInspectorCell extends Cell<Puzzle> {
 
 	public cloneNode(deep?: boolean): Node {
 		const node = <PuzzleInspectorCell>super.cloneNode(deep);
-		node.tileSheet = this.tileSheet;
+		node.palette = this.palette;
 		return node;
 	}
 
@@ -77,13 +78,15 @@ class PuzzleInspectorCell extends Cell<Puzzle> {
 		this.style.setProperty("--text-height", this._text.getBoundingClientRect().height + "px");
 	}
 
-	private _prepareTile(tile: Tile, node: HTMLElement) {
+	private _prepareTile(tile: Tile, node: TileView) {
 		node.className = "tile";
 		node.title = "";
+		node.tile = null;
 		if (!tile) return;
 
 		node.title = tile.name;
-		node.className += " " + this.tileSheet.cssClassesForTile(this.data.item1.id).join(" ");
+		node.tile = this.data.item1;
+		node.palette = this.palette;
 	}
 
 	private formatType(type: PuzzleType): string {

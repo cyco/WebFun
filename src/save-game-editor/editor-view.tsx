@@ -6,7 +6,6 @@ import { Tile } from "src/engine/objects";
 import { GameData, ColorPalette } from "src/engine";
 import { SaveState } from "src/engine/save-game";
 import { Menu, Component } from "src/ui";
-import { CSSTileSheet } from "src/editor";
 import { ImageFactory } from "src/app/rendering/canvas";
 import { WorldSize } from "src/engine/types";
 import { Yoda as GameTypeYoda } from "src/engine/type";
@@ -23,7 +22,6 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 	private _gameData: GameData;
 	private _palette: ColorPalette;
 	private _state: SaveState;
-	private _tileSheet: CSSTileSheet;
 	private _save: Element = <div className="save" />;
 	public state: Storage = new DiscardingStorage();
 
@@ -32,14 +30,7 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 		this.appendChild(this._save);
 	}
 
-	private _buildTileSheet(data: GameData, palette: ColorPalette) {
-		this._tileSheet = new CSSTileSheet(data.tiles.length);
-		data.tiles.forEach(t => this._tileSheet.add(t.imageData));
-		this._tileSheet.draw(new ImageFactory(palette));
-	}
-
 	public presentState(state: SaveState, data: GameData, palette: ColorPalette) {
-		this._buildTileSheet(data, palette);
 		this._state = state;
 		this._gameData = data;
 		this._palette = palette;
@@ -60,8 +51,6 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 	}
 
 	private _buildNodes(state: SaveState) {
-		const tileSheet = this._tileSheet;
-
 		const puzzle = this._gameData.puzzles[state.goalPuzzle];
 		const missionStatement = puzzle.strings[2];
 		const tiles = this._gameData.tiles;
@@ -88,7 +77,6 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 				<div className="current-weapon">
 					<PopoverCharacterPicker
 						palette={this._palette}
-						tileSheet={this._tileSheet}
 						characters={this.data.characters.filter(c => c.isWeapon())}
 						character={this.data.characters[this._state.currentWeapon]}
 						onchange={(e: CustomEvent) =>
@@ -126,7 +114,6 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 					tiles={this._gameData.tiles}
 					zones={this._gameData.zones}
 					palette={this._palette}
-					tileSheet={this._tileSheet}
 					locatorTile={state.type.locatorTile}
 					reveal={true}
 					contextMenuProvider={this}
@@ -140,7 +127,6 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 						tiles={this._gameData.tiles}
 						zones={this._gameData.zones}
 						palette={this._palette}
-						tileSheet={this._tileSheet}
 						locatorTile={state.type.locatorTile}
 						reveal={true}
 						contextMenuProvider={this}
@@ -150,7 +136,7 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 				<Inventory
 					className="content Inventory"
 					tiles={tiles}
-					tileSheet={tileSheet}
+					palette={this._palette}
 					items={Array.from(state.inventoryIDs)
 						.map(t => tiles[t])
 						.concat(null)}

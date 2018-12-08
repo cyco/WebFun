@@ -1,12 +1,12 @@
 import { Cell, IconButton, Selector } from "src/ui/components";
 import { Tile } from "src/engine/objects";
-import { CSSTileSheet } from "src/editor";
-import TileComponent from "./tile";
+import { ColorPalette } from "src/engine/rendering";
+import { TileView } from "src/debug/components";
 import "./inventory-row.scss";
 
 class InventoryRow extends Cell<Tile> {
 	public static readonly tagName = "wf-save-game-editor-inventory-row";
-	private _icon: TileComponent = <TileComponent /> as TileComponent;
+	private _icon: TileView = <TileView /> as TileView;
 	private _label = (
 		<Selector
 			borderless
@@ -49,7 +49,7 @@ class InventoryRow extends Cell<Tile> {
 		copy.ondelete = this.ondelete;
 		copy.onchange = this.onchange;
 		copy.onadd = this.onadd;
-		copy.tileSheet = this.tileSheet;
+		copy.palette = this.palette;
 		copy.data = this.data;
 		copy.tiles = this.tiles;
 
@@ -66,12 +66,12 @@ class InventoryRow extends Cell<Tile> {
 		this._icon.tile = tile;
 	}
 
-	set tileSheet(sheet: CSSTileSheet) {
-		this._icon.tileSheet = sheet;
+	set palette(sheet: ColorPalette) {
+		this._icon.palette = sheet;
 	}
 
-	get tileSheet() {
-		return this._icon.tileSheet;
+	get palette() {
+		return this._icon.palette;
 	}
 }
 

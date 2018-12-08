@@ -3,8 +3,6 @@ import { LogLevel } from "src/util";
 
 const Settings = persistent(
 	{
-		allowTileSheet: false,
-
 		debug: true,
 
 		drawDebugStats: true,

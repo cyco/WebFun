@@ -1,7 +1,8 @@
 import { Cell, InlineSelector } from "src/ui/components";
-import { Zone, ZoneType } from "src/engine/objects";
+import { Zone, ZoneType, Tile } from "src/engine/objects";
 import { Planet } from "src/engine/types";
-import CSSTileSheet from "../css-tile-sheet";
+import { ColorPalette } from "src/engine/rendering";
+import { TileView } from "src/debug/components";
 import "./zone-inspector-cell.scss";
 
 const Events = {
@@ -16,12 +17,13 @@ class ZoneInspectorCell extends Cell<Zone> {
 	public static readonly tagName = "wf-zone-inspector-cell";
 	public static readonly observedAttributes: string[] = [];
 
-	public tileSheet: CSSTileSheet;
+	public palette: ColorPalette;
+	public tiles: Tile[];
 
 	protected connectedCallback() {
-		const classes = this._cssClassesForIcon(this.data.type);
+		const tile = this._tileForType(this.data.type);
 
-		this.appendChild(<div className={"icon" + (classes ? " " + classes.join(" ") : "")} />);
+		this.appendChild(<TileView palette={this.palette} tile={tile} />);
 		this.appendChild(
 			<div className="content">
 				<span className="id">{this.data.id.toString()}</span>
@@ -121,11 +123,11 @@ class ZoneInspectorCell extends Cell<Zone> {
 		);
 	}
 
-	private _cssClassesForIcon(zoneType: ZoneType) {
+	private _tileForType(zoneType: ZoneType): Tile {
 		const tileId = this.tileIdForZoneType(zoneType);
-		if (tileId === -1) return [];
+		if (tileId === -1) return null;
 
-		return this.tileSheet.cssClassesForTile(tileId);
+		return this.tiles[tileId];
 	}
 
 	private tileIdForZoneType(zoneType: ZoneType) {
@@ -165,7 +167,8 @@ class ZoneInspectorCell extends Cell<Zone> {
 
 	public cloneNode(deep?: boolean): ZoneInspectorCell {
 		const node = super.cloneNode(deep) as ZoneInspectorCell;
-		node.tileSheet = this.tileSheet;
+		node.palette = this.palette;
+		node.tiles = this.tiles;
 		node.onclick = this.onclick;
 		node.oncontextmenu = this.oncontextmenu;
 		return node;
