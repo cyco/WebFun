@@ -60,10 +60,7 @@ class ZonePicker extends Component {
 
 	set zones(s) {
 		this._zones = s;
-
-		const zones = s.slice();
-		zones.splice(0, 0, null);
-		this._list.items = zones;
+		this._list.items = s;
 	}
 
 	get zones() {
