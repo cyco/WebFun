@@ -5,6 +5,7 @@ import { DiscardingStorage } from "src/util";
 import PopoverZonePicker from "./popover-zone-picker";
 import { PopoverTilePicker } from "src/editor/components";
 import { Zone, ZoneType } from "src/engine/objects";
+import { srand } from "src/util";
 
 class SimulatorWindow extends AbstractWindow {
 	public static readonly tagName = "wf-debug-simulator-window";
@@ -66,9 +67,18 @@ class SimulatorWindow extends AbstractWindow {
 	private set currentZone(s: Zone) {
 		this._zonePickers[4].zone = s;
 		this._findTile.tiles = s.providedItems;
+		this._findTile.tile = this._findTile.tiles.first();
 		this._npcTile.tiles = s.puzzleNPCs;
+		this._npcTile.tile = this._npcTile.tiles.first();
 		this._requiredTile.tiles = s.requiredItems;
+		this._requiredTile.tile = this._requiredTile.tiles.first();
 		this._required2Tile.tiles = s.goalItems;
+		this._required2Tile.tile = this._required2Tile.tiles.first();
+
+		srand(s.id);
+		this._zonePickers
+			.filter((_, idx) => idx !== 4)
+			.forEach(p => (p.zone = p.filteredZones.shuffle().first()));
 	}
 
 	public get gameController() {
