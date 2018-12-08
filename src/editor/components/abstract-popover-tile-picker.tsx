@@ -56,12 +56,12 @@ abstract class PopoverTilePicker extends Component implements EventListenerObjec
 
 	protected abstract pickerOnChange(picker: TilePicker, e: CustomEvent): void;
 
-	set pallet(s) {
-		this._tileView.palette = s;
+	set palette(s) {
 		this._palette = s;
+		this._tileView.palette = s;
 	}
 
-	get pallet() {
+	get palette() {
 		return this._palette;
 	}
 
