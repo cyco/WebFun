@@ -5,17 +5,18 @@ import { TileView as TileComponent } from "src/debug/components";
 import { PopoverModalSession } from "src/ux";
 import TilePicker, { Events as TilePickerEvents } from "./tile-picker";
 import { ColorPalette } from "src/engine/rendering";
+import { DiscardingStorage } from "src/util";
 import "./abstract-popover-tile-picker.scss";
 
 abstract class PopoverTilePicker extends Component implements EventListenerObject {
 	public static readonly observedAttributes: string[] = [];
 
-	protected tiles: Tile[];
 	private _palette: ColorPalette;
 	public onchange: (e: CustomEvent) => void = () => void 0;
-	public state: Storage = localStorage.prefixedWith("popover-tile-picker");
+	protected _state: Storage = new DiscardingStorage();
 
-	protected _tile: Tile;
+	protected _tiles: Tile[] = null;
+	protected _tile: Tile = null;
 	protected _tileView = <TileComponent /> as TileComponent;
 
 	protected connectedCallback() {
@@ -38,7 +39,7 @@ abstract class PopoverTilePicker extends Component implements EventListenerObjec
 				palette={this._palette}
 				tile={this.tile}
 				style={{ width: "300px", height: "400px" }}
-				state={this.state}
+				state={this.state.prefixedWith("popover-tile-picker")}
 			/>
 		) as TilePicker;
 
@@ -63,13 +64,44 @@ abstract class PopoverTilePicker extends Component implements EventListenerObjec
 		return this._palette;
 	}
 
+	set state(s: Storage) {
+		this._state = s;
+		this.restoreTileFromState();
+	}
+
+	get state() {
+		return this._state;
+	}
+
+	set tiles(s: Tile[]) {
+		this._tiles = s;
+		this.restoreTileFromState();
+	}
+
+	get tiles() {
+		return this._tiles;
+	}
+
 	protected set tile(tile: Tile) {
 		this._tile = tile;
 		this._tileView.tile = tile;
+		this._state.store("tile", tile ? tile.id : -1);
 	}
 
 	protected get tile() {
 		return this._tile;
+	}
+
+	private restoreTileFromState() {
+		if (!this._state) return;
+		if (!this._tiles) return;
+
+		if (!this._state.has("tile")) return;
+
+		const id = +this._state.load("tile");
+		const tile = this.tiles.find(t => t.id === id);
+		this._tile = tile;
+		this._tileView.tile = tile;
 	}
 }
 

@@ -13,7 +13,19 @@ class SimulatorWindow extends AbstractWindow {
 	autosaveName = "simulator";
 	private _gameController: GameController;
 	private _state: Storage = new DiscardingStorage();
-	private _zonePickers = (9).times(
+	private _mainPicker = (
+		<PopoverZonePicker
+			filter={({ type }: Zone) =>
+				type !== ZoneType.Load &&
+				type !== ZoneType.Lose &&
+				type !== ZoneType.Room &&
+				type !== ZoneType.Win &&
+				type !== ZoneType.None
+			}
+			onchange={({ detail: { zone } }: CustomEvent) => (this.currentZone = zone)}
+		/>
+	) as PopoverZonePicker;
+	private _zonePickers = (8).times(
 		() =>
 			(
 				<PopoverZonePicker
@@ -34,15 +46,19 @@ class SimulatorWindow extends AbstractWindow {
 		this.content.style.width = "400px";
 		this.content.style.height = "478px";
 
-		this._zonePickers[4].filter = ({ type }: Zone) =>
-			type !== ZoneType.Load &&
-			type !== ZoneType.Lose &&
-			type !== ZoneType.Room &&
-			type !== ZoneType.Win &&
-			type !== ZoneType.None;
-		this._zonePickers[4].onchange = ({ detail: { zone } }: CustomEvent) => (this.currentZone = zone);
-
-		this.content.appendChild(<div className="zone-container">{this._zonePickers}</div>);
+		this.content.appendChild(
+			<div className="zone-container">
+				{this._zonePickers[0]}
+				{this._zonePickers[1]}
+				{this._zonePickers[2]}
+				{this._zonePickers[3]}
+				{this._mainPicker}
+				{this._zonePickers[4]}
+				{this._zonePickers[5]}
+				{this._zonePickers[6]}
+				{this._zonePickers[7]}
+			</div>
+		);
 		this.content.appendChild(
 			<div className="tile-container">
 				{this._requiredTile}
@@ -61,31 +77,35 @@ class SimulatorWindow extends AbstractWindow {
 	}
 
 	private get currentZone() {
-		return this._zonePickers[4].zone || this.gameController.data.zones[0];
+		return this._mainPicker.zone || this.gameController.data.zones[0];
 	}
 
-	private set currentZone(s: Zone) {
-		const connectedZones = this.connectedZones(s);
-		this._zonePickers[4].zone = s;
-		this._findTile.tiles = s.providedItems.concat(...connectedZones.map(z => z.providedItems)).unique();
+	private set currentZone(zone: Zone) {
+		const connectedZones = this.connectedZones(zone);
+		this._mainPicker.zone = zone;
+		this._findTile.tiles = zone.providedItems
+			.concat(...connectedZones.map(z => z.providedItems))
+			.unique();
 		this._findTile.tile = this._findTile.tiles.first();
-		this._npcTile.tiles = s.puzzleNPCs.concat(...connectedZones.map(z => z.puzzleNPCs)).unique();
+		this._npcTile.tiles = zone.puzzleNPCs.concat(...connectedZones.map(z => z.puzzleNPCs)).unique();
 		this._npcTile.tile = this._npcTile.tiles.first();
-		this._requiredTile.tiles = s.requiredItems
+
+		this._requiredTile.tiles = zone.requiredItems
 			.concat(...connectedZones.map(z => z.requiredItems))
 			.unique();
 		this._requiredTile.tile = this._requiredTile.tiles.first();
-		this._required2Tile.tiles = s.goalItems.concat(...connectedZones.map(z => z.goalItems)).unique();
+		this._required2Tile.tiles = zone.goalItems.concat(...connectedZones.map(z => z.goalItems)).unique();
 		this._required2Tile.tile = this._required2Tile.tiles.first();
 
-		srand(s.id);
+		srand(zone.id);
+
 		this._zonePickers
-			.filter((_, idx) => idx !== 4)
-			.forEach(p => (p.zone = p.filteredZones.shuffle().first()));
+			.filter(picker => !picker.filteredZones.contains(picker.zone))
+			.forEach(picker => (picker.zone = picker.filteredZones.shuffle().first()));
 	}
 
-	private connectedZones(main: Zone): Zone[] {
-		return main.doors
+	private connectedZones(zone: Zone): Zone[] {
+		return zone.doors
 			.filter(({ arg }: Hotspot) => arg !== -1)
 			.map(({ arg }) => {
 				const zone = this._gameController.data.zones[arg];
@@ -98,18 +118,22 @@ class SimulatorWindow extends AbstractWindow {
 		return this._gameController;
 	}
 
-	public set gameController(c) {
-		this._gameController = c;
+	public set gameController(controller) {
+		this._gameController = controller;
 
-		this._findTile.palette = c.palette;
-		this._npcTile.palette = c.palette;
-		this._requiredTile.palette = c.palette;
-		this._required2Tile.palette = c.palette;
+		this._findTile.palette = controller.palette;
+		this._npcTile.palette = controller.palette;
+		this._requiredTile.palette = controller.palette;
+		this._required2Tile.palette = controller.palette;
 
-		this._zonePickers.forEach(p => {
-			p.palette = c.palette;
-			p.zones = c.data.zones;
-			p.zone = p.filteredZones[0];
+		this._mainPicker.palette = controller.palette;
+		this._mainPicker.zones = controller.data.zones;
+		this._mainPicker.zone = this._mainPicker.filteredZones[0];
+
+		this._zonePickers.forEach(picker => {
+			picker.palette = controller.palette;
+			picker.zones = controller.data.zones;
+			picker.zone = picker.filteredZones[0];
 		});
 
 		this.currentZone = this.currentZone;
@@ -122,7 +146,11 @@ class SimulatorWindow extends AbstractWindow {
 	public set state(s) {
 		this._state = s;
 
+		this._mainPicker.state = s.prefixedWith(`main-zone`);
+		this.currentZone = this.currentZone;
+
 		this._zonePickers.forEach((p, idx) => (p.state = s.prefixedWith(`state-${idx}`)));
+
 		this._findTile.state = s.prefixedWith("find-tile");
 		this._npcTile.state = s.prefixedWith("npc-tile");
 		this._requiredTile.state = s.prefixedWith("required-tile");

@@ -12,9 +12,9 @@ export const Events = {
 class TilePicker extends Component {
 	public static readonly tagName = "wf-tile-picker";
 	public static readonly observedAttributes: string[] = [];
-	private _tiles: Tile[];
 	private _list: List<Tile>;
-	private _tile: Tile;
+	private _tiles: Tile[] = null;
+	private _tile: Tile = null;
 
 	constructor() {
 		super();
