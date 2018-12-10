@@ -2,6 +2,7 @@ import { Hotspot, HotspotType, Puzzle, PuzzleType, Tile, Zone, ZoneType } from "
 import { Planet, WorldSize } from "src/engine/types";
 import { constantly, HorizontalPointRange, identity, Point, rand, srand, VerticalPointRange } from "src/util";
 import { and, not } from "src/util/functional";
+import { floor, abs } from "src/std/math";
 import Engine from "../engine";
 import * as Type from "../types";
 import GetDistanceToCenter from "./distance-to-center";
@@ -48,7 +49,7 @@ class WorldGenerator {
 		this._data = engine && engine.data;
 	}
 
-	generate(seed: number) {
+	public generate(seed: number): boolean {
 		this._seed = seed;
 		srand(this._seed);
 
@@ -62,11 +63,11 @@ class WorldGenerator {
 		}
 
 		const puzzleCount = mapGenerator.puzzleCount;
-		const puzzles1Count = Math.floor(puzzleCount % 2 === 1 ? (puzzleCount + 1) / 2 : puzzleCount / 2 + 1);
-		const puzzles2Count = Math.floor(puzzleCount % 2 === 1 ? (puzzleCount + 1) / 2 : puzzleCount / 2);
+		const puzzles1Count = floor(puzzleCount % 2 === 1 ? (puzzleCount + 1) / 2 : puzzleCount / 2 + 1);
+		const puzzles2Count = floor(puzzleCount % 2 === 1 ? (puzzleCount + 1) / 2 : puzzleCount / 2);
 
-		this.puzzleStrain1 = Array(puzzles1Count + 1).fill(-1);
-		this.puzzleStrain2 = Array(puzzles2Count + 1).fill(-1);
+		this.puzzleStrain1 = Array.Repeat(null, puzzles1Count + 1);
+		this.puzzleStrain2 = Array.Repeat(null, puzzles2Count + 1);
 
 		this.currentPuzzleIndex = -1;
 
@@ -75,10 +76,7 @@ class WorldGenerator {
 		this.providedItemQuests = [];
 		this.requiredItemQuests = [];
 
-		let goalPuzzle = null;
-		if (goalPuzzle === null) {
-			goalPuzzle = this.GetUnusedPuzzleRandomly(null, ZoneType.Unknown);
-		}
+		let goalPuzzle = this.GetUnusedPuzzleRandomly(null, ZoneType.Unknown);
 		if (goalPuzzle === null) {
 			return false;
 		}
@@ -86,27 +84,27 @@ class WorldGenerator {
 		this.puzzleStrain1[puzzles1Count] = goalPuzzle;
 		this.puzzleStrain2[puzzles2Count] = goalPuzzle;
 
-		this.DetermineTransportZones();
-		this.DetermineGoalZone(puzzleCount, puzzles2Count, <any>mapGenerator.orderMap);
+		this.determineTransportZones();
+		this.determineGoalZone(puzzleCount, puzzles2Count, mapGenerator.orderMap);
 
-		this.DetermineQuestZones(puzzleCount, <any>mapGenerator.orderMap);
-		this.PlacePuzzlesZones(puzzles2Count - 1, <any>mapGenerator.orderMap);
-		this.DetermineBlockadeAndTownZones(<any>mapGenerator.typeMap);
+		this.determineQuestZones(puzzleCount, mapGenerator.orderMap);
+		this.placePuzzlesZones(puzzles2Count - 1, mapGenerator.orderMap);
+		this.determineBlockadeAndTownZones(mapGenerator.typeMap);
 
-		this.AddProvidedItemQuest(this.lookupTileById(Type.THE_FORCE), 2);
-		this.AddProvidedItemQuest(this.lookupTileById(Type.LOCATOR), 1);
-		this.DetermineFindZones(<any>mapGenerator.typeMap);
-		this.DetermineTeleporters(<any>mapGenerator.typeMap);
+		this.addProvidedItemQuest(this.lookupTileById(Type.THE_FORCE), 2);
+		this.addProvidedItemQuest(this.lookupTileById(Type.LOCATOR), 1);
+		this.determineFindZones(mapGenerator.typeMap);
+		this.determineTeleporters(mapGenerator.typeMap);
 
 		// waste another random number
 		rand();
 
-		this.WritePlanetValues();
+		this.writePlanetValues();
 
 		return true;
 	}
 
-	DetermineTransportZones() {
+	private determineTransportZones(): void {
 		const typeMap = this.mapGenerator.typeMap;
 		const isTravelTarget = (point: Point) => {
 			const index = point.x + point.y * 10;
@@ -173,14 +171,17 @@ class WorldGenerator {
 						requiredItem: this.requiredItem
 					});
 				} else {
-					this.RemoveQuestProvidingItem(this.requiredItem);
+					this.removeQuestProvidingItem(this.requiredItem);
 					this.placeZone(x, y, null, ZoneType.None);
 				}
 			}
 		}
 	}
 
-	loopWorld(map: Map, callback: ((v: WorldItemType, x: number, y: number, id: number, map: Map) => void)) {
+	private loopWorld(
+		map: Map,
+		callback: ((v: WorldItemType, x: number, y: number, id: number, map: Map) => void)
+	): void {
 		for (let y = 0; y < 10; y++) {
 			for (let x = 0; x < 10; x++) {
 				callback(WorldItemType.fromNumber(map[x + 10 * y]), x, y, x + 10 * y, map);
@@ -188,7 +189,7 @@ class WorldGenerator {
 		}
 	}
 
-	DetermineBlockadeAndTownZones(map: Map) {
+	private determineBlockadeAndTownZones(map: Map): void {
 		this.loopWorld(map, (worldItemType, x, y) => {
 			const type = worldItemType.toZoneType();
 			if (!(type.isBlockadeType() || type === ZoneType.Town)) return;
@@ -206,7 +207,7 @@ class WorldGenerator {
 		});
 	}
 
-	findPositionOfPuzzle(orderIdx: number, orderMap: Map) {
+	private findPositionOfPuzzle(orderIdx: number, orderMap: Map): Point {
 		for (let y = 0; y < 10; y++) {
 			for (let x = 0; x < 10; x++) {
 				if (orderMap[x + 10 * y] === orderIdx) return new Point(x, y);
@@ -215,7 +216,7 @@ class WorldGenerator {
 		return null;
 	}
 
-	PlacePuzzlesZones(puzzleMapIdx: number, puzzles: Map) {
+	private placePuzzlesZones(puzzleMapIdx: number, puzzles: Map): void {
 		for (let puzzleIndex = puzzleMapIdx; puzzleIndex > 0; puzzleIndex--) {
 			this.resetState();
 
@@ -224,10 +225,9 @@ class WorldGenerator {
 
 			const puzzle = this.puzzleStrain2[puzzleIndex];
 			const item1 = puzzle.item1;
-			let zone: Zone = null;
 
 			let type = rand() % 2 ? ZoneType.Use : ZoneType.Trade;
-			zone = this.GetUnusedZoneRandomly(type, puzzleIndex - 1, -1, item1, null, distance, false);
+			let zone = this.GetUnusedZoneRandomly(type, puzzleIndex - 1, -1, item1, null, distance, false);
 
 			if (!zone) {
 				type = type === ZoneType.Use ? ZoneType.Trade : ZoneType.Use;
@@ -247,7 +247,7 @@ class WorldGenerator {
 		}
 	}
 
-	DetermineGoalZone(puzzleCount: number, puzzles2Count: number, puzzles: Map) {
+	private determineGoalZone(puzzleCount: number, puzzles2Count: number, puzzles: Map): void {
 		this.resetState();
 
 		const puzzle = this.puzzleStrain1[this.puzzleStrain1.length - 1];
@@ -273,7 +273,7 @@ class WorldGenerator {
 		});
 	}
 
-	resetState() {
+	private resetState(): void {
 		this.requiredItem = null;
 		this.findItem = null;
 		this.npc = null;
@@ -281,7 +281,7 @@ class WorldGenerator {
 		this.additionalRequiredItem = null;
 	}
 
-	DetermineQuestZones(puzzleCount: number, puzzles: Map) {
+	private determineQuestZones(puzzleCount: number, puzzles: Map): void {
 		let previousPuzzleIndex = puzzleCount - 1;
 		for (let puzzleIdIndex = this.puzzleStrain1.length - 2; puzzleIdIndex > 0; puzzleIdIndex--) {
 			this.resetState();
@@ -324,7 +324,7 @@ class WorldGenerator {
 				});
 
 				if (puzzleIdIndex === 1) {
-					this.AddProvidedItemQuest(this.requiredItem, distance);
+					this.addProvidedItemQuest(this.requiredItem, distance);
 					break;
 				}
 			} while (!zone);
@@ -333,7 +333,7 @@ class WorldGenerator {
 	}
 
 	GetUnusedPuzzleRandomly(item: Tile, zoneType: ZoneType): Puzzle {
-		let puzzles = this.GetPuzzleCandidates(zoneType).shuffle();
+		let puzzles = this.getPuzzleCandidates(zoneType).shuffle();
 		const puzzleType = zoneType.toPuzzleType();
 		const typeIsCompatible = (puzzle: Puzzle) => puzzle.type === puzzleType;
 		const hasPuzzleBeenPlaced = (puzzle: Puzzle) => this.hasPuzzleBeenPlaced(puzzle);
@@ -363,11 +363,11 @@ class WorldGenerator {
 		return usableZones
 			.filter(zoneIsUnused)
 			.find((zone: Zone) =>
-				this.GetUnusedZone(zone, puzzleIndex, puzzleIndex2, providedItem, providedItem2, distance, a8)
+				this.getUnusedZone(zone, puzzleIndex, puzzleIndex2, providedItem, providedItem2, distance, a8)
 			);
 	}
 
-	GetUnusedZone(
+	private getUnusedZone(
 		zone: Zone,
 		puzzleIndex: number,
 		puzzleIndex2: number,
@@ -385,18 +385,18 @@ class WorldGenerator {
 			case ZoneType.BlockadeSouth:
 			case ZoneType.BlockadeEast:
 			case ZoneType.TravelEnd:
-				if (!this.RequiredItemForZoneWasNotPlaced(zone)) {
+				if (!this.requiredItemForZoneWasNotPlaced(zone)) {
 					return false;
 				}
 				const itemCandidates = zone.requiredItems.filter(
-					itemID => !this.HasQuestRequiringItem(itemID)
+					itemID => !this.hasQuestRequiringItem(itemID)
 				);
 				if (itemCandidates.length === 0) {
 					return false;
 				}
 				const item = itemCandidates[rand() % itemCandidates.length];
-				this.AddProvidedItemQuest(item, zone.type === ZoneType.TravelStart ? 5 : distance);
-				this.AddRequiredItemQuest(item, distance);
+				this.addProvidedItemQuest(item, zone.type === ZoneType.TravelStart ? 5 : distance);
+				this.addRequiredItemQuest(item, distance);
 				this.requiredItem = item;
 				this.addRequiredItemQuestsFromHotspots(zone);
 
@@ -413,11 +413,11 @@ class WorldGenerator {
 
 				return true;
 			case ZoneType.Goal:
-				if (!this.ZoneLeadsToProvidedItem(zone, providedItem)) return false;
-				if (!this.ZoneLeadsToProvidedItem(zone, providedItem2)) return false;
+				if (!this.zoneLeadsToProvidedItem(zone, providedItem)) return false;
+				if (!this.zoneLeadsToProvidedItem(zone, providedItem2)) return false;
 
-				const newPuzzleItem1 = this.GetUnusedRequiredItemForZoneRandomly(zone, false);
-				const newPuzzleItem2 = this.GetUnusedRequiredItemForZoneRandomly(zone, true);
+				const newPuzzleItem1 = this.getUnusedRequiredItemForZoneRandomly(zone, false);
+				const newPuzzleItem2 = this.getUnusedRequiredItemForZoneRandomly(zone, true);
 				if (newPuzzleItem1 === null || newPuzzleItem2 === null) return false;
 				const newPuzzle = this.GetUnusedPuzzleRandomly(newPuzzleItem1, ZoneType.Goal);
 				if (newPuzzle) this.usedPuzzles.push(newPuzzle);
@@ -429,7 +429,7 @@ class WorldGenerator {
 
 				this.puzzleStrain1[puzzleIndex] = newPuzzle;
 				this.puzzleStrain2[puzzleIndex2] = aapuzzle;
-				if (!this.RequiredItemForZoneWasNotPlaced(zone)) {
+				if (!this.requiredItemForZoneWasNotPlaced(zone)) {
 					return false;
 				}
 
@@ -442,10 +442,10 @@ class WorldGenerator {
 
 				let hasItem = 1;
 				// TODO: this used to be &= which might evaluate the second expression in any case
-				hasItem = +hasItem & +this.ZoneLeadsToRequiredItem(zone, puzzle1.item1);
+				hasItem = +hasItem & +this.zoneLeadsToRequiredItem(zone, puzzle1.item1);
 				// this.ZoneLeadsToRequiredItem(zone, puzzle2.item_1, 1);
-				hasItem = +hasItem & +this.ZoneLeadsToProvidedItem(zone, puzzle3.item1);
-				this.ZoneLeadsToProvidedItem(zone, puzzle3.item2 ? puzzle3.item2 : null);
+				hasItem = +hasItem & +this.zoneLeadsToProvidedItem(zone, puzzle3.item1);
+				this.zoneLeadsToProvidedItem(zone, puzzle3.item2 ? puzzle3.item2 : null);
 
 				if (!hasItem) {
 					return false;
@@ -458,39 +458,39 @@ class WorldGenerator {
 					this.findItem = null;
 					this.requiredItem = puzzle1.item1;
 					this.currentPuzzleIndex = puzzleIndex;
-					this.additionalRequiredItem = <any>puzzleIndex2; /// TODO: this looks broken
+					this.additionalRequiredItem = null; /// TODO: this looks broken
 					this.addRequiredItemQuestsFromHotspots(zone);
 				} else {
 					let didAddItem = 1;
 					// TODO: this used to be &= which might evaluate the second expression in any case
-					didAddItem = didAddItem & +this.ChooseItemFromZone(zone, puzzle1.item1, false);
-					didAddItem = didAddItem & +this.DropItemAtTriggerHotspotRandomly(zone, puzzle3.item1);
+					didAddItem = didAddItem & +this.chooseItemFromZone(zone, puzzle1.item1, false);
+					didAddItem = didAddItem & +this.dropItemAtTriggerHotspotRandomly(zone, puzzle3.item1);
 
-					didAddItem = didAddItem & +this.ChooseItemFromZone(zone, puzzle2.item1, true);
+					didAddItem = didAddItem & +this.chooseItemFromZone(zone, puzzle2.item1, true);
 					didAddItem =
 						didAddItem &
-						+this.DropItemAtTriggerHotspotRandomly(zone, puzzle3.item2 ? puzzle3.item2 : null);
+						+this.dropItemAtTriggerHotspotRandomly(zone, puzzle3.item2 ? puzzle3.item2 : null);
 
 					if (!didAddItem) return false;
 
-					this.AddRequiredItemQuest(puzzle1.item1, distance);
-					this.AddRequiredItemQuest(puzzle2.item1, distance);
-					this.AddRequiredItemQuest(puzzle3.item1, distance);
-					this.AddRequiredItemQuest(puzzle3.item2 ? puzzle3.item2 : null, distance);
+					this.addRequiredItemQuest(puzzle1.item1, distance);
+					this.addRequiredItemQuest(puzzle2.item1, distance);
+					this.addRequiredItemQuest(puzzle3.item1, distance);
+					this.addRequiredItemQuest(puzzle3.item2 ? puzzle3.item2 : null, distance);
 
 					this.npc = null;
 					this.findItem = puzzle3.item1;
 					this.requiredItem = puzzle1.item1;
 					this.currentPuzzleIndex = puzzleIndex;
-					this.additionalRequiredItem = <any>puzzleIndex2; // TODO: this looks broken
+					this.additionalRequiredItem = null; // TODO: this looks broken
 					this.addRequiredItemQuestsFromHotspots(zone);
 				}
-				this.AddRequiredItemQuest(newPuzzleItem1, distance);
-				this.AddRequiredItemQuest(newPuzzleItem2, distance);
+				this.addRequiredItemQuest(newPuzzleItem1, distance);
+				this.addRequiredItemQuest(newPuzzleItem2, distance);
 				return true;
 			case ZoneType.Trade:
-				if (!this.ZoneLeadsToProvidedItem(zone, providedItem)) return false;
-				const requiredItem = this.GetUnusedRequiredItemForZoneRandomly(zone, false);
+				if (!this.zoneLeadsToProvidedItem(zone, providedItem)) return false;
+				const requiredItem = this.getUnusedRequiredItemForZoneRandomly(zone, false);
 				if (requiredItem === null) return false;
 				const puzzle = this.GetUnusedPuzzleRandomly(requiredItem, ZoneType.Trade);
 				if (!puzzle) return false;
@@ -501,21 +501,21 @@ class WorldGenerator {
 				const p1 = array[puzzleIndex];
 				const p2 = array[puzzleIndex + 1];
 
-				this.AddRequiredItemQuest(p1.item1, distance);
-				this.AddRequiredItemQuest(p2.item1, distance);
+				this.addRequiredItemQuest(p1.item1, distance);
+				this.addRequiredItemQuest(p2.item1, distance);
 
-				if (!this.RequiredItemForZoneWasNotPlaced(zone)) {
-					this.RemoveQuestRequiringItem(p1.item1);
+				if (!this.requiredItemForZoneWasNotPlaced(zone)) {
+					this.removeQuestRequiringItem(p1.item1);
 
 					return false;
 				}
 
-				if (this.DropItemAtLockHotspot(zone, p1.item1)) {
-					this.AddRequiredItemQuest(p1.item1, distance);
+				if (this.dropItemAtLockHotspot(zone, p1.item1)) {
+					this.addRequiredItemQuest(p1.item1, distance);
 					this.requiredItem = p1.item1;
 
-					if (this.DropItemAtTriggerHotspotRandomly(zone, p2.item1)) {
-						this.AddRequiredItemQuest(p2.item1, distance);
+					if (this.dropItemAtTriggerHotspotRandomly(zone, p2.item1)) {
+						this.addRequiredItemQuest(p2.item1, distance);
 						this.findItem = p2.item1;
 					}
 				}
@@ -523,12 +523,12 @@ class WorldGenerator {
 				this.addRequiredItemQuestsFromHotspots(zone);
 
 				this.usedPuzzles.push(puzzle);
-				this.AddRequiredItemQuest(requiredItem, distance);
+				this.addRequiredItemQuest(requiredItem, distance);
 
 				return true;
 			case ZoneType.Use: {
-				if (!this.ZoneLeadsToProvidedItem(zone, providedItem)) return false;
-				const puzzleItem = this.GetUnusedRequiredItemForZoneRandomly(zone, false);
+				if (!this.zoneLeadsToProvidedItem(zone, providedItem)) return false;
+				const puzzleItem = this.getUnusedRequiredItemForZoneRandomly(zone, false);
 				if (puzzleItem === null) return false;
 
 				const puzzle2 = this.GetUnusedPuzzleRandomly(puzzleItem, ZoneType.Use);
@@ -538,39 +538,39 @@ class WorldGenerator {
 				array[puzzleIndex] = puzzle2;
 
 				if (zone.type !== ZoneType.Use) return false;
-				if (!this.RequiredItemForZoneWasNotPlaced(zone)) return false;
+				if (!this.requiredItemForZoneWasNotPlaced(zone)) return false;
 
 				const npc = this.findUnusedNPCForZoneRandomly(zone);
 				if (npc === null) return false;
 
 				const requiredItem = array[puzzleIndex].item1;
-				if (!this.ZoneLeadsToRequiredItem(zone, requiredItem)) return false;
+				if (!this.zoneLeadsToRequiredItem(zone, requiredItem)) return false;
 
 				const findItem = array[puzzleIndex + 1].item1;
-				if (!this.ZoneLeadsToProvidedItem(zone, findItem)) return false;
+				if (!this.zoneLeadsToProvidedItem(zone, findItem)) return false;
 
-				if (!this.DropNPCAtHotspotRandomly(zone, npc)) return false;
+				if (!this.dropNPCAtHotspotRandomly(zone, npc)) return false;
 
 				this.npc = npc;
 				this.findItem = findItem;
 				this.requiredItem = requiredItem;
 				this.currentPuzzleIndex = puzzleIndex;
 
-				this.AddRequiredItemQuest(npc, distance);
+				this.addRequiredItemQuest(npc, distance);
 				this.addRequiredItemQuestsFromHotspots(zone);
 
 				this.usedPuzzles.push(puzzle2);
 
-				this.AddRequiredItemQuest(puzzleItem, distance);
+				this.addRequiredItemQuest(puzzleItem, distance);
 				return true;
 			}
 			case ZoneType.Find:
 			case ZoneType.FindTheForce:
-				if (!this.DropItemAtHotspotRandomly(zone, providedItem)) {
+				if (!this.dropItemAtHotspotRandomly(zone, providedItem)) {
 					return false;
 				}
 
-				this.AddRequiredItemQuest(providedItem, distance);
+				this.addRequiredItemQuest(providedItem, distance);
 				this.findItem = providedItem;
 				this.addRequiredItemQuestsFromHotspots(zone);
 
@@ -580,9 +580,9 @@ class WorldGenerator {
 		}
 	}
 
-	DetermineFindZones(world: Map) {
+	private determineFindZones(world: Map): void {
 		for (const quest of this.providedItemQuests) {
-			const candidates = this.DeterminePuzzleLocationChoices(world, quest.distance);
+			const candidates = this.determinePuzzleLocationChoices(world, quest.distance);
 			const point = candidates[rand() % candidates.length];
 			this.errorWhen(!point, `No place to find item ${quest.item} found!`);
 
@@ -602,7 +602,7 @@ class WorldGenerator {
 		}
 	}
 
-	DetermineTeleporters(world: Map) {
+	private determineTeleporters(world: Map): boolean {
 		let teleporterSource = null;
 		let lastZone = null;
 
@@ -641,10 +641,7 @@ class WorldGenerator {
 					}
 
 					let distance = this._size === WorldSize.Large ? 2 : 1;
-					if (
-						Math.abs(teleporterSource.x - x) > distance ||
-						Math.abs(teleporterSource.y - y) > distance
-					) {
+					if (abs(teleporterSource.x - x) > distance || abs(teleporterSource.y - y) > distance) {
 						teleportersFound++;
 						teleporterSource = new Point(x, y);
 						if (!foundTeleporterTarget) break;
@@ -677,17 +674,17 @@ class WorldGenerator {
 		return true;
 	}
 
-	WritePlanetValues() {}
+	private writePlanetValues(): void {}
 
-	PuzzleUsedInLastGame(_: Puzzle, _2: Planet) {
+	private puzzleUsedInLastGame(_: Puzzle, _2: Planet): boolean {
 		return false;
 	}
 
-	hasPuzzleBeenPlaced(puzzle: Puzzle): boolean {
+	private hasPuzzleBeenPlaced(puzzle: Puzzle): boolean {
 		return this.usedPuzzles.contains(puzzle);
 	}
 
-	ZoneLeadsToRequiredItem(zone: Zone, targetItem: Tile): boolean {
+	private zoneLeadsToRequiredItem(zone: Zone, targetItem: Tile): boolean {
 		return this._traverseZoneUntil(
 			zone,
 			({ requiredItems }: Zone) => requiredItems.contains(targetItem),
@@ -696,7 +693,7 @@ class WorldGenerator {
 		);
 	}
 
-	ZoneLeadsToProvidedItem(zone: Zone, targetItem: Tile): boolean {
+	private zoneLeadsToProvidedItem(zone: Zone, targetItem: Tile): boolean {
 		return this._traverseZoneUntil(
 			zone,
 			({ providedItems }: Zone) => providedItems.contains(targetItem),
@@ -705,42 +702,42 @@ class WorldGenerator {
 		);
 	}
 
-	HasQuestRequiringItem(item: Tile) {
-		return this.requiredItemQuests.find(quest => quest.item === item);
+	private hasQuestRequiringItem(item: Tile): boolean {
+		return !!this.requiredItemQuests.find(quest => quest.item === item);
 	}
 
-	AddProvidedItemQuest(item: Tile, maximumDistance: number): Quest {
+	private addProvidedItemQuest(item: Tile, maximumDistance: number): Quest {
 		const quest = new Quest(item, maximumDistance);
 		this.providedItemQuests.unshift(quest);
 		return quest;
 	}
 
-	AddRequiredItemQuest(item: Tile, maximumDistance: number): Quest {
+	private addRequiredItemQuest(item: Tile, maximumDistance: number): Quest {
 		const quest = new Quest(item, maximumDistance);
 		this.requiredItemQuests.push(quest);
 		return quest;
 	}
 
-	RemoveQuestRequiringItem(item: Tile): void {
+	private removeQuestRequiringItem(item: Tile): void {
 		const index = this.requiredItemQuests.findIndex(t => t.item === item);
 		if (index === -1) return;
 		this.requiredItemQuests.splice(index, 1);
 	}
 
-	RemoveQuestProvidingItem(item: Tile): void {
+	private removeQuestProvidingItem(item: Tile): void {
 		const index = this.providedItemQuests.findIndex(t => t.item === item);
 		if (index === -1) return;
 		this.providedItemQuests.splice(index, 1);
 	}
 
-	RequiredItemForZoneWasNotPlaced(zone: Zone): boolean {
+	private requiredItemForZoneWasNotPlaced(zone: Zone): boolean {
 		for (const hotspot of zone.hotspots) {
 			if (hotspot.arg === -1) continue;
-			if (hotspot.type.canHoldItem() && this.HasQuestRequiringItem(this.lookupTileById(hotspot.arg)))
+			if (hotspot.type.canHoldItem() && this.hasQuestRequiringItem(this.lookupTileById(hotspot.arg)))
 				return false;
 			if (
 				hotspot.type === HotspotType.DoorIn &&
-				!this.RequiredItemForZoneWasNotPlaced(this.lookupZoneById(hotspot.arg))
+				!this.requiredItemForZoneWasNotPlaced(this.lookupZoneById(hotspot.arg))
 			)
 				return false;
 		}
@@ -748,16 +745,16 @@ class WorldGenerator {
 		return true;
 	}
 
-	addRequiredItemQuestsFromHotspots(zone: Zone): void {
+	private addRequiredItemQuestsFromHotspots(zone: Zone): void {
 		zone.hotspots.forEach(hotspot => {
 			if (hotspot.arg === -1) return;
-			if (hotspot.type.canHoldItem()) this.AddRequiredItemQuest(this.lookupTileById(hotspot.arg), -1);
+			if (hotspot.type.canHoldItem()) this.addRequiredItemQuest(this.lookupTileById(hotspot.arg), -1);
 			if (hotspot.type === HotspotType.DoorIn)
 				this.addRequiredItemQuestsFromHotspots(this.lookupZoneById(hotspot.arg));
 		});
 	}
 
-	ChooseItemFromZone(zone: Zone, item: Tile, fromAssignedItems: boolean) {
+	private chooseItemFromZone(zone: Zone, item: Tile, fromAssignedItems: boolean): boolean {
 		return this._traverseZoneUntil(
 			zone,
 			zone => {
@@ -769,11 +766,11 @@ class WorldGenerator {
 		);
 	}
 
-	findUnusedNPCForZoneRandomly(zone: Zone): Tile {
+	private findUnusedNPCForZoneRandomly(zone: Zone): Tile {
 		return this._traverseZoneUntil(
 			zone,
 			zone => {
-				const npcCandidates = zone.puzzleNPCs.filter(npc => !this.HasQuestRequiringItem(npc));
+				const npcCandidates = zone.puzzleNPCs.filter(npc => !this.hasQuestRequiringItem(npc));
 				if (!npcCandidates.length) return null;
 
 				return npcCandidates[rand() % npcCandidates.length];
@@ -782,16 +779,16 @@ class WorldGenerator {
 		);
 	}
 
-	zoneLeadsToNPC(zone: Zone, npc: Tile): boolean {
+	private zoneLeadsToNPC(zone: Zone, npc: Tile): boolean {
 		return this._traverseZoneUntil(zone, zone => !!zone.puzzleNPCs.find(t => t === npc), false, identity);
 	}
 
-	GetUnusedRequiredItemForZoneRandomly(zone: Zone, isGoal: boolean): Tile {
+	private getUnusedRequiredItemForZoneRandomly(zone: Zone, isGoal: boolean): Tile {
 		return this._traverseZoneUntil(
 			zone,
 			zone => {
 				const items = isGoal ? zone.goalItems : zone.requiredItems;
-				const item = items.filter(id => !this.HasQuestRequiringItem(id));
+				const item = items.filter(id => !this.hasQuestRequiringItem(id));
 				if (!item.length) return null;
 
 				return item[rand() % item.length];
@@ -825,7 +822,7 @@ class WorldGenerator {
 		return defaultReturn;
 	}
 
-	DeterminePuzzleLocationChoices(world: Map, maxDistance: number) {
+	private determinePuzzleLocationChoices(world: Map, maxDistance: number): Point[] {
 		const farPoints: Point[] = [];
 		const bestPoints: Point[] = [];
 		const pointsCloseToPuzzles: Point[] = [];
@@ -855,7 +852,7 @@ class WorldGenerator {
 		return null;
 	}
 
-	GetPuzzleCandidates(zoneType: ZoneType): Puzzle[] {
+	private getPuzzleCandidates(zoneType: ZoneType): Puzzle[] {
 		return this._data.puzzles.filter(puzzle => {
 			switch (zoneType) {
 				case ZoneType.Find:
@@ -868,7 +865,7 @@ class WorldGenerator {
 				case ZoneType.Unknown:
 					return (
 						puzzle.type === PuzzleType.End &&
-						(!this.PuzzleUsedInLastGame(puzzle, this._planet) || this.goalPuzzle !== null) &&
+						(!this.puzzleUsedInLastGame(puzzle, this._planet) || this.goalPuzzle !== null) &&
 						puzzle.isGoalOnPlanet(this._planet)
 					);
 				default:
@@ -877,7 +874,7 @@ class WorldGenerator {
 		});
 	}
 
-	DropItemAtTriggerHotspotRandomly(zone: Zone, item: Tile) {
+	private dropItemAtTriggerHotspotRandomly(zone: Zone, item: Tile): boolean {
 		return this._traverseZoneUntil(
 			zone,
 			zone => {
@@ -891,14 +888,14 @@ class WorldGenerator {
 		);
 	}
 
-	placeItemAtHotspotRandomly(candidates: Hotspot[], item: Tile): boolean {
+	private placeItemAtHotspotRandomly(candidates: Hotspot[], item: Tile): boolean {
 		if (!candidates.length) return false;
 
 		const hotspot = candidates[rand() % candidates.length];
-		return this.DropItemAtHotspot(item, hotspot);
+		return this.dropItemAtHotspot(item, hotspot);
 	}
 
-	DropItemAtLockHotspot(zone: Zone, item: Tile) {
+	private dropItemAtLockHotspot(zone: Zone, item: Tile): boolean {
 		return this._traverseZoneUntil(
 			zone,
 			zone => {
@@ -907,21 +904,21 @@ class WorldGenerator {
 				const hotspot = zone.hotspots.withType(HotspotType.Lock);
 				if (!hotspot.length) return false;
 
-				return this.DropItemAtHotspot(item, hotspot[0]);
+				return this.dropItemAtHotspot(item, hotspot[0]);
 			},
 			false,
 			identity
 		);
 	}
 
-	DropItemAtHotspot(item: Tile, hotspot: Hotspot): boolean {
+	private dropItemAtHotspot(item: Tile, hotspot: Hotspot): boolean {
 		if (!hotspot) return false;
 		hotspot.arg = item.id;
 		hotspot.enabled = true;
 		return true;
 	}
 
-	DropNPCAtHotspotRandomly(zone: Zone, npc: Tile) {
+	private dropNPCAtHotspotRandomly(zone: Zone, npc: Tile): boolean {
 		const isFree = ({ arg }: Hotspot) => arg === -1;
 
 		return this._traverseZoneUntil(
@@ -936,8 +933,8 @@ class WorldGenerator {
 		);
 	}
 
-	DropItemAtHotspotRandomly(zone: Zone, item: Tile): boolean {
-		if (!this.RequiredItemForZoneWasNotPlaced(zone)) {
+	private dropItemAtHotspotRandomly(zone: Zone, item: Tile): boolean {
+		if (!this.requiredItemForZoneWasNotPlaced(zone)) {
 			return false;
 		}
 
@@ -964,20 +961,27 @@ class WorldGenerator {
 		}
 	}
 
-	placeZone(x: number, y: number, zone: Zone, type: ZoneType, options: Partial<WorldItem> = {}) {
+	private placeZone(
+		x: number,
+		y: number,
+		zone: Zone,
+		type: ZoneType,
+		options: Partial<WorldItem> = {}
+	): void {
 		const idx = x + 10 * y;
-		this.world.index(idx).zone = zone;
-		this.world.index(idx).zoneType = type;
-		this.world.index(idx).puzzleIndex = options.puzzleIndex !== undefined ? options.puzzleIndex : -1;
-		this.world.index(idx).requiredItem = options.requiredItem !== undefined ? options.requiredItem : null;
-		this.world.index(idx).npc = options.npc !== undefined ? options.npc : null;
-		this.world.index(idx).findItem = options.findItem !== undefined ? options.findItem : null;
-		this.world.index(idx).additionalRequiredItem =
+		const worldItem = this.world.index(idx);
+		worldItem.zone = zone;
+		worldItem.zoneType = type;
+		worldItem.puzzleIndex = options.puzzleIndex !== undefined ? options.puzzleIndex : -1;
+		worldItem.requiredItem = options.requiredItem !== undefined ? options.requiredItem : null;
+		worldItem.npc = options.npc !== undefined ? options.npc : null;
+		worldItem.findItem = options.findItem !== undefined ? options.findItem : null;
+		worldItem.additionalRequiredItem =
 			options.additionalRequiredItem !== undefined ? options.additionalRequiredItem : null;
 		if (zone !== null && type !== ZoneType.Town) this.usedZones.unshift(zone);
 	}
 
-	errorWhen(condition: boolean, message: string) {
+	private errorWhen(condition: boolean, message: string): void {
 		if (!condition) return;
 
 		const error = new WorldGenerationError(message);
