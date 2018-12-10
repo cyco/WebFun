@@ -35,10 +35,10 @@ class SimulatorWindow extends AbstractWindow {
 				/>
 			) as PopoverZonePicker
 	);
-	private _findTile = <PopoverTilePicker /> as PopoverTilePicker;
-	private _npcTile = <PopoverTilePicker /> as PopoverTilePicker;
-	private _requiredTile = <PopoverTilePicker /> as PopoverTilePicker;
-	private _required2Tile = <PopoverTilePicker /> as PopoverTilePicker;
+	private _findTile = <PopoverTilePicker title="Item to find" /> as PopoverTilePicker;
+	private _npcTile = <PopoverTilePicker title="Npc involved in trade" /> as PopoverTilePicker;
+	private _requiredTile = <PopoverTilePicker title="Item required to solve puzzle" /> as PopoverTilePicker;
+	private _required2Tile = <PopoverTilePicker title="Item required to solve goal" /> as PopoverTilePicker;
 
 	public constructor() {
 		super();
