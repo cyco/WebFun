@@ -13,8 +13,8 @@ const Settings = persistent(
 		autostartEngine: true,
 		revealWorld: false,
 
-		playSound: true,
-		playMusic: true,
+		playSound: false,
+		playMusic: false,
 
 		logLevel: LogLevel.Debug,
 
@@ -24,7 +24,6 @@ const Settings = persistent(
 				palette: "./game-data/yoda.pal",
 				sfx: (file: string) => `./game-data/sfx-yoda/${encodeURIComponent(file)}`
 			},
-
 			indy: {
 				data: "./game-data/indy.data",
 				palette: "./game-data/indy.pal",
