@@ -17,6 +17,8 @@ abstract class AbstractRenderer {
 
 	redisplay() {}
 
+	renderZoneTile(_tile: any, _x: number, _y: number, _z: number) {}
+
 	renderTile(_tile: any, _x: number, _y: number, _z: number) {}
 
 	renderImage(_image: any, _x: number, _y: number) {}

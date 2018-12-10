@@ -247,7 +247,7 @@ class Hero extends EventTarget {
 		}
 
 		const tile = appearance.getFace(this._direction, frame);
-		if (tile) renderer.renderTile(tile, offset.x + this._location.x, offset.y + this._location.y, 1);
+		if (tile) renderer.renderZoneTile(tile, offset.x + this._location.x, offset.y + this._location.y, 1);
 	}
 }
 
