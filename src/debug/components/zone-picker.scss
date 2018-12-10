@@ -5,8 +5,7 @@ wf-debug-zone-picker {
 
 	wf-list > div {
 		display: grid;
-		grid-template-columns: repeat(9, $tile-size);
-		grid-template-rows: repeat(9, 32px);
+		grid-template-columns: 1fr 1fr;
 		justify-content: center;
 		padding-top: 5px;
 		padding-bottom: 5px;
