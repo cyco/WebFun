@@ -1,8 +1,49 @@
 import { Story, Engine } from "src/engine";
 import { World } from "src/engine/generation";
 import { Tile, Zone } from "src/engine/objects";
+import { WorldSize } from "src/engine/types";
 
 class SimulatedStory extends Story {
+	constructor(
+		find: Tile,
+		npc: Tile,
+		required: Tile,
+		required2: Tile,
+		mainZone: Zone,
+		surroundingZones: Zone[]
+	) {
+		super(0, mainZone.planet, WorldSize.Small);
+
+		this._buildWorld(mainZone, surroundingZones);
+		this._buildPuzzle(mainZone, find, npc, required, required2);
+		this._initializeZone(mainZone, find, npc, required, required2);
+	}
+
+	private _buildPuzzle(_: Zone, find: Tile, npc: Tile, required: Tile, required2: Tile) {
+		const item = this._world.at(4, 4);
+		item.findItem = find;
+		item.npc = npc;
+		item.requiredItem = required;
+		item.additionalRequiredItem = required2;
+	}
+
+	private _initializeZone(zone: Zone, find: Tile, npc: Tile, required: Tile, required2: Tile) {}
+
+	private _buildWorld(zone: Zone, surroundingZones: Zone[]) {
+		const world = new World();
+		world.setZone(4, 4, zone);
+		world.setZone(3, 3, surroundingZones[0]);
+		world.setZone(4, 3, surroundingZones[1]);
+		world.setZone(5, 3, surroundingZones[2]);
+		world.setZone(3, 4, surroundingZones[3]);
+		world.setZone(5, 4, surroundingZones[4]);
+		world.setZone(3, 5, surroundingZones[5]);
+		world.setZone(4, 5, surroundingZones[6]);
+		world.setZone(5, 5, surroundingZones[7]);
+		this._world = world;
+		this._dagobah = world;
+	}
+
 	generateWorld(engine: Engine): void {
 		const copy = new World();
 

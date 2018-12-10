@@ -5,7 +5,8 @@ import { DiscardingStorage } from "src/util";
 import PopoverZonePicker from "./popover-zone-picker";
 import { PopoverTilePicker } from "src/editor/components";
 import { Zone, ZoneType, Hotspot } from "src/engine/objects";
-import { srand } from "src/util";
+import { srand, Point } from "src/util";
+import SimulatedStory from "src/debug/simulated-story";
 
 class SimulatorWindow extends AbstractWindow {
 	public static readonly tagName = "wf-debug-simulator-window";
@@ -71,9 +72,32 @@ class SimulatorWindow extends AbstractWindow {
 		this.content.appendChild(
 			<div className="button-container">
 				<Button label="Cancel" onclick={() => this.close()} />
-				<Button label="Simulate" />
+				<Button label="Simulate" onclick={() => this.runSimulation()} />
 			</div>
 		);
+	}
+
+	private runSimulation() {
+		const story = new SimulatedStory(
+			this._findTile.tile,
+			this._npcTile.tile,
+			this._requiredTile.tile,
+			this._required2Tile.tile,
+			this._mainPicker.zone,
+			this._zonePickers.map(p => p.zone)
+		);
+
+		console.log("GameController", GameController);
+		const controller = this.gameController;
+		const engine = controller.engine;
+
+		engine.hero.location = new Point(0, 0);
+		engine.currentWorld = story.world;
+		engine.story = story;
+		engine.data = controller.data;
+
+		controller.jumpStartEngine(this._mainPicker.zone);
+		this.close();
 	}
 
 	private get currentZone() {
