@@ -40,6 +40,10 @@ class CanvasRenderer extends Renderer {
 
 	clearTile(_: number, _1: number, _2: number) {}
 
+	renderZoneTile(tile: Tile, x: number, y: number, z: number) {
+		this.renderTile(tile, x * TILE_WIDTH, y * TILE_HEIGHT, z);
+	}
+
 	renderTile(tile: Tile, x: number, y: number, _: number) {
 		if (!tile) return;
 
@@ -58,7 +62,7 @@ class CanvasRenderer extends Renderer {
 			return;
 		}
 
-		this.drawImage(image.representation, x * TILE_WIDTH, y * TILE_HEIGHT);
+		this.drawImage(image.representation, x, y);
 	}
 
 	renderImage(image: HTMLImageElement, x: number, y: number) {

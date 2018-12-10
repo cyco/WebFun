@@ -65,7 +65,7 @@ class ZoneScene extends Scene {
 				for (let x = 0; x < size.width; x++) {
 					const tile = zone.getTile(x, y, z);
 					if (tile) {
-						renderer.renderTile(tile, x + offset.x, y + offset.y, z);
+						renderer.renderZoneTile(tile, x + offset.x, y + offset.y, z);
 					}
 				}
 			}
@@ -86,7 +86,12 @@ class ZoneScene extends Scene {
 				zone.npcs.forEach(npc => {
 					const tile = npc.face.frames[0].down;
 					if (tile) {
-						renderer.renderTile(tile, npc.position.x + offset.x, npc.position.y + offset.y, z);
+						renderer.renderZoneTile(
+							tile,
+							npc.position.x + offset.x,
+							npc.position.y + offset.y,
+							z
+						);
 					}
 				});
 			}

@@ -42,7 +42,7 @@ describe("WebFun.App.Rendering.Canvas.Renderer", () => {
 		expect(() => subject.clearTile()).not.toThrow();
 	});
 
-	describe("renderTile", () => {
+	describe("renderZoneTile", () => {
 		it("builds images on first render", () => {
 			let resolve;
 			spyOn(context, "drawImage");
@@ -51,7 +51,7 @@ describe("WebFun.App.Rendering.Canvas.Renderer", () => {
 			);
 
 			const tile = { id: 5 };
-			subject.renderTile(tile, 1, 2);
+			subject.renderZoneTile(tile, 1, 2);
 
 			expect(context.drawImage).not.toHaveBeenCalled();
 			expect(subject._imageFactory.buildImage).toHaveBeenCalled();
@@ -66,14 +66,14 @@ describe("WebFun.App.Rendering.Canvas.Renderer", () => {
 			);
 
 			const tile = { id: 6 };
-			subject.renderTile(tile, 1, 2);
-			subject.renderTile(tile, 1, 2);
+			subject.renderZoneTile(tile, 1, 2);
+			subject.renderZoneTile(tile, 1, 2);
 
 			expect(subject._imageFactory.buildImage.calls.count()).toBe(1);
 
 			resolve({});
 
-			subject.renderTile(tile, 1, 2);
+			subject.renderZoneTile(tile, 1, 2);
 			expect(subject._imageFactory.buildImage.calls.count()).toBe(1);
 		});
 
@@ -86,16 +86,16 @@ describe("WebFun.App.Rendering.Canvas.Renderer", () => {
 			);
 			spyOn(context, "drawImage");
 
-			subject.renderTile(tile, 1, 2);
+			subject.renderZoneTile(tile, 1, 2);
 			expect(context.drawImage).not.toHaveBeenCalled();
-			subject.renderTile(tile, 1, 2);
+			subject.renderZoneTile(tile, 1, 2);
 			expect(context.drawImage).not.toHaveBeenCalled();
 
 			resolve(imageMock);
 
 			await dispatch(() => void 0);
 
-			subject.renderTile(tile, 1, 2);
+			subject.renderZoneTile(tile, 1, 2);
 
 			expect(context.drawImage).toHaveBeenCalledWith("mocked-representation", 32, 64);
 
