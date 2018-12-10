@@ -35,10 +35,10 @@ class World {
 		return worldItem && worldItem.zone;
 	}
 
-	setZone(x: number, y: number, zoneID: Zone) {
+	setZone(x: number, y: number, zone: Zone) {
 		const index = this._pointToIndex(x, y);
 		const worldItem = this._items[index];
-		worldItem.zone = zoneID;
+		worldItem.zone = zone;
 	}
 
 	locationOfZone(zone: Zone): Point {
