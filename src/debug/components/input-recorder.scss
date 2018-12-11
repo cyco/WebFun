@@ -1,0 +1,22 @@
+@import "src/ui/components/abstract-window.scss";
+
+wf-debug-input-recorder {
+	@extend wf-abstract-window;
+	.content {
+		> :first-child {
+			margin-left: 15px;
+		}
+
+		> :last-child {
+			margin-right: 15px;
+		}
+
+		> * + * {
+			margin-left: 20px;
+		}
+
+		wf-icon-button i {
+			font-size: 1.3em;
+		}
+	}
+}
