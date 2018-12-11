@@ -1,7 +1,8 @@
 import { Story, Engine } from "src/engine";
 import { World } from "src/engine/generation";
-import { Tile, Zone } from "src/engine/objects";
+import { Tile, Zone, ZoneType, HotspotType } from "src/engine/objects";
 import { WorldSize } from "src/engine/types";
+import { srand } from "src/util";
 
 class SimulatedStory extends Story {
 	constructor(
@@ -13,6 +14,7 @@ class SimulatedStory extends Story {
 		surroundingZones: Zone[]
 	) {
 		super(0, mainZone.planet, WorldSize.Small);
+		srand(0);
 
 		this._buildWorld(mainZone, surroundingZones);
 		this._buildPuzzle(mainZone, find, npc, required, required2);
@@ -27,7 +29,42 @@ class SimulatedStory extends Story {
 		item.additionalRequiredItem = required2;
 	}
 
-	private _initializeZone(zone: Zone, find: Tile, npc: Tile, required: Tile, required2: Tile) {}
+	private _initializeZone(zone: Zone, find: Tile, npc: Tile, required: Tile, required2: Tile) {
+		switch (zone.type) {
+			case ZoneType.BlockadeNorth:
+			case ZoneType.BlockadeSouth:
+			case ZoneType.BlockadeEast:
+			case ZoneType.BlockadeWest:
+			case ZoneType.TravelStart:
+			case ZoneType.TravelEnd:
+				break;
+			case ZoneType.Goal:
+			/*
+				const npc = this.findUnusedNPCForZoneRandomly(zone);
+				const hasPuzzleNPC = npc !== null ? this.zoneLeadsToNPC(zone, npc) : 0;
+				if(!hasPuzzleNPC) {
+					this.dropItemAtTriggerHotspotRandomly(zone, puzzle3.item1);
+					this.dropItemAtTriggerHotspotRandomly(zone, puzzle3.item2 ? puzzle3.item2 : null)
+				}
+			*/
+			case ZoneType.Trade:
+				// if(this.dropItemAtLockHotspot(zone, p1.item1)) {
+				// 	this.dropItemAtTriggerHotspotRandomly(zone, p2.item1)
+				// }
+				break;
+			case ZoneType.Use:
+				// this.dropNPCAtHotspotRandomly(zone, npc);
+				break;
+			case ZoneType.Find:
+			case ZoneType.FindTheForce:
+				// this.dropItemAtHotspotRandomly(zone, providedItem)
+				break;
+			case ZoneType.Town:
+			case ZoneType.Empty:
+			default:
+				break;
+		}
+	}
 
 	private _buildWorld(zone: Zone, surroundingZones: Zone[]) {
 		const world = new World();
