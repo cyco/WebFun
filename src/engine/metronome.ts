@@ -4,12 +4,16 @@ import { dispatch, identity } from "src/util";
 const TICKLENGTH = 100;
 
 export const Event = {
-	Tick: "tick"
+	BeforeTick: "beforeTick",
+	Tick: "tick",
+	AfterTick: "afterTick"
 };
 
 class Metronome {
 	public static Event = Event;
 	public ontick: Function = identity;
+	public onbeforetick: Function = identity;
+	public onaftertick: Function = identity;
 	public onrender: Function = identity;
 	private _stopped: boolean = false;
 	private _mainLoop: number = null;
@@ -35,17 +39,18 @@ class Metronome {
 		if (update) {
 			this._nextTick = now + TICKLENGTH;
 			if (!this._updatesSuspended) {
-				await this.withSuspendedUpdates(async () => await this.ontick(1));
+				await this.withSuspendedUpdates(async () => {
+					await this.onbeforetick(1);
+					await this.ontick(1);
+					await this.onaftertick(1);
+				});
 			}
 		}
+
 		this.onrender();
 
 		if (update && (<any>window).onMetronomeTick instanceof Function) {
-			this.withSuspendedUpdates(
-				dispatch(async () => {
-					await (<any>window).onMetronomeTick();
-				})
-			);
+			this.withSuspendedUpdates(dispatch(async () => await (<any>window).onMetronomeTick()));
 		}
 	}
 
