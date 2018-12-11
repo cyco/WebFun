@@ -8,6 +8,10 @@ class DesktopInputManager extends InputManager implements EventListenerObject {
 	private _element: HTMLElement;
 	private _lastMouse: Point;
 
+	private preferKeyboard = false;
+	private _mouseDirection: number = 0;
+	private _keyboardDirection: number = 0;
+
 	constructor(gameViewElement: HTMLElement) {
 		super();
 
@@ -31,14 +35,19 @@ class DesktopInputManager extends InputManager implements EventListenerObject {
 	public handleEvent(event: MouseEvent | KeyboardEvent) {
 		switch (event.type) {
 			case "keydown":
+				this.preferKeyboard = true;
 				return this._keyDown(event as KeyboardEvent);
 			case "keyup":
+				this.preferKeyboard = true;
 				return this._keyUp(event as KeyboardEvent);
 			case "mouseup":
+				this.preferKeyboard = false;
 				return this._mouseUp(event as MouseEvent);
 			case "mousedown":
+				this.preferKeyboard = false;
 				return this._mouseDown(event as MouseEvent);
 			case "mousemove":
+				this.preferKeyboard = false;
 				return this._mouseMove(event as MouseEvent);
 			case "contextmenu":
 				event.stopPropagation();
@@ -81,10 +90,10 @@ class DesktopInputManager extends InputManager implements EventListenerObject {
 				this._drag = true;
 				break;
 
-			case KeyEvent.DOM_VK_P: // toggle pause
+			case KeyEvent.DOM_VK_P:
 				this.pause = !this.pause;
 				break;
-			case KeyEvent.DOM_VK_L: // toggle map, must be reset if locator is not available
+			case KeyEvent.DOM_VK_L:
 				this.locator = !this.locator;
 				break;
 
@@ -92,6 +101,7 @@ class DesktopInputManager extends InputManager implements EventListenerObject {
 				break;
 		}
 
+		this._keyboardDirection |= directionMask;
 		this._direction |= directionMask;
 		if (this._direction) this._walk = true;
 
@@ -129,6 +139,7 @@ class DesktopInputManager extends InputManager implements EventListenerObject {
 				break;
 		}
 
+		this._keyboardDirection &= mask;
 		this._direction &= mask;
 		if (!this._direction) this._walk = false;
 	}
@@ -164,6 +175,10 @@ class DesktopInputManager extends InputManager implements EventListenerObject {
 	private _mouseUp(e: MouseEvent) {
 		if (e.button === 0) this._walk = false;
 		if (e.button === 1) this._attack = false;
+	}
+
+	get directions() {
+		return this.preferKeyboard ? this._keyboardDirection : this._mouseDirection;
 	}
 
 	private _getPointInViewCoordinates(location: Point): Point {

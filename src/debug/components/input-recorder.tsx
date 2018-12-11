@@ -38,6 +38,7 @@ class InputRecorder extends AbstractWindow {
 			this._record.icon = "circle";
 		}
 	}
+
 	public close() {
 		super.close();
 
