@@ -38,6 +38,14 @@ class InputRecorder extends AbstractWindow {
 			this._record.icon = "circle";
 		}
 	}
+	public close() {
+		super.close();
+
+		this._recorder.isRecording = false;
+		this._recorder.engine = null;
+		this._gameController.engine.inputManager = this._recorder.implementation;
+		this._gameController.engine.inputManager.engine = this._gameController.engine;
+	}
 
 	public set gameController(c) {
 		this._gameController = c;

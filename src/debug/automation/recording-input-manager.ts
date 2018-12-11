@@ -3,14 +3,14 @@ import { identity } from "src/util";
 import Syntax from "./syntax";
 
 class RecordingInputManager extends InputManager {
-	private _implementation: InputManager;
+	public readonly implementation: InputManager;
 	private _records: string[] = [];
 	public isRecording: boolean = false;
 
 	constructor(implementation: InputManager) {
 		super();
 
-		this._implementation = implementation;
+		this.implementation = implementation;
 	}
 
 	public clearRecord() {
@@ -71,127 +71,127 @@ class RecordingInputManager extends InputManager {
 	}
 
 	get mouseLocationInView() {
-		return this._implementation && this._implementation.mouseLocationInView;
+		return this.implementation && this.implementation.mouseLocationInView;
 	}
 
 	public addListeners(): void {
-		this._implementation && this._implementation.addListeners();
+		this.implementation && this.implementation.addListeners();
 	}
 
 	public removeListeners(): void {
-		this._implementation && this._implementation.removeListeners();
+		this.implementation && this.implementation.removeListeners();
 	}
 
 	public set mouseDownHandler(s) {
-		this._implementation && (this._implementation.mouseDownHandler = s);
+		this.implementation && (this.implementation.mouseDownHandler = s);
 	}
 
 	public get mouseDownHandler() {
-		return this._implementation.mouseDownHandler;
+		return this.implementation.mouseDownHandler;
 	}
 
 	public set keyDownHandler(s) {
-		this._implementation && (this._implementation.keyDownHandler = s);
+		this.implementation && (this.implementation.keyDownHandler = s);
 	}
 
 	public get keyDownHandler() {
-		return this._implementation && this._implementation.keyDownHandler;
+		return this.implementation && this.implementation.keyDownHandler;
 	}
 
 	public set placeTileHandler(s) {
-		this._implementation && (this._implementation.placeTileHandler = s);
+		this.implementation && (this.implementation.placeTileHandler = s);
 	}
 
 	public get placeTileHandler() {
-		return this._implementation && this._implementation.placeTileHandler;
+		return this.implementation && this.implementation.placeTileHandler;
 	}
 
 	public set pause(s) {
-		this._implementation && (this._implementation.pause = s);
+		this.implementation && (this.implementation.pause = s);
 	}
 
 	public get pause() {
-		return this._implementation && this._implementation.pause;
+		return this.implementation && this.implementation.pause;
 	}
 
 	public set locator(s) {
-		this._implementation && (this._implementation.locator = s);
+		this.implementation && (this.implementation.locator = s);
 	}
 
 	public get locator() {
-		return this._implementation && this._implementation.locator;
+		return this.implementation && this.implementation.locator;
 	}
 
 	public set scrollDown(s) {
-		this._implementation && (this._implementation.scrollDown = s);
+		this.implementation && (this.implementation.scrollDown = s);
 	}
 
 	public get scrollDown() {
-		return this._implementation && this._implementation.scrollDown;
+		return this.implementation && this.implementation.scrollDown;
 	}
 
 	public set scrollUp(s) {
-		this._implementation && (this._implementation.scrollUp = s);
+		this.implementation && (this.implementation.scrollUp = s);
 	}
 
 	public get scrollUp() {
-		return this._implementation && this._implementation.scrollUp;
+		return this.implementation && this.implementation.scrollUp;
 	}
 
 	public set endDialog(s) {
-		this._implementation && (this._implementation.endDialog = s);
+		this.implementation && (this.implementation.endDialog = s);
 	}
 
 	public get endDialog() {
-		return this._implementation && this._implementation.endDialog;
+		return this.implementation && this.implementation.endDialog;
 	}
 
 	public set pickUp(s) {
-		this._implementation && (this._implementation.pickUp = s);
+		this.implementation && (this.implementation.pickUp = s);
 	}
 
 	public get pickUp() {
-		return this._implementation && this._implementation.pickUp;
+		return this.implementation && this.implementation.pickUp;
 	}
 
 	public set currentItem(s) {
-		this._implementation && (this._implementation.currentItem = s);
+		this.implementation && (this.implementation.currentItem = s);
 	}
 
 	public get currentItem() {
-		return this._implementation && this._implementation.currentItem;
+		return this.implementation && this.implementation.currentItem;
 	}
 
 	public set engine(s) {
-		if (this._implementation && this._implementation.engine) {
-			this._implementation.engine.metronome.onbeforetick = identity;
+		if (this.implementation && this.implementation.engine) {
+			this.implementation.engine.metronome.onbeforetick = identity;
 		}
 
-		this._implementation && (this._implementation.engine = s);
+		this.implementation && (this.implementation.engine = s);
 
-		if (this._implementation && this._implementation.engine) {
-			this._implementation.engine.metronome.onbeforetick = () => this.recordOne();
+		if (this.implementation && this.implementation.engine) {
+			this.implementation.engine.metronome.onbeforetick = () => this.recordOne();
 		}
 	}
 
 	public get engine() {
-		return this._implementation.engine;
+		return this.implementation.engine;
 	}
 
 	get directions() {
-		return this._implementation && this._implementation.directions;
+		return this.implementation && this.implementation.directions;
 	}
 
 	get walk() {
-		return this._implementation && this._implementation.walk;
+		return this.implementation && this.implementation.walk;
 	}
 
 	get drag() {
-		return this._implementation && this._implementation.drag;
+		return this.implementation && this.implementation.drag;
 	}
 
 	get attack() {
-		return this._implementation && this._implementation.attack;
+		return this.implementation && this.implementation.attack;
 	}
 }
 
