@@ -1,4 +1,4 @@
-import { AbstractWindow, IconButton } from "src/ui/components";
+import { AbstractWindow, Window, IconButton } from "src/ui/components";
 import { GameController } from "src/app";
 import { DiscardingStorage } from "src/util";
 import { RecordingInputManager } from "src/debug/automation";
@@ -13,7 +13,7 @@ class InputRecorder extends AbstractWindow {
 	private _record = (
 		<IconButton style={{ color: "red" }} icon="circle" onclick={() => this.toggleRecording()} />
 	) as IconButton;
-	private _dump = <IconButton icon="print" onclick={() => console.log(this._recorder.dumpRecord())} />;
+	private _dump = <IconButton icon="print" onclick={() => this.showLog()} />;
 	private _clear = <IconButton icon="ban" onclick={() => this._recorder.clearRecord()} /> as IconButton;
 
 	title = "Input Recorder";
@@ -37,6 +37,20 @@ class InputRecorder extends AbstractWindow {
 			this._record.style.color = "red";
 			this._record.icon = "circle";
 		}
+	}
+
+	private showLog() {
+		const result = this._recorder
+			.dumpRecord()
+			.filter((val, idx, arr) => val !== "." || val !== arr[idx + 1])
+			.join(" ");
+		const window = (
+			<Window title="Recorded Input" autosaveName="input-recorder.output" closable={true} />
+		) as Window;
+		window.content.style.width = "320px";
+		window.content.style.height = "270px";
+		window.content.appendChild(<textarea value={result} style={{ width: "100%" }} readOnly />);
+		this.manager.showWindow(window);
 	}
 
 	public close() {
