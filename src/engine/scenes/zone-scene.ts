@@ -330,8 +330,6 @@ class ZoneScene extends Scene {
 	}
 
 	willShow() {
-		this.engine.inputManager.locator = false;
-		this.engine.inputManager.pause = false;
 		this.camera.hero = this.engine.hero;
 	}
 
