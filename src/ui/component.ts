@@ -34,6 +34,7 @@ declare global {
 			option: Styleable<HTMLOptionElement>;
 			ul: Styleable<HTMLUListElement>;
 			li: Styleable<HTMLLIElement>;
+			textarea: Styleable<HTMLTextAreaElement>;
 		}
 
 		interface Element extends HTMLElement {}
