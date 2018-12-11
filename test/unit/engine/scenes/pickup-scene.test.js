@@ -50,7 +50,7 @@ describe("WebFun.Engine.Scenes.PickupScene", () => {
 			sceneManager: { _stack: [{ camera: { offset: {} } }] }
 		};
 		const renderer = {
-			renderTile() {}
+			renderZoneTile() {}
 		};
 		const item = {};
 
@@ -59,14 +59,14 @@ describe("WebFun.Engine.Scenes.PickupScene", () => {
 		scene.tile = item;
 		scene.location = {};
 
-		spyOn(renderer, "renderTile");
+		spyOn(renderer, "renderZoneTile");
 
 		// doesn't render for five ticks
 		for (let i = 0; i < 5; i++) {
 			scene.render(renderer);
 			scene.update();
 
-			expect(renderer.renderTile).not.toHaveBeenCalled();
+			expect(renderer.renderZoneTile).not.toHaveBeenCalled();
 		}
 
 		// renders the tile for the next five ticks
@@ -74,7 +74,7 @@ describe("WebFun.Engine.Scenes.PickupScene", () => {
 			scene.render(renderer);
 			scene.update();
 
-			expect(renderer.renderTile).toHaveBeenCalledTimes(i + 1);
+			expect(renderer.renderZoneTile).toHaveBeenCalledTimes(i + 1);
 		}
 	});
 
@@ -84,7 +84,7 @@ describe("WebFun.Engine.Scenes.PickupScene", () => {
 			sceneManager: { _stack: [{ camera: { offset: { x: -2, y: -1 } } }] }
 		};
 		const renderer = {
-			renderTile() {}
+			renderZoneTile() {}
 		};
 		const item = {};
 
@@ -95,9 +95,9 @@ describe("WebFun.Engine.Scenes.PickupScene", () => {
 
 		(5).times(() => scene.update());
 
-		spyOn(renderer, "renderTile");
+		spyOn(renderer, "renderZoneTile");
 		scene.render(renderer);
 
-		expect(renderer.renderTile).toHaveBeenCalledWith(item, 2, 7, 1);
+		expect(renderer.renderZoneTile).toHaveBeenCalledWith(item, 2, 7, 1);
 	});
 });
