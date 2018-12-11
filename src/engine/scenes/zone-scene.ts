@@ -9,6 +9,7 @@ import PauseScene from "./pause-scene";
 import Scene from "./scene";
 import TransitionScene from "./transition-scene";
 import { EvaluationMode } from "../script";
+import { Direction as InputDirection } from "src/engine/input";
 
 class ZoneScene extends Scene {
 	private _camera = new Camera();
@@ -41,9 +42,9 @@ class ZoneScene extends Scene {
 
 		this._moveNPCs();
 
-		await this._handleMouse();
+		// await this._handleMouse();
 
-		stop = this._handleKeys();
+		stop = await this._handleKeys();
 		if (stop) return;
 
 		this._camera.update(ticks);
@@ -372,7 +373,7 @@ class ZoneScene extends Scene {
 		return;
 	}
 
-	private _handleKeys(): boolean {
+	private async _handleKeys(): Promise<boolean> {
 		const engine = this.engine;
 		const inputManager = engine.inputManager;
 		const hero = engine.hero;
@@ -391,9 +392,32 @@ class ZoneScene extends Scene {
 		}
 
 		hero.isDragging = inputManager.drag;
-
 		hero.isAttacking = inputManager.attack; // TOOD: check if hero can attack right now
 		if (hero.isAttacking) this._attackTriggered();
+
+		if (inputManager.walk) {
+			let point = new Point(0, 0);
+			const directions = inputManager.directions;
+			if (directions & InputDirection.Up) {
+				point.y -= 1;
+			}
+			if (directions & InputDirection.Down) {
+				point.y += 1;
+			}
+			if (directions & InputDirection.Left) {
+				point.x -= 1;
+			}
+			if (directions & InputDirection.Right) {
+				point.x += 1;
+			}
+
+			let direction = Direction.CalculateAngleFromRelativePoint(point);
+			if (isNaN(direction)) return;
+
+			hero.face(direction);
+			if (inputManager.walk) await this._moveHero(direction);
+		}
+
 		return false;
 	}
 
