@@ -12,6 +12,16 @@ class DesktopInputManager extends InputManager implements EventListenerObject {
 	private _mouseDirection: number = 0;
 	private _keyboardDirection: number = 0;
 
+	public pickUp: boolean;
+	public scrollUp: boolean;
+	public pause: boolean;
+	public locator: boolean;
+	public endDialog: boolean;
+	public scrollDown: boolean;
+	public attack: boolean;
+	public walk: boolean;
+	public drag: boolean;
+
 	constructor(gameViewElement: HTMLElement) {
 		super();
 
@@ -82,12 +92,12 @@ class DesktopInputManager extends InputManager implements EventListenerObject {
 				directionMask |= Direction.Right;
 				break;
 			case KeyEvent.DOM_VK_SPACE:
-				this._attack = true;
+				this.attack = true;
 				this.endDialog = true;
 				this.pickUp = true;
 				break;
 			case KeyEvent.DOM_VK_SHIFT:
-				this._drag = true;
+				this.drag = true;
 				break;
 
 			case KeyEvent.DOM_VK_P:
@@ -102,8 +112,7 @@ class DesktopInputManager extends InputManager implements EventListenerObject {
 		}
 
 		this._keyboardDirection |= directionMask;
-		this._direction |= directionMask;
-		if (this._direction) this._walk = true;
+		if (this._keyboardDirection) this.walk = true;
 
 		this.keyDownHandler(e);
 	}
@@ -127,12 +136,12 @@ class DesktopInputManager extends InputManager implements EventListenerObject {
 				mask &= ~Direction.Right;
 				break;
 			case KeyEvent.DOM_VK_SPACE:
-				this._attack = false;
+				this.attack = false;
 				this.endDialog = false;
 				this.pickUp = false;
 				break;
 			case KeyEvent.DOM_VK_SHIFT:
-				this._drag = false;
+				this.drag = false;
 				break;
 
 			default:
@@ -140,8 +149,7 @@ class DesktopInputManager extends InputManager implements EventListenerObject {
 		}
 
 		this._keyboardDirection &= mask;
-		this._direction &= mask;
-		if (!this._direction) this._walk = false;
+		if (!this._keyboardDirection) this.walk = false;
 	}
 
 	private _mouseDown(e: MouseEvent) {
@@ -161,8 +169,8 @@ class DesktopInputManager extends InputManager implements EventListenerObject {
 			return;
 		}
 
-		if (e.button === 0) this._walk = true;
-		if (e.button === 1) this._attack = true;
+		if (e.button === 0) this.walk = true;
+		if (e.button === 1) this.attack = true;
 
 		this.mouseDownHandler(point);
 	}
@@ -173,8 +181,8 @@ class DesktopInputManager extends InputManager implements EventListenerObject {
 	}
 
 	private _mouseUp(e: MouseEvent) {
-		if (e.button === 0) this._walk = false;
-		if (e.button === 1) this._attack = false;
+		if (e.button === 0) this.walk = false;
+		if (e.button === 1) this.attack = false;
 	}
 
 	get directions() {

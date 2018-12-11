@@ -214,7 +214,7 @@ describe("WebFun.App.Input.DesktopInputManager", () => {
 
 		describe("when the left mouse is pressed outside the element", () => {
 			beforeEach(() => {
-				subject._walk = false;
+				subject.walk = false;
 				fakeMouse("down", { x: 0, y: 0, button: 0 });
 			});
 

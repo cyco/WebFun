@@ -2,6 +2,7 @@ import { AbstractWindow, Window, IconButton } from "src/ui/components";
 import { GameController } from "src/app";
 import { DiscardingStorage } from "src/util";
 import { RecordingInputManager } from "src/debug/automation";
+import { DesktopInputManager } from "src/app/input";
 import "./input-recorder.scss";
 
 class InputRecorder extends AbstractWindow {
@@ -64,7 +65,7 @@ class InputRecorder extends AbstractWindow {
 
 	public set gameController(c) {
 		this._gameController = c;
-		this._recorder = new RecordingInputManager(c.engine.inputManager);
+		this._recorder = new RecordingInputManager(c.engine.inputManager as DesktopInputManager);
 		c.engine.inputManager = this._recorder;
 		c.engine.inputManager.engine = c.engine;
 	}

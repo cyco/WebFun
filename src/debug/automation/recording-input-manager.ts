@@ -1,13 +1,14 @@
 import { InputManager, Direction } from "src/engine/input";
+import { DesktopInputManager } from "src/app/input";
 import { identity } from "src/util";
 import Syntax from "./syntax";
 
 class RecordingInputManager extends InputManager {
-	public readonly implementation: InputManager;
+	public readonly implementation: DesktopInputManager;
 	private _records: string[] = [];
 	public isRecording: boolean = false;
 
-	constructor(implementation: InputManager) {
+	constructor(implementation: DesktopInputManager) {
 		super();
 
 		this.implementation = implementation;
