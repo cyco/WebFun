@@ -100,7 +100,7 @@ if (includeCoverage) {
 	});
 }
 
-if (includeJunit) {
+if (includeJunit && false) {
 	config.reporters.push("sonarqube");
 
 	config.sonarqubeReporter = {
