@@ -7,7 +7,7 @@ $fa-font-path: "~font-awesome/fonts/";
 @import "fontello/css/fontello.css";
 
 body {
-	background-color: $background-color;
+	background: $background-color;
 	transition: background-color 0.25s ease-in-out;
 	margin: 0;
 	padding: 0;
@@ -15,6 +15,6 @@ body {
 
 @media (prefers-color-scheme: light) {
 	body {
-		background-color: #a6aab9;
+		background: #a6aab9;
 	}
 }
