@@ -2,6 +2,9 @@ import { Tile } from "src/engine/objects";
 import AbstractRenderer from "../rendering/abstract-renderer";
 import Scene from "./scene";
 
+const PauseImageSrc =
+	"data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAMElEQVRYw+3QoQEAAAjDsO3/o+EMBKmpT5NMjpvLlwABAgQIECBAgAABAgQIEHgvsI0fDxA3PoMxAAAAAElFTkSuQmCC";
+
 class PauseScene extends Scene {
 	private _image: HTMLImageElement;
 
@@ -11,13 +14,15 @@ class PauseScene extends Scene {
 		const image = new Image();
 		image.width = Tile.WIDTH;
 		image.height = Tile.HEIGHT;
+		image.src = PauseImageSrc;
+		image.className = "pixelated";
 		this._image = image;
 	}
 
 	render(renderer: AbstractRenderer): void {
 		for (let x = 0; x < 9; x++) {
 			for (let y = 0; y < 9; y++) {
-				renderer.renderImage({ representation: this._image }, x * Tile.WIDTH, y * Tile.HEIGHT);
+				renderer.renderImage(this._image, x * Tile.WIDTH, y * Tile.HEIGHT);
 			}
 		}
 	}
