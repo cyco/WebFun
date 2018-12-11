@@ -1,4 +1,4 @@
-import { CheatCodeInput, Invincibility, UnlimitedAmmo, Weapons } from "src/engine/cheats";
+import { CheatCodeInput, Invincibility, UnlimitedAmmo, Weapons, RequiredItems } from "src/engine/cheats";
 import { World } from "src/engine/generation";
 import { Tile, ZoneType } from "src/engine/objects";
 import { Planet } from "src/engine/types";
@@ -22,7 +22,12 @@ class MapScene extends Scene {
 	static readonly LOCATOR_ANIMATION_TICKS = 10;
 	private _ticks: number = 0;
 	private _location: Tile = null;
-	private _cheatInput = new CheatCodeInput([new Weapons(), new UnlimitedAmmo(), new Invincibility()]);
+	private _cheatInput = new CheatCodeInput([
+		new Weapons(),
+		new UnlimitedAmmo(),
+		new Invincibility(),
+		new RequiredItems()
+	]);
 	private _locatorTile = new LocatorTile();
 
 	isOpaque() {
