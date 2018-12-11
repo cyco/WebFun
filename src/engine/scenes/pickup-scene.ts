@@ -21,7 +21,7 @@ class PickupScene extends Scene {
 			const cameraOffset = this.cameraOffset;
 			const x = this.location.x + cameraOffset.x;
 			const y = this.location.y + cameraOffset.y;
-			renderer.renderTile(this.tile, x, y, 1);
+			renderer.renderZoneTile(this.tile, x, y, 1);
 		}
 	}
 
