@@ -458,7 +458,7 @@ class WorldGenerator {
 					this.findItem = null;
 					this.requiredItem = puzzle1.item1;
 					this.currentPuzzleIndex = puzzleIndex;
-					this.additionalRequiredItem = null; /// TODO: this looks broken
+					this.additionalRequiredItem = null;
 					this.addRequiredItemQuestsFromHotspots(zone);
 				} else {
 					let didAddItem = 1;
@@ -482,7 +482,7 @@ class WorldGenerator {
 					this.findItem = puzzle3.item1;
 					this.requiredItem = puzzle1.item1;
 					this.currentPuzzleIndex = puzzleIndex;
-					this.additionalRequiredItem = null; // TODO: this looks broken
+					this.additionalRequiredItem = null;
 					this.addRequiredItemQuestsFromHotspots(zone);
 				}
 				this.addRequiredItemQuest(newPuzzleItem1, distance);
