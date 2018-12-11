@@ -4,7 +4,7 @@ import ScriptDebugger from "./script-debugger";
 import GameController from "src/app/game-controller";
 import { main as RunSaveGameEditor } from "src/save-game-editor";
 import { main as RunGameDataEditor } from "src/editor";
-import { SimulatorWindow } from "./components";
+import { SimulatorWindow, InputRecorder } from "./components";
 
 const SettingsItem = (label: string, key: keyof typeof Settings, settings: typeof Settings) => ({
 	title: label,
@@ -32,6 +32,12 @@ export default (gameController: GameController) => ({
 			simulator.gameController = gameController;
 			simulator.state = localStorage.prefixedWith("simulator");
 			WindowManager.defaultManager.showWindow(simulator);
+		}),
+		SettingsAction("Record Input", () => {
+			const recorder = document.createElement(InputRecorder.tagName) as InputRecorder;
+			recorder.gameController = gameController;
+			recorder.state = localStorage.prefixedWith("input-recorder");
+			WindowManager.defaultManager.showWindow(recorder);
 		}),
 		MenuItemSeparator,
 		SettingsAction("Debug Scripts", () => ScriptDebugger.sharedDebugger.show()),

@@ -19,6 +19,7 @@ import AbstractPaletteView from "./abstract-palette-view";
 import AbstractTileView from "./abstract-tile-view";
 import AbstractZoneView from "./abstract-zone-view";
 import AbstractPaletteImageView from "./abstract-palette-image-view";
+import InputRecorder from "./input-recorder";
 
 export {
 	PaletteImageView,
@@ -41,5 +42,6 @@ export {
 	AbstractPaletteView,
 	AbstractTileView,
 	AbstractZoneView,
-	AbstractPaletteImageView
+	AbstractPaletteImageView,
+	InputRecorder
 };
