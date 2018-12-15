@@ -175,6 +175,10 @@ class RecordingInputManager extends InputManager {
 		}
 	}
 
+	public clearPlacedTile() {
+		this.implementation && this.implementation.clearPlacedTile();
+	}
+
 	public get engine() {
 		return this.implementation.engine;
 	}

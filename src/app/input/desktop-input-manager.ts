@@ -3,6 +3,7 @@ import { InputManager, Direction } from "src/engine/input";
 import { SceneView } from "src/app/ui";
 import { document } from "src/std/dom";
 import TilePlacedEvent from "src/engine/input/tile-placed-event";
+import { Tile } from "src/engine/objects";
 
 class DesktopInputManager extends InputManager implements EventListenerObject {
 	private _element: HTMLElement;
@@ -12,6 +13,8 @@ class DesktopInputManager extends InputManager implements EventListenerObject {
 	private _mouseDirection: number = 0;
 	private _keyboardDirection: number = 0;
 
+	public placedTile: Tile;
+	public placedTileLocation: Point;
 	public pickUp: boolean;
 	public scrollUp: boolean;
 	public pause: boolean;
@@ -31,6 +34,11 @@ class DesktopInputManager extends InputManager implements EventListenerObject {
 
 	get mouseLocationInView(): Point {
 		return this._lastMouse;
+	}
+
+	public clearPlacedTile(): void {
+		this.placedTileLocation = null;
+		this.placedTile = null;
 	}
 
 	public addListeners() {
@@ -165,6 +173,8 @@ class DesktopInputManager extends InputManager implements EventListenerObject {
 
 		if (this.currentItem) {
 			this.placeTileHandler(new TilePlacedEvent(this.currentItem, point));
+			this.placedTile = this.currentItem;
+			this.placedTileLocation = point;
 			this.currentItem = null;
 			return;
 		}
