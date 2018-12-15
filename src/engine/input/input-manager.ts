@@ -24,6 +24,10 @@ abstract class InputManager {
 	public readonly drag: boolean;
 	public readonly attack: boolean;
 
+	public readonly placedTile: Tile;
+	public readonly placedTileLocation: Point;
+	public abstract clearPlacedTile(): void;
+
 	// zone scene / locator sceen
 	public readonly locator: boolean;
 
