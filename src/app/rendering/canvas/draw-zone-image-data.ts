@@ -9,10 +9,12 @@ export default (zone: Zone, palette: ColorPalette) => {
 	const ZoneWidth = zone.size.width;
 	const ZoneHeight = zone.size.height;
 
-	const imageData = new ImageData(ZoneWidth * TileWidth, ZoneHeight * TileHeight);
-	const rawImageData = imageData.data;
+	const result = new ImageData(ZoneWidth * TileWidth, ZoneHeight * TileHeight);
+	var buffer = new ArrayBuffer(result.data.length);
+	var byteArray = new Uint8Array(buffer);
+	var data = new Uint32Array(buffer);
 
-	const bpr = 4 * ZoneWidth * TileWidth;
+	const bpr = ZoneWidth * TileWidth;
 
 	for (let y = 0; y < ZoneHeight; y++) {
 		for (let x = 0; x < ZoneWidth; x++) {
@@ -23,18 +25,15 @@ export default (zone: Zone, palette: ColorPalette) => {
 				const pixels = tile.imageData;
 				const sy = y * TileHeight;
 				const sx = x * TileWidth;
-				let j = sy * bpr + sx * 4;
+				let j = sy * bpr + sx;
 
 				for (let ty = 0; ty < TileHeight; ty++) {
 					for (let tx = 0; tx < TileWidth; tx++) {
 						const i = ty * TileWidth + tx;
-						const paletteIndex = pixels[i] * 4;
+						const paletteIndex = pixels[i];
 						if (paletteIndex === 0) continue;
 
-						rawImageData[j + 4 * tx + 0] = palette[paletteIndex + 2];
-						rawImageData[j + 4 * tx + 1] = palette[paletteIndex + 1];
-						rawImageData[j + 4 * tx + 2] = palette[paletteIndex + 0];
-						rawImageData[j + 4 * tx + 3] = paletteIndex === 0 ? 0x00 : 0xff;
+						data[j + tx] = palette[paletteIndex];
 					}
 
 					j += bpr;
@@ -42,6 +41,7 @@ export default (zone: Zone, palette: ColorPalette) => {
 			}
 		}
 	}
+	result.data.set(byteArray);
 
-	return imageData;
+	return result;
 };
