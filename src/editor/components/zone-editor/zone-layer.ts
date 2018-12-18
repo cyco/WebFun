@@ -49,10 +49,11 @@ class ZoneLayer extends Component {
 		const ZoneWidth = zone.size.width;
 		const ZoneHeight = zone.size.height;
 
-		const imageData = new ImageData(ZoneWidth * TileWidth, ZoneHeight * TileHeight);
-		const rawImageData = imageData.data;
-
-		const bpr = 4 * ZoneWidth * TileWidth;
+		const result = new ImageData(ZoneWidth * TileWidth, ZoneHeight * TileHeight);
+		var buffer = new ArrayBuffer(result.data.length);
+		var byteArray = new Uint8Array(buffer);
+		var data = new Uint32Array(buffer);
+		const bpr = ZoneWidth * TileWidth;
 
 		for (let y = 0; y < ZoneHeight; y++) {
 			for (let x = 0; x < ZoneWidth; x++) {
@@ -62,26 +63,21 @@ class ZoneLayer extends Component {
 				const pixels = tile.imageData;
 				const sy = y * TileHeight;
 				const sx = x * TileWidth;
-				let j = sy * bpr + sx * 4;
+				let j = sy * bpr + sx;
 
 				for (let ty = 0; ty < TileHeight; ty++) {
 					for (let tx = 0; tx < TileWidth; tx++) {
 						const i = ty * TileWidth + tx;
-						const paletteIndex = pixels[i] * 4;
-						if (paletteIndex === 0) continue;
-
-						rawImageData[j + 4 * tx + 0] = palette[paletteIndex + 2];
-						rawImageData[j + 4 * tx + 1] = palette[paletteIndex + 1];
-						rawImageData[j + 4 * tx + 2] = palette[paletteIndex + 0];
-						rawImageData[j + 4 * tx + 3] = paletteIndex === 0 ? 0x00 : 0xff;
+						data[j + tx] = palette[pixels[i]];
 					}
 
 					j += bpr;
 				}
 			}
 		}
+		result.data.set(byteArray);
 
-		return imageData;
+		return result;
 	}
 
 	private _updateTile(tile: Tile, at: Point): void {
@@ -95,35 +91,25 @@ class ZoneLayer extends Component {
 		const ZoneWidth = zone.size.width;
 
 		const imageData = this._imageData;
-		const rawImageData = imageData.data;
-
-		const bpr = 4 * ZoneWidth * TileWidth;
+		var buffer = imageData.data.slice();
+		var byteArray = new Uint8Array(buffer);
+		var data = new Uint32Array(buffer);
+		const bpr = ZoneWidth * TileWidth;
 
 		const pixels = tile ? tile.imageData : null;
 		const sy = at.y * TileHeight;
 		const sx = at.x * TileWidth;
-		let j = sy * bpr + sx * 4;
+		let j = sy * bpr + sx;
 
 		for (let ty = 0; ty < TileHeight; ty++) {
 			for (let tx = 0; tx < TileWidth; tx++) {
 				const i = ty * TileWidth + tx;
-				const paletteIndex = pixels ? pixels[i] * 4 : 0;
-				if (paletteIndex === 0) {
-					rawImageData[j + 4 * tx + 0] = 0;
-					rawImageData[j + 4 * tx + 1] = 0;
-					rawImageData[j + 4 * tx + 2] = 0;
-					rawImageData[j + 4 * tx + 3] = 0;
-					continue;
-				}
-
-				rawImageData[j + 4 * tx + 0] = palette[paletteIndex + 2];
-				rawImageData[j + 4 * tx + 1] = palette[paletteIndex + 1];
-				rawImageData[j + 4 * tx + 2] = palette[paletteIndex + 0];
-				rawImageData[j + 4 * tx + 3] = paletteIndex === 0 ? 0x00 : 0xff;
+				data[j + tx] = palette[pixels ? pixels[i] : 0];
 			}
 
 			j += bpr;
 		}
+		imageData.data.set(byteArray);
 	}
 
 	public update(points: Point[]) {
