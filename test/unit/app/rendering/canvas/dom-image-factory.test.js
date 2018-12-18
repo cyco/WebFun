@@ -2,14 +2,16 @@ import DOMImageFactory from "src/app/rendering/canvas/dom-image-factory";
 import { Image } from "std/dom";
 
 describe("WebFun.App.Rendering.Canvas.DOMImageFactory", () => {
-	const CompressedColorPalette = [
+	const CompressedColorPalette = new Uint8Array([
 		...[0, 0, 0, 0], // transparent
 		...[0, 0, 0, 0], // black
 		...[255, 255, 255, 0], // white
 		...[255, 0, 0, 1], // red
 		...[0, 255, 0, 1], // green
-		...[0, 0, 255, 1] // blue
-	];
+		...[0, 0, 255, 1], // blue
+		// fill up remaining size
+		...Array.from({ length: 0x400 - 6 * 4 })
+	]);
 
 	it("it is a class that builds images from palette and pixel data", () => {
 		expect(DOMImageFactory).toBeClass();

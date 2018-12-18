@@ -1,25 +1,20 @@
-import { CompressedColorPalette } from "src/engine";
+import { ColorPalette } from "src/engine";
 import { Size } from "src/util";
 
-export default (pixels: Uint8Array, { width, height }: Size, palette: CompressedColorPalette) => {
+export default (pixels: Uint8Array, { width, height }: Size, palette: ColorPalette) => {
 	const result = new ImageData(width, height);
-	const raw = result.data;
 
-	const bpr = 4 * width;
-	let j = 0;
+	var buffer = new ArrayBuffer(result.data.length);
+	var byteArray = new Uint8Array(buffer);
+	var data = new Uint32Array(buffer);
+
 	for (let ty = 0; ty < height; ty++) {
 		for (let tx = 0; tx < width; tx++) {
-			const colorIndex = pixels[ty * width + tx] * 4;
-			if (colorIndex === 0) continue;
-
-			raw[j + 4 * tx + 0] = palette[colorIndex + 2];
-			raw[j + 4 * tx + 1] = palette[colorIndex + 1];
-			raw[j + 4 * tx + 2] = palette[colorIndex + 0];
-			raw[j + 4 * tx + 3] = colorIndex === 0 ? 0x00 : 0xff;
+			const color = pixels[ty * width + tx];
+			if (color !== 0) data[ty * width + tx] = palette[color];
 		}
-
-		j += bpr;
 	}
 
+	result.data.set(byteArray);
 	return result;
 };

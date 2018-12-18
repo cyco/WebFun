@@ -14,7 +14,7 @@ abstract class AbstractPaletteImageView extends AbstractPaletteView {
 		if (!this._pixels || !this._size) {
 			return;
 		}
-		context.putImageData(drawImage(this.pixels, this.size, this.palette), 0, 0);
+		context.putImageData(drawImage(this.pixels, this.size, this.palette.decompress()), 0, 0);
 	}
 
 	public set size(size: Size) {

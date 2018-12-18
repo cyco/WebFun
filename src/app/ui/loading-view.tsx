@@ -39,7 +39,7 @@ class LoadingView extends Component {
 
 	private _redraw() {
 		if (!this.palette || !this.image) return;
-		const imageData = drawImage(this.image, new Size(288, 288), this.palette);
+		const imageData = drawImage(this.image, new Size(288, 288), this.palette.decompress());
 		const ctx = this._imageCanvas.getContext("2d");
 		ctx.clearRect(0, 0, 288, 288);
 		ctx.putImageData(imageData, 0, 0);
