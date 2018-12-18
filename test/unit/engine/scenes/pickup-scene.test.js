@@ -1,4 +1,5 @@
 import PickupScene from "src/engine/scenes/pickup-scene";
+import Camera from "src/engine/camera";
 
 describe("WebFun.Engine.Scenes.PickupScene", () => {
 	it("can be instantiated without throwing exceptions", () => {
@@ -8,6 +9,7 @@ describe("WebFun.Engine.Scenes.PickupScene", () => {
 	it("watches the input manager for pause button input and eventually pops itself from the scene manager", () => {
 		let popCalled = false;
 		const engine = {
+			camera: new Camera(),
 			inputManager: { pickUp: false },
 			sceneManager: { popScene: () => (popCalled = true) },
 			inventory: {
@@ -30,6 +32,7 @@ describe("WebFun.Engine.Scenes.PickupScene", () => {
 	it("adds the current item to the inventory when it is removed from the scene manager", () => {
 		const item = {};
 		const engine = {
+			camera: new Camera(),
 			inventory: {
 				addItem() {}
 			}
@@ -46,8 +49,8 @@ describe("WebFun.Engine.Scenes.PickupScene", () => {
 
 	it("counts ticks and flashes the item", () => {
 		const engine = {
-			inputManager: {},
-			sceneManager: { _stack: [{ camera: { offset: {} } }] }
+			camera: { offset: {} },
+			inputManager: {}
 		};
 		const renderer = {
 			renderZoneTile() {}
@@ -80,8 +83,8 @@ describe("WebFun.Engine.Scenes.PickupScene", () => {
 
 	it("renders the tile at the correct location", () => {
 		const engine = {
-			inputManager: {},
-			sceneManager: { _stack: [{ camera: { offset: { x: -2, y: -1 } } }] }
+			camera: { offset: { x: -2, y: -1 } },
+			inputManager: {}
 		};
 		const renderer = {
 			renderZoneTile() {}

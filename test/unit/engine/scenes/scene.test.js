@@ -3,9 +3,7 @@ import Scene from "src/engine/scenes/scene";
 describe("WebFun.Engine.Scenes.Scene", () => {
 	let subject = null;
 
-	beforeEach(() => {
-		subject = new Scene();
-	});
+	beforeEach(() => (subject = new Scene()));
 
 	it("is an abstract class representing a scene in the game", () => {
 		expect(subject).toHaveMethod("willShow");
@@ -21,7 +19,7 @@ describe("WebFun.Engine.Scenes.Scene", () => {
 
 	it("has a method for accessing the current camera's offset", () => {
 		const fakeOffset = {};
-		subject.engine = { sceneManager: { _stack: [{ camera: { offset: fakeOffset } }] } };
+		subject.engine = { camera: { offset: fakeOffset } };
 		expect(subject.cameraOffset).toBe(fakeOffset);
 	});
 });
