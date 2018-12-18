@@ -6,7 +6,6 @@ import { Tile } from "src/engine/objects";
 import { GameData, CompressedColorPalette } from "src/engine";
 import { SaveState } from "src/engine/save-game";
 import { Menu, Component } from "src/ui";
-import { ImageFactory } from "src/app/rendering/canvas";
 import { WorldSize } from "src/engine/types";
 import { Yoda as GameTypeYoda } from "src/engine/type";
 import WorldItem from "./world-item";
@@ -280,15 +279,6 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 				</label>
 			</div>
 		);
-	}
-
-	private _findWeaponFace(id: number): Tile {
-		if (!id) return null;
-
-		const character = this._gameData.characters[id];
-		if (!character) return null;
-		console.assert(character.isWeapon());
-		return character.frames[0].extensionRight;
 	}
 
 	get saveGame(): SaveState {

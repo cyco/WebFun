@@ -6,7 +6,7 @@ import Hero from "./hero";
 import Inventory from "./inventory";
 import Metronome from "./metronome";
 import PersistentState from "./persistent-state";
-import { CompressedColorPalette } from "./rendering";
+import { CompressedColorPalette, ColorPalette } from "./rendering";
 import { Reader as SaveGameReader, Writer as SaveGameWriter, SaveState } from "./save-game";
 import SceneManager from "./scene-manager";
 import Story from "./story";
@@ -21,6 +21,7 @@ export {
 	EngineEvents,
 	Engine,
 	CompressedColorPalette,
+	ColorPalette,
 	GameData,
 	Hero,
 	Inventory,

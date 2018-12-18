@@ -24,13 +24,13 @@ class DOMImageFactory extends AbstractImageFactory {
 		const image = await drawImage(
 			pixelData as Uint8Array,
 			new Size(width, height),
-			this.palette
+			this.palette.decompress()
 		).toImage();
 		return new Image(width, height, image);
 	}
 
 	public createImageData(width: number, height: number, pixelData: ArrayLike<number>): ImageData {
-		return drawImage(pixelData as Uint8Array, new Size(width, height), this.palette);
+		return drawImage(pixelData as Uint8Array, new Size(width, height), this.palette.decompress());
 	}
 }
 

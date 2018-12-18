@@ -8,5 +8,5 @@ const size = new Size(Tile.WIDTH, Tile.HEIGHT);
 export default (tile: Tile, palette: CompressedColorPalette) => {
 	if (!tile) return new ImageData(1, 1);
 
-	return drawImage(tile.imageData, size, palette);
+	return drawImage(tile.imageData, size, palette.decompress());
 };
