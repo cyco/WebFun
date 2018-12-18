@@ -3,14 +3,14 @@ import { Puzzle, PuzzleType } from "src/engine/objects";
 import "./puzzle-inspector-cell.scss";
 import Tile from "src/engine/objects/tile";
 import { ExpandButton } from "src/editor/components";
-import { CompressedColorPalette } from "src/engine/rendering";
+import { ColorPalette } from "src/engine/rendering";
 import { TileView } from "src/debug/components";
 
 class PuzzleInspectorCell extends Cell<Puzzle> {
 	public static readonly tagName = "wf-puzzle-inspector-cell";
 	public static readonly observedAttributes: string[] = [];
 
-	public palette: CompressedColorPalette;
+	public palette: ColorPalette;
 	private _tile1: TileView;
 	private _tile2: TileView;
 	private _title: HTMLElement;

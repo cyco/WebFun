@@ -1,6 +1,6 @@
 import { AbstractWindow, ProgressIndicator } from "src/ui/components";
 import { Reader as SaveGameReaderFactory, SaveState } from "src/engine/save-game";
-import { GameData, CompressedColorPalette } from "src/engine";
+import { GameData, ColorPalette } from "src/engine";
 import { InputStream } from "src/util";
 import { DataProvider, PaletteProvider } from "src/app/data";
 import EditorView from "./editor-view";
@@ -35,7 +35,7 @@ class EditorWindow extends AbstractWindow {
 		}
 	}
 
-	public presentSaveGame(saveGame: SaveState, gameData: GameData, palette: CompressedColorPalette) {
+	public presentSaveGame(saveGame: SaveState, gameData: GameData, palette: ColorPalette) {
 		this._progressIndicator.remove();
 		this._editorView.presentState(saveGame, gameData, palette);
 		this.content.appendChild(this._editorView);

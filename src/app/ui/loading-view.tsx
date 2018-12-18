@@ -1,4 +1,4 @@
-import { CompressedColorPalette } from "src/engine";
+import { ColorPalette } from "src/engine";
 import { SegmentedProgressBar } from "src/ui/components";
 import { drawImage } from "src/app/rendering/canvas";
 import { Size } from "src/util";
@@ -8,7 +8,7 @@ import "./loading-view.scss";
 class LoadingView extends Component {
 	public static readonly tagName = "wf-loading-view";
 	private _image: Uint8Array;
-	private _palette: CompressedColorPalette;
+	private _palette: ColorPalette;
 
 	private _imageCanvas: HTMLCanvasElement = (
 		<canvas
@@ -39,7 +39,7 @@ class LoadingView extends Component {
 
 	private _redraw() {
 		if (!this.palette || !this.image) return;
-		const imageData = drawImage(this.image, new Size(288, 288), this.palette.decompress());
+		const imageData = drawImage(this.image, new Size(288, 288), this.palette);
 		const ctx = this._imageCanvas.getContext("2d");
 		ctx.clearRect(0, 0, 288, 288);
 		ctx.putImageData(imageData, 0, 0);

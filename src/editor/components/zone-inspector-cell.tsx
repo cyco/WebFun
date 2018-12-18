@@ -1,7 +1,7 @@
 import { Cell, InlineSelector } from "src/ui/components";
 import { Zone, ZoneType, Tile } from "src/engine/objects";
 import { Planet } from "src/engine/types";
-import { CompressedColorPalette } from "src/engine/rendering";
+import { ColorPalette } from "src/engine/rendering";
 import { TileView } from "src/debug/components";
 import "./zone-inspector-cell.scss";
 
@@ -17,7 +17,7 @@ class ZoneInspectorCell extends Cell<Zone> {
 	public static readonly tagName = "wf-zone-inspector-cell";
 	public static readonly observedAttributes: string[] = [];
 
-	public palette: CompressedColorPalette;
+	public palette: ColorPalette;
 	public tiles: Tile[];
 
 	protected connectedCallback() {

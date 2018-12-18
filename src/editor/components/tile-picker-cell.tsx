@@ -1,6 +1,6 @@
 import { Cell } from "src/ui/components";
 import { Tile } from "src/engine/objects";
-import { CompressedColorPalette } from "src/engine/rendering";
+import { ColorPalette } from "src/engine/rendering";
 import { TileView } from "src/debug/components";
 import "./tile-picker-cell.scss";
 
@@ -35,7 +35,7 @@ class TilePickerCell extends Cell<Tile> {
 		return this.view.tile;
 	}
 
-	set palette(palette: CompressedColorPalette) {
+	set palette(palette: ColorPalette) {
 		this.view.palette = palette;
 	}
 

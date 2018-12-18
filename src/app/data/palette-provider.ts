@@ -1,8 +1,8 @@
-import { GameType, GameTypeYoda, GameTypeIndy, CompressedColorPalette } from "src/engine";
+import { ColorPalette, GameType, GameTypeYoda, GameTypeIndy } from "src/engine";
 import { FileLoader } from "src/util";
 import Settings from "src/settings";
 
-const CompressedColorPaletteSize = 0x400;
+const ColorPaletteByteLength = 0x400;
 
 class PaletteProvider {
 	private url: Map<GameType, string> = new Map<GameType, string>();
@@ -12,10 +12,11 @@ class PaletteProvider {
 		this.url.set(GameTypeIndy, indyUrl);
 	}
 
-	async provide(type: GameType): Promise<CompressedColorPalette> {
+	async provide(type: GameType): Promise<ColorPalette> {
 		const url = this.url.get(type);
 		const stream = await FileLoader.loadAsStream(url);
-		return stream.getUint8Array(CompressedColorPaletteSize) as CompressedColorPalette;
+
+		return Uint32Array.paletteFromUint8Array(stream.getUint8Array(ColorPaletteByteLength));
 	}
 }
 

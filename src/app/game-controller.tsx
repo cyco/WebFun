@@ -1,4 +1,4 @@
-import { Engine, GameData, Hero, Inventory, Metronome, Story, CompressedColorPalette } from "src/engine";
+import { Engine, GameData, Hero, Inventory, Metronome, Story, ColorPalette } from "src/engine";
 import { CanvasRenderer } from "./rendering";
 import { Reader } from "src/engine/save-game";
 import { DesktopInputManager } from "./input";
@@ -32,7 +32,7 @@ class GameController extends EventTarget {
 	public static readonly Event = Event;
 	public settings: typeof Settings = Settings;
 	public data: GameData;
-	public palette: CompressedColorPalette;
+	public palette: ColorPalette;
 	private _window: MainWindow = <MainWindow menu={new MainMenu(this)} /> as MainWindow;
 	private _sceneView: SceneView = <SceneView /> as SceneView;
 	private _engine: Engine;

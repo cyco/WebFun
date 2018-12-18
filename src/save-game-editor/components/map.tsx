@@ -2,7 +2,7 @@ import { Component } from "src/ui";
 import { World, WorldItem } from "src/engine/save-game";
 import { Zone, Tile } from "src/engine/objects";
 import { Point } from "src/util";
-import { CompressedColorPalette } from "src/engine/rendering";
+import { ColorPalette } from "src/engine/rendering";
 import { LocatorTile } from "src/engine/types";
 import { TileView } from "src/debug/components";
 import "./map.scss";
@@ -15,7 +15,7 @@ class Map extends Component {
 	public world: World;
 	public tiles: Tile[];
 	public zones: Zone[];
-	public palette: CompressedColorPalette;
+	public palette: ColorPalette;
 	public location: Point;
 	public locatorTile: LocatorTile;
 	public reveal: boolean = false;
@@ -68,7 +68,7 @@ class Map extends Component {
 		ctx.putImageData(image, 0, 0);
 	}
 
-	private buildWorldImage(world: World, palette: CompressedColorPalette) {
+	private buildWorldImage(world: World, palette: ColorPalette) {
 		const WorldWidth = world.size.width;
 		const WorldHeight = world.size.height;
 
@@ -93,7 +93,7 @@ class Map extends Component {
 						const i = ty * Tile.WIDTH + tx;
 						const paletteIndex = pixels[i] * 4;
 						if (paletteIndex === 0) continue;
-
+						// TODO: fix palette usage
 						rawImageData[j + 4 * tx + 0] = palette[paletteIndex + 2];
 						rawImageData[j + 4 * tx + 1] = palette[paletteIndex + 1];
 						rawImageData[j + 4 * tx + 2] = palette[paletteIndex + 0];

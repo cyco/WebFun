@@ -1,11 +1,11 @@
-import { AbstractImageFactory, CompressedColorPalette, Image } from "src/engine/rendering";
+import { AbstractImageFactory, ColorPalette, Image } from "src/engine/rendering";
 import drawImage from "./draw-image";
 import { Size } from "src/util";
 
 class DOMImageFactory extends AbstractImageFactory {
-	private _palette: CompressedColorPalette = null;
+	private _palette: ColorPalette = null;
 
-	constructor(palette: CompressedColorPalette = null) {
+	constructor(palette: ColorPalette = null) {
 		super();
 		this._palette = palette;
 	}
@@ -24,13 +24,13 @@ class DOMImageFactory extends AbstractImageFactory {
 		const image = await drawImage(
 			pixelData as Uint8Array,
 			new Size(width, height),
-			this.palette.decompress()
+			this.palette
 		).toImage();
 		return new Image(width, height, image);
 	}
 
 	public createImageData(width: number, height: number, pixelData: ArrayLike<number>): ImageData {
-		return drawImage(pixelData as Uint8Array, new Size(width, height), this.palette.decompress());
+		return drawImage(pixelData as Uint8Array, new Size(width, height), this.palette);
 	}
 }
 

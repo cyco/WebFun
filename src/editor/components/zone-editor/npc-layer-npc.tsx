@@ -1,13 +1,13 @@
 import { Component } from "src/ui";
 import { Char } from "src/engine/objects";
-import { CompressedColorPalette } from "src/engine/rendering";
+import { ColorPalette } from "src/engine/rendering";
 import { drawTileImageData } from "src/app/rendering/canvas";
 import "./npc-layer-npc.scss";
 
 class NPCLayerNPC extends Component {
 	public static readonly tagName = "wf-npc-layer-npc";
 	public character: Char;
-	public palette: CompressedColorPalette;
+	public palette: ColorPalette;
 	public canvas = <canvas width={32} height={32} className="pixelated" /> as HTMLCanvasElement;
 
 	protected connectedCallback() {

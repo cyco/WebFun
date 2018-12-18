@@ -1,7 +1,7 @@
 import { Cell } from "src/ui/components";
 import { Tile } from "src/engine/objects";
 import { TileView } from "src/debug/components";
-import { CompressedColorPalette } from "src/engine/rendering";
+import { ColorPalette } from "src/engine/rendering";
 import "./tile-cell.scss";
 
 class TileCell extends Cell<Tile> {
@@ -25,7 +25,7 @@ class TileCell extends Cell<Tile> {
 		return clone;
 	}
 
-	set palette(palette: CompressedColorPalette) {
+	set palette(palette: ColorPalette) {
 		this.view.palette = palette;
 	}
 	get palette() {
