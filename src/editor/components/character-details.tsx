@@ -1,7 +1,7 @@
 import { Component } from "src/ui";
 import { Char, CharMovementType, CharType, CharFrame, Tile } from "src/engine/objects";
 import CharacterFramePreview from "./character-frame-preview";
-import { ColorPalette } from "src/engine/rendering";
+import { CompressedColorPalette } from "src/engine/rendering";
 import { MutableChar } from "src/engine/mutable-objects";
 import "./character-details.scss";
 
@@ -17,7 +17,7 @@ class CharacterDetails extends Component {
 	private _currentPreviewFrame: number = 0;
 	private _framePreview: CharacterFramePreview;
 
-	private _palette: ColorPalette;
+	private _palette: CompressedColorPalette;
 
 	protected connectedCallback() {
 		super.connectedCallback();
@@ -181,7 +181,7 @@ class CharacterDetails extends Component {
 		super.disconnectedCallback();
 	}
 
-	set palette(s: ColorPalette) {
+	set palette(s: CompressedColorPalette) {
 		this._palette = s;
 		this._rebuild();
 	}

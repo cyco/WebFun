@@ -1,6 +1,6 @@
 import { Cell, Label, IconButton } from "src/ui/components";
 import { Char } from "src/engine/objects";
-import { ColorPalette } from "src/engine/rendering";
+import { CompressedColorPalette } from "src/engine/rendering";
 import { TileView } from "src/debug/components";
 import "./character-inspector-cell.scss";
 
@@ -9,7 +9,7 @@ class CharacterInspectorCell extends Cell<Char> {
 	public static readonly observedAttributes: string[] = [];
 
 	public onremove = (_: Event): void => void 0;
-	public palette: ColorPalette;
+	public palette: CompressedColorPalette;
 
 	public cloneNode(deep?: boolean): Node {
 		const node = super.cloneNode(deep) as CharacterInspectorCell;

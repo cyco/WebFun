@@ -1,7 +1,7 @@
 import { AbstractPanel, Button } from "src/ui/components";
 import PaletteImageEditor from "../palette-image-editor";
 import PaletteColorPicker from "../palette-color-picker";
-import { ColorPalette } from "src/engine/rendering";
+import { CompressedColorPalette } from "src/engine/rendering";
 import { Size, rgba, downloadImage } from "src/util";
 import { FilePicker } from "src/ui";
 import { MutableTile } from "src/engine/mutable-objects";
@@ -80,13 +80,13 @@ class Editor extends AbstractPanel {
 		return this._imageEditor.image;
 	}
 
-	set palette(p: ColorPalette) {
+	set palette(p: CompressedColorPalette) {
 		this._imageEditor.palette = p;
 		this._colorPicker.palette = p;
 		this._colorPicker.color = rgba(0, 0, 0, 0);
 	}
 
-	get palette(): ColorPalette {
+	get palette(): CompressedColorPalette {
 		return this._colorPicker.palette;
 	}
 }

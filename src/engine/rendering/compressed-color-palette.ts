@@ -1,7 +1,7 @@
 import { floor } from "src/std/math";
 import { OutputStream } from "src/util";
 
-interface ColorPalette extends Uint8Array {
+interface CompressedColorPalette extends Uint8Array {
 	findColor(r: number, g: number, b: number, a?: number): number;
 	toGIMP(name: string): string;
 	toAdobeColorTable(): Uint8Array;
@@ -51,4 +51,4 @@ Uint8Array.prototype.findColor = Uint8Array.prototype.findColor || findColor;
 Uint8Array.prototype.toGIMP = Uint8Array.prototype.toGIMP || toGIMP;
 Uint8Array.prototype.toAdobeColorTable = Uint8Array.prototype.toAdobeColorTable || toAdobeColorTable;
 
-export default ColorPalette;
+export default CompressedColorPalette;

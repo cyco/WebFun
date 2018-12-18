@@ -1,4 +1,4 @@
-import { ColorPalette, GameData, readGameDataFile, GameTypeYoda } from "src/engine";
+import { CompressedColorPalette, GameData, readGameDataFile, GameTypeYoda } from "src/engine";
 import { AbstractImageFactory } from "src/engine/rendering";
 import Settings from "src/settings";
 import { EventTarget, FileLoader, InputStream } from "src/util";
@@ -15,7 +15,7 @@ export const StageCount = 9;
 
 export declare interface LoaderEventDetails {
 	data: GameData;
-	palette: ColorPalette;
+	palette: CompressedColorPalette;
 }
 
 class Loader extends EventTarget {
@@ -64,7 +64,7 @@ class Loader extends EventTarget {
 		loader.onfail = reason => this._fail(reason);
 		loader.onload = ({ detail: { arraybuffer } }) => {
 			const palette = new Uint8Array(arraybuffer);
-			this._imageFactory.palette = palette as ColorPalette;
+			this._imageFactory.palette = palette as CompressedColorPalette;
 			this._palette = palette;
 			this._loadSetupImage(palette);
 		};

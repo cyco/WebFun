@@ -1,12 +1,12 @@
-import ColorPalette from "./color-palette";
+import CompressedColorPalette from "./compressed-color-palette";
 
 class PaletteAnimation {
-	private _original: ColorPalette;
-	private _current: ColorPalette;
+	private _original: CompressedColorPalette;
+	private _current: CompressedColorPalette;
 	private _mutable: Uint32Array;
 	private _state: boolean = true;
 
-	public constructor(palette: ColorPalette) {
+	public constructor(palette: CompressedColorPalette) {
 		this._original = palette;
 		this._current = palette.slice();
 		this._mutable = new Uint32Array(this._current.buffer);
@@ -46,11 +46,11 @@ class PaletteAnimation {
 		this._mutable[start] = end;
 	}
 
-	get current(): ColorPalette {
+	get current(): CompressedColorPalette {
 		return this._current;
 	}
 
-	get original(): ColorPalette {
+	get original(): CompressedColorPalette {
 		return this._original;
 	}
 }

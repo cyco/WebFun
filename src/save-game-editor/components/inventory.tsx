@@ -1,7 +1,7 @@
 import { AbstractList } from "src/ui/components";
 import InventoryRow from "./inventory-row";
 import { Tile } from "src/engine/objects";
-import { ColorPalette } from "src/engine/rendering";
+import { CompressedColorPalette } from "src/engine/rendering";
 import "./inventory.scss";
 
 export interface InventoryDelegate {
@@ -66,7 +66,7 @@ class Inventory extends AbstractList<Tile> {
 		return this.cell.tiles;
 	}
 
-	set palette(t: ColorPalette) {
+	set palette(t: CompressedColorPalette) {
 		this.cell.palette = t;
 	}
 

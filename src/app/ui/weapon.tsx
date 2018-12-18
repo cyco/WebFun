@@ -3,7 +3,7 @@ import { Char, Tile } from "src/engine/objects";
 import { Component } from "src/ui";
 import { Size } from "src/util";
 import { PaletteView } from "src/editor/components";
-import { ColorPalette } from "src/engine/rendering";
+import { CompressedColorPalette } from "src/engine/rendering";
 import "./weapon.scss";
 
 class Weapon extends Component {
@@ -37,7 +37,7 @@ class Weapon extends Component {
 		return this._weapon;
 	}
 
-	set palette(p: ColorPalette) {
+	set palette(p: CompressedColorPalette) {
 		this._paletteView.palette = p;
 	}
 

@@ -1,4 +1,4 @@
-import { ColorPalette } from "src/engine";
+import { CompressedColorPalette } from "src/engine";
 import { SegmentedProgressBar } from "src/ui/components";
 import { drawImage } from "src/app/rendering/canvas";
 import { Size } from "src/util";
@@ -8,7 +8,7 @@ import "./loading-view.scss";
 class LoadingView extends Component {
 	public static readonly tagName = "wf-loading-view";
 	private _image: Uint8Array;
-	private _palette: ColorPalette;
+	private _palette: CompressedColorPalette;
 
 	private _imageCanvas: HTMLCanvasElement = (
 		<canvas
