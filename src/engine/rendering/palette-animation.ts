@@ -54,4 +54,5 @@ class PaletteAnimation {
 		return this._original;
 	}
 }
+
 export default PaletteAnimation;

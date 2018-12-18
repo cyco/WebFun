@@ -1,10 +1,13 @@
 import { floor } from "src/std/math";
 import { OutputStream } from "src/util";
+import ColorPalette from "./color-palette";
 
 interface CompressedColorPalette extends Uint8Array {
 	findColor(r: number, g: number, b: number, a?: number): number;
 	toGIMP(name: string): string;
 	toAdobeColorTable(): Uint8Array;
+	decompress(): ColorPalette;
+	slice(start?: number, end?: number): CompressedColorPalette;
 }
 
 function findColor(r: number, g: number, b: number, a: number = 255): number {
@@ -47,8 +50,24 @@ function toAdobeColorTable(transparentColorIndex: number = 0): Uint8Array {
 	return new Uint8Array(stream.buffer);
 }
 
-Uint8Array.prototype.findColor = Uint8Array.prototype.findColor || findColor;
-Uint8Array.prototype.toGIMP = Uint8Array.prototype.toGIMP || toGIMP;
-Uint8Array.prototype.toAdobeColorTable = Uint8Array.prototype.toAdobeColorTable || toAdobeColorTable;
+function decompress(): ColorPalette {
+	const colorPalette = new Uint32Array(0x100);
+
+	for (let i = 0; i < 0x100; i++) {
+		colorPalette[i] =
+			((i === 0 ? 0 : 0xff) << 24) | // alpha
+			(this[i * 4 + 0] << 16) | // blue
+			(this[i * 4 + 1] << 8) | // green
+			this[i * 4 + 2]; // red
+	}
+
+	return colorPalette;
+}
+
+const proto = Uint8Array.prototype as any;
+proto.findColor = proto.findColor || findColor;
+proto.toGIMP = proto.toGIMP || toGIMP;
+proto.toAdobeColorTable = proto.toAdobeColorTable || toAdobeColorTable;
+proto.decompress = proto.decompress || decompress;
 
 export default CompressedColorPalette;
