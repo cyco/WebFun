@@ -6,8 +6,7 @@ abstract class Scene_not_builtin {
 	public engine: Engine = null;
 
 	get cameraOffset(): Point {
-		// TODO: remove access to private variable stack and dependency on stack order
-		return (<any>this.engine.sceneManager)._stack[0].camera.offset;
+		return this.engine.camera.offset;
 	}
 
 	public abstract render(renderer: Renderer): void;
