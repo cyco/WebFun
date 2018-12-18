@@ -48,12 +48,6 @@ interface ImageData {
 	toImage(): Promise<HTMLImageElement>;
 }
 
-interface Uint8Array {
-	findColor(r: number, g: number, b: number, a?: number): number;
-	toGIMP(name: string): string;
-	toAdobeColorTable(): Uint8Array;
-}
-
 // by @ahejlsberg
 // As seen on https://github.com/Microsoft/TypeScript/issues/3496#issuecomment-128553540
 type JSONValue = string | number | boolean | JSONObject | JSONArray;
