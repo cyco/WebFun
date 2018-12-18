@@ -3,7 +3,7 @@ import { Popover } from "src/ui/components";
 import { PopoverModalSession } from "src/ux";
 import { Zone, Tile } from "src/engine/objects";
 import { DiscardingStorage } from "src/util";
-import { CompressedColorPalette } from "src/engine/rendering";
+import { ColorPalette } from "src/engine/rendering";
 import ZonePicker, { Events as ZonePickerEvents } from "./zone-picker";
 import { drawZoneImageData } from "src/app/rendering/canvas";
 import "./popover-zone-picker.scss";
@@ -13,7 +13,7 @@ class PopoverZonePicker extends Component implements EventListenerObject {
 	private _canvas: HTMLCanvasElement = <canvas /> as HTMLCanvasElement;
 	public filter: (_: Zone) => boolean = null;
 	private _zone: Zone;
-	public _palette: CompressedColorPalette;
+	public _palette: ColorPalette;
 	private _state: Storage = new DiscardingStorage();
 	public zones: Zone[];
 

@@ -1,7 +1,7 @@
 import Component from "src/ui/component";
 import { Zone, Tile, Hotspot } from "src/engine/objects";
 import { MutableHotspot, MutableZone } from "src/engine/mutable-objects";
-import { CompressedColorPalette } from "src/engine/rendering";
+import { ColorPalette } from "src/engine/rendering";
 import { Point } from "src/util";
 import { MenuItemInit, MenuItemSeparator } from "src/ui";
 import { ModalPrompt } from "src/ux";
@@ -10,7 +10,7 @@ import "./hotspot-layer.scss";
 class HotspotLayer extends Component {
 	public static readonly tagName = "wf-hotspot-layer";
 	public static readonly observedAttributes: string[] = [];
-	public palette: CompressedColorPalette;
+	public palette: ColorPalette;
 	private _zone: Zone;
 
 	protected connectedCallback() {

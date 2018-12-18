@@ -1,5 +1,5 @@
-import { CompressedColorPalette, GameData, readGameDataFile, GameTypeYoda } from "src/engine";
-import { AbstractImageFactory } from "src/engine/rendering";
+import { GameData, readGameDataFile, GameTypeYoda } from "src/engine";
+import { AbstractImageFactory, ColorPalette } from "src/engine/rendering";
 import Settings from "src/settings";
 import { EventTarget, FileLoader, InputStream } from "src/util";
 import { DOMSoundLoader } from "./audio";
@@ -15,7 +15,7 @@ export const StageCount = 9;
 
 export declare interface LoaderEventDetails {
 	data: GameData;
-	palette: CompressedColorPalette;
+	palette: ColorPalette;
 }
 
 class Loader extends EventTarget {
@@ -28,7 +28,7 @@ class Loader extends EventTarget {
 	private _rawData: any;
 	private _buildSoundUrl: (name: string) => string;
 	private _data: GameData;
-	private _palette: Uint8Array;
+	private _palette: ColorPalette;
 	private _imageFactory: AbstractImageFactory;
 
 	constructor() {
@@ -63,15 +63,15 @@ class Loader extends EventTarget {
 		loader.onprogress = ({ detail: { progress } }) => this._progress(2, progress);
 		loader.onfail = reason => this._fail(reason);
 		loader.onload = ({ detail: { arraybuffer } }) => {
-			const palette = new Uint8Array(arraybuffer);
-			this._imageFactory.palette = palette as CompressedColorPalette;
+			const palette = Uint32Array.paletteFromArrayBuffer(arraybuffer);
+			this._imageFactory.palette = palette;
 			this._palette = palette;
 			this._loadSetupImage(palette);
 		};
 		loader.load();
 	}
 
-	private _loadSetupImage(palette: Uint8Array) {
+	private _loadSetupImage(palette: ColorPalette) {
 		this._progress(3, 0);
 
 		const pixels = this._rawData.setup;

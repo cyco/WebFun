@@ -1,7 +1,7 @@
 import Component from "src/ui/component";
 import { Zone, Tile, Char } from "src/engine/objects";
 import { MutableNPC } from "src/engine/mutable-objects";
-import { CompressedColorPalette } from "src/engine/rendering";
+import { ColorPalette } from "src/engine/rendering";
 import { Point } from "src/util";
 import { MenuItemInit, MenuItemSeparator } from "src/ui";
 import { ModalPrompt } from "src/ux";
@@ -11,7 +11,7 @@ import "./npc-layer.scss";
 class NPCLayer extends Component {
 	public static readonly tagName = "wf-npc-layer";
 	public static readonly observedAttributes: string[] = [];
-	public palette: CompressedColorPalette;
+	public palette: ColorPalette;
 	public characters: Char[];
 	private _zone: Zone;
 

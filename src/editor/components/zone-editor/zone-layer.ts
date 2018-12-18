@@ -2,7 +2,7 @@ import Component from "src/ui/component";
 import { default as Zone } from "src/engine/objects/zone";
 import Tile, { HEIGHT as TileHeight, WIDTH as TileWidth } from "src/engine/objects/tile";
 import { Point } from "src/util";
-import { CompressedColorPalette } from "src/engine/rendering";
+import { ColorPalette } from "src/engine/rendering";
 import { MenuItemInit } from "src/ui";
 import "./zone-layer.scss";
 
@@ -12,7 +12,7 @@ class ZoneLayer extends Component {
 	private _zone: Zone;
 	private _layer: number;
 	private _canvas: HTMLCanvasElement;
-	private _palette: CompressedColorPalette;
+	private _palette: ColorPalette;
 	private _imageData: ImageData;
 
 	constructor() {
@@ -167,7 +167,7 @@ class ZoneLayer extends Component {
 		return this._layer;
 	}
 
-	set palette(p: CompressedColorPalette) {
+	set palette(p: ColorPalette) {
 		this._palette = p;
 
 		this._imageData = null;

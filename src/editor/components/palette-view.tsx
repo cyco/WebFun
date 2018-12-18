@@ -1,5 +1,5 @@
 import { Component } from "src/ui";
-import { CompressedColorPalette } from "src/engine";
+import { ColorPalette } from "src/engine";
 import { Size, Point } from "src/util";
 import { ImageFactory } from "src/app/rendering/canvas";
 import "./palette-view.scss";
@@ -8,7 +8,7 @@ class PaletteView extends Component {
 	public static tagName = "wf-palette-view";
 	public static readonly observedAttributes: string[] = [];
 
-	private _palette: CompressedColorPalette;
+	private _palette: ColorPalette;
 	private _image: Uint8Array;
 	private _size: Size;
 

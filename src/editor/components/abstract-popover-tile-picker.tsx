@@ -4,14 +4,14 @@ import { Tile } from "src/engine/objects";
 import { TileView as TileComponent } from "src/debug/components";
 import { PopoverModalSession } from "src/ux";
 import TilePicker, { Events as TilePickerEvents } from "./tile-picker";
-import { CompressedColorPalette } from "src/engine/rendering";
+import { ColorPalette } from "src/engine/rendering";
 import { DiscardingStorage } from "src/util";
 import "./abstract-popover-tile-picker.scss";
 
 abstract class PopoverTilePicker extends Component implements EventListenerObject {
 	public static readonly observedAttributes: string[] = [];
 
-	private _palette: CompressedColorPalette;
+	private _palette: ColorPalette;
 	public onchange: (e: CustomEvent) => void = () => void 0;
 	protected _state: Storage = new DiscardingStorage();
 

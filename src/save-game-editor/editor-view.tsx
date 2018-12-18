@@ -3,7 +3,7 @@ import { PopoverCharacterPicker } from "src/editor/components";
 import { InventoryDelegate } from "./components/inventory";
 import { InteractiveMapContextMenuProvider } from "./components/interactive-map";
 import { Tile } from "src/engine/objects";
-import { GameData, CompressedColorPalette } from "src/engine";
+import { GameData, ColorPalette } from "src/engine";
 import { SaveState } from "src/engine/save-game";
 import { Menu, Component } from "src/ui";
 import { WorldSize } from "src/engine/types";
@@ -19,7 +19,7 @@ import "./editor-view.scss";
 class EditorView extends Component implements InventoryDelegate, InteractiveMapContextMenuProvider {
 	public static readonly tagName = "wf-save-game-editor-view";
 	private _gameData: GameData;
-	private _palette: CompressedColorPalette;
+	private _palette: ColorPalette;
 	private _state: SaveState;
 	private _save: Element = <div className="save" />;
 	public state: Storage = new DiscardingStorage();
@@ -29,7 +29,7 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 		this.appendChild(this._save);
 	}
 
-	public presentState(state: SaveState, data: GameData, palette: CompressedColorPalette) {
+	public presentState(state: SaveState, data: GameData, palette: ColorPalette) {
 		this._state = state;
 		this._gameData = data;
 		this._palette = palette;
