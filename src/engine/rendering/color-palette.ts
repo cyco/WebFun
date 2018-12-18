@@ -19,7 +19,13 @@ function findColor(r: number, g: number, b: number, a: number = 255): number {
 	if (a == 0) return 0;
 
 	for (let i = 0; i < this.length; i += 4) {
-		if (r === this[i + 2] && g === this[i + 1] && b === this[i + 0] && (a === 255 && i != 0)) {
+		const value = this[i];
+		if (
+			r === ((value >> 16) & 0xff) &&
+			g === ((value >> 8) & 0xff) &&
+			b === (value & 0xff) &&
+			(a === 255 && i != 0)
+		) {
 			return floor(i / 4);
 		}
 	}
@@ -34,19 +40,25 @@ function toGIMP(name: string): string {
 	out += `Name: ${name}` + "\n";
 	out += `#` + "\n";
 
-	for (let i = 0; i < this.length; i += 4) {
-		out += `${this[i + 2]} ${this[i + 1]} ${this[i + 0]}${i === 0 ? " transparent" : ""}` + "\n";
+	for (let i = 0; i < this.length; i++) {
+		const value = this[i];
+
+		out +=
+			`${(value >> 16) & 0xff} ${(value >> 8) & 0xff} ${value & 0xff}${i === 0 ? " transparent" : ""}` +
+			"\n";
 	}
 
 	return out;
 }
 
 function toAdobeColorTable(transparentColorIndex: number = 0): Uint8Array {
-	const stream = new OutputStream((this.length / 4) * 3 + 2 + 2);
-	for (let i = 0; i < this.length; i += 4) {
-		stream.writeUint8(this[i + 2]);
-		stream.writeUint8(this[i + 1]);
-		stream.writeUint8(this[i]);
+	const stream = new OutputStream(this.length * 3 + 2 + 2);
+	for (let i = 0; i < this.length; i++) {
+		const value = this[i];
+
+		stream.writeUint8((value >> 16) & 0xff);
+		stream.writeUint8((value >> 8) & 0xff);
+		stream.writeUint8(value & 0xff);
 	}
 	stream.endianess = OutputStream.ENDIAN.BIG;
 	stream.writeUint16(floor(this.length / 4));
