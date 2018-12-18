@@ -13,7 +13,6 @@ import { WindowManager, ComponentJSXRenderer } from "src/ui";
 import { Yoda } from "src/engine/type";
 import EditorWindow from "src/editor/editor-window";
 import SaveGameInspector from "src/editor/inspectors/save-game-inspector";
-import { Listener as WebWorkerListener } from "src/worker";
 
 declare global {
 	interface Window {
@@ -74,27 +73,23 @@ declare global {
 	var module: any;
 }
 
-if (window && window.document) {
-	if (module.hot) {
-		if (module.hot.addStatusHandler) {
-			if (module.hot.status() === "idle") {
-				module.hot.addStatusHandler((status: any) => {
-					if (status === "prepare") rescueData();
-				});
-			}
+if (module.hot) {
+	if (module.hot.addStatusHandler) {
+		if (module.hot.status() === "idle") {
+			module.hot.addStatusHandler((status: any) => {
+				if (status === "prepare") rescueData();
+			});
 		}
 	}
-
-	window.document.addEventListener("keydown", (e: KeyboardEvent) => {
-		if (e.metaKey && e.keyCode === 83) {
-			e.preventDefault();
-			e.stopPropagation();
-
-			rescueData();
-		}
-	});
-
-	window.addEventListener("load", main, { once: true } as any);
-} else {
-	WebWorkerListener.Initialize();
 }
+
+window.document.addEventListener("keydown", (e: KeyboardEvent) => {
+	if (e.metaKey && e.keyCode === 83) {
+		e.preventDefault();
+		e.stopPropagation();
+
+		rescueData();
+	}
+});
+
+window.addEventListener("load", main, { once: true } as any);
