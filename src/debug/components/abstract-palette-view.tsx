@@ -1,9 +1,9 @@
 import { Component } from "src/ui";
-import { ColorPalette } from "src/engine/rendering";
+import { CompressedColorPalette } from "src/engine/rendering";
 import "./abstract-palette-view.scss";
 
 abstract class AbstractTileView extends Component {
-	protected _palette: ColorPalette;
+	protected _palette: CompressedColorPalette;
 	protected _canvas = <canvas /> as HTMLCanvasElement;
 
 	public abstract draw(): void;
@@ -18,7 +18,7 @@ abstract class AbstractTileView extends Component {
 		super.disconnectedCallback();
 	}
 
-	public set palette(p: ColorPalette) {
+	public set palette(p: CompressedColorPalette) {
 		this._palette = p;
 		this.draw();
 	}

@@ -1,11 +1,11 @@
-import { AbstractImageFactory, ColorPalette, Image } from "src/engine/rendering";
+import { AbstractImageFactory, CompressedColorPalette, Image } from "src/engine/rendering";
 import drawImage from "./draw-image";
 import { Size } from "src/util";
 
 class DOMImageFactory extends AbstractImageFactory {
-	private _palette: ColorPalette = null;
+	private _palette: CompressedColorPalette = null;
 
-	constructor(palette: ColorPalette = null) {
+	constructor(palette: CompressedColorPalette = null) {
 		super();
 		this._palette = palette;
 	}

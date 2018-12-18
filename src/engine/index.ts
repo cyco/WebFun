@@ -6,7 +6,7 @@ import Hero from "./hero";
 import Inventory from "./inventory";
 import Metronome from "./metronome";
 import PersistentState from "./persistent-state";
-import { ColorPalette } from "./rendering";
+import { CompressedColorPalette } from "./rendering";
 import { Reader as SaveGameReader, Writer as SaveGameWriter, SaveState } from "./save-game";
 import SceneManager from "./scene-manager";
 import Story from "./story";
@@ -20,7 +20,7 @@ export {
 	GameTypeYoda,
 	EngineEvents,
 	Engine,
-	ColorPalette,
+	CompressedColorPalette,
 	GameData,
 	Hero,
 	Inventory,

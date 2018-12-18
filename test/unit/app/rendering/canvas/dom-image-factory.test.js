@@ -2,7 +2,7 @@ import DOMImageFactory from "src/app/rendering/canvas/dom-image-factory";
 import { Image } from "std/dom";
 
 describe("WebFun.App.Rendering.Canvas.DOMImageFactory", () => {
-	const colorPalette = [
+	const CompressedColorPalette = [
 		...[0, 0, 0, 0], // transparent
 		...[0, 0, 0, 0], // black
 		...[255, 255, 255, 0], // white
@@ -17,14 +17,14 @@ describe("WebFun.App.Rendering.Canvas.DOMImageFactory", () => {
 
 	it("uses a color palette", () => {
 		const factory = new DOMImageFactory();
-		factory.palette = colorPalette;
+		factory.palette = CompressedColorPalette;
 
-		expect(factory.palette).toBe(colorPalette);
+		expect(factory.palette).toBe(CompressedColorPalette);
 	});
 
 	it("can be used to build images", async done => {
 		const factory = new DOMImageFactory();
-		factory.palette = colorPalette;
+		factory.palette = CompressedColorPalette;
 
 		const pixelData = [0, 1, 2, 3, 4, 5];
 		const image = await factory.buildImage(3, 2, pixelData);

@@ -1,7 +1,7 @@
 import { Component } from "src/ui";
 import { Zone, Tile } from "src/engine/objects";
 import { drawZoneImageData } from "src/app/rendering/canvas";
-import { ColorPalette } from "src/engine";
+import { CompressedColorPalette } from "src/engine";
 import { Size } from "src/util";
 import "./zone-view.scss";
 
@@ -10,7 +10,7 @@ class ZoneView extends Component implements EventListenerObject {
 	public size: Size = new Size(4 * 32, 4 * 32);
 	private _canvas = <canvas className="pixelated" /> as HTMLCanvasElement;
 	private _zone: Zone;
-	public palette: ColorPalette;
+	public palette: CompressedColorPalette;
 
 	protected connectedCallback() {
 		super.connectedCallback();

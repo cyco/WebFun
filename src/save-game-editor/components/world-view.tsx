@@ -1,6 +1,6 @@
 import { Component } from "src/ui";
 import { World } from "src/engine/save-game";
-import { GameData, ColorPalette } from "src/engine";
+import { GameData, CompressedColorPalette } from "src/engine";
 import { SaveState } from "src/engine/save-game";
 import TransformCanvas, { TransformCanvasRenderingContext2D } from "./transform-canvas";
 import "./world-view.scss";
@@ -15,7 +15,7 @@ class WorldView extends Component {
 	public gameData: GameData;
 	public state: SaveState;
 	public world: World;
-	public palette: ColorPalette;
+	public palette: CompressedColorPalette;
 
 	private _zoneImages: HTMLImageElement[];
 

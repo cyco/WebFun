@@ -1,13 +1,13 @@
-import { ColorPalette, GameData, GameType, SaveState } from "src/engine";
+import { CompressedColorPalette, GameData, GameType, SaveState } from "src/engine";
 
 class DataManager {
 	private _currentData: GameData;
-	private _palette: ColorPalette;
+	private _palette: CompressedColorPalette;
 	private _type: GameType;
 	private _state: SaveState;
 	private _stateData: GameData;
 
-	constructor(data: GameData, palette: ColorPalette, type: GameType) {
+	constructor(data: GameData, palette: CompressedColorPalette, type: GameType) {
 		this._currentData = data.copy();
 		this._palette = palette;
 		this._type = type;

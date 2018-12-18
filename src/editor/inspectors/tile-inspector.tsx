@@ -5,13 +5,13 @@ import { TileEditor } from "../components";
 import { sqrt, ceil, floor } from "src/std/math";
 import { downloadImage } from "src/util";
 import { FilePicker } from "src/ui";
-import { ColorPalette } from "src/engine/rendering";
+import { CompressedColorPalette } from "src/engine/rendering";
 import { TileView } from "src/debug/components";
 
 import "./tile-inspector.scss";
 
 class TileInspector extends AbstractInspector {
-	private _palette: ColorPalette;
+	private _palette: CompressedColorPalette;
 	private _requiredAttributes: number = 0;
 	private _prohibitedAttributes: number = 0;
 	protected _editor: TileEditor = null;

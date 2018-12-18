@@ -1,6 +1,6 @@
 import { Cell } from "src/ui/components";
 import { Zone, Tile } from "src/engine/objects";
-import { ColorPalette } from "src/engine/rendering";
+import { CompressedColorPalette } from "src/engine/rendering";
 import { drawZoneImageData } from "src/app/rendering/canvas";
 import "./zone-picker-cell.scss";
 
@@ -8,7 +8,7 @@ class ZonePickerCell extends Cell<Zone> {
 	public static readonly tagName = "wf-debug-zone-picker-cell";
 	public static readonly observedAttributes: string[] = [];
 
-	private _palette: ColorPalette;
+	private _palette: CompressedColorPalette;
 	private _canvas = <canvas className="pixelated" /> as HTMLCanvasElement;
 	private _data: Zone;
 
@@ -54,7 +54,7 @@ class ZonePickerCell extends Cell<Zone> {
 		return this._data;
 	}
 
-	set palette(d: ColorPalette) {
+	set palette(d: CompressedColorPalette) {
 		this._palette = d;
 		if (this.isConnected) this.draw();
 	}

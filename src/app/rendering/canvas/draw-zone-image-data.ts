@@ -1,7 +1,7 @@
 import { Zone, Tile } from "src/engine/objects";
-import { ColorPalette } from "src/engine";
+import { CompressedColorPalette } from "src/engine";
 
-export default (zone: Zone, palette: ColorPalette) => {
+export default (zone: Zone, palette: CompressedColorPalette) => {
 	if (!zone) return new ImageData(1, 1);
 
 	const TileWidth = Tile.WIDTH;

@@ -1,13 +1,13 @@
 import { Component } from "src/ui";
 import { Tile } from "src/engine/objects";
-import { ColorPalette } from "src/engine/rendering";
+import { CompressedColorPalette } from "src/engine/rendering";
 import { PaletteView } from "src/editor/components";
 import { Size } from "src/util";
 import "./tile.scss";
 
 class TileComponent extends Component {
 	public static readonly tagName = "wf-save-game-editor-tile";
-	private _palette: ColorPalette;
+	private _palette: CompressedColorPalette;
 	private _tile: Tile = null;
 	private _image: HTMLElement = document.createElement("div");
 
