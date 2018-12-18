@@ -38,10 +38,6 @@ describe("WebFun.App.Rendering.Canvas.Renderer", () => {
 		expect(context.clearRect).toHaveBeenCalledWith(0, 0, 10, 20);
 	});
 
-	it("do nothing when clearTile is called", () => {
-		expect(() => subject.clearTile()).not.toThrow();
-	});
-
 	describe("renderZoneTile", () => {
 		it("builds images on first render", () => {
 			let resolve;
