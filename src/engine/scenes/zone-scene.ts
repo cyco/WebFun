@@ -39,6 +39,9 @@ class ZoneScene extends Scene {
 		let stop = await engine.scriptExecutor.continueActions(engine, EvaluationMode.Walk);
 		if (stop) return;
 
+		stop = await this._handlePlacedTile();
+		if (stop) return;
+
 		this._moveNPCs();
 
 		// await this._handleMouse();
@@ -406,6 +409,18 @@ class ZoneScene extends Scene {
 				// TODO: play blocked sound
 			}
 		} else this.executeHotspots();
+	}
+
+	private async _handlePlacedTile(): Promise<boolean> {
+		const inputManager = this.engine.inputManager;
+		const tile = inputManager.placedTile;
+		const location = inputManager.placedTileLocation;
+
+		if (!tile || !location) return false;
+
+		inputManager.clearPlacedTile();
+
+		return false;
 	}
 }
 
