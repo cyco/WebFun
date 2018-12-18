@@ -4,10 +4,6 @@ import Condition from "./condition";
 import Controls from "./controls";
 import Instruction from "./instruction";
 import TileCell from "./tile-cell";
-import GamepadTest from "./gamepad-test";
-import GamepadTestCell from "./gamepad-test-cell";
-import GamepadTestCellButton from "./gamepad-test-cell-button";
-import GamepadTestCellAxis from "./gamepad-test-cell-axis";
 import SimulatorWindow from "./simulator-window";
 import PopoverZonePicker from "./popover-zone-picker";
 import ZonePicker from "./zone-picker";
@@ -31,10 +27,6 @@ export {
 	BreakpointButton,
 	Condition,
 	Instruction,
-	GamepadTest,
-	GamepadTestCell,
-	GamepadTestCellButton,
-	GamepadTestCellAxis,
 	SimulatorWindow,
 	PopoverZonePicker,
 	ZonePicker,
