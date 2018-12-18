@@ -3,8 +3,12 @@ import { ColorPicker, PaletteColorPicker } from "../components";
 import { IconButton } from "src/ui/components";
 import { Color, Size, download, rgba } from "src/util";
 import { ModalPrompt } from "src/ux";
+import PaletteAnimation from "src/engine/rendering/palette-animation";
+
+const PaletteAnimationInterval = 100;
 
 class PaletteInspector extends AbstractInspector {
+	private _animation: number;
 	private _paletteView = (
 		<PaletteColorPicker
 			size={new Size(16, 16)}
@@ -27,6 +31,10 @@ class PaletteInspector extends AbstractInspector {
 	private _download: IconButton = (
 		<IconButton icon="download" onclick={() => this.downloadPalette()} />
 	) as IconButton;
+	private _animate: IconButton = (
+		<IconButton icon="play" onclick={() => this.togglePaletteAnimation()} />
+	) as IconButton;
+	private _animator: PaletteAnimation = null;
 
 	constructor(state: Storage) {
 		super(state);
@@ -41,6 +49,7 @@ class PaletteInspector extends AbstractInspector {
 		this.window.content.appendChild(this._colorPicker);
 
 		this.window.addTitlebarButton(this._download);
+		this.window.addTitlebarButton(this._animate);
 	}
 
 	async downloadPalette() {
@@ -68,6 +77,26 @@ class PaletteInspector extends AbstractInspector {
 		this._paletteView.color = this.state.load("color") || rgba(0, 0, 0, 0);
 
 		this._paletteView.redraw();
+	}
+
+	public togglePaletteAnimation() {
+		if (!this._animator) {
+			this._animator = new PaletteAnimation(this.data.palette);
+		}
+
+		if (this._animate.icon === "stop") {
+			this._animate.icon = "play";
+			clearInterval(this._animation);
+			this._animator.reset();
+			this._paletteView.palette = this._animator.current;
+			this._animator = null;
+		} else {
+			this._animate.icon = "stop";
+			this._animation = setInterval(() => {
+				this._animator.step();
+				this._paletteView.palette = this._animator.current;
+			}, PaletteAnimationInterval);
+		}
 	}
 }
 
