@@ -15,6 +15,7 @@ import Story from "./story";
 import GameData from "./game-data";
 import { GameType as Type } from "./type";
 import { Mixer } from "./audio";
+import Camera from "./camera";
 
 export { Events };
 
@@ -36,6 +37,7 @@ class Engine extends EventTarget {
 	public persistentState: typeof State = State;
 	public temporaryState: any = null;
 	public gameState: GameState = GameState.Stopped;
+	public camera: Camera = new Camera();
 	private _currentZone: Zone = null;
 	private _currentWorld: World = null;
 

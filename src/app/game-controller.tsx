@@ -159,6 +159,7 @@ class GameController extends EventTarget {
 		engine.metronome.onrender = () => engine.render();
 
 		const zoneScene = new ZoneScene();
+		zoneScene.engine = engine;
 		zoneScene.zone = zone;
 		engine.currentZone = zone;
 		engine.currentWorld = engine.world.locationOfZone(zone) ? engine.world : null;

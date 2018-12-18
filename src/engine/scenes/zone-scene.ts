@@ -12,7 +12,6 @@ import { EvaluationMode } from "../script";
 import { Direction as InputDirection } from "src/engine/input";
 
 class ZoneScene extends Scene {
-	private _camera = new Camera();
 	private _zone: Zone;
 
 	get zone() {
@@ -21,15 +20,15 @@ class ZoneScene extends Scene {
 
 	set zone(z) {
 		this._zone = z;
-		this._camera.zoneSize = z.size;
+		this.engine.camera.zoneSize = z.size;
 	}
 
 	get camera() {
-		return this._camera;
+		return this.engine.camera;
 	}
 
 	get currentOffset() {
-		return this._camera.offset;
+		return this.engine.camera.offset;
 	}
 
 	public async update(ticks: number) {
@@ -47,7 +46,7 @@ class ZoneScene extends Scene {
 		stop = await this._handleKeys();
 		if (stop) return;
 
-		this._camera.update(ticks);
+		this.engine.camera.update(ticks);
 		hero.update(ticks);
 
 		await engine.scriptExecutor.runActions(engine, EvaluationMode.Walk);
@@ -326,7 +325,7 @@ class ZoneScene extends Scene {
 	private _moveNPC(_: NPC) {}
 
 	prepareCamera() {
-		this._camera.update(Infinity);
+		this.engine.camera.update(Infinity);
 	}
 
 	willShow() {
@@ -341,7 +340,7 @@ class ZoneScene extends Scene {
 		const inputManager = engine.inputManager;
 		const mouseLocationInView = inputManager.mouseLocationInView;
 
-		const camera = this._camera;
+		const camera = this.engine.camera;
 		const offset = camera.offset;
 		const size = camera.size;
 		const hero = engine.hero;
