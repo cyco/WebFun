@@ -108,6 +108,10 @@ export class Tile {
 		return this.getAttribute(Tile.Attribute.Locator);
 	}
 
+	isOpaque() {
+		return 0 === (this._attributes & 1);
+	}
+
 	getAttribute(attr: number): boolean {
 		return !!(this._attributes & (1 << attr));
 	}
