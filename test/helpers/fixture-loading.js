@@ -56,4 +56,4 @@ if (!process.browser) {
 	};
 }
 
-export { getFixtureContent, getFixtureData };
+export { getFixtureContent, getFixtureData, buildFixtureUrl };
