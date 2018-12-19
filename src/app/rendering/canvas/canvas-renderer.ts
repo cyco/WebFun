@@ -1,6 +1,6 @@
 import { Point, rgb } from "src/util";
 import { Tile } from "src/engine/objects";
-import { Renderer, Image } from "src/engine/rendering";
+import { Renderer } from "src/engine/rendering";
 
 const TILE_WIDTH = Tile.WIDTH;
 const TILE_HEIGHT = Tile.HEIGHT;
