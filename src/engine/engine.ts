@@ -8,7 +8,7 @@ import Inventory from "./inventory";
 import Metronome from "./metronome";
 import { Zone, Tile } from "./objects";
 import State from "./persistent-state";
-import { AbstractImageFactory, Renderer } from "./rendering";
+import { AbstractImageFactory, Renderer, PaletteAnimation } from "./rendering";
 import SceneManager from "./scene-manager";
 import { ScriptExecutor } from "./script";
 import Story from "./story";
@@ -29,6 +29,7 @@ class Engine extends EventTarget {
 	public sceneManager: SceneManager = null;
 	public renderer: Renderer = null;
 	public imageFactory: AbstractImageFactory = null;
+	public palette: PaletteAnimation = null;
 	public data: GameData = null;
 	public hero: Hero = null;
 	public inventory: Inventory = null;

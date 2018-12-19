@@ -16,6 +16,7 @@ import { MainMenu, MainWindow } from "./windows";
 import { GameTypeYoda } from "src/engine";
 import { DOMAudioChannel } from "./audio";
 import { Mixer } from "src/engine/audio";
+import { PaletteAnimation } from "src/engine/rendering";
 import {
 	LoadingView,
 	SceneView,
@@ -157,6 +158,8 @@ class GameController extends EventTarget {
 		engine.metronome.stop();
 		engine.metronome.ontick = (delta: number) => engine.update(delta);
 		engine.metronome.onrender = () => engine.render();
+
+		engine.palette = new PaletteAnimation(this.palette);
 
 		const zoneScene = new ZoneScene();
 		zoneScene.engine = engine;
