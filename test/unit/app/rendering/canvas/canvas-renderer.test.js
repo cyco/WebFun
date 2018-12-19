@@ -38,67 +38,6 @@ describe("WebFun.App.Rendering.Canvas.Renderer", () => {
 		expect(context.clearRect).toHaveBeenCalledWith(0, 0, 10, 20);
 	});
 
-	describe("renderZoneTile", () => {
-		it("builds images on first render", () => {
-			let resolve;
-			spyOn(context, "drawImage");
-			spyOn(subject._imageFactory, "buildImage").and.returnValue(
-				new Promise((r, reject) => (resolve = r))
-			);
-
-			const tile = { id: 5 };
-			subject.renderZoneTile(tile, 1, 2);
-
-			expect(context.drawImage).not.toHaveBeenCalled();
-			expect(subject._imageFactory.buildImage).toHaveBeenCalled();
-
-			resolve({});
-		});
-
-		it("only builds images once", () => {
-			let resolve;
-			spyOn(subject._imageFactory, "buildImage").and.returnValue(
-				new Promise((r, reject) => (resolve = r))
-			);
-
-			const tile = { id: 6 };
-			subject.renderZoneTile(tile, 1, 2);
-			subject.renderZoneTile(tile, 1, 2);
-
-			expect(subject._imageFactory.buildImage.calls.count()).toBe(1);
-
-			resolve({});
-
-			subject.renderZoneTile(tile, 1, 2);
-			expect(subject._imageFactory.buildImage.calls.count()).toBe(1);
-		});
-
-		it("renders a tile only after the image has been built, potentially missing for several frames", async done => {
-			const imageMock = { representation: "mocked-representation" };
-			let resolve;
-			const tile = { id: 9 };
-			spyOn(subject._imageFactory, "buildImage").and.returnValue(
-				new Promise((r, reject) => (resolve = r))
-			);
-			spyOn(context, "drawImage");
-
-			subject.renderZoneTile(tile, 1, 2);
-			expect(context.drawImage).not.toHaveBeenCalled();
-			subject.renderZoneTile(tile, 1, 2);
-			expect(context.drawImage).not.toHaveBeenCalled();
-
-			resolve(imageMock);
-
-			await dispatch(() => void 0);
-
-			subject.renderZoneTile(tile, 1, 2);
-
-			expect(context.drawImage).toHaveBeenCalledWith("mocked-representation", 32, 64);
-
-			done();
-		});
-	});
-
 	it("implements renderImageData", () => {
 		spyOn(context, "putImageData");
 

@@ -79,7 +79,6 @@ class SaveGameInspector extends AbstractInspector {
 
 		engine.story = story;
 		engine.data = data;
-		engine.renderer.imageFactory.palette = controller.palette;
 
 		controller.show(this.window.manager);
 		controller.jumpStartEngine(controller.data.zones[state.currentZoneID]);

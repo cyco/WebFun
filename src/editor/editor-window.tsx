@@ -3,7 +3,6 @@ import { readGameDataFile, GameData, GameType, GameTypeYoda, GameTypeIndy } from
 import { InputStream } from "src/util";
 import { PaletteProvider } from "src/app/data";
 import DataManager from "./data-manager";
-import { ImageFactory } from "src/app/rendering/canvas";
 import buildEditorMenu from "./menu";
 import { Menu, WindowMenuItem } from "src/ui";
 import EditorView from "./editor-view";

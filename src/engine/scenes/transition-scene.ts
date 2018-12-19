@@ -176,13 +176,15 @@ class TransitionScene extends Scene {
 
 		const offsetX = animatedX * tileWidth;
 		const offsetY = animatedY * tileHeight;
-
+		// TODO: Fix transition scene
+		/*
 		renderer.renderImageData(this._source, offsetX, offsetY);
 		renderer.renderImageData(
 			this._target,
 			offsetX - xDir * w * tileWidth,
 			offsetY - yDir * h * tileHeight
 		);
+*/
 	}
 
 	private _renderRoomAnimation(renderer: AbstractRenderer): void {

@@ -53,7 +53,7 @@ class DetonatorScene extends Scene {
 	render(renderer: AbstractRenderer) {
 		for (let i = 0; i <= this._ticks && i <= this._detonatorFrames.length; i++) {
 			const frame = this._detonatorFrames[i];
-			renderer.renderTile(frame, this._detonatorLocation.x, this._detonatorLocation.y, 3);
+			// renderer.renderTile(frame, this._detonatorLocation.x, this._detonatorLocation.y, 3);
 		}
 	}
 }
