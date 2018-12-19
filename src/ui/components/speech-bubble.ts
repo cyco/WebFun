@@ -110,6 +110,7 @@ class SpeechBubble extends Component {
 		this.appendChild(this._text.parentNode);
 		this._setupButtons();
 		this._setupBackground();
+		this._setupBackground();
 		this._udpateButtonVisibility();
 		this._scrollTo(0);
 	}
