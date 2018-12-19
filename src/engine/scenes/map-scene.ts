@@ -239,9 +239,14 @@ class MapScene extends Scene {
 	}
 
 	render(renderer: AbstractRenderer): void {
-		renderer.clear();
-
 		const engine = this.engine;
+		const palette = this.engine.palette.current;
+		const TileWidth = Tile.WIDTH;
+		const MapWidth = 10;
+		const MapHeight = 10;
+		const MapTileWidth = 28;
+		const MapTileHeight = 28;
+
 		const state = engine.temporaryState;
 		const currentZone = engine.currentZone;
 		let world = engine.world;
@@ -249,24 +254,58 @@ class MapScene extends Scene {
 		if (currentZone.planet === Planet.DAGOBAH) {
 			world = engine.dagobah;
 		}
-
 		const offsetX = (288 - World.WIDTH * MapTileWidth) / 2;
 		const offsetY = (288 - World.HEIGHT * MapTileHeight) / 2;
+		const result = new ImageData(288, 288);
+		var buffer = new ArrayBuffer(result.data.length);
+		var byteArray = new Uint8Array(buffer);
+		var data = new Uint32Array(buffer);
 
-		for (let y = 0; y < World.HEIGHT; y++) {
-			for (let x = 0; x < World.WIDTH; x++) {
+		const bpr = 288;
+		const drawOpaqueTileAt = (tile: Tile, x: number, y: number) => {
+			const pixels = tile.imageData;
+			let tx, ty;
+			let j = y * MapTileHeight * bpr + x * MapTileWidth;
+			for (ty = 0; ty < MapTileHeight; ty++) {
+				for (tx = 0; tx < MapTileWidth; tx++) {
+					data[j + tx + offsetY * bpr + offsetX] = palette[pixels[ty * TileWidth + tx]];
+				}
+				j += bpr;
+			}
+		};
+
+		const drawTileAt = (tile: Tile, x: number, y: number) => {
+			const pixels = tile.imageData;
+			let tx, ty;
+			let j = y * MapTileHeight * bpr + x * MapTileWidth;
+			for (ty = 0; ty < MapTileHeight; ty++) {
+				for (tx = 0; tx < MapTileWidth; tx++) {
+					const paletteIndex = pixels[ty * TileWidth + tx];
+					if (paletteIndex === 0) continue;
+					data[j + tx + offsetY * bpr + offsetX] = palette[paletteIndex];
+				}
+				j += bpr;
+			}
+		};
+
+		let x, y;
+		for (y = 0; y < MapHeight; y++) {
+			for (x = 0; x < MapWidth; x++) {
 				const zone = world.getZone(x, y);
-				let tile = this._tileForZone(zone);
-
-				renderer.renderTile(tile, offsetX + x * MapTileWidth, offsetY + y * MapTileHeight, 0);
+				const tile = this._tileForZone(zone);
+				if (!tile) continue;
+				if (tile.isOpaque()) drawOpaqueTileAt(tile, x, y);
+				else drawTileAt(tile, x, y);
 			}
 		}
 
 		if ((this._ticks % (2 * MapScene.LOCATOR_ANIMATION_TICKS)) / MapScene.LOCATOR_ANIMATION_TICKS < 1) {
-			const x = offsetX + MapTileWidth * state.worldLocation.x;
-			const y = offsetY + MapTileHeight * state.worldLocation.y;
-			if (this._location) renderer.renderTile(this._location, x, y, 1);
+			if (this._location) drawTileAt(this._location, state.worldLocation.x, state.worldLocation.y);
 		}
+
+		result.data.set(byteArray);
+		(renderer as any).renderImageData(result, 0, 0);
+		return;
 	}
 
 	private _tileForZone(zone: Zone): Tile {
