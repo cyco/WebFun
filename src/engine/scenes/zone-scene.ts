@@ -56,7 +56,7 @@ class ZoneScene extends Scene {
 	}
 
 	public render(renderer: AbstractRenderer) {
-		this._renderer.render(this._zone, this.engine, renderer);
+		this._renderer.render(this._zone, this.engine, renderer, renderer.imageFactory.palette);
 	}
 
 	public executeHotspots() {
