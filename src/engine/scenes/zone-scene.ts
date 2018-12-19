@@ -32,6 +32,8 @@ class ZoneScene extends Scene {
 	}
 
 	public async update(ticks: number) {
+		this.engine.palette.step();
+
 		const engine = this.engine;
 		const hero = engine.hero;
 		hero.isWalking = false;
@@ -56,7 +58,7 @@ class ZoneScene extends Scene {
 	}
 
 	public render(renderer: AbstractRenderer) {
-		this._renderer.render(this._zone, this.engine, renderer, renderer.imageFactory.palette);
+		this._renderer.render(this._zone, this.engine, renderer, this.engine.palette.current);
 	}
 
 	public executeHotspots() {
