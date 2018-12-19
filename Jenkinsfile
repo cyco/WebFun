@@ -20,24 +20,8 @@ pipeline {
 		}
 
 		stage("Test") {
-            parallel {
-                stage("Run Unit Tests") {
-                    steps {
-                        sh 'ci=1 yarn test:unit'
-                    }
-                }
-
-                stage("Run Acceptance Tests") {
-                    steps {
-                        sh 'ci=1 yarn test:acceptance'
-                    }
-                }
-
-                stage("Run Performance Tests") {
-                    steps {
-                        sh 'ci=1 yarn test:performance'
-                    }
-                }
+            steps {
+                sh 'ci=1 yarn test:full'
             }
 		}
 
