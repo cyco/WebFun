@@ -26,14 +26,14 @@ describe("WebFun.Engine.Scenes.PauseScene", () => {
 
 	it("renders a checkered tile above the current scene", () => {
 		const renderer = {
-			renderImage() {}
+			drawImage() {}
 		};
-		spyOn(renderer, "renderImage");
+		spyOn(renderer, "drawImage");
 
 		const scene = new PauseScene();
 		scene.render(renderer);
 
 		expect(scene.isOpaque()).toBeFalse();
-		expect(renderer.renderImage).toHaveBeenCalledTimes(9 * 9);
+		expect(renderer.drawImage).toHaveBeenCalledTimes(9 * 9);
 	});
 });

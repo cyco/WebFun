@@ -1,3 +1,4 @@
 import * as CanvasRenderer from "./canvas";
+import { drawImage, drawTileImageData, drawZoneImageData } from "./canvas";
 
-export { CanvasRenderer };
+export { CanvasRenderer, drawImage, drawTileImageData, drawZoneImageData };

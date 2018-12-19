@@ -60,7 +60,6 @@ class GameController extends EventTarget {
 		);
 
 		engine.renderer = new Renderer(this._sceneView.canvas);
-		engine.imageFactory = engine.renderer.imageFactory;
 		engine.sceneManager = this._sceneView.manager;
 		engine.inputManager = new DesktopInputManager(this._sceneView);
 		engine.metronome = new Metronome();
@@ -247,7 +246,7 @@ class GameController extends EventTarget {
 
 				resolve();
 			};
-			loader.load(this._engine.imageFactory);
+			loader.load();
 		});
 	}
 

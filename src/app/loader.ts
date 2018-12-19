@@ -1,5 +1,5 @@
 import { GameData, readGameDataFile, GameTypeYoda } from "src/engine";
-import { AbstractImageFactory, ColorPalette } from "src/engine/rendering";
+import { ColorPalette } from "src/engine/rendering";
 import Settings from "src/settings";
 import { EventTarget, FileLoader, InputStream } from "src/util";
 import { DOMSoundLoader } from "./audio";
@@ -29,7 +29,6 @@ class Loader extends EventTarget {
 	private _buildSoundUrl: (name: string) => string;
 	private _data: GameData;
 	private _palette: ColorPalette;
-	private _imageFactory: AbstractImageFactory;
 
 	constructor() {
 		super();
@@ -41,9 +40,7 @@ class Loader extends EventTarget {
 		this.registerEvents(Events);
 	}
 
-	public load(factory: AbstractImageFactory) {
-		this._imageFactory = factory;
-
+	public load() {
 		const loader = new FileLoader(this._dataUrl);
 		loader.onprogress = ({ detail: { progress } }) => this._progress(0, progress);
 		loader.onfail = reason => this._fail(reason);
@@ -64,7 +61,6 @@ class Loader extends EventTarget {
 		loader.onfail = reason => this._fail(reason);
 		loader.onload = ({ detail: { arraybuffer } }) => {
 			const palette = Uint32Array.paletteFromArrayBuffer(arraybuffer);
-			this._imageFactory.palette = palette;
 			this._palette = palette;
 			this._loadSetupImage(palette);
 		};
@@ -93,10 +89,6 @@ class Loader extends EventTarget {
 		this._data = new GameData(this._rawData);
 		this._progress(4, 1);
 
-		this._loadTileImages();
-	}
-
-	private async _loadTileImages() {
 		this._loadSounds();
 	}
 

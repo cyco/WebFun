@@ -7,7 +7,6 @@ describe("Engine", () => {
 		expect(engine).toHaveMember("metronome");
 		expect(engine).toHaveMember("sceneManager");
 		expect(engine).toHaveMember("renderer");
-		expect(engine).toHaveMember("imageFactory");
 		expect(engine).toHaveMember("data");
 	});
 

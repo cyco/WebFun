@@ -1,7 +1,7 @@
 import { Component } from "src/ui";
 import { ColorPalette } from "src/engine";
 import { Size, Point } from "src/util";
-import { ImageFactory } from "src/app/rendering/canvas";
+import { drawImage } from "src/app/rendering";
 import "./palette-view.scss";
 
 class PaletteView extends Component {
@@ -32,9 +32,7 @@ class PaletteView extends Component {
 		if (!this.palette) return;
 		if (!this.image) return;
 
-		const imageFactory = new ImageFactory();
-		imageFactory.palette = this.palette;
-		this.imageData = imageFactory.createImageData(this._size.width, this._size.height, this.image);
+		this.imageData = drawImage(this.image, this.size, this.palette);
 		this.ctx.putImageData(this.imageData, 0, 0);
 	}
 

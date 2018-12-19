@@ -53,7 +53,7 @@ describe("WebFun.Engine.Scenes.PickupScene", () => {
 			inputManager: {}
 		};
 		const renderer = {
-			renderZoneTile() {}
+			renderImage() {}
 		};
 		const item = {};
 
@@ -62,14 +62,14 @@ describe("WebFun.Engine.Scenes.PickupScene", () => {
 		scene.tile = item;
 		scene.location = {};
 
-		spyOn(renderer, "renderZoneTile");
+		spyOn(renderer, "renderImage");
 
 		// doesn't render for five ticks
 		for (let i = 0; i < 5; i++) {
 			scene.render(renderer);
 			scene.update();
 
-			expect(renderer.renderZoneTile).not.toHaveBeenCalled();
+			expect(renderer.renderImage).not.toHaveBeenCalled();
 		}
 
 		// renders the tile for the next five ticks
@@ -77,7 +77,7 @@ describe("WebFun.Engine.Scenes.PickupScene", () => {
 			scene.render(renderer);
 			scene.update();
 
-			expect(renderer.renderZoneTile).toHaveBeenCalledTimes(i + 1);
+			expect(renderer.renderImage).toHaveBeenCalledTimes(i + 1);
 		}
 	});
 
@@ -87,7 +87,7 @@ describe("WebFun.Engine.Scenes.PickupScene", () => {
 			inputManager: {}
 		};
 		const renderer = {
-			renderZoneTile() {}
+			renderImage() {}
 		};
 		const item = {};
 
@@ -98,9 +98,9 @@ describe("WebFun.Engine.Scenes.PickupScene", () => {
 
 		(5).times(() => scene.update());
 
-		spyOn(renderer, "renderZoneTile");
+		spyOn(renderer, "renderImage");
 		scene.render(renderer);
 
-		expect(renderer.renderZoneTile).toHaveBeenCalledWith(item, 2, 7, 1);
+		expect(renderer.renderImage).toHaveBeenCalledWith(undefined, 64, 224);
 	});
 });

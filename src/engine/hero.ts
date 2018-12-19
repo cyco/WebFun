@@ -233,22 +233,6 @@ class Hero extends EventTarget {
 
 		return true;
 	}
-
-	render(offset: Point, renderer: Renderer): void {
-		if (!this.visible) return;
-
-		let appearance = this._appearance;
-
-		// TODO: implement appearance
-		if (!appearance) return;
-		let frame = this._actionFrames;
-		if (this._attacking) {
-			appearance = this.weapon;
-		}
-
-		const tile = appearance.getFace(this._direction, frame);
-		if (tile) renderer.renderZoneTile(tile, offset.x + this._location.x, offset.y + this._location.y, 1);
-	}
 }
 
 export default Hero;

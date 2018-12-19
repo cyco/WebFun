@@ -1,7 +1,6 @@
 import { Point, rgb } from "src/util";
 import { Tile } from "src/engine/objects";
 import { Renderer, Image } from "src/engine/rendering";
-import DOMImageFactory from "./dom-image-factory";
 
 const TILE_WIDTH = Tile.WIDTH;
 const TILE_HEIGHT = Tile.HEIGHT;
@@ -9,7 +8,6 @@ const TILE_HEIGHT = Tile.HEIGHT;
 class CanvasRenderer extends Renderer {
 	protected _canvas: HTMLCanvasElement;
 	protected _ctx: CanvasRenderingContext2D;
-	protected _imageFactory: DOMImageFactory;
 	protected _imageCache: Map<number, Image> = new Map();
 	protected _imageLoaders: Map<number, Promise<Image>> = new Map();
 
@@ -24,11 +22,6 @@ class CanvasRenderer extends Renderer {
 		this._ctx.imageSmoothingQuality = "low";
 		this._ctx.fillStyle = rgb(0, 0, 0);
 		this._ctx.fillRect(0, 0, 288, 288);
-		this._imageFactory = new DOMImageFactory();
-	}
-
-	get imageFactory() {
-		return this._imageFactory;
 	}
 
 	static isSupported() {
@@ -38,31 +31,6 @@ class CanvasRenderer extends Renderer {
 
 	clear() {
 		this._ctx.clearRect(0, 0, this._canvas.width, this._canvas.height);
-	}
-
-	renderZoneTile(tile: Tile, x: number, y: number, z: number) {
-		this.renderTile(tile, x * TILE_WIDTH, y * TILE_HEIGHT, z);
-	}
-
-	renderTile(tile: Tile, x: number, y: number, _: number) {
-		if (!tile) return;
-
-		let image = this._imageCache.get(tile.id);
-		if (!image) {
-			if (this._imageLoaders.has(tile.id)) {
-				return;
-			}
-
-			const p = this.imageFactory.buildImage(TILE_WIDTH, TILE_HEIGHT, tile.imageData);
-			this._imageLoaders.set(tile.id, p);
-			p.then(img => {
-				this._imageCache.set(tile.id, img);
-				this._imageLoaders.delete(tile.id);
-			});
-			return;
-		}
-
-		this.drawImage(image.representation, x, y);
 	}
 
 	renderImage(image: HTMLImageElement, x: number, y: number) {
