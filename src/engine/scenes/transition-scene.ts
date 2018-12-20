@@ -38,6 +38,12 @@ class TransitionScene extends Scene {
 			offset = new Point(0, 0);
 		}
 
+		if (this.type === TransitionScene.TRANSITION_TYPE.ROOM && this.engine.currentZone.padding >= 0) {
+			this.engine.currentZone.padding &&
+				console.log("copy padding", this.engine.currentZone.padding.toHex(2));
+			this.targetZone.padding = this.engine.currentZone.padding;
+		}
+
 		this._source = this._takeSnapshot(this.engine.currentZone, offset.x, offset.y);
 		this._startTime = performance.now();
 	}
