@@ -13,7 +13,7 @@ export default <InstructionType>{
 		const npc = zone.npcs[instruction.arguments[0]];
 		if (npc) {
 			npc.enabled = false;
-			return Result.UpdateHotspot;
+			return Result.OK;
 		}
 
 		return Result.OK;

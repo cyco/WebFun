@@ -12,6 +12,6 @@ export default <InstructionType>{
 		const zone = engine.currentZone;
 		zone.npcs.forEach(npc => (npc.enabled = false));
 
-		return zone.npcs.length ? Result.UpdateNPC : Result.OK;
+		return zone.npcs.length ? Result.OK : Result.OK;
 	}
 };

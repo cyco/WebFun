@@ -15,6 +15,6 @@ export default <InstructionType>{
 
 		zone.moveTile(args[0], args[1], args[2], args[3], args[4]);
 
-		return Result.UpdateTiles;
+		return Result.OK;
 	}
 };
