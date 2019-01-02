@@ -1,7 +1,7 @@
 import Engine from "../../engine";
 import Action from "../../objects/action";
 import Instruction from "../../objects/instruction";
-import { Result, ResultFlags, Type } from "../types";
+import { Result, Type } from "../types";
 import InstructionType from "../instruction";
 
 export default <InstructionType>{
@@ -13,6 +13,6 @@ export default <InstructionType>{
 		const item = engine.data.tiles[args[0]];
 		engine.inventory.addItem(item);
 
-		return ResultFlags.UpdateInventory;
+		return Result.UpdateInventory;
 	}
 };

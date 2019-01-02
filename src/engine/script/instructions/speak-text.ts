@@ -1,7 +1,7 @@
 import SpeechScene from "src/engine/scenes/speech-scene";
 import { Point } from "src/util";
 import Engine from "../../engine";
-import { Result, ResultFlags } from "../types";
+import { Result } from "../types";
 
 export default async (text: string, point: Point, engine: Engine): Promise<Result> => {
 	const speechScene = new SpeechScene(engine);
@@ -9,5 +9,5 @@ export default async (text: string, point: Point, engine: Engine): Promise<Resul
 	speechScene.location = point;
 	engine.sceneManager.pushScene(speechScene);
 
-	return ResultFlags.UpdateText;
+	return Result.UpdateText;
 };

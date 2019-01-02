@@ -1,7 +1,7 @@
 import Engine from "../../engine";
 import Action from "../../objects/action";
 import Instruction from "../../objects/instruction";
-import { Result, ResultFlags } from "../types";
+import { Result } from "../types";
 import InstructionType from "../instruction";
 
 export default <InstructionType>{
@@ -10,6 +10,6 @@ export default <InstructionType>{
 	Description: "Show hero",
 	Implementation: async (_instruction: Instruction, engine: Engine, _: Action): Promise<Result> => {
 		engine.hero.visible = true;
-		return ResultFlags.UpdateHero;
+		return Result.UpdateHero;
 	}
 };

@@ -1,5 +1,5 @@
 import ScriptExecutor from "src/engine/script/script-executor";
-import { ResultFlags } from "src/engine/script/types";
+import { Result } from "src/engine/script/types";
 
 describe("ScriptExecutor", () => {
 	let evaluator, engine, action;
@@ -105,7 +105,7 @@ describe("ScriptExecutor", () => {
 
 		it("executes all instructions in an action", async done => {
 			const action = { instructions: ["instruction1", "instruction2"] };
-			spyOn(executor, "execute").and.returnValue(ResultFlags.OK);
+			spyOn(executor, "execute").and.returnValue(Result.OK);
 
 			await evaluator.executeInstructions(action);
 
@@ -127,7 +127,7 @@ describe("ScriptExecutor", () => {
 
 		it("stops executing instructions when an instruction returns wait", async done => {
 			const action = { instructions: ["instruction1", "instruction2"], instructionPointer: 0 };
-			spyOn(executor, "execute").and.returnValue(ResultFlags.Wait);
+			spyOn(executor, "execute").and.returnValue(Result.Wait);
 
 			await evaluator.executeInstructions(action);
 

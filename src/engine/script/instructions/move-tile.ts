@@ -1,7 +1,7 @@
 import Engine from "../../engine";
 import Action from "../../objects/action";
 import Instruction from "../../objects/instruction";
-import { Result, ResultFlags, Type } from "../types";
+import { Result, Type } from "../types";
 import InstructionType from "../instruction";
 
 export default <InstructionType>{
@@ -15,6 +15,6 @@ export default <InstructionType>{
 
 		zone.moveTile(args[0], args[1], args[2], args[3], args[4]);
 
-		return ResultFlags.UpdateTiles;
+		return Result.UpdateTiles;
 	}
 };

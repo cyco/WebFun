@@ -1,7 +1,7 @@
 import Engine from "../../engine";
 import Action from "../../objects/action";
 import Instruction from "../../objects/instruction";
-import { Result, ResultFlags } from "../types";
+import { Result } from "../types";
 import InstructionType from "../instruction";
 
 export default <InstructionType>{
@@ -12,6 +12,6 @@ export default <InstructionType>{
 		const zone = engine.currentZone;
 		zone.npcs.forEach(npc => (npc.enabled = false));
 
-		return zone.npcs.length ? ResultFlags.UpdateNPC : ResultFlags.OK;
+		return zone.npcs.length ? Result.UpdateNPC : Result.OK;
 	}
 };

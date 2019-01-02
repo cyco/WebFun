@@ -1,7 +1,7 @@
 import Engine from "../../engine";
 import Action from "../../objects/action";
 import Instruction from "../../objects/instruction";
-import { Result, ResultFlags, Type } from "../types";
+import { Result, Type } from "../types";
 import InstructionType from "../instruction";
 
 export default <InstructionType>{
@@ -15,6 +15,6 @@ export default <InstructionType>{
 		const args = instruction.arguments;
 		const zone = engine.currentZone;
 		zone.random = Math.round(Math.random() * args[0]) % args[0];
-		return ResultFlags.OK;
+		return Result.OK;
 	}
 };

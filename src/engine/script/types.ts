@@ -3,7 +3,6 @@ import { Action, Instruction, Zone } from "../objects";
 import EvaluationMode from "./evaluation-mode";
 
 type int16 = number;
-type Result = number;
 
 export type ConditionImplementation = (
 	args: int16[],
@@ -11,13 +10,14 @@ export type ConditionImplementation = (
 	engine: Engine,
 	mode: EvaluationMode
 ) => Promise<boolean>;
+
 export type InstructionImplementation = (
 	instruction: Instruction,
 	engine: Engine,
 	action: Action
 ) => Promise<Result>;
 
-enum ResultFlags {
+enum Result {
 	OK = 0,
 	UpdateTiles = 1 << 0,
 	UpdateText = 1 << 1,
@@ -47,4 +47,4 @@ class Type {
 	public static readonly Unused = new Type();
 }
 
-export { int16, ResultFlags, Result, Type };
+export { int16, Result, Type };

@@ -1,4 +1,4 @@
-import { ResultFlags } from "src/engine/script/types";
+import { Result } from "src/engine/script/types";
 import EvaluationMode from "./evaluation-mode";
 import { Point } from "src/util";
 import Engine from "../engine";
@@ -89,13 +89,13 @@ class ScriptExecutor {
 		for (let i = action.instructionPointer | 0, len = action.instructions.length; i < len; i++) {
 			action.instructionPointer = i + 1;
 			const result = await this._executor.execute(action.instructions[i]);
-			if (result & ResultFlags.Wait) {
+			if (result & Result.Wait) {
 				return true;
 			}
-			if (result & ResultFlags.UpdateText) {
+			if (result & Result.UpdateText) {
 				return true;
 			}
-			if (result & ResultFlags.UpdateZone) {
+			if (result & Result.UpdateZone) {
 				return true;
 			}
 		}

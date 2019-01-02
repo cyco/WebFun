@@ -2,7 +2,7 @@ import ZoneScene from "src/engine/scenes/zone-scene";
 import Engine from "../../engine";
 import Action from "../../objects/action";
 import Instruction from "../../objects/instruction";
-import { Result, ResultFlags, Type } from "../types";
+import { Result, Type } from "../types";
 import InstructionType from "../instruction";
 
 export default <InstructionType>{
@@ -19,6 +19,6 @@ export default <InstructionType>{
 		}
 
 		// original implementation actually has a hard break here
-		return ResultFlags.OK;
+		return Result.OK;
 	}
 };
