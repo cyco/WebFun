@@ -14,6 +14,6 @@ export default <InstructionType>{
 
 		zone.removeTile(args[0], args[1], args[2]);
 
-		return Result.OK;
+		return Result.Void;
 	}
 };

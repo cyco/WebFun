@@ -13,9 +13,9 @@ export default <InstructionType>{
 		const npc = zone.npcs[instruction.arguments[0]];
 		if (npc) {
 			npc.enabled = true;
-			return Result.OK;
+			return Result.Void;
 		}
 
-		return Result.OK;
+		return Result.Void;
 	}
 };

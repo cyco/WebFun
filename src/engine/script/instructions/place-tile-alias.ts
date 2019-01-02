@@ -15,6 +15,6 @@ export default <InstructionType>{
 		const tile = engine.data.tiles[args[3]];
 		zone.setTile(tile, args[0], args[1], args[2]);
 
-		return Result.OK;
+		return Result.Void;
 	}
 };

@@ -19,6 +19,6 @@ export default <InstructionType>{
 		}
 
 		// original implementation actually has a hard break here
-		return Result.OK;
+		return Result.Void;
 	}
 };

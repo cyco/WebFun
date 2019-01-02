@@ -9,6 +9,6 @@ export default <InstructionType>{
 	Arguments: [],
 	Implementation: async (_: Instruction, engine: Engine, _action: Action): Promise<Result> => {
 		engine.currentZone.solved = true;
-		return Result.OK;
+		return Result.Void;
 	}
 };

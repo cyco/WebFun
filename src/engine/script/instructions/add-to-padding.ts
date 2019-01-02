@@ -11,6 +11,6 @@ export default <InstructionType>{
 	Implementation: async (instruction: Instruction, engine: Engine, _: Action): Promise<Result> => {
 		engine.currentZone.padding += instruction.arguments[0];
 
-		return Result.OK;
+		return Result.Void;
 	}
 };
