@@ -13,7 +13,7 @@ export default <InstructionType>{
 		const hotspot = zone.hotspots[instruction.arguments[0]];
 		if (hotspot) {
 			hotspot.enabled = false;
-			return Result.UpdateHotspot;
+			return Result.OK;
 		}
 
 		return Result.OK;
