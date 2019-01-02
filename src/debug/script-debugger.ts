@@ -5,7 +5,7 @@ import {
 	ConditionChecker,
 	ConditionStore,
 	InstructionExecutor,
-	InstructionResult,
+	Result,
 	InstructionStore,
 	EvaluationMode
 } from "src/engine/script";
@@ -131,11 +131,8 @@ class ScriptDebugger {
 
 	private _buildInstructionStore(originalStore: InstructionStore): InstructionStore {
 		return originalStore.map(
-			(_, i) => (
-				instruction: Instruction,
-				engine: Engine,
-				action: Action
-			): Promise<InstructionResult> => this._handleInstructionCall(i, instruction, engine, action)
+			(_, i) => (instruction: Instruction, engine: Engine, action: Action): Promise<Result> =>
+				this._handleInstructionCall(i, instruction, engine, action)
 		);
 	}
 
@@ -144,7 +141,7 @@ class ScriptDebugger {
 		instruction: Instruction,
 		engine: Engine,
 		action: Action
-	): Promise<InstructionResult> {
+	): Promise<Result> {
 		if (!opcode) return;
 		return InstructionImplementations[opcode](instruction, engine, action);
 	}

@@ -1,7 +1,7 @@
 import Engine from "../../engine";
 import Action from "../../objects/action";
 import Instruction from "../../objects/instruction";
-import { Result, ResultFlags, Type } from "../types";
+import { Result, Type } from "../types";
 import InstructionType from "../instruction";
 
 export default <InstructionType>{
@@ -13,9 +13,9 @@ export default <InstructionType>{
 		const hotspot = zone.hotspots[instruction.arguments[0]];
 		if (hotspot) {
 			hotspot.enabled = false;
-			return ResultFlags.UpdateHotspot;
+			return Result.UpdateHotspot;
 		}
 
-		return ResultFlags.OK;
+		return Result.OK;
 	}
 };

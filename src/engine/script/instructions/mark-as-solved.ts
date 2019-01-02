@@ -1,7 +1,7 @@
 import Engine from "../../engine";
 import Action from "../../objects/action";
 import Instruction from "../../objects/instruction";
-import { Result, ResultFlags } from "../types";
+import { Result } from "../types";
 import InstructionType from "../instruction";
 
 export default <InstructionType>{
@@ -9,6 +9,6 @@ export default <InstructionType>{
 	Arguments: [],
 	Implementation: async (_: Instruction, engine: Engine, _action: Action): Promise<Result> => {
 		engine.currentZone.solved = true;
-		return ResultFlags.OK;
+		return Result.OK;
 	}
 };

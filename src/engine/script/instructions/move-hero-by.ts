@@ -1,7 +1,7 @@
 import Engine from "../../engine";
 import Action from "../../objects/action";
 import Instruction from "../../objects/instruction";
-import { Result, ResultFlags, Type } from "../types";
+import { Result, Type } from "../types";
 import InstructionType from "../instruction";
 
 export default <InstructionType>{
@@ -12,6 +12,6 @@ export default <InstructionType>{
 		engine.hero.location.y += instruction.arguments[1];
 
 		// original implementation actually has a hard break here
-		return ResultFlags.UpdateViewport;
+		return Result.UpdateViewport;
 	}
 };

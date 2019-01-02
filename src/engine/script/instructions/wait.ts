@@ -1,7 +1,7 @@
 import Engine from "../../engine";
 import Action from "../../objects/action";
 import Instruction from "../../objects/instruction";
-import { Result, ResultFlags } from "../types";
+import { Result } from "../types";
 import InstructionType from "../instruction";
 
 export default <InstructionType>{
@@ -9,6 +9,6 @@ export default <InstructionType>{
 	Arguments: [],
 	Description: "Pause script execution for one tick.",
 	Implementation: async (_1: Instruction, _2: Engine, _3: Action): Promise<Result> => {
-		return ResultFlags.Wait;
+		return Result.Wait;
 	}
 };

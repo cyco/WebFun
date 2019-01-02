@@ -1,7 +1,7 @@
 import Engine from "../../engine";
 import Action from "../../objects/action";
 import Instruction from "../../objects/instruction";
-import { Result, ResultFlags } from "../types";
+import { Result } from "../types";
 import InstructionType from "../instruction";
 
 export default <InstructionType>{
@@ -11,6 +11,6 @@ export default <InstructionType>{
 	Implementation: async (_: Instruction, _engine: Engine, action: Action): Promise<Result> => {
 		// original implementation disables action only if no redraw occurs
 		action.enabled = false;
-		return ResultFlags.OK;
+		return Result.OK;
 	}
 };

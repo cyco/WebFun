@@ -3,7 +3,7 @@ import { ConditionImplementations, ConditionsByName, ConditionsByOpcode } from "
 import InstructionExecutor, { InstructionStore } from "./instruction-executor";
 import { InstructionImplementations, InstructionsByName, InstructionsByOpcode } from "./instructions";
 import ScriptExecutor from "./script-executor";
-import { ConditionImplementation, InstructionImplementation, Result, ResultFlags, Type } from "./types";
+import { ConditionImplementation, InstructionImplementation, Result, Type } from "./types";
 import Condition from "./condition";
 import Instruction from "./instruction";
 import EvaluationMode from "./evaluation-mode";
@@ -12,8 +12,7 @@ export {
 	Type,
 	Condition,
 	Instruction,
-	ResultFlags as InstructionResultFlags,
-	Result as InstructionResult,
+	Result,
 	ConditionStore,
 	InstructionStore,
 	ConditionImplementation,

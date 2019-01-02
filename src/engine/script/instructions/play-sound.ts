@@ -1,7 +1,7 @@
 import Engine from "../../engine";
 import Action from "../../objects/action";
 import Instruction from "../../objects/instruction";
-import { Result, ResultFlags, Type } from "../types";
+import { Result, Type } from "../types";
 import InstructionType from "../instruction";
 
 export default <InstructionType>{
@@ -10,6 +10,6 @@ export default <InstructionType>{
 	Description: "Play sound specified by `arg_0`",
 	Implementation: async (instruction: Instruction, engine: Engine, _action: Action): Promise<Result> => {
 		engine.mixer.effectChannel.playSound(instruction.arguments[0]);
-		return ResultFlags.UpdateSound;
+		return Result.UpdateSound;
 	}
 };
