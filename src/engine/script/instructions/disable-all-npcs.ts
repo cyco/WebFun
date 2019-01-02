@@ -12,6 +12,6 @@ export default <InstructionType>{
 		const zone = engine.currentZone;
 		zone.npcs.forEach(npc => (npc.enabled = true));
 
-		return Result.OK;
+		return Result.Void;
 	}
 };

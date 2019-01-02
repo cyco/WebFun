@@ -33,6 +33,6 @@ export default <InstructionType>{
 		}
 		transitionScene.targetZoneLocation = location;
 		engine.sceneManager.pushScene(transitionScene);
-		return Result.OK;
+		return Result.Void;
 	}
 };

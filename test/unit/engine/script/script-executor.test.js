@@ -105,7 +105,7 @@ describe("ScriptExecutor", () => {
 
 		it("executes all instructions in an action", async done => {
 			const action = { instructions: ["instruction1", "instruction2"] };
-			spyOn(executor, "execute").and.returnValue(Result.OK);
+			spyOn(executor, "execute").and.returnValue(Result.Void);
 
 			await evaluator.executeInstructions(action);
 

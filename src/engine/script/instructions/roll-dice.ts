@@ -15,6 +15,6 @@ export default <InstructionType>{
 		const args = instruction.arguments;
 		const zone = engine.currentZone;
 		zone.random = Math.round(Math.random() * args[0]) % args[0];
-		return Result.OK;
+		return Result.Void;
 	}
 };

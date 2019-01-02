@@ -12,6 +12,6 @@ export default <InstructionType>{
 		engine.hero.location.y += instruction.arguments[1];
 
 		// original implementation actually has a hard break here
-		return Result.OK;
+		return Result.Void;
 	}
 };

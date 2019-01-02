@@ -9,7 +9,7 @@ export default <InstructionType>{
 	Arguments: [Type.ZoneX, Type.ZoneY],
 	Description: "Redraw tile at `arg_0`x`arg_1`",
 	Implementation: async (_instruction: Instruction, _engine: Engine, _action: Action): Promise<Result> =>
-		Result.OK
+		Result.Void
 	/*
 	 YodaView::RedrawTile(view, instruction->arg1, instruction->arg2);
 	 YodaDocument::RedrawCurrentZone(document);

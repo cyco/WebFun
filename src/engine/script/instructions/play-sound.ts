@@ -10,6 +10,6 @@ export default <InstructionType>{
 	Description: "Play sound specified by `arg_0`",
 	Implementation: async (instruction: Instruction, engine: Engine, _action: Action): Promise<Result> => {
 		engine.mixer.effectChannel.playSound(instruction.arguments[0]);
-		return Result.OK;
+		return Result.Void;
 	}
 };

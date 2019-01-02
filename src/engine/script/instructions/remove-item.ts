@@ -13,6 +13,6 @@ export default <InstructionType>{
 		const item = engine.data.tiles[args[0]];
 		engine.inventory.removeItem(item);
 
-		return Result.OK;
+		return Result.Void;
 	}
 };

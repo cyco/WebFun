@@ -10,6 +10,6 @@ export default <InstructionType>{
 	Description: "Set current zone's `padding` value to a `arg_0`",
 	Implementation: async (instruction: Instruction, engine: Engine, _: Action): Promise<Result> => {
 		engine.currentZone.padding = instruction.arguments[0];
-		return Result.OK;
+		return Result.Void;
 	}
 };

@@ -18,10 +18,10 @@ export type InstructionImplementation = (
 ) => Promise<Result>;
 
 enum Result {
-	OK = 0,
-	UpdateText = 1 << 1,
-	UpdateZone = 1 << 10,
-	Wait = 1 << 12
+	Void = 0 << 0,
+	UpdateText = 1 << 0,
+	UpdateZone = 1 << 1,
+	Wait = 1 << 2
 }
 
 class Type {

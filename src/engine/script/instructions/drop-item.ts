@@ -17,6 +17,6 @@ export default <InstructionType>{
 		pickupScene.tile = engine.data.tiles[args[0]];
 		engine.sceneManager.pushScene(pickupScene);
 
-		return Result.OK;
+		return Result.Void;
 	}
 };

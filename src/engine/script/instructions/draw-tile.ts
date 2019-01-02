@@ -25,6 +25,6 @@ export default <InstructionType>{
 		 }
 		 goto fetch_next_instruction;
 		 */
-		return Result.OK;
+		return Result.Void;
 	}
 };

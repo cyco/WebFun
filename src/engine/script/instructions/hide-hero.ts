@@ -10,6 +10,6 @@ export default <InstructionType>{
 	Description: "Hide hero",
 	Implementation: async (_: Instruction, engine: Engine, _action: Action): Promise<Result> => {
 		engine.hero.visible = false;
-		return Result.OK;
+		return Result.Void;
 	}
 };
