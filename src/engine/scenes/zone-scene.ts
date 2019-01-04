@@ -38,13 +38,13 @@ class ZoneScene extends Scene {
 		const hero = engine.hero;
 		hero.isWalking = false;
 
-		let scriptResult = await engine.alternateScriptExecutor.execute();
+		let scriptResult = await engine.scriptExecutor.execute();
 		if (scriptResult !== ScriptResult.Done) {
 			return;
 		}
 
-		engine.alternateScriptExecutor.prepeareExecution(EvaluationMode.Walk, this.zone);
-		scriptResult = await engine.alternateScriptExecutor.execute();
+		engine.scriptExecutor.prepeareExecution(EvaluationMode.Walk, this.zone);
+		scriptResult = await engine.scriptExecutor.execute();
 		if (scriptResult !== ScriptResult.Done) {
 			return;
 		}
@@ -62,8 +62,8 @@ class ZoneScene extends Scene {
 		this.engine.camera.update(ticks);
 		hero.update(ticks);
 
-		engine.alternateScriptExecutor.prepeareExecution(EvaluationMode.Walk, this.zone);
-		scriptResult = await engine.alternateScriptExecutor.execute();
+		engine.scriptExecutor.prepeareExecution(EvaluationMode.Walk, this.zone);
+		scriptResult = await engine.scriptExecutor.execute();
 		if (scriptResult !== ScriptResult.Done) {
 			return;
 		}
