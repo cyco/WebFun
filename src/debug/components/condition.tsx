@@ -4,10 +4,12 @@ import Condition from "src/engine/objects/condition";
 import Engine from "src/engine/engine";
 import BreakpointButton from "./breakpoint-button";
 import LocationBreakpoint from "../breakpoint/location-breakpoint";
+import BreakpointStore from "../breakpoint-store";
 
 class ConditionComponent extends InstructionThing {
 	public static readonly tagName = "wf-debug-condition";
-	public engine: Engine;
+	public engine: Engine = null;
+	public breakpointStore: BreakpointStore = null;
 	private _condition: Condition;
 
 	get condition() {
@@ -40,6 +42,7 @@ class ConditionComponent extends InstructionThing {
 		this.appendChild(this._close());
 		this.appendChild(
 			<BreakpointButton
+				store={this.breakpointStore}
 				breakpoint={
 					new LocationBreakpoint(
 						this.zone.id,

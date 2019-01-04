@@ -4,11 +4,13 @@ import Engine from "src/engine/engine";
 import { InstructionsByName as Instructions } from "src/engine/script/instructions";
 import BreakpointButton from "./breakpoint-button";
 import LocationBreakpoint from "../breakpoint/location-breakpoint";
+import BreakpointStore from "../breakpoint-store";
 
 class InstructionComponent extends InstructionThing {
 	public static readonly tagName = "wf-debug-instruction";
 	public engine: Engine;
 	private _instruction: Instruction;
+	public breakpointStore: BreakpointStore = null;
 
 	get instruction() {
 		return this._instruction;
@@ -40,6 +42,7 @@ class InstructionComponent extends InstructionThing {
 		this.appendChild(this._close());
 		this.appendChild(
 			<BreakpointButton
+				store={this.breakpointStore}
 				breakpoint={
 					new LocationBreakpoint(
 						this.zone.id,

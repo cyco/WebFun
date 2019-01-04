@@ -10,7 +10,7 @@ import { Zone, Tile } from "./objects";
 import State from "./persistent-state";
 import { Renderer, PaletteAnimation } from "./rendering";
 import SceneManager from "./scene-manager";
-import { ScriptExecutor } from "./script";
+import { ScriptExecutor, AlternateScriptExecutor } from "./script";
 import Story from "./story";
 import GameData from "./game-data";
 import { GameType as Type } from "./type";
@@ -33,6 +33,7 @@ class Engine extends EventTarget {
 	public hero: Hero = null;
 	public inventory: Inventory = null;
 	public scriptExecutor: ScriptExecutor = null;
+	public alternateScriptExecutor: AlternateScriptExecutor = null;
 	public story: Story = null;
 	public persistentState: typeof State = State;
 	public temporaryState: any = null;
@@ -40,6 +41,7 @@ class Engine extends EventTarget {
 	public camera: Camera = new Camera();
 	private _currentZone: Zone = null;
 	private _currentWorld: World = null;
+	private _updateInProgress: boolean = false;
 
 	constructor(type: Type) {
 		super();
@@ -81,7 +83,9 @@ class Engine extends EventTarget {
 	}
 
 	update(ticks: number) {
-		return this.sceneManager.update(ticks);
+		if (this._updateInProgress) console.warn("Reentering update!");
+		this._updateInProgress = true;
+		return this.sceneManager.update(ticks).then(() => (this._updateInProgress = false));
 	}
 
 	render() {

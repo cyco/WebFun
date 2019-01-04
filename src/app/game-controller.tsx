@@ -4,7 +4,7 @@ import { Reader } from "src/engine/save-game";
 import { DesktopInputManager } from "./input";
 import { Char, Zone, Tile } from "src/engine/objects";
 import { ZoneScene, LoseScene } from "src/engine/scenes";
-import { ScriptExecutor } from "src/engine/script";
+import { ScriptExecutor, AlternateScriptExecutor } from "src/engine/script";
 import { Planet, WorldSize } from "src/engine/types";
 import Settings from "src/settings";
 import { FilePicker, WindowManager } from "src/ui";
@@ -16,6 +16,8 @@ import { MainMenu, MainWindow } from "./windows";
 import { GameTypeYoda } from "src/engine";
 import { DOMAudioChannel } from "./audio";
 import { Mixer } from "src/engine/audio";
+import { ConditionImplementations as Conditions } from "src/engine/script/conditions";
+import { InstructionImplementations as Instructions } from "src/engine/script/instructions";
 import { PaletteAnimation } from "src/engine/rendering";
 import {
 	LoadingView,
@@ -25,6 +27,7 @@ import {
 	Weapon as WeaponComponent,
 	Health as HealthComponent
 } from "./ui";
+import { ScriptDebugger } from "src/debug";
 export const Event = {
 	DidLoadData: "didLoadData"
 };
@@ -65,6 +68,7 @@ class GameController extends EventTarget {
 		engine.metronome = new Metronome();
 		engine.inventory = new Inventory();
 		engine.scriptExecutor = new ScriptExecutor();
+		engine.alternateScriptExecutor = new AlternateScriptExecutor(engine, Instructions, Conditions);
 		engine.hero = new Hero();
 		engine.hero.addEventListener(Hero.Event.HealthChanged, () => {
 			if (engine.hero.health > 0) {
