@@ -76,7 +76,7 @@ class ScriptExecutor {
 		if (action.instructionPointer !== 0) return true;
 
 		for (const condition of action.conditions) {
-			if (!(await this._checker.check(condition, mode))) {
+			if (!(await this._checker.check(condition, mode, this._engine.currentZone))) {
 				return false;
 			}
 		}

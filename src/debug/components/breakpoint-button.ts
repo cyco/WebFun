@@ -13,7 +13,7 @@ class BreakpointButton extends Component {
 	static readonly tagName = "wf-debug-breakpoint-button";
 	static readonly observedAttributes = ["active"];
 	public breakpoint: Breakpoint = null;
-	private _store: BreakpointStore = BreakpointStore.sharedStore;
+	public store: BreakpointStore = BreakpointStore.sharedStore;
 	private _removeHandler = ({ detail: { breakpoint } }: CustomEvent) =>
 		breakpoint === this.breakpoint && (this.active = false);
 	private _addHandler = ({ detail: { breakpoint } }: CustomEvent) =>
@@ -30,20 +30,20 @@ class BreakpointButton extends Component {
 
 	protected connectedCallback() {
 		this.onclick = () => this.toggle();
-		this.active = this._store.hasBreakpoint(this.breakpoint.id);
-		this._store.addEventListener(BreakpointStore.Event.DidAddBreakpoint, this._addHandler);
-		this._store.addEventListener(BreakpointStore.Event.DidRemoveBreakpoint, this._removeHandler);
+		this.active = this.store.hasBreakpoint(this.breakpoint.id);
+		this.store.addEventListener(BreakpointStore.Event.DidAddBreakpoint, this._addHandler);
+		this.store.addEventListener(BreakpointStore.Event.DidRemoveBreakpoint, this._removeHandler);
 	}
 
 	protected disconnectedCallback() {
-		this._store.removeEventListener(BreakpointStore.Event.DidAddBreakpoint, this._addHandler);
-		this._store.removeEventListener(BreakpointStore.Event.DidRemoveBreakpoint, this._removeHandler);
+		this.store.removeEventListener(BreakpointStore.Event.DidAddBreakpoint, this._addHandler);
+		this.store.removeEventListener(BreakpointStore.Event.DidRemoveBreakpoint, this._removeHandler);
 	}
 
 	toggle() {
 		this.active = !this.active;
-		if (this.active) this._store.addBreakpoint(this.breakpoint);
-		else this._store.removeBreakpoint(this.breakpoint);
+		if (this.active) this.store.addBreakpoint(this.breakpoint);
+		else this.store.removeBreakpoint(this.breakpoint);
 	}
 }
 

@@ -31,7 +31,7 @@ const Settings = persistent(
 			}
 		},
 		// app state
-		debuggerActive: false
+		debuggerActive: true
 	},
 	"settings",
 	localStorage

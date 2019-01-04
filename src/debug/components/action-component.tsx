@@ -9,6 +9,7 @@ import { ConditionImplementations } from "src/engine/script/conditions";
 import { EvaluationMode } from "src/engine/script";
 import BreakpointButton from "./breakpoint-button";
 import LocationBreakpoint from "../breakpoint/location-breakpoint";
+import BreakpointStore from "../breakpoint-store";
 
 class ActionComponent extends Component {
 	public static readonly tagName = "wf-debug-action";
@@ -17,6 +18,7 @@ class ActionComponent extends Component {
 	public index: number = null;
 	public engine: Engine = null;
 	private _action: Action = null;
+	public breakpointStore: BreakpointStore = null;
 
 	get action() {
 		return this._action;
@@ -28,7 +30,10 @@ class ActionComponent extends Component {
 		this.appendChild(
 			<span className="head">
 				<span className="key">{`actn ${action.id}`}</span>
-				<BreakpointButton breakpoint={new LocationBreakpoint(this.zone.id, this.action.id)} />
+				<BreakpointButton
+					store={this.breakpointStore}
+					breakpoint={new LocationBreakpoint(this.zone.id, this.action.id)}
+				/>
 			</span>
 		);
 
@@ -45,6 +50,7 @@ class ActionComponent extends Component {
 					zone={this.zone}
 					action={this._action}
 					engine={this.engine}
+					breakpointStore={this.breakpointStore}
 					condition={condition}
 				/>
 			);
@@ -61,6 +67,7 @@ class ActionComponent extends Component {
 					zone={this.zone}
 					action={this._action}
 					engine={this.engine}
+					breakpointStore={this.breakpointStore}
 					instruction={instruction}
 				/>
 			);

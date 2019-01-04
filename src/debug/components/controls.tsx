@@ -6,10 +6,10 @@ class Controls extends Component {
 	public static readonly tagName = "wf-debug-controls";
 	public static readonly observedAttributes = ["running"];
 
-	public ontogglepause: () => void;
-	public onstep: () => void;
-	public ondraw: () => void;
-	public onfastforward: () => void;
+	public ontogglepause = (): void => void 0;
+	public onstep = (): void => void 0;
+	public ondraw = (): void => void 0;
+	public onfastforward = (): void => void 0;
 
 	private _stepButton: IconButton;
 	private _fastForwardButton: IconButton;
@@ -18,29 +18,11 @@ class Controls extends Component {
 	constructor() {
 		super();
 
-		this.ontogglepause = null;
-		this.onstep = null;
-		this.ondraw = null;
-		this.onfastforward = null;
-
-		this._stepButton = (
-			<IconButton
-				icon="step-forward"
-				onclick={() => (this.onstep instanceof Function ? this.onstep() : null)}
-			/>
-		) as IconButton;
+		this._stepButton = <IconButton icon="step-forward" onclick={() => this.onstep()} /> as IconButton;
 		this._fastForwardButton = (
-			<IconButton
-				icon="fast-forward"
-				onclick={() => (this.onfastforward instanceof Function ? this.onfastforward() : null)}
-			/>
+			<IconButton icon="fast-forward" onclick={() => this.onfastforward()} />
 		) as IconButton;
-		this._playButton = (
-			<IconButton
-				icon="play"
-				onclick={() => (this.ontogglepause instanceof Function ? this.ontogglepause() : null)}
-			/>
-		) as IconButton;
+		this._playButton = <IconButton icon="play" onclick={() => this.ontogglepause()} /> as IconButton;
 	}
 
 	get running() {
@@ -53,8 +35,6 @@ class Controls extends Component {
 	}
 
 	protected connectedCallback() {
-		if (this.children.length) return;
-
 		this.appendChild(this._playButton);
 		this.appendChild(this._stepButton);
 		this.appendChild(this._fastForwardButton);

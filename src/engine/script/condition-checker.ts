@@ -1,5 +1,6 @@
 import Engine from "../engine";
 import Condition from "../objects/condition";
+import { Zone } from "../objects";
 import { ConditionImplementation } from "./types";
 import EvaluationMode from "./evaluation-mode";
 
@@ -14,11 +15,11 @@ class ConditionChecker {
 		this._conditions = conditions;
 	}
 
-	public async check(condition: Condition, mode: EvaluationMode) {
+	public async check(condition: Condition, mode: EvaluationMode, zone: Zone) {
 		const handler = this._conditions[condition.opcode];
 		console.assert(!!handler, `Unknown condition opcode 0x${condition.opcode.toString(0x10)}!`);
 
-		return await handler(condition.arguments, this.engine.currentZone, this.engine, mode);
+		return await handler(condition.arguments, zone, this.engine, mode);
 	}
 }
 

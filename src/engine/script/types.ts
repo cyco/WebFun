@@ -24,6 +24,15 @@ enum Result {
 	Wait = 1 << 2
 }
 
+enum ScriptResult {
+	Void = 0 << 0,
+	UpdateText = 1 << 0,
+	UpdateZone = 1 << 1,
+	Wait = 1 << 2,
+
+	Done = 1 << 10
+}
+
 class Type {
 	public static readonly Number = new Type();
 	public static readonly TileID = new Type();
@@ -37,4 +46,4 @@ class Type {
 	public static readonly Unused = new Type();
 }
 
-export { int16, Result, Type };
+export { int16, Result, Type, ScriptResult };

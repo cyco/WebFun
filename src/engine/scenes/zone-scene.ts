@@ -6,7 +6,7 @@ import MapScene from "./map-scene";
 import PauseScene from "./pause-scene";
 import Scene from "./scene";
 import TransitionScene from "./transition-scene";
-import { EvaluationMode } from "../script";
+import { EvaluationMode, ScriptResult } from "../script";
 import { Direction as InputDirection } from "src/engine/input";
 import ZoneSceneRenderer from "src/engine/rendering/zone-scene-renderer";
 
@@ -38,10 +38,18 @@ class ZoneScene extends Scene {
 		const hero = engine.hero;
 		hero.isWalking = false;
 
-		let stop = await engine.scriptExecutor.continueActions(engine, EvaluationMode.Walk);
-		if (stop) return;
+		let scriptResult = await engine.alternateScriptExecutor.execute();
+		if (scriptResult !== ScriptResult.Done) {
+			return;
+		}
 
-		stop = await this._handlePlacedTile();
+		engine.alternateScriptExecutor.prepeareExecution(EvaluationMode.Walk, this.zone);
+		scriptResult = await engine.alternateScriptExecutor.execute();
+		if (scriptResult !== ScriptResult.Done) {
+			return;
+		}
+
+		let stop = await this._handlePlacedTile();
 		if (stop) return;
 
 		this._moveNPCs();
@@ -54,7 +62,11 @@ class ZoneScene extends Scene {
 		this.engine.camera.update(ticks);
 		hero.update(ticks);
 
-		await engine.scriptExecutor.runActions(engine, EvaluationMode.Walk);
+		engine.alternateScriptExecutor.prepeareExecution(EvaluationMode.Walk, this.zone);
+		scriptResult = await engine.alternateScriptExecutor.execute();
+		if (scriptResult !== ScriptResult.Done) {
+			return;
+		}
 	}
 
 	public render(renderer: AbstractRenderer) {
@@ -401,7 +413,7 @@ class ZoneScene extends Scene {
 		const targetPoint = Point.add(hero.location, p);
 		const targetTile = zone.bounds.contains(targetPoint) && zone.getTile(targetPoint.x, targetPoint.y, 1);
 		if (targetTile) {
-			await this.engine.scriptExecutor.bump(targetPoint);
+			// await this.engine.scriptExecutor.bump(targetPoint);
 			//TODO: handle result
 		}
 

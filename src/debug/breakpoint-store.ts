@@ -59,7 +59,17 @@ class BreakpointStore extends EventTarget {
 				let breakpoint = null;
 				if (desc.startsWith("@")) {
 					const parts = desc.substr(1).split(":");
-					breakpoint = new LocationBreakpoint(parts[0], parts[1], parts[2], parts[3]);
+					if (parts[2] !== undefined && parts[2] !== "c" && parts[2] !== "i") {
+						console.warn(`Unable to restore breakpoint ${desc}`);
+						return;
+					}
+
+					breakpoint = new LocationBreakpoint(
+						+parts[0],
+						+parts[1],
+						parts[2] === "c" ? "c" : parts[2] === "i" ? "i" : null,
+						parts[3] !== undefined ? +parts[3] : null
+					);
 				} else if (desc.startsWith("SYM:")) {
 					const parts = desc.substr(4).split(":");
 					breakpoint = new SymbolicBreakpoint(parts[0], parts[1]);
