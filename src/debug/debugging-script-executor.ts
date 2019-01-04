@@ -36,6 +36,7 @@ class DebuggingScriptExecutor extends AlternateScriptExecutor {
 	protected _executor: AsyncIterator<ScriptResult> = null;
 	public stopped: boolean = true;
 	public delegate: DebuggingScriptExecutorDelegate;
+	private _engine: Engine;
 
 	constructor(
 		engine: Engine,
@@ -47,6 +48,7 @@ class DebuggingScriptExecutor extends AlternateScriptExecutor {
 		this._instructionExecutor = new InstructionExecutor(instructions, engine);
 		this._conditionChecker = new ConditionChecker(conditions, engine);
 		this.delegate = delegate;
+		this._engine = engine;
 	}
 
 	prepeareExecution(mode: Mode, zone: Zone) {
@@ -95,6 +97,12 @@ class DebuggingScriptExecutor extends AlternateScriptExecutor {
 			this.didExecute(action, null);
 			while (this.stopped) yield ScriptResult.Wait;
 		}
+
+		zone.actionsInitialized = true;
+		// TODO: get rid of temporaryState
+		this._engine.temporaryState.justEntered = false;
+		this._engine.temporaryState.enteredByPlane = false;
+		this._engine.temporaryState.bump = null;
 
 		this._inUse = false;
 		this.didExecute(zone, ScriptResult.Done);

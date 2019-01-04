@@ -15,10 +15,12 @@ class AlternateScriptExecutor {
 	protected _instructionExecutor: InstructionExecutor;
 	protected _conditionChecker: ConditionChecker;
 	protected _executor: AsyncIterator<ScriptResult> = null;
+	private _engine: Engine;
 
 	constructor(engine: Engine, instructions: InstructionStore, conditions: ConditionStore) {
 		this._instructionExecutor = new InstructionExecutor(instructions, engine);
 		this._conditionChecker = new ConditionChecker(conditions, engine);
+		this._engine = engine;
 	}
 
 	prepeareExecution(mode: Mode, zone: Zone) {
@@ -54,6 +56,12 @@ class AlternateScriptExecutor {
 				}
 			}
 		}
+
+		zone.actionsInitialized = true;
+		// TODO: get rid of temporaryState
+		this._engine.temporaryState.justEntered = false;
+		this._engine.temporaryState.enteredByPlane = false;
+		this._engine.temporaryState.bump = null;
 
 		this._inUse = false;
 
