@@ -2,7 +2,6 @@ import ConditionChecker, { ConditionStore } from "./condition-checker";
 import { ConditionImplementations, ConditionsByName, ConditionsByOpcode } from "./conditions";
 import InstructionExecutor, { InstructionStore } from "./instruction-executor";
 import { InstructionsByName, InstructionsByOpcode } from "./instructions";
-import ScriptExecutor from "./script-executor";
 import { InstructionImplementation, Result, Type, ScriptResult } from "./types";
 import Condition from "./condition";
 import Instruction from "./instruction";
@@ -25,7 +24,6 @@ export {
 	ConditionsByName,
 	AlternateScriptExecutor,
 	ConditionImplementations,
-	ScriptExecutor,
 	ScriptResult,
 	EvaluationMode
 };
