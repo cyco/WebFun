@@ -7,6 +7,7 @@ import { Point } from "src/util";
 const makeConditionDescription = desc => (Name, block) => {
 	desc(`WebFun.Engine.Script.Condition.${Name}`, () => {
 		let engine = {};
+		let currentZone = {};
 		let checker = new ConditionChecker(ConditionImplementations, engine);
 
 		beforeEach(() => {
@@ -17,7 +18,7 @@ const makeConditionDescription = desc => (Name, block) => {
 			engine.sceneManager = { pushScene() {} };
 		});
 
-		block(checker.check.bind(checker), engine);
+		block((condition, mode) => checker.check(condition, mode, engine.currentZone), engine);
 	});
 };
 
