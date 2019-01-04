@@ -7,6 +7,8 @@ import InstructionComponent from "src/debug/components/instruction";
 import ConditionChecker from "src/engine/script/condition-checker";
 import { ConditionImplementations } from "src/engine/script/conditions";
 import { EvaluationMode } from "src/engine/script";
+import BreakpointButton from "./breakpoint-button";
+import LocationBreakpoint from "../breakpoint/location-breakpoint";
 
 class ActionComponent extends Component {
 	public static readonly tagName = "wf-debug-action";
@@ -23,27 +25,29 @@ class ActionComponent extends Component {
 	set action(action) {
 		this._action = action;
 
-		const headline = document.createElement("span");
-		headline.classList.add("head");
-		const intro = document.createElement("span");
-		intro.classList.add("key");
-		intro.textContent = `actn ${action.id}`;
-		headline.appendChild(intro);
-		this.appendChild(headline);
+		this.appendChild(
+			<span className="head">
+				<span className="key">{`actn ${action.id}`}</span>
+				<BreakpointButton breakpoint={new LocationBreakpoint(this.zone.id, this.action.id)} />
+			</span>
+		);
 
 		this.appendChild(document.createTextNode(`(`));
 		this._append(`and`, "key");
 		this.appendChild(document.createTextNode(`\t`));
 
 		action.conditions.forEach((condition, index) => {
-			const component = <ConditionComponent>document.createElement(ConditionComponent.tagName);
-			component.action = this._action;
-			component.engine = this.engine;
-			component.condition = condition;
 			if (index !== 0) {
-				this.appendChild(document.createTextNode("\n\t\t"));
+				this.appendChild(document.createTextNode("\n\t"));
 			}
-			this.appendChild(component);
+			this.appendChild(
+				<ConditionComponent
+					zone={this.zone}
+					action={this._action}
+					engine={this.engine}
+					condition={condition}
+				/>
+			);
 		});
 		this._append(")", "paren-close");
 		this.appendChild(document.createTextNode("\n"));
@@ -51,12 +55,15 @@ class ActionComponent extends Component {
 		this._append(`do`, "key");
 
 		action.instructions.forEach(instruction => {
-			const component = <InstructionComponent>document.createElement(InstructionComponent.tagName);
-			component.action = this._action;
-			component.engine = this.engine;
-			component.instruction = instruction;
-			this.appendChild(document.createTextNode("\n\t\t"));
-			this.appendChild(component);
+			this.appendChild(document.createTextNode("\n\t   "));
+			this.appendChild(
+				<InstructionComponent
+					zone={this.zone}
+					action={this._action}
+					engine={this.engine}
+					instruction={instruction}
+				/>
+			);
 		});
 		this._append(")", "paren-close");
 		this._append(")", "paren-close");
@@ -79,7 +86,7 @@ class ActionComponent extends Component {
 		const checker = new ConditionChecker(ConditionImplementations, this.engine);
 		Array.from(this.querySelectorAll(ConditionComponent.tagName)).forEach(
 			(condition: ConditionComponent) => {
-				if (checker.check(condition.condition, EvaluationMode.Walk)) {
+				if (checker.check(condition.condition, EvaluationMode.Walk, this.engine.currentZone)) {
 					condition.setAttribute("truthy", "");
 				} else {
 					condition.removeAttribute("truthy");
@@ -89,8 +96,7 @@ class ActionComponent extends Component {
 	}
 
 	protected _append(thing: string | Element | Element[], className: string) {
-		const element = document.createElement("span");
-		element.classList.add(className);
+		const element = <span className={className} />;
 		if (typeof thing === "string") element.innerText = thing;
 		else if (thing instanceof Element) {
 			element.appendChild(thing);

@@ -29,10 +29,7 @@ abstract class InstructionThing extends Component {
 	}
 
 	protected _command(name: string) {
-		const element = document.createElement("span");
-		element.innerText = name.dasherize();
-		element.classList.add("command");
-		return element;
+		return <span className="command">{name.dasherize()}</span>;
 	}
 
 	protected _close(): Element {
@@ -40,10 +37,11 @@ abstract class InstructionThing extends Component {
 	}
 
 	private _paren(type: "open" | "close") {
-		const element = document.createElement("span");
-		element.innerText = type === "open" ? "(" : ")";
-		element.classList.add(type === "close" ? "paren-close" : "paren-open");
-		return element;
+		return (
+			<span className={type === "close" ? "paren-close" : "paren-open"}>
+				{type === "open" ? "(" : ")"}
+			</span>
+		);
 	}
 }
 
