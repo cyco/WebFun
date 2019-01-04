@@ -23,20 +23,24 @@ class Controls extends Component {
 		this.ondraw = null;
 		this.onfastforward = null;
 
-		const stepButton = new IconButton();
-		stepButton.icon = "step-forward";
-		stepButton.onclick = () => (this.onstep instanceof Function ? this.onstep() : null);
-		this._stepButton = stepButton;
-
-		const fastForward = new IconButton();
-		fastForward.icon = "fast-forward";
-		fastForward.onclick = () => (this.onfastforward instanceof Function ? this.onfastforward() : null);
-		this._fastForwardButton = fastForward;
-
-		const playButton = new IconButton();
-		playButton.icon = "play";
-		playButton.onclick = () => (this.ontogglepause instanceof Function ? this.ontogglepause() : null);
-		this._playButton = playButton;
+		this._stepButton = (
+			<IconButton
+				icon="step-forward"
+				onclick={() => (this.onstep instanceof Function ? this.onstep() : null)}
+			/>
+		) as IconButton;
+		this._fastForwardButton = (
+			<IconButton
+				icon="fast-forward"
+				onclick={() => (this.onfastforward instanceof Function ? this.onfastforward() : null)}
+			/>
+		) as IconButton;
+		this._playButton = (
+			<IconButton
+				icon="play"
+				onclick={() => (this.ontogglepause instanceof Function ? this.ontogglepause() : null)}
+			/>
+		) as IconButton;
 	}
 
 	get running() {
