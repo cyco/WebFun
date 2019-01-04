@@ -9,7 +9,7 @@ import { ConditionImplementations } from "src/engine/script/conditions";
 import { InstructionImplementations } from "src/engine/script/instructions";
 import { Point } from "src/util";
 import DebuggingScriptExecutor, { DebuggingScriptExecutorDelegate } from "./debugging-script-executor";
-import AlternateScriptExecutor from "src/engine/script/alternate-script-executor";
+import ScriptExecutor from "src/engine/script/script-executor";
 import "./script-debugger.scss";
 import { Zone, Action, Condition, Instruction } from "src/engine/objects";
 import { ScriptResult, Result } from "src/engine/script";
@@ -84,7 +84,7 @@ class ScriptDebugger implements DebuggingScriptExecutorDelegate {
 		if (this._isActive) return;
 		if (!this._engine) return;
 
-		this._engine.alternateScriptExecutor = new DebuggingScriptExecutor(
+		this._engine.scriptExecutor = new DebuggingScriptExecutor(
 			this._engine,
 			InstructionImplementations,
 			ConditionImplementations,
@@ -101,7 +101,7 @@ class ScriptDebugger implements DebuggingScriptExecutorDelegate {
 		Settings.debuggerActive = false;
 
 		this._engine.removeEventListener(EngineEvents.CurrentZoneChange, this._handlers.zoneChange);
-		this._engine.alternateScriptExecutor = new AlternateScriptExecutor(
+		this._engine.scriptExecutor = new ScriptExecutor(
 			this._engine,
 			InstructionImplementations,
 			ConditionImplementations
@@ -129,19 +129,19 @@ class ScriptDebugger implements DebuggingScriptExecutorDelegate {
 	public stepOnce() {
 		console.log("step");
 		this._breakAfter = true;
-		const executor = this._engine.alternateScriptExecutor as DebuggingScriptExecutor;
+		const executor = this._engine.scriptExecutor as DebuggingScriptExecutor;
 		executor.stopped = false;
 		this._reflectExecutorState();
 	}
 
 	public togglePause() {
-		const executor = this._engine.alternateScriptExecutor as DebuggingScriptExecutor;
+		const executor = this._engine.scriptExecutor as DebuggingScriptExecutor;
 		executor.stopped = !executor.stopped;
 		this._reflectExecutorState();
 	}
 
 	private _reflectExecutorState() {
-		const executor = this._engine.alternateScriptExecutor as DebuggingScriptExecutor;
+		const executor = this._engine.scriptExecutor as DebuggingScriptExecutor;
 		const controls = this._window.content.querySelector(Controls.tagName) as Controls;
 		if (executor.stopped) controls.removeAttribute("running");
 		else controls.setAttribute("running", "");

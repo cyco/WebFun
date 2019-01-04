@@ -10,7 +10,7 @@ type InstructionStore = InstructionImplementation[];
 
 class ScriptExecutionError extends Error {}
 
-class AlternateScriptExecutor {
+class ScriptExecutor {
 	protected _inUse: boolean = false;
 	protected _instructionExecutor: InstructionExecutor;
 	protected _conditionChecker: ConditionChecker;
@@ -86,4 +86,4 @@ class AlternateScriptExecutor {
 	}
 }
 
-export default AlternateScriptExecutor;
+export default ScriptExecutor;

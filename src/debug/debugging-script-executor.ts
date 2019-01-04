@@ -9,7 +9,7 @@ import {
 } from "src/engine/script/types";
 import InstructionExecutor from "src/engine/script/instruction-executor";
 import ConditionChecker from "src/engine/script/condition-checker";
-import AlternateScriptExecutor from "src/engine/script/alternate-script-executor";
+import ScriptExecutor from "src/engine/script/script-executor";
 import { Action, Condition, Instruction } from "src/engine/objects";
 
 type ConditionStore = ConditionImplementation[];
@@ -29,7 +29,7 @@ export interface DebuggingScriptExecutorDelegate {
 	): void;
 }
 
-class DebuggingScriptExecutor extends AlternateScriptExecutor {
+class DebuggingScriptExecutor extends ScriptExecutor {
 	protected _inUse: boolean = false;
 	protected _instructionExecutor: InstructionExecutor;
 	protected _conditionChecker: ConditionChecker;
