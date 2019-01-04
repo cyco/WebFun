@@ -1,5 +1,4 @@
-import { EventTarget } from "src/util";
-import { localStorage } from "src/std/dom";
+import { EventTarget, DiscardingStorage } from "src/util";
 import { LocationBreakpoint, SymbolicBreakpoint } from "./breakpoint";
 import Breakpoint from "src/debug/breakpoint/breakpoint";
 
@@ -8,12 +7,13 @@ export const Events = {
 	DidRemoveBreakpoint: "DidRemoveBreakpoint"
 };
 
-const StorageKey = "debug.breakpoints";
+const StorageKey = "breakpoints";
 
 class BreakpointStore extends EventTarget {
 	public static readonly Event = Events;
 	private static _sharedStore: BreakpointStore;
 	private _breakpoints: { [_: string]: Breakpoint } = {};
+	private _backend: Storage = new DiscardingStorage();
 
 	constructor() {
 		super();
@@ -47,11 +47,11 @@ class BreakpointStore extends EventTarget {
 	}
 
 	private _store() {
-		localStorage.setItem(StorageKey, Object.keys(this._breakpoints).join(","));
+		this._backend.setItem(StorageKey, Object.keys(this._breakpoints).join(","));
 	}
 
 	private _load() {
-		const storedValue = localStorage.getItem(StorageKey);
+		const storedValue = this._backend.getItem(StorageKey);
 		if (!storedValue) return;
 
 		try {
@@ -72,6 +72,15 @@ class BreakpointStore extends EventTarget {
 		} catch (e) {
 			console.warn(`Unable to deserialize breakpoints! ${e}`);
 		}
+	}
+
+	set backend(b: Storage) {
+		this._backend = b;
+		this._load();
+	}
+
+	get backend() {
+		return this._backend;
 	}
 }
 

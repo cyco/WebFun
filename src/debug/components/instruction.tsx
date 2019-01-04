@@ -2,6 +2,8 @@ import InstructionThing from "./instruction-thing";
 import { Instruction } from "src/engine/objects";
 import Engine from "src/engine/engine";
 import { InstructionsByName as Instructions } from "src/engine/script/instructions";
+import BreakpointButton from "./breakpoint-button";
+import LocationBreakpoint from "../breakpoint/location-breakpoint";
 
 class InstructionComponent extends InstructionThing {
 	public static readonly tagName = "wf-debug-instruction";
@@ -23,9 +25,9 @@ class InstructionComponent extends InstructionThing {
 
 	private _rebuild() {
 		const name = Object.keys(Instructions).find(
-			key => (<any>Instructions)[key].Opcode === this._instruction.opcode
+			key => (Instructions as any)[key].Opcode === this._instruction.opcode
 		);
-		const definition = (<any>Instructions)[name];
+		const definition = (Instructions as any)[name];
 		const argCount = Math.max(definition.Arguments, 0);
 		const usedArguments = this._instruction.arguments.slice(0, argCount);
 
@@ -36,6 +38,18 @@ class InstructionComponent extends InstructionThing {
 			document.createTextNode((usedArguments.length ? " " : "") + `${usedArguments.join(" ")}`)
 		);
 		this.appendChild(this._close());
+		this.appendChild(
+			<BreakpointButton
+				breakpoint={
+					new LocationBreakpoint(
+						this.zone.id,
+						this.action.id,
+						"i",
+						this.action.instructions.indexOf(this.instruction)
+					)
+				}
+			/>
+		);
 	}
 }
 

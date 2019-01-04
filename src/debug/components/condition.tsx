@@ -2,6 +2,8 @@ import { ConditionsByName as Conditions } from "src/engine/script/conditions";
 import InstructionThing from "./instruction-thing";
 import Condition from "src/engine/objects/condition";
 import Engine from "src/engine/engine";
+import BreakpointButton from "./breakpoint-button";
+import LocationBreakpoint from "../breakpoint/location-breakpoint";
 
 class ConditionComponent extends InstructionThing {
 	public static readonly tagName = "wf-debug-condition";
@@ -23,9 +25,9 @@ class ConditionComponent extends InstructionThing {
 
 	private _rebuild() {
 		const name = Object.keys(Conditions).find(
-			key => (<any>Conditions)[key].Opcode === this._condition.opcode
+			key => (Conditions as any)[key].Opcode === this._condition.opcode
 		);
-		const definition = (<any>Conditions)[name];
+		const definition = (Conditions as any)[name];
 		const argCount = Math.max(definition.Arguments, 0);
 		const usedArguments = this._condition.arguments.slice(0, argCount);
 
@@ -36,6 +38,18 @@ class ConditionComponent extends InstructionThing {
 			document.createTextNode((usedArguments.length ? " " : "") + `${usedArguments.join(" ")}`)
 		);
 		this.appendChild(this._close());
+		this.appendChild(
+			<BreakpointButton
+				breakpoint={
+					new LocationBreakpoint(
+						this.zone.id,
+						this.action.id,
+						"c",
+						this.action.conditions.indexOf(this.condition)
+					)
+				}
+			/>
+		);
 	}
 }
 

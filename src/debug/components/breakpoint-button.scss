@@ -1,6 +1,6 @@
 @import "colors.scss";
 
-wf-breakpoint-button {
+wf-debug-breakpoint-button {
 	display: inline-block;
 	border-radius: 1000px;
 	border: 1px solid rgba(115, 115, 115, 0.84);
@@ -9,6 +9,7 @@ wf-breakpoint-button {
 	height: 10px;
 	margin-top: 4px;
 	margin-right: 5px;
+	cursor: pointer;
 
 	&[active] {
 		background-color: #4c7eea;

@@ -7,6 +7,7 @@ wf-debug-action {
 	padding: 5px;
 	font-family: "Anonymous Pro", monospace;
 	font-size: 12px;
+	min-width: 302px;
 
 	> .container {
 		display: flex;
@@ -21,7 +22,6 @@ wf-debug-action {
 	&.active {
 		font-weight: bold;
 	}
-
 	.expand {
 		position: absolute;
 		right: 5px;
@@ -43,8 +43,17 @@ wf-debug-action {
 			font-weight: bold;
 		}
 
-		&[truthy] .paren-open {
+		&[truthy] .paren-open,
+		&[truthy] .paren-close {
 			color: darkgreen;
+		}
+
+		wf-debug-breakpoint-button {
+			float: right;
+			transform: translateY(-1px);
+		}
+		&:not(:hover) wf-debug-breakpoint-button:not([active]) {
+			display: none;
 		}
 	}
 
@@ -65,5 +74,17 @@ wf-debug-action {
 		float: right;
 		margin-bottom: 4px;
 		display: block;
+
+		> wf-debug-breakpoint-button {
+			zoom: 0.8;
+			margin-top: 0px;
+			margin-right: 0px;
+			margin-left: 4px;
+		}
+
+		&:not(:hover) > wf-debug-breakpoint-button:not([active]) {
+			float: right;
+			display: none;
+		}
 	}
 }

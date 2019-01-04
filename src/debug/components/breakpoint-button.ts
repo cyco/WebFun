@@ -10,23 +10,14 @@ export const Events = {
 
 class BreakpointButton extends Component {
 	static readonly Event = Events;
-	static readonly tagName = "wf-breakpoint-button";
+	static readonly tagName = "wf-debug-breakpoint-button";
 	static readonly observedAttributes = ["active"];
-	public breakpoint: Breakpoint;
-	private _store: BreakpointStore;
-	private _removeHandler: EventListener;
-	private _addHandler: EventListener;
-
-	constructor() {
-		super();
-
-		this._store = BreakpointStore.sharedStore;
-		this.breakpoint = null;
-		this._removeHandler = ({ detail: { breakpoint } }: CustomEvent) =>
-			breakpoint === this.breakpoint && (this.active = false);
-		this._addHandler = ({ detail: { breakpoint } }: CustomEvent) =>
-			breakpoint === this.breakpoint && (this.active = true);
-	}
+	public breakpoint: Breakpoint = null;
+	private _store: BreakpointStore = BreakpointStore.sharedStore;
+	private _removeHandler = ({ detail: { breakpoint } }: CustomEvent) =>
+		breakpoint === this.breakpoint && (this.active = false);
+	private _addHandler = ({ detail: { breakpoint } }: CustomEvent) =>
+		breakpoint === this.breakpoint && (this.active = true);
 
 	get active() {
 		return this.hasAttribute("active");
