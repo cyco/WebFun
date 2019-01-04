@@ -41,7 +41,7 @@ abstract class InstructionThing extends Component {
 
 	private _paren(type: "open" | "close") {
 		const element = document.createElement("span");
-		element.innerText = ")";
+		element.innerText = type === "open" ? "(" : ")";
 		element.classList.add(type === "close" ? "paren-close" : "paren-open");
 		return element;
 	}
