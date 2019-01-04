@@ -4,7 +4,7 @@ import { Reader } from "src/engine/save-game";
 import { DesktopInputManager } from "./input";
 import { Char, Zone, Tile } from "src/engine/objects";
 import { ZoneScene, LoseScene } from "src/engine/scenes";
-import { ScriptExecutor, AlternateScriptExecutor } from "src/engine/script";
+import { AlternateScriptExecutor } from "src/engine/script";
 import { Planet, WorldSize } from "src/engine/types";
 import Settings from "src/settings";
 import { FilePicker, WindowManager } from "src/ui";
@@ -67,7 +67,6 @@ class GameController extends EventTarget {
 		engine.inputManager = new DesktopInputManager(this._sceneView);
 		engine.metronome = new Metronome();
 		engine.inventory = new Inventory();
-		engine.scriptExecutor = new ScriptExecutor();
 		engine.alternateScriptExecutor = new AlternateScriptExecutor(engine, Instructions, Conditions);
 		engine.hero = new Hero();
 		engine.hero.addEventListener(Hero.Event.HealthChanged, () => {

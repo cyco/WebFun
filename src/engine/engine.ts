@@ -10,7 +10,7 @@ import { Zone, Tile } from "./objects";
 import State from "./persistent-state";
 import { Renderer, PaletteAnimation } from "./rendering";
 import SceneManager from "./scene-manager";
-import { ScriptExecutor, AlternateScriptExecutor } from "./script";
+import { AlternateScriptExecutor } from "./script";
 import Story from "./story";
 import GameData from "./game-data";
 import { GameType as Type } from "./type";
@@ -32,7 +32,6 @@ class Engine extends EventTarget {
 	public data: GameData = null;
 	public hero: Hero = null;
 	public inventory: Inventory = null;
-	public scriptExecutor: ScriptExecutor = null;
 	public alternateScriptExecutor: AlternateScriptExecutor = null;
 	public story: Story = null;
 	public persistentState: typeof State = State;
