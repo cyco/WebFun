@@ -15,7 +15,7 @@ class AlternateScriptExecutor {
 	protected _instructionExecutor: InstructionExecutor;
 	protected _conditionChecker: ConditionChecker;
 	protected _executor: AsyncIterator<ScriptResult> = null;
-	private _engine: Engine;
+	protected _engine: Engine;
 
 	constructor(engine: Engine, instructions: InstructionStore, conditions: ConditionStore) {
 		this._instructionExecutor = new InstructionExecutor(instructions, engine);
@@ -40,6 +40,8 @@ class AlternateScriptExecutor {
 		this._inUse = true;
 
 		actions: for (const action of zone.actions) {
+			if (!action.enabled) continue;
+
 			this._instructionExecutor.action = action;
 
 			for (const condition of action.conditions) {

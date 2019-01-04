@@ -36,7 +36,7 @@ class DebuggingScriptExecutor extends AlternateScriptExecutor {
 	protected _executor: AsyncIterator<ScriptResult> = null;
 	public stopped: boolean = true;
 	public delegate: DebuggingScriptExecutorDelegate;
-	private _engine: Engine;
+	protected _engine: Engine;
 
 	constructor(
 		engine: Engine,
@@ -69,6 +69,8 @@ class DebuggingScriptExecutor extends AlternateScriptExecutor {
 		this._inUse = true;
 
 		actions: for (const action of zone.actions) {
+			if (!action.enabled) continue;
+
 			this.willExecute(action);
 			this._instructionExecutor.action = action;
 			while (this.stopped) yield ScriptResult.Wait;
