@@ -8,8 +8,8 @@ export default <InstructionType>{
 	Opcode: 0x22,
 	Arguments: [Type.Number],
 	Description: "Set current zone's `padding` value to a `arg_0`",
-	Implementation: async (instruction: Instruction, engine: Engine, _: Action): Promise<Result> => {
-		engine.currentZone.padding = instruction.arguments[0];
+	Implementation: async (instruction: Instruction, engine: Engine, action: Action): Promise<Result> => {
+		action.zone.padding = instruction.arguments[0];
 		return Result.Void;
 	}
 };

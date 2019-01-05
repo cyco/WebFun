@@ -7,8 +7,8 @@ import InstructionType from "../instruction";
 export default <InstructionType>{
 	Opcode: 0x1e,
 	Arguments: [],
-	Implementation: async (_: Instruction, engine: Engine, _action: Action): Promise<Result> => {
-		engine.currentZone.solved = true;
+	Implementation: async (_: Instruction, _engine: Engine, action: Action): Promise<Result> => {
+		action.zone.solved = true;
 		return Result.Void;
 	}
 };

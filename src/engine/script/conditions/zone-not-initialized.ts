@@ -7,6 +7,6 @@ export default <Condition>{
 	Opcode: 0x00,
 	Arguments: [],
 	Description: "Evaluates to true exactly once (used for initialization)",
-	Implementation: async (_: int16[], _zone: Zone, engine: Engine): Promise<boolean> =>
-		!engine.currentZone.actionsInitialized
+	Implementation: async (_: int16[], zone: Zone, _engine: Engine): Promise<boolean> =>
+		!zone.actionsInitialized
 };
