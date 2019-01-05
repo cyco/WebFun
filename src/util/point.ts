@@ -113,7 +113,16 @@ class Point implements PointLike {
 	}
 
 	isEqualTo(point: PointLike): boolean {
-		return !!(point && this.x === point.x && this.y === point.y && this.z === point.z);
+		return !!(
+			point &&
+			this.x === point.x &&
+			this.y === point.y &&
+			(this.z === null ||
+				this.z === undefined ||
+				point.z === null ||
+				point.z === undefined ||
+				this.z === point.z)
+		);
 	}
 
 	isUnidirectional(): boolean {

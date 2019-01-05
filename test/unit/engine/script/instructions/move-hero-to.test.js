@@ -17,20 +17,4 @@ describeInstruction("MoveHeroTo", (execute, engine) => {
 
 		done();
 	});
-
-	it("executes hotspots if the hero is hidden", async done => {
-		engine.sceneManager = { currentScene: new ZoneScene() };
-		spyOn(engine.sceneManager.currentScene, "executeHotspots");
-		engine.hero.visible = false;
-
-		let instruction = new Instruction({});
-		instruction._opcode = MoveHeroTo.Opcode;
-		instruction._arguments = [2, 1];
-
-		await execute(instruction);
-
-		expect(engine.sceneManager.currentScene.executeHotspots).toHaveBeenCalled();
-
-		done();
-	});
 });

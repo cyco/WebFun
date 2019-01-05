@@ -348,6 +348,24 @@ describe("WebFun.Util.Point", () => {
 		expect(pointA.isEqualTo(null)).toBeFalse();
 	});
 
+	it("isEqualTo ignores z component if it's missing in either point", () => {
+		const pointA = new Point(2, 3, null);
+		const pointB = new Point(2, 3, undefined);
+		const pointC = new Point(2, 3, 4);
+
+		expect(pointA.isEqualTo(pointA)).toBeTrue();
+		expect(pointA.isEqualTo(pointB)).toBeTrue();
+		expect(pointA.isEqualTo(pointC)).toBeTrue();
+
+		expect(pointB.isEqualTo(pointA)).toBeTrue();
+		expect(pointB.isEqualTo(pointB)).toBeTrue();
+		expect(pointB.isEqualTo(pointC)).toBeTrue();
+
+		expect(pointC.isEqualTo(pointA)).toBeTrue();
+		expect(pointC.isEqualTo(pointB)).toBeTrue();
+		expect(pointC.isEqualTo(pointC)).toBeTrue();
+	});
+
 	it("has a method to calculate the distance to another point", () => {
 		const p1 = new Point(3, 4, 5);
 		const p2 = new Point(4, -2, 2);

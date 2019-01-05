@@ -1,4 +1,3 @@
-import ZoneScene from "src/engine/scenes/zone-scene";
 import Engine from "../../engine";
 import Action from "../../objects/action";
 import Instruction from "../../objects/instruction";
@@ -13,10 +12,6 @@ export default <InstructionType>{
 	Implementation: async (instruction: Instruction, engine: Engine, _: Action): Promise<Result> => {
 		engine.hero.location.x = instruction.arguments[0];
 		engine.hero.location.y = instruction.arguments[1];
-
-		if (engine.hero.visible === false && engine.sceneManager.currentScene instanceof ZoneScene) {
-			engine.sceneManager.currentScene.executeHotspots();
-		}
 
 		// original implementation actually has a hard break here
 		return Result.Void;
