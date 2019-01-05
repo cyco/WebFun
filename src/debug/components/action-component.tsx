@@ -19,6 +19,7 @@ class ActionComponent extends Component {
 	public engine: Engine = null;
 	private _action: Action = null;
 	public breakpointStore: BreakpointStore = null;
+	public checker: ConditionChecker;
 
 	get action() {
 		return this._action;
@@ -90,16 +91,16 @@ class ActionComponent extends Component {
 	}
 
 	public evaluateConditions() {
-		const checker = new ConditionChecker(ConditionImplementations, this.engine);
-		Array.from(this.querySelectorAll(ConditionComponent.tagName)).forEach(
-			(condition: ConditionComponent) => {
-				if (checker.check(condition.condition, EvaluationMode.Walk, this.engine.currentZone)) {
-					condition.setAttribute("truthy", "");
-				} else {
-					condition.removeAttribute("truthy");
-				}
+		let checker = this.checker;
+		if (!checker) checker = this.checker = new ConditionChecker(ConditionImplementations, this.engine);
+
+		this.querySelectorAll(ConditionComponent.tagName).forEach(async (condition: ConditionComponent) => {
+			if (await checker.check(condition.condition, EvaluationMode.Walk, this._action.zone)) {
+				condition.setAttribute("truthy", "");
+			} else {
+				condition.removeAttribute("truthy");
 			}
-		);
+		});
 	}
 
 	protected _append(thing: string | Element | Element[], className: string) {
