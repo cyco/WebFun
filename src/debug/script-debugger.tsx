@@ -34,6 +34,7 @@ class ScriptDebugger implements DebuggingScriptExecutorDelegate {
 	private _currentZone: Zone = null;
 	private _currentAction: Action = null;
 	private _breakpointStore: BreakpointStore = BreakpointStore.sharedStore;
+	private _didExecuteSomething = false;
 
 	constructor() {
 		this._breakpointStore.backend = localStorage.prefixedWith("debug");
@@ -134,14 +135,13 @@ class ScriptDebugger implements DebuggingScriptExecutorDelegate {
 	public stepOnce() {
 		this._breakAfter = true;
 		const executor = this._engine.scriptExecutor as DebuggingScriptExecutor;
-		executor.stopped = false;
-		this._reflectExecutorState();
+		this.continueExecution(executor);
 	}
 
 	public togglePause() {
 		const executor = this._engine.scriptExecutor as DebuggingScriptExecutor;
-		executor.stopped = !executor.stopped;
-		this._reflectExecutorState();
+		if (executor.stopped) this.continueExecution(executor);
+		else this.stopExecution(executor);
 	}
 
 	private _reflectExecutorState() {
@@ -166,17 +166,11 @@ class ScriptDebugger implements DebuggingScriptExecutorDelegate {
 		const action = this._actionList.querySelectorAll(ActionComponent.tagName)[+actionId];
 		if (!action) return;
 		action.setAttribute("current", "");
-		if (!type) {
-			(action as any).scrollIntoViewIfNeeded();
-			return;
-		}
+		if (!type) return;
 		const thing = action.querySelectorAll(
 			type === "c" ? ConditionComponent.tagName : InstructionComponent.tagName
 		)[+idx];
-		if (thing) {
-			thing.setAttribute("current", "");
-			(thing as any).scrollIntoViewIfNeeded();
-		}
+		if (thing) thing.setAttribute("current", "");
 	}
 
 	executorWillExecute(
@@ -214,8 +208,7 @@ class ScriptDebugger implements DebuggingScriptExecutorDelegate {
 		this._reflectExecutorPosition(breakpoint);
 		if (breakpoint && this._breakpointStore.hasBreakpoint(breakpoint.id)) {
 			console.log("stopping because of breakpoint", breakpoint.id);
-			executor.stopped = true;
-			this._reflectExecutorState();
+			this.stopExecution(executor);
 		}
 	}
 
@@ -254,9 +247,8 @@ class ScriptDebugger implements DebuggingScriptExecutorDelegate {
 		_result: ScriptResult | Result | boolean
 	): void {
 		if (this._breakAfter) {
-			executor.stopped = true;
+			this.stopExecution(executor);
 			this._breakAfter = false;
-			this._reflectExecutorState();
 		}
 
 		if (thing instanceof Zone) {
@@ -273,6 +265,30 @@ class ScriptDebugger implements DebuggingScriptExecutorDelegate {
 
 		if (thing instanceof Instruction) {
 		}
+	}
+
+	private continueExecution(executor: DebuggingScriptExecutor) {
+		executor.stopped = false;
+		this._reflectExecutorState();
+	}
+
+	private stopExecution(executor: DebuggingScriptExecutor) {
+		executor.stopped = true;
+		this._actionList
+			.querySelectorAll(ActionComponent.tagName)
+			.forEach((component: ActionComponent) => component.evaluateConditions());
+		this._reflectExecutorState();
+		this._scrollToCurrentInstruction();
+	}
+
+	private _scrollToCurrentInstruction() {
+		const actionComponent = this._actionList.querySelector(`${ActionComponent.tagName}[current]`);
+		if (!actionComponent) return;
+		const instructionComponent = actionComponent.querySelector(
+			`${ConditionComponent.tagName}[current],${InstructionComponent.tagName}[current]`
+		);
+		const target = (instructionComponent || actionComponent) as any;
+		target.scrollIntoViewIfNeeded();
 	}
 }
 
