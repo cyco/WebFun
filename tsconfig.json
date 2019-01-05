@@ -16,7 +16,7 @@
     "rootDir": ".",
     "jsx": "preserve",
     "typeRoots": ["src/@types"],
-    "lib": ["es2017", "dom", "es6", "es2015.promise"],
+    "lib": ["es2017", "dom", "es6", "es2015.promise", "esnext.asynciterable"],
     "types": ["jasmine", "jasmine-matchers", "webcomponents.js", "webfun-additions", "text-encoding"]
   },
   "exclude": ["node_modules"]
