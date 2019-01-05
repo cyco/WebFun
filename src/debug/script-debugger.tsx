@@ -2,7 +2,11 @@ import { Window } from "src/ui/components";
 import { Engine, EngineEvents } from "src/engine";
 import Controls from "./components/controls";
 import Group from "src/ui/components/group";
-import ActionComponent from "src/debug/components/action-component";
+import {
+	Action as ActionComponent,
+	Instruction as InstructionComponent,
+	Condition as ConditionComponent
+} from "src/debug/components";
 import Settings from "src/settings";
 import { WindowManager } from "src/ui";
 import { ConditionImplementations } from "src/engine/script/conditions";
@@ -125,7 +129,6 @@ class ScriptDebugger implements DebuggingScriptExecutorDelegate {
 	}
 
 	public stepOnce() {
-		console.log("step");
 		this._breakAfter = true;
 		const executor = this._engine.scriptExecutor as DebuggingScriptExecutor;
 		executor.stopped = false;
@@ -145,12 +148,32 @@ class ScriptDebugger implements DebuggingScriptExecutorDelegate {
 		else controls.setAttribute("running", "");
 	}
 
+	private _reflectExecutorPosition(breakpoint: LocationBreakpoint) {
+		const previousAction = this._actionList.querySelector(`${ActionComponent.tagName}[current]`);
+		if (previousAction) previousAction.removeAttribute("current");
+		const previousThing = this._actionList.querySelector(
+			`${InstructionComponent.tagName}[current],${ConditionComponent.tagName}[current]`
+		);
+		if (previousThing) previousThing.removeAttribute("current");
+
+		if (!breakpoint) return;
+
+		const [_, actionId, type = null, idx = null] = breakpoint.id.substr(1).split(":");
+
+		const action = this._actionList.querySelectorAll(ActionComponent.tagName)[+actionId];
+		if (!action) return;
+		action.setAttribute("current", "");
+		if (!type) return;
+		const thing = action.querySelectorAll(
+			type === "c" ? ConditionComponent.tagName : InstructionComponent.tagName
+		)[+idx];
+		if (thing) thing.setAttribute("current", "");
+	}
+
 	executorWillExecute(
 		executor: DebuggingScriptExecutor,
 		thing: Zone | Action | Condition | Instruction
 	): void {
-		let breakpoint;
-
 		if (thing instanceof Zone) {
 			this._currentZone = thing;
 			this._currentAction = null;
@@ -160,7 +183,8 @@ class ScriptDebugger implements DebuggingScriptExecutorDelegate {
 		if (thing instanceof Action) {
 			this._currentAction = thing;
 			if (thing.zone !== this._currentZone) console.warn("action does not belong to current zone!");
-			breakpoint = new LocationBreakpoint(thing.zone.id, thing.id);
+			if (this._currentAction.zone !== this.engine.currentZone)
+				console.warn("Engine thinks we're on a differente zone!");
 		}
 
 		if (thing instanceof Condition) {
@@ -168,7 +192,33 @@ class ScriptDebugger implements DebuggingScriptExecutorDelegate {
 				console.warn("action does not belong to current zone!");
 			if (this._currentAction.conditions.indexOf(thing) === -1)
 				console.warn("Condition not found in current action!");
+		}
 
+		if (thing instanceof Instruction) {
+			if (this._currentAction.zone !== this._currentZone)
+				console.warn("action does not belong to current zone!");
+			if (this._currentAction.instructions.indexOf(thing) === -1)
+				console.warn("Instruction not found in current action!");
+		}
+
+		let breakpoint = this.buildBreakpoint(thing);
+		this._reflectExecutorPosition(breakpoint);
+		if (breakpoint && this._breakpointStore.hasBreakpoint(breakpoint.id)) {
+			console.log("stopping because of breakpoint", breakpoint.id);
+			executor.stopped = true;
+			this._reflectExecutorState();
+		}
+	}
+
+	private buildBreakpoint(thing: Zone | Action | Condition | Instruction) {
+		let breakpoint = null;
+
+		if (thing instanceof Action) {
+			this._currentAction = thing;
+			breakpoint = new LocationBreakpoint(thing.zone.id, thing.id);
+		}
+
+		if (thing instanceof Condition) {
 			breakpoint = new LocationBreakpoint(
 				this._currentZone.id,
 				this._currentAction.id,
@@ -178,11 +228,6 @@ class ScriptDebugger implements DebuggingScriptExecutorDelegate {
 		}
 
 		if (thing instanceof Instruction) {
-			if (this._currentAction.zone !== this._currentZone)
-				console.warn("action does not belong to current zone!");
-			if (this._currentAction.instructions.indexOf(thing) === -1)
-				console.warn("Instruction not found in current action!");
-
 			breakpoint = new LocationBreakpoint(
 				this._currentZone.id,
 				this._currentAction.id,
@@ -191,11 +236,7 @@ class ScriptDebugger implements DebuggingScriptExecutorDelegate {
 			);
 		}
 
-		if (breakpoint && this._breakpointStore.hasBreakpoint(breakpoint.id)) {
-			console.log("stopping because of breakpoint", breakpoint.id);
-			executor.stopped = true;
-			this._reflectExecutorState();
-		}
+		return breakpoint;
 	}
 
 	executorDidExecute(
