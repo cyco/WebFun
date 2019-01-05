@@ -46,8 +46,6 @@ class ScriptDebugger implements DebuggingScriptExecutorDelegate {
 		this._window.content.appendChild(
 			<Controls onstep={(): void => this.stepOnce()} ontogglepause={(): void => this.togglePause()} />
 		);
-		console.log((this._window.content.lastElementChild as any).constructor.name);
-		console.log((this._window.content.lastElementChild as any).onstep);
 		this._actionList = <Group className="action-list" /> as Group;
 		this._window.content.appendChild(this._actionList);
 	}

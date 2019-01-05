@@ -17,7 +17,7 @@ class DOMAudioChannel extends Channel<HTMLAudioElement> {
 			this._sounds.push(soundNode);
 			await soundNode.play();
 		} catch (e) {
-			console.warn(e);
+			// console.warn(e);
 		}
 	}
 
