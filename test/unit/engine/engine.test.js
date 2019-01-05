@@ -16,7 +16,7 @@ describe("Engine", () => {
 
 		const engine = new Engine();
 		engine.sceneManager = {
-			update: () => (updatePassedOn = true),
+			update: () => ((updatePassedOn = true), Promise.resolve(void 0)),
 			render: () => (renderPassedOn = true)
 		};
 

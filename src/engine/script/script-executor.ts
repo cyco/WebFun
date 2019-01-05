@@ -78,6 +78,11 @@ class ScriptExecutor {
 		if (normalizedResult === ScriptResult.Done) {
 			this._executor = null;
 		}
+		if ((normalizedResult as any) === Result.UpdateZone) {
+			console.log("update zone, emptying executor");
+			while (await this._executor.next()) console.log("wasted instruction result");
+			this._executor = null;
+		}
 		return normalizedResult;
 	}
 

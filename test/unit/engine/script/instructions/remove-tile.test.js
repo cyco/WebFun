@@ -9,6 +9,7 @@ describeInstruction("RemoveTile", (execute, engine) => {
 		let instruction = new Instruction({});
 		instruction._opcode = RemoveTile.Opcode;
 		instruction._arguments = [1, 2, 3];
+
 		await execute(instruction);
 
 		expect(engine.currentZone.removeTile).toHaveBeenCalledWith(1, 2, 3);

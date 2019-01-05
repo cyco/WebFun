@@ -44,7 +44,13 @@ const makeInstructionDescription = desc => (Name, block) => {
 			};
 		});
 
-		block(executor.execute.bind(executor), engine);
+		block(async instruction => {
+			executor.action = {
+				zone: engine.currentZone,
+				instructions: [instruction]
+			};
+			return await executor.execute(instruction, engine);
+		}, engine);
 	});
 };
 
