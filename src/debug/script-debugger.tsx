@@ -126,6 +126,9 @@ class ScriptDebugger implements DebuggingScriptExecutorDelegate {
 			component.evaluateConditions();
 			this._actionList.appendChild(component);
 		});
+
+		if (this._actionList.firstElementChild)
+			(this._actionList.firstElementChild as any).scrollIntoViewIfNeeded();
 	}
 
 	public stepOnce() {
@@ -163,11 +166,17 @@ class ScriptDebugger implements DebuggingScriptExecutorDelegate {
 		const action = this._actionList.querySelectorAll(ActionComponent.tagName)[+actionId];
 		if (!action) return;
 		action.setAttribute("current", "");
-		if (!type) return;
+		if (!type) {
+			(action as any).scrollIntoViewIfNeeded();
+			return;
+		}
 		const thing = action.querySelectorAll(
 			type === "c" ? ConditionComponent.tagName : InstructionComponent.tagName
 		)[+idx];
-		if (thing) thing.setAttribute("current", "");
+		if (thing) {
+			thing.setAttribute("current", "");
+			(thing as any).scrollIntoViewIfNeeded();
+		}
 	}
 
 	executorWillExecute(
