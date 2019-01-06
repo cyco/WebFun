@@ -425,7 +425,6 @@ class ZoneScene extends Scene {
 		const targetPoint = Point.add(hero.location, p);
 		const targetTile = zone.bounds.contains(targetPoint) && zone.getTile(targetPoint.x, targetPoint.y, 1);
 		if (targetTile) {
-			console.log("bump", targetTile);
 			// TODO: get rid of temporary state
 			engine.temporaryState.bump = targetPoint;
 			engine.scriptExecutor.prepeareExecution(EvaluationMode.Bump, this.zone);
