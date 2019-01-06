@@ -106,6 +106,12 @@ class DebuggingScriptExecutor extends ScriptExecutor {
 		this._engine.temporaryState.enteredByPlane = false;
 		this._engine.temporaryState.bump = null;
 
+		if (mode === Mode.PlaceItem) {
+			console.log("clear placed item");
+			this._engine.inputManager.placedTile = null;
+			this._engine.inputManager.placedTileLocation = null;
+		}
+
 		this._inUse = false;
 		this.didExecute(zone, ScriptResult.Done);
 
