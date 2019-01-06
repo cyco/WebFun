@@ -55,7 +55,7 @@ abstract class InstructionThing extends Component {
 				<TileView
 					palette={this.engine.palette.original}
 					tile={this.engine.data.tiles[arg]}
-					style={{ zoom: "0.5", transform: "translateY(8.9px)", display: "inline-block" }}
+					style={{ zoom: "0.4", transform: "translateY(8.9px)", display: "inline-block" }}
 				/>
 			</span>
 		);
