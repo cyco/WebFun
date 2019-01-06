@@ -448,6 +448,43 @@ class ZoneScene extends Scene {
 		const location = inputManager.placedTileLocation;
 
 		if (!tile || !location) return false;
+		let acceptItem = false;
+
+		console.log("tile", tile, "placed at", location);
+		for (const hotspot of this.zone.hotspots) {
+			if (!hotspot.enabled) continue;
+			if (!hotspot.location.isEqualTo(location)) continue;
+			console.log("hotspot.type: ", hotspot.type);
+
+			const worldLocation = this.engine.world.locationOfZone(this.zone);
+			if (!worldLocation) {
+				console.warn("Could not find world location for zone.");
+			}
+			const worldItem = this.engine.world.at(worldLocation);
+			if (!worldItem) {
+				console.warn("Could not find world item at", worldLocation);
+			}
+			const puzzle = this.engine.data.puzzles[worldItem.puzzleIdx];
+			console.log("puzzle: ", this.engine.data.puzzles[worldItem.puzzleIdx]);
+			console.log("or puzzle: ", this.engine.data.puzzles[worldItem.puzzleIdx]);
+
+			if (tile !== worldItem.findItem) {
+				console.warn("play sound no go");
+				break;
+			}
+
+			console.warn("show text", puzzle.strings[1]);
+			console.warn("drop item", puzzle.item2);
+			// TODO: remove item from inventory
+			acceptItem = true;
+		}
+
+		// evaluate scripts
+		this.engine.scriptExecutor.prepeareExecution(EvaluationMode.PlaceItem, this.zone);
+		const scriptResult = await this.engine.scriptExecutor.execute();
+		if (scriptResult !== ScriptResult.Done) {
+			return;
+		}
 
 		inputManager.clearPlacedTile();
 

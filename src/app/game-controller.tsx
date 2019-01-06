@@ -8,7 +8,7 @@ import { ScriptExecutor } from "src/engine/script";
 import { Planet, WorldSize } from "src/engine/types";
 import Settings from "src/settings";
 import { FilePicker, WindowManager } from "src/ui";
-import { EventTarget } from "src/util";
+import { EventTarget, Point, Rectangle, Size } from "src/util";
 import { ConfirmationResult, ModalConfirm } from "src/ux";
 import GameState from "../engine/game-state";
 import Loader, { LoaderEventDetails } from "./loader";
@@ -182,7 +182,7 @@ class GameController extends EventTarget {
 			engine.metronome.stop();
 		});
 		this._window.inventory.addEventListener(InventoryComponent.Events.ItemPlaced, (e: CustomEvent) => {
-			const location = e.detail.location;
+			const location = e.detail.location as Point;
 			const item = e.detail.item as Tile;
 
 			const targetElement = document.elementFromPoint(location.x, location.y);
@@ -197,12 +197,40 @@ class GameController extends EventTarget {
 					].join(",")
 				);
 
+			let used = false;
 			if (element instanceof HealthComponent && item.isEdible) {
+				console.log("consume");
 				this.engine.consume(item);
+				used = true;
 			}
 
 			if (item.isWeapon && (element instanceof AmmoComponet || element instanceof WeaponComponent)) {
+				console.log("equip");
 				this.engine.equip(item);
+				used = true;
+			}
+
+			if (!used) {
+				const { left, top } = this._sceneView.getBoundingClientRect();
+				const pointInView = location
+					.bySubtracting(left, top)
+					.dividedBy(new Size(Tile.WIDTH, Tile.HEIGHT))
+					.byFlooring();
+
+				if (!new Rectangle(new Point(0, 0), new Size(9, 9)).contains(pointInView)) {
+					return;
+				}
+
+				const pointInZone = pointInView.bySubtracting(
+					this.engine.camera.offset.x,
+					this.engine.camera.offset.y
+				);
+				if (!new Rectangle(new Point(0, 0), this.engine.currentZone.size).contains(pointInZone)) {
+					return;
+				}
+
+				this.engine.inputManager.placedTile = item;
+				this.engine.inputManager.placedTileLocation = pointInZone;
 			}
 
 			engine.metronome.start();

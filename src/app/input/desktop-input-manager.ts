@@ -1,4 +1,4 @@
-import { KeyEvent, Point } from "src/util";
+import { KeyEvent, Point, Size, Rectangle } from "src/util";
 import { InputManager, Direction } from "src/engine/input";
 import { SceneView } from "src/app/ui";
 import { document } from "src/std/dom";
@@ -163,21 +163,16 @@ class DesktopInputManager extends InputManager implements EventListenerObject {
 	private _mouseDown(e: MouseEvent) {
 		const mouseLocation = new Point(e.clientX, e.clientY);
 
-		const element = document.elementFromPoint(mouseLocation.x, mouseLocation.y);
 		// HACK: this is a cheap way way to find out if scene view is front most
-		if (!element.closest(SceneView.tagName)) return;
+		const sceneView = document.querySelector(SceneView.tagName);
+		const { left, top, width, height } = sceneView.getBoundingClientRect();
+		if (!new Rectangle(new Point(left, top), new Size(width, height)).contains(mouseLocation)) {
+			return;
+		}
 
 		const point = this._getPointInViewCoordinates(mouseLocation);
 		const pointIsInView = point.x > 0 && point.y > 0 && point.x < 1 && point.y < 1;
 		if (!pointIsInView) return;
-
-		if (this.currentItem) {
-			this.placeTileHandler(new TilePlacedEvent(this.currentItem, point));
-			this.placedTile = this.currentItem;
-			this.placedTileLocation = point;
-			this.currentItem = null;
-			return;
-		}
 
 		if (e.button === 0) this.walk = true;
 		if (e.button === 1) this.attack = true;
