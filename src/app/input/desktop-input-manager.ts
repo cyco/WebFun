@@ -164,7 +164,7 @@ class DesktopInputManager extends InputManager implements EventListenerObject {
 		const mouseLocation = new Point(e.clientX, e.clientY);
 
 		// HACK: this is a cheap way way to find out if scene view is front most
-		const sceneView = document.querySelector(SceneView.tagName);
+		const sceneView = this._element;
 		const { left, top, width, height } = sceneView.getBoundingClientRect();
 		if (!new Rectangle(new Point(left, top), new Size(width, height)).contains(mouseLocation)) {
 			return;
