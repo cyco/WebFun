@@ -30,7 +30,6 @@ class InstructionComponent extends InstructionThing {
 			key => (Instructions as any)[key].Opcode === this._instruction.opcode
 		);
 		const definition = (Instructions as any)[name];
-		const argCount = Math.max(definition.Arguments, 0);
 
 		this.textContent = "";
 		this.appendChild(this._open());
@@ -55,20 +54,46 @@ class InstructionComponent extends InstructionThing {
 	private customize(_: any) {
 		switch (this._instruction.opcode) {
 			case Instructions.PlaceTile.Opcode:
+				this.appendLocationArgument(
+					this._instruction.arguments[0],
+					this._instruction.arguments[1],
+					this._instruction.arguments[2]
+				);
+				this.appendTileArgument(this._instruction.arguments[3]);
 				break;
 			case Instructions.RemoveTile.Opcode:
+				this.appendLocationArgument(
+					this._instruction.arguments[0],
+					this._instruction.arguments[1],
+					this._instruction.arguments[2]
+				);
 				break;
 			case Instructions.MoveTile.Opcode:
+				this.appendLocationArgument(
+					this._instruction.arguments[0],
+					this._instruction.arguments[1],
+					this._instruction.arguments[2]
+				);
 				break;
 			case Instructions.DrawTile.Opcode:
+				this.appendLocationArgument(
+					this._instruction.arguments[3],
+					this._instruction.arguments[4],
+					this._instruction.arguments[2]
+				);
 				break;
 			case Instructions.SpeakHero.Opcode:
+				this.appendTextArgument(this._instruction.text);
 				break;
 			case Instructions.SpeakNpc.Opcode:
+				this.appendLocationArgument(this._instruction.arguments[0], this._instruction.arguments[1]);
+				this.appendTextArgument(this._instruction.text);
 				break;
 			case Instructions.EnableNpc.Opcode:
+				this.appendNumberArgument(this._instruction.arguments[0]);
 				break;
 			case Instructions.DisableNpc.Opcode:
+				this.appendNumberArgument(this._instruction.arguments[0]);
 				break;
 			case Instructions.EnableAllNpcs.Opcode:
 				break;
@@ -87,6 +112,7 @@ class InstructionComponent extends InstructionThing {
 			case Instructions.StopSound.Opcode:
 				break;
 			case Instructions.RollDice.Opcode:
+				this.appendNumberArgument(this._instruction.arguments[0]);
 				break;
 			case Instructions.SetCounter.Opcode:
 				this.appendNumberArgument(this._instruction.arguments[0]);
@@ -98,18 +124,25 @@ class InstructionComponent extends InstructionThing {
 			case Instructions.ShowHero.Opcode:
 				break;
 			case Instructions.MoveHeroTo.Opcode:
+				this.appendLocationArgument(this._instruction.arguments[0], this._instruction.arguments[1]);
 				break;
 			case Instructions.DisableAction.Opcode:
 				break;
 			case Instructions.DisableHotspot.Opcode:
+				this.appendNumberArgument(this._instruction.arguments[0]);
 				break;
 			case Instructions.EnableHotspot.Opcode:
+				this.appendNumberArgument(this._instruction.arguments[0]);
 				break;
 			case Instructions.DropItem.Opcode:
+				this.appendTileArgument(this._instruction.arguments[0]);
+				this.appendLocationArgument(this._instruction.arguments[1], this._instruction.arguments[2]);
 				break;
 			case Instructions.AddItem.Opcode:
+				this.appendTileArgument(this._instruction.arguments[0]);
 				break;
 			case Instructions.RemoveItem.Opcode:
+				this.appendTileArgument(this._instruction.arguments[0]);
 				break;
 			case Instructions.ChangeZone.Opcode:
 				break;
@@ -135,8 +168,17 @@ class InstructionComponent extends InstructionThing {
 			case Instructions.MarkAsSolved.Opcode:
 				break;
 			case Instructions.MoveHeroBy.Opcode:
+				this.appendLocationArgument(this._instruction.arguments[0], this._instruction.arguments[1]);
 				break;
 		}
+	}
+
+	protected appendTextArgument(text: string) {
+		this.appendChild(
+			<span className="argument text" title={text}>
+				text
+			</span>
+		);
 	}
 }
 

@@ -47,6 +47,17 @@ abstract class InstructionThing extends Component {
 	protected appendNumberArgument(arg: number) {
 		this.appendChild(<span className="argument number">{arg.toString()}</span>);
 	}
+	protected appendTileArgument(arg: number) {
+		this.appendChild(<span className="argument tile">Tile {arg}</span>);
+	}
+	protected appendLocationArgument(x: number, y: number, z: number = null) {
+		this.appendChild(
+			<span className="argument location">
+				{x.toString()}x{y.toString()}
+				{z !== null ? `x${z.toString()}` : ""}
+			</span>
+		);
+	}
 }
 
 export default InstructionThing;
