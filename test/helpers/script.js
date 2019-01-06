@@ -28,12 +28,14 @@ const makeInstructionDescription = desc => (Name, block) => {
 			currentZone: {},
 			hero: {},
 			temporaryState: {},
-			data: {}
+			data: {},
+			currentWorld: {}
 		};
 		let executor = new InstructionExecutor(InstructionImplementations, engine);
 
 		beforeEach(() => {
 			engine.currentZone = {};
+			engine.currentWorld = {};
 			engine.hero = { location: new Point(0, 0) };
 			engine.temporaryState = {};
 			engine.data = {};
@@ -49,7 +51,7 @@ const makeInstructionDescription = desc => (Name, block) => {
 				zone: engine.currentZone,
 				instructions: [instruction]
 			};
-			return await executor.execute(instruction, engine);
+			return await executor.execute(instruction);
 		}, engine);
 	});
 };
