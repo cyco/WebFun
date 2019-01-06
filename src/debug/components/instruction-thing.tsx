@@ -43,6 +43,10 @@ abstract class InstructionThing extends Component {
 			</span>
 		);
 	}
+
+	protected appendNumberArgument(arg: number) {
+		this.appendChild(<span className="argument number">{arg.toString()}</span>);
+	}
 }
 
 export default InstructionThing;

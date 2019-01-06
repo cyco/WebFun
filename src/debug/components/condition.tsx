@@ -31,14 +31,11 @@ class ConditionComponent extends InstructionThing {
 		);
 		const definition = (Conditions as any)[name];
 		const argCount = Math.max(definition.Arguments, 0);
-		const usedArguments = this._condition.arguments.slice(0, argCount);
 
 		this.textContent = "";
 		this.appendChild(this._open());
 		this.appendChild(this._command(name));
-		this.appendChild(
-			document.createTextNode((usedArguments.length ? " " : "") + `${usedArguments.join(" ")}`)
-		);
+		this.customize(definition);
 		this.appendChild(this._close());
 		this.appendChild(
 			<BreakpointButton
@@ -53,6 +50,97 @@ class ConditionComponent extends InstructionThing {
 				}
 			/>
 		);
+	}
+
+	private customize(_: any) {
+		switch (this._condition.opcode) {
+			case Conditions.ZoneNotInitialized.Opcode:
+				break;
+			case Conditions.ZoneEntered.Opcode:
+				break;
+			case Conditions.Bump.Opcode:
+				break;
+			case Conditions.PlaceItem.Opcode:
+				break;
+			case Conditions.StandingOn.Opcode:
+				break;
+			case Conditions.CounterIs.Opcode:
+				this.appendNumberArgument(this._condition.arguments[0]);
+				break;
+			case Conditions.RandomIs.Opcode:
+				this.appendNumberArgument(this._condition.arguments[0]);
+				break;
+			case Conditions.RandomIsGreaterThan.Opcode:
+				this.appendNumberArgument(this._condition.arguments[0]);
+				break;
+			case Conditions.RandomIsLessThan.Opcode:
+				this.appendNumberArgument(this._condition.arguments[0]);
+				break;
+			case Conditions.EnterByPlane.Opcode:
+				break;
+			case Conditions.TileAtIs.Opcode:
+				break;
+			case Conditions.NpcIsActive.Opcode:
+				break;
+			case Conditions.HasNoActiveNpcs.Opcode:
+				break;
+			case Conditions.HasItem.Opcode:
+				break;
+			case Conditions.RequiredItemIs.Opcode:
+				break;
+			case Conditions.EndingIs.Opcode:
+				break;
+			case Conditions.ZoneIsSolved.Opcode:
+				break;
+			case Conditions.Unknown1.Opcode:
+				break;
+			case Conditions.GameWon.Opcode:
+				this.appendNumberArgument(this._condition.arguments[0]);
+				break;
+			case Conditions.HealthIsLessThan.Opcode:
+				this.appendNumberArgument(this._condition.arguments[0]);
+				break;
+			case Conditions.HealthIsGreaterThan.Opcode:
+				this.appendNumberArgument(this._condition.arguments[0]);
+				break;
+			case Conditions.Unknown2.Opcode:
+				break;
+			case Conditions.FindItemIs.Opcode:
+				break;
+			case Conditions.PlaceItemIsNot.Opcode:
+				break;
+			case Conditions.HeroIsAt.Opcode:
+				break;
+			case Conditions.PaddingIs.Opcode:
+				this.appendNumberArgument(this._condition.arguments[0]);
+				break;
+			case Conditions.PaddingIsLessThan.Opcode:
+				this.appendNumberArgument(this._condition.arguments[0]);
+				break;
+			case Conditions.PaddingIsGreaterThan.Opcode:
+				this.appendNumberArgument(this._condition.arguments[0]);
+				break;
+			case Conditions.GamesWonIs.Opcode:
+				this.appendNumberArgument(this._condition.arguments[0]);
+				break;
+			case Conditions.HasHotspotTriggerAt.Opcode:
+				break;
+			case Conditions.HasAnyRequiredItem.Opcode:
+				break;
+			case Conditions.CounterIsNot.Opcode:
+				this.appendNumberArgument(this._condition.arguments[0]);
+				break;
+			case Conditions.RandomIsNot.Opcode:
+				this.appendNumberArgument(this._condition.arguments[0]);
+				break;
+			case Conditions.PaddingIsNot.Opcode:
+				this.appendNumberArgument(this._condition.arguments[0]);
+				break;
+			case Conditions.TileAtIsAgain.Opcode:
+				break;
+			case Conditions.GamesWonIsGreaterThan.Opcode:
+				break;
+		}
 	}
 }
 
