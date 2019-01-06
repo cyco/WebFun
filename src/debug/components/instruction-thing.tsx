@@ -2,6 +2,8 @@ import { Component } from "src/ui";
 import Action from "src/engine/objects/action";
 import Zone from "src/engine/objects/zone";
 import Engine from "src/engine/engine";
+import { Size } from "src/util";
+import TileView from "./tile-view";
 
 abstract class InstructionThing extends Component {
 	public zone: Zone = null;
@@ -48,7 +50,15 @@ abstract class InstructionThing extends Component {
 		this.appendChild(<span className="argument number">{arg.toString()}</span>);
 	}
 	protected appendTileArgument(arg: number) {
-		this.appendChild(<span className="argument tile">Tile {arg}</span>);
+		this.appendChild(
+			<span className="argument tile">
+				<TileView
+					palette={this.engine.palette.original}
+					tile={this.engine.data.tiles[arg]}
+					style={{ zoom: "0.5", transform: "translateY(8.9px)", display: "inline-block" }}
+				/>
+			</span>
+		);
 	}
 	protected appendLocationArgument(x: number, y: number, z: number = null) {
 		this.appendChild(
