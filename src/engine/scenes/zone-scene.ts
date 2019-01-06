@@ -43,6 +43,11 @@ class ZoneScene extends Scene {
 			return;
 		}
 
+		scriptResult = await this._handlePlacedTile();
+		if (scriptResult !== ScriptResult.Done) {
+			return;
+		}
+
 		engine.scriptExecutor.prepeareExecution(EvaluationMode.Walk, this.zone);
 		scriptResult = await engine.scriptExecutor.execute();
 		if (scriptResult !== ScriptResult.Done) {
@@ -51,14 +56,11 @@ class ZoneScene extends Scene {
 
 		if (this._evaluateZoneChangeHotspots()) return;
 
-		let stop = await this._handlePlacedTile();
-		if (stop) return;
-
 		this._moveNPCs();
 
 		// await this._handleMouse();
 
-		stop = await this._handleKeys();
+		let stop = await this._handleKeys();
 		if (stop) return;
 
 		this.engine.camera.update(ticks);
@@ -442,19 +444,20 @@ class ZoneScene extends Scene {
 		} else this.executeHotspots();
 	}
 
-	private async _handlePlacedTile(): Promise<boolean> {
+	private async _handlePlacedTile(): Promise<ScriptResult> {
 		const inputManager = this.engine.inputManager;
 		const tile = inputManager.placedTile;
 		const location = inputManager.placedTileLocation;
 
-		if (!tile || !location) return false;
+		if (!tile || !location) {
+			return ScriptResult.Done;
+		}
+		console.log("handle placed tile", tile.name, location.toString());
 		let acceptItem = false;
 
-		console.log("tile", tile, "placed at", location);
 		for (const hotspot of this.zone.hotspots) {
 			if (!hotspot.enabled) continue;
 			if (!hotspot.location.isEqualTo(location)) continue;
-			console.log("hotspot.type: ", hotspot.type);
 
 			const worldLocation = this.engine.world.locationOfZone(this.zone);
 			if (!worldLocation) {
@@ -481,14 +484,7 @@ class ZoneScene extends Scene {
 
 		// evaluate scripts
 		this.engine.scriptExecutor.prepeareExecution(EvaluationMode.PlaceItem, this.zone);
-		const scriptResult = await this.engine.scriptExecutor.execute();
-		if (scriptResult !== ScriptResult.Done) {
-			return;
-		}
-
-		inputManager.clearPlacedTile();
-
-		return false;
+		return await this.engine.scriptExecutor.execute();
 	}
 
 	private _evaluateZoneChangeHotspots(): boolean {

@@ -65,8 +65,13 @@ class ScriptExecutor {
 		this._engine.temporaryState.enteredByPlane = false;
 		this._engine.temporaryState.bump = null;
 
-		this._inUse = false;
+		if (mode === Mode.PlaceItem) {
+			console.log("clear placed item");
+			this._engine.inputManager.placedTile = null;
+			this._engine.inputManager.placedTileLocation = null;
+		}
 
+		this._inUse = false;
 		return ScriptResult.Done;
 	}
 
