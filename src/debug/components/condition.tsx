@@ -59,10 +59,21 @@ class ConditionComponent extends InstructionThing {
 			case Conditions.ZoneEntered.Opcode:
 				break;
 			case Conditions.Bump.Opcode:
+				this.appendLocationArgument(this._condition.arguments[0], this._condition.arguments[1]);
+				this.appendTileArgument(this._condition.arguments[2]);
 				break;
 			case Conditions.PlaceItem.Opcode:
+				this.appendLocationArgument(
+					this._condition.arguments[0],
+					this._condition.arguments[1],
+					this._condition.arguments[2]
+				);
+				this.appendTileArgument(this._condition.arguments[3]);
+				this.appendTileArgument(this._condition.arguments[4]);
 				break;
 			case Conditions.StandingOn.Opcode:
+				this.appendLocationArgument(this._condition.arguments[0], this._condition.arguments[1]);
+				this.appendTileArgument(this._condition.arguments[2]);
 				break;
 			case Conditions.CounterIs.Opcode:
 				this.appendNumberArgument(this._condition.arguments[0]);
@@ -79,14 +90,23 @@ class ConditionComponent extends InstructionThing {
 			case Conditions.EnterByPlane.Opcode:
 				break;
 			case Conditions.TileAtIs.Opcode:
+				this.appendLocationArgument(
+					this._condition.arguments[1],
+					this._condition.arguments[2],
+					this._condition.arguments[3]
+				);
+				this.appendTileArgument(this._condition.arguments[0]);
 				break;
 			case Conditions.NpcIsActive.Opcode:
+				this.appendNumberArgument(this._condition.arguments[0]);
 				break;
 			case Conditions.HasNoActiveNpcs.Opcode:
 				break;
 			case Conditions.HasItem.Opcode:
+				this.appendTileArgument(this._condition.arguments[0]);
 				break;
 			case Conditions.RequiredItemIs.Opcode:
+				this.appendTileArgument(this._condition.arguments[0]);
 				break;
 			case Conditions.EndingIs.Opcode:
 				break;
@@ -95,7 +115,6 @@ class ConditionComponent extends InstructionThing {
 			case Conditions.Unknown1.Opcode:
 				break;
 			case Conditions.GameWon.Opcode:
-				this.appendNumberArgument(this._condition.arguments[0]);
 				break;
 			case Conditions.HealthIsLessThan.Opcode:
 				this.appendNumberArgument(this._condition.arguments[0]);
@@ -106,10 +125,12 @@ class ConditionComponent extends InstructionThing {
 			case Conditions.Unknown2.Opcode:
 				break;
 			case Conditions.FindItemIs.Opcode:
+				this.appendTileArgument(this._condition.arguments[0]);
 				break;
 			case Conditions.PlaceItemIsNot.Opcode:
 				break;
 			case Conditions.HeroIsAt.Opcode:
+				this.appendLocationArgument(this._condition.arguments[0], this._condition.arguments[1]);
 				break;
 			case Conditions.PaddingIs.Opcode:
 				this.appendNumberArgument(this._condition.arguments[0]);
@@ -124,6 +145,7 @@ class ConditionComponent extends InstructionThing {
 				this.appendNumberArgument(this._condition.arguments[0]);
 				break;
 			case Conditions.HasHotspotTriggerAt.Opcode:
+				this.appendLocationArgument(this._condition.arguments[0], this._condition.arguments[1]);
 				break;
 			case Conditions.HasAnyRequiredItem.Opcode:
 				break;
@@ -137,8 +159,15 @@ class ConditionComponent extends InstructionThing {
 				this.appendNumberArgument(this._condition.arguments[0]);
 				break;
 			case Conditions.TileAtIsAgain.Opcode:
+				this.appendLocationArgument(
+					this._condition.arguments[1],
+					this._condition.arguments[2],
+					this._condition.arguments[3]
+				);
+				this.appendTileArgument(this._condition.arguments[0]);
 				break;
 			case Conditions.GamesWonIsGreaterThan.Opcode:
+				this.appendNumberArgument(this._condition.arguments[0]);
 				break;
 		}
 	}
