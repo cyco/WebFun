@@ -55,6 +55,10 @@ wf-debug-action {
 		&:not(:hover) wf-debug-breakpoint-button:not([active]) {
 			display: none;
 		}
+
+		.argument {
+			margin-left: 5px;
+		}
 	}
 
 	.paren-close {
