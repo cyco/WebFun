@@ -108,6 +108,7 @@ class ConditionComponent extends InstructionThing {
 				this.appendTileArgument(this._condition.arguments[0]);
 				break;
 			case Conditions.EndingIs.Opcode:
+				this.appendTileArgument(this._condition.arguments[0]);
 				break;
 			case Conditions.ZoneIsSolved.Opcode:
 				break;

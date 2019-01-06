@@ -74,6 +74,11 @@ class InstructionComponent extends InstructionThing {
 					this._instruction.arguments[1],
 					this._instruction.arguments[2]
 				);
+				this.appendLocationArgument(
+					this._instruction.arguments[3],
+					this._instruction.arguments[4],
+					this._instruction.arguments[2]
+				);
 				break;
 			case Instructions.DrawTile.Opcode:
 				this.appendLocationArgument(
