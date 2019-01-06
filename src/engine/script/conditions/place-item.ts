@@ -15,10 +15,17 @@ export default <Condition>{
 	): Promise<boolean> => {
 		if (mode !== EvaluationMode.PlaceItem) return false;
 
-		const [x, y, z, target, item] = args;
+		let [x, y, z, target, item] = args;
 		if (x < 0 || y < 0 || z < 0 || target < 0) {
 			console.warn("Not implemented");
 			return false;
+		}
+
+		if (item < 0) {
+			const worldLocation = engine.currentWorld.locationOfZone(zone);
+			if (!worldLocation) console.warn("can find location of zone", zone, "on current world");
+			const worldItem = engine.currentWorld.at(worldLocation);
+			item = worldItem.requiredItem.id;
 		}
 
 		return (
