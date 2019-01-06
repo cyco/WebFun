@@ -30,7 +30,6 @@ class ConditionComponent extends InstructionThing {
 			key => (Conditions as any)[key].Opcode === this._condition.opcode
 		);
 		const definition = (Conditions as any)[name];
-		const argCount = Math.max(definition.Arguments, 0);
 
 		this.textContent = "";
 		this.appendChild(this._open());
@@ -128,6 +127,13 @@ class ConditionComponent extends InstructionThing {
 				this.appendTileArgument(this._condition.arguments[0]);
 				break;
 			case Conditions.PlaceItemIsNot.Opcode:
+				this.appendLocationArgument(
+					this._condition.arguments[0],
+					this._condition.arguments[1],
+					this._condition.arguments[2]
+				);
+				this.appendTileArgument(this._condition.arguments[3]);
+				this.appendTileArgument(this._condition.arguments[4]);
 				break;
 			case Conditions.HeroIsAt.Opcode:
 				this.appendLocationArgument(this._condition.arguments[0], this._condition.arguments[1]);

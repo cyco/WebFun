@@ -108,6 +108,7 @@ class InstructionComponent extends InstructionThing {
 			case Instructions.Redraw.Opcode:
 				break;
 			case Instructions.PlaySound.Opcode:
+				this.appendSoundArgument(this._instruction.arguments[0]);
 				break;
 			case Instructions.StopSound.Opcode:
 				break;
@@ -118,6 +119,12 @@ class InstructionComponent extends InstructionThing {
 				this.appendNumberArgument(this._instruction.arguments[0]);
 				break;
 			case Instructions.PlaceTile_Alias_.Opcode:
+				this.appendLocationArgument(
+					this._instruction.arguments[0],
+					this._instruction.arguments[1],
+					this._instruction.arguments[2]
+				);
+				this.appendTileArgument(this._instruction.arguments[3]);
 				break;
 			case Instructions.HideHero.Opcode:
 				break;
@@ -179,6 +186,10 @@ class InstructionComponent extends InstructionThing {
 				text
 			</span>
 		);
+	}
+
+	protected appendSoundArgument(sound: number) {
+		<span className="argument sound">{this.engine.data.sounds[sound].file}</span>;
 	}
 }
 
