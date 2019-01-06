@@ -8,6 +8,7 @@ wf-debug-action {
 	font-family: "Anonymous Pro", monospace;
 	font-size: 12px;
 	min-width: 302px;
+	line-height: 14px;
 
 	> .container {
 		display: flex;
@@ -38,6 +39,7 @@ wf-debug-action {
 		display: inline-block;
 		white-space: nowrap;
 		overflow: hidden;
+		line-height: 14px;
 
 		&[current] {
 			font-weight: bold;
@@ -50,7 +52,9 @@ wf-debug-action {
 
 		wf-debug-breakpoint-button {
 			float: right;
-			transform: translateY(-1px);
+			margin-top: 0px;
+			margin-right: 0px;
+			transform: translateY(2px);
 		}
 		&:not(:hover) wf-debug-breakpoint-button:not([active]) {
 			display: none;
