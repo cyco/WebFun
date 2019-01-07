@@ -46,6 +46,7 @@ class GameController extends EventTarget {
 
 		this._engine = this._buildEngine();
 		this._sceneView.manager.engine = this._engine;
+		if (Settings.debug) (window as any).engine = this._engine;
 	}
 
 	private _buildEngine() {
