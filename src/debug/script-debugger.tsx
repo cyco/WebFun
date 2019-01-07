@@ -153,7 +153,6 @@ class ScriptDebugger implements DebuggingScriptExecutorDelegate {
 			.sort()
 			.forEach(([x, y, z]) => {
 				const id = `${x.toString()}x${y.toString()}x${z.toString()}`;
-				console.log("id", id, "=>", this._variableMap[id] !== undefined ? this._variableMap[id] : i);
 				if (this._variableMap[id] !== undefined) return;
 				this._variableMap[id] = i++;
 			});
