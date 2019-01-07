@@ -28,7 +28,7 @@ import RandomIsNot from "./random-is-not";
 import RequiredItemIs from "./required-item-is";
 import StandingOn from "./standing-on";
 import TileAtIs from "./tile-at-is";
-import TileAtIsAgain from "./tile-at-is-again";
+import IsVariable from "./is-variable";
 import Unknown1 from "./unknown1";
 import GameWon from "./game-won";
 import Unknown2 from "./unknown2";
@@ -73,7 +73,7 @@ registerCondition("HasAnyRequiredItem", HasAnyRequiredItem);
 registerCondition("CounterIsNot", CounterIsNot);
 registerCondition("RandomIsNot", RandomIsNot);
 registerCondition("PaddingIsNot", PaddingIsNot);
-registerCondition("TileAtIsAgain", TileAtIsAgain);
+registerCondition("IsVariable", IsVariable);
 registerCondition("GamesWonIsGreaterThan", GamesWonIsGreaterThan);
 
 const ConditionsByOpcode: Condition[] = new Array(
