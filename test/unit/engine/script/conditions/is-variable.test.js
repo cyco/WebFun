@@ -1,5 +1,5 @@
 import { Condition } from "src/engine/objects";
-import IsVariable from "src/engine/script/conditions/tile-at-is-again";
+import IsVariable from "src/engine/script/conditions/is-variable";
 
 describeCondition("IsVariable", (check, engine) => {
 	it("checks if a specific tile is found at the given location", async done => {

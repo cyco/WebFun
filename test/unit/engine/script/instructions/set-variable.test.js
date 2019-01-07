@@ -1,7 +1,7 @@
 import { Instruction } from "src/engine/objects";
-import PlaceTileAlias from "src/engine/script/instructions/place-tile-alias";
+import SetVariable from "src/engine/script/instructions/set-variable";
 
-describeInstruction("PlaceTileAlias", (execute, engine) => {
+describeInstruction("SetVariable", (execute, engine) => {
 	it("Places a tile at the specified coordinates", async done => {
 		const tile = {};
 		engine.data.tiles = [null, null, tile, null];
@@ -9,7 +9,7 @@ describeInstruction("PlaceTileAlias", (execute, engine) => {
 		spyOn(engine.currentZone, "setTile");
 
 		let instruction = new Instruction({});
-		instruction._opcode = PlaceTileAlias.Opcode;
+		instruction._opcode = SetVariable.Opcode;
 		instruction._arguments = [1, 2, 3, 2];
 		await execute(instruction);
 
