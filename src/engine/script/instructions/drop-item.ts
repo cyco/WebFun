@@ -15,10 +15,11 @@ export default <InstructionType>{
 
 		if (itemID === -1) {
 			const worldLocation = engine.currentWorld.locationOfZone(action.zone);
-			if (!worldLocation) console.warn("can find location of zone", action.zone, "on current world");
+			if (!worldLocation) console.warn("can't find location of zone", action.zone, "on current world");
 			const worldItem = engine.currentWorld.at(worldLocation);
 			itemID = worldItem.findItem.id;
 			action.zone.solved = true;
+			worldItem.zone.solved = true;
 		}
 
 		const pickupScene = new PickupScene(engine);
