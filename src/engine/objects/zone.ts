@@ -98,7 +98,7 @@ class Zone {
 	}
 
 	leadsTo(needleZone: Zone, allZones: Zone[]): boolean {
-		if (needleZone === this) return false;
+		if (needleZone === this) return true;
 
 		for (let hotspot of this._hotspots) {
 			if (hotspot.type === HotspotType.DoorIn && hotspot.arg !== -1) {
