@@ -8,6 +8,8 @@ import TransitionScene from "./transition-scene";
 import { EvaluationMode, ScriptResult } from "../script";
 import { Direction as InputDirection } from "src/engine/input";
 import ZoneSceneRenderer from "src/engine/rendering/zone-scene-renderer";
+import PickupScene from "./pickup-scene";
+import Engine from "../engine";
 
 class ZoneScene extends Scene {
 	private _zone: Zone;
@@ -427,6 +429,8 @@ class ZoneScene extends Scene {
 		if (targetTile) {
 			// TODO: get rid of temporary state
 			engine.temporaryState.bump = targetPoint;
+			this.evaluateBumpHotspots(targetPoint, engine);
+
 			engine.scriptExecutor.prepeareExecution(EvaluationMode.Bump, this.zone);
 
 			const scriptResult = await engine.scriptExecutor.execute();
@@ -443,6 +447,42 @@ class ZoneScene extends Scene {
 		} else this.executeHotspots();
 	}
 
+	private evaluateBumpHotspots(at: Point, engine: Engine) {
+		for (const hotspot of this.zone.hotspots) {
+			if (!hotspot.location.isEqualTo(at)) continue;
+			if (!hotspot.enabled) continue;
+			if (
+				![
+					HotspotType.TriggerLocation,
+					HotspotType.ForceLocation,
+					HotspotType.LocatorThingy,
+					HotspotType.Unused,
+					HotspotType.CrateItem,
+					HotspotType.CrateWeapon
+				].contains(hotspot.type)
+			) {
+				continue;
+			}
+			const itemID = hotspot.arg;
+			if (itemID === -1) return;
+			const currentTile = this.zone.getTileID(at.x, at.y, 1);
+			if (currentTile !== itemID) return;
+
+			this.zone.setTile(null, at.x, at.y, 1);
+			const pickupScene = new PickupScene(engine);
+			pickupScene.location = at;
+			pickupScene.tile = engine.data.tiles[itemID];
+
+			const worldItem = this.engine.currentWorld.at(this.engine.currentWorld.locationOfZone(this.zone));
+			if (worldItem && worldItem.findItem && worldItem.findItem.id === itemID) {
+				this.zone.solved = true;
+				worldItem.zone.solved = true;
+			}
+
+			engine.sceneManager.pushScene(pickupScene);
+		}
+	}
+
 	private async _handlePlacedTile(): Promise<ScriptResult> {
 		const inputManager = this.engine.inputManager;
 		const tile = inputManager.placedTile;
@@ -451,7 +491,6 @@ class ZoneScene extends Scene {
 		if (!tile || !location) {
 			return ScriptResult.Done;
 		}
-		console.log("handle placed tile", tile.name, location.toString());
 		let acceptItem = false;
 
 		for (const hotspot of this.zone.hotspots) {
@@ -468,15 +507,17 @@ class ZoneScene extends Scene {
 			}
 			const puzzle = this.engine.data.puzzles[worldItem.puzzleIdx];
 			console.log("puzzle: ", this.engine.data.puzzles[worldItem.puzzleIdx]);
-			console.log("or puzzle: ", this.engine.data.puzzles[worldItem.puzzleIdx]);
+			console.log("or puzzle: ", this.engine.data.puzzles[worldItem.puzzleIndex]);
 
-			if (tile !== worldItem.findItem) {
+			if (tile !== worldItem.requiredItem) {
 				console.warn("play sound no go");
 				break;
 			}
 
+			continue;
 			console.warn("show text", puzzle.strings[1]);
 			console.warn("drop item", puzzle.item2);
+
 			// TODO: remove item from inventory
 			acceptItem = true;
 		}
