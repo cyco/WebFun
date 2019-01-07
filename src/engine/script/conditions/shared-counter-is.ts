@@ -4,8 +4,9 @@ import { int16, Type } from "../types";
 import Condition from "src/engine/script/condition";
 
 export default <Condition>{
-	Opcode: 0x1a,
+	Opcode: 0x19,
 	Arguments: [Type.Number],
-	Description: "Current zone's `padding` value is less than `arg_0`",
-	Implementation: async (args: int16[], zone: Zone, _: Engine): Promise<boolean> => zone.padding < args[0]
+	Description: "Current zone's `shared-counter` value is equal to `arg_0`",
+	Implementation: async (args: int16[], zone: Zone, _: Engine): Promise<boolean> =>
+		zone.sharedCounter === args[0]
 };

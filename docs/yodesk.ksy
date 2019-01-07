@@ -154,7 +154,7 @@ types:
         type: u2
       - id: type
         type: u4
-      - id: unknown # padding?
+      - id: unknown # shared-counter
         type: u2
         # contents: 0xFF FF
       - id: planet_again

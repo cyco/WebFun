@@ -38,10 +38,10 @@ class TransitionScene extends Scene {
 			offset = new Point(0, 0);
 		}
 
-		if (this.type === TransitionScene.TRANSITION_TYPE.ROOM && this.engine.currentZone.padding >= 0) {
-			this.engine.currentZone.padding &&
-				console.log("copy padding", this.engine.currentZone.padding.toHex(2));
-			this.targetZone.padding = this.engine.currentZone.padding;
+		if (this.type === TransitionScene.TRANSITION_TYPE.ROOM && this.engine.currentZone.sharedCounter >= 0) {
+			this.engine.currentZone.sharedCounter &&
+				console.log("copy sharedCounter", this.engine.currentZone.sharedCounter.toHex(2));
+			this.targetZone.sharedCounter = this.engine.currentZone.sharedCounter;
 		}
 
 		this._source = this._takeSnapshot(this.engine.currentZone, offset.x, offset.y);
