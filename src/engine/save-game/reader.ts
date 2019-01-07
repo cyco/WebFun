@@ -106,7 +106,7 @@ abstract class Reader {
 			this.readInt(stream);
 
 			if (this._type == Yoda) {
-				// skip over padding register
+				// skip over sharedCounter register
 				stream.getUint16();
 				// skip over planet
 				stream.getInt16();

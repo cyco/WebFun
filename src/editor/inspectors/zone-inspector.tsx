@@ -165,7 +165,7 @@ class ZoneInspector extends AbstractInspector {
 		zone.actionsInitialized = template.actionsInitialized;
 		zone.counter = template.counter;
 		zone.random = template.random;
-		zone.padding = template.padding;
+		zone.sharedCounter = template.sharedCounter;
 
 		zone.tileIDs = template.tileIDs;
 

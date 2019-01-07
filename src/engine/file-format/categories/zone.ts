@@ -30,7 +30,7 @@ const parseZone = (stream: InputStream, data: any, gameType: GameType) => {
 	let height = stream.getUint16();
 	let zoneType = stream.getUint32();
 	if (gameType === Yoda) {
-		// skip over padding value
+		// skip over sharedCounter value
 		stream.getUint16();
 
 		let planet_again = stream.getUint16();

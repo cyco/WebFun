@@ -5,11 +5,12 @@ import { Result, Type } from "../types";
 import InstructionType from "../instruction";
 
 export default <InstructionType>{
-	Opcode: 0x22,
+	Opcode: 0x23,
 	Arguments: [Type.Number],
-	Description: "Set current zone's `padding` value to a `arg_0`",
-	Implementation: async (instruction: Instruction, engine: Engine, action: Action): Promise<Result> => {
-		action.zone.padding = instruction.arguments[0];
+	Description: "Add `arg_0` to current zone's `shared-counter` value",
+	Implementation: async (instruction: Instruction, _: Engine, action: Action): Promise<Result> => {
+		action.zone.sharedCounter += instruction.arguments[0];
+
 		return Result.Void;
 	}
 };

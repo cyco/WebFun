@@ -21,7 +21,7 @@ class Zone {
 	public actionsInitialized: boolean = false;
 	public counter: number = 0;
 	public random: number = 0;
-	public padding: number = 0;
+	public sharedCounter: number = 0;
 
 	protected _npcs: NPC[] = null;
 	protected _id: number = -1;
