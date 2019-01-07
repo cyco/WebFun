@@ -20,6 +20,7 @@ class ActionComponent extends Component {
 	private _action: Action = null;
 	public breakpointStore: BreakpointStore = null;
 	public checker: ConditionChecker;
+	public variableMap: any;
 
 	get action() {
 		return this._action;
@@ -52,6 +53,7 @@ class ActionComponent extends Component {
 					action={this._action}
 					engine={this.engine}
 					breakpointStore={this.breakpointStore}
+					variableMap={this.variableMap}
 					condition={condition}
 				/>
 			);
@@ -68,6 +70,7 @@ class ActionComponent extends Component {
 					zone={this.zone}
 					action={this._action}
 					engine={this.engine}
+					variableMap={this.variableMap}
 					breakpointStore={this.breakpointStore}
 					instruction={instruction}
 				/>

@@ -123,13 +123,15 @@ class InstructionComponent extends InstructionThing {
 			case Instructions.SetCounter.Opcode:
 				this.appendNumberArgument(this._instruction.arguments[0]);
 				break;
-			case Instructions.PlaceTile_Alias_.Opcode:
-				this.appendLocationArgument(
-					this._instruction.arguments[0],
-					this._instruction.arguments[1],
-					this._instruction.arguments[2]
+			case Instructions.SetVariable.Opcode:
+				const [x, y, z, value] = this._instruction.arguments;
+				const id = `${x.toString()}x${y.toString()}x${z.toString()}`;
+
+				this.appendChild(
+					<span className="argument variable">{this.variableMap[id].toString()}</span>
 				);
-				this.appendTileArgument(this._instruction.arguments[3]);
+				this.appendChild(<span className="argument number">{value.toString()}</span>);
+
 				break;
 			case Instructions.HideHero.Opcode:
 				break;

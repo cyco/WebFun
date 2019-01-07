@@ -9,8 +9,8 @@ import {
 } from "src/debug/components";
 import Settings from "src/settings";
 import { WindowManager } from "src/ui";
-import { ConditionImplementations } from "src/engine/script/conditions";
-import { InstructionImplementations } from "src/engine/script/instructions";
+import { ConditionImplementations, ConditionsByName } from "src/engine/script/conditions";
+import { InstructionImplementations, InstructionsByName } from "src/engine/script/instructions";
 import { Point } from "src/util";
 import DebuggingScriptExecutor, { DebuggingScriptExecutorDelegate } from "./debugging-script-executor";
 import ScriptExecutor from "src/engine/script/script-executor";
@@ -34,6 +34,7 @@ class ScriptDebugger implements DebuggingScriptExecutorDelegate {
 	private _currentZone: Zone = null;
 	private _currentAction: Action = null;
 	private _breakpointStore: BreakpointStore = BreakpointStore.sharedStore;
+	private _variableMap: any = {};
 	private _didExecuteSomething = false;
 
 	constructor() {
@@ -113,6 +114,7 @@ class ScriptDebugger implements DebuggingScriptExecutorDelegate {
 	}
 
 	private _rebuildActionList() {
+		this._rebuildVariableMap();
 		this._actionList.textContent = "";
 		this._engine.currentZone.actions.forEach((action, idx) => {
 			const component = (
@@ -121,6 +123,7 @@ class ScriptDebugger implements DebuggingScriptExecutorDelegate {
 					breakpointStore={this._breakpointStore}
 					zone={this._engine.currentZone}
 					index={idx}
+					variableMap={this._variableMap}
 					action={action}
 				/>
 			) as ActionComponent;
@@ -130,6 +133,30 @@ class ScriptDebugger implements DebuggingScriptExecutorDelegate {
 
 		if (this._actionList.firstElementChild)
 			(this._actionList.firstElementChild as any).scrollIntoViewIfNeeded();
+	}
+
+	private _rebuildVariableMap(): void {
+		let i = 0;
+		this._variableMap = {};
+		this._engine.currentZone.actions
+			.map(a =>
+				a.conditions
+					.filter(c => c.opcode === ConditionsByName.IsVariable.Opcode)
+					.map(c => [c.arguments[1], c.arguments[2], c.arguments[3]])
+					.concat(
+						a.instructions
+							.filter(c => c.opcode === InstructionsByName.SetVariable.Opcode)
+							.map(a => [a.arguments[0], a.arguments[1], a.arguments[2]])
+					)
+			)
+			.flatten()
+			.sort()
+			.forEach(([x, y, z]) => {
+				const id = `${x.toString()}x${y.toString()}x${z.toString()}`;
+				console.log("id", id, "=>", this._variableMap[id] !== undefined ? this._variableMap[id] : i);
+				if (this._variableMap[id] !== undefined) return;
+				this._variableMap[id] = i++;
+			});
 	}
 
 	public stepOnce() {

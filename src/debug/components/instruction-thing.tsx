@@ -2,7 +2,6 @@ import { Component } from "src/ui";
 import Action from "src/engine/objects/action";
 import Zone from "src/engine/objects/zone";
 import Engine from "src/engine/engine";
-import { Size } from "src/util";
 import TileView from "./tile-view";
 
 abstract class InstructionThing extends Component {
@@ -10,6 +9,7 @@ abstract class InstructionThing extends Component {
 	public action: Action = null;
 	public index: number = null;
 	public engine: Engine = null;
+	public variableMap: any = null;
 
 	static get observedAttributes() {
 		return ["current"];

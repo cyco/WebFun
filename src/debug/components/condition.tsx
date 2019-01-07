@@ -165,13 +165,14 @@ class ConditionComponent extends InstructionThing {
 			case Conditions.PaddingIsNot.Opcode:
 				this.appendNumberArgument(this._condition.arguments[0]);
 				break;
-			case Conditions.TileAtIsAgain.Opcode:
-				this.appendLocationArgument(
-					this._condition.arguments[1],
-					this._condition.arguments[2],
-					this._condition.arguments[3]
+			case Conditions.IsVariable.Opcode:
+				const [value, x, y, z] = this._condition.arguments;
+				const id = `${x.toString()}x${y.toString()}x${z.toString()}`;
+
+				this.appendChild(
+					<span className="argument variable">{this.variableMap[id].toString()}</span>
 				);
-				this.appendTileArgument(this._condition.arguments[0]);
+				this.appendChild(<span className="argument number">{value.toString()}</span>);
 				break;
 			case Conditions.GamesWonIsGreaterThan.Opcode:
 				this.appendNumberArgument(this._condition.arguments[0]);
