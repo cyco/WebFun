@@ -10,10 +10,10 @@ import MapGenerator from "./map-generator";
 import World from "./world";
 import WorldGenerationError from "./world-generation-error";
 import WorldItem from "./world-item";
-import WorldItemType from "./world-item-type";
 import GameData from "src/engine/game-data";
 import Map from "./map";
 import Quest from "./quest";
+import WorldItemType from "./world-item-type";
 
 declare global {
 	interface Array<T> {
@@ -108,12 +108,12 @@ class WorldGenerator {
 		const typeMap = this.mapGenerator.typeMap;
 		const isTravelTarget = (point: Point) => {
 			const index = point.x + point.y * 10;
-			return typeMap[index] === WorldItemType.TravelEnd.rawValue && !this.world.index(index).zone;
+			return typeMap[index] === WorldItemType.TravelEnd && !this.world.index(index).zone;
 		};
 
 		for (let y = 0; y < 10; y++) {
 			for (let x = 0; x < 10; x++) {
-				if (typeMap[x + y * 10] !== WorldItemType.TravelStart.rawValue) continue;
+				if (typeMap[x + y * 10] !== WorldItemType.TravelStart) continue;
 
 				this.resetState();
 
@@ -184,14 +184,33 @@ class WorldGenerator {
 	): void {
 		for (let y = 0; y < 10; y++) {
 			for (let x = 0; x < 10; x++) {
-				callback(WorldItemType.fromNumber(map[x + 10 * y]), x, y, x + 10 * y, map);
+				callback(map[x + 10 * y], x, y, x + 10 * y, map);
 			}
 		}
 	}
 
+	private zoneTypeForWorldItemType(t: WorldItemType): ZoneType {
+		switch (t) {
+			case WorldItemType.Spaceport:
+				return ZoneType.Town;
+			case WorldItemType.BlockEast:
+				return ZoneType.BlockadeEast;
+			case WorldItemType.BlockWest:
+				return ZoneType.BlockadeWest;
+			case WorldItemType.BlockNorth:
+				return ZoneType.BlockadeNorth;
+			case WorldItemType.BlockSouth:
+				return ZoneType.BlockadeSouth;
+			default:
+				return ZoneType.Empty;
+		}
+
+		return ZoneType.None;
+	}
+
 	private determineBlockadeAndTownZones(map: Map): void {
 		this.loopWorld(map, (worldItemType, x, y) => {
-			const type = worldItemType.toZoneType();
+			const type = this.zoneTypeForWorldItemType(worldItemType);
 			if (!(type.isBlockadeType() || type === ZoneType.Town)) return;
 
 			this.resetState();
@@ -598,7 +617,7 @@ class WorldGenerator {
 			this.errorWhen(!zone, "No zone for puzzle found");
 			this.placeZone(point.x, point.y, zone, ZoneType.Find, { findItem: this.findItem });
 			const idx = point.x + 10 * point.y;
-			world[idx] = WorldItemType.Puzzle.rawValue;
+			world[idx] = WorldItemType.Puzzle;
 		}
 	}
 
@@ -611,7 +630,7 @@ class WorldGenerator {
 
 		for (let y = 0; y < 10; y++) {
 			for (let x = 0; x < 10; x++) {
-				const worldItemType = WorldItemType.fromNumber(world[x + 10 * y]);
+				const worldItemType = world[x + 10 * y];
 				if (
 					worldItemType !== WorldItemType.Empty &&
 					worldItemType !== WorldItemType.Candidate &&
@@ -835,10 +854,10 @@ class WorldGenerator {
 				}
 			} else if (item === WorldItemType.Empty || item === WorldItemType.Candidate) {
 				if (
-					(x < 1 || world[idx - 1] !== WorldItemType.Puzzle.rawValue) &&
-					(x > 8 || world[idx + 1] !== WorldItemType.Puzzle.rawValue) &&
-					(y < 1 || world[idx - 10] !== WorldItemType.Puzzle.rawValue) &&
-					(y > 8 || world[idx + 10] !== WorldItemType.Puzzle.rawValue)
+					(x < 1 || world[idx - 1] !== WorldItemType.Puzzle) &&
+					(x > 8 || world[idx + 1] !== WorldItemType.Puzzle) &&
+					(y < 1 || world[idx - 10] !== WorldItemType.Puzzle) &&
+					(y > 8 || world[idx + 10] !== WorldItemType.Puzzle)
 				)
 					bestPoints.push(point);
 				else pointsCloseToPuzzles.push(point);
