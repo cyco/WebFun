@@ -58,7 +58,10 @@ class IslandBuilder {
 		range.iterate((point: Point) => {
 			const currentItem = this.at(point);
 			const neighborItem = this.at(Point.add(point, neighbor));
-			if (currentItem || (neighborItem && neighborItem !== WorldItemType.KeptFree.rawValue)) {
+			if (
+				currentItem !== WorldItemType.None ||
+				(neighborItem !== WorldItemType.None && neighborItem !== WorldItemType.KeptFree)
+			) {
 				if (length < currentRun) {
 					length = currentRun;
 					start = i - currentRun;
@@ -80,9 +83,9 @@ class IslandBuilder {
 	}
 
 	private _buildIsland(range: PointRange) {
-		range.iterate((point: Point) => this.at(point, WorldItemType.Island.rawValue));
+		range.iterate((point: Point) => this.at(point, WorldItemType.Island));
 		const end = rand() % 2 ? range.from : range.to;
-		this.at(end, WorldItemType.TravelEnd.rawValue);
+		this.at(end, WorldItemType.TravelEnd);
 	}
 
 	private _verifyShortRun(run: Run): boolean {
