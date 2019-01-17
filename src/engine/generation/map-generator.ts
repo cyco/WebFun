@@ -33,12 +33,20 @@ let puzzles: number;
 let orderMap: Map;
 
 function blockadeTypeFor(xdiff: number, ydiff: number): WorldItemType {
-	console.assert(!!(xdiff ^ ydiff));
+	if (xdiff === 0 && ydiff === 1) {
+		return WorldItemType.BlockNorth;
+	}
+	if (xdiff === 0 && ydiff === -1) {
+		return WorldItemType.BlockSouth;
+	}
+	if (xdiff === -1 && ydiff === 0) {
+		return WorldItemType.BlockEast;
+	}
+	if (xdiff === 1 && ydiff === 0) {
+		return WorldItemType.BlockWest;
+	}
 
-	if (xdiff === 0 && ydiff === 1) return WorldItemType.BlockNorth;
-	if (xdiff === 0 && ydiff === -1) return WorldItemType.BlockSouth;
-	if (xdiff === -1 && ydiff === 0) return WorldItemType.BlockEast;
-	if (xdiff === 1 && ydiff === 0) return WorldItemType.BlockWest;
+	return null;
 }
 
 function _determineCounts(): void {
@@ -337,8 +345,13 @@ function _choosePuzzlesOnIslands() {
 
 function _chooseAdditionalPuzzles(total_puzzle_count: number): void {
 	let do_break = 0;
+	let maxCount = 5000;
 	for (let i = 0; i <= 200; i++) {
 		let x, y;
+		maxCount--;
+		if (maxCount === 0) {
+			break;
+		}
 
 		if (i > 200) {
 			do_break = 1;
@@ -494,7 +507,6 @@ function _determinePuzzleLocations(iteration: number, puzzle_count_to_place: num
 			travel_threshold = 6;
 			break;
 		default:
-			console.log("default");
 			return;
 	}
 

@@ -48,7 +48,13 @@ class Story {
 		let generator = null;
 		let success = false;
 		let effectiveSeed = this.seed;
+		let maxCount = 50;
 		do {
+			maxCount--;
+			if (maxCount === 0) {
+				console.warn("too many reseeds");
+				return;
+			}
 			try {
 				generator = new WorldGenerator(this.size, this.planet, engine);
 				success = generator.generate(effectiveSeed);

@@ -313,7 +313,12 @@ class WorldGenerator {
 			const item1 = puzzle.item1;
 
 			let zone = null;
+			let maxCount = 10000;
 			do {
+				maxCount--;
+				if (maxCount === 0) {
+					break;
+				}
 				let type = rand() % 2 ? ZoneType.Trade : ZoneType.Use;
 				zone = this.GetUnusedZoneRandomly(type, puzzleIdIndex - 1, -1, item1, null, distance, true);
 
@@ -647,7 +652,12 @@ class WorldGenerator {
 				} else zone = lastZone;
 
 				this.errorWhen(!zone, "No zone found");
+				let maxCount = 5000;
 				while (1) {
+					maxCount--;
+					if (maxCount === 0) {
+						break;
+					}
 					if (this.somethingWithTeleporters) break;
 
 					const hasTeleporter = zone.hotspots.find(htsp => htsp.type === HotspotType.Teleporter);
