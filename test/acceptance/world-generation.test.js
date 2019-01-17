@@ -88,7 +88,7 @@ describe("WebFun.Acceptance.World Generation", () => {
 		.filter(process.acceptance ? runnerFilter : identity);
 	maps.forEach(runTest);
 
-	//* generate all maps
+	/* generate all maps
 	for (let seed = 0; seed <= 0xffff; seed++) {
 		+(function(seed) {
 			it("generates " + seed.toString() + " for coverage", () => {
