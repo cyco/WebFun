@@ -85,6 +85,10 @@ class World {
 		this.zones.filter(identity).forEach(zone => zone.layDownHotspotItems());
 	}
 
+	public map<T>(callback: (_: WorldItem, idx: number) => T) {
+		return this._items.map(callback);
+	}
+
 	private _pointToIndex(x: number | PointLike, y?: number) {
 		if (typeof x === "number") {
 			return y * World.WIDTH + x;
