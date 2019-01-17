@@ -100,7 +100,7 @@ if (includeCoverage) {
 			loader: "istanbul-instrumenter-loader"
 		},
 		include: Paths.sourceRoot,
-		exclude: /(debug|test\.js)/,
+		exclude: /(editor|debug|test\.js)/,
 		enforce: "post"
 	});
 }
