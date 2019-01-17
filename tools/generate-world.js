@@ -32,6 +32,7 @@ const help = (node, self) => {
 	process.stdout.write("options:\n");
 	process.stdout.write(`\t-c       compare with original\n`);
 	process.stdout.write(`\t-a       generate all worlds in expection file\n`);
+	process.stdout.write(`\t-p       print result as json object\n`);
 	process.stdout.write(`\t-d path  game file (default: ./yoda.data)\n`);
 	process.stdout.write(`\t-e path  expectation file (default: ./worlds.txt)\n`);
 };
@@ -64,6 +65,7 @@ const parseArguments = args => {
 		v: false,
 		c: false,
 		a: false,
+		p: false,
 
 		r: false
 	};
@@ -131,6 +133,59 @@ const readArguments = (node, self, ...args) => {
 	}
 
 	return null;
+};
+
+const printResult = story => {
+	const object = {
+		seed: story.seed,
+		planet: story.planet.rawValue,
+		size: story.size.rawValue,
+		reseeded: story._reseeded
+	};
+
+	object.world = {
+		zoneIDs: story.world.map(i => (i.zone ? i.zone.id : -1)),
+		zoneTypes: story.world.map(i => (i.zoneType ? i.zoneType.rawValue : -1)),
+		requiredItemIDs: story.world.map(i => (i.requiredItem ? i.requiredItem.id : -1)),
+		additionalRequiredItemIDs: story.world.map(i =>
+			i.additionalRequiredItem ? i.additionalRequiredItem.id : -1
+		),
+		findItemIDs: story.world.map(i => (i.findItem ? i.findItem.id : -1)),
+		npcIDs: story.world.map(i => (i.npc ? i.npc.id : -1))
+	};
+	/*
+  	dagobah.unknowns1 = data.dagobah.map(z => z.unknown[0]);
+  	dagobah.unknowns2 = data.dagobah.map(z => z.unknown[1]);
+  	dagobah.unknowns3 = data.dagobah.map(z => z.unknown[2]);
+  	dagobah.unknowns4 = data.dagobah.map(z => z.unknown[3]);
+	*/
+
+	object.dagobah = {
+		zoneIDs: story.dagobah._items.filter((_, i) => [].contains(i)).map(i => (i.zone ? i.zone.id : -1)),
+		zoneTypes: story.dagobah._items
+			.filter((_, i) => [44, 45, 54, 55].contains(i))
+			.map(i => (i.zoneType ? i.zoneType.rawValue : -1)),
+		requiredItemIDs: story.dagobah._items
+			.filter((_, i) => [44, 45, 54, 55].contains(i))
+			.map(i => (i.requiredItem ? i.requiredItem.id : -1)),
+		additionalRequiredItemIDs: story.dagobah._items
+			.filter((_, i) => [44, 45, 54, 55].contains(i))
+			.map(i => (i.additionalRequiredItem ? i.additionalRequiredItem.id : -1)),
+		findItemIDs: story.dagobah._items
+			.filter((_, i) => [44, 45, 54, 55].contains(i))
+			.map(i => (i.findItem ? i.findItem.id : -1)),
+		npcIDs: story.dagobah._items
+			.filter((_, i) => [44, 45, 54, 55].contains(i))
+			.map(i => (i.npc ? i.npc.id : -1))
+	};
+	/*
+  	dagobah.unknowns1 = data.dagobah.map(z => z.unknown[0]);
+  	dagobah.unknowns2 = data.dagobah.map(z => z.unknown[1]);
+  	dagobah.unknowns3 = data.dagobah.map(z => z.unknown[2]);
+  	dagobah.unknowns4 = data.dagobah.map(z => z.unknown[3]);
+	*/
+
+	console.log(JSON.stringify(object));
 };
 
 let rawData = null;
@@ -228,6 +283,10 @@ const main = (...args) => {
 				story.generateWorld({ data: gameData });
 			} catch (e) {
 				throw `Unexpected failure in world generation. ${e}`;
+			}
+
+			if (options.p) {
+				printResult(story);
 			}
 
 			if (options.c) {
