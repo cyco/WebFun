@@ -1,3 +1,4 @@
+const FS = require("fs");
 const Path = require("path");
 const Paths = require("./paths");
 const Webpack = require("webpack");
@@ -19,7 +20,22 @@ module.exports = merge(BaseConfig, {
 		globalObject: "(typeof self !== 'undefined' ? self : this)"
 	},
 	serve: {
-		content: [Paths.projectRoot, Paths.assetsRoot, Path.resolve(Paths.sourceRoot, "app")]
+		content: [Paths.projectRoot, Paths.assetsRoot, Path.resolve(Paths.sourceRoot, "app")],
+		https: FS.existsSync(Path.resolve(Paths.configRoot, "ssl.key"))
+			? {
+					key: Path.resolve(Paths.configRoot, "ssl.key"),
+					cert: Path.resolve(Paths.configRoot, "ssl.pem")
+			  }
+			: false,
+		hot: {
+			https: FS.existsSync(Path.resolve(Paths.configRoot, "ssl.key"))
+				? {
+						key: Path.resolve(Paths.configRoot, "ssl.key"),
+						cert: Path.resolve(Paths.configRoot, "ssl.pem")
+				  }
+				: false
+		},
+		http2: true
 	},
 	plugins: [
 		new HtmlWebpackPlugin({

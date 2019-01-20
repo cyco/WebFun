@@ -31,3 +31,5 @@ todo.md
 test/reports
 .vscode/
 assets/game-data
+*.pem
+*.key
