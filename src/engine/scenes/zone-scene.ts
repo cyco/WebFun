@@ -487,10 +487,18 @@ class ZoneScene extends Scene {
 		const inputManager = this.engine.inputManager;
 		const tile = inputManager.placedTile;
 		const location = inputManager.placedTileLocation;
+		const heroLocation = this.engine.hero.location;
 
 		if (!tile || !location) {
+			this.engine.inputManager.clearPlacedTile();
 			return ScriptResult.Done;
 		}
+
+		if (location.distanceTo(heroLocation) > Math.sqrt(2)) {
+			this.engine.inputManager.clearPlacedTile();
+			return ScriptResult.Done;
+		}
+
 		let acceptItem = false;
 
 		for (const hotspot of this.zone.hotspots) {
