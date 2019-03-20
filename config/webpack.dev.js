@@ -19,23 +19,19 @@ module.exports = merge(BaseConfig, {
 		path: Paths.buildRoot,
 		globalObject: "(typeof self !== 'undefined' ? self : this)"
 	},
-	serve: {
-		content: [Paths.projectRoot, Paths.assetsRoot, Path.resolve(Paths.sourceRoot, "app")],
+	devServer: {
+		clientLogLevel: "error",
+		contentBase: [Paths.projectRoot, Paths.assetsRoot, Path.resolve(Paths.sourceRoot, "app")],
+		host: process.env.host || "127.0.0.1",
 		https: FS.existsSync(Path.resolve(Paths.configRoot, "ssl.key"))
 			? {
 					key: Path.resolve(Paths.configRoot, "ssl.key"),
 					cert: Path.resolve(Paths.configRoot, "ssl.pem")
 			  }
 			: false,
-		hot: {
-			https: FS.existsSync(Path.resolve(Paths.configRoot, "ssl.key"))
-				? {
-						key: Path.resolve(Paths.configRoot, "ssl.key"),
-						cert: Path.resolve(Paths.configRoot, "ssl.pem")
-				  }
-				: false
-		},
-		http2: true
+		noInfo: true,
+		progress: true,
+		quiet: true
 	},
 	plugins: [
 		new HtmlWebpackPlugin({
