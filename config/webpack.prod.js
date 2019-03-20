@@ -31,7 +31,7 @@ module.exports = merge(BaseConfig, {
 		]
 	},
 	plugins: [
-		new CleanWebpackPlugin([Paths.buildRoot], { root: Paths.projectRoot }),
+		new CleanWebpackPlugin({ root: Paths.buildRoot }),
 		new HtmlWebpackPlugin({
 			template: Path.resolve(Paths.sourceRoot, "./app/index.html"),
 			title: "WebFun"
