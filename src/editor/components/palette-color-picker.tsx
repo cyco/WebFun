@@ -74,12 +74,13 @@ class PaletteColorPicker extends PaletteView implements EventListenerObject {
 	}
 
 	get color(): string | Color {
-		const i = this._colorIndex;
+		const colorValue = this.palette[this._colorIndex];
+
 		return new Color(
-			this.palette[i * 4 + 2],
-			this.palette[i * 4 + 1],
-			this.palette[i * 4 + 0],
-			this.palette[i * 4 + 3]
+			(colorValue >> 16) & 0xff,
+			(colorValue >> 8) & 0xff,
+			colorValue & 0xff,
+			this._colorIndex === 0 ? 0 : 1
 		);
 	}
 
