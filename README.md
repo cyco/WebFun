@@ -4,19 +4,18 @@ An unfinished web based reimplementation of the desktop adventures game engine.
 
 ### similar efforts
 
-*   https://github.com/shinyquagsire23/DesktopAdventures - reimplementation in c
-*   https://github.com/IceReaper/DesktopAdventuresToolkit - packer / unpacker for game files
-*   https://github.com/digitall/scummvm-deskadv - reimplementation for use in ScummVM
+-   https://github.com/shinyquagsire23/DesktopAdventures - reimplementation in c
+-   https://github.com/IceReaper/DesktopAdventuresToolkit - packer / unpacker for game files
+-   https://github.com/digitall/scummvm-deskadv - reimplementation for use in ScummVM
 
 ## Usage
 
 ### Prerequisites
 
-*   Browser (tested on Safari 11, up to date Chrome should also work)
-*   Node.js
-*   [yarn](https://yarnpkg.com)
-*   game file placed in `assets/game-data` (rename `YODESK.DTA` to `yoda.data`)
-*   palette file placed at `assets/game-data/yoda.pal` `assets/game-data/indy.pal` (extract from original game)
+-   Browser (tested on Safari 11, up to date Chrome should also work)
+-   Node.js
+-   [yarn](https://yarnpkg.com)
+-   game file placed in `assets/game-data` (rename `YODESK.DTA` to `yoda.data`)
 
 ### How to build
 
@@ -41,17 +40,27 @@ yarn test:full
 Check the `scripts` section of `package.json` for other commands.
 
 ## Screenshots
+
 ### Loading Screen
+
 ![Loading screen](docs/screenshots/game.png)
+
 ### In-Game view with active debug overlays
+
 ![Loading screen](docs/screenshots/in-game-debug.png)
+
 ### Save Game Inspector
+
 ![Save Game Inspector](docs/screenshots/save-game-inspector.png)
 
-
 ### Character view of resource editor
+
 ![Character view of resource editor](docs/screenshots/character-inspector-2.png)
+
 ### Puzzle view of resource editor
+
 ![Puzzle view of resource editor](docs/screenshots/puzzle-inspector.png)
+
 ### Zone & action editor
+
 ![Zone & action editor](docs/screenshots/zone-editor.png)
