@@ -5,6 +5,7 @@ pipeline {
             args  '--network=infra_internal --link infra_internal:ci_sonarqube'
         }
     }
+	options { timestamps() }
 
 	stages {
 		stage("Install dependencies") {
