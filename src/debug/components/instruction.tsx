@@ -1,10 +1,10 @@
-import InstructionThing from "./instruction-thing";
-import { Instruction } from "src/engine/objects";
-import Engine from "src/engine/engine";
-import { InstructionsByName as Instructions } from "src/engine/script/instructions";
 import BreakpointButton from "./breakpoint-button";
-import LocationBreakpoint from "../breakpoint/location-breakpoint";
 import BreakpointStore from "../breakpoint-store";
+import Engine from "src/engine/engine";
+import { Instruction } from "src/engine/objects";
+import InstructionThing from "./instruction-thing";
+import { InstructionsByName as Instructions } from "src/engine/script/instructions";
+import LocationBreakpoint from "../breakpoint/location-breakpoint";
 
 class InstructionComponent extends InstructionThing {
 	public static readonly tagName = "wf-debug-instruction";
@@ -196,7 +196,7 @@ class InstructionComponent extends InstructionThing {
 	}
 
 	protected appendSoundArgument(sound: number) {
-		<span className="argument sound">{this.engine.data.sounds[sound].file}</span>;
+		this.appendChild(<span className="argument sound">{this.engine.data.sounds[sound].file}</span>);
 	}
 }
 
