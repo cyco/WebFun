@@ -2,7 +2,7 @@ pipeline {
     agent {
         dockerfile {
             filename 'Dockerfile.CI'
-            args  '--network=webfunci_default --link webfunci_sonarqube_1:sonarqube'
+            args  '--network=infra_internal --link infra_internal:ci_sonarqube'
         }
     }
 
