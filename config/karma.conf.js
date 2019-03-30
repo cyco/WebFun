@@ -80,11 +80,10 @@ if (runUnitTests && runAcceptanceTests && runPerformanceTests) {
 
 if (includeCoverage) {
 	let fileName = name + ".lcov";
-
+	config.devtool = "eval-source-map";
 	config.reporters.push("coverage-istanbul");
 	config.coverageIstanbulReporter = {
 		reports: ["lcovonly", ...(!ci ? ["html"] : [])],
-		fixWebpackSourcePaths: true,
 		dir: Paths.testReportRoot,
 		"report-config": {
 			lcovonly: {
@@ -94,15 +93,7 @@ if (includeCoverage) {
 		file: fileName
 	};
 
-	config.webpack.module.rules.push({
-		test: /\.(ts|tsx|ts|js)$/,
-		use: {
-			loader: "istanbul-instrumenter-loader"
-		},
-		include: Paths.sourceRoot,
-		exclude: /(editor|debug|test\.js)/,
-		enforce: "post"
-	});
+	config.webpack.module.rules[1].use[0].options.plugins = ["istanbul"];
 }
 
 if (includeJunit && false) {
