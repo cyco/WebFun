@@ -12,6 +12,6 @@ export default <InstructionType>{
 		const zone = action.zone;
 		zone.npcs.forEach(npc => (npc.enabled = false));
 
-		return zone.npcs.length ? Result.Void : Result.Void;
+		return Result.Void;
 	}
 };
