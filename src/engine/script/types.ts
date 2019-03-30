@@ -1,5 +1,6 @@
-import Engine from "../engine";
 import { Action, Instruction, Zone } from "../objects";
+
+import Engine from "../engine";
 import EvaluationMode from "./evaluation-mode";
 
 type int16 = number;
@@ -18,14 +19,14 @@ export type InstructionImplementation = (
 ) => Promise<Result>;
 
 enum Result {
-	Void = 0 << 0,
+	Void = 0,
 	UpdateText = 1 << 0,
 	UpdateZone = 1 << 1,
 	Wait = 1 << 2
 }
 
 enum ScriptResult {
-	Void = 0 << 0,
+	Void = 0,
 	UpdateText = 1 << 0,
 	UpdateZone = 1 << 1,
 	Wait = 1 << 2,
