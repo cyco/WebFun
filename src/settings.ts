@@ -1,5 +1,5 @@
-import persistent from "src/util/persistent";
 import { LogLevel } from "src/util";
+import persistent from "src/util/persistent";
 
 const Settings = persistent(
 	{
@@ -31,7 +31,7 @@ const Settings = persistent(
 			}
 		},
 		// app state
-		debuggerActive: true
+		debuggerActive: false
 	},
 	"settings",
 	localStorage
