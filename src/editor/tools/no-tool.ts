@@ -1,7 +1,8 @@
-import AbstractTool from "./abstract-tool";
-import { WIDTH as TileWidth } from "src/engine/objects/tile";
 import { Zone, ZoneLayer } from "src/engine/objects";
+
+import AbstractTool from "./abstract-tool";
 import { Point } from "src/util";
+import { WIDTH as TileWidth } from "src/engine/objects/tile";
 
 class NoTool extends AbstractTool implements EventListenerObject {
 	public readonly name = "None";
@@ -41,7 +42,7 @@ class NoTool extends AbstractTool implements EventListenerObject {
 			this.zone.getTile(tilePoint.x, tilePoint.y, 1),
 			this.zone.getTile(tilePoint.x, tilePoint.y, 0)
 		].forEach((t, idx) => {
-			const layer = ZoneLayer.NameFromNumber(idx);
+			const layer = ZoneLayer[idx];
 			this.renderText(`${layer}: ` + (t ? `${t.id}` : ""), new Point(20, 40 + 20 * idx));
 		});
 	}
