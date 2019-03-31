@@ -1,15 +1,6 @@
-import { Panel, AbstractPanel, Window as WindowComponent } from "src/ui/components";
-import { Zone } from "src/engine/objects";
-import ZoneEditor from "src/editor/components/zone-editor/view";
 import "./window.scss";
-import Sidebar from "./sidebar";
-import SidebarLayer from "src/editor/components/zone-editor/sidebar-layer";
-import Layer from "src/editor/components/zone-editor/layer";
-import SidebarLayersCell, {
-	Events as LayerChangeEvents
-} from "src/editor/components/zone-editor/sidebar-layers-cell";
-import ToolComponent from "./tool";
-import ActionComponent from "./action";
+
+import { AbstractPanel, Panel, Window as WindowComponent } from "src/ui/components";
 import {
 	AbstractTool,
 	NoTool,
@@ -18,11 +9,22 @@ import {
 	RectangleTool,
 	TileChangeEvent
 } from "src/editor/tools";
-import PopoverTilePicker from "src/editor/components/popover-tile-picker";
-import DataManager from "src/editor/data-manager";
+import SidebarLayersCell, {
+	Events as LayerChangeEvents
+} from "src/editor/components/zone-editor/sidebar-layers-cell";
+
 import AbstractDrawingTool from "src/editor/tools/abstract-drawing-tool";
-import { ActionEditor } from "src/editor/components";
+import ActionComponent from "./action";
 import { ActionDescription } from "src/editor/components/zone-editor/action";
+import { ActionEditor } from "src/editor/components";
+import DataManager from "src/editor/data-manager";
+import Layer from "src/editor/components/zone-editor/layer";
+import PopoverTilePicker from "src/editor/components/popover-tile-picker";
+import Sidebar from "./sidebar";
+import SidebarLayer from "src/editor/components/zone-editor/sidebar-layer";
+import ToolComponent from "./tool";
+import { Zone } from "src/engine/objects";
+import ZoneEditor from "src/editor/components/zone-editor/view";
 
 class Window extends AbstractPanel {
 	public static readonly tagName = "wf-zone-editor-window";
