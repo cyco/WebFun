@@ -1,7 +1,9 @@
-import Component from "src/ui/component";
-import { CharFrame } from "src/engine/objects";
-import PopoverTilePicker from "./popover-tile-picker";
 import "./character-frame-preview.scss";
+
+import { CharFrame } from "src/engine/objects";
+import { ColorPalette } from "src/engine";
+import Component from "src/ui/component";
+import PopoverTilePicker from "./popover-tile-picker";
 
 class CharacterFramePreview extends Component {
 	public static readonly tagName = "wf-character-frame-preview";
@@ -46,6 +48,14 @@ class CharacterFramePreview extends Component {
 
 	get tiles() {
 		return this._pickers.first().tiles;
+	}
+
+	set palette(p: ColorPalette) {
+		this._pickers.forEach(picker => (picker.palette = p));
+	}
+
+	get palette() {
+		return this._pickers[0].palette;
 	}
 
 	set frame(f: CharFrame) {

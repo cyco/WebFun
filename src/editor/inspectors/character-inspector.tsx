@@ -1,7 +1,8 @@
-import AbstractInspector from "src/editor/inspectors/abstract-inspector";
-import { List, IconButton } from "src/ui/components";
-import { CharacterDetails, CharacterInspectorCell } from "../components";
 import { Char, CharType } from "src/engine/objects";
+import { CharacterDetails, CharacterInspectorCell } from "../components";
+import { IconButton, List } from "src/ui/components";
+
+import AbstractInspector from "src/editor/inspectors/abstract-inspector";
 import { MutableChar } from "src/engine/mutable-objects";
 
 class CharacterInspector extends AbstractInspector {
@@ -73,6 +74,7 @@ class CharacterInspector extends AbstractInspector {
 		this._details.sounds = this.data.currentData.sounds.map(s => s.file);
 		this._details.weapons = this.data.currentData.characters.filter(c => c.type === CharType.Weapon);
 		this._details.tiles = this.data.currentData.tiles;
+		this._details.palette = this.data.palette;
 
 		const cell = this._list.cell as CharacterInspectorCell;
 		cell.palette = this.data.palette;
