@@ -1,12 +1,13 @@
-import AbstractTool from "src/editor/tools/abstract-tool";
-import { Zone } from "src/engine/objects";
 import Tile, { HEIGHT as TileHeight, WIDTH as TileWidth } from "src/engine/objects/tile";
+
+import AbstractTool from "src/editor/tools/abstract-tool";
 import { Point } from "src/util";
+import { Zone } from "src/engine/objects";
 
 abstract class AbstractDrawingTool extends AbstractTool implements EventListenerObject {
 	protected _ctx: CanvasRenderingContext2D;
 	protected _currentTile: Point = new Point(-1, -1);
-	protected _tile: Tile;
+	protected _tile: Tile = null;
 	private _isApplying: boolean = false;
 
 	public activate(zone: Zone, overlay: HTMLCanvasElement): void {
