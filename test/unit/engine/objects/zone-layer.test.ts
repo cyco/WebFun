@@ -8,8 +8,8 @@ describe("WebFun.Engine.Objects.ZoneLayer", () => {
 	});
 
 	it("defines names for each constant", () => {
-		expect(ZoneLayer.NameFromNumber(ZoneLayer.Floor)).toBe("floor");
-		expect(ZoneLayer.NameFromNumber(ZoneLayer.Object)).toBe("object");
-		expect(ZoneLayer.NameFromNumber(ZoneLayer.Roof)).toBe("roof");
+		expect(ZoneLayer[ZoneLayer.Floor]).toBe("Floor");
+		expect(ZoneLayer[ZoneLayer.Object]).toBe("Object");
+		expect(ZoneLayer[ZoneLayer.Roof]).toBe("Roof");
 	});
 });
