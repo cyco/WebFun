@@ -1,9 +1,10 @@
-import Engine from "src/engine/engine";
-import { Zone } from "src/engine/objects";
-import Mode from "./evaluation-mode";
 import { ConditionImplementation, InstructionImplementation, Result, ScriptResult } from "./types";
-import InstructionExecutor from "./instruction-executor";
+
 import ConditionChecker from "./condition-checker";
+import Engine from "src/engine/engine";
+import InstructionExecutor from "./instruction-executor";
+import Mode from "./evaluation-mode";
+import { Zone } from "src/engine/objects";
 
 type ConditionStore = ConditionImplementation[];
 type InstructionStore = InstructionImplementation[];
@@ -33,7 +34,6 @@ class ScriptExecutor {
 	}
 
 	protected async *_buildExecutor(mode: Mode, zone: Zone): AsyncIterator<ScriptResult> {
-		console.log("Build Executor", mode, zone.id.toHex(3));
 		if (this._inUse) {
 			throw new ScriptExecutionError("Executor is already in use!");
 		}
@@ -49,7 +49,6 @@ class ScriptExecutor {
 					continue actions;
 				}
 			}
-			console.log(`Execute Action ${action.id} of Zone ${zone.id.toHex(3)}`);
 
 			for (const instruction of action.instructions) {
 				const result = (await this._instructionExecutor.execute(instruction)) || Result.Void;
@@ -66,7 +65,6 @@ class ScriptExecutor {
 		this._engine.temporaryState.bump = null;
 
 		if (mode === Mode.PlaceItem) {
-			console.log("clear placed item");
 			this._engine.inputManager.placedTile = null;
 			this._engine.inputManager.placedTileLocation = null;
 		}
