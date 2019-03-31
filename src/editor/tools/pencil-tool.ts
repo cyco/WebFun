@@ -1,8 +1,8 @@
 import AbstractDrawingTool from "./abstract-drawing-tool";
-import { rgba } from "src/util";
 import Point from "src/util/point";
-import { Zone } from "src/engine/objects";
 import TileChangeEvent from "./tile-change-event";
+import { Zone } from "src/engine/objects";
+import { rgba } from "src/util";
 
 const HighlightColor = rgba(255, 0, 0, 0.3);
 
@@ -25,8 +25,7 @@ class PencilTool extends AbstractDrawingTool {
 		const point = new Point(p.x, p.y, this.layer.id);
 
 		this.zone.setTile(this.tile, point);
-		const event = new TileChangeEvent({ affectedPoints: [point] });
-		this.dispatchEvent(event);
+		this.dispatchEvent(new TileChangeEvent({ affectedPoints: [point] }));
 	}
 
 	protected drawPreview(point: Point) {

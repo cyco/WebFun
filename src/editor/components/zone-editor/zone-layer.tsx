@@ -1,25 +1,21 @@
-import Component from "src/ui/component";
-import { default as Zone } from "src/engine/objects/zone";
-import Tile, { HEIGHT as TileHeight, WIDTH as TileWidth } from "src/engine/objects/tile";
-import { Point } from "src/util";
-import { ColorPalette } from "src/engine/rendering";
-import { MenuItemInit } from "src/ui";
 import "./zone-layer.scss";
+
+import Tile, { HEIGHT as TileHeight, WIDTH as TileWidth } from "src/engine/objects/tile";
+
+import { ColorPalette } from "src/engine/rendering";
+import Component from "src/ui/component";
+import { MenuItemInit } from "src/ui";
+import { Point } from "src/util";
+import { default as Zone } from "src/engine/objects/zone";
 
 class ZoneLayer extends Component {
 	public static readonly tagName = "wf-zone-layer";
 	public static readonly observedAttributes: string[] = [];
-	private _zone: Zone;
-	private _layer: number;
-	private _canvas: HTMLCanvasElement;
-	private _palette: ColorPalette;
-	private _imageData: ImageData;
-
-	constructor() {
-		super();
-
-		this._canvas = document.createElement("canvas");
-	}
+	private _zone: Zone = null;
+	private _layer: number = null;
+	private _canvas = <canvas /> as HTMLCanvasElement;
+	private _palette: ColorPalette = null;
+	private _imageData: ImageData = null;
 
 	protected connectedCallback() {
 		this.appendChild(this._canvas);
@@ -27,7 +23,7 @@ class ZoneLayer extends Component {
 	}
 
 	private draw(): void {
-		if (this._layer === undefined) return;
+		if (this._layer === null) return;
 		if (!this._zone) return;
 		if (!this._palette) return;
 
@@ -36,6 +32,7 @@ class ZoneLayer extends Component {
 			this._imageData = this.drawLayer();
 		}
 
+		ctx.clearRect(0, 0, 288, 288);
 		ctx.putImageData(this._imageData, 0, 0);
 	}
 
@@ -91,7 +88,7 @@ class ZoneLayer extends Component {
 		const ZoneWidth = zone.size.width;
 
 		const imageData = this._imageData;
-		var buffer = imageData.data.slice();
+		var buffer = imageData.data.buffer;
 		var byteArray = new Uint8Array(buffer);
 		var data = new Uint32Array(buffer);
 		const bpr = ZoneWidth * TileWidth;
@@ -113,17 +110,17 @@ class ZoneLayer extends Component {
 	}
 
 	public update(points: Point[]) {
-		if (this._layer === undefined) return;
+		if (this._layer === null) return;
 		if (!this._zone) return;
 
 		const zone = this._zone;
 		const ctx = this._canvas.getContext("2d");
 		points.forEach(p => {
 			const tile = zone.getTile(p.x, p.y, this._layer);
-			ctx.clearRect(p.x, p.y, 1, 1);
+			ctx.clearRect(p.x, p.y, Tile.WIDTH, Tile.HEIGHT);
 			this._updateTile(tile, p);
-			this.draw();
 		});
+		this.draw();
 	}
 
 	set zone(zone: Zone) {
