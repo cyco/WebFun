@@ -1,9 +1,11 @@
-import { Component } from "src/ui";
-import { Char, CharMovementType, CharType, CharFrame, Tile } from "src/engine/objects";
+import "./character-details.scss";
+
+import { Char, CharFrame, CharMovementType, CharType, Tile } from "src/engine/objects";
+
 import CharacterFramePreview from "./character-frame-preview";
 import { ColorPalette } from "src/engine";
+import { Component } from "src/ui";
 import { MutableChar } from "src/engine/mutable-objects";
-import "./character-details.scss";
 
 class CharacterDetails extends Component {
 	public static readonly tagName = "wf-character-details";
