@@ -1,42 +1,26 @@
-import { Tile } from "src/engine/objects";
-import { Point } from "src/util";
-import Engine from "../engine";
 import AbstractRenderer from "../rendering/abstract-renderer";
+import Engine from "../engine";
+import { Point } from "src/util";
+import { Renderer } from "src/app/rendering/canvas";
 import Scene from "./scene";
+import { Tile } from "src/engine/objects";
+import { Yoda } from "src/engine";
+import { drawTileImageData } from "src/app/rendering";
 
 class DetonatorScene extends Scene {
-	private _detonatorLocation: Point = null;
-	private _detonatorFrames: Tile[] = null;
+	private _detonatorFrames: HTMLImageElement[] = [];
 	private _ticks: number = -1;
+	public detonatorLocation: Point = null;
 	private _engine: Engine = null;
 
-	get engine(): Engine {
-		return this._engine;
-	}
-
-	set engine(e) {
-		this._engine = e;
-		if (!e) return;
-
-		const data = e.data;
-		this._detonatorFrames = [0x202, 0x431, 0x432, 0x433].map(id => data.tiles[id]);
-	}
-
-	willShow() {
-		this.engine.inputManager.mouseDownHandler = (p: Point) => this.mouseDown(p);
-	}
-
-	mouseDown(p: Point): void {
+	public willShow() {
+		this.engine.inventory.removeItem(Yoda.ItemIDs.ThermalDetonator);
 		this._ticks = 0;
-		this._detonatorLocation = p
-			.clone()
-			.scaleBy(9)
-			.floor();
-		this.engine.inputManager.mouseDownHandler = () => void 0;
 	}
 
-	willHide() {
-		this.engine.inputManager.mouseDownHandler = () => void 0;
+	public willHide() {
+		this._ticks = -1;
+		this.detonatorLocation = null;
 	}
 
 	async update(/*ticks*/) {
@@ -50,11 +34,36 @@ class DetonatorScene extends Scene {
 		}
 	}
 
-	render(renderer: AbstractRenderer) {
-		for (let i = 0; i <= this._ticks && i <= this._detonatorFrames.length; i++) {
+	public render(r: AbstractRenderer) {
+		const renderer = r as Renderer;
+		for (let i = 0; i <= this._ticks && i < this._detonatorFrames.length; i++) {
 			const frame = this._detonatorFrames[i];
-			// renderer.renderTile(frame, this._detonatorLocation.x, this._detonatorLocation.y, 3);
+			const p = this.cameraOffset
+				.byAdding(this.detonatorLocation.x, this.detonatorLocation.y)
+				.byScalingBy(Tile.WIDTH);
+			renderer.renderImage(frame, p.x, p.y);
 		}
+	}
+
+	public set engine(e: Engine) {
+		if (this._engine) {
+			this._detonatorFrames = [];
+		}
+
+		this._engine = e;
+
+		if (this._engine) {
+			this._detonatorFrames = [];
+			for (let id of Yoda.Animation.Detonator) {
+				drawTileImageData(e.data.tiles[id], e.palette.original)
+					.toImage()
+					.then(i => this._detonatorFrames.push(i));
+			}
+		}
+	}
+
+	public get engine() {
+		return this._engine;
 	}
 }
 

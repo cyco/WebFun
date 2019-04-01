@@ -34,7 +34,11 @@ class Inventory extends EventTarget {
 		this.dispatchEvent(Events.ItemsDidChange);
 	}
 
-	removeItem(item: Tile): void {
+	removeItem(item: Tile | number): void {
+		if (typeof item === "number") {
+			item = this._items.find(itm => itm.id === item);
+		}
+
 		const index = this._items.indexOf(item);
 		if (index === -1) return;
 

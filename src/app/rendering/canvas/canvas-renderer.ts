@@ -1,6 +1,7 @@
 import { Point, rgb } from "src/util";
-import { Tile } from "src/engine/objects";
+
 import { Renderer } from "src/engine/rendering";
+import { Tile } from "src/engine/objects";
 
 const TILE_WIDTH = Tile.WIDTH;
 const TILE_HEIGHT = Tile.HEIGHT;
@@ -8,8 +9,6 @@ const TILE_HEIGHT = Tile.HEIGHT;
 class CanvasRenderer extends Renderer {
 	protected _canvas: HTMLCanvasElement;
 	protected _ctx: CanvasRenderingContext2D;
-	protected _imageCache: Map<number, Image> = new Map();
-	protected _imageLoaders: Map<number, Promise<Image>> = new Map();
 
 	constructor(canvas: HTMLCanvasElement) {
 		super();
