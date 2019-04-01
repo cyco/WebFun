@@ -1,15 +1,17 @@
-import { Hotspot, HotspotType, Zone, ZoneType, NPC } from "src/engine/objects";
+import { Direction as InputDirection } from "src/engine/input";
 import { Direction, Point } from "src/util";
+import { EvaluationMode, ScriptResult } from "../script";
+import { Hotspot, HotspotType, Zone, ZoneType, NPC } from "src/engine/objects";
+import { Yoda } from "src/engine";
 import AbstractRenderer from "../rendering/abstract-renderer";
+import DetonatorScene from "./detonator-scene";
+import Engine from "../engine";
 import MapScene from "./map-scene";
 import PauseScene from "./pause-scene";
+import PickupScene from "./pickup-scene";
 import Scene from "./scene";
 import TransitionScene from "./transition-scene";
-import { EvaluationMode, ScriptResult } from "../script";
-import { Direction as InputDirection } from "src/engine/input";
 import ZoneSceneRenderer from "src/engine/rendering/zone-scene-renderer";
-import PickupScene from "./pickup-scene";
-import Engine from "../engine";
 
 class ZoneScene extends Scene {
 	private _zone: Zone;
@@ -111,7 +113,7 @@ class ZoneScene extends Scene {
 				transitionScene.targetHeroLocation = new Point(waysOut.first().x, waysOut.first().y);
 				transitionScene.targetZone = targetZone;
 				console.assert(engine.sceneManager.currentScene instanceof ZoneScene);
-				transitionScene.scene = <ZoneScene>engine.sceneManager.currentScene;
+				transitionScene.scene = engine.sceneManager.currentScene as ZoneScene;
 
 				let world = engine.dagobah;
 				let location = world.locationOfZone(targetZone);
@@ -492,6 +494,14 @@ class ZoneScene extends Scene {
 		if (!tile || !location) {
 			this.engine.inputManager.clearPlacedTile();
 			return ScriptResult.Done;
+		}
+
+		if (tile.id === Yoda.ItemIDs.ThermalDetonator) {
+			const scene = new DetonatorScene();
+			scene.detonatorLocation = location;
+			this.engine.inputManager.clearPlacedTile();
+			this.engine.sceneManager.pushScene(scene);
+			return ScriptResult.Void;
 		}
 
 		if (location.distanceTo(heroLocation) > Math.sqrt(2)) {
