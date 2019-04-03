@@ -1,14 +1,4 @@
 import {
-	MutableNPC,
-	MutableAction,
-	MutableChar,
-	MutablePuzzle,
-	MutableTile,
-	MutableZone
-} from "src/engine/mutable-objects";
-import CharType from "src/engine/objects/char-type";
-
-import {
 	Action,
 	CharFrame,
 	CharMovementType,
@@ -17,13 +7,22 @@ import {
 	HotspotType,
 	Instruction,
 	PuzzleType,
+	Sound,
 	Zone,
-	ZoneType,
-	Sound
+	ZoneType
 } from "../objects";
+import {
+	MutableAction,
+	MutableChar,
+	MutableNPC,
+	MutablePuzzle,
+	MutableTile,
+	MutableZone
+} from "src/engine/mutable-objects";
+import { Point, Size } from "src/util";
 
+import CharType from "src/engine/objects/char-type";
 import { Planet } from "../types";
-import { Size, Point } from "src/util";
 import { Yoda } from "src/engine/type";
 
 const makeTile = (t: any, idx: number) => {
@@ -132,7 +131,6 @@ const makeNPC = (raw: any, idx: number, data: any) => {
 	const npc = new MutableNPC();
 	npc.id = idx;
 	npc.character = data._characters[raw.character];
-	npc.enabled = raw.enabled;
 	npc.position = new Point(raw.x, raw.y);
 
 	return npc;
