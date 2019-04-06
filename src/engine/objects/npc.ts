@@ -47,6 +47,10 @@ class NPC {
 	get position() {
 		return this._position;
 	}
+
+	set position(p: Point) {
+		this._position = p;
+	}
 }
 
 export default NPC;
