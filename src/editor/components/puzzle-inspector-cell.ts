@@ -4,7 +4,7 @@ import { Puzzle, PuzzleType } from "src/engine/objects";
 
 import { Cell } from "src/ui/components";
 import { ColorPalette } from "src/engine/rendering";
-import { ExpandButton } from "src/editor/components";
+import ExpandButton from "./expand-button";
 import Tile from "src/engine/objects/tile";
 import { TileView } from "src/debug/components";
 
