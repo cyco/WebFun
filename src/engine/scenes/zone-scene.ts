@@ -372,8 +372,13 @@ class ZoneScene extends Scene {
 		}
 
 		hero.isDragging = inputManager.drag;
-		hero.isAttacking = inputManager.attack; // TOOD: check if hero can attack right now
+		hero.isAttacking = inputManager.attack;
 		if (hero.isAttacking) this._attackTriggered();
+		if (hero.isAttacking) {
+			hero.isWalking = false;
+			hero.isDragging = false;
+			return;
+		}
 
 		if (inputManager.walk) {
 			let point = new Point(0, 0);
