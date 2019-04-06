@@ -1,8 +1,9 @@
+import "./tile-cell.scss";
+
 import { Cell } from "src/ui/components";
+import { ColorPalette } from "src/engine/rendering";
 import { Tile } from "src/engine/objects";
 import { TileView } from "src/debug/components";
-import { ColorPalette } from "src/engine/rendering";
-import "./tile-cell.scss";
 
 class TileCell extends Cell<Tile> {
 	public static readonly tagName = "wf-debug-tile-cell";

@@ -1,5 +1,6 @@
+import { Char, Tile } from "../objects";
+
 import LocatorTile from "../types/locator-tile";
-import { Tile, Char } from "../objects";
 
 type WellKnownSounds = {
 	NoGo: number;

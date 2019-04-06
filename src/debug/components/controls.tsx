@@ -1,6 +1,7 @@
+import "./controls.scss";
+
 import { Component } from "src/ui";
 import { IconButton } from "src/ui/components";
-import "./controls.scss";
 
 class Controls extends Component {
 	public static readonly tagName = "wf-debug-controls";

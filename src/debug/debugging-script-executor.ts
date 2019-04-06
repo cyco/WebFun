@@ -1,16 +1,17 @@
-import Engine from "src/engine/engine";
-import { Zone } from "src/engine/objects";
-import Mode from "src/engine/script/evaluation-mode";
+import { Action, Condition, Instruction } from "src/engine/objects";
 import {
 	ConditionImplementation,
 	InstructionImplementation,
 	Result,
 	ScriptResult
 } from "src/engine/script/types";
-import InstructionExecutor from "src/engine/script/instruction-executor";
+
 import ConditionChecker from "src/engine/script/condition-checker";
+import Engine from "src/engine/engine";
+import InstructionExecutor from "src/engine/script/instruction-executor";
+import Mode from "src/engine/script/evaluation-mode";
 import ScriptExecutor from "src/engine/script/script-executor";
-import { Action, Condition, Instruction } from "src/engine/objects";
+import { Zone } from "src/engine/objects";
 
 type ConditionStore = ConditionImplementation[];
 type InstructionStore = InstructionImplementation[];

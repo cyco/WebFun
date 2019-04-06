@@ -1,4 +1,5 @@
 import { Point, Rectangle, Size } from "src/util";
+
 import WorldItem from "./world-item";
 
 class World {

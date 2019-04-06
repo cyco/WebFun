@@ -1,7 +1,9 @@
-import { AbstractHealth } from "src/app/ui";
-import { Point, xy2polar, rad2deg } from "src/util";
-import { abs, ceil, sign } from "src/std/math";
 import "./interactive-health.scss";
+
+import { Point, rad2deg, xy2polar } from "src/util";
+import { abs, ceil, sign } from "src/std/math";
+
+import { AbstractHealth } from "src/app/ui";
 
 const FlipThreshold = 180;
 

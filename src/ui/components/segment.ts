@@ -1,5 +1,6 @@
-import Component from "../component";
 import "./segment.scss";
+
+import Component from "../component";
 
 class Segment extends Component {
 	public static readonly tagName = "wf-segment";

@@ -1,7 +1,9 @@
-import Component from "src/ui/component";
-import { AbstractTool, Events } from "src/editor/tools";
-import Editor from "./view";
 import "./tool.scss";
+
+import { AbstractTool, Events } from "src/editor/tools";
+
+import Component from "src/ui/component";
+import Editor from "./view";
 import { Shortcut } from "src/ux";
 import ShortcutManager from "src/ux/shortcut-manager";
 import Window from "./window";

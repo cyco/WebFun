@@ -43,7 +43,7 @@ class EventTarget_not_builtin {
 						detail: detail
 				  });
 
-		(<any>this)["on" + type] instanceof Function && (<any>this)["on" + type](event);
+		(this as any)["on" + type] instanceof Function && (this as any)["on" + type](event);
 
 		let listeners = this.listeners[type instanceof Event ? event.type : type];
 		for (let i in listeners) {
@@ -61,7 +61,7 @@ class EventTarget_not_builtin {
 
 	protected registerEvents(events: { [_: string]: string }): void {
 		events.each(key => {
-			(<any>this)["on" + events[key]] = null;
+			(this as any)["on" + events[key]] = null;
 		});
 	}
 }

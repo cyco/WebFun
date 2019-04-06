@@ -1,10 +1,11 @@
-import Settings from "src/settings";
-import { WindowManager, MenuItemSeparator, MenuItemState } from "src/ui";
-import ScriptDebugger from "./script-debugger";
+import { InputRecorder, SimulatorWindow } from "./components";
+import { MenuItemSeparator, MenuItemState, WindowManager } from "src/ui";
+
 import GameController from "src/app/game-controller";
-import { main as RunSaveGameEditor } from "src/save-game-editor";
 import { main as RunGameDataEditor } from "src/editor";
-import { SimulatorWindow, InputRecorder } from "./components";
+import { main as RunSaveGameEditor } from "src/save-game-editor";
+import ScriptDebugger from "./script-debugger";
+import Settings from "src/settings";
 
 const SettingsItem = (label: string, key: keyof typeof Settings, settings: typeof Settings) => ({
 	title: label,

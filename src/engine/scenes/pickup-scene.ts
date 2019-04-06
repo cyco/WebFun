@@ -1,9 +1,9 @@
-import { Point } from "src/util";
-import Engine from "../engine";
-import Tile from "../objects/tile";
 import AbstractRenderer from "../rendering/abstract-renderer";
-import { drawTileImageData } from "src/app/rendering";
+import Engine from "../engine";
+import { Point } from "src/util";
 import Scene from "./scene";
+import Tile from "../objects/tile";
+import { drawTileImageData } from "src/app/rendering";
 
 class PickupScene extends Scene {
 	public engine: Engine;

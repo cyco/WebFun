@@ -1,9 +1,11 @@
-import { Component } from "src/ui";
-import { Zone, Tile } from "src/engine/objects";
-import { drawZoneImageData } from "src/app/rendering/canvas";
-import { ColorPalette } from "src/engine";
-import { Size } from "src/util";
 import "./zone-view.scss";
+
+import { Tile, Zone } from "src/engine/objects";
+
+import { ColorPalette } from "src/engine";
+import { Component } from "src/ui";
+import { Size } from "src/util";
+import { drawZoneImageData } from "src/app/rendering/canvas";
 
 class ZoneView extends Component implements EventListenerObject {
 	public static readonly tagName = "wf-editor-zone";

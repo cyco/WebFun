@@ -1,5 +1,5 @@
-import Engine from "../engine";
 import Cheat from "./cheat";
+import Engine from "../engine";
 
 class CheatCodeInput {
 	private _input: string = "";

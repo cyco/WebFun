@@ -1,8 +1,9 @@
-import { Cell } from "src/ui/components";
-import { Tile } from "src/engine/objects";
-import { ColorPalette } from "src/engine/rendering";
-import { TileView } from "src/debug/components";
 import "./tile-picker-cell.scss";
+
+import { Cell } from "src/ui/components";
+import { ColorPalette } from "src/engine/rendering";
+import { Tile } from "src/engine/objects";
+import { TileView } from "src/debug/components";
 
 class TilePickerCell extends Cell<Tile> {
 	public static readonly tagName = "wf-tile-picker-cell";

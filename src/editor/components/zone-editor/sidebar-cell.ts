@@ -1,7 +1,8 @@
+import "./sidebar-cell.scss";
+
 import Component from "src/ui/component";
 import ExpandButton from "src/editor/components/expand-button";
 import { IconButton } from "src/ui/components";
-import "./sidebar-cell.scss";
 
 class SidebarCell extends Component {
 	static readonly tagName = "wf-zone-editor-sidebar-cell";
@@ -19,13 +20,13 @@ class SidebarCell extends Component {
 		this._header = document.createElement("header");
 		this._header.appendChild(document.createElement("span"));
 
-		this._expandButton = <ExpandButton>document.createElement(ExpandButton.tagName);
+		this._expandButton = document.createElement(ExpandButton.tagName) as ExpandButton;
 		this._expandButton.element = this;
 		this._expandButton.ontoggle = () =>
 			this._state.store("expanded", this.classList.contains("expanded"));
 		this._header.appendChild(this._expandButton);
 
-		this._newButton = <IconButton>document.createElement(IconButton.tagName);
+		this._newButton = document.createElement(IconButton.tagName) as IconButton;
 		this._newButton.icon = "plus-circle";
 		this._newButton.style.display = "none";
 		this._newButton.onclick = () => this.newItemCallback();

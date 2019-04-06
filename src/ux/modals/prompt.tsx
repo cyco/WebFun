@@ -1,4 +1,5 @@
-import { ConfirmationWindow, Textbox, Selector } from "src/ui/components";
+import { ConfirmationWindow, Selector, Textbox } from "src/ui/components";
+
 import WindowModalSession from "../window-modal-session";
 import { dispatch } from "src/util";
 

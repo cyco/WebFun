@@ -1,5 +1,6 @@
-import AbstractDrawingTool from "./abstract-drawing-tool";
 import { Point, rgba } from "src/util";
+
+import AbstractDrawingTool from "./abstract-drawing-tool";
 import TileChangeEvent from "src/editor/tools/tile-change-event";
 
 const HighlightColor = rgba(255, 0, 0, 0.3);

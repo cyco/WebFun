@@ -1,7 +1,7 @@
-import { SceneManager } from "../engine";
-import { Renderer } from "../engine/rendering";
-import Settings from "../settings";
 import DebugInfoScene from "./debug-info-scene";
+import { Renderer } from "../engine/rendering";
+import { SceneManager } from "../engine";
+import Settings from "../settings";
 
 class DebugInfoSceneManager extends SceneManager {
 	private _debugInfoScene = new DebugInfoScene();

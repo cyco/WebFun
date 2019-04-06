@@ -1,13 +1,15 @@
+import "./inventory.scss";
+
 import Inventory, { Events as InventoryEvent } from "src/engine/inventory";
+
+import { AbstractList } from "src/ui/components";
+import { ColorPalette } from "src/engine/rendering";
+import InventoryRow from "./inventory-row";
+import { ModalSession } from "src/ux";
+import { Point } from "src/util";
 import { Tile } from "src/engine/objects";
 import Yoda from "src/engine/yoda";
-import { AbstractList } from "src/ui/components";
-import { Point } from "src/util";
-import { ModalSession } from "src/ux";
-import InventoryRow from "./inventory-row";
-import { ColorPalette } from "src/engine/rendering";
 import { max } from "src/std/math";
-import "./inventory.scss";
 
 export const Events = {
 	ItemPlaced: "ItemPlaced",

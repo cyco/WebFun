@@ -1,6 +1,6 @@
+import LogLevel from "./log-level";
 import Settings from "src/settings";
 import { identity } from "src/util";
-import LogLevel from "./log-level";
 
 class Logger {
 	public level = LogLevel.Warning;

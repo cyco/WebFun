@@ -1,10 +1,11 @@
-import { HotspotType } from "src/engine/objects";
-import Engine from "../../engine";
-import Zone from "../../objects/zone";
-import { int16, Type } from "../types";
-import Condition from "src/engine/script/condition";
+import { Type, int16 } from "../types";
 
-export default <Condition>{
+import Condition from "src/engine/script/condition";
+import Engine from "../../engine";
+import { HotspotType } from "src/engine/objects";
+import Zone from "../../objects/zone";
+
+export default {
 	Opcode: 0x1d,
 	Arguments: [Type.ZoneX, Type.ZoneY],
 	Implementation: async (args: int16[], zone: Zone, _engine: Engine): Promise<boolean> => {
@@ -20,4 +21,4 @@ export default <Condition>{
 		}
 		return false;
 	}
-};
+} as Condition;

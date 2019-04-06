@@ -1,6 +1,7 @@
-import { Story, Engine } from "src/engine";
+import { Engine, Story } from "src/engine";
+import { HotspotType, Tile, Zone, ZoneType } from "src/engine/objects";
+
 import { World } from "src/engine/generation";
-import { Tile, Zone, ZoneType, HotspotType } from "src/engine/objects";
 import { WorldSize } from "src/engine/types";
 import { srand } from "src/util";
 

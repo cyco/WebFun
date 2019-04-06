@@ -1,8 +1,9 @@
-import AbstractInspector from "./abstract-inspector";
-import { PaletteImageEditor, PaletteColorPicker } from "../components";
+import { PaletteColorPicker, PaletteImageEditor } from "../components";
 import { Size, downloadImage } from "src/util";
-import { FilePicker } from "src/ui";
+
+import AbstractInspector from "./abstract-inspector";
 import { Button } from "src/ui/components";
+import { FilePicker } from "src/ui";
 
 class SetupImageInspector extends AbstractInspector {
 	private _imageEditor = (

@@ -1,12 +1,13 @@
 import AST, { s } from "./ast";
-import Symbol from "./symbol";
-import { Action } from "src/engine/objects";
-import { MutableAction } from "src/engine/mutable-objects";
-import Condition from "src/engine/objects/condition";
-import Instruction from "src/engine/objects/instruction";
+
 import { AbstractActionItemInit } from "src/engine/objects/abstract-action-item";
+import { Action } from "src/engine/objects";
+import Condition from "src/engine/objects/condition";
 import { ConditionsByName } from "src/engine/script/conditions";
+import Instruction from "src/engine/objects/instruction";
 import { InstructionsByName } from "src/engine/script/instructions";
+import { MutableAction } from "src/engine/mutable-objects";
+import Symbol from "./symbol";
 import { Type } from "src/engine/script/types";
 
 class AssemblerInputError extends Error {
@@ -22,8 +23,8 @@ type ASTFunctionDefinition = [Symbol, Symbol, AST, Array<AST>];
 type Opcode = { Opcode: number; Arguments: Type[]; UsesText?: boolean; Description: string };
 type OpcodeMap = { [_: string]: Opcode };
 
-const Conditions = <OpcodeMap>ConditionsByName;
-const Instructions = <OpcodeMap>InstructionsByName;
+const Conditions = ConditionsByName as OpcodeMap;
+const Instructions = InstructionsByName as OpcodeMap;
 
 class Assembler {
 	private checkArgumentCount: boolean = false;
@@ -61,13 +62,13 @@ class Assembler {
 	}
 
 	private validateInputStructure(input: AST): ASTFunctionDefinition {
-		let inputArray = <Array<AST>>input;
+		let inputArray = input as Array<AST>;
 
 		if (!(input instanceof Array)) throw new AssemblerInputError("Input must be an array.", input);
 		if (inputArray[0] !== s`defaction`)
 			throw new AssemblerInputError("Input must be an action definition using defaction.", input);
 
-		return <ASTFunctionDefinition>input.slice();
+		return input.slice() as ASTFunctionDefinition;
 	}
 
 	private parseAnd(body: Array<AST>): [Condition[], Instruction[]] {
@@ -132,9 +133,9 @@ class Assembler {
 		}
 
 		return new itemClass({
-			opcode: <number>opcode.Opcode,
-			text: <string>text,
-			arguments: <number[]>args
+			opcode: opcode.Opcode,
+			text: text as string,
+			arguments: args
 		});
 	}
 }

@@ -20,7 +20,7 @@ class PromiseProxy<T> {
 	}
 
 	public then(onfulfilled?: (value: T) => void | T | PromiseLike<T>): Promise<T> {
-		return this._promise.then(<any>onfulfilled);
+		return this._promise.then(onfulfilled as any);
 	}
 
 	public async catch(onrejected?: (reason: any) => PromiseLike<never>): Promise<T> {

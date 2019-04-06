@@ -1,10 +1,11 @@
-import Engine from "../../engine";
-import Zone from "../../objects/zone";
-import { int16, Type } from "../types";
-import EvaluationMode from "../evaluation-mode";
-import Condition from "src/engine/script/condition";
+import { Type, int16 } from "../types";
 
-export default <Condition>{
+import Condition from "src/engine/script/condition";
+import Engine from "../../engine";
+import EvaluationMode from "../evaluation-mode";
+import Zone from "../../objects/zone";
+
+export default {
 	Opcode: 0x03,
 	Arguments: [Type.Number, Type.Number, Type.Number, Type.Number, Type.Number],
 	Implementation: async (
@@ -35,4 +36,4 @@ export default <Condition>{
 			zone.getTileID(x, y, z) === target
 		);
 	}
-};
+} as Condition;

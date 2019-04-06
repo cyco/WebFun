@@ -1,15 +1,17 @@
-import { Component } from "src/ui";
 import "./action-component.scss";
+
 import { Action, Zone } from "src/engine/objects";
-import Engine from "src/engine/engine";
-import ConditionComponent from "src/debug/components/condition";
-import InstructionComponent from "src/debug/components/instruction";
-import ConditionChecker from "src/engine/script/condition-checker";
-import { ConditionImplementations } from "src/engine/script/conditions";
-import { EvaluationMode } from "src/engine/script";
+
 import BreakpointButton from "./breakpoint-button";
-import LocationBreakpoint from "../breakpoint/location-breakpoint";
 import BreakpointStore from "../breakpoint-store";
+import { Component } from "src/ui";
+import ConditionChecker from "src/engine/script/condition-checker";
+import ConditionComponent from "src/debug/components/condition";
+import { ConditionImplementations } from "src/engine/script/conditions";
+import Engine from "src/engine/engine";
+import { EvaluationMode } from "src/engine/script";
+import InstructionComponent from "src/debug/components/instruction";
+import LocationBreakpoint from "../breakpoint/location-breakpoint";
 
 class ActionComponent extends Component {
 	public static readonly tagName = "wf-debug-action";

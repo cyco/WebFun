@@ -1,8 +1,10 @@
-import { Cell, IconButton, Selector } from "src/ui/components";
-import { Tile } from "src/engine/objects";
-import { ColorPalette } from "src/engine/rendering";
-import { TileView } from "src/debug/components";
 import "./inventory-row.scss";
+
+import { Cell, IconButton, Selector } from "src/ui/components";
+
+import { ColorPalette } from "src/engine/rendering";
+import { Tile } from "src/engine/objects";
+import { TileView } from "src/debug/components";
 
 class InventoryRow extends Cell<Tile> {
 	public static readonly tagName = "wf-save-game-editor-inventory-row";

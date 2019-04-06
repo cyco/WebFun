@@ -1,8 +1,9 @@
-import { Tile } from "src/engine/objects";
+import "./inventory-row.scss";
+
 import { Cell } from "src/ui/components";
 import { PaletteView } from "src/editor/components";
 import { Size } from "src/util";
-import "./inventory-row.scss";
+import { Tile } from "src/engine/objects";
 
 const EmptyImageData = new Uint8Array(Tile.WIDTH * Tile.HEIGHT);
 

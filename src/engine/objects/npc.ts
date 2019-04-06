@@ -1,5 +1,5 @@
-import { Point } from "src/util";
 import Char from "./char";
+import { Point } from "src/util";
 
 class NPC {
 	protected _id: number = -1;
@@ -11,7 +11,7 @@ class NPC {
 	protected _data: any;
 
 	constructor() {
-		this._data = Array.Repeat(-1, 0x20);
+		this._data = Array.Repeat(-1, 0x20); // 32 bytes
 		this._unknown1 = 0;
 		this._unknown2 = 0;
 	}

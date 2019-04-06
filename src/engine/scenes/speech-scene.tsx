@@ -1,10 +1,11 @@
-import { Tile } from "src/engine/objects";
+import { Point, Size } from "src/util";
+
+import Engine from "../engine";
+import { ModalSession } from "src/ux";
+import Scene from "./scene";
 import Settings from "src/settings";
 import { SpeechBubble } from "src/ui/components";
-import { Point, Size } from "src/util";
-import { ModalSession } from "src/ux";
-import Engine from "../engine";
-import Scene from "./scene";
+import { Tile } from "src/engine/objects";
 import { WorldItem } from "src/engine/generation";
 
 class SpeechScene extends Scene {

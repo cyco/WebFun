@@ -1,6 +1,6 @@
 import { EventTarget } from "src/util";
-import UndoOperation from "./undo-operation";
 import UndoBatchOperation from "src/ux/undo-batch-operation";
+import UndoOperation from "./undo-operation";
 
 class UndoManager extends EventTarget {
 	private static _sharedManager: UndoManager;

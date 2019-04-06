@@ -1,9 +1,11 @@
-import { Cell, InlineSelector } from "src/ui/components";
-import { Zone, ZoneType, Tile } from "src/engine/objects";
-import { Planet } from "src/engine/types";
-import { ColorPalette } from "src/engine/rendering";
-import { TileView } from "src/debug/components";
 import "./zone-inspector-cell.scss";
+
+import { Cell, InlineSelector } from "src/ui/components";
+import { Tile, Zone, ZoneType } from "src/engine/objects";
+
+import { ColorPalette } from "src/engine/rendering";
+import { Planet } from "src/engine/types";
+import { TileView } from "src/debug/components";
 
 const Events = {
 	RevealReferences: "RevealReferences",

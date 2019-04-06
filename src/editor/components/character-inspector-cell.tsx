@@ -1,8 +1,10 @@
-import { Cell, Label, IconButton } from "src/ui/components";
+import "./character-inspector-cell.scss";
+
+import { Cell, IconButton, Label } from "src/ui/components";
+
 import { Char } from "src/engine/objects";
 import { ColorPalette } from "src/engine/rendering";
 import { TileView } from "src/debug/components";
-import "./character-inspector-cell.scss";
 
 class CharacterInspectorCell extends Cell<Char> {
 	public static readonly tagName = "wf-character-inspector-cell";

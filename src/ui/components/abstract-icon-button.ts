@@ -1,5 +1,6 @@
-import Component from "../component";
 import "./abstract-icon-button.scss";
+
+import Component from "../component";
 
 abstract class AbstractIconButton extends Component {
 	public static observedAttributes = ["icon"];

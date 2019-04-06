@@ -1,7 +1,7 @@
 import { EventTarget } from "src/util";
-import { Zone } from "src/engine/objects";
-import { ShortcutDescription } from "src/ux/shortcut-manager";
 import Layer from "src/editor/components/zone-editor/layer";
+import { ShortcutDescription } from "src/ux/shortcut-manager";
+import { Zone } from "src/engine/objects";
 
 export const Events = {
 	DidActivate: "DidActivate",

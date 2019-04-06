@@ -1,10 +1,10 @@
-import Engine from "../../engine";
 import Action from "../../objects/action";
+import Engine from "../../engine";
 import Instruction from "../../objects/instruction";
-import { Result } from "../types";
 import InstructionType from "../instruction";
+import { Result } from "../types";
 
-export default <InstructionType>{
+export default {
 	Opcode: 0x1e,
 	Arguments: [],
 	Implementation: async (_: Instruction, engine: Engine, action: Action): Promise<Result> => {
@@ -17,4 +17,4 @@ export default <InstructionType>{
 
 		return Result.Void;
 	}
-};
+} as InstructionType;

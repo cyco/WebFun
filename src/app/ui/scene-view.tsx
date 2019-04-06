@@ -1,9 +1,11 @@
+import "./scene-view.scss";
+
+import { Point, Rectangle, Size, rgb } from "src/util";
+
+import Component from "src/ui/component";
+import DebugInfoSceneManager from "../../debug/debug-info-scene-manager";
 import { SceneManager } from "src/engine";
 import Settings from "src/settings";
-import { rgb, Point, Size, Rectangle } from "src/util";
-import DebugInfoSceneManager from "../../debug/debug-info-scene-manager";
-import Component from "src/ui/component";
-import "./scene-view.scss";
 
 class SceneView extends Component {
 	public static readonly tagName = "wf-scene-view";

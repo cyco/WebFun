@@ -1,5 +1,6 @@
-import Component from "src/ui/component";
 import "./selector.scss";
+
+import Component from "src/ui/component";
 
 class Selector extends Component {
 	public static readonly tagName = "wf-selector";

@@ -1,5 +1,6 @@
-import Component from "../component";
 import "./inline-selector.scss";
+
+import Component from "../component";
 
 class InlineSelector<T> extends Component implements EventListenerObject {
 	public static readonly tagName = "wf-inline-selector";

@@ -1,10 +1,11 @@
-import Reader from "./reader";
-import SaveState from "./save-state";
-import GameData from "../game-data";
-import { InputStream, Point } from "src/util";
 import { Hotspot, HotspotType, Tile } from "src/engine/objects";
+import { InputStream, Point } from "src/util";
 import { MutableHotspot, MutableNPC } from "src/engine/mutable-objects";
 import { Planet, WorldSize } from "../types";
+
+import GameData from "../game-data";
+import Reader from "./reader";
+import SaveState from "./save-state";
 import WorldItem from "./world-item";
 import { Yoda } from "../type";
 import { floor } from "src/std/math";

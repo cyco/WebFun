@@ -1,21 +1,22 @@
+import { PaletteAnimation, Renderer } from "./rendering";
+import { Tile, Zone } from "./objects";
+
+import Camera from "./camera";
 import { EventTarget } from "src/util";
 import Events from "./events";
+import GameData from "./game-data";
 import GameState from "./game-state";
-import { World } from "./generation";
 import Hero from "./hero";
 import { InputManager } from "./input";
 import Inventory from "./inventory";
 import Metronome from "./metronome";
-import { Zone, Tile } from "./objects";
-import State from "./persistent-state";
-import { Renderer, PaletteAnimation } from "./rendering";
+import { Mixer } from "./audio";
 import SceneManager from "./scene-manager";
 import { ScriptExecutor } from "./script";
+import State from "./persistent-state";
 import Story from "./story";
-import GameData from "./game-data";
 import { GameType as Type } from "./type";
-import { Mixer } from "./audio";
-import Camera from "./camera";
+import { World } from "./generation";
 
 export { Events };
 

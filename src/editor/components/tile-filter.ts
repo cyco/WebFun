@@ -1,5 +1,6 @@
-import { SearchDelegate } from "src/ui/components/list";
 import Tile, { Attribute, Subtype } from "src/engine/objects/tile";
+
+import { SearchDelegate } from "src/ui/components/list";
 
 class TileFilter implements SearchDelegate<Tile, RegExp[]> {
 	private _cache: { [_: number]: string } = {};

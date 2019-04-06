@@ -1,7 +1,8 @@
-import Button from "./button";
-import { Point } from "src/util";
 import "./speech-bubble.scss";
+
+import Button from "./button";
 import Component from "../component";
+import { Point } from "src/util";
 
 export const Event = {
 	End: "end"
@@ -125,7 +126,7 @@ class SpeechBubble extends Component {
 	}
 
 	private _buildButton(className: string, icon: string): Button {
-		const button = <Button>document.createElement(Button.tagName);
+		const button = document.createElement(Button.tagName) as Button;
 		button.classList.add(className);
 		button.icon = icon;
 		return button;

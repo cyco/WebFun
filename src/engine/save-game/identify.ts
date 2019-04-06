@@ -1,4 +1,5 @@
-import { Yoda, Indy, GameType } from "../type";
+import { GameType, Indy, Yoda } from "../type";
+
 import { InputStream } from "src/util";
 
 export default (stream: InputStream): GameType => {

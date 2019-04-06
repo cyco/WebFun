@@ -1,5 +1,6 @@
-import Component from "../component";
 import "./progress-indicator.scss";
+
+import Component from "../component";
 
 class ProgressIndicator extends Component {
 	public static readonly tagName = "wf-progress-indicator";

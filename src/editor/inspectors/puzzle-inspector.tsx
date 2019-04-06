@@ -1,7 +1,7 @@
 import AbstractInspector from "./abstract-inspector";
-import { PuzzleInspectorCell } from "../components";
-import { Puzzle } from "src/engine/objects";
 import { List } from "src/ui/components";
+import { Puzzle } from "src/engine/objects";
+import { PuzzleInspectorCell } from "../components";
 
 class PuzzleInspector extends AbstractInspector {
 	private _list: List<Puzzle>;

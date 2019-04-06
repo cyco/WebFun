@@ -1,33 +1,34 @@
-import { Engine, GameData, Hero, Inventory, Metronome, Story, ColorPalette } from "src/engine";
-import { CanvasRenderer } from "./rendering";
-import { Reader } from "src/engine/save-game";
-import { DesktopInputManager } from "./input";
-import { Char, Zone, Tile } from "src/engine/objects";
-import { ZoneScene, LoseScene } from "src/engine/scenes";
-import { ScriptExecutor } from "src/engine/script";
-import { Planet, WorldSize } from "src/engine/types";
-import Settings from "src/settings";
-import { FilePicker, WindowManager } from "src/ui";
-import { EventTarget, Point, Rectangle, Size } from "src/util";
-import { ConfirmationResult, ModalConfirm } from "src/ux";
-import GameState from "../engine/game-state";
-import Loader, { LoaderEventDetails } from "./loader";
-import { MainMenu, MainWindow } from "./windows";
-import { GameTypeYoda } from "src/engine";
-import { DOMAudioChannel } from "./audio";
-import { Mixer } from "src/engine/audio";
-import { ConditionImplementations as Conditions } from "src/engine/script/conditions";
-import { InstructionImplementations as Instructions } from "src/engine/script/instructions";
-import { PaletteAnimation } from "src/engine/rendering";
 import {
+	Ammo as AmmoComponet,
+	Health as HealthComponent,
+	Inventory as InventoryComponent,
 	LoadingView,
 	SceneView,
-	Inventory as InventoryComponent,
-	Ammo as AmmoComponet,
-	Weapon as WeaponComponent,
-	Health as HealthComponent
+	Weapon as WeaponComponent
 } from "./ui";
+import { Char, Tile, Zone } from "src/engine/objects";
+import { ColorPalette, Engine, GameData, Hero, Inventory, Metronome, Story } from "src/engine";
+import { ConfirmationResult, ModalConfirm } from "src/ux";
+import { EventTarget, Point, Rectangle, Size } from "src/util";
+import { FilePicker, WindowManager } from "src/ui";
+import Loader, { LoaderEventDetails } from "./loader";
+import { LoseScene, ZoneScene } from "src/engine/scenes";
+import { MainMenu, MainWindow } from "./windows";
+import { Planet, WorldSize } from "src/engine/types";
+
+import { CanvasRenderer } from "./rendering";
+import { ConditionImplementations as Conditions } from "src/engine/script/conditions";
+import { DOMAudioChannel } from "./audio";
+import { DesktopInputManager } from "./input";
+import GameState from "../engine/game-state";
+import { GameTypeYoda } from "src/engine";
+import { InstructionImplementations as Instructions } from "src/engine/script/instructions";
+import { Mixer } from "src/engine/audio";
+import { PaletteAnimation } from "src/engine/rendering";
+import { Reader } from "src/engine/save-game";
 import { ScriptDebugger } from "src/debug";
+import { ScriptExecutor } from "src/engine/script";
+import Settings from "src/settings";
 export const Event = {
 	DidLoadData: "didLoadData"
 };

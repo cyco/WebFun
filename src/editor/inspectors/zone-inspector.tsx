@@ -1,13 +1,14 @@
-import AbstractInspector from "./abstract-inspector";
-import { ZoneInspectorCell } from "../components";
-import { Zone } from "src/engine/objects";
-import { MutableZone } from "src/engine/mutable-objects";
-import { List, IconButton, ContextMenu } from "src/ui/components";
-import ZoneEditorController from "../components/zone-editor/window";
-import ReferenceResolver from "src/editor/reference-resolver";
+import { ContextMenu, IconButton, List } from "src/ui/components";
 import { Point, Size } from "src/util";
+
+import AbstractInspector from "./abstract-inspector";
 import { Menu } from "src/ui";
 import { ModalPrompt } from "src/ux";
+import { MutableZone } from "src/engine/mutable-objects";
+import ReferenceResolver from "src/editor/reference-resolver";
+import { Zone } from "src/engine/objects";
+import ZoneEditorController from "../components/zone-editor/window";
+import { ZoneInspectorCell } from "../components";
 
 class ZoneInspector extends AbstractInspector {
 	private _list: List<Zone>;

@@ -1,6 +1,7 @@
+import "./context-menu.scss";
+
 import AbstractMenuWindow from "./abstract-menu-window";
 import MenuItem from "./menu-item";
-import "./context-menu.scss";
 
 class ContextMenu extends AbstractMenuWindow implements EventListenerObject {
 	public static readonly tagName = "wf-context-menu";

@@ -1,14 +1,15 @@
-import { buildMenu as buildDebugMenu } from "src/debug";
-import { Menu, MenuItemSeparator as Separator, MenuItemInit } from "src/ui";
-import { WindowModalSession } from "src/ux";
-import { document } from "src/std/dom";
-import { Window } from "src/ui/components";
-import GameController from "../game-controller";
+import { Menu, MenuItemInit, MenuItemSeparator as Separator } from "src/ui";
+
 import DifficultyWindow from "./difficulty-window";
+import GameController from "../game-controller";
 import GameSpeedWindow from "./game-speed-window";
-import StatisticsWindow from "./statistics-window";
-import WorldSizeWindow from "./world-size-window";
 import Settings from "src/settings";
+import StatisticsWindow from "./statistics-window";
+import { Window } from "src/ui/components";
+import { WindowModalSession } from "src/ux";
+import WorldSizeWindow from "./world-size-window";
+import { buildMenu as buildDebugMenu } from "src/debug";
+import { document } from "src/std/dom";
 
 function SoundMenuItem(
 	controller: GameController,

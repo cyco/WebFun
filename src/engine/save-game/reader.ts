@@ -1,9 +1,10 @@
-import { Indy, Yoda, GameType } from "../type";
-import { InputStream } from "src/util";
-import SaveState from "./save-state";
+import { GameType, Indy, Yoda } from "../type";
+import { Hotspot, HotspotType, Zone } from "src/engine/objects";
+
 import GameData from "../game-data";
-import { Zone, Hotspot, HotspotType } from "src/engine/objects";
+import { InputStream } from "src/util";
 import { MutableZone } from "src/engine/mutable-objects";
+import SaveState from "./save-state";
 import World from "./world";
 import WorldItem from "./world-item";
 

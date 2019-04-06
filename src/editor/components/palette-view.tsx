@@ -1,8 +1,10 @@
-import { Component } from "src/ui";
-import { ColorPalette } from "src/engine";
-import { Size, Point } from "src/util";
-import { drawImage } from "src/app/rendering";
 import "./palette-view.scss";
+
+import { Point, Size } from "src/util";
+
+import { ColorPalette } from "src/engine";
+import { Component } from "src/ui";
+import { drawImage } from "src/app/rendering";
 
 class PaletteView extends Component {
 	public static tagName = "wf-palette-view";

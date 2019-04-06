@@ -12,4 +12,4 @@ declare interface BaseEvent extends Event {
 	new (): Event;
 }
 
-export default <typeof Event>(<any>BaseEvent);
+export default (BaseEvent as any) as typeof Event;

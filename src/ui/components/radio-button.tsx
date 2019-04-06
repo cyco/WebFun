@@ -1,5 +1,4 @@
 import Component from "../component";
-
 import Group from "./radio-group";
 
 export { Group };

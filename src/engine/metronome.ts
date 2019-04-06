@@ -1,5 +1,6 @@
-import { performance } from "src/std";
 import { dispatch, identity } from "src/util";
+
+import { performance } from "src/std";
 
 const TICKLENGTH = 100;
 
@@ -49,8 +50,8 @@ class Metronome {
 
 		this.onrender();
 
-		if (update && (<any>window).onMetronomeTick instanceof Function) {
-			this.withSuspendedUpdates(dispatch(async () => await (<any>window).onMetronomeTick()));
+		if (update && (window as any).onMetronomeTick instanceof Function) {
+			this.withSuspendedUpdates(dispatch(async () => await (window as any).onMetronomeTick()));
 		}
 	}
 

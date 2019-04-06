@@ -1,6 +1,6 @@
-import { Tile } from "src/engine/objects";
 import AbstractRenderer from "../rendering/abstract-renderer";
 import Scene from "./scene";
+import { Tile } from "src/engine/objects";
 
 const PauseImageSrc =
 	"data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAMElEQVRYw+3QoQEAAAjDsO3/o+EMBKmpT5NMjpvLlwABAgQIECBAgAABAgQIEHgvsI0fDxA3PoMxAAAAAElFTkSuQmCC";

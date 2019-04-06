@@ -1,12 +1,9 @@
-import { MenuItemSeparator, MenuItemInit } from "src/ui";
-import { Window } from "src/ui/components";
-import EditorView from "src/editor/editor-view";
+import { MenuItemInit, MenuItemSeparator } from "src/ui";
 
-const MenuItemAction = (
-	label: string,
-	callback: (() => void),
-	enabled: boolean | (() => boolean) = true
-) => ({
+import EditorView from "src/editor/editor-view";
+import { Window } from "src/ui/components";
+
+const MenuItemAction = (label: string, callback: () => void, enabled: boolean | (() => boolean) = true) => ({
 	title: label,
 	callback: callback,
 	enabled: enabled

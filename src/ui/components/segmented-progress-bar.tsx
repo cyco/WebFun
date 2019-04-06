@@ -1,5 +1,6 @@
-import Component from "../component";
 import "./segmented-progress-bar.scss";
+
+import Component from "../component";
 
 class SegmentedProgressBar extends Component {
 	public static readonly tagName = "wf-segmented-progress-bar";

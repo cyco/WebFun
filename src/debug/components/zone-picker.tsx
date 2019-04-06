@@ -1,9 +1,10 @@
+import "./zone-picker.scss";
+
 import { Component } from "src/ui";
 import { List } from "src/ui/components";
 import { Zone } from "src/engine/objects";
-import ZonePickerCell from "./zone-picker-cell";
 import ZoneFilter from "./zone-filter";
-import "./zone-picker.scss";
+import ZonePickerCell from "./zone-picker-cell";
 
 export const Events = {
 	ZoneDidChange: "ZoneDidChange"

@@ -1,5 +1,5 @@
-import { Action, Condition, Instruction } from "src/engine/objects";
 import AST, { s } from "./ast";
+import { Action, Condition, Instruction } from "src/engine/objects";
 
 import { ConditionsByName } from "src/engine/script/conditions";
 import { InstructionsByName } from "src/engine/script/instructions";
@@ -20,9 +20,9 @@ class Disassembler {
 	private _disassembleCondition(condition: Condition): AST[] {
 		const name =
 			Object.keys(ConditionsByName).find(
-				key => (<any>ConditionsByName)[key].Opcode === condition.opcode
+				key => (ConditionsByName as any)[key].Opcode === condition.opcode
 			) || `${condition.opcode}`;
-		const Condition = name ? (<any>ConditionsByName)[name] : null;
+		const Condition = name ? (ConditionsByName as any)[name] : null;
 
 		const argCount = Condition.Arguments.length;
 		const usedArguments = condition.arguments.slice(0, argCount);
@@ -33,9 +33,9 @@ class Disassembler {
 	private _disassembleInstruction(instruction: Instruction): AST[] {
 		const name =
 			Object.keys(InstructionsByName).find(
-				key => (<any>InstructionsByName)[key].Opcode === instruction.opcode
+				key => (InstructionsByName as any)[key].Opcode === instruction.opcode
 			) || `${instruction.opcode}`;
-		const Instruction = name ? (<any>InstructionsByName)[name] : null;
+		const Instruction = name ? (InstructionsByName as any)[name] : null;
 
 		const argCount = Instruction.Arguments.length;
 		const usedArguments = instruction.arguments.slice(0, argCount);

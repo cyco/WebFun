@@ -1,9 +1,10 @@
+import { Type, int16 } from "../types";
+
+import Condition from "src/engine/script/condition";
 import Engine from "../../engine";
 import Zone from "../../objects/zone";
-import { int16, Type } from "../types";
-import Condition from "src/engine/script/condition";
 
-export default <Condition>{
+export default {
 	Opcode: 0x0d,
 	Arguments: [Type.TileID],
 	Description:
@@ -14,4 +15,4 @@ export default <Condition>{
 		const itemId = args[0] !== -1 ? args[0] : -1;
 		return engine.inventory.contains(itemId);
 	}
-};
+} as Condition;

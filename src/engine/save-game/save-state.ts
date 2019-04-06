@@ -1,7 +1,8 @@
-import { Point } from "../../util";
 import { Planet, WorldSize } from "../types";
-import World from "./world";
+
 import { GameType } from "../type";
+import { Point } from "../../util";
+import World from "./world";
 
 class SaveState {
 	public type: GameType;

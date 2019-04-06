@@ -1,6 +1,6 @@
+import ModalSession from "./modal-session";
 import { Popover } from "src/ui/components";
 import { dispatch } from "src/util";
-import ModalSession from "./modal-session";
 
 class PopoverModalSession extends ModalSession {
 	private _popover: Popover;

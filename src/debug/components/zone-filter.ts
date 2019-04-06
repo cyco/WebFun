@@ -1,5 +1,6 @@
-import { SearchDelegate } from "src/ui/components/list";
 import { Zone, ZoneType } from "src/engine/objects";
+
+import { SearchDelegate } from "src/ui/components/list";
 
 class ZoneFilter implements SearchDelegate<Zone, RegExp[]> {
 	private _cache: { [_: number]: string } = {};

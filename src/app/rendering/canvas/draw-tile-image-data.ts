@@ -1,6 +1,6 @@
-import { Tile } from "src/engine/objects";
 import { ColorPalette } from "src/engine";
 import { Size } from "src/util";
+import { Tile } from "src/engine/objects";
 import drawImage from "./draw-image";
 
 const size = new Size(Tile.WIDTH, Tile.HEIGHT);

@@ -1,10 +1,11 @@
 import { Tile, Zone } from "src/engine/objects";
-import Settings from "src/settings";
-import { rgba } from "src/util";
-import Hotspot from "../objects/hotspot";
+
 import AbstractRenderer from "src/engine/rendering/abstract-renderer";
 import ColorPalette from "src/engine/rendering/color-palette";
 import Engine from "src/engine/engine";
+import Hotspot from "../objects/hotspot";
+import Settings from "src/settings";
+import { rgba } from "src/util";
 
 class ZoneSceneRenderer {
 	public render(zone: Zone, engine: Engine, renderer: AbstractRenderer, palette: ColorPalette) {
@@ -96,9 +97,9 @@ class ZoneSceneRenderer {
 		result.data.set(byteArray);
 		(renderer as any).renderImageData(result, 0, 0);
 
-		if (!hero.visible && Settings.drawHeroTile && (<any>renderer).fillRect instanceof Function) {
+		if (!hero.visible && Settings.drawHeroTile && (renderer as any).fillRect instanceof Function) {
 			// always show hero while debugging
-			(<any>renderer).fillRect(
+			(renderer as any).fillRect(
 				(hero.location.x + offset.x) * Tile.WIDTH,
 				(hero.location.y + offset.y) * Tile.HEIGHT,
 				Tile.WIDTH,
@@ -107,10 +108,10 @@ class ZoneSceneRenderer {
 			);
 		}
 
-		if (Settings.drawHotspots && (<any>renderer).fillRect instanceof Function) {
+		if (Settings.drawHotspots && (renderer as any).fillRect instanceof Function) {
 			zone.hotspots.forEach(
 				(h: Hotspot): void => {
-					(<any>renderer).fillRect(
+					(renderer as any).fillRect(
 						(h.x + offset.x) * Tile.WIDTH,
 						(h.y + offset.y) * Tile.HEIGHT,
 						Tile.WIDTH,

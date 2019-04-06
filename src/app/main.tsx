@@ -2,17 +2,19 @@ import "@babel/polyfill";
 import "../extension";
 import "../_style/global.scss";
 
-import { ComponentRegistry, Components } from "src/ui";
-import GameController from "./game-controller";
 import * as AppComponents from "./ui";
 import * as WindowComponents from "./windows";
-import Settings from "src/settings";
-import { initialize as initializeDebug } from "src/debug";
-import { FileLoader } from "src/util";
-import { WindowManager, ComponentJSXRenderer } from "src/ui";
-import { Yoda } from "src/engine/type";
+
+import { ComponentJSXRenderer, WindowManager } from "src/ui";
+import { ComponentRegistry, Components } from "src/ui";
+
 import EditorWindow from "src/editor/editor-window";
+import { FileLoader } from "src/util";
+import GameController from "./game-controller";
 import SaveGameInspector from "src/editor/inspectors/save-game-inspector";
+import Settings from "src/settings";
+import { Yoda } from "src/engine/type";
+import { initialize as initializeDebug } from "src/debug";
 
 declare global {
 	interface Window {

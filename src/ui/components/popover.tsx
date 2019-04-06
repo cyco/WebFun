@@ -1,5 +1,6 @@
-import Component from "../component";
 import "./popover.scss";
+
+import Component from "../component";
 
 class Popover extends Component {
 	public static readonly tagName = "wf-popover";

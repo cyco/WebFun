@@ -1,5 +1,6 @@
-import { Component } from "src/ui";
 import "./split-view.scss";
+
+import { Component } from "src/ui";
 
 class SplitView extends Component {
 	public static readonly tagName = "wf-split-view";

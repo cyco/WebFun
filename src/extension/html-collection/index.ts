@@ -1,6 +1,6 @@
 import find from "./find";
-import map from "./map";
-import indexOf from "./index-of";
 import forEach from "./for-each";
+import indexOf from "./index-of";
+import map from "./map";
 
 export { find, map, indexOf, forEach };

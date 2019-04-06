@@ -1,5 +1,6 @@
-import { AbstractIconButton } from "src/ui/components";
 import "./expand-button.scss";
+
+import { AbstractIconButton } from "src/ui/components";
 
 class ExpandButton extends AbstractIconButton {
 	public static readonly tagName = "wf-editor-expand-button";

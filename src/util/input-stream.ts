@@ -1,5 +1,6 @@
-import Stream from "./stream";
 import { DataView, TextDecoder } from "src/std";
+
+import Stream from "./stream";
 
 const DefaultEncoding = "utf-8";
 

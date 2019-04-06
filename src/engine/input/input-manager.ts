@@ -1,6 +1,6 @@
+import Engine from "../engine";
 import { Point } from "src/util";
 import { Tile } from "../objects";
-import Engine from "../engine";
 import TilePlacedEvent from "./tile-placed-event";
 
 export const Direction = {

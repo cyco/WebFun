@@ -1,10 +1,11 @@
-import Engine from "../../engine";
-import Action from "../../objects/action";
-import Instruction from "../../objects/instruction";
 import { Result, Type } from "../types";
+
+import Action from "../../objects/action";
+import Engine from "../../engine";
+import Instruction from "../../objects/instruction";
 import InstructionType from "../instruction";
 
-export default <InstructionType>{
+export default {
 	Opcode: 0x1c,
 	Arguments: [Type.TileID],
 	Description: "Add item with id `arg_0` to inventory",
@@ -15,4 +16,4 @@ export default <InstructionType>{
 
 		return Result.Void;
 	}
-};
+} as InstructionType;

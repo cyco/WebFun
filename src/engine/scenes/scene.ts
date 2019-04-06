@@ -1,5 +1,5 @@
-import { Point } from "src/util";
 import Engine from "../engine";
+import { Point } from "src/util";
 import { Renderer } from "../rendering";
 
 abstract class Scene_not_builtin {

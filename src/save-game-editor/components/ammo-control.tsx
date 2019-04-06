@@ -1,6 +1,7 @@
+import "./ammo-control.scss";
+
 import { Component } from "src/ui";
 import { CustomEvent } from "src/std/dom";
-import "./ammo-control.scss";
 
 class AmmoControl extends Component implements EventListenerObject {
 	public static readonly tagName = "wf-save-game-editor-ammo";

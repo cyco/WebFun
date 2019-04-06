@@ -1,8 +1,9 @@
-import { Component } from "src/ui";
+import "./npc-layer-npc.scss";
+
 import { Char } from "src/engine/objects";
 import { ColorPalette } from "src/engine/rendering";
+import { Component } from "src/ui";
 import { drawTileImageData } from "src/app/rendering/canvas";
-import "./npc-layer-npc.scss";
 
 class NPCLayerNPC extends Component {
 	public static readonly tagName = "wf-npc-layer-npc";

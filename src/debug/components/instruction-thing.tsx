@@ -1,8 +1,8 @@
-import { Component } from "src/ui";
 import Action from "src/engine/objects/action";
-import Zone from "src/engine/objects/zone";
+import { Component } from "src/ui";
 import Engine from "src/engine/engine";
 import TileView from "./tile-view";
+import Zone from "src/engine/objects/zone";
 
 abstract class InstructionThing extends Component {
 	public zone: Zone = null;

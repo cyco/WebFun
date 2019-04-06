@@ -1,21 +1,22 @@
-import { AbstractWindow, ProgressIndicator } from "src/ui/components";
-import { readGameDataFile, GameData, GameType, GameTypeYoda, GameTypeIndy } from "src/engine";
-import { InputStream } from "src/util";
-import { PaletteProvider } from "src/app/data";
-import DataManager from "./data-manager";
-import buildEditorMenu from "./menu";
-import { Menu, WindowMenuItem } from "src/ui";
-import EditorView from "./editor-view";
+import "./editor-window.scss";
 
+import { AbstractWindow, ProgressIndicator } from "src/ui/components";
+import { GameData, GameType, GameTypeIndy, GameTypeYoda, readGameDataFile } from "src/engine";
+import { Menu, WindowMenuItem } from "src/ui";
+
+import CharacterInspector from "src/editor/inspectors/character-inspector";
+import DataManager from "./data-manager";
+import EditorView from "./editor-view";
+import { InputStream } from "src/util";
+import PaletteInspector from "src/editor/inspectors/palette-inspector";
+import { PaletteProvider } from "src/app/data";
+import PuzzleInspector from "src/editor/inspectors/puzzle-inspector";
+import SetupImageInspector from "src/editor/inspectors/setup-image-inspector";
+import SoundInspector from "src/editor/inspectors/sound-inspector";
 import TileInspector from "src/editor/inspectors/tile-inspector";
 import ZoneInspector from "src/editor/inspectors/zone-inspector";
-import SoundInspector from "src/editor/inspectors/sound-inspector";
-import PuzzleInspector from "src/editor/inspectors/puzzle-inspector";
-import CharacterInspector from "src/editor/inspectors/character-inspector";
-import PaletteInspector from "src/editor/inspectors/palette-inspector";
-import SetupImageInspector from "src/editor/inspectors/setup-image-inspector";
 
-import "./editor-window.scss";
+import buildEditorMenu from "./menu";
 
 class EditorWindow extends AbstractWindow {
 	static readonly tagName = "wf-resource-editor-window";

@@ -1,4 +1,5 @@
-import { ColorPalette, GameType, GameTypeYoda, GameTypeIndy } from "src/engine";
+import { ColorPalette, GameType, GameTypeIndy, GameTypeYoda } from "src/engine";
+
 import { FileLoader } from "src/util";
 import Settings from "src/settings";
 

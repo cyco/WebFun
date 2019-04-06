@@ -1,9 +1,10 @@
+import { Char, Tile } from "src/engine/objects";
+
 import GameType from "../type";
 import LocatorTile from "./locator-tile";
-import TileID from "./tile-ids";
-import { Tile, Char } from "src/engine/objects";
-import Strings from "./strings";
 import Sounds from "./sounds";
+import Strings from "./strings";
+import TileID from "./tile-ids";
 
 class Yoda extends GameType {
 	get name() {

@@ -1,13 +1,15 @@
-import AbstractInspector from "./inspectors/abstract-inspector";
-import { InputStream, DiscardingOutputStream, download, OutputStream } from "src/util";
-import DataManager from "./data-manager";
-import GameDataSerializer from "./game-data-serializer";
-import FilePicker from "src/ui/file-picker";
-import { SaveGameReader } from "src/engine";
-import { Component } from "src/ui";
-import WindowManager from "src/ui/window-manager";
-import { SaveGameInspector } from "./inspectors";
 import "./editor-view.scss";
+
+import { DiscardingOutputStream, InputStream, OutputStream, download } from "src/util";
+
+import AbstractInspector from "./inspectors/abstract-inspector";
+import { Component } from "src/ui";
+import DataManager from "./data-manager";
+import FilePicker from "src/ui/file-picker";
+import GameDataSerializer from "./game-data-serializer";
+import { SaveGameInspector } from "./inspectors";
+import { SaveGameReader } from "src/engine";
+import WindowManager from "src/ui/window-manager";
 
 class EditorView extends Component {
 	public static readonly tagName = "wf-editor-view";

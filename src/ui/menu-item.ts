@@ -2,7 +2,6 @@ import { EventTarget } from "src/util";
 import Menu from "./menu";
 import MenuItemDefaults from "./menu-item-defaults";
 import MenuItemInit from "./menu-item-init";
-
 import State from "./menu-item-state";
 
 class MenuItem extends EventTarget {

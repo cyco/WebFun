@@ -1,8 +1,8 @@
-import Engine from "../engine";
 import Condition from "../objects/condition";
-import { Zone } from "../objects";
 import { ConditionImplementation } from "./types";
+import Engine from "../engine";
 import EvaluationMode from "./evaluation-mode";
+import { Zone } from "../objects";
 
 export type ConditionStore = ConditionImplementation[];
 

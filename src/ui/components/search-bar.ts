@@ -1,5 +1,6 @@
-import Component from "src/ui/component";
 import "./search-bar.scss";
+
+import Component from "src/ui/component";
 
 class SearchBar extends Component {
 	public static readonly tagName = "wf-search-bar";

@@ -1,5 +1,6 @@
-import { Button, Slider, AbstractWindow } from "src/ui/components";
 import "./settings-window.scss";
+
+import { AbstractWindow, Button, Slider } from "src/ui/components";
 
 abstract class SettingsWindow extends AbstractWindow {
 	public closable = false;

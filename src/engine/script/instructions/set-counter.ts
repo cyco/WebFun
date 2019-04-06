@@ -1,10 +1,11 @@
-import Engine from "../../engine";
-import Action from "../../objects/action";
-import Instruction from "../../objects/instruction";
 import { Result, Type } from "../types";
+
+import Action from "../../objects/action";
+import Engine from "../../engine";
+import Instruction from "../../objects/instruction";
 import InstructionType from "../instruction";
 
-export default <InstructionType>{
+export default {
 	Opcode: 0x0d,
 	Arguments: [Type.Number],
 	Description: "Set current zone's `counter` value to a `arg_0`",
@@ -13,4 +14,4 @@ export default <InstructionType>{
 
 		return Result.Void;
 	}
-};
+} as InstructionType;

@@ -1,5 +1,5 @@
-import { floor } from "src/std/math";
 import OutputStream from "src/util/output-stream";
+import { floor } from "src/std/math";
 
 interface ColorPalette extends Uint32Array {
 	slice(start?: number, end?: number): ColorPalette;

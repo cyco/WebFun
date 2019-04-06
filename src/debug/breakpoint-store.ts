@@ -1,5 +1,6 @@
-import { EventTarget, DiscardingStorage } from "src/util";
+import { DiscardingStorage, EventTarget } from "src/util";
 import { LocationBreakpoint, SymbolicBreakpoint } from "./breakpoint";
+
 import Breakpoint from "src/debug/breakpoint/breakpoint";
 
 export const Events = {

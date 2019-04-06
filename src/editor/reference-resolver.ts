@@ -1,12 +1,13 @@
-import GameData from "src/engine/game-data";
-import { Action, Char, Hotspot, NPC, Tile, Zone, Sound } from "src/engine/objects";
-import { Point } from "src/util";
-import HotspotType from "src/engine/objects/hotspot-type";
+import { Action, Char, Hotspot, NPC, Sound, Tile, Zone } from "src/engine/objects";
+
 import ChangeZone from "src/engine/script/instructions/change-zone";
-import PlaySound from "src/engine/script/instructions/play-sound";
-import { or } from "src/util/functional";
-import Instruction from "src/engine/objects/instruction";
 import CharType from "src/engine/objects/char-type";
+import GameData from "src/engine/game-data";
+import HotspotType from "src/engine/objects/hotspot-type";
+import Instruction from "src/engine/objects/instruction";
+import PlaySound from "src/engine/script/instructions/play-sound";
+import { Point } from "src/util";
+import { or } from "src/util/functional";
 
 class ReferenceResolver {
 	private data: GameData;

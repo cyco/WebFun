@@ -1,5 +1,7 @@
-import { Cell, Label } from "src/ui/components";
 import "./sound-inspector-cell.scss";
+
+import { Cell, Label } from "src/ui/components";
+
 import Settings from "../../settings";
 
 type Sound = {

@@ -1,12 +1,14 @@
+import "./main-window.scss";
+
 import { Ammo, Health, Inventory, Location, Weapon } from "../ui";
-import { Direction } from "../ui/location";
 import { default as Engine, Events } from "src/engine/engine";
-import { Hero } from "src/engine";
+
 import { AbstractWindow } from "src/ui/components";
+import { Direction } from "../ui/location";
+import { Hero } from "src/engine";
+import InventoryComponent from "../ui/inventory";
 import World from "src/engine/generation/world";
 import { Zone } from "src/engine/objects";
-import InventoryComponent from "../ui/inventory";
-import "./main-window.scss";
 
 class MainWindow extends AbstractWindow {
 	public static readonly tagName = "wf-main-window";

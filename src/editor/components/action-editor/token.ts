@@ -1,7 +1,8 @@
+import "./token.scss";
+
 import { Component } from "src/ui";
 import { Point } from "src/util";
 import { Tile } from "src/engine/objects";
-import "./token.scss";
 
 class Token extends Component {
 	static readonly tagName = "wf-action-editor-token";

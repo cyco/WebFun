@@ -1,4 +1,5 @@
 import { Array } from "src/std";
+
 const unique = function<T>() {
 	return this.sort().filter((item: T, pos: number, ary: T[]) => !pos || item !== ary[pos - 1]);
 };

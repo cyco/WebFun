@@ -1,6 +1,7 @@
+import "./transform-canvas.scss";
+
 import { Component } from "src/ui";
 import { Point } from "src/util";
-import "./transform-canvas.scss";
 
 export interface TransformCanvasRenderingContext2D extends CanvasRenderingContext2D {
 	transformedPoint(x: number, y: number): SVGPoint;
@@ -10,7 +11,7 @@ export interface TransformCanvasRenderingContext2D extends CanvasRenderingContex
 class TransformCanvas extends Component implements EventListenerObject {
 	static tagName = "wf-save-game-editor-canvas";
 	private _canvas = <canvas /> as HTMLCanvasElement;
-	public draw: ((ctx: TransformCanvasRenderingContext2D) => void) = () => {};
+	public draw: (ctx: TransformCanvasRenderingContext2D) => void = () => {};
 	private scaleFactor = 1.1;
 
 	private lastMouse: Point;

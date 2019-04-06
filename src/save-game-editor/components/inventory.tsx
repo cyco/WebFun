@@ -1,8 +1,9 @@
+import "./inventory.scss";
+
 import { AbstractList } from "src/ui/components";
+import { ColorPalette } from "src/engine";
 import InventoryRow from "./inventory-row";
 import { Tile } from "src/engine/objects";
-import { ColorPalette } from "src/engine";
-import "./inventory.scss";
 
 export interface InventoryDelegate {
 	inventoryDidAddItem(inventory: Inventory): void;

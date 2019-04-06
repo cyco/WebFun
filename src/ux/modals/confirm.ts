@@ -1,4 +1,5 @@
 import { ConfirmationWindow, Window } from "src/ui/components";
+
 import WindowModalSession from "../window-modal-session";
 import { dispatch } from "src/util";
 
@@ -31,7 +32,7 @@ const MergeDefaultOptions = (options: Options): Options => ({
 export default async (content: ConfirmDialogContent, o: Options = {}): Promise<Result> => {
 	const options = MergeDefaultOptions(o);
 
-	const window = <ConfirmableWindow>document.createElement(options.component);
+	const window = document.createElement(options.component) as ConfirmableWindow;
 	window.setAttribute("confirm-text", options.confirmText);
 	window.setAttribute("abort-text", options.abortText);
 	window.customContent = content;
@@ -41,7 +42,7 @@ export default async (content: ConfirmDialogContent, o: Options = {}): Promise<R
 	window.onabort = () => session.end(Result.Aborted);
 
 	return new Promise<Result>(resolve => {
-		session.onend = code => dispatch(() => resolve(<Result>code));
+		session.onend = code => dispatch(() => resolve(code as Result));
 		session.run();
 	});
 };

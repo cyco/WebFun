@@ -1,5 +1,5 @@
-import { Direction, EventTarget, Point } from "src/util";
 import { Char, Zone } from "./objects";
+import { Direction, EventTarget, Point } from "src/util";
 
 export const MAX_HEALTH = 0x300;
 export const Events = {

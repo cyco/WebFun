@@ -1,4 +1,5 @@
 import "./sidebar-layer.scss";
+
 import Cell from "src/ui/components/cell";
 import Layer from "./layer";
 
@@ -61,7 +62,7 @@ class SidebarLayer extends Cell<Layer> {
 	}
 
 	public cloneNode(deep?: boolean): SidebarLayer {
-		const copy = <SidebarLayer>super.cloneNode(deep);
+		const copy = super.cloneNode(deep) as SidebarLayer;
 		copy.onclick = this.onclick;
 		return copy;
 	}

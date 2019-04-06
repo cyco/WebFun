@@ -1,5 +1,5 @@
-import { Tile } from "../objects";
 import { Point } from "src/util";
+import { Tile } from "../objects";
 
 const EventName = "tileplaced";
 

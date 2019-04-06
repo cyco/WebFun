@@ -1,12 +1,14 @@
-import Component from "src/ui/component";
-import { Zone, Tile, Char } from "src/engine/objects";
-import { MutableNPC } from "src/engine/mutable-objects";
-import { ColorPalette } from "src/engine/rendering";
-import { Point } from "src/util";
-import { MenuItemInit, MenuItemSeparator } from "src/ui";
-import { ModalPrompt } from "src/ux";
-import NPCLayerNPC from "./npc-layer-npc";
 import "./npc-layer.scss";
+
+import { Char, Tile, Zone } from "src/engine/objects";
+import { MenuItemInit, MenuItemSeparator } from "src/ui";
+
+import { ColorPalette } from "src/engine/rendering";
+import Component from "src/ui/component";
+import { ModalPrompt } from "src/ux";
+import { MutableNPC } from "src/engine/mutable-objects";
+import NPCLayerNPC from "./npc-layer-npc";
+import { Point } from "src/util";
 
 class NPCLayer extends Component {
 	public static readonly tagName = "wf-npc-layer";

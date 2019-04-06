@@ -1,9 +1,10 @@
-import { KeyEvent, Point, Size, Rectangle } from "src/util";
-import { InputManager, Direction } from "src/engine/input";
+import { Direction, InputManager } from "src/engine/input";
+import { KeyEvent, Point, Rectangle, Size } from "src/util";
+
 import { SceneView } from "src/app/ui";
-import { document } from "src/std/dom";
-import TilePlacedEvent from "src/engine/input/tile-placed-event";
 import { Tile } from "src/engine/objects";
+import TilePlacedEvent from "src/engine/input/tile-placed-event";
+import { document } from "src/std/dom";
 
 class DesktopInputManager extends InputManager implements EventListenerObject {
 	private _element: HTMLElement;

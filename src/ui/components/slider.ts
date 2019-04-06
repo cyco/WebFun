@@ -1,7 +1,8 @@
-import { document } from "src/std/dom";
-import { dispatch } from "src/util";
-import Component from "../component";
 import "./slider.scss";
+
+import Component from "../component";
+import { dispatch } from "src/util";
+import { document } from "src/std/dom";
 
 class Slider extends Component {
 	public static readonly tagName = "wf-slider";

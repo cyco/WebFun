@@ -1,7 +1,8 @@
+import "./abstract-tile-view.scss";
+
 import AbstractPaletteView from "./abstract-palette-view";
 import { Tile } from "src/engine/objects";
 import { drawTileImageData } from "src/app/rendering/canvas";
-import "./abstract-tile-view.scss";
 
 abstract class AbstractTileView extends AbstractPaletteView {
 	private _tile: Tile;

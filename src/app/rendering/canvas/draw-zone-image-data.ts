@@ -1,4 +1,5 @@
-import { Zone, Tile } from "src/engine/objects";
+import { Tile, Zone } from "src/engine/objects";
+
 import { ColorPalette } from "src/engine";
 
 export default (zone: Zone, palette: ColorPalette) => {

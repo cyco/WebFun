@@ -1,24 +1,26 @@
-import { Window } from "src/ui/components";
-import { Engine, EngineEvents } from "src/engine";
-import Controls from "./components/controls";
-import Group from "src/ui/components/group";
+import "./script-debugger.scss";
+
+import { Action, Condition, Instruction, Zone } from "src/engine/objects";
 import {
 	Action as ActionComponent,
-	Instruction as InstructionComponent,
-	Condition as ConditionComponent
+	Condition as ConditionComponent,
+	Instruction as InstructionComponent
 } from "src/debug/components";
-import Settings from "src/settings";
-import { WindowManager } from "src/ui";
 import { ConditionImplementations, ConditionsByName } from "src/engine/script/conditions";
-import { InstructionImplementations, InstructionsByName } from "src/engine/script/instructions";
-import { Point } from "src/util";
 import DebuggingScriptExecutor, { DebuggingScriptExecutorDelegate } from "./debugging-script-executor";
-import ScriptExecutor from "src/engine/script/script-executor";
-import "./script-debugger.scss";
-import { Zone, Action, Condition, Instruction } from "src/engine/objects";
-import { ScriptResult, Result } from "src/engine/script";
+import { Engine, EngineEvents } from "src/engine";
+import { InstructionImplementations, InstructionsByName } from "src/engine/script/instructions";
+import { Result, ScriptResult } from "src/engine/script";
+
 import BreakpointStore from "./breakpoint-store";
+import Controls from "./components/controls";
+import Group from "src/ui/components/group";
 import { LocationBreakpoint } from "./breakpoint";
+import { Point } from "src/util";
+import ScriptExecutor from "src/engine/script/script-executor";
+import Settings from "src/settings";
+import { Window } from "src/ui/components";
+import { WindowManager } from "src/ui";
 
 class ScriptDebugger implements DebuggingScriptExecutorDelegate {
 	private static _sharedDebugger: ScriptDebugger;
