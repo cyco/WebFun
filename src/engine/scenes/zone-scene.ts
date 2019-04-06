@@ -298,7 +298,9 @@ class ZoneScene extends Scene {
 			return;
 		}
 
+		this.zone.setTile(null, npc.position);
 		npc.position = target;
+		this.zone.setTile(npc.face.frames[0].down, npc.position);
 	}
 
 	prepareCamera() {
