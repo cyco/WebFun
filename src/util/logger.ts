@@ -1,18 +1,9 @@
 import LogLevel from "./log-level";
-import Settings from "src/settings";
-import { identity } from "src/util";
+import identity from "src/util/identity";
 
 class Logger {
 	public level = LogLevel.Warning;
 	public prefix: string = "";
-
-	public static declare(module: string, enabled = true): Logger {
-		const logger = new Logger();
-		logger.prefix = `[${module}]`;
-		logger.level = enabled ? Settings.logLevel : LogLevel.Off;
-
-		return logger;
-	}
 
 	public log(level: LogLevel, ...args: any[]): void {
 		if (level < this.level) return;

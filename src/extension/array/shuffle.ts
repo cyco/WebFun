@@ -1,5 +1,3 @@
-import "src/extension";
-
 import { Array } from "src/std";
 import { rand } from "src/util";
 

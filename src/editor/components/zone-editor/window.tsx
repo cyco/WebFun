@@ -16,7 +16,7 @@ import SidebarLayersCell, {
 import AbstractDrawingTool from "src/editor/tools/abstract-drawing-tool";
 import ActionComponent from "./action";
 import { ActionDescription } from "src/editor/components/zone-editor/action";
-import { ActionEditor } from "src/editor/components";
+import { Editor as ActionEditor } from "../action-editor";
 import DataManager from "src/editor/data-manager";
 import Layer from "src/editor/components/zone-editor/layer";
 import PopoverTilePicker from "src/editor/components/popover-tile-picker";
