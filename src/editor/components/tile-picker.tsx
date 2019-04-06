@@ -1,10 +1,12 @@
 import "./tile-picker.scss";
 
 import { Component } from "src/ui";
+
+import TileFilter from "./tile-filter";
+import TilePickerCell from "./tile-picker-cell";
+
 import { List } from "src/ui/components";
 import { Tile } from "src/engine/objects";
-import TileFilter from "src/editor/components/tile-filter";
-import TilePickerCell from "./tile-picker-cell";
 
 export const Events = {
 	TileDidChange: "TileDidChange"

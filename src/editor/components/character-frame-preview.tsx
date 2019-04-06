@@ -1,8 +1,8 @@
 import "./character-frame-preview.scss";
 
+import { Component } from "src/ui";
 import { CharFrame } from "src/engine/objects";
 import { ColorPalette } from "src/engine";
-import Component from "src/ui/component";
 import PopoverTilePicker from "./popover-tile-picker";
 
 class CharacterFramePreview extends Component {

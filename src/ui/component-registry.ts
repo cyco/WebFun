@@ -8,13 +8,13 @@ class ComponentRegistry {
 		return this.registry || (this.registry = new this());
 	}
 
-	registerComponents(components: { [_: string]: typeof Component } | typeof Component[]) {
+	public registerComponents(components: { [_: string]: typeof Component } | typeof Component[]) {
 		Object.values(components)
 			.filter(x => x.tagName)
 			.forEach(c => this.registerComponent(c));
 	}
 
-	registerComponent(ComponentDefinition: typeof Component) {
+	public registerComponent(ComponentDefinition: typeof Component) {
 		console.assert(!!ComponentDefinition.tagName, `ComponentDefinitions must define a tag to be used!`);
 		console.assert(
 			!this.components[ComponentDefinition.tagName],

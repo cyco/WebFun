@@ -3,7 +3,7 @@ import "./tile-picker-cell.scss";
 import { Cell } from "src/ui/components";
 import { ColorPalette } from "src/engine/rendering";
 import { Tile } from "src/engine/objects";
-import { TileView } from "src/debug/components";
+import TileView from "src/debug/components/tile-view";
 
 class TilePickerCell extends Cell<Tile> {
 	public static readonly tagName = "wf-tile-picker-cell";

@@ -8,7 +8,7 @@ import { DiscardingStorage } from "src/util";
 import { Popover } from "src/ui/components";
 import { PopoverModalSession } from "src/ux";
 import { Tile } from "src/engine/objects";
-import { TileView as TileComponent } from "src/debug/components";
+import TileComponent from "src/debug/components/tile-view";
 
 abstract class PopoverTilePicker extends Component implements EventListenerObject {
 	public static readonly observedAttributes: string[] = [];
