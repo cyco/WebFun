@@ -1,8 +1,7 @@
 import "./sound-inspector-cell.scss";
 
-import { Cell, Label } from "src/ui/components";
-
 import Settings from "../../settings";
+import { Cell, Label } from "src/ui/components";
 
 type Sound = {
 	id: number;
@@ -30,7 +29,6 @@ class SoundInspectorCell extends Cell<Sound> {
 		super();
 
 		this._id = <span className="id" />;
-
 		this._file = (
 			<Label
 				className="file"

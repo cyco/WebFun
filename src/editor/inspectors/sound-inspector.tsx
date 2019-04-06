@@ -1,9 +1,9 @@
 import { IconButton, List } from "src/ui/components";
 
+import SoundInspectorCell from "../components/sound-inspector-cell";
 import AbstractInspector from "src/editor/inspectors/abstract-inspector";
 import ReferenceResolver from "src/editor/reference-resolver";
 import { Sound } from "src/engine/objects";
-import { SoundInspectorCell } from "../components";
 
 class SoundInspector extends AbstractInspector {
 	private _list: List<Sound>;

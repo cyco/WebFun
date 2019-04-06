@@ -7,7 +7,7 @@ import { ColorPalette } from "src/engine/rendering";
 import { Component } from "src/ui";
 import { LocatorTile } from "src/engine/types";
 import { Point } from "src/util";
-import { TileView } from "src/debug/components";
+import TileView from "src/debug/components/tile-view";
 
 const TileSize = 28;
 const HereInteval = 1000;

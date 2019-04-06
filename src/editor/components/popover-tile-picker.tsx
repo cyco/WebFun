@@ -1,9 +1,9 @@
 import "./popover-tile-picker.scss";
 
 import AbstractPopoverTilePicker from "./abstract-popover-tile-picker";
+import TilePicker from "./tile-picker";
 import { ColorPalette } from "src/engine/rendering";
 import { Tile } from "src/engine/objects";
-import TilePicker from "./tile-picker";
 
 class PopoverTilePicker extends AbstractPopoverTilePicker {
 	public static readonly tagName = "wf-resource-editor-popover-tile-picker";

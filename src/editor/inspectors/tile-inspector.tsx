@@ -8,7 +8,7 @@ import { FilePicker } from "src/ui";
 import { IconButton } from "src/ui/components";
 import { MutableTile } from "src/engine/mutable-objects";
 import { TileEditor } from "../components";
-import { TileView } from "src/debug/components";
+import TileView from "src/debug/components/tile-view";
 import { downloadImage } from "src/util";
 
 class TileInspector extends AbstractInspector {

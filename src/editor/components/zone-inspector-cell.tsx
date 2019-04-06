@@ -5,7 +5,7 @@ import { Tile, Zone, ZoneType } from "src/engine/objects";
 
 import { ColorPalette } from "src/engine/rendering";
 import { Planet } from "src/engine/types";
-import { TileView } from "src/debug/components";
+import TileView from "src/debug/components/tile-view";
 
 const Events = {
 	RevealReferences: "RevealReferences",

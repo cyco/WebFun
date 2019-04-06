@@ -6,7 +6,7 @@ import { Cell } from "src/ui/components";
 import { ColorPalette } from "src/engine/rendering";
 import ExpandButton from "./expand-button";
 import Tile from "src/engine/objects/tile";
-import { TileView } from "src/debug/components";
+import TileView from "src/debug/components/tile-view";
 
 class PuzzleInspectorCell extends Cell<Puzzle> {
 	public static readonly tagName = "wf-puzzle-inspector-cell";
