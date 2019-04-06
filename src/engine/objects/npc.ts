@@ -1,5 +1,6 @@
 import Char from "./char";
 import { Point } from "src/util";
+import Zone from "./zone";
 
 class NPC {
 	protected _id: number = -1;
@@ -49,6 +50,7 @@ class NPC {
 	}
 
 	set position(p: Point) {
+		console.assert(p.z === Zone.Layer.Object, "NPCs must be placed on object layer!");
 		this._position = p;
 	}
 }

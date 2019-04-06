@@ -284,16 +284,15 @@ class ZoneScene extends Scene {
 
 	private _moveNPC(npc: NPC) {
 		if (!npc.enabled) return;
+		console.assert(npc.position.z === Zone.Layer.Object, "NPCs must be placed on object layer!");
 
 		const vector = new Point(0, 0);
-
 		switch (npc.face.movementType) {
 			default:
 				vector.y = 1;
 		}
 
 		const target = npc.position.byAdding(vector.x, vector.y);
-		target.z = 1;
 		const targetTile = this.zone.getTile(target);
 		if (targetTile) {
 			return;
