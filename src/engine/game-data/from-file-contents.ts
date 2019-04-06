@@ -131,7 +131,7 @@ const makeNPC = (raw: any, idx: number, data: any) => {
 	const npc = new MutableNPC();
 	npc.id = idx;
 	npc.character = data._characters[raw.character];
-	npc.position = new Point(raw.x, raw.y);
+	npc.position = new Point(raw.x, raw.y, Zone.Layer.Object);
 
 	return npc;
 };
