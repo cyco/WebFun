@@ -285,10 +285,21 @@ class ZoneScene extends Scene {
 	private _moveNPC(npc: NPC) {
 		if (!npc.enabled) return;
 
+		const vector = new Point(0, 0);
+
 		switch (npc.face.movementType) {
 			default:
-				npc.position.y += 1;
+				vector.y = 1;
 		}
+
+		const target = npc.position.byAdding(vector.x, vector.y);
+		target.z = 1;
+		const targetTile = this.zone.getTile(target);
+		if (targetTile) {
+			return;
+		}
+
+		npc.position = target;
 	}
 
 	prepareCamera() {
