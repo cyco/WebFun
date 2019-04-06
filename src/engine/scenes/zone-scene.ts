@@ -293,6 +293,10 @@ class ZoneScene extends Scene {
 		}
 
 		const target = npc.position.byAdding(vector.x, vector.y);
+		if (!this.zone.bounds.contains(target)) {
+			return;
+		}
+
 		const targetTile = this.zone.getTile(target);
 		if (targetTile) {
 			return;
