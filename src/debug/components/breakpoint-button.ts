@@ -1,7 +1,8 @@
-import { Component } from "src/ui";
-import BreakpointStore from "../breakpoint-store";
 import "./breakpoint-button.scss";
+
 import { Breakpoint } from "../breakpoint";
+import BreakpointStore from "../breakpoint-store";
+import { Component } from "src/ui";
 
 export const Events = {
 	DidSet: "DidSet",

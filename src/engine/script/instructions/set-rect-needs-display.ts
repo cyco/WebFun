@@ -1,10 +1,11 @@
-import Engine from "../../engine";
-import Action from "../../objects/action";
-import Instruction from "../../objects/instruction";
 import { Result, Type } from "../types";
+
+import Action from "../../objects/action";
+import Engine from "../../engine";
+import Instruction from "../../objects/instruction";
 import InstructionType from "../instruction";
 
-export default <InstructionType>{
+export default {
 	Opcode: 0x07,
 	Arguments: [Type.ZoneX, Type.ZoneY, Type.Number, Type.Number],
 	Description:
@@ -15,4 +16,4 @@ export default <InstructionType>{
 	 YodaView::RedrawRect(view, instruction->arg1, instruction->arg2, instruction->arg3, instruction->arg4);
 	 YodaDocument::RedrawCurrentZone(document);
 	 */
-};
+} as InstructionType;

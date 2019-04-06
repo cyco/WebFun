@@ -1,4 +1,5 @@
-import { GameType, GameTypeYoda, GameTypeIndy, GameData, readGameDataFile } from "src/engine";
+import { GameData, GameType, GameTypeIndy, GameTypeYoda, readGameDataFile } from "src/engine";
+
 import { FileLoader } from "src/util";
 import Settings from "src/settings";
 

@@ -1,6 +1,7 @@
-import { Component } from "src/ui";
-import { ColorPalette } from "src/engine/rendering";
 import "./abstract-palette-view.scss";
+
+import { ColorPalette } from "src/engine/rendering";
+import { Component } from "src/ui";
 
 abstract class AbstractTileView extends Component {
 	protected _palette: ColorPalette;

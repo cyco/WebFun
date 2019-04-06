@@ -1,4 +1,5 @@
 import "./sidebar.scss";
+
 import Component from "src/ui/component";
 import SidebarCell from "./sidebar-cell";
 
@@ -7,7 +8,7 @@ class Sidebar extends Component {
 	private _state: Storage;
 
 	addEntry(node: HTMLElement | HTMLElement[], name: string, newItemCallback?: () => void): SidebarCell {
-		const cell = <SidebarCell>document.createElement(SidebarCell.tagName);
+		const cell = document.createElement(SidebarCell.tagName) as SidebarCell;
 		cell.name = name;
 
 		if (this.state) cell.expanded = this.state.load("name") || false;
@@ -25,7 +26,7 @@ class Sidebar extends Component {
 	set state(state: Storage) {
 		this._state = state;
 
-		const cells = <SidebarCell[]>Array.from(this.children).filter(c => c instanceof SidebarCell);
+		const cells = Array.from(this.children).filter(c => c instanceof SidebarCell) as SidebarCell[];
 		cells.forEach(c => (c.state = this.state.prefixedWith(c.name)));
 	}
 

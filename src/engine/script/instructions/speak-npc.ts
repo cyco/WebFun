@@ -1,12 +1,13 @@
-import { Point } from "src/util";
-import Engine from "../../engine";
-import Action from "../../objects/action";
-import Instruction from "../../objects/instruction";
 import { Result, Type } from "../types";
-import SpeakText from "./speak-text";
-import InstructionType from "../instruction";
 
-export default <InstructionType>{
+import Action from "../../objects/action";
+import Engine from "../../engine";
+import Instruction from "../../objects/instruction";
+import InstructionType from "../instruction";
+import { Point } from "src/util";
+import SpeakText from "./speak-text";
+
+export default {
 	Opcode: 0x05,
 	Arguments: [Type.ZoneX, Type.ZoneY],
 	UsesText: true,
@@ -16,4 +17,4 @@ export default <InstructionType>{
 		const args = instruction.arguments;
 		return SpeakText(instruction.text, new Point(args[0], args[1]), engine);
 	}
-};
+} as InstructionType;

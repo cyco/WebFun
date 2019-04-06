@@ -1,8 +1,8 @@
+import Menu from "./menu";
 import MenuItem from "./menu-item";
-import WindowManager from "./window-manager";
 import MenuItemState from "./menu-item-state";
 import { Window } from "./components";
-import Menu from "./menu";
+import WindowManager from "./window-manager";
 
 class WindowMenuItem extends MenuItem {
 	private windowManager: WindowManager;

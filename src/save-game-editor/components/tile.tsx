@@ -1,9 +1,10 @@
-import { Component } from "src/ui";
-import { Tile } from "src/engine/objects";
+import "./tile.scss";
+
 import { ColorPalette } from "src/engine/rendering";
+import { Component } from "src/ui";
 import { PaletteView } from "src/editor/components";
 import { Size } from "src/util";
-import "./tile.scss";
+import { Tile } from "src/engine/objects";
 
 class TileComponent extends Component {
 	public static readonly tagName = "wf-save-game-editor-tile";

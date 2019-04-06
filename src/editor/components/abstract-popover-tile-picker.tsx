@@ -1,12 +1,14 @@
+import "./abstract-popover-tile-picker.scss";
+
+import TilePicker, { Events as TilePickerEvents } from "./tile-picker";
+
+import { ColorPalette } from "src/engine/rendering";
 import { Component } from "src/ui";
+import { DiscardingStorage } from "src/util";
 import { Popover } from "src/ui/components";
+import { PopoverModalSession } from "src/ux";
 import { Tile } from "src/engine/objects";
 import { TileView as TileComponent } from "src/debug/components";
-import { PopoverModalSession } from "src/ux";
-import TilePicker, { Events as TilePickerEvents } from "./tile-picker";
-import { ColorPalette } from "src/engine/rendering";
-import { DiscardingStorage } from "src/util";
-import "./abstract-popover-tile-picker.scss";
 
 abstract class PopoverTilePicker extends Component implements EventListenerObject {
 	public static readonly observedAttributes: string[] = [];

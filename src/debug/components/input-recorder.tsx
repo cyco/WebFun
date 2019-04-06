@@ -1,9 +1,11 @@
-import { AbstractWindow, Window, IconButton } from "src/ui/components";
-import { GameController } from "src/app";
-import { DiscardingStorage } from "src/util";
-import { RecordingInputManager } from "src/debug/automation";
-import { DesktopInputManager } from "src/app/input";
 import "./input-recorder.scss";
+
+import { AbstractWindow, IconButton, Window } from "src/ui/components";
+
+import { DesktopInputManager } from "src/app/input";
+import { DiscardingStorage } from "src/util";
+import { GameController } from "src/app";
+import { RecordingInputManager } from "src/debug/automation";
 
 class InputRecorder extends AbstractWindow {
 	public static readonly tagName = "wf-debug-input-recorder";

@@ -1,6 +1,7 @@
+import { GameType, Yoda } from "src/engine/type";
+
 import { InputStream } from "src/util";
 import { assert } from "../error";
-import { GameType, Yoda } from "src/engine/type";
 
 const IPUZ = "IPUZ";
 const parsePuzzle = (stream: InputStream, _: any, gameType: GameType) => {

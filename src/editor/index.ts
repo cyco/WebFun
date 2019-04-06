@@ -5,7 +5,7 @@ import DataManager from "./data-manager";
 import EditorWindow from "./editor-window";
 
 let Initialize = () => {
-	ComponentRegistry.sharedRegistry.registerComponents(<any>Components);
+	ComponentRegistry.sharedRegistry.registerComponents(Components as any);
 	ComponentRegistry.sharedRegistry.registerComponent(EditorWindow);
 	ComponentRegistry.sharedRegistry.registerComponent(EditorView);
 

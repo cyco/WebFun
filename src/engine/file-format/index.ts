@@ -1,29 +1,29 @@
-import { InputStream } from "src/util";
-import { GameType } from "src/engine";
-import ParseError from "./parse-error";
-
 import {
-	parseActions,
 	parseActionNames,
-	parseCharacters,
+	parseActions,
 	parseCharacterAux,
 	parseCharacterWeapons,
+	parseCharacters,
+	parseEndOfFile,
 	parseHotspots,
-	parsePuzzles,
 	parsePuzzleNames,
+	parsePuzzles,
 	parseSetupImage,
 	parseSounds,
-	parseTiles,
 	parseTileNames,
+	parseTiles,
 	parseVersion,
-	parseZones,
 	parseZaux,
 	parseZax2,
 	parseZax3,
 	parseZax4,
 	parseZoneNames,
-	parseEndOfFile
+	parseZones
 } from "./categories";
+
+import { GameType } from "src/engine";
+import { InputStream } from "src/util";
+import ParseError from "./parse-error";
 import { error } from "./error";
 
 const ENDF = "ENDF";

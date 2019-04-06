@@ -34,7 +34,7 @@ abstract class AbstractList<T> extends Component {
 	constructor() {
 		super();
 
-		this._bar = <SearchBar>document.createElement(SearchBar.tagName);
+		this._bar = document.createElement(SearchBar.tagName) as SearchBar;
 		this._content = document.createElement("div");
 	}
 

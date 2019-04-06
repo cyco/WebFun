@@ -1,7 +1,8 @@
-import { Description } from "../../description";
-import Button from "./button";
 import "./confirmation-window.scss";
+
 import AbstractWindow from "./abstract-window";
+import Button from "./button";
+import { Description } from "../../description";
 
 class ConfirmationWindow extends AbstractWindow {
 	public static readonly tagName = "wf-confirmation-window";
@@ -15,10 +16,10 @@ class ConfirmationWindow extends AbstractWindow {
 	constructor() {
 		super();
 
-		this._confirmButton = <Button>document.createElement(Button.tagName);
+		this._confirmButton = document.createElement(Button.tagName) as Button;
 		this._confirmButton.onclick = () => this.onconfirm();
 
-		this._abortButton = <Button>document.createElement(Button.tagName);
+		this._abortButton = document.createElement(Button.tagName) as Button;
 		this._abortButton.onclick = () => this.onabort();
 
 		this.onclose = () => this.onabort();

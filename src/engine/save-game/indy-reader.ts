@@ -1,12 +1,13 @@
-import Reader from "./reader";
-import SaveState from "./save-state";
-import GameData from "../game-data";
 import { InputStream, Point } from "src/util";
+
+import GameData from "../game-data";
 import { Hotspot } from "src/engine/objects";
+import { Indy } from "src/engine/type";
 import { MutableHotspot } from "src/engine/mutable-objects";
 import { Planet } from "../types";
+import Reader from "./reader";
+import SaveState from "./save-state";
 import WorldItem from "./world-item";
-import { Indy } from "src/engine/type";
 
 class IndyReader extends Reader {
 	constructor(stream: InputStream) {

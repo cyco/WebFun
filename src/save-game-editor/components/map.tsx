@@ -1,11 +1,13 @@
-import { Component } from "src/ui";
-import { World, WorldItem } from "src/engine/save-game";
-import { Zone, Tile } from "src/engine/objects";
-import { Point } from "src/util";
-import { ColorPalette } from "src/engine/rendering";
-import { LocatorTile } from "src/engine/types";
-import { TileView } from "src/debug/components";
 import "./map.scss";
+
+import { Tile, Zone } from "src/engine/objects";
+import { World, WorldItem } from "src/engine/save-game";
+
+import { ColorPalette } from "src/engine/rendering";
+import { Component } from "src/ui";
+import { LocatorTile } from "src/engine/types";
+import { Point } from "src/util";
+import { TileView } from "src/debug/components";
 
 const TileSize = 28;
 const HereInteval = 1000;

@@ -1,6 +1,6 @@
-import ZoneType from "../objects/zone-type";
-import Zone from "src/engine/objects/zone";
 import Tile from "src/engine/objects/tile";
+import Zone from "src/engine/objects/zone";
+import ZoneType from "../objects/zone-type";
 
 class WorldItem {
 	public zone: Zone = null;

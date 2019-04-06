@@ -1,7 +1,9 @@
-import PaletteView from "./palette-view";
-import { Rectangle, Point, Size, Color } from "src/util";
-import { floor } from "src/std/math";
 import "./palette-color-picker.scss";
+
+import { Color, Point, Rectangle, Size } from "src/util";
+
+import PaletteView from "./palette-view";
+import { floor } from "src/std/math";
 
 class PaletteColorPicker extends PaletteView implements EventListenerObject {
 	public static readonly tagName = "wf-editor-palette-color-picker";

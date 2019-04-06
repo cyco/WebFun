@@ -1,6 +1,7 @@
-import { HorizontalPointRange, Point, PointRange, rand, VerticalPointRange } from "src/util";
-import WorldItemType from "./world-item-type";
+import { HorizontalPointRange, Point, PointRange, VerticalPointRange, rand } from "src/util";
+
 import Map from "./map";
+import WorldItemType from "./world-item-type";
 
 const enum Island {
 	East = 3,

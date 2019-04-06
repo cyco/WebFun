@@ -1,5 +1,6 @@
-import { Component } from "src/ui";
 import "./action.scss";
+
+import { Component } from "src/ui";
 
 export type ActionDescription = {
 	name: string;

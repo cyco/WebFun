@@ -1,10 +1,11 @@
-import Engine from "../../engine";
-import Action from "../../objects/action";
-import Instruction from "../../objects/instruction";
 import { Result, Type } from "../types";
+
+import Action from "../../objects/action";
+import Engine from "../../engine";
+import Instruction from "../../objects/instruction";
 import InstructionType from "../instruction";
 
-export default <InstructionType>{
+export default {
 	Opcode: 0x01,
 	Arguments: [Type.ZoneX, Type.ZoneY, Type.ZoneZ],
 	Description: "Remove tile at `arg_0`x`arg_1`x`arg_2`",
@@ -16,4 +17,4 @@ export default <InstructionType>{
 
 		return Result.Void;
 	}
-};
+} as InstructionType;

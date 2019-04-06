@@ -1,9 +1,10 @@
-import { ColorPalette } from "src/engine";
-import { SegmentedProgressBar } from "src/ui/components";
-import { drawImage } from "src/app/rendering/canvas";
-import { Size } from "src/util";
-import Component from "src/ui/component";
 import "./loading-view.scss";
+
+import { ColorPalette } from "src/engine";
+import Component from "src/ui/component";
+import { SegmentedProgressBar } from "src/ui/components";
+import { Size } from "src/util";
+import { drawImage } from "src/app/rendering/canvas";
 
 class LoadingView extends Component {
 	public static readonly tagName = "wf-loading-view";

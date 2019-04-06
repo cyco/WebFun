@@ -1,15 +1,16 @@
-import { CheatCodeInput, Invincibility, UnlimitedAmmo, Weapons, RequiredItems } from "src/engine/cheats";
-import { World } from "src/engine/generation";
-import { Tile, ZoneType } from "src/engine/objects";
-import { Planet } from "src/engine/types";
-import LocatorTile from "src/engine/type/yoda/locator-tile";
-import Settings from "src/settings";
+import { CheatCodeInput, Invincibility, RequiredItems, UnlimitedAmmo, Weapons } from "src/engine/cheats";
 import { Point, Size } from "src/util";
-import Zone from "../objects/zone";
+import { Tile, ZoneType } from "src/engine/objects";
+
 import AbstractRenderer from "../rendering/abstract-renderer";
+import LocatorTile from "src/engine/type/yoda/locator-tile";
+import { Planet } from "src/engine/types";
 import Scene from "./scene";
+import Settings from "src/settings";
 import SpeechScene from "./speech-scene";
 import TransitionScene from "./transition-scene";
+import { World } from "src/engine/generation";
+import Zone from "../objects/zone";
 import ZoneScene from "./zone-scene";
 
 const MapTileWidth = 28;

@@ -1,6 +1,7 @@
-import { identity, Point, PointLike } from "src/util";
-import { Zone } from "../objects";
+import { Point, PointLike, identity } from "src/util";
+
 import WorldItem from "./world-item";
+import { Zone } from "../objects";
 
 class World {
 	public static readonly WIDTH = 10;

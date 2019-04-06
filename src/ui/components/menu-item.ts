@@ -1,6 +1,7 @@
-import MenuItem from "src/ui/menu-item";
-import Component from "../component";
 import "./menu-item.scss";
+
+import Component from "../component";
+import MenuItem from "src/ui/menu-item";
 import MenuItemState from "src/ui/menu-item-state";
 
 class MenuItemComponent extends Component {
@@ -28,7 +29,7 @@ class MenuItemComponent extends Component {
 
 	private _rebuild() {
 		this.textContent = "";
-		const item = this.item || <Partial<MenuItem>>{};
+		const item = this.item || ({} as Partial<MenuItem>);
 
 		const stateNode = document.createElement("span");
 		stateNode.classList.add("state");

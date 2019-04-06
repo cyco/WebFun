@@ -1,6 +1,7 @@
-import Menu from "src/ui/menu";
-import Component from "../component";
 import "./menu-item-separator.scss";
+
+import Component from "../component";
+import Menu from "src/ui/menu";
 
 class MenuItemSeparator extends Component {
 	public static readonly tagName = "wf-menu-item-separator";

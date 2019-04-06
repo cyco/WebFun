@@ -1,5 +1,6 @@
-import { Events } from "./abstract-tool";
 import { Event, Point } from "src/util";
+
+import { Events } from "./abstract-tool";
 
 declare interface TileChangeEventInitDict extends EventInit {
 	affectedPoints: Point[];

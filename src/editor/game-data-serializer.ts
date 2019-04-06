@@ -1,5 +1,3 @@
-import { GameData } from "src/engine";
-import { add, OutputStream } from "src/util";
 import {
 	Action,
 	Char,
@@ -9,10 +7,13 @@ import {
 	NPC,
 	Puzzle,
 	PuzzleType,
-	Tile,
 	Sound,
+	Tile,
 	Zone
 } from "src/engine/objects";
+import { OutputStream, add } from "src/util";
+
+import { GameData } from "src/engine";
 
 class GameDataSerializer {
 	public serialize(data: GameData, stream: OutputStream): void {

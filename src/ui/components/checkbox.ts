@@ -1,5 +1,6 @@
-import Component from "../component";
 import "./checkbox.scss";
+
+import Component from "../component";
 
 class Checkbox extends Component {
 	public static readonly tagName = "wf-checkbox";

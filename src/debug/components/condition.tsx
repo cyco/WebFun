@@ -1,10 +1,10 @@
-import { ConditionsByName as Conditions } from "src/engine/script/conditions";
-import InstructionThing from "./instruction-thing";
-import Condition from "src/engine/objects/condition";
-import Engine from "src/engine/engine";
 import BreakpointButton from "./breakpoint-button";
-import LocationBreakpoint from "../breakpoint/location-breakpoint";
 import BreakpointStore from "../breakpoint-store";
+import Condition from "src/engine/objects/condition";
+import { ConditionsByName as Conditions } from "src/engine/script/conditions";
+import Engine from "src/engine/engine";
+import InstructionThing from "./instruction-thing";
+import LocationBreakpoint from "../breakpoint/location-breakpoint";
 
 class ConditionComponent extends InstructionThing {
 	public static readonly tagName = "wf-debug-condition";

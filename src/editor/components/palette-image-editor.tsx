@@ -1,6 +1,8 @@
-import PaletteView from "./palette-view";
-import { Point, Rectangle, Size } from "src/util";
 import "./palette-image-editor.scss";
+
+import { Point, Rectangle, Size } from "src/util";
+
+import PaletteView from "./palette-view";
 
 class PaletteImageEditor extends PaletteView {
 	public static readonly tagName = "wf-editor-palette-image-editor";

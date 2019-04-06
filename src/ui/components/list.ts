@@ -1,6 +1,7 @@
+import "./list.scss";
+
 import AbstractList from "./abstract-list";
 import Cell from "./cell";
-import "./list.scss";
 
 export declare interface SearchDelegate<T, PreparedSearchValue> {
 	prepareListSearch(searchValue: string, list: List<T>): PreparedSearchValue;

@@ -1,11 +1,13 @@
-import { AbstractWindow, Button } from "src/ui/components";
 import "./simulator-window.scss";
-import { GameController } from "src/app";
+
+import { AbstractWindow, Button } from "src/ui/components";
+import { Hotspot, Zone, ZoneType } from "src/engine/objects";
+import { Point, srand } from "src/util";
+
 import { DiscardingStorage } from "src/util";
-import PopoverZonePicker from "./popover-zone-picker";
+import { GameController } from "src/app";
 import { PopoverTilePicker } from "src/editor/components";
-import { Zone, ZoneType, Hotspot } from "src/engine/objects";
-import { srand, Point } from "src/util";
+import PopoverZonePicker from "./popover-zone-picker";
 import SimulatedStory from "src/debug/simulated-story";
 
 class SimulatorWindow extends AbstractWindow {

@@ -1,4 +1,4 @@
-import { Tile, Puzzle, Zone, Char, Sound } from "src/engine/objects";
+import { Char, Puzzle, Sound, Tile, Zone } from "src/engine/objects";
 
 import fromFileContents from "./from-file-contents";
 

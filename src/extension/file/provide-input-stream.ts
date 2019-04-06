@@ -1,5 +1,5 @@
-import { InputStream } from "src/util";
 import { File } from "src/std/dom";
+import { InputStream } from "src/util";
 
 const provideInputStream = async function(): Promise<InputStream> {
 	const buffer = await this.readAsArrayBuffer();

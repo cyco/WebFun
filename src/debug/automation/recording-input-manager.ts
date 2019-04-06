@@ -1,7 +1,8 @@
-import { InputManager, Direction } from "src/engine/input";
+import { Direction, InputManager } from "src/engine/input";
+
 import { DesktopInputManager } from "src/app/input";
-import { identity } from "src/util";
 import Syntax from "./syntax";
+import { identity } from "src/util";
 
 class RecordingInputManager extends InputManager {
 	public readonly implementation: DesktopInputManager;

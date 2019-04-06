@@ -1,7 +1,9 @@
-import AbstractPaletteView from "./abstract-palette-view";
-import { Zone, Tile } from "src/engine/objects";
-import { drawZoneImageData } from "src/app/rendering/canvas";
 import "./abstract-zone-view.scss";
+
+import { Tile, Zone } from "src/engine/objects";
+
+import AbstractPaletteView from "./abstract-palette-view";
+import { drawZoneImageData } from "src/app/rendering/canvas";
 
 abstract class AbstractZoneView extends AbstractPaletteView {
 	private _zone: Zone;

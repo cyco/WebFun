@@ -1,9 +1,11 @@
+import "./abstract-menu-view.scss";
+
+import MenuItem, { Separator } from "../menu-item";
+
 import Component from "../component";
 import Menu from "../menu";
-import MenuItem, { Separator } from "../menu-item";
 import MenuItemComponent from "./menu-item";
 import MenuItemSeparator from "./menu-item-separator";
-import "./abstract-menu-view.scss";
 
 abstract class AbstractMenuView extends Component {
 	public onclose: (e: Event) => void = () => void 0;
@@ -42,7 +44,7 @@ abstract class AbstractMenuView extends Component {
 	}
 
 	addItemNode(menuItem: MenuItem) {
-		const node = <MenuItemComponent>document.createElement(MenuItemComponent.tagName);
+		const node = document.createElement(MenuItemComponent.tagName) as MenuItemComponent;
 		node.item = menuItem;
 		this.appendChild(node);
 		return node;

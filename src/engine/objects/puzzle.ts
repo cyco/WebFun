@@ -1,6 +1,8 @@
 import * as ItemType from "../types";
-import { Planet } from "../types";
+
 import Type, { default as PuzzleType } from "./puzzle-type";
+
+import { Planet } from "../types";
 import Tile from "./tile";
 
 export { Type };

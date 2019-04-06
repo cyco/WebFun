@@ -1,11 +1,12 @@
-import Map from "./map";
-import { Point } from "src/util";
-import ZoneView from "./zone-view";
-import { Menu } from "src/ui";
-import { ContextMenu } from "src/ui/components";
-import WorldItem from "../world-item";
-import { World } from "src/engine/save-game";
 import "./interactive-map.scss";
+
+import { ContextMenu } from "src/ui/components";
+import Map from "./map";
+import { Menu } from "src/ui";
+import { Point } from "src/util";
+import { World } from "src/engine/save-game";
+import WorldItem from "../world-item";
+import ZoneView from "./zone-view";
 
 export interface InteractiveMapContextMenuProvider {
 	contextMenuForWorldItem(item: WorldItem, at: Point, i: World, of: Map): Menu;

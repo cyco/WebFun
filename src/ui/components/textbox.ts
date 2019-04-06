@@ -1,5 +1,6 @@
-import Component from "../component";
 import "./textbox.scss";
+
+import Component from "../component";
 
 class Textbox extends Component {
 	public static readonly tagName = "wf-textbox";

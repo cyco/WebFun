@@ -1,11 +1,11 @@
-import Engine from "../../engine";
 import Action from "../../objects/action";
+import Engine from "../../engine";
 import Instruction from "../../objects/instruction";
+import InstructionType from "../instruction";
 import { Result } from "../types";
 import SpeakText from "./speak-text";
-import InstructionType from "../instruction";
 
-export default <InstructionType>{
+export default {
 	Opcode: 0x04,
 	Arguments: [],
 	UsesText: true,
@@ -13,4 +13,4 @@ export default <InstructionType>{
 	Implementation: (instruction: Instruction, engine: Engine, _: Action): Promise<Result> => {
 		return SpeakText(instruction.text, engine.hero.location, engine);
 	}
-};
+} as InstructionType;

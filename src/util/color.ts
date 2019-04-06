@@ -1,4 +1,4 @@
-import { floor, min, max, round } from "src/std/math";
+import { floor, max, min, round } from "src/std/math";
 
 const rgba = (r: number, g: number, b: number, a: number): string => `rgba(${r},${g},${b},${a})`;
 const rgb = (r: number, g: number, b: number): string => `rgb(${r},${g},${b})`;
@@ -63,7 +63,7 @@ class Color {
 
 	constructor(red: number | string | Color, green?: number, blue?: number, alpha: number = 1.0) {
 		if (typeof red === "string") {
-			[red, green, blue, alpha] = this._parseColor(<string>red);
+			[red, green, blue, alpha] = this._parseColor(red as string);
 		}
 
 		if (red instanceof Color) {
@@ -74,7 +74,7 @@ class Color {
 			[red, green, blue, alpha] = [0, 0, 0, 1];
 		}
 
-		this._red = <number>red;
+		this._red = red as number;
 		this._green = green;
 		this._blue = blue;
 		this._alpha = alpha;

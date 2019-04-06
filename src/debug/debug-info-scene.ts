@@ -1,7 +1,7 @@
-import { Renderer } from "src/engine/rendering";
 import CanvasRenderer from "src/app/rendering/canvas/canvas-renderer";
-import { Scene } from "src/engine/scenes";
 import { Point } from "src/util";
+import { Renderer } from "src/engine/rendering";
+import { Scene } from "src/engine/scenes";
 
 class DebugInfoScene extends Scene {
 	private _ticks = 0;

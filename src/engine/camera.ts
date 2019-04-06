@@ -1,4 +1,5 @@
 import { Point, Size } from "src/util";
+
 import Hero from "./hero";
 
 class Camera {

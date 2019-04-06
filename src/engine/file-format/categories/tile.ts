@@ -1,6 +1,7 @@
+import { GameType, Yoda } from "src/engine/type";
+
 import { InputStream } from "src/util";
 import { Tile } from "src/engine/objects";
-import { GameType, Yoda } from "src/engine/type";
 
 export const parseTile = (stream: InputStream, _: any) => {
 	let attributes = stream.getUint32();

@@ -1,12 +1,13 @@
-import { Zone } from "src/engine/objects";
-import { List } from "src/ui/components";
 import "./sidebar-layers-cell.scss";
-import SidebarLayer from "./sidebar-layer";
-import Layer from "./layer";
+
 import Component from "src/ui/component";
+import Layer from "./layer";
+import { List } from "src/ui/components";
 import { Shortcut } from "src/ux";
 import ShortcutManager from "src/ux/shortcut-manager";
+import SidebarLayer from "./sidebar-layer";
 import Window from "./window";
+import { Zone } from "src/engine/objects";
 
 export const Events = {
 	LayerDidChange: "LayerDidChange"
@@ -21,9 +22,10 @@ class SidebarLayersCell extends Component {
 	constructor() {
 		super();
 
-		this._list = <List<Layer>>document.createElement(List.tagName);
-		this._list.cell = <SidebarLayer>document.createElement(SidebarLayer.tagName);
-		this._list.cell.onclick = (e: MouseEvent) => this.activateLayerForCell(<SidebarLayer>e.currentTarget);
+		this._list = document.createElement(List.tagName) as List<Layer>;
+		this._list.cell = document.createElement(SidebarLayer.tagName) as SidebarLayer;
+		this._list.cell.onclick = (e: MouseEvent) =>
+			this.activateLayerForCell(e.currentTarget as SidebarLayer);
 
 		this._buildLayers();
 		this._list.items = this._layers;
@@ -152,18 +154,18 @@ class SidebarLayersCell extends Component {
 		const layer = this.activeLayer;
 		if (!layer) return;
 
-		const iconButton = <HTMLElement>layer.querySelector(iconButtonSelector);
+		const iconButton = layer.querySelector(iconButtonSelector) as HTMLElement;
 		if (!iconButton) return;
 
 		iconButton.onclick(new MouseEvent("click"));
 	}
 
 	private get activeLayer() {
-		return <SidebarLayer>this.querySelector(SidebarLayer.tagName + ".active");
+		return this.querySelector(SidebarLayer.tagName + ".active") as SidebarLayer;
 	}
 
 	public activateLayer(idx: number) {
-		const layer = <SidebarLayer>this._list.querySelectorAll(SidebarLayer.tagName)[idx];
+		const layer = this._list.querySelectorAll(SidebarLayer.tagName)[idx] as SidebarLayer;
 		if (layer.classList.contains("active")) return;
 		this.activateLayerForCell(layer);
 	}

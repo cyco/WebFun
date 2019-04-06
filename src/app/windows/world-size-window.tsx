@@ -1,5 +1,6 @@
-import { SettingsWindow } from "../ui";
 import "./world-size-window.scss";
+
+import { SettingsWindow } from "../ui";
 
 class DifficultyWindow extends SettingsWindow {
 	public static readonly tagName = "wf-world-size-window";

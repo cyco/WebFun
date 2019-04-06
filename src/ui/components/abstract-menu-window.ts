@@ -1,7 +1,8 @@
-import { Point } from "src/util";
-import MenuStack from "../menu-stack";
-import AbstractMenuView from "./abstract-menu-view";
 import "./abstract-menu-window.scss";
+
+import AbstractMenuView from "./abstract-menu-view";
+import MenuStack from "../menu-stack";
+import { Point } from "src/util";
 
 abstract class AbstractMenuWindow extends AbstractMenuView {
 	protected stack: MenuStack = null;

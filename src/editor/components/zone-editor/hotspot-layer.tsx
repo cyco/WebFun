@@ -1,11 +1,13 @@
-import Component from "src/ui/component";
-import { Zone, Tile, Hotspot } from "src/engine/objects";
-import { MutableHotspot, MutableZone } from "src/engine/mutable-objects";
-import { ColorPalette } from "src/engine/rendering";
-import { Point } from "src/util";
-import { MenuItemInit, MenuItemSeparator } from "src/ui";
-import { ModalPrompt } from "src/ux";
 import "./hotspot-layer.scss";
+
+import { Hotspot, Tile, Zone } from "src/engine/objects";
+import { MenuItemInit, MenuItemSeparator } from "src/ui";
+import { MutableHotspot, MutableZone } from "src/engine/mutable-objects";
+
+import { ColorPalette } from "src/engine/rendering";
+import Component from "src/ui/component";
+import { ModalPrompt } from "src/ux";
+import { Point } from "src/util";
 
 class HotspotLayer extends Component {
 	public static readonly tagName = "wf-hotspot-layer";

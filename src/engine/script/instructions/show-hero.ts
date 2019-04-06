@@ -1,10 +1,10 @@
-import Engine from "../../engine";
 import Action from "../../objects/action";
+import Engine from "../../engine";
 import Instruction from "../../objects/instruction";
-import { Result } from "../types";
 import InstructionType from "../instruction";
+import { Result } from "../types";
 
-export default <InstructionType>{
+export default {
 	Opcode: 0x11,
 	Arguments: [],
 	Description: "Show hero",
@@ -12,4 +12,4 @@ export default <InstructionType>{
 		engine.hero.visible = true;
 		return Result.Void;
 	}
-};
+} as InstructionType;

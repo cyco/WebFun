@@ -1,14 +1,15 @@
+import "./tile-inspector.scss";
+
+import { ceil, floor, sqrt } from "src/std/math";
+
 import AbstractInspector from "./abstract-inspector";
+import { ColorPalette } from "src/engine/rendering";
+import { FilePicker } from "src/ui";
 import { IconButton } from "src/ui/components";
 import { MutableTile } from "src/engine/mutable-objects";
 import { TileEditor } from "../components";
-import { sqrt, ceil, floor } from "src/std/math";
-import { downloadImage } from "src/util";
-import { FilePicker } from "src/ui";
-import { ColorPalette } from "src/engine/rendering";
 import { TileView } from "src/debug/components";
-
-import "./tile-inspector.scss";
+import { downloadImage } from "src/util";
 
 class TileInspector extends AbstractInspector {
 	private _palette: ColorPalette;

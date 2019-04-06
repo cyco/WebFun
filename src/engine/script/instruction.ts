@@ -7,4 +7,5 @@ export type Instruction = {
 	Arguments?: Type[];
 	UsesText?: boolean;
 };
+
 export default Instruction;

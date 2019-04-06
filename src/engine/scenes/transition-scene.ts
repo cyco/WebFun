@@ -1,8 +1,9 @@
 import { Tile, Zone } from "src/engine/objects";
-import { Point } from "src/util";
-import World from "../generation/world";
+
 import AbstractRenderer from "../rendering/abstract-renderer";
+import { Point } from "src/util";
 import Scene from "./scene";
+import World from "../generation/world";
 import ZoneScene from "./zone-scene";
 
 class TransitionScene extends Scene {
@@ -38,7 +39,10 @@ class TransitionScene extends Scene {
 			offset = new Point(0, 0);
 		}
 
-		if (this.type === TransitionScene.TRANSITION_TYPE.ROOM && this.engine.currentZone.sharedCounter >= 0) {
+		if (
+			this.type === TransitionScene.TRANSITION_TYPE.ROOM &&
+			this.engine.currentZone.sharedCounter >= 0
+		) {
 			this.engine.currentZone.sharedCounter &&
 				console.log("copy sharedCounter", this.engine.currentZone.sharedCounter.toHex(2));
 			this.targetZone.sharedCounter = this.engine.currentZone.sharedCounter;

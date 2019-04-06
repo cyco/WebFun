@@ -1,11 +1,13 @@
+import "./editor.scss";
+
 import { AbstractPanel, Button } from "src/ui/components";
-import PaletteImageEditor from "../palette-image-editor";
-import PaletteColorPicker from "../palette-color-picker";
+import { Size, downloadImage, rgba } from "src/util";
+
 import { ColorPalette } from "src/engine/rendering";
-import { Size, rgba, downloadImage } from "src/util";
 import { FilePicker } from "src/ui";
 import { MutableTile } from "src/engine/mutable-objects";
-import "./editor.scss";
+import PaletteColorPicker from "../palette-color-picker";
+import PaletteImageEditor from "../palette-image-editor";
 
 class Editor extends AbstractPanel {
 	static tagName = "wf-editor-tile-editor";

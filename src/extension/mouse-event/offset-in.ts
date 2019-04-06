@@ -1,5 +1,5 @@
-import { Point } from "src/util";
 import { MouseEvent } from "src/std/dom";
+import { Point } from "src/util";
 
 const offsetIn = function(node: HTMLElement): Point {
 	if (this.target === node) {

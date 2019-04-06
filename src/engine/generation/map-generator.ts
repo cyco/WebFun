@@ -1,10 +1,11 @@
-import { HorizontalPointRange, Point, rand, randmod, Range, srand, VerticalPointRange } from "src/util";
-import { WorldSize } from "../types";
+import { HorizontalPointRange, Point, Range, VerticalPointRange, rand, randmod, srand } from "src/util";
+
 import GetDistanceToCenter from "./distance-to-center";
 import IslandBuilder from "./island-builder";
 import Map from "./map";
-import { max } from "src/std/math";
 import WorldItemType from "./world-item-type";
+import { WorldSize } from "../types";
+import { max } from "src/std/math";
 
 const MapWidth = 10;
 const MapHeight = 10;

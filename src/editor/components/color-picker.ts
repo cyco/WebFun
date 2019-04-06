@@ -1,8 +1,9 @@
-import { Component } from "src/ui";
-import ColorWheel from "./color-wheel";
-import { Color } from "src/util";
-import { Group } from "src/ui/components";
 import "./color-picker.scss";
+
+import { Color } from "src/util";
+import ColorWheel from "./color-wheel";
+import { Component } from "src/ui";
+import { Group } from "src/ui/components";
 
 class ColorPicker extends Component {
 	public static readonly tagName = "wf-color-picker";
@@ -53,7 +54,7 @@ class ColorPicker extends Component {
 	}
 
 	private _buildWheel() {
-		this._wheel = <ColorWheel>document.createElement(ColorWheel.tagName);
+		this._wheel = document.createElement(ColorWheel.tagName) as ColorWheel;
 		this._wheel.style.height = "100px";
 		this._wheel.style.width = "100px";
 		this._wheel.onchange = () => {

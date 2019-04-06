@@ -1,20 +1,21 @@
-import { AmmoControl, InteractiveMap as Map, InteractiveHealth as Health, Inventory } from "./components";
-import { PopoverCharacterPicker } from "src/editor/components";
-import { InventoryDelegate } from "./components/inventory";
-import { InteractiveMapContextMenuProvider } from "./components/interactive-map";
-import { Tile } from "src/engine/objects";
-import { GameData, ColorPalette } from "src/engine";
-import { SaveState } from "src/engine/save-game";
-import { Menu, Component } from "src/ui";
-import { WorldSize } from "src/engine/types";
-import { Yoda as GameTypeYoda } from "src/engine/type";
-import WorldItem from "./world-item";
-import { World } from "src/engine/save-game";
-import { Segment, SegmentControl } from "src/ui/components";
-import { Point, identity, DiscardingStorage } from "src/util";
-import { ModalPrompt } from "src/ux";
-
 import "./editor-view.scss";
+
+import { AmmoControl, InteractiveHealth as Health, Inventory, InteractiveMap as Map } from "./components";
+import { ColorPalette, GameData } from "src/engine";
+import { Component, Menu } from "src/ui";
+import { DiscardingStorage, Point, identity } from "src/util";
+import { Segment, SegmentControl } from "src/ui/components";
+
+import { Yoda as GameTypeYoda } from "src/engine/type";
+import { InteractiveMapContextMenuProvider } from "./components/interactive-map";
+import { InventoryDelegate } from "./components/inventory";
+import { ModalPrompt } from "src/ux";
+import { PopoverCharacterPicker } from "src/editor/components";
+import { SaveState } from "src/engine/save-game";
+import { Tile } from "src/engine/objects";
+import { World } from "src/engine/save-game";
+import WorldItem from "./world-item";
+import { WorldSize } from "src/engine/types";
 
 class EditorView extends Component implements InventoryDelegate, InteractiveMapContextMenuProvider {
 	public static readonly tagName = "wf-save-game-editor-view";

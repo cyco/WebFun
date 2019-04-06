@@ -1,7 +1,8 @@
-import AbstractInspector from "./abstract-inspector";
-import { ColorPicker, PaletteColorPicker } from "../components";
-import { IconButton } from "src/ui/components";
 import { Color, Size, download, rgba } from "src/util";
+import { ColorPicker, PaletteColorPicker } from "../components";
+
+import AbstractInspector from "./abstract-inspector";
+import { IconButton } from "src/ui/components";
 import { ModalPrompt } from "src/ux";
 import PaletteAnimation from "src/engine/rendering/palette-animation";
 
@@ -75,7 +76,6 @@ class PaletteInspector extends AbstractInspector {
 	public build() {
 		this._paletteView.palette = this.data.palette;
 		this._paletteView.color = this.state.load("color") || rgba(0, 0, 0, 0);
-
 		this._paletteView.redraw();
 	}
 

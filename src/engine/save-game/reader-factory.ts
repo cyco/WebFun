@@ -1,9 +1,10 @@
-import { Indy, Yoda, GameType } from "../type";
-import { InputStream } from "src/util";
-import identify from "./identify";
-import Reader from "./reader";
+import { GameType, Indy, Yoda } from "../type";
+
 import IndyReader from "./indy-reader";
+import { InputStream } from "src/util";
+import Reader from "./reader";
 import YodaReader from "./yoda-reader";
+import identify from "./identify";
 
 abstract class ReaderFactory {
 	static build(stream: InputStream): { type: GameType; read: Reader["read"] } {

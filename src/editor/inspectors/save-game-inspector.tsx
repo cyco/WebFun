@@ -1,15 +1,17 @@
-import AbstractInspector from "./abstract-inspector";
-import { IconButton } from "src/ui/components";
-import { EditorView } from "src/save-game-editor";
-import { Writer } from "src/engine/save-game";
-import MutableStory from "src/engine/mutable-story";
-import { download, OutputStream, DiscardingOutputStream } from "src/util";
-import GameController from "src/app/game-controller";
-import { World } from "src/engine/generation";
-import SaveGameWorld from "src/engine/save-game/world";
-import { ZoneType } from "src/engine/objects";
 import "./save-game-inspector.scss";
+
+import { DiscardingOutputStream, OutputStream, download } from "src/util";
+
+import AbstractInspector from "./abstract-inspector";
 import { ColorPalette } from "src/engine";
+import { EditorView } from "src/save-game-editor";
+import GameController from "src/app/game-controller";
+import { IconButton } from "src/ui/components";
+import MutableStory from "src/engine/mutable-story";
+import SaveGameWorld from "src/engine/save-game/world";
+import { World } from "src/engine/generation";
+import { Writer } from "src/engine/save-game";
+import { ZoneType } from "src/engine/objects";
 
 class SaveGameInspector extends AbstractInspector {
 	private _editorView: EditorView = (

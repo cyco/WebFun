@@ -1,4 +1,4 @@
-const each = function<T>(callback: ((key: string, value: T) => void)): void {
+const each = function<T>(callback: (key: string, value: T) => void): void {
 	for (let key in this) {
 		if (!this.hasOwnProperty(key)) continue;
 		callback(key, this[key]);

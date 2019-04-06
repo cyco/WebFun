@@ -1,14 +1,14 @@
 import Engine from "./engine";
+import { Rectangle } from "src/util";
 import { Renderer } from "./rendering";
 import Scene from "./scenes/scene";
-import { Rectangle } from "src/util";
 
 class SceneManager {
 	public engine: Engine = null;
 	private _stack: Scene[] = [];
 	private _determineBounds: () => Rectangle;
 
-	constructor(determineBounds: (() => Rectangle)) {
+	constructor(determineBounds: () => Rectangle) {
 		this._determineBounds = determineBounds;
 	}
 

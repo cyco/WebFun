@@ -36,7 +36,7 @@ class WindowManager {
 	}
 
 	private _onWindowClose(e: CustomEvent) {
-		const window = <AbstractWindow>e.target;
+		const window = e.target as AbstractWindow;
 
 		window.manager = null;
 		const index = this._windows.indexOf(window);

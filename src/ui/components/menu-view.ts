@@ -1,5 +1,6 @@
-import AbstractMenuView from "./abstract-menu-view";
 import "./menu-view.scss";
+
+import AbstractMenuView from "./abstract-menu-view";
 
 class MenuView extends AbstractMenuView {
 	public static readonly tagName = "wf-menu-view";

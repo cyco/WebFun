@@ -1,9 +1,10 @@
 import { DagobahGenerator, WorldGenerationError, WorldGenerator } from "src/engine/generation";
-import { rand } from "src/util";
-import Engine from "./engine";
-import World from "./generation/world";
 import { Planet, WorldSize } from "./types";
+
+import Engine from "./engine";
 import Puzzle from "src/engine/objects/puzzle";
+import World from "./generation/world";
+import { rand } from "src/util";
 
 class Story {
 	public goal: Puzzle;

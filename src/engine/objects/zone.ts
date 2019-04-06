@@ -1,11 +1,12 @@
-import { Point, PointLike, Rectangle, Size } from "src/util";
-import { Planet } from "../types";
-import Action from "./action";
 import { default as Hotspot, Type as HotspotType } from "./hotspot";
-import NPC from "./npc";
-import Tile from "./tile";
-import Layer from "./zone-layer";
+import { Point, PointLike, Rectangle, Size } from "src/util";
 import Type, { default as ZoneType } from "./zone-type";
+
+import Action from "./action";
+import Layer from "./zone-layer";
+import NPC from "./npc";
+import { Planet } from "../types";
+import Tile from "./tile";
 
 export { Type, Layer };
 
@@ -131,7 +132,7 @@ class Zone {
 					case HotspotType.CrateWeapon:
 						if (hotspot.arg < 0) break;
 						if (this.getTile(hotspot.x, hotspot.y, 1)) return;
-						this.setTile(<Tile>{ id: hotspot.arg }, hotspot.x, hotspot.y, 1);
+						this.setTile({ id: hotspot.arg } as Tile, hotspot.x, hotspot.y, 1);
 						break;
 					case HotspotType.DoorIn:
 						if (hotspot.arg < 0) break;

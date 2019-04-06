@@ -1,14 +1,16 @@
-import Component from "src/ui/component";
-import LayerComponent from "./zone-layer";
-import { Zone } from "src/engine/objects";
-import { HEIGHT as TileHeight, WIDTH as TileWidth } from "src/engine/objects/tile";
-import { AbstractTool, NoTool } from "src/editor/tools";
-import { Point } from "src/util";
-import { ContextMenu } from "src/ui/components";
-import Layer from "./layer";
-import HotspotLayerComponent from "./hotspot-layer";
-import NPCLayerComponent from "./npc-layer";
 import "./view.scss";
+
+import { AbstractTool, NoTool } from "src/editor/tools";
+import { HEIGHT as TileHeight, WIDTH as TileWidth } from "src/engine/objects/tile";
+
+import Component from "src/ui/component";
+import { ContextMenu } from "src/ui/components";
+import HotspotLayerComponent from "./hotspot-layer";
+import Layer from "./layer";
+import LayerComponent from "./zone-layer";
+import NPCLayerComponent from "./npc-layer";
+import { Point } from "src/util";
+import { Zone } from "src/engine/objects";
 
 class View extends Component implements EventListenerObject {
 	public static readonly tagName = "wf-zone-editor-view";

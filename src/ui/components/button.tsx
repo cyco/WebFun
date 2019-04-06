@@ -1,4 +1,5 @@
 import "./button.scss";
+
 import AbstractIconButton from "./abstract-icon-button";
 
 class Button extends AbstractIconButton {

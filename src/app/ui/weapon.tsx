@@ -1,10 +1,12 @@
-import GameData from "src/engine/game-data";
-import { Char, Tile } from "src/engine/objects";
-import { Component } from "src/ui";
-import { Size } from "src/util";
-import { PaletteView } from "src/editor/components";
-import { ColorPalette } from "src/engine/rendering";
 import "./weapon.scss";
+
+import { Char, Tile } from "src/engine/objects";
+
+import { ColorPalette } from "src/engine/rendering";
+import { Component } from "src/ui";
+import GameData from "src/engine/game-data";
+import { PaletteView } from "src/editor/components";
+import { Size } from "src/util";
 
 class Weapon extends Component {
 	public static readonly tagName = "wf-weapon";

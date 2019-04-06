@@ -1,7 +1,8 @@
 import { Condition, ConditionsByName, Instruction, InstructionsByName, Type } from "src/engine/script";
+
+import GameData from "src/engine/game-data";
 import { Point } from "src/util";
 import Token from "./token";
-import GameData from "src/engine/game-data";
 
 class ArgumentProcessor {
 	private definitions: { [_: string]: Condition | Instruction } = Object.assign(
@@ -69,14 +70,14 @@ class ArgumentProcessor {
 	}
 
 	collectArgumentNodes(thing: Element, count: number): Token[] {
-		const args = [];
-		let node = thing;
+		const args: Token[] = [];
+		let node = thing as Token;
 		while (count) {
-			node = node.nextElementSibling;
+			node = node.nextElementSibling as Token;
 			args.push(node);
 			count--;
 		}
-		return <Token[]>args;
+		return args;
 	}
 }
 

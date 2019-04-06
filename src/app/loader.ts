@@ -1,8 +1,9 @@
-import { GameData, readGameDataFile, GameTypeYoda } from "src/engine";
-import { ColorPalette } from "src/engine/rendering";
-import Settings from "src/settings";
 import { EventTarget, FileLoader, InputStream } from "src/util";
+import { GameData, GameTypeYoda, readGameDataFile } from "src/engine";
+
+import { ColorPalette } from "src/engine/rendering";
 import { DOMSoundLoader } from "./audio";
+import Settings from "src/settings";
 
 export const Events = {
 	Progress: "progress",
@@ -127,10 +128,10 @@ class Loader extends EventTarget {
 	}
 
 	private _finishLoading() {
-		this.dispatchEvent(Events.Load, <LoaderEventDetails>{
+		this.dispatchEvent(Events.Load, {
 			palette: this._palette,
 			data: this._data
-		});
+		} as LoaderEventDetails);
 	}
 }
 

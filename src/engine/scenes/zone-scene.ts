@@ -1,39 +1,22 @@
-import { Direction as InputDirection } from "src/engine/input";
 import { Direction, Point } from "src/util";
 import { EvaluationMode, ScriptResult } from "../script";
-import { Hotspot, HotspotType, Zone, ZoneType, NPC } from "src/engine/objects";
-import { Yoda } from "src/engine";
+import { Hotspot, HotspotType, NPC, Zone, ZoneType } from "src/engine/objects";
+
 import AbstractRenderer from "../rendering/abstract-renderer";
 import DetonatorScene from "./detonator-scene";
 import Engine from "../engine";
+import { Direction as InputDirection } from "src/engine/input";
 import MapScene from "./map-scene";
 import PauseScene from "./pause-scene";
 import PickupScene from "./pickup-scene";
 import Scene from "./scene";
 import TransitionScene from "./transition-scene";
+import { Yoda } from "src/engine";
 import ZoneSceneRenderer from "src/engine/rendering/zone-scene-renderer";
 
 class ZoneScene extends Scene {
 	private _zone: Zone;
 	private _renderer = new ZoneSceneRenderer();
-
-	get zone() {
-		return this._zone;
-	}
-
-	set zone(z) {
-		console.warn(`Change zone to ${z.id.toHex(3)}`);
-		this._zone = z;
-		this.engine.camera.zoneSize = z.size;
-	}
-
-	get camera() {
-		return this.engine.camera;
-	}
-
-	get currentOffset() {
-		return this.engine.camera.offset;
-	}
 
 	public async update(ticks: number) {
 		this.engine.palette.step();
@@ -160,7 +143,7 @@ class ZoneScene extends Scene {
 				transitionScene.targetHeroLocation = new Point(waysIn.first().x, waysIn.first().y);
 				transitionScene.targetZone = targetZone;
 				console.assert(engine.sceneManager.currentScene instanceof ZoneScene);
-				transitionScene.scene = <ZoneScene>engine.sceneManager.currentScene;
+				transitionScene.scene = engine.sceneManager.currentScene as ZoneScene;
 
 				let world = engine.dagobah;
 				let location = world.locationOfZone(targetZone);
@@ -191,7 +174,7 @@ class ZoneScene extends Scene {
 					: new Point(0, 0);
 				transitionScene.targetZone = targetZone;
 				console.assert(engine.sceneManager.currentScene instanceof ZoneScene);
-				transitionScene.scene = <ZoneScene>engine.sceneManager.currentScene;
+				transitionScene.scene = engine.sceneManager.currentScene as ZoneScene;
 
 				const world = engine.world;
 				const location = world.locationOfZone(targetZone);
@@ -218,7 +201,7 @@ class ZoneScene extends Scene {
 					: new Point(0, 0);
 				transitionScene.targetZone = targetZone;
 				console.assert(engine.sceneManager.currentScene instanceof ZoneScene);
-				transitionScene.scene = <ZoneScene>engine.sceneManager.currentScene;
+				transitionScene.scene = engine.sceneManager.currentScene as ZoneScene;
 
 				const location = engine.dagobah.locationOfZone(targetZone);
 				if (!location) {
@@ -299,7 +282,14 @@ class ZoneScene extends Scene {
 		this._zone.npcs.forEach(npc => this._moveNPC(npc));
 	}
 
-	private _moveNPC(_: NPC) {}
+	private _moveNPC(npc: NPC) {
+		if (!npc.enabled) return;
+
+		switch (npc.face.movementType) {
+			default:
+				npc.position.y += 1;
+		}
+	}
 
 	prepareCamera() {
 		this.engine.camera.update(Infinity);
@@ -584,7 +574,7 @@ class ZoneScene extends Scene {
 					: new Point(0, 0);
 				transitionScene.targetZone = targetZone;
 				console.assert(engine.sceneManager.currentScene instanceof ZoneScene);
-				transitionScene.scene = <ZoneScene>engine.sceneManager.currentScene;
+				transitionScene.scene = engine.sceneManager.currentScene as ZoneScene;
 
 				const world = engine.world;
 				const location = world.locationOfZone(targetZone);
@@ -611,7 +601,7 @@ class ZoneScene extends Scene {
 					: new Point(0, 0);
 				transitionScene.targetZone = targetZone;
 				console.assert(engine.sceneManager.currentScene instanceof ZoneScene);
-				transitionScene.scene = <ZoneScene>engine.sceneManager.currentScene;
+				transitionScene.scene = engine.sceneManager.currentScene as ZoneScene;
 
 				const location = engine.dagobah.locationOfZone(targetZone);
 				if (!location) {
@@ -625,6 +615,24 @@ class ZoneScene extends Scene {
 				return true;
 			}
 		}
+	}
+
+	get zone() {
+		return this._zone;
+	}
+
+	set zone(z) {
+		console.warn(`Change zone to ${z.id.toHex(3)}`);
+		this._zone = z;
+		this.engine.camera.zoneSize = z.size;
+	}
+
+	get camera() {
+		return this.engine.camera;
+	}
+
+	get currentOffset() {
+		return this.engine.camera.offset;
 	}
 }
 

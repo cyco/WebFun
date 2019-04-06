@@ -3,7 +3,7 @@ import Zone from "../../objects/zone";
 import { int16 } from "../types";
 import Condition from "src/engine/script/condition";
 
-export default <Condition>{
+export default {
 	Opcode: 0x01,
 	Arguments: [],
 	Description: "Evalutes to true if hero just entered the zone",
@@ -16,4 +16,4 @@ export default <Condition>{
 	 if ( mode != JustEntered )
 	 goto condition_NOT_satisfied,
 	 */
-};
+} as Condition; 

@@ -1,6 +1,6 @@
 import AbstractPopoverTilePicker from "./abstract-popover-tile-picker";
-import TilePicker from "./tile-picker";
 import { Char } from "src/engine/objects";
+import TilePicker from "./tile-picker";
 
 class PopoverCharacterPicker extends AbstractPopoverTilePicker {
 	public static readonly tagName = "wf-resource-editor-popover-character-picker";

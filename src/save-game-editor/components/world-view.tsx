@@ -1,9 +1,11 @@
-import { Component } from "src/ui";
-import { World } from "src/engine/save-game";
-import { GameData, ColorPalette } from "src/engine";
-import { SaveState } from "src/engine/save-game";
-import TransformCanvas, { TransformCanvasRenderingContext2D } from "./transform-canvas";
 import "./world-view.scss";
+
+import { ColorPalette, GameData } from "src/engine";
+import TransformCanvas, { TransformCanvasRenderingContext2D } from "./transform-canvas";
+
+import { Component } from "src/ui";
+import { SaveState } from "src/engine/save-game";
+import { World } from "src/engine/save-game";
 import { drawZoneImageData as drawZone } from "src/app/rendering/canvas";
 
 class WorldView extends Component {

@@ -1,18 +1,20 @@
+import * as Type from "../types";
+
+import { HorizontalPointRange, Point, VerticalPointRange, constantly, identity, rand, srand } from "src/util";
 import { Hotspot, HotspotType, Puzzle, PuzzleType, Tile, Zone, ZoneType } from "src/engine/objects";
 import { Planet, WorldSize } from "src/engine/types";
-import { constantly, HorizontalPointRange, identity, Point, rand, srand, VerticalPointRange } from "src/util";
+import { abs, floor } from "src/std/math";
 import { and, not } from "src/util/functional";
-import { floor, abs } from "src/std/math";
+
 import Engine from "../engine";
-import * as Type from "../types";
+import GameData from "src/engine/game-data";
 import GetDistanceToCenter from "./distance-to-center";
+import Map from "./map";
 import MapGenerator from "./map-generator";
+import Quest from "./quest";
 import World from "./world";
 import WorldGenerationError from "./world-generation-error";
 import WorldItem from "./world-item";
-import GameData from "src/engine/game-data";
-import Map from "./map";
-import Quest from "./quest";
 import WorldItemType from "./world-item-type";
 
 declare global {
@@ -180,7 +182,7 @@ class WorldGenerator {
 
 	private loopWorld(
 		map: Map,
-		callback: ((v: WorldItemType, x: number, y: number, id: number, map: Map) => void)
+		callback: (v: WorldItemType, x: number, y: number, id: number, map: Map) => void
 	): void {
 		for (let y = 0; y < 10; y++) {
 			for (let x = 0; x < 10; x++) {
@@ -828,7 +830,7 @@ class WorldGenerator {
 
 	private _traverseZoneUntil<T>(
 		zone: Zone,
-		callback: ((_: Zone) => T),
+		callback: (_: Zone) => T,
 		defaultReturn: T,
 		predicate = (result: T) => result !== defaultReturn
 	): T {

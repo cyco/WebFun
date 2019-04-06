@@ -1,5 +1,5 @@
-import { KeyEvent } from "src/std/dom";
 import { EventTarget } from "src/util";
+import { KeyEvent } from "src/std/dom";
 
 export const Event = {
 	DidConfirm: "DidConfirm",

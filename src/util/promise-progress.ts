@@ -1,4 +1,4 @@
-import { default as PromiseProxy, Resolve, Reject } from "./promise-proxy";
+import { default as PromiseProxy, Reject, Resolve } from "./promise-proxy";
 
 type Progress = (v: number) => void;
 type Executor<T> = (resolve: Resolve<T>, reject: Reject, progress: Progress) => void;

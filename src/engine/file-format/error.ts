@@ -1,5 +1,5 @@
-import ParseError from "./parse-error";
 import { InputStream } from "src/util";
+import ParseError from "./parse-error";
 
 export const error = (message: string | Error | ParseError, _?: InputStream) => {
 	let error: ParseError = null;

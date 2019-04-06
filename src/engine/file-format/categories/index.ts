@@ -1,13 +1,14 @@
-import { parseActions, parseActionNames } from "./action";
-import { parseCharacters, parseCharacterAux, parseCharacterWeapons } from "./character";
+import { parseActionNames, parseActions } from "./action";
+import { parseCharacterAux, parseCharacterWeapons, parseCharacters } from "./character";
+import { parsePuzzleNames, parsePuzzles } from "./puzzle";
+import { parseTileNames, parseTiles } from "./tile";
+import { parseZaux, parseZax2, parseZax3, parseZax4, parseZoneNames, parseZones } from "./zone";
+
+import { parseEndOfFile } from "./end-of-file";
 import { parseHotspots } from "./hotspot";
-import { parsePuzzles, parsePuzzleNames } from "./puzzle";
 import { parseSetupImage } from "./setup-image";
 import { parseSounds } from "./sound";
-import { parseTiles, parseTileNames } from "./tile";
 import { parseVersion } from "./version";
-import { parseZones, parseZaux, parseZax2, parseZax3, parseZax4, parseZoneNames } from "./zone";
-import { parseEndOfFile } from "./end-of-file";
 
 export {
 	parseActions,

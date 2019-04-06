@@ -1,5 +1,5 @@
 import { HotspotType, ZoneType } from "src/engine/objects";
-import { randmod } from "src/util";
+
 import Engine from "../engine";
 import GameData from "../game-data";
 import Hotspot from "../objects/hotspot";
@@ -7,6 +7,7 @@ import World from "./world";
 import WorldGenerator from "./world-generator";
 import { WorldItem } from "src/engine/generation";
 import Yoda from "../yoda";
+import { randmod } from "src/util";
 
 class DagobahGenerator {
 	private _engine: Engine;

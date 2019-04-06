@@ -1,4 +1,5 @@
 import { Panel, Window } from "src/ui/components";
+
 import DataManager from "src/editor/data-manager";
 import WindowManager from "src/ui/window-manager";
 

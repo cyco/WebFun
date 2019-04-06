@@ -1,8 +1,9 @@
-import { Direction } from "src/util";
-import CharFrame from "./char-frame";
 import Type, { default as CharType } from "./char-type";
-import Tile from "./tile";
+
+import CharFrame from "./char-frame";
 import CharMovementType from "./char-movement-type";
+import { Direction } from "src/util";
+import Tile from "./tile";
 
 export { Type };
 

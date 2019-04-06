@@ -1,6 +1,8 @@
-import { dispatch, Point } from "src/util";
-import { document } from "src/std/dom";
 import "./modal-session.scss";
+
+import { Point, dispatch } from "src/util";
+
+import { document } from "src/std/dom";
 
 class ModalSession {
 	protected _overlay: HTMLDivElement;

@@ -1,9 +1,10 @@
+import { GameType, Indy, Yoda } from "src/engine/type";
+
 import { InputStream } from "src/util";
 import { assert } from "../error";
-import { parseHotspot } from "./hotspot";
 import { parseAction } from "./action";
+import { parseHotspot } from "./hotspot";
 import { parseNPC } from "./npc";
-import { GameType, Yoda, Indy } from "src/engine/type";
 
 const IZON = "IZON";
 const IZAX = "IZAX";

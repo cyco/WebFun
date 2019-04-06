@@ -1,4 +1,5 @@
 import AST, { default as ASTValue } from "./ast";
+
 import Symbol from "./symbol";
 import TaggedLineBuffer from "src/editor/components/action-editor/tagged-line-buffer";
 
@@ -39,7 +40,7 @@ class Printer {
 		}
 
 		if (this.isKeyword(action)) {
-			this._buffer.put((<Symbol>action).name, "keyword");
+			this._buffer.put((action as Symbol).name, "keyword");
 			return;
 		}
 

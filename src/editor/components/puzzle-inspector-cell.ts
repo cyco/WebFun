@@ -1,9 +1,11 @@
-import { Cell } from "src/ui/components";
-import { Puzzle, PuzzleType } from "src/engine/objects";
 import "./puzzle-inspector-cell.scss";
-import Tile from "src/engine/objects/tile";
-import { ExpandButton } from "src/editor/components";
+
+import { Puzzle, PuzzleType } from "src/engine/objects";
+
+import { Cell } from "src/ui/components";
 import { ColorPalette } from "src/engine/rendering";
+import { ExpandButton } from "src/editor/components";
+import Tile from "src/engine/objects/tile";
 import { TileView } from "src/debug/components";
 
 class PuzzleInspectorCell extends Cell<Puzzle> {
@@ -36,7 +38,7 @@ class PuzzleInspectorCell extends Cell<Puzzle> {
 		this._type.classList.add("type");
 		this._title.appendChild(this._type);
 
-		this._button = <ExpandButton>document.createElement(ExpandButton.tagName);
+		this._button = document.createElement(ExpandButton.tagName) as ExpandButton;
 		this._button.element = this;
 		this._title.appendChild(this._button);
 
@@ -45,7 +47,7 @@ class PuzzleInspectorCell extends Cell<Puzzle> {
 	}
 
 	public cloneNode(deep?: boolean): Node {
-		const node = <PuzzleInspectorCell>super.cloneNode(deep);
+		const node = super.cloneNode(deep) as PuzzleInspectorCell;
 		node.palette = this.palette;
 		return node;
 	}

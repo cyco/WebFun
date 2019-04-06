@@ -1,9 +1,10 @@
+import { Type, int16 } from "../types";
+
+import Condition from "../condition";
 import Engine from "../../engine";
 import Zone from "../../objects/zone";
-import { int16, Type } from "../types";
-import Condition from "../condition";
 
-export default <Condition>{
+export default {
 	Opcode: 0x02,
 	Name: "bump",
 	Arguments: [Type.Number, Type.Number, Type.Number],
@@ -20,7 +21,7 @@ export default <Condition>{
 
 		return false;
 	}
-};
+} as Condition;
 
 // TODO: validate against original implementation
 /*

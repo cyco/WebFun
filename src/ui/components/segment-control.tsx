@@ -1,12 +1,13 @@
-import Component from "../component";
-import Segment from "./segment";
-import { DiscardingStorage } from "src/util";
 import "./segment-control.scss";
+
+import Component from "../component";
+import { DiscardingStorage } from "src/util";
+import Segment from "./segment";
 
 class SegmentControl extends Component implements EventListenerObject {
 	public static readonly tagName = "wf-segmented-control";
 	private _currentSegment: Element;
-	public onsegmentchange: ((segment: Segment) => void);
+	public onsegmentchange: (segment: Segment) => void;
 	public state: Storage = new DiscardingStorage();
 
 	protected connectedCallback() {

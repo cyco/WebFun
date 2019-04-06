@@ -1,6 +1,8 @@
-import { PersistentState } from "src/engine";
-import { Textbox, AbstractWindow } from "src/ui/components";
 import "./statistics-window.scss";
+
+import { AbstractWindow, Textbox } from "src/ui/components";
+
+import { PersistentState } from "src/engine";
 
 class StatisticsWindow extends AbstractWindow {
 	public static readonly tagName = "wf-statistics-window";

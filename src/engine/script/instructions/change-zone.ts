@@ -1,13 +1,14 @@
+import { Result, Type } from "../types";
+
+import Action from "../../objects/action";
+import Engine from "../../engine";
+import Instruction from "../../objects/instruction";
+import InstructionType from "../instruction";
+import { Point } from "src/util";
 import { TransitionScene } from "src/engine/scenes";
 import ZoneScene from "src/engine/scenes/zone-scene";
-import { Point } from "src/util";
-import Engine from "../../engine";
-import Action from "../../objects/action";
-import Instruction from "../../objects/instruction";
-import { Result, Type } from "../types";
-import InstructionType from "../instruction";
 
-export default <InstructionType>{
+export default {
 	Opcode: 0x21,
 	Arguments: [Type.ZoneID, Type.ZoneX, Type.ZoneY],
 	Description: "Change current zone to `arg_0`. Hero will be placed at `arg_1`x`arg_2` in the new zone.",
@@ -18,7 +19,7 @@ export default <InstructionType>{
 		transitionScene.type = TransitionScene.TRANSITION_TYPE.ROOM;
 		transitionScene.targetHeroLocation = new Point(args[1], args[2]);
 		transitionScene.targetZone = engine.data.zones[args[0]];
-		transitionScene.scene = <ZoneScene>engine.sceneManager.currentScene;
+		transitionScene.scene = engine.sceneManager.currentScene as ZoneScene;
 
 		let world = engine.dagobah;
 		let location = world.locationOfZone(transitionScene.targetZone);
@@ -35,4 +36,4 @@ export default <InstructionType>{
 		engine.sceneManager.pushScene(transitionScene);
 		return Result.Void;
 	}
-};
+} as InstructionType;

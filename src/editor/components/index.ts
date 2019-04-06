@@ -1,18 +1,18 @@
+import PaletteView from "./palette-view";
+import PaletteImageEditor from "./palette-image-editor";
+import PaletteColorPicker from "./palette-color-picker";
+import ColorPicker from "./color-picker";
+import ColorWheel from "./color-wheel";
+import ZoneInspectorCell from "./zone-inspector-cell";
 import CharacterDetails from "./character-details";
 import CharacterFramePreview from "./character-frame-preview";
 import CharacterInspectorCell from "./character-inspector-cell";
-import ColorPicker from "./color-picker";
-import ColorWheel from "./color-wheel";
 import ExpandButton from "./expand-button";
-import PaletteView from "./palette-view";
 import PuzzleInspectorCell from "./puzzle-inspector-cell";
 import SoundInspectorCell from "./sound-inspector-cell";
 import TilePicker from "./tile-picker";
-import ZoneInspectorCell from "./zone-inspector-cell";
 import TilePickerCell from "./tile-picker-cell";
 import PopoverTilePicker from "./popover-tile-picker";
-import PaletteColorPicker from "./palette-color-picker";
-import PaletteImageEditor from "./palette-image-editor";
 import PopoverCharacterPicker from "./popover-character-picker";
 import {
 	Action as ZoneEditorAction,

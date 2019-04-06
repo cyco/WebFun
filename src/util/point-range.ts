@@ -6,12 +6,12 @@ class PointRange {
 
 	constructor(fromX: number | Point, fromY: number | Point, toX: number = null, toY: number = null) {
 		if (typeof fromX !== "object") {
-			fromX = new Point(fromX, <number>fromY);
+			fromX = new Point(fromX, fromY as number);
 			fromY = new Point(toX, toY);
 		}
 
 		this.from = fromX;
-		this.to = <Point>fromY;
+		this.to = fromY as Point;
 	}
 
 	iterate(callback: (_: Point, control: any) => void, step: any = new Point(1, 1)): void {

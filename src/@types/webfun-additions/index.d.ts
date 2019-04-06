@@ -25,7 +25,7 @@ interface RegExpConstructor {
 }
 
 interface Object {
-	each<T>(callback: ((key: string, value: T) => void)): void;
+	each<T>(callback: (key: string, value: T) => void): void;
 }
 
 interface NodeList {

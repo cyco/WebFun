@@ -1,9 +1,11 @@
-import { identity, Point } from "src/util";
+import "./window-titlebar.scss";
+
+import { Point, identity } from "src/util";
+
+import AbstractWindow from "./abstract-window";
 import Component from "../component";
 import Menu from "../menu";
 import Menubar from "./menubar";
-import AbstractWindow from "./abstract-window";
-import "./window-titlebar.scss";
 
 class WindowTitlebar extends Component {
 	public static readonly tagName = "wf-window-titlebar";
@@ -48,7 +50,7 @@ class WindowTitlebar extends Component {
 		}
 
 		if (m) {
-			this._menubar = <Menubar>document.createElement(Menubar.tagName);
+			this._menubar = document.createElement(Menubar.tagName) as Menubar;
 			this._menubar.menu = m;
 			if (this.isConnected) this.appendChild(this._menubar);
 		}

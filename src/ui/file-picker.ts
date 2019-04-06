@@ -7,7 +7,7 @@ class FilePicker implements FilePickerOptions {
 	public allowsMultipleFiles: boolean = false;
 	public allowedTypes: string[] = [];
 
-	constructor(options: FilePickerOptions = <FilePickerOptions>{}) {
+	constructor(options: FilePickerOptions = {}) {
 		if (options.allowsMultipleFiles !== undefined) this.allowsMultipleFiles = options.allowsMultipleFiles;
 
 		if (options.allowedTypes !== undefined) {

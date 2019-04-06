@@ -1,10 +1,12 @@
-import { AbstractWindow, ProgressIndicator } from "src/ui/components";
-import { Reader as SaveGameReaderFactory, SaveState } from "src/engine/save-game";
-import { GameData, ColorPalette } from "src/engine";
-import { InputStream } from "src/util";
-import { DataProvider, PaletteProvider } from "src/app/data";
-import EditorView from "./editor-view";
 import "./editor-window.scss";
+
+import { AbstractWindow, ProgressIndicator } from "src/ui/components";
+import { ColorPalette, GameData } from "src/engine";
+import { DataProvider, PaletteProvider } from "src/app/data";
+import { Reader as SaveGameReaderFactory, SaveState } from "src/engine/save-game";
+
+import EditorView from "./editor-view";
+import { InputStream } from "src/util";
 
 class EditorWindow extends AbstractWindow {
 	static readonly tagName = "wf-save-game-editor-window";

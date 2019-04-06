@@ -1,6 +1,6 @@
 import { Renderer } from "../rendering";
-import ZoneScene from "./zone-scene";
 import Scene from "./scene";
+import ZoneScene from "./zone-scene";
 import { ZoneType } from "src/engine/objects";
 
 class LoseScene extends Scene {

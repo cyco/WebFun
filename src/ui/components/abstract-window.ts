@@ -1,9 +1,11 @@
-import Component from "../component";
-import WindowTitlebar from "./window-titlebar";
 import "./abstract-window.scss";
+
+import { Point, PointLike } from "src/util";
+
+import Component from "../component";
 import Menu from "src/ui/menu";
-import { PointLike, Point } from "src/util";
 import WindowManager from "src/ui/window-manager";
+import WindowTitlebar from "./window-titlebar";
 
 export const Event = {
 	DidClose: "didClose"
@@ -21,7 +23,7 @@ abstract class AbstractWindow extends Component {
 	constructor() {
 		super();
 
-		this._titlebar = <WindowTitlebar>document.createElement(WindowTitlebar.tagName);
+		this._titlebar = document.createElement(WindowTitlebar.tagName) as WindowTitlebar;
 		this._content = document.createElement("div");
 		this._content.classList.add("content");
 	}
@@ -155,7 +157,7 @@ abstract class AbstractWindow extends Component {
 	set autosaveName(name: string) {
 		this._autosaveName = name;
 
-		const storedState = <PointLike>localStorage.load(this.stateKey);
+		const storedState = localStorage.load(this.stateKey) as PointLike;
 		if (storedState) {
 			this._x = storedState.x;
 			this._y = storedState.y;

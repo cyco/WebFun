@@ -1,10 +1,11 @@
-import { Point } from "src/util";
-import { ModalSession } from "src/ux";
-import MenuStack from "../menu-stack";
-import AbstractMenuView from "./abstract-menu-view";
-import MenuWindow from "./menu-window";
-import MenuItem from "./menu-item";
 import "./menubar.scss";
+
+import AbstractMenuView from "./abstract-menu-view";
+import MenuItem from "./menu-item";
+import MenuStack from "../menu-stack";
+import MenuWindow from "./menu-window";
+import { ModalSession } from "src/ux";
+import { Point } from "src/util";
 
 class Menubar extends AbstractMenuView {
 	public static readonly tagName = "wf-menubar";
@@ -105,7 +106,7 @@ class Menubar extends AbstractMenuView {
 			return;
 		}
 
-		const menuWindow = <MenuWindow>document.createElement(MenuWindow.tagName);
+		const menuWindow = document.createElement(MenuWindow.tagName) as MenuWindow;
 		menuWindow.menu = menuItem.submenu;
 		menuWindow.show(itemNode);
 		menuWindow.addEventListener("mouseup", this);
