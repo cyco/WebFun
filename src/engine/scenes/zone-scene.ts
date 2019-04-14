@@ -216,6 +216,8 @@ class ZoneScene extends Scene {
 				return true;
 			}
 			case HotspotType.Teleporter: {
+				if (!engine.inventory.contains(Yoda.ItemIDs.Locator)) return;
+
 				const scene = new TeleporterScene();
 				engine.sceneManager.pushScene(scene);
 				return true;
