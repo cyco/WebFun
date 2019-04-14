@@ -80,8 +80,8 @@ class RecordingInputManager extends InputManager {
 		this.implementation && this.implementation.removeListeners();
 	}
 
-	public clearPlacedTile() {
-		this.implementation && this.implementation.clearPlacedTile();
+	public clear() {
+		this.implementation && this.implementation.clear();
 	}
 
 	get mouseLocationInView() {

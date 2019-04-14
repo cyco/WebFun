@@ -511,20 +511,19 @@ class ZoneScene extends Scene {
 		const heroLocation = this.engine.hero.location;
 
 		if (!tile || !location) {
-			this.engine.inputManager.clearPlacedTile();
 			return ScriptResult.Done;
 		}
 
 		if (tile.id === Yoda.ItemIDs.ThermalDetonator) {
 			const scene = new DetonatorScene();
 			scene.detonatorLocation = location;
-			this.engine.inputManager.clearPlacedTile();
+			this.engine.inputManager.clear();
 			this.engine.sceneManager.pushScene(scene);
 			return ScriptResult.Void;
 		}
 
 		if (location.distanceTo(heroLocation) > Math.sqrt(2)) {
-			this.engine.inputManager.clearPlacedTile();
+			this.engine.inputManager.clear();
 			return ScriptResult.Done;
 		}
 

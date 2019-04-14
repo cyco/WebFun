@@ -26,7 +26,7 @@ abstract class InputManager {
 
 	public placedTile: Tile;
 	public placedTileLocation: Point;
-	public abstract clearPlacedTile(): void;
+	public abstract clear(): void;
 
 	// zone scene / locator sceen
 	public readonly locator: boolean;

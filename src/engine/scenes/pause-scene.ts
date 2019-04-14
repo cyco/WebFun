@@ -19,6 +19,10 @@ class PauseScene extends Scene {
 		this._image = image;
 	}
 
+	willShow() {
+		this.engine.inputManager.clear();
+	}
+
 	render(renderer: AbstractRenderer): void {
 		for (let x = 0; x < 9; x++) {
 			for (let y = 0; y < 9; y++) {
@@ -31,9 +35,13 @@ class PauseScene extends Scene {
 	async update(/*ticks*/) {
 		const engine = this.engine;
 		const inputManager = engine.inputManager;
-		if (!inputManager.pause) {
+		if (inputManager.pause) {
 			engine.sceneManager.popScene();
 		}
+	}
+
+	willHide() {
+		this.engine.inputManager.clear();
 	}
 
 	isOpaque() {
