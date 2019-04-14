@@ -5,6 +5,7 @@ module.exports = {
 		"prettier/@typescript-eslint",
 		"plugin:prettier/recommended"
 	],
+	plugins: ["eslint-plugin-react"],
 	parserOptions: {
 		ecmaVersion: 2018,
 		sourceType: "module"
@@ -12,6 +13,7 @@ module.exports = {
 	rules: {
 		eqeqeq: "error",
 		whitespace: [true, "check-module"],
+		"react/jsx-uses-vars": "error",
 		"member-ordering": [
 			true,
 			{
@@ -32,12 +34,7 @@ module.exports = {
 				alphabetize: false
 			}
 		],
-		"sort-imports": [
-			1,
-			{
-				memberSyntaxSortOrder: ["none", "all", "multiple", "single"]
-			}
-		],
+		"prefer-const": ["error", {"destructuring": "all"}],
 		"no-unused-vars": ["warn", { argsIgnorePattern: "^_[a-zA-Z0-9_]*$" }],
 		"@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_[a-zA-Z0-9_]*$" }],
 		"no-new-wrappers": "off",
@@ -45,7 +42,9 @@ module.exports = {
 		"@typescript-eslint/explicit-function-return-type": "off",
 		"@typescript-eslint/no-use-before-define": "off",
 		"@typescript-eslint/no-explicit-any": "off",
+		"@typescript-eslint/no-empty-interface": "off",
 		// temporarily disabled:
+		"sort-imports": "off",
 		"@typescript-eslint/explicit-member-accessibility": "off"
 	}
 };

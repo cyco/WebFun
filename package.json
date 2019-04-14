@@ -27,7 +27,7 @@
 		"world:validate:all": "node -- tools/bin/generate-world.bin.js -c -d \"./build/game-data/yoda.data\" -e \"./game-data/full.txt\" -a",
 		"build-tool": "webpack --config config/webpack.tool.js",
 		"build-tool:cont": "webpack --progress --config config/webpack.tool.js --watch",
-		"format": "eslint --fix 'src/**/*.{js,ts,tsx,jsx}' 'test/**/*.{js,ts,tsx,jsx}'"
+		"format": "eslint --fix 'src/**/*.{js,ts,tsx,jsx}'"
 	},
 	"babel": {
 		"presets": [
@@ -81,6 +81,7 @@
 		"eslint": "^5.16.0",
 		"eslint-config-prettier": "^4.1.0",
 		"eslint-plugin-prettier": "^3.0.1",
+		"eslint-plugin-react": "^7.12.4",
 		"file-loader": "^3.0.1",
 		"font-loader": "^0.1.2",
 		"fork-ts-checker-webpack-plugin": "^1.0.2",
