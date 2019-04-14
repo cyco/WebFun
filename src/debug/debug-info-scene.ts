@@ -35,10 +35,13 @@ class DebugInfoScene extends Scene {
 		const now = performance.now();
 		const currentFPS = 1000 / (now - this._lastFrame);
 		this._fps = this.smoothen(currentFPS, this._fps);
+
 		this._lastFrame = now;
 	}
 
 	private smoothen(value: number, lastValue: number, weight = 0.1) {
+		if (value === Infinity) return lastValue;
+
 		return value * weight + lastValue * (1 - weight);
 	}
 }
