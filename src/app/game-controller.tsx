@@ -180,6 +180,11 @@ class GameController extends EventTarget {
 
 		engine.inputManager.addListeners();
 		this._window.inventory.addEventListener(InventoryComponent.Events.ItemActivated, (e: CustomEvent) => {
+			if (!(engine.sceneManager.currentScene instanceof ZoneScene)) {
+				engine.sceneManager.popScene();
+				return;
+			}
+
 			if (!e.detail.item) return;
 			engine.metronome.stop();
 		});
