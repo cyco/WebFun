@@ -219,6 +219,7 @@ class GameController extends EventTarget {
 					.byFlooring();
 
 				if (!new Rectangle(new Point(0, 0), new Size(9, 9)).contains(pointInView)) {
+					engine.metronome.start();
 					return;
 				}
 
@@ -227,6 +228,7 @@ class GameController extends EventTarget {
 					this.engine.camera.offset.y
 				);
 				if (!new Rectangle(new Point(0, 0), this.engine.currentZone.size).contains(pointInZone)) {
+					engine.metronome.start();
 					return;
 				}
 
