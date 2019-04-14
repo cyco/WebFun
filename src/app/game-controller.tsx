@@ -179,9 +179,11 @@ class GameController extends EventTarget {
 		windowContent.appendChild(this._sceneView);
 
 		engine.inputManager.addListeners();
-		this._window.inventory.addEventListener(InventoryComponent.Events.ItemActivated, (_: CustomEvent) => {
+		this._window.inventory.addEventListener(InventoryComponent.Events.ItemActivated, (e: CustomEvent) => {
+			if (!e.detail.item) return;
 			engine.metronome.stop();
 		});
+
 		this._window.inventory.addEventListener(InventoryComponent.Events.ItemPlaced, (e: CustomEvent) => {
 			const location = e.detail.location as Point;
 			const item = e.detail.item as Tile;
