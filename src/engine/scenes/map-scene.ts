@@ -88,7 +88,7 @@ class MapScene extends Scene {
 		this.engine.sceneManager.pushScene(speechScene);
 	}
 
-	mouseDown(p: Point): void {
+	protected mouseDown(p: Point): void {
 		const worldHeightPx = World.HEIGHT * MapTileHeight;
 		const worldWidthPx = World.WIDTH * MapTileWidth;
 
@@ -115,42 +115,51 @@ class MapScene extends Scene {
 			world = this.engine.dagobah;
 		}
 		const zone = world.getZone(tileX, tileY);
+		if (!zone) {
+			return this.exitScene();
+		}
+
 		if (Settings.debug && this.engine.inputManager.drag && zone) {
-			this._exitScene();
-
-			const transitionScene = new TransitionScene();
-			transitionScene.type = TransitionScene.TRANSITION_TYPE.ROOM;
-			transitionScene.targetHeroLocation = engine.hero.location;
-			transitionScene.targetZone = zone;
-			transitionScene.scene = engine.sceneManager.currentScene as ZoneScene;
-
-			let world = engine.dagobah;
-			let location = world.locationOfZone(transitionScene.targetZone);
-			if (!location) {
-				world = engine.world;
-				location = world.locationOfZone(transitionScene.targetZone);
-			}
-			transitionScene.targetWorld = world;
-
-			if (!location) {
-				location = null;
-			}
-			transitionScene.targetZoneLocation = location;
-			engine.sceneManager.pushScene(transitionScene);
-
-			return;
+			return this.performDebugTeleportAndExit(zone);
 		}
 
-		if (!zone || (!Settings.revealWorld && !zone.visited) || zone.type === ZoneType.Empty) {
-			this._exitScene();
-			return;
+		if (!this.isZoneConsideredVisited(zone)) {
+			return this.exitScene();
 		}
 
-		const location = new Point(tileX, tileY);
-		const message = this._locatorDescription(location);
-		if (message) {
-			this._showText(message, location);
+		this.handleMouseDown(new Point(tileX, tileY), zone);
+	}
+
+	protected handleMouseDown(point: Point, _: Zone) {
+		const message = this._locatorDescription(point);
+		if (!message) return this.exitScene();
+
+		this._showText(message, point);
+	}
+
+	private performDebugTeleportAndExit(zone: Zone) {
+		const engine = this.engine;
+		this.exitScene();
+
+		const transitionScene = new TransitionScene();
+		transitionScene.type = TransitionScene.TRANSITION_TYPE.ROOM;
+		transitionScene.targetHeroLocation = engine.hero.location;
+		transitionScene.targetZone = zone;
+		transitionScene.scene = engine.sceneManager.currentScene as ZoneScene;
+
+		let world = engine.dagobah;
+		let location = world.locationOfZone(transitionScene.targetZone);
+		if (!location) {
+			world = engine.world;
+			location = world.locationOfZone(transitionScene.targetZone);
 		}
+		transitionScene.targetWorld = world;
+
+		if (!location) {
+			location = null;
+		}
+		transitionScene.targetZoneLocation = location;
+		engine.sceneManager.pushScene(transitionScene);
 	}
 
 	private _locatorDescription(at: Point): string {
@@ -235,7 +244,7 @@ class MapScene extends Scene {
 		}
 	}
 
-	private _exitScene() {
+	protected exitScene() {
 		this.engine.sceneManager.popScene();
 	}
 
@@ -311,9 +320,17 @@ class MapScene extends Scene {
 
 	private _tileForZone(zone: Zone): Tile {
 		let tile = this._locatorTile.forZone(zone, zone && zone.visited, Settings.revealWorld);
-		if (tile instanceof Array) tile = tile[zone && zone.solved ? 1 : 0];
+		if (tile instanceof Array) tile = tile[zone && this.isZoneConsideredSolved(zone) ? 1 : 0];
 
 		return this.engine.data.tiles[tile];
+	}
+
+	protected isZoneConsideredSolved(zone: Zone): boolean {
+		return zone.solved;
+	}
+
+	protected isZoneConsideredVisited(zone: Zone) {
+		return zone.visited || Settings.revealWorld;
 	}
 }
 
