@@ -34,7 +34,7 @@ function findColor(r: number, g: number, b: number, a: number = 255): number {
 }
 
 function toGIMP(name: string): string {
-	let out: string = "";
+	let out = "";
 
 	out += `GIMP Palette` + "\n";
 	out += `Name: ${name}` + "\n";

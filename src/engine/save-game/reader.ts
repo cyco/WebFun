@@ -8,7 +8,10 @@ import SaveState from "./save-state";
 import World from "./world";
 import WorldItem from "./world-item";
 
-type Range = { start: number; end: number };
+interface Range {
+	start: number;
+	end: number;
+}
 
 abstract class Reader {
 	protected _stream: InputStream;

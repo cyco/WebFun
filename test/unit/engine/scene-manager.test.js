@@ -8,16 +8,16 @@ describe("SceneManager", () => {
 	});
 
 	it("is in charge of managing the stack of scenes visible during gameplay", () => {
-		const scene1 = new class extends Scene {
+		const scene1 = new (class extends Scene {
 			render() {}
 
 			update() {}
-		}();
-		const scene2 = new class extends Scene {
+		})();
+		const scene2 = new (class extends Scene {
 			render() {}
 
 			update() {}
-		}();
+		})();
 
 		subject.pushScene(scene1);
 		subject.pushScene(scene2);

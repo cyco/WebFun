@@ -1,4 +1,4 @@
-import { default as Color, rgb, rgba, rgb2rgba, hsv2rgb, rgb2hsv } from "src/util/color";
+import { default as Color, hsv2rgb, rgb, rgb2hsv, rgb2rgba, rgba } from "src/util/color";
 
 describe("WebFun.Util.Color", () => {
 	it("defines two funtions in the global namespace", () => {

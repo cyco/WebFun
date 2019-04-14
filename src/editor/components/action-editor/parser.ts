@@ -138,7 +138,7 @@ class Parser {
 
 	private readSymbol(scanner: Scanner): Symbol | boolean {
 		let c,
-			name: string = "",
+			name = "",
 			startingOffset = scanner.offset;
 
 		do {

@@ -1,4 +1,4 @@
-import { rand, srand, randmod } from "src/util/random";
+import { rand, randmod, srand } from "src/util/random";
 
 describe("WebFun.Util.Random", () => {
 	it("defines the functions srand and rand", () => {

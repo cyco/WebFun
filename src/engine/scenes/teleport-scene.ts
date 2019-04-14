@@ -1,7 +1,7 @@
 import MapScene from "./map-scene";
 import TransitionScene from "./transition-scene";
 import ZoneScene from "./zone-scene";
-import { Zone, HotspotType } from "src/engine/objects";
+import { HotspotType, Zone } from "src/engine/objects";
 import { Point } from "src/util";
 
 class TeleportScene extends MapScene {

@@ -1,5 +1,5 @@
 import { getFixtureData } from "test-helpers/fixture-loading";
-import { GameData, readGameDataFile, GameTypeYoda, GameTypeIndy } from "src/engine";
+import { GameData, GameTypeIndy, GameTypeYoda, readGameDataFile } from "src/engine";
 import { InputStream } from "src/util";
 
 describe("DataReading", () => {

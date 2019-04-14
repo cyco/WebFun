@@ -3,10 +3,10 @@ import "./sound-inspector-cell.scss";
 import Settings from "../../settings";
 import { Cell, Label } from "src/ui/components";
 
-type Sound = {
+interface Sound {
 	id: number;
 	file: string;
-};
+}
 
 class SoundInspectorCell extends Cell<Sound> {
 	public static readonly tagName = "wf-sound-inspector-cell";

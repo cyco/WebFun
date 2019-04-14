@@ -1,6 +1,6 @@
 import BaseLocatorTile from "src/engine/types/locator-tile";
 import LocatorTile from "src/engine/type/indy/locator-tile";
-import { ZoneType, HotspotType } from "src/engine/objects";
+import { HotspotType, ZoneType } from "src/engine/objects";
 
 describe("WebFun.Engine.Type.Indy.LocatorTile", () => {
 	let subject;

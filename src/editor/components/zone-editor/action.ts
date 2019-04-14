@@ -2,11 +2,11 @@ import "./action.scss";
 
 import { Component } from "src/ui";
 
-export type ActionDescription = {
+export interface ActionDescription {
 	name: string;
 	icon?: string;
 	command: () => void;
-};
+}
 
 class Action extends Component {
 	static readonly tagName = "wf-zone-editor-action";

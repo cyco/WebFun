@@ -8,4 +8,4 @@ export default {
 	Arguments: [],
 	Description: "True if the current zone is solved",
 	Implementation: async (_: int16[], zone: Zone, _engine: Engine): Promise<boolean> => zone.solved
-} as Condition; 
+} as Condition;
