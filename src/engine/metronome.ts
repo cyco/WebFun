@@ -67,16 +67,18 @@ class Metronome {
 	public async withSuspendedUpdates<T>(thing: Function | Promise<T>) {
 		console.assert(!this._updatesSuspended, "withSuspendedUpdates does not support reentry");
 		this._updatesSuspended = true;
+		try {
+			if (thing instanceof Promise) {
+				await thing;
+			}
 
-		if (thing instanceof Promise) {
-			await thing;
+			if (thing instanceof Function) {
+				await thing();
+			}
+		} catch (e) {
+		} finally {
+			this._updatesSuspended = false;
 		}
-
-		if (thing instanceof Function) {
-			await thing();
-		}
-
-		this._updatesSuspended = false;
 	}
 }
 
