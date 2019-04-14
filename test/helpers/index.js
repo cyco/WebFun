@@ -1,10 +1,10 @@
 import "@babel/polyfill";
 
 import "src/extension";
-import { global, console } from "src/std";
+import { console, global } from "src/std";
 import { describeComponent, fdescribeComponent, xdescribeComponent } from "./component";
 import "./matchers";
-import { getFixtureData, buildFixtureUrl } from "./fixture-loading";
+import { buildFixtureUrl, getFixtureData } from "./fixture-loading";
 
 import render from "./render";
 import { ComponentJSXRenderer } from "src/ui";

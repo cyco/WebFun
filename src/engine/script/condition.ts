@@ -1,9 +1,9 @@
 import { ConditionImplementation, Type } from "./types";
 
-type Condition = {
+interface Condition {
 	Opcode: number;
 	Implementation: ConditionImplementation;
 	Description?: string;
 	Arguments?: Type[];
-};
+}
 export default Condition;

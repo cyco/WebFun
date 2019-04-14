@@ -16,4 +16,4 @@ export default {
 	 if ( mode != JustEntered )
 	 goto condition_NOT_satisfied,
 	 */
-} as Condition; 
+} as Condition;

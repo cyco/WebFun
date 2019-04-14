@@ -10,7 +10,10 @@ const enum Island {
 	West = 0
 }
 
-type Run = { length: number; start: number };
+interface Run {
+	length: number;
+	start: number;
+}
 
 class IslandBuilder {
 	private typeMap: Map;

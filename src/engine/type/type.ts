@@ -2,10 +2,10 @@ import { Char, Tile } from "../objects";
 
 import LocatorTile from "../types/locator-tile";
 
-type WellKnownSounds = {
+interface WellKnownSounds {
 	NoGo: number;
 	Hurt: number;
-};
+}
 
 abstract class GameType {
 	public readonly name: string;

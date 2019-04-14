@@ -15,6 +15,9 @@ import TilePickerCell from "./tile-picker-cell";
 import PopoverTilePicker from "./popover-tile-picker";
 import PopoverCharacterPicker from "./popover-character-picker";
 import {
+	HotspotLayer,
+	NPCLayer,
+	NPCLayerNPC,
 	Action as ZoneEditorAction,
 	Sidebar as ZoneEditorSidebar,
 	SidebarCell as ZoneEditorSidebarCell,
@@ -23,10 +26,7 @@ import {
 	Tool as ZoneEditorTool,
 	View as ZoneEditorView,
 	Window as ZoneEditorWindow,
-	ZoneLayer,
-	HotspotLayer,
-	NPCLayer,
-	NPCLayerNPC
+	ZoneLayer
 } from "./zone-editor";
 import { Editor as ActionEditor, Token as ActionEditorToken } from "./action-editor";
 import { Editor as TileEditor } from "./tile-editor";

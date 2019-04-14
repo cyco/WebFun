@@ -1,5 +1,5 @@
 import toImageData from "src/extension/image/to-image-data";
-import { Image, HTMLImageElement, ImageData } from "src/std/dom";
+import { HTMLImageElement, Image, ImageData } from "src/std/dom";
 
 describe("WebFun.Extension.Image.toImageData", () => {
 	let subject;

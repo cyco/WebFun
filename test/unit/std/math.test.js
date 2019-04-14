@@ -1,5 +1,5 @@
 import { global } from "src/std";
-import { floor, ceil, round } from "src/std/math";
+import { ceil, floor, round } from "src/std/math";
 
 describe("std/math", () => {
 	it("exports functions from global.Math", () => {

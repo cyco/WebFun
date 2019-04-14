@@ -1,5 +1,5 @@
 import toImage from "src/extension/image-data/to-image";
-import { Image, HTMLImageElement, ImageData } from "src/std/dom";
+import { HTMLImageElement, Image, ImageData } from "src/std/dom";
 
 describe("WebFun.Extension.ImageData.toImage", () => {
 	it("is an extension of ImageData to allow conversion to an HTMLImageElement", () => {
@@ -43,14 +43,14 @@ describe("WebFun.Extension.ImageData.toImage", () => {
 	});
 
 	it("rejects the promise if conversion fails", async done => {
-		const imageMock = new class {
+		const imageMock = new (class {
 			set src(_) {
 				setTimeout(() => imageMock.onerror());
 			}
 			get src() {
 				return null;
 			}
-		}();
+		})();
 
 		const originalCreateElement = document.createElement;
 		spyOn(document, "createElement").and.callFake(tag =>

@@ -74,7 +74,7 @@ class Printer {
 		}
 	}
 
-	private putList(action: Array<ASTValue>, unchopped: number = 0, indentation: number = 0) {
+	private putList(action: ASTValue[], unchopped: number = 0, indentation: number = 0) {
 		this._buffer.put("(");
 
 		const chop = unchopped !== 0;

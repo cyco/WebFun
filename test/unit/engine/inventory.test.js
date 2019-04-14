@@ -1,4 +1,4 @@
-import { default as Inventory, Events } from "src/engine/inventory";
+import { Events, default as Inventory } from "src/engine/inventory";
 import { Yoda } from "src/engine";
 
 describe("Inventory", () => {

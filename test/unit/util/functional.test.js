@@ -1,4 +1,4 @@
-import { and, or, not } from "src/util/functional";
+import { and, not, or } from "src/util/functional";
 
 describe("WebFun.Util.functional", () => {
 	describe("and", () => {

@@ -1,6 +1,6 @@
 import loadGameData from "test-helpers/game-data";
 import { getFixtureData } from "test-helpers/fixture-loading";
-import { Yoda, Indy } from "src/engine/type";
+import { Indy, Yoda } from "src/engine/type";
 import { InputStream } from "src/util";
 import { Reader } from "src/engine/save-game";
 import { GameData } from "src/engine";

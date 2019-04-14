@@ -19,9 +19,16 @@ class AssemblerInputError extends Error {
 	}
 }
 
-type ASTFunctionDefinition = [Symbol, Symbol, AST, Array<AST>];
-type Opcode = { Opcode: number; Arguments: Type[]; UsesText?: boolean; Description: string };
-type OpcodeMap = { [_: string]: Opcode };
+type ASTFunctionDefinition = [Symbol, Symbol, AST, AST[]];
+interface Opcode {
+	Opcode: number;
+	Arguments: Type[];
+	UsesText?: boolean;
+	Description: string;
+}
+interface OpcodeMap {
+	[_: string]: Opcode;
+}
 
 const Conditions = ConditionsByName as OpcodeMap;
 const Instructions = InstructionsByName as OpcodeMap;
@@ -62,7 +69,7 @@ class Assembler {
 	}
 
 	private validateInputStructure(input: AST): ASTFunctionDefinition {
-		let inputArray = input as Array<AST>;
+		let inputArray = input as AST[];
 
 		if (!(input instanceof Array)) throw new AssemblerInputError("Input must be an array.", input);
 		if (inputArray[0] !== s`defaction`)
@@ -71,7 +78,7 @@ class Assembler {
 		return input.slice() as ASTFunctionDefinition;
 	}
 
-	private parseAnd(body: Array<AST>): [Condition[], Instruction[]] {
+	private parseAnd(body: AST[]): [Condition[], Instruction[]] {
 		// drop and-symbol
 		const and = body.shift();
 		if (and !== s`and`) throw new AssemblerInputError("Invalid input", body);

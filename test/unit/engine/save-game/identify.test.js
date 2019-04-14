@@ -1,5 +1,5 @@
 import identify from "src/engine/save-game/identify";
-import { Yoda, Indy } from "src/engine/type";
+import { Indy, Yoda } from "src/engine/type";
 
 describe("WebFun.Engine.SaveGame.identify", () => {
 	it("identifies yoda's save games correctly", () => {
