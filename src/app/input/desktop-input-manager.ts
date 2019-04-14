@@ -35,9 +35,11 @@ class DesktopInputManager extends InputManager implements EventListenerObject {
 		return this._lastMouse;
 	}
 
-	public clearPlacedTile(): void {
+	public clear(): void {
 		this.placedTileLocation = null;
 		this.placedTile = null;
+		this.locator = false;
+		this.pause = false;
 	}
 
 	public addListeners() {
@@ -50,6 +52,8 @@ class DesktopInputManager extends InputManager implements EventListenerObject {
 	}
 
 	public handleEvent(event: MouseEvent | KeyboardEvent) {
+		if ("repeat" in event && event.repeat) return;
+
 		switch (event.type) {
 			case "keydown":
 				this.preferKeyboard = true;

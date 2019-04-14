@@ -40,6 +40,7 @@ class MapScene extends Scene {
 
 		this._ticks = 4;
 		this._location = this.engine.data.tiles[this._locatorTile.here];
+		this.engine.inputManager.clear();
 		this.engine.inputManager.mouseDownHandler = (p: Point) => this.mouseDown(p);
 		this.engine.inputManager.keyDownHandler = (e: KeyboardEvent) => {
 			this._cheatInput.addCharacter(String.fromCharCode(e.keyCode).toLowerCase());
@@ -49,10 +50,16 @@ class MapScene extends Scene {
 	willHide() {
 		this.engine.inputManager.mouseDownHandler = () => void 0;
 		this.engine.inputManager.keyDownHandler = () => void 0;
+		this.engine.inputManager.clear();
 	}
 
 	async update(/*ticks*/) {
 		const engine = this.engine;
+		if (engine.inputManager.locator) {
+			this.exitScene();
+			return;
+		}
+
 		const cheatMessages = this._cheatInput.execute(engine);
 		if (cheatMessages.length) {
 			this._cheatInput.reset();
