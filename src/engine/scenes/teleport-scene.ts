@@ -15,23 +15,25 @@ class TeleportScene extends MapScene {
 		const engine = this.engine;
 		this.exitScene();
 
-		const transitionScene = new TransitionScene();
-		transitionScene.type = TransitionScene.TRANSITION_TYPE.ROOM;
-		transitionScene.targetHeroLocation = engine.hero.location;
-		transitionScene.targetZone = zone;
-		transitionScene.scene = engine.sceneManager.currentScene as ZoneScene;
+		const target = zone.hotspots.withType(HotspotType.Teleporter).find(htsp => htsp.enabled);
+		if (!target) return;
+
+		const scene = new TransitionScene();
+		scene.type = TransitionScene.TRANSITION_TYPE.ROOM;
+		scene.targetHeroLocation = target.location;
+		scene.targetZone = zone;
+		scene.scene = engine.sceneManager.currentScene as ZoneScene;
 
 		let world = engine.dagobah;
-		let location = world.locationOfZone(transitionScene.targetZone);
+		let location = world.locationOfZone(scene.targetZone);
 		if (!location) {
 			world = engine.world;
-			location = world.locationOfZone(transitionScene.targetZone);
+			location = world.locationOfZone(scene.targetZone);
 		}
-		transitionScene.targetWorld = world;
-		transitionScene.targetZoneLocation = zone.hotspots
-			.withType(HotspotType.Teleporter)
-			.find(htsp => htsp.enabled).location;
-		engine.sceneManager.pushScene(transitionScene);
+
+		scene.targetWorld = world;
+		scene.targetZoneLocation = engine.currentWorld.locationOfZone(zone);
+		engine.sceneManager.pushScene(scene);
 	}
 }
 

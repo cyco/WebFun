@@ -53,12 +53,7 @@ class MapScene extends Scene {
 
 	async update(/*ticks*/) {
 		const engine = this.engine;
-		const inputManager = engine.inputManager;
-		if (!inputManager.locator) {
-			engine.sceneManager.popScene();
-		}
-
-		let cheatMessages = this._cheatInput.execute(engine);
+		const cheatMessages = this._cheatInput.execute(engine);
 		if (cheatMessages.length) {
 			this._cheatInput.reset();
 			this._showText(cheatMessages.first(), this.engine.temporaryState.worldLocation);

@@ -13,6 +13,7 @@ import Scene from "./scene";
 import TransitionScene from "./transition-scene";
 import { Yoda } from "src/engine";
 import ZoneSceneRenderer from "src/engine/rendering/zone-scene-renderer";
+import TeleporterScene from "./teleport-scene";
 
 class ZoneScene extends Scene {
 	private _zone: Zone;
@@ -91,12 +92,12 @@ class ZoneScene extends Scene {
 
 				if (waysOut.length !== 1) console.warn("Found multiple doors out");
 
-				const transitionScene = new TransitionScene();
-				transitionScene.type = TransitionScene.TRANSITION_TYPE.ROOM;
-				transitionScene.targetHeroLocation = new Point(waysOut.first().x, waysOut.first().y);
-				transitionScene.targetZone = targetZone;
+				const scene = new TransitionScene();
+				scene.type = TransitionScene.TRANSITION_TYPE.ROOM;
+				scene.targetHeroLocation = new Point(waysOut.first().x, waysOut.first().y);
+				scene.targetZone = targetZone;
 				console.assert(engine.sceneManager.currentScene instanceof ZoneScene);
-				transitionScene.scene = engine.sceneManager.currentScene as ZoneScene;
+				scene.scene = engine.sceneManager.currentScene as ZoneScene;
 
 				let world = engine.dagobah;
 				let location = world.locationOfZone(targetZone);
@@ -104,7 +105,7 @@ class ZoneScene extends Scene {
 					world = engine.world;
 					location = world.locationOfZone(targetZone);
 				}
-				transitionScene.targetWorld = world;
+				scene.targetWorld = world;
 
 				targetZone.hotspots
 					.filter((hotspot: Hotspot) => {
@@ -116,8 +117,8 @@ class ZoneScene extends Scene {
 					world = null;
 					location = null;
 				}
-				transitionScene.targetZoneLocation = location;
-				engine.sceneManager.pushScene(transitionScene);
+				scene.targetZoneLocation = location;
+				engine.sceneManager.pushScene(scene);
 				return true;
 			}
 			case HotspotType.DoorOut: {
@@ -138,12 +139,12 @@ class ZoneScene extends Scene {
 				if (waysIn.length !== 1) console.warn("Found multiple doors we might have come through!");
 				if (waysIn.length === 0) console.warn("Found no active door to return to zone");
 
-				const transitionScene = new TransitionScene();
-				transitionScene.type = TransitionScene.TRANSITION_TYPE.ROOM;
-				transitionScene.targetHeroLocation = new Point(waysIn.first().x, waysIn.first().y);
-				transitionScene.targetZone = targetZone;
+				const scene = new TransitionScene();
+				scene.type = TransitionScene.TRANSITION_TYPE.ROOM;
+				scene.targetHeroLocation = new Point(waysIn.first().x, waysIn.first().y);
+				scene.targetZone = targetZone;
 				console.assert(engine.sceneManager.currentScene instanceof ZoneScene);
-				transitionScene.scene = engine.sceneManager.currentScene as ZoneScene;
+				scene.scene = engine.sceneManager.currentScene as ZoneScene;
 
 				let world = engine.dagobah;
 				let location = world.locationOfZone(targetZone);
@@ -151,14 +152,14 @@ class ZoneScene extends Scene {
 					world = engine.world;
 					location = world.locationOfZone(targetZone);
 				}
-				transitionScene.targetWorld = world;
+				scene.targetWorld = world;
 
 				if (!location) {
 					world = null;
 					location = null;
 				}
-				transitionScene.targetZoneLocation = location;
-				engine.sceneManager.pushScene(transitionScene);
+				scene.targetZoneLocation = location;
+				engine.sceneManager.pushScene(scene);
 				return true;
 			}
 			case HotspotType.xWingFromD: {
@@ -166,15 +167,15 @@ class ZoneScene extends Scene {
 
 				const targetZone = engine.data.zones[hotspot.arg];
 
-				const transitionScene = new TransitionScene();
-				transitionScene.type = TransitionScene.TRANSITION_TYPE.ROOM;
+				const scene = new TransitionScene();
+				scene.type = TransitionScene.TRANSITION_TYPE.ROOM;
 				const otherHotspot = targetZone.hotspots.withType(HotspotType.xWingToD).first();
-				transitionScene.targetHeroLocation = otherHotspot
+				scene.targetHeroLocation = otherHotspot
 					? new Point(otherHotspot.x, otherHotspot.y)
 					: new Point(0, 0);
-				transitionScene.targetZone = targetZone;
+				scene.targetZone = targetZone;
 				console.assert(engine.sceneManager.currentScene instanceof ZoneScene);
-				transitionScene.scene = engine.sceneManager.currentScene as ZoneScene;
+				scene.scene = engine.sceneManager.currentScene as ZoneScene;
 
 				const world = engine.world;
 				const location = world.locationOfZone(targetZone);
@@ -182,9 +183,9 @@ class ZoneScene extends Scene {
 					// zone is not on the current planet
 					return;
 				}
-				transitionScene.targetWorld = world;
-				transitionScene.targetZoneLocation = location;
-				engine.sceneManager.pushScene(transitionScene);
+				scene.targetWorld = world;
+				scene.targetZoneLocation = location;
+				engine.sceneManager.pushScene(scene);
 				this.engine.temporaryState.enteredByPlane = true;
 				return true;
 			}
@@ -193,25 +194,30 @@ class ZoneScene extends Scene {
 
 				const targetZone = engine.data.zones[hotspot.arg];
 
-				const transitionScene = new TransitionScene();
-				transitionScene.type = TransitionScene.TRANSITION_TYPE.ROOM;
+				const scene = new TransitionScene();
+				scene.type = TransitionScene.TRANSITION_TYPE.ROOM;
 				const otherHotspot = targetZone.hotspots.withType(HotspotType.xWingFromD).first();
-				transitionScene.targetHeroLocation = otherHotspot
+				scene.targetHeroLocation = otherHotspot
 					? new Point(otherHotspot.x, otherHotspot.y)
 					: new Point(0, 0);
-				transitionScene.targetZone = targetZone;
+				scene.targetZone = targetZone;
 				console.assert(engine.sceneManager.currentScene instanceof ZoneScene);
-				transitionScene.scene = engine.sceneManager.currentScene as ZoneScene;
+				scene.scene = engine.sceneManager.currentScene as ZoneScene;
 
 				const location = engine.dagobah.locationOfZone(targetZone);
 				if (!location) {
 					// zone is not on dagobah
 					return;
 				}
-				transitionScene.targetWorld = engine.dagobah;
-				transitionScene.targetZoneLocation = location;
-				engine.sceneManager.pushScene(transitionScene);
+				scene.targetWorld = engine.dagobah;
+				scene.targetZoneLocation = location;
+				engine.sceneManager.pushScene(scene);
 				this.engine.temporaryState.enteredByPlane = true;
+				return true;
+			}
+			case HotspotType.Teleporter: {
+				const scene = new TeleporterScene();
+				engine.sceneManager.pushScene(scene);
 				return true;
 			}
 		}
@@ -349,8 +355,6 @@ class ZoneScene extends Scene {
 			hero.face(direction);
 			if (inputManager.walk) await this._moveHero(direction);
 		}
-
-		return;
 	}
 
 	private async _handleKeys(): Promise<boolean> {
@@ -476,6 +480,7 @@ class ZoneScene extends Scene {
 			) {
 				continue;
 			}
+
 			const itemID = hotspot.arg;
 			if (itemID === -1) return;
 			const currentTile = this.zone.getTileID(at.x, at.y, 1);
