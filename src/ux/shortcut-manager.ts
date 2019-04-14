@@ -68,7 +68,7 @@ class ShortcutManager implements EventListenerObject {
 		const isInNode = ([{ node }]: RegisteredShortcut) =>
 			!node || (this._node && node.contains(this._node));
 
-		let [, callback] = this._shortcuts.find(
+		const [, callback] = this._shortcuts.find(
 			and(identity, keyCodeMatches, ctrlKeyMatches, metaKeyMatches, isInNode)
 		) || [null, null];
 

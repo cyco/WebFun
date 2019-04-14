@@ -119,11 +119,11 @@ class Slider extends Component {
 		this._knob.classList.add("thumb");
 		this.appendChild(this._knob);
 
-		let mouseCoordinates = {
+		const mouseCoordinates = {
 			x: 0,
 			y: 0
 		};
-		let buttonCoordinates = {
+		const buttonCoordinates = {
 			x: 0,
 			y: 0
 		};
@@ -139,7 +139,7 @@ class Slider extends Component {
 		};
 
 		const mouseMove = (e: MouseEvent) => {
-			let difX = e.pageX - mouseCoordinates.x;
+			const difX = e.pageX - mouseCoordinates.x;
 
 			const buttonWidth = 16;
 			const width = this.getBoundingClientRect().width - 2 * buttonWidth;

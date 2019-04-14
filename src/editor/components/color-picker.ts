@@ -107,16 +107,6 @@ class ColorPicker extends Component {
 		if (attr === "color" && oldValue !== newValue) this.color = newValue;
 	}
 
-	set color(c: string | Color) {
-		this._color = new Color(c);
-
-		const [, , v] = this._color.hsvComponents;
-		this._brightnessInput.value = `${Math.round(v * 255)}`;
-		this._wheel.setAttribute("color", `${this._color}`);
-
-		this.updateState();
-	}
-
 	private updateState() {
 		const [r, g, b] = this._color.rgbComponents;
 		this._redInput.value = `${r}`;
@@ -127,6 +117,16 @@ class ColorPicker extends Component {
 
 	get color() {
 		return this._color;
+	}
+
+	set color(c: string | Color) {
+		this._color = new Color(c);
+
+		const [, , v] = this._color.hsvComponents;
+		this._brightnessInput.value = `${Math.round(v * 255)}`;
+		this._wheel.setAttribute("color", `${this._color}`);
+
+		this.updateState();
 	}
 }
 

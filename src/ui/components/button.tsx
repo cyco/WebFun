@@ -6,7 +6,7 @@ class Button extends AbstractIconButton {
 	public static readonly tagName = "wf-button";
 	public static observedAttributes = ["icon", "label"];
 
-	private _label: HTMLSpanElement = <span style={{ display: "none" } as CSSStyleDeclaration} />;
+	private _label: HTMLSpanElement = <span style={{ display: "none" }} />;
 
 	protected connectedCallback(): void {
 		super.connectedCallback();

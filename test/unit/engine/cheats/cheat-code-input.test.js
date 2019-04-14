@@ -1,8 +1,6 @@
 import CheatCodeInput from "src/engine/cheats/cheat-code-input";
 
 describe("CheatCodeInput", () => {
-	let subject;
-
 	let cheatExecuted = false;
 	const mockCheat = {
 		code: "test",

@@ -29,11 +29,6 @@ class ZoneView extends Component implements EventListenerObject {
 		super.disconnectedCallback();
 	}
 
-	set zone(zone: Zone) {
-		this._zone = zone;
-		this.redraw();
-	}
-
 	private redraw() {
 		const ctx = this._canvas.getContext("2d");
 		const zone = this._zone;
@@ -57,6 +52,11 @@ class ZoneView extends Component implements EventListenerObject {
 		const image = drawZoneImageData(zone, this.palette);
 		ctx.clearRect(0, 0, zone.size.width * TileWidth, zone.size.height * TileHeight);
 		ctx.putImageData(image, 0, 0);
+	}
+
+	set zone(zone: Zone) {
+		this._zone = zone;
+		this.redraw();
 	}
 
 	get zone() {

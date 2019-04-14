@@ -75,8 +75,8 @@ class MapScene extends Scene {
 		const worldHeightPx = World.HEIGHT * MapTileHeight;
 		const worldWidthPx = World.WIDTH * MapTileWidth;
 
-		let offsetX = (ViewWidth - worldWidthPx) / (2 * ViewWidth);
-		let offsetY = (ViewHeight - worldHeightPx) / (2 * ViewHeight) - 1.5 * Tile.HEIGHT;
+		const offsetX = (ViewWidth - worldWidthPx) / (2 * ViewWidth);
+		const offsetY = (ViewHeight - worldHeightPx) / (2 * ViewHeight) - 1.5 * Tile.HEIGHT;
 
 		speechScene.offset = new Point(offsetX, offsetY);
 
@@ -185,7 +185,7 @@ class MapScene extends Scene {
 			if (attributes & 0x40000) return aPart;
 			if (attributes & 0x80000) return aValuable;
 			if (attributes & 0x10000) {
-				if (tile.id == 531 || tile.id == 645 || tile.id == 1087 || tile.id == 1075) {
+				if (tile.id === 531 || tile.id === 645 || tile.id === 1087 || tile.id === 1075) {
 					return aTool;
 				}
 				return aKeyCard;

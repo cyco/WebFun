@@ -69,7 +69,7 @@ class Assembler {
 	}
 
 	private validateInputStructure(input: AST): ASTFunctionDefinition {
-		let inputArray = input as AST[];
+		const inputArray = input as AST[];
 
 		if (!(input instanceof Array)) throw new AssemblerInputError("Input must be an array.", input);
 		if (inputArray[0] !== s`defaction`)

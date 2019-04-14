@@ -43,11 +43,11 @@ class MenuStack extends EventTarget {
 	}
 
 	pop(menu: MenuWindow): void {
-		let index = this._stack.indexOf(menu);
+		const index = this._stack.indexOf(menu);
 		if (index === -1) return;
 
 		for (let i = this._stack.length; i > index; i--) {
-			let menu = this._stack[i - 1];
+			const menu = this._stack[i - 1];
 			menu.close();
 			this._stack.pop();
 		}

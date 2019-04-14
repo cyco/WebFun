@@ -66,15 +66,15 @@ class ZoneSceneRenderer {
 			if (z === 1) {
 				if (hero.visible) {
 					let appearance = hero._appearance;
-					let frame = hero._actionFrames;
+					const frame = hero._actionFrames;
 					if ((hero as any)._attacking) {
 						appearance = hero.weapon;
 					}
 
 					const tile = appearance.getFace(hero._direction, frame);
 					if (tile) {
-						let x = hero._location.x + offset.x;
-						let y = hero._location.y + offset.y;
+						const x = hero._location.x + offset.x;
+						const y = hero._location.y + offset.y;
 						if (x >= 0 && x < VisibleWidth && y >= 0 && y < VisibleHeight) {
 							drawTileAt(tile, x, y);
 						}
@@ -85,8 +85,8 @@ class ZoneSceneRenderer {
 					const tile = npc.face.frames[0].down;
 					if (!tile) return;
 
-					let x = npc.position.x + offset.x;
-					let y = npc.position.y + offset.y;
+					const x = npc.position.x + offset.x;
+					const y = npc.position.y + offset.y;
 					if (x < 0 || x >= VisibleWidth) return;
 					if (y < 0 || y >= VisibleHeight) return;
 					drawTileAt(tile, x, y);

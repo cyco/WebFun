@@ -48,7 +48,7 @@ class ZoneScene extends Scene {
 
 		// await this._handleMouse();
 
-		let stop = await this._handleKeys();
+		const stop = await this._handleKeys();
 		if (stop) return;
 
 		this.engine.camera.update(ticks);
@@ -88,7 +88,7 @@ class ZoneScene extends Scene {
 		switch (hotspot.type) {
 			case HotspotType.DoorIn: {
 				const targetZone = engine.data.zones[hotspot.arg];
-				let waysOut = targetZone.hotspots.filter((h: Hotspot) => h.type === HotspotType.DoorOut);
+				const waysOut = targetZone.hotspots.filter((h: Hotspot) => h.type === HotspotType.DoorOut);
 
 				if (waysOut.length !== 1) console.warn("Found multiple doors out");
 
@@ -350,7 +350,7 @@ class ZoneScene extends Scene {
 			mouseLocationInView.x > 17 / 18 ||
 			mouseLocationInView.y > 17 / 18;
 		if (!onHero || closeToViewEdge) {
-			let direction = Direction.CalculateAngleFromRelativePoint(relativeLocation);
+			const direction = Direction.CalculateAngleFromRelativePoint(relativeLocation);
 
 			if (isNaN(direction)) return;
 
@@ -387,7 +387,7 @@ class ZoneScene extends Scene {
 		}
 
 		if (inputManager.walk) {
-			let point = new Point(0, 0);
+			const point = new Point(0, 0);
 			const directions = inputManager.directions;
 			if (directions & InputDirection.Up) {
 				point.y -= 1;
@@ -402,7 +402,7 @@ class ZoneScene extends Scene {
 				point.x += 1;
 			}
 
-			let direction = Direction.CalculateAngleFromRelativePoint(point);
+			const direction = Direction.CalculateAngleFromRelativePoint(point);
 			if (isNaN(direction)) return;
 
 			hero.face(direction);
@@ -437,9 +437,9 @@ class ZoneScene extends Scene {
 		const hero = engine.hero;
 		const zone = engine.currentZone;
 
-		let diri = Direction.Confine(direction);
-		let point = Direction.CalculateRelativeCoordinates(diri, 1);
-		let p = new Point(point.x, point.y, 0);
+		const diri = Direction.Confine(direction);
+		const point = Direction.CalculateRelativeCoordinates(diri, 1);
+		const p = new Point(point.x, point.y, 0);
 
 		hero.isWalking = true;
 
@@ -554,8 +554,11 @@ class ZoneScene extends Scene {
 			console.warn("show text", puzzle.strings[1]);
 			console.warn("drop item", puzzle.item2);
 
-			// TODO: remove item from inventory
 			acceptItem = true;
+		}
+
+		if (acceptItem) {
+			// TODO: remove item from inventory
 		}
 
 		// evaluate scripts
@@ -583,7 +586,7 @@ class ZoneScene extends Scene {
 		return false;
 	}
 
-	private _useTransport(hotspot: Hotspot) {}
+	private _useTransport(_: Hotspot) {}
 
 	private _useXWing(hotspot: Hotspot) {
 		const engine = this.engine;

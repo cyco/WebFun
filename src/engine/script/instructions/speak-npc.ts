@@ -3,7 +3,7 @@ import { Result, Type } from "../types";
 import Action from "../../objects/action";
 import Engine from "../../engine";
 import Instruction from "../../objects/instruction";
-import InstructionType from "../instruction";
+
 import { Point } from "src/util";
 import SpeakText from "./speak-text";
 
@@ -17,4 +17,4 @@ export default {
 		const args = instruction.arguments;
 		return SpeakText(instruction.text, new Point(args[0], args[1]), engine);
 	}
-} as InstructionType;
+};

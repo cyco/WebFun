@@ -22,20 +22,20 @@ class IndyReader extends Reader {
 	protected _doRead(): SaveState {
 		const stream = this._stream;
 
-		let seed = stream.getUint32() & 0xffff;
+		const seed = stream.getUint32() & 0xffff;
 
 		const puzzleIDs1 = this.readPuzzles(stream);
 		const world = this.readWorld(stream, { start: 0, end: 10 }, { start: 0, end: 10 });
 		const inventoryIDs = this.readInventory(stream);
 
-		let currentZoneID = stream.getUint16();
-		let posXOnWorld = stream.getUint16();
-		let posYOnWorld = stream.getUint16();
+		const currentZoneID = stream.getUint16();
+		const posXOnWorld = stream.getUint16();
+		const posYOnWorld = stream.getUint16();
 
 		// skip over unknown value
 		stream.getUint16();
-		let posXOnZone = stream.getUint16();
-		let posYOnZone = stream.getUint16();
+		const posXOnZone = stream.getUint16();
+		const posYOnZone = stream.getUint16();
 		// skip over unknown values
 		stream.getInt16();
 		stream.getInt16();
@@ -46,7 +46,7 @@ class IndyReader extends Reader {
 		stream.getInt16();
 		stream.getInt16();
 
-		let goalPuzzle = stream.getInt16();
+		const goalPuzzle = stream.getInt16();
 
 		console.assert(
 			stream.isAtEnd(),
@@ -87,17 +87,17 @@ class IndyReader extends Reader {
 	}
 
 	protected readWorldItem(stream: InputStream, _x: number, _y: number): WorldItem {
-		let visited = this.readBool(stream);
-		let solved_1 = this.readBool(stream);
-		let solved_2 = this.readBool(stream);
+		const visited = this.readBool(stream);
+		const solved_1 = this.readBool(stream);
+		const solved_2 = this.readBool(stream);
 
-		let zoneID = stream.getInt16();
-		let field_C = stream.getInt16();
+		const zoneID = stream.getInt16();
+		const field_C = stream.getInt16();
 
-		let requiredItemID = stream.getInt16();
-		let findItemID = stream.getInt16();
+		const requiredItemID = stream.getInt16();
+		const findItemID = stream.getInt16();
 
-		let npcID = stream.getInt16();
+		const npcID = stream.getInt16();
 		// possibly zone or puzzle type, skip over it
 		stream.getInt16();
 
@@ -119,8 +119,8 @@ class IndyReader extends Reader {
 	}
 
 	protected readHotspot(stream: InputStream, oldHotspot: Hotspot): Hotspot {
-		let enabled = stream.getUint16() != 0;
-		let argument = stream.getInt16();
+		const enabled = stream.getUint16() !== 0;
+		const argument = stream.getInt16();
 
 		const hotspot = new MutableHotspot();
 		hotspot.enabled = enabled;

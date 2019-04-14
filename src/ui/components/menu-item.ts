@@ -29,7 +29,7 @@ class MenuItemComponent extends Component {
 
 	private _rebuild() {
 		this.textContent = "";
-		const item = this.item || ({} as Partial<MenuItem>);
+		const item: Partial<MenuItem> = this.item || {};
 
 		const stateNode = document.createElement("span");
 		stateNode.classList.add("state");

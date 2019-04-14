@@ -72,16 +72,20 @@ class RecordingInputManager extends InputManager {
 		return null;
 	}
 
-	get mouseLocationInView() {
-		return this.implementation && this.implementation.mouseLocationInView;
-	}
-
 	public addListeners(): void {
 		this.implementation && this.implementation.addListeners();
 	}
 
 	public removeListeners(): void {
 		this.implementation && this.implementation.removeListeners();
+	}
+
+	public clearPlacedTile() {
+		this.implementation && this.implementation.clearPlacedTile();
+	}
+
+	get mouseLocationInView() {
+		return this.implementation && this.implementation.mouseLocationInView;
 	}
 
 	public set mouseDownHandler(s) {
@@ -174,10 +178,6 @@ class RecordingInputManager extends InputManager {
 		if (this.implementation && this.implementation.engine) {
 			this.implementation.engine.metronome.onbeforetick = () => this.recordOne();
 		}
-	}
-
-	public clearPlacedTile() {
-		this.implementation && this.implementation.clearPlacedTile();
 	}
 
 	public get engine() {

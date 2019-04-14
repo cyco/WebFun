@@ -10,12 +10,7 @@ import Settings from "src/settings";
 class SceneView extends Component {
 	public static readonly tagName = "wf-scene-view";
 	public readonly canvas: HTMLCanvasElement = (
-		<canvas
-			className="pixelated"
-			width={288}
-			height={288}
-			style={{ background: rgb(0, 0, 0) } as CSSStyleDeclaration}
-		/>
+		<canvas className="pixelated" width={288} height={288} style={{ background: rgb(0, 0, 0) }} />
 	) as HTMLCanvasElement;
 	private _manager: SceneManager = this._buildSceneManager();
 

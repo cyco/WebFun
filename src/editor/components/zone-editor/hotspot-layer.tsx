@@ -2,7 +2,7 @@ import "./hotspot-layer.scss";
 
 import { Hotspot, Tile, Zone } from "src/engine/objects";
 import { MenuItemInit, MenuItemSeparator } from "src/ui";
-import { MutableHotspot, MutableZone } from "src/engine/mutable-objects";
+import { MutableHotspot } from "src/engine/mutable-objects";
 
 import { ColorPalette } from "src/engine/rendering";
 import Component from "src/ui/component";
@@ -36,12 +36,10 @@ class HotspotLayer extends Component {
 		return (
 			<div
 				className="wf-hotspot-layer-hotspot"
-				style={
-					{
-						left: `${point.x * Tile.WIDTH}px`,
-						top: `${point.y * Tile.HEIGHT}px`
-					} as CSSStyleDeclaration
-				}
+				style={{
+					left: `${point.x * Tile.WIDTH}px`,
+					top: `${point.y * Tile.HEIGHT}px`
+				}}
 			>
 				{count > 1 ? `${count}` : ""}
 			</div>
@@ -79,7 +77,7 @@ class HotspotLayer extends Component {
 				}
 			},
 			...hotspots
-				.map((htsp, i) => [
+				.map(htsp => [
 					MenuItemSeparator,
 					{
 						title: htsp.type.name + (htsp.enabled ? "" : " (disabled)")
@@ -132,10 +130,6 @@ class HotspotLayer extends Component {
 				])
 				.flatten()
 		];
-	}
-
-	private _groupedHotspots(hotspots: Hotspot[]): Hotspot[][] {
-		return hotspots.groupedBy(htsp => htsp.location);
 	}
 
 	private _findHotspotsAt(point: Point) {

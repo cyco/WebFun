@@ -40,12 +40,10 @@ class NPCLayer extends Component {
 		return (
 			<NPCLayerNPC
 				className="wf-npc-layer-npc"
-				style={
-					{
-						left: `${point.x * Tile.WIDTH - 1}px`,
-						top: `${point.y * Tile.HEIGHT - 1}px`
-					} as CSSStyleDeclaration
-				}
+				style={{
+					left: `${point.x * Tile.WIDTH - 1}px`,
+					top: `${point.y * Tile.HEIGHT - 1}px`
+				}}
 				character={face}
 				palette={this.palette}
 			>

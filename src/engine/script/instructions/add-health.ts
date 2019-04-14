@@ -3,7 +3,6 @@ import { Result, Type } from "../types";
 import Action from "../../objects/action";
 import Engine from "../../engine";
 import Instruction from "../../objects/instruction";
-import InstructionType from "../instruction";
 
 export default {
 	Opcode: 0x25,
@@ -13,4 +12,4 @@ export default {
 		engine.hero.health += instruction.arguments[0];
 		return Result.Void;
 	}
-} as InstructionType;
+};

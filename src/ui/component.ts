@@ -41,11 +41,6 @@ declare global {
 		interface IntrinsicClassAttributes<T> {
 			[_: string]: any;
 		}
-		/*
-	interface HtmlElementInstance { }
-	interface ElementAttributesProperty { __props: any; }
-	interface ElementTypeProperty { __elementType: any; }
-	*/
 	}
 }
 

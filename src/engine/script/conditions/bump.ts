@@ -1,6 +1,5 @@
 import { Type, int16 } from "../types";
 
-import Condition from "../condition";
 import Engine from "../../engine";
 import Zone from "../../objects/zone";
 
@@ -21,7 +20,7 @@ export default {
 
 		return false;
 	}
-} as Condition;
+};
 
 // TODO: validate against original implementation
 /*

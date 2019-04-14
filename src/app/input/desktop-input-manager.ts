@@ -1,9 +1,7 @@
 import { Direction, InputManager } from "src/engine/input";
 import { KeyEvent, Point, Rectangle, Size } from "src/util";
 
-import { SceneView } from "src/app/ui";
 import { Tile } from "src/engine/objects";
-import TilePlacedEvent from "src/engine/input/tile-placed-event";
 import { document } from "src/std/dom";
 
 class DesktopInputManager extends InputManager implements EventListenerObject {

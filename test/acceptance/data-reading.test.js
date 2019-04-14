@@ -4,7 +4,7 @@ import { InputStream } from "src/util";
 
 describe("DataReading", () => {
 	const loadData = async file => {
-		return new Promise((resolve, reject) => {
+		return new Promise(resolve => {
 			getFixtureData(file, result => {
 				resolve(result && result.byteLength > 9 ? new InputStream(result) : null);
 			});

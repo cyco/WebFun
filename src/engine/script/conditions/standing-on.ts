@@ -1,6 +1,5 @@
 import { Type, int16 } from "../types";
 
-import Condition from "src/engine/script/condition";
 import Engine from "../../engine";
 import Zone from "../../objects/zone";
 
@@ -12,4 +11,4 @@ export default {
 		engine.hero.location.x === args[0] &&
 		engine.hero.location.y === args[1] &&
 		zone.getTileID(args[0], args[1], 0) === args[2]
-} as Condition;
+};

@@ -131,7 +131,7 @@ class Loader extends EventTarget {
 		this.dispatchEvent(Events.Load, {
 			palette: this._palette,
 			data: this._data
-		} as LoaderEventDetails);
+		});
 	}
 }
 

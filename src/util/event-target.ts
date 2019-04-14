@@ -45,8 +45,8 @@ class EventTarget_not_builtin {
 
 		(this as any)["on" + type] instanceof Function && (this as any)["on" + type](event);
 
-		let listeners = this.listeners[type instanceof Event ? event.type : type];
-		for (let i in listeners) {
+		const listeners = this.listeners[type instanceof Event ? event.type : type];
+		for (const i in listeners) {
 			if (!listeners.hasOwnProperty(i)) continue;
 			const listener = listeners[i];
 			if (listener instanceof Function) {

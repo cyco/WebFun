@@ -26,7 +26,6 @@ import { InstructionImplementations as Instructions } from "src/engine/script/in
 import { Mixer } from "src/engine/audio";
 import { PaletteAnimation } from "src/engine/rendering";
 import { Reader } from "src/engine/save-game";
-import { ScriptDebugger } from "src/debug";
 import { ScriptExecutor } from "src/engine/script";
 import Settings from "src/settings";
 export const Event = {

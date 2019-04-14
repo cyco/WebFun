@@ -33,23 +33,20 @@ abstract class Reader {
 	protected abstract readHotspot(stream: InputStream, hottspot: Hotspot): Hotspot;
 
 	protected readBool(stream: InputStream): boolean {
-		return this.readInt(stream) != 0;
+		return this.readInt(stream) !== 0;
 	}
 
 	protected readWorldDetails(stream: InputStream): void {
-		let x: number;
-		let y: number;
-
 		do {
-			y = this.readInt(stream);
-			x = this.readInt(stream);
+			const y = this.readInt(stream);
+			const x = this.readInt(stream);
 
-			if (x == -1 || y == -1) {
+			if (x === -1 || y === -1) {
 				break;
 			}
 
-			let zoneID = stream.getInt16();
-			let visited = this.readBool(stream);
+			const zoneID = stream.getInt16();
+			const visited = this.readBool(stream);
 
 			this.readRoom(stream, zoneID, visited);
 		} while (true);
@@ -57,16 +54,16 @@ abstract class Reader {
 
 	protected readRooms(stream: InputStream, zoneID: number, start: number): void {
 		let count: number;
-		let zoneIDs: [number, boolean][] = [];
+		const zoneIDs: [number, boolean][] = [];
 
-		let zone = this._data.zones[zoneID];
-		let hotspots = zone.hotspots;
+		const zone = this._data.zones[zoneID];
+		const hotspots = zone.hotspots;
 		count = hotspots.length;
 
 		for (let i = start; i < count; i++) {
 			start = i;
 			let door;
-			let hotspot = hotspots[i];
+			const hotspot = hotspots[i];
 			if (HotspotType.DoorIn === hotspot.type) {
 				if (hotspot.arg === -1) {
 					continue;
@@ -75,10 +72,10 @@ abstract class Reader {
 				door = hotspot.arg;
 			} else continue;
 
-			let zoneID = stream.getInt16();
-			let visited = this.readBool(stream);
+			const zoneID = stream.getInt16();
+			const visited = this.readBool(stream);
 
-			console.assert(zoneID == door, "Expected door to lead to zone {} instead of {}", zoneID, door);
+			console.assert(zoneID === door, "Expected door to lead to zone {} instead of {}", zoneID, door);
 			zoneIDs.push([door, visited]);
 			break;
 		}
@@ -93,7 +90,7 @@ abstract class Reader {
 	}
 
 	protected readRoom(stream: InputStream, zoneID: number, visited: boolean): void {
-		let zone: Zone = this._data.zones[zoneID];
+		const zone: Zone = this._data.zones[zoneID];
 		this.readZone(stream, zone, visited);
 		this.readRooms(stream, zoneID, 0);
 	}
@@ -109,14 +106,14 @@ abstract class Reader {
 			// skip over door-in (y)
 			this.readInt(stream);
 
-			if (this._type == Yoda) {
+			if (this._type === Yoda) {
 				// skip over sharedCounter register
 				stream.getUint16();
 				// skip over planet
 				stream.getInt16();
 			}
 
-			let tileCount = zone.size.width * zone.size.height * Zone.LAYERS;
+			const tileCount = zone.size.width * zone.size.height * Zone.LAYERS;
 			zone.tileIDs = stream.getInt16Array(tileCount);
 		}
 
@@ -131,7 +128,7 @@ abstract class Reader {
 	}
 
 	protected readHotspots(stream: InputStream, zone: MutableZone) {
-		let count = this.readInt(stream);
+		const count = this.readInt(stream);
 		if (count < 0) return;
 		if (count !== zone.hotspots.length) {
 			zone.hotspots = Array.Repeat(new Hotspot(), count);
@@ -140,7 +137,7 @@ abstract class Reader {
 	}
 
 	protected readNPCs(stream: InputStream, zone: MutableZone) {
-		let count = this.readInt(stream);
+		const count = this.readInt(stream);
 		if (count < 0) return;
 
 		if (this._type === Indy) zone.npcs = new Array(count);
@@ -150,13 +147,13 @@ abstract class Reader {
 			`Number of npcs can't be change from ${zone.npcs.length} to ${count}`
 		);
 
-		for (const _ of zone.npcs) {
+		for (let i = 0; i < zone.npcs.length; i++) {
 			this.readNPC(stream);
 		}
 	}
 
 	protected readActions(stream: InputStream, zone: Zone): void {
-		let count = this.readInt(stream);
+		const count = this.readInt(stream);
 		if (count < 0) return;
 		console.assert(
 			count === zone.actions.length,
@@ -169,7 +166,7 @@ abstract class Reader {
 	}
 
 	protected readInventory(stream: InputStream): Int16Array {
-		let count = this.readInt(stream);
+		const count = this.readInt(stream);
 		if (count < 0) return new Int16Array([]);
 		const result = stream.getInt16Array(count);
 		return result;
@@ -189,7 +186,7 @@ abstract class Reader {
 	}
 
 	protected readPuzzles(stream: InputStream): Int16Array {
-		let count = stream.getUint16();
+		const count = stream.getUint16();
 		return stream.getInt16Array(count);
 	}
 }

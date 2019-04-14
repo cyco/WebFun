@@ -1,7 +1,7 @@
 import Action from "../../objects/action";
 import Engine from "../../engine";
 import Instruction from "../../objects/instruction";
-import InstructionType from "../instruction";
+
 import { Result } from "../types";
 
 export default {
@@ -17,4 +17,4 @@ export default {
 
 		return Result.Void;
 	}
-} as InstructionType;
+};

@@ -21,7 +21,7 @@ class Menubar extends AbstractMenuView {
 	}
 
 	startMouseHandling(event: MouseEvent) {
-		let itemIndex = this._findItemAt(new Point(event.pageX, event.pageY));
+		const itemIndex = this._findItemAt(new Point(event.pageX, event.pageY));
 		if (itemIndex === -1) return;
 		const menuItem = this.menu.items[itemIndex];
 		if (!menuItem.submenu) {

@@ -1,7 +1,7 @@
 import Action from "../../objects/action";
 import Engine from "../../engine";
 import Instruction from "../../objects/instruction";
-import InstructionType from "../instruction";
+
 import { Result } from "../types";
 
 export default {
@@ -10,4 +10,4 @@ export default {
 	Implementation: async (_instruction: Instruction, _engine: Engine, _: Action): Promise<Result> => {
 		throw "Game Lost!";
 	}
-} as InstructionType;
+};

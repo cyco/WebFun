@@ -45,7 +45,7 @@ class World {
 	locationOfZone(zone: Zone): Point {
 		for (let y = 0; y < World.HEIGHT; y++) {
 			for (let x = 0; x < World.HEIGHT; x++) {
-				let index = this._pointToIndex(x, y);
+				const index = this._pointToIndex(x, y);
 				const currentZone = this._items[index].zone;
 				if (currentZone === zone) {
 					return new Point(x, y);
@@ -55,7 +55,7 @@ class World {
 
 		for (let y = 0; y < World.HEIGHT; y++) {
 			for (let x = 0; x < World.HEIGHT; x++) {
-				let index = this._pointToIndex(x, y);
+				const index = this._pointToIndex(x, y);
 				const currentZone = this._items[index].zone;
 				if (currentZone && currentZone.leadsTo(zone, this.zones)) {
 					return new Point(x, y);
@@ -67,7 +67,7 @@ class World {
 	}
 
 	zoneIsAt(needleZone: Zone, x: number, y: number): boolean {
-		let zone = this.getZone(x, y);
+		const zone = this.getZone(x, y);
 		if (!zone) return false;
 		if (zone === needleZone) return true;
 

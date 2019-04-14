@@ -28,9 +28,9 @@ class InputStream extends Stream {
 		data: ArrayBuffer | SharedArrayBuffer | string
 	): ArrayBuffer | SharedArrayBuffer {
 		if (typeof data === "string") {
-			let binaryString = atob(data);
-			let len = binaryString.length;
-			let bytes = new Uint8Array(len);
+			const binaryString = atob(data);
+			const len = binaryString.length;
+			const bytes = new Uint8Array(len);
 			for (let i = 0; i < len; i++) bytes[i] = binaryString.charCodeAt(i);
 
 			return bytes.buffer;
@@ -90,7 +90,7 @@ class InputStream extends Stream {
 	}
 
 	getCStringWithLength(fixedLength: number, encoding: string = DefaultEncoding): string {
-		let raw = this.getUint8Array(fixedLength);
+		const raw = this.getUint8Array(fixedLength);
 		let length = 0;
 		while (length < raw.length && raw[length] !== 0) length++;
 
@@ -122,7 +122,7 @@ class InputStream extends Stream {
 		let result;
 
 		if (this._offset % 2 !== 0) {
-			let buffer = this._arrayBuffer.slice(this._offset, this._offset + length * 2);
+			const buffer = this._arrayBuffer.slice(this._offset, this._offset + length * 2);
 			result = new Uint16Array(buffer);
 		} else {
 			result = new Uint16Array(this._arrayBuffer, this._offset, length);
@@ -136,7 +136,7 @@ class InputStream extends Stream {
 		let result;
 
 		if (this._offset % 2 !== 0) {
-			let buffer = this._arrayBuffer.slice(this._offset, this._offset + length * 2);
+			const buffer = this._arrayBuffer.slice(this._offset, this._offset + length * 2);
 			result = new Int16Array(buffer);
 		} else {
 			result = new Int16Array(this._arrayBuffer, this._offset, length);
@@ -150,7 +150,7 @@ class InputStream extends Stream {
 		let result;
 
 		if (this._offset % 4 !== 0) {
-			let buffer = this._arrayBuffer.slice(this._offset, this._offset + length * 4);
+			const buffer = this._arrayBuffer.slice(this._offset, this._offset + length * 4);
 			result = new Uint32Array(buffer);
 		} else {
 			result = new Uint32Array(this._arrayBuffer, this._offset, length);

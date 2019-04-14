@@ -3,7 +3,6 @@ import { Result, Type } from "../types";
 import Action from "../../objects/action";
 import Engine from "../../engine";
 import Instruction from "../../objects/instruction";
-import InstructionType from "../instruction";
 
 export default {
 	Opcode: 0x07,
@@ -16,4 +15,4 @@ export default {
 	 YodaView::RedrawRect(view, instruction->arg1, instruction->arg2, instruction->arg3, instruction->arg4);
 	 YodaDocument::RedrawCurrentZone(document);
 	 */
-} as InstructionType;
+};

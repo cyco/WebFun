@@ -157,7 +157,7 @@ abstract class AbstractList<T> extends Component {
 	}
 
 	private addItem(item: T): Cell<T> {
-		const cell = <Cell<T>>this.cell.cloneNode(true);
+		const cell = this.cell.cloneNode(true) as Cell<T>;
 		cell.data = item;
 		this._content.appendChild(cell);
 		return cell;

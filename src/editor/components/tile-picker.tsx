@@ -53,6 +53,11 @@ class TilePicker extends Component {
 		cell.classList.add("active");
 	}
 
+	private changeTile(tile: Tile, index: number) {
+		this.tile = tile;
+		this.dispatchEvent(new CustomEvent(Events.TileDidChange, { detail: { tile, index }, bubbles: true }));
+	}
+
 	protected disconnectedCallback() {
 		this._list.remove();
 
@@ -83,11 +88,6 @@ class TilePicker extends Component {
 
 	set tile(tile: Tile) {
 		this._tile = tile;
-	}
-
-	private changeTile(tile: Tile, index: number) {
-		this.tile = tile;
-		this.dispatchEvent(new CustomEvent(Events.TileDidChange, { detail: { tile, index }, bubbles: true }));
 	}
 
 	get tile() {

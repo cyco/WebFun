@@ -1,7 +1,7 @@
 import Action from "../../objects/action";
 import Engine from "../../engine";
 import Instruction from "../../objects/instruction";
-import InstructionType from "../instruction";
+
 import { Result } from "../types";
 
 export default {
@@ -13,4 +13,4 @@ export default {
 	 YodaView::Draw_(view, context);
 	 result_1 |= 0x80u;
 	 */
-} as InstructionType;
+};

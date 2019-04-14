@@ -1,6 +1,5 @@
 import { Type, int16 } from "../types";
 
-import Condition from "src/engine/script/condition";
 import Engine from "../../engine";
 import EvaluationMode from "../evaluation-mode";
 import Zone from "../../objects/zone";
@@ -24,9 +23,9 @@ export default {
 
 		return (
 			engine.inputManager.placedTileLocation.x === x &&
-			engine.inputManager.placedTileLocation.y == y &&
+			engine.inputManager.placedTileLocation.y === y &&
 			zone.getTileID(x, y, z) === target &&
 			engine.inputManager.placedTile.id !== item
 		);
 	}
-} as Condition;
+};

@@ -5,8 +5,8 @@ import { assert } from "../error";
 
 const IPUZ = "IPUZ";
 const parsePuzzle = (stream: InputStream, _: any, gameType: GameType) => {
-	let marker = stream.getCharacters(4);
-	assert(marker == IPUZ, "Expected to find category marker IPUZ", stream);
+	const marker = stream.getCharacters(4);
+	assert(marker === IPUZ, "Expected to find category marker IPUZ", stream);
 	// skip over size
 	stream.getUint32();
 
@@ -15,16 +15,16 @@ const parsePuzzle = (stream: InputStream, _: any, gameType: GameType) => {
 		type = stream.getUint32();
 	}
 
-	let unknown1 = stream.getUint32();
-	let unknown2 = stream.getUint32();
-	let unknown3 = stream.getUint16();
+	const unknown1 = stream.getUint32();
+	const unknown2 = stream.getUint32();
+	const unknown3 = stream.getUint16();
 
-	let texts = new Array(5);
+	const texts = new Array(5);
 	for (let i = 0; i < 5; i++) {
 		texts[i] = stream.getLengthPrefixedString("iso-8859-2");
 	}
 
-	let item1 = stream.getUint16();
+	const item1 = stream.getUint16();
 	let item2 = null;
 	if (gameType === Yoda) {
 		item2 = stream.getUint16();
@@ -46,9 +46,9 @@ export const parsePuzzles = (stream: InputStream, data: any, gameType: GameType)
 	// skip over size
 	stream.getUint32();
 
-	let puzzles = [];
+	const puzzles = [];
 	do {
-		let index = stream.getInt16();
+		const index = stream.getInt16();
 		if (index === -1) break;
 
 		puzzles.push(parsePuzzle(stream, data, gameType));
@@ -60,7 +60,7 @@ export const parsePuzzleNames = (stream: InputStream, data: any) => {
 	// skip over size
 	stream.getUint32();
 
-	let count = stream.getInt16();
+	const count = stream.getInt16();
 	for (let i = 0; i < count; i++) {
 		data.puzzles[i].name = stream.getCStringWithLength(0x10, "iso-8859-2");
 	}

@@ -1,6 +1,5 @@
 import { Type, int16 } from "../types";
 
-import Condition from "src/engine/script/condition";
 import Engine from "../../engine";
 import GameState from "src/engine/game-state";
 import Zone from "../../objects/zone";
@@ -11,4 +10,4 @@ export default {
 	Implementation: async (_: int16[], _2: Zone, engine: Engine): Promise<boolean> => {
 		return engine.gameState === GameState.Won;
 	}
-} as Condition;
+};

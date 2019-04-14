@@ -1,9 +1,9 @@
-import loadGameData from "test-helpers/game-data";
-import { getFixtureData } from "test-helpers/fixture-loading";
 import { Indy, Yoda } from "src/engine/type";
-import { InputStream } from "src/util";
 import { Reader } from "src/engine/save-game";
 import { GameData } from "src/engine";
+import { getFixtureData } from "test-helpers/fixture-loading";
+import { InputStream } from "src/util";
+import loadGameData from "test-helpers/game-data";
 
 describe("WebFun.Acceptance.Save game reading", () => {
 	it("reads yoda's save game format correctly", async done => {
@@ -12,7 +12,7 @@ describe("WebFun.Acceptance.Save game reading", () => {
 		const saveData = await getFixtureData("yoda.wld");
 		const saveStream = new InputStream(saveData);
 
-		const { type, read } = Reader.build(saveStream);
+		const { read } = Reader.build(saveStream);
 		const state = read(gameData);
 		expect(state.type).toBe(Yoda);
 		expect(state.currentZoneID).toBe(89);
@@ -28,7 +28,7 @@ describe("WebFun.Acceptance.Save game reading", () => {
 		const saveData = await getFixtureData("indy.wld");
 		const saveStream = new InputStream(saveData);
 
-		const { type, read } = Reader.build(saveStream);
+		const { read } = Reader.build(saveStream);
 		const state = read(gameData);
 		expect(state.type).toBe(Indy);
 		expect(state.currentZoneID).toBe(120);

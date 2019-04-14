@@ -1,7 +1,7 @@
 import Action from "../../objects/action";
 import Engine from "../../engine";
 import Instruction from "../../objects/instruction";
-import InstructionType from "../instruction";
+
 import { Result } from "../types";
 
 export default {
@@ -11,4 +11,4 @@ export default {
 	Implementation: async (_: Instruction, _engine: Engine, _action: Action): Promise<Result> => {
 		return Result.Void;
 	}
-} as InstructionType;
+};

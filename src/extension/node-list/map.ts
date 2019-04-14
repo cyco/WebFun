@@ -1,7 +1,7 @@
 import { NodeList } from "src/std/dom";
 
 const map = function<T>(callback: (node: Node, idx: number, list: NodeList) => T): T[] {
-	let results = [];
+	const results = [];
 	for (let i = 0; i < this.length; i++) {
 		results.push(callback.call(this, this[i], i, this));
 	}
