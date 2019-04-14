@@ -8,17 +8,23 @@ describe("WebFun.Engine.Scenes.PauseScene", () => {
 	it("watches the input manager for pause button input and eventually pops itself from the scene manager", () => {
 		let popCalled = false;
 		const engine = {
-			inputManager: { pause: true },
+			inputManager: {
+				pause: true,
+				clear: function() {
+					this.pause = false;
+				}
+			},
 			sceneManager: { popScene: () => (popCalled = true) }
 		};
 
 		const scene = new PauseScene();
 		scene.engine = engine;
-		scene.update();
+		scene.willShow();
 
+		scene.update();
 		expect(popCalled).toBeFalse();
 
-		engine.inputManager.pause = false;
+		engine.inputManager.pause = true;
 
 		scene.update();
 		expect(popCalled).toBeTrue();
