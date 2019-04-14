@@ -91,19 +91,19 @@ class Zone {
 			x = x.x;
 		}
 
-		let floor = this.getTile(x, y, 0);
+		const floor = this.getTile(x, y, 0);
 		if (floor && floor.isObject()) return false;
 
-		let object = this.getTile(x, y, 1);
+		const object = this.getTile(x, y, 1);
 		return !object;
 	}
 
 	leadsTo(needleZone: Zone, allZones: Zone[]): boolean {
 		if (needleZone === this) return true;
 
-		for (let hotspot of this._hotspots) {
+		for (const hotspot of this._hotspots) {
 			if (hotspot.type === HotspotType.DoorIn && hotspot.arg !== -1) {
-				let zone = allZones[hotspot.arg];
+				const zone = allZones[hotspot.arg];
 				if (zone.leadsTo(needleZone, allZones)) return true;
 			}
 		}
@@ -132,7 +132,7 @@ class Zone {
 					case HotspotType.CrateWeapon:
 						if (hotspot.arg < 0) break;
 						if (this.getTile(hotspot.x, hotspot.y, 1)) return;
-						this.setTile({ id: hotspot.arg } as Tile, hotspot.x, hotspot.y, 1);
+						this.setTile(({ id: hotspot.arg } as unknown) as Tile, hotspot.x, hotspot.y, 1);
 						break;
 					case HotspotType.DoorIn:
 						if (hotspot.arg < 0) break;

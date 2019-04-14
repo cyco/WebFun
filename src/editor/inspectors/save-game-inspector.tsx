@@ -3,7 +3,6 @@ import "./save-game-inspector.scss";
 import { DiscardingOutputStream, OutputStream, download } from "src/util";
 
 import AbstractInspector from "./abstract-inspector";
-import { ColorPalette } from "src/engine";
 import { EditorView } from "src/save-game-editor";
 import GameController from "src/app/game-controller";
 import { IconButton } from "src/ui/components";

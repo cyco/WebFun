@@ -1,4 +1,4 @@
-import { Zone, ZoneType } from "src/engine/objects";
+import { Zone } from "src/engine/objects";
 
 import { SearchDelegate } from "src/ui/components/list";
 

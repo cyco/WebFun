@@ -83,6 +83,10 @@ class EditorView extends Component {
 		this.show("save-game");
 	}
 
+	get data() {
+		return this._data;
+	}
+
 	set data(dm) {
 		this._data = dm;
 		this._inspectors.each<AbstractInspector>(
@@ -94,10 +98,6 @@ class EditorView extends Component {
 
 	get inspectors() {
 		return Object.values(this._inspectors) as AbstractInspector[];
-	}
-
-	get data() {
-		return this._data;
 	}
 
 	get windowManager() {

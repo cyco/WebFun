@@ -22,23 +22,23 @@ const parseZone = (stream: InputStream, data: any, gameType: GameType) => {
 		stream.getUint16();
 	}
 
-	let marker = stream.getCharacters(4);
+	const marker = stream.getCharacters(4);
 	assert(marker === IZON, `Expected to find category ${IZON}.`, stream);
 
 	// skip over size
 	stream.getUint32();
-	let width = stream.getUint16();
-	let height = stream.getUint16();
-	let zoneType = stream.getUint32();
+	const width = stream.getUint16();
+	const height = stream.getUint16();
+	const zoneType = stream.getUint32();
 	if (gameType === Yoda) {
 		// skip over sharedCounter value
 		stream.getUint16();
 
-		let planet_again = stream.getUint16();
-		assert(planet == planet_again, "Expected to find the same planet again", stream);
+		const planetAgain = stream.getUint16();
+		assert(planet === planetAgain, "Expected to find the same planet again", stream);
 	}
 
-	let tileIDs = stream.getInt16Array(3 * width * height);
+	const tileIDs = stream.getInt16Array(3 * width * height);
 	if (gameType === Indy) {
 		return {
 			planet,
@@ -57,8 +57,8 @@ const parseZone = (stream: InputStream, data: any, gameType: GameType) => {
 		};
 	}
 
-	let hotspotCount = stream.getUint16();
-	let hotspots = [];
+	const hotspotCount = stream.getUint16();
+	const hotspots = [];
 	for (let i = 0; i < hotspotCount; i++) {
 		hotspots.push(parseHotspot(stream));
 	}
@@ -68,8 +68,8 @@ const parseZone = (stream: InputStream, data: any, gameType: GameType) => {
 	const { puzzleNPCIDs } = parseZoneAux3(stream, data);
 	const { unknown } = parseZoneAux4(stream, data);
 
-	let actionCount = stream.getUint16();
-	let actions = [];
+	const actionCount = stream.getUint16();
+	const actions = [];
 	for (let i = 0; i < actionCount; i++) {
 		actions.push(parseAction(stream, data));
 	}
@@ -99,7 +99,7 @@ export const parseZones = (stream: InputStream, data: any, gameType: GameType) =
 		count = stream.getUint16();
 	}
 
-	let zones = [];
+	const zones = [];
 	for (let i = 0; i < count; i++) {
 		zones.push(parseZone(stream, data, gameType));
 	}
@@ -107,59 +107,59 @@ export const parseZones = (stream: InputStream, data: any, gameType: GameType) =
 };
 
 const parseZoneAux = (stream: InputStream, _: any): any => {
-	let marker = stream.getCharacters(4);
+	const marker = stream.getCharacters(4);
 	assert(marker === IZAX, `Expected to find category ${IZAX}.`, stream);
 	// skip over size
 	stream.getUint32();
 	// skip over unknown value
 	stream.getUint16();
 
-	let npcCount = stream.getUint16();
-	let npcs = [];
+	const npcCount = stream.getUint16();
+	const npcs = [];
 	for (let i = 0; i < npcCount; i++) {
 		npcs.push(parseNPC(stream));
 	}
 
-	let requiredItemCount = stream.getUint16();
-	let requiredItemIDs = stream.getInt16Array(requiredItemCount);
+	const requiredItemCount = stream.getUint16();
+	const requiredItemIDs = stream.getInt16Array(requiredItemCount);
 
-	let goalItemCount = stream.getUint16();
-	let goalItemIDs = stream.getInt16Array(goalItemCount);
+	const goalItemCount = stream.getUint16();
+	const goalItemIDs = stream.getInt16Array(goalItemCount);
 
 	return { npcs, requiredItemIDs, goalItemIDs };
 };
 
 const parseZoneAux2 = (stream: InputStream, _: any): any => {
-	let marker = stream.getCharacters(4);
+	const marker = stream.getCharacters(4);
 	assert(marker === IZX2, `Expected to find category ${IZX2}.`, stream);
 	// skip over size
 	stream.getUint32();
 
-	let providedItemCount = stream.getUint16();
-	let providedItemIDs = stream.getUint16Array(providedItemCount);
+	const providedItemCount = stream.getUint16();
+	const providedItemIDs = stream.getUint16Array(providedItemCount);
 
 	return { providedItemIDs };
 };
 
 const parseZoneAux3 = (stream: InputStream, _: any): any => {
-	let marker = stream.getCharacters(4);
+	const marker = stream.getCharacters(4);
 	assert(marker === IZX3, `Expected to find category ${IZX3}.`, stream);
 	// skip over size
 	stream.getUint32();
 
-	let puzzleNPCCount = stream.getUint16();
-	let puzzleNPCIDs = stream.getUint16Array(puzzleNPCCount);
+	const puzzleNPCCount = stream.getUint16();
+	const puzzleNPCIDs = stream.getUint16Array(puzzleNPCCount);
 
 	return { puzzleNPCIDs };
 };
 
 const parseZoneAux4 = (stream: InputStream, _: any): any => {
-	let marker = stream.getCharacters(4);
+	const marker = stream.getCharacters(4);
 	assert(marker === IZX4, `Expected to find category ${IZX4}.`, stream);
 	// skip over size
 	stream.getUint32();
 
-	let unknown = stream.getUint16();
+	const unknown = stream.getUint16();
 	return { unknown };
 };
 
@@ -168,7 +168,7 @@ export const parseZoneNames = (stream: InputStream, data: any) => {
 	stream.getUint32();
 
 	do {
-		let zoneID = stream.getInt16();
+		const zoneID = stream.getInt16();
 		if (zoneID === -1) {
 			break;
 		}
@@ -178,25 +178,25 @@ export const parseZoneNames = (stream: InputStream, data: any) => {
 };
 
 export const parseZaux = (stream: InputStream) => {
-	let size = stream.getUint32();
+	const size = stream.getUint32();
 	stream.getUint8Array(size);
 	// TODO: use aux data
 };
 
 export const parseZax2 = (stream: InputStream) => {
-	let size = stream.getUint32();
+	const size = stream.getUint32();
 	stream.getUint8Array(size);
 	// TODO: use aux data
 };
 
 export const parseZax3 = (stream: InputStream) => {
-	let size = stream.getUint32();
+	const size = stream.getUint32();
 	stream.getUint8Array(size);
 	// TODO: use aux data
 };
 
 export const parseZax4 = (stream: InputStream) => {
-	let size = stream.getUint32();
+	const size = stream.getUint32();
 	stream.getUint8Array(size);
 	// TODO: use aux data
 };

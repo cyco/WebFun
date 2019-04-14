@@ -80,7 +80,7 @@ class Window extends AbstractPanel {
 			/>
 		) as PopoverTilePicker;
 		this._sidebar.addEntry(
-			<div style={{ display: "flex", alignItems: "center" } as CSSStyleDeclaration}>
+			<div style={{ display: "flex", alignItems: "center" }}>
 				{[this._tilePicker, ...toolComponents, ...actionComponents]}
 			</div>,
 			"Tools"

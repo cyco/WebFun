@@ -1,11 +1,11 @@
 import { InputStream } from "src/util";
 
 export const parseHotspot = (stream: InputStream) => {
-	let type = stream.getUint32();
-	let x = stream.getInt16();
-	let y = stream.getInt16();
-	let enabled = stream.getUint16() != 0;
-	let argument = stream.getInt16();
+	const type = stream.getUint32();
+	const x = stream.getInt16();
+	const y = stream.getInt16();
+	const enabled = stream.getUint16() !== 0;
+	const argument = stream.getInt16();
 
 	return { type, x, y, enabled, argument };
 };
@@ -15,13 +15,13 @@ export const parseHotspots = (stream: InputStream, data: any) => {
 	stream.getUint32();
 
 	do {
-		let zoneId = stream.getInt16();
+		const zoneId = stream.getInt16();
 		if (zoneId === -1) {
 			break;
 		}
 
-		let count = stream.getUint16();
-		let hotspots = [];
+		const count = stream.getUint16();
+		const hotspots = [];
 		for (let i = 0; i < count; i++) {
 			hotspots.push(parseHotspot(stream));
 		}

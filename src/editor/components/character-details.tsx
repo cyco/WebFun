@@ -124,7 +124,7 @@ class CharacterDetails extends Component {
 						value={health.toString()}
 					/>
 				</label>
-				<div style={{ height: "10px" } as CSSStyleDeclaration} />
+				<div style={{ height: "10px" }} />
 				<label>
 					<span>Reference:</span>
 				</label>

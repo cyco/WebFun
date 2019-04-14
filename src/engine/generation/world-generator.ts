@@ -78,7 +78,7 @@ class WorldGenerator {
 		this.providedItemQuests = [];
 		this.requiredItemQuests = [];
 
-		let goalPuzzle = this.GetUnusedPuzzleRandomly(null, ZoneType.Unknown);
+		const goalPuzzle = this.GetUnusedPuzzleRandomly(null, ZoneType.Unknown);
 		if (goalPuzzle === null) {
 			return false;
 		}
@@ -222,7 +222,7 @@ class WorldGenerator {
 			if (!zone) zone = this.GetUnusedZoneRandomly(ZoneType.Empty, -1, -1, null, null, distance, false);
 			if (!zone) return;
 
-			let options: Partial<WorldItem> = {};
+			const options: Partial<WorldItem> = {};
 			if (type !== ZoneType.Town) options.requiredItem = this.requiredItem;
 			this.placeZone(x, y, zone, zone.type, options);
 		});
@@ -359,7 +359,7 @@ class WorldGenerator {
 	}
 
 	GetUnusedPuzzleRandomly(item: Tile, zoneType: ZoneType): Puzzle {
-		let puzzles = this.getPuzzleCandidates(zoneType).shuffle();
+		const puzzles = this.getPuzzleCandidates(zoneType).shuffle();
 		const puzzleType = zoneType.toPuzzleType();
 		const typeIsCompatible = (puzzle: Puzzle) => puzzle.type === puzzleType;
 		const hasPuzzleBeenPlaced = (puzzle: Puzzle) => this.hasPuzzleBeenPlaced(puzzle);
@@ -382,8 +382,8 @@ class WorldGenerator {
 		let zoneMatchesType = (zone: Zone) => zone.type === zoneType;
 		if (zoneType === ZoneType.Find || zoneType === ZoneType.FindTheForce)
 			zoneMatchesType = zone => zone.type === ZoneType.Find || zone.type === ZoneType.FindTheForce;
-		let zoneMatchesPlanet = (zone: Zone) => zone.planet === this._planet;
-		let zoneIsUnused = (zone: Zone) =>
+		const zoneMatchesPlanet = (zone: Zone) => zone.planet === this._planet;
+		const zoneIsUnused = (zone: Zone) =>
 			!this.usedZones.contains(zone) || (zoneType === ZoneType.Goal && this.puzzles_can_be_reused > 0);
 		const usableZones = this._data.zones.filter(and(zoneMatchesPlanet, zoneMatchesType)).shuffle();
 		return usableZones
@@ -671,7 +671,7 @@ class WorldGenerator {
 						break;
 					}
 
-					let distance = this._size === WorldSize.Large ? 2 : 1;
+					const distance = this._size === WorldSize.Large ? 2 : 1;
 					if (abs(teleporterSource.x - x) > distance || abs(teleporterSource.y - y) > distance) {
 						teleportersFound++;
 						teleporterSource = new Point(x, y);

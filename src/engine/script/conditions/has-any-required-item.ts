@@ -1,4 +1,3 @@
-import Condition from "src/engine/script/condition";
 import Engine from "../../engine";
 import Zone from "../../objects/zone";
 import { int16 } from "../types";
@@ -13,4 +12,4 @@ export default {
 
 		return engine.inventory.contains(requiredItem) || engine.inventory.contains(additionalRequiredItem);
 	}
-} as Condition;
+};

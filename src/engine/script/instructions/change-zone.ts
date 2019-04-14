@@ -3,7 +3,7 @@ import { Result, Type } from "../types";
 import Action from "../../objects/action";
 import Engine from "../../engine";
 import Instruction from "../../objects/instruction";
-import InstructionType from "../instruction";
+
 import { Point } from "src/util";
 import { TransitionScene } from "src/engine/scenes";
 import ZoneScene from "src/engine/scenes/zone-scene";
@@ -36,4 +36,4 @@ export default {
 		engine.sceneManager.pushScene(transitionScene);
 		return Result.Void;
 	}
-} as InstructionType;
+};

@@ -1,7 +1,6 @@
 import Engine from "../../engine";
 import Zone from "../../objects/zone";
 import { int16 } from "../types";
-import Condition from "src/engine/script/condition";
 
 export default {
 	Opcode: 0x01,
@@ -16,4 +15,4 @@ export default {
 	 if ( mode != JustEntered )
 	 goto condition_NOT_satisfied,
 	 */
-} as Condition;
+};

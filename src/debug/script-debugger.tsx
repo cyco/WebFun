@@ -37,7 +37,6 @@ class ScriptDebugger implements DebuggingScriptExecutorDelegate {
 	private _currentAction: Action = null;
 	private _breakpointStore: BreakpointStore = BreakpointStore.sharedStore;
 	private _variableMap: any = {};
-	private _didExecuteSomething = false;
 
 	constructor() {
 		this._breakpointStore.backend = localStorage.prefixedWith("debug");
@@ -232,7 +231,7 @@ class ScriptDebugger implements DebuggingScriptExecutorDelegate {
 				console.warn("Instruction not found in current action!");
 		}
 
-		let breakpoint = this.buildBreakpoint(thing);
+		const breakpoint = this.buildBreakpoint(thing);
 		this._reflectExecutorPosition(breakpoint);
 		if (breakpoint && this._breakpointStore.hasBreakpoint(breakpoint.id)) {
 			console.log("stopping because of breakpoint", breakpoint.id);

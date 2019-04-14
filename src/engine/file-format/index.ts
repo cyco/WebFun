@@ -52,7 +52,7 @@ export default (input: InputStream, type: GameType): any => {
 		ENDF: parseEndOfFile
 	};
 
-	let data: any = {
+	const data: any = {
 		version: 0,
 		setup: new Uint8Array(0),
 		sounds: [],

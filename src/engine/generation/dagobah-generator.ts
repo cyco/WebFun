@@ -122,7 +122,7 @@ class DagobahGenerator {
 				(hotspot: Hotspot) => hotspot.type === HotspotType.SpawnLocation
 			);
 			if (candidates.length) {
-				let hotspot = candidates[randmod(candidates.length)];
+				const hotspot = candidates[randmod(candidates.length)];
 				hotspot.arg = npcID;
 				hotspot.enabled = true;
 			}
@@ -134,7 +134,7 @@ class DagobahGenerator {
 			const index = zone.puzzleNPCs.findIndex(i => i.id === Yoda.Tile.Yoda);
 			if (index === -1) return;
 
-			let hotspot = hotspots.filter((hotspot: Hotspot) => hotspot.x === 3 && hotspot.y === 3).last();
+			const hotspot = hotspots.filter((hotspot: Hotspot) => hotspot.x === 3 && hotspot.y === 3).last();
 			if (!hotspot) return;
 
 			hotspot.arg = Yoda.Tile.Yoda;
@@ -147,7 +147,7 @@ class DagobahGenerator {
 			const index = zone.puzzleNPCs.findIndex(i => i.id === npcID);
 			if (index === -1) return;
 
-			let hotspot = hotspots.filter((hotspot: Hotspot) => hotspot.x === 3 && hotspot.y === 2).last();
+			const hotspot = hotspots.filter((hotspot: Hotspot) => hotspot.x === 3 && hotspot.y === 2).last();
 			if (!hotspot) return;
 
 			hotspot.arg = npcID;

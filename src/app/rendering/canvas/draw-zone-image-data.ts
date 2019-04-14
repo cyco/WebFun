@@ -20,7 +20,7 @@ export default (zone: Zone, palette: ColorPalette) => {
 	for (let y = 0; y < ZoneHeight; y++) {
 		for (let x = 0; x < ZoneWidth; x++) {
 			for (let z = 0; z < Zone.LAYERS; z++) {
-				let tile = zone.getTile(x, y, z);
+				const tile = zone.getTile(x, y, z);
 				if (!tile) continue;
 
 				const pixels = tile.imageData;

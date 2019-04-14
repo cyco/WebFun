@@ -30,7 +30,7 @@ class Direction {
 	}
 
 	static CalculateRelativeCoordinates(direction: number, distance: number): Point {
-		let rad = (direction * Math.PI) / 180.0;
+		const rad = (direction * Math.PI) / 180.0;
 		return new Point(distance * Math.round(Math.cos(rad)), distance * Math.round(Math.sin(rad)));
 	}
 }

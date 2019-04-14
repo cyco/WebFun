@@ -4,10 +4,10 @@ import { assert } from "../error";
 const IACT = "IACT";
 
 const parseActionItem = (stream: InputStream) => {
-	let opcode = stream.getUint16();
-	let args = stream.getInt16Array(5);
-	let textLength = stream.getUint16();
-	let text = stream.getCharacters(textLength, "iso-8859-2");
+	const opcode = stream.getUint16();
+	const args = stream.getInt16Array(5);
+	const textLength = stream.getUint16();
+	const text = stream.getCharacters(textLength, "iso-8859-2");
 
 	return { opcode, arguments: args, text };
 };
@@ -21,13 +21,13 @@ export const parseAction = (stream: InputStream, _: any) => {
 	// ignore size
 	stream.getUint32();
 
-	let conditionCount = stream.getUint16();
+	const conditionCount = stream.getUint16();
 	const conditions = new Array(conditionCount);
 	for (let i = 0; i < conditionCount; i++) {
 		conditions[i] = parseCondition(stream);
 	}
 
-	let instructionCount = stream.getUint16();
+	const instructionCount = stream.getUint16();
 	const instructions = new Array(instructionCount);
 	for (let i = 0; i < instructionCount; i++) {
 		instructions[i] = parseInstruction(stream);
@@ -41,11 +41,11 @@ export const parseActions = (stream: InputStream, data: any) => {
 	stream.getUint32();
 
 	do {
-		let zoneID = stream.getInt16();
+		const zoneID = stream.getInt16();
 		if (zoneID === -1) break;
 
-		let count = stream.getUint16();
-		let actions = new Array(count);
+		const count = stream.getUint16();
+		const actions = new Array(count);
 		for (let i = 0; i < count; i++) {
 			actions[i] = parseAction(stream, data);
 		}
@@ -59,13 +59,13 @@ export const parseActionNames = (stream: InputStream, data: any) => {
 	stream.getUint32();
 
 	do {
-		let zoneID = stream.getInt16();
+		const zoneID = stream.getInt16();
 		if (zoneID === -1) {
 			break;
 		}
 		const actions = data.zones[zoneID].actions;
 		do {
-			let actionID = stream.getInt16();
+			const actionID = stream.getInt16();
 			if (actionID === -1) {
 				break;
 			}

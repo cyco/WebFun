@@ -201,7 +201,7 @@ class SpeechBubble extends Component {
 		const bottom = top + height;
 		const right = left + width;
 
-		let path = [];
+		const path = [];
 
 		path.push(["M", left + b, top]);
 		if (this._arrowStyle & ArrowStyle.Top) {
@@ -281,7 +281,7 @@ class SpeechBubble extends Component {
 
 	private _calculateNumberOfLines(skipClipping: boolean): number {
 		const lineCount = Math.ceil(this._text.getBoundingClientRect().height / parseInt(LineHeight));
-		let line = Math.max(1, lineCount);
+		const line = Math.max(1, lineCount);
 
 		if (skipClipping) return line;
 		return Math.min(line, 5);

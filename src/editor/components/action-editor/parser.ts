@@ -7,7 +7,7 @@ class ParserError extends Error {}
 
 class Parser {
 	public parse(input: string): AST[] {
-		let scanner = new Scanner(input);
+		const scanner = new Scanner(input);
 
 		const tokens = [];
 		while (!scanner.isAtEnd()) {
@@ -35,9 +35,9 @@ class Parser {
 	}
 
 	private readString(scanner: Scanner): string {
-		let c,
-			result = "",
-			startingOffset = scanner.offset;
+		let c;
+		let result = "";
+		const startingOffset = scanner.offset;
 
 		scanner.poke();
 
@@ -66,9 +66,9 @@ class Parser {
 	}
 
 	private readNumber(scanner: Scanner): number {
-		let c,
-			result = "",
-			startingOffset = scanner.offset;
+		let c;
+		let result = "";
+		const startingOffset = scanner.offset;
 		let factor = 1;
 
 		c = scanner.peek();
@@ -93,9 +93,9 @@ class Parser {
 	}
 
 	private readList(scanner: Scanner): AST[] {
-		let c,
-			result: AST[] = [],
-			startingOffset = scanner.offset;
+		let c;
+		const result: AST[] = [];
+		const startingOffset = scanner.offset;
 
 		scanner.poke();
 
@@ -115,9 +115,9 @@ class Parser {
 	}
 
 	private readArray(scanner: Scanner): AST[] {
-		let c,
-			result: AST[] = [],
-			startingOffset = scanner.offset;
+		let c;
+		const result: AST[] = [];
+		const startingOffset = scanner.offset;
 		scanner.poke();
 
 		do {
@@ -137,9 +137,9 @@ class Parser {
 	}
 
 	private readSymbol(scanner: Scanner): Symbol | boolean {
-		let c,
-			name = "",
-			startingOffset = scanner.offset;
+		let c;
+		let name = "";
+		const startingOffset = scanner.offset;
 
 		do {
 			c = scanner.peek();

@@ -17,7 +17,7 @@ class SceneManager {
 	}
 
 	pushScene(scene: Scene): void {
-		let currentScene = this.currentScene;
+		const currentScene = this.currentScene;
 
 		scene.engine = this.engine;
 

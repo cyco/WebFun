@@ -9,7 +9,7 @@ import identify from "./identify";
 abstract class ReaderFactory {
 	static build(stream: InputStream): { type: GameType; read: Reader["read"] } {
 		const type = identify(stream);
-		let reader = this.buildReader(type, stream);
+		const reader = this.buildReader(type, stream);
 		return { type, read: reader.read.bind(reader) };
 	}
 

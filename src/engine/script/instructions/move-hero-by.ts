@@ -3,7 +3,6 @@ import { Result, Type } from "../types";
 import Action from "../../objects/action";
 import Engine from "../../engine";
 import Instruction from "../../objects/instruction";
-import InstructionType from "../instruction";
 
 export default {
 	Opcode: 0x13,
@@ -15,4 +14,4 @@ export default {
 		// original implementation actually has a hard break here
 		return Result.Void;
 	}
-} as InstructionType;
+};

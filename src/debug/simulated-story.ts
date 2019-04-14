@@ -1,5 +1,5 @@
 import { Engine, Story } from "src/engine";
-import { HotspotType, Tile, Zone, ZoneType } from "src/engine/objects";
+import { Tile, Zone, ZoneType } from "src/engine/objects";
 
 import { World } from "src/engine/generation";
 import { WorldSize } from "src/engine/types";
@@ -30,7 +30,7 @@ class SimulatedStory extends Story {
 		item.additionalRequiredItem = required2;
 	}
 
-	private _initializeZone(zone: Zone, find: Tile, npc: Tile, required: Tile, required2: Tile) {
+	private _initializeZone(zone: Zone, _find: Tile, _npc: Tile, _required: Tile, _required2: Tile) {
 		switch (zone.type) {
 			case ZoneType.BlockadeNorth:
 			case ZoneType.BlockadeSouth:

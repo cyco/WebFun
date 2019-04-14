@@ -23,10 +23,10 @@ class YodaReader extends Reader {
 	protected _doRead(): SaveState {
 		const stream = this._stream;
 
-		let seed = stream.getUint32() & 0xffff;
+		const seed = stream.getUint32() & 0xffff;
 
-		let planet = stream.getUint32();
-		let on_dagobah = stream.getUint32() != 0;
+		const planet = stream.getUint32();
+		const on_dagobah = stream.getUint32() !== 0;
 
 		const puzzleIDs1 = this.readPuzzles(stream);
 		const puzzleIDs2 = this.readPuzzles(stream);
@@ -34,32 +34,32 @@ class YodaReader extends Reader {
 		const world = this.readWorld(stream, { start: 0, end: 10 }, { start: 0, end: 10 });
 		const inventoryIDs = this.readInventory(stream);
 
-		let currentZoneID = stream.getUint16();
-		let posXOnWorld = stream.getUint32();
-		let posYOnWorld = stream.getUint32();
+		const currentZoneID = stream.getUint16();
+		const posXOnWorld = stream.getUint32();
+		const posYOnWorld = stream.getUint32();
 
-		let currentWeapon = stream.getInt16();
-		let currentAmmo = currentWeapon >= 0 ? stream.getInt16() : -1;
+		const currentWeapon = stream.getInt16();
+		const currentAmmo = currentWeapon >= 0 ? stream.getInt16() : -1;
 
-		let forceAmmo = stream.getInt16();
-		let blasterAmmo = stream.getInt16();
-		let blasterRifleAmmo = stream.getInt16();
+		const forceAmmo = stream.getInt16();
+		const blasterAmmo = stream.getInt16();
+		const blasterRifleAmmo = stream.getInt16();
 
-		let posXOnZone = floor(stream.getUint32() / Tile.WIDTH);
-		let posYOnZone = floor(stream.getUint32() / Tile.HEIGHT);
+		const posXOnZone = floor(stream.getUint32() / Tile.WIDTH);
+		const posYOnZone = floor(stream.getUint32() / Tile.HEIGHT);
 
-		let damageTaken = stream.getInt32();
-		let livesLost = stream.getInt32();
+		const damageTaken = stream.getInt32();
+		const livesLost = stream.getInt32();
 
-		let difficulty = stream.getUint32();
-		let time_elapsed = stream.getUint32();
+		const difficulty = stream.getUint32();
+		const time_elapsed = stream.getUint32();
 
-		let world_size = stream.getInt32();
-		let unknown_count = stream.getInt16();
-		let unknown_sum = stream.getInt16();
+		const world_size = stream.getInt32();
+		const unknown_count = stream.getInt16();
+		const unknown_sum = stream.getInt16();
 
-		let goalPuzzle = stream.getUint32();
-		let goalPuzzleAgain = stream.getUint32();
+		const goalPuzzle = stream.getUint32();
+		const goalPuzzleAgain = stream.getUint32();
 
 		console.assert(
 			goalPuzzle === goalPuzzleAgain,
@@ -104,23 +104,23 @@ class YodaReader extends Reader {
 	}
 
 	protected readWorldItem(stream: InputStream, _x: number, _y: number): WorldItem {
-		let visited = this.readBool(stream);
-		let solved_1 = this.readBool(stream);
-		let solved_2 = this.readBool(stream);
+		const visited = this.readBool(stream);
+		const solved_1 = this.readBool(stream);
+		const solved_2 = this.readBool(stream);
 
-		let solved_3 = stream.getUint32() != 0;
-		let solved_4 = stream.getUint32() != 0;
+		const solved_3 = stream.getUint32() !== 0;
+		const solved_4 = stream.getUint32() !== 0;
 
-		let zoneId = stream.getInt16();
-		let field_c = stream.getInt16();
-		let required_item_id = stream.getInt16();
-		let find_item_id = stream.getInt16();
-		let field_ea = stream.getInt16();
-		let additionalRequiredItem = stream.getInt16();
-		let field_16 = stream.getInt16();
-		let npc_id = stream.getInt16();
+		const zoneId = stream.getInt16();
+		const field_c = stream.getInt16();
+		const required_item_id = stream.getInt16();
+		const find_item_id = stream.getInt16();
+		const field_ea = stream.getInt16();
+		const additionalRequiredItem = stream.getInt16();
+		const field_16 = stream.getInt16();
+		const npc_id = stream.getInt16();
 
-		let zoneType = stream.getInt32();
+		const zoneType = stream.getInt32();
 		// skip over unknown value
 		stream.getInt16();
 
@@ -146,11 +146,11 @@ class YodaReader extends Reader {
 	protected readNPC(stream: InputStream): void {
 		// skip over char id
 		stream.getInt16();
-		let x = stream.getInt16();
-		let y = stream.getInt16();
+		const x = stream.getInt16();
+		const y = stream.getInt16();
 		// skip over unknown value (field_a)
 		stream.getInt16();
-		let enabled = stream.getUint32() != 0;
+		const enabled = stream.getUint32() !== 0;
 		// skip over unknown value (field_10)
 		stream.getInt16();
 
@@ -201,11 +201,11 @@ class YodaReader extends Reader {
 	}
 
 	protected readHotspot(stream: InputStream, _: Hotspot): Hotspot {
-		let enabled = stream.getUint16() != 0;
-		let argument = stream.getInt16();
-		let type = HotspotType.fromNumber(stream.getUint32());
-		let x = stream.getInt16();
-		let y = stream.getInt16();
+		const enabled = stream.getUint16() !== 0;
+		const argument = stream.getInt16();
+		const type = HotspotType.fromNumber(stream.getUint32());
+		const x = stream.getInt16();
+		const y = stream.getInt16();
 
 		const hotspot = new MutableHotspot();
 		hotspot.enabled = enabled;

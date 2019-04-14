@@ -4,7 +4,6 @@ import {
 	ParseExpectation,
 	PrepareExpectations
 } from "src/debug/expectation";
-import { getFixtureContent } from "test-helpers/fixture-loading";
 
 import loadGameData from "test-helpers/game-data";
 import GameData from "../../src/engine/game-data";

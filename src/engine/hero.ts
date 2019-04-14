@@ -142,7 +142,7 @@ class Hero extends EventTarget {
 	}
 
 	move(relative: Point, zone: Zone): boolean {
-		let targetPoint = Point.add(relative, this._location);
+		const targetPoint = Point.add(relative, this._location);
 
 		// Look where we're going
 		//    this.face(relative);
@@ -156,8 +156,8 @@ class Hero extends EventTarget {
 		if (this._doMove(relative, zone, relative.isUnidirectional() && this._dragging))
 			return (this._walking = true);
 
-		let y = relative.y;
-		let x = relative.x;
+		const y = relative.y;
+		const x = relative.x;
 
 		// try moving horizontally only
 		relative.y = 0;
@@ -201,8 +201,8 @@ class Hero extends EventTarget {
 	private _doMove(rel: Point, z: Zone, dragging: boolean) {
 		if (rel.isZeroPoint()) return false;
 
-		let source = this._location;
-		let target = Point.add(source, rel);
+		const source = this._location;
+		const target = Point.add(source, rel);
 		target.z = 1;
 
 		if (z.placeWalkable(target)) {
@@ -210,7 +210,7 @@ class Hero extends EventTarget {
 			this._location = target;
 			return true;
 		} else if (dragging) {
-			let dragTarget = Point.add(target, rel);
+			const dragTarget = Point.add(target, rel);
 			dragTarget.z = 1;
 			if (dragTarget.isInBounds(z.size) && this._doDrag(target, dragTarget, z)) {
 				this._location = target;
@@ -222,7 +222,7 @@ class Hero extends EventTarget {
 	}
 
 	private _doDrag(src: Point, target: Point, z: Zone): boolean {
-		let t = z.getTile(src);
+		const t = z.getTile(src);
 		if (!t || !t.isDraggable()) return false;
 
 		if (z.getTile(target.x, target.y, 1) !== null) return false;

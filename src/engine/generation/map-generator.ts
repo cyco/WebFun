@@ -133,11 +133,11 @@ function is_blockade(type: WorldItemType): boolean {
 }
 
 function handle_neighbor(x: number, y: number, iteration: number, xdif: number, ydif: number): boolean {
-	let item_idx = x + MapWidth * y;
+	const item_idx = x + MapWidth * y;
 
-	let neighbor = typeMap.get(x + xdif, y + ydif);
-	let neighborOtherAxisBefore = typeMap.get(x + ydif, y + xdif);
-	let neighborOtherAxisAfter = typeMap.get(x - ydif, y - xdif);
+	const neighbor = typeMap.get(x + xdif, y + ydif);
+	const neighborOtherAxisBefore = typeMap.get(x + ydif, y + xdif);
+	const neighborOtherAxisAfter = typeMap.get(x - ydif, y - xdif);
 
 	if (is_free(neighbor)) return false; // maybe negate is_free
 
@@ -210,8 +210,8 @@ function generate(seed: number, size: WorldSize) {
 
 	rand(); // waste a random number
 
-	let rand1 = randmod(2) + 4;
-	let rand2 = randmod(2) + 4;
+	const rand1 = randmod(2) + 4;
+	const rand2 = randmod(2) + 4;
 	_initializeTypeMap(rand1, rand2);
 	_initializeOrderMap();
 
@@ -348,7 +348,7 @@ function _chooseAdditionalPuzzles(total_puzzle_count: number): void {
 	let do_break = 0;
 	let maxCount = 5000;
 	for (let i = 0; i <= 200; i++) {
-		let x, y;
+		let y;
 		maxCount--;
 		if (maxCount === 0) {
 			break;
@@ -361,7 +361,7 @@ function _chooseAdditionalPuzzles(total_puzzle_count: number): void {
 			do_break = 1;
 		}
 
-		x = rand() % 10;
+		const x = rand() % 10;
 		if (i >= 50 || x === 0 || x === 9) {
 			y = rand() % 10;
 		} else {
@@ -371,9 +371,9 @@ function _chooseAdditionalPuzzles(total_puzzle_count: number): void {
 		// asm compares something against 400, 150 and maybe blockade_count
 		if (placedPuzzles >= total_puzzle_count) break;
 
-		let distance = GetDistanceToCenter(x, y);
+		const distance = GetDistanceToCenter(x, y);
 		if (distance >= 3 || i >= 150) {
-			let item = typeMap.get(x, y);
+			const item = typeMap.get(x, y);
 			if (
 				(item === WorldItemType.Empty || item === WorldItemType.Candidate) &&
 				(x === 0 || typeMap.get(x - 1, y) !== WorldItemType.Puzzle) &&
@@ -431,7 +431,7 @@ function _makeSureLastPuzzleIsNotTooCloseToCenter(): void {
 					getDistanceToCenter(x, y) >= 3 &&
 					(x !== lastPuzzle.x || y !== lastPuzzle.y)
 				) {
-					let replacement_puzzle = orderMap.get(x, y);
+					const replacement_puzzle = orderMap.get(x, y);
 					orderMap.set(lastPuzzle.x, lastPuzzle.y, replacement_puzzle);
 					orderMap.set(x, y, placedPuzzles - 1);
 
@@ -447,9 +447,9 @@ function _placeIntermediateWorldThing(): void {
 
 	_mapCountStuff();
 
-	let puzzles_count = puzzles;
-	let travel_count = travels;
-	let blockades_count = blockades;
+	const puzzles_count = puzzles;
+	const travel_count = travels;
+	const blockades_count = blockades;
 
 	let total_puzzle_count =
 		Math.floor(puzzles_count / 4) +
@@ -521,7 +521,7 @@ function _determinePuzzleLocations(iteration: number, puzzle_count_to_place: num
 			x = (rand() % variance) + min.x;
 		}
 
-		let item_idx = x + MapWidth * y;
+		const item_idx = x + MapWidth * y;
 		if (typeMap[item_idx] !== WorldItemType.None) continue;
 
 		handle_neighbor(x, y, iteration, -1, 0) ||
@@ -545,13 +545,13 @@ function _determineAdditionalPuzzleLocations(travels_to_place: number) {
 			x = rand() % MapWidth;
 		}
 
-		let world_idx = x + MapWidth * y;
+		const world_idx = x + MapWidth * y;
 		if (typeMap[world_idx] !== WorldItemType.None) continue;
 
-		let item_before = typeMap.get(x - 1, y);
-		let item_after = typeMap.get(x + 1, y);
-		let item_above = typeMap.get(x, y - 1);
-		let item_below = typeMap.get(x, y + 1);
+		const item_before = typeMap.get(x - 1, y);
+		const item_after = typeMap.get(x + 1, y);
+		const item_above = typeMap.get(x, y - 1);
+		const item_below = typeMap.get(x, y + 1);
 
 		let y_diff = 0,
 			x_diff = 0;
@@ -571,7 +571,7 @@ function _determineAdditionalPuzzleLocations(travels_to_place: number) {
 
 		if (x_diff === 0 && y_diff === 0) continue;
 
-		let item_neighbor = typeMap.get(x - x_diff, y - y_diff);
+		const item_neighbor = typeMap.get(x - x_diff, y - y_diff);
 		if (item_neighbor === WorldItemType.None) continue;
 
 		switch (item_neighbor) {

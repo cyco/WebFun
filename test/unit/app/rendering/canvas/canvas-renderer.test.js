@@ -1,6 +1,5 @@
 import AbstractRenderer from "src/engine/rendering/abstract-renderer";
 import CanvasRenderer from "src/app/rendering/canvas/canvas-renderer";
-import { dispatch } from "src/util";
 
 describe("WebFun.App.Rendering.Canvas.Renderer", () => {
 	let subject = null;

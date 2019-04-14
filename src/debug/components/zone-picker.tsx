@@ -59,6 +59,11 @@ class ZonePicker extends Component {
 		super.disconnectedCallback();
 	}
 
+	private changeZone(zone: Zone, index: number) {
+		this.zone = zone;
+		this.dispatchEvent(new CustomEvent(Events.ZoneDidChange, { detail: { zone, index }, bubbles: true }));
+	}
+
 	set zones(s) {
 		this._zones = s;
 		this._list.items = s;
@@ -81,12 +86,6 @@ class ZonePicker extends Component {
 	set zone(zone: Zone) {
 		this._zone = zone;
 	}
-
-	private changeZone(zone: Zone, index: number) {
-		this.zone = zone;
-		this.dispatchEvent(new CustomEvent(Events.ZoneDidChange, { detail: { zone, index }, bubbles: true }));
-	}
-
 	get zone() {
 		return this._zone;
 	}

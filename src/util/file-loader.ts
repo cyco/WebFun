@@ -30,7 +30,7 @@ class FileLoader extends EventTarget {
 	}
 
 	load() {
-		let reader = new XMLHttpRequest();
+		const reader = new XMLHttpRequest();
 		reader.open("GET", this._path, true);
 		reader.responseType = "arraybuffer";
 

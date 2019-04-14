@@ -2,6 +2,7 @@ import { localStorage } from "src/std/dom";
 
 function persistent<T extends object>(object: T, prefix: string = null, storage: Storage = localStorage): T {
 	const buildKey = (k: string) => (prefix ? `${prefix}.${k}` : k);
+
 	return new Proxy(object, {
 		get(target: T, p: PropertyKey, _: any): any {
 			if (typeof p === "string")
@@ -14,7 +15,7 @@ function persistent<T extends object>(object: T, prefix: string = null, storage:
 			else (target as any)[p] = value;
 			return true;
 		}
-	} as T);
+	});
 }
 
 export default persistent;

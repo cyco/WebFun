@@ -9,7 +9,7 @@ const shuffle = function() {
 		return this;
 	}
 
-	let tempArray = new Array(count);
+	const tempArray = new Array(count);
 
 	let idx = 0;
 	for (let i = 0; i < count; i++) {

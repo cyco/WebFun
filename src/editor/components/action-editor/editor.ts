@@ -118,7 +118,7 @@ class Editor extends Component {
 		const errors: Error[] = [];
 		this._actions.forEach((action, idx) => {
 			try {
-				let ast = disassembler.disassemble(action);
+				const ast = disassembler.disassemble(action);
 				div.innerHTML += (idx === 0 ? "" : "<br><br>") + printer.pprint(ast);
 			} catch (e) {
 				errors.push(e);

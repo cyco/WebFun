@@ -32,7 +32,7 @@ class InteractiveHealth extends AbstractHealth implements EventListenerObject {
 		const point = new Point(event.clientX, event.clientY).subtract(center);
 		const [, angle] = xy2polar(point.x, point.y);
 
-		let normangle = rad2deg(360 - angle) % 360;
+		const normangle = rad2deg(360 - angle) % 360;
 		let base = ceil(this.health / 100) * 100;
 		if (this.lastAngle === null) {
 			this.health = base - (normangle / 360) * 100;

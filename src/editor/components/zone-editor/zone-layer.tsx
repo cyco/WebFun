@@ -54,7 +54,7 @@ class ZoneLayer extends Component {
 
 		for (let y = 0; y < ZoneHeight; y++) {
 			for (let x = 0; x < ZoneWidth; x++) {
-				let tile = zone.getTile(x, y, layer);
+				const tile = zone.getTile(x, y, layer);
 				if (!tile) continue;
 
 				const pixels = tile.imageData;
