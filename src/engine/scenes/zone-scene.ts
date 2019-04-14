@@ -279,6 +279,7 @@ class ZoneScene extends Scene {
 		transitionScene.targetHeroLocation = targetHeroLocation;
 		transitionScene.targetZoneLocation = targetZoneLocation;
 		transitionScene.sourceZoneLocation = zoneLocation;
+		transitionScene.targetZone = targetZone;
 		transitionScene.targetWorld = world;
 		transitionScene.scene = this;
 		engine.sceneManager.pushScene(transitionScene);
