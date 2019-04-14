@@ -15,7 +15,6 @@ class TransitionScene extends Scene {
 	public targetZone: Zone = null;
 	public targetWorld: World = null;
 	private state: number = Infinity;
-	private _target: ImageData = null;
 	private _startTime: number = Infinity;
 	private _duration: number = Infinity;
 	private _zoneSwapTime: number = Infinity;
