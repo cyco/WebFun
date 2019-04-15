@@ -120,7 +120,7 @@ class Hero extends EventTarget {
 	set ammo(ammo) {
 		if (this.unlimitedAmmo) return;
 
-		this._ammo = ammo;
+		this._ammo = ammo < 0 ? -1 : ammo;
 		if (this.weapon) {
 			this._ammoByWeapon.set(this.weapon, this._ammo);
 		}
