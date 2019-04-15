@@ -9,7 +9,7 @@ export const Events = {
 class Inventory extends EventTarget {
 	private _items: Tile[];
 
-	constructor() {
+	public constructor() {
 		super();
 
 		this._items = [];
@@ -17,7 +17,7 @@ class Inventory extends EventTarget {
 		this.registerEvents(Events);
 	}
 
-	addItem(item: Tile): void {
+	public addItem(item: Tile): void {
 		let index = this._items.length;
 		if (item.id === Yoda.ItemIDs.Locator) {
 			index = 0;
@@ -29,12 +29,12 @@ class Inventory extends EventTarget {
 		});
 	}
 
-	removeAllItems(): void {
+	public removeAllItems(): void {
 		this._items = [];
 		this.dispatchEvent(Events.ItemsDidChange);
 	}
 
-	removeItem(item: Tile | number): void {
+	public removeItem(item: Tile | number): void {
 		if (typeof item === "number") {
 			item = this._items.find(itm => itm.id === item);
 		}
@@ -49,7 +49,7 @@ class Inventory extends EventTarget {
 		});
 	}
 
-	contains(item: Tile | number): boolean {
+	public contains(item: Tile | number): boolean {
 		if (typeof item === "number") {
 			for (let i = 0, len = this._items.length; i < len; i++)
 				if (this._items[i].id === item) return true;
@@ -60,7 +60,11 @@ class Inventory extends EventTarget {
 		return false;
 	}
 
-	forEach(fn: (tile: Tile, index: number, items: Tile[]) => void): void {
+	public find(predicate: (_: Tile) => boolean): Tile {
+		return this._items.find(predicate) || null;
+	}
+
+	public forEach(fn: (tile: Tile, index: number, items: Tile[]) => void): void {
 		this._items.forEach(fn);
 	}
 
