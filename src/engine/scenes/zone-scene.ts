@@ -482,6 +482,8 @@ class ZoneScene extends Scene {
 		bullet.direction = hero.direction;
 		bullet.position = target;
 		this.bullets.push(bullet);
+
+		hero.ammo--;
 	}
 
 	private evaluateBumpHotspots(at: Point, engine: Engine) {
