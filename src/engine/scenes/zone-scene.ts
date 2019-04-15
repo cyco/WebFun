@@ -484,6 +484,21 @@ class ZoneScene extends Scene {
 		this.bullets.push(bullet);
 
 		hero.ammo--;
+		if (hero.ammo === 0) this.reloadWeapon();
+	}
+
+	private reloadWeapon() {
+		const engine = this.engine;
+		const inventory = engine.inventory;
+		const hero = engine.hero;
+		const weapon = hero.weapon;
+
+		const weaponTile = weapon.frames[0].extensionRight;
+		inventory.removeItem(weaponTile);
+		if (inventory.contains(weaponTile)) {
+			hero.ammo = 1;
+			engine.equip(weaponTile);
+		} else engine.equip(inventory.find(tile => tile.isWeapon));
 	}
 
 	private evaluateBumpHotspots(at: Point, engine: Engine) {
