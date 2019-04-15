@@ -1,10 +1,11 @@
 import { Direction, Point } from "src/util";
 import { EvaluationMode, ScriptResult } from "../script";
-import { Hotspot, HotspotType, NPC, Zone, ZoneType } from "src/engine/objects";
+import { Char, Hotspot, HotspotType, NPC, Zone, ZoneType } from "src/engine/objects";
+import Bullet from "src/engine/bullet";
 
-import AbstractRenderer from "../rendering/abstract-renderer";
+import AbstractRenderer from "src/engine/rendering/abstract-renderer";
 import DetonatorScene from "./detonator-scene";
-import Engine from "../engine";
+import Engine from "src/engine/engine";
 import { Direction as InputDirection } from "src/engine/input";
 import MapScene from "./map-scene";
 import PauseScene from "./pause-scene";
@@ -14,10 +15,12 @@ import TransitionScene from "./transition-scene";
 import { Yoda } from "src/engine";
 import ZoneSceneRenderer from "src/engine/rendering/zone-scene-renderer";
 import TeleporterScene from "./teleport-scene";
+import Hero from "src/engine/hero";
 
 class ZoneScene extends Scene {
 	private _zone: Zone;
 	private _renderer = new ZoneSceneRenderer();
+	private bullets: Bullet[] = [];
 
 	public async update(ticks: number) {
 		this.engine.palette.step();
@@ -69,7 +72,10 @@ class ZoneScene extends Scene {
 
 	public render(renderer: AbstractRenderer) {
 		this._renderer.render(this._zone, this.engine, renderer, this.engine.palette.current);
+		this._renderBullets(renderer, this.bullets);
 	}
+
+	private _renderBullets(renderer: AbstractRenderer, bullets: Bullet[]) {}
 
 	public executeHotspots() {
 		if (this.engine.temporaryState.justEntered) return;
@@ -384,6 +390,7 @@ class ZoneScene extends Scene {
 		if (hero.isAttacking) {
 			hero.isWalking = false;
 			hero.isDragging = false;
+			this._placeBullet(hero, hero.weapon);
 			return;
 		}
 
@@ -465,6 +472,16 @@ class ZoneScene extends Scene {
 				// TODO: play blocked sound
 			}
 		} else this.executeHotspots();
+	}
+
+	private _placeBullet(hero: Hero, weapon: Char) {
+		const direction = Direction.CalculateRelativeCoordinates(hero.direction, 1);
+		const target = hero.location.byAdding(direction.x, direction.y);
+
+		const bullet = new Bullet(weapon);
+		bullet.direction = hero.direction;
+		bullet.position = target;
+		this.bullets.push(bullet);
 	}
 
 	private evaluateBumpHotspots(at: Point, engine: Engine) {

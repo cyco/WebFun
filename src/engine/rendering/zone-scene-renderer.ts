@@ -2,13 +2,20 @@ import { Tile, Zone } from "src/engine/objects";
 
 import AbstractRenderer from "src/engine/rendering/abstract-renderer";
 import ColorPalette from "src/engine/rendering/color-palette";
+import Sprite from "src/engine/rendering/sprite";
 import Engine from "src/engine/engine";
 import Hotspot from "../objects/hotspot";
 import Settings from "src/settings";
 import { rgba } from "src/util";
 
 class ZoneSceneRenderer {
-	public render(zone: Zone, engine: Engine, renderer: AbstractRenderer, palette: ColorPalette) {
+	public render(
+		zone: Zone,
+		engine: Engine,
+		renderer: AbstractRenderer,
+		palette: ColorPalette,
+		sprites: Sprite[] = []
+	) {
 		const offset = engine.camera.offset;
 		const TileWidth = Tile.WIDTH;
 		const TileHeight = Tile.HEIGHT;
@@ -35,19 +42,22 @@ class ZoneSceneRenderer {
 			}
 		};
 
-		const drawTileAt = (tile: Tile, x: number, y: number) => {
-			const pixels = tile.imageData;
+		const drawImageAt = (pixels: Uint8Array, x: number, y: number, width: number, height: number) => {
 			let tx, ty;
-			let j = y * TileHeight * bpr + x * TileWidth;
-			for (ty = 0; ty < TileHeight; ty++) {
-				for (tx = 0; tx < TileWidth; tx++) {
-					const paletteIndex = pixels[ty * TileWidth + tx];
+			let j = y * bpr + x;
+			for (ty = 0; ty < height; ty++) {
+				for (tx = 0; tx < width; tx++) {
+					const paletteIndex = pixels[ty * width + tx];
 					if (paletteIndex === 0) continue;
 
 					data[j + tx] = palette[paletteIndex];
 				}
 				j += bpr;
 			}
+		};
+
+		const drawTileAt = (tile: Tile, x: number, y: number) => {
+			drawImageAt(tile.imageData, x * TileWidth, y * TileHeight, TileWidth, TileHeight);
 		};
 
 		const hero = engine.hero;
@@ -90,6 +100,21 @@ class ZoneSceneRenderer {
 					if (x < 0 || x >= VisibleWidth) return;
 					if (y < 0 || y >= VisibleHeight) return;
 					drawTileAt(tile, x, y);
+				});
+
+				sprites.forEach(sprite => {
+					const x = sprite.position.x + offset.x;
+					const y = sprite.position.y + offset.y;
+					if (x < 0 || x >= VisibleWidth) return;
+					if (y < 0 || y >= VisibleHeight) return;
+
+					drawImageAt(
+						sprite.pixels,
+						x * TileWidth,
+						y * TileHeight,
+						sprite.size.width,
+						sprite.size.height
+					);
 				});
 			}
 		}
