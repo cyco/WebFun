@@ -1,7 +1,6 @@
 import { Direction, Point, Size } from "src/util";
 import { EvaluationMode, ScriptResult } from "../script";
 import { Char, Hotspot, HotspotType, NPC, Zone, ZoneType, Tile, CharFrameEntry } from "src/engine/objects";
-import Bullet from "src/engine/bullet";
 
 import AbstractRenderer from "src/engine/rendering/abstract-renderer";
 import DetonatorScene from "./detonator-scene";
@@ -21,8 +20,6 @@ import { Sprite } from "../rendering";
 class ZoneScene extends Scene {
 	private _zone: Zone;
 	private _renderer = new ZoneSceneRenderer();
-	private bullets: Bullet[] = [];
-	private bullet: Bullet;
 
 	public async update(ticks: number) {
 		this.engine.palette.step();
@@ -74,22 +71,20 @@ class ZoneScene extends Scene {
 
 	public render(renderer: AbstractRenderer) {
 		const bulletTiles: Sprite[] = [];
-		if (this.bullet) {
+		const hero = this.engine.hero;
+		if (hero.isAttacking) {
 			let tile = this._extensionTileForBullet();
 			if (tile) {
-				const rel = Direction.CalculateRelativeCoordinates(this.bullet.direction, 1);
-				const position = this.engine.hero.location.byAdding(rel.x, rel.y);
+				const rel = Direction.CalculateRelativeCoordinates(hero.direction, 1);
+				const position = hero.location.byAdding(rel.x, rel.y);
 				const sprite = new Sprite(position, new Size(Tile.WIDTH, Tile.HEIGHT), tile.imageData);
 				bulletTiles.push(sprite);
 			}
 
 			tile = this._bulletTileForBullet();
 			if (tile) {
-				const rel = Direction.CalculateRelativeCoordinates(
-					this.bullet.direction,
-					this.engine.hero._actionFrames + 1
-				);
-				const position = this.engine.hero.location.byAdding(rel.x, rel.y);
+				const rel = Direction.CalculateRelativeCoordinates(hero.direction, hero._actionFrames + 1);
+				const position = hero.location.byAdding(rel.x, rel.y);
 				const sprite = new Sprite(position, new Size(Tile.WIDTH, Tile.HEIGHT), tile.imageData);
 				bulletTiles.push(sprite);
 			}
@@ -99,17 +94,18 @@ class ZoneScene extends Scene {
 	}
 
 	private _extensionTileForBullet(): Tile {
-		const frames = this.engine.hero.weapon.frames;
-		const direction = this.bullet.direction;
+		const hero = this.engine.hero;
+		const frames = hero.weapon.frames;
+		const direction = hero.direction;
 		const frameEntry = this._extensionFrameLocationForDirection(direction);
 		let animState: number;
-		if (this.engine.hero._actionFrames === 0) {
+		if (hero._actionFrames === 0) {
 			animState = 1;
-		} else if (this.engine.hero._actionFrames === 1) {
+		} else if (hero._actionFrames === 1) {
 			animState = 2;
-		} else if (this.engine.hero._actionFrames === 2) {
+		} else if (hero._actionFrames === 2) {
 			animState = 1;
-		} else if (this.engine.hero._actionFrames === 3) {
+		} else if (hero._actionFrames === 3) {
 			return null;
 		} else {
 			return null;
@@ -119,12 +115,13 @@ class ZoneScene extends Scene {
 	}
 
 	private _bulletTileForBullet(): Tile {
-		if (this.engine.hero._actionFrames === 3) {
+		const hero = this.engine.hero;
+		if (hero._actionFrames === 3) {
 			return null;
 		}
 
-		const frames = this.engine.hero.weapon.frames;
-		const direction = this.bullet.direction;
+		const frames = hero.weapon.frames;
+		const direction = hero.direction;
 		const frameEntry = this._frameLocationForDirection(direction);
 		return frames[0].tiles[frameEntry];
 	}
@@ -373,7 +370,6 @@ class ZoneScene extends Scene {
 
 	private _moveBullets() {
 		if (this.engine.hero._actionFrames === 3) {
-			this.bullet = null;
 			this.engine.hero.isAttacking = false;
 			this.engine.hero._actionFrames = 0;
 		}
@@ -470,7 +466,7 @@ class ZoneScene extends Scene {
 			return true;
 		}
 
-		if (this.bullet) return false;
+		if (hero.isAttacking) return false;
 
 		hero.isDragging = inputManager.drag;
 		hero.isAttacking = inputManager.attack;
@@ -479,7 +475,7 @@ class ZoneScene extends Scene {
 			hero._actionFrames = 0;
 			hero.isWalking = false;
 			hero.isDragging = false;
-			this._placeBullet(hero, hero.weapon);
+			this._placeBullet(hero);
 			return true;
 		}
 
@@ -563,16 +559,7 @@ class ZoneScene extends Scene {
 		} else this.executeHotspots();
 	}
 
-	private _placeBullet(hero: Hero, weapon: Char) {
-		if (this.bullet) {
-			console.log("Only one bullet can be in the air at a time");
-			return;
-		}
-		const bullet = new Bullet();
-		bullet.direction = hero.direction;
-		bullet.position = hero.location;
-		this.bullet = bullet;
-
+	private _placeBullet(hero: Hero) {
 		hero.ammo--;
 		if (hero.ammo === 0) this.reloadWeapon();
 	}
