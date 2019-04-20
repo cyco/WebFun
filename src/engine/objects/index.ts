@@ -5,7 +5,7 @@ import Zone, { Layer as ZoneLayer, Type as ZoneType } from "./zone";
 
 import Action from "./action";
 import Char from "./char";
-import CharFrame from "./char-frame";
+import CharFrame, { CharFrameEntry } from "./char-frame";
 import CharMovementType from "./char-movement-type";
 import CharType from "./char-type";
 import Condition from "./condition";
@@ -17,6 +17,7 @@ export {
 	Char,
 	CharType,
 	CharMovementType,
+	CharFrameEntry,
 	CharFrame,
 	Condition,
 	Instruction,

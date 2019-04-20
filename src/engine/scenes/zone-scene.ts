@@ -1,6 +1,6 @@
-import { Direction, Point } from "src/util";
+import { Direction, Point, Size } from "src/util";
 import { EvaluationMode, ScriptResult } from "../script";
-import { Char, Hotspot, HotspotType, NPC, Zone, ZoneType } from "src/engine/objects";
+import { Char, Hotspot, HotspotType, NPC, Zone, ZoneType, Tile, CharFrameEntry } from "src/engine/objects";
 import Bullet from "src/engine/bullet";
 
 import AbstractRenderer from "src/engine/rendering/abstract-renderer";
@@ -16,11 +16,13 @@ import { Yoda } from "src/engine";
 import ZoneSceneRenderer from "src/engine/rendering/zone-scene-renderer";
 import TeleporterScene from "./teleport-scene";
 import Hero from "src/engine/hero";
+import { Sprite } from "../rendering";
 
 class ZoneScene extends Scene {
 	private _zone: Zone;
 	private _renderer = new ZoneSceneRenderer();
 	private bullets: Bullet[] = [];
+	private bullet: Bullet;
 
 	public async update(ticks: number) {
 		this.engine.palette.step();
@@ -47,10 +49,10 @@ class ZoneScene extends Scene {
 
 		if (this._evaluateZoneChangeHotspots()) return;
 
+		this._moveBullets();
 		this._moveNPCs();
 
 		// await this._handleMouse();
-
 		const stop = await this._handleKeys();
 		if (stop) return;
 
@@ -71,11 +73,87 @@ class ZoneScene extends Scene {
 	}
 
 	public render(renderer: AbstractRenderer) {
-		this._renderer.render(this._zone, this.engine, renderer, this.engine.palette.current);
-		this._renderBullets(renderer, this.bullets);
+		const bulletTiles: Sprite[] = [];
+		if (this.bullet) {
+			let tile = this._extensionTileForBullet();
+			if (tile) {
+				const rel = Direction.CalculateRelativeCoordinates(this.bullet.direction, 1);
+				const position = this.engine.hero.location.byAdding(rel.x, rel.y);
+				const sprite = new Sprite(position, new Size(Tile.WIDTH, Tile.HEIGHT), tile.imageData);
+				bulletTiles.push(sprite);
+			}
+
+			tile = this._bulletTileForBullet();
+			if (tile) {
+				const rel = Direction.CalculateRelativeCoordinates(
+					this.bullet.direction,
+					this.engine.hero._actionFrames + 1
+				);
+				const position = this.engine.hero.location.byAdding(rel.x, rel.y);
+				const sprite = new Sprite(position, new Size(Tile.WIDTH, Tile.HEIGHT), tile.imageData);
+				bulletTiles.push(sprite);
+			}
+		}
+
+		this._renderer.render(this._zone, this.engine, renderer, this.engine.palette.current, bulletTiles);
 	}
 
-	private _renderBullets(renderer: AbstractRenderer, bullets: Bullet[]) {}
+	private _extensionTileForBullet(): Tile {
+		const frames = this.engine.hero.weapon.frames;
+		const direction = this.bullet.direction;
+		const frameEntry = this._extensionFrameLocationForDirection(direction);
+		let animState: number;
+		if (this.engine.hero._actionFrames === 0) {
+			animState = 1;
+		} else if (this.engine.hero._actionFrames === 1) {
+			animState = 2;
+		} else if (this.engine.hero._actionFrames === 2) {
+			animState = 1;
+		} else if (this.engine.hero._actionFrames === 3) {
+			return null;
+		} else {
+			return null;
+		}
+
+		return frames[animState].tiles[frameEntry];
+	}
+
+	private _bulletTileForBullet(): Tile {
+		if (this.engine.hero._actionFrames === 3) {
+			return null;
+		}
+
+		const frames = this.engine.hero.weapon.frames;
+		const direction = this.bullet.direction;
+		const frameEntry = this._frameLocationForDirection(direction);
+		return frames[0].tiles[frameEntry];
+	}
+
+	private _extensionFrameLocationForDirection(direction: number) {
+		switch (Direction.Confine(direction)) {
+			case Direction.South:
+				return CharFrameEntry.ExtensionDown;
+			case Direction.North:
+				return CharFrameEntry.ExtensionUp;
+			case Direction.East:
+				return CharFrameEntry.ExtensionRight;
+			case Direction.West:
+				return CharFrameEntry.ExtensionLeft;
+		}
+	}
+
+	private _frameLocationForDirection(direction: number) {
+		switch (Direction.Confine(direction)) {
+			case Direction.South:
+				return CharFrameEntry.Down;
+			case Direction.North:
+				return CharFrameEntry.Up;
+			case Direction.East:
+				return CharFrameEntry.Right;
+			case Direction.West:
+				return CharFrameEntry.Left;
+		}
+	}
 
 	public executeHotspots() {
 		if (this.engine.temporaryState.justEntered) return;
@@ -293,6 +371,14 @@ class ZoneScene extends Scene {
 		return true;
 	}
 
+	private _moveBullets() {
+		if (this.engine.hero._actionFrames === 3) {
+			this.bullet = null;
+			this.engine.hero.isAttacking = false;
+			this.engine.hero._actionFrames = 0;
+		}
+	}
+
 	private _moveNPCs() {
 		this._zone.npcs.forEach(npc => this._moveNPC(npc));
 	}
@@ -384,14 +470,17 @@ class ZoneScene extends Scene {
 			return true;
 		}
 
+		if (this.bullet) return false;
+
 		hero.isDragging = inputManager.drag;
 		hero.isAttacking = inputManager.attack;
 		if (hero.isAttacking) this._attackTriggered();
 		if (hero.isAttacking) {
+			hero._actionFrames = 0;
 			hero.isWalking = false;
 			hero.isDragging = false;
 			this._placeBullet(hero, hero.weapon);
-			return;
+			return true;
 		}
 
 		if (inputManager.walk) {
@@ -475,13 +564,14 @@ class ZoneScene extends Scene {
 	}
 
 	private _placeBullet(hero: Hero, weapon: Char) {
-		const direction = Direction.CalculateRelativeCoordinates(hero.direction, 1);
-		const target = hero.location.byAdding(direction.x, direction.y);
-
-		const bullet = new Bullet(weapon);
+		if (this.bullet) {
+			console.log("Only one bullet can be in the air at a time");
+			return;
+		}
+		const bullet = new Bullet();
 		bullet.direction = hero.direction;
-		bullet.position = target;
-		this.bullets.push(bullet);
+		bullet.position = hero.location;
+		this.bullet = bullet;
 
 		hero.ammo--;
 		if (hero.ammo === 0) this.reloadWeapon();

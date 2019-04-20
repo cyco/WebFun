@@ -1,14 +1,10 @@
 import { Point } from "src/util";
-import { Char as Weapon } from "./objects";
+import { Tile } from "src/engine/objects";
 
 class Bullet {
 	public position: Point;
 	public direction: number;
-	private _weapon: Weapon;
-
-	constructor(weapon: Weapon) {
-		this._weapon = weapon;
-	}
+	public tile: Tile;
 }
 
 export default Bullet;
