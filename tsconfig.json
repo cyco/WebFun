@@ -1,23 +1,23 @@
 {
-  "compilerOptions": {
-    "allowUnreachableCode": true,
-    "moduleResolution": "node",
-    "module": "commonjs",
-    "noImplicitAny": true,
-    "removeComments": true,
-    "preserveConstEnums": true,
-    "experimentalDecorators": true,
-    "sourceMap": false,
-    "inlineSourceMap": true,
-    "inlineSources": true,
-    "target": "es2017",
-    "sourceRoot": ".",
-    "baseUrl": ".",
-    "rootDir": ".",
-    "jsx": "preserve",
-    "typeRoots": ["src/@types"],
-    "lib": ["es2017", "dom", "es6", "es2015.promise", "esnext.asynciterable"],
-    "types": ["jasmine", "jasmine-matchers", "webcomponents.js", "webfun-additions", "text-encoding"]
-  },
-  "exclude": ["node_modules"]
+	"compilerOptions": {
+		"allowUnreachableCode": true,
+		"moduleResolution": "node",
+		"module": "commonjs",
+		"noImplicitAny": true,
+		"removeComments": true,
+		"preserveConstEnums": true,
+		"experimentalDecorators": true,
+		"sourceMap": false,
+		"inlineSourceMap": true,
+		"inlineSources": true,
+		"target": "es2017",
+		"sourceRoot": ".",
+		"baseUrl": ".",
+		"rootDir": ".",
+		"jsx": "preserve",
+		"typeRoots": ["src/@types"],
+		"lib": ["es2018", "dom", "es6", "es2015.promise", "esnext.asynciterable"],
+		"types": ["jasmine", "jasmine-matchers", "webcomponents.js", "webfun-additions", "text-encoding"]
+	},
+	"exclude": ["node_modules"]
 }
