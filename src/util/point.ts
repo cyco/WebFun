@@ -42,7 +42,7 @@ class Point implements PointLike {
 		return this;
 	}
 
-	byAdding(x: number, y: number): Point {
+	byAdding(x: number | PointLike, y: number = null): Point {
 		return new Point(this).add(x, y);
 	}
 
@@ -58,7 +58,7 @@ class Point implements PointLike {
 		return this;
 	}
 
-	bySubtracting(x: number, y: number): Point {
+	bySubtracting(x: number | PointLike, y: number = null): Point {
 		return new Point(this).subtract(x, y);
 	}
 

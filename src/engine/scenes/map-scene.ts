@@ -74,7 +74,7 @@ class MapScene extends Scene {
 		speechScene.text = text;
 
 		// HACK: Work against camera offset correction
-		location = location.bySubtracting(this.cameraOffset.x, this.cameraOffset.y);
+		location = location.bySubtracting(this.cameraOffset);
 
 		speechScene.location = location;
 		speechScene.tileSize = new Size(MapTileWidth, MapTileHeight);

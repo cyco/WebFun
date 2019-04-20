@@ -76,7 +76,7 @@ class ZoneScene extends Scene {
 			let tile = this._extensionTileForBullet();
 			if (tile) {
 				const rel = Direction.CalculateRelativeCoordinates(hero.direction, 1);
-				const position = hero.location.byAdding(rel.x, rel.y);
+				const position = hero.location.byAdding(rel);
 				const sprite = new Sprite(position, new Size(Tile.WIDTH, Tile.HEIGHT), tile.imageData);
 				bulletTiles.push(sprite);
 			}
@@ -84,7 +84,7 @@ class ZoneScene extends Scene {
 			tile = this._bulletTileForBullet();
 			if (tile) {
 				const rel = Direction.CalculateRelativeCoordinates(hero.direction, hero._actionFrames + 1);
-				const position = hero.location.byAdding(rel.x, rel.y);
+				const position = hero.location.byAdding(rel);
 				const sprite = new Sprite(position, new Size(Tile.WIDTH, Tile.HEIGHT), tile.imageData);
 				bulletTiles.push(sprite);
 			}
@@ -389,7 +389,7 @@ class ZoneScene extends Scene {
 				vector.y = 1;
 		}
 
-		const target = npc.position.byAdding(vector.x, vector.y);
+		const target = npc.position.byAdding(vector);
 		if (!this.zone.bounds.contains(target)) {
 			return;
 		}
