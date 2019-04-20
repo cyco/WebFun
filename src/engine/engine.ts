@@ -85,7 +85,10 @@ class Engine extends EventTarget {
 	update(ticks: number) {
 		if (this._updateInProgress) console.warn("Reentering update!");
 		this._updateInProgress = true;
-		return this.sceneManager.update(ticks).then(() => (this._updateInProgress = false));
+		return this.sceneManager
+			.update(ticks)
+			.catch(e => console.warn("Update failed", e))
+			.finally(() => (this._updateInProgress = false));
 	}
 
 	render() {
