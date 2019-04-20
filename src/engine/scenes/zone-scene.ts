@@ -72,7 +72,7 @@ class ZoneScene extends Scene {
 	public render(renderer: AbstractRenderer) {
 		const bulletTiles: Sprite[] = [];
 		const hero = this.engine.hero;
-		if (hero.isAttacking) {
+		if (hero.isAttacking && hero.weapon) {
 			let tile = this._extensionTileForBullet();
 			if (tile) {
 				const rel = Direction.CalculateRelativeCoordinates(hero.direction, 1);
@@ -373,6 +373,7 @@ class ZoneScene extends Scene {
 
 	private _moveBullets() {
 		const hero = this.engine.hero;
+		if (!hero.isAttacking) return;
 		const frames = hero._actionFrames;
 
 		if (frames === 3) {
