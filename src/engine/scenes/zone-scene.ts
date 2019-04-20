@@ -1,6 +1,6 @@
 import { Direction, Point, Size } from "src/util";
 import { EvaluationMode, ScriptResult } from "../script";
-import { Char, Hotspot, HotspotType, NPC, Zone, ZoneType, Tile, CharFrameEntry } from "src/engine/objects";
+import { Hotspot, HotspotType, NPC, Zone, ZoneType, Tile, CharFrameEntry } from "src/engine/objects";
 
 import AbstractRenderer from "src/engine/rendering/abstract-renderer";
 import DetonatorScene from "./detonator-scene";
@@ -85,8 +85,11 @@ class ZoneScene extends Scene {
 			if (tile) {
 				const rel = Direction.CalculateRelativeCoordinates(hero.direction, hero._actionFrames + 1);
 				const position = hero.location.byAdding(rel);
-				const sprite = new Sprite(position, new Size(Tile.WIDTH, Tile.HEIGHT), tile.imageData);
-				bulletTiles.push(sprite);
+				const object = this.zone.getTile(position);
+				if (!object || object.isOpaque()) {
+					const sprite = new Sprite(position, new Size(Tile.WIDTH, Tile.HEIGHT), tile.imageData);
+					bulletTiles.push(sprite);
+				}
 			}
 		}
 
@@ -369,10 +372,25 @@ class ZoneScene extends Scene {
 	}
 
 	private _moveBullets() {
-		if (this.engine.hero._actionFrames === 3) {
-			this.engine.hero.isAttacking = false;
-			this.engine.hero._actionFrames = 0;
+		const hero = this.engine.hero;
+		const frames = hero._actionFrames;
+
+		if (frames === 3) {
+			hero.isAttacking = false;
+			hero._actionFrames = 0;
+			return;
 		}
+
+		const target = hero.location.byAdding(
+			Direction.CalculateRelativeCoordinates(hero.direction, frames + 1)
+		);
+		const tile = this.zone.getTile(target);
+		if (!tile || tile.isOpaque()) return;
+		if (!this._bulletTileForBullet()) return;
+
+		hero.isAttacking = false;
+		hero._actionFrames = 0;
+		// TODO: damage npc
 	}
 
 	private _moveNPCs() {
