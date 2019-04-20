@@ -38,9 +38,7 @@ class DetonatorScene extends Scene {
 		const renderer = r as Renderer;
 		for (let i = 0; i <= this._ticks && i < this._detonatorFrames.length; i++) {
 			const frame = this._detonatorFrames[i];
-			const p = this.cameraOffset
-				.byAdding(this.detonatorLocation.x, this.detonatorLocation.y)
-				.byScalingBy(Tile.WIDTH);
+			const p = this.cameraOffset.byAdding(this.detonatorLocation).byScalingBy(Tile.WIDTH);
 			renderer.renderImage(frame, p.x, p.y);
 		}
 	}
