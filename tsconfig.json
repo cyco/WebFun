@@ -16,8 +16,8 @@
 		"rootDir": ".",
 		"jsx": "preserve",
 		"typeRoots": ["src/@types"],
-		"lib": ["es2018", "dom", "es6", "es2015.promise", "esnext.asynciterable"],
-		"types": ["jasmine", "jasmine-matchers", "webcomponents.js", "webfun-additions", "text-encoding"]
+		"lib": ["es2018", "dom", "esnext.asynciterable"],
+		"types": ["jasmine", "jasmine-matchers", "webcomponents.js", "webfun-additions", "json", "text-encoding"]
 	},
 	"exclude": ["node_modules"]
 }
