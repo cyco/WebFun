@@ -13,6 +13,7 @@ import SceneManager from "./scene-manager";
 import Story from "./story";
 import Yoda from "./yoda";
 import readGameDataFile from "./file-format";
+import { Scene } from "./scenes";
 
 export {
 	SaveState,
@@ -32,5 +33,6 @@ export {
 	Yoda,
 	readGameDataFile,
 	SaveGameReader,
-	SaveGameWriter
+	SaveGameWriter,
+	Scene
 };
