@@ -1,4 +1,4 @@
-import { Tile, Zone } from "src/engine/objects";
+import { Tile, Zone, NPC } from "src/engine/objects";
 
 import AbstractRenderer from "src/engine/rendering/abstract-renderer";
 import ColorPalette from "src/engine/rendering/color-palette";
@@ -142,6 +142,20 @@ class ZoneSceneRenderer {
 						Tile.WIDTH,
 						Tile.HEIGHT,
 						h.enabled ? rgba(0, 255, 0, 0.3) : rgba(255, 0, 0, 0.3)
+					);
+				}
+			);
+		}
+
+		if (Settings.drawNPCState && (renderer as any).fillRect instanceof Function) {
+			zone.npcs.forEach(
+				(n: NPC): void => {
+					(renderer as any).fillRect(
+						(n.position.x + offset.x) * Tile.WIDTH,
+						(n.position.y + offset.y) * Tile.HEIGHT,
+						Tile.WIDTH,
+						Tile.HEIGHT,
+						n.enabled ? rgba(0, 255, 0, 0.3) : rgba(255, 0, 0, 0.3)
 					);
 				}
 			);
