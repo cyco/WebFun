@@ -46,7 +46,10 @@ class ZoneScene extends Scene {
 
 		if (this._evaluateZoneChangeHotspots()) return;
 
-		this._moveBullets();
+		scriptResult = await this._moveBullets();
+		if (scriptResult !== ScriptResult.Done) {
+			return;
+		}
 		this._moveNPCs();
 
 		// await this._handleMouse();
@@ -371,23 +374,31 @@ class ZoneScene extends Scene {
 		return true;
 	}
 
-	private _moveBullets() {
+	private async _moveBullets(): Promise<ScriptResult> {
 		const hero = this.engine.hero;
-		if (!hero.isAttacking) return;
+		if (!hero.isAttacking) return ScriptResult.Done;
 		const frames = hero._actionFrames;
 
 		if (frames === 3) {
 			hero.isAttacking = false;
 			hero._actionFrames = 0;
-			return;
+			return ScriptResult.Done;
 		}
 
 		const target = hero.location.byAdding(
 			Direction.CalculateRelativeCoordinates(hero.direction, frames + 1)
 		);
+
 		const tile = this.zone.getTile(target);
-		if (!tile || tile.isOpaque()) return;
-		if (!this._bulletTileForBullet()) return;
+		if (!this._bulletTileForBullet()) return ScriptResult.Done;
+
+		if (!tile || tile.isOpaque()) {
+			// evaluate scripts
+			this.engine.inputManager.placedTileLocation = target;
+			this.engine.inputManager.placedTile = hero.weapon.frames[0].tiles[CharFrameEntry.ExtensionRight];
+			this.engine.scriptExecutor.prepeareExecution(EvaluationMode.PlaceItem, this.zone);
+			return await this.engine.scriptExecutor.execute();
+		}
 
 		hero.isAttacking = false;
 		hero._actionFrames = 0;
