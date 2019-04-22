@@ -1,6 +1,6 @@
 import DebugInfoScene from "./debug-info-scene";
 import { Renderer } from "../engine/rendering";
-import { SceneManager } from "../engine";
+import { SceneManager, Scene } from "../engine";
 import Settings from "../settings";
 
 class DebugInfoSceneManager extends SceneManager {
@@ -16,6 +16,11 @@ class DebugInfoSceneManager extends SceneManager {
 		if (Settings.drawDebugStats) {
 			this._debugInfoScene.render(renderer);
 		}
+	}
+
+	pushScene(scene: Scene) {
+		super.pushScene(scene);
+		this._debugInfoScene.engine = this.engine;
 	}
 }
 

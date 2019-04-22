@@ -1,7 +1,7 @@
 import CanvasRenderer from "src/app/rendering/canvas/canvas-renderer";
 import { Point } from "src/util";
 import { Renderer } from "src/engine/rendering";
-import { Scene } from "src/engine/scenes";
+import { Scene, ZoneScene } from "src/engine/scenes";
 
 class DebugInfoScene extends Scene {
 	private _ticks = 0;
@@ -14,6 +14,14 @@ class DebugInfoScene extends Scene {
 		if (!(renderer instanceof CanvasRenderer)) return;
 
 		this.calculateFPS();
+
+		if (this.engine) {
+			const sceneStack: Scene[] = (this.engine.sceneManager as any)._stack;
+			const zoneScene = sceneStack.find(s => s instanceof ZoneScene) as ZoneScene;
+			if (zoneScene) {
+				renderer.renderText(`Zone ${zoneScene.zone.id.toHex(3)}`, new Point(200, 266));
+			}
+		}
 
 		renderer.renderText(`${this._ticks} ticks`, new Point(10, 246));
 		renderer.renderText(`${this._fps.toFixed(0)} fps, ${this._tps.toFixed(0)} tps`, new Point(10, 265));
