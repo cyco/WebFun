@@ -4,7 +4,7 @@ import Zone from "./zone";
 
 class NPC {
 	protected _id: number = -1;
-	protected _enabled = false;
+	protected _enabled = true;
 	protected _character: Char = null;
 	protected _position: Point = null;
 	protected _unknown1: any;
