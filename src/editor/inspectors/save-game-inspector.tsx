@@ -98,21 +98,21 @@ class SaveGameInspector extends AbstractInspector {
 
 				result.setZone(x, y, zones[input.zoneId] || null);
 				out.additionalRequiredItem = tiles[input.additionalRequiredItem] || null;
-				// input.field_16;
-				// input.field_C;
-				// input.field_Ea;
+				// input.field16;
+				// input.fieldC;
+				// input.fieldEA;
 				// TODO: puzzle idx and puzzle index are missing
-				out.findItem = tiles[input.find_item_id] || null;
-				out.npc = tiles[input.npc_id] || null;
-				out.requiredItem = tiles[input.required_item_id] || null;
+				out.findItem = tiles[input.findItemID] || null;
+				out.npc = tiles[input.npcID] || null;
+				out.requiredItem = tiles[input.requiredItemId] || null;
 				out.zone = zones[input.zoneId] || null;
 				out.zoneType = ZoneType.fromNumber(input.zoneType);
 				if (out.zone) out.zone.visited = input.visited;
-				if (out.zone) out.zone.solved = input.solved_1 !== 0;
+				if (out.zone) out.zone.solved = input.solved1 !== 0;
 				console.assert(
-					input.solved_1 === input.solved_2 &&
-						input.solved_2 === input.solved_3 &&
-						input.solved_3 === input.solved_4
+					input.solved1 === input.solved2&&
+						input.solved2 === input.solved3&&
+						input.solved3 === input.solved4
 				);
 			}
 		}

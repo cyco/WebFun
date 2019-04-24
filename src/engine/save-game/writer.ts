@@ -186,19 +186,19 @@ class Writer {
 	private _writeWorldItem(item: WorldItem, stream: OutputStream): void {
 		stream.writeUint32(+item.visited);
 
-		stream.writeUint32(item.solved_1);
-		stream.writeUint32(item.solved_3);
-		stream.writeUint32(item.solved_2);
-		stream.writeUint32(item.solved_4);
+		stream.writeUint32(item.solved1);
+		stream.writeUint32(item.solved3);
+		stream.writeUint32(item.solved2);
+		stream.writeUint32(item.solved4);
 
 		stream.writeInt16(item.zoneId);
-		stream.writeInt16(item.field_C);
-		stream.writeInt16(item.required_item_id);
-		stream.writeInt16(item.find_item_id);
-		stream.writeInt16(item.field_Ea);
+		stream.writeInt16(item.fieldC);
+		stream.writeInt16(item.requiredItemId);
+		stream.writeInt16(item.findItemID);
+		stream.writeInt16(item.fieldEA);
 		stream.writeInt16(item.additionalRequiredItem);
-		stream.writeInt16(item.field_16);
-		stream.writeInt16(item.npc_id);
+		stream.writeInt16(item.field16);
+		stream.writeInt16(item.npcID);
 
 		// TODO: fix unknown values
 		stream.writeInt32(item.zoneType);

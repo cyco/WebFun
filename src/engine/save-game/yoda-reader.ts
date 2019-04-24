@@ -26,7 +26,7 @@ class YodaReader extends Reader {
 		const seed = stream.getUint32() & 0xffff;
 
 		const planet = stream.getUint32();
-		const on_dagobah = stream.getUint32() !== 0;
+		const onDagobah = stream.getUint32() !== 0;
 
 		const puzzleIDs1 = this.readPuzzles(stream);
 		const puzzleIDs2 = this.readPuzzles(stream);
@@ -52,11 +52,11 @@ class YodaReader extends Reader {
 		const livesLost = stream.getInt32();
 
 		const difficulty = stream.getUint32();
-		const time_elapsed = stream.getUint32();
+		const timeElapsed = stream.getUint32();
 
-		const world_size = stream.getInt32();
-		const unknown_count = stream.getInt16();
-		const unknown_sum = stream.getInt16();
+		const worldSize = stream.getInt32();
+		const unknownCount = stream.getInt16();
+		const unknownSum = stream.getInt16();
 
 		const goalPuzzle = stream.getUint32();
 		const goalPuzzleAgain = stream.getUint32();
@@ -77,7 +77,7 @@ class YodaReader extends Reader {
 		state.puzzleIDs1 = puzzleIDs1;
 		state.puzzleIDs2 = puzzleIDs2;
 		state.inventoryIDs = inventoryIDs;
-		state.onDagobah = on_dagobah;
+		state.onDagobah = onDagobah;
 		state.currentZoneID = currentZoneID;
 		state.positionOnZone = new Point(posXOnZone, posYOnZone);
 		state.positionOnWorld = new Point(posXOnWorld, posYOnWorld);
@@ -91,12 +91,12 @@ class YodaReader extends Reader {
 		state.livesLost = livesLost;
 		state.dagobah = dagobah;
 		state.world = world;
-		state.timeElapsed = time_elapsed;
+		state.timeElapsed = timeElapsed;
 		state.difficulty = difficulty;
-		state.unknownCount = unknown_count;
-		state.unknownSum = unknown_sum;
+		state.unknownCount = unknownCount;
+		state.unknownSum = unknownSum;
 		try {
-			state.worldSize = WorldSize.fromNumber(1 + world_size);
+			state.worldSize = WorldSize.fromNumber(1 + worldSize);
 		} catch (_) {
 			state.worldSize = WorldSize.Small;
 		}
@@ -105,20 +105,20 @@ class YodaReader extends Reader {
 
 	protected readWorldItem(stream: InputStream, _x: number, _y: number): WorldItem {
 		const visited = this.readBool(stream);
-		const solved_1 = this.readBool(stream);
-		const solved_2 = this.readBool(stream);
+		const solved1 = this.readBool(stream);
+		const solved2 = this.readBool(stream);
 
-		const solved_3 = stream.getUint32() !== 0;
-		const solved_4 = stream.getUint32() !== 0;
+		const solved3 = stream.getUint32() !== 0;
+		const solved4 = stream.getUint32() !== 0;
 
 		const zoneId = stream.getInt16();
-		const field_c = stream.getInt16();
-		const required_item_id = stream.getInt16();
-		const find_item_id = stream.getInt16();
-		const field_ea = stream.getInt16();
+		const fieldC = stream.getInt16();
+		const requiredItemId = stream.getInt16();
+		const findItemId = stream.getInt16();
+		const fieldEA = stream.getInt16();
 		const additionalRequiredItem = stream.getInt16();
-		const field_16 = stream.getInt16();
-		const npc_id = stream.getInt16();
+		const field16 = stream.getInt16();
+		const npcId = stream.getInt16();
 
 		const zoneType = stream.getInt32();
 		// skip over unknown value
@@ -126,18 +126,18 @@ class YodaReader extends Reader {
 
 		const worldItem = new WorldItem();
 		worldItem.visited = visited;
-		worldItem.solved_1 = solved_1 ? 1 : 0;
-		worldItem.solved_2 = solved_2 ? 1 : 0;
-		worldItem.solved_3 = solved_3 ? 1 : 0;
-		worldItem.solved_4 = solved_4 ? 1 : 0;
+		worldItem.solved1 = solved1 ? 1 : 0;
+		worldItem.solved2 = solved2 ? 1 : 0;
+		worldItem.solved3 = solved3 ? 1 : 0;
+		worldItem.solved4 = solved4 ? 1 : 0;
 		worldItem.zoneId = zoneId;
-		worldItem.field_C = field_c;
-		worldItem.required_item_id = required_item_id;
-		worldItem.find_item_id = find_item_id;
-		worldItem.field_Ea = field_ea;
+		worldItem.fieldC = fieldC;
+		worldItem.requiredItemId = requiredItemId;
+		worldItem.findItemID = findItemId;
+		worldItem.fieldEA = fieldEA;
 		worldItem.additionalRequiredItem = additionalRequiredItem;
-		worldItem.field_16 = field_16;
-		worldItem.npc_id = npc_id;
+		worldItem.field16 = field16;
+		worldItem.npcID = npcId;
 		worldItem.zoneType = zoneType;
 
 		return worldItem;
