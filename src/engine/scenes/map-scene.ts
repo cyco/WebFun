@@ -33,7 +33,10 @@ const enum StringID {
 	Solved = 57357,
 	TravelSolved = 57370,
 	GoalSolved = 57364,
-	Town = 57363
+	Town = 57363,
+	aMap = 57360,
+	TheForce = 57362,
+	SomethingUseful = 57361
 }
 
 class MapScene extends Scene {
@@ -196,16 +199,13 @@ class MapScene extends Scene {
 		if (!worldItem.zone.visited && !Settings.revealWorld) return -2;
 
 		const typeForTile = (tile: Tile): number => {
-			const attributes = tile.attributes;
-			if (attributes & 0x20000) return StringID.aTool;
-			if (attributes & 0x40000) return StringID.aPart;
-			if (attributes & 0x80000) return StringID.aValuable;
-			if (attributes & 0x10000) {
-				if (tile.id === 531 || tile.id === 645 || tile.id === 1087 || tile.id === 1075) {
-					return StringID.aTool;
-				}
-				return StringID.aKeyCard;
-			}
+			if (tile.isTool()) return StringID.aTool;
+			if (tile.isPart()) return StringID.aPart;
+			if (tile.isValuable()) return StringID.aValuable;
+			if (tile.isKeycard()) return StringID.aKeyCard;
+			if (tile.isLocator()) return StringID.aMap;
+			if (tile.isWeapon()) return StringID.TheForce;
+			if (tile.isItem()) return StringID.SomethingUseful;
 
 			return StringID.aUnknown;
 		};
@@ -231,9 +231,9 @@ class MapScene extends Scene {
 			case ZoneType.FindTheForce:
 				if (!worldItem.findItem) return StringID.None;
 				if (worldItem.zone.solved) return StringID.Solved;
-				if (worldItem.findItem.attributes & 0x10000) return [StringID.find, 57360];
-				if (worldItem.findItem.attributes & 0x40) return [StringID.find, 57362];
-				if (worldItem.findItem.attributes & 0x80) return [StringID.find, 57361];
+				if (worldItem.findItem.isLocator()) return [StringID.find, StringID.aMap];
+				if (worldItem.findItem.isWeapon()) return [StringID.find, StringID.TheForce];
+				if (worldItem.findItem.isItem()) return [StringID.find, StringID.SomethingUseful];
 				console.assert(false, "Unknown find item!");
 			case ZoneType.Trade:
 				if (!worldItem.requiredItem) return StringID.None;
@@ -242,7 +242,7 @@ class MapScene extends Scene {
 			case ZoneType.Use:
 				if (!worldItem.requiredItem) return StringID.None;
 				if (worldItem.zone.solved) return StringID.Solved;
-				return [StringID.find, worldItem.requiredItem.name];
+				return [StringID.requires, worldItem.requiredItem.name];
 
 			case ZoneType.Load:
 			case ZoneType.Room:

@@ -55,9 +55,9 @@ class TileFilter implements SearchDelegate<Tile, RegExp[]> {
 
 			if (tile.getSubtype(Subtype.Item.Keycard)) components.push("keycard");
 			if (tile.getSubtype(Subtype.Item.Locator)) components.push("locator");
-			if (tile.getSubtype(Subtype.Item.PuzzleGoal)) components.push("puzzle goal");
-			if (tile.getSubtype(Subtype.Item.PuzzleTool)) components.push("tool");
-			if (tile.getSubtype(Subtype.Item.PuzzleValuable)) components.push("valuable");
+			if (tile.getSubtype(Subtype.Item.Part)) components.push("part");
+			if (tile.getSubtype(Subtype.Item.Tool)) components.push("tool");
+			if (tile.getSubtype(Subtype.Item.Valuable)) components.push("valuable");
 		}
 
 		if (tile.getAttribute(Attribute.Character)) {
