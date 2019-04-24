@@ -43,7 +43,7 @@ class WorldGenerator {
 	private findItem: Tile = null;
 	private npc: Tile = null;
 	private somethingWithTeleporters: number = -1;
-	private puzzles_can_be_reused: number = 0;
+	private puzzlesCanBeReused: number = 0;
 
 	constructor(size: WorldSize, planet: Planet, engine: Engine) {
 		this._size = size;
@@ -384,7 +384,7 @@ class WorldGenerator {
 			zoneMatchesType = zone => zone.type === ZoneType.Find || zone.type === ZoneType.FindTheForce;
 		const zoneMatchesPlanet = (zone: Zone) => zone.planet === this._planet;
 		const zoneIsUnused = (zone: Zone) =>
-			!this.usedZones.contains(zone) || (zoneType === ZoneType.Goal && this.puzzles_can_be_reused > 0);
+			!this.usedZones.contains(zone) || (zoneType === ZoneType.Goal && this.puzzlesCanBeReused > 0);
 		const usableZones = this._data.zones.filter(and(zoneMatchesPlanet, zoneMatchesType)).shuffle();
 		return usableZones
 			.filter(zoneIsUnused)

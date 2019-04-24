@@ -88,11 +88,11 @@ class IndyReader extends Reader {
 
 	protected readWorldItem(stream: InputStream, _x: number, _y: number): WorldItem {
 		const visited = this.readBool(stream);
-		const solved_1 = this.readBool(stream);
-		const solved_2 = this.readBool(stream);
+		const solved1 = this.readBool(stream);
+		const solved2 = this.readBool(stream);
 
 		const zoneID = stream.getInt16();
-		const field_C = stream.getInt16();
+		const fieldC = stream.getInt16();
 
 		const requiredItemID = stream.getInt16();
 		const findItemID = stream.getInt16();
@@ -103,18 +103,18 @@ class IndyReader extends Reader {
 
 		const worldItem = new WorldItem();
 		worldItem.visited = visited;
-		worldItem.solved_1 = solved_1 ? 1 : 0;
-		worldItem.solved_2 = solved_2 ? 1 : 0;
-		// worldItem.solved_3 = solved_3 ? 1 : 0;
-		// worldItem.solved_4 = solved_4 ? 1 : 0;
+		worldItem.solved1 = solved1 ? 1 : 0;
+		worldItem.solved2 = solved2 ? 1 : 0;
+		// worldItem.solved3 = solved3 ? 1 : 0;
+		// worldItem.solved4 = solved4 ? 1 : 0;
 		worldItem.zoneId = zoneID;
-		worldItem.field_C = field_C;
-		worldItem.required_item_id = requiredItemID;
-		worldItem.find_item_id = findItemID;
-		// worldItem.field_Ea = field_ea;
+		worldItem.fieldC = fieldC;
+		worldItem.requiredItemId = requiredItemID;
+		worldItem.findItemID = findItemID;
+		// worldItem.fieldEA = fieldEA;
 		// worldItem.additionalRequiredItem = additionalRequiredItem;
-		// worldItem.field_16 = field_16;
-		worldItem.npc_id = npcID;
+		// worldItem.field16 = field16;
+		worldItem.npcID = npcID;
 		return worldItem;
 	}
 

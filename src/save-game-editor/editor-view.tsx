@@ -297,16 +297,16 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 			{
 				title: "Clear",
 				callback: () => {
-					item.field_16 = -1;
-					item.field_C = -1;
-					item.field_Ea = -1;
-					item.find_item_id = -1;
-					item.npc_id = -1;
-					item.required_item_id = -1;
-					item.solved_1 = 0;
-					item.solved_2 = 0;
-					item.solved_3 = 0;
-					item.solved_4 = 0;
+					item.field16 = -1;
+					item.fieldC = -1;
+					item.fieldEA = -1;
+					item.findItemID = -1;
+					item.npcID = -1;
+					item.requiredItemId = -1;
+					item.solved1 = 0;
+					item.solved2 = 0;
+					item.solved3 = 0;
+					item.solved4 = 0;
 					item.visited = false;
 					item.zoneId = -1;
 					item.additionalRequiredItem = -1;
@@ -335,16 +335,16 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 				callback: () => {
 					item.visited = !item.visited;
 					item.additionalRequiredItem = -1;
-					item.field_16 = -1;
-					item.field_C = -1;
-					item.field_Ea = -1;
-					item.find_item_id = -1;
-					item.npc_id = -1;
-					item.required_item_id = -1;
-					item.solved_1 = !item.visited ? 0 : item.solved_1;
-					item.solved_2 = !item.visited ? 0 : item.solved_2;
-					item.solved_3 = !item.visited ? 0 : item.solved_3;
-					item.solved_4 = !item.visited ? 0 : item.solved_4;
+					item.field16 = -1;
+					item.fieldC = -1;
+					item.fieldEA = -1;
+					item.findItemID = -1;
+					item.npcID = -1;
+					item.requiredItemId = -1;
+					item.solved1 = !item.visited ? 0 : item.solved1;
+					item.solved2 = !item.visited ? 0 : item.solved2;
+					item.solved3 = !item.visited ? 0 : item.solved3;
+					item.solved4 = !item.visited ? 0 : item.solved4;
 
 					of.redraw();
 				}

@@ -1,17 +1,17 @@
 class WorldItem {
 	visited: boolean;
-	solved_1: number;
-	solved_3: number;
-	solved_2: number;
-	solved_4: number;
+	solved1: number;
+	solved3: number;
+	solved2: number;
+	solved4: number;
 	zoneId: number;
-	field_C: number;
-	required_item_id: number;
-	find_item_id: number;
-	field_Ea: number;
+	fieldC: number;
+	requiredItemId: number;
+	findItemID: number;
+	fieldEA: number;
 	additionalRequiredItem: number;
-	field_16: number;
-	npc_id: number;
+	field16: number;
+	npcID: number;
 }
 
 export default WorldItem;

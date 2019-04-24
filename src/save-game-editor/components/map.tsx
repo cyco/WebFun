@@ -110,10 +110,10 @@ class Map extends Component {
 		return imageData;
 	}
 
-	private _tileForWorldItem({ visited, solved_1, zoneId }: WorldItem): Tile {
+	private _tileForWorldItem({ visited, solved1, zoneId }: WorldItem): Tile {
 		let tile = this.locatorTile.forZone(this.zones[zoneId], visited, this.reveal);
 		if (!tile) return null;
-		if (tile instanceof Array) tile = tile[solved_1 ? 1 : 0];
+		if (tile instanceof Array) tile = tile[solved1 ? 1 : 0];
 
 		return this.tiles[tile];
 	}
