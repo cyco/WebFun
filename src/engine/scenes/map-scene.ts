@@ -19,6 +19,23 @@ const MapTileHeight = 28;
 const ViewWidth = 288;
 const ViewHeight = 288;
 
+const enum StringID {
+	None = -1,
+
+	requires = 57358,
+	find = 57359,
+	aPart = 57367,
+	aValuable = 57368,
+	aKeyCard = 57369,
+	aTool = 57366,
+	aUnknown = 57365,
+
+	Solved = 57357,
+	TravelSolved = 57370,
+	GoalSolved = 57364,
+	Town = 57363
+}
+
 class MapScene extends Scene {
 	static readonly LOCATOR_ANIMATION_TICKS = 10;
 	private _ticks: number = 0;
@@ -175,65 +192,57 @@ class MapScene extends Scene {
 
 	private _locatorDescriptionId(at: Point): (number | string) | (number | string)[] {
 		const worldItem = this.engine.currentWorld.at(at.x, at.y);
-		if (!worldItem || !worldItem.zone) return -1;
+		if (!worldItem || !worldItem.zone) return StringID.None;
 		if (!worldItem.zone.visited && !Settings.revealWorld) return -2;
 
-		const requires = 57358;
-		const find = 57359;
 		const typeForTile = (tile: Tile): number => {
-			const aPart = 57367;
-			const aValuable = 57368;
-			const aKeyCard = 57369;
-			const aTool = 57366;
-			const aUnknown = 57365;
-
 			const attributes = tile.attributes;
-			if (attributes & 0x20000) return aTool;
-			if (attributes & 0x40000) return aPart;
-			if (attributes & 0x80000) return aValuable;
+			if (attributes & 0x20000) return StringID.aTool;
+			if (attributes & 0x40000) return StringID.aPart;
+			if (attributes & 0x80000) return StringID.aValuable;
 			if (attributes & 0x10000) {
 				if (tile.id === 531 || tile.id === 645 || tile.id === 1087 || tile.id === 1075) {
-					return aTool;
+					return StringID.aTool;
 				}
-				return aKeyCard;
+				return StringID.aKeyCard;
 			}
 
-			return aUnknown;
+			return StringID.aUnknown;
 		};
 
 		switch (worldItem.zone.type) {
 			case ZoneType.Empty:
-				return -1;
+				return StringID.None;
 			case ZoneType.Town:
-				return 57363;
+				return StringID.Town;
 			case ZoneType.BlockadeNorth:
 			case ZoneType.BlockadeSouth:
 			case ZoneType.BlockadeEast:
 			case ZoneType.BlockadeWest:
 			case ZoneType.TravelStart:
 			case ZoneType.TravelEnd:
-				if (!worldItem.requiredItem) return -1;
-				if (worldItem.zone.solved) return 57370;
-				return [requires, typeForTile(worldItem.requiredItem)];
+				if (!worldItem.requiredItem) return StringID.None;
+				if (worldItem.zone.solved) return StringID.TravelSolved;
+				return [StringID.requires, typeForTile(worldItem.requiredItem)];
 			case ZoneType.Goal:
-				if (worldItem.zone.solved) return 57364;
-				return 57365;
+				if (worldItem.zone.solved) return StringID.GoalSolved;
+				return StringID.aUnknown;
 			case ZoneType.Find:
 			case ZoneType.FindTheForce:
-				if (!worldItem.findItem) return -1;
-				if (worldItem.zone.solved) return 57357;
-				if (worldItem.findItem.attributes & 0x10000) return [find, 57360];
-				if (worldItem.findItem.attributes & 0x40) return [find, 57362];
-				if (worldItem.findItem.attributes & 0x80) return [find, 57361];
+				if (!worldItem.findItem) return StringID.None;
+				if (worldItem.zone.solved) return StringID.Solved;
+				if (worldItem.findItem.attributes & 0x10000) return [StringID.find, 57360];
+				if (worldItem.findItem.attributes & 0x40) return [StringID.find, 57362];
+				if (worldItem.findItem.attributes & 0x80) return [StringID.find, 57361];
 				console.assert(false, "Unknown find item!");
 			case ZoneType.Trade:
-				if (!worldItem.requiredItem) return -1;
-				if (worldItem.zone.solved) return 57357;
-				return [requires, typeForTile(worldItem.requiredItem)];
+				if (!worldItem.requiredItem) return StringID.None;
+				if (worldItem.zone.solved) return StringID.Solved;
+				return [StringID.requires, typeForTile(worldItem.requiredItem)];
 			case ZoneType.Use:
-				if (!worldItem.requiredItem) return -1;
-				if (worldItem.zone.solved) return 57357;
-				return [find, worldItem.requiredItem.name];
+				if (!worldItem.requiredItem) return StringID.None;
+				if (worldItem.zone.solved) return StringID.Solved;
+				return [StringID.find, worldItem.requiredItem.name];
 
 			case ZoneType.Load:
 			case ZoneType.Room:
@@ -242,7 +251,7 @@ class MapScene extends Scene {
 			case ZoneType.None:
 			default:
 				console.assert(false, "Zone does not appear on map!");
-				return -1;
+				return StringID.None;
 		}
 	}
 
