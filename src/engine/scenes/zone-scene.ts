@@ -605,7 +605,7 @@ class ZoneScene extends Scene {
 		if (inventory.contains(weaponTile)) {
 			hero.ammo = 1;
 			engine.equip(weaponTile);
-		} else engine.equip(inventory.find(tile => tile.isWeapon));
+		} else engine.equip(inventory.find(tile => tile.isWeapon()));
 	}
 
 	private evaluateBumpHotspots(at: Point, engine: Engine) {

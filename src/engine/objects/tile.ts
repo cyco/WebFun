@@ -6,7 +6,7 @@ export const enum Attributes {
 	Transparent = 1 << 0,
 	Floor = 1 << 1,
 	Object = 1 << 2,
-	Draggabe = 1 << 3,
+	Draggable = 1 << 3,
 	Roof = 1 << 4,
 	Locator = 1 << 5,
 	Weapon = 1 << 6,
@@ -30,14 +30,12 @@ export const Attribute = {
 
 export const Subtype = {
 	Weapon: {
-		// Weapon
 		BlasterLow: 16,
 		BlasterHigh: 17,
 		Lightsaber: 18,
 		TheForce: 19
 	},
 	Locator: {
-		// Locator
 		Town: 1,
 
 		PuzzleUnsolved: 2,
@@ -59,17 +57,14 @@ export const Subtype = {
 		YouAreHere: 15
 	},
 	Item: {
-		// Item
-		Locator: 4,
-
-		Keycard: 0,
-		PuzzleTool: 1,
-		PuzzleGoal: 2,
-		PuzzleValuable: 3,
-		Consumeable: 6
+		Keycard: 16 + 0,
+		Tool: 16 + 1,
+		Part: 16 + 2,
+		Valuable: 16 + 3,
+		Locator: 16 + 4,
+		Consumeable: 16 + 6
 	},
 	Character: {
-		// Character
 		Hero: 16,
 		Enemy: 17,
 		NPC: 18
@@ -89,27 +84,57 @@ export class Tile {
 	protected _imageData: Uint8Array;
 
 	get walkable() {
-		return !this.getAttribute(Tile.Attribute.Object) && !this.getAttribute(Tile.Attribute.Character);
+		return !this.getAttribute(Attribute.Object) && !this.getAttribute(Attribute.Character);
 	}
 
 	get subtype() {
 		return this._attributes & ~0xff;
 	}
 
-	isObject() {
-		return this.getAttribute(Tile.Attribute.Object);
+	public isObject() {
+		return this.getAttribute(Attribute.Object);
 	}
 
-	isDraggable() {
-		return this.getAttribute(Tile.Attribute.Draggable);
+	public isDraggable() {
+		return this.getAttribute(Attribute.Draggable);
 	}
 
-	isLocator() {
-		return this.getAttribute(Tile.Attribute.Locator);
+	public isLocator() {
+		return (
+			this.getAttribute(Attribute.Locator) || (this.isItem() && this.getSubtype(Subtype.Item.Locator))
+		);
 	}
 
-	isOpaque() {
+	public isOpaque() {
 		return 0 === (this._attributes & 1);
+	}
+
+	public isItem() {
+		return this.getAttribute(Attribute.Item);
+	}
+
+	public isKeycard() {
+		return this.isItem() && this.getSubtype(Subtype.Item.Keycard);
+	}
+
+	public isPart() {
+		return this.isItem() && this.getSubtype(Subtype.Item.Part);
+	}
+
+	public isTool() {
+		return this.isItem() && this.getSubtype(Subtype.Item.Tool);
+	}
+
+	public isValuable() {
+		return this.isItem() && this.getSubtype(Subtype.Item.Valuable);
+	}
+
+	public isWeapon() {
+		return (this.attributes & Attributes.Weapon) !== 0;
+	}
+
+	public isEdible() {
+		return (this.attributes & Attributes.Edible) !== 0;
 	}
 
 	getAttribute(attr: number): boolean {
@@ -134,14 +159,6 @@ export class Tile {
 
 	public get imageData() {
 		return this._imageData;
-	}
-
-	public get isWeapon() {
-		return (this.attributes & Attributes.Weapon) !== 0;
-	}
-
-	public get isEdible() {
-		return (this.attributes & Attributes.Edible) !== 0;
 	}
 }
 

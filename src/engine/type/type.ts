@@ -15,7 +15,7 @@ abstract class GameType {
 	abstract get sounds(): WellKnownSounds;
 
 	canBeEquipped(tile: Tile): boolean {
-		return tile.isWeapon;
+		return tile.isWeapon();
 	}
 
 	abstract getHealthBonus(_: Tile): number;
