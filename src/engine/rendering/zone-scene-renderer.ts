@@ -155,6 +155,8 @@ class ZoneSceneRenderer {
 		if (Settings.drawNPCState && (renderer as any).fillRect instanceof Function) {
 			zone.npcs.forEach(
 				(n: NPC): void => {
+					if (!n.alive) return;
+
 					const barArea = new Rectangle(
 						n.position
 							.byAdding(offset)
