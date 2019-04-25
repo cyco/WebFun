@@ -10,6 +10,7 @@ class NPC {
 	protected _unknown1: any;
 	protected _unknown2: any;
 	protected _data: any;
+	public damageTaken: number = 0;
 
 	constructor() {
 		this._data = Array.Repeat(-1, 0x20); // 32 bytes
