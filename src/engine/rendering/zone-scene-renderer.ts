@@ -6,7 +6,11 @@ import Sprite from "src/engine/rendering/sprite";
 import Engine from "src/engine/engine";
 import Hotspot from "../objects/hotspot";
 import Settings from "src/settings";
-import { rgba } from "src/util";
+import { rgba, Rectangle, Size } from "src/util";
+import { round } from "src/std/math";
+
+const NPCHealthBarHeight = 12;
+const NPCHealthBarInset = 4;
 
 class ZoneSceneRenderer {
 	public render(
@@ -151,12 +155,29 @@ class ZoneSceneRenderer {
 		if (Settings.drawNPCState && (renderer as any).fillRect instanceof Function) {
 			zone.npcs.forEach(
 				(n: NPC): void => {
+					const barArea = new Rectangle(
+						n.position
+							.byAdding(offset)
+							.byScalingBy(Tile.WIDTH)
+							.byAdding(0, Tile.HEIGHT - NPCHealthBarHeight),
+						new Size(Tile.WIDTH, NPCHealthBarHeight)
+					).inset(NPCHealthBarInset, NPCHealthBarInset);
+
 					(renderer as any).fillRect(
-						(n.position.x + offset.x) * Tile.WIDTH,
-						(n.position.y + offset.y) * Tile.HEIGHT,
-						Tile.WIDTH,
-						Tile.HEIGHT,
-						n.enabled ? rgba(0, 255, 0, 0.3) : rgba(255, 0, 0, 0.3)
+						barArea.origin.x,
+						barArea.origin.y,
+						barArea.size.width,
+						barArea.size.height,
+						rgba(0, 0, 0, 0.2)
+					);
+
+					barArea.size.width = round(barArea.size.width * (1 - n.damageTaken / n.face.health));
+					(renderer as any).fillRect(
+						barArea.origin.x,
+						barArea.origin.y,
+						barArea.size.width,
+						barArea.size.height,
+						rgba(0, 255, 0, 0.6)
 					);
 				}
 			);
