@@ -420,6 +420,7 @@ class ZoneScene extends Scene {
 		npc.damageTaken += weapon.damage;
 		if (!npc.alive) {
 			this.zone.setTile(null, npc.position);
+			npc.enabled = false;
 		}
 	}
 
