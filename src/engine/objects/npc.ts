@@ -1,6 +1,7 @@
 import Char from "./char";
 import { Point } from "src/util";
 import Zone from "./zone";
+import { min } from "src/std/math";
 
 class NPC {
 	protected _id: number = -1;
@@ -10,7 +11,7 @@ class NPC {
 	protected _unknown1: any;
 	protected _unknown2: any;
 	protected _data: any;
-	public damageTaken: number = 0;
+	private _damageTaken: number = 0;
 
 	constructor() {
 		this._data = Array.Repeat(-1, 0x20); // 32 bytes
@@ -55,12 +56,17 @@ class NPC {
 		this._position = p;
 	}
 
-	public isDead() {
-		return this.damageTaken >= this._character.health;
+	public get alive() {
+		return this._damageTaken < this._character.health;
 	}
 
-	public get alive() {
-		return !this.isDead();
+	public get damageTaken() {
+		return this._damageTaken;
+	}
+
+	public set damageTaken(d: number) {
+		this._damageTaken += d;
+		this._damageTaken = min(this._damageTaken, this._character.health);
 	}
 }
 

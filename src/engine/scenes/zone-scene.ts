@@ -418,7 +418,7 @@ class ZoneScene extends Scene {
 
 	private hitNPC(npc: NPC, weapon: Char) {
 		npc.damageTaken += weapon.damage;
-		if (npc.isDead()) {
+		if (!npc.alive) {
 			this.zone.setTile(null, npc.position);
 		}
 	}
