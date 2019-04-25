@@ -1,6 +1,6 @@
 import { Direction, Point, Size } from "src/util";
 import { EvaluationMode, ScriptResult } from "../script";
-import { Hotspot, HotspotType, NPC, Zone, ZoneType, Tile, CharFrameEntry } from "src/engine/objects";
+import { Hotspot, HotspotType, NPC, Zone, ZoneType, Tile, CharFrameEntry, Char } from "src/engine/objects";
 
 import AbstractRenderer from "src/engine/rendering/abstract-renderer";
 import DetonatorScene from "./detonator-scene";
@@ -389,6 +389,17 @@ class ZoneScene extends Scene {
 			Direction.CalculateRelativeCoordinates(hero.direction, frames + 1)
 		);
 
+		const hitNPCs = this.zone.npcs.filter(
+			({ position, alive, enabled }) => alive && enabled && position.isEqualTo(target)
+		);
+
+		hitNPCs.forEach(npc => this.hitNPC(npc, hero.weapon));
+		if (hitNPCs.length) {
+			hero.isAttacking = false;
+			hero._actionFrames = 0;
+			return ScriptResult.Done;
+		}
+
 		const tile = this.zone.getTile(target);
 		if (!this._bulletTileForBullet()) return ScriptResult.Done;
 
@@ -403,6 +414,10 @@ class ZoneScene extends Scene {
 		hero.isAttacking = false;
 		hero._actionFrames = 0;
 		// TODO: damage npc
+	}
+
+	private hitNPC(npc: NPC, weapon: Char) {
+		npc.damageTaken += weapon.damage;
 	}
 
 	private _moveNPCs() {
