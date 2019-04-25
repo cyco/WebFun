@@ -58,6 +58,10 @@ class NPC {
 	public isDead() {
 		return this.damageTaken >= this._character.health;
 	}
+
+	public get alive() {
+		return !this.isDead();
+	}
 }
 
 export default NPC;
