@@ -30,6 +30,13 @@ class Rectangle {
 		return this.size.area;
 	}
 
+	inset(x: number, y: number): Rectangle {
+		return new Rectangle(
+			this.origin.byAdding(x, y),
+			new Size(this.size.width - 2 * x, this.size.height - 2 * y)
+		);
+	}
+
 	contains(point: Point): boolean {
 		return point.x >= this.minX && point.x < this.maxX && point.y >= this.minY && point.y < this.maxY;
 	}
