@@ -6,5 +6,5 @@ export default {
 	Opcode: 0x0c,
 	Arguments: [],
 	Implementation: async (_: int16[], zone: Zone, _engine: Engine): Promise<boolean> =>
-		!zone.npcs.some(npc => npc.id !== -1) // TODO: might be npc.enabled
+		!zone.npcs.some(npc => npc.enabled)
 };
