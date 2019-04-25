@@ -94,6 +94,7 @@ class ZoneSceneRenderer {
 				zone.npcs.forEach(npc => {
 					const tile = npc.face.frames[0].down;
 					if (!tile) return;
+					if (npc.isDead()) return;
 
 					const x = npc.position.x + offset.x;
 					const y = npc.position.y + offset.y;

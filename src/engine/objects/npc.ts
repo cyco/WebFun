@@ -54,6 +54,10 @@ class NPC {
 		console.assert(p.z === Zone.Layer.Object, "NPCs must be placed on object layer!");
 		this._position = p;
 	}
+
+	public isDead() {
+		return this.damageTaken >= this._character.health;
+	}
 }
 
 export default NPC;
