@@ -171,13 +171,18 @@ class ZoneSceneRenderer {
 						rgba(0, 0, 0, 0.2)
 					);
 
-					barArea.size.width = round(barArea.size.width * (1 - n.damageTaken / n.face.health));
+					const health = 1 - n.damageTaken / n.face.health;
+					let color = rgba(0, 255, 0, 0.6);
+					if (health < 1 / 2) color = rgba(255, 255, 0, 0.6);
+					if (health < 1 / 3) color = rgba(255, 0, 0, 0.6);
+
+					barArea.size.width = round(barArea.size.width * health);
 					(renderer as any).fillRect(
 						barArea.origin.x,
 						barArea.origin.y,
 						barArea.size.width,
 						barArea.size.height,
-						rgba(0, 255, 0, 0.6)
+						color
 					);
 				}
 			);
