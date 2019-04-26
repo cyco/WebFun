@@ -3,7 +3,7 @@ import { Hotspot, HotspotType, Zone } from "src/engine/objects";
 
 import GameData from "../game-data";
 import { InputStream } from "src/util";
-import { MutableZone } from "src/engine/mutable-objects";
+import { MutableZone, MutableNPC } from "src/engine/mutable-objects";
 import SaveState from "./save-state";
 import World from "./world";
 import WorldItem from "./world-item";
@@ -29,7 +29,7 @@ abstract class Reader {
 	protected abstract _doRead(): SaveState;
 	protected abstract readInt(stream: InputStream): number;
 	protected abstract readWorldItem(stram: InputStream, x: number, y: number): WorldItem;
-	protected abstract readNPC(stream: InputStream): void;
+	protected abstract readNPC(stream: InputStream): MutableNPC;
 	protected abstract readHotspot(stream: InputStream, hottspot: Hotspot): Hotspot;
 
 	protected readBool(stream: InputStream): boolean {
@@ -147,7 +147,9 @@ abstract class Reader {
 		);
 
 		for (let i = 0; i < zone.npcs.length; i++) {
-			this.readNPC(stream);
+			const npc = this.readNPC(stream);
+			npc.id = i;
+			zone.npcs[i] = npc;
 		}
 	}
 

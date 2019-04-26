@@ -3,7 +3,7 @@ import { InputStream, Point } from "src/util";
 import GameData from "../game-data";
 import { Hotspot } from "src/engine/objects";
 import { Indy } from "src/engine/type";
-import { MutableHotspot } from "src/engine/mutable-objects";
+import { MutableHotspot, MutableNPC } from "src/engine/mutable-objects";
 import { Planet } from "../types";
 import Reader from "./reader";
 import SaveState from "./save-state";
@@ -131,8 +131,9 @@ class IndyReader extends Reader {
 		return hotspot;
 	}
 
-	protected readNPC(stream: InputStream): void {
+	protected readNPC(stream: InputStream): MutableNPC {
 		stream.getUint8Array(0x20);
+		return null;
 	}
 
 	protected readInt(stream: InputStream): number {
