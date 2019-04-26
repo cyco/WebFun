@@ -234,6 +234,7 @@ class GameController extends EventTarget {
 					this.engine.camera.offset.x,
 					this.engine.camera.offset.y
 				);
+				pointInZone.z = null;
 				if (!new Rectangle(new Point(0, 0), this.engine.currentZone.size).contains(pointInZone)) {
 					engine.metronome.start();
 					return;

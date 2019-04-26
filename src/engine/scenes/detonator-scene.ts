@@ -6,6 +6,7 @@ import Scene from "./scene";
 import { Tile } from "src/engine/objects";
 import { Yoda } from "src/engine";
 import { drawTileImageData } from "src/app/rendering";
+import { abs } from "src/std/math";
 
 class DetonatorScene extends Scene {
 	private _detonatorFrames: HTMLImageElement[] = [];
@@ -28,9 +29,31 @@ class DetonatorScene extends Scene {
 
 		this._ticks++;
 		if (this._ticks >= this._detonatorFrames.length) {
-			// TODO: damage enemeis
+			this._dealDamage();
+
 			this._ticks = -1;
 			this.engine.sceneManager.popScene();
+		}
+	}
+
+	private _dealDamage() {
+		const zone = this.engine.currentZone;
+		const bounds = zone.bounds;
+		for (let y = -1; y <= 1; y++) {
+			for (let x = -1; x <= 1; x++) {
+				const damage = 10 - abs(x) * 2 - abs(y) * 2;
+				const target = this.detonatorLocation.byAdding(x, y);
+				if (!bounds.contains(target)) continue;
+
+				zone.npcs
+					.filter(({ position }) => position.isEqualTo(target))
+					.map(npc => ((npc.damageTaken += damage), npc))
+					.filter(({ alive }) => !alive)
+					.forEach(npc => {
+						zone.setTile(null, npc.position);
+						npc.enabled = false;
+					});
+			}
 		}
 	}
 
