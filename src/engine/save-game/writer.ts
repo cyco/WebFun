@@ -128,7 +128,7 @@ class Writer {
 		stream.writeInt16(npc.face.id);
 		stream.writeInt16(npc.position.x);
 		stream.writeInt16(npc.position.y);
-		stream.writeInt16(0); // TODO: field_A
+		stream.writeInt16(npc.damageTaken);
 		stream.writeUint32(+npc.enabled);
 		stream.writeInt16(0); // TODO: field_10
 		stream.writeInt16(0); // TODO: y__
