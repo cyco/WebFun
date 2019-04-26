@@ -72,6 +72,10 @@ class SpeechScene extends Scene {
 		this.engine.inputManager.mouseDownHandler = () => void 0;
 		this._modalSession.end(0);
 	}
+
+	isOpaque(): boolean {
+		return false;
+	}
 }
 
 export default SpeechScene;
