@@ -143,7 +143,7 @@ class YodaReader extends Reader {
 		return worldItem;
 	}
 
-	protected readNPC(stream: InputStream): void {
+	protected readNPC(stream: InputStream): MutableNPC {
 		const characterId = stream.getInt16();
 		const x = stream.getInt16();
 		const y = stream.getInt16();
@@ -199,6 +199,8 @@ class YodaReader extends Reader {
 		npc.enabled = enabled;
 		npc.position = new Point(x, y);
 		npc.damageTaken = damageTaken;
+
+		return npc;
 	}
 
 	protected readHotspot(stream: InputStream, _: Hotspot): Hotspot {
