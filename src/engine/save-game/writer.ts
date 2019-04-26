@@ -125,7 +125,7 @@ class Writer {
 	}
 
 	private _writeNPC(npc: NPC, stream: OutputStream): void {
-		stream.writeInt16(npc.face.id);
+		stream.writeInt16(npc.alive ? npc.face.id : -1);
 		stream.writeInt16(npc.position.x);
 		stream.writeInt16(npc.position.y);
 		stream.writeInt16(npc.damageTaken);
