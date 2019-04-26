@@ -132,8 +132,19 @@ class IndyReader extends Reader {
 	}
 
 	protected readNPC(stream: InputStream): MutableNPC {
-		stream.getUint8Array(0x20);
-		return null;
+		const characterId = stream.getInt16();
+		const x = stream.getInt16();
+		const y = stream.getInt16();
+		const damageTaken = stream.getInt16();
+
+		stream.getUint8Array(0x18);
+
+		const npc = new MutableNPC();
+		npc.character = this._data.characters[characterId] || null;
+		npc.position = new Point(x, y);
+		npc.damageTaken = damageTaken;
+
+		return npc;
 	}
 
 	protected readInt(stream: InputStream): number {
