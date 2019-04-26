@@ -57,7 +57,7 @@ class NPC {
 	}
 
 	public get alive() {
-		return this._damageTaken < this._character.health;
+		return this._character && this._damageTaken < this._character.health;
 	}
 
 	public get damageTaken() {
@@ -65,8 +65,10 @@ class NPC {
 	}
 
 	public set damageTaken(d: number) {
+		const maxDamage = this._character ? this._character.health : Infinity;
+
 		this._damageTaken += d;
-		this._damageTaken = min(this._damageTaken, this._character.health);
+		this._damageTaken = min(this._damageTaken, maxDamage);
 	}
 }
 

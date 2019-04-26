@@ -147,7 +147,6 @@ class YodaReader extends Reader {
 		const characterId = stream.getInt16();
 		const x = stream.getInt16();
 		const y = stream.getInt16();
-		// skip over unknown value (field_a)
 		const damageTaken = stream.getInt16();
 		const enabled = stream.getUint32() !== 0;
 		// skip over unknown value (field_10)
@@ -195,7 +194,7 @@ class YodaReader extends Reader {
 		}
 
 		const npc = new MutableNPC();
-		npc.character = this._data.characters[characterId];
+		npc.character = this._data.characters[characterId] || null;
 		npc.enabled = enabled;
 		npc.position = new Point(x, y);
 		npc.damageTaken = damageTaken;
