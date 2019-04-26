@@ -52,7 +52,7 @@ class Map extends Component {
 	private _buildURHere() {
 		if (!this.location) return;
 
-		this._here = <TileView palette={this.palette} tile={this.locatorTile.here} />;
+		this._here = <TileView palette={this.palette} tile={this.tiles[this.locatorTile.here]} />;
 		this._here.style.left = `${this.location.x * TileSize}px`;
 		this._here.style.top = `${this.location.y * TileSize}px`;
 	}
@@ -93,13 +93,13 @@ class Map extends Component {
 				for (let ty = 0; ty < TileSize; ty++) {
 					for (let tx = 0; tx < TileSize; tx++) {
 						const i = ty * Tile.WIDTH + tx;
-						const paletteIndex = pixels[i] * 4;
+						const paletteIndex = pixels[i];
 						if (paletteIndex === 0) continue;
-						// TODO: fix palette usage
-						rawImageData[j + 4 * tx + 0] = palette[paletteIndex + 2];
-						rawImageData[j + 4 * tx + 1] = palette[paletteIndex + 1];
-						rawImageData[j + 4 * tx + 2] = palette[paletteIndex + 0];
-						rawImageData[j + 4 * tx + 3] = paletteIndex === 0 ? 0x00 : 0xff;
+
+						rawImageData[j + 4 * tx + 0] = 0xff & (palette[paletteIndex] >> 0);
+						rawImageData[j + 4 * tx + 1] = 0xff & (palette[paletteIndex] >> 8);
+						rawImageData[j + 4 * tx + 2] = 0xff & (palette[paletteIndex] >> 16);
+						rawImageData[j + 4 * tx + 3] = 0xff;
 					}
 
 					j += bpr;
