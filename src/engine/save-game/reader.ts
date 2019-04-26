@@ -53,12 +53,11 @@ abstract class Reader {
 	}
 
 	protected readRooms(stream: InputStream, zoneID: number, start: number): void {
-		let count: number;
 		const zoneIDs: [number, boolean][] = [];
 
 		const zone = this._data.zones[zoneID];
 		const hotspots = zone.hotspots;
-		count = hotspots.length;
+		const count = hotspots.length;
 
 		for (let i = start; i < count; i++) {
 			start = i;
