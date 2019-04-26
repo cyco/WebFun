@@ -320,7 +320,10 @@ class MapScene extends Scene {
 			}
 		}
 
-		if ((this._ticks % (2 * MapScene.LOCATOR_ANIMATION_TICKS)) / MapScene.LOCATOR_ANIMATION_TICKS < 1) {
+		if (
+			(this._ticks % (2 * MapScene.LOCATOR_ANIMATION_TICKS)) / MapScene.LOCATOR_ANIMATION_TICKS < 1 &&
+			state.worldLocation
+		) {
 			if (this._location) drawTileAt(this._location, state.worldLocation.x, state.worldLocation.y);
 		}
 
