@@ -17,6 +17,8 @@ import State from "./persistent-state";
 import Story from "./story";
 import { GameType as Type } from "./type";
 import { World } from "./generation";
+import { SpeechScene } from "src/engine/scenes";
+import { Point } from "src/util";
 
 export { Events };
 
@@ -136,6 +138,14 @@ class Engine extends EventTarget {
 
 		const equipSoundID = this.type.getEquipSound(weaponChar);
 		this.mixer.effectChannel.playSound(equipSoundID);
+	}
+
+	public async speak(text: string, place: Point) {
+		const scene = new SpeechScene(this);
+		scene.text = text;
+		scene.location = place;
+
+		return this.sceneManager.presentScene(scene);
 	}
 }
 
