@@ -178,6 +178,7 @@ class ZoneScene extends Scene {
 	}
 
 	private _hotspotTriggered(hotspot: Hotspot) {
+		console.log("triggered hotspot: ", hotspot);
 		const engine = this.engine;
 		const zone = engine.currentZone;
 
