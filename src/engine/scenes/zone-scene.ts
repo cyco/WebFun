@@ -708,8 +708,8 @@ class ZoneScene extends Scene {
 			if (!worldItem) {
 				console.warn("Could not find world item at", worldLocation);
 			}
-			const puzzle = this.engine.data.puzzles[worldItem.puzzleIdx];
-			console.log("puzzle: ", this.engine.data.puzzles[worldItem.puzzleIdx]);
+			const puzzle = this.engine.data.puzzles[worldItem.puzzleIndex];
+			console.log("puzzle: ", this.engine.data.puzzles[worldItem.puzzleIndex]);
 			console.log("or puzzle: ", this.engine.data.puzzles[worldItem.puzzleIndex]);
 
 			if (tile !== worldItem.requiredItem) {
