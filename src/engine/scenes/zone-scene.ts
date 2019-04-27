@@ -588,6 +588,13 @@ class ZoneScene extends Scene {
 		const targetPoint = Point.add(hero.location, p);
 		const targetTile = zone.bounds.contains(targetPoint) && zone.getTile(targetPoint.x, targetPoint.y, 1);
 		if (targetTile) {
+			const worldItem = this.engine.currentWorld.at(this.engine.currentWorld.locationOfZone(this.zone));
+			if (worldItem.npc && worldItem.npc.id === targetTile.id) {
+				console.log("bump puzzle npc", worldItem);
+			}
+		}
+
+		if (targetTile) {
 			// TODO: get rid of temporary state
 			engine.temporaryState.bump = targetPoint;
 			this.evaluateBumpHotspots(targetPoint, engine);
