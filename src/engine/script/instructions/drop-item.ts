@@ -22,6 +22,6 @@ export default {
 
 		engine.dropItem(engine.data.tiles[itemId], new Point(x, y));
 
-		return Result.UpdateText;
+		return Result.UpdateScene;
 	}
 };

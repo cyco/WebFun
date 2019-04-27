@@ -15,6 +15,6 @@ export default {
 	Implementation: (instruction: Instruction, engine: Engine, _: Action): Promise<Result> => {
 		const [x, y] = instruction.arguments;
 		engine.speak(instruction.text, new Point(x, y));
-		return Promise.resolve(Result.UpdateText);
+		return Promise.resolve(Result.UpdateScene);
 	}
 };
