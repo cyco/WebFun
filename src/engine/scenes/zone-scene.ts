@@ -697,17 +697,15 @@ class ZoneScene extends Scene {
 			if (currentTile !== itemID) return;
 
 			this.zone.setTile(null, at.x, at.y, 1);
-			const pickupScene = new PickupScene(engine);
-			pickupScene.location = at;
-			pickupScene.tile = engine.data.tiles[itemID];
-
-			const worldItem = this.engine.currentWorld.at(this.engine.currentWorld.locationOfZone(this.zone));
-			if (worldItem && worldItem.findItem && worldItem.findItem.id === itemID) {
-				this.zone.solved = true;
-				worldItem.zone.solved = true;
-			}
-
-			engine.sceneManager.pushScene(pickupScene);
+			this.engine.dropItem(engine.data.tiles[itemID], at).then(() => {
+				const worldItem = this.engine.currentWorld.at(
+					this.engine.currentWorld.locationOfZone(this.zone)
+				);
+				if (worldItem && worldItem.findItem && worldItem.findItem.id === itemID) {
+					this.zone.solved = true;
+					worldItem.zone.solved = true;
+				}
+			});
 		}
 	}
 
