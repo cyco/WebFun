@@ -7,25 +7,18 @@ class SceneManager {
 	public engine: Engine = null;
 	private _stack: Scene[] = [];
 	private _determineBounds: () => Rectangle;
+	private _popHandlers = new Map<Scene, () => void>();
+	private _currentScene: Scene;
 
 	constructor(determineBounds: () => Rectangle) {
 		this._determineBounds = determineBounds;
 	}
 
-	get currentScene() {
-		return this._stack.last();
-	}
-
 	pushScene(scene: Scene): void {
-		const currentScene = this.currentScene;
-
 		scene.engine = this.engine;
 
-		scene.willShow();
-		if (currentScene) currentScene.willHide();
 		this._stack.push(scene);
-		if (currentScene) currentScene.didHide();
-		scene.didShow();
+		this.currentScene = scene;
 	}
 
 	async update(ticks: number): Promise<void> {
@@ -45,17 +38,22 @@ class SceneManager {
 	}
 
 	popScene() {
-		const oldScene = this.currentScene;
-		const newScene = this._stack[this._stack.length - 2];
-		if (oldScene) oldScene.willHide();
-		if (newScene) newScene.willShow();
+		const oldScene = this._stack.pop();
 
-		const scene = this._stack.pop();
+		if (this._popHandlers.has(oldScene)) {
+			this._popHandlers.get(oldScene)();
+		}
 
-		if (newScene) newScene.didShow();
-		if (oldScene) oldScene.didHide();
+		this.currentScene = this._stack.last();
 
-		return scene;
+		return oldScene;
+	}
+
+	async presentScene(scene: Scene): Promise<void> {
+		return new Promise(resolve => {
+			this._popHandlers.set(scene, resolve);
+			this.pushScene(scene);
+		});
 	}
 
 	clear() {
@@ -64,6 +62,22 @@ class SceneManager {
 
 	get bounds() {
 		return this._determineBounds();
+	}
+
+	public get currentScene() {
+		return this._currentScene;
+	}
+
+	public set currentScene(newScene: Scene) {
+		const oldScene = this._currentScene;
+		if (oldScene) oldScene.willHide();
+		if (newScene) newScene.willShow();
+
+		this._currentScene = newScene;
+		this._popHandlers.delete(oldScene);
+
+		if (newScene) newScene.didShow();
+		if (oldScene) oldScene.didHide();
 	}
 }
 
