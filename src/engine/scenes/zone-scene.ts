@@ -1,21 +1,32 @@
 import { Direction, Point, Size } from "src/util";
 import { EvaluationMode, ScriptResult } from "../script";
-import { Hotspot, HotspotType, NPC, Zone, ZoneType, Tile, CharFrameEntry, Char } from "src/engine/objects";
-
+import {
+	Hotspot,
+	HotspotType,
+	NPC,
+	Zone,
+	ZoneType,
+	Tile,
+	CharFrameEntry,
+	Char,
+	Puzzle
+} from "src/engine/objects";
+import { Direction as InputDirection } from "src/engine/input";
+import { Sprite } from "../rendering";
+import { WorldItem } from "src/engine/generation";
+import { Yoda } from "src/engine";
 import AbstractRenderer from "src/engine/rendering/abstract-renderer";
 import DetonatorScene from "./detonator-scene";
 import Engine from "src/engine/engine";
-import { Direction as InputDirection } from "src/engine/input";
+import Hero from "src/engine/hero";
 import MapScene from "./map-scene";
 import PauseScene from "./pause-scene";
 import PickupScene from "./pickup-scene";
 import Scene from "./scene";
-import TransitionScene from "./transition-scene";
-import { Yoda } from "src/engine";
-import ZoneSceneRenderer from "src/engine/rendering/zone-scene-renderer";
+import SpeechScene from "./speech-scene";
 import TeleporterScene from "./teleport-scene";
-import Hero from "src/engine/hero";
-import { Sprite } from "../rendering";
+import TransitionScene from "./transition-scene";
+import ZoneSceneRenderer from "src/engine/rendering/zone-scene-renderer";
 
 class ZoneScene extends Scene {
 	private _zone: Zone;
@@ -587,12 +598,6 @@ class ZoneScene extends Scene {
 
 		const targetPoint = Point.add(hero.location, p);
 		const targetTile = zone.bounds.contains(targetPoint) && zone.getTile(targetPoint.x, targetPoint.y, 1);
-		if (targetTile) {
-			const worldItem = this.engine.currentWorld.at(this.engine.currentWorld.locationOfZone(this.zone));
-			if (worldItem.npc && worldItem.npc.id === targetTile.id) {
-				console.log("bump puzzle npc", worldItem);
-			}
-		}
 
 		if (targetTile) {
 			// TODO: get rid of temporary state
@@ -600,6 +605,13 @@ class ZoneScene extends Scene {
 			this.evaluateBumpHotspots(targetPoint, engine);
 
 			engine.scriptExecutor.prepeareExecution(EvaluationMode.Bump, this.zone);
+
+			const worldItem = this.engine.currentWorld.at(this.engine.currentWorld.locationOfZone(this.zone));
+			if (worldItem.npc && worldItem.npc.id === targetTile.id) {
+				console.log("this._bumpPuzzleNPC");
+				this._bumpPuzzleNPC(worldItem, targetPoint);
+				return;
+			}
 
 			const scriptResult = await engine.scriptExecutor.execute();
 			if (scriptResult !== ScriptResult.Done) {
@@ -618,6 +630,34 @@ class ZoneScene extends Scene {
 	private _placeBullet(hero: Hero) {
 		hero.ammo--;
 		if (hero.ammo === 0) this.reloadWeapon();
+	}
+
+	private _bumpPuzzleNPC(worldItem: WorldItem, place: Point) {
+		const puzzleIndex = worldItem.puzzleIndex;
+		let puzzle: Puzzle = null;
+
+		if (puzzleIndex === -1) {
+			puzzle = this.engine.story.goal;
+			let text = "";
+			let item: Tile = null;
+			if (worldItem.zone.solved) {
+				text = puzzle.strings[2];
+			} else {
+				text = puzzle.strings[3];
+				item = worldItem.findItem;
+			}
+
+			if (text.length) {
+				this.engine
+					.speak(text, place)
+					.then(async () => !item || (await this.engine.dropItem(item, place)))
+					.then(() => (this.zone.solved = true));
+			}
+
+			return;
+		} else {
+			console.log("puzzle at index", this.engine.data.puzzles[puzzleIndex]);
+		}
 	}
 
 	private reloadWeapon() {
