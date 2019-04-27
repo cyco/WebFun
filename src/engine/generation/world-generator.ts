@@ -61,7 +61,7 @@ class WorldGenerator {
 		this.world = new World();
 		this.world.zones = this._data.zones;
 		for (let i = 0; i < 100; i++) {
-			this.world.index(i).puzzleIdx = mapGenerator.orderMap[i];
+			this.world.index(i).puzzleIndex = mapGenerator.orderMap[i];
 		}
 
 		const puzzleCount = mapGenerator.puzzleCount;

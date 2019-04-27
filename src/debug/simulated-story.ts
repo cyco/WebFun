@@ -95,7 +95,7 @@ class SimulatedStory extends Story {
 
 				copiedItem.zone = mapZone(item.zone);
 				copiedItem.zoneType = item.zoneType;
-				copiedItem.puzzleIdx = item.puzzleIdx;
+				copiedItem.puzzleIndex = item.puzzleIndex;
 				copiedItem.requiredItem = mapItem(item.requiredItem);
 				copiedItem.additionalRequiredItem = mapItem(item.additionalRequiredItem);
 				copiedItem.npc = mapItem(item.npc);
