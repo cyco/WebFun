@@ -22,7 +22,8 @@ enum Result {
 	Void = 0,
 	UpdateText = 1 << 0,
 	UpdateZone = 1 << 1,
-	Wait = 1 << 2
+	Wait = 1 << 2,
+	UpdateScene = 1 << 3
 }
 
 enum ScriptResult {
@@ -30,6 +31,7 @@ enum ScriptResult {
 	UpdateText = 1 << 0,
 	UpdateZone = 1 << 1,
 	Wait = 1 << 2,
+	UpdateScene = 1 << 3,
 
 	Done = 1 << 10
 }
