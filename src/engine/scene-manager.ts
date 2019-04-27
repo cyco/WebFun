@@ -39,9 +39,14 @@ class SceneManager {
 
 	popScene() {
 		const oldScene = this._stack.pop();
+		const nextScene = this._stack.last();
 
 		if (this._popHandlers.has(oldScene)) {
 			this._popHandlers.get(oldScene)();
+		}
+
+		if (nextScene !== this._stack.last()) {
+			return oldScene;
 		}
 
 		this.currentScene = this._stack.last();
