@@ -17,7 +17,7 @@ import State from "./persistent-state";
 import Story from "./story";
 import { GameType as Type } from "./type";
 import { World } from "./generation";
-import { SpeechScene } from "src/engine/scenes";
+import { SpeechScene, PickupScene } from "src/engine/scenes";
 import { Point } from "src/util";
 
 export { Events };
@@ -140,9 +140,17 @@ class Engine extends EventTarget {
 		this.mixer.effectChannel.playSound(equipSoundID);
 	}
 
-	public async speak(text: string, place: Point) {
+	public speak(text: string, place: Point): Promise<void> {
 		const scene = new SpeechScene(this);
 		scene.text = text;
+		scene.location = place;
+
+		return this.sceneManager.presentScene(scene);
+	}
+
+	public dropItem(tile: Tile, place: Point): Promise<void> {
+		const scene = new PickupScene(this);
+		scene.tile = tile;
 		scene.location = place;
 
 		return this.sceneManager.presentScene(scene);
