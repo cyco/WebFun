@@ -23,7 +23,7 @@ describeComponent(Selector, () => {
 
 		selector.removeOption("value");
 
-		let optionNodes = selector.querySelectorAll("option");
+		const optionNodes = selector.querySelectorAll("option");
 
 		expect(optionNodes.length).toBe(2);
 		expect(optionNodes[0].value).toBe("10");
@@ -31,7 +31,7 @@ describeComponent(Selector, () => {
 	});
 
 	it("has an onchange callback", () => {
-		let callback = () => {
+		const callback = () => {
 			console.log("selection changed");
 		};
 		selector.onchange = callback;

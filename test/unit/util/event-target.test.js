@@ -24,7 +24,7 @@ describe("WebFun.Util.EventTarget", () => {
 		let globalCallbackExecuted = false;
 		let callbackPropertyExecuted = false;
 		let eventListenerObjectExecuted = false;
-		let continueWhenAllCallbacksAreExecuted = () => {
+		const continueWhenAllCallbacksAreExecuted = () => {
 			if (
 				directCallbackExecuted &&
 				globalCallbackExecuted &&
@@ -57,7 +57,7 @@ describe("WebFun.Util.EventTarget", () => {
 	});
 
 	it("event handlers can be unregistered per event type", done => {
-		let executedCallbacks = [];
+		const executedCallbacks = [];
 
 		subject.addEventListener("testEvent", () => {
 			executedCallbacks[0] = true;
@@ -78,8 +78,8 @@ describe("WebFun.Util.EventTarget", () => {
 	});
 
 	it("event handlers can be unregistered per type & callback ", done => {
-		let executedCallbacks = [];
-		let fn1 = () => {
+		const executedCallbacks = [];
+		const fn1 = () => {
 			executedCallbacks[0] = true;
 		};
 		subject.addEventListener("testEvent", fn1);
@@ -99,8 +99,8 @@ describe("WebFun.Util.EventTarget", () => {
 	});
 
 	it("global event handlers can be unregistered in the same way ", done => {
-		let executedCallbacks = [];
-		let fn1 = () => {
+		const executedCallbacks = [];
+		const fn1 = () => {
 			executedCallbacks[0] = true;
 		};
 		EventTarget.addEventListener("testEvent", fn1);

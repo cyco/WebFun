@@ -6,12 +6,12 @@ describe(
 	"WebFun.UI.MenuItem",
 	sandboxed(sand => {
 		it("represents an item in a menu", () => {
-			let menuItem = new MenuItem();
+			const menuItem = new MenuItem();
 		});
 
 		it("can be initiated with an object specifying releveant properties", () => {
 			let callbackExecuted = false;
-			let properties = {
+			const properties = {
 				title: "test-title",
 				state: State.Mixed,
 				callback: () => {
@@ -20,7 +20,7 @@ describe(
 				enabled: false,
 				mnemonic: "M"
 			};
-			let menuItem = new MenuItem(properties);
+			const menuItem = new MenuItem(properties);
 
 			expect(menuItem.title).toBe("test-title");
 			expect(menuItem.state).toBe(State.Mixed);
@@ -47,7 +47,7 @@ describe(
 		});
 
 		it("can be dynamically disabled by supplying a function", () => {
-			let menuItem = new MenuItem({ callback: () => null });
+			const menuItem = new MenuItem({ callback: () => null });
 
 			expect(menuItem.enabled).toBeTrue();
 
@@ -63,7 +63,7 @@ describe(
 		});
 
 		it("has a method to easily detect if something has a submenu", () => {
-			let menuItem = new MenuItem({ submenu: new Menu([]) });
+			const menuItem = new MenuItem({ submenu: new Menu([]) });
 			expect(menuItem.hasSubmenu).toBeTrue();
 		});
 	})

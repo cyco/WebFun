@@ -3,7 +3,7 @@ import SetTileNeedsDisplay from "src/engine/script/instructions/set-tile-needs-d
 
 describeInstruction("SetTileNeedsDisplay", (execute, engine) => {
 	it("Marks the specified tile as dirty", async done => {
-		let instruction = new Instruction({});
+		const instruction = new Instruction({});
 		instruction._opcode = SetTileNeedsDisplay.Opcode;
 		instruction._arguments = [];
 

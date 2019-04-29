@@ -3,7 +3,7 @@ import SetRandom from "src/engine/script/instructions/set-random";
 
 describeInstruction("SetRandom", (execute, engine) => {
 	it("set the current zone's random register to the specified value", async done => {
-		let instruction = new Instruction({});
+		const instruction = new Instruction({});
 		instruction._opcode = SetRandom.Opcode;
 		instruction._arguments = [5];
 

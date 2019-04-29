@@ -144,7 +144,7 @@ describe("WebFun.Util.OutputStream", () => {
 
 	it("has a function to write a byte array to the stream", () => {
 		outputStream = new OutputStream(2);
-		let array = new Uint8Array(2);
+		const array = new Uint8Array(2);
 		array[0] = 0x23;
 		array[1] = 0x42;
 		outputStream.writeUint8Array(array);
@@ -155,7 +155,7 @@ describe("WebFun.Util.OutputStream", () => {
 
 	it("has a function to write a signed byte array to the stream", () => {
 		outputStream = new OutputStream(2);
-		let array = new Int8Array(2);
+		const array = new Int8Array(2);
 		array[0] = -1;
 		array[1] = 0x42;
 		outputStream.writeInt8Array(array);
@@ -166,7 +166,7 @@ describe("WebFun.Util.OutputStream", () => {
 
 	it("has a function to write a word array to the stream", () => {
 		outputStream = new OutputStream(2);
-		let array = new Uint16Array(1);
+		const array = new Uint16Array(1);
 		array[0] = 0x2342;
 		outputStream.writeUint16Array(array);
 
@@ -176,7 +176,7 @@ describe("WebFun.Util.OutputStream", () => {
 
 	it("has a function to write a signed word array to the stream", () => {
 		outputStream = new OutputStream(2);
-		let array = new Int16Array(1);
+		const array = new Int16Array(1);
 		array[0] = -1;
 		outputStream.writeInt16Array(array);
 
@@ -186,7 +186,7 @@ describe("WebFun.Util.OutputStream", () => {
 
 	it("has a function to write a double word array to the stream", () => {
 		outputStream = new OutputStream(4);
-		let array = new Uint32Array(1);
+		const array = new Uint32Array(1);
 		array[0] = 0x23420500;
 		outputStream.writeUint32Array(array);
 

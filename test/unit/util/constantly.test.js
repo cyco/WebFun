@@ -7,7 +7,7 @@ describe("WebFun.Util.constantly", () => {
 		expect(newFn()).toBe(5);
 		expect(newFn()).toBe(5);
 
-		let obj = {
+		const obj = {
 			x: "test"
 		};
 		newFn = constantly(obj);

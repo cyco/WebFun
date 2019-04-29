@@ -13,7 +13,7 @@ xdescribeComponent(InventoryComponent, () => {
 
 	describe("showing inventory contents", () => {
 		let inventory;
-		let tileMock = { image: { representation: {} } };
+		const tileMock = { image: { representation: {} } };
 
 		beforeEach(() => (inventory = new Inventory()));
 
@@ -56,7 +56,7 @@ xdescribeComponent(InventoryComponent, () => {
 
 		describe("row click handlers", () => {
 			it("notifies when an item is clicked", done => {
-				let inventory = new Inventory();
+				const inventory = new Inventory();
 				inventory.addItem(mockTile(Yoda.ItemIDs.Locator));
 				subject.inventory = inventory;
 

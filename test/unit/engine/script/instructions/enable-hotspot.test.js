@@ -5,7 +5,7 @@ describeInstruction("EnableHotspot", (execute, engine) => {
 	it("enables the specified hotspot in the current zone", async done => {
 		engine.currentZone.hotspots = [null, null, {}, null];
 
-		let instruction = new Instruction();
+		const instruction = new Instruction();
 		instruction._opcode = EnableHotspot.Opcode;
 		instruction._arguments = [2];
 

@@ -11,14 +11,14 @@ describe(
 		});
 
 		it("works just like forEach on an Array", () => {
-			let e1 = document.createElement("div");
+			const e1 = document.createElement("div");
 			e1.className = "selectMe";
 			sand.box.appendChild(e1);
-			let e2 = document.createElement("div");
+			const e2 = document.createElement("div");
 			e2.className = "selectMe";
 			sand.box.appendChild(e2);
 
-			let nodeList = sand.box.querySelectorAll(".selectMe");
+			const nodeList = sand.box.querySelectorAll(".selectMe");
 			expect(nodeList.forEach).toBeFunction();
 			expect(nodeList.length).toBe(2);
 

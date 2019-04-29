@@ -3,7 +3,7 @@ import WinGame from "src/engine/script/instructions/win-game";
 
 describeInstruction("WinGame", (execute, engine) => {
 	it("ends the current story by winning", async done => {
-		let instruction = new Instruction({});
+		const instruction = new Instruction({});
 		instruction._opcode = WinGame.Opcode;
 		instruction._arguments = [0, 1, 2, 3, 4];
 

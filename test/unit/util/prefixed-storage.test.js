@@ -59,7 +59,7 @@ describe("WebFun.Util.PrefixedStorage", () => {
 		it("can be used to create namespaces in a storage", () => {
 			spyOn(backing, "getItem");
 
-			let storage = subject.prefixedWith("test").prefixedWith("name");
+			const storage = subject.prefixedWith("test").prefixedWith("name");
 			storage.getItem("my-key");
 
 			expect(backing.getItem).toHaveBeenCalledWith("my-prefix.test.name.my-key");

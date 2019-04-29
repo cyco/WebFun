@@ -7,7 +7,7 @@ export default name => {
 			return line.length && line[0] !== ";";
 		})
 		.map(function(line) {
-			let parts = line
+			const parts = line
 				.split(",")
 				.map(function(v) {
 					return parseInt(v, 0x10);
@@ -15,7 +15,7 @@ export default name => {
 				.map(function(v) {
 					return v === 0xffff ? -1 : v;
 				});
-			let data = parts.slice(3);
+			const data = parts.slice(3);
 			return {
 				seed: parts[0],
 				planet: parts[1],

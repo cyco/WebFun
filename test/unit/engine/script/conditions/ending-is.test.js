@@ -4,7 +4,7 @@ import EndingIs from "src/engine/script/conditions/ending-is";
 describeCondition("EndingIs", (check, engine) => {
 	it("evaluates to true if the story's ending drops the item specified in `arg_0`", async done => {
 		try {
-			let condition = new Condition();
+			const condition = new Condition();
 			condition._opcode = EndingIs.Opcode;
 			condition._arguments = [0x12];
 

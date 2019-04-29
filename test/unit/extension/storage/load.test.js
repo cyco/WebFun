@@ -36,7 +36,7 @@ describe("WebFun.Extension.Storage.load", () => {
 	it("retrieves objects from the storage", () => {
 		store["sample"] = '{ "a": 2 }';
 
-		let result = localStorage.load("sample");
+		const result = localStorage.load("sample");
 		expect(typeof result).toBe("object");
 		expect(result.a).toBe(2);
 	});
@@ -48,7 +48,7 @@ describe("WebFun.Extension.Storage.load", () => {
 	});
 
 	it("returns null if the object does not exist", () => {
-		let result = localStorage.load("does not exists");
+		const result = localStorage.load("does not exists");
 		expect(result).toBe(null);
 	});
 });

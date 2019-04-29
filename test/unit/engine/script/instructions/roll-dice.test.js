@@ -3,7 +3,7 @@ import RollDice from "src/engine/script/instructions/roll-dice";
 
 describeInstruction("RollDice", (execute, engine) => {
 	it("set the current zone's random register to a random() % arg", async done => {
-		let instruction = new Instruction({});
+		const instruction = new Instruction({});
 		instruction._opcode = RollDice.Opcode;
 		instruction._arguments = [5];
 

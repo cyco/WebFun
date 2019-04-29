@@ -8,7 +8,7 @@ describeInstruction("SetVariable", (execute, engine) => {
 		engine.currentZone.setTile = () => {};
 		spyOn(engine.currentZone, "setTile");
 
-		let instruction = new Instruction({});
+		const instruction = new Instruction({});
 		instruction._opcode = SetVariable.Opcode;
 		instruction._arguments = [1, 2, 3, 2];
 		await execute(instruction);

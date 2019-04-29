@@ -5,11 +5,11 @@ describe("WebFun.UX.UndoBatchOperation", () => {
 	it("is a simple container that batches undo operations", () => {
 		let x = 11;
 
-		let increase = new UndoOperation(() => (x -= 1), () => (x += 1));
-		let decrease = new UndoOperation(() => (x += 1), () => (x -= 1));
-		let multiplyBy3 = new UndoOperation(() => (x /= 3), () => (x *= 3));
+		const increase = new UndoOperation(() => (x -= 1), () => (x += 1));
+		const decrease = new UndoOperation(() => (x += 1), () => (x -= 1));
+		const multiplyBy3 = new UndoOperation(() => (x /= 3), () => (x *= 3));
 
-		let subject = new UndoBatchOperation([increase, increase, multiplyBy3, decrease]);
+		const subject = new UndoBatchOperation([increase, increase, multiplyBy3, decrease]);
 		subject.undo();
 		expect(x).toBe(2);
 

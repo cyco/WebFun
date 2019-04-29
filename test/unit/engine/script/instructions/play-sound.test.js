@@ -5,7 +5,7 @@ describeInstruction("PlaySound", (execute, engine) => {
 	it("play a sound", () => {
 		spyOn(engine.mixer.effectChannel, "playSound");
 
-		let instruction = new Instruction({});
+		const instruction = new Instruction({});
 		instruction._opcode = PlaySound.Opcode;
 		instruction._arguments = [5];
 

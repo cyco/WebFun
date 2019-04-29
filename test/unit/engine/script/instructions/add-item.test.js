@@ -10,7 +10,7 @@ describeInstruction("AddItem", (execute, engine) => {
 
 		spyOn(engine.inventory, "addItem");
 
-		let instruction = new Instruction({});
+		const instruction = new Instruction({});
 		instruction._opcode = AddItem.Opcode;
 		instruction._arguments = [1];
 

@@ -5,7 +5,7 @@ describeInstruction("AddToSharedCounter", (execute, engine) => {
 	it("adds a value to the current zone's sharedCounter", async done => {
 		engine.currentZone.sharedCounter = 5;
 
-		let instruction = new Instruction({});
+		const instruction = new Instruction({});
 		instruction._opcode = AddToSharedCounter.Opcode;
 		instruction._arguments = [2];
 

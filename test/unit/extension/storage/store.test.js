@@ -35,7 +35,7 @@ describe("WebFun.Extension.Storage.store", () => {
 	});
 
 	it("stores objects in stores", () => {
-		let object = {
+		const object = {
 			a: 5
 		};
 
@@ -44,7 +44,7 @@ describe("WebFun.Extension.Storage.store", () => {
 	});
 
 	it("will log a warning if the object can' be stringified", () => {
-		let circularObject = {};
+		const circularObject = {};
 		circularObject.root = circularObject;
 
 		localStorage.store("sample", circularObject);
@@ -52,7 +52,7 @@ describe("WebFun.Extension.Storage.store", () => {
 	});
 
 	it("uses toString for unknown obejcts if defined", () => {
-		let object = { toString: () => 5 };
+		const object = { toString: () => 5 };
 		localStorage.store("sample", object);
 		expect(store["sample"]).toBe("5");
 	});

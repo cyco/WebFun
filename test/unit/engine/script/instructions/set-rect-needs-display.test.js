@@ -3,7 +3,7 @@ import SetRectNeedsDisplay from "src/engine/script/instructions/set-rect-needs-d
 
 describeInstruction("SetRectNeedsDisplay", (execute, engine) => {
 	it("Marks the specified rect as dirty", async done => {
-		let instruction = new Instruction({});
+		const instruction = new Instruction({});
 		instruction._opcode = SetRectNeedsDisplay.Opcode;
 		instruction._arguments = [];
 

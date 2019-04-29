@@ -11,7 +11,7 @@ describe("WebFun.Extension.Uint8Array.asString", () => {
 	});
 
 	it("returns the contents interpreted as char codes", () => {
-		let array = new Uint8Array(buffer, 2, 5);
+		const array = new Uint8Array(buffer, 2, 5);
 		expect(array.asString()).toBe("ASCII");
 		expect(typeof asString).toBe("function");
 	});

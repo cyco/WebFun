@@ -1,9 +1,9 @@
-let eventMatchers = {
+const eventMatchers = {
 	HTMLEvents: /^(?:load|unload|abort|error|select|change|submit|reset|focus|blur|resize|scroll)$/,
 	MouseEvents: /^(?:click|dblclick|mouse(?:down|up|over|move|out))$/
 };
 
-let defaultOptions = {
+const defaultOptions = {
 	pointerX: 0,
 	pointerY: 0,
 	button: 0,
@@ -16,7 +16,7 @@ let defaultOptions = {
 };
 
 function extend(destination, source) {
-	for (let property in source) {
+	for (const property in source) {
 		destination[property] = source[property];
 	}
 	return destination;
@@ -24,11 +24,11 @@ function extend(destination, source) {
 
 // found at http://stackoverflow.com/questions/6157929/how-to-simulate-a-mouse-click-using-javascript
 function simulateEvent(element, eventName) {
-	let options = extend(defaultOptions, arguments[2] || {});
+	const options = extend(defaultOptions, arguments[2] || {});
 	let oEvent,
 		eventType = null;
 
-	for (let name in eventMatchers) {
+	for (const name in eventMatchers) {
 		if (eventMatchers[name].test(eventName)) {
 			eventType = name;
 			break;
@@ -64,7 +64,7 @@ function simulateEvent(element, eventName) {
 	} else {
 		options.clientX = options.pointerX;
 		options.clientY = options.pointerY;
-		let evt = document.createEventObject();
+		const evt = document.createEventObject();
 		oEvent = extend(evt, options);
 		element.fireEvent("on" + eventName, oEvent);
 	}

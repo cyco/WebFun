@@ -7,7 +7,7 @@ describeInstruction("MarkAsSolved", (execute, engine) => {
 		engine.currentWorld.locationOfZone = () => ({});
 		engine.currentWorld.at = () => worldItemMock;
 
-		let instruction = new Instruction({});
+		const instruction = new Instruction({});
 		instruction._opcode = MarkAsSolved.Opcode;
 		instruction._arguments = [];
 		await execute(instruction);

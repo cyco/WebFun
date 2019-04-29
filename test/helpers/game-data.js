@@ -14,7 +14,7 @@ export default (type, callback) => {
 				return;
 			}
 
-			let stream = new InputStream(file);
+			const stream = new InputStream(file);
 			const result = readGameDataFile(stream, type);
 			callback && callback(result);
 			resolve(result);

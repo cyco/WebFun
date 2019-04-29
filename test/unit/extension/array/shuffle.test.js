@@ -2,7 +2,7 @@ import { srand } from "src/util";
 
 describe("WebFun.Extension.Array.shuffle", () => {
 	it("extends the Array prototype", () => {
-		let array = [];
+		const array = [];
 		expect(typeof array.shuffle).toBe("function");
 	});
 

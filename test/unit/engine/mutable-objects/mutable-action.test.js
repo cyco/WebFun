@@ -17,7 +17,7 @@ describe("WebFun.Engine.MutableObjecs.MutableAction", () => {
 	});
 
 	it("can be initialized from an action to make a mutable copy", () => {
-		let copy = new Action(template);
+		const copy = new Action(template);
 
 		expect(copy.id).toBe(5);
 		expect(copy.name).toBe("");

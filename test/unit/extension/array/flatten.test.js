@@ -2,13 +2,13 @@ import flatten from "src/extension/array/flatten";
 
 describe("WebFun.Extension.Array.flatten", () => {
 	it("it extends the Array prototype", () => {
-		let array = [];
+		const array = [];
 		expect(array.flatten).toBeFunction();
 		expect(flatten).toBeFunction();
 	});
 
 	it("creates a new array from the elements of the arrays contained", () => {
-		let sample = [["a"], ["b"], ["c", "d"]];
+		const sample = [["a"], ["b"], ["c", "d"]];
 
 		let result = sample.flatten();
 		expect(result.length).toBe(4);
@@ -22,27 +22,27 @@ describe("WebFun.Extension.Array.flatten", () => {
 	});
 
 	it("returns an empty array if the original array is empty", () => {
-		let sample = [];
-		let result = sample.flatten();
+		const sample = [];
+		const result = sample.flatten();
 		expect(result.length).toBe(0);
 	});
 
 	it("works if there are non-array elements", () => {
-		let sample = [["a", "b"], "c"];
-		let result = sample.flatten();
+		const sample = [["a", "b"], "c"];
+		const result = sample.flatten();
 		expect(result.length).toBe(3);
 		expect(result[2]).toBe("c");
 	});
 
 	it("only flattens one layer of arrays", () => {
-		let sample = [["a", ["b"]], "c"];
-		let result = sample.flatten();
+		const sample = [["a", ["b"]], "c"];
+		const result = sample.flatten();
 		expect(result.length).toBe(3);
 		expect(result[1]).toEqual(["b"]);
 	});
 
 	it("leaves the original array untouched", () => {
-		let sample = [["a"]];
+		const sample = [["a"]];
 		sample.flatten();
 		expect(sample[0] instanceof Array).toBeTrue();
 	});

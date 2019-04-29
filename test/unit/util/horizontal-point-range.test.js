@@ -2,7 +2,7 @@ import HorizontalPointRange from "src/util/horizontal-point-range";
 
 describe("WebFun.Util.HorizontalPointRange", () => {
 	it("is a range of points that only extends in y-dimension", () => {
-		let range = new HorizontalPointRange(3, 8, 4);
+		const range = new HorizontalPointRange(3, 8, 4);
 		expect(range.from.x).toBe(3);
 		expect(range.from.y).toBe(4);
 		expect(range.to.x).toBe(8);
@@ -10,8 +10,8 @@ describe("WebFun.Util.HorizontalPointRange", () => {
 	});
 
 	it("has a method to iterate through all points", () => {
-		let visited = {};
-		let range = new HorizontalPointRange(3, 8, 4);
+		const visited = {};
+		const range = new HorizontalPointRange(3, 8, 4);
 
 		range.iterate(function(point) {
 			visited[point.x + "x" + point.y] = true;
@@ -28,8 +28,8 @@ describe("WebFun.Util.HorizontalPointRange", () => {
 	});
 
 	it("can iterate backwards", () => {
-		let visited = {};
-		let range = new HorizontalPointRange(2, 0, 4);
+		const visited = {};
+		const range = new HorizontalPointRange(2, 0, 4);
 
 		range.iterate(function(point) {
 			visited[point.x + "x" + point.y] = true;
