@@ -6,8 +6,8 @@ import { Point } from "src/util";
 
 const makeConditionDescription = desc => (Name, block) => {
 	desc(`WebFun.Engine.Script.Condition.${Name}`, () => {
-		let engine = {};
-		let checker = new ConditionChecker(ConditionImplementations, engine);
+		const engine = {};
+		const checker = new ConditionChecker(ConditionImplementations, engine);
 
 		beforeEach(() => {
 			engine.currentZone = {};
@@ -23,14 +23,16 @@ const makeConditionDescription = desc => (Name, block) => {
 
 const makeInstructionDescription = desc => (Name, block) => {
 	desc(`WebFun.Engine.Script.Instruction.${Name}`, () => {
-		let engine = {
+		const engine = {
 			currentZone: {},
 			hero: {},
 			temporaryState: {},
 			data: {},
-			currentWorld: {}
+			currentWorld: {},
+			speak: () => void 0,
+			dropItem: () => void 0
 		};
-		let executor = new InstructionExecutor(InstructionImplementations, engine);
+		const executor = new InstructionExecutor(InstructionImplementations, engine);
 
 		beforeEach(() => {
 			engine.currentZone = {};
