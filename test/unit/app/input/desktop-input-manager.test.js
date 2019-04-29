@@ -56,7 +56,7 @@ describe("WebFun.App.Input.DesktopInputManager", () => {
 		});
 
 		it("keeps track of directional input", () => {
-			let Mask = Direction;
+			const Mask = Direction;
 
 			const upKey = KeyEvent.DOM_VK_UP;
 			const downKey = KeyEvent.DOM_VK_DOWN;

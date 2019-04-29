@@ -28,7 +28,7 @@ describe("WebFun.Util.InputStream", () => {
 	});
 
 	it("has a method to check if more bytes are available", () => {
-		let stream = new InputStream("test");
+		const stream = new InputStream("test");
 		expect(stream.isAtEnd()).toBeFalse();
 		stream.seek(stream.length, Stream.SEEK.SET);
 		expect(stream.isAtEnd()).toBeTrue();
@@ -39,7 +39,7 @@ describe("WebFun.Util.InputStream", () => {
 	});
 
 	it("getUint8 returns 1 byte of unsigned data at the current position and advances the offset", () => {
-		let stream = new InputStream(buffer);
+		const stream = new InputStream(buffer);
 
 		expect(stream.offset).toBe(0);
 		expect(stream.getUint8()).toBe(0x23);
@@ -49,7 +49,7 @@ describe("WebFun.Util.InputStream", () => {
 	});
 
 	it("getUint16 returns 2 byte of unsigned data at the current position and advances the offset", () => {
-		let stream = new InputStream(buffer);
+		const stream = new InputStream(buffer);
 
 		expect(stream.offset).toBe(0);
 		expect(stream.getUint16()).toBe(0x4223);
@@ -59,7 +59,7 @@ describe("WebFun.Util.InputStream", () => {
 	});
 
 	it("getUint32 returns 4 byte of unsigned data at the current position and advances the offset", () => {
-		let stream = new InputStream(buffer);
+		const stream = new InputStream(buffer);
 
 		expect(stream.offset).toBe(0);
 		expect(stream.getUint32()).toBe(0xffff4223);
@@ -67,7 +67,7 @@ describe("WebFun.Util.InputStream", () => {
 	});
 
 	it("getInt8 returns 1 byte of signed data at the current position and advances the offset", () => {
-		let stream = new InputStream(buffer);
+		const stream = new InputStream(buffer);
 
 		expect(stream.offset).toBe(0);
 		expect(stream.getInt8()).toBe(0x23);
@@ -77,7 +77,7 @@ describe("WebFun.Util.InputStream", () => {
 	});
 
 	it("getInt16 returns 2 byte of signed data at the current position and advances the offset", () => {
-		let stream = new InputStream(buffer);
+		const stream = new InputStream(buffer);
 
 		expect(stream.offset).toBe(0);
 		expect(stream.getInt16()).toBe(0x4223);
@@ -87,7 +87,7 @@ describe("WebFun.Util.InputStream", () => {
 	});
 
 	it("getInt32 returns 4 byte of signed data at the current position and advances the offset", () => {
-		let stream = new InputStream(buffer);
+		const stream = new InputStream(buffer);
 
 		expect(stream.offset).toBe(0);
 		expect(stream.getInt32()).toBe(-48605);
@@ -104,7 +104,7 @@ describe("WebFun.Util.InputStream", () => {
 		});
 
 		it("getCharacter reads a single byte character and returns it", () => {
-			let stream = new InputStream(buffer);
+			const stream = new InputStream(buffer);
 
 			stream.seek(2, Stream.SEEK.SET);
 			expect(stream.offset).toBe(2);
@@ -113,7 +113,7 @@ describe("WebFun.Util.InputStream", () => {
 		});
 
 		it("getCharacters returns a string of length x at the current position", () => {
-			let stream = new InputStream(buffer);
+			const stream = new InputStream(buffer);
 
 			stream.seek(2, Stream.SEEK.SET);
 			expect(stream.offset).toBe(2);
@@ -122,7 +122,7 @@ describe("WebFun.Util.InputStream", () => {
 		});
 
 		it("getCharacters returns an empty string if length is zero", () => {
-			let stream = new InputStream(buffer);
+			const stream = new InputStream(buffer);
 
 			expect(stream.offset).toBe(0);
 			expect(stream.getCharacters(0)).toBe("");
@@ -130,26 +130,26 @@ describe("WebFun.Util.InputStream", () => {
 		});
 
 		it("getNullTerminatedString collects all characters up to a null byte into a string, it does not consume the null byte", () => {
-			let stream = new InputStream(buffer);
+			const stream = new InputStream(buffer);
 
 			stream.seek(2, Stream.SEEK.SET);
 			expect(stream.offset).toBe(2);
-			let string = stream.getNullTerminatedString(stream.length - 2);
+			const string = stream.getNullTerminatedString(stream.length - 2);
 			expect(string).toBe("ASCII STRING");
 			expect(stream.offset).toBe(string.length + 2);
 			expect(stream.getUint8()).toBe(0x00);
 		});
 
 		it("getLengthPrefixedString reads 2 bytes string length and then as many bytes characters returning them in a string", () => {
-			let stream = new InputStream(buffer);
+			const stream = new InputStream(buffer);
 
-			let string = stream.getLengthPrefixedString();
+			const string = stream.getLengthPrefixedString();
 			expect(string).toBe("ASCII STRING");
 		});
 
 		it("getCStringWithLength reads a null terminated string consuming exactly n bytes", () => {
 			let string;
-			let stream = new InputStream(buffer);
+			const stream = new InputStream(buffer);
 
 			stream.seek(0x12, Stream.SEEK.SET);
 			string = stream.getCStringWithLength(1);
@@ -175,8 +175,8 @@ describe("WebFun.Util.InputStream", () => {
 		});
 
 		it("getUint8Array reads an array of unsigned bytes", () => {
-			let stream = new InputStream(buffer);
-			let data = stream.getUint8Array(4);
+			const stream = new InputStream(buffer);
+			const data = stream.getUint8Array(4);
 			expect(data.length).toBe(4);
 			expect(data[0]).toBe(0x17);
 			expect(data[1]).toBe(0x2a);
@@ -185,9 +185,9 @@ describe("WebFun.Util.InputStream", () => {
 		});
 
 		it("getUint16Array reads an array of unsigned words (length is specified in elements)", () => {
-			let stream = new InputStream(buffer);
+			const stream = new InputStream(buffer);
 
-			let data = stream.getUint16Array(4);
+			const data = stream.getUint16Array(4);
 			expect(data.length).toBe(4);
 			expect(data[0]).toBe(0x2a17);
 			expect(data[1]).toBe(0x4223);
@@ -196,7 +196,7 @@ describe("WebFun.Util.InputStream", () => {
 		});
 
 		it("getInt16Array reads an array of signed words (length is specified in elements)", () => {
-			let stream = new InputStream(buffer);
+			const stream = new InputStream(buffer);
 
 			let data = stream.getInt16Array(2);
 			expect(data[0]).toBe(10775);
@@ -209,22 +209,22 @@ describe("WebFun.Util.InputStream", () => {
 		});
 
 		it("getUint16Array can be used even if the offset is not word aligned", () => {
-			let stream = new InputStream(buffer);
+			const stream = new InputStream(buffer);
 			stream.seek(1, Stream.SEEK.SET);
 			expect(stream.offset).toBe(1);
 
-			let data = stream.getUint16Array(2);
+			const data = stream.getUint16Array(2);
 			expect(data.length).toBe(2);
 			expect(data[0]).toBe(0x232a);
 			expect(data[1]).toBe(0x4242);
 		});
 
 		it("getUint32Array can be used even if the offset is not dword aligned", () => {
-			let stream = new InputStream(buffer);
+			const stream = new InputStream(buffer);
 			stream.seek(1, Stream.SEEK.SET);
 			expect(stream.offset).toBe(1);
 
-			let data = stream.getUint32Array(1);
+			const data = stream.getUint32Array(1);
 			expect(data.length).toBe(1);
 			expect(data[0]).toBe(0x4242232a);
 
@@ -232,10 +232,10 @@ describe("WebFun.Util.InputStream", () => {
 		});
 
 		it("getUint32Array can be used to read arrays of unsigned integers", () => {
-			let stream = new InputStream(buffer);
+			const stream = new InputStream(buffer);
 			expect(stream.offset).toBe(0);
 
-			let data = stream.getUint32Array(1);
+			const data = stream.getUint32Array(1);
 			expect(data.length).toBe(1);
 			expect(data[0]).toBe(0x42232a17);
 

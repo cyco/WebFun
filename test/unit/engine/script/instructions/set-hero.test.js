@@ -5,7 +5,7 @@ describeInstruction("SetHero", (execute, engine) => {
 	it("moves the hero to the specified coordinates", async done => {
 		engine.hero.location = { x: 2, y: 4 };
 
-		let instruction = new Instruction({});
+		const instruction = new Instruction({});
 		instruction._opcode = SetHero.Opcode;
 		instruction._arguments = [12, 13];
 		await execute(instruction);

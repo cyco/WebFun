@@ -6,7 +6,7 @@ describe("WebFun.Extension.Element.append", () => {
 	});
 
 	it("is a polyfill that combines Element.appendChild and document.createTextNode to get the desired effect", () => {
-		let container = document.createElement("div");
+		const container = document.createElement("div");
 		document.body.appendChild(container);
 
 		container.append("test");
@@ -16,7 +16,7 @@ describe("WebFun.Extension.Element.append", () => {
 	});
 
 	it("can be invoke explicitly to achieve better code coverage", () => {
-		let container = document.createElement("div");
+		const container = document.createElement("div");
 		document.body.appendChild(container);
 
 		append.call(container, "test");

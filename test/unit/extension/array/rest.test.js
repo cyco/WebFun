@@ -1,18 +1,18 @@
 describe("WebFun.Extension.Array.rest", () => {
 	it("it extends the Array prototype", () => {
-		let array = [];
+		const array = [];
 		expect(typeof array.rest).toBe("function");
 	});
 
 	it("simply returns all but the first elements of an array", () => {
-		let array = ["a", "b", "c"];
-		let result = array.rest();
+		const array = ["a", "b", "c"];
+		const result = array.rest();
 		expect(result).toEqual(["b", "c"]);
 	});
 
 	it("returns [] if the array is empty", () => {
-		let array = [];
-		let result = array.rest();
+		const array = [];
+		const result = array.rest();
 		expect(result).toEqual([]);
 	});
 });

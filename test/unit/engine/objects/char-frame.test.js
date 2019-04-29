@@ -2,12 +2,12 @@ import CharFrame from "src/engine/objects/char-frame";
 
 describe("CharFrame", () => {
 	it("is a class representing one frame of character animation", () => {
-		let charFrame = new CharFrame();
+		const charFrame = new CharFrame();
 		expect(charFrame instanceof CharFrame).toBeTrue();
 	});
 
 	it("basically wraps an array and offers a more expressive interface", () => {
-		let tiles = [
+		const tiles = [
 			"up",
 			"down",
 			"extensionUp",
@@ -18,7 +18,7 @@ describe("CharFrame", () => {
 			"extensionRight"
 		];
 
-		let charFrame = new CharFrame();
+		const charFrame = new CharFrame();
 		charFrame._tiles = tiles;
 
 		expect(charFrame.tiles).toBe(tiles);

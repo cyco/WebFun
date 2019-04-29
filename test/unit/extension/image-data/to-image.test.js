@@ -7,7 +7,7 @@ describe("WebFun.Extension.ImageData.toImage", () => {
 	});
 
 	it("converts image data asynchronously to an image", async done => {
-		let subject = new ImageData(
+		const subject = new ImageData(
 			new Uint8ClampedArray([
 				...[...[0x00, 0x00, 0x00, 0xff], ...[0xff, 0xff, 0xff, 0xff]],
 				...[...[0x00, 0xff, 0x00, 0xff], ...[0xff, 0x00, 0xff, 0xff]]
@@ -25,7 +25,7 @@ describe("WebFun.Extension.ImageData.toImage", () => {
 	});
 
 	it("image smoothing can be enabled", async done => {
-		let subject = new ImageData(
+		const subject = new ImageData(
 			new Uint8ClampedArray([
 				...[...[0x00, 0x00, 0x00, 0xff], ...[0xff, 0xff, 0xff, 0xff]],
 				...[...[0x00, 0xff, 0x00, 0xff], ...[0xff, 0x00, 0xff, 0xff]]

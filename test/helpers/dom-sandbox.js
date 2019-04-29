@@ -2,7 +2,7 @@ import { document } from "std/dom";
 
 export const sandboxed = description => {
 	return () => {
-		let sand = {
+		const sand = {
 			box: null
 		};
 		beforeEach(() => {

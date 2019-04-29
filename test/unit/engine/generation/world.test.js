@@ -36,13 +36,13 @@ describe("World", () => {
 			const mockZone = {};
 			subject.setZone(5, 2, mockZone);
 
-			let point = subject.locationOfZone(mockZone);
+			const point = subject.locationOfZone(mockZone);
 			expect(point.x).toBe(5);
 			expect(point.y).toBe(2);
 		});
 
 		it("returns null if the world does not contain the zone", () => {
-			let point = subject.locationOfZone(zone);
+			const point = subject.locationOfZone(zone);
 			expect(point).toBe(null);
 		});
 	});

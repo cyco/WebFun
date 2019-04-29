@@ -2,7 +2,7 @@ import VerticalPointRange from "src/util/vertical-point-range";
 
 describe("WebFun.Util.VerticalPointRange", () => {
 	it("is a range of points that only extends in y-dimension", () => {
-		let range = new VerticalPointRange(3, 8, 4);
+		const range = new VerticalPointRange(3, 8, 4);
 		expect(range.from.y).toBe(3);
 		expect(range.from.x).toBe(4);
 		expect(range.to.y).toBe(8);
@@ -10,8 +10,8 @@ describe("WebFun.Util.VerticalPointRange", () => {
 	});
 
 	it("has a method to iterate through all points", () => {
-		let visited = {};
-		let range = new VerticalPointRange(3, 8, 4);
+		const visited = {};
+		const range = new VerticalPointRange(3, 8, 4);
 
 		range.iterate(function(point) {
 			visited[point.x + "x" + point.y] = true;

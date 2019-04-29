@@ -3,7 +3,7 @@ import ShowHero from "src/engine/script/instructions/show-hero";
 
 describeInstruction("ShowHero", (execute, engine) => {
 	it("hides the hero", async done => {
-		let instruction = new Instruction({});
+		const instruction = new Instruction({});
 		instruction._opcode = ShowHero.Opcode;
 		instruction._arguments = [];
 

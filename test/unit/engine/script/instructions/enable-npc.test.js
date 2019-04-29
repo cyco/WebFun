@@ -5,7 +5,7 @@ describeInstruction("EnableNPC", (execute, engine) => {
 	it("enables the specified npc in the current zone", async done => {
 		engine.currentZone.npcs = [null, null, {}, null];
 
-		let instruction = new Instruction();
+		const instruction = new Instruction();
 		instruction._opcode = EnableNPC.Opcode;
 		instruction._arguments = [2];
 

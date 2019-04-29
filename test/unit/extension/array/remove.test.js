@@ -1,17 +1,17 @@
 describe("WebFun.Extension.Array.remove", () => {
 	it("it extends the Array prototype", () => {
-		let array = [];
+		const array = [];
 		expect(array.remove).toBeFunction();
 	});
 
 	it("simply removes the element from the array", () => {
-		let array = ["a", "b", "c"];
+		const array = ["a", "b", "c"];
 		array.remove("b");
 		expect(array).toEqual(["a", "c"]);
 	});
 
 	it("only removes the first instance of an element", () => {
-		let array = ["b", "b", "c", "b"];
+		const array = ["b", "b", "c", "b"];
 		array.remove("b");
 		expect(array).toEqual(["b", "c", "b"]);
 	});

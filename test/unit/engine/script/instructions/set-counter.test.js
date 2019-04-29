@@ -3,7 +3,7 @@ import SetCounter from "src/engine/script/instructions/set-counter";
 
 describeInstruction("SetCounter", (execute, engine) => {
 	it("set the current zone's counter to the specified value", async done => {
-		let instruction = new Instruction({});
+		const instruction = new Instruction({});
 		instruction._opcode = SetCounter.Opcode;
 		instruction._arguments = [2];
 

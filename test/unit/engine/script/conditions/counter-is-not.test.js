@@ -3,7 +3,7 @@ import CounterIsNot from "src/engine/script/conditions/counter-is-not";
 
 describeCondition("CounterIsNot", (check, engine) => {
 	it("compares the supplied value against the current zone's counter, returning false on equality", async done => {
-		let condition = new Condition();
+		const condition = new Condition();
 		condition._opcode = CounterIsNot.Opcode;
 		condition._arguments = [5];
 

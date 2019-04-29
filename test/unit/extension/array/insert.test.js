@@ -1,11 +1,11 @@
 describe("WebFun.Extension.Array.insert", () => {
 	it("it extends the Array prototype", () => {
-		let array = [];
+		const array = [];
 		expect(typeof array.insert).toBe("function");
 	});
 
 	it("inserts an element at the specified position", () => {
-		let array = ["a", "c"];
+		const array = ["a", "c"];
 
 		array.insert(1, "b");
 		expect(array).toEqual(["a", "b", "c"]);

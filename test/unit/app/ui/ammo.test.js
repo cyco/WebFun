@@ -17,7 +17,7 @@ describeComponent(Ammo, () => {
 	});
 
 	it("roughly reflects the current ammo in a bar whose height changes", () => {
-		let indicator = subject.querySelector(".value");
+		const indicator = subject.querySelector(".value");
 		subject.ammo = 1;
 		expect(parseInt(indicator.style.height)).toBeGreaterThan(90);
 
@@ -26,7 +26,7 @@ describeComponent(Ammo, () => {
 	});
 
 	it("a value of 0xFF or -1 indicates that there is no current weapon", () => {
-		let background = subject.querySelector(".background");
+		const background = subject.querySelector(".background");
 
 		subject.ammo = 0xff;
 		expect(background.style.backgroundColor).toBe("");

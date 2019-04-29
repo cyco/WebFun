@@ -3,19 +3,19 @@ import Size from "src/util/size";
 
 describe("WebFun.Util.Point", () => {
 	it("defines a point in space with up to 3 coordinates", () => {
-		let point = new Point(1, 2, 3);
+		const point = new Point(1, 2, 3);
 		expect(point.x).toBe(1);
 		expect(point.y).toBe(2);
 		expect(point.z).toBe(3);
 	});
 
 	it("points can also be created from any object that has x,y and z properties", () => {
-		let object = {
+		const object = {
 			x: 2,
 			y: 3,
 			z: 4
 		};
-		let point = new Point(object);
+		const point = new Point(object);
 		expect(point.x).toBe(2);
 		expect(point.y).toBe(3);
 		expect(point.z).toBe(4);
@@ -24,10 +24,10 @@ describe("WebFun.Util.Point", () => {
 	it("has a static method to add to points", () => {
 		expect(typeof Point.add).toBe("function");
 
-		let firstPoint = new Point(1, 2, 3);
-		let secondPoint = new Point(-5, 3, 3);
+		const firstPoint = new Point(1, 2, 3);
+		const secondPoint = new Point(-5, 3, 3);
 
-		let result = Point.add(firstPoint, secondPoint);
+		const result = Point.add(firstPoint, secondPoint);
 
 		expect(result.x).toBe(-4);
 		expect(result.y).toBe(5);
@@ -36,10 +36,10 @@ describe("WebFun.Util.Point", () => {
 	it("adding two points just uses the z-coordinate of the first point", () => {
 		expect(typeof Point.add).toBe("function");
 
-		let firstPoint = new Point(1, 2, 7);
-		let secondPoint = new Point(-5, 3, 3);
+		const firstPoint = new Point(1, 2, 7);
+		const secondPoint = new Point(-5, 3, 3);
 
-		let result = Point.add(firstPoint, secondPoint);
+		const result = Point.add(firstPoint, secondPoint);
 
 		expect(result.z).toBe(7);
 	});
@@ -47,10 +47,10 @@ describe("WebFun.Util.Point", () => {
 	it("has a static method to subtract to points", () => {
 		expect(typeof Point.add).toBe("function");
 
-		let firstPoint = new Point(1, 2, 3);
-		let secondPoint = new Point(-5, 3, 3);
+		const firstPoint = new Point(1, 2, 3);
+		const secondPoint = new Point(-5, 3, 3);
 
-		let result = Point.subtract(firstPoint, secondPoint);
+		const result = Point.subtract(firstPoint, secondPoint);
 
 		expect(result.x).toBe(6);
 		expect(result.y).toBe(-1);
@@ -59,10 +59,10 @@ describe("WebFun.Util.Point", () => {
 	it("subtract two points just uses the z-coordinate of the first point", () => {
 		expect(typeof Point.add).toBe("function");
 
-		let firstPoint = new Point(1, 2, 7);
-		let secondPoint = new Point(-5, 3, 3);
+		const firstPoint = new Point(1, 2, 7);
+		const secondPoint = new Point(-5, 3, 3);
 
-		let result = Point.subtract(firstPoint, secondPoint);
+		const result = Point.subtract(firstPoint, secondPoint);
 
 		expect(result.z).toBe(7);
 	});
@@ -78,8 +78,8 @@ describe("WebFun.Util.Point", () => {
 
 	describe("add", () => {
 		it("adds one point to another", () => {
-			let firstPoint = new Point(1, 2, 3);
-			let secondPoint = new Point(-5, 3, 3);
+			const firstPoint = new Point(1, 2, 3);
+			const secondPoint = new Point(-5, 3, 3);
 
 			firstPoint.add(secondPoint);
 
@@ -88,7 +88,7 @@ describe("WebFun.Util.Point", () => {
 		});
 
 		it("can also be called with the coordinates to add", () => {
-			let firstPoint = new Point(1, 2, 3);
+			const firstPoint = new Point(1, 2, 3);
 
 			firstPoint.add(1, 2, 3);
 
@@ -97,8 +97,8 @@ describe("WebFun.Util.Point", () => {
 		});
 
 		it("doesn't touch the z-coordinate", () => {
-			let firstPoint = new Point(1, 2, 3);
-			let secondPoint = new Point(-5, 3, 3);
+			const firstPoint = new Point(1, 2, 3);
+			const secondPoint = new Point(-5, 3, 3);
 			firstPoint.add(secondPoint);
 			expect(firstPoint.z).toBe(3);
 		});
@@ -119,8 +119,8 @@ describe("WebFun.Util.Point", () => {
 
 	describe("subtract", () => {
 		it("subtract one point from another", () => {
-			let firstPoint = new Point(1, 2, 3);
-			let secondPoint = new Point(-5, 3, 3);
+			const firstPoint = new Point(1, 2, 3);
+			const secondPoint = new Point(-5, 3, 3);
 
 			firstPoint.subtract(secondPoint);
 
@@ -129,7 +129,7 @@ describe("WebFun.Util.Point", () => {
 		});
 
 		it("can also be called with the coordinates to subtract", () => {
-			let firstPoint = new Point(1, 2, 3);
+			const firstPoint = new Point(1, 2, 3);
 
 			firstPoint.subtract(1, 2, 3);
 
@@ -138,8 +138,8 @@ describe("WebFun.Util.Point", () => {
 		});
 
 		it("doesn't touch the z-coordinate", () => {
-			let firstPoint = new Point(1, 2, 3);
-			let secondPoint = new Point(-5, 3, 3);
+			const firstPoint = new Point(1, 2, 3);
+			const secondPoint = new Point(-5, 3, 3);
 			firstPoint.subtract(secondPoint);
 			expect(firstPoint.z).toBe(3);
 		});
@@ -160,21 +160,21 @@ describe("WebFun.Util.Point", () => {
 
 	describe("abs", () => {
 		it("negates negative coordinates", () => {
-			let point = new Point(-1, -2);
+			const point = new Point(-1, -2);
 			point.abs();
 			expect(point.x).toBe(1);
 			expect(point.y).toBe(2);
 		});
 
 		it("doesn't touch positive coordinates", () => {
-			let point = new Point(1, 2);
+			const point = new Point(1, 2);
 			point.abs();
 			expect(point.x).toBe(1);
 			expect(point.y).toBe(2);
 		});
 
 		it("never touches the z coordinate", () => {
-			let point = new Point(1, 2, -5);
+			const point = new Point(1, 2, -5);
 			point.abs();
 			expect(point.z).toBe(-5);
 		});
@@ -192,7 +192,7 @@ describe("WebFun.Util.Point", () => {
 	});
 
 	it("has a method to floor all coordinates", () => {
-		let point = new Point(1.2, 3.2, 7.9);
+		const point = new Point(1.2, 3.2, 7.9);
 		point.floor();
 		expect(point.x).toBe(1);
 		expect(point.y).toBe(3);
@@ -212,7 +212,7 @@ describe("WebFun.Util.Point", () => {
 	});
 
 	it("has a method to ceil all coordinates", () => {
-		let point = new Point(1.2, 3.2, 7.9);
+		const point = new Point(1.2, 3.2, 7.9);
 		point.ceil();
 		expect(point.x).toBe(2);
 		expect(point.y).toBe(4);
@@ -280,13 +280,13 @@ describe("WebFun.Util.Point", () => {
 		});
 
 		it("A zero point is considered to be unidirectional", () => {
-			let point = new Point(0, 0);
+			const point = new Point(0, 0);
 			expect(point.isUnidirectional()).toBeTrue();
 		});
 	});
 
 	it("isInBounds is true if coordinates are positive and less than the specified size", () => {
-		let size = {
+		const size = {
 			width: 10,
 			height: 5
 		};
@@ -331,7 +331,7 @@ describe("WebFun.Util.Point", () => {
 	});
 
 	it("properly converts to a human-readable string", () => {
-		let point = new Point(2, 3);
+		const point = new Point(2, 3);
 		expect(point.toString()).toBe("Point {2x3}");
 		expect("" + point).toBe("Point {2x3}");
 	});

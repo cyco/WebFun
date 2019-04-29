@@ -20,7 +20,7 @@ describe("ConditionChecker", () => {
 			new ConditionChecker();
 		}).not.toThrow();
 
-		let engineMock = {};
+		const engineMock = {};
 		expect(() => {
 			new ConditionChecker(engineMock);
 		}).not.toThrow();

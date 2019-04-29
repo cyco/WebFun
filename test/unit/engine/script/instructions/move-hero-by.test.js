@@ -6,7 +6,7 @@ describeInstruction("MoveHeroBy", (execute, engine) => {
 	it("updates the hero's position", async done => {
 		engine.hero.location = new Point(3, 2);
 
-		let instruction = new Instruction({});
+		const instruction = new Instruction({});
 		instruction._opcode = MoveHeroBy.Opcode;
 		instruction._arguments = [-1, 1];
 

@@ -43,12 +43,12 @@ describe("WebFun.Engine.Objects.Action", () => {
 
 	describe("Instruction", () => {
 		it("extends AbstractActionItem", () => {
-			let instruction = new Instruction({});
+			const instruction = new Instruction({});
 			expect(instruction instanceof AbstractActionItem).toBeTrue();
 		});
 
 		it("may have 'additional data' of arbitrary length (usually text someone speaks)", () => {
-			let instruction = new Instruction({});
+			const instruction = new Instruction({});
 			instruction._additionalData = "something someone might say";
 			expect(instruction.text).toEqual("something someone might say");
 		});
@@ -56,7 +56,7 @@ describe("WebFun.Engine.Objects.Action", () => {
 
 	describe("Condition", () => {
 		it("extends AbstractActionItem", () => {
-			let condition = new Condition({});
+			const condition = new Condition({});
 			expect(condition instanceof AbstractActionItem).toBeTrue();
 		});
 	});

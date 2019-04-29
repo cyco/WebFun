@@ -6,7 +6,7 @@ describeInstruction("RemoveTile", (execute, engine) => {
 		engine.currentZone.removeTile = () => {};
 		spyOn(engine.currentZone, "removeTile");
 
-		let instruction = new Instruction({});
+		const instruction = new Instruction({});
 		instruction._opcode = RemoveTile.Opcode;
 		instruction._arguments = [1, 2, 3];
 

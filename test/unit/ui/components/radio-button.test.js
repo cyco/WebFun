@@ -10,7 +10,7 @@ describeComponent(RadioButton, () => {
 	});
 
 	it("the title can be changed", () => {
-		let newTitle = "new button title";
+		const newTitle = "new button title";
 
 		subject.title = newTitle;
 		expect(subject.title).toBe(newTitle);

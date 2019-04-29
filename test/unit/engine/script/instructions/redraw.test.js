@@ -3,7 +3,7 @@ import Redraw from "src/engine/script/instructions/redraw";
 
 describeInstruction("Redraw", (execute, engine) => {
 	it("redraws the current scene immediately without waiting for the next gameloop", async done => {
-		let instruction = new Instruction({});
+		const instruction = new Instruction({});
 		instruction._opcode = Redraw.Opcode;
 		instruction._arguments = [];
 

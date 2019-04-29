@@ -2,7 +2,7 @@ import padStart from "src/extension/string/pad-start";
 
 describe("WebFun.Extension.String.padStart", () => {
 	it("extends the String prototype", () => {
-		let string = "test";
+		const string = "test";
 		expect(string.padStart).toBeFunction();
 	});
 

@@ -6,7 +6,7 @@ describeInstruction("MoveTile", (execute, engine) => {
 		engine.currentZone.moveTile = () => {};
 		spyOn(engine.currentZone, "moveTile");
 
-		let instruction = new Instruction({});
+		const instruction = new Instruction({});
 		instruction._opcode = MoveTile.Opcode;
 		instruction._arguments = [0, 1, 2, 3, 4];
 		await execute(instruction);

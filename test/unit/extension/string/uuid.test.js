@@ -7,13 +7,13 @@ describe("WebFun.Extension.String.UUID", () => {
 	});
 
 	it("returns a uuid with components separated by strings", () => {
-		let uuid = String.UUID();
+		const uuid = String.UUID();
 		expect(uuid.split("-").length).toBe(5);
 	});
 
 	it("generates a new UUID every time", () => {
-		let uuid1 = String.UUID();
-		let uuid2 = String.UUID();
+		const uuid1 = String.UUID();
+		const uuid2 = String.UUID();
 
 		expect(uuid1).not.toBe(uuid2);
 	});

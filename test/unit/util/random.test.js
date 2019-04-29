@@ -7,11 +7,22 @@ describe("WebFun.Util.Random", () => {
 	});
 
 	it("implements a prng spitting out 16-bit values", () => {
-		let expectedValues = [0x0029, 0x4823, 0x18be, 0x6784, 0x4ae1, 0x3d6c, 0x2cd6, 0x72ae, 0x6952, 0x5f90];
+		const expectedValues = [
+			0x0029,
+			0x4823,
+			0x18be,
+			0x6784,
+			0x4ae1,
+			0x3d6c,
+			0x2cd6,
+			0x72ae,
+			0x6952,
+			0x5f90
+		];
 
 		srand(0x0001);
 		for (let i = 0; i < 10; i++) {
-			let randomNumber = rand();
+			const randomNumber = rand();
 			expect(randomNumber).toEqual(expectedValues[i]);
 		}
 	});

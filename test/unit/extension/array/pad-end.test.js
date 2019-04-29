@@ -2,7 +2,7 @@ import padEnd from "src/extension/array/pad-end";
 
 describe("WebFun.Extension.Array.padEnd", () => {
 	it("extends the Array prototype", () => {
-		let array = [1, 2, 3];
+		const array = [1, 2, 3];
 		expect(array.padEnd).toBeFunction();
 	});
 
@@ -15,8 +15,8 @@ describe("WebFun.Extension.Array.padEnd", () => {
 	});
 
 	it("does not change the original array", () => {
-		let original = [1, 2, 3];
-		let result = original.padEnd(5, 0);
+		const original = [1, 2, 3];
+		const result = original.padEnd(5, 0);
 		expect(original).not.toBe(result);
 		expect(original).toEqual([1, 2, 3]);
 	});

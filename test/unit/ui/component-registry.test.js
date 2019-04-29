@@ -15,7 +15,7 @@ describe("WebFun.UI.ComponentRegistry", () => {
 		it("passes the call on to customElements ", () => {
 			const componentMock = { tagName: "test-component-1" };
 			spyOn(window.customElements, "define");
-			let subject = new ComponentRegistry();
+			const subject = new ComponentRegistry();
 			subject.registerComponent(componentMock);
 			expect(window.customElements.define).toHaveBeenCalledWith("test-component-1", componentMock);
 		});
@@ -29,7 +29,7 @@ describe("WebFun.UI.ComponentRegistry", () => {
 			};
 			spyOn(window.customElements, "define");
 
-			let subject = new ComponentRegistry();
+			const subject = new ComponentRegistry();
 			subject.registerComponents(components);
 			expect(window.customElements.define.calls.count()).toEqual(2);
 		});
@@ -38,7 +38,7 @@ describe("WebFun.UI.ComponentRegistry", () => {
 			const components = [{ tagName: "test-component-1" }, { tagName: "test-component-2" }];
 			spyOn(window.customElements, "define");
 
-			let subject = new ComponentRegistry();
+			const subject = new ComponentRegistry();
 			subject.registerComponents(components);
 			expect(window.customElements.define.calls.count()).toEqual(2);
 		});

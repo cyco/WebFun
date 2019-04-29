@@ -12,8 +12,8 @@ describe("WebFun.UI.MenuStack", () => {
 	});
 
 	it("has a push methods to put menus on the stack (and in the document)", () => {
-		let menu1 = mockMenuWindow();
-		let menu2 = mockMenuWindow();
+		const menu1 = mockMenuWindow();
+		const menu2 = mockMenuWindow();
 
 		const subject = new MenuStack();
 		subject.push(menu1);
@@ -28,9 +28,9 @@ describe("WebFun.UI.MenuStack", () => {
 	});
 
 	it("has a clear methods remove all menus", () => {
-		let menu1 = mockMenuWindow();
+		const menu1 = mockMenuWindow();
 		spyOn(menu1, "close");
-		let menu2 = mockMenuWindow();
+		const menu2 = mockMenuWindow();
 		spyOn(menu2, "close");
 
 		const subject = new MenuStack();
@@ -48,9 +48,9 @@ describe("WebFun.UI.MenuStack", () => {
 	});
 
 	it("has a pop method to remove a menu and all of its descendants", () => {
-		let menu1 = mockMenuWindow();
+		const menu1 = mockMenuWindow();
 		spyOn(menu1, "close");
-		let menu2 = mockMenuWindow();
+		const menu2 = mockMenuWindow();
 		spyOn(menu2, "close");
 
 		const subject = new MenuStack();
@@ -68,8 +68,8 @@ describe("WebFun.UI.MenuStack", () => {
 	});
 
 	it("has a property to query the stack size", () => {
-		let menu1 = mockMenuWindow();
-		let menu2 = mockMenuWindow();
+		const menu1 = mockMenuWindow();
+		const menu2 = mockMenuWindow();
 
 		const subject = new MenuStack();
 

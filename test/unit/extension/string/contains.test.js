@@ -2,7 +2,7 @@ import contains from "src/extension/string/contains";
 
 describe("WebFun.Extension.String.contains", () => {
 	it("extends the String prototype", () => {
-		let string = "test";
+		const string = "test";
 		expect(string.contains).toBeFunction();
 	});
 

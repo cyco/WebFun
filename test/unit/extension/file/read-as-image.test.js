@@ -21,7 +21,7 @@ describe("WebFun.Extension.File.readAsImage", () => {
 
 	xit("returns an image element from the file's contents", async done => {
 		try {
-			let subject = new File(imageBuffer, "b");
+			const subject = new File(imageBuffer, "b");
 			subject.readAsArrayBuffer = () => Promise.resolve(imageBuffer.buffer);
 			const image = await subject.readAsImage();
 			expect(image).toBeInstanceOf(HTMLImageElement);
@@ -35,7 +35,7 @@ describe("WebFun.Extension.File.readAsImage", () => {
 
 	it("rejects the promise if the file can't be read as an image", async done => {
 		try {
-			let subject = new File(new Uint8Array(0), "b");
+			const subject = new File(new Uint8Array(0), "b");
 			await subject.readAsImage();
 			expect(false).toBeTrue();
 		} catch (e) {

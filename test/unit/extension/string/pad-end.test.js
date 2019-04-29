@@ -2,7 +2,7 @@ import padEnd from "src/extension/string/pad-end";
 
 describe("WebFun.Extension.String.padEnd", () => {
 	it("extends the String prototype", () => {
-		let string = "test";
+		const string = "test";
 		expect(string.padEnd).toBeFunction();
 	});
 
