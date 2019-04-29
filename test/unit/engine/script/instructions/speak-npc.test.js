@@ -1,30 +1,21 @@
 import { Instruction } from "src/engine/objects";
 import SpeakNPC from "src/engine/script/instructions/speak-npc";
-import { Point } from "src/util";
+import * as Util from "src/util";
 
 describeInstruction("SpeakNPC", (execute, engine) => {
 	it("shows a speech bubble next to an npc", async done => {
-		let scene = null;
-		engine.sceneManager = {
-			pushScene(s) {
-				scene = s;
-			}
-		};
-		engine.currentWorld = {
-			at: () => ({})
-		};
-		engine.temporaryState = {
-			worldLocation: new Point(0, 0)
-		};
+		const mockedPoint = new Util.Point(0, 1);
+		spyOn(engine, "speak");
+		spyOn(Util, "Point").and.returnValue(mockedPoint);
 
-		let instruction = new Instruction({});
+		const instruction = new Instruction({});
 		instruction._opcode = SpeakNPC.Opcode;
 		instruction._arguments = [0, 1];
 		instruction._additionalData = "test text";
 
 		await execute(instruction);
 
-		expect(scene.text).toEqual("test text");
+		expect(engine.speak).toHaveBeenCalledWith("test text", mockedPoint);
 
 		done();
 	});
