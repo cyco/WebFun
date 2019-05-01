@@ -22,6 +22,15 @@ import Settings from "src/settings";
 import { Window } from "src/ui/components";
 import { WindowManager } from "src/ui";
 
+const StateChangingOpcodes = {
+	[InstructionsByName.SetSharedCounter.Opcode]: true,
+	[InstructionsByName.AddToSharedCounter.Opcode]: true,
+	[InstructionsByName.AddToCounter.Opcode]: true,
+	[InstructionsByName.SetCounter.Opcode]: true,
+	[InstructionsByName.RollDice.Opcode]: true,
+	[InstructionsByName.SetRandom.Opcode]: true
+};
+
 class ScriptDebugger implements DebuggingScriptExecutorDelegate {
 	private static _sharedDebugger: ScriptDebugger;
 	private _window: Window;
@@ -29,7 +38,10 @@ class ScriptDebugger implements DebuggingScriptExecutorDelegate {
 	private _isActive: boolean = false;
 	private _actionList: Group;
 	private _handlers = {
-		zoneChange: () => this._rebuildActionList()
+		zoneChange: () => {
+			this._updateZoneState();
+			this._rebuildActionList();
+		}
 	};
 	private _breakAfter: boolean;
 
@@ -189,7 +201,7 @@ class ScriptDebugger implements DebuggingScriptExecutorDelegate {
 
 		if (!breakpoint) return;
 
-		const [_, actionId, type = null, idx = null] = breakpoint.id.substr(1).split(":");
+		const [, actionId, type = null, idx = null] = breakpoint.id.substr(1).split(":");
 
 		const action = this._actionList.querySelectorAll(ActionComponent.tagName)[+actionId];
 		if (!action) return;
@@ -292,6 +304,9 @@ class ScriptDebugger implements DebuggingScriptExecutorDelegate {
 		}
 
 		if (thing instanceof Instruction) {
+			if (StateChangingOpcodes[thing.opcode]) {
+				this._updateZoneState();
+			}
 		}
 	}
 

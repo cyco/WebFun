@@ -39,46 +39,46 @@ import StopSound from "./stop-sound";
 import Wait from "./wait";
 import WinGame from "./win-game";
 
-const InstructionsByName: { [name: string]: Instruction } = {};
-const registerInstruction = (name: string, c: Instruction) => (InstructionsByName[name] = c);
-registerInstruction("PlaceTile", PlaceTile);
-registerInstruction("RemoveTile", RemoveTile);
-registerInstruction("MoveTile", MoveTile);
-registerInstruction("DrawTile", DrawTile);
-registerInstruction("SpeakHero", SpeakHero);
-registerInstruction("SpeakNpc", SpeakNpc);
-registerInstruction("EnableNpc", EnableNpc);
-registerInstruction("DisableNpc", DisableNpc);
-registerInstruction("EnableAllNpcs", EnableAllNpcs);
-registerInstruction("DisableAllNpcs", DisableAllNpcs);
-registerInstruction("SetTileNeedsDisplay", SetTileNeedsDisplay);
-registerInstruction("SetRectNeedsDisplay", SetRectNeedsDisplay);
-registerInstruction("Wait", Wait);
-registerInstruction("Redraw", Redraw);
-registerInstruction("PlaySound", PlaySound);
-registerInstruction("StopSound", StopSound);
-registerInstruction("RollDice", RollDice);
-registerInstruction("SetCounter", SetCounter);
-registerInstruction("SetVariable", SetVariable);
-registerInstruction("HideHero", HideHero);
-registerInstruction("ShowHero", ShowHero);
-registerInstruction("MoveHeroTo", MoveHeroTo);
-registerInstruction("DisableAction", DisableAction);
-registerInstruction("DisableHotspot", DisableHotspot);
-registerInstruction("EnableHotspot", EnableHotspot);
-registerInstruction("DropItem", DropItem);
-registerInstruction("AddItem", AddItem);
-registerInstruction("RemoveItem", RemoveItem);
-registerInstruction("ChangeZone", ChangeZone);
-registerInstruction("SetSharedCounter", SetSharedCounter);
-registerInstruction("AddToSharedCounter", AddToSharedCounter);
-registerInstruction("SetRandom", SetRandom);
-registerInstruction("AddHealth", AddHealth);
-registerInstruction("AddToCounter", AddToCounter);
-registerInstruction("WinGame", WinGame);
-registerInstruction("LoseGame", LoseGame);
-registerInstruction("MarkAsSolved", MarkAsSolved);
-registerInstruction("MoveHeroBy", MoveHeroBy);
+const InstructionsByName = {
+	PlaceTile,
+	RemoveTile,
+	MoveTile,
+	DrawTile,
+	SpeakHero,
+	SpeakNpc,
+	EnableNpc,
+	DisableNpc,
+	EnableAllNpcs,
+	DisableAllNpcs,
+	SetTileNeedsDisplay,
+	SetRectNeedsDisplay,
+	Wait,
+	Redraw,
+	PlaySound,
+	StopSound,
+	RollDice,
+	SetCounter,
+	SetVariable,
+	HideHero,
+	ShowHero,
+	MoveHeroTo,
+	DisableAction,
+	DisableHotspot,
+	EnableHotspot,
+	DropItem,
+	AddItem,
+	RemoveItem,
+	ChangeZone,
+	SetSharedCounter,
+	AddToSharedCounter,
+	SetRandom,
+	AddHealth,
+	AddToCounter,
+	WinGame,
+	LoseGame,
+	MarkAsSolved,
+	MoveHeroBy
+};
 
 const InstructionsByOpcode: Instruction[] = new Array(
 	Object.values(InstructionsByName)
