@@ -28,6 +28,7 @@ export default (gameController: GameController) => ({
 		SettingsItem("Reveal World", "revealWorld", gameController.settings),
 		SettingsItem("Show Hotspots", "drawHotspots", gameController.settings),
 		SettingsItem("Skip Dialogs", "skipDialogs", gameController.settings),
+		SettingsItem("Automatically pick up items", "pickupItemsAutomatically", gameController.settings),
 		MenuItemSeparator,
 		SettingsAction("Simulate Zone", () => {
 			const simulator = document.createElement(SimulatorWindow.tagName) as SimulatorWindow;
