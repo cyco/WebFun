@@ -10,6 +10,7 @@ const Settings = persistent(
 		drawHeroTile: true,
 		drawNPCState: true,
 		skipDialogs: false,
+		pickupItemsAutomatically: false,
 
 		autostartEngine: true,
 		revealWorld: false,

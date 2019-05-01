@@ -152,6 +152,11 @@ class Engine extends EventTarget {
 	}
 
 	public dropItem(tile: Tile, place: Point): Promise<void> {
+		if (Settings.pickupItemsAutomatically) {
+			this.inventory.addItem(tile);
+			return Promise.resolve();
+		}
+
 		const scene = new PickupScene(this);
 		scene.tile = tile;
 		scene.location = place;
