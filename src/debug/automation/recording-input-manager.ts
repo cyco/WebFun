@@ -62,13 +62,17 @@ class RecordingInputManager extends InputManager {
 		| "SouthEast"
 		| "SouthWest"
 		| null {
-		if (this.directions & (Direction.Up | Direction.Left)) return "NorthWest";
-		if (this.directions & (Direction.Up | Direction.Right)) return "NorthEast";
-		if (this.directions & (Direction.Down | Direction.Left)) return "SouthWest";
-		if (this.directions & (Direction.Down | Direction.Right)) return "SouthEast";
-		if (this.directions & Direction.Down) return "South";
-		if (this.directions & Direction.Left) return "West";
-		if (this.directions & Direction.Right) return "East";
+		const isSet = (mask: number) => (this.directions & mask) === mask;
+
+		if (isSet(Direction.Up | Direction.Left)) return "NorthWest";
+		if (isSet(Direction.Up | Direction.Right)) return "NorthEast";
+		if (isSet(Direction.Down | Direction.Left)) return "SouthWest";
+		if (isSet(Direction.Down | Direction.Right)) return "SouthEast";
+		if (isSet(Direction.Up)) return "North";
+		if (isSet(Direction.Down)) return "South";
+		if (isSet(Direction.Left)) return "West";
+		if (isSet(Direction.Right)) return "East";
+
 		return null;
 	}
 
