@@ -53,6 +53,7 @@ class ScriptDebugger implements DebuggingScriptExecutorDelegate {
 		this._window.content.appendChild(
 			<Controls onstep={(): void => this.stepOnce()} ontogglepause={(): void => this.togglePause()} />
 		);
+		this._window.content.appendChild(this._buildZoneState());
 		this._actionList = <Group className="action-list" /> as Group;
 		this._window.content.appendChild(this._actionList);
 	}
@@ -306,6 +307,7 @@ class ScriptDebugger implements DebuggingScriptExecutorDelegate {
 			.forEach((component: ActionComponent) => component.evaluateConditions());
 		this._reflectExecutorState();
 		this._scrollToCurrentInstruction();
+		this._updateZoneState();
 	}
 
 	private _scrollToCurrentInstruction() {
@@ -316,6 +318,35 @@ class ScriptDebugger implements DebuggingScriptExecutorDelegate {
 		);
 		const target = (instructionComponent || actionComponent) as any;
 		target.scrollIntoViewIfNeeded();
+	}
+
+	private _updateZoneState() {
+		const state = this._window.content.querySelector(".zone-state");
+		state.replaceWith(this._buildZoneState());
+	}
+
+	private _buildZoneState() {
+		const zone = this.engine && this.engine.currentZone;
+		let counter = "";
+		let random = "";
+		let sharedCounter = "";
+
+		if (zone) {
+			counter = zone.counter.toString();
+			random = zone.random.toString();
+			sharedCounter = zone.sharedCounter.toString();
+		}
+
+		return (
+			<Group className="zone-state">
+				<label>Counter:</label>
+				<span>{counter}</span>
+				<label>Random:</label>
+				<span>{random}</span>
+				<label>Shared counter:</label>
+				<span>{sharedCounter}</span>
+			</Group>
+		);
 	}
 }
 
