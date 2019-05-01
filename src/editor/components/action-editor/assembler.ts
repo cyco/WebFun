@@ -31,7 +31,7 @@ interface OpcodeMap {
 }
 
 const Conditions = ConditionsByName as OpcodeMap;
-const Instructions = InstructionsByName as OpcodeMap;
+const Instructions = (InstructionsByName as any) as OpcodeMap;
 
 class Assembler {
 	private checkArgumentCount: boolean = false;
