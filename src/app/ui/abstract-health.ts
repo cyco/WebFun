@@ -13,8 +13,8 @@ const BadColor = "red";
 const CriticalColor = "black";
 const Conditions = [CriticalColor, BadColor, MediumColor, GoodColor, GoodColor];
 
-const MaxHealth = 300;
-const HealthPerColor = 100;
+const MaxHealth = 0x300;
+const HealthPerColor = 0x100;
 
 declare interface SimplePoint {
 	x: number;
@@ -29,16 +29,7 @@ abstract class AbstractHealth extends Component {
 	static readonly Conditions = Conditions;
 	private _condition: SVGCircleElement = null;
 	private _pie: SVGPathElement = null;
-	private _health: number;
-
-	constructor() {
-		super();
-
-		this._condition = null;
-		this._pie = null;
-
-		this.health = 300;
-	}
+	private _health: number = MaxHealth;
 
 	get health() {
 		return this._health;
