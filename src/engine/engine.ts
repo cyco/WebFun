@@ -19,6 +19,7 @@ import { GameType as Type } from "./type";
 import { World } from "./generation";
 import { SpeechScene, PickupScene } from "src/engine/scenes";
 import { Point } from "src/util";
+import Settings from "src/settings";
 
 export { Events };
 
@@ -141,6 +142,8 @@ class Engine extends EventTarget {
 	}
 
 	public speak(text: string, place: Point): Promise<void> {
+		if (Settings.skipDialogs) return Promise.resolve();
+
 		const scene = new SpeechScene(this);
 		scene.text = text;
 		scene.location = place;
