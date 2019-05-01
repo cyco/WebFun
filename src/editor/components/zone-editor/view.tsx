@@ -55,7 +55,9 @@ class View extends Component implements EventListenerObject {
 
 			const point = this.extractTileCoordinates(event);
 			if (!point) return;
-			const items = this.currentLayerNode.getMenuForTile(point);
+			const layer = this.currentLayerNode;
+			if (!layer) return;
+			const items = layer.getMenuForTile(point);
 			if (items.length === 0) return;
 
 			const menu = <ContextMenu menu={items} /> as ContextMenu;
@@ -142,6 +144,8 @@ class View extends Component implements EventListenerObject {
 	}
 
 	private get currentLayerNode() {
+		if (!this.currentLayer) return null;
+
 		return this.nodeForLayer(this.currentLayer.id);
 	}
 
