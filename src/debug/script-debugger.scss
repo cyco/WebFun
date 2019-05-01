@@ -11,9 +11,27 @@ wf-window.script-debugger-window {
 		padding-bottom: 8px;
 	}
 
+	.zone-state {
+		display: flex;
+		@include inset-border(1px);
+		padding: 3px;
+		margin-bottom: 10px;
+		justify-content: space-around;
+
+		label {
+			font-size: 0.9em;
+			color: gray;
+		}
+
+		span {
+			text-align: center;
+			padding-left: 2px;
+			padding-right: 2px;
+		}
+	}
+
 	.action-list {
 		@include inset-border(2px);
-
 		display: flex;
 		flex-direction: column;
 		max-height: 500px;
