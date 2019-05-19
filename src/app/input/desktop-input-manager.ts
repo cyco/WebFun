@@ -53,6 +53,9 @@ class DesktopInputManager extends InputManager implements EventListenerObject {
 
 	public handleEvent(event: MouseEvent | KeyboardEvent) {
 		if ("repeat" in event && event.repeat) return;
+		if (event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement) {
+			return;
+		}
 
 		switch (event.type) {
 			case "keydown":
