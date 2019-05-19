@@ -42,6 +42,11 @@ class InputRecorder extends AbstractWindow {
 		}
 	}
 
+	public connectedCallback() {
+		super.connectedCallback();
+		this.toggleRecording();
+	}
+
 	private showLog() {
 		const result = this._recorder
 			.dumpRecord()
