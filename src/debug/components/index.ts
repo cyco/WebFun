@@ -16,24 +16,26 @@ import AbstractTileView from "./abstract-tile-view";
 import AbstractZoneView from "./abstract-zone-view";
 import AbstractPaletteImageView from "./abstract-palette-image-view";
 import InputRecorder from "./input-recorder";
+import InputReplayer from "./input-replayer";
 
 export {
-	PaletteImageView,
-	ZoneView,
-	TileView,
-	TileCell,
-	Controls,
-	Action,
-	BreakpointButton,
-	Condition,
-	Instruction,
-	SimulatorWindow,
-	PopoverZonePicker,
-	ZonePicker,
-	ZonePickerCell,
+	AbstractPaletteImageView,
 	AbstractPaletteView,
 	AbstractTileView,
 	AbstractZoneView,
-	AbstractPaletteImageView,
-	InputRecorder
+	Action,
+	BreakpointButton,
+	Condition,
+	Controls,
+	InputRecorder,
+	InputReplayer,
+	Instruction,
+	PaletteImageView,
+	PopoverZonePicker,
+	SimulatorWindow,
+	TileCell,
+	TileView,
+	ZonePicker,
+	ZonePickerCell,
+	ZoneView
 };

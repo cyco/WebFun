@@ -1,5 +1,5 @@
-import { InputRecorder, SimulatorWindow } from "./components";
-import { MenuItemSeparator, MenuItemState, WindowManager } from "src/ui";
+import { InputRecorder, InputReplayer, SimulatorWindow } from "./components";
+import { MenuItemSeparator, MenuItemState, WindowManager, FilePicker } from "src/ui";
 
 import GameController from "src/app/game-controller";
 import { main as RunGameDataEditor } from "src/editor";
@@ -37,10 +37,32 @@ export default (gameController: GameController) => ({
 			WindowManager.defaultManager.showWindow(simulator);
 		}),
 		SettingsAction("Record Input", () => {
-			const recorder = document.createElement(InputRecorder.tagName) as InputRecorder;
+			let recorder = document.querySelector(InputRecorder.tagName) as InputRecorder;
+			if (recorder) {
+				WindowManager.defaultManager.focus(recorder);
+				return;
+			}
+
+			recorder = document.createElement(InputRecorder.tagName) as InputRecorder;
 			recorder.gameController = gameController;
 			recorder.state = localStorage.prefixedWith("input-recorder");
 			WindowManager.defaultManager.showWindow(recorder);
+		}),
+		SettingsAction("Replay Input", async () => {
+			const [file] = await FilePicker.Pick();
+			if (!file) return;
+			const result = await file.readAsText();
+
+			let replayer: InputReplayer = document.querySelector(InputReplayer.tagName);
+			if (!replayer) {
+				replayer = document.createElement(InputReplayer.tagName) as InputReplayer;
+				replayer.gameController = gameController;
+				WindowManager.defaultManager.showWindow(replayer);
+			}
+
+			replayer.load(result.split(" "));
+			replayer.start();
+			WindowManager.defaultManager.focus(replayer);
 		}),
 		MenuItemSeparator,
 		SettingsAction("Debug Scripts", () => ScriptDebugger.sharedDebugger.show()),

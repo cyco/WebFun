@@ -1,4 +1,4 @@
-import { dispatch, identity } from "src/util";
+import { dispatch, identity, EventTarget } from "src/util";
 
 import { performance } from "src/std";
 
@@ -7,10 +7,16 @@ const TICKLENGTH = 100;
 export const Event = {
 	BeforeTick: "beforeTick",
 	Tick: "tick",
-	AfterTick: "afterTick"
+	AfterTick: "afterTick",
+
+	BeforeRender: "BeforeRender",
+	Render: "Render",
+	AfterRender: "AfterRender"
 };
 
-class Metronome {
+class MetronomeEvent extends CustomEvent<void> {}
+
+class Metronome extends EventTarget {
 	public static Event = Event;
 	public ontick: Function = identity;
 	public onbeforetick: Function = identity;
@@ -23,6 +29,7 @@ class Metronome {
 	private _updatesSuspended: boolean = false;
 
 	constructor() {
+		super();
 		this._nextTick = performance.now();
 	}
 
@@ -42,13 +49,19 @@ class Metronome {
 			if (!this._updatesSuspended) {
 				await this.withSuspendedUpdates(async () => {
 					await this.onbeforetick(1);
+					this.dispatchEvent(new MetronomeEvent(Event.BeforeTick));
 					await this.ontick(1);
+					this.dispatchEvent(new MetronomeEvent(Event.Tick));
 					await this.onaftertick(1);
+					this.dispatchEvent(new MetronomeEvent(Event.AfterTick));
 				});
 			}
 		}
 
+		this.dispatchEvent(new MetronomeEvent(Event.BeforeRender));
 		this.onrender();
+		this.dispatchEvent(new MetronomeEvent(Event.Render));
+		this.dispatchEvent(new MetronomeEvent(Event.AfterRender));
 
 		if (update && (window as any).onMetronomeTick instanceof Function) {
 			this.withSuspendedUpdates(dispatch(async () => await (window as any).onMetronomeTick()));
