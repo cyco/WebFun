@@ -1,0 +1,26 @@
+@import "src/ui/components/abstract-window.scss";
+
+wf-debug-input-replayer {
+	@extend wf-abstract-window;
+	min-width: 140px;
+
+	.content {
+		justify-content: center;
+
+		> :first-child {
+			margin-left: 15px;
+		}
+
+		> :last-child {
+			margin-right: 15px;
+		}
+
+		> * + * {
+			margin-left: 20px;
+		}
+
+		wf-icon-button i {
+			font-size: 1.3em;
+		}
+	}
+}

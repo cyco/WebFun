@@ -1,8 +1,8 @@
 import { Direction, InputManager } from "src/engine/input";
+import { Metronome } from "src/engine";
 
 import { DesktopInputManager } from "src/app/input";
 import Syntax from "./syntax";
-import { identity } from "src/util";
 
 class RecordingInputManager extends InputManager {
 	public readonly implementation: DesktopInputManager;
@@ -172,15 +172,19 @@ class RecordingInputManager extends InputManager {
 		return this.implementation && this.implementation.currentItem;
 	}
 
+	public handleEvent() {
+		this.recordOne();
+	}
+
 	public set engine(s) {
 		if (this.implementation && this.implementation.engine) {
-			this.implementation.engine.metronome.onbeforetick = identity;
+			this.implementation.engine.metronome.removeEventListener(Metronome.Event.BeforeTick, this);
 		}
 
 		this.implementation && (this.implementation.engine = s);
 
 		if (this.implementation && this.implementation.engine) {
-			this.implementation.engine.metronome.onbeforetick = () => this.recordOne();
+			this.implementation.engine.metronome.addEventListener(Metronome.Event.BeforeTick, this);
 		}
 	}
 
