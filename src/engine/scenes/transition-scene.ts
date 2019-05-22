@@ -5,6 +5,7 @@ import { Point } from "src/util";
 import Scene from "./scene";
 import World from "../generation/world";
 import ZoneScene from "./zone-scene";
+import Settings from "src/settings";
 
 class TransitionScene extends Scene {
 	public type = -1;
@@ -69,6 +70,12 @@ class TransitionScene extends Scene {
 	}
 
 	async update(/*ticks*/) {
+		if (Settings.skipTransitions) {
+			this._zoneSwapTime = Infinity;
+			this._swapZones();
+			this._duration = 0;
+		}
+
 		if (this._zoneSwapTime !== Infinity && this.state > this._zoneSwapTime) {
 			// make sure we don't swap again
 			this._zoneSwapTime = Infinity;
