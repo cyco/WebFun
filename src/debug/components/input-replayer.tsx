@@ -72,12 +72,16 @@ class InputReplayer extends AbstractWindow {
 		this.gameController.engine.metronome.tickDuration = 1;
 		this._fastForward.icon = "play";
 		this._fastForward.onclick = () => this.normalizeSpeed();
+		this.gameController.engine.metronome.stop();
+		this.gameController.engine.metronome.start();
 	}
 
 	public normalizeSpeed() {
 		this.gameController.engine.metronome.tickDuration = DefaultTickDuration;
 		this._fastForward.icon = "fast-forward";
 		this._fastForward.onclick = () => this.fastForward();
+		this.gameController.engine.metronome.stop();
+		this.gameController.engine.metronome.start();
 	}
 
 	public stop() {

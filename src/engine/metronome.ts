@@ -6,7 +6,6 @@ export const DefaultTickDuration = 100;
 
 export const Event = {
 	BeforeTick: "beforeTick",
-	Tick: "tick",
 	AfterTick: "afterTick",
 
 	BeforeRender: "BeforeRender",
@@ -16,16 +15,18 @@ export const Event = {
 
 class MetronomeEvent extends CustomEvent<void> {}
 
+const MinimumFrameDuration = 1000 / 60;
+
 class Metronome extends EventTarget {
 	public static Event = Event;
 	public ontick: Function = identity;
-	public onbeforetick: Function = identity;
-	public onaftertick: Function = identity;
 	public onrender: Function = identity;
 	private _stopped: boolean = false;
-	private _mainLoop: number = null;
-	private _nextTick: number;
-	private _tickCallback = (t: number = 0) => this._performTick(t);
+	private _mainLoop: number = 0;
+	private _updateLoop: number = 0;
+	private _nextTick: number = 0;
+	private _tickCallback = (t: number = 0) => this._executeRenderAndUpdateLoop(t);
+	private _renderCallback = () => this._executeRenderLoop();
 	private _updatesSuspended: boolean = false;
 	private _tickDuration = DefaultTickDuration;
 
@@ -37,35 +38,50 @@ class Metronome extends EventTarget {
 	start() {
 		this._stopped = false;
 		this._nextTick = 0;
-		this._performTick();
+
+		if (this.tickDuration < MinimumFrameDuration) {
+			this._executeUpdateLoop();
+			this._executeRenderLoop();
+		} else {
+			this._executeRenderAndUpdateLoop();
+		}
 	}
 
-	async _performTick(now = performance.now()) {
+	private _executeUpdateLoop() {
+		if (this._stopped) return;
+		this._updateLoop = setTimeout(() => this._executeUpdateLoop(), this.tickDuration);
+		this.update();
+	}
+
+	private _executeRenderLoop() {
+		if (this._stopped) return;
+		this._mainLoop = window.requestAnimationFrame(this._renderCallback);
+		this.onrender();
+	}
+
+	async _executeRenderAndUpdateLoop(now = performance.now()) {
 		if (this._stopped) return;
 
 		this._mainLoop = window.requestAnimationFrame(this._tickCallback);
 		const update = now >= this._nextTick;
-		if (update) {
-			this._nextTick = now + this._tickDuration;
-			if (!this._updatesSuspended) {
-				await this.withSuspendedUpdates(async () => {
-					await this.onbeforetick(1);
-					this.dispatchEvent(new MetronomeEvent(Event.BeforeTick));
-					await this.ontick(1);
-					this.dispatchEvent(new MetronomeEvent(Event.Tick));
-					await this.onaftertick(1);
-					this.dispatchEvent(new MetronomeEvent(Event.AfterTick));
-				});
-			}
-		}
+		if (update) await this.update(now);
 
-		this.dispatchEvent(new MetronomeEvent(Event.BeforeRender));
-		this.onrender();
-		this.dispatchEvent(new MetronomeEvent(Event.Render));
-		this.dispatchEvent(new MetronomeEvent(Event.AfterRender));
+		await this.onrender();
 
 		if (update && (window as any).onMetronomeTick instanceof Function) {
 			this.withSuspendedUpdates(dispatch(async () => await (window as any).onMetronomeTick()));
+		}
+	}
+
+	private async update(now = performance.now()) {
+		this._nextTick = now + this._tickDuration;
+
+		if (!this._updatesSuspended) {
+			await this.withSuspendedUpdates(async () => {
+				this.dispatchEvent(new MetronomeEvent(Event.BeforeTick));
+				await this.ontick(1);
+				this.dispatchEvent(new MetronomeEvent(Event.AfterTick));
+			});
 		}
 	}
 
@@ -75,6 +91,7 @@ class Metronome extends EventTarget {
 
 		this._stopped = true;
 		window.cancelAnimationFrame(this._mainLoop);
+		window.clearTimeout(this._updateLoop);
 		this._mainLoop = null;
 	}
 
