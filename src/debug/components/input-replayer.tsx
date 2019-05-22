@@ -5,6 +5,7 @@ import { AbstractWindow, IconButton } from "src/ui/components";
 import { GameController } from "src/app";
 import { ReplayingInputManager } from "src/debug/automation";
 import { InputManager } from "src/engine/input";
+import { DefaultTickDuration } from "src/engine/metronome";
 
 class InputReplayer extends AbstractWindow {
 	public static readonly tagName = "wf-debug-input-replayer";
@@ -17,11 +18,15 @@ class InputReplayer extends AbstractWindow {
 	private _inputManager: InputManager;
 
 	private _record = <IconButton icon="stop" onclick={() => this.stop()} /> as IconButton;
+	private _fastForward = (
+		<IconButton icon="fast-forward" onclick={() => this.fastForward()} />
+	) as IconButton;
 
 	constructor() {
 		super();
 
 		this.content.appendChild(this._record);
+		this.content.appendChild(this._fastForward);
 	}
 
 	public load(input: string[]) {
@@ -61,6 +66,18 @@ class InputReplayer extends AbstractWindow {
 		this._record.icon = "stop";
 		this._record.onclick = () => this.stop();
 		this.install();
+	}
+
+	public fastForward() {
+		this.gameController.engine.metronome.tickDuration = 1;
+		this._fastForward.icon = "play";
+		this._fastForward.onclick = () => this.normalizeSpeed();
+	}
+
+	public normalizeSpeed() {
+		this.gameController.engine.metronome.tickDuration = DefaultTickDuration;
+		this._fastForward.icon = "fast-forward";
+		this._fastForward.onclick = () => this.fastForward();
 	}
 
 	public stop() {

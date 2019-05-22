@@ -2,7 +2,7 @@ import { dispatch, identity, EventTarget } from "src/util";
 
 import { performance } from "src/std";
 
-const TICKLENGTH = 100;
+export const DefaultTickDuration = 100;
 
 export const Event = {
 	BeforeTick: "beforeTick",
@@ -27,6 +27,7 @@ class Metronome extends EventTarget {
 	private _nextTick: number;
 	private _tickCallback = (t: number = 0) => this._performTick(t);
 	private _updatesSuspended: boolean = false;
+	private _tickDuration = DefaultTickDuration;
 
 	constructor() {
 		super();
@@ -45,7 +46,7 @@ class Metronome extends EventTarget {
 		this._mainLoop = window.requestAnimationFrame(this._tickCallback);
 		const update = now >= this._nextTick;
 		if (update) {
-			this._nextTick = now + TICKLENGTH;
+			this._nextTick = now + this._tickDuration;
 			if (!this._updatesSuspended) {
 				await this.withSuspendedUpdates(async () => {
 					await this.onbeforetick(1);
@@ -92,6 +93,14 @@ class Metronome extends EventTarget {
 		} finally {
 			this._updatesSuspended = false;
 		}
+	}
+
+	public set tickDuration(t: number) {
+		this._tickDuration = t;
+	}
+
+	public get tickDuration() {
+		return this._tickDuration;
 	}
 }
 
