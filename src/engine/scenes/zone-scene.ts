@@ -700,10 +700,13 @@ class ZoneScene extends Scene {
 				const worldItem = this.engine.currentWorld.at(
 					this.engine.currentWorld.locationOfZone(this.zone)
 				);
+
 				if (worldItem && worldItem.findItem && worldItem.findItem.id === itemID) {
 					this.zone.solved = true;
 					worldItem.zone.solved = true;
 				}
+
+				hotspot.enabled = false;
 			});
 		}
 	}
@@ -733,18 +736,20 @@ class ZoneScene extends Scene {
 
 		let acceptItem = false;
 
-		for (const hotspot of this.zone.hotspots) {
+		const worldLocation = this.engine.world.locationOfZone(this.zone);
+		if (!worldLocation) {
+			console.warn("Could not find world location for zone.");
+		}
+		const worldItem = this.engine.world.at(worldLocation);
+		if (!worldItem) {
+			console.warn("Could not find world item at", worldLocation);
+		}
+
+		let hotspot: Hotspot;
+		for (hotspot of this.zone.hotspots) {
 			if (!hotspot.enabled) continue;
 			if (!hotspot.location.isEqualTo(location)) continue;
 
-			const worldLocation = this.engine.world.locationOfZone(this.zone);
-			if (!worldLocation) {
-				console.warn("Could not find world location for zone.");
-			}
-			const worldItem = this.engine.world.at(worldLocation);
-			if (!worldItem) {
-				console.warn("Could not find world item at", worldLocation);
-			}
 			const puzzle = this.engine.data.puzzles[worldItem.puzzleIndex];
 			console.log("puzzle: ", this.engine.data.puzzles[worldItem.puzzleIndex]);
 			console.log("or puzzle: ", this.engine.data.puzzles[worldItem.puzzleIndex]);
@@ -754,15 +759,18 @@ class ZoneScene extends Scene {
 				break;
 			}
 
-			continue;
 			console.warn("show text", puzzle.strings[1]);
 			console.warn("drop item", puzzle.item2);
 
 			acceptItem = true;
+			break;
 		}
 
 		if (acceptItem) {
-			// TODO: remove item from inventory
+			this.zone.solved = true;
+			worldItem.zone.solved = true;
+			this.engine.inventory.removeItem(tile);
+			hotspot.enabled = false;
 		}
 
 		// evaluate scripts
