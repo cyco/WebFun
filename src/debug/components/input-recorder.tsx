@@ -48,10 +48,7 @@ class InputRecorder extends AbstractWindow {
 	}
 
 	private showLog() {
-		const result = this._recorder
-			.dumpRecord()
-			.filter((val, idx, arr) => val !== "." || val !== arr[idx + 1])
-			.join(" ");
+		const result = this._recorder.dumpRecord().join(" ");
 		const window = (
 			<Window title="Recorded Input" autosaveName="input-recorder.output" closable={true} />
 		) as Window;
