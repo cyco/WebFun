@@ -32,10 +32,25 @@ class ReplayingInputManager extends InputManager implements EventListenerObject 
 
 	public handleEvent(_: Event) {
 		this._offset++;
+
+		if (this.token === Syntax.Place.Start) {
+			this._offset++;
+			const tileID = this.token.parseInt();
+			this._offset++;
+			this._offset++;
+			const [x, y] = this.token.split("x").map(x => x.parseInt());
+
+			this.placedTile = this.engine.data.tiles[tileID];
+			this.placedTileLocation = new Point(x, y);
+		}
+
 		if (this._offset === this.input.length) console.log("End of Input");
 	}
 
-	public clear(): void {}
+	public clear(): void {
+		this.placedTile = null;
+		this.placedTileLocation = null;
+	}
 
 	public addListeners(): void {
 		this.engine.metronome.addEventListener(Metronome.Event.AfterTick, this);

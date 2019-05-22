@@ -1,3 +1,5 @@
+import { parseInt } from "src/std";
+
 function parseInteger(): number {
 	if (/^0x/i.test(this)) {
 		return parseInt(this.substr(2), 0x10);
@@ -7,7 +9,7 @@ function parseInteger(): number {
 		return parseInt(this.substr(2), 2);
 	}
 
-	return parseInt(this);
+	return parseInt(this, 10);
 }
 
 String.prototype.parseInt = String.prototype.parseInt || parseInteger;
