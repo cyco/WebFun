@@ -198,6 +198,14 @@ class MapScene extends Scene {
 		if (!worldItem || !worldItem.zone) return StringID.None;
 		if (!worldItem.zone.visited && !Settings.revealWorld) return -2;
 
+		const requires = worldItem.requiredItem;
+		const gives = worldItem.findItem;
+		console.log(
+			[requires ? `requires ${requires.name}` : null, gives ? `gives ${gives.name}` : null]
+				.filter(i => i)
+				.join(", ")
+		);
+
 		const typeForTile = (tile: Tile): number => {
 			if (tile.isTool()) return StringID.aTool;
 			if (tile.isPart()) return StringID.aPart;
