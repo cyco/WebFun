@@ -16,8 +16,8 @@ export default {
 		South: "⇣"
 	},
 	Place: {
-		Start: "「",
-		End: "」"
+		Start: "👋",
+		End: ""
 	},
 	Attack: "🔫",
 	Comment: "-",

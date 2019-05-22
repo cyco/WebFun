@@ -26,7 +26,12 @@ class RecordingInputManager extends InputManager {
 	private recordOne() {
 		if (!this.isRecording) return;
 		let direction;
-		if (this.attack) {
+		if (this.placedTile) {
+			const id = this.placedTile.id;
+			const { x, y } = this.placedTileLocation;
+
+			this._records.push(`${Syntax.Place.Start} ${id.toHex(3)} at ${x}x${y}${Syntax.Place.End}`);
+		} else if (this.attack) {
 			this._records.push(Syntax.Attack);
 		} else if (this.walk && this.drag && (direction = this._currentDragDirection())) {
 			this._records.push((Syntax.Drag as any)[direction]);

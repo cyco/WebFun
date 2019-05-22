@@ -7,6 +7,7 @@ if (!global.window) {
 export const {
 	setTimeout,
 	console,
+	parseInt,
 	Array,
 	ArrayBuffer,
 	Promise,
