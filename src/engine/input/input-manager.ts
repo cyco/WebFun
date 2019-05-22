@@ -1,7 +1,6 @@
 import Engine from "../engine";
 import { Point } from "src/util";
 import { Tile } from "../objects";
-import TilePlacedEvent from "./tile-placed-event";
 
 export const Direction = {
 	Up: 1 << 0,
@@ -13,7 +12,6 @@ export const Direction = {
 abstract class InputManager {
 	public mouseDownHandler = (_: Point): void => void 0;
 	public keyDownHandler = (_: KeyboardEvent): void => void 0;
-	public placeTileHandler = (_: TilePlacedEvent): void => void 0;
 	public currentItem: Tile = null;
 
 	public engine: Engine = null;

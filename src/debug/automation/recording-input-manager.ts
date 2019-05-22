@@ -26,14 +26,7 @@ class RecordingInputManager extends InputManager {
 	private recordOne() {
 		if (!this.isRecording) return;
 		let direction;
-		if (false) {
-			// TODO: handle item placement
-			const id = 0;
-			const x = 1;
-			const y = 1;
-
-			this._records.push(`${Syntax.Place.Start}${id.toHex(3)} ${x} ${y}${Syntax.Place.End}`);
-		} else if (this.attack) {
+		if (this.attack) {
 			this._records.push(Syntax.Attack);
 		} else if (this.walk && this.drag && (direction = this._currentDragDirection())) {
 			this._records.push((Syntax.Drag as any)[direction]);
@@ -106,14 +99,6 @@ class RecordingInputManager extends InputManager {
 
 	public get keyDownHandler() {
 		return this.implementation && this.implementation.keyDownHandler;
-	}
-
-	public set placeTileHandler(s) {
-		this.implementation && (this.implementation.placeTileHandler = s);
-	}
-
-	public get placeTileHandler() {
-		return this.implementation && this.implementation.placeTileHandler;
 	}
 
 	public set pause(s) {
