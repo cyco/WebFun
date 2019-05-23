@@ -750,7 +750,6 @@ class ZoneScene extends Scene {
 			if (!hotspot.enabled) continue;
 			if (!hotspot.location.isEqualTo(location)) continue;
 
-			const puzzle = this.engine.data.puzzles[worldItem.puzzleIndex];
 			console.log("puzzle: ", this.engine.data.puzzles[worldItem.puzzleIndex]);
 			console.log("or puzzle: ", this.engine.data.puzzles[worldItem.puzzleIndex]);
 
@@ -758,9 +757,6 @@ class ZoneScene extends Scene {
 				console.warn("play sound no go");
 				break;
 			}
-
-			console.warn("show text", puzzle.strings[1]);
-			console.warn("drop item", puzzle.item2);
 
 			acceptItem = true;
 			break;
@@ -795,10 +791,33 @@ class ZoneScene extends Scene {
 				return true;
 			}
 		}
+
 		return false;
 	}
 
-	private _useTransport(_: Hotspot) {}
+	private _useTransport(htsp: Hotspot) {
+		const engine = this.engine;
+		const counterPart =
+			htsp.type === HotspotType.VehicleTo ? HotspotType.VehicleBack : HotspotType.VehicleTo;
+		const targetZone = engine.data.zones[htsp.arg];
+		const worldLocation = engine.currentWorld.locationOfZone(targetZone);
+		const zoneLocation = targetZone.hotspots.withType(counterPart).first().location;
+
+		const transitionScene = new TransitionScene();
+		transitionScene.type = TransitionScene.TRANSITION_TYPE.ROOM;
+		transitionScene.targetHeroLocation = zoneLocation;
+		transitionScene.targetZone = targetZone;
+		transitionScene.scene = engine.sceneManager.currentScene as ZoneScene;
+		transitionScene.targetWorld = engine.currentWorld;
+		transitionScene.targetZoneLocation = worldLocation;
+		engine.sceneManager.pushScene(transitionScene);
+		engine.temporaryState.enteredByPlane = true;
+
+		engine.currentZone.solved = true;
+		targetZone.solved = true;
+
+		return true;
+	}
 
 	private _useXWing(hotspot: Hotspot) {
 		const engine = this.engine;
