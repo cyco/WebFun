@@ -79,8 +79,9 @@ const makePuzzle = (raw: any, idx: number, data: any) => {
 	return puzzle;
 };
 
-const makeHotspot = (raw: any, _: any): Hotspot => {
+const makeHotspot = (raw: any, idx: number, _: any): Hotspot => {
 	const hotspot = new Hotspot();
+	hotspot.id = idx;
 	hotspot.x = raw.x;
 	hotspot.y = raw.y;
 
@@ -145,7 +146,7 @@ const makeZone = (raw: any, idx: number, data: any) => {
 	zone.size = new Size(raw.width, raw.height);
 	zone.type = ZoneType.fromNumber(raw.zoneType);
 	zone.tileIDs = raw.tileIDs;
-	zone.hotspots = raw.hotspots.map((d: any) => makeHotspot(d, data));
+	zone.hotspots = raw.hotspots.map((d: any, idx: number) => makeHotspot(d, idx, data));
 	zone.npcs = raw.npcs.map((d: any, idx: number) => makeNPC(d, idx, data));
 	zone.goalItems = Array.from(raw.goalItemIDs).map((id: number) => data._tiles[id]);
 	zone.requiredItems = Array.from(raw.requiredItemIDs).map((id: number) => data._tiles[id]);
