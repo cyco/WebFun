@@ -1,5 +1,5 @@
 import { Direction, InputManager } from "src/engine/input";
-import { Metronome } from "src/engine";
+import { Metronome, EngineEvents } from "src/engine";
 
 import { DesktopInputManager } from "src/app/input";
 import Syntax from "./syntax";
@@ -162,18 +162,26 @@ class RecordingInputManager extends InputManager {
 		return this.implementation && this.implementation.currentItem;
 	}
 
-	public handleEvent() {
+	public handleEvent(e: CustomEvent) {
+		if (e.type === EngineEvents.WeaponChanged) {
+			const id = (e.detail as any).weapon.id;
+			this._records.push(`${Syntax.Place.Start} ${id.toHex(3)}${Syntax.Place.End}`);
+			return;
+		}
+
 		this.recordOne();
 	}
 
 	public set engine(s) {
 		if (this.implementation && this.implementation.engine) {
 			this.implementation.engine.metronome.removeEventListener(Metronome.Event.BeforeTick, this);
+			this.implementation.engine.removeEventListener(EngineEvents.WeaponChanged, this);
 		}
 
 		this.implementation && (this.implementation.engine = s);
 
 		if (this.implementation && this.implementation.engine) {
+			this.implementation.engine.addEventListener(EngineEvents.WeaponChanged, this);
 			this.implementation.engine.metronome.addEventListener(Metronome.Event.BeforeTick, this);
 		}
 	}

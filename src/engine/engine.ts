@@ -139,6 +139,8 @@ class Engine extends EventTarget {
 
 		const equipSoundID = this.type.getEquipSound(weaponChar);
 		this.mixer.effectChannel.playSound(equipSoundID);
+
+		this.dispatchEvent(new CustomEvent(Events.WeaponChanged, { detail: { weapon: tile } }));
 	}
 
 	public speak(text: string, place: Point): Promise<void> {
