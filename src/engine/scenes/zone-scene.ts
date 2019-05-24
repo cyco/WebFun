@@ -769,8 +769,6 @@ class ZoneScene extends Scene {
 		}
 
 		if (acceptItem) {
-			this.zone.solved = true;
-			worldItem.zone.solved = true;
 			this.engine.inventory.removeItem(tile);
 			hotspot.enabled = false;
 		}
