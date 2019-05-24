@@ -4,6 +4,7 @@ import Type from "./hotspot-type";
 export { Type };
 
 class Hotspot {
+	public id: number = 0;
 	public x: number = -1;
 	public y: number = -1;
 

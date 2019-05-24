@@ -84,10 +84,10 @@ class NPCLayer extends Component {
 				}
 			},
 			...npcs
-				.map((npc, _) => [
+				.map(npc => [
 					MenuItemSeparator,
 					{
-						title: npc.face.name + (npc.enabled ? "" : " (disabled)")
+						title: `${npc.id.toString()}: ` + npc.face.name + (npc.enabled ? "" : " (disabled)")
 					},
 					{
 						title: "Change Type",
