@@ -448,13 +448,20 @@ class ZoneScene extends Scene {
 				vector.y = 1;
 		}
 
-		const target = npc.position.byAdding(vector);
+		let target = npc.position.byAdding(vector);
 		if (!this.zone.bounds.contains(target)) {
 			return;
 		}
 
 		const targetTile = this.zone.getTile(target);
 		if (targetTile) {
+			return;
+		}
+		if (npc.face.id === 73 && this.zone.id === 0x270) {
+			target = new Point(4, 8, 1);
+			this.zone.setTile(null, npc.position);
+			npc.position = target;
+			this.zone.setTile(npc.face.frames[0].up, npc.position);
 			return;
 		}
 
@@ -700,7 +707,6 @@ class ZoneScene extends Scene {
 				const worldItem = this.engine.currentWorld.at(
 					this.engine.currentWorld.locationOfZone(this.zone)
 				);
-
 				if (worldItem && worldItem.findItem && worldItem.findItem.id === itemID) {
 					this.zone.solved = true;
 					worldItem.zone.solved = true;
