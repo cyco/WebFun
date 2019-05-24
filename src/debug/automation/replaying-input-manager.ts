@@ -36,11 +36,18 @@ class ReplayingInputManager extends InputManager implements EventListenerObject 
 		if (this.token === Syntax.Place.Start) {
 			this._offset++;
 			const tileID = this.token.parseInt();
+			const tile = this.engine.data.tiles[tileID];
 			this._offset++;
+
+			if (this.token !== "at") {
+				this.engine.equip(tile);
+				return;
+			}
+
 			this._offset++;
 			const [x, y] = this.token.split("x").map(x => x.parseInt());
 
-			this.placedTile = this.engine.data.tiles[tileID];
+			this.placedTile = tile;
 			this.placedTileLocation = new Point(x, y);
 		}
 
