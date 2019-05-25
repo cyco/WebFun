@@ -788,6 +788,8 @@ class ZoneScene extends Scene {
 		for (hotspot of this.zone.hotspots) {
 			if (!hotspot.enabled) continue;
 			if (!hotspot.location.isEqualTo(location)) continue;
+			if (![HotspotType.PuzzleNPC, HotspotType.Lock, HotspotType.SpawnLocation].includes(hotspot.type))
+				continue;
 
 			console.log("puzzle: ", this.engine.data.puzzles[worldItem.puzzleIndex]);
 			console.log("or puzzle: ", this.engine.data.puzzles[worldItem.puzzleIndex]);
