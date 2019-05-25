@@ -10,7 +10,7 @@ class MutableNPC extends NPC {
 		this._enabled = npc.enabled;
 		this._character = npc.face;
 		this._position = npc.position;
-		this._unknown1 = npc.unknown1;
+		this._loot = npc.loot;
 		this._unknown2 = npc.unknown2;
 		this._data = npc.unknown3;
 	}
@@ -47,12 +47,12 @@ class MutableNPC extends NPC {
 		this._position = position;
 	}
 
-	get unknown1() {
-		return this._unknown1;
+	get loot() {
+		return this._loot;
 	}
 
-	set unknown1(unknown1) {
-		this._unknown1 = unknown1;
+	set loot(loot) {
+		this._loot = loot;
 	}
 
 	set unknown2(unknown2) {

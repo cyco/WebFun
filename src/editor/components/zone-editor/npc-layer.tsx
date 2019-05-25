@@ -13,9 +13,10 @@ import { Point } from "src/util";
 class NPCLayer extends Component {
 	public static readonly tagName = "wf-npc-layer";
 	public static readonly observedAttributes: string[] = [];
-	public palette: ColorPalette;
-	public characters: Char[];
-	private _zone: Zone;
+	public palette: ColorPalette = null;
+	public tiles: Tile[] = [];
+	public characters: Char[] = [];
+	private _zone: Zone = null;
 
 	protected connectedCallback() {
 		this.draw();
@@ -68,7 +69,7 @@ class NPCLayer extends Component {
 
 	public getMenuForTile(point: Point): Partial<MenuItemInit>[] {
 		const npcs = this._findNPCsAt(point) as MutableNPC[];
-
+		npcs.forEach(npc => console.log(npc.id, npc.face.name, npc.loot, npc.unknown2, npc.unknown3));
 		return [
 			{
 				title: "Place NPC",
@@ -76,7 +77,7 @@ class NPCLayer extends Component {
 					const npc = new MutableNPC();
 					npc.character = this.enemies.first();
 					npc.position = point;
-					npc.unknown1 = 0;
+					npc.loot = -1;
 					npc.unknown2 = 0;
 					npc.data = new Int8Array(Array.Repeat(-1, 32));
 					this.zone.npcs.push(npc);
@@ -89,6 +90,13 @@ class NPCLayer extends Component {
 					{
 						title: `${npc.id.toString()}: ` + npc.face.name + (npc.enabled ? "" : " (disabled)")
 					},
+					...(npc.loot !== -1
+						? [
+								{
+									title: `Drops ${npc.loot ? this.tiles[npc.loot].name : "<puzzle item>"}`
+								}
+						  ]
+						: []),
 					{
 						title: "Change Type",
 						callback: async () => {

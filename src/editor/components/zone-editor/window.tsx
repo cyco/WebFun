@@ -175,6 +175,7 @@ class Window extends AbstractPanel {
 		this._data = d;
 		this._editor.palette = d.palette;
 		this._editor.characters = d.currentData.characters;
+		this._editor.tiles = d.currentData.tiles;
 
 		this._tilePicker.palette = this._data.palette;
 		this._tilePicker.tiles = this._data.currentData.tiles;

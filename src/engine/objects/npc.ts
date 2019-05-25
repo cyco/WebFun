@@ -8,14 +8,14 @@ class NPC {
 	protected _enabled = true;
 	protected _character: Char = null;
 	protected _position: Point = null;
-	protected _unknown1: any;
+	protected _loot: any;
 	protected _unknown2: any;
 	protected _data: any;
 	private _damageTaken: number = 0;
 
 	constructor() {
 		this._data = Array.Repeat(-1, 0x20); // 32 bytes
-		this._unknown1 = 0;
+		this._loot = -1;
 		this._unknown2 = 0;
 	}
 
@@ -35,8 +35,8 @@ class NPC {
 		return this._character;
 	}
 
-	get unknown1() {
-		return this._unknown1;
+	get loot() {
+		return this._loot;
 	}
 
 	get unknown2() {
