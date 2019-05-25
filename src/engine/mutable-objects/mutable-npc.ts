@@ -11,7 +11,7 @@ class MutableNPC extends NPC {
 		this._character = npc.face;
 		this._position = npc.position;
 		this._loot = npc.loot;
-		this._unknown2 = npc.unknown2;
+		this._dropsLoot = npc.dropsLoot;
 		this._data = npc.unknown3;
 	}
 
@@ -55,12 +55,12 @@ class MutableNPC extends NPC {
 		this._loot = loot;
 	}
 
-	set unknown2(unknown2) {
-		this._unknown2 = unknown2;
+	set dropsLoot(dropsLoot) {
+		this._dropsLoot = dropsLoot;
 	}
 
-	get unknown2() {
-		return this._unknown2;
+	get dropsLoot() {
+		return this._dropsLoot;
 	}
 
 	get data() {

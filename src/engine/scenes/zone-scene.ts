@@ -11,6 +11,7 @@ import {
 	Char,
 	Puzzle
 } from "src/engine/objects";
+import { MutableHotspot } from "src/engine/mutable-objects";
 import { Direction as InputDirection } from "src/engine/input";
 import { Sprite } from "../rendering";
 import { WorldItem } from "src/engine/generation";
@@ -431,7 +432,39 @@ class ZoneScene extends Scene {
 		if (!npc.alive) {
 			this.zone.setTile(null, npc.position);
 			npc.enabled = false;
+
+			if (npc.dropsLoot) this._dropLoot(npc);
 		}
+	}
+
+	private _dropLoot(npc: NPC) {
+		const hotspot = new MutableHotspot();
+		hotspot.type = HotspotType.CrateItem;
+		hotspot.enabled = true;
+		hotspot.location = npc.position;
+
+		let itemId = -1;
+		if (npc.loot > 0) itemId = npc.loot - 1;
+		else {
+			const hotspots = this._zone.hotspots
+				.withType(HotspotType.TriggerLocation)
+				.filter(htsp => htsp.enabled);
+
+			if (!hotspots.length) return;
+
+			const hotspot = hotspots.first();
+			itemId = hotspot.arg;
+			hotspot.enabled = false;
+		}
+
+		if (itemId === -1) return;
+
+		hotspot.arg = itemId;
+
+		this.zone.hotspots.push(hotspot);
+
+		const tile = this.engine.data.tiles[hotspot.arg];
+		this.zone.setTile(tile, hotspot.location.x, hotspot.location.y, 1);
 	}
 
 	private _moveNPCs() {
