@@ -448,7 +448,7 @@ class ZoneScene extends Scene {
 		else {
 			const hotspots = this._zone.hotspots
 				.withType(HotspotType.TriggerLocation)
-				.filter(htsp => htsp.enabled);
+				.filter(htsp => htsp.arg > 0);
 
 			if (!hotspots.length) return;
 
@@ -751,10 +751,11 @@ class ZoneScene extends Scene {
 	}
 
 	private async _handlePlacedTile(): Promise<ScriptResult> {
-		const inputManager = this.engine.inputManager;
+		const engine = this.engine;
+		const inputManager = engine.inputManager;
 		const tile = inputManager.placedTile;
 		const location = inputManager.placedTileLocation;
-		const heroLocation = this.engine.hero.location;
+		const heroLocation = engine.hero.location;
 
 		if (!tile || !location) {
 			return ScriptResult.Done;
@@ -763,23 +764,23 @@ class ZoneScene extends Scene {
 		if (tile.id === Yoda.ItemIDs.ThermalDetonator) {
 			const scene = new DetonatorScene();
 			scene.detonatorLocation = location;
-			this.engine.inputManager.clear();
-			this.engine.sceneManager.pushScene(scene);
+			engine.inputManager.clear();
+			engine.sceneManager.pushScene(scene);
 			return ScriptResult.Void;
 		}
 
 		if (location.distanceTo(heroLocation) > Math.sqrt(2)) {
-			this.engine.inputManager.clear();
+			engine.inputManager.clear();
 			return ScriptResult.Done;
 		}
 
 		let acceptItem = false;
 
-		const worldLocation = this.engine.world.locationOfZone(this.zone);
+		const worldLocation = engine.world.locationOfZone(this.zone);
 		if (!worldLocation) {
 			console.warn("Could not find world location for zone.");
 		}
-		const worldItem = this.engine.world.at(worldLocation);
+		const worldItem = engine.world.at(worldLocation);
 		if (!worldItem) {
 			console.warn("Could not find world item at", worldLocation);
 		}
@@ -791,8 +792,8 @@ class ZoneScene extends Scene {
 			if (![HotspotType.PuzzleNPC, HotspotType.Lock, HotspotType.SpawnLocation].includes(hotspot.type))
 				continue;
 
-			console.log("puzzle: ", this.engine.data.puzzles[worldItem.puzzleIndex]);
-			console.log("or puzzle: ", this.engine.data.puzzles[worldItem.puzzleIndex]);
+			console.log("puzzle: ", engine.data.puzzles[worldItem.puzzleIndex]);
+			console.log("or puzzle: ", engine.data.puzzles[worldItem.puzzleIndex]);
 
 			if (tile !== worldItem.requiredItem) {
 				console.warn("play sound no go");
@@ -804,8 +805,18 @@ class ZoneScene extends Scene {
 		}
 
 		if (acceptItem) {
-			this.engine.inventory.removeItem(tile);
+			engine.inventory.removeItem(tile);
 			hotspot.enabled = false;
+
+			if (hotspot.type === HotspotType.Lock || hotspot.type === HotspotType.SpawnLocation) {
+				this.zone.solved = true;
+				worldItem.zone.solved = true;
+			}
+
+			if (hotspot.type === HotspotType.SpawnLocation) {
+				// TODO: speak
+				this.engine.dropItem(engine.data.tiles[worldItem.findItem.id], location);
+			}
 		}
 
 		// evaluate scripts
