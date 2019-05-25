@@ -8,12 +8,12 @@ describeInstruction("MoveHeroBy", (execute, engine) => {
 
 		const instruction = new Instruction({});
 		instruction._opcode = MoveHeroBy.Opcode;
-		instruction._arguments = [-1, 2];
+		instruction._arguments = [-1, 2, -1, -1];
 
 		await execute(instruction);
 
 		expect(engine.hero.location.x).toBe(2);
-		expect(engine.hero.location.y).toBe(3);
+		expect(engine.hero.location.y).toBe(4);
 
 		done();
 	});
