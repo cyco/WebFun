@@ -47,8 +47,10 @@ class ReplayingInputManager extends InputManager implements EventListenerObject 
 			this._offset++;
 			const [x, y] = this.token.split("x").map(x => x.parseInt());
 
-			this.placedTile = tile;
-			this.placedTileLocation = new Point(x, y);
+			if (this.engine.inventory.contains(tile)) {
+				this.placedTile = tile;
+				this.placedTileLocation = new Point(x, y);
+			}
 		}
 
 		if (this._offset === this.input.length) console.log("End of Input");
