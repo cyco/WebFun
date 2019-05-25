@@ -13,7 +13,7 @@ describe("WebFun.Engine.Objects.NPC", () => {
 		expect(subject.enabled).toBeTrue();
 		expect(subject.face).toBeNull();
 		expect(subject.loot).toBe(-1);
-		expect(subject.unknown2).toBe(0);
+		expect(subject.dropsLoot).toBeFalse();
 		expect(subject.unknown3).toBeArray();
 		expect(subject.position).toBeNull();
 	});
