@@ -181,6 +181,14 @@ class View extends Component implements EventListenerObject {
 	public get characters() {
 		return this._npcs.characters;
 	}
+
+	public set tiles(t) {
+		this._npcs.tiles = t;
+	}
+
+	public get tiles() {
+		return this._npcs.tiles;
+	}
 }
 
 export default View;

@@ -133,6 +133,9 @@ const makeNPC = (raw: any, idx: number, data: any) => {
 	npc.id = idx;
 	npc.character = data._characters[raw.character];
 	npc.position = new Point(raw.x, raw.y, Zone.Layer.Object);
+	npc.loot = raw.loot;
+	npc.unknown2 = raw.unknown2;
+	npc.data = raw.unknown;
 
 	return npc;
 };
