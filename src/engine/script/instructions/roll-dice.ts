@@ -1,4 +1,5 @@
 import { Result, Type } from "../types";
+import { randmod } from "src/util";
 
 import Action from "../../objects/action";
 import Engine from "../../engine";
@@ -11,7 +12,7 @@ export default {
 	Implementation: async (instruction: Instruction, _: Engine, action: Action): Promise<Result> => {
 		const args = instruction.arguments;
 		const zone = action.zone;
-		zone.random = 1 + (Math.round(Math.random() * args[0]) % args[0]);
+		zone.random = 1 + randmod(args[0]);
 		return Result.Void;
 	}
 };
