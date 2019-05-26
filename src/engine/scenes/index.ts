@@ -7,6 +7,7 @@ import Scene from "./scene";
 import SpeechScene from "./speech-scene";
 import TransitionScene from "./transition-scene";
 import ZoneScene from "./zone-scene";
+import WinScene from "./win-scene";
 
 export {
 	LoseScene,
@@ -17,5 +18,6 @@ export {
 	Scene,
 	SpeechScene,
 	TransitionScene,
-	ZoneScene
+	ZoneScene,
+	WinScene
 };
