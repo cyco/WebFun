@@ -356,6 +356,10 @@ class ZoneScene extends Scene {
 		}
 
 		if (!zoneLocation) return;
+		const worldItem = world.at(zoneLocation);
+		if (!worldItem || worldItem.zone !== engine.currentZone) {
+			return;
+		}
 
 		const targetZoneLocation = Point.add(zoneLocation, zoneDirection);
 		const targetZone = world.getZone(targetZoneLocation);
