@@ -15,21 +15,61 @@ import Loader, { LoaderEventDetails } from "./loader";
 import { LoseScene, ZoneScene } from "src/engine/scenes";
 import { MainMenu, MainWindow } from "./windows";
 import { Planet, WorldSize } from "src/engine/types";
+import { Renderer } from "src/engine/rendering";
+import { InputManager } from "src/engine/input";
 
-import { CanvasRenderer } from "./rendering";
 import { ConditionImplementations as Conditions } from "src/engine/script/conditions";
-import { DOMAudioChannel } from "./audio";
-import { DesktopInputManager } from "./input";
 import GameState from "../engine/game-state";
-import { GameTypeYoda } from "src/engine";
+import { GameType, GameTypeYoda } from "src/engine";
 import { InstructionImplementations as Instructions } from "src/engine/script/instructions";
-import { Mixer } from "src/engine/audio";
+import { Mixer, Channel } from "src/engine/audio";
 import { PaletteAnimation } from "src/engine/rendering";
 import { Reader } from "src/engine/save-game";
 import { ScriptExecutor } from "src/engine/script";
 import Settings from "src/settings";
+import { DummyInputManager, DummyRenderer, DummyChannel } from "src/engine";
+
 export const Event = {
 	DidLoadData: "didLoadData"
+};
+
+export interface Factories {
+	Engine: (type: GameType) => Engine;
+	Channel: () => Channel<HTMLAudioElement>;
+	Renderer: (_: HTMLCanvasElement) => Renderer;
+	InputManager: (view: SceneView) => InputManager;
+	Metronome: () => Metronome;
+	Inventory: () => Inventory;
+	ScriptExecutor: (
+		engine: Engine,
+		instructions: typeof Instructions,
+		conditions: typeof Conditions
+	) => ScriptExecutor;
+	Hero: () => Hero;
+	Loader: () => Loader;
+	Mixer: (
+		provider: (id: number) => HTMLAudioElement,
+		musicChannel: Channel<HTMLAudioElement>,
+		effectChannel: Channel<HTMLAudioElement>
+	) => Mixer<HTMLAudioElement>;
+}
+
+const DefaultFactories = {
+	Engine: (type: GameType) => new Engine(type),
+	Metronome: () => new Metronome(),
+	Inventory: () => new Inventory(),
+	ScriptExecutor: (engine: Engine, instructions: typeof Instructions, conditions: typeof Conditions) =>
+		new ScriptExecutor(engine, instructions, conditions),
+	Hero: () => new Hero(),
+	Mixer: (
+		provider: (id: number) => HTMLAudioElement,
+		musicChannel: Channel<HTMLAudioElement>,
+		effectChannel: Channel<HTMLAudioElement>
+	) => new Mixer(provider, musicChannel, effectChannel),
+	InputManager: () => new DummyInputManager(),
+	Renderer: () => new DummyRenderer(),
+	Channel: () => new DummyChannel(),
+	Loader: () => new Loader()
 };
 
 class GameController extends EventTarget {
@@ -37,12 +77,15 @@ class GameController extends EventTarget {
 	public settings: typeof Settings = Settings;
 	public data: GameData;
 	public palette: ColorPalette;
+	public readonly factories: Factories;
 	private _window: MainWindow = <MainWindow menu={new MainMenu(this)} /> as MainWindow;
 	private _sceneView: SceneView = <SceneView /> as SceneView;
 	private _engine: Engine;
 
-	constructor() {
+	constructor(options: Partial<Factories> = {}) {
 		super();
+
+		this.factories = Object.assign({}, options, DefaultFactories);
 
 		this._engine = this._buildEngine();
 		this._sceneView.manager.engine = this._engine;
@@ -50,26 +93,25 @@ class GameController extends EventTarget {
 	}
 
 	private _buildEngine() {
-		const engine = new Engine(GameTypeYoda);
-		const Renderer = this._determineRenderer();
+		const engine = this.factories.Engine(GameTypeYoda);
 
-		const effectsChannel = new DOMAudioChannel();
+		const effectsChannel = this.factories.Channel();
 		effectsChannel.muted = !Settings.playSound;
-		const musicChannel = new DOMAudioChannel();
+		const musicChannel = this.factories.Channel();
 		musicChannel.muted = !Settings.playMusic;
-		engine.mixer = new Mixer(
+		engine.mixer = this.factories.Mixer(
 			(id: number) => this.data.sounds[id].representation,
 			musicChannel,
 			effectsChannel
 		);
 
-		engine.renderer = new Renderer(this._sceneView.canvas);
+		engine.renderer = this.factories.Renderer(this._sceneView.canvas);
 		engine.sceneManager = this._sceneView.manager;
-		engine.inputManager = new DesktopInputManager(this._sceneView);
-		engine.metronome = new Metronome();
-		engine.inventory = new Inventory();
-		engine.scriptExecutor = new ScriptExecutor(engine, Instructions, Conditions);
-		engine.hero = new Hero();
+		engine.inputManager = this.factories.InputManager(this._sceneView);
+		engine.metronome = this.factories.Metronome();
+		engine.inventory = this.factories.Inventory();
+		engine.scriptExecutor = this.factories.ScriptExecutor(engine, Instructions, Conditions);
+		engine.hero = this.factories.Hero();
 		engine.hero.addEventListener(Hero.Event.HealthChanged, () => {
 			if (engine.hero.health > 0) {
 				return;
@@ -80,10 +122,6 @@ class GameController extends EventTarget {
 		});
 
 		return engine;
-	}
-
-	private _determineRenderer(): typeof CanvasRenderer.Renderer {
-		return CanvasRenderer.Renderer;
 	}
 
 	public show(windowManager: WindowManager = WindowManager.defaultManager) {
@@ -260,7 +298,7 @@ class GameController extends EventTarget {
 			windowContent.textContent = "";
 			windowContent.appendChild(loadingView);
 
-			const loader = new Loader();
+			const loader = this.factories.Loader();
 			loader.onfail = event => reject(event);
 			loader.onprogress = ({ detail: { progress } }) => (loadingView.progress = progress);
 			loader.onloadsetupimage = ({ detail: { pixels, palette } }) => {
