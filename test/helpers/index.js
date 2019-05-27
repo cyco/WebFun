@@ -4,7 +4,7 @@ import "src/extension";
 import { console, global } from "src/std";
 import { describeComponent, fdescribeComponent, xdescribeComponent } from "./component";
 import "./matchers";
-import { buildFixtureUrl, getFixtureData } from "./fixture-loading";
+import { buildFixtureUrl, getFixtureData, getFixtureContent } from "./fixture-loading";
 
 import render from "./render";
 import { ComponentJSXRenderer } from "src/ui";
@@ -23,3 +23,5 @@ global.WebFunJSX = new ComponentJSXRenderer();
 console.assert = (condition, message) => {
 	if (!condition) throw message;
 };
+
+export { getFixtureContent };

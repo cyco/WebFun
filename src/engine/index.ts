@@ -15,6 +15,12 @@ import Yoda from "./yoda";
 import readGameDataFile from "./file-format";
 import { Scene } from "./scenes";
 
+import {
+	InputManager as DummyInputManager,
+	Renderer as DummyRenderer,
+	Channel as DummyChannel
+} from "./dummy-interface";
+
 export {
 	SaveState,
 	GameType,
@@ -34,5 +40,8 @@ export {
 	readGameDataFile,
 	SaveGameReader,
 	SaveGameWriter,
-	Scene
+	Scene,
+	DummyInputManager,
+	DummyRenderer,
+	DummyChannel
 };
