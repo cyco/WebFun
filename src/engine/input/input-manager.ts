@@ -2,49 +2,41 @@ import Engine from "../engine";
 import { Point } from "src/util";
 import { Tile } from "../objects";
 
-export const Direction = {
-	Up: 1 << 0,
-	Down: 1 << 1,
-	Left: 1 << 2,
-	Right: 1 << 3
-};
-
-abstract class InputManager {
-	public mouseDownHandler = (_: Point): void => void 0;
-	public keyDownHandler = (_: KeyboardEvent): void => void 0;
-	public currentItem: Tile = null;
-
-	public engine: Engine = null;
+interface InputManager {
+	mouseDownHandler: (_: Point) => void;
+	keyDownHandler: (_: KeyboardEvent) => void;
+	currentItem: Tile;
+	engine: Engine;
 
 	// zone scene
-	public readonly directions: number;
-	public readonly walk: boolean;
-	public readonly drag: boolean;
-	public readonly attack: boolean;
+	readonly directions: number;
+	readonly walk: boolean;
+	readonly drag: boolean;
+	readonly attack: boolean;
 
-	public placedTile: Tile;
-	public placedTileLocation: Point;
-	public abstract clear(): void;
+	placedTile: Tile;
+	placedTileLocation: Point;
+	clear(): void;
 
 	// zone scene / locator sceen
-	public readonly locator: boolean;
+	readonly locator: boolean;
 
 	// zone scene / pause sceen
-	public readonly pause: boolean;
+	readonly pause: boolean;
 
 	// pickup scene
-	public readonly pickUp: boolean;
+	readonly pickUp: boolean;
 
 	// speech scene
-	public readonly scrollDown: boolean;
-	public readonly scrollUp: boolean;
-	public readonly endDialog: boolean;
+	readonly scrollDown: boolean;
+	readonly scrollUp: boolean;
+	readonly endDialog: boolean;
 
-	abstract readonly mouseLocationInView: Point;
+	readonly mouseLocationInView: Point;
 
-	public abstract addListeners(): void;
+	addListeners(): void;
 
-	public abstract removeListeners(): void;
+	removeListeners(): void;
 }
 
 export default InputManager;

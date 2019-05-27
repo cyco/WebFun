@@ -3,8 +3,13 @@ import { Metronome } from "src/engine";
 import { Tile } from "src/engine/objects";
 import { Point } from "src/util";
 import Syntax from "./syntax";
+import { Engine } from "src/engine";
 
-class ReplayingInputManager extends InputManager implements EventListenerObject {
+class ReplayingInputManager implements InputManager, EventListenerObject {
+	public mouseDownHandler: (_: Point) => void;
+	public keyDownHandler: (_: KeyboardEvent) => void;
+	public currentItem: Tile;
+	public engine: Engine;
 	public isReplaying: boolean = false;
 	public readonly input: string[];
 	public readonly mouseLocationInView = new Point(0, 0);
@@ -21,8 +26,6 @@ class ReplayingInputManager extends InputManager implements EventListenerObject 
 	private _offset = 0;
 
 	constructor(input: string[]) {
-		super();
-
 		this.input = input;
 	}
 

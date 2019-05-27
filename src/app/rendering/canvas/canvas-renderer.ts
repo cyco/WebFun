@@ -6,12 +6,11 @@ import { Tile } from "src/engine/objects";
 const TILE_WIDTH = Tile.WIDTH;
 const TILE_HEIGHT = Tile.HEIGHT;
 
-class CanvasRenderer extends Renderer {
+class CanvasRenderer implements Renderer {
 	protected _canvas: HTMLCanvasElement;
 	protected _ctx: CanvasRenderingContext2D;
 
 	constructor(canvas: HTMLCanvasElement) {
-		super();
 		this._canvas = canvas;
 
 		this._ctx = canvas.getContext("2d");
@@ -75,6 +74,10 @@ class CanvasRenderer extends Renderer {
 		this._ctx.fillText(text, location.x, location.y + 13 / 2);
 		this._ctx.restore();
 	}
+
+	redisplayTile(_x: number, _y: number): void {}
+	redisplayRect(_x: number, _y: number, _width: number, _height: number): void {}
+	redisplay(): void {}
 }
 
 export default CanvasRenderer;

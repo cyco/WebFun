@@ -1,10 +1,15 @@
 import { Direction, InputManager } from "src/engine/input";
 import { KeyEvent, Point, Rectangle, Size } from "src/util";
+import { Engine } from "src/engine";
 
 import { Tile } from "src/engine/objects";
 import { document } from "src/std/dom";
 
-class DesktopInputManager extends InputManager implements EventListenerObject {
+class DesktopInputManager implements InputManager, EventListenerObject {
+	public mouseDownHandler: (_: Point) => void = () => void 0;
+	public keyDownHandler: (_: KeyboardEvent) => void = () => void 0;
+	public currentItem: Tile;
+	public engine: Engine;
 	private _element: HTMLElement;
 	private _lastMouse: Point;
 
@@ -25,8 +30,6 @@ class DesktopInputManager extends InputManager implements EventListenerObject {
 	public drag: boolean;
 
 	constructor(gameViewElement: HTMLElement) {
-		super();
-
 		this._element = gameViewElement;
 		this._lastMouse = new Point(NaN, NaN);
 	}

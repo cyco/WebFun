@@ -16,7 +16,7 @@ import { Direction as InputDirection } from "src/engine/input";
 import { Sprite } from "../rendering";
 import { WorldItem } from "src/engine/generation";
 import { Yoda } from "src/engine";
-import AbstractRenderer from "src/engine/rendering/abstract-renderer";
+import { Renderer } from "src/engine/rendering";
 import DetonatorScene from "./detonator-scene";
 import Engine from "src/engine/engine";
 import Hero from "src/engine/hero";
@@ -82,7 +82,7 @@ class ZoneScene extends Scene {
 		this._evaluateZoneChangeHotspots();
 	}
 
-	public render(renderer: AbstractRenderer) {
+	public render(renderer: Renderer) {
 		const bulletTiles: Sprite[] = [];
 		const hero = this.engine.hero;
 		if (hero.isAttacking && hero.weapon) {

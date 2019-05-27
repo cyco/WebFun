@@ -1,6 +1,6 @@
 import { Channel } from "src/engine/audio";
 
-class DOMAudioChannel extends Channel<HTMLAudioElement> {
+class DOMAudioChannel implements Channel<HTMLAudioElement> {
 	private _sounds: HTMLAudioElement[] = [];
 	private _muted = false;
 	private _volume = 1.0;
@@ -42,6 +42,18 @@ class DOMAudioChannel extends Channel<HTMLAudioElement> {
 
 	get muted() {
 		return this._muted;
+	}
+
+	mute(): void {
+		this.muted = true;
+	}
+
+	unmute(): void {
+		this.muted = false;
+	}
+
+	isMuted(): boolean {
+		return this.muted;
 	}
 }
 
