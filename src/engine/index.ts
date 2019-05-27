@@ -14,34 +14,27 @@ import Story from "./story";
 import Yoda from "./yoda";
 import readGameDataFile from "./file-format";
 import { Scene } from "./scenes";
-
-import {
-	InputManager as DummyInputManager,
-	Renderer as DummyRenderer,
-	Channel as DummyChannel
-} from "./dummy-interface";
+import Loader from "./loader";
 
 export {
-	SaveState,
+	ColorPalette,
+	Engine,
+	EngineEvents,
+	GameData,
 	GameType,
 	GameTypeIndy,
 	GameTypeYoda,
-	EngineEvents,
-	Engine,
-	ColorPalette,
-	GameData,
 	Hero,
 	Inventory,
+	Loader,
 	Metronome,
 	PersistentState,
-	SceneManager,
-	Story,
-	Yoda,
 	readGameDataFile,
 	SaveGameReader,
 	SaveGameWriter,
+	SaveState,
 	Scene,
-	DummyInputManager,
-	DummyRenderer,
-	DummyChannel
+	SceneManager,
+	Story,
+	Yoda
 };
