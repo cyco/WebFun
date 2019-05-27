@@ -1,7 +1,7 @@
 import { getFixtureContent } from "test/helpers";
 import { Yoda } from "src/engine/type";
 
-describe("WebFun.Acceptance.Gameplay", () => {
+xdescribe("WebFun.Acceptance.Gameplay", () => {
 	let rawData;
 	beforeAll(async done => {
 		rawData = await loadGameData(Yoda);
