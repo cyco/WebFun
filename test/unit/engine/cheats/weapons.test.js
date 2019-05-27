@@ -1,9 +1,9 @@
 import { Yoda } from "src/engine";
-import WeaponsCheat from "src/engine/cheats/weapons";
+import Weapons from "src/engine/cheats/weapons";
 
-describe("WeaponsCheat", () => {
+describe("WebFun.Unit.Engine.Cheats.Weapons", () => {
 	let subject;
-	beforeEach(() => (subject = new WeaponsCheat()));
+	beforeEach(() => (subject = new Weapons()));
 
 	it("is activated by the code `gojedi`", () => {
 		expect(subject.code).toEqual("gojedi");

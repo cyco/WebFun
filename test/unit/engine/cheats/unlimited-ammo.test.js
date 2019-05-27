@@ -1,8 +1,8 @@
-import UnlimitedAmmoCheat from "src/engine/cheats/unlimited-ammo";
+import UnlimitedAmmo from "src/engine/cheats/unlimited-ammo";
 
-describe("UnlimitedAmmoCheat", () => {
+describe("WebFun.Unit.Engine.Cheats.UnlimitedAmmo", () => {
 	let subject;
-	beforeEach(() => (subject = new UnlimitedAmmoCheat()));
+	beforeEach(() => (subject = new UnlimitedAmmo()));
 
 	it("is activated by the code `gohan`", () => {
 		expect(subject.code).toEqual("gohan");

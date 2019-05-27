@@ -1,8 +1,8 @@
-import InvincibilityCheat from "src/engine/cheats/invincibility";
+import Invincibility from "src/engine/cheats/invincibility";
 
-describe("InvincibilityCheat", () => {
+describe("WebFun.Unit.Engine.Cheats.Invincibility", () => {
 	let subject;
-	beforeEach(() => (subject = new InvincibilityCheat()));
+	beforeEach(() => (subject = new Invincibility()));
 
 	it("is activated by the code `goyoda`", () => {
 		expect(subject.code).toEqual("goyoda");
