@@ -15,7 +15,6 @@ import SaveGameInspector from "src/editor/inspectors/save-game-inspector";
 import Settings from "src/settings";
 import { Yoda } from "src/engine/type";
 import { initialize as initializeDebug } from "src/debug";
-import GameControllerConfiguration from "./game-controller-configuration";
 
 declare global {
 	interface Window {
@@ -44,7 +43,7 @@ const main = async () => {
 	ComponentRegistry.sharedRegistry.registerComponents(WindowComponents as any);
 
 	if (true) {
-		const gameController = new GameController(GameControllerConfiguration);
+		const gameController = new GameController();
 		gameController.newStory();
 		gameController.show();
 

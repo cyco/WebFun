@@ -20,6 +20,13 @@ import { World } from "./generation";
 import { SpeechScene, PickupScene } from "src/engine/scenes";
 import { Point } from "src/util";
 import Settings from "src/settings";
+import Loader from "./loader";
+
+import { ConditionImplementations as Conditions } from "./script/conditions";
+import { InstructionImplementations as Instructions } from "./script/instructions";
+
+import Interface from "./interface";
+import DummyInterface from "./dummy-interface";
 
 export { Events };
 
@@ -42,12 +49,35 @@ class Engine extends EventTarget {
 	public temporaryState: any = null;
 	public gameState: GameState = GameState.Stopped;
 	public camera: Camera = new Camera();
+	public loader: Loader = null;
 	private _currentZone: Zone = null;
 	private _currentWorld: World = null;
 	private _updateInProgress: boolean = false;
 
-	constructor(type: Type) {
+	constructor(type: Type, ifce: Partial<Interface> = {}) {
 		super();
+
+		ifce = Object.assign({}, DummyInterface, ifce) as Interface;
+
+		this.loader = ifce.Loader();
+
+		const effectsChannel = ifce.Channel();
+		effectsChannel.muted = !Settings.playSound;
+		const musicChannel = ifce.Channel();
+		musicChannel.muted = !Settings.playMusic;
+		this.mixer = ifce.Mixer(
+			(id: number) => this.data.sounds[id].representation,
+			musicChannel,
+			effectsChannel
+		);
+
+		this.renderer = ifce.Renderer(null);
+		this.sceneManager = ifce.SceneManager();
+		this.inputManager = ifce.InputManager(null);
+		this.metronome = ifce.Metronome();
+		this.inventory = ifce.Inventory();
+		this.scriptExecutor = ifce.ScriptExecutor(this, Instructions, Conditions);
+		this.hero = ifce.Hero();
 
 		this.type = type;
 		// TODO: remove state
@@ -88,6 +118,7 @@ class Engine extends EventTarget {
 	update(ticks: number) {
 		if (this._updateInProgress) console.warn("Reentering update!");
 		this._updateInProgress = true;
+
 		return this.sceneManager
 			.update(ticks)
 			.catch(e => console.warn("Update failed", e))

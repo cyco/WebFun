@@ -4,6 +4,7 @@ import { GameData, GameTypeYoda, readGameDataFile } from "src/engine";
 import { ColorPalette } from "src/engine/rendering";
 import { DOMSoundLoader } from "./audio";
 import Settings from "src/settings";
+import { Loader as LoaderInterface } from "src/engine";
 
 export const Events = {
 	Progress: "progress",
@@ -14,12 +15,7 @@ export const Events = {
 
 export const StageCount = 9;
 
-export declare interface LoaderEventDetails {
-	data: GameData;
-	palette: ColorPalette;
-}
-
-class Loader extends EventTarget {
+class Loader extends EventTarget implements LoaderInterface {
 	public onfail: (_: CustomEvent) => void;
 	public onprogress: (_: CustomEvent) => void;
 	public onloadsetupimage: (_: CustomEvent) => void;
@@ -33,6 +29,7 @@ class Loader extends EventTarget {
 
 	constructor() {
 		super();
+		console.log("construct loader");
 
 		this._dataUrl = Settings.url.yoda.data;
 		this._paletteUrl = Settings.url.yoda.palette;
@@ -42,6 +39,7 @@ class Loader extends EventTarget {
 	}
 
 	public load() {
+		console.log("load");
 		const loader = new FileLoader(this._dataUrl);
 		loader.onprogress = ({ detail: { progress } }) => this._progress(0, progress);
 		loader.onfail = reason => this._fail(reason);
