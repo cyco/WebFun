@@ -1,17 +1,19 @@
 import { Direction, InputManager } from "src/engine/input";
 import { Metronome, EngineEvents } from "src/engine";
+import { Tile } from "src/engine/objects";
+import { Point } from "src/util";
 
 import { DesktopInputManager } from "src/app/input";
 import Syntax from "./syntax";
 
-class RecordingInputManager extends InputManager {
+class RecordingInputManager implements InputManager {
+	public placedTile: Tile;
+	public placedTileLocation: Point;
 	public readonly implementation: DesktopInputManager;
 	private _records: string[] = [];
 	public isRecording: boolean = false;
 
 	constructor(implementation: DesktopInputManager) {
-		super();
-
 		this.implementation = implementation;
 	}
 

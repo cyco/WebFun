@@ -1,4 +1,4 @@
-import AbstractRenderer from "../rendering/abstract-renderer";
+import { Renderer } from "../rendering";
 import Scene from "./scene";
 import { Tile } from "src/engine/objects";
 
@@ -23,7 +23,7 @@ class PauseScene extends Scene {
 		this.engine.inputManager.clear();
 	}
 
-	render(renderer: AbstractRenderer): void {
+	render(renderer: Renderer): void {
 		for (let x = 0; x < 9; x++) {
 			for (let y = 0; y < 9; y++) {
 				// TODO: remove access to protected method

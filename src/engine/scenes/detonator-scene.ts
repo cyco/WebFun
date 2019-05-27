@@ -1,4 +1,4 @@
-import AbstractRenderer from "../rendering/abstract-renderer";
+import RendererInterface from "../rendering/renderer";
 import Engine from "../engine";
 import { Point } from "src/util";
 import { Renderer } from "src/app/rendering/canvas";
@@ -57,7 +57,7 @@ class DetonatorScene extends Scene {
 		}
 	}
 
-	public render(r: AbstractRenderer) {
+	public render(r: RendererInterface) {
 		const renderer = r as Renderer;
 		for (let i = 0; i <= this._ticks && i < this._detonatorFrames.length; i++) {
 			const frame = this._detonatorFrames[i];

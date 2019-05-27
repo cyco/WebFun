@@ -2,7 +2,7 @@ import { CheatCodeInput, Invincibility, RequiredItems, UnlimitedAmmo, Weapons } 
 import { Point, Size } from "src/util";
 import { Tile, ZoneType } from "src/engine/objects";
 
-import AbstractRenderer from "../rendering/abstract-renderer";
+import Renderer from "../rendering/renderer";
 import LocatorTile from "src/engine/type/yoda/locator-tile";
 import { Planet } from "src/engine/types";
 import Scene from "./scene";
@@ -267,7 +267,7 @@ class MapScene extends Scene {
 		this.engine.sceneManager.popScene();
 	}
 
-	render(renderer: AbstractRenderer): void {
+	render(renderer: Renderer): void {
 		const engine = this.engine;
 		const palette = this.engine.palette.current;
 		const TileWidth = Tile.WIDTH;

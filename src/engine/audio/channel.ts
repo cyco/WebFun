@@ -1,21 +1,14 @@
-abstract class Channel<Sound> {
-	abstract playSound(sound: Sound): void;
-	abstract stop(): void;
+interface Channel<Sound> {
 	muted: boolean;
 	volume: number;
 	provider: (id: number) => Sound;
 
-	public mute() {
-		this.muted = true;
-	}
+	playSound(sound: Sound): void;
+	stop(): void;
 
-	public unmute() {
-		this.muted = false;
-	}
-
-	public isMuted() {
-		return this.muted;
-	}
+	mute(): void;
+	unmute(): void;
+	isMuted(): boolean;
 }
 
 export default Channel;

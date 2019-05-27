@@ -1,4 +1,4 @@
-import AbstractRenderer from "../rendering/abstract-renderer";
+import { Renderer } from "../rendering";
 import Engine from "../engine";
 import { Point } from "src/util";
 import Scene from "./scene";
@@ -26,7 +26,7 @@ class PickupScene extends Scene {
 		imageData.toImage().then(img => (this._image = img));
 	}
 
-	render(renderer: AbstractRenderer): void {
+	render(renderer: Renderer): void {
 		if (this._ticks % 10 >= 5) {
 			const x = this.location.x + this.cameraOffset.x;
 			const y = this.location.y + this.cameraOffset.y;

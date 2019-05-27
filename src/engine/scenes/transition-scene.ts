@@ -1,6 +1,6 @@
 import { Tile, Zone } from "src/engine/objects";
 
-import AbstractRenderer from "../rendering/abstract-renderer";
+import { Renderer } from "../rendering";
 import { Point } from "src/util";
 import Scene from "./scene";
 import World from "../generation/world";
@@ -106,7 +106,7 @@ class TransitionScene extends Scene {
 		// state.dispatchEvent(Event.ZoneLocationDidChange);
 	}
 
-	render(renderer: AbstractRenderer): void {
+	render(renderer: Renderer): void {
 		this.state = performance.now() - this._startTime;
 
 		switch (this.type) {
@@ -120,9 +120,9 @@ class TransitionScene extends Scene {
 		}
 	}
 
-	private _renderZoneAnimation(_: AbstractRenderer): void {}
+	private _renderZoneAnimation(_: Renderer): void {}
 
-	private _renderRoomAnimation(renderer: AbstractRenderer): void {
+	private _renderRoomAnimation(renderer: Renderer): void {
 		const fadeIn = this.state > this._duration / 2.0;
 		const directionAdjustedState = this.state - (fadeIn ? this._duration / 2.0 : 0.0);
 
