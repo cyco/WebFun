@@ -28,7 +28,10 @@ const makeInstructionDescription = desc => (Name, block) => {
 			hero: {},
 			temporaryState: {},
 			data: {},
-			currentWorld: {},
+			currentWorld: {
+				locationOfZone: () => void 0,
+				at: () => void 0
+			},
 			speak: () => void 0,
 			dropItem: () => void 0
 		};
@@ -36,7 +39,10 @@ const makeInstructionDescription = desc => (Name, block) => {
 
 		beforeEach(() => {
 			engine.currentZone = {};
-			engine.currentWorld = {};
+			engine.currentWorld = {
+				locationOfZone: () => void 0,
+				at: () => void 0
+			};
 			engine.hero = { location: new Point(0, 0) };
 			engine.temporaryState = {};
 			engine.data = {};

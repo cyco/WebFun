@@ -14,4 +14,20 @@ describeInstruction("EnableNPC", (execute, engine) => {
 
 		done();
 	});
+	it("does not do anything if the npc can't be found", async done => {
+		engine.currentZone.npcs = [];
+
+		const instruction = new Instruction();
+		instruction._opcode = EnableNPC.Opcode;
+		instruction._arguments = [2];
+
+		try {
+			await execute(instruction);
+			expect(true).toBeTrue();
+		} catch (e) {
+			expect(false).toBeTrue();
+		}
+
+		done();
+	});
 });

@@ -14,4 +14,20 @@ describeInstruction("DisableNPC", (execute, engine) => {
 
 		done();
 	});
+
+	it("does nothing if the npc doesn't exist", async done => {
+		engine.currentZone.npcs = [];
+
+		const instruction = new Instruction();
+		instruction._opcode = DisableNPC.Opcode;
+		instruction._arguments = [2];
+
+		try {
+			await execute(instruction);
+		} catch (e) {
+			expect(false).toBeTrue();
+		}
+
+		done();
+	});
 });

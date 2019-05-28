@@ -1,6 +1,6 @@
 import Invincibility from "src/engine/cheats/invincibility";
 
-describe("WebFun.Unit.Engine.Cheats.Invincibility", () => {
+describe("WebFun..Engine.Cheats.Invincibility", () => {
 	let subject;
 	beforeEach(() => (subject = new Invincibility()));
 

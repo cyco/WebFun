@@ -11,7 +11,7 @@ export default {
 		action.zone.solved = true;
 
 		const worldLocation = engine.currentWorld.locationOfZone(action.zone);
-		if (!worldLocation) console.warn("can find location of zone", action.zone, "on current world");
+		console.assert(!!worldLocation, "can find location of zone", action.zone, "on current world");
 		const worldItem = engine.currentWorld.at(worldLocation);
 		worldItem.zone.solved = true;
 

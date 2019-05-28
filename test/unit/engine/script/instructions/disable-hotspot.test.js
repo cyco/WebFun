@@ -14,4 +14,19 @@ describeInstruction("DisableHotspot", (execute, engine) => {
 
 		done();
 	});
+
+	it("does nothing if the hotspot does not exist", async done => {
+		engine.currentZone.hotspots = [];
+
+		const instruction = new Instruction({});
+		instruction._opcode = DisableHotspot.Opcode;
+		instruction._arguments = [2];
+		try {
+			await execute(instruction);
+		} catch (e) {
+			expect(false).toBeTrue();
+		}
+
+		done();
+	});
 });
