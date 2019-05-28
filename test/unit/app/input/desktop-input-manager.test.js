@@ -1,5 +1,5 @@
 import DesktopInputManager from "src/app/input/desktop-input-manager";
-import { Direction } from "src/engine/input/input-manager";
+import { Direction } from "src/engine/input";
 import { KeyEvent } from "src/util";
 
 describe("WebFun.App.Input.DesktopInputManager", () => {

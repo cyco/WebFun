@@ -1,4 +1,3 @@
-import AbstractRenderer from "src/engine/rendering/abstract-renderer";
 import CanvasRenderer from "src/app/rendering/canvas/canvas-renderer";
 
 describe("WebFun.App.Rendering.Canvas.Renderer", () => {
@@ -16,10 +15,6 @@ describe("WebFun.App.Rendering.Canvas.Renderer", () => {
 		};
 		canvas = { getContext: () => context };
 		subject = new CanvasRenderer(canvas);
-	});
-
-	it("is a canvas based renderer", () => {
-		expect(subject).toBeInstanceOf(AbstractRenderer);
 	});
 
 	it("sets up the context for pixelated rendering", () => {

@@ -20,4 +20,24 @@ describeInstruction("DropItem", (execute, engine) => {
 
 		done();
 	});
+
+	it("drops the zones `findItem` if the first argument is `-1`", async done => {
+		const mockedPoint = new Util.Point(1, 2);
+		const mockTile = { id: 3 };
+		spyOn(engine, "dropItem");
+		spyOn(Util, "Point").and.returnValue(mockedPoint);
+		spyOn(engine.currentWorld, "locationOfZone").and.returnValue(new Util.Point(5, 5));
+		spyOn(engine.currentWorld, "at").and.returnValue({ findItem: mockTile, zone: engine.currentZone });
+		engine.data = { tiles: [null, null, null, mockTile] };
+
+		const instruction = new Instruction({});
+		instruction._opcode = DropItem.Opcode;
+		instruction._arguments = [-1, 1, 2];
+
+		await execute(instruction);
+
+		expect(engine.dropItem).toHaveBeenCalledWith(mockTile, mockedPoint);
+
+		done();
+	});
 });

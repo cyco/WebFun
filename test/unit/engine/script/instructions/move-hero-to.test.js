@@ -1,6 +1,5 @@
 import { Instruction } from "src/engine/objects";
 import MoveHeroTo from "src/engine/script/instructions/move-hero-to";
-import { ZoneScene } from "src/engine/scenes";
 import { Point } from "src/util";
 
 describeInstruction("MoveHeroTo", (execute, engine) => {

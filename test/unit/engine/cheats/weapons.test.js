@@ -1,7 +1,7 @@
 import { Yoda } from "src/engine";
 import Weapons from "src/engine/cheats/weapons";
 
-describe("WebFun.Unit.Engine.Cheats.Weapons", () => {
+describe("WebFun..Engine.Cheats.Weapons", () => {
 	let subject;
 	beforeEach(() => (subject = new Weapons()));
 

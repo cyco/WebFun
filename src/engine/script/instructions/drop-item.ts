@@ -13,7 +13,7 @@ export default {
 
 		if (itemId === -1) {
 			const worldLocation = engine.currentWorld.locationOfZone(action.zone);
-			if (!worldLocation) console.warn("can't find location of zone", action.zone, "on current world");
+			console.assert(!!worldLocation, "can't find location of zone", action.zone, "on current world");
 			const worldItem = engine.currentWorld.at(worldLocation);
 			itemId = worldItem.findItem.id;
 			action.zone.solved = true;

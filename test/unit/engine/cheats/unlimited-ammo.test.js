@@ -1,6 +1,6 @@
 import UnlimitedAmmo from "src/engine/cheats/unlimited-ammo";
 
-describe("WebFun.Unit.Engine.Cheats.UnlimitedAmmo", () => {
+describe("WebFun..Engine.Cheats.UnlimitedAmmo", () => {
 	let subject;
 	beforeEach(() => (subject = new UnlimitedAmmo()));
 
