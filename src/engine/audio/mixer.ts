@@ -4,8 +4,8 @@ class Mixer<Sound> {
 	readonly provider: (id: number) => Sound;
 	readonly musicChannel: Channel<Sound>;
 	readonly effectChannel: Channel<Sound>;
-	protected _volume: number;
-	protected _muted: boolean;
+	protected _volume: number = 1;
+	protected _muted: boolean = false;
 
 	constructor(
 		provider: (id: number) => Sound,
