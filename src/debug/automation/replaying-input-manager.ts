@@ -58,7 +58,6 @@ class ReplayingInputManager extends EventTarget implements InputManager, EventLi
 		}
 
 		if (this._offset === this.input.length) {
-			console.log("End of Input");
 			this.dispatchEvent(new CustomEvent(Event.InputEnd));
 		}
 	}
