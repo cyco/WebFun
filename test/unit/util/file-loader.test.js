@@ -33,7 +33,6 @@ describe("WebFun.Util.FileLoader", () => {
 			await FileLoader.loadAsStream("scheme://something.local");
 			expect(false).toBeTrue();
 		} catch (e) {
-			console.log(e);
 			expect(true).toBeTrue();
 		}
 
