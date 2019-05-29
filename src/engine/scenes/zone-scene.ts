@@ -186,7 +186,6 @@ class ZoneScene extends Scene {
 	}
 
 	private _hotspotTriggered(hotspot: Hotspot) {
-		console.log("triggered hotspot: ", hotspot);
 		const engine = this.engine;
 		const zone = engine.currentZone;
 
@@ -338,7 +337,6 @@ class ZoneScene extends Scene {
 
 		const targetLocation = Point.add(hero.location, direction);
 		if (currentZone.bounds.contains(targetLocation)) {
-			// console.log('target is on same zone!');
 			return false;
 		}
 
@@ -658,7 +656,6 @@ class ZoneScene extends Scene {
 
 			const worldItem = this.engine.currentWorld.at(this.engine.currentWorld.locationOfZone(this.zone));
 			if (worldItem.npc && worldItem.npc.id === targetTile.id) {
-				console.log("this._bumpPuzzleNPC");
 				this._bumpPuzzleNPC(worldItem, targetPoint);
 				return;
 			}
@@ -705,8 +702,6 @@ class ZoneScene extends Scene {
 			}
 
 			return;
-		} else {
-			console.log("puzzle at index", this.engine.data.puzzles[puzzleIndex]);
 		}
 	}
 
@@ -803,11 +798,8 @@ class ZoneScene extends Scene {
 			if (![HotspotType.PuzzleNPC, HotspotType.Lock, HotspotType.SpawnLocation].includes(hotspot.type))
 				continue;
 
-			console.log("puzzle: ", engine.data.puzzles[worldItem.puzzleIndex]);
-			console.log("or puzzle: ", engine.data.puzzles[worldItem.puzzleIndex]);
-
 			if (tile !== worldItem.requiredItem) {
-				console.warn("play sound no go");
+				// TODO: Play sound no-go
 				break;
 			}
 
@@ -945,7 +937,6 @@ class ZoneScene extends Scene {
 	}
 
 	set zone(z) {
-		console.warn(`Change zone to ${z.id.toHex(3)}`);
 		this._zone = z;
 		this.engine.camera.zoneSize = z.size;
 	}
