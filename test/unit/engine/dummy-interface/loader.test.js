@@ -1,6 +1,6 @@
 import Loader from "src/engine/dummy-interface/loader";
 
-describe("WebFun..Engine.DummyInterface.Loader", () => {
+describe("WebFun.Engine.DummyInterface.Loader", () => {
 	let subject;
 
 	beforeEach(() => {

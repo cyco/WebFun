@@ -15,6 +15,8 @@ import { InstructionImplementations as Instructions } from "../script/instructio
 
 import { Rectangle, Point, Size } from "src/util";
 
+export { InputManager, Renderer, Channel, Loader };
+
 export default {
 	Metronome: () => new Metronome(),
 	Inventory: () => new Inventory(),

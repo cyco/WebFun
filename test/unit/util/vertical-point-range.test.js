@@ -26,4 +26,15 @@ describe("WebFun.Util.VerticalPointRange", () => {
 			"4x8": true
 		});
 	});
+
+	it("has a method to find a specific point in the range", () => {
+		let result;
+		const range = new VerticalPointRange(3, 8, 4);
+
+		result = range.find(point => point.x === point.y);
+		expect(result.x).toBe(result.y);
+
+		result = range.find(() => false);
+		expect(result).toBe(null);
+	});
 });

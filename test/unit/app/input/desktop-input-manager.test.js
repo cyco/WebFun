@@ -1,6 +1,6 @@
 import DesktopInputManager from "src/app/input/desktop-input-manager";
 import { Direction } from "src/engine/input";
-import { KeyEvent } from "src/util";
+import { KeyEvent, Point } from "src/util";
 
 describe("WebFun.App.Input.DesktopInputManager", () => {
 	let subject, element, mockElement;
@@ -140,6 +140,34 @@ describe("WebFun.App.Input.DesktopInputManager", () => {
 			document.dispatchEvent(event);
 			expect(subject.attack).not.toBeTrue();
 		});
+
+		it("ignores repeated keyboard events", () => {
+			subject.attack = false;
+			const event = { type: true ? "keydown" : "keyup" };
+			event.which = KeyEvent.DOM_VK_SPACE;
+			event.repeat = true;
+
+			subject.handleEvent(event);
+			expect(subject.attack).not.toBeTrue();
+		});
+
+		it("ignores keyboard events that are sent to an input element", () => {
+			subject.attack = false;
+			let event = { type: true ? "keydown" : "keyup" };
+			event.which = KeyEvent.DOM_VK_SPACE;
+			event.target = document.createElement("input");
+
+			subject.handleEvent(event);
+			expect(subject.attack).not.toBeTrue();
+
+			subject.attack = false;
+			event = { type: true ? "keydown" : "keyup" };
+			event.which = KeyEvent.DOM_VK_SPACE;
+			event.target = document.createElement("textarea");
+
+			subject.handleEvent(event);
+			expect(subject.attack).not.toBeTrue();
+		});
 	});
 
 	describe("contextmenu event", () => {
@@ -243,11 +271,24 @@ describe("WebFun.App.Input.DesktopInputManager", () => {
 			element.remove();
 			subject.removeListeners();
 		});
+
+		describe("`clear` method", () => {
+			it("is called when a placeTile event has been handled and resets related variables", () => {
+				subject.placedTileLocation = new Point(4, 3);
+				subject.placedTile = {};
+
+				subject.clear();
+
+				expect(subject.placedTileLocation).toBeNull();
+				expect(subject.placedTile).toBeNull();
+			});
+		});
 	});
 
 	function fakeKeyEvent(code, pressed) {
 		const event = new CustomEvent(pressed ? "keydown" : "keyup");
 		event.which = code;
+		event.repeat = false;
 		subject.handleEvent(event);
 	}
 

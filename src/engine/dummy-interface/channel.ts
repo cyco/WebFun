@@ -12,6 +12,7 @@ class DummyChannel implements Channel<any> {
 	mute(): void {
 		this.muted = true;
 	}
+
 	unmute(): void {
 		this.muted = false;
 	}

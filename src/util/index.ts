@@ -17,8 +17,6 @@ import Point from "./point";
 import PointLike from "./point-like";
 import PointRange from "./point-range";
 import PrefixedStorage from "./prefixed-storage";
-import PromiseProgress from "./promise-progress";
-import PromiseProxy from "./promise-proxy";
 import QueryString from "./query-string";
 import Range from "./range";
 import Rectangle from "./rectangle";
@@ -41,8 +39,6 @@ import rad2deg from "./rad2deg";
 import xy2polar from "./xy2polar";
 
 export {
-	PromiseProgress,
-	PromiseProxy,
 	Color,
 	add,
 	deg2rad,

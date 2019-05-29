@@ -1,6 +1,6 @@
 import Renderer from "src/engine/dummy-interface/renderer";
 
-describe("WebFun..Engine.DummyInterface.Renderer", () => {
+describe("WebFun.Engine.DummyInterface.Renderer", () => {
 	let subject;
 
 	beforeEach(() => {
