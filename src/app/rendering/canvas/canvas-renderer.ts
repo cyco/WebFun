@@ -35,7 +35,7 @@ class CanvasRenderer implements Renderer {
 		this.drawImage(image, x, y);
 	}
 
-	protected drawImage(image: HTMLImageElement, atX: number, atY: number) {
+	drawImage(image: HTMLImageElement, atX: number, atY: number) {
 		this._ctx.drawImage(image, atX, atY);
 	}
 

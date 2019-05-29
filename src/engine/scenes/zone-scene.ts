@@ -31,6 +31,13 @@ class ZoneScene extends Scene {
 	private _zone: Zone;
 	private _renderer = new ZoneSceneRenderer();
 
+	constructor(engine: Engine = null, zone: Zone = null) {
+		super();
+
+		this._zone = zone;
+		this.engine = engine;
+	}
+
 	public async update(ticks: number) {
 		this.engine.palette.step();
 

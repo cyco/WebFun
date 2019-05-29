@@ -31,7 +31,7 @@ const config = {
 	customLaunchers: {
 		ChromeHeadless: {
 			base: "Chrome",
-			flags: ["--no-sandbox", "--disable-gpu", "--headless", " --remote-debugging-port=9222"]
+			flags: ["--no-sandbox", "--headless", " --remote-debugging-port=9222"]
 		},
 		FirefoxHeadless: {
 			base: "FirefoxNightly",
@@ -79,7 +79,7 @@ if (runUnitTests && runAcceptanceTests && runPerformanceTests) {
 }
 
 if (includeCoverage) {
-	let fileName = name + ".lcov";
+	const fileName = name + ".lcov";
 	config.devtool = "eval-source-map";
 	config.reporters.push("coverage-istanbul");
 	config.coverageIstanbulReporter = {
@@ -105,7 +105,7 @@ if (includeJunit && false) {
 		encoding: "utf-8", // test files encoding
 		outputFolder: "test/reports", // report destination
 		legacyMode: false, // report for Sonarqube < 6.2 (disabled)
-		reportName: metadata => {
+		reportName: _ => {
 			return [name].concat("xml").join(".");
 		}
 	};

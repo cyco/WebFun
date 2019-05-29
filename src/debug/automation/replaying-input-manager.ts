@@ -5,13 +5,18 @@ import { Point } from "src/util";
 import Syntax from "./syntax";
 import { Engine } from "src/engine";
 
-class ReplayingInputManager implements InputManager, EventListenerObject {
+export const Event = {
+	InputEnd: "InputEnd"
+};
+
+class ReplayingInputManager extends EventTarget implements InputManager, EventListenerObject {
+	public static readonly Event = Event;
 	public mouseDownHandler: (_: Point) => void;
 	public keyDownHandler: (_: KeyboardEvent) => void;
 	public currentItem: Tile;
 	public engine: Engine;
 	public isReplaying: boolean = false;
-	public readonly input: string[];
+	private _input: string[] = [];
 	public readonly mouseLocationInView = new Point(0, 0);
 
 	public placedTile: Tile = null;
@@ -24,10 +29,6 @@ class ReplayingInputManager implements InputManager, EventListenerObject {
 	public readonly endDialog: boolean = false;
 
 	private _offset = 0;
-
-	constructor(input: string[]) {
-		this.input = input;
-	}
 
 	public reset() {
 		this._offset = 0;
@@ -56,7 +57,10 @@ class ReplayingInputManager implements InputManager, EventListenerObject {
 			}
 		}
 
-		if (this._offset === this.input.length) console.log("End of Input");
+		if (this._offset === this.input.length) {
+			console.log("End of Input");
+			this.dispatchEvent(new CustomEvent(Event.InputEnd));
+		}
 	}
 
 	public clear(): void {
@@ -141,6 +145,15 @@ class ReplayingInputManager implements InputManager, EventListenerObject {
 
 	public get attack() {
 		return this.token === Syntax.Attack;
+	}
+
+	set input(input: string[]) {
+		this._input = input;
+		this.reset();
+	}
+
+	get input() {
+		return this._input;
 	}
 }
 

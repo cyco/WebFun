@@ -27,7 +27,7 @@ class PauseScene extends Scene {
 		for (let x = 0; x < 9; x++) {
 			for (let y = 0; y < 9; y++) {
 				// TODO: remove access to protected method
-				(renderer as any).drawImage(this._image, x * Tile.WIDTH, y * Tile.HEIGHT);
+				renderer.drawImage(this._image, x * Tile.WIDTH, y * Tile.HEIGHT);
 			}
 		}
 	}

@@ -15,7 +15,7 @@ class InputReplayer extends AbstractWindow {
 
 	public gameController: GameController = null;
 	private _originalInputManager: InputManager;
-	private _inputManager: InputManager;
+	private _inputManager: ReplayingInputManager;
 
 	private _record = <IconButton icon="stop" onclick={() => this.stop()} /> as IconButton;
 	private _fastForward = (
@@ -31,7 +31,8 @@ class InputReplayer extends AbstractWindow {
 
 	public load(input: string[]) {
 		if (this.isInstalled()) this.uninstall();
-		this._inputManager = new ReplayingInputManager(input);
+		this._inputManager = new ReplayingInputManager();
+		this._inputManager.input = input;
 	}
 
 	private install() {

@@ -31,7 +31,7 @@ class PickupScene extends Scene {
 			const x = this.location.x + this.cameraOffset.x;
 			const y = this.location.y + this.cameraOffset.y;
 			// TODO: remove access to protected method
-			(renderer as any).renderImage(this._image, x * Tile.WIDTH, y * Tile.HEIGHT);
+			renderer.renderImage(this._image, x * Tile.WIDTH, y * Tile.HEIGHT);
 		}
 	}
 

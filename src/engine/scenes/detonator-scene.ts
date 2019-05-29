@@ -1,7 +1,6 @@
 import RendererInterface from "../rendering/renderer";
 import Engine from "../engine";
 import { Point } from "src/util";
-import { Renderer } from "src/app/rendering/canvas";
 import Scene from "./scene";
 import { Tile } from "src/engine/objects";
 import { Yoda } from "src/engine";
@@ -57,8 +56,7 @@ class DetonatorScene extends Scene {
 		}
 	}
 
-	public render(r: RendererInterface) {
-		const renderer = r as Renderer;
+	public render(renderer: RendererInterface) {
 		for (let i = 0; i <= this._ticks && i < this._detonatorFrames.length; i++) {
 			const frame = this._detonatorFrames[i];
 			const p = this.cameraOffset.byAdding(this.detonatorLocation).byScalingBy(Tile.WIDTH);

@@ -125,11 +125,11 @@ class ZoneSceneRenderer {
 		}
 
 		result.data.set(byteArray);
-		(renderer as any).renderImageData(result, 0, 0);
+		renderer.renderImageData(result, 0, 0);
 
-		if (!hero.visible && Settings.drawHeroTile && (renderer as any).fillRect instanceof Function) {
+		if (!hero.visible && Settings.drawHeroTile && renderer.fillRect instanceof Function) {
 			// always show hero while debugging
-			(renderer as any).fillRect(
+			renderer.fillRect(
 				(hero.location.x + offset.x) * Tile.WIDTH,
 				(hero.location.y + offset.y) * Tile.HEIGHT,
 				Tile.WIDTH,
@@ -138,10 +138,10 @@ class ZoneSceneRenderer {
 			);
 		}
 
-		if (Settings.drawHotspots && (renderer as any).fillRect instanceof Function) {
+		if (Settings.drawHotspots && renderer.fillRect instanceof Function) {
 			zone.hotspots.forEach(
 				(h: Hotspot): void => {
-					(renderer as any).fillRect(
+					renderer.fillRect(
 						(h.x + offset.x) * Tile.WIDTH,
 						(h.y + offset.y) * Tile.HEIGHT,
 						Tile.WIDTH,
@@ -152,7 +152,7 @@ class ZoneSceneRenderer {
 			);
 		}
 
-		if (Settings.drawNPCState && (renderer as any).fillRect instanceof Function) {
+		if (Settings.drawNPCState && renderer.fillRect instanceof Function) {
 			zone.npcs.forEach(
 				(n: NPC): void => {
 					if (!n.alive) return;
@@ -165,7 +165,7 @@ class ZoneSceneRenderer {
 						new Size(Tile.WIDTH, NPCHealthBarHeight)
 					).inset(NPCHealthBarInset, NPCHealthBarInset);
 
-					(renderer as any).fillRect(
+					renderer.fillRect(
 						barArea.origin.x,
 						barArea.origin.y,
 						barArea.size.width,
@@ -179,7 +179,7 @@ class ZoneSceneRenderer {
 					if (health < 1 / 3) color = rgba(255, 0, 0, 0.6);
 
 					barArea.size.width = round(barArea.size.width * health);
-					(renderer as any).fillRect(
+					renderer.fillRect(
 						barArea.origin.x,
 						barArea.origin.y,
 						barArea.size.width,

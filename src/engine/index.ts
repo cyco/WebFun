@@ -15,6 +15,7 @@ import Yoda from "./yoda";
 import readGameDataFile from "./file-format";
 import { Scene } from "./scenes";
 import Loader from "./loader";
+import GameState from "./game-state";
 
 export {
 	ColorPalette,
@@ -24,6 +25,7 @@ export {
 	GameType,
 	GameTypeIndy,
 	GameTypeYoda,
+	GameState,
 	Hero,
 	Inventory,
 	Loader,
