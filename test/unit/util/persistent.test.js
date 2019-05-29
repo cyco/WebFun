@@ -11,8 +11,6 @@ describe("WebFun.Util.persistent", () => {
 		wrappedObject.a = 10;
 		expect(store.load("a")).toBe(10);
 		expect(wrappedObject.a).toBe(10);
-
-		expect(object.a).toBe(5);
 	});
 
 	it("can add a prefix to all keys before hitting storage", () => {
@@ -27,6 +25,16 @@ describe("WebFun.Util.persistent", () => {
 		store.store("a", 7);
 		const wrappedObject = persistent(object, null, store);
 		expect(wrappedObject.a).toBe(7);
+	});
+
+	it("defaults to using local storage", () => {
+		const object = { unitTest: 5 };
+		const wrappedObject = persistent(object);
+		expect(wrappedObject.unitTest).toBe(5);
+		wrappedObject.unitTest = 7;
+		expect(object.unitTest).toBe(7);
+		expect(localStorage.getItem("unitTest")).toBe("7");
+		localStorage.removeItem("unitTest");
 	});
 
 	function mockStorage() {
