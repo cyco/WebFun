@@ -23,7 +23,7 @@ class Stream {
 		return this._offset;
 	}
 
-	seek(offset: number, mode: number) {
+	seek(offset: number, mode: number = Stream.SEEK.CUR) {
 		switch (mode) {
 			case Stream.SEEK.SET:
 				this._offset = offset;

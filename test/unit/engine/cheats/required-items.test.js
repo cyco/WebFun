@@ -1,6 +1,6 @@
 import RequiredItems from "src/engine/cheats/required-items";
 
-describe("WebFun..Engine.Cheats.RequiredItems", () => {
+describe("WebFun.Engine.Cheats.RequiredItems", () => {
 	let subject;
 	beforeEach(() => (subject = new RequiredItems()));
 

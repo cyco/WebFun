@@ -41,4 +41,15 @@ describe("WebFun.Util.HorizontalPointRange", () => {
 			"0x4": true
 		});
 	});
+
+	it("has a method to find a specific point in the range", () => {
+		let result;
+		const range = new HorizontalPointRange(0, 6, 4);
+
+		result = range.find(point => point.x < point.y);
+		expect(result.x).toBeLessThan(result.y);
+
+		result = range.find(() => false);
+		expect(result).toBe(null);
+	});
 });

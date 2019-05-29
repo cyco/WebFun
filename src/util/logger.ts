@@ -1,15 +1,17 @@
 import LogLevel from "./log-level";
 import identity from "src/util/identity";
+import { console } from "src/std";
 
 class Logger {
 	public level = LogLevel.Warning;
-	public prefix: string = "";
+	public prefix: string = null;
 
 	public log(level: LogLevel, ...args: any[]): void {
 		if (level < this.level) return;
 
 		const facility = this._pickLoggingFacility(level);
-		facility.call(console, this.prefix, ...args);
+		if (this.prefix) facility.call(console, this.prefix, ...args);
+		else facility.call(console, ...args);
 	}
 
 	public off(...args: any[]): void {

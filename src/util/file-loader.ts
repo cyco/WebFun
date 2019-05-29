@@ -43,6 +43,10 @@ class FileLoader extends EventTarget {
 	}
 
 	private _didLoad(reader: XMLHttpRequest) {
+		if (reader.status >= 300) {
+			return this._didFail(new ErrorEvent("error", { error: reader.status }));
+		}
+
 		const stream = new InputStream(reader.response);
 		this.dispatchEvent(Event.Load, {
 			stream,
@@ -50,7 +54,7 @@ class FileLoader extends EventTarget {
 		});
 	}
 
-	private _didFail(event: ProgressEvent) {
+	private _didFail(event: ErrorEvent | ProgressEvent) {
 		this.dispatchEvent(Event.Fail, {
 			reason: event
 		});

@@ -181,7 +181,7 @@ class DesktopInputManager implements InputManager, EventListenerObject {
 
 		const point = this._getPointInViewCoordinates(mouseLocation);
 		const pointIsInView = point.x > 0 && point.y > 0 && point.x < 1 && point.y < 1;
-		if (!pointIsInView) return;
+		console.assert(pointIsInView, "Previous in-bounds check should have been sufficient");
 
 		if (e.button === 0) this.walk = true;
 		if (e.button === 1) this.attack = true;

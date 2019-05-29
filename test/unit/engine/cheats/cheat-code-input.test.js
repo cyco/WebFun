@@ -1,6 +1,6 @@
 import CheatCodeInput from "src/engine/cheats/cheat-code-input";
 
-describe("WebFun..Engine.Cheats.CheatCodeInput", () => {
+describe("WebFun.Engine.Cheats.CheatCodeInput", () => {
 	let cheatExecuted = false;
 	const mockCheat = {
 		code: "test",

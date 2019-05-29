@@ -37,4 +37,13 @@ describe("WebFun.Util.Rectangle", () => {
 		expect(subject.contains(new Point(1, 2))).toBeTrue();
 		expect(subject.contains(new Point(3, 1))).toBeFalse();
 	});
+
+	it("inset", () => {
+		const subject = new Rectangle(new Point(1, 1), new Size(2, 2));
+		const result = subject.inset(-1, -2);
+		expect(result.minX).toBe(0);
+		expect(result.minY).toBe(-1);
+		expect(result.size.width).toBe(4);
+		expect(result.size.height).toBe(6);
+	});
 });

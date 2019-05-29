@@ -1,4 +1,4 @@
-import { srand } from "src/util";
+import { srand, rand } from "src/util";
 
 describe("WebFun.Extension.Array.shuffle", () => {
 	it("extends the Array prototype", () => {
@@ -30,6 +30,15 @@ describe("WebFun.Extension.Array.shuffle", () => {
 		array.shuffle();
 
 		expect(array.length).toBe(0);
+	});
+
+	it("consumes a random number if the array contains exactly one element", () => {
+		srand(0x1234);
+		const array = [5];
+		array.shuffle();
+
+		expect(array).toEqual([5]);
+		expect(rand()).toBe(0x64bd);
 	});
 
 	it("modifies the array in place and also modified the modified array", () => {

@@ -42,8 +42,6 @@ class TransitionScene extends Scene {
 			this.type === TransitionScene.TRANSITION_TYPE.ROOM &&
 			this.engine.currentZone.sharedCounter >= 0
 		) {
-			this.engine.currentZone.sharedCounter &&
-				console.log("copy sharedCounter", this.engine.currentZone.sharedCounter.toHex(2));
 			this.targetZone.sharedCounter = this.engine.currentZone.sharedCounter;
 		}
 

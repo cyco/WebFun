@@ -31,7 +31,13 @@ describe(
 
 		it("plays through 0xDEAD", async endTest => {
 			try {
-				const { cleanup, engine, error } = await runGame(0xdead, Planet.ENDOR, WorldSize.Large, "input-1", true);
+				const { cleanup, engine, error } = await runGame(
+					0xdead,
+					Planet.ENDOR,
+					WorldSize.Large,
+					"input-1",
+					true
+				);
 
 				expect(error).toBeNull();
 				expect(engine.inventory.contains(engine.story.goal.item1)).toBeTrue();
@@ -61,7 +67,10 @@ describe(
 						await dispatch(() => void 0, 5);
 
 						engine.inputManager.removeListeners();
-						engine.inputManager.removeEventListener(ReplayingInputManager.Event.InputEnd, onInputEnd);
+						engine.inputManager.removeEventListener(
+							ReplayingInputManager.Event.InputEnd,
+							onInputEnd
+						);
 						engine.inputManager.input = [];
 						engine.sceneManager.clear();
 
@@ -92,7 +101,8 @@ describe(
 					inputManager = new ReplayingInputManager();
 					engine = new Engine(Yoda, {
 						InputManager: () => inputManager,
-						Renderer: () => (debug ? new CanvasRenderer.Renderer(sceneView.canvas) : new DummyRenderer()),
+						Renderer: () =>
+							debug ? new CanvasRenderer.Renderer(sceneView.canvas) : new DummyRenderer(),
 						Loader: () => {},
 						SceneManager: () => sceneView.manager
 					});
