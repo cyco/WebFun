@@ -336,7 +336,7 @@ class MapScene extends Scene {
 		}
 
 		result.data.set(byteArray);
-		(renderer as any).renderImageData(result, 0, 0);
+		renderer.renderImageData(result, 0, 0);
 		return;
 	}
 

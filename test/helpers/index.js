@@ -8,8 +8,11 @@ import { buildFixtureUrl, getFixtureData, getFixtureContent } from "./fixture-lo
 
 import render from "./render";
 import { ComponentJSXRenderer } from "src/ui";
+import withTimeout from "./with-timeout";
 
 global.render = render;
+
+global.withTimeout = withTimeout;
 
 global.describeComponent = describeComponent;
 global.xdescribeComponent = xdescribeComponent;
