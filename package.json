@@ -14,7 +14,7 @@
 		"test:acceptance": "cross-env scope=acceptance karma start config/karma.conf.js --single-run --",
 		"test:unit": "cross-env coverage=1 scope=unit karma start config/karma.conf.js --single-run",
 		"test:coverage": "cross-env coverage=1 scope=unit,acceptance,performance karma start config/karma.conf.js --single-run",
-		"test:unit:cont": "cross-env coverage=1 scope=unit karma start config/karma.conf.js",
+		"test:unit:cont": "cross-env coverage=1 scope=unit karma start config/karma.conf.js --single-run=false --watch=true",
 		"test:full": "cross-env coverage=1 scope=unit,acceptance,performance karma start config/karma.conf.js",
 		"test:full:cont": "cross-env coverage=1 scope=unit,acceptance,performance karma start config/karma.conf.js --watch=true --single-run=false",
 		"test:gameplay": "cross-env TOOL_NAME=gameplay yarn build-tool && node tools/bin/gameplay.bin.js",
