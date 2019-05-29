@@ -33,7 +33,27 @@ module.exports = {
 			},
 			{
 				test: /\.tsx?$/,
+				exclude: /node_modules|(src\/(debug|editor|save-game-editor))/,
+				use: [
+					{
+						loader: "babel-loader",
+						options: {
+							cacheDirectory: Path.resolve(Paths.configRoot, ".babel")
+						}
+					},
+					{
+						loader: "ts-loader",
+						options: {
+							configFile: Path.resolve(Paths.projectRoot, "tsconfig.json"),
+							transpileOnly: true
+						}
+					}
+				]
+			},
+			{
+				test: /\.tsx?$/,
 				exclude: /node_modules/,
+				include: /src\/(debug|editor|save-game-editor)/,
 				use: [
 					{
 						loader: "babel-loader",
