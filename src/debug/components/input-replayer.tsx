@@ -33,6 +33,10 @@ class InputReplayer extends AbstractWindow {
 		if (this.isInstalled()) this.uninstall();
 		this._inputManager = new ReplayingInputManager();
 		this._inputManager.input = input;
+		this._inputManager.addEventListener(ReplayingInputManager.Event.InputEnd, () => {
+			this.normalizeSpeed();
+			this.stop();
+		});
 	}
 
 	private install() {

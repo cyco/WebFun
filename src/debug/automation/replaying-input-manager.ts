@@ -1,7 +1,7 @@
 import { InputManager, Direction } from "src/engine/input";
 import { Metronome } from "src/engine";
 import { Tile } from "src/engine/objects";
-import { Point } from "src/util";
+import { EventTarget, Point } from "src/util";
 import Syntax from "./syntax";
 import { Engine } from "src/engine";
 
