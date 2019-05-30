@@ -63,6 +63,7 @@ export default (gameController: GameController) => ({
 
 			replayer.load(result.split(" "));
 			replayer.start();
+			replayer.fastForward();
 			WindowManager.defaultManager.focus(replayer);
 		}),
 		MenuItemSeparator,
