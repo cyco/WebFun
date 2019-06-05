@@ -10,9 +10,7 @@ export default {
 	Implementation: async (_: Instruction, engine: Engine, action: Action): Promise<Result> => {
 		action.zone.solved = true;
 
-		const worldLocation = engine.currentWorld.locationOfZone(action.zone);
-		console.assert(!!worldLocation, "can find location of zone", action.zone, "on current world");
-		const worldItem = engine.currentWorld.at(worldLocation);
+		const worldItem = engine.currentWorld.itemForZone(action.zone);
 		worldItem.zone.solved = true;
 
 		return Result.Void;

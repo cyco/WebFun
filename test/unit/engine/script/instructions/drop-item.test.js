@@ -26,8 +26,10 @@ describeInstruction("DropItem", (execute, engine) => {
 		const mockTile = { id: 3 };
 		spyOn(engine, "dropItem");
 		spyOn(Util, "Point").and.returnValue(mockedPoint);
-		spyOn(engine.currentWorld, "locationOfZone").and.returnValue(new Util.Point(5, 5));
-		spyOn(engine.currentWorld, "at").and.returnValue({ findItem: mockTile, zone: engine.currentZone });
+		spyOn(engine.currentWorld, "itemForZone").and.returnValue({
+			findItem: mockTile,
+			zone: engine.currentZone
+		});
 		engine.data = { tiles: [null, null, null, mockTile] };
 
 		const instruction = new Instruction({});

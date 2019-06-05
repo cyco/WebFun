@@ -41,7 +41,8 @@ const makeInstructionDescription = desc => (Name, block) => {
 			engine.currentZone = {};
 			engine.currentWorld = {
 				locationOfZone: () => void 0,
-				at: () => void 0
+				at: () => void 0,
+				itemForZone: () => void 0
 			};
 			engine.hero = { location: new Point(0, 0) };
 			engine.temporaryState = {};

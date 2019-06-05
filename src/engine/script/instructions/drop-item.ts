@@ -12,9 +12,7 @@ export default {
 		let [itemId, x, y] = instruction.arguments;
 
 		if (itemId === -1) {
-			const worldLocation = engine.currentWorld.locationOfZone(action.zone);
-			console.assert(!!worldLocation, "can't find location of zone", action.zone, "on current world");
-			const worldItem = engine.currentWorld.at(worldLocation);
+			const worldItem = engine.currentWorld.itemForZone(action.zone);
 			itemId = worldItem.findItem.id;
 			action.zone.solved = true;
 			worldItem.zone.solved = true;

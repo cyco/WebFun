@@ -42,6 +42,12 @@ class World {
 		worldItem.zone = zone;
 	}
 
+	itemForZone(zone: Zone): WorldItem {
+		const location = this.locationOfZone(zone);
+		if (!location) return null;
+		return this.at(location);
+	}
+
 	locationOfZone(zone: Zone): Point {
 		for (let y = 0; y < World.HEIGHT; y++) {
 			for (let x = 0; x < World.HEIGHT; x++) {

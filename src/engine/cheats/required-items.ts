@@ -11,10 +11,9 @@ class InvincibilityCheat extends Cheat {
 	}
 
 	public execute(engine: Engine): void {
-		const location = engine.currentWorld.locationOfZone(engine.currentZone);
-		if (!location) return;
+		const quest = engine.currentWorld.itemForZone(engine.currentZone);
+		if (!quest) return;
 
-		const quest = engine.currentWorld.at(location);
 		const i1 = quest.requiredItem;
 		if (i1) engine.inventory.addItem(i1);
 		const i2 = quest.additionalRequiredItem;

@@ -74,7 +74,12 @@ abstract class Reader {
 			const zoneID = stream.getInt16();
 			const visited = this.readBool(stream);
 
-			console.assert(zoneID === door, "Expected door to lead to zone {} instead of {}", zoneID, door);
+			console.assert(
+				!zoneID || zoneID === door,
+				"Expected door to lead to zone {} instead of {}",
+				zoneID,
+				door
+			);
 			zoneIDs.push([door, visited]);
 			break;
 		}
