@@ -23,8 +23,11 @@ global.buildFixtureUrl = buildFixtureUrl;
 
 global.WebFunJSX = new ComponentJSXRenderer();
 
-console.assert = (condition, message) => {
-	if (!condition) throw message;
+console.assert = (condition, message, ...rest) => {
+	if (!condition) {
+		let i = 0;
+		throw new Error(message.replace(/\{\}/g, _ => rest[i++]));
+	}
 };
 
 export { getFixtureContent };
