@@ -2,7 +2,7 @@ import World from "src/engine/generation/world";
 import { Zone } from "src/engine/objects";
 import { Point } from "src/util";
 
-describe("World", () => {
+describe("WebFun.Engine.Generation.World", () => {
 	let subject = null;
 	let zone = null;
 	beforeEach(() => {
