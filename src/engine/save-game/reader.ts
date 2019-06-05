@@ -156,13 +156,16 @@ abstract class Reader {
 	protected readActions(stream: InputStream, zone: Zone): void {
 		const count = this.readInt(stream);
 		if (count < 0) return;
-		console.assert(
-			count === zone.actions.length,
-			`Number of actions can't be change from ${zone.actions.length} to ${count}`
-		);
 
 		for (const action of zone.actions) {
 			action.enabled = this.readBool(stream);
+		}
+
+		for (let i = zone.actions.length; i < count; i++) {
+			if (i === zone.actions.length) {
+				console.log(`Zone ${zone.id} has additional actions`);
+			}
+			this.readInt(stream);
 		}
 	}
 
