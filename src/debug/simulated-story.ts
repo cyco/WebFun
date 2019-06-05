@@ -19,7 +19,7 @@ class SimulatedStory extends Story {
 
 		this._buildWorld(mainZone, surroundingZones);
 		this._buildPuzzle(mainZone, find, npc, required, required2);
-		this._initializeZone(mainZone, find, npc, required, required2);
+		// TODO: this._initializeZone(mainZone, find, npc, required, required2);
 	}
 
 	private _buildPuzzle(_: Zone, find: Tile, npc: Tile, required: Tile, required2: Tile) {
@@ -28,43 +28,6 @@ class SimulatedStory extends Story {
 		item.npc = npc;
 		item.requiredItem = required;
 		item.additionalRequiredItem = required2;
-	}
-
-	private _initializeZone(zone: Zone, _find: Tile, _npc: Tile, _required: Tile, _required2: Tile) {
-		switch (zone.type) {
-			case ZoneType.BlockadeNorth:
-			case ZoneType.BlockadeSouth:
-			case ZoneType.BlockadeEast:
-			case ZoneType.BlockadeWest:
-			case ZoneType.TravelStart:
-			case ZoneType.TravelEnd:
-				break;
-			case ZoneType.Goal:
-			/*
-				const npc = this.findUnusedNPCForZoneRandomly(zone);
-				const hasPuzzleNPC = npc !== null ? this.zoneLeadsToNPC(zone, npc) : 0;
-				if(!hasPuzzleNPC) {
-					this.dropItemAtTriggerHotspotRandomly(zone, puzzle3.item1);
-					this.dropItemAtTriggerHotspotRandomly(zone, puzzle3.item2 ? puzzle3.item2 : null)
-				}
-			*/
-			case ZoneType.Trade:
-				// if(this.dropItemAtLockHotspot(zone, p1.item1)) {
-				// 	this.dropItemAtTriggerHotspotRandomly(zone, p2.item1)
-				// }
-				break;
-			case ZoneType.Use:
-				// this.dropNPCAtHotspotRandomly(zone, npc);
-				break;
-			case ZoneType.Find:
-			case ZoneType.FindTheForce:
-				// this.dropItemAtHotspotRandomly(zone, providedItem)
-				break;
-			case ZoneType.Town:
-			case ZoneType.Empty:
-			default:
-				break;
-		}
 	}
 
 	private _buildWorld(zone: Zone, surroundingZones: Zone[]) {
