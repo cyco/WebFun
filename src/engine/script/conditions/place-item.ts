@@ -22,9 +22,7 @@ export default {
 		}
 
 		if (item < 0) {
-			const worldLocation = engine.currentWorld.locationOfZone(zone);
-			if (!worldLocation) console.warn("can find location of zone", zone, "on current world");
-			const worldItem = engine.currentWorld.at(worldLocation);
+			const worldItem = engine.currentWorld.itemForZone(zone);
 			item = worldItem.requiredItem.id;
 		}
 

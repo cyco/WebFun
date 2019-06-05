@@ -8,6 +8,7 @@ import {
 	ZoneType,
 	Tile,
 	CharFrameEntry,
+	CharMovementType,
 	Char,
 	Puzzle
 } from "src/engine/objects";
@@ -53,6 +54,26 @@ class ZoneScene extends Scene {
 		scriptResult = await this._handlePlacedTile();
 		if (scriptResult !== ScriptResult.Done) {
 			return;
+		}
+
+		for (const htsp of this.zone.hotspots) {
+			if (!htsp.enabled) continue;
+			if (htsp.type !== HotspotType.CrateItem && htsp.type !== HotspotType.TriggerLocation) continue;
+			if (this.zone.getTile(htsp.x, htsp.y, 1)) continue;
+
+			if (htsp.arg < 0) {
+				htsp.enabled = false;
+				continue;
+			}
+
+			const item = this.engine.data.tiles[htsp.arg];
+			const worldItem = this.engine.currentWorld.itemForZone(this.zone);
+			if (item && worldItem && worldItem.findItem === item) {
+				this.zone.solved = true;
+				worldItem.zone.solved = true;
+			}
+			htsp.enabled = false;
+			this.engine.dropItem(item, htsp.location);
 		}
 
 		engine.scriptExecutor.prepeareExecution(EvaluationMode.Walk, this.zone);
@@ -486,6 +507,8 @@ class ZoneScene extends Scene {
 
 		const vector = new Point(0, 0);
 		switch (npc.face.movementType) {
+			case CharMovementType.Animation:
+				return this._animateNPC(npc);
 			default:
 				vector.y = 1;
 		}
@@ -510,6 +533,10 @@ class ZoneScene extends Scene {
 		this.zone.setTile(null, npc.position);
 		npc.position = target;
 		this.zone.setTile(npc.face.frames[0].down, npc.position);
+	}
+
+	private _animateNPC(npc: NPC) {
+		console.assert(npc.face.movementType === CharMovementType.Animation);
 	}
 
 	prepareCamera() {
@@ -654,9 +681,9 @@ class ZoneScene extends Scene {
 
 			engine.scriptExecutor.prepeareExecution(EvaluationMode.Bump, this.zone);
 
-			const worldItem = this.engine.currentWorld.at(this.engine.currentWorld.locationOfZone(this.zone));
-			if (worldItem.npc && worldItem.npc.id === targetTile.id) {
-				this._bumpPuzzleNPC(worldItem, targetPoint);
+			const quest = this.engine.currentWorld.itemForZone(this.zone);
+			if (quest && quest.npc && quest.npc.id === targetTile.id) {
+				this._bumpPuzzleNPC(quest, targetPoint);
 				return;
 			}
 
@@ -743,9 +770,7 @@ class ZoneScene extends Scene {
 
 			this.zone.setTile(null, at.x, at.y, 1);
 			this.engine.dropItem(engine.data.tiles[itemID], at).then(() => {
-				const worldItem = this.engine.currentWorld.at(
-					this.engine.currentWorld.locationOfZone(this.zone)
-				);
+				const worldItem = this.engine.currentWorld.itemForZone(this.zone);
 				if (worldItem && worldItem.findItem && worldItem.findItem.id === itemID) {
 					this.zone.solved = true;
 					worldItem.zone.solved = true;
@@ -782,14 +807,8 @@ class ZoneScene extends Scene {
 
 		let acceptItem = false;
 
-		const worldLocation = engine.world.locationOfZone(this.zone);
-		if (!worldLocation) {
-			console.warn("Could not find world location for zone.");
-		}
-		const worldItem = engine.world.at(worldLocation);
-		if (!worldItem) {
-			console.warn("Could not find world item at", worldLocation);
-		}
+		const worldItem = engine.world.itemForZone(this.zone);
+		console.assert(!!worldItem, "Could not find world item for zone", this.zone);
 
 		let hotspot: Hotspot;
 		for (hotspot of this.zone.hotspots) {
@@ -797,6 +816,14 @@ class ZoneScene extends Scene {
 			if (!hotspot.location.isEqualTo(location)) continue;
 			if (![HotspotType.PuzzleNPC, HotspotType.Lock, HotspotType.SpawnLocation].includes(hotspot.type))
 				continue;
+
+			if (hotspot.type === HotspotType.Lock) {
+				const keyTileId = hotspot.arg < 0 ? worldItem.requiredItem.id : hotspot.arg;
+				const keyTile = engine.data.tiles[keyTileId];
+
+				acceptItem = tile === keyTile;
+				break;
+			}
 
 			if (tile !== worldItem.requiredItem) {
 				// TODO: Play sound no-go
@@ -818,7 +845,7 @@ class ZoneScene extends Scene {
 
 			if (hotspot.type === HotspotType.SpawnLocation) {
 				// TODO: speak
-				this.engine.dropItem(engine.data.tiles[worldItem.findItem.id], location);
+				this.engine.dropItem(worldItem.findItem, location);
 			}
 		}
 
