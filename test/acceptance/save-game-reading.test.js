@@ -6,14 +6,18 @@ import { InputStream } from "src/util";
 import loadGameData from "test-helpers/game-data";
 
 describe("WebFun.Acceptance.Save game reading", () => {
-	it("reads yoda's save game format correctly", async done => {
-		const rawGameData = await loadGameData(Yoda);
-		const gameData = new GameData(rawGameData);
-		const saveData = await getFixtureData("yoda.wld");
-		const saveStream = new InputStream(saveData);
+	let rawYodaData;
+	let rawIndyData;
 
-		const { read } = Reader.build(saveStream);
-		const state = read(gameData);
+	beforeAll(async done => {
+		rawYodaData = await loadGameData(Yoda);
+		rawIndyData = await loadGameData(Indy);
+
+		done();
+	});
+
+	it("reads yoda's save game format correctly", async done => {
+		const state = await readSaveGame("save-games/yoda.wld", Yoda);
 		expect(state.type).toBe(Yoda);
 		expect(state.currentZoneID).toBe(89);
 		expect(state.positionOnWorld.x).toBe(0);
@@ -23,13 +27,7 @@ describe("WebFun.Acceptance.Save game reading", () => {
 	});
 
 	it("reads indy's save game format correctly", async done => {
-		const rawGameData = await loadGameData(Indy);
-		const gameData = new GameData(rawGameData);
-		const saveData = await getFixtureData("indy.wld");
-		const saveStream = new InputStream(saveData);
-
-		const { read } = Reader.build(saveStream);
-		const state = read(gameData);
+		const state = await readSaveGame("save-games/indy.wld", Indy);
 		expect(state.type).toBe(Indy);
 		expect(state.currentZoneID).toBe(120);
 		expect(state.positionOnWorld.x).toBe(5);
@@ -37,4 +35,13 @@ describe("WebFun.Acceptance.Save game reading", () => {
 		expect(Array.from(state.inventoryIDs)).toEqual([443, 449]);
 		done();
 	});
+
+	async function readSaveGame(game, type) {
+		const gameData = new GameData(type === Indy ? rawIndyData : rawYodaData);
+		const saveData = await getFixtureData(game);
+		const saveStream = new InputStream(saveData);
+
+		const { read } = Reader.build(saveStream);
+		return await read(gameData);
+	}
 });
