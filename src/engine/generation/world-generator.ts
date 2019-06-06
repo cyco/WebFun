@@ -16,6 +16,7 @@ import World from "./world";
 import WorldGenerationError from "./world-generation-error";
 import WorldItem from "./world-item";
 import WorldItemType from "./world-item-type";
+import RoomIterator from "../room-iterator";
 
 declare global {
 	interface Array<T> {
@@ -135,7 +136,7 @@ class WorldGenerator {
 					requiredItem: this.requiredItem
 				});
 
-				const vehicleHotspot = zone.hotspots.find(htsp => htsp.type === HotspotType.VehicleTo);
+				const vehicleHotspot = zone.hotspots.withType(HotspotType.VehicleTo).first();
 				const connectedZone = this.lookupZoneById(vehicleHotspot ? vehicleHotspot.arg : -1);
 				if (connectedZone === null) continue;
 
@@ -662,7 +663,7 @@ class WorldGenerator {
 					}
 					if (this.somethingWithTeleporters) break;
 
-					const hasTeleporter = zone.hotspots.find(htsp => htsp.type === HotspotType.Teleporter);
+					const hasTeleporter = zone.hotspots.withType(HotspotType.Teleporter).first();
 					if (!hasTeleporter) break;
 
 					if (!teleportersFound) {
@@ -811,7 +812,7 @@ class WorldGenerator {
 	}
 
 	private zoneLeadsToNPC(zone: Zone, npc: Tile): boolean {
-		return this._traverseZoneUntil(zone, zone => !!zone.puzzleNPCs.find(t => t === npc), false, identity);
+		return this._traverseZoneUntil(zone, zone => zone.puzzleNPCs.includes(npc), false, identity);
 	}
 
 	private getUnusedRequiredItemForZoneRandomly(zone: Zone, isGoal: boolean): Tile {
@@ -834,20 +835,11 @@ class WorldGenerator {
 		defaultReturn: T,
 		predicate = (result: T) => result !== defaultReturn
 	): T {
-		const result = callback(zone);
-		if (predicate(result)) {
-			return result;
-		}
-
-		const hotspots = zone.hotspots.withType(HotspotType.DoorIn).filter(htsp => htsp.arg !== -1);
-		for (const hotspot of hotspots) {
-			const result = this._traverseZoneUntil(
-				this.lookupZoneById(hotspot.arg),
-				callback,
-				defaultReturn,
-				predicate
-			);
-			if (predicate(result)) return result;
+		for (const room of RoomIterator(zone, this._data.zones)) {
+			const result = callback(room);
+			if (predicate(result)) {
+				return result;
+			}
 		}
 
 		return defaultReturn;
@@ -909,7 +901,7 @@ class WorldGenerator {
 		return this._traverseZoneUntil(
 			zone,
 			zone => {
-				if (!zone.providedItems.find(t => t === item)) return false;
+				if (!zone.providedItems.includes(item)) return false;
 
 				const candidates = zone.hotspots.withType(HotspotType.TriggerLocation);
 				return this.placeItemAtHotspotRandomly(candidates, item);
@@ -930,7 +922,7 @@ class WorldGenerator {
 		return this._traverseZoneUntil(
 			zone,
 			zone => {
-				if (!zone.requiredItems.find(t => t === item)) return false;
+				if (!zone.requiredItems.includes(item)) return false;
 
 				const hotspot = zone.hotspots.withType(HotspotType.Lock);
 				if (!hotspot.length) return false;
@@ -955,7 +947,7 @@ class WorldGenerator {
 		return this._traverseZoneUntil(
 			zone,
 			zone => {
-				if (!zone.puzzleNPCs.find(t => t === npc)) return false;
+				if (!zone.puzzleNPCs.includes(npc)) return false;
 				const candidates = zone.hotspots.withType(HotspotType.SpawnLocation).filter(isFree);
 				return this.placeItemAtHotspotRandomly(candidates, npc);
 			},
@@ -972,7 +964,7 @@ class WorldGenerator {
 		return this._traverseZoneUntil(
 			zone,
 			zone => {
-				if (!zone.providedItems.find(t => t === item)) return false;
+				if (!zone.providedItems.includes(item)) return false;
 				const hotspotType = this.hotspotTypeForTileAttributes(item.attributes);
 				const candidates = zone.hotspots.withType(hotspotType);
 				return this.placeItemAtHotspotRandomly(candidates, item);
