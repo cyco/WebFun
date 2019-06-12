@@ -9,8 +9,8 @@ import Settings from "src/settings";
 
 const SettingsItem = (label: string, key: keyof typeof Settings, settings: typeof Settings) => ({
 	title: label,
-	callback: () => (settings[key] = !settings[key]),
-	state: () => (settings[key] ? MenuItemState.On : MenuItemState.Off)
+	callback: (): void => (((settings as any)[key] = !(settings as any)[key]), void 0),
+	state: (): MenuItemState => (settings[key] ? MenuItemState.On : MenuItemState.Off)
 });
 
 const SettingsAction = (label: string, callback: Function) => ({
