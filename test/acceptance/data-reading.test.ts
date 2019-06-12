@@ -1,9 +1,9 @@
-import { getFixtureData } from "test-helpers/fixture-loading";
-import { GameData, GameTypeIndy, GameTypeYoda, readGameDataFile } from "src/engine";
+import { getFixtureData } from "test/helpers/fixture-loading";
+import { GameData, GameType, GameTypeIndy, GameTypeYoda, readGameDataFile } from "src/engine";
 import { InputStream } from "src/util";
 
 describe("DataReading", () => {
-	const loadData = async file => {
+	const loadData = async (file: string): Promise<InputStream> => {
 		return new Promise(resolve => {
 			getFixtureData(file, result => {
 				resolve(result && result.byteLength > 9 ? new InputStream(result) : null);
@@ -11,7 +11,7 @@ describe("DataReading", () => {
 		});
 	};
 
-	const parsesWithoutError = (type, file) => async done => {
+	const parsesWithoutError = (type: GameType, file: string) => async (done: () => void) => {
 		const data = await loadData(file);
 		if (!data) {
 			console.warn(`Unable to find fixture data. Place ${file} into test/fixtures to run this test.`);

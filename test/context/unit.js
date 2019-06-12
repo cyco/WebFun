@@ -1,4 +1,4 @@
-import "../helpers/index.js";
+import "../helpers/index.ts";
 
 import { global } from "src/std";
 import {

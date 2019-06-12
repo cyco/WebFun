@@ -1,5 +1,5 @@
 import { HTMLCollection } from "std/dom";
-import render from "test-helpers/render";
+import render from "test/helpers/render";
 
 describe("WebFun.Extension.HTMLCollection.map", () => {
 	let subject;

@@ -1,6 +1,6 @@
 import forEach from "src/extension/html-collection/for-each";
 import { NodeList } from "std/dom";
-import sandboxed from "test-helpers/dom-sandbox";
+import sandboxed from "test/helpers/dom-sandbox";
 
 describe(
 	"WebFun.Extension.HTMLCollection.forEach",

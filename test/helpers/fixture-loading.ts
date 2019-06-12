@@ -1,8 +1,8 @@
-import { XMLHttpRequest } from "std/dom";
+import { XMLHttpRequest } from "src/std/dom";
 
 const base = "base/test/fixtures/";
 
-const getFixtureContent = name => {
+const getFixtureContent = (name: string) => {
 	const url = buildFixtureUrl(name);
 	const xhr = new XMLHttpRequest();
 	xhr.open("GET", url, false);
@@ -11,7 +11,7 @@ const getFixtureContent = name => {
 	return xhr.responseText;
 };
 
-const getFixtureData = (name, callback) => {
+const getFixtureData = (name: string, callback?: (buffer: ArrayBuffer) => void): Promise<ArrayBuffer> => {
 	return new Promise(resolve => {
 		const url = buildFixtureUrl(name);
 		const xhr = new XMLHttpRequest();
@@ -36,7 +36,7 @@ const getFixtureData = (name, callback) => {
 	});
 };
 
-function buildFixtureUrl(name) {
+function buildFixtureUrl(name: string): string {
 	return base + name;
 }
 

@@ -1,6 +1,6 @@
 import Menu from "src/ui/menu";
 import { default as MenuItem, Separator, State } from "src/ui/menu-item";
-import sandboxed from "test-helpers/dom-sandbox";
+import sandboxed from "test/helpers/dom-sandbox";
 
 describe(
 	"WebFun.UI.MenuItem",

@@ -1,5 +1,5 @@
 import readUint8 from "src/extension/array-buffer/read-uint8";
-import { getFixtureData } from "test-helpers/fixture-loading";
+import { getFixtureData } from "test/helpers/fixture-loading";
 
 describe("WebFun.Extension.ArrayBuffer.readUint8", () => {
 	let sampleBuffer;

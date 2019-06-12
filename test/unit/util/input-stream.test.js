@@ -1,6 +1,6 @@
 import InputStream from "src/util/input-stream";
 import Stream from "src/util/stream";
-import { getFixtureData } from "test-helpers/fixture-loading";
+import { getFixtureData } from "test/helpers/fixture-loading";
 
 describe("WebFun.Util.InputStream", () => {
 	let buffer;

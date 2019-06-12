@@ -1,6 +1,6 @@
 import map from "src/extension/node-list/map";
 import { NodeList } from "std/dom";
-import sandboxed from "test-helpers/dom-sandbox";
+import sandboxed from "test/helpers/dom-sandbox";
 
 describe(
 	"WebFun.Extension.NodeList.map",
