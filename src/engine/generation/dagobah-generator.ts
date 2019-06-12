@@ -1,6 +1,5 @@
 import { HotspotType, ZoneType } from "src/engine/objects";
 
-import Engine from "../engine";
 import GameData from "../game-data";
 import Hotspot from "../objects/hotspot";
 import World from "./world";
@@ -10,11 +9,11 @@ import Yoda from "../yoda";
 import { randmod } from "src/util";
 
 class DagobahGenerator {
-	private _engine: Engine;
+	private readonly data: GameData;
 	private _world: World = null;
 
-	constructor(engine: Engine) {
-		this._engine = engine;
+	constructor(data: GameData) {
+		this.data = data;
 	}
 
 	get world() {
@@ -23,7 +22,7 @@ class DagobahGenerator {
 	}
 
 	generate(generator: WorldGenerator) {
-		const data = this._engine.data;
+		const data = this.data;
 		const dagobah = new World();
 		dagobah.zones = data.zones;
 

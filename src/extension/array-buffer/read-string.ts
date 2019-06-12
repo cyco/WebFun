@@ -8,4 +8,10 @@ const readString = function(offset: number, length: number) {
 
 ArrayBuffer.prototype.readString = ArrayBuffer.prototype.readString || readString;
 
+declare global {
+	interface ArrayBuffer {
+		readString(): string;
+	}
+}
+
 export default readString;

@@ -88,7 +88,7 @@ class GameController extends EventTarget {
 		await this._loadGameData();
 		const story = new Story(0xbeef, Planet.TATOOINE, WorldSize.Small);
 		this._engine.inventory.removeAllItems();
-		story.generateWorld(this._engine);
+		story.generateWorld(this._engine.data);
 		this._engine.story = story;
 
 		this._showSceneView();

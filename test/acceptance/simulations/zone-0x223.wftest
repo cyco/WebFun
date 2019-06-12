@@ -1,0 +1,10 @@
+-= WebFun Test =--
+Zone:  0x223
+Seed:  0xDEAD
+Find:  0x213  // Droid Detector
+
+- Input -
+.
+
+- Expect -
+NOP

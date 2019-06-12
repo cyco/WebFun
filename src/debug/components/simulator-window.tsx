@@ -86,10 +86,10 @@ class SimulatorWindow extends AbstractWindow {
 			this._requiredTile.tile,
 			this._required2Tile.tile,
 			this._mainPicker.zone,
-			this._zonePickers.map(p => p.zone)
+			this._zonePickers.map(p => p.zone),
+			this._gameController.data.zones
 		);
 
-		console.log("GameController", GameController);
 		const controller = this.gameController;
 		const engine = controller.engine;
 
@@ -98,7 +98,7 @@ class SimulatorWindow extends AbstractWindow {
 		engine.story = story;
 		engine.data = controller.data;
 
-		controller.jumpStartEngine(this._mainPicker.zone);
+		controller.jumpStartEngine(this._zonePickers[6].zone);
 		this.close();
 	}
 
@@ -125,9 +125,11 @@ class SimulatorWindow extends AbstractWindow {
 
 		srand(zone.id);
 
-		this._zonePickers
-			.filter(picker => !picker.filteredZones.contains(picker.zone))
-			.forEach(picker => (picker.zone = picker.filteredZones.shuffle().first()));
+		this._zonePickers.forEach(
+			picker => (picker.filter = z => z.type === ZoneType.Empty && z.planet === zone.planet)
+		);
+		const zones = this._zonePickers.first().filteredZones.shuffle();
+		this._zonePickers.forEach((picker, idx) => (picker.zone = zones[idx]));
 	}
 
 	private connectedZones(zone: Zone): Zone[] {
