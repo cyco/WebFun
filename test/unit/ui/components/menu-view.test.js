@@ -4,7 +4,7 @@ import {
 	MenuItemSeparator as MenuItemSeparatorComponent
 } from "src/ui/components";
 import MenuView from "src/ui/components/menu-view";
-import { or } from "test-helpers/css";
+import { or } from "test/helpers/css";
 
 describeComponent(MenuView, () => {
 	let subject;

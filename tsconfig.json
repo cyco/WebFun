@@ -17,7 +17,7 @@
 		"jsx": "preserve",
 		"typeRoots": ["src/@types"],
 		"lib": ["es2018", "dom", "esnext.asynciterable"],
-		"types": ["jasmine", "jasmine-matchers", "webcomponents.js", "webfun-additions", "webfun-tests", "json", "text-encoding"]
+		"types": ["jasmine", "jasmine-matchers", "webcomponents.js", "webfun-additions", "json", "text-encoding"]
 	},
 	"exclude": ["node_modules"]
 }

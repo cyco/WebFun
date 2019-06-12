@@ -1,5 +1,5 @@
 import readUint16 from "src/extension/array-buffer/read-uint16";
-import { getFixtureData } from "test-helpers/fixture-loading";
+import { getFixtureData } from "test/helpers/fixture-loading";
 
 describe("WebFun.Extension.ArrayBuffer.readUint16", () => {
 	let sampleBuffer;

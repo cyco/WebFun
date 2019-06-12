@@ -1,5 +1,5 @@
 import readString from "src/extension/array-buffer/read-string";
-import { getFixtureData } from "test-helpers/fixture-loading";
+import { getFixtureData } from "test/helpers/fixture-loading";
 
 describe("WebFun.Extension.ArrayBuffer.readString", () => {
 	let sampleBuffer;

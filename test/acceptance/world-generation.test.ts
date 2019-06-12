@@ -5,16 +5,16 @@ import {
 	PrepareExpectations
 } from "src/debug/expectation";
 
-import loadGameData from "test-helpers/game-data";
+import loadGameData from "test/helpers/game-data";
 import GameData from "../../src/engine/game-data";
 import Story from "../../src/engine/story";
 import { Planet, WorldSize } from "../../src/engine/types";
-import Worlds from "test-fixtures/worlds.txt";
+import Worlds from "test/fixtures/worlds.txt";
 import { Yoda } from "src/engine/type";
 
-let rawData = null;
+let rawData: any = null;
 
-const compareItem = (actual, expected) => {
+const compareItem = (actual: any, expected: any) => {
 	const result = CompareWorldItems(actual, expected);
 	if (result !== ComparisonResult.Different) return;
 
@@ -24,8 +24,8 @@ const compareItem = (actual, expected) => {
 	throw `Difference detected`;
 };
 
-const compare = (story, expectation) => {
-	if (expectation.world === null && !story._reseeded) throw `Expected reseed!`;
+const compare = (story: Story, expectation: any) => {
+	if (expectation.world === null && !(story as any)._reseeded) throw `Expected reseed!`;
 	else if (expectation.world === null) return;
 
 	/* main world */
@@ -48,7 +48,7 @@ const compare = (story, expectation) => {
 	}
 };
 
-const runTest = ({ seed, planet, size, world, dagobah }) => {
+const runTest = ({ seed, planet, size, world, dagobah }: any) => {
 	describe(`World ${seed} ${planet.toString()} ${size.toString()}`, () => {
 		it("is generated correctly", done => {
 			const story = new Story(seed, Planet.fromNumber(planet), WorldSize.fromNumber(size));
@@ -59,31 +59,12 @@ const runTest = ({ seed, planet, size, world, dagobah }) => {
 	});
 };
 
-const runnerFilter = map => {
-	const values = process.acceptance;
-	if (values.seed !== undefined && map.seed !== values.seed) {
-		return false;
-	}
-
-	if (values.planet !== undefined && map.planet !== values.planet) {
-		return false;
-	}
-
-	if (values.size !== undefined && map.size !== values.size) {
-		return false;
-	}
-
-	return true;
-};
-const identity = (i, idx) => idx === 0;
 describe("WebFun.Acceptance.World Generation", () => {
 	beforeAll(async done => {
 		rawData = await loadGameData(Yoda);
 		done();
 	});
 
-	const maps = PrepareExpectations(Worlds)
-		.map(ParseExpectation)
-		.filter(process.acceptance ? runnerFilter : identity);
+	const maps = PrepareExpectations(Worlds).map(ParseExpectation);
 	maps.forEach(runTest);
 });

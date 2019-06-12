@@ -9,8 +9,6 @@ module.exports = {
 			src: Paths.sourceRoot,
 			std: Path.resolve(Paths.sourceRoot, "std"),
 			libs: Path.resolve(Paths.sourceRoot, "libs"),
-			"test-helpers": Path.resolve(Paths.projectRoot, "test/helpers"),
-			"test-fixtures": Path.resolve(Paths.projectRoot, "test/fixtures"),
 			test: Path.resolve(Paths.projectRoot, "test"),
 			fs: Path.resolve(Paths.projectRoot, "test/helpers/polyfill/fs.js"),
 			path: Path.resolve(Paths.projectRoot, "test/helpers/polyfill/path.js")

@@ -1,5 +1,6 @@
 import "core-js/stable";
 import "regenerator-runtime/runtime";
+import "jasmine-expect";
 
 import "src/extension";
 import { console, global } from "src/std";
@@ -24,7 +25,7 @@ global.buildFixtureUrl = buildFixtureUrl;
 
 global.WebFunJSX = new ComponentJSXRenderer();
 
-console.assert = (condition, message, ...rest) => {
+console.assert = (condition: string, message: string, ...rest: any[]) => {
 	if (!condition) {
 		let i = 0;
 		throw new Error(message.replace(/\{\}/g, _ => rest[i++]));

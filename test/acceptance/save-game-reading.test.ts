@@ -1,13 +1,13 @@
-import { Indy, Yoda } from "src/engine/type";
+import { Indy, Yoda, GameType } from "src/engine/type";
 import { Reader } from "src/engine/save-game";
 import { GameData } from "src/engine";
-import { getFixtureData } from "test-helpers/fixture-loading";
+import { getFixtureData } from "test/helpers/fixture-loading";
 import { InputStream } from "src/util";
-import loadGameData from "test-helpers/game-data";
+import loadGameData from "test/helpers/game-data";
 
 describe("WebFun.Acceptance.Save game reading", () => {
-	let rawYodaData;
-	let rawIndyData;
+	let rawYodaData: any;
+	let rawIndyData: any;
 
 	beforeAll(async done => {
 		rawYodaData = await loadGameData(Yoda);
@@ -36,7 +36,7 @@ describe("WebFun.Acceptance.Save game reading", () => {
 		done();
 	});
 
-	async function readSaveGame(game, type) {
+	async function readSaveGame(game: string, type: GameType) {
 		const gameData = new GameData(type === Indy ? rawIndyData : rawYodaData);
 		const saveData = await getFixtureData(game);
 		const saveStream = new InputStream(saveData);

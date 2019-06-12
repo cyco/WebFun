@@ -9,16 +9,19 @@ import { ComponentRegistry } from "src/ui";
 import { GameData, Engine, Story } from "src/engine";
 import { Planet, WorldSize } from "src/engine/types";
 import { PaletteAnimation } from "src/engine/rendering";
+import { Loader } from "src/engine/loader";
 import { Renderer as DummyRenderer } from "src/engine/dummy-interface";
 import Settings from "src/settings";
 import { dispatch } from "src/util";
 
 const FiveMinutes = 5 * 60 * 1000;
 
+declare var withTimeout: (t: number, block: () => void) => () => void;
+
 describe(
 	"WebFun.Acceptance.Gameplay",
 	withTimeout(FiveMinutes, () => {
-		let rawData, paletteData;
+		let rawData: any, paletteData: any;
 
 		beforeAll(async done => {
 			const registry = ComponentRegistry.sharedRegistry;
@@ -49,9 +52,18 @@ describe(
 			}
 		});
 
-		async function runGame(seed, planet, size, input, debug = false) {
+		async function runGame(
+			seed: number,
+			planet: Planet,
+			size: WorldSize,
+			input: string,
+			debug: boolean = false
+		): Promise<{ engine: Engine; cleanup: Function; error: any }> {
 			return new Promise(async resolve => {
-				let engine, inputManager, sceneView, onInputEnd;
+				let engine: Engine,
+					inputManager: ReplayingInputManager,
+					sceneView: SceneView,
+					onInputEnd: () => void;
 
 				Settings.debug = debug;
 				Settings.skipDialogs = true;
@@ -68,11 +80,8 @@ describe(
 						await dispatch(() => void 0, 5);
 
 						engine.inputManager.removeListeners();
-						engine.inputManager.removeEventListener(
-							ReplayingInputManager.Event.InputEnd,
-							onInputEnd
-						);
-						engine.inputManager.input = [];
+						inputManager.removeEventListener(ReplayingInputManager.Event.InputEnd, onInputEnd);
+						inputManager.input = [];
 						engine.sceneManager.clear();
 
 						engine.currentWorld = null;
@@ -83,8 +92,8 @@ describe(
 						engine.inputManager.engine = null;
 						engine.inputManager = null;
 						engine.loader = null;
-						engine.metronome.onrender = () => void 0;
-						engine.metronome.ontick = () => void 0;
+						engine.metronome.onrender = (): void => void 0;
+						engine.metronome.ontick = (): void => void 0;
 						engine.metronome = null;
 						engine.palette = null;
 						engine.renderer = null;
@@ -104,7 +113,7 @@ describe(
 						InputManager: () => inputManager,
 						Renderer: () =>
 							debug ? new CanvasRenderer.Renderer(sceneView.canvas) : new DummyRenderer(),
-						Loader: () => {},
+						Loader: () => (({} as unknown) as Loader),
 						SceneManager: () => sceneView.manager
 					});
 
@@ -118,7 +127,7 @@ describe(
 					engine.story = story;
 
 					engine.metronome.tickDuration = 1;
-					engine.metronome.ontick = delta => engine.update(delta);
+					engine.metronome.ontick = (delta: number) => engine.update(delta);
 					engine.metronome.onrender = () => engine.render();
 
 					sceneView.manager.engine = engine;

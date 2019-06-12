@@ -1,5 +1,5 @@
 import asString from "src/extension/uint8-array/as-string";
-import { getFixtureData } from "test-helpers/fixture-loading";
+import { getFixtureData } from "test/helpers/fixture-loading";
 
 describe("WebFun.Extension.Uint8Array.asString", () => {
 	let buffer;

@@ -1,5 +1,5 @@
-const withTimeout = (timeout, block) => () => {
-	let previousTimeout;
+const withTimeout = (timeout: number, block: Function) => () => {
+	let previousTimeout: number;
 
 	beforeAll(() => {
 		previousTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
