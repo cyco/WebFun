@@ -4,6 +4,7 @@ import ScriptDebugger from "./script-debugger";
 import { ComponentRegistry } from "src/ui";
 import * as Components from "./components";
 import GameController from "src/app/game-controller";
+import SimulatedStory from "./simulated-story";
 
 const initialize = (gameController: GameController) => {
 	ComponentRegistry.sharedRegistry.registerComponents(Components);
@@ -21,5 +22,6 @@ export {
 	PrepareExpectations,
 	ParseExpectation,
 	ComparisonResult,
-	CompareWorldItems
+	CompareWorldItems,
+	SimulatedStory
 };

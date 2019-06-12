@@ -21,7 +21,8 @@ describe(
 		let rawData, paletteData;
 
 		beforeAll(async done => {
-			ComponentRegistry.sharedRegistry.registerComponent(SceneView);
+			const registry = ComponentRegistry.sharedRegistry;
+			if (!registry.contains(SceneView)) registry.registerComponent(SceneView);
 
 			rawData = await loadGameData(Yoda);
 			paletteData = Uint32Array.paletteFromArrayBuffer(await getFixtureData("yoda.pal"));
@@ -113,7 +114,7 @@ describe(
 					engine.palette = new PaletteAnimation(paletteData);
 
 					const story = new Story(seed, planet, size);
-					story.generateWorld(engine);
+					story.generateWorld(engine.data);
 					engine.story = story;
 
 					engine.metronome.tickDuration = 1;

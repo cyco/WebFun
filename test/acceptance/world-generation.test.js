@@ -52,7 +52,7 @@ const runTest = ({ seed, planet, size, world, dagobah }) => {
 	describe(`World ${seed} ${planet.toString()} ${size.toString()}`, () => {
 		it("is generated correctly", done => {
 			const story = new Story(seed, Planet.fromNumber(planet), WorldSize.fromNumber(size));
-			story.generateWorld({ data: new GameData(rawData) });
+			story.generateWorld(new GameData(rawData));
 			expect(() => compare(story, { seed, planet, size, world, dagobah })).not.toThrow();
 			done();
 		});
@@ -86,20 +86,4 @@ describe("WebFun.Acceptance.World Generation", () => {
 		.map(ParseExpectation)
 		.filter(process.acceptance ? runnerFilter : identity);
 	maps.forEach(runTest);
-
-	/* generate all maps
-	for (let seed = 0; seed <= 0xffff; seed++) {
-		+(function(seed) {
-			it("generates " + seed.toString() + " for coverage", () => {
-				if ([529, 8076, 56999, 63300].contains(seed)) {
-					console.log("skip " + seed.toString());
-					return;
-				}
-				const story = new Story(seed, Planet.ENDOR, WorldSize.Large);
-				story.generateWorld({ data: new GameData(rawData) });
-				expect(true).toBe(true);
-			});
-		})(seed);
-	}
-	//*/
 });

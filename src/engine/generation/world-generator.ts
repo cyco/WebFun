@@ -6,7 +6,6 @@ import { Planet, WorldSize } from "src/engine/types";
 import { abs, floor } from "src/std/math";
 import { and, not } from "src/util/functional";
 
-import Engine from "../engine";
 import GameData from "src/engine/game-data";
 import GetDistanceToCenter from "./distance-to-center";
 import Map from "./map";
@@ -46,10 +45,10 @@ class WorldGenerator {
 	private somethingWithTeleporters: number = -1;
 	private puzzlesCanBeReused: number = 0;
 
-	constructor(size: WorldSize, planet: Planet, engine: Engine) {
+	constructor(size: WorldSize, planet: Planet, data: GameData) {
 		this._size = size;
 		this._planet = planet;
-		this._data = engine && engine.data;
+		this._data = data;
 	}
 
 	public generate(seed: number): boolean {

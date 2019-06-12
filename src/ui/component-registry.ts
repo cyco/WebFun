@@ -28,6 +28,10 @@ class ComponentRegistry {
 			console.info(`Could not register component ${ComponentDefinition.tagName}`);
 		}
 	}
+
+	public contains(ComponentDefinition: typeof Component): boolean {
+		return !!this.components[ComponentDefinition.tagName];
+	}
 }
 
 export default ComponentRegistry;

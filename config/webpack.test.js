@@ -23,6 +23,11 @@ const config = merge(BaseConfig, {
 				test: /\.txt/,
 				exclude: /node_modules/,
 				loader: "raw-loader"
+			},
+			{
+				test: /\.wftest/,
+				exclude: /node_modules/,
+				loader: "raw-loader"
 			}
 		]
 	}

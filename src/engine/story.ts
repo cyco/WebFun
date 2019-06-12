@@ -1,7 +1,7 @@
 import { DagobahGenerator, WorldGenerationError, WorldGenerator } from "src/engine/generation";
 import { Planet, WorldSize } from "./types";
 
-import Engine from "./engine";
+import GameData from "./game-data";
 import Puzzle from "src/engine/objects/puzzle";
 import World from "./generation/world";
 import { rand } from "src/util";
@@ -45,7 +45,7 @@ class Story {
 		return this._dagobah;
 	}
 
-	public generateWorld(engine: Engine): void {
+	public generateWorld(data: GameData): void {
 		let generator = null;
 		let success = false;
 		let effectiveSeed = this.seed;
@@ -57,7 +57,7 @@ class Story {
 				return;
 			}
 			try {
-				generator = new WorldGenerator(this.size, this.planet, engine);
+				generator = new WorldGenerator(this.size, this.planet, data);
 				success = generator.generate(effectiveSeed);
 			} catch (e) {
 				if (e instanceof WorldGenerationError) success = false;
@@ -71,19 +71,19 @@ class Story {
 
 		this.goal = generator.goalPuzzle;
 
-		this._setupWorld(generator, engine);
-		this._setupDagobah(generator, engine);
+		this._setupWorld(generator);
+		this._setupDagobah(generator, data);
 
 		this._world.layDownHotspotItems();
 		this._dagobah.layDownHotspotItems();
 	}
 
-	private _setupWorld(generator: WorldGenerator, _: Engine): void {
+	private _setupWorld(generator: WorldGenerator): void {
 		this._world = generator.world;
 	}
 
-	private _setupDagobah(worldGenerator: WorldGenerator, engine: Engine): void {
-		const generator = new DagobahGenerator(engine);
+	private _setupDagobah(worldGenerator: WorldGenerator, data: GameData): void {
+		const generator = new DagobahGenerator(data);
 		generator.generate(worldGenerator);
 		this._dagobah = generator.world;
 	}
