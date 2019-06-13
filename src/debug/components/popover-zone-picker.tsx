@@ -99,7 +99,7 @@ class PopoverZonePicker extends Component implements EventListenerObject {
 
 	public set zone(z) {
 		this._zone = z;
-		this.state.store("zone", z.id);
+		this.state.store("zone", z ? z.id : null);
 		this.redraw();
 	}
 
