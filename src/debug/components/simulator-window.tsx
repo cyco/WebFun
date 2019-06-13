@@ -2,7 +2,7 @@ import "./simulator-window.scss";
 
 import { AbstractWindow, Button } from "src/ui/components";
 import { Hotspot, Zone, ZoneType } from "src/engine/objects";
-import { Point, srand } from "src/util";
+import { Point } from "src/util";
 
 import { DiscardingStorage } from "src/util";
 import { GameController } from "src/app";
