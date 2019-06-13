@@ -2,7 +2,8 @@ wf-debug-popover-zone-picker {
 	display: block;
 	background: black;
 	border: 1px solid gray;
-	:hover {
+
+	&:not([disabled]) :hover {
 		border: 1px solid black;
 	}
 

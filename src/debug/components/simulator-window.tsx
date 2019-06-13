@@ -35,6 +35,7 @@ class SimulatorWindow extends AbstractWindow {
 					filter={({ type, planet }: Zone) =>
 						type === ZoneType.Empty && planet === this.currentZone.planet
 					}
+					disabled={true}
 				/>
 			) as PopoverZonePicker
 	);

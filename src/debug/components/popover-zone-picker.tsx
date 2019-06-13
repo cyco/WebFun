@@ -26,6 +26,8 @@ class PopoverZonePicker extends Component implements EventListenerObject {
 	}
 
 	public handleEvent(e: MouseEvent) {
+		if (this.disabled) return;
+
 		const popover = <Popover /> as Popover;
 		const session = new PopoverModalSession(popover);
 		const picker = (
@@ -108,6 +110,15 @@ class PopoverZonePicker extends Component implements EventListenerObject {
 	public get filteredZones() {
 		if (!this.filter) return this.zones;
 		return this.zones.filter(z => this.filter(z));
+	}
+
+	public set disabled(flag: boolean) {
+		if (flag) this.setAttribute("disabled", "");
+		else this.removeAttribute("disabled");
+	}
+
+	public get disabled() {
+		return this.hasAttribute("disabled");
 	}
 }
 
