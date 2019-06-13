@@ -73,6 +73,7 @@ const run = (fileName: string, testFileContents: string) => {
 
 			function surroundingZones(zone: Zone): Zone[] {
 				const zones = ctx.engine.data.zones.slice();
+				srand(zone.id);
 				return zones
 					.filter((z: Zone) => z !== zone && z.type === Zone.Type.Empty && z.planet === zone.planet)
 					.shuffle();

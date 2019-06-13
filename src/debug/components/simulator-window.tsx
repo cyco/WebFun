@@ -124,12 +124,11 @@ class SimulatorWindow extends AbstractWindow {
 		this._required2Tile.tiles = zone.goalItems.concat(...connectedZones.map(z => z.goalItems)).unique();
 		this._required2Tile.tile = this._required2Tile.tiles.first();
 
-		srand(zone.id);
-
-		this._zonePickers.forEach(
-			picker => (picker.filter = z => z.type === ZoneType.Empty && z.planet === zone.planet)
-		);
-		const zones = this._zonePickers.first().filteredZones.shuffle();
+		const zones = this._zonePickers
+			.first()
+			.zones.slice()
+			.filter((z: Zone) => z !== zone && z.type === Zone.Type.Empty && z.planet === zone.planet)
+			.shuffle();
 		this._zonePickers.forEach((picker, idx) => (picker.zone = zones[idx]));
 	}
 
@@ -162,7 +161,6 @@ class SimulatorWindow extends AbstractWindow {
 		this._zonePickers.forEach(picker => {
 			picker.palette = controller.palette;
 			picker.zones = controller.data.zones;
-			picker.zone = picker.filteredZones[0];
 		});
 
 		this.currentZone = this.currentZone;
