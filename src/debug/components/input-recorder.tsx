@@ -49,14 +49,17 @@ class InputRecorder extends Component {
 	}
 
 	private showLog() {
-		const result = this._recorder.dumpRecord().join(" ");
 		const window = (
 			<Window title="Recorded Input" autosaveName="input-recorder.output" closable={true} />
 		) as Window;
 		window.content.style.width = "320px";
 		window.content.style.height = "270px";
-		window.content.appendChild(<textarea value={result} style={{ width: "100%" }} readOnly />);
+		window.content.appendChild(<textarea value={this.dumpRecord()} style={{ width: "100%" }} readOnly />);
 		WindowManager.defaultManager.showWindow(window);
+	}
+
+	public dumpRecord() {
+		return this._recorder.dumpRecord().join(" ");
 	}
 
 	public set gameController(c) {
