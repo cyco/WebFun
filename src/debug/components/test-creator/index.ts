@@ -1,4 +1,4 @@
 import TestCreatorWindow from "./test-creator-window";
-import CaseBuilder from "./case-builder";
+import ConfiguationBuilder from "./configuration-builder";
 
-export { TestCreatorWindow, CaseBuilder };
+export { TestCreatorWindow, ConfiguationBuilder };

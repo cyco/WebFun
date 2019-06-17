@@ -1,4 +1,4 @@
-import "./case-builder.scss";
+import "./configuration-builder.scss";
 
 import { Component } from "src/ui";
 import { DiscardingStorage } from "src/util";
@@ -10,8 +10,8 @@ import { Configuration } from "src/debug/automation/test";
 import adjacentZones from "./adjacent-zones";
 import { ColorPalette, GameData } from "src/engine";
 
-class CaseBuilder extends Component {
-	public static readonly tagName = "wf-debug-test-creator-case-builder";
+class ConfigurationBuilder extends Component {
+	public static readonly tagName = "wf-debug-test-creator-configuration-builder";
 
 	private _gameData: GameData = null;
 	private _state: Storage = new DiscardingStorage();
@@ -175,4 +175,4 @@ class CaseBuilder extends Component {
 	}
 }
 
-export default CaseBuilder;
+export default ConfigurationBuilder;

@@ -6,7 +6,7 @@ import { Point, DiscardingStorage } from "src/util";
 import { GameController } from "src/app";
 import { TestCase } from "src/debug/automation/test";
 import { InputReplayer, InputRecorder } from "src/debug/components";
-import CaseBuilder from "./case-builder";
+import ConfiguationBuilder from "./configuration-builder";
 import SimulatedStory from "src/debug/simulated-story";
 import adjacentZones from "./adjacent-zones";
 
@@ -17,7 +17,7 @@ class TestCreatorWindow extends AbstractWindow {
 	private _gameController: GameController;
 	private _state: Storage = new DiscardingStorage();
 	private _testCase: TestCase = null;
-	private _caseBuilder: CaseBuilder = <CaseBuilder /> as CaseBuilder;
+	private _caseBuilder: ConfiguationBuilder = <ConfiguationBuilder /> as ConfiguationBuilder;
 	private _replayer: InputReplayer = <InputReplayer /> as InputReplayer;
 	private _recorder: InputRecorder = <InputRecorder /> as InputRecorder;
 
