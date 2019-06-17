@@ -8,6 +8,8 @@ import { TestCase } from "src/debug/automation/test";
 import { InputReplayer } from "src/debug/components";
 import { WindowManager } from "src/ui";
 import CaseBuilder from "./case-builder";
+import SimulatedStory from "src/debug/simulated-story";
+import adjacentZones from "./adjacent-zones";
 
 class TestCreatorWindow extends AbstractWindow {
 	public static readonly tagName = "wf-debug-test-creator-window";
@@ -34,7 +36,7 @@ class TestCreatorWindow extends AbstractWindow {
 	}
 
 	private start() {
-		const story = this._caseBuilder.buildStory();
+		const story = this.buildStory();
 
 		const controller = this.gameController;
 		const engine = controller.engine;
@@ -69,13 +71,37 @@ class TestCreatorWindow extends AbstractWindow {
 		WindowManager.defaultManager.focus(replayer);
 	}
 
+	public buildStory() {
+		const { data } = this._gameController;
+		const t = (t: number) => (t > 0 ? data.tiles[t] : null);
+		const z = (z: number) => (z > 0 ? data.zones[z] : null);
+		const {
+			zone,
+			findItem,
+			puzzleNPC,
+			requiredItem1,
+			requiredItem2
+		} = this._caseBuilder.testCaseConfiguration;
+
+		return new SimulatedStory(
+			t(findItem),
+			t(puzzleNPC),
+			t(requiredItem1),
+			t(requiredItem2),
+			z(zone),
+			adjacentZones(z(zone), this._gameController.data.zones),
+			this._gameController.data.zones
+		);
+	}
+
 	public get gameController() {
 		return this._gameController;
 	}
 
 	public set gameController(controller) {
 		this._gameController = controller;
-		this._caseBuilder.gameController = controller;
+		this._caseBuilder.palette = controller.palette;
+		this._caseBuilder.gameData = controller.data;
 	}
 
 	public set testCase(testCase: TestCase) {
