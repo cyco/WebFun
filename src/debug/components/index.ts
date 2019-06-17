@@ -4,7 +4,7 @@ import Condition from "./condition";
 import Controls from "./controls";
 import Instruction from "./instruction";
 import TileCell from "./tile-cell";
-import SimulatorWindow from "./simulator-window";
+import { TestCreatorWindow, CaseBuilder } from "./test-creator";
 import PopoverZonePicker from "./popover-zone-picker";
 import ZonePicker from "./zone-picker";
 import ZonePickerCell from "./zone-picker-cell";
@@ -32,7 +32,8 @@ export {
 	Instruction,
 	PaletteImageView,
 	PopoverZonePicker,
-	SimulatorWindow,
+	CaseBuilder,
+	TestCreatorWindow,
 	TileCell,
 	TileView,
 	ZonePicker,

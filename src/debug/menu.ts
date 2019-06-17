@@ -1,4 +1,4 @@
-import { InputRecorder, InputReplayer, SimulatorWindow } from "./components";
+import { TestCreatorWindow } from "./components";
 import { MenuItemSeparator, MenuItemState, WindowManager, FilePicker } from "src/ui";
 
 import GameController from "src/app/game-controller";
@@ -32,52 +32,23 @@ export default (gameController: GameController) => ({
 		SettingsItem("Skip Transitions", "skipTransitions", gameController.settings),
 		SettingsItem("Automatically pick up items", "pickupItemsAutomatically", gameController.settings),
 		MenuItemSeparator,
-		SettingsAction("Simulate Zone", () => {
-			const simulator = document.createElement(SimulatorWindow.tagName) as SimulatorWindow;
+		SettingsAction("Create Test", () => {
+			const simulator = document.createElement(TestCreatorWindow.tagName) as TestCreatorWindow;
 			simulator.gameController = gameController;
 			simulator.state = localStorage.prefixedWith("simulator");
 			WindowManager.defaultManager.showWindow(simulator);
 		}),
-		SettingsAction("Run Simulation Test", async () => {
+		SettingsAction("Load Test", async () => {
 			const [file] = await FilePicker.Pick();
 			if (!file) return;
 			const contents = await file.readAsText();
 			const testCase = Parser.Parse(file.name, contents);
 
-			const simulator = document.createElement(SimulatorWindow.tagName) as SimulatorWindow;
+			const simulator = document.createElement(TestCreatorWindow.tagName) as TestCreatorWindow;
 			simulator.gameController = gameController;
 			simulator.state = localStorage.prefixedWith("simulator");
 			simulator.testCase = testCase;
 			WindowManager.defaultManager.showWindow(simulator);
-		}),
-		SettingsAction("Record Input", () => {
-			let recorder = document.querySelector(InputRecorder.tagName) as InputRecorder;
-			if (recorder) {
-				WindowManager.defaultManager.focus(recorder);
-				return;
-			}
-
-			recorder = document.createElement(InputRecorder.tagName) as InputRecorder;
-			recorder.gameController = gameController;
-			recorder.state = localStorage.prefixedWith("input-recorder");
-			WindowManager.defaultManager.showWindow(recorder);
-		}),
-		SettingsAction("Replay Input", async () => {
-			const [file] = await FilePicker.Pick();
-			if (!file) return;
-			const result = await file.readAsText();
-
-			let replayer: InputReplayer = document.querySelector(InputReplayer.tagName);
-			if (!replayer) {
-				replayer = document.createElement(InputReplayer.tagName) as InputReplayer;
-				replayer.gameController = gameController;
-				WindowManager.defaultManager.showWindow(replayer);
-			}
-
-			replayer.load(result.split(" "));
-			replayer.start();
-			replayer.fastForward();
-			WindowManager.defaultManager.focus(replayer);
 		}),
 		MenuItemSeparator,
 		SettingsAction("Debug Scripts", () => ScriptDebugger.sharedDebugger.show()),
