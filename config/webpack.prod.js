@@ -1,17 +1,14 @@
 const Path = require("path");
 const Paths = require("./paths");
-const Webpack = require("webpack");
-const merge = require("webpack-merge");
 
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
+const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 
-const BaseConfig = require("./webpack.common");
-
-module.exports = merge(BaseConfig, {
+module.exports = {
 	entry: {
 		webfun: Path.resolve(Paths.sourceRoot, "app/main")
 	},
@@ -24,7 +21,20 @@ module.exports = merge(BaseConfig, {
 		minimize: true,
 		minimizer: [new TerserPlugin(), new OptimizeCSSAssetsPlugin({})]
 	},
+	resolve: {
+		extensions: [".js", ".ts", ".tsx", ".jsx"],
+		alias: {
+			src: Paths.sourceRoot
+		},
+		unsafeCache: true
+	},
+	mode: "development",
+	cache: true,
+	stats: "errors-only",
 	plugins: [
+		new ForkTsCheckerWebpackPlugin({
+			reportFiles: ["src/**/*.{ts,tsx}"]
+		}),
 		new CleanWebpackPlugin({ root: Paths.buildRoot }),
 		new HtmlWebpackPlugin({
 			template: Path.resolve(Paths.sourceRoot, "./app/index.html"),
@@ -38,6 +48,25 @@ module.exports = merge(BaseConfig, {
 	module: {
 		rules: [
 			{
+				test: /\.tsx?$/,
+				exclude: /node_modules/,
+				use: [
+					{
+						loader: "babel-loader",
+						options: {
+							cacheDirectory: Path.resolve(Paths.configRoot, ".babel")
+						}
+					},
+					{
+						loader: "ts-loader",
+						options: {
+							configFile: Path.resolve(Paths.projectRoot, "tsconfig.json"),
+							transpileOnly: true
+						}
+					}
+				]
+			},
+			{
 				test: /\.scss$/,
 				exclude: /node_modules/,
 				use: [
@@ -50,7 +79,19 @@ module.exports = merge(BaseConfig, {
 						}
 					}
 				]
+			},
+			{
+				test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+				loader: "url-loader",
+				options: {
+					limit: 10000,
+					mimetype: "application/font-woff"
+				}
+			},
+			{
+				test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+				loader: "file-loader"
 			}
 		]
 	}
-});
+};
