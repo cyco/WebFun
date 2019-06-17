@@ -149,10 +149,10 @@ class CaseBuilder extends Component {
 
 	public get testCaseConfiguration(): Configuration {
 		const zone = this.currentZone.id;
-		const requiredItem1 = this._requiredTile.id ? this._requiredTile.tile.id : null;
-		const requiredItem2 = this._required2Tile.id ? this._required2Tile.tile.id : null;
-		const findItem = this._findTile.id ? this._findTile.tile.id : null;
-		const puzzleNPC = this._npcTile.id ? this._npcTile.tile.id : null;
+		const requiredItem1 = this._requiredTile.tile ? this._requiredTile.tile.id : null;
+		const requiredItem2 = this._required2Tile.tile ? this._required2Tile.tile.id : null;
+		const findItem = this._findTile.tile ? this._findTile.tile.id : null;
+		const puzzleNPC = this._npcTile.tile ? this._npcTile.tile.id : null;
 
 		return { seed: zone, zone, findItem, puzzleNPC, requiredItem1, requiredItem2, inventory: [] };
 	}

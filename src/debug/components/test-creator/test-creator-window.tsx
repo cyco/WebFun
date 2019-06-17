@@ -5,8 +5,7 @@ import { Point, DiscardingStorage } from "src/util";
 
 import { GameController } from "src/app";
 import { TestCase } from "src/debug/automation/test";
-import { InputReplayer } from "src/debug/components";
-import { WindowManager } from "src/ui";
+import { InputReplayer, InputRecorder } from "src/debug/components";
 import CaseBuilder from "./case-builder";
 import SimulatedStory from "src/debug/simulated-story";
 import adjacentZones from "./adjacent-zones";
@@ -19,6 +18,8 @@ class TestCreatorWindow extends AbstractWindow {
 	private _state: Storage = new DiscardingStorage();
 	private _testCase: TestCase = null;
 	private _caseBuilder: CaseBuilder = <CaseBuilder /> as CaseBuilder;
+	private _replayer: InputReplayer = <InputReplayer /> as InputReplayer;
+	private _recorder: InputRecorder = <InputRecorder /> as InputRecorder;
 
 	public constructor() {
 		super();
@@ -50,25 +51,20 @@ class TestCreatorWindow extends AbstractWindow {
 
 		controller.jumpStartEngine(story.world.at(4, 5).zone);
 
+		this.content.textContent = "";
+		this.content.appendChild(this._replayer);
+		this.content.appendChild(this._recorder);
+
 		if (this.testCase) {
 			this.setupInput(this.testCase.input);
 		}
-
-		this.close();
 	}
 
 	private setupInput(input: string): void {
-		let replayer: InputReplayer = document.querySelector(InputReplayer.tagName);
-		if (!replayer) {
-			replayer = document.createElement(InputReplayer.tagName) as InputReplayer;
-			replayer.gameController = this.gameController;
-			WindowManager.defaultManager.showWindow(replayer);
-		}
-
+		const replayer: InputReplayer = this._replayer;
 		replayer.load(input.split(" "));
 		replayer.start();
 		replayer.fastForward();
-		WindowManager.defaultManager.focus(replayer);
 	}
 
 	public buildStory() {
@@ -100,6 +96,8 @@ class TestCreatorWindow extends AbstractWindow {
 
 	public set gameController(controller) {
 		this._gameController = controller;
+		this._replayer.gameController = controller;
+		this._recorder.gameController = controller;
 		this._caseBuilder.palette = controller.palette;
 		this._caseBuilder.gameData = controller.data;
 	}
