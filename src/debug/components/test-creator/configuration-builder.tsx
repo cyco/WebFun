@@ -136,7 +136,7 @@ class ConfigurationBuilder extends Component {
 		return this._gameData;
 	}
 
-	public set testCaseConfiguration(config: Configuration) {
+	public set configuration(config: Configuration) {
 		const { zone, findItem, puzzleNPC, requiredItem1, requiredItem2 } = config;
 		const data = this._gameData;
 
@@ -147,7 +147,7 @@ class ConfigurationBuilder extends Component {
 		this._required2Tile.tile = data.tiles[requiredItem2];
 	}
 
-	public get testCaseConfiguration(): Configuration {
+	public get configuration(): Configuration {
 		const zone = this.currentZone.id;
 		const requiredItem1 = this._requiredTile.tile ? this._requiredTile.tile.id : null;
 		const requiredItem2 = this._required2Tile.tile ? this._required2Tile.tile.id : null;
