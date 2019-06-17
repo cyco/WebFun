@@ -1,4 +1,4 @@
-interface TestConfiguration {
+interface Configuration {
 	zone: number;
 	findItem: number;
 	requiredItem1: number;
@@ -8,4 +8,4 @@ interface TestConfiguration {
 	inventory: number[];
 }
 
-export default TestConfiguration;
+export default Configuration;

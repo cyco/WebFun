@@ -352,10 +352,8 @@ class ZoneScene extends Scene {
 
 	private _tryTransition(direction: Point): boolean | undefined {
 		const engine = this.engine;
-		const state = engine.temporaryState;
 		const hero = engine.hero;
 		const currentZone = engine.currentZone;
-
 		const targetLocation = Point.add(hero.location, direction);
 		if (currentZone.bounds.contains(targetLocation)) {
 			return false;
@@ -375,13 +373,13 @@ class ZoneScene extends Scene {
 			return false;
 		}
 
-		const zoneLocation = state.worldLocation;
 		let world = engine.dagobah;
 		if (world.locationOfZone(engine.currentZone) === null) {
 			world = engine.world;
 		}
-
+		const zoneLocation = world.locationOfZone(engine.currentZone);
 		if (!zoneLocation) return;
+
 		const worldItem = world.at(zoneLocation);
 		if (!worldItem || worldItem.zone !== engine.currentZone) {
 			return;

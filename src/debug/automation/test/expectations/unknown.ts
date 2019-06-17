@@ -1,6 +1,6 @@
-import TestExpectation from "../test-expectation";
+import Expectation from "../expectation";
 
-class UnknownExpectation implements TestExpectation {
+class UnknownExpectation implements Expectation {
 	line: string;
 
 	constructor(line: string) {

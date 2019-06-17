@@ -24,13 +24,17 @@ describe(
 		let rawData: any, paletteData: any;
 
 		beforeAll(async done => {
-			const registry = ComponentRegistry.sharedRegistry;
-			if (!registry.contains(SceneView)) registry.registerComponent(SceneView);
+			try {
+				const registry = ComponentRegistry.sharedRegistry;
+				if (!registry.contains(SceneView)) registry.registerComponent(SceneView);
 
-			rawData = await loadGameData(Yoda);
-			paletteData = Uint32Array.paletteFromArrayBuffer(await getFixtureData("yoda.pal"));
-
-			done();
+				rawData = await loadGameData(Yoda);
+				paletteData = Uint32Array.paletteFromArrayBuffer(await getFixtureData("yoda.pal"));
+			} catch (e) {
+				console.error(e);
+			} finally {
+				done();
+			}
 		});
 
 		it("plays through 0xDEAD", async endTest => {

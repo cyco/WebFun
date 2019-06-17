@@ -1,6 +1,6 @@
-import TestExpectation from "../test-expectation";
+import expectation from "../expectation";
 
-class InventoryContainsExpectation implements TestExpectation {
+class InventoryContainsExpectation implements expectation {
 	items: number[];
 
 	constructor(items: number[]) {
