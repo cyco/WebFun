@@ -61,8 +61,13 @@ const runTest = ({ seed, planet, size, world, dagobah }: any) => {
 
 describe("WebFun.Acceptance.World Generation", () => {
 	beforeAll(async done => {
-		rawData = await loadGameData(Yoda);
-		done();
+		try {
+			rawData = await loadGameData(Yoda);
+		} catch (e) {
+			console.error(e);
+		} finally {
+			done();
+		}
 	});
 
 	const maps = PrepareExpectations(Worlds).map(ParseExpectation);

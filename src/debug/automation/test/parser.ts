@@ -1,9 +1,18 @@
-import TestConfiguration from "./test-configuration";
-import TestExpectation from "./test-expectation";
+import TestConfiguration from "./configuration";
+import TestExpectation from "./expectation";
 import TestCase from "./test-case";
-import { NOPExpectation, InventoryContainsExpectation, UnknownExpectation } from "./expectations";
+import {
+	ZoneSolvedExpectation,
+	NOPExpectation,
+	InventoryContainsExpectation,
+	UnknownExpectation
+} from "./expectations";
 
 class TestFileParser {
+	public static Parse(description: string, fileContents: string): TestCase {
+		return new TestFileParser().parse(description, fileContents);
+	}
+
 	public parse(description: string, fileContents: string): TestCase {
 		const testCase = this.doParse(fileContents);
 		testCase.description = description;
@@ -81,7 +90,9 @@ class TestFileParser {
 			const it = lines.next();
 			if (it.done) return expectations;
 			if (!it.value.length) continue;
-			if (it.value.toLowerCase().contains("nop")) {
+			if (it.value.toLowerCase().contains("solved")) {
+				expectations.push(new ZoneSolvedExpectation());
+			} else if (it.value.toLowerCase().contains("nop")) {
 				expectations.push(new NOPExpectation());
 			} else if (it.value.toLowerCase().contains("inventory:")) {
 				expectations.push(

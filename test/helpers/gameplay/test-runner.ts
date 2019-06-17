@@ -1,11 +1,17 @@
-import TestFileParser from "./test-file-parser";
-import TestCase from "./test-case";
 import GameplayContext from "./gameplay-runner";
-import TestExpectation from "./test-expectation";
-import { NOPExpectation, InventoryContainsExpectation, UnknownExpectation } from "./expectations";
 import { Zone } from "src/engine/objects";
 import { srand } from "src/util";
 import { SimulatedStory } from "src/debug";
+
+import {
+	Parser,
+	TestCase,
+	Expectation,
+	NOPExpectation,
+	InventoryContainsExpectation,
+	UnknownExpectation,
+	ZoneSolvedExpectation
+} from "src/debug/automation/test";
 
 declare var withTimeout: (t: number, block: () => void) => () => void;
 const FiveMinutes = 5 * 60 * 1000;
@@ -14,8 +20,8 @@ const run = (fileName: string, testFileContents: string) => {
 	describe(
 		`WebFun.Simulation.${fileName}`,
 		withTimeout(FiveMinutes, () => {
-			const ctx = new GameplayContext();
-			const parser = new TestFileParser();
+			const ctx = new GameplayContext(true);
+			const parser = new Parser();
 			const testCase = parser.parse(fileName, testFileContents);
 
 			beforeAll(async done => {
@@ -32,17 +38,21 @@ const run = (fileName: string, testFileContents: string) => {
 					);
 				} catch (e) {
 					console.warn("e", e);
+				} finally {
+					done();
 				}
-
-				done();
 			});
 
-			testCase.expectations.forEach((exp: TestExpectation) => {
+			testCase.expectations.forEach((exp: Expectation) => {
 				if (exp instanceof NOPExpectation) {
 					it("does nothing, really", (): void => void 0);
 				} else if (exp instanceof InventoryContainsExpectation) {
 					it(`hero has items ${exp.items.map(i => i.toHex(3)).join(", ")}`, () => {
 						exp.items.forEach(i => expect(ctx.engine.inventory.contains(i)).toBe(true));
+					});
+				} else if (exp instanceof ZoneSolvedExpectation) {
+					it("the zone is solved", () => {
+						expect(ctx.engine.currentWorld.at(4, 4).zone.solved).toBeTrue();
 					});
 				} else if (exp instanceof UnknownExpectation) {
 					console.warn(`Don\'t know how to handle expectation ${exp.line}`);
@@ -50,8 +60,13 @@ const run = (fileName: string, testFileContents: string) => {
 			});
 
 			afterAll(async done => {
-				await ctx.cleanup();
-				done();
+				try {
+					await ctx.cleanup();
+				} catch (e) {
+					console.error("cleanup failed", e);
+				} finally {
+					done();
+				}
 			});
 
 			function buildStory(testCase: TestCase) {
@@ -72,9 +87,9 @@ const run = (fileName: string, testFileContents: string) => {
 			}
 
 			function surroundingZones(zone: Zone): Zone[] {
-				const zones = ctx.engine.data.zones.slice();
 				srand(zone.id);
-				return zones
+				return ctx.engine.data.zones
+					.slice()
 					.filter((z: Zone) => z !== zone && z.type === Zone.Type.Empty && z.planet === zone.planet)
 					.shuffle();
 			}

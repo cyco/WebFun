@@ -6,6 +6,7 @@ import { main as RunGameDataEditor } from "src/editor";
 import { main as RunSaveGameEditor } from "src/save-game-editor";
 import ScriptDebugger from "./script-debugger";
 import Settings from "src/settings";
+import { Parser } from "./automation/test";
 
 const SettingsItem = (label: string, key: keyof typeof Settings, settings: typeof Settings) => ({
 	title: label,
@@ -35,6 +36,18 @@ export default (gameController: GameController) => ({
 			const simulator = document.createElement(SimulatorWindow.tagName) as SimulatorWindow;
 			simulator.gameController = gameController;
 			simulator.state = localStorage.prefixedWith("simulator");
+			WindowManager.defaultManager.showWindow(simulator);
+		}),
+		SettingsAction("Run Simulation Test", async () => {
+			const [file] = await FilePicker.Pick();
+			if (!file) return;
+			const contents = await file.readAsText();
+			const testCase = Parser.Parse(file.name, contents);
+
+			const simulator = document.createElement(SimulatorWindow.tagName) as SimulatorWindow;
+			simulator.gameController = gameController;
+			simulator.state = localStorage.prefixedWith("simulator");
+			simulator.testCase = testCase;
 			WindowManager.defaultManager.showWindow(simulator);
 		}),
 		SettingsAction("Record Input", () => {

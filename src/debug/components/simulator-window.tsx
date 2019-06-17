@@ -2,13 +2,15 @@ import "./simulator-window.scss";
 
 import { AbstractWindow, Button } from "src/ui/components";
 import { Hotspot, Zone, ZoneType } from "src/engine/objects";
-import { Point } from "src/util";
+import { Point, DiscardingStorage, srand } from "src/util";
 
-import { DiscardingStorage } from "src/util";
 import { GameController } from "src/app";
 import { PopoverTilePicker } from "src/editor/components";
 import PopoverZonePicker from "./popover-zone-picker";
 import SimulatedStory from "src/debug/simulated-story";
+import { TestCase } from "src/debug/automation/test";
+import { InputReplayer } from "src/debug/components";
+import { WindowManager } from "src/ui";
 
 class SimulatorWindow extends AbstractWindow {
 	public static readonly tagName = "wf-debug-simulator-window";
@@ -43,6 +45,7 @@ class SimulatorWindow extends AbstractWindow {
 	private _npcTile = <PopoverTilePicker title="Npc involved in trade" /> as PopoverTilePicker;
 	private _requiredTile = <PopoverTilePicker title="Item required to solve puzzle" /> as PopoverTilePicker;
 	private _required2Tile = <PopoverTilePicker title="Item required to solve goal" /> as PopoverTilePicker;
+	private _testCase: TestCase = null;
 
 	public constructor() {
 		super();
@@ -95,19 +98,40 @@ class SimulatorWindow extends AbstractWindow {
 		const engine = controller.engine;
 
 		engine.hero.location = new Point(0, 0);
+		engine.hero.visible = true;
 		engine.currentWorld = story.world;
 		engine.story = story;
 		engine.data = controller.data;
+		engine.inventory.removeAllItems();
 
 		controller.jumpStartEngine(this._zonePickers[6].zone);
+
+		if (this.testCase) {
+			this.setupInput(this.testCase.input);
+		}
+
 		this.close();
 	}
 
-	private get currentZone() {
+	private setupInput(input: string): void {
+		let replayer: InputReplayer = document.querySelector(InputReplayer.tagName);
+		if (!replayer) {
+			replayer = document.createElement(InputReplayer.tagName) as InputReplayer;
+			replayer.gameController = this.gameController;
+			WindowManager.defaultManager.showWindow(replayer);
+		}
+
+		replayer.load(input.split(" "));
+		replayer.start();
+		replayer.fastForward();
+		WindowManager.defaultManager.focus(replayer);
+	}
+
+	public get currentZone() {
 		return this._mainPicker.zone || this.gameController.data.zones[0];
 	}
 
-	private set currentZone(zone: Zone) {
+	public set currentZone(zone: Zone) {
 		const connectedZones = this.connectedZones(zone);
 		this._mainPicker.zone = zone;
 		this._findTile.tiles = zone.providedItems
@@ -124,6 +148,7 @@ class SimulatorWindow extends AbstractWindow {
 		this._required2Tile.tiles = zone.goalItems.concat(...connectedZones.map(z => z.goalItems)).unique();
 		this._required2Tile.tile = this._required2Tile.tiles.first();
 
+		srand(zone.id);
 		const zones = this._zonePickers
 			.first()
 			.zones.slice()
@@ -166,8 +191,20 @@ class SimulatorWindow extends AbstractWindow {
 		this.currentZone = this.currentZone;
 	}
 
-	public get state() {
-		return this._state;
+	public set testCase(testCase: TestCase) {
+		this._testCase = testCase;
+		const { zone, findItem, puzzleNPC, requiredItem1, requiredItem2 } = testCase.configuration;
+		const { data } = this.gameController;
+
+		this.currentZone = data.zones[zone];
+		this._findTile.tile = data.tiles[findItem];
+		this._npcTile.tile = data.tiles[puzzleNPC];
+		this._requiredTile.tile = data.tiles[requiredItem1];
+		this._required2Tile.tile = data.tiles[requiredItem2];
+	}
+
+	public get testCase(): TestCase {
+		return this._testCase;
 	}
 
 	public set state(s) {
@@ -182,6 +219,10 @@ class SimulatorWindow extends AbstractWindow {
 		this._npcTile.state = s.prefixedWith("npc-tile");
 		this._requiredTile.state = s.prefixedWith("required-tile");
 		this._required2Tile.state = s.prefixedWith("goal-tile");
+	}
+
+	public get state() {
+		return this._state;
 	}
 }
 

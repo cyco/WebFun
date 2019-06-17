@@ -1,4 +1,3 @@
-import { getFixtureContent } from "test/helpers";
 import loadGameData from "test/helpers/game-data";
 import { ComponentRegistry } from "src/ui";
 
@@ -12,7 +11,8 @@ import { Planet, WorldSize } from "src/engine/types";
 import { PaletteAnimation } from "src/engine/rendering";
 import { Renderer as DummyRenderer } from "src/engine/dummy-interface";
 import Settings from "src/settings";
-import { dispatch } from "src/util";
+import { dispatch, Point } from "src/util";
+import { SimulatedStory } from "src/debug";
 
 let rawData: any, paletteData: any;
 
@@ -28,7 +28,9 @@ class GameplayContext {
 	}
 
 	public async prepare() {
-		if (rawData) return;
+		if (rawData) {
+			return;
+		}
 
 		const registry = ComponentRegistry.sharedRegistry;
 		if (!registry.contains(SceneView)) registry.registerComponent(SceneView);
@@ -76,12 +78,20 @@ class GameplayContext {
 				engine.metronome.onrender = () => engine.render();
 
 				sceneView.manager.engine = engine;
-				const zone = engine.data.zones.find(z => z.isLoadingZone());
+
+				const zone =
+					story instanceof SimulatedStory
+						? engine.world.at(4, 5).zone
+						: engine.data.zones.find(z => z.isLoadingZone());
 				const zoneScene = new ZoneScene(engine, zone);
 				engine.currentZone = zone;
 				engine.currentWorld = engine.world.locationOfZone(zone) ? engine.world : null;
 				engine.hero.appearance = engine.data.characters.find(c => c.isHero());
 				engine.sceneManager.pushScene(zoneScene);
+				if (story instanceof SimulatedStory) {
+					engine.hero.visible = true;
+					engine.hero.location = new Point(0, 0);
+				}
 
 				inputManager.engine = engine;
 				inputManager.input = input;
@@ -95,51 +105,48 @@ class GameplayContext {
 			}
 		});
 	}
+
 	public async cleanup() {
-		try {
-			const { sceneView, engine } = this;
+		const { sceneView, engine } = this;
 
-			if (!engine) {
-				return;
-			}
-
-			engine.metronome.stop();
-			await dispatch(() => void 0, 5);
-
-			engine.inputManager.engine = engine;
-			engine.inputManager.removeListeners();
-			(engine.inputManager as ReplayingInputManager).removeEventListener(
-				ReplayingInputManager.Event.InputEnd,
-				this.onInputEnd
-			);
-			(engine.inputManager as ReplayingInputManager).input = [];
-			engine.sceneManager.clear();
-
-			engine.currentWorld = null;
-			engine.currentZone = null;
-			engine.data = null;
-			engine.hero.appearance = null;
-			engine.hero = null;
-			engine.inputManager.engine = null;
-			engine.inputManager = null;
-			engine.loader = null;
-			engine.metronome.onrender = (): void => void 0;
-			engine.metronome.ontick = (): void => void 0;
-			engine.metronome = null;
-			engine.palette = null;
-			engine.renderer = null;
-			engine.sceneManager.engine = null;
-			engine.sceneManager = null;
-			engine.story = null;
-			sceneView.remove();
-
-			this.engine = null;
-			this.inputManager = null;
-			this.onInputEnd = null;
-			this.sceneView = null;
-		} catch (e) {
-			console.log("cleanup failed", e);
+		if (!engine) {
+			return;
 		}
+
+		engine.metronome.stop();
+		await dispatch(() => void 0, 5);
+
+		engine.inputManager.engine = engine;
+		engine.inputManager.removeListeners();
+		(engine.inputManager as ReplayingInputManager).removeEventListener(
+			ReplayingInputManager.Event.InputEnd,
+			this.onInputEnd
+		);
+		(engine.inputManager as ReplayingInputManager).input = [];
+		engine.sceneManager.clear();
+
+		engine.currentWorld = null;
+		engine.currentZone = null;
+		engine.data = null;
+		engine.hero.appearance = null;
+		engine.hero = null;
+		engine.inputManager.engine = null;
+		engine.inputManager = null;
+		engine.loader = null;
+		engine.metronome.onrender = (): void => void 0;
+		engine.metronome.ontick = (): void => void 0;
+		engine.metronome = null;
+		engine.palette = null;
+		engine.renderer = null;
+		engine.sceneManager.engine = null;
+		engine.sceneManager = null;
+		engine.story = null;
+		sceneView.remove();
+
+		this.engine = null;
+		this.inputManager = null;
+		this.onInputEnd = null;
+		this.sceneView = null;
 	}
 }
 export default GameplayContext;

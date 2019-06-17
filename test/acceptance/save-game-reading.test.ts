@@ -10,30 +10,44 @@ describe("WebFun.Acceptance.Save game reading", () => {
 	let rawIndyData: any;
 
 	beforeAll(async done => {
-		rawYodaData = await loadGameData(Yoda);
-		rawIndyData = await loadGameData(Indy);
-
-		done();
+		try {
+			rawYodaData = await loadGameData(Yoda);
+			rawIndyData = await loadGameData(Indy);
+		} catch (e) {
+			console.error(e);
+		} finally {
+			done();
+		}
 	});
 
 	it("reads yoda's save game format correctly", async done => {
-		const state = await readSaveGame("save-games/yoda.wld", Yoda);
-		expect(state.type).toBe(Yoda);
-		expect(state.currentZoneID).toBe(89);
-		expect(state.positionOnWorld.x).toBe(0);
-		expect(state.positionOnWorld.y).toBe(0);
-		expect(state.currentWeapon).toBe(75);
-		done();
+		try {
+			const state = await readSaveGame("save-games/yoda.wld", Yoda);
+			expect(state.type).toBe(Yoda);
+			expect(state.currentZoneID).toBe(89);
+			expect(state.positionOnWorld.x).toBe(0);
+			expect(state.positionOnWorld.y).toBe(0);
+			expect(state.currentWeapon).toBe(75);
+		} catch (e) {
+			expect(e).toBeUndefined();
+		} finally {
+			done();
+		}
 	});
 
 	it("reads indy's save game format correctly", async done => {
-		const state = await readSaveGame("save-games/indy.wld", Indy);
-		expect(state.type).toBe(Indy);
-		expect(state.currentZoneID).toBe(120);
-		expect(state.positionOnWorld.x).toBe(5);
-		expect(state.positionOnWorld.y).toBe(5);
-		expect(Array.from(state.inventoryIDs)).toEqual([443, 449]);
-		done();
+		try {
+			const state = await readSaveGame("save-games/indy.wld", Indy);
+			expect(state.type).toBe(Indy);
+			expect(state.currentZoneID).toBe(120);
+			expect(state.positionOnWorld.x).toBe(5);
+			expect(state.positionOnWorld.y).toBe(5);
+			expect(Array.from(state.inventoryIDs)).toEqual([443, 449]);
+		} catch (e) {
+			expect(e).toBeUndefined();
+		} finally {
+			done();
+		}
 	});
 
 	async function readSaveGame(game: string, type: GameType) {
