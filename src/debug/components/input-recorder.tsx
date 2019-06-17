@@ -1,16 +1,15 @@
 import "./input-recorder.scss";
 
-import { AbstractWindow, IconButton, Window } from "src/ui/components";
+import { Component, WindowManager } from "src/ui";
+import { IconButton, Window } from "src/ui/components";
 
 import { DesktopInputManager } from "src/app/input";
-import { DiscardingStorage } from "src/util";
 import { GameController } from "src/app";
 import { RecordingInputManager } from "src/debug/automation";
 
-class InputRecorder extends AbstractWindow {
+class InputRecorder extends Component {
 	public static readonly tagName = "wf-debug-input-recorder";
 	private _gameController: GameController = null;
-	private _state: Storage = new DiscardingStorage();
 	private _recorder: RecordingInputManager = null;
 
 	private _record = (
@@ -19,16 +18,23 @@ class InputRecorder extends AbstractWindow {
 	private _dump = <IconButton icon="print" onclick={() => this.showLog()} />;
 	private _clear = <IconButton icon="ban" onclick={() => this._recorder.clearRecord()} /> as IconButton;
 
-	title = "Input Recorder";
-	autosaveName = "input-recorder";
-	closable = true;
+	public connectedCallback() {
+		super.connectedCallback();
 
-	constructor() {
-		super();
+		this.appendChild(this._record);
+		this.appendChild(this._clear);
+		this.appendChild(this._dump);
 
-		this.content.appendChild(this._record);
-		this.content.appendChild(this._clear);
-		this.content.appendChild(this._dump);
+		this.toggleRecording();
+	}
+
+	public disconnectedCallback() {
+		this._recorder.isRecording = false;
+		this._recorder.engine = null;
+		this._gameController.engine.inputManager = this._recorder.implementation;
+		this._gameController.engine.inputManager.engine = this._gameController.engine;
+
+		super.disconnectedCallback();
 	}
 
 	public toggleRecording() {
@@ -42,11 +48,6 @@ class InputRecorder extends AbstractWindow {
 		}
 	}
 
-	public connectedCallback() {
-		super.connectedCallback();
-		this.toggleRecording();
-	}
-
 	private showLog() {
 		const result = this._recorder.dumpRecord().join(" ");
 		const window = (
@@ -55,16 +56,7 @@ class InputRecorder extends AbstractWindow {
 		window.content.style.width = "320px";
 		window.content.style.height = "270px";
 		window.content.appendChild(<textarea value={result} style={{ width: "100%" }} readOnly />);
-		this.manager.showWindow(window);
-	}
-
-	public close() {
-		super.close();
-
-		this._recorder.isRecording = false;
-		this._recorder.engine = null;
-		this._gameController.engine.inputManager = this._recorder.implementation;
-		this._gameController.engine.inputManager.engine = this._gameController.engine;
+		WindowManager.defaultManager.showWindow(window);
 	}
 
 	public set gameController(c) {
@@ -76,14 +68,6 @@ class InputRecorder extends AbstractWindow {
 
 	public get gameController() {
 		return this._gameController;
-	}
-
-	public set state(s: Storage) {
-		this._state = s;
-	}
-
-	public get state() {
-		return this._state;
 	}
 }
 
