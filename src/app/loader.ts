@@ -29,7 +29,6 @@ class Loader extends EventTarget implements LoaderInterface {
 
 	constructor() {
 		super();
-		console.log("construct loader");
 
 		this._dataUrl = Settings.url.yoda.data;
 		this._paletteUrl = Settings.url.yoda.palette;
@@ -39,7 +38,6 @@ class Loader extends EventTarget implements LoaderInterface {
 	}
 
 	public load() {
-		console.log("load");
 		const loader = new FileLoader(this._dataUrl);
 		loader.onprogress = ({ detail: { progress } }) => this._progress(0, progress);
 		loader.onfail = reason => this._fail(reason);
