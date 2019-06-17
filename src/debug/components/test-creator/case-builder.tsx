@@ -1,21 +1,20 @@
 import "./case-builder.scss";
 
 import { Component } from "src/ui";
-import { srand, DiscardingStorage } from "src/util";
-
+import { DiscardingStorage } from "src/util";
 import { PopoverTilePicker } from "src/editor/components";
 import PopoverZonePicker from "../popover-zone-picker";
 import testableZoneFilter from "./testable-zone-filter";
 import { Zone, Hotspot } from "src/engine/objects";
-import SimulatedStory from "src/debug/simulated-story";
-import { GameController } from "src/app";
 import { Configuration } from "src/debug/automation/test";
+import adjacentZones from "./adjacent-zones";
+import { ColorPalette, GameData } from "src/engine";
 
 class CaseBuilder extends Component {
 	public static readonly tagName = "wf-debug-test-creator-case-builder";
 
+	private _gameData: GameData = null;
 	private _state: Storage = new DiscardingStorage();
-	private _gameController: GameController;
 	private _mainPicker = (
 		<PopoverZonePicker
 			filter={testableZoneFilter}
@@ -71,7 +70,7 @@ class CaseBuilder extends Component {
 	}
 
 	public get currentZone() {
-		return this._mainPicker.zone || this.gameController.data.zones[0];
+		return this._mainPicker.zone || this._gameData.zones[0];
 	}
 
 	public set currentZone(zone: Zone) {
@@ -91,12 +90,7 @@ class CaseBuilder extends Component {
 		this._required2Tile.tiles = zone.goalItems.concat(...connectedZones.map(z => z.goalItems)).unique();
 		this._required2Tile.tile = this._required2Tile.tiles.first();
 
-		srand(zone.id);
-		const zones = this._zonePickers
-			.first()
-			.zones.slice()
-			.filter((z: Zone) => z !== zone && z.type === Zone.Type.Empty && z.planet === zone.planet)
-			.shuffle();
+		const zones = adjacentZones(zone, this._zonePickers.first().zones);
 		this._zonePickers.forEach((picker, idx) => (picker.zone = zones[idx]));
 	}
 
@@ -104,57 +98,63 @@ class CaseBuilder extends Component {
 		return zone.doors
 			.filter(({ arg }: Hotspot) => arg !== -1)
 			.map(({ arg }) => {
-				const zone = this._gameController.data.zones[arg];
+				const zone = this._gameData.zones[arg];
 				return [zone, ...this.connectedZones(zone)];
 			})
 			.flatten();
 	}
 
-	public get gameController() {
-		return this._gameController;
+	public set palette(palette: ColorPalette) {
+		this._findTile.palette = palette;
+		this._npcTile.palette = palette;
+		this._requiredTile.palette = palette;
+		this._required2Tile.palette = palette;
+
+		this._mainPicker.palette = palette;
+
+		this._zonePickers.forEach(picker => (picker.palette = palette));
 	}
 
-	public set gameController(controller) {
-		this._gameController = controller;
+	public get palette(): ColorPalette {
+		return this._findTile.palette;
+	}
 
-		this._findTile.palette = controller.palette;
-		this._npcTile.palette = controller.palette;
-		this._requiredTile.palette = controller.palette;
-		this._required2Tile.palette = controller.palette;
+	public set gameData(gameData: GameData) {
+		this._gameData = gameData;
 
-		this._mainPicker.palette = controller.palette;
-		this._mainPicker.zones = controller.data.zones;
+		this._mainPicker.zones = gameData.zones;
 		this._mainPicker.zone = this._mainPicker.filteredZones[0];
 
 		this._zonePickers.forEach(picker => {
-			picker.palette = controller.palette;
-			picker.zones = controller.data.zones;
+			picker.zones = gameData.zones;
 		});
 
 		this.currentZone = this.currentZone;
 	}
 
-	public buildStory() {
-		return new SimulatedStory(
-			this._findTile.tile,
-			this._npcTile.tile,
-			this._requiredTile.tile,
-			this._required2Tile.tile,
-			this._mainPicker.zone,
-			this._zonePickers.map(p => p.zone),
-			this._gameController.data.zones
-		);
+	public get gameData() {
+		return this._gameData;
 	}
 
 	public set testCaseConfiguration(config: Configuration) {
 		const { zone, findItem, puzzleNPC, requiredItem1, requiredItem2 } = config;
-		const { data } = this.gameController;
+		const data = this._gameData;
 
 		this.currentZone = data.zones[zone];
 		this._findTile.tile = data.tiles[findItem];
 		this._npcTile.tile = data.tiles[puzzleNPC];
 		this._requiredTile.tile = data.tiles[requiredItem1];
 		this._required2Tile.tile = data.tiles[requiredItem2];
+	}
+
+	public get testCaseConfiguration(): Configuration {
+		const zone = this.currentZone.id;
+		const requiredItem1 = this._requiredTile.id ? this._requiredTile.tile.id : null;
+		const requiredItem2 = this._required2Tile.id ? this._required2Tile.tile.id : null;
+		const findItem = this._findTile.id ? this._findTile.tile.id : null;
+		const puzzleNPC = this._npcTile.id ? this._npcTile.tile.id : null;
+
+		return { seed: zone, zone, findItem, puzzleNPC, requiredItem1, requiredItem2, inventory: [] };
 	}
 
 	public set state(s) {
