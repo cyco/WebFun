@@ -16,7 +16,7 @@ class InputRecorder extends Component {
 		<IconButton style={{ color: "red" }} icon="circle" onclick={() => this.toggleRecording()} />
 	) as IconButton;
 	private _dump = <IconButton icon="print" onclick={() => this.showLog()} />;
-	private _clear = <IconButton icon="ban" onclick={() => this._recorder.clearRecord()} /> as IconButton;
+	private _clear = <IconButton icon="ban" onclick={() => this._recorder.clearRecords()} /> as IconButton;
 
 	public connectedCallback() {
 		super.connectedCallback();
@@ -54,12 +54,16 @@ class InputRecorder extends Component {
 		) as Window;
 		window.content.style.width = "320px";
 		window.content.style.height = "270px";
-		window.content.appendChild(<textarea value={this.dumpRecord()} style={{ width: "100%" }} readOnly />);
+		window.content.appendChild(<textarea value={this.input} style={{ width: "100%" }} readOnly />);
 		WindowManager.defaultManager.showWindow(window);
 	}
 
-	public dumpRecord() {
-		return this._recorder.dumpRecord().join(" ");
+	public get input() {
+		return this._recorder.records.join(" ");
+	}
+
+	public set input(i: string) {
+		this._recorder.records = i.split(" ");
 	}
 
 	public set gameController(c) {

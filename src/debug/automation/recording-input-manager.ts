@@ -17,11 +17,15 @@ class RecordingInputManager implements InputManager {
 		this.implementation = implementation;
 	}
 
-	public clearRecord() {
+	public clearRecords() {
 		this._records = [];
 	}
 
-	public dumpRecord() {
+	public set records(s: string[]) {
+		this._records = s;
+	}
+
+	public get records(): string[] {
 		return this._records;
 	}
 
