@@ -4,11 +4,12 @@ import { AbstractWindow, Button, IconButton } from "src/ui/components";
 import { Point, DiscardingStorage, download } from "src/util";
 
 import { GameController } from "src/app";
-import { TestCase } from "src/debug/automation/test";
+import { TestCase, Expectation } from "src/debug/automation/test";
 import { InputReplayer, InputRecorder } from "src/debug/components";
 import ConfiguationBuilder from "./configuration-builder";
 import SimulatedStory from "src/debug/simulated-story";
 import adjacentZones from "./adjacent-zones";
+import formatExpectation from "./format-expectation";
 
 class TestCreatorWindow extends AbstractWindow {
 	public static readonly tagName = "wf-debug-test-creator-window";
@@ -20,6 +21,7 @@ class TestCreatorWindow extends AbstractWindow {
 	private _configBuilder: ConfiguationBuilder = <ConfiguationBuilder /> as ConfiguationBuilder;
 	private _replayer: InputReplayer = <InputReplayer /> as InputReplayer;
 	private _recorder: InputRecorder = <InputRecorder /> as InputRecorder;
+	private _expectations: Expectation[] = [];
 
 	public constructor() {
 		super();
@@ -104,9 +106,10 @@ class TestCreatorWindow extends AbstractWindow {
 				...configuration,
 				"",
 				"- Input -",
-				this._recorder.dumpRecord(),
+				this._recorder.input,
 				"",
 				"- Expect -",
+				...this._expectations.map(formatExpectation),
 				""
 			].join("\n"),
 			`zone-${zone.toHex(3)}.wftest`
@@ -128,10 +131,18 @@ class TestCreatorWindow extends AbstractWindow {
 	public set testCase(testCase: TestCase) {
 		this._testCase = testCase;
 		this._configBuilder.configuration = testCase.configuration;
+		this._expectations = testCase.expectations;
+		this._recorder.input = testCase.input;
 	}
 
 	public get testCase(): TestCase {
-		return this._testCase;
+		const testCase = Object.assign({}, this._testCase);
+
+		testCase.expectations = this._expectations;
+		testCase.configuration = this._configBuilder.configuration;
+		testCase.input = this._recorder.input;
+
+		return testCase;
 	}
 
 	public set state(s) {
