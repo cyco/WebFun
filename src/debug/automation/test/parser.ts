@@ -61,7 +61,7 @@ class TestFileParser {
 			if (key.contains("seed")) configuration.seed = value.parseInt();
 			if (key.contains("find")) configuration.findItem = value.parseInt();
 			if (key.contains("puzzle")) configuration.puzzleNPC = value.parseInt();
-			if (key.contains("require") && configuration.requiredItem1 < 0)
+			if (key.contains("require") && configuration.requiredItem1 >= 0)
 				configuration.requiredItem2 = value.parseInt();
 			if (key.contains("require") && configuration.requiredItem1 < 0)
 				configuration.requiredItem1 = value.parseInt();
