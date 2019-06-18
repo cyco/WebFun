@@ -54,6 +54,7 @@ class TestCreatorWindow extends AbstractWindow {
 		engine.story = story;
 		engine.data = controller.data;
 		engine.inventory.removeAllItems();
+		this.testCase.configuration.inventory.forEach(i => engine.inventory.addItem(engine.data.tiles[i]));
 
 		controller.jumpStartEngine(story.world.at(4, 5).zone);
 
