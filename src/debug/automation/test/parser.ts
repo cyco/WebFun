@@ -52,10 +52,11 @@ class TestFileParser {
 			if (!it.value.length) continue;
 			if (it.value[0] === "-") return configuration;
 
-			const [key, value] = it.value
+			const [key, ...valueParts] = it.value
 				.split(" ")
 				.filter(i => i.length)
 				.map(i => i.toLowerCase());
+			const value = valueParts.join(" ");
 
 			if (key.contains("zone")) configuration.zone = value.parseInt();
 			if (key.contains("seed")) configuration.seed = value.parseInt();

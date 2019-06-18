@@ -36,6 +36,7 @@ class ConfigurationBuilder extends Component {
 	private _npcTile = <PopoverTilePicker title="Npc involved in trade" /> as PopoverTilePicker;
 	private _requiredTile = <PopoverTilePicker title="Item required to solve puzzle" /> as PopoverTilePicker;
 	private _required2Tile = <PopoverTilePicker title="Item required to solve goal" /> as PopoverTilePicker;
+	private _inventory: number[] = [];
 
 	public connectedCallback() {
 		super.connectedCallback();
@@ -125,9 +126,7 @@ class ConfigurationBuilder extends Component {
 		this._mainPicker.zones = gameData.zones;
 		this._mainPicker.zone = this._mainPicker.filteredZones[0];
 
-		this._zonePickers.forEach(picker => {
-			picker.zones = gameData.zones;
-		});
+		this._zonePickers.forEach(picker => (picker.zones = gameData.zones));
 
 		this.currentZone = this.currentZone;
 	}
@@ -137,7 +136,7 @@ class ConfigurationBuilder extends Component {
 	}
 
 	public set configuration(config: Configuration) {
-		const { zone, findItem, puzzleNPC, requiredItem1, requiredItem2 } = config;
+		const { zone, findItem, puzzleNPC, requiredItem1, requiredItem2, inventory } = config;
 		const data = this._gameData;
 
 		this.currentZone = data.zones[zone];
@@ -145,6 +144,7 @@ class ConfigurationBuilder extends Component {
 		this._npcTile.tile = data.tiles[puzzleNPC];
 		this._requiredTile.tile = data.tiles[requiredItem1];
 		this._required2Tile.tile = data.tiles[requiredItem2];
+		this._inventory = inventory;
 	}
 
 	public get configuration(): Configuration {
@@ -154,7 +154,15 @@ class ConfigurationBuilder extends Component {
 		const findItem = this._findTile.tile ? this._findTile.tile.id : null;
 		const puzzleNPC = this._npcTile.tile ? this._npcTile.tile.id : null;
 
-		return { seed: zone, zone, findItem, puzzleNPC, requiredItem1, requiredItem2, inventory: [] };
+		return {
+			seed: zone,
+			zone,
+			findItem,
+			puzzleNPC,
+			requiredItem1,
+			requiredItem2,
+			inventory: this._inventory
+		};
 	}
 
 	public set state(s) {
