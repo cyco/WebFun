@@ -22,7 +22,7 @@ class SimulatedStory extends Story {
 		srand(0);
 
 		this.allZones = allZones;
-		this._buildWorld(mainZone, surroundingZones);
+		this._buildWorld(mainZone, surroundingZones, allZones);
 		this._buildPuzzle(mainZone, find, npc, required, required2);
 		this._initializeZone(mainZone, find, npc, required, required2);
 	}
@@ -35,8 +35,9 @@ class SimulatedStory extends Story {
 		item.additionalRequiredItem = required2;
 	}
 
-	private _buildWorld(zone: Zone, surroundingZones: Zone[]) {
+	private _buildWorld(zone: Zone, surroundingZones: Zone[], zones: Zone[]) {
 		const world = new World();
+		world.zones = zones;
 		world.setZone(4, 4, zone);
 		world.setZone(3, 3, surroundingZones[0]);
 		world.setZone(4, 3, surroundingZones[1]);
@@ -47,7 +48,9 @@ class SimulatedStory extends Story {
 		world.setZone(4, 5, surroundingZones[6]);
 		world.setZone(5, 5, surroundingZones[7]);
 		this._world = world;
-		this._dagobah = world;
+
+		this._dagobah = new World();
+		this._dagobah.zones = zones;
 	}
 
 	private _initializeZone(zone: Zone, find: Tile, _npc: Tile, _required: Tile, _required2: Tile) {
