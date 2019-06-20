@@ -21,6 +21,7 @@ import { SpeechScene, PickupScene } from "src/engine/scenes";
 import { Point } from "src/util";
 import Settings from "src/settings";
 import Loader from "./loader";
+import AssetManager from "./asset-manager";
 
 import { ConditionImplementations as Conditions } from "./script/conditions";
 import { InstructionImplementations as Instructions } from "./script/instructions";
@@ -41,6 +42,7 @@ class Engine extends EventTarget {
 	public renderer: Renderer = null;
 	public palette: PaletteAnimation = null;
 	public data: GameData = null;
+	public assetManager: AssetManager = null;
 	public hero: Hero = null;
 	public inventory: Inventory = null;
 	public scriptExecutor: ScriptExecutor = null;
@@ -71,6 +73,7 @@ class Engine extends EventTarget {
 			effectsChannel
 		);
 
+		this.assetManager = ifce.AssetManager();
 		this.renderer = ifce.Renderer(null);
 		this.sceneManager = ifce.SceneManager();
 		this.inputManager = ifce.InputManager(null);

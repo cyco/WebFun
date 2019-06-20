@@ -24,7 +24,7 @@ declare global {
 }
 type Components<Entry> = Extract<Entry[keyof Entry], { readonly tagName: string } & { new (): any }>;
 type ComponentDefinitions<Bundle> = {
-	[TagName in Components<Bundle>["tagName"]]: Extract<Components<Bundle>, { tagName: TagName }>
+	[TagName in Components<Bundle>["tagName"]]: Extract<Components<Bundle>, { tagName: TagName }>;
 };
 type CustomElements = ComponentDefinitions<typeof Components> &
 	ComponentDefinitions<typeof AppComponents> &
