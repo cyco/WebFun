@@ -1,10 +1,9 @@
 import { PaletteAnimation, Renderer } from "./rendering";
-import { Tile, Zone } from "./objects";
+import { Tile, Zone, Sound, Char } from "./objects";
 
 import Camera from "./camera";
 import { EventTarget } from "src/util";
 import Events from "./events";
-import GameData from "./game-data";
 import GameState from "./game-state";
 import Hero from "./hero";
 import { InputManager } from "./input";
@@ -35,25 +34,24 @@ class Engine extends EventTarget {
 	static readonly Event = Events;
 
 	public readonly type: Type = null;
-	public mixer: Mixer<any> = null;
-	public metronome: Metronome = null;
-	public inputManager: InputManager = null;
-	public sceneManager: SceneManager = null;
-	public renderer: Renderer = null;
-	public palette: PaletteAnimation = null;
-	public data: GameData = null;
 	public assetManager: AssetManager = null;
+	public camera: Camera = new Camera();
+	public gameState: GameState = GameState.Stopped;
 	public hero: Hero = null;
+	public inputManager: InputManager = null;
 	public inventory: Inventory = null;
+	public loader: Loader = null;
+	public metronome: Metronome = null;
+	public mixer: Mixer<any> = null;
+	public palette: PaletteAnimation = null;
+	public persistentState: typeof State = State;
+	public renderer: Renderer = null;
+	public sceneManager: SceneManager = null;
 	public scriptExecutor: ScriptExecutor = null;
 	public story: Story = null;
-	public persistentState: typeof State = State;
 	public temporaryState: any = null;
-	public gameState: GameState = GameState.Stopped;
-	public camera: Camera = new Camera();
-	public loader: Loader = null;
-	private _currentZone: Zone = null;
 	private _currentWorld: World = null;
+	private _currentZone: Zone = null;
 	private _updateInProgress: boolean = false;
 
 	constructor(type: Type, ifce: Partial<Interface> = {}) {
@@ -68,7 +66,7 @@ class Engine extends EventTarget {
 		const musicChannel = ifce.Channel();
 		musicChannel.muted = !Settings.playMusic;
 		this.mixer = ifce.Mixer(
-			(id: number) => this.data.sounds[id].representation,
+			(id: number) => this.assetManager.get(Sound, id).representation,
 			musicChannel,
 			effectsChannel
 		);
@@ -162,7 +160,10 @@ class Engine extends EventTarget {
 			return;
 		}
 
-		const weaponChar = this.data.characters.find(c => c.isWeapon && c.frames[0].extensionRight === tile);
+		const weaponChar = this.assetManager.find(
+			Char,
+			c => c.isWeapon && c.frames[0].extensionRight === tile
+		);
 		if (this.hero.weapon === weaponChar) return;
 
 		this.hero.weapon = weaponChar;

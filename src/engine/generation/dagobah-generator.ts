@@ -1,7 +1,7 @@
 import { HotspotType, ZoneType } from "src/engine/objects";
 
-import GameData from "../game-data";
-import Hotspot from "../objects/hotspot";
+import AssetManager from "../asset-manager";
+import { Tile, Zone, Hotspot, Puzzle } from "../objects";
 import World from "./world";
 import WorldGenerator from "./world-generator";
 import { WorldItem } from "src/engine/generation";
@@ -9,11 +9,11 @@ import Yoda from "../yoda";
 import { randmod } from "src/util";
 
 class DagobahGenerator {
-	private readonly data: GameData;
+	private readonly assets: AssetManager;
 	private _world: World = null;
 
-	constructor(data: GameData) {
-		this.data = data;
+	constructor(assets: AssetManager) {
+		this.assets = assets;
 	}
 
 	get world() {
@@ -22,23 +22,23 @@ class DagobahGenerator {
 	}
 
 	generate(generator: WorldGenerator) {
-		const data = this.data;
+		const assets = this.assets;
 		const dagobah = new World();
-		dagobah.zones = data.zones;
+		dagobah.zones = assets.getAll(Zone);
 
-		dagobah.setZone(4, 4, data.zones[Yoda.Zone.DagobahNorthWest]);
-		dagobah.at(4, 4).zoneType = ZoneType.Find; // data.zones[Yoda.Zone.DagobahNorthWest].type;
-		dagobah.setZone(5, 4, data.zones[Yoda.Zone.DagobahNorthEast]);
-		dagobah.at(5, 4).zoneType = ZoneType.Find; // data.zones[Yoda.Zone.DagobahNorthEast].type;
-		dagobah.setZone(4, 5, data.zones[Yoda.Zone.DagobahSouthWest]);
-		dagobah.at(4, 5).zoneType = data.zones[Yoda.Zone.DagobahSouthWest].type;
-		dagobah.setZone(5, 5, data.zones[Yoda.Zone.DagobahSouthEast]);
-		dagobah.at(5, 5).zoneType = ZoneType.Town; // data.zones[Yoda.Zone.DagobahSouthEast].type;
+		dagobah.setZone(4, 4, assets.get(Zone, Yoda.Zone.DagobahNorthWest));
+		dagobah.at(4, 4).zoneType = ZoneType.Find; // assets.get(Zone, Yoda.Zone.DagobahNorthWest).type;
+		dagobah.setZone(5, 4, assets.get(Zone, Yoda.Zone.DagobahNorthEast));
+		dagobah.at(5, 4).zoneType = ZoneType.Find; // assets.get(Zone, Yoda.Zone.DagobahNorthEast).type;
+		dagobah.setZone(4, 5, assets.get(Zone, Yoda.Zone.DagobahSouthWest));
+		dagobah.at(4, 5).zoneType = assets.get(Zone, Yoda.Zone.DagobahSouthWest).type;
+		dagobah.setZone(5, 5, assets.get(Zone, Yoda.Zone.DagobahSouthEast));
+		dagobah.at(5, 5).zoneType = ZoneType.Town; // assets.get(Zone, Yoda.Zone.DagobahSouthEast).type;
 
 		let mode = randmod(4);
-		if (generator.goalPuzzle === data.puzzles[Yoda.Goal.ImperialBattleCode]) {
+		if (generator.goalPuzzle === assets.get(Puzzle, Yoda.Goal.ImperialBattleCode)) {
 			mode = 3;
-		} else if (generator.goalPuzzle === data.puzzles[Yoda.Goal.RescueYoda]) {
+		} else if (generator.goalPuzzle === assets.get(Puzzle, Yoda.Goal.RescueYoda)) {
 			mode = 4;
 		}
 
@@ -56,43 +56,43 @@ class DagobahGenerator {
 		let worldItem: WorldItem = null;
 		switch (mode) {
 			case 0:
-				this._setupSpawnHotspot(Yoda.Zone.DagobahNorthWest, Yoda.Tile.Yoda, data);
+				this._setupSpawnHotspot(Yoda.Zone.DagobahNorthWest, Yoda.Tile.Yoda, assets);
 				worldItem = dagobah.at(4, 4);
 				worldItem.zoneType = ZoneType.Use;
-				worldItem.zone = data.zones[Yoda.Zone.DagobahNorthWest];
-				worldItem.npc = data.tiles[Yoda.Tile.Yoda];
+				worldItem.zone = assets.get(Zone, Yoda.Zone.DagobahNorthWest);
+				worldItem.npc = assets.get(Tile, Yoda.Tile.Yoda);
 				worldItem.findItem = startingItem;
 				break;
 			case 1:
-				this._setupSpawnHotspot(Yoda.Zone.YodasHut, Yoda.Tile.Yoda, data);
+				this._setupSpawnHotspot(Yoda.Zone.YodasHut, Yoda.Tile.Yoda, assets);
 				worldItem = dagobah.at(5, 4);
 				worldItem.zoneType = ZoneType.Use;
-				worldItem.zone = data.zones[Yoda.Zone.YodasHut];
-				worldItem.npc = data.tiles[Yoda.Tile.Yoda];
+				worldItem.zone = assets.get(Zone, Yoda.Zone.YodasHut);
+				worldItem.npc = assets.get(Tile, Yoda.Tile.Yoda);
 				worldItem.findItem = startingItem;
 				break;
 			case 2:
-				this._setupSpawnHotspot(Yoda.Zone.DagobahSouthEast, Yoda.Tile.Yoda, data);
+				this._setupSpawnHotspot(Yoda.Zone.DagobahSouthEast, Yoda.Tile.Yoda, assets);
 				worldItem = dagobah.at(5, 5);
 				worldItem.zoneType = ZoneType.Use;
-				worldItem.zone = data.zones[Yoda.Zone.DagobahSouthEast];
-				worldItem.npc = data.tiles[Yoda.Tile.Yoda];
+				worldItem.zone = assets.get(Zone, Yoda.Zone.DagobahSouthEast);
+				worldItem.npc = assets.get(Tile, Yoda.Tile.Yoda);
 				worldItem.findItem = startingItem;
 				break;
 			case 3:
-				this._setupSpawnHotspot(Yoda.Zone.DagobahSouthWest, Yoda.Tile.Yoda, data);
+				this._setupSpawnHotspot(Yoda.Zone.DagobahSouthWest, Yoda.Tile.Yoda, assets);
 				worldItem = dagobah.at(4, 5);
 				worldItem.zoneType = ZoneType.Use;
-				worldItem.zone = data.zones[Yoda.Zone.DagobahSouthWest];
-				worldItem.npc = data.tiles[Yoda.Tile.Yoda];
+				worldItem.zone = assets.get(Zone, Yoda.Zone.DagobahSouthWest);
+				worldItem.npc = assets.get(Tile, Yoda.Tile.Yoda);
 				worldItem.findItem = startingItem;
 				break;
 			case 4:
-				this._setupSpawnHotspot(Yoda.Zone.YodasHut, Yoda.Tile.YodasSeat, data);
+				this._setupSpawnHotspot(Yoda.Zone.YodasHut, Yoda.Tile.YodasSeat, assets);
 				worldItem = dagobah.at(5, 4);
 				worldItem.zoneType = ZoneType.Use;
-				worldItem.zone = data.zones[Yoda.Zone.DagobahSouthWest];
-				worldItem.npc = data.tiles[Yoda.Tile.Yoda];
+				worldItem.zone = assets.get(Zone, Yoda.Zone.DagobahSouthWest);
+				worldItem.npc = assets.get(Tile, Yoda.Tile.Yoda);
 				worldItem.findItem = startingItem;
 				break;
 
@@ -100,17 +100,16 @@ class DagobahGenerator {
 				break;
 		}
 
-		dagobah.at(4, 4).zone = data.zones[Yoda.Zone.DagobahNorthWest];
-		dagobah.at(5, 4).zone = data.zones[Yoda.Zone.DagobahNorthEast];
-		dagobah.at(4, 5).zone = data.zones[Yoda.Zone.DagobahSouthWest];
-		dagobah.at(5, 5).zone = data.zones[Yoda.Zone.DagobahSouthEast];
+		dagobah.at(4, 4).zone = assets.get(Zone, Yoda.Zone.DagobahNorthWest);
+		dagobah.at(5, 4).zone = assets.get(Zone, Yoda.Zone.DagobahNorthEast);
+		dagobah.at(4, 5).zone = assets.get(Zone, Yoda.Zone.DagobahSouthWest);
+		dagobah.at(5, 5).zone = assets.get(Zone, Yoda.Zone.DagobahSouthEast);
 
 		return (this._world = dagobah);
 	}
 
-	private _setupSpawnHotspot(zoneID: number, npcID: number, data: GameData) {
-		const zones = data.zones;
-		const zone = zones[zoneID];
+	private _setupSpawnHotspot(zoneID: number, npcID: number, assets: AssetManager) {
+		const zone = assets.get(Zone, zoneID);
 		const hotspots = zone.hotspots;
 
 		if (zoneID !== Yoda.Zone.YodasHut) {

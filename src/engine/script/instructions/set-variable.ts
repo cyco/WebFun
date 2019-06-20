@@ -1,6 +1,6 @@
 import { Result, Type } from "../types";
 
-import Action from "../../objects/action";
+import { Action, Tile } from "../../objects";
 import Engine from "../../engine";
 import Instruction from "../../objects/instruction";
 
@@ -13,7 +13,7 @@ export default {
 		const args = instruction.arguments;
 		const zone = action.zone;
 
-		const tile = engine.data.tiles[args[3]];
+		const tile = engine.assetManager.get(Tile, args[3]);
 		zone.setTile(tile, args[0], args[1], args[2]);
 
 		return Result.Void;

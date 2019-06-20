@@ -1,6 +1,6 @@
 import { Result, Type } from "../types";
 
-import Action from "../../objects/action";
+import { Tile, Action } from "../../objects";
 import Engine from "../../engine";
 import Instruction from "../../objects/instruction";
 import { Point } from "src/util";
@@ -18,7 +18,7 @@ export default {
 			worldItem.zone.solved = true;
 		}
 
-		engine.dropItem(engine.data.tiles[itemId], new Point(x, y));
+		engine.dropItem(engine.assetManager.get(Tile, itemId), new Point(x, y));
 
 		return Result.UpdateScene;
 	}

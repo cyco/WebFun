@@ -1,16 +1,16 @@
-import { Instruction } from "src/engine/objects";
+import { Instruction, Tile } from "src/engine/objects";
 import RemoveItem from "src/engine/script/instructions/remove-item";
 
 describeInstruction("RemoveItem", (execute, engine) => {
 	it("removes an item from the inventory", async done => {
-		engine.data.tiles = [null, "fake-tile"];
+		engine.assetManager.populate(Tile, [null, "fake-tile"]);
 		engine.inventory = {
 			removeItem() {}
 		};
 
 		spyOn(engine.inventory, "removeItem");
 
-		const instruction = new Instruction({});
+		const instruction = new Instruction({}) as any;
 		instruction._opcode = RemoveItem.Opcode;
 		instruction._arguments = [1];
 

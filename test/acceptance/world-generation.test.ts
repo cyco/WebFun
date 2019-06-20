@@ -6,11 +6,11 @@ import {
 } from "src/debug/expectation";
 
 import loadGameData from "test/helpers/game-data";
-import GameData from "../../src/engine/game-data";
-import Story from "../../src/engine/story";
+import { GameData, AssetManager, Story } from "src/engine";
 import { Planet, WorldSize } from "../../src/engine/types";
 import Worlds from "test/fixtures/worlds.txt";
 import { Yoda } from "src/engine/type";
+import { Tile, Zone, Puzzle, Char, Sound } from "src/engine/objects";
 
 let rawData: any = null;
 
@@ -51,13 +51,27 @@ const compare = (story: Story, expectation: any) => {
 const runTest = ({ seed, planet, size, world, dagobah }: any) => {
 	describe(`World ${seed} ${planet.toString()} ${size.toString()}`, () => {
 		it("is generated correctly", done => {
+			const assetManager = buildAssetManagerFromGameData();
 			const story = new Story(seed, Planet.fromNumber(planet), WorldSize.fromNumber(size));
-			story.generateWorld(new GameData(rawData));
+			story.generateWorld(assetManager);
 			expect(() => compare(story, { seed, planet, size, world, dagobah })).not.toThrow();
 			done();
 		});
 	});
 };
+
+function buildAssetManagerFromGameData() {
+	const data = new GameData(rawData);
+	const assetManager = new AssetManager();
+
+	assetManager.populate(Zone, data.zones);
+	assetManager.populate(Tile, data.tiles);
+	assetManager.populate(Puzzle, data.puzzles);
+	assetManager.populate(Char, data.characters);
+	assetManager.populate(Sound, data.sounds);
+
+	return assetManager;
+}
 
 describe("WebFun.Acceptance.World Generation", () => {
 	beforeAll(async done => {

@@ -6,7 +6,7 @@ import { Planet, WorldSize } from "src/engine/types";
 import { abs, floor } from "src/std/math";
 import { and, not } from "src/util/functional";
 
-import GameData from "src/engine/game-data";
+import AssetManager, { NullIfMissing } from "src/engine/asset-manager";
 import GetDistanceToCenter from "./distance-to-center";
 import Map from "./map";
 import MapGenerator from "./map-generator";
@@ -28,7 +28,7 @@ class WorldGenerator {
 	private _seed: number = 0;
 	private _size: WorldSize;
 	private _planet: Planet;
-	private _data: GameData;
+	private _assetManager: AssetManager;
 
 	private usedZones: Zone[] = [];
 	private mapGenerator: MapGenerator = null;
@@ -45,10 +45,10 @@ class WorldGenerator {
 	private somethingWithTeleporters: number = -1;
 	private puzzlesCanBeReused: number = 0;
 
-	constructor(size: WorldSize, planet: Planet, data: GameData) {
+	constructor(size: WorldSize, planet: Planet, assetManager: AssetManager) {
 		this._size = size;
 		this._planet = planet;
-		this._data = data;
+		this._assetManager = assetManager;
 	}
 
 	public generate(seed: number): boolean {
@@ -59,7 +59,7 @@ class WorldGenerator {
 		mapGenerator.generate(-1, this._size);
 
 		this.world = new World();
-		this.world.zones = this._data.zones;
+		this.world.zones = this._assetManager.getAll(Zone);
 		for (let i = 0; i < 100; i++) {
 			this.world.index(i).puzzleIndex = mapGenerator.orderMap[i];
 		}
@@ -385,7 +385,9 @@ class WorldGenerator {
 		const zoneMatchesPlanet = (zone: Zone) => zone.planet === this._planet;
 		const zoneIsUnused = (zone: Zone) =>
 			!this.usedZones.contains(zone) || (zoneType === ZoneType.Goal && this.puzzlesCanBeReused > 0);
-		const usableZones = this._data.zones.filter(and(zoneMatchesPlanet, zoneMatchesType)).shuffle();
+		const usableZones = this._assetManager
+			.getFiltered(Zone, and(zoneMatchesPlanet, zoneMatchesType))
+			.shuffle();
 		return usableZones
 			.filter(zoneIsUnused)
 			.find((zone: Zone) =>
@@ -834,7 +836,7 @@ class WorldGenerator {
 		defaultReturn: T,
 		predicate = (result: T) => result !== defaultReturn
 	): T {
-		for (const room of RoomIterator(zone, this._data.zones)) {
+		for (const room of RoomIterator(zone, this._assetManager.getAll(Zone))) {
 			const result = callback(room);
 			if (predicate(result)) {
 				return result;
@@ -875,7 +877,7 @@ class WorldGenerator {
 	}
 
 	private getPuzzleCandidates(zoneType: ZoneType): Puzzle[] {
-		return this._data.puzzles.filter(puzzle => {
+		return this._assetManager.getFiltered(Puzzle, puzzle => {
 			switch (zoneType) {
 				case ZoneType.Find:
 				case ZoneType.FindTheForce:
@@ -1022,11 +1024,11 @@ class WorldGenerator {
 	}
 
 	private lookupTileById(id: number): Tile {
-		return this._data.tiles[id] || null;
+		return this._assetManager.get(Tile, id, NullIfMissing);
 	}
 
 	private lookupZoneById(id: number): Zone {
-		return this._data.zones[id] || null;
+		return this._assetManager.get(Zone, id, NullIfMissing);
 	}
 }
 

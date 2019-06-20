@@ -1,5 +1,5 @@
-import { GameData, Story } from "src/engine";
-import { Tile, Zone, ZoneType, Hotspot } from "src/engine/objects";
+import { Story, AssetManager } from "src/engine";
+import { Tile, Zone, Hotspot, Puzzle } from "src/engine/objects";
 
 import { World } from "src/engine/generation";
 import { WorldSize } from "src/engine/types";
@@ -55,14 +55,14 @@ class SimulatedStory extends Story {
 
 	private _initializeZone(zone: Zone, find: Tile, _npc: Tile, _required: Tile, _required2: Tile) {
 		switch (zone.type) {
-			case ZoneType.BlockadeNorth:
-			case ZoneType.BlockadeSouth:
-			case ZoneType.BlockadeEast:
-			case ZoneType.BlockadeWest:
-			case ZoneType.TravelStart:
-			case ZoneType.TravelEnd:
+			case Zone.Type.BlockadeNorth:
+			case Zone.Type.BlockadeSouth:
+			case Zone.Type.BlockadeEast:
+			case Zone.Type.BlockadeWest:
+			case Zone.Type.TravelStart:
+			case Zone.Type.TravelEnd:
 				break;
-			case ZoneType.Goal:
+			case Zone.Type.Goal:
 			/*
 			const npc = this.findUnusedNPCForZoneRandomly(zone);
 			const hasPuzzleNPC = npc !== null ? this.zoneLeadsToNPC(zone, npc) : 0;
@@ -71,16 +71,16 @@ class SimulatedStory extends Story {
 				this.dropItemAtTriggerHotspotRandomly(zone, puzzle3.item2 ? puzzle3.item2 : null)
 			}
 		*/
-			case ZoneType.Trade:
+			case Zone.Type.Trade:
 				// if(this.dropItemAtLockHotspot(zone, p1.item1)) {
 				// 	this.dropItemAtTriggerHotspotRandomly(zone, p2.item1)
 				// }
 				break;
-			case ZoneType.Use:
+			case Zone.Type.Use:
 				// this.dropNPCAtHotspotRandomly(zone, npc);
 				break;
-			case ZoneType.Find:
-			case ZoneType.FindTheForce:
+			case Zone.Type.Find:
+			case Zone.Type.FindTheForce:
 				const hotspotTypeForTileAttributes = (input: number) => {
 					if ((input & Type.TILE_SPEC_THE_FORCE) !== 0) {
 						return Hotspot.Type.ForceLocation;
@@ -100,18 +100,18 @@ class SimulatedStory extends Story {
 					break;
 				}
 				break;
-			case ZoneType.Town:
-			case ZoneType.Empty:
+			case Zone.Type.Town:
+			case Zone.Type.Empty:
 			default:
 				break;
 		}
 	}
 
-	generateWorld(data: GameData): void {
+	generateWorld(assets: AssetManager): void {
 		const copy = new World();
 
-		const mapItem = (i: Tile) => i && data.tiles[i.id];
-		const mapZone = (z: Zone) => z && data.zones[z.id];
+		const mapItem = (i: Tile) => i && assets.get(Tile, i.id);
+		const mapZone = (z: Zone) => z && assets.get(Zone, z.id);
 
 		for (let y = 0; y < World.HEIGHT; y++) {
 			for (let x = 0; x < World.WIDTH; x++) {
@@ -132,7 +132,7 @@ class SimulatedStory extends Story {
 		this._world = copy;
 		this._dagobah = copy;
 
-		this.goal = data.puzzles.first();
+		this.goal = assets.get(Puzzle, 0);
 		this._world.layDownHotspotItems();
 	}
 

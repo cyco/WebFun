@@ -27,6 +27,7 @@ import Scene from "./scene";
 import TeleporterScene from "./teleport-scene";
 import TransitionScene from "./transition-scene";
 import ZoneSceneRenderer from "src/engine/rendering/zone-scene-renderer";
+import { NullIfMissing } from "src/engine/asset-manager";
 
 class ZoneScene extends Scene {
 	private _zone: Zone;
@@ -66,7 +67,7 @@ class ZoneScene extends Scene {
 				continue;
 			}
 
-			const item = this.engine.data.tiles[htsp.arg];
+			const item = this.assetManager.get(Tile, htsp.arg, NullIfMissing);
 			const worldItem = this.engine.currentWorld.itemForZone(this.zone);
 			if (item && worldItem && worldItem.findItem === item) {
 				this.zone.solved = true;
@@ -212,7 +213,7 @@ class ZoneScene extends Scene {
 
 		switch (hotspot.type) {
 			case HotspotType.DoorIn: {
-				const targetZone = engine.data.zones[hotspot.arg];
+				const targetZone = engine.assetManager.get(Zone, hotspot.arg, NullIfMissing);
 				const waysOut = targetZone.hotspots.filter((h: Hotspot) => h.type === HotspotType.DoorOut);
 
 				if (waysOut.length !== 1) console.warn("Found multiple doors out");
@@ -249,7 +250,7 @@ class ZoneScene extends Scene {
 			case HotspotType.DoorOut: {
 				if (hotspot.arg === -1) console.warn("This is not where we're coming from!");
 
-				const targetZone = engine.data.zones[hotspot.arg];
+				const targetZone = engine.assetManager.get(Zone, hotspot.arg);
 
 				zone.hotspots
 					.filter(hotspot => {
@@ -290,7 +291,7 @@ class ZoneScene extends Scene {
 			case HotspotType.xWingFromD: {
 				if (hotspot.arg === -1) console.warn("This is not where we're coming from!");
 
-				const targetZone = engine.data.zones[hotspot.arg];
+				const targetZone = engine.assetManager.get(Zone, hotspot.arg);
 
 				const scene = new TransitionScene();
 				scene.type = TransitionScene.TRANSITION_TYPE.ROOM;
@@ -317,7 +318,7 @@ class ZoneScene extends Scene {
 			case HotspotType.xWingToD: {
 				if (hotspot.arg === -1) console.warn("This is not where we're coming from!");
 
-				const targetZone = engine.data.zones[hotspot.arg];
+				const targetZone = engine.assetManager.get(Zone, hotspot.arg);
 
 				const scene = new TransitionScene();
 				scene.type = TransitionScene.TRANSITION_TYPE.ROOM;
@@ -491,7 +492,7 @@ class ZoneScene extends Scene {
 
 		this.zone.hotspots.push(hotspot);
 
-		const tile = this.engine.data.tiles[hotspot.arg];
+		const tile = this.assetManager.get(Tile, hotspot.arg);
 		this.zone.setTile(tile, hotspot.location.x, hotspot.location.y, 1);
 	}
 
@@ -767,7 +768,7 @@ class ZoneScene extends Scene {
 			if (currentTile !== itemID) return;
 
 			this.zone.setTile(null, at.x, at.y, 1);
-			this.engine.dropItem(engine.data.tiles[itemID], at).then(() => {
+			this.engine.dropItem(engine.assetManager.get(Tile, itemID), at).then(() => {
 				const worldItem = this.engine.currentWorld.itemForZone(this.zone);
 				if (worldItem && worldItem.findItem && worldItem.findItem.id === itemID) {
 					this.zone.solved = true;
@@ -817,7 +818,7 @@ class ZoneScene extends Scene {
 
 			if (hotspot.type === HotspotType.Lock) {
 				const keyTileId = hotspot.arg < 0 ? worldItem.requiredItem.id : hotspot.arg;
-				const keyTile = engine.data.tiles[keyTileId];
+				const keyTile = engine.assetManager.get(Tile, keyTileId);
 
 				acceptItem = tile === keyTile;
 				break;
@@ -877,7 +878,7 @@ class ZoneScene extends Scene {
 		const engine = this.engine;
 		const counterPart =
 			htsp.type === HotspotType.VehicleTo ? HotspotType.VehicleBack : HotspotType.VehicleTo;
-		const targetZone = engine.data.zones[htsp.arg];
+		const targetZone = engine.assetManager.get(Zone, htsp.arg);
 		const worldLocation = engine.currentWorld.locationOfZone(targetZone);
 		const zoneLocation = targetZone.hotspots.withType(counterPart).first().location;
 
@@ -904,7 +905,7 @@ class ZoneScene extends Scene {
 			case HotspotType.xWingFromD: {
 				if (hotspot.arg === -1) console.warn("This is not where we're coming from!");
 
-				const targetZone = engine.data.zones[hotspot.arg];
+				const targetZone = engine.assetManager.get(Zone, hotspot.arg);
 
 				const transitionScene = new TransitionScene();
 				transitionScene.type = TransitionScene.TRANSITION_TYPE.ROOM;
@@ -931,7 +932,7 @@ class ZoneScene extends Scene {
 			case HotspotType.xWingToD: {
 				if (hotspot.arg === -1) console.warn("This is not where we're coming from!");
 
-				const targetZone = engine.data.zones[hotspot.arg];
+				const targetZone = engine.assetManager.get(Zone, hotspot.arg);
 
 				const transitionScene = new TransitionScene();
 				transitionScene.type = TransitionScene.TRANSITION_TYPE.ROOM;
@@ -972,6 +973,10 @@ class ZoneScene extends Scene {
 
 	get currentOffset() {
 		return this.engine.camera.offset;
+	}
+
+	private get assetManager() {
+		return this.engine.assetManager;
 	}
 }
 

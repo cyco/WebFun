@@ -59,7 +59,7 @@ class MapScene extends Scene {
 		this._cheatInput.reset();
 
 		this._ticks = 4;
-		this._location = this.engine.data.tiles[this._locatorTile.here];
+		this._location = this.engine.assetManager.get(Tile, this._locatorTile.here);
 		this.engine.inputManager.clear();
 		this.engine.inputManager.mouseDownHandler = (p: Point) => this.mouseDown(p);
 		this.engine.inputManager.keyDownHandler = (e: KeyboardEvent) => {
@@ -344,7 +344,7 @@ class MapScene extends Scene {
 		let tile = this._locatorTile.forZone(zone, zone && zone.visited, Settings.revealWorld);
 		if (tile instanceof Array) tile = tile[zone && this.isZoneConsideredSolved(zone) ? 1 : 0];
 
-		return this.engine.data.tiles[tile];
+		return this.engine.assetManager.get(Tile, tile);
 	}
 
 	protected isZoneConsideredSolved(zone: Zone): boolean {

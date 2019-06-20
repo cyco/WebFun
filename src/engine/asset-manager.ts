@@ -1,10 +1,10 @@
-interface AssetConstructor<T> {
+interface AssetType<T> {
 	new (...args: any[]): T;
 }
 
-type MissingEntityHandler = <T>(type: AssetConstructor<T>, id?: number) => T;
+type MissingEntityHandler = <T>(type: AssetType<T>, id?: number) => T;
 const NullIfMissing = (): null => null;
-const ThrowIfMissing = <T>(type: AssetConstructor<T>, id: number = null) => {
+const ThrowIfMissing = <T>(type: AssetType<T>, id: number = null) => {
 	throw new Error(`Entity ${id} of type ${type} cannot be found`);
 };
 
@@ -12,7 +12,7 @@ class AssetManager {
 	private entries = new Map();
 
 	public get<T>(
-		type: AssetConstructor<T>,
+		type: AssetType<T>,
 		id: number = null,
 		missingHandler: MissingEntityHandler = ThrowIfMissing
 	): T {
@@ -21,7 +21,7 @@ class AssetManager {
 		return entries[id] || missingHandler(type, id);
 	}
 
-	public set<T>(type: AssetConstructor<T>, object: T, id: number = null): void {
+	public set<T>(type: AssetType<T>, object: T, id: number = null): void {
 		let entries = this.entries.get(type);
 		if (!entries) {
 			this.entries.set(type, []);
@@ -31,7 +31,21 @@ class AssetManager {
 		entries[id] = object;
 	}
 
-	public populate<T>(type: AssetConstructor<T>, objects: T[]): void {
+	public find<T>(type: AssetType<T>, predicate: (candidate: T) => boolean): T {
+		const entries = this.entries.get(type) || [];
+		return entries.find(predicate);
+	}
+
+	public getFiltered<T>(type: AssetType<T>, predicate: (candidate: T) => boolean): T[] {
+		const entries = this.entries.get(type) || [];
+		return entries.filter(predicate);
+	}
+
+	public getAll<T>(type: AssetType<T>): T[] {
+		return this.entries.get(type) || [];
+	}
+
+	public populate<T>(type: AssetType<T>, objects: T[]): void {
 		this.entries.set(type, objects);
 	}
 }

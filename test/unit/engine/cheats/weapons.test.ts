@@ -1,8 +1,10 @@
 import { Yoda } from "src/engine";
 import Weapons from "src/engine/cheats/weapons";
+import { Tile } from "src/engine/objects";
+import { AssetManager, Engine } from "src/engine";
 
 describe("WebFun.Engine.Cheats.Weapons", () => {
-	let subject;
+	let subject: Weapons;
 	beforeEach(() => (subject = new Weapons()));
 
 	it("is activated by the code `gojedi`", () => {
@@ -14,20 +16,19 @@ describe("WebFun.Engine.Cheats.Weapons", () => {
 	});
 
 	it("gives the hero a couple of items when executed", () => {
-		const items = [];
+		const items: any[] = [];
 		const mockEngine = {
-			inventory: { addItem: item => items.push(item) },
-			data: {
-				tiles: {
-					0x1a5: 0x1a5,
-					0x1ff: 0x1ff,
-					0x200: 0x200,
-					0x201: 0x201,
-					0x202: 0x202
-				}
-			}
+			inventory: { addItem: (item: any) => items.push(item) },
+			assetManager: new AssetManager()
 		};
-		subject.execute(mockEngine);
+
+		mockEngine.assetManager.set(Tile, (0x1a5 as any) as Tile, 0x1a5);
+		mockEngine.assetManager.set(Tile, (0x1ff as any) as Tile, 0x1ff);
+		mockEngine.assetManager.set(Tile, (0x200 as any) as Tile, 0x200);
+		mockEngine.assetManager.set(Tile, (0x201 as any) as Tile, 0x201);
+		mockEngine.assetManager.set(Tile, (0x202 as any) as Tile, 0x202);
+
+		subject.execute((mockEngine as any) as Engine);
 
 		expect(items).toEqual([
 			Yoda.ItemIDs.ThermalDetonator,

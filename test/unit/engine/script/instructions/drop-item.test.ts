@@ -1,6 +1,7 @@
 import { Instruction } from "src/engine/objects";
 import DropItem from "src/engine/script/instructions/drop-item";
 import * as Util from "src/util";
+import { Tile } from "src/engine/objects";
 
 describeInstruction("DropItem", (execute, engine) => {
 	it("shows the pick-up scene with the specified item at the correct location", async done => {
@@ -8,9 +9,9 @@ describeInstruction("DropItem", (execute, engine) => {
 		spyOn(engine, "dropItem");
 		spyOn(Util, "Point").and.returnValue(mockedPoint);
 		const mockTile = {};
-		engine.data = { tiles: [null, null, null, mockTile] };
+		engine.assetManager.populate(Tile, [null, null, null, mockTile]);
 
-		const instruction = new Instruction({});
+		const instruction = new Instruction({}) as any;
 		instruction._opcode = DropItem.Opcode;
 		instruction._arguments = [3, 1, 2];
 
@@ -30,9 +31,9 @@ describeInstruction("DropItem", (execute, engine) => {
 			findItem: mockTile,
 			zone: engine.currentZone
 		});
-		engine.data = { tiles: [null, null, null, mockTile] };
+		engine.assetManager.populate(Tile, [null, null, null, mockTile]);
 
-		const instruction = new Instruction({});
+		const instruction = new Instruction({}) as any;
 		instruction._opcode = DropItem.Opcode;
 		instruction._arguments = [-1, 1, 2];
 

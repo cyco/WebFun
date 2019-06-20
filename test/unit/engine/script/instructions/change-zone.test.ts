@@ -1,17 +1,17 @@
-import { Instruction } from "src/engine/objects";
+import { Zone, Instruction } from "src/engine/objects";
 import ChangeZone from "src/engine/script/instructions/change-zone";
 
 describeInstruction("ChangeZone", (execute, engine) => {
 	it("Switches to a differnt zone using the room animation", async done => {
 		const zone = {};
-		engine.data.zones = [null, null, zone, null];
+		engine.assetManager.populate(Zone, [null, null, zone, null]);
 		engine.dagobah = { locationOfZone: () => true };
 		engine.sceneManager = {
 			pushScene() {}
 		};
 		spyOn(engine.sceneManager, "pushScene");
 
-		const instruction = new Instruction({});
+		const instruction = new Instruction({}) as any;
 		instruction._opcode = ChangeZone.Opcode;
 		instruction._arguments = [2];
 
