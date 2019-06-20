@@ -91,9 +91,6 @@ class Zone {
 			x = x.x;
 		}
 
-		const floor = this.getTile(x, y, 0);
-		if (floor && floor.isObject()) return false;
-
 		const object = this.getTile(x, y, 1);
 		return !object;
 	}
