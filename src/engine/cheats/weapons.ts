@@ -1,6 +1,7 @@
 import Cheat from "./cheat";
 import Engine from "../engine";
 import Yoda from "src/engine/yoda";
+import { Tile } from "src/engine/objects";
 
 class WeaponsCheat extends Cheat {
 	get code() {
@@ -21,7 +22,7 @@ class WeaponsCheat extends Cheat {
 	}
 
 	private addItem(engine: Engine, id: number): void {
-		const tile = engine.data.tiles[id];
+		const tile = engine.assetManager.get(Tile, id);
 		engine.inventory.addItem(tile);
 	}
 }

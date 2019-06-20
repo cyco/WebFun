@@ -10,6 +10,7 @@ import ConfiguationBuilder from "./configuration-builder";
 import SimulatedStory from "src/debug/simulated-story";
 import adjacentZones from "./adjacent-zones";
 import formatExpectation from "./format-expectation";
+import { Zone, Tile, Sound, Puzzle, Char } from "src/engine/objects";
 
 class TestCreatorWindow extends AbstractWindow {
 	public static readonly tagName = "wf-debug-test-creator-window";
@@ -52,9 +53,18 @@ class TestCreatorWindow extends AbstractWindow {
 		engine.hero.visible = true;
 		engine.currentWorld = story.world;
 		engine.story = story;
-		engine.data = controller.data;
+
+		const data = controller.data;
+		engine.assetManager.populate(Zone, data.zones);
+		engine.assetManager.populate(Tile, data.tiles);
+		engine.assetManager.populate(Puzzle, data.puzzles);
+		engine.assetManager.populate(Char, data.characters);
+		engine.assetManager.populate(Sound, data.sounds);
+
 		engine.inventory.removeAllItems();
-		this.testCase.configuration.inventory.forEach(i => engine.inventory.addItem(engine.data.tiles[i]));
+		this.testCase.configuration.inventory.forEach(i =>
+			engine.inventory.addItem(engine.assetManager.get(Tile, i))
+		);
 
 		controller.jumpStartEngine(story.world.at(4, 5).zone);
 

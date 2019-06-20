@@ -40,7 +40,7 @@ class ReplayingInputManager extends EventTarget implements InputManager, EventLi
 		if (this.token === Syntax.Place.Start) {
 			this._offset++;
 			const tileID = this.token.parseInt();
-			const tile = this.engine.data.tiles[tileID];
+			const tile = this.engine.assetManager.get(Tile, tileID);
 			this._offset++;
 
 			if (this.token !== "at") {

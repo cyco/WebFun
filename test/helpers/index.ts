@@ -20,6 +20,12 @@ global.describeComponent = describeComponent;
 global.xdescribeComponent = xdescribeComponent;
 global.fdescribeComponent = fdescribeComponent;
 
+declare global {
+	var describeComponent: Function;
+	var xdescribeComponent: Function;
+	var fdescribeComponent: Function;
+}
+
 global.getFixtureData = getFixtureData;
 global.buildFixtureUrl = buildFixtureUrl;
 

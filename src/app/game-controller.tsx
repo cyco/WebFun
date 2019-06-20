@@ -6,7 +6,7 @@ import {
 	SceneView,
 	Weapon as WeaponComponent
 } from "./ui";
-import { Char, Tile, Zone } from "src/engine/objects";
+import { Char, Tile, Zone, Sound, Puzzle } from "src/engine/objects";
 import { ColorPalette, Engine, GameData, Hero, Story } from "src/engine";
 import { ConfirmationResult, ModalConfirm } from "src/ux";
 import { EventTarget, Point, Rectangle, Size } from "src/util";
@@ -88,7 +88,7 @@ class GameController extends EventTarget {
 		await this._loadGameData();
 		const story = new Story(0xbeef, Planet.TATOOINE, WorldSize.Small);
 		this._engine.inventory.removeAllItems();
-		story.generateWorld(this._engine.data);
+		story.generateWorld(this._engine.assetManager);
 		this._engine.story = story;
 
 		this._showSceneView();
@@ -136,7 +136,7 @@ class GameController extends EventTarget {
 		console.log("Save");
 	}
 
-	private _showSceneView(zone: Zone = this._engine.data.zones.find(z => z.isLoadingZone())) {
+	private _showSceneView(zone: Zone = this._engine.assetManager.find(Zone, z => z.isLoadingZone())) {
 		const engine = this._engine;
 		engine.metronome.stop();
 		engine.metronome.ontick = (delta: number) => engine.update(delta);
@@ -149,7 +149,7 @@ class GameController extends EventTarget {
 		zoneScene.zone = zone;
 		engine.currentZone = zone;
 		engine.currentWorld = engine.world.locationOfZone(zone) ? engine.world : null;
-		engine.hero.appearance = engine.data.characters.find((c: Char) => c.isHero());
+		engine.hero.appearance = engine.assetManager.find(Char, (c: Char) => c.isHero());
 
 		engine.sceneManager.clear();
 		engine.sceneManager.pushScene(zoneScene);
@@ -250,9 +250,14 @@ class GameController extends EventTarget {
 			loader.onload = e => {
 				const details = e.detail;
 				loadingView.progress = 1.0;
-				this.data = details.data;
+				const data = (this.data = details.data);
 				this.palette = details.palette;
-				this._engine.data = this.data;
+
+				this._engine.assetManager.populate(Zone, data.zones);
+				this._engine.assetManager.populate(Tile, data.tiles);
+				this._engine.assetManager.populate(Puzzle, data.puzzles);
+				this._engine.assetManager.populate(Char, data.characters);
+				this._engine.assetManager.populate(Sound, data.sounds);
 
 				this._window.inventory.palette = details.palette;
 				this._window.weapon.palette = details.palette;

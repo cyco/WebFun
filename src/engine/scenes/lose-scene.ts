@@ -1,7 +1,7 @@
 import { Renderer } from "../rendering";
 import Scene from "./scene";
 import ZoneScene from "./zone-scene";
-import { ZoneType } from "src/engine/objects";
+import { Zone } from "src/engine/objects";
 
 class LoseScene extends Scene {
 	private _zoneScene: ZoneScene;
@@ -10,7 +10,7 @@ class LoseScene extends Scene {
 		this._zoneScene = new ZoneScene();
 		this.engine.hero.visible = false;
 		this._zoneScene.engine = this.engine;
-		this._zoneScene.zone = this.engine.data.zones.withType(ZoneType.Lose).first();
+		this._zoneScene.zone = this.engine.assetManager.find(Zone, ({ type }) => type === Zone.Type.Lose);
 		this._zoneScene.willShow();
 	}
 

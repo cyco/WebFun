@@ -6,8 +6,9 @@ import { Yoda } from "src/engine/type";
 import { ZoneScene } from "src/engine/scenes";
 import { CanvasRenderer } from "src/app/rendering";
 import { SceneView } from "src/app/ui";
-import { GameData, Engine, Story } from "src/engine";
+import { GameData, Engine, Story, AssetManager } from "src/engine";
 import { Planet, WorldSize } from "src/engine/types";
+import { Tile, Zone, Puzzle, Sound, Char } from "src/engine/objects";
 import { PaletteAnimation } from "src/engine/rendering";
 import { Renderer as DummyRenderer } from "src/engine/dummy-interface";
 import Settings from "src/settings";
@@ -47,10 +48,24 @@ class GameplayContext {
 			Renderer: () =>
 				this.debug ? new CanvasRenderer.Renderer(this.sceneView.canvas) : new DummyRenderer(),
 			Loader: () => null,
-			SceneManager: () => this.sceneView.manager
+			SceneManager: () => this.sceneView.manager,
+			AssetManager: () => this.buildAssetManagerFromGameData(rawData)
 		});
-		this.engine.data = new GameData(rawData);
+
 		this.engine.palette = new PaletteAnimation(paletteData);
+	}
+
+	private buildAssetManagerFromGameData(rawData: any) {
+		const data = new GameData(rawData);
+		const assetManager = new AssetManager();
+
+		assetManager.populate(Zone, data.zones);
+		assetManager.populate(Tile, data.tiles);
+		assetManager.populate(Puzzle, data.puzzles);
+		assetManager.populate(Char, data.characters);
+		assetManager.populate(Sound, data.sounds);
+
+		return assetManager;
 	}
 
 	public async playNewStory(seed: number, planet: Planet, size: WorldSize, input: string[], debug = false) {
@@ -70,7 +85,7 @@ class GameplayContext {
 			try {
 				document.body.appendChild(sceneView);
 
-				story.generateWorld(engine.data);
+				story.generateWorld(engine.assetManager);
 				engine.story = story;
 
 				engine.metronome.tickDuration = 1;
@@ -82,11 +97,11 @@ class GameplayContext {
 				const zone =
 					story instanceof SimulatedStory
 						? engine.world.at(4, 5).zone
-						: engine.data.zones.find(z => z.isLoadingZone());
+						: engine.assetManager.find(Zone, z => z.isLoadingZone());
 				const zoneScene = new ZoneScene(engine, zone);
 				engine.currentZone = zone;
 				engine.currentWorld = engine.world.locationOfZone(zone) ? engine.world : null;
-				engine.hero.appearance = engine.data.characters.find(c => c.isHero());
+				engine.hero.appearance = engine.assetManager.find(Char, c => c.isHero());
 				engine.sceneManager.pushScene(zoneScene);
 				if (story instanceof SimulatedStory) {
 					engine.hero.visible = true;
@@ -127,7 +142,13 @@ class GameplayContext {
 
 		engine.currentWorld = null;
 		engine.currentZone = null;
-		engine.data = null;
+
+		engine.assetManager.populate(Zone, []);
+		engine.assetManager.populate(Tile, []);
+		engine.assetManager.populate(Puzzle, []);
+		engine.assetManager.populate(Char, []);
+		engine.assetManager.populate(Sound, []);
+		engine.assetManager = null;
 		engine.hero.appearance = null;
 		engine.hero = null;
 		engine.inputManager.engine = null;

@@ -10,7 +10,7 @@ import MutableStory from "src/engine/mutable-story";
 import SaveGameWorld from "src/engine/save-game/world";
 import { World } from "src/engine/generation";
 import { Writer } from "src/engine/save-game";
-import { ZoneType } from "src/engine/objects";
+import { Zone, Puzzle, Tile, Sound, Char } from "src/engine/objects";
 
 class SaveGameInspector extends AbstractInspector {
 	private _editorView: EditorView = (
@@ -79,7 +79,12 @@ class SaveGameInspector extends AbstractInspector {
 		engine.currentWorld = state.onDagobah ? story.dagobah : story.world;
 
 		engine.story = story;
-		engine.data = data;
+
+		engine.assetManager.populate(Zone, data.zones);
+		engine.assetManager.populate(Tile, data.tiles);
+		engine.assetManager.populate(Puzzle, data.puzzles);
+		engine.assetManager.populate(Char, data.characters);
+		engine.assetManager.populate(Sound, data.sounds);
 
 		controller.show(this.window.manager);
 		controller.jumpStartEngine(controller.data.zones[state.currentZoneID]);
@@ -106,12 +111,12 @@ class SaveGameInspector extends AbstractInspector {
 				out.npc = tiles[input.npcID] || null;
 				out.requiredItem = tiles[input.requiredItemId] || null;
 				out.zone = zones[input.zoneId] || null;
-				out.zoneType = ZoneType.fromNumber(input.zoneType);
+				out.zoneType = Zone.Type.fromNumber(input.zoneType);
 				if (out.zone) out.zone.visited = input.visited;
 				if (out.zone) out.zone.solved = input.solved1 !== 0;
 				console.assert(
-					input.solved1 === input.solved2&&
-						input.solved2 === input.solved3&&
+					input.solved1 === input.solved2 &&
+						input.solved2 === input.solved3 &&
 						input.solved3 === input.solved4
 				);
 			}

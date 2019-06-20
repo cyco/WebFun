@@ -1,7 +1,8 @@
 import { HotspotType, ZoneLayer } from "src/engine/objects";
 
 import Engine from "../engine";
-import Hotspot from "../objects/hotspot";
+import { Tile, Hotspot } from "../objects";
+import { NullIfMissing } from "src/engine/asset-manager";
 import Zone from "../objects/zone";
 
 class HotspotExecutor {
@@ -25,8 +26,7 @@ class HotspotExecutor {
 		const currentTile = zone.getTile(location);
 		if (currentTile) return;
 
-		const tiles = this._engine.data.tiles;
-		const tile = tiles[hotspot.arg];
+		const tile = this._engine.assetManager.get(Tile, hotspot.arg, NullIfMissing);
 
 		const type = hotspot.type;
 		if (type === HotspotType.SpawnLocation) {

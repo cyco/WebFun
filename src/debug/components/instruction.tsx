@@ -1,7 +1,7 @@
 import BreakpointButton from "./breakpoint-button";
 import BreakpointStore from "../breakpoint-store";
 import Engine from "src/engine/engine";
-import { Instruction } from "src/engine/objects";
+import { Instruction, Sound } from "src/engine/objects";
 import InstructionThing from "./instruction-thing";
 import { InstructionsByName as Instructions } from "src/engine/script/instructions";
 import LocationBreakpoint from "../breakpoint/location-breakpoint";
@@ -196,7 +196,9 @@ class InstructionComponent extends InstructionThing {
 	}
 
 	protected appendSoundArgument(sound: number) {
-		this.appendChild(<span className="argument sound">{this.engine.data.sounds[sound].file}</span>);
+		this.appendChild(
+			<span className="argument sound">{this.engine.assetManager.get(Sound, sound).file}</span>
+		);
 	}
 }
 

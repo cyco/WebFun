@@ -1,5 +1,5 @@
 import GameplayContext from "./gameplay-runner";
-import { Zone } from "src/engine/objects";
+import { Zone, Tile } from "src/engine/objects";
 import { srand } from "src/util";
 import { SimulatedStory } from "src/debug";
 
@@ -72,8 +72,8 @@ const run = (fileName: string, testFileContents: string) => {
 			function buildStory(testCase: TestCase) {
 				const engine = ctx.engine;
 				const { findItem, puzzleNPC, requiredItem1, requiredItem2, zone } = testCase.configuration;
-				const t = (t: number) => (t < 0 ? null : engine.data.tiles[t]);
-				const z = (z: number) => (z < 0 ? null : engine.data.zones[z]);
+				const t = (t: number) => (t < 0 ? null : engine.assetManager.get(Tile, t));
+				const z = (z: number) => (z < 0 ? null : engine.assetManager.get(Zone, z));
 
 				return new SimulatedStory(
 					t(findItem),
@@ -82,15 +82,18 @@ const run = (fileName: string, testFileContents: string) => {
 					t(requiredItem2),
 					z(zone),
 					surroundingZones(z(zone)),
-					engine.data.zones
+					engine.assetManager.getAll(Zone)
 				);
 			}
 
 			function surroundingZones(zone: Zone): Zone[] {
 				srand(zone.id);
-				return ctx.engine.data.zones
+				return ctx.engine.assetManager
+					.getFiltered(
+						Zone,
+						(z: Zone) => z !== zone && z.type === Zone.Type.Empty && z.planet === zone.planet
+					)
 					.slice()
-					.filter((z: Zone) => z !== zone && z.type === Zone.Type.Empty && z.planet === zone.planet)
 					.shuffle();
 			}
 		})
