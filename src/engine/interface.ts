@@ -8,6 +8,7 @@ import { ScriptExecutor } from "./script";
 import Hero from "./hero";
 import SceneManager from "./scene-manager";
 import Loader from "./loader";
+import AssetManager from "./asset-manager";
 
 import { ConditionImplementations as Conditions } from "./script/conditions";
 import { InstructionImplementations as Instructions } from "./script/instructions";
@@ -31,6 +32,7 @@ interface Interface {
 		musicChannel: Channel<HTMLAudioElement>,
 		effectChannel: Channel<HTMLAudioElement>
 	) => Mixer<HTMLAudioElement>;
+	AssetManager: () => AssetManager;
 }
 
 export default Interface;

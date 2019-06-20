@@ -9,6 +9,7 @@ import Hero from "../hero";
 import Loader from "./loader";
 import { Mixer } from "../audio";
 import SceneManager from "../scene-manager";
+import AssetManager from "../asset-manager";
 
 import { ConditionImplementations as Conditions } from "../script/conditions";
 import { InstructionImplementations as Instructions } from "../script/instructions";
@@ -29,5 +30,6 @@ export default {
 	Renderer: () => new Renderer(),
 	Channel: () => new Channel(),
 	Loader: () => new Loader(),
-	SceneManager: () => new SceneManager(() => new Rectangle(new Point(0, 0), new Size(0, 0)))
+	SceneManager: () => new SceneManager(() => new Rectangle(new Point(0, 0), new Size(0, 0))),
+	AssetManager: () => new AssetManager()
 };
