@@ -95,4 +95,5 @@ proto.toAdobeColorTable = proto.toAdobeColorTable || toAdobeColorTable;
 constructor.paletteFromUint8Array = constructor.paletteFromUint8Array || paletteFromUint8Array;
 constructor.paletteFromArrayBuffer = constructor.paletteFromArrayBuffer || paletteFromArrayBuffer;
 
+export { findColor, toGIMP, toAdobeColorTable, paletteFromUint8Array, paletteFromArrayBuffer };
 export default ColorPalette;
