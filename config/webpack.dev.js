@@ -29,9 +29,7 @@ module.exports = merge(BaseConfig, {
 					cert: Path.resolve(Paths.configRoot, "ssl.pem")
 			  }
 			: false,
-		noInfo: true,
-		progress: true,
-		quiet: true
+		progress: true
 	},
 	plugins: [
 		new HtmlWebpackPlugin({

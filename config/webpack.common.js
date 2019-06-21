@@ -1,6 +1,5 @@
 const Path = require("path");
 const Paths = require("./paths");
-const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 
 module.exports = {
 	resolve: {
@@ -18,7 +17,6 @@ module.exports = {
 	mode: "development",
 	cache: true,
 	stats: "errors-only",
-	plugins: [new ForkTsCheckerWebpackPlugin()],
 	module: {
 		rules: [
 			{
@@ -42,8 +40,7 @@ module.exports = {
 					{
 						loader: "ts-loader",
 						options: {
-							configFile: Path.resolve(Paths.projectRoot, "tsconfig.json"),
-							transpileOnly: true
+							configFile: Path.resolve(Paths.projectRoot, "tsconfig.json")
 						}
 					}
 				]
