@@ -1,65 +1,23 @@
-import * as ItemType from "../types";
-
-import Type, { default as PuzzleType } from "./puzzle-type";
-
-import { Planet } from "../types";
+import Type from "./puzzle-type";
+import Planet from "src/engine/types/planet";
 import Tile from "./tile";
-
-export { Type };
+import Goals from "./goals";
 
 class Puzzle {
+	public static readonly Type = Type;
+
 	protected _id: number = -1;
 	protected _item1: Tile = null;
 	protected _item2: Tile = null;
 	protected _strings: string[] = ["", "", "", "", ""];
 	protected _name: string = "";
-	protected _type: PuzzleType = null;
+	protected _type: Type = null;
 	protected _unknown1: number = null;
 	protected _unknown2: number = null;
 	protected _unknown3: number = null;
 
 	public isGoalOnPlanet(planet: Planet): boolean {
-		const id = this.id;
-		if (planet === Planet.TATOOINE) {
-			switch (id) {
-				case ItemType.GOAL_FALCON:
-				case ItemType.GOAL_HAN:
-				case ItemType.GOAL_AMULET:
-				case ItemType.GOAL_ADEGAN_CRYSTAL:
-				case ItemType.GOAL_THREEPIOS_PARTS:
-					return true;
-				default:
-					return false;
-			}
-		}
-
-		if (planet === Planet.HOTH) {
-			switch (id) {
-				case ItemType.GOAL_GENERAL_MARUTZ:
-				case ItemType.GOAL_HIDDEN_FACTORY:
-				case ItemType.GOAL_WARN_THE_REBELS:
-				case ItemType.GOAL_RESCUE_YODA:
-				case ItemType.GOAL_CAR:
-					return true;
-				default:
-					return false;
-			}
-		}
-
-		if (planet === Planet.ENDOR) {
-			switch (id) {
-				case ItemType.GOAL_FIND_LEIA:
-				case ItemType.GOAL_IMPERIAL_BATTLE_STATION:
-				case ItemType.GOAL_LANTERN_OF_SACRED_LIGHT:
-				case ItemType.GOAL_IMPERIAL_BATTLE_CODE:
-				case ItemType.GOAL_RELAY_STATION:
-					return true;
-				default:
-					return false;
-			}
-		}
-
-		return false;
+		return Goals.get(planet).has(this.id);
 	}
 
 	get id() {
@@ -99,4 +57,5 @@ class Puzzle {
 	}
 }
 
+export { Type };
 export default Puzzle;
