@@ -7,7 +7,7 @@ import {
 	Weapon as WeaponComponent
 } from "./ui";
 import { Char, Tile, Zone, Sound, Puzzle } from "src/engine/objects";
-import { ColorPalette, Engine, GameData, Hero, Story } from "src/engine";
+import { ColorPalette, Engine, GameData, Hero, Story, AssetManager } from "src/engine";
 import { ConfirmationResult, ModalConfirm } from "src/ux";
 import { EventTarget, Point, Rectangle, Size } from "src/util";
 import { FilePicker, WindowManager } from "src/ui";
@@ -118,7 +118,15 @@ class GameController extends EventTarget {
 		const stream = await this.pickSaveGame();
 		if (!stream) return;
 		const { read } = Reader.build(stream);
-		read(this.data);
+
+		const assetManager = new AssetManager();
+		assetManager.populate(Zone, this.data.zones);
+		assetManager.populate(Tile, this.data.tiles);
+		assetManager.populate(Puzzle, this.data.puzzles);
+		assetManager.populate(Char, this.data.characters);
+		assetManager.populate(Sound, this.data.sounds);
+
+		read(assetManager);
 	}
 
 	private async pickSaveGame() {

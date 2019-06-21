@@ -1,7 +1,7 @@
 import { GameType, Indy, Yoda } from "../type";
 import { Hotspot, HotspotType, Zone } from "src/engine/objects";
 
-import GameData from "../game-data";
+import AssetManager from "../asset-manager";
 import { InputStream } from "src/util";
 import { MutableZone, MutableNPC } from "src/engine/mutable-objects";
 import SaveState from "./save-state";
@@ -15,14 +15,14 @@ interface Range {
 
 abstract class Reader {
 	protected _stream: InputStream;
-	protected _data: GameData;
+	protected _assets: AssetManager;
 	private _type: GameType;
 
-	abstract read(gameData: GameData): SaveState;
+	abstract read(assets: AssetManager): SaveState;
 
 	constructor(stream: InputStream, type: GameType) {
 		this._stream = stream;
-		this._data = null;
+		this._assets = null;
 		this._type = type;
 	}
 
@@ -55,7 +55,7 @@ abstract class Reader {
 	protected readRooms(stream: InputStream, zoneID: number, start: number): void {
 		const zoneIDs: [number, boolean][] = [];
 
-		const zone = this._data.zones[zoneID];
+		const zone = this._assets.get(Zone, zoneID);
 		const hotspots = zone.hotspots;
 		const count = hotspots.length;
 
@@ -94,7 +94,7 @@ abstract class Reader {
 	}
 
 	protected readRoom(stream: InputStream, zoneID: number, visited: boolean): void {
-		const zone: Zone = this._data.zones[zoneID];
+		const zone: Zone = this._assets.get(Zone, zoneID);
 		this.readZone(stream, zone, visited);
 		this.readRooms(stream, zoneID, 0);
 	}

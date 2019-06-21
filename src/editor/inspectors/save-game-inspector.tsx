@@ -10,6 +10,7 @@ import MutableStory from "src/engine/mutable-story";
 import SaveGameWorld from "src/engine/save-game/world";
 import { World } from "src/engine/generation";
 import { Writer } from "src/engine/save-game";
+import { AssetManager } from "src/engine";
 import { Zone, Puzzle, Tile, Sound, Char } from "src/engine/objects";
 
 class SaveGameInspector extends AbstractInspector {
@@ -47,7 +48,15 @@ class SaveGameInspector extends AbstractInspector {
 
 	public downloadSaveGame(): void {
 		const state = this._editorView.saveGame;
-		const writer = new Writer(this._editorView.data);
+		const data = this._editorView.data;
+		const assetManager = new AssetManager();
+		assetManager.populate(Zone, data.zones);
+		assetManager.populate(Tile, data.tiles);
+		assetManager.populate(Puzzle, data.puzzles);
+		assetManager.populate(Char, data.characters);
+		assetManager.populate(Sound, data.sounds);
+
+		const writer = new Writer(assetManager);
 
 		const countingStream = new DiscardingOutputStream();
 		writer.write(state, countingStream);

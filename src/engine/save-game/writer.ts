@@ -1,16 +1,16 @@
 import { Action, Hotspot, HotspotType, NPC, Tile, Zone } from "src/engine/objects";
 
-import GameData from "../game-data";
 import { OutputStream } from "src/util";
 import SaveState from "./save-state";
 import World from "./world";
 import WorldItem from "./world-item";
+import AssetManager from "../asset-manager";
 
 class Writer {
-	private _data: GameData;
+	private _assets: AssetManager;
 
-	constructor(data: GameData) {
-		this._data = data;
+	constructor(assets: AssetManager) {
+		this._assets = assets;
 	}
 
 	public write(state: SaveState, stream: OutputStream): void {
@@ -90,7 +90,7 @@ class Writer {
 			(hotspot: Hotspot) => hotspot.type === HotspotType.DoorIn && hotspot.arg !== -1
 		);
 		doors.forEach((hotspot: Hotspot) => {
-			const zone = this._data.zones[hotspot.arg];
+			const zone = this._assets.get(Zone, hotspot.arg);
 			stream.writeInt16(zone.id);
 			stream.writeUint32(zone.visited ? 1 : 0);
 			this._writeRoom(zone, visited, stream);
@@ -175,7 +175,7 @@ class Writer {
 				stream.writeInt16(item.zoneId);
 				stream.writeUint32(+item.visited);
 
-				this._writeRoom(this._data.zones[item.zoneId], item.visited, stream);
+				this._writeRoom(this._assets.get(Zone, item.zoneId), item.visited, stream);
 			}
 		}
 

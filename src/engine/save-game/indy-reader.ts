@@ -1,21 +1,21 @@
 import { InputStream, Point } from "src/util";
 
-import GameData from "../game-data";
-import { Hotspot } from "src/engine/objects";
+import { Hotspot, Char } from "src/engine/objects";
 import { Indy } from "src/engine/type";
 import { MutableHotspot, MutableNPC } from "src/engine/mutable-objects";
 import { Planet } from "../types";
 import Reader from "./reader";
 import SaveState from "./save-state";
 import WorldItem from "./world-item";
+import AssetManager, { NullIfMissing } from "../asset-manager";
 
 class IndyReader extends Reader {
 	constructor(stream: InputStream) {
 		super(stream, Indy);
 	}
 
-	public read(gameData: GameData): SaveState {
-		this._data = gameData;
+	public read(assets: AssetManager): SaveState {
+		this._assets = assets;
 		return this._doRead();
 	}
 
@@ -140,7 +140,7 @@ class IndyReader extends Reader {
 		stream.getUint8Array(0x18);
 
 		const npc = new MutableNPC();
-		npc.character = this._data.characters[characterId] || null;
+		npc.character = this._assets.get(Char, characterId, NullIfMissing);
 		npc.position = new Point(x, y);
 		npc.damageTaken = damageTaken;
 

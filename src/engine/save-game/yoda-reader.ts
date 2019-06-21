@@ -1,22 +1,22 @@
-import { Hotspot, HotspotType, Tile } from "src/engine/objects";
+import { Hotspot, HotspotType, Tile, Char } from "src/engine/objects";
 import { InputStream, Point } from "src/util";
 import { MutableHotspot, MutableNPC } from "src/engine/mutable-objects";
 import { Planet, WorldSize } from "../types";
 
-import GameData from "../game-data";
 import Reader from "./reader";
 import SaveState from "./save-state";
 import WorldItem from "./world-item";
 import { Yoda } from "../type";
 import { floor } from "src/std/math";
+import AssetManager, { NullIfMissing } from "src/engine/asset-manager";
 
 class YodaReader extends Reader {
 	constructor(stream: InputStream) {
 		super(stream, Yoda);
 	}
 
-	public read(gameData: GameData): SaveState {
-		this._data = gameData;
+	public read(assets: AssetManager): SaveState {
+		this._assets = assets;
 		return this._doRead();
 	}
 
@@ -194,7 +194,7 @@ class YodaReader extends Reader {
 		}
 
 		const npc = new MutableNPC();
-		npc.character = this._data.characters[characterId] || null;
+		npc.character = this._assets.get(Char, characterId, NullIfMissing);
 		npc.enabled = enabled;
 		npc.position = new Point(x, y);
 		npc.damageTaken = damageTaken;
