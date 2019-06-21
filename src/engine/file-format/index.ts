@@ -1,58 +1,14 @@
-import {
-	parseActionNames,
-	parseActions,
-	parseCharacterAux,
-	parseCharacterWeapons,
-	parseCharacters,
-	parseEndOfFile,
-	parseHotspots,
-	parsePuzzleNames,
-	parsePuzzles,
-	parseSetupImage,
-	parseSounds,
-	parseTileNames,
-	parseTiles,
-	parseVersion,
-	parseZaux,
-	parseZax2,
-	parseZax3,
-	parseZax4,
-	parseZoneNames,
-	parseZones
-} from "./categories";
-
 import { GameType } from "src/engine";
 import { InputStream } from "src/util";
 import ParseError from "./parse-error";
 import { error } from "./error";
+import { Data } from "./types";
+import dispatch from "./dispatch";
 
 const ENDF = "ENDF";
 
-export default (input: InputStream, type: GameType): any => {
-	const dispatch: any = {
-		VERS: parseVersion,
-		STUP: parseSetupImage,
-		SNDS: parseSounds,
-		TILE: parseTiles,
-		ZONE: parseZones,
-		PUZ2: parsePuzzles,
-		CHAR: parseCharacters,
-		CHWP: parseCharacterWeapons,
-		CAUX: parseCharacterAux,
-		TNAM: parseTileNames,
-		ZAUX: parseZaux,
-		ZAX2: parseZax2,
-		ZAX3: parseZax3,
-		ZAX4: parseZax4,
-		HTSP: parseHotspots,
-		ACTN: parseActions,
-		ZNAM: parseZoneNames,
-		PNAM: parsePuzzleNames,
-		ANAM: parseActionNames,
-		ENDF: parseEndOfFile
-	};
-
-	const data: any = {
+export default (input: InputStream, type: GameType): Data => {
+	const data: Data = {
 		version: 0,
 		setup: new Uint8Array(0),
 		sounds: [],
@@ -79,4 +35,4 @@ export default (input: InputStream, type: GameType): any => {
 	return data;
 };
 
-export { ParseError };
+export { ParseError, Data };

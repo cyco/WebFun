@@ -1,8 +1,10 @@
 import { Char, Puzzle, Sound, Tile, Zone } from "src/engine/objects";
-
+import { GameType } from "../type";
 import fromFileContents from "./from-file-contents";
+import { Data as RawData } from "../file-format/types";
 
 class GameData {
+	private _type: GameType;
 	private _rawInput: any;
 	private _version: number;
 	private _sounds: Sound[];
@@ -12,12 +14,16 @@ class GameData {
 	private _characters: Char[];
 	private _setup: Uint8Array;
 
-	constructor(raw: any) {
+	constructor(raw: RawData) {
 		fromFileContents(this, raw);
 	}
 
 	copy() {
 		return new GameData(this._rawInput);
+	}
+
+	get type(): GameType {
+		return this._type;
 	}
 
 	get version(): number {

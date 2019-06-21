@@ -1,9 +1,10 @@
 import { InputStream } from "src/util";
 import { assert } from "../error";
+import { Data, ActionItem, Action } from "../types";
 
 const IACT = "IACT";
 
-const parseActionItem = (stream: InputStream) => {
+const parseActionItem = (stream: InputStream): ActionItem => {
 	const opcode = stream.getUint16();
 	const args = stream.getInt16Array(5);
 	const textLength = stream.getUint16();
@@ -15,7 +16,7 @@ const parseActionItem = (stream: InputStream) => {
 const parseCondition = parseActionItem;
 const parseInstruction = parseActionItem;
 
-export const parseAction = (stream: InputStream, _: any) => {
+export const parseAction = (stream: InputStream, _: Data): Action => {
 	const category = stream.getCharacters(4);
 	assert(category === IACT, `Expected to find category ${IACT}.`, stream);
 	// ignore size
@@ -36,7 +37,7 @@ export const parseAction = (stream: InputStream, _: any) => {
 	return { conditions, instructions };
 };
 
-export const parseActions = (stream: InputStream, data: any) => {
+export const parseActions = (stream: InputStream, data: Data): void => {
 	// skip over size
 	stream.getUint32();
 
@@ -54,7 +55,7 @@ export const parseActions = (stream: InputStream, data: any) => {
 	} while (true);
 };
 
-export const parseActionNames = (stream: InputStream, data: any) => {
+export const parseActionNames = (stream: InputStream, data: Data): void => {
 	// skip over size
 	stream.getUint32();
 

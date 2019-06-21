@@ -1,9 +1,9 @@
 import { getFixtureData } from "./fixture-loading";
-import { readGameDataFile } from "src/engine";
-import { GameData, GameTypeYoda, GameType } from "../../src/engine";
-import { InputStream } from "../../src/util";
+import { readGameDataFile, GameTypeYoda, GameType } from "src/engine";
+import { InputStream } from "src/util";
+import { Data } from "src/engine/file-format";
 
-export default (type: GameType, callback?: (data: GameData) => void): Promise<GameData> => {
+export default (type: GameType, callback?: (data: Data) => void): Promise<Data> => {
 	return new Promise(async resolve => {
 		const file = type === GameTypeYoda ? "yoda.data" : "indy.data";
 		const contents = await getFixtureData(file);
