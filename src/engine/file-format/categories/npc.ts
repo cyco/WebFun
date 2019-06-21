@@ -1,6 +1,7 @@
 import { InputStream } from "src/util";
+import { NPC } from "../types";
 
-export const parseNPC = (stream: InputStream) => {
+export const parseNPC = (stream: InputStream): NPC => {
 	const character = stream.getUint16();
 	const x = stream.getUint16();
 	const y = stream.getUint16();

@@ -1,6 +1,7 @@
 import { InputStream } from "src/util";
+import { Data, Hotspot } from "../types";
 
-export const parseHotspot = (stream: InputStream) => {
+export const parseHotspot = (stream: InputStream): Hotspot => {
 	const type = stream.getUint32();
 	const x = stream.getInt16();
 	const y = stream.getInt16();
@@ -10,7 +11,7 @@ export const parseHotspot = (stream: InputStream) => {
 	return { type, x, y, enabled, argument };
 };
 
-export const parseHotspots = (stream: InputStream, data: any) => {
+export const parseHotspots = (stream: InputStream, data: Data) => {
 	// skip over count
 	stream.getUint32();
 

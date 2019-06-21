@@ -20,29 +20,40 @@ import {
 	MutableZone
 } from "src/engine/mutable-objects";
 import { Point, Size } from "src/util";
+import {
+	NPC as RawNPC,
+	Hotspot as RawHotspot,
+	Action as RawAction,
+	Zone as RawZone,
+	Tile as RawTile,
+	Puzzle as RawPuzzle,
+	Character as RawCharacter,
+	Data as RawData
+} from "../file-format/types";
 
 import CharType from "src/engine/objects/char-type";
 import { Planet } from "../types";
 import { Yoda } from "src/engine/type";
+import GameData from "./index";
 
-const makeTile = (t: any, idx: number) => {
+const makeTile = (t: RawTile, idx: number) => {
 	const tile = new MutableTile();
 	tile.id = idx;
 	tile.attributes = t.attributes;
-	tile.imageData = t.imageData || t.pixels;
+	tile.imageData = t.pixels;
 	tile.name = t.name;
 
 	return tile;
 };
 
-const makeCharacter = (raw: any, idx: number, data: any) => {
+const makeCharacter = (raw: RawCharacter, idx: number, data: GameData) => {
 	const char = new MutableChar();
 	char.id = idx;
 	char.name = raw.name;
 	char.frames = [
-		new CharFrame(Array.from(raw.frame1).map((i: number) => data._tiles[i] || null)),
-		new CharFrame(Array.from(raw.frame2).map((i: number) => data._tiles[i] || null)),
-		new CharFrame(Array.from(raw.frame3).map((i: number) => data._tiles[i] || null))
+		new CharFrame(Array.from(raw.frame1).map((i: number) => data.tiles[i] || null)),
+		new CharFrame(Array.from(raw.frame2).map((i: number) => data.tiles[i] || null)),
+		new CharFrame(Array.from(raw.frame3).map((i: number) => data.tiles[i] || null))
 	];
 	char.type = CharType.fromNumber(raw.type);
 	char.movementType = CharMovementType.fromNumber(raw.movementType);
@@ -56,7 +67,7 @@ const makeCharacter = (raw: any, idx: number, data: any) => {
 	return char;
 };
 
-const makePuzzle = (raw: any, idx: number, data: any) => {
+const makePuzzle = (raw: RawPuzzle, idx: number, data: GameData) => {
 	const puzzle = new MutablePuzzle();
 
 	puzzle.id = idx;
@@ -67,19 +78,19 @@ const makePuzzle = (raw: any, idx: number, data: any) => {
 	puzzle.unknown3 = raw.unknown3;
 
 	puzzle.strings = raw.texts.slice();
-	puzzle.item1 = data._tiles[raw.item1] || null;
-	puzzle.item2 = data._tiles[raw.item2] || null;
+	puzzle.item1 = data.tiles[raw.item1] || null;
+	puzzle.item2 = data.tiles[raw.item2] || null;
 
 	if (puzzle.type !== PuzzleType.End && puzzle.type !== PuzzleType.Disabled) {
 		puzzle.item2 = null;
 	}
 
-	if (data._type === Yoda && (idx === 0xbd || idx === 0xc5)) puzzle.type = PuzzleType.Disabled;
+	if (data.type === Yoda && (idx === 0xbd || idx === 0xc5)) puzzle.type = PuzzleType.Disabled;
 
 	return puzzle;
 };
 
-const makeHotspot = (raw: any, idx: number, _: any): Hotspot => {
+const makeHotspot = (raw: RawHotspot, idx: number, _: any): Hotspot => {
 	const hotspot = new Hotspot();
 	hotspot.id = idx;
 	hotspot.x = raw.x;
@@ -116,7 +127,7 @@ const makeHotspot = (raw: any, idx: number, _: any): Hotspot => {
 	return hotspot;
 };
 
-const makeAction = (raw: any, idx: number, zone: Zone, _: any): Action => {
+const makeAction = (raw: RawAction, idx: number, zone: Zone, _: any): Action => {
 	const action = new MutableAction();
 
 	action.id = idx;
@@ -128,19 +139,19 @@ const makeAction = (raw: any, idx: number, zone: Zone, _: any): Action => {
 	return action;
 };
 
-const makeNPC = (raw: any, idx: number, data: any) => {
+const makeNPC = (raw: RawNPC, idx: number, data: GameData) => {
 	const npc = new MutableNPC();
 	npc.id = idx;
-	npc.character = data._characters[raw.character];
+	npc.character = data.characters[raw.character];
 	npc.position = new Point(raw.x, raw.y, Zone.Layer.Object);
 	npc.loot = raw.loot;
 	npc.dropsLoot = raw.dropsLoot;
-	npc.data = raw.unknown;
+	npc.data = Array.from(raw.unknown);
 
 	return npc;
 };
 
-const makeZone = (raw: any, idx: number, data: any) => {
+const makeZone = (raw: RawZone, idx: number, data: GameData) => {
 	const zone = new MutableZone();
 
 	zone.id = idx;
@@ -151,10 +162,10 @@ const makeZone = (raw: any, idx: number, data: any) => {
 	zone.tileIDs = raw.tileIDs;
 	zone.hotspots = raw.hotspots.map((d: any, idx: number) => makeHotspot(d, idx, data));
 	zone.npcs = raw.npcs.map((d: any, idx: number) => makeNPC(d, idx, data));
-	zone.goalItems = Array.from(raw.goalItemIDs).map((id: number) => data._tiles[id]);
-	zone.requiredItems = Array.from(raw.requiredItemIDs).map((id: number) => data._tiles[id]);
-	zone.providedItems = Array.from(raw.providedItemIDs).map((id: number) => data._tiles[id]);
-	zone.puzzleNPCs = Array.from(raw.puzzleNPCIDs).map((id: number) => data._tiles[id]);
+	zone.goalItems = Array.from(raw.goalItemIDs).map((id: number) => data.tiles[id]);
+	zone.requiredItems = Array.from(raw.requiredItemIDs).map((id: number) => data.tiles[id]);
+	zone.providedItems = Array.from(raw.providedItemIDs).map((id: number) => data.tiles[id]);
+	zone.puzzleNPCs = Array.from(raw.puzzleNPCIDs).map((id: number) => data.tiles[id]);
 	zone.izaxUnknown = raw.unknown;
 	zone.izx4Unknown = raw.unknown;
 
@@ -164,9 +175,9 @@ const makeZone = (raw: any, idx: number, data: any) => {
 	return zone;
 };
 
-export default (data: any, raw: any) => {
-	data._type = raw.type;
+export default (data: any, raw: RawData) => {
 	data._rawInput = raw;
+	data._type = raw.type;
 	data._version = raw.version;
 	data._setup = raw.setup;
 	data._sounds = raw.sounds.map((name: string, id: number) => new Sound(id, name));
@@ -174,5 +185,5 @@ export default (data: any, raw: any) => {
 	data._characters = raw.characters.map((r: any, i: number) => makeCharacter(r, i, data));
 	data._puzzles = raw.puzzles.map((r: any, i: number) => makePuzzle(r, i, data));
 	data._zones = raw.zones.map((r: any, i: number) => makeZone(r, i, data));
-	data._zones.forEach((z: Zone, _: number, store: Zone[]) => ((z as any).zoneStore = store));
+	data.zones.forEach((z: Zone, _: number, store: Zone[]) => ((z as any).zoneStore = store));
 };

@@ -5,6 +5,7 @@ import { assert } from "../error";
 import { parseAction } from "./action";
 import { parseHotspot } from "./hotspot";
 import { parseNPC } from "./npc";
+import { Data, Zone, Hotspot, Action } from "../types";
 
 const IZON = "IZON";
 const IZAX = "IZAX";
@@ -12,7 +13,7 @@ const IZX2 = "IZX2";
 const IZX3 = "IZX3";
 const IZX4 = "IZX4";
 
-const parseZone = (stream: InputStream, data: any, gameType: GameType) => {
+const parseZone = (stream: InputStream, data: Data, gameType: GameType): Zone => {
 	let planet = 0;
 	if (gameType === Yoda) {
 		planet = stream.getUint16();
@@ -46,9 +47,9 @@ const parseZone = (stream: InputStream, data: any, gameType: GameType) => {
 			height,
 			zoneType,
 			tileIDs,
-			hotspots: [] as any[],
+			hotspots: [] as Hotspot[],
 			npcs: [] as any[],
-			actions: [] as any[],
+			actions: [] as Action[],
 			requiredItemIDs: new Int16Array(0),
 			goalItemIDs: new Int16Array(0),
 			providedItemIDs: new Int16Array(0),
@@ -91,7 +92,7 @@ const parseZone = (stream: InputStream, data: any, gameType: GameType) => {
 	};
 };
 
-export const parseZones = (stream: InputStream, data: any, gameType: GameType) => {
+export const parseZones = (stream: InputStream, data: Data, gameType: GameType): void => {
 	let count = stream.getUint16();
 	if (gameType === Indy) {
 		// skip over unknown value
@@ -106,7 +107,7 @@ export const parseZones = (stream: InputStream, data: any, gameType: GameType) =
 	data.zones = zones;
 };
 
-const parseZoneAux = (stream: InputStream, _: any): any => {
+const parseZoneAux = (stream: InputStream, _: Data): any => {
 	const marker = stream.getCharacters(4);
 	assert(marker === IZAX, `Expected to find category ${IZAX}.`, stream);
 	// skip over size
@@ -129,7 +130,7 @@ const parseZoneAux = (stream: InputStream, _: any): any => {
 	return { npcs, requiredItemIDs, goalItemIDs };
 };
 
-const parseZoneAux2 = (stream: InputStream, _: any): any => {
+const parseZoneAux2 = (stream: InputStream, _: Data): any => {
 	const marker = stream.getCharacters(4);
 	assert(marker === IZX2, `Expected to find category ${IZX2}.`, stream);
 	// skip over size
@@ -141,7 +142,7 @@ const parseZoneAux2 = (stream: InputStream, _: any): any => {
 	return { providedItemIDs };
 };
 
-const parseZoneAux3 = (stream: InputStream, _: any): any => {
+const parseZoneAux3 = (stream: InputStream, _: Data): any => {
 	const marker = stream.getCharacters(4);
 	assert(marker === IZX3, `Expected to find category ${IZX3}.`, stream);
 	// skip over size
@@ -153,7 +154,7 @@ const parseZoneAux3 = (stream: InputStream, _: any): any => {
 	return { puzzleNPCIDs };
 };
 
-const parseZoneAux4 = (stream: InputStream, _: any): any => {
+const parseZoneAux4 = (stream: InputStream, _: Data): any => {
 	const marker = stream.getCharacters(4);
 	assert(marker === IZX4, `Expected to find category ${IZX4}.`, stream);
 	// skip over size
@@ -163,7 +164,7 @@ const parseZoneAux4 = (stream: InputStream, _: any): any => {
 	return { unknown };
 };
 
-export const parseZoneNames = (stream: InputStream, data: any) => {
+export const parseZoneNames = (stream: InputStream, data: Data): void => {
 	// skip over size
 	stream.getUint32();
 
@@ -177,25 +178,25 @@ export const parseZoneNames = (stream: InputStream, data: any) => {
 	} while (true);
 };
 
-export const parseZaux = (stream: InputStream) => {
+export const parseZaux = (stream: InputStream): void => {
 	const size = stream.getUint32();
 	stream.getUint8Array(size);
 	// TODO: use aux data
 };
 
-export const parseZax2 = (stream: InputStream) => {
+export const parseZax2 = (stream: InputStream): void => {
 	const size = stream.getUint32();
 	stream.getUint8Array(size);
 	// TODO: use aux data
 };
 
-export const parseZax3 = (stream: InputStream) => {
+export const parseZax3 = (stream: InputStream): void => {
 	const size = stream.getUint32();
 	stream.getUint8Array(size);
 	// TODO: use aux data
 };
 
-export const parseZax4 = (stream: InputStream) => {
+export const parseZax4 = (stream: InputStream): void => {
 	const size = stream.getUint32();
 	stream.getUint8Array(size);
 	// TODO: use aux data

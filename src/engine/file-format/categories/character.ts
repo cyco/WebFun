@@ -2,13 +2,14 @@ import { GameType, Yoda } from "src/engine/type";
 
 import { InputStream } from "src/util";
 import { assert } from "../error";
+import { Data, Character } from "../types";
 
 const ICHA = "ICHA";
-const parseCharacterFrame = (stream: InputStream, _: any) => {
+const parseCharacterFrame = (stream: InputStream, _: Data): Int16Array => {
 	return stream.getInt16Array(0x8);
 };
 
-const parseCharacter = (stream: InputStream, data: any, gameType: GameType) => {
+const parseCharacter = (stream: InputStream, data: Data, gameType: GameType): Character => {
 	const marker = stream.getCharacters(4);
 	assert(marker === ICHA, "Expected to find ICHAR marker.", stream);
 	// skip over size
@@ -42,7 +43,7 @@ const parseCharacter = (stream: InputStream, data: any, gameType: GameType) => {
 	};
 };
 
-export const parseCharacters = (stream: InputStream, data: any, type: GameType) => {
+export const parseCharacters = (stream: InputStream, data: Data, type: GameType) => {
 	// skip over size
 	stream.getUint32();
 	const characters = [];
@@ -57,7 +58,7 @@ export const parseCharacters = (stream: InputStream, data: any, type: GameType) 
 	data.characters = characters;
 };
 
-export const parseCharacterAux = (stream: InputStream, data: any) => {
+export const parseCharacterAux = (stream: InputStream, data: Data) => {
 	// skip over size
 	stream.getUint32();
 
@@ -69,12 +70,12 @@ export const parseCharacterAux = (stream: InputStream, data: any) => {
 	} while (true);
 };
 
-export const parseCharacterAux1 = (stream: InputStream, data: any, index: number) => {
+export const parseCharacterAux1 = (stream: InputStream, data: Data, index: number) => {
 	const damage = stream.getInt16();
 	data.characters[index].damage = damage;
 };
 
-export const parseCharacterWeapon = (stream: InputStream, data: any, index: number) => {
+export const parseCharacterWeapon = (stream: InputStream, data: Data, index: number) => {
 	const reference = stream.getInt16();
 	const health = stream.getInt16();
 
@@ -82,7 +83,7 @@ export const parseCharacterWeapon = (stream: InputStream, data: any, index: numb
 	data.characters[index].reference = reference;
 };
 
-export const parseCharacterWeapons = (stream: InputStream, data: any): void => {
+export const parseCharacterWeapons = (stream: InputStream, data: Data): void => {
 	// skip over size
 	stream.getUint32();
 
