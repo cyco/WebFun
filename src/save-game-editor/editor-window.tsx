@@ -1,9 +1,10 @@
 import "./editor-window.scss";
 
 import { AbstractWindow, ProgressIndicator } from "src/ui/components";
-import { ColorPalette, GameData } from "src/engine";
+import { ColorPalette, GameData, AssetManager } from "src/engine";
 import { DataProvider, PaletteProvider } from "src/app/data";
 import { Reader as SaveGameReaderFactory, SaveState } from "src/engine/save-game";
+import { Tile, Zone, Puzzle, Char, Sound } from "src/engine/objects";
 
 import EditorView from "./editor-view";
 import { InputStream } from "src/util";
@@ -29,7 +30,14 @@ class EditorWindow extends AbstractWindow {
 			const { type, read } = SaveGameReaderFactory.build(stream);
 			const gameData = await new DataProvider().provide(type);
 			const palette = await new PaletteProvider().provide(type);
-			const saveGame = read(gameData);
+
+			const assetManager = new AssetManager();
+			assetManager.populate(Zone, gameData.zones);
+			assetManager.populate(Tile, gameData.tiles);
+			assetManager.populate(Puzzle, gameData.puzzles);
+			assetManager.populate(Char, gameData.characters);
+			assetManager.populate(Sound, gameData.sounds);
+			const saveGame = read(assetManager);
 
 			this.presentSaveGame(saveGame, gameData, palette);
 		} catch (e) {

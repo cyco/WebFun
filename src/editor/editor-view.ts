@@ -8,8 +8,9 @@ import DataManager from "./data-manager";
 import FilePicker from "src/ui/file-picker";
 import GameDataSerializer from "./game-data-serializer";
 import { SaveGameInspector } from "./inspectors";
-import { SaveGameReader } from "src/engine";
+import { SaveGameReader, AssetManager } from "src/engine";
 import WindowManager from "src/ui/window-manager";
+import { Tile, Zone, Puzzle, Char, Sound } from "src/engine/objects";
 
 class EditorView extends Component {
 	public static readonly tagName = "wf-editor-view";
@@ -75,7 +76,14 @@ class EditorView extends Component {
 			return;
 		}
 
-		const state = read(this.data.currentData);
+		const data = this.data.currentData;
+		const assetManager = new AssetManager();
+		assetManager.populate(Zone, data.zones);
+		assetManager.populate(Tile, data.tiles);
+		assetManager.populate(Puzzle, data.puzzles);
+		assetManager.populate(Char, data.characters);
+		assetManager.populate(Sound, data.sounds);
+		const state = read(assetManager);
 		const inspector = new SaveGameInspector(this.state.prefixedWith("save-game"));
 		this.addInspector("save-game", inspector);
 		this.data.state = state;
@@ -89,11 +97,9 @@ class EditorView extends Component {
 
 	set data(dm) {
 		this._data = dm;
-		this._inspectors.each<AbstractInspector>(
-			(_: string, inspector: AbstractInspector): void => {
-				inspector.data = dm;
-			}
-		);
+		this._inspectors.each<AbstractInspector>((_: string, inspector: AbstractInspector): void => {
+			inspector.data = dm;
+		});
 	}
 
 	get inspectors() {
