@@ -6,7 +6,6 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
-const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 
 module.exports = {
 	entry: {
@@ -32,9 +31,6 @@ module.exports = {
 	cache: true,
 	stats: "errors-only",
 	plugins: [
-		new ForkTsCheckerWebpackPlugin({
-			reportFiles: ["src/**/*.{ts,tsx}"]
-		}),
 		new CleanWebpackPlugin({ root: Paths.buildRoot }),
 		new HtmlWebpackPlugin({
 			template: Path.resolve(Paths.sourceRoot, "./app/index.html"),
@@ -60,8 +56,7 @@ module.exports = {
 					{
 						loader: "ts-loader",
 						options: {
-							configFile: Path.resolve(Paths.projectRoot, "tsconfig.json"),
-							transpileOnly: true
+							configFile: Path.resolve(Paths.projectRoot, "tsconfig.json")
 						}
 					}
 				]

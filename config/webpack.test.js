@@ -2,7 +2,6 @@ const Path = require("path");
 const Paths = require("./paths");
 const Webpack = require("webpack");
 const merge = require("webpack-merge");
-const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 
 const BaseConfig = require("./webpack.common");
 
@@ -32,10 +31,5 @@ const config = merge(BaseConfig, {
 		]
 	}
 });
-
-if (+process.env.ci) {
-	// skip type checking entirely
-	config.plugins = config.plugins.filter(plugin => !(plugin instanceof ForkTsCheckerWebpackPlugin));
-}
 
 module.exports = config;
