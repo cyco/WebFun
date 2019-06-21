@@ -47,7 +47,7 @@ const config = {
 			chunks: false
 		}
 	},
-	reportSlowerThan: 250,
+	reportSlowerThan: 500,
 	browserDisconnectTimeout: 200000,
 	processKillTimeout: 200000,
 	browserSocketTimeout: 200000,
