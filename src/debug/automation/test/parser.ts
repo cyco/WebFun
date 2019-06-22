@@ -61,6 +61,7 @@ class TestFileParser {
 			if (it.done) throw "Unexpected end of input";
 			if (!it.value.length) continue;
 			if (it.value[0] === "-") break;
+			if (it.value[0] === "#") continue;
 
 			const [key, ...valueParts] = it.value
 				.split(":")
@@ -130,6 +131,7 @@ class TestFileParser {
 			const it = lines.next();
 			if (it.done) return expectations;
 			if (!it.value.length) continue;
+			if (it.value[0] === "#") continue;
 			const value = it.value.toLowerCase();
 			const Exp = Expectations.find(e => e.CanBeBuiltFrom(value)) || UnknownExpectation;
 			expectations.push(Exp.BuildFrom(it));
