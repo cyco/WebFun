@@ -13,6 +13,7 @@ import PuzzleInspectorCell from "./puzzle-inspector-cell";
 import TilePicker from "./tile-picker";
 import TilePickerCell from "./tile-picker-cell";
 import PopoverTilePicker from "./popover-tile-picker";
+import PopoutTilePicker from "./popout-tile-picker";
 import PopoverCharacterPicker from "./popover-character-picker";
 import {
 	HotspotLayer,
@@ -62,5 +63,6 @@ export {
 	HotspotLayer,
 	PaletteColorPicker,
 	PaletteImageEditor,
-	TileEditor
+	TileEditor,
+	PopoutTilePicker
 };
