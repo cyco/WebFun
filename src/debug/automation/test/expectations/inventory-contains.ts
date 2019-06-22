@@ -11,7 +11,7 @@ class InventoryContainsExpectation implements expectation {
 	public static BuildFrom(it: IteratorResult<string>): InventoryContainsExpectation {
 		return new InventoryContainsExpectation(
 			it.value
-				.split(" ")[1]
+				.split(":")[1]
 				.split(", ")
 				.map(i => i.trim())
 				.map(i => i.parseInt())
