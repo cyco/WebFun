@@ -61,7 +61,7 @@ class WindowTitlebar extends Component {
 	}
 
 	get title() {
-		return this._titleNode.innerText;
+		return this._titleNode ? this._titleNode.innerText : "";
 	}
 
 	set title(t) {
