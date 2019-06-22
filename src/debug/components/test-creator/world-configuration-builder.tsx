@@ -74,7 +74,8 @@ class WorldConfigurationBuilder extends Component {
 			seed: this._seed.value.parseInt(),
 			planet: this._planet.value.parseInt(),
 			size: this._size.value.parseInt(),
-			gamesWon: this._gamesWon.value.parseInt()
+			gamesWon: this._gamesWon.value.parseInt(),
+			inventory: []
 		};
 	}
 
