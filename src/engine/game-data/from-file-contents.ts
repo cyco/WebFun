@@ -34,6 +34,7 @@ import {
 import CharType from "src/engine/objects/char-type";
 import { Planet } from "../types";
 import { Yoda } from "src/engine/type";
+import YodaConstants from "src/engine/yoda";
 import GameData from "./index";
 
 const makeTile = (t: RawTile, idx: number) => {
@@ -85,7 +86,9 @@ const makePuzzle = (raw: RawPuzzle, idx: number, data: GameData) => {
 		puzzle.item2 = null;
 	}
 
-	if (data.type === Yoda && (idx === 0xbd || idx === 0xc5)) puzzle.type = PuzzleType.Disabled;
+	if (data.type === Yoda && (idx === YodaConstants.Goal.RescueYoda || idx === YodaConstants.Goal.Car)) {
+		puzzle.type = PuzzleType.Disabled;
+	}
 
 	return puzzle;
 };

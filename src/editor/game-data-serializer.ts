@@ -12,6 +12,7 @@ import {
 	Zone
 } from "src/engine/objects";
 import { OutputStream, add } from "src/util";
+import Yoda from "src/engine/yoda";
 
 import { GameData } from "src/engine";
 
@@ -187,7 +188,7 @@ class GameDataSerializer {
 			stream.writeCharacters("IPUZ");
 			stream.writeUint32(18 + puzzle.strings.map(s => 2 + s.length).reduce(add, 0));
 
-			if (index === 0xbd || index === 0xc5) {
+			if (index === Yoda.Goal.RescueYoda || index === Yoda.Goal.Car) {
 				stream.writeUint32(PuzzleType.End.rawValue);
 			} else stream.writeUint32(puzzle.type.rawValue);
 
