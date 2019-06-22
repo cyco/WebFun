@@ -11,6 +11,7 @@ import SimulatedStory from "src/debug/simulated-story";
 import adjacentZones from "./adjacent-zones";
 import formatExpectation from "./format-expectation";
 import { Zone, Tile, Sound, Puzzle, Char } from "src/engine/objects";
+import { Planet, WorldSize } from "src/engine/types";
 
 class TestCreatorWindow extends AbstractWindow {
 	public static readonly tagName = "wf-debug-test-creator-window";
@@ -101,14 +102,28 @@ class TestCreatorWindow extends AbstractWindow {
 	}
 
 	public downloadTest() {
-		const { zone, findItem, puzzleNPC, requiredItem1, requiredItem2 } = this._configBuilder.configuration;
+		const {
+			size,
+			seed,
+			planet,
+			zone,
+			findItem,
+			puzzleNPC,
+			requiredItem1,
+			requiredItem2,
+			gamesWon
+		} = this._configBuilder.configuration;
 
 		const configuration = [];
-		if (zone) configuration.push(`Zone: ${zone.toHex(3)}`);
-		if (findItem) configuration.push(`Find: ${findItem.toHex(3)}`);
-		if (puzzleNPC) configuration.push(`NPC: ${findItem.toHex(3)}`);
-		if (requiredItem1) configuration.push(`Required: ${requiredItem1.toHex(3)}`);
-		if (requiredItem2) configuration.push(`Required: ${requiredItem2.toHex(3)}`);
+		if (seed >= 0) configuration.push(`Seed: ${seed.toHex(3)}`);
+		if (planet > 0) configuration.push(`Planet: ${Planet.fromNumber(planet).name}`);
+		if (size > 0) configuration.push(`Size: ${WorldSize.fromNumber(size).name}`);
+		if (gamesWon > 0) configuration.push(`Games Won: ${gamesWon.toString(10)}`);
+		if (zone >= 0) configuration.push(`Zone: ${zone.toHex(3)}`);
+		if (findItem > 0) configuration.push(`Find: ${findItem.toHex(3)}`);
+		if (puzzleNPC > 0) configuration.push(`NPC: ${findItem.toHex(3)}`);
+		if (requiredItem1 > 0) configuration.push(`Required: ${requiredItem1.toHex(3)}`);
+		if (requiredItem2 > 0) configuration.push(`Required: ${requiredItem2.toHex(3)}`);
 
 		download(
 			[
@@ -122,7 +137,11 @@ class TestCreatorWindow extends AbstractWindow {
 				...this._expectations.map(formatExpectation),
 				""
 			].join("\n"),
-			`zone-${zone.toHex(3)}.wftest`
+			zone >= 0
+				? `zone-${zone.toHex(3)}.wftest`
+				: `world-${seed.toHex(3)}-${Planet.fromNumber(
+						planet
+				  ).name.toLowerCase()}-${WorldSize.fromNumber(size).name.toLowerCase()}.wftest`
 		);
 	}
 

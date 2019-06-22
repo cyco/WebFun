@@ -14,10 +14,12 @@ class ConfigurationBuilder extends Component {
 		<SimulationConfigurationBuilder />
 	) as SimulationConfigurationBuilder;
 	private _worldConfigurationBuilder = <WorldConfigurationBuilder /> as WorldConfigurationBuilder;
+	private _initialConfiguration: Configuration = {} as any;
 
 	public connectedCallback() {
 		super.connectedCallback();
 
+		const config = this._initialConfiguration;
 		this.append(
 			...[
 				<SegmentControl
@@ -31,8 +33,12 @@ class ConfigurationBuilder extends Component {
 					}}
 					state={this._state.prefixedWith("selector")}
 				>
-					<Segment className="world">New World</Segment>
-					<Segment className="simulation">Simulation</Segment>
+					<Segment className="world" selected={typeof config.zone !== "number"}>
+						New World
+					</Segment>
+					<Segment className="simulation" selected={typeof config.zone === "number"}>
+						Simulation
+					</Segment>
 				</SegmentControl>,
 				<div id="world">{this._worldConfigurationBuilder}</div>,
 				<div id="simulation">{this._simulationConfigurationBuilder}</div>
@@ -46,11 +52,31 @@ class ConfigurationBuilder extends Component {
 	}
 
 	public set configuration(config: Configuration) {
-		const { zone, findItem, puzzleNPC, requiredItem1, requiredItem2, inventory } = config;
+		this._simulationConfigurationBuilder.configuration = config;
+		this._worldConfigurationBuilder.configuration = config;
+		this._initialConfiguration = config;
+
+		if (!this.isConnected) return;
+
+		if (typeof config.zone === "number") {
+			this._worldConfigurationBuilder.parentElement.style.display = "none";
+			this._simulationConfigurationBuilder.parentElement.style.display = "";
+		} else {
+			this._worldConfigurationBuilder.parentElement.style.display = "";
+			this._simulationConfigurationBuilder.parentElement.style.display = "none";
+		}
 	}
 
 	public get configuration(): Configuration {
-		return {} as any;
+		return this.currentBuilder.configuration;
+	}
+
+	private get currentBuilder() {
+		if (this._simulationConfigurationBuilder.parentElement.style.display === "none") {
+			return this._worldConfigurationBuilder;
+		}
+
+		return this._simulationConfigurationBuilder;
 	}
 
 	public set gameData(p) {
