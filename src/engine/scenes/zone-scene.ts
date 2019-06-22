@@ -397,7 +397,6 @@ class ZoneScene extends Scene {
 		targetHeroLocation.subtract(zoneDirection.x * 18, zoneDirection.y * 18);
 
 		if (!targetZone.placeWalkable(targetHeroLocation)) {
-			console.log("Tile is blocked on target zone!");
 			return false;
 		}
 
