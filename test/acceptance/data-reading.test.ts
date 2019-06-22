@@ -2,7 +2,7 @@ import { getFixtureData } from "test/helpers/fixture-loading";
 import { GameData, GameType, GameTypeIndy, GameTypeYoda, readGameDataFile } from "src/engine";
 import { InputStream } from "src/util";
 
-describe("DataReading", () => {
+describe("WebFun.Acceptance.DataReading", () => {
 	const loadData = async (file: string): Promise<InputStream> => {
 		return new Promise(resolve => {
 			getFixtureData(file, result => {

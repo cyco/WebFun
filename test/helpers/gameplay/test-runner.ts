@@ -2,6 +2,8 @@ import GameplayContext from "./gameplay-runner";
 import { Zone, Tile } from "src/engine/objects";
 import { srand } from "src/util";
 import { SimulatedStory } from "src/debug";
+import { Story } from "src/engine";
+import { Planet, WorldSize } from "src/engine/types";
 
 import {
 	Parser,
@@ -18,7 +20,7 @@ const FiveMinutes = 5 * 60 * 1000;
 
 const run = (fileName: string, testFileContents: string) => {
 	describe(
-		`WebFun.Simulation.${fileName}`,
+		`WebFun.Acceptance.Gameplay.${fileName}`,
 		withTimeout(FiveMinutes, () => {
 			const ctx = new GameplayContext(true);
 			const parser = new Parser();
@@ -30,12 +32,8 @@ const run = (fileName: string, testFileContents: string) => {
 					ctx.buildEngine();
 
 					srand(testCase.configuration.seed);
-					await ctx.playStory(
-						testCase.configuration.seed,
-						buildStory(testCase),
-						testCase.input.split(""),
-						false
-					);
+					ctx.engine.persistentState.gamesWon = testCase.configuration.gamesWon;
+					await ctx.playStory(buildStory(testCase), testCase.input.split(""), false);
 				} catch (e) {
 					console.warn("e", e);
 				} finally {
@@ -70,6 +68,12 @@ const run = (fileName: string, testFileContents: string) => {
 			});
 
 			function buildStory(testCase: TestCase) {
+				if (testCase.configuration.zone >= 0) return buildSimulatedStory(testCase);
+
+				return buildRealWorldStory(testCase);
+			}
+
+			function buildSimulatedStory(testCase: TestCase) {
 				const engine = ctx.engine;
 				const { findItem, puzzleNPC, requiredItem1, requiredItem2, zone } = testCase.configuration;
 				const t = (t: number) => (t < 0 ? null : engine.assetManager.get(Tile, t));
@@ -84,6 +88,12 @@ const run = (fileName: string, testFileContents: string) => {
 					surroundingZones(z(zone)),
 					engine.assetManager.getAll(Zone)
 				);
+			}
+
+			function buildRealWorldStory(testCase: TestCase) {
+				const { seed, planet, size } = testCase.configuration;
+
+				return new Story(seed, Planet.fromNumber(planet), WorldSize.fromNumber(size));
 			}
 
 			function surroundingZones(zone: Zone): Zone[] {

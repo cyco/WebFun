@@ -70,10 +70,10 @@ class GameplayContext {
 
 	public async playNewStory(seed: number, planet: Planet, size: WorldSize, input: string[], debug = false) {
 		const story = new Story(seed, planet, size);
-		return await this.playStory(seed, story, input, debug);
+		return await this.playStory(story, input, debug);
 	}
 
-	public playStory(seed: number, story: Story, input: string[], debug = false): Promise<void> {
+	public playStory(story: Story, input: string[], debug = false): Promise<void> {
 		return new Promise(async resolve => {
 			const { sceneView, engine, inputManager } = this;
 

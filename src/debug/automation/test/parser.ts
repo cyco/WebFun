@@ -59,7 +59,11 @@ class TestFileParser {
 				.split(":")
 				.filter(i => i.length)
 				.map(i => i.toLowerCase());
-			const value = valueParts.join(":");
+			const value = valueParts
+				.join(":")
+				.split(" ")
+				.map(i => i.toLowerCase().trim())
+				.join("");
 
 			if (key.contains("zone")) configuration.zone = value.parseInt();
 			if (key.contains("seed")) configuration.seed = value.parseInt();
