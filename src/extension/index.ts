@@ -4,6 +4,7 @@ import * as Element from "./element";
 import * as File from "./file";
 import * as HTMLCollection from "./html-collection";
 import * as HTMLSelectElement from "./html-select-element";
+import * as HTMLImageElement from "./html-image-element";
 import * as Image from "./image";
 import * as ImageData from "./image-data";
 import * as MouseEvent from "./mouse-event";
@@ -34,6 +35,7 @@ export {
 	Uint8Array,
 	HTMLCollection,
 	HTMLSelectElement,
+	HTMLImageElement,
 	RegExp,
 	MouseEvent,
 	ImageData
