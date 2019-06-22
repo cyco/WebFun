@@ -33,7 +33,7 @@ export default {
 	},
 	Goal: {
 		ImperialBattleCode: 0x84,
-		RescueYoda: 0x84
+		RescueYoda: 0xbd
 	},
 	Animation: {
 		Detonator: [0x202, 0x431, 0x432, 0x433]
