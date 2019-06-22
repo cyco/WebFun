@@ -101,8 +101,6 @@ class DagobahGenerator {
 	private _setupIndoorSpawn(dagobah: World, tile: Tile, npcID: number) {
 		const zoneID = Yoda.Zone.YodasHut;
 		const zone = this.assets.get(Zone, zoneID);
-		console.assert(!!zone.puzzleNPCs.find(i => i.id === npcID));
-
 		const place = dagobah.at(5, 4);
 		place.zoneType = Zone.Type.Use;
 		place.npc = this.assets.get(Tile, npcID);
