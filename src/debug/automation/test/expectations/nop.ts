@@ -13,6 +13,10 @@ class UnknownExpectation implements Expectation {
 	evaluate(_: GameplayContext) {
 		it("does nothing, really", (): void => void 0);
 	}
+
+	format() {
+		return "NOP";
+	}
 }
 
 export default UnknownExpectation;

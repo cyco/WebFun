@@ -15,6 +15,10 @@ class ZoneSolvedExpectation implements Expectation {
 			expect(ctx.engine.currentWorld.at(4, 4).zone.solved).toBeTrue();
 		});
 	}
+
+	format() {
+		return "Zone solved";
+	}
 }
 
 export default ZoneSolvedExpectation;

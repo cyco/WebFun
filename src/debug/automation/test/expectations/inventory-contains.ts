@@ -22,6 +22,10 @@ class InventoryContainsExpectation implements expectation {
 		this.items = items;
 	}
 
+	format(): string {
+		return `Inventory: ${this.items.map(i => i.toHex(3)).join(", ")}`;
+	}
+
 	evaluate(ctx: GameplayContext) {
 		it(`hero has items ${this.items.map(i => i.toHex(3)).join(", ")}`, () => {
 			this.items.forEach(i => expect(ctx.engine.inventory.contains(i)).toBe(true));
