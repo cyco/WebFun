@@ -85,8 +85,8 @@ class GameplayContext {
 			try {
 				document.body.appendChild(sceneView);
 
-				story.generateWorld(engine.assetManager);
 				engine.story = story;
+				story.generateWorld(engine.assetManager);
 
 				engine.metronome.tickDuration = 1;
 				engine.metronome.ontick = (delta: number) => engine.update(delta);
@@ -106,6 +106,8 @@ class GameplayContext {
 				if (story instanceof SimulatedStory) {
 					engine.hero.visible = true;
 					engine.hero.location = new Point(0, 0);
+				} else {
+					engine.currentWorld = story.dagobah;
 				}
 
 				inputManager.engine = engine;

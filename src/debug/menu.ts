@@ -41,9 +41,9 @@ export default (gameController: GameController) => ({
 		SettingsAction("Load Test", async () => {
 			const [file] = await FilePicker.Pick();
 			if (!file) return;
+
 			const contents = await file.readAsText();
 			const testCase = Parser.Parse(file.name, contents);
-
 			const simulator = document.createElement(TestCreatorWindow.tagName) as TestCreatorWindow;
 			simulator.gameController = gameController;
 			simulator.state = localStorage.prefixedWith("simulator");

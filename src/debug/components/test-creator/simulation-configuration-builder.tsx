@@ -139,11 +139,13 @@ class SimulationConfigurationBuilder extends Component {
 		const { zone, findItem, puzzleNPC, requiredItem1, requiredItem2, inventory } = config;
 		const data = this._gameData;
 
-		this.currentZone = data.zones[zone];
-		this._findTile.tile = data.tiles[findItem];
-		this._npcTile.tile = data.tiles[puzzleNPC];
-		this._requiredTile.tile = data.tiles[requiredItem1];
-		this._required2Tile.tile = data.tiles[requiredItem2];
+		if (zone >= 0) {
+			this.currentZone = data.zones[zone];
+			this._findTile.tile = data.tiles[findItem];
+			this._npcTile.tile = data.tiles[puzzleNPC];
+			this._requiredTile.tile = data.tiles[requiredItem1];
+			this._required2Tile.tile = data.tiles[requiredItem2];
+		}
 		this._inventory = inventory;
 	}
 

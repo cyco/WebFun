@@ -18,9 +18,9 @@ import {
 declare var withTimeout: (t: number, block: () => void) => () => void;
 const FiveMinutes = 5 * 60 * 1000;
 
-const run = (fileName: string, testFileContents: string) => {
+const run = (prefix: string, fileName: string, testFileContents: string) => {
 	describe(
-		`WebFun.Acceptance.Gameplay.${fileName}`,
+		`WebFun.Acceptance.${prefix}.${fileName}`,
 		withTimeout(FiveMinutes, () => {
 			const ctx = new GameplayContext(true);
 			const parser = new Parser();
@@ -33,7 +33,7 @@ const run = (fileName: string, testFileContents: string) => {
 
 					srand(testCase.configuration.seed);
 					ctx.engine.persistentState.gamesWon = testCase.configuration.gamesWon;
-					await ctx.playStory(buildStory(testCase), testCase.input.split(""), false);
+					await ctx.playStory(buildStory(testCase), testCase.input.split(" "), true);
 				} catch (e) {
 					console.warn("e", e);
 				} finally {

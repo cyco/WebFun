@@ -33,10 +33,10 @@ class ConfigurationBuilder extends Component {
 					}}
 					state={this._state.prefixedWith("selector")}
 				>
-					<Segment className="world" selected={typeof config.zone !== "number"}>
+					<Segment className="world" selected={config.zone < 0}>
 						New World
 					</Segment>
-					<Segment className="simulation" selected={typeof config.zone === "number"}>
+					<Segment className="simulation" selected={config.zone >= 0}>
 						Simulation
 					</Segment>
 				</SegmentControl>,
@@ -44,6 +44,7 @@ class ConfigurationBuilder extends Component {
 				<div id="simulation">{this._simulationConfigurationBuilder}</div>
 			]
 		);
+		if (this._initialConfiguration) this.configuration = this._initialConfiguration;
 	}
 
 	public disconnectedCallback() {
@@ -58,7 +59,7 @@ class ConfigurationBuilder extends Component {
 
 		if (!this.isConnected) return;
 
-		if (typeof config.zone === "number") {
+		if (config.zone >= 0) {
 			this._worldConfigurationBuilder.parentElement.style.display = "none";
 			this._simulationConfigurationBuilder.parentElement.style.display = "";
 		} else {

@@ -37,8 +37,10 @@ import persistent from "./persistent";
 import polar2xy from "./polar2xy";
 import rad2deg from "./rad2deg";
 import xy2polar from "./xy2polar";
+import sleep from "./sleep";
 
 export {
+	sleep,
 	Color,
 	add,
 	deg2rad,
