@@ -2,9 +2,10 @@ import Story from "src/engine/story";
 import { Planet, WorldSize } from "src/engine/types";
 import { srand } from "src/util";
 import * as Generation from "src/engine/generation";
+import { WorldGenerationError } from "src/engine/generation";
 
-describe("Story", () => {
-	let subject;
+describe("WebFun.Unit.Engine.Story", () => {
+	let subject: Story;
 	beforeEach(() => (subject = new Story(1, Planet.HOTH, WorldSize.Small)));
 	it("is a simple container for seed, size and world size", () => {
 		expect(subject.seed).toBe(1);
@@ -13,9 +14,9 @@ describe("Story", () => {
 	});
 
 	describe("generating the world", () => {
-		let engineMock;
-		let worldGeneratorMock;
-		let dagobahGeneratorMock;
+		let engineMock: any;
+		let worldGeneratorMock: any;
+		let dagobahGeneratorMock: any;
 
 		beforeEach(() => {
 			engineMock = mockEngine();
@@ -28,17 +29,17 @@ describe("Story", () => {
 
 		it("can generate the original world", () => {
 			spyOn(worldGeneratorMock, "generate").and.returnValue(true);
-			subject.generateWorld(mockEngine);
+			subject.generateWorld(engineMock);
 
-			expect(Generation.WorldGenerator).toHaveBeenCalledWith(subject.size, subject.planet, mockEngine);
-			expect(worldGeneratorMock.generate).toHaveBeenCalledWith(subject.seed);
+			expect(Generation.WorldGenerator).toHaveBeenCalledWith(subject.size, subject.planet, engineMock);
+			expect(worldGeneratorMock.generate).toHaveBeenCalledWith(subject.seed, 0);
 		});
 
 		it("places hotspot items after generation", () => {
 			spyOn(worldGeneratorMock, "generate").and.returnValue(true);
 			spyOn(worldGeneratorMock.world, "layDownHotspotItems");
 			spyOn(dagobahGeneratorMock.world, "layDownHotspotItems");
-			subject.generateWorld(mockEngine);
+			subject.generateWorld(engineMock);
 
 			expect(worldGeneratorMock.world.layDownHotspotItems).toHaveBeenCalled();
 			expect(dagobahGeneratorMock.world.layDownHotspotItems).toHaveBeenCalled();
@@ -47,17 +48,17 @@ describe("Story", () => {
 		it("keeps generating worlds with varying seed until it succeeds", () => {
 			srand(0);
 
-			spyOn(worldGeneratorMock, "generate").and.callFake(seed => {
+			spyOn(worldGeneratorMock, "generate").and.callFake((seed: number) => {
 				if (seed === 1) throw new WorldGenerationError();
 				if (seed === 38) return false;
 				return true;
 			});
 
-			subject.generateWorld(mockEngine);
+			subject.generateWorld(engineMock);
 
-			expect(worldGeneratorMock.generate).toHaveBeenCalledWith(1);
-			expect(worldGeneratorMock.generate).toHaveBeenCalledWith(38);
-			expect(worldGeneratorMock.generate).toHaveBeenCalledWith(7719);
+			expect(worldGeneratorMock.generate).toHaveBeenCalledWith(1, 0);
+			expect(worldGeneratorMock.generate).toHaveBeenCalledWith(38, 0);
+			expect(worldGeneratorMock.generate).toHaveBeenCalledWith(7719, 0);
 		});
 
 		function mockEngine() {
