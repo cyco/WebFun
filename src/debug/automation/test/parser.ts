@@ -53,7 +53,7 @@ class TestFileParser {
 			const it = lines.next();
 			if (it.done) throw "Unexpected end of input";
 			if (!it.value.length) continue;
-			if (it.value[0] === "-") return configuration;
+			if (it.value[0] === "-") break;
 
 			const [key, ...valueParts] = it.value
 				.split(":")

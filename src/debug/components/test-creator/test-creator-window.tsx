@@ -1,7 +1,7 @@
 import "./test-creator-window.scss";
 
 import { AbstractWindow, Button, IconButton } from "src/ui/components";
-import { Point, DiscardingStorage, download } from "src/util";
+import { Point, DiscardingStorage, download, sleep } from "src/util";
 
 import { GameController } from "src/app";
 import { TestCase, Expectation, Configuration } from "src/debug/automation/test";
@@ -45,13 +45,16 @@ class TestCreatorWindow extends AbstractWindow {
 		);
 	}
 
-	private start() {
+	private async start() {
 		const controller = this.gameController;
 		const engine = controller.engine;
 
 		Settings.pickupItemsAutomatically = true;
 		Settings.skipDialogs = true;
 		Settings.skipTransitions = true;
+
+		if (engine.metronome) engine.metronome.stop();
+		await sleep(10);
 
 		const data = (controller.data = controller.data.copy());
 		engine.assetManager = new AssetManager();
@@ -67,6 +70,7 @@ class TestCreatorWindow extends AbstractWindow {
 		engine.story = story;
 		engine.currentWorld = story.world;
 		engine.camera.update(0);
+		engine.persistentState.gamesWon = this.testCase.configuration.gamesWon;
 
 		engine.inventory.removeAllItems();
 		this.testCase.configuration.inventory.forEach(i =>
