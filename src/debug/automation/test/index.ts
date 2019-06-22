@@ -2,12 +2,14 @@ import {
 	InventoryContainsExpectation,
 	NOPExpectation,
 	UnknownExpectation,
-	ZoneSolvedExpectation
+	ZoneSolvedExpectation,
+	StorySolvedExpectation
 } from "./expectations";
 import Expectation from "./expectation";
 import Configuration from "./configuration";
 import Parser from "./parser";
 import TestCase from "./test-case";
+import GameplayContext from "./gameplay-context";
 
 export {
 	Configuration,
@@ -17,5 +19,7 @@ export {
 	Parser,
 	TestCase,
 	UnknownExpectation,
-	ZoneSolvedExpectation
+	ZoneSolvedExpectation,
+	StorySolvedExpectation,
+	GameplayContext
 };
