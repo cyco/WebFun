@@ -1,0 +1,27 @@
+wf-debug-test-creator-world-configuration-builder {
+	display: block;
+
+	> div {
+		display: flex;
+		flex-direction: column;
+		padding: 20px 20px 0;
+
+		> div {
+			& + div {
+				margin-top: 5px;
+			}
+			display: flex;
+			flex-direction: row;
+
+			> label {
+				width: 90px;
+				margin-right: 10px;
+				line-height: 23px;
+			}
+
+			select {
+				width: 150px;
+			}
+		}
+	}
+}

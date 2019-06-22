@@ -4,7 +4,12 @@ import Condition from "./condition";
 import Controls from "./controls";
 import Instruction from "./instruction";
 import TileCell from "./tile-cell";
-import { TestCreatorWindow, ConfiguationBuilder } from "./test-creator";
+import {
+	TestCreatorWindow,
+	ConfiguationBuilder,
+	SimulationConfigurationBuilder,
+	WorldConfigurationBuilder
+} from "./test-creator";
 import PopoverZonePicker from "./popover-zone-picker";
 import ZonePicker from "./zone-picker";
 import ZonePickerCell from "./zone-picker-cell";
@@ -38,5 +43,7 @@ export {
 	TileView,
 	ZonePicker,
 	ZonePickerCell,
-	ZoneView
+	ZoneView,
+	SimulationConfigurationBuilder,
+	WorldConfigurationBuilder
 };

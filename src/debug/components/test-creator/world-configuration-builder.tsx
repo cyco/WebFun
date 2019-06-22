@@ -1,0 +1,77 @@
+import "./world-configuration-builder.scss";
+
+import { Component } from "src/ui";
+import { DiscardingStorage } from "src/util";
+import { Selector, Textbox } from "src/ui/components";
+import { Planet, WorldSize } from "src/engine/types";
+
+class WorldConfigurationBuilder extends Component {
+	public static readonly tagName = "wf-debug-test-creator-world-configuration-builder";
+	private _state: Storage = new DiscardingStorage();
+	private _seed: Textbox = (
+		<Textbox onchange={() => this._state.store("seed", this._seed.value)} />
+	) as Textbox;
+	private _planet: Selector = (
+		<Selector
+			onchange={() => this._state.store("planet", this._planet.value)}
+			options={[
+				{ label: Planet.TATOOINE.name, value: Planet.TATOOINE.rawValue },
+				{ label: Planet.HOTH.name, value: Planet.HOTH.rawValue },
+				{ label: Planet.ENDOR.name, value: Planet.ENDOR.rawValue }
+			]}
+		/>
+	) as Selector;
+	private _size: Selector = (
+		<Selector
+			onchange={() => this._state.store("size", this._size.value)}
+			options={[
+				{ label: WorldSize.Small.name, value: WorldSize.Small.rawValue },
+				{ label: WorldSize.Medium.name, value: WorldSize.Medium.rawValue },
+				{ label: WorldSize.Large.name, value: WorldSize.Large.rawValue }
+			]}
+		/>
+	) as Selector;
+	private _gamesWon: Textbox = (
+		<Textbox onchange={() => this._state.store("gamesWon", this._gamesWon.value)} />
+	) as Textbox;
+
+	public connectedCallback() {
+		super.connectedCallback();
+
+		this.append(
+			<div>
+				<div>
+					<label>Seed</label>
+					{this._seed}
+				</div>
+				<div>
+					<label>Planet</label>
+					{this._planet}
+				</div>
+				<div>
+					<label>Size</label>
+					{this._size}
+				</div>
+				<span style={{ marginTop: "7px", marginBottom: "7px", borderTop: "1px dashed gray" }}></span>
+				<div>
+					<label>Games Won</label>
+					{this._gamesWon}
+				</div>
+			</div>
+		);
+	}
+
+	public set state(s) {
+		this._state = s;
+		this._seed.value = s.load("seed") || (0).toHex(4);
+		this._planet.value = s.load("planet") || Planet.TATOOINE.rawValue;
+		this._size.value = s.load("size") || WorldSize.Small.rawValue;
+		this._gamesWon.value = s.load("gamesWon") || "0";
+	}
+
+	public get state() {
+		return this._state;
+	}
+}
+
+export default WorldConfigurationBuilder;
