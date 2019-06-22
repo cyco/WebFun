@@ -4,7 +4,7 @@ import { AbstractWindow, Button, IconButton } from "src/ui/components";
 import { Point, DiscardingStorage, download } from "src/util";
 
 import { GameController } from "src/app";
-import { TestCase, Expectation } from "src/debug/automation/test";
+import { TestCase, Expectation, Configuration } from "src/debug/automation/test";
 import { InputReplayer, InputRecorder } from "src/debug/components";
 import ConfiguationBuilder from "./configuration-builder";
 import SimulatedStory from "src/debug/simulated-story";
@@ -12,6 +12,8 @@ import adjacentZones from "./adjacent-zones";
 import formatExpectation from "./format-expectation";
 import { Zone, Tile, Sound, Puzzle, Char } from "src/engine/objects";
 import { Planet, WorldSize } from "src/engine/types";
+import { Story, Engine, AssetManager } from "src/engine";
+import Settings from "src/settings";
 
 class TestCreatorWindow extends AbstractWindow {
 	public static readonly tagName = "wf-debug-test-creator-window";
@@ -44,29 +46,49 @@ class TestCreatorWindow extends AbstractWindow {
 	}
 
 	private start() {
-		const story = this.buildStory();
-
 		const controller = this.gameController;
 		const engine = controller.engine;
 
-		engine.hero.location = new Point(0, 0);
-		engine.hero.visible = true;
-		engine.currentWorld = story.world;
-		engine.story = story;
+		Settings.pickupItemsAutomatically = true;
+		Settings.skipDialogs = true;
+		Settings.skipTransitions = true;
 
-		const data = controller.data;
+		const data = (controller.data = controller.data.copy());
+		engine.assetManager = new AssetManager();
 		engine.assetManager.populate(Zone, data.zones);
 		engine.assetManager.populate(Tile, data.tiles);
 		engine.assetManager.populate(Puzzle, data.puzzles);
 		engine.assetManager.populate(Char, data.characters);
 		engine.assetManager.populate(Sound, data.sounds);
 
+		const story = this.buildStory(engine);
+		engine.hero.location = new Point(0, 0);
+		engine.hero.visible = true;
+		engine.story = story;
+		engine.currentWorld = story.world;
+		engine.camera.update(0);
+
 		engine.inventory.removeAllItems();
 		this.testCase.configuration.inventory.forEach(i =>
 			engine.inventory.addItem(engine.assetManager.get(Tile, i))
 		);
 
-		controller.jumpStartEngine(story.world.at(4, 5).zone);
+		story.generateWorld(engine.assetManager);
+		if (!(story instanceof SimulatedStory)) {
+			engine.currentWorld = story.dagobah;
+			engine.hero.visible = false;
+			engine.temporaryState = {
+				justEntered: true,
+				enteredByPlane: true,
+				bump: false
+			};
+		}
+
+		controller.jumpStartEngine(
+			story instanceof SimulatedStory
+				? story.world.at(4, 5).zone
+				: engine.assetManager.find(Zone, ({ type }) => type === Zone.Type.Load)
+		);
 
 		this.content.textContent = "";
 		this.content.appendChild(this._replayer);
@@ -84,11 +106,21 @@ class TestCreatorWindow extends AbstractWindow {
 		replayer.fastForward();
 	}
 
-	public buildStory() {
-		const { data } = this._gameController;
-		const t = (t: number) => (t > 0 ? data.tiles[t] : null);
-		const z = (z: number) => (z > 0 ? data.zones[z] : null);
-		const { zone, findItem, puzzleNPC, requiredItem1, requiredItem2 } = this._configBuilder.configuration;
+	public buildStory(engine: Engine) {
+		const config = this._configBuilder.configuration;
+		if (config.zone >= 0) {
+			return this._buildSimulatedStory(engine, config);
+		}
+
+		return this._buildStory(config);
+	}
+
+	private _buildSimulatedStory(engine: Engine, config: Configuration) {
+		const assets = engine.assetManager;
+		const t = (t: number) => (t > 0 ? assets.get(Tile, t) : null);
+		const z = (z: number) => (z > 0 ? assets.get(Zone, z) : null);
+
+		const { zone, findItem, puzzleNPC, requiredItem1, requiredItem2 } = config;
 
 		return new SimulatedStory(
 			t(findItem),
@@ -99,6 +131,10 @@ class TestCreatorWindow extends AbstractWindow {
 			adjacentZones(z(zone), this._gameController.data.zones),
 			this._gameController.data.zones
 		);
+	}
+
+	private _buildStory(config: Configuration) {
+		return new Story(config.seed, Planet.fromNumber(config.planet), WorldSize.fromNumber(config.size));
 	}
 
 	public downloadTest() {
