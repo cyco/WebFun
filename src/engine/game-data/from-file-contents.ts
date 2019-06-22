@@ -159,7 +159,7 @@ const makeZone = (raw: RawZone, idx: number, data: GameData) => {
 	zone.planet = Planet.fromNumber(raw.planet);
 	zone.size = new Size(raw.width, raw.height);
 	zone.type = ZoneType.fromNumber(raw.zoneType);
-	zone.tileIDs = raw.tileIDs;
+	zone.tileIDs = raw.tileIDs.slice();
 	zone.hotspots = raw.hotspots.map((d: any, idx: number) => makeHotspot(d, idx, data));
 	zone.npcs = raw.npcs.map((d: any, idx: number) => makeNPC(d, idx, data));
 	zone.goalItems = Array.from(raw.goalItemIDs).map((id: number) => data.tiles[id]);
