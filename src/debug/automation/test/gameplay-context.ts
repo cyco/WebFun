@@ -172,4 +172,5 @@ class GameplayContext {
 		this.sceneView = null;
 	}
 }
+
 export default GameplayContext;

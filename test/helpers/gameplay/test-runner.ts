@@ -1,19 +1,10 @@
-import GameplayContext from "./gameplay-runner";
 import { Zone, Tile } from "src/engine/objects";
 import { srand } from "src/util";
 import { SimulatedStory } from "src/debug";
 import { Story } from "src/engine";
 import { Planet, WorldSize } from "src/engine/types";
 
-import {
-	Parser,
-	TestCase,
-	Expectation,
-	NOPExpectation,
-	InventoryContainsExpectation,
-	UnknownExpectation,
-	ZoneSolvedExpectation
-} from "src/debug/automation/test";
+import { Parser, TestCase, Expectation, GameplayContext } from "src/debug/automation/test";
 
 declare var withTimeout: (t: number, block: () => void) => () => void;
 const FiveMinutes = 5 * 60 * 1000;
@@ -42,21 +33,7 @@ const run = (prefix: string, fileName: string, testFileContents: string) => {
 				}
 			});
 
-			testCase.expectations.forEach((exp: Expectation) => {
-				if (exp instanceof NOPExpectation) {
-					it("does nothing, really", (): void => void 0);
-				} else if (exp instanceof InventoryContainsExpectation) {
-					it(`hero has items ${exp.items.map(i => i.toHex(3)).join(", ")}`, () => {
-						exp.items.forEach(i => expect(ctx.engine.inventory.contains(i)).toBe(true));
-					});
-				} else if (exp instanceof ZoneSolvedExpectation) {
-					it("the zone is solved", () => {
-						expect(ctx.engine.currentWorld.at(4, 4).zone.solved).toBeTrue();
-					});
-				} else if (exp instanceof UnknownExpectation) {
-					console.warn(`Don\'t know how to handle expectation ${exp.line}`);
-				}
-			});
+			testCase.expectations.forEach((exp: Expectation) => exp.evaluate(ctx));
 
 			afterAll(async done => {
 				try {

@@ -5,10 +5,17 @@ import {
 	ZoneSolvedExpectation,
 	NOPExpectation,
 	InventoryContainsExpectation,
-	UnknownExpectation
+	UnknownExpectation,
+	StorySolvedExpectation
 } from "./expectations";
 import { Planet, WorldSize } from "src/engine/types";
 
+const Expectations = [
+	StorySolvedExpectation,
+	ZoneSolvedExpectation,
+	NOPExpectation,
+	InventoryContainsExpectation
+];
 class TestFileParser {
 	public static Parse(description: string, fileContents: string): TestCase {
 		return new TestFileParser().parse(description, fileContents);
@@ -123,23 +130,9 @@ class TestFileParser {
 			const it = lines.next();
 			if (it.done) return expectations;
 			if (!it.value.length) continue;
-			if (it.value.toLowerCase().contains("solved")) {
-				expectations.push(new ZoneSolvedExpectation());
-			} else if (it.value.toLowerCase().contains("nop")) {
-				expectations.push(new NOPExpectation());
-			} else if (it.value.toLowerCase().contains("inventory:")) {
-				expectations.push(
-					new InventoryContainsExpectation(
-						it.value
-							.split(" ")[1]
-							.split(", ")
-							.map(i => i.trim())
-							.map(i => i.parseInt())
-					)
-				);
-			} else {
-				expectations.push(new UnknownExpectation(it.value));
-			}
+			const value = it.value.toLowerCase();
+			const Exp = Expectations.find(e => e.CanBeBuiltFrom(value)) || UnknownExpectation;
+			expectations.push(Exp.BuildFrom(it));
 		} while (true);
 	}
 }
