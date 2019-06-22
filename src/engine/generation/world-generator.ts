@@ -16,6 +16,8 @@ import WorldGenerationError from "./world-generation-error";
 import WorldItem from "./world-item";
 import WorldItemType from "./world-item-type";
 import RoomIterator from "../room-iterator";
+import Yoda from "src/engine/yoda";
+import { MutablePuzzle } from "src/engine/mutable-objects";
 
 declare global {
 	interface Array<T> {
@@ -51,7 +53,7 @@ class WorldGenerator {
 		this._assetManager = assetManager;
 	}
 
-	public generate(seed: number): boolean {
+	public generate(seed: number, gamesWon: number = 0): boolean {
 		this._seed = seed;
 		srand(this._seed);
 
@@ -77,6 +79,20 @@ class WorldGenerator {
 
 		this.providedItemQuests = [];
 		this.requiredItemQuests = [];
+
+		// FIXME: Two puzzles are only available after a certain amount of games have been won. This is basically
+		// what the original implementation did, but there's got to be a better way.
+		if (gamesWon >= 1) {
+			console.log("Unlock rescue goal");
+			const puzzle = (this._assetManager.get(Puzzle, Yoda.Goal.RescueYoda) as any) as MutablePuzzle;
+			puzzle.type = Puzzle.Type.End;
+		}
+
+		if (gamesWon >= 10) {
+			console.log("Unlock car puzzgoalle");
+			const puzzle = (this._assetManager.get(Puzzle, Yoda.Goal.Car) as any) as MutablePuzzle;
+			puzzle.type = Puzzle.Type.End;
+		}
 
 		const goalPuzzle = this.GetUnusedPuzzleRandomly(null, ZoneType.Unknown);
 		if (goalPuzzle === null) {

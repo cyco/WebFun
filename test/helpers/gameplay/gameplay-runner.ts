@@ -86,7 +86,7 @@ class GameplayContext {
 				document.body.appendChild(sceneView);
 
 				engine.story = story;
-				story.generateWorld(engine.assetManager);
+				story.generateWorld(engine.assetManager, engine.persistentState.gamesWon);
 
 				engine.metronome.tickDuration = 1;
 				engine.metronome.ontick = (delta: number) => engine.update(delta);

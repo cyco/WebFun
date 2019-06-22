@@ -77,7 +77,7 @@ class TestCreatorWindow extends AbstractWindow {
 			engine.inventory.addItem(engine.assetManager.get(Tile, i))
 		);
 
-		story.generateWorld(engine.assetManager);
+		story.generateWorld(engine.assetManager, engine.persistentState.gamesWon);
 		if (!(story instanceof SimulatedStory)) {
 			engine.currentWorld = story.dagobah;
 			engine.hero.visible = false;
