@@ -12,6 +12,7 @@ class RectangleTool extends AbstractDrawingTool {
 	private _startingPoint: Point = null;
 
 	protected applyTo(point: Point, _: boolean) {
+		if (!this.zone.bounds.contains(point)) return;
 		if (!this._startingPoint) this._startingPoint = point;
 
 		const rect = this.calculateRectFromStartTo(point);
