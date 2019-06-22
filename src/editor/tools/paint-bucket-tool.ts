@@ -13,6 +13,7 @@ class PaintBucketTool extends AbstractDrawingTool {
 	protected applyTo(point: Point, continous: boolean) {
 		if (continous) return;
 		if (this.layer.locked) return;
+		if (!this.zone.bounds.contains(point)) return;
 
 		const points = this.findConnectedPoints(point);
 		points.forEach(p => {

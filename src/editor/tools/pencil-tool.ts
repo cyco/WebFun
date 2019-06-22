@@ -23,7 +23,7 @@ class PencilTool extends AbstractDrawingTool {
 		this._ctx.fillRect(p.x, p.y, 1, 1);
 
 		const point = new Point(p.x, p.y, this.layer.id);
-
+		if (!this.zone.bounds.contains(point)) return;
 		this.zone.setTile(this.tile, point);
 		this.dispatchEvent(new TileChangeEvent({ affectedPoints: [point] }));
 	}
