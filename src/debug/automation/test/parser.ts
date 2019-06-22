@@ -7,6 +7,7 @@ import {
 	InventoryContainsExpectation,
 	UnknownExpectation
 } from "./expectations";
+import { Planet, WorldSize } from "src/engine/types";
 
 class TestFileParser {
 	public static Parse(description: string, fileContents: string): TestCase {
@@ -43,7 +44,9 @@ class TestFileParser {
 			requiredItem2: -1,
 			puzzleNPC: -1,
 			seed: -1,
-			inventory: []
+			inventory: [],
+			planet: -1,
+			size: -1
 		};
 
 		do {
@@ -53,13 +56,16 @@ class TestFileParser {
 			if (it.value[0] === "-") return configuration;
 
 			const [key, ...valueParts] = it.value
-				.split(" ")
+				.split(":")
 				.filter(i => i.length)
 				.map(i => i.toLowerCase());
-			const value = valueParts.join(" ");
+			const value = valueParts.join(":");
 
 			if (key.contains("zone")) configuration.zone = value.parseInt();
 			if (key.contains("seed")) configuration.seed = value.parseInt();
+			if (key.contains("planet")) configuration.planet = this.parsePlanet(value);
+			if (key.contains("size")) configuration.size = this.parseWorldSize(value);
+			if (key.contains("games won")) configuration.gamesWon = value.parseInt();
 			if (key.contains("find")) configuration.findItem = value.parseInt();
 			if (key.contains("puzzle")) configuration.puzzleNPC = value.parseInt();
 			if (key.contains("require") && configuration.requiredItem1 >= 0)
@@ -71,6 +77,28 @@ class TestFileParser {
 		} while (true);
 
 		return configuration;
+	}
+
+	private parsePlanet(value: string) {
+		switch (value) {
+			case "tatooine":
+				return Planet.TATOOINE.rawValue;
+			case "endor":
+				return Planet.ENDOR.rawValue;
+			case "hoth":
+				return Planet.HOTH.rawValue;
+		}
+	}
+
+	private parseWorldSize(size: string) {
+		switch (size) {
+			case "small":
+				return WorldSize.Small.rawValue;
+			case "medium":
+				return WorldSize.Medium.rawValue;
+			case "large":
+				return WorldSize.Large.rawValue;
+		}
 	}
 
 	private parseInput(lines: IterableIterator<string>): string {

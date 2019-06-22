@@ -13,8 +13,9 @@ class SegmentControl extends Component implements EventListenerObject {
 	protected connectedCallback() {
 		super.connectedCallback();
 		Array.from(this.children).forEach(c => c.addEventListener("click", this));
-		this.currentSegment = (this.childNodes[this.state.load("active-segment")] ||
-			this.firstElementChild) as Segment;
+		this.currentSegment =
+			Array.from(this.children).find(c => c.hasAttribute("selected")) ||
+			((this.childNodes[this.state.load("active-segment")] || this.firstElementChild) as Segment);
 	}
 
 	handleEvent(e: Event) {

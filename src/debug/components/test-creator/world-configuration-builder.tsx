@@ -4,6 +4,7 @@ import { Component } from "src/ui";
 import { DiscardingStorage } from "src/util";
 import { Selector, Textbox } from "src/ui/components";
 import { Planet, WorldSize } from "src/engine/types";
+import { Configuration } from "src/debug/automation/test";
 
 class WorldConfigurationBuilder extends Component {
 	public static readonly tagName = "wf-debug-test-creator-world-configuration-builder";
@@ -59,6 +60,22 @@ class WorldConfigurationBuilder extends Component {
 				</div>
 			</div>
 		);
+	}
+
+	public set configuration(config: Configuration) {
+		if (typeof config.seed === "number") this._seed.value = config.seed.toHex(4);
+		if (typeof config.planet === "number") this._planet.value = `${config.planet}`;
+		if (typeof config.size === "number") this._size.value = `${config.size}`;
+		if (typeof config.gamesWon === "number") this._gamesWon.value = config.gamesWon.toString(10);
+	}
+
+	public get configuration(): Configuration {
+		return {
+			seed: this._seed.value.parseInt(),
+			planet: this._planet.value.parseInt(),
+			size: this._size.value.parseInt(),
+			gamesWon: this._gamesWon.value.parseInt()
+		};
 	}
 
 	public set state(s) {
