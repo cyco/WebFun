@@ -17,12 +17,13 @@ import {
 
 declare var withTimeout: (t: number, block: () => void) => () => void;
 const FiveMinutes = 5 * 60 * 1000;
+const debug = false;
 
 const run = (prefix: string, fileName: string, testFileContents: string) => {
 	describe(
 		`WebFun.Acceptance.${prefix}.${fileName}`,
 		withTimeout(FiveMinutes, () => {
-			const ctx = new GameplayContext(true);
+			const ctx = new GameplayContext(debug);
 			const parser = new Parser();
 			const testCase = parser.parse(fileName, testFileContents);
 
@@ -33,7 +34,7 @@ const run = (prefix: string, fileName: string, testFileContents: string) => {
 
 					srand(testCase.configuration.seed);
 					ctx.engine.persistentState.gamesWon = testCase.configuration.gamesWon;
-					await ctx.playStory(buildStory(testCase), testCase.input.split(" "), true);
+					await ctx.playStory(buildStory(testCase), testCase.input.split(" "), debug);
 				} catch (e) {
 					console.warn("e", e);
 				} finally {
