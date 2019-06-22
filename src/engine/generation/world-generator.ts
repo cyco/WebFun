@@ -30,7 +30,7 @@ class WorldGenerator {
 	private _seed: number = 0;
 	private _size: WorldSize;
 	private _planet: Planet;
-	private _assetManager: AssetManager;
+	private _assets: AssetManager;
 
 	private usedZones: Zone[] = [];
 	private mapGenerator: MapGenerator = null;
@@ -50,7 +50,7 @@ class WorldGenerator {
 	constructor(size: WorldSize, planet: Planet, assetManager: AssetManager) {
 		this._size = size;
 		this._planet = planet;
-		this._assetManager = assetManager;
+		this._assets = assetManager;
 	}
 
 	public generate(seed: number, gamesWon: number = 0): boolean {
@@ -61,7 +61,7 @@ class WorldGenerator {
 		mapGenerator.generate(-1, this._size);
 
 		this.world = new World();
-		this.world.zones = this._assetManager.getAll(Zone);
+		this.world.zones = this._assets.getAll(Zone);
 		for (let i = 0; i < 100; i++) {
 			this.world.index(i).puzzleIndex = mapGenerator.orderMap[i];
 		}
@@ -83,12 +83,12 @@ class WorldGenerator {
 		// FIXME: Two puzzles are only available after a certain amount of games have been won. This is basically
 		// what the original implementation did, but there's got to be a better way.
 		if (gamesWon >= 1) {
-			const puzzle = (this._assetManager.get(Puzzle, Yoda.Goal.RescueYoda) as any) as MutablePuzzle;
+			const puzzle = (this._assets.get(Puzzle, Yoda.Goal.RescueYoda) as any) as MutablePuzzle;
 			puzzle.type = Puzzle.Type.End;
 		}
 
 		if (gamesWon >= 10) {
-			const puzzle = (this._assetManager.get(Puzzle, Yoda.Goal.Car) as any) as MutablePuzzle;
+			const puzzle = (this._assets.get(Puzzle, Yoda.Goal.Car) as any) as MutablePuzzle;
 			puzzle.type = Puzzle.Type.End;
 		}
 
@@ -399,9 +399,7 @@ class WorldGenerator {
 		const zoneMatchesPlanet = (zone: Zone) => zone.planet === this._planet;
 		const zoneIsUnused = (zone: Zone) =>
 			!this.usedZones.contains(zone) || (zoneType === ZoneType.Goal && this.puzzlesCanBeReused > 0);
-		const usableZones = this._assetManager
-			.getFiltered(Zone, and(zoneMatchesPlanet, zoneMatchesType))
-			.shuffle();
+		const usableZones = this._assets.getFiltered(Zone, and(zoneMatchesPlanet, zoneMatchesType)).shuffle();
 		return usableZones
 			.filter(zoneIsUnused)
 			.find((zone: Zone) =>
@@ -850,7 +848,7 @@ class WorldGenerator {
 		defaultReturn: T,
 		predicate = (result: T) => result !== defaultReturn
 	): T {
-		for (const room of RoomIterator(zone, this._assetManager.getAll(Zone))) {
+		for (const room of RoomIterator(zone, this._assets.getAll(Zone))) {
 			const result = callback(room);
 			if (predicate(result)) {
 				return result;
@@ -891,7 +889,7 @@ class WorldGenerator {
 	}
 
 	private getPuzzleCandidates(zoneType: ZoneType): Puzzle[] {
-		return this._assetManager.getFiltered(Puzzle, puzzle => {
+		return this._assets.getFiltered(Puzzle, puzzle => {
 			switch (zoneType) {
 				case ZoneType.Find:
 				case ZoneType.FindTheForce:
@@ -1038,11 +1036,11 @@ class WorldGenerator {
 	}
 
 	private lookupTileById(id: number): Tile {
-		return this._assetManager.get(Tile, id, NullIfMissing);
+		return this._assets.get(Tile, id, NullIfMissing);
 	}
 
 	private lookupZoneById(id: number): Zone {
-		return this._assetManager.get(Zone, id, NullIfMissing);
+		return this._assets.get(Zone, id, NullIfMissing);
 	}
 }
 
