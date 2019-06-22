@@ -32,7 +32,6 @@ class TestCreatorWindow extends AbstractWindow {
 		);
 
 		this.content.style.width = "400px";
-		this.content.style.height = "478px";
 
 		this.content.appendChild(this._configBuilder);
 		this.content.appendChild(
