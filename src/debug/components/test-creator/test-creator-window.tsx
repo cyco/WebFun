@@ -9,7 +9,6 @@ import { InputReplayer, InputRecorder } from "src/debug/components";
 import ConfiguationBuilder from "./configuration-builder";
 import SimulatedStory from "src/debug/simulated-story";
 import adjacentZones from "./adjacent-zones";
-import formatExpectation from "./format-expectation";
 import { Zone, Tile, Sound, Puzzle, Char } from "src/engine/objects";
 import { Planet, WorldSize } from "src/engine/types";
 import { Story, Engine, AssetManager } from "src/engine";
@@ -174,7 +173,7 @@ class TestCreatorWindow extends AbstractWindow {
 				this._recorder.input,
 				"",
 				"- Expect -",
-				...this._expectations.map(formatExpectation),
+				...this._expectations.map(e => e.format()),
 				""
 			].join("\n"),
 			zone >= 0

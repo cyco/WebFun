@@ -16,6 +16,10 @@ class StorySolvedExpectation implements Expectation {
 			expect(ctx.engine.gameState).toBe(GameState.Won);
 		});
 	}
+
+	format() {
+		return "Story Solved";
+	}
 }
 
 export default StorySolvedExpectation;
