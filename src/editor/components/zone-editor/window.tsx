@@ -19,7 +19,7 @@ import { ActionDescription } from "src/editor/components/zone-editor/action";
 import { Editor as ActionEditor } from "../action-editor";
 import DataManager from "src/editor/data-manager";
 import Layer from "src/editor/components/zone-editor/layer";
-import PopoverTilePicker from "src/editor/components/popover-tile-picker";
+import PopoutTilePicker from "src/editor/components/popout-tile-picker";
 import Sidebar from "./sidebar";
 import SidebarLayer from "src/editor/components/zone-editor/sidebar-layer";
 import ToolComponent from "./tool";
@@ -32,7 +32,7 @@ class Window extends AbstractPanel {
 	private _editor: ZoneEditor = <ZoneEditor /> as ZoneEditor;
 	private _state: Storage;
 	private _sidebar: Sidebar = <Sidebar /> as Sidebar;
-	private _tilePicker: PopoverTilePicker;
+	private _tilePicker: PopoutTilePicker;
 	private _data: DataManager;
 	private _tools: AbstractTool[];
 	private _actionsWindow: WindowComponent;
@@ -70,7 +70,7 @@ class Window extends AbstractPanel {
 		].map(a => this._buildActionItem(a));
 
 		this._tilePicker = (
-			<PopoverTilePicker
+			<PopoutTilePicker
 				onchange={(e: CustomEvent) => {
 					this._tilePickerTileChanged();
 					e.stopImmediatePropagation();
@@ -78,7 +78,7 @@ class Window extends AbstractPanel {
 				}}
 				tile={null}
 			/>
-		) as PopoverTilePicker;
+		) as PopoutTilePicker;
 		this._sidebar.addEntry(
 			<div style={{ display: "flex", alignItems: "center" }}>
 				{[this._tilePicker, ...toolComponents, ...actionComponents]}

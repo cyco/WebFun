@@ -1,0 +1,5 @@
+@import "./abstract-popout-tile-picker.scss";
+
+wf-resource-editor-popout-tile-picker {
+	@extend wf-abstract-resource-editor-popout-tile-picker;
+}
