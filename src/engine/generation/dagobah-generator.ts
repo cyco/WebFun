@@ -82,7 +82,7 @@ class DagobahGenerator {
 
 	private setupOutdoorSpawn(spawn: YodaSpawn, tile: Tile, dagobah: World) {
 		const npcID = Yoda.Tile.Yoda;
-		const places = [[4, 4], , [5, 5], [4, 5]];
+		const places = [[4, 4], [-1, -1], [5, 5], [4, 5]];
 		const [x, y] = places[spawn];
 		const place = dagobah.at(x, y);
 		place.zoneType = Zone.Type.Use;

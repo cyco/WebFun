@@ -14,7 +14,7 @@ class DataProvider {
 	async provide(type: GameType): Promise<GameData> {
 		const url = this.url.get(type);
 		const stream = await FileLoader.loadAsStream(url);
-		const rawData = await readGameDataFile(stream, type);
+		const rawData = readGameDataFile(stream, type);
 		return new GameData(rawData);
 	}
 }
