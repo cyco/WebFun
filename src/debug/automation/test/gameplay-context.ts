@@ -1,4 +1,3 @@
-import loadGameData from "test/helpers/game-data";
 import { ComponentRegistry } from "src/ui";
 
 import { ReplayingInputManager } from "src/debug/automation";
@@ -28,7 +27,7 @@ class GameplayContext {
 		this.debug = debug;
 	}
 
-	public async prepare() {
+	public async prepare(loadGameData: any) {
 		if (rawData) {
 			return;
 		}
