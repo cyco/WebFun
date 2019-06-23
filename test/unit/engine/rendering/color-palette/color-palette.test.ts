@@ -32,6 +32,9 @@ describe("WebFun.Engine.Rendering.ColorPalette", () => {
 		expect(subject.findColor(1, 2, 3, 0)).toBe(0);
 		expect(subject.findColor(255, 0, 0, 255)).toBe(2);
 		expect(subject.findColor(255, 0, 255)).toBe(5);
+
+		subject = ColorPalette.FromBGR8(new Uint8Array());
+		expect(subject.findColor(1, 2, 3)).toBe(-1);
 	});
 
 	it("can be seriaized to GIMP's palette format", () => {
