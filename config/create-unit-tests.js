@@ -28,7 +28,7 @@ const isExcluded = (file, isDirectory) => {
 const testFileNames = source => {
 	const fileName = Path.basename(source, Path.extname(source));
 
-	return [fileName + ".test.js", fileName + ".test.ts"];
+	return [fileName + ".test.ts", fileName + ".test.js"];
 };
 
 const isDir = path => {
@@ -78,10 +78,10 @@ const scanTests = (test, source) =>
 			} else {
 				if (isTestExcluded(file, false)) return [];
 				const sourceNames = [
+					file.split(".test.ts")[0] + ".ts",
 					file.split(".test.js")[0] + ".ts",
 					file.split(".test.js")[0] + ".tsx",
 					file.split(".test.js")[0] + ".js",
-					file.split(".test.ts")[0] + ".ts",
 					file.split(".test.ts")[0] + ".tsx",
 					file.split(".test.ts")[0] + ".js"
 				];
