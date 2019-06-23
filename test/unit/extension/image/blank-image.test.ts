@@ -1,3 +1,4 @@
+import { Image } from "src/std/dom";
 import source from "src/extension/image/blank-image";
 
 describe("WebFun.Extension.Image.blankImage", () => {

@@ -5,7 +5,7 @@ function toGIMP(buffer: Uint32Array, name: string): string {
 	out += `Name: ${name}` + "\n";
 	out += `#` + "\n";
 
-	for (let i = 0; i < this.length; i++) {
+	for (let i = 0; i < buffer.length; i++) {
 		const value = buffer[i];
 
 		out +=
