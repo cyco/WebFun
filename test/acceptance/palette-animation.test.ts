@@ -53,6 +53,13 @@ describe("WebFun.Acceptance.Palette Animation", () => {
 		done();
 	});
 
+	it("Can be reset to its original state", async done => {
+		animateXSteps(145);
+		animator.reset();
+		await assertCurrentImageIsEqualTo(fixtureImages[0]);
+		done();
+	});
+
 	function animateXSteps(steps: number) {
 		while (steps--) {
 			animator.step();

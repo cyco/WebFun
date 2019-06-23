@@ -13,13 +13,7 @@ const NPCHealthBarHeight = 12;
 const NPCHealthBarInset = 4;
 
 class ZoneSceneRenderer {
-	public render(
-		zone: Zone,
-		engine: Engine,
-		renderer: Renderer,
-		palette: ColorPalette,
-		sprites: Sprite[] = []
-	) {
+	public render(zone: Zone, engine: Engine, renderer: Renderer, palette: ColorPalette, sprites: Sprite[]) {
 		const offset = engine.camera.offset;
 		const TileWidth = Tile.WIDTH;
 		const TileHeight = Tile.HEIGHT;
@@ -139,55 +133,51 @@ class ZoneSceneRenderer {
 		}
 
 		if (Settings.drawHotspots && renderer.fillRect instanceof Function) {
-			zone.hotspots.forEach(
-				(h: Hotspot): void => {
-					renderer.fillRect(
-						(h.x + offset.x) * Tile.WIDTH,
-						(h.y + offset.y) * Tile.HEIGHT,
-						Tile.WIDTH,
-						Tile.HEIGHT,
-						h.enabled ? rgba(0, 255, 0, 0.3) : rgba(255, 0, 0, 0.3)
-					);
-				}
-			);
+			zone.hotspots.forEach((h: Hotspot): void => {
+				renderer.fillRect(
+					(h.x + offset.x) * Tile.WIDTH,
+					(h.y + offset.y) * Tile.HEIGHT,
+					Tile.WIDTH,
+					Tile.HEIGHT,
+					h.enabled ? rgba(0, 255, 0, 0.3) : rgba(255, 0, 0, 0.3)
+				);
+			});
 		}
 
 		if (Settings.drawNPCState && renderer.fillRect instanceof Function) {
-			zone.npcs.forEach(
-				(n: NPC): void => {
-					if (!n.alive) return;
+			zone.npcs.forEach((n: NPC): void => {
+				if (!n.alive) return;
 
-					const barArea = new Rectangle(
-						n.position
-							.byAdding(offset)
-							.byScalingBy(Tile.WIDTH)
-							.byAdding(0, Tile.HEIGHT - NPCHealthBarHeight),
-						new Size(Tile.WIDTH, NPCHealthBarHeight)
-					).inset(NPCHealthBarInset, NPCHealthBarInset);
+				const barArea = new Rectangle(
+					n.position
+						.byAdding(offset)
+						.byScalingBy(Tile.WIDTH)
+						.byAdding(0, Tile.HEIGHT - NPCHealthBarHeight),
+					new Size(Tile.WIDTH, NPCHealthBarHeight)
+				).inset(NPCHealthBarInset, NPCHealthBarInset);
 
-					renderer.fillRect(
-						barArea.origin.x,
-						barArea.origin.y,
-						barArea.size.width,
-						barArea.size.height,
-						rgba(0, 0, 0, 0.2)
-					);
+				renderer.fillRect(
+					barArea.origin.x,
+					barArea.origin.y,
+					barArea.size.width,
+					barArea.size.height,
+					rgba(0, 0, 0, 0.2)
+				);
 
-					const health = 1 - n.damageTaken / n.face.health;
-					let color = rgba(0, 255, 0, 0.6);
-					if (health < 1 / 2) color = rgba(255, 255, 0, 0.6);
-					if (health < 1 / 3) color = rgba(255, 0, 0, 0.6);
+				const health = 1 - n.damageTaken / n.face.health;
+				let color = rgba(0, 255, 0, 0.6);
+				if (health < 1 / 2) color = rgba(255, 255, 0, 0.6);
+				if (health < 1 / 3) color = rgba(255, 0, 0, 0.6);
 
-					barArea.size.width = round(barArea.size.width * health);
-					renderer.fillRect(
-						barArea.origin.x,
-						barArea.origin.y,
-						barArea.size.width,
-						barArea.size.height,
-						color
-					);
-				}
-			);
+				barArea.size.width = round(barArea.size.width * health);
+				renderer.fillRect(
+					barArea.origin.x,
+					barArea.origin.y,
+					barArea.size.width,
+					barArea.size.height,
+					color
+				);
+			});
 		}
 	}
 }
