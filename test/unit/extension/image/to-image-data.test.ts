@@ -1,4 +1,3 @@
-import toImageData from "src/extension/image/to-image-data";
 import { Image, ImageData } from "src/std/dom";
 
 describe("WebFun.Extension.Image.toImageData", () => {
@@ -12,7 +11,7 @@ describe("WebFun.Extension.Image.toImageData", () => {
 	});
 
 	it("is an extension on HTMLImageElement to allow conversion to ImageData", () => {
-		expect(subject.toImageData).toBe(toImageData);
+		expect(subject.toImageData).toBeDefined();
 	});
 
 	it("creates an image data object from the image's src", () => {
