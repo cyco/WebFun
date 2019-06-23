@@ -1,5 +1,9 @@
 import PickupScene from "src/engine/scenes/pickup-scene";
 import Camera from "src/engine/camera";
+import { Engine } from "src/engine";
+import { Renderer } from "src/engine/rendering";
+import { Tile } from "src/engine/objects";
+import { Point } from "src/util";
 
 describe("WebFun.Engine.Scenes.PickupScene", () => {
 	it("can be instantiated without throwing exceptions", () => {
@@ -8,14 +12,14 @@ describe("WebFun.Engine.Scenes.PickupScene", () => {
 
 	it("watches the input manager for pause button input and eventually pops itself from the scene manager", () => {
 		let popCalled = false;
-		const engine = {
+		const engine: Engine = ({
 			camera: new Camera(),
 			inputManager: { pickUp: false },
 			sceneManager: { popScene: () => (popCalled = true) },
 			inventory: {
 				addItem: () => {}
 			}
-		};
+		} as any) as Engine;
 
 		const scene = new PickupScene();
 		scene.engine = engine;
@@ -23,20 +27,20 @@ describe("WebFun.Engine.Scenes.PickupScene", () => {
 
 		expect(popCalled).toBeFalse();
 
-		engine.inputManager.pickUp = true;
+		(engine.inputManager as any).pickUp = true;
 
 		scene.update();
 		expect(popCalled).toBeTrue();
 	});
 
 	it("adds the current item to the inventory when it is removed from the scene manager", () => {
-		const item = {};
-		const engine = {
+		const item: Tile = ({} as any) as Tile;
+		const engine: Engine = ({
 			camera: new Camera(),
 			inventory: {
 				addItem() {}
 			}
-		};
+		} as any) as Engine;
 		spyOn(engine.inventory, "addItem");
 
 		const scene = new PickupScene();
@@ -48,19 +52,19 @@ describe("WebFun.Engine.Scenes.PickupScene", () => {
 	});
 
 	it("counts ticks and flashes the item", () => {
-		const engine = {
+		const engine: Engine = ({
 			camera: { offset: {} },
 			inputManager: {}
-		};
-		const renderer = {
+		} as any) as Engine;
+		const renderer = ({
 			renderImage() {}
-		};
-		const item = {};
+		} as any) as Renderer;
+		const item = ({} as any) as Tile;
 
 		const scene = new PickupScene();
 		scene.engine = engine;
 		scene.tile = item;
-		scene.location = {};
+		scene.location = new Point(0, 0);
 
 		spyOn(renderer, "renderImage");
 
@@ -82,19 +86,19 @@ describe("WebFun.Engine.Scenes.PickupScene", () => {
 	});
 
 	it("renders the tile at the correct location", () => {
-		const engine = {
+		const engine = ({
 			camera: { offset: { x: -2, y: -1 } },
 			inputManager: {}
-		};
-		const renderer = {
+		} as any) as Engine;
+		const renderer = ({
 			renderImage() {}
-		};
-		const item = {};
+		} as any) as Renderer;
+		const item = ({} as any) as Tile;
 
 		const scene = new PickupScene();
 		scene.engine = engine;
 		scene.tile = item;
-		scene.location = { x: 4, y: 8 };
+		scene.location = new Point(4, 8);
 
 		(5).times(() => scene.update());
 
