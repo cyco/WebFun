@@ -1,4 +1,4 @@
-function toGIMP(name: string): string {
+function toGIMP(buffer: Uint32Array, name: string): string {
 	let out = "";
 
 	out += `GIMP Palette` + "\n";
@@ -6,7 +6,7 @@ function toGIMP(name: string): string {
 	out += `#` + "\n";
 
 	for (let i = 0; i < this.length; i++) {
-		const value = this[i];
+		const value = buffer[i];
 
 		out +=
 			`${(value >> 16) & 0xff} ${(value >> 8) & 0xff} ${value & 0xff}${i === 0 ? " transparent" : ""}` +

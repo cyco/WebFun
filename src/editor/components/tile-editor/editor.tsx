@@ -65,8 +65,7 @@ class Editor extends AbstractPanel {
 				imageData.data[j + 3]
 			];
 
-			const color = palette.findColor(r, g, b, a);
-			pixels[i] = color;
+			pixels[i] = palette.findColor(r, g, b, a);
 		}
 
 		this._imageEditor.image = pixels;
