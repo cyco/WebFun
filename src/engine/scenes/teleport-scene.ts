@@ -23,15 +23,7 @@ class TeleportScene extends MapScene {
 		scene.targetHeroLocation = target.location;
 		scene.targetZone = zone;
 		scene.scene = engine.sceneManager.currentScene as ZoneScene;
-
-		let world = engine.dagobah;
-		let location = world.locationOfZone(scene.targetZone);
-		if (!location) {
-			world = engine.world;
-			location = world.locationOfZone(scene.targetZone);
-		}
-
-		scene.targetWorld = world;
+		scene.targetWorld = engine.currentWorld;
 		scene.targetZoneLocation = engine.currentWorld.locationOfZone(zone);
 		engine.sceneManager.pushScene(scene);
 	}

@@ -8,7 +8,7 @@ export default {
 	Opcode: 0x13,
 	Arguments: [Type.Number, Type.Number, Type.Number, Type.Number, Type.Number],
 	Implementation: async (instruction: Instruction, engine: Engine, _: Action): Promise<Result> => {
-		const [relx, rely, absx, absy, _absz] = instruction.arguments;
+		const [relx, rely, absx, absy] = instruction.arguments;
 
 		engine.hero.location.x += relx;
 		if (absx !== -1) engine.hero.location.x = absx;
