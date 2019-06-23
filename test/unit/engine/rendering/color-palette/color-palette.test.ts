@@ -1,6 +1,6 @@
 import ColorPalette from "src/engine/rendering/color-palette/color-palette";
 
-describe("WebFun.Unit.Engine.Rendering.ColorPalette", () => {
+describe("WebFun.Engine.Rendering.ColorPalette", () => {
 	let buffer: ArrayBuffer | SharedArrayBuffer;
 	let subject: ColorPalette;
 	beforeAll(() => {

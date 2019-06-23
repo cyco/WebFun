@@ -4,7 +4,7 @@ import { srand } from "src/util";
 import * as Generation from "src/engine/generation";
 import { WorldGenerationError } from "src/engine/generation";
 
-describe("WebFun.Unit.Engine.Story", () => {
+describe("WebFun.Engine.Story", () => {
 	let subject: Story;
 	beforeEach(() => (subject = new Story(1, Planet.HOTH, WorldSize.Small)));
 	it("is a simple container for seed, size and world size", () => {
