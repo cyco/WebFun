@@ -83,6 +83,7 @@ if (includeCoverage) {
 	config.devtool = "eval-source-map";
 	config.reporters.push("coverage-istanbul");
 	config.coverageIstanbulReporter = {
+		fixWebpackSourcePaths: true,
 		reports: ["lcovonly", ...(!ci ? ["html"] : [])],
 		dir: Paths.testReportRoot,
 		"report-config": {
