@@ -2,12 +2,11 @@ import { Image } from "src/std/dom";
 
 const blankImage = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"></svg>';
 
-if (Image)
-	Object.defineProperty(Image, "blankImage", {
-		value: blankImage,
-		writable: false,
-		enumerable: false,
-		configurable: false
-	});
+Object.defineProperty(Image, "blankImage", {
+	value: blankImage,
+	writable: false,
+	enumerable: false,
+	configurable: false
+});
 
 export default blankImage;

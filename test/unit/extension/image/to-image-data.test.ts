@@ -1,10 +1,11 @@
 import toImageData from "src/extension/image/to-image-data";
-import { HTMLImageElement, Image, ImageData } from "src/std/dom";
+import { Image, ImageData } from "src/std/dom";
 
 describe("WebFun.Extension.Image.toImageData", () => {
-	let subject;
+	let subject: any;
+
 	beforeEach(done => {
-		subject = document.createElement("img");
+		subject = new Image(2, 2) as any;
 		subject.onload = done;
 		subject.src =
 			"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAF0lEQVQYVwXBAQEAAACCIPs/mmAVtMR0Q+wH/DyFmbQAAAAASUVORK5CYII=";
@@ -28,7 +29,7 @@ describe("WebFun.Extension.Image.toImageData", () => {
 	});
 
 	it("can be created with image smoothing enabled", () => {
-		const imageData = subject.toImageData(false);
+		const imageData = subject.toImageData();
 		expect(imageData).toBeInstanceOf(ImageData);
 		expect(imageData.width).toBe(2);
 		expect(imageData.height).toBe(2);
