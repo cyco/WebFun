@@ -16,7 +16,7 @@ describe("WebFun.Acceptance.Palette Animation", () => {
 	let animator: PaletteAnimation;
 
 	beforeAll(async done => {
-		paletteData = Uint32Array.paletteFromArrayBuffer(await getFixtureData("yoda.pal"));
+		paletteData = ColorPalette.FromBGR8Buffer(await getFixtureData("yoda.pal"));
 
 		done();
 	});

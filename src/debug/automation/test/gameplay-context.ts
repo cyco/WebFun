@@ -9,7 +9,7 @@ import { SceneView } from "src/app/ui";
 import { GameData, Engine, Story, AssetManager } from "src/engine";
 import { Planet, WorldSize } from "src/engine/types";
 import { Tile, Zone, Puzzle, Sound, Char } from "src/engine/objects";
-import { PaletteAnimation } from "src/engine/rendering";
+import { PaletteAnimation, ColorPalette } from "src/engine/rendering";
 import { Renderer as DummyRenderer } from "src/engine/dummy-interface";
 import Settings from "src/settings";
 import { dispatch, Point } from "src/util";
@@ -37,7 +37,7 @@ class GameplayContext {
 		if (!registry.contains(SceneView)) registry.registerComponent(SceneView);
 
 		rawData = await loadGameData(Yoda);
-		paletteData = Uint32Array.paletteFromArrayBuffer(await getFixtureData("yoda.pal"));
+		paletteData = ColorPalette.FromBGR8Buffer(await getFixtureData("yoda.pal"));
 	}
 
 	public buildEngine() {

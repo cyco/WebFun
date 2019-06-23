@@ -57,7 +57,7 @@ class Loader extends EventTarget implements LoaderInterface {
 		loader.onprogress = ({ detail: { progress } }) => this._progress(2, progress);
 		loader.onfail = reason => this._fail(reason);
 		loader.onload = ({ detail: { arraybuffer } }) => {
-			const palette = Uint32Array.paletteFromArrayBuffer(arraybuffer);
+			const palette = ColorPalette.FromBGR8Buffer(arraybuffer);
 			this._palette = palette;
 			this._loadSetupImage(palette);
 		};

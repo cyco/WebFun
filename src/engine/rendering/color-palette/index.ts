@@ -1,25 +1,67 @@
-import findColor from "./find-color";
+import { floor } from "src/std/math";
 import toGIMP from "./to-gimp";
 import toAdobeColorTable from "./to-adobe-color-table";
-import paletteFromUint8Array from "./from-uint8-array";
-import paletteFromArrayBuffer from "./from-array-buffer";
 
-import ColorPalette from "./color-palette";
-const proto = Uint32Array.prototype as ColorPalette;
-const constructor = Uint32Array as any;
+interface ColorPalette extends Uint32Array {
+	slice(start?: number, end?: number): ColorPalette;
+}
 
-declare global {
-	interface Uint32ArrayConstructor {
-		paletteFromUint8Array(bytes: Uint8Array): ColorPalette;
-		paletteFromArrayBuffer(buffer: ArrayBuffer): ColorPalette;
+class ColorPalette extends Uint32Array {
+	[index: number]: number;
+
+	public static FromBGR8Buffer(buffer: ArrayBuffer): ColorPalette {
+		const arr = new Uint8Array(buffer);
+		return this.FromBGR8(arr);
+	}
+
+	public static FromBGR8(buffer: Uint8Array, bpc: number = 4): ColorPalette {
+		// Convert buffer from bytewise BB GG RR 00 ... to double word 0xAA BB GG RR (little endian RGBA) array
+		const length = floor(buffer.length / 4);
+		const colorPalette = new Uint32Array(length);
+
+		// Color at index 0 is transparent, handle special case outside of loop to improve performance
+		colorPalette[0] = (buffer[0] << 16) | (buffer[1] << 8) | buffer[2];
+
+		for (let i = 1; i < length; i++) {
+			colorPalette[i] =
+				(0xff << 24) | (buffer[i * bpc + 0] << 16) | (buffer[i * bpc + 1] << 8) | buffer[i * bpc + 2];
+		}
+
+		return this.Create(colorPalette);
+	}
+
+	private static Create(palette: Uint32Array): ColorPalette {
+		// HACK: In order to support array syntax (e.g. palette[5]) without performance penalities we just insert
+		// ColorPalette into the prototype chain of the existing Uint32Array.
+		// Usage of __proto__ is non-standard and will break in the future.
+		(palette as any).__proto__ = ColorPalette.prototype;
+		return (palette as any) as ColorPalette;
+	}
+
+	public slice(start?: number, end?: number): ColorPalette {
+		const result = Uint32Array.prototype.slice.call(this, start, end);
+		return ColorPalette.Create(result);
+	}
+
+	public findColor(r: number, g: number, b: number, a: number = 255): number {
+		if (a === 0) return 0;
+
+		// HACK: Send needle through Uint32Array to get unsigned value for comparison
+		const needle = new Uint32Array([(0xff << 24) | (b << 16) | (g << 8) | r])[0];
+		for (let i = 1; i < this.length; i++) {
+			if (this[i] === needle) return i;
+		}
+
+		return -1;
+	}
+
+	public toGIMP(name: string): string {
+		return toGIMP(this, name);
+	}
+
+	public toAdobeColorTable(): Uint8Array {
+		return toAdobeColorTable(this);
 	}
 }
 
-proto.findColor = proto.findColor || findColor;
-proto.toGIMP = proto.toGIMP || toGIMP;
-proto.toAdobeColorTable = proto.toAdobeColorTable || toAdobeColorTable;
-constructor.paletteFromUint8Array = constructor.paletteFromUint8Array || paletteFromUint8Array;
-constructor.paletteFromArrayBuffer = constructor.paletteFromArrayBuffer || paletteFromArrayBuffer;
-
-export { findColor, toGIMP, toAdobeColorTable, paletteFromUint8Array, paletteFromArrayBuffer };
 export default ColorPalette;
