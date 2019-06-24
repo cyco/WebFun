@@ -83,7 +83,10 @@ class MapScene extends Scene {
 		const cheatMessages = this._cheatInput.execute(engine);
 		if (cheatMessages.length) {
 			this._cheatInput.reset();
-			this._showText(cheatMessages.first(), this.engine.temporaryState.worldLocation);
+			this._showText(
+				cheatMessages.first(),
+				this.engine.currentWorld.locationOfZone(this.engine.currentZone)
+			);
 		}
 
 		this._ticks++;
