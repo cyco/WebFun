@@ -4,7 +4,7 @@ import DisableAction from "src/engine/script/instructions/disable-action";
 import { InstructionImplementations } from "src/engine/script/instructions";
 
 describeInstruction("DisableAction", () => {
-	it("disables the action that's currently executing", async done => {
+	it("disables the action that's currently executing", async () => {
 		const engine = {
 			currentZone: {},
 			hero: {},
@@ -22,7 +22,5 @@ describeInstruction("DisableAction", () => {
 
 		await executor.execute(instruction);
 		expect(action.enabled).toBeFalse();
-
-		done();
 	});
 });

@@ -19,32 +19,18 @@ const run = (prefix: string, fileName: string, testFileContents: string) => {
 			const parser = new Parser();
 			const testCase = parser.parse(fileName, testFileContents);
 
-			beforeAll(async done => {
-				try {
-					await ctx.prepare(loadGameData);
-					ctx.buildEngine();
+			beforeAll(async () => {
+				await ctx.prepare(loadGameData);
+				ctx.buildEngine();
 
-					srand(testCase.configuration.seed);
-					ctx.engine.persistentState.gamesWon = testCase.configuration.gamesWon;
-					await ctx.playStory(buildStory(testCase), testCase.input.split(" "), debug);
-				} catch (e) {
-					console.warn("e", e);
-				} finally {
-					done();
-				}
+				srand(testCase.configuration.seed);
+				ctx.engine.persistentState.gamesWon = testCase.configuration.gamesWon;
+				await ctx.playStory(buildStory(testCase), testCase.input.split(" "), debug);
 			});
 
 			testCase.expectations.forEach((exp: Expectation) => exp.evaluate(ctx));
 
-			afterAll(async done => {
-				try {
-					await ctx.cleanup();
-				} catch (e) {
-					console.error("cleanup failed", e);
-				} finally {
-					done();
-				}
-			});
+			afterAll(async () => await ctx.cleanup());
 
 			function buildStory(testCase: TestCase) {
 				if (testCase.configuration.zone >= 0) return buildSimulatedStory(testCase);

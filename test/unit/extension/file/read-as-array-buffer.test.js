@@ -8,15 +8,13 @@ describe("WebFun.Extension.File.readAsArrayBuffer", () => {
 		expect(file.readAsArrayBuffer).toBeFunction();
 	});
 
-	it("provides the file's content as an array buffer", async done => {
+	it("provides the file's content as an array buffer", async () => {
 		const file = new File(["content"], "my-file");
 		const buffer = await file.readAsArrayBuffer();
 		expect(buffer.byteLength).toEqual("content".length);
-
-		done();
 	});
 
-	it("properly rejects the promise when an error occurs", async done => {
+	it("properly rejects the promise when an error occurs", async () => {
 		const mockedError = {};
 		const mockedFileReder = {
 			readAsArrayBuffer: () =>
@@ -33,7 +31,6 @@ describe("WebFun.Extension.File.readAsArrayBuffer", () => {
 			expect(e).toBe(mockedError);
 		} finally {
 			DOM.FileReader = originalReader;
-			done();
 		}
 	});
 });

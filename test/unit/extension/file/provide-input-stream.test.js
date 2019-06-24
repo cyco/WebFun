@@ -7,10 +7,9 @@ describe("WebFun.Extension.File.provideInputStream", () => {
 		expect(file.provideInputStream).toBeFunction();
 	});
 
-	it("provides the file's content as an input stream", async done => {
+	it("provides the file's content as an input stream", async () => {
 		const file = new File(["content"], "my-file");
 		const stream = await file.provideInputStream();
 		expect(stream.getCharacters(3)).toEqual("con");
-		done();
 	});
 });

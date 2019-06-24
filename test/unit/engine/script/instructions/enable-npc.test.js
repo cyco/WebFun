@@ -2,7 +2,7 @@ import { Instruction } from "src/engine/objects";
 import EnableNPC from "src/engine/script/instructions/enable-npc";
 
 describeInstruction("EnableNPC", (execute, engine) => {
-	it("enables the specified npc in the current zone", async done => {
+	it("enables the specified npc in the current zone", async () => {
 		engine.currentZone.npcs = [null, null, {}, null];
 
 		const instruction = new Instruction();
@@ -11,10 +11,8 @@ describeInstruction("EnableNPC", (execute, engine) => {
 
 		await execute(instruction);
 		expect(engine.currentZone.npcs[2].enabled).toBeTrue();
-
-		done();
 	});
-	it("does not do anything if the npc can't be found", async done => {
+	it("does not do anything if the npc can't be found", async () => {
 		engine.currentZone.npcs = [];
 
 		const instruction = new Instruction();
@@ -27,7 +25,5 @@ describeInstruction("EnableNPC", (execute, engine) => {
 		} catch (e) {
 			expect(false).toBeTrue();
 		}
-
-		done();
 	});
 });

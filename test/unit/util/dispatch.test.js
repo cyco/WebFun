@@ -15,14 +15,13 @@ describe("WebFun.Util.dispatch", () => {
 		}, 0);
 	});
 
-	it("timeout can be awaited", async done => {
+	it("timeout can be awaited", async () => {
 		try {
 			await dispatch(() => {
 				throw false;
 			}, 0);
 		} catch (e) {
 			expect(e).toBeFalse();
-			done();
 		}
 	});
 });

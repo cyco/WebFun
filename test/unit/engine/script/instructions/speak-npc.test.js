@@ -3,7 +3,7 @@ import SpeakNPC from "src/engine/script/instructions/speak-npc";
 import * as Util from "src/util";
 
 describeInstruction("SpeakNPC", (execute, engine) => {
-	it("shows a speech bubble next to an npc", async done => {
+	it("shows a speech bubble next to an npc", async () => {
 		const mockedPoint = new Util.Point(0, 1);
 		spyOn(engine, "speak");
 		spyOn(Util, "Point").and.returnValue(mockedPoint);
@@ -16,7 +16,5 @@ describeInstruction("SpeakNPC", (execute, engine) => {
 		await execute(instruction);
 
 		expect(engine.speak).toHaveBeenCalledWith("test text", mockedPoint);
-
-		done();
 	});
 });

@@ -2,7 +2,7 @@ import { Instruction } from "src/engine/objects";
 import MarkAsSolved from "src/engine/script/instructions/mark-as-solved";
 
 describeInstruction("MarkAsSolved", (execute, engine) => {
-	it("marks the current zone as solved", async done => {
+	it("marks the current zone as solved", async () => {
 		const worldItemMock = { zone: {} };
 		engine.currentWorld.itemForZone = () => worldItemMock;
 
@@ -12,7 +12,5 @@ describeInstruction("MarkAsSolved", (execute, engine) => {
 		await execute(instruction);
 		expect(engine.currentZone.solved).toBeTrue();
 		expect(worldItemMock.zone.solved).toBeTrue();
-
-		done();
 	});
 });

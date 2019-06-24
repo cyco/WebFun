@@ -74,15 +74,7 @@ function buildAssetManagerFromGameData() {
 }
 
 describe("WebFun.Acceptance.World Generation", () => {
-	beforeAll(async done => {
-		try {
-			rawData = await loadGameData(Yoda);
-		} catch (e) {
-			console.error(e);
-		} finally {
-			done();
-		}
-	});
+	beforeAll(async () => (rawData = await loadGameData(Yoda)));
 
 	const maps = PrepareExpectations(Worlds).map(ParseExpectation);
 	maps.forEach(runTest);

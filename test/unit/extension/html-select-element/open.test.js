@@ -8,7 +8,7 @@ describe("WebFun.Extension.HTMLSelectElement.open", () => {
 		expect(subject.open).toBe(open);
 	});
 
-	it("works by faking click events in most browsers", async done => {
+	it("works by faking click events in most browsers", async () => {
 		const mockEvent = { initMouseEvent() {} };
 		spyOn(mockEvent, "initMouseEvent");
 		spyOn(document, "createEvent").and.returnValue(mockEvent);
@@ -19,11 +19,9 @@ describe("WebFun.Extension.HTMLSelectElement.open", () => {
 		expect(document.createEvent).toHaveBeenCalledWith("MouseEvents");
 		expect(mockEvent.initMouseEvent).toHaveBeenCalled();
 		expect(subject.dispatchEvent).toHaveBeenCalledWith(mockEvent);
-
-		done();
 	});
 
-	it("falls back to using fireEvent if createEvent is not available", async done => {
+	it("falls back to using fireEvent if createEvent is not available", async () => {
 		const originalCreateEvent = document.createEvent;
 		document.createEvent = null;
 
@@ -35,10 +33,9 @@ describe("WebFun.Extension.HTMLSelectElement.open", () => {
 		expect(subject.fireEvent).toHaveBeenCalledWith("onmousedown");
 
 		document.createEvent = originalCreateEvent;
-		done();
 	});
 
-	it("rejects the promise if neither method is available", async done => {
+	it("rejects the promise if neither method is available", async () => {
 		const originalCreateEvent = document.createEvent;
 		const originalFireEvent = subject.fireEvent;
 		subject.fireEvent = null;
@@ -53,6 +50,5 @@ describe("WebFun.Extension.HTMLSelectElement.open", () => {
 
 		subject.fireEvent = originalFireEvent;
 		document.createEvent = originalCreateEvent;
-		done();
 	});
 });

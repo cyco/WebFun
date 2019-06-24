@@ -23,7 +23,7 @@ describe("WebFun.Acceptance.DataReading", () => {
 		done();
 	};
 
-	it("reads indy's data without errors", async done => {
+	it("reads indy's data without errors", async () => {
 		const file = await loadData("indy.data");
 		const data = new GameData(readGameDataFile(file, GameTypeIndy));
 
@@ -35,16 +35,14 @@ describe("WebFun.Acceptance.DataReading", () => {
 		expect(data.characters.length).toBe(27);
 		expect(data.setupImageData.length).toBe(82944);
 		expect(data.copy()).toBeInstanceOf(GameData);
-		done();
 	});
 
 	it("reads indy's demo data without errors", parsesWithoutError(GameTypeIndy, "indy-demo.data"));
 	it("reads yoda's data without errors", parsesWithoutError(GameTypeYoda, "yoda.data"));
 	it("reads yoda's demo data without errors", parsesWithoutError(GameTypeYoda, "yoda-demo.data"));
-	it("throws an error when the data can not be parsed", async done => {
+	it("throws an error when the data can not be parsed", async () => {
 		const data = await getFixtureData("someData");
 		expect(() => readGameDataFile(new InputStream(data), GameTypeYoda)).toThrow();
 		expect(() => readGameDataFile(new InputStream(data), GameTypeIndy)).toThrow();
-		done();
 	});
 });
