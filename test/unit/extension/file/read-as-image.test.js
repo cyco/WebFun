@@ -19,7 +19,7 @@ describe("WebFun.Extension.File.readAsImage", () => {
 		expect(new File(imageBuffer, "b").readAsImage).toBe(readAsImage);
 	});
 
-	xit("returns an image element from the file's contents", async done => {
+	xit("returns an image element from the file's contents", async () => {
 		try {
 			const subject = new File(imageBuffer, "b");
 			subject.readAsArrayBuffer = () => Promise.resolve(imageBuffer.buffer);
@@ -28,20 +28,16 @@ describe("WebFun.Extension.File.readAsImage", () => {
 			expect(image.src).toStartWith("blob:");
 		} catch (e) {
 			expect(true).toBeFalse();
-		} finally {
-			done();
 		}
 	});
 
-	it("rejects the promise if the file can't be read as an image", async done => {
+	it("rejects the promise if the file can't be read as an image", async () => {
 		try {
 			const subject = new File(new Uint8Array(0), "b");
 			await subject.readAsImage();
 			expect(false).toBeTrue();
 		} catch (e) {
 			expect(true).toBeTrue();
-		} finally {
-			done();
 		}
 	});
 });

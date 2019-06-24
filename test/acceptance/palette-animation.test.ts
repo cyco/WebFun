@@ -15,49 +15,41 @@ describe("WebFun.Acceptance.Palette Animation", () => {
 	let paletteData: ColorPalette;
 	let animator: PaletteAnimation;
 
-	beforeAll(async done => {
+	beforeAll(async () => {
 		paletteData = ColorPalette.FromBGR8Buffer(await getFixtureData("yoda.pal"));
-
-		done();
 	});
 
 	beforeEach(() => (animator = new PaletteAnimation(paletteData)));
 
-	it("renders the initial image correctly", async done => {
+	it("renders the initial image correctly", async () => {
 		animateXSteps(0);
 		await assertCurrentImageIsEqualTo(fixtureImages[0]);
-		done();
 	});
 
-	it("renders the image correctly after 1 animation steps", async done => {
+	it("renders the image correctly after 1 animation steps", async () => {
 		animateXSteps(1);
 		await assertCurrentImageIsEqualTo(fixtureImages[1]);
-		done();
 	});
 
-	it("renders the image correctly after 2 animation steps", async done => {
+	it("renders the image correctly after 2 animation steps", async () => {
 		animateXSteps(2);
 		await assertCurrentImageIsEqualTo(fixtureImages[2]);
-		done();
 	});
 
-	it("renders the image correctly after 145 animation steps", async done => {
+	it("renders the image correctly after 145 animation steps", async () => {
 		animateXSteps(145);
 		await assertCurrentImageIsEqualTo(fixtureImages[145]);
-		done();
 	});
 
-	it("arrives at the original state after 180 steps", async done => {
+	it("arrives at the original state after 180 steps", async () => {
 		animateXSteps(180);
 		await assertCurrentImageIsEqualTo(fixtureImages[0]);
-		done();
 	});
 
-	it("Can be reset to its original state", async done => {
+	it("Can be reset to its original state", async () => {
 		animateXSteps(145);
 		animator.reset();
 		await assertCurrentImageIsEqualTo(fixtureImages[0]);
-		done();
 	});
 
 	function animateXSteps(steps: number) {

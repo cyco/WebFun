@@ -2,7 +2,7 @@ import { Instruction } from "src/engine/objects";
 import DisableNPC from "src/engine/script/instructions/disable-npc";
 
 describeInstruction("DisableNPC", (execute, engine) => {
-	it("disables the specified npc in the current zone", async done => {
+	it("disables the specified npc in the current zone", async () => {
 		engine.currentZone.npcs = [null, null, {}, null];
 
 		const instruction = new Instruction();
@@ -11,11 +11,9 @@ describeInstruction("DisableNPC", (execute, engine) => {
 
 		await execute(instruction);
 		expect(engine.currentZone.npcs[2].enabled).toBeFalse();
-
-		done();
 	});
 
-	it("does nothing if the npc doesn't exist", async done => {
+	it("does nothing if the npc doesn't exist", async () => {
 		engine.currentZone.npcs = [];
 
 		const instruction = new Instruction();
@@ -27,7 +25,5 @@ describeInstruction("DisableNPC", (execute, engine) => {
 		} catch (e) {
 			expect(false).toBeTrue();
 		}
-
-		done();
 	});
 });

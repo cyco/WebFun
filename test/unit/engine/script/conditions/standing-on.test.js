@@ -2,7 +2,7 @@ import { Condition } from "src/engine/objects";
 import StandingOn from "src/engine/script/conditions/standing-on";
 
 describeCondition("StandingOn", (check, engine) => {
-	it("checks if the hero is standing on a specific tile", async done => {
+	it("checks if the hero is standing on a specific tile", async () => {
 		const hero = engine.hero;
 		const condition = new Condition();
 		condition._opcode = StandingOn.Opcode;
@@ -26,7 +26,5 @@ describeCondition("StandingOn", (check, engine) => {
 			return 3;
 		};
 		expect(await check(condition)).toBeFalse();
-
-		done();
 	});
 });

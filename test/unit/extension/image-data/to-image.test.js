@@ -6,7 +6,7 @@ describe("WebFun.Extension.ImageData.toImage", () => {
 		expect(new ImageData(1, 1).toImage).toBe(toImage);
 	});
 
-	it("converts image data asynchronously to an image", async done => {
+	it("converts image data asynchronously to an image", async () => {
 		const subject = new ImageData(
 			new Uint8ClampedArray([
 				...[...[0x00, 0x00, 0x00, 0xff], ...[0xff, 0xff, 0xff, 0xff]],
@@ -20,11 +20,9 @@ describe("WebFun.Extension.ImageData.toImage", () => {
 		expect(image.src).toBe(
 			"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAF0lEQVQYVwXBAQEAAACCIPs/mmAVtMR0Q+wH/DyFmbQAAAAASUVORK5CYII="
 		);
-
-		done();
 	});
 
-	it("image smoothing can be enabled", async done => {
+	it("image smoothing can be enabled", async () => {
 		const subject = new ImageData(
 			new Uint8ClampedArray([
 				...[...[0x00, 0x00, 0x00, 0xff], ...[0xff, 0xff, 0xff, 0xff]],
@@ -38,11 +36,9 @@ describe("WebFun.Extension.ImageData.toImage", () => {
 		expect(image.src).toBe(
 			"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAF0lEQVQYVwXBAQEAAACCIPs/mmAVtMR0Q+wH/DyFmbQAAAAASUVORK5CYII="
 		);
-
-		done();
 	});
 
-	it("rejects the promise if conversion fails", async done => {
+	it("rejects the promise if conversion fails", async () => {
 		const imageMock = new (class {
 			set src(_) {
 				setTimeout(() => imageMock.onerror());
@@ -62,7 +58,6 @@ describe("WebFun.Extension.ImageData.toImage", () => {
 			await imageData.toImage();
 		} catch (e) {
 			expect(true).toBeTrue();
-			done();
 		}
 	});
 });

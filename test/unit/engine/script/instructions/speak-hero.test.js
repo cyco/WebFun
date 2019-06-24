@@ -2,7 +2,7 @@ import { Instruction } from "src/engine/objects";
 import SpeakHero from "src/engine/script/instructions/speak-hero";
 
 describeInstruction("SpeakHero", (execute, engine) => {
-	it("shows a speech bubble next to the hero", async done => {
+	it("shows a speech bubble next to the hero", async () => {
 		const location = {};
 		engine.hero.location = location;
 		spyOn(engine, "speak");
@@ -14,7 +14,5 @@ describeInstruction("SpeakHero", (execute, engine) => {
 		await execute(instruction);
 
 		expect(engine.speak).toHaveBeenCalledWith("test text", location);
-
-		done();
 	});
 });

@@ -10,18 +10,16 @@ describe("WebFun.Acceptance.Save game reading", () => {
 	let rawYodaData: any;
 	let rawIndyData: any;
 
-	beforeAll(async done => {
+	beforeAll(async () => {
 		try {
 			rawYodaData = await loadGameData(Yoda);
 			rawIndyData = await loadGameData(Indy);
 		} catch (e) {
 			console.error(e);
-		} finally {
-			done();
 		}
 	});
 
-	it("reads yoda's save game format correctly", async done => {
+	it("reads yoda's save game format correctly", async () => {
 		try {
 			const state = await readSaveGame("save-games/yoda.wld", Yoda);
 			expect(state.type).toBe(Yoda);
@@ -31,12 +29,10 @@ describe("WebFun.Acceptance.Save game reading", () => {
 			expect(state.currentWeapon).toBe(75);
 		} catch (e) {
 			expect(e).toBeUndefined();
-		} finally {
-			done();
 		}
 	});
 
-	it("reads indy's save game format correctly", async done => {
+	it("reads indy's save game format correctly", async () => {
 		try {
 			const state = await readSaveGame("save-games/indy.wld", Indy);
 			expect(state.type).toBe(Indy);
@@ -46,8 +42,6 @@ describe("WebFun.Acceptance.Save game reading", () => {
 			expect(Array.from(state.inventoryIDs)).toEqual([443, 449]);
 		} catch (e) {
 			expect(e).toBeUndefined();
-		} finally {
-			done();
 		}
 	});
 

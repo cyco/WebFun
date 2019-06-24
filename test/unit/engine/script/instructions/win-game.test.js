@@ -2,7 +2,7 @@ import { Instruction } from "src/engine/objects";
 import WinGame from "src/engine/script/instructions/win-game";
 
 describeInstruction("WinGame", (execute, engine) => {
-	it("ends the current story by winning", async done => {
+	it("ends the current story by winning", async () => {
 		spyOn(engine.sceneManager, "pushScene");
 
 		const instruction = new Instruction({});
@@ -11,7 +11,5 @@ describeInstruction("WinGame", (execute, engine) => {
 
 		await execute(instruction);
 		expect(engine.sceneManager.pushScene).toHaveBeenCalled();
-
-		done();
 	});
 });

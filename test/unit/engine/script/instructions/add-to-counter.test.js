@@ -2,7 +2,7 @@ import { Instruction } from "src/engine/objects";
 import AddToCounter from "src/engine/script/instructions/add-to-counter";
 
 describeInstruction("AddToCounter", (execute, engine) => {
-	it("adds a value to the current zone's counter", async done => {
+	it("adds a value to the current zone's counter", async () => {
 		engine.currentZone.counter = 5;
 
 		const instruction = new Instruction({});
@@ -15,7 +15,5 @@ describeInstruction("AddToCounter", (execute, engine) => {
 		instruction._arguments = [-3];
 		await execute(instruction);
 		expect(engine.currentZone.counter).toBe(4);
-
-		done();
 	});
 });

@@ -3,7 +3,7 @@ import GameWon from "src/engine/script/conditions/game-won";
 import GameState from "src/engine/game-state";
 
 describeCondition("GameWon", (check, engine) => {
-	it("evaluates to true if the story has been completed already", async done => {
+	it("evaluates to true if the story has been completed already", async () => {
 		const condition = new Condition();
 		condition._opcode = GameWon.Opcode;
 		condition._arguments = [];
@@ -16,7 +16,5 @@ describeCondition("GameWon", (check, engine) => {
 
 		engine.gameState = GameState.Running;
 		expect(await check(condition)).toBeFalse();
-
-		done();
 	});
 });

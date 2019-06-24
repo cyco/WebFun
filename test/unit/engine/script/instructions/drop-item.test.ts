@@ -4,7 +4,7 @@ import * as Util from "src/util";
 import { Tile } from "src/engine/objects";
 
 describeInstruction("DropItem", (execute, engine) => {
-	it("shows the pick-up scene with the specified item at the correct location", async done => {
+	it("shows the pick-up scene with the specified item at the correct location", async () => {
 		const mockedPoint = new Util.Point(1, 2);
 		spyOn(engine, "dropItem");
 		spyOn(Util, "Point").and.returnValue(mockedPoint);
@@ -18,11 +18,9 @@ describeInstruction("DropItem", (execute, engine) => {
 		await execute(instruction);
 
 		expect(engine.dropItem).toHaveBeenCalledWith(mockTile, mockedPoint);
-
-		done();
 	});
 
-	it("drops the zones `findItem` if the first argument is `-1`", async done => {
+	it("drops the zones `findItem` if the first argument is `-1`", async () => {
 		const mockedPoint = new Util.Point(1, 2);
 		const mockTile = { id: 3 };
 		spyOn(engine, "dropItem");
@@ -40,7 +38,5 @@ describeInstruction("DropItem", (execute, engine) => {
 		await execute(instruction);
 
 		expect(engine.dropItem).toHaveBeenCalledWith(mockTile, mockedPoint);
-
-		done();
 	});
 });
