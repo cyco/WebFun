@@ -4,7 +4,7 @@ import { GameData, GameTypeYoda, readGameDataFile } from "src/engine";
 import { ColorPalette } from "src/engine/rendering";
 import { DOMSoundLoader } from "./audio";
 import Settings from "src/settings";
-import { Loader as LoaderInterface } from "src/engine";
+import { ResourceManager, Loader as LoaderInterface } from "src/engine";
 
 export const Events = {
 	Progress: "progress",
@@ -23,26 +23,22 @@ class Loader extends EventTarget implements LoaderInterface {
 	private _dataUrl: string;
 	private _paletteUrl: string;
 	private _rawData: any;
-	private _buildSoundUrl: (name: string) => string;
 	private _data: GameData;
 	private _palette: ColorPalette;
+	private _resourceManager: ResourceManager;
 
-	constructor() {
+	constructor(e: ResourceManager) {
 		super();
-
-		this._dataUrl = Settings.url.yoda.data;
-		this._paletteUrl = Settings.url.yoda.palette;
-		this._buildSoundUrl = Settings.url.yoda.sfx;
+		this._resourceManager = e;
 
 		this.registerEvents(Events);
 	}
 
 	public load() {
-		const loader = new FileLoader(this._dataUrl);
-		loader.onprogress = ({ detail: { progress } }) => this._progress(0, progress);
-		loader.onfail = reason => this._fail(reason);
-		loader.onload = ({ detail: { stream } }) => this._readGameData(stream);
-		loader.load();
+		this._resourceManager
+			.loadGameFile(progress => this._progress(0, progress))
+			.then(s => this._readGameData(s))
+			.catch(e => this._fail(e));
 	}
 
 	private _readGameData(stream: InputStream) {
@@ -53,15 +49,13 @@ class Loader extends EventTarget implements LoaderInterface {
 	}
 
 	private _loadPalette() {
-		const loader = new FileLoader(this._paletteUrl);
-		loader.onprogress = ({ detail: { progress } }) => this._progress(2, progress);
-		loader.onfail = reason => this._fail(reason);
-		loader.onload = ({ detail: { arraybuffer } }) => {
-			const palette = ColorPalette.FromBGR8Buffer(arraybuffer);
-			this._palette = palette;
-			this._loadSetupImage(palette);
-		};
-		loader.load();
+		this._resourceManager
+			.loadPalette(progress => this._progress(2, progress))
+			.then(palette => {
+				this._palette = palette;
+				this._loadSetupImage(palette);
+			})
+			.catch(e => this._fail(e));
 	}
 
 	private _loadSetupImage(palette: ColorPalette) {
@@ -96,7 +90,7 @@ class Loader extends EventTarget implements LoaderInterface {
 		}
 		this._progress(10, 0);
 
-		const loader = new DOMSoundLoader(this._buildSoundUrl(""));
+		const loader = new DOMSoundLoader("");
 		let i = 0;
 		const count = this._data.sounds.length;
 		for (const sound of this._data.sounds) {

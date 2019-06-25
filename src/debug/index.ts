@@ -6,11 +6,13 @@ import * as Components from "./components";
 import GameController from "src/app/game-controller";
 import SimulatedStory from "./simulated-story";
 
-const initialize = (gameController: GameController) => {
+const initialize = (gameController?: GameController) => {
 	ComponentRegistry.sharedRegistry.registerComponents(Components);
 
-	ScriptDebugger.sharedDebugger.engine = gameController.engine;
-	if (gameController.settings.debuggerActive) {
+	if (gameController) {
+		ScriptDebugger.sharedDebugger.engine = gameController.engine;
+	}
+	if (gameController && gameController.settings.debuggerActive) {
 		ScriptDebugger.sharedDebugger.show();
 	}
 };

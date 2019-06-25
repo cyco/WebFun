@@ -6,6 +6,7 @@ if (!global.window) {
 
 export const {
 	setTimeout,
+	encodeURIComponent,
 	console,
 	parseInt,
 	Array,

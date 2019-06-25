@@ -21,6 +21,7 @@ import { Point } from "src/util";
 import Settings from "src/settings";
 import Loader from "./loader";
 import AssetManager from "./asset-manager";
+import ResourceManager from "./resource-manager";
 
 import { ConditionImplementations as Conditions } from "./script/conditions";
 import { InstructionImplementations as Instructions } from "./script/instructions";
@@ -35,6 +36,7 @@ class Engine extends EventTarget {
 
 	public readonly type: Type = null;
 	public assetManager: AssetManager = null;
+	public resourceManager: ResourceManager = null;
 	public camera: Camera = new Camera();
 	public gameState: GameState = GameState.Stopped;
 	public hero: Hero = null;
@@ -59,8 +61,6 @@ class Engine extends EventTarget {
 
 		ifce = Object.assign({}, DummyInterface, ifce) as Interface;
 
-		this.loader = ifce.Loader();
-
 		const effectsChannel = ifce.Channel();
 		effectsChannel.muted = !Settings.playSound;
 		const musicChannel = ifce.Channel();
@@ -71,6 +71,7 @@ class Engine extends EventTarget {
 			effectsChannel
 		);
 
+		this.resourceManager = ifce.ResourceManager();
 		this.assetManager = ifce.AssetManager();
 		this.renderer = ifce.Renderer(null);
 		this.sceneManager = ifce.SceneManager();
@@ -79,6 +80,7 @@ class Engine extends EventTarget {
 		this.inventory = ifce.Inventory();
 		this.scriptExecutor = ifce.ScriptExecutor(this, Instructions, Conditions);
 		this.hero = ifce.Hero();
+		this.loader = ifce.Loader(this);
 
 		this.type = type;
 		// TODO: remove state
