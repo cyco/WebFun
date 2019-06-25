@@ -105,7 +105,13 @@ class TileInspector extends AbstractInspector {
 
 	build() {
 		this._palette = this.data.palette;
+		const previousContent = this.window.content.querySelectorAll(TileView.tagName);
 		this.window.content.textContent = "";
+		previousContent.forEach((c: TileView) => {
+			c.onclick = () => void 5;
+			c.tile = null;
+			c.palette = null;
+		});
 
 		const titles: { [_: number]: string } = {
 			0: "transparent",

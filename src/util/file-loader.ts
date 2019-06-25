@@ -14,11 +14,12 @@ class FileLoader extends EventTarget {
 	public onload: (_: CustomEvent) => void;
 	private _path: string;
 
-	public static async loadAsStream(path: string): Promise<InputStream> {
+	public static async loadAsStream(path: string, progress?: (p: number) => void): Promise<InputStream> {
 		return new Promise<InputStream>((resolve, reject) => {
 			const loader = new this(path);
 			loader.onload = (e: any) => resolve(e.detail.stream);
 			loader.onfail = reject;
+			if (progress) loader.addEventListener(Event.Progress, (e: any) => progress(e.progress));
 			loader.load();
 		});
 	}

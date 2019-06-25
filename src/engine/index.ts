@@ -17,6 +17,7 @@ import { Scene } from "./scenes";
 import Loader from "./loader";
 import GameState from "./game-state";
 import AssetManager from "./asset-manager";
+import ResourceManager from "./resource-manager";
 
 export {
 	ColorPalette,
@@ -40,5 +41,6 @@ export {
 	SceneManager,
 	Story,
 	Yoda,
-	AssetManager
+	AssetManager,
+	ResourceManager
 };

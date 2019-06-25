@@ -25,12 +25,12 @@ const Settings = persistent(
 			yoda: {
 				data: "./game-data/yoda.data",
 				palette: "./game-data/yoda.pal",
-				sfx: (file: string) => `./game-data/sfx-yoda/${encodeURIComponent(file)}`
+				sfx: "./game-data/sfx-yoda"
 			},
 			indy: {
 				data: "./game-data/indy.data",
 				palette: "./game-data/indy.pal",
-				sfx: (file: string) => `./game-data/sfx-indy/${encodeURIComponent(file)}`
+				sfx: "./game-data/sfx-indy"
 			}
 		},
 		// app state

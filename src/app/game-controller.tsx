@@ -7,7 +7,7 @@ import {
 	Weapon as WeaponComponent
 } from "./ui";
 import { Char, Tile, Zone, Sound, Puzzle } from "src/engine/objects";
-import { ColorPalette, Engine, GameData, Hero, Story, AssetManager } from "src/engine";
+import { ColorPalette, Engine, GameData, Hero, Story, AssetManager, GameType } from "src/engine";
 import { ConfirmationResult, ModalConfirm } from "src/ux";
 import { EventTarget, Point, Rectangle, Size } from "src/util";
 import { FilePicker, WindowManager } from "src/ui";
@@ -15,7 +15,6 @@ import { LoseScene, ZoneScene } from "src/engine/scenes";
 import { MainMenu, MainWindow } from "./windows";
 import { Planet, WorldSize } from "src/engine/types";
 import GameState from "../engine/game-state";
-import { GameTypeYoda } from "src/engine";
 import { PaletteAnimation } from "src/engine/rendering";
 import { Reader } from "src/engine/save-game";
 import Settings from "src/settings";
@@ -23,10 +22,17 @@ import { DOMAudioChannel } from "./audio";
 import { CanvasRenderer } from "./rendering";
 import { DesktopInputManager } from "./input";
 import Loader from "./loader";
+import { ResourceManager } from "src/engine/dummy-interface";
 
 export const Event = {
 	DidLoadData: "didLoadData"
 };
+
+interface PathConfiguration {
+	data: string;
+	palette: string;
+	sfx: string;
+}
 
 class GameController extends EventTarget {
 	public static readonly Event = Event;
@@ -37,21 +43,22 @@ class GameController extends EventTarget {
 	private _sceneView: SceneView = <SceneView /> as SceneView;
 	private _engine: Engine;
 
-	constructor() {
+	constructor(type: GameType, paths: PathConfiguration) {
 		super();
 
-		this._engine = this._buildEngine();
+		this._engine = this._buildEngine(type, paths);
 		this._sceneView.manager.engine = this._engine;
 		if (Settings.debug) (window as any).engine = this._engine;
 	}
 
-	private _buildEngine() {
-		const engine = new Engine(GameTypeYoda, {
+	private _buildEngine(type: GameType, paths: PathConfiguration) {
+		const engine: Engine = new Engine(type, {
 			Channel: () => new DOMAudioChannel(),
 			Renderer: () => new CanvasRenderer.Renderer(this._sceneView.canvas),
 			InputManager: () => new DesktopInputManager(this._sceneView),
-			Loader: () => new Loader(),
-			SceneManager: () => this._sceneView.manager
+			Loader: e => new Loader(e.resourceManager),
+			SceneManager: () => this._sceneView.manager,
+			ResourceManager: () => new ResourceManager(paths.palette, paths.data, paths.sfx)
 		});
 
 		engine.hero.addEventListener(Hero.Event.HealthChanged, () => {

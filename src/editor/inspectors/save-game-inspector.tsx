@@ -12,6 +12,8 @@ import { World } from "src/engine/generation";
 import { Writer } from "src/engine/save-game";
 import { AssetManager } from "src/engine";
 import { Zone, Puzzle, Tile, Sound, Char } from "src/engine/objects";
+import { Yoda } from "src/engine/type";
+import Settings from "src/settings";
 
 class SaveGameInspector extends AbstractInspector {
 	private _editorView: EditorView = (
@@ -67,7 +69,7 @@ class SaveGameInspector extends AbstractInspector {
 	}
 
 	public playSaveGame(): void {
-		const controller = new GameController();
+		const controller = new GameController(Yoda, Settings.url.yoda);
 		controller.data = this.data.currentData.copy();
 		controller.palette = this.data.palette.slice();
 
