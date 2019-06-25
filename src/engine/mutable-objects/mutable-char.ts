@@ -13,6 +13,9 @@ class MutableChar extends Char {
 		this._movementType = char.movementType;
 		this._garbage1 = char.garbage1;
 		this._garbage2 = char.garbage2;
+		this._reference = char.reference;
+		this._damage = char.damage;
+		this._health = char.health;
 	}
 
 	public set id(id) {
