@@ -90,7 +90,7 @@ describe("WebFun.Util.Point", () => {
 		it("can also be called with the coordinates to add", () => {
 			const firstPoint = new Point(1, 2, 3);
 
-			firstPoint.add(1, 2, 3);
+			firstPoint.add(1, 2);
 
 			expect(firstPoint.x).toBe(2);
 			expect(firstPoint.y).toBe(4);
@@ -131,7 +131,7 @@ describe("WebFun.Util.Point", () => {
 		it("can also be called with the coordinates to subtract", () => {
 			const firstPoint = new Point(1, 2, 3);
 
-			firstPoint.subtract(1, 2, 3);
+			firstPoint.subtract(1, 2);
 
 			expect(firstPoint.x).toBe(0);
 			expect(firstPoint.y).toBe(0);

@@ -1,7 +1,7 @@
 import Scanner from "src/util/scanner";
 
 describe("WebFun.Util.Scanner", () => {
-	let subject;
+	let subject: Scanner;
 
 	it("is a class used in string parsing", () => {
 		expect(Scanner).toBeAClass();
