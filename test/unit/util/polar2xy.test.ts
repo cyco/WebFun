@@ -3,7 +3,7 @@ import { PI } from "src/std/math";
 
 describe("WebFun.Util.polar2xy", () => {
 	it("converts coordinates from polar to cartesian coordinates", () => {
-		let x, y;
+		let x: number, y: number;
 
 		[x, y] = polar2xy(0, 0);
 		expect(x).toBeCloseTo(0, 0.1);

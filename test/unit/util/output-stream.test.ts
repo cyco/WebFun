@@ -2,7 +2,7 @@ import OutputStream from "src/util/output-stream";
 import Stream from "src/util/stream";
 
 describe("WebFun.Util.OutputStream", () => {
-	let outputStream;
+	let outputStream: OutputStream;
 	it("is a class used to write data", () => {
 		outputStream = new OutputStream(1);
 		expect(typeof outputStream.writeUint8).toBe("function");
@@ -205,7 +205,7 @@ describe("WebFun.Util.OutputStream", () => {
 		}).toThrow();
 	});
 
-	function getByte(offset) {
-		return new DataView(outputStream._arrayBuffer, offset).getUint8(0);
+	function getByte(offset: number) {
+		return new DataView((outputStream as any)._arrayBuffer, offset).getUint8(0);
 	}
 });

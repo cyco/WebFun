@@ -1,7 +1,8 @@
 import Direction from "src/util/direction";
+import { Point } from "src/util";
 
 describe("WebFun.Util.Direction", () => {
-	it("is a static class that can't be initlaized", () => {
+	it("is a static class that can't be initialized", () => {
 		expect(() => {
 			let x = new Direction();
 			x = x;
@@ -29,8 +30,8 @@ describe("WebFun.Util.Direction", () => {
 	});
 
 	it("calculates the angle from the origin point to a gien point", () => {
-		expect(Direction.CalculateAngleFromRelativePoint({ x: 1, y: 0 })).toBe(0);
-		expect(Direction.CalculateAngleFromRelativePoint({ x: -1, y: 0 })).toBe(180);
+		expect(Direction.CalculateAngleFromRelativePoint(new Point(1, 0))).toBe(0);
+		expect(Direction.CalculateAngleFromRelativePoint(new Point(-1, 0))).toBe(180);
 	});
 
 	it("given an angle and a distance it calculates a point", () => {

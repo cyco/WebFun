@@ -1,7 +1,6 @@
-import Settings, { loadSettings } from "src/settings";
-import * as DOM from "src/std/dom";
+import Settings from "src/settings";
 
-describe("Settings", () => {
+describe("WebFun.Settings", () => {
 	it("is a simple obejct", () => {
 		expect(Settings.constructor).toBe(Object);
 	});
@@ -14,15 +13,13 @@ describe("Settings", () => {
 		expect(Settings.url.yoda.data).toContain("yoda.data");
 		expect(Settings.url.yoda.palette).toContain("yoda.pal");
 
-		expect(Settings.url.yoda.sfx("youwin.wav")).toContain("youwin");
-		expect(Settings.url.yoda.sfx("youwin.wav")).toContain("game-data");
+		expect(Settings.url.yoda.sfx).toContain("sfx-yoda");
 	});
 
 	it("also provides access to urls for indy's game data", () => {
 		expect(Settings.url.indy.data).toContain("indy.data");
 		expect(Settings.url.indy.palette).toContain("indy.pal");
 
-		expect(Settings.url.indy.sfx("youwin.wav")).toContain("youwin");
-		expect(Settings.url.indy.sfx("youwin.wav")).toContain("game-data");
+		expect(Settings.url.indy.sfx).toContain("sfx-indy");
 	});
 });

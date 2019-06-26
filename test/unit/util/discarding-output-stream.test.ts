@@ -1,7 +1,7 @@
 import DiscardingOutputStream from "src/util/discarding-output-stream";
 
 describe("WebFun.Util.DiscardingOutputStream", () => {
-	let subject;
+	let subject: DiscardingOutputStream;
 	beforeEach(() => (subject = new DiscardingOutputStream()));
 
 	it("is an output stream that discards everything written", () => {
