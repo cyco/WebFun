@@ -52,7 +52,10 @@ export default (gameController: GameController) => ({
 		}),
 		MenuItemSeparator,
 		SettingsAction("Debug Scripts", () => ScriptDebugger.sharedDebugger.show()),
-		SettingsAction("Edit Game Data", RunGameDataEditor),
-		SettingsAction("Edit Save Game", RunSaveGameEditor)
+		SettingsAction("Edit Current Data", () =>
+			RunGameDataEditor(WindowManager.defaultManager, gameController.data)
+		),
+		SettingsAction("Edit Game Data...", RunGameDataEditor),
+		SettingsAction("Edit Save Game...", RunSaveGameEditor)
 	]
 });

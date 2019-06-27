@@ -38,7 +38,12 @@ class EditorWindow extends AbstractWindow {
 	public async loadStream(stream: InputStream, type: GameType) {
 		const rawData = readGameDataFile(stream, type);
 		const data = new GameData(rawData);
-		const palette = await new PaletteProvider().provide(type);
+		(data as any)._type = type;
+		await this.loadGameData(data);
+	}
+
+	public async loadGameData(data: GameData) {
+		const palette = await new PaletteProvider().provide(data.type);
 
 		this._gotoFullscreen();
 		const editor = document.createElement(EditorView.tagName) as EditorView;
@@ -50,7 +55,7 @@ class EditorWindow extends AbstractWindow {
 		editor.addInspector("character", new CharacterInspector(state.prefixedWith("character")));
 		editor.addInspector("setup-image", new SetupImageInspector(state.prefixedWith("setup-image")));
 		editor.addInspector("palette", new PaletteInspector(state.prefixedWith("palette")));
-		editor.data = new DataManager(data, palette, type);
+		editor.data = new DataManager(data, palette, data.type);
 		editor.state = state;
 		this._showMenu(editor);
 		this.content.textContent = "";
