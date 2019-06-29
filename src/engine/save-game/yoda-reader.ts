@@ -194,7 +194,7 @@ class YodaReader extends Reader {
 		}
 
 		const npc = new MutableNPC();
-		npc.character = this._assets.get(Char, characterId, NullIfMissing);
+		npc.face = this._assets.get(Char, characterId, NullIfMissing);
 		npc.enabled = enabled;
 		npc.position = new Point(x, y);
 		npc.damageTaken = damageTaken;

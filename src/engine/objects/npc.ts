@@ -5,8 +5,8 @@ import { min } from "src/std/math";
 
 class NPC {
 	protected _id: number = -1;
-	protected _enabled = true;
-	protected _character: Char = null;
+	public enabled = true;
+	public face: Char = null;
 	protected _position: Point = null;
 	protected _loot: number = -1;
 	protected _dropsLoot: boolean = false;
@@ -15,18 +15,6 @@ class NPC {
 
 	get id() {
 		return this._id;
-	}
-
-	get enabled() {
-		return this._enabled;
-	}
-
-	set enabled(flag) {
-		this._enabled = flag;
-	}
-
-	get face() {
-		return this._character;
 	}
 
 	get loot() {
@@ -51,7 +39,7 @@ class NPC {
 	}
 
 	public get alive() {
-		return this._character && this._damageTaken < this._character.health;
+		return this.face && this._damageTaken < this.face.health;
 	}
 
 	public get damageTaken() {
@@ -59,7 +47,7 @@ class NPC {
 	}
 
 	public set damageTaken(d: number) {
-		const maxDamage = this._character ? this._character.health : Infinity;
+		const maxDamage = this.face ? this.face.health : Infinity;
 
 		this._damageTaken += d;
 		this._damageTaken = min(this._damageTaken, maxDamage);

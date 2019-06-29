@@ -145,7 +145,7 @@ const makeAction = (raw: RawAction, idx: number, zone: Zone, _: any): Action => 
 const makeNPC = (raw: RawNPC, idx: number, data: GameData) => {
 	const npc = new MutableNPC();
 	npc.id = idx;
-	npc.character = data.characters[raw.character];
+	npc.face = data.characters[raw.character];
 	npc.position = new Point(raw.x, raw.y, Zone.Layer.Object);
 	npc.loot = raw.loot;
 	npc.dropsLoot = raw.dropsLoot;

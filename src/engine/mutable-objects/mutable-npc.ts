@@ -7,8 +7,8 @@ class MutableNPC extends NPC {
 		if (!npc) return;
 
 		this._id = npc.id;
-		this._enabled = npc.enabled;
-		this._character = npc.face;
+		this.enabled = npc.enabled;
+		this.face = npc.face;
 		this._position = npc.position;
 		this._loot = npc.loot;
 		this._dropsLoot = npc.dropsLoot;
@@ -21,22 +21,6 @@ class MutableNPC extends NPC {
 
 	set id(id) {
 		this._id = id;
-	}
-
-	get enabled() {
-		return this._enabled;
-	}
-
-	set enabled(enabled) {
-		this._enabled = enabled;
-	}
-
-	get character() {
-		return this._character;
-	}
-
-	set character(character) {
-		this._character = character;
 	}
 
 	get position() {

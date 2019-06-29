@@ -75,7 +75,7 @@ class NPCLayer extends Component {
 				title: "Place NPC",
 				callback: (): void => {
 					const npc = new MutableNPC();
-					npc.character = this.enemies.first();
+					npc.face = this.enemies.first();
 					npc.position = point;
 					npc.loot = -1;
 					npc.dropsLoot = false;
@@ -108,7 +108,7 @@ class NPCLayer extends Component {
 								}))
 							});
 							if (!t) return;
-							npc.character = this.enemies.find(e => e.id === +t);
+							npc.face = this.enemies.find(e => e.id === +t);
 							this.draw();
 						}
 					},
