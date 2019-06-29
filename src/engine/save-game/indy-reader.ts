@@ -140,7 +140,7 @@ class IndyReader extends Reader {
 		stream.getUint8Array(0x18);
 
 		const npc = new MutableNPC();
-		npc.character = this._assets.get(Char, characterId, NullIfMissing);
+		npc.face = this._assets.get(Char, characterId, NullIfMissing);
 		npc.position = new Point(x, y);
 		npc.damageTaken = damageTaken;
 

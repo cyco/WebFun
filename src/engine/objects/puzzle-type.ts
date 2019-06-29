@@ -14,7 +14,7 @@ class PuzzleType {
 		return PuzzleType.knownTypes.indexOf(this);
 	}
 
-	private get name() {
+	public get name() {
 		switch (this) {
 			case PuzzleType.U1:
 				return "U1";
