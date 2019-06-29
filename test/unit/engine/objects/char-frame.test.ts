@@ -1,8 +1,9 @@
 import CharFrame from "src/engine/objects/char-frame";
+import Tile from "src/engine/objects/tile";
 
 describe("CharFrame", () => {
 	it("is a class representing one frame of character animation", () => {
-		const charFrame = new CharFrame();
+		const charFrame = new CharFrame([]);
 		expect(charFrame instanceof CharFrame).toBeTrue();
 	});
 
@@ -18,8 +19,7 @@ describe("CharFrame", () => {
 			"extensionRight"
 		];
 
-		const charFrame = new CharFrame();
-		charFrame._tiles = tiles;
+		const charFrame: any = new CharFrame((tiles as any) as Tile[]);
 
 		expect(charFrame.tiles).toBe(tiles);
 		expect(charFrame.up).toEqual("up");

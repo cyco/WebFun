@@ -3,7 +3,7 @@ import HotspotType from "src/engine/objects/hotspot-type";
 import { Point } from "src/util";
 
 describe("WebFun.Engine.Objects.Hotspot", () => {
-	let subject;
+	let subject: Hotspot;
 	beforeEach(() => (subject = new Hotspot()));
 
 	it("marks a point of interest on a zone", () => {

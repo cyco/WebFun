@@ -1,7 +1,7 @@
 import NPC from "src/engine/objects/npc";
 
 describe("WebFun.Engine.Objects.NPC", () => {
-	let subject;
+	let subject: NPC;
 	beforeEach(() => (subject = new NPC()));
 
 	it("is a class representing an npc", () => {

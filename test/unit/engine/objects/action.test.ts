@@ -4,7 +4,7 @@ import Condition from "src/engine/objects/condition";
 import Instruction from "src/engine/objects/instruction";
 
 describe("WebFun.Engine.Objects.Action", () => {
-	let subject;
+	let subject: Action;
 	beforeEach(() => (subject = new Action()));
 
 	it("can have several conditions", () => {
@@ -49,7 +49,7 @@ describe("WebFun.Engine.Objects.Action", () => {
 
 		it("may have 'additional data' of arbitrary length (usually text someone speaks)", () => {
 			const instruction = new Instruction({});
-			instruction._additionalData = "something someone might say";
+			(instruction as any)._additionalData = "something someone might say";
 			expect(instruction.text).toEqual("something someone might say");
 		});
 	});
