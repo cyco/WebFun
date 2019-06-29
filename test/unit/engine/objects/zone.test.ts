@@ -9,17 +9,17 @@ describe("Zone", () => {
 
 	it("has a method identifying the loading zone", () => {
 		const zone = new Zone();
-		zone._type = Type.Load;
+		(zone as any)._type = Type.Load;
 
 		expect(zone.isLoadingZone()).toBeTrue();
 	});
 
 	describe("hotspots", () => {
-		let subject;
+		let subject: Zone;
 		beforeEach(() => {
 			subject = new Zone();
-			subject._type = Type.Empty;
-			subject._hotspots = [
+			(subject as any)._type = Type.Empty;
+			(subject as any)._hotspots = [
 				{ type: HotspotType.DoorIn, arg: -1 },
 				{ type: HotspotType.DoorIn, arg: 0x72 },
 				{},
@@ -38,7 +38,7 @@ describe("Zone", () => {
 
 		it("mark teleporters", () => {
 			expect(subject.hasTeleporter).toBeTrue();
-			subject._hotspots = [];
+			(subject as any)._hotspots = [];
 			expect(subject.hasTeleporter).toBeFalse();
 		});
 	});
