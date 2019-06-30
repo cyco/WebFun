@@ -146,11 +146,6 @@ abstract class Reader {
 
 		if (this._type === Indy) zone.npcs = new Array(count);
 
-		console.assert(
-			count === zone.npcs.length,
-			`Number of npcs can't be change from ${zone.npcs.length} to ${count}`
-		);
-
 		for (let i = 0; i < zone.npcs.length; i++) {
 			const npc = this.readNPC(stream);
 			npc.id = i;
