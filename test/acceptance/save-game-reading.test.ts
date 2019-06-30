@@ -1,6 +1,6 @@
 import { Indy, Yoda, GameType } from "src/engine/type";
 import { Reader } from "src/engine/save-game";
-import { GameData, AssetManager } from "src/engine";
+import { GameData, AssetManager, SaveState } from "src/engine";
 import { getFixtureData } from "test/helpers/fixture-loading";
 import { InputStream } from "src/util";
 import loadGameData from "test/helpers/game-data";
@@ -11,41 +11,32 @@ describe("WebFun.Acceptance.Save game reading", () => {
 	let rawIndyData: any;
 
 	beforeAll(async () => {
-		try {
-			rawYodaData = await loadGameData(Yoda);
-			rawIndyData = await loadGameData(Indy);
-		} catch (e) {
-			console.error(e);
-		}
+		rawYodaData = await loadGameData(Yoda);
+		rawIndyData = await loadGameData(Indy);
 	});
 
 	it("reads yoda's save game format correctly", async () => {
-		try {
-			const state = await readSaveGame("save-games/yoda.wld", Yoda);
-			expect(state.type).toBe(Yoda);
-			expect(state.currentZoneID).toBe(89);
-			expect(state.positionOnWorld.x).toBe(0);
-			expect(state.positionOnWorld.y).toBe(0);
-			expect(state.currentWeapon).toBe(75);
-		} catch (e) {
-			expect(e).toBeUndefined();
-		}
+		const { state } = await readSaveGame("save-games/yoda.wld", Yoda);
+		expect(state.type).toBe(Yoda);
+		expect(state.currentZoneID).toBe(89);
+		expect(state.positionOnWorld.x).toBe(0);
+		expect(state.positionOnWorld.y).toBe(0);
+		expect(state.currentWeapon).toBe(75);
 	});
 
 	it("reads indy's save game format correctly", async () => {
-		try {
-			const state = await readSaveGame("save-games/indy.wld", Indy);
-			expect(state.type).toBe(Indy);
-			expect(state.currentZoneID).toBe(120);
-			expect(state.positionOnWorld.x).toBe(5);
-			expect(state.positionOnWorld.y).toBe(5);
-			expect(Array.from(state.inventoryIDs)).toEqual([443, 449]);
-		} catch (e) {
-			expect(e).toBeUndefined();
-		}
+		const { state } = await readSaveGame("save-games/indy.wld", Indy);
+		expect(state.type).toBe(Indy);
+		expect(state.currentZoneID).toBe(120);
+		expect(state.positionOnWorld.x).toBe(5);
+		expect(state.positionOnWorld.y).toBe(5);
+		expect(Array.from(state.inventoryIDs)).toEqual([443, 449]);
 	});
 
-	async function readSaveGame(game: string, type: GameType) {
+	async function readSaveGame(
+		game: string,
+		type: GameType
+	): Promise<{ state: SaveState; assets: AssetManager }> {
 		const gameData = new GameData(type === Indy ? rawIndyData : rawYodaData);
 		const assetManager = new AssetManager();
 		assetManager.populate(Zone, gameData.zones);
@@ -58,6 +49,6 @@ describe("WebFun.Acceptance.Save game reading", () => {
 		const saveStream = new InputStream(saveData);
 
 		const { read } = Reader.build(saveStream);
-		return await read(assetManager);
+		return { state: await read(assetManager), assets: assetManager };
 	}
 });
