@@ -505,9 +505,36 @@ class ZoneScene extends Scene {
 	private _moveNPC(npc: NPC) {
 		if (!npc.enabled) return;
 		console.assert(npc.position.z === Zone.Layer.Object, "NPCs must be placed on object layer!");
+		const hero = this.engine.hero;
 
 		const vector = new Point(0, 0);
 		switch (npc.face.movementType) {
+			case CharMovementType.Sit: {
+				const moveDirection = new Point(0, 0);
+				const moveDistance = 0;
+				if (npc.position.x === hero.location.x) {
+					moveDirection.x = 0;
+				} else if (npc.position.x < hero.location.x) {
+					moveDirection.x = 1;
+				} else {
+					moveDirection.x = -1;
+				}
+
+				if (npc.position.y === hero.location.y) {
+					moveDirection.y = 0;
+				} else if (npc.position.y < hero.location.y) {
+					moveDirection.y = 1;
+				} else {
+					moveDirection.y = -1;
+				}
+
+				const tile = this._findTileIdForCharFrameWithDirection(
+					npc.face.frames.first(),
+					moveDirection
+				);
+				this.zone.setTile(tile, npc.position.x, npc.position.y, Zone.Layer.Object);
+				return;
+			}
 			case CharMovementType.Animation: {
 				const tile = this._findAnimationTileIdForCharFrame(
 					npc.face.frames.first(),
@@ -564,6 +591,42 @@ class ZoneScene extends Scene {
 			default:
 				return frame.up;
 		}
+	}
+
+	private _findTileIdForCharFrameWithDirection(frame: CharFrame, direction: Point): Tile {
+		if (direction.x === 0 && direction.y === 1) {
+			return frame.down || frame.down;
+		}
+
+		if (direction.x === 0 && direction.y === -1) {
+			return frame.up || frame.down;
+		}
+
+		if (direction.x === 1 && direction.y === 0) {
+			return frame.right || frame.down;
+		}
+
+		if (direction.x === -1 && direction.y === 0) {
+			return frame.left || frame.down;
+		}
+
+		if (direction.x === -1 && direction.y === -1) {
+			return frame.extensionUp || frame.down;
+		}
+
+		if (direction.x === -1 && direction.y === 1) {
+			return frame.extensionDown || frame.down;
+		}
+
+		if (direction.x === 1 && direction.y === -1) {
+			return frame.extensionLeft || frame.down;
+		}
+
+		if (direction.x === 1 && direction.y === 1) {
+			return frame.extensionRight || frame.down;
+		}
+
+		return frame.down;
 	}
 
 	prepareCamera() {
