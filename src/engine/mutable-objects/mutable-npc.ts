@@ -14,6 +14,29 @@ class MutableNPC extends NPC {
 		this._dropsLoot = npc.dropsLoot;
 		this._data = npc.unknown3;
 		this.facingDirection = npc.facingDirection;
+		this.lastDirectionChoice = npc.lastDirectionChoice;
+
+		this.bulletPosition = npc.bulletPosition;
+		this.direction = npc.direction;
+		this.field10 = npc.field10;
+		this.bulletX = npc.bulletX;
+		this.bulletY = npc.bulletY;
+		this.currentFrame = npc.currentFrame;
+		this.flag18 = npc.flag18;
+		this.flag1c = npc.flag1c;
+		this.flag20 = npc.flag20;
+		this.lastDirectionChoice = npc.lastDirectionChoice;
+		this.hasItem = npc.hasItem;
+		this.flag2c = npc.flag2c;
+		this.field30 = npc.field30;
+		this.field32 = npc.field32;
+		this.flag34 = npc.flag34;
+		this.directionX = npc.directionX;
+		this.directionY = npc.directionY;
+		this.field3c = npc.field3c;
+		this.facingDirection = npc.facingDirection;
+		this.field60 = npc.field60;
+		this.field62 = npc.field62;
 	}
 
 	get id() {

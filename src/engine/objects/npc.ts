@@ -15,9 +15,25 @@ class NPC {
 	private _damageTaken: number = 0;
 	public bulletPosition: Point = null;
 	public direction: Point = null;
-	public currentActionFrame: number = 0;
-	public currentBulletFrame: number = 0;
+	public field10: number = 0;
+	public bulletX: number = 0;
+	public bulletY: number = 0;
+	public currentFrame: number = 0;
+	public flag18: boolean = false;
+	public flag1c: boolean = false;
+	public flag20: boolean = false;
+	public lastDirectionChoice: number = 0;
+	public hasItem: boolean = false;
+	public flag2c: boolean = false;
+	public field30: number = 1;
+	public field32: number = 0;
+	public flag34: boolean = false;
+	public directionX: number = 0;
+	public directionY: number = 0;
+	public field3c: number = 0;
 	public facingDirection: CharFrameEntry = CharFrameEntry.Up;
+	public field60: number = 0;
+	public field62: number = 0;
 
 	get id() {
 		return this._id;
