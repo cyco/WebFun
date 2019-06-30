@@ -7,6 +7,7 @@ import {
 	Zone,
 	ZoneType,
 	Tile,
+	CharFrame,
 	CharFrameEntry,
 	CharMovementType,
 	Char,
@@ -28,6 +29,8 @@ import TeleporterScene from "./teleport-scene";
 import TransitionScene from "./transition-scene";
 import ZoneSceneRenderer from "src/engine/rendering/zone-scene-renderer";
 import { NullIfMissing } from "src/engine/asset-manager";
+
+const AnimationFrameCount = 6;
 
 class ZoneScene extends Scene {
 	private _zone: Zone;
@@ -505,8 +508,15 @@ class ZoneScene extends Scene {
 
 		const vector = new Point(0, 0);
 		switch (npc.face.movementType) {
-			case CharMovementType.Animation:
-				return this._animateNPC(npc);
+			case CharMovementType.Animation: {
+				const tile = this._findAnimationTileIdForCharFrame(
+					npc.face.frames.first(),
+					npc.facingDirection
+				);
+				this.zone.setTile(tile, npc.position.x, npc.position.y, Zone.Layer.Object);
+				npc.facingDirection = (npc.facingDirection + 1) % AnimationFrameCount;
+				return;
+			}
 			default:
 				vector.y = 1;
 		}
@@ -533,8 +543,27 @@ class ZoneScene extends Scene {
 		this.zone.setTile(npc.face.frames[0].down, npc.position);
 	}
 
-	private _animateNPC(npc: NPC) {
-		console.assert(npc.face.movementType === CharMovementType.Animation);
+	private _findAnimationTileIdForCharFrame(frame: CharFrame, direction: number): Tile {
+		switch (direction) {
+			case CharFrameEntry.Up:
+				return frame.up;
+			case CharFrameEntry.Down:
+				return frame.down;
+			case CharFrameEntry.ExtensionUp:
+				return frame.extensionUp;
+			case CharFrameEntry.Left:
+				return frame.left;
+			case CharFrameEntry.ExtensionDown:
+				return frame.extensionDown;
+			case CharFrameEntry.ExtensionLeft:
+				return frame.extensionLeft;
+			case CharFrameEntry.Right:
+				return frame.right;
+			case CharFrameEntry.ExtensionRight:
+				return frame.extensionRight;
+			default:
+				return frame.up;
+		}
 	}
 
 	prepareCamera() {
