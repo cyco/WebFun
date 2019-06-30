@@ -13,6 +13,7 @@ class MutableNPC extends NPC {
 		this._loot = npc.loot;
 		this._dropsLoot = npc.dropsLoot;
 		this._data = npc.unknown3;
+		this.facingDirection = npc.facingDirection;
 	}
 
 	get id() {

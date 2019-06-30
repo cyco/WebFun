@@ -1,4 +1,4 @@
-import { Hotspot, HotspotType, Tile, Char } from "src/engine/objects";
+import { Hotspot, HotspotType, Tile, Char, CharFrameEntry } from "src/engine/objects";
 import { InputStream, Point } from "src/util";
 import { MutableHotspot, MutableNPC } from "src/engine/mutable-objects";
 import { Planet, WorldSize } from "../types";
@@ -161,7 +161,7 @@ class YodaReader extends Reader {
 		const directionY = stream.getInt16();
 
 		const field3C = stream.getInt16();
-		const field3E = stream.getInt16();
+		const facingDirection = stream.getInt16();
 		const field60 = stream.getInt16();
 		const loot = stream.getInt16();
 		const flag2C = stream.getUint32() !== 0;
@@ -185,6 +185,7 @@ class YodaReader extends Reader {
 		npc.bulletPosition = bulletX >= 0 && bulletY >= 0 ? new Point(bulletX, bulletY) : null;
 		npc.currentBulletFrame = bulletFrame;
 		npc.direction = directionX >= 0 && directionY >= 0 ? new Point(directionX, directionY) : null;
+		npc.facingDirection = facingDirection;
 
 		return npc;
 	}

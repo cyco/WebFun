@@ -1,4 +1,5 @@
 import Char from "./char";
+import { CharFrameEntry } from "./char-frame";
 import { Point } from "src/util";
 import Zone from "./zone";
 import { min } from "src/std/math";
@@ -16,6 +17,7 @@ class NPC {
 	public direction: Point = null;
 	public currentActionFrame: number = 0;
 	public currentBulletFrame: number = 0;
+	public facingDirection: CharFrameEntry = CharFrameEntry.Up;
 
 	get id() {
 		return this._id;
