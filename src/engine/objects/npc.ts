@@ -12,6 +12,10 @@ class NPC {
 	protected _dropsLoot: boolean = false;
 	protected _data: number[] = Array.Repeat(-1, 0x20);
 	private _damageTaken: number = 0;
+	public bulletPosition: Point = null;
+	public direction: Point = null;
+	public currentActionFrame: number = 0;
+	public currentBulletFrame: number = 0;
 
 	get id() {
 		return this._id;

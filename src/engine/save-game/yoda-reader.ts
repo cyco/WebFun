@@ -149,44 +149,26 @@ class YodaReader extends Reader {
 		const y = stream.getInt16();
 		const damageTaken = stream.getInt16();
 		const enabled = stream.getUint32() !== 0;
-		// skip over unknown value (field_10)
-		stream.getInt16();
+		const currentActionFrame = stream.getInt16();
 
-		// skip over unknown value (field_x__)
-		stream.getInt16();
-		// skip over unknown value (field_y__)
-		stream.getInt16();
-		// skip over current frame
-		stream.getInt16();
-		// skip over unknown value (field_18)
-		stream.getUint32();
-		// skip over unknown value (field_1c)
-		stream.getUint32();
-		// skip over unknown value (field_2)
-		stream.getUint32();
-		// skip over unknown value (field_x_)
-		stream.getInt16();
-		// skip over unknown value (field_y_)
-		stream.getInt16();
-		// skip over unknown value (field_3c)
-		stream.getInt16();
-		// skip over unknown value (field_3e)
-		stream.getInt16();
-		// skip over unknown value (field_60)
-		stream.getInt16();
-		// skip over unknown value (field_26)
-		stream.getInt16();
-		// skip over unknown value (field_2c)
-		stream.getUint32();
-		// skip over unknown value (field_34)
-		stream.getUint32();
-		// skip over unknown value (field_28)
-		stream.getUint32();
+		const bulletX = stream.getInt16();
+		const bulletY = stream.getInt16();
+		const bulletFrame = stream.getInt16();
+		const flag18 = stream.getUint32() !== 0;
+		const flag1C = stream.getUint32() !== 0;
+		const flag20 = stream.getUint32() !== 0;
+		const directionX = stream.getInt16();
+		const directionY = stream.getInt16();
 
-		// skip over unknown value (field_24)
-		stream.getInt16();
-		// skip over unknown value (
-		stream.getInt16();
+		const field3C = stream.getInt16();
+		const field3E = stream.getInt16();
+		const field60 = stream.getInt16();
+		const loot = stream.getInt16();
+		const flag2C = stream.getUint32() !== 0;
+		const flag34 = stream.getUint32() !== 0;
+		const hasItem = stream.getUint32() !== 0;
+		const lastDamageTaken = stream.getInt16();
+		const field30 = stream.getInt16();
 
 		for (let i = 0; i < 4; i++) {
 			stream.getUint32();
@@ -198,6 +180,11 @@ class YodaReader extends Reader {
 		npc.enabled = enabled;
 		npc.position = new Point(x, y);
 		npc.damageTaken = damageTaken;
+		npc.loot = loot;
+		npc.currentActionFrame = currentActionFrame;
+		npc.bulletPosition = bulletX >= 0 && bulletY >= 0 ? new Point(bulletX, bulletY) : null;
+		npc.currentBulletFrame = bulletFrame;
+		npc.direction = directionX >= 0 && directionY >= 0 ? new Point(directionX, directionY) : null;
 
 		return npc;
 	}
