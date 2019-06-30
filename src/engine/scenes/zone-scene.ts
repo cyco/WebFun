@@ -1,4 +1,4 @@
-import { Direction, Point, Size } from "src/util";
+import { Direction, Point, Size, rand, randmod } from "src/util";
 import { EvaluationMode, ScriptResult } from "../script";
 import {
 	Hotspot,
@@ -32,9 +32,20 @@ import { NullIfMissing } from "src/engine/asset-manager";
 
 const AnimationFrameCount = 6;
 
+enum NPCMoveCheck {
+	OutOfBounds = -1,
+	Free = 1,
+	Blocked = 0,
+	EvadeRight = 2,
+	EvadeLeft = 3,
+	EvadeDown = 4,
+	EvadeUp = 5
+}
+
 class ZoneScene extends Scene {
 	private _zone: Zone;
 	private _renderer = new ZoneSceneRenderer();
+	public evasionStrategy: () => -1 | 1 = () => ((performance.now() & 1) < 1 ? 1 : -1);
 
 	constructor(engine: Engine = null, zone: Zone = null) {
 		super();
@@ -506,9 +517,105 @@ class ZoneScene extends Scene {
 		if (!npc.enabled) return;
 		console.assert(npc.position.z === Zone.Layer.Object, "NPCs must be placed on object layer!");
 		const hero = this.engine.hero;
+		const zone = this.engine.currentZone;
 
 		const vector = new Point(0, 0);
 		switch (npc.face.movementType) {
+			case CharMovementType.Wander: {
+				let relX = 0,
+					relY = 0;
+				// npc.lastDirectionChoice <-- direction change cooldown
+				// npc.field30 <-- current direction
+				if (npc.lastDirectionChoice) {
+					relX = 0;
+					relY = 0;
+					npc.lastDirectionChoice -= 1;
+				} else {
+					switch (npc.field30 + 1) {
+						case 0:
+							relX = 0;
+							relY = -1;
+							break;
+						case 1:
+							relX = 0;
+							relY = 1;
+							break;
+						case 2:
+							relX = 1;
+							relY = 0;
+							break;
+						case 3:
+							relX = -1;
+							relY = 0;
+							break;
+					}
+				}
+
+				let canMove = this.checkNPCMove(npc.position, new Point(relX, relY));
+				if (canMove !== NPCMoveCheck.Free) {
+					relX = 0;
+					relY = 0;
+					npc.lastDirectionChoice = randmod(3);
+					npc.field30 = randmod(4) - 1; // TODO: check random, this shoud probably be something like randmod(4) -1
+				}
+
+				if (npc.position.byAdding(relX, relY).isEqualTo(hero.location)) {
+					relX = 0;
+					relY = 0;
+
+					if (npc.face.reference === -1 && npc.face.damage >= 0) {
+						// TODO: Change health
+						// TODO: Play hurt sound
+					}
+				}
+
+				const target = npc.position.byAdding(relX, relY);
+				if (zone.getTile(target.x, target.y, Zone.Layer.Object)) {
+					// TODO: goto no movement
+					break;
+				}
+
+				const targetTile = zone.getTile(target.x, target.y, Zone.Layer.Object);
+				if (!targetTile) {
+					canMove = NPCMoveCheck.Free;
+				}
+
+				if (canMove === NPCMoveCheck.Free) {
+					npc.position = target;
+				}
+
+				// perform move
+				zone.setTile(null, npc.position.x - relX, npc.position.y - relY, Zone.Layer.Object);
+				let tile = this._findTileIdForCharFrameWithDirection(
+					npc.face.frames.first(),
+					new Point(relX, relY)
+				);
+
+				// look at hero if he's in the same column or row
+				if (hero.location.x === npc.position.x && hero.location.y < npc.position.y) {
+					tile = this._findTileIdForCharFrameWithDirection(
+						npc.face.frames.first(),
+						new Point(0, -1)
+					);
+				} else if (hero.location.x === npc.position.x && hero.location.y > npc.position.y) {
+					tile = this._findTileIdForCharFrameWithDirection(
+						npc.face.frames.first(),
+						new Point(0, 1)
+					);
+				} else if (hero.location.y === npc.position.y && hero.location.x < npc.position.x) {
+					tile = this._findTileIdForCharFrameWithDirection(
+						npc.face.frames.first(),
+						new Point(-1, 0)
+					);
+				} else if (hero.location.y === npc.position.y && hero.location.x > npc.position.x) {
+					tile = this._findTileIdForCharFrameWithDirection(
+						npc.face.frames.first(),
+						new Point(1, 0)
+					);
+				}
+				zone.setTile(tile, npc.position.x, npc.position.y, Zone.Layer.Object);
+				return;
+			}
 			case CharMovementType.Sit: {
 				const moveDirection = new Point(0, 0);
 				const moveDistance = 0;
@@ -557,6 +664,8 @@ class ZoneScene extends Scene {
 		if (targetTile) {
 			return;
 		}
+
+		// HACK: This special case was added to complete a specific zone without having to implement actual movement types
 		if (npc.face.id === 73 && this.zone.id === 0x270) {
 			target = new Point(4, 8, 1);
 			this.zone.setTile(null, npc.position);
@@ -568,6 +677,102 @@ class ZoneScene extends Scene {
 		this.zone.setTile(null, npc.position);
 		npc.position = target;
 		this.zone.setTile(npc.face.frames[0].down, npc.position);
+	}
+
+	private checkNPCMove(source: Point, rel: Point): NPCMoveCheck {
+		const zone = this.zone;
+		const a7 = false;
+		const target = source.byAdding(rel);
+		if (!zone.bounds.contains(target)) {
+			return NPCMoveCheck.OutOfBounds;
+		}
+
+		if (!zone.getTile(target.x, target.y, Zone.Layer.Object)) {
+			return NPCMoveCheck.Free;
+		}
+
+		const evade = this.evasionStrategy();
+
+		let x = target.x;
+		let y = target.y;
+		let altX: number, altY: number;
+		let movingLeft = false;
+		let isFree = false;
+
+		if (rel.x || !rel.y) {
+			if (rel.y) {
+				movingLeft = rel.x < 0;
+			} else {
+				movingLeft = rel.x < 0;
+				if (rel.x) {
+					if (y - evade >= 0 && (zone.getTile(x, y - evade, Zone.Layer.Object) === null || a7)) {
+						y -= evade;
+						isFree = true;
+					}
+					if (isFree) return returnAlternativePath();
+					altY = y + evade;
+					if (
+						zone.size.height <= y + evade ||
+						(zone.getTile(x, y + evade, Zone.Layer.Object) === null && !a7)
+					)
+						return returnAlternativePath();
+
+					y = altY;
+					isFree = true;
+					return returnAlternativePath();
+				}
+			}
+			altX = x + 1;
+			if (!movingLeft) altX = x - 1;
+			if (zone.getTile(altX, y, Zone.Layer.Object) === null || a7) {
+				x = altX;
+				isFree = true;
+			}
+			if (isFree) return returnAlternativePath();
+			altY = y + 1;
+			if (rel.y >= 0) altY = y - 1;
+			if (zone.getTile(x, altY, Zone.Layer.Object) === null && !a7) return returnAlternativePath();
+			y = altY;
+			isFree = true;
+			return returnAlternativePath();
+		}
+
+		if (x - evade >= 0 && (zone.getTile(x - evade, y, Zone.Layer.Object) === null || a7)) {
+			x -= evade;
+			isFree = true;
+		}
+
+		if (!isFree) {
+			if (
+				zone.size.width > x + evade &&
+				(zone.getTile(x + evade, y, Zone.Layer.Object) === null || a7)
+			) {
+				x += evade;
+				isFree = true;
+			}
+		}
+
+		function returnAlternativePath() {
+			if (!isFree) return NPCMoveCheck.Blocked;
+
+			if (y >= target.y) {
+				if (y <= target.y) {
+					if (x >= target.x) {
+						return NPCMoveCheck.EvadeRight;
+						if (x <= target.x) return NPCMoveCheck.Blocked; // Blocked
+					} else {
+						return NPCMoveCheck.EvadeLeft;
+					}
+				} else {
+					return NPCMoveCheck.EvadeDown;
+				}
+			} else {
+				return NPCMoveCheck.EvadeUp;
+			}
+			return NPCMoveCheck.Blocked;
+		}
+
+		return returnAlternativePath();
 	}
 
 	private _findAnimationTileIdForCharFrame(frame: CharFrame, direction: number): Tile {

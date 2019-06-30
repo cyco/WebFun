@@ -149,25 +149,25 @@ class YodaReader extends Reader {
 		const y = stream.getInt16();
 		const damageTaken = stream.getInt16();
 		const enabled = stream.getUint32() !== 0;
-		const currentActionFrame = stream.getInt16();
+		const field10 = stream.getInt16();
 
 		const bulletX = stream.getInt16();
 		const bulletY = stream.getInt16();
-		const bulletFrame = stream.getInt16();
+		const currentFrame = stream.getInt16();
 		const flag18 = stream.getUint32() !== 0;
-		const flag1C = stream.getUint32() !== 0;
+		const flag1c = stream.getUint32() !== 0;
 		const flag20 = stream.getUint32() !== 0;
 		const directionX = stream.getInt16();
 		const directionY = stream.getInt16();
 
-		const field3C = stream.getInt16();
+		const field3c = stream.getInt16();
 		const facingDirection = stream.getInt16();
 		const field60 = stream.getInt16();
 		const loot = stream.getInt16();
-		const flag2C = stream.getUint32() !== 0;
+		const flag2c = stream.getUint32() !== 0;
 		const flag34 = stream.getUint32() !== 0;
 		const hasItem = stream.getUint32() !== 0;
-		const lastDamageTaken = stream.getInt16();
+		const lastDirectionChoice = stream.getInt16();
 		const field30 = stream.getInt16();
 
 		for (let i = 0; i < 4; i++) {
@@ -181,11 +181,23 @@ class YodaReader extends Reader {
 		npc.position = new Point(x, y);
 		npc.damageTaken = damageTaken;
 		npc.loot = loot;
-		npc.currentActionFrame = currentActionFrame;
+		npc.field10 = field10;
 		npc.bulletPosition = bulletX >= 0 && bulletY >= 0 ? new Point(bulletX, bulletY) : null;
-		npc.currentBulletFrame = bulletFrame;
+		npc.currentFrame = currentFrame;
 		npc.direction = directionX >= 0 && directionY >= 0 ? new Point(directionX, directionY) : null;
 		npc.facingDirection = facingDirection;
+		npc.lastDirectionChoice = lastDirectionChoice;
+		npc.flag18 = flag18;
+		npc.flag20 = flag20;
+		npc.flag1c = flag1c;
+		npc.directionX = directionX;
+		npc.directionY = directionY;
+		npc.field30 = field3c;
+		npc.field60 = field60;
+		npc.flag2c = flag2c;
+		npc.flag34 = flag34;
+		npc.hasItem = hasItem;
+		npc.field30 = field30;
 
 		return npc;
 	}
