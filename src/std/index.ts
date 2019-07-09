@@ -4,8 +4,10 @@ if (!global.window) {
 	global.window = global;
 }
 
+const timeout = global.setTimeout.bind(global);
+export const setTimeout = timeout;
+
 export const {
-	setTimeout,
 	encodeURIComponent,
 	console,
 	parseInt,
