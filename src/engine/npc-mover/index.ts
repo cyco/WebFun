@@ -31,7 +31,13 @@ const dispatch = new Map([
 ]);
 
 export default (npc: NPC, zone: Zone, hero: Point): void => {
-	if (!npc.enabled) return;
+	if (!npc.enabled) {
+		if (!npc.face) return;
+		if (npc.face.reference < 0) return;
+
+		// TODO: move bullet
+		return;
+	}
 
 	const move = dispatch.get(npc.face.movementType) || none;
 	return move(npc, zone, hero);
