@@ -19,7 +19,7 @@ describe("WebFun.Engine.Objects.CharMovementType", () => {
 		expect(CharMovementType.UnknownIndyOnly.name).toBe("Unknown (Indy)");
 		expect(CharMovementType.Unspecific4.name).toBe("Unspecific4");
 		expect(CharMovementType.Unspecific5.name).toBe("Unspecific5");
-		expect(CharMovementType.Unspecific6.name).toBe("Unspecific6");
+		expect(CharMovementType.Droid.name).toBe("Droid");
 		expect(CharMovementType.Wander.name).toBe("Wander");
 		expect(CharMovementType.Patrol.name).toBe("Patrol");
 		expect(CharMovementType.Scaredy.name).toBe("Scaredy");
@@ -41,7 +41,7 @@ describe("WebFun.Engine.Objects.CharMovementType", () => {
 		expect(CharMovementType.UnknownIndyOnly.rawValue).toBe(5);
 		expect(CharMovementType.Unspecific4.rawValue).toBe(6);
 		expect(CharMovementType.Unspecific5.rawValue).toBe(7);
-		expect(CharMovementType.Unspecific6.rawValue).toBe(8);
+		expect(CharMovementType.Droid.rawValue).toBe(8);
 		expect(CharMovementType.Wander.rawValue).toBe(9);
 		expect(CharMovementType.Patrol.rawValue).toBe(10);
 		expect(CharMovementType.Scaredy.rawValue).toBe(11);
