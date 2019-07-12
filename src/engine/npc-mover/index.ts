@@ -10,7 +10,7 @@ import unspecific2 from "./unspecific-2";
 import unspecific3 from "./unspecific-3";
 import unspecific4 from "./unspecific-4";
 import unspecific5 from "./unspecific-5";
-import unspecific6 from "./unspecific-6";
+import droid from "./droid";
 import scaredy from "./scaredy";
 import unknownIndyOnly from "./unknown-indy-only";
 
@@ -22,7 +22,7 @@ const dispatch = new Map([
 	[CharMovementType.Sit, sit],
 	[CharMovementType.Unspecific4, unspecific4],
 	[CharMovementType.Unspecific5, unspecific5],
-	[CharMovementType.Unspecific6, unspecific6],
+	[CharMovementType.Droid, droid],
 	[CharMovementType.Wander, wander],
 	[CharMovementType.Patrol, patrol],
 	[CharMovementType.Scaredy, scaredy],
