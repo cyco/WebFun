@@ -13,7 +13,8 @@ export const enum Attributes {
 	Item = 1 << 7,
 	Character = 1 << 8,
 
-	Edible = Character & (1 << 22)
+	Edible = Character | (1 << 22),
+	Doorway = Floor | (1 << 15)
 }
 
 export const Attribute = {
@@ -68,6 +69,9 @@ export const Subtype = {
 		Hero: 16,
 		Enemy: 17,
 		NPC: 18
+	},
+	Floor: {
+		Doorway: 16
 	}
 };
 
@@ -134,7 +138,11 @@ export class Tile {
 	}
 
 	public isEdible() {
-		return (this.attributes & Attributes.Edible) !== 0;
+		return (this.attributes & Attributes.Edible) === Attributes.Edible;
+	}
+
+	public isDoorway() {
+		return (this._attributes & Attributes.Doorway) === Attributes.Doorway;
 	}
 
 	getAttribute(attr: number): boolean {

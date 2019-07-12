@@ -22,7 +22,7 @@ describe("WebFun.Engine.Objects.CharMovementType", () => {
 		expect(CharMovementType.Unspecific6.name).toBe("Unspecific6");
 		expect(CharMovementType.Wander.name).toBe("Wander");
 		expect(CharMovementType.Patrol.name).toBe("Patrol");
-		expect(CharMovementType.Unspecific7.name).toBe("Unspecific7");
+		expect(CharMovementType.Scaredy.name).toBe("Scaredy");
 		expect(CharMovementType.Animation.name).toBe("Animation");
 
 		expect(new CharMovementType().name).toBe("None");
@@ -44,7 +44,7 @@ describe("WebFun.Engine.Objects.CharMovementType", () => {
 		expect(CharMovementType.Unspecific6.rawValue).toBe(8);
 		expect(CharMovementType.Wander.rawValue).toBe(9);
 		expect(CharMovementType.Patrol.rawValue).toBe(10);
-		expect(CharMovementType.Unspecific7.rawValue).toBe(11);
+		expect(CharMovementType.Scaredy.rawValue).toBe(11);
 		expect(CharMovementType.Animation.rawValue).toBe(12);
 	});
 });

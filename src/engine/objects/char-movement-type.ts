@@ -9,7 +9,7 @@ class CharMovementType {
 	public static readonly Unspecific6 = new CharMovementType();
 	public static readonly Wander = new CharMovementType();
 	public static readonly Patrol = new CharMovementType();
-	public static readonly Unspecific7 = new CharMovementType();
+	public static readonly Scaredy = new CharMovementType();
 	public static readonly Animation = new CharMovementType();
 	public static readonly UnknownIndyOnly = new CharMovementType();
 
@@ -25,7 +25,7 @@ class CharMovementType {
 		CharMovementType.Unspecific6,
 		CharMovementType.Wander,
 		CharMovementType.Patrol,
-		CharMovementType.Unspecific7,
+		CharMovementType.Scaredy,
 		CharMovementType.Animation
 	];
 
@@ -55,8 +55,8 @@ class CharMovementType {
 				return "Wander";
 			case CharMovementType.Patrol:
 				return "Patrol";
-			case CharMovementType.Unspecific7:
-				return "Unspecific7";
+			case CharMovementType.Scaredy:
+				return "Scaredy";
 			case CharMovementType.Animation:
 				return "Animation";
 			case CharMovementType.UnknownIndyOnly:
