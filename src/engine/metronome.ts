@@ -29,6 +29,7 @@ class Metronome extends EventTarget {
 	private _renderCallback = () => this._executeRenderLoop();
 	private _updatesSuspended: boolean = false;
 	private _tickDuration = DefaultTickDuration;
+	private _tickCount: Uint32Array = null;
 
 	constructor() {
 		super();
@@ -38,6 +39,7 @@ class Metronome extends EventTarget {
 	start() {
 		this._stopped = false;
 		this._nextTick = 0;
+		this._tickCount = new Uint32Array(new ArrayBuffer(4));
 
 		if (this.tickDuration < MinimumFrameDuration) {
 			this._executeUpdateLoop();
@@ -51,6 +53,7 @@ class Metronome extends EventTarget {
 		if (this._stopped) return;
 		this._updateLoop = setTimeout(() => this._executeUpdateLoop(), this.tickDuration);
 		this.update();
+		this._tickCount[0]++;
 	}
 
 	private _executeRenderLoop() {
@@ -118,6 +121,10 @@ class Metronome extends EventTarget {
 
 	public get tickDuration() {
 		return this._tickDuration;
+	}
+
+	public get tickCount() {
+		return this._tickCount[0];
 	}
 }
 

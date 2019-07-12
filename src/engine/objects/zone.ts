@@ -48,6 +48,9 @@ class Zone {
 	}
 
 	getTileID(x: number, y: number, z: number): number {
+		if (x < 0 || x >= this._size.width || y < 0 || y >= this._size.height) {
+			return null;
+		}
 		return this.tileIDs[Zone.LAYERS * (y * this._size.width + x) + z];
 	}
 

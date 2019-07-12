@@ -2,26 +2,25 @@ import { Zone } from "src/engine/objects";
 import MoveCheckResult from "./move-check-result";
 import { Point } from "src/util";
 
-export const EvasionStrategy = () => ((performance.now() & 1) < 1 ? 1 : -1);
+export const EvasionStrategy = () => (((window as any).engine.metronome.tickCount & 1) < 1 ? 1 : -1);
 
-export default (source: Point, rel: Point, zone: Zone): MoveCheckResult => {
-	const a7 = false;
-	const target = source.byAdding(rel);
-	if (!zone.bounds.contains(target)) {
+export default (source: Point, rel: Point, zone: Zone, flag = false): MoveCheckResult => {
+	let result: MoveCheckResult;
+	let movingLeft: boolean;
+	let isFree = false;
+	let targetX = rel.x + source.x;
+	let targetY = rel.y + source.y;
+	const originalTargetX = rel.x + source.x;
+	const originalTargetY = rel.y + source.y;
+	let altX: number;
+	let altY: number;
+
+	if (targetX < 0 || targetY < 0 || zone.size.width <= targetX || zone.size.height <= targetY)
 		return MoveCheckResult.OutOfBounds;
-	}
-
-	if (!zone.getTile(target.x, target.y, Zone.Layer.Object)) {
-		return MoveCheckResult.Free;
-	}
 
 	const evade = EvasionStrategy();
-
-	let x = target.x;
-	let y = target.y;
-	let altX: number, altY: number;
-	let movingLeft = false;
-	let isFree = false;
+	//   evade = (GetTickCount() & 1) < 1 ? 1 : -1;
+	if (!zone.getTile(targetX, targetY, Zone.Layer.Object)) return MoveCheckResult.Free;
 
 	if (rel.x || !rel.y) {
 		if (rel.y) {
@@ -29,69 +28,98 @@ export default (source: Point, rel: Point, zone: Zone): MoveCheckResult => {
 		} else {
 			movingLeft = rel.x < 0;
 			if (rel.x) {
-				if (y - evade >= 0 && (zone.getTile(x, y - evade, Zone.Layer.Object) === null || a7)) {
-					y -= evade;
+				if (
+					targetY - evade >= 0 &&
+					(!zone.getTile(targetX, targetY - evade, Zone.Layer.Object) || flag)
+				) {
+					targetY -= evade;
 					isFree = true;
 				}
-				if (isFree) return returnAlternativePath();
-				altY = y + evade;
-				if (
-					zone.size.height <= y + evade ||
-					(zone.getTile(x, y + evade, Zone.Layer.Object) === null && !a7)
-				)
-					return returnAlternativePath();
 
-				y = altY;
+				if (isFree) {
+					return returnAlternativePath();
+				}
+
+				altY = targetY + evade;
+				if (
+					zone.size.height <= targetY + evade ||
+					(zone.getTile(targetX, targetY + evade, Zone.Layer.Object) && !flag)
+				) {
+					return ReturnBlockedOrAlternatePath();
+				}
+
+				targetY = altY;
 				isFree = true;
-				return returnAlternativePath();
+				return ReturnBlockedOrAlternatePath();
 			}
 		}
-		altX = x + 1;
-		if (!movingLeft) altX = x - 1;
-		if (zone.getTile(altX, y, Zone.Layer.Object) === null || a7) {
-			x = altX;
+		altX = targetX + 1;
+		if (!movingLeft) {
+			altX = targetX - 1;
+		}
+
+		if (!zone.getTile(altX, targetY, Zone.Layer.Object) || flag) {
+			targetX = altX;
 			isFree = true;
 		}
-		if (isFree) return returnAlternativePath();
-		altY = y + 1;
-		if (rel.y >= 0) altY = y - 1;
-		if (zone.getTile(x, altY, Zone.Layer.Object) === null && !a7) return returnAlternativePath();
-		y = altY;
+
+		if (isFree) {
+			return returnAlternativePath();
+		}
+
+		altY = targetY + 1;
+		if (rel.y >= 0) {
+			altY = targetY - 1;
+		}
+
+		if (zone.getTile(targetX, altY, Zone.Layer.Object) && !flag) {
+			return ReturnBlockedOrAlternatePath();
+		}
+
+		targetY = altY;
 		isFree = true;
-		return returnAlternativePath();
+		return ReturnBlockedOrAlternatePath();
 	}
 
-	if (x - evade >= 0 && (zone.getTile(x - evade, y, Zone.Layer.Object) === null || a7)) {
-		x -= evade;
+	if (targetX - evade >= 0 && (!zone.getTile(targetX - evade, targetY, Zone.Layer.Object) || flag)) {
+		targetX -= evade;
 		isFree = true;
 	}
 
 	if (!isFree) {
-		if (zone.size.width > x + evade && (zone.getTile(x + evade, y, Zone.Layer.Object) === null || a7)) {
-			x += evade;
+		if (
+			zone.size.width > targetX + evade &&
+			(!zone.getTile(targetX + evade, targetY, Zone.Layer.Object) || flag)
+		) {
+			targetX += evade;
 			isFree = true;
 		}
-	}
 
-	function returnAlternativePath() {
 		if (!isFree) return MoveCheckResult.Blocked;
-
-		if (y >= target.y) {
-			if (y <= target.y) {
-				if (x >= target.x) {
-					return MoveCheckResult.EvadeRight;
-					if (x <= target.x) return MoveCheckResult.Blocked; // Blocked
-				} else {
-					return MoveCheckResult.EvadeLeft;
-				}
-			} else {
-				return MoveCheckResult.EvadeDown;
-			}
-		} else {
-			return MoveCheckResult.EvadeUp;
-		}
-		return MoveCheckResult.Blocked;
 	}
 
 	return returnAlternativePath();
+
+	function ReturnBlockedOrAlternatePath() {
+		if (!isFree) return MoveCheckResult.Blocked;
+		return returnAlternativePath();
+	}
+
+	function returnAlternativePath() {
+		if (targetY >= originalTargetY) {
+			if (targetY <= originalTargetY) {
+				if (targetX >= originalTargetX) {
+					result = MoveCheckResult.EvadeRight;
+					if (targetX <= originalTargetX) result = MoveCheckResult.Blocked;
+				} else {
+					result = MoveCheckResult.EvadeLeft;
+				}
+			} else {
+				result = MoveCheckResult.EvadeDown;
+			}
+		} else {
+			result = MoveCheckResult.EvadeUp;
+		}
+		return result;
+	}
 };

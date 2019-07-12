@@ -11,7 +11,7 @@ import unspecific3 from "./unspecific-3";
 import unspecific4 from "./unspecific-4";
 import unspecific5 from "./unspecific-5";
 import unspecific6 from "./unspecific-6";
-import unspecific7 from "./unspecific-7";
+import scaredy from "./scaredy";
 import unknownIndyOnly from "./unknown-indy-only";
 
 const dispatch = new Map([
@@ -25,7 +25,7 @@ const dispatch = new Map([
 	[CharMovementType.Unspecific6, unspecific6],
 	[CharMovementType.Wander, wander],
 	[CharMovementType.Patrol, patrol],
-	[CharMovementType.Unspecific7, unspecific7],
+	[CharMovementType.Scaredy, scaredy],
 	[CharMovementType.Animation, animate],
 	[CharMovementType.UnknownIndyOnly, unknownIndyOnly]
 ]);
