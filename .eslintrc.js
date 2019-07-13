@@ -5,15 +5,15 @@ module.exports = {
 		"prettier/@typescript-eslint",
 		"plugin:prettier/recommended"
 	],
-	plugins: ["eslint-plugin-react"],
+	plugins: ["eslint-plugin-react", "only-warn"],
 	parserOptions: {
 		ecmaVersion: 2018,
 		sourceType: "module"
 	},
 	rules: {
-		eqeqeq: "error",
-		"react/jsx-uses-vars": "error",
-		"prefer-const": ["error", { destructuring: "all" }],
+		eqeqeq: "warn",
+		"react/jsx-uses-vars": "warn",
+		"prefer-const": ["warn", { destructuring: "all" }],
 		"no-unused-vars": ["warn", { argsIgnorePattern: "^_[a-zA-Z0-9_]*$" }],
 		"@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_[a-zA-Z0-9_]*$" }],
 		"no-new-wrappers": "off",
