@@ -12,29 +12,8 @@ module.exports = {
 	},
 	rules: {
 		eqeqeq: "error",
-		whitespace: [true, "check-module"],
 		"react/jsx-uses-vars": "error",
-		"member-ordering": [
-			true,
-			{
-				order: [
-					"public-static-field",
-					"protected-static-field",
-					"private-static-field",
-					"public-static-method",
-					"protected-static-method",
-					"private-static-method",
-					"public-instance-field",
-					"protected-instance-field",
-					"private-instance-field",
-					"public-constructor",
-					"protected-constructor",
-					"private-constructor"
-				],
-				alphabetize: false
-			}
-		],
-		"prefer-const": ["error", {"destructuring": "all"}],
+		"prefer-const": ["error", { destructuring: "all" }],
 		"no-unused-vars": ["warn", { argsIgnorePattern: "^_[a-zA-Z0-9_]*$" }],
 		"@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_[a-zA-Z0-9_]*$" }],
 		"no-new-wrappers": "off",
@@ -47,6 +26,7 @@ module.exports = {
 		"@typescript-eslint/no-namespace": "off",
 		// temporarily disabled:
 		"sort-imports": "off",
-		"@typescript-eslint/explicit-member-accessibility": "off"
+		"@typescript-eslint/explicit-member-accessibility": "off",
+		"prettier/prettier": "warn"
 	}
 };
