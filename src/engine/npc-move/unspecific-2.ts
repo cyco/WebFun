@@ -114,7 +114,8 @@ export default (npc: NPC, zone: Zone, hero: Point): void => {
 	if (canActuallyMove) {
 		npc.position.x += xDistance;
 		npc.position.y += yDistance;
+		return performMove(npc, new Point(xDistance, yDistance), hero, zone);
 	}
 
-	return performMove(npc, new Point(xDistance, yDistance), hero, zone);
+	return performMove(npc, new Point(0, 0), hero, zone);
 };
