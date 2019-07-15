@@ -27,7 +27,7 @@ import TeleporterScene from "./teleport-scene";
 import TransitionScene from "./transition-scene";
 import ZoneSceneRenderer from "src/engine/rendering/zone-scene-renderer";
 import { NullIfMissing } from "src/engine/asset-manager";
-import moveNPC from "src/engine/npc-mover";
+import moveNPC from "src/engine/npc-move";
 
 class ZoneScene extends Scene {
 	private _zone: Zone;
