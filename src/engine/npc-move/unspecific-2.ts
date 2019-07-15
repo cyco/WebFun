@@ -23,9 +23,9 @@ export default (npc: NPC, zone: Zone, hero: Point): void => {
 
 	const HIDWORD = (val: number) => val;
 
-	const xDif = npc.position.x - hero.x;
-	const yDif = npc.position.y - hero.y;
-	if ((HIDWORD(xDif) ^ xDif) - HIDWORD(xDif) >= 2 || (HIDWORD(yDif) ^ yDif) - HIDWORD(yDif) >= 2) {
+	const xDiff = npc.position.x - hero.x;
+	const yDiff = npc.position.y - hero.y;
+	if ((HIDWORD(xDiff) ^ xDiff) - HIDWORD(xDiff) >= 2 || (HIDWORD(yDiff) ^ yDiff) - HIDWORD(yDiff) >= 2) {
 		flag = 0;
 		switch (npc.field30 + 1) {
 			case 0:
