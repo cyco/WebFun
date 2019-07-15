@@ -77,7 +77,8 @@ export default (npc: NPC, zone: Zone, hero: Point): void => {
 	if (tile && !tile.isDoorway()) {
 		npc.position.x += rel.x;
 		npc.position.y += rel.y;
+		return performMove(npc, rel, hero, zone);
 	}
 
-	return performMove(npc, rel, hero, zone);
+	return performMove(npc, new Point(0, 0), hero, zone);
 };
