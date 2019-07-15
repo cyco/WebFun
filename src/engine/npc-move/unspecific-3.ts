@@ -1,11 +1,10 @@
 import { NPC, Zone } from "src/engine/objects";
 import { Point, rand } from "src/util";
 import { performMove, moveCheck, MoveCheckResult } from "./helpers";
+import { abs } from "src/std/math";
 
 export default (npc: NPC, zone: Zone, hero: Point): void => {
 	const rel: Point = new Point(0, 0);
-
-	const HIDWORD = (val: number) => val;
 
 	if (npc.lastDirectionChoice) {
 		rel.y = 0;
@@ -18,13 +17,9 @@ export default (npc: NPC, zone: Zone, hero: Point): void => {
 		return performMove(npc, new Point(0, 0), hero, zone);
 	}
 
-	const xDiff = npc.position.x - hero.x;
-	const yDiff = npc.position.y - hero.y;
-	if (
-		(HIDWORD(xDiff) ^ xDiff) - HIDWORD(xDiff) < 2 &&
-		(HIDWORD(yDiff) ^ yDiff) - HIDWORD(yDiff) < 2 &&
-		rand() % -2
-	) {
+	const xDiff = abs(npc.position.x - hero.x);
+	const yDiff = abs(npc.position.y - hero.y);
+	if (xDiff < 2 && yDiff < 2 && rand() % -2) {
 		if (npc.position.x <= hero.x) {
 			rel.x = 1;
 			if (npc.position.x >= hero.x) rel.x = 0;
