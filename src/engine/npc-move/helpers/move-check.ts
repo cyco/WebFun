@@ -18,9 +18,9 @@ export default (source: Point, rel: Point, zone: Zone, flag = false): MoveCheckR
 	if (targetX < 0 || targetY < 0 || zone.size.width <= targetX || zone.size.height <= targetY)
 		return MoveCheckResult.OutOfBounds;
 
-	const evade = EvasionStrategy();
-	//   evade = (GetTickCount() & 1) < 1 ? 1 : -1;
 	if (!zone.getTile(targetX, targetY, Zone.Layer.Object)) return MoveCheckResult.Free;
+
+	const evade = EvasionStrategy();
 
 	if (rel.x || !rel.y) {
 		if (rel.y) {
