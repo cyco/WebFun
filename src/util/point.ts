@@ -1,5 +1,6 @@
 import PointLike from "./point-like";
 import SizeLike from "./size-like";
+import { abs } from "src/std/math";
 
 class Point implements PointLike {
 	public x: number;
@@ -101,9 +102,14 @@ class Point implements PointLike {
 		return new Point(this).ceil();
 	}
 
+	byComparingTo(p2: Point): Point {
+		const p = this.bySubtracting(p2);
+		return new Point((p.x / abs(p.x)) | 0, (p.y / abs(p.y)) | 0);
+	}
+
 	abs(): this {
-		this.x = Math.abs(this.x);
-		this.y = Math.abs(this.y);
+		this.x = abs(this.x);
+		this.y = abs(this.y);
 
 		return this;
 	}

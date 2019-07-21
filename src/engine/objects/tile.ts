@@ -145,6 +145,10 @@ export class Tile {
 		return (this._attributes & Attributes.Doorway) === Attributes.Doorway;
 	}
 
+	public isCharacter() {
+		return (this._attributes & Attributes.Character) === Attributes.Character;
+	}
+
 	getAttribute(attr: number): boolean {
 		return !!(this._attributes & (1 << attr));
 	}

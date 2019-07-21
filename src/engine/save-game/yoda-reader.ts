@@ -167,8 +167,8 @@ class YodaReader extends Reader {
 		const flag2c = stream.getUint32() !== 0;
 		const flag34 = stream.getUint32() !== 0;
 		const hasItem = stream.getUint32() !== 0;
-		const lastDirectionChoice = stream.getInt16();
-		const field30 = stream.getInt16();
+		const cooldown = stream.getInt16();
+		const preferred = stream.getInt16();
 
 		for (let i = 0; i < 4; i++) {
 			stream.getUint32();
@@ -182,22 +182,22 @@ class YodaReader extends Reader {
 		npc.damageTaken = damageTaken;
 		npc.loot = loot;
 		npc.field10 = field10;
-		npc.bulletPosition = bulletX >= 0 && bulletY >= 0 ? new Point(bulletX, bulletY) : null;
+		npc.bulletX = bulletX;
+		npc.bulletY = bulletY;
 		npc.currentFrame = currentFrame;
-		npc.direction = directionX >= 0 && directionY >= 0 ? new Point(directionX, directionY) : null;
 		npc.facingDirection = facingDirection;
-		npc.lastDirectionChoice = lastDirectionChoice;
+		npc.cooldown = cooldown;
 		npc.flag18 = flag18;
 		npc.flag20 = flag20;
 		npc.flag1c = flag1c;
 		npc.directionX = directionX;
 		npc.directionY = directionY;
-		npc.field30 = field3c;
+		npc.field3c = field3c;
 		npc.field60 = field60;
 		npc.flag2c = flag2c;
 		npc.flag34 = flag34;
 		npc.hasItem = hasItem;
-		npc.field30 = field30;
+		npc.preferredDirection = preferred;
 
 		return npc;
 	}

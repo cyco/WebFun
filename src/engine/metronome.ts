@@ -53,7 +53,6 @@ class Metronome extends EventTarget {
 		if (this._stopped) return;
 		this._updateLoop = setTimeout(() => this._executeUpdateLoop(), this.tickDuration);
 		this.update();
-		this._tickCount[0]++;
 	}
 
 	private _executeRenderLoop() {
@@ -81,6 +80,7 @@ class Metronome extends EventTarget {
 
 		if (!this._updatesSuspended) {
 			await this.withSuspendedUpdates(async () => {
+				this._tickCount[0]++;
 				this.dispatchEvent(new MetronomeEvent(Event.BeforeTick));
 				await this.ontick(1);
 				this.dispatchEvent(new MetronomeEvent(Event.AfterTick));

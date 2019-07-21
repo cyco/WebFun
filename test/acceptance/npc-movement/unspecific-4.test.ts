@@ -1,0 +1,88 @@
+import { describeNPCMovement } from "test/helpers";
+import { CharMovementType } from "src/engine/objects";
+import { rand, Point } from "src/util";
+
+describeNPCMovement(CharMovementType.Unspecific4, (ctx, t, vars) => {
+	it("moves as expected", async () => {
+		const { npc } = vars;
+		ctx.engine.metronome.start();
+
+		let ticks = -1;
+		const tick = (i: number) => {
+			const p = t(Array.Repeat(".", i - ticks).join(""));
+			ticks = i;
+			return p;
+		};
+
+		await tick(2), expect(npc.position).toEqual(new Point(5, 2));
+		await tick(5), expect(npc.position).toEqual(new Point(4, 2));
+		await tick(8), expect(npc.position).toEqual(new Point(5, 2));
+		await tick(11), expect(npc.position).toEqual(new Point(6, 3));
+		await tick(14), expect(npc.position).toEqual(new Point(7, 3));
+		await tick(17), expect(npc.position).toEqual(new Point(6, 3));
+		await tick(20), expect(npc.position).toEqual(new Point(5, 4));
+		await tick(23), expect(npc.position).toEqual(new Point(6, 5));
+		await tick(26), expect(npc.position).toEqual(new Point(7, 6));
+		await tick(29), expect(npc.position).toEqual(new Point(7, 5));
+		await tick(32), expect(npc.position).toEqual(new Point(6, 4));
+		await tick(35), expect(npc.position).toEqual(new Point(7, 5));
+		await tick(38), expect(npc.position).toEqual(new Point(7, 4));
+		await tick(41), expect(npc.position).toEqual(new Point(7, 5));
+		await tick(44), expect(npc.position).toEqual(new Point(7, 6));
+		await tick(47), expect(npc.position).toEqual(new Point(7, 5));
+		await tick(53), expect(npc.position).toEqual(new Point(7, 4));
+		await tick(56), expect(npc.position).toEqual(new Point(7, 5));
+		await tick(59), expect(npc.position).toEqual(new Point(7, 6));
+		await tick(62), expect(npc.position).toEqual(new Point(7, 7));
+		await tick(65), expect(npc.position).toEqual(new Point(7, 6));
+		await tick(68), expect(npc.position).toEqual(new Point(7, 7));
+		await tick(71), expect(npc.position).toEqual(new Point(6, 7));
+		await tick(74), expect(npc.position).toEqual(new Point(6, 6));
+		await tick(77), expect(npc.position).toEqual(new Point(5, 7));
+		await tick(80), expect(npc.position).toEqual(new Point(5, 6));
+		await tick(83), expect(npc.position).toEqual(new Point(4, 5));
+		await tick(86), expect(npc.position).toEqual(new Point(3, 5));
+		await tick(89), expect(npc.position).toEqual(new Point(3, 4));
+		await tick(92), expect(npc.position).toEqual(new Point(3, 3));
+		await tick(95), expect(npc.position).toEqual(new Point(3, 4));
+		await tick(98), expect(npc.position).toEqual(new Point(2, 4));
+		await tick(101), expect(npc.position).toEqual(new Point(1, 4));
+		await tick(104), expect(npc.position).toEqual(new Point(1, 5));
+		await tick(107), expect(npc.position).toEqual(new Point(1, 6));
+		await tick(110), expect(npc.position).toEqual(new Point(1, 5));
+		await tick(113), expect(npc.position).toEqual(new Point(1, 4));
+		await tick(116), expect(npc.position).toEqual(new Point(2, 3));
+		await tick(119), expect(npc.position).toEqual(new Point(2, 4));
+		await tick(122), expect(npc.position).toEqual(new Point(3, 5));
+		await tick(125), expect(npc.position).toEqual(new Point(4, 5));
+		await tick(128), expect(npc.position).toEqual(new Point(5, 6));
+		await tick(131), expect(npc.position).toEqual(new Point(6, 6));
+		await tick(134), expect(npc.position).toEqual(new Point(6, 5));
+		await tick(137), expect(npc.position).toEqual(new Point(5, 5));
+		await tick(140), expect(npc.position).toEqual(new Point(6, 5));
+		await tick(143), expect(npc.position).toEqual(new Point(6, 4));
+		await tick(146), expect(npc.position).toEqual(new Point(5, 4));
+		await tick(149), expect(npc.position).toEqual(new Point(5, 3));
+		await tick(152), expect(npc.position).toEqual(new Point(6, 2));
+		await tick(155), expect(npc.position).toEqual(new Point(7, 1));
+		await tick(158), expect(npc.position).toEqual(new Point(7, 2));
+		await tick(161), expect(npc.position).toEqual(new Point(6, 1));
+		await tick(164), expect(npc.position).toEqual(new Point(7, 1));
+		await tick(167), expect(npc.position).toEqual(new Point(7, 2));
+		await tick(170), expect(npc.position).toEqual(new Point(7, 1));
+		await tick(176), expect(npc.position).toEqual(new Point(7, 2));
+		await tick(179), expect(npc.position).toEqual(new Point(6, 2));
+		await tick(182), expect(npc.position).toEqual(new Point(5, 1));
+		await tick(185), expect(npc.position).toEqual(new Point(6, 1));
+		await tick(188), expect(npc.position).toEqual(new Point(5, 1));
+		await tick(191), expect(npc.position).toEqual(new Point(4, 2));
+		await tick(194), expect(npc.position).toEqual(new Point(3, 2));
+		await tick(197), expect(npc.position).toEqual(new Point(3, 1));
+		await tick(200), expect(npc.position).toEqual(new Point(2, 1));
+		await tick(203), expect(npc.position).toEqual(new Point(3, 2));
+		await tick(206), expect(npc.position).toEqual(new Point(2, 2));
+		await tick(209), expect(npc.position).toEqual(new Point(1, 2));
+
+		expect(rand()).toBe(3163);
+	});
+});

@@ -35,7 +35,7 @@ module.exports = AtomWebFun =
         }
     })
     @browserWindow.on('closed', -> @browserWindow = null)
-    @browserWindow.loadURL("http://localhost:8080")
+    @browserWindow.loadURL("https://webfun.local:8080")
     @browserWindow.show()
     @browserWindow.openDevTools({ mode: 'detach' })
 

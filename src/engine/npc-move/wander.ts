@@ -1,83 +1,46 @@
-import { NPC, Zone } from "src/engine/objects";
-import { Point, randmod } from "src/util";
-import { moveCheck, MoveCheckResult, findTileIdForCharFrameWithDirection } from "./helpers";
+import { NPC, Zone } from "../objects";
+import { Point, randmod, Size } from "src/util";
+import {
+	noMovement,
+	canPerformMeleeAttack,
+	performMoveAfterDoorwayCheck,
+	moveCheck,
+	convertToDirectionPoint,
+	MoveCheckResult,
+	even,
+	performMeleeAttackIfUnarmed
+} from "./helpers";
+import { Engine } from "src/engine";
 
-export default (npc: NPC, zone: Zone, hero: Point): void => {
-	let relX = 0,
-		relY = 0;
-	// npc.lastDirectionChoice <-- direction change cooldown
-	// npc.field30 <-- current direction
-	if (npc.lastDirectionChoice) {
-		relX = 0;
-		relY = 0;
-		npc.lastDirectionChoice -= 1;
-	} else {
-		switch (npc.field30 + 1) {
-			case 0:
-				relX = 0;
-				relY = -1;
-				break;
-			case 1:
-				relX = 0;
-				relY = 1;
-				break;
-			case 2:
-				relX = 1;
-				relY = 0;
-				break;
-			case 3:
-				relX = -1;
-				relY = 0;
-				break;
-		}
+export default (npc: NPC, zone: Zone, engine: Engine) => {
+	const tickCount = engine.metronome.tickCount;
+
+	if (npc.cooldown) {
+		npc.cooldown--;
+		return noMovement(npc, zone, engine);
+	}
+	if (even(tickCount)) return noMovement(npc, zone, engine);
+
+	let direction: Point;
+	direction = convertToDirectionPoint(npc.preferredDirection);
+
+	const hero = engine.hero.location;
+	const distanceToHero = npc.position.bySubtracting(hero).abs();
+	const directionToHero = hero
+		.bySubtracting(npc.position)
+		.dividedBy(new Size(distanceToHero.x, distanceToHero.y));
+	directionToHero.x |= 0;
+	directionToHero.y |= 0;
+
+	if (moveCheck(npc.position, direction, zone, false) !== MoveCheckResult.Free) {
+		direction = new Point(0, 0);
+		npc.cooldown = randmod(3);
+		npc.preferredDirection = randmod(4) - 1;
+	}
+	if (canPerformMeleeAttack(direction, npc, hero)) {
+		performMeleeAttackIfUnarmed(true, npc, engine);
+		return noMovement(npc, zone, engine);
 	}
 
-	let canMove = moveCheck(npc.position, new Point(relX, relY), zone);
-	if (canMove !== MoveCheckResult.Free) {
-		relX = 0;
-		relY = 0;
-		npc.lastDirectionChoice = randmod(3);
-		npc.field30 = randmod(4) - 1; // TODO: check random
-	}
-
-	if (npc.position.byAdding(relX, relY).isEqualTo(hero)) {
-		relX = 0;
-		relY = 0;
-
-		if (npc.face.reference === -1 && npc.face.damage >= 0) {
-			// TODO: Change health
-			// TODO: Play hurt sound
-		}
-	}
-
-	const target = npc.position.byAdding(relX, relY);
-	if (zone.getTile(target.x, target.y, Zone.Layer.Object)) {
-		// TODO: goto no movement
-		return;
-	}
-
-	const targetTile = zone.getTile(target.x, target.y, Zone.Layer.Object);
-	if (!targetTile) {
-		canMove = MoveCheckResult.Free;
-	}
-
-	if (canMove === MoveCheckResult.Free) {
-		npc.position = target;
-	}
-
-	// perform move
-	zone.setTile(null, npc.position.x - relX, npc.position.y - relY, Zone.Layer.Object);
-	let tile = findTileIdForCharFrameWithDirection(npc.face.frames.first(), new Point(relX, relY));
-
-	// look at hero if he's in the same column or row
-	if (hero.x === npc.position.x && hero.y < npc.position.y) {
-		tile = findTileIdForCharFrameWithDirection(npc.face.frames.first(), new Point(0, -1));
-	} else if (hero.x === npc.position.x && hero.y > npc.position.y) {
-		tile = findTileIdForCharFrameWithDirection(npc.face.frames.first(), new Point(0, 1));
-	} else if (hero.y === npc.position.y && hero.x < npc.position.x) {
-		tile = findTileIdForCharFrameWithDirection(npc.face.frames.first(), new Point(-1, 0));
-	} else if (hero.y === npc.position.y && hero.x > npc.position.x) {
-		tile = findTileIdForCharFrameWithDirection(npc.face.frames.first(), new Point(1, 0));
-	}
-	zone.setTile(tile, npc.position.x, npc.position.y, Zone.Layer.Object);
+	return performMoveAfterDoorwayCheck(direction, npc, zone, engine);
 };

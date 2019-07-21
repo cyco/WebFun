@@ -496,7 +496,7 @@ class ZoneScene extends Scene {
 	}
 
 	private _moveNPCs() {
-		this._zone.npcs.forEach(npc => moveNPC(npc, this.zone, this.engine.hero.location));
+		this._zone.npcs.forEach(npc => moveNPC(npc, this.zone, this.engine));
 	}
 
 	prepareCamera() {

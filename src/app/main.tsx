@@ -43,8 +43,23 @@ const main = async () => {
 	ComponentRegistry.sharedRegistry.registerComponents(AppComponents as any);
 	ComponentRegistry.sharedRegistry.registerComponents(WindowComponents as any);
 
+	if (false) {
+		const gameController = new GameController(Yoda, Settings.url.yoda);
+		gameController.newStory();
+		gameController.show();
+
+		if (Settings.debug) {
+			initializeDebug(gameController);
+		}
+
+		return;
+	}
+
 	if (true) {
-		const gameController = new GameController();
+		const gameController = new GameController(
+			Yoda,
+			Object.assign({}, Settings.url.yoda, { data: "./game-data/construct.data" })
+		);
 		gameController.newStory();
 		gameController.show();
 
@@ -60,13 +75,15 @@ const main = async () => {
 	editorWindow.center();
 	const dataStreams = await FileLoader.loadAsStream("game-data/construct.data");
 	await editorWindow.loadStream(dataStreams, Yoda);
-
+	initializeDebug();
+	return;
 	const saveGameStream = await FileLoader.loadAsStream("save-games/construct.wld");
 	await editorWindow.editor.loadSaveGameStream(saveGameStream);
 };
 
 const rescueData = () => {
 	editorWindow.editor.save();
+	return;
 	(editorWindow.editor.inspectors.find(
 		i => i instanceof SaveGameInspector
 	) as SaveGameInspector).downloadSaveGame();
