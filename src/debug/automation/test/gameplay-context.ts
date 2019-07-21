@@ -20,8 +20,8 @@ class GameplayContext {
 	public engine: Engine;
 	private debug: boolean;
 	private inputManager: ReplayingInputManager;
-	private sceneView: SceneView;
-	private onInputEnd: (_: Event) => void;
+	public sceneView: SceneView;
+	public onInputEnd: (_: Event) => void;
 
 	constructor(debug = false) {
 		this.debug = debug;
@@ -72,53 +72,53 @@ class GameplayContext {
 		return await this.playStory(story, input, debug);
 	}
 
-	public playStory(story: Story, input: string[], debug = false): Promise<void> {
+	public setupEngine(story: Story, input: string[], debug = false) {
+		const { sceneView, engine, inputManager } = this;
+
+		Settings.debug = debug;
+		Settings.skipDialogs = true;
+		Settings.skipTransitions = true;
+		Settings.pickupItemsAutomatically = true;
+
+		document.body.appendChild(sceneView);
+
+		engine.story = story;
+		story.generateWorld(engine.assetManager, engine.persistentState.gamesWon);
+
+		engine.metronome.tickDuration = 1;
+		engine.metronome.ontick = (delta: number) => engine.update(delta);
+		engine.metronome.onrender = () => engine.render();
+
+		sceneView.manager.engine = engine;
+
+		const zone =
+			story instanceof SimulatedStory
+				? engine.world.at(4, 5).zone
+				: engine.assetManager.find(Zone, z => z.isLoadingZone());
+		const zoneScene = new ZoneScene(engine, zone);
+		engine.currentZone = zone;
+		engine.currentWorld = engine.world.locationOfZone(zone) ? engine.world : null;
+		engine.hero.appearance = engine.assetManager.find(Char, c => c.isHero());
+		engine.sceneManager.pushScene(zoneScene);
+		if (story instanceof SimulatedStory) {
+			engine.hero.visible = true;
+			engine.hero.location = new Point(0, 0);
+		} else {
+			engine.currentWorld = story.dagobah;
+		}
+
+		inputManager.engine = engine;
+		inputManager.input = input;
+	}
+
+	public async playStory(story: Story, input: string[], debug = false) {
 		return new Promise(async resolve => {
-			const { sceneView, engine, inputManager } = this;
-
-			Settings.debug = debug;
-			Settings.skipDialogs = true;
-			Settings.skipTransitions = true;
-			Settings.pickupItemsAutomatically = true;
-
-			try {
-				document.body.appendChild(sceneView);
-
-				engine.story = story;
-				story.generateWorld(engine.assetManager, engine.persistentState.gamesWon);
-
-				engine.metronome.tickDuration = 1;
-				engine.metronome.ontick = (delta: number) => engine.update(delta);
-				engine.metronome.onrender = () => engine.render();
-
-				sceneView.manager.engine = engine;
-
-				const zone =
-					story instanceof SimulatedStory
-						? engine.world.at(4, 5).zone
-						: engine.assetManager.find(Zone, z => z.isLoadingZone());
-				const zoneScene = new ZoneScene(engine, zone);
-				engine.currentZone = zone;
-				engine.currentWorld = engine.world.locationOfZone(zone) ? engine.world : null;
-				engine.hero.appearance = engine.assetManager.find(Char, c => c.isHero());
-				engine.sceneManager.pushScene(zoneScene);
-				if (story instanceof SimulatedStory) {
-					engine.hero.visible = true;
-					engine.hero.location = new Point(0, 0);
-				} else {
-					engine.currentWorld = story.dagobah;
-				}
-
-				inputManager.engine = engine;
-				inputManager.input = input;
-				this.onInputEnd = () => resolve();
-				inputManager.addEventListener(ReplayingInputManager.Event.InputEnd, this.onInputEnd);
-				engine.inputManager.addListeners();
-				engine.metronome.start();
-			} catch (e) {
-				console.log("error", e);
-				resolve();
-			}
+			this.setupEngine(story, input, debug);
+			this.onInputEnd = () => resolve();
+			const inputManager = this.engine.inputManager as ReplayingInputManager;
+			inputManager.addEventListener(ReplayingInputManager.Event.InputEnd, this.onInputEnd);
+			inputManager.addListeners();
+			this.engine.metronome.start();
 		});
 	}
 

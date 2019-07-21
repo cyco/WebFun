@@ -24,14 +24,14 @@ class Zone {
 	public random: number = 0;
 	public sharedCounter: number = 0;
 
-	protected _npcs: NPC[] = null;
+	protected _npcs: NPC[] = [];
 	protected _id: number = -1;
 	protected _name: string = "";
 	protected _planet: Planet = Planet.NONE;
 	protected _size: Size = null;
 	protected _type: Type = null;
 	protected _tileIDs: Int16Array = new Int16Array(0);
-	protected _hotspots: Hotspot[] = null;
+	protected _hotspots: Hotspot[] = [];
 	protected _tileStore: any = null;
 	protected _zoneStore: any = null;
 	protected _goalItems: Tile[] = [];
@@ -40,7 +40,7 @@ class Zone {
 	protected _puzzleNPCs: Tile[] = [];
 	protected _izx4Unknown: number = 0;
 	protected _izaxUnknown: number = 0;
-	protected _actions: Action[] = null;
+	protected _actions: Action[] = [];
 	public doorInLocation: Point = new Point(0, 0);
 
 	get doors(): Hotspot[] {

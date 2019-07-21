@@ -20,6 +20,8 @@ class Char {
 	protected _health: number = null;
 	protected _damage: number = null;
 
+	public tile: Tile;
+
 	get id() {
 		return this._id;
 	}

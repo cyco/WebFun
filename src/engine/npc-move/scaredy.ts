@@ -1,51 +1,49 @@
-import { NPC, Zone, Tile } from "src/engine/objects";
-import { Point, randmod } from "src/util";
-import { abs } from "src/std/math";
-import { movePartial, performMove } from "./helpers";
+import { NPC, Zone } from "../objects";
+import { Point, Size } from "src/util";
+import randomDirection from "./helpers/random-direction";
+import {
+	evade,
+	noMovement,
+	canPerformMeleeAttack,
+	moveCheck,
+	performMeleeAttack,
+	performMove
+} from "./helpers";
+import { Engine } from "src/engine";
 
-const distanceLessThan = (p1: Point, p2: Point, max: number): boolean =>
-	abs(p1.x - p2.x) < max && abs(p1.y - p2.y) < max;
-const diff = (p1: Point, p2: Point) => {
-	const p = p1.bySubtracting(p2);
-	return new Point(p.x / abs(p.x) || 0, p.y / abs(p.y) || 0);
-};
-const randRel = () => new Point(randmod(3) - 1, randmod(3) - 1);
+export default (npc: NPC, zone: Zone, engine: Engine) => {
+	let direction: Point;
+	const hero = engine.hero.location;
+	const distanceToHero = npc.position.bySubtracting(hero).abs();
+	const directionToHero = hero
+		.bySubtracting(npc.position)
+		.dividedBy(new Size(distanceToHero.x, distanceToHero.y));
+	directionToHero.x |= 0;
+	directionToHero.y |= 0;
+	const directionAwayFromHero = directionToHero.byScalingBy(-1);
 
-export default (npc: NPC, zone: Zone, hero: Point): void => {
-	let target: Point;
-	let rel = distanceLessThan(npc.position, hero, 6) ? diff(npc.position, hero) : randRel();
+	if (distanceToHero.x < 6 && distanceToHero.y < 6) {
+		direction = directionAwayFromHero;
+	} else direction = randomDirection();
 
-	do {
-		rel = movePartial(npc.position, rel, zone);
-
-		target = npc.position.byAdding(rel);
-		if (target.isEqualTo(hero)) {
-			target = npc.position;
-			rel = new Point(0, 0);
-
-			if (npc.face.damage) {
-				// TODO: play sound hurt
-				// TODO: damage hero
-			}
+	while (1) {
+		direction = evade(direction, moveCheck(npc.position, direction, zone, false));
+		if (canPerformMeleeAttack(direction, npc, hero)) {
+			performMeleeAttack(npc, engine);
+			return noMovement(npc, zone, engine);
 		}
 
-		if (zone.getTile(target.x, target.y, Zone.Layer.Object)) {
-			return;
-		}
+		const target = direction.byAdding(npc.position);
+		if (zone.getTile(target.x, target.y, Zone.Layer.Object)) return noMovement(npc, zone, engine);
 
 		const tile = zone.getTile(target.x, target.y, Zone.Layer.Floor);
-		if (!tile) {
-			return;
-		}
+		if (!tile) return noMovement(npc, zone, engine);
 
 		if (!tile.isDoorway()) {
-			break;
+			npc.position.add(direction);
+			return performMove(npc, direction, true, zone, engine);
 		}
 
-		rel = randRel();
-		console.log(rel);
-	} while (true);
-
-	npc.position = target;
-	performMove(npc, rel, hero, zone);
+		direction = randomDirection();
+	}
 };

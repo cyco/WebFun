@@ -13,8 +13,6 @@ class NPC {
 	protected _dropsLoot: boolean = false;
 	protected _data: number[] = Array.Repeat(-1, 0x20);
 	private _damageTaken: number = 0;
-	public bulletPosition: Point = null;
-	public direction: Point = null;
 	public field10: number = 0;
 	public bulletX: number = 0;
 	public bulletY: number = 0;
@@ -22,10 +20,10 @@ class NPC {
 	public flag18: boolean = false;
 	public flag1c: boolean = false;
 	public flag20: boolean = false;
-	public lastDirectionChoice: number = 0;
+	public cooldown: number = 0;
 	public hasItem: boolean = false;
 	public flag2c: boolean = false;
-	public field30: number = 1;
+	public preferredDirection: number = 1;
 	public field32: number = 0;
 	public flag34: boolean = false;
 	public directionX: number = 0;
@@ -34,6 +32,9 @@ class NPC {
 	public facingDirection: CharFrameEntry = CharFrameEntry.Up;
 	public field60: number = 0;
 	public field62: number = 0;
+
+	// TODO: Fix:
+	public currentActionFrame: number = 0;
 
 	get id() {
 		return this._id;
@@ -73,6 +74,40 @@ class NPC {
 
 		this._damageTaken += d;
 		this._damageTaken = min(this._damageTaken, maxDamage);
+	}
+
+	public get x() {
+		return this.position.x;
+	}
+
+	public set x(v) {
+		this.position.x = v;
+	}
+
+	public get y() {
+		return this.position.y;
+	}
+
+	public set y(v) {
+		this.position.y = v;
+	}
+
+	public set direction(d: Point) {
+		this.directionX = d.x;
+		this.directionY = d.y;
+	}
+
+	public get direction() {
+		return new Point(this.directionX, this.directionY);
+	}
+
+	public set bullet(d: Point) {
+		this.bulletX = d.x;
+		this.bulletY = d.y;
+	}
+
+	public get bullet() {
+		return new Point(this.bulletX, this.bulletY);
 	}
 }
 

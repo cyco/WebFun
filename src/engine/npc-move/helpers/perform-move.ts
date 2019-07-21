@@ -1,20 +1,68 @@
-import { Zone, NPC } from "src/engine/objects";
-import { Point } from "src/util";
-import findTileIdForCharFrameWithDirection from "./find-tile-id-for-char-frame-with-direction";
+import { NPC, Zone, CharMovementType } from "src/engine/objects";
+import { Point, Size } from "src/util";
+import { Engine } from "src/engine";
+import YodaViewRedrawTile from "./yoda-view-redraw";
+import CharSetDefaultFace from "./char-set-default-face";
+import ZoneSetTileAt from "./zone-set-tile-at";
 
-export default (npc: NPC, rel: Point, hero: Point, zone: Zone) => {
-	zone.setTile(null, npc.position.x - rel.x, npc.position.y - rel.y, Zone.Layer.Object);
-	let tile = findTileIdForCharFrameWithDirection(npc.face.frames.first(), new Point(rel.x, rel.y));
-
-	// look at hero if he's in the same column or row
-	if (hero.x === npc.position.x && hero.y < npc.position.y) {
-		tile = findTileIdForCharFrameWithDirection(npc.face.frames.first(), new Point(0, -1));
-	} else if (hero.x === npc.position.x && hero.y > npc.position.y) {
-		tile = findTileIdForCharFrameWithDirection(npc.face.frames.first(), new Point(0, 1));
-	} else if (hero.y === npc.position.y && hero.x < npc.position.x) {
-		tile = findTileIdForCharFrameWithDirection(npc.face.frames.first(), new Point(-1, 0));
-	} else if (hero.y === npc.position.y && hero.x > npc.position.x) {
-		tile = findTileIdForCharFrameWithDirection(npc.face.frames.first(), new Point(1, 0));
+function maybeRestoreFaceThenDraw(npc: NPC, direction: Point, zone: Zone) {
+	if (npc.flag34) {
+		CharSetDefaultFace(npc.face, direction);
+		npc.flag34 = false;
 	}
-	zone.setTile(tile, npc.position.x, npc.position.y, Zone.Layer.Object);
+	YodaViewRedrawTile(npc.position, zone);
+}
+
+export default (npc: NPC, direction: Point, move: boolean, zone: Zone, engine: Engine) => {
+	const hero = engine.hero.location;
+	const distanceToHero = npc.position.bySubtracting(hero).abs();
+	const directionToHero = hero
+		.bySubtracting(npc.position)
+		.dividedBy(new Size(distanceToHero.x, distanceToHero.y));
+	directionToHero.x |= 0;
+	directionToHero.y |= 0;
+
+	if (!npc.face) {
+		// TODO: this was break and might have jumped to handle bullet
+		YodaViewRedrawTile(npc.position, zone);
+		return;
+	}
+
+	console.assert(npc.face.movementType !== CharMovementType.Animation);
+	console.assert(npc.face.movementType !== CharMovementType.Unspecific3);
+
+	if (direction.x || direction.y) {
+		if (move) {
+			ZoneSetTileAt(engine, zone, npc.position.bySubtracting(direction), -1);
+			YodaViewRedrawTile(npc.position.bySubtracting(direction), zone);
+			CharSetDefaultFace(npc.face, direction);
+		} else if (npc.flag34) {
+			CharSetDefaultFace(npc.face, direction);
+			npc.flag34 = false;
+		}
+		return maybeRestoreFaceThenDraw(npc, direction, zone);
+	}
+
+	if (npc.x === hero.x) {
+		direction.x = -1;
+		if (npc.x <= hero.x) direction.x = 0;
+	} else {
+		if (npc.y !== hero.y) {
+			return maybeRestoreFaceThenDraw(npc, direction, zone);
+		}
+		if (npc.x >= hero.x) {
+			direction.x = -1;
+			if (npc.x <= hero.x) direction.x = 0;
+		} else {
+			direction.x = 1;
+		}
+	}
+	if (npc.y >= hero.y) {
+		direction.y = -1;
+		if (npc.y <= hero.y) direction.y = 0;
+	} else {
+		direction.y = 1;
+	}
+	CharSetDefaultFace(npc.face, direction);
+	return maybeRestoreFaceThenDraw(npc, direction, zone);
 };
