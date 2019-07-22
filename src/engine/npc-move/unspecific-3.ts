@@ -1,7 +1,7 @@
 import { NPC, Zone, Sound } from "../objects";
 import { Point, randmod, Size } from "src/util";
 import randomDirection from "./helpers/random-direction";
-import { evade, canPerformMeleeAttack, moveCheck, playSound, changeHealth } from "./helpers";
+import { evade, canPerformMeleeAttack, moveCheck, playSound } from "./helpers";
 import { Engine } from "src/engine";
 import YodaViewRedrawTile from "./helpers/yoda-view-redraw";
 import CharSetDefaultFace from "./helpers/char-set-default-face";
@@ -14,7 +14,7 @@ function _noMovement(npc: NPC, zone: Zone, engine: Engine) {
 function _performMeleeAttackIfUnarmed(hit: boolean, npc: NPC, zone: Zone, engine: Engine) {
 	if (npc.face.reference < 0 && npc.face.damage >= 0 && hit) {
 		playSound(engine.assetManager.get(Sound, engine.type.sounds.Hurt), engine);
-		changeHealth(npc.face.damage, engine);
+		engine.hero.health -= npc.face.damage;
 	}
 	return _noMovement(npc, zone, engine);
 }

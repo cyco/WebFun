@@ -5,7 +5,6 @@ import {
 	evade,
 	noMovement,
 	playSound,
-	changeHealth,
 	canPerformMeleeAttack,
 	performMoveAfterDoorwayCheck,
 	moveCheck
@@ -52,7 +51,7 @@ export default (npc: NPC, zone: Zone, engine: Engine) => {
 		direction = new Point(0, 0);
 		if (npc.face.damage >= 0) {
 			playSound(engine.assetManager.get(Sound, engine.type.sounds.Hurt), engine);
-			changeHealth(npc.face.damage, engine);
+			engine.hero.health -= npc.face.damage;
 		}
 		npc.currentFrame++;
 		if (npc.currentFrame > 1) {

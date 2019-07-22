@@ -8,7 +8,6 @@ import evade from "./evade";
 import randomDirection from "./random-direction";
 import noMovement from "./no-movement";
 import playSound from "./play-sound";
-import changeHealth from "./change-health";
 import performMoveAfterDoorwayCheck from "./perform-move-after-doorway-check";
 import convertToDirectionPoint from "./convert-to-direction-point";
 import performMeleeAttackIfUnarmed from "./perform-melee-attack-if-unarmed";
@@ -28,7 +27,6 @@ export {
 	randomDirection,
 	noMovement,
 	playSound,
-	changeHealth,
 	performMoveAfterDoorwayCheck,
 	convertToDirectionPoint,
 	performMeleeAttackIfUnarmed,
