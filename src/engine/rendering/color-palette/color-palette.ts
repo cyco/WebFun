@@ -31,7 +31,7 @@ class ColorPalette extends Uint32Array {
 	}
 
 	private static Create(palette: Uint32Array): ColorPalette {
-		// HACK: In order to support array syntax (e.g. palette[5]) without performance penalities we just insert
+		// HACK: In order to support array syntax (e.g. palette[5]) without performance penalties we just insert
 		// ColorPalette into the prototype chain of the existing Uint32Array.
 		// Usage of __proto__ is non-standard and will break in the future.
 		(palette as any).__proto__ = ColorPalette.prototype;
