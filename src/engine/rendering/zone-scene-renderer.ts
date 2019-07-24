@@ -1,16 +1,11 @@
-import { Tile, Zone, NPC } from "src/engine/objects";
+import { Tile, Zone } from "src/engine/objects";
 
 import Renderer from "src/engine/rendering/renderer";
 import ColorPalette from "src/engine/rendering/color-palette";
 import Sprite from "src/engine/rendering/sprite";
 import Engine from "src/engine/engine";
-import Hotspot from "../objects/hotspot";
 import Settings from "src/settings";
-import { rgba, Rectangle, Size } from "src/util";
-import { round } from "src/std/math";
-
-const NPCHealthBarHeight = 12;
-const NPCHealthBarInset = 4;
+import { highlightHero, highlightHotspots, highlightNPCs } from "src/debug/rendering";
 
 class ZoneSceneRenderer {
 	public render(zone: Zone, engine: Engine, renderer: Renderer, palette: ColorPalette, sprites: Sprite[]) {
@@ -121,63 +116,16 @@ class ZoneSceneRenderer {
 		result.data.set(byteArray);
 		renderer.renderImageData(result, 0, 0);
 
-		if (!hero.visible && Settings.drawHeroTile && renderer.fillRect instanceof Function) {
-			// always show hero while debugging
-			renderer.fillRect(
-				(hero.location.x + offset.x) * Tile.WIDTH,
-				(hero.location.y + offset.y) * Tile.HEIGHT,
-				Tile.WIDTH,
-				Tile.HEIGHT,
-				rgba(0, 0, 255, 0.3)
-			);
+		if (!hero.visible && Settings.drawHeroTile) {
+			highlightHero(renderer, hero.location, offset);
 		}
 
-		if (Settings.drawHotspots && renderer.fillRect instanceof Function) {
-			zone.hotspots.forEach((h: Hotspot): void => {
-				renderer.fillRect(
-					(h.x + offset.x) * Tile.WIDTH,
-					(h.y + offset.y) * Tile.HEIGHT,
-					Tile.WIDTH,
-					Tile.HEIGHT,
-					h.enabled ? rgba(0, 255, 0, 0.3) : rgba(255, 0, 0, 0.3)
-				);
-			});
+		if (Settings.drawHotspots) {
+			highlightHotspots(renderer, zone.hotspots, offset);
 		}
 
-		if (Settings.drawNPCState && renderer.fillRect instanceof Function) {
-			zone.npcs.forEach((n: NPC): void => {
-				if (!n.alive) return;
-
-				const barArea = new Rectangle(
-					n.position
-						.byAdding(offset)
-						.byScalingBy(Tile.WIDTH)
-						.byAdding(0, Tile.HEIGHT - NPCHealthBarHeight),
-					new Size(Tile.WIDTH, NPCHealthBarHeight)
-				).inset(NPCHealthBarInset, NPCHealthBarInset);
-
-				renderer.fillRect(
-					barArea.origin.x,
-					barArea.origin.y,
-					barArea.size.width,
-					barArea.size.height,
-					rgba(0, 0, 0, 0.2)
-				);
-
-				const health = 1 - n.damageTaken / n.face.health;
-				let color = rgba(0, 255, 0, 0.6);
-				if (health < 1 / 2) color = rgba(255, 255, 0, 0.6);
-				if (health < 1 / 3) color = rgba(255, 0, 0, 0.6);
-
-				barArea.size.width = round(barArea.size.width * health);
-				renderer.fillRect(
-					barArea.origin.x,
-					barArea.origin.y,
-					barArea.size.width,
-					barArea.size.height,
-					color
-				);
-			});
+		if (Settings.drawNPCState) {
+			highlightNPCs(renderer, zone.npcs, offset);
 		}
 	}
 }
