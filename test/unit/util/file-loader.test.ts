@@ -15,6 +15,14 @@ describe("WebFun.Util.FileLoader", () => {
 		expect(result.getCharacters(5)).toBe("ASCII");
 	});
 
+	it("can report the loading progress back to the caller", async () => {
+		const progressCallback = jasmine.createSpy("spy");
+		await FileLoader.loadAsStream("base/test/fixtures/asciiString", progressCallback);
+
+		expect(progressCallback).toHaveBeenCalledWith(0);
+		expect(progressCallback).toHaveBeenCalledWith(1);
+	});
+
 	it("rejects the promise if the file can't be read", async () => {
 		try {
 			await FileLoader.loadAsStream("missing file");

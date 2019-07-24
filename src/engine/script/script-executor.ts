@@ -9,8 +9,6 @@ import { Zone } from "src/engine/objects";
 type ConditionStore = ConditionImplementation[];
 type InstructionStore = InstructionImplementation[];
 
-class ScriptExecutionError extends Error {}
-
 class ScriptExecutor {
 	protected _inUse: boolean = false;
 	protected _instructionExecutor: InstructionExecutor;
@@ -25,18 +23,12 @@ class ScriptExecutor {
 	}
 
 	prepeareExecution(mode: Mode, zone: Zone) {
-		if (this._inUse) {
-			console.warn("Executor is already prepeared!");
-			this._inUse = false;
-		}
-
+		console.assert(!this._inUse, "Executor is already prepeared!");
 		this._executor = this._buildExecutor(mode, zone);
 	}
 
 	protected async *_buildExecutor(mode: Mode, zone: Zone): AsyncIterator<ScriptResult> {
-		if (this._inUse) {
-			throw new ScriptExecutionError("Executor is already in use!");
-		}
+		console.assert(!this._inUse, "Executor is already in use!");
 		this._inUse = true;
 
 		actions: for (const action of zone.actions) {
@@ -82,15 +74,10 @@ class ScriptExecutor {
 			this._executor = null;
 		}
 		if ((normalizedResult as any) === Result.UpdateZone) {
-			console.log("update zone, emptying executor");
 			while (await this._executor.next()) console.log("wasted instruction result");
 			this._executor = null;
 		}
 		return normalizedResult;
-	}
-
-	public get inUse() {
-		return this._inUse;
 	}
 }
 

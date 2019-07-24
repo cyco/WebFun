@@ -10,7 +10,7 @@ const readAsText = function(): Promise<string> {
 	});
 };
 
-if (File) File.prototype.readAsText = File.prototype.readAsText || readAsText;
+File.prototype.readAsText = File.prototype.readAsText || readAsText;
 
 declare global {
 	interface File {

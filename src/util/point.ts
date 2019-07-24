@@ -102,11 +102,6 @@ class Point implements PointLike {
 		return new Point(this).ceil();
 	}
 
-	byComparingTo(p2: Point): Point {
-		const p = this.bySubtracting(p2);
-		return new Point((p.x / abs(p.x)) | 0, (p.y / abs(p.y)) | 0);
-	}
-
 	abs(): this {
 		this.x = abs(this.x);
 		this.y = abs(this.y);

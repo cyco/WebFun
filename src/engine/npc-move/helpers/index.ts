@@ -2,7 +2,6 @@ import findTileIdForCharFrameWithDirection from "./find-tile-id-for-char-frame-w
 import MoveCheckResult from "./move-check-result";
 import moveCheck from "./move-check";
 import findAnimationTileIdForCharFrame from "./find-animation-tile-id-for-char-frame";
-import placeIsWalkable from "./place-is-walkable";
 import performMove from "./perform-move";
 import evade from "./evade";
 import randomDirection from "./random-direction";
@@ -21,7 +20,6 @@ export {
 	findTileIdForCharFrameWithDirection,
 	moveCheck,
 	MoveCheckResult,
-	placeIsWalkable,
 	performMove,
 	evade,
 	randomDirection,

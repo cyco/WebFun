@@ -11,7 +11,7 @@ const readAsImage = async function(): Promise<Image> {
 	});
 };
 
-if (File) File.prototype.readAsImage = File.prototype.readAsImage || readAsImage;
+File.prototype.readAsImage = File.prototype.readAsImage || readAsImage;
 
 declare global {
 	interface File {
