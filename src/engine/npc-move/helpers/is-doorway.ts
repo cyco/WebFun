@@ -1,8 +1,7 @@
-import { Engine } from "src/engine";
-import { Tile } from "src/engine/objects";
-import { NullIfMissing } from "src/engine/asset-manager";
+import { Zone } from "src/engine/objects";
+import { Point } from "src/util";
 
-export default (engine: Engine, tileId: number): boolean => {
-	const tile = engine.assetManager.get(Tile, tileId, NullIfMissing);
+export default (zone: Zone, target: Point): boolean => {
+	const tile = zone.getTile(target.x, target.y, Zone.Layer.Floor);
 	return tile && tile.isDoorway();
 };

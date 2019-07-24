@@ -15,9 +15,8 @@ describe("WebFun.Engine.Rendering.ColorPalette", () => {
 		]).buffer;
 	});
 
-	beforeEach(() => {
-		subject = ColorPalette.FromBGR8Buffer(buffer);
-	});
+	beforeEach(() => (subject = ColorPalette.FromBGR8Buffer(buffer)));
+
 	it("is a class used to convert color buffers and represent a color palette in general", () => {
 		expect(ColorPalette).toBeAClass();
 		expect(subject.length).toBe(7);
@@ -26,6 +25,12 @@ describe("WebFun.Engine.Rendering.ColorPalette", () => {
 	it("holds colors in RGBA little endian", () => {
 		expect(subject[0]).toBe(0);
 		expect(subject[6]).toBe(0xffffffff);
+	});
+
+	it("can be copied easily", () => {
+		const copy = subject.slice();
+		expect(copy.length).toBe(7);
+		expect(copy).toEqual(subject);
 	});
 
 	it("can return the index of a color", () => {

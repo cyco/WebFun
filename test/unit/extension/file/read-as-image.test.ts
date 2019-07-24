@@ -1,9 +1,8 @@
 import { File } from "src/std/dom";
-import * as DOM from "src/std/dom";
 import readAsImage from "src/extension/file/read-as-image";
 
 describe("WebFun.Extension.File.readAsImage", () => {
-	let imageBuffer;
+	let imageBuffer: Uint8Array;
 	beforeAll(
 		() =>
 			(imageBuffer = Uint8Array.from(
@@ -19,16 +18,12 @@ describe("WebFun.Extension.File.readAsImage", () => {
 		expect(new File(imageBuffer, "b").readAsImage).toBe(readAsImage);
 	});
 
-	xit("returns an image element from the file's contents", async () => {
-		try {
-			const subject = new File(imageBuffer, "b");
-			subject.readAsArrayBuffer = () => Promise.resolve(imageBuffer.buffer);
-			const image = await subject.readAsImage();
-			expect(image).toBeInstanceOf(HTMLImageElement);
-			expect(image.src).toStartWith("blob:");
-		} catch (e) {
-			expect(true).toBeFalse();
-		}
+	it("returns an image element from the file's contents", async () => {
+		const subject = new File(imageBuffer, "b");
+		subject.readAsArrayBuffer = () => Promise.resolve(imageBuffer.buffer);
+		const image = await subject.readAsImage();
+		expect(image).toBeInstanceOf(HTMLImageElement);
+		expect(image.src).toStartWith("blob:");
 	});
 
 	it("rejects the promise if the file can't be read as an image", async () => {

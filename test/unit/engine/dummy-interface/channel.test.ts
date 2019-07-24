@@ -1,14 +1,14 @@
 import Channel from "src/engine/dummy-interface/channel";
 
 describe("WebFun.Engine.DummyInterface.Channel", () => {
-	let subject;
+	let subject: Channel;
 
 	beforeEach(() => {
 		subject = new Channel();
 	});
 
 	it("does not do anything", () => {
-		expect(() => subject.playSound()).not.toThrow();
+		expect(() => subject.playSound("")).not.toThrow();
 		expect(() => subject.stop()).not.toThrow();
 	});
 

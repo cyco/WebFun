@@ -1,7 +1,5 @@
 import { global } from "./index";
 
-const window = global.window;
-
 export const {
 	Storage,
 	XMLHttpRequest,
@@ -21,7 +19,7 @@ export const {
 	CustomEvent
 } = global;
 
-export { window };
 export const KeyEvent: { [_: string]: number } = global.KeyEvent || {};
-export const document = window.document as Document;
+export const document = global.document as Document;
+export const window = global.window;
 export const localStorage = (window.localStorage || new global.Storage()) as Storage;

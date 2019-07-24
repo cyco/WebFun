@@ -1,7 +1,7 @@
 import { NPC, Zone, Sound } from "../objects";
 import { Point, randmod, Size } from "src/util";
 import randomDirection from "./helpers/random-direction";
-import { evade, canPerformMeleeAttack, moveCheck, playSound } from "./helpers";
+import { evade, canPerformMeleeAttack, moveCheck, playSound, isDoorway } from "./helpers";
 import { Engine } from "src/engine";
 import YodaViewRedrawTile from "./helpers/yoda-view-redraw";
 import CharSetDefaultFace from "./helpers/char-set-default-face";
@@ -52,8 +52,7 @@ function _performMoveAfterDoorwayCheck(direction: Point, npc: NPC, zone: Zone, e
 	const target = npc.position.byAdding(direction);
 	if (zone.getTile(target.x, target.y, Zone.Layer.Object)) return _noMovement(npc, zone, engine);
 	let move = false;
-	const tile = zone.getTile(target.x, target.y, Zone.Layer.Floor);
-	if (tile && !tile.isDoorway()) move = true;
+	if (!isDoorway(zone, target)) move = true;
 	if (move) {
 		npc.position.add(direction);
 	} else {

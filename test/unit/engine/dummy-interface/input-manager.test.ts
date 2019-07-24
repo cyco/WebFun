@@ -1,7 +1,7 @@
 import InputManager from "src/engine/dummy-interface/input-manager";
 
 describe("WebFun.Engine.DummyInterface.InputManager", () => {
-	let subject;
+	let subject: InputManager;
 
 	beforeEach(() => {
 		subject = new InputManager();

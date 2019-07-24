@@ -86,8 +86,8 @@ class ZoneSceneRenderer {
 
 				zone.npcs.forEach(npc => {
 					const tile = npc.face.frames[0].down;
-					if (!tile) return;
 					if (!npc.alive) return;
+					console.assert(!!tile);
 
 					const x = npc.position.x + offset.x;
 					const y = npc.position.y + offset.y;
@@ -99,8 +99,10 @@ class ZoneSceneRenderer {
 				sprites.forEach(sprite => {
 					const x = sprite.position.x + offset.x;
 					const y = sprite.position.y + offset.y;
-					if (x < 0 || x >= VisibleWidth) return;
-					if (y < 0 || y >= VisibleHeight) return;
+					console.assert(
+						0 <= x && x <= VisibleHeight && 0 <= y && y <= VisibleHeight,
+						"Sprites must be located on the zone."
+					);
 
 					drawImageAt(
 						sprite.pixels,

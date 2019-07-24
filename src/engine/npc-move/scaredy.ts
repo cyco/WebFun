@@ -7,7 +7,8 @@ import {
 	canPerformMeleeAttack,
 	moveCheck,
 	performMeleeAttack,
-	performMove
+	performMove,
+	isDoorway
 } from "./helpers";
 import { Engine } from "src/engine";
 
@@ -36,10 +37,7 @@ export default (npc: NPC, zone: Zone, engine: Engine) => {
 		const target = direction.byAdding(npc.position);
 		if (zone.getTile(target.x, target.y, Zone.Layer.Object)) return noMovement(npc, zone, engine);
 
-		const tile = zone.getTile(target.x, target.y, Zone.Layer.Floor);
-		if (!tile) return noMovement(npc, zone, engine);
-
-		if (!tile.isDoorway()) {
+		if (!isDoorway(zone, target)) {
 			npc.position.add(direction);
 			return performMove(npc, direction, true, zone, engine);
 		}

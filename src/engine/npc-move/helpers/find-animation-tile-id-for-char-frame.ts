@@ -14,11 +14,5 @@ export default (frame: CharFrame, direction: number): Tile => {
 			return frame.extensionDown;
 		case CharFrameEntry.ExtensionLeft:
 			return frame.extensionLeft;
-		case CharFrameEntry.Right:
-			return frame.right;
-		case CharFrameEntry.ExtensionRight:
-			return frame.extensionRight;
-		default:
-			return frame.up;
 	}
 };
