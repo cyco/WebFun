@@ -15,11 +15,17 @@ import {
 } from "./gameplay/npc-movement";
 
 import render from "./render";
-import { ComponentJSXRenderer } from "src/ui";
+import { Component, ComponentJSXRenderer } from "src/ui";
 import withTimeout from "./with-timeout";
 
 global.render = render;
-
+declare global {
+	var render: (
+		text: string | Component | typeof Component,
+		attributes?: any,
+		flags?: string[]
+	) => HTMLElement;
+}
 global.withTimeout = withTimeout;
 
 global.describeComponent = describeComponent;

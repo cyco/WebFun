@@ -8,7 +8,7 @@ describeInstruction("PlaceTile", (execute, engine) => {
 		engine.currentZone.setTile = () => {};
 		spyOn(engine.currentZone, "setTile");
 
-		const instruction = new Instruction({}) as any;
+		const instruction: any = new Instruction({}) as any;
 		instruction._opcode = PlaceTile.Opcode;
 		instruction._arguments = [1, 2, 3, 2];
 		await execute(instruction);

@@ -7,4 +7,10 @@ const readUint8 = function(offset: number) {
 
 ArrayBuffer.prototype.readUint8 = ArrayBuffer.prototype.readUint8 || readUint8;
 
+declare global {
+	interface ArrayBuffer {
+		readUint8(offset: number): number;
+	}
+}
+
 export default readUint8;

@@ -20,10 +20,7 @@ abstract class AbstractMenuWindow extends AbstractMenuView {
 			origin = new Point(box.left, box.bottom + 1);
 			minWidth = box.width;
 		}
-
-		if (!origin) {
-			throw new TypeError("Expected location to be either Point or Element");
-		}
+		console.assert(!!origin, "Expected location to be either Point or Element");
 
 		this.style.left = `${origin.x}px`;
 		this.style.top = `${origin.y}px`;

@@ -21,9 +21,7 @@ class EventTarget_not_builtin {
 		place.splice(0, 0, listener);
 	}
 
-	removeEventListener(type: string, listener: EventListener | EventListenerObject): void {
-		if (!type) return;
-
+	removeEventListener(type: string, listener?: EventListener | EventListenerObject): void {
 		if (listener) {
 			const listeners = this.listeners[type];
 			if (!listeners) return;

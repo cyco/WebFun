@@ -72,14 +72,6 @@ class World {
 		return null;
 	}
 
-	zoneIsAt(needleZone: Zone, x: number, y: number): boolean {
-		const zone = this.getZone(x, y);
-		if (!zone) return false;
-		if (zone === needleZone) return true;
-
-		return zone.leadsTo(needleZone, this.zones);
-	}
-
 	public at(x: number | PointLike, y?: number): WorldItem {
 		return this._items[this._pointToIndex(x, y)];
 	}
@@ -90,10 +82,6 @@ class World {
 
 	layDownHotspotItems(): void {
 		this.zones.filter(identity).forEach(zone => zone.layDownHotspotItems());
-	}
-
-	public map<T>(callback: (_: WorldItem, idx: number) => T) {
-		return this._items.map(callback);
 	}
 
 	private _pointToIndex(x: number | PointLike, y?: number) {

@@ -6,7 +6,7 @@ import { Engine, AssetManager } from "src/engine";
 import { Point } from "src/util";
 
 type JasmineDescribe = (description: string, block: () => void) => void;
-type ConditionTester = (check: (condition: Condition, mode: EvaluationMode) => void, engine: Engine) => void;
+type ConditionTester = (check: (condition: Condition, mode?: EvaluationMode) => void, engine: Engine) => void;
 type InstructionTester = (
 	check: (instruction: Instruction, mode: EvaluationMode) => void,
 	engine: Engine
@@ -85,9 +85,9 @@ export const xdescribeCondition = makeConditionDescription(xdescribe);
 export const fdescribeCondition = makeConditionDescription(fdescribe);
 
 declare global {
-	var describeCondition: () => void;
-	var xdescribeCondition: () => void;
-	var fdescribeCondition: () => void;
+	var describeCondition: (name: string, block: ConditionTester) => void;
+	var xdescribeCondition: (name: string, block: ConditionTester) => void;
+	var fdescribeCondition: (name: string, block: ConditionTester) => void;
 }
 
 export const describeInstruction = makeInstructionDescription(describe);

@@ -35,7 +35,7 @@ class Selector extends Component {
 		if (option) option.selected = true;
 	}
 
-	public addOption(label: string, value: string): void {
+	public addOption(label: string, value?: string): void {
 		this.element.appendChild(
 			<option selected={value === this.value} value={value !== undefined ? value : label}>
 				{label || value}
