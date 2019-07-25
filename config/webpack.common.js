@@ -3,14 +3,12 @@ const Paths = require("./paths");
 
 module.exports = {
 	resolve: {
-		extensions: [".js", ".ts", ".tsx", ".jsx"],
+		extensions: [".ts", ".tsx", ".js", ".jsx"],
 		alias: {
 			src: Paths.sourceRoot,
 			std: Path.resolve(Paths.sourceRoot, "std"),
 			libs: Path.resolve(Paths.sourceRoot, "libs"),
-			test: Path.resolve(Paths.projectRoot, "test"),
-			fs: Path.resolve(Paths.projectRoot, "test/helpers/polyfill/fs.js"),
-			path: Path.resolve(Paths.projectRoot, "test/helpers/polyfill/path.js")
+			test: Path.resolve(Paths.projectRoot, "test")
 		},
 		unsafeCache: true
 	},
@@ -21,7 +19,6 @@ module.exports = {
 		rules: [
 			{
 				test: /\.jsx?$/,
-				exclude: /node_modules/,
 				loader: "babel-loader",
 				options: {
 					cacheDirectory: Path.resolve(Paths.configRoot, ".babel")

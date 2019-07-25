@@ -2,7 +2,6 @@ config/*
 docs/*
 node_modules/*
 src/*
-tools/*
 .git/*
 .idea/*
 .scannerwork/*

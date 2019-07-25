@@ -29,8 +29,6 @@ sfx-yoda
 test/reports
 test/screenshots
 todo.md
-tools/*.bin.js
-tools/strings.js
 yarn-error.log
 yoda-demo.data
 yoda.data
