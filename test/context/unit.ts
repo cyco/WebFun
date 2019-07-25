@@ -20,5 +20,5 @@ global.fdescribeInstruction = fdescribeInstruction;
 
 import "src/app/windows";
 
-var testsContext = require.context("../unit/", true, /\.test.(js|ts)$/);
+var testsContext = require.context("../unit/", true, /\.test\.ts$/);
 testsContext.keys().forEach(testsContext);

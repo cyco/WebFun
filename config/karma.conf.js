@@ -22,7 +22,7 @@ const config = {
 		}
 	],
 	preprocessors: {
-		"test/context/*.js": ["webpack"]
+		"test/context/*.ts": ["webpack"]
 	},
 	frameworks: ["jasmine", "jasmine-matchers"],
 	reporters: ["dots"],
@@ -65,7 +65,7 @@ var scopes = [];
 runUnitTests && scopes.push("unit");
 runAcceptanceTests && scopes.push("acceptance");
 runPerformanceTests && scopes.push("performance");
-config.files.push({ pattern: "test/context/" + scopes.join("_") + ".js", watched: false });
+config.files.push({ pattern: "test/context/" + scopes.join("_") + ".ts", watched: false });
 
 let name;
 if (runUnitTests && runAcceptanceTests && runPerformanceTests) {

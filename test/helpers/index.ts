@@ -20,6 +20,7 @@ import withTimeout from "./with-timeout";
 
 global.render = render;
 declare global {
+	var require: any;
 	var render: (
 		text: string | Component | typeof Component,
 		attributes?: any,

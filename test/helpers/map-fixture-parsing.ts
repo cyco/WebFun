@@ -1,12 +1,10 @@
 import { getFixtureContent } from "./fixture-loading";
 
-export default name => {
+export default (name: string) => {
 	return getFixtureContent(name)
 		.split("\n")
-		.filter(function(line) {
-			return line.length && line[0] !== ";";
-		})
-		.map(function(line) {
+		.filter((line: string) => line.length && line[0] !== ";")
+		.map((line: string) => {
 			const parts = line
 				.split(",")
 				.map(function(v) {
