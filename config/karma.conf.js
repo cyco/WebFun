@@ -9,7 +9,6 @@ const includeCoverage = !!process.env.coverage || ci;
 const includeJunit = !!process.env.junit || ci;
 const runUnitTests = !process.env.scope || ~process.env.scope.indexOf("unit");
 const runAcceptanceTests = process.env.scope && ~process.env.scope.indexOf("acceptance");
-const runPerformanceTests = process.env.scope && ~process.env.scope.indexOf("performance");
 
 const config = {
 	basePath: Paths.projectRoot,
@@ -64,16 +63,13 @@ config.webpackMiddleware = {
 var scopes = [];
 runUnitTests && scopes.push("unit");
 runAcceptanceTests && scopes.push("acceptance");
-runPerformanceTests && scopes.push("performance");
 config.files.push({ pattern: "test/context/" + scopes.join("_") + ".ts", watched: false });
 
 let name;
-if (runUnitTests && runAcceptanceTests && runPerformanceTests) {
+if (runUnitTests && runAcceptanceTests) {
 	name = "full";
 } else if (runAcceptanceTests) {
 	name = "acceptance";
-} else if (runPerformanceTests) {
-	name = "performance";
 } else {
 	name = "unit";
 }
