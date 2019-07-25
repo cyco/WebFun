@@ -2,6 +2,5 @@ test/reports
 src/_style/fontello
 node_modules
 build
-tools/bin
 test/fixtures
 assets
