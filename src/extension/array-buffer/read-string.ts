@@ -1,8 +1,8 @@
 import { ArrayBuffer, Uint8Array } from "src/std";
 
-const readString = function(offset: number, length: number) {
+const readString = function(offset: number = 0, length?: number) {
 	if (length === 0) return "";
-	const buffer = new Uint8Array(this, offset, length);
+	const buffer = new Uint8Array(this, offset, length || this.length);
 	return String.fromCharCode.apply(null, buffer);
 };
 
@@ -10,7 +10,7 @@ ArrayBuffer.prototype.readString = ArrayBuffer.prototype.readString || readStrin
 
 declare global {
 	interface ArrayBuffer {
-		readString(): string;
+		readString(offset?: number, length?: number): string;
 	}
 }
 

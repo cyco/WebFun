@@ -11,9 +11,7 @@ describeInstruction("AddItem", (execute, engine) => {
 
 		spyOn(engine.inventory, "addItem");
 
-		const instruction = new Instruction({}) as any;
-		instruction._opcode = AddItem.Opcode;
-		instruction._arguments = [1];
+		const instruction = new Instruction({ opcode: AddItem.Opcode, arguments: [1] });
 
 		await execute(instruction);
 		expect(engine.inventory.addItem).toHaveBeenCalledWith("fake-tile");

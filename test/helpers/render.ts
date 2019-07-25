@@ -1,6 +1,6 @@
 import Component from "src/ui/component";
 
-export default (text: string | Component, attributes = {}, flags: string[] = []) => {
+export default (text: string | Component | typeof Component, attributes = {}, flags: string[] = []) => {
 	const id = "WebFun Test Container";
 	let container = document.getElementById(id);
 	if (!container) {

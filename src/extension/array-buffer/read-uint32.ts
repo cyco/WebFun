@@ -11,4 +11,10 @@ const readUint32 = function(offset: number) {
 
 ArrayBuffer.prototype.readUint32 = ArrayBuffer.prototype.readUint32 || readUint32;
 
+declare global {
+	interface ArrayBuffer {
+		readUint32(offset: number): number;
+	}
+}
+
 export default readUint32;

@@ -6,7 +6,7 @@ Number.prototype.toHex = Number.prototype.toHex || toHex;
 
 declare global {
 	interface Number {
-		toHex(length: number): string;
+		toHex(length?: number): string;
 	}
 }
 

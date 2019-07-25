@@ -10,7 +10,7 @@ describeInstruction("RemoveItem", (execute, engine) => {
 
 		spyOn(engine.inventory, "removeItem");
 
-		const instruction = new Instruction({}) as any;
+		const instruction: any = new Instruction({}) as any;
 		instruction._opcode = RemoveItem.Opcode;
 		instruction._arguments = [1];
 

@@ -11,9 +11,7 @@ describeInstruction("ChangeZone", (execute, engine) => {
 		};
 		spyOn(engine.sceneManager, "pushScene");
 
-		const instruction = new Instruction({}) as any;
-		instruction._opcode = ChangeZone.Opcode;
-		instruction._arguments = [2];
+		const instruction = new Instruction({ opcode: ChangeZone.Opcode, arguments: [2] });
 
 		await execute(instruction);
 

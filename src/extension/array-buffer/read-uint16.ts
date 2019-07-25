@@ -11,4 +11,10 @@ const readUint16 = function(offset: number) {
 
 ArrayBuffer.prototype.readUint16 = ArrayBuffer.prototype.readUint16 || readUint16;
 
+declare global {
+	interface ArrayBuffer {
+		readUint16(offset: number): number;
+	}
+}
+
 export default readUint16;

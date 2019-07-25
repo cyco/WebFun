@@ -13,7 +13,7 @@ String.prototype.trimCharacter = String.prototype.trimCharacter || trimCharacter
 
 declare global {
 	interface String {
-		trimCharacter(character: string): string;
+		trimCharacter(character?: string): string;
 	}
 }
 

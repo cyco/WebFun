@@ -11,7 +11,7 @@ describeInstruction("DropItem", (execute, engine) => {
 		const mockTile = {};
 		engine.assetManager.populate(Tile, [null, null, null, mockTile]);
 
-		const instruction = new Instruction({}) as any;
+		const instruction: any = new Instruction({}) as any;
 		instruction._opcode = DropItem.Opcode;
 		instruction._arguments = [3, 1, 2];
 
@@ -31,7 +31,7 @@ describeInstruction("DropItem", (execute, engine) => {
 		});
 		engine.assetManager.populate(Tile, [null, null, null, mockTile]);
 
-		const instruction = new Instruction({}) as any;
+		const instruction: any = new Instruction({}) as any;
 		instruction._opcode = DropItem.Opcode;
 		instruction._arguments = [-1, 1, 2];
 
