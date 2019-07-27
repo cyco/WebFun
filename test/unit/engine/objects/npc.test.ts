@@ -14,7 +14,7 @@ describe("WebFun.Engine.Objects.NPC", () => {
 		expect(subject.face).toBeNull();
 		expect(subject.loot).toBe(-1);
 		expect(subject.dropsLoot).toBeFalse();
-		expect(subject.unknown3).toBeArray();
+		expect(subject.patrolPath).toBeNull();
 		expect(subject.position).toBeNull();
 	});
 });

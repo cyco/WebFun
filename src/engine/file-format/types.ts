@@ -35,7 +35,7 @@ interface NPC {
 	y: number;
 	loot: number;
 	dropsLoot: boolean;
-	unknown: Uint8Array;
+	patrolPath: Int32Array;
 }
 
 interface Hotspot {

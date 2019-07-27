@@ -11,7 +11,7 @@ class NPC {
 	protected _position: Point = null;
 	protected _loot: number = -1;
 	protected _dropsLoot: boolean = false;
-	protected _data: number[] = Array.Repeat(-1, 0x20);
+	protected _patrolPath: [Point, Point, Point, Point] = null;
 	private _damageTaken: number = 0;
 	public field10: number = 0;
 	public bulletX: number = 0;
@@ -48,8 +48,8 @@ class NPC {
 		return this._dropsLoot;
 	}
 
-	get unknown3() {
-		return this._data;
+	get patrolPath() {
+		return this._patrolPath;
 	}
 
 	get position() {

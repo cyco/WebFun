@@ -123,12 +123,19 @@ class GameDataSerializer {
 
 			stream.writeUint16(zone.npcs.length);
 			zone.npcs.forEach((npc: NPC) => {
+				const path = new Int32Array(8);
+				if (!npc.patrolPath) path.fill(-1);
+				else
+					npc.patrolPath.map(({ x, y }, idx) => {
+						path[idx * 2] = x;
+						path[idx * 2 + 1] = y;
+					});
 				stream.writeUint16(npc.face.id);
 				stream.writeUint16(npc.position.x);
 				stream.writeUint16(npc.position.y);
-				stream.writeInt16(-1);
-				stream.writeInt32(0);
-				stream.writeInt8Array(Array.Repeat(-1, 0x20));
+				stream.writeInt16(npc.loot);
+				stream.writeInt32(+npc.dropsLoot);
+				stream.writeInt32Array(path);
 			});
 
 			stream.writeUint16(zone.requiredItems.length);
