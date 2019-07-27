@@ -1,5 +1,5 @@
 import { NPC, Zone, CharMovementType } from "src/engine/objects";
-import { Point, Size } from "src/util";
+import { Point } from "src/util";
 import { Engine } from "src/engine";
 import YodaViewRedrawTile from "./yoda-view-redraw";
 import CharSetDefaultFace from "./char-set-default-face";
@@ -15,12 +15,6 @@ function maybeRestoreFaceThenDraw(npc: NPC, direction: Point, zone: Zone) {
 
 export default (npc: NPC, direction: Point, move: boolean, zone: Zone, engine: Engine) => {
 	const hero = engine.hero.location;
-	const distanceToHero = npc.position.bySubtracting(hero).abs();
-	const directionToHero = hero
-		.bySubtracting(npc.position)
-		.dividedBy(new Size(distanceToHero.x, distanceToHero.y));
-	directionToHero.x |= 0;
-	directionToHero.y |= 0;
 
 	if (!npc.face) {
 		// TODO: this was break and might have jumped to handle bullet

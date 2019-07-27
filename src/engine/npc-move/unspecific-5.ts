@@ -1,5 +1,5 @@
 import { NPC, Zone } from "../objects";
-import { Point, randmod, Size } from "src/util";
+import { Point, randmod } from "src/util";
 
 import {
 	evade,
@@ -23,11 +23,7 @@ export default (npc: NPC, zone: Zone, engine: Engine) => {
 	let direction: Point;
 	const hero = engine.hero.location;
 	const distanceToHero = npc.position.bySubtracting(hero).abs();
-	const directionToHero = hero
-		.bySubtracting(npc.position)
-		.dividedBy(new Size(distanceToHero.x, distanceToHero.y));
-	directionToHero.x |= 0;
-	directionToHero.y |= 0;
+	const directionToHero = hero.comparedTo(npc.position);
 
 	if (distanceToHero.x >= 2 || distanceToHero.y >= 2) {
 		direction = convertToDirectionPoint(npc.preferredDirection);
