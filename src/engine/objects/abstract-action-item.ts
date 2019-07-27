@@ -8,7 +8,7 @@ class AbstractActionItem {
 	constructor(data: AbstractActionItemInit = {}) {
 		this._opcode = data.opcode;
 		this._arguments = data.arguments || [];
-		this._additionalData = data.text || null;
+		this._additionalData = data.text || "";
 	}
 
 	get opcode() {
