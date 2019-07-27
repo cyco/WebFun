@@ -97,6 +97,12 @@ class OutputStream extends Stream {
 			this.writeUint32(array[i]);
 		}
 	}
+
+	writeInt32Array(array: number[] | Int32Array): void {
+		for (let i = 0, len = array.length; i < len; i++) {
+			this.writeInt32(array[i]);
+		}
+	}
 }
 
 export default OutputStream;

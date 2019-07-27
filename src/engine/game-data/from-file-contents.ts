@@ -149,7 +149,17 @@ const makeNPC = (raw: RawNPC, idx: number, data: GameData) => {
 	npc.position = new Point(raw.x, raw.y, Zone.Layer.Object);
 	npc.loot = raw.loot;
 	npc.dropsLoot = raw.dropsLoot;
-	npc.data = Array.from(raw.unknown);
+	npc.patrolPath = null;
+
+	const path = Array.from(raw.patrolPath);
+	if (path.some(i => i !== -1)) {
+		npc.patrolPath = [
+			new Point(path[0], path[1]),
+			new Point(path[2], path[3]),
+			new Point(path[4], path[5]),
+			new Point(path[6], path[7])
+		];
+	}
 
 	return npc;
 };

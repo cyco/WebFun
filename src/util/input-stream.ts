@@ -159,6 +159,20 @@ class InputStream extends Stream {
 		this._offset += length * 4;
 		return result;
 	}
+
+	getInt32Array(length: number): Int32Array {
+		let result;
+
+		if (this._offset % 4 !== 0) {
+			const buffer = this._arrayBuffer.slice(this._offset, this._offset + length * 4);
+			result = new Int32Array(buffer);
+		} else {
+			result = new Int32Array(this._arrayBuffer, this._offset, length);
+		}
+
+		this._offset += length * 4;
+		return result;
+	}
 }
 
 export default InputStream;
