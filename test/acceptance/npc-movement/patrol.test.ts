@@ -1,10 +1,10 @@
 import { CharMovementType } from "src/engine/objects";
 import { Point, rand } from "src/util";
 
-fdescribeNPCMovement(CharMovementType.Patrol, (ctx, tick, vars) => {
+describeNPCMovement(CharMovementType.Patrol, (ctx, tick, vars) => {
 	it("moves as expected", async () => {
 		const { npc } = vars;
-		npc.patrolPath = [new Point(1, 1), new Point(7, 1), new Point(7, 7), new Point(1, 7)];
+		npc.waypoints = [new Point(1, 1), new Point(7, 1), new Point(7, 7), new Point(1, 7)];
 		ctx.engine.metronome.start();
 
 		await tick(".");

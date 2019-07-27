@@ -12,7 +12,7 @@ export default (npc: NPC, zone: Zone, engine: Engine) => {
 	const tickCount = engine.metronome.tickCount;
 	const hero = engine.hero.location;
 
-	const waypoint = npc.patrolPath[npc.facingDirection + 1];
+	const waypoint = npc.waypoints[npc.facingDirection + 1];
 	if (npc.cooldown) {
 		npc.cooldown--;
 		return noMovement(npc, zone, engine);

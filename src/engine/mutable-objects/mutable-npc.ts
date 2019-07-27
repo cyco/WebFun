@@ -12,7 +12,7 @@ class MutableNPC extends NPC {
 		this._position = npc.position;
 		this._loot = npc.loot;
 		this._dropsLoot = npc.dropsLoot;
-		this._patrolPath = npc.patrolPath;
+		this._waypoints = npc.waypoints;
 		this.facingDirection = npc.facingDirection;
 		this.cooldown = npc.cooldown;
 
@@ -67,12 +67,12 @@ class MutableNPC extends NPC {
 		return this._dropsLoot;
 	}
 
-	get patrolPath() {
-		return this._patrolPath;
+	get waypoints() {
+		return this._waypoints;
 	}
 
-	set patrolPath(patrolPath) {
-		this._patrolPath = patrolPath;
+	set waypoints(waypoints) {
+		this._waypoints = waypoints;
 	}
 }
 

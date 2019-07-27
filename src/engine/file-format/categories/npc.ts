@@ -7,7 +7,7 @@ export const parseNPC = (stream: InputStream): NPC => {
 	const y = stream.getUint16();
 	const loot = stream.getInt16();
 	const dropsLoot = !!stream.getUint32();
-	const patrolPath = stream.getInt32Array(8);
+	const waypoints = stream.getInt32Array(8);
 
-	return { character, x, y, loot, dropsLoot, patrolPath };
+	return { character, x, y, loot, dropsLoot, waypoints };
 };
