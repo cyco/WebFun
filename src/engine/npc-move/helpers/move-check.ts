@@ -8,19 +8,18 @@ export default (source: Point, rel: Point, zone: Zone, flag = false): MoveCheckR
 	let result: MoveCheckResult;
 	let movingLeft: boolean;
 	let isFree = false;
-	let targetX = rel.x + source.x;
-	let targetY = rel.y + source.y;
-	const originalTargetX = rel.x + source.x;
-	const originalTargetY = rel.y + source.y;
-	let altX: number;
-	let altY: number;
-
-	if (targetX < 0 || targetY < 0 || zone.size.width <= targetX || zone.size.height <= targetY)
-		return MoveCheckResult.OutOfBounds;
-
-	if (!zone.getTile(targetX, targetY, Zone.Layer.Object)) return MoveCheckResult.Free;
-
+	const target = source.byAdding(rel);
+	const originalTarget = source.byAdding(rel);
+	const alt: Point = new Point(0, 0);
 	const evade = EvasionStrategy();
+
+	if (!zone.bounds.contains(target)) {
+		return MoveCheckResult.OutOfBounds;
+	}
+
+	if (!zone.getTile(target.x, target.y, Zone.Layer.Object)) {
+		return MoveCheckResult.Free;
+	}
 
 	if (rel.x || !rel.y) {
 		if (rel.y) {
@@ -29,10 +28,10 @@ export default (source: Point, rel: Point, zone: Zone, flag = false): MoveCheckR
 			movingLeft = rel.x < 0;
 			if (rel.x) {
 				if (
-					targetY - evade >= 0 &&
-					(!zone.getTile(targetX, targetY - evade, Zone.Layer.Object) || flag)
+					target.y - evade >= 0 &&
+					(!zone.getTile(target.x, target.y - evade, Zone.Layer.Object) || flag)
 				) {
-					targetY -= evade;
+					target.y -= evade;
 					isFree = true;
 				}
 
@@ -40,26 +39,27 @@ export default (source: Point, rel: Point, zone: Zone, flag = false): MoveCheckR
 					return returnAlternativePath();
 				}
 
-				altY = targetY + evade;
+				alt.y = target.y + evade;
 				if (
-					zone.size.height <= targetY + evade ||
-					(zone.getTile(targetX, targetY + evade, Zone.Layer.Object) && !flag)
+					zone.size.height <= target.y + evade ||
+					(zone.getTile(target.x, target.y + evade, Zone.Layer.Object) && !flag)
 				) {
 					return ReturnBlockedOrAlternatePath();
 				}
 
-				targetY = altY;
+				target.y = alt.y;
 				isFree = true;
 				return ReturnBlockedOrAlternatePath();
 			}
 		}
-		altX = targetX + 1;
+
+		alt.x = target.x + 1;
 		if (!movingLeft) {
-			altX = targetX - 1;
+			alt.x = target.x - 1;
 		}
 
-		if (!zone.getTile(altX, targetY, Zone.Layer.Object) || flag) {
-			targetX = altX;
+		if (!zone.getTile(alt.x, target.y, Zone.Layer.Object) || flag) {
+			target.x = alt.x;
 			isFree = true;
 		}
 
@@ -67,38 +67,32 @@ export default (source: Point, rel: Point, zone: Zone, flag = false): MoveCheckR
 			return returnAlternativePath();
 		}
 
-		altY = targetY + 1;
+		alt.y = target.y + 1;
 		if (rel.y >= 0) {
-			altY = targetY - 1;
+			alt.y = target.y - 1;
 		}
 
-		if (zone.getTile(targetX, altY, Zone.Layer.Object) && !flag) {
+		if (zone.getTile(target.x, alt.y, Zone.Layer.Object) && !flag) {
 			return ReturnBlockedOrAlternatePath();
 		}
 
-		targetY = altY;
+		target.y = alt.y;
 		isFree = true;
 		return ReturnBlockedOrAlternatePath();
 	}
 
-	if (targetX - evade >= 0 && (!zone.getTile(targetX - evade, targetY, Zone.Layer.Object) || flag)) {
-		targetX -= evade;
+	if (target.x - evade >= 0 && (!zone.getTile(target.x - evade, target.y, Zone.Layer.Object) || flag)) {
+		target.x -= evade;
+		isFree = true;
+	} else if (
+		zone.size.width > target.x + evade &&
+		(!zone.getTile(target.x + evade, target.y, Zone.Layer.Object) || flag)
+	) {
+		target.x += evade;
 		isFree = true;
 	}
 
-	if (!isFree) {
-		if (
-			zone.size.width > targetX + evade &&
-			(!zone.getTile(targetX + evade, targetY, Zone.Layer.Object) || flag)
-		) {
-			targetX += evade;
-			isFree = true;
-		}
-
-		if (!isFree) return MoveCheckResult.Blocked;
-	}
-
-	return returnAlternativePath();
+	return ReturnBlockedOrAlternatePath();
 
 	function ReturnBlockedOrAlternatePath() {
 		if (!isFree) return MoveCheckResult.Blocked;
@@ -106,11 +100,11 @@ export default (source: Point, rel: Point, zone: Zone, flag = false): MoveCheckR
 	}
 
 	function returnAlternativePath() {
-		if (targetY >= originalTargetY) {
-			if (targetY <= originalTargetY) {
-				if (targetX >= originalTargetX) {
+		if (target.y >= originalTarget.y) {
+			if (target.y <= originalTarget.y) {
+				if (target.x >= originalTarget.x) {
 					result = MoveCheckResult.EvadeRight;
-					if (targetX <= originalTargetX) result = MoveCheckResult.Blocked;
+					if (target.x <= originalTarget.x) result = MoveCheckResult.Blocked;
 				} else {
 					result = MoveCheckResult.EvadeLeft;
 				}
