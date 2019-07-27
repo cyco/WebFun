@@ -1,5 +1,5 @@
 import { NPC, Zone } from "../objects";
-import { Point, randmod, Size } from "src/util";
+import { Point, randmod } from "src/util";
 import randomDirection from "./helpers/random-direction";
 import {
 	evade,
@@ -16,11 +16,7 @@ import { Engine } from "src/engine";
 export default (npc: NPC, zone: Zone, engine: Engine) => {
 	const hero = engine.hero.location;
 	const distanceToHero = npc.position.bySubtracting(hero).abs();
-	const directionToHero = hero
-		.bySubtracting(npc.position)
-		.dividedBy(new Size(distanceToHero.x, distanceToHero.y));
-	directionToHero.x |= 0;
-	directionToHero.y |= 0;
+	const directionToHero = hero.comparedTo(npc.position);
 
 	let direction: Point;
 	if (npc.cooldown) {

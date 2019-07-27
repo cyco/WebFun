@@ -1,5 +1,5 @@
 import { NPC, Zone, CharMovementType } from "../objects";
-import { Point, Size } from "src/util";
+import { Point } from "src/util";
 import { findAnimationTileIdForCharFrame } from "./helpers";
 import { Engine } from "src/engine";
 import CharSetDefaultFace from "./helpers/char-set-default-face";
@@ -23,12 +23,7 @@ function maybeRestoreFaceThenDraw(npc: NPC, direction: Point, zone: Zone, engine
 
 export default (npc: NPC, zone: Zone, engine: Engine) => {
 	const hero = engine.hero.location;
-	const distanceToHero = npc.position.bySubtracting(hero).abs();
-	const direction = hero
-		.bySubtracting(npc.position)
-		.dividedBy(new Size(distanceToHero.x, distanceToHero.y));
-	direction.x |= 0;
-	direction.y |= 0;
+	const direction = hero.comparedTo(npc.position);
 
 	if (!npc.face) {
 		// TODO: this was break and might have jumped to handle bullet

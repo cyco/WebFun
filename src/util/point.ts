@@ -43,6 +43,16 @@ class Point implements PointLike {
 		return this;
 	}
 
+	comparedTo(point: Point) {
+		let x = 0;
+		let y = 0;
+
+		if (this.x !== point.x) x = this.x < point.x ? -1 : 1;
+		if (this.y !== point.y) y = this.y < point.y ? -1 : 1;
+
+		return new Point(x, y);
+	}
+
 	byAdding(x: number | PointLike, y: number = null): Point {
 		return new Point(this).add(x, y);
 	}

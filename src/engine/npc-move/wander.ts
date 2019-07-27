@@ -21,17 +21,9 @@ export default (npc: NPC, zone: Zone, engine: Engine) => {
 	}
 	if (even(tickCount)) return noMovement(npc, zone, engine);
 
-	let direction: Point;
-	direction = convertToDirectionPoint(npc.preferredDirection);
+	let direction = convertToDirectionPoint(npc.preferredDirection);
 
 	const hero = engine.hero.location;
-	const distanceToHero = npc.position.bySubtracting(hero).abs();
-	const directionToHero = hero
-		.bySubtracting(npc.position)
-		.dividedBy(new Size(distanceToHero.x, distanceToHero.y));
-	directionToHero.x |= 0;
-	directionToHero.y |= 0;
-
 	if (moveCheck(npc.position, direction, zone, false) !== MoveCheckResult.Free) {
 		direction = new Point(0, 0);
 		npc.cooldown = randmod(3);

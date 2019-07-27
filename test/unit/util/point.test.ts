@@ -372,4 +372,22 @@ describe("WebFun.Util.Point", () => {
 
 		expect(p1.distanceTo(p2)).toBeCloseTo(6, 0.1);
 	});
+
+	it("can be compared to other points", () => {
+		let p1 = new Point(3, 4);
+		let p2 = new Point(3, 4);
+		expect(p1.comparedTo(p2)).toEqual(new Point(0, 0));
+
+		p1 = new Point(2, 3);
+		p2 = new Point(3, 4);
+		expect(p1.comparedTo(p2)).toEqual(new Point(-1, -1));
+
+		p1 = new Point(4, 5);
+		p2 = new Point(3, 4);
+		expect(p1.comparedTo(p2)).toEqual(new Point(1, 1));
+
+		p1 = new Point(7, 4);
+		p2 = new Point(4, 5);
+		expect(p1.comparedTo(p2)).toEqual(new Point(1, -1));
+	});
 });

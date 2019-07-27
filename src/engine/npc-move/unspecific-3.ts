@@ -1,5 +1,5 @@
 import { NPC, Zone, Sound } from "../objects";
-import { Point, randmod, Size } from "src/util";
+import { Point, randmod } from "src/util";
 import randomDirection from "./helpers/random-direction";
 import { evade, canPerformMeleeAttack, moveCheck, playSound, isDoorway } from "./helpers";
 import { Engine } from "src/engine";
@@ -21,12 +21,7 @@ function _performMeleeAttackIfUnarmed(hit: boolean, npc: NPC, zone: Zone, engine
 
 function _performMove(direction: Point, npc: NPC, move: boolean, zone: Zone, engine: Engine) {
 	const hero = engine.hero.location;
-	const distanceToHero = npc.position.bySubtracting(hero).abs();
-	const directionToHero = hero
-		.bySubtracting(npc.position)
-		.dividedBy(new Size(distanceToHero.x, distanceToHero.y));
-	directionToHero.x |= 0;
-	directionToHero.y |= 0;
+	const directionToHero = hero.comparedTo(npc.position);
 
 	if (!npc.face) {
 		// TODO: this was break and might have jumped to handle bullet
@@ -73,11 +68,7 @@ export default (npc: NPC, zone: Zone, engine: Engine) => {
 	let direction: Point;
 	const hero = engine.hero.location;
 	const distanceToHero = npc.position.bySubtracting(hero).abs();
-	const directionToHero = hero
-		.bySubtracting(npc.position)
-		.dividedBy(new Size(distanceToHero.x, distanceToHero.y));
-	directionToHero.x |= 0;
-	directionToHero.y |= 0;
+	const directionToHero = hero.comparedTo(npc.position);
 
 	if (distanceToHero.x < 2 && distanceToHero.y < 2 && randmod(2)) {
 		direction = directionToHero;

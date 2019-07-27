@@ -1,5 +1,5 @@
 import { NPC, Zone, Sound } from "../objects";
-import { Point, Size } from "src/util";
+import { Point } from "src/util";
 import randomDirection from "./helpers/random-direction";
 import {
 	evade,
@@ -29,11 +29,7 @@ export default (npc: NPC, zone: Zone, engine: Engine) => {
 
 	const hero = engine.hero.location;
 	const distanceToHero = npc.position.bySubtracting(hero).abs();
-	const directionToHero = hero
-		.bySubtracting(npc.position)
-		.dividedBy(new Size(distanceToHero.x, distanceToHero.y));
-	directionToHero.x |= 0;
-	directionToHero.y |= 0;
+	const directionToHero = hero.comparedTo(npc.position);
 	const directionAwayFromHero = directionToHero.byScalingBy(-1);
 	if (npc.currentActionFrame) direction = directionToHero;
 	else direction = directionAwayFromHero;
