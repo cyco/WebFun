@@ -6,31 +6,22 @@ describe("WebFun.Util.InputStream", () => {
 	let buffer: ArrayBuffer;
 	let subject: InputStream;
 
-	beforeEach(done => {
-		getFixtureData("someData", b => {
-			buffer = b;
-			done();
-		});
-	});
+	beforeEach(async () => (buffer = await getFixtureData("someData")));
 
 	it("can be initialized using an array buffer as data source", () => {
-		expect(() => {
-			subject = new InputStream(buffer);
-		}).not.toThrow();
+		expect(() => (subject = new InputStream(buffer))).not.toThrow();
 		expect(subject.length).toBe(6);
 	});
 
 	it("can be initialized using a string as data source", () => {
-		expect(() => {
-			subject = new InputStream("test");
-		}).not.toThrow();
+		expect(() => (subject = new InputStream("test"))).not.toThrow();
 		expect(subject.length).toBe(3);
 	});
 
 	it("has a method to check if more bytes are available", () => {
 		subject = new InputStream("test");
 		expect(subject.isAtEnd()).toBeFalse();
-		subject.seek(subject.length, Stream.SEEK.SET);
+		subject.seek(subject.length, Stream.Seek.Set);
 		expect(subject.isAtEnd()).toBeTrue();
 	});
 
@@ -96,17 +87,12 @@ describe("WebFun.Util.InputStream", () => {
 
 	describe("string reading", () => {
 		let buffer: ArrayBuffer;
-		beforeAll(done => {
-			getFixtureData("asciiString", function(b) {
-				buffer = b;
-				done();
-			});
-		});
+		beforeAll(async () => (buffer = await getFixtureData("asciiString")));
 
 		it("getCharacter reads a single byte character and returns it", () => {
 			subject = new InputStream(buffer);
 
-			subject.seek(2, Stream.SEEK.SET);
+			subject.seek(2, Stream.Seek.Set);
 			expect(subject.offset).toBe(2);
 			expect(subject.getCharacter()).toBe("A");
 			expect(subject.offset).toBe(3);
@@ -115,7 +101,7 @@ describe("WebFun.Util.InputStream", () => {
 		it("getCharacters returns a string of length x at the current position", () => {
 			subject = new InputStream(buffer);
 
-			subject.seek(2, Stream.SEEK.SET);
+			subject.seek(2, Stream.Seek.Set);
 			expect(subject.offset).toBe(2);
 			expect(subject.getCharacters(5)).toBe("ASCII");
 			expect(subject.offset).toBe(7);
@@ -132,7 +118,7 @@ describe("WebFun.Util.InputStream", () => {
 		it("getNullTerminatedString collects all characters up to a null byte into a string, it does not consume the null byte", () => {
 			subject = new InputStream(buffer);
 
-			subject.seek(2, Stream.SEEK.SET);
+			subject.seek(2, Stream.Seek.Set);
 			expect(subject.offset).toBe(2);
 			const string = subject.getNullTerminatedString(subject.length - 2);
 			expect(string).toBe("ASCII STRING");
@@ -151,15 +137,15 @@ describe("WebFun.Util.InputStream", () => {
 			let string;
 			subject = new InputStream(buffer);
 
-			subject.seek(0x12, Stream.SEEK.SET);
+			subject.seek(0x12, Stream.Seek.Set);
 			string = subject.getCStringWithLength(1);
 			expect(string).toBe("c");
 
-			subject.seek(0x12, Stream.SEEK.SET);
+			subject.seek(0x12, Stream.Seek.Set);
 			string = subject.getCStringWithLength(8);
 			expect(string).toBe("c-string");
 
-			subject.seek(0x12, Stream.SEEK.SET);
+			subject.seek(0x12, Stream.Seek.Set);
 			string = subject.getCStringWithLength(9);
 			expect(string).toBe("c-string");
 		});
@@ -167,12 +153,7 @@ describe("WebFun.Util.InputStream", () => {
 
 	describe("array reading", () => {
 		let buffer: ArrayBuffer;
-		beforeAll(done => {
-			getFixtureData("arrayReading", function(b) {
-				buffer = b;
-				done();
-			});
-		});
+		beforeAll(async () => (buffer = await getFixtureData("arrayReading")));
 
 		it("getUint8Array reads an array of unsigned bytes", () => {
 			subject = new InputStream(buffer);
@@ -202,7 +183,7 @@ describe("WebFun.Util.InputStream", () => {
 			expect(data[0]).toBe(10775);
 			expect(data[1]).toBe(16931);
 
-			subject.seek(1, Stream.SEEK.SET);
+			subject.seek(1, Stream.Seek.Set);
 			data = subject.getInt16Array(2);
 			expect(data[0]).toBe(0x232a);
 			expect(data[1]).toBe(0x4242);
@@ -210,7 +191,7 @@ describe("WebFun.Util.InputStream", () => {
 
 		it("getUint16Array can be used even if the offset is not word aligned", () => {
 			subject = new InputStream(buffer);
-			subject.seek(1, Stream.SEEK.SET);
+			subject.seek(1, Stream.Seek.Set);
 			expect(subject.offset).toBe(1);
 
 			const data = subject.getUint16Array(2);
@@ -221,7 +202,7 @@ describe("WebFun.Util.InputStream", () => {
 
 		it("getUint32Array can be used even if the offset is not dword aligned", () => {
 			subject = new InputStream(buffer);
-			subject.seek(1, Stream.SEEK.SET);
+			subject.seek(1, Stream.Seek.Set);
 			expect(subject.offset).toBe(1);
 
 			const data = subject.getUint32Array(1);
@@ -240,6 +221,23 @@ describe("WebFun.Util.InputStream", () => {
 			expect(data[0]).toBe(0x42232a17);
 
 			expect(subject.offset).toBe(4);
+		});
+
+		it("getInt32Array can be used to read arrays of signed integers", async () => {
+			let buffer = await getFixtureData("someData");
+			subject = new InputStream(buffer);
+
+			expect(subject.offset).toBe(0);
+			expect(subject.getInt32Array(1)[0]).toBe(-48605);
+			expect(subject.offset).toBe(4);
+
+			buffer = await getFixtureData("asciiString");
+			subject = new InputStream(buffer);
+
+			subject.seek(0x0d, Stream.Seek.Set);
+			expect(subject.offset).toBe(13);
+			expect(subject.getInt32Array(1)[0]).toBe(-575864761);
+			expect(subject.offset).toBe(17);
 		});
 	});
 });

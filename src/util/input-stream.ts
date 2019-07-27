@@ -11,7 +11,7 @@ class InputStream extends Stream {
 	constructor(data: ArrayBuffer | SharedArrayBuffer | string) {
 		super();
 
-		this.endianess = Stream.ENDIAN.LITTLE;
+		this.endianess = Stream.Endian.Little;
 		this._arrayBuffer = this._makeArrayBuffer(data);
 		this._dataView = new DataView(this._arrayBuffer);
 	}

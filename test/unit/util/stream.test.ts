@@ -13,22 +13,22 @@ describe("WebFun.Util.Stream", () => {
 	it("has the function 'seek' to change the current position", () => {
 		expect(typeof subject.seek).toBe("function");
 
-		subject.seek(15, Stream.SEEK.SET);
+		subject.seek(15, Stream.Seek.Set);
 		expect(subject.offset).toBe(15);
 	});
 
 	it("the offset can be changed relative to the current position", () => {
-		subject.seek(15, Stream.SEEK.CUR);
-		subject.seek(12, Stream.SEEK.CUR);
+		subject.seek(15, Stream.Seek.Cur);
+		subject.seek(12, Stream.Seek.Cur);
 		expect(subject.offset).toBe(27);
 	});
 
 	it("the endianess of the stream values can be set", () => {
 		expect(subject.endianess).not.toBe(undefined);
 
-		subject.endianess = Stream.ENDIAN.LITTLE;
+		subject.endianess = Stream.Endian.Little;
 		expect(subject.littleEndian).toBeTrue();
-		subject.endianess = Stream.ENDIAN.BIG;
+		subject.endianess = Stream.Endian.Big;
 		expect(subject.littleEndian).toBeFalse();
 	});
 });

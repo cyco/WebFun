@@ -21,12 +21,12 @@ describe("WebFun.Util.OutputStream", () => {
 	it("but endianess can be changed at any time", () => {
 		outputStream = new OutputStream(8);
 
-		outputStream.endianess = Stream.ENDIAN.BIG;
+		outputStream.endianess = Stream.Endian.Big;
 		outputStream.writeUint16(0x4223);
 		expect(getByte(0)).toBe(0x42);
 		expect(getByte(1)).toBe(0x23);
 
-		outputStream.endianess = Stream.ENDIAN.LITTLE;
+		outputStream.endianess = Stream.Endian.Little;
 		outputStream.writeUint16(0x4223);
 		expect(getByte(2)).toBe(0x23);
 		expect(getByte(3)).toBe(0x42);
@@ -184,7 +184,7 @@ describe("WebFun.Util.OutputStream", () => {
 		expect(getByte(1)).toBe(0xff);
 	});
 
-	it("has a function to write a double word array to the stream", () => {
+	it("has a function to write an unsigned double word array to the stream", () => {
 		outputStream = new OutputStream(4);
 		const array = new Uint32Array(1);
 		array[0] = 0x23420500;
@@ -194,6 +194,27 @@ describe("WebFun.Util.OutputStream", () => {
 		expect(getByte(1)).toBe(0x05);
 		expect(getByte(2)).toBe(0x42);
 		expect(getByte(3)).toBe(0x23);
+	});
+
+	it("has a function to write a signed double word array to the stream", () => {
+		outputStream = new OutputStream(4);
+		const array = new Int32Array(1);
+		array[0] = -1;
+		outputStream.writeInt32Array(array);
+
+		expect(getByte(0)).toBe(0xff);
+		expect(getByte(1)).toBe(0xff);
+		expect(getByte(2)).toBe(0xff);
+		expect(getByte(3)).toBe(0xff);
+
+		array[0] = 0x10203040;
+		outputStream = new OutputStream(4);
+		outputStream.writeInt32Array(array);
+
+		expect(getByte(0)).toBe(0x40);
+		expect(getByte(1)).toBe(0x30);
+		expect(getByte(2)).toBe(0x20);
+		expect(getByte(3)).toBe(0x10);
 	});
 
 	it("throws an exception if the pre-specified size is exceeded", () => {
