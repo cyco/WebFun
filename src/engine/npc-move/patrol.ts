@@ -1,5 +1,4 @@
 import { NPC, Zone } from "../objects";
-import { Point } from "src/util";
 import {
 	noMovement,
 	canPerformMeleeAttack,

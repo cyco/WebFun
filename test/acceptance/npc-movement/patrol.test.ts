@@ -1,22 +1,23 @@
-import { describeNPCMovement } from "test/helpers";
 import { CharMovementType } from "src/engine/objects";
-import { Point, dispatch } from "src/util";
+import { Point, rand } from "src/util";
 
-describeNPCMovement(CharMovementType.Patrol, (ctx, tick, vars) => {
+fdescribeNPCMovement(CharMovementType.Patrol, (ctx, tick, vars) => {
 	it("moves as expected", async () => {
 		const { npc } = vars;
-		return;
+		npc.patrolPath = [new Point(1, 1), new Point(7, 1), new Point(7, 7), new Point(1, 7)];
 		ctx.engine.metronome.start();
 
 		await tick(".");
-		expect(npc.position).toEqual(new Point(3, 2));
+		expect(npc.position).toEqual(new Point(5, 2));
+		await tick("..............");
+		expect(npc.position).toEqual(new Point(7, 5));
+		await tick("........................");
+		expect(npc.position).toEqual(new Point(1, 5));
+		await tick("..............");
+		expect(npc.position).toEqual(new Point(3, 1));
+		await tick("...");
+		expect(npc.position).toEqual(new Point(4, 1));
 
-		console.log("--");
-		const orignalLog = console.log;
-		const start = ctx.engine.metronome.tickCount;
-		console.log = (...args) => orignalLog.call(console, ctx.engine.metronome.tickCount - start, ...args);
-
-		await dispatch(() => void 0, 50000);
-		// expect(rand()).toBe(22352);
+		expect(rand()).toBe(22352);
 	});
 });
