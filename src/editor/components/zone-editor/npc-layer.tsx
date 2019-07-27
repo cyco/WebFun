@@ -69,7 +69,7 @@ class NPCLayer extends Component {
 
 	public getMenuForTile(point: Point): Partial<MenuItemInit>[] {
 		const npcs = this._findNPCsAt(point) as MutableNPC[];
-		npcs.forEach(npc => console.log(npc.id, npc.face.name, npc.loot, npc.dropsLoot, npc.patrolPath));
+		npcs.forEach(npc => console.log(npc.id, npc.face.name, npc.loot, npc.dropsLoot, npc.waypoints));
 		return [
 			{
 				title: "Place NPC",
@@ -79,7 +79,7 @@ class NPCLayer extends Component {
 					npc.position = point;
 					npc.loot = -1;
 					npc.dropsLoot = false;
-					npc.patrolPath = null;
+					npc.waypoints = null;
 					this.zone.npcs.push(npc);
 					this.draw();
 				}

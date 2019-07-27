@@ -124,12 +124,16 @@ class GameDataSerializer {
 			stream.writeUint16(zone.npcs.length);
 			zone.npcs.forEach((npc: NPC) => {
 				const path = new Int32Array(8);
-				if (!npc.patrolPath) path.fill(-1);
-				else
-					npc.patrolPath.map(({ x, y }, idx) => {
-						path[idx * 2] = x;
-						path[idx * 2 + 1] = y;
-					});
+				for (let i = 0; i < npc.waypoints.length; i++) {
+					const waypoint = npc.waypoints[i];
+					path[2 * i + 0] = waypoint.x;
+					path[2 * i + 1] = waypoint.y;
+				}
+				for (let i = npc.waypoints.length; i < 4; i++) {
+					path[2 * i + 0] = -1;
+					path[2 * i + 1] = -1;
+				}
+
 				stream.writeUint16(npc.face.id);
 				stream.writeUint16(npc.position.x);
 				stream.writeUint16(npc.position.y);
