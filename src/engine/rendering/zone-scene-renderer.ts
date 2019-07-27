@@ -84,18 +84,6 @@ class ZoneSceneRenderer {
 					}
 				}
 
-				zone.npcs.forEach(npc => {
-					const tile = npc.face.frames[0].down;
-					if (!npc.alive) return;
-					console.assert(!!tile);
-
-					const x = npc.position.x + offset.x;
-					const y = npc.position.y + offset.y;
-					if (x < 0 || x >= VisibleWidth) return;
-					if (y < 0 || y >= VisibleHeight) return;
-					drawTileAt(tile, x, y);
-				});
-
 				sprites.forEach(sprite => {
 					const x = sprite.position.x + offset.x;
 					const y = sprite.position.y + offset.y;
