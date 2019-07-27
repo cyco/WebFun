@@ -99,6 +99,7 @@ class GameController extends EventTarget {
 		this._engine.story = story;
 
 		this._showSceneView();
+		this._engine.gameState = GameState.Running;
 	}
 
 	public async replayStory() {
@@ -175,6 +176,11 @@ class GameController extends EventTarget {
 
 		engine.inputManager.addListeners();
 		this._window.inventory.addEventListener(InventoryComponent.Events.ItemActivated, (e: CustomEvent) => {
+			if (engine.gameState !== GameState.Running) {
+				e.preventDefault();
+				return;
+			}
+
 			if (!(engine.sceneManager.currentScene instanceof ZoneScene)) {
 				engine.sceneManager.popScene();
 				return;
@@ -185,6 +191,11 @@ class GameController extends EventTarget {
 		});
 
 		this._window.inventory.addEventListener(InventoryComponent.Events.ItemPlaced, (e: CustomEvent) => {
+			if (engine.gameState !== GameState.Running) {
+				e.preventDefault();
+				return;
+			}
+
 			const location = e.detail.location as Point;
 			const item = e.detail.item as Tile;
 
