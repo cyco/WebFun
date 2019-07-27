@@ -1,10 +1,10 @@
-import { File, Image } from "src/std/dom";
+import { File } from "src/std/dom";
 
 const readAsImage = async function(): Promise<Image> {
 	const buffer = await this.readAsArrayBuffer();
 
 	return new Promise<Image>(async (resolve, reject) => {
-		const image = new Image();
+		const image = document.createElement("img");
 		image.onload = () => resolve(image);
 		image.onerror = (e: any) => reject(e);
 		image.src = window.URL.createObjectURL(new Blob([buffer]));
