@@ -7,7 +7,7 @@ class OutputStream extends Stream {
 	constructor(size: number) {
 		super();
 
-		this.endianess = Stream.ENDIAN.LITTLE;
+		this.endianess = Stream.Endian.Little;
 		this._arrayBuffer = new ArrayBuffer(size);
 		this._dataView = new DataView(this._arrayBuffer);
 	}
@@ -22,12 +22,12 @@ class OutputStream extends Stream {
 	}
 
 	writeUint16(value: number): void {
-		this._dataView.setUint16(this._offset, value, this.endianess === Stream.ENDIAN.LITTLE);
+		this._dataView.setUint16(this._offset, value, this.endianess === Stream.Endian.Little);
 		this._offset += Uint16Array.BYTES_PER_ELEMENT;
 	}
 
 	writeUint32(value: number): void {
-		this._dataView.setUint32(this._offset, value, this.endianess === Stream.ENDIAN.LITTLE);
+		this._dataView.setUint32(this._offset, value, this.endianess === Stream.Endian.Little);
 		this._offset += Uint32Array.BYTES_PER_ELEMENT;
 	}
 
@@ -37,12 +37,12 @@ class OutputStream extends Stream {
 	}
 
 	writeInt16(value: number): void {
-		this._dataView.setInt16(this._offset, value, this.endianess === Stream.ENDIAN.LITTLE);
+		this._dataView.setInt16(this._offset, value, this.endianess === Stream.Endian.Little);
 		this._offset += Uint16Array.BYTES_PER_ELEMENT;
 	}
 
 	writeInt32(value: number): void {
-		this._dataView.setInt32(this._offset, value, this.endianess === Stream.ENDIAN.LITTLE);
+		this._dataView.setInt32(this._offset, value, this.endianess === Stream.Endian.Little);
 		this._offset += Uint32Array.BYTES_PER_ELEMENT;
 	}
 
