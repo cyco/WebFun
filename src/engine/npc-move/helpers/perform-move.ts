@@ -37,26 +37,12 @@ export default (npc: NPC, direction: Point, move: boolean, zone: Zone, engine: E
 		return maybeRestoreFaceThenDraw(npc, direction, zone);
 	}
 
-	if (npc.x === hero.x) {
-		direction.x = -1;
-		if (npc.x <= hero.x) direction.x = 0;
-	} else {
-		if (npc.y !== hero.y) {
-			return maybeRestoreFaceThenDraw(npc, direction, zone);
-		}
-		if (npc.x >= hero.x) {
-			direction.x = -1;
-			if (npc.x <= hero.x) direction.x = 0;
-		} else {
-			direction.x = 1;
-		}
+	const directionToHero = hero.comparedTo(npc.position);
+	if (directionToHero.x !== 0 && directionToHero.y !== 0) {
+		return maybeRestoreFaceThenDraw(npc, direction, zone);
 	}
-	if (npc.y >= hero.y) {
-		direction.y = -1;
-		if (npc.y <= hero.y) direction.y = 0;
-	} else {
-		direction.y = 1;
-	}
+	direction = directionToHero;
+
 	CharSetDefaultFace(npc.face, direction);
 	return maybeRestoreFaceThenDraw(npc, direction, zone);
 };
