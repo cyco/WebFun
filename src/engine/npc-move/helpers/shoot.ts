@@ -49,7 +49,7 @@ export default (npc: NPC, zone: Zone, engine: Engine): boolean => {
 				engine.mixer.effectChannel.playSound(sound);
 			}
 		} else {
-			engine.hero.health -= weapon.damage;
+			engine.hero.health -= npc.face.damage;
 			const sound = engine.assetManager.get(Sound, Yoda.sounds.Hurt);
 			engine.mixer.effectChannel.playSound(sound);
 			canActuallyMove = false;
