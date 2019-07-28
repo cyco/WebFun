@@ -1,7 +1,7 @@
 import { Char, NPC, Zone, CharMovementType } from "src/engine/objects";
 import { Point } from "src/util";
 import { Engine } from "src/engine";
-import { findTileIdForCharFrameWithDirection } from "./helpers";
+import { findTileIdForCharFrameWithDirection, shoot } from "./helpers";
 import { NullIfMissing } from "src/engine/asset-manager";
 import ZoneSetTileAt from "./helpers/zone-set-tile-at";
 import YodaViewRedrawTile from "./helpers/yoda-view-redraw";
@@ -16,6 +16,7 @@ import wander from "./wander";
 import patrol from "./patrol";
 import scaredy from "./scaredy";
 import animation from "./animation";
+import CharSetDefaultFace from "./helpers/char-set-default-face";
 
 const dispatch = new Map([
 	[CharMovementType.Unspecific1, unspecific1],
@@ -56,6 +57,12 @@ export default (npc: NPC, zone: Zone, engine: Engine): void => {
 	if (!npc.face) return;
 	if (!npc.enabled) {
 		handleRemainingBullet(npc, zone, engine);
+		return;
+	}
+
+	if (shoot(npc, zone, engine)) {
+		CharSetDefaultFace(npc.face, npc.direction);
+		YodaViewRedrawTile(npc.position, zone);
 		return;
 	}
 
