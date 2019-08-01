@@ -133,7 +133,6 @@ class SimulatedStory extends Story {
 		this._dagobah = copy;
 
 		this.goal = assets.get(Puzzle, 0);
-		this._world.layDownHotspotItems();
 	}
 
 	set world(w) {
