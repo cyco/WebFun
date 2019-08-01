@@ -1,5 +1,5 @@
 import { NPC, Zone } from "../objects";
-import { Point, Size } from "src/util";
+import { Point } from "src/util";
 import randomDirection from "./helpers/random-direction";
 import {
 	evade,

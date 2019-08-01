@@ -15,6 +15,7 @@ import canPerformMeleeAttack from "./can-perform-melee-attack";
 import isDoorway from "./is-doorway";
 import even from "./even";
 import shoot from "./shoot";
+import dealDamage from "./deal-damage";
 
 export {
 	findAnimationTileIdForCharFrame,
@@ -33,5 +34,6 @@ export {
 	canPerformMeleeAttack,
 	isDoorway,
 	even,
-	shoot
+	shoot,
+	dealDamage
 };
