@@ -73,9 +73,6 @@ class Story {
 
 		this._setupWorld(generator);
 		this._setupDagobah(generator, assetManager);
-
-		this._world.layDownHotspotItems();
-		this._dagobah.layDownHotspotItems();
 	}
 
 	private _setupWorld(generator: WorldGenerator): void {

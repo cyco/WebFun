@@ -94,6 +94,7 @@ class TransitionScene extends Scene {
 		engine.currentWorld = this.targetWorld;
 		engine.currentZone = this.targetZone;
 		engine.currentZone.visited = true;
+		engine.currentZone.initialize();
 
 		this.scene.zone = engine.currentZone;
 		this.scene.prepareCamera();

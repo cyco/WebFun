@@ -115,7 +115,23 @@ class Zone {
 		return this._type === Type.Load;
 	}
 
-	layDownHotspotItems(): void {
+	initialize() {
+		this.placeNPCs();
+		this.layDownHotspotItems();
+	}
+
+	private placeNPCs(): void {
+		this.npcs
+			.filter(npc => npc.enabled)
+			.forEach(npc => {
+				if (this.getTile(npc.x, npc.y, Zone.Layer.Object) === null) {
+					const tile = npc.face.frames[0].down;
+					this.setTile(tile, npc.x, npc.y, Zone.Layer.Object);
+				}
+			});
+	}
+
+	private layDownHotspotItems(): void {
 		this.hotspots
 			.filter(htsp => htsp.enabled)
 			.forEach(hotspot => {
