@@ -7,7 +7,8 @@ import {
 	playSound,
 	canPerformMeleeAttack,
 	performMoveAfterDoorwayCheck,
-	moveCheck
+	moveCheck,
+	dealDamage
 } from "./helpers";
 import { Engine } from "src/engine";
 
@@ -46,7 +47,7 @@ export default (npc: NPC, zone: Zone, engine: Engine) => {
 		direction = new Point(0, 0);
 		if (npc.face.damage >= 0) {
 			playSound(engine.assetManager.get(Sound, engine.type.sounds.Hurt), engine);
-			engine.hero.health -= npc.face.damage;
+			dealDamage(npc.face.damage, engine);
 		}
 		npc.currentFrame++;
 		if (npc.currentFrame > 1) {

@@ -1,5 +1,5 @@
 import { NPC, Zone } from "../objects";
-import { Point, randmod, Size } from "src/util";
+import { Point, randmod } from "src/util";
 import {
 	noMovement,
 	canPerformMeleeAttack,

@@ -6,6 +6,7 @@ import moveCheck from "./move-check";
 import MoveCheckResult from "./move-check-result";
 import { Yoda } from "src/engine/type";
 import findTileIdForCharFrameWithDirection from "./find-tile-id-for-char-frame-with-direction";
+import dealDamage from "./deal-damage";
 
 export default (npc: NPC, zone: Zone, engine: Engine): boolean => {
 	const hero = engine.hero.location;
@@ -49,7 +50,7 @@ export default (npc: NPC, zone: Zone, engine: Engine): boolean => {
 				engine.mixer.effectChannel.playSound(sound);
 			}
 		} else {
-			engine.hero.health -= npc.face.damage;
+			dealDamage(npc.face.damage, engine);
 			const sound = engine.assetManager.get(Sound, Yoda.sounds.Hurt);
 			engine.mixer.effectChannel.playSound(sound);
 			canActuallyMove = false;
@@ -59,7 +60,6 @@ export default (npc: NPC, zone: Zone, engine: Engine): boolean => {
 	}
 
 	if (canActuallyMove && npc.field3c < 4) {
-		console.log("direction", direction.x, direction.y);
 		zone.setTile(null, npc.bullet.x - direction.x, npc.bullet.y - direction.y, Zone.Layer.Object);
 		// YodaView::RedrawTile(view, *bulletXRef - *y_2, *bulletYRef - *y_5);
 		zone.setTile(tile, npc.bullet.x, npc.bullet.y, Zone.Layer.Object);
