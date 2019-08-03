@@ -35,16 +35,6 @@ describe("WebFun.Engine.Story", () => {
 			expect(worldGeneratorMock.generate).toHaveBeenCalledWith(subject.seed, 0);
 		});
 
-		it("places hotspot items after generation", () => {
-			spyOn(worldGeneratorMock, "generate").and.returnValue(true);
-			spyOn(worldGeneratorMock.world, "layDownHotspotItems");
-			spyOn(dagobahGeneratorMock.world, "layDownHotspotItems");
-			subject.generateWorld(engineMock);
-
-			expect(worldGeneratorMock.world.layDownHotspotItems).toHaveBeenCalled();
-			expect(dagobahGeneratorMock.world.layDownHotspotItems).toHaveBeenCalled();
-		});
-
 		it("keeps generating worlds with varying seed until it succeeds", () => {
 			srand(0);
 
@@ -74,7 +64,7 @@ describe("WebFun.Engine.Story", () => {
 		}
 
 		function mockWorld() {
-			return { layDownHotspotItems() {} };
+			return {};
 		}
 	});
 });
