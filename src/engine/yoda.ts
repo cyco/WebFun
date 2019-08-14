@@ -13,7 +13,9 @@ export default {
 		RebelFirstAidKit: 0x1f9,
 		ImperialFirstAidKit: 0x1fa,
 		BactaFluid: 0x1e0,
-		CharkRoot: 0x1e2
+		CharkRoot: 0x1e2,
+
+		SpiritHeart: 0x589
 	},
 	WeaponID: {
 		TheForce: 13,
