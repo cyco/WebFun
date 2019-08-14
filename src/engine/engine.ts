@@ -139,7 +139,7 @@ class Engine extends EventTarget {
 		}
 
 		const healthBonus = this.type.getHealthBonus(tile);
-		if (healthBonus > 0 && this.hero.health >= Hero.MAX_HEALTH) {
+		if (healthBonus > 0 && this.hero.health >= Hero.MaxHealth) {
 			this.mixer.effectChannel.playSound(this.type.sounds.NoGo);
 			return;
 		}

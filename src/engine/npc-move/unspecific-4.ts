@@ -7,8 +7,7 @@ import {
 	playSound,
 	canPerformMeleeAttack,
 	performMoveAfterDoorwayCheck,
-	moveCheck,
-	dealDamage
+	moveCheck
 } from "./helpers";
 import { Engine } from "src/engine";
 
@@ -45,7 +44,7 @@ export default (npc: NPC, zone: Zone, engine: Engine) => {
 			if (!(tickCount % 3))
 				// only play sound sometimes
 				playSound(engine.assetManager.get(Sound, engine.type.sounds.Hurt), engine);
-			dealDamage(engine.hero.health, engine);
+			engine.hero.changeHealth(-npc.face.damage);
 		}
 
 		npc.currentActionFrame++;

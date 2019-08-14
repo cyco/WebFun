@@ -1,7 +1,12 @@
 import { Char, Zone } from "./objects";
 import { Direction, EventTarget, Point } from "src/util";
+import Settings from "src/settings";
+import { floor, min, max, ceil } from "src/std/math";
 
-export const MAX_HEALTH = 0x300;
+export const HealthPerLive = 100;
+export const MaxLives = 3;
+export const MaxHealth = MaxLives * HealthPerLive;
+
 export const Events = {
 	HealthChanged: "HealthChanged",
 	WeaponChanged: "WeaponChanged",
@@ -9,7 +14,11 @@ export const Events = {
 };
 
 class Hero extends EventTarget {
-	static readonly MAX_HEALTH = MAX_HEALTH;
+	public static readonly MaxHealth = MaxHealth;
+	public static readonly HealthPerLive = HealthPerLive;
+	public static readonly MaxLives = MaxLives;
+	public static readonly Event = Events;
+
 	public visible: boolean = false;
 	public _location: Point = new Point(0, 0, 1); // TODO: make private again
 	public invincible: boolean = false;
@@ -17,7 +26,8 @@ class Hero extends EventTarget {
 	public _actionFrames: number = 0; // TODO: make private again
 	public _direction: number = Direction.South; // TODO: make private again
 	public _appearance: Char = null; // TODO: make private again
-	private _health: number = MAX_HEALTH;
+
+	private _health: number = MaxHealth;
 	private _walking: boolean = false;
 	private _attacking: boolean = false;
 	private _dragging: boolean = false;
@@ -25,8 +35,19 @@ class Hero extends EventTarget {
 	private _ammo: number = -1;
 	private _ammoByWeapon: WeakMap<Char, number> = new WeakMap();
 
-	static get Event() {
-		return Events;
+	public static ConvertDamageToHealth(damage: number, lives: number): number {
+		if (damage > 99 && lives >= 3) return 0;
+		if (damage <= 1 && lives <= 1) return MaxHealth;
+
+		return (4 - lives) * 100 - damage;
+	}
+
+	public static ConvertHealthToDamage(health: number): [number, number] {
+		if (health <= 0) return [100, 3];
+		if (health >= MaxHealth) return [1, 1];
+
+		const livesLost = 3 - floor(health / 100);
+		return [100 - (health % 100), livesLost];
 	}
 
 	get isWalking() {
@@ -60,7 +81,7 @@ class Hero extends EventTarget {
 	set health(h) {
 		if (this.invincible) return;
 
-		this._health = h;
+		this._health = max(0, min(MaxHealth, h));
 		this.dispatchEvent(Events.HealthChanged, {
 			health: h
 		});
@@ -231,6 +252,37 @@ class Hero extends EventTarget {
 		z.setTile(t, target);
 
 		return true;
+	}
+
+	public changeHealth(damage: number) {
+		if (this.invincible) return;
+
+		let [damageTaken, lives] = Hero.ConvertHealthToDamage(this.health);
+		const difficultyAdjustment = floor(100 / Settings.difficulty);
+		const effectiveDamage = floor(damage / difficultyAdjustment);
+		if (effectiveDamage > -100) {
+			damageTaken -= effectiveDamage;
+			lives += floor(damageTaken / 100) - ceil(effectiveDamage / 100);
+		} else {
+			damageTaken -= ceil(effectiveDamage / 3) + 1;
+			lives += floor(damageTaken / 100) - ceil(effectiveDamage / 100);
+		}
+
+		damageTaken %= 100;
+		if (lives > 3) {
+			lives = 3;
+			damageTaken = 100;
+		}
+
+		this.health = Hero.ConvertDamageToHealth(damageTaken, lives);
+	}
+
+	get damage() {
+		return Hero.ConvertHealthToDamage(this.health)[0];
+	}
+
+	get lives() {
+		return Hero.ConvertHealthToDamage(this.health)[1];
 	}
 }
 

@@ -6,7 +6,6 @@ import moveCheck from "./move-check";
 import MoveCheckResult from "./move-check-result";
 import { Yoda } from "src/engine/type";
 import findTileIdForCharFrameWithDirection from "./find-tile-id-for-char-frame-with-direction";
-import dealDamage from "./deal-damage";
 
 export default (npc: NPC, zone: Zone, engine: Engine): boolean => {
 	const hero = engine.hero.location;
@@ -50,7 +49,7 @@ export default (npc: NPC, zone: Zone, engine: Engine): boolean => {
 				engine.mixer.effectChannel.playSound(sound);
 			}
 		} else {
-			dealDamage(npc.face.damage, engine);
+			engine.hero.changeHealth(-npc.face.damage);
 			const sound = engine.assetManager.get(Sound, Yoda.sounds.Hurt);
 			engine.mixer.effectChannel.playSound(sound);
 			canActuallyMove = false;

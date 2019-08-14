@@ -13,8 +13,8 @@ const BadColor = "red";
 const CriticalColor = "black";
 const Conditions = [CriticalColor, BadColor, MediumColor, GoodColor, GoodColor];
 
-const MaxHealth = 0x300;
-const HealthPerColor = 0x100;
+const MaxHealth = 300;
+const HealthPerColor = 100;
 
 declare interface SimplePoint {
 	x: number;
