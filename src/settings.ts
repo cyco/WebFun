@@ -19,6 +19,8 @@ const Settings = persistent(
 		playSound: false,
 		playMusic: false,
 
+		difficulty: 50,
+
 		logLevel: LogLevel.Debug,
 
 		url: {
