@@ -13,7 +13,7 @@ export default (npc: NPC, zone: Zone, engine: Engine): boolean => {
 	const directionToHero = hero.comparedTo(npc.position);
 
 	const weapon = engine.assetManager.get(Char, npc.face.reference, NullIfMissing);
-	if (!weapon) return true;
+	if (!weapon) return false;
 
 	let playShootSound = false;
 	let canActuallyMove = false;
