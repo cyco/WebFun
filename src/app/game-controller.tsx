@@ -7,7 +7,7 @@ import {
 	Weapon as WeaponComponent
 } from "./ui";
 import { Char, Tile, Zone, Sound, Puzzle } from "src/engine/objects";
-import { ColorPalette, Engine, GameData, Hero, Story, AssetManager, GameType } from "src/engine";
+import { ColorPalette, Engine, GameData, Hero, Story, AssetManager, GameType, Yoda } from "src/engine";
 import { ConfirmationResult, ModalConfirm } from "src/ux";
 import { EventTarget, Point, Rectangle, Size } from "src/util";
 import { FilePicker, WindowManager } from "src/ui";
@@ -63,6 +63,14 @@ class GameController extends EventTarget {
 
 		engine.hero.addEventListener(Hero.Event.HealthChanged, () => {
 			if (engine.hero.health > 0) {
+				return;
+			}
+
+			if (engine.inventory.contains(Yoda.ItemIDs.SpiritHeart)) {
+				engine.hero.health = Hero.MaxHealth;
+				engine.inventory.removeItem(Yoda.ItemIDs.SpiritHeart);
+				const flourish = engine.assetManager.get(Sound, Yoda.Sound.Flourish);
+				engine.mixer.effectChannel.playSound(flourish);
 				return;
 			}
 

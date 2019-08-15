@@ -15,7 +15,10 @@ export default {
 		BactaFluid: 0x1e0,
 		CharkRoot: 0x1e2,
 
-		SpiritHeart: 0x589
+		SpiritHeart: 1432
+	},
+	Sound: {
+		Flourish: 58
 	},
 	WeaponID: {
 		TheForce: 13,
