@@ -57,11 +57,8 @@ class ConditionComponent extends InstructionThing {
 				break;
 			case Conditions.ZoneEntered.Opcode:
 				break;
-			case Conditions.Bump.Opcode:
-				this.appendLocationArgument(this._condition.arguments[0], this._condition.arguments[1]);
-				this.appendTileArgument(this._condition.arguments[2]);
-				break;
 			case Conditions.PlaceItem.Opcode:
+			case Conditions.PlaceItemIsNot.Opcode:
 				this.appendLocationArgument(
 					this._condition.arguments[0],
 					this._condition.arguments[1],
@@ -70,6 +67,7 @@ class ConditionComponent extends InstructionThing {
 				this.appendTileArgument(this._condition.arguments[3]);
 				this.appendTileArgument(this._condition.arguments[4]);
 				break;
+			case Conditions.Bump.Opcode:
 			case Conditions.StandingOn.Opcode:
 				this.appendLocationArgument(this._condition.arguments[0], this._condition.arguments[1]);
 				this.appendTileArgument(this._condition.arguments[2]);
@@ -126,15 +124,6 @@ class ConditionComponent extends InstructionThing {
 				break;
 			case Conditions.FindItemIs.Opcode:
 				this.appendTileArgument(this._condition.arguments[0]);
-				break;
-			case Conditions.PlaceItemIsNot.Opcode:
-				this.appendLocationArgument(
-					this._condition.arguments[0],
-					this._condition.arguments[1],
-					this._condition.arguments[2]
-				);
-				this.appendTileArgument(this._condition.arguments[3]);
-				this.appendTileArgument(this._condition.arguments[4]);
 				break;
 			case Conditions.HeroIsAt.Opcode:
 				this.appendLocationArgument(this._condition.arguments[0], this._condition.arguments[1]);
