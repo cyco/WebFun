@@ -3,7 +3,7 @@ import { Point } from "src/util";
 
 export default (frame: CharFrame, direction: Point): Tile => {
 	if (direction.x === 0 && direction.y === 1) {
-		return frame.down || frame.down;
+		return frame.down;
 	}
 
 	if (direction.x === 0 && direction.y === -1) {

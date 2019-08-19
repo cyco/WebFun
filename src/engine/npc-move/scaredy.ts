@@ -23,7 +23,7 @@ export default (npc: NPC, zone: Zone, engine: Engine) => {
 		direction = directionAwayFromHero;
 	} else direction = randomDirection();
 
-	while (1) {
+	while (true) {
 		direction = evade(direction, moveCheck(npc.position, direction, zone, false));
 		if (canPerformMeleeAttack(direction, npc, hero)) {
 			performMeleeAttack(npc, engine);

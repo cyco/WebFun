@@ -19,6 +19,7 @@ export default (npc: NPC, zone: Zone, engine: Engine): boolean => {
 	let canActuallyMove = false;
 
 	if (npc.field3c || npc.cooldown > 0) {
+		//
 	} else if (npc.enabled && distanceToHero.x < 4 && distanceToHero.y < 4) {
 		npc.bullet = new Point(npc.position);
 		npc.direction = directionToHero;
