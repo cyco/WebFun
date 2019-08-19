@@ -297,10 +297,11 @@ class ScriptDebugger implements DebuggingScriptExecutorDelegate {
 		}
 
 		if (thing instanceof Action) {
+			return;
 		}
 
 		if (thing instanceof Condition) {
-			// breakpoint = new LocationBreakpoint(thing.action.zone.id, thing.id);
+			return;
 		}
 
 		if (thing instanceof Instruction) {
