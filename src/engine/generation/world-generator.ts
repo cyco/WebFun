@@ -669,7 +669,7 @@ class WorldGenerator {
 
 				this.errorWhen(!zone, "No zone found");
 				let maxCount = 5000;
-				while (1) {
+				while (true) {
 					maxCount--;
 					if (maxCount === 0) {
 						break;

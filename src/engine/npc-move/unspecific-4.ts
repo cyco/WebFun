@@ -12,15 +12,12 @@ import {
 import { Engine } from "src/engine";
 
 export default (npc: NPC, zone: Zone, engine: Engine) => {
-	const tickCount = engine.metronome.tickCount;
-
-	let direction: Point;
 	if (npc.cooldown) {
-		direction = new Point(0, 0);
 		npc.cooldown--;
 		return noMovement(npc, zone, engine);
 	}
 
+	const tickCount = engine.metronome.tickCount;
 	if (tickCount % 3) return noMovement(npc, zone, engine);
 
 	if (!npc.currentActionFrame) {
@@ -31,6 +28,8 @@ export default (npc: NPC, zone: Zone, engine: Engine) => {
 	const distanceToHero = npc.position.bySubtracting(hero).abs();
 	const directionToHero = hero.comparedTo(npc.position);
 	const directionAwayFromHero = directionToHero.byScalingBy(-1);
+
+	let direction: Point;
 	if (npc.currentActionFrame) direction = directionToHero;
 	else direction = directionAwayFromHero;
 

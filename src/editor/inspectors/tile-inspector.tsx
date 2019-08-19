@@ -108,7 +108,7 @@ class TileInspector extends AbstractInspector {
 		const previousContent = this.window.content.querySelectorAll(TileView.tagName);
 		this.window.content.textContent = "";
 		previousContent.forEach((c: TileView) => {
-			c.onclick = () => void 5;
+			c.onclick = () => void 0;
 			c.tile = null;
 			c.palette = null;
 		});
