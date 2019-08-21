@@ -9,7 +9,7 @@ import DataManager from "./data-manager";
 import EditorView from "./editor-view";
 import { InputStream } from "src/util";
 import PaletteInspector from "src/editor/inspectors/palette-inspector";
-import { PaletteProvider } from "src/app/data";
+import { PaletteProvider } from "./data";
 import PuzzleInspector from "src/editor/inspectors/puzzle-inspector";
 import SetupImageInspector from "src/editor/inspectors/setup-image-inspector";
 import SoundInspector from "src/editor/inspectors/sound-inspector";
