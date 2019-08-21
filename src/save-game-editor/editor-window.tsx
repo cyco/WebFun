@@ -2,7 +2,7 @@ import "./editor-window.scss";
 
 import { AbstractWindow, ProgressIndicator } from "src/ui/components";
 import { ColorPalette, GameData, AssetManager } from "src/engine";
-import { DataProvider, PaletteProvider } from "src/app/data";
+import { DataProvider, PaletteProvider } from "src/editor/data";
 import { Reader as SaveGameReaderFactory, SaveState } from "src/engine/save-game";
 import { Tile, Zone, Puzzle, Char, Sound } from "src/engine/objects";
 
