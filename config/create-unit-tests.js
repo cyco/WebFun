@@ -21,7 +21,9 @@ const isExcluded = (file, isDirectory) => {
 		(!isDirectory && !file.endsWith(".js") && !file.endsWith(".ts")) ||
 		(isDirectory && file === "debug") ||
 		(isDirectory && file === "editor") ||
-		(isDirectory && file === "@types")
+		(isDirectory && file === "@types") ||
+		(isDirectory && file === "npc-move") ||
+		(isDirectory && file === "save-game-editor")
 	);
 };
 
