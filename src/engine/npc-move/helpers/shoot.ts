@@ -66,6 +66,14 @@ export default (npc: NPC, zone: Zone, engine: Engine): boolean => {
 		// YodaView::RedrawTile(view, *bulletXRef, *bulletYRef);
 		return true;
 	} else {
+		if (
+			npc.field3c >= 4 &&
+			zone.getTile(npc.bullet.x - direction.x, npc.bullet.y - direction.y, Zone.Layer.Object) === tile
+		) {
+			zone.setTile(null, npc.bullet.x - direction.x, npc.bullet.y - direction.y, Zone.Layer.Object);
+			// YodaView::RedrawTile(view, *bulletXRef - *y_2, *bulletYRef - *y_5);
+		}
+
 		if (zone.getTile(npc.bullet.x, npc.bullet.y, Zone.Layer.Object) === tile) {
 			zone.setTile(null, npc.bullet.x, npc.bullet.y, Zone.Layer.Object);
 			// YodaView::RedrawTile(view, *bulletXRef - *y_2, *bulletYRef - *y_5);
