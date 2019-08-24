@@ -6,7 +6,7 @@ class DOMAudioChannel implements Channel<HTMLAudioElement> {
 	private _volume = 1.0;
 	public provider: (id: number) => HTMLAudioElement;
 
-	async playSound(sound: HTMLAudioElement | number): Promise<void> {
+	public async playSound(sound: HTMLAudioElement | number): Promise<void> {
 		try {
 			let soundNode = sound instanceof HTMLAudioElement ? sound : this.provider(sound);
 
@@ -21,7 +21,7 @@ class DOMAudioChannel implements Channel<HTMLAudioElement> {
 		}
 	}
 
-	stop(): void {
+	public stop(): void {
 		this._sounds.forEach(s => s.pause());
 		this._sounds = [];
 	}
@@ -44,15 +44,15 @@ class DOMAudioChannel implements Channel<HTMLAudioElement> {
 		return this._muted;
 	}
 
-	mute(): void {
+	public mute(): void {
 		this.muted = true;
 	}
 
-	unmute(): void {
+	public unmute(): void {
 		this.muted = false;
 	}
 
-	isMuted(): boolean {
+	public isMuted(): boolean {
 		return this.muted;
 	}
 }

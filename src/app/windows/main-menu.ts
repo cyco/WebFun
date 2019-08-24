@@ -106,8 +106,7 @@ class MainMenu extends Menu {
 					Separator,
 					{
 						title: "Pause",
-						mnemonic: 0,
-						enabled: () => controller.engine !== null
+						mnemonic: 0
 					}
 				]
 			},

@@ -1,22 +1,22 @@
 import { global } from "./index";
 
 export const {
-	Storage,
-	XMLHttpRequest,
+	CustomEvent,
 	Element,
-	Image,
-	NodeList,
-	Node,
-	ImageData,
-	HTMLElement,
-	HTMLCollection,
-	HTMLImageElement,
-	HTMLSelectElement,
 	Event,
 	File,
 	FileReader,
+	HTMLCollection,
+	HTMLElement,
+	HTMLImageElement,
+	HTMLSelectElement,
+	Image,
+	ImageData,
 	MouseEvent,
-	CustomEvent
+	Node,
+	NodeList,
+	Storage,
+	XMLHttpRequest
 } = global;
 
 export const KeyEvent: { [_: string]: number } = global.KeyEvent || {};

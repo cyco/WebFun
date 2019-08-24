@@ -2,7 +2,7 @@ import { SettingsWindow } from "src/app/ui";
 import DifficultyWindow from "src/app/windows/difficulty-window";
 
 describeComponent(DifficultyWindow, () => {
-	let subject: DifficultyWindow;
+	let subject: any;
 	beforeEach(() => (subject = render(DifficultyWindow) as any));
 
 	it("is a settings window", () => {
@@ -11,9 +11,9 @@ describeComponent(DifficultyWindow, () => {
 
 	it("sets automatically sets up default attributes", () => {
 		expect(subject.title).toBe("Difficulty");
-		expect((subject as any).key).toBe("difficulty");
-		expect((subject as any).minLabel).toBe("Easy");
-		expect((subject as any).midLabel).toBe("Medium");
-		expect((subject as any).maxLabel).toBe("Hard");
+		expect(subject.key).toBe("difficulty");
+		expect(subject.minLabel).toBe("Easy");
+		expect(subject.midLabel).toBe("Medium");
+		expect(subject.maxLabel).toBe("Hard");
 	});
 });

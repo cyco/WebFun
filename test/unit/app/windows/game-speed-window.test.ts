@@ -1,11 +1,12 @@
 import GameSpeedWindow from "src/app/windows/game-speed-window";
+import { SettingsWindow } from "src/app/ui";
 
 describeComponent(GameSpeedWindow, () => {
 	let subject: GameSpeedWindow;
 	beforeEach(() => (subject = render(GameSpeedWindow) as any));
 
 	it("is a settings window", () => {
-		expect(subject instanceof GameSpeedWindow).toBeTrue();
+		expect(subject instanceof SettingsWindow).toBeTrue();
 	});
 
 	it("sets automatically sets up default attributes", () => {

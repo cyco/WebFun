@@ -6,7 +6,6 @@ import { default as Engine, Events } from "src/engine/engine";
 import { AbstractWindow } from "src/ui/components";
 import { Direction } from "../ui/location";
 import { Hero } from "src/engine";
-import InventoryComponent from "../ui/inventory";
 import World from "src/engine/generation/world";
 import { Zone } from "src/engine/objects";
 
@@ -45,36 +44,35 @@ class MainWindow extends AbstractWindow {
 	}
 
 	set engine(e) {
-		const inventoryView = this.content.querySelector(InventoryComponent.tagName) as InventoryComponent;
-		const ammoView = this.content.querySelector(Ammo.tagName) as Ammo;
-		const weaponView = this.content.querySelector(Weapon.tagName) as Weapon;
-
 		if (this._engine) {
+			const hero = this._engine.hero;
 			this._handlers.each((event: any, handler: any) =>
 				this._engine.removeEventListener(event, handler)
 			);
-			this._engine.hero.removeEventListener(Hero.Event.HealthChanged, this._handlers.healthChanged);
-			this._engine.hero.removeEventListener(
-				Hero.Event.WeaponChanged,
-				this._handlers[Events.WeaponChanged]
-			);
-			inventoryView.inventory = null;
+			hero.removeEventListener(Hero.Event.HealthChanged, this._handlers.healthChanged);
+			hero.removeEventListener(Hero.Event.WeaponChanged, this._handlers[Events.WeaponChanged]);
+			hero.removeEventListener(Hero.Event.AmmoChanged, this._handlers[Events.AmmoChanged]);
 		}
 
 		this._engine = e;
 
 		if (this._engine) {
-			this._engine.hero.addEventListener(Hero.Event.HealthChanged, this._handlers.healthChanged);
-			this._engine.hero.addEventListener(
-				Hero.Event.WeaponChanged,
-				this._handlers[Events.WeaponChanged]
-			);
-			this._engine.hero.addEventListener(Hero.Event.AmmoChanged, this._handlers[Events.AmmoChanged]);
+			const hero = this._engine.hero;
+			hero.addEventListener(Hero.Event.HealthChanged, this._handlers.healthChanged);
+			hero.addEventListener(Hero.Event.WeaponChanged, this._handlers[Events.WeaponChanged]);
+			hero.addEventListener(Hero.Event.AmmoChanged, this._handlers[Events.AmmoChanged]);
 			this._handlers.each((event: any, handler: any) => this._engine.addEventListener(event, handler));
-			inventoryView.inventory = this._engine ? this._engine.inventory : null;
-			ammoView.ammo = e.hero.ammo;
-			weaponView.weapon = e.hero.weapon;
 		}
+
+		this.applyCurrentValues();
+	}
+
+	private applyCurrentValues() {
+		const engine = this._engine;
+
+		this.inventory.inventory = engine ? engine.inventory : null;
+		this.ammo.ammo = engine ? engine.hero.ammo : 0;
+		this.weapon.weapon = engine ? engine.hero.weapon : null;
 	}
 
 	get mainContent() {
@@ -82,14 +80,14 @@ class MainWindow extends AbstractWindow {
 	}
 
 	private _updateAmmo() {
-		const weapon = this.engine ? this.engine.hero.weapon : null;
-		const current = weapon ? this.engine.hero.ammo : -1;
-		const max = this.engine ? this.engine.type.getMaxAmmo(this.engine.hero.weapon) : 0;
-		this.ammo.ammo = current / max;
+		const weapon = this.engine.hero.weapon;
+		const current = this.engine.hero.ammo;
+		const max = this.engine.type.getMaxAmmo(weapon);
+		this.ammo.ammo = weapon ? current / max : 0;
 	}
 
 	private _updateWeapon() {
-		this.weapon.weapon = this.engine ? this.engine.hero.weapon : null;
+		this.weapon.weapon = this.engine.hero.weapon;
 	}
 
 	private _updateLocation({ zone, world }: { zone: Zone; world: World }) {

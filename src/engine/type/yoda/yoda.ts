@@ -42,11 +42,10 @@ class Yoda extends GameType {
 			case TileID.Chakroot:
 				return 50;
 			case TileID.RebelFirstAidKit:
-				return 100;
 			case TileID.ImperialFirstAidKit:
 				return 100;
 			default:
-				return null;
+				return 0;
 		}
 	}
 

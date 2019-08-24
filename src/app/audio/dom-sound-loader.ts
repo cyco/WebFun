@@ -4,7 +4,7 @@ class DOMSoundLoader extends SoundLoader<HTMLAudioElement> {
 	private readonly baseURL: string;
 	constructor(url: string) {
 		super();
-		this.baseURL = url;
+		this.baseURL = url.ensureTail("/");
 	}
 
 	loadSound(file: string) {
@@ -18,9 +18,7 @@ class DOMSoundLoader extends SoundLoader<HTMLAudioElement> {
 					audio.addEventListener("loadeddata", () => resolve(audio));
 					audio.addEventListener("error", reject);
 				}
-				for (let i = 0; i < 10; i++) {
-					audio.load();
-				}
+				audio.load();
 			} catch (e) {
 				reject(e);
 			}
