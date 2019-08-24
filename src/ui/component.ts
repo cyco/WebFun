@@ -1,9 +1,3 @@
-import { global } from "src/std";
-
-if (!global.HTMLElement) {
-	global.HTMLElement = class {};
-}
-
 abstract class Component extends HTMLElement {
 	public static readonly tagName: string;
 	public static observedAttributes: string[];

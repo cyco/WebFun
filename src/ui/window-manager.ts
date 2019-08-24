@@ -1,15 +1,11 @@
 import { AbstractWindow } from "src/ui/components";
 
-class WindowManager {
+class WindowManager implements EventListenerObject {
 	private static _defaultManager: WindowManager;
 	private _container: HTMLElement;
 	private _windows: AbstractWindow[] = [];
 	private _topIndex = 0;
 	private _topMostWindow: AbstractWindow;
-
-	private _handlers = {
-		windowDidClose: (e: CustomEvent) => this._onWindowClose(e)
-	};
 
 	public static get defaultManager(): WindowManager {
 		return (this._defaultManager = this._defaultManager || new WindowManager(document.body));
@@ -27,28 +23,38 @@ class WindowManager {
 	}
 
 	showWindow(window: AbstractWindow) {
-		if (!~this._windows.indexOf(window)) this._windows.push(window);
+		if (~this._windows.indexOf(window)) {
+			this.focus(window);
+			return;
+		}
+
 		window.manager = this;
-		window.addEventListener(AbstractWindow.Event.DidClose, this._handlers.windowDidClose);
+		window.addEventListener(AbstractWindow.Event.DidClose, this);
+		this._windows.push(window);
 		this._container.appendChild(window);
 
 		this.focus(window);
 	}
 
-	private _onWindowClose(e: CustomEvent) {
-		const window = e.target as AbstractWindow;
+	handleEvent(evt: Event): void {
+		console.assert(evt.type === AbstractWindow.Event.DidClose);
+		const window = evt.target as AbstractWindow;
 
 		window.manager = null;
+		window.removeEventListener(AbstractWindow.Event.DidClose, this);
+
 		const index = this._windows.indexOf(window);
-		if (index !== -1) this._windows.splice(index, 1);
+		console.assert(index !== -1);
+		this._windows.splice(index, 1);
 		if (window === this._topMostWindow) {
 			const newTopMostWindow = this._windows.reduce((a: AbstractWindow, b: AbstractWindow) => {
 				if (!a) return b;
-				if (!b) return a;
 				if (a.style.zIndex >= b.style.zIndex) return a;
 				return b;
 			}, null);
+
 			if (newTopMostWindow) this.focus(newTopMostWindow);
+			else this._topMostWindow = null;
 		}
 	}
 
