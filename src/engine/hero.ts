@@ -96,20 +96,7 @@ class Hero extends EventTarget {
 	}
 
 	get direction() {
-		switch (Direction.Confine(this._direction)) {
-			case Direction.NorthEast:
-			case Direction.NorthWest:
-			case Direction.North:
-				return Direction.North;
-			case Direction.SouthEast:
-			case Direction.SouthWest:
-			case Direction.South:
-				return Direction.South;
-			case Direction.East:
-				return Direction.East;
-			case Direction.West:
-				return Direction.West;
-		}
+		return Direction.Confine(this._direction);
 	}
 
 	get appearance() {
