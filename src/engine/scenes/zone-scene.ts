@@ -91,8 +91,7 @@ class ZoneScene extends Scene {
 		}
 		this._moveNPCs();
 
-		// await this._handleMouse();
-		const stop = await this._handleKeys();
+		const stop = await this.handleInput();
 		if (stop) return;
 
 		this.engine.camera.update(ticks);
@@ -509,41 +508,7 @@ class ZoneScene extends Scene {
 
 	willHide() {}
 
-	private async _handleMouse(): Promise<void> {
-		const engine = this.engine;
-
-		const inputManager = engine.inputManager;
-		const mouseLocationInView = inputManager.mouseLocationInView;
-
-		const camera = this.engine.camera;
-		const offset = camera.offset;
-		const size = camera.size;
-		const hero = engine.hero;
-
-		const mouseLocationOnZone = new Point(
-			mouseLocationInView.x * size.width - offset.x - 0.5,
-			mouseLocationInView.y * size.height - offset.y - 0.5
-		);
-
-		const relativeLocation = Point.subtract(mouseLocationOnZone, hero.location);
-
-		const onHero = Math.abs(relativeLocation.x) < 0.5 && Math.abs(relativeLocation.y) < 0.5;
-		const closeToViewEdge =
-			mouseLocationInView.x < 1 / 18 ||
-			mouseLocationInView.y < 1 / 18 ||
-			mouseLocationInView.x > 17 / 18 ||
-			mouseLocationInView.y > 17 / 18;
-		if (!onHero || closeToViewEdge) {
-			const direction = Direction.CalculateAngleFromRelativePoint(relativeLocation);
-
-			if (isNaN(direction)) return;
-
-			hero.face(direction);
-			if (inputManager.walk) await this._moveHero(direction);
-		}
-	}
-
-	private async _handleKeys(): Promise<boolean> {
+	private async handleInput(): Promise<boolean> {
 		const engine = this.engine;
 		const inputManager = engine.inputManager;
 		const hero = engine.hero;
@@ -574,28 +539,28 @@ class ZoneScene extends Scene {
 			return true;
 		}
 
-		if (inputManager.walk) {
+		const inputDirections = inputManager.directions;
+		if (inputDirections) {
 			const point = new Point(0, 0);
-			const directions = inputManager.directions;
-			if (directions & InputDirection.Up) {
+			if (inputDirections & InputDirection.Up) {
 				point.y -= 1;
 			}
-			if (directions & InputDirection.Down) {
+			if (inputDirections & InputDirection.Down) {
 				point.y += 1;
 			}
-			if (directions & InputDirection.Left) {
+			if (inputDirections & InputDirection.Left) {
 				point.x -= 1;
 			}
-			if (directions & InputDirection.Right) {
+			if (inputDirections & InputDirection.Right) {
 				point.x += 1;
 			}
-
-			const direction = Direction.CalculateAngleFromRelativePoint(point);
-			if (isNaN(direction)) return;
-
-			hero.face(direction);
-			if (inputManager.walk) await this._moveHero(direction);
+			const direction = Direction.Confine(Direction.CalculateAngleFromRelativePoint(point));
+			if (!isNaN(direction)) {
+				hero.face(direction);
+			}
 		}
+
+		if (inputManager.walk) await this._moveHero(hero.direction);
 
 		return false;
 	}
