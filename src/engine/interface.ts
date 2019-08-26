@@ -1,4 +1,4 @@
-import { Channel, Mixer } from "./audio";
+import { Mixer } from "./audio";
 import { Renderer } from "./rendering";
 import { InputManager } from "./input";
 import { ScriptExecutor } from "./script";
@@ -15,7 +15,6 @@ import { ConditionImplementations as Conditions } from "./script/conditions";
 import { InstructionImplementations as Instructions } from "./script/instructions";
 
 interface Interface {
-	Channel: () => Channel<HTMLAudioElement>;
 	InputManager: (view: any) => InputManager;
 	Inventory: () => Inventory;
 	Metronome: () => Metronome;
@@ -28,11 +27,7 @@ interface Interface {
 	SceneManager: () => SceneManager;
 	Hero: () => Hero;
 	Loader: (e: Engine) => Loader;
-	Mixer: (
-		provider: (id: number) => HTMLAudioElement,
-		musicChannel: Channel<HTMLAudioElement>,
-		effectChannel: Channel<HTMLAudioElement>
-	) => Mixer<HTMLAudioElement>;
+	Mixer: () => Mixer;
 	AssetManager: () => AssetManager;
 	ResourceManager: () => ResourceManager;
 }

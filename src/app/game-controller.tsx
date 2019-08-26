@@ -18,12 +18,12 @@ import GameState from "../engine/game-state";
 import { PaletteAnimation } from "src/engine/rendering";
 import { Reader } from "src/engine/save-game";
 import Settings from "src/settings";
-import { DOMAudioChannel } from "./audio";
 import { CanvasRenderer } from "./rendering";
 import { DesktopInputManager } from "./input";
 import Loader from "./loader";
 import { ResourceManager } from "src/engine/dummy-interface";
 import CursorManager from "./input/cursor-manager";
+import { Channel } from "src/engine/audio";
 
 export const Event = {
 	DidLoadData: "didLoadData"
@@ -54,7 +54,6 @@ class GameController extends EventTarget {
 
 	private _buildEngine(type: GameType, paths: PathConfiguration) {
 		const engine: Engine = new Engine(type, {
-			Channel: () => new DOMAudioChannel(),
 			Renderer: () => new CanvasRenderer.Renderer(this._sceneView.canvas),
 			InputManager: () => new DesktopInputManager(this._sceneView, new CursorManager(this._sceneView)),
 			Loader: e => new Loader(e.resourceManager),
@@ -71,7 +70,7 @@ class GameController extends EventTarget {
 				engine.hero.health = Hero.MaxHealth;
 				engine.inventory.removeItem(Yoda.ItemIDs.SpiritHeart);
 				const flourish = engine.assetManager.get(Sound, Yoda.Sound.Flourish);
-				engine.mixer.effectChannel.playSound(flourish);
+				engine.mixer.play(flourish, Channel.Effect);
 				return;
 			}
 
