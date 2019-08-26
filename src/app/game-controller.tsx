@@ -23,6 +23,7 @@ import { CanvasRenderer } from "./rendering";
 import { DesktopInputManager } from "./input";
 import Loader from "./loader";
 import { ResourceManager } from "src/engine/dummy-interface";
+import CursorManager from "./input/cursor-manager";
 
 export const Event = {
 	DidLoadData: "didLoadData"
@@ -55,7 +56,7 @@ class GameController extends EventTarget {
 		const engine: Engine = new Engine(type, {
 			Channel: () => new DOMAudioChannel(),
 			Renderer: () => new CanvasRenderer.Renderer(this._sceneView.canvas),
-			InputManager: () => new DesktopInputManager(this._sceneView),
+			InputManager: () => new DesktopInputManager(this._sceneView, new CursorManager(this._sceneView)),
 			Loader: e => new Loader(e.resourceManager),
 			SceneManager: () => this._sceneView.manager,
 			ResourceManager: () => new ResourceManager(paths.palette, paths.data, paths.sfx)

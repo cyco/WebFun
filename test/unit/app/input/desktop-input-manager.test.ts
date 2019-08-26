@@ -1,15 +1,18 @@
 import DesktopInputManager from "src/app/input/desktop-input-manager";
 import { Direction } from "src/engine/input";
 import { KeyEvent, Point } from "src/util";
+import CursorManager from "src/app/input/cursor-manager";
 
 describe("WebFun.App.Input.DesktopInputManager", () => {
 	let subject: DesktopInputManager;
 	let element: HTMLDivElement;
 	let mockElement: HTMLDivElement;
+	let mockedCursorManager: CursorManager;
 
 	beforeAll(() => {
+		mockedCursorManager = { changeCursor() {} } as any;
 		element = document.createElement("div");
-		subject = new DesktopInputManager(element);
+		subject = new DesktopInputManager(element, mockedCursorManager);
 		mockElement = { closest: () => true } as any;
 		spyOn(document, "elementFromPoint").and.returnValue(mockElement);
 	});
