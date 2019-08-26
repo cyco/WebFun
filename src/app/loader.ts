@@ -2,7 +2,6 @@ import { EventTarget, FileLoader, InputStream } from "src/util";
 import { GameData, GameTypeYoda, readGameDataFile } from "src/engine";
 
 import { ColorPalette } from "src/engine/rendering";
-import { DOMSoundLoader } from "./audio";
 import Settings from "src/settings";
 import { ResourceManager, Loader as LoaderInterface } from "src/engine";
 
@@ -85,19 +84,6 @@ class Loader extends EventTarget implements LoaderInterface {
 
 	private async _loadSounds() {
 		this._progress(10, 0);
-
-		const loader = new DOMSoundLoader("game-data/sfx-yoda/");
-		let i = 0;
-		const count = this._data.sounds.length;
-		for (const sound of this._data.sounds) {
-			try {
-				sound.representation = await loader.loadSound(sound.file);
-				i++;
-				this._progress(10, i / count);
-			} catch (e) {
-				console.warn("Unable to load sound", i, e);
-			}
-		}
 		this._finishLoading();
 	}
 
