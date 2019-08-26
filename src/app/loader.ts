@@ -84,13 +84,9 @@ class Loader extends EventTarget implements LoaderInterface {
 	}
 
 	private async _loadSounds() {
-		if (true) {
-			this._finishLoading();
-			return;
-		}
 		this._progress(10, 0);
 
-		const loader = new DOMSoundLoader("");
+		const loader = new DOMSoundLoader("game-data/sfx-yoda/");
 		let i = 0;
 		const count = this._data.sounds.length;
 		for (const sound of this._data.sounds) {
