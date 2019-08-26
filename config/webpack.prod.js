@@ -27,7 +27,6 @@ module.exports = {
 		},
 		unsafeCache: true
 	},
-	mode: "development",
 	cache: true,
 	stats: "errors-only",
 	plugins: [
