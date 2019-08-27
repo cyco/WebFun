@@ -24,6 +24,7 @@ import Loader from "./loader";
 import { ResourceManager } from "src/engine/dummy-interface";
 import CursorManager from "./input/cursor-manager";
 import { Channel } from "src/engine/audio";
+import { Mixer } from "./audio";
 
 export const Event = {
 	DidLoadData: "didLoadData"
@@ -53,12 +54,14 @@ class GameController extends EventTarget {
 	}
 
 	private _buildEngine(type: GameType, paths: PathConfiguration) {
+		const mixer = new Mixer();
 		const engine: Engine = new Engine(type, {
 			Renderer: () => new CanvasRenderer.Renderer(this._sceneView.canvas),
 			InputManager: () => new DesktopInputManager(this._sceneView, new CursorManager(this._sceneView)),
-			Loader: e => new Loader(e.resourceManager),
+			Loader: e => new Loader(e.resourceManager, mixer),
 			SceneManager: () => this._sceneView.manager,
-			ResourceManager: () => new ResourceManager(paths.palette, paths.data, paths.sfx)
+			ResourceManager: () => new ResourceManager(paths.palette, paths.data, paths.sfx),
+			Mixer: () => mixer
 		});
 
 		engine.hero.addEventListener(Hero.Event.HealthChanged, () => {
