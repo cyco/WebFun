@@ -23,7 +23,8 @@ const isExcluded = (file, isDirectory) => {
 		(isDirectory && file === "editor") ||
 		(isDirectory && file === "@types") ||
 		(isDirectory && file === "npc-move") ||
-		(isDirectory && file === "save-game-editor")
+		(isDirectory && file === "save-game-editor") ||
+		(isDirectory && file === "std")
 	);
 };
 
