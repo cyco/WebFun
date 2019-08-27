@@ -269,24 +269,6 @@ describe("WebFun.App.Windows.MainMenu", () => {
 					expect(playMusicItem.enabled).toBeTrue();
 				});
 
-				describe("when a game is in progress", () => {
-					beforeEach(() => {
-						(gameController as any).engine = { mixer: { musicChannel: { muted: false } } };
-					});
-
-					it("determines it's state according to the muted property of the mixer's sound channel", () => {
-						expect(playMusicItem.state).toBe(MenuItemState.On);
-						gameController.engine.mixer.musicChannel.muted = true;
-						expect(playMusicItem.state).toBe(MenuItemState.None);
-					});
-
-					it("toggles the mute property and updates the settings when clicked", () => {
-						playMusicItem.callback();
-						expect(gameController.engine.mixer.musicChannel.muted).toBeTrue();
-						expect(Settings.playMusic).toBeFalse();
-					});
-				});
-
 				describe("when no game is running", () => {
 					beforeEach(() => {
 						Settings.playMusic = true;

@@ -9,7 +9,7 @@ import Hero from "./hero";
 import { InputManager } from "./input";
 import Inventory from "./inventory";
 import Metronome from "./metronome";
-import { Mixer } from "./audio";
+import { Mixer, Channel } from "./audio";
 import SceneManager from "./scene-manager";
 import { ScriptExecutor } from "./script";
 import State from "./persistent-state";
@@ -20,7 +20,7 @@ import { SpeechScene, PickupScene } from "src/engine/scenes";
 import { Point } from "src/util";
 import Settings from "src/settings";
 import Loader from "./loader";
-import AssetManager from "./asset-manager";
+import AssetManager, { NullIfMissing } from "./asset-manager";
 import ResourceManager from "./resource-manager";
 
 import { ConditionImplementations as Conditions } from "./script/conditions";
@@ -44,7 +44,7 @@ class Engine extends EventTarget {
 	public inventory: Inventory = null;
 	public loader: Loader = null;
 	public metronome: Metronome = null;
-	public mixer: Mixer<any> = null;
+	public mixer: Mixer = null;
 	public palette: PaletteAnimation = null;
 	public persistentState: typeof State = State;
 	public renderer: Renderer = null;
@@ -61,15 +61,7 @@ class Engine extends EventTarget {
 
 		ifce = Object.assign({}, DummyInterface, ifce) as Interface;
 
-		const effectsChannel = ifce.Channel();
-		effectsChannel.muted = !Settings.playSound;
-		const musicChannel = ifce.Channel();
-		musicChannel.muted = !Settings.playMusic;
-		this.mixer = ifce.Mixer(
-			(id: number) => this.assetManager.get(Sound, id).representation,
-			musicChannel,
-			effectsChannel
-		);
+		this.mixer = ifce.Mixer();
 
 		this.resourceManager = ifce.ResourceManager();
 		this.assetManager = ifce.AssetManager();
@@ -134,31 +126,36 @@ class Engine extends EventTarget {
 
 	public consume(tile: Tile) {
 		if (!tile.isEdible) {
-			this.mixer.effectChannel.playSound(this.type.sounds.NoGo);
+			const sound = this.assetManager.get(Sound, this.type.sounds.NoGo, NullIfMissing);
+			this.mixer.play(sound, Channel.Effect);
 			return;
 		}
 
 		const healthBonus = this.type.getHealthBonus(tile);
 		if (healthBonus > 0 && this.hero.health >= Hero.MaxHealth) {
-			this.mixer.effectChannel.playSound(this.type.sounds.NoGo);
+			const sound = this.assetManager.get(Sound, this.type.sounds.NoGo, NullIfMissing);
+			this.mixer.play(sound, Channel.Effect);
 			return;
 		}
 		this.hero.health += healthBonus;
 		this.inventory.removeItem(tile);
 		if (healthBonus < 0) {
-			this.mixer.effectChannel.playSound(this.type.sounds.Hurt);
+			const sound = this.assetManager.get(Sound, this.type.sounds.Hurt, NullIfMissing);
+			this.mixer.play(sound, Channel.Effect);
 			return;
 		}
 	}
 
 	public equip(tile: Tile) {
 		if (!tile.isWeapon) {
-			this.mixer.effectChannel.playSound(this.type.sounds.NoGo);
+			const sound = this.assetManager.get(Sound, this.type.sounds.NoGo, NullIfMissing);
+			this.mixer.play(sound, Channel.Effect);
 			return;
 		}
 
 		if (!this.type.canBeEquipped(tile)) {
-			this.mixer.effectChannel.playSound(this.type.sounds.NoGo);
+			const sound = this.assetManager.get(Sound, this.type.sounds.NoGo, NullIfMissing);
+			this.mixer.play(sound, Channel.Effect);
 			return;
 		}
 
@@ -175,7 +172,8 @@ class Engine extends EventTarget {
 		this.hero.ammo = ammo;
 
 		const equipSoundID = this.type.getEquipSound(weaponChar);
-		this.mixer.effectChannel.playSound(equipSoundID);
+		const sound = this.assetManager.get(Sound, equipSoundID, NullIfMissing);
+		this.mixer.play(sound, Channel.Effect);
 
 		this.dispatchEvent(new CustomEvent(Events.WeaponChanged, { detail: { weapon: tile } }));
 	}

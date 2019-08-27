@@ -1,10 +1,9 @@
-import { EventTarget, FileLoader, InputStream } from "src/util";
+import { EventTarget, InputStream } from "src/util";
 import { GameData, GameTypeYoda, readGameDataFile } from "src/engine";
 
 import { ColorPalette } from "src/engine/rendering";
-import { DOMSoundLoader } from "./audio";
-import Settings from "src/settings";
 import { ResourceManager, Loader as LoaderInterface } from "src/engine";
+import { Mixer } from "./audio";
 
 export const Events = {
 	Progress: "progress",
@@ -20,16 +19,16 @@ class Loader extends EventTarget implements LoaderInterface {
 	public onprogress: (_: CustomEvent) => void;
 	public onloadsetupimage: (_: CustomEvent) => void;
 	public onload: (_: CustomEvent) => void;
-	private _dataUrl: string;
-	private _paletteUrl: string;
 	private _rawData: any;
 	private _data: GameData;
 	private _palette: ColorPalette;
 	private _resourceManager: ResourceManager;
+	private _mixer: Mixer;
 
-	constructor(e: ResourceManager) {
+	constructor(e: ResourceManager, mixer: Mixer) {
 		super();
 		this._resourceManager = e;
+		this._mixer = mixer;
 
 		this.registerEvents(Events);
 	}
@@ -84,24 +83,14 @@ class Loader extends EventTarget implements LoaderInterface {
 	}
 
 	private async _loadSounds() {
-		if (true) {
-			this._finishLoading();
-			return;
-		}
-		this._progress(10, 0);
-
-		const loader = new DOMSoundLoader("");
-		let i = 0;
-		const count = this._data.sounds.length;
+		this._progress(5, 0);
 		for (const sound of this._data.sounds) {
-			try {
-				sound.representation = await loader.loadSound(sound.file);
-				i++;
-				this._progress(10, i / count);
-			} catch (e) {
-				console.warn("Unable to load sound", i, e);
-			}
+			if (!sound.file) continue;
+
+			const buffer = await this._resourceManager.loadSound(sound.file, () => void 0);
+			await this._mixer.prepare(sound, buffer);
 		}
+
 		this._finishLoading();
 	}
 

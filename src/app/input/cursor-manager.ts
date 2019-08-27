@@ -1,4 +1,5 @@
 import { Direction } from "src/util";
+import "./cursor-manager.scss";
 
 class CursorManager {
 	private _node: HTMLElement;

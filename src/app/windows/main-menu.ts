@@ -14,27 +14,14 @@ import { document } from "src/std/dom";
 function SoundMenuItem(
 	controller: GameController,
 	name: string,
-	settingsName: "playSound" | "playMusic",
-	channelName: "effectChannel" | "musicChannel"
+	settingsName: "playEffects" | "playMusic"
 ): MenuItemInit {
 	return {
 		title: `${name} On`,
 		mnemonic: 0,
 		enabled: () => controller.engine !== null,
-		state: () =>
-			(controller.engine
-			? !controller.engine.mixer[channelName].muted
-			: Settings[settingsName])
-				? +1
-				: +0,
-		callback: (): void => {
-			const audible = controller.engine
-				? !controller.engine.mixer[channelName].muted
-				: Settings[settingsName];
-
-			if (controller.engine) controller.engine.mixer[channelName].muted = audible;
-			Settings[settingsName] = !audible;
-		}
+		state: () => (Settings[settingsName] ? +1 : +0),
+		callback: (): void => void (Settings[settingsName] = !Settings[settingsName])
 	};
 }
 
@@ -101,8 +88,8 @@ class MainMenu extends Menu {
 						callback: () => this._runModalSessionForWindowComponent(StatisticsWindow.tagName)
 					},
 					Separator,
-					SoundMenuItem(controller, "Music", "playMusic", "musicChannel"),
-					SoundMenuItem(controller, "Sound", "playSound", "effectChannel"),
+					SoundMenuItem(controller, "Music", "playMusic"),
+					SoundMenuItem(controller, "Sound", "playEffects"),
 					Separator,
 					{
 						title: "Pause",

@@ -16,7 +16,7 @@ const Settings = persistent(
 		autostartEngine: true,
 		revealWorld: false,
 
-		playSound: false,
+		playEffects: false,
 		playMusic: false,
 
 		difficulty: 50,

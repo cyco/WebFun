@@ -1,4 +1,3 @@
-import DOMAudioChannel from "./dom-audio-channel";
-import DOMSoundLoader from "./dom-sound-loader";
+import Mixer from "./mixer";
 
-export { DOMAudioChannel, DOMSoundLoader };
+export { Mixer };

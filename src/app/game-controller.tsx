@@ -7,7 +7,17 @@ import {
 	Weapon as WeaponComponent
 } from "./ui";
 import { Char, Tile, Zone, Sound, Puzzle } from "src/engine/objects";
-import { ColorPalette, Engine, GameData, Hero, Story, AssetManager, GameType, Yoda } from "src/engine";
+import {
+	ColorPalette,
+	Engine,
+	GameData,
+	Hero,
+	Story,
+	AssetManager,
+	GameType,
+	Interface,
+	Yoda
+} from "src/engine";
 import { ConfirmationResult, ModalConfirm } from "src/ux";
 import { EventTarget, Point, Rectangle, Size } from "src/util";
 import { FilePicker, WindowManager } from "src/ui";
@@ -18,11 +28,13 @@ import GameState from "../engine/game-state";
 import { PaletteAnimation } from "src/engine/rendering";
 import { Reader } from "src/engine/save-game";
 import Settings from "src/settings";
-import { DOMAudioChannel } from "./audio";
 import { CanvasRenderer } from "./rendering";
 import { DesktopInputManager } from "./input";
 import Loader from "./loader";
-import { ResourceManager } from "src/engine/dummy-interface";
+import ResourceManager from "./resource-manager";
+import CursorManager from "./input/cursor-manager";
+import { Channel } from "src/engine/audio";
+import { Mixer } from "./audio";
 
 export const Event = {
 	DidLoadData: "didLoadData"
@@ -52,14 +64,7 @@ class GameController extends EventTarget {
 	}
 
 	private _buildEngine(type: GameType, paths: PathConfiguration) {
-		const engine: Engine = new Engine(type, {
-			Channel: () => new DOMAudioChannel(),
-			Renderer: () => new CanvasRenderer.Renderer(this._sceneView.canvas),
-			InputManager: () => new DesktopInputManager(this._sceneView),
-			Loader: e => new Loader(e.resourceManager),
-			SceneManager: () => this._sceneView.manager,
-			ResourceManager: () => new ResourceManager(paths.palette, paths.data, paths.sfx)
-		});
+		const engine: Engine = new Engine(type, this._buildInterface(paths));
 
 		engine.hero.addEventListener(Hero.Event.HealthChanged, () => {
 			if (engine.hero.health > 0) {
@@ -70,7 +75,7 @@ class GameController extends EventTarget {
 				engine.hero.health = Hero.MaxHealth;
 				engine.inventory.removeItem(Yoda.ItemIDs.SpiritHeart);
 				const flourish = engine.assetManager.get(Sound, Yoda.Sound.Flourish);
-				engine.mixer.effectChannel.playSound(flourish);
+				engine.mixer.play(flourish, Channel.Effect);
 				return;
 			}
 
@@ -79,6 +84,23 @@ class GameController extends EventTarget {
 		});
 
 		return engine;
+	}
+
+	private _buildInterface(paths: any): Partial<Interface> {
+		const mixer = new Mixer(this.settings);
+		const renderer = new CanvasRenderer.Renderer(this._sceneView.canvas);
+		const inputManager = new DesktopInputManager(this._sceneView, new CursorManager(this._sceneView));
+		const resourceManager = new ResourceManager(paths.palette, paths.data, paths.sfx);
+		const loader = new Loader(resourceManager, mixer);
+
+		return {
+			Renderer: () => renderer,
+			InputManager: () => inputManager,
+			Loader: () => loader,
+			SceneManager: () => this._sceneView.manager,
+			ResourceManager: () => resourceManager,
+			Mixer: () => mixer
+		};
 	}
 
 	public show(windowManager: WindowManager = WindowManager.defaultManager) {
@@ -183,6 +205,7 @@ class GameController extends EventTarget {
 		windowContent.appendChild(this._sceneView);
 
 		engine.inputManager.addListeners();
+		engine.inputManager.engine = engine;
 		this._window.inventory.addEventListener(InventoryComponent.Events.ItemActivated, (e: CustomEvent) => {
 			if (engine.gameState !== GameState.Running) {
 				e.preventDefault();

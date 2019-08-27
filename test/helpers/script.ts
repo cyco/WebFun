@@ -65,8 +65,7 @@ const makeInstructionDescription = (desc: JasmineDescribe) => (Name: string, blo
 			engine.sceneManager = { pushScene() {} };
 			engine.assetManager = new AssetManager();
 			engine.mixer = {
-				effectChannel: { playSound: (): void => void 0 },
-				musicChannel: { playSound: (): void => void 0 }
+				play: (): void => void 0
 			};
 		});
 

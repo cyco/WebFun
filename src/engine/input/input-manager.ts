@@ -35,7 +35,6 @@ interface InputManager {
 	readonly mouseLocationInView: Point;
 
 	addListeners(): void;
-
 	removeListeners(): void;
 }
 
