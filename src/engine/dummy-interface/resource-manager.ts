@@ -24,7 +24,10 @@ class ResourceManager implements ResourceManagerInterface {
 	}
 
 	loadSound(name: string, progress: (progress: number) => void): Promise<InputStream> {
-		return FileLoader.loadAsStream([this._soundBaseURL, encodeURIComponent(name)].join("/"), progress);
+		return FileLoader.loadAsStream(
+			[this._soundBaseURL, encodeURIComponent(name + ".mp3")].join("/"),
+			progress
+		);
 	}
 }
 
