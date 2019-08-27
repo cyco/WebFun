@@ -34,7 +34,7 @@ class Mixer implements MixerInterface {
 	private settingNameForChannel(channel: Channel) {
 		switch (channel) {
 			case Channel.Effect:
-				return "playSound";
+				return "playEffects";
 			case Channel.Music:
 				return "playMusic";
 		}
