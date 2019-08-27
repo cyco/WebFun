@@ -1,39 +1,22 @@
 import { ResourceManager } from "src/engine/dummy-interface";
-import { FileLoader, InputStream } from "src/util";
-import { ColorPalette } from "src/engine";
 
 describe("WebFun.Engine.DummyInterface.ResourceManager", () => {
 	const progressHandler: () => void = () => void 0;
 	let subject: ResourceManager;
-	let resultStream: InputStream;
 
 	beforeEach(() => {
-		resultStream = new InputStream("");
-		spyOn(FileLoader, "loadAsStream").and.returnValue(Promise.resolve(resultStream));
-		subject = new ResourceManager("palette.data", "data.data", "sound-base");
+		subject = new ResourceManager();
 	});
 
-	it("loads the palette", async () => {
-		const mockedBuffer = ({} as unknown) as Uint8Array;
-		spyOn(ColorPalette, "FromBGR8");
-		spyOn(resultStream, "getUint8Array").and.returnValue(mockedBuffer);
-
-		await subject.loadPalette(progressHandler);
-
-		expect(FileLoader.loadAsStream).toHaveBeenCalled();
-		expect(resultStream.getUint8Array).toHaveBeenCalledWith(0x400);
-		expect(ColorPalette.FromBGR8).toHaveBeenCalledWith(mockedBuffer);
+	it("throws an error when palette is requested", () => {
+		expect(() => subject.loadPalette(progressHandler)).toThrow();
 	});
 
-	it("loads the game data", async () => {
-		const result = await subject.loadGameFile(progressHandler);
-		expect(FileLoader.loadAsStream).toHaveBeenCalled();
-		expect(result).toBe(resultStream);
+	it("throws an error when a game data stream is requested", () => {
+		expect(() => subject.loadGameFile(progressHandler)).toThrow();
 	});
 
-	it("loads sounds according to the base url", async () => {
-		const result = await subject.loadSound("sound name", progressHandler);
-		expect(FileLoader.loadAsStream).toHaveBeenCalled();
-		expect(result).toBe(resultStream);
+	it("throws an error when a sound is loaded", async () => {
+		expect(() => subject.loadSound("sound name", progressHandler)).toThrow();
 	});
 });
