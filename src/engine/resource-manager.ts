@@ -6,7 +6,7 @@ type ProgressHandler = (progress: number) => void;
 interface ResourceManager {
 	loadGameFile(progress: ProgressHandler): Promise<InputStream>;
 	loadPalette(progress: ProgressHandler): Promise<ColorPalette>;
-	loadSound(name: string, progress: ProgressHandler): Promise<InputStream>;
+	loadSound(name: string, progress: ProgressHandler): Promise<ArrayBuffer>;
 }
 
 export default ResourceManager;

@@ -1,9 +1,10 @@
 import { Direction, InputManager } from "src/engine/input";
-import { KeyEvent, Point, Rectangle, Size } from "src/util";
+import { KeyEvent, Point, Rectangle, Size, Direction as DirectionHelper } from "src/util";
 import { Engine } from "src/engine";
 
 import { Tile } from "src/engine/objects";
 import { document } from "src/std/dom";
+import CursorManager from "./cursor-manager";
 
 class DesktopInputManager implements InputManager, EventListenerObject {
 	public mouseDownHandler: (_: Point) => void = () => void 0;
@@ -16,6 +17,7 @@ class DesktopInputManager implements InputManager, EventListenerObject {
 	private preferKeyboard = false;
 	private _mouseDirection: number = 0;
 	private _keyboardDirection: number = 0;
+	private readonly cursorManager: CursorManager;
 
 	public placedTile: Tile;
 	public placedTileLocation: Point;
@@ -29,9 +31,10 @@ class DesktopInputManager implements InputManager, EventListenerObject {
 	public walk: boolean;
 	public drag: boolean;
 
-	constructor(gameViewElement: HTMLElement) {
+	constructor(gameViewElement: HTMLElement, cursorManager: CursorManager) {
 		this._element = gameViewElement;
 		this._lastMouse = new Point(NaN, NaN);
+		this.cursorManager = cursorManager;
 	}
 
 	get mouseLocationInView(): Point {
@@ -179,7 +182,7 @@ class DesktopInputManager implements InputManager, EventListenerObject {
 			return;
 		}
 
-		const point = this._getPointInViewCoordinates(mouseLocation);
+		const point = this.convertClientCoordinatesToView(mouseLocation);
 		const pointIsInView = point.x > 0 && point.y > 0 && point.x < 1 && point.y < 1;
 		console.assert(pointIsInView, "Previous in-bounds check should have been sufficient");
 
@@ -191,23 +194,89 @@ class DesktopInputManager implements InputManager, EventListenerObject {
 
 	private _mouseMove(e: MouseEvent) {
 		const mouseLocation = new Point(e.clientX, e.clientY);
-		this._lastMouse = this._getPointInViewCoordinates(mouseLocation);
+		this._lastMouse = this.convertClientCoordinatesToView(mouseLocation);
+
+		const [dir, angle] = this.calculateDirectionFromHero(this._lastMouse);
+		this._mouseDirection = dir;
+		this._updateCursor(dir, angle);
+	}
+
+	private _directionInputFromAngle(input: Point): number {
+		let result = 0;
+
+		if (input.x < 0) result |= Direction.Left;
+		if (input.x > 0) result |= Direction.Right;
+		if (input.y < 0) result |= Direction.Up;
+		if (input.y > 0) result |= Direction.Down;
+
+		return result;
 	}
 
 	private _mouseUp(e: MouseEvent) {
 		if (e.button === 0) this.walk = false;
 		if (e.button === 1) this.attack = false;
+
+		this._keyboardDirection = 0;
+		this._mouseDirection = 0;
+		this.preferKeyboard = false;
 	}
 
 	get directions() {
 		return this.preferKeyboard ? this._keyboardDirection : this._mouseDirection;
 	}
 
-	private _getPointInViewCoordinates(location: Point): Point {
+	private convertClientCoordinatesToView(location: Point): Point {
 		const boundingRect = this._element.getBoundingClientRect();
 		const viewOffset = new Point(boundingRect.left, boundingRect.top);
 
 		return Point.subtract(location, viewOffset).dividedBy(boundingRect);
+	}
+
+	private calculateDirectionFromHero(location: Point): [number, number] {
+		const engine = this.engine;
+		if (!engine) return [0, null];
+		const mouseLocationInView = location;
+
+		const camera = engine.camera;
+		const offset = camera.offset;
+		const size = camera.size;
+		const hero = engine.hero;
+
+		const mouseLocationOnZone = new Point(
+			mouseLocationInView.x * size.width - offset.x - 0.5,
+			mouseLocationInView.y * size.height - offset.y - 0.5
+		);
+
+		const relativeLocation = Point.subtract(mouseLocationOnZone, hero.location);
+
+		const onHero = Math.abs(relativeLocation.x) < 0.5 && Math.abs(relativeLocation.y) < 0.5;
+		const closeToViewEdge =
+			mouseLocationInView.x < 1 / 18 ||
+			mouseLocationInView.y < 1 / 18 ||
+			mouseLocationInView.x > 17 / 18 ||
+			mouseLocationInView.y > 17 / 18;
+		if (!onHero || closeToViewEdge) {
+			const direction = DirectionHelper.Confine(
+				DirectionHelper.CalculateAngleFromRelativePoint(relativeLocation)
+			);
+			if (isNaN(direction)) {
+				return [0, null];
+			}
+
+			const angle = DirectionHelper.CalculateRelativeCoordinates(direction, 1);
+
+			return [this._directionInputFromAngle(angle), direction];
+		} else {
+			return [0, null];
+		}
+	}
+
+	private _updateCursor(direction: number, angle: number) {
+		if (angle === null) {
+			this.cursorManager.changeCursor("block");
+		} else {
+			this.cursorManager.changeCursor(angle);
+		}
 	}
 }
 
