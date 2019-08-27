@@ -1,15 +1,18 @@
 import { Mixer as MixerInterface, Channel } from "src/engine/audio";
 import { Sound } from "src/engine/objects";
 import { AudioContext } from "src/std/webaudio";
+import Settings from "src/settings";
 
 class Mixer implements MixerInterface {
 	public volume: number;
 	public muted: boolean;
 
 	private _context: AudioContext;
+	private _settings: typeof Settings;
 
-	constructor() {
+	constructor(settings: typeof Settings) {
 		this._context = new AudioContext();
+		this._settings = settings;
 	}
 
 	public async prepare(sound: Sound, buffer: ArrayBuffer): Promise<void> {
@@ -19,11 +22,22 @@ class Mixer implements MixerInterface {
 	}
 
 	public play(sound: Sound, channel: Channel): void {
+		if (!this._settings[this.settingNameForChannel(channel)]) return;
+
 		const buffer = sound.representation as AudioBuffer;
 		var source = this.context.createBufferSource();
 		source.buffer = buffer;
 		source.connect(this.context.destination);
 		source.start(0);
+	}
+
+	private settingNameForChannel(channel: Channel) {
+		switch (channel) {
+			case Channel.Effect:
+				return "playSound";
+			case Channel.Music:
+				return "playMusic";
+		}
 	}
 
 	public stop(): void {}

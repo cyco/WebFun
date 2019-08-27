@@ -2,13 +2,16 @@ import * as WebAudio from "src/std/webaudio";
 import { Mixer } from "src/app/audio";
 import { Sound } from "src/engine/objects";
 import { Channel } from "src/engine/audio";
+import Settings from "src/settings";
 
 describe("WebFun.App.Audio.Mixer", () => {
 	let subject: Mixer;
 	let contextMock: AudioContext;
 	let bufferSourceMock: AudioBufferSourceNode;
+	let settings: typeof Settings;
 
 	beforeEach(() => {
+		settings = { playMusic: true, playSound: true } as any;
 		bufferSourceMock = { connect: jasmine.createSpy(), start: jasmine.createSpy() } as any;
 		contextMock = {
 			decodeAudioData() {},
@@ -16,7 +19,7 @@ describe("WebFun.App.Audio.Mixer", () => {
 			destination: {}
 		} as any;
 		spyOn(WebAudio, "AudioContext").and.returnValue(contextMock);
-		subject = new Mixer();
+		subject = new Mixer(settings as any);
 	});
 
 	it("creates an audio context on construction", () => {
@@ -55,6 +58,15 @@ describe("WebFun.App.Audio.Mixer", () => {
 		expect(bufferSourceMock.buffer).toBe(sound.representation);
 		expect(bufferSourceMock.connect).toHaveBeenCalledWith(contextMock.destination);
 		expect(bufferSourceMock.start).toHaveBeenCalledWith(0);
+	});
+
+	it("does not play sounds if the channel is disabled", () => {
+		const sound: Sound = { representation: {} } as any;
+		spyOn(contextMock, "createBufferSource");
+		settings.playSound = false;
+		subject.play(sound, Channel.Effect);
+
+		expect(contextMock.createBufferSource).not.toHaveBeenCalled();
 	});
 
 	it("does not implement stop yet", () => {

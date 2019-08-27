@@ -7,7 +7,17 @@ import {
 	Weapon as WeaponComponent
 } from "./ui";
 import { Char, Tile, Zone, Sound, Puzzle } from "src/engine/objects";
-import { ColorPalette, Engine, GameData, Hero, Story, AssetManager, GameType, Yoda } from "src/engine";
+import {
+	ColorPalette,
+	Engine,
+	GameData,
+	Hero,
+	Story,
+	AssetManager,
+	GameType,
+	Interface,
+	Yoda
+} from "src/engine";
 import { ConfirmationResult, ModalConfirm } from "src/ux";
 import { EventTarget, Point, Rectangle, Size } from "src/util";
 import { FilePicker, WindowManager } from "src/ui";
@@ -54,15 +64,7 @@ class GameController extends EventTarget {
 	}
 
 	private _buildEngine(type: GameType, paths: PathConfiguration) {
-		const mixer = new Mixer();
-		const engine: Engine = new Engine(type, {
-			Renderer: () => new CanvasRenderer.Renderer(this._sceneView.canvas),
-			InputManager: () => new DesktopInputManager(this._sceneView, new CursorManager(this._sceneView)),
-			Loader: e => new Loader(e.resourceManager, mixer),
-			SceneManager: () => this._sceneView.manager,
-			ResourceManager: () => new ResourceManager(paths.palette, paths.data, paths.sfx),
-			Mixer: () => mixer
-		});
+		const engine: Engine = new Engine(type, this._buildInterface(paths));
 
 		engine.hero.addEventListener(Hero.Event.HealthChanged, () => {
 			if (engine.hero.health > 0) {
@@ -82,6 +84,23 @@ class GameController extends EventTarget {
 		});
 
 		return engine;
+	}
+
+	private _buildInterface(paths: any): Partial<Interface> {
+		const mixer = new Mixer(this.settings);
+		const renderer = new CanvasRenderer.Renderer(this._sceneView.canvas);
+		const inputManager = new DesktopInputManager(this._sceneView, new CursorManager(this._sceneView));
+		const resourceManager = new ResourceManager(paths.palette, paths.data, paths.sfx);
+		const loader = new Loader(resourceManager, mixer);
+
+		return {
+			Renderer: () => renderer,
+			InputManager: () => inputManager,
+			Loader: () => loader,
+			SceneManager: () => this._sceneView.manager,
+			ResourceManager: () => resourceManager,
+			Mixer: () => mixer
+		};
 	}
 
 	public show(windowManager: WindowManager = WindowManager.defaultManager) {
