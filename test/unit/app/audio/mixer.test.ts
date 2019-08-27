@@ -11,7 +11,7 @@ describe("WebFun.App.Audio.Mixer", () => {
 	let settings: typeof Settings;
 
 	beforeEach(() => {
-		settings = { playMusic: true, playSound: true } as any;
+		settings = { playMusic: true, playEffects: true } as any;
 		bufferSourceMock = { connect: jasmine.createSpy(), start: jasmine.createSpy() } as any;
 		contextMock = {
 			decodeAudioData() {},
@@ -63,7 +63,7 @@ describe("WebFun.App.Audio.Mixer", () => {
 	it("does not play sounds if the channel is disabled", () => {
 		const sound: Sound = { representation: {} } as any;
 		spyOn(contextMock, "createBufferSource");
-		settings.playSound = false;
+		settings.playEffects = false;
 		subject.play(sound, Channel.Effect);
 
 		expect(contextMock.createBufferSource).not.toHaveBeenCalled();

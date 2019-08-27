@@ -14,7 +14,7 @@ import { document } from "src/std/dom";
 function SoundMenuItem(
 	controller: GameController,
 	name: string,
-	settingsName: "playSound" | "playMusic"
+	settingsName: "playEffects" | "playMusic"
 ): MenuItemInit {
 	return {
 		title: `${name} On`,
@@ -89,7 +89,7 @@ class MainMenu extends Menu {
 					},
 					Separator,
 					SoundMenuItem(controller, "Music", "playMusic"),
-					SoundMenuItem(controller, "Sound", "playSound"),
+					SoundMenuItem(controller, "Sound", "playEffects"),
 					Separator,
 					{
 						title: "Pause",
