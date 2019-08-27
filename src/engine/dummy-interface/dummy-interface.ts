@@ -28,5 +28,5 @@ export default {
 	Loader: () => new Loader(),
 	SceneManager: () => new SceneManager(() => new Rectangle(new Point(0, 0), new Size(0, 0))),
 	AssetManager: () => new AssetManager(),
-	ResourceManager: () => new ResourceManager("", "", "")
+	ResourceManager: () => new ResourceManager()
 };

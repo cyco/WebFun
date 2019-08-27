@@ -1,6 +1,5 @@
 import { Mixer as MixerInterface, Channel } from "src/engine/audio";
 import { Sound } from "src/engine/objects";
-import { InputStream } from "src/util";
 import { AudioContext } from "src/std/webaudio";
 
 class Mixer implements MixerInterface {
@@ -13,8 +12,7 @@ class Mixer implements MixerInterface {
 		this._context = new AudioContext();
 	}
 
-	public async prepare(sound: Sound, data: InputStream): Promise<void> {
-		const buffer = (data as any)._arrayBuffer;
+	public async prepare(sound: Sound, buffer: ArrayBuffer): Promise<void> {
 		return new Promise((resolve, reject) => {
 			this._context.decodeAudioData(buffer, b => ((sound.representation = b), resolve()), reject);
 		});

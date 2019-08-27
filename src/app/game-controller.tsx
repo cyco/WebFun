@@ -21,7 +21,7 @@ import Settings from "src/settings";
 import { CanvasRenderer } from "./rendering";
 import { DesktopInputManager } from "./input";
 import Loader from "./loader";
-import { ResourceManager } from "src/engine/dummy-interface";
+import ResourceManager from "./resource-manager";
 import CursorManager from "./input/cursor-manager";
 import { Channel } from "src/engine/audio";
 import { Mixer } from "./audio";
