@@ -28,7 +28,14 @@ class Mixer implements MixerInterface {
 
 	public async prepare(sound: Sound, buffer: ArrayBuffer): Promise<void> {
 		return new Promise((resolve, reject) => {
-			this._context.decodeAudioData(buffer, b => ((sound.representation = b), resolve()), reject);
+			this._context.decodeAudioData(
+				buffer,
+				b => {
+					sound.representation = b;
+					resolve();
+				},
+				reject
+			);
 		});
 	}
 
@@ -36,7 +43,7 @@ class Mixer implements MixerInterface {
 		if (!this._settings[this.settingNameForChannel(channel)]) return;
 
 		const buffer = sound.representation as AudioBuffer;
-		var source = this.context.createBufferSource();
+		const source = this.context.createBufferSource();
 		source.buffer = buffer;
 		source.connect(this.nodeForChannel(channel));
 		source.start(0);

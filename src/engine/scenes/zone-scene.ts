@@ -237,11 +237,6 @@ class ZoneScene extends Scene {
 						return hotspot.type === HotspotType.DoorOut && hotspot.arg === -1;
 					})
 					.forEach((hotspot: Hotspot) => (hotspot.arg = zone.id));
-
-				if (!location) {
-					world = null;
-					location = null;
-				}
 				scene.targetZoneLocation = location;
 				engine.sceneManager.pushScene(scene);
 				return true;
@@ -272,17 +267,13 @@ class ZoneScene extends Scene {
 				scene.scene = engine.sceneManager.currentScene as ZoneScene;
 
 				let world = engine.dagobah;
+
 				let location = world.locationOfZone(targetZone);
 				if (!location) {
 					world = engine.world;
 					location = world.locationOfZone(targetZone);
 				}
 				scene.targetWorld = world;
-
-				if (!location) {
-					world = null;
-					location = null;
-				}
 				scene.targetZoneLocation = location;
 				engine.sceneManager.pushScene(scene);
 				return true;
