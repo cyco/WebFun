@@ -12,7 +12,7 @@ describe("WebFun.App.Audio.Mixer", () => {
 	let master: GainNode, effect: GainNode, music: GainNode;
 
 	beforeEach(() => {
-		master = { connect: jasmine.createSpy("master") } as any;
+		master = { connect: jasmine.createSpy("master"), gain: { value: 1 } } as any;
 		effect = { connect: jasmine.createSpy("effect") } as any;
 		music = { connect: jasmine.createSpy("music") } as any;
 		settings = { playMusic: true, playEffects: true } as any;
@@ -37,6 +37,13 @@ describe("WebFun.App.Audio.Mixer", () => {
 		expect(master.connect).toHaveBeenCalledWith(contextMock.destination);
 		expect(effect.connect).toHaveBeenCalledWith(master);
 		expect(music.connect).toHaveBeenCalledWith(master);
+	});
+
+	it("uses a gain node to adjust the volume", () => {
+		expect(subject.volume).toEqual(1);
+		subject.volume = 0.5;
+		expect(subject.volume).toEqual(0.5);
+		expect(master.gain.value).toEqual(0.5);
 	});
 
 	describe("sound preparation", () => {
