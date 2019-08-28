@@ -24,6 +24,7 @@ module.exports = {
 		"@typescript-eslint/no-empty-interface": "off",
 		"@typescript-eslint/no-var-requires": "off",
 		"@typescript-eslint/no-namespace": "off",
+		"@typescript-eslint/no-inferrable-types": "off",
 		// temporarily disabled:
 		"sort-imports": "off",
 		"@typescript-eslint/explicit-member-accessibility": "off",
