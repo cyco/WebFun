@@ -17,13 +17,13 @@ class Button extends AbstractIconButton {
 		this.attributeChangedCallback("label", this.getAttribute("label"), this.getAttribute("label"));
 	}
 
-	protected attributeChangedCallback(attrName: string, newValue: string, oldValue: string): void {
-		if (attrName === "label") {
+	protected attributeChangedCallback(attributeName: string, oldValue: string, newValue: string): void {
+		if (attributeName === "label") {
 			this._label.textContent = newValue;
 			this._label.style.display = this._label.textContent.length ? "" : "none";
 		}
 
-		super.attributeChangedCallback(attrName, newValue, oldValue);
+		super.attributeChangedCallback(attributeName, newValue, oldValue);
 	}
 
 	set label(l: string) {
