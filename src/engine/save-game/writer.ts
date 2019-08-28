@@ -98,7 +98,6 @@ class Writer {
 	}
 
 	private _writeZone(zone: Zone, visited: boolean, stream: OutputStream): void {
-		console.log("write zone", zone.id, visited ? "full" : "minimal");
 		if (visited) {
 			stream.writeUint32(zone.counter);
 			stream.writeUint32(zone.random);

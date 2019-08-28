@@ -1,8 +1,8 @@
 import { Indy, Yoda, GameType } from "src/engine/type";
-import { Reader } from "src/engine/save-game";
+import { Reader, Writer } from "src/engine/save-game";
 import { GameData, AssetManager, SaveState } from "src/engine";
 import { getFixtureData } from "test/helpers/fixture-loading";
-import { InputStream } from "src/util";
+import { InputStream, DiscardingOutputStream, OutputStream } from "src/util";
 import loadGameData from "test/helpers/game-data";
 import { Sound, Zone, Tile, Puzzle, Char } from "src/engine/objects";
 
@@ -13,6 +13,11 @@ describe("WebFun.Acceptance.Save game reading", () => {
 	beforeAll(async () => {
 		rawYodaData = await loadGameData(Yoda);
 		rawIndyData = await loadGameData(Indy);
+	});
+
+	afterAll(() => {
+		rawYodaData = null;
+		rawIndyData = null;
 	});
 
 	it("reads yoda's save game format correctly", async () => {
@@ -33,6 +38,12 @@ describe("WebFun.Acceptance.Save game reading", () => {
 		expect(Array.from(state.inventoryIDs)).toEqual([443, 449]);
 	});
 
+	it("writes save games correctly", async () => {
+		const { state, assets } = await readSaveGame("save-games/yoda.wld", Yoda);
+		const outputStream = writeSaveGame(state, assets);
+		expect(outputStream.buffer.byteLength).toEqual(73953);
+	});
+
 	async function readSaveGame(
 		game: string,
 		type: GameType
@@ -50,5 +61,14 @@ describe("WebFun.Acceptance.Save game reading", () => {
 
 		const { read } = Reader.build(saveStream);
 		return { state: await read(assetManager), assets: assetManager };
+	}
+
+	function writeSaveGame(state: SaveState, assetManager: AssetManager): OutputStream {
+		const writer = new Writer(assetManager);
+		const sizeStream = new DiscardingOutputStream();
+		writer.write(state, sizeStream);
+		const stream = new OutputStream(sizeStream.offset);
+		writer.write(state, stream);
+		return stream;
 	}
 });
