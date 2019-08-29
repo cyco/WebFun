@@ -18,6 +18,7 @@ const isExcluded = (file, isDirectory) => {
 		file === ".DS_Store" ||
 		file === "index.ts" ||
 		file === "index.js" ||
+		file === "bootstrap-components.ts" ||
 		(!isDirectory && !file.endsWith(".js") && !file.endsWith(".ts")) ||
 		(isDirectory && file === "debug") ||
 		(isDirectory && file === "editor") ||
