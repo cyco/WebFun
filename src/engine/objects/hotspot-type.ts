@@ -13,8 +13,8 @@ class HotspotType {
 	public static readonly Unused = new HotspotType();
 	public static readonly Lock = new HotspotType();
 	public static readonly Teleporter = new HotspotType();
-	public static readonly xWingFromD = new HotspotType();
-	public static readonly xWingToD = new HotspotType();
+	public static readonly xWingFromDagobah = new HotspotType();
+	public static readonly xWingToDagobah = new HotspotType();
 
 	public static readonly knownTypes = [
 		HotspotType.TriggerLocation,
@@ -31,8 +31,8 @@ class HotspotType {
 		HotspotType.Unused,
 		HotspotType.Lock,
 		HotspotType.Teleporter,
-		HotspotType.xWingFromD,
-		HotspotType.xWingToD
+		HotspotType.xWingFromDagobah,
+		HotspotType.xWingToDagobah
 	];
 
 	get rawValue(): number {
@@ -69,10 +69,10 @@ class HotspotType {
 				return "Lock";
 			case HotspotType.Teleporter:
 				return "Teleporter";
-			case HotspotType.xWingFromD:
-				return "xWingFromD";
-			case HotspotType.xWingToD:
-				return "xWingToD";
+			case HotspotType.xWingFromDagobah:
+				return "xWingFromDagobah";
+			case HotspotType.xWingToDagobah:
+				return "xWingToDagobah";
 			default:
 				return "unknown";
 		}

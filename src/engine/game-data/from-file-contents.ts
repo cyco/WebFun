@@ -114,8 +114,8 @@ const makeHotspot = (raw: RawHotspot, idx: number, _: any): Hotspot => {
 		case HotspotType.VehicleBack:
 		case HotspotType.DoorIn:
 		case HotspotType.Lock:
-		case HotspotType.xWingFromD:
-		case HotspotType.xWingToD:
+		case HotspotType.xWingFromDagobah:
+		case HotspotType.xWingToDagobah:
 		case HotspotType.CrateItem:
 		case HotspotType.PuzzleNPC:
 		case HotspotType.CrateWeapon:

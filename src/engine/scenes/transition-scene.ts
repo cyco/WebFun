@@ -7,8 +7,14 @@ import World from "../generation/world";
 import ZoneScene from "./zone-scene";
 import Settings from "src/settings";
 
+export enum TransitionType {
+	Zone,
+	Room
+}
+
 class TransitionScene extends Scene {
-	public type = -1;
+	public static readonly Type = TransitionType;
+	public type: TransitionType = TransitionType.Room;
 	public scene: ZoneScene = null;
 	public targetHeroLocation: Point = null;
 	public targetZoneLocation: Point = null;
@@ -21,21 +27,11 @@ class TransitionScene extends Scene {
 	private _zoneSwapTime: number = Infinity;
 	private _snapAnimationToTiles: boolean = false;
 
-	static get TRANSITION_TYPE() {
-		return {
-			ZONE: 0,
-			ROOM: 1
-		};
-	}
-
 	willShow() {
 		this._setupAnimationAttributes();
 		this.state = 0;
 
-		if (
-			this.type === TransitionScene.TRANSITION_TYPE.ROOM &&
-			this.engine.currentZone.sharedCounter >= 0
-		) {
+		if (this.type === TransitionScene.Type.Room && this.engine.currentZone.sharedCounter >= 0) {
 			this.targetZone.sharedCounter = this.engine.currentZone.sharedCounter;
 		}
 
@@ -48,12 +44,12 @@ class TransitionScene extends Scene {
 
 	private _setupAnimationAttributes() {
 		switch (this.type) {
-			case TransitionScene.TRANSITION_TYPE.ZONE:
+			case TransitionScene.Type.Zone:
 				this._duration = 1000.0;
 				this._zoneSwapTime = this._duration;
 				this._snapAnimationToTiles = false;
 				break;
-			case TransitionScene.TRANSITION_TYPE.ROOM:
+			case TransitionScene.Type.Room:
 				this._duration = 1500.0;
 				this._zoneSwapTime = this._duration / 2.0;
 				this._snapAnimationToTiles = true;
@@ -94,7 +90,7 @@ class TransitionScene extends Scene {
 		this.scene.prepareCamera();
 
 		state.justEntered = true;
-		state.enteredByPlane = this.type === TransitionScene.TRANSITION_TYPE.ROOM;
+		state.enteredByPlane = this.type === TransitionScene.Type.Room;
 
 		// state.dispatchEvent(Event.ZoneLocationDidChange);
 	}
@@ -103,11 +99,11 @@ class TransitionScene extends Scene {
 		this.state = performance.now() - this._startTime;
 
 		switch (this.type) {
-			case TransitionScene.TRANSITION_TYPE.ZONE:
+			case TransitionScene.Type.Zone:
 				this.state += 8;
 				this._renderZoneAnimation(renderer);
 				break;
-			case TransitionScene.TRANSITION_TYPE.ROOM:
+			case TransitionScene.Type.Room:
 				this._renderRoomAnimation(renderer);
 				break;
 		}

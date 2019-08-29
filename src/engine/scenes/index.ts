@@ -5,19 +5,21 @@ import PauseScene from "./pause-scene";
 import PickupScene from "./pickup-scene";
 import Scene from "./scene";
 import SpeechScene from "./speech-scene";
+import TeleportScene from "./teleport-scene";
 import TransitionScene from "./transition-scene";
-import ZoneScene from "./zone-scene";
 import WinScene from "./win-scene";
+import ZoneScene from "./zone-scene";
 
 export {
-	LoseScene,
 	DetonatorScene,
+	LoseScene,
 	MapScene,
 	PauseScene,
 	PickupScene,
 	Scene,
 	SpeechScene,
+	TeleportScene,
 	TransitionScene,
-	ZoneScene,
-	WinScene
+	WinScene,
+	ZoneScene
 };

@@ -19,7 +19,7 @@ class TeleportScene extends MapScene {
 		if (!target) return;
 
 		const scene = new TransitionScene();
-		scene.type = TransitionScene.TRANSITION_TYPE.ROOM;
+		scene.type = TransitionScene.Type.Room;
 		scene.targetHeroLocation = target.location;
 		scene.targetZone = zone;
 		scene.scene = engine.sceneManager.currentScene as ZoneScene;

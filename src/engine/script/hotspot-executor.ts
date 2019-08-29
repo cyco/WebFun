@@ -4,6 +4,11 @@ import Engine from "../engine";
 import { Tile, Hotspot } from "../objects";
 import { NullIfMissing } from "src/engine/asset-manager";
 import Zone from "../objects/zone";
+import doorIn from "./hotspots/door-in";
+import doorOut from "./hotspots/door-out";
+import xWingFromDagobah from "./hotspots/x-wing-from-dagobah";
+import xWingToDagobah from "./hotspots/x-wing-to-dagobah";
+import teleporter from "./hotspots/teleporter";
 
 class HotspotExecutor {
 	private _engine: Engine;
@@ -14,6 +19,21 @@ class HotspotExecutor {
 
 	laydownHotspotItems(zone: Zone): void {
 		zone.hotspots.forEach(hotspot => this._laydownHotspotItem(zone, hotspot));
+	}
+
+	public trigger(hotspot: Hotspot) {
+		switch (hotspot.type) {
+			case HotspotType.DoorIn:
+				return doorIn(this._engine, hotspot);
+			case HotspotType.DoorOut:
+				return doorOut(this._engine, hotspot);
+			case HotspotType.xWingFromDagobah:
+				return xWingFromDagobah(this._engine, hotspot);
+			case HotspotType.xWingToDagobah:
+				return xWingToDagobah(this._engine, hotspot);
+			case HotspotType.Teleporter:
+				return teleporter(this._engine, hotspot);
+		}
 	}
 
 	private _laydownHotspotItem(zone: Zone, hotspot: Hotspot): void {

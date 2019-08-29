@@ -28,6 +28,7 @@ import { InstructionImplementations as Instructions } from "./script/instruction
 
 import Interface from "./interface";
 import DummyInterface from "./dummy-interface";
+import HotspotExecutor from "./script/hotspot-executor";
 
 export { Events };
 
@@ -55,6 +56,7 @@ class Engine extends EventTarget {
 	private _currentWorld: World = null;
 	private _currentZone: Zone = null;
 	private _updateInProgress: boolean = false;
+	private _hotspotExecutor: HotspotExecutor;
 
 	constructor(type: Type, ifce: Partial<Interface> = {}) {
 		super();
@@ -75,6 +77,7 @@ class Engine extends EventTarget {
 		this.loader = ifce.Loader(this);
 
 		this.type = type;
+		this._hotspotExecutor = new HotspotExecutor(this);
 		// TODO: remove state
 		this.temporaryState = {
 			justEntered: true,
@@ -199,6 +202,10 @@ class Engine extends EventTarget {
 		scene.location = place;
 
 		return this.sceneManager.presentScene(scene);
+	}
+
+	get hotspotExecutor() {
+		return this._hotspotExecutor;
 	}
 }
 

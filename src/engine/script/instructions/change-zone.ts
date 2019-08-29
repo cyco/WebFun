@@ -16,7 +16,7 @@ export default {
 		const args = instruction.arguments;
 
 		const transitionScene = new TransitionScene();
-		transitionScene.type = TransitionScene.TRANSITION_TYPE.ROOM;
+		transitionScene.type = TransitionScene.Type.Room;
 		transitionScene.targetHeroLocation = new Point(args[1], args[2]);
 		transitionScene.targetZone = engine.assetManager.get(Zone, args[0]);
 		transitionScene.scene = engine.sceneManager.currentScene as ZoneScene;
