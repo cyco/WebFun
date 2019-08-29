@@ -32,12 +32,6 @@ class TransitionScene extends Scene {
 		this._setupAnimationAttributes();
 		this.state = 0;
 
-		let offset = this.scene.currentOffset;
-		// TODO: fix offset for new scene that has never been visited
-		if (offset === null || offset === undefined) {
-			offset = new Point(0, 0);
-		}
-
 		if (
 			this.type === TransitionScene.TRANSITION_TYPE.ROOM &&
 			this.engine.currentZone.sharedCounter >= 0

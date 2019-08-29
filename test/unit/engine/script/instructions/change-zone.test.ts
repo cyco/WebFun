@@ -7,9 +7,8 @@ describeInstruction("ChangeZone", (execute, engine) => {
 		engine.assetManager.populate(Zone, [null, null, zone, null]);
 		engine.dagobah = { locationOfZone: () => true };
 		engine.sceneManager = {
-			pushScene() {}
+			pushScene: jasmine.createSpy("pushScene")
 		};
-		spyOn(engine.sceneManager, "pushScene");
 
 		const instruction = new Instruction({ opcode: ChangeZone.Opcode, arguments: [2] });
 

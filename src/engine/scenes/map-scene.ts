@@ -165,19 +165,8 @@ class MapScene extends Scene {
 		transitionScene.targetHeroLocation = engine.hero.location;
 		transitionScene.targetZone = zone;
 		transitionScene.scene = engine.sceneManager.currentScene as ZoneScene;
-
-		let world = engine.dagobah;
-		let location = world.locationOfZone(transitionScene.targetZone);
-		if (!location) {
-			world = engine.world;
-			location = world.locationOfZone(transitionScene.targetZone);
-		}
-		transitionScene.targetWorld = world;
-
-		if (!location) {
-			location = null;
-		}
-		transitionScene.targetZoneLocation = location;
+		transitionScene.targetWorld = engine.currentWorld;
+		transitionScene.targetZoneLocation = engine.currentWorld.locationOfZone(transitionScene.targetZone);
 		engine.sceneManager.pushScene(transitionScene);
 	}
 
@@ -274,12 +263,7 @@ class MapScene extends Scene {
 		const MapTileHeight = 28;
 
 		const state = engine.temporaryState;
-		const currentZone = engine.currentZone;
-		let world = engine.world;
-
-		if (currentZone.planet === Planet.DAGOBAH) {
-			world = engine.dagobah;
-		}
+		const world = engine.currentWorld;
 		const offsetX = (288 - World.WIDTH * MapTileWidth) / 2;
 		const offsetY = (288 - World.HEIGHT * MapTileHeight) / 2;
 		const result = new ImageData(288, 288);
