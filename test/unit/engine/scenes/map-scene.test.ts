@@ -25,8 +25,6 @@ describe("WebFun.Engine.Scenes.MapScene", () => {
 		describe("and the locator key is pressed", () => {
 			beforeEach(() => {
 				(engine.inputManager as any).locator = true;
-				spyOn(engine.sceneManager, "popScene");
-
 				subject.update();
 			});
 
@@ -68,7 +66,6 @@ describe("WebFun.Engine.Scenes.MapScene", () => {
 				beforeEach(() => {
 					mockedSpeechScene = {} as SpeechScene.default;
 					spyOn(SpeechScene, "default").and.returnValue(mockedSpeechScene);
-					spyOn(engine.sceneManager, "pushScene");
 					spyOn(engine.currentWorld, "locationOfZone").and.returnValue(new Point(1, 3));
 
 					spyOn(cheatInput, "execute").and.returnValue(["Cheat Successful!"]);
@@ -93,11 +90,49 @@ describe("WebFun.Engine.Scenes.MapScene", () => {
 			});
 		});
 
+		describe("and the user clicks somewhere outside of the map", () => {
+			beforeEach(() => clickZone(0, 15));
+
+			it("the click is ignored", () => {
+				expect(engine.sceneManager.popScene).not.toHaveBeenCalled();
+			});
+		});
+
+		describe("and the user clicks on an empty field", () => {
+			beforeEach(() => {
+				spyOn(engine.currentWorld, "getZone").and.returnValue(null);
+				clickZone(0, 0);
+			});
+
+			it("pops iteself from the scene stack", () => {
+				expect(engine.sceneManager.popScene).toHaveBeenCalled();
+			});
+		});
+
+		describe("and an unvisited zone is clicked", () => {
+			beforeEach(() => {
+				spyOn(engine.currentWorld, "getZone").and.returnValue({ visited: false } as any);
+				clickZone(0, 0);
+			});
+
+			it("pops iteself from the scene stack", () => {
+				expect(engine.sceneManager.popScene).toHaveBeenCalled();
+			});
+		});
+
 		afterEach(() => {
 			subject.willHide();
 			subject.didHide();
 		});
 	});
+
+	function clickZone(x: number, y: number): void {
+		const offset = 0.013888888888888888;
+		const tileSizeInViewCoordinates = 0.1;
+		engine.inputManager.mouseDownHandler(
+			new Point(offset + x * tileSizeInViewCoordinates, offset + y * tileSizeInViewCoordinates)
+		);
+	}
 
 	function mockEngine(): Engine {
 		return (engine = ({
@@ -106,15 +141,18 @@ describe("WebFun.Engine.Scenes.MapScene", () => {
 				get: (): void => void 0
 			},
 			sceneManager: {
-				pushScene: (): void => void 0,
-				popScene: (): void => void 0
+				pushScene: jasmine.createSpy("pushScene"),
+				popScene: jasmine.createSpy("popScene")
 			},
 			inputManager: {
 				clear: (): void => void 0,
 				keyDownHandler: (): void => void 0
 			},
 			currentZone: {},
-			currentWorld: { locationOfZone: (): void => void 0 }
+			currentWorld: {
+				locationOfZone: (): void => void 0,
+				getZone: (): void => void 0
+			}
 		} as any) as Engine);
 	}
 });

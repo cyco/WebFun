@@ -133,13 +133,7 @@ class MapScene extends Scene {
 		const tileX = Math.floor(p.x * World.WIDTH);
 		const tileY = Math.floor(p.y * World.HEIGHT);
 
-		const engine = this.engine;
-		const currentZone = engine.currentZone;
-		let world = this.engine.world;
-		if (currentZone.planet === Planet.DAGOBAH) {
-			world = this.engine.dagobah;
-		}
-		const zone = world.getZone(tileX, tileY);
+		const zone = this.engine.currentWorld.getZone(tileX, tileY);
 		if (!zone) {
 			return this.exitScene();
 		}
@@ -289,9 +283,9 @@ class MapScene extends Scene {
 		const offsetX = (288 - World.WIDTH * MapTileWidth) / 2;
 		const offsetY = (288 - World.HEIGHT * MapTileHeight) / 2;
 		const result = new ImageData(288, 288);
-		var buffer = new ArrayBuffer(result.data.length);
-		var byteArray = new Uint8Array(buffer);
-		var data = new Uint32Array(buffer);
+		const buffer = new ArrayBuffer(result.data.length);
+		const byteArray = new Uint8Array(buffer);
+		const data = new Uint32Array(buffer);
 
 		const bpr = 288;
 		const drawOpaqueTileAt = (tile: Tile, x: number, y: number) => {
