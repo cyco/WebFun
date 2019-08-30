@@ -6,19 +6,15 @@ import { Point } from "src/util";
 export default (engine: Engine, hotspot: Hotspot): boolean => {
 	const zone = engine.currentZone;
 	console.assert(hotspot.arg !== -1, "This is not where we're coming from!");
-
-	zone.hotspots.filter(({ type }) => type === HotspotType.DoorOut).forEach(hotspot => (hotspot.arg = -1));
-
 	const targetZone = engine.assetManager.get(Zone, hotspot.arg);
-	const waysIn = targetZone.hotspots.filter(
-		({ type, enabled, arg }) => type === HotspotType.DoorIn && arg === zone.id && enabled
+	const doorIn = targetZone.hotspots.find(
+		({ type, arg }) => type === HotspotType.DoorIn && arg === zone.id
 	);
-	console.assert(waysIn.length < 2, "Found multiple doors we might have come through!");
-	console.assert(waysIn.length > 0, "Found no active door to return to zone");
+	console.assert(!!doorIn, "Don't know where to return to in target zone");
 
 	const scene = new TransitionScene();
 	scene.type = TransitionScene.Type.Room;
-	scene.targetHeroLocation = new Point(waysIn.first().x, waysIn.first().y);
+	scene.targetHeroLocation = new Point(doorIn.x, doorIn.y);
 	scene.targetZone = targetZone;
 	console.assert(engine.sceneManager.currentScene instanceof ZoneScene);
 	scene.scene = engine.sceneManager.currentScene as ZoneScene;
