@@ -19,9 +19,9 @@ class ZoneSceneRenderer {
 		const firstXTile = -offset.x;
 		const firstYTile = -offset.y;
 		const result = new ImageData(VisibleWidth * TileWidth, VisibleHeight * TileHeight);
-		var buffer = new ArrayBuffer(result.data.length);
-		var byteArray = new Uint8Array(buffer);
-		var data = new Uint32Array(buffer);
+		const buffer = new ArrayBuffer(result.data.length);
+		const byteArray = new Uint8Array(buffer);
+		const data = new Uint32Array(buffer);
 
 		const drawOpaqueTileAt = (tile: Tile, x: number, y: number) => {
 			const pixels = tile.imageData;

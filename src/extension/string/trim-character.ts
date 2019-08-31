@@ -1,5 +1,5 @@
 const trimCharacter = function(character = " ") {
-	let result = this;
+	let result = this.slice();
 	while (~character.indexOf(result[0])) {
 		result = result.slice(1);
 	}

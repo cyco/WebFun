@@ -23,16 +23,10 @@ import Hero from "src/engine/hero";
 import MapScene from "./map-scene";
 import PauseScene from "./pause-scene";
 import Scene from "./scene";
-import TeleporterScene from "./teleport-scene";
 import TransitionScene from "./transition-scene";
 import ZoneSceneRenderer from "src/engine/rendering/zone-scene-renderer";
 import { NullIfMissing } from "src/engine/asset-manager";
 import moveNPC from "src/engine/npc-move";
-import doorIn from "../script/hotspots/door-in";
-import doorOut from "../script/hotspots/door-out";
-import xWingFromDagobah from "../script/hotspots/x-wing-from-dagobah";
-import xWingToDagobah from "../script/hotspots/x-wing-to-dagobah";
-import teleporter from "../script/hotspots/teleporter";
 
 class ZoneScene extends Scene {
 	private _zone: Zone;

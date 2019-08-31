@@ -2,7 +2,7 @@ import Engine from "../engine";
 import { Point } from "src/util";
 import { Renderer } from "../rendering";
 
-abstract class Scene_not_builtin {
+abstract class SceneNotBuiltin {
 	public engine: Engine = null;
 
 	get cameraOffset(): Point {
@@ -26,4 +26,4 @@ abstract class Scene_not_builtin {
 	}
 }
 
-export default Scene_not_builtin;
+export default SceneNotBuiltin;

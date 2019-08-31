@@ -1,4 +1,3 @@
-const Path = require("path");
 const Webpack = require("webpack");
 const webpackConfig = require("./webpack.test.js");
 
@@ -60,7 +59,7 @@ config.webpackMiddleware = {
 	stats: "errors-only"
 };
 
-var scopes = [];
+const scopes = [];
 runUnitTests && scopes.push("unit");
 runAcceptanceTests && scopes.push("acceptance");
 config.files.push({ pattern: "test/context/" + scopes.join("_") + ".ts", watched: false });
@@ -97,11 +96,11 @@ if (includeJunit && false) {
 	config.reporters.push("sonarqube");
 
 	config.sonarqubeReporter = {
-		basePath: "test", // test files folder
-		filePattern: "**/*.test.*", // test files glob pattern
-		encoding: "utf-8", // test files encoding
-		outputFolder: "test/reports", // report destination
-		legacyMode: false, // report for Sonarqube < 6.2 (disabled)
+		basePath: "test",
+		filePattern: "**/*.test.*",
+		encoding: "utf-8",
+		outputFolder: "test/reports",
+		legacyMode: false,
 		reportName: _ => {
 			return [name].concat("xml").join(".");
 		}

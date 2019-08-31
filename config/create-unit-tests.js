@@ -70,7 +70,7 @@ const scan = (source, test) =>
 		.filter(s => s)
 		.flatten();
 
-const isTestExcluded = (path, isDirectory) => false;
+const isTestExcluded = (_path, _isDirectory) => false;
 
 const scanTests = (test, source) =>
 	FS.readdirSync(test)

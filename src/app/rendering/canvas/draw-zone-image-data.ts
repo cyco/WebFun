@@ -11,9 +11,9 @@ export default (zone: Zone, palette: ColorPalette): ImageData => {
 	const ZoneHeight = zone.size.height;
 
 	const result = new ImageData(ZoneWidth * TileWidth, ZoneHeight * TileHeight);
-	var buffer = new ArrayBuffer(result.data.length);
-	var byteArray = new Uint8Array(buffer);
-	var data = new Uint32Array(buffer);
+	const buffer = new ArrayBuffer(result.data.length);
+	const byteArray = new Uint8Array(buffer);
+	const data = new Uint32Array(buffer);
 
 	const bpr = ZoneWidth * TileWidth;
 

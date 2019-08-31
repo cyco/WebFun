@@ -20,8 +20,8 @@ import withTimeout from "./with-timeout";
 
 global.render = render;
 declare global {
-	var require: any;
-	var render: (
+	let require: any;
+	let render: (
 		text: string | Component | typeof Component,
 		attributes?: any,
 		flags?: string[]
@@ -34,9 +34,9 @@ global.xdescribeComponent = xdescribeComponent;
 global.fdescribeComponent = fdescribeComponent;
 
 declare global {
-	var describeComponent: Function;
-	var xdescribeComponent: Function;
-	var fdescribeComponent: Function;
+	let describeComponent: Function;
+	let xdescribeComponent: Function;
+	let fdescribeComponent: Function;
 }
 
 global.getFixtureData = getFixtureData;
@@ -57,9 +57,9 @@ global.xdescribeNPCMovement = xdescribeNPCMovement;
 global.fdescribeNPCMovement = fdescribeNPCMovement;
 
 declare global {
-	var describeNPCMovement: DescribeNPCMovement;
-	var xdescribeNPCMovement: DescribeNPCMovement;
-	var fdescribeNPCMovement: DescribeNPCMovement;
+	let describeNPCMovement: DescribeNPCMovement;
+	let xdescribeNPCMovement: DescribeNPCMovement;
+	let fdescribeNPCMovement: DescribeNPCMovement;
 }
 
 export { getFixtureContent, describeNPCMovement };

@@ -1,4 +1,4 @@
-import { Hotspot, HotspotType, Tile, Char, CharFrameEntry } from "src/engine/objects";
+import { Hotspot, HotspotType, Tile, Char } from "src/engine/objects";
 import { InputStream, Point } from "src/util";
 import { MutableHotspot, MutableNPC } from "src/engine/mutable-objects";
 import { Planet, WorldSize } from "../types";

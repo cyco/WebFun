@@ -1,5 +1,5 @@
 const padStart = function(length: number, character: string = " "): string {
-	let result = this;
+	let result = this.slice();
 	while (result.length < length) {
 		result = character + result;
 	}

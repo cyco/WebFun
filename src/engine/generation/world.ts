@@ -1,4 +1,4 @@
-import { Point, PointLike, identity } from "src/util";
+import { Point, PointLike } from "src/util";
 
 import WorldItem from "./world-item";
 import { Zone } from "../objects";

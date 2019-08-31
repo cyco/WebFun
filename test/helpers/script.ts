@@ -84,9 +84,9 @@ export const xdescribeCondition = makeConditionDescription(xdescribe);
 export const fdescribeCondition = makeConditionDescription(fdescribe);
 
 declare global {
-	var describeCondition: (name: string, block: ConditionTester) => void;
-	var xdescribeCondition: (name: string, block: ConditionTester) => void;
-	var fdescribeCondition: (name: string, block: ConditionTester) => void;
+	let describeCondition: (name: string, block: ConditionTester) => void;
+	let xdescribeCondition: (name: string, block: ConditionTester) => void;
+	let fdescribeCondition: (name: string, block: ConditionTester) => void;
 }
 
 export const describeInstruction = makeInstructionDescription(describe);
@@ -94,7 +94,7 @@ export const xdescribeInstruction = makeInstructionDescription(xdescribe);
 export const fdescribeInstruction = makeInstructionDescription(fdescribe);
 
 declare global {
-	var describeInstruction: (name: string, cb: (ex: Function, engine: any) => void) => void;
-	var xdescribeInstruction: (name: string, cb: (ex: Function, engine: any) => void) => void;
-	var fdescribeInstruction: (name: string, cb: (ex: Function, engine: any) => void) => void;
+	let describeInstruction: (name: string, cb: (ex: Function, engine: any) => void) => void;
+	let xdescribeInstruction: (name: string, cb: (ex: Function, engine: any) => void) => void;
+	let fdescribeInstruction: (name: string, cb: (ex: Function, engine: any) => void) => void;
 }

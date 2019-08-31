@@ -4,9 +4,9 @@ import { Size } from "src/util";
 export default (pixels: Uint8Array, { width, height }: Size, palette: ColorPalette) => {
 	const result = new ImageData(width, height);
 
-	var buffer = new ArrayBuffer(result.data.length);
-	var byteArray = new Uint8Array(buffer);
-	var data = new Uint32Array(buffer);
+	const buffer = new ArrayBuffer(result.data.length);
+	const byteArray = new Uint8Array(buffer);
+	const data = new Uint32Array(buffer);
 
 	for (let ty = 0; ty < height; ty++) {
 		for (let tx = 0; tx < width; tx++) {

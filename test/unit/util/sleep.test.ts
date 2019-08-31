@@ -1,6 +1,6 @@
 import * as stdlib from "src/std";
 import sleep from "src/util/sleep";
-declare var jasmine: any;
+declare let jasmine: any;
 
 describe("WebFun.Util.sleep", () => {
 	it("is an asynchronous function that resolves after a given time", () => {

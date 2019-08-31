@@ -47,9 +47,9 @@ class ZoneLayer extends Component {
 		const ZoneHeight = zone.size.height;
 
 		const result = new ImageData(ZoneWidth * TileWidth, ZoneHeight * TileHeight);
-		var buffer = new ArrayBuffer(result.data.length);
-		var byteArray = new Uint8Array(buffer);
-		var data = new Uint32Array(buffer);
+		const buffer = new ArrayBuffer(result.data.length);
+		const byteArray = new Uint8Array(buffer);
+		const data = new Uint32Array(buffer);
 		const bpr = ZoneWidth * TileWidth;
 
 		for (let y = 0; y < ZoneHeight; y++) {
@@ -88,9 +88,9 @@ class ZoneLayer extends Component {
 		const ZoneWidth = zone.size.width;
 
 		const imageData = this._imageData;
-		var buffer = imageData.data.buffer;
-		var byteArray = new Uint8Array(buffer);
-		var data = new Uint32Array(buffer);
+		const buffer = imageData.data.buffer;
+		const byteArray = new Uint8Array(buffer);
+		const data = new Uint32Array(buffer);
 		const bpr = ZoneWidth * TileWidth;
 
 		const pixels = tile ? tile.imageData : null;

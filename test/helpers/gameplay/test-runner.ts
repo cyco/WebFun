@@ -7,7 +7,7 @@ import { Planet, WorldSize } from "src/engine/types";
 import { Parser, TestCase, Expectation, GameplayContext } from "src/debug/automation/test";
 import loadGameData from "test/helpers/game-data";
 
-declare var withTimeout: (t: number, block: () => void) => () => void;
+declare let withTimeout: (t: number, block: () => void) => () => void;
 const FiveMinutes = 5 * 60 * 1000;
 const debug = false;
 

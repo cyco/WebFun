@@ -4,7 +4,6 @@ import { Tile, ZoneType } from "src/engine/objects";
 
 import Renderer from "../rendering/renderer";
 import LocatorTile from "src/engine/type/yoda/locator-tile";
-import { Planet } from "src/engine/types";
 import Scene from "./scene";
 import Settings from "src/settings";
 import SpeechScene from "./speech-scene";
