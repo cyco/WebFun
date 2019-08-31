@@ -25,9 +25,10 @@ module.exports = {
 		"@typescript-eslint/no-var-requires": "off",
 		"@typescript-eslint/no-namespace": "off",
 		"@typescript-eslint/no-inferrable-types": "off",
+		"@typescript-eslint/no-this-alias": "off",
 		// temporarily disabled:
 		"sort-imports": "off",
 		"@typescript-eslint/explicit-member-accessibility": "off",
-		"prettier/prettier": "warn"
+		"prettier/prettier": "warn",
 	}
 };
