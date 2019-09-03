@@ -6,29 +6,29 @@ import { NullIfMissing } from "src/engine/asset-manager";
 
 export default (engine: Engine, hotspot: Hotspot): boolean => {
 	const zone = engine.currentZone;
-	const targetZone = engine.assetManager.get(Zone, hotspot.arg, NullIfMissing);
-	const wayOut = targetZone.hotspots.find(
+	const destinationZone = engine.assetManager.get(Zone, hotspot.arg, NullIfMissing);
+	const wayOut = destinationZone.hotspots.find(
 		(h: Hotspot) => h.type === HotspotType.DoorOut && (h.arg === -1 || h.arg === zone.id)
 	);
 	console.assert(!!wayOut, "Found no way to return to current zone");
 
 	const scene = new TransitionScene();
 	scene.type = TransitionScene.Type.Room;
-	scene.targetHeroLocation = new Point(wayOut.x, wayOut.y);
-	scene.targetZone = targetZone;
+	scene.destinationHeroLocation = new Point(wayOut.x, wayOut.y);
+	scene.destinationZone = destinationZone;
 	console.assert(engine.sceneManager.currentScene instanceof ZoneScene);
 	scene.scene = engine.sceneManager.currentScene as ZoneScene;
 
 	let world = engine.dagobah;
-	let location = world.locationOfZone(targetZone);
+	let location = world.locationOfZone(destinationZone);
 	if (!location) {
 		world = engine.world;
-		location = world.locationOfZone(targetZone);
+		location = world.locationOfZone(destinationZone);
 	}
-	scene.targetWorld = world;
+	scene.destinationWorld = world;
 
 	wayOut.arg = zone.id;
-	scene.targetZoneLocation = location;
+	scene.destinationZoneLocation = location;
 	engine.sceneManager.pushScene(scene);
 	return true;
 };

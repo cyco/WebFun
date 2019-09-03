@@ -18,14 +18,14 @@ describe("WebFun.Engine.Script.Hotspots.DoorIn", () => {
 	});
 
 	describe("when triggered with the id of a zone on the main world", () => {
-		let targetZone: Zone;
+		let destinationZone: Zone;
 
 		beforeEach(() => {
-			targetZone = {
+			destinationZone = {
 				hotspots: [mockHotspot(Hotspot.Type.DoorOut, -1, new Point(2, 5))]
 			} as any;
 			engine.currentZone = { id: 5 } as any;
-			(engine.assetManager.get as any).and.returnValue(targetZone);
+			(engine.assetManager.get as any).and.returnValue(destinationZone);
 			(engine.dagobah.locationOfZone as any).and.returnValue(null);
 			(engine.world.locationOfZone as any).and.returnValue(new Point(3, 4));
 			doorIn(engine, mockHotspot(Hotspot.Type.DoorIn, 235));
@@ -36,38 +36,38 @@ describe("WebFun.Engine.Script.Hotspots.DoorIn", () => {
 		});
 
 		it("sets the target zone for the transition", () => {
-			expect(transitionScene.targetZone).toBe(targetZone);
+			expect(transitionScene.destinationZone).toBe(destinationZone);
 		});
 
 		it("sets the target world for the transition", () => {
-			expect(transitionScene.targetWorld).toBe(engine.world);
+			expect(transitionScene.destinationWorld).toBe(engine.world);
 		});
 
 		it("sets the location of the zone on the target world", () => {
-			expect(transitionScene.targetZoneLocation).toEqual(new Point(3, 4));
+			expect(transitionScene.destinationZoneLocation).toEqual(new Point(3, 4));
 		});
 
 		it("sets the hero's location on the target zone", () => {
-			expect(transitionScene.targetHeroLocation).toEqual(new Point(2, 5));
+			expect(transitionScene.destinationHeroLocation).toEqual(new Point(2, 5));
 		});
 	});
 
 	describe("when triggered with the id of a zone on the dagobah", () => {
-		let targetZone: Zone;
+		let destinationZone: Zone;
 
 		beforeEach(() => {
-			targetZone = {
+			destinationZone = {
 				hotspots: [mockHotspot(Hotspot.Type.DoorOut, -1, new Point(2, 5))]
 			} as any;
 			engine.currentZone = { id: 5 } as any;
-			(engine.assetManager.get as any).and.returnValue(targetZone);
+			(engine.assetManager.get as any).and.returnValue(destinationZone);
 			(engine.dagobah.locationOfZone as any).and.returnValue(new Point(4, 5));
 			(engine.world.locationOfZone as any).and.returnValue(null);
 			doorIn(engine, mockHotspot(Hotspot.Type.DoorIn, 235));
 		});
 
 		it("sets the target world for the transition to dagobah", () => {
-			expect(transitionScene.targetWorld).toBe(engine.dagobah);
+			expect(transitionScene.destinationWorld).toBe(engine.dagobah);
 		});
 	});
 

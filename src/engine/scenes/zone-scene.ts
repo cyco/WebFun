@@ -244,27 +244,27 @@ class ZoneScene extends Scene {
 			return;
 		}
 
-		const targetZoneLocation = Point.add(zoneLocation, zoneDirection);
-		const targetZone = world.getZone(targetZoneLocation);
-		if (!targetZone) return false;
+		const destinationZoneLocation = Point.add(zoneLocation, zoneDirection);
+		const destinationZone = world.getZone(destinationZoneLocation);
+		if (!destinationZone) return false;
 
 		const targetLocationOnCurrentZone = Point.add(hero.location, direction);
 		if (currentZone.bounds.contains(targetLocationOnCurrentZone)) return false;
 
-		const targetHeroLocation = Point.add(hero.location, direction);
-		targetHeroLocation.subtract(zoneDirection.x * 18, zoneDirection.y * 18);
+		const destinationHeroLocation = Point.add(hero.location, direction);
+		destinationHeroLocation.subtract(zoneDirection.x * 18, zoneDirection.y * 18);
 
-		if (!targetZone.placeWalkable(targetHeroLocation)) {
+		if (!destinationZone.placeWalkable(destinationHeroLocation)) {
 			return false;
 		}
 
 		const transitionScene = new TransitionScene();
 		transitionScene.type = TransitionScene.Type.Zone;
-		transitionScene.targetHeroLocation = targetHeroLocation;
-		transitionScene.targetZoneLocation = targetZoneLocation;
-		transitionScene.sourceZoneLocation = zoneLocation;
-		transitionScene.targetZone = targetZone;
-		transitionScene.targetWorld = world;
+		transitionScene.destinationHeroLocation = destinationHeroLocation;
+		transitionScene.destinationZoneLocation = destinationZoneLocation;
+		transitionScene.originZoneLocation = zoneLocation;
+		transitionScene.destinationZone = destinationZone;
+		transitionScene.destinationWorld = world;
 		transitionScene.scene = this;
 		engine.sceneManager.pushScene(transitionScene);
 
@@ -664,22 +664,22 @@ class ZoneScene extends Scene {
 		const engine = this.engine;
 		const counterPart =
 			htsp.type === HotspotType.VehicleTo ? HotspotType.VehicleBack : HotspotType.VehicleTo;
-		const targetZone = engine.assetManager.get(Zone, htsp.arg);
-		const worldLocation = engine.currentWorld.locationOfZone(targetZone);
-		const zoneLocation = targetZone.hotspots.withType(counterPart).first().location;
+		const destinationZone = engine.assetManager.get(Zone, htsp.arg);
+		const worldLocation = engine.currentWorld.locationOfZone(destinationZone);
+		const zoneLocation = destinationZone.hotspots.withType(counterPart).first().location;
 
 		const transitionScene = new TransitionScene();
 		transitionScene.type = TransitionScene.Type.Room;
-		transitionScene.targetHeroLocation = zoneLocation;
-		transitionScene.targetZone = targetZone;
+		transitionScene.destinationHeroLocation = zoneLocation;
+		transitionScene.destinationZone = destinationZone;
 		transitionScene.scene = engine.sceneManager.currentScene as ZoneScene;
-		transitionScene.targetWorld = engine.currentWorld;
-		transitionScene.targetZoneLocation = worldLocation;
+		transitionScene.destinationWorld = engine.currentWorld;
+		transitionScene.destinationZoneLocation = worldLocation;
 		engine.sceneManager.pushScene(transitionScene);
 		engine.temporaryState.enteredByPlane = true;
 
 		engine.currentZone.solved = true;
-		targetZone.solved = true;
+		destinationZone.solved = true;
 
 		return true;
 	}
@@ -691,26 +691,26 @@ class ZoneScene extends Scene {
 			case HotspotType.xWingFromDagobah: {
 				if (hotspot.arg === -1) console.warn("This is not where we're coming from!");
 
-				const targetZone = engine.assetManager.get(Zone, hotspot.arg);
+				const destinationZone = engine.assetManager.get(Zone, hotspot.arg);
 
 				const transitionScene = new TransitionScene();
 				transitionScene.type = TransitionScene.Type.Room;
-				const otherHotspot = targetZone.hotspots.withType(HotspotType.xWingToDagobah).first();
-				transitionScene.targetHeroLocation = otherHotspot
+				const otherHotspot = destinationZone.hotspots.withType(HotspotType.xWingToDagobah).first();
+				transitionScene.destinationHeroLocation = otherHotspot
 					? new Point(otherHotspot.x, otherHotspot.y)
 					: new Point(0, 0);
-				transitionScene.targetZone = targetZone;
+				transitionScene.destinationZone = destinationZone;
 				console.assert(engine.sceneManager.currentScene instanceof ZoneScene);
 				transitionScene.scene = engine.sceneManager.currentScene as ZoneScene;
 
 				const world = engine.world;
-				const location = world.locationOfZone(targetZone);
+				const location = world.locationOfZone(destinationZone);
 				if (!location) {
 					// zone is not on the current planet
 					return;
 				}
-				transitionScene.targetWorld = world;
-				transitionScene.targetZoneLocation = location;
+				transitionScene.destinationWorld = world;
+				transitionScene.destinationZoneLocation = location;
 				engine.sceneManager.pushScene(transitionScene);
 				this.engine.temporaryState.enteredByPlane = true;
 				return true;
@@ -718,25 +718,25 @@ class ZoneScene extends Scene {
 			case HotspotType.xWingToDagobah: {
 				if (hotspot.arg === -1) console.warn("This is not where we're coming from!");
 
-				const targetZone = engine.assetManager.get(Zone, hotspot.arg);
+				const destinationZone = engine.assetManager.get(Zone, hotspot.arg);
 
 				const transitionScene = new TransitionScene();
 				transitionScene.type = TransitionScene.Type.Room;
-				const otherHotspot = targetZone.hotspots.withType(HotspotType.xWingFromDagobah).first();
-				transitionScene.targetHeroLocation = otherHotspot
+				const otherHotspot = destinationZone.hotspots.withType(HotspotType.xWingFromDagobah).first();
+				transitionScene.destinationHeroLocation = otherHotspot
 					? new Point(otherHotspot.x, otherHotspot.y)
 					: new Point(0, 0);
-				transitionScene.targetZone = targetZone;
+				transitionScene.destinationZone = destinationZone;
 				console.assert(engine.sceneManager.currentScene instanceof ZoneScene);
 				transitionScene.scene = engine.sceneManager.currentScene as ZoneScene;
 
-				const location = engine.dagobah.locationOfZone(targetZone);
+				const location = engine.dagobah.locationOfZone(destinationZone);
 				if (!location) {
 					// zone is not on dagobah
 					return;
 				}
-				transitionScene.targetWorld = engine.dagobah;
-				transitionScene.targetZoneLocation = location;
+				transitionScene.destinationWorld = engine.dagobah;
+				transitionScene.destinationZoneLocation = location;
 				engine.sceneManager.pushScene(transitionScene);
 				this.engine.temporaryState.enteredByPlane = true;
 				return true;

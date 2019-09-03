@@ -18,14 +18,17 @@ describe("WebFun.Engine.Script.Hotspots.xWingFromDagobah", () => {
 	});
 
 	describe("when triggered", () => {
-		let targetZone: Zone;
+		let destinationZone: Zone;
 
 		beforeEach(() => {
-			targetZone = {
+			destinationZone = {
 				hotspots: [mockHotspot(HotspotType.xWingToDagobah, 5, new Point(2, 5))]
 			} as any;
-			engine.currentZone = { id: 5, hotspots: [mockHotspot(Hotspot.Type.xWingFromDagobah, 235)] } as any;
-			(engine.assetManager.get as any).and.returnValue(targetZone);
+			engine.currentZone = {
+				id: 5,
+				hotspots: [mockHotspot(Hotspot.Type.xWingFromDagobah, 235)]
+			} as any;
+			(engine.assetManager.get as any).and.returnValue(destinationZone);
 			(engine.dagobah.locationOfZone as any).and.returnValue(null);
 			(engine.world.locationOfZone as any).and.returnValue(new Point(3, 4));
 
@@ -36,20 +39,20 @@ describe("WebFun.Engine.Script.Hotspots.xWingFromDagobah", () => {
 			expect(engine.sceneManager.pushScene).toHaveBeenCalledWith(transitionScene);
 		});
 
-		it("sets the target zone for the transition", () => {
-			expect(transitionScene.targetZone).toBe(targetZone);
+		it("sets the destination zone for the transition", () => {
+			expect(transitionScene.destinationZone).toBe(destinationZone);
 		});
 
-		it("sets the target world for the transition", () => {
-			expect(transitionScene.targetWorld).toBe(engine.world);
+		it("sets the destination world for the transition", () => {
+			expect(transitionScene.destinationWorld).toBe(engine.world);
 		});
 
-		it("sets the location of the zone on the target world", () => {
-			expect(transitionScene.targetZoneLocation).toEqual(new Point(3, 4));
+		it("sets the location of the zone on the destination world", () => {
+			expect(transitionScene.destinationZoneLocation).toEqual(new Point(3, 4));
 		});
 
-		it("sets the hero's location on the target zone", () => {
-			expect(transitionScene.targetHeroLocation).toEqual(new Point(2, 5));
+		it("sets the hero's location on the destination zone", () => {
+			expect(transitionScene.destinationHeroLocation).toEqual(new Point(2, 5));
 		});
 
 		it("sets a flag so EnterByPlane scripts are executed after the transition", () => {

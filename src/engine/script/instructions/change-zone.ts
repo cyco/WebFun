@@ -17,22 +17,22 @@ export default {
 
 		const transitionScene = new TransitionScene();
 		transitionScene.type = TransitionScene.Type.Room;
-		transitionScene.targetHeroLocation = new Point(args[1], args[2]);
-		transitionScene.targetZone = engine.assetManager.get(Zone, args[0]);
+		transitionScene.destinationHeroLocation = new Point(args[1], args[2]);
+		transitionScene.destinationZone = engine.assetManager.get(Zone, args[0]);
 		transitionScene.scene = engine.sceneManager.currentScene as ZoneScene;
 
 		let world = engine.dagobah;
-		let location = world.locationOfZone(transitionScene.targetZone);
+		let location = world.locationOfZone(transitionScene.destinationZone);
 		if (!location) {
 			world = engine.world;
-			location = world.locationOfZone(transitionScene.targetZone);
+			location = world.locationOfZone(transitionScene.destinationZone);
 		}
-		transitionScene.targetWorld = world;
+		transitionScene.destinationWorld = world;
 
 		if (!location) {
 			location = null;
 		}
-		transitionScene.targetZoneLocation = location;
+		transitionScene.destinationZoneLocation = location;
 		engine.sceneManager.pushScene(transitionScene);
 		return Result.Void;
 	}

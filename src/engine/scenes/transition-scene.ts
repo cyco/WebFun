@@ -18,28 +18,40 @@ class TransitionScene extends Scene {
 	public static readonly Type = TransitionType;
 	public type: TransitionType = TransitionType.Room;
 	public scene: ZoneScene = null;
-	public targetHeroLocation: Point = null;
-	public targetZoneLocation: Point = null;
-	public sourceZoneLocation: Point = null;
-	public targetZone: Zone = null;
-	public targetWorld: World = null;
+	public destinationHeroLocation: Point = null;
+	public destinationZoneLocation: Point = null;
+	public originZoneLocation: Point = null;
+	public destinationZone: Zone = null;
+	public destinationWorld: World = null;
 	private state: number = Infinity;
 	private _startTime: number = Infinity;
 	private _duration: number = Infinity;
 	private _zoneSwapTime: number = Infinity;
 	private _snapAnimationToTiles: boolean = false;
 	private _direction: Point;
-	_originImage: ImageData;
-	_targetImage: ImageData;
+	private _originImage: ImageData;
+	private _destinationImage: ImageData;
 
 	willShow() {
 		if (this.type === TransitionScene.Type.Room && this.engine.currentZone.sharedCounter >= 0) {
-			this.targetZone.sharedCounter = this.engine.currentZone.sharedCounter;
+			this.destinationZone.sharedCounter = this.engine.currentZone.sharedCounter;
 		}
 
 		this._setupAnimationAttributes();
 		this.state = 0;
 		this._startTime = performance.now();
+	}
+
+	didHide() {
+		this.scene = null;
+		this.destinationHeroLocation = null;
+		this.destinationZoneLocation = null;
+		this.originZoneLocation = null;
+		this.destinationZone = null;
+		this.destinationWorld = null;
+		this._direction = null;
+		this._originImage = null;
+		this._destinationImage = null;
 	}
 
 	isOpaque() {
@@ -83,10 +95,10 @@ class TransitionScene extends Scene {
 		const state = this.engine.temporaryState;
 		const hero = this.engine.hero;
 		const engine = this.engine;
-		hero.location = this.targetHeroLocation;
-		state.worldLocation = this.targetZoneLocation || state.worldLocation;
-		engine.currentWorld = this.targetWorld;
-		engine.currentZone = this.targetZone;
+		hero.location = this.destinationHeroLocation;
+		state.worldLocation = this.destinationZoneLocation || state.worldLocation;
+		engine.currentWorld = this.destinationWorld;
+		engine.currentZone = this.destinationZone;
 		engine.currentZone.visited = true;
 		engine.currentZone.initialize();
 
@@ -114,9 +126,9 @@ class TransitionScene extends Scene {
 
 	private _renderZoneAnimation(renderer: Renderer): void {
 		if (!this._direction) {
-			this._direction = this.sourceZoneLocation.bySubtracting(this.targetZoneLocation);
+			this._direction = this.originZoneLocation.bySubtracting(this.destinationZoneLocation);
 			this._originImage = drawZoneImageData(this.engine.currentZone, this.engine.palette.current);
-			this._targetImage = drawZoneImageData(this.targetZone, this.engine.palette.current);
+			this._destinationImage = drawZoneImageData(this.destinationZone, this.engine.palette.current);
 		}
 
 		const camera = this.engine.camera;
@@ -131,7 +143,7 @@ class TransitionScene extends Scene {
 			cameraOffset.y + this._direction.y * viewportHeight * animationState
 		);
 		renderer.renderImageData(
-			this._targetImage,
+			this._destinationImage,
 			cameraOffset.x + this._direction.x * viewportWidth * (animationState - 2),
 			cameraOffset.y + this._direction.y * viewportHeight * (animationState - 2)
 		);

@@ -161,11 +161,11 @@ class MapScene extends Scene {
 
 		const transitionScene = new TransitionScene();
 		transitionScene.type = TransitionScene.Type.Room;
-		transitionScene.targetHeroLocation = engine.hero.location;
-		transitionScene.targetZone = zone;
+		transitionScene.destinationHeroLocation = engine.hero.location;
+		transitionScene.destinationZone = zone;
 		transitionScene.scene = engine.sceneManager.currentScene as ZoneScene;
-		transitionScene.targetWorld = engine.currentWorld;
-		transitionScene.targetZoneLocation = engine.currentWorld.locationOfZone(transitionScene.targetZone);
+		transitionScene.destinationWorld = engine.currentWorld;
+		transitionScene.destinationZoneLocation = engine.currentWorld.locationOfZone(zone);
 		engine.sceneManager.pushScene(transitionScene);
 	}
 

@@ -18,14 +18,14 @@ describe("WebFun.Engine.Script.Hotspots.xWingToDagobah", () => {
 	});
 
 	describe("when triggered", () => {
-		let targetZone: Zone;
+		let destinationZone: Zone;
 
 		beforeEach(() => {
-			targetZone = {
+			destinationZone = {
 				hotspots: [mockHotspot(HotspotType.xWingFromDagobah, 5, new Point(2, 5))]
 			} as any;
 			engine.currentZone = { id: 5, hotspots: [mockHotspot(Hotspot.Type.xWingToDagobah, 235)] } as any;
-			(engine.assetManager.get as any).and.returnValue(targetZone);
+			(engine.assetManager.get as any).and.returnValue(destinationZone);
 			(engine.dagobah.locationOfZone as any).and.returnValue(new Point(3, 4));
 			(engine.world.locationOfZone as any).and.returnValue(null);
 
@@ -36,20 +36,20 @@ describe("WebFun.Engine.Script.Hotspots.xWingToDagobah", () => {
 			expect(engine.sceneManager.pushScene).toHaveBeenCalledWith(transitionScene);
 		});
 
-		it("sets the target zone for the transition", () => {
-			expect(transitionScene.targetZone).toBe(targetZone);
+		it("sets the destination zone for the transition", () => {
+			expect(transitionScene.destinationZone).toBe(destinationZone);
 		});
 
-		it("sets the target world for the transition", () => {
-			expect(transitionScene.targetWorld).toBe(engine.dagobah);
+		it("sets the destination world for the transition", () => {
+			expect(transitionScene.destinationWorld).toBe(engine.dagobah);
 		});
 
-		it("sets the location of the zone on the target world", () => {
-			expect(transitionScene.targetZoneLocation).toEqual(new Point(3, 4));
+		it("sets the location of the zone on the destination world", () => {
+			expect(transitionScene.destinationZoneLocation).toEqual(new Point(3, 4));
 		});
 
-		it("sets the hero's location on the target zone", () => {
-			expect(transitionScene.targetHeroLocation).toEqual(new Point(2, 5));
+		it("sets the hero's location on the destination zone", () => {
+			expect(transitionScene.destinationHeroLocation).toEqual(new Point(2, 5));
 		});
 
 		it("sets a flag so EnterByPlane scripts are executed after the transition", () => {
