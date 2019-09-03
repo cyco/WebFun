@@ -358,6 +358,7 @@ class ZoneScene extends Scene {
 	}
 
 	prepareCamera() {
+		this.engine.camera.zoneSize = this.zone.size;
 		this.engine.camera.update(Infinity);
 	}
 

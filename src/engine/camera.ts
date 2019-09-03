@@ -3,18 +3,10 @@ import { Point, Size } from "src/util";
 import Hero from "./hero";
 
 class Camera {
-	public zoneSize: Size;
-	public hero: Hero;
-	private _offset: Point;
-	private _size: Size;
-
-	constructor() {
-		this._offset = new Point(0, 0);
-		this._size = new Size(9, 9);
-		this.zoneSize = new Size(9, 9);
-
-		this.hero = null;
-	}
+	public zoneSize: Size = new Size(9, 9);
+	public hero: Hero = null;
+	private _offset: Point = new Point(0, 0);
+	private _size: Size = new Size(9, 9);
 
 	get offset(): Point {
 		return this._offset;

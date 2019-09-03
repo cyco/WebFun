@@ -6,6 +6,8 @@ import Scene from "./scene";
 import World from "../generation/world";
 import ZoneScene from "./zone-scene";
 import Settings from "src/settings";
+import { drawZoneImageData } from "src/app/rendering";
+import { min } from "src/std/math";
 
 export enum TransitionType {
 	Zone,
@@ -26,15 +28,17 @@ class TransitionScene extends Scene {
 	private _duration: number = Infinity;
 	private _zoneSwapTime: number = Infinity;
 	private _snapAnimationToTiles: boolean = false;
+	private _direction: Point;
+	_originImage: ImageData;
+	_targetImage: ImageData;
 
 	willShow() {
-		this._setupAnimationAttributes();
-		this.state = 0;
-
 		if (this.type === TransitionScene.Type.Room && this.engine.currentZone.sharedCounter >= 0) {
 			this.targetZone.sharedCounter = this.engine.currentZone.sharedCounter;
 		}
 
+		this._setupAnimationAttributes();
+		this.state = 0;
 		this._startTime = performance.now();
 	}
 
@@ -100,7 +104,6 @@ class TransitionScene extends Scene {
 
 		switch (this.type) {
 			case TransitionScene.Type.Zone:
-				this.state += 8;
 				this._renderZoneAnimation(renderer);
 				break;
 			case TransitionScene.Type.Room:
@@ -109,7 +112,30 @@ class TransitionScene extends Scene {
 		}
 	}
 
-	private _renderZoneAnimation(_: Renderer): void {}
+	private _renderZoneAnimation(renderer: Renderer): void {
+		if (!this._direction) {
+			this._direction = this.sourceZoneLocation.bySubtracting(this.targetZoneLocation);
+			this._originImage = drawZoneImageData(this.engine.currentZone, this.engine.palette.current);
+			this._targetImage = drawZoneImageData(this.targetZone, this.engine.palette.current);
+		}
+
+		const camera = this.engine.camera;
+		const animationState = min(this.state / this._duration, 1);
+		const cameraOffset = camera.offset.byScalingBy(Tile.WIDTH);
+		const viewportWidth = Tile.WIDTH * 9;
+		const viewportHeight = Tile.HEIGHT * 9;
+
+		renderer.renderImageData(
+			this._originImage,
+			cameraOffset.x + this._direction.x * viewportWidth * animationState,
+			cameraOffset.y + this._direction.y * viewportHeight * animationState
+		);
+		renderer.renderImageData(
+			this._targetImage,
+			cameraOffset.x + this._direction.x * viewportWidth * (animationState - 2),
+			cameraOffset.y + this._direction.y * viewportHeight * (animationState - 2)
+		);
+	}
 
 	private _renderRoomAnimation(renderer: Renderer): void {
 		const fadeIn = this.state > this._duration / 2.0;
