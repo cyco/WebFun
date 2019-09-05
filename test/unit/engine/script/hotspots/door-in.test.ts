@@ -1,19 +1,18 @@
 import { Hotspot, Zone, HotspotType } from "src/engine/objects";
 import { Engine } from "src/engine";
 import doorIn from "src/engine/script/hotspots/door-in";
-import { TransitionScene } from "src/engine/scenes";
+import { RoomTransitionScene } from "src/engine/scenes";
 import * as Scenes from "src/engine/scenes";
 import { Point } from "src/util";
 
 describe("WebFun.Engine.Script.Hotspots.DoorIn", () => {
 	let engine: Engine;
-	let transitionScene: TransitionScene;
+	let transitionScene: RoomTransitionScene;
 
 	beforeEach(() => {
 		transitionScene = {} as any;
 		spyOn(console, "assert");
-		spyOn(Scenes, "TransitionScene").and.returnValue(transitionScene);
-		(Scenes.TransitionScene as any).Type = TransitionScene.Type;
+		spyOn(Scenes, "RoomTransitionScene").and.returnValue(transitionScene);
 		mockEngine();
 	});
 

@@ -11,22 +11,23 @@ import {
 	Char,
 	Puzzle
 } from "src/engine/objects";
-import { MutableHotspot } from "src/engine/mutable-objects";
 import { Direction as InputDirection } from "src/engine/input";
+import { MutableHotspot } from "src/engine/mutable-objects";
+import { NullIfMissing } from "src/engine/asset-manager";
+import { Renderer } from "src/engine/rendering";
 import { Sprite } from "../rendering";
 import { WorldItem } from "src/engine/generation";
 import { Yoda } from "src/engine";
-import { Renderer } from "src/engine/rendering";
 import DetonatorScene from "./detonator-scene";
 import Engine from "src/engine/engine";
 import Hero from "src/engine/hero";
 import MapScene from "./map-scene";
-import PauseScene from "./pause-scene";
-import Scene from "./scene";
-import TransitionScene from "./transition-scene";
-import ZoneSceneRenderer from "src/engine/rendering/zone-scene-renderer";
-import { NullIfMissing } from "src/engine/asset-manager";
 import moveNPC from "src/engine/npc-move";
+import PauseScene from "./pause-scene";
+import RoomTransitionScene from "./room-transition-scene";
+import Scene from "./scene";
+import ZoneSceneRenderer from "src/engine/rendering/zone-scene-renderer";
+import ZoneTransitionScene from "./zone-transition-scene";
 
 class ZoneScene extends Scene {
 	private _zone: Zone;
@@ -258,8 +259,7 @@ class ZoneScene extends Scene {
 			return false;
 		}
 
-		const transitionScene = new TransitionScene();
-		transitionScene.type = TransitionScene.Type.Zone;
+		const transitionScene = new ZoneTransitionScene();
 		transitionScene.destinationHeroLocation = destinationHeroLocation;
 		transitionScene.destinationZoneLocation = destinationZoneLocation;
 		transitionScene.originZoneLocation = zoneLocation;
@@ -668,8 +668,7 @@ class ZoneScene extends Scene {
 		const worldLocation = engine.currentWorld.locationOfZone(destinationZone);
 		const zoneLocation = destinationZone.hotspots.withType(counterPart).first().location;
 
-		const transitionScene = new TransitionScene();
-		transitionScene.type = TransitionScene.Type.Room;
+		const transitionScene = new RoomTransitionScene();
 		transitionScene.destinationHeroLocation = zoneLocation;
 		transitionScene.destinationZone = destinationZone;
 		transitionScene.scene = engine.sceneManager.currentScene as ZoneScene;
@@ -693,8 +692,7 @@ class ZoneScene extends Scene {
 
 				const destinationZone = engine.assetManager.get(Zone, hotspot.arg);
 
-				const transitionScene = new TransitionScene();
-				transitionScene.type = TransitionScene.Type.Room;
+				const transitionScene = new RoomTransitionScene();
 				const otherHotspot = destinationZone.hotspots.withType(HotspotType.xWingToDagobah).first();
 				transitionScene.destinationHeroLocation = otherHotspot
 					? new Point(otherHotspot.x, otherHotspot.y)
@@ -720,8 +718,7 @@ class ZoneScene extends Scene {
 
 				const destinationZone = engine.assetManager.get(Zone, hotspot.arg);
 
-				const transitionScene = new TransitionScene();
-				transitionScene.type = TransitionScene.Type.Room;
+				const transitionScene = new RoomTransitionScene();
 				const otherHotspot = destinationZone.hotspots.withType(HotspotType.xWingFromDagobah).first();
 				transitionScene.destinationHeroLocation = otherHotspot
 					? new Point(otherHotspot.x, otherHotspot.y)

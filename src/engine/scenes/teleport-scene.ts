@@ -1,5 +1,5 @@
 import MapScene from "./map-scene";
-import TransitionScene from "./transition-scene";
+import RoomTransitionScene from "./room-transition-scene";
 import ZoneScene from "./zone-scene";
 import { HotspotType, Zone } from "src/engine/objects";
 import { Point } from "src/util";
@@ -18,8 +18,7 @@ class TeleportScene extends MapScene {
 		const target = zone.hotspots.withType(HotspotType.Teleporter).find(htsp => htsp.enabled);
 		if (!target) return;
 
-		const scene = new TransitionScene();
-		scene.type = TransitionScene.Type.Room;
+		const scene = new RoomTransitionScene();
 		scene.destinationHeroLocation = target.location;
 		scene.destinationZone = zone;
 		scene.scene = engine.sceneManager.currentScene as ZoneScene;

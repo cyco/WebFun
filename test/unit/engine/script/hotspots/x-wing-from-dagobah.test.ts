@@ -1,19 +1,18 @@
 import { Hotspot, Zone, HotspotType } from "src/engine/objects";
 import { Engine } from "src/engine";
 import { Point } from "src/util";
-import { TransitionScene } from "src/engine/scenes";
+import { RoomTransitionScene } from "src/engine/scenes";
 import * as Scenes from "src/engine/scenes";
 import xWingFromDagobah from "src/engine/script/hotspots/x-wing-from-dagobah";
 
 describe("WebFun.Engine.Script.Hotspots.xWingFromDagobah", () => {
 	let engine: Engine;
-	let transitionScene: TransitionScene;
+	let transitionScene: RoomTransitionScene;
 
 	beforeEach(() => {
 		transitionScene = {} as any;
 		spyOn(console, "assert");
-		spyOn(Scenes, "TransitionScene").and.returnValue(transitionScene);
-		(Scenes.TransitionScene as any).Type = TransitionScene.Type;
+		spyOn(Scenes, "RoomTransitionScene").and.returnValue(transitionScene);
 		mockEngine();
 	});
 

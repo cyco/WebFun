@@ -3,12 +3,13 @@ import LoseScene from "./lose-scene";
 import MapScene from "./map-scene";
 import PauseScene from "./pause-scene";
 import PickupScene from "./pickup-scene";
+import RoomTransitionScene from "./room-transition-scene";
 import Scene from "./scene";
 import SpeechScene from "./speech-scene";
 import TeleportScene from "./teleport-scene";
-import TransitionScene from "./transition-scene";
 import WinScene from "./win-scene";
 import ZoneScene from "./zone-scene";
+import ZoneTransitionScene from "./zone-transition-scene";
 
 export {
 	DetonatorScene,
@@ -16,10 +17,11 @@ export {
 	MapScene,
 	PauseScene,
 	PickupScene,
+	RoomTransitionScene,
 	Scene,
 	SpeechScene,
 	TeleportScene,
-	TransitionScene,
 	WinScene,
-	ZoneScene
+	ZoneScene,
+	ZoneTransitionScene
 };

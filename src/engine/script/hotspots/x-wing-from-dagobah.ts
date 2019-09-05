@@ -1,6 +1,6 @@
 import { Engine } from "src/engine";
 import { Hotspot, Zone, HotspotType } from "src/engine/objects";
-import { TransitionScene, ZoneScene } from "src/engine/scenes";
+import { RoomTransitionScene, ZoneScene } from "src/engine/scenes";
 import { Point } from "src/util";
 
 export default (engine: Engine, hotspot: Hotspot): boolean => {
@@ -9,8 +9,7 @@ export default (engine: Engine, hotspot: Hotspot): boolean => {
 	const destinationZone = engine.assetManager.get(Zone, hotspot.arg);
 	const otherHotspot = destinationZone.hotspots.find(({ type }) => type === HotspotType.xWingToDagobah);
 	console.assert(otherHotspot !== null);
-	const scene = new TransitionScene();
-	scene.type = TransitionScene.Type.Room;
+	const scene = new RoomTransitionScene();
 	scene.destinationHeroLocation = new Point(otherHotspot.x, otherHotspot.y);
 	scene.destinationZone = destinationZone;
 	console.assert(engine.sceneManager.currentScene instanceof ZoneScene);

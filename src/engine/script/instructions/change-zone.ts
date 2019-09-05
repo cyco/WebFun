@@ -5,7 +5,7 @@ import Engine from "../../engine";
 import Instruction from "../../objects/instruction";
 
 import { Point } from "src/util";
-import { TransitionScene } from "src/engine/scenes";
+import { RoomTransitionScene } from "src/engine/scenes";
 import ZoneScene from "src/engine/scenes/zone-scene";
 
 export default {
@@ -15,8 +15,7 @@ export default {
 	Implementation: async (instruction: Instruction, engine: Engine, _: Action): Promise<Result> => {
 		const args = instruction.arguments;
 
-		const transitionScene = new TransitionScene();
-		transitionScene.type = TransitionScene.Type.Room;
+		const transitionScene = new RoomTransitionScene();
 		transitionScene.destinationHeroLocation = new Point(args[1], args[2]);
 		transitionScene.destinationZone = engine.assetManager.get(Zone, args[0]);
 		transitionScene.scene = engine.sceneManager.currentScene as ZoneScene;

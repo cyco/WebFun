@@ -7,7 +7,7 @@ import LocatorTile from "src/engine/type/yoda/locator-tile";
 import Scene from "./scene";
 import Settings from "src/settings";
 import SpeechScene from "./speech-scene";
-import TransitionScene from "./transition-scene";
+import RoomTransitionScene from "./room-transition-scene";
 import { World } from "src/engine/generation";
 import Zone from "../objects/zone";
 import ZoneScene from "./zone-scene";
@@ -159,8 +159,7 @@ class MapScene extends Scene {
 		const engine = this.engine;
 		this.exitScene();
 
-		const transitionScene = new TransitionScene();
-		transitionScene.type = TransitionScene.Type.Room;
+		const transitionScene = new RoomTransitionScene();
 		transitionScene.destinationHeroLocation = engine.hero.location;
 		transitionScene.destinationZone = zone;
 		transitionScene.scene = engine.sceneManager.currentScene as ZoneScene;
