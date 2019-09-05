@@ -43,7 +43,7 @@ class TestFileParser {
 		};
 	}
 
-	private parseConfiguration(lines: IterableIterator<string>): TestConfiguration {
+	private parseConfiguration(lines: Iterator<string, string>): TestConfiguration {
 		const configuration: TestConfiguration = {
 			zone: -1,
 			findItem: -1,

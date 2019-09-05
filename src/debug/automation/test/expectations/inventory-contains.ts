@@ -8,7 +8,7 @@ class InventoryContainsExpectation implements expectation {
 		return value.contains("inventory:");
 	}
 
-	public static BuildFrom(it: IteratorResult<string>): InventoryContainsExpectation {
+	public static BuildFrom(it: IteratorResult<string, string>): InventoryContainsExpectation {
 		return new InventoryContainsExpectation(
 			it.value
 				.split(":")[1]
