@@ -23,7 +23,7 @@ class Button extends AbstractIconButton {
 			this._label.style.display = this._label.textContent.length ? "" : "none";
 		}
 
-		super.attributeChangedCallback(attributeName, newValue, oldValue);
+		super.attributeChangedCallback(attributeName, oldValue, newValue);
 	}
 
 	set label(l: string) {
