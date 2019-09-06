@@ -2,7 +2,7 @@ import { GameType, Indy, Yoda } from "../type";
 import { Hotspot, HotspotType, Zone } from "src/engine/objects";
 
 import AssetManager from "../asset-manager";
-import { InputStream } from "src/util";
+import { InputStream, Point } from "src/util";
 import { MutableZone, MutableNPC } from "src/engine/mutable-objects";
 import SaveState from "./save-state";
 import World from "./world";
@@ -101,28 +101,25 @@ abstract class Reader {
 
 	protected readZone(stream: InputStream, zone: MutableZone, visited: boolean) {
 		if (visited) {
-			// skip over counter register
-			this.readInt(stream);
-			// skip over random register
-			this.readInt(stream);
-			// skip over door-in (x)
-			this.readInt(stream);
-			// skip over door-in (y)
-			this.readInt(stream);
+			zone.counter = this.readInt(stream);
+			zone.random = this.readInt(stream);
+
+			const x = this.readInt(stream);
+			const y = this.readInt(stream);
+			zone.doorInLocation = new Point(x, y);
 
 			if (this._type === Yoda) {
-				// skip over sharedCounter register
-				stream.getUint16();
-				// skip over planet
-				stream.getInt16();
+				zone.sharedCounter = stream.getUint16();
+
+				const planet = stream.getInt16();
+				console.assert(planet === zone.planet.rawValue);
 			}
 
 			const tileCount = zone.size.width * zone.size.height * Zone.LAYERS;
 			zone.tileIDs = stream.getInt16Array(tileCount);
 		}
 
-		// skip over visited flag
-		this.readBool(stream);
+		zone.visited = this.readBool(stream);
 		this.readHotspots(stream, zone);
 
 		if (visited) {
