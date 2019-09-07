@@ -1,7 +1,7 @@
-import { CharMovementType } from "src/engine/objects";
+import { Char } from "src/engine/objects";
 import { Point, rand } from "src/util";
 
-describeNPCMovement(CharMovementType.Patrol, (ctx, tick, vars) => {
+describeNPCMovement(Char.MovementType.Patrol, (ctx, tick, vars) => {
 	it("moves as expected", async () => {
 		const { npc } = vars;
 		npc.waypoints = [new Point(1, 1), new Point(7, 1), new Point(7, 7), new Point(1, 7)];

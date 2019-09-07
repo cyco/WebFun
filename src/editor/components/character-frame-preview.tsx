@@ -1,7 +1,7 @@
 import "./character-frame-preview.scss";
 
 import { Component } from "src/ui";
-import { CharFrame } from "src/engine/objects";
+import { Char } from "src/engine/objects";
 import { ColorPalette } from "src/engine";
 import PopoverTilePicker from "./popover-tile-picker";
 
@@ -10,7 +10,7 @@ class CharacterFramePreview extends Component {
 	public static readonly observedAttributes: string[] = [];
 
 	public onchange: (e: CustomEvent) => void = () => void 0;
-	private _frame: CharFrame;
+	private _frame: Char.Frame;
 	private _pickers: PopoverTilePicker[] = (8).times(
 		idx =>
 			(
@@ -58,7 +58,7 @@ class CharacterFramePreview extends Component {
 		return this._pickers[0].palette;
 	}
 
-	set frame(f: CharFrame) {
+	set frame(f: Char.Frame) {
 		this._frame = f;
 		this._rebuild();
 	}

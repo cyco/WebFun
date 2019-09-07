@@ -1,21 +1,19 @@
-import { default as Hotspot, Type as HotspotType } from "./hotspot";
+import Hotspot from "./hotspot";
 import { Point, PointLike, Rectangle, Size } from "src/util";
-import Type, { default as ZoneType } from "./zone-type";
+import ZoneType from "./zone-type";
 
 import Action from "./action";
-import Layer from "./zone-layer";
+import ZoneLayer from "./zone-layer";
 import NPC from "./npc";
 import { Planet } from "../types";
 import Tile from "./tile";
-
-export { Type, Layer };
 
 const TILE_ADEGAN_CRYSTAL = 12;
 
 class Zone {
 	public static readonly LAYERS = 3;
-	public static readonly Type = Type;
-	public static readonly Layer = Layer;
+	public static readonly Type = ZoneType;
+	public static readonly Layer = ZoneLayer;
 
 	public visited: boolean = false;
 	public solved: boolean = false;
@@ -29,7 +27,7 @@ class Zone {
 	protected _name: string = "";
 	protected _planet: Planet = Planet.NONE;
 	protected _size: Size = null;
-	protected _type: Type = null;
+	protected _type: ZoneType = null;
 	protected _tileIDs: Int16Array = new Int16Array(0);
 	protected _hotspots: Hotspot[] = [];
 	protected _tileStore: any = null;
@@ -44,7 +42,7 @@ class Zone {
 	public doorInLocation: Point = new Point(0, 0);
 
 	get doors(): Hotspot[] {
-		return this._hotspots.filter(hotspot => hotspot.type === HotspotType.DoorIn && hotspot.arg !== -1);
+		return this._hotspots.filter(hotspot => hotspot.type === Hotspot.Type.DoorIn && hotspot.arg !== -1);
 	}
 
 	getTileID(x: number, y: number, z: number): number {
@@ -102,7 +100,7 @@ class Zone {
 		if (needleZone === this) return true;
 
 		for (const hotspot of this._hotspots) {
-			if (hotspot.type === HotspotType.DoorIn && hotspot.arg !== -1) {
+			if (hotspot.type === Hotspot.Type.DoorIn && hotspot.arg !== -1) {
 				const zone = allZones[hotspot.arg];
 				if (zone.leadsTo(needleZone, allZones)) return true;
 			}
@@ -112,7 +110,7 @@ class Zone {
 	}
 
 	isLoadingZone(): boolean {
-		return this._type === Type.Load;
+		return this._type === ZoneType.Load;
 	}
 
 	initialize() {
@@ -124,9 +122,9 @@ class Zone {
 		this.npcs
 			.filter(npc => npc.enabled)
 			.forEach(npc => {
-				if (this.getTile(npc.x, npc.y, Zone.Layer.Object) === null) {
+				if (this.getTile(npc.x, npc.y, ZoneLayer.Object) === null) {
 					const tile = npc.face.frames[0].down;
-					this.setTile(tile, npc.x, npc.y, Zone.Layer.Object);
+					this.setTile(tile, npc.x, npc.y, ZoneLayer.Object);
 				}
 			});
 	}
@@ -136,21 +134,21 @@ class Zone {
 			.filter(htsp => htsp.enabled)
 			.forEach(hotspot => {
 				switch (hotspot.type) {
-					case HotspotType.Unused:
+					case Hotspot.Type.Unused:
 						hotspot.arg = TILE_ADEGAN_CRYSTAL;
 					/* intentional fallthrough */
-					case HotspotType.TriggerLocation:
-					case HotspotType.SpawnLocation:
-					case HotspotType.ForceLocation:
-					case HotspotType.LocatorThingy:
-					case HotspotType.CrateItem:
-					case HotspotType.PuzzleNPC:
-					case HotspotType.CrateWeapon:
+					case Hotspot.Type.TriggerLocation:
+					case Hotspot.Type.SpawnLocation:
+					case Hotspot.Type.ForceLocation:
+					case Hotspot.Type.LocatorThingy:
+					case Hotspot.Type.CrateItem:
+					case Hotspot.Type.PuzzleNPC:
+					case Hotspot.Type.CrateWeapon:
 						if (hotspot.arg < 0) break;
 						if (this.getTile(hotspot.x, hotspot.y, 1)) return;
 						this.setTile(({ id: hotspot.arg } as unknown) as Tile, hotspot.x, hotspot.y, 1);
 						break;
-					case HotspotType.DoorIn:
+					case Hotspot.Type.DoorIn:
 						if (hotspot.arg < 0) break;
 						const zone = this._zoneStore[hotspot.arg];
 						zone.layDownHotspotItems();
@@ -166,7 +164,7 @@ class Zone {
 	}
 
 	get hasTeleporter() {
-		return this._type === ZoneType.Empty && this.hotspots.withType(HotspotType.Teleporter).length !== 0;
+		return this._type === ZoneType.Empty && this.hotspots.withType(Hotspot.Type.Teleporter).length !== 0;
 	}
 
 	public get bounds() {
@@ -240,6 +238,10 @@ class Zone {
 	get actions() {
 		return this._actions;
 	}
+}
+namespace Zone {
+	export type Layer = ZoneLayer;
+	export type Type = ZoneType;
 }
 
 export default Zone;

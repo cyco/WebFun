@@ -1,9 +1,8 @@
-import { HotspotType, ZoneLayer } from "src/engine/objects";
+import { Zone } from "src/engine/objects";
 
 import Engine from "../engine";
 import { Tile, Hotspot } from "../objects";
 import { NullIfMissing } from "src/engine/asset-manager";
-import Zone from "../objects/zone";
 import doorIn from "./hotspots/door-in";
 import doorOut from "./hotspots/door-out";
 import xWingFromDagobah from "./hotspots/x-wing-from-dagobah";
@@ -23,15 +22,15 @@ class HotspotExecutor {
 
 	public trigger(hotspot: Hotspot) {
 		switch (hotspot.type) {
-			case HotspotType.DoorIn:
+			case Hotspot.Type.DoorIn:
 				return doorIn(this._engine, hotspot);
-			case HotspotType.DoorOut:
+			case Hotspot.Type.DoorOut:
 				return doorOut(this._engine, hotspot);
-			case HotspotType.xWingFromDagobah:
+			case Hotspot.Type.xWingFromDagobah:
 				return xWingFromDagobah(this._engine, hotspot);
-			case HotspotType.xWingToDagobah:
+			case Hotspot.Type.xWingToDagobah:
 				return xWingToDagobah(this._engine, hotspot);
-			case HotspotType.Teleporter:
+			case Hotspot.Type.Teleporter:
 				return teleporter(this._engine, hotspot);
 		}
 	}
@@ -41,7 +40,7 @@ class HotspotExecutor {
 		if (hotspot.arg === -1) return;
 
 		const location = hotspot.location.clone();
-		location.z = ZoneLayer.Object;
+		location.z = Zone.Layer.Object;
 
 		const currentTile = zone.getTile(location);
 		if (currentTile) return;
@@ -49,15 +48,15 @@ class HotspotExecutor {
 		const tile = this._engine.assetManager.get(Tile, hotspot.arg, NullIfMissing);
 
 		const type = hotspot.type;
-		if (type === HotspotType.SpawnLocation) {
+		if (type === Hotspot.Type.SpawnLocation) {
 			// TODO: grab puzzle NPC from world
 			// if (hotspot.arg !== zone.puzzleNPC) console.warn("NPC ID mismatch");
 			zone.setTile(tile, location);
 		} else if (
-			hotspot.type === HotspotType.TriggerLocation ||
-			hotspot.type === HotspotType.CrateItem ||
-			hotspot.type === HotspotType.CrateWeapon ||
-			hotspot.type === HotspotType.ForceLocation
+			hotspot.type === Hotspot.Type.TriggerLocation ||
+			hotspot.type === Hotspot.Type.CrateItem ||
+			hotspot.type === Hotspot.Type.CrateWeapon ||
+			hotspot.type === Hotspot.Type.ForceLocation
 		) {
 			zone.setTile(tile, location);
 		} else return;

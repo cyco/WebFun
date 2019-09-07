@@ -1,4 +1,4 @@
-import { Char, CharType } from "src/engine/objects";
+import { Char } from "src/engine/objects";
 import { CharacterDetails, CharacterInspectorCell } from "../components";
 import { IconButton, List } from "src/ui/components";
 
@@ -72,7 +72,7 @@ class CharacterInspector extends AbstractInspector {
 	public build() {
 		this._details.palette = this.data.palette;
 		this._details.sounds = this.data.currentData.sounds.map(s => s.file);
-		this._details.weapons = this.data.currentData.characters.filter(c => c.type === CharType.Weapon);
+		this._details.weapons = this.data.currentData.characters.filter(c => c.type === Char.Type.Weapon);
 		this._details.tiles = this.data.currentData.tiles;
 		this._details.palette = this.data.palette;
 

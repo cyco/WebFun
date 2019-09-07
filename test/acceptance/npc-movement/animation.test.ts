@@ -1,8 +1,8 @@
 import { describeNPCMovement } from "test/helpers";
-import { Zone, CharMovementType } from "src/engine/objects";
+import { Zone, Char } from "src/engine/objects";
 import { rand } from "src/util";
 
-describeNPCMovement(CharMovementType.Animation, (ctx, tick, vars) => {
+describeNPCMovement(Char.MovementType.Animation, (ctx, tick, vars) => {
 	it("moves as expected", async () => {
 		const { char, zone, InitialPosition, npc } = vars;
 		ctx.engine.metronome.start();

@@ -1,5 +1,4 @@
 import Char from "./char";
-import { CharFrameEntry } from "./char-frame";
 import { Point } from "src/util";
 import Zone from "./zone";
 import { min } from "src/std/math";
@@ -29,7 +28,7 @@ class NPC {
 	public directionX: number = 0;
 	public directionY: number = 0;
 	public field3c: number = 0;
-	public facingDirection: CharFrameEntry = CharFrameEntry.Up;
+	public facingDirection: Char.FrameEntry = Char.FrameEntry.Up;
 	public field60: number = 0;
 	public field62: number = 0;
 

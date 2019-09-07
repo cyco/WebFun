@@ -1,4 +1,4 @@
-import { Hotspot, Zone, HotspotType } from "src/engine/objects";
+import { Hotspot, Zone } from "src/engine/objects";
 import { Engine } from "src/engine";
 import { Point } from "src/util";
 import doorOut from "src/engine/script/hotspots/door-out";
@@ -72,7 +72,7 @@ describe("WebFun.Engine.Script.Hotspots.DoorOut", () => {
 		});
 	});
 
-	function mockHotspot(type: HotspotType, arg: number = -1, pos: Point = new Point(0, 0)): Hotspot {
+	function mockHotspot(type: Hotspot.Type, arg: number = -1, pos: Point = new Point(0, 0)): Hotspot {
 		return { type, arg, x: pos.x, y: pos.y, enabled: true } as Hotspot;
 	}
 

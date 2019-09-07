@@ -1,6 +1,6 @@
 import "./puzzle-inspector-cell.scss";
 
-import { Puzzle, PuzzleType } from "src/engine/objects";
+import { Puzzle } from "src/engine/objects";
 
 import { Cell } from "src/ui/components";
 import { ColorPalette } from "src/engine/rendering";
@@ -91,17 +91,17 @@ class PuzzleInspectorCell extends Cell<Puzzle> {
 		node.palette = this.palette;
 	}
 
-	private formatType(type: PuzzleType): string {
+	private formatType(type: Puzzle.Type): string {
 		switch (type) {
-			case PuzzleType.End:
+			case Puzzle.Type.End:
 				return "Goal";
-			case PuzzleType.Use:
+			case Puzzle.Type.Use:
 				return "Unknown 1";
-			case PuzzleType.Trade:
+			case Puzzle.Type.Trade:
 				return "Unknown 2";
-			case PuzzleType.Goal:
+			case Puzzle.Type.Goal:
 				return "Unknown 3";
-			case PuzzleType.U4:
+			case Puzzle.Type.U4:
 				return "Unknown 4";
 		}
 

@@ -1,16 +1,4 @@
-import {
-	Action,
-	CharFrame,
-	CharMovementType,
-	Condition,
-	Hotspot,
-	HotspotType,
-	Instruction,
-	PuzzleType,
-	Sound,
-	Zone,
-	ZoneType
-} from "../objects";
+import { Action, Condition, Hotspot, Instruction, Sound, Puzzle, Char, Zone } from "../objects";
 import {
 	MutableAction,
 	MutableChar,
@@ -31,7 +19,6 @@ import {
 	Data as RawData
 } from "../file-format/types";
 
-import CharType from "src/engine/objects/char-type";
 import { Planet } from "../types";
 import { Yoda } from "src/engine/type";
 import YodaConstants from "src/engine/yoda";
@@ -52,12 +39,12 @@ const makeCharacter = (raw: RawCharacter, idx: number, data: GameData) => {
 	char.id = idx;
 	char.name = raw.name;
 	char.frames = [
-		new CharFrame(Array.from(raw.frame1).map((i: number) => data.tiles[i] || null)),
-		new CharFrame(Array.from(raw.frame2).map((i: number) => data.tiles[i] || null)),
-		new CharFrame(Array.from(raw.frame3).map((i: number) => data.tiles[i] || null))
+		new Char.Frame(Array.from(raw.frame1).map((i: number) => data.tiles[i] || null)),
+		new Char.Frame(Array.from(raw.frame2).map((i: number) => data.tiles[i] || null)),
+		new Char.Frame(Array.from(raw.frame3).map((i: number) => data.tiles[i] || null))
 	];
-	char.type = CharType.fromNumber(raw.type);
-	char.movementType = CharMovementType.fromNumber(raw.movementType);
+	char.type = Char.Type.fromNumber(raw.type);
+	char.movementType = Char.MovementType.fromNumber(raw.movementType);
 	char.garbage1 = raw.probablyGarbage1;
 	char.garbage2 = raw.probablyGarbage2;
 
@@ -73,7 +60,7 @@ const makePuzzle = (raw: RawPuzzle, idx: number, data: GameData) => {
 
 	puzzle.id = idx;
 	puzzle.name = raw.name || "";
-	puzzle.type = PuzzleType.fromNumber(raw.type);
+	puzzle.type = Puzzle.Type.fromNumber(raw.type);
 	puzzle.unknown1 = raw.unknown1;
 	puzzle.unknown2 = raw.unknown2;
 	puzzle.unknown3 = raw.unknown3;
@@ -82,12 +69,12 @@ const makePuzzle = (raw: RawPuzzle, idx: number, data: GameData) => {
 	puzzle.item1 = data.tiles[raw.item1] || null;
 	puzzle.item2 = data.tiles[raw.item2] || null;
 
-	if (puzzle.type !== PuzzleType.End && puzzle.type !== PuzzleType.Disabled) {
+	if (puzzle.type !== Puzzle.Type.End && puzzle.type !== Puzzle.Type.Disabled) {
 		puzzle.item2 = null;
 	}
 
 	if (data.type === Yoda && (idx === YodaConstants.Goal.RescueYoda || idx === YodaConstants.Goal.Car)) {
-		puzzle.type = PuzzleType.Disabled;
+		puzzle.type = Puzzle.Type.Disabled;
 	}
 
 	return puzzle;
@@ -101,24 +88,24 @@ const makeHotspot = (raw: RawHotspot, idx: number, _: any): Hotspot => {
 
 	hotspot.enabled = !!raw.enabled;
 	hotspot.arg = raw.argument;
-	hotspot.type = HotspotType.fromNumber(raw.type);
+	hotspot.type = Hotspot.Type.fromNumber(raw.type);
 
 	switch (hotspot.type) {
-		case HotspotType.TriggerLocation:
-		case HotspotType.SpawnLocation:
-		case HotspotType.ForceLocation:
-		case HotspotType.LocatorThingy:
+		case Hotspot.Type.TriggerLocation:
+		case Hotspot.Type.SpawnLocation:
+		case Hotspot.Type.ForceLocation:
+		case Hotspot.Type.LocatorThingy:
 			hotspot.enabled = false;
 			break;
-		case HotspotType.VehicleTo:
-		case HotspotType.VehicleBack:
-		case HotspotType.DoorIn:
-		case HotspotType.Lock:
-		case HotspotType.xWingFromDagobah:
-		case HotspotType.xWingToDagobah:
-		case HotspotType.CrateItem:
-		case HotspotType.PuzzleNPC:
-		case HotspotType.CrateWeapon:
+		case Hotspot.Type.VehicleTo:
+		case Hotspot.Type.VehicleBack:
+		case Hotspot.Type.DoorIn:
+		case Hotspot.Type.Lock:
+		case Hotspot.Type.xWingFromDagobah:
+		case Hotspot.Type.xWingToDagobah:
+		case Hotspot.Type.CrateItem:
+		case Hotspot.Type.PuzzleNPC:
+		case Hotspot.Type.CrateWeapon:
 			hotspot.enabled = true;
 			break;
 		default:
@@ -171,7 +158,7 @@ const makeZone = (raw: RawZone, idx: number, data: GameData) => {
 	zone.name = raw.name || "";
 	zone.planet = Planet.fromNumber(raw.planet);
 	zone.size = new Size(raw.width, raw.height);
-	zone.type = ZoneType.fromNumber(raw.zoneType);
+	zone.type = Zone.Type.fromNumber(raw.zoneType);
 	zone.tileIDs = raw.tileIDs.slice();
 	zone.hotspots = raw.hotspots.map((d: any, idx: number) => makeHotspot(d, idx, data));
 	zone.npcs = raw.npcs.map((d: any, idx: number) => makeNPC(d, idx, data));

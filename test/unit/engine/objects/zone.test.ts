@@ -1,5 +1,5 @@
-import Zone, { Type } from "src/engine/objects/zone";
-import { Type as HotspotType } from "src/engine/objects/hotspot";
+import Zone from "src/engine/objects/zone";
+import Hotspot from "src/engine/objects/hotspot";
 
 describe("Zone", () => {
 	it("is a class representing an in-game map", () => {
@@ -9,7 +9,7 @@ describe("Zone", () => {
 
 	it("has a method identifying the loading zone", () => {
 		const zone = new Zone();
-		(zone as any)._type = Type.Load;
+		(zone as any)._type = Zone.Type.Load;
 
 		expect(zone.isLoadingZone()).toBeTrue();
 	});
@@ -18,12 +18,12 @@ describe("Zone", () => {
 		let subject: Zone;
 		beforeEach(() => {
 			subject = new Zone();
-			(subject as any)._type = Type.Empty;
+			(subject as any)._type = Zone.Type.Empty;
 			(subject as any)._hotspots = [
-				{ type: HotspotType.DoorIn, arg: -1 },
-				{ type: HotspotType.DoorIn, arg: 0x72 },
+				{ type: Hotspot.Type.DoorIn, arg: -1 },
+				{ type: Hotspot.Type.DoorIn, arg: 0x72 },
 				{},
-				{ type: HotspotType.Teleporter, arg: -1 }
+				{ type: Hotspot.Type.Teleporter, arg: -1 }
 			];
 		});
 

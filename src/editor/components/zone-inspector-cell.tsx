@@ -1,7 +1,7 @@
 import "./zone-inspector-cell.scss";
 
 import { Cell, InlineSelector } from "src/ui/components";
-import { Tile, Zone, ZoneType } from "src/engine/objects";
+import { Tile, Zone } from "src/engine/objects";
 
 import { ColorPalette } from "src/engine/rendering";
 import { Planet } from "src/engine/types";
@@ -35,7 +35,7 @@ class ZoneInspectorCell extends Cell<Zone> {
 						this.dispatchEvent(
 							new CustomEvent(Events.ChangeType, {
 								detail: {
-									type: (e.target as InlineSelector<ZoneType>).value,
+									type: (e.target as InlineSelector<Zone.Type>).value,
 									zone: this.data
 								},
 								bubbles: true
@@ -125,43 +125,43 @@ class ZoneInspectorCell extends Cell<Zone> {
 		);
 	}
 
-	private _tileForType(zoneType: ZoneType): Tile {
+	private _tileForType(zoneType: Zone.Type): Tile {
 		const tileId = this.tileIdForZoneType(zoneType);
 		if (tileId === -1) return null;
 
 		return this.tiles[tileId];
 	}
 
-	private tileIdForZoneType(zoneType: ZoneType) {
+	private tileIdForZoneType(zoneType: Zone.Type) {
 		switch (zoneType) {
-			case ZoneType.Town:
+			case Zone.Type.Town:
 				return 829;
-			case ZoneType.Goal:
+			case Zone.Type.Goal:
 				return 830;
-			case ZoneType.BlockadeWest:
+			case Zone.Type.BlockadeWest:
 				return 827;
-			case ZoneType.BlockadeEast:
+			case Zone.Type.BlockadeEast:
 				return 823;
-			case ZoneType.BlockadeNorth:
+			case Zone.Type.BlockadeNorth:
 				return 821;
-			case ZoneType.BlockadeSouth:
+			case Zone.Type.BlockadeSouth:
 				return 825;
-			case ZoneType.Find:
-			case ZoneType.FindTheForce:
-			case ZoneType.Trade:
-			case ZoneType.Use:
+			case Zone.Type.Find:
+			case Zone.Type.FindTheForce:
+			case Zone.Type.Trade:
+			case Zone.Type.Use:
 				return 818;
-			case ZoneType.TravelStart:
-			case ZoneType.TravelEnd:
+			case Zone.Type.TravelStart:
+			case Zone.Type.TravelEnd:
 				return 820;
-			case ZoneType.Empty:
+			case Zone.Type.Empty:
 				if (this.data.hasTeleporter) return 834;
 				return 832;
-			case ZoneType.Room:
+			case Zone.Type.Room:
 				return 835;
-			case ZoneType.None:
-			case ZoneType.Load:
-			case ZoneType.Unknown:
+			case Zone.Type.None:
+			case Zone.Type.Load:
+			case Zone.Type.Unknown:
 				return 836;
 		}
 		return -1;

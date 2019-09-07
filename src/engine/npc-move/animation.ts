@@ -1,4 +1,4 @@
-import { NPC, Zone, CharMovementType } from "../objects";
+import { NPC, Zone, Char } from "../objects";
 import { Point } from "src/util";
 import { findAnimationTileIdForCharFrame } from "./helpers";
 import { Engine } from "src/engine";
@@ -31,7 +31,7 @@ export default (npc: NPC, zone: Zone, engine: Engine) => {
 		return;
 	}
 
-	console.assert(npc.face.movementType !== CharMovementType.Unspecific3);
+	console.assert(npc.face.movementType !== Char.MovementType.Unspecific3);
 
 	if (direction.x || direction.y) {
 		return maybeRestoreFaceThenDraw(npc, direction, zone, engine);

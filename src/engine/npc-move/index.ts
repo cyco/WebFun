@@ -1,4 +1,4 @@
-import { Char, NPC, Zone, CharMovementType } from "src/engine/objects";
+import { Char, NPC, Zone } from "src/engine/objects";
 import { Point } from "src/util";
 import { Engine } from "src/engine";
 import { findTileIdForCharFrameWithDirection, shoot } from "./helpers";
@@ -19,18 +19,18 @@ import animation from "./animation";
 import CharSetDefaultFace from "./helpers/char-set-default-face";
 
 const dispatch = new Map([
-	[CharMovementType.Unspecific1, unspecific1],
-	[CharMovementType.Unspecific2, unspecific2],
-	[CharMovementType.Unspecific3, unspecific3],
-	[CharMovementType.Sit, sit],
-	[CharMovementType.Unspecific4, unspecific4],
-	[CharMovementType.Unspecific5, unspecific5],
-	[CharMovementType.Droid, droid],
-	[CharMovementType.Wander, wander],
-	[CharMovementType.Patrol, patrol],
-	[CharMovementType.Scaredy, scaredy],
-	[CharMovementType.Animation, animation]
-	// [CharMovementType.UnknownIndyOnly, unknownIndyOnly]
+	[Char.MovementType.Unspecific1, unspecific1],
+	[Char.MovementType.Unspecific2, unspecific2],
+	[Char.MovementType.Unspecific3, unspecific3],
+	[Char.MovementType.Sit, sit],
+	[Char.MovementType.Unspecific4, unspecific4],
+	[Char.MovementType.Unspecific5, unspecific5],
+	[Char.MovementType.Droid, droid],
+	[Char.MovementType.Wander, wander],
+	[Char.MovementType.Patrol, patrol],
+	[Char.MovementType.Scaredy, scaredy],
+	[Char.MovementType.Animation, animation]
+	// [Char.MovementType.UnknownIndyOnly, unknownIndyOnly]
 ]);
 
 function handleRemainingBullet(npc: NPC, zone: Zone, engine: Engine) {

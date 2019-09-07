@@ -1,5 +1,5 @@
 import { Engine } from "src/engine";
-import { Hotspot, HotspotType, Zone } from "src/engine/objects";
+import { Hotspot, Zone } from "src/engine/objects";
 import { RoomTransitionScene, ZoneScene } from "src/engine/scenes";
 import { Point } from "src/util";
 import { NullIfMissing } from "src/engine/asset-manager";
@@ -8,7 +8,7 @@ export default (engine: Engine, hotspot: Hotspot): boolean => {
 	const zone = engine.currentZone;
 	const destinationZone = engine.assetManager.get(Zone, hotspot.arg, NullIfMissing);
 	const wayOut = destinationZone.hotspots.find(
-		(h: Hotspot) => h.type === HotspotType.DoorOut && (h.arg === -1 || h.arg === zone.id)
+		(h: Hotspot) => h.type === Hotspot.Type.DoorOut && (h.arg === -1 || h.arg === zone.id)
 	);
 	console.assert(!!wayOut, "Found no way to return to current zone");
 

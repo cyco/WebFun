@@ -6,7 +6,6 @@ import {
 	Instruction,
 	NPC,
 	Puzzle,
-	PuzzleType,
 	Sound,
 	Tile,
 	Zone
@@ -200,7 +199,7 @@ class GameDataSerializer {
 			stream.writeUint32(18 + puzzle.strings.map(s => 2 + s.length).reduce(add, 0));
 
 			if (index === Yoda.Goal.RescueYoda || index === Yoda.Goal.Car) {
-				stream.writeUint32(PuzzleType.End.rawValue);
+				stream.writeUint32(Puzzle.Type.End.rawValue);
 			} else stream.writeUint32(puzzle.type.rawValue);
 
 			stream.writeUint32(puzzle.unknown1);

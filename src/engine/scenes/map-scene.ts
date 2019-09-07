@@ -1,6 +1,6 @@
 import { CheatCodeInput, Invincibility, RequiredItems, UnlimitedAmmo, Weapons } from "src/engine/cheats";
 import { Point, Size } from "src/util";
-import { Tile, ZoneType } from "src/engine/objects";
+import { Tile, Zone } from "src/engine/objects";
 
 import Renderer from "../rendering/renderer";
 import LocatorTile from "src/engine/type/yoda/locator-tile";
@@ -9,7 +9,6 @@ import Settings from "src/settings";
 import SpeechScene from "./speech-scene";
 import RoomTransitionScene from "./room-transition-scene";
 import { World } from "src/engine/generation";
-import Zone from "../objects/zone";
 import ZoneScene from "./zone-scene";
 
 const MapTileWidth = 28;
@@ -203,44 +202,44 @@ class MapScene extends Scene {
 		};
 
 		switch (worldItem.zone.type) {
-			case ZoneType.Empty:
+			case Zone.Type.Empty:
 				return StringID.None;
-			case ZoneType.Town:
+			case Zone.Type.Town:
 				return StringID.Town;
-			case ZoneType.BlockadeNorth:
-			case ZoneType.BlockadeSouth:
-			case ZoneType.BlockadeEast:
-			case ZoneType.BlockadeWest:
-			case ZoneType.TravelStart:
-			case ZoneType.TravelEnd:
+			case Zone.Type.BlockadeNorth:
+			case Zone.Type.BlockadeSouth:
+			case Zone.Type.BlockadeEast:
+			case Zone.Type.BlockadeWest:
+			case Zone.Type.TravelStart:
+			case Zone.Type.TravelEnd:
 				if (!worldItem.requiredItem) return StringID.None;
 				if (worldItem.zone.solved) return StringID.TravelSolved;
 				return [StringID.requires, typeForTile(worldItem.requiredItem)];
-			case ZoneType.Goal:
+			case Zone.Type.Goal:
 				if (worldItem.zone.solved) return StringID.GoalSolved;
 				return StringID.aUnknown;
-			case ZoneType.Find:
-			case ZoneType.FindTheForce:
+			case Zone.Type.Find:
+			case Zone.Type.FindTheForce:
 				if (!worldItem.findItem) return StringID.None;
 				if (worldItem.zone.solved) return StringID.Solved;
 				if (worldItem.findItem.isLocator()) return [StringID.find, StringID.aMap];
 				if (worldItem.findItem.isWeapon()) return [StringID.find, StringID.TheForce];
 				if (worldItem.findItem.isItem()) return [StringID.find, StringID.SomethingUseful];
 				console.assert(false, "Unknown find item!");
-			case ZoneType.Trade:
+			case Zone.Type.Trade:
 				if (!worldItem.requiredItem) return StringID.None;
 				if (worldItem.zone.solved) return StringID.Solved;
 				return [StringID.requires, typeForTile(worldItem.requiredItem)];
-			case ZoneType.Use:
+			case Zone.Type.Use:
 				if (!worldItem.requiredItem) return StringID.None;
 				if (worldItem.zone.solved) return StringID.Solved;
 				return [StringID.requires, worldItem.requiredItem.name];
 
-			case ZoneType.Load:
-			case ZoneType.Room:
-			case ZoneType.Win:
-			case ZoneType.Lose:
-			case ZoneType.None:
+			case Zone.Type.Load:
+			case Zone.Type.Room:
+			case Zone.Type.Win:
+			case Zone.Type.Lose:
+			case Zone.Type.None:
 			default:
 				console.assert(false, "Zone does not appear on map!");
 				return StringID.None;

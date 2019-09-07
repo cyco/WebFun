@@ -1,4 +1,4 @@
-import { HotspotType, Zone, ZoneType } from "src/engine/objects";
+import { Hotspot, Zone } from "src/engine/objects";
 
 import LocatorTile from "src/engine/types/locator-tile";
 import { rgb } from "src/util";
@@ -18,31 +18,31 @@ export default class extends LocatorTile {
 		if (!reveal && (visited === false || (visited === undefined && !zone.visited))) return 0x343;
 
 		switch (zone.type) {
-			case ZoneType.Empty:
+			case Zone.Type.Empty:
 				if (this._hasTeleporterHotspot(zone)) {
 					return [0x341, 0x342];
 				}
 				return 0x340;
-			case ZoneType.Town:
+			case Zone.Type.Town:
 				return [0x33d];
-			case ZoneType.Goal:
+			case Zone.Type.Goal:
 				return [0x33f, 0x33e];
-			case ZoneType.TravelStart:
+			case Zone.Type.TravelStart:
 				return [0x333, 0x334];
-			case ZoneType.TravelEnd:
+			case Zone.Type.TravelEnd:
 				return [0x333, 0x334];
-			case ZoneType.BlockadeEast:
+			case Zone.Type.BlockadeEast:
 				return [0x337, 0x338];
-			case ZoneType.BlockadeWest:
+			case Zone.Type.BlockadeWest:
 				return [0x33b, 0x33c];
-			case ZoneType.BlockadeNorth:
+			case Zone.Type.BlockadeNorth:
 				return [0x335, 0x336];
-			case ZoneType.BlockadeSouth:
+			case Zone.Type.BlockadeSouth:
 				return [0x339, 0x33a];
-			case ZoneType.Use:
-			case ZoneType.Trade:
-			case ZoneType.Find:
-			case ZoneType.FindTheForce:
+			case Zone.Type.Use:
+			case Zone.Type.Trade:
+			case Zone.Type.Find:
+			case Zone.Type.FindTheForce:
 				return [0x331, 0x332];
 			default:
 				return 0x340;
@@ -50,6 +50,6 @@ export default class extends LocatorTile {
 	}
 
 	private _hasTeleporterHotspot(zone: Zone): boolean {
-		return !!zone.hotspots.find(({ type }) => type === HotspotType.Teleporter);
+		return !!zone.hotspots.find(({ type }) => type === Hotspot.Type.Teleporter);
 	}
 }

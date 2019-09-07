@@ -1,5 +1,5 @@
 import { MutableZone, MutableNPC, MutableChar } from "src/engine/mutable-objects";
-import { CharMovementType, Zone, Char, Tile, CharFrame } from "src/engine/objects";
+import { Char, Zone, Tile } from "src/engine/objects";
 import { srand, Size, Point } from "src/util";
 import { SimulatedStory } from "src/debug";
 import { Story, AssetManager } from "src/engine";
@@ -20,11 +20,11 @@ interface Vars {
 }
 
 export type DescribeNPCMovement = (
-	type: CharMovementType,
+	type: Char.MovementType,
 	block: (ctx: GameplayContext, tick: (input?: string) => Promise<void>, vars: Vars) => void
 ) => void;
 const makeFunction = (describe: any): DescribeNPCMovement => (
-	type: CharMovementType,
+	type: Char.MovementType,
 	block: (ctx: GameplayContext, tick: (input?: string) => Promise<void>, vars: Vars) => void
 ) =>
 	describe(
@@ -133,15 +133,15 @@ const makeFunction = (describe: any): DescribeNPCMovement => (
 				return npc;
 			}
 
-			function buildChar(movementType: CharMovementType, assets: AssetManager): Char {
+			function buildChar(movementType: Char.MovementType, assets: AssetManager): Char {
 				const char = new MutableChar();
 				char.id = assets.getAll(Char).length;
 				char.movementType = movementType;
 				const charTiles = assets.getAll(Tile).filter(t => t.isCharacter());
 
-				const frame1 = new CharFrame(charTiles.slice(1, 9));
-				const frame2 = new CharFrame(charTiles.slice(9, 17).concat(charTiles));
-				const frame3 = new CharFrame(charTiles.slice(17, 25).concat(charTiles));
+				const frame1 = new Char.Frame(charTiles.slice(1, 9));
+				const frame2 = new Char.Frame(charTiles.slice(9, 17).concat(charTiles));
+				const frame3 = new Char.Frame(charTiles.slice(17, 25).concat(charTiles));
 				char.frames = [frame1, frame2, frame3];
 
 				assets.populate(Char, assets.getAll(Char).concat([char]));

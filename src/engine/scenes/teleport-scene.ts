@@ -1,21 +1,21 @@
 import MapScene from "./map-scene";
 import RoomTransitionScene from "./room-transition-scene";
 import ZoneScene from "./zone-scene";
-import { HotspotType, Zone } from "src/engine/objects";
+import { Hotspot, Zone } from "src/engine/objects";
 import { Point } from "src/util";
 
 class TeleportScene extends MapScene {
 	protected isZoneConsideredSolved(zone: Zone): boolean {
 		if (!zone.hasTeleporter) return super.isZoneConsideredSolved(zone);
 
-		return zone.hotspots.withType(HotspotType.Teleporter).some(htsp => htsp.enabled);
+		return zone.hotspots.withType(Hotspot.Type.Teleporter).some(htsp => htsp.enabled);
 	}
 
 	protected handleMouseDown(_: Point, zone: Zone) {
 		const engine = this.engine;
 		this.exitScene();
 
-		const target = zone.hotspots.withType(HotspotType.Teleporter).find(htsp => htsp.enabled);
+		const target = zone.hotspots.withType(Hotspot.Type.Teleporter).find(htsp => htsp.enabled);
 		if (!target) return;
 
 		const scene = new RoomTransitionScene();

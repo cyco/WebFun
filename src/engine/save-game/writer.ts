@@ -1,4 +1,4 @@
-import { Action, Hotspot, HotspotType, NPC, Tile, Zone } from "src/engine/objects";
+import { Action, Hotspot, NPC, Tile, Zone } from "src/engine/objects";
 
 import { OutputStream } from "src/util";
 import SaveState from "./save-state";
@@ -87,7 +87,7 @@ class Writer {
 	private _writeRoom(zone: Zone, visited: boolean, stream: OutputStream): void {
 		this._writeZone(zone, visited, stream);
 		const doors = zone.hotspots.filter(
-			(hotspot: Hotspot) => hotspot.type === HotspotType.DoorIn && hotspot.arg !== -1
+			(hotspot: Hotspot) => hotspot.type === Hotspot.Type.DoorIn && hotspot.arg !== -1
 		);
 		doors.forEach((hotspot: Hotspot) => {
 			const zone = this._assets.get(Zone, hotspot.arg);

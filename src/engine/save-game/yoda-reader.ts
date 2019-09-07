@@ -1,4 +1,4 @@
-import { Hotspot, HotspotType, Tile, Char } from "src/engine/objects";
+import { Hotspot, Tile, Char } from "src/engine/objects";
 import { InputStream, Point } from "src/util";
 import { MutableHotspot, MutableNPC } from "src/engine/mutable-objects";
 import { Planet, WorldSize } from "../types";
@@ -205,7 +205,7 @@ class YodaReader extends Reader {
 	protected readHotspot(stream: InputStream, _: Hotspot): Hotspot {
 		const enabled = stream.getUint16() !== 0;
 		const argument = stream.getInt16();
-		const type = HotspotType.fromNumber(stream.getUint32());
+		const type = Hotspot.Type.fromNumber(stream.getUint32());
 		const x = stream.getInt16();
 		const y = stream.getInt16();
 

@@ -1,7 +1,7 @@
 import { Type, int16 } from "../types";
 
 import Engine from "../../engine";
-import { HotspotType } from "src/engine/objects";
+import { Hotspot } from "src/engine/objects";
 import Zone from "../../objects/zone";
 
 export default {
@@ -10,7 +10,7 @@ export default {
 	Implementation: async (args: int16[], zone: Zone, _engine: Engine): Promise<boolean> => {
 		for (const hotspot of zone.hotspots) {
 			if (
-				hotspot.type === HotspotType.TriggerLocation &&
+				hotspot.type === Hotspot.Type.TriggerLocation &&
 				hotspot.x === args[0] &&
 				hotspot.y === args[1] &&
 				hotspot.enabled

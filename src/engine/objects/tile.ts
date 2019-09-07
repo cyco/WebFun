@@ -2,7 +2,7 @@ export const WIDTH = 32;
 export const HEIGHT = 32;
 export const SIZE = WIDTH * HEIGHT;
 
-export const enum Attributes {
+const enum TileAttributes {
 	Transparent = 1 << 0,
 	Floor = 1 << 1,
 	Object = 1 << 2,
@@ -17,7 +17,7 @@ export const enum Attributes {
 	Doorway = Floor | (1 << 15)
 }
 
-export const Attribute = {
+const TileAttribute = {
 	Transparent: 0,
 	Floor: 1,
 	Object: 2,
@@ -29,7 +29,7 @@ export const Attribute = {
 	Character: 8
 };
 
-export const Subtype = {
+const TileSubtype = {
 	Weapon: {
 		BlasterLow: 16,
 		BlasterHigh: 17,
@@ -75,12 +75,12 @@ export const Subtype = {
 	}
 };
 
-export class Tile {
-	static readonly WIDTH = WIDTH;
-	static readonly HEIGHT = HEIGHT;
-	static readonly SIZE = SIZE;
-	static readonly Attribute = Attribute;
-	static readonly Subtype = Subtype;
+class Tile {
+	public static readonly WIDTH = WIDTH;
+	public static readonly HEIGHT = HEIGHT;
+	public static readonly SIZE = SIZE;
+	public static readonly Attribute = TileAttribute;
+	public static readonly Subtype = TileSubtype;
 
 	protected _id: number;
 	protected _name: string;
@@ -88,7 +88,7 @@ export class Tile {
 	protected _imageData: Uint8Array;
 
 	get walkable() {
-		return !this.getAttribute(Attribute.Object) && !this.getAttribute(Attribute.Character);
+		return !this.getAttribute(TileAttribute.Object) && !this.getAttribute(TileAttribute.Character);
 	}
 
 	get subtype() {
@@ -96,16 +96,17 @@ export class Tile {
 	}
 
 	public isObject() {
-		return this.getAttribute(Attribute.Object);
+		return this.getAttribute(TileAttribute.Object);
 	}
 
 	public isDraggable() {
-		return this.getAttribute(Attribute.Draggable);
+		return this.getAttribute(TileAttribute.Draggable);
 	}
 
 	public isLocator() {
 		return (
-			this.getAttribute(Attribute.Locator) || (this.isItem() && this.getSubtype(Subtype.Item.Locator))
+			this.getAttribute(TileAttribute.Locator) ||
+			(this.isItem() && this.getSubtype(TileSubtype.Item.Locator))
 		);
 	}
 
@@ -114,39 +115,39 @@ export class Tile {
 	}
 
 	public isItem() {
-		return this.getAttribute(Attribute.Item);
+		return this.getAttribute(TileAttribute.Item);
 	}
 
 	public isKeycard() {
-		return this.isItem() && this.getSubtype(Subtype.Item.Keycard);
+		return this.isItem() && this.getSubtype(TileSubtype.Item.Keycard);
 	}
 
 	public isPart() {
-		return this.isItem() && this.getSubtype(Subtype.Item.Part);
+		return this.isItem() && this.getSubtype(TileSubtype.Item.Part);
 	}
 
 	public isTool() {
-		return this.isItem() && this.getSubtype(Subtype.Item.Tool);
+		return this.isItem() && this.getSubtype(TileSubtype.Item.Tool);
 	}
 
 	public isValuable() {
-		return this.isItem() && this.getSubtype(Subtype.Item.Valuable);
+		return this.isItem() && this.getSubtype(TileSubtype.Item.Valuable);
 	}
 
 	public isWeapon() {
-		return (this.attributes & Attributes.Weapon) !== 0;
+		return (this.attributes & TileAttributes.Weapon) !== 0;
 	}
 
 	public isEdible() {
-		return (this.attributes & Attributes.Edible) === Attributes.Edible;
+		return (this.attributes & TileAttributes.Edible) === TileAttributes.Edible;
 	}
 
 	public isDoorway() {
-		return (this._attributes & Attributes.Doorway) === Attributes.Doorway;
+		return (this._attributes & TileAttributes.Doorway) === TileAttributes.Doorway;
 	}
 
 	public isCharacter() {
-		return (this._attributes & Attributes.Character) === Attributes.Character;
+		return (this._attributes & TileAttributes.Character) === TileAttributes.Character;
 	}
 
 	getAttribute(attr: number): boolean {
@@ -172,6 +173,10 @@ export class Tile {
 	public get imageData() {
 		return this._imageData;
 	}
+}
+
+namespace Tile {
+	export type Attributes = TileAttributes;
 }
 
 export default Tile;

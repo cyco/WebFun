@@ -1,17 +1,17 @@
-import Type from "./puzzle-type";
+import PuzzleType from "./puzzle-type";
 import Planet from "src/engine/types/planet";
 import Tile from "./tile";
 import Goals from "./goals";
 
 class Puzzle {
-	public static readonly Type = Type;
+	public static readonly Type = PuzzleType;
 
 	protected _id: number = -1;
 	protected _item1: Tile = null;
 	protected _item2: Tile = null;
 	protected _strings: string[] = ["", "", "", "", ""];
 	protected _name: string = "";
-	protected _type: Type = null;
+	protected _type: PuzzleType = null;
 	protected _unknown1: number = null;
 	protected _unknown2: number = null;
 	protected _unknown3: number = null;
@@ -57,5 +57,8 @@ class Puzzle {
 	}
 }
 
-export { Type };
+namespace Puzzle {
+	export type Type = PuzzleType;
+}
+
 export default Puzzle;

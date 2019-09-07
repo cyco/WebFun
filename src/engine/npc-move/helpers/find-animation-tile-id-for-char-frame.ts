@@ -1,18 +1,18 @@
-import { CharFrame, CharFrameEntry, Tile } from "src/engine/objects";
+import { Char, Tile } from "src/engine/objects";
 
-export default (frame: CharFrame, direction: number): Tile => {
+export default (frame: Char.Frame, direction: number): Tile => {
 	switch (direction) {
-		case CharFrameEntry.Up:
+		case Char.FrameEntry.Up:
 			return frame.up;
-		case CharFrameEntry.Down:
+		case Char.FrameEntry.Down:
 			return frame.down;
-		case CharFrameEntry.ExtensionUp:
+		case Char.FrameEntry.ExtensionUp:
 			return frame.extensionUp;
-		case CharFrameEntry.Left:
+		case Char.FrameEntry.Left:
 			return frame.left;
-		case CharFrameEntry.ExtensionDown:
+		case Char.FrameEntry.ExtensionDown:
 			return frame.extensionDown;
-		case CharFrameEntry.ExtensionLeft:
+		case Char.FrameEntry.ExtensionLeft:
 			return frame.extensionLeft;
 	}
 };

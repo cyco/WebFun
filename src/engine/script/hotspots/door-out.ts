@@ -1,5 +1,5 @@
 import { Engine } from "src/engine";
-import { Hotspot, Zone, HotspotType } from "src/engine/objects";
+import { Hotspot, Zone } from "src/engine/objects";
 import { RoomTransitionScene, ZoneScene } from "src/engine/scenes";
 import { Point } from "src/util";
 
@@ -8,7 +8,7 @@ export default (engine: Engine, hotspot: Hotspot): boolean => {
 	console.assert(hotspot.arg !== -1, "This is not where we're coming from!");
 	const destinationZone = engine.assetManager.get(Zone, hotspot.arg);
 	const doorIn = destinationZone.hotspots.find(
-		({ type, arg }) => type === HotspotType.DoorIn && arg === zone.id
+		({ type, arg }) => type === Hotspot.Type.DoorIn && arg === zone.id
 	);
 	console.assert(!!doorIn, "Don't know where to return to in target zone");
 

@@ -1,15 +1,6 @@
 import Tile from "src/engine/objects/tile";
 
-export const enum CharFrameEntry {
-	Up = 0,
-	Down = 1,
-	ExtensionUp = 2,
-	Left = 3,
-	ExtensionDown = 4,
-	ExtensionLeft = 5,
-	Right = 6,
-	ExtensionRight = 7
-}
+import { CharFrameEntry } from "./char-frame-entry";
 
 class CharFrame {
 	private _tiles: Tile[];

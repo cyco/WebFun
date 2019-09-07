@@ -1,7 +1,7 @@
-import { Tile, CharFrame } from "src/engine/objects";
+import { Tile, Char } from "src/engine/objects";
 import { Point } from "src/util";
 
-export default (frame: CharFrame, direction: Point): Tile => {
+export default (frame: Char.Frame, direction: Point): Tile => {
 	if (direction.x === 0 && direction.y === 1) {
 		return frame.down;
 	}

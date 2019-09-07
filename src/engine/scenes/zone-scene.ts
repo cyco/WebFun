@@ -1,16 +1,6 @@
 import { Direction, Point, Size } from "src/util";
 import { EvaluationMode, ScriptResult } from "../script";
-import {
-	Hotspot,
-	HotspotType,
-	NPC,
-	Zone,
-	ZoneType,
-	Tile,
-	CharFrameEntry,
-	Char,
-	Puzzle
-} from "src/engine/objects";
+import { Hotspot, NPC, Zone, Tile, Char, Puzzle } from "src/engine/objects";
 import { Direction as InputDirection } from "src/engine/input";
 import { MutableHotspot } from "src/engine/mutable-objects";
 import { NullIfMissing } from "src/engine/asset-manager";
@@ -59,7 +49,7 @@ class ZoneScene extends Scene {
 
 		for (const htsp of this.zone.hotspots) {
 			if (!htsp.enabled) continue;
-			if (htsp.type !== HotspotType.CrateItem && htsp.type !== HotspotType.TriggerLocation) continue;
+			if (htsp.type !== Hotspot.Type.CrateItem && htsp.type !== Hotspot.Type.TriggerLocation) continue;
 			if (this.zone.getTile(htsp.x, htsp.y, 1)) continue;
 
 			if (htsp.arg < 0) {
@@ -173,26 +163,26 @@ class ZoneScene extends Scene {
 	private _extensionFrameLocationForDirection(direction: number) {
 		switch (Direction.Confine(direction)) {
 			case Direction.South:
-				return CharFrameEntry.ExtensionDown;
+				return Char.FrameEntry.ExtensionDown;
 			case Direction.North:
-				return CharFrameEntry.ExtensionUp;
+				return Char.FrameEntry.ExtensionUp;
 			case Direction.East:
-				return CharFrameEntry.ExtensionRight;
+				return Char.FrameEntry.ExtensionRight;
 			case Direction.West:
-				return CharFrameEntry.ExtensionLeft;
+				return Char.FrameEntry.ExtensionLeft;
 		}
 	}
 
 	private _frameLocationForDirection(direction: number) {
 		switch (Direction.Confine(direction)) {
 			case Direction.South:
-				return CharFrameEntry.Down;
+				return Char.FrameEntry.Down;
 			case Direction.North:
-				return CharFrameEntry.Up;
+				return Char.FrameEntry.Up;
 			case Direction.East:
-				return CharFrameEntry.Right;
+				return Char.FrameEntry.Right;
 			case Direction.West:
-				return CharFrameEntry.Left;
+				return Char.FrameEntry.Left;
 		}
 	}
 
@@ -303,7 +293,7 @@ class ZoneScene extends Scene {
 		if (!tile || tile.isOpaque()) {
 			// evaluate scripts
 			this.engine.inputManager.placedTileLocation = target;
-			this.engine.inputManager.placedTile = hero.weapon.frames[0].tiles[CharFrameEntry.ExtensionRight];
+			this.engine.inputManager.placedTile = hero.weapon.frames[0].tiles[Char.FrameEntry.ExtensionRight];
 			this.engine.scriptExecutor.prepeareExecution(EvaluationMode.PlaceItem, this.zone);
 			return await this.engine.scriptExecutor.execute();
 		}
@@ -325,7 +315,7 @@ class ZoneScene extends Scene {
 
 	private _dropLoot(npc: NPC) {
 		const hotspot = new MutableHotspot();
-		hotspot.type = HotspotType.CrateItem;
+		hotspot.type = Hotspot.Type.CrateItem;
 		hotspot.enabled = true;
 		hotspot.location = npc.position;
 
@@ -333,7 +323,7 @@ class ZoneScene extends Scene {
 		if (npc.loot > 0) itemId = npc.loot - 1;
 		else {
 			const hotspots = this._zone.hotspots
-				.withType(HotspotType.TriggerLocation)
+				.withType(Hotspot.Type.TriggerLocation)
 				.filter(htsp => htsp.arg > 0);
 
 			if (!hotspots.length) return;
@@ -537,12 +527,12 @@ class ZoneScene extends Scene {
 			if (!hotspot.enabled) continue;
 			if (
 				![
-					HotspotType.TriggerLocation,
-					HotspotType.ForceLocation,
-					HotspotType.LocatorThingy,
-					HotspotType.Unused,
-					HotspotType.CrateItem,
-					HotspotType.CrateWeapon
+					Hotspot.Type.TriggerLocation,
+					Hotspot.Type.ForceLocation,
+					Hotspot.Type.LocatorThingy,
+					Hotspot.Type.Unused,
+					Hotspot.Type.CrateItem,
+					Hotspot.Type.CrateWeapon
 				].contains(hotspot.type)
 			) {
 				continue;
@@ -599,10 +589,14 @@ class ZoneScene extends Scene {
 		for (hotspot of this.zone.hotspots) {
 			if (!hotspot.enabled) continue;
 			if (!hotspot.location.isEqualTo(location)) continue;
-			if (![HotspotType.PuzzleNPC, HotspotType.Lock, HotspotType.SpawnLocation].includes(hotspot.type))
+			if (
+				![Hotspot.Type.PuzzleNPC, Hotspot.Type.Lock, Hotspot.Type.SpawnLocation].includes(
+					hotspot.type
+				)
+			)
 				continue;
 
-			if (hotspot.type === HotspotType.Lock) {
+			if (hotspot.type === Hotspot.Type.Lock) {
 				const keyTileId = hotspot.arg < 0 ? worldItem.requiredItem.id : hotspot.arg;
 				const keyTile = engine.assetManager.get(Tile, keyTileId);
 
@@ -623,12 +617,12 @@ class ZoneScene extends Scene {
 			engine.inventory.removeItem(tile);
 			hotspot.enabled = false;
 
-			if (hotspot.type === HotspotType.Lock || hotspot.type === HotspotType.SpawnLocation) {
+			if (hotspot.type === Hotspot.Type.Lock || hotspot.type === Hotspot.Type.SpawnLocation) {
 				this.zone.solved = true;
 				worldItem.zone.solved = true;
 			}
 
-			if (hotspot.type === HotspotType.SpawnLocation) {
+			if (hotspot.type === Hotspot.Type.SpawnLocation) {
 				// TODO: speak
 				this.engine.dropItem(worldItem.findItem, location);
 			}
@@ -640,18 +634,18 @@ class ZoneScene extends Scene {
 	}
 
 	private _evaluateZoneChangeHotspots(): boolean {
-		if (![ZoneType.Town, ZoneType.TravelStart, ZoneType.TravelEnd].contains(this.zone.type)) {
+		if (![Zone.Type.Town, Zone.Type.TravelStart, Zone.Type.TravelEnd].contains(this.zone.type)) {
 			return;
 		}
 
 		for (const hotspot of this.zone.hotspots) {
 			if (!hotspot.enabled) continue;
 			if (!hotspot.location.isEqualTo(this.engine.hero.location)) continue;
-			if ([HotspotType.VehicleTo, HotspotType.VehicleBack].contains(hotspot.type)) {
+			if ([Hotspot.Type.VehicleTo, Hotspot.Type.VehicleBack].contains(hotspot.type)) {
 				this._useTransport(hotspot);
 				return true;
 			}
-			if ([HotspotType.xWingToDagobah, HotspotType.xWingFromDagobah].contains(hotspot.type)) {
+			if ([Hotspot.Type.xWingToDagobah, Hotspot.Type.xWingFromDagobah].contains(hotspot.type)) {
 				this._useXWing(hotspot);
 				return true;
 			}
@@ -663,7 +657,7 @@ class ZoneScene extends Scene {
 	private _useTransport(htsp: Hotspot) {
 		const engine = this.engine;
 		const counterPart =
-			htsp.type === HotspotType.VehicleTo ? HotspotType.VehicleBack : HotspotType.VehicleTo;
+			htsp.type === Hotspot.Type.VehicleTo ? Hotspot.Type.VehicleBack : Hotspot.Type.VehicleTo;
 		const destinationZone = engine.assetManager.get(Zone, htsp.arg);
 		const worldLocation = engine.currentWorld.locationOfZone(destinationZone);
 		const zoneLocation = destinationZone.hotspots.withType(counterPart).first().location;
@@ -687,13 +681,13 @@ class ZoneScene extends Scene {
 		const engine = this.engine;
 
 		switch (hotspot.type) {
-			case HotspotType.xWingFromDagobah: {
+			case Hotspot.Type.xWingFromDagobah: {
 				if (hotspot.arg === -1) console.warn("This is not where we're coming from!");
 
 				const destinationZone = engine.assetManager.get(Zone, hotspot.arg);
 
 				const transitionScene = new RoomTransitionScene();
-				const otherHotspot = destinationZone.hotspots.withType(HotspotType.xWingToDagobah).first();
+				const otherHotspot = destinationZone.hotspots.withType(Hotspot.Type.xWingToDagobah).first();
 				transitionScene.destinationHeroLocation = otherHotspot
 					? new Point(otherHotspot.x, otherHotspot.y)
 					: new Point(0, 0);
@@ -713,13 +707,13 @@ class ZoneScene extends Scene {
 				this.engine.temporaryState.enteredByPlane = true;
 				return true;
 			}
-			case HotspotType.xWingToDagobah: {
+			case Hotspot.Type.xWingToDagobah: {
 				if (hotspot.arg === -1) console.warn("This is not where we're coming from!");
 
 				const destinationZone = engine.assetManager.get(Zone, hotspot.arg);
 
 				const transitionScene = new RoomTransitionScene();
-				const otherHotspot = destinationZone.hotspots.withType(HotspotType.xWingFromDagobah).first();
+				const otherHotspot = destinationZone.hotspots.withType(Hotspot.Type.xWingFromDagobah).first();
 				transitionScene.destinationHeroLocation = otherHotspot
 					? new Point(otherHotspot.x, otherHotspot.y)
 					: new Point(0, 0);

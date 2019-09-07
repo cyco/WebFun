@@ -1,9 +1,7 @@
 import { Action, Char, Hotspot, NPC, Sound, Tile, Zone } from "src/engine/objects";
 
 import ChangeZone from "src/engine/script/instructions/change-zone";
-import CharType from "src/engine/objects/char-type";
 import GameData from "src/engine/game-data";
-import HotspotType from "src/engine/objects/hotspot-type";
 import Instruction from "src/engine/objects/instruction";
 import PlaySound from "src/engine/script/instructions/play-sound";
 import { Point } from "src/util";
@@ -55,8 +53,8 @@ class ReferenceResolver {
 	}
 
 	private findReferencesToZone(zone: Zone): any[] {
-		const isDoorToZone = (htsp: Hotspot) => htsp.type === HotspotType.DoorIn && htsp.arg === zone.id;
-		const isDoorFromZone = (htsp: Hotspot) => htsp.type === HotspotType.DoorOut && htsp.arg === zone.id;
+		const isDoorToZone = (htsp: Hotspot) => htsp.type === Hotspot.Type.DoorIn && htsp.arg === zone.id;
+		const isDoorFromZone = (htsp: Hotspot) => htsp.type === Hotspot.Type.DoorOut && htsp.arg === zone.id;
 		const isChangeZoneInstruction = (i: Instruction) =>
 			i.opcode === ChangeZone.Opcode && i.arguments[0] === zone.id;
 		const findReferencesInZone = (z: Zone) =>
@@ -79,7 +77,7 @@ class ReferenceResolver {
 			i.opcode === PlaySound.Opcode && i.arguments[0] === id;
 		const findReferencesInAction = (a: Action) => a.instructions.filter(zoneIsReferenceToSound);
 		const findReferencesInZone = (zone: Zone) => zone.actions.map(findReferencesInAction).flatten();
-		const charIsReferenceToSound = (c: Char) => c.type === CharType.Weapon && c.reference === id;
+		const charIsReferenceToSound = (c: Char) => c.type === Char.Type.Weapon && c.reference === id;
 
 		return this.data.zones
 			.map(findReferencesInZone)

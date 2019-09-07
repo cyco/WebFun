@@ -1,5 +1,5 @@
 import { GameType, Indy, Yoda } from "../type";
-import { Hotspot, HotspotType, Zone } from "src/engine/objects";
+import { Hotspot, Zone } from "src/engine/objects";
 
 import AssetManager from "../asset-manager";
 import { InputStream, Point } from "src/util";
@@ -63,7 +63,7 @@ abstract class Reader {
 			start = i;
 			let door;
 			const hotspot = hotspots[i];
-			if (HotspotType.DoorIn === hotspot.type) {
+			if (Hotspot.Type.DoorIn === hotspot.type) {
 				if (hotspot.arg === -1) {
 					continue;
 				}

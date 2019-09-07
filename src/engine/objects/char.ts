@@ -1,14 +1,17 @@
-import Type, { default as CharType } from "./char-type";
+import CharType from "./char-type";
 
 import CharFrame from "./char-frame";
+import { CharFrameEntry } from "./char-frame-entry";
 import CharMovementType from "./char-movement-type";
 import { Direction } from "src/util";
 import Tile from "./tile";
 
-export { Type };
-
 class Char {
-	public static readonly Type = Type;
+	public static readonly Frame = CharFrame;
+	public static readonly FrameEntry = CharFrameEntry;
+	public static readonly Type = CharType;
+	public static readonly MovementType = CharMovementType;
+
 	protected _id: number;
 	protected _frames: [CharFrame, CharFrame, CharFrame];
 	protected _name: string = null;
@@ -110,6 +113,13 @@ class Char {
 	get reference() {
 		return this._reference;
 	}
+}
+
+namespace Char {
+	export type Frame = CharFrame;
+	export type FrameEntry = CharFrameEntry;
+	export type Type = CharType;
+	export type MovementType = CharMovementType;
 }
 
 export default Char;

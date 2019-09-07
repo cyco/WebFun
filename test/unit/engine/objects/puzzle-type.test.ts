@@ -13,9 +13,9 @@ describe("WebFun.Engine.Objects.PuzzleType", () => {
 	});
 
 	it("can be represented as a string", () => {
-		expect(PuzzleType.Use.name).toBe("U1");
-		expect(PuzzleType.Trade.name).toBe("U2");
-		expect(PuzzleType.Goal.name).toBe("U3");
+		expect(PuzzleType.Use.name).toBe("Use");
+		expect(PuzzleType.Trade.name).toBe("Trade");
+		expect(PuzzleType.Goal.name).toBe("Goal");
 		expect(PuzzleType.End.name).toBe("End");
 		expect(PuzzleType.U4.name).toBe("U4");
 		expect(PuzzleType.U4.toString()).toBe("PuzzleType{U4}");

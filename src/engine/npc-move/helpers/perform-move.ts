@@ -1,4 +1,4 @@
-import { NPC, Zone, CharMovementType } from "src/engine/objects";
+import { NPC, Zone, Char } from "src/engine/objects";
 import { Point } from "src/util";
 import { Engine } from "src/engine";
 import YodaViewRedrawTile from "./yoda-view-redraw";
@@ -22,8 +22,8 @@ export default (npc: NPC, direction: Point, move: boolean, zone: Zone, engine: E
 		return;
 	}
 
-	console.assert(npc.face.movementType !== CharMovementType.Animation);
-	console.assert(npc.face.movementType !== CharMovementType.Unspecific3);
+	console.assert(npc.face.movementType !== Char.MovementType.Animation);
+	console.assert(npc.face.movementType !== Char.MovementType.Unspecific3);
 
 	if (direction.x || direction.y) {
 		if (move) {

@@ -3,7 +3,7 @@ import "./character-details.scss";
 import { Component } from "src/ui";
 import CharacterFramePreview from "./character-frame-preview";
 
-import { Char, CharFrame, CharMovementType, CharType, Tile } from "src/engine/objects";
+import { Char, Tile } from "src/engine/objects";
 import { MutableChar } from "src/engine/mutable-objects";
 import { ColorPalette } from "src/engine";
 
@@ -44,9 +44,9 @@ class CharacterDetails extends Component {
 			reference: -1,
 			health: -1,
 			damage: -1,
-			type: CharType.Hero,
-			movementType: CharMovementType.None,
-			frames: [null, null, null] as CharFrame[]
+			type: Char.Type.Hero,
+			movementType: Char.MovementType.None,
+			frames: [null, null, null] as Char.Frame[]
 		};
 
 		return (
@@ -72,12 +72,12 @@ class CharacterDetails extends Component {
 						className="type"
 						onchange={({ currentTarget }: CustomEvent) => {
 							const rawValue = (currentTarget as HTMLSelectElement).value.parseInt();
-							this._character.type = CharType.fromNumber(rawValue);
+							this._character.type = Char.Type.fromNumber(rawValue);
 							this._character.reference = -1;
 							this._rebuild();
 						}}
 					>
-						{CharType.knownTypes
+						{Char.Type.knownTypes
 							.filter(t => t)
 							.map(t => (
 								<option value={t.rawValue.toString()} selected={type === t}>
@@ -93,11 +93,11 @@ class CharacterDetails extends Component {
 						value={movementType.rawValue.toString()}
 						onchange={({ currentTarget }: CustomEvent) => {
 							const rawValue = (currentTarget as HTMLSelectElement).value.parseInt();
-							this._character.movementType = CharMovementType.fromNumber(rawValue);
+							this._character.movementType = Char.MovementType.fromNumber(rawValue);
 							this._rebuild();
 						}}
 					>
-						{CharMovementType.knownTypes.map(type => (
+						{Char.MovementType.knownTypes.map(type => (
 							<option value={type.rawValue.toString()} selected={type === movementType}>
 								{type.name}
 							</option>
@@ -133,7 +133,7 @@ class CharacterDetails extends Component {
 					<div className="tile" />
 					<select
 						className="weapon"
-						disabled={type !== CharType.Hero && type !== CharType.Enemy}
+						disabled={type !== Char.Type.Hero && type !== Char.Type.Enemy}
 						onchange={({ currentTarget }: CustomEvent) => {
 							this._character.reference = (currentTarget as HTMLSelectElement).value.parseInt();
 							this._rebuild();
@@ -144,7 +144,7 @@ class CharacterDetails extends Component {
 							<option
 								value={weapon.id.toString()}
 								selected={
-									(type === CharType.Hero || type === CharType.Enemy) &&
+									(type === Char.Type.Hero || type === Char.Type.Enemy) &&
 									reference === weapon.id
 								}
 							>
@@ -157,7 +157,7 @@ class CharacterDetails extends Component {
 					<span> </span>
 					<select
 						className="sound"
-						disabled={type !== CharType.Weapon}
+						disabled={type !== Char.Type.Weapon}
 						onchange={({ currentTarget }: CustomEvent) => {
 							this._character.reference = (currentTarget as HTMLSelectElement).value.parseInt();
 							this._rebuild();
@@ -167,7 +167,7 @@ class CharacterDetails extends Component {
 						{sounds.map((sound, index) => (
 							<option
 								value={`${index}`}
-								selected={type === CharType.Weapon && reference === index}
+								selected={type === Char.Type.Weapon && reference === index}
 							>
 								{index} {sound}
 							</option>
