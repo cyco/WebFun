@@ -13,8 +13,8 @@ import MapGenerator from "./map-generator";
 import Quest from "./quest";
 import World from "./world";
 import WorldGenerationError from "./world-generation-error";
-import WorldItem from "./world-item";
-import WorldItemType from "./world-item-type";
+import Sector from "./sector";
+import SectorType from "./sector-type";
 import RoomIterator from "../room-iterator";
 import Yoda from "src/engine/yoda";
 import { MutablePuzzle } from "src/engine/mutable-objects";
@@ -124,12 +124,12 @@ class WorldGenerator {
 		const typeMap = this.mapGenerator.typeMap;
 		const isTravelTarget = (point: Point) => {
 			const index = point.x + point.y * 10;
-			return typeMap[index] === WorldItemType.TravelEnd && !this.world.index(index).zone;
+			return typeMap[index] === SectorType.TravelEnd && !this.world.index(index).zone;
 		};
 
 		for (let y = 0; y < 10; y++) {
 			for (let x = 0; x < 10; x++) {
-				if (typeMap[x + y * 10] !== WorldItemType.TravelStart) continue;
+				if (typeMap[x + y * 10] !== SectorType.TravelStart) continue;
 
 				this.resetState();
 
@@ -196,7 +196,7 @@ class WorldGenerator {
 
 	private loopWorld(
 		map: Map,
-		callback: (v: WorldItemType, x: number, y: number, id: number, map: Map) => void
+		callback: (v: SectorType, x: number, y: number, id: number, map: Map) => void
 	): void {
 		for (let y = 0; y < 10; y++) {
 			for (let x = 0; x < 10; x++) {
@@ -205,17 +205,17 @@ class WorldGenerator {
 		}
 	}
 
-	private zoneTypeForWorldItemType(t: WorldItemType): Zone.Type {
+	private zoneTypeForSectorType(t: SectorType): Zone.Type {
 		switch (t) {
-			case WorldItemType.Spaceport:
+			case SectorType.Spaceport:
 				return Zone.Type.Town;
-			case WorldItemType.BlockEast:
+			case SectorType.BlockEast:
 				return Zone.Type.BlockadeEast;
-			case WorldItemType.BlockWest:
+			case SectorType.BlockWest:
 				return Zone.Type.BlockadeWest;
-			case WorldItemType.BlockNorth:
+			case SectorType.BlockNorth:
 				return Zone.Type.BlockadeNorth;
-			case WorldItemType.BlockSouth:
+			case SectorType.BlockSouth:
 				return Zone.Type.BlockadeSouth;
 			default:
 				return Zone.Type.Empty;
@@ -225,8 +225,8 @@ class WorldGenerator {
 	}
 
 	private determineBlockadeAndTownZones(map: Map): void {
-		this.loopWorld(map, (worldItemType, x, y) => {
-			const type = this.zoneTypeForWorldItemType(worldItemType);
+		this.loopWorld(map, (sectorType, x, y) => {
+			const type = this.zoneTypeForSectorType(sectorType);
 			if (!(type.isBlockadeType() || type === Zone.Type.Town)) return;
 
 			this.resetState();
@@ -237,7 +237,7 @@ class WorldGenerator {
 				zone = this.GetUnusedZoneRandomly(Zone.Type.Empty, -1, -1, null, null, distance, false);
 			if (!zone) return;
 
-			const options: Partial<WorldItem> = {};
+			const options: Partial<Sector> = {};
 			if (type !== Zone.Type.Town) options.requiredItem = this.requiredItem;
 			this.placeZone(x, y, zone, zone.type, options);
 		});
@@ -639,7 +639,7 @@ class WorldGenerator {
 			this.errorWhen(!zone, "No zone for puzzle found");
 			this.placeZone(point.x, point.y, zone, Zone.Type.Find, { findItem: this.findItem });
 			const idx = point.x + 10 * point.y;
-			world[idx] = WorldItemType.Puzzle;
+			world[idx] = SectorType.Puzzle;
 		}
 	}
 
@@ -652,16 +652,16 @@ class WorldGenerator {
 
 		for (let y = 0; y < 10; y++) {
 			for (let x = 0; x < 10; x++) {
-				const worldItemType = world[x + 10 * y];
+				const sectorType = world[x + 10 * y];
 				if (
-					worldItemType !== WorldItemType.Empty &&
-					worldItemType !== WorldItemType.Candidate &&
-					worldItemType !== WorldItemType.Island
+					sectorType !== SectorType.Empty &&
+					sectorType !== SectorType.Candidate &&
+					sectorType !== SectorType.Island
 				)
 					continue;
 
 				const distance = GetDistanceToCenter(x, y);
-				this.somethingWithTeleporters = +(worldItemType === WorldItemType.Island || distance < 2);
+				this.somethingWithTeleporters = +(sectorType === SectorType.Island || distance < 2);
 
 				let zone = null;
 				if (this.somethingWithTeleporters || !foundTeleporterTarget) {
@@ -867,15 +867,15 @@ class WorldGenerator {
 		this.loopWorld(world, (item, x, y, idx) => {
 			const point = new Point(x, y);
 			if (GetDistanceToCenter(x, y) > maxDistance) {
-				if (item === WorldItemType.Empty) {
+				if (item === SectorType.Empty) {
 					farPoints.push(point);
 				}
-			} else if (item === WorldItemType.Empty || item === WorldItemType.Candidate) {
+			} else if (item === SectorType.Empty || item === SectorType.Candidate) {
 				if (
-					(x < 1 || world[idx - 1] !== WorldItemType.Puzzle) &&
-					(x > 8 || world[idx + 1] !== WorldItemType.Puzzle) &&
-					(y < 1 || world[idx - 10] !== WorldItemType.Puzzle) &&
-					(y > 8 || world[idx + 10] !== WorldItemType.Puzzle)
+					(x < 1 || world[idx - 1] !== SectorType.Puzzle) &&
+					(x > 8 || world[idx + 1] !== SectorType.Puzzle) &&
+					(y < 1 || world[idx - 10] !== SectorType.Puzzle) &&
+					(y > 8 || world[idx + 10] !== SectorType.Puzzle)
 				)
 					bestPoints.push(point);
 				else pointsCloseToPuzzles.push(point);
@@ -1003,17 +1003,17 @@ class WorldGenerator {
 		y: number,
 		zone: Zone,
 		type: Zone.Type,
-		options: Partial<WorldItem> = {}
+		options: Partial<Sector> = {}
 	): void {
 		const idx = x + 10 * y;
-		const worldItem = this.world.index(idx);
-		worldItem.zone = zone;
-		worldItem.zoneType = type;
-		worldItem.puzzleIndex = options.puzzleIndex !== undefined ? options.puzzleIndex : -1;
-		worldItem.requiredItem = options.requiredItem !== undefined ? options.requiredItem : null;
-		worldItem.npc = options.npc !== undefined ? options.npc : null;
-		worldItem.findItem = options.findItem !== undefined ? options.findItem : null;
-		worldItem.additionalRequiredItem =
+		const sector = this.world.index(idx);
+		sector.zone = zone;
+		sector.zoneType = type;
+		sector.puzzleIndex = options.puzzleIndex !== undefined ? options.puzzleIndex : -1;
+		sector.requiredItem = options.requiredItem !== undefined ? options.requiredItem : null;
+		sector.npc = options.npc !== undefined ? options.npc : null;
+		sector.findItem = options.findItem !== undefined ? options.findItem : null;
+		sector.additionalRequiredItem =
 			options.additionalRequiredItem !== undefined ? options.additionalRequiredItem : null;
 		if (zone !== null && type !== Zone.Type.Town) this.usedZones.unshift(zone);
 	}

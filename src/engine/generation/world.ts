@@ -1,6 +1,6 @@
 import { Point, PointLike } from "src/util";
 
-import WorldItem from "./world-item";
+import Sector from "./sector";
 import { Zone } from "../objects";
 
 class World {
@@ -8,12 +8,12 @@ class World {
 	public static readonly HEIGHT = 10;
 
 	public zones: Zone[] = [];
-	private _items: WorldItem[];
+	private _items: Sector[];
 
 	constructor() {
 		const items = new Array(World.WIDTH * World.HEIGHT);
 		for (let i = 0; i < World.WIDTH * World.HEIGHT; i++) {
-			items[i] = new WorldItem();
+			items[i] = new Sector();
 		}
 		this._items = items;
 	}
@@ -31,18 +31,18 @@ class World {
 		}
 
 		const index = this._pointToIndex(x, y);
-		const worldItem = this._items[index];
+		const sector = this._items[index];
 
-		return worldItem && worldItem.zone;
+		return sector && sector.zone;
 	}
 
 	setZone(x: number, y: number, zone: Zone) {
 		const index = this._pointToIndex(x, y);
-		const worldItem = this._items[index];
-		worldItem.zone = zone;
+		const sector = this._items[index];
+		sector.zone = zone;
 	}
 
-	itemForZone(zone: Zone): WorldItem {
+	itemForZone(zone: Zone): Sector {
 		const location = this.locationOfZone(zone);
 		if (!location) return null;
 		return this.at(location);
@@ -72,11 +72,11 @@ class World {
 		return null;
 	}
 
-	public at(x: number | PointLike, y?: number): WorldItem {
+	public at(x: number | PointLike, y?: number): Sector {
 		return this._items[this._pointToIndex(x, y)];
 	}
 
-	index(index: number): WorldItem {
+	index(index: number): Sector {
 		return this._items[index];
 	}
 

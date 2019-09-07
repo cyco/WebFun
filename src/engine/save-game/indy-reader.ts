@@ -6,7 +6,7 @@ import { MutableHotspot, MutableNPC } from "src/engine/mutable-objects";
 import { Planet } from "../types";
 import Reader from "./reader";
 import SaveState from "./save-state";
-import WorldItem from "./world-item";
+import Sector from "./sector";
 import AssetManager, { NullIfMissing } from "../asset-manager";
 
 class IndyReader extends Reader {
@@ -86,7 +86,7 @@ class IndyReader extends Reader {
 		return state;
 	}
 
-	protected readWorldItem(stream: InputStream, _x: number, _y: number): WorldItem {
+	protected readSector(stream: InputStream, _x: number, _y: number): Sector {
 		const visited = this.readBool(stream);
 		const solved1 = this.readBool(stream);
 		const solved2 = this.readBool(stream);
@@ -101,21 +101,21 @@ class IndyReader extends Reader {
 		// possibly zone or puzzle type, skip over it
 		stream.getInt16();
 
-		const worldItem = new WorldItem();
-		worldItem.visited = visited;
-		worldItem.solved1 = solved1 ? 1 : 0;
-		worldItem.solved2 = solved2 ? 1 : 0;
-		// worldItem.solved3 = solved3 ? 1 : 0;
-		// worldItem.solved4 = solved4 ? 1 : 0;
-		worldItem.zoneId = zoneID;
-		worldItem.fieldC = fieldC;
-		worldItem.requiredItemId = requiredItemID;
-		worldItem.findItemID = findItemID;
-		// worldItem.fieldEA = fieldEA;
-		// worldItem.additionalRequiredItem = additionalRequiredItem;
-		// worldItem.field16 = field16;
-		worldItem.npcID = npcID;
-		return worldItem;
+		const sector = new Sector();
+		sector.visited = visited;
+		sector.solved1 = solved1 ? 1 : 0;
+		sector.solved2 = solved2 ? 1 : 0;
+		// sector.solved3 = solved3 ? 1 : 0;
+		// sector.solved4 = solved4 ? 1 : 0;
+		sector.zoneId = zoneID;
+		sector.fieldC = fieldC;
+		sector.requiredItemId = requiredItemID;
+		sector.findItemID = findItemID;
+		// sector.fieldEA = fieldEA;
+		// sector.additionalRequiredItem = additionalRequiredItem;
+		// sector.field16 = field16;
+		sector.npcID = npcID;
+		return sector;
 	}
 
 	protected readHotspot(stream: InputStream, oldHotspot: Hotspot): Hotspot {

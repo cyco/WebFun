@@ -109,7 +109,7 @@ class SaveGameInspector extends AbstractInspector {
 
 		for (let y = 0; y < 10; y++) {
 			for (let x = 0; x < 10; x++) {
-				const input = world.getWorldItem(x, y);
+				const input = world.getSector(x, y);
 				const out = result.at(x, y);
 
 				result.setZone(x, y, zones[input.zoneId] || null);

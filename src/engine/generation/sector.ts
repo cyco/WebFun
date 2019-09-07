@@ -1,6 +1,6 @@
 import { Tile, Zone } from "src/engine/objects";
 
-class WorldItem {
+class Sector {
 	public zone: Zone = null;
 	public zoneType: Zone.Type = null;
 	public puzzleIndex: number = -1;
@@ -10,4 +10,4 @@ class WorldItem {
 	public findItem: Tile = null;
 }
 
-export default WorldItem;
+export default Sector;

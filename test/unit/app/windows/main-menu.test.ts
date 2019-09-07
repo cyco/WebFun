@@ -43,30 +43,30 @@ describe("WebFun.App.Windows.MainMenu", () => {
 		});
 
 		describe("->", () => {
-			let newWorldItem: MenuItem;
+			let newSector: MenuItem;
 			let replayStoryItem: MenuItem;
-			let loadWorldItem: MenuItem;
-			let saveWorldItem: MenuItem;
+			let loadSector: MenuItem;
+			let saveSector: MenuItem;
 			let exitItem: MenuItem;
 
 			beforeEach(() => {
-				[newWorldItem, replayStoryItem, loadWorldItem, saveWorldItem, , exitItem] = fileMenu.items;
+				[newSector, replayStoryItem, loadSector, saveSector, , exitItem] = fileMenu.items;
 			});
 
 			describe("New World", () => {
 				it("has the right title", () => {
-					expect(newWorldItem.title).toBe("New World");
+					expect(newSector.title).toBe("New World");
 				});
 
 				it("is enabled when the game data is available", () => {
-					expect(newWorldItem.enabled).toBeFalsy();
+					expect(newSector.enabled).toBeFalsy();
 					gameController.data = {} as any;
-					expect(newWorldItem.enabled).toBeTruthy();
+					expect(newSector.enabled).toBeTruthy();
 				});
 
 				it("starts a new story when clicked", () => {
 					spyOn(gameController, "newStory");
-					newWorldItem.callback();
+					newSector.callback();
 					expect(gameController.newStory).toHaveBeenCalled();
 				});
 			});
@@ -91,35 +91,35 @@ describe("WebFun.App.Windows.MainMenu", () => {
 
 			describe("Load World", () => {
 				it("has the right title", () => {
-					expect(loadWorldItem.title).toBe("Load World");
+					expect(loadSector.title).toBe("Load World");
 				});
 
 				it("is enabled when the game data is available", () => {
-					expect(loadWorldItem.enabled).toBeFalsy();
+					expect(loadSector.enabled).toBeFalsy();
 					gameController.data = {} as any;
-					expect(loadWorldItem.enabled).toBeTruthy();
+					expect(loadSector.enabled).toBeTruthy();
 				});
 
 				it("prompts to load a new story when clicked", () => {
 					spyOn(gameController, "load");
-					loadWorldItem.callback();
+					loadSector.callback();
 					expect(gameController.load).toHaveBeenCalled();
 				});
 			});
 			describe("Save World", () => {
 				it("has the right title", () => {
-					expect(saveWorldItem.title).toBe("Save World");
+					expect(saveSector.title).toBe("Save World");
 				});
 
 				it("is enabled when a game is in progress", () => {
-					expect(saveWorldItem.enabled).toBeFalsy();
+					expect(saveSector.enabled).toBeFalsy();
 					(gameController as any).engine = {};
-					expect(saveWorldItem.enabled).toBeTruthy();
+					expect(saveSector.enabled).toBeTruthy();
 				});
 
 				it("saves the current story when clicked", () => {
 					spyOn(gameController, "save");
-					saveWorldItem.callback();
+					saveSector.callback();
 					expect(gameController.save).toHaveBeenCalled();
 				});
 			});

@@ -5,11 +5,11 @@ import Map from "./map";
 import { Menu } from "src/ui";
 import { Point } from "src/util";
 import { World } from "src/engine/save-game";
-import WorldItem from "../world-item";
+import Sector from "../sector";
 import ZoneView from "./zone-view";
 
 export interface InteractiveMapContextMenuProvider {
-	contextMenuForWorldItem(item: WorldItem, at: Point, i: World, of: Map): Menu;
+	contextMenuForSector(item: Sector, at: Point, i: World, of: Map): Menu;
 }
 
 class InteractiveMap extends Map implements EventListenerObject {
@@ -51,9 +51,9 @@ class InteractiveMap extends Map implements EventListenerObject {
 	}
 
 	private _showMenuForTile(tile: Point, raw: Point) {
-		const worldItem = this.world.getWorldItem(tile.x, tile.y);
+		const sector = this.world.getSector(tile.x, tile.y);
 		if (!this.contextMenuProvider) return;
-		const menu = this.contextMenuProvider.contextMenuForWorldItem(worldItem, tile, this.world, this);
+		const menu = this.contextMenuProvider.contextMenuForSector(sector, tile, this.world, this);
 		if (!menu || menu.items.length === 0) return;
 
 		this.highlightTile = null;
@@ -85,13 +85,13 @@ class InteractiveMap extends Map implements EventListenerObject {
 			return;
 		}
 
-		const worldItem = this.world.getWorldItem(this._highlightTile.x, this._highlightTile.y);
-		if (worldItem.zoneId === -1) {
+		const sector = this.world.getSector(this._highlightTile.x, this._highlightTile.y);
+		if (sector.zoneId === -1) {
 			this._highlight.remove();
 			return;
 		}
 
-		const zone = this.zones[worldItem.zoneId];
+		const zone = this.zones[sector.zoneId];
 		const { left: x, top: y } = this.getBoundingClientRect();
 		this._highlight.zone = zone;
 		this._highlight.style.left = `${t.x * 28 + x}px`;

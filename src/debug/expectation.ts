@@ -18,7 +18,7 @@ export const ComparisonResult = {
 	Similar: 2
 };
 
-export const CompareWorldItems = (item1: any, item2: any): any => {
+export const CompareSectors = (item1: any, item2: any): any => {
 	if ((item1.zone ? item1.zone.id : -1) === item2.zoneID && item1.zoneID === null)
 		return ComparisonResult.Equal;
 

@@ -14,7 +14,7 @@ import { PopoverCharacterPicker } from "src/editor/components";
 import { SaveState } from "src/engine/save-game";
 import { Tile } from "src/engine/objects";
 import { World } from "src/engine/save-game";
-import WorldItem from "./world-item";
+import Sector from "./sector";
 import { WorldSize } from "src/engine/types";
 
 class EditorView extends Component implements InventoryDelegate, InteractiveMapContextMenuProvider {
@@ -290,7 +290,7 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 		return this._gameData;
 	}
 
-	public contextMenuForWorldItem(item: WorldItem, _at: Point, _i: World, of: Map): Menu {
+	public contextMenuForSector(item: Sector, _at: Point, _i: World, of: Map): Menu {
 		if (item.zoneId === undefined || item.zoneId === -1) return null;
 
 		return new Menu([

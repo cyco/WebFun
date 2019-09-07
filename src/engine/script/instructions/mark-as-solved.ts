@@ -9,8 +9,8 @@ export default {
 	Implementation: async (_: Instruction, engine: Engine, action: Action): Promise<Result> => {
 		action.zone.solved = true;
 
-		const worldItem = engine.currentWorld.itemForZone(action.zone);
-		worldItem.zone.solved = true;
+		const sector = engine.currentWorld.itemForZone(action.zone);
+		sector.zone.solved = true;
 
 		return Result.Void;
 	}

@@ -1,4 +1,4 @@
-class WorldItem {
+class Sector {
 	public visited: boolean = false;
 	public solved1: number = -1;
 	public solved3: number = -1;
@@ -15,4 +15,4 @@ class WorldItem {
 	public zoneType: number = 0;
 }
 
-export default WorldItem;
+export default Sector;

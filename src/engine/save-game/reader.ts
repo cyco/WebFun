@@ -6,7 +6,7 @@ import { InputStream, Point } from "src/util";
 import { MutableZone, MutableNPC } from "src/engine/mutable-objects";
 import SaveState from "./save-state";
 import World from "./world";
-import WorldItem from "./world-item";
+import Sector from "./sector";
 
 interface Range {
 	start: number;
@@ -28,7 +28,7 @@ abstract class Reader {
 
 	protected abstract _doRead(): SaveState;
 	protected abstract readInt(stream: InputStream): number;
-	protected abstract readWorldItem(stram: InputStream, x: number, y: number): WorldItem;
+	protected abstract readSector(stram: InputStream, x: number, y: number): Sector;
 	protected abstract readNPC(stream: InputStream): MutableNPC;
 	protected abstract readHotspot(stream: InputStream, hottspot: Hotspot): Hotspot;
 
@@ -178,8 +178,8 @@ abstract class Reader {
 
 		for (let y = yRange.start; y < yRange.end; y++) {
 			for (let x = xRange.start; x < xRange.end; x++) {
-				const item = this.readWorldItem(stream, x, y);
-				world.setWorldItem(x, y, item);
+				const item = this.readSector(stream, x, y);
+				world.setSector(x, y, item);
 			}
 		}
 		this.readWorldDetails(stream);

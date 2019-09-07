@@ -11,9 +11,9 @@ export default {
 	Implementation: async (instruction: Instruction, engine: Engine, action: Action): Promise<Result> => {
 		const args = instruction.arguments;
 		const zone = action.zone;
-		const worldItem = engine.currentWorld.itemForZone(zone);
+		const sector = engine.currentWorld.itemForZone(zone);
 
-		const itemID = args[0] < 0 ? worldItem.requiredItem.id : args[0];
+		const itemID = args[0] < 0 ? sector.requiredItem.id : args[0];
 		const item = engine.assetManager.get(Tile, itemID);
 		engine.inventory.removeItem(item);
 

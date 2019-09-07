@@ -1,4 +1,4 @@
-class WorldItem {
+class Sector {
 	visited: boolean;
 	solved1: number;
 	solved3: number;
@@ -14,4 +14,4 @@ class WorldItem {
 	npcID: number;
 }
 
-export default WorldItem;
+export default Sector;

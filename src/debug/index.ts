@@ -1,4 +1,4 @@
-import { CompareWorldItems, ComparisonResult, ParseExpectation, PrepareExpectations } from "./expectation";
+import { CompareSectors, ComparisonResult, ParseExpectation, PrepareExpectations } from "./expectation";
 import buildMenu from "./menu";
 import ScriptDebugger from "./script-debugger";
 import { ComponentRegistry } from "src/ui";
@@ -24,6 +24,6 @@ export {
 	PrepareExpectations,
 	ParseExpectation,
 	ComparisonResult,
-	CompareWorldItems,
+	CompareSectors,
 	SimulatedStory
 };

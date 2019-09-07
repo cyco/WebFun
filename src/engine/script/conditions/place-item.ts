@@ -22,8 +22,8 @@ export default {
 		}
 
 		if (item < 0) {
-			const worldItem = engine.currentWorld.itemForZone(zone);
-			item = worldItem.requiredItem.id;
+			const sector = engine.currentWorld.itemForZone(zone);
+			item = sector.requiredItem.id;
 		}
 
 		return (

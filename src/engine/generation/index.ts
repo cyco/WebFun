@@ -2,6 +2,6 @@ import DagobahGenerator from "./dagobah-generator";
 import World from "./world";
 import WorldGenerationError from "./world-generation-error";
 import WorldGenerator from "./world-generator";
-import WorldItem from "./world-item";
+import Sector from "./sector";
 
-export { WorldItem, World, WorldGenerator, DagobahGenerator, WorldGenerationError };
+export { Sector, World, WorldGenerator, DagobahGenerator, WorldGenerationError };

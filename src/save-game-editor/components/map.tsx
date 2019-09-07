@@ -1,7 +1,7 @@
 import "./map.scss";
 
 import { Tile, Zone } from "src/engine/objects";
-import { World, WorldItem } from "src/engine/save-game";
+import { World, Sector } from "src/engine/save-game";
 
 import { ColorPalette } from "src/engine/rendering";
 import { Component } from "src/ui";
@@ -81,8 +81,8 @@ class Map extends Component {
 
 		for (let y = 0; y < WorldHeight; y++) {
 			for (let x = 0; x < WorldWidth; x++) {
-				const worldItem = world.getWorldItem(x, y);
-				const tile = this._tileForWorldItem(worldItem);
+				const sector = world.getSector(x, y);
+				const tile = this._tileForSector(sector);
 				if (!tile) continue;
 
 				const pixels = tile.imageData;
@@ -110,7 +110,7 @@ class Map extends Component {
 		return imageData;
 	}
 
-	private _tileForWorldItem({ visited, solved1, zoneId }: WorldItem): Tile {
+	private _tileForSector({ visited, solved1, zoneId }: Sector): Tile {
 		let tile = this.locatorTile.forZone(this.zones[zoneId], visited, this.reveal);
 		if (!tile) return null;
 		if (tile instanceof Array) tile = tile[solved1 ? 1 : 0];

@@ -1,7 +1,7 @@
 import { HorizontalPointRange, Point, PointRange, VerticalPointRange, rand } from "src/util";
 
 import Map from "./map";
-import WorldItemType from "./world-item-type";
+import SectorType from "./sector-type";
 
 const enum Island {
 	East = 3,
@@ -63,8 +63,8 @@ class IslandBuilder {
 			const currentItem = this.at(point);
 			const neighborItem = this.at(Point.add(point, neighbor));
 			if (
-				currentItem !== WorldItemType.None ||
-				(neighborItem !== WorldItemType.None && neighborItem !== WorldItemType.KeptFree)
+				currentItem !== SectorType.None ||
+				(neighborItem !== SectorType.None && neighborItem !== SectorType.KeptFree)
 			) {
 				if (length < currentRun) {
 					length = currentRun;
@@ -87,9 +87,9 @@ class IslandBuilder {
 	}
 
 	private _buildIsland(range: PointRange) {
-		range.iterate((point: Point) => this.at(point, WorldItemType.Island));
+		range.iterate((point: Point) => this.at(point, SectorType.Island));
 		const end = rand() % 2 ? range.from : range.to;
-		this.at(end, WorldItemType.TravelEnd);
+		this.at(end, SectorType.TravelEnd);
 	}
 
 	private _verifyShortRun(run: Run): boolean {

@@ -3,7 +3,7 @@ import { Action, Hotspot, NPC, Tile, Zone } from "src/engine/objects";
 import { OutputStream } from "src/util";
 import SaveState from "./save-state";
 import World from "./world";
-import WorldItem from "./world-item";
+import Sector from "./sector";
 import AssetManager from "../asset-manager";
 
 class Writer {
@@ -67,7 +67,7 @@ class Writer {
 	private _writeDagobah(world: World, stream: OutputStream): void {
 		for (let y = 4; y <= 5; y++) {
 			for (let x = 4; x <= 5; x++) {
-				this._writeWorldItem(world.getWorldItem(x, y), stream);
+				this._writeSector(world.getSector(x, y), stream);
 			}
 		}
 
@@ -77,7 +77,7 @@ class Writer {
 	private _writeWorld(world: World, stream: OutputStream): void {
 		for (let y = 0; y < 10; y++) {
 			for (let x = 0; x < 10; x++) {
-				this._writeWorldItem(world.getWorldItem(x, y), stream);
+				this._writeSector(world.getSector(x, y), stream);
 			}
 		}
 
@@ -165,7 +165,7 @@ class Writer {
 	private _writeWorldDetails(world: World, stream: OutputStream): void {
 		for (let y = 0; y < world.size.height; y++) {
 			for (let x = 0; x < world.size.width; x++) {
-				const item = world.getWorldItem(x, y);
+				const item = world.getSector(x, y);
 				if (!item || item.zoneId === -1 || item.zoneId === undefined) continue;
 
 				stream.writeInt32(x);
@@ -182,7 +182,7 @@ class Writer {
 		stream.writeInt32(-1);
 	}
 
-	private _writeWorldItem(item: WorldItem, stream: OutputStream): void {
+	private _writeSector(item: Sector, stream: OutputStream): void {
 		stream.writeUint32(+item.visited);
 
 		stream.writeUint32(item.solved1);

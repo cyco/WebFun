@@ -177,12 +177,12 @@ class MapScene extends Scene {
 	}
 
 	private _locatorDescriptionId(at: Point): (number | string) | (number | string)[] {
-		const worldItem = this.engine.currentWorld.at(at.x, at.y);
-		if (!worldItem || !worldItem.zone) return StringID.None;
-		if (!worldItem.zone.visited && !Settings.revealWorld) return -2;
+		const sector = this.engine.currentWorld.at(at.x, at.y);
+		if (!sector || !sector.zone) return StringID.None;
+		if (!sector.zone.visited && !Settings.revealWorld) return -2;
 
-		const requires = worldItem.requiredItem;
-		const gives = worldItem.findItem;
+		const requires = sector.requiredItem;
+		const gives = sector.findItem;
 		console.log(
 			[requires ? `requires ${requires.name}` : null, gives ? `gives ${gives.name}` : null]
 				.filter(i => i)
@@ -201,7 +201,7 @@ class MapScene extends Scene {
 			return StringID.aUnknown;
 		};
 
-		switch (worldItem.zone.type) {
+		switch (sector.zone.type) {
 			case Zone.Type.Empty:
 				return StringID.None;
 			case Zone.Type.Town:
@@ -212,28 +212,28 @@ class MapScene extends Scene {
 			case Zone.Type.BlockadeWest:
 			case Zone.Type.TravelStart:
 			case Zone.Type.TravelEnd:
-				if (!worldItem.requiredItem) return StringID.None;
-				if (worldItem.zone.solved) return StringID.TravelSolved;
-				return [StringID.requires, typeForTile(worldItem.requiredItem)];
+				if (!sector.requiredItem) return StringID.None;
+				if (sector.zone.solved) return StringID.TravelSolved;
+				return [StringID.requires, typeForTile(sector.requiredItem)];
 			case Zone.Type.Goal:
-				if (worldItem.zone.solved) return StringID.GoalSolved;
+				if (sector.zone.solved) return StringID.GoalSolved;
 				return StringID.aUnknown;
 			case Zone.Type.Find:
 			case Zone.Type.FindTheForce:
-				if (!worldItem.findItem) return StringID.None;
-				if (worldItem.zone.solved) return StringID.Solved;
-				if (worldItem.findItem.isLocator()) return [StringID.find, StringID.aMap];
-				if (worldItem.findItem.isWeapon()) return [StringID.find, StringID.TheForce];
-				if (worldItem.findItem.isItem()) return [StringID.find, StringID.SomethingUseful];
+				if (!sector.findItem) return StringID.None;
+				if (sector.zone.solved) return StringID.Solved;
+				if (sector.findItem.isLocator()) return [StringID.find, StringID.aMap];
+				if (sector.findItem.isWeapon()) return [StringID.find, StringID.TheForce];
+				if (sector.findItem.isItem()) return [StringID.find, StringID.SomethingUseful];
 				console.assert(false, "Unknown find item!");
 			case Zone.Type.Trade:
-				if (!worldItem.requiredItem) return StringID.None;
-				if (worldItem.zone.solved) return StringID.Solved;
-				return [StringID.requires, typeForTile(worldItem.requiredItem)];
+				if (!sector.requiredItem) return StringID.None;
+				if (sector.zone.solved) return StringID.Solved;
+				return [StringID.requires, typeForTile(sector.requiredItem)];
 			case Zone.Type.Use:
-				if (!worldItem.requiredItem) return StringID.None;
-				if (worldItem.zone.solved) return StringID.Solved;
-				return [StringID.requires, worldItem.requiredItem.name];
+				if (!sector.requiredItem) return StringID.None;
+				if (sector.zone.solved) return StringID.Solved;
+				return [StringID.requires, sector.requiredItem.name];
 
 			case Zone.Type.Load:
 			case Zone.Type.Room:

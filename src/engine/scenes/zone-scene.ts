@@ -6,7 +6,7 @@ import { MutableHotspot } from "src/engine/mutable-objects";
 import { NullIfMissing } from "src/engine/asset-manager";
 import { Renderer } from "src/engine/rendering";
 import { Sprite } from "../rendering";
-import { WorldItem } from "src/engine/generation";
+import { Sector } from "src/engine/generation";
 import { Yoda } from "src/engine";
 import DetonatorScene from "./detonator-scene";
 import Engine from "src/engine/engine";
@@ -58,10 +58,10 @@ class ZoneScene extends Scene {
 			}
 
 			const item = this.assetManager.get(Tile, htsp.arg, NullIfMissing);
-			const worldItem = this.engine.currentWorld.itemForZone(this.zone);
-			if (item && worldItem && worldItem.findItem === item) {
+			const sector = this.engine.currentWorld.itemForZone(this.zone);
+			if (item && sector && sector.findItem === item) {
 				this.zone.solved = true;
-				worldItem.zone.solved = true;
+				sector.zone.solved = true;
 			}
 			htsp.enabled = false;
 			this.engine.dropItem(item, htsp.location);
@@ -230,8 +230,8 @@ class ZoneScene extends Scene {
 		const zoneLocation = world.locationOfZone(engine.currentZone);
 		if (!zoneLocation) return;
 
-		const worldItem = world.at(zoneLocation);
-		if (!worldItem || worldItem.zone !== engine.currentZone) {
+		const sector = world.at(zoneLocation);
+		if (!sector || sector.zone !== engine.currentZone) {
 			return;
 		}
 
@@ -481,19 +481,19 @@ class ZoneScene extends Scene {
 		if (hero.ammo === 0) this.reloadWeapon();
 	}
 
-	private _bumpPuzzleNPC(worldItem: WorldItem, place: Point) {
-		const puzzleIndex = worldItem.puzzleIndex;
+	private _bumpPuzzleNPC(sector: Sector, place: Point) {
+		const puzzleIndex = sector.puzzleIndex;
 		let puzzle: Puzzle = null;
 
 		if (puzzleIndex === -1) {
 			puzzle = this.engine.story.goal;
 			let text = "";
 			let item: Tile = null;
-			if (worldItem.zone.solved) {
+			if (sector.zone.solved) {
 				text = puzzle.strings[2];
 			} else {
 				text = puzzle.strings[3];
-				item = worldItem.findItem;
+				item = sector.findItem;
 			}
 
 			if (text.length) {
@@ -545,10 +545,10 @@ class ZoneScene extends Scene {
 
 			this.zone.setTile(null, at.x, at.y, 1);
 			this.engine.dropItem(engine.assetManager.get(Tile, itemID), at).then(() => {
-				const worldItem = this.engine.currentWorld.itemForZone(this.zone);
-				if (worldItem && worldItem.findItem && worldItem.findItem.id === itemID) {
+				const sector = this.engine.currentWorld.itemForZone(this.zone);
+				if (sector && sector.findItem && sector.findItem.id === itemID) {
 					this.zone.solved = true;
-					worldItem.zone.solved = true;
+					sector.zone.solved = true;
 				}
 
 				hotspot.enabled = false;
@@ -582,8 +582,8 @@ class ZoneScene extends Scene {
 
 		let acceptItem = false;
 
-		const worldItem = engine.world.itemForZone(this.zone);
-		console.assert(!!worldItem, "Could not find world item for zone", this.zone);
+		const sector = engine.world.itemForZone(this.zone);
+		console.assert(!!sector, "Could not find world item for zone", this.zone);
 
 		let hotspot: Hotspot;
 		for (hotspot of this.zone.hotspots) {
@@ -597,14 +597,14 @@ class ZoneScene extends Scene {
 				continue;
 
 			if (hotspot.type === Hotspot.Type.Lock) {
-				const keyTileId = hotspot.arg < 0 ? worldItem.requiredItem.id : hotspot.arg;
+				const keyTileId = hotspot.arg < 0 ? sector.requiredItem.id : hotspot.arg;
 				const keyTile = engine.assetManager.get(Tile, keyTileId);
 
 				acceptItem = tile === keyTile;
 				break;
 			}
 
-			if (tile !== worldItem.requiredItem) {
+			if (tile !== sector.requiredItem) {
 				// TODO: Play sound no-go
 				break;
 			}
@@ -619,12 +619,12 @@ class ZoneScene extends Scene {
 
 			if (hotspot.type === Hotspot.Type.Lock || hotspot.type === Hotspot.Type.SpawnLocation) {
 				this.zone.solved = true;
-				worldItem.zone.solved = true;
+				sector.zone.solved = true;
 			}
 
 			if (hotspot.type === Hotspot.Type.SpawnLocation) {
 				// TODO: speak
-				this.engine.dropItem(worldItem.findItem, location);
+				this.engine.dropItem(sector.findItem, location);
 			}
 		}
 

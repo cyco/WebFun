@@ -5,7 +5,7 @@ import { ModalSession } from "src/ux";
 import Scene from "./scene";
 import { SpeechBubble } from "src/ui/components";
 import { Tile } from "src/engine/objects";
-import { WorldItem } from "src/engine/generation";
+import { Sector } from "src/engine/generation";
 
 class SpeechScene extends Scene {
 	public engine: Engine;
@@ -33,7 +33,7 @@ class SpeechScene extends Scene {
 		this._bubble.text = this.resolveVariables(t, quest);
 	}
 
-	private resolveVariables(text: string, quest: WorldItem) {
+	private resolveVariables(text: string, quest: Sector) {
 		if (!quest) return text;
 
 		// Each placeholder has 2 variations, first is iso latin, second unicode.

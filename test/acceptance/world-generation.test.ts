@@ -1,5 +1,5 @@
 import {
-	CompareWorldItems,
+	CompareSectors,
 	ComparisonResult,
 	ParseExpectation,
 	PrepareExpectations
@@ -15,7 +15,7 @@ import { Tile, Zone, Puzzle, Char, Sound } from "src/engine/objects";
 let rawData: any = null;
 
 const compareItem = (actual: any, expected: any) => {
-	const result = CompareWorldItems(actual, expected);
+	const result = CompareSectors(actual, expected);
 	if (result !== ComparisonResult.Different) return;
 
 	if ((actual.zone ? actual.zone.id : -1) !== expected.zoneID)

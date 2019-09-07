@@ -12,10 +12,10 @@ export default {
 		let [itemId, x, y] = instruction.arguments;
 
 		if (itemId === -1) {
-			const worldItem = engine.currentWorld.itemForZone(action.zone);
-			itemId = worldItem.findItem.id;
+			const sector = engine.currentWorld.itemForZone(action.zone);
+			itemId = sector.findItem.id;
 			action.zone.solved = true;
-			worldItem.zone.solved = true;
+			sector.zone.solved = true;
 		}
 
 		engine.dropItem(engine.assetManager.get(Tile, itemId), new Point(x, y));

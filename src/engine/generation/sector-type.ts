@@ -1,4 +1,4 @@
-const enum WorldItemType {
+const enum SectorType {
 	BlockEast,
 	BlockNorth,
 	BlockSouth,
@@ -15,4 +15,4 @@ const enum WorldItemType {
 	None
 }
 
-export default WorldItemType;
+export default SectorType;

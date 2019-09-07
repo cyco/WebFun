@@ -5,7 +5,7 @@ import { Planet, WorldSize } from "../types";
 
 import Reader from "./reader";
 import SaveState from "./save-state";
-import WorldItem from "./world-item";
+import Sector from "./sector";
 import { Yoda } from "../type";
 import { floor } from "src/std/math";
 import AssetManager, { NullIfMissing } from "src/engine/asset-manager";
@@ -103,7 +103,7 @@ class YodaReader extends Reader {
 		return state;
 	}
 
-	protected readWorldItem(stream: InputStream, _x: number, _y: number): WorldItem {
+	protected readSector(stream: InputStream, _x: number, _y: number): Sector {
 		const visited = this.readBool(stream);
 		const solved1 = this.readBool(stream);
 		const solved2 = this.readBool(stream);
@@ -124,23 +124,23 @@ class YodaReader extends Reader {
 		// skip over unknown value
 		stream.getInt16();
 
-		const worldItem = new WorldItem();
-		worldItem.visited = visited;
-		worldItem.solved1 = solved1 ? 1 : 0;
-		worldItem.solved2 = solved2 ? 1 : 0;
-		worldItem.solved3 = solved3 ? 1 : 0;
-		worldItem.solved4 = solved4 ? 1 : 0;
-		worldItem.zoneId = zoneId;
-		worldItem.fieldC = fieldC;
-		worldItem.requiredItemId = requiredItemId;
-		worldItem.findItemID = findItemId;
-		worldItem.fieldEA = fieldEA;
-		worldItem.additionalRequiredItem = additionalRequiredItem;
-		worldItem.field16 = field16;
-		worldItem.npcID = npcId;
-		worldItem.zoneType = zoneType;
+		const sector = new Sector();
+		sector.visited = visited;
+		sector.solved1 = solved1 ? 1 : 0;
+		sector.solved2 = solved2 ? 1 : 0;
+		sector.solved3 = solved3 ? 1 : 0;
+		sector.solved4 = solved4 ? 1 : 0;
+		sector.zoneId = zoneId;
+		sector.fieldC = fieldC;
+		sector.requiredItemId = requiredItemId;
+		sector.findItemID = findItemId;
+		sector.fieldEA = fieldEA;
+		sector.additionalRequiredItem = additionalRequiredItem;
+		sector.field16 = field16;
+		sector.npcID = npcId;
+		sector.zoneType = zoneType;
 
-		return worldItem;
+		return sector;
 	}
 
 	protected readNPC(stream: InputStream): MutableNPC {
