@@ -26,9 +26,7 @@ class World {
 	}
 
 	private _toIndex(p: Point): number {
-		if (!this.bounds.contains(p))
-			throw new RangeError(`Index ${p} does not lie within rect ${this.bounds}`);
-
+		console.assert(this.bounds.contains(p), `Point ${p} muste be within bounds ${this.bounds}`);
 		return p.y * 10 + p.x;
 	}
 
