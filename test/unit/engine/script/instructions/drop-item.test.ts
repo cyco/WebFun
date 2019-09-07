@@ -25,7 +25,7 @@ describeInstruction("DropItem", (execute, engine) => {
 		const mockTile = { id: 3 };
 		spyOn(engine, "dropItem");
 		spyOn(Util, "Point").and.returnValue(mockedPoint);
-		spyOn(engine.currentWorld, "itemForZone").and.returnValue({
+		spyOn(engine.currentWorld, "findSectorContainingZone").and.returnValue({
 			findItem: mockTile,
 			zone: engine.currentZone
 		});

@@ -15,7 +15,7 @@ export default (engine: Engine, hotspot: Hotspot): boolean => {
 	console.assert(engine.sceneManager.currentScene instanceof ZoneScene);
 	scene.scene = engine.sceneManager.currentScene as ZoneScene;
 
-	const location = engine.world.locationOfZone(destinationZone);
+	const location = engine.world.findLocationOfZone(destinationZone);
 	console.assert(location !== null, "X-Wing destination must be on the main world!");
 	scene.destinationWorld = engine.world;
 	scene.destinationZoneLocation = location;

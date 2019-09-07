@@ -12,7 +12,7 @@ export default {
 		let [itemId, x, y] = instruction.arguments;
 
 		if (itemId === -1) {
-			const sector = engine.currentWorld.itemForZone(action.zone);
+			const sector = engine.currentWorld.findSectorContainingZone(action.zone);
 			itemId = sector.findItem.id;
 			action.zone.solved = true;
 			sector.zone.solved = true;

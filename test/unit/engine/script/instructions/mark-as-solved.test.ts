@@ -5,7 +5,7 @@ import Sector from "src/engine/sector";
 describeInstruction("MarkAsSolved", (execute, engine) => {
 	it("marks the current zone as solved", async () => {
 		const sectorMock: Sector = { zone: {} } as any;
-		engine.currentWorld.itemForZone = () => sectorMock;
+		engine.currentWorld.findSectorContainingZone = () => sectorMock;
 
 		const instruction = new Instruction({ opcode: MarkAsSolved.Opcode });
 

@@ -179,7 +179,7 @@ abstract class Reader {
 		for (let y = yRange.start; y < yRange.end; y++) {
 			for (let x = xRange.start; x < xRange.end; x++) {
 				const item = this.readSector(stream, x, y);
-				world.setSector(x, y, item);
+				world.replaceSector(x, y, item);
 			}
 		}
 		this.readWorldDetails(stream);

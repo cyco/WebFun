@@ -19,7 +19,10 @@ describe("WebFun.Engine.Cheats.RequiredItems", () => {
 		const itemMock2 = {};
 		const mockEngine: Engine = {
 			currentWorld: {
-				itemForZone: () => ({ requiredItem: itemMock1, additionalRequiredItem: itemMock2 })
+				findSectorContainingZone: () => ({
+					requiredItem: itemMock1,
+					additionalRequiredItem: itemMock2
+				})
 			},
 			inventory: { addItem: (): void => void 0 }
 		} as any;
@@ -33,7 +36,7 @@ describe("WebFun.Engine.Cheats.RequiredItems", () => {
 		const itemMock1 = {};
 		const mockEngine: Engine = {
 			currentWorld: {
-				itemForZone: () => ({ findItem: itemMock1 })
+				findSectorContainingZone: () => ({ findItem: itemMock1 })
 			},
 			inventory: { addItem: (): void => void 0 }
 		} as any;
@@ -45,7 +48,7 @@ describe("WebFun.Engine.Cheats.RequiredItems", () => {
 	it("does nothing if the hero is off planet", () => {
 		const mockEngine: Engine = {
 			currentWorld: {
-				itemForZone(): any {
+				findSectorContainingZone(): any {
 					return null;
 				}
 			}

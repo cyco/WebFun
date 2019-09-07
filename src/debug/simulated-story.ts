@@ -38,15 +38,15 @@ class SimulatedStory extends Story {
 	private _buildWorld(zone: Zone, surroundingZones: Zone[], zones: Zone[]) {
 		const world = new World();
 		world.zones = zones;
-		world.setZone(4, 4, zone);
-		world.setZone(3, 3, surroundingZones[0]);
-		world.setZone(4, 3, surroundingZones[1]);
-		world.setZone(5, 3, surroundingZones[2]);
-		world.setZone(3, 4, surroundingZones[3]);
-		world.setZone(5, 4, surroundingZones[4]);
-		world.setZone(3, 5, surroundingZones[5]);
-		world.setZone(4, 5, surroundingZones[6]);
-		world.setZone(5, 5, surroundingZones[7]);
+		world.at(4, 4).zone = zone;
+		world.at(3, 3).zone = surroundingZones[0];
+		world.at(4, 3).zone = surroundingZones[1];
+		world.at(5, 3).zone = surroundingZones[2];
+		world.at(3, 4).zone = surroundingZones[3];
+		world.at(5, 4).zone = surroundingZones[4];
+		world.at(3, 5).zone = surroundingZones[5];
+		world.at(4, 5).zone = surroundingZones[6];
+		world.at(5, 5).zone = surroundingZones[7];
 		this._world = world;
 
 		this._dagobah = new World();
@@ -113,8 +113,8 @@ class SimulatedStory extends Story {
 		const mapItem = (i: Tile) => i && assets.get(Tile, i.id);
 		const mapZone = (z: Zone) => z && assets.get(Zone, z.id);
 
-		for (let y = 0; y < World.HEIGHT; y++) {
-			for (let x = 0; x < World.WIDTH; x++) {
+		for (let y = 0; y < World.Size.height; y++) {
+			for (let x = 0; x < World.Size.width; x++) {
 				const item = this._world.at(x, y);
 				const copiedItem = copy.at(x, y);
 

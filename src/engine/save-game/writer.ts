@@ -67,7 +67,7 @@ class Writer {
 	private _writeDagobah(world: World, stream: OutputStream): void {
 		for (let y = 4; y <= 5; y++) {
 			for (let x = 4; x <= 5; x++) {
-				this._writeSector(world.getSector(x, y), stream);
+				this._writeSector(world.at(x, y), stream);
 			}
 		}
 
@@ -77,7 +77,7 @@ class Writer {
 	private _writeWorld(world: World, stream: OutputStream): void {
 		for (let y = 0; y < 10; y++) {
 			for (let x = 0; x < 10; x++) {
-				this._writeSector(world.getSector(x, y), stream);
+				this._writeSector(world.at(x, y), stream);
 			}
 		}
 
@@ -165,7 +165,7 @@ class Writer {
 	private _writeWorldDetails(world: World, stream: OutputStream): void {
 		for (let y = 0; y < World.Size.height; y++) {
 			for (let x = 0; x < World.Size.width; x++) {
-				const item = world.getSector(x, y);
+				const item = world.at(x, y);
 				if (!item || !item.zone) continue;
 
 				stream.writeInt32(x);

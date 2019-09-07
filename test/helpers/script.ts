@@ -44,8 +44,9 @@ const makeInstructionDescription = (desc: JasmineDescribe) => (Name: string, blo
 			temporaryState: {},
 			assetManager: new AssetManager(),
 			currentWorld: {
-				locationOfZone: (): void => void 0,
-				at: (): void => void 0
+				findLocationOfZone: (): void => void 0,
+				at: (): void => void 0,
+				findSectorContainingZone: (): void => void 0
 			},
 			speak: (): void => void 0,
 			dropItem: (): void => void 0
@@ -55,9 +56,9 @@ const makeInstructionDescription = (desc: JasmineDescribe) => (Name: string, blo
 		beforeEach(() => {
 			engine.currentZone = {};
 			engine.currentWorld = {
-				locationOfZone: (): void => void 0,
+				findLocationOfZone: (): void => void 0,
 				at: (): void => void 0,
-				itemForZone: (): void => void 0
+				findSectorContainingZone: (): void => void 0
 			};
 			engine.hero = { location: new Point(0, 0) };
 			engine.temporaryState = {};

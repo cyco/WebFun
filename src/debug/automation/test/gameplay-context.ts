@@ -97,7 +97,7 @@ class GameplayContext {
 				: engine.assetManager.find(Zone, z => z.isLoadingZone());
 		const zoneScene = new ZoneScene(engine, zone);
 		engine.currentZone = zone;
-		engine.currentWorld = engine.world.locationOfZone(zone) ? engine.world : null;
+		engine.currentWorld = engine.world.findLocationOfZone(zone) ? engine.world : null;
 		engine.hero.appearance = engine.assetManager.find(Char, c => c.isHero());
 		engine.sceneManager.pushScene(zoneScene);
 		if (story instanceof SimulatedStory) {

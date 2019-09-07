@@ -27,12 +27,24 @@ class WorldView extends Component {
 	}
 
 	public async connectedCallback() {
+		const zoneIds = (world: World) => {
+			const ids = [];
+			for (let y = 0; y < World.Size.height; y++) {
+				for (let x = 0; x < World.Size.width; x++) {
+					const zone = world.at(x, y).zone;
+					if (zone) ids.push(zone.id);
+				}
+			}
+
+			return ids;
+		};
+
 		super.connectedCallback();
 
 		this._zoneImages = await Promise.all(
-			this.state.world
-				.map(({ zoneId }: any) => zoneId)
-				.map((id: number) => drawZone(this.gameData.zones[id], this.palette).toImage())
+			zoneIds(this.state.world).map((id: number) =>
+				drawZone(this.gameData.zones[id], this.palette).toImage()
+			)
 		);
 
 		this._canvas.width = 10 * 32 * 18;

@@ -9,7 +9,7 @@ export default {
 	Implementation: async (_: Instruction, engine: Engine, action: Action): Promise<Result> => {
 		action.zone.solved = true;
 
-		const sector = engine.currentWorld.itemForZone(action.zone);
+		const sector = engine.currentWorld.findSectorContainingZone(action.zone);
 		sector.zone.solved = true;
 
 		return Result.Void;

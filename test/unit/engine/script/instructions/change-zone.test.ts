@@ -5,7 +5,7 @@ describeInstruction("ChangeZone", (execute, engine) => {
 	it("Switches to a differnt zone using the room animation", async () => {
 		const zone = {};
 		engine.assetManager.populate(Zone, [null, null, zone, null]);
-		engine.dagobah = { locationOfZone: () => true };
+		engine.dagobah = { findLocationOfZone: () => true };
 		engine.sceneManager = {
 			pushScene: jasmine.createSpy("pushScene")
 		};
@@ -16,14 +16,14 @@ describeInstruction("ChangeZone", (execute, engine) => {
 
 		expect(engine.sceneManager.pushScene).toHaveBeenCalled();
 
-		engine.dagobah = { locationOfZone: () => false };
-		engine.world = { locationOfZone: () => true };
+		engine.dagobah = { findLocationOfZone: () => false };
+		engine.world = { findLocationOfZone: () => true };
 
 		await execute(instruction);
 		expect(engine.sceneManager.pushScene).toHaveBeenCalledTimes(2);
 
-		engine.dagobah = { locationOfZone: () => false };
-		engine.world = { locationOfZone: () => false };
+		engine.dagobah = { findLocationOfZone: () => false };
+		engine.world = { findLocationOfZone: () => false };
 
 		await execute(instruction);
 		expect(engine.sceneManager.pushScene).toHaveBeenCalledTimes(3);

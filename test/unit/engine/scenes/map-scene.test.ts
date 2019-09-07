@@ -66,7 +66,7 @@ describe("WebFun.Engine.Scenes.MapScene", () => {
 				beforeEach(() => {
 					mockedSpeechScene = {} as SpeechScene.default;
 					spyOn(SpeechScene, "default").and.returnValue(mockedSpeechScene);
-					spyOn(engine.currentWorld, "locationOfZone").and.returnValue(new Point(1, 3));
+					spyOn(engine.currentWorld, "findLocationOfZone").and.returnValue(new Point(1, 3));
 
 					spyOn(cheatInput, "execute").and.returnValue(["Cheat Successful!"]);
 					spyOn(cheatInput, "reset");
@@ -100,7 +100,7 @@ describe("WebFun.Engine.Scenes.MapScene", () => {
 
 		describe("and the user clicks on an empty field", () => {
 			beforeEach(() => {
-				spyOn(engine.currentWorld, "getZone").and.returnValue(null);
+				spyOn(engine.currentWorld, "at").and.returnValue({ zone: {} } as any);
 				clickZone(0, 0);
 			});
 
@@ -111,7 +111,7 @@ describe("WebFun.Engine.Scenes.MapScene", () => {
 
 		describe("and an unvisited zone is clicked", () => {
 			beforeEach(() => {
-				spyOn(engine.currentWorld, "getZone").and.returnValue({ visited: false } as any);
+				spyOn(engine.currentWorld, "at").and.returnValue({ zone: { visited: false } } as any);
 				clickZone(0, 0);
 			});
 
@@ -150,8 +150,8 @@ describe("WebFun.Engine.Scenes.MapScene", () => {
 			},
 			currentZone: {},
 			currentWorld: {
-				locationOfZone: (): void => void 0,
-				getZone: (): void => void 0
+				findLocationOfZone: (): void => void 0,
+				at: (): void => void 0
 			}
 		} as any) as Engine);
 	}

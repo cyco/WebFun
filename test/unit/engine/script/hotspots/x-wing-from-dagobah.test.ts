@@ -28,8 +28,8 @@ describe("WebFun.Engine.Script.Hotspots.xWingFromDagobah", () => {
 				hotspots: [mockHotspot(Hotspot.Type.xWingFromDagobah, 235)]
 			} as any;
 			(engine.assetManager.get as any).and.returnValue(destinationZone);
-			(engine.dagobah.locationOfZone as any).and.returnValue(null);
-			(engine.world.locationOfZone as any).and.returnValue(new Point(3, 4));
+			(engine.dagobah.findLocationOfZone as any).and.returnValue(null);
+			(engine.world.findLocationOfZone as any).and.returnValue(new Point(3, 4));
 
 			xWingFromDagobah(engine, mockHotspot(Hotspot.Type.xWingFromDagobah, 235));
 		});
@@ -68,8 +68,8 @@ describe("WebFun.Engine.Script.Hotspots.xWingFromDagobah", () => {
 			assetManager: { get: jasmine.createSpy("assetManager.get") },
 			inventory: { contains: jasmine.createSpy("inventory.contains") },
 			sceneManager: { pushScene: jasmine.createSpy("sceneManager.pushScene"), currentScene: {} },
-			dagobah: { locationOfZone: jasmine.createSpy("dagobah.locationOfZone") },
-			world: { locationOfZone: jasmine.createSpy("world.locationOfZone") },
+			dagobah: { findLocationOfZone: jasmine.createSpy("dagobah.findLocationOfZone") },
+			world: { findLocationOfZone: jasmine.createSpy("world.findLocationOfZone") },
 			temporaryState: { enteredByPlane: false }
 		} as any;
 	}

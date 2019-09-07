@@ -8,6 +8,7 @@ import { Direction } from "../ui/location";
 import { Hero } from "src/engine";
 import World from "src/engine/world";
 import { Zone } from "src/engine/objects";
+import { Point } from "src/util";
 
 class MainWindow extends AbstractWindow {
 	public static readonly tagName = "wf-main-window";
@@ -94,15 +95,17 @@ class MainWindow extends AbstractWindow {
 		const locationView = this.content.querySelector(Location.tagName) as Location;
 
 		let mask = Direction.None;
-		const location = world.locationOfZone(zone);
-		if (!location || !world) {
+		const location = world.findLocationOfZone(zone);
+		if (!location) {
 			locationView.mask = mask;
 			return;
 		}
-		mask |= world.getZone(location.byAdding(-1, 0)) ? Direction.West : 0;
-		mask |= world.getZone(location.byAdding(1, 0)) ? Direction.East : 0;
-		mask |= world.getZone(location.byAdding(0, -1)) ? Direction.North : 0;
-		mask |= world.getZone(location.byAdding(0, 1)) ? Direction.South : 0;
+		const getZone = (pos: Point): Zone => (world.bounds.contains(pos) ? world.at(pos).zone : null);
+
+		mask |= getZone(location.byAdding(-1, 0)) ? Direction.West : 0;
+		mask |= getZone(location.byAdding(1, 0)) ? Direction.East : 0;
+		mask |= getZone(location.byAdding(0, -1)) ? Direction.North : 0;
+		mask |= getZone(location.byAdding(0, 1)) ? Direction.South : 0;
 
 		locationView.mask = mask;
 	}

@@ -58,7 +58,7 @@ class ZoneScene extends Scene {
 			}
 
 			const item = this.assetManager.get(Tile, htsp.arg, NullIfMissing);
-			const sector = this.engine.currentWorld.itemForZone(this.zone);
+			const sector = this.engine.currentWorld.findSectorContainingZone(this.zone);
 			if (item && sector && sector.findItem === item) {
 				this.zone.solved = true;
 				sector.zone.solved = true;
@@ -224,10 +224,10 @@ class ZoneScene extends Scene {
 		}
 
 		let world = engine.dagobah;
-		if (world.locationOfZone(engine.currentZone) === null) {
+		if (world.findLocationOfZone(engine.currentZone) === null) {
 			world = engine.world;
 		}
-		const zoneLocation = world.locationOfZone(engine.currentZone);
+		const zoneLocation = world.findLocationOfZone(engine.currentZone);
 		if (!zoneLocation) return;
 
 		const sector = world.at(zoneLocation);
@@ -236,7 +236,7 @@ class ZoneScene extends Scene {
 		}
 
 		const destinationZoneLocation = Point.add(zoneLocation, zoneDirection);
-		const destinationZone = world.getZone(destinationZoneLocation);
+		const destinationZone = world.at(destinationZoneLocation).zone;
 		if (!destinationZone) return false;
 
 		const targetLocationOnCurrentZone = Point.add(hero.location, direction);
@@ -456,7 +456,7 @@ class ZoneScene extends Scene {
 
 			engine.scriptExecutor.prepeareExecution(EvaluationMode.Bump, this.zone);
 
-			const quest = this.engine.currentWorld.itemForZone(this.zone);
+			const quest = this.engine.currentWorld.findSectorContainingZone(this.zone);
 			if (quest && quest.npc && quest.npc.id === targetTile.id) {
 				this._bumpPuzzleNPC(quest, targetPoint);
 				return;
@@ -545,7 +545,7 @@ class ZoneScene extends Scene {
 
 			this.zone.setTile(null, at.x, at.y, 1);
 			this.engine.dropItem(engine.assetManager.get(Tile, itemID), at).then(() => {
-				const sector = this.engine.currentWorld.itemForZone(this.zone);
+				const sector = this.engine.currentWorld.findSectorContainingZone(this.zone);
 				if (sector && sector.findItem && sector.findItem.id === itemID) {
 					this.zone.solved = true;
 					sector.zone.solved = true;
@@ -582,7 +582,7 @@ class ZoneScene extends Scene {
 
 		let acceptItem = false;
 
-		const sector = engine.world.itemForZone(this.zone);
+		const sector = engine.world.findSectorContainingZone(this.zone);
 		console.assert(!!sector, "Could not find world item for zone", this.zone);
 
 		let hotspot: Hotspot;
@@ -659,7 +659,7 @@ class ZoneScene extends Scene {
 		const counterPart =
 			htsp.type === Hotspot.Type.VehicleTo ? Hotspot.Type.VehicleBack : Hotspot.Type.VehicleTo;
 		const destinationZone = engine.assetManager.get(Zone, htsp.arg);
-		const worldLocation = engine.currentWorld.locationOfZone(destinationZone);
+		const worldLocation = engine.currentWorld.findLocationOfZone(destinationZone);
 		const zoneLocation = destinationZone.hotspots.withType(counterPart).first().location;
 
 		const transitionScene = new RoomTransitionScene();
@@ -696,7 +696,7 @@ class ZoneScene extends Scene {
 				transitionScene.scene = engine.sceneManager.currentScene as ZoneScene;
 
 				const world = engine.world;
-				const location = world.locationOfZone(destinationZone);
+				const location = world.findLocationOfZone(destinationZone);
 				if (!location) {
 					// zone is not on the current planet
 					return;
@@ -721,7 +721,7 @@ class ZoneScene extends Scene {
 				console.assert(engine.sceneManager.currentScene instanceof ZoneScene);
 				transitionScene.scene = engine.sceneManager.currentScene as ZoneScene;
 
-				const location = engine.dagobah.locationOfZone(destinationZone);
+				const location = engine.dagobah.findLocationOfZone(destinationZone);
 				if (!location) {
 					// zone is not on dagobah
 					return;

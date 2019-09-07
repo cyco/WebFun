@@ -31,7 +31,7 @@ const compare = (story: Story, expectation: any) => {
 	/* main world */
 	try {
 		for (let i = 0; i < 100; i++) {
-			compareItem(story.world.index(i), expectation.world[i]);
+			compareItem(story.world.at(i), expectation.world[i]);
 		}
 	} catch (e) {
 		throw `World: ${e}`;

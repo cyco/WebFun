@@ -83,7 +83,7 @@ class MapScene extends Scene {
 			this._cheatInput.reset();
 			this._showText(
 				cheatMessages.first(),
-				this.engine.currentWorld.locationOfZone(this.engine.currentZone)
+				this.engine.currentWorld.findLocationOfZone(this.engine.currentZone)
 			);
 		}
 
@@ -100,8 +100,8 @@ class MapScene extends Scene {
 		speechScene.location = location;
 		speechScene.tileSize = new Size(MapTileWidth, MapTileHeight);
 
-		const worldHeightPx = World.HEIGHT * MapTileHeight;
-		const worldWidthPx = World.WIDTH * MapTileWidth;
+		const worldHeightPx = World.Size.height * MapTileHeight;
+		const worldWidthPx = World.Size.width * MapTileWidth;
 
 		const offsetX = (ViewWidth - worldWidthPx) / (2 * ViewWidth);
 		const offsetY = (ViewHeight - worldHeightPx) / (2 * ViewHeight) - 1.5 * Tile.HEIGHT;
@@ -112,8 +112,8 @@ class MapScene extends Scene {
 	}
 
 	protected mouseDown(p: Point): void {
-		const worldHeightPx = World.HEIGHT * MapTileHeight;
-		const worldWidthPx = World.WIDTH * MapTileWidth;
+		const worldHeightPx = World.Size.height * MapTileHeight;
+		const worldWidthPx = World.Size.width * MapTileWidth;
 
 		const offsetX = (ViewWidth - worldWidthPx) / (2 * ViewWidth);
 		const offsetY = (ViewHeight - worldHeightPx) / (2 * ViewHeight);
@@ -128,23 +128,23 @@ class MapScene extends Scene {
 			return;
 		}
 
-		const tileX = Math.floor(p.x * World.WIDTH);
-		const tileY = Math.floor(p.y * World.HEIGHT);
+		const tileX = Math.floor(p.x * World.Size.width);
+		const tileY = Math.floor(p.y * World.Size.height);
 
-		const zone = this.engine.currentWorld.getZone(tileX, tileY);
-		if (!zone) {
+		const sector = this.engine.currentWorld.at(tileX, tileY);
+		if (!sector || !sector.zone) {
 			return this.exitScene();
 		}
 
-		if (Settings.debug && this.engine.inputManager.drag && zone) {
-			return this.performDebugTeleportAndExit(zone);
+		if (Settings.debug && this.engine.inputManager.drag) {
+			return this.performDebugTeleportAndExit(sector.zone);
 		}
 
-		if (!this.isZoneConsideredVisited(zone)) {
+		if (!this.isZoneConsideredVisited(sector.zone)) {
 			return this.exitScene();
 		}
 
-		this.handleMouseDown(new Point(tileX, tileY), zone);
+		this.handleMouseDown(new Point(tileX, tileY), sector.zone);
 	}
 
 	protected handleMouseDown(point: Point, _: Zone) {
@@ -163,7 +163,7 @@ class MapScene extends Scene {
 		transitionScene.destinationZone = zone;
 		transitionScene.scene = engine.sceneManager.currentScene as ZoneScene;
 		transitionScene.destinationWorld = engine.currentWorld;
-		transitionScene.destinationZoneLocation = engine.currentWorld.locationOfZone(zone);
+		transitionScene.destinationZoneLocation = engine.currentWorld.findLocationOfZone(zone);
 		engine.sceneManager.pushScene(transitionScene);
 	}
 
@@ -261,8 +261,8 @@ class MapScene extends Scene {
 
 		const state = engine.temporaryState;
 		const world = engine.currentWorld;
-		const offsetX = (288 - World.WIDTH * MapTileWidth) / 2;
-		const offsetY = (288 - World.HEIGHT * MapTileHeight) / 2;
+		const offsetX = (288 - World.Size.width * MapTileWidth) / 2;
+		const offsetY = (288 - World.Size.height * MapTileHeight) / 2;
 		const result = new ImageData(288, 288);
 		const buffer = new ArrayBuffer(result.data.length);
 		const byteArray = new Uint8Array(buffer);
@@ -298,7 +298,7 @@ class MapScene extends Scene {
 		let x, y;
 		for (y = 0; y < MapHeight; y++) {
 			for (x = 0; x < MapWidth; x++) {
-				const zone = world.getZone(x, y);
+				const zone = world.at(x, y).zone;
 				const tile = this._tileForZone(zone);
 				if (!tile) continue;
 				if (tile.isOpaque()) drawOpaqueTileAt(tile, x, y);

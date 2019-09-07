@@ -19,10 +19,10 @@ export default (engine: Engine, hotspot: Hotspot): boolean => {
 	scene.scene = engine.sceneManager.currentScene as ZoneScene;
 
 	let world = engine.dagobah;
-	let location = world.locationOfZone(destinationZone);
+	let location = world.findLocationOfZone(destinationZone);
 	if (!location) {
 		world = engine.world;
-		location = world.locationOfZone(destinationZone);
+		location = world.findLocationOfZone(destinationZone);
 	}
 	scene.destinationWorld = world;
 

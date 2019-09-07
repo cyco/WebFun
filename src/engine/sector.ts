@@ -16,6 +16,13 @@ class Sector {
 	public visited: boolean = false;
 	public zone: Zone = null;
 	public zoneType: Zone.Type = null;
+
+	public containsZone(zone: Zone, zones: Zone[]): boolean {
+		if (!this.zone) return false;
+		if (zone === this.zone) return true;
+
+		return this.zone.leadsTo(zone, zones);
+	}
 }
 
 export default Sector;

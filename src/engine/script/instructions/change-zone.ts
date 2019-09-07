@@ -21,10 +21,10 @@ export default {
 		transitionScene.scene = engine.sceneManager.currentScene as ZoneScene;
 
 		let world = engine.dagobah;
-		let location = world.locationOfZone(transitionScene.destinationZone);
+		let location = world.findLocationOfZone(transitionScene.destinationZone);
 		if (!location) {
 			world = engine.world;
-			location = world.locationOfZone(transitionScene.destinationZone);
+			location = world.findLocationOfZone(transitionScene.destinationZone);
 		}
 		transitionScene.destinationWorld = world;
 

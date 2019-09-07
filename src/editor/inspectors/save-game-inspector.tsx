@@ -103,15 +103,12 @@ class SaveGameInspector extends AbstractInspector {
 	private _createWorld(world: World): World {
 		const result = new World();
 
-		const zones = this.data.currentData.zones;
-		const tiles = this.data.currentData.tiles;
-
 		for (let y = 0; y < 10; y++) {
 			for (let x = 0; x < 10; x++) {
-				const input = world.getSector(x, y);
+				const input = world.at(x, y);
 				const out = result.at(x, y);
 
-				result.setZone(x, y, input.zone);
+				out.zone = input.zone;
 				out.additionalRequiredItem = input.additionalRequiredItem;
 				// input.field16;
 				// input.fieldC;

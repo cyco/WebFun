@@ -23,7 +23,7 @@ class TeleportScene extends MapScene {
 		scene.destinationZone = zone;
 		scene.scene = engine.sceneManager.currentScene as ZoneScene;
 		scene.destinationWorld = engine.currentWorld;
-		scene.destinationZoneLocation = engine.currentWorld.locationOfZone(zone);
+		scene.destinationZoneLocation = engine.currentWorld.findLocationOfZone(zone);
 		engine.sceneManager.pushScene(scene);
 	}
 }

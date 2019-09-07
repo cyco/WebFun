@@ -22,7 +22,7 @@ export default {
 		}
 
 		if (item < 0) {
-			const sector = engine.currentWorld.itemForZone(zone);
+			const sector = engine.currentWorld.findSectorContainingZone(zone);
 			item = sector.requiredItem.id;
 		}
 

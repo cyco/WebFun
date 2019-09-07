@@ -82,7 +82,7 @@ class Map extends Component {
 
 		for (let y = 0; y < WorldHeight; y++) {
 			for (let x = 0; x < WorldWidth; x++) {
-				const sector = world.getSector(x, y);
+				const sector = world.at(x, y);
 				const tile = this._tileForSector(sector);
 				if (!tile) continue;
 

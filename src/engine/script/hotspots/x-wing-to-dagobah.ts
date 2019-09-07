@@ -8,7 +8,7 @@ export default (engine: Engine, hotspot: Hotspot): boolean => {
 
 	const destinationZone = engine.assetManager.get(Zone, hotspot.arg);
 	const desinationHotspot = destinationZone.hotspots.withType(Hotspot.Type.xWingFromDagobah).first();
-	const location = engine.dagobah.locationOfZone(destinationZone);
+	const location = engine.dagobah.findLocationOfZone(destinationZone);
 	console.assert(desinationHotspot !== null, "Zone does not have a proper target spot");
 	console.assert(location !== null, "X-Wing destination must be on dagobah!");
 	console.assert(engine.sceneManager.currentScene instanceof ZoneScene);

@@ -2,7 +2,7 @@ import { Ammo, Health, Inventory, Location, Weapon } from "src/app/ui";
 import MainWindow from "src/app/windows/main-window";
 import Engine, { Events as EngineEvents } from "src/engine/engine";
 import Hero, { Events as HeroEvents } from "src/engine/hero";
-import { EventTarget } from "src/util";
+import { EventTarget, Rectangle, Point, Size } from "src/util";
 import { Metronome } from "src/engine";
 import { Char } from "src/engine/objects";
 
@@ -144,17 +144,19 @@ describeComponent(MainWindow, () => {
 			triggerLocationChange(mask: number) {
 				const detail = {
 					world: {
-						locationOfZone() {
+						findLocationOfZone() {
 							return mask
 								? {
 										byAdding() {
-											return 5;
+											return new Point(1, 1);
 										}
 								  }
 								: null;
 						},
-						getZone() {
-							return {};
+						bounds: new Rectangle(new Point(0, 0), new Size(10, 10)),
+
+						at() {
+							return { zone: {} } as any;
 						}
 					}
 				};

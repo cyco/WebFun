@@ -29,7 +29,7 @@ class SpeechScene extends Scene {
 
 	set text(t) {
 		const world = this.engine.currentWorld;
-		const quest = world.itemForZone(this.engine.currentZone);
+		const quest = world.findSectorContainingZone(this.engine.currentZone);
 		this._bubble.text = this.resolveVariables(t, quest);
 	}
 

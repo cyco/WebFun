@@ -194,7 +194,7 @@ class GameController extends EventTarget {
 		zoneScene.engine = engine;
 		zoneScene.zone = zone;
 		engine.currentZone = zone;
-		engine.currentWorld = engine.world.locationOfZone(zone) ? engine.world : null;
+		engine.currentWorld = engine.world.findLocationOfZone(zone) ? engine.world : null;
 		engine.hero.appearance = engine.assetManager.find(Char, (c: Char) => c.isHero());
 
 		engine.sceneManager.clear();

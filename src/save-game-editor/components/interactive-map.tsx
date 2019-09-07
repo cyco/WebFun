@@ -51,7 +51,7 @@ class InteractiveMap extends Map implements EventListenerObject {
 	}
 
 	private _showMenuForTile(tile: Point, raw: Point) {
-		const sector = this.world.getSector(tile.x, tile.y);
+		const sector = this.world.at(tile.x, tile.y);
 		if (!this.contextMenuProvider) return;
 		const menu = this.contextMenuProvider.contextMenuForSector(sector, tile, this.world, this);
 		if (!menu || menu.items.length === 0) return;
@@ -85,7 +85,7 @@ class InteractiveMap extends Map implements EventListenerObject {
 			return;
 		}
 
-		const sector = this.world.getSector(this._highlightTile.x, this._highlightTile.y);
+		const sector = this.world.at(this._highlightTile.x, this._highlightTile.y);
 		if (!sector.zone) {
 			this._highlight.remove();
 			return;

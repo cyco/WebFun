@@ -31,13 +31,13 @@ class DagobahGenerator {
 		const dagobah = new World();
 		dagobah.zones = assets.getAll(Zone);
 
-		dagobah.setZone(4, 4, assets.get(Zone, Yoda.Zone.DagobahNorthWest));
+		dagobah.at(4, 4).zone = assets.get(Zone, Yoda.Zone.DagobahNorthWest);
 		dagobah.at(4, 4).zoneType = Zone.Type.Find;
-		dagobah.setZone(5, 4, assets.get(Zone, Yoda.Zone.DagobahNorthEast));
+		dagobah.at(5, 4).zone = assets.get(Zone, Yoda.Zone.DagobahNorthEast);
 		dagobah.at(5, 4).zoneType = Zone.Type.Find;
-		dagobah.setZone(4, 5, assets.get(Zone, Yoda.Zone.DagobahSouthWest));
+		dagobah.at(4, 5).zone = assets.get(Zone, Yoda.Zone.DagobahSouthWest);
 		dagobah.at(4, 5).zoneType = Zone.Type.Find;
-		dagobah.setZone(5, 5, assets.get(Zone, Yoda.Zone.DagobahSouthEast));
+		dagobah.at(5, 5).zone = assets.get(Zone, Yoda.Zone.DagobahSouthEast);
 		dagobah.at(5, 5).zoneType = Zone.Type.Town;
 
 		//* temporarily copy zone types over from main world for easy comparison against original
