@@ -2,8 +2,8 @@ import { Action, Hotspot, NPC, Tile, Zone } from "src/engine/objects";
 
 import { OutputStream } from "src/util";
 import SaveState from "./save-state";
-import World from "./world";
-import Sector from "./sector";
+import World from "src/engine/world";
+import Sector from "src/engine/sector";
 import AssetManager from "../asset-manager";
 
 class Writer {
@@ -163,18 +163,18 @@ class Writer {
 	}
 
 	private _writeWorldDetails(world: World, stream: OutputStream): void {
-		for (let y = 0; y < world.size.height; y++) {
-			for (let x = 0; x < world.size.width; x++) {
+		for (let y = 0; y < World.Size.height; y++) {
+			for (let x = 0; x < World.Size.width; x++) {
 				const item = world.getSector(x, y);
-				if (!item || item.zoneId === -1 || item.zoneId === undefined) continue;
+				if (!item || !item.zone) continue;
 
 				stream.writeInt32(x);
 				stream.writeInt32(y);
 
-				stream.writeInt16(item.zoneId);
+				stream.writeInt16(item.zone.id);
 				stream.writeUint32(+item.visited);
 
-				this._writeRoom(this._assets.get(Zone, item.zoneId), item.visited, stream);
+				this._writeRoom(item.zone, item.visited, stream);
 			}
 		}
 
@@ -183,24 +183,26 @@ class Writer {
 	}
 
 	private _writeSector(item: Sector, stream: OutputStream): void {
+		const id = (item: Tile | Zone) => (item ? item.id : -1);
+
 		stream.writeUint32(+item.visited);
 
-		stream.writeUint32(item.solved1);
-		stream.writeUint32(item.solved3);
-		stream.writeUint32(item.solved2);
-		stream.writeUint32(item.solved4);
+		stream.writeUint32(+item.solved1);
+		stream.writeUint32(+item.solved3);
+		stream.writeUint32(+item.solved2);
+		stream.writeUint32(+item.solved4);
 
-		stream.writeInt16(item.zoneId);
+		stream.writeInt16(id(item.zone));
 		stream.writeInt16(item.fieldC);
-		stream.writeInt16(item.requiredItemId);
-		stream.writeInt16(item.findItemID);
+		stream.writeInt16(id(item.requiredItem));
+		stream.writeInt16(id(item.findItem));
 		stream.writeInt16(item.fieldEA);
-		stream.writeInt16(item.additionalRequiredItem);
+		stream.writeInt16(id(item.additionalRequiredItem));
 		stream.writeInt16(item.field16);
-		stream.writeInt16(item.npcID);
+		stream.writeInt16(id(item.npc));
 
 		// TODO: fix unknown values
-		stream.writeInt32(item.zoneType);
+		stream.writeInt32(item.zoneType.rawValue);
 		stream.writeInt16(0);
 	}
 }

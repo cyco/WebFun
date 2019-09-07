@@ -1,11 +1,11 @@
-import { Hotspot, Tile, Char } from "src/engine/objects";
+import { Hotspot, Tile, Char, Zone } from "src/engine/objects";
 import { InputStream, Point } from "src/util";
 import { MutableHotspot, MutableNPC } from "src/engine/mutable-objects";
 import { Planet, WorldSize } from "../types";
 
 import Reader from "./reader";
 import SaveState from "./save-state";
-import Sector from "./sector";
+import Sector from "src/engine/sector";
 import { Yoda } from "../type";
 import { floor } from "src/std/math";
 import AssetManager, { NullIfMissing } from "src/engine/asset-manager";
@@ -72,7 +72,7 @@ class YodaReader extends Reader {
 
 		const state = new SaveState();
 		state.type = Yoda;
-		state.planet = Planet.fromNumber(planet);
+		state.planet = Planet.isPlanet(planet) ? Planet.fromNumber(planet) : Planet.NONE;
 		state.seed = seed;
 		state.puzzleIDs1 = puzzleIDs1;
 		state.puzzleIDs2 = puzzleIDs2;
@@ -126,19 +126,19 @@ class YodaReader extends Reader {
 
 		const sector = new Sector();
 		sector.visited = visited;
-		sector.solved1 = solved1 ? 1 : 0;
-		sector.solved2 = solved2 ? 1 : 0;
-		sector.solved3 = solved3 ? 1 : 0;
-		sector.solved4 = solved4 ? 1 : 0;
-		sector.zoneId = zoneId;
+		sector.solved1 = solved1;
+		sector.solved2 = solved2;
+		sector.solved3 = solved3;
+		sector.solved4 = solved4;
+		sector.zone = this._assets.get(Zone, zoneId, NullIfMissing);
 		sector.fieldC = fieldC;
-		sector.requiredItemId = requiredItemId;
-		sector.findItemID = findItemId;
+		sector.requiredItem = this._assets.get(Tile, requiredItemId, NullIfMissing);
+		sector.findItem = this._assets.get(Tile, findItemId, NullIfMissing);
 		sector.fieldEA = fieldEA;
-		sector.additionalRequiredItem = additionalRequiredItem;
+		sector.additionalRequiredItem = this._assets.get(Tile, additionalRequiredItem, NullIfMissing);
 		sector.field16 = field16;
-		sector.npcID = npcId;
-		sector.zoneType = zoneType;
+		sector.npc = this._assets.get(Tile, npcId, NullIfMissing);
+		sector.zoneType = Zone.Type.isZoneType(zoneType) ? Zone.Type.fromNumber(zoneType) : Zone.Type.None;
 
 		return sector;
 	}

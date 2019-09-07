@@ -5,8 +5,8 @@ import AssetManager from "../asset-manager";
 import { InputStream, Point } from "src/util";
 import { MutableZone, MutableNPC } from "src/engine/mutable-objects";
 import SaveState from "./save-state";
-import World from "./world";
-import Sector from "./sector";
+import World from "src/engine/world";
+import Sector from "src/engine/sector";
 
 interface Range {
 	start: number;

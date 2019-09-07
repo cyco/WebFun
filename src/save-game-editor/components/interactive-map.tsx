@@ -4,7 +4,8 @@ import { ContextMenu } from "src/ui/components";
 import Map from "./map";
 import { Menu } from "src/ui";
 import { Point } from "src/util";
-import { World, Sector } from "src/engine/save-game";
+import World from "src/engine/world";
+import Sector from "src/engine/sector";
 import ZoneView from "./zone-view";
 
 export interface InteractiveMapContextMenuProvider {
@@ -85,14 +86,13 @@ class InteractiveMap extends Map implements EventListenerObject {
 		}
 
 		const sector = this.world.getSector(this._highlightTile.x, this._highlightTile.y);
-		if (sector.zoneId === -1) {
+		if (!sector.zone) {
 			this._highlight.remove();
 			return;
 		}
 
-		const zone = this.zones[sector.zoneId];
 		const { left: x, top: y } = this.getBoundingClientRect();
-		this._highlight.zone = zone;
+		this._highlight.zone = sector.zone;
 		this._highlight.style.left = `${t.x * 28 + x}px`;
 		this._highlight.style.top = `${t.y * 28 + y}px`;
 		document.body.appendChild(this._highlight);

@@ -7,7 +7,6 @@ import { EditorView } from "src/save-game-editor";
 import GameController from "src/app/game-controller";
 import { IconButton } from "src/ui/components";
 import MutableStory from "src/engine/mutable-story";
-import SaveGameWorld from "src/engine/save-game/world";
 import World from "src/engine/world";
 import { Writer } from "src/engine/save-game";
 import { AssetManager } from "src/engine";
@@ -101,7 +100,7 @@ class SaveGameInspector extends AbstractInspector {
 		controller.jumpStartEngine(controller.data.zones[state.currentZoneID]);
 	}
 
-	private _createWorld(world: SaveGameWorld): World {
+	private _createWorld(world: World): World {
 		const result = new World();
 
 		const zones = this.data.currentData.zones;
@@ -112,24 +111,27 @@ class SaveGameInspector extends AbstractInspector {
 				const input = world.getSector(x, y);
 				const out = result.at(x, y);
 
-				result.setZone(x, y, zones[input.zoneId] || null);
-				out.additionalRequiredItem = tiles[input.additionalRequiredItem] || null;
+				result.setZone(x, y, input.zone);
+				out.additionalRequiredItem = input.additionalRequiredItem;
 				// input.field16;
 				// input.fieldC;
 				// input.fieldEA;
 				// TODO: puzzle idx and puzzle index are missing
-				out.findItem = tiles[input.findItemID] || null;
-				out.npc = tiles[input.npcID] || null;
-				out.requiredItem = tiles[input.requiredItemId] || null;
-				out.zone = zones[input.zoneId] || null;
-				out.zoneType = Zone.Type.fromNumber(input.zoneType);
-				if (out.zone) out.zone.visited = input.visited;
-				if (out.zone) out.zone.solved = input.solved1 !== 0;
-				console.assert(
-					input.solved1 === input.solved2 &&
-						input.solved2 === input.solved3 &&
-						input.solved3 === input.solved4
-				);
+				out.findItem = input.findItem;
+				out.npc = input.npc;
+				out.requiredItem = input.requiredItem;
+				out.zone = input.zone;
+				out.zoneType = input.zoneType;
+				out.zone.visited = input.visited;
+				out.zone.solved = input.solved1;
+				out.solved1 = input.solved1;
+				out.solved2 = input.solved2;
+				out.solved3 = input.solved3;
+				out.solved4 = input.solved4;
+				out.visited = input.visited;
+				out.field16 = input.field16;
+				out.fieldC = input.fieldC;
+				out.fieldEA = input.fieldEA;
 			}
 		}
 

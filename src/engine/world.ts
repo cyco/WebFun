@@ -1,4 +1,4 @@
-import { Point, PointLike, Size } from "src/util";
+import { Point, PointLike, Size, Rectangle } from "src/util";
 
 import Sector from "./sector";
 import { Zone } from "./objects";
@@ -19,6 +19,10 @@ class World {
 		this._sectors = items;
 	}
 
+	get bounds() {
+		return new Rectangle(new Point(0, 0), World.Size);
+	}
+
 	getZone(x: number | PointLike, y?: number): Zone {
 		console.assert(!!this.zones, "Data has not been set");
 
@@ -35,6 +39,16 @@ class World {
 		const sector = this._sectors[index];
 
 		return sector && sector.zone;
+	}
+
+	setSector(x: number, y: number, item: Sector): void {
+		const index = this._pointToIndex(new Point(x, y));
+		this._sectors[index] = item;
+	}
+
+	getSector(x: number, y: number): Sector {
+		const index = this._pointToIndex(new Point(x, y));
+		return this._sectors[index];
 	}
 
 	setZone(x: number, y: number, zone: Zone) {
@@ -87,6 +101,10 @@ class World {
 		}
 
 		return x.y * World.WIDTH + x.x;
+	}
+
+	public map<T>(callback: (_: Sector, idx: number) => T) {
+		return this._sectors.map(callback);
 	}
 }
 

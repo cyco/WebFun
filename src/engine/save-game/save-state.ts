@@ -2,7 +2,7 @@ import { Planet, WorldSize } from "../types";
 
 import { GameType } from "../type";
 import { Point } from "../../util";
-import World from "./world";
+import World from "src/engine/world";
 
 class SaveState {
 	public type: GameType;

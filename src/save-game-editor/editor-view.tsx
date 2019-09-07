@@ -11,9 +11,10 @@ import { InteractiveMapContextMenuProvider } from "./components/interactive-map"
 import { InventoryDelegate } from "./components/inventory";
 import { ModalPrompt } from "src/ux";
 import { PopoverCharacterPicker } from "src/editor/components";
-import { SaveState, Sector } from "src/engine/save-game";
+import { SaveState } from "src/engine/save-game";
 import { Tile } from "src/engine/objects";
-import { World } from "src/engine/save-game";
+import World from "src/engine/world";
+import Sector from "src/engine/sector";
 import { WorldSize } from "src/engine/types";
 
 class EditorView extends Component implements InventoryDelegate, InteractiveMapContextMenuProvider {
@@ -290,7 +291,7 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 	}
 
 	public contextMenuForSector(item: Sector, _at: Point, _i: World, of: Map): Menu {
-		if (item.zoneId === undefined || item.zoneId === -1) return null;
+		if (!item.zone) return null;
 
 		return new Menu([
 			{
@@ -299,16 +300,16 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 					item.field16 = -1;
 					item.fieldC = -1;
 					item.fieldEA = -1;
-					item.findItemID = -1;
-					item.npcID = -1;
-					item.requiredItemId = -1;
-					item.solved1 = 0;
-					item.solved2 = 0;
-					item.solved3 = 0;
-					item.solved4 = 0;
+					item.findItem = null;
+					item.npc = null;
+					item.requiredItem = null;
+					item.solved1 = false;
+					item.solved2 = false;
+					item.solved3 = false;
+					item.solved4 = false;
 					item.visited = false;
-					item.zoneId = -1;
-					item.additionalRequiredItem = -1;
+					item.zone = null;
+					item.additionalRequiredItem = null;
 
 					of.redraw();
 				}
@@ -317,13 +318,13 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 				title: "Change Zone",
 				callback: async () => {
 					const id = await ModalPrompt("New Zone ID", {
-						defaultValue: item.zoneId.toHex(2)
+						defaultValue: (item.zone ? item.zone.id : null).toHex(2)
 					});
 					if (id === null) return;
 
 					const newId = id.parseInt();
 					this._state.currentZoneID = newId;
-					item.zoneId = newId;
+					item.zone = this.data.zones[newId] || null;
 					of.redraw();
 				}
 			},
@@ -331,17 +332,17 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 				title: item.visited ? "Mark unvisted" : "Mark visited",
 				callback: () => {
 					item.visited = !item.visited;
-					item.additionalRequiredItem = -1;
+					item.additionalRequiredItem = null;
 					item.field16 = -1;
 					item.fieldC = -1;
 					item.fieldEA = -1;
-					item.findItemID = -1;
-					item.npcID = -1;
-					item.requiredItemId = -1;
-					item.solved1 = !item.visited ? 0 : item.solved1;
-					item.solved2 = !item.visited ? 0 : item.solved2;
-					item.solved3 = !item.visited ? 0 : item.solved3;
-					item.solved4 = !item.visited ? 0 : item.solved4;
+					item.findItem = null;
+					item.npc = null;
+					item.requiredItem = null;
+					item.solved1 = !item.visited ? false : item.solved1;
+					item.solved2 = !item.visited ? false : item.solved2;
+					item.solved3 = !item.visited ? false : item.solved3;
+					item.solved4 = !item.visited ? false : item.solved4;
 
 					of.redraw();
 				}

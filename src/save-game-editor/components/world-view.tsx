@@ -5,7 +5,7 @@ import TransformCanvas, { TransformCanvasRenderingContext2D } from "./transform-
 
 import { Component } from "src/ui";
 import { SaveState } from "src/engine/save-game";
-import { World } from "src/engine/save-game";
+import World from "src/engine/world";
 import { drawZoneImageData as drawZone } from "src/app/rendering/canvas";
 
 class WorldView extends Component {

@@ -1,12 +1,12 @@
 import { InputStream, Point } from "src/util";
 
-import { Hotspot, Char } from "src/engine/objects";
+import { Hotspot, Char, Zone, Tile } from "src/engine/objects";
 import { Indy } from "src/engine/type";
 import { MutableHotspot, MutableNPC } from "src/engine/mutable-objects";
 import { Planet } from "../types";
 import Reader from "./reader";
 import SaveState from "./save-state";
-import Sector from "./sector";
+import Sector from "src/engine/sector";
 import AssetManager, { NullIfMissing } from "../asset-manager";
 
 class IndyReader extends Reader {
@@ -103,18 +103,18 @@ class IndyReader extends Reader {
 
 		const sector = new Sector();
 		sector.visited = visited;
-		sector.solved1 = solved1 ? 1 : 0;
-		sector.solved2 = solved2 ? 1 : 0;
-		// sector.solved3 = solved3 ? 1 : 0;
-		// sector.solved4 = solved4 ? 1 : 0;
-		sector.zoneId = zoneID;
+		sector.solved1 = solved1;
+		sector.solved2 = solved2;
+		// sector.solved3 = solved3;
+		// sector.solved4 = solved4;
+		sector.zone = this._assets.get(Zone, zoneID, NullIfMissing);
 		sector.fieldC = fieldC;
-		sector.requiredItemId = requiredItemID;
-		sector.findItemID = findItemID;
+		sector.requiredItem = this._assets.get(Tile, requiredItemID, NullIfMissing);
+		sector.findItem = this._assets.get(Tile, findItemID, NullIfMissing);
 		// sector.fieldEA = fieldEA;
 		// sector.additionalRequiredItem = additionalRequiredItem;
 		// sector.field16 = field16;
-		sector.npcID = npcID;
+		sector.npc = this._assets.get(Tile, npcID, NullIfMissing);
 		return sector;
 	}
 
