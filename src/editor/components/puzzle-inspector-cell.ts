@@ -95,11 +95,11 @@ class PuzzleInspectorCell extends Cell<Puzzle> {
 		switch (type) {
 			case PuzzleType.End:
 				return "Goal";
-			case PuzzleType.U1:
+			case PuzzleType.Use:
 				return "Unknown 1";
-			case PuzzleType.U2:
+			case PuzzleType.Trade:
 				return "Unknown 2";
-			case PuzzleType.U3:
+			case PuzzleType.Goal:
 				return "Unknown 3";
 			case PuzzleType.U4:
 				return "Unknown 4";

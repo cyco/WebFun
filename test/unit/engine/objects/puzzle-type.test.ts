@@ -13,18 +13,18 @@ describe("WebFun.Engine.Objects.PuzzleType", () => {
 	});
 
 	it("can be represented as a string", () => {
-		expect(PuzzleType.U1.name).toBe("U1");
-		expect(PuzzleType.U2.name).toBe("U2");
-		expect(PuzzleType.U3.name).toBe("U3");
+		expect(PuzzleType.Use.name).toBe("U1");
+		expect(PuzzleType.Trade.name).toBe("U2");
+		expect(PuzzleType.Goal.name).toBe("U3");
 		expect(PuzzleType.End.name).toBe("End");
 		expect(PuzzleType.U4.name).toBe("U4");
 		expect(PuzzleType.U4.toString()).toBe("PuzzleType{U4}");
 	});
 
 	it("can be represented as a number", () => {
-		expect(PuzzleType.U1.rawValue).toBe(0);
-		expect(PuzzleType.U2.rawValue).toBe(1);
-		expect(PuzzleType.U3.rawValue).toBe(2);
+		expect(PuzzleType.Use.rawValue).toBe(0);
+		expect(PuzzleType.Trade.rawValue).toBe(1);
+		expect(PuzzleType.Goal.rawValue).toBe(2);
 		expect(PuzzleType.End.rawValue).toBe(3);
 		expect(PuzzleType.U4.rawValue).toBe(4);
 		expect(PuzzleType.Disabled.rawValue).toBe(-1);

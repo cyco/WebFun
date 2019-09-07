@@ -1,12 +1,18 @@
 class PuzzleType {
-	public static readonly U1 = new PuzzleType();
-	public static readonly U2 = new PuzzleType();
-	public static readonly U3 = new PuzzleType();
+	public static readonly Use = new PuzzleType();
+	public static readonly Trade = new PuzzleType();
+	public static readonly Goal = new PuzzleType();
 	public static readonly End = new PuzzleType();
 	public static readonly U4 = new PuzzleType();
 
 	public static readonly Disabled = new PuzzleType();
-	private static knownTypes = [PuzzleType.U1, PuzzleType.U2, PuzzleType.U3, PuzzleType.End, PuzzleType.U4];
+	private static knownTypes = [
+		PuzzleType.Use,
+		PuzzleType.Trade,
+		PuzzleType.Goal,
+		PuzzleType.End,
+		PuzzleType.U4
+	];
 
 	public get rawValue() {
 		if (this === PuzzleType.Disabled) return -1;
@@ -16,12 +22,12 @@ class PuzzleType {
 
 	public get name() {
 		switch (this) {
-			case PuzzleType.U1:
-				return "U1";
-			case PuzzleType.U2:
-				return "U2";
-			case PuzzleType.U3:
-				return "U3";
+			case PuzzleType.Use:
+				return "Use";
+			case PuzzleType.Trade:
+				return "Trade";
+			case PuzzleType.Goal:
+				return "Goal";
 			case PuzzleType.End:
 				return "End";
 			case PuzzleType.U4:

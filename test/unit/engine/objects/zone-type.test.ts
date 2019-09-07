@@ -60,10 +60,10 @@ describe("WebFun.Engine.Objects.ZoneType", () => {
 	});
 
 	it("can be converted to a puzzle type", () => {
-		expect(ZoneType.Use.toPuzzleType()).toBe(PuzzleType.U1);
+		expect(ZoneType.Use.toPuzzleType()).toBe(PuzzleType.Use);
 		expect(ZoneType.Unknown.toPuzzleType()).toBe(PuzzleType.End);
-		expect(ZoneType.Goal.toPuzzleType()).toBe(PuzzleType.U3);
-		expect(ZoneType.Trade.toPuzzleType()).toBe(PuzzleType.U2);
+		expect(ZoneType.Goal.toPuzzleType()).toBe(PuzzleType.Goal);
+		expect(ZoneType.Trade.toPuzzleType()).toBe(PuzzleType.Trade);
 		expect(() => ZoneType.Room.toPuzzleType()).toThrow();
 	});
 });
