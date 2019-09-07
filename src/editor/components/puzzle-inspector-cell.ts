@@ -1,11 +1,10 @@
 import "./puzzle-inspector-cell.scss";
 
-import { Puzzle } from "src/engine/objects";
+import { Puzzle, Tile } from "src/engine/objects";
 
 import { Cell } from "src/ui/components";
 import { ColorPalette } from "src/engine/rendering";
 import ExpandButton from "./expand-button";
-import Tile from "src/engine/objects/tile";
 import TileView from "src/debug/components/tile-view";
 
 class PuzzleInspectorCell extends Cell<Puzzle> {

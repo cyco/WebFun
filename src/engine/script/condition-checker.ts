@@ -1,4 +1,4 @@
-import Condition from "../objects/condition";
+import { Condition } from "src/engine/objects";
 import { ConditionImplementation } from "./types";
 import Engine from "../engine";
 import EvaluationMode from "./evaluation-mode";

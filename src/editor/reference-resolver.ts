@@ -1,8 +1,7 @@
-import { Action, Char, Hotspot, NPC, Sound, Tile, Zone } from "src/engine/objects";
+import { Action, Char, Instruction, Hotspot, NPC, Sound, Tile, Zone } from "src/engine/objects";
 
 import ChangeZone from "src/engine/script/instructions/change-zone";
 import GameData from "src/engine/game-data";
-import Instruction from "src/engine/objects/instruction";
 import PlaySound from "src/engine/script/instructions/play-sound";
 import { Point } from "src/util";
 import { or } from "src/util/functional";

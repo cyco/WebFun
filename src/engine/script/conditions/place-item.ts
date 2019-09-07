@@ -2,7 +2,7 @@ import { Type, int16 } from "../types";
 
 import Engine from "../../engine";
 import EvaluationMode from "../evaluation-mode";
-import Zone from "../../objects/zone";
+import { Zone } from "src/engine/objects";
 
 export default {
 	Opcode: 0x03,

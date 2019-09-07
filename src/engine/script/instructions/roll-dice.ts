@@ -1,9 +1,8 @@
 import { Result, Type } from "../types";
 import { randmod } from "src/util";
 
-import Action from "../../objects/action";
 import Engine from "../../engine";
-import Instruction from "../../objects/instruction";
+import { Action, Instruction } from "src/engine/objects";
 
 export default {
 	Opcode: 0x0c,

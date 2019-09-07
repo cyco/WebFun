@@ -1,6 +1,5 @@
-import Action from "../../objects/action";
 import Engine from "../../engine";
-import Instruction from "../../objects/instruction";
+import { Action, Instruction } from "src/engine/objects";
 import { WinScene } from "src/engine/scenes";
 import GameState from "src/engine/game-state";
 

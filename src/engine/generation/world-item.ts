@@ -1,5 +1,4 @@
-import Tile from "src/engine/objects/tile";
-import Zone from "src/engine/objects/zone";
+import { Tile, Zone } from "src/engine/objects";
 
 class WorldItem {
 	public zone: Zone = null;

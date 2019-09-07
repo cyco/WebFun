@@ -1,7 +1,6 @@
 import "./view.scss";
 
 import { AbstractTool, NoTool } from "src/editor/tools";
-import { HEIGHT as TileHeight, WIDTH as TileWidth } from "src/engine/objects/tile";
 
 import Component from "src/ui/component";
 import { ContextMenu } from "src/ui/components";
@@ -10,7 +9,7 @@ import Layer from "./layer";
 import LayerComponent from "./zone-layer";
 import NPCLayerComponent from "./npc-layer";
 import { Point } from "src/util";
-import { Zone } from "src/engine/objects";
+import { Zone, Tile } from "src/engine/objects";
 
 class View extends Component implements EventListenerObject {
 	public static readonly tagName = "wf-zone-editor-view";
@@ -69,7 +68,7 @@ class View extends Component implements EventListenerObject {
 		const zone = this.zone;
 
 		const offset = event.offsetIn(this);
-		const point = offset.scaleBy(1 / TileWidth).floor();
+		const point = offset.scaleBy(1 / Tile.WIDTH).floor();
 		if (point.x < 0 || point.y < 0 || point.x >= zone.size.width || point.y >= zone.size.height)
 			return null;
 
@@ -96,12 +95,12 @@ class View extends Component implements EventListenerObject {
 		this._hotspots.zone = zone;
 		this._npcs.zone = zone;
 
-		this._overlay.style.width = zone.size.width * TileWidth + "px";
-		this._overlay.style.height = zone.size.height * TileHeight + "px";
-		this._overlay.width = zone.size.width * TileWidth * window.devicePixelRatio;
-		this._overlay.height = zone.size.height * TileHeight * window.devicePixelRatio;
-		this.style.width = 2 + zone.size.width * TileWidth + "px";
-		this.style.height = 2 + zone.size.height * TileHeight + "px";
+		this._overlay.style.width = zone.size.width * Tile.WIDTH + "px";
+		this._overlay.style.height = zone.size.height * Tile.HEIGHT + "px";
+		this._overlay.width = zone.size.width * Tile.WIDTH * window.devicePixelRatio;
+		this._overlay.height = zone.size.height * Tile.HEIGHT * window.devicePixelRatio;
+		this.style.width = 2 + zone.size.width * Tile.WIDTH + "px";
+		this.style.height = 2 + zone.size.height * Tile.HEIGHT + "px";
 
 		if (this._tool) this._tool.activate(this._zone, this._overlay);
 	}

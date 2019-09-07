@@ -1,4 +1,4 @@
-import Action from "src/engine/objects/action";
+import { Action } from "src/engine/objects";
 import { Component } from "src/ui";
 import Engine from "src/engine/engine";
 import TileView from "./tile-view";

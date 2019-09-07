@@ -2,7 +2,7 @@ import { Result, Type } from "../types";
 
 import { Tile, Action } from "../../objects";
 import Engine from "../../engine";
-import Instruction from "../../objects/instruction";
+import { Instruction } from "src/engine/objects";
 import { Point } from "src/util";
 
 export default {

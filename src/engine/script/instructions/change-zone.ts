@@ -2,7 +2,7 @@ import { Result, Type } from "../types";
 
 import { Action, Zone } from "../../objects";
 import Engine from "../../engine";
-import Instruction from "../../objects/instruction";
+import { Instruction } from "src/engine/objects";
 
 import { Point } from "src/util";
 import { RoomTransitionScene } from "src/engine/scenes";

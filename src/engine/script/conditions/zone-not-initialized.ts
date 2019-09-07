@@ -1,5 +1,5 @@
 import Engine from "../../engine";
-import Zone from "../../objects/zone";
+import { Zone } from "src/engine/objects";
 import { int16 } from "../types";
 
 export default {

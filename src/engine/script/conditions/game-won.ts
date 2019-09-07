@@ -2,7 +2,7 @@ import { Type, int16 } from "../types";
 
 import Engine from "../../engine";
 import GameState from "src/engine/game-state";
-import Zone from "../../objects/zone";
+import { Zone } from "src/engine/objects";
 
 export default {
 	Opcode: 0x12,

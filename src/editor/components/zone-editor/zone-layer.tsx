@@ -1,12 +1,11 @@
 import "./zone-layer.scss";
 
-import Tile, { HEIGHT as TileHeight, WIDTH as TileWidth } from "src/engine/objects/tile";
+import { Tile, Zone } from "src/engine/objects";
 
 import { ColorPalette } from "src/engine/rendering";
 import Component from "src/ui/component";
 import { MenuItemInit } from "src/ui";
 import { Point } from "src/util";
-import { default as Zone } from "src/engine/objects/zone";
 
 class ZoneLayer extends Component {
 	public static readonly tagName = "wf-zone-layer";
@@ -126,10 +125,10 @@ class ZoneLayer extends Component {
 	set zone(zone: Zone) {
 		this._zone = zone;
 
-		this._canvas.width = zone.size.width * TileWidth;
-		this._canvas.height = zone.size.height * TileHeight;
-		this._canvas.style.width = zone.size.width * TileWidth + "px";
-		this._canvas.style.height = zone.size.height * TileHeight + "px";
+		this._canvas.width = zone.size.width * Tile.WIDTH;
+		this._canvas.height = zone.size.height * Tile.HEIGHT;
+		this._canvas.style.width = zone.size.width * Tile.WIDTH + "px";
+		this._canvas.style.height = zone.size.height * Tile.HEIGHT + "px";
 
 		this._imageData = null;
 		if (this.isConnected) this.draw();

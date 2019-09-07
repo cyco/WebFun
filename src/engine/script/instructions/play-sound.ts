@@ -1,8 +1,7 @@
 import { Result, Type } from "../types";
 
-import Action from "../../objects/action";
 import Engine from "../../engine";
-import Instruction from "../../objects/instruction";
+import { Action, Instruction } from "src/engine/objects";
 import { Channel } from "src/engine/audio";
 import { Sound } from "src/engine/objects";
 import { NullIfMissing } from "src/engine/asset-manager";

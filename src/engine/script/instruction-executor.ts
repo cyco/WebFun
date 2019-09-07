@@ -1,6 +1,5 @@
-import Action from "../objects/action";
 import Engine from "../engine";
-import Instruction from "../objects/instruction";
+import { Action, Instruction } from "src/engine/objects";
 import { InstructionImplementation } from "./types";
 import { Result } from "src/engine/script/types";
 

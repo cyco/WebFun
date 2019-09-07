@@ -1,8 +1,6 @@
-import Tile, { HEIGHT as TileHeight, WIDTH as TileWidth } from "src/engine/objects/tile";
-
 import AbstractTool from "src/editor/tools/abstract-tool";
 import { Point } from "src/util";
-import { Zone } from "src/engine/objects";
+import { Zone, Tile } from "src/engine/objects";
 
 abstract class AbstractDrawingTool extends AbstractTool implements EventListenerObject {
 	protected _ctx: CanvasRenderingContext2D;
@@ -16,10 +14,10 @@ abstract class AbstractDrawingTool extends AbstractTool implements EventListener
 		this._ctx = overlay.getContext("2d");
 		this._ctx.save();
 		this._ctx.setTransform(
-			window.devicePixelRatio * TileWidth,
+			window.devicePixelRatio * Tile.WIDTH,
 			0,
 			0,
-			window.devicePixelRatio * TileHeight,
+			window.devicePixelRatio * Tile.HEIGHT,
 			0,
 			0
 		);
@@ -123,7 +121,7 @@ abstract class AbstractDrawingTool extends AbstractTool implements EventListener
 		const zone = this.zone;
 
 		const offset = event.offsetIn(this.canvas);
-		const point = offset.scaleBy(1 / TileWidth).floor();
+		const point = offset.scaleBy(1 / Tile.WIDTH).floor();
 		if (point.x < 0 || point.y < 0 || point.x >= zone.size.width || point.y >= zone.size.height)
 			return null;
 

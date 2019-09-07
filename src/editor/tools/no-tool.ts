@@ -2,7 +2,7 @@ import { Zone } from "src/engine/objects";
 
 import AbstractTool from "./abstract-tool";
 import { Point } from "src/util";
-import { WIDTH as TileWidth } from "src/engine/objects/tile";
+import { Tile } from "src/engine/objects";
 
 class NoTool extends AbstractTool implements EventListenerObject {
 	public readonly name = "None";
@@ -55,7 +55,7 @@ class NoTool extends AbstractTool implements EventListenerObject {
 		const zone = this.zone;
 
 		const offset = event.offsetIn(this.canvas);
-		const point = offset.scaleBy(1 / TileWidth).floor();
+		const point = offset.scaleBy(1 / Tile.WIDTH).floor();
 		if (point.x < 0 || point.y < 0 || point.x >= zone.size.width || point.y >= zone.size.height)
 			return null;
 

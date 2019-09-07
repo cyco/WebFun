@@ -1,8 +1,7 @@
 import { Result, Type } from "../types";
 
-import { Action, Tile } from "../../objects";
 import Engine from "../../engine";
-import Instruction from "../../objects/instruction";
+import { Action, Tile, Instruction } from "src/engine/objects";
 
 export default {
 	Opcode: 0x0f,

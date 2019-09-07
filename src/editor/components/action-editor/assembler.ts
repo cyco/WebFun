@@ -1,10 +1,8 @@
 import AST, { s } from "./ast";
 
 import { AbstractActionItemInit } from "src/engine/objects/abstract-action-item";
-import { Action } from "src/engine/objects";
-import Condition from "src/engine/objects/condition";
+import { Action, Condition, Instruction } from "src/engine/objects";
 import { ConditionsByName } from "src/engine/script/conditions";
-import Instruction from "src/engine/objects/instruction";
 import { InstructionsByName } from "src/engine/script/instructions";
 import { MutableAction } from "src/engine/mutable-objects";
 import Symbol from "./symbol";

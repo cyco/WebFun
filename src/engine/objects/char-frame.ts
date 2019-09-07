@@ -1,5 +1,4 @@
-import Tile from "src/engine/objects/tile";
-
+import Tile from "./tile";
 import { CharFrameEntry } from "./char-frame-entry";
 
 class CharFrame {

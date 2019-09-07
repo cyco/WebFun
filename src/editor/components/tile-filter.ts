@@ -1,4 +1,4 @@
-import Tile from "src/engine/objects/tile";
+import { Tile } from "src/engine/objects";
 
 import { SearchDelegate } from "src/ui/components/list";
 

@@ -3,18 +3,16 @@ import "./editor.scss";
 import { default as Assembler, AssemblerInputError } from "src/editor/components/action-editor/assembler";
 import { default as Parser, ParserError } from "src/editor/components/action-editor/parser";
 
-import { Action } from "src/engine/objects";
+import { Action, Zone } from "src/engine/objects";
 import ArgumentProcessor from "./argument-processor";
 import Component from "src/ui/component";
 import Disassembler from "src/editor/components/action-editor/disassembler";
 import GameData from "src/engine/game-data";
-import MutableAction from "src/engine/mutable-objects/mutable-action";
-import MutableZone from "src/engine/mutable-objects/mutable-zone";
+import { MutableAction, MutableZone } from "src/engine/mutable-objects";
 import Printer from "src/editor/components/action-editor/printer";
 import { Shortcut } from "src/ux";
 import ShortcutManager from "src/ux/shortcut-manager";
 import Token from "src/editor/components/action-editor/token";
-import Zone from "src/engine/objects/zone";
 
 class Editor extends Component {
 	static readonly tagName = "wf-action-editor";

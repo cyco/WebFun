@@ -1,6 +1,6 @@
 import BreakpointButton from "./breakpoint-button";
 import BreakpointStore from "../breakpoint-store";
-import Condition from "src/engine/objects/condition";
+import { Condition } from "src/engine/objects";
 import { ConditionsByName as Conditions } from "src/engine/script/conditions";
 import Engine from "src/engine/engine";
 import InstructionThing from "./instruction-thing";

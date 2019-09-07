@@ -2,7 +2,7 @@ import { DagobahGenerator, WorldGenerationError, WorldGenerator } from "src/engi
 import { Planet, WorldSize } from "./types";
 
 import AssetManager from "./asset-manager";
-import Puzzle from "src/engine/objects/puzzle";
+import { Puzzle } from "src/engine/objects";
 import World from "./generation/world";
 import { rand } from "src/util";
 
