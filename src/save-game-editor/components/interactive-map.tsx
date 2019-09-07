@@ -4,8 +4,7 @@ import { ContextMenu } from "src/ui/components";
 import Map from "./map";
 import { Menu } from "src/ui";
 import { Point } from "src/util";
-import { World } from "src/engine/save-game";
-import Sector from "../sector";
+import { World, Sector } from "src/engine/save-game";
 import ZoneView from "./zone-view";
 
 export interface InteractiveMapContextMenuProvider {

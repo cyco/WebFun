@@ -11,10 +11,9 @@ import { InteractiveMapContextMenuProvider } from "./components/interactive-map"
 import { InventoryDelegate } from "./components/inventory";
 import { ModalPrompt } from "src/ux";
 import { PopoverCharacterPicker } from "src/editor/components";
-import { SaveState } from "src/engine/save-game";
+import { SaveState, Sector } from "src/engine/save-game";
 import { Tile } from "src/engine/objects";
 import { World } from "src/engine/save-game";
-import Sector from "./sector";
 import { WorldSize } from "src/engine/types";
 
 class EditorView extends Component implements InventoryDelegate, InteractiveMapContextMenuProvider {
@@ -353,9 +352,11 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 	public inventoryDidAddItem(inventory: Inventory): void {
 		this._updateInventory(inventory.items);
 	}
+
 	public inventoryDidChangeItem(inventory: Inventory): void {
 		this._updateInventory(inventory.items);
 	}
+
 	public inventoryDidRemoveItem(inventory: Inventory): void {
 		this._updateInventory(inventory.items);
 	}
