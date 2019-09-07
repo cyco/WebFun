@@ -1,9 +1,9 @@
-import { Tile, Zone } from "src/engine/objects";
+import { Zone } from "src/engine/objects";
 
 import { Renderer } from "../rendering";
 import { Point } from "src/util";
 import Scene from "./scene";
-import World from "../generation/world";
+import World from "src/engine/world";
 import ZoneScene from "./zone-scene";
 import Settings from "src/settings";
 

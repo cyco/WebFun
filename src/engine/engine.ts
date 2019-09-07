@@ -15,7 +15,7 @@ import { ScriptExecutor } from "./script";
 import State from "./persistent-state";
 import Story from "./story";
 import { GameType as Type } from "./type";
-import { World } from "./generation";
+import World from "./world";
 import { SpeechScene, PickupScene } from "src/engine/scenes";
 import { Point } from "src/util";
 import Settings from "src/settings";

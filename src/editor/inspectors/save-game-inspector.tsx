@@ -8,7 +8,7 @@ import GameController from "src/app/game-controller";
 import { IconButton } from "src/ui/components";
 import MutableStory from "src/engine/mutable-story";
 import SaveGameWorld from "src/engine/save-game/world";
-import { World } from "src/engine/generation";
+import World from "src/engine/world";
 import { Writer } from "src/engine/save-game";
 import { AssetManager } from "src/engine";
 import { Zone, Puzzle, Tile, Sound, Char } from "src/engine/objects";

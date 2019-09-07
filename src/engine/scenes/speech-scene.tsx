@@ -5,7 +5,7 @@ import { ModalSession } from "src/ux";
 import Scene from "./scene";
 import { SpeechBubble } from "src/ui/components";
 import { Tile } from "src/engine/objects";
-import { Sector } from "src/engine/generation";
+import Sector from "src/engine/sector";
 
 class SpeechScene extends Scene {
 	public engine: Engine;

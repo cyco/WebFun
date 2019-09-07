@@ -1,7 +1,7 @@
 import { Story, AssetManager } from "src/engine";
 import { Tile, Zone, Hotspot, Puzzle } from "src/engine/objects";
 
-import { World } from "src/engine/generation";
+import World from "src/engine/world";
 import { WorldSize } from "src/engine/types";
 import { srand, randmod } from "src/util";
 import RoomIterator from "src/engine/room-iterator";

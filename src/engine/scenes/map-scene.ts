@@ -8,7 +8,7 @@ import Scene from "./scene";
 import Settings from "src/settings";
 import SpeechScene from "./speech-scene";
 import RoomTransitionScene from "./room-transition-scene";
-import { World } from "src/engine/generation";
+import World from "src/engine/world";
 import ZoneScene from "./zone-scene";
 
 const MapTileWidth = 28;

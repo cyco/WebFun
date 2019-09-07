@@ -6,7 +6,7 @@ import { default as Engine, Events } from "src/engine/engine";
 import { AbstractWindow } from "src/ui/components";
 import { Direction } from "../ui/location";
 import { Hero } from "src/engine";
-import World from "src/engine/generation/world";
+import World from "src/engine/world";
 import { Zone } from "src/engine/objects";
 
 class MainWindow extends AbstractWindow {

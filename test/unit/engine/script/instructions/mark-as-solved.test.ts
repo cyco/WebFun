@@ -1,6 +1,6 @@
 import { Instruction } from "src/engine/objects";
 import MarkAsSolved from "src/engine/script/instructions/mark-as-solved";
-import { Sector } from "src/engine/generation";
+import Sector from "src/engine/sector";
 
 describeInstruction("MarkAsSolved", (execute, engine) => {
 	it("marks the current zone as solved", async () => {

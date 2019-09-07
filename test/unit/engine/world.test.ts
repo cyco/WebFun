@@ -1,4 +1,4 @@
-import World from "src/engine/generation/world";
+import World from "src/engine/world";
 import { Zone } from "src/engine/objects";
 import { Point } from "src/util";
 

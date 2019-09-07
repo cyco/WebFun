@@ -1,6 +1,6 @@
 import AssetManager from "src/engine/asset-manager";
 import { Tile, Zone, Hotspot, Puzzle } from "src/engine/objects";
-import World from "./world";
+import World from "src/engine/world";
 import WorldGenerator from "./world-generator";
 import Yoda from "src/engine/yoda";
 import { randmod } from "src/util";

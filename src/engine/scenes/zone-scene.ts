@@ -6,7 +6,7 @@ import { MutableHotspot } from "src/engine/mutable-objects";
 import { NullIfMissing } from "src/engine/asset-manager";
 import { Renderer } from "src/engine/rendering";
 import { Sprite } from "../rendering";
-import { Sector } from "src/engine/generation";
+import Sector from "src/engine/sector";
 import { Yoda } from "src/engine";
 import DetonatorScene from "./detonator-scene";
 import Engine from "src/engine/engine";

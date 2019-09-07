@@ -1,21 +1,22 @@
-import { Point, PointLike } from "src/util";
+import { Point, PointLike, Size } from "src/util";
 
 import Sector from "./sector";
-import { Zone } from "../objects";
+import { Zone } from "./objects";
 
 class World {
 	public static readonly WIDTH = 10;
 	public static readonly HEIGHT = 10;
+	public static readonly Size = new Size(10, 10);
 
 	public zones: Zone[] = [];
-	private _items: Sector[];
+	private _sectors: Sector[];
 
 	constructor() {
 		const items = new Array(World.WIDTH * World.HEIGHT);
 		for (let i = 0; i < World.WIDTH * World.HEIGHT; i++) {
 			items[i] = new Sector();
 		}
-		this._items = items;
+		this._sectors = items;
 	}
 
 	getZone(x: number | PointLike, y?: number): Zone {
@@ -31,14 +32,14 @@ class World {
 		}
 
 		const index = this._pointToIndex(x, y);
-		const sector = this._items[index];
+		const sector = this._sectors[index];
 
 		return sector && sector.zone;
 	}
 
 	setZone(x: number, y: number, zone: Zone) {
 		const index = this._pointToIndex(x, y);
-		const sector = this._items[index];
+		const sector = this._sectors[index];
 		sector.zone = zone;
 	}
 
@@ -52,7 +53,7 @@ class World {
 		for (let y = 0; y < World.HEIGHT; y++) {
 			for (let x = 0; x < World.WIDTH; x++) {
 				const index = this._pointToIndex(x, y);
-				const currentZone = this._items[index].zone;
+				const currentZone = this._sectors[index].zone;
 				if (currentZone === zone) {
 					return new Point(x, y);
 				}
@@ -62,7 +63,7 @@ class World {
 		for (let y = 0; y < World.HEIGHT; y++) {
 			for (let x = 0; x < World.WIDTH; x++) {
 				const index = this._pointToIndex(x, y);
-				const currentZone = this._items[index].zone;
+				const currentZone = this._sectors[index].zone;
 				if (currentZone && currentZone.leadsTo(zone, this.zones)) {
 					return new Point(x, y);
 				}
@@ -73,11 +74,11 @@ class World {
 	}
 
 	public at(x: number | PointLike, y?: number): Sector {
-		return this._items[this._pointToIndex(x, y)];
+		return this._sectors[this._pointToIndex(x, y)];
 	}
 
 	index(index: number): Sector {
-		return this._items[index];
+		return this._sectors[index];
 	}
 
 	private _pointToIndex(x: number | PointLike, y?: number) {

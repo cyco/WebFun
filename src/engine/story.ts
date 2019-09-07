@@ -3,7 +3,7 @@ import { Planet, WorldSize } from "./types";
 
 import AssetManager from "./asset-manager";
 import { Puzzle } from "src/engine/objects";
-import World from "./generation/world";
+import World from "./world";
 import { rand } from "src/util";
 
 class Story {
