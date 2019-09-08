@@ -19,43 +19,34 @@ const compareItem = (actual: any, expected: any) => {
 	if (result !== ComparisonResult.Different) return;
 
 	if ((actual.zone ? actual.zone.id : -1) !== expected.zoneID)
-		throw `Difference in zone ids detected! ${actual.zone ? actual.zone.id : -1} !== ${expected.zoneID}`;
+		fail(`Difference in zone ids detected! ${actual.zone ? actual.zone.id : -1} !== ${expected.zoneID}`);
 
-	throw `Difference detected`;
+	fail(`Difference detected`);
 };
 
 const compare = (story: Story, expectation: any) => {
-	if (expectation.world === null && !(story as any)._reseeded) throw `Expected reseed!`;
+	if (expectation.world === null && !(story as any)._reseeded) fail(`Expected reseed!`);
 	else if (expectation.world === null) return;
 
 	/* main world */
-	try {
-		for (let i = 0; i < 100; i++) {
-			compareItem(story.world.at(i), expectation.world[i]);
-		}
-	} catch (e) {
-		throw `World: ${e}`;
+	for (let i = 0; i < 100; i++) {
+		compareItem(story.world.at(i), expectation.world[i]);
 	}
 
 	/* dagobah */
-	try {
-		compareItem(story.dagobah.at(4, 4), expectation.dagobah[0]);
-		compareItem(story.dagobah.at(5, 4), expectation.dagobah[1]);
-		compareItem(story.dagobah.at(4, 5), expectation.dagobah[2]);
-		compareItem(story.dagobah.at(5, 5), expectation.dagobah[3]);
-	} catch (e) {
-		throw `Dagobah: ${e}`;
-	}
+	compareItem(story.dagobah.at(4, 4), expectation.dagobah[0]);
+	compareItem(story.dagobah.at(5, 4), expectation.dagobah[1]);
+	compareItem(story.dagobah.at(4, 5), expectation.dagobah[2]);
+	compareItem(story.dagobah.at(5, 5), expectation.dagobah[3]);
 };
 
 const runTest = ({ seed, planet, size, world, dagobah }: any) => {
 	describe(`World ${seed} ${planet.toString()} ${size.toString()}`, () => {
-		it("is generated correctly", done => {
+		it("is generated correctly", () => {
 			const assetManager = buildAssetManagerFromGameData();
 			const story = new Story(seed, Planet.fromNumber(planet), WorldSize.fromNumber(size));
 			story.generateWorld(assetManager);
-			expect(() => compare(story, { seed, planet, size, world, dagobah })).not.toThrow();
-			done();
+			compare(story, { seed, planet, size, world, dagobah });
 		});
 	});
 };
