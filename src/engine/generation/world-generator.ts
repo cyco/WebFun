@@ -394,8 +394,8 @@ class WorldGenerator {
 		a8: boolean
 	): Zone {
 		let zoneMatchesType = (zone: Zone) => zone.type === zoneType;
-		if (zoneType === Zone.Type.Find || zoneType === Zone.Type.FindTheForce)
-			zoneMatchesType = zone => zone.type === Zone.Type.Find || zone.type === Zone.Type.FindTheForce;
+		if (zoneType === Zone.Type.Find || zoneType === Zone.Type.FindUniqueWeapon)
+			zoneMatchesType = zone => zone.type === Zone.Type.Find || zone.type === Zone.Type.FindUniqueWeapon;
 		const zoneMatchesPlanet = (zone: Zone) => zone.planet === this._planet;
 		const zoneIsUnused = (zone: Zone) =>
 			!this.usedZones.contains(zone) || (zoneType === Zone.Type.Goal && this.puzzlesCanBeReused > 0);
@@ -605,7 +605,7 @@ class WorldGenerator {
 				return true;
 			}
 			case Zone.Type.Find:
-			case Zone.Type.FindTheForce:
+			case Zone.Type.FindUniqueWeapon:
 				if (!this.dropItemAtHotspotRandomly(zone, providedItem)) {
 					return false;
 				}
@@ -892,7 +892,7 @@ class WorldGenerator {
 		return this._assets.getFiltered(Puzzle, puzzle => {
 			switch (zoneType) {
 				case Zone.Type.Find:
-				case Zone.Type.FindTheForce:
+				case Zone.Type.FindUniqueWeapon:
 					return false;
 				case Zone.Type.Use:
 				case Zone.Type.Trade:
@@ -989,9 +989,9 @@ class WorldGenerator {
 
 	private hotspotTypeForTileAttributes(input: number): Hotspot.Type {
 		if ((input & Tile.Attributes.Weapon) !== 0) {
-			return Hotspot.Type.ForceLocation;
+			return Hotspot.Type.WeaponLocation;
 		} else if ((input & (1 << Tile.Subtype.Item.Locator)) !== 0) {
-			return Hotspot.Type.LocatorThingy;
+			return Hotspot.Type.LocatorLocation;
 		} else if ((input & Tile.Attributes.Item) !== 0) {
 			return Hotspot.Type.TriggerLocation;
 		}

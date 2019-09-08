@@ -32,8 +32,8 @@ describe("WebFun.Engine.Objects.ZoneType", () => {
 		expect(ZoneType.Use.name).toBe("Use");
 		expect(ZoneType.Find.name).toBe("Find");
 		expect(ZoneType.Unknown.name).toBe("Unknown");
-		expect(ZoneType.FindTheForce.name).toBe("Find The Force");
-		expect(ZoneType.FindTheForce.toString()).toBe("ZoneType{FindTheForce}");
+		expect(ZoneType.FindUniqueWeapon.name).toBe("Find Unique Weapon");
+		expect(ZoneType.FindUniqueWeapon.toString()).toBe("ZoneType{FindUniqueWeapon}");
 	});
 
 	it("can be represented as a number", () => {
@@ -55,7 +55,7 @@ describe("WebFun.Engine.Objects.ZoneType", () => {
 		expect(ZoneType.Trade.rawValue).toBe(15);
 		expect(ZoneType.Use.rawValue).toBe(16);
 		expect(ZoneType.Find.rawValue).toBe(17);
-		expect(ZoneType.FindTheForce.rawValue).toBe(18);
+		expect(ZoneType.FindUniqueWeapon.rawValue).toBe(18);
 		expect(ZoneType.Unknown.rawValue).toBe(9999);
 	});
 

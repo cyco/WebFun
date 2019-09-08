@@ -19,7 +19,7 @@ class ZoneType {
 	public static readonly Trade = new ZoneType();
 	public static readonly Use = new ZoneType();
 	public static readonly Find = new ZoneType();
-	public static readonly FindTheForce = new ZoneType();
+	public static readonly FindUniqueWeapon = new ZoneType();
 
 	public static readonly Unknown = new ZoneType();
 
@@ -44,7 +44,7 @@ class ZoneType {
 		ZoneType.Trade,
 		ZoneType.Use,
 		ZoneType.Find,
-		ZoneType.FindTheForce
+		ZoneType.FindUniqueWeapon
 	];
 
 	get rawValue(): number {
@@ -88,8 +88,8 @@ class ZoneType {
 				return "Use";
 			case ZoneType.Find:
 				return "Find";
-			case ZoneType.FindTheForce:
-				return "Find The Force";
+			case ZoneType.FindUniqueWeapon:
+				return "Find Unique Weapon";
 			case ZoneType.UnknownIndyOnly:
 				return "Unknown (indy)";
 

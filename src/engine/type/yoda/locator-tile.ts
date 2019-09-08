@@ -42,7 +42,7 @@ export default class extends LocatorTile {
 			case Zone.Type.Use:
 			case Zone.Type.Trade:
 			case Zone.Type.Find:
-			case Zone.Type.FindTheForce:
+			case Zone.Type.FindUniqueWeapon:
 				return [0x331, 0x332];
 			default:
 				return 0x340;

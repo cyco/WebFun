@@ -92,8 +92,8 @@ const makeHotspot = (raw: RawHotspot, idx: number, _: any): Hotspot => {
 	switch (hotspot.type) {
 		case Hotspot.Type.TriggerLocation:
 		case Hotspot.Type.SpawnLocation:
-		case Hotspot.Type.ForceLocation:
-		case Hotspot.Type.LocatorThingy:
+		case Hotspot.Type.WeaponLocation:
+		case Hotspot.Type.LocatorLocation:
 			hotspot.enabled = false;
 			break;
 		case Hotspot.Type.VehicleTo:

@@ -219,7 +219,7 @@ class MapScene extends Scene {
 				if (sector.zone.solved) return StringID.GoalSolved;
 				return StringID.aUnknown;
 			case Zone.Type.Find:
-			case Zone.Type.FindTheForce:
+			case Zone.Type.FindUniqueWeapon:
 				if (!sector.findItem) return StringID.None;
 				if (sector.zone.solved) return StringID.Solved;
 				if (sector.findItem.isLocator()) return [StringID.find, StringID.aMap];

@@ -13,10 +13,10 @@ describe("WebFun.Engine.Objects.HotspotType", () => {
 	it("can be represented as a string", () => {
 		expect(HotspotType.TriggerLocation.name).toBe("TriggerLocation");
 		expect(HotspotType.SpawnLocation.name).toBe("SpawnLocation");
-		expect(HotspotType.ForceLocation.name).toBe("ForceLocation");
+		expect(HotspotType.WeaponLocation.name).toBe("WeaponLocation");
 		expect(HotspotType.VehicleTo.name).toBe("VehicleTo");
 		expect(HotspotType.VehicleBack.name).toBe("VehicleBack");
-		expect(HotspotType.LocatorThingy.name).toBe("LocatorThingy");
+		expect(HotspotType.LocatorLocation.name).toBe("LocatorLocation");
 		expect(HotspotType.CrateItem.name).toBe("CrateItem");
 		expect(HotspotType.PuzzleNPC.name).toBe("PuzzleNPC");
 		expect(HotspotType.CrateWeapon.name).toBe("CrateWeapon");
@@ -34,10 +34,10 @@ describe("WebFun.Engine.Objects.HotspotType", () => {
 	it("can be represented as a number", () => {
 		expect(HotspotType.TriggerLocation.rawValue).toBe(0);
 		expect(HotspotType.SpawnLocation.rawValue).toBe(1);
-		expect(HotspotType.ForceLocation.rawValue).toBe(2);
+		expect(HotspotType.WeaponLocation.rawValue).toBe(2);
 		expect(HotspotType.VehicleTo.rawValue).toBe(3);
 		expect(HotspotType.VehicleBack.rawValue).toBe(4);
-		expect(HotspotType.LocatorThingy.rawValue).toBe(5);
+		expect(HotspotType.LocatorLocation.rawValue).toBe(5);
 		expect(HotspotType.CrateItem.rawValue).toBe(6);
 		expect(HotspotType.PuzzleNPC.rawValue).toBe(7);
 		expect(HotspotType.CrateWeapon.rawValue).toBe(8);

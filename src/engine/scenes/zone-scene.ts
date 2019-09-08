@@ -528,8 +528,8 @@ class ZoneScene extends Scene {
 			if (
 				![
 					Hotspot.Type.TriggerLocation,
-					Hotspot.Type.ForceLocation,
-					Hotspot.Type.LocatorThingy,
+					Hotspot.Type.WeaponLocation,
+					Hotspot.Type.LocatorLocation,
 					Hotspot.Type.Unused,
 					Hotspot.Type.CrateItem,
 					Hotspot.Type.CrateWeapon

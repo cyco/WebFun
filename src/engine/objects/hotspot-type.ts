@@ -1,10 +1,10 @@
 class HotspotType {
 	public static readonly TriggerLocation = new HotspotType();
 	public static readonly SpawnLocation = new HotspotType();
-	public static readonly ForceLocation = new HotspotType();
+	public static readonly WeaponLocation = new HotspotType();
 	public static readonly VehicleTo = new HotspotType();
 	public static readonly VehicleBack = new HotspotType();
-	public static readonly LocatorThingy = new HotspotType();
+	public static readonly LocatorLocation = new HotspotType();
 	public static readonly CrateItem = new HotspotType();
 	public static readonly PuzzleNPC = new HotspotType();
 	public static readonly CrateWeapon = new HotspotType();
@@ -19,10 +19,10 @@ class HotspotType {
 	public static readonly knownTypes = [
 		HotspotType.TriggerLocation,
 		HotspotType.SpawnLocation,
-		HotspotType.ForceLocation,
+		HotspotType.WeaponLocation,
 		HotspotType.VehicleTo,
 		HotspotType.VehicleBack,
-		HotspotType.LocatorThingy,
+		HotspotType.LocatorLocation,
 		HotspotType.CrateItem,
 		HotspotType.PuzzleNPC,
 		HotspotType.CrateWeapon,
@@ -45,14 +45,14 @@ class HotspotType {
 				return "TriggerLocation";
 			case HotspotType.SpawnLocation:
 				return "SpawnLocation";
-			case HotspotType.ForceLocation:
-				return "ForceLocation";
+			case HotspotType.WeaponLocation:
+				return "WeaponLocation";
 			case HotspotType.VehicleTo:
 				return "VehicleTo";
 			case HotspotType.VehicleBack:
 				return "VehicleBack";
-			case HotspotType.LocatorThingy:
-				return "LocatorThingy";
+			case HotspotType.LocatorLocation:
+				return "LocatorLocation";
 			case HotspotType.CrateItem:
 				return "CrateItem";
 			case HotspotType.PuzzleNPC:

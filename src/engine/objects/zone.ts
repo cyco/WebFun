@@ -140,8 +140,8 @@ class Zone {
 					/* intentional fallthrough */
 					case Hotspot.Type.TriggerLocation:
 					case Hotspot.Type.SpawnLocation:
-					case Hotspot.Type.ForceLocation:
-					case Hotspot.Type.LocatorThingy:
+					case Hotspot.Type.WeaponLocation:
+					case Hotspot.Type.LocatorLocation:
 					case Hotspot.Type.CrateItem:
 					case Hotspot.Type.PuzzleNPC:
 					case Hotspot.Type.CrateWeapon:

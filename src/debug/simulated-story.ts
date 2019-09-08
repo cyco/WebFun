@@ -79,12 +79,12 @@ class SimulatedStory extends Story {
 				// this.dropNPCAtHotspotRandomly(zone, npc);
 				break;
 			case Zone.Type.Find:
-			case Zone.Type.FindTheForce:
+			case Zone.Type.FindUniqueWeapon:
 				const hotspotTypeForTileAttributes = (input: number) => {
 					if ((input & Tile.Attributes.Weapon) !== 0) {
-						return Hotspot.Type.ForceLocation;
+						return Hotspot.Type.WeaponLocation;
 					} else if ((input & (1 << Tile.Subtype.Item.Locator)) !== 0) {
-						return Hotspot.Type.LocatorThingy;
+						return Hotspot.Type.LocatorLocation;
 					} else if ((input & Tile.Attributes.Item) !== 0) {
 						return Hotspot.Type.TriggerLocation;
 					}

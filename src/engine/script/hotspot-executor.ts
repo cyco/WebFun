@@ -56,7 +56,7 @@ class HotspotExecutor {
 			hotspot.type === Hotspot.Type.TriggerLocation ||
 			hotspot.type === Hotspot.Type.CrateItem ||
 			hotspot.type === Hotspot.Type.CrateWeapon ||
-			hotspot.type === Hotspot.Type.ForceLocation
+			hotspot.type === Hotspot.Type.WeaponLocation
 		) {
 			zone.setTile(tile, location);
 		} else return;
