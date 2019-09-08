@@ -6,7 +6,7 @@ import AbstractInspector from "./abstract-inspector";
 import { EditorView } from "src/save-game-editor";
 import GameController from "src/app/game-controller";
 import { IconButton } from "src/ui/components";
-import MutableStory from "src/engine/mutable-story";
+import MutableStory from "src/editor/mutable-story";
 import World from "src/engine/world";
 import { Writer } from "src/engine/save-game";
 import { AssetManager } from "src/engine";
