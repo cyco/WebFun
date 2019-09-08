@@ -132,7 +132,7 @@ class TestCreatorWindow extends AbstractWindow {
 			t(requiredItem2),
 			z(zone),
 			adjacentZones(z(zone), this._gameController.data.zones),
-			this._gameController.data.zones
+			assets
 		);
 	}
 

@@ -28,8 +28,7 @@ class DagobahGenerator {
 
 	generate(generator: WorldGenerator): void {
 		const assets = this.assets;
-		const dagobah = new World();
-		dagobah.zones = assets.getAll(Zone);
+		const dagobah = new World(this.assets);
 
 		dagobah.at(4, 4).zone = assets.get(Zone, Yoda.Zone.DagobahNorthWest);
 		dagobah.at(4, 4).zoneType = Zone.Type.Find;

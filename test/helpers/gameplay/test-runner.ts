@@ -52,7 +52,7 @@ const run = (prefix: string, fileName: string, testFileContents: string) => {
 					t(requiredItem2),
 					z(zone),
 					surroundingZones(z(zone)),
-					engine.assetManager.getAll(Zone)
+					engine.assetManager
 				);
 			}
 

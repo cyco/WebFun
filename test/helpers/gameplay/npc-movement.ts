@@ -93,7 +93,7 @@ const makeFunction = (describe: any): DescribeNPCMovement => (
 					null,
 					vars.zone,
 					Array.Repeat(vars.zone, 8),
-					assets.getAll(Zone)
+					assets
 				);
 			}
 

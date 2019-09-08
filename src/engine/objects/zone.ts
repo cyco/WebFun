@@ -7,6 +7,7 @@ import ZoneLayer from "./zone-layer";
 import NPC from "./npc";
 import { Planet } from "../types";
 import Tile from "./tile";
+import AssetManager, { NullIfMissing } from "src/engine/asset-manager";
 
 const TILE_ADEGAN_CRYSTAL = 12;
 
@@ -96,13 +97,13 @@ class Zone {
 		return !object;
 	}
 
-	leadsTo(needleZone: Zone, allZones: Zone[]): boolean {
+	leadsTo(needleZone: Zone, assets: AssetManager): boolean {
 		if (needleZone === this) return true;
 
 		for (const hotspot of this._hotspots) {
 			if (hotspot.type === Hotspot.Type.DoorIn && hotspot.arg !== -1) {
-				const zone = allZones[hotspot.arg];
-				if (zone.leadsTo(needleZone, allZones)) return true;
+				const zone = assets.get(Zone, hotspot.arg, NullIfMissing);
+				if (zone.leadsTo(needleZone, assets)) return true;
 			}
 		}
 

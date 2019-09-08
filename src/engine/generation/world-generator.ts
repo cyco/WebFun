@@ -60,8 +60,7 @@ class WorldGenerator {
 		const mapGenerator = (this.mapGenerator = new MapGenerator());
 		mapGenerator.generate(-1, this._size);
 
-		this.world = new World();
-		this.world.zones = this._assets.getAll(Zone);
+		this.world = new World(this._assets);
 		for (let i = 0; i < 100; i++) {
 			this.world.at(i).puzzleIndex = mapGenerator.orderMap[i];
 		}
@@ -849,7 +848,7 @@ class WorldGenerator {
 		defaultReturn: T,
 		predicate = (result: T) => result !== defaultReturn
 	): T {
-		for (const room of RoomIterator(zone, this._assets.getAll(Zone))) {
+		for (const room of RoomIterator(zone, this._assets)) {
 			const result = callback(room);
 			if (predicate(result)) {
 				return result;

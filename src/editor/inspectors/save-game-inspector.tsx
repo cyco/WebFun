@@ -101,7 +101,14 @@ class SaveGameInspector extends AbstractInspector {
 	}
 
 	private _createWorld(world: World): World {
-		const result = new World();
+		const data = this._editorView.data;
+		const assets = new AssetManager();
+		assets.populate(Zone, data.zones);
+		assets.populate(Tile, data.tiles);
+		assets.populate(Puzzle, data.puzzles);
+		assets.populate(Char, data.characters);
+		assets.populate(Sound, data.sounds);
+		const result = new World(assets);
 
 		for (let y = 0; y < 10; y++) {
 			for (let x = 0; x < 10; x++) {

@@ -1,4 +1,5 @@
 import { Tile, Zone } from "src/engine/objects";
+import AssetManager from "./asset-manager";
 
 class Sector {
 	public additionalRequiredItem: Tile = null;
@@ -17,11 +18,11 @@ class Sector {
 	public zone: Zone = null;
 	public zoneType: Zone.Type = null;
 
-	public containsZone(zone: Zone, zones: Zone[]): boolean {
+	public containsZone(zone: Zone, assets: AssetManager): boolean {
 		if (!this.zone) return false;
 		if (zone === this.zone) return true;
 
-		return this.zone.leadsTo(zone, zones);
+		return this.zone.leadsTo(zone, assets);
 	}
 }
 

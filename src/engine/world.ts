@@ -3,19 +3,20 @@ import { Point, PointLike, Size, Rectangle } from "src/util";
 import Sector from "./sector";
 import { Zone } from "./objects";
 import { floor } from "src/std/math";
+import AssetManager from "./asset-manager";
 
 class World {
 	public static readonly Size = new Size(10, 10);
-
-	public zones: Zone[] = [];
 	private _sectors: Sector[];
+	private _assets: AssetManager;
 
-	constructor() {
+	constructor(assets: AssetManager) {
 		const items = new Array(World.Size.width * World.Size.height);
 		for (let i = 0; i < World.Size.width * World.Size.height; i++) {
 			items[i] = new Sector();
 		}
 		this._sectors = items;
+		this._assets = assets;
 	}
 
 	public findSectorContainingZone(zone: Zone): Sector {
@@ -25,7 +26,7 @@ class World {
 	}
 
 	public findLocationOfZone(zone: Zone): Point {
-		const index = this._sectors.findIndex(s => s.containsZone(zone, this.zones));
+		const index = this._sectors.findIndex(s => s.containsZone(zone, this._assets));
 		if (index === -1) return null;
 
 		return new Point(index % World.Size.width, floor(index / World.Size.height));

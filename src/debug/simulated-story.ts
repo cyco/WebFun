@@ -8,7 +8,8 @@ import RoomIterator from "src/engine/room-iterator";
 import * as Type from "src/engine/types";
 
 class SimulatedStory extends Story {
-	private readonly allZones: Zone[];
+	private readonly assets: AssetManager;
+
 	constructor(
 		find: Tile,
 		npc: Tile,
@@ -16,13 +17,13 @@ class SimulatedStory extends Story {
 		required2: Tile,
 		mainZone: Zone,
 		surroundingZones: Zone[],
-		allZones: Zone[]
+		assets: AssetManager
 	) {
 		super(0, mainZone.planet, WorldSize.Small);
 		srand(0);
 
-		this.allZones = allZones;
-		this._buildWorld(mainZone, surroundingZones, allZones);
+		this.assets = assets;
+		this._buildWorld(mainZone, surroundingZones, assets);
 		this._buildPuzzle(mainZone, find, npc, required, required2);
 		this._initializeZone(mainZone, find, npc, required, required2);
 	}
@@ -35,9 +36,8 @@ class SimulatedStory extends Story {
 		item.additionalRequiredItem = required2;
 	}
 
-	private _buildWorld(zone: Zone, surroundingZones: Zone[], zones: Zone[]) {
-		const world = new World();
-		world.zones = zones;
+	private _buildWorld(zone: Zone, surroundingZones: Zone[], assets: AssetManager) {
+		const world = new World(assets);
 		world.at(4, 4).zone = zone;
 		world.at(3, 3).zone = surroundingZones[0];
 		world.at(4, 3).zone = surroundingZones[1];
@@ -49,8 +49,7 @@ class SimulatedStory extends Story {
 		world.at(5, 5).zone = surroundingZones[7];
 		this._world = world;
 
-		this._dagobah = new World();
-		this._dagobah.zones = zones;
+		this._dagobah = new World(assets);
 	}
 
 	private _initializeZone(zone: Zone, find: Tile, _npc: Tile, _required: Tile, _required2: Tile) {
@@ -91,7 +90,7 @@ class SimulatedStory extends Story {
 					}
 				};
 				const type = hotspotTypeForTileAttributes(find.attributes);
-				for (const room of RoomIterator(zone, this.allZones)) {
+				for (const room of RoomIterator(zone, this.assets)) {
 					const candidates = room.hotspots.withType(type);
 					if (!candidates.length) continue;
 					const hotspot = candidates[randmod(candidates.length)];
@@ -108,7 +107,7 @@ class SimulatedStory extends Story {
 	}
 
 	generateWorld(assets: AssetManager): void {
-		const copy = new World();
+		const copy = new World(assets);
 
 		const mapItem = (i: Tile) => i && assets.get(Tile, i.id);
 		const mapZone = (z: Zone) => z && assets.get(Zone, z.id);
@@ -127,7 +126,6 @@ class SimulatedStory extends Story {
 				copiedItem.findItem = mapItem(item.findItem);
 			}
 		}
-		copy.zones = this._world.zones.map(mapZone);
 
 		this._world = copy;
 		this._dagobah = copy;

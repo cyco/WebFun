@@ -1,14 +1,17 @@
 import World from "src/engine/world";
 import { Zone } from "src/engine/objects";
 import { Point } from "src/util";
+import { AssetManager } from "src/engine";
 
 describe("WebFun.Engine.World", () => {
 	let subject: World = null;
 	let zone: Zone = null;
+	let assets: AssetManager = null;
+
 	beforeEach(() => {
-		subject = new World();
 		zone = new Zone();
-		subject.zones = [zone];
+		assets = { get: () => zone } as any;
+		subject = new World(assets);
 	});
 
 	it("knows the standard size of a world", () => {

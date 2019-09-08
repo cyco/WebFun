@@ -174,7 +174,7 @@ abstract class Reader {
 	}
 
 	protected readWorld(stream: InputStream, xRange: Range, yRange: Range): World {
-		const world = new World();
+		const world = new World(this._assets);
 
 		for (let y = yRange.start; y < yRange.end; y++) {
 			for (let x = xRange.start; x < xRange.end; x++) {
@@ -182,7 +182,9 @@ abstract class Reader {
 				world.replaceSector(x, y, item);
 			}
 		}
+
 		this.readWorldDetails(stream);
+
 		return world;
 	}
 
