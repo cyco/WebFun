@@ -1,7 +1,7 @@
 import InventoryComponent, { Events as InventoryEvent } from "src/app/ui/inventory";
 import InventoryRow from "src/app/ui/inventory-row";
 import Inventory from "src/engine/inventory";
-import Yoda from "src/engine/yoda";
+import { Yoda } from "src/engine/type";
 import { Tile } from "src/engine/objects";
 
 xdescribeComponent(InventoryComponent, () => {
@@ -58,11 +58,11 @@ xdescribeComponent(InventoryComponent, () => {
 		describe("row click handlers", () => {
 			it("notifies when an item is clicked", done => {
 				const inventory = new Inventory();
-				inventory.addItem(mockTile(Yoda.ItemIDs.Locator));
+				inventory.addItem(mockTile(Yoda.tileIDs.Locator));
 				subject.inventory = inventory;
 
 				subject.addEventListener(InventoryEvent.ItemActivated, (e: any) => {
-					expect(e.detail.item.id).toBe(Yoda.ItemIDs.Locator);
+					expect(e.detail.item.id).toBe(Yoda.tileIDs.Locator);
 					expect(e.detail.row).toBe(0);
 
 					done();

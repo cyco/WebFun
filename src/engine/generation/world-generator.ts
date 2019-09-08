@@ -16,7 +16,7 @@ import WorldGenerationError from "./world-generation-error";
 import Sector from "src/engine/sector";
 import SectorType from "./sector-type";
 import RoomIterator from "../room-iterator";
-import Yoda from "src/engine/yoda";
+import { Yoda } from "src/engine/type";
 import { MutablePuzzle } from "src/engine/mutable-objects";
 
 declare global {
@@ -82,12 +82,12 @@ class WorldGenerator {
 		// FIXME: Two puzzles are only available after a certain amount of games have been won. This is basically
 		// what the original implementation did, but there's got to be a better way.
 		if (gamesWon >= 1) {
-			const puzzle = (this._assets.get(Puzzle, Yoda.Goal.RescueYoda) as any) as MutablePuzzle;
+			const puzzle: MutablePuzzle = this._assets.get(Puzzle, Yoda.goalIDs.RESCUE_YODA) as any;
 			puzzle.type = Puzzle.Type.End;
 		}
 
 		if (gamesWon >= 10) {
-			const puzzle = (this._assets.get(Puzzle, Yoda.Goal.Car) as any) as MutablePuzzle;
+			const puzzle: MutablePuzzle = this._assets.get(Puzzle, Yoda.goalIDs.CAR) as any;
 			puzzle.type = Puzzle.Type.End;
 		}
 
@@ -106,8 +106,8 @@ class WorldGenerator {
 		this.placePuzzlesZones(puzzles2Count - 1, mapGenerator.orderMap);
 		this.determineBlockadeAndTownZones(mapGenerator.typeMap);
 
-		this.addProvidedItemQuest(this.lookupTileById(Type.THE_FORCE), 2);
-		this.addProvidedItemQuest(this.lookupTileById(Type.LOCATOR), 1);
+		this.addProvidedItemQuest(this.lookupTileById(Yoda.tileIDs.TheForce), 2);
+		this.addProvidedItemQuest(this.lookupTileById(Yoda.tileIDs.Locator), 1);
 		this.determineFindZones(mapGenerator.typeMap);
 		this.determineTeleporters(mapGenerator.typeMap);
 
@@ -988,11 +988,11 @@ class WorldGenerator {
 	}
 
 	private hotspotTypeForTileAttributes(input: number): Hotspot.Type {
-		if ((input & Type.TILE_SPEC_THE_FORCE) !== 0) {
+		if ((input & Tile.Attributes.Weapon) !== 0) {
 			return Hotspot.Type.ForceLocation;
-		} else if ((input & Type.TILE_SPEC_MAP) !== 0) {
+		} else if ((input & (1 << Tile.Subtype.Item.Locator)) !== 0) {
 			return Hotspot.Type.LocatorThingy;
-		} else if ((input & Type.TILE_SPEC_USEFUL) !== 0) {
+		} else if ((input & Tile.Attributes.Item) !== 0) {
 			return Hotspot.Type.TriggerLocation;
 		}
 	}

@@ -1,4 +1,4 @@
-import { Yoda } from "src/engine";
+import { Yoda } from "src/engine/type";
 import Weapons from "src/engine/cheats/weapons";
 import { Tile } from "src/engine/objects";
 import { AssetManager, Engine } from "src/engine";
@@ -31,14 +31,14 @@ describe("WebFun.Engine.Cheats.Weapons", () => {
 		subject.execute((mockEngine as any) as Engine);
 
 		expect(items).toEqual([
-			Yoda.ItemIDs.ThermalDetonator,
-			Yoda.ItemIDs.ThermalDetonator,
-			Yoda.ItemIDs.ThermalDetonator,
-			Yoda.ItemIDs.ThermalDetonator,
-			Yoda.ItemIDs.ThermalDetonator,
-			Yoda.ItemIDs.BlasterRifle,
-			Yoda.ItemIDs.Blaster,
-			Yoda.ItemIDs.TheForce
+			Yoda.tileIDs.ThermalDetonator,
+			Yoda.tileIDs.ThermalDetonator,
+			Yoda.tileIDs.ThermalDetonator,
+			Yoda.tileIDs.ThermalDetonator,
+			Yoda.tileIDs.ThermalDetonator,
+			Yoda.tileIDs.BlasterRifle,
+			Yoda.tileIDs.Blaster,
+			Yoda.tileIDs.TheForce
 		]);
 	});
 });

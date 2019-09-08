@@ -7,17 +7,7 @@ import {
 	Weapon as WeaponComponent
 } from "./ui";
 import { Char, Tile, Zone, Sound, Puzzle } from "src/engine/objects";
-import {
-	ColorPalette,
-	Engine,
-	GameData,
-	Hero,
-	Story,
-	AssetManager,
-	GameType,
-	Interface,
-	Yoda
-} from "src/engine";
+import { ColorPalette, Engine, GameData, Hero, Story, AssetManager, GameType, Interface } from "src/engine";
 import { ConfirmationResult, ModalConfirm } from "src/ux";
 import { EventTarget, Point, Rectangle, Size } from "src/util";
 import { FilePicker, WindowManager } from "src/ui";
@@ -35,6 +25,7 @@ import ResourceManager from "./resource-manager";
 import CursorManager from "./input/cursor-manager";
 import { Channel } from "src/engine/audio";
 import { Mixer } from "./audio";
+import { Yoda } from "src/engine/type";
 
 export const Event = {
 	DidLoadData: "didLoadData"
@@ -71,10 +62,10 @@ class GameController extends EventTarget {
 				return;
 			}
 
-			if (engine.inventory.contains(Yoda.ItemIDs.SpiritHeart)) {
+			if (engine.inventory.contains(Yoda.tileIDs.SpiritHeart)) {
 				engine.hero.health = Hero.MaxHealth;
-				engine.inventory.removeItem(Yoda.ItemIDs.SpiritHeart);
-				const flourish = engine.assetManager.get(Sound, Yoda.Sound.Flourish);
+				engine.inventory.removeItem(Yoda.tileIDs.SpiritHeart);
+				const flourish = engine.assetManager.get(Sound, Yoda.sounds.Flourish);
 				engine.mixer.play(flourish, Channel.Effect);
 				return;
 			}

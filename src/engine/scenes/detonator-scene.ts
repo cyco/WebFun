@@ -3,7 +3,7 @@ import Engine from "../engine";
 import { Point } from "src/util";
 import Scene from "./scene";
 import { Tile } from "src/engine/objects";
-import { Yoda } from "src/engine";
+import { Yoda } from "src/engine/type";
 import { drawTileImageData } from "src/app/rendering";
 import { abs } from "src/std/math";
 
@@ -14,7 +14,7 @@ class DetonatorScene extends Scene {
 	private _engine: Engine = null;
 
 	public willShow() {
-		this.engine.inventory.removeItem(Yoda.ItemIDs.ThermalDetonator);
+		this.engine.inventory.removeItem(Yoda.tileIDs.ThermalDetonator);
 		this._ticks = 0;
 	}
 
@@ -73,7 +73,7 @@ class DetonatorScene extends Scene {
 
 		if (this._engine) {
 			this._detonatorFrames = [];
-			for (const id of Yoda.Animation.Detonator) {
+			for (const id of Yoda.animations.ThermanDetonatorAnimation) {
 				drawTileImageData(e.assetManager.get(Tile, id), e.palette.original)
 					.toImage()
 					.then(i => this._detonatorFrames.push(i));

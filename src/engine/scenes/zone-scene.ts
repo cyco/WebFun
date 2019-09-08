@@ -7,7 +7,7 @@ import { NullIfMissing } from "src/engine/asset-manager";
 import { Renderer } from "src/engine/rendering";
 import { Sprite } from "../rendering";
 import Sector from "src/engine/sector";
-import { Yoda } from "src/engine";
+import { Yoda } from "src/engine/type";
 import DetonatorScene from "./detonator-scene";
 import Engine from "src/engine/engine";
 import Hero from "src/engine/hero";
@@ -567,7 +567,7 @@ class ZoneScene extends Scene {
 			return ScriptResult.Done;
 		}
 
-		if (tile.id === Yoda.ItemIDs.ThermalDetonator) {
+		if (tile.id === Yoda.tileIDs.ThermalDetonator) {
 			const scene = new DetonatorScene();
 			scene.detonatorLocation = location;
 			engine.inputManager.clear();

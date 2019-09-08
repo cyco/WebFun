@@ -1,5 +1,5 @@
 import { Events, default as Inventory } from "src/engine/inventory";
-import { Yoda } from "src/engine";
+import { Yoda } from "src/engine/type";
 import { Tile } from "src/engine/objects";
 
 describe("WebFun.Engine.Inventory", () => {
@@ -74,9 +74,9 @@ describe("WebFun.Engine.Inventory", () => {
 	it("keeps the locator on top", () => {
 		subject.addItem(({ id: 3 } as any) as Tile);
 		subject.addItem(({ id: 4 } as any) as Tile);
-		subject.addItem(({ id: Yoda.ItemIDs.Locator } as any) as Tile);
+		subject.addItem(({ id: Yoda.tileIDs.Locator } as any) as Tile);
 
-		expect((subject as any)._items[0].id).toEqual(Yoda.ItemIDs.Locator);
+		expect((subject as any)._items[0].id).toEqual(Yoda.tileIDs.Locator);
 	});
 
 	describe("Events", () => {

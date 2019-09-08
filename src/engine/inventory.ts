@@ -1,6 +1,6 @@
 import { EventTarget } from "src/util";
 import { Tile } from "./objects";
-import Yoda from "./yoda";
+import { Yoda } from "./type";
 
 export const Events = {
 	ItemsDidChange: "ItemsDidChange"
@@ -19,7 +19,7 @@ class Inventory extends EventTarget {
 
 	public addItem(item: Tile): void {
 		let index = this._items.length;
-		if (item.id === Yoda.ItemIDs.Locator) {
+		if (item.id === Yoda.tileIDs.Locator) {
 			index = 0;
 		}
 		this._items.splice(index, 0, item);

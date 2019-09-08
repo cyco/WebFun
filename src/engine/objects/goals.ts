@@ -1,35 +1,36 @@
 import Planet from "src/engine/types/planet";
-import * as ItemType from "../types";
+import { Yoda } from "src/engine/type";
 
-export default new Map<Planet, Set<number>>([
-	[
-		Planet.TATOOINE,
-		new Set([
-			ItemType.GOAL_FALCON,
-			ItemType.GOAL_HAN,
-			ItemType.GOAL_AMULET,
-			ItemType.GOAL_ADEGAN_CRYSTAL,
-			ItemType.GOAL_THREEPIOS_PARTS
-		])
-	],
-	[
-		Planet.HOTH,
-		new Set([
-			ItemType.GOAL_GENERAL_MARUTZ,
-			ItemType.GOAL_HIDDEN_FACTORY,
-			ItemType.GOAL_WARN_THE_REBELS,
-			ItemType.GOAL_RESCUE_YODA,
-			ItemType.GOAL_CAR
-		])
-	],
-	[
-		Planet.ENDOR,
-		new Set([
-			ItemType.GOAL_FIND_LEIA,
-			ItemType.GOAL_IMPERIAL_BATTLE_STATION,
-			ItemType.GOAL_LANTERN_OF_SACRED_LIGHT,
-			ItemType.GOAL_IMPERIAL_BATTLE_CODE,
-			ItemType.GOAL_RELAY_STATION
-		])
-	]
-]);
+export default () =>
+	new Map<Planet, Set<number>>([
+		[
+			Planet.TATOOINE,
+			new Set([
+				Yoda.goalIDs.FALCON,
+				Yoda.goalIDs.HAN,
+				Yoda.goalIDs.AMULET,
+				Yoda.goalIDs.ADEGAN_CRYSTAL,
+				Yoda.goalIDs.THREEPIOS_PARTS
+			])
+		],
+		[
+			Planet.HOTH,
+			new Set([
+				Yoda.goalIDs.GENERAL_MARUTZ,
+				Yoda.goalIDs.HIDDEN_FACTORY,
+				Yoda.goalIDs.WARN_THE_REBELS,
+				Yoda.goalIDs.RESCUE_YODA,
+				Yoda.goalIDs.CAR
+			])
+		],
+		[
+			Planet.ENDOR,
+			new Set([
+				Yoda.goalIDs.FIND_LEIA,
+				Yoda.goalIDs.IMPERIAL_BATTLE_STATION,
+				Yoda.goalIDs.LANTERN_OF_SACRED_LIGHT,
+				Yoda.goalIDs.IMPERIAL_BATTLE_CODE,
+				Yoda.goalIDs.RELAY_STATION
+			])
+		]
+	]);

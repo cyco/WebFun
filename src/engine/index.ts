@@ -11,7 +11,6 @@ import Metronome from "./metronome";
 import PersistentState from "./persistent-state";
 import SceneManager from "./scene-manager";
 import Story from "./story";
-import Yoda from "./yoda";
 import readGameDataFile from "./file-format";
 import { Scene } from "./scenes";
 import Loader from "./loader";
@@ -42,7 +41,6 @@ export {
 	SceneManager,
 	Interface,
 	Story,
-	Yoda,
 	AssetManager,
 	ResourceManager
 };

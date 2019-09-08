@@ -17,7 +17,9 @@ class Puzzle {
 	protected _unknown3: number = null;
 
 	public isGoalOnPlanet(planet: Planet): boolean {
-		return Goals.get(planet).has(this.id);
+		return Goals()
+			.get(planet)
+			.has(this.id);
 	}
 
 	get id() {

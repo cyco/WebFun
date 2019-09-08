@@ -4,45 +4,46 @@ import GameType from "../type";
 import LocatorTile from "./locator-tile";
 import Sounds from "./sounds";
 import Strings from "./strings";
-import TileID from "./tile-ids";
+import Animations from "./animations";
+import CharIDs from "./char-ids";
+import GoalIDs from "./goal-ids";
+import ZoneIDs from "./zone-ids";
+import TileIDs from "./tile-ids";
 
 class Yoda extends GameType {
-	get name() {
-		return "Yoda Stories";
-	}
+	public static readonly goalIDs = GoalIDs;
+	public static readonly zoneIDs = ZoneIDs;
+	public static readonly charIDs = CharIDs;
+	public static readonly animations = Animations;
+	public static readonly tileIDs = TileIDs;
 
-	get saveGameMagic() {
-		return "YODASAV44";
-	}
-
-	get locatorTile() {
-		return new LocatorTile();
-	}
-
-	get strings() {
-		return Strings;
-	}
-
-	get sounds() {
-		return Sounds;
-	}
+	public readonly name = "Yoda Stories";
+	public readonly saveGameMagic = "YODASAV44";
+	public readonly locatorTile = new LocatorTile();
+	public readonly strings = Strings;
+	public readonly sounds = Sounds;
+	public readonly goalIDs = GoalIDs;
+	public readonly zoneIDs = ZoneIDs;
+	public readonly charIDs = CharIDs;
+	public readonly animations = Animations;
+	public readonly tileIDs = TileIDs;
 
 	public canBeEquipped(tile: Tile): boolean {
-		return super.canBeEquipped(tile) && tile.id !== TileID.ThermalDetonator;
+		return super.canBeEquipped(tile) && tile.id !== TileIDs.ThermalDetonator;
 	}
 
 	public getHealthBonus(tile: Tile): number {
 		switch (tile.id) {
-			case TileID.QRations:
+			case TileIDs.QRations:
 				return 25;
-			case TileID.IceMushroom:
-			case TileID.ScrubRoot:
-			case TileID.Mushroom:
-			case TileID.BactaFluid:
-			case TileID.Chakroot:
+			case TileIDs.IceMushroom:
+			case TileIDs.ScrubRoot:
+			case TileIDs.Mushroom:
+			case TileIDs.BactaFluid:
+			case TileIDs.CharkRoot:
 				return 50;
-			case TileID.RebelFirstAidKit:
-			case TileID.ImperialFirstAidKit:
+			case TileIDs.RebelFirstAidKit:
+			case TileIDs.ImperialFirstAidKit:
 				return 100;
 			default:
 				return 0;
@@ -52,15 +53,15 @@ class Yoda extends GameType {
 	public getMaxAmmo(weapon: Char): number {
 		const tile = weapon.frames[0].extensionRight;
 		switch (tile.id) {
-			case TileID.BlasterRifle:
+			case TileIDs.BlasterRifle:
 				return 10;
-			case TileID.TheForce:
+			case TileIDs.TheForce:
 				return 15;
-			case TileID.Blaster:
+			case TileIDs.Blaster:
 				return 30;
-			case TileID.LightsaberGreen:
-			case TileID.LightsaberBlue:
-			case TileID.ThermalDetonator:
+			case TileIDs.LightsaberGreen:
+			case TileIDs.LightsaberBlue:
+			case TileIDs.ThermalDetonator:
 			default:
 				return -1;
 		}
@@ -69,13 +70,13 @@ class Yoda extends GameType {
 	public getEquipSound(weapon: Char): number {
 		const tile = weapon.frames[0].extensionRight;
 		switch (tile.id) {
-			case TileID.BlasterRifle:
-			case TileID.Blaster:
+			case TileIDs.BlasterRifle:
+			case TileIDs.Blaster:
 				return Sounds.Armed;
-			case TileID.LightsaberGreen:
-			case TileID.LightsaberBlue:
+			case TileIDs.LightsaberGreen:
+			case TileIDs.LightsaberBlue:
 				return Sounds.SaberOut;
-			case TileID.TheForce:
+			case TileIDs.TheForce:
 				return Sounds.ArmForce;
 			default:
 				return -1;

@@ -1,6 +1,6 @@
 import Cheat from "./cheat";
 import Engine from "../engine";
-import Yoda from "src/engine/yoda";
+import { Yoda } from "src/engine/type";
 import { Tile } from "src/engine/objects";
 
 class WeaponsCheat extends Cheat {
@@ -14,11 +14,11 @@ class WeaponsCheat extends Cheat {
 
 	public execute(engine: Engine): void {
 		for (let i = 0; i < 5; i++) {
-			this.addItem(engine, Yoda.ItemIDs.ThermalDetonator);
+			this.addItem(engine, Yoda.tileIDs.ThermalDetonator);
 		}
-		this.addItem(engine, Yoda.ItemIDs.BlasterRifle);
-		this.addItem(engine, Yoda.ItemIDs.Blaster);
-		this.addItem(engine, Yoda.ItemIDs.TheForce);
+		this.addItem(engine, Yoda.tileIDs.BlasterRifle);
+		this.addItem(engine, Yoda.tileIDs.Blaster);
+		this.addItem(engine, Yoda.tileIDs.TheForce);
 	}
 
 	private addItem(engine: Engine, id: number): void {

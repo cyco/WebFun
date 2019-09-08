@@ -2,7 +2,7 @@ import AssetManager from "src/engine/asset-manager";
 import { Tile, Zone, Hotspot, Puzzle } from "src/engine/objects";
 import World from "src/engine/world";
 import WorldGenerator from "./world-generator";
-import Yoda from "src/engine/yoda";
+import { Yoda } from "src/engine/type";
 import { randmod } from "src/util";
 
 enum YodaSpawn {
@@ -30,13 +30,13 @@ class DagobahGenerator {
 		const assets = this.assets;
 		const dagobah = new World(this.assets);
 
-		dagobah.at(4, 4).zone = assets.get(Zone, Yoda.Zone.DagobahNorthWest);
+		dagobah.at(4, 4).zone = assets.get(Zone, Yoda.zoneIDs.DagobahNorthWest);
 		dagobah.at(4, 4).zoneType = Zone.Type.Find;
-		dagobah.at(5, 4).zone = assets.get(Zone, Yoda.Zone.DagobahNorthEast);
+		dagobah.at(5, 4).zone = assets.get(Zone, Yoda.zoneIDs.DagobahNorthEast);
 		dagobah.at(5, 4).zoneType = Zone.Type.Find;
-		dagobah.at(4, 5).zone = assets.get(Zone, Yoda.Zone.DagobahSouthWest);
+		dagobah.at(4, 5).zone = assets.get(Zone, Yoda.zoneIDs.DagobahSouthWest);
 		dagobah.at(4, 5).zoneType = Zone.Type.Find;
-		dagobah.at(5, 5).zone = assets.get(Zone, Yoda.Zone.DagobahSouthEast);
+		dagobah.at(5, 5).zone = assets.get(Zone, Yoda.zoneIDs.DagobahSouthEast);
 		dagobah.at(5, 5).zoneType = Zone.Type.Town;
 
 		//* temporarily copy zone types over from main world for easy comparison against original
@@ -56,10 +56,10 @@ class DagobahGenerator {
 				this.setupOutdoorSpawn(spawn, generator.initialItem, dagobah);
 				break;
 			case YodaSpawn.Hut:
-				this._setupIndoorSpawn(dagobah, generator.initialItem, Yoda.Tile.Yoda);
+				this._setupIndoorSpawn(dagobah, generator.initialItem, Yoda.tileIDs.Yoda);
 				break;
 			case YodaSpawn.None:
-				this._setupIndoorSpawn(dagobah, generator.initialItem, Yoda.Tile.YodasSeat);
+				this._setupIndoorSpawn(dagobah, generator.initialItem, Yoda.tileIDs.YodasSeat);
 				break;
 		}
 		this._world = dagobah;
@@ -68,11 +68,11 @@ class DagobahGenerator {
 	private determineYodasSpawnLocation(goal: Puzzle) {
 		const spawn = randmod(4);
 
-		if (goal === this.assets.get(Puzzle, Yoda.Goal.ImperialBattleCode)) {
+		if (goal === this.assets.get(Puzzle, Yoda.goalIDs.IMPERIAL_BATTLE_CODE)) {
 			return YodaSpawn.SouthWest;
 		}
 
-		if (goal === this.assets.get(Puzzle, Yoda.Goal.RescueYoda)) {
+		if (goal === this.assets.get(Puzzle, Yoda.goalIDs.RESCUE_YODA)) {
 			return YodaSpawn.None;
 		}
 
@@ -80,7 +80,7 @@ class DagobahGenerator {
 	}
 
 	private setupOutdoorSpawn(spawn: YodaSpawn, tile: Tile, dagobah: World) {
-		const npcID = Yoda.Tile.Yoda;
+		const npcID = Yoda.tileIDs.Yoda;
 		const places = [[4, 4], [-1, -1], [5, 5], [4, 5]];
 		const [x, y] = places[spawn];
 		const place = dagobah.at(x, y);
@@ -98,7 +98,7 @@ class DagobahGenerator {
 	}
 
 	private _setupIndoorSpawn(dagobah: World, tile: Tile, npcID: number) {
-		const zoneID = Yoda.Zone.YodasHut;
+		const zoneID = Yoda.zoneIDs.YodasHut;
 		const zone = this.assets.get(Zone, zoneID);
 		const place = dagobah.at(5, 4);
 		place.zoneType = Zone.Type.Use;
@@ -106,7 +106,7 @@ class DagobahGenerator {
 		place.findItem = tile;
 
 		let hotspotFilter: (hotspot: Hotspot) => boolean;
-		if (npcID === Yoda.Tile.Yoda) {
+		if (npcID === Yoda.tileIDs.Yoda) {
 			hotspotFilter = ({ x, y }: Hotspot) => x === 3 && y === 3;
 		} else {
 			hotspotFilter = ({ x, y }: Hotspot) => x === 3 && y === 2;

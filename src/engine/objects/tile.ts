@@ -2,7 +2,7 @@ export const WIDTH = 32;
 export const HEIGHT = 32;
 export const SIZE = WIDTH * HEIGHT;
 
-const enum TileAttributes {
+enum TileAttributes {
 	Transparent = 1 << 0,
 	Floor = 1 << 1,
 	Object = 1 << 2,
@@ -80,6 +80,7 @@ class Tile {
 	public static readonly HEIGHT = HEIGHT;
 	public static readonly SIZE = SIZE;
 	public static readonly Attribute = TileAttribute;
+	public static readonly Attributes = TileAttributes;
 	public static readonly Subtype = TileSubtype;
 
 	protected _id: number;

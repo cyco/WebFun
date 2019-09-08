@@ -81,11 +81,11 @@ class SimulatedStory extends Story {
 			case Zone.Type.Find:
 			case Zone.Type.FindTheForce:
 				const hotspotTypeForTileAttributes = (input: number) => {
-					if ((input & Type.TILE_SPEC_THE_FORCE) !== 0) {
+					if ((input & Tile.Attributes.Weapon) !== 0) {
 						return Hotspot.Type.ForceLocation;
-					} else if ((input & Type.TILE_SPEC_MAP) !== 0) {
+					} else if ((input & (1 << Tile.Subtype.Item.Locator)) !== 0) {
 						return Hotspot.Type.LocatorThingy;
-					} else if ((input & Type.TILE_SPEC_USEFUL) !== 0) {
+					} else if ((input & Tile.Attributes.Item) !== 0) {
 						return Hotspot.Type.TriggerLocation;
 					}
 				};
