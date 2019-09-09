@@ -124,7 +124,6 @@ class SaveGameInspector extends AbstractInspector {
 				out.findItem = input.findItem;
 				out.npc = input.npc;
 				out.requiredItem = input.requiredItem;
-				out.zone = input.zone;
 				out.zoneType = input.zoneType;
 				out.zone.visited = input.visited;
 				out.zone.solved = input.solved1;
