@@ -1,7 +1,6 @@
 const FS = require("fs");
 const Path = require("path");
 const Paths = require("./paths");
-const Webpack = require("webpack");
 const merge = require("webpack-merge");
 
 const HtmlWebpackPlugin = require("html-webpack-plugin");
@@ -21,7 +20,12 @@ module.exports = merge(BaseConfig, {
 	},
 	devServer: {
 		clientLogLevel: "error",
-		contentBase: [Paths.projectRoot, Paths.assetsRoot, Path.resolve(Paths.sourceRoot, "app")],
+		contentBase: [
+			Paths.projectRoot,
+			Paths.assetsRoot,
+			Path.resolve(Paths.sourceRoot, "app"),
+			Path.resolve(Paths.assetsRoot, "favicons")
+		],
 		host: process.env.host || "127.0.0.1",
 		https: FS.existsSync(Path.resolve(Paths.configRoot, "ssl.key"))
 			? {
