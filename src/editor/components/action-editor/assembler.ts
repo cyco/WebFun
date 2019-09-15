@@ -22,7 +22,7 @@ interface Opcode {
 	Opcode: number;
 	Arguments: Type[];
 	UsesText?: boolean;
-	Description: string;
+	Description?: string;
 }
 interface OpcodeMap {
 	[_: string]: Opcode;

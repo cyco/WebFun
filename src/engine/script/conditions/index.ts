@@ -18,7 +18,7 @@ import IsVariable from "./is-variable";
 import ItemPlaced from "./item-placed";
 import NoItemPlaced from "./no-item-placed";
 import NpcIsActive from "./npc-is-active";
-import PlacedItem from "./placed-item-is";
+import PlacedItemIs from "./placed-item-is";
 import PlacedItemIsNot from "./placed-item-is-not";
 import RandomIs from "./random-is";
 import RandomIsGreaterThan from "./random-is-greater-than";
@@ -36,52 +36,51 @@ import ZoneEntered from "./zone-entered";
 import ZoneIsSolved from "./zone-is-solved";
 import ZoneNotInitialized from "./zone-not-initialized";
 
-const ConditionsByName: { [name: string]: Condition } = {};
-const registerCondition = (name: string, c: Condition) => (ConditionsByName[name] = c);
-registerCondition("ZoneNotInitialized", ZoneNotInitialized);
-registerCondition("ZoneEntered", ZoneEntered);
-registerCondition("Bump", Bump);
-registerCondition("PlacedItem", PlacedItem);
-registerCondition("StandingOn", StandingOn);
-registerCondition("CounterIs", CounterIs);
-registerCondition("RandomIs", RandomIs);
-registerCondition("RandomIsGreaterThan", RandomIsGreaterThan);
-registerCondition("RandomIsLessThan", RandomIsLessThan);
-registerCondition("EnterByPlane", EnterByPlane);
-registerCondition("TileAtIs", TileAtIs);
-registerCondition("NpcIsActive", NpcIsActive);
-registerCondition("HasNoActiveNpcs", HasNoActiveNpcs);
-registerCondition("HasItem", HasItem);
-registerCondition("RequiredItemIs", RequiredItemIs);
-registerCondition("EndingIs", EndingIs);
-registerCondition("ZoneIsSolved", ZoneIsSolved);
-registerCondition("NoItemPlaced", NoItemPlaced);
-registerCondition("ItemPlaced", ItemPlaced);
-registerCondition("HealthIsLessThan", HealthIsLessThan);
-registerCondition("HealthIsGreaterThan", HealthIsGreaterThan);
-registerCondition("Unused", Unused);
-registerCondition("FindItemIs", FindItemIs);
-registerCondition("PlacedItemIsNot", PlacedItemIsNot);
-registerCondition("HeroIsAt", HeroIsAt);
-registerCondition("SharedCounterIs", SharedCounterIs);
-registerCondition("SharedCounterIsLessThan", SharedCounterIsLessThan);
-registerCondition("SharedCounterIsGreaterThan", SharedCounterIsGreaterThan);
-registerCondition("GamesWonIs", GamesWonIs);
-registerCondition("HasHotspotTriggerAt", HasHotspotTriggerAt);
-registerCondition("HasAnyRequiredItem", HasAnyRequiredItem);
-registerCondition("CounterIsNot", CounterIsNot);
-registerCondition("RandomIsNot", RandomIsNot);
-registerCondition("SharedCounterIsNot", SharedCounterIsNot);
-registerCondition("IsVariable", IsVariable);
-registerCondition("GamesWonIsGreaterThan", GamesWonIsGreaterThan);
+const ConditionsByName = {
+	Bump,
+	CounterIs,
+	CounterIsNot,
+	EndingIs,
+	EnterByPlane,
+	FindItemIs,
+	GamesWonIs,
+	GamesWonIsGreaterThan,
+	HasAnyRequiredItem,
+	HasHotspotTriggerAt,
+	HasItem,
+	HasNoActiveNpcs,
+	HealthIsGreaterThan,
+	HealthIsLessThan,
+	HeroIsAt,
+	IsVariable,
+	ItemPlaced,
+	NoItemPlaced,
+	NpcIsActive,
+	PlacedItemIs,
+	PlacedItemIsNot,
+	RandomIs,
+	RandomIsGreaterThan,
+	RandomIsLessThan,
+	RandomIsNot,
+	RequiredItemIs,
+	SharedCounterIs,
+	SharedCounterIsGreaterThan,
+	SharedCounterIsLessThan,
+	SharedCounterIsNot,
+	StandingOn,
+	TileAtIs,
+	Unused,
+	ZoneEntered,
+	ZoneIsSolved,
+	ZoneNotInitialized
+};
 
 const ConditionsByOpcode: Condition[] = new Array(
 	Object.values(ConditionsByName)
 		.sort((a, b) => b.Opcode - a.Opcode)
 		.first().Opcode
 );
-ConditionsByName.each<Condition>((_, c) => (ConditionsByOpcode[c.Opcode] = c));
-
-const ConditionImplementations = ConditionsByOpcode.map(c => c.Implementation);
+ConditionsByName.each<Condition>((_, i) => (ConditionsByOpcode[i.Opcode] = i));
+const ConditionImplementations = ConditionsByOpcode.map(i => i.Implementation);
 
 export { ConditionsByName, ConditionsByOpcode, ConditionImplementations };
