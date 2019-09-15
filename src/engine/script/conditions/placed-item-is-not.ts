@@ -15,10 +15,15 @@ export default {
 	): Promise<boolean> => {
 		if (mode !== EvaluationMode.PlaceItem) return false;
 
-		const [x, y, z, target, item] = args;
+		let [x, y, z, target, item] = args;
 		if (x < 0 || y < 0 || z < 0 || target < 0) {
 			console.warn("Not implemented");
 			return false;
+		}
+
+		if (item < 0) {
+			const sector = engine.currentWorld.findSectorContainingZone(zone);
+			item = sector.requiredItem.id;
 		}
 
 		return (
