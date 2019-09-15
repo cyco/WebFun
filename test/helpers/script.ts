@@ -63,7 +63,8 @@ function mockEngine(): Engine {
 		dropItem: (): void => void 0,
 		persistentState: {},
 		sceneManager: { pushScene: (): void => void 0 },
-		mixer: { play: (): void => void 0 }
+		mixer: { play: (): void => void 0 },
+		inventory: { contains: (): boolean => false }
 	} as any;
 }
 
