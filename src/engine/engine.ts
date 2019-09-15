@@ -29,6 +29,7 @@ import { InstructionImplementations as Instructions } from "./script/instruction
 import Interface from "./interface";
 import DummyInterface from "./dummy-interface";
 import HotspotExecutor from "./script/hotspot-executor";
+import Sector from "./sector";
 
 export { Events };
 
@@ -202,6 +203,14 @@ class Engine extends EventTarget {
 		scene.location = place;
 
 		return this.sceneManager.presentScene(scene);
+	}
+
+	public findSectorContainingZone(zone: Zone) {
+		let sector: Sector = this.world.findSectorContainingZone(zone);
+		if (sector) return { sector, world: this.world };
+
+		sector = this.dagobah.findSectorContainingZone(zone);
+		if (sector) return { sector, world: this.dagobah };
 	}
 
 	get hotspotExecutor() {

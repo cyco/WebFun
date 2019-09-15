@@ -186,20 +186,6 @@ class ZoneScene extends Scene {
 		}
 	}
 
-	public executeHotspots() {
-		if (this.engine.temporaryState.justEntered) return;
-		const zone = this.zone;
-		const hero = this.engine.hero;
-
-		const hotspotIsTriggered = (h: Hotspot) =>
-			h.enabled && h.x === hero.location.x && h.y === hero.location.y;
-		zone.hotspots.filter(hotspotIsTriggered).forEach((h: Hotspot) => this._hotspotTriggered(h));
-	}
-
-	private _hotspotTriggered(hotspot: Hotspot) {
-		return this.engine.hotspotExecutor.trigger(hotspot);
-	}
-
 	private _tryTransition(direction: Point): boolean | undefined {
 		const engine = this.engine;
 		const hero = engine.hero;
@@ -473,7 +459,7 @@ class ZoneScene extends Scene {
 			if (doTransition === false) {
 				// TODO: play blocked sound
 			}
-		} else this.executeHotspots();
+		} else this.engine.hotspotExecutor.triggerBumpHotspots(this.zone, this.engine);
 	}
 
 	private _placeBullet(hero: Hero) {
@@ -580,55 +566,7 @@ class ZoneScene extends Scene {
 			return ScriptResult.Done;
 		}
 
-		let acceptItem = false;
-
-		const sector = engine.world.findSectorContainingZone(this.zone);
-		console.assert(!!sector, "Could not find sector for zone", this.zone);
-
-		let hotspot: Hotspot;
-		for (hotspot of this.zone.hotspots) {
-			if (!hotspot.enabled) continue;
-			if (!hotspot.location.isEqualTo(location)) continue;
-			if (
-				![Hotspot.Type.PuzzleNPC, Hotspot.Type.Lock, Hotspot.Type.SpawnLocation].includes(
-					hotspot.type
-				)
-			)
-				continue;
-
-			if (hotspot.type === Hotspot.Type.Lock) {
-				const keyTileId = hotspot.arg < 0 ? sector.requiredItem.id : hotspot.arg;
-				const keyTile = engine.assetManager.get(Tile, keyTileId);
-
-				acceptItem = tile === keyTile;
-				break;
-			}
-
-			if (tile !== sector.requiredItem) {
-				// TODO: Play sound no-go
-				break;
-			}
-
-			acceptItem = true;
-			break;
-		}
-
-		if (acceptItem) {
-			engine.inventory.removeItem(tile);
-			hotspot.enabled = false;
-
-			if (hotspot.type === Hotspot.Type.Lock || hotspot.type === Hotspot.Type.SpawnLocation) {
-				this.zone.solved = true;
-				sector.zone.solved = true;
-			}
-
-			if (hotspot.type === Hotspot.Type.SpawnLocation) {
-				// TODO: speak
-				this.engine.dropItem(sector.findItem, location);
-			}
-		}
-
-		// evaluate scripts
+		this.engine.hotspotExecutor.triggerPlaceHotspots(tile, location, this.zone, engine);
 		this.engine.scriptExecutor.prepeareExecution(EvaluationMode.PlaceItem, this.zone);
 		return await this.engine.scriptExecutor.execute();
 	}

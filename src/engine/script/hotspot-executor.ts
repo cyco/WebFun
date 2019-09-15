@@ -8,6 +8,7 @@ import doorOut from "./hotspots/door-out";
 import xWingFromDagobah from "./hotspots/x-wing-from-dagobah";
 import xWingToDagobah from "./hotspots/x-wing-to-dagobah";
 import teleporter from "./hotspots/teleporter";
+import { Point } from "src/util";
 
 class HotspotExecutor {
 	private _engine: Engine;
@@ -20,7 +21,65 @@ class HotspotExecutor {
 		zone.hotspots.forEach(hotspot => this._laydownHotspotItem(zone, hotspot));
 	}
 
-	public trigger(hotspot: Hotspot) {
+	public triggerBumpHotspots(zone: Zone, engine: Engine) {
+		if (engine.temporaryState.justEntered) return;
+		const hero = engine.hero;
+
+		const hotspotIsTriggered = (h: Hotspot) =>
+			h.enabled && h.x === hero.location.x && h.y === hero.location.y;
+		zone.hotspots.filter(hotspotIsTriggered).forEach((h: Hotspot) => this.trigger(h));
+	}
+
+	public triggerPlaceHotspots(tile: Tile, location: Point, zone: Zone, engine: Engine) {
+		let acceptItem = false;
+		const { sector } = engine.findSectorContainingZone(zone);
+		console.assert(!!sector, "Could not find sector for zone", zone);
+
+		let hotspot: Hotspot;
+		for (hotspot of zone.hotspots) {
+			if (!hotspot.enabled) continue;
+			if (!hotspot.location.isEqualTo(location)) continue;
+			if (
+				![Hotspot.Type.PuzzleNPC, Hotspot.Type.Lock, Hotspot.Type.SpawnLocation].includes(
+					hotspot.type
+				)
+			)
+				continue;
+
+			if (hotspot.type === Hotspot.Type.Lock) {
+				const keyTileId = hotspot.arg < 0 ? sector.requiredItem.id : hotspot.arg;
+				const keyTile = engine.assetManager.get(Tile, keyTileId);
+
+				acceptItem = tile === keyTile;
+				break;
+			}
+
+			if (tile !== sector.requiredItem) {
+				// TODO: Play sound no-go
+				break;
+			}
+
+			acceptItem = true;
+			break;
+		}
+
+		if (acceptItem) {
+			engine.inventory.removeItem(tile);
+			hotspot.enabled = false;
+
+			if (hotspot.type === Hotspot.Type.Lock || hotspot.type === Hotspot.Type.SpawnLocation) {
+				zone.solved = true;
+				sector.zone.solved = true;
+			}
+
+			if (hotspot.type === Hotspot.Type.SpawnLocation) {
+				// TODO: speak
+				engine.dropItem(sector.findItem, location);
+			}
+		}
+	}
+
+	public trigger(hotspot: Hotspot): boolean {
 		switch (hotspot.type) {
 			case Hotspot.Type.DoorIn:
 				return doorIn(this._engine, hotspot);
@@ -33,6 +92,7 @@ class HotspotExecutor {
 			case Hotspot.Type.Teleporter:
 				return teleporter(this._engine, hotspot);
 		}
+		return false;
 	}
 
 	private _laydownHotspotItem(zone: Zone, hotspot: Hotspot): void {
