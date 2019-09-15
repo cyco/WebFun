@@ -583,7 +583,7 @@ class ZoneScene extends Scene {
 		let acceptItem = false;
 
 		const sector = engine.world.findSectorContainingZone(this.zone);
-		console.assert(!!sector, "Could not find world item for zone", this.zone);
+		console.assert(!!sector, "Could not find sector for zone", this.zone);
 
 		let hotspot: Hotspot;
 		for (hotspot of this.zone.hotspots) {
