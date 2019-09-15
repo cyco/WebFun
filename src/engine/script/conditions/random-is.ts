@@ -6,6 +6,6 @@ import { Zone } from "src/engine/objects";
 export default {
 	Opcode: 0x06,
 	Arguments: [Type.Number],
-	Description: "Current zone's `random` value is less equal to `arg_0`",
+	Description: "Current zone's `random` value is equal to `arg_0`",
 	Implementation: async (args: int16[], zone: Zone, _: Engine): Promise<boolean> => zone.random === args[0]
 };
