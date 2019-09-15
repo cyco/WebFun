@@ -1,5 +1,3 @@
-import * as Type from "../types";
-
 import { HorizontalPointRange, Point, VerticalPointRange, constantly, identity, rand, srand } from "src/util";
 import { Hotspot, Puzzle, Tile, Zone } from "src/engine/objects";
 import { Planet, WorldSize } from "src/engine/types";
@@ -395,7 +393,8 @@ class WorldGenerator {
 	): Zone {
 		let zoneMatchesType = (zone: Zone) => zone.type === zoneType;
 		if (zoneType === Zone.Type.Find || zoneType === Zone.Type.FindUniqueWeapon)
-			zoneMatchesType = zone => zone.type === Zone.Type.Find || zone.type === Zone.Type.FindUniqueWeapon;
+			zoneMatchesType = zone =>
+				zone.type === Zone.Type.Find || zone.type === Zone.Type.FindUniqueWeapon;
 		const zoneMatchesPlanet = (zone: Zone) => zone.planet === this._planet;
 		const zoneIsUnused = (zone: Zone) =>
 			!this.usedZones.contains(zone) || (zoneType === Zone.Type.Goal && this.puzzlesCanBeReused > 0);
