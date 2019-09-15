@@ -64,7 +64,8 @@ function mockEngine(): Engine {
 		persistentState: {},
 		sceneManager: { pushScene: (): void => void 0 },
 		mixer: { play: (): void => void 0 },
-		inventory: { contains: (): boolean => false }
+		inventory: { contains: (): boolean => false },
+		inputManager: {}
 	} as any;
 }
 
