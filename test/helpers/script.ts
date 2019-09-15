@@ -3,10 +3,12 @@ import { ConditionImplementations } from "src/engine/script/conditions";
 import { InstructionImplementations } from "src/engine/script/instructions";
 import { Condition, Instruction } from "src/engine/objects";
 import { Engine, AssetManager } from "src/engine";
-import { Point } from "src/util";
 
 type JasmineDescribe = (description: string, block: () => void) => void;
-type ConditionTester = (check: (condition: Condition, mode?: EvaluationMode) => void, engine: Engine) => void;
+type ConditionTester = (
+	check: (condition: Condition, mode?: EvaluationMode) => Promise<boolean>,
+	engine: Engine
+) => void;
 type InstructionTester = (
 	check: (instruction: Instruction, mode: EvaluationMode) => void,
 	engine: Engine
@@ -16,21 +18,14 @@ const makeConditionDescription = (
 	desc: JasmineDescribe
 ): ((name: string, block: ConditionTester) => void) => (Name, block) => {
 	desc(`WebFun.Engine.Script.Condition.${Name}`, () => {
-		const engine = {} as any;
-		const checker = new ConditionChecker(ConditionImplementations, engine);
+		const engine: any = mockEngine();
+		const checker: any = new ConditionChecker(ConditionImplementations, engine);
 
-		beforeEach(() => {
-			engine.currentZone = {};
-			engine.hero = { location: new Point(0, 0) };
-			engine.persistentState = {};
-			engine.temporaryState = {};
-			engine.sceneManager = { pushScene() {} };
-			engine.assetManager = new AssetManager();
-		});
+		beforeEach(() => Object.assign(engine, mockEngine()));
 
 		block(
-			(condition: Condition, mode: EvaluationMode) =>
-				checker.check(condition, mode, engine.currentZone),
+			async (condition: Condition, mode: EvaluationMode) =>
+				await checker.check(condition, mode, engine.currentZone),
 			engine
 		);
 	});
@@ -38,37 +33,10 @@ const makeConditionDescription = (
 
 const makeInstructionDescription = (desc: JasmineDescribe) => (Name: string, block: InstructionTester) => {
 	desc(`WebFun.Engine.Script.Instruction.${Name}`, () => {
-		const engine = {
-			currentZone: {},
-			hero: {},
-			temporaryState: {},
-			assetManager: new AssetManager(),
-			currentWorld: {
-				findLocationOfZone: (): void => void 0,
-				at: (): void => void 0,
-				findSectorContainingZone: (): void => void 0
-			},
-			speak: (): void => void 0,
-			dropItem: (): void => void 0
-		} as any;
+		const engine = mockEngine();
 		const executor = new InstructionExecutor(InstructionImplementations, engine);
 
-		beforeEach(() => {
-			engine.currentZone = {};
-			engine.currentWorld = {
-				findLocationOfZone: (): void => void 0,
-				at: (): void => void 0,
-				findSectorContainingZone: (): void => void 0
-			};
-			engine.hero = { location: new Point(0, 0) };
-			engine.temporaryState = {};
-			engine.data = {};
-			engine.sceneManager = { pushScene() {} };
-			engine.assetManager = new AssetManager();
-			engine.mixer = {
-				play: (): void => void 0
-			};
-		});
+		beforeEach(() => Object.assign(engine, mockEngine()));
 
 		block(async instruction => {
 			executor.action = {
@@ -79,6 +47,25 @@ const makeInstructionDescription = (desc: JasmineDescribe) => (Name: string, blo
 		}, engine);
 	});
 };
+
+function mockEngine(): Engine {
+	return {
+		currentZone: {},
+		hero: {},
+		temporaryState: {},
+		assetManager: new AssetManager(),
+		currentWorld: {
+			findLocationOfZone: (): void => void 0,
+			at: (): void => void 0,
+			findSectorContainingZone: (): void => void 0
+		},
+		speak: (): void => void 0,
+		dropItem: (): void => void 0,
+		persistentState: {},
+		sceneManager: { pushScene: (): void => void 0 },
+		mixer: { play: (): void => void 0 }
+	} as any;
+}
 
 export const describeCondition = makeConditionDescription(describe);
 export const xdescribeCondition = makeConditionDescription(xdescribe);
