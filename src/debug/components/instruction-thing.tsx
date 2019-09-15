@@ -3,6 +3,7 @@ import { Component } from "src/ui";
 import Engine from "src/engine/engine";
 import TileView from "./tile-view";
 import { Tile, Zone } from "src/engine/objects";
+import { NullIfMissing } from "src/engine/asset-manager";
 
 abstract class InstructionThing extends Component {
 	public zone: Zone = null;
@@ -54,7 +55,7 @@ abstract class InstructionThing extends Component {
 			<span className="argument tile">
 				<TileView
 					palette={this.engine.palette.original}
-					tile={this.engine.assetManager.get(Tile, arg)}
+					tile={this.engine.assetManager.get(Tile, arg, NullIfMissing)}
 					style={{ zoom: "0.4", transform: "translateY(8.9px)", display: "inline-block" }}
 				/>
 			</span>
