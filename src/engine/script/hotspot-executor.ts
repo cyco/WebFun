@@ -25,6 +25,41 @@ class HotspotExecutor {
 		zone.hotspots.forEach(hotspot => this._laydownHotspotItem(zone, hotspot));
 	}
 
+	public evaluateBumpHotspots(at: Point, zone: Zone, engine: Engine) {
+		for (const hotspot of zone.hotspots) {
+			if (!hotspot.location.isEqualTo(at)) continue;
+			if (!hotspot.enabled) continue;
+			if (
+				![
+					Hotspot.Type.TriggerLocation,
+					Hotspot.Type.WeaponLocation,
+					Hotspot.Type.LocatorLocation,
+					Hotspot.Type.Unused,
+					Hotspot.Type.CrateItem,
+					Hotspot.Type.CrateWeapon
+				].contains(hotspot.type)
+			) {
+				continue;
+			}
+
+			const itemID = hotspot.arg;
+			if (itemID === -1) return;
+			const currentTile = zone.getTileID(at.x, at.y, Zone.Layer.Object);
+			if (currentTile !== itemID) return;
+
+			zone.setTile(null, at.x, at.y, Zone.Layer.Object);
+			engine.dropItem(engine.assetManager.get(Tile, itemID), at).then(() => {
+				const sector = engine.currentWorld.findSectorContainingZone(zone);
+				if (sector && sector.findItem && sector.findItem.id === itemID) {
+					zone.solved = true;
+					sector.zone.solved = true;
+				}
+
+				hotspot.enabled = false;
+			});
+		}
+	}
+
 	public uncoverSolvedHotspotItems(zone: Zone, engine: Engine) {
 		for (const htsp of zone.hotspots) {
 			if (!htsp.enabled) continue;

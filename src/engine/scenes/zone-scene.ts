@@ -492,38 +492,7 @@ class ZoneScene extends Scene {
 	}
 
 	private evaluateBumpHotspots(at: Point, engine: Engine) {
-		for (const hotspot of this.zone.hotspots) {
-			if (!hotspot.location.isEqualTo(at)) continue;
-			if (!hotspot.enabled) continue;
-			if (
-				![
-					Hotspot.Type.TriggerLocation,
-					Hotspot.Type.WeaponLocation,
-					Hotspot.Type.LocatorLocation,
-					Hotspot.Type.Unused,
-					Hotspot.Type.CrateItem,
-					Hotspot.Type.CrateWeapon
-				].contains(hotspot.type)
-			) {
-				continue;
-			}
-
-			const itemID = hotspot.arg;
-			if (itemID === -1) return;
-			const currentTile = this.zone.getTileID(at.x, at.y, Zone.Layer.Object);
-			if (currentTile !== itemID) return;
-
-			this.zone.setTile(null, at.x, at.y, Zone.Layer.Object);
-			this.engine.dropItem(engine.assetManager.get(Tile, itemID), at).then(() => {
-				const sector = this.engine.currentWorld.findSectorContainingZone(this.zone);
-				if (sector && sector.findItem && sector.findItem.id === itemID) {
-					this.zone.solved = true;
-					sector.zone.solved = true;
-				}
-
-				hotspot.enabled = false;
-			});
-		}
+		this.engine.hotspotExecutor.evaluateBumpHotspots(at, this.zone, engine);
 	}
 
 	private async _handlePlacedTile(): Promise<ScriptResult> {
