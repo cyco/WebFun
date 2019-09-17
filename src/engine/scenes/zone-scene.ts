@@ -308,7 +308,7 @@ class ZoneScene extends Scene {
 		this.zone.hotspots.push(hotspot);
 
 		const tile = this.assetManager.get(Tile, hotspot.arg);
-		this.zone.setTile(tile, hotspot.location.x, hotspot.location.y, 1);
+		this.zone.setTile(tile, hotspot.location.x, hotspot.location.y, Zone.Layer.Object);
 	}
 
 	private _moveNPCs() {
@@ -415,7 +415,9 @@ class ZoneScene extends Scene {
 		hero.isWalking = true;
 
 		const targetPoint = Point.add(hero.location, p);
-		const targetTile = zone.bounds.contains(targetPoint) && zone.getTile(targetPoint.x, targetPoint.y, 1);
+		const targetTile =
+			zone.bounds.contains(targetPoint) &&
+			zone.getTile(targetPoint.x, targetPoint.y, Zone.Layer.Object);
 
 		if (targetTile) {
 			// TODO: get rid of temporary state
@@ -508,10 +510,10 @@ class ZoneScene extends Scene {
 
 			const itemID = hotspot.arg;
 			if (itemID === -1) return;
-			const currentTile = this.zone.getTileID(at.x, at.y, 1);
+			const currentTile = this.zone.getTileID(at.x, at.y, Zone.Layer.Object);
 			if (currentTile !== itemID) return;
 
-			this.zone.setTile(null, at.x, at.y, 1);
+			this.zone.setTile(null, at.x, at.y, Zone.Layer.Object);
 			this.engine.dropItem(engine.assetManager.get(Tile, itemID), at).then(() => {
 				const sector = this.engine.currentWorld.findSectorContainingZone(this.zone);
 				if (sector && sector.findItem && sector.findItem.id === itemID) {
