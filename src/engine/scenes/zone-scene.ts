@@ -45,7 +45,7 @@ class ZoneScene extends Scene {
 			return;
 		}
 
-		engine.hotspotExecutor.uncoverSolvedHotspotItems(this.zone, this.engine);
+		engine.hotspotExecutor.uncoverSolvedHotspotItems(this.zone);
 
 		engine.scriptExecutor.prepeareExecution(EvaluationMode.Walk, this.zone);
 		scriptResult = await engine.scriptExecutor.execute();
@@ -420,7 +420,7 @@ class ZoneScene extends Scene {
 		if (targetTile) {
 			// TODO: get rid of temporary state
 			engine.temporaryState.bump = targetPoint;
-			this.evaluateBumpHotspots(targetPoint, engine);
+			this.evaluateBumpHotspots(targetPoint);
 
 			engine.scriptExecutor.prepeareExecution(EvaluationMode.Bump, this.zone);
 
@@ -441,7 +441,7 @@ class ZoneScene extends Scene {
 			if (doTransition === false) {
 				// TODO: play blocked sound
 			}
-		} else this.engine.hotspotExecutor.triggerBumpHotspots(this.zone, this.engine);
+		} else this.engine.hotspotExecutor.triggerBumpHotspots(this.zone);
 	}
 
 	private _placeBullet(hero: Hero) {
@@ -489,8 +489,8 @@ class ZoneScene extends Scene {
 		} else engine.equip(inventory.find(tile => tile.isWeapon()));
 	}
 
-	private evaluateBumpHotspots(at: Point, engine: Engine) {
-		this.engine.hotspotExecutor.evaluateBumpHotspots(at, this.zone, engine);
+	private evaluateBumpHotspots(at: Point) {
+		this.engine.hotspotExecutor.evaluateBumpHotspots(at, this.zone);
 	}
 
 	private async _handlePlacedTile(): Promise<ScriptResult> {
@@ -517,17 +517,13 @@ class ZoneScene extends Scene {
 			return ScriptResult.Done;
 		}
 
-		this.engine.hotspotExecutor.triggerPlaceHotspots(tile, location, this.zone, engine);
+		this.engine.hotspotExecutor.triggerPlaceHotspots(tile, location, this.zone);
 		this.engine.scriptExecutor.prepeareExecution(EvaluationMode.PlaceItem, this.zone);
 		return await this.engine.scriptExecutor.execute();
 	}
 
 	private _evaluateZoneChangeHotspots(): boolean {
-		return this.engine.hotspotExecutor.evaluateZoneChangeHotspots(
-			this.engine.hero.location,
-			this.zone,
-			this.engine
-		);
+		return this.engine.hotspotExecutor.evaluateZoneChangeHotspots(this.engine.hero.location, this.zone);
 	}
 
 	get zone() {

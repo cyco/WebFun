@@ -1,6 +1,5 @@
 import { NullIfMissing } from "src/engine/asset-manager";
 import { Point } from "src/util";
-import { RoomTransitionScene, ZoneScene } from "src/engine/scenes";
 import { Zone, Tile, Hotspot } from "src/engine/objects";
 import Engine from "src/engine/engine";
 
@@ -12,9 +11,19 @@ import teleporter from "./hotspots/teleporter";
 
 class HotspotExecutor {
 	private _engine: Engine;
-	private travelZoneTypes = new WeakSet([Zone.Type.Town, Zone.Type.TravelStart, Zone.Type.TravelEnd]);
-	private transportTypes = new WeakSet([Hotspot.Type.VehicleTo, Hotspot.Type.VehicleBack]);
-	private dagobahTypes = new WeakSet([Hotspot.Type.xWingToDagobah, Hotspot.Type.xWingFromDagobah]);
+	private travelZoneTypes = new WeakSet([
+		Zone.Type.Town,
+		Zone.Type.TravelStart,
+		Zone.Type.TravelEnd,
+		Zone.Type.Empty
+	]);
+	private travelTypes = new WeakSet([
+		Hotspot.Type.VehicleTo,
+		Hotspot.Type.VehicleBack,
+		Hotspot.Type.xWingToDagobah,
+		Hotspot.Type.xWingFromDagobah,
+		Hotspot.Type.Teleporter
+	]);
 	private bumpTypes = new WeakSet([
 		Hotspot.Type.TriggerLocation,
 		Hotspot.Type.WeaponLocation,
@@ -37,7 +46,7 @@ class HotspotExecutor {
 		zone.hotspots.forEach(hotspot => this._laydownHotspotItem(zone, hotspot));
 	}
 
-	public evaluateBumpHotspots(at: Point, zone: Zone, engine: Engine) {
+	public evaluateBumpHotspots(at: Point, zone: Zone) {
 		for (const hotspot of zone.hotspots) {
 			if (!hotspot.location.isEqualTo(at)) continue;
 			if (!hotspot.enabled) continue;
@@ -49,8 +58,8 @@ class HotspotExecutor {
 			if (currentTile !== itemID) return;
 
 			zone.setTile(null, at.x, at.y, Zone.Layer.Object);
-			engine.dropItem(engine.assetManager.get(Tile, itemID), at).then(() => {
-				const sector = engine.currentWorld.findSectorContainingZone(zone);
+			this._engine.dropItem(this._engine.assetManager.get(Tile, itemID), at).then(() => {
+				const sector = this._engine.currentWorld.findSectorContainingZone(zone);
 				if (sector && sector.findItem && sector.findItem.id === itemID) {
 					zone.solved = true;
 					sector.zone.solved = true;
@@ -61,7 +70,7 @@ class HotspotExecutor {
 		}
 	}
 
-	public uncoverSolvedHotspotItems(zone: Zone, engine: Engine) {
+	public uncoverSolvedHotspotItems(zone: Zone) {
 		for (const htsp of zone.hotspots) {
 			if (!htsp.enabled) continue;
 			if (htsp.type !== Hotspot.Type.CrateItem && htsp.type !== Hotspot.Type.TriggerLocation) continue;
@@ -72,18 +81,18 @@ class HotspotExecutor {
 				continue;
 			}
 
-			const item = engine.assetManager.get(Tile, htsp.arg, NullIfMissing);
-			const { sector } = engine.findSectorContainingZone(zone);
+			const item = this._engine.assetManager.get(Tile, htsp.arg, NullIfMissing);
+			const { sector } = this._engine.findSectorContainingZone(zone);
 			if (item && sector && sector.findItem === item) {
 				zone.solved = true;
 				sector.zone.solved = true;
 			}
 			htsp.enabled = false;
-			engine.dropItem(item, htsp.location);
+			this._engine.dropItem(item, htsp.location);
 		}
 	}
 
-	public evaluateZoneChangeHotspots(point: Point, zone: Zone, engine: Engine): boolean {
+	public evaluateZoneChangeHotspots(point: Point, zone: Zone): boolean {
 		if (!this.travelZoneTypes.has(zone.type)) {
 			return false;
 		}
@@ -91,99 +100,26 @@ class HotspotExecutor {
 		for (const hotspot of zone.hotspots) {
 			if (!hotspot.enabled) continue;
 			if (!hotspot.location.isEqualTo(point)) continue;
-			if (this.transportTypes.has(hotspot.type)) {
-				this._useTransport(hotspot, engine);
-				return true;
-			}
-			if (this.dagobahTypes.has(hotspot.type)) {
-				this._useXWing(hotspot, engine);
-				return true;
-			}
+			if (!this.travelTypes.has(hotspot.type)) continue;
+
+			return this.trigger(hotspot);
 		}
 
 		return false;
 	}
 
-	private _useTransport(htsp: Hotspot, engine: Engine): void {
-		const counterPart =
-			htsp.type === Hotspot.Type.VehicleTo ? Hotspot.Type.VehicleBack : Hotspot.Type.VehicleTo;
-		const destinationZone = engine.assetManager.get(Zone, htsp.arg);
-		const worldLocation = engine.currentWorld.findLocationOfZone(destinationZone);
-		const zoneLocation = destinationZone.hotspots.withType(counterPart).first().location;
-
-		const transitionScene = new RoomTransitionScene();
-		transitionScene.destinationHeroLocation = zoneLocation;
-		transitionScene.destinationZone = destinationZone;
-		transitionScene.scene = engine.sceneManager.currentScene as ZoneScene;
-		transitionScene.destinationWorld = engine.currentWorld;
-		transitionScene.destinationZoneLocation = worldLocation;
-		engine.sceneManager.pushScene(transitionScene);
-		engine.temporaryState.enteredByPlane = true;
-
-		engine.currentZone.solved = true;
-		destinationZone.solved = true;
-	}
-
-	private _useXWing(hotspot: Hotspot, engine: Engine): void {
-		switch (hotspot.type) {
-			case Hotspot.Type.xWingFromDagobah: {
-				if (hotspot.arg === -1) console.warn("This is not where we're coming from!");
-
-				const destinationZone = engine.assetManager.get(Zone, hotspot.arg);
-
-				const transitionScene = new RoomTransitionScene();
-				const otherHotspot = destinationZone.hotspots.withType(Hotspot.Type.xWingToDagobah).first();
-				transitionScene.destinationHeroLocation = otherHotspot
-					? new Point(otherHotspot.x, otherHotspot.y)
-					: new Point(0, 0);
-				transitionScene.destinationZone = destinationZone;
-				console.assert(engine.sceneManager.currentScene instanceof ZoneScene);
-				transitionScene.scene = engine.sceneManager.currentScene as ZoneScene;
-
-				const world = engine.world;
-				const location = world.findLocationOfZone(destinationZone);
-				console.assert(!!location, "Zone must be zone on the main planet");
-				transitionScene.destinationWorld = world;
-				transitionScene.destinationZoneLocation = location;
-				engine.sceneManager.pushScene(transitionScene);
-				engine.temporaryState.enteredByPlane = true;
-			}
-			case Hotspot.Type.xWingToDagobah: {
-				if (hotspot.arg === -1) console.warn("This is not where we're coming from!");
-
-				const destinationZone = engine.assetManager.get(Zone, hotspot.arg);
-
-				const transitionScene = new RoomTransitionScene();
-				const otherHotspot = destinationZone.hotspots.withType(Hotspot.Type.xWingFromDagobah).first();
-				transitionScene.destinationHeroLocation = otherHotspot
-					? new Point(otherHotspot.x, otherHotspot.y)
-					: new Point(0, 0);
-				transitionScene.destinationZone = destinationZone;
-				console.assert(engine.sceneManager.currentScene instanceof ZoneScene);
-				transitionScene.scene = engine.sceneManager.currentScene as ZoneScene;
-
-				const location = engine.dagobah.findLocationOfZone(destinationZone);
-				console.assert(!!location, "Zone must be zone on dagobah");
-				transitionScene.destinationWorld = engine.dagobah;
-				transitionScene.destinationZoneLocation = location;
-				engine.sceneManager.pushScene(transitionScene);
-				engine.temporaryState.enteredByPlane = true;
-			}
-		}
-	}
-
-	public triggerBumpHotspots(zone: Zone, engine: Engine): void {
-		if (engine.temporaryState.justEntered) return;
-		const hero = engine.hero;
+	public triggerBumpHotspots(zone: Zone): void {
+		if (this._engine.temporaryState.justEntered) return;
+		const hero = this._engine.hero;
 
 		const hotspotIsTriggered = (h: Hotspot) =>
 			h.enabled && h.x === hero.location.x && h.y === hero.location.y;
 		zone.hotspots.filter(hotspotIsTriggered).forEach((h: Hotspot) => this.trigger(h));
 	}
 
-	public triggerPlaceHotspots(tile: Tile, location: Point, zone: Zone, engine: Engine) {
+	public triggerPlaceHotspots(tile: Tile, location: Point, zone: Zone) {
 		let acceptItem = false;
-		const { sector } = engine.findSectorContainingZone(zone);
+		const { sector } = this._engine.findSectorContainingZone(zone);
 		console.assert(!!sector, "Could not find sector for zone", zone);
 
 		let hotspot: Hotspot;
@@ -194,7 +130,7 @@ class HotspotExecutor {
 
 			if (hotspot.type === Hotspot.Type.Lock) {
 				const keyTileId = hotspot.arg < 0 ? sector.requiredItem.id : hotspot.arg;
-				const keyTile = engine.assetManager.get(Tile, keyTileId);
+				const keyTile = this._engine.assetManager.get(Tile, keyTileId);
 
 				acceptItem = tile === keyTile;
 				break;
@@ -210,7 +146,7 @@ class HotspotExecutor {
 		}
 
 		if (acceptItem) {
-			engine.inventory.removeItem(tile);
+			this._engine.inventory.removeItem(tile);
 			hotspot.enabled = false;
 
 			if (hotspot.type === Hotspot.Type.Lock || hotspot.type === Hotspot.Type.SpawnLocation) {
@@ -220,12 +156,12 @@ class HotspotExecutor {
 
 			if (hotspot.type === Hotspot.Type.SpawnLocation) {
 				// TODO: speak
-				engine.dropItem(sector.findItem, location);
+				this._engine.dropItem(sector.findItem, location);
 			}
 		}
 	}
 
-	public trigger(hotspot: Hotspot): boolean {
+	private trigger(hotspot: Hotspot): boolean {
 		switch (hotspot.type) {
 			case Hotspot.Type.DoorIn:
 				return doorIn(this._engine, hotspot);
@@ -238,6 +174,7 @@ class HotspotExecutor {
 			case Hotspot.Type.Teleporter:
 				return teleporter(this._engine, hotspot);
 		}
+
 		return false;
 	}
 
@@ -270,12 +207,6 @@ class HotspotExecutor {
 		// TODO: redraw location
 		hotspot.enabled = false;
 	}
-
-	pickUpHotspotItems(zone: Zone) {
-		zone.hotspots.forEach(hotspot => this._pickUpHotspotItem(zone, hotspot));
-	}
-
-	private _pickUpHotspotItem(_zone: Zone, _hotspot: Hotspot) {}
 }
 
 export default HotspotExecutor;
