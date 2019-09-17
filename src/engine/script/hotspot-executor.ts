@@ -15,6 +15,19 @@ class HotspotExecutor {
 	private travelZoneTypes = new WeakSet([Zone.Type.Town, Zone.Type.TravelStart, Zone.Type.TravelEnd]);
 	private transportTypes = new WeakSet([Hotspot.Type.VehicleTo, Hotspot.Type.VehicleBack]);
 	private dagobahTypes = new WeakSet([Hotspot.Type.xWingToDagobah, Hotspot.Type.xWingFromDagobah]);
+	private bumpTypes = new WeakSet([
+		Hotspot.Type.TriggerLocation,
+		Hotspot.Type.WeaponLocation,
+		Hotspot.Type.LocatorLocation,
+		Hotspot.Type.Unused,
+		Hotspot.Type.CrateItem,
+		Hotspot.Type.CrateWeapon
+	]);
+	private placeTileTypes = new WeakSet([
+		Hotspot.Type.PuzzleNPC,
+		Hotspot.Type.Lock,
+		Hotspot.Type.SpawnLocation
+	]);
 
 	constructor(engine: Engine) {
 		this._engine = engine;
@@ -28,18 +41,7 @@ class HotspotExecutor {
 		for (const hotspot of zone.hotspots) {
 			if (!hotspot.location.isEqualTo(at)) continue;
 			if (!hotspot.enabled) continue;
-			if (
-				![
-					Hotspot.Type.TriggerLocation,
-					Hotspot.Type.WeaponLocation,
-					Hotspot.Type.LocatorLocation,
-					Hotspot.Type.Unused,
-					Hotspot.Type.CrateItem,
-					Hotspot.Type.CrateWeapon
-				].contains(hotspot.type)
-			) {
-				continue;
-			}
+			if (!this.bumpTypes.has(hotspot.type)) continue;
 
 			const itemID = hotspot.arg;
 			if (itemID === -1) return;
@@ -192,12 +194,7 @@ class HotspotExecutor {
 		for (hotspot of zone.hotspots) {
 			if (!hotspot.enabled) continue;
 			if (!hotspot.location.isEqualTo(location)) continue;
-			if (
-				![Hotspot.Type.PuzzleNPC, Hotspot.Type.Lock, Hotspot.Type.SpawnLocation].includes(
-					hotspot.type
-				)
-			)
-				continue;
+			if (!this.placeTileTypes.has(hotspot.type)) continue;
 
 			if (hotspot.type === Hotspot.Type.Lock) {
 				const keyTileId = hotspot.arg < 0 ? sector.requiredItem.id : hotspot.arg;
