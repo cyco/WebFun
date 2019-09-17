@@ -104,7 +104,7 @@ class HotspotExecutor {
 		return false;
 	}
 
-	private _useTransport(htsp: Hotspot, engine: Engine) {
+	private _useTransport(htsp: Hotspot, engine: Engine): void {
 		const counterPart =
 			htsp.type === Hotspot.Type.VehicleTo ? Hotspot.Type.VehicleBack : Hotspot.Type.VehicleTo;
 		const destinationZone = engine.assetManager.get(Zone, htsp.arg);
@@ -122,11 +122,9 @@ class HotspotExecutor {
 
 		engine.currentZone.solved = true;
 		destinationZone.solved = true;
-
-		return true;
 	}
 
-	private _useXWing(hotspot: Hotspot, engine: Engine) {
+	private _useXWing(hotspot: Hotspot, engine: Engine): void {
 		switch (hotspot.type) {
 			case Hotspot.Type.xWingFromDagobah: {
 				if (hotspot.arg === -1) console.warn("This is not where we're coming from!");
@@ -149,7 +147,6 @@ class HotspotExecutor {
 				transitionScene.destinationZoneLocation = location;
 				engine.sceneManager.pushScene(transitionScene);
 				engine.temporaryState.enteredByPlane = true;
-				return true;
 			}
 			case Hotspot.Type.xWingToDagobah: {
 				if (hotspot.arg === -1) console.warn("This is not where we're coming from!");
@@ -171,12 +168,11 @@ class HotspotExecutor {
 				transitionScene.destinationZoneLocation = location;
 				engine.sceneManager.pushScene(transitionScene);
 				engine.temporaryState.enteredByPlane = true;
-				return true;
 			}
 		}
 	}
 
-	public triggerBumpHotspots(zone: Zone, engine: Engine) {
+	public triggerBumpHotspots(zone: Zone, engine: Engine): void {
 		if (engine.temporaryState.justEntered) return;
 		const hero = engine.hero;
 
