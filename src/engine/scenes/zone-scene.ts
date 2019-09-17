@@ -47,25 +47,7 @@ class ZoneScene extends Scene {
 			return;
 		}
 
-		for (const htsp of this.zone.hotspots) {
-			if (!htsp.enabled) continue;
-			if (htsp.type !== Hotspot.Type.CrateItem && htsp.type !== Hotspot.Type.TriggerLocation) continue;
-			if (this.zone.getTile(htsp.x, htsp.y, 1)) continue;
-
-			if (htsp.arg < 0) {
-				htsp.enabled = false;
-				continue;
-			}
-
-			const item = this.assetManager.get(Tile, htsp.arg, NullIfMissing);
-			const sector = this.engine.currentWorld.findSectorContainingZone(this.zone);
-			if (item && sector && sector.findItem === item) {
-				this.zone.solved = true;
-				sector.zone.solved = true;
-			}
-			htsp.enabled = false;
-			this.engine.dropItem(item, htsp.location);
-		}
+		engine.hotspotExecutor.uncoverSolvedHotspotItems(this.zone, this.engine);
 
 		engine.scriptExecutor.prepeareExecution(EvaluationMode.Walk, this.zone);
 		scriptResult = await engine.scriptExecutor.execute();

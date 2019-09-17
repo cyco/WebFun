@@ -25,6 +25,28 @@ class HotspotExecutor {
 		zone.hotspots.forEach(hotspot => this._laydownHotspotItem(zone, hotspot));
 	}
 
+	public uncoverSolvedHotspotItems(zone: Zone, engine: Engine) {
+		for (const htsp of zone.hotspots) {
+			if (!htsp.enabled) continue;
+			if (htsp.type !== Hotspot.Type.CrateItem && htsp.type !== Hotspot.Type.TriggerLocation) continue;
+			if (zone.getTile(htsp.x, htsp.y, Zone.Layer.Object)) continue;
+
+			if (htsp.arg < 0) {
+				htsp.enabled = false;
+				continue;
+			}
+
+			const item = engine.assetManager.get(Tile, htsp.arg, NullIfMissing);
+			const { sector } = engine.findSectorContainingZone(zone);
+			if (item && sector && sector.findItem === item) {
+				zone.solved = true;
+				sector.zone.solved = true;
+			}
+			htsp.enabled = false;
+			engine.dropItem(item, htsp.location);
+		}
+	}
+
 	public evaluateZoneChangeHotspots(point: Point, zone: Zone, engine: Engine): boolean {
 		if (!this.travelZoneTypes.has(zone.type)) {
 			return false;
