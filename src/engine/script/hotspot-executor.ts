@@ -1,15 +1,14 @@
-import { Zone } from "src/engine/objects";
-
-import Engine from "../engine";
-import { Tile, Hotspot } from "../objects";
 import { NullIfMissing } from "src/engine/asset-manager";
+import { Point } from "src/util";
+import { RoomTransitionScene, ZoneScene } from "src/engine/scenes";
+import { Zone, Tile, Hotspot } from "src/engine/objects";
+import Engine from "src/engine/engine";
+
 import doorIn from "./hotspots/door-in";
 import doorOut from "./hotspots/door-out";
 import xWingFromDagobah from "./hotspots/x-wing-from-dagobah";
 import xWingToDagobah from "./hotspots/x-wing-to-dagobah";
 import teleporter from "./hotspots/teleporter";
-import { Point } from "src/util";
-import { RoomTransitionScene, ZoneScene } from "../scenes";
 
 class HotspotExecutor {
 	private _engine: Engine;
