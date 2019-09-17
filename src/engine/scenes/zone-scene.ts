@@ -572,105 +572,11 @@ class ZoneScene extends Scene {
 	}
 
 	private _evaluateZoneChangeHotspots(): boolean {
-		if (![Zone.Type.Town, Zone.Type.TravelStart, Zone.Type.TravelEnd].contains(this.zone.type)) {
-			return;
-		}
-
-		for (const hotspot of this.zone.hotspots) {
-			if (!hotspot.enabled) continue;
-			if (!hotspot.location.isEqualTo(this.engine.hero.location)) continue;
-			if ([Hotspot.Type.VehicleTo, Hotspot.Type.VehicleBack].contains(hotspot.type)) {
-				this._useTransport(hotspot);
-				return true;
-			}
-			if ([Hotspot.Type.xWingToDagobah, Hotspot.Type.xWingFromDagobah].contains(hotspot.type)) {
-				this._useXWing(hotspot);
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	private _useTransport(htsp: Hotspot) {
-		const engine = this.engine;
-		const counterPart =
-			htsp.type === Hotspot.Type.VehicleTo ? Hotspot.Type.VehicleBack : Hotspot.Type.VehicleTo;
-		const destinationZone = engine.assetManager.get(Zone, htsp.arg);
-		const worldLocation = engine.currentWorld.findLocationOfZone(destinationZone);
-		const zoneLocation = destinationZone.hotspots.withType(counterPart).first().location;
-
-		const transitionScene = new RoomTransitionScene();
-		transitionScene.destinationHeroLocation = zoneLocation;
-		transitionScene.destinationZone = destinationZone;
-		transitionScene.scene = engine.sceneManager.currentScene as ZoneScene;
-		transitionScene.destinationWorld = engine.currentWorld;
-		transitionScene.destinationZoneLocation = worldLocation;
-		engine.sceneManager.pushScene(transitionScene);
-		engine.temporaryState.enteredByPlane = true;
-
-		engine.currentZone.solved = true;
-		destinationZone.solved = true;
-
-		return true;
-	}
-
-	private _useXWing(hotspot: Hotspot) {
-		const engine = this.engine;
-
-		switch (hotspot.type) {
-			case Hotspot.Type.xWingFromDagobah: {
-				if (hotspot.arg === -1) console.warn("This is not where we're coming from!");
-
-				const destinationZone = engine.assetManager.get(Zone, hotspot.arg);
-
-				const transitionScene = new RoomTransitionScene();
-				const otherHotspot = destinationZone.hotspots.withType(Hotspot.Type.xWingToDagobah).first();
-				transitionScene.destinationHeroLocation = otherHotspot
-					? new Point(otherHotspot.x, otherHotspot.y)
-					: new Point(0, 0);
-				transitionScene.destinationZone = destinationZone;
-				console.assert(engine.sceneManager.currentScene instanceof ZoneScene);
-				transitionScene.scene = engine.sceneManager.currentScene as ZoneScene;
-
-				const world = engine.world;
-				const location = world.findLocationOfZone(destinationZone);
-				if (!location) {
-					// zone is not on the current planet
-					return;
-				}
-				transitionScene.destinationWorld = world;
-				transitionScene.destinationZoneLocation = location;
-				engine.sceneManager.pushScene(transitionScene);
-				this.engine.temporaryState.enteredByPlane = true;
-				return true;
-			}
-			case Hotspot.Type.xWingToDagobah: {
-				if (hotspot.arg === -1) console.warn("This is not where we're coming from!");
-
-				const destinationZone = engine.assetManager.get(Zone, hotspot.arg);
-
-				const transitionScene = new RoomTransitionScene();
-				const otherHotspot = destinationZone.hotspots.withType(Hotspot.Type.xWingFromDagobah).first();
-				transitionScene.destinationHeroLocation = otherHotspot
-					? new Point(otherHotspot.x, otherHotspot.y)
-					: new Point(0, 0);
-				transitionScene.destinationZone = destinationZone;
-				console.assert(engine.sceneManager.currentScene instanceof ZoneScene);
-				transitionScene.scene = engine.sceneManager.currentScene as ZoneScene;
-
-				const location = engine.dagobah.findLocationOfZone(destinationZone);
-				if (!location) {
-					// zone is not on dagobah
-					return;
-				}
-				transitionScene.destinationWorld = engine.dagobah;
-				transitionScene.destinationZoneLocation = location;
-				engine.sceneManager.pushScene(transitionScene);
-				this.engine.temporaryState.enteredByPlane = true;
-				return true;
-			}
-		}
+		return this.engine.hotspotExecutor.evaluateZoneChangeHotspots(
+			this.engine.hero.location,
+			this.zone,
+			this.engine
+		);
 	}
 
 	get zone() {
