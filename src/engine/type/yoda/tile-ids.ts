@@ -1,6 +1,7 @@
 enum TileIDs {
 	Yoda = 0x030c,
 	YodasSeat = 2034,
+	R2D2 = 0x31a,
 	// Items
 	Locator = 0x1a5,
 	// Consumeables
