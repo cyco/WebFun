@@ -112,12 +112,6 @@ class ConditionComponent extends InstructionThing {
 				break;
 			case Conditions.Unused.Opcode:
 				break;
-			case Conditions.PlacedItemIs.Opcode:
-				this.appendTileArgument(this._condition.arguments[0]);
-				break;
-			case Conditions.PlacedItemIsNot.Opcode:
-				this.appendTileArgument(this._condition.arguments[0]);
-				break;
 			case Conditions.HealthIsLessThan.Opcode:
 				this.appendNumberArgument(this._condition.arguments[0]);
 				break;
