@@ -5,6 +5,7 @@ import { Engine } from "src/engine";
 import { Tile } from "src/engine/objects";
 import { document } from "src/std/dom";
 import CursorManager from "./cursor-manager";
+import { ZoneScene } from "src/engine/scenes";
 
 class DesktopInputManager implements InputManager, EventListenerObject {
 	public mouseDownHandler: (_: Point) => void = () => void 0;
@@ -272,6 +273,11 @@ class DesktopInputManager implements InputManager, EventListenerObject {
 	}
 
 	private _updateCursor(direction: number, angle: number) {
+		if (!(this.engine.sceneManager.currentScene instanceof ZoneScene) || !this.engine.hero.visible) {
+			this.cursorManager.changeCursor(null);
+			return;
+		}
+
 		if (angle === null) {
 			this.cursorManager.changeCursor("block");
 		} else {
