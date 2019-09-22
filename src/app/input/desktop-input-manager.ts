@@ -273,7 +273,10 @@ class DesktopInputManager implements InputManager, EventListenerObject {
 	}
 
 	private _updateCursor(direction: number, angle: number) {
-		if (!(this.engine.sceneManager.currentScene instanceof ZoneScene) || !this.engine.hero.visible) {
+		if (
+			this.engine &&
+			(!(this.engine.sceneManager.currentScene instanceof ZoneScene) || !this.engine.hero.visible)
+		) {
 			this.cursorManager.changeCursor(null);
 			return;
 		}

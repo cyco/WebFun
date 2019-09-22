@@ -17,6 +17,7 @@ class Sector {
 	public visited: boolean = false;
 	public zone: Zone = null;
 	public zoneType: Zone.Type = null;
+	public usedAlternateStrain: boolean;
 
 	public containsZone(zone: Zone, assets: AssetManager): boolean {
 		if (!this.zone) return false;

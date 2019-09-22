@@ -10,7 +10,7 @@ describe("WebFun.App.Input.DesktopInputManager", () => {
 	let mockedCursorManager: CursorManager;
 
 	beforeAll(() => {
-		mockedCursorManager = { changeCursor() {} } as any;
+		mockedCursorManager = { changeCursor: (): void => void 0 } as any;
 		element = document.createElement("div");
 		subject = new DesktopInputManager(element, mockedCursorManager);
 		mockElement = { closest: () => true } as any;

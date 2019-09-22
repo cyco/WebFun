@@ -11,18 +11,15 @@ class Story {
 	protected _seed: number;
 	protected _planet: Planet;
 	protected _size: WorldSize;
-	protected _world: World;
-	protected _dagobah: World;
-	protected _reseeded: boolean;
+	protected _world: World = null;
+	protected _dagobah: World = null;
+	protected _reseeded: boolean = false;
+	protected _puzzles: [Puzzle[], Puzzle[]] = [[], []];
 
 	constructor(seed: number, planet: Planet, size: WorldSize) {
 		this._seed = seed;
 		this._planet = planet;
 		this._size = size;
-
-		this._world = null;
-		this._dagobah = null;
-		this._reseeded = false;
 	}
 
 	get seed() {
@@ -43,6 +40,10 @@ class Story {
 
 	get dagobah() {
 		return this._dagobah;
+	}
+
+	get puzzles() {
+		return this._puzzles;
 	}
 
 	public generateWorld(assetManager: AssetManager, gamesWon: number = 0): void {
@@ -70,6 +71,7 @@ class Story {
 		} while (!success);
 
 		this.goal = generator.goalPuzzle;
+		this._puzzles = generator.puzzles;
 
 		this._setupWorld(generator);
 		this._setupDagobah(generator, assetManager);

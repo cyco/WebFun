@@ -44,6 +44,7 @@ class WorldGenerator {
 	private npc: Tile = null;
 	private somethingWithTeleporters: number = -1;
 	private puzzlesCanBeReused: number = 0;
+	private usedAlternateStrain: boolean = false;
 
 	constructor(size: WorldSize, planet: Planet, assetManager: AssetManager) {
 		this._size = size;
@@ -391,6 +392,7 @@ class WorldGenerator {
 		distance: number,
 		a8: boolean
 	): Zone {
+		this.usedAlternateStrain = a8;
 		let zoneMatchesType = (zone: Zone) => zone.type === zoneType;
 		if (zoneType === Zone.Type.Find || zoneType === Zone.Type.FindUniqueWeapon)
 			zoneMatchesType = zone =>
@@ -415,6 +417,7 @@ class WorldGenerator {
 		distance: number,
 		a8: boolean
 	): boolean {
+		this.usedAlternateStrain = a8;
 		switch (zone.type) {
 			case Zone.Type.Town:
 				return true;
@@ -1013,6 +1016,7 @@ class WorldGenerator {
 		sector.findItem = options.findItem !== undefined ? options.findItem : null;
 		sector.additionalRequiredItem =
 			options.additionalRequiredItem !== undefined ? options.additionalRequiredItem : null;
+		sector.usedAlternateStrain = this.usedAlternateStrain;
 		if (zone !== null && type !== Zone.Type.Town) this.usedZones.unshift(zone);
 	}
 
@@ -1032,6 +1036,10 @@ class WorldGenerator {
 
 	get goalPuzzle(): Puzzle {
 		return this.usedPuzzles[0] || null;
+	}
+
+	get puzzles(): [Puzzle[], Puzzle[]] {
+		return [this.puzzleStrain1, this.puzzleStrain2];
 	}
 
 	private lookupTileById(id: number): Tile {

@@ -118,47 +118,94 @@ class HotspotExecutor {
 	}
 
 	public triggerPlaceHotspots(tile: Tile, location: Point, zone: Zone) {
-		let acceptItem = false;
+		const acceptItem = false;
 		const { sector } = this._engine.findSectorContainingZone(zone);
 		console.assert(!!sector, "Could not find sector for zone", zone);
 
-		let hotspot: Hotspot;
-		for (hotspot of zone.hotspots) {
-			if (!hotspot.enabled) continue;
-			if (!hotspot.location.isEqualTo(location)) continue;
-			if (!this.placeTileTypes.has(hotspot.type)) continue;
+		const index = sector.puzzleIndex;
+		const alternate = sector.usedAlternateStrain;
 
-			if (hotspot.type === Hotspot.Type.Lock) {
-				const keyTileId = hotspot.arg < 0 ? sector.requiredItem.id : hotspot.arg;
-				const keyTile = this._engine.assetManager.get(Tile, keyTileId);
-
-				acceptItem = tile === keyTile;
-				break;
-			}
-
-			if (tile !== sector.requiredItem) {
-				// TODO: Play sound no-go
-				break;
-			}
-
-			acceptItem = true;
-			break;
+		console.log("Look up ", index, " in ", alternate ? "alternate branch" : "primary branch");
+		const puzzle = this._engine.story.puzzles[1 - +alternate][index];
+		console.log("Puzzle: ", puzzle);
+		if (!puzzle || puzzle.item1 !== tile) {
+			console.log("not the right puzzle to solve this, skipping");
+			console.log("should execute actions");
+			return;
 		}
 
-		if (acceptItem) {
+		if (sector.zone.type === Zone.Type.Use) {
+			const npc = zone.getTile(location.x, location.y, Zone.Layer.Object);
+			if (npc !== sector.npc) {
+				console.log("should execute actions");
+				return;
+			}
+			const hotspot = zone.hotspots.find(htsp => htsp.location.isEqualTo(location) && htsp.enabled);
+			if (!hotspot) {
+				console.log("should execute actions");
+				return;
+			}
+
+			if (!hotspot.enabled) {
+				console.log("should execute actions");
+				return;
+			}
+
+			const findItem = sector.findItem;
+			if (!findItem) {
+				console.log("should execute actions");
+				console.log("should play NoGo unless an action already played something");
+				return;
+			}
+
+			sector.solved1 = true;
+			zone.solved = true;
 			this._engine.inventory.removeItem(tile);
-			hotspot.enabled = false;
+			this._engine.speak(puzzle.strings[1], location).then(() => {
+				this._engine.dropItem(findItem, location);
+			});
 
-			if (hotspot.type === Hotspot.Type.Lock || hotspot.type === Hotspot.Type.SpawnLocation) {
-				zone.solved = true;
+			console.log("should execute actions");
+			return;
+		}
+
+		if (sector.zone.type !== Zone.Type.Trade) {
+			console.log("zone is not trade");
+			console.log("should execute actions");
+			return;
+		}
+
+		console.log("zone type is trade");
+		const hotspot = zone.hotspots.find(
+			htsp => htsp.enabled && htsp.type === Hotspot.Type.Lock && htsp.location.isEqualTo(location)
+		);
+		if (!hotspot) {
+			console.log("play NoGo");
+			console.log("should execute actions");
+			return;
+		}
+
+		sector.solved1 = true;
+
+		if (tile.isTool()) {
+			this._engine.inventory.removeItem(tile);
+		}
+
+		const findItem = sector.findItem;
+		console.log("Find item:", findItem);
+		if (findItem) {
+			const hotspot = zone.hotspots.find(
+				htsp => htsp.enabled && htsp.type === Hotspot.Type.TriggerLocation && htsp.arg === findItem.id
+			);
+			if (hotspot) {
+				sector.solved2 = true;
 				sector.zone.solved = true;
-			}
-
-			if (hotspot.type === Hotspot.Type.SpawnLocation) {
-				// TODO: speak
-				this._engine.dropItem(sector.findItem, location);
+				this._engine.dropItem(findItem, location);
 			}
 		}
+		console.log("should execute actions");
+
+		return;
 	}
 
 	private trigger(hotspot: Hotspot): boolean {
