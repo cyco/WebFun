@@ -1,5 +1,6 @@
 import RequiredItems from "src/engine/cheats/required-items";
 import { Engine } from "src/engine";
+import { Tile } from "src/engine/objects";
 
 describe("WebFun.Engine.Cheats.RequiredItems", () => {
 	let subject: RequiredItems;
@@ -15,8 +16,8 @@ describe("WebFun.Engine.Cheats.RequiredItems", () => {
 	});
 
 	it("adds items required to solved the current zone to the inventory", () => {
-		const itemMock1 = {};
-		const itemMock2 = {};
+		const itemMock1: Tile = {} as any;
+		const itemMock2: Tile = {} as any;
 		const mockEngine: Engine = {
 			currentWorld: {
 				findSectorContainingZone: () => ({
@@ -33,7 +34,7 @@ describe("WebFun.Engine.Cheats.RequiredItems", () => {
 	});
 
 	it("adds items required to solved the current zone to the inventory", () => {
-		const itemMock1 = {};
+		const itemMock1: Tile = {} as any;
 		const mockEngine: Engine = {
 			currentWorld: {
 				findSectorContainingZone: () => ({ findItem: itemMock1 })

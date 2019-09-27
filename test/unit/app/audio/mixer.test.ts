@@ -34,9 +34,9 @@ describe("WebFun.App.Audio.Mixer", () => {
 	});
 
 	it("sets up the audio network as expected", () => {
-		expect(master.connect).toHaveBeenCalledWith(contextMock.destination);
-		expect(effect.connect).toHaveBeenCalledWith(master);
-		expect(music.connect).toHaveBeenCalledWith(master);
+		expect(master.connect).toHaveBeenCalledWith(contextMock.destination as any);
+		expect(effect.connect).toHaveBeenCalledWith(master as any);
+		expect(music.connect).toHaveBeenCalledWith(master as any);
 	});
 
 	it("uses a gain node to adjust the volume", () => {
@@ -75,7 +75,7 @@ describe("WebFun.App.Audio.Mixer", () => {
 		subject.play(sound, Channel.Effect);
 
 		expect(bufferSourceMock.buffer).toBe(sound.representation);
-		expect(bufferSourceMock.connect).toHaveBeenCalledWith(effect);
+		expect(bufferSourceMock.connect).toHaveBeenCalledWith(effect as any);
 		expect(bufferSourceMock.start).toHaveBeenCalledWith(0);
 	});
 
@@ -86,7 +86,7 @@ describe("WebFun.App.Audio.Mixer", () => {
 		subject.play(sound, Channel.Music);
 
 		expect(bufferSourceMock.buffer).toBe(sound.representation);
-		expect(bufferSourceMock.connect).toHaveBeenCalledWith(music);
+		expect(bufferSourceMock.connect).toHaveBeenCalledWith(music as any);
 		expect(bufferSourceMock.start).toHaveBeenCalledWith(0);
 	});
 
