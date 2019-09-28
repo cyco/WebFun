@@ -21,7 +21,7 @@ wf-save-game-editor-inventory-row {
 		}
 	}
 
-	> wf-save-game-editor-tile {
+	> wf-save-game-editor-tile, wf-debug-tile-view {
 		@include inset-border-inverted(1px);
 		position: relative;
 		display: inline-block;
