@@ -4,7 +4,7 @@ import PlaceTile from "src/engine/script/instructions/place-tile";
 describeInstruction("PlaceTile", (execute, engine) => {
 	it("Places a tile at the specified coordinates", async () => {
 		const tile = {};
-		engine.assetManager.populate(Tile, [null, null, tile, null]);
+		engine.assets.populate(Tile, [null, null, tile, null]);
 		engine.currentZone.setTile = () => {};
 		spyOn(engine.currentZone, "setTile");
 

@@ -46,10 +46,10 @@ class WorldGenerator {
 	private puzzlesCanBeReused: number = 0;
 	private usedAlternateStrain: boolean = false;
 
-	constructor(size: WorldSize, planet: Planet, assetManager: AssetManager) {
+	constructor(size: WorldSize, planet: Planet, assets: AssetManager) {
 		this._size = size;
 		this._planet = planet;
-		this._assets = assetManager;
+		this._assets = assets;
 	}
 
 	public generate(seed: number, gamesWon: number = 0): boolean {

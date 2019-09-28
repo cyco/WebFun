@@ -42,7 +42,7 @@ export default (npc: NPC, zone: Zone, engine: Engine) => {
 		if (npc.face.reference < 0 && npc.face.damage >= 0) {
 			if (!(tickCount % 3))
 				// only play sound sometimes
-				playSound(engine.assetManager.get(Sound, engine.type.sounds.Hurt), engine);
+				playSound(engine.assets.get(Sound, engine.type.sounds.Hurt), engine);
 			engine.hero.changeHealth(-npc.face.damage);
 		}
 

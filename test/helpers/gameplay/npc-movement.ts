@@ -43,7 +43,7 @@ const makeFunction = (describe: any): DescribeNPCMovement => (
 				ctx.buildEngine();
 				(window as any).engine = ctx.engine;
 
-				const story = buildStory(ctx.engine.assetManager);
+				const story = buildStory(ctx.engine.assets);
 				try {
 					srand(0xdead);
 					ctx.setupEngine(story, [], debug);

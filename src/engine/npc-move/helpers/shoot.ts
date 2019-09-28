@@ -13,7 +13,7 @@ export default (npc: NPC, zone: Zone, engine: Engine): boolean => {
 	const distanceToHero = npc.position.bySubtracting(hero).abs();
 	const directionToHero = hero.comparedTo(npc.position);
 
-	const weapon = engine.assetManager.get(Char, npc.face.reference, NullIfMissing);
+	const weapon = engine.assets.get(Char, npc.face.reference, NullIfMissing);
 	if (!weapon) return false;
 
 	let playShootSound = false;
@@ -47,12 +47,12 @@ export default (npc: NPC, zone: Zone, engine: Engine): boolean => {
 			canActuallyMove = true;
 			npc.bullet = npc.bullet.byAdding(direction);
 			if (npc.field3c === 1 && playShootSound) {
-				const sound = engine.assetManager.get(Sound, weapon.reference);
+				const sound = engine.assets.get(Sound, weapon.reference);
 				engine.mixer.play(sound, Channel.Effect);
 			}
 		} else {
 			engine.hero.changeHealth(-npc.face.damage);
-			const sound = engine.assetManager.get(Sound, Yoda.sounds.Hurt);
+			const sound = engine.assets.get(Sound, Yoda.sounds.Hurt);
 			engine.mixer.play(sound, Channel.Effect);
 			canActuallyMove = false;
 		}

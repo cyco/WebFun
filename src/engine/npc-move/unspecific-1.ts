@@ -45,7 +45,7 @@ export default (npc: NPC, zone: Zone, engine: Engine) => {
 	if (canPerformMeleeAttack(direction, npc, hero)) {
 		direction = new Point(0, 0);
 		if (npc.face.damage >= 0) {
-			playSound(engine.assetManager.get(Sound, engine.type.sounds.Hurt), engine);
+			playSound(engine.assets.get(Sound, engine.type.sounds.Hurt), engine);
 			engine.hero.changeHealth(-npc.face.damage);
 		}
 		npc.currentFrame++;

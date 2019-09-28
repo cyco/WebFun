@@ -137,7 +137,7 @@ describe("WebFun.Engine.Scenes.MapScene", () => {
 	function mockEngine(): Engine {
 		return (engine = ({
 			camera: { offset: new Point(4, 4) },
-			assetManager: {
+			assets: {
 				get: (): void => void 0
 			},
 			sceneManager: {

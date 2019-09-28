@@ -33,13 +33,13 @@ class EditorWindow extends AbstractWindow {
 			const gameData = await new DataProvider().provide(type);
 			const palette = await new PaletteProvider().provide(type);
 
-			const assetManager = new AssetManager();
-			assetManager.populate(Zone, gameData.zones);
-			assetManager.populate(Tile, gameData.tiles);
-			assetManager.populate(Puzzle, gameData.puzzles);
-			assetManager.populate(Char, gameData.characters);
-			assetManager.populate(Sound, gameData.sounds);
-			const saveGame = read(assetManager);
+			const assets = new AssetManager();
+			assets.populate(Zone, gameData.zones);
+			assets.populate(Tile, gameData.tiles);
+			assets.populate(Puzzle, gameData.puzzles);
+			assets.populate(Char, gameData.characters);
+			assets.populate(Sound, gameData.sounds);
+			const saveGame = read(assets);
 
 			this.presentSaveGame(saveGame, gameData, palette);
 		} catch (e) {

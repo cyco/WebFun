@@ -46,7 +46,7 @@ class Story {
 		return this._puzzles;
 	}
 
-	public generateWorld(assetManager: AssetManager, gamesWon: number = 0): void {
+	public generateWorld(assets: AssetManager, gamesWon: number = 0): void {
 		let generator = null;
 		let success = false;
 		let effectiveSeed = this.seed;
@@ -58,7 +58,7 @@ class Story {
 				return;
 			}
 			try {
-				generator = new WorldGenerator(this.size, this.planet, assetManager);
+				generator = new WorldGenerator(this.size, this.planet, assets);
 				success = generator.generate(effectiveSeed, gamesWon);
 			} catch (e) {
 				if (e instanceof WorldGenerationError) success = false;
@@ -74,7 +74,7 @@ class Story {
 		this._puzzles = generator.puzzles;
 
 		this._setupWorld(generator);
-		this._setupDagobah(generator, assetManager);
+		this._setupDagobah(generator, assets);
 	}
 
 	private _setupWorld(generator: WorldGenerator): void {

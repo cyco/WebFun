@@ -24,7 +24,7 @@ describe("WebFun.Engine.Script.Hotspots.DoorIn", () => {
 				hotspots: [mockHotspot(Hotspot.Type.DoorOut, -1, new Point(2, 5))]
 			} as any;
 			engine.currentZone = { id: 5 } as any;
-			(engine.assetManager.get as any).and.returnValue(destinationZone);
+			(engine.assets.get as any).and.returnValue(destinationZone);
 			(engine.dagobah.findLocationOfZone as any).and.returnValue(null);
 			(engine.world.findLocationOfZone as any).and.returnValue(new Point(3, 4));
 			doorIn(engine, mockHotspot(Hotspot.Type.DoorIn, 235));
@@ -59,7 +59,7 @@ describe("WebFun.Engine.Script.Hotspots.DoorIn", () => {
 				hotspots: [mockHotspot(Hotspot.Type.DoorOut, -1, new Point(2, 5))]
 			} as any;
 			engine.currentZone = { id: 5 } as any;
-			(engine.assetManager.get as any).and.returnValue(destinationZone);
+			(engine.assets.get as any).and.returnValue(destinationZone);
 			(engine.dagobah.findLocationOfZone as any).and.returnValue(new Point(4, 5));
 			(engine.world.findLocationOfZone as any).and.returnValue(null);
 			doorIn(engine, mockHotspot(Hotspot.Type.DoorIn, 235));
@@ -76,7 +76,7 @@ describe("WebFun.Engine.Script.Hotspots.DoorIn", () => {
 
 	function mockEngine() {
 		engine = {
-			assetManager: { get: jasmine.createSpy("assetManager.get") },
+			assets: { get: jasmine.createSpy("assets.get") },
 			inventory: { contains: jasmine.createSpy("inventory.contains") },
 			sceneManager: { pushScene: jasmine.createSpy("sceneManager.pushScene"), currentScene: {} },
 			dagobah: { findLocationOfZone: jasmine.createSpy("dagobah.findLocationOfZone") },

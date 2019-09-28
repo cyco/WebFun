@@ -35,9 +35,9 @@ const dispatch = new Map([
 
 function handleRemainingBullet(npc: NPC, zone: Zone, engine: Engine) {
 	const hero = engine.hero.location;
-	const character = engine.assetManager.get(Char, npc.face.id, NullIfMissing);
+	const character = engine.assets.get(Char, npc.face.id, NullIfMissing);
 	if (!character) return;
-	const weapon = engine.assetManager.get(Char, character.reference, NullIfMissing);
+	const weapon = engine.assets.get(Char, character.reference, NullIfMissing);
 
 	if (!weapon) return;
 

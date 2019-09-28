@@ -14,7 +14,7 @@ export default {
 		const sector = engine.currentWorld.findSectorContainingZone(zone);
 
 		const itemID = args[0] < 0 ? sector.requiredItem.id : args[0];
-		const item = engine.assetManager.get(Tile, itemID);
+		const item = engine.assets.get(Tile, itemID);
 		engine.inventory.removeItem(item);
 
 		return Result.Void;

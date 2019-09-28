@@ -77,13 +77,13 @@ class EditorView extends Component {
 		}
 
 		const data = this.data.currentData;
-		const assetManager = new AssetManager();
-		assetManager.populate(Zone, data.zones);
-		assetManager.populate(Tile, data.tiles);
-		assetManager.populate(Puzzle, data.puzzles);
-		assetManager.populate(Char, data.characters);
-		assetManager.populate(Sound, data.sounds);
-		const state = read(assetManager);
+		const assets = new AssetManager();
+		assets.populate(Zone, data.zones);
+		assets.populate(Tile, data.tiles);
+		assets.populate(Puzzle, data.puzzles);
+		assets.populate(Char, data.characters);
+		assets.populate(Sound, data.sounds);
+		const state = read(assets);
 		const inspector = new SaveGameInspector(this.state.prefixedWith("save-game"));
 		this.addInspector("save-game", inspector);
 		this.data.state = state;

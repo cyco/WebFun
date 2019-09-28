@@ -10,7 +10,7 @@ export default {
 	Description: "Add item with id `arg_0` to inventory",
 	Implementation: async (instruction: Instruction, engine: Engine, _: Action): Promise<Result> => {
 		const args = instruction.arguments;
-		const item = engine.assetManager.get(Tile, args[0]);
+		const item = engine.assets.get(Tile, args[0]);
 		engine.inventory.addItem(item);
 
 		return Result.Void;

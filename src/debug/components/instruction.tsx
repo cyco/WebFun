@@ -197,7 +197,7 @@ class InstructionComponent extends InstructionThing {
 
 	protected appendSoundArgument(sound: number) {
 		this.appendChild(
-			<span className="argument sound">{this.engine.assetManager.get(Sound, sound).file}</span>
+			<span className="argument sound">{this.engine.assets.get(Sound, sound).file}</span>
 		);
 	}
 }

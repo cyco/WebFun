@@ -18,7 +18,7 @@ export default {
 			sector.zone.solved = true;
 		}
 
-		engine.dropItem(engine.assetManager.get(Tile, itemId), new Point(x, y));
+		engine.dropItem(engine.assets.get(Tile, itemId), new Point(x, y));
 
 		return Result.UpdateScene;
 	}

@@ -3,7 +3,7 @@ import RemoveItem from "src/engine/script/instructions/remove-item";
 
 describeInstruction("RemoveItem", (execute, engine) => {
 	it("removes an item from the inventory", async () => {
-		engine.assetManager.populate(Tile, [null, "fake-tile"]);
+		engine.assets.populate(Tile, [null, "fake-tile"]);
 		engine.inventory = {
 			removeItem() {}
 		};

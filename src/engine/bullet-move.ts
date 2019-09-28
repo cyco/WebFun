@@ -70,7 +70,7 @@ function frameLocationForDirection(direction: number) {
 
 export default async (engine: Engine, zone: Zone): Promise<ScriptResult> => {
 	const hero = engine.hero;
-	const assets = engine.assetManager;
+	const assets = engine.assets;
 
 	if (!hero.isAttacking) return ScriptResult.Done;
 	const frames = hero._actionFrames;

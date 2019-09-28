@@ -65,7 +65,7 @@ class GameController extends EventTarget {
 			if (engine.inventory.contains(Yoda.tileIDs.SpiritHeart)) {
 				engine.hero.health = Hero.MaxHealth;
 				engine.inventory.removeItem(Yoda.tileIDs.SpiritHeart);
-				const flourish = engine.assetManager.get(Sound, Yoda.sounds.Flourish);
+				const flourish = engine.assets.get(Sound, Yoda.sounds.Flourish);
 				engine.mixer.play(flourish, Channel.Effect);
 				return;
 			}
@@ -116,7 +116,7 @@ class GameController extends EventTarget {
 		await this._loadGameData();
 		const story = new Story(0xbeef, Planet.TATOOINE, WorldSize.Small);
 		this._engine.inventory.removeAllItems();
-		story.generateWorld(this._engine.assetManager, this.engine.persistentState.gamesWon);
+		story.generateWorld(this._engine.assets, this.engine.persistentState.gamesWon);
 		this._engine.story = story;
 
 		this._showSceneView();
@@ -148,14 +148,14 @@ class GameController extends EventTarget {
 		if (!stream) return;
 		const { read } = Reader.build(stream);
 
-		const assetManager = new AssetManager();
-		assetManager.populate(Zone, this.data.zones);
-		assetManager.populate(Tile, this.data.tiles);
-		assetManager.populate(Puzzle, this.data.puzzles);
-		assetManager.populate(Char, this.data.characters);
-		assetManager.populate(Sound, this.data.sounds);
+		const assets = new AssetManager();
+		assets.populate(Zone, this.data.zones);
+		assets.populate(Tile, this.data.tiles);
+		assets.populate(Puzzle, this.data.puzzles);
+		assets.populate(Char, this.data.characters);
+		assets.populate(Sound, this.data.sounds);
 
-		read(assetManager);
+		read(assets);
 	}
 
 	private async pickSaveGame() {
@@ -173,7 +173,7 @@ class GameController extends EventTarget {
 		console.log("Save");
 	}
 
-	private _showSceneView(zone: Zone = this._engine.assetManager.find(Zone, z => z.isLoadingZone())) {
+	private _showSceneView(zone: Zone = this._engine.assets.find(Zone, z => z.isLoadingZone())) {
 		const engine = this._engine;
 		engine.metronome.stop();
 		engine.metronome.ontick = (delta: number) => engine.update(delta);
@@ -186,7 +186,7 @@ class GameController extends EventTarget {
 		zoneScene.zone = zone;
 		engine.currentZone = zone;
 		engine.currentWorld = engine.world.findLocationOfZone(zone) ? engine.world : null;
-		engine.hero.appearance = engine.assetManager.find(Char, (c: Char) => c.isHero());
+		engine.hero.appearance = engine.assets.find(Char, (c: Char) => c.isHero());
 
 		engine.sceneManager.clear();
 		engine.sceneManager.pushScene(zoneScene);
@@ -301,11 +301,11 @@ class GameController extends EventTarget {
 				const data = (this.data = details.data);
 				this.palette = details.palette;
 
-				this._engine.assetManager.populate(Zone, data.zones);
-				this._engine.assetManager.populate(Tile, data.tiles);
-				this._engine.assetManager.populate(Puzzle, data.puzzles);
-				this._engine.assetManager.populate(Char, data.characters);
-				this._engine.assetManager.populate(Sound, data.sounds);
+				this._engine.assets.populate(Zone, data.zones);
+				this._engine.assets.populate(Tile, data.tiles);
+				this._engine.assets.populate(Puzzle, data.puzzles);
+				this._engine.assets.populate(Char, data.characters);
+				this._engine.assets.populate(Sound, data.sounds);
 
 				this._window.inventory.palette = details.palette;
 				this._window.weapon.palette = details.palette;

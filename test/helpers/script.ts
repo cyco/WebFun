@@ -53,7 +53,7 @@ function mockEngine(): Engine {
 		currentZone: {},
 		hero: {},
 		temporaryState: {},
-		assetManager: new AssetManager(),
+		assets: new AssetManager(),
 		currentWorld: {
 			findLocationOfZone: (): void => void 0,
 			at: (): void => void 0,

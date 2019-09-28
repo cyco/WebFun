@@ -6,7 +6,7 @@ import { Point } from "src/util";
 export default (engine: Engine, hotspot: Hotspot): boolean => {
 	const zone = engine.currentZone;
 	console.assert(hotspot.arg !== -1, "This is not where we're coming from!");
-	const destinationZone = engine.assetManager.get(Zone, hotspot.arg);
+	const destinationZone = engine.assets.get(Zone, hotspot.arg);
 	const doorIn = destinationZone.hotspots.find(
 		({ type, arg }) => type === Hotspot.Type.DoorIn && arg === zone.id
 	);

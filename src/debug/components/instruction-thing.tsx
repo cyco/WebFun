@@ -55,7 +55,7 @@ abstract class InstructionThing extends Component {
 			<span className="argument tile">
 				<TileView
 					palette={this.engine.palette.original}
-					tile={this.engine.assetManager.get(Tile, arg, NullIfMissing)}
+					tile={this.engine.assets.get(Tile, arg, NullIfMissing)}
 					style={{ zoom: "0.4", transform: "translateY(8.9px)", display: "inline-block" }}
 				/>
 			</span>

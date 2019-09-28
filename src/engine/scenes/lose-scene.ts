@@ -10,7 +10,7 @@ class LoseScene extends Scene {
 		this._zoneScene = new ZoneScene();
 		this.engine.hero.visible = false;
 		this._zoneScene.engine = this.engine;
-		this._zoneScene.zone = this.engine.assetManager.find(Zone, ({ type }) => type === Zone.Type.Lose);
+		this._zoneScene.zone = this.engine.assets.find(Zone, ({ type }) => type === Zone.Type.Lose);
 		this._zoneScene.willShow();
 	}
 

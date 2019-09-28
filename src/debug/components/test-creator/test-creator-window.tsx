@@ -56,12 +56,12 @@ class TestCreatorWindow extends AbstractWindow {
 		await sleep(10);
 
 		const data = (controller.data = controller.data.copy());
-		engine.assetManager = new AssetManager();
-		engine.assetManager.populate(Zone, data.zones);
-		engine.assetManager.populate(Tile, data.tiles);
-		engine.assetManager.populate(Puzzle, data.puzzles);
-		engine.assetManager.populate(Char, data.characters);
-		engine.assetManager.populate(Sound, data.sounds);
+		engine.assets = new AssetManager();
+		engine.assets.populate(Zone, data.zones);
+		engine.assets.populate(Tile, data.tiles);
+		engine.assets.populate(Puzzle, data.puzzles);
+		engine.assets.populate(Char, data.characters);
+		engine.assets.populate(Sound, data.sounds);
 
 		const story = this.buildStory(engine);
 		engine.hero.location = new Point(0, 0);
@@ -73,10 +73,10 @@ class TestCreatorWindow extends AbstractWindow {
 
 		engine.inventory.removeAllItems();
 		this.testCase.configuration.inventory.forEach(i =>
-			engine.inventory.addItem(engine.assetManager.get(Tile, i))
+			engine.inventory.addItem(engine.assets.get(Tile, i))
 		);
 
-		story.generateWorld(engine.assetManager, engine.persistentState.gamesWon);
+		story.generateWorld(engine.assets, engine.persistentState.gamesWon);
 		if (!(story instanceof SimulatedStory)) {
 			engine.currentWorld = story.dagobah;
 			engine.hero.visible = false;
@@ -90,7 +90,7 @@ class TestCreatorWindow extends AbstractWindow {
 		controller.jumpStartEngine(
 			story instanceof SimulatedStory
 				? story.world.at(4, 5).zone
-				: engine.assetManager.find(Zone, ({ type }) => type === Zone.Type.Load)
+				: engine.assets.find(Zone, ({ type }) => type === Zone.Type.Load)
 		);
 
 		this.content.textContent = "";
@@ -119,7 +119,7 @@ class TestCreatorWindow extends AbstractWindow {
 	}
 
 	private _buildSimulatedStory(engine: Engine, config: Configuration) {
-		const assets = engine.assetManager;
+		const assets = engine.assets;
 		const t = (t: number) => (t > 0 ? assets.get(Tile, t) : null);
 		const z = (z: number) => (z > 0 ? assets.get(Zone, z) : null);
 

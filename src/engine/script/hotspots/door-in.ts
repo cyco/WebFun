@@ -6,7 +6,7 @@ import { NullIfMissing } from "src/engine/asset-manager";
 
 export default (engine: Engine, hotspot: Hotspot): boolean => {
 	const zone = engine.currentZone;
-	const destinationZone = engine.assetManager.get(Zone, hotspot.arg, NullIfMissing);
+	const destinationZone = engine.assets.get(Zone, hotspot.arg, NullIfMissing);
 	const wayOut = destinationZone.hotspots.find(
 		(h: Hotspot) => h.type === Hotspot.Type.DoorOut && (h.arg === -1 || h.arg === zone.id)
 	);

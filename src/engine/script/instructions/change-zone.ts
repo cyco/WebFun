@@ -17,7 +17,7 @@ export default {
 
 		const transitionScene = new RoomTransitionScene();
 		transitionScene.destinationHeroLocation = new Point(args[1], args[2]);
-		transitionScene.destinationZone = engine.assetManager.get(Zone, args[0]);
+		transitionScene.destinationZone = engine.assets.get(Zone, args[0]);
 		transitionScene.scene = engine.sceneManager.currentScene as ZoneScene;
 
 		let world = engine.dagobah;

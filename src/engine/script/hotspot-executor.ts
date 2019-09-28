@@ -58,7 +58,7 @@ class HotspotExecutor {
 			if (currentTile !== itemID) return;
 
 			zone.setTile(null, at.x, at.y, Zone.Layer.Object);
-			this._engine.dropItem(this._engine.assetManager.get(Tile, itemID), at).then(() => {
+			this._engine.dropItem(this._engine.assets.get(Tile, itemID), at).then(() => {
 				const sector = this._engine.currentWorld.findSectorContainingZone(zone);
 				if (sector && sector.findItem && sector.findItem.id === itemID) {
 					zone.solved = true;
@@ -81,7 +81,7 @@ class HotspotExecutor {
 				continue;
 			}
 
-			const item = this._engine.assetManager.get(Tile, htsp.arg, NullIfMissing);
+			const item = this._engine.assets.get(Tile, htsp.arg, NullIfMissing);
 			const { sector } = this._engine.findSectorContainingZone(zone);
 			if (item && sector && sector.findItem === item) {
 				zone.solved = true;
@@ -235,7 +235,7 @@ class HotspotExecutor {
 		const currentTile = zone.getTile(location);
 		if (currentTile) return;
 
-		const tile = this._engine.assetManager.get(Tile, hotspot.arg, NullIfMissing);
+		const tile = this._engine.assets.get(Tile, hotspot.arg, NullIfMissing);
 
 		const type = hotspot.type;
 		if (type === Hotspot.Type.SpawnLocation) {

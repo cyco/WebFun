@@ -19,14 +19,14 @@ describe("WebFun.Engine.Cheats.Weapons", () => {
 		const items: any[] = [];
 		const mockEngine = {
 			inventory: { addItem: (item: any) => items.push(item) },
-			assetManager: new AssetManager()
+			assets: new AssetManager()
 		};
 
-		mockEngine.assetManager.set(Tile, (0x1a5 as any) as Tile, 0x1a5);
-		mockEngine.assetManager.set(Tile, (0x1ff as any) as Tile, 0x1ff);
-		mockEngine.assetManager.set(Tile, (0x200 as any) as Tile, 0x200);
-		mockEngine.assetManager.set(Tile, (0x201 as any) as Tile, 0x201);
-		mockEngine.assetManager.set(Tile, (0x202 as any) as Tile, 0x202);
+		mockEngine.assets.set(Tile, (0x1a5 as any) as Tile, 0x1a5);
+		mockEngine.assets.set(Tile, (0x1ff as any) as Tile, 0x1ff);
+		mockEngine.assets.set(Tile, (0x200 as any) as Tile, 0x200);
+		mockEngine.assets.set(Tile, (0x201 as any) as Tile, 0x201);
+		mockEngine.assets.set(Tile, (0x202 as any) as Tile, 0x202);
 
 		subject.execute((mockEngine as any) as Engine);
 

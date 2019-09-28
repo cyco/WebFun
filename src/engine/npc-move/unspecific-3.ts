@@ -13,7 +13,7 @@ function _noMovement(npc: NPC, zone: Zone, engine: Engine) {
 
 function _performMeleeAttackIfUnarmed(hit: boolean, npc: NPC, zone: Zone, engine: Engine) {
 	if (npc.face.reference < 0 && npc.face.damage >= 0 && hit) {
-		playSound(engine.assetManager.get(Sound, engine.type.sounds.Hurt), engine);
+		playSound(engine.assets.get(Sound, engine.type.sounds.Hurt), engine);
 		engine.hero.changeHealth(-npc.face.damage);
 	}
 	return _noMovement(npc, zone, engine);

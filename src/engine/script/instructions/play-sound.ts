@@ -11,7 +11,7 @@ export default {
 	Arguments: [Type.SoundID],
 	Description: "Play sound specified by `arg_0`",
 	Implementation: async (instruction: Instruction, engine: Engine, _action: Action): Promise<Result> => {
-		const sound = engine.assetManager.get(Sound, instruction.arguments[0], NullIfMissing);
+		const sound = engine.assets.get(Sound, instruction.arguments[0], NullIfMissing);
 		engine.mixer.play(sound, Channel.Effect);
 		return Result.Void;
 	}

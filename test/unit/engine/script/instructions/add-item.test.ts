@@ -4,7 +4,7 @@ import { Tile } from "src/engine/objects";
 
 describeInstruction("AddItem", (execute, engine) => {
 	it("adds an item to the inventory", async () => {
-		engine.assetManager.populate(Tile, [null, "fake-tile"]);
+		engine.assets.populate(Tile, [null, "fake-tile"]);
 		engine.inventory = {
 			addItem() {}
 		};

@@ -56,15 +56,15 @@ class GameplayContext {
 
 	private buildAssetManagerFromGameData(rawData: any) {
 		const data = new GameData(rawData);
-		const assetManager = new AssetManager();
+		const assets = new AssetManager();
 
-		assetManager.populate(Zone, data.zones);
-		assetManager.populate(Tile, data.tiles);
-		assetManager.populate(Puzzle, data.puzzles);
-		assetManager.populate(Char, data.characters);
-		assetManager.populate(Sound, data.sounds);
+		assets.populate(Zone, data.zones);
+		assets.populate(Tile, data.tiles);
+		assets.populate(Puzzle, data.puzzles);
+		assets.populate(Char, data.characters);
+		assets.populate(Sound, data.sounds);
 
-		return assetManager;
+		return assets;
 	}
 
 	public async playNewStory(seed: number, planet: Planet, size: WorldSize, input: string[], debug = false) {
@@ -83,7 +83,7 @@ class GameplayContext {
 		document.body.appendChild(sceneView);
 
 		engine.story = story;
-		story.generateWorld(engine.assetManager, engine.persistentState.gamesWon);
+		story.generateWorld(engine.assets, engine.persistentState.gamesWon);
 
 		engine.metronome.tickDuration = 1;
 		engine.metronome.ontick = (delta: number) => engine.update(delta);
@@ -94,11 +94,11 @@ class GameplayContext {
 		const zone =
 			story instanceof SimulatedStory
 				? engine.world.at(4, 5).zone
-				: engine.assetManager.find(Zone, z => z.isLoadingZone());
+				: engine.assets.find(Zone, z => z.isLoadingZone());
 		const zoneScene = new ZoneScene(engine, zone);
 		engine.currentZone = zone;
 		engine.currentWorld = engine.world.findLocationOfZone(zone) ? engine.world : null;
-		engine.hero.appearance = engine.assetManager.find(Char, c => c.isHero());
+		engine.hero.appearance = engine.assets.find(Char, c => c.isHero());
 		engine.sceneManager.pushScene(zoneScene);
 		if (story instanceof SimulatedStory) {
 			engine.hero.visible = true;
@@ -144,12 +144,12 @@ class GameplayContext {
 		engine.currentWorld = null;
 		engine.currentZone = null;
 
-		engine.assetManager.populate(Zone, []);
-		engine.assetManager.populate(Tile, []);
-		engine.assetManager.populate(Puzzle, []);
-		engine.assetManager.populate(Char, []);
-		engine.assetManager.populate(Sound, []);
-		engine.assetManager = null;
+		engine.assets.populate(Zone, []);
+		engine.assets.populate(Tile, []);
+		engine.assets.populate(Puzzle, []);
+		engine.assets.populate(Char, []);
+		engine.assets.populate(Sound, []);
+		engine.assets = null;
 		engine.hero.appearance = null;
 		engine.hero = null;
 		engine.inputManager.engine = null;

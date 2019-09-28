@@ -43,9 +43,9 @@ const compare = (story: Story, expectation: any) => {
 const runTest = ({ seed, planet, size, world, dagobah }: any) => {
 	describe(`World ${seed} ${planet.toString()} ${size.toString()}`, () => {
 		it("is generated correctly", () => {
-			const assetManager = buildAssetManagerFromGameData();
+			const assets = buildAssetManagerFromGameData();
 			const story = new Story(seed, Planet.fromNumber(planet), WorldSize.fromNumber(size));
-			story.generateWorld(assetManager);
+			story.generateWorld(assets);
 			compare(story, { seed, planet, size, world, dagobah });
 		});
 	});
@@ -53,15 +53,15 @@ const runTest = ({ seed, planet, size, world, dagobah }: any) => {
 
 function buildAssetManagerFromGameData() {
 	const data = new GameData(rawData);
-	const assetManager = new AssetManager();
+	const assets = new AssetManager();
 
-	assetManager.populate(Zone, data.zones);
-	assetManager.populate(Tile, data.tiles);
-	assetManager.populate(Puzzle, data.puzzles);
-	assetManager.populate(Char, data.characters);
-	assetManager.populate(Sound, data.sounds);
+	assets.populate(Zone, data.zones);
+	assets.populate(Tile, data.tiles);
+	assets.populate(Puzzle, data.puzzles);
+	assets.populate(Char, data.characters);
+	assets.populate(Sound, data.sounds);
 
-	return assetManager;
+	return assets;
 }
 
 describe("WebFun.Acceptance.World Generation", () => {

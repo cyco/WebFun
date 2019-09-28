@@ -6,7 +6,7 @@ import { Point } from "src/util";
 export default (engine: Engine, hotspot: Hotspot): boolean => {
 	console.assert(hotspot.arg !== -1, "This is not where we're coming from!");
 
-	const destinationZone = engine.assetManager.get(Zone, hotspot.arg);
+	const destinationZone = engine.assets.get(Zone, hotspot.arg);
 	const desinationHotspot = destinationZone.hotspots.withType(Hotspot.Type.xWingFromDagobah).first();
 	const location = engine.dagobah.findLocationOfZone(destinationZone);
 	console.assert(desinationHotspot !== null, "Zone does not have a proper target spot");

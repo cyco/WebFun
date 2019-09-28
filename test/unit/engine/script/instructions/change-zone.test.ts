@@ -4,7 +4,7 @@ import ChangeZone from "src/engine/script/instructions/change-zone";
 describeInstruction("ChangeZone", (execute, engine) => {
 	it("Switches to a differnt zone using the room animation", async () => {
 		const zone = {};
-		engine.assetManager.populate(Zone, [null, null, zone, null]);
+		engine.assets.populate(Zone, [null, null, zone, null]);
 		engine.dagobah = { findLocationOfZone: () => true };
 		engine.sceneManager = {
 			pushScene: jasmine.createSpy("pushScene")

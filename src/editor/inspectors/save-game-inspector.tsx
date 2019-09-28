@@ -50,14 +50,14 @@ class SaveGameInspector extends AbstractInspector {
 	public downloadSaveGame(): void {
 		const state = this._editorView.saveGame;
 		const data = this._editorView.data;
-		const assetManager = new AssetManager();
-		assetManager.populate(Zone, data.zones);
-		assetManager.populate(Tile, data.tiles);
-		assetManager.populate(Puzzle, data.puzzles);
-		assetManager.populate(Char, data.characters);
-		assetManager.populate(Sound, data.sounds);
+		const assets = new AssetManager();
+		assets.populate(Zone, data.zones);
+		assets.populate(Tile, data.tiles);
+		assets.populate(Puzzle, data.puzzles);
+		assets.populate(Char, data.characters);
+		assets.populate(Sound, data.sounds);
 
-		const writer = new Writer(assetManager);
+		const writer = new Writer(assets);
 
 		const countingStream = new DiscardingOutputStream();
 		writer.write(state, countingStream);
@@ -90,11 +90,11 @@ class SaveGameInspector extends AbstractInspector {
 
 		engine.story = story;
 
-		engine.assetManager.populate(Zone, data.zones);
-		engine.assetManager.populate(Tile, data.tiles);
-		engine.assetManager.populate(Puzzle, data.puzzles);
-		engine.assetManager.populate(Char, data.characters);
-		engine.assetManager.populate(Sound, data.sounds);
+		engine.assets.populate(Zone, data.zones);
+		engine.assets.populate(Tile, data.tiles);
+		engine.assets.populate(Puzzle, data.puzzles);
+		engine.assets.populate(Char, data.characters);
+		engine.assets.populate(Sound, data.sounds);
 
 		controller.show(this.window.manager);
 		controller.jumpStartEngine(controller.data.zones[state.currentZoneID]);

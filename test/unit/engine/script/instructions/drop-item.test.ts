@@ -9,7 +9,7 @@ describeInstruction("DropItem", (execute, engine) => {
 		spyOn(engine, "dropItem");
 		spyOn(Util, "Point").and.returnValue(mockedPoint);
 		const mockTile = {};
-		engine.assetManager.populate(Tile, [null, null, null, mockTile]);
+		engine.assets.populate(Tile, [null, null, null, mockTile]);
 
 		const instruction: any = new Instruction({}) as any;
 		instruction._opcode = DropItem.Opcode;
@@ -29,7 +29,7 @@ describeInstruction("DropItem", (execute, engine) => {
 			findItem: mockTile,
 			zone: engine.currentZone
 		});
-		engine.assetManager.populate(Tile, [null, null, null, mockTile]);
+		engine.assets.populate(Tile, [null, null, null, mockTile]);
 
 		const instruction: any = new Instruction({}) as any;
 		instruction._opcode = DropItem.Opcode;

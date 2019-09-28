@@ -10,7 +10,7 @@ describe("WebFun.Engine.Scenes.LoseScene", () => {
 		subject = new LoseScene();
 		subject.engine = engine = ({
 			hero: { visible: true },
-			assetManager: { find: jasmine.createSpy() },
+			assets: { find: jasmine.createSpy() },
 			metronome: { stop: jasmine.createSpy() }
 		} as any) as Engine;
 	});
@@ -30,7 +30,7 @@ describe("WebFun.Engine.Scenes.LoseScene", () => {
 			} as any) as ZoneScene.default;
 			spyOn(ZoneScene, "default").and.returnValue(zoneSceneMock);
 
-			(subject.engine.assetManager as any).find.and.returnValue(mockedLoseZone);
+			(subject.engine.assets as any).find.and.returnValue(mockedLoseZone);
 
 			subject.willShow();
 			subject.didShow();

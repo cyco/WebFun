@@ -49,22 +49,22 @@ describe("WebFun.Acceptance.Save game reading", () => {
 		type: GameType
 	): Promise<{ state: SaveState; assets: AssetManager }> {
 		const gameData = new GameData(type === Indy ? rawIndyData : rawYodaData);
-		const assetManager = new AssetManager();
-		assetManager.populate(Zone, gameData.zones);
-		assetManager.populate(Puzzle, gameData.puzzles);
-		assetManager.populate(Tile, gameData.tiles);
-		assetManager.populate(Sound, gameData.sounds);
-		assetManager.populate(Char, gameData.characters);
+		const assets = new AssetManager();
+		assets.populate(Zone, gameData.zones);
+		assets.populate(Puzzle, gameData.puzzles);
+		assets.populate(Tile, gameData.tiles);
+		assets.populate(Sound, gameData.sounds);
+		assets.populate(Char, gameData.characters);
 
 		const saveData = await getFixtureData(game);
 		const saveStream = new InputStream(saveData);
 
 		const { read } = Reader.build(saveStream);
-		return { state: await read(assetManager), assets: assetManager };
+		return { state: await read(assets), assets: assets };
 	}
 
-	function writeSaveGame(state: SaveState, assetManager: AssetManager): OutputStream {
-		const writer = new Writer(assetManager);
+	function writeSaveGame(state: SaveState, assets: AssetManager): OutputStream {
+		const writer = new Writer(assets);
 		const sizeStream = new DiscardingOutputStream();
 		writer.write(state, sizeStream);
 		const stream = new OutputStream(sizeStream.offset);

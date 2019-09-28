@@ -74,7 +74,7 @@ class DetonatorScene extends Scene {
 		if (this._engine) {
 			this._detonatorFrames = [];
 			for (const id of Yoda.animations.ThermanDetonatorAnimation) {
-				drawTileImageData(e.assetManager.get(Tile, id), e.palette.original)
+				drawTileImageData(e.assets.get(Tile, id), e.palette.original)
 					.toImage()
 					.then(i => this._detonatorFrames.push(i));
 			}
