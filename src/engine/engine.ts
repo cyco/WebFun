@@ -38,7 +38,7 @@ class Engine extends EventTarget {
 
 	public readonly type: Type = null;
 	public assets: AssetManager = null;
-	public resourceManager: ResourceManager = null;
+	public resources: ResourceManager = null;
 	public camera: Camera = new Camera();
 	public gameState: GameState = GameState.Stopped;
 	public hero: Hero = null;
@@ -66,7 +66,7 @@ class Engine extends EventTarget {
 
 		this.mixer = ifce.Mixer();
 
-		this.resourceManager = ifce.ResourceManager();
+		this.resources = ifce.ResourceManager();
 		this.assets = ifce.AssetManager();
 		this.renderer = ifce.Renderer(null);
 		this.sceneManager = ifce.SceneManager();

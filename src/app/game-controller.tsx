@@ -81,15 +81,15 @@ class GameController extends EventTarget {
 		const mixer = new Mixer(this.settings);
 		const renderer = new CanvasRenderer.Renderer(this._sceneView.canvas);
 		const inputManager = new DesktopInputManager(this._sceneView, new CursorManager(this._sceneView));
-		const resourceManager = new ResourceManager(paths.palette, paths.data, paths.sfx);
-		const loader = new Loader(resourceManager, mixer);
+		const resources = new ResourceManager(paths.palette, paths.data, paths.sfx);
+		const loader = new Loader(resources, mixer);
 
 		return {
 			Renderer: () => renderer,
 			InputManager: () => inputManager,
 			Loader: () => loader,
 			SceneManager: () => this._sceneView.manager,
-			ResourceManager: () => resourceManager,
+			ResourceManager: () => resources,
 			Mixer: () => mixer
 		};
 	}

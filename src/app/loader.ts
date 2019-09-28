@@ -22,19 +22,19 @@ class Loader extends EventTarget implements LoaderInterface {
 	private _rawData: any;
 	private _data: GameData;
 	private _palette: ColorPalette;
-	private _resourceManager: ResourceManager;
+	private _resources: ResourceManager;
 	private _mixer: Mixer;
 
 	constructor(e: ResourceManager, mixer: Mixer) {
 		super();
-		this._resourceManager = e;
+		this._resources = e;
 		this._mixer = mixer;
 
 		this.registerEvents(Events);
 	}
 
 	public load() {
-		this._resourceManager
+		this._resources
 			.loadGameFile(progress => this._progress(0, progress))
 			.then(s => this._readGameData(s))
 			.catch(e => this._fail(e));
@@ -48,7 +48,7 @@ class Loader extends EventTarget implements LoaderInterface {
 	}
 
 	private _loadPalette() {
-		this._resourceManager
+		this._resources
 			.loadPalette(progress => this._progress(2, progress))
 			.then(palette => {
 				this._palette = palette;
@@ -87,7 +87,7 @@ class Loader extends EventTarget implements LoaderInterface {
 		for (const sound of this._data.sounds) {
 			if (!sound.file) continue;
 
-			const buffer = await this._resourceManager.loadSound(sound.file, () => void 0);
+			const buffer = await this._resources.loadSound(sound.file, () => void 0);
 			await this._mixer.prepare(sound, buffer);
 		}
 
