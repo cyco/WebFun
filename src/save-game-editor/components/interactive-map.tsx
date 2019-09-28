@@ -24,6 +24,7 @@ class InteractiveMap extends Map implements EventListenerObject {
 		this._highlight.palette = this.palette;
 		this._highlight.style.position = "absolute";
 		this._highlight.style.pointerEvents = "none";
+		this._highlight.style.zIndex = "1000";
 
 		this.addEventListener("mousemove", this);
 		this.addEventListener("mouseleave", this);
