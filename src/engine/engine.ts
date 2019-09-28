@@ -128,7 +128,7 @@ class Engine extends EventTarget {
 		this.sceneManager.render(this.renderer);
 	}
 
-	public consume(tile: Tile) {
+	public consume(tile: Tile): void {
 		if (!tile.isEdible) {
 			const sound = this.assets.get(Sound, this.type.sounds.NoGo, NullIfMissing);
 			this.mixer.play(sound, Channel.Effect);
@@ -150,7 +150,7 @@ class Engine extends EventTarget {
 		}
 	}
 
-	public equip(tile: Tile) {
+	public equip(tile: Tile): void {
 		if (!tile.isWeapon) {
 			const sound = this.assets.get(Sound, this.type.sounds.NoGo, NullIfMissing);
 			this.mixer.play(sound, Channel.Effect);
@@ -202,7 +202,7 @@ class Engine extends EventTarget {
 		return this.sceneManager.presentScene(scene);
 	}
 
-	public findSectorContainingZone(zone: Zone) {
+	public findSectorContainingZone(zone: Zone): { sector: Sector; world: World } {
 		let sector: Sector = this.world.findSectorContainingZone(zone);
 		if (sector) return { sector, world: this.world };
 

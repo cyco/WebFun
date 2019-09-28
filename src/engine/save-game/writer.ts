@@ -182,27 +182,27 @@ class Writer {
 		stream.writeInt32(-1);
 	}
 
-	private _writeSector(item: Sector, stream: OutputStream): void {
+	private _writeSector(sector: Sector, stream: OutputStream): void {
 		const id = (item: Tile | Zone) => (item ? item.id : -1);
 
-		stream.writeUint32(+item.visited);
+		stream.writeUint32(+sector.visited);
 
-		stream.writeUint32(+item.solved1);
-		stream.writeUint32(+item.solved3);
-		stream.writeUint32(+item.solved2);
-		stream.writeUint32(+item.solved4);
+		stream.writeUint32(+sector.solved1);
+		stream.writeUint32(+sector.solved3);
+		stream.writeUint32(+sector.solved2);
+		stream.writeUint32(+sector.solved4);
 
-		stream.writeInt16(id(item.zone));
-		stream.writeInt16(item.puzzleIndex);
-		stream.writeInt16(id(item.requiredItem));
-		stream.writeInt16(id(item.findItem));
-		stream.writeInt16(item.isGoal);
-		stream.writeInt16(id(item.additionalRequiredItem));
-		stream.writeInt16(item.additionalGainItem);
-		stream.writeInt16(id(item.npc));
+		stream.writeInt16(id(sector.zone));
+		stream.writeInt16(sector.puzzleIndex);
+		stream.writeInt16(id(sector.requiredItem));
+		stream.writeInt16(id(sector.findItem));
+		stream.writeInt16(sector.isGoal);
+		stream.writeInt16(id(sector.additionalRequiredItem));
+		stream.writeInt16(id(sector.additionalGainItem));
+		stream.writeInt16(id(sector.npc));
 
 		// TODO: fix unknown values
-		stream.writeInt32(item.zoneType.rawValue);
+		stream.writeInt32(sector.zoneType.rawValue);
 		stream.writeInt16(0);
 	}
 }

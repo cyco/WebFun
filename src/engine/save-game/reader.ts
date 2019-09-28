@@ -30,7 +30,7 @@ abstract class Reader {
 	protected abstract readInt(stream: InputStream): number;
 	protected abstract readSector(stram: InputStream, x: number, y: number): Sector;
 	protected abstract readNPC(stream: InputStream): MutableNPC;
-	protected abstract readHotspot(stream: InputStream, hottspot: Hotspot): Hotspot;
+	protected abstract readHotspot(stream: InputStream, hotspot: Hotspot): Hotspot;
 
 	protected readBool(stream: InputStream): boolean {
 		return this.readInt(stream) !== 0;

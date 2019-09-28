@@ -134,7 +134,7 @@ class YodaReader extends Reader {
 		sector.findItem = this._assets.get(Tile, findItemId, NullIfMissing);
 		sector.isGoal = isGoal;
 		sector.additionalRequiredItem = this._assets.get(Tile, additionalRequiredItem, NullIfMissing);
-		sector.additionalGainItem = additionalGainItem;
+		sector.additionalGainItem = this._assets.get(Tile, additionalGainItem, NullIfMissing);
 		sector.usedAlternateStrain = usedAlternateStrain === -1 ? null : usedAlternateStrain === 1;
 		sector.npc = this._assets.get(Tile, npcId, NullIfMissing);
 		sector.zoneType = Zone.Type.isZoneType(zoneType) ? Zone.Type.fromNumber(zoneType) : Zone.Type.None;
