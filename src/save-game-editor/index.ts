@@ -15,15 +15,19 @@ Initialize();
 const main = async (windowManager: WindowManager = WindowManager.defaultManager) => {
 	Initialize();
 
-	const [file] = await FilePicker.Pick({ allowedTypes: ["wld"] });
-	if (!file) return;
-
-	const stream = await file.provideInputStream();
-	const editor = document.createElement(EditorWindow.tagName) as EditorWindow;
-	editor.title = file.name;
-	windowManager.showWindow(editor);
-	editor.center();
-	await editor.loadGameFromStream(stream);
+	return Promise.all(
+		(await FilePicker.Pick({
+			allowedTypes: ["wld"],
+			allowsMultipleFiles: true
+		})).map(async file => {
+			const stream = await file.provideInputStream();
+			const editor = document.createElement(EditorWindow.tagName) as EditorWindow;
+			editor.title = file.name;
+			windowManager.showWindow(editor);
+			editor.center();
+			await editor.loadGameFromStream(stream);
+		})
+	);
 };
 
 export { main, EditorView };

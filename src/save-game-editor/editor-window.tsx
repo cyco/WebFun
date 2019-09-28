@@ -7,13 +7,15 @@ import { Reader as SaveGameReaderFactory, SaveState } from "src/engine/save-game
 import { Tile, Zone, Puzzle, Char, Sound } from "src/engine/objects";
 
 import EditorView from "./editor-view";
-import { InputStream } from "src/util";
+import { InputStream, PrefixedStorage } from "src/util";
 
 class EditorWindow extends AbstractWindow {
 	static readonly tagName = "wf-save-game-editor-window";
 	title: string = "Save Game Editor";
 	private _progressIndicator: HTMLElement = <ProgressIndicator />;
-	private _editorView: EditorView = <EditorView /> as EditorView;
+	private _editorView: EditorView = (
+		<EditorView storage={new PrefixedStorage(localStorage, "save-game-editor")} />
+	) as EditorView;
 
 	protected connectedCallback() {
 		super.connectedCallback();
