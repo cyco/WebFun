@@ -1,11 +1,10 @@
 import { Direction, Point, Size } from "src/util";
 import { EvaluationMode, ScriptResult } from "../script";
-import { Hotspot, NPC, Zone, Tile, Char, Puzzle } from "src/engine/objects";
+import { Hotspot, NPC, Zone, Tile, Char } from "src/engine/objects";
 import { Direction as InputDirection } from "src/engine/input";
 import { MutableHotspot } from "src/engine/mutable-objects";
 import { Renderer } from "src/engine/rendering";
 import { Sprite } from "../rendering";
-import Sector from "src/engine/sector";
 import { Yoda } from "src/engine/type";
 import DetonatorScene from "./detonator-scene";
 import Engine from "src/engine/engine";
@@ -15,7 +14,7 @@ import moveNPC from "src/engine/npc-move";
 import PauseScene from "./pause-scene";
 import Scene from "./scene";
 import ZoneSceneRenderer from "src/engine/rendering/zone-scene-renderer";
-import ZoneTransitionScene from "./zone-transition-scene";
+import moveHero from "src/engine/hero-move";
 
 class ZoneScene extends Scene {
 	private _zone: Zone;
@@ -164,67 +163,6 @@ class ZoneScene extends Scene {
 			case Direction.West:
 				return Char.FrameEntry.Left;
 		}
-	}
-
-	private _tryTransition(direction: Point): boolean | undefined {
-		const engine = this.engine;
-		const hero = engine.hero;
-		const currentZone = engine.currentZone;
-		const targetLocation = Point.add(hero.location, direction);
-		if (currentZone.bounds.contains(targetLocation)) {
-			return false;
-		}
-
-		const zoneDirection = new Point(targetLocation.x, targetLocation.y);
-		if (zoneDirection.x < 0) zoneDirection.x = -1;
-		else if (zoneDirection.x >= 18) zoneDirection.x = 1;
-		else zoneDirection.x = 0;
-
-		if (zoneDirection.y < 0) zoneDirection.y = -1;
-		else if (zoneDirection.y >= 18) zoneDirection.y = 1;
-		else zoneDirection.y = 0;
-
-		if (!zoneDirection.isUnidirectional()) {
-			console.log("can't move two zones at once!");
-			return false;
-		}
-
-		let world = engine.dagobah;
-		if (world.findLocationOfZone(engine.currentZone) === null) {
-			world = engine.world;
-		}
-		const zoneLocation = world.findLocationOfZone(engine.currentZone);
-		if (!zoneLocation) return;
-
-		const sector = world.at(zoneLocation);
-		if (!sector || sector.zone !== engine.currentZone) {
-			return;
-		}
-
-		const destinationZoneLocation = Point.add(zoneLocation, zoneDirection);
-		const destinationZone = world.at(destinationZoneLocation).zone;
-		if (!destinationZone) return false;
-
-		const targetLocationOnCurrentZone = Point.add(hero.location, direction);
-		if (currentZone.bounds.contains(targetLocationOnCurrentZone)) return false;
-
-		const destinationHeroLocation = Point.add(hero.location, direction);
-		destinationHeroLocation.subtract(zoneDirection.x * 18, zoneDirection.y * 18);
-
-		if (!destinationZone.placeWalkable(destinationHeroLocation)) {
-			return false;
-		}
-
-		const transitionScene = new ZoneTransitionScene();
-		transitionScene.destinationHeroLocation = destinationHeroLocation;
-		transitionScene.destinationZoneLocation = destinationZoneLocation;
-		transitionScene.originZoneLocation = zoneLocation;
-		transitionScene.destinationZone = destinationZone;
-		transitionScene.destinationWorld = world;
-		transitionScene.scene = this;
-		engine.sceneManager.pushScene(transitionScene);
-
-		return true;
 	}
 
 	private async _moveBullets(): Promise<ScriptResult> {
@@ -376,7 +314,7 @@ class ZoneScene extends Scene {
 			}
 		}
 
-		if (inputManager.walk) await this._moveHero(hero.direction);
+		if (inputManager.walk) await moveHero(hero.direction, this.zone, this.engine, this);
 
 		return false;
 	}
@@ -401,78 +339,9 @@ class ZoneScene extends Scene {
 		}
 	}
 
-	private async _moveHero(direction: number): Promise<void> {
-		const engine = this.engine;
-		const hero = engine.hero;
-		const zone = engine.currentZone;
-
-		const diri = Direction.Confine(direction);
-		const point = Direction.CalculateRelativeCoordinates(diri, 1);
-		const p = new Point(point.x, point.y, 0);
-
-		hero.isWalking = true;
-
-		const targetPoint = Point.add(hero.location, p);
-		const targetTile =
-			zone.bounds.contains(targetPoint) &&
-			zone.getTile(targetPoint.x, targetPoint.y, Zone.Layer.Object);
-
-		if (targetTile) {
-			// TODO: get rid of temporary state
-			engine.temporaryState.bump = targetPoint;
-			this.evaluateBumpHotspots(targetPoint);
-
-			engine.scriptExecutor.prepeareExecution(EvaluationMode.Bump, this.zone);
-
-			const quest = this.engine.currentWorld.findSectorContainingZone(this.zone);
-			if (quest && quest.npc && quest.npc.id === targetTile.id) {
-				this._bumpPuzzleNPC(quest, targetPoint);
-				return;
-			}
-
-			const scriptResult = await engine.scriptExecutor.execute();
-			if (scriptResult !== ScriptResult.Done) {
-				return;
-			}
-		}
-
-		if (!hero.move(p, this.zone)) {
-			const doTransition = this._tryTransition(p);
-			if (doTransition === false) {
-				// TODO: play blocked sound
-			}
-		} else this.engine.hotspotExecutor.triggerBumpHotspots(this.zone);
-	}
-
 	private _placeBullet(hero: Hero) {
 		hero.ammo--;
 		if (hero.ammo === 0) this.reloadWeapon();
-	}
-
-	private _bumpPuzzleNPC(sector: Sector, place: Point) {
-		const puzzleIndex = sector.puzzleIndex;
-		let puzzle: Puzzle = null;
-
-		if (puzzleIndex === -1) {
-			puzzle = this.engine.story.goal;
-			let text = "";
-			let item: Tile = null;
-			if (sector.zone.solved) {
-				text = puzzle.strings[2];
-			} else {
-				text = puzzle.strings[3];
-				item = sector.findItem;
-			}
-
-			if (text.length) {
-				this.engine
-					.speak(text, place)
-					.then(async () => !item || (await this.engine.dropItem(item, place)))
-					.then(() => (this.zone.solved = true));
-			}
-
-			return;
-		}
 	}
 
 	private reloadWeapon() {
@@ -487,10 +356,6 @@ class ZoneScene extends Scene {
 			hero.ammo = 1;
 			engine.equip(weaponTile);
 		} else engine.equip(inventory.find(tile => tile.isWeapon()));
-	}
-
-	private evaluateBumpHotspots(at: Point) {
-		this.engine.hotspotExecutor.evaluateBumpHotspots(at, this.zone);
 	}
 
 	private async _handlePlacedTile(): Promise<ScriptResult> {
