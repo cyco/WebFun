@@ -107,22 +107,20 @@ class YodaReader extends Reader {
 		const visited = this.readBool(stream);
 		const solved1 = this.readBool(stream);
 		const solved2 = this.readBool(stream);
-
-		const solved3 = stream.getUint32() !== 0;
-		const solved4 = stream.getUint32() !== 0;
+		const solved3 = this.readBool(stream);
+		const solved4 = this.readBool(stream);
 
 		const zoneId = stream.getInt16();
-		const fieldC = stream.getInt16();
+		const puzzleType = stream.getInt16();
 		const requiredItemId = stream.getInt16();
 		const findItemId = stream.getInt16();
-		const fieldEA = stream.getInt16();
+		const isGoal = stream.getInt16();
 		const additionalRequiredItem = stream.getInt16();
-		const field16 = stream.getInt16();
+		const additionalGainItem = stream.getInt16();
 		const npcId = stream.getInt16();
 
 		const zoneType = stream.getInt32();
-		// skip over unknown value
-		stream.getInt16();
+		const usedAlternateStrain = stream.getInt16();
 
 		const sector = new Sector();
 		sector.visited = visited;
@@ -131,12 +129,13 @@ class YodaReader extends Reader {
 		sector.solved3 = solved3;
 		sector.solved4 = solved4;
 		sector.zone = this._assets.get(Zone, zoneId, NullIfMissing);
-		sector.fieldC = fieldC;
+		sector.puzzleType = puzzleType;
 		sector.requiredItem = this._assets.get(Tile, requiredItemId, NullIfMissing);
 		sector.findItem = this._assets.get(Tile, findItemId, NullIfMissing);
-		sector.fieldEA = fieldEA;
+		sector.isGoal = isGoal;
 		sector.additionalRequiredItem = this._assets.get(Tile, additionalRequiredItem, NullIfMissing);
-		sector.field16 = field16;
+		sector.additionalGainItem = additionalGainItem;
+		sector.usedAlternateStrain = usedAlternateStrain === -1 ? null : usedAlternateStrain === 1;
 		sector.npc = this._assets.get(Tile, npcId, NullIfMissing);
 		sector.zoneType = Zone.Type.isZoneType(zoneType) ? Zone.Type.fromNumber(zoneType) : Zone.Type.None;
 

@@ -73,6 +73,7 @@ class SectorPreview extends Component {
 				{tileRow("Use", requiredItem, additionalRequiredItem)}
 
 				<div className="sector-solved">
+					<span>{`${zone.type.name}`}</span>
 					<span>{`ctr ${zone.counter}`}</span>
 					<span>{`rnd ${zone.random}`}</span>
 					<span>{`sctr ${zone.sharedCounter}`}</span>

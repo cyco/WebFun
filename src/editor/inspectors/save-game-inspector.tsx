@@ -132,9 +132,9 @@ class SaveGameInspector extends AbstractInspector {
 				out.solved3 = input.solved3;
 				out.solved4 = input.solved4;
 				out.visited = input.visited;
-				out.field16 = input.field16;
-				out.fieldC = input.fieldC;
-				out.fieldEA = input.fieldEA;
+				out.additionalGainItem = input.additionalGainItem;
+				out.puzzleType = input.puzzleType;
+				out.isGoal = input.isGoal;
 			}
 		}
 

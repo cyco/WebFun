@@ -3,9 +3,9 @@ import AssetManager from "./asset-manager";
 
 class Sector {
 	public additionalRequiredItem: Tile = null;
-	public field16: number = -1;
-	public fieldC: number = -1;
-	public fieldEA: number = -1;
+	public additionalGainItem: number = -1;
+	public puzzleType: number = -1;
+	public isGoal: number = -1;
 	public findItem: Tile = null;
 	public npc: Tile = null;
 	public puzzleIndex: number = -1;

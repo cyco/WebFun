@@ -108,7 +108,7 @@ class IndyReader extends Reader {
 		// sector.solved3 = solved3;
 		// sector.solved4 = solved4;
 		sector.zone = this._assets.get(Zone, zoneID, NullIfMissing);
-		sector.fieldC = fieldC;
+		sector.puzzleType = fieldC;
 		sector.requiredItem = this._assets.get(Tile, requiredItemID, NullIfMissing);
 		sector.findItem = this._assets.get(Tile, findItemID, NullIfMissing);
 		// sector.fieldEA = fieldEA;

@@ -193,12 +193,12 @@ class Writer {
 		stream.writeUint32(+item.solved4);
 
 		stream.writeInt16(id(item.zone));
-		stream.writeInt16(item.fieldC);
+		stream.writeInt16(item.puzzleType);
 		stream.writeInt16(id(item.requiredItem));
 		stream.writeInt16(id(item.findItem));
-		stream.writeInt16(item.fieldEA);
+		stream.writeInt16(item.isGoal);
 		stream.writeInt16(id(item.additionalRequiredItem));
-		stream.writeInt16(item.field16);
+		stream.writeInt16(item.additionalGainItem);
 		stream.writeInt16(id(item.npc));
 
 		// TODO: fix unknown values
