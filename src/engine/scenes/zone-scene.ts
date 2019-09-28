@@ -1,8 +1,7 @@
 import { Direction, Point, Size } from "src/util";
 import { EvaluationMode, ScriptResult } from "../script";
-import { Hotspot, NPC, Zone, Tile, Char } from "src/engine/objects";
+import { Zone, Tile, Char } from "src/engine/objects";
 import { Direction as InputDirection } from "src/engine/input";
-import { MutableHotspot } from "src/engine/mutable-objects";
 import { Renderer } from "src/engine/rendering";
 import { Sprite } from "../rendering";
 import { Yoda } from "src/engine/type";
@@ -15,6 +14,7 @@ import PauseScene from "./pause-scene";
 import Scene from "./scene";
 import ZoneSceneRenderer from "src/engine/rendering/zone-scene-renderer";
 import moveHero from "src/engine/hero-move";
+import moveBullets from "src/engine/bullet-move";
 
 class ZoneScene extends Scene {
 	private _zone: Zone;
@@ -54,7 +54,7 @@ class ZoneScene extends Scene {
 
 		if (this._evaluateZoneChangeHotspots()) return;
 
-		scriptResult = await this._moveBullets();
+		scriptResult = await moveBullets(engine, this.zone);
 		if (scriptResult !== ScriptResult.Done) {
 			return;
 		}
@@ -163,88 +163,6 @@ class ZoneScene extends Scene {
 			case Direction.West:
 				return Char.FrameEntry.Left;
 		}
-	}
-
-	private async _moveBullets(): Promise<ScriptResult> {
-		const hero = this.engine.hero;
-		if (!hero.isAttacking) return ScriptResult.Done;
-		const frames = hero._actionFrames;
-
-		if (frames === 3) {
-			hero.isAttacking = false;
-			hero._actionFrames = 0;
-			return ScriptResult.Done;
-		}
-
-		const target = hero.location.byAdding(
-			Direction.CalculateRelativeCoordinates(hero.direction, frames + 1)
-		);
-
-		const hitNPCs = this.zone.npcs.filter(
-			({ position, alive, enabled }) => alive && enabled && position.isEqualTo(target)
-		);
-
-		hitNPCs.forEach(npc => this.hitNPC(npc, hero.weapon));
-		if (hitNPCs.length) {
-			hero.isAttacking = false;
-			hero._actionFrames = 0;
-			return ScriptResult.Done;
-		}
-
-		const tile = this.zone.getTile(target);
-		if (!this._bulletTileForBullet()) return ScriptResult.Done;
-
-		if (!tile || tile.isOpaque()) {
-			// evaluate scripts
-			this.engine.inputManager.placedTileLocation = target;
-			this.engine.inputManager.placedTile = hero.weapon.frames[0].tiles[Char.FrameEntry.ExtensionRight];
-			this.engine.scriptExecutor.prepeareExecution(EvaluationMode.PlaceItem, this.zone);
-			return await this.engine.scriptExecutor.execute();
-		}
-
-		hero.isAttacking = false;
-		hero._actionFrames = 0;
-		// TODO: damage npc
-	}
-
-	private hitNPC(npc: NPC, weapon: Char) {
-		npc.damageTaken += weapon.damage;
-		if (!npc.alive) {
-			this.zone.setTile(null, npc.position);
-			npc.enabled = false;
-
-			if (npc.dropsLoot) this._dropLoot(npc);
-		}
-	}
-
-	private _dropLoot(npc: NPC) {
-		const hotspot = new MutableHotspot();
-		hotspot.type = Hotspot.Type.CrateItem;
-		hotspot.enabled = true;
-		hotspot.location = npc.position;
-
-		let itemId = -1;
-		if (npc.loot > 0) itemId = npc.loot - 1;
-		else {
-			const hotspots = this._zone.hotspots
-				.withType(Hotspot.Type.TriggerLocation)
-				.filter(htsp => htsp.arg > 0);
-
-			if (!hotspots.length) return;
-
-			const hotspot = hotspots.first();
-			itemId = hotspot.arg;
-			hotspot.enabled = false;
-		}
-
-		if (itemId === -1) return;
-
-		hotspot.arg = itemId;
-
-		this.zone.hotspots.push(hotspot);
-
-		const tile = this.assetManager.get(Tile, hotspot.arg);
-		this.zone.setTile(tile, hotspot.location.x, hotspot.location.y, Zone.Layer.Object);
 	}
 
 	private _moveNPCs() {
@@ -406,10 +324,6 @@ class ZoneScene extends Scene {
 
 	get currentOffset() {
 		return this.engine.camera.offset;
-	}
-
-	private get assetManager() {
-		return this.engine.assetManager;
 	}
 }
 
