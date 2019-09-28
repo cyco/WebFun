@@ -29,13 +29,28 @@ class SectorPreview extends Component {
 		this._sector = s;
 		this._zonePreview.zone = this._sector.zone;
 
+		this._rebuildDetails();
+	}
+
+	private _rebuildDetails() {
+		const { palette } = this;
+		const {
+			findItem,
+			requiredItem,
+			additionalRequiredItem,
+			solved1,
+			solved2,
+			solved3,
+			solved4
+		} = this._sector;
+
 		const tileRow = (label: string, tile: Tile, tile2?: Tile) =>
 			tile ? (
 				<div>
-					<span>{label}</span>
+					<div>{label}</div>
 					<div>
-						<TileView tile={tile} palette={this.palette} />
-						<TileView tile={tile2} palette={this.palette} />
+						<TileView tile={tile} palette={palette} />
+						<TileView tile={tile2} palette={palette} />
 					</div>
 				</div>
 			) : null;
@@ -43,8 +58,14 @@ class SectorPreview extends Component {
 		const oldDetails = this._sectorDetails;
 		this._sectorDetails = (
 			<div className="sector-details">
-				{tileRow("Find", this._sector.findItem)}
-				{tileRow("Use", this._sector.requiredItem, this._sector.additionalRequiredItem)}
+				<div className="sector-solved">
+					<span>{solved1 ? "YES" : "NO"}</span>
+					<span>{solved2 ? "YES" : "NO"}</span>
+					<span>{solved3 ? "YES" : "NO"}</span>
+					<span>{solved4 ? "YES" : "NO"}</span>
+				</div>
+				{tileRow("Find", findItem)}
+				{tileRow("Use", requiredItem, additionalRequiredItem)}
 			</div>
 		);
 		if (this.isConnected) this.replaceChild(this._sectorDetails, oldDetails);

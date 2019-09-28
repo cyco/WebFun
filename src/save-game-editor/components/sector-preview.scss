@@ -1,11 +1,27 @@
 wf-save-game-editor-sector-preview {
 	display: flex;
-flex-direction: row;
+	flex-direction: row;
 
-.sector-details {
-	margin-left: 10px;
-	color: white;
-	text-shadow: 1px 0px 0px black;
+	.sector-details {
+		margin-left: 10px;
+		color: white;
+		text-shadow: 1px 0px 0px black;
 
-}
+		display: flex;
+		flex-direction: column;
+	}
+
+	.sector-solved {
+		margin-top: 3px;
+		margin-bottom: 4px;
+
+		span {
+				padding: 2px;
+				border: 1px solid white;
+				border-radius: 2px;
+				font-size: .8em;
+				margin: 2px;
+				box-shadow: 1px 0px 0px black;
+		}
+	}
 }
