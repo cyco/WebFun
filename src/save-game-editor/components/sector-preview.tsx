@@ -25,6 +25,10 @@ class SectorPreview extends Component {
 		super.disconnectedCallback();
 	}
 
+	public get sector() {
+		return this._sector;
+	}
+
 	public set sector(s: Sector) {
 		this._sector = s;
 		this._zonePreview.zone = this._sector.zone;
@@ -41,7 +45,8 @@ class SectorPreview extends Component {
 			solved1,
 			solved2,
 			solved3,
-			solved4
+			solved4,
+			zone
 		} = this._sector;
 
 		const tileRow = (label: string, tile: Tile, tile2?: Tile) =>
@@ -66,13 +71,15 @@ class SectorPreview extends Component {
 				</div>
 				{tileRow("Find", findItem)}
 				{tileRow("Use", requiredItem, additionalRequiredItem)}
+
+				<div className="sector-solved">
+					<span>{`ctr ${zone.counter}`}</span>
+					<span>{`rnd ${zone.random}`}</span>
+					<span>{`sctr ${zone.sharedCounter}`}</span>
+				</div>
 			</div>
 		);
 		if (this.isConnected) this.replaceChild(this._sectorDetails, oldDetails);
-	}
-
-	public get sector() {
-		return this._sector;
 	}
 
 	public set palette(p: ColorPalette) {
