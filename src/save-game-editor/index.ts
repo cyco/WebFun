@@ -12,9 +12,11 @@ let Initialize = () => {
 };
 Initialize();
 
+const OverlayedWindowOffset = 10.0;
 const main = async (windowManager: WindowManager = WindowManager.defaultManager) => {
 	Initialize();
 
+	let editors = 0;
 	return Promise.all(
 		(await FilePicker.Pick({
 			allowedTypes: ["wld"],
@@ -25,6 +27,11 @@ const main = async (windowManager: WindowManager = WindowManager.defaultManager)
 			editor.title = file.name;
 			windowManager.showWindow(editor);
 			editor.center();
+			editor.origin = editor.origin.byAdding(
+				OverlayedWindowOffset * editors,
+				OverlayedWindowOffset * editors
+			);
+			editors++;
 			await editor.loadGameFromStream(stream);
 		})
 	);

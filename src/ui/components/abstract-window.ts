@@ -38,7 +38,7 @@ abstract class AbstractWindow extends Component {
 		return parseFloat(this.style.left);
 	}
 
-	set origin(p: PointLike) {
+	set origin(p: Point) {
 		this._x = p.x;
 		this._y = p.y;
 		this._update();
