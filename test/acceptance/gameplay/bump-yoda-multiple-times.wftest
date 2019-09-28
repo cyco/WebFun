@@ -1,0 +1,11 @@
+-= WebFun Test =--
+Seed: 0xbeef
+Planet: Tatooine
+Size: Small
+Games Won: 0
+
+- Input -
+. . . . . . . . . . . . . . . . . . . . . → → → → → → → → → → → → → → → → → → → . ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ → → → → → → ↑ ↑ ↑ ↑ ↑ ↑ ↑ → ↑ ↑ ↑ ↑ ↑ . . . . . ↑ ↑ ← ← ↑ ↑ ↑ . . . . ↑ . . . ↑ .
+
+- Expect -
+Inventory: 0x12, 0x1bc
