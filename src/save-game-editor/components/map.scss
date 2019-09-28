@@ -7,7 +7,7 @@ wf-save-game-editor-map {
 	display: inline-block;
 	position: relative;
 
-	canvas {
+	> canvas {
 		@extend .pixelated;
 		width: 280px;
 		height: 280px;
@@ -15,6 +15,7 @@ wf-save-game-editor-map {
 	}
 
 	.here {
+		@extend .pixelated;
 		position: absolute;
 		display: block;
 		width: 32px;
