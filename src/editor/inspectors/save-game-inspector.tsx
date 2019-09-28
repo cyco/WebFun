@@ -117,10 +117,6 @@ class SaveGameInspector extends AbstractInspector {
 
 				out.zone = input.zone;
 				out.additionalRequiredItem = input.additionalRequiredItem;
-				// input.field16;
-				// input.fieldC;
-				// input.fieldEA;
-				// TODO: puzzle idx and puzzle index are missing
 				out.findItem = input.findItem;
 				out.npc = input.npc;
 				out.requiredItem = input.requiredItem;
@@ -133,7 +129,7 @@ class SaveGameInspector extends AbstractInspector {
 				out.solved4 = input.solved4;
 				out.visited = input.visited;
 				out.additionalGainItem = input.additionalGainItem;
-				out.puzzleType = input.puzzleType;
+				out.puzzleIndex = input.puzzleIndex;
 				out.isGoal = input.isGoal;
 			}
 		}

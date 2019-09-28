@@ -92,7 +92,7 @@ class IndyReader extends Reader {
 		const solved2 = this.readBool(stream);
 
 		const zoneID = stream.getInt16();
-		const fieldC = stream.getInt16();
+		const puzzleIndex = stream.getInt16();
 
 		const requiredItemID = stream.getInt16();
 		const findItemID = stream.getInt16();
@@ -105,16 +105,12 @@ class IndyReader extends Reader {
 		sector.visited = visited;
 		sector.solved1 = solved1;
 		sector.solved2 = solved2;
-		// sector.solved3 = solved3;
-		// sector.solved4 = solved4;
 		sector.zone = this._assets.get(Zone, zoneID, NullIfMissing);
-		sector.puzzleType = fieldC;
+		sector.puzzleIndex = puzzleIndex;
 		sector.requiredItem = this._assets.get(Tile, requiredItemID, NullIfMissing);
 		sector.findItem = this._assets.get(Tile, findItemID, NullIfMissing);
-		// sector.fieldEA = fieldEA;
-		// sector.additionalRequiredItem = additionalRequiredItem;
-		// sector.field16 = field16;
 		sector.npc = this._assets.get(Tile, npcID, NullIfMissing);
+
 		return sector;
 	}
 

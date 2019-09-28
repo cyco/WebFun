@@ -193,7 +193,7 @@ class Writer {
 		stream.writeUint32(+item.solved4);
 
 		stream.writeInt16(id(item.zone));
-		stream.writeInt16(item.puzzleType);
+		stream.writeInt16(item.puzzleIndex);
 		stream.writeInt16(id(item.requiredItem));
 		stream.writeInt16(id(item.findItem));
 		stream.writeInt16(item.isGoal);

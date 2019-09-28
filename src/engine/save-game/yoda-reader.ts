@@ -111,7 +111,7 @@ class YodaReader extends Reader {
 		const solved4 = this.readBool(stream);
 
 		const zoneId = stream.getInt16();
-		const puzzleType = stream.getInt16();
+		const puzzleIndex = stream.getInt16();
 		const requiredItemId = stream.getInt16();
 		const findItemId = stream.getInt16();
 		const isGoal = stream.getInt16();
@@ -129,7 +129,7 @@ class YodaReader extends Reader {
 		sector.solved3 = solved3;
 		sector.solved4 = solved4;
 		sector.zone = this._assets.get(Zone, zoneId, NullIfMissing);
-		sector.puzzleType = puzzleType;
+		sector.puzzleIndex = puzzleIndex;
 		sector.requiredItem = this._assets.get(Tile, requiredItemId, NullIfMissing);
 		sector.findItem = this._assets.get(Tile, findItemId, NullIfMissing);
 		sector.isGoal = isGoal;

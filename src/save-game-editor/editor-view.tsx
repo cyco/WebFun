@@ -298,7 +298,7 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 				title: "Clear",
 				callback: () => {
 					item.additionalGainItem = -1;
-					item.puzzleType = -1;
+					item.puzzleIndex = -1;
 					item.isGoal = -1;
 					item.findItem = null;
 					item.npc = null;
@@ -334,7 +334,7 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 					item.visited = !item.visited;
 					item.additionalRequiredItem = null;
 					item.additionalGainItem = -1;
-					item.puzzleType = -1;
+					item.puzzleIndex = -1;
 					item.isGoal = -1;
 					item.findItem = null;
 					item.npc = null;
