@@ -1,23 +1,25 @@
 import AmmoControl from "./ammo-control";
-import Tile from "./tile";
+import InteractiveHealth from "./interactive-health";
+import InteractiveMap from "./interactive-map";
+import Inventory from "./inventory";
 import InventoryRow from "./inventory-row";
 import Map from "./map";
-import InteractiveHealth from "./interactive-health";
-import Inventory from "./inventory";
-import InteractiveMap from "./interactive-map";
-import ZoneView from "./zone-view";
-import WorldView from "./world-view";
+import SectorPreview from "./sector-preview";
+import Tile from "./tile";
 import TransformCanvas from "./transform-canvas";
+import WorldView from "./world-view";
+import ZoneView from "./zone-view";
 
 export {
-	ZoneView,
-	InteractiveMap,
 	AmmoControl,
-	Tile,
+	InteractiveHealth,
+	InteractiveMap,
+	Inventory,
 	InventoryRow,
 	Map,
-	InteractiveHealth,
-	Inventory,
+	SectorPreview,
+	Tile,
+	TransformCanvas,
 	WorldView,
-	TransformCanvas
+	ZoneView
 };

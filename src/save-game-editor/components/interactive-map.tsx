@@ -6,7 +6,7 @@ import { Menu } from "src/ui";
 import { Point } from "src/util";
 import World from "src/engine/world";
 import Sector from "src/engine/sector";
-import ZoneView from "./zone-view";
+import SectorPreview from "./sector-preview";
 
 export interface InteractiveMapContextMenuProvider {
 	contextMenuForSector(item: Sector, at: Point, i: World, of: Map): Menu;
@@ -14,7 +14,7 @@ export interface InteractiveMapContextMenuProvider {
 
 class InteractiveMap extends Map implements EventListenerObject {
 	public static readonly tagName = "wf-resource-editor-map-interactive";
-	private _highlight: ZoneView = <ZoneView /> as ZoneView;
+	private _highlight: SectorPreview = <SectorPreview /> as SectorPreview;
 	private _highlightTile: Point = null;
 	public contextMenuProvider: InteractiveMapContextMenuProvider;
 
@@ -93,7 +93,7 @@ class InteractiveMap extends Map implements EventListenerObject {
 		}
 
 		const { left: x, top: y } = this.getBoundingClientRect();
-		this._highlight.zone = sector.zone;
+		this._highlight.sector = sector;
 		this._highlight.style.left = `${t.x * 28 + x}px`;
 		this._highlight.style.top = `${t.y * 28 + y}px`;
 		document.body.appendChild(this._highlight);
