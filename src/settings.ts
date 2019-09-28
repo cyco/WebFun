@@ -13,7 +13,7 @@ const Settings = persistent(
 		skipTransitions: false,
 		pickupItemsAutomatically: false,
 
-		autostartEngine: true,
+		autostartEngine: false,
 		revealWorld: false,
 
 		playEffects: false,
