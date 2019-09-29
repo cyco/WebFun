@@ -17,7 +17,7 @@ export default (renderer: Renderer, hotspots: Hotspot[], offset: Point) => {
 			h.enabled ? rgba(0, 255, 0, 0.3) : rgba(255, 0, 0, 0.3)
 		);
 
-		const canvasRenderer = renderer as CanvasRenderer;
+		if (!(renderer instanceof CanvasRenderer)) return;
 		if (!h.location.isEqualTo(l)) c = 0;
 		l = h.location;
 
@@ -30,7 +30,7 @@ export default (renderer: Renderer, hotspots: Hotspot[], offset: Point) => {
 			shadowOffsetY: 0
 		};
 		const location = new Point((h.x + offset.x) * Tile.WIDTH, c * 10 + (h.y + offset.y) * Tile.HEIGHT);
-		canvasRenderer.renderText(shortName(h.type), location, style);
+		renderer.renderText(shortName(h.type), location, style);
 		c++;
 	});
 
