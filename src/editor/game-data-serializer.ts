@@ -4,7 +4,7 @@ import {
 	Condition,
 	Hotspot,
 	Instruction,
-	NPC,
+	Monster,
 	Puzzle,
 	Sound,
 	Tile,
@@ -68,7 +68,7 @@ class GameDataSerializer {
 				8 +
 				2 +
 				2 +
-				zone.npcs.length * 44 +
+				zone.monsters.length * 44 +
 				2 +
 				2 * zone.requiredItems.length +
 				2 +
@@ -120,24 +120,24 @@ class GameDataSerializer {
 			stream.writeUint32(izaxSize);
 			stream.writeUint16(zone.izaxUnknown);
 
-			stream.writeUint16(zone.npcs.length);
-			zone.npcs.forEach((npc: NPC) => {
+			stream.writeUint16(zone.monsters.length);
+			zone.monsters.forEach((monster: Monster) => {
 				const path = new Int32Array(8);
-				for (let i = 0; i < npc.waypoints.length; i++) {
-					const waypoint = npc.waypoints[i];
+				for (let i = 0; i < monster.waypoints.length; i++) {
+					const waypoint = monster.waypoints[i];
 					path[2 * i + 0] = waypoint.x;
 					path[2 * i + 1] = waypoint.y;
 				}
-				for (let i = npc.waypoints.length; i < 4; i++) {
+				for (let i = monster.waypoints.length; i < 4; i++) {
 					path[2 * i + 0] = -1;
 					path[2 * i + 1] = -1;
 				}
 
-				stream.writeUint16(npc.face.id);
-				stream.writeUint16(npc.position.x);
-				stream.writeUint16(npc.position.y);
-				stream.writeInt16(npc.loot);
-				stream.writeInt32(+npc.dropsLoot);
+				stream.writeUint16(monster.face.id);
+				stream.writeUint16(monster.position.x);
+				stream.writeUint16(monster.position.y);
+				stream.writeInt16(monster.loot);
+				stream.writeInt32(+monster.dropsLoot);
 				stream.writeInt32Array(path);
 			});
 

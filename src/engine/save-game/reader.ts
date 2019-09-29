@@ -3,7 +3,7 @@ import { Hotspot, Zone } from "src/engine/objects";
 
 import AssetManager from "../asset-manager";
 import { InputStream, Point } from "src/util";
-import { MutableZone, MutableNPC } from "src/engine/mutable-objects";
+import { MutableZone, MutableMonster } from "src/engine/mutable-objects";
 import SaveState from "./save-state";
 import World from "src/engine/world";
 import Sector from "src/engine/sector";
@@ -29,7 +29,7 @@ abstract class Reader {
 	protected abstract _doRead(): SaveState;
 	protected abstract readInt(stream: InputStream): number;
 	protected abstract readSector(stram: InputStream, x: number, y: number): Sector;
-	protected abstract readNPC(stream: InputStream): MutableNPC;
+	protected abstract readMonster(stream: InputStream): MutableMonster;
 	protected abstract readHotspot(stream: InputStream, hotspot: Hotspot): Hotspot;
 
 	protected readBool(stream: InputStream): boolean {
@@ -123,7 +123,7 @@ abstract class Reader {
 		this.readHotspots(stream, zone);
 
 		if (visited) {
-			this.readNPCs(stream, zone);
+			this.readMonsters(stream, zone);
 			this.readActions(stream, zone);
 		}
 	}
@@ -137,16 +137,16 @@ abstract class Reader {
 		zone.hotspots = zone.hotspots.map(htsp => this.readHotspot(stream, htsp));
 	}
 
-	protected readNPCs(stream: InputStream, zone: MutableZone) {
+	protected readMonsters(stream: InputStream, zone: MutableZone) {
 		const count = this.readInt(stream);
 		if (count < 0) return;
 
-		if (this._type === Indy) zone.npcs = new Array(count);
+		if (this._type === Indy) zone.monsters = new Array(count);
 
-		for (let i = 0; i < zone.npcs.length; i++) {
-			const npc = this.readNPC(stream);
-			npc.id = i;
-			zone.npcs[i] = npc;
+		for (let i = 0; i < zone.monsters.length; i++) {
+			const monster = this.readMonster(stream);
+			monster.id = i;
+			zone.monsters[i] = monster;
 		}
 	}
 

@@ -41,12 +41,12 @@ class SidebarLayersCell extends Component {
 		hotspots.locked = false;
 		this._layers.push(hotspots);
 
-		const npcs = new Layer();
-		npcs.id = -2;
-		npcs.name = "NPCs";
-		npcs.visible = true;
-		npcs.locked = false;
-		this._layers.push(npcs);
+		const monsters = new Layer();
+		monsters.id = -2;
+		monsters.name = "Monsters";
+		monsters.visible = true;
+		monsters.locked = false;
+		this._layers.push(monsters);
 
 		const roof = new Layer();
 		roof.id = Zone.Layer.Roof;

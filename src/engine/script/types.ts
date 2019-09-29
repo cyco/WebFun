@@ -42,7 +42,7 @@ class Type {
 	public static readonly ZoneX = new Type();
 	public static readonly ZoneY = new Type();
 	public static readonly ZoneZ = new Type();
-	public static readonly NPCID = new Type();
+	public static readonly MonsterId = new Type();
 	public static readonly ZoneID = new Type();
 	public static readonly HotspotID = new Type();
 	public static readonly SoundID = new Type();

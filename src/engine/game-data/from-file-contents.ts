@@ -2,14 +2,14 @@ import { Action, Condition, Hotspot, Instruction, Sound, Puzzle, Char, Zone } fr
 import {
 	MutableAction,
 	MutableChar,
-	MutableNPC,
+	MutableMonster,
 	MutablePuzzle,
 	MutableTile,
 	MutableZone
 } from "src/engine/mutable-objects";
 import { Point, Size } from "src/util";
 import {
-	NPC as RawNPC,
+	Monster as RawMonster,
 	Hotspot as RawHotspot,
 	Action as RawAction,
 	Zone as RawZone,
@@ -128,8 +128,8 @@ const makeAction = (raw: RawAction, idx: number, zone: Zone, _: any): Action => 
 	return action;
 };
 
-const makeNPC = (raw: RawNPC, idx: number, data: GameData) => {
-	const npc = new MutableNPC();
+const makeNPC = (raw: RawMonster, idx: number, data: GameData) => {
+	const npc = new MutableMonster();
 	npc.id = idx;
 	npc.face = data.characters[raw.character];
 	npc.position = new Point(raw.x, raw.y, Zone.Layer.Object);
@@ -160,7 +160,7 @@ const makeZone = (raw: RawZone, idx: number, data: GameData) => {
 	zone.type = Zone.Type.fromNumber(raw.zoneType);
 	zone.tileIDs = raw.tileIDs.slice();
 	zone.hotspots = raw.hotspots.map((d: any, idx: number) => makeHotspot(d, idx, data));
-	zone.npcs = raw.npcs.map((d: any, idx: number) => makeNPC(d, idx, data));
+	zone.monsters = raw.monsters.map((d: any, idx: number) => makeNPC(d, idx, data));
 	zone.goalItems = Array.from(raw.goalItemIDs).map((id: number) => data.tiles[id]);
 	zone.requiredItems = Array.from(raw.requiredItemIDs).map((id: number) => data.tiles[id]);
 	zone.providedItems = Array.from(raw.providedItemIDs).map((id: number) => data.tiles[id]);

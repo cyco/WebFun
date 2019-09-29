@@ -1,5 +1,5 @@
 import highlightHero from "./highlight-hero";
 import highlightHotspots from "./highlight-hotspots";
-import highlightNPCs from "./highlight-npcs";
+import highlightMonsters from "./highlight-monsters";
 
-export { highlightHero, highlightNPCs, highlightHotspots };
+export { highlightHero, highlightMonsters, highlightHotspots };

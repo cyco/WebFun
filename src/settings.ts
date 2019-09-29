@@ -8,7 +8,7 @@ const Settings = persistent(
 		drawDebugStats: true,
 		drawHotspots: true,
 		drawHeroTile: true,
-		drawNPCState: true,
+		drawMonsterState: true,
 		skipDialogs: false,
 		skipTransitions: false,
 		pickupItemsAutomatically: false,

@@ -16,7 +16,7 @@ interface Zone {
 	name?: string;
 	actions: Action[];
 	hotspots: Hotspot[];
-	npcs: NPC[];
+	monsters: Monster[];
 	planet: number;
 	width: number;
 	height: number;
@@ -29,7 +29,7 @@ interface Zone {
 	unknown: number;
 }
 
-interface NPC {
+interface Monster {
 	character: number;
 	x: number;
 	y: number;
@@ -91,4 +91,4 @@ interface Data {
 	end: number;
 }
 
-export { NPC, Hotspot, ActionItem, Action, Zone, Tile, Puzzle, Sound, Character, Data };
+export { Monster, Hotspot, ActionItem, Action, Zone, Tile, Puzzle, Sound, Character, Data };

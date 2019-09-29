@@ -8,11 +8,10 @@ import { describeComponent, fdescribeComponent, xdescribeComponent } from "./com
 import "./matchers";
 import { buildFixtureUrl, getFixtureData, getFixtureContent } from "./fixture-loading";
 import {
-	describeNPCMovement,
-	xdescribeNPCMovement,
-	fdescribeNPCMovement,
-	DescribeNPCMovement
-} from "./gameplay/npc-movement";
+	describeMonsterMovement,
+	xdescribeMonsterMovement,
+	fdescribeMonsterMovement
+} from "./gameplay/monster-movement";
 
 import render from "./render";
 import { Component, ComponentJSXRenderer } from "src/ui";
@@ -52,14 +51,14 @@ console.assert = (condition: string, message?: string, ...rest: any[]) => {
 	}
 };
 
-global.describeNPCMovement = describeNPCMovement;
-global.xdescribeNPCMovement = xdescribeNPCMovement;
-global.fdescribeNPCMovement = fdescribeNPCMovement;
+global.describeMonsterMovement = describeMonsterMovement;
+global.xdescribeMonsterMovement = xdescribeMonsterMovement;
+global.fdescribeMonsterMovement = fdescribeMonsterMovement;
 
 declare global {
-	let describeNPCMovement: DescribeNPCMovement;
-	let xdescribeNPCMovement: DescribeNPCMovement;
-	let fdescribeNPCMovement: DescribeNPCMovement;
+	let describeMonsterMovement: describeMonsterMovement;
+	let xdescribeMonsterMovement: describeMonsterMovement;
+	let fdescribeMonsterMovement: describeMonsterMovement;
 }
 
-export { getFixtureContent, describeNPCMovement };
+export { getFixtureContent, describeMonsterMovement };

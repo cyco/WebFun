@@ -10,14 +10,14 @@ import GamesWonIsGreaterThan from "./games-won-is-greater-than";
 import HasAnyRequiredItem from "./has-any-required-item";
 import DropsQuestItemAt from "./drops-quest-item-at";
 import HasItem from "./has-item";
-import HasNoActiveNpcs from "./has-no-active-npcs";
+import HasNoActiveMonsters from "./has-no-active-monsters";
 import HealthIsGreaterThan from "./health-is-greater-than";
 import HealthIsLessThan from "./health-is-less-than";
 import HeroIsAt from "./hero-is-at";
 import IsVariable from "./is-variable";
 import ItemPlaced from "./item-placed";
 import NoItemPlaced from "./no-item-placed";
-import NpcIsActive from "./npc-is-active";
+import MonsterIsActive from "./monster-is-active";
 import PlacedItemIs from "./placed-item-is";
 import PlacedItemIsNot from "./placed-item-is-not";
 import RandomIs from "./random-is";
@@ -40,22 +40,22 @@ const ConditionsByName = {
 	Bump,
 	CounterIs,
 	CounterIsNot,
+	DropsQuestItemAt,
 	EndingIs,
 	EnterByPlane,
 	FindItemIs,
 	GamesWonIs,
 	GamesWonIsGreaterThan,
 	HasAnyRequiredItem,
-	DropsQuestItemAt,
 	HasItem,
-	HasNoActiveNpcs,
+	HasNoActiveMonsters,
 	HealthIsGreaterThan,
 	HealthIsLessThan,
 	HeroIsAt,
 	IsVariable,
 	ItemPlaced,
+	MonsterIsActive,
 	NoItemPlaced,
-	NpcIsActive,
 	PlacedItemIs,
 	PlacedItemIsNot,
 	RandomIs,

@@ -25,7 +25,7 @@ export default (gameController: GameController) => ({
 	submenu: [
 		SettingsItem("Draw Debug Stats", "drawDebugStats", gameController.settings),
 		SettingsItem("Draw invisible Hero", "drawHeroTile", gameController.settings),
-		SettingsItem("Draw NPC State", "drawNPCState", gameController.settings),
+		SettingsItem("Draw Monster State", "drawMonsterState", gameController.settings),
 		SettingsItem("Reveal World", "revealWorld", gameController.settings),
 		SettingsItem("Show Hotspots", "drawHotspots", gameController.settings),
 		SettingsItem("Skip Dialogs", "skipDialogs", gameController.settings),

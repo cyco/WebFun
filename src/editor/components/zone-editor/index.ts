@@ -1,7 +1,7 @@
 import Action from "./action";
 import HotspotLayer from "./hotspot-layer";
-import NPCLayer from "./npc-layer";
-import NPCLayerNPC from "./npc-layer-npc";
+import MonsterLayer from "./monster-layer";
+import MonsterLayerMonster from "./monster-layer-monster";
 import Sidebar from "./sidebar";
 import SidebarCell from "./sidebar-cell";
 import SidebarLayer from "./sidebar-layer";
@@ -22,6 +22,6 @@ export {
 	SidebarLayersCell,
 	Action,
 	HotspotLayer,
-	NPCLayer,
-	NPCLayerNPC
+	MonsterLayer,
+	MonsterLayerMonster
 };

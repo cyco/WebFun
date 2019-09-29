@@ -151,7 +151,7 @@ class ZoneInspector extends AbstractInspector {
 		zone.size = template.size;
 		zone.name = "New Zone";
 		zone.planet = template.planet;
-		zone.npcs = template.npcs;
+		zone.monsters = template.monsters;
 		zone.goalItems = template.goalItems;
 		zone.requiredItems = template.requiredItems;
 		zone.providedItems = template.providedItems;

@@ -1,12 +1,12 @@
 import { Zone } from "src/engine/objects";
 
 class MutableZone extends Zone {
-	get npcs() {
-		return this._npcs;
+	get monsters() {
+		return this._monsters;
 	}
 
-	set npcs(value) {
-		this._npcs = value;
+	set monsters(value) {
+		this._monsters = value;
 	}
 
 	get id() {

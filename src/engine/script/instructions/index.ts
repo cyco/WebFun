@@ -6,14 +6,14 @@ import AddToCounter from "./add-to-counter";
 import AddToSharedCounter from "./add-to-shared-counter";
 import ChangeZone from "./change-zone";
 import DisableAction from "./disable-action";
-import DisableAllNpcs from "./disable-all-npcs";
+import DisableAllMonsters from "./disable-all-monsters";
 import DisableHotspot from "./disable-hotspot";
-import DisableNpc from "./disable-npc";
+import DisableMonster from "./disable-monster";
 import DrawTile from "./draw-tile";
 import DropItem from "./drop-item";
-import EnableAllNpcs from "./enable-all-npcs";
+import EnableAllMonsters from "./enable-all-monsters";
 import EnableHotspot from "./enable-hotspot";
-import EnableNpc from "./enable-npc";
+import EnableMonster from "./enable-monster";
 import HideHero from "./hide-hero";
 import LoseGame from "./lose-game";
 import MarkAsSolved from "./mark-as-solved";
@@ -40,44 +40,44 @@ import Wait from "./wait";
 import WinGame from "./win-game";
 
 const InstructionsByName = {
-	PlaceTile,
-	RemoveTile,
-	MoveTile,
-	DrawTile,
-	SpeakHero,
-	SpeakNpc,
-	EnableNpc,
-	DisableNpc,
-	EnableAllNpcs,
-	DisableAllNpcs,
-	SetTileNeedsDisplay,
-	SetRectNeedsDisplay,
-	Wait,
-	Redraw,
-	PlaySound,
-	StopSound,
-	RollDice,
-	SetCounter,
-	SetVariable,
-	HideHero,
-	ShowHero,
-	MoveHeroTo,
-	DisableAction,
-	DisableHotspot,
-	EnableHotspot,
-	DropItem,
-	AddItem,
-	RemoveItem,
-	ChangeZone,
-	SetSharedCounter,
-	AddToSharedCounter,
-	SetRandom,
 	AddHealth,
+	AddItem,
 	AddToCounter,
-	WinGame,
+	AddToSharedCounter,
+	ChangeZone,
+	DisableAction,
+	DisableAllMonsters,
+	DisableHotspot,
+	DisableMonster,
+	DrawTile,
+	DropItem,
+	EnableAllMonsters,
+	EnableHotspot,
+	EnableMonster,
+	HideHero,
 	LoseGame,
 	MarkAsSolved,
-	MoveHeroBy
+	MoveHeroBy,
+	MoveHeroTo,
+	MoveTile,
+	PlaceTile,
+	PlaySound,
+	Redraw,
+	RemoveItem,
+	RemoveTile,
+	RollDice,
+	SetCounter,
+	SetRandom,
+	SetRectNeedsDisplay,
+	SetSharedCounter,
+	SetTileNeedsDisplay,
+	SetVariable,
+	ShowHero,
+	SpeakHero,
+	SpeakNpc,
+	StopSound,
+	Wait,
+	WinGame
 };
 
 const InstructionsByOpcode: Instruction[] = new Array(

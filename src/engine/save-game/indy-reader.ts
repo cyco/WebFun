@@ -2,7 +2,7 @@ import { InputStream, Point } from "src/util";
 
 import { Hotspot, Char, Zone, Tile } from "src/engine/objects";
 import { Indy } from "src/engine/type";
-import { MutableHotspot, MutableNPC } from "src/engine/mutable-objects";
+import { MutableHotspot, MutableMonster } from "src/engine/mutable-objects";
 import { Planet } from "../types";
 import Reader from "./reader";
 import SaveState from "./save-state";
@@ -127,7 +127,7 @@ class IndyReader extends Reader {
 		return hotspot;
 	}
 
-	protected readNPC(stream: InputStream): MutableNPC {
+	protected readMonster(stream: InputStream): MutableMonster {
 		const characterId = stream.getInt16();
 		const x = stream.getInt16();
 		const y = stream.getInt16();
@@ -135,12 +135,12 @@ class IndyReader extends Reader {
 
 		stream.getUint8Array(0x18);
 
-		const npc = new MutableNPC();
-		npc.face = this._assets.get(Char, characterId, NullIfMissing);
-		npc.position = new Point(x, y);
-		npc.damageTaken = damageTaken;
+		const monster = new MutableMonster();
+		monster.face = this._assets.get(Char, characterId, NullIfMissing);
+		monster.position = new Point(x, y);
+		monster.damageTaken = damageTaken;
 
-		return npc;
+		return monster;
 	}
 
 	protected readInt(stream: InputStream): number {

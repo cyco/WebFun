@@ -1,28 +1,28 @@
 import { ScriptResult, EvaluationMode } from "./script";
 import Engine from "./engine";
 import { Direction } from "src/util";
-import { NPC, Char, Hotspot, Zone, Tile } from "./objects";
+import { Monster, Char, Hotspot, Zone, Tile } from "./objects";
 import { MutableHotspot } from "./mutable-objects";
 import AssetManager from "./asset-manager";
 
-function hitNPC(npc: NPC, weapon: Char, zone: Zone, assets: AssetManager) {
-	npc.damageTaken += weapon.damage;
-	if (!npc.alive) {
-		zone.setTile(null, npc.position);
-		npc.enabled = false;
+function hitMonster(monster: Monster, weapon: Char, zone: Zone, assets: AssetManager) {
+	monster.damageTaken += weapon.damage;
+	if (!monster.alive) {
+		zone.setTile(null, monster.position);
+		monster.enabled = false;
 
-		if (npc.dropsLoot) _dropLoot(npc, zone, assets);
+		if (monster.dropsLoot) _dropLoot(monster, zone, assets);
 	}
 }
 
-function _dropLoot(npc: NPC, zone: Zone, assets: AssetManager) {
+function _dropLoot(monster: Monster, zone: Zone, assets: AssetManager) {
 	const hotspot = new MutableHotspot();
 	hotspot.type = Hotspot.Type.DropItem;
 	hotspot.enabled = true;
-	hotspot.location = npc.position;
+	hotspot.location = monster.position;
 
 	let itemId = -1;
-	if (npc.loot > 0) itemId = npc.loot - 1;
+	if (monster.loot > 0) itemId = monster.loot - 1;
 	else {
 		const hotspots = zone.hotspots.withType(Hotspot.Type.DropQuestItem).filter(htsp => htsp.arg > 0);
 
@@ -83,12 +83,12 @@ export default async (engine: Engine, zone: Zone): Promise<ScriptResult> => {
 
 	const target = hero.location.byAdding(Direction.CalculateRelativeCoordinates(hero.direction, frames + 1));
 
-	const hitNPCs = zone.npcs.filter(
+	const hitMonsters = zone.monsters.filter(
 		({ position, alive, enabled }) => alive && enabled && position.isEqualTo(target)
 	);
 
-	hitNPCs.forEach(npc => hitNPC(npc, hero.weapon, zone, assets));
-	if (hitNPCs.length) {
+	hitMonsters.forEach(monster => hitMonster(monster, hero.weapon, zone, assets));
+	if (hitMonsters.length) {
 		hero.isAttacking = false;
 		hero._actionFrames = 0;
 		return ScriptResult.Done;

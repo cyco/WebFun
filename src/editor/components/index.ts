@@ -17,8 +17,8 @@ import PopoutTilePicker from "./popout-tile-picker";
 import PopoverCharacterPicker from "./popover-character-picker";
 import {
 	HotspotLayer,
-	NPCLayer,
-	NPCLayerNPC,
+	MonsterLayer,
+	MonsterLayerMonster,
 	Action as ZoneEditorAction,
 	Sidebar as ZoneEditorSidebar,
 	SidebarCell as ZoneEditorSidebarCell,
@@ -33,8 +33,8 @@ import { Editor as ActionEditor, Token as ActionEditorToken } from "./action-edi
 import { Editor as TileEditor } from "./tile-editor";
 
 export {
-	NPCLayer,
-	NPCLayerNPC,
+	MonsterLayer,
+	MonsterLayerMonster,
 	ActionEditorToken,
 	ActionEditor,
 	TilePickerCell,

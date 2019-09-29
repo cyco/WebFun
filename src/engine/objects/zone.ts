@@ -4,7 +4,7 @@ import ZoneType from "./zone-type";
 
 import Action from "./action";
 import ZoneLayer from "./zone-layer";
-import NPC from "./npc";
+import Monster from "./monster";
 import { Planet } from "../types";
 import Tile from "./tile";
 import AssetManager, { NullIfMissing } from "src/engine/asset-manager";
@@ -23,7 +23,7 @@ class Zone {
 	public random: number = 0;
 	public sharedCounter: number = 0;
 
-	protected _npcs: NPC[] = [];
+	protected _monsters: Monster[] = [];
 	protected _id: number = -1;
 	protected _name: string = "";
 	protected _planet: Planet = Planet.NONE;
@@ -120,7 +120,7 @@ class Zone {
 	}
 
 	private placeNPCs(): void {
-		this.npcs
+		this.monsters
 			.filter(npc => npc.enabled)
 			.forEach(npc => {
 				if (this.getTile(npc.x, npc.y, ZoneLayer.Object) === null) {
@@ -172,8 +172,8 @@ class Zone {
 		return new Rectangle(new Point(0, 0), this._size);
 	}
 
-	get npcs() {
-		return this._npcs;
+	get monsters() {
+		return this._monsters;
 	}
 
 	get id() {

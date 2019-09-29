@@ -7,7 +7,7 @@ import { ContextMenu } from "src/ui/components";
 import HotspotLayerComponent from "./hotspot-layer";
 import Layer from "./layer";
 import LayerComponent from "./zone-layer";
-import NPCLayerComponent from "./npc-layer";
+import MonsterLayerComponent from "./monster-layer";
 import { Point } from "src/util";
 import { Zone, Tile } from "src/engine/objects";
 
@@ -19,7 +19,7 @@ class View extends Component implements EventListenerObject {
 	private _objects: LayerComponent;
 	private _roof: LayerComponent;
 	private _hotspots: HotspotLayerComponent;
-	private _npcs: NPCLayerComponent;
+	private _monsters: MonsterLayerComponent;
 	private _overlay: HTMLCanvasElement;
 	private _tool: AbstractTool;
 	private _currentLayer: Layer;
@@ -28,7 +28,7 @@ class View extends Component implements EventListenerObject {
 		super();
 
 		this._hotspots = <HotspotLayerComponent /> as HotspotLayerComponent;
-		this._npcs = <NPCLayerComponent /> as NPCLayerComponent;
+		this._monsters = <MonsterLayerComponent /> as MonsterLayerComponent;
 		this._floor = <LayerComponent layer={Zone.Layer.Floor} /> as LayerComponent;
 		this._objects = <LayerComponent layer={Zone.Layer.Object} /> as LayerComponent;
 		this._roof = <LayerComponent layer={Zone.Layer.Roof} /> as LayerComponent;
@@ -43,7 +43,7 @@ class View extends Component implements EventListenerObject {
 		this.appendChild(this._objects);
 		this.appendChild(this._roof);
 		this.appendChild(this._hotspots);
-		this.appendChild(this._npcs);
+		this.appendChild(this._monsters);
 		this.appendChild(this._overlay);
 		this._overlay.addEventListener("contextmenu", this);
 	}
@@ -81,7 +81,7 @@ class View extends Component implements EventListenerObject {
 		this._objects.remove();
 		this._roof.remove();
 		this._hotspots.remove();
-		this._npcs.remove();
+		this._monsters.remove();
 		this._overlay.remove();
 	}
 
@@ -93,7 +93,7 @@ class View extends Component implements EventListenerObject {
 		this._objects.zone = zone;
 		this._roof.zone = zone;
 		this._hotspots.zone = zone;
-		this._npcs.zone = zone;
+		this._monsters.zone = zone;
 
 		this._overlay.style.width = zone.size.width * Tile.WIDTH + "px";
 		this._overlay.style.height = zone.size.height * Tile.HEIGHT + "px";
@@ -137,7 +137,7 @@ class View extends Component implements EventListenerObject {
 		if (id === Zone.Layer.Floor) return this._floor;
 
 		if (id === -1) return this._hotspots;
-		if (id === -2) return this._npcs;
+		if (id === -2) return this._monsters;
 
 		console.assert(false, "Invalid layer encountered");
 	}
@@ -163,7 +163,7 @@ class View extends Component implements EventListenerObject {
 
 	public set palette(p) {
 		this._hotspots.palette = p;
-		this._npcs.palette = p;
+		this._monsters.palette = p;
 		this._floor.palette = p;
 		this._roof.palette = p;
 		this._objects.palette = p;
@@ -174,19 +174,19 @@ class View extends Component implements EventListenerObject {
 	}
 
 	public set characters(c) {
-		this._npcs.characters = c;
+		this._monsters.characters = c;
 	}
 
 	public get characters() {
-		return this._npcs.characters;
+		return this._monsters.characters;
 	}
 
 	public set tiles(t) {
-		this._npcs.tiles = t;
+		this._monsters.tiles = t;
 	}
 
 	public get tiles() {
-		return this._npcs.tiles;
+		return this._monsters.tiles;
 	}
 }
 

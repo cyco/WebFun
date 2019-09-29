@@ -1,6 +1,6 @@
 import { Hotspot, Tile, Char, Zone } from "src/engine/objects";
 import { InputStream, Point } from "src/util";
-import { MutableHotspot, MutableNPC } from "src/engine/mutable-objects";
+import { MutableHotspot, MutableMonster } from "src/engine/mutable-objects";
 import { Planet, WorldSize } from "../types";
 
 import Reader from "./reader";
@@ -142,7 +142,7 @@ class YodaReader extends Reader {
 		return sector;
 	}
 
-	protected readNPC(stream: InputStream): MutableNPC {
+	protected readMonster(stream: InputStream): MutableMonster {
 		const characterId = stream.getInt16();
 		const x = stream.getInt16();
 		const y = stream.getInt16();
@@ -174,31 +174,31 @@ class YodaReader extends Reader {
 			stream.getUint32();
 		}
 
-		const npc = new MutableNPC();
-		npc.face = this._assets.get(Char, characterId, NullIfMissing);
-		npc.enabled = enabled;
-		npc.position = new Point(x, y);
-		npc.damageTaken = damageTaken;
-		npc.loot = loot;
-		npc.field10 = field10;
-		npc.bulletX = bulletX;
-		npc.bulletY = bulletY;
-		npc.currentFrame = currentFrame;
-		npc.facingDirection = facingDirection;
-		npc.cooldown = cooldown;
-		npc.flag18 = flag18;
-		npc.flag20 = flag20;
-		npc.flag1c = flag1c;
-		npc.directionX = directionX;
-		npc.directionY = directionY;
-		npc.field3c = field3c;
-		npc.field60 = field60;
-		npc.flag2c = flag2c;
-		npc.flag34 = flag34;
-		npc.hasItem = hasItem;
-		npc.preferredDirection = preferred;
+		const monster = new MutableMonster();
+		monster.face = this._assets.get(Char, characterId, NullIfMissing);
+		monster.enabled = enabled;
+		monster.position = new Point(x, y);
+		monster.damageTaken = damageTaken;
+		monster.loot = loot;
+		monster.field10 = field10;
+		monster.bulletX = bulletX;
+		monster.bulletY = bulletY;
+		monster.currentFrame = currentFrame;
+		monster.facingDirection = facingDirection;
+		monster.cooldown = cooldown;
+		monster.flag18 = flag18;
+		monster.flag20 = flag20;
+		monster.flag1c = flag1c;
+		monster.directionX = directionX;
+		monster.directionY = directionY;
+		monster.field3c = field3c;
+		monster.field60 = field60;
+		monster.flag2c = flag2c;
+		monster.flag34 = flag34;
+		monster.hasItem = hasItem;
+		monster.preferredDirection = preferred;
 
-		return npc;
+		return monster;
 	}
 
 	protected readHotspot(stream: InputStream, _: Hotspot): Hotspot {

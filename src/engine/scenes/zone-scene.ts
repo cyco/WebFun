@@ -9,7 +9,7 @@ import DetonatorScene from "./detonator-scene";
 import Engine from "src/engine/engine";
 import Hero from "src/engine/hero";
 import MapScene from "./map-scene";
-import moveNPC from "src/engine/npc-move";
+import moveMonster from "src/engine/monster-move";
 import PauseScene from "./pause-scene";
 import Scene from "./scene";
 import ZoneSceneRenderer from "src/engine/rendering/zone-scene-renderer";
@@ -167,7 +167,7 @@ class ZoneScene extends Scene {
 	}
 
 	private _moveNPCs() {
-		this._zone.npcs.forEach(npc => moveNPC(npc, this.zone, this.engine));
+		this._zone.monsters.forEach(npc => moveMonster(npc, this.zone, this.engine));
 	}
 
 	prepareCamera() {

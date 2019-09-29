@@ -1,4 +1,4 @@
-import { Action, Hotspot, NPC, Tile, Zone } from "src/engine/objects";
+import { Action, Hotspot, Monster, Tile, Zone } from "src/engine/objects";
 
 import { OutputStream } from "src/util";
 import SaveState from "./save-state";
@@ -115,15 +115,15 @@ class Writer {
 		zone.hotspots.forEach((hotspot: Hotspot) => this._writeHotspot(hotspot, stream));
 
 		if (visited) {
-			stream.writeUint32(zone.npcs.length);
-			zone.npcs.forEach((npc: NPC) => this._writeNPC(npc, stream));
+			stream.writeUint32(zone.monsters.length);
+			zone.monsters.forEach((npc: Monster) => this._writeNPC(npc, stream));
 
 			stream.writeUint32(zone.actions.length);
 			zone.actions.forEach((action: Action) => stream.writeUint32(+action.enabled));
 		}
 	}
 
-	private _writeNPC(npc: NPC, stream: OutputStream): void {
+	private _writeNPC(npc: Monster, stream: OutputStream): void {
 		stream.writeInt16(npc.alive ? npc.face.id : -1);
 		stream.writeInt16(npc.position.x);
 		stream.writeInt16(npc.position.y);

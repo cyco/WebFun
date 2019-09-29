@@ -7,7 +7,7 @@ import Action from "./action";
 import Char from "./char";
 import Condition from "./condition";
 import Instruction from "./instruction";
-import NPC from "./npc";
+import Monster from "./monster";
 import Sound from "./sound";
 
-export { Char, Condition, Instruction, Puzzle, Tile, Action, Zone, Hotspot, NPC, Sound };
+export { Char, Condition, Instruction, Puzzle, Tile, Action, Zone, Hotspot, Monster, Sound };

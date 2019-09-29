@@ -4,7 +4,7 @@ import { InputStream } from "src/util";
 import { assert } from "../error";
 import { parseAction } from "./action";
 import { parseHotspot } from "./hotspot";
-import { parseNPC } from "./npc";
+import { parseMonster } from "./monster";
 import { Data, Zone, Hotspot, Action } from "../types";
 
 const IZON = "IZON";
@@ -48,7 +48,7 @@ const parseZone = (stream: InputStream, data: Data, gameType: GameType): Zone =>
 			zoneType,
 			tileIDs,
 			hotspots: [] as Hotspot[],
-			npcs: [] as any[],
+			monsters: [] as any[],
 			actions: [] as Action[],
 			requiredItemIDs: new Int16Array(0),
 			goalItemIDs: new Int16Array(0),
@@ -64,7 +64,7 @@ const parseZone = (stream: InputStream, data: Data, gameType: GameType): Zone =>
 		hotspots.push(parseHotspot(stream));
 	}
 
-	const { npcs, requiredItemIDs, goalItemIDs } = parseZoneAux(stream, data);
+	const { monsters, requiredItemIDs, goalItemIDs } = parseZoneAux(stream, data);
 	const { providedItemIDs } = parseZoneAux2(stream, data);
 	const { puzzleNPCIDs } = parseZoneAux3(stream, data);
 	const { unknown } = parseZoneAux4(stream, data);
@@ -82,7 +82,7 @@ const parseZone = (stream: InputStream, data: Data, gameType: GameType): Zone =>
 		zoneType,
 		tileIDs,
 		hotspots,
-		npcs,
+		monsters,
 		actions,
 		requiredItemIDs,
 		goalItemIDs,
@@ -115,10 +115,10 @@ const parseZoneAux = (stream: InputStream, _: Data): any => {
 	// skip over unknown value
 	stream.getUint16();
 
-	const npcCount = stream.getUint16();
-	const npcs = [];
-	for (let i = 0; i < npcCount; i++) {
-		npcs.push(parseNPC(stream));
+	const monsterCount = stream.getUint16();
+	const monsters = [];
+	for (let i = 0; i < monsterCount; i++) {
+		monsters.push(parseMonster(stream));
 	}
 
 	const requiredItemCount = stream.getUint16();
@@ -127,7 +127,7 @@ const parseZoneAux = (stream: InputStream, _: Data): any => {
 	const goalItemCount = stream.getUint16();
 	const goalItemIDs = stream.getInt16Array(goalItemCount);
 
-	return { npcs, requiredItemIDs, goalItemIDs };
+	return { monsters, requiredItemIDs, goalItemIDs };
 };
 
 const parseZoneAux2 = (stream: InputStream, _: Data): any => {

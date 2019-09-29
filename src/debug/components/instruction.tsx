@@ -94,15 +94,15 @@ class InstructionComponent extends InstructionThing {
 				this.appendLocationArgument(this._instruction.arguments[0], this._instruction.arguments[1]);
 				this.appendTextArgument(this._instruction.text);
 				break;
-			case Instructions.EnableNpc.Opcode:
+			case Instructions.EnableMonster.Opcode:
 				this.appendNumberArgument(this._instruction.arguments[0]);
 				break;
-			case Instructions.DisableNpc.Opcode:
+			case Instructions.DisableMonster.Opcode:
 				this.appendNumberArgument(this._instruction.arguments[0]);
 				break;
-			case Instructions.EnableAllNpcs.Opcode:
+			case Instructions.EnableAllMonsters.Opcode:
 				break;
-			case Instructions.DisableAllNpcs.Opcode:
+			case Instructions.DisableAllMonsters.Opcode:
 				break;
 			case Instructions.SetTileNeedsDisplay.Opcode:
 				break;
@@ -196,9 +196,7 @@ class InstructionComponent extends InstructionThing {
 	}
 
 	protected appendSoundArgument(sound: number) {
-		this.appendChild(
-			<span className="argument sound">{this.engine.assets.get(Sound, sound).file}</span>
-		);
+		this.appendChild(<span className="argument sound">{this.engine.assets.get(Sound, sound).file}</span>);
 	}
 }
 

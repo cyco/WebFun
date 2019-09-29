@@ -44,7 +44,7 @@ class DetonatorScene extends Scene {
 				const target = this.detonatorLocation.byAdding(x, y);
 				if (!bounds.contains(target)) continue;
 
-				zone.npcs
+				zone.monsters
 					.filter(({ position }) => position.isEqualTo(target))
 					.map(npc => ((npc.damageTaken += damage), npc))
 					.filter(({ alive }) => !alive)
