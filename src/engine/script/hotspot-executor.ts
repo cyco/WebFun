@@ -118,11 +118,11 @@ class HotspotExecutor {
 	}
 
 	public triggerPlaceHotspots(tile: Tile, location: Point, zone: Zone) {
-		const acceptItem = false;
 		const { sector } = this._engine.findSectorContainingZone(zone);
 		console.assert(!!sector, "Could not find sector for zone", zone);
 
 		const index = sector.puzzleIndex;
+		if (index === -1) return;
 		const alternate = sector.usedAlternateStrain;
 
 		console.log("Look up ", index, " in ", alternate ? "alternate branch" : "primary branch");
