@@ -8,7 +8,7 @@ import FindItemIs from "./find-item-is";
 import GamesWonIs from "./games-won-is";
 import GamesWonIsGreaterThan from "./games-won-is-greater-than";
 import HasAnyRequiredItem from "./has-any-required-item";
-import HasHotspotTriggerAt from "./has-hotspot-trigger-at";
+import DropsQuestItemAt from "./drops-quest-item-at";
 import HasItem from "./has-item";
 import HasNoActiveNpcs from "./has-no-active-npcs";
 import HealthIsGreaterThan from "./health-is-greater-than";
@@ -46,7 +46,7 @@ const ConditionsByName = {
 	GamesWonIs,
 	GamesWonIsGreaterThan,
 	HasAnyRequiredItem,
-	HasHotspotTriggerAt,
+	DropsQuestItemAt,
 	HasItem,
 	HasNoActiveNpcs,
 	HealthIsGreaterThan,

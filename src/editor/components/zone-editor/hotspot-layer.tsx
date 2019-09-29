@@ -67,7 +67,7 @@ class HotspotLayer extends Component {
 				title: "Place hotspot",
 				callback: (): void => {
 					const hotspot = new MutableHotspot();
-					hotspot.type = MutableHotspot.Type.TriggerLocation;
+					hotspot.type = MutableHotspot.Type.DropQuestItem;
 					hotspot.arg = -1;
 					hotspot.x = point.x;
 					hotspot.y = point.y;

@@ -138,13 +138,13 @@ class Zone {
 					case Hotspot.Type.Unused:
 						hotspot.arg = TILE_ADEGAN_CRYSTAL;
 					/* intentional fallthrough */
-					case Hotspot.Type.TriggerLocation:
+					case Hotspot.Type.DropQuestItem:
 					case Hotspot.Type.SpawnLocation:
-					case Hotspot.Type.WeaponLocation:
-					case Hotspot.Type.LocatorLocation:
-					case Hotspot.Type.CrateItem:
+					case Hotspot.Type.DropUniqueWeapon:
+					case Hotspot.Type.DropMap:
+					case Hotspot.Type.DropItem:
 					case Hotspot.Type.PuzzleNPC:
-					case Hotspot.Type.CrateWeapon:
+					case Hotspot.Type.DropWeapon:
 						if (hotspot.arg < 0) break;
 						if (this.getTile(hotspot.x, hotspot.y, 1)) return;
 						this.setTile(({ id: hotspot.arg } as unknown) as Tile, hotspot.x, hotspot.y, 1);

@@ -17,14 +17,14 @@ function hitNPC(npc: NPC, weapon: Char, zone: Zone, assets: AssetManager) {
 
 function _dropLoot(npc: NPC, zone: Zone, assets: AssetManager) {
 	const hotspot = new MutableHotspot();
-	hotspot.type = Hotspot.Type.CrateItem;
+	hotspot.type = Hotspot.Type.DropItem;
 	hotspot.enabled = true;
 	hotspot.location = npc.position;
 
 	let itemId = -1;
 	if (npc.loot > 0) itemId = npc.loot - 1;
 	else {
-		const hotspots = zone.hotspots.withType(Hotspot.Type.TriggerLocation).filter(htsp => htsp.arg > 0);
+		const hotspots = zone.hotspots.withType(Hotspot.Type.DropQuestItem).filter(htsp => htsp.arg > 0);
 
 		if (!hotspots.length) return;
 

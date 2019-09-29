@@ -136,7 +136,7 @@ class ConditionComponent extends InstructionThing {
 			case Conditions.GamesWonIs.Opcode:
 				this.appendNumberArgument(this._condition.arguments[0]);
 				break;
-			case Conditions.HasHotspotTriggerAt.Opcode:
+			case Conditions.DropsQuestItemAt.Opcode:
 				this.appendLocationArgument(this._condition.arguments[0], this._condition.arguments[1]);
 				break;
 			case Conditions.HasAnyRequiredItem.Opcode:

@@ -66,13 +66,13 @@ class SimulatedStory extends Story {
 			const npc = this.findUnusedNPCForZoneRandomly(zone);
 			const hasPuzzleNPC = npc !== null ? this.zoneLeadsToNPC(zone, npc) : 0;
 			if(!hasPuzzleNPC) {
-				this.dropItemAtTriggerHotspotRandomly(zone, puzzle3.item1);
-				this.dropItemAtTriggerHotspotRandomly(zone, puzzle3.item2 ? puzzle3.item2 : null)
+				this.placeQuestItem(zone, puzzle3.item1);
+				this.placeQuestItem(zone, puzzle3.item2 ? puzzle3.item2 : null)
 			}
 		*/
 			case Zone.Type.Trade:
 				// if(this.dropItemAtLockHotspot(zone, p1.item1)) {
-				// 	this.dropItemAtTriggerHotspotRandomly(zone, p2.item1)
+				// 	this.placeQuestItem(zone, p2.item1)
 				// }
 				break;
 			case Zone.Type.Use:
@@ -82,11 +82,11 @@ class SimulatedStory extends Story {
 			case Zone.Type.FindUniqueWeapon:
 				const hotspotTypeForTileAttributes = (input: number) => {
 					if ((input & Tile.Attributes.Weapon) !== 0) {
-						return Hotspot.Type.WeaponLocation;
+						return Hotspot.Type.DropUniqueWeapon;
 					} else if ((input & (1 << Tile.Subtype.Item.Locator)) !== 0) {
-						return Hotspot.Type.LocatorLocation;
+						return Hotspot.Type.DropMap;
 					} else if ((input & Tile.Attributes.Item) !== 0) {
-						return Hotspot.Type.TriggerLocation;
+						return Hotspot.Type.DropQuestItem;
 					}
 				};
 				const type = hotspotTypeForTileAttributes(find.attributes);

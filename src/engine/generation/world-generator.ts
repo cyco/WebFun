@@ -506,12 +506,11 @@ class WorldGenerator {
 					let didAddItem = 1;
 					// TODO: this used to be &= which might evaluate the second expression in any case
 					didAddItem = didAddItem & +this.chooseItemFromZone(zone, puzzle1.item1, false);
-					didAddItem = didAddItem & +this.dropItemAtTriggerHotspotRandomly(zone, puzzle3.item1);
+					didAddItem = didAddItem & +this.placeQuestItem(zone, puzzle3.item1);
 
 					didAddItem = didAddItem & +this.chooseItemFromZone(zone, puzzle2.item1, true);
 					didAddItem =
-						didAddItem &
-						+this.dropItemAtTriggerHotspotRandomly(zone, puzzle3.item2 ? puzzle3.item2 : null);
+						didAddItem & +this.placeQuestItem(zone, puzzle3.item2 ? puzzle3.item2 : null);
 
 					if (!didAddItem) return false;
 
@@ -556,7 +555,7 @@ class WorldGenerator {
 					this.addRequiredItemQuest(p1.item1, distance);
 					this.requiredItem = p1.item1;
 
-					if (this.dropItemAtTriggerHotspotRandomly(zone, p2.item1)) {
+					if (this.placeQuestItem(zone, p2.item1)) {
 						this.addRequiredItemQuest(p2.item1, distance);
 						this.findItem = p2.item1;
 					}
@@ -912,13 +911,13 @@ class WorldGenerator {
 		});
 	}
 
-	private dropItemAtTriggerHotspotRandomly(zone: Zone, item: Tile): boolean {
+	private placeQuestItem(zone: Zone, item: Tile): boolean {
 		return this._traverseZoneUntil(
 			zone,
 			zone => {
 				if (!zone.providedItems.includes(item)) return false;
 
-				const candidates = zone.hotspots.withType(Hotspot.Type.TriggerLocation);
+				const candidates = zone.hotspots.withType(Hotspot.Type.DropQuestItem);
 				return this.placeItemAtHotspotRandomly(candidates, item);
 			},
 			false,
@@ -991,11 +990,11 @@ class WorldGenerator {
 
 	private hotspotTypeForTileAttributes(input: number): Hotspot.Type {
 		if ((input & Tile.Attributes.Weapon) !== 0) {
-			return Hotspot.Type.WeaponLocation;
+			return Hotspot.Type.DropUniqueWeapon;
 		} else if ((input & (1 << Tile.Subtype.Item.Locator)) !== 0) {
-			return Hotspot.Type.LocatorLocation;
+			return Hotspot.Type.DropMap;
 		} else if ((input & Tile.Attributes.Item) !== 0) {
-			return Hotspot.Type.TriggerLocation;
+			return Hotspot.Type.DropQuestItem;
 		}
 	}
 

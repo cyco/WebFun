@@ -90,10 +90,10 @@ const makeHotspot = (raw: RawHotspot, idx: number, _: any): Hotspot => {
 	hotspot.type = Hotspot.Type.fromNumber(raw.type);
 
 	switch (hotspot.type) {
-		case Hotspot.Type.TriggerLocation:
+		case Hotspot.Type.DropQuestItem:
 		case Hotspot.Type.SpawnLocation:
-		case Hotspot.Type.WeaponLocation:
-		case Hotspot.Type.LocatorLocation:
+		case Hotspot.Type.DropUniqueWeapon:
+		case Hotspot.Type.DropMap:
 			hotspot.enabled = false;
 			break;
 		case Hotspot.Type.VehicleTo:
@@ -102,9 +102,9 @@ const makeHotspot = (raw: RawHotspot, idx: number, _: any): Hotspot => {
 		case Hotspot.Type.Lock:
 		case Hotspot.Type.xWingFromDagobah:
 		case Hotspot.Type.xWingToDagobah:
-		case Hotspot.Type.CrateItem:
+		case Hotspot.Type.DropItem:
 		case Hotspot.Type.PuzzleNPC:
-		case Hotspot.Type.CrateWeapon:
+		case Hotspot.Type.DropWeapon:
 			hotspot.enabled = true;
 			break;
 		default:

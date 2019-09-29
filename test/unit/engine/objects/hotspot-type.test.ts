@@ -6,20 +6,20 @@ describe("WebFun.Engine.Objects.HotspotType", () => {
 	});
 
 	it("can be created from a number", () => {
-		expect(HotspotType.fromNumber(0)).toBe(HotspotType.TriggerLocation);
+		expect(HotspotType.fromNumber(0)).toBe(HotspotType.DropQuestItem);
 		expect(() => HotspotType.fromNumber(-1)).toThrow();
 	});
 
 	it("can be represented as a string", () => {
-		expect(HotspotType.TriggerLocation.name).toBe("TriggerLocation");
+		expect(HotspotType.DropQuestItem.name).toBe("DropQuestItem");
 		expect(HotspotType.SpawnLocation.name).toBe("SpawnLocation");
-		expect(HotspotType.WeaponLocation.name).toBe("WeaponLocation");
+		expect(HotspotType.DropUniqueWeapon.name).toBe("DropUniqueWeapon");
 		expect(HotspotType.VehicleTo.name).toBe("VehicleTo");
 		expect(HotspotType.VehicleBack.name).toBe("VehicleBack");
-		expect(HotspotType.LocatorLocation.name).toBe("LocatorLocation");
-		expect(HotspotType.CrateItem.name).toBe("CrateItem");
+		expect(HotspotType.DropMap.name).toBe("DropMap");
+		expect(HotspotType.DropItem.name).toBe("DropItem");
 		expect(HotspotType.PuzzleNPC.name).toBe("PuzzleNPC");
-		expect(HotspotType.CrateWeapon.name).toBe("CrateWeapon");
+		expect(HotspotType.DropWeapon.name).toBe("DropWeapon");
 		expect(HotspotType.DoorIn.name).toBe("DoorIn");
 		expect(HotspotType.DoorOut.name).toBe("DoorOut");
 		expect(HotspotType.Unused.name).toBe("Unused");
@@ -32,15 +32,15 @@ describe("WebFun.Engine.Objects.HotspotType", () => {
 	});
 
 	it("can be represented as a number", () => {
-		expect(HotspotType.TriggerLocation.rawValue).toBe(0);
+		expect(HotspotType.DropQuestItem.rawValue).toBe(0);
 		expect(HotspotType.SpawnLocation.rawValue).toBe(1);
-		expect(HotspotType.WeaponLocation.rawValue).toBe(2);
+		expect(HotspotType.DropUniqueWeapon.rawValue).toBe(2);
 		expect(HotspotType.VehicleTo.rawValue).toBe(3);
 		expect(HotspotType.VehicleBack.rawValue).toBe(4);
-		expect(HotspotType.LocatorLocation.rawValue).toBe(5);
-		expect(HotspotType.CrateItem.rawValue).toBe(6);
+		expect(HotspotType.DropMap.rawValue).toBe(5);
+		expect(HotspotType.DropItem.rawValue).toBe(6);
 		expect(HotspotType.PuzzleNPC.rawValue).toBe(7);
-		expect(HotspotType.CrateWeapon.rawValue).toBe(8);
+		expect(HotspotType.DropWeapon.rawValue).toBe(8);
 		expect(HotspotType.DoorIn.rawValue).toBe(9);
 		expect(HotspotType.DoorOut.rawValue).toBe(10);
 		expect(HotspotType.Unused.rawValue).toBe(11);

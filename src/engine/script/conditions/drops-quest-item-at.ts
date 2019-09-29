@@ -10,7 +10,7 @@ export default {
 	Implementation: async (args: int16[], zone: Zone, _engine: Engine): Promise<boolean> => {
 		for (const hotspot of zone.hotspots) {
 			if (
-				hotspot.type === Hotspot.Type.TriggerLocation &&
+				hotspot.type === Hotspot.Type.DropQuestItem &&
 				hotspot.x === args[0] &&
 				hotspot.y === args[1] &&
 				hotspot.enabled

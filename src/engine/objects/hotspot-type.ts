@@ -1,13 +1,13 @@
 class HotspotType {
-	public static readonly TriggerLocation = new HotspotType();
+	public static readonly DropQuestItem = new HotspotType();
 	public static readonly SpawnLocation = new HotspotType();
-	public static readonly WeaponLocation = new HotspotType();
+	public static readonly DropUniqueWeapon = new HotspotType();
 	public static readonly VehicleTo = new HotspotType();
 	public static readonly VehicleBack = new HotspotType();
-	public static readonly LocatorLocation = new HotspotType();
-	public static readonly CrateItem = new HotspotType();
+	public static readonly DropMap = new HotspotType();
+	public static readonly DropItem = new HotspotType();
 	public static readonly PuzzleNPC = new HotspotType();
-	public static readonly CrateWeapon = new HotspotType();
+	public static readonly DropWeapon = new HotspotType();
 	public static readonly DoorIn = new HotspotType();
 	public static readonly DoorOut = new HotspotType();
 	public static readonly Unused = new HotspotType();
@@ -17,15 +17,15 @@ class HotspotType {
 	public static readonly xWingToDagobah = new HotspotType();
 
 	public static readonly knownTypes = [
-		HotspotType.TriggerLocation,
+		HotspotType.DropQuestItem,
 		HotspotType.SpawnLocation,
-		HotspotType.WeaponLocation,
+		HotspotType.DropUniqueWeapon,
 		HotspotType.VehicleTo,
 		HotspotType.VehicleBack,
-		HotspotType.LocatorLocation,
-		HotspotType.CrateItem,
+		HotspotType.DropMap,
+		HotspotType.DropItem,
 		HotspotType.PuzzleNPC,
-		HotspotType.CrateWeapon,
+		HotspotType.DropWeapon,
 		HotspotType.DoorIn,
 		HotspotType.DoorOut,
 		HotspotType.Unused,
@@ -41,24 +41,24 @@ class HotspotType {
 
 	get name() {
 		switch (this) {
-			case HotspotType.TriggerLocation:
-				return "TriggerLocation";
+			case HotspotType.DropQuestItem:
+				return "DropQuestItem";
 			case HotspotType.SpawnLocation:
 				return "SpawnLocation";
-			case HotspotType.WeaponLocation:
-				return "WeaponLocation";
+			case HotspotType.DropUniqueWeapon:
+				return "DropUniqueWeapon";
 			case HotspotType.VehicleTo:
 				return "VehicleTo";
 			case HotspotType.VehicleBack:
 				return "VehicleBack";
-			case HotspotType.LocatorLocation:
-				return "LocatorLocation";
-			case HotspotType.CrateItem:
-				return "CrateItem";
+			case HotspotType.DropMap:
+				return "DropMap";
+			case HotspotType.DropItem:
+				return "DropItem";
 			case HotspotType.PuzzleNPC:
 				return "PuzzleNPC";
-			case HotspotType.CrateWeapon:
-				return "CrateWeapon";
+			case HotspotType.DropWeapon:
+				return "DropWeapon";
 			case HotspotType.DoorIn:
 				return "DoorIn";
 			case HotspotType.DoorOut:
@@ -92,9 +92,9 @@ class HotspotType {
 
 	public canHoldItem() {
 		switch (this) {
-			case HotspotType.CrateItem:
+			case HotspotType.DropItem:
 			case HotspotType.PuzzleNPC:
-			case HotspotType.CrateWeapon:
+			case HotspotType.DropWeapon:
 				return true;
 			default:
 				return false;

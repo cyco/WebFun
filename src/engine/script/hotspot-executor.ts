@@ -25,12 +25,12 @@ class HotspotExecutor {
 		Hotspot.Type.Teleporter
 	]);
 	private bumpTypes = new WeakSet([
-		Hotspot.Type.TriggerLocation,
-		Hotspot.Type.WeaponLocation,
-		Hotspot.Type.LocatorLocation,
+		Hotspot.Type.DropQuestItem,
+		Hotspot.Type.DropUniqueWeapon,
+		Hotspot.Type.DropMap,
 		Hotspot.Type.Unused,
-		Hotspot.Type.CrateItem,
-		Hotspot.Type.CrateWeapon
+		Hotspot.Type.DropItem,
+		Hotspot.Type.DropWeapon
 	]);
 	private placeTileTypes = new WeakSet([
 		Hotspot.Type.PuzzleNPC,
@@ -73,7 +73,7 @@ class HotspotExecutor {
 	public uncoverSolvedHotspotItems(zone: Zone) {
 		for (const htsp of zone.hotspots) {
 			if (!htsp.enabled) continue;
-			if (htsp.type !== Hotspot.Type.CrateItem && htsp.type !== Hotspot.Type.TriggerLocation) continue;
+			if (htsp.type !== Hotspot.Type.DropItem && htsp.type !== Hotspot.Type.DropQuestItem) continue;
 			if (zone.getTile(htsp.x, htsp.y, Zone.Layer.Object)) continue;
 
 			if (htsp.arg < 0) {
@@ -195,7 +195,7 @@ class HotspotExecutor {
 		console.log("Find item:", findItem);
 		if (findItem) {
 			const hotspot = zone.hotspots.find(
-				htsp => htsp.enabled && htsp.type === Hotspot.Type.TriggerLocation && htsp.arg === findItem.id
+				htsp => htsp.enabled && htsp.type === Hotspot.Type.DropQuestItem && htsp.arg === findItem.id
 			);
 			if (hotspot) {
 				sector.solved2 = true;
@@ -243,10 +243,10 @@ class HotspotExecutor {
 			// if (hotspot.arg !== zone.puzzleNPC) console.warn("NPC ID mismatch");
 			zone.setTile(tile, location);
 		} else if (
-			hotspot.type === Hotspot.Type.TriggerLocation ||
-			hotspot.type === Hotspot.Type.CrateItem ||
-			hotspot.type === Hotspot.Type.CrateWeapon ||
-			hotspot.type === Hotspot.Type.WeaponLocation
+			hotspot.type === Hotspot.Type.DropQuestItem ||
+			hotspot.type === Hotspot.Type.DropItem ||
+			hotspot.type === Hotspot.Type.DropWeapon ||
+			hotspot.type === Hotspot.Type.DropUniqueWeapon
 		) {
 			zone.setTile(tile, location);
 		} else return;
