@@ -90,7 +90,7 @@ class WorldGenerator {
 			puzzle.type = Puzzle.Type.End;
 		}
 
-		const goalPuzzle = this.GetUnusedPuzzleRandomly(null, Zone.Type.Unknown);
+		const goalPuzzle = this.getUnusedPuzzleRandomly(null, Zone.Type.Unknown);
 		if (goalPuzzle === null) {
 			return false;
 		}
@@ -132,7 +132,7 @@ class WorldGenerator {
 				this.resetState();
 
 				const distance = GetDistanceToCenter(x, y);
-				const zone = this.GetUnusedZoneRandomly(
+				const zone = this.getUnusedZoneRandomly(
 					Zone.Type.TravelStart,
 					-1,
 					-1,
@@ -230,9 +230,9 @@ class WorldGenerator {
 			this.resetState();
 
 			const distance = GetDistanceToCenter(x, y);
-			let zone = this.GetUnusedZoneRandomly(type, -1, -1, null, null, distance, false);
+			let zone = this.getUnusedZoneRandomly(type, -1, -1, null, null, distance, false);
 			if (!zone)
-				zone = this.GetUnusedZoneRandomly(Zone.Type.Empty, -1, -1, null, null, distance, false);
+				zone = this.getUnusedZoneRandomly(Zone.Type.Empty, -1, -1, null, null, distance, false);
 			if (!zone) return;
 
 			const options: Partial<Sector> = {};
@@ -261,11 +261,11 @@ class WorldGenerator {
 			const item1 = puzzle.item1;
 
 			let type = rand() % 2 ? Zone.Type.Use : Zone.Type.Trade;
-			let zone = this.GetUnusedZoneRandomly(type, puzzleIndex - 1, -1, item1, null, distance, false);
+			let zone = this.getUnusedZoneRandomly(type, puzzleIndex - 1, -1, item1, null, distance, false);
 
 			if (!zone) {
 				type = type === Zone.Type.Use ? Zone.Type.Trade : Zone.Type.Use;
-				zone = this.GetUnusedZoneRandomly(type, puzzleIndex - 1, -1, item1, null, distance, false);
+				zone = this.getUnusedZoneRandomly(type, puzzleIndex - 1, -1, item1, null, distance, false);
 			}
 
 			this.errorWhen(!zone, "Unable to find suitable puzzle zone");
@@ -288,7 +288,7 @@ class WorldGenerator {
 		const pos = this.findPositionOfPuzzle(puzzleCount - 1, puzzles);
 		const distance = GetDistanceToCenter(pos.x, pos.y);
 		const worldPuzzleIndex = puzzles[pos.x + 10 * pos.y];
-		const zone = this.GetUnusedZoneRandomly(
+		const zone = this.getUnusedZoneRandomly(
 			Zone.Type.Goal,
 			this.puzzleStrain1.length - 2,
 			puzzles2Count - 1,
@@ -335,11 +335,11 @@ class WorldGenerator {
 					break;
 				}
 				let type = rand() % 2 ? Zone.Type.Trade : Zone.Type.Use;
-				zone = this.GetUnusedZoneRandomly(type, puzzleIdIndex - 1, -1, item1, null, distance, true);
+				zone = this.getUnusedZoneRandomly(type, puzzleIdIndex - 1, -1, item1, null, distance, true);
 
 				if (!zone) {
 					type = type === Zone.Type.Use ? Zone.Type.Trade : Zone.Type.Use;
-					zone = this.GetUnusedZoneRandomly(
+					zone = this.getUnusedZoneRandomly(
 						type,
 						puzzleIdIndex - 1,
 						-1,
@@ -371,7 +371,7 @@ class WorldGenerator {
 		}
 	}
 
-	GetUnusedPuzzleRandomly(item: Tile, zoneType: Zone.Type): Puzzle {
+	private getUnusedPuzzleRandomly(item: Tile, zoneType: Zone.Type): Puzzle {
 		const puzzles = this.getPuzzleCandidates(zoneType).shuffle();
 		const puzzleType = zoneType.toPuzzleType();
 		const typeIsCompatible = (puzzle: Puzzle) => puzzle.type === puzzleType;
@@ -383,7 +383,7 @@ class WorldGenerator {
 		return puzzles.find(and(typeIsCompatible, not(hasPuzzleBeenPlaced), hasRequiredItem));
 	}
 
-	GetUnusedZoneRandomly(
+	private getUnusedZoneRandomly(
 		zoneType: Zone.Type,
 		puzzleIndex: number,
 		puzzleIndex2: number,
@@ -461,9 +461,9 @@ class WorldGenerator {
 				const newPuzzleItem1 = this.getUnusedRequiredItemForZoneRandomly(zone, false);
 				const newPuzzleItem2 = this.getUnusedRequiredItemForZoneRandomly(zone, true);
 				if (newPuzzleItem1 === null || newPuzzleItem2 === null) return false;
-				const newPuzzle = this.GetUnusedPuzzleRandomly(newPuzzleItem1, Zone.Type.Goal);
+				const newPuzzle = this.getUnusedPuzzleRandomly(newPuzzleItem1, Zone.Type.Goal);
 				if (newPuzzle) this.usedPuzzles.push(newPuzzle);
-				const aapuzzle = this.GetUnusedPuzzleRandomly(newPuzzleItem2, Zone.Type.Goal);
+				const aapuzzle = this.getUnusedPuzzleRandomly(newPuzzleItem2, Zone.Type.Goal);
 				if (aapuzzle) {
 					this.usedPuzzles.push(aapuzzle);
 				}
@@ -533,7 +533,7 @@ class WorldGenerator {
 				if (!this.zoneLeadsToProvidedItem(zone, providedItem)) return false;
 				const requiredItem = this.getUnusedRequiredItemForZoneRandomly(zone, false);
 				if (requiredItem === null) return false;
-				const puzzle = this.GetUnusedPuzzleRandomly(requiredItem, Zone.Type.Trade);
+				const puzzle = this.getUnusedPuzzleRandomly(requiredItem, Zone.Type.Trade);
 				if (!puzzle) return false;
 
 				const array = a8 ? this.puzzleStrain1 : this.puzzleStrain2;
@@ -572,7 +572,7 @@ class WorldGenerator {
 				const puzzleItem = this.getUnusedRequiredItemForZoneRandomly(zone, false);
 				if (puzzleItem === null) return false;
 
-				const puzzle2 = this.GetUnusedPuzzleRandomly(puzzleItem, Zone.Type.Use);
+				const puzzle2 = this.getUnusedPuzzleRandomly(puzzleItem, Zone.Type.Use);
 				if (!puzzle2) return false;
 
 				const array = a8 ? this.puzzleStrain1 : this.puzzleStrain2;
@@ -627,7 +627,7 @@ class WorldGenerator {
 			const point = candidates[rand() % candidates.length];
 			this.errorWhen(!point, `No place to find item ${quest.item} found!`);
 
-			const zone = this.GetUnusedZoneRandomly(
+			const zone = this.getUnusedZoneRandomly(
 				Zone.Type.Find,
 				-1,
 				-1,
@@ -665,7 +665,7 @@ class WorldGenerator {
 
 				let zone = null;
 				if (this.somethingWithTeleporters || !foundTeleporterTarget) {
-					zone = this.GetUnusedZoneRandomly(Zone.Type.Empty, -1, -1, null, null, distance, false);
+					zone = this.getUnusedZoneRandomly(Zone.Type.Empty, -1, -1, null, null, distance, false);
 				} else zone = lastZone;
 
 				this.errorWhen(!zone, "No zone found");
@@ -699,7 +699,7 @@ class WorldGenerator {
 
 					lastZone = zone;
 					foundTeleporterTarget = true;
-					zone = this.GetUnusedZoneRandomly(Zone.Type.Empty, -1, -1, null, null, distance, false);
+					zone = this.getUnusedZoneRandomly(Zone.Type.Empty, -1, -1, null, null, distance, false);
 					this.errorWhen(!zone, "No zone found");
 				}
 
@@ -711,7 +711,7 @@ class WorldGenerator {
 			this.somethingWithTeleporters = 1;
 
 			const distance = GetDistanceToCenter(teleporterSource.x, teleporterSource.y);
-			const zone = this.GetUnusedZoneRandomly(Zone.Type.Empty, -1, -1, null, null, distance, false);
+			const zone = this.getUnusedZoneRandomly(Zone.Type.Empty, -1, -1, null, null, distance, false);
 			if (zone) {
 				this.placeZone(teleporterSource.x, teleporterSource.y, zone, Zone.Type.Empty);
 			}
