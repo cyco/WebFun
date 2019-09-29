@@ -149,13 +149,16 @@ class GameController extends EventTarget {
 		const { read } = Reader.build(stream);
 
 		const assets = new AssetManager();
-		assets.populate(Zone, this.data.zones);
-		assets.populate(Tile, this.data.tiles);
-		assets.populate(Puzzle, this.data.puzzles);
-		assets.populate(Char, this.data.characters);
-		assets.populate(Sound, this.data.sounds);
-
+		this.populateAssetManager(assets);
 		read(assets);
+	}
+
+	private populateAssetManager(manager: AssetManager) {
+		manager.populate(Zone, this.data.zones);
+		manager.populate(Tile, this.data.tiles);
+		manager.populate(Puzzle, this.data.puzzles);
+		manager.populate(Char, this.data.characters);
+		manager.populate(Sound, this.data.sounds);
 	}
 
 	private async pickSaveGame() {
@@ -298,14 +301,10 @@ class GameController extends EventTarget {
 			loader.onload = e => {
 				const details = e.detail;
 				loadingView.progress = 1.0;
-				const data = (this.data = details.data);
+				this.data = details.data;
 				this.palette = details.palette;
 
-				this._engine.assets.populate(Zone, data.zones);
-				this._engine.assets.populate(Tile, data.tiles);
-				this._engine.assets.populate(Puzzle, data.puzzles);
-				this._engine.assets.populate(Char, data.characters);
-				this._engine.assets.populate(Sound, data.sounds);
+				this.populateAssetManager(this._engine.assets);
 
 				this._window.inventory.palette = details.palette;
 				this._window.weapon.palette = details.palette;
