@@ -18,7 +18,7 @@ describe("WebFun.Engine.Objects.HotspotType", () => {
 		expect(HotspotType.VehicleBack.name).toBe("VehicleBack");
 		expect(HotspotType.DropMap.name).toBe("DropMap");
 		expect(HotspotType.DropItem.name).toBe("DropItem");
-		expect(HotspotType.PuzzleNPC.name).toBe("PuzzleNPC");
+		expect(HotspotType.NPC.name).toBe("NPC");
 		expect(HotspotType.DropWeapon.name).toBe("DropWeapon");
 		expect(HotspotType.DoorIn.name).toBe("DoorIn");
 		expect(HotspotType.DoorOut.name).toBe("DoorOut");
@@ -39,7 +39,7 @@ describe("WebFun.Engine.Objects.HotspotType", () => {
 		expect(HotspotType.VehicleBack.rawValue).toBe(4);
 		expect(HotspotType.DropMap.rawValue).toBe(5);
 		expect(HotspotType.DropItem.rawValue).toBe(6);
-		expect(HotspotType.PuzzleNPC.rawValue).toBe(7);
+		expect(HotspotType.NPC.rawValue).toBe(7);
 		expect(HotspotType.DropWeapon.rawValue).toBe(8);
 		expect(HotspotType.DoorIn.rawValue).toBe(9);
 		expect(HotspotType.DoorOut.rawValue).toBe(10);

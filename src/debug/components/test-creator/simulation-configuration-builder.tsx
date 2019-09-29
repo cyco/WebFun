@@ -81,7 +81,7 @@ class SimulationConfigurationBuilder extends Component {
 			.concat(...connectedZones.map(z => z.providedItems))
 			.unique();
 		this._findTile.tile = this._findTile.tiles.first();
-		this._npcTile.tiles = zone.puzzleNPCs.concat(...connectedZones.map(z => z.puzzleNPCs)).unique();
+		this._npcTile.tiles = zone.npcs.concat(...connectedZones.map(z => z.npcs)).unique();
 		this._npcTile.tile = this._npcTile.tiles.first();
 
 		this._requiredTile.tiles = zone.requiredItems
@@ -136,13 +136,13 @@ class SimulationConfigurationBuilder extends Component {
 	}
 
 	public set configuration(config: Configuration) {
-		const { zone, findItem, puzzleNPC, requiredItem1, requiredItem2, inventory } = config;
+		const { zone, findItem, npc, requiredItem1, requiredItem2, inventory } = config;
 		const data = this._gameData;
 
 		if (zone >= 0) {
 			this.currentZone = data.zones[zone];
 			this._findTile.tile = data.tiles[findItem];
-			this._npcTile.tile = data.tiles[puzzleNPC];
+			this._npcTile.tile = data.tiles[npc];
 			this._requiredTile.tile = data.tiles[requiredItem1];
 			this._required2Tile.tile = data.tiles[requiredItem2];
 		}
@@ -154,13 +154,13 @@ class SimulationConfigurationBuilder extends Component {
 		const requiredItem1 = this._requiredTile.tile ? this._requiredTile.tile.id : null;
 		const requiredItem2 = this._required2Tile.tile ? this._required2Tile.tile.id : null;
 		const findItem = this._findTile.tile ? this._findTile.tile.id : null;
-		const puzzleNPC = this._npcTile.tile ? this._npcTile.tile.id : null;
+		const npc = this._npcTile.tile ? this._npcTile.tile.id : null;
 
 		return {
 			seed: zone,
 			zone,
 			findItem,
-			puzzleNPC,
+			npc,
 			requiredItem1,
 			requiredItem2,
 			inventory: this._inventory

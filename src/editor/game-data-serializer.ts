@@ -74,7 +74,7 @@ class GameDataSerializer {
 				2 +
 				2 * zone.goalItems.length;
 			const izx2Size = 8 + 2 + 2 * zone.providedItems.length;
-			const izx3Size = 8 + 2 + 2 * zone.puzzleNPCs.length;
+			const izx3Size = 8 + 2 + 2 * zone.npcs.length;
 			const izx4Size = 2;
 			const calculateActionSize = (action: Action) =>
 				action.conditions.map((condition: Condition) => 0xe + condition.text.length).reduce(add, 2) +
@@ -153,8 +153,8 @@ class GameDataSerializer {
 
 			stream.writeCharacters("IZX3");
 			stream.writeUint32(izx3Size);
-			stream.writeUint16(zone.puzzleNPCs.length);
-			stream.writeUint16Array(zone.puzzleNPCs.map(i => i.id));
+			stream.writeUint16(zone.npcs.length);
+			stream.writeUint16Array(zone.npcs.map(i => i.id));
 
 			stream.writeCharacters("IZX4");
 			stream.writeUint32(izx4Size);

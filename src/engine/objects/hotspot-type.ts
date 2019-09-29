@@ -6,7 +6,7 @@ class HotspotType {
 	public static readonly VehicleBack = new HotspotType();
 	public static readonly DropMap = new HotspotType();
 	public static readonly DropItem = new HotspotType();
-	public static readonly PuzzleNPC = new HotspotType();
+	public static readonly NPC = new HotspotType();
 	public static readonly DropWeapon = new HotspotType();
 	public static readonly DoorIn = new HotspotType();
 	public static readonly DoorOut = new HotspotType();
@@ -24,7 +24,7 @@ class HotspotType {
 		HotspotType.VehicleBack,
 		HotspotType.DropMap,
 		HotspotType.DropItem,
-		HotspotType.PuzzleNPC,
+		HotspotType.NPC,
 		HotspotType.DropWeapon,
 		HotspotType.DoorIn,
 		HotspotType.DoorOut,
@@ -55,8 +55,8 @@ class HotspotType {
 				return "DropMap";
 			case HotspotType.DropItem:
 				return "DropItem";
-			case HotspotType.PuzzleNPC:
-				return "PuzzleNPC";
+			case HotspotType.NPC:
+				return "NPC";
 			case HotspotType.DropWeapon:
 				return "DropWeapon";
 			case HotspotType.DoorIn:
@@ -93,7 +93,7 @@ class HotspotType {
 	public canHoldItem() {
 		switch (this) {
 			case HotspotType.DropItem:
-			case HotspotType.PuzzleNPC:
+			case HotspotType.NPC:
 			case HotspotType.DropWeapon:
 				return true;
 			default:

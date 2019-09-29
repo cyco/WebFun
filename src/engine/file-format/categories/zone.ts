@@ -53,7 +53,7 @@ const parseZone = (stream: InputStream, data: Data, gameType: GameType): Zone =>
 			requiredItemIDs: new Int16Array(0),
 			goalItemIDs: new Int16Array(0),
 			providedItemIDs: new Int16Array(0),
-			puzzleNPCIDs: new Int16Array(0),
+			npcIDs: new Int16Array(0),
 			unknown: 0
 		};
 	}
@@ -66,7 +66,7 @@ const parseZone = (stream: InputStream, data: Data, gameType: GameType): Zone =>
 
 	const { monsters, requiredItemIDs, goalItemIDs } = parseZoneAux(stream, data);
 	const { providedItemIDs } = parseZoneAux2(stream, data);
-	const { puzzleNPCIDs } = parseZoneAux3(stream, data);
+	const { npcIDs } = parseZoneAux3(stream, data);
 	const { unknown } = parseZoneAux4(stream, data);
 
 	const actionCount = stream.getUint16();
@@ -87,7 +87,7 @@ const parseZone = (stream: InputStream, data: Data, gameType: GameType): Zone =>
 		requiredItemIDs,
 		goalItemIDs,
 		providedItemIDs,
-		puzzleNPCIDs,
+		npcIDs,
 		unknown
 	};
 };
@@ -148,10 +148,10 @@ const parseZoneAux3 = (stream: InputStream, _: Data): any => {
 	// skip over size
 	stream.getUint32();
 
-	const puzzleNPCCount = stream.getUint16();
-	const puzzleNPCIDs = stream.getUint16Array(puzzleNPCCount);
+	const npcCount = stream.getUint16();
+	const npcIDs = stream.getUint16Array(npcCount);
 
-	return { puzzleNPCIDs };
+	return { npcIDs };
 };
 
 const parseZoneAux4 = (stream: InputStream, _: Data): any => {

@@ -64,8 +64,8 @@ class SimulatedStory extends Story {
 			case Zone.Type.Goal:
 			/*
 			const npc = this.findUnusedNPCForZoneRandomly(zone);
-			const hasPuzzleNPC = npc !== null ? this.zoneLeadsToNPC(zone, npc) : 0;
-			if(!hasPuzzleNPC) {
+			const hasNPC = npc !== null ? this.zoneLeadsToNPC(zone, npc) : 0;
+			if(!hasNPC) {
 				this.placeQuestItem(zone, puzzle3.item1);
 				this.placeQuestItem(zone, puzzle3.item2 ? puzzle3.item2 : null)
 			}

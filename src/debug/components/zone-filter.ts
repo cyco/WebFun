@@ -26,7 +26,7 @@ class ZoneFilter implements SearchDelegate<Zone, RegExp[]> {
 			zone.type.name,
 			zone.planet.name,
 			zone.hasTeleporter ? "teleporter" : "",
-			...zone.puzzleNPCs.map(tile => tile.name),
+			...zone.npcs.map(tile => tile.name),
 			...zone.requiredItems.map(tile => tile.name),
 			...zone.providedItems.map(tile => tile.name),
 			...zone.goalItems.map(tile => tile.name),

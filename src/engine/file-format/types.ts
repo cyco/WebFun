@@ -25,7 +25,7 @@ interface Zone {
 	requiredItemIDs: Int16Array;
 	goalItemIDs: Int16Array;
 	providedItemIDs: Int16Array;
-	puzzleNPCIDs: Int16Array;
+	npcIDs: Int16Array;
 	unknown: number;
 }
 

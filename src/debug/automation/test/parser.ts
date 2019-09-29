@@ -49,7 +49,7 @@ class TestFileParser {
 			findItem: -1,
 			requiredItem1: -1,
 			requiredItem2: -1,
-			puzzleNPC: -1,
+			npc: -1,
 			seed: -1,
 			inventory: [],
 			planet: -1,
@@ -79,7 +79,7 @@ class TestFileParser {
 			if (key.contains("size")) configuration.size = this.parseWorldSize(value);
 			if (key.contains("games won")) configuration.gamesWon = value.parseInt();
 			if (key.contains("find")) configuration.findItem = value.parseInt();
-			if (key.contains("puzzle")) configuration.puzzleNPC = value.parseInt();
+			if (key.contains("puzzle")) configuration.npc = value.parseInt();
 			if (key.contains("require") && configuration.requiredItem1 >= 0)
 				configuration.requiredItem2 = value.parseInt();
 			if (key.contains("require") && configuration.requiredItem1 < 0)

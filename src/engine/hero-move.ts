@@ -65,7 +65,7 @@ function _tryTransition(direction: Point, engine: Engine, scene: ZoneScene): boo
 	return true;
 }
 
-function _bumpPuzzleNPC(sector: Sector, place: Point, engine: Engine, zone: Zone) {
+function _bumpNPC(sector: Sector, place: Point, engine: Engine, zone: Zone) {
 	const puzzleIndex = sector.puzzleIndex;
 	let puzzle: Puzzle = null;
 
@@ -118,7 +118,7 @@ export default async (
 
 		const quest = engine.currentWorld.findSectorContainingZone(zone);
 		if (quest && quest.npc && quest.npc.id === targetTile.id) {
-			_bumpPuzzleNPC(quest, targetPoint, engine, zone);
+			_bumpNPC(quest, targetPoint, engine, zone);
 			return;
 		}
 

@@ -36,7 +36,7 @@ class Zone {
 	protected _goalItems: Tile[] = [];
 	protected _requiredItems: Tile[] = [];
 	protected _providedItems: Tile[] = [];
-	protected _puzzleNPCs: Tile[] = [];
+	protected _npcs: Tile[] = [];
 	protected _izx4Unknown: number = 0;
 	protected _izaxUnknown: number = 0;
 	protected _actions: Action[] = [];
@@ -143,7 +143,7 @@ class Zone {
 					case Hotspot.Type.DropUniqueWeapon:
 					case Hotspot.Type.DropMap:
 					case Hotspot.Type.DropItem:
-					case Hotspot.Type.PuzzleNPC:
+					case Hotspot.Type.NPC:
 					case Hotspot.Type.DropWeapon:
 						if (hotspot.arg < 0) break;
 						if (this.getTile(hotspot.x, hotspot.y, 1)) return;
@@ -224,8 +224,8 @@ class Zone {
 		return this._providedItems;
 	}
 
-	get puzzleNPCs() {
-		return this._puzzleNPCs;
+	get npcs() {
+		return this._npcs;
 	}
 
 	get izx4Unknown() {

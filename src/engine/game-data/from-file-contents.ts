@@ -103,7 +103,7 @@ const makeHotspot = (raw: RawHotspot, idx: number, _: any): Hotspot => {
 		case Hotspot.Type.xWingFromDagobah:
 		case Hotspot.Type.xWingToDagobah:
 		case Hotspot.Type.DropItem:
-		case Hotspot.Type.PuzzleNPC:
+		case Hotspot.Type.NPC:
 		case Hotspot.Type.DropWeapon:
 			hotspot.enabled = true;
 			break;
@@ -164,7 +164,7 @@ const makeZone = (raw: RawZone, idx: number, data: GameData) => {
 	zone.goalItems = Array.from(raw.goalItemIDs).map((id: number) => data.tiles[id]);
 	zone.requiredItems = Array.from(raw.requiredItemIDs).map((id: number) => data.tiles[id]);
 	zone.providedItems = Array.from(raw.providedItemIDs).map((id: number) => data.tiles[id]);
-	zone.puzzleNPCs = Array.from(raw.puzzleNPCIDs).map((id: number) => data.tiles[id]);
+	zone.npcs = Array.from(raw.npcIDs).map((id: number) => data.tiles[id]);
 	zone.izaxUnknown = raw.unknown;
 	zone.izx4Unknown = raw.unknown;
 

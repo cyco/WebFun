@@ -105,12 +105,12 @@ class MutableZone extends Zone {
 		this._providedItems = value;
 	}
 
-	get puzzleNPCs() {
-		return this._puzzleNPCs;
+	get npcs() {
+		return this._npcs;
 	}
 
-	set puzzleNPCs(value) {
-		this._puzzleNPCs = value;
+	set npcs(value) {
+		this._npcs = value;
 	}
 
 	get izx4Unknown() {

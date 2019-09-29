@@ -123,11 +123,11 @@ class TestCreatorWindow extends AbstractWindow {
 		const t = (t: number) => (t > 0 ? assets.get(Tile, t) : null);
 		const z = (z: number) => (z > 0 ? assets.get(Zone, z) : null);
 
-		const { zone, findItem, puzzleNPC, requiredItem1, requiredItem2 } = config;
+		const { zone, findItem, npc, requiredItem1, requiredItem2 } = config;
 
 		return new SimulatedStory(
 			t(findItem),
-			t(puzzleNPC),
+			t(npc),
 			t(requiredItem1),
 			t(requiredItem2),
 			z(zone),
@@ -147,7 +147,7 @@ class TestCreatorWindow extends AbstractWindow {
 			planet,
 			zone,
 			findItem,
-			puzzleNPC,
+			npc,
 			requiredItem1,
 			requiredItem2,
 			gamesWon
@@ -160,7 +160,7 @@ class TestCreatorWindow extends AbstractWindow {
 		if (gamesWon > 0) configuration.push(`Games Won: ${gamesWon.toString(10)}`);
 		if (zone >= 0) configuration.push(`Zone: ${zone.toHex(3)}`);
 		if (findItem > 0) configuration.push(`Find: ${findItem.toHex(3)}`);
-		if (puzzleNPC > 0) configuration.push(`NPC: ${findItem.toHex(3)}`);
+		if (npc > 0) configuration.push(`NPC: ${findItem.toHex(3)}`);
 		if (requiredItem1 > 0) configuration.push(`Required: ${requiredItem1.toHex(3)}`);
 		if (requiredItem2 > 0) configuration.push(`Required: ${requiredItem2.toHex(3)}`);
 

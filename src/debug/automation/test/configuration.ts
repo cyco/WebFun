@@ -3,7 +3,7 @@ interface Configuration {
 	findItem?: number;
 	requiredItem1?: number;
 	requiredItem2?: number;
-	puzzleNPC?: number;
+	npc?: number;
 	seed: number;
 	planet?: number;
 	size?: number;

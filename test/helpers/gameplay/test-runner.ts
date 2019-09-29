@@ -41,13 +41,13 @@ const run = (prefix: string, fileName: string, testFileContents: string) => {
 
 			function buildSimulatedStory(testCase: TestCase) {
 				const engine = ctx.engine;
-				const { findItem, puzzleNPC, requiredItem1, requiredItem2, zone } = testCase.configuration;
+				const { findItem, npc, requiredItem1, requiredItem2, zone } = testCase.configuration;
 				const t = (t: number) => (t < 0 ? null : engine.assets.get(Tile, t));
 				const z = (z: number) => (z < 0 ? null : engine.assets.get(Zone, z));
 
 				return new SimulatedStory(
 					t(findItem),
-					t(puzzleNPC),
+					t(npc),
 					t(requiredItem1),
 					t(requiredItem2),
 					z(zone),

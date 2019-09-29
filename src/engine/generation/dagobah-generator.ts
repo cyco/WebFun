@@ -89,7 +89,7 @@ class DagobahGenerator {
 		place.findItem = tile;
 
 		const zone = this.assets.get(Zone, place.zone.id);
-		console.assert(!!zone.puzzleNPCs.find(i => i.id === npcID));
+		console.assert(!!zone.npcs.find(i => i.id === npcID));
 		const candidates = zone.hotspots.withType(Hotspot.Type.SpawnLocation);
 		console.assert(candidates.length === 1);
 		const hotspot = candidates[randmod(candidates.length)];

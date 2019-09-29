@@ -155,7 +155,7 @@ class ZoneInspector extends AbstractInspector {
 		zone.goalItems = template.goalItems;
 		zone.requiredItems = template.requiredItems;
 		zone.providedItems = template.providedItems;
-		zone.puzzleNPCs = template.puzzleNPCs;
+		zone.npcs = template.npcs;
 		zone.izaxUnknown = template.izaxUnknown;
 		zone.izx4Unknown = template.izx4Unknown;
 		zone.actions = template.actions;

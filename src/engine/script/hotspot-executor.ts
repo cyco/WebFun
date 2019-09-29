@@ -32,11 +32,7 @@ class HotspotExecutor {
 		Hotspot.Type.DropItem,
 		Hotspot.Type.DropWeapon
 	]);
-	private placeTileTypes = new WeakSet([
-		Hotspot.Type.PuzzleNPC,
-		Hotspot.Type.Lock,
-		Hotspot.Type.SpawnLocation
-	]);
+	private placeTileTypes = new WeakSet([Hotspot.Type.NPC, Hotspot.Type.Lock, Hotspot.Type.SpawnLocation]);
 
 	constructor(engine: Engine) {
 		this._engine = engine;
@@ -240,7 +236,7 @@ class HotspotExecutor {
 		const type = hotspot.type;
 		if (type === Hotspot.Type.SpawnLocation) {
 			// TODO: grab puzzle NPC from world
-			// if (hotspot.arg !== zone.puzzleNPC) console.warn("NPC ID mismatch");
+			// if (hotspot.arg !== zone.npc) console.warn("NPC ID mismatch");
 			zone.setTile(tile, location);
 		} else if (
 			hotspot.type === Hotspot.Type.DropQuestItem ||

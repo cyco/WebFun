@@ -480,7 +480,7 @@ class WorldGenerator {
 				const puzzle3 = this.puzzleStrain1[puzzleIndex + 1];
 
 				const npc = this.findUnusedNPCForZoneRandomly(zone);
-				const hasPuzzleNPC = npc !== null ? this.zoneLeadsToNPC(zone, npc) : 0;
+				const hasNPC = npc !== null ? this.zoneLeadsToNPC(zone, npc) : 0;
 
 				let hasItem = 1;
 				// TODO: this used to be &= which might evaluate the second expression in any case
@@ -493,7 +493,7 @@ class WorldGenerator {
 					return false;
 				}
 
-				if (hasPuzzleNPC) {
+				if (hasNPC) {
 					this.addRequiredItemQuestsFromHotspots(zone);
 
 					this.npc = npc;
@@ -816,7 +816,7 @@ class WorldGenerator {
 		return this._traverseZoneUntil(
 			zone,
 			zone => {
-				const npcCandidates = zone.puzzleNPCs.filter(npc => !this.hasQuestRequiringItem(npc));
+				const npcCandidates = zone.npcs.filter(npc => !this.hasQuestRequiringItem(npc));
 				if (!npcCandidates.length) return null;
 
 				return npcCandidates[rand() % npcCandidates.length];
@@ -826,7 +826,7 @@ class WorldGenerator {
 	}
 
 	private zoneLeadsToNPC(zone: Zone, npc: Tile): boolean {
-		return this._traverseZoneUntil(zone, zone => zone.puzzleNPCs.includes(npc), false, identity);
+		return this._traverseZoneUntil(zone, zone => zone.npcs.includes(npc), false, identity);
 	}
 
 	private getUnusedRequiredItemForZoneRandomly(zone: Zone, isGoal: boolean): Tile {
@@ -961,7 +961,7 @@ class WorldGenerator {
 		return this._traverseZoneUntil(
 			zone,
 			zone => {
-				if (!zone.puzzleNPCs.includes(npc)) return false;
+				if (!zone.npcs.includes(npc)) return false;
 				const candidates = zone.hotspots.withType(Hotspot.Type.SpawnLocation).filter(isFree);
 				return this.placeItemAtHotspotRandomly(candidates, npc);
 			},
