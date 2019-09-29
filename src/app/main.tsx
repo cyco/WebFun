@@ -16,6 +16,12 @@ import { initialize as initializeDebug } from "src/debug";
 
 import "./bootstrap-components.ts";
 
+import * as WebFunLib from "../";
+
+declare global {
+	var WebFun: typeof WebFunLib;
+}
+
 const main = async () => {
 	window.WebFunJSX = new ComponentJSXRenderer();
 	ComponentRegistry.sharedRegistry.registerComponents(Components as any);
@@ -31,4 +37,5 @@ const main = async () => {
 	}
 };
 
+window.WebFun = WebFunLib;
 window.addEventListener("load", main, { once: true } as any);
