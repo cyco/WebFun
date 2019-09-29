@@ -1,6 +1,6 @@
 import { Direction, Point, Size } from "src/util";
 import { EvaluationMode, ScriptResult } from "../script";
-import { Zone, Tile, Char } from "src/engine/objects";
+import { Zone, Tile, Char, Sound } from "src/engine/objects";
 import { Direction as InputDirection } from "src/engine/input";
 import { Renderer } from "src/engine/rendering";
 import { Sprite } from "../rendering";
@@ -15,6 +15,7 @@ import Scene from "./scene";
 import ZoneSceneRenderer from "src/engine/rendering/zone-scene-renderer";
 import moveHero from "src/engine/hero-move";
 import moveBullets from "src/engine/bullet-move";
+import { Channel } from "src/engine/audio";
 
 class ZoneScene extends Scene {
 	private _zone: Zone;
@@ -293,6 +294,20 @@ class ZoneScene extends Scene {
 			engine.inputManager.clear();
 			engine.sceneManager.pushScene(scene);
 			return ScriptResult.Void;
+		}
+
+		if (location.isEqualTo(heroLocation)) {
+			if (tile.isWeapon()) {
+				engine.equip(tile);
+			} else if (tile.isEdible()) {
+				engine.consume(tile);
+			} else {
+				const nogo = engine.assets.get(Sound, engine.type.sounds.NoGo);
+				engine.mixer.play(nogo, Channel.Effect);
+			}
+
+			engine.inputManager.clear();
+			return ScriptResult.Done;
 		}
 
 		if (location.distanceTo(heroLocation) > Math.sqrt(2)) {
