@@ -6,6 +6,16 @@ import { Tile } from "src/engine/objects";
 const TILE_WIDTH = Tile.WIDTH;
 const TILE_HEIGHT = Tile.HEIGHT;
 
+const DefaultTextStyle = {
+	textAlign: "left",
+	shadowColor: "black",
+	shadowBlur: 1,
+	shadowOffsetX: 0,
+	shadowOffsetY: 1,
+	font: '13px "Anonymous Pro", monospace',
+	fillStyle: "white"
+};
+
 class CanvasRenderer implements Renderer {
 	protected _canvas: HTMLCanvasElement;
 	protected _ctx: CanvasRenderingContext2D;
@@ -60,16 +70,13 @@ class CanvasRenderer implements Renderer {
 		this.fillRect(x * TILE_WIDTH, y * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT, color);
 	}
 
-	renderText(text: string, location: Point) {
+	renderText(text: string, location: Point, style: Partial<typeof DefaultTextStyle> = DefaultTextStyle) {
+		const effectiveStyle: typeof DefaultTextStyle = Object.assign({}, DefaultTextStyle, style);
 		this._ctx.save();
 		this._ctx.globalCompositeOperation = "source-over";
-		this._ctx.textAlign = "left";
-		this._ctx.shadowColor = "black";
-		this._ctx.shadowBlur = 1;
-		this._ctx.shadowOffsetX = 0;
-		this._ctx.shadowOffsetY = 1;
-		this._ctx.font = '13px "Anonymous Pro", monospace';
-		this._ctx.fillStyle = "white";
+		for (const style of Object.entries(effectiveStyle)) {
+			(this._ctx as any)[style[0]] = style[1];
+		}
 
 		this._ctx.fillText(text, location.x, location.y + 13 / 2);
 		this._ctx.restore();
