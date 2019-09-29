@@ -100,8 +100,8 @@ const makeHotspot = (raw: RawHotspot, idx: number, _: any): Hotspot => {
 		case Hotspot.Type.VehicleBack:
 		case Hotspot.Type.DoorIn:
 		case Hotspot.Type.Lock:
-		case Hotspot.Type.xWingFromDagobah:
-		case Hotspot.Type.xWingToDagobah:
+		case Hotspot.Type.ShipToPlanet:
+		case Hotspot.Type.ShipFromPlanet:
 		case Hotspot.Type.DropItem:
 		case Hotspot.Type.NPC:
 		case Hotspot.Type.DropWeapon:

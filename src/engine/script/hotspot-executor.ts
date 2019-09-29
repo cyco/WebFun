@@ -5,8 +5,8 @@ import Engine from "src/engine/engine";
 
 import doorIn from "./hotspots/door-in";
 import doorOut from "./hotspots/door-out";
-import xWingFromDagobah from "./hotspots/x-wing-from-dagobah";
-import xWingToDagobah from "./hotspots/x-wing-to-dagobah";
+import ShipToPlanet from "./hotspots/ship-to-planet";
+import ShipFromPlanet from "./hotspots/ship-from-planet";
 import teleporter from "./hotspots/teleporter";
 
 class HotspotExecutor {
@@ -20,8 +20,8 @@ class HotspotExecutor {
 	private travelTypes = new WeakSet([
 		Hotspot.Type.VehicleTo,
 		Hotspot.Type.VehicleBack,
-		Hotspot.Type.xWingToDagobah,
-		Hotspot.Type.xWingFromDagobah,
+		Hotspot.Type.ShipFromPlanet,
+		Hotspot.Type.ShipToPlanet,
 		Hotspot.Type.Teleporter
 	]);
 	private bumpTypes = new WeakSet([
@@ -210,10 +210,10 @@ class HotspotExecutor {
 				return doorIn(this._engine, hotspot);
 			case Hotspot.Type.DoorOut:
 				return doorOut(this._engine, hotspot);
-			case Hotspot.Type.xWingFromDagobah:
-				return xWingFromDagobah(this._engine, hotspot);
-			case Hotspot.Type.xWingToDagobah:
-				return xWingToDagobah(this._engine, hotspot);
+			case Hotspot.Type.ShipToPlanet:
+				return ShipToPlanet(this._engine, hotspot);
+			case Hotspot.Type.ShipFromPlanet:
+				return ShipFromPlanet(this._engine, hotspot);
 			case Hotspot.Type.Teleporter:
 				return teleporter(this._engine, hotspot);
 		}

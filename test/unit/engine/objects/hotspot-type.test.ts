@@ -25,8 +25,8 @@ describe("WebFun.Engine.Objects.HotspotType", () => {
 		expect(HotspotType.Unused.name).toBe("Unused");
 		expect(HotspotType.Lock.name).toBe("Lock");
 		expect(HotspotType.Teleporter.name).toBe("Teleporter");
-		expect(HotspotType.xWingFromDagobah.name).toBe("xWingFromDagobah");
-		expect(HotspotType.xWingToDagobah.name).toBe("xWingToDagobah");
+		expect(HotspotType.ShipToPlanet.name).toBe("ShipToPlanet");
+		expect(HotspotType.ShipFromPlanet.name).toBe("ShipFromPlanet");
 
 		expect(new HotspotType().name).toBe("unknown");
 	});
@@ -46,7 +46,7 @@ describe("WebFun.Engine.Objects.HotspotType", () => {
 		expect(HotspotType.Unused.rawValue).toBe(11);
 		expect(HotspotType.Lock.rawValue).toBe(12);
 		expect(HotspotType.Teleporter.rawValue).toBe(13);
-		expect(HotspotType.xWingFromDagobah.rawValue).toBe(14);
-		expect(HotspotType.xWingToDagobah.rawValue).toBe(15);
+		expect(HotspotType.ShipToPlanet.rawValue).toBe(14);
+		expect(HotspotType.ShipFromPlanet.rawValue).toBe(15);
 	});
 });

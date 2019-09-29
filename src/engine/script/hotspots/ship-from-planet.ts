@@ -7,17 +7,17 @@ export default (engine: Engine, hotspot: Hotspot): boolean => {
 	console.assert(hotspot.arg !== -1, "This is not where we're coming from!");
 
 	const destinationZone = engine.assets.get(Zone, hotspot.arg);
-	const otherHotspot = destinationZone.hotspots.find(({ type }) => type === Hotspot.Type.xWingToDagobah);
-	console.assert(otherHotspot !== null);
-	const scene = new RoomTransitionScene();
-	scene.destinationHeroLocation = new Point(otherHotspot.x, otherHotspot.y);
-	scene.destinationZone = destinationZone;
+	const desinationHotspot = destinationZone.hotspots.withType(Hotspot.Type.ShipToPlanet).first();
+	const location = engine.dagobah.findLocationOfZone(destinationZone);
+	console.assert(desinationHotspot !== null, "Zone does not have a proper target spot");
+	console.assert(location !== null, "ShipFromPlanet destination must not be on main world!");
 	console.assert(engine.sceneManager.currentScene instanceof ZoneScene);
-	scene.scene = engine.sceneManager.currentScene as ZoneScene;
 
-	const location = engine.world.findLocationOfZone(destinationZone);
-	console.assert(location !== null, "X-Wing destination must be on the main world!");
-	scene.destinationWorld = engine.world;
+	const scene = new RoomTransitionScene();
+	scene.destinationHeroLocation = new Point(desinationHotspot.x, desinationHotspot.y);
+	scene.destinationZone = destinationZone;
+	scene.scene = engine.sceneManager.currentScene as ZoneScene;
+	scene.destinationWorld = engine.dagobah;
 	scene.destinationZoneLocation = location;
 	engine.sceneManager.pushScene(scene);
 	engine.temporaryState.enteredByPlane = true;

@@ -3,9 +3,9 @@ import { Engine } from "src/engine";
 import { Point } from "src/util";
 import { RoomTransitionScene } from "src/engine/scenes";
 import * as Scenes from "src/engine/scenes";
-import xWingFromDagobah from "src/engine/script/hotspots/x-wing-from-dagobah";
+import ShipToPlanet from "src/engine/script/hotspots/ship-to-planet";
 
-describe("WebFun.Engine.Script.Hotspots.xWingFromDagobah", () => {
+describe("WebFun.Engine.Script.Hotspots.ShipToPlanet", () => {
 	let engine: Engine;
 	let transitionScene: RoomTransitionScene;
 
@@ -21,17 +21,17 @@ describe("WebFun.Engine.Script.Hotspots.xWingFromDagobah", () => {
 
 		beforeEach(() => {
 			destinationZone = {
-				hotspots: [mockHotspot(Hotspot.Type.xWingToDagobah, 5, new Point(2, 5))]
+				hotspots: [mockHotspot(Hotspot.Type.ShipFromPlanet, 5, new Point(2, 5))]
 			} as any;
 			engine.currentZone = {
 				id: 5,
-				hotspots: [mockHotspot(Hotspot.Type.xWingFromDagobah, 235)]
+				hotspots: [mockHotspot(Hotspot.Type.ShipToPlanet, 235)]
 			} as any;
 			(engine.assets.get as any).and.returnValue(destinationZone);
 			(engine.dagobah.findLocationOfZone as any).and.returnValue(null);
 			(engine.world.findLocationOfZone as any).and.returnValue(new Point(3, 4));
 
-			xWingFromDagobah(engine, mockHotspot(Hotspot.Type.xWingFromDagobah, 235));
+			ShipToPlanet(engine, mockHotspot(Hotspot.Type.ShipToPlanet, 235));
 		});
 
 		it("pushes a new transition scene", () => {

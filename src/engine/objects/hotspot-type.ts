@@ -13,8 +13,8 @@ class HotspotType {
 	public static readonly Unused = new HotspotType();
 	public static readonly Lock = new HotspotType();
 	public static readonly Teleporter = new HotspotType();
-	public static readonly xWingFromDagobah = new HotspotType();
-	public static readonly xWingToDagobah = new HotspotType();
+	public static readonly ShipToPlanet = new HotspotType();
+	public static readonly ShipFromPlanet = new HotspotType();
 
 	public static readonly knownTypes = [
 		HotspotType.DropQuestItem,
@@ -31,8 +31,8 @@ class HotspotType {
 		HotspotType.Unused,
 		HotspotType.Lock,
 		HotspotType.Teleporter,
-		HotspotType.xWingFromDagobah,
-		HotspotType.xWingToDagobah
+		HotspotType.ShipToPlanet,
+		HotspotType.ShipFromPlanet
 	];
 
 	get rawValue(): number {
@@ -69,10 +69,10 @@ class HotspotType {
 				return "Lock";
 			case HotspotType.Teleporter:
 				return "Teleporter";
-			case HotspotType.xWingFromDagobah:
-				return "xWingFromDagobah";
-			case HotspotType.xWingToDagobah:
-				return "xWingToDagobah";
+			case HotspotType.ShipToPlanet:
+				return "ShipToPlanet";
+			case HotspotType.ShipFromPlanet:
+				return "ShipFromPlanet";
 			default:
 				return "unknown";
 		}
