@@ -16,6 +16,8 @@ import ZoneSceneRenderer from "src/engine/rendering/zone-scene-renderer";
 import moveHero from "src/engine/hero-move";
 import moveBullets from "src/engine/bullet-move";
 import { Channel } from "src/engine/audio";
+import { HotspotExecutionMode } from "../script/hotspot-execution-mode";
+import { HotspotExecutionResult } from "../script/hotspot-execution-result";
 
 class ZoneScene extends Scene {
 	private _zone: Zone;
@@ -45,7 +47,7 @@ class ZoneScene extends Scene {
 			return;
 		}
 
-		engine.hotspotExecutor.uncoverSolvedHotspotItems(this.zone);
+		engine.hotspotExecutor.execute(HotspotExecutionMode.Initialize);
 
 		engine.scriptExecutor.prepeareExecution(EvaluationMode.Walk, this.zone);
 		scriptResult = await engine.scriptExecutor.execute();
@@ -53,7 +55,13 @@ class ZoneScene extends Scene {
 			return;
 		}
 
-		if (this._evaluateZoneChangeHotspots()) return;
+		let htspResult = engine.hotspotExecutor.execute(HotspotExecutionMode.Stand);
+		if (
+			htspResult & HotspotExecutionResult.Speak ||
+			htspResult & HotspotExecutionResult.ChangeZone ||
+			htspResult & HotspotExecutionResult.Drop
+		)
+			return;
 
 		scriptResult = await moveBullets(engine, this.zone);
 		if (scriptResult !== ScriptResult.Done) {
@@ -77,7 +85,13 @@ class ZoneScene extends Scene {
 			return;
 		}
 
-		this._evaluateZoneChangeHotspots();
+		htspResult = engine.hotspotExecutor.execute(HotspotExecutionMode.Stand);
+		if (
+			htspResult & HotspotExecutionResult.Speak ||
+			htspResult & HotspotExecutionResult.ChangeZone ||
+			htspResult & HotspotExecutionResult.Drop
+		)
+			return;
 	}
 
 	public render(renderer: Renderer) {
@@ -315,13 +329,9 @@ class ZoneScene extends Scene {
 			return ScriptResult.Done;
 		}
 
-		this.engine.hotspotExecutor.triggerPlaceHotspots(tile, location, this.zone);
+		this.engine.hotspotExecutor.execute(HotspotExecutionMode.PlaceTile, location, tile);
 		this.engine.scriptExecutor.prepeareExecution(EvaluationMode.PlaceItem, this.zone);
 		return await this.engine.scriptExecutor.execute();
-	}
-
-	private _evaluateZoneChangeHotspots(): boolean {
-		return this.engine.hotspotExecutor.evaluateZoneChangeHotspots(this.engine.hero.location, this.zone);
 	}
 
 	get zone() {

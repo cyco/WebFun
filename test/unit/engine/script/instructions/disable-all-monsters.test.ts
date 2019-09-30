@@ -10,8 +10,8 @@ describeInstruction("DiableAllMonsters", (execute, engine) => {
 		instruction._arguments = [];
 
 		await execute(instruction);
-		expect(engine.currentZone.monsters[0].enabled).toBeTrue();
-		expect(engine.currentZone.monsters[1].enabled).toBeTrue();
-		expect(engine.currentZone.monsters[2].enabled).toBeTrue();
+		expect(engine.currentZone.monsters[0].enabled).toBeFalse();
+		expect(engine.currentZone.monsters[1].enabled).toBeFalse();
+		expect(engine.currentZone.monsters[2].enabled).toBeFalse();
 	});
 });

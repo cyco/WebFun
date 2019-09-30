@@ -14,8 +14,7 @@ export default {
 		if (itemId === -1) {
 			const sector = engine.currentWorld.findSectorContainingZone(action.zone);
 			itemId = sector.findItem.id;
-			action.zone.solved = true;
-			sector.zone.solved = true;
+			sector.solved1 = true;
 		}
 
 		engine.dropItem(engine.assets.get(Tile, itemId), new Point(x, y));

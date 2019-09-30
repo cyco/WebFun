@@ -213,26 +213,26 @@ class MapScene extends Scene {
 			case Zone.Type.TravelStart:
 			case Zone.Type.TravelEnd:
 				if (!sector.requiredItem) return StringID.None;
-				if (sector.zone.solved) return StringID.TravelSolved;
+				if (sector.solved1) return StringID.TravelSolved;
 				return [StringID.requires, typeForTile(sector.requiredItem)];
 			case Zone.Type.Goal:
-				if (sector.zone.solved) return StringID.GoalSolved;
+				if (sector.solved1 && sector.solved2) return StringID.GoalSolved;
 				return StringID.aUnknown;
 			case Zone.Type.Find:
 			case Zone.Type.FindUniqueWeapon:
 				if (!sector.findItem) return StringID.None;
-				if (sector.zone.solved) return StringID.Solved;
+				if (sector.solved1) return StringID.Solved;
 				if (sector.findItem.isLocator()) return [StringID.find, StringID.aMap];
 				if (sector.findItem.isWeapon()) return [StringID.find, StringID.TheForce];
 				if (sector.findItem.isItem()) return [StringID.find, StringID.SomethingUseful];
 				console.assert(false, "Unknown find item!");
 			case Zone.Type.Trade:
 				if (!sector.requiredItem) return StringID.None;
-				if (sector.zone.solved) return StringID.Solved;
+				if (sector.solved2) return StringID.Solved;
 				return [StringID.requires, typeForTile(sector.requiredItem)];
 			case Zone.Type.Use:
 				if (!sector.requiredItem) return StringID.None;
-				if (sector.zone.solved) return StringID.Solved;
+				if (sector.solved2) return StringID.Solved;
 				return [StringID.requires, sector.requiredItem.name];
 
 			case Zone.Type.Load:
@@ -326,7 +326,8 @@ class MapScene extends Scene {
 	}
 
 	protected isZoneConsideredSolved(zone: Zone): boolean {
-		return zone.solved;
+		const sector = this.engine.currentWorld.findSectorContainingZone(zone);
+		return sector && sector.solved;
 	}
 
 	protected isZoneConsideredVisited(zone: Zone) {

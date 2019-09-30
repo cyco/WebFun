@@ -2,8 +2,9 @@ import { Engine } from "src/engine";
 import { Hotspot, Zone } from "src/engine/objects";
 import { RoomTransitionScene, ZoneScene } from "src/engine/scenes";
 import { Point } from "src/util";
+import { HotspotExecutionResult } from "../hotspot-execution-result";
 
-export default (engine: Engine, hotspot: Hotspot): boolean => {
+export default (engine: Engine, hotspot: Hotspot): HotspotExecutionResult => {
 	console.assert(hotspot.arg !== -1, "This is not where we're coming from!");
 
 	const destinationZone = engine.assets.get(Zone, hotspot.arg);
@@ -21,5 +22,6 @@ export default (engine: Engine, hotspot: Hotspot): boolean => {
 	scene.destinationZoneLocation = location;
 	engine.sceneManager.pushScene(scene);
 	engine.temporaryState.enteredByPlane = true;
-	return true;
+
+	return HotspotExecutionResult.ChangeZone;
 };

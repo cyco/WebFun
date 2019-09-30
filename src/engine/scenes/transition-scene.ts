@@ -34,7 +34,7 @@ abstract class TransitionScene extends Scene {
 	}
 
 	isOpaque() {
-		return true;
+		return false;
 	}
 
 	async update(/*ticks*/) {

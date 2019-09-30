@@ -12,7 +12,6 @@ export default {
 		const monster = zone.monsters[instruction.arguments[0]];
 		if (monster) {
 			monster.enabled = true;
-			return Result.Void;
 		}
 
 		return Result.Void;

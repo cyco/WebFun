@@ -1,9 +1,11 @@
 import { Zone, Puzzle, Tile } from "./objects";
 import Engine from "./engine";
 import Sector from "./sector";
-import { Direction, Point, Size } from "src/util";
+import { Direction, Point } from "src/util";
 import { EvaluationMode, ScriptResult } from "./script";
 import { ZoneTransitionScene, ZoneScene } from "./scenes";
+import { HotspotExecutionMode } from "./script/hotspot-execution-mode";
+import { HotspotExecutionResult } from "./script/hotspot-execution-result";
 
 function _tryTransition(direction: Point, engine: Engine, scene: ZoneScene): boolean | undefined {
 	const hero = engine.hero;
@@ -65,32 +67,6 @@ function _tryTransition(direction: Point, engine: Engine, scene: ZoneScene): boo
 	return true;
 }
 
-function _bumpNPC(sector: Sector, place: Point, engine: Engine, zone: Zone) {
-	const puzzleIndex = sector.puzzleIndex;
-	let puzzle: Puzzle = null;
-
-	if (puzzleIndex === -1) {
-		puzzle = engine.story.goal;
-		let text = "";
-		let item: Tile = null;
-		if (sector.zone.solved) {
-			text = puzzle.strings[2];
-		} else {
-			text = puzzle.strings[3];
-			item = sector.findItem;
-		}
-
-		if (text.length) {
-			engine
-				.speak(text, place)
-				.then(async () => !item || (await engine.dropItem(item, place)))
-				.then(() => (zone.solved = true));
-		}
-
-		return;
-	}
-}
-
 export default async (
 	direction: number,
 	zone: Zone,
@@ -112,15 +88,8 @@ export default async (
 	if (targetTile) {
 		// TODO: get rid of temporary state
 		engine.temporaryState.bump = targetPoint;
-		engine.hotspotExecutor.evaluateBumpHotspots(targetPoint, zone);
-
+		if (engine.hotspotExecutor.execute(HotspotExecutionMode.Bump, targetPoint, null)) return;
 		engine.scriptExecutor.prepeareExecution(EvaluationMode.Bump, zone);
-
-		const quest = engine.currentWorld.findSectorContainingZone(zone);
-		if (quest && quest.npc && quest.npc.id === targetTile.id) {
-			_bumpNPC(quest, targetPoint, engine, zone);
-			return;
-		}
 
 		const scriptResult = await engine.scriptExecutor.execute();
 		if (scriptResult !== ScriptResult.Done) {
@@ -133,5 +102,14 @@ export default async (
 		if (doTransition === false) {
 			// TODO: play blocked sound
 		}
-	} else engine.hotspotExecutor.triggerBumpHotspots(zone);
+		return;
+	}
+
+	const htspResult = engine.hotspotExecutor.execute(HotspotExecutionMode.Walk);
+	if (
+		htspResult & HotspotExecutionResult.Speak ||
+		htspResult & HotspotExecutionResult.ChangeZone ||
+		htspResult & HotspotExecutionResult.Drop
+	)
+		return;
 };

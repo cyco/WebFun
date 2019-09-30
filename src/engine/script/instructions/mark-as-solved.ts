@@ -7,10 +7,11 @@ export default {
 	Opcode: 0x1e,
 	Arguments: [],
 	Implementation: async (_: Instruction, engine: Engine, action: Action): Promise<Result> => {
-		action.zone.solved = true;
-
 		const sector = engine.currentWorld.findSectorContainingZone(action.zone);
-		sector.zone.solved = true;
+		sector.solved1 = true;
+		sector.solved2 = true;
+		sector.solved3 = true;
+		sector.solved4 = true;
 
 		return Result.Void;
 	}

@@ -8,8 +8,8 @@ describeInstruction("EnableAllMonsters", (execute, engine) => {
 		const instruction = new Instruction({ opcode: EnableAllMonsters.Opcode });
 
 		await execute(instruction);
-		expect(engine.currentZone.monsters[0].enabled).toBeFalse();
-		expect(engine.currentZone.monsters[1].enabled).toBeFalse();
-		expect(engine.currentZone.monsters[2].enabled).toBeFalse();
+		expect(engine.currentZone.monsters[0].enabled).toBeTrue();
+		expect(engine.currentZone.monsters[1].enabled).toBeTrue();
+		expect(engine.currentZone.monsters[2].enabled).toBeTrue();
 	});
 });

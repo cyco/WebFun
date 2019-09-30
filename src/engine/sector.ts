@@ -24,6 +24,40 @@ class Sector {
 
 		return this.zone.leadsTo(zone, assets);
 	}
+
+	public get solved() {
+		if (!this.zone) return false;
+
+		switch (this.zone.type) {
+			case Zone.Type.Empty:
+				return false;
+			case Zone.Type.Town:
+				return false;
+			case Zone.Type.BlockadeNorth:
+			case Zone.Type.BlockadeSouth:
+			case Zone.Type.BlockadeEast:
+			case Zone.Type.BlockadeWest:
+			case Zone.Type.TravelStart:
+			case Zone.Type.TravelEnd:
+				return this.solved1;
+			case Zone.Type.Goal:
+				return this.solved1 && this.solved2;
+			case Zone.Type.Find:
+			case Zone.Type.FindUniqueWeapon:
+				return this.solved1;
+			case Zone.Type.Trade:
+				return this.solved2;
+			case Zone.Type.Use:
+				return this.solved2;
+			case Zone.Type.Load:
+			case Zone.Type.Room:
+			case Zone.Type.Win:
+			case Zone.Type.Lose:
+			case Zone.Type.None:
+			default:
+				return false;
+		}
+	}
 }
 
 export default Sector;

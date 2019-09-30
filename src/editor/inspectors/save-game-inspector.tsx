@@ -122,7 +122,6 @@ class SaveGameInspector extends AbstractInspector {
 				out.requiredItem = input.requiredItem;
 				out.zoneType = input.zoneType;
 				out.zone.visited = input.visited;
-				out.zone.solved = input.solved1;
 				out.solved1 = input.solved1;
 				out.solved2 = input.solved2;
 				out.solved3 = input.solved3;

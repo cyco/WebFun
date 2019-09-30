@@ -10,7 +10,9 @@ describeInstruction("MarkAsSolved", (execute, engine) => {
 		const instruction = new Instruction({ opcode: MarkAsSolved.Opcode });
 
 		await execute(instruction);
-		expect(engine.currentZone.solved).toBeTrue();
-		expect(sectorMock.zone.solved).toBeTrue();
+		expect(sectorMock.solved1).toBeTrue();
+		expect(sectorMock.solved2).toBeTrue();
+		expect(sectorMock.solved3).toBeTrue();
+		expect(sectorMock.solved4).toBeTrue();
 	});
 });

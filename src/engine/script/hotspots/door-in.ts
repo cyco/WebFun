@@ -3,8 +3,9 @@ import { Hotspot, Zone } from "src/engine/objects";
 import { RoomTransitionScene, ZoneScene } from "src/engine/scenes";
 import { Point } from "src/util";
 import { NullIfMissing } from "src/engine/asset-manager";
+import { HotspotExecutionResult } from "../hotspot-execution-result";
 
-export default (engine: Engine, hotspot: Hotspot): boolean => {
+export default (engine: Engine, hotspot: Hotspot): HotspotExecutionResult => {
 	const zone = engine.currentZone;
 	const destinationZone = engine.assets.get(Zone, hotspot.arg, NullIfMissing);
 	const wayOut = destinationZone.hotspots.find(
@@ -29,5 +30,6 @@ export default (engine: Engine, hotspot: Hotspot): boolean => {
 	wayOut.arg = zone.id;
 	scene.destinationZoneLocation = location;
 	engine.sceneManager.pushScene(scene);
-	return true;
+
+	return HotspotExecutionResult.ChangeZone;
 };

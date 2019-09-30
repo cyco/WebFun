@@ -6,5 +6,8 @@ export default {
 	Opcode: 0x10,
 	Arguments: [],
 	Description: "True if the current zone is solved",
-	Implementation: async (_: int16[], zone: Zone, _engine: Engine): Promise<boolean> => zone.solved
+	Implementation: async (_: int16[], zone: Zone, engine: Engine): Promise<boolean> => {
+		const sector = engine.currentWorld.findSectorContainingZone(zone);
+		return sector && sector.solved;
+	}
 };

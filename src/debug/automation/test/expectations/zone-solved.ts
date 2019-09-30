@@ -12,7 +12,8 @@ class ZoneSolvedExpectation implements Expectation {
 
 	evaluate(ctx: GameplayContext) {
 		it("the zone is solved", () => {
-			expect(ctx.engine.currentWorld.at(4, 4).zone.solved).toBeTrue();
+			expect(ctx.engine.currentWorld.at(4, 4).solved1).toBeTrue();
+			expect(ctx.engine.currentWorld.at(4, 4).solved2).toBeTrue();
 		});
 	}
 

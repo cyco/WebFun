@@ -162,7 +162,6 @@ class ZoneInspector extends AbstractInspector {
 		zone.hotspots = template.hotspots;
 
 		zone.visited = template.visited;
-		zone.solved = template.solved;
 		zone.actionsInitialized = template.actionsInitialized;
 		zone.counter = template.counter;
 		zone.random = template.random;

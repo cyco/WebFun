@@ -17,7 +17,6 @@ class Zone {
 	public static readonly Layer = ZoneLayer;
 
 	public visited: boolean = false;
-	public solved: boolean = false;
 	public actionsInitialized: boolean = false;
 	public counter: number = 0;
 	public random: number = 0;
