@@ -20,13 +20,13 @@ describe("WebFun.Engine.Script.Hotspots.DoorOut", () => {
 		let destinationZone: Zone;
 
 		beforeEach(() => {
-			destinationZone = {
-				hotspots: [mockHotspot(Hotspot.Type.DoorIn, 5, new Point(2, 5))]
-			} as any;
-			engine.currentZone = { id: 5, hotspots: [mockHotspot(Hotspot.Type.DoorOut, 235)] } as any;
+			destinationZone = {} as any;
+			engine.currentZone = { id: 5, doorInLocation: new Point(2, 5) } as any;
 			(engine.assets.get as any).and.returnValue(destinationZone);
-			(engine.dagobah.findLocationOfZone as any).and.returnValue(null);
-			(engine.world.findLocationOfZone as any).and.returnValue(new Point(3, 4));
+			(engine.findLocationOfZone as any).and.returnValue({
+				location: new Point(3, 4),
+				world: engine.world
+			});
 
 			doorOut(engine, mockHotspot(Hotspot.Type.DoorOut, 235));
 		});
@@ -61,8 +61,10 @@ describe("WebFun.Engine.Script.Hotspots.DoorOut", () => {
 			} as any;
 			engine.currentZone = { id: 5, hotspots: [mockHotspot(Hotspot.Type.DoorOut, 235)] } as any;
 			(engine.assets.get as any).and.returnValue(destinationZone);
-			(engine.dagobah.findLocationOfZone as any).and.returnValue(new Point(3, 4));
-			(engine.world.findLocationOfZone as any).and.returnValue(null);
+			(engine.findLocationOfZone as any).and.returnValue({
+				location: new Point(3, 4),
+				world: engine.dagobah
+			});
 
 			doorOut(engine, mockHotspot(Hotspot.Type.DoorOut, 235));
 		});
@@ -73,7 +75,7 @@ describe("WebFun.Engine.Script.Hotspots.DoorOut", () => {
 	});
 
 	function mockHotspot(type: Hotspot.Type, arg: number = -1, pos: Point = new Point(0, 0)): Hotspot {
-		return { type, arg, x: pos.x, y: pos.y, enabled: true } as Hotspot;
+		return { type, arg, x: pos.x, y: pos.y, enabled: true, location: pos } as Hotspot;
 	}
 
 	function mockEngine() {
@@ -81,8 +83,9 @@ describe("WebFun.Engine.Script.Hotspots.DoorOut", () => {
 			assets: { get: jasmine.createSpy("assets.get") },
 			inventory: { contains: jasmine.createSpy("inventory.contains") },
 			sceneManager: { pushScene: jasmine.createSpy("sceneManager.pushScene"), currentScene: {} },
-			dagobah: { findLocationOfZone: jasmine.createSpy("dagobah.findLocationOfZone") },
-			world: { findLocationOfZone: jasmine.createSpy("world.findLocationOfZone") }
+			dagobah: {},
+			world: {},
+			findLocationOfZone: jasmine.createSpy("engine.findLocationOfZone")
 		} as any;
 	}
 });

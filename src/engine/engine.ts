@@ -210,6 +210,16 @@ class Engine extends EventTarget {
 		if (sector) return { sector, world: this.dagobah };
 	}
 
+	public findLocationOfZone(zone: Zone): { location: Point; world: World } {
+		let location: Point = this.world.findLocationOfZone(zone);
+		if (location) return { location, world: this.world };
+
+		location = this.dagobah.findLocationOfZone(zone);
+		if (location) return { location, world: this.dagobah };
+
+		return { location: null, world: null };
+	}
+
 	get hotspotExecutor() {
 		return this._hotspotExecutor;
 	}

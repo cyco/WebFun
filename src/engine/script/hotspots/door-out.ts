@@ -1,32 +1,23 @@
 import { Engine } from "src/engine";
 import { Hotspot, Zone } from "src/engine/objects";
 import { RoomTransitionScene, ZoneScene } from "src/engine/scenes";
-import { Point } from "src/util";
 import { HotspotExecutionResult } from "../hotspot-execution-result";
 
 export default (engine: Engine, hotspot: Hotspot): HotspotExecutionResult => {
-	const zone = engine.currentZone;
 	console.assert(hotspot.arg !== -1, "This is not where we're coming from!");
+	console.assert(engine.sceneManager.currentScene instanceof ZoneScene);
+
+	const zone = engine.currentZone;
 	const destinationZone = engine.assets.get(Zone, hotspot.arg);
-	const doorIn = destinationZone.hotspots.find(
-		({ type, arg }) => type === Hotspot.Type.DoorIn && arg === zone.id
-	);
-	console.assert(!!doorIn, "Don't know where to return to in target zone");
+	const { world, location } = engine.findLocationOfZone(destinationZone);
 
 	const scene = new RoomTransitionScene();
-	scene.destinationHeroLocation = new Point(doorIn.x, doorIn.y);
+	scene.destinationHeroLocation = zone.doorInLocation;
 	scene.destinationZone = destinationZone;
-	console.assert(engine.sceneManager.currentScene instanceof ZoneScene);
 	scene.scene = engine.sceneManager.currentScene as ZoneScene;
-
-	let world = engine.dagobah;
-	let location = world.findLocationOfZone(destinationZone);
-	if (!location) {
-		world = engine.world;
-		location = world.findLocationOfZone(destinationZone);
-	}
 	scene.destinationWorld = world;
 	scene.destinationZoneLocation = location;
+
 	engine.sceneManager.pushScene(scene);
 
 	return HotspotExecutionResult.ChangeZone;

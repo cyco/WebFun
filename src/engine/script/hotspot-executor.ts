@@ -17,14 +17,10 @@ import vehicleTo from "./hotspots/vehicle-to";
 import { Channel } from "../audio";
 
 type SimpleHotspot = (engine: Engine, hotspot: Hotspot) => HotspotExecutionResult;
+type Dispatch = WeakMap<Hotspot.Type, SimpleHotspot>;
+
 class HotspotExecutor {
 	private _engine: Engine;
-	private travelZoneTypes = new WeakSet([
-		Zone.Type.Town,
-		Zone.Type.TravelStart,
-		Zone.Type.TravelEnd,
-		Zone.Type.Empty
-	]);
 	private initializeTypes = new WeakSet([
 		Hotspot.Type.DropMap,
 		Hotspot.Type.DropItem,
@@ -53,15 +49,6 @@ class HotspotExecutor {
 		[Hotspot.Type.DropUniqueWeapon, drop],
 		[Hotspot.Type.DropWeapon, drop]
 	]);
-	private bumpTypes = new WeakSet([
-		Hotspot.Type.DropQuestItem,
-		Hotspot.Type.DropUniqueWeapon,
-		Hotspot.Type.DropMap,
-		Hotspot.Type.Unused,
-		Hotspot.Type.DropItem,
-		Hotspot.Type.DropWeapon
-	]);
-	private placeTileTypes = new WeakSet([Hotspot.Type.NPC, Hotspot.Type.Lock, Hotspot.Type.SpawnLocation]);
 
 	constructor(engine: Engine) {
 		this._engine = engine;
@@ -87,10 +74,7 @@ class HotspotExecutor {
 		return HotspotExecutionResult.Void;
 	}
 
-	private executeHotspots(
-		point: Point,
-		dispatch: WeakMap<Hotspot.Type, SimpleHotspot>
-	): HotspotExecutionResult {
+	private executeHotspots(point: Point, dispatch: Dispatch): HotspotExecutionResult {
 		const engine = this._engine;
 		const zone = engine.currentZone;
 		for (const hotspot of zone.hotspots) {
@@ -128,7 +112,7 @@ class HotspotExecutor {
 
 		if (puzzle.type === Puzzle.Type.Use) {
 			if (sector.requiredItem !== tile) return HotspotExecutionResult.Void;
-			console.log("found use puzzle");
+
 			const npc = zone.getTile(point.x, point.y, Zone.Layer.Object);
 			const hotspot = zone.hotspots.find(htsp => htsp.location.isEqualTo(point));
 			if (sector.npc === npc && hotspot && hotspot.enabled) {
@@ -155,7 +139,6 @@ class HotspotExecutor {
 		}
 
 		if (puzzle.type === Puzzle.Type.Trade) {
-			console.log("found trade puzzle");
 			const hotspot = zone.hotspots.find(
 				htsp =>
 					htsp.location.isEqualTo(point) &&
@@ -164,7 +147,6 @@ class HotspotExecutor {
 					htsp.arg === tile.id
 			);
 			if (!hotspot) {
-				console.log("no htsp");
 				const nogo = engine.assets.get(Sound, engine.type.sounds.NoGo);
 				engine.mixer.play(nogo, Channel.Effect);
 				return HotspotExecutionResult.Sounds;
@@ -189,45 +171,6 @@ class HotspotExecutor {
 		}
 
 		console.log("unhandled case for puzzle type", puzzle.type.name);
-		/*
-      view_1 = view;
-      view_2 = view;
-      document_8 = view->document;
-      game_mode = document_8->game_mode_1;
-      document_8->game_mode_1 = 1;
-      evaluation_result = Zone::EvaluateActions(
-                            view_1->document->current_zone,
-                            PlaceItem,
-                            x,
-                            y,
-                            0,
-                            0,
-                            0,
-                            context_1,
-                            view_1->document,
-                            view_2);
-      zone_type = view->document->current_zone->type;
-      if ( zone_type == TravelStart || zone_type == TravelEnd || zone_type == Town )
-        YodaView::EvaluateZoneChangeHotspots(view);
-      document_9 = view->document;
-      if ( game_mode == GAME_MODE_1_INVENTORY_CLICK )
-      {
-        game_mode_1 = document_9->game_mode_1;
-        game_mode_1_ref = &document_9->game_mode_1;
-        if ( game_mode_1 != GAME_MODE_1_PICKUP && game_mode_1 != GAME_MODE_1_CHANGING_ZONES )
-          *game_mode_1_ref = GAME_MODE_1_WALK;
-      }
-      else
-      {
-        game_mode_2 = document_9->game_mode_1;
-        game_mode_3 = &document_9->game_mode_1;
-        if ( game_mode_2 != GAME_MODE_1_CHANGING_ZONES && game_mode_2 != GAME_MODE_1_PICKUP )
-          *game_mode_3 = game_mode;
-      }
-      if ( !(evaluation_result & UpdateSounds) )
-        YodaView::PlaySound(view, (SOUND_NAME)document_10);
-      goto update_palette_and_return;
-*/
 	}
 
 	private _laydownHotspotItem(zone: Zone, hotspot: Hotspot): void {

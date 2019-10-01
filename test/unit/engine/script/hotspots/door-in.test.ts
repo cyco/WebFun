@@ -25,9 +25,11 @@ describe("WebFun.Engine.Script.Hotspots.DoorIn", () => {
 			} as any;
 			engine.currentZone = { id: 5 } as any;
 			(engine.assets.get as any).and.returnValue(destinationZone);
-			(engine.dagobah.findLocationOfZone as any).and.returnValue(null);
-			(engine.world.findLocationOfZone as any).and.returnValue(new Point(3, 4));
-			doorIn(engine, mockHotspot(Hotspot.Type.DoorIn, 235));
+			(engine.findLocationOfZone as any).and.returnValue({
+				location: new Point(3, 4),
+				world: engine.world
+			});
+			doorIn(engine, mockHotspot(Hotspot.Type.DoorIn, 235, new Point(8, 2)));
 		});
 
 		it("pushes a new transition scene", () => {
@@ -49,6 +51,10 @@ describe("WebFun.Engine.Script.Hotspots.DoorIn", () => {
 		it("sets the hero's location on the target zone", () => {
 			expect(transitionScene.destinationHeroLocation).toEqual(new Point(2, 5));
 		});
+
+		it("notes the location of the door so it can be returned to when the room is left", () => {
+			expect(destinationZone.doorInLocation).toEqual(new Point(8, 2));
+		});
 	});
 
 	describe("when triggered with the id of a zone on the dagobah", () => {
@@ -60,8 +66,10 @@ describe("WebFun.Engine.Script.Hotspots.DoorIn", () => {
 			} as any;
 			engine.currentZone = { id: 5 } as any;
 			(engine.assets.get as any).and.returnValue(destinationZone);
-			(engine.dagobah.findLocationOfZone as any).and.returnValue(new Point(4, 5));
-			(engine.world.findLocationOfZone as any).and.returnValue(null);
+			(engine.findLocationOfZone as any).and.returnValue({
+				location: new Point(3, 4),
+				world: engine.dagobah
+			});
 			doorIn(engine, mockHotspot(Hotspot.Type.DoorIn, 235));
 		});
 
@@ -71,7 +79,7 @@ describe("WebFun.Engine.Script.Hotspots.DoorIn", () => {
 	});
 
 	function mockHotspot(type: Hotspot.Type, arg: number = -1, pos: Point = new Point(0, 0)): Hotspot {
-		return { type, arg, x: pos.x, y: pos.y } as Hotspot;
+		return { type, arg, x: pos.x, y: pos.y, location: pos } as Hotspot;
 	}
 
 	function mockEngine() {
@@ -79,8 +87,9 @@ describe("WebFun.Engine.Script.Hotspots.DoorIn", () => {
 			assets: { get: jasmine.createSpy("assets.get") },
 			inventory: { contains: jasmine.createSpy("inventory.contains") },
 			sceneManager: { pushScene: jasmine.createSpy("sceneManager.pushScene"), currentScene: {} },
-			dagobah: { findLocationOfZone: jasmine.createSpy("dagobah.findLocationOfZone") },
-			world: { findLocationOfZone: jasmine.createSpy("world.findLocationOfZone") }
+			dagobah: {},
+			world: {},
+			findLocationOfZone: jasmine.createSpy("engine.findLocationOfZone")
 		} as any;
 	}
 });
