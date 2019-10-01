@@ -13,8 +13,8 @@ describe("WebFun.App.Input.DesktopInputManager", () => {
 		mockedCursorManager = { changeCursor: (): void => void 0 } as any;
 		element = document.createElement("div");
 		subject = new DesktopInputManager(element, mockedCursorManager);
-		mockElement = { closest: () => true } as any;
-		spyOn(document, "elementFromPoint").and.returnValue(mockElement);
+		mockElement = {} as any;
+		spyOn(element, "contains").and.callFake(e => e === mockElement);
 	});
 
 	it("collects game input from keyboard and mouse", () => {
@@ -249,7 +249,7 @@ describe("WebFun.App.Input.DesktopInputManager", () => {
 		describe("when the left mouse is pressed outside the element", () => {
 			beforeEach(() => {
 				subject.walk = false;
-				fakeMouse("down", { x: 0, y: 0, button: 0 });
+				fakeMouse("down", { x: 0, y: 0, button: 0 }, {});
 			});
 
 			it("start does not initiate walking", () => {
@@ -298,11 +298,12 @@ describe("WebFun.App.Input.DesktopInputManager", () => {
 		subject.handleEvent(event);
 	}
 
-	function fakeMouse(type: string, options: any) {
-		const event: any = new CustomEvent("mouse" + type);
+	function fakeMouse(type: string, options: any, target: any = mockElement) {
+		const event: any = { type: "mouse" + type };
 		event.clientX = options.x;
 		event.clientY = options.y;
 		event.button = options.button;
+		event.target = target;
 		subject.handleEvent(event);
 	}
 });

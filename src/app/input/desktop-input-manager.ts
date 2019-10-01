@@ -1,5 +1,5 @@
 import { Direction, InputManager } from "src/engine/input";
-import { KeyEvent, Point, Rectangle, Size, Direction as DirectionHelper } from "src/util";
+import { KeyEvent, Point, Direction as DirectionHelper } from "src/util";
 import { Engine } from "src/engine";
 
 import { Tile } from "src/engine/objects";
@@ -175,13 +175,7 @@ class DesktopInputManager implements InputManager, EventListenerObject {
 
 	private _mouseDown(e: MouseEvent) {
 		const mouseLocation = new Point(e.clientX, e.clientY);
-
-		// HACK: this is a cheap way way to find out if scene view is front most
-		const sceneView = this._element;
-		const { left, top, width, height } = sceneView.getBoundingClientRect();
-		if (!new Rectangle(new Point(left, top), new Size(width, height)).contains(mouseLocation)) {
-			return;
-		}
+		if (!this._element.contains(e.target as Node)) return;
 
 		const point = this.convertClientCoordinatesToView(mouseLocation);
 		const pointIsInView = point.x > 0 && point.y > 0 && point.x < 1 && point.y < 1;
