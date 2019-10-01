@@ -11,7 +11,7 @@ import SimulatedStory from "src/debug/simulated-story";
 import adjacentZones from "./adjacent-zones";
 import { Zone, Tile, Sound, Puzzle, Char } from "src/engine/objects";
 import { Planet, WorldSize } from "src/engine/types";
-import { Story, Engine, AssetManager } from "src/engine";
+import { Story, Engine, AssetManager, Hero } from "src/engine";
 import Settings from "src/settings";
 
 class TestCreatorWindow extends AbstractWindow {
@@ -66,6 +66,7 @@ class TestCreatorWindow extends AbstractWindow {
 		const story = this.buildStory(engine);
 		engine.hero.location = new Point(0, 0);
 		engine.hero.visible = true;
+		engine.hero.health = Hero.MaxHealth;
 		engine.story = story;
 		engine.currentWorld = story.world;
 		engine.camera.update(0);
