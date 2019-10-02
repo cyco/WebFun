@@ -296,8 +296,8 @@ class ZoneScene extends Scene {
 		const weaponTile = weapon.frames[0].extensionRight;
 		inventory.removeItem(weaponTile);
 		if (inventory.contains(weaponTile)) {
-			hero.ammo = 1;
 			engine.equip(weaponTile);
+			hero.ammo = engine.type.getMaxAmmo(weapon);
 		} else engine.equip(inventory.find(tile => tile.isWeapon()));
 	}
 
