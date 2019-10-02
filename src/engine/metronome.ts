@@ -29,7 +29,7 @@ class Metronome extends EventTarget {
 	private _renderCallback = () => this._executeRenderLoop();
 	private _updatesSuspended: boolean = false;
 	private _tickDuration = DefaultTickDuration;
-	private _tickCount: Uint32Array = null;
+	private _tickCount: Uint32Array = new Uint32Array(new ArrayBuffer(4));
 
 	constructor() {
 		super();
@@ -39,7 +39,6 @@ class Metronome extends EventTarget {
 	start() {
 		this._stopped = false;
 		this._nextTick = 0;
-		this._tickCount = new Uint32Array(new ArrayBuffer(4));
 
 		if (this.tickDuration < MinimumFrameDuration) {
 			this._executeUpdateLoop();
@@ -88,7 +87,7 @@ class Metronome extends EventTarget {
 		}
 	}
 
-	public stop() {
+	public async stop(): Promise<void> {
 		if (this._stopped) return;
 		if (!this._mainLoop) return;
 
@@ -96,6 +95,10 @@ class Metronome extends EventTarget {
 		window.cancelAnimationFrame(this._mainLoop);
 		window.clearTimeout(this._updateLoop);
 		this._mainLoop = null;
+
+		do {
+			await dispatch(() => void 0, 5);
+		} while (this._updatesSuspended);
 	}
 
 	public async withSuspendedUpdates<T>(thing: Function | Promise<T>) {
@@ -124,6 +127,7 @@ class Metronome extends EventTarget {
 	}
 
 	public get tickCount() {
+		console.log("tickCount", this._tickCount[0]);
 		return this._tickCount[0];
 	}
 }

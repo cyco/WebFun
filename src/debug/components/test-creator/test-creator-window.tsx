@@ -52,8 +52,10 @@ class TestCreatorWindow extends AbstractWindow {
 		Settings.skipDialogs = true;
 		Settings.skipTransitions = true;
 
-		if (engine.metronome) engine.metronome.stop();
-		await sleep(10);
+		if (engine.metronome) {
+			await engine.metronome.stop();
+			(engine.metronome as any)._tickCount[0] = 0;
+		}
 
 		const data = (controller.data = controller.data.copy());
 		engine.assets = new AssetManager();
