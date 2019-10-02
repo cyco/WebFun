@@ -100,7 +100,8 @@ class ZoneScene extends Scene {
 		if (hero.isAttacking && hero.weapon) {
 			let tile = this._extensionTileForBullet();
 			if (tile) {
-				const rel = Direction.CalculateRelativeCoordinates(hero.direction, 1);
+				const direction = Direction.Confine(hero.direction, false);
+				const rel = Direction.CalculateRelativeCoordinates(direction, 1);
 				const position = hero.location.byAdding(rel);
 				const sprite = new Sprite(position, new Size(Tile.WIDTH, Tile.HEIGHT), tile.imageData);
 				bulletTiles.push(sprite);
@@ -108,7 +109,8 @@ class ZoneScene extends Scene {
 
 			tile = this._bulletTileForBullet();
 			if (tile) {
-				const rel = Direction.CalculateRelativeCoordinates(hero.direction, hero._actionFrames + 1);
+				const direction = Direction.Confine(hero.direction, false);
+				const rel = Direction.CalculateRelativeCoordinates(direction, hero._actionFrames + 1);
 				const position = hero.location.byAdding(rel);
 				const object = this.zone.getTile(position);
 				if (!object || object.isOpaque()) {
@@ -124,7 +126,7 @@ class ZoneScene extends Scene {
 	private _extensionTileForBullet(): Tile {
 		const hero = this.engine.hero;
 		const frames = hero.weapon.frames;
-		const direction = hero.direction;
+		const direction = Direction.Confine(hero.direction, false);
 		const frameEntry = this._extensionFrameLocationForDirection(direction);
 		let animState: number;
 		if (hero._actionFrames === 0) {
@@ -155,10 +157,14 @@ class ZoneScene extends Scene {
 	}
 
 	private _extensionFrameLocationForDirection(direction: number) {
-		switch (Direction.Confine(direction)) {
+		switch (Direction.Confine(direction, true)) {
+			case Direction.SouthWest:
 			case Direction.South:
+			case Direction.SouthEast:
 				return Char.FrameEntry.ExtensionDown;
+			case Direction.NorthWest:
 			case Direction.North:
+			case Direction.NorthEast:
 				return Char.FrameEntry.ExtensionUp;
 			case Direction.East:
 				return Char.FrameEntry.ExtensionRight;
@@ -170,8 +176,12 @@ class ZoneScene extends Scene {
 	private _frameLocationForDirection(direction: number) {
 		switch (Direction.Confine(direction)) {
 			case Direction.South:
+			case Direction.SouthWest:
+			case Direction.SouthEast:
 				return Char.FrameEntry.Down;
 			case Direction.North:
+			case Direction.NorthWest:
+			case Direction.NorthEast:
 				return Char.FrameEntry.Up;
 			case Direction.East:
 				return Char.FrameEntry.Right;

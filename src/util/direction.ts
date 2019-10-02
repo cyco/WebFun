@@ -20,8 +20,27 @@ class Direction {
 		return result;
 	}
 
-	static Confine(direction: number): number {
-		return Direction.Normalize(Math.round(direction / 45.0) * 45.0);
+	static Confine(direction: number, allowDiagonals = true): number {
+		const value = Direction.Normalize(Math.round(direction / 45.0) * 45.0);
+
+		if (!allowDiagonals) {
+			switch (value) {
+				case Direction.East:
+					return Direction.East;
+				case Direction.SouthEast:
+				case Direction.South:
+				case Direction.SouthWest:
+					return Direction.South;
+				case Direction.West:
+					return Direction.West;
+				case Direction.NorthWest:
+				case Direction.North:
+				case Direction.NorthEast:
+					return Direction.North;
+			}
+		}
+
+		return value;
 	}
 
 	static CalculateAngleFromRelativePoint(relative: Point): number {

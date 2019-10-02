@@ -1,6 +1,5 @@
-import { Zone, Puzzle, Tile } from "./objects";
+import { Zone } from "./objects";
 import Engine from "./engine";
-import Sector from "./sector";
 import { Direction, Point } from "src/util";
 import { EvaluationMode, ScriptResult } from "./script";
 import { ZoneTransitionScene, ZoneScene } from "./scenes";
