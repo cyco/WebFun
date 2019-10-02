@@ -8,16 +8,18 @@ import { Point } from "src/util";
 export default {
 	Opcode: 0x1b,
 	Arguments: [Type.TileID, Type.ZoneX, Type.ZoneY],
+	Description:
+		"Drops item `arg_0` for pickup at `arg_1`x`arg_2`. If the item is -1, it drops the current sector's find item. instead",
 	Implementation: async (instruction: Instruction, engine: Engine, action: Action): Promise<Result> => {
-		let [itemId, x, y] = instruction.arguments;
+		let [itemID, x, y] = instruction.arguments;
 
-		if (itemId === -1) {
+		if (itemID === -1) {
 			const sector = engine.currentWorld.findSectorContainingZone(action.zone);
-			itemId = sector.findItem.id;
+			itemID = sector.findItem.id;
 			sector.solved1 = true;
 		}
 
-		engine.dropItem(engine.assets.get(Tile, itemId), new Point(x, y));
+		engine.dropItem(engine.assets.get(Tile, itemID), new Point(x, y));
 
 		return Result.UpdateScene;
 	}

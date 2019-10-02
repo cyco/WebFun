@@ -9,6 +9,7 @@ export default {
 	Description: "Set current zone's `shared-counter` value to a `arg_0`",
 	Implementation: async (instruction: Instruction, _: Engine, action: Action): Promise<Result> => {
 		action.zone.sharedCounter = instruction.arguments[0];
+
 		return Result.Void;
 	}
 };

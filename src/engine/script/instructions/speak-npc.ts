@@ -13,7 +13,8 @@ export default {
 		"Show speech bubble at `arg_0`x`arg_1`. _Uses `text` attribute_. The characters `¢` and `¥` are used as placeholders for provided and required items of the current zone, respectively.",
 	Implementation: async (instruction: Instruction, engine: Engine, _: Action): Promise<Result> => {
 		const [x, y] = instruction.arguments;
-		await engine.speak(instruction.text, new Point(x, y));
-		return Result.Void;
+		engine.speak(instruction.text, new Point(x, y));
+
+		return Result.UpdateText;
 	}
 };

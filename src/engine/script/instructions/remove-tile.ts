@@ -8,10 +8,10 @@ export default {
 	Arguments: [Type.ZoneX, Type.ZoneY, Type.ZoneZ],
 	Description: "Remove tile at `arg_0`x`arg_1`x`arg_2`",
 	Implementation: async (instruction: Instruction, _: Engine, action: Action): Promise<Result> => {
-		const args = instruction.arguments;
+		const [x, y, z] = instruction.arguments;
 		const zone = action.zone;
 
-		zone.removeTile(args[0], args[1], args[2]);
+		zone.setTile(null, x, y, z);
 
 		return Result.Void;
 	}

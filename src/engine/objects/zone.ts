@@ -76,16 +76,6 @@ class Zone {
 		this.tileIDs[index] = tile === null ? -1 : tile.id;
 	}
 
-	removeTile(x: number, y: number, z: number): void {
-		this.setTile(null, x, y, z);
-	}
-
-	moveTile(sourceX: number, sourceY: number, z: number, targetX: number, targetY: number): void {
-		const tile = this.getTile(sourceX, sourceY, z);
-		this.setTile(tile, targetX, targetY, z);
-		this.setTile(null, sourceX, sourceY, z);
-	}
-
 	placeWalkable(x: number | PointLike, y?: number): boolean {
 		if (typeof x === "object") {
 			y = x.y;

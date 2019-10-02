@@ -3,8 +3,8 @@ import RemoveTile from "src/engine/script/instructions/remove-tile";
 
 describeInstruction("RemoveTile", (execute, engine) => {
 	it("removes a tile from the current zone", async () => {
-		engine.currentZone.removeTile = () => {};
-		spyOn(engine.currentZone, "removeTile");
+		engine.currentZone.setTile = () => {};
+		spyOn(engine.currentZone, "setTile");
 
 		const instruction: any = new Instruction({});
 		instruction._opcode = RemoveTile.Opcode;
@@ -12,6 +12,6 @@ describeInstruction("RemoveTile", (execute, engine) => {
 
 		await execute(instruction);
 
-		expect(engine.currentZone.removeTile).toHaveBeenCalledWith(1, 2, 3);
+		expect(engine.currentZone.setTile).toHaveBeenCalledWith(null, 1, 2, 3);
 	});
 });

@@ -13,6 +13,7 @@ export default {
 	Implementation: async (instruction: Instruction, engine: Engine, _action: Action): Promise<Result> => {
 		const sound = engine.assets.get(Sound, instruction.arguments[0], NullIfMissing);
 		engine.mixer.play(sound, Channel.Effect);
+
 		return Result.Void;
 	}
 };

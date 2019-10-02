@@ -12,6 +12,7 @@ export default {
 		const args = instruction.arguments;
 		const zone = action.zone;
 		zone.random = 1 + randmod(args[0]);
+
 		return Result.Void;
 	}
 };

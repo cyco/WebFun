@@ -10,6 +10,7 @@ export default {
 	Implementation: async (_: Instruction, _engine: Engine, action: Action): Promise<Result> => {
 		// original implementation disables action only if no redraw occurs
 		action.enabled = false;
+
 		return Result.Void;
 	}
 };

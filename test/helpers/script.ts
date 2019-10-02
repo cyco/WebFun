@@ -50,7 +50,7 @@ const makeInstructionDescription = (desc: JasmineDescribe) => (Name: string, blo
 
 function mockEngine(): Engine {
 	return {
-		currentZone: {},
+		currentZone: { setTile: (): void => void 0, getTile: (): void => void 0 },
 		hero: {},
 		temporaryState: {},
 		assets: new AssetManager(),
@@ -65,7 +65,8 @@ function mockEngine(): Engine {
 		sceneManager: { pushScene: (): void => void 0 },
 		mixer: { play: (): void => void 0 },
 		inventory: { contains: (): boolean => false },
-		inputManager: {}
+		inputManager: {},
+		findLocationOfZone: (): void => void 0
 	} as any;
 }
 
