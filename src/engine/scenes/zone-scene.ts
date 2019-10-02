@@ -47,7 +47,13 @@ class ZoneScene extends Scene {
 			return;
 		}
 
-		engine.hotspotExecutor.execute(HotspotExecutionMode.Initialize);
+		let htspResult = engine.hotspotExecutor.execute(HotspotExecutionMode.Initialize);
+		if (
+			htspResult & HotspotExecutionResult.Speak ||
+			htspResult & HotspotExecutionResult.ChangeZone ||
+			htspResult & HotspotExecutionResult.Drop
+		)
+			return;
 
 		engine.scriptExecutor.prepeareExecution(EvaluationMode.Walk, this.zone);
 		scriptResult = await engine.scriptExecutor.execute();
@@ -55,7 +61,7 @@ class ZoneScene extends Scene {
 			return;
 		}
 
-		let htspResult = engine.hotspotExecutor.execute(HotspotExecutionMode.Stand);
+		htspResult = engine.hotspotExecutor.execute(HotspotExecutionMode.Stand);
 		if (
 			htspResult & HotspotExecutionResult.Speak ||
 			htspResult & HotspotExecutionResult.ChangeZone ||
@@ -317,7 +323,8 @@ class ZoneScene extends Scene {
 			scene.detonatorLocation = location;
 			engine.inputManager.clear();
 			engine.sceneManager.pushScene(scene);
-			return ScriptResult.Void;
+
+			return ScriptResult.UpdateScene;
 		}
 
 		if (location.isEqualTo(heroLocation)) {
@@ -331,15 +338,29 @@ class ZoneScene extends Scene {
 			}
 
 			engine.inputManager.clear();
+
 			return ScriptResult.Done;
 		}
 
 		if (location.distanceTo(heroLocation) > Math.sqrt(2)) {
 			engine.inputManager.clear();
+
 			return ScriptResult.Done;
 		}
 
-		this.engine.hotspotExecutor.execute(HotspotExecutionMode.PlaceTile, location, tile);
+		const htspResult = this.engine.hotspotExecutor.execute(
+			HotspotExecutionMode.PlaceTile,
+			location,
+			tile
+		);
+
+		if (
+			htspResult & HotspotExecutionResult.Speak ||
+			htspResult & HotspotExecutionResult.ChangeZone ||
+			htspResult & HotspotExecutionResult.Drop
+		)
+			return ScriptResult.Void;
+
 		this.engine.scriptExecutor.prepeareExecution(EvaluationMode.PlaceItem, this.zone);
 		return await this.engine.scriptExecutor.execute();
 	}

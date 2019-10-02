@@ -44,6 +44,7 @@ class ScriptExecutor {
 
 			for (const instruction of action.instructions) {
 				const result = (await this._instructionExecutor.execute(instruction)) || Result.Void;
+
 				if (result !== Result.Void) {
 					yield (result as any) as ScriptResult;
 				}
@@ -51,6 +52,7 @@ class ScriptExecutor {
 		}
 
 		zone.actionsInitialized = true;
+
 		// TODO: get rid of temporaryState
 		this._engine.temporaryState.justEntered = false;
 		this._engine.temporaryState.enteredByPlane = false;
@@ -74,7 +76,13 @@ class ScriptExecutor {
 			this._executor = null;
 		}
 		if ((normalizedResult as any) === Result.UpdateZone) {
-			while (await this._executor.next()) console.log("wasted instruction result");
+			do {
+				const result = await this._executor.next();
+				if (!result) break;
+				if (!result.value) break;
+
+				console.log("Waisting instruction result", result);
+			} while (true);
 			this._executor = null;
 		}
 		return normalizedResult;
