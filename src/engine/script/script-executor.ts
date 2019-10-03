@@ -72,17 +72,18 @@ class ScriptExecutor {
 
 		const result = await this._executor.next();
 		const normalizedResult = result.value || ScriptResult.Done;
-		if (normalizedResult === ScriptResult.Done) {
+		if (normalizedResult & ScriptResult.Done) {
 			this._executor = null;
 		}
+
 		if ((normalizedResult as any) === Result.UpdateZone) {
 			do {
 				const result = await this._executor.next();
 				if (!result) break;
 				if (!result.value) break;
-
-				console.log("Waisting instruction result", result);
+				if (result.value & ScriptResult.Done) break;
 			} while (true);
+
 			this._executor = null;
 		}
 		return normalizedResult;

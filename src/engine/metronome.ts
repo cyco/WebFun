@@ -127,7 +127,6 @@ class Metronome extends EventTarget {
 	}
 
 	public get tickCount() {
-		console.log("tickCount", this._tickCount[0]);
 		return this._tickCount[0];
 	}
 }
