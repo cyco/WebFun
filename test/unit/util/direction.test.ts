@@ -3,10 +3,7 @@ import { Point } from "src/util";
 
 describe("WebFun.Util.Direction", () => {
 	it("is a static class that can't be initialized", () => {
-		expect(() => {
-			let x = new Direction();
-			x = x;
-		}).toThrow();
+		expect(() => new Direction()).toThrow();
 	});
 
 	it("normalizes a direction, making sure it's between 0 and 360 degrees", () => {
@@ -26,7 +23,18 @@ describe("WebFun.Util.Direction", () => {
 		expect(Direction.Confine(46)).toBe(45);
 		expect(Direction.Confine(270)).toBe(270);
 		expect(Direction.Confine(265)).toBe(270);
-		expect(Direction.Confine(350)).toBe(0);
+		expect(Direction.Confine(350, true)).toBe(0);
+	});
+
+	it("can map the input to a 90° angle", () => {
+		expect(Direction.Confine(1, false)).toBe(0);
+		expect(Direction.Confine(44, false)).toBe(90);
+		expect(Direction.Confine(46, false)).toBe(90);
+		expect(Direction.Confine(179, false)).toBe(180);
+		expect(Direction.Confine(224, false)).toBe(270);
+		expect(Direction.Confine(270, false)).toBe(270);
+		expect(Direction.Confine(265, false)).toBe(270);
+		expect(Direction.Confine(350, false)).toBe(0);
 	});
 
 	it("calculates the angle from the origin point to a gien point", () => {

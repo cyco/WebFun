@@ -3,6 +3,18 @@ import { document } from "../../../src/std/dom";
 import { MenuWindow } from "src/ui/components";
 
 describe("WebFun.UI.MenuStack", () => {
+	let subject: MenuStack;
+	let menu1: MenuWindow, menu2: MenuWindow;
+
+	beforeEach(() => {
+		menu1 = mockMenuWindow();
+		menu2 = mockMenuWindow();
+
+		subject = new MenuStack();
+	});
+
+	afterEach(() => subject.clear());
+
 	it("is a class that manages z-order of a menu hierarchy", () => {
 		expect(MenuStack).toBeClass();
 	});
@@ -13,10 +25,6 @@ describe("WebFun.UI.MenuStack", () => {
 	});
 
 	it("has a push methods to put menus on the stack (and in the document)", () => {
-		const menu1 = mockMenuWindow();
-		const menu2 = mockMenuWindow();
-
-		const subject = new MenuStack();
 		subject.push(menu1);
 		subject.push(menu2);
 
@@ -29,12 +37,9 @@ describe("WebFun.UI.MenuStack", () => {
 	});
 
 	it("has a clear methods remove all menus", () => {
-		const menu1 = mockMenuWindow();
 		spyOn(menu1, "close");
-		const menu2 = mockMenuWindow();
 		spyOn(menu2, "close");
 
-		const subject = new MenuStack();
 		subject.push(menu1);
 		subject.push(menu2);
 
@@ -48,13 +53,18 @@ describe("WebFun.UI.MenuStack", () => {
 		menu2.remove();
 	});
 
-	it("has a pop method to remove a menu and all of its descendants", () => {
-		const menu1 = mockMenuWindow();
-		spyOn(menu1, "close");
-		const menu2 = mockMenuWindow();
-		spyOn(menu2, "close");
+	it("removes all menus in the stack when the overlay is clicked", () => {
+		spyOn(subject, "clear").and.callThrough();
 
-		const subject = new MenuStack();
+		subject.push(menu1);
+		const overlay = document.body.lastElementChild.previousElementSibling;
+		overlay.dispatchEvent(new CustomEvent("mousedown"));
+		expect(subject.clear).toHaveBeenCalled();
+	});
+
+	it("has a pop method to remove a menu and all of its descendants", () => {
+		spyOn(menu1, "close");
+		spyOn(menu2, "close");
 		subject.push(menu1);
 		subject.push(menu2);
 
@@ -68,12 +78,11 @@ describe("WebFun.UI.MenuStack", () => {
 		menu2.remove();
 	});
 
+	it("ignores unregisterd menus", () => {
+		expect(() => subject.pop(menu1)).not.toThrow();
+	});
+
 	it("has a property to query the stack size", () => {
-		const menu1 = mockMenuWindow();
-		const menu2 = mockMenuWindow();
-
-		const subject = new MenuStack();
-
 		subject.push(menu1);
 		subject.push(menu2);
 

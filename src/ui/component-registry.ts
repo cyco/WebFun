@@ -21,12 +21,8 @@ class ComponentRegistry {
 			`A component with tag '${ComponentDefinition.tagName}' is already registered!`
 		);
 
-		try {
-			window.customElements.define(ComponentDefinition.tagName, ComponentDefinition);
-			this.components[ComponentDefinition.tagName] = ComponentDefinition;
-		} catch (e) {
-			console.info(`Could not register component ${ComponentDefinition.tagName}`);
-		}
+		window.customElements.define(ComponentDefinition.tagName, ComponentDefinition);
+		this.components[ComponentDefinition.tagName] = ComponentDefinition;
 	}
 
 	public contains(ComponentDefinition: typeof Component): boolean {

@@ -1,3 +1,1 @@
-xdescribe("Missing test", () => {
-	it("must still be written", () => {});
-});
+describe("WebFun.Engine.SaveGame.ReaderFactory", () => {});

@@ -21,8 +21,6 @@ abstract class ReaderFactory {
 		if (type === Yoda) {
 			return new YodaReader(stream);
 		}
-
-		throw "Invalid game type";
 	}
 }
 

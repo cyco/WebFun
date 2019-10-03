@@ -22,7 +22,7 @@ class MenuStack extends EventTarget {
 		this._overlay.style.width = "auto";
 		this._overlay.style.height = "auto";
 		this._overlay.style.position = "fixed";
-		this._overlay.addEventListener("mousedown", () => MenuStack.sharedStack.clear());
+		this._overlay.addEventListener("mousedown", () => this.clear());
 	}
 
 	static get sharedStack() {

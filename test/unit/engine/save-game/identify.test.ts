@@ -13,9 +13,9 @@ describe("WebFun.Engine.SaveGame.identify", () => {
 		expect(identify(stream)).toBe(Indy);
 	});
 
-	it("throws an exception if the save game can not be identified", () => {
+	it("returns null if the save game can not be identified", () => {
 		const stream = mockStream("UNKNOWN44");
-		expect(() => identify(stream)).toThrow();
+		expect(identify(stream)).toBeNull();
 	});
 
 	function mockStream(characters: string): InputStream {

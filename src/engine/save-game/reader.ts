@@ -130,7 +130,7 @@ abstract class Reader {
 
 	protected readHotspots(stream: InputStream, zone: MutableZone) {
 		const count = this.readInt(stream);
-		if (count < 0) return;
+		console.assert(count >= 0);
 		if (count !== zone.hotspots.length) {
 			zone.hotspots = Array.Repeat(new Hotspot(), count);
 		}
@@ -139,7 +139,7 @@ abstract class Reader {
 
 	protected readMonsters(stream: InputStream, zone: MutableZone) {
 		const count = this.readInt(stream);
-		if (count < 0) return;
+		console.assert(count >= 0);
 
 		if (this._type === Indy) zone.monsters = new Array(count);
 
@@ -152,7 +152,7 @@ abstract class Reader {
 
 	protected readActions(stream: InputStream, zone: Zone): void {
 		const count = this.readInt(stream);
-		if (count < 0) return;
+		console.assert(count >= 0);
 
 		for (const action of zone.actions) {
 			action.enabled = this.readBool(stream);

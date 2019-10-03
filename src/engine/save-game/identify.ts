@@ -8,5 +8,5 @@ export default (stream: InputStream): GameType => {
 	if (magic === Yoda.saveGameMagic) return Yoda;
 	if (magic === Indy.saveGameMagic) return Indy;
 
-	throw "Invalid save game format";
+	return null;
 };
