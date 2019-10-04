@@ -46,29 +46,28 @@ class Story {
 		return this._puzzles;
 	}
 
-	public generateWorld(assets: AssetManager, gamesWon: number = 0): void {
+	public generateWorld(assets: AssetManager, gamesWon: number = 0, maxRetries = 1): void {
 		let generator = null;
 		let success = false;
 		let effectiveSeed = this.seed;
-		let maxCount = 50;
-		do {
-			maxCount--;
-			if (maxCount === 0) {
-				console.warn("too many reseeds");
-				return;
-			}
+		while (maxRetries >= 0) {
+			maxRetries--;
 			try {
 				generator = new WorldGenerator(this.size, this.planet, assets);
 				success = generator.generate(effectiveSeed, gamesWon);
 			} catch (e) {
 				if (e instanceof WorldGenerationError) success = false;
-			} finally {
-				if (!success) {
-					this._reseeded = true;
-					effectiveSeed = rand();
-				}
 			}
-		} while (!success);
+
+			if (!success) {
+				this._reseeded = true;
+				effectiveSeed = rand();
+			} else {
+				break;
+			}
+		}
+
+		if (!success) throw new WorldGenerationError("Too many reseeds");
 
 		this.goal = generator.goalPuzzle;
 		this._puzzles = generator.puzzles;

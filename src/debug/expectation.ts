@@ -3,11 +3,16 @@ export const PrepareExpectations = (string: string): string[] => {
 };
 
 export const ParseExpectation = (expectation: any, line: number) => {
+	if (!expectation) {
+		return { seed: -1 };
+	}
+
 	try {
 		return JSON.parse(expectation);
 	} catch (e) {
 		if (line !== undefined) console.warn(`Unable to parse expectation at line ${line}!`);
 		else console.warn(`Unable to parse expectation!`);
+		console.log(e);
 	}
 	return { seed: -1 };
 };
