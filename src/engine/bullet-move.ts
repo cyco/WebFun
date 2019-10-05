@@ -58,8 +58,12 @@ function bulletTileForBullet(engine: Engine): Tile {
 function frameLocationForDirection(direction: number) {
 	switch (Direction.Confine(direction)) {
 		case Direction.South:
+		case Direction.SouthEast:
+		case Direction.SouthWest:
 			return Char.FrameEntry.Down;
 		case Direction.North:
+		case Direction.NorthEast:
+		case Direction.NorthWest:
 			return Char.FrameEntry.Up;
 		case Direction.East:
 			return Char.FrameEntry.Right;
@@ -81,7 +85,8 @@ export default async (engine: Engine, zone: Zone): Promise<ScriptResult> => {
 		return ScriptResult.Done;
 	}
 
-	const target = hero.location.byAdding(Direction.CalculateRelativeCoordinates(hero.direction, frames + 1));
+	const direction = Direction.Confine(hero.direction, true);
+	const target = hero.location.byAdding(Direction.CalculateRelativeCoordinates(direction, frames + 1));
 
 	const hitMonsters = zone.monsters.filter(
 		({ position, alive, enabled }) => alive && enabled && position.isEqualTo(target)
