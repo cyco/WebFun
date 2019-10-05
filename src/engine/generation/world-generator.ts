@@ -92,9 +92,8 @@ class WorldGenerator {
 		}
 
 		const goalPuzzle = this.getUnusedPuzzleRandomly(null, Zone.Type.Unknown);
-		if (goalPuzzle === null) {
-			return false;
-		}
+		console.assert(!!goalPuzzle, "Could not find a suitable goal puzzle");
+
 		this.usedPuzzles.push(goalPuzzle);
 		this.puzzleStrain1[puzzles1Count] = goalPuzzle;
 		this.puzzleStrain2[puzzles2Count] = goalPuzzle;
@@ -142,7 +141,7 @@ class WorldGenerator {
 					distance,
 					true
 				);
-				if (!zone) continue;
+				console.assert(!!zone, "Could not determine zone for travel start");
 
 				this.placeZone(x, y, zone, Zone.Type.TravelStart, {
 					requiredItem: this.requiredItem
@@ -150,7 +149,7 @@ class WorldGenerator {
 
 				const vehicleHotspot = zone.hotspots.withType(Hotspot.Type.VehicleTo).first();
 				const connectedZone = this.lookupZoneById(vehicleHotspot ? vehicleHotspot.arg : -1);
-				if (connectedZone === null) continue;
+				console.assert(!!zone, "Could not determine zone for travel end");
 
 				let range = null;
 				let travelTarget = null;
@@ -179,16 +178,15 @@ class WorldGenerator {
 					travelTarget = range.find(isTravelTarget);
 				}
 
-				if (travelTarget) {
-					if (this.usedZones.contains(connectedZone)) continue;
+				console.assert(!!travelTarget, "Could not determine location for travel target");
+				console.assert(
+					!this.usedZones.contains(connectedZone),
+					"Zone is already in use for a different travel sector"
+				);
 
-					this.placeZone(travelTarget.x, travelTarget.y, connectedZone, Zone.Type.TravelEnd, {
-						requiredItem: this.requiredItem
-					});
-				} else {
-					this.removeQuestProvidingItem(this.requiredItem);
-					this.placeZone(x, y, null, Zone.Type.None);
-				}
+				this.placeZone(travelTarget.x, travelTarget.y, connectedZone, Zone.Type.TravelEnd, {
+					requiredItem: this.requiredItem
+				});
 			}
 		}
 	}
@@ -219,8 +217,6 @@ class WorldGenerator {
 			default:
 				return Zone.Type.Empty;
 		}
-
-		return Zone.Type.None;
 	}
 
 	private determineBlockadeAndTownZones(map: Map): void {
@@ -234,7 +230,7 @@ class WorldGenerator {
 			let zone = this.getUnusedZoneRandomly(type, -1, -1, null, null, distance, false);
 			if (!zone)
 				zone = this.getUnusedZoneRandomly(Zone.Type.Empty, -1, -1, null, null, distance, false);
-			if (!zone) return;
+			console.assert(!!zone, "Could not find an unused empty zone");
 
 			const options: Partial<Sector> = {};
 			if (type !== Zone.Type.Town) options.requiredItem = this.requiredItem;
@@ -329,12 +325,10 @@ class WorldGenerator {
 			const item1 = puzzle.item1;
 
 			let zone = null;
-			let maxCount = 10000;
+			let iterationLimit = 10000;
 			do {
-				maxCount--;
-				if (maxCount === 0) {
-					break;
-				}
+				iterationLimit--;
+				console.assert(iterationLimit !== 0, "Maximum number of iterations exceeded.");
 				let type = rand() % 2 ? Zone.Type.Trade : Zone.Type.Use;
 				zone = this.getUnusedZoneRandomly(type, puzzleIdIndex - 1, -1, item1, null, distance, true);
 
@@ -677,12 +671,10 @@ class WorldGenerator {
 				} else zone = lastZone;
 
 				this.errorWhen(!zone, "No zone found");
-				let maxCount = 5000;
+				let iterationLimit = 5000;
 				while (true) {
-					maxCount--;
-					if (maxCount === 0) {
-						break;
-					}
+					iterationLimit--;
+					console.assert(iterationLimit !== 0, "Maximum number of iterations exceeded");
 					if (this.somethingWithTeleporters) break;
 
 					const hasTeleporter = zone.hotspots.withType(Hotspot.Type.Teleporter).first();
