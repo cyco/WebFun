@@ -129,7 +129,7 @@ const compareSector = (pos: { x: number; y: number }, actual: Sector, expected: 
 };
 
 const compare = (story: any, expectation: any) => {
-	if (!story.world) return;
+	if (!story.world || !expectation.world) return;
 	if (story.world === null && expectation.world !== null)
 		return fail("Expected a successfull world but found reseed");
 	if (story.world !== null && expectation.world === null) return fail("Expected a reseed");
@@ -184,7 +184,7 @@ function buildAssetManagerFromGameData() {
 	return assets;
 }
 
-fdescribe("WebFun.Acceptance.World Generation", () => {
+describe("WebFun.Acceptance.World Generation", () => {
 	beforeAll(async () => (rawData = await loadGameData(Yoda)));
 
 	PrepareExpectations(Worlds)

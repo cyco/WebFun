@@ -24,10 +24,10 @@ class MapGenerator {
 	private probablility: number = 0;
 	private threshold: number = 0;
 	private travelThreshold: number = 0;
-	private lastTime: SectorType = 0;
-	private remainingCountToPlace: number = 0;
+	private lastType: SectorType = 0;
+	private remainingSectors: number = 0;
 	private _typeMap: Map = null;
-	private placedPuzzles: number = 0;
+	private placedSectors: number = 0;
 	private blockades: number = 0;
 	private travels: number = 0;
 	private placedTravels: number = 0;
@@ -55,7 +55,7 @@ class MapGenerator {
 		this.travels = rand() % 3;
 		this.blockades = rand() % 4;
 
-		this.placedPuzzles = 0;
+		this.placedSectors = 0;
 		this.placedTravels = 0;
 	}
 
@@ -88,8 +88,8 @@ class MapGenerator {
 		this.typeMap.set(x - ydif - xdif, y - ydif - xdif, SectorType.KeptFree);
 		this.typeMap.set(x + ydif - xdif, y - ydif + xdif, SectorType.KeptFree);
 
-		this.remainingCountToPlace -= 1;
-		this.placedPuzzles += 2;
+		this.remainingSectors -= 1;
+		this.placedSectors += 2;
 		this.blockades -= 1;
 	}
 
@@ -98,8 +98,8 @@ class MapGenerator {
 		this.typeMap.set(x - ydif, y - xdif, SectorType.KeptFree);
 		this.typeMap.set(x + ydif, y + xdif, SectorType.KeptFree);
 
-		this.placedPuzzles += 1;
-		this.remainingCountToPlace -= 1;
+		this.placedSectors += 1;
+		this.remainingSectors -= 1;
 	}
 
 	private isFree(type: SectorType): boolean {
@@ -142,7 +142,7 @@ class MapGenerator {
 
 		if (this.isFree(neighbor)) return false; // maybe negate isFree
 
-		this.lastTime = this.typeMap.get(x + xdif, y + ydif);
+		this.lastType = this.typeMap.get(x + xdif, y + ydif);
 
 		const BlockadeType = this.blockadeTypeFor(xdif, ydif);
 		const canPlaceBlockade = this.isFree(neighborOtherAxisBefore) && this.isFree(neighborOtherAxisAfter);
@@ -166,8 +166,8 @@ class MapGenerator {
 
 		if (!shouldPlaceBlockade || (ydif && !canPlaceBlockade) || (xdif && isWithinBlockadeRange)) {
 			this.typeMap[itemIdx] = SectorType.Empty;
-			this.placedPuzzles += 1;
-			this.remainingCountToPlace -= 1;
+			this.placedSectors += 1;
+			this.remainingSectors -= 1;
 			return true;
 		}
 
@@ -200,7 +200,7 @@ class MapGenerator {
 
 		this.blockades = 0;
 		this.puzzles = 0;
-		this.placedPuzzles = 0;
+		this.placedSectors = 0;
 
 		this._determineCounts();
 
@@ -232,7 +232,7 @@ class MapGenerator {
 	private findPuzzleLastPuzzle() {
 		for (let y = 0; y < MapHeight; y++) {
 			for (let x = 0; x < MapWidth; x++) {
-				if (this.orderMap.get(x, y) === this.placedPuzzles - 1) {
+				if (this.orderMap.get(x, y) === this.placedSectors - 1) {
 					return new Point(x, y);
 				}
 			}
@@ -286,8 +286,8 @@ class MapGenerator {
 				}
 
 				this.typeMap.set(point.x, point.y, SectorType.Puzzle);
-				this.orderMap.set(point.x, point.y, this.placedPuzzles);
-				this.placedPuzzles += 1;
+				this.orderMap.set(point.x, point.y, this.placedSectors);
+				this.placedSectors += 1;
 			}
 		}
 	}
@@ -339,8 +339,8 @@ class MapGenerator {
 				range.iterate(iteration, step);
 
 				this.typeMap.set(puzzleLocation.x, puzzleLocation.y, SectorType.Puzzle);
-				this.orderMap.set(puzzleLocation.x, puzzleLocation.y, this.placedPuzzles);
-				this.placedPuzzles += 1;
+				this.orderMap.set(puzzleLocation.x, puzzleLocation.y, this.placedSectors);
+				this.placedSectors += 1;
 			}
 		}
 	}
@@ -358,7 +358,7 @@ class MapGenerator {
 			if (i > 200) {
 				doBreak = 1;
 			}
-			if (this.placedPuzzles >= totalPuzzleCount) {
+			if (this.placedSectors >= totalPuzzleCount) {
 				doBreak = 1;
 			}
 
@@ -370,7 +370,7 @@ class MapGenerator {
 			}
 
 			// asm compares something against 400, 150 and maybe blockade_count
-			if (this.placedPuzzles >= totalPuzzleCount) break;
+			if (this.placedSectors >= totalPuzzleCount) break;
 
 			const distance = GetDistanceToCenter(x, y);
 			if (distance >= 3 || i >= 150) {
@@ -383,11 +383,11 @@ class MapGenerator {
 					(y === 9 || this.typeMap.get(x, y + 1) !== SectorType.Puzzle)
 				) {
 					this.typeMap.set(x, y, SectorType.Puzzle);
-					this.orderMap.set(x, y, this.placedPuzzles);
-					this.placedPuzzles += 1;
+					this.orderMap.set(x, y, this.placedSectors);
+					this.placedSectors += 1;
 				}
 
-				if (this.placedPuzzles >= totalPuzzleCount) break;
+				if (this.placedSectors >= totalPuzzleCount) break;
 			}
 
 			if (distance < 3 && i < 150) i--;
@@ -434,7 +434,7 @@ class MapGenerator {
 						(x !== lastPuzzle.x || y !== lastPuzzle.y)
 					) {
 						this.orderMap.set(lastPuzzle.x, lastPuzzle.y, this.orderMap.get(x, y));
-						this.orderMap.set(x, y, this.placedPuzzles - 1);
+						this.orderMap.set(x, y, this.placedSectors - 1);
 
 						return;
 					}
@@ -444,7 +444,7 @@ class MapGenerator {
 	}
 
 	private _placeIntermediateWorldThing(): void {
-		this.placedPuzzles = 0;
+		this.placedSectors = 0;
 
 		this._mapCountStuff();
 
@@ -460,7 +460,7 @@ class MapGenerator {
 			2;
 		if (totalPuzzleCount < 4) totalPuzzleCount = 4;
 
-		this.placedPuzzles = 0;
+		this.placedSectors = 0;
 
 		this._choosePuzzlesBehindBlockades();
 		this._choosePuzzlesOnIslands();
@@ -481,7 +481,7 @@ class MapGenerator {
 	}
 
 	private _determinePuzzleLocations(iteration: number, puzzleCountToPlace: number): void {
-		this.remainingCountToPlace = puzzleCountToPlace;
+		this.remainingSectors = puzzleCountToPlace;
 
 		switch (iteration) {
 			case 2:
@@ -512,7 +512,7 @@ class MapGenerator {
 				return;
 		}
 
-		for (let i = 0; i <= 144 && this.remainingCountToPlace > 0; i++) {
+		for (let i = 0; i <= 144 && this.remainingSectors > 0; i++) {
 			let x, y;
 			if (rand() % 2) {
 				x = rand() % 2 ? this.min.x : this.alternate.x;
@@ -530,7 +530,7 @@ class MapGenerator {
 				this.handleNeighbor(x, y, iteration, 0, -1) ||
 				this.handleNeighbor(x, y, iteration, 0, 1);
 
-			this._tryPlacingTravel(itemIdx, iteration, this.lastTime);
+			this._tryPlacingTravel(itemIdx, iteration, this.lastType);
 		}
 	}
 
@@ -637,7 +637,7 @@ class MapGenerator {
 					continue;
 			}
 
-			this.placedPuzzles += 1;
+			this.placedSectors += 1;
 			--travelsToPlace;
 		}
 	}
