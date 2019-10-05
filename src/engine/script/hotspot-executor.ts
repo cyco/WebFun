@@ -12,8 +12,7 @@ import shipFromPlanet from "./hotspots/ship-from-planet";
 import shipToPlanet from "./hotspots/ship-to-planet";
 import spawnLocation from "./hotspots/spawn-location";
 import teleporter from "./hotspots/teleporter";
-import vehicleBack from "./hotspots/vehicle-back";
-import vehicleTo from "./hotspots/vehicle-to";
+import useTransport from "./hotspots/use-transport";
 import { Channel } from "../audio";
 
 type SimpleHotspot = (engine: Engine, hotspot: Hotspot) => HotspotExecutionResult;
@@ -31,8 +30,8 @@ class HotspotExecutor {
 		Hotspot.Type.SpawnLocation
 	]);
 	private standDispatch = new WeakMap<Hotspot.Type, SimpleHotspot>([
-		[Hotspot.Type.VehicleTo, vehicleTo],
-		[Hotspot.Type.VehicleBack, vehicleBack],
+		[Hotspot.Type.VehicleTo, useTransport],
+		[Hotspot.Type.VehicleBack, useTransport],
 		[Hotspot.Type.ShipToPlanet, shipToPlanet],
 		[Hotspot.Type.ShipFromPlanet, shipFromPlanet]
 	]);
