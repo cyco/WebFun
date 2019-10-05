@@ -95,6 +95,12 @@ class MainWindow extends AbstractWindow {
 		const locationView = this.content.querySelector(Location.tagName) as Location;
 
 		let mask = Direction.None;
+
+		if (!world) {
+			locationView.mask = mask;
+			return;
+		}
+
 		const location = world.findLocationOfZone(zone);
 		if (!location) {
 			locationView.mask = mask;
