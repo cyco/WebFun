@@ -28,12 +28,9 @@ function _tryTransition(direction: Point, engine: Engine, scene: ZoneScene): boo
 		return false;
 	}
 
-	let world = engine.dagobah;
-	if (world.findLocationOfZone(engine.currentZone) === null) {
-		world = engine.world;
-	}
-	const zoneLocation = world.findLocationOfZone(engine.currentZone);
+	const { world, location: zoneLocation } = engine.findLocationOfZone(engine.currentZone);
 	if (!zoneLocation) return;
+	if (!world) return;
 
 	const sector = world.at(zoneLocation);
 	if (!sector || sector.zone !== engine.currentZone) {
@@ -41,7 +38,10 @@ function _tryTransition(direction: Point, engine: Engine, scene: ZoneScene): boo
 	}
 
 	const destinationZoneLocation = Point.add(zoneLocation, zoneDirection);
-	const destinationZone = world.at(destinationZoneLocation).zone;
+	const destinationSector = world.at(destinationZoneLocation);
+	if (!destinationSector) return false;
+
+	const destinationZone = destinationSector.zone;
 	if (!destinationZone) return false;
 
 	const targetLocationOnCurrentZone = Point.add(hero.location, direction);
