@@ -44,7 +44,7 @@ describe("WebFun.Engine.Story", () => {
 				return true;
 			});
 
-			subject.generateWorld(engineMock);
+			subject.generateWorld(engineMock, 0, 50);
 
 			expect(worldGeneratorMock.generate).toHaveBeenCalledWith(1, 0);
 			expect(worldGeneratorMock.generate).toHaveBeenCalledWith(38, 0);
