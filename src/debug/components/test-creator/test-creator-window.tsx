@@ -86,7 +86,8 @@ class TestCreatorWindow extends AbstractWindow {
 			engine.temporaryState = {
 				justEntered: true,
 				enteredByPlane: true,
-				bump: false
+				bump: false,
+				worldLocation: null
 			};
 		}
 

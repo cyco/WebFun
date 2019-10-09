@@ -54,7 +54,12 @@ class Engine extends EventTarget {
 	public sceneManager: SceneManager = null;
 	public scriptExecutor: ScriptExecutor = null;
 	public story: Story = null;
-	public temporaryState: any = null;
+	public temporaryState: {
+		enteredByPlane: boolean;
+		justEntered: boolean;
+		bump: Point | false;
+		worldLocation: Point;
+	} = null;
 	private _currentWorld: World = null;
 	private _currentZone: Zone = null;
 	private _updateInProgress: boolean = false;
@@ -85,7 +90,8 @@ class Engine extends EventTarget {
 		this.temporaryState = {
 			justEntered: true,
 			enteredByPlane: true,
-			bump: false
+			bump: false,
+			worldLocation: null
 		};
 		this.registerEvents(Events);
 	}
