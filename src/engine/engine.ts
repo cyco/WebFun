@@ -30,6 +30,8 @@ import Interface from "./interface";
 import DummyInterface from "./dummy-interface";
 import HotspotExecutor from "./script/hotspot-executor";
 import Sector from "./sector";
+import calculateScore from "./score";
+import { max } from "src/std/math";
 
 export { Events };
 
@@ -40,7 +42,6 @@ class Engine extends EventTarget {
 	public assets: AssetManager = null;
 	public resources: ResourceManager = null;
 	public camera: Camera = new Camera();
-	public gameState: GameState = GameState.Stopped;
 	public hero: Hero = null;
 	public inputManager: InputManager = null;
 	public inventory: Inventory = null;
@@ -58,6 +59,7 @@ class Engine extends EventTarget {
 	private _currentZone: Zone = null;
 	private _updateInProgress: boolean = false;
 	private _hotspotExecutor: HotspotExecutor;
+	private _gameState: GameState = GameState.Stopped;
 
 	constructor(type: Type, ifce: Partial<Interface> = {}) {
 		super();
@@ -222,6 +224,28 @@ class Engine extends EventTarget {
 
 	get hotspotExecutor() {
 		return this._hotspotExecutor;
+	}
+
+	public set gameState(state: GameState) {
+		if (state === this._gameState) return;
+
+		this._gameState = state;
+		if (this._gameState === GameState.Lost) {
+			this.persistentState.gamesLost += 1;
+		}
+		if (this._gameState === GameState.Won) {
+			const score = calculateScore(this);
+			this.persistentState.gamesWon += 1;
+			this.persistentState.lastScore = score;
+			this.persistentState.highScore = max(
+				this.persistentState.highScore,
+				this.persistentState.lastScore
+			);
+		}
+	}
+
+	public get gameState() {
+		return this._gameState;
 	}
 }
 
