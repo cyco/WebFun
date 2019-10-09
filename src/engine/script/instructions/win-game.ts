@@ -10,8 +10,9 @@ export default {
 	Arguments: [],
 	Implementation: async (_: Instruction, engine: Engine, _action: Action): Promise<Result> => {
 		engine.gameState = GameState.Won;
-		engine.sceneManager.pushScene(new WinScene());
 
+		const score = engine.persistentState.lastScore;
+		engine.sceneManager.pushScene(new WinScene(score));
 		return Result.UpdateScene;
 	}
 };
