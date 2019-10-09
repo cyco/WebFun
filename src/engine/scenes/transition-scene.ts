@@ -60,7 +60,6 @@ abstract class TransitionScene extends Scene {
 		const hero = this.engine.hero;
 		const engine = this.engine;
 		hero.location = this.destinationHeroLocation;
-		state.worldLocation = this.destinationZoneLocation || state.worldLocation;
 		engine.currentWorld = this.destinationWorld;
 		engine.currentZone = this.destinationZone;
 		engine.currentZone.visited = true;

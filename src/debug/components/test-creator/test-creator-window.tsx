@@ -1,7 +1,7 @@
 import "./test-creator-window.scss";
 
 import { AbstractWindow, Button, IconButton } from "src/ui/components";
-import { Point, DiscardingStorage, download, sleep } from "src/util";
+import { Point, DiscardingStorage, download } from "src/util";
 
 import { GameController } from "src/app";
 import { TestCase, Expectation, Configuration } from "src/debug/automation/test";
@@ -86,8 +86,7 @@ class TestCreatorWindow extends AbstractWindow {
 			engine.temporaryState = {
 				justEntered: true,
 				enteredByPlane: true,
-				bump: false,
-				worldLocation: null
+				bump: false
 			};
 		}
 

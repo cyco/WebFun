@@ -58,7 +58,6 @@ class Engine extends EventTarget {
 		enteredByPlane: boolean;
 		justEntered: boolean;
 		bump: Point | false;
-		worldLocation: Point;
 	} = null;
 	private _currentWorld: World = null;
 	private _currentZone: Zone = null;
@@ -90,8 +89,7 @@ class Engine extends EventTarget {
 		this.temporaryState = {
 			justEntered: true,
 			enteredByPlane: true,
-			bump: false,
-			worldLocation: null
+			bump: false
 		};
 		this.registerEvents(Events);
 	}

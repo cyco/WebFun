@@ -306,11 +306,13 @@ class MapScene extends Scene {
 			}
 		}
 
+		const { location } = engine.findLocationOfZone(engine.currentZone);
+
 		if (
 			(this._ticks % (2 * MapScene.LOCATOR_ANIMATION_TICKS)) / MapScene.LOCATOR_ANIMATION_TICKS < 1 &&
-			state.worldLocation
+			location
 		) {
-			if (this._location) drawTileAt(this._location, state.worldLocation.x, state.worldLocation.y);
+			if (this._location) drawTileAt(this._location, location.x, location.y);
 		}
 
 		result.data.set(byteArray);
