@@ -25,7 +25,7 @@ class Zone {
 	protected _monsters: Monster[] = [];
 	protected _id: number = -1;
 	protected _name: string = "";
-	protected _planet: Planet = Planet.NONE;
+	protected _planet: Planet = Planet.None;
 	protected _size: Size = null;
 	protected _type: ZoneType = null;
 	protected _tileIDs: Int16Array = new Int16Array(0);

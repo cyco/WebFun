@@ -6,7 +6,7 @@ describe("WebFun.Engine.Objects.Puzzle", () => {
 	beforeEach(() => (subject = new Puzzle()));
 
 	it("might be a goal", () => {
-		expect(subject.isGoalOnPlanet(Planet.ENDOR)).toBeFalse();
+		expect(subject.isGoalOnPlanet(Planet.Endor)).toBeFalse();
 	});
 
 	it("has default values", () => {

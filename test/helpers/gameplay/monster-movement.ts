@@ -100,7 +100,7 @@ const makeFunction = (describe: any): describeMonsterMovement => (
 			function buildZone(assets: AssetManager): MutableZone {
 				const zone = new MutableZone();
 				zone.type = Zone.Type.Room;
-				zone.planet = Planet.NONE;
+				zone.planet = Planet.None;
 				zone.tileStore = assets.getAll(Tile);
 				zone.zoneStore = assets.getAll(Zone);
 				zone.size = new Size(9, 9);

@@ -84,11 +84,11 @@ class ZoneInspectorCell extends Cell<Zone> {
 						)
 					}
 					options={[
-						{ label: "None", value: Planet.NONE },
-						{ label: "Tatooine", value: Planet.TATOOINE },
-						{ label: "Endor", value: Planet.ENDOR },
-						{ label: "Hoth", value: Planet.HOTH },
-						{ label: "Dagobah", value: Planet.DAGOBAH }
+						{ label: "None", value: Planet.None },
+						{ label: "Tatooine", value: Planet.Tatooine },
+						{ label: "Endor", value: Planet.Endor },
+						{ label: "Hoth", value: Planet.Hoth },
+						{ label: "Dagobah", value: Planet.Dagobah }
 					]}
 					value={this.data.planet}
 				/>

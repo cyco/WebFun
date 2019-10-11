@@ -4,7 +4,7 @@ import { Yoda } from "src/engine/type";
 export default () =>
 	new Map<Planet, Set<number>>([
 		[
-			Planet.TATOOINE,
+			Planet.Tatooine,
 			new Set([
 				Yoda.goalIDs.FALCON,
 				Yoda.goalIDs.HAN,
@@ -14,7 +14,7 @@ export default () =>
 			])
 		],
 		[
-			Planet.HOTH,
+			Planet.Hoth,
 			new Set([
 				Yoda.goalIDs.GENERAL_MARUTZ,
 				Yoda.goalIDs.HIDDEN_FACTORY,
@@ -24,7 +24,7 @@ export default () =>
 			])
 		],
 		[
-			Planet.ENDOR,
+			Planet.Endor,
 			new Set([
 				Yoda.goalIDs.FIND_LEIA,
 				Yoda.goalIDs.IMPERIAL_BATTLE_STATION,

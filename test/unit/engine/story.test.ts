@@ -6,10 +6,10 @@ import { WorldGenerationError } from "src/engine/generation";
 
 describe("WebFun.Engine.Story", () => {
 	let subject: Story;
-	beforeEach(() => (subject = new Story(1, Planet.HOTH, WorldSize.Small)));
+	beforeEach(() => (subject = new Story(1, Planet.Hoth, WorldSize.Small)));
 	it("is a simple container for seed, size and world size", () => {
 		expect(subject.seed).toBe(1);
-		expect(subject.planet).toBe(Planet.HOTH);
+		expect(subject.planet).toBe(Planet.Hoth);
 		expect(subject.size).toBe(WorldSize.Small);
 	});
 

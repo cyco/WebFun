@@ -72,7 +72,7 @@ class YodaReader extends Reader {
 
 		const state = new SaveState();
 		state.type = Yoda;
-		state.planet = Planet.isPlanet(planet) ? Planet.fromNumber(planet) : Planet.NONE;
+		state.planet = Planet.isPlanet(planet) ? Planet.fromNumber(planet) : Planet.None;
 		state.seed = seed;
 		state.puzzleIDs1 = puzzleIDs1;
 		state.puzzleIDs2 = puzzleIDs2;

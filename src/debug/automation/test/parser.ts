@@ -94,11 +94,11 @@ class TestFileParser {
 	private parsePlanet(value: string) {
 		switch (value) {
 			case "tatooine":
-				return Planet.TATOOINE.rawValue;
+				return Planet.Tatooine.rawValue;
 			case "endor":
-				return Planet.ENDOR.rawValue;
+				return Planet.Endor.rawValue;
 			case "hoth":
-				return Planet.HOTH.rawValue;
+				return Planet.Hoth.rawValue;
 		}
 	}
 

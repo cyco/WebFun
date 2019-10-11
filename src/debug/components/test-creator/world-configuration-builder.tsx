@@ -16,9 +16,9 @@ class WorldConfigurationBuilder extends Component {
 		<Selector
 			onchange={() => this._state.store("planet", this._planet.value)}
 			options={[
-				{ label: Planet.TATOOINE.name, value: Planet.TATOOINE.rawValue },
-				{ label: Planet.HOTH.name, value: Planet.HOTH.rawValue },
-				{ label: Planet.ENDOR.name, value: Planet.ENDOR.rawValue }
+				{ label: Planet.Tatooine.name, value: Planet.Tatooine.rawValue },
+				{ label: Planet.Hoth.name, value: Planet.Hoth.rawValue },
+				{ label: Planet.Endor.name, value: Planet.Endor.rawValue }
 			]}
 		/>
 	) as Selector;
@@ -82,7 +82,7 @@ class WorldConfigurationBuilder extends Component {
 	public set state(s) {
 		this._state = s;
 		this._seed.value = s.load("seed") || (0).toHex(4);
-		this._planet.value = s.load("planet") || Planet.TATOOINE.rawValue;
+		this._planet.value = s.load("planet") || Planet.Tatooine.rawValue;
 		this._size.value = s.load("size") || WorldSize.Small.rawValue;
 		this._gamesWon.value = s.load("gamesWon") || "0";
 	}

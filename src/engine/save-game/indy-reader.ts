@@ -55,7 +55,7 @@ class IndyReader extends Reader {
 
 		const state = new SaveState();
 		state.type = Indy;
-		state.planet = Planet.NONE;
+		state.planet = Planet.None;
 		state.seed = seed;
 		state.puzzleIDs1 = puzzleIDs1;
 		state.puzzleIDs2 = null;
