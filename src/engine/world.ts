@@ -53,6 +53,10 @@ class World {
 		return x.y * World.Size.width + x.x;
 	}
 
+	public get sectors() {
+		return this._sectors;
+	}
+
 	public get bounds() {
 		return new Rectangle(new Point(0, 0), World.Size);
 	}
