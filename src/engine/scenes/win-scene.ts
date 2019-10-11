@@ -42,6 +42,14 @@ class WinScene extends Scene {
 
 	async update(ticks: number) {
 		this._ticksUntilScoreIsShown -= 1;
+		if (this._ticksUntilScoreIsShown < 0) {
+			const engine = this.engine;
+			const input = engine.inputManager;
+			if (input.locator || input.attack || input.walk) {
+				engine.sceneManager.popScene();
+				return;
+			}
+		}
 		this._zoneScene.update(ticks);
 	}
 
@@ -57,6 +65,7 @@ class WinScene extends Scene {
 		this._zoneScene.willHide();
 
 		this.engine.hero.location = this._originalLocation;
+		this.engine.hero.visible = true;
 		this.engine.camera.update(0);
 	}
 
