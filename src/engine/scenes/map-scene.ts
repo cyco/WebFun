@@ -259,7 +259,6 @@ class MapScene extends Scene {
 		const MapTileWidth = 28;
 		const MapTileHeight = 28;
 
-		const state = engine.temporaryState;
 		const world = engine.currentWorld;
 		const offsetX = (288 - World.Size.width * MapTileWidth) / 2;
 		const offsetY = (288 - World.Size.height * MapTileHeight) / 2;
