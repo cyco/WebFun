@@ -58,6 +58,8 @@ class Engine extends EventTarget {
 		enteredByPlane: boolean;
 		justEntered: boolean;
 		bump: Point | false;
+		totalPlayTime: number;
+		currentPlayStart: Date;
 	} = null;
 	private _currentWorld: World = null;
 	private _currentZone: Zone = null;
@@ -89,7 +91,9 @@ class Engine extends EventTarget {
 		this.temporaryState = {
 			justEntered: true,
 			enteredByPlane: true,
-			bump: false
+			bump: false,
+			totalPlayTime: 0,
+			currentPlayStart: new Date()
 		};
 		this.registerEvents(Events);
 	}
