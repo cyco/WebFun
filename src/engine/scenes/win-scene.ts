@@ -5,6 +5,7 @@ import { Zone } from "src/engine/objects";
 import { Point } from "src/util";
 import CanvasRenderer from "src/app/rendering/canvas/canvas-renderer";
 import { round } from "src/std/math";
+import Settings from "src/settings";
 
 class WinScene extends Scene {
 	private _zoneScene: ZoneScene;
@@ -36,6 +37,7 @@ class WinScene extends Scene {
 	public didShow(): void {
 		this.engine.temporaryState.justEntered = true;
 		this._zoneScene.didShow();
+		if (Settings.skipWinScene) this.engine.sceneManager.popScene();
 	}
 
 	async update(ticks: number) {

@@ -79,6 +79,7 @@ class GameplayContext {
 		Settings.skipDialogs = true;
 		Settings.skipTransitions = true;
 		Settings.pickupItemsAutomatically = true;
+		Settings.skipWinScene = true;
 
 		document.body.appendChild(sceneView);
 

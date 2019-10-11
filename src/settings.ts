@@ -11,6 +11,7 @@ const Settings = persistent(
 		drawMonsterState: true,
 		skipDialogs: false,
 		skipTransitions: false,
+		skipWinScene: false,
 		pickupItemsAutomatically: false,
 
 		autostartEngine: true,
