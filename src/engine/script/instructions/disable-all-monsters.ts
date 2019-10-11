@@ -8,8 +8,7 @@ export default {
 	Arguments: [],
 	Description: "Disable all monsters",
 	Implementation: async (_: Instruction, _engine: Engine, action: Action): Promise<Result> => {
-		const zone = action.zone;
-		zone.monsters.forEach(monster => (monster.enabled = false));
+		action.zone.monsters.forEach(monster => (monster.enabled = false));
 
 		return Result.Void;
 	}

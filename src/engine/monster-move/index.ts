@@ -37,8 +37,8 @@ function handleRemainingBullet(monster: Monster, zone: Zone, engine: Engine) {
 	const hero = engine.hero.location;
 	const character = engine.assets.get(Char, monster.face.id, NullIfMissing);
 	if (!character) return;
-	const weapon = engine.assets.get(Char, character.reference, NullIfMissing);
 
+	const weapon = engine.assets.get(Char, character.reference, NullIfMissing);
 	if (!weapon) return;
 
 	const tile = findTileIdForCharFrameWithDirection(weapon.frames[0], monster.direction);
@@ -57,6 +57,11 @@ export default (monster: Monster, zone: Zone, engine: Engine): void => {
 	if (!monster.face) return;
 	if (!monster.enabled) {
 		handleRemainingBullet(monster, zone, engine);
+		CharSetDefaultFace(monster.face, monster.direction);
+		if (zone.getTile(monster.position.x, monster.position.y, Zone.Layer.Object) === monster.face.tile) {
+			console.log("clearing disabled monster off the map");
+			zone.setTile(null, monster.position.x, monster.position.y, Zone.Layer.Object);
+		}
 		return;
 	}
 
