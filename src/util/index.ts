@@ -26,6 +26,7 @@ import SizeLike from "./size-like";
 import Stream from "./stream";
 import VerticalPointRange from "./vertical-point-range";
 import add from "./add";
+import clamp from "./clamp";
 import constantly from "./constantly";
 import deg2rad from "./deg2rad";
 import dispatch from "./dispatch";
@@ -36,38 +37,41 @@ import iterate from "./iterate";
 import persistent from "./persistent";
 import polar2xy from "./polar2xy";
 import rad2deg from "./rad2deg";
-import xy2polar from "./xy2polar";
 import sleep from "./sleep";
+import xy2polar from "./xy2polar";
 
 export {
-	sleep,
-	Color,
 	add,
-	deg2rad,
+	clamp,
+	Color,
 	constantly,
+	deg2rad,
 	Direction,
 	DiscardingOutputStream,
+	DiscardingStorage,
 	dispatch,
 	download,
+	downloadImage,
+	Event,
 	EventTarget,
 	FileLoader,
 	HorizontalPointRange,
 	hsv2rgb,
 	identity,
 	InputStream,
+	iterate,
 	KeyEvent,
 	Logger,
 	LogLevel,
-	downloadImage,
 	OutputStream,
 	persistent,
 	Point,
 	PointLike,
 	PointRange,
+	polar2xy,
 	PrefixedStorage,
 	QueryString,
 	rad2deg,
-	polar2xy,
 	rand,
 	randmod,
 	Range,
@@ -76,14 +80,12 @@ export {
 	rgb2hsv,
 	rgb2rgba,
 	rgba,
+	Scanner,
 	Size,
 	SizeLike,
+	sleep,
 	srand,
 	Stream,
 	VerticalPointRange,
-	xy2polar,
-	DiscardingStorage,
-	Event,
-	Scanner,
-	iterate
+	xy2polar
 };

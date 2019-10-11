@@ -21,7 +21,6 @@ export const {
 	atanh,
 	cbrt,
 	ceil,
-	clamp,
 	clz32,
 	cos,
 	cosh,
