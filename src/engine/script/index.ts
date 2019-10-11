@@ -8,6 +8,8 @@ import Condition from "./condition";
 import EvaluationMode from "./evaluation-mode";
 import Instruction from "./instruction";
 import ScriptExecutor from "./script-executor";
+import * as Instructions from "./instructions";
+import * as Conditions from "./conditions";
 
 export {
 	Type,
@@ -26,5 +28,7 @@ export {
 	ScriptExecutor,
 	ConditionImplementations,
 	ScriptResult,
-	EvaluationMode
+	EvaluationMode,
+	Instructions,
+	Conditions
 };

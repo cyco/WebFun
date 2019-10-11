@@ -19,6 +19,7 @@ import AssetManager from "./asset-manager";
 import ResourceManager from "./resource-manager";
 import Interface from "./interface";
 import * as Objects from "./objects";
+import * as Script from "./script";
 
 export {
 	ColorPalette,
@@ -41,6 +42,7 @@ export {
 	SaveState,
 	Scene,
 	SceneManager,
+	Script,
 	Interface,
 	Story,
 	AssetManager,
