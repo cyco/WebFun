@@ -7,7 +7,8 @@ import { InstructionsByName, InstructionsByOpcode } from "./instructions";
 import Condition from "./condition";
 import EvaluationMode from "./evaluation-mode";
 import Instruction from "./instruction";
-import ScriptExecutor from "./script-executor";
+import ScriptProcessingUnit from "./script-processing-unit";
+import HotspotProcessingUnit from "./hotspot-processing-unit";
 import * as Instructions from "./instructions";
 import * as Conditions from "./conditions";
 
@@ -25,10 +26,11 @@ export {
 	InstructionsByName,
 	ConditionsByOpcode,
 	ConditionsByName,
-	ScriptExecutor,
+	ScriptProcessingUnit,
 	ConditionImplementations,
 	ScriptResult,
 	EvaluationMode,
 	Instructions,
-	Conditions
+	Conditions,
+	HotspotProcessingUnit
 };

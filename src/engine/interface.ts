@@ -1,7 +1,7 @@
 import { Mixer } from "./audio";
 import { Renderer } from "./rendering";
 import { InputManager } from "./input";
-import { ScriptExecutor } from "./script";
+import { ScriptProcessingUnit } from "./script";
 import AssetManager from "./asset-manager";
 import Engine from "./engine";
 import Hero from "./hero";
@@ -19,11 +19,11 @@ interface Interface {
 	Inventory: () => Inventory;
 	Metronome: () => Metronome;
 	Renderer: (_: HTMLCanvasElement) => Renderer;
-	ScriptExecutor: (
+	ScriptProcessingUnit: (
 		engine: Engine,
 		instructions: typeof Instructions,
 		conditions: typeof Conditions
-	) => ScriptExecutor;
+	) => ScriptProcessingUnit;
 	SceneManager: () => SceneManager;
 	Hero: () => Hero;
 	Loader: (e: Engine) => Loader;

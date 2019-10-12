@@ -11,7 +11,7 @@ import Inventory from "./inventory";
 import Metronome from "./metronome";
 import { Mixer, Channel } from "./audio";
 import SceneManager from "./scene-manager";
-import { ScriptExecutor } from "./script";
+import { ScriptProcessingUnit, HotspotProcessingUnit } from "./script";
 import State from "./persistent-state";
 import Story from "./story";
 import { GameType as Type } from "./type";
@@ -28,7 +28,6 @@ import { InstructionImplementations as Instructions } from "./script/instruction
 
 import Interface from "./interface";
 import DummyInterface from "./dummy-interface";
-import HotspotExecutor from "./script/hotspot-executor";
 import Sector from "./sector";
 import calculateScore from "./score";
 import { max } from "src/std/math";
@@ -52,7 +51,7 @@ class Engine extends EventTarget {
 	public persistentState: typeof State = State;
 	public renderer: Renderer = null;
 	public sceneManager: SceneManager = null;
-	public scriptExecutor: ScriptExecutor = null;
+	public spu: ScriptProcessingUnit = null;
 	public story: Story = null;
 	public temporaryState: {
 		enteredByPlane: boolean;
@@ -64,7 +63,7 @@ class Engine extends EventTarget {
 	private _currentWorld: World = null;
 	private _currentZone: Zone = null;
 	private _updateInProgress: boolean = false;
-	private _hotspotExecutor: HotspotExecutor;
+	private _hpu: HotspotProcessingUnit;
 	private _gameState: GameState = GameState.Stopped;
 
 	constructor(type: Type, ifce: Partial<Interface> = {}) {
@@ -81,12 +80,12 @@ class Engine extends EventTarget {
 		this.inputManager = ifce.InputManager(null);
 		this.metronome = ifce.Metronome();
 		this.inventory = ifce.Inventory();
-		this.scriptExecutor = ifce.ScriptExecutor(this, Instructions, Conditions);
+		this.spu = ifce.ScriptProcessingUnit(this, Instructions, Conditions);
 		this.hero = ifce.Hero();
 		this.loader = ifce.Loader(this);
 
 		this.type = type;
-		this._hotspotExecutor = new HotspotExecutor(this);
+		this._hpu = new HotspotProcessingUnit(this);
 		// TODO: remove state
 		this.temporaryState = {
 			justEntered: true,
@@ -230,8 +229,8 @@ class Engine extends EventTarget {
 		return { location: null, world: null };
 	}
 
-	get hotspotExecutor() {
-		return this._hotspotExecutor;
+	get hpu() {
+		return this._hpu;
 	}
 
 	public set gameState(state: GameState) {

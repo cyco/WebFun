@@ -10,7 +10,7 @@ import ConditionChecker from "src/engine/script/condition-checker";
 import Engine from "src/engine/engine";
 import InstructionExecutor from "src/engine/script/instruction-executor";
 import Mode from "src/engine/script/evaluation-mode";
-import ScriptExecutor from "src/engine/script/script-executor";
+import ScriptProcessingUnit from "src/engine/script/script-processing-unit";
 import { Zone } from "src/engine/objects";
 
 type ConditionStore = ConditionImplementation[];
@@ -18,32 +18,32 @@ type InstructionStore = InstructionImplementation[];
 
 class ScriptExecutionError extends Error {}
 
-export interface DebuggingScriptExecutorDelegate {
+export interface DebuggingScriptProcessingUnitDelegate {
 	executorWillExecute(
-		executor: DebuggingScriptExecutor,
+		executor: DebuggingScriptProcessingUnit,
 		thing: Zone | Action | Condition | Instruction
 	): void;
 	executorDidExecute(
-		executor: DebuggingScriptExecutor,
+		executor: DebuggingScriptProcessingUnit,
 		thing: Zone | Action | Condition | Instruction,
 		result: ScriptResult | Result | boolean
 	): void;
 }
 
-class DebuggingScriptExecutor extends ScriptExecutor {
+class DebuggingScriptProcessingUnit extends ScriptProcessingUnit {
 	protected _inUse: boolean = false;
 	protected _instructionExecutor: InstructionExecutor;
 	protected _conditionChecker: ConditionChecker;
 	protected _executor: AsyncIterator<ScriptResult> = null;
 	public stopped: boolean = true;
-	public delegate: DebuggingScriptExecutorDelegate;
+	public delegate: DebuggingScriptProcessingUnitDelegate;
 	protected _engine: Engine;
 
 	constructor(
 		engine: Engine,
 		instructions: InstructionStore,
 		conditions: ConditionStore,
-		delegate: DebuggingScriptExecutorDelegate = null
+		delegate: DebuggingScriptProcessingUnitDelegate = null
 	) {
 		super(engine, instructions, conditions);
 		this._instructionExecutor = new InstructionExecutor(instructions, engine);
@@ -132,7 +132,7 @@ class DebuggingScriptExecutor extends ScriptExecutor {
 		this.delegate.executorDidExecute(this, thing, result);
 	}
 
-	public async execute(): Promise<ScriptResult> {
+	public async run(): Promise<ScriptResult> {
 		if (!this._executor) return ScriptResult.Done;
 
 		const result = await this._executor.next();
@@ -148,4 +148,4 @@ class DebuggingScriptExecutor extends ScriptExecutor {
 	}
 }
 
-export default DebuggingScriptExecutor;
+export default DebuggingScriptProcessingUnit;

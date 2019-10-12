@@ -37,7 +37,7 @@ class ZoneScene extends Scene {
 		const hero = engine.hero;
 		hero.isWalking = false;
 
-		let scriptResult = await engine.scriptExecutor.execute();
+		let scriptResult = await engine.spu.run();
 		if (scriptResult !== ScriptResult.Done) {
 			return;
 		}
@@ -47,7 +47,7 @@ class ZoneScene extends Scene {
 			return;
 		}
 
-		let htspResult = engine.hotspotExecutor.execute(HotspotExecutionMode.Initialize);
+		let htspResult = engine.hpu.execute(HotspotExecutionMode.Initialize);
 		if (
 			htspResult & HotspotExecutionResult.Speak ||
 			htspResult & HotspotExecutionResult.ChangeZone ||
@@ -55,13 +55,13 @@ class ZoneScene extends Scene {
 		)
 			return;
 
-		engine.scriptExecutor.prepeareExecution(EvaluationMode.Walk, this.zone);
-		scriptResult = await engine.scriptExecutor.execute();
+		engine.spu.prepeareExecution(EvaluationMode.Walk, this.zone);
+		scriptResult = await engine.spu.run();
 		if (scriptResult !== ScriptResult.Done) {
 			return;
 		}
 
-		htspResult = engine.hotspotExecutor.execute(HotspotExecutionMode.Stand);
+		htspResult = engine.hpu.execute(HotspotExecutionMode.Stand);
 		if (
 			htspResult & HotspotExecutionResult.Speak ||
 			htspResult & HotspotExecutionResult.ChangeZone ||
@@ -80,18 +80,18 @@ class ZoneScene extends Scene {
 
 		this.engine.camera.update(ticks);
 		hero.update(ticks);
-		scriptResult = await engine.scriptExecutor.execute();
+		scriptResult = await engine.spu.run();
 		if (scriptResult !== ScriptResult.Done) {
 			return;
 		}
 
-		engine.scriptExecutor.prepeareExecution(EvaluationMode.Walk, this.zone);
-		scriptResult = await engine.scriptExecutor.execute();
+		engine.spu.prepeareExecution(EvaluationMode.Walk, this.zone);
+		scriptResult = await engine.spu.run();
 		if (scriptResult !== ScriptResult.Done) {
 			return;
 		}
 
-		htspResult = engine.hotspotExecutor.execute(HotspotExecutionMode.Stand);
+		htspResult = engine.hpu.execute(HotspotExecutionMode.Stand);
 		if (
 			htspResult & HotspotExecutionResult.Speak ||
 			htspResult & HotspotExecutionResult.ChangeZone ||
@@ -348,7 +348,7 @@ class ZoneScene extends Scene {
 			return ScriptResult.Done;
 		}
 
-		const htspResult = this.engine.hotspotExecutor.execute(
+		const htspResult = this.engine.hpu.execute(
 			HotspotExecutionMode.PlaceTile,
 			location,
 			tile
@@ -361,8 +361,8 @@ class ZoneScene extends Scene {
 		)
 			return ScriptResult.Void;
 
-		this.engine.scriptExecutor.prepeareExecution(EvaluationMode.PlaceItem, this.zone);
-		return await this.engine.scriptExecutor.execute();
+		this.engine.spu.prepeareExecution(EvaluationMode.PlaceItem, this.zone);
+		return await this.engine.spu.run();
 	}
 
 	get zone() {

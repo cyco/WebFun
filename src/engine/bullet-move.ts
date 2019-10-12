@@ -106,8 +106,8 @@ export default async (engine: Engine, zone: Zone): Promise<ScriptResult> => {
 		// evaluate scripts
 		engine.inputManager.placedTileLocation = target;
 		engine.inputManager.placedTile = hero.weapon.frames[0].tiles[Char.FrameEntry.ExtensionRight];
-		engine.scriptExecutor.prepeareExecution(EvaluationMode.PlaceItem, zone);
-		return await engine.scriptExecutor.execute();
+		engine.spu.prepeareExecution(EvaluationMode.PlaceItem, zone);
+		return await engine.spu.run();
 	}
 
 	hero.isAttacking = false;

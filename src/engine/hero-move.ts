@@ -87,10 +87,10 @@ export default async (
 	if (targetTile) {
 		// TODO: get rid of temporary state
 		engine.temporaryState.bump = targetPoint;
-		if (engine.hotspotExecutor.execute(HotspotExecutionMode.Bump, targetPoint, null)) return;
-		engine.scriptExecutor.prepeareExecution(EvaluationMode.Bump, zone);
+		if (engine.hpu.execute(HotspotExecutionMode.Bump, targetPoint, null)) return;
+		engine.spu.prepeareExecution(EvaluationMode.Bump, zone);
 
-		const scriptResult = await engine.scriptExecutor.execute();
+		const scriptResult = await engine.spu.run();
 		if (scriptResult !== ScriptResult.Done) {
 			return;
 		}
@@ -104,7 +104,7 @@ export default async (
 		return;
 	}
 
-	const htspResult = engine.hotspotExecutor.execute(HotspotExecutionMode.Walk);
+	const htspResult = engine.hpu.execute(HotspotExecutionMode.Walk);
 	if (
 		htspResult & HotspotExecutionResult.Speak ||
 		htspResult & HotspotExecutionResult.ChangeZone ||

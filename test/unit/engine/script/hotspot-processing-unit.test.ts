@@ -1,17 +1,17 @@
 /*
-import HotspotExecutor, { HotspotExecutionMode } from "src/engine/script/hotspot-executor";
+import HotspotProcessingUnit, { HotspotExecutionMode } from "src/engine/script/hotspot-processing-unit";
 import { Engine } from "src/engine";
 import { Tile, Zone } from "src/engine/objects";
 import { Point } from "src/util";
 import Sector from "src/engine/sector";
 
-describe("WebFun.Engine.HotspotExecutor", () => {
-	let subject: HotspotExecutor;
+describe("WebFun.Engine.HotspotProcessingUnit", () => {
+	let subject: HotspotProcessingUnit;
 	let engine: Engine;
 
 	beforeEach(() => {
 		engine = { findSectorContainingZone: (): void => void 0, story: { puzzles: [] } } as any;
-		subject = new HotspotExecutor(engine);
+		subject = new HotspotProcessingUnit(engine);
 	});
 
 	it("ignores hotspots on a zone without a puzzle", () => {

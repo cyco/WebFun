@@ -3,7 +3,7 @@ import Renderer from "./renderer";
 import Metronome from "../metronome";
 import Inventory from "../inventory";
 import Engine from "../engine";
-import { ScriptExecutor } from "../script";
+import { ScriptProcessingUnit } from "../script";
 import Hero from "../hero";
 import Loader from "./loader";
 import Mixer from "./mixer";
@@ -19,8 +19,8 @@ import { Rectangle, Point, Size } from "src/util";
 export default {
 	Metronome: () => new Metronome(),
 	Inventory: () => new Inventory(),
-	ScriptExecutor: (engine: Engine, instructions: typeof Instructions, conditions: typeof Conditions) =>
-		new ScriptExecutor(engine, instructions, conditions),
+	ScriptProcessingUnit: (engine: Engine, instructions: typeof Instructions, conditions: typeof Conditions) =>
+		new ScriptProcessingUnit(engine, instructions, conditions),
 	Hero: () => new Hero(),
 	Mixer: () => new Mixer(),
 	InputManager: () => new InputManager(),

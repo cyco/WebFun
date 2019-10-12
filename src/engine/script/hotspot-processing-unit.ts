@@ -18,7 +18,7 @@ import { Channel } from "../audio";
 type SimpleHotspot = (engine: Engine, hotspot: Hotspot) => HotspotExecutionResult;
 type Dispatch = WeakMap<Hotspot.Type, SimpleHotspot>;
 
-class HotspotExecutor {
+class HotspotProcessingUnit {
 	private _engine: Engine;
 	private initializeTypes = new WeakSet([
 		Hotspot.Type.DropMap,
@@ -188,4 +188,4 @@ class HotspotExecutor {
 	}
 }
 
-export default HotspotExecutor;
+export default HotspotProcessingUnit;

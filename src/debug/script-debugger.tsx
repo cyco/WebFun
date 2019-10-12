@@ -7,7 +7,7 @@ import {
 	Instruction as InstructionComponent
 } from "src/debug/components";
 import { ConditionImplementations, ConditionsByName } from "src/engine/script/conditions";
-import DebuggingScriptExecutor, { DebuggingScriptExecutorDelegate } from "./debugging-script-executor";
+import DebuggingScriptProcessingUnit, { DebuggingScriptProcessingUnitDelegate } from "./debugging-script-processing-unit";
 import { Engine, EngineEvents } from "src/engine";
 import { InstructionImplementations, InstructionsByName } from "src/engine/script/instructions";
 import { Result, ScriptResult } from "src/engine/script";
@@ -17,7 +17,7 @@ import Controls from "./components/controls";
 import Group from "src/ui/components/group";
 import { LocationBreakpoint } from "./breakpoint";
 import { Point } from "src/util";
-import ScriptExecutor from "src/engine/script/script-executor";
+import ScriptProcessingUnit from "src/engine/script/script-processing-unit";
 import Settings from "src/settings";
 import { Window } from "src/ui/components";
 import { WindowManager } from "src/ui";
@@ -31,7 +31,7 @@ const StateChangingOpcodes = {
 	[InstructionsByName.SetRandom.Opcode]: true
 };
 
-class ScriptDebugger implements DebuggingScriptExecutorDelegate {
+class ScriptDebugger implements DebuggingScriptProcessingUnitDelegate {
 	private static _sharedDebugger: ScriptDebugger;
 	private _window: Window;
 	private _engine: Engine;
@@ -102,7 +102,7 @@ class ScriptDebugger implements DebuggingScriptExecutorDelegate {
 		if (this._isActive) return;
 		if (!this._engine) return;
 
-		this._engine.scriptExecutor = new DebuggingScriptExecutor(
+		this._engine.spu = new DebuggingScriptProcessingUnit(
 			this._engine,
 			InstructionImplementations,
 			ConditionImplementations,
@@ -119,7 +119,7 @@ class ScriptDebugger implements DebuggingScriptExecutorDelegate {
 		Settings.debuggerActive = false;
 
 		this._engine.removeEventListener(EngineEvents.CurrentZoneChange, this._handlers.zoneChange);
-		this._engine.scriptExecutor = new ScriptExecutor(
+		this._engine.spu = new ScriptProcessingUnit(
 			this._engine,
 			InstructionImplementations,
 			ConditionImplementations
@@ -174,18 +174,18 @@ class ScriptDebugger implements DebuggingScriptExecutorDelegate {
 
 	public stepOnce() {
 		this._breakAfter = true;
-		const executor = this._engine.scriptExecutor as DebuggingScriptExecutor;
+		const executor = this._engine.spu as DebuggingScriptProcessingUnit;
 		this.continueExecution(executor);
 	}
 
 	public togglePause() {
-		const executor = this._engine.scriptExecutor as DebuggingScriptExecutor;
+		const executor = this._engine.spu as DebuggingScriptProcessingUnit;
 		if (executor.stopped) this.continueExecution(executor);
 		else this.stopExecution(executor);
 	}
 
 	private _reflectExecutorState() {
-		const executor = this._engine.scriptExecutor as DebuggingScriptExecutor;
+		const executor = this._engine.spu as DebuggingScriptProcessingUnit;
 		const controls = this._window.content.querySelector(Controls.tagName) as Controls;
 		if (executor.stopped) controls.removeAttribute("running");
 		else controls.setAttribute("running", "");
@@ -214,7 +214,7 @@ class ScriptDebugger implements DebuggingScriptExecutorDelegate {
 	}
 
 	executorWillExecute(
-		executor: DebuggingScriptExecutor,
+		executor: DebuggingScriptProcessingUnit,
 		thing: Zone | Action | Condition | Instruction
 	): void {
 		if (thing instanceof Zone) {
@@ -282,7 +282,7 @@ class ScriptDebugger implements DebuggingScriptExecutorDelegate {
 	}
 
 	executorDidExecute(
-		executor: DebuggingScriptExecutor,
+		executor: DebuggingScriptProcessingUnit,
 		thing: Zone | Action | Condition | Instruction,
 		_result: ScriptResult | Result | boolean
 	): void {
@@ -311,12 +311,12 @@ class ScriptDebugger implements DebuggingScriptExecutorDelegate {
 		}
 	}
 
-	private continueExecution(executor: DebuggingScriptExecutor) {
+	private continueExecution(executor: DebuggingScriptProcessingUnit) {
 		executor.stopped = false;
 		this._reflectExecutorState();
 	}
 
-	private stopExecution(executor: DebuggingScriptExecutor) {
+	private stopExecution(executor: DebuggingScriptProcessingUnit) {
 		executor.stopped = true;
 		this._actionList
 			.querySelectorAll(ActionComponent.tagName)

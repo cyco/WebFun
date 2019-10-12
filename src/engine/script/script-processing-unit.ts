@@ -9,7 +9,7 @@ import { Zone } from "src/engine/objects";
 type ConditionStore = ConditionImplementation[];
 type InstructionStore = InstructionImplementation[];
 
-class ScriptExecutor {
+class ScriptProcessingUnit {
 	protected _inUse: boolean = false;
 	protected _instructionExecutor: InstructionExecutor;
 	protected _conditionChecker: ConditionChecker;
@@ -67,7 +67,7 @@ class ScriptExecutor {
 		return ScriptResult.Done;
 	}
 
-	public async execute(): Promise<ScriptResult> {
+	public async run(): Promise<ScriptResult> {
 		if (!this._executor) return ScriptResult.Done;
 
 		const result = await this._executor.next();
@@ -90,4 +90,4 @@ class ScriptExecutor {
 	}
 }
 
-export default ScriptExecutor;
+export default ScriptProcessingUnit;
