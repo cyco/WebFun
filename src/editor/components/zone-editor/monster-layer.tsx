@@ -81,7 +81,7 @@ class MonsterLayer extends Component {
 					monster.position = point;
 					monster.loot = -1;
 					monster.dropsLoot = false;
-					monster.waypoints = null;
+					monster.waypoints = [];
 					this.zone.monsters.push(monster);
 					this.draw();
 				}
