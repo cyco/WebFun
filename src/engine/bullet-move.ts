@@ -85,11 +85,19 @@ export default async (engine: Engine, zone: Zone): Promise<ScriptResult> => {
 		return ScriptResult.Done;
 	}
 
-	const direction = Direction.Confine(hero.direction, true);
-	const target = hero.location.byAdding(Direction.CalculateRelativeCoordinates(direction, frames + 1));
+	const direction = Direction.Confine(hero.direction, false);
+	const weaponHasProjectile = !!hero.weapon.frames[0].left;
+	const targets = weaponHasProjectile
+		? [hero.location.byAdding(Direction.CalculateRelativeCoordinates(direction, frames + 1))]
+		: [
+				hero.location.byAdding(Direction.CalculateRelativeCoordinates(direction, 1)),
+				hero.location.byAdding(Direction.CalculateRelativeCoordinates(direction - 45, 1)),
+				hero.location.byAdding(Direction.CalculateRelativeCoordinates(direction + 50, 1))
+		  ];
 
 	const hitMonsters = zone.monsters.filter(
-		({ position, alive, enabled }) => alive && enabled && position.isEqualTo(target)
+		({ position, alive, enabled }) =>
+			alive && enabled && targets.some(target => position.isEqualTo(target))
 	);
 
 	hitMonsters.forEach(monster => hitMonster(monster, hero.weapon, zone, assets));
@@ -99,12 +107,12 @@ export default async (engine: Engine, zone: Zone): Promise<ScriptResult> => {
 		return ScriptResult.Done;
 	}
 
-	const tile = zone.getTile(target);
+	const tile = zone.getTile(targets[0]);
 	if (!bulletTileForBullet(engine)) return ScriptResult.Done;
 
 	if (!tile || tile.isOpaque()) {
 		// evaluate scripts
-		engine.inputManager.placedTileLocation = target;
+		engine.inputManager.placedTileLocation = targets[0];
 		engine.inputManager.placedTile = hero.weapon.frames[0].tiles[Char.FrameEntry.ExtensionRight];
 		engine.spu.prepeareExecution(EvaluationMode.PlaceItem, zone);
 		return await engine.spu.run();
