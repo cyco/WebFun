@@ -14,7 +14,8 @@ describe("WebFun.Engine.Scenes.PauseScene", () => {
 				pause: true,
 				clear: function() {
 					this.pause = false;
-				}
+				},
+				temporaryState: { totalPlayTime: 0, currentPlayStart: new Date() }
 			},
 			sceneManager: { popScene: () => (popCalled = true) }
 		} as any;

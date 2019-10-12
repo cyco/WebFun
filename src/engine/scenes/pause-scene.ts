@@ -21,6 +21,9 @@ class PauseScene extends Scene {
 
 	willShow() {
 		this.engine.inputManager.clear();
+		this.engine.temporaryState.totalPlayTime +=
+			(new Date().getTime() - this.engine.temporaryState.currentPlayStart.getTime()) / 1000;
+		this.engine.temporaryState.currentPlayStart = new Date();
 	}
 
 	render(renderer: Renderer): void {
@@ -41,6 +44,7 @@ class PauseScene extends Scene {
 	}
 
 	willHide() {
+		this.engine.temporaryState.currentPlayStart = new Date();
 		this.engine.inputManager.clear();
 	}
 
