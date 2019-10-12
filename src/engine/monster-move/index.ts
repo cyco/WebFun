@@ -59,7 +59,6 @@ export default (monster: Monster, zone: Zone, engine: Engine): void => {
 		handleRemainingBullet(monster, zone, engine);
 		CharSetDefaultFace(monster.face, monster.direction);
 		if (zone.getTile(monster.position.x, monster.position.y, Zone.Layer.Object) === monster.face.tile) {
-			console.log("clearing disabled monster off the map");
 			zone.setTile(null, monster.position.x, monster.position.y, Zone.Layer.Object);
 		}
 		return;
