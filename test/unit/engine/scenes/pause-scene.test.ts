@@ -3,6 +3,7 @@ import { Engine } from "src/engine";
 import { Renderer } from "src/engine/rendering";
 
 describe("WebFun.Engine.Scenes.PauseScene", () => {
+	let subject: PauseScene;
 	it("can be instantiated without throwing exceptions", () => {
 		expect(() => new PauseScene()).not.toThrow();
 	});
@@ -15,21 +16,21 @@ describe("WebFun.Engine.Scenes.PauseScene", () => {
 				clear: function() {
 					this.pause = false;
 				},
-				temporaryState: { totalPlayTime: 0, currentPlayStart: new Date() }
 			},
+			temporaryState: { totalPlayTime: 0, currentPlayStart: new Date() },
 			sceneManager: { popScene: () => (popCalled = true) }
 		} as any;
 
-		const scene = new PauseScene();
-		scene.engine = engine;
-		scene.willShow();
+		subject = new PauseScene();
+		subject.engine = engine;
+		subject.willShow();
 
-		scene.update();
+		subject.update();
 		expect(popCalled).toBeFalse();
 
 		(engine.inputManager as any).pause = true;
 
-		scene.update();
+		subject.update();
 		expect(popCalled).toBeTrue();
 	});
 
@@ -39,10 +40,11 @@ describe("WebFun.Engine.Scenes.PauseScene", () => {
 		} as any) as Renderer;
 		spyOn(renderer, "drawImage");
 
-		const scene = new PauseScene();
-		scene.render(renderer);
+		subject = new PauseScene();
+		subject.engine = {temporaryState: {}} as any;
+		subject.render(renderer);
 
-		expect(scene.isOpaque()).toBeFalse();
+		expect(subject.isOpaque()).toBeFalse();
 		expect(renderer.drawImage).toHaveBeenCalledTimes(9 * 9);
 	});
 });
