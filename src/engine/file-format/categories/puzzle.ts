@@ -6,30 +6,30 @@ import { Data, Puzzle } from "../types";
 const IPUZ = "IPUZ";
 
 const parsePuzzle = (stream: InputStream, _: Data, gameType: GameType): Puzzle => {
-	const marker = stream.getCharacters(4);
+	const marker = stream.readCharacters(4);
 	assert(marker === IPUZ, "Expected to find category marker IPUZ", stream);
 	// skip over size
-	stream.getUint32();
+	stream.readUint32();
 
 	let type = 0;
 	if (gameType === Yoda) {
-		type = stream.getUint32();
+		type = stream.readUint32();
 	}
 
-	const unknown1 = stream.getUint32();
-	const unknown2 = stream.getUint32();
-	const unknown3 = stream.getUint16();
+	const unknown1 = stream.readUint32();
+	const unknown2 = stream.readUint32();
+	const unknown3 = stream.readUint16();
 
 	const texts: string[] = Array.Repeat("", 5);
 
 	for (let i = 0; i < 5; i++) {
-		texts[i] = stream.getLengthPrefixedString("iso-8859-2");
+		texts[i] = stream.readLengthPrefixedString("iso-8859-2");
 	}
 
-	const item1 = stream.getUint16();
+	const item1 = stream.readUint16();
 	let item2 = null;
 	if (gameType === Yoda) {
-		item2 = stream.getUint16();
+		item2 = stream.readUint16();
 	}
 
 	return {
@@ -46,11 +46,11 @@ const parsePuzzle = (stream: InputStream, _: Data, gameType: GameType): Puzzle =
 
 export const parsePuzzles = (stream: InputStream, data: Data, gameType: GameType): void => {
 	// skip over size
-	stream.getUint32();
+	stream.readUint32();
 
 	const puzzles = [];
 	do {
-		const index = stream.getInt16();
+		const index = stream.readInt16();
 		if (index === -1) break;
 
 		puzzles.push(parsePuzzle(stream, data, gameType));
@@ -60,10 +60,10 @@ export const parsePuzzles = (stream: InputStream, data: Data, gameType: GameType
 
 export const parsePuzzleNames = (stream: InputStream, data: Data): void => {
 	// skip over size
-	stream.getUint32();
+	stream.readUint32();
 
-	const count = stream.getInt16();
+	const count = stream.readInt16();
 	for (let i = 0; i < count; i++) {
-		data.puzzles[i].name = stream.getCStringWithLength(0x10, "iso-8859-2");
+		data.puzzles[i].name = stream.readCStringWithLength(0x10, "iso-8859-2");
 	}
 };

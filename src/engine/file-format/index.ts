@@ -22,7 +22,7 @@ export default (input: InputStream, type: GameType): Data => {
 
 	let category: string;
 	do {
-		category = input.getCharacters(4);
+		category = input.readCharacters(4);
 		const parse = dispatch[category] || (() => error(`Invalid category ${category} found.`, input));
 		parse(input, data, type);
 	} while (category !== ENDF);

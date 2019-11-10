@@ -16,7 +16,7 @@ class InputStream extends Stream {
 		this._dataView = new DataView(this._arrayBuffer);
 	}
 
-	get length() {
+	public get length() {
 		return this._arrayBuffer.byteLength;
 	}
 
@@ -39,47 +39,47 @@ class InputStream extends Stream {
 		return data;
 	}
 
-	getCharacter(): string {
-		return String.fromCharCode(this.getUint8());
+	public readCharacter(): string {
+		return String.fromCharCode(this.readUint8());
 	}
 
-	getUint8(): number {
+	public readUint8(): number {
 		const result = this._dataView.getUint8(this._offset);
 		this._offset += Uint8Array.BYTES_PER_ELEMENT;
 		return result;
 	}
 
-	getUint16(): number {
+	public readUint16(): number {
 		const result = this._dataView.getUint16(this._offset, this.littleEndian);
 		this._offset += Uint16Array.BYTES_PER_ELEMENT;
 		return result;
 	}
 
-	getUint32(): number {
+	public readUint32(): number {
 		const result = this._dataView.getUint32(this._offset, this.littleEndian);
 		this._offset += Uint32Array.BYTES_PER_ELEMENT;
 		return result;
 	}
 
-	getInt8(): number {
+	public readInt8(): number {
 		const result = this._dataView.getInt8(this._offset);
 		this._offset += Uint8Array.BYTES_PER_ELEMENT;
 		return result;
 	}
 
-	getInt16(): number {
+	public readInt16(): number {
 		const result = this._dataView.getInt16(this._offset, this.littleEndian);
 		this._offset += Uint16Array.BYTES_PER_ELEMENT;
 		return result;
 	}
 
-	getInt32(): number {
+	public readInt32(): number {
 		const result = this._dataView.getInt32(this._offset, this.littleEndian);
 		this._offset += Uint32Array.BYTES_PER_ELEMENT;
 		return result;
 	}
 
-	getCharacters(length: number, encoding: string = DefaultEncoding): string {
+	public readCharacters(length: number, encoding: string = DefaultEncoding): string {
 		if (length === 0) return "";
 
 		const data = new Uint8Array(this._arrayBuffer, this._offset, length);
@@ -89,8 +89,8 @@ class InputStream extends Stream {
 		return decoder.decode(data);
 	}
 
-	getCStringWithLength(fixedLength: number, encoding: string = DefaultEncoding): string {
-		const raw = this.getUint8Array(fixedLength);
+	public readCStringWithLength(fixedLength: number, encoding: string = DefaultEncoding): string {
+		const raw = this.readUint8Array(fixedLength);
 		let length = 0;
 		while (length < raw.length && raw[length] !== 0) length++;
 
@@ -98,27 +98,27 @@ class InputStream extends Stream {
 		return decoder.decode(raw.slice(0, length));
 	}
 
-	getNullTerminatedString(maxLength: number, encoding: string = DefaultEncoding): string {
+	public readNullTerminatedString(maxLength: number, encoding: string = DefaultEncoding): string {
 		const uint8Array = new Uint8Array(this._arrayBuffer, this._offset, maxLength);
 
 		let length = -1;
 		while (uint8Array[++length]) true /* nop */;
 
-		return this.getCharacters(length, encoding);
+		return this.readCharacters(length, encoding);
 	}
 
-	getLengthPrefixedString(encoding: string = DefaultEncoding): string {
-		const length = this.getUint16();
-		return this.getCharacters(length, encoding);
+	public readLengthPrefixedString(encoding: string = DefaultEncoding): string {
+		const length = this.readUint16();
+		return this.readCharacters(length, encoding);
 	}
 
-	getUint8Array(length: number): Uint8Array {
+	public readUint8Array(length: number): Uint8Array {
 		const result = new Uint8Array(this._arrayBuffer, this._offset, length);
 		this._offset += length;
 		return result;
 	}
 
-	getUint16Array(length: number): Uint16Array {
+	public readUint16Array(length: number): Uint16Array {
 		let result;
 
 		if (this._offset % 2 !== 0) {
@@ -132,7 +132,7 @@ class InputStream extends Stream {
 		return result;
 	}
 
-	getInt16Array(length: number): Int16Array {
+	public readInt16Array(length: number): Int16Array {
 		let result;
 
 		if (this._offset % 2 !== 0) {
@@ -146,7 +146,7 @@ class InputStream extends Stream {
 		return result;
 	}
 
-	getUint32Array(length: number): Uint32Array {
+	public readUint32Array(length: number): Uint32Array {
 		let result;
 
 		if (this._offset % 4 !== 0) {
@@ -160,7 +160,7 @@ class InputStream extends Stream {
 		return result;
 	}
 
-	getInt32Array(length: number): Int32Array {
+	public readInt32Array(length: number): Int32Array {
 		let result;
 
 		if (this._offset % 4 !== 0) {

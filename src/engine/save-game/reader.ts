@@ -45,7 +45,7 @@ abstract class Reader {
 				break;
 			}
 
-			const zoneID = stream.getInt16();
+			const zoneID = stream.readInt16();
 			const visited = this.readBool(stream);
 
 			this.readRoom(stream, zoneID, visited);
@@ -71,7 +71,7 @@ abstract class Reader {
 				door = hotspot.arg;
 			} else continue;
 
-			const zoneID = stream.getInt16();
+			const zoneID = stream.readInt16();
 			const visited = this.readBool(stream);
 
 			console.assert(
@@ -109,14 +109,14 @@ abstract class Reader {
 			zone.doorInLocation = new Point(x, y);
 
 			if (this._type === Yoda) {
-				zone.sharedCounter = stream.getInt16();
+				zone.sharedCounter = stream.readInt16();
 
-				const planet = stream.getInt16();
+				const planet = stream.readInt16();
 				console.assert(planet === zone.planet.rawValue);
 			}
 
 			const tileCount = zone.size.width * zone.size.height * Zone.LAYERS;
-			zone.tileIDs = stream.getInt16Array(tileCount);
+			zone.tileIDs = stream.readInt16Array(tileCount);
 		}
 
 		zone.visited = this.readBool(stream);
@@ -169,7 +169,7 @@ abstract class Reader {
 	protected readInventory(stream: InputStream): Int16Array {
 		const count = this.readInt(stream);
 		if (count < 0) return new Int16Array([]);
-		const result = stream.getInt16Array(count);
+		const result = stream.readInt16Array(count);
 		return result;
 	}
 
@@ -189,8 +189,8 @@ abstract class Reader {
 	}
 
 	protected readPuzzles(stream: InputStream): Int16Array {
-		const count = stream.getUint16();
-		return stream.getInt16Array(count);
+		const count = stream.readUint16();
+		return stream.readInt16Array(count);
 	}
 }
 

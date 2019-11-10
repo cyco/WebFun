@@ -12,7 +12,7 @@ describe("WebFun.Util.FileLoader", () => {
 		expect(result).toBeInstanceOf(InputStream);
 		expect(result.length).toBe(27);
 		result.seek(2);
-		expect(result.getCharacters(5)).toBe("ASCII");
+		expect(result.readCharacters(5)).toBe("ASCII");
 	});
 
 	it("can report the loading progress back to the caller", async () => {

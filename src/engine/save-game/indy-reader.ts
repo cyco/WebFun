@@ -22,31 +22,31 @@ class IndyReader extends Reader {
 	protected _doRead(): SaveState {
 		const stream = this._stream;
 
-		const seed = stream.getUint32() & 0xffff;
+		const seed = stream.readUint32() & 0xffff;
 
 		const puzzleIDs1 = this.readPuzzles(stream);
 		const world = this.readWorld(stream, { start: 0, end: 10 }, { start: 0, end: 10 });
 		const inventoryIDs = this.readInventory(stream);
 
-		const currentZoneID = stream.getUint16();
-		const posXOnWorld = stream.getUint16();
-		const posYOnWorld = stream.getUint16();
+		const currentZoneID = stream.readUint16();
+		const posXOnWorld = stream.readUint16();
+		const posYOnWorld = stream.readUint16();
 
 		// skip over unknown value
-		stream.getUint16();
-		const posXOnZone = stream.getUint16();
-		const posYOnZone = stream.getUint16();
+		stream.readUint16();
+		const posXOnZone = stream.readUint16();
+		const posYOnZone = stream.readUint16();
 		// skip over unknown values
-		stream.getInt16();
-		stream.getInt16();
-		stream.getInt16();
-		stream.getInt16();
+		stream.readInt16();
+		stream.readInt16();
+		stream.readInt16();
+		stream.readInt16();
 
-		stream.getInt16();
-		stream.getInt16();
-		stream.getInt16();
+		stream.readInt16();
+		stream.readInt16();
+		stream.readInt16();
 
-		const goalPuzzle = stream.getInt16();
+		const goalPuzzle = stream.readInt16();
 
 		console.assert(
 			stream.isAtEnd(),
@@ -91,15 +91,15 @@ class IndyReader extends Reader {
 		const solved1 = this.readBool(stream);
 		const solved2 = this.readBool(stream);
 
-		const zoneID = stream.getInt16();
-		const puzzleIndex = stream.getInt16();
+		const zoneID = stream.readInt16();
+		const puzzleIndex = stream.readInt16();
 
-		const requiredItemID = stream.getInt16();
-		const findItemID = stream.getInt16();
+		const requiredItemID = stream.readInt16();
+		const findItemID = stream.readInt16();
 
-		const npcID = stream.getInt16();
+		const npcID = stream.readInt16();
 		// possibly zone or puzzle type, skip over it
-		stream.getInt16();
+		stream.readInt16();
 
 		const sector = new Sector();
 		sector.visited = visited;
@@ -115,8 +115,8 @@ class IndyReader extends Reader {
 	}
 
 	protected readHotspot(stream: InputStream, oldHotspot: Hotspot): Hotspot {
-		const enabled = stream.getUint16() !== 0;
-		const argument = stream.getInt16();
+		const enabled = stream.readUint16() !== 0;
+		const argument = stream.readInt16();
 
 		const hotspot = new MutableHotspot();
 		hotspot.enabled = enabled;
@@ -128,12 +128,12 @@ class IndyReader extends Reader {
 	}
 
 	protected readMonster(stream: InputStream): MutableMonster {
-		const characterId = stream.getInt16();
-		const x = stream.getInt16();
-		const y = stream.getInt16();
-		const damageTaken = stream.getInt16();
+		const characterId = stream.readInt16();
+		const x = stream.readInt16();
+		const y = stream.readInt16();
+		const damageTaken = stream.readInt16();
 
-		stream.getUint8Array(0x18);
+		stream.readUint8Array(0x18);
 
 		const monster = new MutableMonster();
 		monster.face = this._assets.get(Char, characterId, NullIfMissing);
@@ -144,7 +144,7 @@ class IndyReader extends Reader {
 	}
 
 	protected readInt(stream: InputStream): number {
-		return stream.getInt16();
+		return stream.readInt16();
 	}
 }
 

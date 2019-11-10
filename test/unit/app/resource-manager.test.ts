@@ -16,12 +16,12 @@ describe("WebFun.App.ResourceManager", () => {
 	it("loads the palette", async () => {
 		const mockedBuffer = ({} as unknown) as Uint8Array;
 		spyOn(ColorPalette, "FromBGR8");
-		spyOn(resultStream, "getUint8Array").and.returnValue(mockedBuffer);
+		spyOn(resultStream, "readUint8Array").and.returnValue(mockedBuffer);
 
 		await subject.loadPalette(progressHandler);
 
 		expect(FileLoader.loadAsStream).toHaveBeenCalled();
-		expect(resultStream.getUint8Array).toHaveBeenCalledWith(0x400);
+		expect(resultStream.readUint8Array).toHaveBeenCalledWith(0x400);
 		expect(ColorPalette.FromBGR8).toHaveBeenCalledWith(mockedBuffer);
 	});
 

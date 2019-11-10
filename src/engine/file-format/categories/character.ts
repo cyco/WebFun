@@ -6,22 +6,22 @@ import { Data, Character } from "../types";
 
 const ICHA = "ICHA";
 const parseCharacterFrame = (stream: InputStream, _: Data): Int16Array => {
-	return stream.getInt16Array(0x8);
+	return stream.readInt16Array(0x8);
 };
 
 const parseCharacter = (stream: InputStream, data: Data, gameType: GameType): Character => {
-	const marker = stream.getCharacters(4);
+	const marker = stream.readCharacters(4);
 	assert(marker === ICHA, "Expected to find ICHAR marker.", stream);
 	// skip over size
-	stream.getUint32();
-	const name = stream.getCStringWithLength(0x10, "iso-8859-2");
-	const type = stream.getInt16();
-	const movementType = stream.getInt16();
+	stream.readUint32();
+	const name = stream.readCStringWithLength(0x10, "iso-8859-2");
+	const type = stream.readInt16();
+	const movementType = stream.readInt16();
 	let probablyGarbage1 = 0;
 	let probablyGarbage2 = 0;
 	if (gameType === Yoda) {
-		probablyGarbage1 = stream.getInt16();
-		probablyGarbage2 = stream.getUint32();
+		probablyGarbage1 = stream.readInt16();
+		probablyGarbage2 = stream.readUint32();
 	}
 
 	const frame1 = parseCharacterFrame(stream, data);
@@ -45,11 +45,11 @@ const parseCharacter = (stream: InputStream, data: Data, gameType: GameType): Ch
 
 export const parseCharacters = (stream: InputStream, data: Data, type: GameType) => {
 	// skip over size
-	stream.getUint32();
+	stream.readUint32();
 	const characters = [];
 
 	do {
-		const index = stream.getInt16();
+		const index = stream.readInt16();
 		if (index === -1) break;
 
 		characters.push(parseCharacter(stream, data, type));
@@ -60,10 +60,10 @@ export const parseCharacters = (stream: InputStream, data: Data, type: GameType)
 
 export const parseCharacterAux = (stream: InputStream, data: Data) => {
 	// skip over size
-	stream.getUint32();
+	stream.readUint32();
 
 	do {
-		const index = stream.getInt16();
+		const index = stream.readInt16();
 		if (index === -1) break;
 
 		parseCharacterAux1(stream, data, index);
@@ -71,13 +71,13 @@ export const parseCharacterAux = (stream: InputStream, data: Data) => {
 };
 
 export const parseCharacterAux1 = (stream: InputStream, data: Data, index: number) => {
-	const damage = stream.getInt16();
+	const damage = stream.readInt16();
 	data.characters[index].damage = damage;
 };
 
 export const parseCharacterWeapon = (stream: InputStream, data: Data, index: number) => {
-	const reference = stream.getInt16();
-	const health = stream.getInt16();
+	const reference = stream.readInt16();
+	const health = stream.readInt16();
 
 	data.characters[index].health = health;
 	data.characters[index].reference = reference;
@@ -85,10 +85,10 @@ export const parseCharacterWeapon = (stream: InputStream, data: Data, index: num
 
 export const parseCharacterWeapons = (stream: InputStream, data: Data): void => {
 	// skip over size
-	stream.getUint32();
+	stream.readUint32();
 
 	do {
-		const index = stream.getInt16();
+		const index = stream.readInt16();
 		if (index === -1) break;
 
 		parseCharacterWeapon(stream, data, index);

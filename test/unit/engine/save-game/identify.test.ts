@@ -19,6 +19,6 @@ describe("WebFun.Engine.SaveGame.identify", () => {
 	});
 
 	function mockStream(characters: string): InputStream {
-		return { getCharacters: () => characters } as any;
+		return { readCharacters: () => characters } as any;
 	}
 });

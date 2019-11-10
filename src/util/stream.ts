@@ -15,15 +15,15 @@ class Stream {
 	public endianess: number = Stream.Endian.Big;
 	protected _offset: number = 0;
 
-	get littleEndian() {
+	public get littleEndian() {
 		return this.endianess === Stream.Endian.Little;
 	}
 
-	get offset() {
+	public get offset() {
 		return this._offset;
 	}
 
-	seek(offset: number, mode: number = Stream.Seek.Cur) {
+	public seek(offset: number, mode: number = Stream.Seek.Cur) {
 		switch (mode) {
 			case Stream.Seek.Set:
 				this._offset = offset;

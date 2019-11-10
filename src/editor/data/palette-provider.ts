@@ -17,7 +17,7 @@ class PaletteProvider {
 		const url = this.url.get(type);
 		const stream = await FileLoader.loadAsStream(url);
 
-		const buffer = stream.getUint8Array(ColorPaletteByteLength);
+		const buffer = stream.readUint8Array(ColorPaletteByteLength);
 		return ColorPalette.FromBGR8(buffer);
 	}
 }

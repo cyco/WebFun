@@ -1,4 +1,3 @@
-import { File } from "src/std/dom";
 import provideInputStream from "src/extension/file/provide-input-stream";
 
 describe("WebFun.Extension.File.provideInputStream", () => {
@@ -10,6 +9,6 @@ describe("WebFun.Extension.File.provideInputStream", () => {
 	it("provides the file's content as an input stream", async () => {
 		const file = new File(["content"], "my-file");
 		const stream = await file.provideInputStream();
-		expect(stream.getCharacters(3)).toEqual("con");
+		expect(stream.readCharacters(3)).toEqual("con");
 	});
 });

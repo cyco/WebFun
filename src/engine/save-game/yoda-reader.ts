@@ -23,10 +23,10 @@ class YodaReader extends Reader {
 	protected _doRead(): SaveState {
 		const stream = this._stream;
 
-		const seed = stream.getUint32() & 0xffff;
+		const seed = stream.readUint32() & 0xffff;
 
-		const planet = stream.getUint32();
-		const onDagobah = stream.getUint32() !== 0;
+		const planet = stream.readUint32();
+		const onDagobah = stream.readUint32() !== 0;
 
 		const puzzleIDs1 = this.readPuzzles(stream);
 		const puzzleIDs2 = this.readPuzzles(stream);
@@ -34,32 +34,32 @@ class YodaReader extends Reader {
 		const world = this.readWorld(stream, { start: 0, end: 10 }, { start: 0, end: 10 });
 		const inventoryIDs = this.readInventory(stream);
 
-		const currentZoneID = stream.getUint16();
-		const posXOnWorld = stream.getUint32();
-		const posYOnWorld = stream.getUint32();
+		const currentZoneID = stream.readUint16();
+		const posXOnWorld = stream.readUint32();
+		const posYOnWorld = stream.readUint32();
 
-		const currentWeapon = stream.getInt16();
-		const currentAmmo = currentWeapon >= 0 ? stream.getInt16() : -1;
+		const currentWeapon = stream.readInt16();
+		const currentAmmo = currentWeapon >= 0 ? stream.readInt16() : -1;
 
-		const forceAmmo = stream.getInt16();
-		const blasterAmmo = stream.getInt16();
-		const blasterRifleAmmo = stream.getInt16();
+		const forceAmmo = stream.readInt16();
+		const blasterAmmo = stream.readInt16();
+		const blasterRifleAmmo = stream.readInt16();
 
-		const posXOnZone = floor(stream.getUint32() / Tile.WIDTH);
-		const posYOnZone = floor(stream.getUint32() / Tile.HEIGHT);
+		const posXOnZone = floor(stream.readUint32() / Tile.WIDTH);
+		const posYOnZone = floor(stream.readUint32() / Tile.HEIGHT);
 
-		const damageTaken = stream.getInt32();
-		const livesLost = stream.getInt32();
+		const damageTaken = stream.readInt32();
+		const livesLost = stream.readInt32();
 
-		const difficulty = stream.getUint32();
-		const timeElapsed = stream.getUint32();
+		const difficulty = stream.readUint32();
+		const timeElapsed = stream.readUint32();
 
-		const worldSize = stream.getInt32();
-		const unknownCount = stream.getInt16();
-		const unknownSum = stream.getInt16();
+		const worldSize = stream.readInt32();
+		const unknownCount = stream.readInt16();
+		const unknownSum = stream.readInt16();
 
-		const goalPuzzle = stream.getUint32();
-		const goalPuzzleAgain = stream.getUint32();
+		const goalPuzzle = stream.readUint32();
+		const goalPuzzleAgain = stream.readUint32();
 
 		console.assert(
 			goalPuzzle === goalPuzzleAgain,
@@ -110,17 +110,17 @@ class YodaReader extends Reader {
 		const solved3 = this.readBool(stream);
 		const solved4 = this.readBool(stream);
 
-		const zoneId = stream.getInt16();
-		const puzzleIndex = stream.getInt16();
-		const requiredItemId = stream.getInt16();
-		const findItemId = stream.getInt16();
-		const isGoal = stream.getInt16();
-		const additionalRequiredItem = stream.getInt16();
-		const additionalGainItem = stream.getInt16();
-		const npcId = stream.getInt16();
+		const zoneId = stream.readInt16();
+		const puzzleIndex = stream.readInt16();
+		const requiredItemId = stream.readInt16();
+		const findItemId = stream.readInt16();
+		const isGoal = stream.readInt16();
+		const additionalRequiredItem = stream.readInt16();
+		const additionalGainItem = stream.readInt16();
+		const npcId = stream.readInt16();
 
-		const zoneType = stream.getInt32();
-		const usedAlternateStrain = stream.getInt16();
+		const zoneType = stream.readInt32();
+		const usedAlternateStrain = stream.readInt16();
 
 		const sector = new Sector();
 		sector.visited = visited;
@@ -143,35 +143,35 @@ class YodaReader extends Reader {
 	}
 
 	protected readMonster(stream: InputStream): MutableMonster {
-		const characterId = stream.getInt16();
-		const x = stream.getInt16();
-		const y = stream.getInt16();
-		const damageTaken = stream.getInt16();
-		const enabled = stream.getUint32() !== 0;
-		const field10 = stream.getInt16();
+		const characterId = stream.readInt16();
+		const x = stream.readInt16();
+		const y = stream.readInt16();
+		const damageTaken = stream.readInt16();
+		const enabled = stream.readUint32() !== 0;
+		const field10 = stream.readInt16();
 
-		const bulletX = stream.getInt16();
-		const bulletY = stream.getInt16();
-		const currentFrame = stream.getInt16();
-		const flag18 = stream.getUint32() !== 0;
-		const flag1c = stream.getUint32() !== 0;
-		const flag20 = stream.getUint32() !== 0;
-		const directionX = stream.getInt16();
-		const directionY = stream.getInt16();
+		const bulletX = stream.readInt16();
+		const bulletY = stream.readInt16();
+		const currentFrame = stream.readInt16();
+		const flag18 = stream.readUint32() !== 0;
+		const flag1c = stream.readUint32() !== 0;
+		const flag20 = stream.readUint32() !== 0;
+		const directionX = stream.readInt16();
+		const directionY = stream.readInt16();
 
-		const field3c = stream.getInt16();
-		const facingDirection = stream.getInt16();
-		const field60 = stream.getInt16();
-		const loot = stream.getInt16();
-		const flag2c = stream.getUint32() !== 0;
-		const flag34 = stream.getUint32() !== 0;
-		const hasItem = stream.getUint32() !== 0;
-		const cooldown = stream.getInt16();
-		const preferred = stream.getInt16();
+		const field3c = stream.readInt16();
+		const facingDirection = stream.readInt16();
+		const field60 = stream.readInt16();
+		const loot = stream.readInt16();
+		const flag2c = stream.readUint32() !== 0;
+		const flag34 = stream.readUint32() !== 0;
+		const hasItem = stream.readUint32() !== 0;
+		const cooldown = stream.readInt16();
+		const preferred = stream.readInt16();
 
 		for (let i = 0; i < 4; i++) {
-			stream.getUint32();
-			stream.getUint32();
+			stream.readUint32();
+			stream.readUint32();
 		}
 
 		const monster = new MutableMonster();
@@ -202,11 +202,11 @@ class YodaReader extends Reader {
 	}
 
 	protected readHotspot(stream: InputStream, _: Hotspot): Hotspot {
-		const enabled = stream.getUint16() !== 0;
-		const argument = stream.getInt16();
-		const type = Hotspot.Type.fromNumber(stream.getUint32());
-		const x = stream.getInt16();
-		const y = stream.getInt16();
+		const enabled = stream.readUint16() !== 0;
+		const argument = stream.readInt16();
+		const type = Hotspot.Type.fromNumber(stream.readUint32());
+		const x = stream.readInt16();
+		const y = stream.readInt16();
 
 		const hotspot = new MutableHotspot();
 		hotspot.enabled = enabled;
@@ -219,7 +219,7 @@ class YodaReader extends Reader {
 	}
 
 	protected readInt(stream: InputStream): number {
-		return stream.getInt32();
+		return stream.readInt32();
 	}
 }
 

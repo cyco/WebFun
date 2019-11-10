@@ -16,7 +16,7 @@ class ResourceManager implements ResourceManagerInterface {
 
 	async loadPalette(progress: (progress: number) => void): Promise<ColorPalette> {
 		const stream = await FileLoader.loadAsStream(this._paletteURL, progress);
-		return ColorPalette.FromBGR8(stream.getUint8Array(0x400));
+		return ColorPalette.FromBGR8(stream.readUint8Array(0x400));
 	}
 
 	loadGameFile(progress: (progress: number) => void): Promise<InputStream> {
