@@ -8,10 +8,10 @@ class InputStream extends Stream {
 	private _arrayBuffer: ArrayBuffer | SharedArrayBuffer;
 	private _dataView: DataView;
 
-	constructor(data: ArrayBuffer | SharedArrayBuffer | string) {
+	constructor(data: ArrayBuffer | SharedArrayBuffer | string, endianess = Stream.Endian.Little) {
 		super();
 
-		this.endianess = Stream.Endian.Little;
+		this.endianess = endianess;
 		this._arrayBuffer = this._makeArrayBuffer(data);
 		this._dataView = new DataView(this._arrayBuffer);
 	}

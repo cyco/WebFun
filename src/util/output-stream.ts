@@ -4,10 +4,10 @@ class OutputStream extends Stream {
 	private _arrayBuffer: ArrayBuffer;
 	private _dataView: DataView;
 
-	constructor(size: number) {
+	constructor(size: number, endianess = Stream.Endian.Little) {
 		super();
 
-		this.endianess = Stream.Endian.Little;
+		this.endianess = endianess;
 		this._arrayBuffer = new ArrayBuffer(size);
 		this._dataView = new DataView(this._arrayBuffer);
 	}
