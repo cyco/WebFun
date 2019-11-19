@@ -10,6 +10,7 @@
 assets/game-data
 assets/game-data/full.txt
 assets/save-games/construct.wld
+assets/ingame-coverage.json
 bin
 build
 config/.babel

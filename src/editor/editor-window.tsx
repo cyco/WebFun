@@ -15,13 +15,14 @@ import SetupImageInspector from "src/editor/inspectors/setup-image-inspector";
 import SoundInspector from "src/editor/inspectors/sound-inspector";
 import TileInspector from "src/editor/inspectors/tile-inspector";
 import ZoneInspector from "src/editor/inspectors/zone-inspector";
+import CoverageInspector from "src/editor/inspectors/coverage-inspector";
 
 import buildEditorMenu from "./menu";
 
 class EditorWindow extends AbstractWindow {
 	static readonly tagName = "wf-resource-editor-window";
 	title: string = "Resource Editor";
-	private _progressIndicator: HTMLElement = <ProgressIndicator />;
+	private _progressIndicator: HTMLElement = (<ProgressIndicator />);
 	private _editor: EditorView = null;
 
 	protected connectedCallback() {
@@ -55,6 +56,7 @@ class EditorWindow extends AbstractWindow {
 		editor.addInspector("character", new CharacterInspector(state.prefixedWith("character")));
 		editor.addInspector("setup-image", new SetupImageInspector(state.prefixedWith("setup-image")));
 		editor.addInspector("palette", new PaletteInspector(state.prefixedWith("palette")));
+		editor.addInspector("coverage", new CoverageInspector(state.prefixedWith("coverage")));
 		editor.data = new DataManager(data, palette, data.type);
 		editor.state = state;
 		this._showMenu(editor);

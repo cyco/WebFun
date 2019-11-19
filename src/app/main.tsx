@@ -6,14 +6,14 @@ import "../_style/global.scss";
 import * as AppComponents from "./ui";
 import * as WindowComponents from "./windows";
 
-import { ComponentJSXRenderer } from "src/ui";
+import { ComponentJSXRenderer, WindowManager } from "src/ui";
 import { ComponentRegistry, Components } from "src/ui";
 
 import GameController from "./game-controller";
 import Settings from "src/settings";
 import { Yoda } from "src/engine/type";
 import { initialize as initializeDebug } from "src/debug";
-
+import { main as RunGameDataEditor } from "src/editor";
 import "./bootstrap-components.ts";
 
 import * as WebFunLib from "../";
@@ -23,13 +23,16 @@ declare global {
 }
 
 const main = async () => {
+	Settings.autostartEngine = false;
 	window.WebFunJSX = new ComponentJSXRenderer();
-	ComponentRegistry.sharedRegistry.registerComponents(Components as any);
-	ComponentRegistry.sharedRegistry.registerComponents(AppComponents as any);
+	ComponentRegistry.sharedRegistry.registerComponents(Components);
+	ComponentRegistry.sharedRegistry.registerComponents(AppComponents);
 	ComponentRegistry.sharedRegistry.registerComponents(WindowComponents as any);
 
 	const gameController = new GameController(Yoda, Settings.url.yoda);
-	gameController.newStory();
+	gameController
+		.newStory()
+		.then(() => RunGameDataEditor(WindowManager.defaultManager, gameController.data));
 	gameController.show();
 
 	if (Settings.debug) {
@@ -38,4 +41,4 @@ const main = async () => {
 };
 
 window.WebFun = WebFunLib;
-window.addEventListener("load", main, { once: true } as any);
+window.addEventListener("load", main, { once: true });

@@ -7,12 +7,14 @@ import { CanvasRenderer } from "src/app/rendering";
 import { SceneView } from "src/app/ui";
 import { GameData, Engine, Story, AssetManager } from "src/engine";
 import { Planet, WorldSize } from "src/engine/types";
-import { Tile, Zone, Puzzle, Sound, Char } from "src/engine/objects";
+import { Tile, Zone, Puzzle, Sound, Char, Action, Condition, Instruction } from "src/engine/objects";
 import { PaletteAnimation, ColorPalette } from "src/engine/rendering";
 import { Renderer as DummyRenderer } from "src/engine/dummy-interface";
 import Settings from "src/settings";
 import { dispatch, Point } from "src/util";
 import { SimulatedStory } from "src/debug";
+import DebuggingScriptProcessingUnit from "src/debug/debugging-script-processing-unit";
+import { ScriptProcessingUnit } from "src/engine/script";
 
 let rawData: any, paletteData: any;
 
@@ -48,7 +50,60 @@ class GameplayContext {
 				this.debug ? new CanvasRenderer.Renderer(this.sceneView.canvas) : new DummyRenderer(),
 			Loader: () => null,
 			SceneManager: () => this.sceneView.manager,
-			AssetManager: () => this.buildAssetManagerFromGameData(rawData)
+			AssetManager: () => this.buildAssetManagerFromGameData(rawData),
+			ScriptProcessingUnit: (engine, conditions, instructions) => {
+				if (typeof window.__webfun_coverage__ === "undefined") {
+					return new ScriptProcessingUnit(engine, conditions, instructions);
+				}
+
+				const spu = new DebuggingScriptProcessingUnit(engine, conditions, instructions);
+				let currentZone: Zone;
+				let currentAction: Action;
+				let coverageAction: any = null;
+				spu.delegate = {
+					executorWillExecute(_, thing) {
+						if (thing instanceof Zone) {
+							currentZone = thing;
+							window.__webfun_coverage__.zones[currentZone.id] =
+								window.__webfun_coverage__.zones[currentZone.id] || {};
+							window.__webfun_coverage__.zones[currentZone.id].visited = true;
+						}
+
+						if (thing instanceof Action) {
+							currentAction = thing;
+							const id = `${currentZone.id.toString()}_${currentAction.id.toString()}`;
+							window.__webfun_coverage__.actions[id] =
+								window.__webfun_coverage__.actions[id] || {};
+							coverageAction = window.__webfun_coverage__.actions[id];
+						}
+
+						if (thing instanceof Condition) {
+							const id = currentAction.conditions.indexOf(thing);
+							coverageAction.conditions = coverageAction.conditions || [];
+							coverageAction.conditions[id] = coverageAction.conditions[id] || 0;
+							coverageAction.conditions[id]++;
+						}
+
+						if (thing instanceof Instruction) {
+							const id = currentAction.instructions.indexOf(thing);
+							coverageAction.instructions = coverageAction.instructions || [];
+							coverageAction.instructions[id] = coverageAction.instructions[id] || 0;
+							coverageAction.instructions[id]++;
+						}
+					},
+
+					executorDidExecute(_, thing) {
+						if (thing instanceof Zone) {
+							currentZone = null;
+						}
+						if (thing instanceof Action) {
+							currentAction = null;
+						}
+					}
+				};
+
+				return spu;
+			}
 		});
 
 		this.engine.palette = new PaletteAnimation(paletteData);

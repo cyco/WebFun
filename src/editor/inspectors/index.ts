@@ -7,6 +7,7 @@ import TileInspector from "./tile-inspector";
 import ZoneInspector from "./zone-inspector";
 import PaletteInspector from "./palette-inspector";
 import SaveGameInspector from "./save-game-inspector";
+import CoverageInspector from "./coverage-inspector";
 
 export {
 	AbstractInspector,
@@ -17,5 +18,6 @@ export {
 	TileInspector,
 	ZoneInspector,
 	PaletteInspector,
-	SaveGameInspector
+	SaveGameInspector,
+	CoverageInspector
 };

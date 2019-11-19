@@ -1,6 +1,7 @@
 const Webpack = require("webpack");
 const webpackConfig = require("./webpack.test.js");
 
+const Path = require("path");
 const Paths = require("./paths");
 
 const ci = !!+process.env.ci;
@@ -23,6 +24,17 @@ const config = {
 		"test/context/*.ts": ["webpack"]
 	},
 	frameworks: ["jasmine", "jasmine-matchers"],
+	plugins: [
+		"karma-chrome-launcher",
+		"karma-coverage",
+		"karma-coverage-istanbul-reporter",
+		"karma-firefox-launcher",
+		"karma-jasmine",
+		"karma-jasmine-matchers",
+		"karma-sonarqube-reporter",
+		"karma-sourcemap-loader",
+		"karma-webpack"
+	],
 	reporters: ["dots"],
 	browsers: ["ChromeHeadless"],
 	webpack: webpackConfig,
@@ -90,6 +102,13 @@ if (includeCoverage) {
 	};
 
 	config.webpack.module.rules[1].use[0].options.plugins = ["istanbul"];
+
+	config.reporters.push("ingame-coverage");
+	config.frameworks.push("ingame-coverage");
+	config.ingameCoverageReporter = {
+		outputFile: Path.join(Paths.assetsRoot, "ingame-coverage.json")
+	};
+	config.plugins.push(require("../test/helpers/ingame-coverage-reporter"));
 }
 
 if (includeJunit && false) {

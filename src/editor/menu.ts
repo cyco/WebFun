@@ -34,7 +34,12 @@ export default (editor: EditorView, window: Window) =>
 				MenuItemAction("Sound", () => editor.show("sound")),
 				MenuItemAction("Setup Image", () => editor.show("setup-image")),
 				MenuItemAction("Palette", () => editor.show("palette")),
-				MenuItemAction("Save Game", () => editor.show("save-game"), () => !!editor.data.state)
+				MenuItemAction(
+					"Save Game",
+					() => editor.show("save-game"),
+					() => !!editor.data.state
+				),
+				MenuItemAction("Coverage", () => editor.show("coverage"))
 			]
 		}
 	] as MenuItemInit[];

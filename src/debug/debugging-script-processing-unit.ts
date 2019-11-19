@@ -1,4 +1,4 @@
-import { Action, Condition, Instruction } from "src/engine/objects";
+import { Action, Condition, Instruction, Zone } from "src/engine/objects";
 import {
 	ConditionImplementation,
 	InstructionImplementation,
@@ -11,7 +11,6 @@ import Engine from "src/engine/engine";
 import InstructionExecutor from "src/engine/script/instruction-executor";
 import Mode from "src/engine/script/evaluation-mode";
 import ScriptProcessingUnit from "src/engine/script/script-processing-unit";
-import { Zone } from "src/engine/objects";
 
 type ConditionStore = ConditionImplementation[];
 type InstructionStore = InstructionImplementation[];
@@ -35,7 +34,7 @@ class DebuggingScriptProcessingUnit extends ScriptProcessingUnit {
 	protected _instructionExecutor: InstructionExecutor;
 	protected _conditionChecker: ConditionChecker;
 	protected _executor: AsyncIterator<ScriptResult> = null;
-	public stopped: boolean = true;
+	public stopped: boolean = false;
 	public delegate: DebuggingScriptProcessingUnitDelegate;
 	protected _engine: Engine;
 
@@ -53,20 +52,13 @@ class DebuggingScriptProcessingUnit extends ScriptProcessingUnit {
 	}
 
 	prepeareExecution(mode: Mode, zone: Zone) {
-		if (this._inUse) {
-			console.warn("Executor is already prepeared!");
-			this._inUse = false;
-		}
-
+		console.assert(!this._inUse, "Executor is already prepeared!");
 		this.willExecute(zone);
 		this._executor = this._buildExecutor(mode, zone);
 	}
 
 	protected async *_buildExecutor(mode: Mode, zone: Zone): AsyncIterator<ScriptResult> {
-		if (this._inUse) {
-			throw new ScriptExecutionError("Executor is already in use!");
-		}
-
+		console.assert(!this._inUse, "Executor is already in use!");
 		this._inUse = true;
 
 		actions: for (const action of zone.actions) {
@@ -108,7 +100,6 @@ class DebuggingScriptProcessingUnit extends ScriptProcessingUnit {
 		this._engine.temporaryState.bump = null;
 
 		if (mode === Mode.PlaceItem) {
-			console.log("clear placed item");
 			this._engine.inputManager.placedTile = null;
 			this._engine.inputManager.placedTileLocation = null;
 		}
@@ -137,14 +128,21 @@ class DebuggingScriptProcessingUnit extends ScriptProcessingUnit {
 
 		const result = await this._executor.next();
 		const normalizedResult = result.value || ScriptResult.Done;
-		if (normalizedResult === ScriptResult.Done) {
+		if (normalizedResult & ScriptResult.Done) {
+			this._executor = null;
+		}
+
+		if ((normalizedResult as any) === Result.UpdateZone) {
+			do {
+				const result = await this._executor.next();
+				if (!result) break;
+				if (!result.value) break;
+				if (result.value & ScriptResult.Done) break;
+			} while (true);
+
 			this._executor = null;
 		}
 		return normalizedResult;
-	}
-
-	public get inUse() {
-		return this._inUse;
 	}
 }
 
