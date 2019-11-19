@@ -20,34 +20,15 @@ class CoverageInspector extends AbstractInspector {
 			};
 		};
 	} = null;
-	private _orderBy = (
-		<InlineSelector
-			onchange={(_: CustomEvent) => this.build()}
-			options={[
-				{
-					value: "zone-id",
-					label: "Zone"
-				},
-				{
-					value: "coverage",
-					label: "% hit"
-				}
-			]}
-			value="zone-id"
-		/>
-	) as InlineSelector<string>;
 
 	constructor(state: Storage) {
 		super(state);
 
 		this.window.title = "Coverage";
 		this.window.autosaveName = "coverage-inspector";
-		this.window.style.width = "514px";
 		this.window.content.style.height = "604px";
 		this.window.content.style.flexDirection = "row";
 		this.window.classList.add("wf-coverage-inspector");
-
-		this.window.addTitlebarButton(this._orderBy);
 	}
 
 	public async build() {
@@ -59,84 +40,107 @@ class CoverageInspector extends AbstractInspector {
 			if (this._coverage) this.build();
 		} else {
 			this.window.content.textContent = "";
-
-			const table = this.data.currentData.zones
-				.map(zone => {
-					const actions = zone.actions.map((_, i) => this._coverage.actions[`${zone.id}_${i}`]);
-					const coveredActions =
-						actions.reduce(
-							(acc: number, ac) =>
-								acc +
-								(ac.conditions.some(i => i > 0) || ac.instructions.some(i => i > 0) ? 1 : 0),
-							0
-						) / (zone.actions.length || 1);
-					const coveredConditions =
-						actions.reduce(
-							(acc: number, ac) =>
-								acc + ac.conditions.map(i => (i > 0 ? 1 : 0)).reduce((a, b) => a + b, 0),
-							0
-						) / (actions.reduce((acc: number, ac) => acc + ac.conditions.length, 0) || 1);
-					const coveredInstructions =
-						actions.reduce(
-							(acc: number, ac) =>
-								acc + ac.instructions.map(i => (i > 0 ? 1 : 0)).reduce((a, b) => a + b, 0),
-							0
-						) / (actions.reduce((acc: number, ac) => acc + ac.instructions.length, 0) || 1);
-
-					return {
-						zone: zone.id,
-						actions: coveredActions,
-						conditions: coveredConditions,
-						instructions: coveredInstructions,
-						total: (coveredActions + coveredConditions + coveredInstructions) / 3
-					};
-				})
-				.reduce(
-					(container, dp) => (
-						[
-							<span className={this.colorClass(dp.total)}>Zone {dp.zone.toString()}</span>,
-							<span className={this.colorClass(dp.total)}>
-								<div className="bar-chart">
-									<div style={{ width: (100 * dp.total).toFixed(2) + "%" }}></div>
-								</div>
-							</span>,
-							<span className={"center " + this.colorClass(dp.total)}>
-								{this.fmt(dp.total)}
-							</span>,
-							<span className={"center " + this.colorClass(dp.actions)}>
-								{this.fmt(dp.actions)}
-							</span>,
-							<span className={"center " + this.colorClass(dp.conditions)}>
-								{this.fmt(dp.conditions)}{" "}
-							</span>,
-							<span className={"center " + this.colorClass(dp.instructions)}>
-								{this.fmt(dp.instructions)}{" "}
-							</span>
-						].forEach(e => container.appendChild(e)),
-						container
-					),
-					document.createElement("div")
-				);
-			table.classList.add("table");
+			const table = (
+				<table>
+					<thead>
+						<tr>
+							{["Zone", "Total", "", "Actions", "", "Conditions", "", "Instructions", ""].map(
+								t => (
+									<th className={t === "" ? "extend-previous-cell" : ""}>{t}</th>
+								)
+							)}
+						</tr>
+					</thead>
+					<tbody>{this.datapoints.map(dp => this.row(dp))}</tbody>
+				</table>
+			);
 			this.window.content.appendChild(table);
 		}
 	}
 
-	private fmt(percentage: number): string {
-		const number = (percentage * 100).toFixed(2).replace(".00", "");
+	private get datapoints() {
+		return this.data.currentData.zones.map(zone => {
+			const actions = zone.actions.map((_, i) => this._coverage.actions[`${zone.id}_${i}`]);
+			const actionsTotal = zone.actions.length;
+			const actionsCovered = actions.reduce(
+				(acc, a) => acc + (a.conditions.some(i => i > 0) || a.instructions.some(i => i > 0) ? 1 : 0),
+				0
+			);
+			const actionsRatio = actionsCovered / (zone.actions.length || 1);
 
-		return number + " %";
+			const conditionsTotal = actions.reduce((acc, ac) => acc + ac.conditions.length, 0);
+			const conditionsCovered = actions.reduce(
+				(acc, ac) => acc + ac.conditions.map(i => (i > 0 ? 1 : 0)).reduce((a, b) => a + b, 0),
+				0
+			);
+			const conditionsRatio = conditionsCovered / (conditionsTotal || 1);
+
+			const instructionsTotal = actions.reduce((acc, ac) => acc + ac.instructions.length, 0);
+			const instructionsCovered = actions.reduce(
+				(acc: number, ac) =>
+					acc + ac.instructions.map(i => (i > 0 ? 1 : 0)).reduce((a, b) => a + b, 0),
+				0
+			);
+			const instructionsRatio = instructionsCovered / (instructionsTotal || 1);
+
+			return {
+				zone: zone.id,
+				actionsTotal: actionsTotal,
+				actionsCovered: actionsCovered,
+				actions: actionsRatio,
+				conditionsTotal: conditionsTotal,
+				conditionsCovered: conditionsCovered,
+				conditions: conditionsRatio,
+				instructionsTotal: instructionsTotal,
+				instructionsCovered: instructionsCovered,
+				instructions: instructionsRatio,
+				total: (actionsRatio + conditionsRatio + instructionsRatio) / 3
+			};
+		});
 	}
 
-	private colorClass(coverage: number): string {
-		if (coverage > 0.75) return "high";
-		if (coverage > 0.5) return "medium";
-		return "low";
+	private row(dp: any) {
+		function pcnt(percentage: number): string {
+			const number = (percentage * 100).toFixed(2).replace(".00", "");
 
-		if (coverage > 0.75) return "rgb(230,245,208)"; // green (light)
-		if (coverage > 0.5) return "#fff4c2";
-		// yellow (light)
-		else return "#FCE1E5"; // red (light)
+			return number + " %";
+		}
+		function n(number: number): string {
+			return number.toString();
+		}
+		function colorClass(coverage: number): string {
+			if (coverage > 0.75) return "high";
+			if (coverage > 0.5) return "medium";
+			return "low";
+
+			if (coverage > 0.75) return "rgb(230,245,208)"; // green (light)
+			if (coverage > 0.5) return "#fff4c2";
+			// yellow (light)
+			else return "#FCE1E5"; // red (light)
+		}
+		return (
+			<tr>
+				<td className={colorClass(dp.total)}>Zone {dp.zone.toString()}</td>
+				<td className={colorClass(dp.total)}>
+					<div className="bar-chart">
+						<div style={{ width: (100 * dp.total).toFixed(2) + "%" }}></div>
+					</div>
+				</td>
+				<td className={"center " + colorClass(dp.total)}>{pcnt(dp.total)}</td>
+				<td className={"center " + colorClass(dp.actions)}>{pcnt(dp.actions)}</td>
+				<td className={"center " + colorClass(dp.actions)}>
+					{n(dp.actionsCovered)}/{n(dp.actionsTotal)}
+				</td>
+				<td className={"center " + colorClass(dp.conditions)}>{pcnt(dp.conditions)}</td>
+				<td className={"center " + colorClass(dp.conditions)}>
+					{n(dp.conditionsCovered)}/{n(dp.conditionsTotal)}
+				</td>
+				<td className={"center " + colorClass(dp.instructions)}>{pcnt(dp.instructions)}</td>
+				<td className={"center " + colorClass(dp.instructions)}>
+					{n(dp.instructionsCovered)}/{n(dp.instructionsTotal)}
+				</td>
+			</tr>
+		);
 	}
 
 	private async loadCoverage(): Promise<string> {

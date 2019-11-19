@@ -29,6 +29,12 @@ declare global {
 			ul: Styleable<HTMLUListElement>;
 			li: Styleable<HTMLLIElement>;
 			textarea: Styleable<HTMLTextAreaElement>;
+			table: Styleable<HTMLTableElement>;
+			tr: Styleable<HTMLTableRowElement>;
+			td: Styleable<HTMLTableCellElement>;
+			tbody: Styleable<HTMLTableSectionElement>;
+			thead: Styleable<HTMLTableSectionElement>;
+			th: Styleable<HTMLTableCellElement>;
 		}
 
 		interface Element extends HTMLElement {}

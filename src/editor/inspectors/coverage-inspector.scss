@@ -6,17 +6,34 @@
 	}
 
 	.content {
-		.table {
-			display: grid;
-			grid-template-columns: 94px 120px 75px 75px 75px 75px;
-			grid-gap: 1px;
-			background: #bbb;
+		> table {
+			border-collapse: collapse;
+			th,
+			td {
+				padding: 10px;
+				white-space: nowrap;
+			}
+
+			th {
+				text-align: left;
+				background: white;
+				border-bottom: 1px solid darkgray;
+
+				& + th {
+					border-left: 1px solid darkgray;
+				}
+
+				&.extend-previous-cell {
+					border-left: 0px;
+				}
+			}
+
+			td {
+				border: 1px solid #bbb;
+			}
 
 			.center {
 				text-align: center;
-			}
-			> span {
-				padding: 10px;
 			}
 
 			&.low,
