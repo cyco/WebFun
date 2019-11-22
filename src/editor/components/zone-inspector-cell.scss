@@ -6,7 +6,7 @@ wf-zone-inspector-cell {
 	display: flex;
 	flex-direction: row;
 
-	.icon {
+	> wf-debug-tile-view {
 		@include inset-border-inverted(1px);
 		border-left-width: 0;
 		height: 30px;
