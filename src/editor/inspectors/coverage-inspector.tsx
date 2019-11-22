@@ -2,6 +2,27 @@ import AbstractInspector from "./abstract-inspector";
 import { InlineSelector, ProgressIndicator } from "src/ui/components";
 import "./coverage-inspector.scss";
 
+type DataPoint = {
+	zone: number;
+	actionsTotal: number;
+	actionsCovered: number;
+	actions: number;
+	conditionsTotal: number;
+	conditionsCovered: number;
+	conditions: number;
+	instructionsTotal: number;
+	instructionsCovered: number;
+	instructions: number;
+	total: number;
+};
+
+type SortDescriptor = (dp1: DataPoint, dp2: DataPoint) => number;
+function sortBy(key: keyof DataPoint) {
+	return (dp1: DataPoint, dp2: DataPoint) => {
+		return dp1[key] - dp2[key];
+	};
+}
+
 class CoverageInspector extends AbstractInspector {
 	private _coverage: {
 		zones: {
@@ -20,6 +41,33 @@ class CoverageInspector extends AbstractInspector {
 			};
 		};
 	} = null;
+	private _invertSortDescriptor = false;
+	private _datapoints: DataPoint[];
+	private _aggregatedCoverage: {
+		actionsTotal: number;
+		actionsCovered: number;
+		actions: number;
+		conditionsTotal: number;
+		conditionsCovered: number;
+		conditions: number;
+		instructionsTotal: number;
+		instructionsCovered: number;
+		instructions: number;
+		total: number;
+		zones: number;
+	};
+	private _columns: [string, SortDescriptor][] = [
+		["", sortBy("zone")],
+		["Total", sortBy("total")],
+		["", sortBy("total")],
+		["Actions", sortBy("actions")],
+		["", sortBy("actionsTotal")],
+		["Conditions", sortBy("conditions")],
+		["", sortBy("conditionsTotal")],
+		["Instructions", sortBy("instructions")],
+		["", sortBy("instructionsTotal")]
+	];
+	private _sortDescriptor: (dp1: DataPoint, dp2: DataPoint) => number;
 
 	constructor(state: Storage) {
 		super(state);
@@ -27,8 +75,10 @@ class CoverageInspector extends AbstractInspector {
 		this.window.title = "Coverage";
 		this.window.autosaveName = "coverage-inspector";
 		this.window.content.style.height = "604px";
-		this.window.content.style.flexDirection = "row";
+		this.window.content.style.flexDirection = "column";
 		this.window.classList.add("wf-coverage-inspector");
+
+		this._sortDescriptor = this._columns[0][1];
 	}
 
 	public async build() {
@@ -40,26 +90,98 @@ class CoverageInspector extends AbstractInspector {
 			if (this._coverage) this.build();
 		} else {
 			this.window.content.textContent = "";
-			const table = (
-				<table>
-					<thead>
-						<tr>
-							{["Zone", "Total", "", "Actions", "", "Conditions", "", "Instructions", ""].map(
-								t => (
-									<th className={t === "" ? "extend-previous-cell" : ""}>{t}</th>
-								)
-							)}
-						</tr>
-					</thead>
-					<tbody>{this.datapoints.map(dp => this.row(dp))}</tbody>
-				</table>
-			);
-			this.window.content.appendChild(table);
+			this.window.content.appendChild(this.renderOverview());
+			this.window.content.appendChild(this.renderCoverageTable());
 		}
 	}
 
+	private renderOverview() {
+		function pcnt(percentage: number): string {
+			const number = (percentage * 100).toFixed(2).replace(".00", "");
+
+			return number + "%";
+		}
+		function n(number: number): string {
+			return number.toString();
+		}
+
+		const zonesCovered = this.datapoints.reduce((acc, dp) => (acc + dp.actionsCovered > 0 ? 1 : 0), 0);
+		const zonesTotal = this.datapoints.length;
+
+		const actionsCovered = this.datapoints.reduce((acc, dp) => acc + dp.actionsCovered, 0);
+		const actionsTotal = this.datapoints.reduce((acc, dp) => acc + dp.actionsTotal, 0);
+
+		const instructionsCovered = this.datapoints.reduce((acc, dp) => acc + dp.instructionsCovered, 0);
+		const instructionsTotal = this.datapoints.reduce((acc, dp) => acc + dp.instructionsTotal, 0);
+
+		const conditionsCovered = this.datapoints.reduce((acc, dp) => acc + dp.conditionsCovered, 0);
+		const conditionsTotal = this.datapoints.reduce((acc, dp) => acc + dp.conditionsTotal, 0);
+
+		return (
+			<div>
+				<span>
+					<span className="percentage">{pcnt(zonesCovered / zonesTotal)}</span> Zones{" "}
+					<span className="details">
+						{n(zonesCovered)}/{n(zonesTotal)}
+					</span>
+				</span>
+				<span>
+					<span className="percentage">{pcnt(actionsCovered / actionsTotal)}</span> Actions{" "}
+					<span className="details">
+						{n(actionsCovered)}/{n(actionsTotal)}
+					</span>
+				</span>
+				<span>
+					<span className="percentage">{pcnt(conditionsCovered / conditionsTotal)}</span> Conditions{" "}
+					<span className="details">
+						{n(conditionsCovered)}/{n(conditionsTotal)}
+					</span>
+				</span>
+				<span>
+					<span className="percentage">{pcnt(instructionsCovered / instructionsTotal)}</span>{" "}
+					Instructions{" "}
+					<span className="details">
+						{n(instructionsCovered)}/{n(instructionsTotal)}
+					</span>
+				</span>
+			</div>
+		);
+	}
+
+	private renderCoverageTable() {
+		return (
+			<table>
+				<thead>
+					<tr>
+						{this._columns.map(([t, s]) => (
+							<th
+								className={t === "" ? "extend-previous-cell" : ""}
+								onclick={() => (this.sortDescriptor = s)}
+							>
+								{t}
+							</th>
+						))}
+					</tr>
+				</thead>
+				<tbody>{this.datapoints.sort(this.sortDescriptor).map(dp => this.row(dp))}</tbody>
+			</table>
+		);
+	}
+
+	private get aggregatedCoverage() {
+		if (this._aggregatedCoverage) {
+			return this._aggregatedCoverage;
+		}
+
+		this._aggregatedCoverage = {} as any;
+		this.datapoints.reduce((agg, dp) => {
+			return agg;
+		}, this._aggregatedCoverage);
+	}
+
 	private get datapoints() {
-		return this.data.currentData.zones.map(zone => {
+		if (this._datapoints) return this._datapoints;
+		this._datapoints = this.data.currentData.zones.map(zone => {
 			const actions = zone.actions.map((_, i) => this._coverage.actions[`${zone.id}_${i}`]);
 			const actionsTotal = zone.actions.length;
 			const actionsCovered = actions.reduce(
@@ -97,6 +219,7 @@ class CoverageInspector extends AbstractInspector {
 				total: (actionsRatio + conditionsRatio + instructionsRatio) / 3
 			};
 		});
+		return this._datapoints;
 	}
 
 	private row(dp: any) {
@@ -151,6 +274,24 @@ class CoverageInspector extends AbstractInspector {
 			reader.onerror = event => reject(event);
 			reader.send(void 0);
 		});
+	}
+
+	public set sortDescriptor(s) {
+		if (this._sortDescriptor === s) {
+			this._invertSortDescriptor = !this._invertSortDescriptor;
+		} else {
+			this._invertSortDescriptor = false;
+		}
+		this._sortDescriptor = s;
+
+		this.build();
+	}
+
+	public get sortDescriptor() {
+		if (this._invertSortDescriptor)
+			return (a: DataPoint, b: DataPoint) => -1 * this._sortDescriptor(a, b);
+
+		return this._sortDescriptor;
 	}
 }
 

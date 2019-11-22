@@ -6,6 +6,41 @@
 	}
 
 	.content {
+		> div {
+			flex-direction: row;
+			font-family: Helvetica Neue, Helvetica, Arial;
+			font-size: 14px;
+			color: rgba(0, 0, 0, 0.5);
+			padding: 10px;
+			background: white;
+			line-height: 14px;
+			border-bottom: 1px solid darkgray;
+			display: flex;
+			flex-direction: row;
+			justify-items: center;
+			justify-content: space-evenly;
+			flex-shrink: 0;
+
+			> span {
+				padding: 4px;
+			}
+
+			.percentage {
+				font-weight: bold;
+				color: #333;
+			}
+
+			.details {
+				font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+				font-size: 10px;
+				color: #555;
+				background: #e8e8e8;
+				padding: 4px 5px;
+				border-radius: 3px;
+				vertical-align: middle;
+			}
+		}
+
 		> table {
 			border-collapse: collapse;
 			th,
