@@ -15,6 +15,8 @@ import TilePickerCell from "./tile-picker-cell";
 import PopoverTilePicker from "./popover-tile-picker";
 import PopoutTilePicker from "./popout-tile-picker";
 import PopoverCharacterPicker from "./popover-character-picker";
+import SourceLevelCoverage from "./source-level-coverage";
+import SymbolicCoverage from "./symbolic-coverage";
 import {
 	HotspotLayer,
 	MonsterLayer,
@@ -33,36 +35,38 @@ import { Editor as ActionEditor, Token as ActionEditorToken } from "./action-edi
 import { Editor as TileEditor } from "./tile-editor";
 
 export {
-	MonsterLayer,
-	MonsterLayerMonster,
-	ActionEditorToken,
 	ActionEditor,
-	TilePickerCell,
-	TilePicker,
-	ZoneEditorTool,
-	ZoneEditorSidebarLayer,
-	ZoneEditorSidebarLayerCell,
-	ZoneEditorSidebarCell,
-	ZoneEditorAction,
-	ExpandButton,
+	ActionEditorToken,
 	CharacterDetails,
-	PopoverCharacterPicker,
 	CharacterFramePreview,
 	CharacterInspectorCell,
-	PopoverTilePicker,
 	ColorPicker,
 	ColorWheel,
+	ExpandButton,
+	HotspotLayer,
+	MonsterLayer,
+	MonsterLayerMonster,
+	PaletteColorPicker,
+	PaletteImageEditor,
 	PaletteView,
+	PopoutTilePicker,
+	PopoverCharacterPicker,
+	PopoverTilePicker,
 	PuzzleInspectorCell,
 	SoundInspectorCell,
+	SourceLevelCoverage,
+	SymbolicCoverage,
+	TileEditor,
+	TilePicker,
+	TilePickerCell,
+	ZoneEditorAction,
+	ZoneEditorSidebar,
+	ZoneEditorSidebarCell,
+	ZoneEditorSidebarLayer,
+	ZoneEditorSidebarLayerCell,
+	ZoneEditorTool,
 	ZoneEditorView,
 	ZoneEditorWindow,
 	ZoneInspectorCell,
-	ZoneEditorSidebar,
-	ZoneLayer,
-	HotspotLayer,
-	PaletteColorPicker,
-	PaletteImageEditor,
-	TileEditor,
-	PopoutTilePicker
+	ZoneLayer
 };

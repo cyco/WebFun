@@ -6,6 +6,7 @@ class InlineSelector<T> extends Component implements EventListenerObject {
 	public static readonly tagName = "wf-inline-selector";
 	private _options: { label: string; value: T }[] = [];
 	private _value: T = null;
+	public onchange: (e: Event) => void;
 
 	connectedCallback() {
 		super.connectedCallback();
@@ -27,6 +28,7 @@ class InlineSelector<T> extends Component implements EventListenerObject {
 						this.value = this.options[+select.value].value;
 						select.remove();
 						e.stopPropagation();
+						if (this.onchange) this.onchange(new CustomEvent("change"));
 						this.dispatchEvent(new CustomEvent("change"));
 					}}
 					onblur={() => select.remove()}
