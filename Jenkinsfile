@@ -2,7 +2,7 @@ pipeline {
     agent {
         dockerfile {
             filename 'Dockerfile.CI'
-            args  '--network=infrastructure_internal --link sonarqube:sonarqube'
+            args  '--network=infrastructure_internal --link infrastructure_sonarqube_1:sonarqube'
         }
     }
 	options { timestamps() }
