@@ -20,8 +20,8 @@ abstract class AbstractList<T> extends Component {
 	public static readonly observedAttributes: string[] = [];
 
 	public cell: Cell<T>;
-	private _bar: SearchBar;
-	private _content: HTMLElement;
+	private _bar: SearchBar = (<SearchBar />) as SearchBar;
+	private _content: HTMLElement = (<div />);
 	protected _items: T[] = [];
 	protected _cells: Cell<T>[] = [];
 	private _shortcut: Shortcut;
@@ -30,13 +30,6 @@ abstract class AbstractList<T> extends Component {
 	private _lastSearchValue: string = "";
 	private _closeSearchbarShortcut: Shortcut;
 	private _state: Storage = new DiscardingStorage();
-
-	constructor() {
-		super();
-
-		this._bar = document.createElement(SearchBar.tagName) as SearchBar;
-		this._content = document.createElement("div");
-	}
 
 	protected connectedCallback() {
 		if (this.searchDelegate && !this._bar.parentElement)

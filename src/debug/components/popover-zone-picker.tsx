@@ -40,7 +40,7 @@ class PopoverZonePicker extends Component implements EventListenerObject {
 				zones={this.filteredZones}
 				palette={this.palette}
 				zone={this.zone}
-				style={{ width: "300px", height: "400px" }}
+				style={{ width: "258px", height: "400px" }}
 				state={this.state}
 			/>
 		) as ZonePicker;
@@ -49,9 +49,10 @@ class PopoverZonePicker extends Component implements EventListenerObject {
 			this.pickerOnChange(picker, e);
 			session.end(1);
 		});
-		session.onclick = () => session.end(0);
+		session.onclick = (e: Event) => !(e.target as any).closest(Popover.tagName) && session.end(0);
 		popover.content.appendChild(picker);
 		session.run();
+		picker.focus();
 
 		e.stopPropagation();
 	}
