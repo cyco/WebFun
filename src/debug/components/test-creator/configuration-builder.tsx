@@ -14,12 +14,12 @@ class ConfigurationBuilder extends Component {
 		<SimulationConfigurationBuilder />
 	) as SimulationConfigurationBuilder;
 	private _worldConfigurationBuilder = (<WorldConfigurationBuilder />) as WorldConfigurationBuilder;
-	private _initialConfiguration: Configuration = { inventory: [0x12] } as any;
+	private _initialConfiguration: Configuration;
 
 	public connectedCallback() {
 		super.connectedCallback();
 
-		const config = this._initialConfiguration;
+		const config: Configuration = this._initialConfiguration ?? ({} as any);
 		this.append(
 			...[
 				<SegmentControl
