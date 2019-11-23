@@ -61,4 +61,4 @@ declare global {
 	let fdescribeMonsterMovement: describeMonsterMovement;
 }
 
-export { getFixtureContent, describeMonsterMovement };
+export { getFixtureContent, describeMonsterMovement, fdescribeMonsterMovement, xdescribeMonsterMovement };

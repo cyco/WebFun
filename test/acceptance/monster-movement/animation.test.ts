@@ -6,7 +6,7 @@ describeMonsterMovement(Char.MovementType.Animation, (ctx, tick, vars) => {
 	it("moves as expected", async () => {
 		const { char, zone, InitialPosition, monster } = vars;
 		ctx.engine.metronome.start();
-		const tileId = () => zone.getTile(InitialPosition.x, InitialPosition.y, Zone.Layer.Object).id;
+		const tileId = () => zone.getTile(InitialPosition.x, InitialPosition.y, Zone.Layer.Object)?.id ?? -1;
 
 		await tick(".");
 		expect(monster.position).toEqual(InitialPosition);

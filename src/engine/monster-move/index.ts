@@ -55,10 +55,13 @@ function handleRemainingBullet(monster: Monster, zone: Zone, engine: Engine) {
 
 export default (monster: Monster, zone: Zone, engine: Engine): void => {
 	if (!monster.face) return;
-	if (!monster.enabled) {
+	if (!monster.alive || !monster.enabled) {
 		handleRemainingBullet(monster, zone, engine);
 		CharSetDefaultFace(monster.face, monster.direction);
-		if (zone.getTile(monster.position.x, monster.position.y, Zone.Layer.Object) === monster.face.tile) {
+		if (
+			!monster.alive &&
+			zone.getTile(monster.position.x, monster.position.y, Zone.Layer.Object) === monster.face.tile
+		) {
 			zone.setTile(null, monster.position.x, monster.position.y, Zone.Layer.Object);
 		}
 		return;
