@@ -12,7 +12,7 @@ import { drawZoneImageData } from "src/app/rendering/canvas";
 
 class PopoverZonePicker extends Component implements EventListenerObject {
 	public static readonly tagName = "wf-debug-popover-zone-picker";
-	private _canvas: HTMLCanvasElement = <canvas /> as HTMLCanvasElement;
+	private _canvas: HTMLCanvasElement = (<canvas />) as HTMLCanvasElement;
 	public filter: (_: Zone) => boolean = null;
 	private _zone: Zone;
 	public _palette: ColorPalette;
@@ -47,8 +47,9 @@ class PopoverZonePicker extends Component implements EventListenerObject {
 
 		picker.addEventListener(ZonePickerEvents.ZoneDidChange, (e: CustomEvent) => {
 			this.pickerOnChange(picker, e);
-			session.end(5);
+			session.end(1);
 		});
+		session.onclick = () => session.end(0);
 		popover.content.appendChild(picker);
 		session.run();
 
