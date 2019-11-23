@@ -28,7 +28,12 @@ class PopoverZonePicker extends Component implements EventListenerObject {
 	public handleEvent(e: MouseEvent) {
 		if (this.disabled) return;
 
-		const popover = <Popover /> as Popover;
+		const { left, top } = this.getBoundingClientRect();
+		const popover = (
+			<Popover
+				style={{ position: "absolute", left: `${left.toString()}px`, top: `${top.toString()}px` }}
+			/>
+		) as Popover;
 		const session = new PopoverModalSession(popover);
 		const picker = (
 			<ZonePicker
