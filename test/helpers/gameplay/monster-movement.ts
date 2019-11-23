@@ -130,6 +130,7 @@ const makeFunction = (describe: any): describeMonsterMovement => (
 				const monster = new MutableMonster();
 				monster.id = 0;
 				monster.enabled = true;
+
 				return monster;
 			}
 

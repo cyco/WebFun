@@ -73,7 +73,7 @@ class ZoneScene extends Scene {
 		if (scriptResult !== ScriptResult.Done) {
 			return;
 		}
-		this._moveNPCs();
+		this._moveMonsers();
 
 		const stop = await this.handleInput();
 		if (stop) return;
@@ -196,8 +196,8 @@ class ZoneScene extends Scene {
 		}
 	}
 
-	private _moveNPCs() {
-		this._zone.monsters.forEach(npc => moveMonster(npc, this.zone, this.engine));
+	private _moveMonsers() {
+		this._zone.monsters.forEach(monster => moveMonster(monster, this.zone, this.engine));
 	}
 
 	prepareCamera() {
@@ -348,11 +348,7 @@ class ZoneScene extends Scene {
 			return ScriptResult.Done;
 		}
 
-		const htspResult = this.engine.hpu.execute(
-			HotspotExecutionMode.PlaceTile,
-			location,
-			tile
-		);
+		const htspResult = this.engine.hpu.execute(HotspotExecutionMode.PlaceTile, location, tile);
 
 		if (
 			htspResult & HotspotExecutionResult.Speak ||
