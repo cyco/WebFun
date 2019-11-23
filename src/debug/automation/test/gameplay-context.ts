@@ -82,6 +82,10 @@ class GameplayContext {
 							coverageAction.conditions = coverageAction.conditions || [];
 							coverageAction.conditions[id] = coverageAction.conditions[id] || 0;
 							coverageAction.conditions[id]++;
+
+							window.__webfun_coverage__.conditions[thing.opcode] =
+								window.__webfun_coverage__.conditions[thing.opcode] || 0;
+							window.__webfun_coverage__.conditions[thing.opcode]++;
 						}
 
 						if (thing instanceof Instruction) {
@@ -89,6 +93,10 @@ class GameplayContext {
 							coverageAction.instructions = coverageAction.instructions || [];
 							coverageAction.instructions[id] = coverageAction.instructions[id] || 0;
 							coverageAction.instructions[id]++;
+
+							window.__webfun_coverage__.instructions[thing.opcode] =
+								window.__webfun_coverage__.instructions[thing.opcode] || 0;
+							window.__webfun_coverage__.instructions[thing.opcode]++;
 						}
 					},
 
