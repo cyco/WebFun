@@ -39,6 +39,8 @@ class CoverageInspector extends AbstractInspector {
 		this.window.classList.add("wf-coverage-inspector");
 		this.window.addTitlebarButton(this._viewModeSelector);
 
+		this._sourceLevelCoverage.state = state.prefixedWith("source-level");
+		this._symbolicCoverage.state = state.prefixedWith("symbolic");
 		this._viewModeSelector.value =
 			(+state.load(ViewModeStateKey) as ViewMode) || this._viewModeSelector.options[0].value;
 	}
@@ -58,7 +60,7 @@ class CoverageInspector extends AbstractInspector {
 			this.covergeLoaded = true;
 			this.build();
 		} else {
-			this.state.store(ViewModeStateKey, this._viewModeSelector.value.toString());
+			this.state.store(ViewModeStateKey, this._viewModeSelector.value);
 			this.window.content.textContent = "";
 			this.window.content.appendChild(this.currentView);
 		}

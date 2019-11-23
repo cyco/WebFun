@@ -2,6 +2,7 @@ import "./source-level-coverage.scss";
 
 import { Component } from "src/ui";
 import DataManager from "../data-manager";
+import { DiscardingStorage } from "src/util";
 
 type DataPoint = {
 	zone: number;
@@ -24,9 +25,12 @@ function sortBy(key: keyof DataPoint) {
 	};
 }
 
+const SortDescriptorKey = "sort-column";
+const InvertSortDescriptorKey = "sort-inverted";
 class SourceLevelCoverage extends Component {
 	public static readonly tagName = "wf-editor-source-level-coverage";
 	public static readonly observedAttributes: string[] = [];
+	private _state: Storage = new DiscardingStorage();
 
 	public data: DataManager;
 	private _coverage: {
@@ -78,6 +82,8 @@ class SourceLevelCoverage extends Component {
 	}
 
 	private rebuild() {
+		if (!this.isConnected) return;
+
 		this.textContent = "";
 		this.appendChild(this.renderOverview());
 		this.appendChild(this.renderCoverageTable());
@@ -251,6 +257,12 @@ class SourceLevelCoverage extends Component {
 		}
 		this._sortDescriptor = s;
 
+		this._state.store(
+			SortDescriptorKey,
+			this._columns.findIndex(([_, sd]) => s == sd)
+		);
+		this._state.store(InvertSortDescriptorKey, this._invertSortDescriptor);
+
 		this.rebuild();
 	}
 
@@ -267,6 +279,21 @@ class SourceLevelCoverage extends Component {
 
 	public get coverage() {
 		return this._coverage;
+	}
+
+	set state(state: Storage) {
+		this._state = state;
+
+		const sortColumnIdx = state.load(SortDescriptorKey) ?? 0;
+		const sortColumn = this._columns[sortColumnIdx] ?? this._columns.first();
+		this._sortDescriptor = sortColumn[1];
+		this._invertSortDescriptor = state.load(InvertSortDescriptorKey) ?? false;
+
+		this.rebuild();
+	}
+
+	get state() {
+		return this._state;
 	}
 }
 

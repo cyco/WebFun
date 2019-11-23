@@ -3,8 +3,6 @@ import "./symbolic-coverage.scss";
 import { Component } from "src/ui";
 import DataManager from "../data-manager";
 import {
-	Condition,
-	Instruction,
 	ConditionsByName,
 	InstructionsByName,
 	ConditionsByOpcode,
@@ -12,6 +10,7 @@ import {
 } from "src/engine/script";
 
 import { min, max } from "src/std/math";
+import { DiscardingStorage } from "src/util";
 
 type DataPoint = {
 	type: "Condition" | "Instruction";
@@ -20,6 +19,8 @@ type DataPoint = {
 	opcode: number;
 	hits: number;
 };
+const SortDescriptorKey = "sort-column";
+const InvertSortDescriptorKey = "sort-inverted";
 
 type SortDescriptor = (dp1: DataPoint, dp2: DataPoint) => number;
 function sortBy(key: keyof DataPoint) {
@@ -39,6 +40,7 @@ class SymbolicCoverage extends Component {
 	public static readonly tagName = "wf-editor-symbolic-coverage";
 	public static readonly observedAttributes: string[] = [];
 	public data: DataManager;
+	private _state: Storage = new DiscardingStorage();
 	private _coverage: {
 		instructions: {
 			[_: number]: number;
@@ -75,6 +77,8 @@ class SymbolicCoverage extends Component {
 	}
 
 	private rebuild() {
+		if (!this.isConnected) return;
+
 		this.textContent = "";
 		this.appendChild(this.renderOverview());
 		this.appendChild(this.renderCoverageTable());
@@ -82,9 +86,7 @@ class SymbolicCoverage extends Component {
 
 	private renderOverview() {
 		function pcnt(percentage: number): string {
-			const number = (percentage * 100).toFixed(2).replace(".00", "");
-
-			return number + "%";
+			return (max(0, min(1, percentage)) * 100).toFixed(2).replace(".00", "") + "%";
 		}
 		function n(number: number): string {
 			return number.toString();
@@ -206,6 +208,12 @@ class SymbolicCoverage extends Component {
 		}
 		this._sortDescriptor = s;
 
+		this._state.store(
+			SortDescriptorKey,
+			this._columns.findIndex(([_, sd]) => s == sd)
+		);
+		this._state.store(InvertSortDescriptorKey, this._invertSortDescriptor);
+
 		this.rebuild();
 	}
 
@@ -222,6 +230,21 @@ class SymbolicCoverage extends Component {
 
 	public get coverage() {
 		return this._coverage;
+	}
+
+	set state(state: Storage) {
+		this._state = state;
+
+		const sortColumnIdx = state.load(SortDescriptorKey) ?? 0;
+		const sortColumn = this._columns[sortColumnIdx] ?? this._columns.first();
+		this._sortDescriptor = sortColumn[1];
+		this._invertSortDescriptor = state.load(InvertSortDescriptorKey) ?? false;
+
+		this.rebuild();
+	}
+
+	get state() {
+		return this._state;
 	}
 }
 
