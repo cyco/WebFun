@@ -19,7 +19,7 @@ abstract class PopoverTilePicker extends Component implements EventListenerObjec
 
 	protected _tiles: Tile[] = null;
 	protected _tile: Tile = null;
-	protected _tileView = <TileComponent /> as TileComponent;
+	protected _tileView = (<TileComponent />) as TileComponent;
 
 	protected connectedCallback() {
 		super.connectedCallback();
@@ -33,7 +33,12 @@ abstract class PopoverTilePicker extends Component implements EventListenerObjec
 	}
 
 	public handleEvent(e: MouseEvent) {
-		const popover = <Popover /> as Popover;
+		const { left, top } = this.getBoundingClientRect();
+		const popover = (
+			<Popover
+				style={{ position: "absolute", left: `${left.toString()}px`, top: `${top.toString()}px` }}
+			/>
+		) as Popover;
 		const session = new PopoverModalSession(popover);
 		const picker = (
 			<TilePicker
@@ -47,10 +52,12 @@ abstract class PopoverTilePicker extends Component implements EventListenerObjec
 
 		picker.addEventListener(TilePickerEvents.TileDidChange, (e: CustomEvent) => {
 			this.pickerOnChange(picker, e);
-			session.end(5);
+			session.end(1);
 		});
 		popover.content.appendChild(picker);
+		session.onclick = (e: Event) => !(e.target as any).closest(Popover.tagName) && session.end(0);
 		session.run();
+		picker.focus();
 
 		e.stopPropagation();
 	}
