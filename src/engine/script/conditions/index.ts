@@ -17,7 +17,7 @@ import HeroIsAt from "./hero-is-at";
 import IsVariable from "./is-variable";
 import ItemPlaced from "./item-placed";
 import NoItemPlaced from "./no-item-placed";
-import MonsterIsActive from "./monster-is-active";
+import MonsterIsDead from "./monster-is-dead";
 import PlacedItemIs from "./placed-item-is";
 import PlacedItemIsNot from "./placed-item-is-not";
 import RandomIs from "./random-is";
@@ -54,7 +54,7 @@ const ConditionsByName = {
 	HeroIsAt,
 	IsVariable,
 	ItemPlaced,
-	MonsterIsActive,
+	MonsterIsDead,
 	NoItemPlaced,
 	PlacedItemIs,
 	PlacedItemIsNot,

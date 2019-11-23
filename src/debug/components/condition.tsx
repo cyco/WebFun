@@ -94,7 +94,7 @@ class ConditionComponent extends InstructionThing {
 				);
 				this.appendTileArgument(this._condition.arguments[0]);
 				break;
-			case Conditions.MonsterIsActive.Opcode:
+			case Conditions.MonsterIsDead.Opcode:
 				this.appendNumberArgument(this._condition.arguments[0]);
 				break;
 			case Conditions.HasNoActiveMonsters.Opcode:
