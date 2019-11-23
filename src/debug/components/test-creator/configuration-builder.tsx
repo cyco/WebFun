@@ -13,8 +13,8 @@ class ConfigurationBuilder extends Component {
 	private _simulationConfigurationBuilder = (
 		<SimulationConfigurationBuilder />
 	) as SimulationConfigurationBuilder;
-	private _worldConfigurationBuilder = <WorldConfigurationBuilder /> as WorldConfigurationBuilder;
-	private _initialConfiguration: Configuration = {} as any;
+	private _worldConfigurationBuilder = (<WorldConfigurationBuilder />) as WorldConfigurationBuilder;
+	private _initialConfiguration: Configuration = { inventory: [0x12] } as any;
 
 	public connectedCallback() {
 		super.connectedCallback();

@@ -1,0 +1,13 @@
+-= WebFun Test =--
+Description: Quest NPC should not drop items until all monsters are dead
+Tag: regression
+
+Seed: 0x202
+Zone: 0x202
+Find: 0x1db
+
+- Input -
+. . . . . → → → → → . . . . . . . ↑ . . . . . ↑ ↗ → → → ↗ ↑ ↑ ↑ ↑ → → . . . → . .
+
+- Expect -
+Inventory does not contain: 0x1db

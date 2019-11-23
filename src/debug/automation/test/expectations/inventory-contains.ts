@@ -5,7 +5,7 @@ class InventoryContainsExpectation implements expectation {
 	private items: number[];
 
 	public static CanBeBuiltFrom(value: string) {
-		return value.contains("inventory:");
+		return value.contains("inventory:") && !value.contains("not");
 	}
 
 	public static BuildFrom(it: IteratorResult<string, string>): InventoryContainsExpectation {
