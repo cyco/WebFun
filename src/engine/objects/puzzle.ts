@@ -59,7 +59,7 @@ class Puzzle {
 	}
 }
 
-namespace Puzzle {
+declare namespace Puzzle {
 	export type Type = PuzzleType;
 }
 

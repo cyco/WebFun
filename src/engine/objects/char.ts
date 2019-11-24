@@ -115,7 +115,7 @@ class Char {
 	}
 }
 
-namespace Char {
+declare namespace Char {
 	export type Frame = CharFrame;
 	export type FrameEntry = CharFrameEntry;
 	export type Type = CharType;

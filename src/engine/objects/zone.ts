@@ -229,7 +229,8 @@ class Zone {
 		return this._actions;
 	}
 }
-namespace Zone {
+
+declare namespace Zone {
 	export type Layer = ZoneLayer;
 	export type Type = ZoneType;
 }

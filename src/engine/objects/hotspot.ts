@@ -17,7 +17,7 @@ class Hotspot {
 	}
 }
 
-namespace Hotspot {
+declare namespace Hotspot {
 	export type Type = HotspotType;
 }
 

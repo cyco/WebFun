@@ -176,7 +176,7 @@ class Tile {
 	}
 }
 
-namespace Tile {
+declare namespace Tile {
 	export type Attributes = TileAttributes;
 }
 
