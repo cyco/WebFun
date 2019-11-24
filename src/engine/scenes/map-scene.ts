@@ -1,5 +1,5 @@
 import { CheatCodeInput, Invincibility, RequiredItems, UnlimitedAmmo, Weapons } from "src/engine/cheats";
-import { Point, Size } from "src/util";
+import { Point, Size, rgba } from "src/util";
 import { Tile, Zone } from "src/engine/objects";
 
 import Renderer from "../rendering/renderer";
@@ -10,6 +10,8 @@ import SpeechScene from "./speech-scene";
 import RoomTransitionScene from "./room-transition-scene";
 import World from "src/engine/world";
 import ZoneScene from "./zone-scene";
+import { Renderer as CanvasRenderer } from "src/app/rendering/canvas";
+import PuzzleDependencyGraph from "src/debug/puzzle-dependency-graph";
 
 const MapTileWidth = 28;
 const MapTileHeight = 28;
@@ -48,12 +50,14 @@ class MapScene extends Scene {
 		new RequiredItems()
 	]);
 	private _locatorTile = new LocatorTile();
+	private _pdg: PuzzleDependencyGraph;
 
 	isOpaque() {
 		return true;
 	}
 
 	willShow() {
+		this._pdg = new PuzzleDependencyGraph(this.engine);
 		this._cheatInput.reset();
 
 		this._ticks = 4;
@@ -316,7 +320,26 @@ class MapScene extends Scene {
 
 		result.data.set(byteArray);
 		renderer.renderImageData(result, 0, 0);
-		return;
+
+		if (Settings.drawDebugStats && engine.currentWorld === engine.world) {
+			this._renderPDG(renderer as CanvasRenderer);
+		}
+	}
+
+	private _renderPDG(renderer: CanvasRenderer) {
+		const order = this._pdg.visitOrder;
+		for (let y = 0; y < 10; y++) {
+			for (let x = 0; x < 10; x++) {
+				const v = order[y * 10 + x] ?? -1;
+				if (v === -1) continue;
+
+				renderer.renderText(v.toString(), new Point(4 + x * 28 + 28 / 2.0, 1 + y * 28 + 28 / 2.0), {
+					textAlign: "center",
+					fillStyle: this.engine.world.at(y, x).solved ? rgba(78, 52, 49, 1) : rgba(231, 37, 34, 1),
+					font: '15px "Anonymous Pro", monospace'
+				});
+			}
+		}
 	}
 
 	private _tileForZone(zone: Zone): Tile {

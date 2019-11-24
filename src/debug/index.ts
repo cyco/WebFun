@@ -5,6 +5,7 @@ import { ComponentRegistry } from "src/ui";
 import * as Components from "./components";
 import GameController from "src/app/game-controller";
 import SimulatedStory from "./simulated-story";
+import PuzzleDependencyGraph from "./puzzle-dependency-graph";
 
 const initialize = (gameController?: GameController) => {
 	ComponentRegistry.sharedRegistry.registerComponents(Components);
@@ -25,5 +26,6 @@ export {
 	ParseExpectation,
 	ComparisonResult,
 	CompareSectors,
-	SimulatedStory
+	SimulatedStory,
+	PuzzleDependencyGraph
 };
