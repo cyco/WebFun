@@ -101,8 +101,8 @@ class InputStream extends Stream {
 	public readNullTerminatedString(maxLength: number, encoding: string = DefaultEncoding): string {
 		const uint8Array = new Uint8Array(this._arrayBuffer, this._offset, maxLength);
 
-		let length = -1;
-		while (uint8Array[++length]) true /* nop */;
+		let length = 0;
+		while (uint8Array[length]) length++;
 
 		return this.readCharacters(length, encoding);
 	}

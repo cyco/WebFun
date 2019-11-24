@@ -25,6 +25,26 @@ function sortBy(key: keyof DataPoint) {
 	};
 }
 
+function pcnt(percentage: number): string {
+	const number = (percentage * 100).toFixed(2).replace(".00", "");
+	return number + "%";
+}
+
+function n(number: number): string {
+	return number.toString();
+}
+
+function colorClass(coverage: number): string {
+	if (coverage > 0.75) return "high";
+	if (coverage > 0.5) return "medium";
+	return "low";
+
+	if (coverage > 0.75) return "rgb(230,245,208)"; // green (light)
+	if (coverage > 0.5) return "#fff4c2";
+	// yellow (light)
+	else return "#FCE1E5"; // red (light)
+}
+
 const SortDescriptorKey = "sort-column";
 const InvertSortDescriptorKey = "sort-inverted";
 class SourceLevelCoverage extends Component {
@@ -90,15 +110,6 @@ class SourceLevelCoverage extends Component {
 	}
 
 	private renderOverview() {
-		function pcnt(percentage: number): string {
-			const number = (percentage * 100).toFixed(2).replace(".00", "");
-
-			return number + "%";
-		}
-		function n(number: number): string {
-			return number.toString();
-		}
-
 		const zonesCovered = this.datapoints.reduce((acc, dp) => (acc + dp.actionsCovered > 0 ? 1 : 0), 0);
 		const zonesTotal = this.datapoints.length;
 
@@ -206,24 +217,6 @@ class SourceLevelCoverage extends Component {
 	}
 
 	private row(dp: DataPoint) {
-		function pcnt(percentage: number): string {
-			const number = (percentage * 100).toFixed(2).replace(".00", "");
-
-			return number + " %";
-		}
-		function n(number: number): string {
-			return number.toString();
-		}
-		function colorClass(coverage: number): string {
-			if (coverage > 0.75) return "high";
-			if (coverage > 0.5) return "medium";
-			return "low";
-
-			if (coverage > 0.75) return "rgb(230,245,208)"; // green (light)
-			if (coverage > 0.5) return "#fff4c2";
-			// yellow (light)
-			else return "#FCE1E5"; // red (light)
-		}
 		return (
 			<tr>
 				<td className={colorClass(dp.total)}>Zone {dp.zone.toString()}</td>

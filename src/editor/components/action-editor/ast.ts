@@ -1,6 +1,6 @@
 import Symbol from "./symbol";
 
-export type ASTValue = string | number | boolean | String | Symbol | AST;
+export type ASTValue = string | number | boolean | Symbol | AST;
 
 interface AST extends Array<ASTValue> {}
 

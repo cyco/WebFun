@@ -10,7 +10,7 @@ import { Parser } from "./automation/test";
 
 const SettingsItem = (label: string, key: keyof typeof Settings, settings: typeof Settings) => ({
 	title: label,
-	callback: (): void => (((settings as any)[key] = !(settings as any)[key]), void 0),
+	callback: (): void => void ((settings as any)[key] = !(settings as any)[key]),
 	state: (): MenuItemState => (settings[key] ? MenuItemState.On : MenuItemState.Off)
 });
 

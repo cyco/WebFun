@@ -46,7 +46,10 @@ class DetonatorScene extends Scene {
 
 				zone.monsters
 					.filter(({ position }) => position.isEqualTo(target))
-					.map(npc => ((npc.damageTaken += damage), npc))
+					.map(npc => {
+						npc.damageTaken += damage;
+						return npc;
+					})
 					.filter(({ alive }) => !alive)
 					.forEach(npc => {
 						zone.setTile(null, npc.position);

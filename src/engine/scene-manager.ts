@@ -62,7 +62,7 @@ class SceneManager {
 	}
 
 	clear() {
-		while (this.popScene()) true; /* nop */
+		while (this._stack.length) this.popScene();
 	}
 
 	get bounds() {
