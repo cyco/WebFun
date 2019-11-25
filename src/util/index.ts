@@ -39,9 +39,11 @@ import polar2xy from "./polar2xy";
 import rad2deg from "./rad2deg";
 import sleep from "./sleep";
 import xy2polar from "./xy2polar";
+import astar from "./a-star";
 
 export {
 	add,
+	astar,
 	clamp,
 	Color,
 	constantly,

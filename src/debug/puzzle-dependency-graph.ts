@@ -1,5 +1,5 @@
 import { Engine } from "src/engine";
-import { Point, Rectangle, Size } from "src/util";
+import { Point, Rectangle, Size, astar } from "src/util";
 import { Zone, Tile } from "src/engine/objects";
 import World from "src/engine/world";
 
@@ -37,7 +37,6 @@ class PuzzleDependencyGraph {
 
 	private solve() {
 		const solution = this._solveUsingTSP();
-		console.log("solution", solution);
 		return this._engine.world.sectors.map((_, i) => solution.indexOf(i));
 	}
 
@@ -81,7 +80,7 @@ class PuzzleDependencyGraph {
 		);
 		return candidates.reduce((d, c, idx, array) => {
 			for (let i = idx; i < len; i++) {
-				const path = this.shortestPath(c, array[i], world);
+				const path = this.calculateShortestPath(c, array[i], world);
 				d[c][array[i]] = path.length;
 				d[array[i]][c] = path.length;
 			}
@@ -117,7 +116,7 @@ class PuzzleDependencyGraph {
 			let neighborPathLength = pathLength + d(node, neighbor);
 			if (neighborPathLength >= bestLength) continue;
 
-			const sector = world.sectors[neighbor as number];
+			const sector = world.sectors[neighbor];
 
 			const neighborInventory = new Set(inventory);
 			neighborInventory.add(sector.findItem);
@@ -151,95 +150,37 @@ class PuzzleDependencyGraph {
 		return [bestPath, bestLength];
 	}
 
-	private shortestPath(startIdx: number, endIdx: number, world: World): number[] {
-		if (startIdx === endIdx) return [];
-		const neighbors = (candidate: number): number[] => {
-			const x = (candidate as number) % 10;
-			const y = floor((candidate as number) / 10);
+	private calculateShortestPath(startIdx: number, endIdx: number, world: World): number[] {
+		return astar(
+			startIdx,
+			endIdx,
+			(candidate: number): number[] => {
+				const x = candidate % 10;
+				const y = floor(candidate / 10);
 
-			let result: number[] = [];
+				const result: number[] = [];
 
-			if (x > 0) result.push((candidate as number) - 1);
-			if (x < 9) result.push((candidate as number) + 1);
-			if (y > 0) result.push((candidate as number) - 10);
-			if (y < 9) result.push((candidate as number) + 10);
+				if (x > 0 && world.sectors[candidate - 1].zone) result.push(candidate - 1);
+				if (x < 9 && world.sectors[candidate + 1].zone) result.push(candidate + 1);
+				if (y > 0 && world.sectors[candidate - 10].zone) result.push(candidate - 10);
+				if (y < 9 && world.sectors[candidate + 10].zone) result.push(candidate + 10);
 
-			result = result.filter(i => world.sectors[i as number].zone);
-
-			// result is modified during iteration, calculate length before any modification is made
-			for (let i = 0, len = result.length; i < len; i++) {
-				const sector = world.sectors[result[i] as number];
-				if (sector.zoneType === Zone.Type.TravelStart || sector.zoneType === Zone.Type.TravelEnd) {
-					result.push(this._findCounterpart(world, result[i]));
-				}
-			}
-
-			return result;
-		};
-		const h = (candidate: number) => g(candidate, endIdx);
-		const g = (start: number, end: number) =>
-			abs(((start as number) % 10) - ((end as number) % 10)) +
-			abs(floor((start as number) / 10) - floor((end as number) / 10));
-
-		const openSet = new Set<number>([startIdx]);
-		const open: number[] = [startIdx];
-		const parent = new Map<number, number>();
-
-		const gScore = new Map<number, number>();
-		(100).times(i => gScore.set(i, Infinity));
-		gScore.set(startIdx, 0);
-
-		const fScore = new Map<number, number>();
-		fScore.set(startIdx, h(startIdx));
-
-		while (openSet.size) {
-			const current = open.shift();
-
-			if (current === endIdx) return this.reconstructPath(parent, current);
-
-			openSet.delete(current);
-			for (const neighbor of neighbors(current)) {
-				const tentativeGScore = gScore.get(current) + g(current, neighbor);
-
-				if (tentativeGScore < gScore.get(neighbor)) {
-					parent.set(neighbor, current);
-					gScore.set(neighbor, tentativeGScore);
-					fScore.set(neighbor, tentativeGScore + h(neighbor));
-
-					if (!openSet.has(neighbor)) {
-						openSet.add(neighbor);
-						insert(neighbor);
+				// result is modified during iteration, calculate length before any modification is made
+				for (let i = 0, len = result.length; i < len; i++) {
+					const sector = world.sectors[result[i]];
+					if (
+						sector.zoneType === Zone.Type.TravelStart ||
+						sector.zoneType === Zone.Type.TravelEnd
+					) {
+						result.push(this._findCounterpart(world, result[i]));
 					}
 				}
-			}
-		}
 
-		function insert(val: number) {
-			open.splice(sortedIndex(open, val), 0, val);
-		}
-
-		function sortedIndex<T>(array: T[], value: T): number {
-			let low = 0,
-				high = array.length;
-
-			while (low < high) {
-				const mid = (low + high) >>> 1;
-				if (array[mid] < value) low = mid + 1;
-				else high = mid;
-			}
-			return low;
-		}
-		return null;
-	}
-
-	private reconstructPath<T>(cameFrom: Map<T, T>, current: T): T[] {
-		const path = [];
-		while (cameFrom.has(current)) {
-			current = cameFrom.get(current);
-			path.unshift(current);
-		}
-
-		return path;
+				return result;
+			},
+			(n1, n2) => abs((n1 % 10) - (n2 % 10)) + abs(floor(n1 / 10) - floor(n2 / 10)),
+			(n: number) => abs((n % 10) - (endIdx % 10)) + abs(floor(n / 10) - floor(endIdx / 10))
+		);
 	}
 
 	private neighbors(
@@ -256,7 +197,7 @@ class PuzzleDependencyGraph {
 			const blockingSector = b(idx);
 			if (blockingSector && !solved.has(blockingSector)) return false;
 
-			const s = world.sectors[idx as number];
+			const s = world.sectors[idx];
 			if (!inventory.has(s.requiredItem)) return false;
 			if (!inventory.has(s.additionalRequiredItem)) return false;
 
@@ -275,7 +216,7 @@ class PuzzleDependencyGraph {
 	}
 
 	private findBlocker(world: World, sector: number): number {
-		const pos = new Point((sector as number) % 10, floor((sector as number) / 10));
+		const pos = new Point(sector % 10, floor(sector / 10));
 
 		let blocker: number = null;
 		blocker = blocker ?? this._findBlocker(world, pos, new Point(-1, 0), Zone.Type.BlockadeEast);
@@ -301,7 +242,7 @@ class PuzzleDependencyGraph {
 	}
 
 	private _findCounterpart(world: World, sectorId: number): number {
-		const sector = world.sectors[sectorId as number];
+		const sector = world.sectors[sectorId];
 		if (sector.zoneType !== Zone.Type.TravelEnd && sector.zoneType !== Zone.Type.TravelStart)
 			return sectorId;
 
