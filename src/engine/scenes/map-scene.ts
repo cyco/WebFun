@@ -333,11 +333,17 @@ class MapScene extends Scene {
 				const v = order[y * 10 + x] ?? -1;
 				if (v === -1) continue;
 
-				renderer.renderText(v.toString(), new Point(4 + x * 28 + 28 / 2.0, 1 + y * 28 + 28 / 2.0), {
-					textAlign: "center",
-					fillStyle: this.engine.world.at(y, x).solved ? rgba(78, 52, 49, 1) : rgba(231, 37, 34, 1),
-					font: '15px "Anonymous Pro", monospace'
-				});
+				renderer.renderText(
+					(v + 1).toString(),
+					new Point(4 + x * 28 + 28 / 2.0, 1 + y * 28 + 28 / 2.0),
+					{
+						textAlign: "center",
+						fillStyle: this.engine.world.at(y, x).solved
+							? rgba(78, 52, 49, 1)
+							: rgba(231, 37, 34, 1),
+						font: '15px "Anonymous Pro", monospace'
+					}
+				);
 			}
 		}
 	}
