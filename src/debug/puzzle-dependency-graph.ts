@@ -36,11 +36,6 @@ class PuzzleDependencyGraph {
 	}
 
 	private solve() {
-		const solution = this._solveUsingTSP();
-		return this._engine.world.sectors.map((_, i) => solution.indexOf(i));
-	}
-
-	private _solveUsingTSP() {
 		const engine = this._engine;
 		const world = engine.world;
 		const start = world.sectors.findIndex(s => s.zoneType === Zone.Type.Town);
@@ -54,10 +49,9 @@ class PuzzleDependencyGraph {
 			})
 			.filter(i => i !== -1);
 		const distances = this.precomputeDistances([start, ...candidates], world);
-
 		const blockers = this.precomputeBlocker(candidates, world);
 
-		return this.solveTSP(
+		const path = this.solveTSP(
 			start,
 			end,
 			new Set<Tile>([null, ...engine.dagobah.sectors.map(i => i.findItem)]),
@@ -70,23 +64,23 @@ class PuzzleDependencyGraph {
 			world,
 			candidates
 		)[0];
+
+		return this._engine.world.sectors.map((_, i) => path.indexOf(i));
 	}
 
 	private precomputeDistances(candidates: number[], world: World) {
-		const len = candidates.length;
-		const d = candidates.reduce(
+		const length = candidates.length;
+		const distances = candidates.reduce(
 			(d, v) => ((d[v] = {}), d),
 			{} as { [_: string]: { [_: string]: number } }
 		);
 		return candidates.reduce((d, c, idx, array) => {
-			for (let i = idx; i < len; i++) {
-				const path = this.calculateShortestPath(c, array[i], world);
-				d[c][array[i]] = path.length;
-				d[array[i]][c] = path.length;
+			for (let i = idx; i < length; i++) {
+				d[c][array[i]] = d[array[i]][c] = this.calculateShortestPath(c, array[i], world).length;
 			}
 
 			return d;
-		}, d);
+		}, distances);
 	}
 
 	private solveTSP(
@@ -114,7 +108,7 @@ class PuzzleDependencyGraph {
 
 			let neighborPath = [...path, neighbor];
 			let neighborPathLength = pathLength + d(node, neighbor);
-			if (neighborPathLength >= bestLength) continue;
+			if (neighborPathLength + candidates.length - 1 >= bestLength) continue;
 
 			const sector = world.sectors[neighbor];
 
