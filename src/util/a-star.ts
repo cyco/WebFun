@@ -1,5 +1,5 @@
 function reconstructPath<T>(parent: Map<T, T>, current: T): T[] {
-	const path = [];
+	const path = [current];
 	while (parent.has(current)) {
 		current = parent.get(current);
 		path.unshift(current);
