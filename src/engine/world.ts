@@ -36,6 +36,11 @@ class World {
 		return this._sectors[this._pointToIndex(indexOrPointOrX, y)] || null;
 	}
 
+	public locationOfSector(sector: Sector): Point {
+		const idx = this._sectors.indexOf(sector);
+		return new Point(idx % 10, floor(idx / 10));
+	}
+
 	public replaceSector(x: number, y: number, item: Sector): void {
 		const index = this._pointToIndex(new Point(x, y));
 		this._sectors[index] = item;

@@ -155,6 +155,10 @@ class Point implements PointLike {
 		return Math.sqrt(x ** 2 + y ** 2);
 	}
 
+	length() {
+		return abs(this.x) + abs(this.y);
+	}
+
 	toString(): string {
 		return `Point {${this.x}x${this.y}}`;
 	}
