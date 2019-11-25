@@ -57,7 +57,7 @@ class MapScene extends Scene {
 	}
 
 	willShow() {
-		this._pdg = new PuzzleDependencyGraph(this.engine);
+		if (!this._pdg) this._pdg = new PuzzleDependencyGraph(this.engine);
 		this._cheatInput.reset();
 
 		this._ticks = 4;
