@@ -1,6 +1,6 @@
-let globalInstance: EventTargetNotBuiltin;
+let globalInstance: EventTarget;
 
-class EventTargetNotBuiltin {
+class EventTarget {
 	private listeners: { [_: string]: (EventListener | EventListenerObject)[] } = {};
 
 	static addEventListener(type: string, listener: EventListener | EventListenerObject): void {
@@ -64,5 +64,5 @@ class EventTargetNotBuiltin {
 	}
 }
 
-globalInstance = new EventTargetNotBuiltin();
-export default EventTargetNotBuiltin;
+globalInstance = new EventTarget();
+export default EventTarget;
