@@ -22,12 +22,11 @@ class ReplayingInputManager extends EventTarget implements InputManager, EventLi
 
 	public placedTile: Tile = null;
 	public placedTileLocation: Point = null;
-	public readonly locator: boolean = false;
-	public readonly pause: boolean = false;
-	public readonly pickUp: boolean = false;
-	public readonly scrollDown: boolean = false;
-	public readonly scrollUp: boolean = false;
-	public readonly endDialog: boolean = false;
+	private locator: boolean = false;
+	private pause: boolean = false;
+	private scrollDown: boolean = false;
+	private scrollUp: boolean = false;
+	private endDialog: boolean = false;
 
 	private _offset = 0;
 
@@ -63,7 +62,7 @@ class ReplayingInputManager extends EventTarget implements InputManager, EventLi
 		}
 	}
 
-	readInput(tick: number): InputMask {
+	readInput(_: number): InputMask {
 		let result = InputMask.None;
 
 		if (this.pause) result |= InputMask.Pause;
@@ -106,7 +105,7 @@ class ReplayingInputManager extends EventTarget implements InputManager, EventLi
 		return "";
 	}
 
-	public get directions() {
+	private get directions() {
 		switch (this.token) {
 			case Syntax.Move.East:
 			case Syntax.Drag.East:
@@ -133,7 +132,7 @@ class ReplayingInputManager extends EventTarget implements InputManager, EventLi
 		}
 	}
 
-	public get walk() {
+	private get walk() {
 		switch (this.token) {
 			case Syntax.Drag.East:
 			case Syntax.Drag.West:
@@ -153,7 +152,7 @@ class ReplayingInputManager extends EventTarget implements InputManager, EventLi
 		}
 	}
 
-	public get drag() {
+	private get drag() {
 		switch (this.token) {
 			case Syntax.Drag.North:
 			case Syntax.Drag.East:
@@ -165,7 +164,7 @@ class ReplayingInputManager extends EventTarget implements InputManager, EventLi
 		}
 	}
 
-	public get attack() {
+	private get attack() {
 		return this.token === Syntax.Attack;
 	}
 

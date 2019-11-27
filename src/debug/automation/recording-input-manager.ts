@@ -32,16 +32,22 @@ class RecordingInputManager implements InputManager {
 	private recordOne() {
 		if (!this.isRecording) return;
 		let direction;
+		const input = this.implementation.readInput(0);
+
 		if (this.placedTile) {
 			const id = this.placedTile.id;
 			const { x, y } = this.placedTileLocation;
 
 			this._records.push(`${Syntax.Place.Start} ${id.toHex(3)} at ${x}x${y}${Syntax.Place.End}`);
-		} else if (this.attack) {
+		} else if (input & InputMask.Attack) {
 			this._records.push(Syntax.Attack);
-		} else if (this.walk && this.drag && (direction = this._currentDragDirection())) {
+		} else if (
+			input & InputMask.Walk &&
+			input & InputMask.Drag &&
+			(direction = this._currentDragDirection())
+		) {
 			this._records.push((Syntax.Drag as any)[direction]);
-		} else if (this.walk && (direction = this._currentMoveDirection())) {
+		} else if (input & InputMask.Walk && (direction = this._currentMoveDirection())) {
 			this._records.push((Syntax.Move as any)[direction]);
 		} else {
 			this._records.push(".");
@@ -112,54 +118,6 @@ class RecordingInputManager implements InputManager {
 		return this.implementation && this.implementation.keyDownHandler;
 	}
 
-	public set pause(s) {
-		this.implementation && (this.implementation.pause = s);
-	}
-
-	public get pause() {
-		return this.implementation && this.implementation.pause;
-	}
-
-	public set locator(s) {
-		this.implementation && (this.implementation.locator = s);
-	}
-
-	public get locator() {
-		return this.implementation && this.implementation.locator;
-	}
-
-	public set scrollDown(s) {
-		this.implementation && (this.implementation.scrollDown = s);
-	}
-
-	public get scrollDown() {
-		return this.implementation && this.implementation.scrollDown;
-	}
-
-	public set scrollUp(s) {
-		this.implementation && (this.implementation.scrollUp = s);
-	}
-
-	public get scrollUp() {
-		return this.implementation && this.implementation.scrollUp;
-	}
-
-	public set endDialog(s) {
-		this.implementation && (this.implementation.endDialog = s);
-	}
-
-	public get endDialog() {
-		return this.implementation && this.implementation.endDialog;
-	}
-
-	public set pickUp(s) {
-		this.implementation && (this.implementation.pickUp = s);
-	}
-
-	public get pickUp() {
-		return this.implementation && this.implementation.pickUp;
-	}
-
 	public set currentItem(s) {
 		this.implementation && (this.implementation.currentItem = s);
 	}
@@ -209,18 +167,6 @@ class RecordingInputManager implements InputManager {
 		if (input & InputMask.Left) result |= Direction.Left;
 		if (input & InputMask.Right) result |= Direction.Right;
 		return result;
-	}
-
-	get walk() {
-		return this.implementation && this.implementation.walk;
-	}
-
-	get drag() {
-		return this.implementation && this.implementation.drag;
-	}
-
-	get attack() {
-		return this.implementation && this.implementation.attack;
 	}
 }
 

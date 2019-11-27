@@ -18,19 +18,11 @@ class DesktopInputManager implements InputManager, EventListenerObject {
 	private preferKeyboard = false;
 	private _mouseDirection: number = 0;
 	private _keyboardDirection: number = 0;
+	private _currentInput: InputMask = InputMask.None;
 	private readonly cursorManager: CursorManager;
 
 	public placedTile: Tile;
 	public placedTileLocation: Point;
-	public pickUp: boolean;
-	public scrollUp: boolean;
-	public pause: boolean;
-	public locator: boolean;
-	public endDialog: boolean;
-	public scrollDown: boolean;
-	public attack: boolean;
-	public walk: boolean;
-	public drag: boolean;
 
 	constructor(gameViewElement: HTMLElement, cursorManager: CursorManager) {
 		this._element = gameViewElement;
@@ -45,8 +37,9 @@ class DesktopInputManager implements InputManager, EventListenerObject {
 	public clear(): void {
 		this.placedTileLocation = null;
 		this.placedTile = null;
-		this.locator = false;
-		this.pause = false;
+
+		this._currentInput &= ~InputMask.Locator;
+		this._currentInput &= ~InputMask.Pause;
 	}
 
 	public addListeners() {
@@ -100,10 +93,10 @@ class DesktopInputManager implements InputManager, EventListenerObject {
 		switch (e.which) {
 			case KeyEvent.DOM_VK_UP:
 				directionMask |= Direction.Up;
-				this.scrollUp = true;
+				this._currentInput |= InputMask.ScrollUp;
 				break;
 			case KeyEvent.DOM_VK_DOWN:
-				this.scrollDown = true;
+				this._currentInput |= InputMask.ScrollDown;
 				directionMask |= Direction.Down;
 				break;
 			case KeyEvent.DOM_VK_LEFT:
@@ -113,19 +106,19 @@ class DesktopInputManager implements InputManager, EventListenerObject {
 				directionMask |= Direction.Right;
 				break;
 			case KeyEvent.DOM_VK_SPACE:
-				this.attack = true;
-				this.endDialog = true;
-				this.pickUp = true;
+				this._currentInput |= InputMask.Attack;
+				this._currentInput |= InputMask.EndDialog;
+				this._currentInput |= InputMask.PickUp;
 				break;
 			case KeyEvent.DOM_VK_SHIFT:
-				this.drag = true;
+				this._currentInput |= InputMask.Drag;
 				break;
 
 			case KeyEvent.DOM_VK_P:
-				this.pause = !this.pause;
+				this._currentInput ^= InputMask.Pause;
 				break;
 			case KeyEvent.DOM_VK_L:
-				this.locator = !this.locator;
+				this._currentInput ^= InputMask.Locator;
 				break;
 
 			default:
@@ -133,7 +126,7 @@ class DesktopInputManager implements InputManager, EventListenerObject {
 		}
 
 		this._keyboardDirection |= directionMask;
-		if (this._keyboardDirection) this.walk = true;
+		if (this._keyboardDirection) this._currentInput |= InputMask.Walk;
 
 		this.keyDownHandler(e);
 	}
@@ -144,11 +137,11 @@ class DesktopInputManager implements InputManager, EventListenerObject {
 		switch (e.which) {
 			case KeyEvent.DOM_VK_UP:
 				mask = ~Direction.Up;
-				this.scrollUp = false;
+				this._currentInput &= ~InputMask.ScrollUp;
 				break;
 			case KeyEvent.DOM_VK_DOWN:
 				mask &= ~Direction.Down;
-				this.scrollDown = false;
+				this._currentInput &= ~InputMask.ScrollDown;
 				break;
 			case KeyEvent.DOM_VK_LEFT:
 				mask &= ~Direction.Left;
@@ -157,12 +150,12 @@ class DesktopInputManager implements InputManager, EventListenerObject {
 				mask &= ~Direction.Right;
 				break;
 			case KeyEvent.DOM_VK_SPACE:
-				this.attack = false;
-				this.endDialog = false;
-				this.pickUp = false;
+				this._currentInput &= ~InputMask.Attack;
+				this._currentInput &= ~InputMask.EndDialog;
+				this._currentInput &= ~InputMask.PickUp;
 				break;
 			case KeyEvent.DOM_VK_SHIFT:
-				this.drag = false;
+				this._currentInput &= ~InputMask.Drag;
 				break;
 
 			default:
@@ -170,7 +163,7 @@ class DesktopInputManager implements InputManager, EventListenerObject {
 		}
 
 		this._keyboardDirection &= mask;
-		if (!this._keyboardDirection) this.walk = false;
+		if (!this._keyboardDirection) this._currentInput &= ~InputMask.Walk;
 	}
 
 	private _mouseDown(e: MouseEvent) {
@@ -181,8 +174,8 @@ class DesktopInputManager implements InputManager, EventListenerObject {
 		const pointIsInView = point.x > 0 && point.y > 0 && point.x < 1 && point.y < 1;
 		console.assert(pointIsInView, "Previous in-bounds check should have been sufficient");
 
-		if (e.button === 0) this.walk = true;
-		if (e.button === 1) this.attack = true;
+		if (e.button === 0) this._currentInput |= InputMask.Walk;
+		if (e.button === 1) this._currentInput |= InputMask.Attack;
 
 		this.mouseDownHandler(point);
 	}
@@ -208,8 +201,8 @@ class DesktopInputManager implements InputManager, EventListenerObject {
 	}
 
 	private _mouseUp(e: MouseEvent) {
-		if (e.button === 0) this.walk = false;
-		if (e.button === 1) this.attack = false;
+		if (e.button === 0) this._currentInput &= ~InputMask.Walk;
+		if (e.button === 1) this._currentInput &= ~InputMask.Attack;
 
 		this._keyboardDirection = 0;
 		this._mouseDirection = 0;
@@ -217,28 +210,10 @@ class DesktopInputManager implements InputManager, EventListenerObject {
 	}
 
 	public readInput(_: number): InputMask {
-		let result = InputMask.None;
-
-		if (this.pause) result |= InputMask.Pause;
-		if (this.locator) result |= InputMask.Locator;
-
-		if (this.endDialog) result |= InputMask.EndDialog;
-		if (this.scrollDown) result |= InputMask.ScrollDown;
-		if (this.scrollUp) result |= InputMask.ScrollUp;
-
-		const directions = this.directions;
-		if (directions & Direction.Left) result |= InputMask.Left;
-		if (directions & Direction.Up) result |= InputMask.Up;
-		if (directions & Direction.Down) result |= InputMask.Down;
-		if (directions & Direction.Right) result |= InputMask.Right;
-		if (this.walk) result |= InputMask.Walk;
-		if (this.drag) result |= InputMask.Drag;
-		if (this.attack) result |= InputMask.Attack;
-
-		return result;
+		return this._currentInput | this.preferredDirections;
 	}
 
-	private get directions() {
+	private get preferredDirections() {
 		return this.preferKeyboard ? this._keyboardDirection : this._mouseDirection;
 	}
 
