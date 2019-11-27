@@ -9,7 +9,7 @@ import {
 import { Char, Tile, Zone, Sound, Puzzle } from "src/engine/objects";
 import { ColorPalette, Engine, GameData, Hero, Story, AssetManager, GameType, Interface } from "src/engine";
 import { ConfirmationResult, ModalConfirm } from "src/ux";
-import { EventTarget, Point, Rectangle, Size } from "src/util";
+import { EventTarget, Point, Rectangle, Size, rand, srand } from "src/util";
 import { FilePicker, WindowManager } from "src/ui";
 import { LoseScene, ZoneScene } from "src/engine/scenes";
 import { MainMenu, MainWindow } from "./windows";
@@ -42,8 +42,8 @@ class GameController extends EventTarget {
 	public settings: typeof Settings = Settings;
 	public data: GameData;
 	public palette: ColorPalette;
-	private _window: MainWindow = <MainWindow menu={new MainMenu(this)} /> as MainWindow;
-	private _sceneView: SceneView = <SceneView /> as SceneView;
+	private _window: MainWindow = (<MainWindow menu={new MainMenu(this)} />) as MainWindow;
+	private _sceneView: SceneView = (<SceneView />) as SceneView;
 	private _engine: Engine;
 
 	constructor(type: GameType, paths: PathConfiguration) {
@@ -113,8 +113,9 @@ class GameController extends EventTarget {
 			return;
 		}
 
+		srand(performance.now());
 		await this._loadGameData();
-		const story = new Story(0xdead, Planet.Endor, WorldSize.Small);
+		const story = new Story(rand(), Planet.Endor, WorldSize.Small);
 		this._engine.inventory.removeAllItems();
 		story.generateWorld(this._engine.assets, this.engine.persistentState.gamesWon);
 		this._engine.story = story;
@@ -286,7 +287,7 @@ class GameController extends EventTarget {
 
 	private _loadGameData(): Promise<void> {
 		return new Promise((resolve, reject) => {
-			const loadingView = <LoadingView /> as LoadingView;
+			const loadingView = (<LoadingView />) as LoadingView;
 			const windowContent = this._window.mainContent;
 			windowContent.textContent = "";
 			windowContent.appendChild(loadingView);

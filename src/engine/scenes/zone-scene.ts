@@ -75,7 +75,7 @@ class ZoneScene extends Scene {
 		}
 		this._moveMonsers();
 
-		const stop = await this.handleInput();
+		const stop = await this.handleInput(ticks);
 		if (stop) return;
 
 		this.engine.camera.update(ticks);
@@ -211,7 +211,7 @@ class ZoneScene extends Scene {
 
 	willHide() {}
 
-	private async handleInput(): Promise<boolean> {
+	private async handleInput(ticks: number): Promise<boolean> {
 		const engine = this.engine;
 		const inputManager = engine.inputManager;
 		const hero = engine.hero;
@@ -242,7 +242,7 @@ class ZoneScene extends Scene {
 			return true;
 		}
 
-		const inputDirections = inputManager.directions;
+		const inputDirections = inputManager.readInput(ticks);
 		if (inputDirections) {
 			const point = new Point(0, 0);
 			if (inputDirections & InputDirection.Up) {

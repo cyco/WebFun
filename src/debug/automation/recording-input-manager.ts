@@ -1,4 +1,4 @@
-import { Direction, InputManager } from "src/engine/input";
+import { Direction, InputManager, InputMask } from "src/engine/input";
 import { Metronome, EngineEvents } from "src/engine";
 import { Tile } from "src/engine/objects";
 import { Point } from "src/util";
@@ -196,8 +196,19 @@ class RecordingInputManager implements InputManager {
 		return this.implementation.engine;
 	}
 
-	get directions() {
-		return this.implementation && this.implementation.directions;
+	public readInput(ticks: number) {
+		return this.implementation && this.implementation.readInput(ticks);
+	}
+
+	private get directions() {
+		const input = this.readInput(0);
+
+		let result: number = 0;
+		if (input & InputMask.Up) result |= Direction.Up;
+		if (input & InputMask.Down) result |= Direction.Down;
+		if (input & InputMask.Left) result |= Direction.Left;
+		if (input & InputMask.Right) result |= Direction.Right;
+		return result;
 	}
 
 	get walk() {

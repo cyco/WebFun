@@ -1,5 +1,5 @@
 import DesktopInputManager from "src/app/input/desktop-input-manager";
-import { Direction } from "src/engine/input";
+import { Direction, InputMask } from "src/engine/input";
 import { KeyEvent, Point } from "src/util";
 import CursorManager from "src/app/input/cursor-manager";
 
@@ -62,31 +62,29 @@ describe("WebFun.App.Input.DesktopInputManager", () => {
 		});
 
 		it("keeps track of directional input", () => {
-			const Mask = Direction;
-
 			const upKey = KeyEvent.DOM_VK_UP;
 			const downKey = KeyEvent.DOM_VK_DOWN;
 			const leftKey = KeyEvent.DOM_VK_LEFT;
 			const rightKey = KeyEvent.DOM_VK_RIGHT;
 
 			fakeKeyEvent(upKey, true);
-			expect(subject.directions & Mask.Up).toBeTruthy();
+			expect(subject.readInput(0) & InputMask.Up).toBeTruthy();
 			fakeKeyEvent(downKey, true);
-			expect(subject.directions & Mask.Down).toBeTruthy();
+			expect(subject.readInput(0) & InputMask.Down).toBeTruthy();
 			fakeKeyEvent(leftKey, true);
-			expect(subject.directions & Mask.Left).toBeTruthy();
+			expect(subject.readInput(0) & InputMask.Left).toBeTruthy();
 			fakeKeyEvent(rightKey, true);
-			expect(subject.directions & Mask.Right).toBeTruthy();
+			expect(subject.readInput(0) & InputMask.Right).toBeTruthy();
 			expect(subject.walk).toBeTrue();
 
 			fakeKeyEvent(upKey, false);
-			expect(subject.directions & Mask.Up).toBeFalsy();
+			expect(subject.readInput(0) & InputMask.Up).toBeFalsy();
 			fakeKeyEvent(downKey, false);
-			expect(subject.directions & Mask.Down).toBeFalsy();
+			expect(subject.readInput(0) & InputMask.Down).toBeFalsy();
 			fakeKeyEvent(leftKey, false);
-			expect(subject.directions & Mask.Left).toBeFalsy();
+			expect(subject.readInput(0) & InputMask.Left).toBeFalsy();
 			fakeKeyEvent(rightKey, false);
-			expect(subject.directions & Mask.Right).toBeFalsy();
+			expect(subject.readInput(0) & InputMask.Right).toBeFalsy();
 			expect(subject.walk).toBeFalse();
 		});
 

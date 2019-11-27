@@ -1,3 +1,4 @@
+import InputMask from "src/engine/input/input-mask";
 import { InputManager, Direction } from "src/engine/input";
 import { Metronome } from "src/engine";
 import { Tile } from "src/engine/objects";
@@ -60,6 +61,28 @@ class ReplayingInputManager extends EventTarget implements InputManager, EventLi
 		if (this._offset === this.input.length) {
 			this.dispatchEvent(new CustomEvent(Event.InputEnd));
 		}
+	}
+
+	readInput(tick: number): InputMask {
+		let result = InputMask.None;
+
+		if (this.pause) result |= InputMask.Pause;
+		if (this.locator) result |= InputMask.Locator;
+
+		if (this.endDialog) result |= InputMask.EndDialog;
+		if (this.scrollDown) result |= InputMask.ScrollDown;
+		if (this.scrollUp) result |= InputMask.ScrollUp;
+
+		const directions = this.directions;
+		if (directions & Direction.Left) result |= Direction.Left;
+		if (directions & Direction.Up) result |= Direction.Up;
+		if (directions & Direction.Down) result |= Direction.Down;
+		if (directions & Direction.Right) result |= Direction.Right;
+		if (this.walk) result |= InputMask.Walk;
+		if (this.drag) result |= InputMask.Drag;
+		if (this.attack) result |= InputMask.Attack;
+
+		return result;
 	}
 
 	public clear(): void {

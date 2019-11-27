@@ -1,4 +1,4 @@
-import { InputManager } from "../input";
+import { InputManager, InputMask } from "../input";
 import { Point } from "src/util";
 
 class DummyInputManager implements InputManager {
@@ -22,6 +22,9 @@ class DummyInputManager implements InputManager {
 
 	public clear(): void {}
 	public addListeners(): void {}
+	public readInput(_: number): InputMask {
+		return InputMask.None;
+	}
 	public removeListeners(): void {}
 }
 

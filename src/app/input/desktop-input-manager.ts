@@ -1,4 +1,4 @@
-import { Direction, InputManager } from "src/engine/input";
+import { Direction, InputMask, InputManager } from "src/engine/input";
 import { KeyEvent, Point, Direction as DirectionHelper } from "src/util";
 import { Engine } from "src/engine";
 
@@ -216,7 +216,29 @@ class DesktopInputManager implements InputManager, EventListenerObject {
 		this.preferKeyboard = false;
 	}
 
-	get directions() {
+	public readInput(_: number): InputMask {
+		let result = InputMask.None;
+
+		if (this.pause) result |= InputMask.Pause;
+		if (this.locator) result |= InputMask.Locator;
+
+		if (this.endDialog) result |= InputMask.EndDialog;
+		if (this.scrollDown) result |= InputMask.ScrollDown;
+		if (this.scrollUp) result |= InputMask.ScrollUp;
+
+		const directions = this.directions;
+		if (directions & Direction.Left) result |= InputMask.Left;
+		if (directions & Direction.Up) result |= InputMask.Up;
+		if (directions & Direction.Down) result |= InputMask.Down;
+		if (directions & Direction.Right) result |= InputMask.Right;
+		if (this.walk) result |= InputMask.Walk;
+		if (this.drag) result |= InputMask.Drag;
+		if (this.attack) result |= InputMask.Attack;
+
+		return result;
+	}
+
+	private get directions() {
 		return this.preferKeyboard ? this._keyboardDirection : this._mouseDirection;
 	}
 
