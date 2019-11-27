@@ -6,6 +6,7 @@ import Scene from "./scene";
 import { SpeechBubble } from "src/ui/components";
 import { Tile } from "src/engine/objects";
 import Sector from "src/engine/sector";
+import { InputMask } from "../input";
 
 class SpeechScene extends Scene {
 	public engine: Engine;
@@ -59,8 +60,9 @@ class SpeechScene extends Scene {
 		this._bubble.show();
 	}
 
-	async update() {
-		if (this.engine.inputManager.endDialog) {
+	async update(ticks: number) {
+		const input = this.engine.inputManager.readInput(ticks);
+		if (input & InputMask.EndDialog) {
 			this._bubble.end();
 		}
 	}

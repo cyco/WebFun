@@ -1,6 +1,7 @@
 import { Renderer } from "../rendering";
 import Scene from "./scene";
 import { Tile } from "src/engine/objects";
+import { InputMask } from "../input";
 
 const PauseImageSrc =
 	"data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAMElEQVRYw+3QoQEAAAjDsO3/o+EMBKmpT5NMjpvLlwABAgQIECBAgAABAgQIEHgvsI0fDxA3PoMxAAAAAElFTkSuQmCC";
@@ -35,10 +36,10 @@ class PauseScene extends Scene {
 		}
 	}
 
-	async update(/*ticks*/) {
+	async update(ticks: number) {
 		const engine = this.engine;
-		const inputManager = engine.inputManager;
-		if (inputManager.pause) {
+		const inputManager = engine.inputManager.readInput(ticks);
+		if (inputManager & InputMask.Pause) {
 			engine.sceneManager.popScene();
 		}
 	}

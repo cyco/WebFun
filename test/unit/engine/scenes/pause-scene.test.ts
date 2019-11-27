@@ -1,6 +1,7 @@
 import PauseScene from "src/engine/scenes/pause-scene";
 import { Engine } from "src/engine";
 import { Renderer } from "src/engine/rendering";
+import { InputMask } from "src/engine/input";
 
 describe("WebFun.Engine.Scenes.PauseScene", () => {
 	let subject: PauseScene;
@@ -10,12 +11,15 @@ describe("WebFun.Engine.Scenes.PauseScene", () => {
 
 	it("watches the input manager for pause button input and eventually pops itself from the scene manager", () => {
 		let popCalled = false;
+		let pause: boolean = true;
 		const engine: Engine = {
 			inputManager: {
-				pause: true,
-				clear: function() {
-					this.pause = false;
+				readInput() {
+					return pause ? InputMask.Pause : InputMask.None;
 				},
+				clear: function() {
+					pause = false;
+				}
 			},
 			temporaryState: { totalPlayTime: 0, currentPlayStart: new Date() },
 			sceneManager: { popScene: () => (popCalled = true) }
@@ -25,12 +29,12 @@ describe("WebFun.Engine.Scenes.PauseScene", () => {
 		subject.engine = engine;
 		subject.willShow();
 
-		subject.update();
+		subject.update(0);
 		expect(popCalled).toBeFalse();
 
-		(engine.inputManager as any).pause = true;
+		pause = true;
 
-		subject.update();
+		subject.update(0);
 		expect(popCalled).toBeTrue();
 	});
 
@@ -41,7 +45,7 @@ describe("WebFun.Engine.Scenes.PauseScene", () => {
 		spyOn(renderer, "drawImage");
 
 		subject = new PauseScene();
-		subject.engine = {temporaryState: {}} as any;
+		subject.engine = { temporaryState: {} } as any;
 		subject.render(renderer);
 
 		expect(subject.isOpaque()).toBeFalse();

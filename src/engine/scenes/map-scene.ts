@@ -12,6 +12,7 @@ import World from "src/engine/world";
 import ZoneScene from "./zone-scene";
 import { Renderer as CanvasRenderer } from "src/app/rendering/canvas";
 import PuzzleDependencyGraph from "src/debug/puzzle-dependency-graph";
+import { InputMask } from "../input";
 
 const MapTileWidth = 28;
 const MapTileHeight = 28;
@@ -75,9 +76,10 @@ class MapScene extends Scene {
 		this.engine.inputManager.clear();
 	}
 
-	async update(/*ticks*/) {
+	async update(ticks: number) {
 		const engine = this.engine;
-		if (engine.inputManager.locator) {
+		const input = engine.inputManager.readInput(ticks);
+		if (input & InputMask.Locator) {
 			this.exitScene();
 			return;
 		}
@@ -140,7 +142,8 @@ class MapScene extends Scene {
 			return this.exitScene();
 		}
 
-		if (Settings.debug && this.engine.inputManager.drag) {
+		const input = this.engine.inputManager.readInput(0);
+		if (Settings.debug && input & InputMask.Drag) {
 			return this.performDebugTeleportAndExit(sector.zone);
 		}
 

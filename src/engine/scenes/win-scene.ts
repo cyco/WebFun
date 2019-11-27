@@ -6,6 +6,7 @@ import { Point } from "src/util";
 import CanvasRenderer from "src/app/rendering/canvas/canvas-renderer";
 import { round } from "src/std/math";
 import Settings from "src/settings";
+import { InputMask } from "../input";
 
 class WinScene extends Scene {
 	private _zoneScene: ZoneScene;
@@ -44,8 +45,8 @@ class WinScene extends Scene {
 		this._ticksUntilScoreIsShown -= 1;
 		if (this._ticksUntilScoreIsShown < 0) {
 			const engine = this.engine;
-			const input = engine.inputManager;
-			if (input.locator || input.attack || input.walk) {
+			const input = engine.inputManager.readInput(ticks);
+			if (input & InputMask.Locator || input & InputMask.Attack || input & InputMask.Walk) {
 				engine.sceneManager.popScene();
 				return;
 			}

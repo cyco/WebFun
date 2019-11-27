@@ -3,10 +3,13 @@ import { Engine } from "src/engine";
 import { CheatCodeInput } from "src/engine/cheats";
 import * as SpeechScene from "src/engine/scenes/speech-scene";
 import { Point, Size } from "src/util";
+import { InputMask } from "src/engine/input";
 
 describe("WebFun.Engine.Scenes.MapScene", () => {
 	let subject: MapScene;
 	let engine: Engine;
+	let input: InputMask;
+
 	beforeEach(() => {
 		subject = new MapScene();
 		subject.engine = mockEngine();
@@ -24,8 +27,8 @@ describe("WebFun.Engine.Scenes.MapScene", () => {
 
 		describe("and the locator key is pressed", () => {
 			beforeEach(() => {
-				(engine.inputManager as any).locator = true;
-				subject.update();
+				input = InputMask.Locator;
+				subject.update(0);
 			});
 
 			it("removes itself from the scene stack", () => {
@@ -71,7 +74,7 @@ describe("WebFun.Engine.Scenes.MapScene", () => {
 					spyOn(cheatInput, "execute").and.returnValue(["Cheat Successful!"]);
 					spyOn(cheatInput, "reset");
 
-					subject.update();
+					subject.update(0);
 				});
 
 				it("the input handler is reset", () => {
@@ -145,8 +148,9 @@ describe("WebFun.Engine.Scenes.MapScene", () => {
 				popScene: jasmine.createSpy("popScene")
 			},
 			inputManager: {
-				clear: (): void => void 0,
-				keyDownHandler: (): void => void 0
+				clear: (): void => void (input = InputMask.None),
+				keyDownHandler: (): void => void 0,
+				readInput: () => input
 			},
 			currentZone: {},
 			currentWorld: {

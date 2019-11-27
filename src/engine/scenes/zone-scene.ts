@@ -1,7 +1,7 @@
 import { Direction, Point, Size } from "src/util";
 import { EvaluationMode, ScriptResult } from "../script";
 import { Zone, Tile, Char, Sound } from "src/engine/objects";
-import { Direction as InputDirection } from "src/engine/input";
+import { Direction as InputDirection, InputMask } from "src/engine/input";
 import { Renderer } from "src/engine/rendering";
 import { Sprite } from "../rendering";
 import { Yoda } from "src/engine/type";
@@ -215,14 +215,15 @@ class ZoneScene extends Scene {
 		const engine = this.engine;
 		const inputManager = engine.inputManager;
 		const hero = engine.hero;
+		const input = inputManager.readInput(ticks);
 
-		if (inputManager.pause) {
+		if (input & InputMask.Pause) {
 			const pauseScene = new PauseScene();
 			this.engine.sceneManager.pushScene(pauseScene);
 			return true;
 		}
 
-		if (inputManager.locator) {
+		if (input & InputMask.Locator) {
 			// && hero.hasLocator();
 			const mapScene = new MapScene();
 			this.engine.sceneManager.pushScene(mapScene);
@@ -231,8 +232,8 @@ class ZoneScene extends Scene {
 
 		if (hero.isAttacking) return false;
 
-		hero.isDragging = inputManager.drag;
-		hero.isAttacking = inputManager.attack;
+		hero.isDragging = !!(input & InputMask.Drag);
+		hero.isAttacking = !!(input & InputMask.Attack);
 		if (hero.isAttacking) this._attackTriggered();
 		if (hero.isAttacking) {
 			hero._actionFrames = 0;
@@ -242,19 +243,18 @@ class ZoneScene extends Scene {
 			return true;
 		}
 
-		const inputDirections = inputManager.readInput(ticks);
-		if (inputDirections) {
+		if (input) {
 			const point = new Point(0, 0);
-			if (inputDirections & InputDirection.Up) {
+			if (input & InputMask.Up) {
 				point.y -= 1;
 			}
-			if (inputDirections & InputDirection.Down) {
+			if (input & InputMask.Down) {
 				point.y += 1;
 			}
-			if (inputDirections & InputDirection.Left) {
+			if (input & InputMask.Left) {
 				point.x -= 1;
 			}
-			if (inputDirections & InputDirection.Right) {
+			if (input & InputMask.Right) {
 				point.x += 1;
 			}
 			const direction = Direction.Confine(Direction.CalculateAngleFromRelativePoint(point));
@@ -263,7 +263,7 @@ class ZoneScene extends Scene {
 			}
 		}
 
-		if (inputManager.walk) await moveHero(hero.direction, this.zone, this.engine, this);
+		if (input & InputMask.Walk) await moveHero(hero.direction, this.zone, this.engine, this);
 
 		return false;
 	}

@@ -4,6 +4,7 @@ import { Point } from "src/util";
 import Scene from "./scene";
 import { drawTileImageData } from "src/app/rendering";
 import { Tile } from "src/engine/objects";
+import { InputMask } from "../input";
 
 class PickupScene extends Scene {
 	public engine: Engine;
@@ -35,9 +36,10 @@ class PickupScene extends Scene {
 		}
 	}
 
-	async update() {
+	async update(ticks: number) {
 		const engine = this.engine;
-		if (engine.inputManager.pickUp) {
+		const input = engine.inputManager.readInput(ticks);
+		if (input & InputMask.PickUp) {
 			engine.sceneManager.popScene();
 		}
 
