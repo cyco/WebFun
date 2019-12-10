@@ -1,4 +1,5 @@
-import { Direction, InputManager, InputMask } from "src/engine/input";
+import InputMask from "src/engine/input/input-mask";
+import { Direction, InputManager } from "src/engine/input";
 import { Metronome, EngineEvents } from "src/engine";
 import { Tile } from "src/engine/objects";
 import { Point } from "src/util";
@@ -12,6 +13,7 @@ class RecordingInputManager implements InputManager {
 	public readonly implementation: DesktopInputManager;
 	private _records: string[] = [];
 	public isRecording: boolean = false;
+	_input: InputMask;
 
 	constructor(implementation: DesktopInputManager) {
 		this.implementation = implementation;
@@ -30,10 +32,12 @@ class RecordingInputManager implements InputManager {
 	}
 
 	private recordOne() {
-		if (!this.isRecording) return;
-		let direction;
 		const input = this.implementation.readInput(0);
+		this._input = input;
 
+		if (!this.isRecording) return;
+
+		let direction;
 		if (this.placedTile) {
 			const id = this.placedTile.id;
 			const { x, y } = this.placedTileLocation;
@@ -96,6 +100,7 @@ class RecordingInputManager implements InputManager {
 
 	public clear() {
 		this.implementation && this.implementation.clear();
+		this._input = 0;
 	}
 
 	get mouseLocationInView() {
@@ -154,18 +159,19 @@ class RecordingInputManager implements InputManager {
 		return this.implementation.engine;
 	}
 
-	public readInput(ticks: number) {
-		return this.implementation && this.implementation.readInput(ticks);
+	public readInput(_: number) {
+		return this._input;
 	}
 
 	private get directions() {
-		const input = this.readInput(0);
+		const input = this._input;
 
 		let result: number = 0;
 		if (input & InputMask.Up) result |= Direction.Up;
 		if (input & InputMask.Down) result |= Direction.Down;
 		if (input & InputMask.Left) result |= Direction.Left;
 		if (input & InputMask.Right) result |= Direction.Right;
+
 		return result;
 	}
 }

@@ -15,8 +15,8 @@ class InputRecorder extends Component {
 	private _record = (
 		<IconButton style={{ color: "red" }} icon="circle" onclick={() => this.toggleRecording()} />
 	) as IconButton;
-	private _dump = <IconButton icon="print" onclick={() => this.showLog()} />;
-	private _clear = <IconButton icon="ban" onclick={() => this._recorder.clearRecords()} /> as IconButton;
+	private _dump = (<IconButton icon="print" onclick={() => this.showLog()} />);
+	private _clear = (<IconButton icon="ban" onclick={() => this._recorder.clearRecords()} />) as IconButton;
 
 	public connectedCallback() {
 		super.connectedCallback();

@@ -17,6 +17,10 @@ class MetronomeEvent extends CustomEvent<void> {}
 
 const MinimumFrameDuration = 1000 / 60;
 
+export interface MetronomeInternals {
+	_tickCount: Uint32Array;
+}
+
 class Metronome extends EventTarget {
 	public static Event = Event;
 	public ontick: Function = identity;

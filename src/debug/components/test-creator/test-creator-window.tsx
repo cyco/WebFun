@@ -13,6 +13,7 @@ import { Zone, Tile, Sound, Puzzle, Char } from "src/engine/objects";
 import { Planet, WorldSize } from "src/engine/types";
 import { Story, Engine, AssetManager, Hero } from "src/engine";
 import Settings from "src/settings";
+import { MetronomeInternals } from "src/engine/metronome";
 
 class TestCreatorWindow extends AbstractWindow {
 	public static readonly tagName = "wf-debug-test-creator-window";
@@ -21,9 +22,9 @@ class TestCreatorWindow extends AbstractWindow {
 	private _gameController: GameController;
 	private _state: Storage = new DiscardingStorage();
 	private _testCase: TestCase = null;
-	private _configBuilder: ConfiguationBuilder = <ConfiguationBuilder /> as ConfiguationBuilder;
-	private _replayer: InputReplayer = <InputReplayer /> as InputReplayer;
-	private _recorder: InputRecorder = <InputRecorder /> as InputRecorder;
+	private _configBuilder: ConfiguationBuilder = (<ConfiguationBuilder />) as ConfiguationBuilder;
+	private _replayer: InputReplayer = (<InputReplayer />) as InputReplayer;
+	private _recorder: InputRecorder = (<InputRecorder />) as InputRecorder;
 	private _expectations: Expectation[] = [];
 
 	public constructor() {
@@ -54,7 +55,7 @@ class TestCreatorWindow extends AbstractWindow {
 
 		if (engine.metronome) {
 			await engine.metronome.stop();
-			(engine.metronome as any)._tickCount[0] = 0;
+			((engine.metronome as any) as MetronomeInternals)._tickCount[0] = 0;
 		}
 
 		const data = (controller.data = controller.data.copy());
