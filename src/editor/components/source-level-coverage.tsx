@@ -110,7 +110,7 @@ class SourceLevelCoverage extends Component {
 	}
 
 	private renderOverview() {
-		const zonesCovered = this.datapoints.reduce((acc, dp) => (acc + dp.actionsCovered > 0 ? 1 : 0), 0);
+		const zonesCovered = this.datapoints.reduce((acc, dp) => acc + (dp.actionsCovered > 0 ? 1 : 0), 0);
 		const zonesTotal = this.datapoints.length;
 
 		const actionsCovered = this.datapoints.reduce((acc, dp) => acc + dp.actionsCovered, 0);
