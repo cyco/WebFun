@@ -239,7 +239,19 @@ class ZoneScene extends Scene {
 			hero._actionFrames = 0;
 			hero.isWalking = false;
 			hero.isDragging = false;
+
 			this._placeBullet(hero);
+
+			const weaponIcon = hero.weapon.getWeaponIcon();
+			console.assert(!!weaponIcon);
+
+			const point = Direction.CalculateRelativeCoordinates(hero.direction, 1);
+			const inertia = new Point(point.x, point.y, 0);
+			const target = Point.add(hero.location, inertia);
+
+			this.engine.inputManager.placedTile = weaponIcon;
+			this.engine.inputManager.placedTileLocation = target;
+
 			return true;
 		}
 
@@ -276,15 +288,16 @@ class ZoneScene extends Scene {
 		// do nothing if no weapon is equipped
 		if (!weapon) {
 			hero.isAttacking = false;
-			return;
+			return ScriptResult.Done;
 		}
 
 		// do nothing if hero is looking away from the zone
 		const point = Direction.CalculateRelativeCoordinates(hero.direction, 1);
 		const inertia = new Point(point.x, point.y, 0);
-		if (!Point.add(hero.location, inertia).isInBounds(zone.size)) {
+		const target = Point.add(hero.location, inertia);
+		if (!target.isInBounds(zone.size)) {
 			hero.isAttacking = false;
-			return;
+			return ScriptResult.Done;
 		}
 	}
 
@@ -321,7 +334,7 @@ class ZoneScene extends Scene {
 		if (tile.id === Yoda.tileIDs.ThermalDetonator) {
 			const scene = new DetonatorScene();
 			scene.detonatorLocation = location;
-			engine.inputManager.clear();
+			inputManager.clear();
 			engine.sceneManager.pushScene(scene);
 
 			return ScriptResult.UpdateScene;
@@ -337,13 +350,13 @@ class ZoneScene extends Scene {
 				engine.mixer.play(nogo, Channel.Effect);
 			}
 
-			engine.inputManager.clear();
+			inputManager.clear();
 
 			return ScriptResult.Done;
 		}
 
 		if (location.distanceTo(heroLocation) > Math.sqrt(2)) {
-			engine.inputManager.clear();
+			inputManager.clear();
 
 			return ScriptResult.Done;
 		}

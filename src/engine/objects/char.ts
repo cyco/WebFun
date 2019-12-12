@@ -113,6 +113,12 @@ class Char {
 	get reference() {
 		return this._reference;
 	}
+
+	public getWeaponIcon(): Tile {
+		if (!this.isWeapon()) return null;
+
+		return this.frames[0].tiles[CharFrameEntry.ExtensionRight];
+	}
 }
 
 declare namespace Char {
