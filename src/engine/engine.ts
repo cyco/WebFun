@@ -209,7 +209,7 @@ class Engine extends EventTarget {
 		console.assert(!!tile && !!place);
 		const solveSector = () => {
 			if (this.currentSector.findItem === tile) {
-				this.currentSector.solved1 = true;
+				this.currentSector.solved2 = true;
 			}
 		};
 
