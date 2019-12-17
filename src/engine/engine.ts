@@ -65,6 +65,7 @@ class Engine extends EventTarget {
 	private _updateInProgress: boolean = false;
 	private _hpu: HotspotProcessingUnit;
 	private _gameState: GameState = GameState.Stopped;
+	private _currentSector: Sector;
 
 	constructor(type: Type, ifce: Partial<Interface> = {}) {
 		super();
@@ -113,6 +114,12 @@ class Engine extends EventTarget {
 		this._currentZone = z;
 		this.dispatchEvent(Events.CurrentZoneChange);
 		this.dispatchEvent(Events.LocationChanged, { zone: z, world: this._currentWorld });
+	}
+
+	set currentSector(s) {}
+
+	get currentSector() {
+		return this.currentWorld.findSectorContainingZone(this.currentZone);
 	}
 
 	get currentWorld() {
@@ -199,8 +206,16 @@ class Engine extends EventTarget {
 	}
 
 	public dropItem(tile: Tile, place: Point): Promise<void> {
+		console.assert(!!tile && !!place);
+		const solveSector = () => {
+			if (this.currentSector.findItem === tile) {
+				this.currentSector.solved1 = true;
+			}
+		};
+
 		if (Settings.pickupItemsAutomatically) {
 			this.inventory.addItem(tile);
+			solveSector();
 			return Promise.resolve();
 		}
 
@@ -208,7 +223,7 @@ class Engine extends EventTarget {
 		scene.tile = tile;
 		scene.location = place;
 
-		return this.sceneManager.presentScene(scene);
+		return this.sceneManager.presentScene(scene).then(solveSector);
 	}
 
 	public findSectorContainingZone(zone: Zone): { sector: Sector; world: World } {

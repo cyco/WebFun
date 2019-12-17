@@ -1,20 +1,20 @@
 import expectation from "../expectation";
 import GameplayContext from "../gameplay-context";
+import { not } from "src/util/functional";
 
 class InventoryContainsExpectation implements expectation {
 	private items: number[];
 
 	public static CanBeBuiltFrom(value: string) {
-		return value.contains("inventory:") && !value.contains("not");
+		return value.contains("inventory") && !value.contains("not");
 	}
 
 	public static BuildFrom(it: IteratorResult<string, string>): InventoryContainsExpectation {
 		return new InventoryContainsExpectation(
 			it.value
-				.split(":")[1]
-				.split(", ")
-				.map(i => i.trim())
-				.map(i => i.parseInt())
+				.split(/[^A-Za-z0-9]+/)
+				.map(i => i.trim().parseInt())
+				.filter(not(isNaN))
 		);
 	}
 

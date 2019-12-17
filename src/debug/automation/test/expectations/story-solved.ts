@@ -18,7 +18,7 @@ class StorySolvedExpectation implements Expectation {
 	}
 
 	format() {
-		return "Story Solved";
+		return "Story solved";
 	}
 }
 

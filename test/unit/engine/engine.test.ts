@@ -5,6 +5,7 @@ import Settings from "src/settings";
 import * as Scenes from "src/engine/scenes";
 import { SpeechScene, PickupScene } from "src/engine/scenes";
 import { Tile } from "src/engine/objects";
+import Sector from "src/engine/sector";
 
 describe("Engine", () => {
 	let subject: Engine;
@@ -105,9 +106,13 @@ describe("Engine", () => {
 	describe("dropping items", () => {
 		let scene: PickupScene;
 		let tile: Tile;
+		let sectorMock: Sector;
+
 		beforeEach(() => {
 			tile = {} as any;
 			scene = {} as any;
+			sectorMock = {} as any;
+			subject.currentWorld = { findSectorContainingZone: () => sectorMock } as any;
 			spyOn(Scenes, "PickupScene").and.returnValue(scene as any);
 			spyOn(sceneManager, "presentScene").and.returnValue(Promise.resolve());
 			spyOn(subject.inventory, "addItem");
@@ -118,6 +123,16 @@ describe("Engine", () => {
 			await subject.dropItem(tile, new Point(4, 5));
 			expect(Scenes.PickupScene).not.toHaveBeenCalled();
 			expect(subject.inventory.addItem).toHaveBeenCalledWith(tile);
+		});
+
+		it("solves the current zone after pick up if the item is the sector's findItem", async () => {
+			sectorMock.findItem = tile;
+
+			Settings.pickupItemsAutomatically = true;
+			await subject.dropItem(tile, new Point(4, 5));
+			expect(Scenes.PickupScene).not.toHaveBeenCalled();
+			expect(subject.inventory.addItem).toHaveBeenCalledWith(tile);
+			expect(sectorMock.solved1).toBeTruthy();
 		});
 
 		it("shows a pick up scene at the specified location", async () => {
