@@ -7,7 +7,7 @@ import { SpeechScene, PickupScene } from "src/engine/scenes";
 import { Tile } from "src/engine/objects";
 import Sector from "src/engine/sector";
 
-describe("Engine", () => {
+describe("WebFun.Engine", () => {
 	let subject: Engine;
 	let sceneManager: SceneManager;
 
@@ -132,7 +132,17 @@ describe("Engine", () => {
 			await subject.dropItem(tile, new Point(4, 5));
 			expect(Scenes.PickupScene).not.toHaveBeenCalled();
 			expect(subject.inventory.addItem).toHaveBeenCalledWith(tile);
-			expect(sectorMock.solved1).toBeTruthy();
+			expect(sectorMock.solved2).toBeTruthy();
+		});
+
+		it("does not solve the current zone after pick up if the item is not the sector's findItem", async () => {
+			sectorMock.findItem = {} as Tile;
+
+			Settings.pickupItemsAutomatically = true;
+			await subject.dropItem(tile, new Point(4, 5));
+			expect(Scenes.PickupScene).not.toHaveBeenCalled();
+			expect(subject.inventory.addItem).toHaveBeenCalledWith(tile);
+			expect(sectorMock.solved2).not.toBeTruthy();
 		});
 
 		it("shows a pick up scene at the specified location", async () => {
