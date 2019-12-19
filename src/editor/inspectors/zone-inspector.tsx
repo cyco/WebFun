@@ -29,11 +29,10 @@ class ZoneInspector extends AbstractInspector {
 			<IconButton icon="plus" title="Add new zone" onclick={() => this.addZone()} />
 		);
 
-		this._list = <List state={state.prefixedWith("list")} /> as List<Zone>;
+		this._list = (<List state={state.prefixedWith("list")} searchDelegate={this} />) as List<Zone>;
 		this._list.cell = (
 			<ZoneInspectorCell
 				onclick={(e: MouseEvent) => this._onCellClicked(e.currentTarget as ZoneInspectorCell)}
-				searchDelegate={this}
 				oncontextmenu={(e: MouseEvent) => this._onCellContextMenu(e)}
 			/>
 		) as ZoneInspectorCell;
@@ -47,12 +46,10 @@ class ZoneInspector extends AbstractInspector {
 			this.build();
 		});
 		this._list.addEventListener(ZoneInspectorCell.Events.ChangeType, (e: CustomEvent) => {
-			console.log("ChangeType", e.detail.zone.type, e.detail.type);
 			e.detail.zone.type = e.detail.type;
 			this.build();
 		});
 		this._list.addEventListener(ZoneInspectorCell.Events.ChangePlanet, (e: CustomEvent) => {
-			console.log("ChangePlanet", e.detail.zone.planet, e.detail.planet);
 			e.detail.zone.planet = e.detail.planet;
 			this.build();
 		});
@@ -117,7 +114,10 @@ class ZoneInspector extends AbstractInspector {
 	}
 
 	private _storeZones() {
-		this._state.store("zones", this._controllers.map(c => c.zone.id));
+		this._state.store(
+			"zones",
+			this._controllers.map(c => c.zone.id)
+		);
 	}
 
 	build() {
