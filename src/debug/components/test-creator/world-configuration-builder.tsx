@@ -35,6 +35,9 @@ class WorldConfigurationBuilder extends Component {
 	private _gamesWon: Textbox = (
 		<Textbox onchange={() => this._state.store("gamesWon", this._gamesWon.value)} />
 	) as Textbox;
+	private _inventory: number[];
+	private _tags: string[];
+	private _description: string;
 
 	public connectedCallback() {
 		super.connectedCallback();
@@ -67,6 +70,10 @@ class WorldConfigurationBuilder extends Component {
 		if (typeof config.planet === "number") this._planet.value = `${config.planet}`;
 		if (typeof config.size === "number") this._size.value = `${config.size}`;
 		if (typeof config.gamesWon === "number") this._gamesWon.value = config.gamesWon.toString(10);
+
+		this._inventory = config.inventory;
+		this._tags = config.tags;
+		this._description = config.description;
 	}
 
 	public get configuration(): Configuration {
@@ -75,7 +82,9 @@ class WorldConfigurationBuilder extends Component {
 			planet: this._planet.value.parseInt(),
 			size: this._size.value.parseInt(),
 			gamesWon: this._gamesWon.value.parseInt(),
-			inventory: []
+			inventory: this._inventory,
+			tags: this._tags,
+			description: this._description
 		};
 	}
 

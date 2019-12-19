@@ -32,11 +32,15 @@ class SimulationConfigurationBuilder extends Component {
 				/>
 			) as PopoverZonePicker
 	);
-	private _findTile = <PopoverTilePicker title="Item to find" /> as PopoverTilePicker;
-	private _npcTile = <PopoverTilePicker title="Npc involved in trade" /> as PopoverTilePicker;
-	private _requiredTile = <PopoverTilePicker title="Item required to solve puzzle" /> as PopoverTilePicker;
-	private _required2Tile = <PopoverTilePicker title="Item required to solve goal" /> as PopoverTilePicker;
+	private _findTile = (<PopoverTilePicker title="Item to find" />) as PopoverTilePicker;
+	private _npcTile = (<PopoverTilePicker title="Npc involved in trade" />) as PopoverTilePicker;
+	private _requiredTile = (
+		<PopoverTilePicker title="Item required to solve puzzle" />
+	) as PopoverTilePicker;
+	private _required2Tile = (<PopoverTilePicker title="Item required to solve goal" />) as PopoverTilePicker;
 	private _inventory: number[] = [];
+	private _tags: string[];
+	private _description: string;
 
 	public connectedCallback() {
 		super.connectedCallback();
@@ -136,7 +140,7 @@ class SimulationConfigurationBuilder extends Component {
 	}
 
 	public set configuration(config: Configuration) {
-		const { zone, findItem, npc, requiredItem1, requiredItem2, inventory } = config;
+		const { zone, findItem, npc, requiredItem1, requiredItem2, inventory, tags, description } = config;
 		const data = this._gameData;
 
 		if (zone >= 0) {
@@ -147,6 +151,8 @@ class SimulationConfigurationBuilder extends Component {
 			this._required2Tile.tile = data.tiles[requiredItem2];
 		}
 		this._inventory = inventory;
+		this._tags = tags;
+		this._description = description;
 	}
 
 	public get configuration(): Configuration {
@@ -163,7 +169,9 @@ class SimulationConfigurationBuilder extends Component {
 			npc,
 			requiredItem1,
 			requiredItem2,
-			inventory: this._inventory
+			inventory: this._inventory,
+			tags: this._tags,
+			description: this._description
 		};
 	}
 

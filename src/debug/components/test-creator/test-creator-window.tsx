@@ -4,7 +4,7 @@ import { AbstractWindow, Button, IconButton } from "src/ui/components";
 import { Point, DiscardingStorage, download } from "src/util";
 
 import { GameController } from "src/app";
-import { TestCase, Expectation, Configuration } from "src/debug/automation/test";
+import { TestCase, Expectation, Configuration, Serializer } from "src/debug/automation/test";
 import { InputReplayer, InputRecorder } from "src/debug/components";
 import ConfiguationBuilder from "./configuration-builder";
 import SimulatedStory from "src/debug/simulated-story";
@@ -147,41 +147,17 @@ class TestCreatorWindow extends AbstractWindow {
 	}
 
 	public downloadTest() {
-		const {
-			size,
-			seed,
-			planet,
-			zone,
-			findItem,
-			npc,
-			requiredItem1,
-			requiredItem2,
-			gamesWon
-		} = this._configBuilder.configuration;
+		const serializer = new Serializer();
+		const data = serializer.serialize(
+			this._configBuilder.configuration,
+			this._recorder.input,
+			this._expectations
+		);
 
-		const configuration = [];
-		if (seed >= 0) configuration.push(`Seed: ${seed.toHex(3)}`);
-		if (planet > 0) configuration.push(`Planet: ${Planet.fromNumber(planet).name}`);
-		if (size > 0) configuration.push(`Size: ${WorldSize.fromNumber(size).name}`);
-		if (gamesWon > 0) configuration.push(`Games Won: ${gamesWon.toString(10)}`);
-		if (zone >= 0) configuration.push(`Zone: ${zone.toHex(3)}`);
-		if (findItem > 0) configuration.push(`Find: ${findItem.toHex(3)}`);
-		if (npc > 0) configuration.push(`NPC: ${findItem.toHex(3)}`);
-		if (requiredItem1 > 0) configuration.push(`Required: ${requiredItem1.toHex(3)}`);
-		if (requiredItem2 > 0) configuration.push(`Required: ${requiredItem2.toHex(3)}`);
+		const { zone, size, planet, seed } = this._configBuilder.configuration;
 
 		download(
-			[
-				"-= WebFun Test =--",
-				...configuration,
-				"",
-				"- Input -",
-				this._recorder.input,
-				"",
-				"- Expect -",
-				...this._expectations.map(e => e.format()),
-				""
-			].join("\n"),
+			data,
 			zone >= 0
 				? `zone-${zone.toHex(3)}.wftest`
 				: `world-${seed.toHex(3)}-${Planet.fromNumber(

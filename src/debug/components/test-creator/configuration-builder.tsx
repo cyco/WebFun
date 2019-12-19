@@ -19,7 +19,7 @@ class ConfigurationBuilder extends Component {
 	public connectedCallback() {
 		super.connectedCallback();
 
-		const config: Configuration = this._initialConfiguration ?? ({} as any);
+		const config: Configuration = this._initialConfiguration ?? { inventory: [], tags: [], seed: 0 };
 		this.append(
 			...[
 				<SegmentControl
@@ -44,7 +44,8 @@ class ConfigurationBuilder extends Component {
 				<div id="simulation">{this._simulationConfigurationBuilder}</div>
 			]
 		);
-		if (this._initialConfiguration) this.configuration = this._initialConfiguration;
+
+		if (this._initialConfiguration) this.configuration = config;
 	}
 
 	public disconnectedCallback() {

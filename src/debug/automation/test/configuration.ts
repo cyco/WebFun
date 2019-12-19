@@ -7,6 +7,8 @@ interface Configuration {
 	seed: number;
 	planet?: number;
 	size?: number;
+	tags: string[];
+	description?: string;
 	inventory: number[];
 	gamesWon?: number;
 }

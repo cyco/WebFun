@@ -55,7 +55,8 @@ class TestFileParser {
 			seed: -1,
 			inventory: [],
 			planet: -1,
-			size: -1
+			size: -1,
+			tags: []
 		};
 
 		do {
@@ -88,6 +89,20 @@ class TestFileParser {
 				configuration.requiredItem1 = value.parseInt();
 			if (key.contains("inventory"))
 				configuration.inventory = value.split(",").map(i => i.trim().parseInt());
+			if (key.contains("tag"))
+				configuration.tags = it.value
+					.split(":")
+					.rest()
+					.join(":")
+					.split(",")
+					.map(i => i.trim())
+					.filter(i => i.length);
+			if (key.contains("description"))
+				configuration.description = it.value
+					.split(":")
+					.rest()
+					.join(":")
+					.trim();
 		} while (true);
 
 		return configuration;
