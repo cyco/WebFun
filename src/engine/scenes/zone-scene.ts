@@ -334,7 +334,11 @@ class ZoneScene extends Scene {
 		if (tile.id === Yoda.tileIDs.ThermalDetonator) {
 			const scene = new DetonatorScene();
 			scene.detonatorLocation = location;
-			inputManager.clear();
+
+			this.engine.inventory.removeItem(Yoda.tileIDs.ThermalDetonator);
+			this.engine.inputManager.clear();
+			this.engine.inputManager.placedTile = null;
+			this.engine.inputManager.placedTileLocation = null;
 			engine.sceneManager.pushScene(scene);
 
 			return ScriptResult.UpdateScene;

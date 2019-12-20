@@ -14,7 +14,6 @@ class DetonatorScene extends Scene {
 	private _engine: Engine = null;
 
 	public willShow() {
-		this.engine.inventory.removeItem(Yoda.tileIDs.ThermalDetonator);
 		this._ticks = 0;
 	}
 
