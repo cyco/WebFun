@@ -45,6 +45,7 @@ class DetonatorScene extends Scene {
 				if (!bounds.contains(target)) continue;
 
 				zone.monsters
+					.filter(({ enabled }) => enabled)
 					.filter(({ position }) => position.isEqualTo(target))
 					.map(npc => {
 						npc.damageTaken += damage;
