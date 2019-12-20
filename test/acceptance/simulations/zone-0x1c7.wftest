@@ -1,0 +1,13 @@
+-= WebFun Test =--
+Description: Ensure that disable-all-monsters instruction clears the way
+Tag: regression
+
+Seed: 0x1c7
+Zone: 0x1c7
+Find: 0x1d5
+
+- Input -
+. . → → → → ↑ . . . → → → → → ↑ ↑ ↑ ↑ ↑ . . ← ← ↖ ↖ . . ← ↖ ← . ← ↖ ↖ . .
+
+- Expect -
+Inventory contains 0x1d5
