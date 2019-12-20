@@ -15,68 +15,72 @@ const run = (prefix: string, fileName: string, testFileContents: string) => {
 	describe(
 		`WebFun.Acceptance.${prefix}.${fileName}`,
 		withTimeout(FiveMinutes, () => {
-			const ctx = new GameplayContext(debug);
-			const parser = new Parser();
-			const testCase = parser.parse(fileName, testFileContents);
+			const testCases = Parser.Parse(fileName, testFileContents);
 
-			beforeAll(async () => {
-				await ctx.prepare(loadGameData);
-				ctx.buildEngine();
-				(window as any).engine = ctx.engine;
+			testCases.forEach(testCase => {
+				const ctx = new GameplayContext(debug);
+				describe(`WebFun.Acceptance.${prefix}.${fileName}.${testCase.description}`, () => {
+					beforeAll(async () => {
+						await ctx.prepare(loadGameData);
+						ctx.buildEngine();
+						(window as any).engine = ctx.engine;
 
-				srand(testCase.configuration.seed);
-				ctx.engine.persistentState.gamesWon = testCase.configuration.gamesWon;
+						srand(testCase.configuration.seed);
+						ctx.engine.persistentState.gamesWon = testCase.configuration.gamesWon;
 
-				ctx.engine.inventory.removeAllItems();
-				testCase.configuration.inventory.forEach(i =>
-					ctx.engine.inventory.addItem(ctx.engine.assets.get(Tile, i))
-				);
-				await ctx.playStory(buildStory(testCase), testCase.input.split(" "), debug);
+						ctx.engine.inventory.removeAllItems();
+						testCase.configuration.inventory.forEach(i =>
+							ctx.engine.inventory.addItem(ctx.engine.assets.get(Tile, i))
+						);
+						await ctx.playStory(buildStory(testCase), testCase.input.split(" "), debug);
+					});
+
+					testCase.expectations.forEach((exp: Expectation) => exp.evaluate(ctx));
+
+					afterAll(async () => await ctx.cleanup());
+
+					function buildStory(testCase: TestCase) {
+						if (testCase.configuration.zone >= 0) return buildSimulatedStory(testCase);
+
+						return buildRealWorldStory(testCase);
+					}
+
+					function buildSimulatedStory(testCase: TestCase) {
+						const engine = ctx.engine;
+						const { findItem, npc, requiredItem1, requiredItem2, zone } = testCase.configuration;
+						const t = (t: number) => (t < 0 ? null : engine.assets.get(Tile, t));
+						const z = (z: number) => (z < 0 ? null : engine.assets.get(Zone, z));
+
+						return new SimulatedStory(
+							t(findItem),
+							t(npc),
+							t(requiredItem1),
+							t(requiredItem2),
+							z(zone),
+							surroundingZones(z(zone)),
+							engine.assets
+						);
+					}
+
+					function buildRealWorldStory(testCase: TestCase) {
+						const { seed, planet, size } = testCase.configuration;
+
+						return new Story(seed, Planet.fromNumber(planet), WorldSize.fromNumber(size));
+					}
+
+					function surroundingZones(zone: Zone): Zone[] {
+						srand(zone.id);
+						return ctx.engine.assets
+							.getFiltered(
+								Zone,
+								(z: Zone) =>
+									z !== zone && z.type === Zone.Type.Empty && z.planet === zone.planet
+							)
+							.slice()
+							.shuffle();
+					}
+				});
 			});
-
-			testCase.expectations.forEach((exp: Expectation) => exp.evaluate(ctx));
-
-			afterAll(async () => await ctx.cleanup());
-
-			function buildStory(testCase: TestCase) {
-				if (testCase.configuration.zone >= 0) return buildSimulatedStory(testCase);
-
-				return buildRealWorldStory(testCase);
-			}
-
-			function buildSimulatedStory(testCase: TestCase) {
-				const engine = ctx.engine;
-				const { findItem, npc, requiredItem1, requiredItem2, zone } = testCase.configuration;
-				const t = (t: number) => (t < 0 ? null : engine.assets.get(Tile, t));
-				const z = (z: number) => (z < 0 ? null : engine.assets.get(Zone, z));
-
-				return new SimulatedStory(
-					t(findItem),
-					t(npc),
-					t(requiredItem1),
-					t(requiredItem2),
-					z(zone),
-					surroundingZones(z(zone)),
-					engine.assets
-				);
-			}
-
-			function buildRealWorldStory(testCase: TestCase) {
-				const { seed, planet, size } = testCase.configuration;
-
-				return new Story(seed, Planet.fromNumber(planet), WorldSize.fromNumber(size));
-			}
-
-			function surroundingZones(zone: Zone): Zone[] {
-				srand(zone.id);
-				return ctx.engine.assets
-					.getFiltered(
-						Zone,
-						(z: Zone) => z !== zone && z.type === Zone.Type.Empty && z.planet === zone.planet
-					)
-					.slice()
-					.shuffle();
-			}
 		})
 	);
 };

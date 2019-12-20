@@ -7,7 +7,8 @@ import {
 	InventoryContainsExpectation,
 	UnknownExpectation,
 	StorySolvedExpectation,
-	InventoryContainsNotExpectation
+	InventoryContainsNotExpectation,
+	TicksExpectation
 } from "./expectations";
 import { Planet, WorldSize } from "src/engine/types";
 
@@ -16,33 +17,54 @@ const Expectations = [
 	ZoneSolvedExpectation,
 	NOPExpectation,
 	InventoryContainsExpectation,
-	InventoryContainsNotExpectation
+	InventoryContainsNotExpectation,
+	TicksExpectation
 ];
 class TestFileParser {
-	public static Parse(description: string, fileContents: string): TestCase {
+	public static Parse(description: string, fileContents: string): TestCase[] {
 		return new TestFileParser().parse(description, fileContents);
 	}
 
-	public parse(description: string, fileContents: string): TestCase {
-		const testCase = this.doParse(fileContents);
-		testCase.description = description;
-		return testCase as TestCase;
+	public parse(description: string, fileContents: string): TestCase[] {
+		const testCases = this.doParse(fileContents);
+		for (let i = 0; i < testCases.length; i++) {
+			const testCase = testCases[i];
+			if (!testCase.description) {
+				testCase.description = description + (testCases.length > 1 ? ` Test ${i + 1}` : "");
+			}
+		}
+
+		return testCases as TestCase[];
 	}
 
-	public async parseFile(file: string): Promise<TestCase> {
+	public async parseFile(file: string): Promise<TestCase[]> {
 		const input = (await getFixtureData(file)).readString();
 		return this.parse(file, input);
 	}
 
-	private doParse(input: string): Partial<TestCase> {
+	private doParse(input: string): Partial<TestCase>[] {
 		const lines = input.split("\n").values();
-		lines.next();
+		const cases: Partial<TestCase>[] = [];
 
-		return {
-			configuration: this.parseConfiguration(lines),
-			input: this.parseInput(lines),
-			expectations: this.parseExpectations(lines)
+		const findStart = () => {
+			while (true) {
+				const lineIt = lines.next();
+				if (lineIt.done) return false;
+
+				const line = lineIt.value as string;
+				if (line.startsWith("-") && line.contains("WebFun Test")) return true;
+			}
 		};
+
+		while (findStart()) {
+			cases.push({
+				configuration: this.parseConfiguration(lines),
+				input: this.parseInput(lines),
+				expectations: this.parseExpectations(lines)
+			});
+		}
+
+		return cases;
 	}
 
 	private parseConfiguration(lines: Iterator<string, string>): TestConfiguration {
@@ -63,8 +85,8 @@ class TestFileParser {
 			const it = lines.next();
 			if (it.done) throw "Unexpected end of input";
 			if (!it.value.length) continue;
-			if (it.value[0] === "-") break;
-			if (it.value[0] === "#") continue;
+			if (it.value.startsWith("-")) break;
+			if (it.value.startsWith("#")) continue;
 
 			const [key, ...valueParts] = it.value
 				.split(":")
@@ -148,7 +170,9 @@ class TestFileParser {
 			const it = lines.next();
 			if (it.done) return expectations;
 			if (!it.value.length) continue;
-			if (it.value[0] === "#") continue;
+			if (it.value.startsWith("#")) continue;
+			if (it.value.startsWith("-")) break;
+
 			const value = it.value.toLowerCase();
 			const Exp = Expectations.find(e => e.CanBeBuiltFrom(value)) || UnknownExpectation;
 			expectations.push(Exp.BuildFrom(it));

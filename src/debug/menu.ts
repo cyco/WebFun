@@ -43,12 +43,14 @@ export default (gameController: GameController) => ({
 			if (!file) return;
 
 			const contents = await file.readAsText();
-			const testCase = Parser.Parse(file.name, contents);
-			const simulator = document.createElement(TestCreatorWindow.tagName) as TestCreatorWindow;
-			simulator.gameController = gameController;
-			simulator.state = localStorage.prefixedWith("simulator");
-			simulator.testCase = testCase;
-			WindowManager.defaultManager.showWindow(simulator);
+			const testCases = Parser.Parse(file.name, contents);
+			testCases.forEach(testCase => {
+				const simulator = document.createElement(TestCreatorWindow.tagName) as TestCreatorWindow;
+				simulator.gameController = gameController;
+				simulator.state = localStorage.prefixedWith("simulator");
+				simulator.testCase = testCase;
+				WindowManager.defaultManager.showWindow(simulator);
+			});
 		}),
 		MenuItemSeparator,
 		SettingsAction("Debug Scripts", () => ScriptDebugger.sharedDebugger.show()),
