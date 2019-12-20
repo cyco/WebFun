@@ -4,12 +4,14 @@ import NOPExpectation from "./nop";
 import ZoneSolvedExpectation from "./zone-solved";
 import StorySolvedExpectation from "./story-solved";
 import InventoryContainsNotExpectation from "./inventory-contains-not";
+import TicksExpectation from "./ticks";
 
 export {
-	NOPExpectation,
 	InventoryContainsExpectation,
 	InventoryContainsNotExpectation,
+	NOPExpectation,
+	StorySolvedExpectation,
+	TicksExpectation,
 	UnknownExpectation,
-	ZoneSolvedExpectation,
-	StorySolvedExpectation
+	ZoneSolvedExpectation
 };
