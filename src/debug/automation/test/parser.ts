@@ -168,7 +168,7 @@ class TestFileParser {
 
 		do {
 			const it = lines.next();
-			if (it.done) return expectations;
+			if (it.done) break;
 			if (!it.value.length) continue;
 			if (it.value.startsWith("#")) continue;
 			if (it.value.startsWith("-")) break;
@@ -177,6 +177,8 @@ class TestFileParser {
 			const Exp = Expectations.find(e => e.CanBeBuiltFrom(value)) || UnknownExpectation;
 			expectations.push(Exp.BuildFrom(it));
 		} while (true);
+
+		return expectations;
 	}
 }
 
