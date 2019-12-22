@@ -26,6 +26,8 @@ class MainWindow extends AbstractWindow {
 	constructor() {
 		super();
 
+		this.closable = false;
+
 		this.content.appendChild(<div className="main" />);
 		this.content.appendChild(<Inventory />);
 		this.content.appendChild(

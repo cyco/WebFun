@@ -6,6 +6,10 @@
 wf-main-window {
 	@extend wf-abstract-window;
 
+	> wf-window-titlebar > wf-menubar {
+		margin-left: 0px;
+	}
+
 	> .content {
 		display: grid;
 		grid-column-gap: 14px;
