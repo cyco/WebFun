@@ -3,9 +3,7 @@ import "./scene-view.scss";
 import { Point, Rectangle, Size, rgb } from "src/util";
 
 import Component from "src/ui/component";
-import DebugInfoSceneManager from "../../debug/debug-info-scene-manager";
 import { SceneManager } from "src/engine";
-import Settings from "src/settings";
 
 class SceneView extends Component {
 	public static readonly tagName = "wf-scene-view";
@@ -28,7 +26,6 @@ class SceneView extends Component {
 			return new Rectangle(new Point(left, top), new Size(width, height));
 		};
 
-		if (Settings.debug) return new DebugInfoSceneManager(determineBounds);
 		return new SceneManager(determineBounds);
 	}
 }

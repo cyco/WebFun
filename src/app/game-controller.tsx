@@ -26,6 +26,7 @@ import CursorManager from "./input/cursor-manager";
 import { Channel } from "src/engine/audio";
 import { Mixer } from "./audio";
 import { Yoda } from "src/engine/type";
+import DebugInfoScene from "src/debug/debug-info-scene";
 
 export const Event = {
 	DidLoadData: "didLoadData"
@@ -73,6 +74,10 @@ class GameController extends EventTarget {
 			this._engine.gameState = GameState.Lost;
 			this._engine.sceneManager.pushScene(new LoseScene());
 		});
+
+		if (this.settings.drawDebugStats) {
+			engine.sceneManager.addOverlay(new DebugInfoScene());
+		}
 
 		return engine;
 	}
