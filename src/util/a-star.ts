@@ -37,6 +37,7 @@ export default <T>(
 	fScore.set(start, h(start));
 
 	while (open.length) {
+		open.sort((o1, o2) => fScore.get(o1) - fScore.get(o2));
 		const current = open.shift();
 
 		if (current === end) return reconstructPath(parent, current);

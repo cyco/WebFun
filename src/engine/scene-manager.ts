@@ -106,6 +106,11 @@ class SceneManager {
 		overlay.engine = this.engine;
 	}
 
+	public removeOverlay(overlay: Scene) {
+		overlay.engine = null;
+		this._overlays.splice(this._overlays.indexOf(overlay), 1);
+	}
+
 	public get engine() {
 		return this._engine;
 	}

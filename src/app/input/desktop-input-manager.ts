@@ -1,11 +1,18 @@
 import { Direction, InputMask, InputManager } from "src/engine/input";
-import { KeyEvent, Point, Direction as DirectionHelper } from "src/util";
+import { KeyEvent, Point, Direction as DirectionHelper, astar } from "src/util";
 import { Engine } from "src/engine";
 
 import { Tile } from "src/engine/objects";
 import { document } from "src/std/dom";
 import CursorManager from "./cursor-manager";
-import { ZoneScene } from "src/engine/scenes";
+import { ZoneScene, Scene } from "src/engine/scenes";
+import PathUIScene from "./path-ui-scene";
+import { floor } from "src/std/math";
+
+enum MouseMode {
+	Direction,
+	Path
+}
 
 class DesktopInputManager implements InputManager, EventListenerObject {
 	public mouseDownHandler: (_: Point) => void = () => void 0;
@@ -23,11 +30,16 @@ class DesktopInputManager implements InputManager, EventListenerObject {
 
 	public placedTile: Tile;
 	public placedTileLocation: Point;
+	private _highlight = new PathUIScene();
+	private mouseMode: MouseMode = MouseMode.Direction;
+	private pathTarget: Point;
 
 	constructor(gameViewElement: HTMLElement, cursorManager: CursorManager) {
 		this._element = gameViewElement;
 		this._lastMouse = new Point(NaN, NaN);
 		this.cursorManager = cursorManager;
+
+		this._highlight.highlight = new Point(3, 2);
 	}
 
 	get mouseLocationInView(): Point {
@@ -49,6 +61,8 @@ class DesktopInputManager implements InputManager, EventListenerObject {
 		document.addEventListener("mousedown", this);
 		document.addEventListener("mouseup", this);
 		document.addEventListener("contextmenu", this);
+
+		this.engine.sceneManager.addOverlay(this._highlight);
 	}
 
 	public handleEvent(event: MouseEvent | KeyboardEvent) {
@@ -86,6 +100,8 @@ class DesktopInputManager implements InputManager, EventListenerObject {
 		document.removeEventListener("mousedown", this);
 		document.removeEventListener("mouseup", this);
 		document.removeEventListener("contextmenu", this);
+
+		this.engine.sceneManager.removeOverlay(this._highlight);
 	}
 
 	private _keyDown(e: KeyboardEvent) {
@@ -120,7 +136,10 @@ class DesktopInputManager implements InputManager, EventListenerObject {
 			case KeyEvent.DOM_VK_L:
 				this._currentInput ^= InputMask.Locator;
 				break;
-
+			case KeyEvent.DOM_VK_CONTROL:
+				this.mouseMode = MouseMode.Path;
+				this.updateMouse();
+				break;
 			default:
 				break;
 		}
@@ -157,6 +176,11 @@ class DesktopInputManager implements InputManager, EventListenerObject {
 			case KeyEvent.DOM_VK_SHIFT:
 				this._currentInput &= ~InputMask.Drag;
 				break;
+			case KeyEvent.DOM_VK_CONTROL:
+				this.mouseMode = MouseMode.Direction;
+				this._highlight.highlight = null;
+				this.updateMouse();
+				break;
 
 			default:
 				break;
@@ -174,8 +198,19 @@ class DesktopInputManager implements InputManager, EventListenerObject {
 		const pointIsInView = point.x > 0 && point.y > 0 && point.x < 1 && point.y < 1;
 		console.assert(pointIsInView, "Previous in-bounds check should have been sufficient");
 
-		if (e.button === 0) this._currentInput |= InputMask.Walk;
-		if (e.button === 1) this._currentInput |= InputMask.Attack;
+		this._lastMouse = point;
+		this.updateMouse();
+
+		if (this.mouseMode === MouseMode.Direction) {
+			if (e.button === 0) this._currentInput |= InputMask.Walk;
+			if (e.button === 1) this._currentInput |= InputMask.Attack;
+		} else {
+			this.pathTarget = point
+				.byScalingBy(9)
+				.floor()
+				.subtract(this.engine.camera.offset);
+			this._highlight.target = this.pathTarget;
+		}
 
 		this.mouseDownHandler(point);
 	}
@@ -183,10 +218,19 @@ class DesktopInputManager implements InputManager, EventListenerObject {
 	private _mouseMove(e: MouseEvent) {
 		const mouseLocation = new Point(e.clientX, e.clientY);
 		this._lastMouse = this.convertClientCoordinatesToView(mouseLocation);
+		this.updateMouse();
+	}
 
+	private updateMouse() {
 		const [dir, angle] = this.calculateDirectionFromHero(this._lastMouse);
 		this._mouseDirection = dir;
-		this._updateCursor(dir, angle);
+
+		if (this.mouseMode === MouseMode.Direction) {
+			this._updateCursor(dir, angle);
+		} else {
+			this.cursorManager.changeCursor(null);
+			this._highlight.highlight = new Point(this._lastMouse.x, this._lastMouse.y);
+		}
 	}
 
 	private _directionInputFromAngle(input: Point): number {
@@ -210,6 +254,65 @@ class DesktopInputManager implements InputManager, EventListenerObject {
 	}
 
 	public readInput(_: number): InputMask {
+		if (this.pathTarget) {
+			const zone = this.engine.currentZone;
+			const source = this.engine.hero.location;
+			const target = this.pathTarget;
+
+			if (source.isEqualTo(target)) {
+				this.pathTarget = null;
+				return InputMask.None;
+			}
+
+			const p2n = (p: Point): number => p.x + p.y * zone.size.width;
+			const n2p = (n: number): Point => new Point(n % zone.size.width, floor(n / zone.size.width));
+			const path =
+				astar(
+					p2n(source),
+					p2n(target),
+					node =>
+						[
+							n2p(node).byAdding(-1, -1),
+							n2p(node).byAdding(0, -1),
+							n2p(node).byAdding(1, -1),
+							n2p(node).byAdding(-1, 0),
+							n2p(node).byAdding(1, 0),
+							n2p(node).byAdding(-1, 1),
+							n2p(node).byAdding(0, 1),
+							n2p(node).byAdding(1, 1)
+						]
+							.filter(
+								p => (zone.bounds.contains(p) && zone.placeWalkable(p)) || p.isEqualTo(target)
+							)
+							.map(p2n),
+					(n1, n2) => n2p(n1).manhattenDistanceTo(n2p(n2)),
+					n => n2p(n).manhattenDistanceTo(target)
+				) ?? [];
+
+			path.shift();
+
+			const nextStep = n2p(path.shift());
+			let direction = InputMask.Walk;
+
+			if (nextStep.x < source.x) {
+				direction |= InputMask.Left;
+			} else if (nextStep.x > source.x) {
+				direction |= InputMask.Right;
+			}
+
+			if (nextStep.y < source.y) {
+				direction |= InputMask.Up;
+			} else if (nextStep.y > source.y) {
+				direction |= InputMask.Down;
+			}
+
+			if (path.length === 0) {
+				this.pathTarget = null;
+			}
+
+			return direction;
+		}
+
 		return this._currentInput | this.preferredDirections;
 	}
 

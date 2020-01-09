@@ -85,6 +85,10 @@ class CanvasRenderer implements Renderer {
 	redisplayTile(_x: number, _y: number): void {}
 	redisplayRect(_x: number, _y: number, _width: number, _height: number): void {}
 	redisplay(): void {}
+
+	get context() {
+		return this._ctx;
+	}
 }
 
 export default CanvasRenderer;

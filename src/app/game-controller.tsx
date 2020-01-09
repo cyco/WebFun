@@ -204,8 +204,8 @@ class GameController extends EventTarget {
 		windowContent.textContent = "";
 		windowContent.appendChild(this._sceneView);
 
-		engine.inputManager.addListeners();
 		engine.inputManager.engine = engine;
+		engine.inputManager.addListeners();
 		this._window.inventory.addEventListener(InventoryComponent.Events.ItemActivated, (e: CustomEvent) => {
 			if (engine.gameState !== GameState.Running) {
 				e.preventDefault();
