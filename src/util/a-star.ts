@@ -8,18 +8,6 @@ function reconstructPath<T>(parent: Map<T, T>, current: T): T[] {
 	return path;
 }
 
-function findIndex<T>(array: T[], value: T): number {
-	let low = 0;
-	let high = array.length;
-
-	while (low < high) {
-		const mid = (low + high) >>> 1;
-		if (array[mid] < value) low = mid + 1;
-		else high = mid;
-	}
-	return low;
-}
-
 export default <T>(
 	start: T,
 	end: T,
@@ -33,12 +21,28 @@ export default <T>(
 	const gScore = new Map<T, number>();
 	const fScore = new Map<T, number>();
 
+	function findIndex(array: T[], value: T): number {
+		const val = (node: T): number => fScore.get(node);
+		const v = val(value);
+
+		let low = 0;
+		let high = array.length;
+
+		while (low < high) {
+			const mid = (low + high) >>> 1;
+			if (val(array[mid]) < v) low = mid + 1;
+			else high = mid;
+		}
+
+		return low;
+	}
+
 	gScore.set(start, 0);
 	fScore.set(start, h(start));
 
 	while (open.length) {
-		open.sort((o1, o2) => fScore.get(o1) - fScore.get(o2));
 		const current = open.shift();
+		if (!openSet.has(current)) continue;
 
 		if (current === end) return reconstructPath(parent, current);
 
@@ -51,11 +55,8 @@ export default <T>(
 				parent.set(neighbor, current);
 				gScore.set(neighbor, tentativeGScore);
 				fScore.set(neighbor, tentativeGScore + h(neighbor));
-
-				if (!openSet.has(neighbor)) {
-					openSet.add(neighbor);
-					open.splice(findIndex(open, neighbor), 0, neighbor);
-				}
+				openSet.add(neighbor);
+				open.splice(findIndex(open, neighbor), 0, neighbor);
 			}
 		}
 	}
