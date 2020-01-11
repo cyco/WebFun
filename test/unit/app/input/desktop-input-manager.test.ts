@@ -1,6 +1,6 @@
 import DesktopInputManager from "src/app/input/desktop-input-manager";
 import { InputMask } from "src/engine/input";
-import { KeyEvent, Point } from "src/util";
+import { KeyEvent, Point, Size } from "src/util";
 import CursorManager from "src/app/input/cursor-manager";
 
 describe("WebFun.App.Input.DesktopInputManager", () => {
@@ -13,6 +13,10 @@ describe("WebFun.App.Input.DesktopInputManager", () => {
 		mockedCursorManager = { changeCursor: (): void => void 0 } as any;
 		element = document.createElement("div");
 		subject = new DesktopInputManager(element, mockedCursorManager);
+		subject.engine = {
+			sceneManager: { addOverlay() {}, removeOverlay() {} },
+			camera: { offset: new Point(0, 0), size: new Size(288, 288) }
+		} as any;
 		mockElement = {} as any;
 		spyOn(element, "contains").and.callFake(e => e === mockElement);
 	});
