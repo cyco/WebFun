@@ -62,10 +62,18 @@ class DesktopInputManager implements InputManager, EventListenerObject {
 		document.addEventListener("mouseup", this);
 		document.addEventListener("contextmenu", this);
 
+		this.engine.addEventListener(Engine.Event.CurrentZoneChange, this);
 		this.engine.sceneManager.addOverlay(this._highlight);
 	}
 
 	public handleEvent(event: MouseEvent | KeyboardEvent) {
+		if (event.type === Engine.Event.CurrentZoneChange) {
+			this.pathTarget = null;
+			this._highlight.highlight = null;
+			this._highlight.target = null;
+			return;
+		}
+
 		if ("repeat" in event && event.repeat) return;
 		if (event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement) {
 			return;
@@ -101,6 +109,7 @@ class DesktopInputManager implements InputManager, EventListenerObject {
 		document.removeEventListener("mouseup", this);
 		document.removeEventListener("contextmenu", this);
 
+		this.engine.removeEventListener(Engine.Event.CurrentZoneChange, this);
 		this.engine.sceneManager.removeOverlay(this._highlight);
 	}
 

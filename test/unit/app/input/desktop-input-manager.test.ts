@@ -15,7 +15,9 @@ describe("WebFun.App.Input.DesktopInputManager", () => {
 		subject = new DesktopInputManager(element, mockedCursorManager);
 		subject.engine = {
 			sceneManager: { addOverlay() {}, removeOverlay() {} },
-			camera: { offset: new Point(0, 0), size: new Size(288, 288) }
+			camera: { offset: new Point(0, 0), size: new Size(288, 288) },
+			addEventListener() {},
+			removeEventListener() {}
 		} as any;
 		mockElement = {} as any;
 		spyOn(element, "contains").and.callFake(e => e === mockElement);
