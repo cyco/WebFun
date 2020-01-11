@@ -14,6 +14,7 @@ describe("WebFun.App.Input.DesktopInputManager", () => {
 		element = document.createElement("div");
 		subject = new DesktopInputManager(element, mockedCursorManager);
 		subject.engine = {
+			hero: { location: new Point(0, 0) },
 			sceneManager: { addOverlay() {}, removeOverlay() {} },
 			camera: { offset: new Point(0, 0), size: new Size(288, 288) },
 			addEventListener() {},
