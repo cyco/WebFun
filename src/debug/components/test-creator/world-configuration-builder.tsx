@@ -82,8 +82,8 @@ class WorldConfigurationBuilder extends Component {
 			planet: this._planet.value.parseInt(),
 			size: this._size.value.parseInt(),
 			gamesWon: this._gamesWon.value.parseInt(),
-			inventory: this._inventory,
-			tags: this._tags,
+			inventory: this._inventory ?? [],
+			tags: this._tags ?? [],
 			description: this._description
 		};
 	}
