@@ -19,7 +19,7 @@ import { PaletteAnimation } from "src/engine/rendering";
 import { Reader } from "src/engine/save-game";
 import Settings from "src/settings";
 import { CanvasRenderer } from "./rendering";
-import { DesktopInputManager } from "./input";
+import { DesktopInputManager, TouchInputManager } from "./input";
 import Loader from "./loader";
 import ResourceManager from "./resource-manager";
 import CursorManager from "./input/cursor-manager";
@@ -27,6 +27,7 @@ import { Channel } from "src/engine/audio";
 import { Mixer } from "./audio";
 import { Yoda } from "src/engine/type";
 import DebugInfoScene from "src/debug/debug-info-scene";
+import { Pad, Shoot, Drag } from "./ui/onscreen-controls";
 
 export const Event = {
 	DidLoadData: "didLoadData"
@@ -53,6 +54,7 @@ class GameController extends EventTarget {
 		this._engine = this._buildEngine(type, paths);
 		this._sceneView.manager.engine = this._engine;
 		if (Settings.debug) (window as any).engine = this._engine;
+		if (Settings.mobile) this._window.classList.add("mobile");
 	}
 
 	private _buildEngine(type: GameType, paths: PathConfiguration) {
@@ -85,7 +87,14 @@ class GameController extends EventTarget {
 	private _buildInterface(paths: any): Partial<Interface> {
 		const mixer = new Mixer(this.settings);
 		const renderer = new CanvasRenderer.Renderer(this._sceneView.canvas);
-		const inputManager = new DesktopInputManager(this._sceneView, new CursorManager(this._sceneView));
+		const inputManager = !Settings.mobile
+			? new DesktopInputManager(this._sceneView, new CursorManager(this._sceneView))
+			: new TouchInputManager(
+					this._sceneView,
+					this._window.content.querySelector(Pad.tagName),
+					this._window.content.querySelector(Shoot.tagName),
+					this._window.content.querySelector(Drag.tagName)
+			  );
 		const resources = new ResourceManager(paths.palette, paths.data, paths.sfx);
 		const loader = new Loader(resources, mixer);
 

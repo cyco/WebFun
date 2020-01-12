@@ -3,18 +3,12 @@
 
 wf-loading-view {
 	@include fullsize();
+	@include fullsize-children();
 
-	position: absolute;
 	background-color: #000000;
 
 	> canvas {
-		@include fullsize();
-
 		@extend .pixelated;
-
-		position: absolute;
-		width: 288px;
-		height: 288px;
 	}
 
 	> img:not([src]) {

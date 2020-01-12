@@ -2,7 +2,7 @@ import Component from "./component";
 import { iterate } from "src/util";
 
 class ComponentJSXRenderer {
-	render(thing: string | (typeof Component) | Node, props: any, ...children: any[]) {
+	render(thing: string | typeof Component | Node, props: any, ...children: any[]) {
 		let node: Node;
 
 		if (typeof thing === "string") {
@@ -13,7 +13,7 @@ class ComponentJSXRenderer {
 
 		if (props) {
 			for (const [key, value] of iterate(props)) {
-				if (key === "style") {
+				if (key === "style" && typeof value !== "string") {
 					for (const [key, style] of iterate(value)) {
 						(node as any).style[key] = style;
 					}

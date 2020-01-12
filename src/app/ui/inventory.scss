@@ -6,8 +6,11 @@ wf-inventory {
 	@include inset-border(2px);
 	@extend wf-abstract-list;
 
+	flex-grow: 1;
+	flex-shrink: 2;
+
 	height: 7 * $tile-size + 2 * $border-size;
-	min-height: 7 * $tile-size + 2 * $border-size;
+	min-height: 3 * $tile-size + 2 * $border-size;
 	max-height: 7 * $tile-size + 2 * $border-size;
 	width: 206px;
 

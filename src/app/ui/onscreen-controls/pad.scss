@@ -1,0 +1,22 @@
+wf-onscreen-pad {
+	$base-radius: 80px;
+	$thumb-radius: 48px;
+	display: block;
+	position: relative;
+	width: 180px;
+	height: 180px;
+
+	> svg {
+		position: absolute;
+		top: 0px;
+		left: 0px;
+	}
+
+	> *:nth-child(1) {
+	}
+
+	> *:nth-child(2) {
+		margin-left: -$thumb-radius;
+		margin-top: -$thumb-radius;
+	}
+}

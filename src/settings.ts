@@ -3,6 +3,7 @@ import persistent from "src/util/persistent";
 
 const Settings = persistent(
 	{
+		mobile: true,
 		debug: true,
 
 		drawDebugStats: true,

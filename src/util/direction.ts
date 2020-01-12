@@ -1,4 +1,5 @@
 import Point from "./point";
+import { atan, PI, round, sin, cos } from "src/std/math";
 
 class Direction {
 	public static readonly East = 0;
@@ -21,7 +22,7 @@ class Direction {
 	}
 
 	static Confine(direction: number, allowDiagonals = true): number {
-		const value = Direction.Normalize(Math.round(direction / 45.0) * 45.0);
+		const value = Direction.Normalize(round(direction / 45.0) * 45.0);
 
 		if (!allowDiagonals) {
 			switch (value) {
@@ -44,13 +45,13 @@ class Direction {
 	}
 
 	static CalculateAngleFromRelativePoint(relative: Point): number {
-		if (relative.x < 0) return 180.0 - (Math.atan(relative.y / -relative.x) * 180.0) / Math.PI;
-		else return (Math.atan(relative.y / relative.x) * 180.0) / Math.PI;
+		if (relative.x < 0) return 180.0 - (atan(relative.y / -relative.x) * 180.0) / PI;
+		else return (atan(relative.y / relative.x) * 180.0) / PI;
 	}
 
 	static CalculateRelativeCoordinates(direction: number, distance: number): Point {
-		const rad = (direction * Math.PI) / 180.0;
-		return new Point(distance * Math.round(Math.cos(rad)), distance * Math.round(Math.sin(rad)));
+		const rad = (direction * PI) / 180.0;
+		return new Point(distance * round(cos(rad)), distance * round(sin(rad)));
 	}
 }
 

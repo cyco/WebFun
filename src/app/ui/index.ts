@@ -8,16 +8,28 @@ import Location from "./location";
 import Weapon from "./weapon";
 import LoadingView from "./loading-view";
 import SceneView from "./scene-view";
+import {
+	Shoot as OnscreenShoot,
+	Drag as OnscreenDrag,
+	Pad as OnscreenPad,
+	Pause as OnscreenPause,
+	Locator as OnscreenLocator
+} from "./onscreen-controls";
 
 export {
-	SettingsWindow,
 	AbstractHealth,
-	InventoryRow,
-	Inventory,
 	Ammo,
-	Weapon,
 	Health,
-	Location,
+	Inventory,
+	InventoryRow,
 	LoadingView,
-	SceneView
+	Location,
+	OnscreenDrag,
+	OnscreenLocator,
+	OnscreenPad,
+	OnscreenPause,
+	OnscreenShoot,
+	SceneView,
+	SettingsWindow,
+	Weapon
 };

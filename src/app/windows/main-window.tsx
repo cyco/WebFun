@@ -1,6 +1,7 @@
 import "./main-window.scss";
 
 import { Ammo, Health, Inventory, Location, Weapon } from "../ui";
+import { Pad as OnscreenPad, Shoot as OnscreenShoot, Drag as OnscreenDrag } from "../ui/onscreen-controls";
 import { default as Engine, Events } from "src/engine/engine";
 
 import { AbstractWindow } from "src/ui/components";
@@ -38,6 +39,22 @@ class MainWindow extends AbstractWindow {
 					<Weapon />
 				</div>
 				<Health />
+			</div>
+		);
+		this.content.appendChild(
+			<OnscreenPad
+				style={{
+					position: "fixed",
+					bottom: "30px",
+					left: "30px",
+					marginLeft: "env(safe-area-inset-left)"
+				}}
+			/>
+		);
+		this.content.appendChild(
+			<div className="buttons">
+				<OnscreenDrag style="zoom: .7" />
+				<OnscreenShoot style="zoom: .7; margin-left: 15px;" />
 			</div>
 		);
 	}
