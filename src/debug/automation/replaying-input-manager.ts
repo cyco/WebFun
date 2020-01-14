@@ -35,8 +35,6 @@ class ReplayingInputManager extends EventTarget implements InputManager, EventLi
 	}
 
 	public handleEvent(_: Event) {
-		this._offset++;
-
 		if (this.token === Syntax.Place.Start) {
 			this._offset++;
 			const tileID = this.token.parseInt();
@@ -80,6 +78,7 @@ class ReplayingInputManager extends EventTarget implements InputManager, EventLi
 		if (this.walk) result |= InputMask.Walk;
 		if (this.drag) result |= InputMask.Drag;
 		if (this.attack) result |= InputMask.Attack;
+		this._offset++;
 
 		return result;
 	}

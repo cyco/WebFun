@@ -137,8 +137,6 @@ class RecordingInputManager implements InputManager {
 			this._records.push(`${Syntax.Place.Start} ${id.toHex(3)}${Syntax.Place.End}`);
 			return;
 		}
-
-		this.recordOne();
 	}
 
 	public set engine(s) {
@@ -160,6 +158,7 @@ class RecordingInputManager implements InputManager {
 	}
 
 	public readInput(_: number) {
+		this.recordOne();
 		return this._input;
 	}
 

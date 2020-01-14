@@ -101,7 +101,7 @@ class Metronome extends EventTarget {
 		this._mainLoop = null;
 
 		do {
-			await dispatch(() => void 0, 5);
+			await dispatch(() => void 0, 1);
 		} while (this._updatesSuspended);
 	}
 
