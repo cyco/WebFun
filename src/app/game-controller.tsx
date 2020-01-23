@@ -39,7 +39,7 @@ interface PathConfiguration {
 	sfx: string;
 }
 
-class GameController extends EventTarget {
+class GameController extends EventTarget implements EventListenerObject {
 	public static readonly Event = Event;
 	public settings: typeof Settings = Settings;
 	public data: GameData;
@@ -59,29 +59,117 @@ class GameController extends EventTarget {
 
 	private _buildEngine(type: GameType, paths: PathConfiguration) {
 		const engine: Engine = new Engine(type, this._buildInterface(paths));
-
-		engine.hero.addEventListener(Hero.Event.HealthChanged, () => {
-			if (engine.hero.health > 0) {
-				return;
-			}
-
-			if (engine.inventory.contains(Yoda.tileIDs.SpiritHeart)) {
-				engine.hero.health = Hero.MaxHealth;
-				engine.inventory.removeItem(Yoda.tileIDs.SpiritHeart);
-				const flourish = engine.assets.get(Sound, Yoda.sounds.Flourish);
-				engine.mixer.play(flourish, Channel.Effect);
-				return;
-			}
-
-			this._engine.gameState = GameState.Lost;
-			this._engine.sceneManager.pushScene(new LoseScene());
-		});
+		engine.hero.addEventListener(Hero.Event.HealthChanged, this);
 
 		if (this.settings.drawDebugStats) {
 			engine.sceneManager.addOverlay(new DebugInfoScene());
 		}
 
 		return engine;
+	}
+
+	handleEvent(evt: CustomEvent): void {
+		const engine = this.engine;
+		switch (evt.type) {
+			case Hero.Event.HealthChanged: {
+				if (engine.hero.health > 0) {
+					return;
+				}
+
+				if (engine.inventory.contains(Yoda.tileIDs.SpiritHeart)) {
+					engine.hero.health = Hero.MaxHealth;
+					engine.inventory.removeItem(Yoda.tileIDs.SpiritHeart);
+					const flourish = engine.assets.get(Sound, Yoda.sounds.Flourish);
+					engine.mixer.play(flourish, Channel.Effect);
+					return;
+				}
+
+				this._engine.gameState = GameState.Lost;
+				this._engine.sceneManager.pushScene(new LoseScene());
+				return;
+			}
+			case InventoryComponent.Events.ItemActivated: {
+				if (engine.gameState !== GameState.Running) {
+					evt.preventDefault();
+					return;
+				}
+
+				if (!(engine.sceneManager.currentScene instanceof ZoneScene)) {
+					engine.sceneManager.popScene();
+					return;
+				}
+
+				if (!evt.detail.item) return;
+				engine.metronome.stop();
+				return;
+			}
+
+			case InventoryComponent.Events.ItemPlaced: {
+				if (engine.gameState !== GameState.Running) {
+					evt.preventDefault();
+					return;
+				}
+
+				const location = evt.detail.location as Point;
+				const item = evt.detail.item as Tile;
+
+				const targetElement = document.elementFromPoint(location.x, location.y);
+				const element =
+					targetElement &&
+					targetElement.closest(
+						[
+							AmmoComponet.tagName,
+							WeaponComponent.tagName,
+							HealthComponent.tagName,
+							SceneView.tagName
+						].join(",")
+					);
+
+				let used = false;
+				if (element instanceof HealthComponent && item.isEdible) {
+					console.log("consume");
+					this.engine.consume(item);
+					used = true;
+				}
+
+				if (
+					item.isWeapon &&
+					(element instanceof AmmoComponet || element instanceof WeaponComponent)
+				) {
+					console.log("equip");
+					this.engine.equip(item);
+					used = true;
+				}
+
+				if (!used) {
+					const { left, top } = this._sceneView.getBoundingClientRect();
+					const pointInView = location
+						.bySubtracting(left, top)
+						.dividedBy(new Size(Tile.WIDTH, Tile.HEIGHT))
+						.byFlooring();
+
+					if (!new Rectangle(new Point(0, 0), new Size(9, 9)).contains(pointInView)) {
+						engine.metronome.start();
+						return;
+					}
+
+					const pointInZone = pointInView.bySubtracting(
+						this.engine.camera.offset.x,
+						this.engine.camera.offset.y
+					);
+					pointInZone.z = null;
+					if (!new Rectangle(new Point(0, 0), this.engine.currentZone.size).contains(pointInZone)) {
+						engine.metronome.start();
+						return;
+					}
+
+					this.engine.inputManager.placedTile = item;
+					this.engine.inputManager.placedTileLocation = pointInZone;
+				}
+
+				engine.metronome.start();
+			}
+		}
 	}
 
 	private _buildInterface(paths: any): Partial<Interface> {
@@ -192,6 +280,9 @@ class GameController extends EventTarget {
 	}
 
 	private _showSceneView(zone: Zone = this._engine.assets.find(Zone, z => z.isLoadingZone())) {
+		this._window.inventory.removeEventListener(InventoryComponent.Events.ItemActivated, this);
+		this._window.inventory.removeEventListener(InventoryComponent.Events.ItemPlaced, this);
+
 		const engine = this._engine;
 		engine.metronome.stop();
 		engine.metronome.ontick = (delta: number) => engine.update(delta);
@@ -215,83 +306,8 @@ class GameController extends EventTarget {
 
 		engine.inputManager.engine = engine;
 		engine.inputManager.addListeners();
-		this._window.inventory.addEventListener(InventoryComponent.Events.ItemActivated, (e: CustomEvent) => {
-			if (engine.gameState !== GameState.Running) {
-				e.preventDefault();
-				return;
-			}
-
-			if (!(engine.sceneManager.currentScene instanceof ZoneScene)) {
-				engine.sceneManager.popScene();
-				return;
-			}
-
-			if (!e.detail.item) return;
-			engine.metronome.stop();
-		});
-
-		this._window.inventory.addEventListener(InventoryComponent.Events.ItemPlaced, (e: CustomEvent) => {
-			if (engine.gameState !== GameState.Running) {
-				e.preventDefault();
-				return;
-			}
-
-			const location = e.detail.location as Point;
-			const item = e.detail.item as Tile;
-
-			const targetElement = document.elementFromPoint(location.x, location.y);
-			const element =
-				targetElement &&
-				targetElement.closest(
-					[
-						AmmoComponet.tagName,
-						WeaponComponent.tagName,
-						HealthComponent.tagName,
-						SceneView.tagName
-					].join(",")
-				);
-
-			let used = false;
-			if (element instanceof HealthComponent && item.isEdible) {
-				console.log("consume");
-				this.engine.consume(item);
-				used = true;
-			}
-
-			if (item.isWeapon && (element instanceof AmmoComponet || element instanceof WeaponComponent)) {
-				console.log("equip");
-				this.engine.equip(item);
-				used = true;
-			}
-
-			if (!used) {
-				const { left, top } = this._sceneView.getBoundingClientRect();
-				const pointInView = location
-					.bySubtracting(left, top)
-					.dividedBy(new Size(Tile.WIDTH, Tile.HEIGHT))
-					.byFlooring();
-
-				if (!new Rectangle(new Point(0, 0), new Size(9, 9)).contains(pointInView)) {
-					engine.metronome.start();
-					return;
-				}
-
-				const pointInZone = pointInView.bySubtracting(
-					this.engine.camera.offset.x,
-					this.engine.camera.offset.y
-				);
-				pointInZone.z = null;
-				if (!new Rectangle(new Point(0, 0), this.engine.currentZone.size).contains(pointInZone)) {
-					engine.metronome.start();
-					return;
-				}
-
-				this.engine.inputManager.placedTile = item;
-				this.engine.inputManager.placedTileLocation = pointInZone;
-			}
-
-			engine.metronome.start();
-		});
+		this._window.inventory.addEventListener(InventoryComponent.Events.ItemActivated, this);
+		this._window.inventory.addEventListener(InventoryComponent.Events.ItemPlaced, this);
 		this._window.engine = engine;
 
 		if (this.settings.autostartEngine) {
