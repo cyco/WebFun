@@ -15,7 +15,7 @@ class InputReplayer extends Component {
 	private _originalInputManager: InputManager;
 	private _inputManager: ReplayingInputManager;
 
-	private _record = <IconButton icon="stop" onclick={() => this.stop()} /> as IconButton;
+	private _record = (<IconButton icon="stop" onclick={() => this.stop()} />) as IconButton;
 	private _fastForward = (
 		<IconButton icon="fast-forward" onclick={() => this.fastForward()} />
 	) as IconButton;
