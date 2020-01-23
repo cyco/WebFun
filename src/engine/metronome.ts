@@ -5,6 +5,9 @@ import { performance } from "src/std";
 export const DefaultTickDuration = 100;
 
 export const Event = {
+	Start: "start",
+	Stop: "stop",
+
 	BeforeTick: "beforeTick",
 	AfterTick: "afterTick",
 
@@ -44,6 +47,7 @@ class Metronome extends EventTarget {
 		this._stopped = false;
 		this._nextTick = 0;
 
+		this.dispatchEvent(new MetronomeEvent(Event.Start));
 		if (this.tickDuration < MinimumFrameDuration) {
 			this._executeUpdateLoop();
 			this._executeRenderLoop();
@@ -103,6 +107,7 @@ class Metronome extends EventTarget {
 		do {
 			await dispatch(() => void 0, 1);
 		} while (this._updatesSuspended);
+		this.dispatchEvent(new MetronomeEvent(Event.Stop));
 	}
 
 	public async withSuspendedUpdates<T>(thing: Function | Promise<T>) {
