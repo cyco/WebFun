@@ -38,12 +38,7 @@ class RecordingInputManager implements InputManager {
 		if (!this.isRecording) return;
 
 		let direction;
-		if (this.placedTile) {
-			const id = this.placedTile.id;
-			const { x, y } = this.placedTileLocation;
-
-			this._records.push(`${Syntax.Place.Start} ${id.toHex(3)} at ${x}x${y}${Syntax.Place.End}`);
-		} else if (input & InputMask.Attack) {
+		if (input & InputMask.Attack) {
 			this._records.push(Syntax.Attack);
 		} else if (
 			input & InputMask.Walk &&
@@ -137,10 +132,21 @@ class RecordingInputManager implements InputManager {
 			this._records.push(`${Syntax.Place.Start} ${id.toHex(3)}${Syntax.Place.End}`);
 			return;
 		}
+
+		if (e.type === Metronome.Event.Start) {
+			if (this.placedTile && this.placedTileLocation) {
+				const id = this.placedTile.id;
+				const { x, y } = this.placedTileLocation;
+
+				this._records.push(`${Syntax.Place.Start} ${id.toHex(3)} at ${x}x${y}${Syntax.Place.End}`);
+				return;
+			}
+		}
 	}
 
 	public set engine(s) {
 		if (this.implementation && this.implementation.engine) {
+			this.implementation.engine.metronome.removeEventListener(Metronome.Event.Start, this);
 			this.implementation.engine.metronome.removeEventListener(Metronome.Event.BeforeTick, this);
 			this.implementation.engine.removeEventListener(EngineEvents.WeaponChanged, this);
 		}
@@ -149,6 +155,7 @@ class RecordingInputManager implements InputManager {
 
 		if (this.implementation && this.implementation.engine) {
 			this.implementation.engine.addEventListener(EngineEvents.WeaponChanged, this);
+			this.implementation.engine.metronome.addEventListener(Metronome.Event.Start, this);
 			this.implementation.engine.metronome.addEventListener(Metronome.Event.BeforeTick, this);
 		}
 	}
