@@ -28,8 +28,8 @@ class DesktopInputManager implements InputManager, EventListenerObject {
 	private _currentInput: InputMask = InputMask.None;
 	private readonly cursorManager: CursorManager;
 
-	public placedTile: Tile;
-	public placedTileLocation: Point;
+	public placedTile: Tile = null;
+	public placedTileLocation: Point = null;
 	private _highlight = new PathUIScene();
 	private mouseMode: MouseMode = MouseMode.Direction;
 	private pathTarget: Point;
