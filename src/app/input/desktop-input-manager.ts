@@ -5,9 +5,10 @@ import { Engine } from "src/engine";
 import { Tile } from "src/engine/objects";
 import { document } from "src/std/dom";
 import CursorManager from "./cursor-manager";
-import { ZoneScene, Scene } from "src/engine/scenes";
+import { ZoneScene } from "src/engine/scenes";
 import PathUIScene from "./path-ui-scene";
 import { floor } from "src/std/math";
+import Settings from "src/settings";
 
 enum MouseMode {
 	Direction,
@@ -231,6 +232,8 @@ class DesktopInputManager implements InputManager, EventListenerObject {
 	}
 
 	private updateMouse() {
+		if (!Settings.lookTowardsMouse) return;
+
 		const [dir, angle] = this.calculateDirectionFromHero(this._lastMouse);
 		this._mouseDirection = dir;
 

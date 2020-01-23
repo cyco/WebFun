@@ -3,7 +3,7 @@ import persistent from "src/util/persistent";
 
 const Settings = persistent(
 	{
-		mobile: true,
+		mobile: false,
 		debug: true,
 
 		drawDebugStats: true,
@@ -14,6 +14,7 @@ const Settings = persistent(
 		skipTransitions: false,
 		skipWinScene: false,
 		pickupItemsAutomatically: false,
+		lookTowardsMouse: false,
 
 		autostartEngine: true,
 		revealWorld: false,
