@@ -21,8 +21,8 @@ class Serializer {
 
 		const configuration = [];
 		if (description) configuration.push(`Description: ${description}`);
-		if (tags.length) configuration.push(`Tag: ${tags.join(", ")}`);
-		if (description || tags.length) configuration.push(``);
+		if (tags && tags.length) configuration.push(`Tag: ${tags.join(", ")}`);
+		if (description || (tags && tags.length)) configuration.push(``);
 
 		if (seed >= 0) configuration.push(`Seed: ${seed.toHex(3)}`);
 		if (planet > 0) configuration.push(`Planet: ${Planet.fromNumber(planet).name}`);
