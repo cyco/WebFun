@@ -15,7 +15,7 @@ import { Story, Engine, AssetManager, Hero } from "src/engine";
 import Settings from "src/settings";
 import { MetronomeInternals } from "src/engine/metronome";
 
-class TestCreatorWindow extends AbstractWindow {
+class TestCreatorWindow extends AbstractWindow implements EventListenerObject {
 	public static readonly tagName = "wf-debug-test-creator-window";
 	title = "Test Creator";
 	autosaveName = "test-creator-window";
@@ -121,7 +121,19 @@ class TestCreatorWindow extends AbstractWindow {
 			return this._buildSimulatedStory(engine, config);
 		}
 
+		engine.removeEventListener(Engine.Event.CurrentZoneChange, this);
+		engine.addEventListener(Engine.Event.CurrentZoneChange, this);
 		return this._buildStory(config);
+	}
+
+	handleEvent(evt: Event): void {
+		if (
+			evt.type === Engine.Event.CurrentZoneChange &&
+			!this._replayer.isInstalled() &&
+			Settings.autosaveTestOnZoneChange
+		) {
+			this.downloadTest();
+		}
 	}
 
 	private _buildSimulatedStory(engine: Engine, config: Configuration) {

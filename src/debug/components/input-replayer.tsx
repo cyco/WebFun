@@ -66,7 +66,7 @@ class InputReplayer extends Component {
 		this._originalInputManager = null;
 	}
 
-	private isInstalled() {
+	public isInstalled() {
 		return this._originalInputManager !== null;
 	}
 

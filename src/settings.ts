@@ -15,6 +15,7 @@ const Settings = persistent(
 		skipWinScene: false,
 		pickupItemsAutomatically: false,
 		lookTowardsMouse: false,
+		autosaveTestOnZoneChange: true,
 
 		autostartEngine: true,
 		revealWorld: false,
