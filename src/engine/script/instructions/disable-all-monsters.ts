@@ -16,7 +16,6 @@ export default {
 			const currentTile = zone.getTile(position);
 			if (currentTile && currentTile === monster.face.getFace(Direction.South, -1)) {
 				zone.setTile(null, position);
-			} else {
 			}
 			monster.enabled = false;
 		});

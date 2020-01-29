@@ -86,7 +86,6 @@ wf-main-window {
 
 		> .content {
 			position: relative;
-			display: block;
 			grid-column-gap: 14px;
 			grid-row-gap: 14px;
 			height: calc(100vh + #{-$titlebar-height} - 3px);
