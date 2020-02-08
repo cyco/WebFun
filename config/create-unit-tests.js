@@ -19,7 +19,7 @@ const isExcluded = (file, isDirectory) => {
 		file === "index.ts" ||
 		file === "index.js" ||
 		file === "bootstrap-components.ts" ||
-		(!isDirectory && !file.endsWith(".js") && !file.endsWith(".ts")) ||
+		(!isDirectory && !file.endsWith(".js") && !file.endsWith(".ts") && !file.endsWith(".tsx")) ||
 		(isDirectory && file === "debug") ||
 		(isDirectory && file === "editor") ||
 		(isDirectory && file === "@types") ||
