@@ -27,7 +27,7 @@ import { Channel } from "src/engine/audio";
 import { Mixer } from "./audio";
 import { Yoda } from "src/engine/type";
 import DebugInfoScene from "src/debug/debug-info-scene";
-import { Pad, Shoot, Drag } from "./ui/onscreen-controls";
+import { OnscreenPad, OnscreenButton } from "./ui";
 
 export const Event = {
 	DidLoadData: "didLoadData"
@@ -179,9 +179,9 @@ class GameController extends EventTarget implements EventListenerObject {
 			? new DesktopInputManager(this._sceneView, new CursorManager(this._sceneView))
 			: new TouchInputManager(
 					this._sceneView,
-					this._window.content.querySelector(Pad.tagName),
-					this._window.content.querySelector(Shoot.tagName),
-					this._window.content.querySelector(Drag.tagName)
+					this._window.content.querySelector(OnscreenPad.tagName),
+					this._window.content.querySelector(`${OnscreenButton.tagName}.shoot`),
+					this._window.content.querySelector(`${OnscreenButton.tagName}.drag`)
 			  );
 		const resources = new ResourceManager(paths.palette, paths.data, paths.sfx);
 		const loader = new Loader(resources, mixer);

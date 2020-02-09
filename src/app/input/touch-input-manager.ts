@@ -2,7 +2,7 @@ import { InputManager, InputMask, Direction } from "src/engine/input";
 import { Point, Direction as DirectionHelper } from "src/util";
 import { Tile } from "src/engine/objects";
 import { Engine } from "src/engine";
-import { Pad, Shoot, Drag } from "src/app/ui/onscreen-controls";
+import { OnscreenPad, OnscreenButton } from "src/app/ui";
 
 class TouchInputManager implements InputManager, EventListenerObject {
 	mouseDownHandler: (_: Point) => void;
@@ -15,9 +15,9 @@ class TouchInputManager implements InputManager, EventListenerObject {
 
 	public constructor(
 		private gameViewElement: HTMLElement,
-		private pad: Pad,
-		private shoot: Shoot,
-		private drag: Drag
+		private pad: OnscreenPad,
+		private shoot: OnscreenButton,
+		private drag: OnscreenButton
 	) {
 		console.log("this.pad", this.pad);
 		console.log("this.shoot", this.shoot);
