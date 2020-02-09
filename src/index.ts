@@ -8,5 +8,7 @@ import * as Std from "./std";
 import * as UI from "./ui";
 import * as Util from "./util";
 import * as UX from "./ux";
+import Settings from "./settings";
+import Description from "./description";
 
-export { App, Debug, Editor, Engine, Extension, SaveGameEditor, Std, UI, Util, UX };
+export { App, Debug, Editor, Engine, Extension, Settings, Description, SaveGameEditor, Std, UI, Util, UX };
