@@ -81,7 +81,7 @@ class OnscreenPad extends Component implements EventListenerObject {
 	}
 
 	private _directionInputFromAngle(x: number, y: number): number {
-		let result = 0;
+		let result = InputMask.None;
 
 		if (x < -this.deadZone) result |= InputMask.Left;
 		if (x > this.deadZone) result |= InputMask.Right;

@@ -15,6 +15,10 @@ describeComponent(OnscreenButton, () => {
 			expect(subject).toHaveClass("pressed");
 		});
 
+		it("is reflected in a property", () => {
+			expect(subject.pressed).toBeTrue();
+		});
+
 		it("prevents default actions of the event in order to prevent accidental scrolling", () => {
 			expect(lastEvent.defaultPrevented).toBeTrue();
 		});
@@ -26,6 +30,10 @@ describeComponent(OnscreenButton, () => {
 
 			it("does not have the `pressed` class anymore", () => {
 				expect(subject).not.toHaveClass("pressed");
+			});
+
+			it("is reflected in a property", () => {
+				expect(subject.pressed).toBeFalse();
 			});
 
 			it("prevents default actions of the event in order to prevent accidental scrolling", () => {

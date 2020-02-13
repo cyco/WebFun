@@ -11,12 +11,7 @@ class PathUIScene extends Scene {
 	private offset = 0;
 
 	public render(renderer: Renderer): void {
-		if (!this.highlight && !this.target) return;
-		if (!this.engine) return;
-		if (!this.engine.sceneManager) return;
-		if (!(this.engine.sceneManager.currentScene instanceof ZoneScene)) return;
-		if (!(renderer instanceof CanvasRenderer.Renderer)) return;
-		if (!this.engine.hero.visible) return;
+		if (!this.canRender(renderer)) return;
 
 		if (this.highlight) {
 			const walkable = this.walkable;
@@ -57,8 +52,7 @@ class PathUIScene extends Scene {
 	}
 
 	public get walkable() {
-		const scene = this.engine.sceneManager.currentScene;
-		if (!(scene instanceof ZoneScene)) return false;
+		const scene = this.engine.sceneManager.currentScene as ZoneScene;
 
 		return scene.zone.placeWalkable(
 			this.highlight
@@ -66,6 +60,17 @@ class PathUIScene extends Scene {
 				.floor()
 				.subtract(this.cameraOffset)
 		);
+	}
+
+	canRender(renderer: Renderer): renderer is CanvasRenderer.Renderer {
+		if (!this.highlight && !this.target) return false;
+		if (!this.engine) return false;
+		if (!this.engine.sceneManager) return false;
+		if (!(this.engine.sceneManager.currentScene instanceof ZoneScene)) return false;
+		if (!(renderer instanceof CanvasRenderer.Renderer)) return false;
+		if (!this.engine.hero.visible) return false;
+
+		return true;
 	}
 }
 

@@ -60,11 +60,11 @@ class DetonatorScene extends Scene {
 	}
 
 	public render(renderer: RendererInterface) {
-		for (let i = 0; i <= this._ticks && i < this._detonatorFrames.length; i++) {
-			const frame = this._detonatorFrames[i];
-			const p = this.cameraOffset.byAdding(this.detonatorLocation).byScalingBy(Tile.WIDTH);
-			renderer.renderImage(frame, p.x, p.y);
-		}
+		if (this._ticks >= this._detonatorFrames.length || this._ticks < 0) return;
+
+		const frame = this._detonatorFrames[this._ticks];
+		const p = this.cameraOffset.byAdding(this.detonatorLocation).byScalingBy(Tile.WIDTH);
+		renderer.renderImage(frame, p.x, p.y);
 	}
 
 	public set engine(e: Engine) {

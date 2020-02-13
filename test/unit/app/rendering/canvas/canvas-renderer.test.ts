@@ -87,4 +87,8 @@ describe("WebFun.App.Rendering.Canvas.Renderer", () => {
 		expect(() => subject.redisplayRect(0, 0, 0, 0)).not.toThrow();
 		expect(() => subject.redisplay()).not.toThrow();
 	});
+
+	it("allows access to the raw drawing context", () => {
+		expect(subject.context).toBe(context);
+	});
 });

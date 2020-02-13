@@ -4,7 +4,7 @@ import { Tile } from "src/engine/objects";
 import { Engine } from "src/engine";
 import { OnscreenPad, OnscreenButton } from "src/app/ui";
 
-class TouchInputManager implements InputManager, EventListenerObject {
+class TouchInputManager implements InputManager {
 	mouseDownHandler: (_: Point) => void;
 	keyDownHandler: (_: KeyboardEvent) => void;
 	currentItem: Tile;
@@ -18,17 +18,12 @@ class TouchInputManager implements InputManager, EventListenerObject {
 		private pad: OnscreenPad,
 		private shoot: OnscreenButton,
 		private drag: OnscreenButton
-	) {
-		console.log("this.pad", this.pad);
-		console.log("this.shoot", this.shoot);
-		console.log("this.drag", this.drag);
-	}
+	) {}
 
 	readInput(tick: number): InputMask {
 		let input = InputMask.None;
 
 		if (this.shoot.pressed) input |= InputMask.Attack;
-		if (this.shoot.pressed) console.log("shoot", this.shoot, this.shoot.pressed);
 		if (this.drag.pressed) input |= InputMask.Drag;
 
 		input |= this.pad.input;
@@ -41,7 +36,5 @@ class TouchInputManager implements InputManager, EventListenerObject {
 	addListeners(): void {}
 
 	removeListeners(): void {}
-
-	handleEvent(evt: Event): void {}
 }
 export default TouchInputManager;
