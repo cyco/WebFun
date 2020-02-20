@@ -53,8 +53,8 @@ class GameController extends EventTarget implements EventListenerObject {
 
 		this._engine = this._buildEngine(type, paths);
 		this._sceneView.manager.engine = this._engine;
-		if (Settings.debug) (window as any).engine = this._engine;
-		if (Settings.mobile) this._window.classList.add("mobile");
+		if (this.settings.debug) (window as any).engine = this._engine;
+		if (this.settings.mobile) this._window.classList.add("mobile");
 	}
 
 	private _buildEngine(type: GameType, paths: PathConfiguration) {
@@ -175,7 +175,7 @@ class GameController extends EventTarget implements EventListenerObject {
 	private _buildInterface(paths: any): Partial<Interface> {
 		const mixer = new Mixer(this.settings);
 		const renderer = new CanvasRenderer.Renderer(this._sceneView.canvas);
-		const inputManager = !Settings.mobile
+		const inputManager = !this.settings.mobile
 			? new DesktopInputManager(this._sceneView, new CursorManager(this._sceneView))
 			: new TouchInputManager(
 					this._sceneView,

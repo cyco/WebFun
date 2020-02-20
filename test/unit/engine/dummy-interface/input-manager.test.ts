@@ -1,4 +1,5 @@
 import InputManager from "src/engine/dummy-interface/input-manager";
+import { InputMask } from "src/engine/input";
 
 describe("WebFun.Engine.DummyInterface.InputManager", () => {
 	let subject: InputManager;
@@ -13,5 +14,6 @@ describe("WebFun.Engine.DummyInterface.InputManager", () => {
 			subject.addListeners();
 			subject.removeListeners();
 		}).not.toThrow();
+		expect(subject.readInput(0)).toBe(InputMask.None);
 	});
 });

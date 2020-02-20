@@ -49,4 +49,17 @@ describe("WebFun.Engine.World", () => {
 			expect(point).toBe(null);
 		});
 	});
+
+	describe("locationOfSector", () => {
+		it("returns the location of the given sector", () => {
+			expect(subject.locationOfSector(subject.sectors[12])).toEqual(new Point(2, 1));
+		});
+	});
+
+	it("has a bounds property to describe its extend", () => {
+		expect(subject.bounds.origin.x).toBe(0);
+		expect(subject.bounds.origin.y).toBe(0);
+		expect(subject.bounds.size.width).toBe(10);
+		expect(subject.bounds.size.height).toBe(10);
+	});
 });
