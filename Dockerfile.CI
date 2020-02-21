@@ -16,11 +16,7 @@ RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - \
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
  	&& echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
 	&& apt-get update -y && apt-get install -y --no-install-recommends yarn \
-	&& rm -rf /etc/apt/sources.list.d/yarn.list \
-	&& mkdir -p /.cache/yarn 2 > /dev/null \
-	&& chmod oug+rw /.cache/yarn \
-	&& mkdir -p /.yarn 2 > /dev/null \
-	&& chmod oug+rw /.yarn
+	&& rm -rf /etc/apt/sources.list.d/yarn.list
 
 # libraries for 'canvas' npm modules
 RUN apt install -y pkg-config libjpeg-dev libcairo2-dev libgif-dev
@@ -45,3 +41,5 @@ RUN apt-get update -y && apt-get install -y default-jre
 # cleanup
 RUN apt-get purge --auto-remove -y curl gnupg \
 	&& rm -rf /var/lib/apt/lists/*
+
+ENV YARN_CACHE_FOLDER=/cache/yarn
