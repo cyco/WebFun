@@ -7,7 +7,17 @@ import {
 	Weapon as WeaponComponent
 } from "./ui";
 import { Char, Tile, Zone, Sound, Puzzle } from "src/engine/objects";
-import { ColorPalette, Engine, GameData, Hero, Story, AssetManager, GameType, Interface } from "src/engine";
+import {
+	ColorPalette,
+	Engine,
+	GameData,
+	Hero,
+	Story,
+	AssetManager,
+	GameType,
+	Interface,
+	PaletteAnimation
+} from "src/engine";
 import { ConfirmationResult, ModalConfirm } from "src/ux";
 import { EventTarget, Point, Rectangle, Size, rand, srand } from "src/util";
 import { FilePicker, WindowManager } from "src/ui";
@@ -15,7 +25,6 @@ import { LoseScene, ZoneScene } from "src/engine/scenes";
 import { MainMenu, MainWindow } from "./windows";
 import { Planet, WorldSize } from "src/engine/types";
 import GameState from "../engine/game-state";
-import { PaletteAnimation } from "src/engine/rendering";
 import { Reader } from "src/engine/save-game";
 import Settings from "src/settings";
 import { CanvasRenderer } from "./rendering";

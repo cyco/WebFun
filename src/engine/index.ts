@@ -1,7 +1,7 @@
 import { GameType, Indy as GameTypeIndy, Yoda as GameTypeYoda } from "./type";
 import { Reader as SaveGameReader, Writer as SaveGameWriter, SaveState } from "./save-game";
 
-import { ColorPalette } from "./rendering";
+import { ColorPalette, PaletteAnimation } from "./rendering";
 import Engine from "./engine";
 import EngineEvents from "./events";
 import GameData from "./game-data";
@@ -23,6 +23,7 @@ import * as Script from "./script";
 
 export {
 	ColorPalette,
+	PaletteAnimation,
 	Engine,
 	Objects,
 	EngineEvents,
