@@ -59,6 +59,12 @@ class Zone {
 			x = x.x;
 		}
 
+		if (!this.bounds.contains(new Point(x, y))) {
+			console.warn("Missing bounds check");
+			console.trace();
+			return;
+		}
+
 		const index = this.getTileID(x, y, z);
 		if (index === -1 || index === 0xffff || index >= this._tileStore.length) return null;
 
@@ -70,6 +76,12 @@ class Zone {
 			y = x.y;
 			z = x.z;
 			x = x.x;
+		}
+
+		if (!this.bounds.contains(new Point(x, y))) {
+			console.warn("Missing bounds check");
+			console.trace();
+			return;
 		}
 
 		const index = Zone.LAYERS * (y * this._size.width + x) + z;
