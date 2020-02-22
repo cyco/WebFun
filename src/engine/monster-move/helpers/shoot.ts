@@ -38,6 +38,9 @@ export default (monster: Monster, zone: Zone, engine: Engine): boolean => {
 	}
 
 	const direction = monster.direction;
+	if (direction.x && direction.y) {
+		return false;
+	}
 	const tile = findTileIdForCharFrameWithDirection(weapon.frames[0], direction);
 
 	monster.field3c++;
@@ -63,19 +66,32 @@ export default (monster: Monster, zone: Zone, engine: Engine): boolean => {
 	if (canActuallyMove && monster.field3c < 4) {
 		zone.setTile(null, monster.bullet.x - direction.x, monster.bullet.y - direction.y, Zone.Layer.Object);
 		// YodaView::RedrawTile(view, *bulletXRef - *y_2, *bulletYRef - *y_5);
+
 		zone.setTile(tile, monster.bullet.x, monster.bullet.y, Zone.Layer.Object);
 		// YodaView::RedrawTile(view, *bulletXRef, *bulletYRef);
 		return true;
 	} else {
 		if (
 			monster.field3c >= 4 &&
-			zone.getTile(monster.bullet.x - direction.x, monster.bullet.y - direction.y, Zone.Layer.Object) === tile
+			zone.getTile(
+				monster.bullet.x - direction.x,
+				monster.bullet.y - direction.y,
+				Zone.Layer.Object
+			) === tile
 		) {
-			zone.setTile(null, monster.bullet.x - direction.x, monster.bullet.y - direction.y, Zone.Layer.Object);
+			zone.setTile(
+				null,
+				monster.bullet.x - direction.x,
+				monster.bullet.y - direction.y,
+				Zone.Layer.Object
+			);
 			// YodaView::RedrawTile(view, *bulletXRef - *y_2, *bulletYRef - *y_5);
 		}
 
-		if (zone.getTile(monster.bullet.x, monster.bullet.y, Zone.Layer.Object) === tile) {
+		if (
+			zone.bounds.contains(monster.bullet) &&
+			zone.getTile(monster.bullet.x, monster.bullet.y, Zone.Layer.Object) === tile
+		) {
 			zone.setTile(null, monster.bullet.x, monster.bullet.y, Zone.Layer.Object);
 			// YodaView::RedrawTile(view, *bulletXRef - *y_2, *bulletYRef - *y_5);
 		}
