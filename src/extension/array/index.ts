@@ -14,6 +14,7 @@ import rest from "./rest";
 import shuffle from "./shuffle";
 import unique from "./unique";
 import withType from "./with-type";
+import random from "./random";
 
 export {
 	withType,
@@ -31,5 +32,6 @@ export {
 	rest,
 	shuffle,
 	unique,
-	groupedBy
+	groupedBy,
+	random
 };
