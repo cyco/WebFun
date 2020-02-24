@@ -21,7 +21,7 @@ import {
 import { ConfirmationResult, ModalConfirm } from "src/ux";
 import { EventTarget, Point, Rectangle, Size, rand, srand } from "src/util";
 import { FilePicker, WindowManager } from "src/ui";
-import { LoseScene, ZoneScene } from "src/engine/scenes";
+import { LoseScene, ZoneScene, MapScene } from "src/engine/scenes";
 import { MainMenu, MainWindow } from "./windows";
 import { Planet, WorldSize } from "src/engine/types";
 import GameState from "../engine/game-state";
@@ -37,6 +37,7 @@ import { Mixer } from "./audio";
 import { Yoda } from "src/engine/type";
 import DebugInfoScene from "src/debug/debug-info-scene";
 import { OnscreenPad, OnscreenButton } from "./ui";
+import { round, random, floor } from "src/std/math";
 
 export const Event = {
 	DidLoadData: "didLoadData"
@@ -108,7 +109,14 @@ class GameController extends EventTarget implements EventListenerObject {
 					return;
 				}
 
-				if (!evt.detail.item) return;
+				const item = evt.detail.item;
+				if (!item) return;
+
+				if (item.id === Yoda.tileIDs.Locator) {
+					this.engine.sceneManager.pushScene(new MapScene());
+					return;
+				}
+
 				engine.metronome.stop();
 				return;
 			}
@@ -224,9 +232,13 @@ class GameController extends EventTarget implements EventListenerObject {
 			return;
 		}
 
-		srand(performance.now());
+		srand(floor(random() * 0xffff));
 		await this._loadGameData();
-		const story = new Story(rand(), Planet.Endor, WorldSize.Small);
+		const story = new Story(
+			rand(),
+			[Planet.Endor, Planet.Hoth, Planet.Tatooine].random(),
+			[WorldSize.Small, WorldSize.Medium, WorldSize.Large].random()
+		);
 		this._engine.inventory.removeAllItems();
 		story.generateWorld(this._engine.assets, this.engine.persistentState.gamesWon);
 		this._engine.story = story;

@@ -1,19 +1,33 @@
-import { Engine, GameType, Interface, Hero } from "src/engine";
+import {
+	Engine,
+	GameType,
+	Interface,
+	Hero,
+	GameState,
+	GameData,
+	ColorPalette,
+	Story,
+	PaletteAnimation
+} from "src/engine";
 import { GameController } from "src/app";
 import { MainMenu, MainWindow } from "src/app/windows";
 import { Mixer } from "src/app/audio";
+import { Renderer } from "src/app/rendering/canvas";
 import { SceneView } from "src/app/ui";
 import { Settings } from "src";
+import { TouchInputManager, DesktopInputManager } from "src/app/input";
 import { Yoda } from "src/engine/type";
+import { ZoneScene, MapScene } from "src/engine/scenes";
 import * as AppAudioModule from "src/app/audio";
 import * as AppCanvasRendererModule from "src/app/rendering/canvas";
 import * as AppWindowModule from "src/app/windows";
 import * as EngineModule from "src/engine";
-import { Renderer } from "src/app/rendering/canvas";
-import { TouchInputManager, DesktopInputManager } from "src/app/input";
+import * as ScenesModule from "src/engine/scenes";
+import DebugInfoScene from "src/debug/debug-info-scene";
+import InventoryComponent from "src/app/ui/inventory";
 import Loader from "src/app/loader";
 import ResourceManager from "src/app/resource-manager";
-import DebugInfoScene from "src/debug/debug-info-scene";
+import { Size } from "src/util";
 
 describe("WebFun.App.GameController", () => {
 	let originalSettings: any;
@@ -25,6 +39,8 @@ describe("WebFun.App.GameController", () => {
 	let createElement: (tagName: string) => HTMLElement;
 	let mockMixer: Mixer;
 	let engineInterface: Interface;
+	let mockedData: GameData;
+	let mockedPalette: ColorPalette;
 
 	beforeEach(() => {
 		originalSettings = Object.assign({}, Settings);
@@ -38,6 +54,7 @@ describe("WebFun.App.GameController", () => {
 
 	describe("when created", () => {
 		beforeEach(() => {
+			Settings.mobile = false;
 			createSubject();
 		});
 
@@ -69,6 +86,59 @@ describe("WebFun.App.GameController", () => {
 
 		it("listens for changes to hero's health", () => {
 			expect(engine.hero.addEventListener).toHaveBeenCalledWith(Hero.Event.HealthChanged, subject);
+		});
+
+		describe("a new game is started", () => {
+			let mockedStory: Story;
+			let mockedPaletteAnimation: PaletteAnimation;
+
+			beforeEach(async () => {
+				mockedStory = { generateWorld: jasmine.createSpy() } as any;
+				mockedPaletteAnimation = {} as any;
+				spyOn(EngineModule, "Story").and.returnValue(mockedStory);
+				spyOn(EngineModule, "PaletteAnimation").and.returnValue(mockedPaletteAnimation);
+				(engine.assets.find as jasmine.Spy).and.returnValue({ size: new Size(9, 9) });
+				await subject.newStory();
+			});
+
+			it("listens for item activate events", () => {
+				expect((mockedWindow as any).inventory.addEventListener).toHaveBeenCalledWith(
+					InventoryComponent.Events.ItemActivated,
+					subject
+				);
+			});
+
+			describe("and the game is running", () => {
+				beforeEach(() => {
+					engine.gameState = GameState.Running;
+				});
+
+				describe("and the scene manager shows a zone scene", () => {
+					beforeEach(() => {
+						(engine.metronome.stop as jasmine.Spy).calls.reset();
+						(engine.sceneManager.pushScene as jasmine.Spy).calls.reset();
+						engine.sceneManager.currentScene = new ZoneScene(engine);
+					});
+
+					describe("and the locator is activated in the inventory", () => {
+						beforeEach(() => {
+							subject.handleEvent(
+								new CustomEvent(InventoryComponent.Events.ItemActivated, {
+									detail: { item: { id: Yoda.tileIDs.Locator } }
+								})
+							);
+						});
+
+						it("shows the map scene", () => {
+							expect(engine.sceneManager.pushScene).toHaveBeenCalledWith(jasmine.any(MapScene));
+						});
+
+						it("does not stop the metronome", () => {
+							expect(engine.metronome.stop).not.toHaveBeenCalled();
+						});
+					});
+				});
+			});
 		});
 	});
 
@@ -139,6 +209,15 @@ describe("WebFun.App.GameController", () => {
 
 		if (tagName === MainWindow.tagName) {
 			element.content = createElement("div");
+			element.mainContent = createElement("div");
+			element.inventory = {
+				addEventListener: jasmine.createSpy(),
+				removeEventListener: jasmine.createSpy()
+			};
+			element.weapon = {
+				addEventListener: jasmine.createSpy(),
+				removeEventListener: jasmine.createSpy()
+			};
 			mockedWindow = element;
 		}
 
@@ -146,10 +225,34 @@ describe("WebFun.App.GameController", () => {
 	}
 
 	function mockEngine(): Engine {
+		mockedData = {} as any;
+		mockedPalette = {} as any;
+
 		return {
 			hero: { addEventListener: jasmine.createSpy() },
-			sceneManager: { addOverlay: jasmine.createSpy() },
-			assets: { populate: jasmine.createSpy() }
+			sceneManager: {
+				addOverlay: jasmine.createSpy(),
+				pushScene: jasmine.createSpy(),
+				clear: jasmine.createSpy(),
+				currentScene: null,
+				popScene: jasmine.createSpy()
+			},
+			inventory: { removeAllItems: jasmine.createSpy() },
+			assets: { populate: jasmine.createSpy(), find: jasmine.createSpy() },
+			metronome: { start: jasmine.createSpy(), stop: jasmine.createSpy() },
+			loader: {
+				load: function() {
+					const loader = this;
+					const loadEvent = new CustomEvent("load", {
+						detail: { data: mockedData, palette: mockedPalette }
+					});
+					setTimeout(() => loader.onload(loadEvent));
+				}
+			},
+			persistentState: { gamesWon: 0 },
+			world: { findLocationOfZone: jasmine.createSpy() },
+			inputManager: { addListeners: jasmine.createSpy() },
+			camera: {}
 		} as any;
 	}
 });
