@@ -9,6 +9,7 @@ export const Events = {
 	Progress: "progress",
 	Fail: "fail",
 	Load: "load",
+	DidLoadPalette: "loadpalette",
 	DidLoadSetupImage: "loadsetupimage"
 };
 
@@ -17,6 +18,7 @@ export const StageCount = 9;
 class Loader extends EventTarget implements LoaderInterface {
 	public onfail: (_: CustomEvent) => void;
 	public onprogress: (_: CustomEvent) => void;
+	public onloadpalette: (_: CustomEvent) => void;
 	public onloadsetupimage: (_: CustomEvent) => void;
 	public onload: (_: CustomEvent) => void;
 	private _rawData: any;
@@ -52,6 +54,9 @@ class Loader extends EventTarget implements LoaderInterface {
 			.loadPalette(progress => this._progress(2, progress))
 			.then(palette => {
 				this._palette = palette;
+				this.dispatchEvent(Events.DidLoadPalette, {
+					palette
+				});
 				this._loadSetupImage(palette);
 			})
 			.catch(e => this._fail(e));

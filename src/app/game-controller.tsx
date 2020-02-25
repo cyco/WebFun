@@ -346,20 +346,21 @@ class GameController extends EventTarget implements EventListenerObject {
 			const loader = this.engine.loader;
 			loader.onfail = event => reject(event);
 			loader.onprogress = ({ detail: { progress } }) => (loadingView.progress = progress);
-			loader.onloadsetupimage = ({ detail: { pixels, palette } }) => {
+			loader.onloadpalette = ({ detail: { palette } }) => {
+				this.palette = palette;
+				this._window.inventory.palette = palette;
+				this._window.weapon.palette = palette;
 				loadingView.palette = palette;
+			};
+			loader.onloadsetupimage = ({ detail: { pixels } }) => {
 				loadingView.image = pixels;
 			};
-			loader.onload = e => {
-				const details = e.detail;
+
+			loader.onload = ({ detail: { data } }) => {
 				loadingView.progress = 1.0;
-				this.data = details.data;
-				this.palette = details.palette;
+				this.data = data;
 
 				this.populateAssetManager(this._engine.assets);
-
-				this._window.inventory.palette = details.palette;
-				this._window.weapon.palette = details.palette;
 
 				this.dispatchEvent(
 					new CustomEvent(Event.DidLoadData, {
