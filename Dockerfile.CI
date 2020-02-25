@@ -43,3 +43,6 @@ RUN apt-get purge --auto-remove -y curl gnupg \
 	&& rm -rf /var/lib/apt/lists/*
 
 ENV YARN_CACHE_FOLDER=/cache/yarn
+ADD yarn.lock yarn.lock
+ADD package.json package.json
+RUN yarn install --frozen-lockfile --non-interactive && rm -rf node_modules package.json yarn.lock

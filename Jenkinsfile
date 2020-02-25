@@ -2,7 +2,7 @@ pipeline {
     agent {
         dockerfile {
             filename 'Dockerfile.CI'
-            args  '--network=infrastructure_internal --link infrastructure_sonarqube_1:sonarqube -v /usr/local/share/.cache/yarn/:/cache/yarn:rw,z'
+            args  '--network=infrastructure_internal --link infrastructure_sonarqube_1:sonarqube'
         }
     }
 	options { timestamps() }
