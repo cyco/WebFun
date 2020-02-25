@@ -3,7 +3,8 @@ pipeline {
         dockerfile {
             filename 'Dockerfile.CI'
             args  '--network=infrastructure_internal --link infrastructure_sonarqube_1:sonarqube \
-                   --tmpfs /var/jenkins_home/workspace:rw'
+                   --tmpfs /var/jenkins_home/workspace:rw \
+                   --tmpfs /root/.sonar/cache:rw'
         }
     }
 	options { timestamps() }
