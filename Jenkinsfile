@@ -2,7 +2,8 @@ pipeline {
     agent {
         dockerfile {
             filename 'Dockerfile.CI'
-            args  '--network=infrastructure_internal --link infrastructure_sonarqube_1:sonarqube'
+            args  '--network=infrastructure_internal --link infrastructure_sonarqube_1:sonarqube \
+                   --tmpfs /var/jenkins_home/workspace:rw'
         }
     }
 	options { timestamps() }
@@ -10,7 +11,7 @@ pipeline {
 	stages {
 		stage("Install dependencies") {
             steps {
-                sh 'yarn install --frozen-lockfile --non-interactive --offline'
+                sh 'YARN_CACHE_FOLDER=/cache/yarn yarn install --frozen-lockfile --non-interactive --offline'
             }
 		}
 
