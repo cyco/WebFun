@@ -10,7 +10,7 @@ pipeline {
 	stages {
 		stage("Install dependencies") {
             steps {
-                sh 'yarn'
+                sh 'yarn install --frozen-lockfile --non-interactive --offline'
             }
 		}
 
