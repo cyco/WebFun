@@ -49,7 +49,9 @@ wf-menu-item {
 		border-radius: 2px;
 		padding: 1px 3px;
 		color: $menu-separator-color-bottom;
+		margin-left: 10px;
 	}
+
 	&:not([disabled]):hover .beta {
 		filter: invert(1);
 	}
