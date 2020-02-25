@@ -29,14 +29,14 @@ const Settings = persistent(
 
 		url: {
 			yoda: {
-				data: "./game-data/yoda.data",
-				palette: "./game-data/yoda.pal",
-				sfx: "./game-data/sfx-yoda"
+				data: process.env["YODA_DATA"] ?? "./game-data/yoda.data",
+				palette: process.env["YODA_PALETTE"] ?? "./game-data/yoda.pal",
+				sfx: process.env["YODA_SFX"] ?? "./game-data/sfx-yoda"
 			},
 			indy: {
-				data: "./game-data/indy.data",
-				palette: "./game-data/indy.pal",
-				sfx: "./game-data/sfx-indy"
+				data: process.env["INDY_DATA"] ?? "./game-data/indy.data",
+				palette: process.env["INDY_PALETTE"] ?? "./game-data/indy.pal",
+				sfx: process.env["INDY_SFX"] ?? "./game-data/sfx-indy"
 			}
 		},
 		// app state

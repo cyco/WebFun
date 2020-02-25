@@ -8,7 +8,6 @@ pipeline {
         }
     }
 	options { timestamps() }
-
 	stages {
 		stage("Install dependencies") {
             steps {
@@ -17,6 +16,9 @@ pipeline {
 		}
 
 		stage("Build") {
+			environment {
+			    YODA_DATA = credentials('YODA_DATA')
+			}
 			steps {
 				sh "ci=1 yarn build"
 			}

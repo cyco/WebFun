@@ -4,6 +4,7 @@ const Paths = require("./paths");
 const merge = require("webpack-merge");
 
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const Dotenv = require("dotenv-webpack");
 
 const BaseConfig = require("./webpack.common");
 
@@ -39,7 +40,8 @@ module.exports = merge(BaseConfig, {
 		new HtmlWebpackPlugin({
 			template: Path.resolve(Paths.sourceRoot, "./app/index.html"),
 			title: "WebFun Development"
-		})
+		}),
+		new Dotenv({ silent: true })
 	],
 	module: {
 		rules: [

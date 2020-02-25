@@ -47,3 +47,7 @@ interface HTMLImageElement {
 interface ImageData {
 	toImage(): Promise<HTMLImageElement>;
 }
+
+declare let process: {
+	env: { [_: string]: string };
+};
