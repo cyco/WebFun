@@ -14,9 +14,10 @@ const SettingsItem = (label: string, key: keyof typeof Settings, settings: typeo
 	state: (): MenuItemState => (settings[key] ? MenuItemState.On : MenuItemState.Off)
 });
 
-const SettingsAction = (label: string, callback: Function) => ({
-	title: label,
-	callback: callback
+const SettingsAction = (title: string, callback: Function, beta: boolean = false) => ({
+	title,
+	callback,
+	beta
 });
 
 export default (gameController: GameController) => ({
@@ -54,10 +55,12 @@ export default (gameController: GameController) => ({
 		}),
 		MenuItemSeparator,
 		SettingsAction("Debug Scripts", () => ScriptDebugger.sharedDebugger.show()),
-		SettingsAction("Edit Current Data", () =>
-			RunGameDataEditor(WindowManager.defaultManager, gameController.data)
+		SettingsAction(
+			"Edit Current Data",
+			() => RunGameDataEditor(WindowManager.defaultManager, gameController.data),
+			true
 		),
-		SettingsAction("Edit Game Data...", RunGameDataEditor),
-		SettingsAction("Edit Save Game...", RunSaveGameEditor)
+		SettingsAction("Edit Game Data...", RunGameDataEditor, true),
+		SettingsAction("Edit Save Game...", RunSaveGameEditor, true)
 	]
 });

@@ -12,6 +12,7 @@ class MenuItem extends EventTarget {
 	public mnemonic: number;
 	public isSeparator: boolean = false;
 	private _enabled: boolean | Function;
+	private _beta: boolean;
 
 	constructor(item: Partial<MenuItemInit> = {}) {
 		super();
@@ -22,6 +23,7 @@ class MenuItem extends EventTarget {
 		this._state = options.state;
 		this.callback = options.callback;
 		this._enabled = options.enabled;
+		this._beta = options.beta;
 		this.submenu = null;
 		if (options.submenu) {
 			this.submenu = options.submenu instanceof Menu ? options.submenu : new Menu(options.submenu);
@@ -47,6 +49,10 @@ class MenuItem extends EventTarget {
 	get state() {
 		if (this._state instanceof Function) return this._state();
 		return this._state;
+	}
+
+	get beta() {
+		return this._beta;
 	}
 }
 

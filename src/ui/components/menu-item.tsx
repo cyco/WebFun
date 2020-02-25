@@ -30,10 +30,7 @@ class MenuItemComponent extends Component {
 	private _rebuild() {
 		this.textContent = "";
 		const item: Partial<MenuItem> = this.item || {};
-
-		const stateNode = document.createElement("span");
-		stateNode.classList.add("state");
-		this.appendChild(stateNode);
+		this.appendChild(<span className="state" />);
 
 		const state = this.evaluate(item.state, MenuItemState.Off);
 		this._reflectState(state);
@@ -46,22 +43,20 @@ class MenuItemComponent extends Component {
 		title.classList.add("title");
 		this.appendChild(title);
 
+		if (item.beta) {
+			this.appendChild(<span className="beta">Beta</span>);
+		}
+
 		if (item.submenu) {
 			this.setAttribute("submenu", "");
-			this._buildSubmenuIndicator();
+			this.appendChild(
+				<span className="submenu">
+					<i className="fa fa-caret-right"></i>
+				</span>
+			);
 		} else {
 			this.removeAttribute("submenu");
 		}
-	}
-
-	private _buildSubmenuIndicator() {
-		const submenuIndicator = document.createElement("span");
-		submenuIndicator.classList.add("submenu");
-		const icon = document.createElement("i");
-		icon.classList.add("fa");
-		icon.classList.add("fa-caret-right");
-		submenuIndicator.appendChild(icon);
-		this.appendChild(submenuIndicator);
 	}
 
 	private buildTitle(t: string | (() => string), mnemonicIndex: number) {
@@ -84,6 +79,7 @@ class MenuItemComponent extends Component {
 		titleNode.appendChild(document.createTextNode(preMnemonic));
 		titleNode.appendChild(mnemonicHighlight);
 		titleNode.appendChild(document.createTextNode(postMnemonic));
+
 		return titleNode;
 	}
 

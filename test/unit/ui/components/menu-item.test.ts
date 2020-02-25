@@ -13,4 +13,14 @@ describeComponent(MenuItemComponent, () => {
 
 		expect(subject.textContent).toEqual("My Item");
 	});
+
+	it("adds a badge to designate beta features", () => {
+		subject.item = new MenuItem({
+			title: "My Item",
+			mnemonic: 4,
+			beta: true
+		});
+
+		expect(subject.textContent).toContain("Beta");
+	});
 });

@@ -7,7 +7,8 @@ const MenuItemDefaults: MenuItemInit = {
 	callback: null,
 	mnemonic: undefined,
 	submenu: null,
-	enabled: true
+	enabled: true,
+	beta: false
 };
 
 export default MenuItemDefaults;

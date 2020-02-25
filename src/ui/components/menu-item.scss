@@ -3,7 +3,9 @@
 wf-menu-item {
 	border-width: 0px;
 	cursor: default;
-	display: block;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
 
 	&[disabled] {
 		color: $disabled-color;
@@ -14,12 +16,14 @@ wf-menu-item {
 		height: 10px;
 		display: inline-block;
 		margin-right: 4px;
+		flex-grow: 0;
 	}
 
 	.title {
 		.mnemonic {
 			text-decoration: underline;
 		}
+		flex-grow: 1;
 	}
 
 	&:not([disabled]):hover .state {
@@ -38,7 +42,19 @@ wf-menu-item {
 		//    background-image: url('mixed.svg');
 	}
 
+	.beta {
+		flex-grow: 0;
+		font-size: 0.7em;
+		border: 1px solid $menu-separator-color-bottom;
+		border-radius: 2px;
+		padding: 1px 3px;
+		color: $menu-separator-color-bottom;
+	}
+	&:not([disabled]):hover .beta {
+		filter: invert(1);
+	}
+
 	&[submenu] .submenu {
-		float: right;
+		flex-grow: 0;
 	}
 }

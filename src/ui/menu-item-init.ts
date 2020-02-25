@@ -8,6 +8,7 @@ declare interface MenuItemInit {
 	enabled: boolean | Function;
 	mnemonic: number;
 	submenu?: Menu | MenuItem[] | Partial<MenuItemInit>[];
+	beta: boolean;
 }
 
 export default MenuItemInit;

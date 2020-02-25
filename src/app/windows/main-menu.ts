@@ -15,7 +15,7 @@ function SoundMenuItem(
 	controller: GameController,
 	name: string,
 	settingsName: "playEffects" | "playMusic"
-): MenuItemInit {
+): Partial<MenuItemInit> {
 	return {
 		title: `${name} On`,
 		mnemonic: 0,
@@ -48,13 +48,15 @@ class MainMenu extends Menu {
 						title: "Load World",
 						mnemonic: 0,
 						callback: () => controller.load(),
-						enabled: () => controller.data !== null
+						enabled: () => controller.data !== null,
+						beta: true
 					},
 					{
 						title: "Save World",
 						mnemonic: 0,
 						callback: () => controller.save(),
-						enabled: () => controller.engine !== null
+						enabled: () => controller.engine !== null,
+						beta: true
 					},
 					Separator,
 					{
