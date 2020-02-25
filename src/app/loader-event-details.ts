@@ -1,5 +1,4 @@
-import { ColorPalette } from "../rendering";
-import GameData from "../game-data";
+import { GameData, ColorPalette } from "src/engine";
 
 declare interface LoaderEventDetails {
 	data: GameData;

@@ -13,7 +13,6 @@ import SceneManager from "./scene-manager";
 import Story from "./story";
 import readGameDataFile from "./file-format";
 import { Scene } from "./scenes";
-import Loader from "./loader";
 import GameState from "./game-state";
 import AssetManager from "./asset-manager";
 import ResourceManager from "./resource-manager";
@@ -34,7 +33,6 @@ export {
 	GameState,
 	Hero,
 	Inventory,
-	Loader,
 	Metronome,
 	PersistentState,
 	readGameDataFile,

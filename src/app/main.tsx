@@ -30,9 +30,7 @@ const main = async () => {
 	ComponentRegistry.sharedRegistry.registerComponents(WindowComponents as any);
 
 	const gameController = new GameController(Yoda, Settings.url.yoda);
-	gameController
-		.newStory()
-		.then(() => RunGameDataEditor(WindowManager.defaultManager, gameController.data));
+	gameController.newStory();
 	gameController.show();
 
 	if (Settings.debug) {

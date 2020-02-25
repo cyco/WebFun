@@ -5,7 +5,6 @@ import Inventory from "../inventory";
 import Engine from "../engine";
 import { ScriptProcessingUnit } from "../script";
 import Hero from "../hero";
-import Loader from "./loader";
 import Mixer from "./mixer";
 import SceneManager from "../scene-manager";
 import AssetManager from "../asset-manager";
@@ -19,13 +18,15 @@ import { Rectangle, Point, Size } from "src/util";
 export default {
 	Metronome: () => new Metronome(),
 	Inventory: () => new Inventory(),
-	ScriptProcessingUnit: (engine: Engine, instructions: typeof Instructions, conditions: typeof Conditions) =>
-		new ScriptProcessingUnit(engine, instructions, conditions),
+	ScriptProcessingUnit: (
+		engine: Engine,
+		instructions: typeof Instructions,
+		conditions: typeof Conditions
+	) => new ScriptProcessingUnit(engine, instructions, conditions),
 	Hero: () => new Hero(),
 	Mixer: () => new Mixer(),
 	InputManager: () => new InputManager(),
 	Renderer: () => new Renderer(),
-	Loader: () => new Loader(),
 	SceneManager: () => new SceneManager(() => new Rectangle(new Point(0, 0), new Size(0, 0))),
 	AssetManager: () => new AssetManager(),
 	ResourceManager: () => new ResourceManager()

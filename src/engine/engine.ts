@@ -19,7 +19,6 @@ import World from "./world";
 import { SpeechScene, PickupScene } from "src/engine/scenes";
 import { Point } from "src/util";
 import Settings from "src/settings";
-import Loader from "./loader";
 import AssetManager, { NullIfMissing } from "./asset-manager";
 import ResourceManager from "./resource-manager";
 
@@ -44,7 +43,6 @@ class Engine extends EventTarget {
 	public hero: Hero = null;
 	public inputManager: InputManager = null;
 	public inventory: Inventory = null;
-	public loader: Loader = null;
 	public metronome: Metronome = null;
 	public mixer: Mixer = null;
 	public palette: PaletteAnimation = null;
@@ -83,7 +81,6 @@ class Engine extends EventTarget {
 		this.inventory = ifce.Inventory();
 		this.spu = ifce.ScriptProcessingUnit(this, Instructions, Conditions);
 		this.hero = ifce.Hero();
-		this.loader = ifce.Loader(this);
 
 		this.type = type;
 		this._hpu = new HotspotProcessingUnit(this);

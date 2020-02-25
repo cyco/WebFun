@@ -48,7 +48,6 @@ class GameplayContext {
 			InputManager: () => this.inputManager,
 			Renderer: () =>
 				this.debug ? new CanvasRenderer.Renderer(this.sceneView.canvas) : new DummyRenderer(),
-			Loader: () => null,
 			SceneManager: () => this.sceneView.manager,
 			AssetManager: () => this.buildAssetManagerFromGameData(rawData),
 			ScriptProcessingUnit: (engine, conditions, instructions) => {
@@ -218,7 +217,6 @@ class GameplayContext {
 		engine.hero = null;
 		engine.inputManager.engine = null;
 		engine.inputManager = null;
-		engine.loader = null;
 		engine.metronome.onrender = (): void => void 0;
 		engine.metronome.ontick = (): void => void 0;
 		engine.metronome = null;

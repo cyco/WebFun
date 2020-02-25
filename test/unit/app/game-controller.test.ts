@@ -67,10 +67,6 @@ describe("WebFun.App.GameController", () => {
 				expect(engineInterface.Renderer(null)).toBe(mockRenderer);
 			});
 
-			it("provides a loader", () => {
-				expect(engineInterface.Loader(null)).toBeInstanceOf(Loader);
-			});
-
 			it("provides a scene manager", () => {
 				expect(engineInterface.SceneManager()).toBe(engine.sceneManager);
 			});

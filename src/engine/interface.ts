@@ -6,7 +6,6 @@ import AssetManager from "./asset-manager";
 import Engine from "./engine";
 import Hero from "./hero";
 import Inventory from "./inventory";
-import Loader from "./loader";
 import Metronome from "./metronome";
 import ResourceManager from "./resource-manager";
 import SceneManager from "./scene-manager";
@@ -26,7 +25,6 @@ interface Interface {
 	) => ScriptProcessingUnit;
 	SceneManager: () => SceneManager;
 	Hero: () => Hero;
-	Loader: (e: Engine) => Loader;
 	Mixer: () => Mixer;
 	AssetManager: () => AssetManager;
 	ResourceManager: () => ResourceManager;

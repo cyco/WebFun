@@ -2,8 +2,9 @@ import { EventTarget, InputStream } from "src/util";
 import { GameData, GameTypeYoda, readGameDataFile } from "src/engine";
 
 import { ColorPalette } from "src/engine/rendering";
-import { ResourceManager, Loader as LoaderInterface } from "src/engine";
+import { ResourceManager } from "src/engine";
 import { Mixer } from "./audio";
+import LoaderEvent from "./loader-event";
 
 export const Events = {
 	Progress: "progress",
@@ -15,12 +16,12 @@ export const Events = {
 
 export const StageCount = 9;
 
-class Loader extends EventTarget implements LoaderInterface {
-	public onfail: (_: CustomEvent) => void;
-	public onprogress: (_: CustomEvent) => void;
-	public onloadpalette: (_: CustomEvent) => void;
-	public onloadsetupimage: (_: CustomEvent) => void;
-	public onload: (_: CustomEvent) => void;
+class Loader extends EventTarget {
+	public onfail: (_: LoaderEvent) => void;
+	public onprogress: (_: LoaderEvent) => void;
+	public onloadpalette: (_: LoaderEvent) => void;
+	public onloadsetupimage: (_: LoaderEvent) => void;
+	public onload: (_: LoaderEvent) => void;
 	private _rawData: any;
 	private _data: GameData;
 	private _palette: ColorPalette;

@@ -201,12 +201,10 @@ class GameController extends EventTarget implements EventListenerObject {
 					this._window.content.querySelector(`${OnscreenButton.tagName}.drag`)
 			  );
 		const resources = new ResourceManager(paths.palette, paths.data, paths.sfx);
-		const loader = new Loader(resources, mixer);
 
 		return {
 			Renderer: () => renderer,
 			InputManager: () => inputManager,
-			Loader: () => loader,
 			SceneManager: () => this._sceneView.manager,
 			ResourceManager: () => resources,
 			Mixer: () => mixer
@@ -343,7 +341,8 @@ class GameController extends EventTarget implements EventListenerObject {
 			windowContent.textContent = "";
 			windowContent.appendChild(loadingView);
 
-			const loader = this.engine.loader;
+			const engine = this.engine;
+			const loader = new Loader(engine.resources, engine.mixer as Mixer);
 			loader.onfail = event => reject(event);
 			loader.onprogress = ({ detail: { progress } }) => (loadingView.progress = progress);
 			loader.onloadpalette = ({ detail: { palette } }) => {
