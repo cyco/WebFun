@@ -1,4 +1,4 @@
-import { Menu, MenuItemInit, MenuItemSeparator as Separator } from "src/ui";
+import { Menu, MenuItemInit, MenuItemSeparator as Separator, MenuItem } from "src/ui";
 
 import DifficultyWindow from "./difficulty-window";
 import GameController from "../game-controller";
@@ -10,6 +10,8 @@ import { WindowModalSession } from "src/ux";
 import WorldSizeWindow from "./world-size-window";
 import { buildMenu as buildDebugMenu } from "src/debug";
 import { document } from "src/std/dom";
+import { GameState } from "src/engine";
+import { PauseScene } from "src/engine/scenes";
 
 function SoundMenuItem(
 	controller: GameController,
@@ -95,7 +97,16 @@ class MainMenu extends Menu {
 					Separator,
 					{
 						title: "Pause",
-						mnemonic: 0
+						mnemonic: 0,
+						enabled: () => controller.engine?.gameState === GameState.Running,
+						state: () =>
+							controller.engine?.sceneManager?.currentScene instanceof PauseScene
+								? MenuItem.State.On
+								: MenuItem.State.Off,
+						callback: () =>
+							controller.engine?.sceneManager?.currentScene instanceof PauseScene
+								? controller.engine.sceneManager.popScene()
+								: controller.engine.sceneManager.pushScene(new PauseScene())
 					}
 				]
 			},

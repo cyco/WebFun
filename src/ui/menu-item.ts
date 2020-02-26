@@ -5,6 +5,7 @@ import MenuItemInit from "./menu-item-init";
 import State from "./menu-item-state";
 
 class MenuItem extends EventTarget {
+	public static readonly State = State;
 	public title: string;
 	private _state: number | Function;
 	public callback: Function;

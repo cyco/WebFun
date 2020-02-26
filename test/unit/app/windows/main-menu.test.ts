@@ -4,6 +4,8 @@ import { Menu, MenuItem, MenuItemState } from "src/ui";
 import * as UX from "src/ux";
 import { StatisticsWindow, WorldSizeWindow, GameSpeedWindow, DifficultyWindow } from "src/app/windows";
 import Settings from "src/settings";
+import { PauseScene } from "src/engine/scenes";
+import { GameState } from "src/engine";
 
 describe("WebFun.App.Windows.MainMenu", () => {
 	let subject: MainMenu;
@@ -301,6 +303,43 @@ describe("WebFun.App.Windows.MainMenu", () => {
 			describe("Pause", () => {
 				it("has the right title", () => {
 					expect(pauseItem.title).toBe("Pause");
+				});
+
+				it("is disabled if engine property is not yet set", () => {
+					expect(pauseItem.enabled).toBeFalse();
+				});
+
+				it("is enabled if a game is running", () => {
+					(gameController as any).engine = { gameState: GameState.Running };
+					expect(pauseItem.enabled).toBeTrue();
+				});
+
+				it("is presents the on state if the current scene is a pause scene", () => {
+					(gameController as any).engine = { sceneManager: { currentScene: new PauseScene() } };
+					expect(pauseItem.state).toBe(MenuItemState.On);
+				});
+
+				it("is presents the off state if the current scene is not a pause scene", () => {
+					(gameController as any).engine = { sceneManager: { currentScene: {} } };
+					expect(pauseItem.state).toBe(MenuItemState.Off);
+				});
+
+				it("removes the current scene if it is a pause scene", () => {
+					(gameController as any).engine = {
+						sceneManager: { currentScene: new PauseScene(), popScene: jasmine.createSpy() }
+					};
+					pauseItem.callback();
+					expect(gameController.engine.sceneManager.popScene).toHaveBeenCalled();
+				});
+
+				it("adds a new pause scene if the current scene is not a pause scene", () => {
+					(gameController as any).engine = {
+						sceneManager: { currentScene: {}, pushScene: jasmine.createSpy() }
+					};
+					pauseItem.callback();
+					expect(gameController.engine.sceneManager.pushScene).toHaveBeenCalledWith(
+						jasmine.any(PauseScene)
+					);
 				});
 			});
 		});
