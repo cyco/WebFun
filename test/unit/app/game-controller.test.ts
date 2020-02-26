@@ -22,12 +22,11 @@ import * as AppAudioModule from "src/app/audio";
 import * as AppCanvasRendererModule from "src/app/rendering/canvas";
 import * as AppWindowModule from "src/app/windows";
 import * as EngineModule from "src/engine";
-import * as ScenesModule from "src/engine/scenes";
 import DebugInfoScene from "src/debug/debug-info-scene";
 import InventoryComponent from "src/app/ui/inventory";
-import Loader from "src/app/loader";
 import ResourceManager from "src/app/resource-manager";
 import { Size } from "src/util";
+import * as LoaderModule from "src/app/loader";
 
 describe("WebFun.App.GameController", () => {
 	let originalSettings: any;
@@ -223,6 +222,15 @@ describe("WebFun.App.GameController", () => {
 	function mockEngine(): Engine {
 		mockedData = {} as any;
 		mockedPalette = {} as any;
+		spyOn(LoaderModule, "default").and.returnValue({
+			load: function() {
+				const loader = this;
+				const loadEvent = new CustomEvent("load", {
+					detail: { data: mockedData, palette: mockedPalette }
+				});
+				setTimeout(() => loader.onload(loadEvent));
+			}
+		} as any);
 
 		return {
 			hero: { addEventListener: jasmine.createSpy() },
@@ -236,15 +244,6 @@ describe("WebFun.App.GameController", () => {
 			inventory: { removeAllItems: jasmine.createSpy() },
 			assets: { populate: jasmine.createSpy(), find: jasmine.createSpy() },
 			metronome: { start: jasmine.createSpy(), stop: jasmine.createSpy() },
-			loader: {
-				load: function() {
-					const loader = this;
-					const loadEvent = new CustomEvent("load", {
-						detail: { data: mockedData, palette: mockedPalette }
-					});
-					setTimeout(() => loader.onload(loadEvent));
-				}
-			},
 			persistentState: { gamesWon: 0 },
 			world: { findLocationOfZone: jasmine.createSpy() },
 			inputManager: { addListeners: jasmine.createSpy() },
