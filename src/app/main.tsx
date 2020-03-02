@@ -22,12 +22,19 @@ declare global {
 	var WebFun: typeof WebFunLib;
 }
 
+const endPreload = () => {
+	const container = document.getElementById("webfun-preload");
+	if (container) container.remove();
+};
+
 const main = async () => {
 	Settings.autostartEngine = false;
 	window.WebFunJSX = new ComponentJSXRenderer();
 	ComponentRegistry.sharedRegistry.registerComponents(Components);
 	ComponentRegistry.sharedRegistry.registerComponents(AppComponents);
 	ComponentRegistry.sharedRegistry.registerComponents(WindowComponents as any);
+
+	endPreload();
 
 	const gameController = new GameController(Yoda, Settings.url.yoda);
 	gameController.newStory();
