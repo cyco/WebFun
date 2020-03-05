@@ -3,13 +3,13 @@ import persistent from "src/util/persistent";
 
 const Settings = persistent(
 	{
-		mobile: false,
-		debug: true,
+		mobile: true,
+		debug: false,
 
-		drawDebugStats: true,
-		drawHotspots: true,
-		drawHeroTile: true,
-		drawMonsterState: true,
+		drawDebugStats: false,
+		drawHotspots: false,
+		drawHeroTile: false,
+		drawMonsterState: false,
 		skipDialogs: false,
 		skipTransitions: false,
 		skipWinScene: false,
