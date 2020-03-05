@@ -29,32 +29,30 @@ class MainWindow extends AbstractWindow {
 
 		this.closable = false;
 
-		this.content.appendChild(<div className="main" />);
-		this.content.appendChild(
-			<div className="status">
-				<Location />
-				<div className="equipment">
-					<Ammo />
-					<Weapon />
+		this.content = (
+			<div>
+				<div className="main" />
+				<div className="status">
+					<Location />
+					<div className="equipment">
+						<Ammo />
+						<Weapon />
+					</div>
+					<Health />
 				</div>
-				<Health />
-			</div>
-		);
-		this.content.appendChild(<Inventory />);
-		this.content.appendChild(
-			<OnscreenPad
-				style={{
-					position: "fixed",
-					bottom: "30px",
-					left: "30px",
-					marginLeft: "env(safe-area-inset-left)"
-				}}
-			/>
-		);
-		this.content.appendChild(
-			<div className="buttons">
-				<OnscreenButton style="zoom: .7" className="drag" />
-				<OnscreenButton style="zoom: .7; margin-left: 15px;" className="shoot" />
+				<Inventory />
+				<OnscreenPad
+					style={{
+						position: "fixed",
+						bottom: "30px",
+						left: "30px",
+						marginLeft: "env(safe-area-inset-left)"
+					}}
+				/>
+				<div className="buttons">
+					<OnscreenButton style="zoom: .7" className="drag" />
+					<OnscreenButton style="zoom: .7; margin-left: 15px;" className="shoot" />
+				</div>
 			</div>
 		);
 	}

@@ -32,6 +32,12 @@ abstract class AbstractWindow extends Component {
 		return this._content;
 	}
 
+	set content(newContent: HTMLElement) {
+		newContent.classList.add("content");
+		this._content.replaceWith(newContent);
+		this._content = newContent;
+	}
+
 	get x(): number {
 		if (!this.isConnected) return this._x;
 
