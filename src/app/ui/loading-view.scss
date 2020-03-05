@@ -1,9 +1,10 @@
 @import "sizing.scss";
 @import "pixelated.scss";
+@import "aspect-ratio.scss";
 
 wf-loading-view {
 	@include fullsize();
-	@include fullsize-children();
+	@include aspect-ratio(1/1);
 
 	background-color: #000000;
 

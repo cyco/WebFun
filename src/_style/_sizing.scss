@@ -8,12 +8,3 @@
 	bottom: $inset;
 	right: $inset;
 }
-
-@mixin fullsize-children() {
-	display: flex;
-	align-items: stretch;
-	> * {
-		flex-grow: 1;
-		flex-shrink: 1;
-	}
-}
