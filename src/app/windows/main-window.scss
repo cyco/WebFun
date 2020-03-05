@@ -2,6 +2,7 @@
 @import "border.scss";
 @import "../ui/settings-window.scss";
 @import "../../ui/components/abstract-window";
+@import "aspect-ratio.scss";
 
 wf-main-window {
 	@extend wf-abstract-window;
@@ -83,45 +84,87 @@ wf-main-window {
 		z-index: 0;
 
 		$titlebar-height: 26px;
+
 		$padding: 10px;
+		@media (orientation: portrait) {
+			$padding: 0px;
+			> .content {
+				padding: $padding;
+				position: relative;
+				grid-column-gap: 14px;
+				grid-row-gap: 14px;
+				height: calc(100vh + #{-$titlebar-height} - 3px);
+				overflow: hidden;
 
-		> .content {
-			position: relative;
-			grid-column-gap: 14px;
-			grid-row-gap: 14px;
-			height: calc(100vh + #{-$titlebar-height} - 3px);
-			overflow: hidden;
-			display: grid;
-
-			grid-template-columns: 1fr calc(100vh + #{-$titlebar-height - 2 * $padding} - 3px) 1fr;
-			grid-template-rows: auto 64px - 14px 80px;
-			grid-template-areas:
-				"empty main inventory"
-				"pad main status"
-				"pad main buttons";
-			> .main {
 				display: flex;
-				align-items: stretch;
-				> * {
+				flex-direction: column;
+
+				> .main {
+					@include aspect-ratio(1/1);
+				}
+
+				> wf-inventory {
+					width: unset;
+					min-width: 150px;
+					height: unset;
+					max-height: unset;
+					min-height: unset;
 					flex-grow: 1;
 					flex-shrink: 1;
 				}
+
+				.status {
+					min-height: 64px;
+				}
+
+				wf-onscreen-pad,
+				.buttons {
+					display: none;
+				}
+			}
+		}
+
+		@media (orientation: landscape) {
+			$padding: 10px;
+			> .content {
+				padding: $padding;
+				position: relative;
+				grid-column-gap: 14px;
+				grid-row-gap: 14px;
+				height: calc(100vh + #{-$titlebar-height} - 3px);
 				overflow: hidden;
-			}
+				display: grid;
 
-			> wf-inventory {
-				width: unset;
-				min-width: 150px;
-				height: unset;
-				max-height: unset;
-			}
+				grid-template-columns: 1fr calc(100vh + #{-$titlebar-height - 2 * $padding} - 3px) 1fr;
+				grid-template-rows: auto 64px - 14px 80px;
+				grid-template-areas:
+					"empty main inventory"
+					"pad main status"
+					"pad main buttons";
+				> .main {
+					display: flex;
+					align-items: stretch;
+					> * {
+						flex-grow: 1;
+						flex-shrink: 1;
+					}
+					overflow: hidden;
+				}
 
-			wf-onscreen-pad {
-				display: block;
-			}
+				> wf-inventory {
+					width: unset;
+					min-width: 150px;
+					height: unset;
+					max-height: unset;
+				}
 
-			.buttons {
-				display: flex;
+				wf-onscreen-pad {
+					display: block;
+				}
+
+				.buttons {
+					display: flex;
+				}
 			}
 		}
 	}
