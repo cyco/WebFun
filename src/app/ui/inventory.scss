@@ -1,10 +1,12 @@
 @import "variables.scss";
 @import "border.scss";
+@import "colors.scss";
 @import "../../ui/components/abstract-list";
 
 wf-inventory {
 	@include inset-border(2px);
 	@extend wf-abstract-list;
+	background: $window-background-color;
 
 	flex-grow: 1;
 	flex-shrink: 2;
