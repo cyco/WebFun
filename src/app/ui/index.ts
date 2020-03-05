@@ -10,6 +10,7 @@ import LoadingView from "./loading-view";
 import SceneView from "./scene-view";
 import OnscreenPad from "./onscreen-pad";
 import OnscreenButton from "./onscreen-button";
+import FullscreenLock from "./fullscreen-lock";
 
 export {
 	AbstractHealth,
@@ -23,5 +24,6 @@ export {
 	SettingsWindow,
 	Weapon,
 	OnscreenButton,
-	OnscreenPad
+	OnscreenPad,
+	FullscreenLock
 };

@@ -71,15 +71,16 @@ wf-main-window {
 	}
 
 	&.mobile {
-		position: absolute;
+		position: fixed;
 		top: 0 !important;
 		left: 0 !important;
-		right: 0;
-		bottom: 0;
 		width: 100vw;
 		height: 100vh;
 		box-shadow: none;
 		border-radius: 0;
+
+		overflow: hidden;
+		z-index: 0;
 
 		$titlebar-height: 26px;
 		$padding: 10px;

@@ -7,6 +7,8 @@ export const {
 	LN10,
 	LOG2E,
 	LOG10E,
+	MAX_VALUE,
+	MIN_VALUE,
 	PI,
 	RAD_PER_DEG,
 	SQRT1_2,
