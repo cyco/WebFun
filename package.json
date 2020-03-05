@@ -47,6 +47,7 @@
   "dependencies": {
     "@babel/runtime": "^7.8.4",
     "core-js": "^3.6.4",
+    "detect-mobile-browser": "^5.0.0",
     "font-awesome": "^4.7.0",
     "regenerator-runtime": "^0.13.2"
   },

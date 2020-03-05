@@ -37,7 +37,8 @@ import { Mixer } from "./audio";
 import { Yoda } from "src/engine/type";
 import DebugInfoScene from "src/debug/debug-info-scene";
 import { OnscreenPad, OnscreenButton } from "./ui";
-import { round, random, floor } from "src/std/math";
+import { random, floor } from "src/std/math";
+import * as SmartPhone from "detect-mobile-browser";
 
 export const Event = {
 	DidLoadData: "didLoadData"
@@ -61,6 +62,7 @@ class GameController extends EventTarget implements EventListenerObject {
 	constructor(type: GameType, paths: PathConfiguration) {
 		super();
 
+		this.settings.mobile = !!(SmartPhone(false).isAndroid() || SmartPhone(false).isIPhone());
 		this._engine = this._buildEngine(type, paths);
 		this._sceneView.manager.engine = this._engine;
 		if (this.settings.debug) (window as any).engine = this._engine;
