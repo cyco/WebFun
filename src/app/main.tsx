@@ -29,7 +29,7 @@ const endPreload = () => {
 };
 
 const main = async () => {
-	window.WebFunJSX = new ComponentJSXRenderer();
+	window.WebFun.JSX = new ComponentJSXRenderer();
 	ComponentRegistry.sharedRegistry.registerComponents(Components);
 	ComponentRegistry.sharedRegistry.registerComponents(AppComponents);
 	ComponentRegistry.sharedRegistry.registerComponents(WindowComponents as any);
@@ -46,5 +46,5 @@ const main = async () => {
 	}
 };
 
-window.WebFun = WebFunLib;
+window.WebFun = WebFunLib as any;
 window.addEventListener("load", main, { once: true });

@@ -6,7 +6,7 @@ import * as WindowComponents from "./windows";
 
 declare global {
 	interface Window {
-		WebFunJSX: ComponentJSXRenderer;
+		WebFun: { JSX: ComponentJSXRenderer };
 	}
 }
 type Components<Entry> = Extract<Entry[keyof Entry], { readonly tagName: string } & { new (): any }>;

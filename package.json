@@ -39,7 +39,7 @@
       [
         "@babel/plugin-transform-react-jsx",
         {
-          "pragma": "WebFunJSX.render"
+          "pragma": "WebFun.JSX.render"
         }
       ]
     ]

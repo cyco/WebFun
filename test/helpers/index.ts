@@ -41,7 +41,8 @@ declare global {
 global.getFixtureData = getFixtureData;
 global.buildFixtureUrl = buildFixtureUrl;
 
-global.WebFunJSX = new ComponentJSXRenderer();
+global.WebFun = global.WebFun || {};
+global.WebFun.JSX = new ComponentJSXRenderer();
 
 console.assert = (condition: string, message?: string, ...rest: any[]) => {
 	if (!condition) {
