@@ -1,6 +1,28 @@
+@import "colors.scss";
+
 wf-onscreen-button {
 	display: inline-block;
+	position: relative;
+
 	&.pressed {
 		filter: brightness(0.5);
+	}
+
+	svg {
+		display: block;
+		width: 60px;
+		height: 60px;
+	}
+
+	label {
+		display: block;
+		text-align: center;
+		width: 100%;
+		margin-top: 4px;
+
+		color: $disabled-color;
+		text-shadow: 0px 1px #eee;
+		text-transform: uppercase;
+		font-size: 0.75em;
 	}
 }
