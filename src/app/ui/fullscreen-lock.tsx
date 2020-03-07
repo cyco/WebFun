@@ -25,18 +25,6 @@ class FullscreenLock extends Component implements EventListenerObject {
 	}
 
 	public handleEvent(event: Event) {
-		if (event.type === "touchmove") {
-			event.preventDefault();
-			event.stopImmediatePropagation();
-			return;
-		}
-
-		if (event.type === "scroll" && this.noBottomBar) {
-			event.preventDefault();
-			event.stopImmediatePropagation();
-			return;
-		}
-
 		if (event.type === "resize") {
 			const currentOrientation = this.getOrientation();
 			if (this.orientation !== currentOrientation) {

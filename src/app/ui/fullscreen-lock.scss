@@ -6,4 +6,6 @@ wf-fullscreen-lock {
 	height: 120vh;
 
 	z-index: 1000;
+
+	pointer-events: none;
 }

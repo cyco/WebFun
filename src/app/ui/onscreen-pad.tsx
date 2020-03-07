@@ -34,14 +34,23 @@ class OnscreenPad extends Component implements EventListenerObject {
 		this.addEventListener("touchstart", this);
 		this.addEventListener("touchmove", this);
 		this.addEventListener("touchend", this);
+		this.addEventListener("mousedown", this);
 	}
 
-	handleEvent(event: TouchEvent): void {
-		if (event.type === "touchend") {
+	handleEvent(event: TouchEvent | MouseEvent): void {
+		if (event.type === "mousedown") {
+			document.addEventListener("mouseup", this);
+			document.addEventListener("mousemove", this);
+		}
+
+		if (event.type === "touchend" || event.type === "mouseup") {
 			this.positionThumb(0, 0);
+			document.removeEventListener("mouseup", this);
+			document.removeEventListener("mousemove", this);
 		} else {
-			const touch = event.touches[0];
-			const box = this.getBoundingClientRect();
+			const touch =
+				"touches" in event ? event.touches[0] : { clientX: event.clientX, clientY: event.clientY };
+			const box = this.getClientRects()[0];
 			const centerX = box.left + box.width / 2;
 			const centerY = box.top + box.height / 2;
 
@@ -76,6 +85,9 @@ class OnscreenPad extends Component implements EventListenerObject {
 		this.removeEventListener("touchstart", this);
 		this.removeEventListener("touchmove", this);
 		this.removeEventListener("touchend", this);
+		this.removeEventListener("mousedown", this);
+		document.removeEventListener("mousemove", this);
+		document.removeEventListener("mouseup", this);
 
 		super.disconnectedCallback();
 	}
