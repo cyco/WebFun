@@ -5,8 +5,9 @@ import AbstractIconButton from "./abstract-icon-button";
 class Button extends AbstractIconButton {
 	public static readonly tagName = "wf-button";
 	public static observedAttributes = ["icon", "label"];
+	public ontouchstart = (): void => void 0;
 
-	private _label: HTMLSpanElement = <span style={{ display: "none" }} />;
+	private _label: HTMLSpanElement = (<span style={{ display: "none" }} />);
 
 	protected connectedCallback(): void {
 		super.connectedCallback();
@@ -24,6 +25,15 @@ class Button extends AbstractIconButton {
 		}
 
 		super.attributeChangedCallback(attributeName, oldValue, newValue);
+	}
+
+	set active(flag: boolean) {
+		if (flag) this.setAttribute("active", "");
+		else this.removeAttribute("active");
+	}
+
+	get active() {
+		return this.hasAttribute("active");
 	}
 
 	set label(l: string) {

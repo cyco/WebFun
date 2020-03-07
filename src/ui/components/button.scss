@@ -11,6 +11,12 @@ wf-button {
 	text-align: center;
 	color: $control-text-color;
 	background-color: $window-background-color;
+	touch-action: none;
+	overflow-x: hidden;
+
+	> * {
+		pointer-events: none;
+	}
 
 	> div {
 		@include inset-border-inverted(1px);
@@ -26,7 +32,8 @@ wf-button {
 		text-shadow: 1px 1px #828282;
 	}
 
-	&:active:not([disabled]) {
+	&:active:not([disabled]),
+	&[active]:not([disabled]) {
 		> div {
 			@include inset-border(1px);
 		}
