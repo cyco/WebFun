@@ -20,6 +20,8 @@ class OnscreenButton extends Component {
 		this.appendChild(this._background);
 		this.appendChild(<label>{this.label}</label>);
 		this.addEventListener("touchstart", this);
+		this.addEventListener("mousedown", this);
+		this.addEventListener("mouseup", this);
 		this.addEventListener("touchend", this);
 		this.addEventListener("touchcancel", this);
 	}
@@ -28,13 +30,15 @@ class OnscreenButton extends Component {
 		this.removeEventListener("touchstart", this);
 		this.removeEventListener("touchend", this);
 		this.removeEventListener("touchcancel", this);
+		this.removeEventListener("mousedown", this);
+		this.removeEventListener("mouseup", this);
 		this.textContent = "";
 		super.disconnectedCallback();
 	}
 
 	handleEvent(event: TouchEvent) {
 		this._pressed = event.type === "touchstart";
-		if (event.type === "touchstart") this.classList.add("pressed");
+		if (event.type === "touchstart" || event.type === "mousedown") this.classList.add("pressed");
 		else this.classList.remove("pressed");
 
 		event.preventDefault();

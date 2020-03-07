@@ -4,7 +4,7 @@ wf-onscreen-button {
 	display: inline-block;
 	position: relative;
 
-	&.pressed {
+	&.pressed > svg {
 		filter: brightness(0.5);
 	}
 
