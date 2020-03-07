@@ -1,0 +1,186 @@
+@import "variables.scss";
+@import "border.scss";
+@import "../ui/settings-window.scss";
+@import "../../ui/components/abstract-window";
+@import "aspect-ratio.scss";
+
+wf-fullscreen-main-window {
+	@extend wf-abstract-window;
+
+	position: fixed;
+	top: 0 !important;
+	left: 0 !important;
+	width: 100vw;
+	height: 100vh;
+	box-shadow: none;
+	border-radius: 0;
+
+	overflow: hidden;
+	z-index: 0;
+
+	$titlebar-height: 26px;
+
+	$padding: 10px;
+
+	> wf-window-titlebar {
+		padding: 0 env(safe-area-inset-right) 0 env(safe-area-inset-left);
+		> wf-menubar {
+			margin-left: 0px;
+		}
+	}
+
+	> wf-window-titlebar {
+		display: none;
+	}
+	> .content {
+		display: grid;
+		grid-column-gap: 14px;
+		grid-row-gap: 14px;
+		grid-template-columns: 288px + 2 * 2px 206px;
+		grid-template-rows: 228px 64px - 14px;
+		grid-template-areas:
+			"main inventory"
+			"main status";
+		height: calc(100vh - 3px);
+
+		> .main {
+			@include inset-border(2px);
+			@include aspect-ratio(1/1);
+
+			grid-area: main;
+		}
+
+		> wf-inventory {
+			z-index: 1;
+			grid-area: inventory;
+			transform: translate(0, 100%);
+			transition: transform 0.2s ease-out;
+
+			&.slide-up {
+				transform: translate(0, 0%);
+			}
+		}
+
+		> .status {
+			@include inset-border(1px);
+			border-left: 0;
+			border-right: 0;
+
+			display: flex;
+			align-items: center;
+			justify-content: space-around;
+			grid-area: status;
+			height: 75px;
+			> .equipment {
+				$indicator-color: #0091ea;
+
+				height: $tile-size + 2 * $border-size;
+
+				> * {
+					height: $tile-size + 2 * $border-size;
+					display: inline-block;
+					position: relative;
+				}
+
+				wf-ammo + wf-weapon {
+					margin-left: 2px;
+				}
+			}
+		}
+
+		> .actions {
+			align-items: center;
+			justify-content: stretch;
+			display: flex;
+			min-height: 34px;
+
+			> wf-button {
+				padding: 2px;
+				font-size: 0.9em;
+				flex-grow: 1;
+				margin: 5px;
+			}
+		}
+
+		wf-onscreen-pad {
+			grid-area: pad;
+		}
+	}
+
+	@media (orientation: portrait) {
+		$padding: 0px;
+		> .content {
+			height: calc(100vh - 3px);
+			overflow: hidden;
+			padding: $padding;
+			position: relative;
+
+			display: flex;
+			flex-direction: column;
+
+			> wf-inventory {
+				width: 100%;
+				height: unset;
+				max-height: unset;
+				min-height: unset;
+				flex-grow: 1;
+				flex-shrink: 1;
+				margin-top: 10px;
+
+				position: absolute;
+				bottom: 0px;
+			}
+
+			.controls {
+				display: flex;
+				flex-direction: row;
+				justify-content: space-between;
+				padding: 10px;
+
+				wf-onscreen-button + wf-onscreen-button {
+					margin-left: 15px;
+				}
+			}
+		}
+	}
+
+	@media (orientation: landscape) {
+		$padding: 10px;
+		> .content {
+			padding: $padding;
+			position: relative;
+			grid-column-gap: 14px;
+			grid-row-gap: 14px;
+			height: calc(100vh + #{-$titlebar-height} - 3px);
+			overflow: hidden;
+			display: grid;
+
+			grid-template-columns: 1fr calc(100vh + #{-$titlebar-height - 2 * $padding} - 3px) 1fr;
+			grid-template-rows: auto 64px - 14px 80px;
+			grid-template-areas:
+				"empty main inventory"
+				"pad main status"
+				"pad main buttons";
+			> .main {
+				display: flex;
+				align-items: stretch;
+				> * {
+					flex-grow: 1;
+					flex-shrink: 1;
+				}
+				overflow: hidden;
+			}
+
+			> wf-inventory {
+				width: unset;
+				min-width: 150px;
+				height: unset;
+				max-height: unset;
+			}
+
+			wf-onscreen-pad {
+				display: block;
+			}
+		}
+	}
+}
