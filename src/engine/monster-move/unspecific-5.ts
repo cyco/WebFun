@@ -27,14 +27,14 @@ export default (monster: Monster, zone: Zone, engine: Engine) => {
 
 	if (distanceToHero.x >= 2 || distanceToHero.y >= 2) {
 		direction = convertToDirectionPoint(monster.preferredDirection);
-		if (moveCheck(monster.position, direction, zone, false) !== MoveCheckResult.Free) {
+		if (moveCheck(monster.position, direction, zone, false, engine) !== MoveCheckResult.Free) {
 			direction = new Point(0, 0);
 			monster.cooldown = randmod(8);
 			monster.preferredDirection = randmod(4) - 1;
 		}
 	} else {
 		direction = directionToHero;
-		direction = evade(direction, moveCheck(monster.position, direction, zone, false));
+		direction = evade(direction, moveCheck(monster.position, direction, zone, false, engine));
 	}
 
 	if (canPerformMeleeAttack(direction, monster, hero)) {

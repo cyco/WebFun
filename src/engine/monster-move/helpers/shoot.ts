@@ -45,7 +45,7 @@ export default (monster: Monster, zone: Zone, engine: Engine): boolean => {
 
 	monster.field3c++;
 
-	if (moveCheck(monster.bullet, direction, zone, false) === MoveCheckResult.Free) {
+	if (moveCheck(monster.bullet, direction, zone, false, engine) === MoveCheckResult.Free) {
 		if (!monster.bullet.byAdding(direction).isEqualTo(hero)) {
 			canActuallyMove = true;
 			monster.bullet = monster.bullet.byAdding(direction);

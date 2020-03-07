@@ -24,7 +24,7 @@ export default (monster: Monster, zone: Zone, engine: Engine) => {
 	let direction = convertToDirectionPoint(monster.preferredDirection);
 
 	const hero = engine.hero.location;
-	if (moveCheck(monster.position, direction, zone, false) !== MoveCheckResult.Free) {
+	if (moveCheck(monster.position, direction, zone, false, engine) !== MoveCheckResult.Free) {
 		direction = new Point(0, 0);
 		monster.cooldown = randmod(3);
 		monster.preferredDirection = randmod(4) - 1;

@@ -24,7 +24,7 @@ export default (monster: Monster, zone: Zone, engine: Engine) => {
 	} else direction = randomDirection();
 
 	while (true) {
-		direction = evade(direction, moveCheck(monster.position, direction, zone, false));
+		direction = evade(direction, moveCheck(monster.position, direction, zone, false, engine));
 		if (canPerformMeleeAttack(direction, monster, hero)) {
 			performMeleeAttack(monster, engine);
 			return noMovement(monster, zone, engine);

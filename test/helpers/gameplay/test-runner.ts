@@ -23,7 +23,6 @@ const run = (prefix: string, fileName: string, testFileContents: string) => {
 					beforeAll(async () => {
 						await ctx.prepare(loadGameData);
 						ctx.buildEngine();
-						(window as any).engine = ctx.engine;
 
 						srand(testCase.configuration.seed);
 						ctx.engine.persistentState.gamesWon = testCase.configuration.gamesWon;

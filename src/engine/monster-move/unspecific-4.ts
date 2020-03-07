@@ -37,7 +37,7 @@ export default (monster: Monster, zone: Zone, engine: Engine) => {
 		direction = randomDirection();
 	}
 
-	direction = evade(direction, moveCheck(monster.position, direction, zone, false));
+	direction = evade(direction, moveCheck(monster.position, direction, zone, false, engine));
 	if (canPerformMeleeAttack(direction, monster, hero)) {
 		if (monster.face.reference < 0 && monster.face.damage >= 0) {
 			if (!(tickCount % 3))

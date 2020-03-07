@@ -42,8 +42,8 @@ export default (monster: Monster, zone: Zone, engine: Engine) => {
 		}
 	}
 	if (canEvade) {
-		direction = evade(direction, moveCheck(monster.position, direction, zone, false));
-	} else if (moveCheck(monster.position, direction, zone, false) !== MoveCheckResult.Free) {
+		direction = evade(direction, moveCheck(monster.position, direction, zone, false, engine));
+	} else if (moveCheck(monster.position, direction, zone, false, engine) !== MoveCheckResult.Free) {
 		direction = new Point(0, 0);
 		monster.cooldown = randmod(10);
 		monster.preferredDirection = randmod(4) - 1;

@@ -76,7 +76,7 @@ export default (monster: Monster, zone: Zone, engine: Engine) => {
 		direction = randomDirection();
 	}
 
-	direction = evade(direction, moveCheck(monster.position, direction, zone, false));
+	direction = evade(direction, moveCheck(monster.position, direction, zone, false, engine));
 
 	if (canPerformMeleeAttack(direction, monster, hero)) {
 		return _performMeleeAttackIfUnarmed(true, monster, zone, engine);

@@ -41,7 +41,7 @@ export default (monster: Monster, zone: Zone, engine: Engine) => {
 		direction = directionToHero;
 	}
 
-	direction = evade(direction, moveCheck(monster.position, direction, zone, false));
+	direction = evade(direction, moveCheck(monster.position, direction, zone, false, engine));
 	if (canPerformMeleeAttack(direction, monster, hero)) {
 		direction = new Point(0, 0);
 		if (monster.face.damage >= 0) {

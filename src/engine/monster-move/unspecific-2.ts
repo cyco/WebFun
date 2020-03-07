@@ -32,12 +32,12 @@ export default (monster: Monster, zone: Zone, engine: Engine) => {
 		direction = convertToDirectionPoint(monster.preferredDirection);
 	} else if (randmod(2)) {
 		direction = directionToHero;
-		direction = evade(direction, moveCheck(monster.position, direction, zone, false));
+		direction = evade(direction, moveCheck(monster.position, direction, zone, false, engine));
 	} else {
 		direction = randomDirection();
 	}
 
-	if (moveCheck(monster.position, direction, zone, false) !== MoveCheckResult.Free) {
+	if (moveCheck(monster.position, direction, zone, false, engine) !== MoveCheckResult.Free) {
 		direction = new Point(0, 0);
 		monster.cooldown = randmod(3);
 		monster.preferredDirection = randmod(4) - 1;

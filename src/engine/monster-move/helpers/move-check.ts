@@ -1,10 +1,11 @@
 import { Zone } from "src/engine/objects";
 import MoveCheckResult from "./move-check-result";
 import { Point } from "src/util";
+import { Engine } from "src/engine";
 
-export const EvasionStrategy = () => (((window as any).engine.metronome.tickCount & 1) < 1 ? 1 : -1);
+export const EvasionStrategy = (tickCount: number) => ((tickCount & 1) < 1 ? 1 : -1);
 
-export default (source: Point, rel: Point, zone: Zone, flag = false): MoveCheckResult => {
+export default (source: Point, rel: Point, zone: Zone, flag = false, engine: Engine): MoveCheckResult => {
 	const target = source.byAdding(rel);
 
 	if (!zone.bounds.contains(target)) {
@@ -24,7 +25,7 @@ export default (source: Point, rel: Point, zone: Zone, flag = false): MoveCheckR
 		);
 	};
 
-	const evade = EvasionStrategy();
+	const evade = EvasionStrategy(engine.metronome.tickCount);
 	if (rel.x && !rel.y && isFree(new Point(0, -evade))) {
 		return MoveCheckResult.EvadeUp;
 	}

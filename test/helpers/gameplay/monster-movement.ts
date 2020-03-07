@@ -41,7 +41,6 @@ const makeFunction = (describe: any): describeMonsterMovement => (
 			beforeAll(async () => {
 				await ctx.prepare(loadGameData);
 				ctx.buildEngine();
-				(window as any).engine = ctx.engine;
 
 				const story = buildStory(ctx.engine.assets);
 				try {
