@@ -3,6 +3,7 @@ import { Point, Direction as DirectionHelper } from "src/util";
 import { Tile } from "src/engine/objects";
 import { Engine } from "src/engine";
 import { OnscreenPad, OnscreenButton } from "src/app/ui";
+import { MapScene, PickupScene } from "src/engine/scenes";
 
 class TouchInputManager implements InputManager {
 	mouseDownHandler: (_: Point) => void;
@@ -33,8 +34,20 @@ class TouchInputManager implements InputManager {
 
 	clear(): void {}
 
-	addListeners(): void {}
+	addListeners(): void {
+		this.gameViewElement.addEventListener("touchbegin", this);
+		this.gameViewElement.addEventListener("mousedown", this);
+	}
 
-	removeListeners(): void {}
+	handleEvent(_: TouchEvent) {
+		if (this.engine?.sceneManager?.currentScene instanceof PickupScene) {
+			this.engine.sceneManager.popScene();
+		}
+	}
+
+	removeListeners(): void {
+		this.gameViewElement.removeEventListener("mousedown", this);
+		this.gameViewElement.removeEventListener("touchbegin", this);
+	}
 }
 export default TouchInputManager;
