@@ -33,13 +33,15 @@ class EventTarget {
 
 	dispatchEvent(type: string | Event, detail: any = {}): void {
 		detail.target = detail.target || this;
-
-		const event =
+		const target = this;
+		const event = new Proxy(
 			type instanceof Event
 				? type
 				: new CustomEvent(type, {
 						detail: detail
-				  });
+				  }),
+			{ get: (obj: any, prop: any) => (prop === "target" ? target : obj[prop]) }
+		);
 
 		(this as any)["on" + type] instanceof Function && (this as any)["on" + type](event);
 

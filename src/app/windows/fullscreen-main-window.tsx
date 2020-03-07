@@ -1,16 +1,18 @@
 import "./fullscreen-main-window.scss";
 
-import { Ammo, Health, Inventory, Location, Weapon } from "../ui";
+import { Ammo, Health, Inventory as InventoryComponent, Location, Weapon } from "../ui";
 import { OnscreenPad, OnscreenButton } from "../ui";
 import { default as Engine, Events } from "src/engine/engine";
 
 import { AbstractWindow } from "src/ui/components";
 import { Direction } from "../ui/location";
-import { Hero } from "src/engine";
+import { Hero, SceneManager, Inventory } from "src/engine";
 import World from "src/engine/world";
 import { Zone } from "src/engine/objects";
 import { Point } from "src/util";
 import { Button } from "src/ui/components";
+import { MapScene } from "src/engine/scenes";
+import Yoda from "src/engine/type/yoda";
 
 class FullscreenMainWindow extends AbstractWindow {
 	public static readonly tagName = "wf-fullscreen-main-window";
@@ -19,6 +21,8 @@ class FullscreenMainWindow extends AbstractWindow {
 		[Events.AmmoChanged]: () => this._updateAmmo(),
 		[Events.WeaponChanged]: () => this._updateWeapon(),
 		[Events.LocationChanged]: ({ detail }: CustomEvent) => this._updateLocation(detail),
+		[Inventory.Event.ItemsChanged]: ({ target }: CustomEvent) => this._updateMapButton(target as any),
+		[SceneManager.Event.SceneChanged]: ({ target }: CustomEvent) => this._updateMapButton(target as any),
 		healthChanged: () => this._updateHealth()
 	};
 
@@ -46,7 +50,7 @@ class FullscreenMainWindow extends AbstractWindow {
 					</div>
 					<Health />
 				</div>
-				<Inventory />
+				<InventoryComponent />
 				<div className="controls">
 					<OnscreenPad />
 					<div className="buttons">
@@ -71,6 +75,15 @@ class FullscreenMainWindow extends AbstractWindow {
 			hero.removeEventListener(Hero.Event.HealthChanged, this._handlers.healthChanged);
 			hero.removeEventListener(Hero.Event.WeaponChanged, this._handlers[Events.WeaponChanged]);
 			hero.removeEventListener(Hero.Event.AmmoChanged, this._handlers[Events.AmmoChanged]);
+
+			this._engine.inventory.removeEventListener(
+				Inventory.Event.ItemsChanged,
+				this._handlers[Inventory.Event.ItemsChanged]
+			);
+			this._engine.sceneManager.removeEventListener(
+				SceneManager.Event.SceneChanged,
+				this._handlers[SceneManager.Event.SceneChanged]
+			);
 		}
 
 		this._engine = e;
@@ -81,6 +94,14 @@ class FullscreenMainWindow extends AbstractWindow {
 			hero.addEventListener(Hero.Event.WeaponChanged, this._handlers[Events.WeaponChanged]);
 			hero.addEventListener(Hero.Event.AmmoChanged, this._handlers[Events.AmmoChanged]);
 			this._handlers.each((event: any, handler: any) => this._engine.addEventListener(event, handler));
+			this._engine.inventory.addEventListener(
+				Inventory.Event.ItemsChanged,
+				this._handlers[Inventory.Event.ItemsChanged]
+			);
+			this._engine.sceneManager.addEventListener(
+				SceneManager.Event.SceneChanged,
+				this._handlers[SceneManager.Event.SceneChanged]
+			);
 		}
 
 		this.applyCurrentValues();
@@ -139,8 +160,20 @@ class FullscreenMainWindow extends AbstractWindow {
 		healthView.health = this._engine.hero.health;
 	}
 
+	private _updateMapButton(source: SceneManager | Inventory) {
+		if (source instanceof SceneManager) {
+			this.mapButton.active = source.currentScene instanceof MapScene;
+		}
+		if (source instanceof Inventory) {
+			this.mapButton.disabled = !source.contains(Yoda.tileIDs.Locator);
+		}
+	}
+
+	private get mapButton() {
+		return this.querySelector(`${Button.tagName}[label="Map"]`) as Button;
+	}
+
 	private toggleInventory(e: Event) {
-		console.log("toggleInventory", e);
 		const button = e.target as Button;
 		button.active = !button.active;
 		if (button.active) this.inventory.classList.add("slide-up");
@@ -154,7 +187,7 @@ class FullscreenMainWindow extends AbstractWindow {
 	}
 
 	public get inventory() {
-		return this.querySelector(Inventory.tagName) as Inventory;
+		return this.querySelector(InventoryComponent.tagName) as InventoryComponent;
 	}
 
 	public get weapon() {

@@ -1,9 +1,14 @@
-import Engine from "./engine";
-import { Rectangle } from "src/util";
+import { Rectangle, EventTarget } from "src/util";
 import { Renderer } from "./rendering";
+import Engine from "./engine";
 import Scene from "./scenes/scene";
 
-class SceneManager {
+export const Event = {
+	SceneChanged: "scenechange"
+};
+
+class SceneManager extends EventTarget {
+	public static readonly Event = Event;
 	private _engine: Engine = null;
 	private _stack: Scene[] = [];
 	private _determineBounds: () => Rectangle;
@@ -13,6 +18,7 @@ class SceneManager {
 	private _visibleScenes: Scene[] = [];
 
 	constructor(determineBounds: () => Rectangle) {
+		super();
 		this._determineBounds = determineBounds;
 	}
 
@@ -89,6 +95,8 @@ class SceneManager {
 
 		if (newScene) newScene.didShow();
 		if (oldScene) oldScene.didHide();
+
+		this.dispatchEvent(new CustomEvent(Event.SceneChanged));
 	}
 
 	private _rebuildVisibleScenes() {

@@ -3,10 +3,11 @@ import { Tile } from "./objects";
 import { Yoda } from "./type";
 
 export const Events = {
-	ItemsDidChange: "ItemsDidChange"
+	ItemsChanged: "ItemsChanged"
 };
 
 class Inventory extends EventTarget {
+	public static readonly Event = Events;
 	private _items: Tile[];
 
 	public constructor() {
@@ -23,7 +24,7 @@ class Inventory extends EventTarget {
 			index = 0;
 		}
 		this._items.splice(index, 0, item);
-		this.dispatchEvent(Events.ItemsDidChange, {
+		this.dispatchEvent(Events.ItemsChanged, {
 			mode: "add",
 			item: item
 		});
@@ -31,7 +32,7 @@ class Inventory extends EventTarget {
 
 	public removeAllItems(): void {
 		this._items = [];
-		this.dispatchEvent(Events.ItemsDidChange);
+		this.dispatchEvent(Events.ItemsChanged);
 	}
 
 	public removeItem(item: Tile | number): void {
@@ -43,7 +44,7 @@ class Inventory extends EventTarget {
 		if (index === -1) return;
 
 		this._items.splice(index, 1);
-		this.dispatchEvent(Events.ItemsDidChange, {
+		this.dispatchEvent(Events.ItemsChanged, {
 			mode: "remove",
 			item: item
 		});

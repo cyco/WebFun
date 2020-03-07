@@ -68,14 +68,14 @@ class InventoryComponent extends AbstractList<Tile> {
 
 	set inventory(i) {
 		if (this._inventory) {
-			this._inventory.removeEventListener(InventoryEvent.ItemsDidChange, this._inventoryChangedHandler);
+			this._inventory.removeEventListener(InventoryEvent.ItemsChanged, this._inventoryChangedHandler);
 			this.items = Array.Repeat(null, MinRows);
 		}
 
 		this._inventory = i;
 
 		if (this._inventory) {
-			this._inventory.addEventListener(InventoryEvent.ItemsDidChange, this._inventoryChangedHandler);
+			this._inventory.addEventListener(InventoryEvent.ItemsChanged, this._inventoryChangedHandler);
 			this._rebuildTable();
 		}
 	}
