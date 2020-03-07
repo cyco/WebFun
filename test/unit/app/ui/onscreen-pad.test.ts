@@ -2,7 +2,7 @@ import OnscreenPad from "src/app/ui/onscreen-pad";
 import { Point } from "src/util";
 import { InputMask } from "src/engine/input";
 
-describeComponent(OnscreenPad, () => {
+xdescribeComponent(OnscreenPad, () => {
 	let lastEvent: Event;
 	let subject: OnscreenPad;
 	beforeEach(() => (subject = render(OnscreenPad) as any));

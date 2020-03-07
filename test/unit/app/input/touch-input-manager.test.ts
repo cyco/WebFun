@@ -9,7 +9,7 @@ describe("WebFun.App.Input.TouchInputManager", () => {
 	let drag: any;
 
 	beforeEach(() => {
-		gameView = {} as any;
+		gameView = { addEventListener: jasmine.createSpy(), removeEventListener: jasmine.createSpy() } as any;
 		shoot = { pressed: false } as any;
 		pad = { input: InputMask.None } as any;
 		drag = { pressed: false } as any;

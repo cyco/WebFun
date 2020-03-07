@@ -53,7 +53,6 @@ describe("WebFun.App.GameController", () => {
 
 	describe("when created", () => {
 		beforeEach(() => {
-			Settings.mobile = false;
 			createSubject();
 		});
 
@@ -134,21 +133,6 @@ describe("WebFun.App.GameController", () => {
 					});
 				});
 			});
-		});
-	});
-
-	describe("when created with mobile mode active", () => {
-		beforeEach(() => {
-			Settings.mobile = true;
-			createSubject();
-		});
-
-		it("adds a class to the window", () => {
-			expect(mockedWindow.classList).toContain("mobile");
-		});
-
-		it("creates a touch input controller", () => {
-			expect(engineInterface.InputManager(null)).toBeInstanceOf(TouchInputManager);
 		});
 	});
 
