@@ -39,7 +39,8 @@ const main = async () => {
 	gameController.newStory();
 	gameController.show();
 	if (Settings.mobile) {
-		document.body.appendChild(<FullscreenLock />);
+		document.body.style.height = "120vh";
+		setTimeout(() => (window.document.scrollingElement.scrollTop = 0));
 	}
 	if (Settings.debug) {
 		initializeDebug(gameController);
