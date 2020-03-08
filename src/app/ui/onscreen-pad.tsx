@@ -166,6 +166,7 @@ class OnscreenPad extends Component implements EventListenerObject {
 	private _label2: HTMLElement = (
 		<div style="position: absolute; top: 0px; right: 0px; font-size: .9em; text-align: right;" />
 	);
+	private trackedTouch: number = null;
 
 	connectedCallback() {
 		super.connectedCallback();
@@ -188,13 +189,29 @@ class OnscreenPad extends Component implements EventListenerObject {
 			document.addEventListener("mousemove", this);
 		}
 
+		if (event.type === "touchstart" && !this.trackedTouch) {
+			this.trackedTouch = "changedTouches" in event ? event.changedTouches[0].identifier : null;
+		}
+
 		if (event.type === "touchend" || event.type === "mouseup") {
+			if (
+				"changedTouches" in event &&
+				!Array.from(event.changedTouches).find(({ identifier }) => identifier === this.trackedTouch)
+			)
+				return;
+
 			this.positionThumb(0, 0);
+			this.trackedTouch = null;
 			document.removeEventListener("mouseup", this);
 			document.removeEventListener("mousemove", this);
 		} else {
-			const touch =
-				"touches" in event ? event.touches[0] : { clientX: event.clientX, clientY: event.clientY };
+			const touches = "changedTouches" in event ? Array.from(event.changedTouches) : [];
+			let touch: Touch | MouseEvent = touches.find(
+				({ identifier }) => identifier === this.trackedTouch
+			);
+			if (!touch && event.type === "touchmove") return;
+			if (!touch) touch = event as MouseEvent;
+
 			const box = this.getBoundingClientRect();
 			const centerX = box.left + box.width / 2;
 			const centerY = box.top + box.height / 2;
