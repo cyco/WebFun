@@ -22,8 +22,7 @@ class MainWindow extends AbstractWindow {
 		[Engine.Event.LocationChanged]: ({ detail }: CustomEvent) => this._updateLocation(detail),
 		[Hero.Event.HealthChanged]: () => this._updateHealth(),
 		[Inventory.Event.ItemsChanged]: ({ target }: CustomEvent) => this._updateMapButton(target as any),
-		[SceneManager.Event.SceneChanged]: ({ target }: CustomEvent) => this._updateMapButton(target as any),
-		resize: () => this._updateInventorySize()
+		[SceneManager.Event.SceneChanged]: ({ target }: CustomEvent) => this._updateMapButton(target as any)
 	};
 	private cache: Map<string, Element> = new Map();
 
@@ -51,7 +50,6 @@ class MainWindow extends AbstractWindow {
 					</div>
 					<Health />
 				</div>
-				<InventoryComponent />
 				<div className="controls">
 					<OnscreenPad />
 					<div className="buttons">
@@ -59,6 +57,7 @@ class MainWindow extends AbstractWindow {
 						<OnscreenButton className="shoot" label="Shoot" />
 					</div>
 				</div>
+				<InventoryComponent />
 			</div>
 		);
 	}
@@ -76,7 +75,6 @@ class MainWindow extends AbstractWindow {
 			hero.removeEventListener(Hero.Event.HealthChanged, this._handlers.healthChanged);
 			hero.removeEventListener(Hero.Event.WeaponChanged, this._handlers[Engine.Event.WeaponChanged]);
 			hero.removeEventListener(Hero.Event.AmmoChanged, this._handlers[Engine.Event.AmmoChanged]);
-			window.removeEventListener("resize", this._handlers["resize"]);
 
 			this._engine.inventory.removeEventListener(
 				Inventory.Event.ItemsChanged,
@@ -93,7 +91,6 @@ class MainWindow extends AbstractWindow {
 		if (this._engine) {
 			const hero = this._engine.hero;
 
-			window.addEventListener("resize", this._handlers["resize"]);
 			hero.addEventListener(Hero.Event.HealthChanged, this._handlers.healthChanged);
 			hero.addEventListener(Hero.Event.WeaponChanged, this._handlers[Engine.Event.WeaponChanged]);
 			hero.addEventListener(Hero.Event.AmmoChanged, this._handlers[Engine.Event.AmmoChanged]);
@@ -133,10 +130,6 @@ class MainWindow extends AbstractWindow {
 		const button = e.target as Button;
 		button.active = !button.active;
 
-		const { width, height } = this.controls.getBoundingClientRect();
-		this.inventory.style.width = `${width.toString()}px`;
-		this.inventory.style.height = `${height.toString()}px`;
-
 		if (button.active) this.inventory.classList.add("slide-up");
 		else this.inventory.classList.remove("slide-up");
 	}
@@ -168,15 +161,6 @@ class MainWindow extends AbstractWindow {
 
 	private _updateWeapon() {
 		this.weapon.weapon = this.engine.hero.weapon;
-	}
-
-	private _updateInventorySize() {
-		const inventory = this.inventory;
-		if (!inventory.classList.contains("slide-up")) return;
-
-		const { width, height } = this.controls.getBoundingClientRect();
-		inventory.style.width = `${width.toString()}px`;
-		inventory.style.height = `${height.toString()}px`;
 	}
 
 	private _updateLocation({ zone, world }: { zone: Zone; world: World }) {
