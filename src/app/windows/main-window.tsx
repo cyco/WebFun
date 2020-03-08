@@ -76,7 +76,7 @@ class MainWindow extends AbstractWindow {
 			this._handlers.each((event: any, handler: any) =>
 				this._engine.removeEventListener(event, handler)
 			);
-			hero.removeEventListener(Hero.Event.HealthChanged, this._handlers.healthChanged);
+			hero.removeEventListener(Hero.Event.HealthChanged, this._handlers[Hero.Event.HealthChanged]);
 			hero.removeEventListener(Hero.Event.WeaponChanged, this._handlers[Engine.Event.WeaponChanged]);
 			hero.removeEventListener(Hero.Event.AmmoChanged, this._handlers[Engine.Event.AmmoChanged]);
 
@@ -95,7 +95,7 @@ class MainWindow extends AbstractWindow {
 		if (this._engine) {
 			const hero = this._engine.hero;
 
-			hero.addEventListener(Hero.Event.HealthChanged, this._handlers.healthChanged);
+			hero.addEventListener(Hero.Event.HealthChanged, this._handlers[Hero.Event.HealthChanged]);
 			hero.addEventListener(Hero.Event.WeaponChanged, this._handlers[Engine.Event.WeaponChanged]);
 			hero.addEventListener(Hero.Event.AmmoChanged, this._handlers[Engine.Event.AmmoChanged]);
 			this._handlers.each((event: any, handler: any) => this._engine.addEventListener(event, handler));
