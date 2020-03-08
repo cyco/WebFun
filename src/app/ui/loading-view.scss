@@ -3,6 +3,7 @@
 @import "aspect-ratio.scss";
 
 wf-loading-view {
+	display: block;
 	@include fullsize();
 	@include aspect-ratio(1/1);
 
