@@ -38,6 +38,7 @@ wf-main-window {
 		justify-content: stretch;
 		display: flex;
 		min-height: 34px;
+		grid-area: actions;
 
 		> wf-button {
 			padding: 2px;
@@ -64,7 +65,7 @@ wf-main-window {
 		}
 	}
 
-	> wf-inventory {
+	wf-inventory {
 		grid-area: inventory;
 	}
 
@@ -176,41 +177,41 @@ wf-main-window {
 		@media (orientation: landscape) {
 			> .content {
 				grid-template-columns: 1fr calc(100vh - 3px) 1fr;
-				grid-template-rows: 1fr 1fr 1fr;
-				grid-column-gap: 0;
-				grid-row-gap: 0;
+				grid-template-rows: min-content min-content min-content 1fr;
 				grid-template-areas:
-					"empty main inventory"
+					"actions main status"
 					"empty main inventory"
 					"ctrl-left main ctrl-right";
-
-				> .main {
-					grid-area: main;
-				}
-
-				> .actions {
-					grid-area: inventory;
-				}
-
-				> .status {
-					grid-area: inventory;
-				}
-
+				grid-auto-flow: column;
+				overflow: auto;
 				> .controls {
 					display: contents;
+				}
 
-					> wf-onscreen-pad {
-						grid-area: ctrl-left;
-						margin-left: env(safe-area-inset-left);
+				wf-onscreen-pad {
+					grid-area: ctrl-left;
+					margin-left: env(safe-area-inset-left);
+				}
+
+				.actions > :not(:last-child) {
+					display: none;
+				}
+
+				.status {
+					padding: 0px;
+					> * + * {
+						margin-left: 2px;
 					}
+				}
+
+				wf-inventory {
+					width: unset;
+					height: unset;
+					max-height: 160px;
 				}
 
 				.buttons {
 					grid-area: ctrl-right;
-				}
-
-				> :not(.main) {
-					overflow: hidden;
 				}
 			}
 		}
