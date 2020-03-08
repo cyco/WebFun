@@ -173,7 +173,6 @@ class MainWindow extends AbstractWindow {
 	private _updateInventorySize() {
 		const inventory = this.inventory;
 		if (!inventory.classList.contains("slide-up")) return;
-		console.log("_updateInventorySize");
 
 		const { width, height } = this.controls.getBoundingClientRect();
 		inventory.style.width = `${width.toString()}px`;
