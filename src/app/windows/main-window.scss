@@ -153,7 +153,6 @@ wf-main-window {
 				transition: transform 0.2s ease-out;
 
 				grid-area: controls;
-				border: 1px solid red;
 				&.slide-up {
 					transform: translate(0, 0%);
 				}
