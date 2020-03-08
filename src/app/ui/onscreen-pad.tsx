@@ -2,7 +2,8 @@ import { Component } from "src/ui";
 import "./onscreen-pad.scss";
 import { min, max } from "src/std/math";
 import InputMask from "src/engine/input/input-mask";
-import { Point, Direction as DirectionHelper } from "src/util";
+import { Point, Direction as DirectionHelper, xy2polar, rad2deg } from "src/util";
+import { Settings } from "src";
 
 const BaseSVG = `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
@@ -15,11 +16,8 @@ const BaseSVG = `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    sodipodi:docname="game-pad.svg"
    inkscape:version="1.0beta2 (2b71d25, 2019-12-03)"
-   id="svg699"
    version="1.1"
-   viewBox="0 0 42.32 42.32"
-   height="42.32mm"
-   width="42.32mm">
+   viewBox="0 0 42.32 42.32">
   <sodipodi:namedview
      inkscape:window-maximized="0"
      inkscape:window-y="23"
@@ -159,15 +157,15 @@ const r = (t: string): SVGSVGElement => {
 	d.innerHTML = t;
 	return d.firstElementChild as SVGSVGElement;
 };
-const px = (n: number) => n.toString() + "px";
-
-const ThumbOffsetMax = 70;
-const PadBaseRadius = 80;
 
 class OnscreenPad extends Component implements EventListenerObject {
 	public static readonly tagName = "wf-onscreen-pad";
 	private _base: SVGSVGElement = r(BaseSVG);
 	private _input: InputMask = InputMask.None;
+	private _label: HTMLElement = (<div style="position: absolute; top: 0px; left: 0px; font-size: .9em" />);
+	private _label2: HTMLElement = (
+		<div style="position: absolute; top: 0px; right: 0px; font-size: .9em; text-align: right;" />
+	);
 
 	connectedCallback() {
 		super.connectedCallback();
@@ -175,6 +173,8 @@ class OnscreenPad extends Component implements EventListenerObject {
 		this.positionThumb(0, 0);
 
 		this.appendChild(this._base);
+		this.appendChild(this._label);
+		this.appendChild(this._label2);
 
 		this.addEventListener("touchstart", this);
 		this.addEventListener("touchmove", this);
@@ -195,7 +195,7 @@ class OnscreenPad extends Component implements EventListenerObject {
 		} else {
 			const touch =
 				"touches" in event ? event.touches[0] : { clientX: event.clientX, clientY: event.clientY };
-			const box = this.getClientRects()[0];
+			const box = this.getBoundingClientRect();
 			const centerX = box.left + box.width / 2;
 			const centerY = box.top + box.height / 2;
 
@@ -210,15 +210,27 @@ class OnscreenPad extends Component implements EventListenerObject {
 	}
 
 	private positionThumb(x: number, y: number) {
-		// TODO: Limit to circle instead of a rectangle
+		const ANGLE_RANGE = 45;
+		const DEADZONE = 0.1;
+		const DEADZONE_WALK = 0.4;
+
 		x = max(min(x, 1), -1);
 		y = max(min(y, 1), -1);
 
-		let input: InputMask;
-		const distance = this._distanceFromPoint(x, y);
+		let input: InputMask = InputMask.None;
+		const [rho, theta] = xy2polar(x, y);
+		const angle = (360 + rad2deg(theta)) % 360;
 
-		if (distance > 0.7) input |= InputMask.Walk;
-		input |= this._directionInputFromAngle(x, y);
+		if (rho > DEADZONE_WALK) input |= InputMask.Walk;
+		if (rho > DEADZONE && angle.isInRange(0 - ANGLE_RANGE, 0 + ANGLE_RANGE)) input |= InputMask.Right;
+		if (rho > DEADZONE && angle.isInRange(180 - ANGLE_RANGE, 180 + ANGLE_RANGE)) input |= InputMask.Left;
+		if (rho > DEADZONE && angle.isInRange(90 - ANGLE_RANGE, 90 + ANGLE_RANGE)) input |= InputMask.Up;
+		if (rho > DEADZONE && angle.isInRange(270 - ANGLE_RANGE, 270 + ANGLE_RANGE)) input |= InputMask.Down;
+
+		if (Settings.debug) {
+			this._label.textContent = `${x} x ${y}`;
+			this._label2.textContent = `${(rho * 100).toPrecision(3)}% @ ${angle.toPrecision(2)}°`;
+		}
 
 		this._input = input;
 	}
@@ -232,25 +244,6 @@ class OnscreenPad extends Component implements EventListenerObject {
 		document.removeEventListener("mouseup", this);
 
 		super.disconnectedCallback();
-	}
-
-	private _directionInputFromAngle(x: number, y: number): number {
-		let result = InputMask.None;
-
-		if (x < -this.deadZone) result |= InputMask.Left;
-		if (x > this.deadZone) result |= InputMask.Right;
-		if (y < -this.deadZone) result |= InputMask.Up;
-		if (y > this.deadZone) result |= InputMask.Down;
-
-		return result;
-	}
-
-	private _distanceFromPoint(x: number, y: number): number {
-		return new Point(0, 0).distanceTo(new Point(x, y));
-	}
-
-	private get deadZone() {
-		return 0.4;
 	}
 
 	public get input(): InputMask {

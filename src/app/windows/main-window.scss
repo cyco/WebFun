@@ -52,8 +52,12 @@ wf-main-window {
 		flex-direction: row;
 		justify-content: space-between;
 		align-items: center;
-		padding: 10px;
+		padding: 2px;
 		grid-area: controls;
+
+		padding-bottom: env(safe-area-inset-bottom);
+		padding-left: 10px;
+		padding-right: 10px;
 
 		wf-onscreen-button + wf-onscreen-button {
 			margin-left: 15px;
@@ -117,6 +121,18 @@ wf-main-window {
 			padding-top: 0px;
 		}
 
+		wf-onscreen-pad {
+			height: 100%;
+			width: 100%;
+			max-width: 160px;
+			max-height: 160px;
+		}
+
+		.buttons {
+			display: flex;
+			flex-direction: row;
+		}
+
 		/**********************************************************************************************/
 		/**                                         Portrait                                         **/
 		/**********************************************************************************************/
@@ -136,10 +152,6 @@ wf-main-window {
 					"actions"
 					"status"
 					"controls";
-			}
-
-			.controls {
-				position: absolute;
 			}
 
 			wf-inventory {

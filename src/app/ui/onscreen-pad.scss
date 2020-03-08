@@ -1,19 +1,10 @@
+@import "aspect-ratio.scss";
+
 wf-onscreen-pad {
-	$base-radius: 80px;
-	$thumb-radius: 48px;
 	display: block;
 	position: relative;
-	width: 150px;
-	height: 150px;
-
-	> svg {
-		position: absolute;
-		top: 0px;
-		left: 0px;
-	}
-
-	> *:nth-child(2) {
-		margin-left: -$thumb-radius;
-		margin-top: -$thumb-radius;
+	@include aspect-ratio(1);
+	&::before {
+		padding-bottom: unset;
 	}
 }
