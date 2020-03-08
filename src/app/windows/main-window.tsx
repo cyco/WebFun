@@ -40,7 +40,7 @@ class MainWindow extends AbstractWindow {
 				<div className="actions">
 					<Button label="Inventory" onclick={(e: Event) => this.toggleInventory(e)}></Button>
 					<Button label="Map" disabled></Button>
-					<Button label="Options"></Button>
+					<Button label="Menu"></Button>
 				</div>
 				<div className="status">
 					<Location />
