@@ -66,8 +66,8 @@ wf-main-window {
 
 		wf-onscreen-pad {
 			grid-area: pad;
-			margin-left: env();
 			display: none;
+			padding-left: env(safe-area-inset-left);
 		}
 	}
 }
