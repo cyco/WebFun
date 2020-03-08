@@ -4,14 +4,5 @@ import MainMenu from "./main-menu";
 import MainWindow from "./main-window";
 import StatisticsWindow from "./statistics-window";
 import WorldSizeWindow from "./world-size-window";
-import FullscreenMainWindow from "./fullscreen-main-window";
 
-export {
-	MainMenu,
-	MainWindow,
-	FullscreenMainWindow,
-	StatisticsWindow,
-	GameSpeedWindow,
-	DifficultyWindow,
-	WorldSizeWindow
-};
+export { MainMenu, MainWindow, StatisticsWindow, GameSpeedWindow, DifficultyWindow, WorldSizeWindow };

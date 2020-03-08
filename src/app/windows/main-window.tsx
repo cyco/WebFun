@@ -1,24 +1,28 @@
 import "./main-window.scss";
 
-import { Ammo, Health, Inventory, Location, Weapon } from "../ui";
+import { Ammo, Health, Inventory as InventoryComponent, Location, Weapon } from "../ui";
 import { OnscreenPad, OnscreenButton } from "../ui";
-import { default as Engine, Events } from "src/engine/engine";
+import { default as Engine } from "src/engine/engine";
 
-import { AbstractWindow } from "src/ui/components";
+import { AbstractWindow, Button } from "src/ui/components";
 import { Direction } from "../ui/location";
-import { Hero } from "src/engine";
+import { Hero, SceneManager, Inventory } from "src/engine";
 import World from "src/engine/world";
 import { Zone } from "src/engine/objects";
 import { Point } from "src/util";
+import { MapScene } from "src/engine/scenes";
+import { Yoda } from "src/engine/type";
 
 class MainWindow extends AbstractWindow {
 	public static readonly tagName = "wf-main-window";
 	private _engine: Engine = null;
 	private _handlers = {
-		[Events.AmmoChanged]: () => this._updateAmmo(),
-		[Events.WeaponChanged]: () => this._updateWeapon(),
-		[Events.LocationChanged]: ({ detail }: CustomEvent) => this._updateLocation(detail),
-		healthChanged: () => this._updateHealth()
+		[Engine.Event.AmmoChanged]: () => this._updateAmmo(),
+		[Engine.Event.WeaponChanged]: () => this._updateWeapon(),
+		[Engine.Event.LocationChanged]: ({ detail }: CustomEvent) => this._updateLocation(detail),
+		[Hero.Event.HealthChanged]: () => this._updateHealth(),
+		[Inventory.Event.ItemsChanged]: ({ target }: CustomEvent) => this._updateMapButton(target as any),
+		[SceneManager.Event.SceneChanged]: ({ target }: CustomEvent) => this._updateMapButton(target as any)
 	};
 
 	autosaveName = "main-window";
@@ -32,6 +36,11 @@ class MainWindow extends AbstractWindow {
 		this.content = (
 			<div>
 				<div className="main" />
+				<div className="actions">
+					<Button label="Inventory" onclick={(e: Event) => this.toggleInventory(e)}></Button>
+					<Button label="Map" disabled></Button>
+					<Button label="Options"></Button>
+				</div>
 				<div className="status">
 					<Location />
 					<div className="equipment">
@@ -40,18 +49,13 @@ class MainWindow extends AbstractWindow {
 					</div>
 					<Health />
 				</div>
-				<Inventory />
-				<OnscreenPad
-					style={{
-						position: "fixed",
-						bottom: "30px",
-						left: "30px",
-						marginLeft: "env(safe-area-inset-left)"
-					}}
-				/>
-				<div className="buttons">
-					<OnscreenButton style="zoom: .7" className="drag" />
-					<OnscreenButton style="zoom: .7; margin-left: 15px;" className="shoot" />
+				<InventoryComponent />
+				<div className="controls">
+					<OnscreenPad />
+					<div className="buttons">
+						<OnscreenButton className="drag" label="Drag" />
+						<OnscreenButton className="shoot" label="Shoot" />
+					</div>
 				</div>
 			</div>
 		);
@@ -68,8 +72,17 @@ class MainWindow extends AbstractWindow {
 				this._engine.removeEventListener(event, handler)
 			);
 			hero.removeEventListener(Hero.Event.HealthChanged, this._handlers.healthChanged);
-			hero.removeEventListener(Hero.Event.WeaponChanged, this._handlers[Events.WeaponChanged]);
-			hero.removeEventListener(Hero.Event.AmmoChanged, this._handlers[Events.AmmoChanged]);
+			hero.removeEventListener(Hero.Event.WeaponChanged, this._handlers[Engine.Event.WeaponChanged]);
+			hero.removeEventListener(Hero.Event.AmmoChanged, this._handlers[Engine.Event.AmmoChanged]);
+
+			this._engine.inventory.removeEventListener(
+				Inventory.Event.ItemsChanged,
+				this._handlers[Inventory.Event.ItemsChanged]
+			);
+			this._engine.sceneManager.removeEventListener(
+				SceneManager.Event.SceneChanged,
+				this._handlers[SceneManager.Event.SceneChanged]
+			);
 		}
 
 		this._engine = e;
@@ -77,12 +90,46 @@ class MainWindow extends AbstractWindow {
 		if (this._engine) {
 			const hero = this._engine.hero;
 			hero.addEventListener(Hero.Event.HealthChanged, this._handlers.healthChanged);
-			hero.addEventListener(Hero.Event.WeaponChanged, this._handlers[Events.WeaponChanged]);
-			hero.addEventListener(Hero.Event.AmmoChanged, this._handlers[Events.AmmoChanged]);
+			hero.addEventListener(Hero.Event.WeaponChanged, this._handlers[Engine.Event.WeaponChanged]);
+			hero.addEventListener(Hero.Event.AmmoChanged, this._handlers[Engine.Event.AmmoChanged]);
 			this._handlers.each((event: any, handler: any) => this._engine.addEventListener(event, handler));
+			this._engine.inventory.addEventListener(
+				Inventory.Event.ItemsChanged,
+				this._handlers[Inventory.Event.ItemsChanged]
+			);
+			this._engine.sceneManager.addEventListener(
+				SceneManager.Event.SceneChanged,
+				this._handlers[SceneManager.Event.SceneChanged]
+			);
 		}
 
 		this.applyCurrentValues();
+	}
+
+	private _updateMapButton(source: SceneManager | Inventory) {
+		if (source instanceof SceneManager) {
+			this.mapButton.active = source.currentScene instanceof MapScene;
+		}
+		if (source instanceof Inventory) {
+			this.mapButton.disabled = !source.contains(Yoda.tileIDs.Locator);
+		}
+	}
+
+	private get mapButton() {
+		return this.querySelector(`${Button.tagName}[label="Map"]`) as Button;
+	}
+
+	private toggleInventory(e: Event) {
+		const button = e.target as Button;
+		button.active = !button.active;
+		if (button.active) this.inventory.classList.add("slide-up");
+		else this.inventory.classList.remove("slide-up");
+	}
+
+	private toggleMenu(e: CustomEvent) {
+		console.log("toggleMenu", e);
+		const button = e.target as Button;
+		button.active = !button.active;
 	}
 
 	private applyCurrentValues() {
@@ -139,7 +186,7 @@ class MainWindow extends AbstractWindow {
 	}
 
 	public get inventory() {
-		return this.querySelector(Inventory.tagName) as Inventory;
+		return this.querySelector(InventoryComponent.tagName) as InventoryComponent;
 	}
 
 	public get weapon() {

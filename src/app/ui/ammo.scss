@@ -1,3 +1,4 @@
+@import "variables.scss";
 @import "border.scss";
 @import "sizing.scss";
 @import "colors.scss";
@@ -7,6 +8,8 @@ wf-ammo {
 
 	position: relative;
 	width: 10px + 2 * $border-size;
+	height: $tile-size + 2 * $border-size;
+	display: block;
 
 	> * {
 		position: absolute;

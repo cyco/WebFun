@@ -7,6 +7,8 @@ wf-weapon {
 
 	position: relative;
 	width: $tile-size + 2 * 2px;
+	height: $tile-size + 2 * $border-size;
+	display: block;
 
 	> .background {
 		@include fullsize();

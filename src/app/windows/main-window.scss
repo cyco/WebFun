@@ -7,67 +7,191 @@
 wf-main-window {
 	@extend wf-abstract-window;
 
-	> wf-window-titlebar {
-		padding: 0 env(safe-area-inset-right) 0 env(safe-area-inset-left);
-		> wf-menubar {
-			margin-left: 0px;
+	.equipment {
+		display: flex;
+		flex-direction: row;
+
+		wf-ammo + wf-weapon {
+			margin-left: 2px;
 		}
 	}
 
-	> .content {
+	.content {
 		display: grid;
-		grid-column-gap: 14px;
-		grid-row-gap: 14px;
-		grid-template-columns: 288px + 2 * 2px 206px;
-		grid-template-rows: 228px 64px - 14px;
-		grid-template-areas:
-			"main inventory"
-			"main status";
+	}
 
-		> .main {
-			@include inset-border(2px);
+	.main {
+		@include inset-border(2px);
+		grid-area: main;
+	}
 
-			position: relative;
-			grid-area: main;
+	.status {
+		display: flex;
+		align-items: center;
+		justify-content: space-around;
+		grid-area: status;
+	}
+
+	.actions {
+		align-items: center;
+		justify-content: stretch;
+		display: flex;
+		min-height: 34px;
+
+		> wf-button {
+			padding: 2px;
+			font-size: 0.9em;
+			flex-grow: 1;
+			margin: 5px;
+		}
+	}
+
+	.controls {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		padding: 10px;
+		grid-area: controls;
+
+		wf-onscreen-button + wf-onscreen-button {
+			margin-left: 15px;
+		}
+	}
+
+	> wf-inventory {
+		grid-area: inventory;
+	}
+
+	/**************************************************************************************************************/
+	/**                                                  DESKTOP                                                 **/
+	/**************************************************************************************************************/
+	&:not(.mobile) {
+		> wf-window-titlebar > wf-menubar {
+			margin-left: 0px;
+		}
+		> .content {
+			grid-column-gap: 14px;
+			grid-row-gap: 14px;
+			grid-template-columns: 288px + 2 * 2px 206px;
+			grid-template-rows: 228px 64px - 14px;
+			grid-template-areas:
+				"main inventory"
+				"main status";
+
+			> .buttons,
+			> .controls,
+			> .actions {
+				display: none;
+			}
+		}
+	}
+	/**************************************************************************************************************/
+	/**                                                  Mobile                                                  **/
+	/**************************************************************************************************************/
+	&.mobile {
+		position: fixed;
+		top: 0 !important;
+		left: 0 !important;
+		width: 100vw;
+		height: 100vh;
+		box-shadow: none;
+		border-radius: 0;
+
+		> wf-window-titlebar {
+			display: none;
 		}
 
-		> wf-inventory {
-			grid-area: inventory;
+		> .content {
+			padding: 0;
+			height: calc(100vh - 3px);
+			overflow: hidden;
 		}
 
-		> .status {
-			display: flex;
-			align-items: center;
-			justify-content: space-around;
-			grid-area: status;
+		.status {
+			@include inset-border(1px);
+			border-left: 0;
+			border-right: 0;
+			height: 75px;
+		}
 
-			> .equipment {
-				$indicator-color: #0091ea;
+		/**********************************************************************************************/
+		/**                                         Portrait                                         **/
+		/**********************************************************************************************/
+		@media (orientation: portrait) {
+			> .content {
+				grid-template-columns: 100%;
 
-				height: $tile-size + 2 * $border-size;
+				grid-template-areas:
+					"main"
+					"actions"
+					"status"
+					"inventory"
+					"controls";
+			}
 
-				> * {
-					height: $tile-size + 2 * $border-size;
-					display: inline-block;
-					position: relative;
-				}
+			wf-inventory {
+				position: absolute;
+				bottom: 0px;
+				min-height: unset;
+				height: unset;
+				max-height: unset;
+				width: 100%;
+				margin-top: 10px;
+				flex-grow: 1;
+				flex-shrink: 1;
+				z-index: 1;
 
-				wf-ammo + wf-weapon {
-					margin-left: 2px;
+				transform: translate(0, 100%);
+				transition: transform 0.2s ease-out;
+
+				&.slide-up {
+					transform: translate(0, 0%);
 				}
 			}
 		}
+		/**********************************************************************************************/
+		/**                                        Landscape                                         **/
+		/**********************************************************************************************/
+		@media (orientation: landscape) {
+			> .content {
+				grid-template-columns: 1fr calc(100vh - 3px) 1fr;
+				grid-template-rows: 1fr 1fr 1fr;
+				grid-column-gap: 0;
+				grid-row-gap: 0;
+				grid-template-areas:
+					"empty main inventory"
+					"empty main inventory"
+					"ctrl-left main ctrl-right";
 
-		> .buttons {
-			grid-area: buttons;
-			display: none;
-			justify-content: center;
-		}
+				> .main {
+					grid-area: main;
+				}
 
-		wf-onscreen-pad {
-			grid-area: pad;
-			display: none;
-			padding-left: env(safe-area-inset-left);
+				> .actions {
+					grid-area: inventory;
+				}
+
+				> .status {
+					grid-area: inventory;
+				}
+
+				> .controls {
+					display: contents;
+
+					> wf-onscreen-pad {
+						grid-area: ctrl-left;
+						margin-left: env(safe-area-inset-left);
+					}
+				}
+
+				.buttons {
+					grid-area: ctrl-right;
+				}
+
+				> :not(.main) {
+					overflow: hidden;
+				}
+			}
 		}
 	}
 }

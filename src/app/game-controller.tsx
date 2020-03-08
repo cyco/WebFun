@@ -22,7 +22,7 @@ import { ConfirmationResult, ModalConfirm } from "src/ux";
 import { EventTarget, Point, Rectangle, Size, rand, srand } from "src/util";
 import { FilePicker, WindowManager } from "src/ui";
 import { LoseScene, ZoneScene, MapScene } from "src/engine/scenes";
-import { MainMenu, MainWindow, FullscreenMainWindow } from "./windows";
+import { MainMenu, MainWindow } from "./windows";
 import { Planet, WorldSize } from "src/engine/types";
 import GameState from "../engine/game-state";
 import { Reader } from "src/engine/save-game";
@@ -55,7 +55,7 @@ class GameController extends EventTarget implements EventListenerObject {
 	public settings: typeof Settings = Settings;
 	public data: GameData;
 	public palette: ColorPalette;
-	private _window: MainWindow | FullscreenMainWindow;
+	private _window: MainWindow;
 	private _sceneView: SceneView = (<SceneView />) as SceneView;
 	private _engine: Engine;
 
@@ -63,9 +63,9 @@ class GameController extends EventTarget implements EventListenerObject {
 		super();
 
 		this.settings.mobile = !!(SmartPhone(false).isAndroid() || SmartPhone(false).isIPhone());
-		this._window = this.settings.mobile
-			? ((<FullscreenMainWindow />) as FullscreenMainWindow)
-			: ((<MainWindow menu={new MainMenu(this)} />) as MainWindow);
+		this._window = (
+			<MainWindow menu={new MainMenu(this)} className={this.settings.mobile ? "mobile" : ""} />
+		) as MainWindow;
 		this._engine = this._buildEngine(type, paths);
 		this._sceneView.manager.engine = this._engine;
 		if (this.settings.debug) (window as any).engine = this._engine;
