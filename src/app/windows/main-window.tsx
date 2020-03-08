@@ -60,6 +60,10 @@ class MainWindow extends AbstractWindow {
 				<InventoryComponent />
 			</div>
 		);
+		this.content.querySelector(".controls").addEventListener("touchstart", e => {
+			e.preventDefault();
+			e.stopImmediatePropagation();
+		});
 	}
 
 	get engine(): Engine {
