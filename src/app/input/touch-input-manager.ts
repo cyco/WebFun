@@ -1,9 +1,9 @@
-import { InputManager, InputMask, Direction } from "src/engine/input";
-import { Point, Direction as DirectionHelper } from "src/util";
+import { InputManager, InputMask } from "src/engine/input";
+import { Point } from "src/util";
 import { Tile } from "src/engine/objects";
 import { Engine } from "src/engine";
 import { OnscreenPad, OnscreenButton } from "src/app/ui";
-import { MapScene, PickupScene } from "src/engine/scenes";
+import { PickupScene } from "src/engine/scenes";
 
 class TouchInputManager implements InputManager {
 	mouseDownHandler: (_: Point) => void;
@@ -35,19 +35,36 @@ class TouchInputManager implements InputManager {
 	clear(): void {}
 
 	addListeners(): void {
-		this.gameViewElement.addEventListener("touchbegin", this);
+		this.gameViewElement.addEventListener("touchstart", this);
 		this.gameViewElement.addEventListener("mousedown", this);
 	}
 
-	handleEvent(_: TouchEvent) {
+	handleEvent(e: TouchEvent) {
 		if (this.engine?.sceneManager?.currentScene instanceof PickupScene) {
 			this.engine.sceneManager.popScene();
+			return;
 		}
+
+		if (e.type === "touchstart") {
+			const location = new Point(e.changedTouches[0].clientX, e.changedTouches[0].screenY);
+			const point = this.convertClientCoordinatesToView(location);
+
+			this.mouseLocationInView = location;
+			this.mouseDownHandler(point);
+			this.mouseLocationInView = null;
+		}
+	}
+
+	private convertClientCoordinatesToView(location: Point): Point {
+		const boundingRect = this.gameViewElement.getBoundingClientRect();
+		const viewOffset = new Point(boundingRect.left, boundingRect.top);
+
+		return Point.subtract(location, viewOffset).dividedBy(boundingRect);
 	}
 
 	removeListeners(): void {
 		this.gameViewElement.removeEventListener("mousedown", this);
-		this.gameViewElement.removeEventListener("touchbegin", this);
+		this.gameViewElement.removeEventListener("touchstart", this);
 	}
 }
 export default TouchInputManager;
