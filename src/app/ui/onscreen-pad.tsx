@@ -184,6 +184,9 @@ class OnscreenPad extends Component implements EventListenerObject {
 	}
 
 	handleEvent(event: TouchEvent | MouseEvent): void {
+		event.preventDefault();
+		event.stopPropagation();
+
 		if (event.type === "mousedown") {
 			document.addEventListener("mouseup", this);
 			document.addEventListener("mousemove", this);
@@ -221,13 +224,10 @@ class OnscreenPad extends Component implements EventListenerObject {
 
 			this.positionThumb(x, y);
 		}
-
-		event.preventDefault();
-		event.stopPropagation();
 	}
 
 	private positionThumb(x: number, y: number) {
-		const ANGLE_RANGE = 45;
+		const ANGLE_RANGE = 55;
 		const DEADZONE = 0.1;
 		const DEADZONE_WALK = 0.4;
 
@@ -236,13 +236,14 @@ class OnscreenPad extends Component implements EventListenerObject {
 
 		let input: InputMask = InputMask.None;
 		const [rho, theta] = xy2polar(x, y);
-		const angle = (360 + rad2deg(theta)) % 360;
-
-		if (rho > DEADZONE_WALK) input |= InputMask.Walk;
-		if (rho > DEADZONE && angle.isInRange(0 - ANGLE_RANGE, 0 + ANGLE_RANGE)) input |= InputMask.Right;
+		const wrap = (input: number) => (360 + input) % 360;
+		const angle = wrap(rad2deg(theta)) % 360;
+		if (rho > DEADZONE && (angle.isInRange(0, ANGLE_RANGE) || angle.isInRange(360 - ANGLE_RANGE, 360)))
+			input |= InputMask.Right;
 		if (rho > DEADZONE && angle.isInRange(180 - ANGLE_RANGE, 180 + ANGLE_RANGE)) input |= InputMask.Left;
 		if (rho > DEADZONE && angle.isInRange(90 - ANGLE_RANGE, 90 + ANGLE_RANGE)) input |= InputMask.Up;
 		if (rho > DEADZONE && angle.isInRange(270 - ANGLE_RANGE, 270 + ANGLE_RANGE)) input |= InputMask.Down;
+		if (input !== InputMask.None && rho > DEADZONE_WALK) input |= InputMask.Walk;
 
 		if (Settings.debug) {
 			this._label.textContent = `${x} x ${y}`;
