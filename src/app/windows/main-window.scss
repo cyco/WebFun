@@ -104,14 +104,15 @@ wf-main-window {
 		> .content {
 			padding: 0;
 			height: calc(100vh - 3px);
-			overflow: hidden;
 		}
 
 		.status {
 			@include inset-border(1px);
 			border-left: 0;
 			border-right: 0;
-			height: 75px;
+			border-top: 0px;
+			padding: 10px;
+			padding-top: 0px;
 		}
 
 		/**********************************************************************************************/
@@ -119,7 +120,14 @@ wf-main-window {
 		/**********************************************************************************************/
 		@media (orientation: portrait) {
 			> .content {
+				> .main {
+					border-left: none;
+					border-right: none;
+					border-top: none;
+				}
+
 				grid-template-columns: 100%;
+				grid-template-rows: calc(100vw - 1px) auto;
 
 				grid-template-areas:
 					"main"
@@ -130,15 +138,12 @@ wf-main-window {
 			}
 
 			wf-inventory {
-				position: absolute;
+				position: fixed;
 				bottom: 0px;
 				min-height: unset;
 				height: unset;
 				max-height: unset;
 				width: 100%;
-				margin-top: 10px;
-				flex-grow: 1;
-				flex-shrink: 1;
 				z-index: 1;
 
 				transform: translate(0, 100%);

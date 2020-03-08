@@ -22,8 +22,10 @@ class MainWindow extends AbstractWindow {
 		[Engine.Event.LocationChanged]: ({ detail }: CustomEvent) => this._updateLocation(detail),
 		[Hero.Event.HealthChanged]: () => this._updateHealth(),
 		[Inventory.Event.ItemsChanged]: ({ target }: CustomEvent) => this._updateMapButton(target as any),
-		[SceneManager.Event.SceneChanged]: ({ target }: CustomEvent) => this._updateMapButton(target as any)
+		[SceneManager.Event.SceneChanged]: ({ target }: CustomEvent) => this._updateMapButton(target as any),
+		resize: () => this._updateInventorySize()
 	};
+	private cache: Map<string, Element> = new Map();
 
 	autosaveName = "main-window";
 	onclose = () => this._engine && this._engine.metronome.stop();
@@ -74,6 +76,7 @@ class MainWindow extends AbstractWindow {
 			hero.removeEventListener(Hero.Event.HealthChanged, this._handlers.healthChanged);
 			hero.removeEventListener(Hero.Event.WeaponChanged, this._handlers[Engine.Event.WeaponChanged]);
 			hero.removeEventListener(Hero.Event.AmmoChanged, this._handlers[Engine.Event.AmmoChanged]);
+			window.removeEventListener("resize", this._handlers["resize"]);
 
 			this._engine.inventory.removeEventListener(
 				Inventory.Event.ItemsChanged,
@@ -89,6 +92,8 @@ class MainWindow extends AbstractWindow {
 
 		if (this._engine) {
 			const hero = this._engine.hero;
+
+			window.addEventListener("resize", this._handlers["resize"]);
 			hero.addEventListener(Hero.Event.HealthChanged, this._handlers.healthChanged);
 			hero.addEventListener(Hero.Event.WeaponChanged, this._handlers[Engine.Event.WeaponChanged]);
 			hero.addEventListener(Hero.Event.AmmoChanged, this._handlers[Engine.Event.AmmoChanged]);
@@ -104,6 +109,11 @@ class MainWindow extends AbstractWindow {
 		}
 
 		this.applyCurrentValues();
+	}
+
+	disconnectedCallback() {
+		this.cache = new Map();
+		super.disconnectedCallback();
 	}
 
 	private _updateMapButton(source: SceneManager | Inventory) {
@@ -122,6 +132,11 @@ class MainWindow extends AbstractWindow {
 	private toggleInventory(e: Event) {
 		const button = e.target as Button;
 		button.active = !button.active;
+
+		const { width, height } = this.controls.getBoundingClientRect();
+		this.inventory.style.width = `${width.toString()}px`;
+		this.inventory.style.height = `${height.toString()}px`;
+
 		if (button.active) this.inventory.classList.add("slide-up");
 		else this.inventory.classList.remove("slide-up");
 	}
@@ -155,6 +170,16 @@ class MainWindow extends AbstractWindow {
 		this.weapon.weapon = this.engine.hero.weapon;
 	}
 
+	private _updateInventorySize() {
+		const inventory = this.inventory;
+		if (!inventory.classList.contains("slide-up")) return;
+		console.log("_updateInventorySize");
+
+		const { width, height } = this.controls.getBoundingClientRect();
+		inventory.style.width = `${width.toString()}px`;
+		inventory.style.height = `${height.toString()}px`;
+	}
+
 	private _updateLocation({ zone, world }: { zone: Zone; world: World }) {
 		const locationView = this.content.querySelector(Location.tagName) as Location;
 
@@ -181,20 +206,31 @@ class MainWindow extends AbstractWindow {
 	}
 
 	private _updateHealth() {
-		const healthView = this.content.querySelector(Health.tagName) as Health;
+		const healthView = this.querySelectorCache(Health.tagName) as Health;
 		healthView.health = this._engine.hero.health;
 	}
 
 	public get inventory() {
-		return this.querySelector(InventoryComponent.tagName) as InventoryComponent;
+		return this.querySelectorCache(InventoryComponent.tagName) as InventoryComponent;
 	}
 
 	public get weapon() {
-		return this.querySelector(Weapon.tagName) as Weapon;
+		return this.querySelectorCache(Weapon.tagName) as Weapon;
 	}
 
 	public get ammo() {
-		return this.querySelector(Ammo.tagName) as Ammo;
+		return this.querySelectorCache(Ammo.tagName) as Ammo;
+	}
+
+	private get controls() {
+		return this.querySelectorCache(".controls");
+	}
+
+	private querySelectorCache(sel: string) {
+		if (this.cache.has(sel)) return this.cache.get(sel);
+		const node = this.querySelector(sel);
+		this.cache.set(sel, node);
+		return node;
 	}
 }
 
