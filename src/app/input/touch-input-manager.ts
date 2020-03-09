@@ -46,9 +46,8 @@ class TouchInputManager implements InputManager {
 		}
 
 		if (e.type === "touchstart") {
-			const location = new Point(e.changedTouches[0].clientX, e.changedTouches[0].screenY);
+			const location = new Point(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
 			const point = this.convertClientCoordinatesToView(location);
-
 			this.mouseLocationInView = location;
 			this.mouseDownHandler(point);
 			this.mouseLocationInView = null;
