@@ -34,7 +34,13 @@ module.exports = {
 		new CleanWebpackPlugin({ root: Paths.buildRoot }),
 		new HtmlWebpackPlugin({
 			template: Path.resolve(Paths.sourceRoot, "./app/index.html"),
-			title: "WebFun"
+			title: "WebFun",
+			meta: {
+				viewport: "width=device-width, user-scalable=no, viewport-fit=cover",
+				"msapplication-TileColor": "#da532c",
+				"theme-color": "#da532c",
+				"apple-mobile-web-app-capable": "yes"
+			}
 		}),
 		new MiniCssExtractPlugin({
 			filename: "[name].css",
@@ -79,16 +85,8 @@ module.exports = {
 				]
 			},
 			{
-				test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-				loader: "url-loader",
-				options: {
-					limit: 10000,
-					mimetype: "application/font-woff"
-				}
-			},
-			{
-				test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-				loader: "file-loader"
+				test: /\.(xml|ico|png|svg|jpg|gif|ttf|eot|woff|woff2)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+				use: ["file-loader"]
 			}
 		]
 	}
