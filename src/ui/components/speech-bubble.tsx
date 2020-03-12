@@ -26,7 +26,7 @@ const enum ArrowStyle {
 }
 const DefaultTextStyle = {
 	fontSize: "11px",
-	fontFamily: "Microsoft Sans Serif,sans",
+	fontFamily: `"Trueno", sans-serif`,
 	lineHeight: "12px"
 };
 
