@@ -37,7 +37,7 @@ declare global {
 			th: Styleable<HTMLTableCellElement>;
 		}
 
-		interface Element extends HTMLElement {}
+		interface ElementClass extends Component {}
 		interface IntrinsicClassAttributes<T> {
 			[_: string]: any;
 		}

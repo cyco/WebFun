@@ -8,10 +8,7 @@ export const Event = {
 	End: "end"
 };
 
-const FontSize = "11px";
-const LineHeight = "12px";
-const FontFamily = "Microsoft Sans Serif,sans";
-const Padding = "7px";
+const Padding = 7;
 const MaxLineCount = 5;
 const ArrowWidth = 16;
 const ScrollRepeatInterval = 100;
@@ -27,68 +24,41 @@ const enum ArrowStyle {
 	Horizontal = ArrowStyle.Left | ArrowStyle.Right,
 	Vertical = ArrowStyle.Top | ArrowStyle.Left
 }
+const DefaultTextStyle = {
+	fontSize: "11px",
+	fontFamily: "Microsoft Sans Serif,sans",
+	lineHeight: "12px"
+};
 
 class SpeechBubble extends Component {
-	public static readonly tagName = "wf-speech-bubble";
 	public static readonly Event = Event;
+	public static readonly tagName = "wf-speech-bubble";
 	public static readonly observedAttributes = ["text"];
 
 	public onend: (e: CustomEvent) => void;
-	private _width: number = 170;
-	private _arrowStyle: number = ArrowStyle.Top;
-	private _upButton: Button;
-	private _downButton: Button;
-	private _endButton: Button;
-	private _text: HTMLElement;
-	private _keepScrolling: number;
+	private _width = 170;
+	private _arrowStyle = ArrowStyle.Top;
+	private _up = (<Button className="up" icon="caret-up" onmousedown={() => this.scrollUp()} />);
+	private _down = (<Button className="down" icon="caret-down" onmousedown={() => this.scrollDown()} />);
+	private _end = (<Button className="end" icon="circle" onclick={() => this.end()} />);
+	private _text: HTMLElement = (<div className="text" style={DefaultTextStyle} />);
+	private _keepScrolling: number = -1;
 
 	constructor() {
 		super();
 
-		this._text = document.createElement("div");
-		this._text.style.fontSize = FontSize;
-		this._text.style.fontFamily = FontFamily;
-		this._text.style.lineHeight = LineHeight;
-		this._text.classList.add("text");
-
-		const textContainer = document.createElement("div");
-		textContainer.classList.add("text-container");
+		const textContainer = <div className="text-container"></div>;
 		textContainer.appendChild(this._text);
-
-		this._upButton = this._buildButton("up", "caret-up");
-		this._upButton.onmousedown = () => {
-			this.scrollUp();
-
-			document.addEventListener("mouseup", () => clearTimeout(this._keepScrolling), {
-				capture: true,
-				passive: true,
-				once: true
-			});
-		};
-		this._downButton = this._buildButton("down", "caret-down");
-		this._downButton.onmousedown = () => {
-			this.scrollDown();
-
-			document.addEventListener("mouseup", () => clearTimeout(this._keepScrolling), {
-				capture: true,
-				passive: true,
-				once: true
-			});
-		};
-
-		this._endButton = this._buildButton("end", "circle");
-		this._endButton.onclick = () => this.end();
 	}
 
 	protected connectedCallback() {
 		super.connectedCallback();
 
-		this.style.setProperty("--font-family", FontFamily);
-		this.style.setProperty("--line-height", LineHeight);
+		this.style.setProperty("--font-family", DefaultTextStyle.fontFamily);
+		this.style.setProperty("--line-height", DefaultTextStyle.lineHeight);
 		this.style.setProperty("--current-line", "0");
 
 		this.style.width = this._width + "px";
-		this.style.position = "absolute";
 
 		this.appendChild(this._text.parentNode);
 
@@ -125,22 +95,15 @@ class SpeechBubble extends Component {
 		return new Point(parseInt(this.style.left), parseInt(this.style.top));
 	}
 
-	private _buildButton(className: string, icon: string): Button {
-		const button = document.createElement(Button.tagName) as Button;
-		button.classList.add(className);
-		button.icon = icon;
-		return button;
-	}
-
 	private _setupButtons() {
-		this._endButton.setAttribute("disabled", "");
-
-		const buttonBar = document.createElement("div");
-		buttonBar.classList.add("controls");
-		buttonBar.appendChild(this._upButton);
-		buttonBar.appendChild(this._downButton);
-		buttonBar.appendChild(this._endButton);
-		this.appendChild(buttonBar);
+		this._end.setAttribute("disabled", "");
+		this.appendChild(
+			<div className="controls">
+				{this._up}
+				{this._down}
+				{this._end}
+			</div>
+		);
 	}
 
 	private _setupBackground() {
@@ -182,13 +145,12 @@ class SpeechBubble extends Component {
 		const topArrowWidth = this._arrowStyle & ArrowStyle.Top ? ArrowWidth : 0;
 		const bottomArrowWidth = this._arrowStyle & ArrowStyle.Bottom ? ArrowWidth : 0;
 
-		const padding = parseInt(Padding);
-		this._text.parentElement.style.left = padding + leftArrowWidth + "px";
-		this._text.parentElement.style.top = padding + topArrowWidth + "px";
-		this._text.parentElement.style.bottom = padding + bottomArrowWidth + "px";
-		this._text.parentElement.style.right = 21 + padding + rightArrowWidth + "px";
+		this._text.parentElement.style.left = Padding + leftArrowWidth + "px";
+		this._text.parentElement.style.top = Padding + topArrowWidth + "px";
+		this._text.parentElement.style.bottom = Padding + bottomArrowWidth + "px";
+		this._text.parentElement.style.right = 21 + Padding + rightArrowWidth + "px";
 
-		this._endButton.parentElement.style.bottom = padding - 2 + bottomArrowWidth + "px";
+		this._end.parentElement.style.bottom = Padding - 2 + bottomArrowWidth + "px";
 	}
 
 	private _buildPath() {
@@ -239,11 +201,13 @@ class SpeechBubble extends Component {
 	public scrollDown() {
 		this._scrollBy(1);
 		this._keepScrolling = setTimeout(() => this.scrollDown(), ScrollRepeatInterval);
+		this.stopScrollingOnMouseUp();
 	}
 
 	public scrollUp() {
 		this._scrollBy(-1);
 		this._keepScrolling = setTimeout(() => this.scrollUp(), ScrollRepeatInterval);
+		this.stopScrollingOnMouseUp();
 	}
 
 	public end() {
@@ -251,6 +215,14 @@ class SpeechBubble extends Component {
 		this.remove();
 		this.dispatchEvent(new CustomEvent(SpeechBubble.Event.End));
 		if (this.onend) this.onend(new CustomEvent(SpeechBubble.Event.End));
+	}
+
+	private stopScrollingOnMouseUp() {
+		document.addEventListener("mouseup", () => clearTimeout(this._keepScrolling), {
+			capture: true,
+			passive: true,
+			once: true
+		});
 	}
 
 	public show(container: HTMLElement = document.body) {
@@ -275,12 +247,13 @@ class SpeechBubble extends Component {
 	private _calculateHeight() {
 		const lineCount = this._calculateNumberOfLines(false);
 
-		const padding = parseInt(Padding);
-		return padding + lineCount * parseInt(LineHeight) + padding;
+		return Padding + lineCount * parseInt(DefaultTextStyle.lineHeight) + Padding;
 	}
 
 	private _calculateNumberOfLines(skipClipping: boolean): number {
-		const lineCount = Math.ceil(this._text.getBoundingClientRect().height / parseInt(LineHeight));
+		const lineCount = Math.ceil(
+			this._text.getBoundingClientRect().height / parseInt(DefaultTextStyle.lineHeight)
+		);
 		const line = Math.max(1, lineCount);
 
 		if (skipClipping) return line;
@@ -290,11 +263,11 @@ class SpeechBubble extends Component {
 	private _udpateButtonVisibility() {
 		const canScroll = this._calculateNumberOfLines(true) > 5;
 		if (!canScroll) {
-			this._upButton.setAttribute("hidden", "");
-			this._downButton.setAttribute("hidden", "");
+			this._up.setAttribute("hidden", "");
+			this._down.setAttribute("hidden", "");
 		} else {
-			this._upButton.removeAttribute("hidden");
-			this._downButton.removeAttribute("hidden");
+			this._up.removeAttribute("hidden");
+			this._down.removeAttribute("hidden");
 		}
 	}
 
@@ -302,16 +275,16 @@ class SpeechBubble extends Component {
 		const currentLine = parseInt(this._text.style.getPropertyValue("--current-line"));
 		const maxLine = this._calculateNumberOfLines(true) - MaxLineCount;
 
-		this._upButton.removeAttribute("disabled");
-		this._downButton.removeAttribute("disabled");
+		this._up.removeAttribute("disabled");
+		this._down.removeAttribute("disabled");
 
 		if (currentLine <= 0) {
-			this._upButton.setAttribute("disabled", "");
+			this._up.setAttribute("disabled", "");
 		}
 
 		if (currentLine >= maxLine) {
-			this._downButton.setAttribute("disabled", "");
-			this._endButton.removeAttribute("disabled");
+			this._down.setAttribute("disabled", "");
+			this._end.removeAttribute("disabled");
 		}
 	}
 }

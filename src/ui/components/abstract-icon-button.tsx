@@ -4,14 +4,8 @@ import Component from "../component";
 
 abstract class AbstractIconButton extends Component {
 	public static observedAttributes = ["icon"];
-	private _icon: HTMLElement;
+	private _icon: HTMLElement = (<i></i>);
 	private _iconName: string;
-
-	constructor() {
-		super();
-
-		this._icon = document.createElement("i");
-	}
 
 	get icon() {
 		return this._iconName;
