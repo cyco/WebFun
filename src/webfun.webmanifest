@@ -1,0 +1,9 @@
+{
+	"name": "WebFun",
+	"short_name": "WebFun",
+	"start_url": ".",
+	"display": "standalone",
+	"background_color": "#fff",
+	"description": "A re-implementation of the Desktop Adventures game engine.",
+	"icons": []
+}
