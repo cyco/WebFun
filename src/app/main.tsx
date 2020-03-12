@@ -6,18 +6,16 @@ import "../_style/global.scss";
 import * as AppComponents from "./ui";
 import * as WindowComponents from "./windows";
 
-import { ComponentJSXRenderer, WindowManager } from "src/ui";
+import { ComponentJSXRenderer } from "src/ui";
 import { ComponentRegistry, Components } from "src/ui";
 
 import GameController from "./game-controller";
 import Settings from "src/settings";
 import { Yoda } from "src/engine/type";
 import { initialize as initializeDebug } from "src/debug";
-import { main as RunGameDataEditor } from "src/editor";
 import "./bootstrap-components.ts";
 
 import * as WebFunLib from "../";
-import { FullscreenLock } from "./ui";
 
 declare global {
 	var WebFun: typeof WebFunLib;
