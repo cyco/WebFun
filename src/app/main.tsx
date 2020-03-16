@@ -13,12 +13,6 @@ import { Yoda } from "src/engine/type";
 import initializeDebug from "src/debug/initialize";
 import "./bootstrap-components.ts";
 
-import * as WebFunLib from "../";
-
-declare global {
-	var WebFun: typeof WebFunLib;
-}
-
 const endPreload = () => {
 	const container = document.getElementById("webfun-preload");
 	if (container) container.remove();
@@ -26,6 +20,7 @@ const endPreload = () => {
 
 const main = async () => {
 	localStorage.clear();
+	window.WebFun = window.WebFun || { JSX: null };
 	window.WebFun.JSX = new ComponentJSXRenderer();
 	ComponentRegistry.sharedRegistry.registerComponents(Components);
 	ComponentRegistry.sharedRegistry.registerComponents(AppComponents);
@@ -45,5 +40,4 @@ const main = async () => {
 	}
 };
 
-window.WebFun = WebFunLib as any;
 window.addEventListener("load", main, { once: true });
