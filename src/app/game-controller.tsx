@@ -1,11 +1,4 @@
-import {
-	Ammo as AmmoComponet,
-	Health as HealthComponent,
-	Inventory as InventoryComponent,
-	LoadingView,
-	SceneView,
-	Weapon as WeaponComponent
-} from "./ui";
+import { Inventory as InventoryComponent, LoadingView, SceneView } from "./ui";
 import { Char, Tile, Zone, Sound, Puzzle } from "src/engine/objects";
 import {
 	ColorPalette,
@@ -19,9 +12,9 @@ import {
 	PaletteAnimation
 } from "src/engine";
 import { ConfirmationResult, ModalConfirm } from "src/ux";
-import { EventTarget, Point, Rectangle, Size, rand, srand } from "src/util";
+import { EventTarget, rand, srand } from "src/util";
 import { FilePicker, WindowManager } from "src/ui";
-import { LoseScene, ZoneScene, MapScene } from "src/engine/scenes";
+import { ZoneScene } from "src/engine/scenes";
 import { MainMenu, MainWindow } from "./windows";
 import { Planet, WorldSize } from "src/engine/types";
 import GameState from "../engine/game-state";
@@ -32,13 +25,12 @@ import { DesktopInputManager, TouchInputManager } from "./input";
 import Loader from "./loader";
 import ResourceManager from "./resource-manager";
 import CursorManager from "./input/cursor-manager";
-import { Channel } from "src/engine/audio";
 import { Mixer } from "./audio";
-import { Yoda } from "src/engine/type";
 import DebugInfoScene from "src/debug/debug-info-scene";
 import { OnscreenPad, OnscreenButton } from "./ui";
 import { random, floor } from "src/std/math";
 import * as SmartPhone from "detect-mobile-browser";
+import GameEventHandler from "./game-event-handler";
 
 export const Event = {
 	DidLoadData: "didLoadData"
@@ -58,6 +50,7 @@ class GameController extends EventTarget implements EventListenerObject {
 	private _window: MainWindow;
 	private _sceneView: SceneView = (<SceneView />) as SceneView;
 	private _engine: Engine;
+	private _eventHandler = new GameEventHandler();
 
 	constructor(type: GameType, paths: PathConfiguration) {
 		super();
@@ -84,114 +77,7 @@ class GameController extends EventTarget implements EventListenerObject {
 	}
 
 	handleEvent(evt: CustomEvent): void {
-		const engine = this.engine;
-		switch (evt.type) {
-			case Hero.Event.HealthChanged: {
-				if (engine.hero.health > 0) {
-					return;
-				}
-
-				if (engine.inventory.contains(Yoda.tileIDs.SpiritHeart)) {
-					engine.hero.health = Hero.MaxHealth;
-					engine.inventory.removeItem(Yoda.tileIDs.SpiritHeart);
-					const flourish = engine.assets.get(Sound, Yoda.sounds.Flourish);
-					engine.mixer.play(flourish, Channel.Effect);
-					return;
-				}
-
-				this._engine.gameState = GameState.Lost;
-				this._engine.sceneManager.pushScene(new LoseScene());
-				return;
-			}
-			case InventoryComponent.Events.ItemActivated: {
-				if (engine.gameState !== GameState.Running) {
-					evt.preventDefault();
-					return;
-				}
-
-				if (!(engine.sceneManager.currentScene instanceof ZoneScene)) {
-					engine.sceneManager.popScene();
-					return;
-				}
-
-				const item = evt.detail.item;
-				if (!item) return;
-
-				if (item.id === Yoda.tileIDs.Locator) {
-					this.engine.sceneManager.pushScene(new MapScene());
-					return;
-				}
-
-				engine.metronome.stop();
-				return;
-			}
-
-			case InventoryComponent.Events.ItemPlaced: {
-				if (engine.gameState !== GameState.Running) {
-					evt.preventDefault();
-					return;
-				}
-
-				const location = evt.detail.location as Point;
-				const item = evt.detail.item as Tile;
-
-				const targetElement = document.elementFromPoint(location.x, location.y);
-				const element =
-					targetElement &&
-					targetElement.closest(
-						[
-							AmmoComponet.tagName,
-							WeaponComponent.tagName,
-							HealthComponent.tagName,
-							SceneView.tagName
-						].join(",")
-					);
-
-				let used = false;
-				if (element instanceof HealthComponent && item.isEdible) {
-					console.log("consume");
-					this.engine.consume(item);
-					used = true;
-				}
-
-				if (
-					item.isWeapon &&
-					(element instanceof AmmoComponet || element instanceof WeaponComponent)
-				) {
-					console.log("equip");
-					this.engine.equip(item);
-					used = true;
-				}
-
-				if (!used) {
-					const { left, top } = this._sceneView.getBoundingClientRect();
-					const pointInView = location
-						.bySubtracting(left, top)
-						.dividedBy(new Size(Tile.WIDTH, Tile.HEIGHT))
-						.byFlooring();
-
-					if (!new Rectangle(new Point(0, 0), new Size(9, 9)).contains(pointInView)) {
-						engine.metronome.start();
-						return;
-					}
-
-					const pointInZone = pointInView.bySubtracting(
-						this.engine.camera.offset.x,
-						this.engine.camera.offset.y
-					);
-					pointInZone.z = null;
-					if (!new Rectangle(new Point(0, 0), this.engine.currentZone.size).contains(pointInZone)) {
-						engine.metronome.start();
-						return;
-					}
-
-					this.engine.inputManager.placedTile = item;
-					this.engine.inputManager.placedTileLocation = pointInZone;
-				}
-
-				engine.metronome.start();
-			}
-		}
+		this._eventHandler.handleEvent(this.engine, this._sceneView, evt);
 	}
 
 	private _buildInterface(paths: any): Partial<Interface> {
