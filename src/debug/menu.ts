@@ -1,12 +1,7 @@
-import { TestCreatorWindow } from "./components";
 import { MenuItemSeparator, MenuItemState, WindowManager, FilePicker } from "src/ui";
 
 import GameController from "src/app/game-controller";
-import { main as RunGameDataEditor } from "src/editor";
-import { main as RunSaveGameEditor } from "src/save-game-editor";
-import ScriptDebugger from "./script-debugger";
 import Settings from "src/settings";
-import { Parser } from "./automation/test";
 
 const SettingsItem = (label: string, key: keyof typeof Settings, settings: typeof Settings) => ({
 	title: label,
@@ -33,8 +28,11 @@ export default (gameController: GameController) => ({
 		SettingsItem("Skip Transitions", "skipTransitions", gameController.settings),
 		SettingsItem("Automatically pick up items", "pickupItemsAutomatically", gameController.settings),
 		MenuItemSeparator,
-		SettingsAction("Create Test", () => {
-			const simulator = document.createElement(TestCreatorWindow.tagName) as TestCreatorWindow;
+		SettingsAction("Create Test", async () => {
+			const TestCreatorWindow = (await import("./components")).TestCreatorWindow;
+			const simulator = document.createElement(TestCreatorWindow.tagName) as InstanceType<
+				typeof TestCreatorWindow
+			>;
 			simulator.gameController = gameController;
 			simulator.state = localStorage.prefixedWith("simulator");
 			WindowManager.defaultManager.showWindow(simulator);
@@ -44,9 +42,14 @@ export default (gameController: GameController) => ({
 			if (!file) return;
 
 			const contents = await file.readAsText();
+			const Parser = (await import("./automation/test")).Parser;
 			const testCases = Parser.Parse(file.name, contents);
+
+			const TestCreatorWindow = (await import("./components")).TestCreatorWindow;
 			testCases.forEach(testCase => {
-				const simulator = document.createElement(TestCreatorWindow.tagName) as TestCreatorWindow;
+				const simulator = document.createElement(TestCreatorWindow.tagName) as InstanceType<
+					typeof TestCreatorWindow
+				>;
 				simulator.gameController = gameController;
 				simulator.state = localStorage.prefixedWith("simulator");
 				simulator.testCase = testCase;
@@ -54,13 +57,15 @@ export default (gameController: GameController) => ({
 			});
 		}),
 		MenuItemSeparator,
-		SettingsAction("Debug Scripts", () => ScriptDebugger.sharedDebugger.show()),
+		SettingsAction("Debug Scripts", async () =>
+			(await import("./script-debugger")).default.sharedDebugger.show()
+		),
 		SettingsAction(
 			"Edit Current Data",
-			() => RunGameDataEditor(WindowManager.defaultManager, gameController.data),
+			async () => (await import("src/editor")).main(WindowManager.defaultManager, gameController.data),
 			true
 		),
-		SettingsAction("Edit Game Data...", RunGameDataEditor, true),
-		SettingsAction("Edit Save Game...", RunSaveGameEditor, true)
+		SettingsAction("Edit Game Data...", async () => (await import("src/editor")).main(), true),
+		SettingsAction("Edit Save Game...", async () => (await import("src/save-game-editor")).main(), true)
 	]
 });

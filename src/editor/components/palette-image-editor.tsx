@@ -2,9 +2,9 @@ import "./palette-image-editor.scss";
 
 import { Point, Rectangle, Size } from "src/util";
 
-import PaletteView from "./palette-view";
+import { AbstractPaletteView } from "src/app/ui";
 
-class PaletteImageEditor extends PaletteView {
+class PaletteImageEditor extends AbstractPaletteView {
 	public static readonly tagName = "wf-editor-palette-image-editor";
 	public colorIndex: number = 0;
 

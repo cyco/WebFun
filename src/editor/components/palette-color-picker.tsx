@@ -2,13 +2,13 @@ import "./palette-color-picker.scss";
 
 import { Color, Point, Rectangle, Size } from "src/util";
 
-import PaletteView from "./palette-view";
+import { AbstractPaletteView } from "src/app/ui";
 import { floor } from "src/std/math";
 
-class PaletteColorPicker extends PaletteView implements EventListenerObject {
+class PaletteColorPicker extends AbstractPaletteView implements EventListenerObject {
 	public static readonly tagName = "wf-editor-palette-color-picker";
 	public readonly image = new Uint8Array(16 * 16).map((_, idx) => idx);
-	private highlighter: HTMLElement = <div className="highlighter" />;
+	private highlighter: HTMLElement = (<div className="highlighter" />);
 	private _colorIndex: number = 0;
 
 	protected connectedCallback() {

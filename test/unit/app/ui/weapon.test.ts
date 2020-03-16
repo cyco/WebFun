@@ -1,6 +1,6 @@
 import Weapon from "src/app/ui/weapon";
 import { Char } from "src/engine/objects";
-import { PaletteView } from "src/editor/components";
+import { PaletteView } from "src/app/ui";
 
 describeComponent(Weapon, () => {
 	let subject: Weapon = null;

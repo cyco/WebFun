@@ -12,7 +12,7 @@ import { ComponentRegistry, Components } from "src/ui";
 import GameController from "./game-controller";
 import Settings from "src/settings";
 import { Yoda } from "src/engine/type";
-import { initialize as initializeDebug } from "src/debug";
+import initializeDebug from "src/debug/initialize";
 import "./bootstrap-components.ts";
 
 import * as WebFunLib from "../";
@@ -27,6 +27,7 @@ const endPreload = () => {
 };
 
 const main = async () => {
+	localStorage.clear();
 	window.WebFun.JSX = new ComponentJSXRenderer();
 	ComponentRegistry.sharedRegistry.registerComponents(Components);
 	ComponentRegistry.sharedRegistry.registerComponents(AppComponents);
@@ -40,8 +41,9 @@ const main = async () => {
 		document.body.style.height = "120vh";
 		setTimeout(() => (window.document.scrollingElement.scrollTop = 0));
 	}
+
 	if (Settings.debug) {
-		initializeDebug(gameController);
+		await initializeDebug(gameController);
 	}
 };
 

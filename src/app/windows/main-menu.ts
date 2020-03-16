@@ -5,10 +5,10 @@ import GameController from "../game-controller";
 import GameSpeedWindow from "./game-speed-window";
 import Settings from "src/settings";
 import StatisticsWindow from "./statistics-window";
-import { Window } from "src/ui/components";
+import { Window as WindowComponent } from "src/ui/components";
 import { WindowModalSession } from "src/ux";
 import WorldSizeWindow from "./world-size-window";
-import { buildMenu as buildDebugMenu } from "src/debug";
+import buildDebugMenu from "src/debug/menu";
 import { document } from "src/std/dom";
 import { GameState } from "src/engine";
 import { PauseScene } from "src/engine/scenes";
@@ -144,11 +144,11 @@ class MainMenu extends Menu {
 	}
 
 	private _runModalSessionForWindowComponent(tagName: string) {
-		const window = document.createElement(tagName) as Window;
+		const window = document.createElement(tagName) as WindowComponent;
 		this._runModalSession(window);
 	}
 
-	private _runModalSession(window: Window) {
+	private _runModalSession(window: WindowComponent) {
 		const session = new WindowModalSession(window);
 		window.onclose = () => session.end(0);
 		session.run();

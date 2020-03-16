@@ -1,7 +1,7 @@
 @import "pixelated.scss";
 @import "border.scss";
 
-wf-palette-view {
+wf-abstract-palette-view {
 	display: block;
 	@include inset-border(1px);
 

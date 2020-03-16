@@ -1,4 +1,4 @@
-const enum InputMask {
+enum InputMask {
 	None = 0,
 
 	Up = 1 << 0,

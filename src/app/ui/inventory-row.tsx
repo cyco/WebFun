@@ -1,21 +1,21 @@
 import "./inventory-row.scss";
 
 import { Cell } from "src/ui/components";
-import { PaletteView } from "src/editor/components";
 import { Size } from "src/util";
 import { Tile } from "src/engine/objects";
+import { PaletteView } from "src/app/ui";
 
 const EmptyImageData = new Uint8Array(Tile.WIDTH * Tile.HEIGHT);
 
 class InventoryRow extends Cell<Tile> {
 	public static readonly tagName = "wf-inventory-row";
-	private _label: HTMLSpanElement = <span />;
+	private _label: HTMLSpanElement = (<span />);
 	private _tile: Tile = null;
 	private _pickedUp: boolean = false;
 	private _paletteView: PaletteView = (
 		<PaletteView size={new Size(Tile.WIDTH, Tile.HEIGHT)} />
 	) as PaletteView;
-	private _iconBorder: HTMLSpanElement = <span />;
+	private _iconBorder: HTMLSpanElement = (<span />);
 
 	protected connectedCallback() {
 		super.connectedCallback();

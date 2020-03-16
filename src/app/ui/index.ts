@@ -1,5 +1,6 @@
 import SettingsWindow from "./settings-window";
 import AbstractHealth from "./abstract-health";
+import AbstractPaletteView from "./abstract-palette-view";
 import Ammo from "./ammo";
 import Health from "./health";
 import Inventory from "./inventory";
@@ -11,9 +12,11 @@ import SceneView from "./scene-view";
 import OnscreenPad from "./onscreen-pad";
 import OnscreenButton from "./onscreen-button";
 import FullscreenLock from "./fullscreen-lock";
+import PaletteView from "./palette-view";
 
 export {
 	AbstractHealth,
+	AbstractPaletteView,
 	Ammo,
 	Health,
 	Inventory,
@@ -23,6 +26,7 @@ export {
 	SceneView,
 	SettingsWindow,
 	Weapon,
+	PaletteView,
 	OnscreenButton,
 	OnscreenPad,
 	FullscreenLock

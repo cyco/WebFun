@@ -1,0 +1,5 @@
+@import "./abstract-palette-view.scss";
+
+wf-palette-view {
+	@extend wf-abstract-palette-view;
+}

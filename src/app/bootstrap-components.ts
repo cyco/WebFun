@@ -3,6 +3,7 @@ import { Components } from "src/ui";
 
 import * as AppComponents from "./ui";
 import * as WindowComponents from "./windows";
+import * as UIComponents from "src/ui/components";
 
 declare global {
 	interface Window {
@@ -15,7 +16,8 @@ type ComponentDefinitions<Bundle> = {
 };
 type CustomElements = ComponentDefinitions<typeof Components> &
 	ComponentDefinitions<typeof AppComponents> &
-	ComponentDefinitions<typeof WindowComponents>;
+	ComponentDefinitions<typeof WindowComponents> &
+	ComponentDefinitions<typeof UIComponents>;
 
 declare global {
 	interface Document {

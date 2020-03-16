@@ -1,20 +1,19 @@
-import "./palette-view.scss";
+import "./abstract-palette-view.scss";
 
 import { Point, Size } from "src/util";
 
 import { ColorPalette } from "src/engine";
-import { Component } from "src/ui";
 import { drawImage } from "src/app/rendering";
+import { Component } from "src/ui";
 
-class PaletteView extends Component {
-	public static tagName = "wf-palette-view";
+abstract class PaletteView extends Component {
 	public static readonly observedAttributes: string[] = [];
 
 	private _palette: ColorPalette;
 	private _image: Uint8Array;
 	private _size: Size;
 
-	protected canvas: HTMLCanvasElement = <canvas /> as HTMLCanvasElement;
+	protected canvas: HTMLCanvasElement = (<canvas />) as HTMLCanvasElement;
 	private ctx: CanvasRenderingContext2D = this.canvas.getContext("2d");
 	private imageData: ImageData;
 

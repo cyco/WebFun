@@ -2,7 +2,7 @@ import "./tile.scss";
 
 import { ColorPalette } from "src/engine/rendering";
 import { Component } from "src/ui";
-import { PaletteView } from "src/editor/components";
+import { PaletteView } from "src/app/ui";
 import { Size } from "src/util";
 import { Tile } from "src/engine/objects";
 

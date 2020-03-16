@@ -15,8 +15,9 @@ module.exports = {
 	},
 	mode: "production",
 	output: {
+		path: Paths.buildRoot,
 		filename: "[name].js",
-		path: Paths.buildRoot
+		chunkFilename: "[name].chunk.js"
 	},
 	optimization: {
 		minimize: true,
@@ -52,6 +53,17 @@ module.exports = {
 	],
 	module: {
 		rules: [
+			{
+				test: /\.jsx?$/,
+				use: [
+					{
+						loader: "babel-loader",
+						options: {
+							cacheDirectory: Path.resolve(Paths.configRoot, ".babel")
+						}
+					}
+				]
+			},
 			{
 				test: /\.tsx?$/,
 				exclude: /node_modules/,

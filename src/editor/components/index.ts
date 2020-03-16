@@ -1,5 +1,4 @@
 import SoundInspectorCell from "./sound-inspector-cell";
-import PaletteView from "./palette-view";
 import PaletteImageEditor from "./palette-image-editor";
 import PaletteColorPicker from "./palette-color-picker";
 import ColorPicker from "./color-picker";
@@ -48,7 +47,6 @@ export {
 	MonsterLayerMonster,
 	PaletteColorPicker,
 	PaletteImageEditor,
-	PaletteView,
 	PopoutTilePicker,
 	PopoverCharacterPicker,
 	PopoverTilePicker,

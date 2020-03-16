@@ -19,8 +19,8 @@ export const Events = {
 const MinRows = 7;
 
 class InventoryComponent extends AbstractList<Tile> {
-	public static Events = Events;
 	public static readonly tagName = "wf-inventory";
+	public static Events = Events;
 	public cell = (
 		<InventoryRow onclick={(e: MouseEvent) => this.rowClicked(e.currentTarget as InventoryRow)} />
 	) as InventoryRow;

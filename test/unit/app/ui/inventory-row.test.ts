@@ -1,6 +1,6 @@
 import InventoryRow from "src/app/ui/inventory-row";
 import { Tile } from "src/engine/objects";
-import { PaletteView } from "src/editor/components";
+import { PaletteView } from "src/app/ui";
 import { ColorPalette } from "src/engine";
 
 describeComponent(InventoryRow, () => {
