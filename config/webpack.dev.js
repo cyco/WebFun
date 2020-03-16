@@ -39,7 +39,13 @@ module.exports = merge(BaseConfig, {
 	plugins: [
 		new HtmlWebpackPlugin({
 			template: Path.resolve(Paths.sourceRoot, "./app/index.html"),
-			title: "WebFun Development"
+			title: "WebFun Development",
+			meta: {
+				viewport: "width=device-width, user-scalable=no, viewport-fit=cover",
+				"msapplication-TileColor": "#da532c",
+				"theme-color": "#da532c",
+				"apple-mobile-web-app-capable": "yes"
+			}
 		}),
 		new Dotenv({ silent: true })
 	],
