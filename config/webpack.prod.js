@@ -7,6 +7,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
 module.exports = {
 	entry: {
@@ -31,6 +32,7 @@ module.exports = {
 	cache: true,
 	stats: "errors-only",
 	plugins: [
+		new BundleAnalyzerPlugin({ analyzerMode: "static" }),
 		new CleanWebpackPlugin({ root: Paths.buildRoot }),
 		new HtmlWebpackPlugin({
 			template: Path.resolve(Paths.sourceRoot, "./app/index.html"),
