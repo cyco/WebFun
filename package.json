@@ -37,6 +37,16 @@
     "plugins": [
       "@babel/transform-regenerator",
       [
+        "@babel/plugin-transform-runtime",
+        {
+          "absoluteRuntime": false,
+          "corejs": 3,
+          "helpers": true,
+          "regenerator": true,
+          "useESModules": false
+        }
+      ],
+      [
         "@babel/plugin-transform-react-jsx",
         {
           "pragma": "WebFun.JSX.render"
@@ -45,7 +55,6 @@
     ]
   },
   "dependencies": {
-    "@babel/runtime": "^7.8.7",
     "core-js": "^3.6.4",
     "detect-mobile-browser": "^5.0.0",
     "font-awesome": "^4.7.0",
