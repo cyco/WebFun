@@ -98,6 +98,7 @@ class MainWindow extends AbstractWindow {
 			hero.addEventListener(Hero.Event.HealthChanged, this._handlers[Hero.Event.HealthChanged]);
 			hero.addEventListener(Hero.Event.WeaponChanged, this._handlers[Engine.Event.WeaponChanged]);
 			hero.addEventListener(Hero.Event.AmmoChanged, this._handlers[Engine.Event.AmmoChanged]);
+
 			this._handlers.each((event: any, handler: any) => this._engine.addEventListener(event, handler));
 			this._engine.inventory.addEventListener(
 				Inventory.Event.ItemsChanged,
@@ -139,7 +140,6 @@ class MainWindow extends AbstractWindow {
 	}
 
 	private toggleMenu(e: CustomEvent) {
-		console.log("toggleMenu", e);
 		const button = e.target as Button;
 		button.active = !button.active;
 	}

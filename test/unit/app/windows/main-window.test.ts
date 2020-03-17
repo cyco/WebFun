@@ -127,6 +127,11 @@ describeComponent(MainWindow, () => {
 
 		class MockEngine extends EventTarget {
 			type = { getMaxAmmo: () => 10 };
+			inventory = { addEventListener: jasmine.createSpy(), removeEventListener: jasmine.createSpy() };
+			sceneManager = {
+				addEventListener: jasmine.createSpy(),
+				removeEventListener: jasmine.createSpy()
+			};
 
 			triggerHealthChange(value: number) {
 				hero.health = value;

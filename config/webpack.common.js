@@ -18,26 +18,31 @@ module.exports = {
 	module: {
 		rules: [
 			{
-				test: /\.jsx?$/,
-				loader: "babel-loader",
-				options: {
-					cacheDirectory: Path.resolve(Paths.configRoot, ".babel")
-				}
-			},
-			{
 				test: /\.tsx?$/,
 				exclude: /node_modules|(src\/(debug|editor|save-game-editor))/,
 				use: [
 					{
 						loader: "babel-loader",
 						options: {
-							cacheDirectory: Path.resolve(Paths.configRoot, ".babel")
+							cacheDirectory: Path.resolve(Paths.configRoot, ".babel"),
+							presets: [
+								[
+									"@babel/preset-env",
+									{
+										targets: {
+											node: "current",
+											browsers: ["last 1 version"]
+										},
+										modules: "commonjs"
+									}
+								]
+							]
 						}
 					},
 					{
 						loader: "ts-loader",
 						options: {
-							configFile: Path.resolve(Paths.projectRoot, "tsconfig.json")
+							configFile: Path.resolve(Paths.projectRoot, "tsconfig.test.json")
 						}
 					}
 				]
@@ -50,13 +55,25 @@ module.exports = {
 					{
 						loader: "babel-loader",
 						options: {
-							cacheDirectory: Path.resolve(Paths.configRoot, ".babel")
+							cacheDirectory: Path.resolve(Paths.configRoot, ".babel"),
+							presets: [
+								[
+									"@babel/preset-env",
+									{
+										targets: {
+											node: "current",
+											browsers: ["last 1 version"]
+										},
+										modules: "commonjs"
+									}
+								]
+							]
 						}
 					},
 					{
 						loader: "ts-loader",
 						options: {
-							configFile: Path.resolve(Paths.projectRoot, "tsconfig.json"),
+							configFile: Path.resolve(Paths.projectRoot, "tsconfig.test.json"),
 							transpileOnly: true
 						}
 					}
