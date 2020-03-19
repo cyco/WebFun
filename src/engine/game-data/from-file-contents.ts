@@ -38,9 +38,9 @@ const makeCharacter = (raw: RawCharacter, idx: number, data: GameData) => {
 	char.id = idx;
 	char.name = raw.name;
 	char.frames = [
-		new Char.Frame(Array.from(raw.frame1).map((i: number) => data.tiles[i] || null)),
-		new Char.Frame(Array.from(raw.frame2).map((i: number) => data.tiles[i] || null)),
-		new Char.Frame(Array.from(raw.frame3).map((i: number) => data.tiles[i] || null))
+		new Char.Frame(raw.frame1.mapArray((i: number) => data.tiles[i] || null)),
+		new Char.Frame(raw.frame2.mapArray((i: number) => data.tiles[i] || null)),
+		new Char.Frame(raw.frame3.mapArray((i: number) => data.tiles[i] || null))
 	];
 	char.type = Char.Type.fromNumber(raw.type);
 	char.movementType = Char.MovementType.fromNumber(raw.movementType);
@@ -137,14 +137,17 @@ const makeNPC = (raw: RawMonster, idx: number, data: GameData) => {
 	npc.dropsLoot = raw.dropsLoot;
 	npc.waypoints = [];
 
-	const path = Array.from(raw.waypoints);
-	if (path.some(i => i !== -1)) {
-		npc.waypoints = [
-			new Point(path[0], path[1]),
-			new Point(path[2], path[3]),
-			new Point(path[4], path[5]),
-			new Point(path[6], path[7])
-		];
+	const rawWaypoints = raw.waypoints;
+	const waypoints: Point[] = [];
+	let foundAWaypoint = false;
+	for (let i = 0; i < 8; i += 2) {
+		const x = rawWaypoints[i];
+		const y = rawWaypoints[i + 1];
+		foundAWaypoint = foundAWaypoint || x !== -1 || y !== -1;
+		waypoints.push(new Point(x, y));
+	}
+	if (foundAWaypoint) {
+		npc.waypoints = waypoints;
 	}
 
 	return npc;
@@ -161,10 +164,10 @@ const makeZone = (raw: RawZone, idx: number, data: GameData) => {
 	zone.tileIDs = raw.tileIDs.slice();
 	zone.hotspots = raw.hotspots.map((d: any, idx: number) => makeHotspot(d, idx, data));
 	zone.monsters = raw.monsters.map((d: any, idx: number) => makeNPC(d, idx, data));
-	zone.goalItems = Array.from(raw.goalItemIDs).map((id: number) => data.tiles[id]);
-	zone.requiredItems = Array.from(raw.requiredItemIDs).map((id: number) => data.tiles[id]);
-	zone.providedItems = Array.from(raw.providedItemIDs).map((id: number) => data.tiles[id]);
-	zone.npcs = Array.from(raw.npcIDs).map((id: number) => data.tiles[id]);
+	zone.goalItems = raw.goalItemIDs.mapArray((id: number) => data.tiles[id]);
+	zone.requiredItems = raw.requiredItemIDs.mapArray((id: number) => data.tiles[id]);
+	zone.providedItems = raw.providedItemIDs.mapArray((id: number) => data.tiles[id]);
+	zone.npcs = raw.npcIDs.mapArray((id: number) => data.tiles[id]);
 	zone.izaxUnknown = raw.unknown;
 	zone.izx4Unknown = raw.unknown;
 

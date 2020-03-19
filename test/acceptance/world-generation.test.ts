@@ -5,7 +5,7 @@ import { GameData, AssetManager, Story } from "src/engine";
 import { Planet, WorldSize } from "../../src/engine/types";
 import Worlds from "test/fixtures/worlds.txt";
 import { Yoda } from "src/engine/type";
-import { Tile, Zone, Puzzle, Char, Sound } from "src/engine/objects";
+import { Tile, Zone, Puzzle } from "src/engine/objects";
 import Sector from "src/engine/sector";
 import { WorldGenerationError } from "src/engine/generation";
 import { floor } from "src/std/math";
@@ -178,8 +178,6 @@ function buildAssetManagerFromGameData() {
 	assets.populate(Zone, data.zones);
 	assets.populate(Tile, data.tiles);
 	assets.populate(Puzzle, data.puzzles);
-	assets.populate(Char, data.characters);
-	assets.populate(Sound, data.sounds);
 
 	return assets;
 }

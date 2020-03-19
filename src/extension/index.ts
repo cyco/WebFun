@@ -16,27 +16,35 @@ import * as RegExp from "./regexp";
 import * as Set from "./set";
 import * as Storage from "./storage";
 import * as String from "./string";
+import * as Uint32Array from "./uint32-array";
 import * as Uint16Array from "./uint16-array";
 import * as Uint8Array from "./uint8-array";
+import * as Int32Array from "./int32-array";
+import * as Int16Array from "./int16-array";
+import * as Int8Array from "./int8-array";
 
 export {
-	File,
-	Set,
 	Array,
 	ArrayBuffer,
 	Element,
+	File,
+	HTMLCollection,
+	HTMLImageElement,
+	HTMLSelectElement,
 	Image,
+	ImageData,
+	Int16Array,
+	Int32Array,
+	Int8Array,
+	MouseEvent,
 	NodeList,
 	Number,
 	Object_,
+	RegExp,
+	Set,
 	Storage,
 	String,
 	Uint16Array,
-	Uint8Array,
-	HTMLCollection,
-	HTMLSelectElement,
-	HTMLImageElement,
-	RegExp,
-	MouseEvent,
-	ImageData
+	Uint32Array,
+	Uint8Array
 };

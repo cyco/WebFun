@@ -1,6 +1,6 @@
 import { HorizontalPointRange, Point, PointRange, VerticalPointRange, rand } from "src/util";
 
-import Map from "./map";
+import WorldMap from "./map";
 import SectorType from "./sector-type";
 
 const enum Island {
@@ -16,9 +16,9 @@ interface Run {
 }
 
 class IslandBuilder {
-	private typeMap: Map;
+	private typeMap: WorldMap;
 
-	constructor(world: Map) {
+	constructor(world: WorldMap) {
 		this.typeMap = world;
 	}
 

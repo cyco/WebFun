@@ -6,7 +6,7 @@ import { and, not } from "src/util/functional";
 
 import AssetManager, { NullIfMissing } from "src/engine/asset-manager";
 import GetDistanceToCenter from "./distance-to-center";
-import Map from "./map";
+import WorldMap from "./map";
 import MapGenerator from "./map-generator";
 import Quest from "./quest";
 import World from "src/engine/world";
@@ -46,6 +46,8 @@ class WorldGenerator {
 	private somethingWithTeleporters: number = -1;
 	private puzzlesCanBeReused: number = 0;
 	private usedAlternateStrain: boolean = false;
+	private _zones: Zone[];
+	private _zonesByType: Map<Zone.Type, Zone[]>;
 
 	constructor(size: WorldSize, planet: Planet, assets: AssetManager) {
 		this._size = size;
@@ -56,6 +58,9 @@ class WorldGenerator {
 	public generate(seed: number, gamesWon: number = 0): boolean {
 		this._seed = seed;
 		srand(this._seed);
+
+		this._zones = this._assets.getFiltered(Zone, z => z.planet === this._planet);
+		this._zonesByType = new Map();
 
 		const mapGenerator = (this.mapGenerator = new MapGenerator());
 		mapGenerator.generate(-1, this._size);
@@ -192,8 +197,8 @@ class WorldGenerator {
 	}
 
 	private loopWorld(
-		map: Map,
-		callback: (v: SectorType, x: number, y: number, id: number, map: Map) => void
+		map: WorldMap,
+		callback: (v: SectorType, x: number, y: number, id: number, map: WorldMap) => void
 	): void {
 		for (let y = 0; y < 10; y++) {
 			for (let x = 0; x < 10; x++) {
@@ -219,7 +224,7 @@ class WorldGenerator {
 		}
 	}
 
-	private determineBlockadeAndTownZones(map: Map): void {
+	private determineBlockadeAndTownZones(map: WorldMap): void {
 		this.loopWorld(map, (sectorType, x, y) => {
 			const type = this.zoneTypeForSectorType(sectorType);
 			if (!(type.isBlockadeType() || type === Zone.Type.Town)) return;
@@ -238,7 +243,7 @@ class WorldGenerator {
 		});
 	}
 
-	private findPositionOfPuzzle(orderIdx: number, orderMap: Map): Point {
+	private findPositionOfPuzzle(orderIdx: number, orderMap: WorldMap): Point {
 		for (let y = 0; y < 10; y++) {
 			for (let x = 0; x < 10; x++) {
 				if (orderMap[x + 10 * y] === orderIdx) return new Point(x, y);
@@ -247,7 +252,7 @@ class WorldGenerator {
 		return null;
 	}
 
-	private placePuzzlesZones(puzzleMapIdx: number, puzzles: Map): void {
+	private placePuzzlesZones(puzzleMapIdx: number, puzzles: WorldMap): void {
 		for (let puzzleIndex = puzzleMapIdx; puzzleIndex > 0; puzzleIndex--) {
 			this.resetState();
 
@@ -278,7 +283,7 @@ class WorldGenerator {
 		}
 	}
 
-	private determineGoalZone(puzzleCount: number, puzzles2Count: number, puzzles: Map): void {
+	private determineGoalZone(puzzleCount: number, puzzles2Count: number, puzzles: WorldMap): void {
 		this.resetState();
 
 		const puzzle = this.puzzleStrain1[this.puzzleStrain1.length - 1];
@@ -313,7 +318,7 @@ class WorldGenerator {
 		this.additionalFindItem = null;
 	}
 
-	private determineQuestZones(puzzleCount: number, puzzles: Map): void {
+	private determineQuestZones(puzzleCount: number, puzzles: WorldMap): void {
 		let previousPuzzleIndex = puzzleCount - 1;
 		for (let puzzleIdIndex = this.puzzleStrain1.length - 2; puzzleIdIndex > 0; puzzleIdIndex--) {
 			this.resetState();
@@ -386,14 +391,10 @@ class WorldGenerator {
 		useAlternateStrain: boolean
 	): Zone {
 		this.usedAlternateStrain = useAlternateStrain;
-		let zoneMatchesType = (zone: Zone) => zone.type === zoneType;
-		if (zoneType === Zone.Type.Find || zoneType === Zone.Type.FindUniqueWeapon)
-			zoneMatchesType = zone =>
-				zone.type === Zone.Type.Find || zone.type === Zone.Type.FindUniqueWeapon;
-		const zoneMatchesPlanet = (zone: Zone) => zone.planet === this._planet;
 		const zoneIsUnused = (zone: Zone) =>
 			!this.usedZones.contains(zone) || (zoneType === Zone.Type.Goal && this.puzzlesCanBeReused > 0);
-		const usableZones = this._assets.getFiltered(Zone, and(zoneMatchesPlanet, zoneMatchesType)).shuffle();
+		const zones = this.getZonesForType(zoneType);
+		const usableZones = zones.slice().shuffle();
 		return usableZones
 			.filter(zoneIsUnused)
 			.find((zone: Zone) =>
@@ -407,6 +408,22 @@ class WorldGenerator {
 					useAlternateStrain
 				)
 			);
+	}
+
+	private getZonesForType(type: Zone.Type) {
+		let result = this._zonesByType.get(type);
+		if (result) return result;
+
+		let zoneMatchesType = (zone: Zone) => zone.type === type;
+		if (type === Zone.Type.Find || type === Zone.Type.FindUniqueWeapon)
+			zoneMatchesType = zone =>
+				zone.type === Zone.Type.Find || zone.type === Zone.Type.FindUniqueWeapon;
+
+		result = this._zones.filter(zoneMatchesType);
+		this._zonesByType.set(type, result);
+		if (type === Zone.Type.Find) this._zonesByType.set(Zone.Type.FindUniqueWeapon, result);
+		if (type === Zone.Type.FindUniqueWeapon) this._zonesByType.set(Zone.Type.Find, result);
+		return result;
 	}
 
 	private getUnusedZone(
@@ -623,7 +640,7 @@ class WorldGenerator {
 		}
 	}
 
-	private determineFindZones(world: Map): void {
+	private determineFindZones(world: WorldMap): void {
 		for (const quest of this.providedItemQuests) {
 			const candidates = this.determinePuzzleLocationChoices(world, quest.distance);
 			const point = candidates[rand() % candidates.length];
@@ -645,7 +662,7 @@ class WorldGenerator {
 		}
 	}
 
-	private determineTeleporters(world: Map): boolean {
+	private determineTeleporters(world: WorldMap): boolean {
 		let teleporterSource = null;
 		let lastZone = null;
 
@@ -859,7 +876,7 @@ class WorldGenerator {
 		return defaultReturn;
 	}
 
-	private determinePuzzleLocationChoices(world: Map, maxDistance: number): Point[] {
+	private determinePuzzleLocationChoices(world: WorldMap, maxDistance: number): Point[] {
 		const farPoints: Point[] = [];
 		const bestPoints: Point[] = [];
 		const pointsCloseToPuzzles: Point[] = [];

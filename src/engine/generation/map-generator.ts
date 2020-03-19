@@ -2,7 +2,7 @@ import { HorizontalPointRange, Point, Range, VerticalPointRange, rand, randmod, 
 
 import GetDistanceToCenter from "./distance-to-center";
 import IslandBuilder from "./island-builder";
-import Map from "./map";
+import WorldMap from "./map";
 import SectorType from "./sector-type";
 import { WorldSize } from "../types";
 import { max } from "src/std/math";
@@ -26,13 +26,13 @@ class MapGenerator {
 	private travelThreshold: number = 0;
 	private lastType: SectorType = 0;
 	private remainingSectors: number = 0;
-	private _typeMap: Map = null;
+	private _typeMap: WorldMap = null;
 	private placedSectors: number = 0;
 	private blockades: number = 0;
 	private travels: number = 0;
 	private placedTravels: number = 0;
 	private puzzles: number = 0;
-	private _orderMap: Map = null;
+	private _orderMap: WorldMap = null;
 
 	private blockadeTypeFor(xdiff: number, ydiff: number): SectorType {
 		if (xdiff === 0 && ydiff === 1) {
@@ -59,7 +59,7 @@ class MapGenerator {
 		this.placedTravels = 0;
 	}
 
-	private getIslandOrientation(x: number, y: number, typeMap: Map): IslandOrientation {
+	private getIslandOrientation(x: number, y: number, typeMap: WorldMap): IslandOrientation {
 		if (typeMap.get(x - 1, y) === SectorType.Island) return IslandOrientation.Left;
 		if (typeMap.get(x + 1, y) === SectorType.Island) return IslandOrientation.Right;
 		if (typeMap.get(x, y - 1) === SectorType.Island) return IslandOrientation.Up;
@@ -120,7 +120,7 @@ class MapGenerator {
 		}
 	}
 
-	private neighbors(map: Map, x: number, y: number) {
+	private neighbors(map: WorldMap, x: number, y: number) {
 		return [map.get(x - 1, y), map.get(x + 1, y), map.get(x, y - 1), map.get(x, y + 1)];
 	}
 
