@@ -10,7 +10,7 @@ import { Hero, SceneManager, Inventory } from "src/engine";
 import World from "src/engine/world";
 import { Zone } from "src/engine/objects";
 import { Point } from "src/util";
-import { MapScene } from "src/engine/scenes";
+import { MapScene, ZoneScene } from "src/engine/scenes";
 import { Yoda } from "src/engine/type";
 
 class MainWindow extends AbstractWindow {
@@ -39,7 +39,7 @@ class MainWindow extends AbstractWindow {
 				<div className="main" />
 				<div className="actions">
 					<Button label="Inventory" onclick={(e: Event) => this.toggleInventory(e)}></Button>
-					<Button label="Map" disabled></Button>
+					<Button label="Map" disabled onclick={() => this.toggleMap()}></Button>
 					<Button label="Menu"></Button>
 				</div>
 				<div className="status">
@@ -122,6 +122,7 @@ class MainWindow extends AbstractWindow {
 		if (source instanceof SceneManager) {
 			this.mapButton.active = source.currentScene instanceof MapScene;
 		}
+
 		if (source instanceof Inventory) {
 			this.mapButton.disabled = !source.contains(Yoda.tileIDs.Locator);
 		}
@@ -129,6 +130,24 @@ class MainWindow extends AbstractWindow {
 
 	private get mapButton() {
 		return this.querySelector(`${Button.tagName}[label="Map"]`) as Button;
+	}
+
+	private toggleMap() {
+		if (!this.engine.inventory.contains(Yoda.tileIDs.Locator)) {
+			return;
+		}
+
+		const currentScene = this.engine.sceneManager.currentScene;
+
+		if (currentScene instanceof MapScene) {
+			this.engine.sceneManager.popScene();
+			return;
+		}
+
+		if (currentScene instanceof ZoneScene) {
+			this.engine.sceneManager.pushScene(new MapScene());
+			return;
+		}
 	}
 
 	private toggleInventory(e: Event) {
