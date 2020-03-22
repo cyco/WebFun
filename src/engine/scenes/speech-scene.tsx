@@ -15,7 +15,7 @@ class SpeechScene extends Scene {
 	public offset = new Point(0, 0);
 	private _modalSession: ModalSession = null;
 	private _bubble: SpeechBubble = (
-		<SpeechBubble onend={() => this.engine.sceneManager.popScene()} />
+		<SpeechBubble onend={() => this.engine.sceneManager.popScene()} style={{ position: "fixed" }} />
 	) as SpeechBubble;
 
 	constructor(engine: Engine = null) {
