@@ -16,7 +16,7 @@ import { Yoda } from "src/engine/type";
 class GameEventHandler {
 	public handleEvent(engine: Engine, sceneView: SceneView, evt: CustomEvent) {
 		switch (evt.type) {
-			case Hero.Event.HealthChanged: {
+			case Hero.Event.HealthDidChange: {
 				if (engine.hero.health > 0) {
 					return;
 				}

@@ -20,8 +20,14 @@ class MainWindow extends AbstractWindow {
 		[Engine.Event.AmmoChanged]: () => this._updateAmmo(),
 		[Engine.Event.WeaponChanged]: () => this._updateWeapon(),
 		[Engine.Event.LocationChanged]: ({ detail }: CustomEvent) => this._updateLocation(detail),
-		[Hero.Event.HealthChanged]: () => this._updateHealth(),
-		[Inventory.Event.ItemsChanged]: ({ target }: CustomEvent) => this._updateMapButton(target as any),
+		[Hero.Event.HealthDidChange]: () => this._updateHealth(),
+		[Inventory.Event.DidAddItem]: ({ target }: CustomEvent) => {
+			this._updateMapButton(target as any);
+			this._highlightInventoryButton();
+		},
+		[Inventory.Event.DidRemoveItem]: ({ target }: CustomEvent) => {
+			this._updateMapButton(target as any);
+		},
 		[SceneManager.Event.SceneChanged]: ({ target }: CustomEvent) => this._updateMapButton(target as any)
 	};
 	private cache: Map<string, Element> = new Map();
@@ -38,7 +44,11 @@ class MainWindow extends AbstractWindow {
 			<div>
 				<div className="main" />
 				<div className="actions">
-					<Button label="Inventory" onclick={(e: Event) => this.toggleInventory(e)}></Button>
+					<Button
+						label="Inventory"
+						onclick={(e: Event) => this.toggleInventory(e)}
+						onanimationend={(e: any) => e.target.classList.remove("pulse-animation")}
+					></Button>
 					<Button label="Map" disabled onclick={() => this.toggleMap()}></Button>
 					<Button label="Menu"></Button>
 				</div>
@@ -76,13 +86,17 @@ class MainWindow extends AbstractWindow {
 			this._handlers.each((event: any, handler: any) =>
 				this._engine.removeEventListener(event, handler)
 			);
-			hero.removeEventListener(Hero.Event.HealthChanged, this._handlers[Hero.Event.HealthChanged]);
+			hero.removeEventListener(Hero.Event.HealthDidChange, this._handlers[Hero.Event.HealthDidChange]);
 			hero.removeEventListener(Hero.Event.WeaponChanged, this._handlers[Engine.Event.WeaponChanged]);
 			hero.removeEventListener(Hero.Event.AmmoChanged, this._handlers[Engine.Event.AmmoChanged]);
 
 			this._engine.inventory.removeEventListener(
-				Inventory.Event.ItemsChanged,
-				this._handlers[Inventory.Event.ItemsChanged]
+				Inventory.Event.DidAddItem,
+				this._handlers[Inventory.Event.DidAddItem]
+			);
+			this._engine.inventory.removeEventListener(
+				Inventory.Event.DidRemoveItem,
+				this._handlers[Inventory.Event.DidRemoveItem]
 			);
 			this._engine.sceneManager.removeEventListener(
 				SceneManager.Event.SceneChanged,
@@ -95,14 +109,18 @@ class MainWindow extends AbstractWindow {
 		if (this._engine) {
 			const hero = this._engine.hero;
 
-			hero.addEventListener(Hero.Event.HealthChanged, this._handlers[Hero.Event.HealthChanged]);
+			hero.addEventListener(Hero.Event.HealthDidChange, this._handlers[Hero.Event.HealthDidChange]);
 			hero.addEventListener(Hero.Event.WeaponChanged, this._handlers[Engine.Event.WeaponChanged]);
 			hero.addEventListener(Hero.Event.AmmoChanged, this._handlers[Engine.Event.AmmoChanged]);
 
 			this._handlers.each((event: any, handler: any) => this._engine.addEventListener(event, handler));
 			this._engine.inventory.addEventListener(
-				Inventory.Event.ItemsChanged,
-				this._handlers[Inventory.Event.ItemsChanged]
+				Inventory.Event.DidAddItem,
+				this._handlers[Inventory.Event.DidAddItem]
+			);
+			this._engine.inventory.addEventListener(
+				Inventory.Event.DidRemoveItem,
+				this._handlers[Inventory.Event.DidRemoveItem]
 			);
 			this._engine.sceneManager.addEventListener(
 				SceneManager.Event.SceneChanged,
@@ -118,6 +136,12 @@ class MainWindow extends AbstractWindow {
 		super.disconnectedCallback();
 	}
 
+	private _highlightInventoryButton() {
+		const inventoryButton = this.inventoryButton;
+		if (inventoryButton) inventoryButton.classList.add("pulse-animation");
+		else console.log("no button");
+	}
+
 	private _updateMapButton(source: SceneManager | Inventory) {
 		if (source instanceof SceneManager) {
 			this.mapButton.active = source.currentScene instanceof MapScene;
@@ -130,6 +154,10 @@ class MainWindow extends AbstractWindow {
 
 	private get mapButton() {
 		return this.querySelector(`${Button.tagName}[label="Map"]`) as Button;
+	}
+
+	private get inventoryButton() {
+		return this.querySelector(`${Button.tagName}[label="Inventory"]`) as Button;
 	}
 
 	private toggleMap() {

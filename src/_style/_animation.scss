@@ -14,6 +14,10 @@
 	animation: spin 4s linear infinite;
 }
 
+.pulse-animation {
+	animation: pulse 0.25s;
+}
+
 @keyframes fadeIn {
 	0% {
 		opacity: 0;
@@ -66,5 +70,22 @@
 @keyframes spin {
 	100% {
 		transform: rotate(360deg);
+	}
+}
+
+@keyframes pulse {
+	from {
+		-webkit-transform: scale3d(1, 1, 1);
+		transform: scale3d(1, 1, 1);
+	}
+
+	50% {
+		-webkit-transform: scale3d(1.05, 1.05, 1.05);
+		transform: scale3d(1.05, 1.05, 1.05);
+	}
+
+	to {
+		-webkit-transform: scale3d(1, 1, 1);
+		transform: scale3d(1, 1, 1);
 	}
 }

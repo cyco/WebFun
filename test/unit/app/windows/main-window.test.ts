@@ -135,7 +135,7 @@ describeComponent(MainWindow, () => {
 
 			triggerHealthChange(value: number) {
 				hero.health = value;
-				hero.dispatchEvent(HeroEvents.HealthChanged);
+				hero.dispatchEvent(HeroEvents.HealthDidChange);
 			}
 
 			triggerAmmoChange() {

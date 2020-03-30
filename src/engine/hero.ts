@@ -8,7 +8,7 @@ export const MaxLives = 3;
 export const MaxHealth = MaxLives * HealthPerLive;
 
 export const Events = {
-	HealthChanged: "HealthChanged",
+	HealthDidChange: "HealthDidChange",
 	WeaponChanged: "WeaponChanged",
 	AmmoChanged: "AmmoChanged"
 };
@@ -82,7 +82,7 @@ class Hero extends EventTarget {
 		if (this.invincible) return;
 
 		this._health = max(0, min(MaxHealth, h));
-		this.dispatchEvent(Events.HealthChanged, {
+		this.dispatchEvent(Events.HealthDidChange, {
 			health: h
 		});
 	}

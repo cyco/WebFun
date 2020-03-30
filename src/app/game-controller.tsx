@@ -67,7 +67,7 @@ class GameController extends EventTarget implements EventListenerObject {
 
 	private _buildEngine(type: GameType, paths: PathConfiguration) {
 		const engine: Engine = new Engine(type, this._buildInterface(paths));
-		engine.hero.addEventListener(Hero.Event.HealthChanged, this);
+		engine.hero.addEventListener(Hero.Event.HealthDidChange, this);
 
 		if (this.settings.drawDebugStats) {
 			engine.sceneManager.addOverlay(new DebugInfoScene());

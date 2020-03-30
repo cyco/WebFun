@@ -55,7 +55,7 @@ describe("WebFun.Engine.Inventory", () => {
 		subject.addItem(mockItem1);
 		subject.addItem(mockItem2);
 		let eventFired = false;
-		subject.addEventListener(Events.ItemsChanged, () => (eventFired = true));
+		subject.addEventListener(Events.DidChangeItems, () => (eventFired = true));
 		subject.removeAllItems();
 		expect(eventFired).toBeTrue();
 		expect(subject.contains(mockItem1)).toBeFalse();
@@ -81,12 +81,12 @@ describe("WebFun.Engine.Inventory", () => {
 
 	describe("Events", () => {
 		afterEach(() => {
-			subject.removeEventListener(Events.ItemsChanged);
+			subject.removeEventListener(Events.DidChangeItems);
 		});
 
 		it("sends an event when an item is added", done => {
 			const mockItem: Tile = { id: 3 } as any;
-			subject.addEventListener(Events.ItemsChanged, function(event: any) {
+			subject.addEventListener(Events.DidChangeItems, function(event: any) {
 				expect(event.detail.mode).toEqual("add");
 				expect(event.detail.item).toBe(mockItem);
 
@@ -99,7 +99,7 @@ describe("WebFun.Engine.Inventory", () => {
 			const mockItem: Tile = { id: 3 } as any;
 			subject.addItem(mockItem);
 
-			subject.addEventListener(Events.ItemsChanged, function(event: any) {
+			subject.addEventListener(Events.DidChangeItems, function(event: any) {
 				expect(event.detail.mode).toEqual("remove");
 				expect(event.detail.item).toBe(mockItem);
 

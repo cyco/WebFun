@@ -79,7 +79,7 @@ describe("WebFun.App.GameController", () => {
 		});
 
 		it("listens for changes to hero's health", () => {
-			expect(engine.hero.addEventListener).toHaveBeenCalledWith(Hero.Event.HealthChanged, subject);
+			expect(engine.hero.addEventListener).toHaveBeenCalledWith(Hero.Event.HealthDidChange, subject);
 		});
 
 		describe("a new game is started", () => {
