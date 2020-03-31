@@ -1,14 +1,14 @@
 import { Monster, Zone, Sound } from "../objects";
 import { Point, randmod } from "src/util";
 import randomDirection from "./helpers/random-direction";
-import { evade, canPerformMeleeAttack, moveCheck, playSound, isDoorway } from "./helpers";
+import { evade, canPerformMeleeAttack, moveCheck, playSound, performMoveAfterDoorwayCheck } from "./helpers";
 import { Engine } from "src/engine";
 import YodaViewRedrawTile from "./helpers/yoda-view-redraw";
 import CharSetDefaultFace from "./helpers/char-set-default-face";
 import ZoneSetTileAt from "./helpers/zone-set-tile-at";
 
 function _noMovement(monster: Monster, zone: Zone, engine: Engine) {
-	_performMove(new Point(0, 0), monster, false, zone, engine);
+	_performMove(monster, new Point(0, 0), false, zone, engine);
 }
 
 function _performMeleeAttackIfUnarmed(hit: boolean, monster: Monster, zone: Zone, engine: Engine) {
@@ -19,7 +19,7 @@ function _performMeleeAttackIfUnarmed(hit: boolean, monster: Monster, zone: Zone
 	return _noMovement(monster, zone, engine);
 }
 
-function _performMove(direction: Point, monster: Monster, move: boolean, zone: Zone, engine: Engine) {
+function _performMove(monster: Monster, direction: Point, move: boolean, zone: Zone, engine: Engine) {
 	const hero = engine.hero.location;
 	const directionToHero = hero.comparedTo(monster.position);
 
@@ -41,20 +41,6 @@ function _performMove(direction: Point, monster: Monster, move: boolean, zone: Z
 	}
 	// ZoneSetTileAt(zone, monster.position, char.current_face);
 	YodaViewRedrawTile(monster.position, zone);
-}
-
-function _performMoveAfterDoorwayCheck(direction: Point, monster: Monster, zone: Zone, engine: Engine) {
-	const target = monster.position.byAdding(direction);
-	if (zone.getTile(target.x, target.y, Zone.Layer.Object)) return _noMovement(monster, zone, engine);
-	let move = false;
-	if (!isDoorway(zone, target)) move = true;
-	if (move) {
-		monster.position.add(direction);
-	} else {
-		direction = new Point(0, 0);
-	}
-
-	return _performMove(direction, monster, move, zone, engine);
 }
 
 export default (monster: Monster, zone: Zone, engine: Engine) => {
@@ -82,5 +68,5 @@ export default (monster: Monster, zone: Zone, engine: Engine) => {
 		return _performMeleeAttackIfUnarmed(true, monster, zone, engine);
 	}
 
-	return _performMoveAfterDoorwayCheck(direction, monster, zone, engine);
+	return performMoveAfterDoorwayCheck(direction, monster, zone, engine, _performMove);
 };
