@@ -6,7 +6,7 @@ const source = Path.resolve("../src");
 const test = Path.resolve("../test/unit");
 
 /* prototype extensions */
-const flatten = function() {
+const flatten = function () {
 	return Array.prototype.concat.apply([], this);
 };
 

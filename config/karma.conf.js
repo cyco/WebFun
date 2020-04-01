@@ -90,15 +90,15 @@ if (includeCoverage) {
 	config.devtool = "eval-source-map";
 	config.reporters.push("coverage-istanbul");
 	config.coverageIstanbulReporter = {
-		fixWebpackSourcePaths: true,
-		reports: ["lcovonly", ...(!ci ? ["html"] : [])],
-		dir: Paths.testReportRoot,
+		"fixWebpackSourcePaths": true,
+		"reports": ["lcovonly", ...(!ci ? ["html"] : [])],
+		"dir": Paths.testReportRoot,
 		"report-config": {
 			lcovonly: {
 				file: fileName
 			}
 		},
-		file: fileName
+		"file": fileName
 	};
 
 	config.webpack.module.rules[1].use[0].options.plugins = ["istanbul"];
@@ -139,6 +139,6 @@ if (runAcceptanceTests) {
 	config.webpack.plugins.push(environment);
 }
 
-module.exports = function(c) {
+module.exports = function (c) {
 	c.set(config);
 };

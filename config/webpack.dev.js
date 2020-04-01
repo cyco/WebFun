@@ -41,7 +41,7 @@ module.exports = merge(BaseConfig, {
 			template: Path.resolve(Paths.sourceRoot, "./app/index.html"),
 			title: "WebFun Development",
 			meta: {
-				viewport: "width=device-width, user-scalable=no, viewport-fit=cover",
+				"viewport": "width=device-width, user-scalable=no, viewport-fit=cover",
 				"msapplication-TileColor": "#da532c",
 				"theme-color": "#da532c",
 				"apple-mobile-web-app-capable": "yes"

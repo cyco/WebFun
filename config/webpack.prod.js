@@ -39,7 +39,7 @@ module.exports = {
 			template: Path.resolve(Paths.sourceRoot, "./app/index.html"),
 			title: "WebFun",
 			meta: {
-				viewport: "width=device-width, user-scalable=no, viewport-fit=cover",
+				"viewport": "width=device-width, user-scalable=no, viewport-fit=cover",
 				"msapplication-TileColor": "#da532c",
 				"theme-color": "#da532c",
 				"apple-mobile-web-app-capable": "yes"
