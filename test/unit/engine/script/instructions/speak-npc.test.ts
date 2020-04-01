@@ -1,4 +1,3 @@
-import { Instruction } from "src/engine/objects";
 import SpeakNPC from "src/engine/script/instructions/speak-npc";
 import * as Util from "src/util";
 
@@ -8,10 +7,10 @@ describeInstruction("SpeakNPC", (execute, engine) => {
 		spyOn(engine, "speak");
 		spyOn(Util, "Point").and.returnValue(mockedPoint);
 
-		const instruction: any = new Instruction({});
-		instruction._opcode = SpeakNPC.Opcode;
-		instruction._arguments = [0, 1];
-		instruction._additionalData = "test text";
+		const instruction: any = {};
+		instruction.opcode = SpeakNPC.Opcode;
+		instruction.arguments = [0, 1];
+		instruction.text = "test text";
 
 		await execute(instruction);
 

@@ -1,4 +1,3 @@
-import { Instruction } from "src/engine/objects";
 import AddItem from "src/engine/script/instructions/add-item";
 import { Tile } from "src/engine/objects";
 
@@ -11,7 +10,7 @@ describeInstruction("AddItem", (execute, engine) => {
 
 		spyOn(engine.inventory, "addItem");
 
-		const instruction = new Instruction({ opcode: AddItem.Opcode, arguments: [1] });
+		const instruction = { opcode: AddItem.Opcode, arguments: [1] };
 
 		await execute(instruction);
 		expect(engine.inventory.addItem).toHaveBeenCalledWith("fake-tile");

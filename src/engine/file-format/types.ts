@@ -1,15 +1,10 @@
 import { GameType } from "src/engine";
-
-interface ActionItem {
-	opcode: number;
-	arguments: Int16Array;
-	text: string;
-}
+import { Condition, Instruction } from "src/engine/objects";
 
 interface Action {
 	name?: string;
-	conditions: ActionItem[];
-	instructions: ActionItem[];
+	conditions: Condition[];
+	instructions: Instruction[];
 }
 
 interface Zone {
@@ -91,4 +86,4 @@ interface Data {
 	end: number;
 }
 
-export { Monster, Hotspot, ActionItem, Action, Zone, Tile, Puzzle, Sound, Character, Data };
+export { Monster, Hotspot, Action, Zone, Tile, Puzzle, Sound, Character, Data };

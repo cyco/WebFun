@@ -1,5 +1,4 @@
 import AbstractActionItem from "./abstract-action-item";
 
-class Instruction extends AbstractActionItem {}
-
+type Instruction = AbstractActionItem & { isInstruction: true };
 export default Instruction;

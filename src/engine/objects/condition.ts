@@ -1,5 +1,4 @@
 import AbstractActionItem from "./abstract-action-item";
 
-class Condition extends AbstractActionItem {}
-
+type Condition = AbstractActionItem & { isCondition: true };
 export default Condition;

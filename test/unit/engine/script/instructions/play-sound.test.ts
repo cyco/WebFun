@@ -1,4 +1,4 @@
-import { Instruction, Sound } from "src/engine/objects";
+import { Sound } from "src/engine/objects";
 import PlaySound from "src/engine/script/instructions/play-sound";
 import { Channel } from "src/engine/audio";
 import { NullIfMissing } from "src/engine/asset-manager";
@@ -9,9 +9,9 @@ describeInstruction("PlaySound", (execute, engine) => {
 		spyOn(engine.mixer, "play");
 		spyOn(engine.assets, "get").and.returnValue(mockSound);
 
-		const instruction: any = new Instruction({});
-		instruction._opcode = PlaySound.Opcode;
-		instruction._arguments = [5];
+		const instruction: any = {};
+		instruction.opcode = PlaySound.Opcode;
+		instruction.arguments = [5];
 
 		execute(instruction);
 		expect(engine.assets.get).toHaveBeenCalledWith(Sound, 5, NullIfMissing);

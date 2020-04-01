@@ -4,7 +4,7 @@ import StandingOn from "src/engine/script/conditions/standing-on";
 describeCondition("StandingOn", (check, engine) => {
 	it("checks if the hero is standing on a specific tile", async () => {
 		const hero = engine.hero;
-		const condition = new Condition({ opcode: StandingOn.Opcode, arguments: [1, 2, 5] });
+		const condition: any = { opcode: StandingOn.Opcode, arguments: [1, 2, 5] };
 
 		hero.location = { x: 1, y: 2 } as any;
 		engine.currentZone.getTileID = () => {

@@ -1,4 +1,4 @@
-import { Instruction, Tile } from "src/engine/objects";
+import { Tile } from "src/engine/objects";
 import RemoveItem from "src/engine/script/instructions/remove-item";
 
 describeInstruction("RemoveItem", (execute, engine) => {
@@ -10,9 +10,9 @@ describeInstruction("RemoveItem", (execute, engine) => {
 
 		spyOn(engine.inventory, "removeItem");
 
-		const instruction: any = new Instruction({}) as any;
-		instruction._opcode = RemoveItem.Opcode;
-		instruction._arguments = [1];
+		const instruction: any = {} as any;
+		instruction.opcode = RemoveItem.Opcode;
+		instruction.arguments = [1];
 
 		await execute(instruction);
 		expect(engine.inventory.removeItem).toHaveBeenCalledWith("fake-tile");

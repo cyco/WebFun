@@ -76,7 +76,7 @@ class GameplayContext {
 							coverageAction = window.__webfun_coverage__.actions[id];
 						}
 
-						if (thing instanceof Condition) {
+						if ("isCondition" in thing) {
 							const id = currentAction.conditions.indexOf(thing);
 							coverageAction.conditions = coverageAction.conditions || [];
 							coverageAction.conditions[id] = coverageAction.conditions[id] || 0;
@@ -87,7 +87,7 @@ class GameplayContext {
 							window.__webfun_coverage__.conditions[thing.opcode]++;
 						}
 
-						if (thing instanceof Instruction) {
+						if ("isInstruction" in thing) {
 							const id = currentAction.instructions.indexOf(thing);
 							coverageAction.instructions = coverageAction.instructions || [];
 							coverageAction.instructions[id] = coverageAction.instructions[id] || 0;
@@ -157,11 +157,11 @@ class GameplayContext {
 		const zone =
 			story instanceof SimulatedStory
 				? engine.world.at(4, 5).zone
-				: engine.assets.find(Zone, z => z.isLoadingZone());
+				: engine.assets.find(Zone, (z) => z.isLoadingZone());
 		const zoneScene = new ZoneScene(engine, zone);
 		engine.currentZone = zone;
 		engine.currentWorld = engine.world.findLocationOfZone(zone) ? engine.world : null;
-		engine.hero.appearance = engine.assets.find(Char, c => c.isHero());
+		engine.hero.appearance = engine.assets.find(Char, (c) => c.isHero());
 		engine.sceneManager.pushScene(zoneScene);
 		if (story instanceof SimulatedStory) {
 			engine.hero.visible = true;
@@ -175,7 +175,7 @@ class GameplayContext {
 	}
 
 	public async playStory(story: Story, input: string[], debug = false) {
-		return new Promise(async resolve => {
+		return new Promise(async (resolve) => {
 			this.setupEngine(story, input, debug);
 			this.onInputEnd = () => resolve();
 			const inputManager = this.engine.inputManager as ReplayingInputManager;

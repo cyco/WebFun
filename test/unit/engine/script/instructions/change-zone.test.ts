@@ -1,4 +1,4 @@
-import { Zone, Instruction } from "src/engine/objects";
+import { Zone } from "src/engine/objects";
 import ChangeZone from "src/engine/script/instructions/change-zone";
 import { RoomTransitionScene } from "src/engine/scenes";
 
@@ -11,7 +11,7 @@ describeInstruction("ChangeZone", (execute, engine) => {
 		};
 		spyOn(engine, "findLocationOfZone").and.returnValue({});
 
-		const instruction = new Instruction({ opcode: ChangeZone.Opcode, arguments: [2] });
+		const instruction = { opcode: ChangeZone.Opcode, arguments: [2] };
 
 		await execute(instruction);
 

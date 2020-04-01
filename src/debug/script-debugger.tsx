@@ -7,7 +7,9 @@ import {
 	Instruction as InstructionComponent
 } from "src/debug/components";
 import { ConditionImplementations, ConditionsByName } from "src/engine/script/conditions";
-import DebuggingScriptProcessingUnit, { DebuggingScriptProcessingUnitDelegate } from "./debugging-script-processing-unit";
+import DebuggingScriptProcessingUnit, {
+	DebuggingScriptProcessingUnitDelegate
+} from "./debugging-script-processing-unit";
 import { Engine, EngineEvents } from "src/engine";
 import { InstructionImplementations, InstructionsByName } from "src/engine/script/instructions";
 import { Result, ScriptResult } from "src/engine/script";
@@ -66,7 +68,7 @@ class ScriptDebugger implements DebuggingScriptProcessingUnitDelegate {
 			<Controls onstep={(): void => this.stepOnce()} ontogglepause={(): void => this.togglePause()} />
 		);
 		this._window.content.appendChild(this._buildZoneState());
-		this._actionList = <Group className="action-list" /> as Group;
+		this._actionList = (<Group className="action-list" />) as Group;
 		this._window.content.appendChild(this._actionList);
 	}
 
@@ -153,14 +155,14 @@ class ScriptDebugger implements DebuggingScriptProcessingUnitDelegate {
 		let i = 0;
 		this._variableMap = {};
 		this._engine.currentZone.actions
-			.map(a =>
+			.map((a) =>
 				a.conditions
-					.filter(c => c.opcode === ConditionsByName.IsVariable.Opcode)
-					.map(c => [c.arguments[1], c.arguments[2], c.arguments[3]])
+					.filter((c) => c.opcode === ConditionsByName.IsVariable.Opcode)
+					.map((c) => [c.arguments[1], c.arguments[2], c.arguments[3]])
 					.concat(
 						a.instructions
-							.filter(c => c.opcode === InstructionsByName.SetVariable.Opcode)
-							.map(a => [a.arguments[0], a.arguments[1], a.arguments[2]])
+							.filter((c) => c.opcode === InstructionsByName.SetVariable.Opcode)
+							.map((a) => [a.arguments[0], a.arguments[1], a.arguments[2]])
 					)
 			)
 			.flatten()
@@ -230,14 +232,14 @@ class ScriptDebugger implements DebuggingScriptProcessingUnitDelegate {
 				console.warn("Engine thinks we're on a differente zone!");
 		}
 
-		if (thing instanceof Condition) {
+		if ("isCondition" in thing) {
 			if (this._currentAction.zone !== this._currentZone)
 				console.warn("action does not belong to current zone!");
 			if (this._currentAction.conditions.indexOf(thing) === -1)
 				console.warn("Condition not found in current action!");
 		}
 
-		if (thing instanceof Instruction) {
+		if ("isInstruction" in thing) {
 			if (this._currentAction.zone !== this._currentZone)
 				console.warn("action does not belong to current zone!");
 			if (this._currentAction.instructions.indexOf(thing) === -1)
@@ -260,7 +262,7 @@ class ScriptDebugger implements DebuggingScriptProcessingUnitDelegate {
 			breakpoint = new LocationBreakpoint(thing.zone.id, thing.id);
 		}
 
-		if (thing instanceof Condition) {
+		if ("isCondition" in thing) {
 			breakpoint = new LocationBreakpoint(
 				this._currentZone.id,
 				this._currentAction.id,
@@ -269,7 +271,7 @@ class ScriptDebugger implements DebuggingScriptProcessingUnitDelegate {
 			);
 		}
 
-		if (thing instanceof Instruction) {
+		if ("isInstruction" in thing) {
 			breakpoint = new LocationBreakpoint(
 				this._currentZone.id,
 				this._currentAction.id,
@@ -300,11 +302,11 @@ class ScriptDebugger implements DebuggingScriptProcessingUnitDelegate {
 			return;
 		}
 
-		if (thing instanceof Condition) {
+		if ("isCondition" in thing) {
 			return;
 		}
 
-		if (thing instanceof Instruction) {
+		if ("isInstruction" in thing) {
 			if (StateChangingOpcodes[thing.opcode]) {
 				this._updateZoneState();
 			}

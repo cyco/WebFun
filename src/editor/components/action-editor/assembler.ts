@@ -1,6 +1,5 @@
 import AST, { s } from "./ast";
 
-import { AbstractActionItemInit } from "src/engine/objects/abstract-action-item";
 import { Action, Condition, Instruction } from "src/engine/objects";
 import { ConditionsByName } from "src/engine/script/conditions";
 import { InstructionsByName } from "src/engine/script/instructions";
@@ -87,26 +86,22 @@ class Assembler {
 		if (progn.first() !== s`progn`) {
 			instructions = [this.parseInstruction(progn)];
 		} else {
-			instructions = progn.slice(1).map(input => this.parseInstruction(input));
+			instructions = progn.slice(1).map((input) => this.parseInstruction(input));
 		}
 
-		const conditions = body.map(input => this.parseCondition(input));
+		const conditions = body.map((input) => this.parseCondition(input));
 		return [conditions, instructions];
 	}
 
 	private parseInstruction(input: AST): Instruction {
-		return this.parseOpcode(input, Instructions, Instruction);
+		return Object.assign(this.parseOpcode(input, Instructions), { isInstruction: true });
 	}
 
 	private parseCondition(input: AST): Condition {
-		return this.parseOpcode(input, Conditions, Condition);
+		return Object.assign(this.parseOpcode(input, Conditions), { isCondition: true });
 	}
 
-	private parseOpcode<T>(
-		input: AST,
-		map: OpcodeMap,
-		itemClass: { new (data: AbstractActionItemInit): T }
-	): T {
+	private parseOpcode<T>(input: AST, map: OpcodeMap): any {
 		if (!(input instanceof Array)) throw new AssemblerInputError("Invalid input.", input);
 
 		const [name, ...args] = input;
@@ -129,19 +124,19 @@ class Assembler {
 			throw new AssemblerInputError("Expected last argument to be a string.", input);
 		}
 
-		if (!args.every(arg => typeof arg === "number")) {
+		if (!args.every((arg) => typeof arg === "number")) {
 			throw new AssemblerInputError("Expected arguments to be of type number.", input);
 		}
 
-		if (!args.every(arg => arg >= -1 * 2 ** 15 && arg <= 2 ** 15 - 1)) {
+		if (!args.every((arg) => arg >= -1 * 2 ** 15 && arg <= 2 ** 15 - 1)) {
 			throw new AssemblerInputError("Arguments must fit into a 16bit signed integer.", input);
 		}
 
-		return new itemClass({
+		return {
 			opcode: opcode.Opcode,
 			text: text as string,
 			arguments: args
-		});
+		};
 	}
 }
 

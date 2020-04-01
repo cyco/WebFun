@@ -1,10 +1,10 @@
 import { InputStream } from "src/util";
 import { assert } from "../error";
-import { Data, ActionItem, Action } from "../types";
+import { Data, Action } from "../types";
 
 const IACT = "IACT";
 
-const parseActionItem = (stream: InputStream): ActionItem => {
+const parseActionItem = (stream: InputStream) => {
 	const opcode = stream.readUint16();
 	const args = stream.readInt16Array(5);
 	const textLength = stream.readUint16();
@@ -13,8 +13,9 @@ const parseActionItem = (stream: InputStream): ActionItem => {
 	return { opcode, arguments: args, text };
 };
 
-const parseCondition = parseActionItem;
-const parseInstruction = parseActionItem;
+const parseCondition = (stream: InputStream) => Object.assign(parseActionItem(stream), { isCondition: true });
+const parseInstruction = (stream: InputStream) =>
+	Object.assign(parseActionItem(stream), { isInstruction: true });
 
 export const parseAction = (stream: InputStream, _: Data): Action => {
 	const category = stream.readCharacters(4);

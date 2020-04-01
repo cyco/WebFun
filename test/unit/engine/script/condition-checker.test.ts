@@ -12,7 +12,7 @@ describe("WebFun.Script.ConditionChecker", () => {
 			persistentState: {},
 			temporaryState: {}
 		} as any;
-		condition = new Condition({});
+		condition = {} as any;
 		checker = new ConditionChecker(Conditions, engine);
 	});
 

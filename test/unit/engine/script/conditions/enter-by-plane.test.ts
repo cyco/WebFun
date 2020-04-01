@@ -1,9 +1,8 @@
-import { Condition } from "src/engine/objects";
 import EnterByPlane from "src/engine/script/conditions/enter-by-plane";
 
 describeCondition("EnterByPlane", (check, engine) => {
 	it("checks if the zone has been entered by plane", async () => {
-		const condition = new Condition({ opcode: EnterByPlane.Opcode });
+		const condition: any = { opcode: EnterByPlane.Opcode };
 
 		engine.temporaryState.enteredByPlane = true;
 		expect(await check(condition)).toBeTrue();

@@ -1,4 +1,3 @@
-import { Instruction } from "src/engine/objects";
 import DiableAllMonsters from "src/engine/script/instructions/disable-all-monsters";
 import { Point } from "src/util";
 
@@ -10,9 +9,9 @@ describeInstruction("DiableAllMonsters", (execute, engine) => {
 			{ position: new Point(0, 0) }
 		];
 
-		const instruction: any = new Instruction({});
-		instruction._opcode = DiableAllMonsters.Opcode;
-		instruction._arguments = [];
+		const instruction: any = {};
+		instruction.opcode = DiableAllMonsters.Opcode;
+		instruction.arguments = [];
 
 		await execute(instruction);
 		expect(engine.currentZone.monsters[0].enabled).toBeFalse();

@@ -1,4 +1,4 @@
-import { Instruction, Action } from "src/engine/objects";
+import { Action } from "src/engine/objects";
 import { InstructionExecutor } from "src/engine/script";
 import DisableAction from "src/engine/script/instructions/disable-action";
 import { InstructionImplementations } from "src/engine/script/instructions";
@@ -14,7 +14,7 @@ describeInstruction("DisableAction", () => {
 		} as any;
 
 		const executor = new InstructionExecutor(InstructionImplementations, engine);
-		const instruction = new Instruction({ opcode: DisableAction.Opcode });
+		const instruction: any = { opcode: DisableAction.Opcode };
 
 		const action: Action = {} as any;
 		executor.action = action;

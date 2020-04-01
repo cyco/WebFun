@@ -1,4 +1,3 @@
-import { Instruction } from "src/engine/objects";
 import SpeakHero from "src/engine/script/instructions/speak-hero";
 
 describeInstruction("SpeakHero", (execute, engine) => {
@@ -7,9 +6,9 @@ describeInstruction("SpeakHero", (execute, engine) => {
 		engine.hero.location = location;
 		spyOn(engine, "speak");
 
-		const instruction: any = new Instruction({});
-		instruction._opcode = SpeakHero.Opcode;
-		instruction._additionalData = "test text";
+		const instruction: any = {};
+		instruction.opcode = SpeakHero.Opcode;
+		instruction.text = "test text";
 
 		await execute(instruction);
 

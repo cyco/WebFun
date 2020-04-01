@@ -121,8 +121,8 @@ const makeAction = (raw: RawAction, idx: number, zone: Zone, _: any): Action => 
 
 	action.id = idx;
 	action.name = raw.name || "";
-	action.conditions = raw.conditions.map((raw: any) => new Condition(raw));
-	action.instructions = raw.instructions.map((raw: any) => new Instruction(raw));
+	action.conditions = raw.conditions.slice();
+	action.instructions = raw.instructions.slice();
 	action.zone = zone;
 
 	return action;

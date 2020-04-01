@@ -1,4 +1,3 @@
-import { Instruction } from "src/engine/objects";
 import MarkAsSolved from "src/engine/script/instructions/mark-as-solved";
 import Sector from "src/engine/sector";
 
@@ -7,7 +6,7 @@ describeInstruction("MarkAsSolved", (execute, engine) => {
 		const sectorMock: Sector = { zone: {} } as any;
 		engine.currentWorld.findSectorContainingZone = () => sectorMock;
 
-		const instruction = new Instruction({ opcode: MarkAsSolved.Opcode });
+		const instruction = { opcode: MarkAsSolved.Opcode };
 
 		await execute(instruction);
 		expect(sectorMock.solved1).toBeTrue();

@@ -78,7 +78,9 @@ class GameDataSerializer {
 			const izx4Size = 2;
 			const calculateActionSize = (action: Action) =>
 				action.conditions.map((condition: Condition) => 0xe + condition.text.length).reduce(add, 2) +
-				action.instructions.map((condition: Condition) => 0xe + condition.text.length).reduce(add, 2);
+				action.instructions
+					.map((instruction: Instruction) => 0xe + instruction.text.length)
+					.reduce(add, 2);
 			const izonSize = 20 + zone.size.height * zone.size.width * Zone.LAYERS * 2;
 			const hotspotSize = zone.hotspots.length * 0xc;
 			const actionSize = zone.actions.map(calculateActionSize).reduce(add, 0) + 8 * zone.actions.length;
@@ -142,19 +144,19 @@ class GameDataSerializer {
 			});
 
 			stream.writeUint16(zone.requiredItems.length);
-			stream.writeUint16Array(zone.requiredItems.map(i => i.id));
+			stream.writeUint16Array(zone.requiredItems.map((i) => i.id));
 			stream.writeUint16(zone.goalItems.length);
-			stream.writeUint16Array(zone.goalItems.map(i => i.id));
+			stream.writeUint16Array(zone.goalItems.map((i) => i.id));
 
 			stream.writeCharacters("IZX2");
 			stream.writeUint32(izx2Size);
 			stream.writeUint16(zone.providedItems.length);
-			stream.writeUint16Array(zone.providedItems.map(i => i.id));
+			stream.writeUint16Array(zone.providedItems.map((i) => i.id));
 
 			stream.writeCharacters("IZX3");
 			stream.writeUint32(izx3Size);
 			stream.writeUint16(zone.npcs.length);
-			stream.writeUint16Array(zone.npcs.map(i => i.id));
+			stream.writeUint16Array(zone.npcs.map((i) => i.id));
 
 			stream.writeCharacters("IZX4");
 			stream.writeUint32(izx4Size);
@@ -188,7 +190,7 @@ class GameDataSerializer {
 		stream.writeUint32(
 			data.puzzles.length * 28 +
 				data.puzzles
-					.map((p: Puzzle) => p.strings.map(p => 2 + p.length).reduce(add, 0))
+					.map((p: Puzzle) => p.strings.map((p) => 2 + p.length).reduce(add, 0))
 					.reduce(add, 0) +
 				2
 		);
@@ -196,7 +198,7 @@ class GameDataSerializer {
 		data.puzzles.forEach((puzzle: Puzzle, index: number) => {
 			stream.writeUint16(index);
 			stream.writeCharacters("IPUZ");
-			stream.writeUint32(18 + puzzle.strings.map(s => 2 + s.length).reduce(add, 0));
+			stream.writeUint32(18 + puzzle.strings.map((s) => 2 + s.length).reduce(add, 0));
 
 			if (index === Yoda.goalIDs.RESCUE_YODA || index === Yoda.goalIDs.CAR) {
 				stream.writeUint32(Puzzle.Type.End.rawValue);
@@ -206,7 +208,7 @@ class GameDataSerializer {
 			stream.writeUint32(puzzle.unknown2);
 			stream.writeUint16(puzzle.unknown3);
 
-			puzzle.strings.forEach(string => {
+			puzzle.strings.forEach((string) => {
 				stream.writeLengthPrefixedString(string);
 			});
 			stream.writeUint16(puzzle.item1.id);
@@ -230,8 +232,8 @@ class GameDataSerializer {
 			stream.writeUint16(c.garbage1);
 			stream.writeUint32(c.garbage2);
 
-			c.frames.forEach(frame => {
-				stream.writeUint16Array(frame.tiles.map(t => (t ? t.id : -1)));
+			c.frames.forEach((frame) => {
+				stream.writeUint16Array(frame.tiles.map((t) => (t ? t.id : -1)));
 			});
 		});
 		stream.writeUint16(-1);

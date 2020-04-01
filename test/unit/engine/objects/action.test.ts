@@ -1,7 +1,4 @@
-import AbstractActionItem from "src/engine/objects/abstract-action-item";
 import Action from "src/engine/objects/action";
-import Condition from "src/engine/objects/condition";
-import Instruction from "src/engine/objects/instruction";
 
 describe("WebFun.Engine.Objects.Action", () => {
 	let subject: Action;
@@ -33,31 +30,5 @@ describe("WebFun.Engine.Objects.Action", () => {
 
 	it("has a name (eventhough it's only used in indy)", () => {
 		expect(subject.name).toBe("");
-	});
-
-	describe("AbstractActionItem", () => {
-		it("is a common (private) base class for instructions and conditions", () => {
-			expect(typeof AbstractActionItem).toBe("function");
-		});
-	});
-
-	describe("Instruction", () => {
-		it("extends AbstractActionItem", () => {
-			const instruction = new Instruction({});
-			expect(instruction instanceof AbstractActionItem).toBeTrue();
-		});
-
-		it("may have 'additional data' of arbitrary length (usually text someone speaks)", () => {
-			const instruction = new Instruction({});
-			(instruction as any)._additionalData = "something someone might say";
-			expect(instruction.text).toEqual("something someone might say");
-		});
-	});
-
-	describe("Condition", () => {
-		it("extends AbstractActionItem", () => {
-			const condition = new Condition({});
-			expect(condition instanceof AbstractActionItem).toBeTrue();
-		});
 	});
 });

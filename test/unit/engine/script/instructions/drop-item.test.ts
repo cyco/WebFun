@@ -1,4 +1,3 @@
-import { Instruction } from "src/engine/objects";
 import DropItem from "src/engine/script/instructions/drop-item";
 import * as Util from "src/util";
 import { Tile } from "src/engine/objects";
@@ -11,9 +10,9 @@ describeInstruction("DropItem", (execute, engine) => {
 		const mockTile = {};
 		engine.assets.populate(Tile, [null, null, null, mockTile]);
 
-		const instruction: any = new Instruction({}) as any;
-		instruction._opcode = DropItem.Opcode;
-		instruction._arguments = [3, 1, 2];
+		const instruction: any = {} as any;
+		instruction.opcode = DropItem.Opcode;
+		instruction.arguments = [3, 1, 2];
 
 		await execute(instruction);
 
@@ -31,9 +30,9 @@ describeInstruction("DropItem", (execute, engine) => {
 		});
 		engine.assets.populate(Tile, [null, null, null, mockTile]);
 
-		const instruction: any = new Instruction({}) as any;
-		instruction._opcode = DropItem.Opcode;
-		instruction._arguments = [-1, 1, 2];
+		const instruction: any = {} as any;
+		instruction.opcode = DropItem.Opcode;
+		instruction.arguments = [-1, 1, 2];
 
 		await execute(instruction);
 

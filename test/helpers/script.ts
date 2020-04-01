@@ -38,7 +38,7 @@ const makeInstructionDescription = (desc: JasmineDescribe) => (Name: string, blo
 
 		beforeEach(() => Object.assign(engine, mockEngine()));
 
-		block(async instruction => {
+		block(async (instruction) => {
 			executor.action = {
 				zone: engine.currentZone,
 				instructions: [instruction]

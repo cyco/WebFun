@@ -1,4 +1,3 @@
-import { Instruction } from "src/engine/objects";
 import MoveTile from "src/engine/script/instructions/move-tile";
 
 describeInstruction("MoveTile", (execute, engine) => {
@@ -6,9 +5,9 @@ describeInstruction("MoveTile", (execute, engine) => {
 		spyOn(engine.currentZone, "setTile");
 		spyOn(engine.currentZone, "getTile");
 
-		const instruction: any = new Instruction({});
-		instruction._opcode = MoveTile.Opcode;
-		instruction._arguments = [0, 1, 2, 3, 4];
+		const instruction: any = {};
+		instruction.opcode = MoveTile.Opcode;
+		instruction.arguments = [0, 1, 2, 3, 4];
 		await execute(instruction);
 
 		expect(engine.currentZone.getTile).toHaveBeenCalled();

@@ -1,11 +1,10 @@
-import { Instruction } from "src/engine/objects";
 import StopSound from "src/engine/script/instructions/stop-sound";
 
 describeInstruction("StopSound", (execute, engine) => {
 	it("stops all sounds that are currently playing", async () => {
-		const instruction: any = new Instruction({});
-		instruction._opcode = StopSound.Opcode;
-		instruction._arguments = [];
+		const instruction: any = {};
+		instruction.opcode = StopSound.Opcode;
+		instruction.arguments = [];
 
 		expect(() => execute(instruction)).not.toThrow();
 	});
