@@ -9,6 +9,7 @@ import { or } from "test/helpers/css";
 describeComponent(MenuView, () => {
 	let subject: MenuView;
 	beforeEach(() => (subject = render(MenuView) as MenuView));
+	afterEach(() => subject.remove());
 
 	it("draws all items of a menu", () => {
 		subject.menu = new Menu([{ title: "Test" }, MenuItemSeparator, { title: "Test 2" }]);
@@ -39,7 +40,7 @@ describeComponent(MenuView, () => {
 		expect(subject.isConnected).toBeFalse();
 	});
 
-	it("executes a callback when closed", done => {
+	it("executes a callback when closed", (done) => {
 		subject.menu = new Menu([{ title: "Test" }]);
 		subject.onclose = () => {
 			expect(true).toBeTrue();

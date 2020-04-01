@@ -3,6 +3,7 @@ import Textbox from "src/ui/components/textbox";
 describeComponent(Textbox, () => {
 	let subject: Textbox;
 	beforeEach(() => (subject = render(Textbox) as Textbox));
+	afterEach(() => subject.remove());
 
 	it("can be editable", () => {
 		expect(subject.editable).toBeTrue();

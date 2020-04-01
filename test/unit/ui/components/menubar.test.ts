@@ -12,6 +12,7 @@ describeComponent(Menubar, () => {
 		subject = render(Menubar) as Menubar;
 		subject.menu = new Menu([{ title: "Test" }, MenuItemSeparator, { title: "Test 2" }]);
 	});
+	afterEach(() => subject.remove());
 
 	it("is a menu view that's attached to the top of a window", () => {
 		expect(
@@ -36,7 +37,7 @@ describeComponent(Menubar, () => {
 		expect(() => subject.dispatchEvent(event)).not.toThrow();
 	});
 
-	it("executes a clicked item's callback", done => {
+	it("executes a clicked item's callback", (done) => {
 		subject.menu.items[0].callback = () => done();
 		const item = subject.querySelector(MenuItemComponent.tagName);
 		const box = item.getBoundingClientRect();
