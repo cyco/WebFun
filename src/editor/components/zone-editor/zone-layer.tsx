@@ -12,7 +12,7 @@ class ZoneLayer extends Component {
 	public static readonly observedAttributes: string[] = [];
 	private _zone: Zone = null;
 	private _layer: number = null;
-	private _canvas = <canvas /> as HTMLCanvasElement;
+	private _canvas = (<canvas />) as HTMLCanvasElement;
 	private _palette: ColorPalette = null;
 	private _imageData: ImageData = null;
 

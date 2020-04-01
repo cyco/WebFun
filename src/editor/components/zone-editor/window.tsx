@@ -29,9 +29,9 @@ import ZoneEditor from "src/editor/components/zone-editor/view";
 class Window extends AbstractPanel {
 	public static readonly tagName = "wf-zone-editor-window";
 	private _zone: Zone;
-	private _editor: ZoneEditor = <ZoneEditor /> as ZoneEditor;
+	private _editor: ZoneEditor = (<ZoneEditor />) as ZoneEditor;
 	private _state: Storage;
-	private _sidebar: Sidebar = <Sidebar /> as Sidebar;
+	private _sidebar: Sidebar = (<Sidebar />) as Sidebar;
 	private _tilePicker: PopoutTilePicker;
 	private _data: DataManager;
 	private _tools: AbstractTool[];
@@ -52,7 +52,7 @@ class Window extends AbstractPanel {
 			this._editor.setLayerVisible(layer, layer.visible);
 		});
 
-		const layers = <SidebarLayersCell /> as SidebarLayersCell;
+		const layers = (<SidebarLayersCell />) as SidebarLayersCell;
 		layers.addEventListener(
 			LayerChangeEvents.LayerDidChange,
 			(e: CustomEvent) => (this._editor.currentLayer = e.detail.layer)
@@ -117,7 +117,7 @@ class Window extends AbstractPanel {
 
 	private _editActions() {
 		if (!this._actionsWindow) {
-			const window = <Panel style={{ width: "480px", maxHeight: "630px" }} /> as Panel;
+			const window = (<Panel style={{ width: "480px", maxHeight: "630px" }} />) as Panel;
 			window.content.appendChild(<ActionEditor />);
 
 			this._actionsWindow = window;
@@ -131,7 +131,7 @@ class Window extends AbstractPanel {
 	}
 
 	private _buildToolItem(tool: AbstractTool): ToolComponent {
-		const component = <ToolComponent tool={tool} editor={this._editor} /> as ToolComponent;
+		const component = (<ToolComponent tool={tool} editor={this._editor} />) as ToolComponent;
 		tool.addEventListener(AbstractTool.Event.ChangedTiles, (e: TileChangeEvent) =>
 			this._editor.redraw(e.affectedPoints)
 		);
@@ -139,7 +139,7 @@ class Window extends AbstractPanel {
 	}
 
 	private _buildActionItem(a: ActionDescription) {
-		return <ActionComponent action={a} /> as ActionComponent;
+		return (<ActionComponent action={a} />) as ActionComponent;
 	}
 
 	set state(state) {

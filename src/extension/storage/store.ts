@@ -1,4 +1,4 @@
-const store = function(key: string, object: JSONValue): JSONValue {
+const store = function (key: string, object: JSONValue): JSONValue {
 	try {
 		if (
 			typeof object === "object" &&

@@ -4,7 +4,7 @@ import Component from "src/ui/component";
 
 class Selector extends Component {
 	public static readonly tagName = "wf-selector";
-	private element: HTMLSelectElement = <select /> as HTMLSelectElement;
+	private element: HTMLSelectElement = (<select />) as HTMLSelectElement;
 
 	protected connectedCallback() {
 		super.connectedCallback();
@@ -43,7 +43,7 @@ class Selector extends Component {
 		);
 	}
 
-	set options(options: string[] | ({ label: string; value: string })[]) {
+	set options(options: string[] | { label: string; value: string }[]) {
 		(options as any).forEach((option: any) =>
 			typeof option === "string"
 				? this.addOption(option, option)

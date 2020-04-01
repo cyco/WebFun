@@ -185,8 +185,5 @@ function buildAssetManagerFromGameData() {
 describe("WebFun.Acceptance.World Generation", () => {
 	beforeAll(async () => (rawData = await loadGameData(Yoda)));
 
-	PrepareExpectations(Worlds)
-		.sort()
-		.map(ParseExpectation)
-		.forEach(runTest);
+	PrepareExpectations(Worlds).sort().map(ParseExpectation).forEach(runTest);
 });

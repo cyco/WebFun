@@ -39,8 +39,7 @@ class HotspotLayer extends Component {
 				style={{
 					left: `${point.x * Tile.WIDTH}px`,
 					top: `${point.y * Tile.HEIGHT}px`
-				}}
-			>
+				}}>
 				{count > 1 ? `${count}` : ""}
 			</div>
 		);

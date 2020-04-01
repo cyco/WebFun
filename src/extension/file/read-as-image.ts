@@ -1,6 +1,6 @@
 import { File } from "src/std/dom";
 
-const readAsImage = async function(): Promise<Image> {
+const readAsImage = async function (): Promise<Image> {
 	const buffer = await this.readAsArrayBuffer();
 
 	return new Promise<Image>(async (resolve, reject) => {

@@ -1,7 +1,7 @@
 import { File } from "src/std/dom";
 import { FileReader } from "src/std/dom";
 
-const readAsText = function(): Promise<string> {
+const readAsText = function (): Promise<string> {
 	return new Promise<string>((resolve, reject) => {
 		const fileReader = new FileReader();
 		fileReader.onload = (e: any) => resolve(e.target.result);

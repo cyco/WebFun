@@ -21,7 +21,7 @@ class LoadingView extends Component {
 			}}
 		/>
 	) as HTMLCanvasElement;
-	private _progressBar: SegmentedProgressBar = <SegmentedProgressBar /> as SegmentedProgressBar;
+	private _progressBar: SegmentedProgressBar = (<SegmentedProgressBar />) as SegmentedProgressBar;
 
 	protected connectedCallback() {
 		super.connectedCallback();

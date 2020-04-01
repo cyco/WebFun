@@ -47,8 +47,7 @@ class MainWindow extends AbstractWindow {
 					<Button
 						label="Inventory"
 						onclick={(e: Event) => this.toggleInventory(e)}
-						onanimationend={(e: any) => e.target.classList.remove("pulse-animation")}
-					></Button>
+						onanimationend={(e: any) => e.target.classList.remove("pulse-animation")}></Button>
 					<Button label="Map" disabled onclick={() => this.toggleMap()}></Button>
 					<Button label="Menu"></Button>
 				</div>

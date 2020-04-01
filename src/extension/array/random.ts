@@ -1,7 +1,7 @@
 import { Array } from "src/std";
 import { floor, random } from "src/std/math";
 
-const randomElement = function() {
+const randomElement = function () {
 	return this[floor(random() * this.length)];
 };
 

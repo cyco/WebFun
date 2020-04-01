@@ -16,10 +16,10 @@ class SetupImageInspector extends AbstractInspector {
 		<PaletteColorPicker
 			size={new Size(16, 16)}
 			style={{
-				width: "128px",
-				height: "128px",
+				"width": "128px",
+				"height": "128px",
 				"margin-left": "20px",
-				display: "inline-block"
+				"display": "inline-block"
 			}}
 			onchange={() => (this._imageEditor.colorIndex = this._colorPicker.colorIndex)}
 		/>

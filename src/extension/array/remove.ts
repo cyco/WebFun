@@ -1,6 +1,6 @@
 import { Array } from "src/std";
 
-const remove = function<T>(item: T) {
+const remove = function <T>(item: T) {
 	const index = this.indexOf(item);
 	if (~index) {
 		this.splice(index, 1);

@@ -14,7 +14,7 @@ export interface InteractiveMapContextMenuProvider {
 
 class InteractiveMap extends Map implements EventListenerObject {
 	public static readonly tagName = "wf-resource-editor-map-interactive";
-	private _highlight: SectorPreview = <SectorPreview /> as SectorPreview;
+	private _highlight: SectorPreview = (<SectorPreview />) as SectorPreview;
 	private _highlightTile: Point = null;
 	public contextMenuProvider: InteractiveMapContextMenuProvider;
 

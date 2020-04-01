@@ -17,7 +17,7 @@ describe("WebFun.Engine.Scenes.PauseScene", () => {
 				readInput() {
 					return pause ? InputMask.Pause : InputMask.None;
 				},
-				clear: function() {
+				clear: function () {
 					pause = false;
 				}
 			},

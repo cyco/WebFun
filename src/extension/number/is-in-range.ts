@@ -1,4 +1,4 @@
-const isInRange = function(start: number, end: number): boolean {
+const isInRange = function (start: number, end: number): boolean {
 	return this >= start && this <= end;
 };
 

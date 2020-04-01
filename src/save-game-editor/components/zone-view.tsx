@@ -10,7 +10,7 @@ import { drawZoneImageData } from "src/app/rendering/canvas";
 class ZoneView extends Component implements EventListenerObject {
 	public static readonly tagName = "wf-editor-zone";
 	public size: Size = new Size(4 * 32, 4 * 32);
-	private _canvas = <canvas className="pixelated" /> as HTMLCanvasElement;
+	private _canvas = (<canvas className="pixelated" />) as HTMLCanvasElement;
 	private _zone: Zone;
 	public palette: ColorPalette;
 

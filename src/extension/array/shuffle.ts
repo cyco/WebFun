@@ -1,7 +1,7 @@
 import { Array } from "src/std";
 import { rand } from "src/util";
 
-const shuffle = function() {
+const shuffle = function () {
 	const count = this.length;
 	if (count === 0) return this;
 	if (count === 1) {

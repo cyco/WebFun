@@ -155,14 +155,14 @@ class ScriptDebugger implements DebuggingScriptProcessingUnitDelegate {
 		let i = 0;
 		this._variableMap = {};
 		this._engine.currentZone.actions
-			.map((a) =>
+			.map(a =>
 				a.conditions
-					.filter((c) => c.opcode === ConditionsByName.IsVariable.Opcode)
-					.map((c) => [c.arguments[1], c.arguments[2], c.arguments[3]])
+					.filter(c => c.opcode === ConditionsByName.IsVariable.Opcode)
+					.map(c => [c.arguments[1], c.arguments[2], c.arguments[3]])
 					.concat(
 						a.instructions
-							.filter((c) => c.opcode === InstructionsByName.SetVariable.Opcode)
-							.map((a) => [a.arguments[0], a.arguments[1], a.arguments[2]])
+							.filter(c => c.opcode === InstructionsByName.SetVariable.Opcode)
+							.map(a => [a.arguments[0], a.arguments[1], a.arguments[2]])
 					)
 			)
 			.flatten()

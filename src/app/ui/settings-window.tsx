@@ -4,10 +4,10 @@ import { AbstractWindow, Button, Slider } from "src/ui/components";
 
 abstract class SettingsWindow extends AbstractWindow {
 	public closable = false;
-	private _minLabel: HTMLLabelElement = <label /> as HTMLLabelElement;
-	private _midLabel: HTMLLabelElement = <label /> as HTMLLabelElement;
-	private _maxLabel: HTMLLabelElement = <label /> as HTMLLabelElement;
-	private _slider: Slider = <Slider min={0} value={0.5} max={1} /> as Slider;
+	private _minLabel: HTMLLabelElement = (<label />) as HTMLLabelElement;
+	private _midLabel: HTMLLabelElement = (<label />) as HTMLLabelElement;
+	private _maxLabel: HTMLLabelElement = (<label />) as HTMLLabelElement;
+	private _slider: Slider = (<Slider min={0} value={0.5} max={1} />) as Slider;
 	private _key: string;
 
 	constructor() {

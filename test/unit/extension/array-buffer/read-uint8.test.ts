@@ -4,7 +4,7 @@ import { getFixtureData } from "test/helpers/fixture-loading";
 describe("WebFun.Extension.ArrayBuffer.readUint8", () => {
 	let sampleBuffer: ArrayBuffer;
 	beforeAll(done => {
-		getFixtureData("someData", function(buffer) {
+		getFixtureData("someData", function (buffer) {
 			sampleBuffer = buffer;
 			done();
 		});

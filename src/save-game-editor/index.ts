@@ -18,10 +18,12 @@ const main = async (windowManager: WindowManager = WindowManager.defaultManager)
 
 	let editors = 0;
 	return Promise.all(
-		(await FilePicker.Pick({
-			allowedTypes: ["wld"],
-			allowsMultipleFiles: true
-		})).map(async file => {
+		(
+			await FilePicker.Pick({
+				allowedTypes: ["wld"],
+				allowsMultipleFiles: true
+			})
+		).map(async file => {
 			const stream = await file.provideInputStream();
 			const editor = document.createElement(EditorWindow.tagName) as EditorWindow;
 			editor.title = file.name;

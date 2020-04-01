@@ -86,10 +86,10 @@ class Assembler {
 		if (progn.first() !== s`progn`) {
 			instructions = [this.parseInstruction(progn)];
 		} else {
-			instructions = progn.slice(1).map((input) => this.parseInstruction(input));
+			instructions = progn.slice(1).map(input => this.parseInstruction(input));
 		}
 
-		const conditions = body.map((input) => this.parseCondition(input));
+		const conditions = body.map(input => this.parseCondition(input));
 		return [conditions, instructions];
 	}
 
@@ -124,11 +124,11 @@ class Assembler {
 			throw new AssemblerInputError("Expected last argument to be a string.", input);
 		}
 
-		if (!args.every((arg) => typeof arg === "number")) {
+		if (!args.every(arg => typeof arg === "number")) {
 			throw new AssemblerInputError("Expected arguments to be of type number.", input);
 		}
 
-		if (!args.every((arg) => arg >= -1 * 2 ** 15 && arg <= 2 ** 15 - 1)) {
+		if (!args.every(arg => arg >= -1 * 2 ** 15 && arg <= 2 ** 15 - 1)) {
 			throw new AssemblerInputError("Arguments must fit into a 16bit signed integer.", input);
 		}
 

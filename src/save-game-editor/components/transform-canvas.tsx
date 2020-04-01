@@ -10,7 +10,7 @@ export interface TransformCanvasRenderingContext2D extends CanvasRenderingContex
 
 class TransformCanvas extends Component implements EventListenerObject {
 	static tagName = "wf-save-game-editor-canvas";
-	private _canvas = <canvas /> as HTMLCanvasElement;
+	private _canvas = (<canvas />) as HTMLCanvasElement;
 	public draw: (ctx: TransformCanvasRenderingContext2D) => void = () => {};
 	private scaleFactor = 1.1;
 
@@ -120,43 +120,43 @@ class TransformCanvas extends Component implements EventListenerObject {
 		const ctx = this.getContext("2d");
 		const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
 		let xform = svg.createSVGMatrix() as SVGMatrix;
-		ctx.getTransform = function() {
+		ctx.getTransform = function () {
 			return xform;
 		};
 
 		const savedTransforms: SVGMatrix[] = [];
 		const save = ctx.save;
-		ctx.save = function() {
+		ctx.save = function () {
 			savedTransforms.push(xform.translate(0, 0));
 			return save.call(ctx);
 		};
 
 		const restore = ctx.restore;
-		ctx.restore = function() {
+		ctx.restore = function () {
 			xform = savedTransforms.pop();
 			return restore.call(ctx);
 		};
 
 		const scale = ctx.scale;
-		ctx.scale = function(sx, sy) {
+		ctx.scale = function (sx, sy) {
 			xform = xform.scale(sx, sy);
 			return scale.call(ctx, sx, sy);
 		};
 
 		const rotate = ctx.rotate;
-		ctx.rotate = function(radians) {
+		ctx.rotate = function (radians) {
 			xform = xform.rotate((radians * 180) / Math.PI);
 			return rotate.call(ctx, radians);
 		};
 
 		const translate = ctx.translate;
-		ctx.translate = function(dx, dy) {
+		ctx.translate = function (dx, dy) {
 			xform = xform.translate(dx, dy);
 			return translate.call(ctx, dx, dy);
 		};
 
 		const transform = ctx.transform;
-		ctx.transform = function(a, b, c, d, e, f) {
+		ctx.transform = function (a, b, c, d, e, f) {
 			const m2 = svg.createSVGMatrix();
 			m2.a = a;
 			m2.b = b;
@@ -169,7 +169,7 @@ class TransformCanvas extends Component implements EventListenerObject {
 		};
 
 		const setTransform = ctx.setTransform;
-		ctx.setTransform = function(
+		ctx.setTransform = function (
 			a?: DOMMatrix2DInit | number,
 			b?: number,
 			c?: number,
@@ -189,7 +189,7 @@ class TransformCanvas extends Component implements EventListenerObject {
 		};
 
 		const pt = svg.createSVGPoint();
-		ctx.transformedPoint = function(x: number, y: number): SVGPoint {
+		ctx.transformedPoint = function (x: number, y: number): SVGPoint {
 			pt.x = x;
 			pt.y = y;
 			return pt.matrixTransform(xform.inverse());

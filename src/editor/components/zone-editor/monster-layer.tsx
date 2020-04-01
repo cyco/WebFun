@@ -46,8 +46,7 @@ class MonsterLayer extends Component {
 					top: `${point.y * Tile.HEIGHT - 1}px`
 				}}
 				character={face}
-				palette={this.palette}
-			>
+				palette={this.palette}>
 				{" "}
 				{count > 1 ? `${count}` : ""}{" "}
 			</MonsterLayerMonster>

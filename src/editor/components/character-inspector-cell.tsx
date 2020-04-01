@@ -37,8 +37,7 @@ class CharacterInspectorCell extends Cell<Char> {
 								detail: { cell: this, name: (e.target as Element).textContent }
 							})
 						)
-					}
-				>
+					}>
 					{this.data.name}
 				</Label>
 			</div>,

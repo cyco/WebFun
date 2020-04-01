@@ -1,6 +1,6 @@
 import { PrefixedStorage } from "src/util";
 
-const prefixedWith = function(prefix: string): PrefixedStorage {
+const prefixedWith = function (prefix: string): PrefixedStorage {
 	return new PrefixedStorage(this, prefix);
 };
 

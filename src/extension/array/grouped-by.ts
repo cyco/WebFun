@@ -1,8 +1,8 @@
 import { Array } from "src/std";
 
-const groupedBy = function<T, R>(accessor: (item: T) => R): T[][] {
+const groupedBy = function <T, R>(accessor: (item: T) => R): T[][] {
 	return Object.values(
-		this.reduce(function(result: any, x: T) {
+		this.reduce(function (result: any, x: T) {
 			const key = accessor(x);
 			(result[key] = result[key] || []).push(x);
 			return result;

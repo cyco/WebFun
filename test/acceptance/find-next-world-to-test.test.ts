@@ -6,11 +6,7 @@ xdescribe("WebFun.Acceptance.Gameplay.FindNextWorldToTest", () => {
 });
 
 function findWorldToTestNext() {
-	const bestWorld = findBestWorld(
-		PrepareExpectations(Worlds)
-			.sort()
-			.map(ParseExpectation)
-	);
+	const bestWorld = findBestWorld(PrepareExpectations(Worlds).sort().map(ParseExpectation));
 	if (bestWorld) console.log("best world: ", bestWorld.seed, bestWorld.planet, bestWorld.size);
 	else console.log("could not find a world to satisfy requirements");
 }

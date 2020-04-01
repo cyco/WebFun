@@ -37,7 +37,7 @@ describeComponent(Menubar, () => {
 		expect(() => subject.dispatchEvent(event)).not.toThrow();
 	});
 
-	it("executes a clicked item's callback", (done) => {
+	it("executes a clicked item's callback", done => {
 		subject.menu.items[0].callback = () => done();
 		const item = subject.querySelector(MenuItemComponent.tagName);
 		const box = item.getBoundingClientRect();

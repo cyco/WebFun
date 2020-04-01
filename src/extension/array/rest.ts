@@ -1,6 +1,6 @@
 import { Array } from "src/std";
 
-const rest = function<T>(): T[] {
+const rest = function <T>(): T[] {
 	return this.slice(1);
 };
 

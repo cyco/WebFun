@@ -7,7 +7,7 @@ import TileView from "src/debug/components/tile-view";
 
 class TileCell extends Cell<Tile> {
 	public static readonly tagName = "wf-debug-tile-cell";
-	public view: TileView = <TileView /> as TileView;
+	public view: TileView = (<TileView />) as TileView;
 
 	connectedCallback() {
 		super.connectedCallback();

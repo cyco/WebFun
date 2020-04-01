@@ -12,7 +12,7 @@ describe("WebFun.Extension.Storage.load", () => {
 		store = {} as any;
 		warnings = [];
 
-		localStorage.getItem = function(key) {
+		localStorage.getItem = function (key) {
 			return store[key];
 		};
 		console.warn = (...args) => {

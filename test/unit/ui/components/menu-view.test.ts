@@ -40,7 +40,7 @@ describeComponent(MenuView, () => {
 		expect(subject.isConnected).toBeFalse();
 	});
 
-	it("executes a callback when closed", (done) => {
+	it("executes a callback when closed", done => {
 		subject.menu = new Menu([{ title: "Test" }]);
 		subject.onclose = () => {
 			expect(true).toBeTrue();

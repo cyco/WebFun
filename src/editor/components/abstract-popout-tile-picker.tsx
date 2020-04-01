@@ -18,7 +18,7 @@ abstract class PopoverTilePicker extends Component implements EventListenerObjec
 
 	protected _tiles: Tile[] = null;
 	protected _tile: Tile = null;
-	protected _tileView = <TileComponent /> as TileComponent;
+	protected _tileView = (<TileComponent />) as TileComponent;
 	private _window: Panel;
 
 	protected connectedCallback() {
@@ -34,7 +34,7 @@ abstract class PopoverTilePicker extends Component implements EventListenerObjec
 
 	public handleEvent(e: MouseEvent) {
 		if (!this._window) {
-			const panel = <Panel /> as Panel;
+			const panel = (<Panel />) as Panel;
 			const picker = (
 				<TilePicker
 					tiles={this.tiles}

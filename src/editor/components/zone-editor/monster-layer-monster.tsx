@@ -9,7 +9,7 @@ class MonsterLayerMonster extends Component {
 	public static readonly tagName = "wf-monster-layer-monster";
 	public character: Char;
 	public palette: ColorPalette;
-	public canvas = <canvas width={32} height={32} className="pixelated" /> as HTMLCanvasElement;
+	public canvas = (<canvas width={32} height={32} className="pixelated" />) as HTMLCanvasElement;
 
 	protected connectedCallback() {
 		super.connectedCallback();

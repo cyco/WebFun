@@ -7,10 +7,10 @@ export default (name: string) => {
 		.map((line: string) => {
 			const parts = line
 				.split(",")
-				.map(function(v) {
+				.map(function (v) {
 					return parseInt(v, 0x10);
 				})
-				.map(function(v) {
+				.map(function (v) {
 					return v === 0xffff ? -1 : v;
 				});
 			const data = parts.slice(3);

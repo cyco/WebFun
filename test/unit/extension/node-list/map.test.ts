@@ -25,7 +25,7 @@ describe(
 			expect(typeof (nodeList as any).map).toBe("function");
 			expect(nodeList.length).toBe(2);
 
-			const result = map.call(nodeList, function(node: any) {
+			const result = map.call(nodeList, function (node: any) {
 				return node.textContent;
 			});
 			expect(result).toEqual(["test", "values"]);

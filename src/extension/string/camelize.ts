@@ -1,4 +1,4 @@
-const camelize = function() {
+const camelize = function () {
 	if (!this.length) return "";
 
 	return this.split("-")

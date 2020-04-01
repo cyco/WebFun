@@ -22,7 +22,7 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 	private _gameData: GameData;
 	private _palette: ColorPalette;
 	private _state: SaveState;
-	private _save: Element = <div className="save" />;
+	private _save: Element = (<div className="save" />);
 	public state: Storage = new DiscardingStorage();
 
 	protected connectedCallback() {
@@ -99,8 +99,7 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 
 				<SegmentControl
 					onsegmentchange={(segment: Segment) => this._showSegment(segment)}
-					state={this.state.prefixedWith("content")}
-				>
+					state={this.state.prefixedWith("content")}>
 					<Segment>World</Segment>
 					{state.type === GameTypeYoda && <Segment>Dagobah</Segment>}
 					<Segment>Inventory</Segment>

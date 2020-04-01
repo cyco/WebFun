@@ -11,7 +11,7 @@ class ZonePickerCell extends Cell<Zone> {
 	public static readonly observedAttributes: string[] = [];
 
 	private _palette: ColorPalette;
-	private _canvas = <canvas className="pixelated" /> as HTMLCanvasElement;
+	private _canvas = (<canvas className="pixelated" />) as HTMLCanvasElement;
 	private _data: Zone;
 
 	protected connectedCallback() {

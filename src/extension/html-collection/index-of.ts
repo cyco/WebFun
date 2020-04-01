@@ -1,7 +1,7 @@
 import { Array } from "src/std";
 import { HTMLCollection } from "src/std/dom";
 
-const indexOf = function(node: Node) {
+const indexOf = function (node: Node) {
 	return Array.from(this).indexOf(node);
 };
 

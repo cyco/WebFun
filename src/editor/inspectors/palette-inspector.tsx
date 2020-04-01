@@ -56,7 +56,10 @@ class PaletteInspector extends AbstractInspector {
 	async downloadPalette() {
 		const type = await ModalPrompt("Pick file format:", {
 			defaultValue: "gpl",
-			options: [{ label: "GIMP Palette", value: "gpl" }, { label: "Adobe Color Table", value: "act" }]
+			options: [
+				{ label: "GIMP Palette", value: "gpl" },
+				{ label: "Adobe Color Table", value: "act" }
+			]
 		});
 		if (type === null) return;
 

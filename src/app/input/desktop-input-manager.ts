@@ -215,10 +215,7 @@ class DesktopInputManager implements InputManager, EventListenerObject {
 			if (e.button === 0) this._currentInput |= InputMask.Walk;
 			if (e.button === 1) this._currentInput |= InputMask.Attack;
 		} else {
-			this.pathTarget = point
-				.byScalingBy(9)
-				.floor()
-				.subtract(this.engine.camera.offset);
+			this.pathTarget = point.byScalingBy(9).floor().subtract(this.engine.camera.offset);
 			this._highlight.target = this.pathTarget;
 		}
 

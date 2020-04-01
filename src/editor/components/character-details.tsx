@@ -62,8 +62,7 @@ class CharacterDetails extends Component {
 				<button
 					onclick={() =>
 						(this._framePreview.frame = this._character.frames[++this._currentPreviewFrame % 3])
-					}
-				>
+					}>
 					Step
 				</button>
 				<label>
@@ -75,8 +74,7 @@ class CharacterDetails extends Component {
 							this._character.type = Char.Type.fromNumber(rawValue);
 							this._character.reference = -1;
 							this._rebuild();
-						}}
-					>
+						}}>
 						{Char.Type.knownTypes
 							.filter(t => t)
 							.map(t => (
@@ -95,8 +93,7 @@ class CharacterDetails extends Component {
 							const rawValue = (currentTarget as HTMLSelectElement).value.parseInt();
 							this._character.movementType = Char.MovementType.fromNumber(rawValue);
 							this._rebuild();
-						}}
-					>
+						}}>
 						{Char.MovementType.knownTypes.map(type => (
 							<option value={type.rawValue.toString()} selected={type === movementType}>
 								{type.name}
@@ -137,8 +134,7 @@ class CharacterDetails extends Component {
 						onchange={({ currentTarget }: CustomEvent) => {
 							this._character.reference = (currentTarget as HTMLSelectElement).value.parseInt();
 							this._rebuild();
-						}}
-					>
+						}}>
 						<option value="-1">None</option>
 						{weapons.map(weapon => (
 							<option
@@ -146,8 +142,7 @@ class CharacterDetails extends Component {
 								selected={
 									(type === Char.Type.Hero || type === Char.Type.Enemy) &&
 									reference === weapon.id
-								}
-							>
+								}>
 								{weapon.id} {weapon.name}
 							</option>
 						))}
@@ -161,14 +156,12 @@ class CharacterDetails extends Component {
 						onchange={({ currentTarget }: CustomEvent) => {
 							this._character.reference = (currentTarget as HTMLSelectElement).value.parseInt();
 							this._rebuild();
-						}}
-					>
+						}}>
 						<option value="-1">None</option>
 						{sounds.map((sound, index) => (
 							<option
 								value={`${index}`}
-								selected={type === Char.Type.Weapon && reference === index}
-							>
+								selected={type === Char.Type.Weapon && reference === index}>
 								{index} {sound}
 							</option>
 						))}

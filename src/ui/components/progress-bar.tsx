@@ -4,7 +4,7 @@ import Component from "../component";
 
 class ProgressBar extends Component {
 	public static readonly tagName = "wf-progress-bar";
-	private _indicator: HTMLElement = <div />;
+	private _indicator: HTMLElement = (<div />);
 	private _value: number = 0;
 
 	connectedCallback() {

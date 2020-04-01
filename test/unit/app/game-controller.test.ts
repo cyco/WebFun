@@ -207,7 +207,7 @@ describe("WebFun.App.GameController", () => {
 		mockedData = {} as any;
 		mockedPalette = {} as any;
 		spyOn(LoaderModule, "default").and.returnValue({
-			load: function() {
+			load: function () {
 				const loader = this;
 				const loadEvent = new CustomEvent("load", {
 					detail: { data: mockedData, palette: mockedPalette }

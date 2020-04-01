@@ -7,8 +7,8 @@ class RadioButton extends Component {
 	public static readonly Group = Group;
 	public static readonly tagName = "wf-radio-button";
 	private _id = String.UUID();
-	private _radio = <input type="radio" id={this._id} /> as HTMLInputElement;
-	private _label = <label htmlFor={this._id} />;
+	private _radio = (<input type="radio" id={this._id} />) as HTMLInputElement;
+	private _label = (<label htmlFor={this._id} />);
 
 	protected connectedCallback() {
 		super.connectedCallback();

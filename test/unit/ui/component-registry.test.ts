@@ -36,7 +36,7 @@ describe("WebFun.UI.ComponentRegistry", () => {
 		});
 
 		it("can be called using an array of components", () => {
-			const components: (typeof Component)[] = [
+			const components: typeof Component[] = [
 				{ tagName: "test-component-1" },
 				{ tagName: "test-component-2" }
 			] as any;

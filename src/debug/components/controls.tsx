@@ -19,11 +19,11 @@ class Controls extends Component {
 	constructor() {
 		super();
 
-		this._stepButton = <IconButton icon="step-forward" onclick={() => this.onstep()} /> as IconButton;
+		this._stepButton = (<IconButton icon="step-forward" onclick={() => this.onstep()} />) as IconButton;
 		this._fastForwardButton = (
 			<IconButton icon="fast-forward" onclick={() => this.onfastforward()} />
 		) as IconButton;
-		this._playButton = <IconButton icon="play" onclick={() => this.ontogglepause()} /> as IconButton;
+		this._playButton = (<IconButton icon="play" onclick={() => this.ontogglepause()} />) as IconButton;
 	}
 
 	get running() {

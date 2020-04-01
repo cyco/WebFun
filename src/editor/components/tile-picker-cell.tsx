@@ -8,7 +8,7 @@ import TileView from "src/debug/components/tile-view";
 class TilePickerCell extends Cell<Tile> {
 	public static readonly tagName = "wf-tile-picker-cell";
 	public static readonly observedAttributes: string[] = [];
-	private view: TileView = <TileView /> as TileView;
+	private view: TileView = (<TileView />) as TileView;
 
 	protected connectedCallback() {
 		super.connectedCallback();

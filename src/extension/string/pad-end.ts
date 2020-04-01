@@ -1,4 +1,4 @@
-const padEnd = function(length: number, character: string = " "): string {
+const padEnd = function (length: number, character: string = " "): string {
 	let result = this.slice();
 	while (result.length < length) {
 		result = result + character;

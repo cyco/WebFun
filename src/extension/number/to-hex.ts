@@ -1,4 +1,4 @@
-const toHex = function(length: number = 0): string {
+const toHex = function (length: number = 0): string {
 	return `0x${this.toString(0x10).padStart(length, "0")}`;
 };
 

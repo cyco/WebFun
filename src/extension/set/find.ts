@@ -1,4 +1,4 @@
-const find = function<T>(predicate: (item: T) => boolean): T {
+const find = function <T>(predicate: (item: T) => boolean): T {
 	return [...this.values()].find(predicate);
 };
 

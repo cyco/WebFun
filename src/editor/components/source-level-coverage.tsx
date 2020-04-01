@@ -161,8 +161,7 @@ class SourceLevelCoverage extends Component {
 						{this._columns.map(([t, s]) => (
 							<th
 								className={t === "" ? "extend-previous-cell" : ""}
-								onclick={() => (this.sortDescriptor = s)}
-							>
+								onclick={() => (this.sortDescriptor = s)}>
 								{t}
 							</th>
 						))}

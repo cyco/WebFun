@@ -12,9 +12,21 @@ describe("WebFun.App.Rendering.Canvas.DrawZoneImageData", () => {
 
 	it("creates an image data object by drawing each tile of each layer of the zone", () => {
 		const tiles: Tile[][][] = [
-			[[t(0), null, null], [null, t(1), null], [null, null, t(2)]],
-			[[null, null, null], [t(1), t(2), t(3)], [t(0), t(0), t(0)]],
-			[[t(0), t(0), t(0)], [t(0), t(0), t(0)], [t(0), t(0), t(0)]]
+			[
+				[t(0), null, null],
+				[null, t(1), null],
+				[null, null, t(2)]
+			],
+			[
+				[null, null, null],
+				[t(1), t(2), t(3)],
+				[t(0), t(0), t(0)]
+			],
+			[
+				[t(0), t(0), t(0)],
+				[t(0), t(0), t(0)],
+				[t(0), t(0), t(0)]
+			]
 		];
 		const zone = ({
 			size: new Size(3, 3),

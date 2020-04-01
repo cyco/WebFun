@@ -1,6 +1,6 @@
 import { HTMLCollection } from "src/std/dom";
 
-const find = function(cb: (_: Element) => boolean) {
+const find = function (cb: (_: Element) => boolean) {
 	for (let i = 0, len = this.length; i < len; i++) {
 		if (cb(this[i])) return this[i];
 	}

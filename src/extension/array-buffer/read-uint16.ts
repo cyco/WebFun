@@ -1,6 +1,6 @@
 import { ArrayBuffer, Uint16Array } from "src/std";
 
-const readUint16 = function(offset: number) {
+const readUint16 = function (offset: number) {
 	let buffer;
 	if (offset % Uint16Array.BYTES_PER_ELEMENT !== 0)
 		buffer = new Uint16Array(this.slice(offset, offset + Uint16Array.BYTES_PER_ELEMENT));

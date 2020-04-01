@@ -1,6 +1,6 @@
 import { ArrayBuffer, Uint8Array } from "src/std";
 
-const readUint8 = function(offset: number) {
+const readUint8 = function (offset: number) {
 	const buffer = new Uint8Array(this, offset, Uint8Array.BYTES_PER_ELEMENT);
 	return buffer[0];
 };

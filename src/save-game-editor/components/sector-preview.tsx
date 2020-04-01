@@ -10,8 +10,8 @@ class SectorPreview extends Component {
 	public static readonly tagName = "wf-save-game-editor-sector-preview";
 
 	private _sector: Sector;
-	private _zonePreview: ZoneView = <ZoneView /> as ZoneView;
-	private _sectorDetails: HTMLElement = <div />;
+	private _zonePreview: ZoneView = (<ZoneView />) as ZoneView;
+	private _sectorDetails: HTMLElement = (<div />);
 
 	connectedCallback() {
 		super.connectedCallback();

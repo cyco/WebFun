@@ -42,7 +42,9 @@ class PaintBucketTool extends AbstractDrawingTool {
 				if (x === point.x && y === point.y) continue;
 				if (this.zone.getTile(x, y, layer) !== tile) continue;
 
-				graphs.push(new Set<Point>([new Point(x, y, layer)]));
+				graphs.push(
+					new Set<Point>([new Point(x, y, layer)])
+				);
 			}
 		}
 

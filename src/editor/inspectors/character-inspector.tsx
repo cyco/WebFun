@@ -20,7 +20,7 @@ class CharacterInspector extends AbstractInspector {
 			<IconButton icon="plus" title="Add new character" onclick={() => this.addCharacter()} />
 		);
 
-		this._list = <List state={state.prefixedWith("list")} /> as List<Char>;
+		this._list = (<List state={state.prefixedWith("list")} />) as List<Char>;
 		this._list.cell = (
 			<CharacterInspectorCell
 				className="character-inspector-list"
@@ -36,7 +36,7 @@ class CharacterInspector extends AbstractInspector {
 		) as CharacterInspectorCell;
 		this.window.content.appendChild(this._list);
 
-		this._details = <CharacterDetails /> as CharacterDetails;
+		this._details = (<CharacterDetails />) as CharacterDetails;
 		this.window.content.appendChild(this._details);
 	}
 

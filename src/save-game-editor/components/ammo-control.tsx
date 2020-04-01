@@ -9,7 +9,7 @@ class AmmoControl extends Component implements EventListenerObject {
 	public continous = true;
 	private _value: number = 1;
 	private _vertical: boolean = false;
-	private _bar: HTMLElement = <div />;
+	private _bar: HTMLElement = (<div />);
 
 	protected connectedCallback() {
 		super.connectedCallback();

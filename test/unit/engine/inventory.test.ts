@@ -86,7 +86,7 @@ describe("WebFun.Engine.Inventory", () => {
 
 		it("sends an event when an item is added", done => {
 			const mockItem: Tile = { id: 3 } as any;
-			subject.addEventListener(Events.DidChangeItems, function(event: any) {
+			subject.addEventListener(Events.DidChangeItems, function (event: any) {
 				expect(event.detail.mode).toEqual("add");
 				expect(event.detail.item).toBe(mockItem);
 
@@ -99,7 +99,7 @@ describe("WebFun.Engine.Inventory", () => {
 			const mockItem: Tile = { id: 3 } as any;
 			subject.addItem(mockItem);
 
-			subject.addEventListener(Events.DidChangeItems, function(event: any) {
+			subject.addEventListener(Events.DidChangeItems, function (event: any) {
 				expect(event.detail.mode).toEqual("remove");
 				expect(event.detail.item).toBe(mockItem);
 

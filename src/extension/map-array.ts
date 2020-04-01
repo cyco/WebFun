@@ -1,4 +1,4 @@
-export default function(cb: any): any[] {
+export default function (cb: any): any[] {
 	const result = [];
 	const length = this.length;
 	for (let i = 0; i < length; i++) {

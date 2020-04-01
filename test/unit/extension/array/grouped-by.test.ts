@@ -11,6 +11,9 @@ describe("WebFun.Extension.Array.groupedBy", () => {
 		const array = [1, 1.1, 2.6, 1.2, 1.3, 2, 2.3, 2.1];
 		const result = array.groupedBy(floor);
 
-		expect(result).toEqual([[1, 1.1, 1.2, 1.3], [2.6, 2, 2.3, 2.1]]);
+		expect(result).toEqual([
+			[1, 1.1, 1.2, 1.3],
+			[2.6, 2, 2.3, 2.1]
+		]);
 	});
 });

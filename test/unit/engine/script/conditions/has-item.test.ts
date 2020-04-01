@@ -4,7 +4,7 @@ describeCondition("HasItem", (check, engine) => {
 	it("checks if the inventory contains the item specified in argument 0", async () => {
 		spyOn(engine.currentWorld, "findSectorContainingZone").and.returnValue({} as any);
 
-		spyOn(engine.inventory, "contains").and.callFake((itemId) => itemId === 13);
+		spyOn(engine.inventory, "contains").and.callFake(itemId => itemId === 13);
 		let condition: any = { opcode: HasItem.Opcode, arguments: [13] };
 		expect(await check(condition)).toBeTrue();
 
@@ -16,7 +16,7 @@ describeCondition("HasItem", (check, engine) => {
 		spyOn(engine.currentWorld, "findSectorContainingZone").and.returnValue({
 			findItem: { id: 5 }
 		} as any);
-		spyOn(engine.inventory, "contains").and.callFake((itemId) => itemId === 5);
+		spyOn(engine.inventory, "contains").and.callFake(itemId => itemId === 5);
 
 		const condition: any = { opcode: HasItem.Opcode, arguments: [-1] };
 		expect(await check(condition)).toBeTrue();

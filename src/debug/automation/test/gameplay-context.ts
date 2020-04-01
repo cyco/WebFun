@@ -157,11 +157,11 @@ class GameplayContext {
 		const zone =
 			story instanceof SimulatedStory
 				? engine.world.at(4, 5).zone
-				: engine.assets.find(Zone, (z) => z.isLoadingZone());
+				: engine.assets.find(Zone, z => z.isLoadingZone());
 		const zoneScene = new ZoneScene(engine, zone);
 		engine.currentZone = zone;
 		engine.currentWorld = engine.world.findLocationOfZone(zone) ? engine.world : null;
-		engine.hero.appearance = engine.assets.find(Char, (c) => c.isHero());
+		engine.hero.appearance = engine.assets.find(Char, c => c.isHero());
 		engine.sceneManager.pushScene(zoneScene);
 		if (story instanceof SimulatedStory) {
 			engine.hero.visible = true;
@@ -175,7 +175,7 @@ class GameplayContext {
 	}
 
 	public async playStory(story: Story, input: string[], debug = false) {
-		return new Promise(async (resolve) => {
+		return new Promise(async resolve => {
 			this.setupEngine(story, input, debug);
 			this.onInputEnd = () => resolve();
 			const inputManager = this.engine.inputManager as ReplayingInputManager;

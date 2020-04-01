@@ -1,4 +1,4 @@
-const ensureTail = function(tail: string): string {
+const ensureTail = function (tail: string): string {
 	if (this.endsWith(tail)) return this;
 	return this + tail;
 };

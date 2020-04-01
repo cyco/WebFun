@@ -13,7 +13,7 @@ describe("WebFun.Extension.Storage.store", () => {
 		store = {} as any;
 		warnings = [];
 
-		localStorage.setItem = function(key, data) {
+		localStorage.setItem = function (key, data) {
 			store[key] = data;
 		};
 

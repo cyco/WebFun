@@ -4,7 +4,7 @@ import Component from "../component";
 
 class Popover extends Component {
 	public static readonly tagName = "wf-popover";
-	public content: HTMLElement = <div />;
+	public content: HTMLElement = (<div />);
 
 	protected connectedCallback() {
 		super.connectedCallback();

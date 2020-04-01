@@ -120,11 +120,7 @@ class TestFileParser {
 					.map(i => i.trim())
 					.filter(i => i.length);
 			if (key.contains("description"))
-				configuration.description = it.value
-					.split(":")
-					.rest()
-					.join(":")
-					.trim();
+				configuration.description = it.value.split(":").rest().join(":").trim();
 		} while (true);
 
 		return configuration;

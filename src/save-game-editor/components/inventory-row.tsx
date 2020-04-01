@@ -8,7 +8,7 @@ import TileView from "src/debug/components/tile-view";
 
 class InventoryRow extends Cell<Tile> {
 	public static readonly tagName = "wf-save-game-editor-inventory-row";
-	private _icon: TileView = <TileView /> as TileView;
+	private _icon: TileView = (<TileView />) as TileView;
 	private _label = (
 		<Selector
 			borderless

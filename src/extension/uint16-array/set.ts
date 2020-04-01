@@ -1,4 +1,4 @@
-const set = function(x: number, y: number, v: number) {
+const set = function (x: number, y: number, v: number) {
 	this[x + y * 10] = v;
 };
 

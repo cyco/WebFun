@@ -4,8 +4,8 @@ import { Component } from "src/ui";
 
 class Ammo extends Component {
 	public static readonly tagName = "wf-ammo";
-	private _background: HTMLDivElement = <div className="background" /> as HTMLDivElement;
-	private _indicator: HTMLDivElement = <div className="value" /> as HTMLDivElement;
+	private _background: HTMLDivElement = (<div className="background" />) as HTMLDivElement;
+	private _indicator: HTMLDivElement = (<div className="value" />) as HTMLDivElement;
 	private _value: number = -1;
 
 	get ammo() {

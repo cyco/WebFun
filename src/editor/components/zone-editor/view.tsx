@@ -27,13 +27,13 @@ class View extends Component implements EventListenerObject {
 	constructor() {
 		super();
 
-		this._hotspots = <HotspotLayerComponent /> as HotspotLayerComponent;
-		this._monsters = <MonsterLayerComponent /> as MonsterLayerComponent;
-		this._floor = <LayerComponent layer={Zone.Layer.Floor} /> as LayerComponent;
-		this._objects = <LayerComponent layer={Zone.Layer.Object} /> as LayerComponent;
-		this._roof = <LayerComponent layer={Zone.Layer.Roof} /> as LayerComponent;
+		this._hotspots = (<HotspotLayerComponent />) as HotspotLayerComponent;
+		this._monsters = (<MonsterLayerComponent />) as MonsterLayerComponent;
+		this._floor = (<LayerComponent layer={Zone.Layer.Floor} />) as LayerComponent;
+		this._objects = (<LayerComponent layer={Zone.Layer.Object} />) as LayerComponent;
+		this._roof = (<LayerComponent layer={Zone.Layer.Roof} />) as LayerComponent;
 
-		this._overlay = <canvas className="overlay" /> as HTMLCanvasElement;
+		this._overlay = (<canvas className="overlay" />) as HTMLCanvasElement;
 
 		this.tool = new NoTool();
 	}
@@ -59,7 +59,7 @@ class View extends Component implements EventListenerObject {
 			const items = layer.getMenuForTile(point);
 			if (items.length === 0) return;
 
-			const menu = <ContextMenu menu={items} /> as ContextMenu;
+			const menu = (<ContextMenu menu={items} />) as ContextMenu;
 			menu.show(new Point(event.clientX, event.clientY));
 		}
 	}

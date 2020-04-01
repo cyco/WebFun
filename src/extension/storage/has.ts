@@ -1,6 +1,6 @@
 import { Storage } from "src/std/dom";
 
-const has = function(key: string): boolean {
+const has = function (key: string): boolean {
 	return this.getItem(key) !== null;
 };
 

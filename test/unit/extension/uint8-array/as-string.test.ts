@@ -4,7 +4,7 @@ import { getFixtureData } from "test/helpers/fixture-loading";
 describe("WebFun.Extension.Uint8Array.asString", () => {
 	let buffer: ArrayBuffer;
 	beforeEach(done => {
-		getFixtureData("asciiString", function(b) {
+		getFixtureData("asciiString", function (b) {
 			buffer = (b as any) as ArrayBuffer;
 			done();
 		});

@@ -5,7 +5,7 @@ import { Component } from "src/ui";
 
 abstract class AbstractTileView extends Component {
 	protected _palette: ColorPalette;
-	protected _canvas = <canvas /> as HTMLCanvasElement;
+	protected _canvas = (<canvas />) as HTMLCanvasElement;
 
 	public abstract draw(): void;
 

@@ -1,6 +1,6 @@
 import { Array } from "src/std";
 
-const first = function() {
+const first = function () {
 	return this.length ? this[0] : null;
 };
 

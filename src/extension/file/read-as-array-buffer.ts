@@ -1,7 +1,7 @@
 import { File } from "src/std/dom";
 import { FileReader } from "src/std/dom";
 
-const readAsArrayBuffer = function(): Promise<ArrayBuffer> {
+const readAsArrayBuffer = function (): Promise<ArrayBuffer> {
 	return new Promise<ArrayBuffer>((resolve, reject) => {
 		const fileReader = new FileReader();
 		fileReader.onload = (e: any) => resolve(e.target.result);

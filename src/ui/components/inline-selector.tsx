@@ -31,8 +31,7 @@ class InlineSelector<T> extends Component implements EventListenerObject {
 						if (this.onchange) this.onchange(new CustomEvent("change"));
 						this.dispatchEvent(new CustomEvent("change"));
 					}}
-					onblur={() => select.remove()}
-				>
+					onblur={() => select.remove()}>
 					{this.options.map(({ label }, idx) => (
 						<option selected={idx === index} value={idx.toString()}>
 							{label}

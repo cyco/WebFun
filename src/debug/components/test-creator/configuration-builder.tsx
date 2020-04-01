@@ -31,8 +31,7 @@ class ConfigurationBuilder extends Component {
 						const target = this.querySelector("#" + segment.className) as HTMLElement;
 						target.style.display = "";
 					}}
-					state={this._state.prefixedWith("selector")}
-				>
+					state={this._state.prefixedWith("selector")}>
 					<Segment className="world" selected={config.zone < 0}>
 						New World
 					</Segment>
