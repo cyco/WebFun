@@ -19,5 +19,6 @@ describeComponent(InventoryRow, () => {
 		expect(paletteView.image).toBe(item.imageData);
 		expect(paletteView.palette).toBe(palette);
 		expect(row.textContent).toContain("Test Item Name");
+		row.remove();
 	});
 });
