@@ -129,14 +129,6 @@ const makeAction = (raw: RawAction, idx: number, zone: Zone, _: any): Action => 
 };
 
 const makeNPC = (raw: RawMonster, idx: number, data: GameData) => {
-	const npc = new MutableMonster();
-	npc.id = idx;
-	npc.face = data.characters[raw.character];
-	npc.position = new Point(raw.x, raw.y, Zone.Layer.Object);
-	npc.loot = raw.loot;
-	npc.dropsLoot = raw.dropsLoot;
-	npc.waypoints = [];
-
 	const rawWaypoints = raw.waypoints;
 	const waypoints: Point[] = [];
 	let foundAWaypoint = false;
@@ -146,11 +138,15 @@ const makeNPC = (raw: RawMonster, idx: number, data: GameData) => {
 		foundAWaypoint = foundAWaypoint || x !== -1 || y !== -1;
 		waypoints.push(new Point(x, y));
 	}
-	if (foundAWaypoint) {
-		npc.waypoints = waypoints;
-	}
 
-	return npc;
+	return new MutableMonster({
+		_id: idx,
+		face: data.characters[raw.character],
+		_position: new Point(raw.x, raw.y, Zone.Layer.Object),
+		_loot: raw.loot,
+		_dropsLoot: raw.dropsLoot,
+		_waypoints: waypoints
+	});
 };
 
 const makeZone = (raw: RawZone, idx: number, data: GameData) => {

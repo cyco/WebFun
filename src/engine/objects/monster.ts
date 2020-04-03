@@ -3,37 +3,70 @@ import { Point } from "src/util";
 import Zone from "./zone";
 import { min } from "src/std/math";
 
-class Monster {
-	protected _id: number = -1;
-	public enabled = true;
-	public face: Char = null;
-	protected _position: Point = null;
-	protected _loot: number = -1;
-	protected _dropsLoot: boolean = false;
-	protected _waypoints: Point[] = [];
-	private _damageTaken: number = 0;
-	public field10: number = 0;
-	public bulletX: number = 0;
-	public bulletY: number = 0;
-	public currentFrame: number = 0;
-	public flag18: boolean = false;
-	public flag1c: boolean = false;
-	public flag20: boolean = false;
-	public cooldown: number = 0;
-	public hasItem: boolean = false;
-	public flag2c: boolean = false;
-	public preferredDirection: number = 1;
-	public field32: number = 0;
-	public flag34: boolean = false;
-	public directionX: number = 0;
-	public directionY: number = 0;
-	public field3c: number = 0;
-	public facingDirection: Char.FrameEntry = Char.FrameEntry.Up;
-	public field60: number = 0;
-	public field62: number = 0;
+const MonsterInit = {
+	_id: -1,
+	enabled: true,
+	face: null as Char,
+	_position: null as Point,
+	_loot: -1,
+	_dropsLoot: false,
+	_waypoints: [] as Point[],
+	_damageTaken: 0,
+	field10: 0,
+	bulletX: 0,
+	bulletY: 0,
+	currentFrame: 0,
+	flag18: false,
+	flag1c: false,
+	flag20: false,
+	cooldown: 0,
+	hasItem: false,
+	flag2c: false,
+	preferredDirection: 1,
+	field32: 0,
+	flag34: false,
+	directionX: 0,
+	directionY: 0,
+	field3c: 0,
+	facingDirection: Char.FrameEntry.Up,
+	field60: 0,
+	field62: 0,
+	currentActionFrame: 0
+};
 
-	// TODO: Fix:
-	public currentActionFrame: number = 0;
+class Monster {
+	protected _id: number;
+	public enabled: boolean;
+	public face: Char;
+	protected _position: Point;
+	protected _loot: number;
+	protected _dropsLoot: boolean;
+	protected _waypoints: Point[];
+	private _damageTaken: number;
+	public field10: number;
+	public bulletX: number;
+	public bulletY: number;
+	public currentFrame: number;
+	public flag18: boolean;
+	public flag1c: boolean;
+	public flag20: boolean;
+	public cooldown: number;
+	public hasItem: boolean;
+	public flag2c: boolean;
+	public preferredDirection: number;
+	public field32: number;
+	public flag34: boolean;
+	public directionX: number;
+	public directionY: number;
+	public field3c: number;
+	public facingDirection: Char.FrameEntry;
+	public field60: number;
+	public field62: number;
+	public currentActionFrame: number;
+
+	constructor(npc: Monster | typeof MonsterInit | Partial<typeof MonsterInit> = MonsterInit) {
+		Object.assign(this, MonsterInit, npc);
+	}
 
 	get id() {
 		return this._id;

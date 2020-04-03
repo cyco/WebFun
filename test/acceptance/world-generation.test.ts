@@ -11,6 +11,8 @@ import { WorldGenerationError } from "src/engine/generation";
 import { floor } from "src/std/math";
 
 let rawData: any = null;
+let data: GameData = null;
+let assets: AssetManager = null;
 
 const compareSector = (pos: { x: number; y: number }, actual: Sector, expected: number[]) => {
 	const id = (thing: any) => (thing ? thing.id : -1);
@@ -155,7 +157,6 @@ const runTest = ({ seed, planet, size, world, dagobah }: any) => {
 	describe(`World ${seed} ${planet.toString()} ${size.toString()}`, () => {
 		it("is generated correctly", () => {
 			try {
-				const assets = buildAssetManagerFromGameData();
 				const story = new Story(seed, Planet.fromNumber(planet), WorldSize.fromNumber(size));
 				story.generateWorld(assets, 0, 0);
 				compare(story, { seed, planet, size, world, dagobah });
@@ -171,19 +172,22 @@ const runTest = ({ seed, planet, size, world, dagobah }: any) => {
 	});
 };
 
-function buildAssetManagerFromGameData() {
-	const data = new GameData(rawData);
-	const assets = new AssetManager();
-
-	assets.populate(Zone, data.zones);
-	assets.populate(Tile, data.tiles);
-	assets.populate(Puzzle, data.puzzles);
-
-	return assets;
-}
-
 describe("WebFun.Acceptance.World Generation", () => {
-	beforeAll(async () => (rawData = await loadGameData(Yoda)));
+	beforeAll(async () => {
+		rawData = await loadGameData(Yoda);
+	});
+	beforeEach(() => {
+		if (!data) {
+			data = new GameData(rawData);
+			assets = new AssetManager();
+
+			assets.populate(Zone, data.zones);
+			assets.populate(Tile, data.tiles);
+			assets.populate(Puzzle, data.puzzles);
+		} else {
+			data.resetAfterWorldGeneration();
+		}
+	});
 
 	PrepareExpectations(Worlds).sort().map(ParseExpectation).forEach(runTest);
 });
