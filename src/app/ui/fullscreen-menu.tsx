@@ -1,6 +1,6 @@
 import "./fullscreen-menu.scss";
 
-import { Component, Menu, MenuItem } from "src/ui";
+import { Component, Menu } from "src/ui";
 
 const TransitionDuration = 250 + 50;
 
