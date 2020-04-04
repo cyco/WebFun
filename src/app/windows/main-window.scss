@@ -176,10 +176,10 @@ wf-main-window {
 		@media (orientation: landscape) {
 			> .content {
 				grid-template-columns: 1fr 100vh 1fr;
-				grid-template-rows: min-content min-content min-content 1fr;
+				grid-template-rows: min-content min-content min-content;
 				grid-template-areas:
-					"actions main status"
-					"empty main inventory"
+					"actions main empty"
+					"inventory main status"
 					"ctrl-left main ctrl-right";
 				grid-auto-flow: column;
 				overflow: auto;
@@ -206,7 +206,10 @@ wf-main-window {
 				wf-inventory {
 					width: unset;
 					height: unset;
-					max-height: 160px;
+					border-left: none;
+					border-right: none;
+
+					max-height: calc(100% - 20px);
 				}
 
 				.buttons {
