@@ -46,11 +46,13 @@ class FullscreenMenu extends Component {
 							.filter(i => i.hasSubmenu && i.submenu && i.submenu.items)
 							.map(i => (
 								<ul>
-									{i.submenu.items.map(itm => (
-										<li>
-											<a>{itm.title}</a>
-										</li>
-									))}
+									{i.submenu.items
+										.filter(itm => !itm.isSeparator)
+										.map(itm => (
+											<li>
+												<a>{itm.title}</a>
+											</li>
+										))}
 								</ul>
 							))}
 				</div>
