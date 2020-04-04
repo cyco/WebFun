@@ -8,6 +8,8 @@ const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+const GoogleFontsPlugin = require("@beyonk/google-fonts-webpack-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
 	entry: {
@@ -16,8 +18,8 @@ module.exports = {
 	mode: "production",
 	output: {
 		path: Paths.buildRoot,
-		filename: "[name].js",
-		chunkFilename: "[name].chunk.js"
+		filename: "assets/[name].js",
+		chunkFilename: "assets/chunk/webfun.chunk[id].js"
 	},
 	optimization: {
 		minimize: true,
@@ -33,8 +35,13 @@ module.exports = {
 	cache: true,
 	stats: "errors-only",
 	plugins: [
-		new BundleAnalyzerPlugin({ analyzerMode: "static" }),
+		// new BundleAnalyzerPlugin({ analyzerMode: "static" }),
 		new CleanWebpackPlugin({ root: Paths.buildRoot }),
+		new GoogleFontsPlugin({
+			fonts: [{ family: "Montserrat" }, { family: "Lato" }],
+			filename: "assets/font/index.css",
+			path: "."
+		}),
 		new HtmlWebpackPlugin({
 			template: Path.resolve(Paths.sourceRoot, "./app/index.html"),
 			title: "WebFun",
@@ -46,10 +53,14 @@ module.exports = {
 			}
 		}),
 		new MiniCssExtractPlugin({
-			filename: "[name].css",
-			chunkFilename: "[id].css"
+			filename: "assets/[name].css",
+			chunkFilename: "assets/chunk/webfun.chunk[id].css"
 		}),
-		new Dotenv({ systemvars: true, silent: true })
+		new Dotenv({ systemvars: true, silent: true }),
+		new CopyPlugin([
+			{ from: "assets/game-data", to: "data" },
+			{ from: "assets/favicons", to: "assets/favicons" }
+		])
 	],
 	module: {
 		rules: [
@@ -94,6 +105,24 @@ module.exports = {
 							sassOptions: {
 								includePaths: [Path.resolve(Paths.sourceRoot, "_style"), "./"]
 							}
+						}
+					}
+				]
+			},
+			{
+				test: /\.svg$/,
+				include: Paths.assetsRoot,
+				loader: "url-loader"
+			},
+			{
+				test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+				exclude: /cursors/,
+				use: [
+					{
+						loader: "file-loader",
+						options: {
+							name: "[name].[ext]",
+							outputPath: "assets/font/"
 						}
 					}
 				]
