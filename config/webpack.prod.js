@@ -10,6 +10,7 @@ const Dotenv = require("dotenv-webpack");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 const GoogleFontsPlugin = require("@beyonk/google-fonts-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
+const PWAManifestPlugin = require("webpack-pwa-manifest");
 
 module.exports = {
 	entry: {
@@ -42,6 +43,19 @@ module.exports = {
 			filename: "assets/font/index.css",
 			path: "."
 		}),
+		new PWAManifestPlugin({
+			name: "WebFun",
+			short_name: "WebFun",
+			description: "My awesome Progressive Web App!",
+			background_color: "#000",
+			crossorigin: null,
+			ios: true,
+			includeDirectory: true,
+			filename: "assets/webfun.webmanifest",
+			start_url: "/?source=pwa",
+			display: "fullscreen",
+			scope: "/"
+		}),
 		new HtmlWebpackPlugin({
 			template: Path.resolve(Paths.sourceRoot, "./app/index.html"),
 			title: "WebFun",
@@ -56,11 +70,11 @@ module.exports = {
 			filename: "assets/[name].css",
 			chunkFilename: "assets/chunk/webfun.chunk[id].css"
 		}),
-		new Dotenv({ systemvars: true, silent: true }),
 		new CopyPlugin([
 			{ from: "assets/game-data", to: "data" },
-			{ from: "assets/favicons", to: "assets/favicons" }
-		])
+			{ from: "assets/favicons", to: "assets/icon" }
+		]),
+		new Dotenv({ systemvars: true, silent: true, defaults: true })
 	],
 	module: {
 		rules: [
