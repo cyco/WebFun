@@ -138,25 +138,25 @@ class TransformCanvas extends Component implements EventListenerObject {
 		};
 
 		const scale = ctx.scale;
-		ctx.scale = function (sx, sy) {
+		ctx.scale = function (sx: number, sy: number) {
 			xform = xform.scale(sx, sy);
 			return scale.call(ctx, sx, sy);
 		};
 
 		const rotate = ctx.rotate;
-		ctx.rotate = function (radians) {
+		ctx.rotate = function (radians: number) {
 			xform = xform.rotate((radians * 180) / Math.PI);
 			return rotate.call(ctx, radians);
 		};
 
 		const translate = ctx.translate;
-		ctx.translate = function (dx, dy) {
+		ctx.translate = function (dx: number, dy: number) {
 			xform = xform.translate(dx, dy);
 			return translate.call(ctx, dx, dy);
 		};
 
 		const transform = ctx.transform;
-		ctx.transform = function (a, b, c, d, e, f) {
+		ctx.transform = function (a: number, b: number, c: number, d: number, e: number, f: number) {
 			const m2 = svg.createSVGMatrix();
 			m2.a = a;
 			m2.b = b;

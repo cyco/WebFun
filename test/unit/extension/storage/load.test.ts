@@ -15,7 +15,7 @@ describe("WebFun.Extension.Storage.load", () => {
 		localStorage.getItem = function (key) {
 			return store[key];
 		};
-		console.warn = (...args) => {
+		console.warn = (...args: any[]) => {
 			warnings.push(args);
 		};
 	});

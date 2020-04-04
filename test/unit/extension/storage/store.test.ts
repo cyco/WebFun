@@ -17,7 +17,7 @@ describe("WebFun.Extension.Storage.store", () => {
 			store[key] = data;
 		};
 
-		console.warn = (...args) => {
+		console.warn = (...args: any[]) => {
 			warnings.push(args);
 		};
 	});
