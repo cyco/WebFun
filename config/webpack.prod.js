@@ -97,10 +97,6 @@ module.exports = {
 						}
 					}
 				]
-			},
-			{
-				test: /\.(xml|ico|png|svg|jpg|gif|ttf|eot|woff|woff2)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-				use: ["file-loader"]
 			}
 		]
 	}

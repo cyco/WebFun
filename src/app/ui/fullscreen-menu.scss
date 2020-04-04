@@ -43,6 +43,7 @@ wf-fullscreen-menu {
 		transform: translateX(-100%);
 		transition: transform $transition-duration ease-in-out;
 		padding-left: 10px;
+
 		@at-root {
 			@media (orientation: landscape) {
 				& {
@@ -59,6 +60,7 @@ wf-fullscreen-menu {
 			text-shadow: 0px 1px 0px rgba(0, 0, 0, 1);
 			flex-grow: 0;
 			flex-shrink: 0;
+			font-family: "Lato";
 		}
 
 		.hr {
@@ -70,6 +72,7 @@ wf-fullscreen-menu {
 		}
 
 		> div.items {
+			font-family: "Montserrat";
 			overflow-y: auto;
 			flex-shrink: 1;
 			flex-grow: 1;
