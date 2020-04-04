@@ -74,6 +74,16 @@ wf-fullscreen-menu {
 			flex-shrink: 1;
 			flex-grow: 1;
 
+			-webkit-mask-image: -webkit-gradient(
+				linear,
+				left top,
+				left bottom,
+				color-stop(0%, rgba(0, 0, 0, 0)),
+				color-stop(2%, rgba(0, 0, 0, 1)),
+				color-stop(95%, rgba(0, 0, 0, 1)),
+				color-stop(100%, rgba(0, 0, 0, 0))
+			);
+
 			> ul {
 				width: 100%;
 
