@@ -54,7 +54,11 @@ class FullscreenMenu extends Component {
 											</li>
 										))}
 								</ul>
-							))}
+							))
+							.reduce((prev, current, idx) => {
+								if (idx === 0) return [current];
+								return prev.concat([<div className="hr" />], [current]);
+							}, [])}
 				</div>
 			</div>
 		);
