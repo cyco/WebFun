@@ -50,7 +50,9 @@ class FullscreenMenu extends Component {
 										.filter(itm => !itm.isSeparator)
 										.map(itm => (
 											<li>
-												<a>{itm.title}</a>
+												<a onclick={() => itm.enabled && itm.callback()}>
+													{itm.title}
+												</a>
 											</li>
 										))}
 								</ul>

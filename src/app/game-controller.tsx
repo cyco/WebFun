@@ -15,7 +15,7 @@ import { ConfirmationResult, ModalConfirm } from "src/ux";
 import { EventTarget, rand, srand } from "src/util";
 import { FilePicker, WindowManager } from "src/ui";
 import { ZoneScene } from "src/engine/scenes";
-import { MainMenu, MainWindow } from "./windows";
+import { MainMenu, MobileMainMenu, MainWindow } from "./windows";
 import { Planet, WorldSize } from "src/engine/types";
 import GameState from "../engine/game-state";
 import { Reader } from "src/engine/save-game";
@@ -56,8 +56,9 @@ class GameController extends EventTarget implements EventListenerObject {
 		super();
 
 		this.settings.mobile = !!(SmartPhone(false).isAndroid() || SmartPhone(false).isIPhone());
+		const mainMenuClasss = this.settings.mobile ? MobileMainMenu : MainMenu;
 		this._window = (
-			<MainWindow menu={new MainMenu(this)} className={this.settings.mobile ? "mobile" : ""} />
+			<MainWindow menu={new mainMenuClasss(this)} className={this.settings.mobile ? "mobile" : ""} />
 		) as MainWindow;
 		this._engine = this._buildEngine(type, paths);
 		this._sceneView.manager.engine = this._engine;
