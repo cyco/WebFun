@@ -4,7 +4,6 @@ import { Point, identity } from "src/util";
 
 import AbstractWindow from "./abstract-window";
 import Component from "../component";
-import Menu from "../menu";
 import Menubar from "./menubar";
 
 class WindowTitlebar extends Component {
@@ -12,7 +11,6 @@ class WindowTitlebar extends Component {
 	public onclose: (_: Event) => void = identity;
 	public onpin: (_: Event) => void = identity;
 	public movable: boolean = true;
-	private _menu: Menu = null;
 	private _menubar: Menubar = null;
 	private _titleNode: HTMLElement = null;
 	private _window: AbstractWindow;
@@ -40,7 +38,7 @@ class WindowTitlebar extends Component {
 	}
 
 	get menu() {
-		return this._menu;
+		return this._menubar?.menu;
 	}
 
 	set menu(m) {
@@ -71,7 +69,7 @@ class WindowTitlebar extends Component {
 		}
 
 		if (t) {
-			if (this._menu) {
+			if (this.menu) {
 				this._titleNode.style.display = "none";
 			}
 

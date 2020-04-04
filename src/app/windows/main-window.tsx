@@ -1,7 +1,7 @@
 import "./main-window.scss";
 
 import { Ammo, Health, Inventory as InventoryComponent, Location, Weapon } from "../ui";
-import { OnscreenPad, OnscreenButton } from "../ui";
+import { OnscreenPad, OnscreenButton, FullscreenMenu } from "../ui";
 import { default as Engine } from "src/engine/engine";
 
 import { AbstractWindow, Button } from "src/ui/components";
@@ -31,7 +31,7 @@ class MainWindow extends AbstractWindow {
 		[SceneManager.Event.SceneChanged]: ({ target }: CustomEvent) => this._updateMapButton(target as any)
 	};
 	private cache: Map<string, Element> = new Map();
-
+	private _menu: FullscreenMenu = null;
 	autosaveName = "main-window";
 	onclose = () => this._engine && this._engine.metronome.stop();
 
@@ -49,7 +49,7 @@ class MainWindow extends AbstractWindow {
 						onclick={(e: Event) => this.toggleInventory(e)}
 						onanimationend={(e: any) => e.target.classList.remove("pulse-animation")}></Button>
 					<Button label="Map" disabled onclick={() => this.toggleMap()}></Button>
-					<Button label="Menu"></Button>
+					<Button label="Menu" onclick={(e: MouseEvent) => this.toggleMenu(e)}></Button>
 				</div>
 				<div className="status">
 					<Location />
@@ -138,7 +138,6 @@ class MainWindow extends AbstractWindow {
 	private _highlightInventoryButton() {
 		const inventoryButton = this.inventoryButton;
 		if (inventoryButton) inventoryButton.classList.add("pulse-animation");
-		else console.log("no button");
 	}
 
 	private _updateMapButton(source: SceneManager | Inventory) {
@@ -185,9 +184,24 @@ class MainWindow extends AbstractWindow {
 		else this.inventory.classList.remove("slide-up");
 	}
 
-	private toggleMenu(e: CustomEvent) {
+	private toggleMenu(e: MouseEvent) {
 		const button = e.target as Button;
 		button.active = !button.active;
+		if (button.active) {
+			this._menu = (
+				<FullscreenMenu
+					menu={this.menu}
+					onclose={() => {
+						this._menu = null;
+						button.active = false;
+					}}
+				/>
+			);
+			this.parentElement.appendChild(this._menu);
+		} else {
+			this._menu.close();
+			this._menu = null;
+		}
 	}
 
 	private applyCurrentValues() {

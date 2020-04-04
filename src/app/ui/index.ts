@@ -13,21 +13,23 @@ import OnscreenPad from "./onscreen-pad";
 import OnscreenButton from "./onscreen-button";
 import FullscreenLock from "./fullscreen-lock";
 import PaletteView from "./palette-view";
+import FullscreenMenu from "./fullscreen-menu";
 
 export {
 	AbstractHealth,
 	AbstractPaletteView,
 	Ammo,
+	FullscreenLock,
+	FullscreenMenu,
 	Health,
 	Inventory,
 	InventoryRow,
 	LoadingView,
 	Location,
-	SceneView,
-	SettingsWindow,
-	Weapon,
-	PaletteView,
 	OnscreenButton,
 	OnscreenPad,
-	FullscreenLock
+	PaletteView,
+	SceneView,
+	SettingsWindow,
+	Weapon
 };

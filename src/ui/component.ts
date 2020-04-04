@@ -35,6 +35,8 @@ declare global {
 			tbody: Styleable<HTMLTableSectionElement>;
 			thead: Styleable<HTMLTableSectionElement>;
 			th: Styleable<HTMLTableCellElement>;
+			a: Styleable<HTMLAnchorElement>;
+			h1: Styleable<HTMLHeadingElement>;
 		}
 
 		interface ElementClass extends Component {}
