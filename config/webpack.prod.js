@@ -11,10 +11,12 @@ const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPl
 const GoogleFontsPlugin = require("@beyonk/google-fonts-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const PWAManifestPlugin = require("webpack-pwa-manifest");
+const ServiceWorkerInjectFileList = require("./sw-file-list");
 
 module.exports = {
 	entry: {
-		webfun: Path.resolve(Paths.sourceRoot, "app/main")
+		"webfun": Path.resolve(Paths.sourceRoot, "app/main"),
+		"webfun.sw": Path.resolve(Paths.sourceRoot, "app/service-worker")
 	},
 	mode: "production",
 	output: {
@@ -74,7 +76,8 @@ module.exports = {
 			{ from: "assets/game-data", to: "data" },
 			{ from: "assets/favicons", to: "assets/icon" }
 		]),
-		new Dotenv({ systemvars: true, silent: true, defaults: true })
+		new Dotenv({ systemvars: true, silent: true, defaults: true }),
+		ServiceWorkerInjectFileList({ file: Path.resolve(Paths.buildRoot, "assets/webfun.sw.js") })
 	],
 	module: {
 		rules: [

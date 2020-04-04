@@ -20,13 +20,20 @@ const endPreload = () => {
 
 const main = async () => {
 	localStorage.clear();
+
 	window.WebFun = window.WebFun || { JSX: null };
 	window.WebFun.JSX = new ComponentJSXRenderer();
+
 	ComponentRegistry.sharedRegistry.registerComponents(Components);
 	ComponentRegistry.sharedRegistry.registerComponents(AppComponents);
 	ComponentRegistry.sharedRegistry.registerComponents(WindowComponents as any);
 
 	endPreload();
+
+	if ("serviceWorker" in navigator) {
+		navigator.serviceWorker.register("assets/webfun.sw.js");
+	}
+
 	const gameController = new GameController(Yoda, Settings.url.yoda);
 	gameController.newStory();
 	gameController.show();
