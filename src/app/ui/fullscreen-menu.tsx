@@ -1,15 +1,15 @@
 import "./fullscreen-menu.scss";
 
-import { Component, Menu } from "src/ui";
+import { Component, Menu, MenuItem } from "src/ui";
 
 const TransitionDuration = 250 + 50;
 
 class FullscreenMenu extends Component {
 	public static readonly tagName = "wf-fullscreen-menu";
-	private _parent: HTMLElement;
+	private _parent: HTMLElement = null;
 	public onclose: () => void = () => void 0;
 	public onclick: () => void = () => this.close();
-	private _menu: Menu;
+	private _rootMenu: Menu = null;
 
 	connectedCallback() {
 		super.connectedCallback();
@@ -34,40 +34,52 @@ class FullscreenMenu extends Component {
 	}
 
 	public set menu(m: Menu) {
-		this._menu = m;
+		this._rootMenu = m;
 
 		this.textContent = "";
 		this.appendChild(
 			<div className="content" onclick={(e: Event) => e.stopPropagation()}>
 				<h1>WebFun</h1>
-				<div className="items">
-					{m &&
-						m.items
-							.filter(i => i.hasSubmenu && i.submenu && i.submenu.items)
-							.map(i => (
-								<ul>
-									{i.submenu.items
-										.filter(itm => !itm.isSeparator)
-										.map(itm => (
-											<li>
-												<a onclick={() => itm.enabled && itm.callback()}>
-													{itm.title}
-												</a>
-											</li>
-										))}
-								</ul>
-							))
-							.reduce((prev, current, idx) => {
-								if (idx === 0) return [current];
-								return prev.concat([<div className="hr" />], [current]);
-							}, [])}
-				</div>
+				{m && this.renderItems(m)}
 			</div>
 		);
 	}
 
+	private renderMenu(menu: Menu) {
+		if (!menu) return;
+
+		return <ul>{menu.items.map(i => this.renderItem(i))}</ul>;
+	}
+
+	private renderItems(menu: Menu): HTMLElement {
+		return <div className="items">{this.renderMenu(menu)}</div>;
+	}
+
+	private renderItem(item: MenuItem): HTMLElement {
+		if (item.isSeparator) return <div className="hr" />;
+
+		return (
+			<li>
+				<a onclick={e => this.itemClickHandler(item, e.target as any)}>{item.title}</a>
+				{item.hasSubmenu && this.renderMenu(item.submenu)}
+			</li>
+		);
+	}
+
+	private itemClickHandler(item: MenuItem, node: HTMLElement) {
+		if (item.enabled && item.callback) item.callback();
+		if (item.enabled && item.submenu) this.navigateTo(item, node.closest("li"));
+	}
+
+	public navigateTo(item: MenuItem, li: HTMLElement) {
+		const parent = this.querySelector(".items > ul") as HTMLElement;
+		parent.style.transform = "translateX(-100%)";
+		const child = li.querySelector("ul");
+		child.style.display = "block";
+	}
+
 	public get menu() {
-		return this._menu;
+		return this._rootMenu;
 	}
 }
 

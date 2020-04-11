@@ -4,11 +4,13 @@ wf-fullscreen-menu {
 	display: block;
 	width: 100vw;
 	height: 100vh;
+
 	position: fixed;
+	top: 0px;
+	bottom: 0px;
 	left: 0px;
 	right: 0px;
-	bottom: 0px;
-	top: 0px;
+
 	z-index: 800;
 
 	@at-root {
@@ -30,7 +32,8 @@ wf-fullscreen-menu {
 	}
 
 	> div.content {
-		padding: 10px;
+		display: flex;
+		flex-direction: column;
 		color: white;
 		width: 60vw;
 		max-width: 300px;
@@ -60,6 +63,8 @@ wf-fullscreen-menu {
 			flex-grow: 0;
 			flex-shrink: 0;
 			font-family: "Lato";
+			flex-shrink: 0;
+			flex-grow: 0;
 		}
 
 		.hr {
@@ -71,6 +76,8 @@ wf-fullscreen-menu {
 		}
 
 		> div.items {
+			flex-shrink: 0;
+			position: relative;
 			font-family: "Montserrat";
 			overflow-y: auto;
 			flex-shrink: 1;
@@ -87,6 +94,16 @@ wf-fullscreen-menu {
 			);
 
 			> ul {
+				position: relative;
+			}
+
+			ul {
+				ul {
+					position: absolute;
+					top: 0;
+					left: 100%;
+				}
+
 				width: 100%;
 
 				padding-left: 10px;

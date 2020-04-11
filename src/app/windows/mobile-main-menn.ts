@@ -31,63 +31,62 @@ class MainMenu extends Menu {
 	constructor(controller: GameController) {
 		super([
 			{
-				title: "File",
+				title: "New World",
 				mnemonic: 0,
-				submenu: [
-					{
-						title: "New World",
-						mnemonic: 0,
-						callback: () => controller.newStory(),
-						enabled: () => controller.data !== null
-					},
-					{
-						title: "Replay Story",
-						mnemonic: 0,
-						callback: () => controller.replayStory(),
-						enabled: () => controller.engine !== null
-					},
-					{
-						title: "Load World",
-						mnemonic: 0,
-						callback: () => controller.load(),
-						enabled: () => controller.data !== null,
-						beta: true
-					},
-					{
-						title: "Save World",
-						mnemonic: 0,
-						callback: () => controller.save(),
-						enabled: () => controller.engine !== null,
-						beta: true
-					}
-				]
+				callback: () => controller.newStory(),
+				enabled: () => controller.data !== null
 			},
+			{
+				title: "Replay Story",
+				mnemonic: 0,
+				callback: () => controller.replayStory(),
+				enabled: () => controller.engine !== null
+			},
+			{
+				title: "Load World",
+				mnemonic: 0,
+				callback: () => controller.load(),
+				enabled: () => controller.data !== null,
+				beta: true
+			},
+			{
+				title: "Save World",
+				mnemonic: 0,
+				callback: () => controller.save(),
+				enabled: () => controller.engine !== null,
+				beta: true
+			},
+
+			Separator,
+
 			{
 				title: "Options",
 				mnemonic: 0,
 				submenu: [
-					{
-						title: "Options",
-						mnemonic: 0,
-						callback: () => this._runModalSessionForWindowComponent(DifficultyWindow.tagName)
-					},
-					{
-						title: "Statistics...",
-						mnemonic: 0,
-						callback: () => this._runModalSessionForWindowComponent(StatisticsWindow.tagName)
-					},
-					SoundMenuItem(controller, "Sound", "playEffects")
+					{ title: "Diffculty" },
+					{ title: "Game Speed" },
+					{ title: "World Size" },
+					Separator,
+					{ title: "Music" },
+					{ title: "Sound" }
 				]
 			},
 			{
-				title: "Help",
+				title: "Statistics...",
 				mnemonic: 0,
 				submenu: [
-					{
-						title: "How to Play",
-						mnemonic: 0
-					}
+					{ title: "High Score" },
+					{ title: "Last Score" },
+					{ title: "Games Won" },
+					{ title: "Games Lost" }
 				]
+			},
+			SoundMenuItem(controller, "Sound", "playEffects"),
+
+			Separator,
+			{
+				title: "How to Play",
+				mnemonic: 0
 			},
 			...(controller.settings.debug ? [buildDebugMenu(controller)] : [])
 		]);
