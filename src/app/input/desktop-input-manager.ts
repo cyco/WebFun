@@ -9,6 +9,9 @@ import { ZoneScene } from "src/engine/scenes";
 import PathUIScene from "./path-ui-scene";
 import { floor } from "src/std/math";
 import Settings from "src/settings";
+import KeyboardInputManager from "./keyboard-input-manager";
+import MouseInputManager from "./mouse-input-manager";
+import OnscreenInputManager from "./onscreen-input-manager";
 
 enum MouseMode {
 	Direction,
@@ -16,18 +19,22 @@ enum MouseMode {
 }
 
 class DesktopInputManager implements InputManager, EventListenerObject {
+	private keyboardInputManager: KeyboardInputManager;
+	private mouseInputManager: MouseInputManager;
+	private onscreenInputManager: OnscreenInputManager;
+	private inputManagers: InputManager[];
+
 	public mouseDownHandler: (_: Point) => void = () => void 0;
 	public keyDownHandler: (_: KeyboardEvent) => void = () => void 0;
 	public currentItem: Tile;
-	public engine: Engine;
+	private _engine: Engine;
 	private _element: HTMLElement;
 	private _lastMouse: Point;
 
-	private preferKeyboard = false;
 	private _mouseDirection: number = 0;
-	private _keyboardDirection: number = 0;
 	private _currentInput: InputMask = InputMask.None;
 	private readonly cursorManager: CursorManager;
+	public lastDirectionInput: number = performance.now();
 
 	public placedTile: Tile = null;
 	public placedTileLocation: Point = null;
@@ -41,6 +48,12 @@ class DesktopInputManager implements InputManager, EventListenerObject {
 		this.cursorManager = cursorManager;
 
 		this._highlight.highlight = new Point(3, 2);
+
+		this.keyboardInputManager = new KeyboardInputManager();
+		this.mouseInputManager = new MouseInputManager();
+		this.onscreenInputManager = new OnscreenInputManager();
+
+		this.inputManagers = [this.keyboardInputManager, this.mouseInputManager, this.onscreenInputManager];
 	}
 
 	get mouseLocationInView(): Point {
@@ -53,11 +66,11 @@ class DesktopInputManager implements InputManager, EventListenerObject {
 
 		this._currentInput &= ~InputMask.Locator;
 		this._currentInput &= ~InputMask.Pause;
+
+		this.inputManagers.forEach(i => i.clear());
 	}
 
 	public addListeners() {
-		document.addEventListener("keydown", this);
-		document.addEventListener("keyup", this);
 		document.addEventListener("mousemove", this);
 		document.addEventListener("mousedown", this);
 		document.addEventListener("mouseup", this);
@@ -65,9 +78,11 @@ class DesktopInputManager implements InputManager, EventListenerObject {
 
 		this.engine.addEventListener(Engine.Event.CurrentZoneChange, this);
 		this.engine.sceneManager.addOverlay(this._highlight);
+
+		this.inputManagers.forEach(i => i.addListeners());
 	}
 
-	public handleEvent(event: MouseEvent | KeyboardEvent) {
+	public handleEvent(event: MouseEvent) {
 		if (event.type === Engine.Event.CurrentZoneChange) {
 			this.pathTarget = null;
 			this._highlight.highlight = null;
@@ -75,26 +90,16 @@ class DesktopInputManager implements InputManager, EventListenerObject {
 			return;
 		}
 
-		if ("repeat" in event && event.repeat) return;
 		if (event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement) {
 			return;
 		}
 
 		switch (event.type) {
-			case "keydown":
-				this.preferKeyboard = true;
-				return this._keyDown(event as KeyboardEvent);
-			case "keyup":
-				this.preferKeyboard = true;
-				return this._keyUp(event as KeyboardEvent);
 			case "mouseup":
-				this.preferKeyboard = false;
 				return this._mouseUp(event as MouseEvent);
 			case "mousedown":
-				this.preferKeyboard = false;
 				return this._mouseDown(event as MouseEvent);
 			case "mousemove":
-				this.preferKeyboard = false;
 				return this._mouseMove(event as MouseEvent);
 			case "contextmenu":
 				event.stopPropagation();
@@ -103,8 +108,6 @@ class DesktopInputManager implements InputManager, EventListenerObject {
 	}
 
 	public removeListeners() {
-		document.removeEventListener("keydown", this);
-		document.removeEventListener("keyup", this);
 		document.removeEventListener("mousemove", this);
 		document.removeEventListener("mousedown", this);
 		document.removeEventListener("mouseup", this);
@@ -112,92 +115,8 @@ class DesktopInputManager implements InputManager, EventListenerObject {
 
 		this.engine.removeEventListener(Engine.Event.CurrentZoneChange, this);
 		this.engine.sceneManager.removeOverlay(this._highlight);
-	}
 
-	private _keyDown(e: KeyboardEvent) {
-		let directionMask = 0;
-		switch (e.which) {
-			case KeyEvent.DOM_VK_UP:
-				directionMask |= Direction.Up;
-				this._currentInput |= InputMask.ScrollUp;
-				break;
-			case KeyEvent.DOM_VK_DOWN:
-				this._currentInput |= InputMask.ScrollDown;
-				directionMask |= Direction.Down;
-				break;
-			case KeyEvent.DOM_VK_LEFT:
-				directionMask |= Direction.Left;
-				break;
-			case KeyEvent.DOM_VK_RIGHT:
-				directionMask |= Direction.Right;
-				break;
-			case KeyEvent.DOM_VK_SPACE:
-				this._currentInput |= InputMask.Attack;
-				this._currentInput |= InputMask.EndDialog;
-				this._currentInput |= InputMask.PickUp;
-				break;
-			case KeyEvent.DOM_VK_SHIFT:
-				this._currentInput |= InputMask.Drag;
-				break;
-
-			case KeyEvent.DOM_VK_P:
-				this._currentInput ^= InputMask.Pause;
-				break;
-			case KeyEvent.DOM_VK_L:
-				this._currentInput ^= InputMask.Locator;
-				break;
-			case KeyEvent.DOM_VK_CONTROL:
-				this.mouseMode = MouseMode.Path;
-				this.updateMouse();
-				break;
-			default:
-				break;
-		}
-
-		this._keyboardDirection |= directionMask;
-		if (this._keyboardDirection) this._currentInput |= InputMask.Walk;
-
-		this.keyDownHandler(e);
-	}
-
-	private _keyUp(e: KeyboardEvent) {
-		let mask = 0xff;
-
-		switch (e.which) {
-			case KeyEvent.DOM_VK_UP:
-				mask = ~Direction.Up;
-				this._currentInput &= ~InputMask.ScrollUp;
-				break;
-			case KeyEvent.DOM_VK_DOWN:
-				mask &= ~Direction.Down;
-				this._currentInput &= ~InputMask.ScrollDown;
-				break;
-			case KeyEvent.DOM_VK_LEFT:
-				mask &= ~Direction.Left;
-				break;
-			case KeyEvent.DOM_VK_RIGHT:
-				mask &= ~Direction.Right;
-				break;
-			case KeyEvent.DOM_VK_SPACE:
-				this._currentInput &= ~InputMask.Attack;
-				this._currentInput &= ~InputMask.EndDialog;
-				this._currentInput &= ~InputMask.PickUp;
-				break;
-			case KeyEvent.DOM_VK_SHIFT:
-				this._currentInput &= ~InputMask.Drag;
-				break;
-			case KeyEvent.DOM_VK_CONTROL:
-				this.mouseMode = MouseMode.Direction;
-				this._highlight.highlight = null;
-				this.updateMouse();
-				break;
-
-			default:
-				break;
-		}
-
-		this._keyboardDirection &= mask;
-		if (!this._keyboardDirection) this._currentInput &= ~InputMask.Walk;
+		this.inputManagers.forEach(i => i.removeListeners());
 	}
 
 	private _mouseDown(e: MouseEvent) {
@@ -210,6 +129,7 @@ class DesktopInputManager implements InputManager, EventListenerObject {
 
 		this._lastMouse = point;
 		this.updateMouse();
+		this.lastDirectionInput = performance.now();
 
 		if (this.mouseMode === MouseMode.Direction) {
 			if (e.button === 0) this._currentInput |= InputMask.Walk;
@@ -226,6 +146,7 @@ class DesktopInputManager implements InputManager, EventListenerObject {
 		const mouseLocation = new Point(e.clientX, e.clientY);
 		this._lastMouse = this.convertClientCoordinatesToView(mouseLocation);
 		this.updateMouse();
+		this.lastDirectionInput = performance.now();
 	}
 
 	private updateMouse() {
@@ -257,9 +178,8 @@ class DesktopInputManager implements InputManager, EventListenerObject {
 		if (e.button === 0) this._currentInput &= ~InputMask.Walk;
 		if (e.button === 1) this._currentInput &= ~InputMask.Attack;
 
-		this._keyboardDirection = 0;
+		this.lastDirectionInput = performance.now();
 		this._mouseDirection = 0;
-		this.preferKeyboard = false;
 	}
 
 	public readInput(_: number): InputMask {
@@ -322,11 +242,20 @@ class DesktopInputManager implements InputManager, EventListenerObject {
 			return direction;
 		}
 
-		return this._currentInput | this.preferredDirections;
+		const walk =
+			(this.keyboardInputManager.lastDirectionInput > this.lastDirectionInput
+				? this.keyboardInputManager._currentInput
+				: this._currentInput) & InputMask.Walk;
+
+		return ((this._currentInput | this.preferredDirections) & ~InputMask.Walk) | walk;
 	}
 
 	private get preferredDirections() {
-		return this.preferKeyboard ? this._keyboardDirection : this._mouseDirection;
+		if (this.keyboardInputManager.lastDirectionInput > this.lastDirectionInput) {
+			return this.keyboardInputManager._keyboardDirection;
+		}
+
+		return this._mouseDirection;
 	}
 
 	private convertClientCoordinatesToView(location: Point): Point {
@@ -389,6 +318,15 @@ class DesktopInputManager implements InputManager, EventListenerObject {
 		} else {
 			this.cursorManager.changeCursor(angle);
 		}
+	}
+
+	set engine(e: Engine) {
+		this._engine = e;
+		this.inputManagers.forEach(im => (im.engine = e));
+	}
+
+	get engine() {
+		return this._engine;
 	}
 }
 
