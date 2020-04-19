@@ -2,17 +2,30 @@ import InputManager from "src/app/input/input-manager";
 import { InputMask } from "src/engine/input";
 import { KeyEvent, Point, Size } from "src/util";
 import CursorManager from "src/app/input/cursor-manager";
+import { OnscreenButton, OnscreenPad } from "src/app/ui";
 
 describe("WebFun.App.Input.InputManager", () => {
 	let subject: InputManager;
 	let element: HTMLDivElement;
 	let mockElement: HTMLDivElement;
 	let mockedCursorManager: CursorManager;
+	let mockOnscreenAttackButton: OnscreenButton;
+	let mockOnscreenDragButton: OnscreenButton;
+	let mockOnscreenPad: OnscreenPad;
 
 	beforeAll(() => {
+		mockOnscreenAttackButton = {} as any;
+		mockOnscreenDragButton = {} as any;
+		mockOnscreenPad = { lastInput: 0 } as any;
 		mockedCursorManager = { changeCursor: (): void => void 0 } as any;
 		element = document.createElement("div");
-		subject = new InputManager(element, mockedCursorManager, null, null, null);
+		subject = new InputManager(
+			element,
+			mockedCursorManager,
+			mockOnscreenPad,
+			mockOnscreenDragButton,
+			mockOnscreenAttackButton
+		);
 		subject.engine = {
 			hero: { location: new Point(0, 0) },
 			sceneManager: { addOverlay() {}, removeOverlay() {} },
@@ -24,17 +37,12 @@ describe("WebFun.App.Input.InputManager", () => {
 		spyOn(element, "contains").and.callFake(e => e === mockElement);
 	});
 
-	it("collects game input from keyboard and mouse", () => {
-		expect((subject as any)._keyDown).toBeFunction();
-		expect((subject as any)._keyUp).toBeFunction();
-		expect((subject as any)._mouseDown).toBeFunction();
-		expect((subject as any)._mouseMove).toBeFunction();
-		expect((subject as any)._mouseUp).toBeFunction();
-	});
-
 	describe("keyboard input", () => {
 		beforeEach(() => subject.addListeners());
-		afterEach(() => subject.removeListeners());
+		afterEach(() => {
+			releaseAllKeys();
+			subject.removeListeners();
+		});
 
 		it("toggles locator when the l-key is pressed", () => {
 			fakeKeyEvent(KeyEvent.DOM_VK_L, true);
@@ -69,28 +77,23 @@ describe("WebFun.App.Input.InputManager", () => {
 		});
 
 		it("keeps track of directional input", () => {
-			const upKey = KeyEvent.DOM_VK_UP;
-			const downKey = KeyEvent.DOM_VK_DOWN;
-			const leftKey = KeyEvent.DOM_VK_LEFT;
-			const rightKey = KeyEvent.DOM_VK_RIGHT;
-
-			fakeKeyEvent(upKey, true);
+			fakeKeyEvent(KeyEvent.DOM_VK_UP, true);
 			expect(subject.readInput(0) & InputMask.Up).toBeTruthy();
-			fakeKeyEvent(downKey, true);
+			fakeKeyEvent(KeyEvent.DOM_VK_DOWN, true);
 			expect(subject.readInput(0) & InputMask.Down).toBeTruthy();
-			fakeKeyEvent(leftKey, true);
+			fakeKeyEvent(KeyEvent.DOM_VK_LEFT, true);
 			expect(subject.readInput(0) & InputMask.Left).toBeTruthy();
-			fakeKeyEvent(rightKey, true);
+			fakeKeyEvent(KeyEvent.DOM_VK_RIGHT, true);
 			expect(subject.readInput(0) & InputMask.Right).toBeTruthy();
 			expect(subject.readInput(0) & InputMask.Walk).toBeTruthy();
 
-			fakeKeyEvent(upKey, false);
+			fakeKeyEvent(KeyEvent.DOM_VK_UP, false);
 			expect(subject.readInput(0) & InputMask.Up).toBeFalsy();
-			fakeKeyEvent(downKey, false);
+			fakeKeyEvent(KeyEvent.DOM_VK_DOWN, false);
 			expect(subject.readInput(0) & InputMask.Down).toBeFalsy();
-			fakeKeyEvent(leftKey, false);
+			fakeKeyEvent(KeyEvent.DOM_VK_LEFT, false);
 			expect(subject.readInput(0) & InputMask.Left).toBeFalsy();
-			fakeKeyEvent(rightKey, false);
+			fakeKeyEvent(KeyEvent.DOM_VK_RIGHT, false);
 			expect(subject.readInput(0) & InputMask.Right).toBeFalsy();
 			expect(subject.readInput(0) & InputMask.Walk).toBeFalsy();
 		});
@@ -163,7 +166,6 @@ describe("WebFun.App.Input.InputManager", () => {
 		});
 
 		it("ignores keyboard events that are sent to an input element", () => {
-			(subject as any)._currentInput = InputMask.None;
 			let event: any = { type: true ? "keydown" : "keyup" };
 			event.which = KeyEvent.DOM_VK_SPACE;
 			event.target = document.createElement("input");
@@ -296,11 +298,24 @@ describe("WebFun.App.Input.InputManager", () => {
 		});
 	});
 
+	function releaseAllKeys() {
+		[
+			KeyEvent.DOM_VK_UP,
+			KeyEvent.DOM_VK_DOWN,
+			KeyEvent.DOM_VK_LEFT,
+			KeyEvent.DOM_VK_RIGHT,
+			KeyEvent.DOM_VK_SHIFT,
+			KeyEvent.DOM_VK_SPACE,
+			KeyEvent.DOM_VK_P,
+			KeyEvent.DOM_VK_L
+		].forEach(k => fakeKeyEvent(k, false));
+	}
+
 	function fakeKeyEvent(code: number, pressed: boolean) {
 		const event: any = new CustomEvent(pressed ? "keydown" : "keyup");
 		event.which = code;
 		event.repeat = false;
-		subject.handleEvent(event);
+		(subject as any).keyboardInputManager.handleEvent(event);
 	}
 
 	function fakeMouse(type: string, options: any, target: any = mockElement) {
@@ -309,6 +324,6 @@ describe("WebFun.App.Input.InputManager", () => {
 		event.clientY = options.y;
 		event.button = options.button;
 		event.target = target;
-		subject.handleEvent(event);
+		(subject as any).mouseInputManager.handleEvent(event);
 	}
 });

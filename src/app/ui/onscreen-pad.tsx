@@ -22,7 +22,7 @@ class OnscreenPad extends Component implements EventListenerObject {
 		<div style="position: absolute; top: 0px; right: 0px; font-size: .9em; text-align: right;" />
 	);
 	private trackedTouch: number = null;
-	private _lastInput: number;
+	private _lastInput: number = performance.now();
 
 	connectedCallback() {
 		super.connectedCallback();

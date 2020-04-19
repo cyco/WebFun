@@ -31,7 +31,7 @@ class MouseInputManager implements InputManager {
 	public endDialog: boolean;
 	public attack: boolean;
 
-	public lastDirectionInput: number;
+	public lastDirectionInput: number = performance.now();
 	private readonly cursorManager: CursorManager;
 	private _element: HTMLElement;
 	private mouseMode: MouseMode = MouseMode.Direction;
@@ -39,7 +39,7 @@ class MouseInputManager implements InputManager {
 	private pathTarget: Point;
 	private _mouseDirection: number = 0;
 	private _lastMouse: Point;
-	_currentInput: number;
+	private _currentInput: number;
 
 	constructor(gameViewElement: HTMLElement, cursorManager: CursorManager) {
 		this._element = gameViewElement;

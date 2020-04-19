@@ -44,6 +44,8 @@ global.buildFixtureUrl = buildFixtureUrl;
 global.WebFun = global.WebFun || {};
 global.WebFun.JSX = new ComponentJSXRenderer();
 
+localStorage.clear();
+
 console.assert = (condition: string, message?: string, ...rest: any[]) => {
 	if (!condition) {
 		let i = 0;

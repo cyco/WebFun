@@ -2,6 +2,7 @@ const store = function (key: string, object: JSONValue): JSONValue {
 	try {
 		if (
 			typeof object === "object" &&
+			object !== null &&
 			object.toString !== Array.prototype.toString &&
 			object.toString !== Object.prototype.toString
 		) {
@@ -10,7 +11,7 @@ const store = function (key: string, object: JSONValue): JSONValue {
 			this.setItem(key, JSON.stringify(object));
 		}
 	} catch (e) {
-		console.warn("Unable to store item Storage: ", e);
+		console.warn("Unable to store item: ", e);
 	}
 
 	return object;
