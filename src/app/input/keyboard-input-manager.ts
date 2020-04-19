@@ -1,6 +1,6 @@
 import { Tile } from "src/engine/objects";
 import { Engine } from "src/engine";
-import { KeyEvent, Point, Direction as DirectionHelper, astar } from "src/util";
+import { KeyEvent, Point } from "src/util";
 import { Direction, InputMask, InputManager } from "src/engine/input";
 
 class KeyboardInputManager implements InputManager {
@@ -23,10 +23,13 @@ class KeyboardInputManager implements InputManager {
 	public mouseLocationInView: Point;
 
 	public lastDirectionInput: number = performance.now();
-	public _currentInput: InputMask;
-	public _keyboardDirection: number;
+	private _currentInput: InputMask;
+	private _keyboardDirection: number;
 
-	public clear(): void {}
+	public clear(): void {
+		this._currentInput &= ~InputMask.Locator;
+		this._currentInput &= ~InputMask.Pause;
+	}
 
 	public addListeners(): void {
 		document.addEventListener("keydown", this);
@@ -132,7 +135,7 @@ class KeyboardInputManager implements InputManager {
 	}
 
 	public readInput(_: number): InputMask {
-		return InputMask.None;
+		return this._currentInput | this._keyboardDirection;
 	}
 
 	public removeListeners(): void {

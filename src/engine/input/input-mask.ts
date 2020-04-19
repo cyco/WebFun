@@ -14,7 +14,9 @@ enum InputMask {
 	Attack = 1 << 9,
 	Walk = 1 << 10,
 	Drag = 1 << 11,
-	ScrollUp = 1 << 12
+	ScrollUp = 1 << 12,
+
+	Movement = InputMask.Walk | InputMask.Down | InputMask.Left | InputMask.Up | InputMask.Right
 }
 
 export default InputMask;
