@@ -27,7 +27,7 @@ function SoundMenuItem(
 	};
 }
 
-class MainMenu extends Menu {
+class MobileMainMenu extends Menu {
 	constructor(controller: GameController) {
 		super([
 			{
@@ -104,4 +104,4 @@ class MainMenu extends Menu {
 	}
 }
 
-export default MainMenu;
+export default MobileMainMenu;
