@@ -12,6 +12,10 @@ import Settings from "src/settings";
 import { Yoda } from "src/engine/type";
 import initializeDebug from "src/debug/initialize";
 import "./bootstrap-components.ts";
+import OnScreenButton from "src/app/ui/onscreen-button";
+import OnScreenPad from "src/app/ui/onscreen-pad";
+import * as SmartPhone from "detect-mobile-browser";
+import "./main.scss";
 
 const endPreload = () => {
 	const container = document.getElementById("webfun-preload");
@@ -19,10 +23,12 @@ const endPreload = () => {
 };
 
 const main = async () => {
-	localStorage.clear();
+	// localStorage.clear();
 
 	window.WebFun = window.WebFun || { JSX: null };
 	window.WebFun.JSX = new ComponentJSXRenderer();
+
+	Settings.mobile = SmartPhone(false).isAndroid() || SmartPhone(false).isIPhone();
 
 	ComponentRegistry.sharedRegistry.registerComponents(Components);
 	ComponentRegistry.sharedRegistry.registerComponents(AppComponents);
@@ -31,7 +37,7 @@ const main = async () => {
 	endPreload();
 
 	if ("serviceWorker" in navigator) {
-		navigator.serviceWorker.register("assets/webfun.sw.js");
+		// navigator.serviceWorker.register("assets/webfun.sw.js");
 	}
 
 	const gameController = new GameController(Yoda, Settings.url.yoda);
@@ -43,7 +49,25 @@ const main = async () => {
 	}
 
 	if (Settings.debug) {
-		await initializeDebug(gameController);
+		// await initializeDebug(gameController);
+	}
+
+	if (!Settings.mobile) {
+		document.body.appendChild(
+			<div id="onscreen-test">
+				<button
+					onclick={(e: MouseEvent) => {
+						(e.target as any).classList.toggle("active");
+						(e.target as any).parentElement.classList.toggle("edit");
+					}}>
+					Edit
+				</button>
+				<OnScreenButton id="btn_1" label="Shoot"></OnScreenButton>
+				<OnScreenButton id="btn_2" label="Drag"></OnScreenButton>
+
+				<OnScreenPad id="pad_1"></OnScreenPad>
+			</div>
+		);
 	}
 };
 

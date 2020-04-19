@@ -55,11 +55,15 @@ class GameController extends EventTarget implements EventListenerObject {
 	constructor(type: GameType, paths: PathConfiguration) {
 		super();
 
-		this.settings.mobile = !!(SmartPhone(false).isAndroid() || SmartPhone(false).isIPhone());
+		this.settings.mobile = SmartPhone(false).isAndroid() || SmartPhone(false).isIPhone();
 		const mainMenuClasss = this.settings.mobile ? MobileMainMenu : MainMenu;
 		this._window = (
 			<MainWindow menu={new mainMenuClasss(this)} className={this.settings.mobile ? "mobile" : ""} />
 		) as MainWindow;
+
+		if (SmartPhone(false).isIPad()) {
+		}
+
 		this._engine = this._buildEngine(type, paths);
 		this._sceneView.manager.engine = this._engine;
 		if (this.settings.debug) (window as any).engine = this._engine;

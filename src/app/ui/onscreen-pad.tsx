@@ -23,8 +23,13 @@ class OnscreenPad extends Component implements EventListenerObject {
 	);
 	private trackedTouch: number = null;
 
+	public state: Storage = localStorage.prefixedWith("onscreeen");
+	private dragging = false;
+	private offset: Point;
+
 	connectedCallback() {
 		super.connectedCallback();
+		this.applyState();
 
 		this.positionThumb(0, 0);
 
@@ -36,6 +41,7 @@ class OnscreenPad extends Component implements EventListenerObject {
 		this.addEventListener("touchmove", this);
 		this.addEventListener("touchend", this);
 		this.addEventListener("mousedown", this);
+		this.addEventListener("zoom", this);
 	}
 
 	handleEvent(event: TouchEvent | MouseEvent): void {
@@ -49,6 +55,57 @@ class OnscreenPad extends Component implements EventListenerObject {
 
 		if (event.type === "touchstart" && !this.trackedTouch) {
 			this.trackedTouch = "changedTouches" in event ? event.changedTouches[0].identifier : null;
+		}
+
+		if (this.closest(".edit")) {
+			if (event.type === "touchstart" || event.type === "mousedown") {
+				const { clientX, clientY } = event instanceof MouseEvent ? event : event.touches[0];
+				const { left, top } = this.getBoundingClientRect();
+				this.offset = new Point(left - clientX, top - clientY);
+				this.dragging = true;
+				document.addEventListener("touchmove", this);
+				document.addEventListener("mousemove", this);
+				document.addEventListener("touchmove", this);
+				document.addEventListener("mouseup", this);
+				document.addEventListener("touchend", this);
+			} else if (event.type === "mouseup" || event.type === "touchend") {
+				this.dragging = false;
+				this.offset = null;
+				document.removeEventListener("mousemove", this);
+				document.removeEventListener("touchmove", this);
+				document.removeEventListener("mouseup", this);
+				document.removeEventListener("touchend", this);
+
+				const { top, left, bottom, right } = this.getBoundingClientRect();
+				const {
+					top: pTop,
+					left: pLeft,
+					bottom: pBottom,
+					right: pRight,
+					width,
+					height
+				} = this.closest(".edit").getBoundingClientRect();
+
+				const le = (left - pLeft) / width;
+				const ri = (pRight - right) / width;
+
+				const bo = (pBottom - bottom) / height;
+				const to = (top - pTop) / height;
+
+				this.style.left = le < ri ? `${le * 100}%` : ``;
+				this.style.right = ri < le ? `${ri * 100}%` : ``;
+				this.style.bottom = bo < to ? `${bo * 100}%` : ``;
+				this.style.top = to < bo ? `${to * 100}%` : ``;
+
+				this.storeState();
+			} else {
+				const { clientX, clientY } = event instanceof MouseEvent ? event : event.touches[0];
+
+				this.style.left = `${this.offset.x + clientX}px`;
+				this.style.top = `${this.offset.y + clientY}px`;
+				this.style.right = "";
+				this.style.bottom = "";
+			}
 		}
 
 		if (event.type === "touchend" || event.type === "mouseup") {
@@ -113,10 +170,24 @@ class OnscreenPad extends Component implements EventListenerObject {
 		this.removeEventListener("touchmove", this);
 		this.removeEventListener("touchend", this);
 		this.removeEventListener("mousedown", this);
+		this.removeEventListener("zoom", this);
 		document.removeEventListener("mousemove", this);
 		document.removeEventListener("mouseup", this);
 
 		super.disconnectedCallback();
+	}
+
+	private applyState() {
+		const { top, left, bottom, right } = this.state.load(this.id) || {};
+		this.style.top = top;
+		this.style.left = left;
+		this.style.bottom = bottom;
+		this.style.right = right;
+	}
+
+	private storeState() {
+		const { top, left, bottom, right } = this.style;
+		this.state.store(this.id, { top, left, bottom, right });
 	}
 
 	public get input(): InputMask {

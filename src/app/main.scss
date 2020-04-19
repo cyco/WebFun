@@ -1,0 +1,34 @@
+#onscreen-test {
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	width: 100vw;
+	height: 100vh;
+
+	> button {
+		position: absolute;
+		bottom: 50px;
+	}
+
+	wf-onscreen-pad,
+	wf-onscreen-button {
+		position: absolute;
+		padding: 2px;
+	}
+
+	wf-onscreen-pad {
+		width: 180px;
+		height: 180px;
+	}
+
+	wf-onscreen-button {
+		// zoom: 1.2;
+	}
+
+	&.edit {
+		wf-onscreen-button,
+		wf-onscreen-pad {
+			border: 1px dashed gray;
+		}
+	}
+}
