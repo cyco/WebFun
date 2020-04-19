@@ -15,7 +15,7 @@ import { Mixer } from "src/app/audio";
 import { Renderer } from "src/app/rendering/canvas";
 import { SceneView } from "src/app/ui";
 import { Settings } from "src";
-import { TouchInputManager, DesktopInputManager } from "src/app/input";
+import { InputManager } from "src/app/input";
 import { Yoda } from "src/engine/type";
 import { ZoneScene, MapScene } from "src/engine/scenes";
 import * as AppAudioModule from "src/app/audio";
@@ -58,7 +58,7 @@ describe("WebFun.App.GameController", () => {
 
 		describe("it creates a new engine", () => {
 			it("provides a input manager", () => {
-				expect(engineInterface.InputManager(null)).toBeInstanceOf(DesktopInputManager);
+				expect(engineInterface.InputManager(null)).toBeInstanceOf(InputManager);
 			});
 
 			it("provides a renderer", () => {

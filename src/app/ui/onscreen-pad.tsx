@@ -24,8 +24,8 @@ class OnscreenPad extends Component implements EventListenerObject {
 	private trackedTouch: number = null;
 
 	public state: Storage = localStorage.prefixedWith("onscreeen");
-	private dragging = false;
 	private offset: Point;
+	private _lastInput: number;
 
 	connectedCallback() {
 		super.connectedCallback();
@@ -46,7 +46,7 @@ class OnscreenPad extends Component implements EventListenerObject {
 
 	handleEvent(event: TouchEvent | MouseEvent): void {
 		event.preventDefault();
-		event.stopPropagation();
+		event.stopImmediatePropagation();
 
 		if (event.type === "mousedown") {
 			document.addEventListener("mouseup", this);
@@ -62,14 +62,12 @@ class OnscreenPad extends Component implements EventListenerObject {
 				const { clientX, clientY } = event instanceof MouseEvent ? event : event.touches[0];
 				const { left, top } = this.getBoundingClientRect();
 				this.offset = new Point(left - clientX, top - clientY);
-				this.dragging = true;
 				document.addEventListener("touchmove", this);
 				document.addEventListener("mousemove", this);
 				document.addEventListener("touchmove", this);
 				document.addEventListener("mouseup", this);
 				document.addEventListener("touchend", this);
 			} else if (event.type === "mouseup" || event.type === "touchend") {
-				this.dragging = false;
 				this.offset = null;
 				document.removeEventListener("mousemove", this);
 				document.removeEventListener("touchmove", this);
@@ -163,6 +161,7 @@ class OnscreenPad extends Component implements EventListenerObject {
 		}
 
 		this._input = input;
+		this._lastInput = performance.now();
 	}
 
 	disconnectedCallback() {
@@ -192,6 +191,10 @@ class OnscreenPad extends Component implements EventListenerObject {
 
 	public get input(): InputMask {
 		return this._input;
+	}
+
+	public get lastInput(): number {
+		return this._lastInput;
 	}
 }
 

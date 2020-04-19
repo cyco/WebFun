@@ -68,7 +68,7 @@ class WorldView extends Component {
 		for (let y = 0; y < 10; y++) {
 			for (let x = 0; x < 10; x++) {
 				const zoneImage = this._zoneImages[10 * y + x];
-				ctx.drawImage(zoneImage, x * 576, y * 576);
+				(ctx as any).drawImage(zoneImage, x * 576, y * 576);
 			}
 		}
 	}

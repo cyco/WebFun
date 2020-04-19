@@ -1,10 +1,10 @@
-import DesktopInputManager from "src/app/input/desktop-input-manager";
+import InputManager from "src/app/input/input-manager";
 import { InputMask } from "src/engine/input";
 import { KeyEvent, Point, Size } from "src/util";
 import CursorManager from "src/app/input/cursor-manager";
 
-describe("WebFun.App.Input.DesktopInputManager", () => {
-	let subject: DesktopInputManager;
+describe("WebFun.App.Input.InputManager", () => {
+	let subject: InputManager;
 	let element: HTMLDivElement;
 	let mockElement: HTMLDivElement;
 	let mockedCursorManager: CursorManager;
@@ -12,7 +12,7 @@ describe("WebFun.App.Input.DesktopInputManager", () => {
 	beforeAll(() => {
 		mockedCursorManager = { changeCursor: (): void => void 0 } as any;
 		element = document.createElement("div");
-		subject = new DesktopInputManager(element, mockedCursorManager);
+		subject = new InputManager(element, mockedCursorManager, null, null, null);
 		subject.engine = {
 			hero: { location: new Point(0, 0) },
 			sceneManager: { addOverlay() {}, removeOverlay() {} },

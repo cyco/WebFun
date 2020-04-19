@@ -1,4 +1,3 @@
-import DesktopInputManager from "./desktop-input-manager";
-import TouchInputManager from "./touch-input-manager";
+import InputManager from "./input-manager";
 
-export { DesktopInputManager, TouchInputManager };
+export { InputManager };

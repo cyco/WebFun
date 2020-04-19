@@ -21,7 +21,7 @@ import GameState from "../engine/game-state";
 import { Reader } from "src/engine/save-game";
 import Settings from "src/settings";
 import { CanvasRenderer } from "./rendering";
-import { DesktopInputManager, TouchInputManager } from "./input";
+import { InputManager } from "./input";
 import Loader from "./loader";
 import ResourceManager from "./resource-manager";
 import CursorManager from "./input/cursor-manager";
@@ -88,14 +88,13 @@ class GameController extends EventTarget implements EventListenerObject {
 	private _buildInterface(paths: any): Partial<Interface> {
 		const mixer = new Mixer(this.settings);
 		const renderer = new CanvasRenderer.Renderer(this._sceneView.canvas);
-		const inputManager = !this.settings.mobile
-			? new DesktopInputManager(this._sceneView, new CursorManager(this._sceneView))
-			: new TouchInputManager(
-					this._sceneView,
-					this._window.content.querySelector(OnscreenPad.tagName),
-					this._window.content.querySelector(`${OnscreenButton.tagName}.shoot`),
-					this._window.content.querySelector(`${OnscreenButton.tagName}.drag`)
-			  );
+		const inputManager = new InputManager(
+			this._sceneView,
+			new CursorManager(this._sceneView),
+			this._window.content.querySelector(OnscreenPad.tagName),
+			this._window.content.querySelector(`${OnscreenButton.tagName}.shoot`),
+			this._window.content.querySelector(`${OnscreenButton.tagName}.drag`)
+		);
 		const resources = new ResourceManager(paths.palette, paths.data, paths.sfx);
 
 		return {

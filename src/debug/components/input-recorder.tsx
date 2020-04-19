@@ -3,7 +3,7 @@ import "./input-recorder.scss";
 import { Component, WindowManager } from "src/ui";
 import { IconButton, Window } from "src/ui/components";
 
-import { DesktopInputManager } from "src/app/input";
+import { InputManager as AppInputManager } from "src/app/input";
 import { GameController } from "src/app";
 import { RecordingInputManager } from "src/debug/automation";
 
@@ -68,7 +68,7 @@ class InputRecorder extends Component {
 
 	public set gameController(c) {
 		this._gameController = c;
-		this._recorder = new RecordingInputManager(c.engine.inputManager as DesktopInputManager);
+		this._recorder = new RecordingInputManager(c.engine.inputManager as AppInputManager);
 		c.engine.inputManager = this._recorder;
 		c.engine.inputManager.engine = c.engine;
 	}

@@ -1,4 +1,4 @@
-import { InputMask, InputManager } from "src/engine/input";
+import { InputMask, InputManager as InputManagerInterface } from "src/engine/input";
 import { Point } from "src/util";
 import { Engine } from "src/engine";
 
@@ -8,8 +8,9 @@ import CursorManager from "./cursor-manager";
 import KeyboardInputManager from "./keyboard-input-manager";
 import MouseInputManager from "./mouse-input-manager";
 import OnscreenInputManager from "./onscreen-input-manager";
+import { OnscreenPad, OnscreenButton } from "src/app/ui";
 
-class DesktopInputManager implements InputManager, EventListenerObject {
+class InputManager implements InputManagerInterface, EventListenerObject {
 	public mouseDownHandler: (_: Point) => void = () => void 0;
 	public keyDownHandler: (_: KeyboardEvent) => void = () => void 0;
 	public currentItem: Tile;
@@ -19,13 +20,19 @@ class DesktopInputManager implements InputManager, EventListenerObject {
 	private keyboardInputManager: KeyboardInputManager;
 	private mouseInputManager: MouseInputManager;
 	private onscreenInputManager: OnscreenInputManager;
-	private inputManagers: InputManager[];
+	private inputManagers: InputManagerInterface[];
 	private _engine: Engine;
 
-	constructor(gameViewElement: HTMLElement, cursorManager: CursorManager) {
+	constructor(
+		gameViewElement: HTMLElement,
+		cursorManager: CursorManager,
+		pad: OnscreenPad,
+		shoot: OnscreenButton,
+		drag: OnscreenButton
+	) {
 		this.keyboardInputManager = new KeyboardInputManager();
 		this.mouseInputManager = new MouseInputManager(gameViewElement, cursorManager);
-		this.onscreenInputManager = new OnscreenInputManager();
+		this.onscreenInputManager = new OnscreenInputManager(gameViewElement, pad, shoot, drag);
 
 		this.inputManagers = [this.keyboardInputManager, this.mouseInputManager, this.onscreenInputManager];
 	}
@@ -106,4 +113,4 @@ class DesktopInputManager implements InputManager, EventListenerObject {
 	}
 }
 
-export default DesktopInputManager;
+export default InputManager;

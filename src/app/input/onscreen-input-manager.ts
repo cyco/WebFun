@@ -1,40 +1,73 @@
 import { InputManager, InputMask } from "src/engine/input";
+import { Point } from "src/util";
 import { Tile } from "src/engine/objects";
 import { Engine } from "src/engine";
-import { Point } from "src/util";
+import { OnscreenPad, OnscreenButton } from "src/app/ui";
+import { PickupScene } from "src/engine/scenes";
 
-class OnscreenInputManager implements InputManager {
-	public mouseDownHandler: (_: Point) => void;
-	public keyDownHandler: (_: KeyboardEvent) => void;
-	public currentItem: Tile;
-	public engine: Engine;
-	public directions: number;
-	public walk: boolean;
-	public drag: boolean;
-	public scrollUp: boolean;
-	public placedTile: Tile;
-	public placedTileLocation: Point;
-	public locator: boolean;
-	public pause: boolean;
-	public pickUp: boolean;
-	public scrollDown: boolean;
-	public endDialog: boolean;
-	public attack: boolean;
-	public mouseLocationInView: Point;
+class OnscreenManager implements InputManager {
+	mouseDownHandler: (_: Point) => void;
+	keyDownHandler: (_: KeyboardEvent) => void;
+	currentItem: Tile;
+	engine: Engine;
+	placedTile: Tile;
+	mouseLocationInView: Point;
+	placedTileLocation: Point;
 
-	public lastDirectionInput: number = performance.now();
-	private _currentInput: number;
+	public constructor(
+		private gameViewElement: HTMLElement,
+		private pad: OnscreenPad,
+		private shoot: OnscreenButton,
+		private drag: OnscreenButton
+	) {}
 
-	public clear(): void {
-		this._currentInput &= ~InputMask.Locator;
-		this._currentInput &= ~InputMask.Pause;
+	readInput(_: number): InputMask {
+		let input = InputMask.None;
+
+		if (this.shoot.pressed) input |= InputMask.Attack;
+		if (this.drag.pressed) input |= InputMask.Drag;
+
+		input |= this.pad.input;
+
+		return input;
 	}
 
-	public addListeners(): void {}
-	public readInput(_: number): InputMask {
-		return InputMask.None;
+	clear(): void {}
+
+	addListeners(): void {
+		this.gameViewElement.addEventListener("touchstart", this);
+		this.gameViewElement.addEventListener("mousedown", this);
 	}
-	public removeListeners(): void {}
+
+	handleEvent(e: TouchEvent) {
+		if (this.engine?.sceneManager?.currentScene instanceof PickupScene) {
+			this.engine.sceneManager.popScene();
+			return;
+		}
+
+		if (e.type === "touchstart") {
+			const location = new Point(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
+			const point = this.convertClientCoordinatesToView(location);
+			this.mouseLocationInView = location;
+			this.mouseDownHandler && this.mouseDownHandler(point);
+			this.mouseLocationInView = null;
+		}
+	}
+
+	private convertClientCoordinatesToView(location: Point): Point {
+		const boundingRect = this.gameViewElement.getBoundingClientRect();
+		const viewOffset = new Point(boundingRect.left, boundingRect.top);
+
+		return Point.subtract(location, viewOffset).dividedBy(boundingRect);
+	}
+
+	removeListeners(): void {
+		this.gameViewElement.removeEventListener("mousedown", this);
+		this.gameViewElement.removeEventListener("touchstart", this);
+	}
+
+	public get lastDirectionInput() {
+		return this.pad.lastInput;
+	}
 }
-
-export default OnscreenInputManager;
+export default OnscreenManager;
