@@ -10,12 +10,8 @@ import { ComponentRegistry, Components } from "src/ui";
 import GameController from "./game-controller";
 import Settings from "src/settings";
 import { Yoda } from "src/engine/type";
-import initializeDebug from "src/debug/initialize";
 import "./bootstrap-components.ts";
-import OnScreenButton from "src/app/ui/onscreen-button";
-import OnScreenPad from "src/app/ui/onscreen-pad";
 import * as SmartPhone from "detect-mobile-browser";
-import "./main.scss";
 
 const endPreload = () => {
 	const container = document.getElementById("webfun-preload");
@@ -23,7 +19,7 @@ const endPreload = () => {
 };
 
 const main = async () => {
-	// localStorage.clear();
+	localStorage.clear();
 
 	window.WebFun = window.WebFun || { JSX: null };
 	window.WebFun.JSX = new ComponentJSXRenderer();
@@ -50,24 +46,6 @@ const main = async () => {
 
 	if (Settings.debug) {
 		// await initializeDebug(gameController);
-	}
-
-	if (!Settings.mobile) {
-		document.body.appendChild(
-			<div id="onscreen-test">
-				<button
-					onclick={(e: MouseEvent) => {
-						(e.target as any).classList.toggle("active");
-						(e.target as any).parentElement.classList.toggle("edit");
-					}}>
-					Edit
-				</button>
-				<OnScreenButton id="btn_1" label="Shoot"></OnScreenButton>
-				<OnScreenButton id="btn_2" label="Drag"></OnScreenButton>
-
-				<OnScreenPad id="pad_1"></OnScreenPad>
-			</div>
-		);
 	}
 };
 
