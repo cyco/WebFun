@@ -40,7 +40,19 @@ class EventTarget {
 				: new CustomEvent(type, {
 						detail: detail
 				  }),
-			{ get: (obj: any, prop: any) => (prop === "target" ? target : obj[prop]) }
+			{
+				get: (obj: any, prop: any) => {
+					if(prop === "target")
+						return target;
+
+					const value = obj[prop];
+					if(value instanceof Function) {
+						return value.bind(obj);
+					}
+
+					return value;
+				}
+			}
 		);
 
 		(this as any)["on" + type] instanceof Function && (this as any)["on" + type](event);

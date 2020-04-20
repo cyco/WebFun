@@ -70,6 +70,7 @@ class MouseInputManager implements InputManager {
 				this.pathTarget = null;
 				this._highlight.highlight = null;
 				this._highlight.target = null;
+				break;
 			}
 			case "mouseup":
 				return this._mouseUp(event as MouseEvent);
