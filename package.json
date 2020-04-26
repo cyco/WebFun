@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "engines": { 
+    "node": "13"
+  },
   "scripts": {
     "build": "webpack --production --optimize-minimize --config config/webpack.prod.js",
     "start": "webpack-dev-server --open --mode development --config config/webpack.dev.js",
