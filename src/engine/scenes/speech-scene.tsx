@@ -7,6 +7,7 @@ import { SpeechBubble } from "src/ui/components";
 import { Tile } from "src/engine/objects";
 import Sector from "src/engine/sector";
 import { InputMask } from "../input";
+import { Settings } from "src";
 
 class SpeechScene extends Scene {
 	public engine: Engine;
@@ -57,6 +58,8 @@ class SpeechScene extends Scene {
 		const x = anchor.x * this.tileSize.width + origin.x + 16 + this.offset.x;
 		const y = anchor.y * this.tileSize.height + origin.y + 32 + 32 + this.offset.y;
 		this._bubble.origin = new Point(x, y);
+		if (Settings.mobile) this._bubble.style.zoom = "1.2";
+
 		this._bubble.show();
 	}
 
