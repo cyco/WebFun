@@ -1,4 +1,5 @@
-import { Hotspot, Zone } from "src/engine/objects";
+import Hotspot from "src/engine/objects/hotspot";
+import Zone from "src/engine/objects/zone";
 
 import LocatorTile from "src/engine/types/locator-tile";
 import { rgb } from "src/util";

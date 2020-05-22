@@ -10,7 +10,7 @@ declare global {
 		WebFun: { JSX: ComponentJSXRenderer };
 	}
 }
-type Components<Entry> = Extract<Entry[keyof Entry], { readonly tagName: string } & { new (): any }>;
+type Components<Entry> = Extract<Entry[keyof Entry], { readonly tagName: string } & { new(): any }>;
 type ComponentDefinitions<Bundle> = {
 	[TagName in Components<Bundle>["tagName"]]: Extract<Components<Bundle>, { tagName: TagName }>;
 };

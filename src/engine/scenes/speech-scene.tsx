@@ -7,7 +7,7 @@ import { SpeechBubble } from "src/ui/components";
 import { Tile } from "src/engine/objects";
 import Sector from "src/engine/sector";
 import { InputMask } from "../input";
-import { Settings } from "src";
+import Settings from "src/settings";
 
 class SpeechScene extends Scene {
 	public engine: Engine;
