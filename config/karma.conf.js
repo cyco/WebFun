@@ -103,7 +103,7 @@ if (includeCoverage) {
 		"file": fileName
 	};
 
-	config.webpack.module.rules[1].use[0].options.plugins = ["istanbul"];
+	config.webpack.module.rules[0].use[0].options.plugins = ["istanbul"];
 
 	config.reporters.push("ingame-coverage");
 	config.frameworks.push("ingame-coverage");
