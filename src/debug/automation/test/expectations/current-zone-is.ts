@@ -9,7 +9,7 @@ class CurrentZoneIsExpectation implements Expectation {
 	}
 
 	public static BuildFrom(description: IteratorResult<string>): CurrentZoneIsExpectation {
-		return new CurrentZoneIsExpectation(description.value.split(':')[1].trim().parseInt());
+		return new CurrentZoneIsExpectation(description.value.split(":")[1].trim().parseInt());
 	}
 
 	constructor(zone: number) {

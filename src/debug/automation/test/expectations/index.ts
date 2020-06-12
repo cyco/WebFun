@@ -5,7 +5,7 @@ import ZoneSolvedExpectation from "./zone-solved";
 import StorySolvedExpectation from "./story-solved";
 import InventoryContainsNotExpectation from "./inventory-contains-not";
 import TicksExpectation from "./ticks";
-import CurrentZoneIsExpectation from './current-zone-is';
+import CurrentZoneIsExpectation from "./current-zone-is";
 
 export {
 	InventoryContainsExpectation,
@@ -15,5 +15,5 @@ export {
 	TicksExpectation,
 	ZoneSolvedExpectation,
 	CurrentZoneIsExpectation,
-	UnknownExpectation,
+	UnknownExpectation
 };

@@ -42,11 +42,10 @@ class EventTarget {
 				  }),
 			{
 				get: (obj: any, prop: any) => {
-					if(prop === "target")
-						return target;
+					if (prop === "target") return target;
 
 					const value = obj[prop];
-					if(value instanceof Function) {
+					if (value instanceof Function) {
 						return value.bind(obj);
 					}
 
