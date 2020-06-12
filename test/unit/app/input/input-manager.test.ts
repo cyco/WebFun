@@ -156,7 +156,7 @@ describe("WebFun.App.Input.InputManager", () => {
 		});
 
 		it("ignores repeated keyboard events", () => {
-			(subject as any)._currentInput = InputMask.None;
+			(subject as any).keyboardInputManager._currentInput = InputMask.None;
 			const event: any = { type: true ? "keydown" : "keyup" };
 			event.which = KeyEvent.DOM_VK_SPACE;
 			event.repeat = true;
@@ -173,7 +173,7 @@ describe("WebFun.App.Input.InputManager", () => {
 			subject.handleEvent(event);
 			expect(subject.readInput(0) & InputMask.Attack).not.toBeTruthy();
 
-			(subject as any)._currentInput = InputMask.None;
+			(subject as any).keyboardInputManager._currentInput = InputMask.None;
 			event = { type: true ? "keydown" : "keyup" };
 			event.which = KeyEvent.DOM_VK_SPACE;
 			event.target = document.createElement("textarea");
@@ -255,7 +255,7 @@ describe("WebFun.App.Input.InputManager", () => {
 
 		describe("when the left mouse is pressed outside the element", () => {
 			beforeEach(() => {
-				(subject as any)._currentInput = InputMask.None;
+				(subject as any).mouseInputManager._currentInput = InputMask.None;
 				fakeMouse("down", { x: 0, y: 0, button: 0 }, {});
 			});
 
