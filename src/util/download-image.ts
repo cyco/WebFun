@@ -1,4 +1,4 @@
-const downloadImage = (content: ImageData, filename: string, type: string = "png") => {
+const downloadImage = (content: ImageData, filename: string, type: string = "png"): void => {
 	const canvas = document.createElement("canvas");
 	canvas.width = content.width;
 	canvas.height = content.height;

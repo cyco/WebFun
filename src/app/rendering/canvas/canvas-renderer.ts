@@ -41,24 +41,24 @@ class CanvasRenderer implements Renderer {
 		this._ctx.clearRect(0, 0, this._canvas.width, this._canvas.height);
 	}
 
-	renderImage(image: HTMLImageElement, x: number, y: number) {
-		this.drawImage(image, x, y);
+	renderImage(image: HTMLImageElement, x: number, y: number): void {
+		this.drawImage(image as any, x, y);
 	}
 
-	drawImage(image: HTMLImageElement, atX: number, atY: number) {
-		this._ctx.drawImage(image, atX, atY);
+	drawImage(image: HTMLImageElement, atX: number, atY: number): void {
+		this._ctx.drawImage(image as any, atX, atY);
 	}
 
-	renderImageData(image: ImageData, x: number, y: number) {
+	renderImageData(image: ImageData, x: number, y: number): void {
 		this._ctx.putImageData(image, x, y);
 	}
 
-	fillBlackRect(x: number, y: number, width: number, height: number) {
+	fillBlackRect(x: number, y: number, width: number, height: number): void {
 		this.fillRect(x, y, width, height, "#000000");
 	}
 
 	// debug
-	fillRect(x: number, y: number, width: number, height: number, color: string) {
+	fillRect(x: number, y: number, width: number, height: number, color: string): void {
 		this._ctx.save();
 		this._ctx.globalCompositeOperation = "source-over";
 		this._ctx.fillStyle = color;
@@ -66,11 +66,11 @@ class CanvasRenderer implements Renderer {
 		this._ctx.restore();
 	}
 
-	fillTile(x: number, y: number, color: string) {
+	fillTile(x: number, y: number, color: string): void {
 		this.fillRect(x * TILE_WIDTH, y * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT, color);
 	}
 
-	renderText(text: string, location: Point, style: Partial<typeof DefaultTextStyle> = DefaultTextStyle) {
+	renderText(text: string, location: Point, style: Partial<typeof DefaultTextStyle> = DefaultTextStyle): void {
 		const effectiveStyle: typeof DefaultTextStyle = Object.assign({}, DefaultTextStyle, style);
 		this._ctx.save();
 		this._ctx.globalCompositeOperation = "source-over";
@@ -86,7 +86,7 @@ class CanvasRenderer implements Renderer {
 	redisplayRect(_x: number, _y: number, _width: number, _height: number): void {}
 	redisplay(): void {}
 
-	get context() {
+	get context(): CanvasRenderingContext2D {
 		return this._ctx;
 	}
 }
