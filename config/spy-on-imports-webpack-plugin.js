@@ -5,7 +5,7 @@ class SpyOnImportsWebpackPlugin {
 		compiler.hooks.emit.tapAsync("spy-on-imports", (compilation, callback) => {
 			compilation.chunks.forEach(chunk => {
 				chunk.files.forEach(filename => {
-					const search = /exports, "([a-z0-9A-Z_]+)", \{\n\s+enumerable: true,\n\s+get: function get\(\) \{\n\s+return ([a-z0-9A-Z_]+)\.([a-z0-9A-Z_]+)/g
+					const search = /exports, "([a-z0-9A-Z_]+)", \{\n\s+enumerable: true,\n\s+get: function get\(\) \{\n?.*\n?.*?\n\s+return ([a-z0-9A-Z_]+)\.([a-z0-9A-Z_]+)/g
 
 					const source = new ReplaceSource(compilation.assets[filename], filename)
 					const sourceCode = source.source();
@@ -16,9 +16,8 @@ class SpyOnImportsWebpackPlugin {
 						const moduleName = result[2];
 						const importName = result[3];
 					
-						const newContent = 'exports, "'+exportName+'", {\nenumerable: true,set: function(v) { '+moduleName+'.'+importName+' = v; },\nget: function get() {\nreturn '+moduleName+'.'+importName;
-
-						source.replace(result.index, result.index + result[0].length, newContent)
+						const newContent = 'set: function(v) { '+moduleName+'.'+importName+' = v; },\n';
+						source.insert(result.index+('exports, "'+exportName+'", {').length,newContent)
 					}
 
 					compilation.updateAsset(
