@@ -132,6 +132,7 @@
     "webpack-dev-server": "^3.11.0",
     "webpack-merge": "^4.2.2",
     "webpack-node-externals": "^1.7.2",
-    "webpack-pwa-manifest": "^4.2.0"
+    "webpack-pwa-manifest": "^4.2.0",
+    "webpack-sources": "^1.4.3"
   }
 }
