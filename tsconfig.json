@@ -2,7 +2,7 @@
   "compilerOptions": {
     "allowUnreachableCode": true,
     "moduleResolution": "node",
-    "module": "esnext",
+    "module": "commonjs",
     "noImplicitAny": true,
     "removeComments": true,
     "preserveConstEnums": true,
@@ -10,7 +10,7 @@
     "sourceMap": false,
     "inlineSourceMap": true,
     "inlineSources": true,
-    "target": "es2017",
+    "target": "es2020",
     "sourceRoot": ".",
     "baseUrl": ".",
     "rootDir": ".",
