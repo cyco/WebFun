@@ -1,3 +1,3 @@
-xdescribe("Missing test", () => {
+xdescribe("WebFun.App.UI.PaletteView", () => {
 	it("must still be written", () => {});
 });

@@ -1,3 +1,3 @@
-xdescribe("Missing test", () => {
+xdescribe("WebFun.Engine.Input.Direction", () => {
 	it("must still be written", () => {});
 });

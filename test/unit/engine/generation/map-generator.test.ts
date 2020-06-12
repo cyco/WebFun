@@ -1,3 +1,3 @@
-xdescribe("Missing test", () => {
+xdescribe("WebFun.Engine.Generation.MapGenerator", () => {
 	it("must still be written", () => {});
 });

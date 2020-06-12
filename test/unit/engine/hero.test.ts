@@ -1,5 +1,6 @@
 import Hero, { MaxHealth } from "src/engine/hero";
 import Settings from "src/settings";
+
 describe("WebFun.Engine.Hero", () => {
 	let subject: Hero;
 	beforeAll(() => (Settings.difficulty = 50));

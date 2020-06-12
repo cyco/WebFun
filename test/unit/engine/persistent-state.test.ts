@@ -1,3 +1,3 @@
 import PersistentState from "src/engine/persistent-state";
 
-describe("PersistentState", () => {});
+describe("WebFun.Engine.PersistentState", () => {});

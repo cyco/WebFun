@@ -1,3 +1,3 @@
-xdescribe("Missing test", () => {
+xdescribe("WebFun.Engine.Types.LocatorTile", () => {
 	it("must still be written", () => {});
 });

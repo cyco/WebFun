@@ -1,3 +1,3 @@
-xdescribe("Missing test", () => {
+xdescribe("WebFun.Engine.Rendering.PaletteAnimation", () => {
 	it("must still be written", () => {});
 });
