@@ -1,13 +1,13 @@
 import Expectation from "../expectation";
 import GameplayContext from "../gameplay-context";
 
-class UnknownExpectation implements Expectation {
+class NoOpExpectation implements Expectation {
 	public static CanBeBuiltFrom(value: string) {
 		return value.contains("nop");
 	}
 
-	public static BuildFrom(_: IteratorResult<string>): UnknownExpectation {
-		return new UnknownExpectation();
+	public static BuildFrom(_: IteratorResult<string>): NoOpExpectation {
+		return new NoOpExpectation();
 	}
 
 	evaluate(_: GameplayContext) {
@@ -19,4 +19,4 @@ class UnknownExpectation implements Expectation {
 	}
 }
 
-export default UnknownExpectation;
+export default NoOpExpectation;

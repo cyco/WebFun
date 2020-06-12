@@ -3,7 +3,8 @@ import {
 	NOPExpectation,
 	UnknownExpectation,
 	ZoneSolvedExpectation,
-	StorySolvedExpectation
+	StorySolvedExpectation,
+	CurrentZoneIsExpectation
 } from "./expectations";
 import Expectation from "./expectation";
 import Configuration from "./configuration";
@@ -23,5 +24,6 @@ export {
 	StorySolvedExpectation,
 	TestCase,
 	UnknownExpectation,
-	ZoneSolvedExpectation
+	ZoneSolvedExpectation,
+	CurrentZoneIsExpectation
 };

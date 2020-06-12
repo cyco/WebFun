@@ -8,7 +8,8 @@ import {
 	UnknownExpectation,
 	StorySolvedExpectation,
 	InventoryContainsNotExpectation,
-	TicksExpectation
+	TicksExpectation,
+	CurrentZoneIsExpectation
 } from "./expectations";
 import { Planet, WorldSize } from "src/engine/types";
 
@@ -18,6 +19,7 @@ const Expectations = [
 	NOPExpectation,
 	InventoryContainsExpectation,
 	InventoryContainsNotExpectation,
+	CurrentZoneIsExpectation,
 	TicksExpectation
 ];
 class TestFileParser {
