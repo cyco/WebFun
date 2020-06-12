@@ -50,7 +50,7 @@ module.exports = merge(BaseConfig, {
 		}),
 		new Dotenv({ silent: true }),
 		new CircularDependencyPlugin({
-			exclude: /node_modules/,
+			exclude: /node_modules|(src\/ux)|(src\/extension\/)|(src\/save-game-editor\/)|(src\/ui)|(src\/util)/,
 			failOnError: true,
 			allowAsyncCycles: false,
 			cwd: Paths.projectRoot
