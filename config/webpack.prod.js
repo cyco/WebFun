@@ -72,10 +72,6 @@ module.exports = {
 			filename: "assets/[name].css",
 			chunkFilename: "assets/chunk/webfun.chunk[id].css"
 		}),
-		new CopyPlugin([
-			{ from: "assets/game-data", to: "data" },
-			{ from: "assets/favicons", to: "assets/icon" }
-		]),
 		new Dotenv({ systemvars: true, silent: true, defaults: true }),
 		ServiceWorkerInjectFileList({ file: Path.resolve(Paths.buildRoot, "assets/webfun.sw.js") })
 	],
