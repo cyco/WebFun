@@ -50,7 +50,9 @@ const config = {
 	},
 	watch: false,
 	singleRun: true,
-	jasmine: { random: false },
+	client: {
+		jasmine: { random: false },
+	},
 	logLevel: "error",
 	webpackMiddleware: {
 		stats: {
