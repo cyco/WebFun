@@ -44,7 +44,7 @@ abstract class TransitionScene extends Scene {
 			this._duration = 0;
 		}
 
-		if (this._zoneSwapTime !== Infinity && this.state > this._zoneSwapTime) {
+		if (this._zoneSwapTime !== Infinity && this.state >= this._zoneSwapTime) {
 			// make sure we don't swap again
 			this._zoneSwapTime = Infinity;
 			this.swapZones();
