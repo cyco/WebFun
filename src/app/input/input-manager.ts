@@ -11,8 +11,6 @@ import OnscreenInputManager from "./onscreen-input-manager";
 import { OnscreenPad, OnscreenButton } from "src/app/ui";
 
 class InputManager implements InputManagerInterface, EventListenerObject {
-	public mouseDownHandler: (_: Point) => void = () => void 0;
-	public keyDownHandler: (_: KeyboardEvent) => void = () => void 0;
 	public currentItem: Tile;
 	public placedTile: Tile = null;
 	public placedTileLocation: Point = null;
@@ -110,6 +108,22 @@ class InputManager implements InputManagerInterface, EventListenerObject {
 
 	get engine() {
 		return this._engine;
+	}
+
+	public set mouseDownHandler(h: (_: Point) => void) {
+		this.inputManagers.forEach(i => (i.mouseDownHandler = h));
+	}
+
+	public get mouseDownHandler() {
+		return this.inputManagers.first().mouseDownHandler;
+	}
+
+	public set keyDownHandler(h: (_: KeyboardEvent) => void) {
+		this.inputManagers.forEach(i => (i.keyDownHandler = h));
+	}
+
+	public get keyDownHandler() {
+		return this.inputManagers.first().keyDownHandler;
 	}
 }
 

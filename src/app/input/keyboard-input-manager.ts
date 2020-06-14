@@ -90,6 +90,7 @@ class KeyboardInputManager implements InputManager {
 
 		this._keyboardDirection |= directionMask;
 		if (this._keyboardDirection) this._currentInput |= InputMask.Walk;
+		if(this.keyDownHandler) this.keyDownHandler(e);
 	}
 
 	private _keyUp(e: KeyboardEvent) {
