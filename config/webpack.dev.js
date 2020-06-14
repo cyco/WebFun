@@ -5,7 +5,6 @@ const merge = require("webpack-merge");
 
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
-const CircularDependencyPlugin = require("circular-dependency-plugin");
 
 const BaseConfig = require("./webpack.common");
 
@@ -49,12 +48,6 @@ module.exports = merge(BaseConfig, {
 			}
 		}),
 		new Dotenv({ silent: true }),
-		new CircularDependencyPlugin({
-			exclude: /node_modules|(src\/ux)|(src\/extension\/)|(src\/save-game-editor\/)|(src\/ui)|(src\/util)/,
-			failOnError: true,
-			allowAsyncCycles: false,
-			cwd: Paths.projectRoot
-		})
 	],
 	module: {
 		rules: [
