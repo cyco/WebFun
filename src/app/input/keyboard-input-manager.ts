@@ -52,36 +52,40 @@ class KeyboardInputManager implements InputManager {
 		let directionMask = 0;
 		switch (e.code) {
 			case "ArrowUp":
+			case "KeyW":
 				directionMask |= Direction.Up;
 				this._currentInput |= InputMask.ScrollUp;
 				this.lastDirectionInput = performance.now();
 				break;
 			case "ArrowDown":
+			case "KeyS":
 				this._currentInput |= InputMask.ScrollDown;
 				directionMask |= Direction.Down;
 				this.lastDirectionInput = performance.now();
 				break;
-			case 'ArrowLeft':
+			case "ArrowLeft":
+			case "KeyA":
 				directionMask |= Direction.Left;
 				this.lastDirectionInput = performance.now();
 				break;
-			case 'ArrowRight':
+			case "ArrowRight":
+			case "KeyD":
 				directionMask |= Direction.Right;
 				this.lastDirectionInput = performance.now();
 				break;
-			case 'Space':
+			case "Space":
 				this._currentInput |= InputMask.Attack;
 				this._currentInput |= InputMask.EndDialog;
 				this._currentInput |= InputMask.PickUp;
 				break;
-			case 'ShiftLeft':
-			case 'ShiftRight':
+			case "ShiftLeft":
+			case "ShiftRight":
 				this._currentInput |= InputMask.Drag;
 				break;
-			case 'KeyP':
+			case "KeyP":
 				this._currentInput ^= InputMask.Pause;
 				break;
-			case 'KeyL':
+			case "KeyL":
 				this._currentInput ^= InputMask.Locator;
 				break;
 			default:
@@ -90,42 +94,46 @@ class KeyboardInputManager implements InputManager {
 
 		this._keyboardDirection |= directionMask;
 		if (this._keyboardDirection) this._currentInput |= InputMask.Walk;
-		if(this.keyDownHandler) this.keyDownHandler(e);
+		if (this.keyDownHandler) this.keyDownHandler(e);
 	}
 
 	private _keyUp(e: KeyboardEvent) {
 		let mask = 0xff;
 
 		switch (e.code) {
-			case 'ArrowUp':
+			case "ArrowUp":
+			case "KeyW":
 				mask = ~Direction.Up;
 				this._currentInput &= ~InputMask.ScrollUp;
 				this.lastDirectionInput = performance.now();
 				break;
-			case 'ArrowDown':
+			case "ArrowDown":
+			case "KeyS":
 				mask &= ~Direction.Down;
 				this._currentInput &= ~InputMask.ScrollDown;
 				this.lastDirectionInput = performance.now();
 				break;
-			case 'ArrowLeft':
+			case "ArrowLeft":
+			case "KeyA":
 				mask &= ~Direction.Left;
 				this.lastDirectionInput = performance.now();
 				break;
-			case 'ArrowRight':
+			case "ArrowRight":
+			case "KeyD":
 				mask &= ~Direction.Right;
 				this.lastDirectionInput = performance.now();
 				break;
-			case 'Space':
+			case "Space":
 				this._currentInput &= ~InputMask.Attack;
 				this._currentInput &= ~InputMask.EndDialog;
 				this._currentInput &= ~InputMask.PickUp;
 				break;
-			case 'ShiftLeft':
-			case 'ShiftRight':
+			case "ShiftLeft":
+			case "ShiftRight":
 				this._currentInput &= ~InputMask.Drag;
 				break;
-			case 'ControlLeft':
-			case 'ControlLeftRight':
+			case "ControlLeft":
+			case "ControlLeftRight":
 				// TODO: re-implement
 				break;
 

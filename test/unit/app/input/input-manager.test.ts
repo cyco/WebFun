@@ -45,61 +45,83 @@ describe("WebFun.App.Input.InputManager", () => {
 		});
 
 		it("toggles locator when the l-key is pressed", () => {
-			mockKeyboardEvent('KeyL', true);
+			mockKeyboardEvent("KeyL", true);
 			expect(subject.readInput(0) & InputMask.Locator).toBeTruthy();
 
-			mockKeyboardEvent('KeyL', true);
+			mockKeyboardEvent("KeyL", true);
 			expect(subject.readInput(0) & InputMask.Locator).toBeFalsy();
 
-			mockKeyboardEvent('KeyL', true);
+			mockKeyboardEvent("KeyL", true);
 			expect(subject.readInput(0) & InputMask.Locator).toBeTruthy();
 		});
 
 		it("toggles pause when the p-key is pressed", () => {
-			mockKeyboardEvent('KeyP', true);
+			mockKeyboardEvent("KeyP", true);
 			expect(subject.readInput(0) & InputMask.Pause).toBeTruthy();
 
-			mockKeyboardEvent('KeyP', true);
+			mockKeyboardEvent("KeyP", true);
 			expect(subject.readInput(0) & InputMask.Pause).toBeFalsy();
 
-			mockKeyboardEvent('KeyP', true);
+			mockKeyboardEvent("KeyP", true);
 			expect(subject.readInput(0) & InputMask.Pause).toBeTruthy();
 		});
 
 		it("activates dragging while shift key is pressed", () => {
-			mockKeyboardEvent('ShiftLeft', true);
+			mockKeyboardEvent("ShiftLeft", true);
 			expect(subject.readInput(0) & InputMask.Drag).toBeTruthy();
-			mockKeyboardEvent('ShiftLeft', true);
+			mockKeyboardEvent("ShiftLeft", true);
 			expect(subject.readInput(0) & InputMask.Drag).toBeTruthy();
 
-			mockKeyboardEvent('ShiftLeft', false);
+			mockKeyboardEvent("ShiftLeft", false);
 			expect(subject.readInput(0) & InputMask.Drag).toBeFalsy();
 		});
 
 		it("keeps track of directional input", () => {
-			mockKeyboardEvent('ArrowUp', true);
+			mockKeyboardEvent("ArrowUp", true);
 			expect(subject.readInput(0) & InputMask.Up).toBeTruthy();
-			mockKeyboardEvent('ArrowDown', true);
+			mockKeyboardEvent("ArrowDown", true);
 			expect(subject.readInput(0) & InputMask.Down).toBeTruthy();
-			mockKeyboardEvent('ArrowLeft', true);
+			mockKeyboardEvent("ArrowLeft", true);
 			expect(subject.readInput(0) & InputMask.Left).toBeTruthy();
-			mockKeyboardEvent('ArrowRight', true);
+			mockKeyboardEvent("ArrowRight", true);
 			expect(subject.readInput(0) & InputMask.Right).toBeTruthy();
 			expect(subject.readInput(0) & InputMask.Walk).toBeTruthy();
 
-			mockKeyboardEvent('ArrowUp', false);
+			mockKeyboardEvent("ArrowUp", false);
 			expect(subject.readInput(0) & InputMask.Up).toBeFalsy();
-			mockKeyboardEvent('ArrowDown', false);
+			mockKeyboardEvent("ArrowDown", false);
 			expect(subject.readInput(0) & InputMask.Down).toBeFalsy();
-			mockKeyboardEvent('ArrowLeft', false);
+			mockKeyboardEvent("ArrowLeft", false);
 			expect(subject.readInput(0) & InputMask.Left).toBeFalsy();
-			mockKeyboardEvent('ArrowRight', false);
+			mockKeyboardEvent("ArrowRight", false);
+			expect(subject.readInput(0) & InputMask.Right).toBeFalsy();
+			expect(subject.readInput(0) & InputMask.Walk).toBeFalsy();
+		});
+
+		it("accepts WASD input ", () => {
+			mockKeyboardEvent("KeyW", true);
+			expect(subject.readInput(0) & InputMask.Up).toBeTruthy();
+			mockKeyboardEvent("KeyS", true);
+			expect(subject.readInput(0) & InputMask.Down).toBeTruthy();
+			mockKeyboardEvent("KeyA", true);
+			expect(subject.readInput(0) & InputMask.Left).toBeTruthy();
+			mockKeyboardEvent("KeyD", true);
+			expect(subject.readInput(0) & InputMask.Right).toBeTruthy();
+			expect(subject.readInput(0) & InputMask.Walk).toBeTruthy();
+
+			mockKeyboardEvent("KeyW", false);
+			expect(subject.readInput(0) & InputMask.Up).toBeFalsy();
+			mockKeyboardEvent("KeyS", false);
+			expect(subject.readInput(0) & InputMask.Down).toBeFalsy();
+			mockKeyboardEvent("KeyA", false);
+			expect(subject.readInput(0) & InputMask.Left).toBeFalsy();
+			mockKeyboardEvent("KeyD", false);
 			expect(subject.readInput(0) & InputMask.Right).toBeFalsy();
 			expect(subject.readInput(0) & InputMask.Walk).toBeFalsy();
 		});
 
 		it("tracks the 'attack' key", () => {
-			const attackKey = 'Space';
+			const attackKey = "Space";
 			mockKeyboardEvent(attackKey, true);
 			expect(subject.readInput(0) & InputMask.Attack).toBeTruthy();
 			mockKeyboardEvent(attackKey, false);
@@ -107,50 +129,50 @@ describe("WebFun.App.Input.InputManager", () => {
 		});
 
 		it("tracks the 'end dialog' key", () => {
-			const endDialogKey = 'Space';
+			const endDialogKey = "Space";
 			mockKeyboardEvent(endDialogKey, true);
 			expect(subject.readInput(0) & InputMask.EndDialog).toBeTruthy();
 		});
 
 		it("maps up-key presses to scrollUp", () => {
-			const scrollUpKey = 'ArrowUp';
+			const scrollUpKey = "ArrowUp";
 			mockKeyboardEvent(scrollUpKey, true);
 			expect(subject.readInput(0) & InputMask.ScrollUp).toBeTruthy();
 		});
 
 		it("maps down-key presses to scrollDown", () => {
-			const scrollDownKey = 'ArrowDown';
+			const scrollDownKey = "ArrowDown";
 			mockKeyboardEvent(scrollDownKey, true);
 			expect(subject.readInput(0) & InputMask.ScrollDown).toBeTruthy();
 		});
 
 		it("tracks the 'pick up' key", () => {
-			const pickUpKey = 'Space';
+			const pickUpKey = "Space";
 			mockKeyboardEvent(pickUpKey, true);
 			expect(subject.readInput(0) & InputMask.PickUp).toBeTruthy();
 		});
 
 		it("ignores unknown keys", () => {
 			expect(() => {
-				mockKeyboardEvent('KeyO', true);
-				mockKeyboardEvent('KeyZ', false);
+				mockKeyboardEvent("KeyO", true);
+				mockKeyboardEvent("KeyZ", false);
 			}).not.toThrow();
 		});
 
 		it("does not react to keyboard events after being deactivated", () => {
 			let event: any = new CustomEvent("keydown");
-			event.code = 'Space';
+			event.code = "Space";
 			document.dispatchEvent(event);
 			expect(subject.readInput(0) & InputMask.Attack).toBeTruthy();
 
 			event = new CustomEvent("keyup");
-			event.code = 'Space';
+			event.code = "Space";
 			document.dispatchEvent(event);
 			expect(subject.readInput(0) & InputMask.Attack).toBeFalsy();
 
 			subject.removeListeners();
 			event = new CustomEvent("keydown");
-			event.code = 'Space';
+			event.code = "Space";
 			document.dispatchEvent(event);
 			expect(subject.readInput(0) & InputMask.Attack).not.toBeTruthy();
 		});
@@ -158,7 +180,7 @@ describe("WebFun.App.Input.InputManager", () => {
 		it("ignores repeated keyboard events", () => {
 			(subject as any).keyboardInputManager._currentInput = InputMask.None;
 			const event: any = { type: true ? "keydown" : "keyup" };
-			event.code = 'Space';
+			event.code = "Space";
 			event.repeat = true;
 
 			subject.handleEvent(event);
@@ -167,7 +189,7 @@ describe("WebFun.App.Input.InputManager", () => {
 
 		it("ignores keyboard events that are sent to an input element", () => {
 			let event: any = { type: true ? "keydown" : "keyup" };
-			event.code = 'Space';
+			event.code = "Space";
 			event.target = document.createElement("input");
 
 			subject.handleEvent(event);
@@ -175,7 +197,7 @@ describe("WebFun.App.Input.InputManager", () => {
 
 			(subject as any).keyboardInputManager._currentInput = InputMask.None;
 			event = { type: true ? "keydown" : "keyup" };
-			event.code = 'Space';
+			event.code = "Space";
 			event.target = document.createElement("textarea");
 
 			subject.handleEvent(event);
@@ -300,14 +322,18 @@ describe("WebFun.App.Input.InputManager", () => {
 
 	function releaseAllKeys() {
 		[
-			'ArrowUp',
-			'ArrowDown',
-			'ArrowLeft',
-			'ArrowRight',
-			'ShiftLeft',
-			'Space',
-			'KeyP',
-			'KeyL'
+			"ArrowUp",
+			"ArrowDown",
+			"ArrowLeft",
+			"ArrowRight",
+			"ShiftLeft",
+			"Space",
+			"KeyP",
+			"KeyL",
+			"KeyW",
+			"KeyA",
+			"KeyS",
+			"KeyD"
 		].forEach(k => mockKeyboardEvent(k, false));
 	}
 
