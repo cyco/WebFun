@@ -1,6 +1,6 @@
 import { Tile } from "src/engine/objects";
 import { Engine } from "src/engine";
-import { KeyEvent, Point } from "src/util";
+import { Point } from "src/util";
 import { Direction, InputMask, InputManager } from "src/engine/input";
 
 class KeyboardInputManager implements InputManager {
@@ -50,38 +50,38 @@ class KeyboardInputManager implements InputManager {
 
 	private _keyDown(e: KeyboardEvent) {
 		let directionMask = 0;
-		switch (e.which) {
-			case KeyEvent.DOM_VK_UP:
+		switch (e.code) {
+			case "ArrowUp":
 				directionMask |= Direction.Up;
 				this._currentInput |= InputMask.ScrollUp;
 				this.lastDirectionInput = performance.now();
 				break;
-			case KeyEvent.DOM_VK_DOWN:
+			case "ArrowDown":
 				this._currentInput |= InputMask.ScrollDown;
 				directionMask |= Direction.Down;
 				this.lastDirectionInput = performance.now();
 				break;
-			case KeyEvent.DOM_VK_LEFT:
+			case 'ArrowLeft':
 				directionMask |= Direction.Left;
 				this.lastDirectionInput = performance.now();
 				break;
-			case KeyEvent.DOM_VK_RIGHT:
+			case 'ArrowRight':
 				directionMask |= Direction.Right;
 				this.lastDirectionInput = performance.now();
 				break;
-			case KeyEvent.DOM_VK_SPACE:
+			case 'Space':
 				this._currentInput |= InputMask.Attack;
 				this._currentInput |= InputMask.EndDialog;
 				this._currentInput |= InputMask.PickUp;
 				break;
-			case KeyEvent.DOM_VK_SHIFT:
+			case 'ShiftLeft':
+			case 'ShiftRight':
 				this._currentInput |= InputMask.Drag;
 				break;
-
-			case KeyEvent.DOM_VK_P:
+			case 'KeyP':
 				this._currentInput ^= InputMask.Pause;
 				break;
-			case KeyEvent.DOM_VK_L:
+			case 'KeyL':
 				this._currentInput ^= InputMask.Locator;
 				break;
 			default:
@@ -96,34 +96,36 @@ class KeyboardInputManager implements InputManager {
 	private _keyUp(e: KeyboardEvent) {
 		let mask = 0xff;
 
-		switch (e.which) {
-			case KeyEvent.DOM_VK_UP:
+		switch (e.code) {
+			case 'ArrowUp':
 				mask = ~Direction.Up;
 				this._currentInput &= ~InputMask.ScrollUp;
 				this.lastDirectionInput = performance.now();
 				break;
-			case KeyEvent.DOM_VK_DOWN:
+			case 'ArrowDown':
 				mask &= ~Direction.Down;
 				this._currentInput &= ~InputMask.ScrollDown;
 				this.lastDirectionInput = performance.now();
 				break;
-			case KeyEvent.DOM_VK_LEFT:
+			case 'ArrowLeft':
 				mask &= ~Direction.Left;
 				this.lastDirectionInput = performance.now();
 				break;
-			case KeyEvent.DOM_VK_RIGHT:
+			case 'ArrowRight':
 				mask &= ~Direction.Right;
 				this.lastDirectionInput = performance.now();
 				break;
-			case KeyEvent.DOM_VK_SPACE:
+			case 'Space':
 				this._currentInput &= ~InputMask.Attack;
 				this._currentInput &= ~InputMask.EndDialog;
 				this._currentInput &= ~InputMask.PickUp;
 				break;
-			case KeyEvent.DOM_VK_SHIFT:
+			case 'ShiftLeft':
+			case 'ShiftRight':
 				this._currentInput &= ~InputMask.Drag;
 				break;
-			case KeyEvent.DOM_VK_CONTROL:
+			case 'ControlLeft':
+			case 'ControlLeftRight':
 				// TODO: re-implement
 				break;
 

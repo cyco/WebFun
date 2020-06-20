@@ -1,5 +1,4 @@
 import { EventTarget } from "src/util";
-import { KeyEvent } from "src/std/dom";
 
 export const Event = {
 	DidConfirm: "DidConfirm",
@@ -73,9 +72,9 @@ class FieldEditor extends EventTarget {
 	}
 
 	private _onKeyDown(e: KeyboardEvent) {
-		if (e.which === KeyEvent.DOM_VK_RETURN || e.which === KeyEvent.DOM_VK_ENTER) {
+		if (e.code === 'Enter') {
 			this.confirm(e);
-		} else if (e.which === KeyEvent.DOM_VK_ESCAPE) {
+		} else if (e.code === 'Escape') {
 			this.cancel(e);
 		}
 	}

@@ -1,5 +1,4 @@
 import Label from "src/ui/components/label";
-import { KeyEvent } from "src/util";
 
 describeComponent(Label, () => {
 	let subject: Label;
@@ -19,7 +18,7 @@ describeComponent(Label, () => {
 		expect(subject).toHaveAttribute("contenteditable");
 		subject.textContent = "New Text";
 		const event = new CustomEvent("keydown") as any;
-		event.which = KeyEvent.DOM_VK_ENTER;
+		event.code = "Enter";
 		subject.dispatchEvent(event);
 	});
 

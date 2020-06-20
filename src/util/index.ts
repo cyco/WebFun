@@ -9,7 +9,6 @@ import EventTarget from "./event-target";
 import FileLoader from "./file-loader";
 import HorizontalPointRange from "./horizontal-point-range";
 import InputStream from "./input-stream";
-import KeyEvent from "./key-event";
 import LogLevel from "./log-level";
 import Logger from "./logger";
 import OutputStream from "./output-stream";
@@ -62,7 +61,6 @@ export {
 	identity,
 	InputStream,
 	iterate,
-	KeyEvent,
 	Logger,
 	LogLevel,
 	OutputStream,

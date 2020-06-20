@@ -19,7 +19,6 @@ export const {
 	XMLHttpRequest
 } = global;
 
-export const KeyEvent: { [_: string]: number } = global.KeyEvent || {};
 export const document = global.document as Document;
 export const window = global.window;
 export const localStorage = (window.localStorage || new global.Storage()) as Storage;
