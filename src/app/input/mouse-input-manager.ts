@@ -92,7 +92,7 @@ class MouseInputManager implements InputManager {
 		const pointIsInView = point.x > 0 && point.y > 0 && point.x < 1 && point.y < 1;
 		console.assert(pointIsInView, "Previous in-bounds check should have been sufficient");
 
-		if(this.mouseDownHandler) this.mouseDownHandler(point);
+		if (this.mouseDownHandler) this.mouseDownHandler(point);
 
 		this._lastMouse = point;
 		this.updateMouse();
@@ -109,7 +109,10 @@ class MouseInputManager implements InputManager {
 
 	private _mouseMove(e: MouseEvent) {
 		const mouseLocation = new Point(e.clientX, e.clientY);
-		this._lastMouse = this.convertClientCoordinatesToView(mouseLocation);
+		const newMouse = this.convertClientCoordinatesToView(mouseLocation);
+		if (newMouse.isEqualTo(this._lastMouse)) return;
+
+		this._lastMouse = newMouse;
 		this.updateMouse();
 		this.lastDirectionInput = performance.now();
 	}

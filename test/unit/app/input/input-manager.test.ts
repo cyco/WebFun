@@ -302,6 +302,16 @@ describe("WebFun.App.Input.InputManager", () => {
 			});
 		});
 
+		it("are ignored if only triggered because of modifier changes", () => {
+			mockKeyboardEvent("ShiftLeft", true);
+			fakeMouse("move", { x: 140, y: 280, shiftKey: true });
+			mockKeyboardEvent("KeyW", true);
+
+			mockKeyboardEvent("ShiftLeft", false);
+			fakeMouse("move", { x: 140, y: 280, shiftKey: false });
+			expect(subject.readInput(0) & InputMask.Up).toBeTruthy();
+		});
+
 		afterEach(() => {
 			element.remove();
 			subject.removeListeners();
