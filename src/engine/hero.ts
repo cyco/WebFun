@@ -206,7 +206,7 @@ class Hero extends EventTarget {
 		return (this._walking = false);
 	}
 
-	private _doMove(rel: Point, z: Zone, dragging: boolean) {
+	private _doMove(rel: Point, z: Zone, dragging: boolean): boolean {
 		if (rel.isZeroPoint()) return false;
 
 		const source = this._location;
@@ -230,6 +230,9 @@ class Hero extends EventTarget {
 	}
 
 	private _doDrag(src: Point, target: Point, z: Zone): boolean {
+		if (!target.isInBounds(z.size)) return;
+		if (!src.isInBounds(z.size)) return;
+
 		const t = z.getTile(src);
 		if (!t || !t.isDraggable()) return false;
 
