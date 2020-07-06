@@ -1,6 +1,8 @@
 import { Char, Tile } from "src/engine/objects";
 
 export default (frame: Char.Frame, direction: number): Tile => {
+	if (!frame) return null;
+
 	switch (direction) {
 		case Char.FrameEntry.Up:
 			return frame.up;

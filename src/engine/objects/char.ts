@@ -54,6 +54,7 @@ class Char {
 
 		let tile = null;
 		const frame = this._frames[frameIdx];
+		if (!frame) return null;
 
 		const dir = Direction.Confine(direction);
 		switch (dir) {
