@@ -11,7 +11,8 @@ describe("WebFun.Engine.Scenes.LoseScene", () => {
 		subject.engine = engine = ({
 			hero: { visible: true },
 			assets: { find: jasmine.createSpy() },
-			metronome: { stop: jasmine.createSpy() }
+			metronome: { stop: jasmine.createSpy() },
+			camera: { update: jasmine.createSpy() }
 		} as any) as Engine;
 	});
 

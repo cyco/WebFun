@@ -24,14 +24,15 @@ class WinScene extends Scene {
 		const engine = this.engine;
 
 		this._originalLocation = engine.hero.location;
+		engine.hero.isAttacking = false;
+		engine.hero._actionFrames = Infinity;
 		engine.hero.visible = false;
 		engine.hero.location = new Point(0, 0);
-		engine.camera.update(0);
+		engine.camera.update(Infinity);
 
-		this._zoneScene = new ZoneScene(
-			engine,
-			engine.assets.find(Zone, ({ type }) => type === Zone.Type.Win)
-		);
+		this._zoneScene = new ZoneScene();
+		this._zoneScene.engine = engine;
+		this._zoneScene.zone = engine.assets.find(Zone, ({ type }) => type === Zone.Type.Win);
 		this._zoneScene.willShow();
 	}
 
