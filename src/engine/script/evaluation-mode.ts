@@ -1,4 +1,5 @@
 enum EvaluationMode {
+	Initialize,
 	JustEntered,
 	ByPlane,
 

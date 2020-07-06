@@ -6,6 +6,7 @@ import Scene from "./scene";
 import World from "src/engine/world";
 import ZoneScene from "./zone-scene";
 import Settings from "src/settings";
+import { EvaluationMode } from "../script";
 
 abstract class TransitionScene extends Scene {
 	public scene: ZoneScene = null;
@@ -62,8 +63,12 @@ abstract class TransitionScene extends Scene {
 		hero.location = this.destinationHeroLocation;
 		engine.currentWorld = this.destinationWorld;
 		engine.currentZone = this.destinationZone;
-		engine.currentZone.visited = true;
-		engine.currentZone.initialize();
+		if (!engine.currentZone.visited) {
+			engine.currentZone.visited = true;
+			engine.currentZone.initialize();
+			engine.spu.prepeareExecution(EvaluationMode.Initialize, engine.currentZone);
+			engine.spu.run();
+		}
 
 		this.scene.zone = engine.currentZone;
 		this.scene.prepareCamera();
