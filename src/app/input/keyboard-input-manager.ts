@@ -37,7 +37,11 @@ class KeyboardInputManager implements InputManager {
 	}
 
 	handleEvent(event: KeyboardEvent) {
-		if (event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement) {
+		if (
+			event.target instanceof HTMLInputElement ||
+			event.target instanceof HTMLTextAreaElement ||
+			(event.target instanceof HTMLElement && event.target.hasAttribute("contenteditable"))
+		) {
 			return;
 		}
 
@@ -98,29 +102,28 @@ class KeyboardInputManager implements InputManager {
 	}
 
 	private _keyUp(e: KeyboardEvent) {
-		let mask = 0xff;
-
+		let directionMask = 0xffff;
 		switch (e.code) {
 			case "ArrowUp":
 			case "KeyW":
-				mask = ~Direction.Up;
+				directionMask = ~Direction.Up;
 				this._currentInput &= ~InputMask.ScrollUp;
 				this.lastDirectionInput = performance.now();
 				break;
 			case "ArrowDown":
 			case "KeyS":
-				mask &= ~Direction.Down;
+				directionMask &= ~Direction.Down;
 				this._currentInput &= ~InputMask.ScrollDown;
 				this.lastDirectionInput = performance.now();
 				break;
 			case "ArrowLeft":
 			case "KeyA":
-				mask &= ~Direction.Left;
+				directionMask &= ~Direction.Left;
 				this.lastDirectionInput = performance.now();
 				break;
 			case "ArrowRight":
 			case "KeyD":
-				mask &= ~Direction.Right;
+				directionMask &= ~Direction.Right;
 				this.lastDirectionInput = performance.now();
 				break;
 			case "Space":
@@ -141,7 +144,7 @@ class KeyboardInputManager implements InputManager {
 				break;
 		}
 
-		this._keyboardDirection &= mask;
+		this._keyboardDirection &= directionMask;
 		if (!this._keyboardDirection) this._currentInput &= ~InputMask.Walk;
 	}
 

@@ -208,7 +208,7 @@ class GameController extends EventTarget implements EventListenerObject {
 		zoneScene.engine = engine;
 		zoneScene.zone = zone;
 		engine.currentZone = zone;
-		engine.currentWorld = engine.world.findLocationOfZone(zone) ? engine.world : null;
+		engine.currentWorld = engine.world.findLocationOfZone(zone) ? engine.world : engine.dagobah;
 		engine.hero.appearance = engine.assets.find(Char, (c: Char) => c.isHero());
 
 		engine.sceneManager.clear();
