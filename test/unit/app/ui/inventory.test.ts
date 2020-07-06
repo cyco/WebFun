@@ -4,15 +4,16 @@ import Inventory from "src/engine/inventory";
 import { Yoda } from "src/engine/type";
 import { Tile } from "src/engine/objects";
 
-xdescribeComponent(InventoryComponent, () => {
+describeComponent(InventoryComponent, () => {
 	let subject: InventoryComponent;
-	beforeEach(() => (subject = render(InventoryComponent) as any));
+	beforeEach(() => (subject = render(InventoryComponent)));
+	afterEach(() => subject.remove());
 
 	it("renders at least 7 rows", () => {
-		expect(subject.querySelectorAll(InventoryRow.tagName).length).toBe(7);
+		expect(subject.querySelectorAll(InventoryRow.tagName).length).toBeGreaterThanOrEqualTo(7);
 	});
 
-	describe("showing inventory contents", () => {
+	xdescribe("showing inventory contents", () => {
 		let inventory: Inventory;
 		const tileMock: Tile = { image: { representation: {} } } as any;
 

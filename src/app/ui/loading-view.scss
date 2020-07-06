@@ -9,11 +9,7 @@ wf-loading-view {
 
 	background-color: #000000;
 
-	> canvas {
-		@extend .pixelated;
-	}
-
-	> img:not([src]) {
-		display: none;
+	> wf-palette-view {
+		border: none;
 	}
 }

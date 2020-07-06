@@ -85,7 +85,7 @@ class InventoryComponent extends AbstractList<Tile> {
 	}
 
 	private _rebuildTable() {
-		const items = this._inventory ? this._inventory.items : [];
+		const items = this._inventory?.items ?? [];
 		this.items = items.concat(...Array.Repeat(null, max(0, MinRows - items.length)));
 	}
 

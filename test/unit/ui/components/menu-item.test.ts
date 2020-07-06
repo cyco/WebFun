@@ -3,7 +3,7 @@ import MenuItem from "src/ui/menu-item";
 
 describeComponent(MenuItemComponent, () => {
 	let subject: MenuItemComponent;
-	beforeEach(() => (subject = render(MenuItemComponent) as MenuItemComponent));
+	beforeEach(() => (subject = render(MenuItemComponent)));
 
 	it("draws a menu item", () => {
 		subject.item = new MenuItem({

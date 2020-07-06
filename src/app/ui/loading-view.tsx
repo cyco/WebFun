@@ -1,32 +1,20 @@
 import "./loading-view.scss";
 
-import { ColorPalette } from "src/engine";
 import Component from "src/ui/component";
 import { SegmentedProgressBar } from "src/ui/components";
 import { Size } from "src/util";
-import { drawImage } from "src/app/rendering/canvas";
+import PaletteView from "./palette-view";
 
 class LoadingView extends Component {
 	public static readonly tagName = "wf-loading-view";
-	private _image: Uint8Array;
-	private _palette: ColorPalette;
 
-	private _imageCanvas: HTMLCanvasElement = (
-		<canvas
-			width={288}
-			height={288}
-			ondragstart={e => {
-				e.preventDefault();
-				return false;
-			}}
-		/>
-	) as HTMLCanvasElement;
+	private _background: PaletteView = (<PaletteView size={new Size(288, 288)} />);
 	private _progressBar: SegmentedProgressBar = (<SegmentedProgressBar />) as SegmentedProgressBar;
 
 	protected connectedCallback() {
 		super.connectedCallback();
 
-		this.appendChild(this._imageCanvas);
+		this.appendChild(this._background);
 		this.appendChild(this._progressBar);
 	}
 
@@ -38,29 +26,19 @@ class LoadingView extends Component {
 		this._progressBar.value = p;
 	}
 
-	private _redraw() {
-		if (!this.palette || !this.image) return;
-		const imageData = drawImage(this.image, new Size(288, 288), this.palette);
-		const ctx = this._imageCanvas.getContext("2d");
-		ctx.clearRect(0, 0, 288, 288);
-		ctx.putImageData(imageData, 0, 0);
-	}
-
 	set palette(p) {
-		this._palette = p;
-		this._redraw();
+		this._background.palette = p;
 	}
 
 	get palette() {
-		return this._palette;
+		return this._background.palette;
 	}
 
 	set image(p) {
-		this._image = p;
-		this._redraw();
+		this._background.image = p;
 	}
 	get image() {
-		return this._image;
+		return this._background.image;
 	}
 }
 

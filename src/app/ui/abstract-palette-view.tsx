@@ -6,7 +6,7 @@ import { ColorPalette } from "src/engine";
 import { drawImage } from "src/app/rendering";
 import { Component } from "src/ui";
 
-abstract class PaletteView extends Component {
+abstract class AbstractPaletteView extends Component {
 	public static readonly observedAttributes: string[] = [];
 
 	private _palette: ColorPalette;
@@ -15,7 +15,7 @@ abstract class PaletteView extends Component {
 
 	protected canvas: HTMLCanvasElement = (<canvas />) as HTMLCanvasElement;
 	private ctx: CanvasRenderingContext2D = this.canvas.getContext("2d");
-	private imageData: ImageData;
+	private imageData: ImageData = null;
 
 	protected connectedCallback() {
 		this.appendChild(this.canvas);
@@ -74,4 +74,4 @@ abstract class PaletteView extends Component {
 	}
 }
 
-export default PaletteView;
+export default AbstractPaletteView;

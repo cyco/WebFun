@@ -20,11 +20,16 @@ import withTimeout from "./with-timeout";
 global.render = render;
 declare global {
 	let require: any;
-	let render: (
-		text: string | Component | typeof Component,
+
+	type RenderViaClass = <T extends typeof Component & { new (): any }>(
+		componentClass: T,
 		attributes?: any,
 		flags?: string[]
-	) => HTMLElement;
+	) => InstanceType<T>;
+	type RenderString = (text: string, attributes?: any, flags?: string[]) => HTMLElement;
+	type RenderComponent = (text: Component, attributes?: any, flags?: string[]) => Component;
+
+	let render: RenderViaClass & RenderString & RenderComponent;
 }
 global.withTimeout = withTimeout;
 
