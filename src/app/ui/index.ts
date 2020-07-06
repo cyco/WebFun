@@ -11,7 +11,6 @@ import LoadingView from "./loading-view";
 import SceneView from "./scene-view";
 import OnscreenPad from "./onscreen-pad";
 import OnscreenButton from "./onscreen-button";
-import FullscreenLock from "./fullscreen-lock";
 import PaletteView from "./palette-view";
 import FullscreenMenu from "./fullscreen-menu";
 
@@ -19,7 +18,6 @@ export {
 	AbstractHealth,
 	AbstractPaletteView,
 	Ammo,
-	FullscreenLock,
 	FullscreenMenu,
 	Health,
 	Inventory,
