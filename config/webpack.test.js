@@ -1,9 +1,9 @@
 const Path = require("path");
 const Paths = require("./paths");
 const Webpack = require("webpack");
-const merge = require("webpack-merge");
+const { merge } = require("webpack-merge");
 const WebpackSources = require("webpack-sources");
-const SpyOnImportsWebpackPlugin = require('./spy-on-imports-webpack-plugin');
+const SpyOnImportsWebpackPlugin = require("./spy-on-imports-webpack-plugin");
 
 const BaseConfig = require("./webpack.common");
 

@@ -1,7 +1,7 @@
 const FS = require("fs");
 const Path = require("path");
 const Paths = require("./paths");
-const merge = require("webpack-merge");
+const { merge } = require("webpack-merge");
 
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
@@ -47,7 +47,7 @@ module.exports = merge(BaseConfig, {
 				"apple-mobile-web-app-capable": "yes"
 			}
 		}),
-		new Dotenv({ silent: true }),
+		new Dotenv({ silent: true })
 	],
 	module: {
 		rules: [
