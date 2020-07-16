@@ -28,9 +28,9 @@ class Loader extends EventTarget {
 	private _resources: ResourceManager;
 	private _mixer: Mixer;
 
-	constructor(e: ResourceManager, mixer: Mixer) {
+	constructor(resources: ResourceManager, mixer: Mixer) {
 		super();
-		this._resources = e;
+		this._resources = resources;
 		this._mixer = mixer;
 
 		this.registerEvents(Events);
