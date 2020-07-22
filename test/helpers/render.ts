@@ -11,6 +11,7 @@ export default (text: string | Component | typeof Component, attributes = {}, fl
 
 	const textIsString = typeof text === "string";
 	const textIsHTML = textIsString && ~(text as string).indexOf("<");
+	const textIsComponent = typeof text !== "string" && "tagName" in (text as any);
 
 	if (textIsHTML) {
 		container.innerHTML = text as string;
@@ -22,8 +23,14 @@ export default (text: string | Component | typeof Component, attributes = {}, fl
 	const node = document.createElement(
 		textIsString ? (text as string) : ((text as unknown) as typeof Component).tagName
 	);
-	attributes.each((key: string, value: string) => node.setAttribute(key, value));
-	flags.forEach(flag => node.setAttribute(flag, ""));
+
+	if (textIsComponent) {
+		attributes.each((key: string, value: string) => ((node as any)[key] = value));
+		flags.forEach(flag => node.setAttribute(flag, ""));
+	} else {
+		attributes.each((key: string, value: string) => node.setAttribute(key, value));
+		flags.forEach(flag => node.setAttribute(flag, ""));
+	}
 	container.appendChild(node);
 	return node;
 };

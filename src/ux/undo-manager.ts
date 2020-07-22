@@ -35,7 +35,7 @@ class UndoManager extends EventTarget {
 		if (currentBatch) {
 			currentBatch.add(op);
 		} else {
-			this._stack.splice(this._stackPointer, this._stack.length);
+			this._stack.splice(this._stackPointer + 1, this._stack.length);
 			this._stack.push(op);
 			this._stackPointer++;
 		}
@@ -54,6 +54,7 @@ class UndoManager extends EventTarget {
 		const currentBatch = this._batchStack.pop();
 		console.assert(!!currentBatch, "No batch operation in progress!");
 		this._stack.push(currentBatch);
+		this._stackPointer++;
 	}
 
 	private canUndo() {
@@ -61,7 +62,7 @@ class UndoManager extends EventTarget {
 	}
 
 	private canRedo() {
-		return this._stackPointer + 1 !== this._stack.length - 1;
+		return this._stackPointer + 1 !== this._stack.length;
 	}
 }
 

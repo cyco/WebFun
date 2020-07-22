@@ -6,10 +6,14 @@ describe("WebFun.App.ResourceManager", () => {
 	const progressHandler: () => void = () => void 0;
 	let subject: ResourceManager;
 	let resultStream: InputStream;
+	let xhr: XMLHttpRequest;
 
 	beforeEach(() => {
 		resultStream = new InputStream("");
 		spyOn(FileLoader, "loadAsStream").and.returnValue(Promise.resolve(resultStream));
+		spyOn(window, "XMLHttpRequest").and.callFake(
+			() => (xhr = { open: jasmine.createSpy(), send: jasmine.createSpy() } as any)
+		);
 		subject = new ResourceManager("palette.data", "data.data", "sound-base");
 	});
 
@@ -31,9 +35,16 @@ describe("WebFun.App.ResourceManager", () => {
 		expect(result).toBe(resultStream);
 	});
 
-	xit("loads sounds according to the base url", async () => {
-		const result = await subject.loadSound("sound name", progressHandler);
-		expect(FileLoader.loadAsStream).toHaveBeenCalled();
-		// expect(result).toBe(resultStream);
+	it("loads sounds according to the base url", async () => {
+		const mockedResponse: any = {};
+		const resultPromise = subject.loadSound("sound name", progressHandler);
+		expect(xhr.open as jasmine.Spy).toHaveBeenCalledWith("GET", "sound-base/sound%20name.mp3");
+		expect(xhr.send as jasmine.Spy).toHaveBeenCalledWith();
+		expect(xhr.responseType).toBe("arraybuffer");
+
+		(xhr as any).response = mockedResponse;
+		(xhr as any).onload();
+
+		expect(await resultPromise).toBe(mockedResponse);
 	});
 });

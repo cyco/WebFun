@@ -12,7 +12,7 @@ class PopoverModalSession extends ModalSession {
 
 	run() {
 		this._overlay.appendChild(this._popover);
-		super.run();
+		return super.run();
 	}
 
 	protected _whenOverlayIsGone(callback: Function) {

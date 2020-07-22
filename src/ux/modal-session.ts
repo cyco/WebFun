@@ -67,7 +67,6 @@ class ModalSession {
 		["mouseup", "mousedown", "mousemove", "mousedrag"].forEach(eventName =>
 			window.removeEventListener(eventName, this._locationHandler)
 		);
-
 		this.cursor = null;
 		await dispatch(() => this._overlay && this._overlay.remove(), 10);
 		return new Promise<void>(resolve =>
