@@ -35,14 +35,11 @@ function n(number: number): string {
 }
 
 function colorClass(coverage: number): string {
+	if (isNaN(coverage)) return "high";
 	if (coverage > 0.75) return "high";
 	if (coverage > 0.5) return "medium";
-	return "low";
 
-	if (coverage > 0.75) return "rgb(230,245,208)"; // green (light)
-	if (coverage > 0.5) return "#fff4c2";
-	// yellow (light)
-	else return "#FCE1E5"; // red (light)
+	return "low";
 }
 
 const SortDescriptorKey = "sort-column";
@@ -181,14 +178,14 @@ class SourceLevelCoverage extends Component {
 				(acc, a) => acc + (a.conditions.some(i => i > 0) || a.instructions.some(i => i > 0) ? 1 : 0),
 				0
 			);
-			const actionsRatio = actionsCovered / (zone.actions.length || 1);
+			const actionsRatio = zone.actions.length === 0 ? 1 : actionsCovered / zone.actions.length;
 
 			const conditionsTotal = actions.reduce((acc, ac) => acc + ac.conditions.length, 0);
 			const conditionsCovered = actions.reduce(
 				(acc, ac) => acc + ac.conditions.map(i => (i > 0 ? 1 : 0)).reduce((a, b) => a + b, 0),
 				0
 			);
-			const conditionsRatio = conditionsCovered / (conditionsTotal || 1);
+			const conditionsRatio = conditionsTotal === 0 ? 1 : conditionsCovered / conditionsTotal;
 
 			const instructionsTotal = actions.reduce((acc, ac) => acc + ac.instructions.length, 0);
 			const instructionsCovered = actions.reduce(
@@ -196,7 +193,7 @@ class SourceLevelCoverage extends Component {
 					acc + ac.instructions.map(i => (i > 0 ? 1 : 0)).reduce((a, b) => a + b, 0),
 				0
 			);
-			const instructionsRatio = instructionsCovered / (instructionsTotal || 1);
+			const instructionsRatio = instructionsTotal === 0 ? 1 : instructionsCovered / instructionsTotal;
 
 			return {
 				zone: zone.id,
