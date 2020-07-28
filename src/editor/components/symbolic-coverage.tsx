@@ -11,6 +11,8 @@ import {
 
 import { min, max } from "src/std/math";
 import { DiscardingStorage } from "src/util";
+import { Engine } from "src/engine";
+import { Zone } from "src/engine/objects";
 
 type DataPoint = {
 	type: "Condition" | "Instruction";
@@ -189,7 +191,7 @@ class SymbolicCoverage extends Component {
 		}
 
 		return (
-			<tr>
+			<tr onclick={(e: any) => this.logZonesUsing(dp.opcode, dp.type)}>
 				<td className={colorClass(dp.hits)}>{dp.type}</td>
 				<td className={colorClass(dp.hits)}>{dp.opcode.toHex(2)}</td>
 				<td className={colorClass(dp.hits)}>{dp.name}</td>
@@ -197,6 +199,17 @@ class SymbolicCoverage extends Component {
 				<td className={colorClass(dp.hits)}>{dp.description}</td>
 			</tr>
 		);
+	}
+
+	private logZonesUsing(opcode: number, type: "Condition" | "Instruction") {
+		const engine = (window as any).engine as Engine;
+		const filter =
+			type === "Condition"
+				? (z: Zone) => z.actions.some(a => a.conditions.some(c => c.opcode === opcode))
+				: (z: Zone) => z.actions.some(a => a.instructions.some(i => i.opcode === opcode));
+		const zones = engine.assets.getFiltered(Zone, filter);
+		console.log(`Zones containg ${type.toLowerCase()} with opcode ${opcode.toHex(2)}: `);
+		console.log(zones.map(z => z.id.toHex(2)));
 	}
 
 	public set sortDescriptor(s) {
