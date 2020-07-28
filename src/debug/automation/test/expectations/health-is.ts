@@ -5,11 +5,11 @@ class HealthIsExpectation implements Expectation {
 	private _health: number;
 
 	public static CanBeBuiltFrom(value: string) {
-		return value.contains("health");
+		return value.toLowerCase().contains("health");
 	}
 
 	public static BuildFrom(description: IteratorResult<string>): HealthIsExpectation {
-		return new HealthIsExpectation(description.value.split(" ").last().trim().parseInt());
+		return new HealthIsExpectation(description.value.trim().split(" ").last().parseInt());
 	}
 
 	constructor(health: number) {
@@ -23,7 +23,7 @@ class HealthIsExpectation implements Expectation {
 	}
 
 	format() {
-		return `Current health is not ${this._health.toHex(3)}`;
+		return `Health is ${this._health.toHex(3)}`;
 	}
 }
 

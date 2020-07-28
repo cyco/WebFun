@@ -9,7 +9,8 @@ import {
 	StorySolvedExpectation,
 	InventoryContainsNotExpectation,
 	TicksExpectation,
-	CurrentZoneIsExpectation
+	CurrentZoneIsExpectation,
+	HealthIsExpectation
 } from "./expectations";
 import { Planet, WorldSize } from "src/engine/types";
 
@@ -20,7 +21,8 @@ const Expectations = [
 	InventoryContainsExpectation,
 	InventoryContainsNotExpectation,
 	CurrentZoneIsExpectation,
-	TicksExpectation
+	TicksExpectation,
+	HealthIsExpectation
 ];
 class TestFileParser {
 	public static Parse(description: string, fileContents: string): TestCase[] {

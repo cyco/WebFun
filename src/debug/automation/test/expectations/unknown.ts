@@ -16,7 +16,7 @@ class UnknownExpectation implements Expectation {
 	}
 
 	evaluate() {
-		console.warn(`Don't know how to handle expectation ${this.line}`);
+		throw `Don't know how to handle expectation ${this.line}`;
 	}
 
 	format() {

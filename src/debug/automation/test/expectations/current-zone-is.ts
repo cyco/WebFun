@@ -23,7 +23,7 @@ class CurrentZoneIsExpectation implements Expectation {
 	}
 
 	format() {
-		return `Current zone is not ${this._zone.toHex(3)}`;
+		return `Current zone is ${this._zone.toHex(3)}`;
 	}
 }
 

@@ -4,7 +4,8 @@ import {
 	UnknownExpectation,
 	ZoneSolvedExpectation,
 	StorySolvedExpectation,
-	CurrentZoneIsExpectation
+	CurrentZoneIsExpectation,
+	HealthIsExpectation
 } from "./expectations";
 import Expectation from "./expectation";
 import Configuration from "./configuration";
@@ -25,5 +26,6 @@ export {
 	TestCase,
 	UnknownExpectation,
 	ZoneSolvedExpectation,
-	CurrentZoneIsExpectation
+	CurrentZoneIsExpectation,
+	HealthIsExpectation
 };
