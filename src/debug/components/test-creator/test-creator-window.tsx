@@ -52,6 +52,7 @@ class TestCreatorWindow extends AbstractWindow implements EventListenerObject {
 		Settings.pickupItemsAutomatically = true;
 		Settings.skipDialogs = true;
 		Settings.skipTransitions = true;
+		Settings.difficulty = this.testCase.configuration.difficulty;
 
 		if (engine.metronome) {
 			await engine.metronome.stop();

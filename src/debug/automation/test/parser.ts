@@ -80,7 +80,8 @@ class TestFileParser {
 			inventory: [],
 			planet: -1,
 			size: -1,
-			tags: []
+			tags: [],
+			difficulty: 50
 		};
 
 		do {
@@ -107,6 +108,12 @@ class TestFileParser {
 			if (key.contains("games won")) configuration.gamesWon = value.parseInt();
 			if (key.contains("find")) configuration.findItem = value.parseInt();
 			if (key.contains("puzzle")) configuration.npc = value.parseInt();
+			if (key.contains("difficulty"))
+				configuration.difficulty = value.toLowerCase().contains("easy")
+					? 0
+					: value.toLowerCase().contains("medium")
+					? 50
+					: 100;
 			if (key.contains("require") && configuration.requiredItem1 >= 0)
 				configuration.requiredItem2 = value.parseInt();
 			if (key.contains("require") && configuration.requiredItem1 < 0)

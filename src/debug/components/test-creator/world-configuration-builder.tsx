@@ -38,6 +38,7 @@ class WorldConfigurationBuilder extends Component {
 	private _inventory: number[];
 	private _tags: string[];
 	private _description: string;
+	private _difficulty: number;
 
 	public connectedCallback() {
 		super.connectedCallback();
@@ -74,6 +75,7 @@ class WorldConfigurationBuilder extends Component {
 		this._inventory = config.inventory;
 		this._tags = config.tags;
 		this._description = config.description;
+		this._difficulty = config.difficulty;
 	}
 
 	public get configuration(): Configuration {
@@ -84,7 +86,8 @@ class WorldConfigurationBuilder extends Component {
 			gamesWon: this._gamesWon.value.parseInt(),
 			inventory: this._inventory ?? [],
 			tags: this._tags ?? [],
-			description: this._description
+			description: this._description,
+			difficulty: this._difficulty
 		};
 	}
 

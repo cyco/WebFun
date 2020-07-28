@@ -41,6 +41,7 @@ class SimulationConfigurationBuilder extends Component {
 	private _inventory: number[] = [];
 	private _tags: string[];
 	private _description: string;
+	private _difficulty: number;
 
 	public connectedCallback() {
 		super.connectedCallback();
@@ -140,19 +141,19 @@ class SimulationConfigurationBuilder extends Component {
 	}
 
 	public set configuration(config: Configuration) {
-		const { zone, findItem, npc, requiredItem1, requiredItem2, inventory, tags, description } = config;
 		const data = this._gameData;
 
-		if (zone >= 0) {
-			this.currentZone = data.zones[zone];
-			this._findTile.tile = data.tiles[findItem];
-			this._npcTile.tile = data.tiles[npc];
-			this._requiredTile.tile = data.tiles[requiredItem1];
-			this._required2Tile.tile = data.tiles[requiredItem2];
+		if (config.zone >= 0) {
+			this.currentZone = data.zones[config.zone];
+			this._findTile.tile = data.tiles[config.findItem];
+			this._npcTile.tile = data.tiles[config.npc];
+			this._requiredTile.tile = data.tiles[config.requiredItem1];
+			this._required2Tile.tile = data.tiles[config.requiredItem2];
 		}
-		this._inventory = inventory;
-		this._tags = tags;
-		this._description = description;
+		this._inventory = config.inventory;
+		this._tags = config.tags;
+		this._description = config.description;
+		this._difficulty = config.difficulty;
 	}
 
 	public get configuration(): Configuration {
@@ -171,7 +172,8 @@ class SimulationConfigurationBuilder extends Component {
 			requiredItem2,
 			inventory: this._inventory,
 			tags: this._tags,
-			description: this._description
+			description: this._description,
+			difficulty: this._difficulty
 		};
 	}
 

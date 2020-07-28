@@ -6,6 +6,7 @@ import { Planet, WorldSize } from "src/engine/types";
 
 import { Parser, TestCase, Expectation, GameplayContext } from "src/debug/automation/test";
 import loadGameData from "test/helpers/game-data";
+import { Settings } from "src";
 
 declare let withTimeout: (t: number, block: () => void) => () => void;
 const FiveMinutes = 5 * 60 * 1000;
@@ -24,6 +25,7 @@ const run = (prefix: string, fileName: string, testFileContents: string) => {
 						await ctx.prepare(loadGameData);
 						ctx.buildEngine();
 
+						Settings.difficulty = testCase.configuration.difficulty;
 						srand(testCase.configuration.seed);
 						ctx.engine.persistentState.gamesWon = testCase.configuration.gamesWon;
 

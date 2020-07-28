@@ -10,6 +10,7 @@ interface Configuration {
 	tags: string[];
 	description?: string;
 	inventory: number[];
+	difficulty: number;
 	gamesWon?: number;
 }
 

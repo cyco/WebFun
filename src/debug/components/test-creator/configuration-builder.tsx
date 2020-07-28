@@ -19,7 +19,12 @@ class ConfigurationBuilder extends Component {
 	public connectedCallback() {
 		super.connectedCallback();
 
-		const config: Configuration = this._initialConfiguration ?? { inventory: [], tags: [], seed: 0 };
+		const config: Configuration = this._initialConfiguration ?? {
+			inventory: [],
+			tags: [],
+			seed: 0,
+			difficulty: 50
+		};
 		this.append(
 			...[
 				<SegmentControl
