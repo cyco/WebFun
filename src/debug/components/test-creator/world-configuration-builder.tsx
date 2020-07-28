@@ -39,6 +39,7 @@ class WorldConfigurationBuilder extends Component {
 	private _tags: string[];
 	private _description: string;
 	private _difficulty: number;
+	private _health: number;
 
 	public connectedCallback() {
 		super.connectedCallback();
@@ -76,6 +77,7 @@ class WorldConfigurationBuilder extends Component {
 		this._tags = config.tags;
 		this._description = config.description;
 		this._difficulty = config.difficulty;
+		this._health = config.health;
 	}
 
 	public get configuration(): Configuration {
@@ -87,7 +89,8 @@ class WorldConfigurationBuilder extends Component {
 			inventory: this._inventory ?? [],
 			tags: this._tags ?? [],
 			description: this._description,
-			difficulty: this._difficulty
+			difficulty: this._difficulty,
+			health: this._health
 		};
 	}
 

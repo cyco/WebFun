@@ -114,6 +114,7 @@ class TestFileParser {
 					: value.toLowerCase().contains("medium")
 					? 50
 					: 100;
+			if (key.contains("health")) configuration.health = value.parseInt();
 			if (key.contains("require") && configuration.requiredItem1 >= 0)
 				configuration.requiredItem2 = value.parseInt();
 			if (key.contains("require") && configuration.requiredItem1 < 0)

@@ -17,7 +17,8 @@ class Serializer {
 			description,
 			tags,
 			inventory,
-			difficulty
+			difficulty,
+			health
 		} = config;
 
 		const configuration = [];
@@ -30,6 +31,7 @@ class Serializer {
 		if (size > 0) configuration.push(`Size: ${WorldSize.fromNumber(size).name}`);
 		if (gamesWon > 0) configuration.push(`Games Won: ${gamesWon.toString(10)}`);
 		if (difficulty !== 50) configuration.push(`Difficulty: ${difficulty < 50 ? "easy" : "hard"}`);
+		if (health) configuration.push(`Health: ${health}`);
 		if (zone >= 0) configuration.push(`Zone: ${zone.toHex(3)}`);
 		if (findItem > 0) configuration.push(`Find: ${findItem.toHex(3)}`);
 		if (npc > 0) configuration.push(`NPC: ${findItem.toHex(3)}`);

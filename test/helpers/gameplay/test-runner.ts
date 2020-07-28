@@ -29,6 +29,9 @@ const run = (prefix: string, fileName: string, testFileContents: string) => {
 						srand(testCase.configuration.seed);
 						ctx.engine.persistentState.gamesWon = testCase.configuration.gamesWon;
 
+						if (testCase.configuration.health)
+							ctx.engine.hero.health = testCase.configuration.health;
+
 						ctx.engine.inventory.removeAllItems();
 						testCase.configuration.inventory.forEach(i =>
 							ctx.engine.inventory.addItem(ctx.engine.assets.get(Tile, i))

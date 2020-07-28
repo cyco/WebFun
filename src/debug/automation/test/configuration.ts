@@ -12,6 +12,7 @@ interface Configuration {
 	inventory: number[];
 	difficulty: number;
 	gamesWon?: number;
+	health?: number;
 }
 
 export default Configuration;

@@ -81,6 +81,9 @@ class TestCreatorWindow extends AbstractWindow implements EventListenerObject {
 			engine.inventory.addItem(engine.assets.get(Tile, i))
 		);
 
+		if (this.testCase.configuration.health) engine.hero.health = this.testCase.configuration.health;
+		console.log("this.testCase.configuration.health", this.testCase.configuration.health);
+
 		story.generateWorld(engine.assets, engine.persistentState.gamesWon);
 		if (!(story instanceof SimulatedStory)) {
 			engine.currentWorld = story.dagobah;
