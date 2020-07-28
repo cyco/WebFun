@@ -41,12 +41,12 @@ abstract class SettingsWindow extends AbstractWindow {
 
 	private _storeValue() {
 		if (!this._key) return;
-		localStorage.store(this._key, this._slider.value);
+		localStorage.store(`settings.${this._key}`, this._slider.value);
 	}
 
 	private _updateValue() {
 		if (!this._key) return;
-		this._slider.value = localStorage.load(this._key);
+		this._slider.value = localStorage.load(`settings.${this._key}`);
 	}
 
 	protected set steps(s) {
