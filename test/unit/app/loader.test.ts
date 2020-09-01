@@ -124,7 +124,7 @@ describe("WebFun.App.Loader", () => {
 						let setupImageHandler: any;
 						let gameData: GameData;
 						beforeEach(() => {
-							gameData = {} as any;
+							gameData = { sounds: [] } as any;
 							spyOn(EngineModule, "GameData").and.callFake(() => gameData);
 							(mixer.prepare as jasmine.Spy).and.callFake(input => Promise.resolve(input));
 							setupImageHandler = jasmine.createSpy("setupImageHandler");
