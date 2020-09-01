@@ -9,7 +9,7 @@ import { Window as WindowComponent } from "src/ui/components";
 import { WindowModalSession } from "src/ux";
 import WorldSizeWindow from "./world-size-window";
 import buildDebugMenu from "src/debug/menu";
-import { document } from "src/std/dom";
+import { document, window } from "src/std/dom";
 import { GameState } from "src/engine";
 import { PauseScene } from "src/engine/scenes";
 
@@ -131,6 +131,11 @@ class MainMenu extends Menu {
 					{
 						title: "Using Help",
 						mnemonic: 0
+					},
+					{
+						title: "Report a Bug",
+						mnemonic: 0,
+						callback: () => window.open(Settings.issueTracker)
 					},
 					Separator,
 					{

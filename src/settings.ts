@@ -27,6 +27,7 @@ const Settings = persistent(
 
 		logLevel: LogLevel.Debug,
 
+		issueTracker: "https://github.com/cyco/WebFun/issues/new",
 		url: {
 			yoda: {
 				data: process.env["YODA_DATA"] ?? "./game-data/yoda.data",

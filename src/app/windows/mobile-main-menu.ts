@@ -1,17 +1,11 @@
-import { Menu, MenuItemInit, MenuItemSeparator as Separator, MenuItem } from "src/ui";
+import { Menu, MenuItemInit, MenuItemSeparator as Separator } from "src/ui";
 
-import DifficultyWindow from "./difficulty-window";
 import GameController from "../game-controller";
-import GameSpeedWindow from "./game-speed-window";
 import Settings from "src/settings";
-import StatisticsWindow from "./statistics-window";
 import { Window as WindowComponent } from "src/ui/components";
 import { WindowModalSession } from "src/ux";
-import WorldSizeWindow from "./world-size-window";
 import buildDebugMenu from "src/debug/menu";
-import { document } from "src/std/dom";
-import { GameState } from "src/engine";
-import { PauseScene } from "src/engine/scenes";
+import { document, window } from "src/std/dom";
 
 function SoundMenuItem(
 	controller: GameController,
@@ -87,6 +81,11 @@ class MobileMainMenu extends Menu {
 			{
 				title: "How to Play",
 				mnemonic: 0
+			},
+			{
+				title: "Report a Bug",
+				mnemonic: 0,
+				callback: () => window.open(Settings.issueTracker)
 			},
 			...(controller.settings.debug ? [buildDebugMenu(controller)] : [])
 		]);
