@@ -3,7 +3,6 @@ import { Point } from "src/util";
 import { Engine } from "src/engine";
 
 import { Tile } from "src/engine/objects";
-import { document } from "src/std/dom";
 import CursorManager from "./cursor-manager";
 import KeyboardInputManager from "./keyboard-input-manager";
 import MouseInputManager from "./mouse-input-manager";
@@ -20,6 +19,7 @@ class InputManager implements InputManagerInterface, EventListenerObject {
 	private onscreenInputManager: OnscreenInputManager;
 	private inputManagers: InputManagerInterface[];
 	private _engine: Engine;
+	private gameViewElement: HTMLElement;
 
 	constructor(
 		gameViewElement: HTMLElement,
@@ -28,6 +28,8 @@ class InputManager implements InputManagerInterface, EventListenerObject {
 		shoot: OnscreenButton,
 		drag: OnscreenButton
 	) {
+		this.gameViewElement = gameViewElement;
+
 		this.keyboardInputManager = new KeyboardInputManager();
 		this.mouseInputManager = new MouseInputManager(gameViewElement, cursorManager);
 		this.onscreenInputManager = new OnscreenInputManager(gameViewElement, pad, shoot, drag);
@@ -47,32 +49,17 @@ class InputManager implements InputManagerInterface, EventListenerObject {
 	}
 
 	public addListeners() {
-		document.addEventListener("contextmenu", this);
-
+		this.gameViewElement.addEventListener("contextmenu", this);
 		this.inputManagers.forEach(i => i.addListeners());
 	}
 
 	public handleEvent(event: MouseEvent) {
-		if (
-			event.target instanceof HTMLInputElement ||
-			event.target instanceof HTMLTextAreaElement ||
-			(event.target instanceof HTMLElement && event.target.hasAttribute("contenteditable"))
-		) {
-			return;
-		}
-
-		switch (event.type) {
-			case "contextmenu":
-				event.stopPropagation();
-				event.preventDefault();
-		}
+		event.stopPropagation();
+		event.preventDefault();
 	}
 
 	public removeListeners() {
-		document.removeEventListener("contextmenu", this);
-
-		this.engine.removeEventListener(Engine.Event.CurrentZoneChange, this);
-
+		this.gameViewElement.removeEventListener("contextmenu", this);
 		this.inputManagers.forEach(i => i.removeListeners());
 	}
 

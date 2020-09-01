@@ -39,6 +39,7 @@ import rad2deg from "./rad2deg";
 import sleep from "./sleep";
 import xy2polar from "./xy2polar";
 import astar from "./a-star";
+import MouseButton from "./mouse-button";
 
 export {
 	add,
@@ -63,6 +64,7 @@ export {
 	iterate,
 	Logger,
 	LogLevel,
+	MouseButton,
 	OutputStream,
 	persistent,
 	Point,

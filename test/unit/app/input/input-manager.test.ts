@@ -1,8 +1,8 @@
 import InputManager from "src/app/input/input-manager";
 import { InputMask } from "src/engine/input";
-import { Point, Size } from "src/util";
+import { MouseButton, Point, Size } from "src/util";
 import CursorManager from "src/app/input/cursor-manager";
-import { OnscreenButton, OnscreenPad } from "src/app/ui";
+import { OnscreenButton, OnscreenPad, SceneView } from "src/app/ui";
 
 describe("WebFun.App.Input.InputManager", () => {
 	let subject: InputManager;
@@ -179,28 +179,41 @@ describe("WebFun.App.Input.InputManager", () => {
 
 		it("ignores repeated keyboard events", () => {
 			(subject as any).keyboardInputManager._currentInput = InputMask.None;
-			const event: any = { type: true ? "keydown" : "keyup" };
-			event.code = "Space";
-			event.repeat = true;
+			const event: any = {
+				type: "keydown",
+				code: "Space",
+				repeat: true,
+				stopPropagation: jasmine.createSpy(),
+				preventDefault: jasmine.createSpy()
+			};
 
-			subject.handleEvent(event);
+			(subject as any).keyboardInputManager.handleEvent(event);
 			expect(subject.readInput(0) & InputMask.Attack).not.toBeTruthy();
 		});
 
 		it("ignores keyboard events that are sent to an input element", () => {
-			let event: any = { type: true ? "keydown" : "keyup" };
-			event.code = "Space";
-			event.target = document.createElement("input");
+			let event: any = {
+				type: "keydown",
+				code: "Space",
+				repeat: true,
+				stopPropagation: jasmine.createSpy(),
+				preventDefault: jasmine.createSpy(),
+				target: document.createElement("input")
+			};
 
 			subject.handleEvent(event);
 			expect(subject.readInput(0) & InputMask.Attack).not.toBeTruthy();
 
 			(subject as any).keyboardInputManager._currentInput = InputMask.None;
-			event = { type: true ? "keydown" : "keyup" };
-			event.code = "Space";
-			event.target = document.createElement("textarea");
+			event = {
+				type: "keydown",
+				code: "Space",
+				target: document.createElement("textarea"),
+				stopPropagation: jasmine.createSpy(),
+				preventDefault: jasmine.createSpy()
+			};
 
-			subject.handleEvent(event);
+			(subject as any).keyboardInputManager.handleEvent(event);
 			expect(subject.readInput(0) & InputMask.Attack).not.toBeTruthy();
 		});
 	});
@@ -209,8 +222,13 @@ describe("WebFun.App.Input.InputManager", () => {
 		beforeEach(() => subject.addListeners());
 		afterEach(() => subject.removeListeners());
 
-		it("overrides the browsers context menu", () => {
-			const event: any = { type: "contextmenu", preventDefault() {}, stopPropagation() {} };
+		it("overrides the browsers context menu if the click occured in a scene view", () => {
+			const event: any = {
+				type: "contextmenu",
+				preventDefault() {},
+				stopPropagation() {},
+				target: element
+			};
 			spyOn(event, "preventDefault");
 			subject.handleEvent(event);
 			expect(event.preventDefault).toHaveBeenCalled();
@@ -252,14 +270,14 @@ describe("WebFun.App.Input.InputManager", () => {
 		});
 
 		describe("when the left mouse is pressed inside the element", () => {
-			beforeEach(() => fakeMouse("down", { x: 15, y: 15, button: 0 }));
+			beforeEach(() => fakeMouse("down", { x: 15, y: 15, button: MouseButton.Main }));
 
 			it("starts walking", () => {
 				expect(subject.readInput(0) & InputMask.Walk).toBeTruthy();
 			});
 
 			describe("and the right button is released", () => {
-				beforeEach(() => fakeMouse("up", { x: 10, y: 10, button: 1 }));
+				beforeEach(() => fakeMouse("up", { x: 10, y: 10, button: MouseButton.Secondary }));
 
 				it("does not stop walking", () => {
 					expect(subject.readInput(0) & InputMask.Walk).toBeTruthy();
@@ -267,7 +285,7 @@ describe("WebFun.App.Input.InputManager", () => {
 			});
 
 			describe("and it is released", () => {
-				beforeEach(() => fakeMouse("up", { x: 10, y: 10, button: 0 }));
+				beforeEach(() => fakeMouse("up", { x: 10, y: 10, button: MouseButton.Main }));
 
 				it("stops walking", () => {
 					expect(subject.readInput(0) & InputMask.Walk).toBeFalsy();
@@ -278,7 +296,7 @@ describe("WebFun.App.Input.InputManager", () => {
 		describe("when the left mouse is pressed outside the element", () => {
 			beforeEach(() => {
 				(subject as any).mouseInputManager._currentInput = InputMask.None;
-				fakeMouse("down", { x: 0, y: 0, button: 0 }, {});
+				fakeMouse("down", { x: 0, y: 0, button: MouseButton.Main }, {});
 			});
 
 			it("start does not initiate walking", () => {
@@ -287,14 +305,14 @@ describe("WebFun.App.Input.InputManager", () => {
 		});
 
 		describe("when the right mouse is pressed inside the element", () => {
-			beforeEach(() => fakeMouse("down", { x: 15, y: 15, button: 1 }));
+			beforeEach(() => fakeMouse("down", { x: 15, y: 15, button: MouseButton.Secondary }));
 
 			it("starts attacking", () => {
 				expect(subject.readInput(0) & InputMask.Attack).toBeTruthy();
 			});
 
 			describe("and it is released", () => {
-				beforeEach(() => fakeMouse("up", { x: 0, y: 0, button: 1 }));
+				beforeEach(() => fakeMouse("up", { x: 0, y: 0, button: MouseButton.Secondary }));
 
 				it("stops attacking", () => {
 					expect(subject.readInput(0) & InputMask.Attack).toBeFalsy();

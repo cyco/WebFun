@@ -1,7 +1,7 @@
 import { InputManager, InputMask, Direction } from "src/engine/input";
 import { Tile } from "src/engine/objects";
 import { Engine } from "src/engine";
-import { Point, Direction as DirectionHelper, astar } from "src/util";
+import { Point, Direction as DirectionHelper, astar, MouseButton } from "src/util";
 import { ZoneScene } from "src/engine/scenes";
 import Settings from "src/settings";
 import CursorManager from "./cursor-manager";
@@ -103,8 +103,8 @@ class MouseInputManager implements InputManager {
 		this.lastDirectionInput = performance.now();
 
 		if (this.mouseMode === MouseMode.Direction) {
-			if (e.button === 0) this._currentInput |= InputMask.Walk;
-			if (e.button === 1) this._currentInput |= InputMask.Attack;
+			if (e.button === MouseButton.Main) this._currentInput |= InputMask.Walk;
+			if (e.button === MouseButton.Secondary) this._currentInput |= InputMask.Attack;
 		} else {
 			this.pathTarget = point.byScalingBy(9).floor().subtract(this.engine.camera.offset);
 			this._highlight.target = this.pathTarget;
@@ -147,8 +147,8 @@ class MouseInputManager implements InputManager {
 	}
 
 	private _mouseUp(e: MouseEvent) {
-		if (e.button === 0) this._currentInput &= ~InputMask.Walk;
-		if (e.button === 1) this._currentInput &= ~InputMask.Attack;
+		if (e.button === MouseButton.Main) this._currentInput &= ~InputMask.Walk;
+		if (e.button === MouseButton.Secondary) this._currentInput &= ~InputMask.Attack;
 
 		this.lastDirectionInput = performance.now();
 		this._mouseDirection = 0;
