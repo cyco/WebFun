@@ -8,7 +8,7 @@ const forEach = function (callback: (_: HTMLElement, idx: number, collection: HT
 
 declare global {
 	interface HTMLCollectionOf<T> {
-		forEach(_: (_: T, idx: number, collection: HTMLCollectionOf<T>) => boolean): void;
+		forEach(_: (_: T, idx: number, collection: HTMLCollectionOf<T>) => void): void;
 	}
 }
 
