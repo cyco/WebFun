@@ -1,0 +1,32 @@
+@import "animation.scss";
+@import "border.scss";
+@import "variables.scss";
+@import "../ui/settings-window.scss";
+@import "../../ui/components/abstract-window";
+@import "aspect-ratio.scss";
+
+wf-help-viewer {
+	@extend wf-abstract-window;
+	.content {
+		flex-direction: column;
+		.action-bar {
+			display: flex;
+			flex-direction: row;
+			wf-button {
+				width: 104px;
+			}
+		}
+
+		.help-contents {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			align-content: center;
+			justify-content: center;
+
+			wf-progress-indicator {
+				margin: 60px;
+			}
+		}
+	}
+}

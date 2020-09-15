@@ -5,6 +5,7 @@ import MobileMainMenu from "./mobile-main-menu";
 import MainWindow from "./main-window";
 import StatisticsWindow from "./statistics-window";
 import WorldSizeWindow from "./world-size-window";
+import HelpViewer from "./help-viewer";
 
 export {
 	DifficultyWindow,
@@ -13,5 +14,6 @@ export {
 	MainWindow,
 	MobileMainMenu,
 	StatisticsWindow,
-	WorldSizeWindow
+	WorldSizeWindow,
+	HelpViewer
 };

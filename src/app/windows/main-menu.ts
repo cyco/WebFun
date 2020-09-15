@@ -1,17 +1,18 @@
-import { Menu, MenuItemInit, MenuItemSeparator as Separator, MenuItem } from "src/ui";
+import { Menu, MenuItemInit, MenuItemSeparator as Separator, MenuItem, WindowManager } from "src/ui";
 
-import DifficultyWindow from "./difficulty-window";
-import GameController from "../game-controller";
-import GameSpeedWindow from "./game-speed-window";
-import Settings from "src/settings";
-import StatisticsWindow from "./statistics-window";
-import { Window as WindowComponent } from "src/ui/components";
-import { WindowModalSession } from "src/ux";
-import WorldSizeWindow from "./world-size-window";
-import buildDebugMenu from "src/debug/menu";
 import { document, window } from "src/std/dom";
 import { GameState } from "src/engine";
 import { PauseScene } from "src/engine/scenes";
+import { Window as WindowComponent } from "src/ui/components";
+import { WindowModalSession } from "src/ux";
+import buildDebugMenu from "src/debug/menu";
+import DifficultyWindow from "./difficulty-window";
+import GameController from "../game-controller";
+import GameSpeedWindow from "./game-speed-window";
+import HelpViewer from "./help-viewer";
+import Settings from "src/settings";
+import StatisticsWindow from "./statistics-window";
+import WorldSizeWindow from "./world-size-window";
 
 function SoundMenuItem(
 	controller: GameController,
@@ -126,6 +127,11 @@ class MainMenu extends Menu {
 				submenu: [
 					{
 						title: "How to Play",
+						callback: () => {
+							const helpWindow = document.createElement(HelpViewer.tagName);
+							WindowManager.defaultManager.showWindow(helpWindow);
+							helpWindow.loadHelpFile(Settings.url.yoda.help);
+						},
 						mnemonic: 0
 					},
 					{
