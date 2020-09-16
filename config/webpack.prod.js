@@ -31,7 +31,8 @@ module.exports = {
 	resolve: {
 		extensions: [".js", ".ts", ".tsx", ".jsx"],
 		alias: {
-			src: Paths.sourceRoot
+			src: Paths.sourceRoot,
+			fs: Path.resolve(Paths.sourceRoot, "util/empty.ts")
 		},
 		unsafeCache: true
 	},
@@ -73,6 +74,9 @@ module.exports = {
 			chunkFilename: "assets/chunk/webfun.chunk[id].css"
 		}),
 		new Dotenv({ systemvars: true, silent: true, defaults: true }),
+		new CopyPlugin({
+			patterns: [{ from: "src/**/*.wasm", to: "assets", flatten: true }]
+		}),
 		ServiceWorkerInjectFileList({ file: Path.resolve(Paths.buildRoot, "assets/webfun.sw.js") })
 	],
 	module: {
