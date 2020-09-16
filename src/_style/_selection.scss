@@ -19,3 +19,15 @@ textarea,
 a {
 	cursor: default;
 }
+
+@mixin selectable {
+	user-select: text;
+	-webkit-user-select: text;
+	cursor: initial;
+
+	* {
+		user-select: text;
+		-webkit-user-select: text;
+		cursor: initial;
+	}
+}

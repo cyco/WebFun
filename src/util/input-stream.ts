@@ -173,6 +173,10 @@ class InputStream extends Stream {
 		this._offset += length * 4;
 		return result;
 	}
+
+	public get buffer() {
+		return this._arrayBuffer;
+	}
 }
 
 export default InputStream;
