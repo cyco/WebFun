@@ -40,9 +40,10 @@ class HelpViewer extends AbstractWindow {
 
 		if (!this.helpdeco) {
 			const module = (await import("./helpdeco.js")) as any;
-			this.helpdeco = await module();
+			this.helpdeco = await module({
+				locateFile: (path: string) => "assets/" + path
+			});
 		}
-
 		const stream = await FileLoader.loadAsStream(source);
 		hc.innerHTML = this.helpdeco.render(stream.buffer, source.split(".").last());
 		this.topicCount = this.getElementsByTagName(TopicTag).length;

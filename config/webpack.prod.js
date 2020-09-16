@@ -71,7 +71,7 @@ module.exports = {
 		}),
 		new Dotenv({ systemvars: true, silent: true, defaults: true }),
 		new CopyPlugin({
-			patterns: [{ from: "src/**/*.wasm", to: "", flatten: true }]
+			patterns: [{ from: "src/**/*.wasm", to: "assets", flatten: true }]
 		}),
 		ServiceWorkerInjectFileList({ file: Path.resolve(Paths.buildRoot, "assets/webfun.sw.js") })
 	],

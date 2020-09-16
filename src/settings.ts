@@ -33,13 +33,13 @@ const Settings = persistent(
 				data: process.env["YODA_DATA"] ?? "./game-data/yoda.data",
 				palette: process.env["YODA_PALETTE"] ?? "./game-data/yoda.pal",
 				sfx: process.env["YODA_SFX"] ?? "./game-data/sfx-yoda",
-				help: process.env["YODA_HLP"] ?? "./game-data/yoda.hlp"
+				help: process.env["YODA_HELP"] ?? "./game-data/yoda.hlp"
 			},
 			indy: {
 				data: process.env["INDY_DATA"] ?? "./game-data/indy.data",
 				palette: process.env["INDY_PALETTE"] ?? "./game-data/indy.pal",
 				sfx: process.env["INDY_SFX"] ?? "./game-data/sfx-indy",
-				help: process.env["YODA_HLP"] ?? "./game-data/indy.hlp"
+				help: process.env["YODA_HELP"] ?? "./game-data/indy.hlp"
 			}
 		},
 		// app state
