@@ -3,11 +3,6 @@
 @import "colors.scss";
 @import "fonts.scss";
 
-$fa-font-path: "~font-awesome/fonts/";
-@import "~font-awesome/scss/font-awesome.scss";
-@import "fontello/css/fontello.css";
-@import "./trueno.css";
-
 body {
 	background: $background-color;
 	transition: background-color 0.25s ease-in-out;

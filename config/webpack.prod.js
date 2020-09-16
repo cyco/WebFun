@@ -2,16 +2,16 @@ const Path = require("path");
 const Paths = require("./paths");
 
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+const CopyPlugin = require("copy-webpack-plugin");
+const CssUrlRelativePlugin = require("css-url-relative-plugin");
+const Dotenv = require("dotenv-webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
-const TerserPlugin = require("terser-webpack-plugin");
-const Dotenv = require("dotenv-webpack");
-const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
-const GoogleFontsPlugin = require("@beyonk/google-fonts-webpack-plugin");
-const CopyPlugin = require("copy-webpack-plugin");
 const PWAManifestPlugin = require("webpack-pwa-manifest");
 const ServiceWorkerInjectFileList = require("./sw-file-list");
+const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = {
 	entry: {
@@ -41,11 +41,6 @@ module.exports = {
 	plugins: [
 		// new BundleAnalyzerPlugin({ analyzerMode: "static" }),
 		new CleanWebpackPlugin({ root: Paths.buildRoot }),
-		new GoogleFontsPlugin({
-			fonts: [{ family: "Montserrat" }, { family: "Lato" }],
-			filename: "assets/font/index.css",
-			path: "."
-		}),
 		new PWAManifestPlugin({
 			name: "WebFun",
 			short_name: "WebFun",
@@ -69,13 +64,14 @@ module.exports = {
 				"apple-mobile-web-app-capable": "yes"
 			}
 		}),
+		new CssUrlRelativePlugin(),
 		new MiniCssExtractPlugin({
 			filename: "assets/[name].css",
 			chunkFilename: "assets/chunk/webfun.chunk[id].css"
 		}),
 		new Dotenv({ systemvars: true, silent: true, defaults: true }),
 		new CopyPlugin({
-			patterns: [{ from: "src/**/*.wasm", to: "assets", flatten: true }]
+			patterns: [{ from: "src/**/*.wasm", to: "", flatten: true }]
 		}),
 		ServiceWorkerInjectFileList({ file: Path.resolve(Paths.buildRoot, "assets/webfun.sw.js") })
 	],

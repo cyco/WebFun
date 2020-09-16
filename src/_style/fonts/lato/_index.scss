@@ -1,0 +1,13 @@
+@font-face {
+	font-family: "Lato";
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: url("./fonts/lato/Lato-Regular.eot");
+	src: local("Lato Regular"), local("Lato-Regular"),
+		url("./fonts/lato/Lato-Regular.eot") format("embedded-opentype"),
+		url("./fonts/lato/Lato-Regular.woff2") format("woff2"),
+		url("./fonts/lato/Lato-Regular.woff") format("woff"),
+		url("./fonts/lato/Lato-Regular.ttf") format("truetype"),
+		url("./fonts/lato/Lato-Regular.svg") format("svg");
+}
