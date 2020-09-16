@@ -374,8 +374,8 @@ describe("WebFun.App.Windows.MainMenu", () => {
 			expect(helpItem.title).toEqual("Help");
 		});
 
-		it("has a submenu with 3 entries (and a separator)", () => {
-			expect(helpMenu.items).toBeArrayOfSize(4);
+		it("has a submenu with 4 entries (and a separator)", () => {
+			expect(helpMenu.items).toBeArrayOfSize(5);
 		});
 	});
 
