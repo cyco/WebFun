@@ -8,7 +8,8 @@ module.exports = {
 			src: Paths.sourceRoot,
 			std: Path.resolve(Paths.sourceRoot, "std"),
 			libs: Path.resolve(Paths.sourceRoot, "libs"),
-			test: Path.resolve(Paths.projectRoot, "test")
+			test: Path.resolve(Paths.projectRoot, "test"),
+			fs: Path.resolve(Paths.sourceRoot, "util/empty.ts")
 		},
 		unsafeCache: true
 	},
@@ -19,7 +20,7 @@ module.exports = {
 		rules: [
 			{
 				test: /\.tsx?$/,
-				exclude: /node_modules|(src\/(debug|editor|save-game-editor))/,
+				exclude: /node_modules|(src\/(debug|editor|save-game-editor))|helpdeco/,
 				use: [
 					{
 						loader: "babel-loader",
@@ -49,7 +50,7 @@ module.exports = {
 			},
 			{
 				test: /\.tsx?$/,
-				exclude: /node_modules/,
+				exclude: /node_modules|helpdeco/,
 				include: /src\/(debug|editor|save-game-editor)/,
 				use: [
 					{

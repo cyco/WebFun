@@ -25,6 +25,7 @@ module.exports = merge(BaseConfig, {
 			Paths.projectRoot,
 			Paths.assetsRoot,
 			Path.resolve(Paths.sourceRoot, "app"),
+			Path.resolve(Paths.sourceRoot, "app/windows/help-viewer"),
 			Path.resolve(Paths.assetsRoot, "favicons")
 		],
 		host: process.env.host || "127.0.0.1",
