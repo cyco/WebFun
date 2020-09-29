@@ -71,7 +71,21 @@ module.exports = {
 		}),
 		new Dotenv({ systemvars: true, silent: true, defaults: true }),
 		new CopyPlugin({
-			patterns: [{ from: "src/**/*.wasm", to: "assets", flatten: true }]
+			patterns: [
+				{
+					from: "assets/game-data/*.{data,pal,hlp}",
+					to: "data",
+					noErrorOnMissing: true,
+					flatten: true
+				},
+				{
+					from: "sfx-*/**/*",
+					to: "data",
+					noErrorOnMissing: true,
+					toType: "dir",
+					context: "assets/game-data"
+				}
+			]
 		}),
 		ServiceWorkerInjectFileList({ file: Path.resolve(Paths.buildRoot, "assets/webfun.sw.js") })
 	],
@@ -79,12 +93,12 @@ module.exports = {
 		rules: [
 			{
 				test: /\.jsx?$/,
-				use: [{ loader: "babel-loader" }]
+				use: [{ loader: "babel-loader", options: { cacheDirectory: true } }]
 			},
 			{
 				test: /\.tsx?$/,
 				exclude: /node_modules/,
-				use: [{ loader: "babel-loader" }, { loader: "ts-loader" }]
+				use: [{ loader: "babel-loader", options: { cacheDirectory: true } }, { loader: "ts-loader" }]
 			},
 			{
 				test: /\.scss$/,
