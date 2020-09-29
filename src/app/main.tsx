@@ -1,5 +1,5 @@
-import "../extension";
 import "../_style/global.scss";
+import "../extension";
 
 import * as AppComponents from "./ui";
 import * as WindowComponents from "./windows";

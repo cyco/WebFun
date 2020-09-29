@@ -12,6 +12,8 @@ const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const PWAManifestPlugin = require("webpack-pwa-manifest");
 const ServiceWorkerInjectFileList = require("./sw-file-list");
 const TerserPlugin = require("terser-webpack-plugin");
+const postcss = require('postcss');
+const cssnano = require('cssnano');
 
 module.exports = {
 	entry: {
@@ -26,7 +28,7 @@ module.exports = {
 	},
 	optimization: {
 		minimize: true,
-		minimizer: [new TerserPlugin(), new OptimizeCSSAssetsPlugin({})]
+		minimizer: [new TerserPlugin(), new OptimizeCSSAssetsPlugin({ cssProcessor: postcss([cssnano]) })]
 	},
 	resolve: {
 		extensions: [".js", ".ts", ".tsx", ".jsx"],
@@ -72,6 +74,11 @@ module.exports = {
 		new Dotenv({ systemvars: true, silent: true, defaults: true }),
 		new CopyPlugin({
 			patterns: [
+				{
+					from: "assets/*.wasm",
+					to: "assets",
+					flatten: true
+				},
 				{
 					from: "assets/game-data/*.{data,pal,hlp}",
 					to: "data",
