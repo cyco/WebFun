@@ -14,7 +14,6 @@
     "test:unit": "cross-env coverage=1 scope=unit karma start config/karma.conf.js --single-run",
     "test:unit:cont": "cross-env coverage=1 scope=unit karma start config/karma.conf.js --single-run=false --watch=true",
     "test:full": "cross-env coverage=1 scope=unit,acceptance karma start config/karma.conf.js",
-    "gen-coverage": "genhtml test/coverage/unit.lcov test/coverage/acceptance/lcov.info -o test/coverage/html",
     "format": "eslint --fix 'src/**/*.{js,ts,tsx,jsx}'"
   },
   "babel": {
@@ -25,7 +24,7 @@
           "targets": {
             "node": "current",
             "browsers": [
-              "last 1 version"
+              "last 3 versions"
             ]
           },
           "modules": "commonjs"
@@ -80,7 +79,7 @@
     "css-loader": "^4.3.0",
     "css-url-relative-plugin": "^1.0.1",
     "cssnano": "^4.1.10",
-    "dotenv-webpack": "^3.0.0",
+    "dotenv-webpack": "^2.0.0",
     "eslint": "7.10.0",
     "eslint-config-prettier": "^6.12.0",
     "eslint-plugin-only-warn": "^1.0.2",
