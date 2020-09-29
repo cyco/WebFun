@@ -12,8 +12,8 @@ const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const PWAManifestPlugin = require("webpack-pwa-manifest");
 const ServiceWorkerInjectFileList = require("./sw-file-list");
 const TerserPlugin = require("terser-webpack-plugin");
-const postcss = require('postcss');
-const cssnano = require('cssnano');
+const postcss = require("postcss");
+const cssnano = require("cssnano");
 
 module.exports = {
 	entry: {
@@ -77,6 +77,11 @@ module.exports = {
 				{
 					from: "assets/*.wasm",
 					to: "assets",
+					flatten: true
+				},
+				{
+					from: "assets/icon/**",
+					to: "assets/icon",
 					flatten: true
 				},
 				{
