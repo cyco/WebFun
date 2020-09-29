@@ -79,32 +79,12 @@ module.exports = {
 		rules: [
 			{
 				test: /\.jsx?$/,
-				use: [
-					{
-						loader: "babel-loader",
-						options: {
-							cacheDirectory: Path.resolve(Paths.configRoot, ".babel")
-						}
-					}
-				]
+				use: [{ loader: "babel-loader" }]
 			},
 			{
 				test: /\.tsx?$/,
 				exclude: /node_modules/,
-				use: [
-					{
-						loader: "babel-loader",
-						options: {
-							cacheDirectory: Path.resolve(Paths.configRoot, ".babel")
-						}
-					},
-					{
-						loader: "ts-loader",
-						options: {
-							configFile: Path.resolve(Paths.projectRoot, "tsconfig.json")
-						}
-					}
-				]
+				use: [{ loader: "babel-loader" }, { loader: "ts-loader" }]
 			},
 			{
 				test: /\.scss$/,

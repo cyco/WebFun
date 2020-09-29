@@ -31,9 +31,9 @@ module.exports = merge(BaseConfig, {
 		host: process.env.host || "127.0.0.1",
 		https: FS.existsSync(Path.resolve(Paths.configRoot, "ssl.key"))
 			? {
-					key: Path.resolve(Paths.configRoot, "ssl.key"),
-					cert: Path.resolve(Paths.configRoot, "ssl.pem")
-			  }
+				key: Path.resolve(Paths.configRoot, "ssl.key"),
+				cert: Path.resolve(Paths.configRoot, "ssl.pem")
+			}
 			: false,
 		progress: true
 	},
@@ -56,12 +56,8 @@ module.exports = merge(BaseConfig, {
 				test: /\.scss$/,
 				exclude: /node_modules/,
 				use: [
-					{
-						loader: "style-loader"
-					},
-					{
-						loader: "css-loader"
-					},
+					{ loader: "style-loader" },
+					{ loader: "css-loader" },
 					{
 						loader: "sass-loader",
 						options: {
