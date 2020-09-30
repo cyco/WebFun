@@ -23,11 +23,43 @@ module.exports = {
 	output: {
 		path: Paths.buildRoot,
 		filename: "assets/[name].js",
-		chunkFilename: "assets/chunk/webfun.chunk[id].js"
+		chunkFilename: "assets/webfun.[name].js"
 	},
 	optimization: {
 		minimize: true,
-		minimizer: [new TerserPlugin(), new OptimizeCSSAssetsPlugin({ cssProcessor: postcss([cssnano]) })]
+		minimizer: [new TerserPlugin(), new OptimizeCSSAssetsPlugin({ cssProcessor: postcss([cssnano]) })],
+		splitChunks: {
+			chunks: "all",
+			cacheGroups: {
+				"vendor": {
+					test: /[/\\]node_modules[/\\]/,
+					priority: 10,
+					reuseExistingChunk: true,
+					enforce: true
+				},
+				"save-game-editor": {
+					test: /src[/\\]save-game-editor[/\\]/,
+					priority: 10,
+					reuseExistingChunk: true,
+					enforce: true
+				},
+				"debug": {
+					test: /src[/\\]debug[/\\]/,
+					priority: 10,
+					reuseExistingChunk: true,
+					enforce: true
+				},
+				"editor": {
+					test: /src[/\\]editor[/\\]/,
+					priority: 10,
+					reuseExistingChunk: true,
+					enforce: true
+				}
+			},
+			name(module, chunks, cacheGroupKey) {
+				return `${cacheGroupKey}`;
+			}
+		}
 	},
 	resolve: {
 		extensions: [".js", ".ts", ".tsx", ".jsx"],
@@ -39,10 +71,6 @@ module.exports = {
 	cache: true,
 	stats: "errors-only",
 	plugins: [
-		/* profile bundle
-		new (require("webpack-bundle-analyzer").BundleAnalyzerPlugin)({ analyzerMode: "static" }),
-		new (require("webpack-visualizer-plugin"))(),
-		//*/
 		new CleanWebpackPlugin({ root: Paths.buildRoot }),
 		new PWAManifestPlugin({
 			name: "WebFun",
@@ -70,7 +98,7 @@ module.exports = {
 		new CssUrlRelativePlugin(),
 		new MiniCssExtractPlugin({
 			filename: "assets/[name].css",
-			chunkFilename: "assets/chunk/webfun.chunk[id].css"
+			chunkFilename: "assets/webfun.[name].css"
 		}),
 		new Dotenv({ systemvars: true, silent: true, defaults: true }),
 		new CopyPlugin({
@@ -101,6 +129,12 @@ module.exports = {
 			]
 		}),
 		ServiceWorkerInjectFileList({ file: Path.resolve(Paths.buildRoot, "assets/webfun.sw.js") })
+		/* profile bundle
+		new (require("webpack-bundle-analyzer").BundleAnalyzerPlugin)({ analyzerMode: "static" }),
+		new (require("webpack-visualizer-plugin"))({
+			filename: "./statistics.html"
+		}),
+		//*/
 	],
 	module: {
 		rules: [
