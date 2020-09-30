@@ -1,16 +1,13 @@
 import "./help-viewer.scss";
 import { AbstractWindow, Button, ProgressIndicator } from "src/ui/components";
 import { HelpdecoModule } from "./helpdeco";
-import { FileLoader } from "src/util";
+import { FileLoader, Point } from "src/util";
 
 const TopicTag = "helpdeco-topic";
 const TitleTag = "helpdeco-title";
 
 class HelpViewer extends AbstractWindow {
 	public static readonly tagName = "wf-help-viewer";
-	autosaveName = "help-viewer-window";
-	closeable = true;
-	title = "Help Viewer";
 	private history: number[] = [];
 	private topicCount: number = 0;
 	private currentTopic: number = 0;
@@ -18,6 +15,11 @@ class HelpViewer extends AbstractWindow {
 
 	constructor() {
 		super();
+
+		this.closable = true;
+		this.title = "Help Viewer";
+		this.origin = new Point(20, 20);
+		this.autosaveName = "help-viewer-window";
 
 		this.content = (
 			<div>
@@ -29,7 +31,7 @@ class HelpViewer extends AbstractWindow {
 		);
 	}
 
-	public async loadHelpFile(source: string) {
+	public async loadHelpFile(source: string): Promise<void> {
 		this.history = [];
 		this.topicCount = 0;
 		this.currentTopic = 0;
@@ -65,7 +67,7 @@ class HelpViewer extends AbstractWindow {
 		this.updateActionBar();
 	}
 
-	public visitTopic(topic: number) {
+	public visitTopic(topic: number): void {
 		if (topic < 0) return;
 		if (topic > this.topicCount - 1) return;
 		if (topic === this.currentTopic) return;
@@ -75,13 +77,13 @@ class HelpViewer extends AbstractWindow {
 		this.showTopic(topic);
 	}
 
-	public visitLastTopic() {
+	public visitLastTopic(): void {
 		this.history.pop();
 		const topic = this.history.pop() ?? 0;
 		this.visitTopic(topic);
 	}
 
-	private updateActionBar() {
+	private updateActionBar(): void {
 		this.querySelector(".action-bar").replaceWith(
 			<div className="action-bar">
 				<Button disabled={true}>Contents</Button>
