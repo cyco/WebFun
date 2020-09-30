@@ -2,7 +2,6 @@ const Path = require("path");
 const Paths = require("./paths");
 
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 const CopyPlugin = require("copy-webpack-plugin");
 const CssUrlRelativePlugin = require("css-url-relative-plugin");
 const Dotenv = require("dotenv-webpack");
@@ -33,15 +32,17 @@ module.exports = {
 	resolve: {
 		extensions: [".js", ".ts", ".tsx", ".jsx"],
 		alias: {
-			src: Paths.sourceRoot,
-			fs: Path.resolve(Paths.sourceRoot, "util/empty.ts")
+			src: Paths.sourceRoot
 		},
 		unsafeCache: true
 	},
 	cache: true,
 	stats: "errors-only",
 	plugins: [
-		// new BundleAnalyzerPlugin({ analyzerMode: "static" }),
+		/* profile bundle
+		new (require("webpack-bundle-analyzer").BundleAnalyzerPlugin)({ analyzerMode: "static" }),
+		new (require("webpack-visualizer-plugin"))(),
+		//*/
 		new CleanWebpackPlugin({ root: Paths.buildRoot }),
 		new PWAManifestPlugin({
 			name: "WebFun",

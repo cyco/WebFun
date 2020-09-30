@@ -6,6 +6,12 @@
   "engines": {
     "node": "14"
   },
+  "browser": {
+    "path": false,
+    "fs": false,
+    "crypto": false,
+    "buffer": false
+  },
   "scripts": {
     "build": "webpack --production --optimize-minimize --config config/webpack.prod.js",
     "start": "webpack-dev-server --open --mode development --config config/webpack.dev.js",
@@ -24,7 +30,7 @@
           "targets": {
             "node": "current",
             "browsers": [
-              "last 3 versions"
+              "last 1 version"
             ]
           },
           "modules": "commonjs"
@@ -126,6 +132,7 @@
     "webpack-merge": "^5.1.4",
     "webpack-node-externals": "^2.5.2",
     "webpack-pwa-manifest": "^4.2.0",
-    "webpack-sources": "^2.0.1"
+    "webpack-sources": "^2.0.1",
+    "webpack-visualizer-plugin": "^0.1.11"
   }
 }
