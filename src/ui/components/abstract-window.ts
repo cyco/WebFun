@@ -1,5 +1,6 @@
 import "./abstract-window.scss";
 
+import { localStorage } from "src/std/dom";
 import { Point, PointLike } from "src/util";
 
 import Component from "../component";
@@ -28,7 +29,7 @@ abstract class AbstractWindow extends Component {
 		this._content.classList.add("content");
 	}
 
-	get content() {
+	get content(): HTMLElement {
 		return this._content;
 	}
 
@@ -50,7 +51,7 @@ abstract class AbstractWindow extends Component {
 		this._update();
 	}
 
-	get origin() {
+	get origin(): Point {
 		return new Point(this._x, this._y);
 	}
 
@@ -60,7 +61,7 @@ abstract class AbstractWindow extends Component {
 		return parseFloat(this.style.top);
 	}
 
-	get menu() {
+	get menu(): Menu {
 		return this._titlebar.menu;
 	}
 
@@ -68,7 +69,7 @@ abstract class AbstractWindow extends Component {
 		this._titlebar.menu = menu;
 	}
 
-	get closable() {
+	get closable(): boolean {
 		return this._titlebar.closable;
 	}
 
@@ -76,7 +77,7 @@ abstract class AbstractWindow extends Component {
 		this._titlebar.closable = flag;
 	}
 
-	get movable() {
+	get movable(): boolean {
 		return this._titlebar.movable;
 	}
 
@@ -84,23 +85,23 @@ abstract class AbstractWindow extends Component {
 		this._titlebar.movable = flag;
 	}
 
-	get pinnable() {
+	get pinnable(): boolean {
 		return this._titlebar.pinnable;
 	}
 
-	set pinnable(flag) {
+	set pinnable(flag: boolean) {
 		this._titlebar.pinnable = flag;
 	}
 
-	set pinned(flag) {
+	set pinned(flag: boolean) {
 		this._titlebar.pinned = flag;
 	}
 
-	get pinned() {
+	get pinned(): boolean {
 		return this._titlebar.pinned;
 	}
 
-	get title() {
+	get title(): string {
 		return this._titlebar.title;
 	}
 
@@ -108,23 +109,23 @@ abstract class AbstractWindow extends Component {
 		this._titlebar.title = t;
 	}
 
-	get onclose() {
+	get onclose(): (event: Event) => void {
 		return this._titlebar.onclose;
 	}
 
-	set onclose(cb) {
+	set onclose(cb: (event: Event) => void) {
 		this._titlebar.onclose = cb;
 	}
 
-	set onpin(cb) {
+	set onpin(cb: (event: Event) => void) {
 		this._titlebar.onpin = cb;
 	}
 
-	get onpin() {
+	get onpin(): (event: Event) => void {
 		return this._titlebar.onpin;
 	}
 
-	protected connectedCallback() {
+	protected connectedCallback(): void {
 		super.connectedCallback();
 
 		this._titlebar.window = this;
@@ -145,13 +146,13 @@ abstract class AbstractWindow extends Component {
 		this._update();
 	}
 
-	public close() {
+	public close(): void {
 		this.remove();
 		this.onclose(new CustomEvent("close"));
 		this.dispatchEvent(new CustomEvent(Event.DidClose, { bubbles: false }));
 	}
 
-	private _update() {
+	private _update(): void {
 		if (!this.isConnected) return;
 
 		this.style.top = `${this._y | 0}px`;
@@ -183,7 +184,7 @@ abstract class AbstractWindow extends Component {
 		return `window-state.${this._autosaveName}`;
 	}
 
-	addTitlebarButton(element: HTMLElement) {
+	addTitlebarButton(element: HTMLElement): void {
 		this._titlebar.addButton(element);
 	}
 }
