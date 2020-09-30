@@ -2,6 +2,7 @@ const Path = require("path");
 const Paths = require("./paths");
 
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 const CopyPlugin = require("copy-webpack-plugin");
 const CssUrlRelativePlugin = require("css-url-relative-plugin");
 const Dotenv = require("dotenv-webpack");
@@ -11,8 +12,9 @@ const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const PWAManifestPlugin = require("webpack-pwa-manifest");
 const ServiceWorkerInjectFileList = require("./sw-file-list");
 const TerserPlugin = require("terser-webpack-plugin");
-const postcss = require("postcss");
+const WebpackVisualizerPlugin = require("webpack-visualizer-plugin");
 const cssnano = require("cssnano");
+const postcss = require("postcss");
 
 module.exports = {
 	entry: {
@@ -128,13 +130,16 @@ module.exports = {
 				}
 			]
 		}),
-		ServiceWorkerInjectFileList({ file: Path.resolve(Paths.buildRoot, "assets/webfun.sw.js") })
-		/* profile bundle
-		new (require("webpack-bundle-analyzer").BundleAnalyzerPlugin)({ analyzerMode: "static" }),
-		new (require("webpack-visualizer-plugin"))({
-			filename: "./statistics.html"
-		}),
-		//*/
+		ServiceWorkerInjectFileList({ file: Path.resolve(Paths.buildRoot, "assets/webfun.sw.js") }),
+
+		...(function (args) {
+			if (!args.includes("--stats")) return [];
+
+			return [
+				new BundleAnalyzerPlugin({ analyzerMode: "static" }),
+				new WebpackVisualizerPlugin({ filename: "./statistics.html" })
+			];
+		})(Array.from(process.argv))
 	],
 	module: {
 		rules: [
