@@ -27,6 +27,7 @@ module.exports = {
 		filename: "assets/[name].js",
 		chunkFilename: "assets/webfun.[name].js"
 	},
+	node: false,
 	optimization: {
 		minimize: true,
 		minimizer: [new TerserPlugin(), new OptimizeCSSAssetsPlugin({ cssProcessor: postcss([cssnano]) })],
@@ -66,7 +67,7 @@ module.exports = {
 	resolve: {
 		extensions: [".js", ".ts", ".tsx", ".jsx"],
 		alias: {
-			src: Paths.sourceRoot
+			"src": Paths.sourceRoot
 		},
 		unsafeCache: true
 	},

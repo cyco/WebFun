@@ -6,12 +6,6 @@
   "engines": {
     "node": "14"
   },
-  "browser": {
-    "path": false,
-    "fs": false,
-    "crypto": false,
-    "buffer": false
-  },
   "scripts": {
     "build": "webpack --production --optimize-minimize --config config/webpack.prod.js",
     "start": "webpack-dev-server --open --mode development --config config/webpack.dev.js",
