@@ -1,10 +1,10 @@
 import { EventTarget, InputStream } from "src/util";
-import { GameData, GameTypeYoda, readGameDataFile } from "src/engine";
+import { GameData, GameTypeYoda, readGameDataFile, ResourceManager } from "src/engine";
 
 import { ColorPalette } from "src/engine/rendering";
-import { ResourceManager } from "src/engine";
 import { Mixer } from "./audio";
 import LoaderEvent from "./loader-event";
+import { Sound } from "src/engine/objects";
 
 export const Events = {
 	Progress: "progress",
@@ -36,7 +36,7 @@ class Loader extends EventTarget {
 		this.registerEvents(Events);
 	}
 
-	public load() {
+	public load(): void {
 		this._resources
 			.loadGameFile(progress => this._progress(0, progress))
 			.then(s => this._readGameData(s))
@@ -90,11 +90,13 @@ class Loader extends EventTarget {
 
 	private async _loadSounds() {
 		this._progress(5, 0);
-		for (const sound of this._data.sounds) {
-			if (!sound.file) continue;
 
-			const buffer = await this._resources.loadSound(sound.file, () => void 0);
-			await this._mixer.prepare(sound, buffer);
+		const soundBufferRequests: [Sound, Promise<ArrayBuffer>][] = this._data.sounds
+			.filter(snd => snd.file)
+			.map(snd => [snd, this._resources.loadSound(snd.file, () => void 0)]);
+
+		for (const [sound, request] of soundBufferRequests) {
+			await this._mixer.prepare(sound, await request);
 		}
 
 		this._finishLoading();
