@@ -1,3 +1,3 @@
 FROM nginx:alpine
 
-ADD build/ /usr/share/nginx/html/
+ADD build/ /etc/nginx/html/

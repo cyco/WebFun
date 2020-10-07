@@ -2,6 +2,7 @@
 .idea
 .scannerwork
 .vscode
+assets
 config
 docs
 node_modules
