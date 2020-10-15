@@ -65,7 +65,7 @@ module.exports = {
 	resolve: {
 		extensions: [".js", ".ts", ".tsx", ".jsx"],
 		alias: {
-			"src": Paths.sourceRoot
+			src: Paths.sourceRoot
 		},
 		unsafeCache: true
 	},
@@ -94,6 +94,12 @@ module.exports = {
 				"msapplication-TileColor": "#da532c",
 				"theme-color": "#da532c",
 				"apple-mobile-web-app-capable": "yes"
+			},
+			minify: {
+				collapseWhitespace: true,
+				minifyCSS: true,
+				minifyJS: true,
+				removeComments: true
 			}
 		}),
 		new CssUrlRelativePlugin(),
