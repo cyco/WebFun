@@ -9,7 +9,6 @@ const Dotenv = require("dotenv-webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
-const PWAManifestPlugin = require("webpack-pwa-manifest");
 const TerserPlugin = require("terser-webpack-plugin");
 const WebpackVisualizerPlugin = require("webpack-visualizer-plugin");
 const cssnano = require("cssnano");
@@ -73,28 +72,8 @@ module.exports = {
 	stats: "errors-only",
 	plugins: [
 		new CleanWebpackPlugin({ root: Paths.buildRoot }),
-		new PWAManifestPlugin({
-			name: "WebFun",
-			short_name: "WebFun",
-			description: "My awesome Progressive Web App!",
-			background_color: "#000",
-			crossorigin: null,
-			ios: true,
-			includeDirectory: true,
-			filename: "assets/webfun.webmanifest",
-			start_url: "/?source=pwa",
-			display: "fullscreen",
-			scope: "/"
-		}),
 		new HtmlWebpackPlugin({
 			template: Path.resolve(Paths.sourceRoot, "./app/index.html"),
-			title: "WebFun",
-			meta: {
-				"viewport": "width=device-width, user-scalable=no, viewport-fit=cover",
-				"msapplication-TileColor": "#da532c",
-				"theme-color": "#da532c",
-				"apple-mobile-web-app-capable": "yes"
-			},
 			minify: {
 				collapseWhitespace: true,
 				minifyCSS: true,
@@ -112,6 +91,11 @@ module.exports = {
 			patterns: [
 				{
 					from: "assets/*.wasm",
+					to: "assets",
+					flatten: true
+				},
+				{
+					from: "src/*.webmanifest",
 					to: "assets",
 					flatten: true
 				},
