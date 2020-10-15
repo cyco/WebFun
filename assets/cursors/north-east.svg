@@ -1,14 +1,1 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="13.5pt" height="13.5pt" viewBox="0 0 13.5 13.5" version="1.1">
-<defs>
-<clipPath id="clip1">
-  <path d="M 0 1 L 13 1 L 13 13.5 L 0 13.5 Z M 0 1 "/>
-</clipPath>
-</defs>
-<g id="surface1">
-<path style=" stroke:none;fill-rule:evenodd;fill:rgb(92.155457%,92.155457%,92.155457%);fill-opacity:1;" d="M 3.625 12.660156 C 3.625 12.660156 0.625 9.660156 0.625 9.660156 C 0.625 9.660156 5.148438 5.136719 5.148438 5.136719 C 5.148438 5.136719 2.148438 2.136719 2.148438 2.136719 C 2.148438 2.136719 11.148438 2.136719 11.148438 2.136719 C 11.148438 2.136719 11.148438 11.136719 11.148438 11.136719 C 11.148438 11.136719 8.148438 8.136719 8.148438 8.136719 C 8.148438 8.136719 3.625 12.660156 3.625 12.660156 Z M 3.625 12.660156 "/>
-<g clip-path="url(#clip1)" clip-rule="nonzero">
-<path style="fill:none;stroke-width:1;stroke-linecap:square;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:1.414214;" d="M 7.25 25.320312 C 7.25 25.320312 1.25 19.320312 1.25 19.320312 C 1.25 19.320312 10.296875 10.273438 10.296875 10.273438 C 10.296875 10.273438 4.296875 4.273438 4.296875 4.273438 C 4.296875 4.273438 22.296875 4.273438 22.296875 4.273438 C 22.296875 4.273438 22.296875 22.273438 22.296875 22.273438 C 22.296875 22.273438 16.296875 16.273438 16.296875 16.273438 C 16.296875 16.273438 7.25 25.320312 7.25 25.320312 Z M 7.25 25.320312 " transform="matrix(0.5,0,0,0.5,0,0)"/>
-</g>
-</g>
-</svg>
+<svg height="13.5pt" viewBox="0 0 13.5 13.5" width="13.5pt" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><clipPath id="a"><path d="m0 1h13v12.5h-13zm0 0"/></clipPath><path d="m3.625 12.660156s-3-3-3-3 4.523438-4.523437 4.523438-4.523437-3-3-3-3h9v9s-3-3-3-3-4.523438 4.523437-4.523438 4.523437zm0 0" fill="#ebebeb" fill-rule="evenodd"/><g clip-path="url(#a)"><path d="m7.25 25.320312s-6-6-6-6 9.046875-9.046874 9.046875-9.046874-6-6-6-6h18v18s-6-6-6-6-9.046875 9.046874-9.046875 9.046874zm0 0" fill="none" stroke="#000" stroke-linecap="square" stroke-miterlimit="1.414214" transform="scale(.5)"/></g></svg>

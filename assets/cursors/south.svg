@@ -1,14 +1,1 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="13.5pt" height="13.5pt" viewBox="0 0 13.5 13.5" version="1.1">
-<defs>
-<clipPath id="clip1">
-  <path d="M 0 0 L 13 0 L 13 13.5 L 0 13.5 Z M 0 0 "/>
-</clipPath>
-</defs>
-<g id="surface1">
-<g clip-path="url(#clip1)" clip-rule="nonzero">
-<path style=" stroke:none;fill-rule:evenodd;fill:rgb(92.155457%,92.155457%,92.155457%);fill-opacity:1;" d="M 4.515625 0.265625 C 4.515625 0.265625 8.757812 0.265625 8.757812 0.265625 C 8.757812 0.265625 8.757812 6.664062 8.757812 6.664062 C 8.757812 6.664062 13 6.664062 13 6.664062 C 13 6.664062 6.636719 13.027344 6.636719 13.027344 C 6.636719 13.027344 0.273438 6.664062 0.273438 6.664062 C 0.273438 6.664062 4.515625 6.664062 4.515625 6.664062 C 4.515625 6.664062 4.515625 0.265625 4.515625 0.265625 Z M 4.515625 0.265625 "/>
-</g>
-<path style="fill:none;stroke-width:1;stroke-linecap:square;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:1.414214;" d="M 9.03125 0.53125 C 9.03125 0.53125 17.515625 0.53125 17.515625 0.53125 C 17.515625 0.53125 17.515625 13.328125 17.515625 13.328125 C 17.515625 13.328125 26 13.328125 26 13.328125 C 26 13.328125 13.273438 26.054688 13.273438 26.054688 C 13.273438 26.054688 0.546875 13.328125 0.546875 13.328125 C 0.546875 13.328125 9.03125 13.328125 9.03125 13.328125 C 9.03125 13.328125 9.03125 0.53125 9.03125 0.53125 Z M 9.03125 0.53125 " transform="matrix(0.5,0,0,0.5,0,0)"/>
-</g>
-</svg>
+<svg height="13.5pt" viewBox="0 0 13.5 13.5" width="13.5pt" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><clipPath id="a"><path d="m0 0h13v13.5h-13zm0 0"/></clipPath><g clip-path="url(#a)"><path d="m4.515625.265625h4.242187v6.398437h4.242188s-6.363281 6.363282-6.363281 6.363282-6.363281-6.363282-6.363281-6.363282h4.242187zm0 0" fill="#ebebeb" fill-rule="evenodd"/></g><path d="m9.03125.53125h8.484375v12.796875h8.484375s-12.726562 12.726563-12.726562 12.726563-12.726563-12.726563-12.726563-12.726563h8.484375zm0 0" fill="none" stroke="#000" stroke-linecap="square" stroke-miterlimit="1.414214" transform="scale(.5)"/></svg>

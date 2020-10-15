@@ -1,14 +1,1 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="13.5pt" height="13.5pt" viewBox="0 0 13.5 13.5" version="1.1">
-<defs>
-<clipPath id="clip1">
-  <path d="M 1 1 L 13.5 1 L 13.5 13.5 L 1 13.5 Z M 1 1 "/>
-</clipPath>
-</defs>
-<g id="surface1">
-<path style=" stroke:none;fill-rule:evenodd;fill:rgb(92.155457%,92.155457%,92.155457%);fill-opacity:1;" d="M 12.648438 9.660156 C 12.648438 9.660156 9.648438 12.660156 9.648438 12.660156 C 9.648438 12.660156 5.125 8.136719 5.125 8.136719 C 5.125 8.136719 2.125 11.136719 2.125 11.136719 C 2.125 11.136719 2.125 2.136719 2.125 2.136719 C 2.125 2.136719 11.125 2.136719 11.125 2.136719 C 11.125 2.136719 8.125 5.136719 8.125 5.136719 C 8.125 5.136719 12.648438 9.660156 12.648438 9.660156 Z M 12.648438 9.660156 "/>
-<g clip-path="url(#clip1)" clip-rule="nonzero">
-<path style="fill:none;stroke-width:1;stroke-linecap:square;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:1.414214;" d="M 25.296875 19.320312 C 25.296875 19.320312 19.296875 25.320312 19.296875 25.320312 C 19.296875 25.320312 10.25 16.273438 10.25 16.273438 C 10.25 16.273438 4.25 22.273438 4.25 22.273438 C 4.25 22.273438 4.25 4.273438 4.25 4.273438 C 4.25 4.273438 22.25 4.273438 22.25 4.273438 C 22.25 4.273438 16.25 10.273438 16.25 10.273438 C 16.25 10.273438 25.296875 19.320312 25.296875 19.320312 Z M 25.296875 19.320312 " transform="matrix(0.5,0,0,0.5,0,0)"/>
-</g>
-</g>
-</svg>
+<svg height="13.5pt" viewBox="0 0 13.5 13.5" width="13.5pt" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><clipPath id="a"><path d="m1 1h12.5v12.5h-12.5zm0 0"/></clipPath><path d="m12.648438 9.660156s-3 3-3 3-4.523438-4.523437-4.523438-4.523437-3 3-3 3v-9h9s-3 3-3 3 4.523438 4.523437 4.523438 4.523437zm0 0" fill="#ebebeb" fill-rule="evenodd"/><g clip-path="url(#a)"><path d="m25.296875 19.320312s-6 6-6 6-9.046875-9.046874-9.046875-9.046874-6 6-6 6v-18h18s-6 6-6 6 9.046875 9.046874 9.046875 9.046874zm0 0" fill="none" stroke="#000" stroke-linecap="square" stroke-miterlimit="1.414214" transform="scale(.5)"/></g></svg>
