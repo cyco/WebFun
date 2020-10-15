@@ -19,6 +19,6 @@ declare module "detect-mobile-browser" {
 		isAny(): boolean;
 	}
 
-	var SmartPhoneConstructor: (_: boolean) => SmartPhone;
+	const SmartPhoneConstructor: (_: boolean) => SmartPhone;
 	export = SmartPhoneConstructor;
 }

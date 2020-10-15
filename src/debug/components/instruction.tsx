@@ -12,16 +12,16 @@ class InstructionComponent extends InstructionThing {
 	private _instruction: Instruction;
 	public breakpointStore: BreakpointStore = null;
 
-	get instruction() {
+	get instruction(): Instruction {
 		return this._instruction;
 	}
 
-	set instruction(instruction) {
+	set instruction(instruction: Instruction) {
 		this._instruction = instruction;
 		this._rebuild();
 	}
 
-	get type() {
+	get type(): string {
 		return "i";
 	}
 
@@ -187,7 +187,7 @@ class InstructionComponent extends InstructionThing {
 		}
 	}
 
-	protected appendTextArgument(text: string) {
+	protected appendTextArgument(text: string): void {
 		this.appendChild(
 			<span className="argument text" title={text}>
 				text
@@ -195,7 +195,7 @@ class InstructionComponent extends InstructionThing {
 		);
 	}
 
-	protected appendSoundArgument(sound: number) {
+	protected appendSoundArgument(sound: number): void {
 		this.appendChild(<span className="argument sound">{this.engine.assets.get(Sound, sound).file}</span>);
 	}
 }

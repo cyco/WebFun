@@ -5,7 +5,7 @@ import { not } from "src/util/functional";
 class InventoryContainsExpectation implements expectation {
 	private items: number[];
 
-	public static CanBeBuiltFrom(value: string) {
+	public static CanBeBuiltFrom(value: string): boolean {
 		return value.contains("inventory") && !value.contains("not");
 	}
 
@@ -26,7 +26,7 @@ class InventoryContainsExpectation implements expectation {
 		return `Inventory: ${this.items.map(i => i.toHex(3)).join(", ")}`;
 	}
 
-	evaluate(ctx: GameplayContext) {
+	evaluate(ctx: GameplayContext): void {
 		it(`hero has items ${this.items.map(i => i.toHex(3)).join(", ")}`, () => {
 			for (const item of this.items) {
 				if (ctx.engine.inventory.contains(item)) continue;

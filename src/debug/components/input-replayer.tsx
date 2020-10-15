@@ -20,19 +20,19 @@ class InputReplayer extends Component {
 		<IconButton icon="fast-forward" onclick={() => this.fastForward()} />
 	) as IconButton;
 
-	public connectedCallback() {
+	protected connectedCallback(): void {
 		super.connectedCallback();
 
 		this.appendChild(this._record);
 		this.appendChild(this._fastForward);
 	}
 
-	public disconnectedCallback() {
+	protected disconnectedCallback(): void {
 		this.stop();
 		super.disconnectedCallback();
 	}
 
-	public load(input: string[]) {
+	public load(input: string[]): void {
 		if (this.isInstalled()) this.uninstall();
 		this._inputManager = new ReplayingInputManager();
 		this._inputManager.input = input;
@@ -66,17 +66,17 @@ class InputReplayer extends Component {
 		this._originalInputManager = null;
 	}
 
-	public isInstalled() {
+	public isInstalled(): boolean {
 		return this._originalInputManager !== null;
 	}
 
-	public start() {
+	public start(): void {
 		this._record.icon = "stop";
 		this._record.onclick = () => this.stop();
 		this.install();
 	}
 
-	public fastForward() {
+	public fastForward(): void {
 		this.gameController.engine.metronome.tickDuration = 1;
 		this._fastForward.icon = "play";
 		this._fastForward.onclick = () => this.normalizeSpeed();
@@ -84,7 +84,7 @@ class InputReplayer extends Component {
 		this.gameController.engine.metronome.start();
 	}
 
-	public normalizeSpeed() {
+	public normalizeSpeed(): void {
 		this.gameController.engine.metronome.tickDuration = DefaultTickDuration;
 		this._fastForward.icon = "fast-forward";
 		this._fastForward.onclick = () => this.fastForward();
@@ -92,7 +92,7 @@ class InputReplayer extends Component {
 		this.gameController.engine.metronome.start();
 	}
 
-	public stop() {
+	public stop(): void {
 		this._record.icon = "play";
 		this._record.onclick = () => this.start();
 		this.uninstall();

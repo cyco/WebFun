@@ -17,7 +17,7 @@ class EditorWindow extends AbstractWindow {
 		<EditorView storage={new PrefixedStorage(localStorage, "save-game-editor")} />
 	) as EditorView;
 
-	protected connectedCallback() {
+	protected connectedCallback(): void {
 		super.connectedCallback();
 		this.content.appendChild(this._progressIndicator);
 	}

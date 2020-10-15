@@ -44,7 +44,7 @@ class SimulationConfigurationBuilder extends Component {
 	private _difficulty: number;
 	private _health: number;
 
-	public connectedCallback() {
+	protected connectedCallback(): void {
 		super.connectedCallback();
 
 		this.appendChild(
@@ -71,12 +71,12 @@ class SimulationConfigurationBuilder extends Component {
 		);
 	}
 
-	public disconnectedCallback() {
+	protected disconnectedCallback(): void {
 		this.textContent = "";
 		super.disconnectedCallback();
 	}
 
-	public get currentZone() {
+	public get currentZone(): Zone {
 		return this._mainPicker.zone || this._gameData.zones[0];
 	}
 
@@ -137,7 +137,7 @@ class SimulationConfigurationBuilder extends Component {
 		this.currentZone = this.currentZone;
 	}
 
-	public get gameData() {
+	public get gameData(): GameData {
 		return this._gameData;
 	}
 
@@ -180,7 +180,7 @@ class SimulationConfigurationBuilder extends Component {
 		};
 	}
 
-	public set state(s) {
+	public set state(s: Storage) {
 		this._state = s;
 		this._mainPicker.state = s.prefixedWith(`main-zone`);
 		this.currentZone = this.currentZone;
@@ -193,7 +193,7 @@ class SimulationConfigurationBuilder extends Component {
 		this._required2Tile.state = s.prefixedWith("goal-tile");
 	}
 
-	public get state() {
+	public get state(): Storage {
 		return this._state;
 	}
 }

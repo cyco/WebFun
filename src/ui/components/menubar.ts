@@ -15,7 +15,7 @@ class Menubar extends AbstractMenuView {
 	private _modalSession: ModalSession;
 	private _registerMouseUpHandler: () => void;
 
-	protected connectedCallback() {
+	protected connectedCallback(): void {
 		super.connectedCallback();
 		this.onmousedown = (e: MouseEvent) => this.startMouseHandling(e);
 	}

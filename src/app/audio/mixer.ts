@@ -69,7 +69,7 @@ class Mixer implements MixerInterface {
 
 	public stop(): void {}
 
-	public get context() {
+	public get context(): AudioContext {
 		return this._context;
 	}
 
@@ -77,7 +77,7 @@ class Mixer implements MixerInterface {
 		this._master.gain.value = v;
 	}
 
-	get volume() {
+	get volume(): number {
 		return this._master.gain.value;
 	}
 }

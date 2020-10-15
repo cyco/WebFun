@@ -11,7 +11,7 @@ class PopoutTilePicker extends AbstractPopoutTilePicker {
 	public tile: Tile;
 	public palette: ColorPalette;
 
-	protected pickerOnChange(_: TilePicker, e: CustomEvent) {
+	protected pickerOnChange(_: TilePicker, e: CustomEvent): void {
 		this.tile = e.detail.tile as Tile;
 		this.dispatchEvent(new CustomEvent("change", { detail: { tile: this.tile }, bubbles: true }));
 	}

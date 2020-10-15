@@ -34,7 +34,7 @@ class ColorWheel extends Component implements EventListenerObject {
 		this.color = new Color(0, 0, 0, 0);
 	}
 
-	protected connectedCallback() {
+	protected connectedCallback(): void {
 		this.appendChild(this._canvas);
 		this.appendChild(this._crosshair);
 
@@ -68,7 +68,7 @@ class ColorWheel extends Component implements EventListenerObject {
 		this._crosshair.style.filter = this._brightness <= 0.5 ? "invert()" : "";
 	}
 
-	public handleEvent(e: Event) {
+	public handleEvent(e: Event): void {
 		if (!(e instanceof MouseEvent)) return;
 
 		if (e.type === "mousedown") {
@@ -154,14 +154,14 @@ class ColorWheel extends Component implements EventListenerObject {
 		ctx.stroke();
 	}
 
-	protected disconnectedCallback() {
+	protected disconnectedCallback(): void {
 		this._canvas.remove();
 		this.removeEventListener("mousedown", this);
 
 		this.textContent = "";
 	}
 
-	public attributeChangedCallback(attr: string, _: string, newValue: string) {
+	public attributeChangedCallback(attr: string, _: string, newValue: string): void {
 		if (attr === "color") this.color = newValue;
 	}
 

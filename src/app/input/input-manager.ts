@@ -48,17 +48,17 @@ class InputManager implements InputManagerInterface, EventListenerObject {
 		this.inputManagers.forEach(i => i.clear());
 	}
 
-	public addListeners() {
+	public addListeners(): void {
 		this.gameViewElement.addEventListener("contextmenu", this);
 		this.inputManagers.forEach(i => i.addListeners());
 	}
 
-	public handleEvent(event: MouseEvent) {
+	public handleEvent(event: MouseEvent): void {
 		event.stopPropagation();
 		event.preventDefault();
 	}
 
-	public removeListeners() {
+	public removeListeners(): void {
 		this.gameViewElement.removeEventListener("contextmenu", this);
 		this.inputManagers.forEach(i => i.removeListeners());
 	}
@@ -97,7 +97,7 @@ class InputManager implements InputManagerInterface, EventListenerObject {
 		this.inputManagers.forEach(im => (im.engine = e));
 	}
 
-	get engine() {
+	get engine(): Engine {
 		return this._engine;
 	}
 
@@ -105,7 +105,7 @@ class InputManager implements InputManagerInterface, EventListenerObject {
 		this.inputManagers.forEach(i => (i.mouseDownHandler = h));
 	}
 
-	public get mouseDownHandler() {
+	public get mouseDownHandler(): (_: Point) => void {
 		return this.inputManagers.first().mouseDownHandler;
 	}
 
@@ -113,7 +113,7 @@ class InputManager implements InputManagerInterface, EventListenerObject {
 		this.inputManagers.forEach(i => (i.keyDownHandler = h));
 	}
 
-	public get keyDownHandler() {
+	public get keyDownHandler(): (_: KeyboardEvent) => void {
 		return this.inputManagers.first().keyDownHandler;
 	}
 }

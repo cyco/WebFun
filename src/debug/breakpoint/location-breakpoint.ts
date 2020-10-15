@@ -12,7 +12,7 @@ class LocationBreakpoint extends Breakpoint {
 		if (idx !== null) this._path.push(idx);
 	}
 
-	get id() {
+	get id(): string {
 		return `@${this._path.join(":")}`;
 	}
 }

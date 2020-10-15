@@ -73,7 +73,7 @@ class WorldView extends Component {
 		}
 	}
 
-	public disconnectedCallback() {
+	protected disconnectedCallback(): void {
 		super.disconnectedCallback();
 	}
 }

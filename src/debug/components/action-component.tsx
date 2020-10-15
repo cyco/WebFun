@@ -24,11 +24,11 @@ class ActionComponent extends Component {
 	public checker: ConditionChecker;
 	public variableMap: any;
 
-	get action() {
+	get action(): Action {
 		return this._action;
 	}
 
-	set action(action) {
+	set action(action: Action) {
 		this._action = action;
 
 		this.appendChild(
@@ -82,33 +82,36 @@ class ActionComponent extends Component {
 		this._append(")", "paren-close");
 	}
 
-	get current() {
+	get current(): boolean {
 		return this.hasAttribute("current");
 	}
 
-	set current(flag) {
+	set current(flag: boolean) {
 		if (flag) this.setAttribute("current", "");
 		else this.removeAttribute("current");
 	}
 
-	get _storageId() {
+	get _storageId(): string {
 		return `debug.action.expanded.${this.zone}.${this.index}`;
 	}
 
-	public evaluateConditions() {
+	public async evaluateConditions(): Promise<void> {
 		let checker = this.checker;
 		if (!checker) checker = this.checker = new ConditionChecker(ConditionImplementations, this.engine);
 
-		this.querySelectorAll(ConditionComponent.tagName).forEach(async (condition: ConditionComponent) => {
+		const conditions: ConditionComponent[] = Array.from(
+			this.querySelectorAll(ConditionComponent.tagName)
+		);
+		for (const condition of conditions) {
 			if (await checker.check(condition.condition, EvaluationMode.Walk, this._action.zone)) {
 				condition.setAttribute("truthy", "");
 			} else {
 				condition.removeAttribute("truthy");
 			}
-		});
+		}
 	}
 
-	protected _append(thing: string | Element | Element[], className: string) {
+	protected _append(thing: string | Element | Element[], className: string): Element {
 		const element = <span className={className} />;
 		if (typeof thing === "string") element.innerText = thing;
 		else if (thing instanceof Element) {

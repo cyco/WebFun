@@ -33,12 +33,12 @@ class SidebarCell extends Component {
 		this._header.appendChild(this._newButton);
 	}
 
-	protected connectedCallback() {
+	protected connectedCallback(): void {
 		super.connectedCallback();
 		this.insertBefore(this._header, this.firstElementChild);
 	}
 
-	protected disconnectedCallback() {
+	protected disconnectedCallback(): void {
 		this._header.remove();
 		super.disconnectedCallback();
 	}
@@ -47,11 +47,11 @@ class SidebarCell extends Component {
 		this._header.firstElementChild.textContent = name;
 	}
 
-	public get name() {
+	public get name(): string {
 		return this._header.firstElementChild.textContent;
 	}
 
-	public set state(state) {
+	public set state(state: Storage) {
 		this._state = state;
 
 		if (state.load("expanded")) {
@@ -59,7 +59,7 @@ class SidebarCell extends Component {
 		}
 	}
 
-	public get state() {
+	public get state(): Storage {
 		return this._state;
 	}
 

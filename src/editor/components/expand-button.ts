@@ -16,7 +16,7 @@ class ExpandButton extends AbstractIconButton {
 		this.onclick = () => this.toggle();
 	}
 
-	public toggle() {
+	public toggle(): void {
 		if (this.expandableElement.classList.contains("expanded")) {
 			this.collapse();
 		} else {
@@ -24,7 +24,7 @@ class ExpandButton extends AbstractIconButton {
 		}
 	}
 
-	public expand() {
+	public expand(): void {
 		if (this.expandableElement.classList.contains("expanded")) {
 			return;
 		}
@@ -34,7 +34,7 @@ class ExpandButton extends AbstractIconButton {
 		if (this.ontoggle instanceof Function) this.ontoggle();
 	}
 
-	public collapse() {
+	public collapse(): void {
 		if (!this.expandableElement.classList.contains("expanded")) {
 			return;
 		}

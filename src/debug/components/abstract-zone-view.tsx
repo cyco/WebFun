@@ -8,7 +8,7 @@ import { drawZoneImageData } from "src/app/rendering/canvas";
 abstract class AbstractZoneView extends AbstractPaletteView {
 	private _zone: Zone;
 
-	public draw() {
+	public draw(): void {
 		if (!this.palette) return;
 		const context = this._canvas.getContext("2d");
 		context.clearRect(0, 0, this._canvas.width, this._canvas.height);
@@ -26,7 +26,7 @@ abstract class AbstractZoneView extends AbstractPaletteView {
 		this.draw();
 	}
 
-	public get zone() {
+	public get zone(): Zone {
 		return this._zone;
 	}
 }

@@ -13,13 +13,13 @@ class SectorPreview extends Component {
 	private _zonePreview: ZoneView = (<ZoneView />) as ZoneView;
 	private _sectorDetails: HTMLElement = (<div />);
 
-	connectedCallback() {
+	protected connectedCallback(): void {
 		super.connectedCallback();
 		this.appendChild(this._zonePreview);
 		this.appendChild(this._sectorDetails);
 	}
 
-	disconnectedCallback() {
+	protected disconnectedCallback(): void {
 		this.removeChild(this._sectorDetails);
 		this.removeChild(this._zonePreview);
 		super.disconnectedCallback();
@@ -87,7 +87,7 @@ class SectorPreview extends Component {
 		this._zonePreview.palette = p;
 	}
 
-	public get palette() {
+	public get palette(): ColorPalette {
 		return this._zonePreview.palette;
 	}
 }

@@ -3,7 +3,7 @@ import { Renderer } from "src/engine/rendering";
 import { Point, rgba } from "src/util";
 import CanvasRenderer from "src/app/rendering/canvas/canvas-renderer";
 
-export default (renderer: Renderer, hotspots: Hotspot[], offset: Point) => {
+export default (renderer: Renderer, hotspots: Hotspot[], offset: Point): void => {
 	if (!(renderer.fillRect instanceof Function)) return;
 
 	let c = 0;

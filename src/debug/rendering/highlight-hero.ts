@@ -2,7 +2,7 @@ import { Renderer } from "src/engine/rendering";
 import { Point, rgba } from "src/util";
 import { Tile } from "src/engine/objects";
 
-export default (renderer: Renderer, hero: Point, offset: Point) => {
+export default (renderer: Renderer, hero: Point, offset: Point): void => {
 	if (!(renderer.fillRect instanceof Function)) return;
 
 	renderer.fillRect(

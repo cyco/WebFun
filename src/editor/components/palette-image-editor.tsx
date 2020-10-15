@@ -8,12 +8,12 @@ class PaletteImageEditor extends AbstractPaletteView {
 	public static readonly tagName = "wf-editor-palette-image-editor";
 	public colorIndex: number = 0;
 
-	protected connectedCallback() {
+	protected connectedCallback(): void {
 		super.connectedCallback();
 		this.addEventListener("mousedown", this);
 	}
 
-	public handleEvent(e: MouseEvent) {
+	public handleEvent(e: MouseEvent): void {
 		if (e.which !== 1) return;
 
 		if (e.type === "mouseup") {
@@ -48,7 +48,7 @@ class PaletteImageEditor extends AbstractPaletteView {
 		this.redraw(pointInColors);
 	}
 
-	protected disconnectedCallback() {
+	protected disconnectedCallback(): void {
 		document.removeEventListener("mousemove", this);
 		document.removeEventListener("mouseup", this);
 		this.removeEventListener("mousedown", this);

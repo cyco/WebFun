@@ -25,25 +25,25 @@ class EditorWindow extends AbstractWindow {
 	private _progressIndicator: HTMLElement = (<ProgressIndicator />);
 	private _editor: EditorView = null;
 
-	protected connectedCallback() {
+	protected connectedCallback(): void {
 		super.connectedCallback();
 		this.content.appendChild(this._progressIndicator);
 	}
 
-	public async loadFile(file: File) {
+	public async loadFile(file: File): Promise<void> {
 		const stream = await file.provideInputStream();
 		const type = file.name.toLowerCase().indexOf("yod") === -1 ? GameTypeIndy : GameTypeYoda;
 		await this.loadStream(stream, type);
 	}
 
-	public async loadStream(stream: InputStream, type: GameType) {
+	public async loadStream(stream: InputStream, type: GameType): Promise<void> {
 		const rawData = readGameDataFile(stream, type);
 		const data = new GameData(rawData);
 		(data as any)._type = type;
 		await this.loadGameData(data);
 	}
 
-	public async loadGameData(data: GameData) {
+	public async loadGameData(data: GameData): Promise<void> {
 		const palette = await new PaletteProvider().provide(data.type);
 
 		this._gotoFullscreen();
@@ -81,7 +81,7 @@ class EditorWindow extends AbstractWindow {
 		this.menu = new Menu(menuItems);
 	}
 
-	public get editor() {
+	public get editor(): EditorView {
 		return this._editor;
 	}
 }

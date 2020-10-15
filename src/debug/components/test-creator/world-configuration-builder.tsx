@@ -41,7 +41,7 @@ class WorldConfigurationBuilder extends Component {
 	private _difficulty: number;
 	private _health: number;
 
-	public connectedCallback() {
+	protected connectedCallback(): void {
 		super.connectedCallback();
 
 		this.append(
@@ -94,7 +94,7 @@ class WorldConfigurationBuilder extends Component {
 		};
 	}
 
-	public set state(s) {
+	public set state(s: Storage) {
 		this._state = s;
 		this._seed.value = s.load("seed") || (0).toHex(4);
 		this._planet.value = s.load("planet") || Planet.Tatooine.rawValue;
@@ -102,7 +102,7 @@ class WorldConfigurationBuilder extends Component {
 		this._gamesWon.value = s.load("gamesWon") || "0";
 	}
 
-	public get state() {
+	public get state(): Storage {
 		return this._state;
 	}
 }

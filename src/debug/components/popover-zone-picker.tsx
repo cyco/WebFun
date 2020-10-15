@@ -19,13 +19,13 @@ class PopoverZonePicker extends Component implements EventListenerObject {
 	private _state: Storage = new DiscardingStorage();
 	public zones: Zone[];
 
-	public connectedCallback() {
+	protected connectedCallback(): void {
 		super.connectedCallback();
 		this.appendChild(this._canvas);
 		this.addEventListener("click", this);
 	}
 
-	public handleEvent(e: MouseEvent) {
+	public handleEvent(e: MouseEvent): void {
 		if (this.disabled) return;
 
 		const { left, top } = this.getBoundingClientRect();
@@ -57,12 +57,12 @@ class PopoverZonePicker extends Component implements EventListenerObject {
 		e.stopPropagation();
 	}
 
-	protected pickerOnChange(_: ZonePicker, e: CustomEvent) {
+	protected pickerOnChange(_: ZonePicker, e: CustomEvent): void {
 		this.zone = e.detail.zone as Zone;
 		this.dispatchEvent(new CustomEvent("change", { detail: { zone: this.zone }, bubbles: true }));
 	}
 
-	public disconnectedCallback() {
+	protected disconnectedCallback(): void {
 		this._canvas.remove();
 		this.removeEventListener("click", this);
 		super.disconnectedCallback();
@@ -84,37 +84,37 @@ class PopoverZonePicker extends Component implements EventListenerObject {
 		context.putImageData(imageData, 0, 0);
 	}
 
-	public set state(s) {
+	public set state(s: Storage) {
 		this._state = s;
 
 		const zone = this.zones[this.state.load("zone")];
 		if (zone) this.zone = zone;
 	}
 
-	public get state() {
+	public get state(): Storage {
 		return this._state;
 	}
 
-	public set palette(p) {
+	public set palette(p: ColorPalette) {
 		this._palette = p;
 		this.redraw();
 	}
 
-	public get palette() {
+	public get palette(): ColorPalette {
 		return this._palette;
 	}
 
-	public set zone(z) {
+	public set zone(z: Zone) {
 		this._zone = z;
 		this.state.store("zone", z ? z.id : null);
 		this.redraw();
 	}
 
-	public get zone() {
+	public get zone(): Zone {
 		return this._zone;
 	}
 
-	public get filteredZones() {
+	public get filteredZones(): Zone[] {
 		if (!this.filter) return this.zones;
 		return this.zones.filter(z => this.filter(z));
 	}
@@ -124,7 +124,7 @@ class PopoverZonePicker extends Component implements EventListenerObject {
 		else this.removeAttribute("disabled");
 	}
 
-	public get disabled() {
+	public get disabled(): boolean {
 		return this.hasAttribute("disabled");
 	}
 }

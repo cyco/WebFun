@@ -14,7 +14,7 @@ class ZoneView extends Component implements EventListenerObject {
 	private _zone: Zone;
 	public palette: ColorPalette;
 
-	protected connectedCallback() {
+	protected connectedCallback(): void {
 		super.connectedCallback();
 		this.addEventListener("click", this);
 		this.appendChild(this._canvas);
@@ -24,7 +24,7 @@ class ZoneView extends Component implements EventListenerObject {
 		this.redraw();
 	}
 
-	protected disconnectedCallback() {
+	protected disconnectedCallback(): void {
 		this.removeEventListener("click", this);
 		super.disconnectedCallback();
 	}

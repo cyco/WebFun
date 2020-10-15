@@ -36,7 +36,7 @@ class KeyboardInputManager implements InputManager {
 		document.addEventListener("keyup", this);
 	}
 
-	handleEvent(event: KeyboardEvent) {
+	handleEvent(event: KeyboardEvent): void {
 		if (
 			event.target instanceof HTMLInputElement ||
 			event.target instanceof HTMLTextAreaElement ||

@@ -18,11 +18,11 @@ class MonsterLayer extends Component {
 	public characters: Char[] = [];
 	private _zone: Zone = null;
 
-	protected connectedCallback() {
+	protected connectedCallback(): void {
 		this.draw();
 	}
 
-	public update(_: Point[]) {
+	public update(_: Point[]): void {
 		this.draw();
 	}
 
@@ -62,7 +62,7 @@ class MonsterLayer extends Component {
 		if (this.isConnected) this.draw();
 	}
 
-	get zone() {
+	get zone(): Zone {
 		return this._zone;
 	}
 

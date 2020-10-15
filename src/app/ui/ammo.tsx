@@ -8,7 +8,7 @@ class Ammo extends Component {
 	private _indicator: HTMLDivElement = (<div className="value" />) as HTMLDivElement;
 	private _value: number = -1;
 
-	get ammo() {
+	get ammo(): number {
 		return this._value;
 	}
 
@@ -22,7 +22,7 @@ class Ammo extends Component {
 		this._value = value;
 	}
 
-	protected connectedCallback() {
+	protected connectedCallback(): void {
 		super.connectedCallback();
 
 		this.appendChild(this._background);

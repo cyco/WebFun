@@ -5,7 +5,6 @@ import World from "src/engine/world";
 import { WorldSize } from "src/engine/types";
 import { srand, randmod } from "src/util";
 import RoomIterator from "src/engine/room-iterator";
-import * as Type from "src/engine/types";
 
 class SimulatedStory extends Story {
 	private readonly assets: AssetManager;
@@ -133,11 +132,11 @@ class SimulatedStory extends Story {
 		this.goal = assets.get(Puzzle, 0);
 	}
 
-	set world(w) {
+	set world(w: World) {
 		this._world = w;
 	}
 
-	get world() {
+	get world(): World {
 		return this._world;
 	}
 }

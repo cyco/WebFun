@@ -77,7 +77,7 @@ abstract class AbstractDrawingTool extends AbstractTool implements EventListener
 		this._mouseMoved(event);
 	}
 
-	protected _mousePressed(event: MouseEvent) {
+	protected _mousePressed(event: MouseEvent): void {
 		const tilePoint = this.extractTileCoordinates(event);
 		if (!tilePoint) return;
 		this._currentTile = tilePoint;
@@ -91,7 +91,7 @@ abstract class AbstractDrawingTool extends AbstractTool implements EventListener
 		event.stopImmediatePropagation();
 	}
 
-	protected _mouseMoved(event: MouseEvent) {
+	protected _mouseMoved(event: MouseEvent): void {
 		const tilePoint = this.extractTileCoordinates(event);
 		if (!tilePoint) return;
 		if (this._currentTile.isEqualTo(tilePoint)) return;
@@ -104,7 +104,7 @@ abstract class AbstractDrawingTool extends AbstractTool implements EventListener
 		event.stopImmediatePropagation();
 	}
 
-	protected _mouseReleased(event: MouseEvent) {
+	protected _mouseReleased(event: MouseEvent): void {
 		this.finalize(this._currentTile);
 
 		this._isApplying = false;
@@ -117,7 +117,7 @@ abstract class AbstractDrawingTool extends AbstractTool implements EventListener
 		event.stopImmediatePropagation();
 	}
 
-	protected extractTileCoordinates(event: MouseEvent) {
+	protected extractTileCoordinates(event: MouseEvent): Point {
 		const zone = this.zone;
 
 		const offset = event.offsetIn(this.canvas);
@@ -128,11 +128,11 @@ abstract class AbstractDrawingTool extends AbstractTool implements EventListener
 		return point;
 	}
 
-	set tile(t) {
+	set tile(t: Tile) {
 		this._tile = t;
 	}
 
-	get tile() {
+	get tile(): Tile {
 		return this._tile;
 	}
 }

@@ -27,16 +27,16 @@ class EditorView extends Component {
 		}
 	}
 
-	addInspector(name: string, inspector: AbstractInspector) {
+	addInspector(name: string, inspector: AbstractInspector): void {
 		inspector.windowManager = this._windowManager;
 		this._inspectors[name] = inspector;
 	}
 
-	public show(key: string) {
+	public show(key: string): void {
 		this._windowManager.asDefaultManager(() => this._inspectors[key].show());
 	}
 
-	public save() {
+	public save(): void {
 		const serializer = new GameDataSerializer();
 		const sizeCalculationStream = new DiscardingOutputStream();
 		serializer.serialize(this.data.currentData, sizeCalculationStream);
@@ -46,7 +46,7 @@ class EditorView extends Component {
 		download(outputStream.buffer, "yoda.data");
 	}
 
-	public async load() {
+	public async load(): Promise<void> {
 		const filePicker = new FilePicker();
 		const [file] = await filePicker.pickFile();
 		if (!file) return;
@@ -54,9 +54,9 @@ class EditorView extends Component {
 		await this.loadFile(file);
 	}
 
-	public async loadFile(_: File) {}
+	public async loadFile(_: File): Promise<void> {}
 
-	public async loadSaveGame() {
+	public async loadSaveGame(): Promise<void> {
 		const filePicker = new FilePicker();
 		const [file] = await filePicker.pickFile();
 		if (!file) return;
@@ -64,12 +64,12 @@ class EditorView extends Component {
 		this.loadSaveGameFile(file);
 	}
 
-	public async loadSaveGameFile(file: File) {
+	public async loadSaveGameFile(file: File): Promise<void> {
 		const stream = await file.provideInputStream();
 		await this.loadSaveGameStream(stream);
 	}
 
-	public async loadSaveGameStream(stream: InputStream) {
+	public async loadSaveGameStream(stream: InputStream): Promise<void> {
 		const { type, read } = SaveGameReader.build(stream);
 		if (type !== this.data.type) {
 			console.log("Save game does not match current game type!");
@@ -91,22 +91,22 @@ class EditorView extends Component {
 		this.show("save-game");
 	}
 
-	get data() {
+	get data(): DataManager {
 		return this._data;
 	}
 
-	set data(dm) {
+	set data(dm: DataManager) {
 		this._data = dm;
 		this._inspectors.each<AbstractInspector>((_: string, inspector: AbstractInspector): void => {
 			inspector.data = dm;
 		});
 	}
 
-	get inspectors() {
+	get inspectors(): AbstractInspector[] {
 		return Object.values(this._inspectors) as AbstractInspector[];
 	}
 
-	get windowManager() {
+	get windowManager(): WindowManager {
 		return this._windowManager;
 	}
 }

@@ -1,7 +1,7 @@
 import { ColorPalette } from "src/engine";
 import { Size } from "src/util";
 
-export default (pixels: Uint8Array, { width, height }: Size, palette: ColorPalette) => {
+export default (pixels: Uint8Array, { width, height }: Size, palette: ColorPalette): ImageData => {
 	const result = new ImageData(width, height);
 
 	const buffer = new ArrayBuffer(result.data.length);

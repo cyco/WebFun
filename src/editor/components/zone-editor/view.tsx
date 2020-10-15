@@ -9,7 +9,8 @@ import Layer from "./layer";
 import LayerComponent from "./zone-layer";
 import MonsterLayerComponent from "./monster-layer";
 import { Point } from "src/util";
-import { Zone, Tile } from "src/engine/objects";
+import { Zone, Tile, Char } from "src/engine/objects";
+import { ColorPalette } from "src/engine";
 
 class View extends Component implements EventListenerObject {
 	public static readonly tagName = "wf-zone-editor-view";
@@ -38,7 +39,7 @@ class View extends Component implements EventListenerObject {
 		this.tool = new NoTool();
 	}
 
-	protected connectedCallback() {
+	protected connectedCallback(): void {
 		this.appendChild(this._floor);
 		this.appendChild(this._objects);
 		this.appendChild(this._roof);
@@ -48,7 +49,7 @@ class View extends Component implements EventListenerObject {
 		this._overlay.addEventListener("contextmenu", this);
 	}
 
-	public handleEvent(event: MouseEvent) {
+	public handleEvent(event: MouseEvent): void {
 		if (event.type === "contextmenu") {
 			event.preventDefault();
 
@@ -64,7 +65,7 @@ class View extends Component implements EventListenerObject {
 		}
 	}
 
-	protected extractTileCoordinates(event: MouseEvent) {
+	protected extractTileCoordinates(event: MouseEvent): Point {
 		const zone = this.zone;
 
 		const offset = event.offsetIn(this);
@@ -75,7 +76,7 @@ class View extends Component implements EventListenerObject {
 		return point;
 	}
 
-	protected disconnectedCallback() {
+	protected disconnectedCallback(): void {
 		this._overlay.removeEventListener("contextmenu", this);
 		this._floor.remove();
 		this._objects.remove();
@@ -105,7 +106,7 @@ class View extends Component implements EventListenerObject {
 		if (this._tool) this._tool.activate(this._zone, this._overlay);
 	}
 
-	get zone() {
+	get zone(): Zone {
 		return this._zone;
 	}
 
@@ -122,11 +123,11 @@ class View extends Component implements EventListenerObject {
 		}
 	}
 
-	get tool() {
+	get tool(): AbstractTool {
 		return this._tool;
 	}
 
-	public setLayerVisible(layer: Layer, flag: boolean) {
+	public setLayerVisible(layer: Layer, flag: boolean): void {
 		const layerNode = this.nodeForLayer(layer.id);
 		layerNode.style.display = flag ? "" : "none";
 	}
@@ -161,7 +162,7 @@ class View extends Component implements EventListenerObject {
 		return this._currentLayer;
 	}
 
-	public set palette(p) {
+	public set palette(p: ColorPalette) {
 		this._hotspots.palette = p;
 		this._monsters.palette = p;
 		this._floor.palette = p;
@@ -169,23 +170,23 @@ class View extends Component implements EventListenerObject {
 		this._objects.palette = p;
 	}
 
-	public get palette() {
+	public get palette(): ColorPalette {
 		return this._floor.palette;
 	}
 
-	public set characters(c) {
+	public set characters(c: Char[]) {
 		this._monsters.characters = c;
 	}
 
-	public get characters() {
+	public get characters(): Char[] {
 		return this._monsters.characters;
 	}
 
-	public set tiles(t) {
+	public set tiles(t: Tile[]) {
 		this._monsters.tiles = t;
 	}
 
-	public get tiles() {
+	public get tiles(): Tile[] {
 		return this._monsters.tiles;
 	}
 }

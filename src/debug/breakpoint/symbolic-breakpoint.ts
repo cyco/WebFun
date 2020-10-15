@@ -11,7 +11,7 @@ class SymbolicBreakpoint extends Breakpoint {
 		this._symbol = symbol;
 	}
 
-	get id() {
+	get id(): string {
 		return `SYM:${this._symbolType}:${this._symbol}`;
 	}
 }

@@ -9,11 +9,11 @@ class Symbol {
 		Symbol.symbols[name] = this;
 	}
 
-	get name() {
+	get name(): string {
 		return this._name;
 	}
 
-	public toString() {
+	public toString(): string {
 		return `Symbol(${this.name})`;
 	}
 }

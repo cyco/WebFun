@@ -60,7 +60,7 @@ class MouseInputManager implements InputManager {
 		this.engine.sceneManager.addOverlay(this._highlight);
 	}
 
-	handleEvent(event: MouseEvent) {
+	handleEvent(event: MouseEvent): void {
 		if (
 			event.target instanceof HTMLInputElement ||
 			event.target instanceof HTMLTextAreaElement ||

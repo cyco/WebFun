@@ -19,7 +19,7 @@ class PickupScene extends Scene {
 		this.engine = engine;
 	}
 
-	willShow() {
+	public willShow(): void {
 		super.willShow();
 
 		this._image = null;
@@ -36,7 +36,7 @@ class PickupScene extends Scene {
 		}
 	}
 
-	async update(ticks: number) {
+	async update(ticks: number): Promise<void> {
 		const engine = this.engine;
 		const input = engine.inputManager.readInput(ticks);
 		if (input & InputMask.PickUp) {
@@ -46,7 +46,7 @@ class PickupScene extends Scene {
 		this._ticks++;
 	}
 
-	willHide() {
+	public willHide(): void {
 		const engine = this.engine;
 		const inventory = engine.inventory;
 
@@ -56,7 +56,7 @@ class PickupScene extends Scene {
 		super.willHide();
 	}
 
-	isOpaque() {
+	public isOpaque(): boolean {
 		return false;
 	}
 }

@@ -10,12 +10,12 @@ class TilePickerCell extends Cell<Tile> {
 	public static readonly observedAttributes: string[] = [];
 	private view: TileView = (<TileView />) as TileView;
 
-	protected connectedCallback() {
+	protected connectedCallback(): void {
 		super.connectedCallback();
 		this.appendChild(this.view);
 	}
 
-	protected disconnectedCallback() {
+	protected disconnectedCallback(): void {
 		this.view.remove();
 		super.disconnectedCallback();
 	}
@@ -40,7 +40,7 @@ class TilePickerCell extends Cell<Tile> {
 		this.view.palette = palette;
 	}
 
-	get palette() {
+	get palette(): ColorPalette {
 		return this.view.palette;
 	}
 }

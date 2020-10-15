@@ -7,7 +7,7 @@ class ProgressBar extends Component {
 	private _indicator: HTMLElement = (<div />);
 	private _value: number = 0;
 
-	connectedCallback() {
+	protected connectedCallback(): void {
 		super.connectedCallback();
 		this.appendChild(this._indicator);
 	}

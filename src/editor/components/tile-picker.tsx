@@ -7,6 +7,7 @@ import TilePickerCell from "./tile-picker-cell";
 
 import { List } from "src/ui/components";
 import { Tile } from "src/engine/objects";
+import { ColorPalette } from "src/engine";
 
 export const Events = {
 	TileDidChange: "TileDidChange"
@@ -37,7 +38,7 @@ class TilePicker extends Component {
 		this._list.showBar(true);
 	}
 
-	protected connectedCallback() {
+	protected connectedCallback(): void {
 		super.connectedCallback();
 
 		this.appendChild(this._list);
@@ -58,13 +59,13 @@ class TilePicker extends Component {
 		this.dispatchEvent(new CustomEvent(Events.TileDidChange, { detail: { tile, index }, bubbles: true }));
 	}
 
-	protected disconnectedCallback() {
+	protected disconnectedCallback(): void {
 		this._list.remove();
 
 		super.disconnectedCallback();
 	}
 
-	set tiles(s) {
+	set tiles(s: Tile[]) {
 		this._tiles = s;
 
 		const tiles = s.slice();
@@ -72,16 +73,16 @@ class TilePicker extends Component {
 		this._list.items = tiles;
 	}
 
-	get tiles() {
+	get tiles(): Tile[] {
 		return this._tiles;
 	}
 
-	set palette(p) {
+	set palette(p: ColorPalette) {
 		const cell = this._list.cell as TilePickerCell;
 		cell.palette = p;
 	}
 
-	get palette() {
+	get palette(): ColorPalette {
 		const cell = this._list.cell as TilePickerCell;
 		return cell.palette;
 	}
@@ -90,7 +91,7 @@ class TilePicker extends Component {
 		this._tile = tile;
 	}
 
-	get tile() {
+	get tile(): Tile {
 		return this._tile;
 	}
 
@@ -98,7 +99,7 @@ class TilePicker extends Component {
 		this._list.state = s.prefixedWith("list");
 	}
 
-	get state() {
+	get state(): Storage {
 		return this._list.state;
 	}
 }

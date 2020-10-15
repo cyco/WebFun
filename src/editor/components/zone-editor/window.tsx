@@ -87,7 +87,7 @@ class Window extends AbstractPanel {
 		);
 	}
 
-	protected connectedCallback() {
+	protected connectedCallback(): void {
 		super.connectedCallback();
 
 		this.content.appendChild(this._sidebar);
@@ -101,12 +101,12 @@ class Window extends AbstractPanel {
 			.forEach((t: AbstractDrawingTool) => (t.tile = tile));
 	}
 
-	public show() {
+	public show(): void {
 		this._state.store("visible", true);
 		this.manager.showWindow(this);
 	}
 
-	public close() {
+	public close(): void {
 		super.close();
 		this._state.store("visible", false);
 	}
@@ -142,7 +142,7 @@ class Window extends AbstractPanel {
 		return (<ActionComponent action={a} />) as ActionComponent;
 	}
 
-	set state(state) {
+	set state(state: Storage) {
 		this._state = state;
 
 		this.pinned = state.load("pinned");
@@ -154,7 +154,7 @@ class Window extends AbstractPanel {
 		if (state.load("visible")) this.show();
 	}
 
-	get state() {
+	get state(): Storage {
 		return this._state;
 	}
 
@@ -167,11 +167,11 @@ class Window extends AbstractPanel {
 		this._editor.zone = zone;
 	}
 
-	get zone() {
+	get zone(): Zone {
 		return this._zone;
 	}
 
-	public set data(d) {
+	public set data(d: DataManager) {
 		this._data = d;
 		this._editor.palette = d.palette;
 		this._editor.characters = d.currentData.characters;
@@ -181,7 +181,7 @@ class Window extends AbstractPanel {
 		this._tilePicker.tiles = this._data.currentData.tiles;
 	}
 
-	public get data() {
+	public get data(): DataManager {
 		return this._data;
 	}
 }

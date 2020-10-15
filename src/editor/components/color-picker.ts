@@ -27,7 +27,7 @@ class ColorPicker extends Component {
 		this._buildColorPreview();
 	}
 
-	protected connectedCallback() {
+	protected connectedCallback(): void {
 		super.connectedCallback();
 		const container = document.createElement(Group.tagName);
 		container.appendChild(this._wheel);
@@ -43,7 +43,7 @@ class ColorPicker extends Component {
 		this.color = this._color;
 	}
 
-	protected disconnectedCallback() {
+	protected disconnectedCallback(): void {
 		this.textContent = "";
 		super.disconnectedCallback();
 	}
@@ -103,7 +103,7 @@ class ColorPicker extends Component {
 		this.dispatchEvent(new CustomEvent("change"));
 	}
 
-	public attributeChangedCallback(attr: string, oldValue: string, newValue: string) {
+	public attributeChangedCallback(attr: string, oldValue: string, newValue: string): void {
 		if (attr === "color" && oldValue !== newValue) this.color = newValue;
 	}
 
@@ -115,7 +115,7 @@ class ColorPicker extends Component {
 		this._rgbPreview.style.backgroundColor = `rgb(${r},${g},${b})`;
 	}
 
-	get color() {
+	get color(): string | Color {
 		return this._color;
 	}
 

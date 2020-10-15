@@ -29,7 +29,7 @@ class ArgumentProcessor {
 		return container;
 	}
 
-	enrichArguments(thing: Element, argumentTypes: Type[]) {
+	enrichArguments(thing: Element, argumentTypes: Type[]): void {
 		const argumentNodes = this.collectArgumentNodes(thing, argumentTypes.length);
 
 		for (let i = 0; i < argumentTypes.length; i++) {

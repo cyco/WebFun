@@ -14,7 +14,7 @@ abstract class AbstractTileView extends AbstractPaletteView {
 		this._canvas.height = Tile.HEIGHT;
 	}
 
-	public draw() {
+	public draw(): void {
 		if (!this.palette) return;
 		const context = this._canvas.getContext("2d");
 		context.clearRect(0, 0, Tile.WIDTH, Tile.HEIGHT);
@@ -29,7 +29,7 @@ abstract class AbstractTileView extends AbstractPaletteView {
 		this.draw();
 	}
 
-	public get tile() {
+	public get tile(): Tile {
 		return this._tile;
 	}
 }

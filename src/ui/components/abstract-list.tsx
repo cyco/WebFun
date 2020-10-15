@@ -31,7 +31,7 @@ abstract class AbstractList<T> extends Component {
 	private _closeSearchbarShortcut: Shortcut;
 	private _state: Storage = new DiscardingStorage();
 
-	protected connectedCallback() {
+	protected connectedCallback(): void {
 		if (this.searchDelegate && !this._bar.parentElement)
 			this.insertBefore(this._bar, this.firstElementChild);
 
@@ -85,7 +85,7 @@ abstract class AbstractList<T> extends Component {
 		this.refilter();
 	}
 
-	protected disconnectedCallback() {
+	protected disconnectedCallback(): void {
 		this._bar.remove();
 		this.hideBar(false);
 

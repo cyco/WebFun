@@ -17,17 +17,17 @@ abstract class AbstractPaletteView extends Component {
 	private ctx: CanvasRenderingContext2D = this.canvas.getContext("2d");
 	private imageData: ImageData = null;
 
-	protected connectedCallback() {
+	protected connectedCallback(): void {
 		this.appendChild(this.canvas);
 		this.redraw();
 	}
 
-	protected get pixelSize() {
+	protected get pixelSize(): Size {
 		const { width: totalWidth, height: totalHeight } = this.canvas.getBoundingClientRect();
 		return new Size(totalWidth / this.size.width, totalHeight / this.size.height);
 	}
 
-	public redraw(_: Point = null) {
+	public redraw(_: Point = null): void {
 		if (!this.ctx) return;
 		if (!this.size) return;
 		if (!this.palette) return;
@@ -37,39 +37,39 @@ abstract class AbstractPaletteView extends Component {
 		this.ctx.putImageData(this.imageData, 0, 0);
 	}
 
-	public get renderedImage() {
+	public get renderedImage(): ImageData {
 		return this.imageData;
 	}
 
-	set size(s) {
+	set size(s: Size) {
 		this._size = s;
 		this.canvas.width = s.width;
 		this.canvas.height = s.height;
 	}
 
-	get size() {
+	get size(): Size {
 		return this._size;
 	}
 
-	set palette(p) {
+	set palette(p: ColorPalette) {
 		this._palette = p;
 		this.redraw();
 	}
 
-	get palette() {
+	get palette(): ColorPalette {
 		return this._palette;
 	}
 
-	set image(p) {
+	set image(p: Uint8Array) {
 		this._image = p;
 		this.redraw();
 	}
 
-	get image() {
+	get image(): Uint8Array {
 		return this._image;
 	}
 
-	get imageDataURL() {
+	get imageDataURL(): string {
 		return this.canvas.toDataURL();
 	}
 }

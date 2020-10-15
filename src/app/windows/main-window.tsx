@@ -32,8 +32,8 @@ class MainWindow extends AbstractWindow {
 	};
 	private cache: Map<string, Element> = new Map();
 	private _menu: FullscreenMenu = null;
-	autosaveName = "main-window";
-	onclose = () => this._engine && this._engine.metronome.stop();
+	autosaveName: string = "main-window";
+	onclose: () => void = () => this._engine && this._engine.metronome.stop();
 
 	constructor() {
 		super();
@@ -79,7 +79,7 @@ class MainWindow extends AbstractWindow {
 		return this._engine;
 	}
 
-	set engine(e) {
+	set engine(e: Engine) {
 		if (this._engine) {
 			const hero = this._engine.hero;
 			this._handlers.each((event: any, handler: any) =>
@@ -130,7 +130,7 @@ class MainWindow extends AbstractWindow {
 		this.applyCurrentValues();
 	}
 
-	disconnectedCallback() {
+	protected disconnectedCallback(): void {
 		this.cache = new Map();
 		super.disconnectedCallback();
 	}
@@ -212,7 +212,7 @@ class MainWindow extends AbstractWindow {
 		this.weapon.weapon = engine ? engine.hero.weapon : null;
 	}
 
-	get mainContent() {
+	get mainContent(): Element {
 		return this.content.querySelector(".main");
 	}
 
@@ -257,15 +257,15 @@ class MainWindow extends AbstractWindow {
 		healthView.health = this._engine.hero.health;
 	}
 
-	public get inventory() {
+	public get inventory(): InventoryComponent {
 		return this.querySelectorCache(InventoryComponent.tagName) as InventoryComponent;
 	}
 
-	public get weapon() {
+	public get weapon(): Weapon {
 		return this.querySelectorCache(Weapon.tagName) as Weapon;
 	}
 
-	public get ammo() {
+	public get ammo(): Ammo {
 		return this.querySelectorCache(Ammo.tagName) as Ammo;
 	}
 

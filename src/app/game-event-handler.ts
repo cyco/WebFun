@@ -14,7 +14,7 @@ import { Channel } from "src/engine/audio";
 import { Yoda } from "src/engine/type";
 
 class GameEventHandler {
-	public handleEvent(engine: Engine, sceneView: SceneView, evt: CustomEvent) {
+	public handleEvent(engine: Engine, sceneView: SceneView, evt: CustomEvent): void {
 		switch (evt.type) {
 			case Hero.Event.HealthDidChange: {
 				if (engine.hero.health > 0) {

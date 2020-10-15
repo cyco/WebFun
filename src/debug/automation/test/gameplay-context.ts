@@ -1,13 +1,13 @@
 import { ComponentRegistry } from "src/ui";
 
 import { ReplayingInputManager } from "src/debug/automation";
-import { Yoda } from "src/engine/type";
+import { GameType, Yoda } from "src/engine/type";
 import { ZoneScene } from "src/engine/scenes";
 import { CanvasRenderer } from "src/app/rendering";
 import { SceneView } from "src/app/ui";
 import { GameData, Engine, Story, AssetManager } from "src/engine";
 import { Planet, WorldSize } from "src/engine/types";
-import { Tile, Zone, Puzzle, Sound, Char, Action, Condition, Instruction } from "src/engine/objects";
+import { Tile, Zone, Puzzle, Sound, Char, Action } from "src/engine/objects";
 import { PaletteAnimation, ColorPalette } from "src/engine/rendering";
 import { Renderer as DummyRenderer } from "src/engine/dummy-interface";
 import Settings from "src/settings";
@@ -29,7 +29,7 @@ class GameplayContext {
 		this.debug = debug;
 	}
 
-	public async prepare(loadGameData: any) {
+	public async prepare(loadGameData: (_: GameType) => Promise<any>): Promise<void> {
 		if (rawData) {
 			return;
 		}
@@ -41,7 +41,7 @@ class GameplayContext {
 		paletteData = ColorPalette.FromBGR8Buffer(await getFixtureData("yoda.pal"));
 	}
 
-	public buildEngine() {
+	public buildEngine(): void {
 		this.sceneView = document.createElement(SceneView.tagName);
 		this.inputManager = new ReplayingInputManager();
 		this.engine = new Engine(Yoda, {
@@ -129,12 +129,18 @@ class GameplayContext {
 		return assets;
 	}
 
-	public async playNewStory(seed: number, planet: Planet, size: WorldSize, input: string[], debug = false) {
+	public async playNewStory(
+		seed: number,
+		planet: Planet,
+		size: WorldSize,
+		input: string[],
+		debug = false
+	): Promise<void> {
 		const story = new Story(seed, planet, size);
 		return await this.playStory(story, input, debug);
 	}
 
-	public setupEngine(story: Story, input: string[], debug = false) {
+	public setupEngine(story: Story, input: string[], debug = false): void {
 		const { sceneView, engine, inputManager } = this;
 
 		Settings.debug = debug;
@@ -174,7 +180,7 @@ class GameplayContext {
 		inputManager.input = input;
 	}
 
-	public async playStory(story: Story, input: string[], debug = false) {
+	public async playStory(story: Story, input: string[], debug = false): Promise<void> {
 		return new Promise(async resolve => {
 			this.setupEngine(story, input, debug);
 			this.onInputEnd = () => resolve();
@@ -185,7 +191,7 @@ class GameplayContext {
 		});
 	}
 
-	public async cleanup() {
+	public async cleanup(): Promise<void> {
 		const { sceneView, engine } = this;
 
 		if (!engine) {

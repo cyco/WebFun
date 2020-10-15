@@ -12,16 +12,16 @@ class ConditionComponent extends InstructionThing {
 	public breakpointStore: BreakpointStore = null;
 	private _condition: Condition;
 
-	get condition() {
+	get condition(): Condition {
 		return this._condition;
 	}
 
-	set condition(condition) {
+	set condition(condition: Condition) {
 		this._condition = condition;
 		this._rebuild();
 	}
 
-	get type() {
+	get type(): string {
 		return "c";
 	}
 

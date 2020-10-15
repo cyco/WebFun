@@ -16,18 +16,18 @@ import { InstructionImplementations as Instructions } from "../script/instructio
 import { Rectangle, Point, Size } from "src/util";
 
 export default {
-	Metronome: () => new Metronome(),
-	Inventory: () => new Inventory(),
+	Metronome: (): Metronome => new Metronome(),
+	Inventory: (): Inventory => new Inventory(),
 	ScriptProcessingUnit: (
 		engine: Engine,
 		instructions: typeof Instructions,
 		conditions: typeof Conditions
-	) => new ScriptProcessingUnit(engine, instructions, conditions),
-	Hero: () => new Hero(),
-	Mixer: () => new Mixer(),
-	InputManager: () => new InputManager(),
-	Renderer: () => new Renderer(),
-	SceneManager: () => new SceneManager(() => new Rectangle(new Point(0, 0), new Size(0, 0))),
-	AssetManager: () => new AssetManager(),
-	ResourceManager: () => new ResourceManager()
+	): ScriptProcessingUnit => new ScriptProcessingUnit(engine, instructions, conditions),
+	Hero: (): Hero => new Hero(),
+	Mixer: (): Mixer => new Mixer(),
+	InputManager: (): InputManager => new InputManager(),
+	Renderer: (): Renderer => new Renderer(),
+	SceneManager: (): SceneManager => new SceneManager(() => new Rectangle(new Point(0, 0), new Size(0, 0))),
+	AssetManager: (): AssetManager => new AssetManager(),
+	ResourceManager: (): ResourceManager => new ResourceManager()
 };

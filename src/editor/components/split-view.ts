@@ -5,11 +5,11 @@ import { Component } from "src/ui";
 class SplitView extends Component {
 	public static readonly tagName = "wf-split-view";
 
-	protected connectedCallback() {
+	protected connectedCallback(): void {
 		console.log("connected");
 	}
 
-	protected disconnectedCallback() {
+	protected disconnectedCallback(): void {
 		console.log("disconnected");
 	}
 }

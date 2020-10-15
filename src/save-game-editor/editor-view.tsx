@@ -25,7 +25,7 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 	private _save: Element = (<div className="save" />);
 	public state: Storage = new DiscardingStorage();
 
-	protected connectedCallback() {
+	protected connectedCallback(): void {
 		super.connectedCallback();
 		this.appendChild(this._save);
 	}

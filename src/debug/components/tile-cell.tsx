@@ -9,12 +9,12 @@ class TileCell extends Cell<Tile> {
 	public static readonly tagName = "wf-debug-tile-cell";
 	public view: TileView = (<TileView />) as TileView;
 
-	connectedCallback() {
+	protected connectedCallback(): void {
 		super.connectedCallback();
 		this.appendChild(this.view);
 	}
 
-	disconnectedCallback() {
+	protected disconnectedCallback(): void {
 		this.view.remove();
 		super.disconnectedCallback();
 	}
@@ -29,7 +29,7 @@ class TileCell extends Cell<Tile> {
 	set palette(palette: ColorPalette) {
 		this.view.palette = palette;
 	}
-	get palette() {
+	get palette(): ColorPalette {
 		return this.view.palette;
 	}
 
@@ -37,7 +37,7 @@ class TileCell extends Cell<Tile> {
 		this.view.tile = tile;
 	}
 
-	get data() {
+	get data(): Tile {
 		return this.view.tile;
 	}
 }

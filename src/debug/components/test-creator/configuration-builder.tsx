@@ -6,6 +6,7 @@ import { SegmentControl, Segment } from "src/ui/components";
 import { Configuration } from "src/debug/automation/test";
 import SimulationConfigurationBuilder from "./simulation-configuration-builder";
 import WorldConfigurationBuilder from "./world-configuration-builder";
+import { ColorPalette, GameData } from "src/engine";
 
 class ConfigurationBuilder extends Component {
 	public static readonly tagName = "wf-debug-test-creator-configuration-builder";
@@ -16,7 +17,7 @@ class ConfigurationBuilder extends Component {
 	private _worldConfigurationBuilder = (<WorldConfigurationBuilder />) as WorldConfigurationBuilder;
 	private _initialConfiguration: Configuration;
 
-	public connectedCallback() {
+	protected connectedCallback(): void {
 		super.connectedCallback();
 
 		const config: Configuration = this._initialConfiguration ?? {
@@ -52,7 +53,7 @@ class ConfigurationBuilder extends Component {
 		if (this._initialConfiguration) this.configuration = config;
 	}
 
-	public disconnectedCallback() {
+	protected disconnectedCallback(): void {
 		this.textContent = "";
 		super.disconnectedCallback();
 	}
@@ -85,23 +86,23 @@ class ConfigurationBuilder extends Component {
 		return this._simulationConfigurationBuilder;
 	}
 
-	public set gameData(p) {
+	public set gameData(p: GameData) {
 		this._simulationConfigurationBuilder.gameData = p;
 	}
 
-	public get gameData() {
+	public get gameData(): GameData {
 		return this._simulationConfigurationBuilder.gameData;
 	}
 
-	public set palette(p) {
+	public set palette(p: ColorPalette) {
 		this._simulationConfigurationBuilder.palette = p;
 	}
 
-	public get palette() {
+	public get palette(): ColorPalette {
 		return this._simulationConfigurationBuilder.palette;
 	}
 
-	public set state(s) {
+	public set state(s: Storage) {
 		this._state = s;
 		this._simulationConfigurationBuilder.state = s.prefixedWith("simulation");
 		this._worldConfigurationBuilder.state = s.prefixedWith("world");
@@ -109,7 +110,7 @@ class ConfigurationBuilder extends Component {
 		if (segmentControl) segmentControl.state = s.prefixedWith("selector");
 	}
 
-	public get state() {
+	public get state(): Storage {
 		return this._state;
 	}
 }

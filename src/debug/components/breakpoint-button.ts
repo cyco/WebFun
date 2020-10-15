@@ -20,28 +20,28 @@ class BreakpointButton extends Component {
 	private _addHandler = ({ detail: { breakpoint } }: CustomEvent) =>
 		breakpoint === this.breakpoint && (this.active = true);
 
-	get active() {
+	get active(): boolean {
 		return this.hasAttribute("active");
 	}
 
-	set active(flag) {
+	set active(flag: boolean) {
 		if (flag) this.setAttribute("active", "");
 		else this.removeAttribute("active");
 	}
 
-	protected connectedCallback() {
+	protected connectedCallback(): void {
 		this.onclick = () => this.toggle();
 		this.active = this.store.hasBreakpoint(this.breakpoint.id);
 		this.store.addEventListener(BreakpointStore.Event.DidAddBreakpoint, this._addHandler);
 		this.store.addEventListener(BreakpointStore.Event.DidRemoveBreakpoint, this._removeHandler);
 	}
 
-	protected disconnectedCallback() {
+	protected disconnectedCallback(): void {
 		this.store.removeEventListener(BreakpointStore.Event.DidAddBreakpoint, this._addHandler);
 		this.store.removeEventListener(BreakpointStore.Event.DidRemoveBreakpoint, this._removeHandler);
 	}
 
-	toggle() {
+	public toggle(): void {
 		this.active = !this.active;
 		if (this.active) this.store.addBreakpoint(this.breakpoint);
 		else this.store.removeBreakpoint(this.breakpoint);

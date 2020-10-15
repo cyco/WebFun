@@ -50,35 +50,35 @@ class Hero extends EventTarget {
 		return [100 - (health % 100), livesLost];
 	}
 
-	get isWalking() {
+	get isWalking(): boolean {
 		return this._walking;
 	}
 
-	set isWalking(w) {
+	set isWalking(w: boolean) {
 		this._walking = w;
 	}
 
-	get isAttacking() {
+	get isAttacking(): boolean {
 		return this._attacking;
 	}
 
-	set isAttacking(a) {
+	set isAttacking(a: boolean) {
 		this._attacking = a;
 	}
 
-	get isDragging() {
+	get isDragging(): boolean {
 		return this._dragging;
 	}
 
-	set isDragging(d) {
+	set isDragging(d: boolean) {
 		this._dragging = d;
 	}
 
-	get health() {
+	get health(): number {
 		return this._health;
 	}
 
-	set health(h) {
+	set health(h: number) {
 		if (this.invincible) return;
 
 		this._health = max(0, min(MaxHealth, h));
@@ -87,31 +87,31 @@ class Hero extends EventTarget {
 		});
 	}
 
-	get location() {
+	get location(): Point {
 		return this._location;
 	}
 
-	set location(l) {
+	set location(l: Point) {
 		this._location = l;
 	}
 
-	get direction() {
+	get direction(): number {
 		return Direction.Confine(this._direction);
 	}
 
-	get appearance() {
+	get appearance(): Char {
 		return this._appearance;
 	}
 
-	set appearance(a) {
+	set appearance(a: Char) {
 		this._appearance = a;
 	}
 
-	get weapon() {
+	get weapon(): Char {
 		return this._weapon;
 	}
 
-	set weapon(weapon) {
+	set weapon(weapon: Char) {
 		if (this._weapon) {
 			this._ammoByWeapon.set(this._weapon, this._ammo);
 		}
@@ -121,11 +121,11 @@ class Hero extends EventTarget {
 		if (!this._weapon) this.ammo = -1;
 	}
 
-	get ammo() {
+	get ammo(): number {
 		return this._ammo;
 	}
 
-	set ammo(ammo) {
+	set ammo(ammo: number) {
 		if (this.unlimitedAmmo) return;
 
 		this._ammo = ammo < 0 ? -1 : ammo;
@@ -136,7 +136,7 @@ class Hero extends EventTarget {
 		this.dispatchEvent(Events.AmmoChanged, { ammo });
 	}
 
-	public getAmmoForWeapon(weapon: Char) {
+	public getAmmoForWeapon(weapon: Char): number {
 		return this._ammoByWeapon.has(weapon) ? this._ammoByWeapon.get(weapon) : 0;
 	}
 
@@ -244,7 +244,7 @@ class Hero extends EventTarget {
 		return true;
 	}
 
-	public changeHealth(damage: number) {
+	public changeHealth(damage: number): void {
 		if (this.invincible) return;
 
 		let [damageTaken, lives] = Hero.ConvertHealthToDamage(this.health);
@@ -267,11 +267,11 @@ class Hero extends EventTarget {
 		this.health = Hero.ConvertDamageToHealth(damageTaken, lives);
 	}
 
-	get damage() {
+	get damage(): number {
 		return Hero.ConvertHealthToDamage(this.health)[0];
 	}
 
-	get lives() {
+	get lives(): number {
 		return Hero.ConvertHealthToDamage(this.health)[1];
 	}
 }

@@ -7,7 +7,7 @@ class MenuItemSeparator extends Component {
 	public static readonly tagName = "wf-menu-item-separator";
 	public menu: Menu = null;
 
-	protected connectedCallback() {
+	protected connectedCallback(): void {
 		super.connectedCallback();
 
 		this.textContent = "";

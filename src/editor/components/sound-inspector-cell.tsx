@@ -86,7 +86,7 @@ class SoundInspectorCell extends Cell<Sound> {
 		return result;
 	}
 
-	protected connectedCallback() {
+	protected connectedCallback(): void {
 		this._id.textContent = `${this.data.id}`;
 		this.appendChild(this._id);
 
@@ -96,7 +96,7 @@ class SoundInspectorCell extends Cell<Sound> {
 		this.appendChild(this._play);
 	}
 
-	public togglePlaying() {
+	public togglePlaying(): void {
 		if (!this._sound) {
 			const url = [Settings.url.yoda.sfx, encodeURIComponent(this.data.file)].join("/");
 			this._sound = new Audio(url);
@@ -131,7 +131,7 @@ class SoundInspectorCell extends Cell<Sound> {
 		}
 	}
 
-	get label() {
+	get label(): string {
 		return this._file.textContent;
 	}
 }

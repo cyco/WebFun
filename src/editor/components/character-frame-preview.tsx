@@ -1,7 +1,7 @@
 import "./character-frame-preview.scss";
 
 import { Component } from "src/ui";
-import { Char } from "src/engine/objects";
+import { Char, Tile } from "src/engine/objects";
 import { ColorPalette } from "src/engine";
 import PopoverTilePicker from "./popover-tile-picker";
 
@@ -26,13 +26,13 @@ class CharacterFramePreview extends Component {
 			) as PopoverTilePicker
 	);
 
-	protected connectedCallback() {
+	protected connectedCallback(): void {
 		super.connectedCallback();
 		this._pickers.forEach(t => this.appendChild(t));
 		this._rebuild();
 	}
 
-	protected disconnectedCallback() {
+	protected disconnectedCallback(): void {
 		this.textContent = "";
 		super.disconnectedCallback();
 	}
@@ -42,11 +42,11 @@ class CharacterFramePreview extends Component {
 		this._pickers.forEach((p, idx) => (p.tile = tiles[idx]));
 	}
 
-	set tiles(t) {
+	set tiles(t: Tile[]) {
 		this._pickers.forEach(p => (p.tiles = t));
 	}
 
-	get tiles() {
+	get tiles(): Tile[] {
 		return this._pickers.first().tiles;
 	}
 
@@ -54,7 +54,7 @@ class CharacterFramePreview extends Component {
 		this._pickers.forEach(picker => (picker.palette = p));
 	}
 
-	get palette() {
+	get palette(): ColorPalette {
 		return this._pickers[0].palette;
 	}
 
@@ -63,7 +63,7 @@ class CharacterFramePreview extends Component {
 		this._rebuild();
 	}
 
-	get frame() {
+	get frame(): Char.Frame {
 		return this._frame;
 	}
 }

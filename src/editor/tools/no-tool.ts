@@ -28,7 +28,7 @@ class NoTool extends AbstractTool implements EventListenerObject {
 		this._ctx.fillStyle = "white";
 	}
 
-	public handleEvent(e: MouseEvent) {
+	public handleEvent(e: MouseEvent): void {
 		const tilePoint = this.extractTileCoordinates(e);
 		if (!tilePoint) return;
 

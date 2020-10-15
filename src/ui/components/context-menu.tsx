@@ -6,7 +6,7 @@ import MenuItem from "./menu-item";
 class ContextMenu extends AbstractMenuWindow implements EventListenerObject {
 	public static readonly tagName = "wf-context-menu";
 
-	protected connectedCallback() {
+	protected connectedCallback(): void {
 		super.connectedCallback();
 
 		document.addEventListener("mousemove", this);
@@ -31,7 +31,7 @@ class ContextMenu extends AbstractMenuWindow implements EventListenerObject {
 		return false;
 	}
 
-	protected disconnectedCallback() {
+	protected disconnectedCallback(): void {
 		document.removeEventListener("mousemove", this);
 		document.removeEventListener("mousedown", this);
 		document.removeEventListener("mouseup", this);

@@ -5,7 +5,7 @@ import Component from "../component";
 class ProgressIndicator extends Component {
 	public static readonly tagName = "wf-progress-indicator";
 
-	public connectedCallback() {
+	protected connectedCallback(): void {
 		super.connectedCallback();
 
 		this.appendChild(
@@ -26,7 +26,7 @@ class ProgressIndicator extends Component {
 		);
 	}
 
-	protected disconnectedCallback() {
+	protected disconnectedCallback(): void {
 		this.textContent = "";
 		super.disconnectedCallback();
 	}

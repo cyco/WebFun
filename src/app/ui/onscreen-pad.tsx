@@ -24,7 +24,7 @@ class OnscreenPad extends Component implements EventListenerObject {
 	private trackedTouch: number = null;
 	private _lastInput: number = performance.now();
 
-	connectedCallback() {
+	protected connectedCallback(): void {
 		super.connectedCallback();
 
 		this.positionThumb(0, 0);
@@ -109,7 +109,7 @@ class OnscreenPad extends Component implements EventListenerObject {
 		this._lastInput = performance.now();
 	}
 
-	disconnectedCallback() {
+	protected disconnectedCallback(): void {
 		this.removeEventListener("touchstart", this);
 		this.removeEventListener("touchmove", this);
 		this.removeEventListener("touchend", this);

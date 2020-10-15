@@ -51,7 +51,7 @@ class SpeechBubble extends Component {
 		textContainer.appendChild(this._text);
 	}
 
-	protected connectedCallback() {
+	protected connectedCallback(): void {
 		super.connectedCallback();
 
 		this.style.setProperty("--font-family", DefaultTextStyle.fontFamily);

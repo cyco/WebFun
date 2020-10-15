@@ -4,7 +4,7 @@ import GameplayContext from "../gameplay-context";
 class HealthIsExpectation implements Expectation {
 	private _health: number;
 
-	public static CanBeBuiltFrom(value: string) {
+	public static CanBeBuiltFrom(value: string): boolean {
 		return value.toLowerCase().contains("health");
 	}
 
@@ -16,13 +16,13 @@ class HealthIsExpectation implements Expectation {
 		this._health = health;
 	}
 
-	evaluate(ctx: GameplayContext) {
+	evaluate(ctx: GameplayContext): void {
 		it(`the hero's health is ${this._health.toHex(3)}`, () => {
 			expect(ctx.engine.hero.health).toBe(this._health);
 		});
 	}
 
-	format() {
+	format(): string {
 		return `Health is ${this._health.toHex(3)}`;
 	}
 }

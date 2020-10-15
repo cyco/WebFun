@@ -32,7 +32,7 @@ class Editor extends Component {
 		this._errorArea.style.display = "none";
 	}
 
-	protected connectedCallback() {
+	protected connectedCallback(): void {
 		super.connectedCallback();
 		this.registerShortcuts();
 	}
@@ -52,7 +52,7 @@ class Editor extends Component {
 		this._shortcuts.push(shortcut);
 	}
 
-	public save() {
+	public save(): void {
 		const parser = new Parser();
 		const assembler = new Assembler();
 
@@ -78,7 +78,7 @@ class Editor extends Component {
 		}
 	}
 
-	public indent() {}
+	public indent(): void {}
 
 	private unregisterShortcuts() {
 		const manager = ShortcutManager.sharedManager;
@@ -86,7 +86,7 @@ class Editor extends Component {
 		this._shortcuts = [];
 	}
 
-	protected disconnectedCallback() {
+	protected disconnectedCallback(): void {
 		super.disconnectedCallback();
 		this.unregisterShortcuts();
 	}
@@ -96,7 +96,7 @@ class Editor extends Component {
 		this.actions = zone.actions;
 	}
 
-	get zone() {
+	get zone(): Zone {
 		return this._zone;
 	}
 

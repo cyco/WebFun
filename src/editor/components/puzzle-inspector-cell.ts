@@ -51,7 +51,7 @@ class PuzzleInspectorCell extends Cell<Puzzle> {
 		return node;
 	}
 
-	protected connectedCallback() {
+	protected connectedCallback(): void {
 		this._id.textContent = `${this.data.id}`;
 		this._type.textContent = this.formatType(this.data.type);
 
@@ -107,7 +107,7 @@ class PuzzleInspectorCell extends Cell<Puzzle> {
 		return "";
 	}
 
-	protected disconnectedCallback() {
+	protected disconnectedCallback(): void {
 		this._id.remove();
 		this._type.remove();
 		this._tile1.remove();

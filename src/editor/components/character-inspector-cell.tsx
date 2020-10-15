@@ -23,7 +23,7 @@ class CharacterInspectorCell extends Cell<Char> {
 		return node;
 	}
 
-	protected connectedCallback() {
+	protected connectedCallback(): void {
 		const tile = this.data.frames[0].extensionRight;
 		[
 			<TileView palette={this.palette} tile={tile} />,
@@ -48,7 +48,7 @@ class CharacterInspectorCell extends Cell<Char> {
 		].forEach(c => this.appendChild(c));
 	}
 
-	protected disconnectedCallback() {}
+	protected disconnectedCallback(): void {}
 }
 
 export default CharacterInspectorCell;

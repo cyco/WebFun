@@ -18,16 +18,16 @@ class Location extends Component {
 	private _mask: number = Direction.None;
 	private _svg: SVGElement = null;
 
-	get mask() {
+	get mask(): number {
 		return this._mask;
 	}
 
-	set mask(mask) {
+	set mask(mask: number) {
 		this._mask = mask;
 		this._updateClassList();
 	}
 
-	protected connectedCallback() {
+	protected connectedCallback(): void {
 		super.connectedCallback();
 
 		this.innerHTML = LocationSVG;

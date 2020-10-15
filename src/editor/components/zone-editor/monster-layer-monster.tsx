@@ -11,7 +11,7 @@ class MonsterLayerMonster extends Component {
 	public palette: ColorPalette;
 	public canvas = (<canvas width={32} height={32} className="pixelated" />) as HTMLCanvasElement;
 
-	protected connectedCallback() {
+	protected connectedCallback(): void {
 		super.connectedCallback();
 		if (!this.character) return;
 		this.appendChild(this.canvas);
@@ -24,7 +24,7 @@ class MonsterLayerMonster extends Component {
 		ctx.putImageData(imageData, 0, 0);
 	}
 
-	protected disconnectedCallback() {
+	protected disconnectedCallback(): void {
 		super.disconnectedCallback();
 	}
 }

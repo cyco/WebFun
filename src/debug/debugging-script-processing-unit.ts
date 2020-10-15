@@ -15,8 +15,6 @@ import ScriptProcessingUnit from "src/engine/script/script-processing-unit";
 type ConditionStore = ConditionImplementation[];
 type InstructionStore = InstructionImplementation[];
 
-class ScriptExecutionError extends Error {}
-
 export interface DebuggingScriptProcessingUnitDelegate {
 	executorWillExecute(
 		executor: DebuggingScriptProcessingUnit,
@@ -51,7 +49,7 @@ class DebuggingScriptProcessingUnit extends ScriptProcessingUnit {
 		this._engine = engine;
 	}
 
-	prepeareExecution(mode: Mode, zone: Zone) {
+	prepeareExecution(mode: Mode, zone: Zone): void {
 		console.assert(!this._inUse, "Executor is already prepeared!");
 		this.willExecute(zone);
 		this._executor = this._buildExecutor(mode, zone);

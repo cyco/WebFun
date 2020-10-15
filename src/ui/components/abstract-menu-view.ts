@@ -25,7 +25,7 @@ abstract class AbstractMenuView extends Component {
 		this.addItemNodes();
 	}
 
-	protected connectedCallback() {
+	protected connectedCallback(): void {
 		this.removeItemNodes();
 		this.addItemNodes();
 	}

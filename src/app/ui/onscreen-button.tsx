@@ -15,7 +15,7 @@ class OnscreenButton extends Component {
 	private _pressed: boolean = false;
 	public label: string;
 
-	connectedCallback() {
+	protected connectedCallback(): void {
 		super.connectedCallback();
 		this.appendChild(this._background);
 
@@ -27,7 +27,7 @@ class OnscreenButton extends Component {
 		this.addEventListener("touchcancel", this);
 	}
 
-	disconnectedCallback() {
+	protected disconnectedCallback(): void {
 		this.removeEventListener("touchstart", this);
 		this.removeEventListener("touchend", this);
 		this.removeEventListener("touchcancel", this);
@@ -37,7 +37,7 @@ class OnscreenButton extends Component {
 		super.disconnectedCallback();
 	}
 
-	handleEvent(event: TouchEvent) {
+	handleEvent(event: TouchEvent): void {
 		this._pressed = event.type === "touchstart";
 		if (event.type === "touchstart" || event.type === "mousedown") this.classList.add("pressed");
 		else this.classList.remove("pressed");
@@ -46,7 +46,7 @@ class OnscreenButton extends Component {
 		event.stopPropagation();
 	}
 
-	public get pressed() {
+	public get pressed(): boolean {
 		return this._pressed;
 	}
 }

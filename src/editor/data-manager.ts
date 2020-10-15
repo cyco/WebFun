@@ -17,7 +17,7 @@ class DataManager {
 		return this._currentData;
 	}
 
-	get palette() {
+	get palette(): ColorPalette {
 		return this._palette;
 	}
 

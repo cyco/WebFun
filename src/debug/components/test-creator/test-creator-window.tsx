@@ -17,8 +17,8 @@ import { MetronomeInternals } from "src/engine/metronome";
 
 class TestCreatorWindow extends AbstractWindow implements EventListenerObject {
 	public static readonly tagName = "wf-debug-test-creator-window";
-	title = "Test Creator";
-	autosaveName = "test-creator-window";
+	title: string = "Test Creator";
+	autosaveName: string = "test-creator-window";
 	private _gameController: GameController;
 	private _state: Storage = new DiscardingStorage();
 	private _testCase: TestCase = null;
@@ -119,7 +119,7 @@ class TestCreatorWindow extends AbstractWindow implements EventListenerObject {
 		replayer.fastForward();
 	}
 
-	public buildStory(engine: Engine) {
+	public buildStory(engine: Engine): SimulatedStory | Story {
 		const config = this._configBuilder.configuration;
 		if (config.zone >= 0) {
 			return this._buildSimulatedStory(engine, config);
@@ -162,7 +162,7 @@ class TestCreatorWindow extends AbstractWindow implements EventListenerObject {
 		return new Story(config.seed, Planet.fromNumber(config.planet), WorldSize.fromNumber(config.size));
 	}
 
-	public downloadTest() {
+	public downloadTest(): void {
 		const serializer = new Serializer();
 		const data = serializer.serialize(
 			this._configBuilder.configuration,
@@ -182,11 +182,11 @@ class TestCreatorWindow extends AbstractWindow implements EventListenerObject {
 		);
 	}
 
-	public get gameController() {
+	public get gameController(): GameController {
 		return this._gameController;
 	}
 
-	public set gameController(controller) {
+	public set gameController(controller: GameController) {
 		this._gameController = controller;
 		this._replayer.gameController = controller;
 		this._recorder.gameController = controller;
@@ -211,12 +211,12 @@ class TestCreatorWindow extends AbstractWindow implements EventListenerObject {
 		return testCase;
 	}
 
-	public set state(s) {
+	public set state(s: Storage) {
 		this._state = s;
 		this._configBuilder.state = s.prefixedWith(`config-builder`);
 	}
 
-	public get state() {
+	public get state(): Storage {
 		return this._state;
 	}
 }

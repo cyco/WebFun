@@ -70,7 +70,7 @@ class SidebarLayersCell extends Component {
 		this._layers.push(floor);
 	}
 
-	protected connectedCallback() {
+	protected connectedCallback(): void {
 		super.connectedCallback();
 
 		this.appendChild(this._list);
@@ -78,7 +78,7 @@ class SidebarLayersCell extends Component {
 		this._registerShortcuts();
 	}
 
-	protected disconnectedCallback() {
+	protected disconnectedCallback(): void {
 		this._list.remove();
 
 		super.disconnectedCallback();

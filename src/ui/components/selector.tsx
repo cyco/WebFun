@@ -6,7 +6,7 @@ class Selector extends Component {
 	public static readonly tagName = "wf-selector";
 	private element: HTMLSelectElement = (<select />) as HTMLSelectElement;
 
-	protected connectedCallback() {
+	protected connectedCallback(): void {
 		super.connectedCallback();
 		this.appendChild(this.element);
 		this.appendChild(<i className="fa fa-caret-down" />);

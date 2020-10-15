@@ -26,7 +26,7 @@ class Controls extends Component {
 		this._playButton = (<IconButton icon="play" onclick={() => this.ontogglepause()} />) as IconButton;
 	}
 
-	get running() {
+	get running(): boolean {
 		return this.hasAttribute("running");
 	}
 
@@ -35,13 +35,13 @@ class Controls extends Component {
 		else this.removeAttribute("running");
 	}
 
-	protected connectedCallback() {
+	protected connectedCallback(): void {
 		this.appendChild(this._playButton);
 		this.appendChild(this._stepButton);
 		this.appendChild(this._fastForwardButton);
 	}
 
-	protected attributeChangedCallback(attribute: string) {
+	protected attributeChangedCallback(attribute: string): void {
 		if (attribute === "running") {
 			const isRunning = this.hasAttribute("running");
 			this._playButton.icon = isRunning ? "pause" : "play";

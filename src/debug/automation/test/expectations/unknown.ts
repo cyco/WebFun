@@ -3,7 +3,7 @@ import Expectation from "../expectation";
 class UnknownExpectation implements Expectation {
 	private line: string;
 
-	public static CanBeBuiltFrom(_: string) {
+	public static CanBeBuiltFrom(_: string): boolean {
 		return true;
 	}
 
@@ -15,11 +15,11 @@ class UnknownExpectation implements Expectation {
 		this.line = line;
 	}
 
-	evaluate() {
+	evaluate(): void {
 		throw `Don't know how to handle expectation ${this.line}`;
 	}
 
-	format() {
+	format(): string {
 		return this.line;
 	}
 }

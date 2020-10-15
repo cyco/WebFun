@@ -6,12 +6,12 @@ class Popover extends Component {
 	public static readonly tagName = "wf-popover";
 	public content: HTMLElement = (<div />);
 
-	protected connectedCallback() {
+	protected connectedCallback(): void {
 		super.connectedCallback();
 		this.appendChild(this.content);
 	}
 
-	protected disconnectedCallback() {
+	protected disconnectedCallback(): void {
 		super.disconnectedCallback();
 		this.content.remove();
 	}

@@ -21,18 +21,18 @@ abstract class PopoverTilePicker extends Component implements EventListenerObjec
 	protected _tile: Tile = null;
 	protected _tileView = (<TileComponent />) as TileComponent;
 
-	protected connectedCallback() {
+	protected connectedCallback(): void {
 		super.connectedCallback();
 		this.addEventListener("click", this);
 		this.appendChild(this._tileView);
 	}
 
-	protected disconnectedCallback() {
+	protected disconnectedCallback(): void {
 		this.removeEventListener("click", this);
 		super.disconnectedCallback();
 	}
 
-	public handleEvent(e: MouseEvent) {
+	public handleEvent(e: MouseEvent): void {
 		const { left, top } = this.getBoundingClientRect();
 		const popover = (
 			<Popover
@@ -64,12 +64,12 @@ abstract class PopoverTilePicker extends Component implements EventListenerObjec
 
 	protected abstract pickerOnChange(picker: TilePicker, e: CustomEvent): void;
 
-	set palette(s) {
+	set palette(s: ColorPalette) {
 		this._palette = s;
 		this._tileView.palette = s;
 	}
 
-	get palette() {
+	get palette(): ColorPalette {
 		return this._palette;
 	}
 
@@ -78,7 +78,7 @@ abstract class PopoverTilePicker extends Component implements EventListenerObjec
 		this.restoreTileFromState();
 	}
 
-	get state() {
+	get state(): Storage {
 		return this._state;
 	}
 
@@ -87,7 +87,7 @@ abstract class PopoverTilePicker extends Component implements EventListenerObjec
 		this.restoreTileFromState();
 	}
 
-	get tiles() {
+	get tiles(): Tile[] {
 		return this._tiles;
 	}
 
@@ -97,7 +97,7 @@ abstract class PopoverTilePicker extends Component implements EventListenerObjec
 		this._state.store("tile", tile ? tile.id : -1);
 	}
 
-	protected get tile() {
+	protected get tile(): Tile {
 		return this._tile;
 	}
 

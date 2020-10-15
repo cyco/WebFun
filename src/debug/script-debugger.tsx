@@ -72,11 +72,11 @@ class ScriptDebugger implements DebuggingScriptProcessingUnitDelegate {
 		this._window.content.appendChild(this._actionList);
 	}
 
-	public static get sharedDebugger() {
+	public static get sharedDebugger(): ScriptDebugger {
 		return (this._sharedDebugger = this._sharedDebugger || new ScriptDebugger());
 	}
 
-	get engine() {
+	get engine(): Engine {
 		return this._engine;
 	}
 
@@ -94,7 +94,7 @@ class ScriptDebugger implements DebuggingScriptProcessingUnitDelegate {
 		}
 	}
 
-	public show() {
+	public show(): void {
 		this._setupDebugger();
 		this._window.onclose = () => this._teardownDebugger();
 		WindowManager.defaultManager.showWindow(this._window);
@@ -174,13 +174,13 @@ class ScriptDebugger implements DebuggingScriptProcessingUnitDelegate {
 			});
 	}
 
-	public stepOnce() {
+	public stepOnce(): void {
 		this._breakAfter = true;
 		const executor = this._engine.spu as DebuggingScriptProcessingUnit;
 		this.continueExecution(executor);
 	}
 
-	public togglePause() {
+	public togglePause(): void {
 		const executor = this._engine.spu as DebuggingScriptProcessingUnit;
 		if (executor.stopped) this.continueExecution(executor);
 		else this.stopExecution(executor);

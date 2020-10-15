@@ -67,12 +67,12 @@ class SymbolicCoverage extends Component {
 		this._sortDescriptor = this._columns[0][1];
 	}
 
-	connectedCallback() {
+	protected connectedCallback(): void {
 		super.connectedCallback();
 		this.rebuild();
 	}
 
-	disconnectedCallback() {
+	protected disconnectedCallback(): void {
 		this.firstElementChild.remove();
 		this.firstElementChild.remove();
 		super.disconnectedCallback();

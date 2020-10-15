@@ -31,24 +31,24 @@ abstract class AbstractHealth extends Component {
 	private _pie: SVGPathElement = null;
 	private _health: number = MaxHealth;
 
-	get health() {
+	get health(): number {
 		return this._health;
 	}
 
-	set health(value) {
+	set health(value: number) {
 		this._health = max(0, min(value, MaxHealth));
 		this._update();
 	}
 
-	get lives() {
+	get lives(): number {
 		return floor(this._health / HealthPerColor);
 	}
 
-	get damage() {
+	get damage(): number {
 		return HealthPerColor - (floor(this._health % HealthPerColor) || 1);
 	}
 
-	protected connectedCallback() {
+	protected connectedCallback(): void {
 		super.connectedCallback();
 		this.innerHTML = HealthSVG;
 		this._condition = this.querySelector("#health-condition");

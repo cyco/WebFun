@@ -95,39 +95,39 @@ class Engine extends EventTarget {
 		this.registerEvents(Events);
 	}
 
-	get dagobah() {
+	get dagobah(): World {
 		return this.story.dagobah;
 	}
 
-	get world() {
+	get world(): World {
 		return this.story.world;
 	}
 
-	get currentZone() {
+	get currentZone(): Zone {
 		return this._currentZone;
 	}
 
-	set currentZone(z) {
+	set currentZone(z: Zone) {
 		this._currentZone = z;
 		this.dispatchEvent(Events.CurrentZoneChange);
 		this.dispatchEvent(Events.LocationChanged, { zone: z, world: this._currentWorld });
 	}
 
-	set currentSector(s) {}
+	set currentSector(s: Sector) {}
 
-	get currentSector() {
+	get currentSector(): Sector {
 		return this.currentWorld.findSectorContainingZone(this.currentZone);
 	}
 
-	get currentWorld() {
+	get currentWorld(): World {
 		return this._currentWorld;
 	}
 
-	set currentWorld(w) {
+	set currentWorld(w: World) {
 		this._currentWorld = w;
 	}
 
-	update(ticks: number) {
+	update(ticks: number): Promise<void> {
 		if (this._updateInProgress) console.warn("Reentering update!");
 		this._updateInProgress = true;
 
@@ -137,7 +137,7 @@ class Engine extends EventTarget {
 			.finally(() => (this._updateInProgress = false));
 	}
 
-	render() {
+	render(): void {
 		this.sceneManager.render(this.renderer);
 	}
 
@@ -242,7 +242,7 @@ class Engine extends EventTarget {
 		return { location: null, world: null };
 	}
 
-	get hpu() {
+	get hpu(): HotspotProcessingUnit {
 		return this._hpu;
 	}
 
@@ -264,7 +264,7 @@ class Engine extends EventTarget {
 		}
 	}
 
-	public get gameState() {
+	public get gameState(): GameState {
 		return this._gameState;
 	}
 }

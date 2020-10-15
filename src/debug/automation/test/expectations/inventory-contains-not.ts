@@ -4,7 +4,7 @@ import GameplayContext from "../gameplay-context";
 class InventoryContainsNotExpectation implements expectation {
 	private items: number[];
 
-	public static CanBeBuiltFrom(value: string) {
+	public static CanBeBuiltFrom(value: string): boolean {
 		return value.startsWith("inventory") && value.contains("not");
 	}
 
@@ -26,7 +26,7 @@ class InventoryContainsNotExpectation implements expectation {
 		return `Inventory does not contain: ${this.items.map(i => i.toHex(3)).join(", ")}`;
 	}
 
-	evaluate(ctx: GameplayContext) {
+	evaluate(ctx: GameplayContext): void {
 		it(`hero does not have items ${this.items.map(i => i.toHex(3)).join(", ")}`, () => {
 			for (const item of this.items) {
 				if (!ctx.engine.inventory.contains(item)) continue;

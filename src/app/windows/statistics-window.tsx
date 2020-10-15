@@ -6,8 +6,8 @@ import { PersistentState } from "src/engine";
 
 class StatisticsWindow extends AbstractWindow {
 	public static readonly tagName = "wf-statistics-window";
-	public readonly title = "Player Statistics";
-	public readonly closable = true;
+	public readonly title: string = "Player Statistics";
+	public readonly closable: boolean = true;
 
 	private _state: typeof PersistentState = PersistentState;
 
@@ -39,7 +39,7 @@ class StatisticsWindow extends AbstractWindow {
 		);
 	}
 
-	protected disconnectedCallback() {
+	protected disconnectedCallback(): void {
 		this.content.textContent = "";
 		super.disconnectedCallback();
 	}

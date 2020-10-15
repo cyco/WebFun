@@ -101,7 +101,7 @@ class Assembler {
 		return Object.assign(this.parseOpcode(input, Conditions), { isCondition: true });
 	}
 
-	private parseOpcode<T>(input: AST, map: OpcodeMap): any {
+	private parseOpcode(input: AST, map: OpcodeMap): any {
 		if (!(input instanceof Array)) throw new AssemblerInputError("Invalid input.", input);
 
 		const [name, ...args] = input;

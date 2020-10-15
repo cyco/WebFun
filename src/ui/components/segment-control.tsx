@@ -10,7 +10,7 @@ class SegmentControl extends Component implements EventListenerObject {
 	public onsegmentchange: (segment: Segment) => void;
 	public state: Storage = new DiscardingStorage();
 
-	protected connectedCallback() {
+	protected connectedCallback(): void {
 		super.connectedCallback();
 		Array.from(this.children).forEach(c => c.addEventListener("click", this));
 		this.currentSegment =
@@ -22,7 +22,7 @@ class SegmentControl extends Component implements EventListenerObject {
 		this.currentSegment = e.currentTarget as Element;
 	}
 
-	protected disconnectedCallback() {
+	protected disconnectedCallback(): void {
 		Array.from(this.children).forEach(c => c.removeEventListener("click", this));
 		super.disconnectedCallback();
 	}

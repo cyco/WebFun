@@ -32,12 +32,12 @@ class CanvasRenderer implements Renderer {
 		this._ctx.fillRect(0, 0, 288, 288);
 	}
 
-	static isSupported() {
+	static isSupported(): boolean {
 		const canvas = document.createElement("canvas");
 		return canvas.getContext("2d") !== null;
 	}
 
-	clear() {
+	clear(): void {
 		this._ctx.clearRect(0, 0, this._canvas.width, this._canvas.height);
 	}
 

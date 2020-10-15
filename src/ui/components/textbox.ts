@@ -7,7 +7,7 @@ class Textbox extends Component {
 	public static readonly observedAttributes = ["readonly"];
 	private _element: HTMLInputElement = document.createElement("input");
 
-	protected connectedCallback() {
+	protected connectedCallback(): void {
 		super.connectedCallback();
 		this._element.type = "text";
 		this.appendChild(this._element);

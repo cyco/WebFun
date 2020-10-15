@@ -25,7 +25,7 @@ class TransformCanvas extends Component implements EventListenerObject {
 		this.trackTransforms();
 	}
 
-	connectedCallback() {
+	protected connectedCallback(): void {
 		const canvas = this._canvas;
 		super.connectedCallback();
 		this.lastMouse = new Point(this.width / 2, this.height / 2);
@@ -40,7 +40,7 @@ class TransformCanvas extends Component implements EventListenerObject {
 		this.redraw();
 	}
 
-	disconnectedCallback() {
+	protected disconnectedCallback(): void {
 		const canvas = this._canvas;
 		canvas.removeEventListener("DOMMouseScroll", this, false);
 		canvas.removeEventListener("mousewheel", this, false);

@@ -9,12 +9,12 @@ abstract class AbstractTileView extends Component {
 
 	public abstract draw(): void;
 
-	connectedCallback() {
+	protected connectedCallback(): void {
 		super.connectedCallback();
 		this.appendChild(this._canvas);
 	}
 
-	disconnectedCallback() {
+	protected disconnectedCallback(): void {
 		this.removeChild(this._canvas);
 		super.disconnectedCallback();
 	}
@@ -24,7 +24,7 @@ abstract class AbstractTileView extends Component {
 		this.draw();
 	}
 
-	public get palette() {
+	public get palette(): ColorPalette {
 		return this._palette;
 	}
 }

@@ -14,7 +14,7 @@ class ZonePickerCell extends Cell<Zone> {
 	private _canvas = (<canvas className="pixelated" />) as HTMLCanvasElement;
 	private _data: Zone;
 
-	protected connectedCallback() {
+	protected connectedCallback(): void {
 		super.connectedCallback();
 		this.appendChild(this._canvas);
 		this.draw();
@@ -31,7 +31,7 @@ class ZonePickerCell extends Cell<Zone> {
 		context.putImageData(imageData, 0, 0);
 	}
 
-	protected disconnectedCallback() {
+	protected disconnectedCallback(): void {
 		this._canvas.remove();
 		super.disconnectedCallback();
 	}
@@ -52,7 +52,7 @@ class ZonePickerCell extends Cell<Zone> {
 		if (this.isConnected) this.draw();
 	}
 
-	get data() {
+	get data(): Zone {
 		return this._data;
 	}
 
@@ -61,7 +61,7 @@ class ZonePickerCell extends Cell<Zone> {
 		if (this.isConnected) this.draw();
 	}
 
-	get palette() {
+	get palette(): ColorPalette {
 		return this._palette;
 	}
 }

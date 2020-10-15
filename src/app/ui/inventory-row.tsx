@@ -4,6 +4,7 @@ import { Cell } from "src/ui/components";
 import { Size } from "src/util";
 import { Tile } from "src/engine/objects";
 import { PaletteView } from "src/app/ui";
+import { ColorPalette } from "src/engine";
 
 const EmptyImageData = new Uint8Array(Tile.WIDTH * Tile.HEIGHT);
 
@@ -17,7 +18,7 @@ class InventoryRow extends Cell<Tile> {
 	) as PaletteView;
 	private _iconBorder: HTMLSpanElement = (<span />);
 
-	protected connectedCallback() {
+	protected connectedCallback(): void {
 		super.connectedCallback();
 
 		this.appendChild(this._paletteView);
@@ -25,18 +26,18 @@ class InventoryRow extends Cell<Tile> {
 		this.appendChild(this._label);
 	}
 
-	public cloneNode(deep: boolean) {
+	public cloneNode(deep: boolean): InventoryRow {
 		const clone = super.cloneNode(deep) as InventoryRow;
 		clone.onclick = this.onclick;
 		clone.palette = this.palette;
 		return clone;
 	}
 
-	get data() {
+	get data(): Tile {
 		return this._tile;
 	}
 
-	set data(tile) {
+	set data(tile: Tile) {
 		this._tile = tile;
 
 		this._label.innerText = tile ? tile.name : "";
@@ -48,19 +49,19 @@ class InventoryRow extends Cell<Tile> {
 		this._paletteView.image = flag ? EmptyImageData : this._tile ? this._tile.imageData : EmptyImageData;
 	}
 
-	public get pickedUp() {
+	public get pickedUp(): boolean {
 		return this._pickedUp;
 	}
 
-	public set palette(p) {
+	public set palette(p: ColorPalette) {
 		this._paletteView.palette = p;
 	}
 
-	public get palette() {
+	public get palette(): ColorPalette {
 		return this._paletteView.palette;
 	}
 
-	public get imageDataURL() {
+	public get imageDataURL(): string {
 		return this._paletteView.imageDataURL;
 	}
 }

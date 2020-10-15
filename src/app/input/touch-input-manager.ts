@@ -21,7 +21,7 @@ class TouchInputManager implements InputManager {
 		private drag: OnscreenButton
 	) {}
 
-	readInput(tick: number): InputMask {
+	readInput(_: number): InputMask {
 		let input = InputMask.None;
 
 		if (this.shoot.pressed) input |= InputMask.Attack;
@@ -39,7 +39,7 @@ class TouchInputManager implements InputManager {
 		this.gameViewElement.addEventListener("mousedown", this);
 	}
 
-	handleEvent(e: TouchEvent) {
+	handleEvent(e: TouchEvent): void {
 		if (this.engine?.sceneManager?.currentScene instanceof PickupScene) {
 			this.engine.sceneManager.popScene();
 			return;

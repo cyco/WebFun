@@ -22,7 +22,7 @@ class ZoneInspectorCell extends Cell<Zone> {
 	public palette: ColorPalette;
 	public tiles: Tile[];
 
-	protected connectedCallback() {
+	protected connectedCallback(): void {
 		const tile = this._tileForType(this.data.type);
 
 		this.appendChild(<TileView palette={this.palette} tile={tile} />);
@@ -176,7 +176,7 @@ class ZoneInspectorCell extends Cell<Zone> {
 		return node;
 	}
 
-	protected disconnectedCallback() {
+	protected disconnectedCallback(): void {
 		this.textContent = "";
 	}
 }

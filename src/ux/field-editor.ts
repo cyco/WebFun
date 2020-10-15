@@ -72,9 +72,9 @@ class FieldEditor extends EventTarget {
 	}
 
 	private _onKeyDown(e: KeyboardEvent) {
-		if (e.code === 'Enter') {
+		if (e.code === "Enter") {
 			this.confirm(e);
-		} else if (e.code === 'Escape') {
+		} else if (e.code === "Escape") {
 			this.cancel(e);
 		}
 	}

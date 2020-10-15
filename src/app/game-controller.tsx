@@ -106,7 +106,7 @@ class GameController extends EventTarget implements EventListenerObject {
 		};
 	}
 
-	public show(windowManager: WindowManager = WindowManager.defaultManager) {
+	public show(windowManager: WindowManager = WindowManager.defaultManager): void {
 		windowManager.showWindow(this._window);
 
 		if (!this._window.x && !this._window.y) {
@@ -114,7 +114,7 @@ class GameController extends EventTarget implements EventListenerObject {
 		}
 	}
 
-	public async newStory() {
+	public async newStory(): Promise<void> {
 		const gameState = this.engine.gameState;
 		if (
 			gameState === GameState.Running &&
@@ -140,7 +140,7 @@ class GameController extends EventTarget implements EventListenerObject {
 		this._engine.gameState = GameState.Running;
 	}
 
-	public async replayStory() {
+	public async replayStory(): Promise<void> {
 		const gameState = this.engine.gameState;
 		if (
 			gameState === GameState.Running &&
@@ -151,7 +151,7 @@ class GameController extends EventTarget implements EventListenerObject {
 		}
 	}
 
-	public async load() {
+	public async load(): Promise<void> {
 		const gameState = this.engine.gameState;
 		if (
 			gameState === GameState.Running &&
@@ -189,7 +189,7 @@ class GameController extends EventTarget implements EventListenerObject {
 		return await file.provideInputStream();
 	}
 
-	public async save() {
+	public async save(): Promise<void> {
 		console.log("Save");
 	}
 
@@ -271,13 +271,13 @@ class GameController extends EventTarget implements EventListenerObject {
 		});
 	}
 
-	public jumpStartEngine(zone: Zone) {
+	public jumpStartEngine(zone: Zone): void {
 		this._showSceneView(zone);
 		this._window.inventory.palette = this.palette;
 		this._window.engine = this.engine;
 	}
 
-	public get engine() {
+	public get engine(): Engine {
 		return this._engine;
 	}
 }

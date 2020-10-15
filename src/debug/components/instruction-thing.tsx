@@ -12,15 +12,15 @@ abstract class InstructionThing extends Component {
 	public engine: Engine = null;
 	public variableMap: any = null;
 
-	static get observedAttributes() {
+	static get observedAttributes(): string[] {
 		return ["current"];
 	}
 
-	get current() {
+	get current(): boolean {
 		return this.hasAttribute("current");
 	}
 
-	set current(flag) {
+	set current(flag: boolean) {
 		if (flag) this.setAttribute("current", "");
 		else this.removeAttribute("current");
 	}
@@ -31,7 +31,7 @@ abstract class InstructionThing extends Component {
 		return this._paren("open");
 	}
 
-	protected _command(name: string) {
+	protected _command(name: string): Element {
 		return <span className="command">{name.dasherize()}</span>;
 	}
 
@@ -47,10 +47,11 @@ abstract class InstructionThing extends Component {
 		);
 	}
 
-	protected appendNumberArgument(arg: number) {
+	protected appendNumberArgument(arg: number): void {
 		this.appendChild(<span className="argument number">{arg.toString()}</span>);
 	}
-	protected appendTileArgument(arg: number) {
+
+	protected appendTileArgument(arg: number): void {
 		this.appendChild(
 			<span className="argument tile">
 				<TileView
@@ -61,7 +62,8 @@ abstract class InstructionThing extends Component {
 			</span>
 		);
 	}
-	protected appendLocationArgument(x: number, y: number, z: number = null) {
+
+	protected appendLocationArgument(x: number, y: number, z: number = null): void {
 		this.appendChild(
 			<span className="argument location">
 				{x.toString()}x{y.toString()}

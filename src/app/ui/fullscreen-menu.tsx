@@ -11,7 +11,7 @@ class FullscreenMenu extends Component {
 	public onclick: () => void = () => this.close();
 	private _rootMenu: Menu = null;
 
-	connectedCallback() {
+	connectedCallback(): void {
 		super.connectedCallback();
 
 		this._parent = this.parentElement;
@@ -20,14 +20,14 @@ class FullscreenMenu extends Component {
 		);
 	}
 
-	disconnectedCallback() {
+	disconnectedCallback(): void {
 		this._parent.removeAttribute("fs-menu-open");
 		this._parent = null;
 
 		super.disconnectedCallback();
 	}
 
-	public close() {
+	public close(): void {
 		this.onclose();
 		this._parent.removeAttribute("fs-menu-open");
 		setTimeout(() => this.remove(), TransitionDuration);
@@ -43,6 +43,10 @@ class FullscreenMenu extends Component {
 				{m && this.renderItems(m)}
 			</div>
 		);
+	}
+
+	public get menu(): Menu {
+		return this._rootMenu;
 	}
 
 	private renderMenu(menu: Menu) {
@@ -71,15 +75,11 @@ class FullscreenMenu extends Component {
 		if (item.enabled && item.submenu) this.navigateTo(item, node.closest("li"));
 	}
 
-	public navigateTo(item: MenuItem, li: HTMLElement) {
+	public navigateTo(item: MenuItem, li: HTMLElement): void {
 		const parent = this.querySelector(".items > ul") as HTMLElement;
 		parent.style.transform = "translateX(-100%)";
 		const child = li.querySelector("ul");
 		child.style.display = "block";
-	}
-
-	public get menu() {
-		return this._rootMenu;
 	}
 }
 

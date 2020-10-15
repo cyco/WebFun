@@ -18,7 +18,7 @@ class InteractiveMap extends Map implements EventListenerObject {
 	private _highlightTile: Point = null;
 	public contextMenuProvider: InteractiveMapContextMenuProvider;
 
-	protected connectedCallback() {
+	protected connectedCallback(): void {
 		super.connectedCallback();
 
 		this._highlight.palette = this.palette;
@@ -70,7 +70,7 @@ class InteractiveMap extends Map implements EventListenerObject {
 		menuNode.show(raw);
 	}
 
-	protected disconnectedCallback() {
+	protected disconnectedCallback(): void {
 		this.removeEventListener("mousemove", this);
 		super.disconnectedCallback();
 	}

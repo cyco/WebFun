@@ -53,11 +53,11 @@ class MapScene extends Scene {
 	private _locatorTile = new LocatorTile();
 	private _pdg: PuzzleDependencyGraph;
 
-	isOpaque() {
+	public isOpaque(): boolean {
 		return true;
 	}
 
-	willShow() {
+	public willShow(): void {
 		if (!this._pdg) this._pdg = new PuzzleDependencyGraph(this.engine);
 		this._cheatInput.reset();
 
@@ -70,13 +70,13 @@ class MapScene extends Scene {
 		};
 	}
 
-	willHide() {
+	public willHide(): void {
 		this.engine.inputManager.mouseDownHandler = () => void 0;
 		this.engine.inputManager.keyDownHandler = () => void 0;
 		this.engine.inputManager.clear();
 	}
 
-	async update(ticks: number) {
+	async update(ticks: number): Promise<void> {
 		const engine = this.engine;
 		const input = engine.inputManager.readInput(ticks);
 		if (input & InputMask.Locator) {
@@ -154,7 +154,7 @@ class MapScene extends Scene {
 		this.handleMouseDown(new Point(tileX, tileY), sector.zone);
 	}
 
-	protected handleMouseDown(point: Point, _: Zone) {
+	protected handleMouseDown(point: Point, _: Zone): void {
 		const message = this._locatorDescription(point);
 		if (!message) return this.exitScene();
 
@@ -253,7 +253,7 @@ class MapScene extends Scene {
 		}
 	}
 
-	protected exitScene() {
+	protected exitScene(): void {
 		this.engine.sceneManager.popScene();
 	}
 
@@ -363,7 +363,7 @@ class MapScene extends Scene {
 		return sector && sector.solved;
 	}
 
-	protected isZoneConsideredVisited(zone: Zone) {
+	protected isZoneConsideredVisited(zone: Zone): boolean {
 		return zone.visited || Settings.revealWorld;
 	}
 }

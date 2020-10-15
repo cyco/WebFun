@@ -51,7 +51,7 @@ class PathUIScene extends Scene {
 		ctx.restore();
 	}
 
-	public get walkable() {
+	public get walkable(): boolean {
 		const scene = this.engine.sceneManager.currentScene as ZoneScene;
 
 		return scene.zone.placeWalkable(this.highlight.byScalingBy(9).floor().subtract(this.cameraOffset));

@@ -11,7 +11,7 @@ class InteractiveHealth extends AbstractHealth implements EventListenerObject {
 	public static readonly tagName = "wf-save-game-editor-health";
 	private lastAngle: number = null;
 
-	protected connectedCallback() {
+	protected connectedCallback(): void {
 		super.connectedCallback();
 		this.addEventListener("mousedown", this);
 	}
@@ -54,7 +54,7 @@ class InteractiveHealth extends AbstractHealth implements EventListenerObject {
 		this.dispatchEvent(new CustomEvent("change"));
 	}
 
-	protected disconnectedCallback() {
+	protected disconnectedCallback(): void {
 		super.disconnectedCallback();
 
 		this.removeEventListener("mousedown", this);

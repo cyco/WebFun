@@ -3,7 +3,7 @@ import GameplayContext from "../gameplay-context";
 import { GameState } from "src/engine";
 
 class StorySolvedExpectation implements Expectation {
-	public static CanBeBuiltFrom(value: string) {
+	public static CanBeBuiltFrom(value: string): boolean {
 		return value.contains("story") && value.contains("solved");
 	}
 
@@ -11,13 +11,13 @@ class StorySolvedExpectation implements Expectation {
 		return new StorySolvedExpectation();
 	}
 
-	evaluate(ctx: GameplayContext) {
+	evaluate(ctx: GameplayContext): void {
 		it(`the story is solved`, () => {
 			expect(ctx.engine.gameState).toBe(GameState.Won);
 		});
 	}
 
-	format() {
+	format(): string {
 		return "Story solved";
 	}
 }

@@ -27,7 +27,7 @@ class InventoryComponent extends AbstractList<Tile> {
 	private _inventory: Inventory = null;
 	private _inventoryChangedHandler = () => this._rebuildTable();
 
-	public connectedCallback() {
+	protected connectedCallback(): void {
 		super.connectedCallback();
 		this._rebuildTable();
 	}
@@ -66,7 +66,7 @@ class InventoryComponent extends AbstractList<Tile> {
 		);
 	}
 
-	set inventory(i) {
+	set inventory(i: Inventory) {
 		if (this._inventory) {
 			this._inventory.removeEventListener(InventoryEvent.DidChangeItems, this._inventoryChangedHandler);
 			this.items = Array.Repeat(null, MinRows);
@@ -80,7 +80,7 @@ class InventoryComponent extends AbstractList<Tile> {
 		}
 	}
 
-	get inventory() {
+	get inventory(): Inventory {
 		return this._inventory;
 	}
 
@@ -98,7 +98,7 @@ class InventoryComponent extends AbstractList<Tile> {
 		this.cell.palette = palette;
 	}
 
-	public get palette() {
+	public get palette(): ColorPalette {
 		return this.cell.palette;
 	}
 }

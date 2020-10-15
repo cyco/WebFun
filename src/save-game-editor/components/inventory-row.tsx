@@ -24,7 +24,7 @@ class InventoryRow extends Cell<Tile> {
 	public onchange: () => void;
 	public tiles: Tile[];
 
-	protected connectedCallback() {
+	protected connectedCallback(): void {
 		super.connectedCallback();
 		if (this.data) {
 			this.tiles.forEach(t => this._label.addOption(t.name, `${t.id}`));
@@ -72,7 +72,7 @@ class InventoryRow extends Cell<Tile> {
 		this._icon.palette = sheet;
 	}
 
-	get palette() {
+	get palette(): ColorPalette {
 		return this._icon.palette;
 	}
 }

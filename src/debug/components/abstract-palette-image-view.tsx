@@ -8,7 +8,7 @@ abstract class AbstractPaletteImageView extends AbstractPaletteView {
 	private _pixels: Uint8Array;
 	private _size: Size;
 
-	public draw() {
+	public draw(): void {
 		if (!this.palette) return;
 		const context = this._canvas.getContext("2d");
 		context.clearRect(0, 0, this._canvas.width, this._canvas.height);
@@ -23,7 +23,7 @@ abstract class AbstractPaletteImageView extends AbstractPaletteView {
 		this._canvas.height = size.height;
 	}
 
-	public get size() {
+	public get size(): Size {
 		return new Size(this._canvas.width, this._canvas.height);
 	}
 
@@ -32,7 +32,7 @@ abstract class AbstractPaletteImageView extends AbstractPaletteView {
 		this.draw();
 	}
 
-	public get pixels() {
+	public get pixels(): Uint8Array {
 		return this._pixels;
 	}
 }

@@ -18,7 +18,7 @@ class InputRecorder extends Component {
 	private _dump = (<IconButton icon="print" onclick={() => this.showLog()} />);
 	private _clear = (<IconButton icon="ban" onclick={() => this._recorder.clearRecords()} />) as IconButton;
 
-	public connectedCallback() {
+	protected connectedCallback(): void {
 		super.connectedCallback();
 
 		this.appendChild(this._record);
@@ -28,7 +28,7 @@ class InputRecorder extends Component {
 		this.toggleRecording();
 	}
 
-	public disconnectedCallback() {
+	protected disconnectedCallback(): void {
 		this._recorder.isRecording = false;
 		this._recorder.engine = null;
 		this._gameController.engine.inputManager = this._recorder.implementation;
@@ -37,7 +37,7 @@ class InputRecorder extends Component {
 		super.disconnectedCallback();
 	}
 
-	public toggleRecording() {
+	public toggleRecording(): void {
 		this._recorder.isRecording = !this._recorder.isRecording;
 		if (this._recorder.isRecording) {
 			this._record.style.color = "black";
@@ -58,7 +58,7 @@ class InputRecorder extends Component {
 		WindowManager.defaultManager.showWindow(window);
 	}
 
-	public get input() {
+	public get input(): string {
 		return this._recorder.records.join(" ");
 	}
 
@@ -66,14 +66,14 @@ class InputRecorder extends Component {
 		this._recorder.records = i.split(" ");
 	}
 
-	public set gameController(c) {
+	public set gameController(c: GameController) {
 		this._gameController = c;
 		this._recorder = new RecordingInputManager(c.engine.inputManager as AppInputManager);
 		c.engine.inputManager = this._recorder;
 		c.engine.inputManager.engine = c.engine;
 	}
 
-	public get gameController() {
+	public get gameController(): GameController {
 		return this._gameController;
 	}
 }

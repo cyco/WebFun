@@ -21,7 +21,7 @@ class CharacterDetails extends Component {
 
 	private _palette: ColorPalette;
 
-	protected connectedCallback() {
+	protected connectedCallback(): void {
 		super.connectedCallback();
 		this._rebuild();
 	}
@@ -171,7 +171,7 @@ class CharacterDetails extends Component {
 		);
 	}
 
-	protected disconnectedCallback() {
+	protected disconnectedCallback(): void {
 		this.textContent = "";
 		super.disconnectedCallback();
 	}
@@ -181,7 +181,7 @@ class CharacterDetails extends Component {
 		this._rebuild();
 	}
 
-	get palette() {
+	get palette(): ColorPalette {
 		return this._palette;
 	}
 
@@ -192,7 +192,7 @@ class CharacterDetails extends Component {
 		this._rebuild();
 	}
 
-	get character() {
+	get character(): MutableChar | Char {
 		return this._character;
 	}
 
@@ -201,7 +201,7 @@ class CharacterDetails extends Component {
 		this._rebuild();
 	}
 
-	get sounds() {
+	get sounds(): string[] {
 		return this._sounds;
 	}
 
@@ -210,7 +210,7 @@ class CharacterDetails extends Component {
 		this._rebuild();
 	}
 
-	get weapons() {
+	get weapons(): Char[] {
 		return this._weapons;
 	}
 
@@ -219,7 +219,7 @@ class CharacterDetails extends Component {
 		this._rebuild();
 	}
 
-	get tiles() {
+	get tiles(): Tile[] {
 		return this._tiles;
 	}
 }

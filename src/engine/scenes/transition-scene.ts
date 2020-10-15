@@ -20,7 +20,7 @@ abstract class TransitionScene extends Scene {
 	protected _duration: number = Infinity;
 	protected _zoneSwapTime: number = Infinity;
 
-	willShow() {
+	public willShow(): void {
 		this.state = 0;
 		this._startTime = performance.now();
 	}
@@ -34,7 +34,7 @@ abstract class TransitionScene extends Scene {
 		this.destinationWorld = null;
 	}
 
-	isOpaque() {
+	public isOpaque(): boolean {
 		return false;
 	}
 

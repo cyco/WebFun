@@ -9,7 +9,7 @@ class InlineSelector<T> extends Component implements EventListenerObject {
 	private _value: T = null;
 	public onchange: (e: Event) => void;
 
-	connectedCallback() {
+	protected connectedCallback(): void {
 		super.connectedCallback();
 		this.addEventListener("mousedown", this);
 		this.addEventListener("mouseup", this);
@@ -46,7 +46,7 @@ class InlineSelector<T> extends Component implements EventListenerObject {
 		}
 	}
 
-	disconnectedCallback() {
+	protected disconnectedCallback(): void {
 		this.removeEventListener("mousedown", this);
 		this.removeEventListener("mouseup", this);
 		this.removeEventListener("click", this);

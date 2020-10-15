@@ -42,7 +42,7 @@ class WinScene extends Scene {
 		if (Settings.skipWinScene) this.engine.sceneManager.popScene();
 	}
 
-	async update(ticks: number) {
+	async update(ticks: number): Promise<void> {
 		this._ticksUntilScoreIsShown -= 1;
 		if (this._ticksUntilScoreIsShown < 0) {
 			const engine = this.engine;

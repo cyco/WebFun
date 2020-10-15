@@ -1,6 +1,6 @@
 import InputMask from "src/engine/input/input-mask";
 import { Direction, InputManager } from "src/engine/input";
-import { Metronome, EngineEvents } from "src/engine";
+import { Metronome, EngineEvents, Engine } from "src/engine";
 import { Tile } from "src/engine/objects";
 import { Point } from "src/util";
 
@@ -19,7 +19,7 @@ class RecordingInputManager implements InputManager {
 		this.implementation = implementation;
 	}
 
-	public clearRecords() {
+	public clearRecords(): void {
 		this._records = [];
 	}
 
@@ -93,40 +93,40 @@ class RecordingInputManager implements InputManager {
 		this.implementation && this.implementation.removeListeners();
 	}
 
-	public clear() {
+	public clear(): void {
 		this.implementation && this.implementation.clear();
 		this._input = 0;
 	}
 
-	get mouseLocationInView() {
+	get mouseLocationInView(): Point {
 		return this.implementation && this.implementation.mouseLocationInView;
 	}
 
-	public set mouseDownHandler(s) {
+	public set mouseDownHandler(s: (_: Point) => void) {
 		this.implementation && (this.implementation.mouseDownHandler = s);
 	}
 
-	public get mouseDownHandler() {
+	public get mouseDownHandler(): (_: Point) => void {
 		return this.implementation.mouseDownHandler;
 	}
 
-	public set keyDownHandler(s) {
+	public set keyDownHandler(s: (_: KeyboardEvent) => void) {
 		this.implementation && (this.implementation.keyDownHandler = s);
 	}
 
-	public get keyDownHandler() {
+	public get keyDownHandler(): (_: KeyboardEvent) => void {
 		return this.implementation && this.implementation.keyDownHandler;
 	}
 
-	public set currentItem(s) {
+	public set currentItem(s: Tile) {
 		this.implementation && (this.implementation.currentItem = s);
 	}
 
-	public get currentItem() {
+	public get currentItem(): Tile {
 		return this.implementation && this.implementation.currentItem;
 	}
 
-	public handleEvent(e: CustomEvent) {
+	public handleEvent(e: CustomEvent): void {
 		if (e.type === EngineEvents.WeaponChanged) {
 			const id = (e.detail as any).weapon.id;
 			this._records.push(`${Syntax.Place.Start} ${id.toHex(3)}${Syntax.Place.End}`);
@@ -144,7 +144,7 @@ class RecordingInputManager implements InputManager {
 		}
 	}
 
-	public set engine(s) {
+	public set engine(s: Engine) {
 		if (this.implementation && this.implementation.engine) {
 			this.implementation.engine.metronome.removeEventListener(Metronome.Event.Start, this);
 			this.implementation.engine.metronome.removeEventListener(Metronome.Event.BeforeTick, this);
@@ -160,11 +160,11 @@ class RecordingInputManager implements InputManager {
 		}
 	}
 
-	public get engine() {
+	public get engine(): Engine {
 		return this.implementation.engine;
 	}
 
-	public readInput(_: number) {
+	public readInput(_: number): number {
 		this.recordOne();
 		return this._input;
 	}

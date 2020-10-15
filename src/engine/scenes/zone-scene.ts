@@ -205,11 +205,11 @@ class ZoneScene extends Scene {
 		this.engine.camera.update(Infinity);
 	}
 
-	willShow() {
+	public willShow(): void {
 		this.camera.hero = this.engine.hero;
 	}
 
-	willHide() {}
+	public willHide(): void {}
 
 	private async handleInput(ticks: number): Promise<boolean> {
 		const engine = this.engine;

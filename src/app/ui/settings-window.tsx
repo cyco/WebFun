@@ -3,7 +3,7 @@ import "./settings-window.scss";
 import { AbstractWindow, Button, Slider } from "src/ui/components";
 
 abstract class SettingsWindow extends AbstractWindow {
-	public closable = false;
+	public closable: boolean = false;
 	private _minLabel: HTMLLabelElement = (<label />) as HTMLLabelElement;
 	private _midLabel: HTMLLabelElement = (<label />) as HTMLLabelElement;
 	private _maxLabel: HTMLLabelElement = (<label />) as HTMLLabelElement;
@@ -49,44 +49,44 @@ abstract class SettingsWindow extends AbstractWindow {
 		this._slider.value = localStorage.load(`settings.${this._key}`);
 	}
 
-	protected set steps(s) {
+	protected set steps(s: number) {
 		this._slider.steps = s;
 	}
 
-	protected get steps() {
+	protected get steps(): number {
 		return this._slider.steps;
 	}
 
-	protected set key(m) {
+	protected set key(m: string) {
 		this._key = m;
 		this._updateValue();
 	}
 
-	protected get key() {
+	protected get key(): string {
 		return this._key;
 	}
 
-	protected set minLabel(m) {
+	protected set minLabel(m: string) {
 		this._minLabel.textContent = m;
 	}
 
-	protected get minLabel() {
+	protected get minLabel(): string {
 		return this._minLabel.textContent;
 	}
 
-	protected set midLabel(m) {
+	protected set midLabel(m: string) {
 		this._midLabel.textContent = m;
 	}
 
-	protected get midLabel() {
+	protected get midLabel(): string {
 		return this._midLabel.textContent;
 	}
 
-	protected set maxLabel(m) {
+	protected set maxLabel(m: string) {
 		this._maxLabel.textContent = m;
 	}
 
-	protected get maxLabel() {
+	protected get maxLabel(): string {
 		return this._maxLabel.textContent;
 	}
 }

@@ -5,6 +5,7 @@ import { List } from "src/ui/components";
 import { Zone } from "src/engine/objects";
 import ZoneFilter from "./zone-filter";
 import ZonePickerCell from "./zone-picker-cell";
+import { ColorPalette } from "src/engine";
 
 export const Events = {
 	ZoneDidChange: "ZoneDidChange"
@@ -37,7 +38,7 @@ class ZonePicker extends Component {
 		this._list.showBar(true);
 	}
 
-	protected connectedCallback() {
+	protected connectedCallback(): void {
 		super.connectedCallback();
 
 		this.appendChild(this._list);
@@ -53,7 +54,7 @@ class ZonePicker extends Component {
 		cell.classList.add("active");
 	}
 
-	protected disconnectedCallback() {
+	protected disconnectedCallback(): void {
 		this._list.remove();
 
 		super.disconnectedCallback();
@@ -64,21 +65,21 @@ class ZonePicker extends Component {
 		this.dispatchEvent(new CustomEvent(Events.ZoneDidChange, { detail: { zone, index }, bubbles: true }));
 	}
 
-	set zones(s) {
+	set zones(s: Zone[]) {
 		this._zones = s;
 		this._list.items = s;
 	}
 
-	get zones() {
+	get zones(): Zone[] {
 		return this._zones;
 	}
 
-	set palette(p) {
+	set palette(p: ColorPalette) {
 		const cell = this._list.cell as ZonePickerCell;
 		cell.palette = p;
 	}
 
-	get palette() {
+	get palette(): ColorPalette {
 		const cell = this._list.cell as ZonePickerCell;
 		return cell.palette;
 	}
@@ -86,7 +87,8 @@ class ZonePicker extends Component {
 	set zone(zone: Zone) {
 		this._zone = zone;
 	}
-	get zone() {
+
+	get zone(): Zone {
 		return this._zone;
 	}
 
@@ -94,7 +96,7 @@ class ZonePicker extends Component {
 		this._list.state = s.prefixedWith("list");
 	}
 
-	get state() {
+	get state(): Storage {
 		return this._list.state;
 	}
 }

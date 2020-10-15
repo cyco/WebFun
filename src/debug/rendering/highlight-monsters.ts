@@ -6,7 +6,7 @@ import { round } from "src/std/math";
 const MonsterHealthBarHeight = 12;
 const MonsterHealthBarInset = 4;
 
-export default (renderer: Renderer, monsters: Monster[], offset: Point) => {
+export default (renderer: Renderer, monsters: Monster[], offset: Point): void => {
 	if (!(renderer.fillRect instanceof Function)) return;
 
 	monsters.forEach((n: Monster): void => {

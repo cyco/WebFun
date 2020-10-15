@@ -51,7 +51,7 @@ class SidebarLayer extends Cell<Layer> {
 		};
 	}
 
-	protected connectedCallback() {
+	protected connectedCallback(): void {
 		super.connectedCallback();
 
 		this.appendChild(this._name);
@@ -79,7 +79,7 @@ class SidebarLayer extends Cell<Layer> {
 		else this._locked.classList.add("fa-unlock-alt");
 	}
 
-	protected disconnectedCallback() {
+	protected disconnectedCallback(): void {
 		super.disconnectedCallback();
 		this.textContent = "";
 	}

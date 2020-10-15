@@ -10,14 +10,14 @@ class RadioButton extends Component {
 	private _radio = (<input type="radio" id={this._id} />) as HTMLInputElement;
 	private _label = (<label htmlFor={this._id} />);
 
-	protected connectedCallback() {
+	protected connectedCallback(): void {
 		super.connectedCallback();
 
 		this.appendChild(this._radio);
 		this.appendChild(this._label);
 	}
 
-	protected disconnectedCallback() {
+	protected disconnectedCallback(): void {
 		this._label.remove();
 		this._radio.remove();
 

@@ -30,11 +30,11 @@ class ReplayingInputManager extends EventTarget implements InputManager, EventLi
 
 	private _offset = 0;
 
-	public reset() {
+	public reset(): void {
 		this._offset = 0;
 	}
 
-	public handleEvent(_: Event) {
+	public handleEvent(_: Event): void {
 		if (this.token === Syntax.Place.Start) {
 			this._offset++;
 			const tileID = this.token.parseInt();
@@ -172,7 +172,7 @@ class ReplayingInputManager extends EventTarget implements InputManager, EventLi
 		this.reset();
 	}
 
-	get input() {
+	get input(): string[] {
 		return this._input;
 	}
 }

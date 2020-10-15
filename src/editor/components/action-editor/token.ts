@@ -11,14 +11,14 @@ class Token extends Component {
 	private _tile: Tile;
 	private _details: HTMLElement;
 
-	protected connectedCallback() {
+	protected connectedCallback(): void {
 		super.connectedCallback();
 
 		this.addEventListener("mouseenter", this);
 		this.addEventListener("mouseleave", this);
 	}
 
-	public handleEvent(event: MouseEvent) {
+	public handleEvent(event: MouseEvent): void {
 		if (event.type === "mouseenter") {
 			if (this._details) this._details.remove();
 			this._details = null;
@@ -31,7 +31,7 @@ class Token extends Component {
 		}
 	}
 
-	protected disconnectedCallback() {
+	protected disconnectedCallback(): void {
 		super.disconnectedCallback();
 
 		this.removeEventListener("mouseover", this);
@@ -43,7 +43,7 @@ class Token extends Component {
 		this._point = p;
 	}
 
-	get point() {
+	get point(): Point {
 		return this._point;
 	}
 
@@ -51,7 +51,7 @@ class Token extends Component {
 		this._tile = tile;
 	}
 
-	get tile() {
+	get tile(): Tile {
 		return this._tile;
 	}
 
@@ -59,7 +59,7 @@ class Token extends Component {
 		this._sound = sound;
 	}
 
-	get sound() {
+	get sound(): string {
 		return this._sound;
 	}
 }

@@ -2,7 +2,7 @@ import Expectation from "../expectation";
 import GameplayContext from "../gameplay-context";
 
 class NoOpExpectation implements Expectation {
-	public static CanBeBuiltFrom(value: string) {
+	public static CanBeBuiltFrom(value: string): boolean {
 		return value.contains("nop");
 	}
 
@@ -10,11 +10,11 @@ class NoOpExpectation implements Expectation {
 		return new NoOpExpectation();
 	}
 
-	evaluate(_: GameplayContext) {
+	evaluate(_: GameplayContext): void {
 		it("does nothing, really", (): void => void 0);
 	}
 
-	format() {
+	format(): string {
 		return "NOP";
 	}
 }

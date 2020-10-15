@@ -15,11 +15,11 @@ class HotspotLayer extends Component {
 	public palette: ColorPalette;
 	private _zone: Zone;
 
-	protected connectedCallback() {
+	protected connectedCallback(): void {
 		this.draw();
 	}
 
-	public update(_: Point[]) {
+	public update(_: Point[]): void {
 		this.draw();
 	}
 
@@ -54,7 +54,7 @@ class HotspotLayer extends Component {
 		if (this.isConnected) this.draw();
 	}
 
-	get zone() {
+	get zone(): Zone {
 		return this._zone;
 	}
 
@@ -76,7 +76,7 @@ class HotspotLayer extends Component {
 				}
 			},
 			...hotspots
-				.map((htsp, id) => [
+				.map(htsp => [
 					MenuItemSeparator,
 					{
 						title:

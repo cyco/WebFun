@@ -11,13 +11,13 @@ class PaletteColorPicker extends AbstractPaletteView implements EventListenerObj
 	private highlighter: HTMLElement = (<div className="highlighter" />);
 	private _colorIndex: number = 0;
 
-	protected connectedCallback() {
+	protected connectedCallback(): void {
 		super.connectedCallback();
 		this.addEventListener("mousedown", this);
 		this.appendChild(this.highlighter);
 	}
 
-	public handleEvent(e: MouseEvent) {
+	public handleEvent(e: MouseEvent): void {
 		if (e.which !== 1) return;
 
 		if (e.type === "mouseup") {
@@ -53,7 +53,7 @@ class PaletteColorPicker extends AbstractPaletteView implements EventListenerObj
 		this.dispatchEvent(new CustomEvent("change"));
 	}
 
-	protected disconnectedCallback() {
+	protected disconnectedCallback(): void {
 		document.removeEventListener("mousemove", this);
 		document.removeEventListener("mouseup", this);
 		this.removeEventListener("mousedown", this);
@@ -86,11 +86,11 @@ class PaletteColorPicker extends AbstractPaletteView implements EventListenerObj
 		);
 	}
 
-	get colorIndex() {
+	get colorIndex(): number {
 		return this._colorIndex;
 	}
 
-	public updateCurrentColor(color: Color | string) {
+	public updateCurrentColor(color: Color | string): void {
 		const { palette: p, _colorIndex: i } = this;
 		[p[i * 4 + 2], p[i * 4 + 1], p[i * 4 + 0], p[i * 4 + 3]] = new Color(color).rgbaComponents;
 		this.redraw(new Point(this._colorIndex % this.size.width, floor(this._colorIndex / this.size.width)));

@@ -47,7 +47,7 @@ class SpeechScene extends Scene {
 
 	render() {}
 
-	willShow() {
+	public willShow(): void {
 		this.engine.inputManager.mouseDownHandler = (_: Point): void => null;
 		this._modalSession = new ModalSession();
 		this._modalSession.run();
@@ -63,14 +63,14 @@ class SpeechScene extends Scene {
 		this._bubble.show();
 	}
 
-	async update(ticks: number) {
+	async update(ticks: number): Promise<void> {
 		const input = this.engine.inputManager.readInput(ticks);
 		if (input & InputMask.EndDialog) {
 			this._bubble.end();
 		}
 	}
 
-	willHide() {
+	public willHide(): void {
 		this.engine.inputManager.mouseDownHandler = () => void 0;
 		this._modalSession.end(0);
 	}

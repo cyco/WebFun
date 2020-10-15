@@ -47,14 +47,14 @@ class Checkbox extends Component {
 		this._box.onchange = f;
 	}
 
-	protected connectedCallback() {
+	protected connectedCallback(): void {
 		super.connectedCallback();
 
 		this.appendChild(this._box);
 		this.appendChild(this._label);
 	}
 
-	protected disconnectedCallback() {
+	protected disconnectedCallback(): void {
 		this.textContent = "";
 
 		super.disconnectedCallback();

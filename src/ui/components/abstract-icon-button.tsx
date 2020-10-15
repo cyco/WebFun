@@ -25,7 +25,7 @@ abstract class AbstractIconButton extends Component {
 		else this.removeAttribute("disabled");
 	}
 
-	protected connectedCallback() {
+	protected connectedCallback(): void {
 		if (!this._icon.parentNode) this.appendChild(this._icon);
 	}
 

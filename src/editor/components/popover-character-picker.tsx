@@ -7,28 +7,28 @@ class PopoverCharacterPicker extends AbstractPopoverTilePicker {
 	private _characters: Char[];
 	private _character: Char;
 
-	protected pickerOnChange(_: TilePicker, e: CustomEvent) {
+	protected pickerOnChange(_: TilePicker, e: CustomEvent): void {
 		this.character = this._characters[e.detail.index as number];
 		this.dispatchEvent(
 			new CustomEvent("change", { detail: { character: this.character }, bubbles: true })
 		);
 	}
 
-	set characters(c) {
+	set characters(c: Char[]) {
 		this._characters = c;
 		this.tiles = c.map(c => c.frames[0].extensionRight);
 	}
 
-	get characters() {
+	get characters(): Char[] {
 		return this._characters;
 	}
 
-	set character(c) {
+	set character(c: Char) {
 		this._character = c;
 		this.tile = c ? c.frames[0].extensionRight : null;
 	}
 
-	get character() {
+	get character(): Char {
 		return this._character;
 	}
 }

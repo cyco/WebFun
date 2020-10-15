@@ -5,7 +5,7 @@ import { not } from "src/util/functional";
 class TicksExpectation implements Expectation {
 	private _ticks: number;
 
-	public static CanBeBuiltFrom(value: string) {
+	public static CanBeBuiltFrom(value: string): boolean {
 		return value.contains("ticks");
 	}
 
@@ -23,13 +23,13 @@ class TicksExpectation implements Expectation {
 		this._ticks = ticks;
 	}
 
-	evaluate(ctx: GameplayContext) {
+	evaluate(ctx: GameplayContext): void {
 		it(`the proper amount of ticks have been executed`, () => {
 			expect(ctx.engine.metronome.tickCount).toEqual(this._ticks);
 		});
 	}
 
-	format() {
+	format(): string {
 		return `Elapsed Ticks: ${this._ticks.toString()}`;
 	}
 }

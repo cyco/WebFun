@@ -17,7 +17,7 @@ class Weapon extends Component {
 		<PaletteView size={new Size(Tile.WIDTH, Tile.HEIGHT)} />
 	) as PaletteView;
 
-	protected connectedCallback() {
+	protected connectedCallback(): void {
 		this.appendChild(this._background);
 		this.appendChild(this._paletteView);
 	}
@@ -43,7 +43,7 @@ class Weapon extends Component {
 		this._paletteView.palette = p;
 	}
 
-	get palette() {
+	get palette(): ColorPalette {
 		return this._paletteView.palette;
 	}
 }

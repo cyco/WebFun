@@ -5,7 +5,7 @@ class TaggedLineBuffer extends LineBuffer {
 	private _tagLines: string[] = [];
 	private _currentTagLine: string = "";
 
-	put(string: string, className?: string) {
+	put(string: string, className?: string): void {
 		super.put(string);
 
 		const parts = string.split("\n");
@@ -18,7 +18,7 @@ class TaggedLineBuffer extends LineBuffer {
 		}
 	}
 
-	endLine() {
+	endLine(): void {
 		if (!this._currentLine.length) return;
 
 		super.endLine();
@@ -27,7 +27,7 @@ class TaggedLineBuffer extends LineBuffer {
 		this._currentTagLine = "";
 	}
 
-	get string() {
+	get string(): string {
 		return this._tagLines.join("<br>");
 	}
 }

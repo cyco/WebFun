@@ -22,7 +22,7 @@ class MenuItemComponent extends Component {
 		this.onmouseup = null;
 	}
 
-	connectedCallback() {
+	protected connectedCallback(): void {
 		super.connectedCallback();
 		this._rebuild();
 	}

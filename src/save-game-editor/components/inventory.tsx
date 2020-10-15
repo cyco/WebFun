@@ -71,7 +71,7 @@ class Inventory extends AbstractList<Tile> {
 		this.cell.palette = t;
 	}
 
-	get palette() {
+	get palette(): ColorPalette {
 		return this.cell.palette;
 	}
 }

@@ -75,7 +75,7 @@ describe("WebFun.Engine.SceneManager", () => {
 
 			async update(_: number) {}
 
-			isOpaque() {
+			public isOpaque(): boolean {
 				return false;
 			}
 		};
@@ -84,7 +84,7 @@ describe("WebFun.Engine.SceneManager", () => {
 
 			async update(_: number) {}
 
-			isOpaque() {
+			public isOpaque(): boolean {
 				return true;
 			}
 		};

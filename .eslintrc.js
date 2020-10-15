@@ -11,7 +11,7 @@ module.exports = {
 		sourceType: "module"
 	},
 	rules: {
-		eqeqeq: "warn",
+		"eqeqeq": "warn",
 		"react/jsx-uses-vars": "warn",
 		"prefer-const": ["warn", { destructuring: "all" }],
 		"no-unused-vars": ["warn", { argsIgnorePattern: "^_[a-zA-Z0-9_]*$" }],
@@ -29,6 +29,6 @@ module.exports = {
 		// temporarily disabled:
 		"sort-imports": "off",
 		"@typescript-eslint/explicit-member-accessibility": "off",
-		"prettier/prettier": "warn",
+		"prettier/prettier": "warn"
 	}
 };

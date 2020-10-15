@@ -104,7 +104,7 @@ class Slider extends Component {
 		this._steps = s;
 	}
 
-	protected connectedCallback() {
+	protected connectedCallback(): void {
 		super.connectedCallback();
 
 		this._setupLeftButton();

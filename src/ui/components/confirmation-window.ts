@@ -55,7 +55,7 @@ class ConfirmationWindow extends AbstractWindow {
 		super.connectedCallback();
 	}
 
-	protected disconnectedCallback() {
+	protected disconnectedCallback(): void {
 		while (this.content.firstChild) {
 			this.content.removeChild(this.content.firstChild);
 		}

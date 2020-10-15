@@ -27,7 +27,7 @@ class PuzzleDependencyGraph {
 		this._engine = engine;
 	}
 
-	public get visitOrder() {
+	public get visitOrder(): number[] {
 		if (!this._solution) {
 			this._solution = this.solve();
 		}

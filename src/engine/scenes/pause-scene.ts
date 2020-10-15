@@ -20,7 +20,7 @@ class PauseScene extends Scene {
 		this._image = image;
 	}
 
-	willShow() {
+	public willShow(): void {
 		this.engine.inputManager.clear();
 		this.engine.temporaryState.totalPlayTime +=
 			(new Date().getTime() - this.engine.temporaryState.currentPlayStart.getTime()) / 1000;
@@ -36,7 +36,7 @@ class PauseScene extends Scene {
 		}
 	}
 
-	async update(ticks: number) {
+	async update(ticks: number): Promise<void> {
 		const engine = this.engine;
 		const inputManager = engine.inputManager.readInput(ticks);
 		if (inputManager & InputMask.Pause) {
@@ -44,12 +44,12 @@ class PauseScene extends Scene {
 		}
 	}
 
-	willHide() {
+	public willHide(): void {
 		this.engine.temporaryState.currentPlayStart = new Date();
 		this.engine.inputManager.clear();
 	}
 
-	isOpaque() {
+	public isOpaque(): boolean {
 		return false;
 	}
 }

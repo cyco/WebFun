@@ -16,7 +16,7 @@ class ZoneLayer extends Component {
 	private _palette: ColorPalette = null;
 	private _imageData: ImageData = null;
 
-	protected connectedCallback() {
+	protected connectedCallback(): void {
 		this.appendChild(this._canvas);
 		this.draw();
 	}
@@ -156,7 +156,7 @@ class ZoneLayer extends Component {
 		if (this.isConnected) this.draw();
 	}
 
-	get palette() {
+	get palette(): ColorPalette {
 		return this._palette;
 	}
 

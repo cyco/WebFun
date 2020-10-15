@@ -12,7 +12,7 @@ class TileComponent extends Component {
 	private _tile: Tile = null;
 	private _image: HTMLElement = document.createElement("div");
 
-	protected connectedCallback() {
+	protected connectedCallback(): void {
 		super.connectedCallback();
 		this.appendChild(this._image);
 	}
@@ -41,7 +41,7 @@ class TileComponent extends Component {
 		this._palette = p;
 	}
 
-	get palette() {
+	get palette(): ColorPalette {
 		return this._palette;
 	}
 }

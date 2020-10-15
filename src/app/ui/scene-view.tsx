@@ -12,11 +12,11 @@ class SceneView extends Component {
 	) as HTMLCanvasElement;
 	private _manager: SceneManager = this._buildSceneManager();
 
-	protected connectedCallback() {
+	protected connectedCallback(): void {
 		this.appendChild(this.canvas);
 	}
 
-	get manager() {
+	get manager(): SceneManager {
 		return this._manager;
 	}
 
