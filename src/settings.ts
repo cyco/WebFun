@@ -1,9 +1,11 @@
 import { LogLevel } from "src/util";
 import persistent from "src/util/persistent";
+import * as SmartPhone from "detect-mobile-browser";
 
 const Settings = persistent(
 	{
-		mobile: true,
+		mobile: SmartPhone(false).isAndroid() || SmartPhone(false).isIPhone(),
+		pwa: new URLSearchParams(window.location.search).get("source") === "pwa",
 		debug: false,
 
 		drawDebugStats: false,

@@ -11,8 +11,6 @@ import GameController from "./game-controller";
 import Settings from "src/settings";
 import { Yoda } from "src/engine/type";
 import "./bootstrap-components.ts";
-import * as SmartPhone from "detect-mobile-browser";
-
 const endPreload = () => {
 	const container = document.getElementById("webfun-preload");
 	if (container) container.remove();
@@ -24,8 +22,6 @@ const main = async () => {
 	window.WebFun = window.WebFun || { JSX: null };
 	window.WebFun.JSX = new ComponentJSXRenderer();
 
-	Settings.mobile = SmartPhone(false).isAndroid() || SmartPhone(false).isIPhone();
-
 	ComponentRegistry.sharedRegistry.registerComponents(Components);
 	ComponentRegistry.sharedRegistry.registerComponents(AppComponents);
 	ComponentRegistry.sharedRegistry.registerComponents(WindowComponents as any);
@@ -35,7 +31,7 @@ const main = async () => {
 	const gameController = new GameController(Yoda, Settings.url.yoda);
 	gameController.newStory();
 	gameController.show();
-	if (Settings.mobile) {
+	if (Settings.mobile && !Settings.pwa) {
 		document.body.style.height = "120vh";
 		setTimeout(() => (window.document.scrollingElement.scrollTop = 0));
 	}
