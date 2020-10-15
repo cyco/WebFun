@@ -32,10 +32,6 @@ const main = async () => {
 
 	endPreload();
 
-	if ("serviceWorker" in navigator) {
-		// navigator.serviceWorker.register("assets/webfun.sw.js");
-	}
-
 	const gameController = new GameController(Yoda, Settings.url.yoda);
 	gameController.newStory();
 	gameController.show();

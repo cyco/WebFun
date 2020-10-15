@@ -10,7 +10,6 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const PWAManifestPlugin = require("webpack-pwa-manifest");
-const ServiceWorkerInjectFileList = require("./sw-file-list");
 const TerserPlugin = require("terser-webpack-plugin");
 const WebpackVisualizerPlugin = require("webpack-visualizer-plugin");
 const cssnano = require("cssnano");
@@ -18,8 +17,7 @@ const postcss = require("postcss");
 
 module.exports = {
 	entry: {
-		"webfun": Path.resolve(Paths.sourceRoot, "app/main"),
-		"webfun.sw": Path.resolve(Paths.sourceRoot, "app/service-worker")
+		webfun: Path.resolve(Paths.sourceRoot, "app/main")
 	},
 	mode: "production",
 	output: {
@@ -131,8 +129,6 @@ module.exports = {
 				}
 			]
 		}),
-		ServiceWorkerInjectFileList({ file: Path.resolve(Paths.buildRoot, "assets/webfun.sw.js") }),
-
 		...(function (args) {
 			if (!args.includes("--stats")) return [];
 
