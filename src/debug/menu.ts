@@ -1,7 +1,8 @@
-import { MenuItemSeparator, MenuItemState, WindowManager, FilePicker } from "src/ui";
+import { MenuItemSeparator, MenuItemState, WindowManager } from "src/ui";
 
 import GameController from "src/app/game-controller";
 import Settings from "src/settings";
+import loadTest from "./load-test";
 
 const SettingsItem = (label: string, key: keyof typeof Settings, settings: typeof Settings) => ({
 	title: label,
@@ -33,48 +34,21 @@ export default (gameController: GameController) => {
 			MenuItemSeparator,
 			SettingsAction("Create Test", async () => {
 				const TestCreatorWindow = (await import("./components")).TestCreatorWindow;
-				const simulator = document.createElement(TestCreatorWindow.tagName) as InstanceType<
-					typeof TestCreatorWindow
-				>;
+				const simulator = document.createElement(TestCreatorWindow.tagName) as InstanceType<typeof TestCreatorWindow>;
 				simulator.gameController = gameController;
 				simulator.state = localStorage.prefixedWith("simulator");
 				WindowManager.defaultManager.showWindow(simulator);
 			}),
-			SettingsAction("Load Test", async () => {
-				const [file] = await FilePicker.Pick();
-				if (!file) return;
-
-				const contents = await file.readAsText();
-				const Parser = (await import("./automation/test")).Parser;
-				const testCases = Parser.Parse(file.name, contents);
-
-				const TestCreatorWindow = (await import("./components")).TestCreatorWindow;
-				testCases.forEach(testCase => {
-					const simulator = document.createElement(TestCreatorWindow.tagName) as InstanceType<
-						typeof TestCreatorWindow
-					>;
-					simulator.gameController = gameController;
-					simulator.state = localStorage.prefixedWith("simulator");
-					simulator.testCase = testCase;
-					WindowManager.defaultManager.showWindow(simulator);
-				});
-			}),
+			SettingsAction("Load Test", loadTest(gameController)),
 			MenuItemSeparator,
-			SettingsAction("Debug Scripts", async () =>
-				(await import("./script-debugger")).default.sharedDebugger.show()
-			),
+			SettingsAction("Debug Scripts", async () => (await import("./script-debugger")).default.sharedDebugger.show()),
 			SettingsAction(
 				"Edit Current Data",
-				async () =>
-					(await import("src/editor")).main(WindowManager.defaultManager, gameController.data),
+				async () => (await import("src/editor")).main(WindowManager.defaultManager, gameController.data),
 				true
 			),
 			SettingsAction("Edit Game Data...", async () => (await import("src/editor")).main(), true),
-			SettingsAction(
-				"Edit Save Game...",
-				async () => (await import("src/save-game-editor")).main(),
-				true
-			)
+			SettingsAction("Edit Save Game...", async () => (await import("src/save-game-editor")).main(), true)
 		]
 	};
 };
