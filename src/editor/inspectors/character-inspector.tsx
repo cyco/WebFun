@@ -16,9 +16,7 @@ class CharacterInspector extends AbstractInspector {
 		this.window.autosaveName = "character-inspector";
 		this.window.style.width = "416px";
 		this.window.content.style.height = "280px";
-		this.window.addTitlebarButton(
-			<IconButton icon="plus" title="Add new character" onclick={() => this.addCharacter()} />
-		);
+		this.window.addTitlebarButton(<IconButton icon="plus" title="Add new character" onclick={() => this.addCharacter()} />);
 
 		this._list = (<List state={state.prefixedWith("list")} />) as List<Char>;
 		this._list.cell = (
@@ -26,12 +24,8 @@ class CharacterInspector extends AbstractInspector {
 				className="character-inspector-list"
 				searchDelegate={this}
 				onclick={(e: MouseEvent) => this._onCellClicked(e.currentTarget as CharacterInspectorCell)}
-				onchange={(e: CustomEvent) =>
-					this.renameCharacter((e.detail.cell as CharacterInspectorCell).data, e.detail.name)
-				}
-				onremove={(e: CustomEvent) =>
-					this.removeCharacter((e.detail.cell as CharacterInspectorCell).data)
-				}
+				onchange={(e: CustomEvent) => this.renameCharacter((e.detail.cell as CharacterInspectorCell).data, e.detail.name)}
+				onremove={(e: CustomEvent) => this.removeCharacter((e.detail.cell as CharacterInspectorCell).data)}
 			/>
 		) as CharacterInspectorCell;
 		this.window.content.appendChild(this._list);

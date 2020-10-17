@@ -59,18 +59,15 @@ class ShortcutManager implements EventListenerObject {
 
 		if (!currentCtrlKey && !currentMetaKey && this._plainKeyShortcutCount === 0) return;
 
-		const keyCodeMatches = ([{ keyCode }]: RegisteredShortcut) =>
-			keyCode === undefined || keyCode === currentKeyCode;
-		const ctrlKeyMatches = ([{ ctrlKey }]: RegisteredShortcut) =>
-			ctrlKey === undefined || ctrlKey === currentCtrlKey;
-		const metaKeyMatches = ([{ metaKey }]: RegisteredShortcut) =>
-			metaKey === undefined || metaKey === currentMetaKey;
-		const isInNode = ([{ node }]: RegisteredShortcut) =>
-			!node || (this._node && node.contains(this._node));
+		const keyCodeMatches = ([{ keyCode }]: RegisteredShortcut) => keyCode === undefined || keyCode === currentKeyCode;
+		const ctrlKeyMatches = ([{ ctrlKey }]: RegisteredShortcut) => ctrlKey === undefined || ctrlKey === currentCtrlKey;
+		const metaKeyMatches = ([{ metaKey }]: RegisteredShortcut) => metaKey === undefined || metaKey === currentMetaKey;
+		const isInNode = ([{ node }]: RegisteredShortcut) => !node || (this._node && node.contains(this._node));
 
-		const [, callback] = this._shortcuts.find(
-			and(identity, keyCodeMatches, ctrlKeyMatches, metaKeyMatches, isInNode)
-		) || [null, null];
+		const [, callback] = this._shortcuts.find(and(identity, keyCodeMatches, ctrlKeyMatches, metaKeyMatches, isInNode)) || [
+			null,
+			null
+		];
 
 		if (callback instanceof Function) {
 			callback();

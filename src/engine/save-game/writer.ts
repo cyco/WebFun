@@ -86,9 +86,7 @@ class Writer {
 
 	private _writeRoom(zone: Zone, visited: boolean, stream: OutputStream): void {
 		this._writeZone(zone, visited, stream);
-		const doors = zone.hotspots.filter(
-			(hotspot: Hotspot) => hotspot.type === Hotspot.Type.DoorIn && hotspot.arg !== -1
-		);
+		const doors = zone.hotspots.filter((hotspot: Hotspot) => hotspot.type === Hotspot.Type.DoorIn && hotspot.arg !== -1);
 		doors.forEach((hotspot: Hotspot) => {
 			const zone = this._assets.get(Zone, hotspot.arg);
 			stream.writeInt16(zone.id);

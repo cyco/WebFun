@@ -24,8 +24,7 @@ class SidebarLayersCell extends Component {
 
 		this._list = document.createElement(List.tagName) as List<Layer>;
 		this._list.cell = document.createElement(SidebarLayer.tagName) as SidebarLayer;
-		this._list.cell.onclick = (e: MouseEvent) =>
-			this.activateLayerForCell(e.currentTarget as SidebarLayer);
+		this._list.cell.onclick = (e: MouseEvent) => this.activateLayerForCell(e.currentTarget as SidebarLayer);
 
 		this._buildLayers();
 		this._list.items = this._layers;
@@ -132,9 +131,7 @@ class SidebarLayersCell extends Component {
 				keyCode: 188
 			})
 		);
-		this._shortcuts.push(
-			manager.registerShortcut(() => this._toggleLock(), { ctrlKey: true, keyCode: 190 })
-		);
+		this._shortcuts.push(manager.registerShortcut(() => this._toggleLock(), { ctrlKey: true, keyCode: 190 }));
 	}
 
 	private _unregisterShortcuts() {
@@ -177,9 +174,7 @@ class SidebarLayersCell extends Component {
 		cell.classList.add("active");
 
 		const layer = cell.data;
-		this.dispatchEvent(
-			new CustomEvent(Events.LayerDidChange, { detail: { layer: layer }, bubbles: true })
-		);
+		this.dispatchEvent(new CustomEvent(Events.LayerDidChange, { detail: { layer: layer }, bubbles: true }));
 	}
 }
 

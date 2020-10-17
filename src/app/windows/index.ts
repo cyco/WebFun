@@ -7,13 +7,4 @@ import StatisticsWindow from "./statistics-window";
 import WorldSizeWindow from "./world-size-window";
 import HelpViewer from "./help-viewer";
 
-export {
-	DifficultyWindow,
-	GameSpeedWindow,
-	MainMenu,
-	MainWindow,
-	MobileMainMenu,
-	StatisticsWindow,
-	WorldSizeWindow,
-	HelpViewer
-};
+export { DifficultyWindow, GameSpeedWindow, MainMenu, MainWindow, MobileMainMenu, StatisticsWindow, WorldSizeWindow, HelpViewer };

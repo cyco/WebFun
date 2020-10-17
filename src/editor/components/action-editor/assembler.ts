@@ -114,10 +114,7 @@ class Assembler {
 		const text = opcode.UsesText ? args.pop() : "";
 
 		if (this.checkArgumentCount && ~opcode.Arguments && args.length !== opcode.Arguments.length) {
-			throw new AssemblerInputError(
-				`Expected ${opcode.Arguments} arguments but found ${args.length}.`,
-				input
-			);
+			throw new AssemblerInputError(`Expected ${opcode.Arguments} arguments but found ${args.length}.`, input);
 		}
 
 		if (typeof text !== "string") {

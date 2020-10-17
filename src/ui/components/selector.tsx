@@ -45,9 +45,7 @@ class Selector extends Component {
 
 	set options(options: string[] | { label: string; value: string }[]) {
 		(options as any).forEach((option: any) =>
-			typeof option === "string"
-				? this.addOption(option, option)
-				: this.addOption(option.label, option.value)
+			typeof option === "string" ? this.addOption(option, option) : this.addOption(option.label, option.value)
 		);
 	}
 

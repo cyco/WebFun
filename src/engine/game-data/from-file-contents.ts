@@ -1,12 +1,5 @@
 import { Action, Condition, Hotspot, Instruction, Sound, Puzzle, Char, Zone } from "../objects";
-import {
-	MutableAction,
-	MutableChar,
-	MutableMonster,
-	MutablePuzzle,
-	MutableTile,
-	MutableZone
-} from "src/engine/mutable-objects";
+import { MutableAction, MutableChar, MutableMonster, MutablePuzzle, MutableTile, MutableZone } from "src/engine/mutable-objects";
 import { Point, Size } from "src/util";
 import {
 	Monster as RawMonster,

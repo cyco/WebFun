@@ -84,8 +84,7 @@ class Color {
 		c = c.toLowerCase();
 
 		let matches = HexRegex.exec(c);
-		if (matches)
-			return [parseInt(matches[1], 0x10), parseInt(matches[2], 0x10), parseInt(matches[3], 0x10), 1];
+		if (matches) return [parseInt(matches[1], 0x10), parseInt(matches[2], 0x10), parseInt(matches[3], 0x10), 1];
 
 		matches = RGBRegex.exec(c);
 		if (matches) {

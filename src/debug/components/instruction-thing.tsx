@@ -40,11 +40,7 @@ abstract class InstructionThing extends Component {
 	}
 
 	private _paren(type: "open" | "close") {
-		return (
-			<span className={type === "close" ? "paren-close" : "paren-open"}>
-				{type === "open" ? "(" : ")"}
-			</span>
-		);
+		return <span className={type === "close" ? "paren-close" : "paren-open"}>{type === "open" ? "(" : ")"}</span>;
 	}
 
 	protected appendNumberArgument(arg: number): void {

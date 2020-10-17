@@ -7,10 +7,7 @@ import { FilePicker } from "src/ui";
 
 class SetupImageInspector extends AbstractInspector {
 	private _imageEditor = (
-		<PaletteImageEditor
-			size={new Size(288, 288)}
-			style={{ width: "230px", height: "230px", display: "inline-block" }}
-		/>
+		<PaletteImageEditor size={new Size(288, 288)} style={{ width: "230px", height: "230px", display: "inline-block" }} />
 	) as PaletteImageEditor;
 	private _colorPicker = (
 		<PaletteColorPicker
@@ -65,12 +62,7 @@ class SetupImageInspector extends AbstractInspector {
 
 		for (let i = 0; i < size; i++) {
 			const j = i * 4;
-			const [r, g, b, a] = [
-				imageData.data[j + 0],
-				imageData.data[j + 1],
-				imageData.data[j + 2],
-				imageData.data[j + 3]
-			];
+			const [r, g, b, a] = [imageData.data[j + 0], imageData.data[j + 1], imageData.data[j + 2], imageData.data[j + 3]];
 
 			const color = palette.findColor(r, g, b, a);
 			paletteImage[i] = color;

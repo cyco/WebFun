@@ -5,11 +5,7 @@ import { Point } from "src/util";
 import Token from "./token";
 
 class ArgumentProcessor {
-	private definitions: { [_: string]: Condition | Instruction } = Object.assign(
-		{},
-		ConditionsByName,
-		InstructionsByName
-	);
+	private definitions: { [_: string]: Condition | Instruction } = Object.assign({}, ConditionsByName, InstructionsByName);
 	private _data: GameData;
 
 	constructor(data: GameData) {
@@ -37,27 +33,18 @@ class ArgumentProcessor {
 			const type = argumentTypes[i];
 
 			if (type === Type.SoundID) {
-				argumentNode.sound =
-					+argumentNode === -1 ? null : this._data.sounds[+argumentNode]?.file ?? "<unknown>";
+				argumentNode.sound = +argumentNode === -1 ? null : this._data.sounds[+argumentNode]?.file ?? "<unknown>";
 			}
 			if (type === Type.TileID) {
 				argumentNode.tile = +argumentNode === -1 ? null : this._data.tiles[+argumentNode];
 			}
 
 			if (type === Type.ZoneX) {
-				argumentNode.point = new Point(
-					+argumentNode.textContent,
-					+argumentNode.nextElementSibling.textContent,
-					0
-				);
+				argumentNode.point = new Point(+argumentNode.textContent, +argumentNode.nextElementSibling.textContent, 0);
 			}
 
 			if (type === Type.ZoneY) {
-				argumentNode.point = new Point(
-					+argumentNode.previousElementSibling.textContent,
-					+argumentNode.textContent,
-					0
-				);
+				argumentNode.point = new Point(+argumentNode.previousElementSibling.textContent, +argumentNode.textContent, 0);
 			}
 
 			if (type === Type.ZoneZ) {

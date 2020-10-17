@@ -1,15 +1,4 @@
-import {
-	Action,
-	Char,
-	Condition,
-	Hotspot,
-	Instruction,
-	Monster,
-	Puzzle,
-	Sound,
-	Tile,
-	Zone
-} from "src/engine/objects";
+import { Action, Char, Condition, Hotspot, Instruction, Monster, Puzzle, Sound, Tile, Zone } from "src/engine/objects";
 import { OutputStream, add } from "src/util";
 import { Yoda } from "src/engine/type";
 
@@ -65,22 +54,13 @@ class GameDataSerializer {
 
 		data.zones.forEach((zone: Zone, index: number) => {
 			const izaxSize =
-				8 +
-				2 +
-				2 +
-				zone.monsters.length * 44 +
-				2 +
-				2 * zone.requiredItems.length +
-				2 +
-				2 * zone.goalItems.length;
+				8 + 2 + 2 + zone.monsters.length * 44 + 2 + 2 * zone.requiredItems.length + 2 + 2 * zone.goalItems.length;
 			const izx2Size = 8 + 2 + 2 * zone.providedItems.length;
 			const izx3Size = 8 + 2 + 2 * zone.npcs.length;
 			const izx4Size = 2;
 			const calculateActionSize = (action: Action) =>
 				action.conditions.map((condition: Condition) => 0xe + condition.text.length).reduce(add, 2) +
-				action.instructions
-					.map((instruction: Instruction) => 0xe + instruction.text.length)
-					.reduce(add, 2);
+				action.instructions.map((instruction: Instruction) => 0xe + instruction.text.length).reduce(add, 2);
 			const izonSize = 20 + zone.size.height * zone.size.width * Zone.LAYERS * 2;
 			const hotspotSize = zone.hotspots.length * 0xc;
 			const actionSize = zone.actions.map(calculateActionSize).reduce(add, 0) + 8 * zone.actions.length;
@@ -189,9 +169,7 @@ class GameDataSerializer {
 		stream.writeCharacters("PUZ2");
 		stream.writeUint32(
 			data.puzzles.length * 28 +
-				data.puzzles
-					.map((p: Puzzle) => p.strings.map(p => 2 + p.length).reduce(add, 0))
-					.reduce(add, 0) +
+				data.puzzles.map((p: Puzzle) => p.strings.map(p => 2 + p.length).reduce(add, 0)).reduce(add, 0) +
 				2
 		);
 

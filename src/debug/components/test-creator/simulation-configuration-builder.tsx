@@ -25,18 +25,14 @@ class SimulationConfigurationBuilder extends Component {
 		() =>
 			(
 				<PopoverZonePicker
-					filter={({ type, planet }: Zone) =>
-						type === Zone.Type.Empty && planet === this.currentZone.planet
-					}
+					filter={({ type, planet }: Zone) => type === Zone.Type.Empty && planet === this.currentZone.planet}
 					disabled={true}
 				/>
 			) as PopoverZonePicker
 	);
 	private _findTile = (<PopoverTilePicker title="Item to find" />) as PopoverTilePicker;
 	private _npcTile = (<PopoverTilePicker title="Npc involved in trade" />) as PopoverTilePicker;
-	private _requiredTile = (
-		<PopoverTilePicker title="Item required to solve puzzle" />
-	) as PopoverTilePicker;
+	private _requiredTile = (<PopoverTilePicker title="Item required to solve puzzle" />) as PopoverTilePicker;
 	private _required2Tile = (<PopoverTilePicker title="Item required to solve goal" />) as PopoverTilePicker;
 	private _inventory: number[] = [];
 	private _tags: string[];
@@ -83,16 +79,12 @@ class SimulationConfigurationBuilder extends Component {
 	public set currentZone(zone: Zone) {
 		const connectedZones = this.connectedZones(zone);
 		this._mainPicker.zone = zone;
-		this._findTile.tiles = zone.providedItems
-			.concat(...connectedZones.map(z => z.providedItems))
-			.unique();
+		this._findTile.tiles = zone.providedItems.concat(...connectedZones.map(z => z.providedItems)).unique();
 		this._findTile.tile = this._findTile.tiles.first();
 		this._npcTile.tiles = zone.npcs.concat(...connectedZones.map(z => z.npcs)).unique();
 		this._npcTile.tile = this._npcTile.tiles.first();
 
-		this._requiredTile.tiles = zone.requiredItems
-			.concat(...connectedZones.map(z => z.requiredItems))
-			.unique();
+		this._requiredTile.tiles = zone.requiredItems.concat(...connectedZones.map(z => z.requiredItems)).unique();
 		this._requiredTile.tile = this._requiredTile.tiles.first();
 		this._required2Tile.tiles = zone.goalItems.concat(...connectedZones.map(z => z.goalItems)).unique();
 		this._required2Tile.tile = this._required2Tile.tiles.first();

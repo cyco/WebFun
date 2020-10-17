@@ -11,9 +11,7 @@ import { ColorPalette, GameData } from "src/engine";
 class ConfigurationBuilder extends Component {
 	public static readonly tagName = "wf-debug-test-creator-configuration-builder";
 	private _state: Storage = new DiscardingStorage();
-	private _simulationConfigurationBuilder = (
-		<SimulationConfigurationBuilder />
-	) as SimulationConfigurationBuilder;
+	private _simulationConfigurationBuilder = (<SimulationConfigurationBuilder />) as SimulationConfigurationBuilder;
 	private _worldConfigurationBuilder = (<WorldConfigurationBuilder />) as WorldConfigurationBuilder;
 	private _initialConfiguration: Configuration;
 
@@ -30,9 +28,7 @@ class ConfigurationBuilder extends Component {
 			...[
 				<SegmentControl
 					onsegmentchange={(segment: Segment) => {
-						this.querySelectorAll("#world,#simulation").forEach(
-							(n: HTMLElement) => (n.style.display = "none")
-						);
+						this.querySelectorAll("#world,#simulation").forEach((n: HTMLElement) => (n.style.display = "none"));
 
 						const target = this.querySelector("#" + segment.className) as HTMLElement;
 						target.style.display = "";

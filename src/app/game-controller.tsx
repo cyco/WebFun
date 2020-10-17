@@ -47,7 +47,9 @@ class GameController extends EventTarget implements EventListenerObject {
 
 		this.settings.mobile = !!(SmartPhone(false).isAndroid() || SmartPhone(false).isIPhone());
 		const mainMenuClasss = this.settings.mobile ? MobileMainMenu : MainMenu;
-		this._window = (<MainWindow menu={new mainMenuClasss(this)} className={this.settings.mobile ? "mobile" : ""} />) as MainWindow;
+		this._window = (
+			<MainWindow menu={new mainMenuClasss(this)} className={this.settings.mobile ? "mobile" : ""} />
+		) as MainWindow;
 
 		if (SmartPhone(false).isIPad()) {
 		}
@@ -106,7 +108,8 @@ class GameController extends EventTarget implements EventListenerObject {
 		const gameState = this.engine.gameState;
 		if (
 			gameState === GameState.Running &&
-			(await ModalConfirm("This command will discard the current world.\nBuild a new world anyway?")) !== ConfirmationResult.Confirmed
+			(await ModalConfirm("This command will discard the current world.\nBuild a new world anyway?")) !==
+				ConfirmationResult.Confirmed
 		) {
 			return;
 		}

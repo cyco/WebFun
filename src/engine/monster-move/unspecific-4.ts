@@ -1,14 +1,7 @@
 import { Monster, Zone, Sound } from "../objects";
 import { Point } from "src/util";
 import randomDirection from "./helpers/random-direction";
-import {
-	evade,
-	noMovement,
-	playSound,
-	canPerformMeleeAttack,
-	performMoveAfterDoorwayCheck,
-	moveCheck
-} from "./helpers";
+import { evade, noMovement, playSound, canPerformMeleeAttack, performMoveAfterDoorwayCheck, moveCheck } from "./helpers";
 import { Engine } from "src/engine";
 
 export default (monster: Monster, zone: Zone, engine: Engine) => {

@@ -28,9 +28,7 @@ class ZonePicker extends Component {
 				searchDelegate={new ZoneFilter()}
 				cell={
 					<ZonePickerCell
-						onclick={({ currentTarget }: MouseEvent) =>
-							this._cellClicked(currentTarget as ZonePickerCell)
-						}
+						onclick={({ currentTarget }: MouseEvent) => this._cellClicked(currentTarget as ZonePickerCell)}
 					/>
 				}
 			/>

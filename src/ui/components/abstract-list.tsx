@@ -32,8 +32,7 @@ abstract class AbstractList<T> extends Component {
 	private _state: Storage = new DiscardingStorage();
 
 	protected connectedCallback(): void {
-		if (this.searchDelegate && !this._bar.parentElement)
-			this.insertBefore(this._bar, this.firstElementChild);
+		if (this.searchDelegate && !this._bar.parentElement) this.insertBefore(this._bar, this.firstElementChild);
 
 		this.rebuild();
 

@@ -40,11 +40,7 @@ class RecordingInputManager implements InputManager {
 		let direction;
 		if (input & InputMask.Attack) {
 			this._records.push(Syntax.Attack);
-		} else if (
-			input & InputMask.Walk &&
-			input & InputMask.Drag &&
-			(direction = this._currentDragDirection())
-		) {
+		} else if (input & InputMask.Walk && input & InputMask.Drag && (direction = this._currentDragDirection())) {
 			this._records.push((Syntax.Drag as any)[direction]);
 		} else if (input & InputMask.Walk && (direction = this._currentMoveDirection())) {
 			this._records.push((Syntax.Move as any)[direction]);

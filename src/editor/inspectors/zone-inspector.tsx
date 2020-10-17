@@ -25,9 +25,7 @@ class ZoneInspector extends AbstractInspector {
 		this.window.style.width = "326px";
 		this.window.content.style.maxHeight = "300px";
 		this.window.content.style.flexDirection = "column";
-		this.window.addTitlebarButton(
-			<IconButton icon="plus" title="Add new zone" onclick={() => this.addZone()} />
-		);
+		this.window.addTitlebarButton(<IconButton icon="plus" title="Add new zone" onclick={() => this.addZone()} />);
 
 		this._list = (<List state={state.prefixedWith("list")} searchDelegate={this} />) as List<Zone>;
 		this._list.cell = (

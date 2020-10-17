@@ -1,6 +1,5 @@
 var Module = (function () {
-	var _scriptDir =
-		typeof document !== "undefined" && document.currentScript ? document.currentScript.src : undefined;
+	var _scriptDir = typeof document !== "undefined" && document.currentScript ? document.currentScript.src : undefined;
 
 	return function (Module) {
 		Module = Module || {};
@@ -903,10 +902,7 @@ var Module = (function () {
 				var prevCapacity = node.contents ? node.contents.length : 0;
 				if (prevCapacity >= newCapacity) return;
 				var CAPACITY_DOUBLING_MAX = 1024 * 1024;
-				newCapacity = Math.max(
-					newCapacity,
-					(prevCapacity * (prevCapacity < CAPACITY_DOUBLING_MAX ? 2 : 1.125)) >>> 0
-				);
+				newCapacity = Math.max(newCapacity, (prevCapacity * (prevCapacity < CAPACITY_DOUBLING_MAX ? 2 : 1.125)) >>> 0);
 				if (prevCapacity != 0) newCapacity = Math.max(newCapacity, 256);
 				var oldContents = node.contents;
 				node.contents = new Uint8Array(newCapacity);
@@ -1712,8 +1708,7 @@ var Module = (function () {
 					FS.hashAddNode(old_node);
 				}
 				try {
-					if (FS.trackingDelegate["onMovePath"])
-						FS.trackingDelegate["onMovePath"](old_path, new_path);
+					if (FS.trackingDelegate["onMovePath"]) FS.trackingDelegate["onMovePath"](old_path, new_path);
 				} catch (e) {
 					err(
 						"FS.trackingDelegate['onMovePath']('" +
@@ -1745,21 +1740,14 @@ var Module = (function () {
 						FS.trackingDelegate["willDeletePath"](path);
 					}
 				} catch (e) {
-					err(
-						"FS.trackingDelegate['willDeletePath']('" +
-							path +
-							"') threw an exception: " +
-							e.message
-					);
+					err("FS.trackingDelegate['willDeletePath']('" + path + "') threw an exception: " + e.message);
 				}
 				parent.node_ops.rmdir(parent, name);
 				FS.destroyNode(node);
 				try {
 					if (FS.trackingDelegate["onDeletePath"]) FS.trackingDelegate["onDeletePath"](path);
 				} catch (e) {
-					err(
-						"FS.trackingDelegate['onDeletePath']('" + path + "') threw an exception: " + e.message
-					);
+					err("FS.trackingDelegate['onDeletePath']('" + path + "') threw an exception: " + e.message);
 				}
 			},
 			readdir: function (path) {
@@ -1790,21 +1778,14 @@ var Module = (function () {
 						FS.trackingDelegate["willDeletePath"](path);
 					}
 				} catch (e) {
-					err(
-						"FS.trackingDelegate['willDeletePath']('" +
-							path +
-							"') threw an exception: " +
-							e.message
-					);
+					err("FS.trackingDelegate['willDeletePath']('" + path + "') threw an exception: " + e.message);
 				}
 				parent.node_ops.unlink(parent, name);
 				FS.destroyNode(node);
 				try {
 					if (FS.trackingDelegate["onDeletePath"]) FS.trackingDelegate["onDeletePath"](path);
 				} catch (e) {
-					err(
-						"FS.trackingDelegate['onDeletePath']('" + path + "') threw an exception: " + e.message
-					);
+					err("FS.trackingDelegate['onDeletePath']('" + path + "') threw an exception: " + e.message);
 				}
 			},
 			readlink: function (path) {
@@ -2009,12 +1990,7 @@ var Module = (function () {
 						FS.trackingDelegate["onOpenFile"](path, trackingFlags);
 					}
 				} catch (e) {
-					err(
-						"FS.trackingDelegate['onOpenFile']('" +
-							path +
-							"', flags) threw an exception: " +
-							e.message
-					);
+					err("FS.trackingDelegate['onOpenFile']('" + path + "', flags) threw an exception: " + e.message);
 				}
 				return stream;
 			},
@@ -2105,15 +2081,9 @@ var Module = (function () {
 				var bytesWritten = stream.stream_ops.write(stream, buffer, offset, length, position, canOwn);
 				if (!seeking) stream.position += bytesWritten;
 				try {
-					if (stream.path && FS.trackingDelegate["onWriteToFile"])
-						FS.trackingDelegate["onWriteToFile"](stream.path);
+					if (stream.path && FS.trackingDelegate["onWriteToFile"]) FS.trackingDelegate["onWriteToFile"](stream.path);
 				} catch (e) {
-					err(
-						"FS.trackingDelegate['onWriteToFile']('" +
-							stream.path +
-							"') threw an exception: " +
-							e.message
-					);
+					err("FS.trackingDelegate['onWriteToFile']('" + stream.path + "') threw an exception: " + e.message);
 				}
 				return bytesWritten;
 			},
@@ -2437,9 +2407,7 @@ var Module = (function () {
 				return FS.create(path, mode);
 			},
 			createDataFile: function (parent, name, data, canRead, canWrite, canOwn) {
-				var path = name
-					? PATH.join2(typeof parent === "string" ? parent : FS.getPath(parent), name)
-					: parent;
+				var path = name ? PATH.join2(typeof parent === "string" ? parent : FS.getPath(parent), name) : parent;
 				var mode = FS.getMode(canRead, canWrite);
 				var node = FS.create(path, mode);
 				if (data) {
@@ -2555,22 +2523,16 @@ var Module = (function () {
 						throw new Error("Couldn't load " + url + ". Status: " + xhr.status);
 					var datalength = Number(xhr.getResponseHeader("Content-length"));
 					var header;
-					var hasByteServing =
-						(header = xhr.getResponseHeader("Accept-Ranges")) && header === "bytes";
+					var hasByteServing = (header = xhr.getResponseHeader("Accept-Ranges")) && header === "bytes";
 					var usesGzip = (header = xhr.getResponseHeader("Content-Encoding")) && header === "gzip";
 					var chunkSize = 1024 * 1024;
 					if (!hasByteServing) chunkSize = datalength;
 					var doXHR = function (from, to) {
-						if (from > to)
-							throw new Error(
-								"invalid range (" + from + ", " + to + ") or no bytes requested!"
-							);
-						if (to > datalength - 1)
-							throw new Error("only " + datalength + " bytes available! programmer error!");
+						if (from > to) throw new Error("invalid range (" + from + ", " + to + ") or no bytes requested!");
+						if (to > datalength - 1) throw new Error("only " + datalength + " bytes available! programmer error!");
 						var xhr = new XMLHttpRequest();
 						xhr.open("GET", url, false);
-						if (datalength !== chunkSize)
-							xhr.setRequestHeader("Range", "bytes=" + from + "-" + to);
+						if (datalength !== chunkSize) xhr.setRequestHeader("Range", "bytes=" + from + "-" + to);
 						if (typeof Uint8Array !== "undefined") xhr.responseType = "arraybuffer";
 						if (xhr.overrideMimeType) {
 							xhr.overrideMimeType("text/plain; charset=x-user-defined");
@@ -2592,8 +2554,7 @@ var Module = (function () {
 						if (typeof lazyArray.chunks[chunkNum] === "undefined") {
 							lazyArray.chunks[chunkNum] = doXHR(start, end);
 						}
-						if (typeof lazyArray.chunks[chunkNum] === "undefined")
-							throw new Error("doXHR failed!");
+						if (typeof lazyArray.chunks[chunkNum] === "undefined") throw new Error("doXHR failed!");
 						return lazyArray.chunks[chunkNum];
 					});
 					if (usesGzip || !datalength) {
@@ -2729,9 +2690,7 @@ var Module = (function () {
 				}
 			},
 			indexedDB: function () {
-				return (
-					window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB
-				);
+				return window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
 			},
 			DB_NAME: function () {
 				return "EM_FS_" + window.location.pathname;
@@ -2810,14 +2769,7 @@ var Module = (function () {
 							if (FS.analyzePath(path).exists) {
 								FS.unlink(path);
 							}
-							FS.createDataFile(
-								PATH.dirname(path),
-								PATH.basename(path),
-								getRequest.result,
-								true,
-								true,
-								true
-							);
+							FS.createDataFile(PATH.dirname(path), PATH.basename(path), getRequest.result, true, true, true);
 							ok++;
 							if (ok + fail == total) finish();
 						};
@@ -3315,14 +3267,13 @@ var Module = (function () {
 		};
 		var asm = Module["asm"](asmGlobalArg, asmLibraryArg, buffer);
 		var __ZL22initialize_malloc_heapv = (Module["__ZL22initialize_malloc_heapv"] = function () {
-			return (__ZL22initialize_malloc_heapv = Module["__ZL22initialize_malloc_heapv"] =
-				Module["asm"]["m"]).apply(null, arguments);
-		});
-		var ___errno_location = (Module["___errno_location"] = function () {
-			return (___errno_location = Module["___errno_location"] = Module["asm"]["n"]).apply(
+			return (__ZL22initialize_malloc_heapv = Module["__ZL22initialize_malloc_heapv"] = Module["asm"]["m"]).apply(
 				null,
 				arguments
 			);
+		});
+		var ___errno_location = (Module["___errno_location"] = function () {
+			return (___errno_location = Module["___errno_location"] = Module["asm"]["n"]).apply(null, arguments);
 		});
 		var _get_version = (Module["_get_version"] = function () {
 			return (_get_version = Module["_get_version"] = Module["asm"]["o"]).apply(null, arguments);
@@ -3426,12 +3377,7 @@ var Module = (function () {
 				}
 				try {
 					FS.chdir("/tmp");
-					return ccall(
-						"render",
-						"string",
-						["array", "number", "string"],
-						[data, data.byteLength, filename]
-					);
+					return ccall("render", "string", ["array", "number", "string"], [data, data.byteLength, filename]);
 				} finally {
 					for (const f of FS.readdir("/tmp")) {
 						if (f === "." || f === "..") continue;

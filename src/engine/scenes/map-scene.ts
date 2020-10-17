@@ -44,12 +44,7 @@ class MapScene extends Scene {
 	static readonly LOCATOR_ANIMATION_TICKS = 10;
 	private _ticks: number = 0;
 	private _location: Tile = null;
-	private _cheatInput = new CheatCodeInput([
-		new Weapons(),
-		new UnlimitedAmmo(),
-		new Invincibility(),
-		new RequiredItems()
-	]);
+	private _cheatInput = new CheatCodeInput([new Weapons(), new UnlimitedAmmo(), new Invincibility(), new RequiredItems()]);
 	private _locatorTile = new LocatorTile();
 	private _pdg: PuzzleDependencyGraph;
 
@@ -87,10 +82,7 @@ class MapScene extends Scene {
 		const cheatMessages = this._cheatInput.execute(engine);
 		if (cheatMessages.length) {
 			this._cheatInput.reset();
-			this._showText(
-				cheatMessages.first(),
-				this.engine.currentWorld.findLocationOfZone(this.engine.currentZone)
-			);
+			this._showText(cheatMessages.first(), this.engine.currentWorld.findLocationOfZone(this.engine.currentZone));
 		}
 
 		this._ticks++;
@@ -191,9 +183,7 @@ class MapScene extends Scene {
 		const requires = sector.requiredItem;
 		const gives = sector.findItem;
 		console.log(
-			[requires ? `requires ${requires.name}` : null, gives ? `gives ${gives.name}` : null]
-				.filter(i => i)
-				.join(", ")
+			[requires ? `requires ${requires.name}` : null, gives ? `gives ${gives.name}` : null].filter(i => i).join(", ")
 		);
 
 		const typeForTile = (tile: Tile): number => {
@@ -314,10 +304,7 @@ class MapScene extends Scene {
 
 		const { location } = engine.findLocationOfZone(engine.currentZone);
 
-		if (
-			(this._ticks % (2 * MapScene.LOCATOR_ANIMATION_TICKS)) / MapScene.LOCATOR_ANIMATION_TICKS < 1 &&
-			location
-		) {
+		if ((this._ticks % (2 * MapScene.LOCATOR_ANIMATION_TICKS)) / MapScene.LOCATOR_ANIMATION_TICKS < 1 && location) {
 			if (this._location) drawTileAt(this._location, location.x, location.y);
 		}
 
@@ -336,17 +323,11 @@ class MapScene extends Scene {
 				const v = order[y * 10 + x] ?? -1;
 				if (v === -1) continue;
 
-				renderer.renderText(
-					(v + 1).toString(),
-					new Point(4 + x * 28 + 28 / 2.0, 1 + y * 28 + 28 / 2.0),
-					{
-						textAlign: "center",
-						fillStyle: this.engine.world.at(y, x).solved
-							? rgba(78, 52, 49, 1)
-							: rgba(231, 37, 34, 1),
-						font: '15px "Anonymous Pro", monospace'
-					}
-				);
+				renderer.renderText((v + 1).toString(), new Point(4 + x * 28 + 28 / 2.0, 1 + y * 28 + 28 / 2.0), {
+					textAlign: "center",
+					fillStyle: this.engine.world.at(y, x).solved ? rgba(78, 52, 49, 1) : rgba(231, 37, 34, 1),
+					font: '15px "Anonymous Pro", monospace'
+				});
 			}
 		}
 	}

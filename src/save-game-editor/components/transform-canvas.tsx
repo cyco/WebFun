@@ -57,11 +57,7 @@ class TransformCanvas extends Component implements EventListenerObject {
 		switch (event.type) {
 			case "mousewheel":
 			case "DOMMouseScroll":
-				const delta = (event as any).wheelDelta
-					? (event as any).wheelDelta / 40
-					: event.detail
-					? -event.detail
-					: 0;
+				const delta = (event as any).wheelDelta ? (event as any).wheelDelta / 40 : event.detail ? -event.detail : 0;
 				if (delta) this.zoom(delta);
 				event.preventDefault();
 				break;

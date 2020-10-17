@@ -11,9 +11,7 @@ import { drawZoneImageData as drawZone } from "src/app/rendering/canvas";
 class WorldView extends Component {
 	public static readonly tagName = "wf-save-game-editor-world-view";
 
-	private _canvas: TransformCanvas = (
-		<TransformCanvas className="pixelated" width={288} height={288} />
-	) as TransformCanvas;
+	private _canvas: TransformCanvas = (<TransformCanvas className="pixelated" width={288} height={288} />) as TransformCanvas;
 	public gameData: GameData;
 	public state: SaveState;
 	public world: World;
@@ -42,9 +40,7 @@ class WorldView extends Component {
 		super.connectedCallback();
 
 		this._zoneImages = await Promise.all(
-			zoneIds(this.state.world).map((id: number) =>
-				drawZone(this.gameData.zones[id], this.palette).toImage()
-			)
+			zoneIds(this.state.world).map((id: number) => drawZone(this.gameData.zones[id], this.palette).toImage())
 		);
 
 		this._canvas.width = 10 * 32 * 18;

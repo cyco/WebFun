@@ -20,13 +20,7 @@ export default (renderer: Renderer, monsters: Monster[], offset: Point): void =>
 			new Size(Tile.WIDTH, MonsterHealthBarHeight)
 		).inset(MonsterHealthBarInset, MonsterHealthBarInset);
 
-		renderer.fillRect(
-			barArea.origin.x,
-			barArea.origin.y,
-			barArea.size.width,
-			barArea.size.height,
-			rgba(0, 0, 0, 0.2)
-		);
+		renderer.fillRect(barArea.origin.x, barArea.origin.y, barArea.size.width, barArea.size.height, rgba(0, 0, 0, 0.2));
 
 		const health = 1 - n.damageTaken / n.face.health;
 		let color = rgba(0, 255, 0, 0.6);

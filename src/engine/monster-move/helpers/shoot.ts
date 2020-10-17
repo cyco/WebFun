@@ -73,18 +73,9 @@ export default (monster: Monster, zone: Zone, engine: Engine): boolean => {
 	} else {
 		if (
 			monster.field3c >= 4 &&
-			zone.getTile(
-				monster.bullet.x - direction.x,
-				monster.bullet.y - direction.y,
-				Zone.Layer.Object
-			) === tile
+			zone.getTile(monster.bullet.x - direction.x, monster.bullet.y - direction.y, Zone.Layer.Object) === tile
 		) {
-			zone.setTile(
-				null,
-				monster.bullet.x - direction.x,
-				monster.bullet.y - direction.y,
-				Zone.Layer.Object
-			);
+			zone.setTile(null, monster.bullet.x - direction.x, monster.bullet.y - direction.y, Zone.Layer.Object);
 			// YodaView::RedrawTile(view, *bulletXRef - *y_2, *bulletYRef - *y_5);
 		}
 

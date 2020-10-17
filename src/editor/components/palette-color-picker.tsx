@@ -78,12 +78,7 @@ class PaletteColorPicker extends AbstractPaletteView implements EventListenerObj
 	get color(): string | Color {
 		const colorValue = this.palette[this._colorIndex];
 
-		return new Color(
-			(colorValue >> 16) & 0xff,
-			(colorValue >> 8) & 0xff,
-			colorValue & 0xff,
-			this._colorIndex === 0 ? 0 : 1
-		);
+		return new Color((colorValue >> 16) & 0xff, (colorValue >> 8) & 0xff, colorValue & 0xff, this._colorIndex === 0 ? 0 : 1);
 	}
 
 	get colorIndex(): number {
@@ -120,12 +115,7 @@ class PaletteColorPicker extends AbstractPaletteView implements EventListenerObj
 		const { palette } = this;
 		const [r, g, b, a] = c.rgbaComponents;
 		for (let i = 0; i < palette.length; i += 4) {
-			if (
-				r === palette[i + 2] &&
-				g === palette[i + 1] &&
-				b === palette[i + 0] &&
-				a === palette[i + 3]
-			) {
+			if (r === palette[i + 2] && g === palette[i + 1] && b === palette[i + 0] && a === palette[i + 3]) {
 				return i;
 			}
 		}

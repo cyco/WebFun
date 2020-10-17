@@ -30,9 +30,7 @@ class TestCreatorWindow extends AbstractWindow implements EventListenerObject {
 	public constructor() {
 		super();
 
-		this.addTitlebarButton(
-			<IconButton icon="download" title="Download test file" onclick={() => this.downloadTest()} />
-		);
+		this.addTitlebarButton(<IconButton icon="download" title="Download test file" onclick={() => this.downloadTest()} />);
 
 		this.content.style.width = "400px";
 
@@ -77,9 +75,7 @@ class TestCreatorWindow extends AbstractWindow implements EventListenerObject {
 		engine.persistentState.gamesWon = this.testCase.configuration.gamesWon;
 
 		engine.inventory.removeAllItems();
-		this.testCase.configuration.inventory.forEach(i =>
-			engine.inventory.addItem(engine.assets.get(Tile, i))
-		);
+		this.testCase.configuration.inventory.forEach(i => engine.inventory.addItem(engine.assets.get(Tile, i)));
 
 		if (this.testCase.configuration.health) engine.hero.health = this.testCase.configuration.health;
 
@@ -130,11 +126,7 @@ class TestCreatorWindow extends AbstractWindow implements EventListenerObject {
 	}
 
 	handleEvent(evt: Event): void {
-		if (
-			evt.type === Engine.Event.CurrentZoneChange &&
-			!this._replayer.isInstalled() &&
-			Settings.autosaveTestOnZoneChange
-		) {
+		if (evt.type === Engine.Event.CurrentZoneChange && !this._replayer.isInstalled() && Settings.autosaveTestOnZoneChange) {
 			this.downloadTest();
 		}
 	}
@@ -163,11 +155,7 @@ class TestCreatorWindow extends AbstractWindow implements EventListenerObject {
 
 	public downloadTest(): void {
 		const serializer = new Serializer();
-		const data = serializer.serialize(
-			this._configBuilder.configuration,
-			this._recorder.input,
-			this._expectations
-		);
+		const data = serializer.serialize(this._configBuilder.configuration, this._recorder.input, this._expectations);
 
 		const { zone, size, planet, seed } = this._configBuilder.configuration;
 
@@ -175,9 +163,9 @@ class TestCreatorWindow extends AbstractWindow implements EventListenerObject {
 			data,
 			zone >= 0
 				? `zone-${zone.toHex(3)}.wftest`
-				: `world-${seed.toHex(3)}-${Planet.fromNumber(
-						planet
-				  ).name.toLowerCase()}-${WorldSize.fromNumber(size).name.toLowerCase()}.wftest`
+				: `world-${seed.toHex(3)}-${Planet.fromNumber(planet).name.toLowerCase()}-${WorldSize.fromNumber(
+						size
+				  ).name.toLowerCase()}.wftest`
 		);
 	}
 

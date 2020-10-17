@@ -66,12 +66,7 @@ function _tryTransition(direction: Point, engine: Engine, scene: ZoneScene): boo
 	return true;
 }
 
-export default async (
-	direction: number,
-	zone: Zone,
-	engine: Engine,
-	scene: ZoneScene
-): Promise<ScriptResult> => {
+export default async (direction: number, zone: Zone, engine: Engine, scene: ZoneScene): Promise<ScriptResult> => {
 	const hero = engine.hero;
 
 	const diri = Direction.Confine(direction);
@@ -81,8 +76,7 @@ export default async (
 	hero.isWalking = true;
 
 	const targetPoint = Point.add(hero.location, p);
-	const targetTile =
-		zone.bounds.contains(targetPoint) && zone.getTile(targetPoint.x, targetPoint.y, Zone.Layer.Object);
+	const targetTile = zone.bounds.contains(targetPoint) && zone.getTile(targetPoint.x, targetPoint.y, Zone.Layer.Object);
 
 	if (targetTile) {
 		// TODO: get rid of temporary state

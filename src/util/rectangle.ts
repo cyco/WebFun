@@ -31,10 +31,7 @@ class Rectangle {
 	}
 
 	inset(x: number, y: number): Rectangle {
-		return new Rectangle(
-			this.origin.byAdding(x, y),
-			new Size(this.size.width - 2 * x, this.size.height - 2 * y)
-		);
+		return new Rectangle(this.origin.byAdding(x, y), new Size(this.size.width - 2 * x, this.size.height - 2 * y));
 	}
 
 	contains(point: Point): boolean {

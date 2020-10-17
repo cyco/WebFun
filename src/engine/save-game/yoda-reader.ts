@@ -65,10 +65,7 @@ class YodaReader extends Reader {
 			goalPuzzle === goalPuzzleAgain,
 			`Expected goal ${goalPuzzle} to be reapeted. Found ${goalPuzzleAgain} instead`
 		);
-		console.assert(
-			stream.isAtEnd(),
-			`Encountered ${stream.length - stream.offset} unknown bytes at end of stream`
-		);
+		console.assert(stream.isAtEnd(), `Encountered ${stream.length - stream.offset} unknown bytes at end of stream`);
 
 		const state = new SaveState();
 		state.type = Yoda;

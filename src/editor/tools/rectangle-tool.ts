@@ -49,14 +49,8 @@ class RectangleTool extends AbstractDrawingTool {
 	}
 
 	private calculateRectFromStartTo(point: Point): Rectangle {
-		const min = new Point(
-			Math.min(point.x, this._startingPoint.x),
-			Math.min(point.y, this._startingPoint.y)
-		);
-		const max = new Point(
-			Math.max(point.x, this._startingPoint.x),
-			Math.max(point.y, this._startingPoint.y)
-		);
+		const min = new Point(Math.min(point.x, this._startingPoint.x), Math.min(point.y, this._startingPoint.y));
+		const max = new Point(Math.max(point.x, this._startingPoint.x), Math.max(point.y, this._startingPoint.y));
 
 		return new Rectangle(min, new Size(max.x - min.x + 1, max.y - min.y + 1));
 	}

@@ -70,11 +70,7 @@ class CanvasRenderer implements Renderer {
 		this.fillRect(x * TILE_WIDTH, y * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT, color);
 	}
 
-	renderText(
-		text: string,
-		location: Point,
-		style: Partial<typeof DefaultTextStyle> = DefaultTextStyle
-	): void {
+	renderText(text: string, location: Point, style: Partial<typeof DefaultTextStyle> = DefaultTextStyle): void {
 		const effectiveStyle: typeof DefaultTextStyle = Object.assign({}, DefaultTextStyle, style);
 		this._ctx.save();
 		this._ctx.globalCompositeOperation = "source-over";

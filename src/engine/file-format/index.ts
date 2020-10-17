@@ -27,10 +27,7 @@ export default (input: InputStream, type: GameType): Data => {
 		parse(input, data, type);
 	} while (category !== ENDF);
 
-	console.assert(
-		input.isAtEnd(),
-		`0x${(input.length - input.offset).toString(0x10)} unknown bytes at end of stream!`
-	);
+	console.assert(input.isAtEnd(), `0x${(input.length - input.offset).toString(0x10)} unknown bytes at end of stream!`);
 
 	return data;
 };

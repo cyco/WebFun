@@ -9,9 +9,7 @@ class PopoverCharacterPicker extends AbstractPopoverTilePicker {
 
 	protected pickerOnChange(_: TilePicker, e: CustomEvent): void {
 		this.character = this._characters[e.detail.index as number];
-		this.dispatchEvent(
-			new CustomEvent("change", { detail: { character: this.character }, bubbles: true })
-		);
+		this.dispatchEvent(new CustomEvent("change", { detail: { character: this.character }, bubbles: true }));
 	}
 
 	set characters(c: Char[]) {

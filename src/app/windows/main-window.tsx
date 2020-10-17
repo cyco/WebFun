@@ -82,17 +82,12 @@ class MainWindow extends AbstractWindow {
 	set engine(e: Engine) {
 		if (this._engine) {
 			const hero = this._engine.hero;
-			this._handlers.each((event: any, handler: any) =>
-				this._engine.removeEventListener(event, handler)
-			);
+			this._handlers.each((event: any, handler: any) => this._engine.removeEventListener(event, handler));
 			hero.removeEventListener(Hero.Event.HealthDidChange, this._handlers[Hero.Event.HealthDidChange]);
 			hero.removeEventListener(Hero.Event.WeaponChanged, this._handlers[Engine.Event.WeaponChanged]);
 			hero.removeEventListener(Hero.Event.AmmoChanged, this._handlers[Engine.Event.AmmoChanged]);
 
-			this._engine.inventory.removeEventListener(
-				Inventory.Event.DidAddItem,
-				this._handlers[Inventory.Event.DidAddItem]
-			);
+			this._engine.inventory.removeEventListener(Inventory.Event.DidAddItem, this._handlers[Inventory.Event.DidAddItem]);
 			this._engine.inventory.removeEventListener(
 				Inventory.Event.DidRemoveItem,
 				this._handlers[Inventory.Event.DidRemoveItem]
@@ -113,14 +108,8 @@ class MainWindow extends AbstractWindow {
 			hero.addEventListener(Hero.Event.AmmoChanged, this._handlers[Engine.Event.AmmoChanged]);
 
 			this._handlers.each((event: any, handler: any) => this._engine.addEventListener(event, handler));
-			this._engine.inventory.addEventListener(
-				Inventory.Event.DidAddItem,
-				this._handlers[Inventory.Event.DidAddItem]
-			);
-			this._engine.inventory.addEventListener(
-				Inventory.Event.DidRemoveItem,
-				this._handlers[Inventory.Event.DidRemoveItem]
-			);
+			this._engine.inventory.addEventListener(Inventory.Event.DidAddItem, this._handlers[Inventory.Event.DidAddItem]);
+			this._engine.inventory.addEventListener(Inventory.Event.DidRemoveItem, this._handlers[Inventory.Event.DidRemoveItem]);
 			this._engine.sceneManager.addEventListener(
 				SceneManager.Event.SceneChanged,
 				this._handlers[SceneManager.Event.SceneChanged]

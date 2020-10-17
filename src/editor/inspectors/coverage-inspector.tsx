@@ -41,8 +41,7 @@ class CoverageInspector extends AbstractInspector {
 
 		this._sourceLevelCoverage.state = state.prefixedWith("source-level");
 		this._symbolicCoverage.state = state.prefixedWith("symbolic");
-		this._viewModeSelector.value =
-			(+state.load(ViewModeStateKey) as ViewMode) || this._viewModeSelector.options[0].value;
+		this._viewModeSelector.value = (+state.load(ViewModeStateKey) as ViewMode) || this._viewModeSelector.options[0].value;
 	}
 
 	public async build() {

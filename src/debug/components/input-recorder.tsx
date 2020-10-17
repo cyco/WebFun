@@ -49,9 +49,7 @@ class InputRecorder extends Component {
 	}
 
 	private showLog() {
-		const window = (
-			<Window title="Recorded Input" autosaveName="input-recorder.output" closable={true} />
-		) as Window;
+		const window = (<Window title="Recorded Input" autosaveName="input-recorder.output" closable={true} />) as Window;
 		window.content.style.width = "320px";
 		window.content.style.height = "270px";
 		window.content.appendChild(<textarea value={this.input} style={{ width: "100%" }} readOnly />);

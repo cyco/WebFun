@@ -105,10 +105,7 @@ class Tile {
 	}
 
 	public isLocator(): boolean {
-		return (
-			this.getAttribute(TileAttribute.Locator) ||
-			(this.isItem() && this.getSubtype(TileSubtype.Item.Locator))
-		);
+		return this.getAttribute(TileAttribute.Locator) || (this.isItem() && this.getSubtype(TileSubtype.Item.Locator));
 	}
 
 	public isOpaque(): boolean {

@@ -11,11 +11,7 @@ const ThrowIfMissing = <T>(type: AssetType<T>, id: number = null) => {
 class AssetManager {
 	private entries = new Map();
 
-	public get<T>(
-		type: AssetType<T>,
-		id: number = null,
-		missingHandler: MissingEntityHandler = ThrowIfMissing
-	): T {
+	public get<T>(type: AssetType<T>, id: number = null, missingHandler: MissingEntityHandler = ThrowIfMissing): T {
 		const entries = this.entries.get(type);
 		if (!entries) throw new Error(`Type ${type} is not registed`);
 		return entries[id] || missingHandler(type, id);

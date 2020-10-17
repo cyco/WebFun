@@ -128,11 +128,7 @@ class Point implements PointLike {
 			point &&
 			this.x === point.x &&
 			this.y === point.y &&
-			(this.z === null ||
-				this.z === undefined ||
-				point.z === null ||
-				point.z === undefined ||
-				this.z === point.z)
+			(this.z === null || this.z === undefined || point.z === null || point.z === undefined || this.z === point.z)
 		);
 	}
 

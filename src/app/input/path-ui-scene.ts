@@ -24,12 +24,7 @@ class PathUIScene extends Scene {
 		}
 
 		if (this.target) {
-			this.highlightTile(
-				renderer,
-				this.target.byAdding(this.cameraOffset),
-				rgba(255, 255, 255, 0.8),
-				this.offset
-			);
+			this.highlightTile(renderer, this.target.byAdding(this.cameraOffset), rgba(255, 255, 255, 0.8), this.offset);
 		}
 	}
 

@@ -42,9 +42,7 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 	}
 
 	private _showSegment(segment: Segment): void {
-		Array.from(this._save.querySelectorAll(".content")).forEach(
-			(c: HTMLElement) => (c.style.display = "none")
-		);
+		Array.from(this._save.querySelectorAll(".content")).forEach((c: HTMLElement) => (c.style.display = "none"));
 		let r = this._save.querySelector(".content." + segment.textContent) as Segment;
 		if (!r) r = this._save.querySelector(".content") as Segment;
 		r.style.display = "";
@@ -161,18 +159,14 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 					positionOnWorld.x{" "}
 					<input
 						value={`${this._state.positionOnWorld.x}`}
-						onchange={e =>
-							(this._state.positionOnWorld.x = +(e.target as HTMLInputElement).value)
-						}
+						onchange={e => (this._state.positionOnWorld.x = +(e.target as HTMLInputElement).value)}
 					/>
 				</label>
 				<label>
 					positionOnWorld.y{" "}
 					<input
 						value={`${this._state.positionOnWorld.y}`}
-						onchange={e =>
-							(this._state.positionOnWorld.y = +(e.target as HTMLInputElement).value)
-						}
+						onchange={e => (this._state.positionOnWorld.y = +(e.target as HTMLInputElement).value)}
 					/>
 				</label>
 				<label>
@@ -249,11 +243,7 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 					worldSize{" "}
 					<input
 						value={`${this._state.worldSize}`}
-						onchange={e =>
-							(this._state.worldSize = WorldSize.fromNumber(
-								+(e.target as HTMLInputElement).value
-							))
-						}
+						onchange={e => (this._state.worldSize = WorldSize.fromNumber(+(e.target as HTMLInputElement).value))}
 					/>
 				</label>
 				<label>

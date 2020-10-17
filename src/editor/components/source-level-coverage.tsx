@@ -140,8 +140,7 @@ class SourceLevelCoverage extends Component {
 					</span>
 				</span>
 				<span>
-					<span className="percentage">{pcnt(instructionsCovered / instructionsTotal)}</span>{" "}
-					Instructions{" "}
+					<span className="percentage">{pcnt(instructionsCovered / instructionsTotal)}</span> Instructions{" "}
 					<span className="details">
 						{n(instructionsCovered)}/{n(instructionsTotal)}
 					</span>
@@ -156,9 +155,7 @@ class SourceLevelCoverage extends Component {
 				<thead>
 					<tr>
 						{this._columns.map(([t, s]) => (
-							<th
-								className={t === "" ? "extend-previous-cell" : ""}
-								onclick={() => (this.sortDescriptor = s)}>
+							<th className={t === "" ? "extend-previous-cell" : ""} onclick={() => (this.sortDescriptor = s)}>
 								{t}
 							</th>
 						))}
@@ -189,8 +186,7 @@ class SourceLevelCoverage extends Component {
 
 			const instructionsTotal = actions.reduce((acc, ac) => acc + ac.instructions.length, 0);
 			const instructionsCovered = actions.reduce(
-				(acc: number, ac) =>
-					acc + ac.instructions.map(i => (i > 0 ? 1 : 0)).reduce((a, b) => a + b, 0),
+				(acc: number, ac) => acc + ac.instructions.map(i => (i > 0 ? 1 : 0)).reduce((a, b) => a + b, 0),
 				0
 			);
 			const instructionsRatio = instructionsTotal === 0 ? 1 : instructionsCovered / instructionsTotal;
@@ -256,8 +252,7 @@ class SourceLevelCoverage extends Component {
 	}
 
 	public get sortDescriptor() {
-		if (this._invertSortDescriptor)
-			return (a: DataPoint, b: DataPoint) => -1 * this._sortDescriptor(a, b);
+		if (this._invertSortDescriptor) return (a: DataPoint, b: DataPoint) => -1 * this._sortDescriptor(a, b);
 
 		return this._sortDescriptor;
 	}

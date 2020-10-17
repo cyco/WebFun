@@ -152,8 +152,7 @@ class Slider extends Component {
 
 			this._value =
 				this._min +
-				((pos - buttonWidth) / (this.getBoundingClientRect().width - 3 * buttonWidth)) *
-					(this._max - this._min);
+				((pos - buttonWidth) / (this.getBoundingClientRect().width - 3 * buttonWidth)) * (this._max - this._min);
 			if (this._snapToIntegers) {
 				this._value = Math.round(this._value);
 			}

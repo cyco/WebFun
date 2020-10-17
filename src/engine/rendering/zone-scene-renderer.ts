@@ -8,13 +8,7 @@ import Settings from "src/settings";
 import { highlightHero, highlightHotspots, highlightMonsters } from "src/debug/rendering";
 
 class ZoneSceneRenderer {
-	public render(
-		zone: Zone,
-		engine: Engine,
-		renderer: Renderer,
-		palette: ColorPalette,
-		sprites: Sprite[]
-	): void {
+	public render(zone: Zone, engine: Engine, renderer: Renderer, palette: ColorPalette, sprites: Sprite[]): void {
 		const offset = engine.camera.offset;
 		const TileWidth = Tile.WIDTH;
 		const TileHeight = Tile.HEIGHT;
@@ -98,13 +92,7 @@ class ZoneSceneRenderer {
 						"Sprites must be located on the zone."
 					);
 
-					drawImageAt(
-						sprite.pixels,
-						x * TileWidth,
-						y * TileHeight,
-						sprite.size.width,
-						sprite.size.height
-					);
+					drawImageAt(sprite.pixels, x * TileWidth, y * TileHeight, sprite.size.width, sprite.size.height);
 				});
 			}
 		}

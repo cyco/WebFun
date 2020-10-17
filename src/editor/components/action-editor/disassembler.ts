@@ -19,9 +19,8 @@ class Disassembler {
 
 	private _disassembleCondition(condition: Condition): AST[] {
 		const name =
-			Object.keys(ConditionsByName).find(
-				key => (ConditionsByName as any)[key].Opcode === condition.opcode
-			) || `${condition.opcode}`;
+			Object.keys(ConditionsByName).find(key => (ConditionsByName as any)[key].Opcode === condition.opcode) ||
+			`${condition.opcode}`;
 		const Condition = name ? (ConditionsByName as any)[name] : null;
 
 		const argCount = Condition.Arguments.length;
@@ -32,19 +31,14 @@ class Disassembler {
 
 	private _disassembleInstruction(instruction: Instruction): AST[] {
 		const name =
-			Object.keys(InstructionsByName).find(
-				key => (InstructionsByName as any)[key].Opcode === instruction.opcode
-			) || `${instruction.opcode}`;
+			Object.keys(InstructionsByName).find(key => (InstructionsByName as any)[key].Opcode === instruction.opcode) ||
+			`${instruction.opcode}`;
 		const Instruction = name ? (InstructionsByName as any)[name] : null;
 
 		const argCount = Instruction.Arguments.length;
 		const usedArguments = instruction.arguments.slice(0, argCount);
 
-		return [
-			s`${name.dasherize()}`,
-			...usedArguments,
-			...(Instruction.UsesText ? [instruction.text] : [])
-		];
+		return [s`${name.dasherize()}`, ...usedArguments, ...(Instruction.UsesText ? [instruction.text] : [])];
 	}
 }
 

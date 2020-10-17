@@ -96,8 +96,7 @@ export default async (engine: Engine, zone: Zone): Promise<ScriptResult> => {
 		  ];
 
 	const hitMonsters = zone.monsters.filter(
-		({ position, alive, enabled }) =>
-			alive && enabled && targets.some(target => position.isEqualTo(target))
+		({ position, alive, enabled }) => alive && enabled && targets.some(target => position.isEqualTo(target))
 	);
 
 	hitMonsters.forEach(monster => hitMonster(monster, hero.weapon, zone, assets));

@@ -53,9 +53,7 @@ class Map extends Component {
 	private _buildURHere() {
 		if (!this.location) return;
 
-		this._here = (
-			<TileView className="here" palette={this.palette} tile={this.tiles[this.locatorTile.here]} />
-		);
+		this._here = <TileView className="here" palette={this.palette} tile={this.tiles[this.locatorTile.here]} />;
 		this._here.style.left = `${this.location.x * TileSize}px`;
 		this._here.style.top = `${this.location.y * TileSize}px`;
 	}

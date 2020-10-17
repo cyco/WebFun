@@ -13,9 +13,7 @@ class InventoryRow extends Cell<Tile> {
 	private _label: HTMLSpanElement = (<span />);
 	private _tile: Tile = null;
 	private _pickedUp: boolean = false;
-	private _paletteView: PaletteView = (
-		<PaletteView size={new Size(Tile.WIDTH, Tile.HEIGHT)} />
-	) as PaletteView;
+	private _paletteView: PaletteView = (<PaletteView size={new Size(Tile.WIDTH, Tile.HEIGHT)} />) as PaletteView;
 	private _iconBorder: HTMLSpanElement = (<span />);
 
 	protected connectedCallback(): void {

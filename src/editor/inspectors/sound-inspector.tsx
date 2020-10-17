@@ -16,9 +16,7 @@ class SoundInspector extends AbstractInspector {
 		this.window.style.width = "200px";
 		this.window.content.style.height = "450px";
 		this.window.content.style.flexDirection = "column";
-		this.window.addTitlebarButton(
-			<IconButton icon="plus" title="Add new sound" onclick={() => this.addSound()} />
-		);
+		this.window.addTitlebarButton(<IconButton icon="plus" title="Add new sound" onclick={() => this.addSound()} />);
 
 		this._list = (
 			<List

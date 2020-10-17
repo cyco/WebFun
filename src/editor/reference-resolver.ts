@@ -54,8 +54,7 @@ class ReferenceResolver {
 	private findReferencesToZone(zone: Zone): any[] {
 		const isDoorToZone = (htsp: Hotspot) => htsp.type === Hotspot.Type.DoorIn && htsp.arg === zone.id;
 		const isDoorFromZone = (htsp: Hotspot) => htsp.type === Hotspot.Type.DoorOut && htsp.arg === zone.id;
-		const isChangeZoneInstruction = (i: Instruction) =>
-			i.opcode === ChangeZone.Opcode && i.arguments[0] === zone.id;
+		const isChangeZoneInstruction = (i: Instruction) => i.opcode === ChangeZone.Opcode && i.arguments[0] === zone.id;
 		const findReferencesInZone = (z: Zone) =>
 			z.hotspots
 				.filter(or(isDoorToZone, isDoorFromZone))
@@ -72,16 +71,12 @@ class ReferenceResolver {
 		const id = this.data.sounds.indexOf(sound);
 		if (id === -1) return [];
 
-		const zoneIsReferenceToSound = (i: Instruction) =>
-			i.opcode === PlaySound.Opcode && i.arguments[0] === id;
+		const zoneIsReferenceToSound = (i: Instruction) => i.opcode === PlaySound.Opcode && i.arguments[0] === id;
 		const findReferencesInAction = (a: Action) => a.instructions.filter(zoneIsReferenceToSound);
 		const findReferencesInZone = (zone: Zone) => zone.actions.map(findReferencesInAction).flatten();
 		const charIsReferenceToSound = (c: Char) => c.type === Char.Type.Weapon && c.reference === id;
 
-		return this.data.zones
-			.map(findReferencesInZone)
-			.flatten()
-			.concat(this.data.characters.filter(charIsReferenceToSound));
+		return this.data.zones.map(findReferencesInZone).flatten().concat(this.data.characters.filter(charIsReferenceToSound));
 	}
 
 	private findReferencesToAction(_: Action): any[] {

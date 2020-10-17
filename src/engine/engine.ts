@@ -255,10 +255,7 @@ class Engine extends EventTarget {
 			const score = calculateScore(this);
 			this.persistentState.gamesWon += 1;
 			this.persistentState.lastScore = score;
-			this.persistentState.highScore = max(
-				this.persistentState.highScore,
-				this.persistentState.lastScore
-			);
+			this.persistentState.highScore = max(this.persistentState.highScore, this.persistentState.lastScore);
 		}
 	}
 

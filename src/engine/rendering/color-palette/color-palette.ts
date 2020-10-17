@@ -23,8 +23,7 @@ class ColorPalette extends Uint32Array {
 		colorPalette[0] = (buffer[0] << 16) | (buffer[1] << 8) | buffer[2];
 
 		for (let i = 1; i < length; i++) {
-			colorPalette[i] =
-				(0xff << 24) | (buffer[i * bpc + 0] << 16) | (buffer[i * bpc + 1] << 8) | buffer[i * bpc + 2];
+			colorPalette[i] = (0xff << 24) | (buffer[i * bpc + 0] << 16) | (buffer[i * bpc + 1] << 8) | buffer[i * bpc + 2];
 		}
 
 		return this.Create(colorPalette);

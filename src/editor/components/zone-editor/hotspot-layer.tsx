@@ -79,8 +79,7 @@ class HotspotLayer extends Component {
 				.map(htsp => [
 					MenuItemSeparator,
 					{
-						title:
-							`${htsp.id.toString()}: ` + htsp.type.name + (htsp.enabled ? "" : " (disabled)")
+						title: `${htsp.id.toString()}: ` + htsp.type.name + (htsp.enabled ? "" : " (disabled)")
 					},
 					{
 						title: `${htsp.x}x${htsp.y}`

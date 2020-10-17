@@ -37,11 +37,7 @@ export default async (prompt: string, o: Options = {}): Promise<string> => {
 				<div>
 					{prompt}
 					<br />
-					{o.options ? (
-						<Selector value={o.defaultValue} options={o.options} />
-					) : (
-						<Textbox value={o.defaultValue} />
-					)}
+					{o.options ? <Selector value={o.defaultValue} options={o.options} /> : <Textbox value={o.defaultValue} />}
 				</div>
 			}
 		/>

@@ -6,24 +6,14 @@ class Planet {
 	public static readonly Dagobah = new Planet();
 	public static readonly Load = new Planet();
 
-	private static readonly knownPlanets = [
-		Planet.None,
-		Planet.Tatooine,
-		Planet.Hoth,
-		Planet.Endor,
-		undefined,
-		Planet.Dagobah
-	];
+	private static readonly knownPlanets = [Planet.None, Planet.Tatooine, Planet.Hoth, Planet.Endor, undefined, Planet.Dagobah];
 
 	get rawValue(): number {
 		return Planet.knownPlanets.indexOf(this);
 	}
 
 	static isPlanet(number: number): boolean {
-		return (
-			number === -1 ||
-			(number >= 0 && number < Planet.knownPlanets.length && Planet.knownPlanets[number] !== undefined)
-		);
+		return number === -1 || (number >= 0 && number < Planet.knownPlanets.length && Planet.knownPlanets[number] !== undefined);
 	}
 
 	static fromNumber(number: number): Planet {

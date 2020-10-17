@@ -9,9 +9,7 @@ import { Configuration } from "src/debug/automation/test";
 class WorldConfigurationBuilder extends Component {
 	public static readonly tagName = "wf-debug-test-creator-world-configuration-builder";
 	private _state: Storage = new DiscardingStorage();
-	private _seed: Textbox = (
-		<Textbox onchange={() => this._state.store("seed", this._seed.value)} />
-	) as Textbox;
+	private _seed: Textbox = (<Textbox onchange={() => this._state.store("seed", this._seed.value)} />) as Textbox;
 	private _planet: Selector = (
 		<Selector
 			onchange={() => this._state.store("planet", this._planet.value)}
@@ -32,9 +30,7 @@ class WorldConfigurationBuilder extends Component {
 			]}
 		/>
 	) as Selector;
-	private _gamesWon: Textbox = (
-		<Textbox onchange={() => this._state.store("gamesWon", this._gamesWon.value)} />
-	) as Textbox;
+	private _gamesWon: Textbox = (<Textbox onchange={() => this._state.store("gamesWon", this._gamesWon.value)} />) as Textbox;
 	private _inventory: number[];
 	private _tags: string[];
 	private _description: string;

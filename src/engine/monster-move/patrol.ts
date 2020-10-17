@@ -1,11 +1,5 @@
 import { Monster, Zone } from "../objects";
-import {
-	noMovement,
-	canPerformMeleeAttack,
-	performMoveAfterDoorwayCheck,
-	performMeleeAttack,
-	even
-} from "./helpers";
+import { noMovement, canPerformMeleeAttack, performMoveAfterDoorwayCheck, performMeleeAttack, even } from "./helpers";
 import { Engine } from "src/engine";
 
 export default (monster: Monster, zone: Zone, engine: Engine) => {

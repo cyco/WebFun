@@ -13,9 +13,7 @@ class Weapon extends Component {
 	public data: GameData = null;
 	private _weapon: Char = null;
 	private _background: HTMLDivElement = (<div className="background" />) as HTMLDivElement;
-	private _paletteView: PaletteView = (
-		<PaletteView size={new Size(Tile.WIDTH, Tile.HEIGHT)} />
-	) as PaletteView;
+	private _paletteView: PaletteView = (<PaletteView size={new Size(Tile.WIDTH, Tile.HEIGHT)} />) as PaletteView;
 
 	protected connectedCallback(): void {
 		this.appendChild(this._background);

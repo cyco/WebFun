@@ -1,10 +1,5 @@
 import { Action, Condition, Instruction, Zone } from "src/engine/objects";
-import {
-	ConditionImplementation,
-	InstructionImplementation,
-	Result,
-	ScriptResult
-} from "src/engine/script/types";
+import { ConditionImplementation, InstructionImplementation, Result, ScriptResult } from "src/engine/script/types";
 
 import ConditionChecker from "src/engine/script/condition-checker";
 import Engine from "src/engine/engine";
@@ -16,10 +11,7 @@ type ConditionStore = ConditionImplementation[];
 type InstructionStore = InstructionImplementation[];
 
 export interface DebuggingScriptProcessingUnitDelegate {
-	executorWillExecute(
-		executor: DebuggingScriptProcessingUnit,
-		thing: Zone | Action | Condition | Instruction
-	): void;
+	executorWillExecute(executor: DebuggingScriptProcessingUnit, thing: Zone | Action | Condition | Instruction): void;
 	executorDidExecute(
 		executor: DebuggingScriptProcessingUnit,
 		thing: Zone | Action | Condition | Instruction,
@@ -113,10 +105,7 @@ class DebuggingScriptProcessingUnit extends ScriptProcessingUnit {
 		this.delegate.executorWillExecute(this, thing);
 	}
 
-	private didExecute(
-		thing: Zone | Action | Condition | Instruction,
-		result: ScriptResult | Result | boolean
-	) {
+	private didExecute(thing: Zone | Action | Condition | Instruction, result: ScriptResult | Result | boolean) {
 		if (!this.delegate) return;
 		this.delegate.executorDidExecute(this, thing, result);
 	}

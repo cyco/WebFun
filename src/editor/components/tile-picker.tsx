@@ -28,9 +28,7 @@ class TilePicker extends Component {
 				searchDelegate={new TileFilter()}
 				cell={
 					<TilePickerCell
-						onclick={({ currentTarget }: MouseEvent) =>
-							this._cellClicked(currentTarget as TilePickerCell)
-						}
+						onclick={({ currentTarget }: MouseEvent) => this._cellClicked(currentTarget as TilePickerCell)}
 					/>
 				}
 			/>

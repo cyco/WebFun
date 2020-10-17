@@ -15,9 +15,7 @@ class FullscreenMenu extends Component {
 		super.connectedCallback();
 
 		this._parent = this.parentElement;
-		setTimeout(
-			() => this._parent === this.parentElement && this._parent.setAttribute("fs-menu-open", "")
-		);
+		setTimeout(() => this._parent === this.parentElement && this._parent.setAttribute("fs-menu-open", ""));
 	}
 
 	disconnectedCallback(): void {

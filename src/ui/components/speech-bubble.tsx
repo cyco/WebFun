@@ -251,9 +251,7 @@ class SpeechBubble extends Component {
 	}
 
 	private _calculateNumberOfLines(skipClipping: boolean): number {
-		const lineCount = Math.ceil(
-			this._text.getBoundingClientRect().height / parseInt(DefaultTextStyle.lineHeight)
-		);
+		const lineCount = Math.ceil(this._text.getBoundingClientRect().height / parseInt(DefaultTextStyle.lineHeight));
 		const line = Math.max(1, lineCount);
 
 		if (skipClipping) return line;

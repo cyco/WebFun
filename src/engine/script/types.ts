@@ -5,18 +5,9 @@ import EvaluationMode from "./evaluation-mode";
 
 type int16 = number;
 
-export type ConditionImplementation = (
-	args: int16[],
-	zone: Zone,
-	engine: Engine,
-	mode: EvaluationMode
-) => Promise<boolean>;
+export type ConditionImplementation = (args: int16[], zone: Zone, engine: Engine, mode: EvaluationMode) => Promise<boolean>;
 
-export type InstructionImplementation = (
-	instruction: Instruction,
-	engine: Engine,
-	action: Action
-) => Promise<Result>;
+export type InstructionImplementation = (instruction: Instruction, engine: Engine, action: Action) => Promise<Result>;
 
 enum Result {
 	Void = 0,

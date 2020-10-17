@@ -46,8 +46,7 @@ class GameplayContext {
 		this.inputManager = new ReplayingInputManager();
 		this.engine = new Engine(Yoda, {
 			InputManager: () => this.inputManager,
-			Renderer: () =>
-				this.debug ? new CanvasRenderer.Renderer(this.sceneView.canvas) : new DummyRenderer(),
+			Renderer: () => (this.debug ? new CanvasRenderer.Renderer(this.sceneView.canvas) : new DummyRenderer()),
 			SceneManager: () => this.sceneView.manager,
 			AssetManager: () => this.buildAssetManagerFromGameData(rawData),
 			ScriptProcessingUnit: (engine, conditions, instructions) => {
@@ -71,8 +70,7 @@ class GameplayContext {
 						if (thing instanceof Action) {
 							currentAction = thing;
 							const id = `${currentZone.id.toString()}_${currentAction.id.toString()}`;
-							window.__webfun_coverage__.actions[id] =
-								window.__webfun_coverage__.actions[id] || {};
+							window.__webfun_coverage__.actions[id] = window.__webfun_coverage__.actions[id] || {};
 							coverageAction = window.__webfun_coverage__.actions[id];
 						}
 
@@ -129,13 +127,7 @@ class GameplayContext {
 		return assets;
 	}
 
-	public async playNewStory(
-		seed: number,
-		planet: Planet,
-		size: WorldSize,
-		input: string[],
-		debug = false
-	): Promise<void> {
+	public async playNewStory(seed: number, planet: Planet, size: WorldSize, input: string[], debug = false): Promise<void> {
 		const story = new Story(seed, planet, size);
 		return await this.playStory(story, input, debug);
 	}
@@ -161,9 +153,7 @@ class GameplayContext {
 		sceneView.manager.engine = engine;
 
 		const zone =
-			story instanceof SimulatedStory
-				? engine.world.at(4, 5).zone
-				: engine.assets.find(Zone, z => z.isLoadingZone());
+			story instanceof SimulatedStory ? engine.world.at(4, 5).zone : engine.assets.find(Zone, z => z.isLoadingZone());
 		const zoneScene = new ZoneScene(engine, zone);
 		engine.currentZone = zone;
 		engine.currentWorld = engine.world.findLocationOfZone(zone) ? engine.world : null;
@@ -203,10 +193,7 @@ class GameplayContext {
 
 		engine.inputManager.engine = engine;
 		engine.inputManager.removeListeners();
-		(engine.inputManager as ReplayingInputManager).removeEventListener(
-			ReplayingInputManager.Event.InputEnd,
-			this.onInputEnd
-		);
+		(engine.inputManager as ReplayingInputManager).removeEventListener(ReplayingInputManager.Event.InputEnd, this.onInputEnd);
 		(engine.inputManager as ReplayingInputManager).input = [];
 		engine.sceneManager.clear();
 

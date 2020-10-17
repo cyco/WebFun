@@ -64,9 +64,7 @@ class OnscreenPad extends Component implements EventListenerObject {
 			document.removeEventListener("mousemove", this);
 		} else {
 			const touches = "changedTouches" in event ? Array.from(event.changedTouches) : [];
-			let touch: Touch | MouseEvent = touches.find(
-				({ identifier }) => identifier === this.trackedTouch
-			);
+			let touch: Touch | MouseEvent = touches.find(({ identifier }) => identifier === this.trackedTouch);
 			if (!touch && event.type === "touchmove") return;
 			if (!touch) touch = event as MouseEvent;
 
