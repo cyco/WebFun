@@ -1,7 +1,7 @@
 import Planet from "src/engine/types/planet";
 import { Yoda } from "src/engine/type";
 
-export default () =>
+export default (): Map<Planet, Set<number>> =>
 	new Map<Planet, Set<number>>([
 		[
 			Planet.Tatooine,

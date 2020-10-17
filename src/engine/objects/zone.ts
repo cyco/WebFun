@@ -8,6 +8,7 @@ import Monster from "./monster";
 import { Planet } from "../types";
 import Tile from "./tile";
 import AssetManager, { NullIfMissing } from "src/engine/asset-manager";
+import { Type } from "../script";
 
 const TILE_ADEGAN_CRYSTAL = 12;
 
@@ -115,7 +116,7 @@ class Zone {
 		return this._type === ZoneType.Load;
 	}
 
-	initialize() {
+	initialize(): void {
 		this.placeNPCs();
 		this.layDownHotspotItems();
 	}
@@ -161,47 +162,47 @@ class Zone {
 			});
 	}
 
-	public isRoom() {
+	public isRoom(): boolean {
 		return this._size.width === 9;
 	}
 
-	get hasTeleporter() {
+	get hasTeleporter(): boolean {
 		return this._type === ZoneType.Empty && this.hotspots.withType(Hotspot.Type.Teleporter).length !== 0;
 	}
 
-	public get bounds() {
+	public get bounds(): Rectangle {
 		return new Rectangle(new Point(0, 0), this._size);
 	}
 
-	get monsters() {
+	get monsters(): Monster[] {
 		return this._monsters;
 	}
 
-	get id() {
+	get id(): number {
 		return this._id;
 	}
 
-	get name() {
+	get name(): string {
 		return this._name;
 	}
 
-	get planet() {
+	get planet(): Planet {
 		return this._planet;
 	}
 
-	get size() {
+	get size(): Size {
 		return this._size;
 	}
 
-	get type() {
+	get type(): ZoneType {
 		return this._type;
 	}
 
-	get tileIDs() {
+	get tileIDs(): Int16Array {
 		return this._tileIDs;
 	}
 
-	get hotspots() {
+	get hotspots(): Hotspot[] {
 		return this._hotspots;
 	}
 
@@ -213,31 +214,31 @@ class Zone {
 		return this._zoneStore;
 	}
 
-	get goalItems() {
+	get goalItems(): Tile[] {
 		return this._goalItems;
 	}
 
-	get requiredItems() {
+	get requiredItems(): Tile[] {
 		return this._requiredItems;
 	}
 
-	get providedItems() {
+	get providedItems(): Tile[] {
 		return this._providedItems;
 	}
 
-	get npcs() {
+	get npcs(): Tile[] {
 		return this._npcs;
 	}
 
-	get izx4Unknown() {
+	get izx4Unknown(): number {
 		return this._izx4Unknown;
 	}
 
-	get izaxUnknown() {
+	get izaxUnknown(): number {
 		return this._izaxUnknown;
 	}
 
-	get actions() {
+	get actions(): Action[] {
 		return this._actions;
 	}
 }

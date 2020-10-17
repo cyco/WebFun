@@ -92,7 +92,7 @@ class TileInspector extends AbstractInspector {
 		this.window.content.appendChild(table);
 	}
 
-	protected addTile() {
+	protected addTile(): void {
 		const tile = new MutableTile();
 		tile.id = this.data.currentData.tiles.length;
 		tile.imageData = new Uint8Array(MutableTile.WIDTH * MutableTile.HEIGHT);
@@ -103,7 +103,7 @@ class TileInspector extends AbstractInspector {
 		this.window.content.scrollTop = this.window.content.scrollHeight;
 	}
 
-	build() {
+	build(): void {
 		this._palette = this.data.palette;
 		const previousContent = this.window.content.querySelectorAll(TileView.tagName);
 		this.window.content.textContent = "";
@@ -171,7 +171,7 @@ class TileInspector extends AbstractInspector {
 		const body = document.createElement("tbody");
 		this.data.currentData.tiles.forEach(tile => {
 			const row = document.createElement("tr");
-			row.dataset.attributes = tile.attributes;
+			row.dataset.attributes = tile.attributes.toString(10);
 			const tileCell = document.createElement("td");
 
 			const tilePreview = document.createElement(TileView.tagName) as TileView;
@@ -203,12 +203,12 @@ class TileInspector extends AbstractInspector {
 		);
 	}
 
-	show() {
+	show(): void {
 		super.show();
 		setTimeout(() => (this.window.content.scrollTop = this.state.load("scroll") | 0));
 	}
 
-	public editTile(tile: MutableTile) {
+	public editTile(tile: MutableTile): void {
 		if (this._editor) {
 			this._editor.remove();
 		}
@@ -226,7 +226,7 @@ class TileInspector extends AbstractInspector {
 		this._editor = editor;
 	}
 
-	public downloadTileset() {
+	public downloadTileset(): void {
 		const size = ceil(sqrt(this.data.currentData.tiles.length));
 
 		const TileWidth = MutableTile.WIDTH;
@@ -266,7 +266,7 @@ class TileInspector extends AbstractInspector {
 		downloadImage(imageData, `${this.data.type.name} tileset.png`);
 	}
 
-	public async uploadTileset() {
+	public async uploadTileset(): Promise<void> {
 		const [file] = await FilePicker.Pick({ allowedTypes: ["png"] });
 		if (!file) return;
 

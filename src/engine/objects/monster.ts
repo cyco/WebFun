@@ -68,23 +68,23 @@ class Monster {
 		Object.assign(this, MonsterInit, npc);
 	}
 
-	get id() {
+	get id(): number {
 		return this._id;
 	}
 
-	get loot() {
+	get loot(): number {
 		return this._loot;
 	}
 
-	get dropsLoot() {
+	get dropsLoot(): boolean {
 		return this._dropsLoot;
 	}
 
-	get waypoints() {
+	get waypoints(): Point[] {
 		return this._waypoints;
 	}
 
-	get position() {
+	get position(): Point {
 		return this._position;
 	}
 
@@ -93,11 +93,11 @@ class Monster {
 		this._position = p;
 	}
 
-	public get alive() {
+	public get alive(): boolean {
 		return this.face && this._damageTaken < this.face.health;
 	}
 
-	public get damageTaken() {
+	public get damageTaken(): number {
 		return this._damageTaken;
 	}
 
@@ -108,19 +108,19 @@ class Monster {
 		this._damageTaken = min(this._damageTaken, maxDamage);
 	}
 
-	public get x() {
+	public get x(): number {
 		return this.position.x;
 	}
 
-	public set x(v) {
+	public set x(v: number) {
 		this.position.x = v;
 	}
 
-	public get y() {
+	public get y(): number {
 		return this.position.y;
 	}
 
-	public set y(v) {
+	public set y(v: number) {
 		this.position.y = v;
 	}
 
@@ -129,7 +129,7 @@ class Monster {
 		this.directionY = d.y;
 	}
 
-	public get direction() {
+	public get direction(): Point {
 		return new Point(this.directionX, this.directionY);
 	}
 
@@ -138,7 +138,7 @@ class Monster {
 		this.bulletY = d.y;
 	}
 
-	public get bullet() {
+	public get bullet(): Point {
 		return new Point(this.bulletX, this.bulletY);
 	}
 }

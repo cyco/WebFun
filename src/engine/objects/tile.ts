@@ -85,69 +85,69 @@ class Tile {
 
 	protected _id: number;
 	protected _name: string;
-	protected _attributes: any;
+	protected _attributes: number;
 	protected _imageData: Uint8Array;
 
-	get walkable() {
+	get walkable(): boolean {
 		return !this.getAttribute(TileAttribute.Object) && !this.getAttribute(TileAttribute.Character);
 	}
 
-	get subtype() {
+	get subtype(): number {
 		return this._attributes & ~0xff;
 	}
 
-	public isObject() {
+	public isObject(): boolean {
 		return this.getAttribute(TileAttribute.Object);
 	}
 
-	public isDraggable() {
+	public isDraggable(): boolean {
 		return this.getAttribute(TileAttribute.Draggable);
 	}
 
-	public isLocator() {
+	public isLocator(): boolean {
 		return (
 			this.getAttribute(TileAttribute.Locator) ||
 			(this.isItem() && this.getSubtype(TileSubtype.Item.Locator))
 		);
 	}
 
-	public isOpaque() {
+	public isOpaque(): boolean {
 		return 0 === (this._attributes & 1);
 	}
 
-	public isItem() {
+	public isItem(): boolean {
 		return this.getAttribute(TileAttribute.Item);
 	}
 
-	public isKeycard() {
+	public isKeycard(): boolean {
 		return this.isItem() && this.getSubtype(TileSubtype.Item.Keycard);
 	}
 
-	public isPart() {
+	public isPart(): boolean {
 		return this.isItem() && this.getSubtype(TileSubtype.Item.Part);
 	}
 
-	public isTool() {
+	public isTool(): boolean {
 		return this.isItem() && this.getSubtype(TileSubtype.Item.Tool);
 	}
 
-	public isValuable() {
+	public isValuable(): boolean {
 		return this.isItem() && this.getSubtype(TileSubtype.Item.Valuable);
 	}
 
-	public isWeapon() {
+	public isWeapon(): boolean {
 		return (this.attributes & TileAttributes.Weapon) !== 0;
 	}
 
-	public isEdible() {
+	public isEdible(): boolean {
 		return (this.attributes & TileAttributes.Edible) === TileAttributes.Edible;
 	}
 
-	public isDoorway() {
+	public isDoorway(): boolean {
 		return (this._attributes & TileAttributes.Doorway) === TileAttributes.Doorway;
 	}
 
-	public isCharacter() {
+	public isCharacter(): boolean {
 		return (this._attributes & TileAttributes.Character) === TileAttributes.Character;
 	}
 
@@ -159,19 +159,19 @@ class Tile {
 		return !!(this.subtype & (1 << attr));
 	}
 
-	public get id() {
+	public get id(): number {
 		return this._id;
 	}
 
-	public get name() {
+	public get name(): string {
 		return this._name;
 	}
 
-	public get attributes() {
+	public get attributes(): number {
 		return this._attributes;
 	}
 
-	public get imageData() {
+	public get imageData(): Uint8Array {
 		return this._imageData;
 	}
 }

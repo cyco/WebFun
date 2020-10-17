@@ -15,7 +15,7 @@ class CharType {
 		return CharType.knownTypes.indexOf(this);
 	}
 
-	public get name() {
+	public get name(): string {
 		switch (this) {
 			case CharType.Hero:
 				return "Hero";

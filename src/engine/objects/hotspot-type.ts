@@ -39,7 +39,7 @@ class HotspotType {
 		return HotspotType.knownTypes.indexOf(this);
 	}
 
-	get name() {
+	get name(): string {
 		switch (this) {
 			case HotspotType.DropQuestItem:
 				return "DropQuestItem";
@@ -78,7 +78,7 @@ class HotspotType {
 		}
 	}
 
-	public static isHotspotType(number: number) {
+	public static isHotspotType(number: number): boolean {
 		return number >= 0 && number < HotspotType.knownTypes.length;
 	}
 
@@ -90,7 +90,7 @@ class HotspotType {
 		return HotspotType.knownTypes[num];
 	}
 
-	public canHoldItem() {
+	public canHoldItem(): boolean {
 		switch (this) {
 			case HotspotType.DropItem:
 			case HotspotType.NPC:

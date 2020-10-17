@@ -33,7 +33,7 @@ class CharMovementType {
 		return CharMovementType.knownTypes.indexOf(this);
 	}
 
-	public get name() {
+	public get name(): string {
 		switch (this) {
 			case CharMovementType.None:
 				return "None";

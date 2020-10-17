@@ -25,11 +25,11 @@ class SpeechScene extends Scene {
 		this.engine = engine;
 	}
 
-	get text() {
+	get text(): string {
 		return this._bubble.text;
 	}
 
-	set text(t) {
+	set text(t: string) {
 		const world = this.engine.currentWorld;
 		const sector = world?.findSectorContainingZone(this.engine.currentZone);
 		this._bubble.text = this.resolveVariables(t, sector);
@@ -45,7 +45,7 @@ class SpeechScene extends Scene {
 		return text;
 	}
 
-	render() {}
+	render(): void {}
 
 	public willShow(): void {
 		this.engine.inputManager.mouseDownHandler = (_: Point): void => null;

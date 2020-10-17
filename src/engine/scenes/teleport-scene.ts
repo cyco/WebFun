@@ -11,7 +11,7 @@ class TeleportScene extends MapScene {
 		return zone.hotspots.withType(Hotspot.Type.Teleporter).some(htsp => htsp.enabled);
 	}
 
-	protected handleMouseDown(_: Point, zone: Zone) {
+	protected handleMouseDown(_: Point, zone: Zone): void {
 		const engine = this.engine;
 		this.exitScene();
 

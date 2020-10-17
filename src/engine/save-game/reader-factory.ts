@@ -13,7 +13,7 @@ abstract class ReaderFactory {
 		return { type, read: reader.read.bind(reader) };
 	}
 
-	protected static buildReader(type: GameType, stream: InputStream) {
+	protected static buildReader(type: GameType, stream: InputStream): IndyReader | YodaReader {
 		if (type === Indy) {
 			return new IndyReader(stream);
 		}

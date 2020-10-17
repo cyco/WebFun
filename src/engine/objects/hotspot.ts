@@ -12,7 +12,7 @@ class Hotspot {
 	public arg: number = -1;
 	public type: HotspotType = null;
 
-	get location() {
+	get location(): Point {
 		return new Point(this.x, this.y);
 	}
 }

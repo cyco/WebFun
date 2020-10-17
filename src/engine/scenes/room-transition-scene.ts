@@ -5,7 +5,7 @@ import { Renderer } from "../rendering";
 class RoomTransitionScene extends TransitionScene {
 	private _snapAnimationToTiles: boolean = true;
 
-	public willShow() {
+	public willShow(): void {
 		this._duration = 1500.0;
 		this._zoneSwapTime = this._duration / 2.0;
 

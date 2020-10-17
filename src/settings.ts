@@ -6,7 +6,7 @@ const Settings = persistent(
 	{
 		mobile: SmartPhone(false).isAndroid() || SmartPhone(false).isIPhone(),
 		pwa: new URLSearchParams(window.location.search).get("source") === "pwa",
-		debug: false,
+		debug: true,
 
 		drawDebugStats: false,
 		drawHotspots: false,

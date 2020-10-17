@@ -25,7 +25,7 @@ class Char {
 
 	public tile: Tile;
 
-	get id() {
+	get id(): number {
 		return this._id;
 	}
 
@@ -33,15 +33,15 @@ class Char {
 		return this._frames;
 	}
 
-	get name() {
+	get name(): string {
 		return this._name;
 	}
 
-	get type() {
+	get type(): CharType {
 		return this._type;
 	}
 
-	get attackDuration() {
+	get attackDuration(): number {
 		return 4;
 	}
 
@@ -91,27 +91,27 @@ class Char {
 		return this.type === CharType.Weapon;
 	}
 
-	get movementType() {
+	get movementType(): CharMovementType {
 		return this._movementType;
 	}
 
-	get garbage1() {
+	get garbage1(): number {
 		return this._garbage1;
 	}
 
-	get garbage2() {
+	get garbage2(): number {
 		return this._garbage2;
 	}
 
-	get damage() {
+	get damage(): number {
 		return this._damage;
 	}
 
-	get health() {
+	get health(): number {
 		return this._health;
 	}
 
-	get reference() {
+	get reference(): number {
 		return this._reference;
 	}
 

@@ -55,7 +55,7 @@ class WinScene extends Scene {
 		this._zoneScene.update(ticks);
 	}
 
-	render(renderer: Renderer) {
+	render(renderer: Renderer): void {
 		this._zoneScene.render(renderer);
 
 		if (this._ticksUntilScoreIsShown > 0) return;

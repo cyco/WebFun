@@ -113,8 +113,6 @@ class Engine extends EventTarget {
 		this.dispatchEvent(Events.LocationChanged, { zone: z, world: this._currentWorld });
 	}
 
-	set currentSector(s: Sector) {}
-
 	get currentSector(): Sector {
 		return this.currentWorld.findSectorContainingZone(this.currentZone);
 	}

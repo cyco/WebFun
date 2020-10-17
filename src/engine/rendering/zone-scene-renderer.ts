@@ -8,7 +8,13 @@ import Settings from "src/settings";
 import { highlightHero, highlightHotspots, highlightMonsters } from "src/debug/rendering";
 
 class ZoneSceneRenderer {
-	public render(zone: Zone, engine: Engine, renderer: Renderer, palette: ColorPalette, sprites: Sprite[]) {
+	public render(
+		zone: Zone,
+		engine: Engine,
+		renderer: Renderer,
+		palette: ColorPalette,
+		sprites: Sprite[]
+	): void {
 		const offset = engine.camera.offset;
 		const TileWidth = Tile.WIDTH;
 		const TileHeight = Tile.HEIGHT;

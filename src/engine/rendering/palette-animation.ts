@@ -10,12 +10,12 @@ class PaletteAnimation {
 		this._current = palette.slice();
 	}
 
-	public reset() {
+	public reset(): void {
 		this._current = this.original.slice();
 		this._state = true;
 	}
 
-	public step() {
+	public step(): void {
 		// normal cycles
 		this.cycle(10, 5);
 		this.cycle(202, 1);

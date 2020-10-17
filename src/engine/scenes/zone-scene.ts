@@ -1,7 +1,7 @@
 import { Direction, Point, Size } from "src/util";
 import { EvaluationMode, ScriptResult } from "../script";
 import { Zone, Tile, Char, Sound } from "src/engine/objects";
-import { Direction as InputDirection, InputMask } from "src/engine/input";
+import { InputMask } from "src/engine/input";
 import { Renderer } from "src/engine/rendering";
 import { Sprite } from "../rendering";
 import { Yoda } from "src/engine/type";
@@ -18,6 +18,7 @@ import moveBullets from "src/engine/bullet-move";
 import { Channel } from "src/engine/audio";
 import { HotspotExecutionMode } from "../script/hotspot-execution-mode";
 import { HotspotExecutionResult } from "../script/hotspot-execution-result";
+import Camera from "../camera";
 
 class ZoneScene extends Scene {
 	private _zone: Zone;
@@ -30,7 +31,7 @@ class ZoneScene extends Scene {
 		this.engine = engine;
 	}
 
-	public async update(ticks: number) {
+	public async update(ticks: number): Promise<void> {
 		this.engine.palette.step();
 
 		const engine = this.engine;
@@ -52,8 +53,9 @@ class ZoneScene extends Scene {
 			htspResult & HotspotExecutionResult.Speak ||
 			htspResult & HotspotExecutionResult.ChangeZone ||
 			htspResult & HotspotExecutionResult.Drop
-		)
+		) {
 			return;
+		}
 
 		engine.spu.prepeareExecution(EvaluationMode.Walk, this.zone);
 		scriptResult = await engine.spu.run();
@@ -66,8 +68,9 @@ class ZoneScene extends Scene {
 			htspResult & HotspotExecutionResult.Speak ||
 			htspResult & HotspotExecutionResult.ChangeZone ||
 			htspResult & HotspotExecutionResult.Drop
-		)
+		) {
 			return;
+		}
 
 		scriptResult = await moveBullets(engine, this.zone);
 		if (scriptResult !== ScriptResult.Done) {
@@ -96,11 +99,12 @@ class ZoneScene extends Scene {
 			htspResult & HotspotExecutionResult.Speak ||
 			htspResult & HotspotExecutionResult.ChangeZone ||
 			htspResult & HotspotExecutionResult.Drop
-		)
+		) {
 			return;
+		}
 	}
 
-	public render(renderer: Renderer) {
+	public render(renderer: Renderer): void {
 		const bulletTiles: Sprite[] = [];
 		const hero = this.engine.hero;
 		if (hero.isAttacking && hero.weapon) {
@@ -200,7 +204,7 @@ class ZoneScene extends Scene {
 		this._zone.monsters.forEach(monster => moveMonster(monster, this.zone, this.engine));
 	}
 
-	prepareCamera() {
+	prepareCamera(): void {
 		this.engine.camera.zoneSize = this.zone.size;
 		this.engine.camera.update(Infinity);
 	}
@@ -378,20 +382,20 @@ class ZoneScene extends Scene {
 		return await this.engine.spu.run();
 	}
 
-	get zone() {
+	get zone(): Zone {
 		return this._zone;
 	}
 
-	set zone(z) {
+	set zone(z: Zone) {
 		this._zone = z;
 		this.engine.camera.zoneSize = z.size;
 	}
 
-	get camera() {
+	get camera(): Camera {
 		return this.engine.camera;
 	}
 
-	get currentOffset() {
+	get currentOffset(): Point {
 		return this.engine.camera.offset;
 	}
 }

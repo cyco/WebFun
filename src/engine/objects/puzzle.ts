@@ -20,39 +20,39 @@ class Puzzle {
 		return Goals().get(planet).has(this.id);
 	}
 
-	get id() {
+	get id(): number {
 		return this._id;
 	}
 
-	get item1() {
+	get item1(): Tile {
 		return this._item1;
 	}
 
-	get item2() {
+	get item2(): Tile {
 		return this._item2;
 	}
 
-	get strings() {
+	get strings(): string[] {
 		return this._strings;
 	}
 
-	get name() {
+	get name(): string {
 		return this._name;
 	}
 
-	get type() {
+	get type(): PuzzleType {
 		return this._type;
 	}
 
-	get unknown1() {
+	get unknown1(): number {
 		return this._unknown1;
 	}
 
-	get unknown2() {
+	get unknown2(): number {
 		return this._unknown2;
 	}
 
-	get unknown3() {
+	get unknown3(): number {
 		return this._unknown3;
 	}
 }

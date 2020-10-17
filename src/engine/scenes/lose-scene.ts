@@ -26,9 +26,9 @@ class LoseScene extends Scene {
 		this.engine.metronome.stop();
 	}
 
-	async update(_: number) {}
+	async update(_: number): Promise<void> {}
 
-	render(renderer: Renderer) {
+	render(renderer: Renderer): void {
 		this._zoneScene.render(renderer);
 	}
 
@@ -40,7 +40,7 @@ class LoseScene extends Scene {
 		this._zoneScene.didHide();
 	}
 
-	public isOpaque() {
+	public isOpaque(): boolean {
 		return false;
 	}
 }

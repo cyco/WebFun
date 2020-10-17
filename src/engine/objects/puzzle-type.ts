@@ -14,13 +14,13 @@ class PuzzleType {
 		PuzzleType.U4
 	];
 
-	public get rawValue() {
+	public get rawValue(): number {
 		if (this === PuzzleType.Disabled) return -1;
 
 		return PuzzleType.knownTypes.indexOf(this);
 	}
 
-	public get name() {
+	public get name(): string {
 		switch (this) {
 			case PuzzleType.Use:
 				return "Use";
@@ -50,7 +50,7 @@ class PuzzleType {
 		return this.knownTypes[number];
 	}
 
-	public toString() {
+	public toString(): string {
 		return `PuzzleType{${this.name}}`;
 	}
 }

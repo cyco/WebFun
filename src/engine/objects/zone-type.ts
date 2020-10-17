@@ -52,7 +52,7 @@ class ZoneType {
 		return ZoneType.knownTypes.indexOf(this);
 	}
 
-	get name() {
+	get name(): string {
 		switch (this) {
 			case ZoneType.None:
 				return "None";

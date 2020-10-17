@@ -99,7 +99,7 @@ abstract class Reader {
 		this.readRooms(stream, zoneID, 0);
 	}
 
-	protected readZone(stream: InputStream, zone: MutableZone, visited: boolean) {
+	protected readZone(stream: InputStream, zone: MutableZone, visited: boolean): void {
 		if (visited) {
 			zone.counter = this.readInt(stream);
 			zone.random = this.readInt(stream);
@@ -128,7 +128,7 @@ abstract class Reader {
 		}
 	}
 
-	protected readHotspots(stream: InputStream, zone: MutableZone) {
+	protected readHotspots(stream: InputStream, zone: MutableZone): void {
 		const count = this.readInt(stream);
 		console.assert(count >= 0);
 		if (count !== zone.hotspots.length) {
@@ -137,7 +137,7 @@ abstract class Reader {
 		zone.hotspots = zone.hotspots.map(htsp => this.readHotspot(stream, htsp));
 	}
 
-	protected readMonsters(stream: InputStream, zone: MutableZone) {
+	protected readMonsters(stream: InputStream, zone: MutableZone): void {
 		const count = this.readInt(stream);
 		console.assert(count >= 0);
 

@@ -25,7 +25,7 @@ abstract class TransitionScene extends Scene {
 		this._startTime = performance.now();
 	}
 
-	didHide() {
+	didHide(): void {
 		this.scene = null;
 		this.destinationHeroLocation = null;
 		this.destinationZoneLocation = null;
@@ -38,7 +38,7 @@ abstract class TransitionScene extends Scene {
 		return false;
 	}
 
-	async update(/*ticks*/) {
+	async update(/*ticks*/): Promise<void> {
 		if (Settings.skipTransitions) {
 			this._zoneSwapTime = Infinity;
 			this.swapZones();
@@ -56,7 +56,7 @@ abstract class TransitionScene extends Scene {
 		}
 	}
 
-	protected swapZones() {
+	protected swapZones(): void {
 		const state = this.engine.temporaryState;
 		const hero = this.engine.hero;
 		const engine = this.engine;

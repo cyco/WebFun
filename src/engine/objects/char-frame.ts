@@ -8,39 +8,39 @@ class CharFrame {
 		this._tiles = tiles;
 	}
 
-	get tiles() {
+	get tiles(): Tile[] {
 		return this._tiles;
 	}
 
-	get up() {
+	get up(): Tile {
 		return this._tiles[CharFrameEntry.Up];
 	}
 
-	get down() {
+	get down(): Tile {
 		return this._tiles[CharFrameEntry.Down];
 	}
 
-	get extensionUp() {
+	get extensionUp(): Tile {
 		return this._tiles[CharFrameEntry.ExtensionUp];
 	}
 
-	get left() {
+	get left(): Tile {
 		return this._tiles[CharFrameEntry.Left];
 	}
 
-	get extensionDown() {
+	get extensionDown(): Tile {
 		return this._tiles[CharFrameEntry.ExtensionDown];
 	}
 
-	get extensionLeft() {
+	get extensionLeft(): Tile {
 		return this._tiles[CharFrameEntry.ExtensionLeft];
 	}
 
-	get right() {
+	get right(): Tile {
 		return this._tiles[CharFrameEntry.Right];
 	}
 
-	get extensionRight() {
+	get extensionRight(): Tile {
 		return this._tiles[CharFrameEntry.ExtensionRight];
 	}
 }

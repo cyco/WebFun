@@ -13,16 +13,16 @@ class DetonatorScene extends Scene {
 	public detonatorLocation: Point = null;
 	private _engine: Engine = null;
 
-	public willShow() {
+	public willShow(): void {
 		this._ticks = 0;
 	}
 
-	public willHide() {
+	public willHide(): void {
 		this._ticks = -1;
 		this.detonatorLocation = null;
 	}
 
-	async update(/*ticks*/) {
+	async update(/*ticks*/): Promise<void> {
 		if (this._ticks === -1) return;
 
 		this._ticks++;
@@ -59,7 +59,7 @@ class DetonatorScene extends Scene {
 		}
 	}
 
-	public render(renderer: RendererInterface) {
+	public render(renderer: RendererInterface): void {
 		if (this._ticks >= this._detonatorFrames.length || this._ticks < 0) return;
 
 		const frame = this._detonatorFrames[this._ticks];
@@ -84,7 +84,7 @@ class DetonatorScene extends Scene {
 		}
 	}
 
-	public get engine() {
+	public get engine(): Engine {
 		return this._engine;
 	}
 }

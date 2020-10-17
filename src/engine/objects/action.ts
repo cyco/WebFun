@@ -11,23 +11,23 @@ class Action {
 	protected _conditions: Condition[] = [];
 	protected _instructions: Instruction[] = [];
 
-	get zone() {
+	get zone(): Zone {
 		return this._zone;
 	}
 
-	get name() {
+	get name(): string {
 		return this._name;
 	}
 
-	get id() {
+	get id(): number {
 		return this._id;
 	}
 
-	get conditions() {
+	get conditions(): Condition[] {
 		return this._conditions;
 	}
 
-	get instructions() {
+	get instructions(): Instruction[] {
 		return this._instructions;
 	}
 }
