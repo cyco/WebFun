@@ -24,7 +24,6 @@ class SceneManager extends EventTarget {
 
 	pushScene(scene: Scene): void {
 		scene.engine = this.engine;
-
 		this._stack.push(scene);
 		this._rebuildVisibleScenes();
 		this.currentScene = scene;
@@ -47,7 +46,7 @@ class SceneManager extends EventTarget {
 		}
 	}
 
-	popScene() {
+	popScene(): Scene {
 		const oldScene = this._stack.pop();
 		const nextScene = this._stack.last();
 
@@ -73,15 +72,15 @@ class SceneManager extends EventTarget {
 		});
 	}
 
-	clear() {
+	clear(): void {
 		while (this._stack.length) this.popScene();
 	}
 
-	get bounds() {
+	get bounds(): Rectangle {
 		return this._determineBounds();
 	}
 
-	public get currentScene() {
+	public get currentScene(): Scene {
 		return this._currentScene;
 	}
 
@@ -109,21 +108,21 @@ class SceneManager extends EventTarget {
 		this._visibleScenes = visibleScenes;
 	}
 
-	public addOverlay(overlay: Scene) {
+	public addOverlay(overlay: Scene): void {
 		this._overlays.push(overlay);
 		overlay.engine = this.engine;
 	}
 
-	public removeOverlay(overlay: Scene) {
+	public removeOverlay(overlay: Scene): void {
 		overlay.engine = null;
 		this._overlays.splice(this._overlays.indexOf(overlay), 1);
 	}
 
-	public get engine() {
+	public get engine(): Engine {
 		return this._engine;
 	}
 
-	public set engine(e) {
+	public set engine(e: Engine) {
 		this._engine = e;
 		this._stack.forEach(s => (s.engine = e));
 		this._overlays.forEach(o => (o.engine = e));

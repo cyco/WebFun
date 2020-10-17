@@ -14,7 +14,6 @@ export default {
 	Implementation: async (instruction: Instruction, engine: Engine, _: Action): Promise<Result> => {
 		const [x, y] = instruction.arguments;
 		engine.speak(instruction.text, new Point(x, y));
-
 		return Result.UpdateText;
 	}
 };

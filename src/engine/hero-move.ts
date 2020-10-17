@@ -89,10 +89,9 @@ export default async (
 		engine.temporaryState.bump = targetPoint;
 		if (engine.hpu.execute(HotspotExecutionMode.Bump, targetPoint, null)) return;
 		engine.spu.prepeareExecution(EvaluationMode.Bump, zone);
-
 		const scriptResult = await engine.spu.run();
 		if (scriptResult !== ScriptResult.Done) {
-			return;
+			return scriptResult;
 		}
 	}
 
@@ -101,7 +100,7 @@ export default async (
 		if (doTransition === false) {
 			// TODO: play blocked sound
 		}
-		return;
+		return ScriptResult.Done;
 	}
 
 	const htspResult = engine.hpu.execute(HotspotExecutionMode.Walk);
@@ -109,6 +108,9 @@ export default async (
 		htspResult & HotspotExecutionResult.Speak ||
 		htspResult & HotspotExecutionResult.ChangeZone ||
 		htspResult & HotspotExecutionResult.Drop
-	)
-		return;
+	) {
+		return ScriptResult.Wait;
+	}
+
+	return ScriptResult.Done;
 };

@@ -37,7 +37,6 @@ class ZoneScene extends Scene {
 		const engine = this.engine;
 		const hero = engine.hero;
 		hero.isWalking = false;
-
 		let scriptResult = await engine.spu.run();
 		if (scriptResult !== ScriptResult.Done) {
 			return;
@@ -279,7 +278,12 @@ class ZoneScene extends Scene {
 			}
 		}
 
-		if (input & InputMask.Walk) await moveHero(hero.direction, this.zone, this.engine, this);
+		if (input & InputMask.Walk) {
+			const result = await moveHero(hero.direction, this.zone, this.engine, this);
+			if (result !== ScriptResult.Done) {
+				return true;
+			}
+		}
 
 		return false;
 	}
@@ -375,11 +379,13 @@ class ZoneScene extends Scene {
 			htspResult & HotspotExecutionResult.Speak ||
 			htspResult & HotspotExecutionResult.ChangeZone ||
 			htspResult & HotspotExecutionResult.Drop
-		)
+		) {
 			return ScriptResult.Void;
+		}
 
 		this.engine.spu.prepeareExecution(EvaluationMode.PlaceItem, this.zone);
-		return await this.engine.spu.run();
+		const result = await this.engine.spu.run();
+		return result;
 	}
 
 	get zone(): Zone {
