@@ -1,0 +1,21 @@
+@import "variables.scss";
+@import "border.scss";
+@import "sizing.scss";
+@import "colors.scss";
+
+wf-debug-expection-editor {
+    min-height: 128px;
+    overflow-y: auto;
+
+    @include inset-border(2px);
+    > div {
+        @include inset-border-inverted(1px);
+        padding: 2px;
+        line-height: 32px;
+
+        span {
+            margin-right: 5px;
+            margin-left: 5px;
+        }
+    }
+}

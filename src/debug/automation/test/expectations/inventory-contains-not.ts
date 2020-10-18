@@ -1,5 +1,4 @@
-import expectation from "../expectation";
-import GameplayContext from "../gameplay-context";
+import expectation, { EngineRef } from "../expectation";
 
 class InventoryContainsNotExpectation implements expectation {
 	private items: number[];
@@ -26,10 +25,10 @@ class InventoryContainsNotExpectation implements expectation {
 		return `Inventory does not contain: ${this.items.map(i => i.toHex(3)).join(", ")}`;
 	}
 
-	evaluate(ctx: GameplayContext): void {
+	evaluate(ref: EngineRef): void {
 		it(`hero does not have items ${this.items.map(i => i.toHex(3)).join(", ")}`, () => {
 			for (const item of this.items) {
-				if (!ctx.engine.inventory.contains(item)) continue;
+				if (!ref.engine.inventory.contains(item)) continue;
 
 				const message =
 					this.items.length > 1

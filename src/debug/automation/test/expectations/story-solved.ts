@@ -1,5 +1,4 @@
-import Expectation from "../expectation";
-import GameplayContext from "../gameplay-context";
+import Expectation, { EngineRef } from "../expectation";
 import { GameState } from "src/engine";
 
 class StorySolvedExpectation implements Expectation {
@@ -11,9 +10,9 @@ class StorySolvedExpectation implements Expectation {
 		return new StorySolvedExpectation();
 	}
 
-	evaluate(ctx: GameplayContext): void {
+	evaluate(ref: EngineRef): void {
 		it(`the story is solved`, () => {
-			expect(ctx.engine.gameState).toBe(GameState.Won);
+			expect(ref.engine.gameState).toBe(GameState.Won);
 		});
 	}
 

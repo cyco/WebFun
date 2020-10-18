@@ -1,7 +1,13 @@
-import GameplayContext from "./gameplay-context";
+import { Engine } from "src/engine";
+
+interface EngineRef {
+	engine: Engine;
+}
+
 interface Expectation {
-	evaluate(ctx: GameplayContext): void;
+	evaluate(engine: EngineRef): void;
 	format(): string;
 }
 
+export { EngineRef };
 export default Expectation;

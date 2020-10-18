@@ -46,13 +46,11 @@ describe("WebFun.Acceptance.InGameCoverage", () => {
 			z.actions.forEach(a => {
 				a.instructions.forEach(
 					({ opcode }) =>
-						(window.__webfun_coverage__.instructions[opcode] =
-							window.__webfun_coverage__.instructions[opcode] || 0)
+						(window.__webfun_coverage__.instructions[opcode] = window.__webfun_coverage__.instructions[opcode] || 0)
 				);
 				a.conditions.forEach(
 					({ opcode }) =>
-						(window.__webfun_coverage__.conditions[opcode] =
-							window.__webfun_coverage__.conditions[opcode] || 0)
+						(window.__webfun_coverage__.conditions[opcode] = window.__webfun_coverage__.conditions[opcode] || 0)
 				);
 			})
 		);

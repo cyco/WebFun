@@ -1,5 +1,4 @@
-import expectation from "../expectation";
-import GameplayContext from "../gameplay-context";
+import expectation, { EngineRef } from "../expectation";
 import { not } from "src/util/functional";
 
 class InventoryContainsExpectation implements expectation {
@@ -26,10 +25,10 @@ class InventoryContainsExpectation implements expectation {
 		return `Inventory: ${this.items.map(i => i.toHex(3)).join(", ")}`;
 	}
 
-	evaluate(ctx: GameplayContext): void {
+	evaluate(ref: EngineRef): void {
 		it(`hero has items ${this.items.map(i => i.toHex(3)).join(", ")}`, () => {
 			for (const item of this.items) {
-				if (ctx.engine.inventory.contains(item)) continue;
+				if (ref.engine.inventory.contains(item)) continue;
 
 				const message =
 					this.items.length > 1

@@ -1,5 +1,4 @@
-import Expectation from "../expectation";
-import GameplayContext from "../gameplay-context";
+import Expectation, { EngineRef } from "../expectation";
 
 class CurrentZoneIsExpectation implements Expectation {
 	private _zone: number;
@@ -16,9 +15,9 @@ class CurrentZoneIsExpectation implements Expectation {
 		this._zone = zone;
 	}
 
-	evaluate(ctx: GameplayContext): void {
+	evaluate(ref: EngineRef): void {
 		it(`the current zone is ${this._zone.toHex(3)}`, () => {
-			expect(ctx.engine.currentZone.id).toBe(this._zone);
+			expect(ref.engine.currentZone.id).toBe(this._zone);
 		});
 	}
 

@@ -4,8 +4,8 @@ import { AbstractWindow, Button, IconButton } from "src/ui/components";
 import { Point, DiscardingStorage, download } from "src/util";
 
 import { GameController } from "src/app";
-import { TestCase, Expectation, Configuration, Serializer } from "src/debug/automation/test";
-import { InputReplayer, InputRecorder } from "src/debug/components";
+import { TestCase, Configuration, Serializer } from "src/debug/automation/test";
+import { InputReplayer, InputRecorder, ExpectationEditor } from "src/debug/components";
 import ConfiguationBuilder from "./configuration-builder";
 import SimulatedStory from "src/debug/simulated-story";
 import adjacentZones from "./adjacent-zones";
@@ -13,7 +13,7 @@ import { Zone, Tile, Sound, Puzzle, Char } from "src/engine/objects";
 import { Planet, WorldSize } from "src/engine/types";
 import { Story, Engine, AssetManager, Hero } from "src/engine";
 import Settings from "src/settings";
-import { MetronomeInternals } from "src/engine/metronome";
+import Metronome, { MetronomeInternals } from "src/engine/metronome";
 
 class TestCreatorWindow extends AbstractWindow implements EventListenerObject {
 	public static readonly tagName = "wf-debug-test-creator-window";
@@ -25,7 +25,7 @@ class TestCreatorWindow extends AbstractWindow implements EventListenerObject {
 	private _configBuilder: ConfiguationBuilder = (<ConfiguationBuilder />) as ConfiguationBuilder;
 	private _replayer: InputReplayer = (<InputReplayer />) as InputReplayer;
 	private _recorder: InputRecorder = (<InputRecorder />) as InputRecorder;
-	private _expectations: Expectation[] = [];
+	private _expectationEditor: ExpectationEditor = (<ExpectationEditor />) as ExpectationEditor;
 
 	public constructor() {
 		super();
@@ -73,6 +73,8 @@ class TestCreatorWindow extends AbstractWindow implements EventListenerObject {
 		engine.currentWorld = story.world;
 		engine.camera.update(0);
 		engine.persistentState.gamesWon = this.testCase.configuration.gamesWon;
+		engine.metronome.addEventListener(Metronome.Event.AfterTick, this);
+		engine.metronome.addEventListener(Metronome.Event.BeforeTick, this);
 
 		engine.inventory.removeAllItems();
 		this.testCase.configuration.inventory.forEach(i => engine.inventory.addItem(engine.assets.get(Tile, i)));
@@ -98,9 +100,12 @@ class TestCreatorWindow extends AbstractWindow implements EventListenerObject {
 				: engine.assets.find(Zone, ({ type }) => type === Zone.Type.Load)
 		);
 
+		this._expectationEditor.engine = engine;
+
 		this.content.textContent = "";
 		this.content.appendChild(this._replayer);
 		this.content.appendChild(this._recorder);
+		this.content.appendChild(this._expectationEditor);
 
 		if (this.testCase) {
 			this.setupInput(this.testCase.input);
@@ -129,6 +134,8 @@ class TestCreatorWindow extends AbstractWindow implements EventListenerObject {
 		if (evt.type === Engine.Event.CurrentZoneChange && !this._replayer.isInstalled() && Settings.autosaveTestOnZoneChange) {
 			this.downloadTest();
 		}
+
+		this._expectationEditor.evaluateExpectations();
 	}
 
 	private _buildSimulatedStory(engine: Engine, config: Configuration) {
@@ -155,7 +162,11 @@ class TestCreatorWindow extends AbstractWindow implements EventListenerObject {
 
 	public downloadTest(): void {
 		const serializer = new Serializer();
-		const data = serializer.serialize(this._configBuilder.configuration, this._recorder.input, this._expectations);
+		const data = serializer.serialize(
+			this._configBuilder.configuration,
+			this._recorder.input,
+			this._expectationEditor.expectations
+		);
 
 		const { zone, size, planet, seed } = this._configBuilder.configuration;
 
@@ -167,6 +178,14 @@ class TestCreatorWindow extends AbstractWindow implements EventListenerObject {
 						size
 				  ).name.toLowerCase()}.wftest`
 		);
+	}
+
+	public close(): void {
+		this.gameController.engine.metronome.removeEventListener(Metronome.Event.AfterTick, this);
+		this.gameController.engine.metronome.removeEventListener(Metronome.Event.BeforeTick, this);
+		this.gameController.engine.removeEventListener(Engine.Event.CurrentZoneChange, this);
+
+		super.close();
 	}
 
 	public get gameController(): GameController {
@@ -184,14 +203,14 @@ class TestCreatorWindow extends AbstractWindow implements EventListenerObject {
 	public set testCase(testCase: TestCase) {
 		this._testCase = testCase;
 		this._configBuilder.configuration = testCase.configuration;
-		this._expectations = testCase.expectations;
+		this._expectationEditor.expectations = testCase.expectations;
 		this._recorder.input = testCase.input;
 	}
 
 	public get testCase(): TestCase {
 		const testCase = Object.assign({}, this._testCase);
 
-		testCase.expectations = this._expectations;
+		testCase.expectations = this._expectationEditor.expectations;
 		testCase.configuration = this._configBuilder.configuration;
 		testCase.input = this._recorder.input;
 

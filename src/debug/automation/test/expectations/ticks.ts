@@ -1,5 +1,4 @@
-import Expectation from "../expectation";
-import GameplayContext from "../gameplay-context";
+import Expectation, { EngineRef } from "../expectation";
 import { not } from "src/util/functional";
 
 class TicksExpectation implements Expectation {
@@ -23,9 +22,9 @@ class TicksExpectation implements Expectation {
 		this._ticks = ticks;
 	}
 
-	evaluate(ctx: GameplayContext): void {
+	evaluate(ref: EngineRef): void {
 		it(`the proper amount of ticks have been executed`, () => {
-			expect(ctx.engine.metronome.tickCount).toEqual(this._ticks);
+			expect(ref.engine.metronome.tickCount).toEqual(this._ticks);
 		});
 	}
 

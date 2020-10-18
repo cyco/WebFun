@@ -1,5 +1,4 @@
-import Expectation from "../expectation";
-import GameplayContext from "../gameplay-context";
+import Expectation, { EngineRef } from "../expectation";
 
 class HealthIsExpectation implements Expectation {
 	private _health: number;
@@ -16,9 +15,9 @@ class HealthIsExpectation implements Expectation {
 		this._health = health;
 	}
 
-	evaluate(ctx: GameplayContext): void {
+	evaluate(ref: EngineRef): void {
 		it(`the hero's health is ${this._health.toHex(3)}`, () => {
-			expect(ctx.engine.hero.health).toBe(this._health);
+			expect(ref.engine.hero.health).toBe(this._health);
 		});
 	}
 

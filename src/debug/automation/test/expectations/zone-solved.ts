@@ -1,5 +1,4 @@
-import Expectation from "../expectation";
-import GameplayContext from "../gameplay-context";
+import Expectation, { EngineRef } from "../expectation";
 
 class ZoneSolvedExpectation implements Expectation {
 	public static CanBeBuiltFrom(value: string): boolean {
@@ -10,10 +9,12 @@ class ZoneSolvedExpectation implements Expectation {
 		return new ZoneSolvedExpectation();
 	}
 
-	evaluate(ctx: GameplayContext): void {
+	evaluate(ref: EngineRef): void {
 		it("the zone is solved", () => {
-			expect(ctx.engine.currentWorld.at(4, 4).solved1).toBeTrue();
-			expect(ctx.engine.currentWorld.at(4, 4).solved2).toBeTrue();
+			const sector = ref.engine.currentWorld.at(4, 4);
+
+			expect(sector.solved1).toBeTrue();
+			expect(sector.solved2).toBeTrue();
 		});
 	}
 

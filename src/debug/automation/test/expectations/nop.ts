@@ -1,5 +1,4 @@
-import Expectation from "../expectation";
-import GameplayContext from "../gameplay-context";
+import Expectation, { EngineRef } from "../expectation";
 
 class NoOpExpectation implements Expectation {
 	public static CanBeBuiltFrom(value: string): boolean {
@@ -10,7 +9,7 @@ class NoOpExpectation implements Expectation {
 		return new NoOpExpectation();
 	}
 
-	evaluate(_: GameplayContext): void {
+	evaluate(_: EngineRef): void {
 		it("does nothing, really", (): void => void 0);
 	}
 
