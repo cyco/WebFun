@@ -3,7 +3,7 @@ import { GameState } from "src/engine";
 
 class StorySolvedExpectation implements Expectation {
 	public static CanBeBuiltFrom(value: string): boolean {
-		return value.contains("story") && value.contains("solved");
+		return (value.contains("story") && value.contains("solved")) || (value.contains("game") && value.contains("won"));
 	}
 
 	public static BuildFrom(_: IteratorResult<string>): StorySolvedExpectation {

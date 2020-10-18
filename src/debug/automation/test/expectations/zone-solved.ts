@@ -2,7 +2,7 @@ import Expectation, { EngineRef } from "../expectation";
 
 class ZoneSolvedExpectation implements Expectation {
 	public static CanBeBuiltFrom(value: string): boolean {
-		return value.contains("solved");
+		return value.contains("solved") && value.contains("zone");
 	}
 
 	public static BuildFrom(_: IteratorResult<string>): ZoneSolvedExpectation {
