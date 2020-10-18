@@ -57,7 +57,7 @@ class ExpectationEditor extends Component {
 
 		(window as any).it = it;
 		(window as any).expect = expect;
-		(window as any).fail = expect;
+		(window as any).fail = fail;
 
 		expectation.evaluate({ engine: this.engine });
 
