@@ -13,7 +13,7 @@ enum TileAttributes {
 	Item = 1 << 7,
 	Character = 1 << 8,
 
-	Edible = Character | (1 << 22),
+	Edible = Item | (1 << 22),
 	Doorway = Floor | (1 << 15)
 }
 
@@ -133,11 +133,11 @@ class Tile {
 	}
 
 	public isWeapon(): boolean {
-		return (this.attributes & TileAttributes.Weapon) !== 0;
+		return (this._attributes & TileAttributes.Weapon) !== 0;
 	}
 
 	public isEdible(): boolean {
-		return (this.attributes & TileAttributes.Edible) === TileAttributes.Edible;
+		return (this._attributes & TileAttributes.Edible) === TileAttributes.Edible;
 	}
 
 	public isDoorway(): boolean {
