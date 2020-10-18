@@ -7,7 +7,7 @@ Zone: 0x202
 Find: 0x1db
 
 - Input -
-. . . . . → → → → → . . . . . . . ↑ . . . . . ↑ ↗ → → → ↗ ↑ ↑ ↑ ↑ → → . . . → . .
+. → → → → → . ↑ . ↑ ↗ → → → ↗ ↑ ↑ ↑ ↑ → → . → . .
 
 - Expect -
 Inventory does not contain: 0x1db

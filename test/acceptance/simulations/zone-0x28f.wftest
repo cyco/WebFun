@@ -3,7 +3,7 @@ Zone: 0x28f
 Description: Test item placement (rand = 3)
 
 - Input -
-. . . . . . . → ↑ ↑ . . ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ → → → . . ← ← ↑ ↑ . → →
+. → ↑ ↑ . . ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ → → → . . ← ← ↑ ↑ . → →
 
 - Expect -
 Inventory to contain 482
