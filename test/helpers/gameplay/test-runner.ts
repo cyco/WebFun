@@ -14,13 +14,13 @@ const debug = false;
 
 const run = (prefix: string, fileName: string, testFileContents: string): void => {
 	describe(
-		`WebFun.Acceptance.${prefix}.${fileName}`,
+		`WebFun.Acceptance.${prefix}.${fileName.replace(/[\./]*(.*)\.wftest/gi, "$1")}`,
 		withTimeout(FiveMinutes, () => {
 			const testCases = Parser.Parse(fileName, testFileContents);
 
 			testCases.forEach(testCase => {
 				const ctx = new GameplayContext(debug);
-				describe(`WebFun.Acceptance.${prefix}.${fileName}.${testCase.description}`, () => {
+				describe(`${testCase.description}`, () => {
 					beforeAll(async () => {
 						await ctx.prepare(loadGameData);
 						ctx.buildEngine();
