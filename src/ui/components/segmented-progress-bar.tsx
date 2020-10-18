@@ -7,11 +7,11 @@ class SegmentedProgressBar extends Component {
 	private _value: number = 0;
 	public numberOfSegments: number = 24;
 
-	get value() {
+	get value(): number {
 		return this._value;
 	}
 
-	set value(progress) {
+	set value(progress: number) {
 		const numberOfSegments = Math.min(Math.round(progress * this.numberOfSegments), this.numberOfSegments);
 
 		while (this.children.length < numberOfSegments) this.appendChild(<div />);

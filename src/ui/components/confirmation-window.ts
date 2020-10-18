@@ -63,7 +63,7 @@ class ConfirmationWindow extends AbstractWindow {
 		super.disconnectedCallback();
 	}
 
-	protected attributeChangedCallback(attr: string, oldValue: string, newValue: string) {
+	protected attributeChangedCallback(attr: string, oldValue: string, newValue: string): void {
 		if (attr === "confirm-text") {
 			this._confirmButton.setAttribute("label", newValue);
 		} else if (attr === "abort-text") {
@@ -75,7 +75,7 @@ class ConfirmationWindow extends AbstractWindow {
 		this.setAttribute("confirm-text", t);
 	}
 
-	get confirmText() {
+	get confirmText(): string {
 		return this.getAttribute("confirm-text");
 	}
 
@@ -83,7 +83,7 @@ class ConfirmationWindow extends AbstractWindow {
 		this.setAttribute("abort-text", t);
 	}
 
-	get abortText() {
+	get abortText(): string {
 		return this.getAttribute("abort-text");
 	}
 
@@ -91,7 +91,7 @@ class ConfirmationWindow extends AbstractWindow {
 		this._customContent = c;
 	}
 
-	get customContent() {
+	get customContent(): string | HTMLElement | HTMLDivElement[] {
 		return this._customContent;
 	}
 }

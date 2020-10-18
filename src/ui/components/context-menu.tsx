@@ -16,7 +16,7 @@ class ContextMenu extends AbstractMenuWindow implements EventListenerObject {
 		document.addEventListener("keydown", this);
 	}
 
-	public handleEvent(e: MouseEvent | KeyboardEvent) {
+	public handleEvent(e: MouseEvent | KeyboardEvent): void {
 		if (e.type === "mouseup") {
 			const node = (e.target as Element).closest(MenuItem.tagName) as MenuItem;
 			if (node && node.item.enabled) {
@@ -28,7 +28,6 @@ class ContextMenu extends AbstractMenuWindow implements EventListenerObject {
 
 		e.stopPropagation();
 		e.preventDefault();
-		return false;
 	}
 
 	protected disconnectedCallback(): void {

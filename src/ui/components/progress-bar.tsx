@@ -12,11 +12,11 @@ class ProgressBar extends Component {
 		this.appendChild(this._indicator);
 	}
 
-	get value() {
+	get value(): number {
 		return this._value;
 	}
 
-	set value(progress) {
+	set value(progress: number) {
 		this._value = progress;
 		this._indicator.style.width = `${(progress * 100).toString()}%`;
 	}

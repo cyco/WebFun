@@ -7,7 +7,7 @@ abstract class AbstractIconButton extends Component {
 	private _icon: HTMLElement = (<i></i>);
 	private _iconName: string;
 
-	get icon() {
+	get icon(): string {
 		return this._iconName;
 	}
 
@@ -16,7 +16,7 @@ abstract class AbstractIconButton extends Component {
 		this._icon.className = `fa fa-${i}`;
 	}
 
-	get disabled() {
+	get disabled(): boolean {
 		return this.hasAttribute("disabled");
 	}
 

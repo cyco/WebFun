@@ -12,23 +12,23 @@ class Selector extends Component {
 		this.appendChild(<i className="fa fa-caret-down" />);
 	}
 
-	public focus() {
+	public focus(): void {
 		this.element.focus();
 	}
 
-	get onchange() {
+	get onchange(): (_: Event) => void {
 		return this.element.onchange;
 	}
 
-	set onchange(fn) {
+	set onchange(fn: (_: Event) => void) {
 		this.element.onchange = fn;
 	}
 
-	get value() {
+	get value(): string {
 		return this.element.value;
 	}
 
-	set value(v) {
+	set value(v: string) {
 		this.element.value = v;
 		this.element.options.forEach(c => (c.selected = false));
 		const option = this.element.options.find(c => c.value === v);
@@ -49,11 +49,11 @@ class Selector extends Component {
 		);
 	}
 
-	public removeAllOptions() {
+	public removeAllOptions(): void {
 		this.element.textContent = "";
 	}
 
-	public removeOption(value: string) {
+	public removeOption(value: string): void {
 		const option = this.element.options.find(c => c.value === value);
 		if (option) this.element.removeChild(option);
 	}
@@ -63,7 +63,7 @@ class Selector extends Component {
 		else this.removeAttribute("borderless");
 	}
 
-	get borderless() {
+	get borderless(): boolean {
 		return this.hasAttribute("borderless");
 	}
 }

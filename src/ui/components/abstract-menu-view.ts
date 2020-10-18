@@ -11,11 +11,11 @@ abstract class AbstractMenuView extends Component {
 	public onclose: (e: Event) => void = () => void 0;
 	private _menu: Menu = null;
 
-	get menu() {
+	get menu(): Menu {
 		return this._menu;
 	}
 
-	set menu(menu) {
+	set menu(menu: Menu) {
 		if (menu && !(menu instanceof Menu)) menu = new Menu(menu);
 
 		this._menu = menu;
@@ -30,12 +30,12 @@ abstract class AbstractMenuView extends Component {
 		this.addItemNodes();
 	}
 
-	close() {
+	close(): void {
 		this.remove();
 		if (this.onclose instanceof Function) this.onclose(new CustomEvent("close"));
 	}
 
-	addItemNodes() {
+	addItemNodes(): void {
 		if (!this.menu) return;
 		this.menu.items.forEach((menuItem: MenuItem) => {
 			if (menuItem === Separator || menuItem.isSeparator) this.addSeparatorNode();
@@ -43,20 +43,20 @@ abstract class AbstractMenuView extends Component {
 		});
 	}
 
-	addItemNode(menuItem: MenuItem) {
+	addItemNode(menuItem: MenuItem): MenuItemComponent {
 		const node = document.createElement(MenuItemComponent.tagName) as MenuItemComponent;
 		node.item = menuItem;
 		this.appendChild(node);
 		return node;
 	}
 
-	addSeparatorNode() {
+	addSeparatorNode(): MenuItemSeparator {
 		const node = document.createElement(MenuItemSeparator.tagName);
 		this.appendChild(node);
 		return node;
 	}
 
-	removeItemNodes() {
+	removeItemNodes(): void {
 		this.textContent = "";
 	}
 }

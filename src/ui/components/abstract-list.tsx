@@ -52,7 +52,7 @@ abstract class AbstractList<T> extends Component {
 		this._content.scrollTop = this._state.load(ScrollTopStateKey);
 	}
 
-	public showBar(updateState: boolean) {
+	public showBar(updateState: boolean): void {
 		this._bar.setAttribute("visible", "");
 		this._bar.onsearch = () => this.setNeedsRefiltering();
 		this._bar.onclose = () => this.hideBar(true);
@@ -70,7 +70,7 @@ abstract class AbstractList<T> extends Component {
 		this.refilter();
 	}
 
-	public hideBar(updateState: boolean) {
+	public hideBar(updateState: boolean): void {
 		this._bar.removeAttribute("visible");
 		this._bar.onsearch = null;
 		this._bar.onclose = null;
@@ -160,7 +160,7 @@ abstract class AbstractList<T> extends Component {
 		this.rebuild();
 	}
 
-	get items() {
+	get items(): T[] {
 		return this._items;
 	}
 
@@ -179,7 +179,7 @@ abstract class AbstractList<T> extends Component {
 		}
 	}
 
-	get state() {
+	get state(): Storage {
 		return this._state;
 	}
 }

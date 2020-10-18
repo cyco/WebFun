@@ -7,7 +7,7 @@ import { Point } from "src/util";
 abstract class AbstractMenuWindow extends AbstractMenuView {
 	protected stack: MenuStack = null;
 
-	show(location: Point | Element, stack = MenuStack.sharedStack) {
+	show(location: Point | Element, stack = MenuStack.sharedStack): void {
 		let minWidth: number = null;
 		let origin: Point;
 
@@ -33,7 +33,7 @@ abstract class AbstractMenuWindow extends AbstractMenuView {
 		this.stack = stack;
 	}
 
-	close() {
+	close(): void {
 		super.close();
 		this.stack = null;
 	}

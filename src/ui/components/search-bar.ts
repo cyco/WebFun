@@ -32,7 +32,7 @@ class SearchBar extends Component {
 		this._button.remove();
 	}
 
-	focus() {
+	focus(): void {
 		this._inputField.focus();
 	}
 
@@ -40,11 +40,11 @@ class SearchBar extends Component {
 		this._inputField.value = s;
 	}
 
-	get searchString() {
+	get searchString(): string {
 		return this._inputField.value;
 	}
 
-	get isVisible() {
+	get isVisible(): boolean {
 		return this.hasAttribute("visible");
 	}
 }

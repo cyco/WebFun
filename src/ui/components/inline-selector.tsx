@@ -16,7 +16,7 @@ class InlineSelector<T> extends Component implements EventListenerObject {
 		this.addEventListener("click", this);
 	}
 
-	handleEvent(e: MouseEvent) {
+	handleEvent(e: MouseEvent): void {
 		e.stopPropagation();
 		e.stopImmediatePropagation();
 
@@ -57,7 +57,7 @@ class InlineSelector<T> extends Component implements EventListenerObject {
 		this._options = o;
 	}
 
-	get options() {
+	get options(): { label: string; value: T }[] {
 		return this._options;
 	}
 
@@ -68,7 +68,7 @@ class InlineSelector<T> extends Component implements EventListenerObject {
 		this.textContent = option.label;
 	}
 
-	get value() {
+	get value(): T {
 		return this._value;
 	}
 

@@ -20,7 +20,7 @@ class Menubar extends AbstractMenuView {
 		this.onmousedown = (e: MouseEvent) => this.startMouseHandling(e);
 	}
 
-	startMouseHandling(event: MouseEvent) {
+	startMouseHandling(event: MouseEvent): void {
 		const itemIndex = this._findItemAt(new Point(event.pageX, event.pageY));
 		if (itemIndex === -1) return;
 		const menuItem = this.menu.items[itemIndex];
@@ -77,7 +77,7 @@ class Menubar extends AbstractMenuView {
 		MenuStack.sharedStack.clear();
 	}
 
-	handleEvent(e: MouseEvent) {
+	handleEvent(e: MouseEvent): void {
 		if (e.type === "mouseup") {
 			const node = (e.target as Element).closest(MenuItem.tagName) as MenuItem;
 			if (!node) return;

@@ -11,11 +11,11 @@ class RadioGroup extends EventTarget {
 		buttons.forEach(b => this.addButton(b));
 	}
 
-	public get buttons() {
+	public get buttons(): RadioButton[] {
 		return this._buttons;
 	}
 
-	public addButton(button: RadioButton) {
+	public addButton(button: RadioButton): void {
 		this._buttons.push(button);
 		button.groupID = this._id;
 	}

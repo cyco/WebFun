@@ -22,28 +22,28 @@ class Checkbox extends Component {
 		this._label = label;
 	}
 
-	get title() {
+	get title(): string {
 		return this._label.textContent;
 	}
 
-	set title(t) {
+	set title(t: string) {
 		this._label.textContent = "";
 		this._label.appendChild(document.createTextNode(t));
 	}
 
-	get checked() {
+	get checked(): boolean {
 		return this._box.checked;
 	}
 
-	set checked(c) {
+	set checked(c: boolean) {
 		this._box.checked = c;
 	}
 
-	get onchange() {
+	get onchange(): (_: Event) => void {
 		return this._box.onchange;
 	}
 
-	set onchange(f) {
+	set onchange(f: (_: Event) => void) {
 		this._box.onchange = f;
 	}
 

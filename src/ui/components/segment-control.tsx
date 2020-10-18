@@ -18,7 +18,7 @@ class SegmentControl extends Component implements EventListenerObject {
 			((this.childNodes[this.state.load("active-segment")] || this.firstElementChild) as Segment);
 	}
 
-	handleEvent(e: Event) {
+	handleEvent(e: Event): void {
 		this.currentSegment = e.currentTarget as Element;
 	}
 

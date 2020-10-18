@@ -32,7 +32,7 @@ class Button extends AbstractIconButton {
 		else this.removeAttribute("active");
 	}
 
-	get active() {
+	get active(): boolean {
 		return this.hasAttribute("active");
 	}
 

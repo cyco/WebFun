@@ -8,11 +8,11 @@ class MenuItemComponent extends Component {
 	public static readonly tagName = "wf-menu-item";
 	private _item: MenuItem = null;
 
-	get item() {
+	get item(): MenuItem {
 		return this._item;
 	}
 
-	set item(i) {
+	set item(i: MenuItem) {
 		if (this._item) this._reset();
 		this._item = i;
 		if (this._item) this._rebuild();

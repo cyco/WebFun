@@ -24,36 +24,36 @@ class RadioButton extends Component {
 		super.disconnectedCallback();
 	}
 
-	get title() {
+	get title(): string {
 		return this._label.textContent;
 	}
 
-	set title(t) {
+	set title(t: string) {
 		this._label.textContent = t;
 	}
 
-	get checked() {
+	get checked(): boolean {
 		return this._radio.hasAttribute("checked");
 	}
 
-	set checked(c) {
+	set checked(c: boolean) {
 		if (c) this._radio.setAttribute("checked", "");
 		else this._radio.removeAttribute("checked");
 	}
 
-	get onchange() {
+	get onchange(): (_: Event) => void {
 		return this._radio.onchange;
 	}
 
-	set onchange(f) {
+	set onchange(f: (_: Event) => void) {
 		this._radio.onchange = f;
 	}
 
-	get groupID() {
+	get groupID(): string {
 		return this._radio.name;
 	}
 
-	set groupID(id) {
+	set groupID(id: string) {
 		this._radio.name = id;
 	}
 }

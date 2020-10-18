@@ -14,7 +14,7 @@ class Label extends Component implements EventListenerObject {
 		this.addEventListener("dblclick", this);
 	}
 
-	handleEvent(e: MouseEvent) {
+	handleEvent(e: MouseEvent): void {
 		if (e.type !== "dblclick") return;
 		if (this._editor) return;
 		e.preventDefault();
@@ -25,7 +25,7 @@ class Label extends Component implements EventListenerObject {
 		this.dispatchEvent(new Event("change"));
 	}
 
-	public beginEditing() {
+	public beginEditing(): void {
 		if (this._editor) return;
 
 		const editor = new FieldEditor(this);
@@ -34,7 +34,7 @@ class Label extends Component implements EventListenerObject {
 		this._editor = editor;
 	}
 
-	public endEditing() {
+	public endEditing(): void {
 		if (!this._editor) return;
 
 		this._editor.abort();

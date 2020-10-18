@@ -13,7 +13,7 @@ class Slider extends Component {
 	private _steps = 0;
 	private _snapToIntegers = false;
 	private _continuous = false;
-	private _onChange: Function = null;
+	private _onChange: (_: Event) => void = null;
 	private _knob: HTMLDivElement;
 	private _left: HTMLDivElement;
 	private _right: HTMLDivElement;
@@ -21,86 +21,86 @@ class Slider extends Component {
 	private _midText: string;
 	private _maxText: string;
 
-	get min() {
+	get min(): number {
 		return this._min;
 	}
 
-	set min(v) {
+	set min(v: number) {
 		this._min = v;
 		this.layout();
 	}
 
-	get value() {
+	get value(): number {
 		return this._value;
 	}
 
-	set value(v) {
+	set value(v: number) {
 		this._value = Math.max(this._min, Math.min(v, this._max));
 		this.layout();
 	}
 
-	get max() {
+	get max(): number {
 		return this._max;
 	}
 
-	set max(v) {
+	set max(v: number) {
 		this._max = v;
 		this.layout();
 	}
 
-	get minText() {
+	get minText(): string {
 		return this._minText;
 	}
 
-	set minText(t) {
+	set minText(t: string) {
 		this._minText = t;
 	}
 
-	get midText() {
+	get midText(): string {
 		return this._midText;
 	}
 
-	set midText(t) {
+	set midText(t: string) {
 		this._midText = t;
 	}
 
-	get maxText() {
+	get maxText(): string {
 		return this._maxText;
 	}
 
-	set maxText(t) {
+	set maxText(t: string) {
 		this._maxText = t;
 	}
 
-	get continuous() {
+	get continuous(): boolean {
 		return this._continuous;
 	}
 
-	set continuous(c) {
+	set continuous(c: boolean) {
 		this._continuous = c;
 	}
 
-	get onChange() {
+	get onChange(): (_: Event) => void {
 		return this._onChange;
 	}
 
-	set onChange(fn) {
+	set onChange(fn: (_: Event) => void) {
 		this._onChange = fn;
 	}
 
-	get snapToIntegers() {
+	get snapToIntegers(): boolean {
 		return this._snapToIntegers;
 	}
 
-	set snapToIntegers(s) {
+	set snapToIntegers(s: boolean) {
 		this._snapToIntegers = s;
 	}
 
-	get steps() {
+	get steps(): number {
 		return this._steps;
 	}
 
-	set steps(s) {
+	set steps(s: number) {
 		this._steps = s;
 	}
 
@@ -233,7 +233,7 @@ class Slider extends Component {
 		}, 80);
 	}
 
-	layout() {
+	layout(): void {
 		this._value = Math.max(this._min, this._value);
 		this._value = Math.min(this._max, this._value);
 
@@ -247,7 +247,7 @@ class Slider extends Component {
 
 	private _postChangeNotification() {
 		if (this._onChange instanceof Function) {
-			this._onChange(this);
+			this._onChange(new CustomEvent("change"));
 		}
 	}
 }
