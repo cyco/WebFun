@@ -18,6 +18,7 @@ const SettingsAction = (title: string, callback: Function, beta: boolean = false
 
 export default (gameController: GameController) => {
 	import("./initialize").then(({ default: initialize }) => initialize(gameController));
+	import("src/editor");
 
 	return {
 		title: "Debug",
