@@ -2,7 +2,6 @@ import "./confirmation-window.scss";
 
 import AbstractWindow from "./abstract-window";
 import Button from "./button";
-import { Description } from "../../description";
 
 class ConfirmationWindow extends AbstractWindow {
 	public static readonly tagName = "wf-confirmation-window";
@@ -24,7 +23,7 @@ class ConfirmationWindow extends AbstractWindow {
 
 		this.onclose = () => this.onabort();
 
-		this.title = Description.Name;
+		this.title = "WebFun";
 	}
 
 	protected connectedCallback(): void {
