@@ -4,7 +4,7 @@ import randomDirection from "./helpers/random-direction";
 import { evade, noMovement, canPerformMeleeAttack, moveCheck, performMeleeAttack, performMove, isDoorway } from "./helpers";
 import { Engine } from "src/engine";
 
-export default (monster: Monster, zone: Zone, engine: Engine) => {
+export default (monster: Monster, zone: Zone, engine: Engine): void => {
 	let direction: Point;
 	const hero = engine.hero.location;
 	const distanceToHero = monster.position.bySubtracting(hero).abs();

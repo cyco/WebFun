@@ -3,7 +3,6 @@ import { Point } from "src/util";
 import { Engine } from "src/engine";
 import { findTileIdForCharFrameWithDirection, shoot } from "./helpers";
 import { NullIfMissing } from "src/engine/asset-manager";
-import ZoneSetTileAt from "./helpers/zone-set-tile-at";
 import YodaViewRedrawTile from "./helpers/yoda-view-redraw";
 import unspecific1 from "./unspecific-1";
 import unspecific2 from "./unspecific-2";
@@ -44,11 +43,10 @@ function handleRemainingBullet(monster: Monster, zone: Zone, engine: Engine) {
 	const tile = findTileIdForCharFrameWithDirection(weapon.frames[0], monster.direction);
 	if (zone.getTile(monster.bullet.x, monster.bullet.y, Zone.Layer.Object) === tile) {
 		if (!monster.bullet.isEqualTo(hero)) {
-			ZoneSetTileAt(engine, zone, monster.bullet, -1);
 			YodaViewRedrawTile(monster.bullet, zone);
 		}
 	}
-	monster.field3c = 0;
+	monster.bulletOffset = 0;
 	monster.bullet = new Point(monster.position);
 	monster.direction = new Point(0, 0);
 }
@@ -58,9 +56,6 @@ export default (monster: Monster, zone: Zone, engine: Engine): void => {
 	if (!monster.alive || !monster.enabled) {
 		handleRemainingBullet(monster, zone, engine);
 		CharSetDefaultFace(monster.face, monster.direction);
-		if (!monster.alive && zone.getTile(monster.position.x, monster.position.y, Zone.Layer.Object) === monster.face.tile) {
-			zone.setTile(null, monster.position.x, monster.position.y, Zone.Layer.Object);
-		}
 		return;
 	}
 

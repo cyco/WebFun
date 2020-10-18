@@ -3,7 +3,7 @@ import MoveCheckResult from "./move-check-result";
 import { Point } from "src/util";
 import { Engine } from "src/engine";
 
-export const EvasionStrategy = (tickCount: number) => ((tickCount & 1) < 1 ? 1 : -1);
+export const EvasionStrategy = (tickCount: number): 1 | -1 => ((tickCount & 1) < 1 ? 1 : -1);
 
 export default (source: Point, rel: Point, zone: Zone, flag = false, engine: Engine): MoveCheckResult => {
 	const target = source.byAdding(rel);

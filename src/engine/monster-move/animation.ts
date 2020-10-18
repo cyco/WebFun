@@ -21,7 +21,7 @@ function maybeRestoreFaceThenDraw(monster: Monster, direction: Point, zone: Zone
 	return updateFaceAndRedraw(monster, zone, engine);
 }
 
-export default (monster: Monster, zone: Zone, engine: Engine) => {
+export default (monster: Monster, zone: Zone, engine: Engine): void => {
 	const hero = engine.hero.location;
 	const direction = hero.comparedTo(monster.position);
 

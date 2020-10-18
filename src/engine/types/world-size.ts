@@ -5,11 +5,11 @@ class WorldSize {
 
 	private static readonly knownSizes = [WorldSize.Small, WorldSize.Medium, WorldSize.Large];
 
-	get rawValue() {
+	get rawValue(): number {
 		return WorldSize.knownSizes.indexOf(this) + 1;
 	}
 
-	public static isWorldSize(number: number) {
+	public static isWorldSize(number: number): boolean {
 		return number >= 1 && number <= WorldSize.knownSizes.length;
 	}
 
@@ -18,11 +18,11 @@ class WorldSize {
 		return WorldSize.knownSizes[number - 1];
 	}
 
-	public toString() {
+	public toString(): string {
 		return `WorldSize {${this.name}}`;
 	}
 
-	get name() {
+	get name(): string {
 		switch (this) {
 			case WorldSize.Small:
 				return "Small";

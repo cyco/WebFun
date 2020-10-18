@@ -43,7 +43,7 @@ function _performMove(monster: Monster, direction: Point, move: boolean, zone: Z
 	YodaViewRedrawTile(monster.position, zone);
 }
 
-export default (monster: Monster, zone: Zone, engine: Engine) => {
+export default (monster: Monster, zone: Zone, engine: Engine): void => {
 	if (monster.cooldown) {
 		monster.cooldown--;
 		return _noMovement(monster, zone, engine);

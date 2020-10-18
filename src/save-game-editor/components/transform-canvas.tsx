@@ -62,7 +62,6 @@ class TransformCanvas extends Component implements EventListenerObject {
 				event.preventDefault();
 				break;
 			case "mousedown":
-				console.log("mouse down");
 				document.body.style.userSelect = "none";
 				this.lastMouse = new Point(
 					event.offsetX || event.pageX - canvas.offsetLeft,
@@ -73,7 +72,6 @@ class TransformCanvas extends Component implements EventListenerObject {
 
 				break;
 			case "mousemove":
-				console.log("mousemove");
 				this.lastMouse = new Point(
 					event.offsetX || event.pageX - canvas.offsetLeft,
 					event.offsetY || event.pageY - canvas.offsetTop

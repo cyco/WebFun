@@ -27,7 +27,7 @@ const MonsterInit = {
 	flag34: false,
 	directionX: 0,
 	directionY: 0,
-	field3c: 0,
+	bulletOffset: 0,
 	facingDirection: Char.FrameEntry.Up,
 	field60: 0,
 	field62: 0,
@@ -58,7 +58,7 @@ class Monster {
 	public flag34: boolean;
 	public directionX: number;
 	public directionY: number;
-	public field3c: number;
+	public bulletOffset: number;
 	public facingDirection: Char.FrameEntry;
 	public field60: number;
 	public field62: number;

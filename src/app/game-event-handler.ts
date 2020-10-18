@@ -74,13 +74,11 @@ class GameEventHandler {
 
 				let used = false;
 				if (element instanceof HealthComponent && item.isEdible) {
-					console.log("consume");
 					engine.consume(item);
 					used = true;
 				}
 
 				if (item.isWeapon && (element instanceof AmmoComponet || element instanceof WeaponComponent)) {
-					console.log("equip");
 					engine.equip(item);
 					used = true;
 				}

@@ -1,6 +1,6 @@
 import { Point } from "src/util";
 
-export default (direction: number) => {
+export default (direction: number): Point => {
 	switch (direction) {
 		case -1:
 			return new Point(0, -1);

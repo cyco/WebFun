@@ -13,7 +13,7 @@ function maybeRestoreFaceThenDraw(monster: Monster, direction: Point, zone: Zone
 	YodaViewRedrawTile(monster.position, zone);
 }
 
-export default (monster: Monster, direction: Point, move: boolean, zone: Zone, engine: Engine) => {
+export default (monster: Monster, direction: Point, move: boolean, zone: Zone, engine: Engine): void => {
 	const hero = engine.hero.location;
 
 	if (!monster.face) {

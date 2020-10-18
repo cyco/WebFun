@@ -1,7 +1,7 @@
 import { Point } from "src/util";
 import MoveCheckResult from "./move-check-result";
 
-export default function evade(direction: Point, val: number) {
+export default function evade(direction: Point, val: number): Point {
 	switch (val) {
 		case MoveCheckResult.OutOfBounds:
 		case MoveCheckResult.Blocked:

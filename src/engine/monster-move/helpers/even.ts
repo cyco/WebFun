@@ -1,1 +1,1 @@
-export default (i: number) => i % 2 === 0;
+export default (i: number): boolean => i % 2 === 0;

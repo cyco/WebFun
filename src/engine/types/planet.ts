@@ -22,7 +22,7 @@ class Planet {
 		return Planet.knownPlanets[number];
 	}
 
-	get name() {
+	get name(): string {
 		switch (this) {
 			case Planet.None:
 				return "None";

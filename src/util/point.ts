@@ -43,7 +43,7 @@ class Point implements PointLike {
 		return this;
 	}
 
-	public comparedTo(point: Point) {
+	public comparedTo(point: Point): Point {
 		let x = 0;
 		let y = 0;
 

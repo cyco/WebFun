@@ -4,7 +4,7 @@ import randomDirection from "./helpers/random-direction";
 import { evade, noMovement, playSound, canPerformMeleeAttack, performMoveAfterDoorwayCheck, moveCheck } from "./helpers";
 import { Engine } from "src/engine";
 
-export default (monster: Monster, zone: Zone, engine: Engine) => {
+export default (monster: Monster, zone: Zone, engine: Engine): void => {
 	if (monster.cooldown) {
 		monster.cooldown--;
 		return noMovement(monster, zone, engine);

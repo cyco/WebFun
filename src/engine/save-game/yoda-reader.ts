@@ -93,7 +93,7 @@ class YodaReader extends Reader {
 		state.unknownCount = unknownCount;
 		state.unknownSum = unknownSum;
 		try {
-			state.worldSize = WorldSize.fromNumber(1 + worldSize);
+			state.worldSize = WorldSize.isWorldSize(1 + worldSize) ? WorldSize.fromNumber(1 + worldSize) : WorldSize.Medium;
 		} catch (_) {
 			state.worldSize = WorldSize.Small;
 		}
@@ -156,7 +156,7 @@ class YodaReader extends Reader {
 		const directionX = stream.readInt16();
 		const directionY = stream.readInt16();
 
-		const field3c = stream.readInt16();
+		const bulletOffset = stream.readInt16();
 		const facingDirection = stream.readInt16();
 		const field60 = stream.readInt16();
 		const loot = stream.readInt16();
@@ -188,7 +188,7 @@ class YodaReader extends Reader {
 		monster.flag1c = flag1c;
 		monster.directionX = directionX;
 		monster.directionY = directionY;
-		monster.field3c = field3c;
+		monster.bulletOffset = bulletOffset;
 		monster.field60 = field60;
 		monster.flag2c = flag2c;
 		monster.flag34 = flag34;

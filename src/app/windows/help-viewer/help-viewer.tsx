@@ -71,7 +71,6 @@ class HelpViewer extends AbstractWindow {
 		if (topic === this.currentTopic) return;
 
 		this.history.push(topic);
-		console.log("visit", topic, "=>", this.history);
 		this.showTopic(topic);
 	}
 

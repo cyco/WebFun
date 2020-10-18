@@ -98,8 +98,10 @@ class DagobahGenerator {
 		const candidates = zone.hotspots.withType(Hotspot.Type.SpawnLocation);
 		console.assert(candidates.length === 1);
 		const hotspot = candidates[randmod(candidates.length)];
-		hotspot.arg = npcID;
-		hotspot.enabled = true;
+		if (hotspot) {
+			hotspot.arg = npcID;
+			hotspot.enabled = true;
+		}
 	}
 
 	private _setupIndoorSpawn(dagobah: World, tile: Tile, npcID: number) {

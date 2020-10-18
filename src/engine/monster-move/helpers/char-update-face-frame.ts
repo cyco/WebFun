@@ -3,9 +3,11 @@ import { Point } from "src/util";
 import { findTileIdForCharFrameWithDirection } from ".";
 
 function CharUpdateFaceFrame(char: Char, direction: Point, frame: number): Tile {
-	return (char.tile =
-		findTileIdForCharFrameWithDirection(char.frames[frame], direction) ||
-		findTileIdForCharFrameWithDirection(char.frames[0], direction));
+	const t1 = findTileIdForCharFrameWithDirection(char.frames[frame], direction);
+	const t2 = findTileIdForCharFrameWithDirection(char.frames[0], direction);
+	char.tile = t1 || t2;
+
+	return char.tile;
 }
 
 export default CharUpdateFaceFrame;

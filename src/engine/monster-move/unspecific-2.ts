@@ -13,7 +13,7 @@ import {
 } from "./helpers";
 import { Engine } from "src/engine";
 
-export default (monster: Monster, zone: Zone, engine: Engine) => {
+export default (monster: Monster, zone: Zone, engine: Engine): void => {
 	let direction: Point;
 
 	if (monster.cooldown) {
