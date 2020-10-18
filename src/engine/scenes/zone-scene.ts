@@ -352,7 +352,7 @@ class ZoneScene extends Scene {
 			return ScriptResult.UpdateScene;
 		}
 
-		if (location.isEqualTo(heroLocation)) {
+		if (location.isEqualTo(new Point(heroLocation.x, heroLocation.y))) {
 			if (tile.isWeapon()) {
 				engine.equip(tile);
 			} else if (tile.isEdible()) {
