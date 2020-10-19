@@ -1,6 +1,6 @@
 import InputMask from "src/engine/input/input-mask";
 import { Direction, InputManager } from "src/engine/input";
-import { Metronome, EngineEvents, Engine } from "src/engine";
+import { Metronome, Engine } from "src/engine";
 import { Tile } from "src/engine/objects";
 import { Point } from "src/util";
 
@@ -83,9 +83,11 @@ class RecordingInputManager implements InputManager {
 
 	public addListeners(): void {
 		this.implementation && this.implementation.addListeners();
+		this.engine.addEventListener(Engine.Event.CurrentZoneChange, this);
 	}
 
 	public removeListeners(): void {
+		this.engine.removeEventListener(Engine.Event.CurrentZoneChange, this);
 		this.implementation && this.implementation.removeListeners();
 	}
 
@@ -123,10 +125,16 @@ class RecordingInputManager implements InputManager {
 	}
 
 	public handleEvent(e: CustomEvent): void {
-		if (e.type === EngineEvents.WeaponChanged) {
+		if (e.type === Engine.Event.WeaponChanged) {
 			const id = (e.detail as any).weapon.id;
 			this._records.push(`${Syntax.Place.Start} ${id.toHex(3)}${Syntax.Place.End}`);
 			return;
+		}
+
+		if (e.type === Engine.Event.CurrentZoneChange) {
+			this._records.push(
+				`\n# Entering zone ${this.engine.currentZone.id.toHex(3)} at tick ${this.engine.metronome.tickCount.toString()}\n`
+			);
 		}
 
 		if (e.type === Metronome.Event.Start) {
@@ -144,13 +152,13 @@ class RecordingInputManager implements InputManager {
 		if (this.implementation && this.implementation.engine) {
 			this.implementation.engine.metronome.removeEventListener(Metronome.Event.Start, this);
 			this.implementation.engine.metronome.removeEventListener(Metronome.Event.BeforeTick, this);
-			this.implementation.engine.removeEventListener(EngineEvents.WeaponChanged, this);
+			this.implementation.engine.removeEventListener(Engine.Event.WeaponChanged, this);
 		}
 
 		this.implementation && (this.implementation.engine = s);
 
 		if (this.implementation && this.implementation.engine) {
-			this.implementation.engine.addEventListener(EngineEvents.WeaponChanged, this);
+			this.implementation.engine.addEventListener(Engine.Event.WeaponChanged, this);
 			this.implementation.engine.metronome.addEventListener(Metronome.Event.Start, this);
 			this.implementation.engine.metronome.addEventListener(Metronome.Event.BeforeTick, this);
 		}
