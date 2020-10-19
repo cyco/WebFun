@@ -164,7 +164,7 @@ class TestCreatorWindow extends AbstractWindow implements EventListenerObject {
 		const serializer = new Serializer();
 		const data = serializer.serialize(
 			this._configBuilder.configuration,
-			this._recorder.input,
+			this._recorder.input.replace(/(\s\.)+$/gi, ""),
 			this._expectationEditor.expectations
 		);
 
