@@ -30,7 +30,7 @@ class InputReplayer extends Component {
 		super.disconnectedCallback();
 	}
 
-	public load(input: string[]): void {
+	public load(input: string): void {
 		if (this.isInstalled()) this.uninstall();
 		this._inputManager = new ReplayingInputManager();
 		this._inputManager.input = input;

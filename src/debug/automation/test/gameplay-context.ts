@@ -127,12 +127,12 @@ class GameplayContext {
 		return assets;
 	}
 
-	public async playNewStory(seed: number, planet: Planet, size: WorldSize, input: string[], debug = false): Promise<void> {
+	public async playNewStory(seed: number, planet: Planet, size: WorldSize, input: string, debug = false): Promise<void> {
 		const story = new Story(seed, planet, size);
 		return await this.playStory(story, input, debug);
 	}
 
-	public setupEngine(story: Story, input: string[], debug = false): void {
+	public setupEngine(story: Story, input: string, debug = false): void {
 		const { sceneView, engine, inputManager } = this;
 
 		Settings.debug = debug;
@@ -170,7 +170,7 @@ class GameplayContext {
 		inputManager.input = input;
 	}
 
-	public async playStory(story: Story, input: string[], debug = false): Promise<void> {
+	public async playStory(story: Story, input: string, debug = false): Promise<void> {
 		return new Promise(async resolve => {
 			this.setupEngine(story, input, debug);
 			this.onInputEnd = () => resolve();
@@ -188,13 +188,12 @@ class GameplayContext {
 			return;
 		}
 
-		engine.metronome.stop();
-		await dispatch(() => void 0, 5);
+		await engine.metronome.stop();
 
 		engine.inputManager.engine = engine;
 		engine.inputManager.removeListeners();
 		(engine.inputManager as ReplayingInputManager).removeEventListener(ReplayingInputManager.Event.InputEnd, this.onInputEnd);
-		(engine.inputManager as ReplayingInputManager).input = [];
+		(engine.inputManager as ReplayingInputManager).input = "";
 		engine.sceneManager.clear();
 
 		engine.currentWorld = null;

@@ -20,6 +20,6 @@ export default {
 		End: ""
 	},
 	Attack: "🔫",
-	Comment: "-",
+	Comment: "#",
 	Wait: "."
 };

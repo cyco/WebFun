@@ -42,7 +42,11 @@ class ReplayingInputManager extends EventTarget implements InputManager, EventLi
 			this._offset++;
 
 			if (this.token !== "at") {
-				this.engine.equip(tile);
+				if (tile.isEdible()) {
+					this.engine.consume(tile);
+				} else {
+					this.engine.equip(tile);
+				}
 				return;
 			}
 
@@ -55,7 +59,7 @@ class ReplayingInputManager extends EventTarget implements InputManager, EventLi
 			}
 		}
 
-		if (this._offset === this.input.length) {
+		if (this.token === "") {
 			this.dispatchEvent(new CustomEvent(Event.InputEnd));
 		}
 	}
@@ -97,8 +101,13 @@ class ReplayingInputManager extends EventTarget implements InputManager, EventLi
 	}
 
 	private get token(): string {
-		if (this._offset < this.input.length) {
-			return this.input[this._offset];
+		if (this._offset < this._input.length) {
+			const token = this._input[this._offset];
+			if (token && token[0] === Syntax.Comment) {
+				this._offset++;
+				return this.token;
+			}
+			return token;
 		}
 
 		return "";
@@ -167,13 +176,94 @@ class ReplayingInputManager extends EventTarget implements InputManager, EventLi
 		return this.token === Syntax.Attack;
 	}
 
-	set input(input: string[]) {
-		this._input = input;
+	set input(input: string) {
+		this._input = this.parseInput(input);
 		this.reset();
 	}
 
-	get input(): string[] {
-		return this._input;
+	get input(): string {
+		return this.assembleInput(this._input);
+	}
+
+	private parseInput(input: string): string[] {
+		if (!input.length) return [];
+
+		const result: string[] = [];
+		for (let i = 0; i < input.length; i++) {
+			let char = input[i];
+			switch (char) {
+				case " ":
+				case "\n":
+					continue;
+				case Syntax.Comment: {
+					let comment = Syntax.Comment;
+					for (i; i < input.length; i++) {
+						char = input[i];
+						if (char === "\n") break;
+						comment += char;
+					}
+					result.push(comment);
+					break;
+				}
+				case Syntax.Attack[0]:
+				case Syntax.Place.Start[0]:
+					if (input[i + 1] === Syntax.Attack[1]) {
+						result.push(Syntax.Attack);
+						i += Syntax.Attack.length;
+						break;
+					} else {
+						result.push(Syntax.Place.Start);
+						i += Syntax.Place.Start.length + 1;
+
+						let item = "";
+						for (i; i < input.length; i++) {
+							char = input[i];
+							if (char === " ") break;
+							item += char;
+						}
+						result.push(item);
+
+						i += 1;
+						if (input[i] === "a" && input[i + 1] === "t") {
+							result.push("at");
+							i += 3;
+						}
+
+						let place = "";
+						for (i; i < input.length; i++) {
+							char = input[i];
+							if (char === " ") break;
+							place += char;
+						}
+						result.push(place);
+					}
+					break;
+				default:
+					result.push(char);
+					break;
+			}
+		}
+
+		return result;
+	}
+
+	private assembleInput(input: string[]): string {
+		if (input.length === 0) return ".";
+
+		let result = "" + input[1];
+		let atStart = false;
+		for (let i = 1; i < input.length; i++) {
+			const currentInput = input[i];
+			if (currentInput[0] === Syntax.Comment) {
+				result += "\n";
+				atStart = true;
+			} else if (!atStart) {
+				result += " ";
+			}
+			result += currentInput;
+		}
+
+		return result;
 	}
 }
 

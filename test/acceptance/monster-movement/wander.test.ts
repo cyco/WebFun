@@ -5,7 +5,6 @@ import { rand, Point } from "src/util";
 describeMonsterMovement(Char.MovementType.Wander, (ctx, tick, vars) => {
 	it("moves as expected", async () => {
 		const { monster } = vars;
-		ctx.engine.metronome.start();
 
 		await tick(".");
 		expect(monster.position).toEqual(new Point(5, 3));

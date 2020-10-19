@@ -35,7 +35,7 @@ const run = (prefix: string, fileName: string, testFileContents: string): void =
 						testCase.configuration.inventory.forEach(i =>
 							ctx.engine.inventory.addItem(ctx.engine.assets.get(Tile, i))
 						);
-						await ctx.playStory(buildStory(testCase), testCase.input.split(" "), debug);
+						await ctx.playStory(buildStory(testCase), testCase.input, debug);
 					});
 
 					testCase.expectations.forEach((exp: Expectation) => exp.evaluate(ctx));

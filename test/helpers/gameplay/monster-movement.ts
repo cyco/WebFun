@@ -31,6 +31,7 @@ const makeFunction = (describe: any): describeMonsterMovement => (
 		"WebFun.Acceptance.MonsterMovement." + type.name,
 		withTimeout(FiveMinutes, () => {
 			const ctx = new GameplayContext(debug);
+
 			const vars: Vars = {
 				monster: null,
 				char: null,
@@ -45,8 +46,9 @@ const makeFunction = (describe: any): describeMonsterMovement => (
 				const story = buildStory(ctx.engine.assets);
 				try {
 					srand(0xdead);
-					ctx.setupEngine(story, [], debug);
+					ctx.setupEngine(story, "", debug);
 					ctx.engine.hero.location = new Point(4, 6);
+					await ctx.engine.metronome.stop();
 				} catch (e) {}
 			});
 
@@ -57,7 +59,9 @@ const makeFunction = (describe: any): describeMonsterMovement => (
 			async function tick(input = "."): Promise<void> {
 				return new Promise(async resolve => {
 					try {
-						ctx.onInputEnd = () => {
+						await ctx.engine.metronome.stop();
+						ctx.onInputEnd = async () => {
+							await ctx.engine.metronome.stop();
 							ctx.engine.inputManager.removeListeners();
 							inputManager.removeEventListener(ReplayingInputManager.Event.InputEnd, ctx.onInputEnd);
 							ctx.onInputEnd = () => void 0;
@@ -65,8 +69,9 @@ const makeFunction = (describe: any): describeMonsterMovement => (
 						};
 						const inputManager = ctx.engine.inputManager as ReplayingInputManager;
 						inputManager.addEventListener(ReplayingInputManager.Event.InputEnd, ctx.onInputEnd);
-						inputManager.input = input.split("").map(t => t.trim());
+						inputManager.input = input;
 						ctx.engine.inputManager.addListeners();
+						ctx.engine.metronome.start();
 					} catch (e) {}
 				});
 			}

@@ -4,7 +4,6 @@ import { Char } from "src/engine/objects";
 describeMonsterMovement(Char.MovementType.Sit, (ctx, tick, vars) => {
 	it("moves as expected", async () => {
 		const { monster, InitialPosition } = vars;
-		ctx.engine.metronome.start();
 
 		await tick(".");
 		expect(monster.position).toEqual(InitialPosition);

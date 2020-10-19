@@ -31,6 +31,7 @@ class TestFileParser {
 
 	public parse(description: string, fileContents: string): TestCase[] {
 		const testCases = this.doParse(fileContents);
+
 		for (let i = 0; i < testCases.length; i++) {
 			const testCase = testCases[i];
 			if (!testCase.description) {
@@ -157,12 +158,12 @@ class TestFileParser {
 	}
 
 	private parseInput(lines: IterableIterator<string>): string {
-		const inputLines: string[] = ["."];
+		const inputLines: string[] = [];
 		do {
 			const it = lines.next();
 			if (it.done) throw "Unexpected end of input";
 			if (!it.value.length) continue;
-			if (it.value[0] === "-") return inputLines.map(l => l.trim()).join("");
+			if (it.value[0] === "-") return inputLines.map(l => l.trim()).join("\n");
 			inputLines.push(it.value);
 		} while (true);
 	}

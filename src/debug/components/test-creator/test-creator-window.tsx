@@ -114,7 +114,7 @@ class TestCreatorWindow extends AbstractWindow implements EventListenerObject {
 
 	private setupInput(input: string): void {
 		const replayer: InputReplayer = this._replayer;
-		replayer.load(input.split(" "));
+		replayer.load(input);
 		replayer.start();
 		replayer.fastForward();
 	}

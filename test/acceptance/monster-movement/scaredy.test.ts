@@ -4,7 +4,6 @@ import { rand, Point } from "src/util";
 describeMonsterMovement(Char.MovementType.Scaredy, (ctx, tick, vars) => {
 	it("moves as expected", async () => {
 		const { monster, InitialPosition } = vars;
-		ctx.engine.metronome.start();
 
 		expect(monster.position).toEqual(InitialPosition);
 		await tick(".");
