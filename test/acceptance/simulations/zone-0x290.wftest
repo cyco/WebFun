@@ -1,21 +1,13 @@
 -= WebFun Test =--
-Zone: 0x290
-Description: Test item placement (rand = 2)
-
-- Input -
- . . . . → → ↑ . → → → → → ↑ ↑ ↑ ↑ → ↗ → → ↑ →
-
-- Expect -
-Inventory to contain 1198
-
-------------------------------------------------------------------------------------------------------------------------
-
--= WebFun Test =--
-Zone: 0x290
 Description: Test item placement (rand = 3)
 
+Seed: 0x290
+Zone: 0x290
+
 - Input -
- . . . . ↑ . . . ↑ ↑ ↑ ↑ ↗ → → → → → → → ↑ ↑ ↑ ↑ . → → → → . . . . . . . . . . . . . .
+. . . . ↑ .
+# Entering zone 0x290 at tick 6
+. . ↑ ↑ ↑ ↑ ↗ → → → → → → → ↑ ↑ ↑ ↑ . → → → → .
 
 - Expect -
-Inventory to contain 1198
+Inventory: 0x4ae

@@ -1,11 +1,17 @@
 -= WebFun Test =--
+Seed: 0x110
 Zone: 0x110
 Find: 0x1ff
-Seed: 0x110
 
 - Input -
-. . → → → ↑ ↑ . → ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ . → → → . → . . ↓ . ↓ . . ↑ . ↑ . ↑ . ↑ . → . → → . → → . ↓ . ↓ . ↓ . ↓ . ↓ . . ← . . ← ← ↑ ↑ ↑ . . ↓ ↓ ↘ → . . ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ .
+. . → → → ↑ ↑
+# Entering zone 0x110 at tick 7
+. → ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ . → → → . → . . ↓ . ↓ . . ↑ . ↑ . ↑ . ↑ . → . → → . → → . ↓ . ↓ . ↓ . ↓ . ↓ . . ← . . ← ← ↑ ↑ ↑ . . ↓ ↓ ↘ → . . ↑ ↑
+# Entering zone 0x111 at tick 79
+↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ .
+# Entering zone 0x1bc at tick 0
+. . . . . . 
 
 - Expect -
-Zone Solved
+Zone solved
 Inventory: 0x1ff

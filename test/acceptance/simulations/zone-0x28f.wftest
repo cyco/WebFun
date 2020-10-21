@@ -1,9 +1,15 @@
 -= WebFun Test =--
-Zone: 0x28f
 Description: Test item placement (rand = 3)
 
+Seed: 0x28f
+Zone: 0x28f
+
 - Input -
-. → ↑ ↑ . . ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ → → → . . ← ← ↑ ↑ . → →
+. → ↑ ↑
+# Entering zone 0x28f at tick 4
+. . ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ → → → . . ← ← ↑ ↑ . → →
+# Entering zone 0x1c9 at tick 0
+. . . . . . . . . . . 
 
 - Expect -
-Inventory to contain 482
+Inventory: 0x1e2

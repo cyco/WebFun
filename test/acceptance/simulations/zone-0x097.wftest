@@ -5,7 +5,14 @@ Zone: 0x097
 Inventory: 0x1fe
 
 - Input -
-. . → → ← . ↑ . . ↑ ↑ ↑ ↑ ↑ ↗ ↗ ↑ . → ↑ ↑ ↑ → → → → ↑ ↑ ↑ . ↑ . . ↑ ↑ ↑ ↑ ↑ . . ↑ . . ↑ ↑ . ↑ ↑ . ↑ . 
+. . → → ← . ↑ .
+# Entering zone 0x097 at tick 8
+. ↑ ↑ ↑ ↑ ↑ ↗ ↗ ↑ . → ↑ ↑ ↑ → → → → ↑ ↑ ↑ . ↑ .
+# Entering zone 0x098 at tick 33
+. ↑ ↑ ↑ ↑ ↑ . . ↑ . . ↑ ↑ . ↑ ↑ . ↑ .
+# Entering zone 0x05d at tick 17
+# Entering zone 0x083 at tick 0
+. . . . . . . . . . 
 
 - Expect -
-Health to be 300
+Health is 0x12c

@@ -7,7 +7,11 @@ Zone: 0x202
 Find: 0x1db
 
 - Input -
-. → → → → → . ↑ . ↑ ↗ → → → ↗ ↑ ↑ ↑ ↑ → → . → . .
+. → → → → → . ↑ .
+# Entering zone 0x202 at tick 9
+↑ ↗ → → → ↗ ↑ ↑ ↑ ↑ → → . → . .
+# Entering zone 0x1c8 at tick 0
+. . . . . . . . . . 
 
 - Expect -
 Inventory does not contain: 0x1db

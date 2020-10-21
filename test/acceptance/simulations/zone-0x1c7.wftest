@@ -7,7 +7,11 @@ Zone: 0x1c7
 Find: 0x1d5
 
 - Input -
-. . → → → → ↑ . → → → → → ↑ ↑ ↑ ↑ ↑ . . ← ← ↖ ↖ . . ← ↖ ← . ← ↖ ↖ . .
+. . → → → → ↑ .
+# Entering zone 0x1c7 at tick 8
+→ → → → → ↑ ↑ ↑ ↑ ↑ . . ← ← ↖ ↖ . . ← ↖ ← . ← ↖ ↖ . .
+# Entering zone 0x24e at tick 0
+. . . . . . . . . . 
 
 - Expect -
-Inventory contains 0x1d5
+Inventory: 0x1d5

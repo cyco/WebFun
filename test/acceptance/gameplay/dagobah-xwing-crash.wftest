@@ -4,7 +4,14 @@ Planet: Endor
 Size: Medium
 
 - Input -
-. → → ↑ ↑ → → → ↑ ↑ ↑ ↑ ↑ → → . ↓ ↓ ↙ ↙ ↙ ↓ ← ← ← . ← . . → → ↗ ↗ ↗ ↑ ↑ ↑ ↗ ↗ ↑ ↑ . . → → → . . → ↓ ↓ ↓ ↓ ↓ ↓ ↓ ← ← ← ← ← . . ← . ← ← ← . ← . ← . ↓ . ↑ ← ← ← . . ← ↓ ↓ . . ← ↓ ↓ ↓ .
+.
+# Entering zone 0x05d at tick 13
+→ → ↑ ↑ → → → ↑ ↑ ↑ ↑ ↑ → → . ↓ ↓ ↙ ↙ ↙ ↓ ← ← ← . ← . . → → ↗ ↗ ↗ ↑ ↑ ↑ ↗ ↗ ↑ ↑ . . → → → . . → ↓ ↓ ↓ ↓ ↓ ↓ ↓ ← ← ← ← ← . . ← .
+# Entering zone 0x282 at tick 118
+# Entering zone 0x1d7 at tick 97
+← ← ← . ← . ← . ↓ . ↑ ← ← ← . . ← ↓ ↓ . . ← ↓ ↓ ↓ .
+# Entering zone 0x1dc at tick 156
+.
 
 - Expect -
-Zone: 0x1dc
+Current zone is 0x1dc

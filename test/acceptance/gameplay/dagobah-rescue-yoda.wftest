@@ -5,7 +5,33 @@ Size: Medium
 Games Won: 100
 
 - Input -
-. . → → ↑ . . → ↑ . ↑ → → → → → → → → → . → ↑ ↑ ↑ ↑ ↑ ↑ → → → ↗ ↗ ↑ ↑ ↑ ↑ ↑ . . ↑ → → → → → → ↑ ↑ ↑ ↑ ↑ ↑ ↑ . ← ← . ← ← ↑ ↑ ↑ ↑ ↑ . . ↑ ↑ . → ↓ ↓ . ↓ ↓ ↓ ↓ ↓ ← ← ↓ ← ← ← → → ↗ ↗ ↗ ↑ ↑ ↑ ↑ . ← ← ↑ ↑ ← ← ← ← ↖ ↑ ← ← ← ↓ ↓ ← ← ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ . . ↓ ↓ ↓ ↓ ↓ ↓ ← ← ← . . ← ← ← ↑ ↑ ← ← ↓ ↓ ↓ ↓ ↓ ↓ ↓ ← ← . → → → → → → → ↗ → → → → ↗ ↑ ↑ ↑ ↑ ↗ ↗ ↗ ↗ ↗ ↗ ↗ ↗ ↗ ↗ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ . . ↑ ← ↖ ↖ ↑ ↑ ↑ . ↑ ↑ . ↓ ↓ ↘ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↙ ↙ ↙ ↙ ↙ ↙ ↙ ↙ ↙ ↙ ← ← ← ← ← ← ↙ ↙ ↙ ← ← ↙ ↙ ↓ ↓ ↓ ↙ ← ← ← ↙ .
+.
+# Entering zone 0x05d at tick 13
+. → → ↑ . . → ↑ . ↑ → → → → → → → → → .
+# Entering zone 0x060 at tick 43
+→ ↑ ↑ ↑ ↑ ↑ ↑ → → → ↗ ↗ ↑ ↑ ↑ ↑ ↑ .
+# Entering zone 0x05f at tick 62
+. ↑ → → → → → → ↑ ↑ ↑ ↑ ↑ ↑ ↑ . ← ← . ← ← ↑ ↑ ↑ ↑ ↑ .
+# Entering zone 0x217 at tick 90
+. ↑ ↑ . → ↓ ↓ .
+# Entering zone 0x05f at tick 111
+↓ ↓ ↓ ↓ ↓ ← ← ↓ ← ← ← → → ↗ ↗ ↗ ↑ ↑ ↑ ↑ . ← ← ↑ ↑ ← ← ← ← ↖ ↑ ← ← ← ↓ ↓ ← ← ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ .
+# Entering zone 0x060 at tick 181
+. ↓ ↓ ↓ ↓ ↓ ↓ ← ← ← .
+# Entering zone 0x05d at tick 193
+. ← ← ← ↑ ↑ ← ← ↓ ↓ ↓ ↓ ↓ ↓ ↓ ← ← . → → → → → → → ↗ → →
+# Entering zone 0x060 at tick 222
+→ → ↗ ↑ ↑ ↑ ↑ ↗ ↗ ↗ ↗ ↗ ↗ ↗
+# Entering zone 0x05f at tick 237
+↗ ↗ ↗ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑
+# Entering zone 0x217 at tick 251
+. . ↑ ← ↖ ↖ ↑ ↑ ↑ . ↑ ↑ . ↓ ↓ ↘ ↓ ↓ ↓
+# Entering zone 0x05f at tick 271
+↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↙ ↙ ↙ ↙
+# Entering zone 0x060 at tick 285
+↙ ↙ ↙ ↙ ↙ ↙ ← ← ← ← ←
+# Entering zone 0x05d at tick 297
+← ↙ ↙ ↙ ← ← ↙ ↙ ↓ ↓ ↓ ↙ ← ← ← ↙ .
 
 - Expect -
 Inventory: 0x1fe
