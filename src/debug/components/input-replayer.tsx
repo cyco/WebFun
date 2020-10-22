@@ -4,9 +4,10 @@ import { Component } from "src/ui";
 import { IconButton } from "src/ui/components";
 
 import { GameController } from "src/app";
-import { ReplayingInputManager } from "src/debug/automation";
+import { RecordingInputManager, ReplayingInputManager } from "src/debug/automation";
 import { InputManager } from "src/engine/input";
 import { DefaultTickDuration } from "src/engine/metronome";
+import { parse } from "../automation/input";
 
 class InputReplayer extends Component {
 	public static readonly tagName = "wf-debug-input-replayer";
@@ -58,6 +59,9 @@ class InputReplayer extends Component {
 		this._inputManager.removeListeners();
 		this._inputManager.engine = null;
 
+		if (this._originalInputManager instanceof RecordingInputManager) {
+			this._originalInputManager.records = parse(this._inputManager.input);
+		}
 		this._originalInputManager.engine = this.gameController.engine;
 		this._originalInputManager.addListeners();
 		this.gameController.engine.inputManager = this._originalInputManager;

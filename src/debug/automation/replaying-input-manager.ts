@@ -5,6 +5,7 @@ import { Tile } from "src/engine/objects";
 import { EventTarget, Point } from "src/util";
 import Syntax from "./syntax";
 import { Engine } from "src/engine";
+import { parse, assemble } from "./input";
 
 export const Event = {
 	InputEnd: "InputEnd"
@@ -177,93 +178,12 @@ class ReplayingInputManager extends EventTarget implements InputManager, EventLi
 	}
 
 	set input(input: string) {
-		this._input = this.parseInput(input);
+		this._input = parse(input);
 		this.reset();
 	}
 
 	get input(): string {
-		return this.assembleInput(this._input);
-	}
-
-	private parseInput(input: string): string[] {
-		if (!input.length) return [];
-
-		const result: string[] = [];
-		for (let i = 0; i < input.length; i++) {
-			let char = input[i];
-			switch (char) {
-				case " ":
-				case "\n":
-					continue;
-				case Syntax.Comment: {
-					let comment = Syntax.Comment;
-					for (i; i < input.length; i++) {
-						char = input[i];
-						if (char === "\n") break;
-						comment += char;
-					}
-					result.push(comment);
-					break;
-				}
-				case Syntax.Attack[0]:
-				case Syntax.Place.Start[0]:
-					if (input[i + 1] === Syntax.Attack[1]) {
-						result.push(Syntax.Attack);
-						i += Syntax.Attack.length;
-						break;
-					} else {
-						result.push(Syntax.Place.Start);
-						i += Syntax.Place.Start.length + 1;
-
-						let item = "";
-						for (i; i < input.length; i++) {
-							char = input[i];
-							if (char === " ") break;
-							item += char;
-						}
-						result.push(item);
-
-						i += 1;
-						if (input[i] === "a" && input[i + 1] === "t") {
-							result.push("at");
-							i += 3;
-						}
-
-						let place = "";
-						for (i; i < input.length; i++) {
-							char = input[i];
-							if (char === " ") break;
-							place += char;
-						}
-						result.push(place);
-					}
-					break;
-				default:
-					result.push(char);
-					break;
-			}
-		}
-
-		return result;
-	}
-
-	private assembleInput(input: string[]): string {
-		if (input.length === 0) return ".";
-
-		let result = "" + input[1];
-		let atStart = false;
-		for (let i = 1; i < input.length; i++) {
-			const currentInput = input[i];
-			if (currentInput[0] === Syntax.Comment) {
-				result += "\n";
-				atStart = true;
-			} else if (!atStart) {
-				result += " ";
-			}
-			result += currentInput;
-		}
-
-		return result;
+		return assemble(this._input);
 	}
 }
 

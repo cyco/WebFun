@@ -4,11 +4,16 @@ class CurrentZoneIsExpectation implements Expectation {
 	private _zone: number;
 
 	public static CanBeBuiltFrom(value: string): boolean {
-		return value.contains("zone:");
+		return (value.contains("zone") && value.contains("is")) || value.contains("zone:");
 	}
 
 	public static BuildFrom(description: IteratorResult<string>): CurrentZoneIsExpectation {
-		return new CurrentZoneIsExpectation(description.value.split(":")[1].trim().parseInt());
+		return new CurrentZoneIsExpectation(
+			description.value
+				.split(" ")
+				.map((n: string) => n.parseInt())
+				.filter((i: number) => !isNaN(i))[0]
+		);
 	}
 
 	constructor(zone: number) {

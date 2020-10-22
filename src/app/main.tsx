@@ -14,6 +14,9 @@ import "./bootstrap-components.ts";
 
 const main = async () => {
 	localStorage.clear();
+	//
+	window.WebFun = await require("src/index");
+	//*/
 
 	// Setup Custom Elements
 	window.WebFun = window.WebFun || { JSX: null };

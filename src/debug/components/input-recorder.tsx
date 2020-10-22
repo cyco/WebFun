@@ -6,6 +6,7 @@ import { IconButton, Window } from "src/ui/components";
 import { InputManager as AppInputManager } from "src/app/input";
 import { GameController } from "src/app";
 import { RecordingInputManager } from "src/debug/automation";
+import { assemble, parse } from "../automation/input";
 
 class InputRecorder extends Component {
 	public static readonly tagName = "wf-debug-input-recorder";
@@ -57,11 +58,11 @@ class InputRecorder extends Component {
 	}
 
 	public get input(): string {
-		return this._recorder.records.join(" ");
+		return assemble(this._recorder.records);
 	}
 
 	public set input(i: string) {
-		this._recorder.records = i.split(" ");
+		this._recorder.records = parse(i);
 	}
 
 	public set gameController(c: GameController) {

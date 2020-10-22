@@ -152,9 +152,11 @@ class GameController extends EventTarget implements EventListenerObject {
 		if (!stream) return;
 		const { read } = Reader.build(stream);
 
+		await this.engine.metronome.stop();
 		const assets = new AssetManager();
 		this.populateAssetManager(assets);
-		read(assets);
+		const state = read(assets);
+		console.log("state", state);
 	}
 
 	private populateAssetManager(manager: AssetManager) {

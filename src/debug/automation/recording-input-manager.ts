@@ -83,12 +83,10 @@ class RecordingInputManager implements InputManager {
 
 	public addListeners(): void {
 		this.implementation && this.implementation.addListeners();
-		this.engine.addEventListener(Engine.Event.CurrentZoneChange, this);
 	}
 
 	public removeListeners(): void {
 		this.engine.removeEventListener(Engine.Event.CurrentZoneChange, this);
-		this.implementation && this.implementation.removeListeners();
 	}
 
 	public clear(): void {
@@ -131,12 +129,6 @@ class RecordingInputManager implements InputManager {
 			return;
 		}
 
-		if (e.type === Engine.Event.CurrentZoneChange) {
-			this._records.push(
-				`\n# Entering zone ${this.engine.currentZone.id.toHex(3)} at tick ${this.engine.metronome.tickCount.toString()}\n`
-			);
-		}
-
 		if (e.type === Metronome.Event.Start) {
 			if (this.placedTile && this.placedTileLocation) {
 				const id = this.placedTile.id;
@@ -150,17 +142,17 @@ class RecordingInputManager implements InputManager {
 
 	public set engine(s: Engine) {
 		if (this.implementation && this.implementation.engine) {
+			this.implementation.engine.removeEventListener(Engine.Event.WeaponChanged, this);
 			this.implementation.engine.metronome.removeEventListener(Metronome.Event.Start, this);
 			this.implementation.engine.metronome.removeEventListener(Metronome.Event.BeforeTick, this);
-			this.implementation.engine.removeEventListener(Engine.Event.WeaponChanged, this);
 		}
 
 		this.implementation && (this.implementation.engine = s);
 
 		if (this.implementation && this.implementation.engine) {
-			this.implementation.engine.addEventListener(Engine.Event.WeaponChanged, this);
 			this.implementation.engine.metronome.addEventListener(Metronome.Event.Start, this);
 			this.implementation.engine.metronome.addEventListener(Metronome.Event.BeforeTick, this);
+			this.implementation.engine.addEventListener(Engine.Event.WeaponChanged, this);
 		}
 	}
 
