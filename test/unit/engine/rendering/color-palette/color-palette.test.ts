@@ -43,48 +43,22 @@ describe("WebFun.Engine.Rendering.ColorPalette", () => {
 	});
 
 	it("can be seriaized to GIMP's palette format", () => {
-		expect(subject.toGIMP("test.gpl")).toBe(`GIMP Palette
+		expect(subject.toGIMP("test.gpl").split("\n")).toEqual(`GIMP Palette
 Name: test.gpl
 #
 0 0 0 transparent
 0 0 0
-0 0 255
-0 255 0
 255 0 0
+0 255 0
+0 0 255
 255 0 255
 255 255 255
-`);
+`.split("\n"));
 	});
 
 	it("can be seriaized to Adobe's color table format", () => {
 		expect(subject.toAdobeColorTable()).toEqual(
-			new Uint8Array([
-				0,
-				0,
-				0,
-				0,
-				0,
-				0,
-				0,
-				0,
-				255,
-				0,
-				255,
-				0,
-				255,
-				0,
-				0,
-				255,
-				0,
-				255,
-				255,
-				255,
-				255,
-				0,
-				1,
-				0,
-				0
-			])
+			new Uint8Array([0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 255, 0, 255, 0, 0, 255, 0, 255, 255, 255, 255, 0, 1, 0, 0])
 		);
 	});
 });
