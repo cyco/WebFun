@@ -23,7 +23,7 @@ const config = {
 	preprocessors: {
 		"test/context/*.ts": ["webpack"]
 	},
-	frameworks: ["jasmine", "jasmine-matchers"],
+	frameworks: ["jasmine", "jasmine-matchers", "webpack"],
 	plugins: [
 		"karma-chrome-launcher",
 		"karma-coverage",
@@ -38,16 +38,6 @@ const config = {
 	reporters: ["dots"],
 	browsers: ["ChromeHeadless"],
 	webpack: webpackConfig,
-	customLaunchers: {
-		ChromeHeadless: {
-			base: "Chrome",
-			flags: ["--no-sandbox", "--headless", " --remote-debugging-port=9222"]
-		},
-		FirefoxHeadless: {
-			base: "FirefoxNightly",
-			flags: ["--headless"]
-		}
-	},
 	watch: false,
 	singleRun: true,
 	client: {

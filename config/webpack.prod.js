@@ -21,6 +21,7 @@ module.exports = {
 	mode: "production",
 	output: {
 		path: Paths.buildRoot,
+		publicPath: "",
 		filename: "assets/[name].js",
 		chunkFilename: "assets/webfun.[name].js"
 	},
@@ -91,24 +92,20 @@ module.exports = {
 			patterns: [
 				{
 					from: "assets/*.wasm",
-					to: "assets",
-					flatten: true
+					to: "assets/[name].[ext]"
 				},
 				{
 					from: "src/*.webmanifest",
-					to: "assets",
-					flatten: true
+					to: "assets/[name].[ext]"
 				},
 				{
 					from: "assets/icon/**",
-					to: "assets/icon",
-					flatten: true
+					to: "assets/icon/[name].[ext]"
 				},
 				{
 					from: "assets/game-data/*.{data,pal,hlp}",
-					to: "data",
-					noErrorOnMissing: true,
-					flatten: true
+					to: "data/[name].[ext]",
+					noErrorOnMissing: true
 				},
 				{
 					from: "sfx-*/**/*",
