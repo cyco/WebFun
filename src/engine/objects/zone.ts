@@ -8,7 +8,6 @@ import Monster from "./monster";
 import { Planet } from "../types";
 import Tile from "./tile";
 import AssetManager, { NullIfMissing } from "src/engine/asset-manager";
-import { Type } from "../script";
 
 const TILE_ADEGAN_CRYSTAL = 12;
 
