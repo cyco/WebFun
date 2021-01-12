@@ -9,7 +9,7 @@ const MenuItemAction = (label: string, callback: () => void, enabled: boolean | 
 	enabled: enabled
 });
 
-export default (editor: EditorView, window: Window) =>
+export default (editor: EditorView, window: Window): MenuItemInit[] =>
 	[
 		{
 			title: "Editor",
