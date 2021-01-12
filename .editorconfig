@@ -6,8 +6,20 @@ end_of_line = lf
 indent_size = 4
 indent_style = tab
 insert_final_newline = true
-max_line_length = 120
+max_line_length = 100
 trim_trailing_whitespace = true
+
+[*.ts]
+indent_size = 2
+
+[*.tsx]
+indent_size = 2
+
+[*.js]
+indent_size = 2
+
+[*.jsx]
+indent_size = 2
 
 [package.json]
 indent_size = 2
@@ -19,3 +31,4 @@ trim_trailing_whitespace = false
 
 [COMMIT_EDITMSG]
 max_line_length = 0
+
