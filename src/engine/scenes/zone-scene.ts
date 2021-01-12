@@ -129,7 +129,13 @@ class ZoneScene extends Scene {
 			}
 		}
 
-		this._renderer.render(this._zone, this.engine, renderer, this.engine.palette.current, bulletTiles);
+		this._renderer.render(
+			this._zone,
+			this.engine,
+			renderer,
+			this.engine.palette.current,
+			bulletTiles
+		);
 	}
 
 	private _extensionTileForBullet(): Tile {

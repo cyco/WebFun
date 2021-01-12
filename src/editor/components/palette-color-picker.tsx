@@ -78,7 +78,12 @@ class PaletteColorPicker extends AbstractPaletteView implements EventListenerObj
 	get color(): string | Color {
 		const colorValue = this.palette[this._colorIndex];
 
-		return new Color((colorValue >> 16) & 0xff, (colorValue >> 8) & 0xff, colorValue & 0xff, this._colorIndex === 0 ? 0 : 1);
+		return new Color(
+			(colorValue >> 16) & 0xff,
+			(colorValue >> 8) & 0xff,
+			colorValue & 0xff,
+			this._colorIndex === 0 ? 0 : 1
+		);
 	}
 
 	get colorIndex(): number {
@@ -88,7 +93,9 @@ class PaletteColorPicker extends AbstractPaletteView implements EventListenerObj
 	public updateCurrentColor(color: Color | string): void {
 		const { palette: p, _colorIndex: i } = this;
 		[p[i * 4 + 2], p[i * 4 + 1], p[i * 4 + 0], p[i * 4 + 3]] = new Color(color).rgbaComponents;
-		this.redraw(new Point(this._colorIndex % this.size.width, floor(this._colorIndex / this.size.width)));
+		this.redraw(
+			new Point(this._colorIndex % this.size.width, floor(this._colorIndex / this.size.width))
+		);
 	}
 
 	private _highlightCurrentColor() {
@@ -115,7 +122,12 @@ class PaletteColorPicker extends AbstractPaletteView implements EventListenerObj
 		const { palette } = this;
 		const [r, g, b, a] = c.rgbaComponents;
 		for (let i = 0; i < palette.length; i += 4) {
-			if (r === palette[i + 2] && g === palette[i + 1] && b === palette[i + 0] && a === palette[i + 3]) {
+			if (
+				r === palette[i + 2] &&
+				g === palette[i + 1] &&
+				b === palette[i + 0] &&
+				a === palette[i + 3]
+			) {
 				return i;
 			}
 		}

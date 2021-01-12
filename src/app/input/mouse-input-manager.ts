@@ -185,7 +185,9 @@ class MouseInputManager implements InputManager {
 			mouseLocationInView.x > 17 / 18 ||
 			mouseLocationInView.y > 17 / 18;
 		if (!onHero || closeToViewEdge) {
-			const direction = DirectionHelper.Confine(DirectionHelper.CalculateAngleFromRelativePoint(relativeLocation));
+			const direction = DirectionHelper.Confine(
+				DirectionHelper.CalculateAngleFromRelativePoint(relativeLocation)
+			);
 			if (isNaN(direction)) {
 				return [0, null];
 			}
@@ -199,7 +201,10 @@ class MouseInputManager implements InputManager {
 	}
 
 	private _updateCursor(direction: number, angle: number) {
-		if (this.engine && (!(this.engine.sceneManager.currentScene instanceof ZoneScene) || !this.engine.hero.visible)) {
+		if (
+			this.engine &&
+			(!(this.engine.sceneManager.currentScene instanceof ZoneScene) || !this.engine.hero.visible)
+		) {
 			this.cursorManager.changeCursor(null);
 			return;
 		}
@@ -239,7 +244,9 @@ class MouseInputManager implements InputManager {
 							n2p(node).byAdding(0, 1),
 							n2p(node).byAdding(1, 1)
 						]
-							.filter(p => (zone.bounds.contains(p) && zone.placeWalkable(p)) || p.isEqualTo(target))
+							.filter(
+								p => (zone.bounds.contains(p) && zone.placeWalkable(p)) || p.isEqualTo(target)
+							)
 							.map(p2n),
 					(n1, n2) => n2p(n1).manhattenDistanceTo(n2p(n2)),
 					n => n2p(n).manhattenDistanceTo(target)

@@ -1,8 +1,17 @@
 import "./window.scss";
 
 import { AbstractPanel, Panel, Window as WindowComponent } from "src/ui/components";
-import { AbstractTool, NoTool, PaintBucketTool, PencilTool, RectangleTool, TileChangeEvent } from "src/editor/tools";
-import SidebarLayersCell, { Events as LayerChangeEvents } from "src/editor/components/zone-editor/sidebar-layers-cell";
+import {
+	AbstractTool,
+	NoTool,
+	PaintBucketTool,
+	PencilTool,
+	RectangleTool,
+	TileChangeEvent
+} from "src/editor/tools";
+import SidebarLayersCell, {
+	Events as LayerChangeEvents
+} from "src/editor/components/zone-editor/sidebar-layers-cell";
 
 import AbstractDrawingTool from "src/editor/tools/abstract-drawing-tool";
 import ActionComponent from "./action";
@@ -87,7 +96,9 @@ class Window extends AbstractPanel {
 
 	private _tilePickerTileChanged() {
 		const tile = this._tilePicker.tile;
-		this._tools.filter(t => t instanceof AbstractDrawingTool).forEach((t: AbstractDrawingTool) => (t.tile = tile));
+		this._tools
+			.filter(t => t instanceof AbstractDrawingTool)
+			.forEach((t: AbstractDrawingTool) => (t.tile = tile));
 	}
 
 	public show(): void {
@@ -121,7 +132,9 @@ class Window extends AbstractPanel {
 
 	private _buildToolItem(tool: AbstractTool): ToolComponent {
 		const component = (<ToolComponent tool={tool} editor={this._editor} />) as ToolComponent;
-		tool.addEventListener(AbstractTool.Event.ChangedTiles, (e: TileChangeEvent) => this._editor.redraw(e.affectedPoints));
+		tool.addEventListener(AbstractTool.Event.ChangedTiles, (e: TileChangeEvent) =>
+			this._editor.redraw(e.affectedPoints)
+		);
 		return component;
 	}
 

@@ -42,7 +42,9 @@ class Zone {
 	public doorInLocation: Point = new Point(0, 0);
 
 	get doors(): Hotspot[] {
-		return this._hotspots.filter(hotspot => hotspot.type === Hotspot.Type.DoorIn && hotspot.arg !== -1);
+		return this._hotspots.filter(
+			hotspot => hotspot.type === Hotspot.Type.DoorIn && hotspot.arg !== -1
+		);
 	}
 
 	getTileID(x: number, y: number, z: number): number {
@@ -166,7 +168,9 @@ class Zone {
 	}
 
 	get hasTeleporter(): boolean {
-		return this._type === ZoneType.Empty && this.hotspots.withType(Hotspot.Type.Teleporter).length !== 0;
+		return (
+			this._type === ZoneType.Empty && this.hotspots.withType(Hotspot.Type.Teleporter).length !== 0
+		);
 	}
 
 	public get bounds(): Rectangle {

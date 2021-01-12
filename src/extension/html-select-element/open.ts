@@ -5,7 +5,23 @@ function open() {
 		setTimeout(() => {
 			if (document.createEvent) {
 				const event = document.createEvent("MouseEvents");
-				event.initMouseEvent("mousedown", false, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+				event.initMouseEvent(
+					"mousedown",
+					false,
+					true,
+					window,
+					0,
+					0,
+					0,
+					0,
+					0,
+					false,
+					false,
+					false,
+					false,
+					0,
+					null
+				);
 				this.dispatchEvent(event);
 				resolve();
 			} else if ((this as any).fireEvent) {

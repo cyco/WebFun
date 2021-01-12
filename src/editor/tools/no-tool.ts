@@ -56,7 +56,8 @@ class NoTool extends AbstractTool implements EventListenerObject {
 
 		const offset = event.offsetIn(this.canvas);
 		const point = offset.scaleBy(1 / Tile.WIDTH).floor();
-		if (point.x < 0 || point.y < 0 || point.x >= zone.size.width || point.y >= zone.size.height) return null;
+		if (point.x < 0 || point.y < 0 || point.x >= zone.size.width || point.y >= zone.size.height)
+			return null;
 
 		return point;
 	}

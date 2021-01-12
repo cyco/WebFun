@@ -2,7 +2,12 @@ import "./symbolic-coverage.scss";
 
 import { Component } from "src/ui";
 import DataManager from "../data-manager";
-import { ConditionsByName, InstructionsByName, ConditionsByOpcode, InstructionsByOpcode } from "src/engine/script";
+import {
+	ConditionsByName,
+	InstructionsByName,
+	ConditionsByOpcode,
+	InstructionsByOpcode
+} from "src/engine/script";
 
 import { min, max } from "src/std/math";
 import { DiscardingStorage } from "src/util";
@@ -90,9 +95,15 @@ class SymbolicCoverage extends Component {
 		}
 
 		const instructionsTotal = Object.values(this.coverage.instructions).length;
-		const instructionsCovered = Object.values(this.coverage.instructions).reduce((acc, i) => acc + (i > 0 ? 1 : 0), 0);
+		const instructionsCovered = Object.values(this.coverage.instructions).reduce(
+			(acc, i) => acc + (i > 0 ? 1 : 0),
+			0
+		);
 		const conditionsTotal = Object.values(this.coverage.conditions).length;
-		const conditionsCovered = Object.values(this.coverage.conditions).reduce((acc, i) => acc + (i > 0 ? 1 : 0), 0);
+		const conditionsCovered = Object.values(this.coverage.conditions).reduce(
+			(acc, i) => acc + (i > 0 ? 1 : 0),
+			0
+		);
 
 		const totalCovered = conditionsCovered + instructionsCovered;
 		const total = instructionsTotal + conditionsCovered;
@@ -112,7 +123,8 @@ class SymbolicCoverage extends Component {
 					</span>
 				</span>
 				<span>
-					<span className="percentage">{pcnt(instructionsCovered / instructionsTotal)}</span> Instructions{" "}
+					<span className="percentage">{pcnt(instructionsCovered / instructionsTotal)}</span>{" "}
+					Instructions{" "}
 					<span className="details">
 						{n(instructionsCovered)}/{n(instructionsTotal)}
 					</span>
@@ -127,7 +139,9 @@ class SymbolicCoverage extends Component {
 				<thead>
 					<tr>
 						{this._columns.map(([t, s]) => (
-							<th className={t === "" ? "extend-previous-cell" : ""} onclick={() => (this.sortDescriptor = s)}>
+							<th
+								className={t === "" ? "extend-previous-cell" : ""}
+								onclick={() => (this.sortDescriptor = s)}>
 								{t}
 							</th>
 						))}
@@ -216,7 +230,8 @@ class SymbolicCoverage extends Component {
 	}
 
 	public get sortDescriptor() {
-		if (this._invertSortDescriptor) return (a: DataPoint, b: DataPoint) => -1 * this._sortDescriptor(a, b);
+		if (this._invertSortDescriptor)
+			return (a: DataPoint, b: DataPoint) => -1 * this._sortDescriptor(a, b);
 
 		return this._sortDescriptor;
 	}

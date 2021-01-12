@@ -1,4 +1,12 @@
-import { HorizontalPointRange, Point, Range, VerticalPointRange, rand, randmod, srand } from "src/util";
+import {
+	HorizontalPointRange,
+	Point,
+	Range,
+	VerticalPointRange,
+	rand,
+	randmod,
+	srand
+} from "src/util";
 
 import GetDistanceToCenter from "./distance-to-center";
 import IslandBuilder from "./island-builder";
@@ -133,7 +141,13 @@ class MapGenerator {
 		);
 	}
 
-	private handleNeighbor(x: number, y: number, iteration: number, xdif: number, ydif: number): boolean {
+	private handleNeighbor(
+		x: number,
+		y: number,
+		iteration: number,
+		xdif: number,
+		ydif: number
+	): boolean {
 		const itemIdx = x + MapWidth * y;
 
 		const neighbor = this.typeMap.get(x + xdif, y + ydif);
@@ -145,7 +159,8 @@ class MapGenerator {
 		this.lastType = this.typeMap.get(x + xdif, y + ydif);
 
 		const BlockadeType = this.blockadeTypeFor(xdif, ydif);
-		const canPlaceBlockade = this.isFree(neighborOtherAxisBefore) && this.isFree(neighborOtherAxisAfter);
+		const canPlaceBlockade =
+			this.isFree(neighborOtherAxisBefore) && this.isFree(neighborOtherAxisAfter);
 		if ((canPlaceBlockade && neighbor === SectorType.Candidate) || neighbor === BlockadeType) {
 			this.extendBlockade(x, y, xdif, ydif);
 		}
@@ -303,7 +318,10 @@ class MapGenerator {
 		let puzzleLocation;
 		const iteration = (point: Point, control: any) => {
 			const nextPoint = Point.add(point, control.step);
-			if (!nextPoint.isInBounds(bounds) || this.typeMap.get(nextPoint.x, nextPoint.y) !== SectorType.Island) {
+			if (
+				!nextPoint.isInBounds(bounds) ||
+				this.typeMap.get(nextPoint.x, nextPoint.y) !== SectorType.Island
+			) {
 				control.stop = true;
 				puzzleLocation = point;
 			}
@@ -450,7 +468,11 @@ class MapGenerator {
 		const blockadesCount = this.blockades;
 
 		let totalPuzzleCount =
-			Math.floor(puzzlesCount / 4) + (rand() % (Math.floor(puzzlesCount / 5) + 1)) - blockadesCount - travelCount - 2;
+			Math.floor(puzzlesCount / 4) +
+			(rand() % (Math.floor(puzzlesCount / 5) + 1)) -
+			blockadesCount -
+			travelCount -
+			2;
 		if (totalPuzzleCount < 4) totalPuzzleCount = 4;
 
 		this.placedSectors = 0;

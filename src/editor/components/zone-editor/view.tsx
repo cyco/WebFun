@@ -70,7 +70,8 @@ class View extends Component implements EventListenerObject {
 
 		const offset = event.offsetIn(this);
 		const point = offset.scaleBy(1 / Tile.WIDTH).floor();
-		if (point.x < 0 || point.y < 0 || point.x >= zone.size.width || point.y >= zone.size.height) return null;
+		if (point.x < 0 || point.y < 0 || point.x >= zone.size.width || point.y >= zone.size.height)
+			return null;
 
 		return point;
 	}

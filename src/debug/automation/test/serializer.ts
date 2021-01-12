@@ -37,7 +37,8 @@ class Serializer {
 		if (npc > 0) configuration.push(`NPC: ${findItem.toHex(3)}`);
 		if (requiredItem1 > 0) configuration.push(`Required: ${requiredItem1.toHex(3)}`);
 		if (requiredItem2 > 0) configuration.push(`Required: ${requiredItem2.toHex(3)}`);
-		if (inventory.length) configuration.push(`Inventory: ${inventory.map(i => i.toHex(3)).join(", ")}`);
+		if (inventory.length)
+			configuration.push(`Inventory: ${inventory.map(i => i.toHex(3)).join(", ")}`);
 
 		return [
 			"-= WebFun Test =--",

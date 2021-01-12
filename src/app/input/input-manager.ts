@@ -34,7 +34,11 @@ class InputManager implements InputManagerInterface, EventListenerObject {
 		this.mouseInputManager = new MouseInputManager(gameViewElement, cursorManager);
 		this.onscreenInputManager = new OnscreenInputManager(gameViewElement, pad, shoot, drag);
 
-		this.inputManagers = [this.keyboardInputManager, this.mouseInputManager, this.onscreenInputManager];
+		this.inputManagers = [
+			this.keyboardInputManager,
+			this.mouseInputManager,
+			this.onscreenInputManager
+		];
 	}
 
 	get mouseLocationInView(): Point {

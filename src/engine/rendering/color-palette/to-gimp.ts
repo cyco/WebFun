@@ -8,7 +8,10 @@ function toGIMP(buffer: Uint32Array, name: string): string {
 	for (let i = 0; i < buffer.length; i++) {
 		const value = buffer[i];
 
-		out += `${value & 0xff} ${(value >> 8) & 0xff} ${(value >> 16) & 0xff}${i === 0 ? " transparent" : ""}` + "\n";
+		out +=
+			`${value & 0xff} ${(value >> 8) & 0xff} ${(value >> 16) & 0xff}${
+				i === 0 ? " transparent" : ""
+			}` + "\n";
 	}
 
 	return out;

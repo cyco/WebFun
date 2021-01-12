@@ -18,7 +18,11 @@ class Button extends AbstractIconButton {
 		this.attributeChangedCallback("label", this.getAttribute("label"), this.getAttribute("label"));
 	}
 
-	protected attributeChangedCallback(attributeName: string, oldValue: string, newValue: string): void {
+	protected attributeChangedCallback(
+		attributeName: string,
+		oldValue: string,
+		newValue: string
+	): void {
 		if (attributeName === "label") {
 			this._label.textContent = newValue;
 			this._label.style.display = this._label.textContent.length ? "" : "none";

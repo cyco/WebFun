@@ -1,4 +1,12 @@
-import { HorizontalPointRange, Point, VerticalPointRange, constantly, identity, rand, srand } from "src/util";
+import {
+	HorizontalPointRange,
+	Point,
+	VerticalPointRange,
+	constantly,
+	identity,
+	rand,
+	srand
+} from "src/util";
 import { Hotspot, Puzzle, Tile, Zone } from "src/engine/objects";
 import { Planet, WorldSize } from "src/engine/types";
 import { abs, floor } from "src/std/math";
@@ -71,7 +79,9 @@ class WorldGenerator {
 		}
 
 		const puzzleCount = mapGenerator.puzzleCount;
-		const puzzles1Count = floor(puzzleCount % 2 === 1 ? (puzzleCount + 1) / 2 : puzzleCount / 2 + 1);
+		const puzzles1Count = floor(
+			puzzleCount % 2 === 1 ? (puzzleCount + 1) / 2 : puzzleCount / 2 + 1
+		);
 		const puzzles2Count = floor(puzzleCount % 2 === 1 ? (puzzleCount + 1) / 2 : puzzleCount / 2);
 
 		this.puzzleStrain1 = Array.Repeat(null, puzzles1Count + 1);
@@ -137,7 +147,15 @@ class WorldGenerator {
 				this.resetState();
 
 				const distance = GetDistanceToCenter(x, y);
-				const zone = this.getUnusedZoneRandomly(Zone.Type.TravelStart, -1, -1, null, null, distance, true);
+				const zone = this.getUnusedZoneRandomly(
+					Zone.Type.TravelStart,
+					-1,
+					-1,
+					null,
+					null,
+					distance,
+					true
+				);
 				console.assert(!!zone, "Could not determine zone for travel start");
 
 				this.placeZone(x, y, zone, Zone.Type.TravelStart, {
@@ -176,7 +194,10 @@ class WorldGenerator {
 				}
 
 				console.assert(!!travelTarget, "Could not determine location for travel target");
-				console.assert(!this.usedZones.contains(connectedZone), "Zone is already in use for a different travel sector");
+				console.assert(
+					!this.usedZones.contains(connectedZone),
+					"Zone is already in use for a different travel sector"
+				);
 
 				this.placeZone(travelTarget.x, travelTarget.y, connectedZone, Zone.Type.TravelEnd, {
 					requiredItem: this.requiredItem
@@ -185,7 +206,10 @@ class WorldGenerator {
 		}
 	}
 
-	private loopWorld(map: WorldMap, callback: (v: SectorType, x: number, y: number, id: number, map: WorldMap) => void): void {
+	private loopWorld(
+		map: WorldMap,
+		callback: (v: SectorType, x: number, y: number, id: number, map: WorldMap) => void
+	): void {
 		for (let y = 0; y < 10; y++) {
 			for (let x = 0; x < 10; x++) {
 				callback(map[x + 10 * y], x, y, x + 10 * y, map);
@@ -219,7 +243,8 @@ class WorldGenerator {
 
 			const distance = GetDistanceToCenter(x, y);
 			let zone = this.getUnusedZoneRandomly(type, -1, -1, null, null, distance, false);
-			if (!zone) zone = this.getUnusedZoneRandomly(Zone.Type.Empty, -1, -1, null, null, distance, false);
+			if (!zone)
+				zone = this.getUnusedZoneRandomly(Zone.Type.Empty, -1, -1, null, null, distance, false);
 			console.assert(!!zone, "Could not find an unused empty zone");
 
 			const options: Partial<Sector> = {};
@@ -248,7 +273,15 @@ class WorldGenerator {
 			const item1 = puzzle.item1;
 
 			let type = rand() % 2 ? Zone.Type.Use : Zone.Type.Trade;
-			let zone = this.getUnusedZoneRandomly(type, puzzleIndex - 1, -1, item1, null, distance, false);
+			let zone = this.getUnusedZoneRandomly(
+				type,
+				puzzleIndex - 1,
+				-1,
+				item1,
+				null,
+				distance,
+				false
+			);
 
 			if (!zone) {
 				type = type === Zone.Type.Use ? Zone.Type.Trade : Zone.Type.Use;
@@ -324,7 +357,15 @@ class WorldGenerator {
 
 				if (!zone) {
 					type = type === Zone.Type.Use ? Zone.Type.Trade : Zone.Type.Use;
-					zone = this.getUnusedZoneRandomly(type, puzzleIdIndex - 1, -1, item1, null, distance, true);
+					zone = this.getUnusedZoneRandomly(
+						type,
+						puzzleIdIndex - 1,
+						-1,
+						item1,
+						null,
+						distance,
+						true
+					);
 				}
 
 				this.errorWhen(!zone, `Unable to find suitable zone for puzzle at ${pos.x}x${pos.y}`);
@@ -369,13 +410,22 @@ class WorldGenerator {
 	): Zone {
 		this.usedAlternateStrain = useAlternateStrain;
 		const zoneIsUnused = (zone: Zone) =>
-			!this.usedZones.contains(zone) || (zoneType === Zone.Type.Goal && this.puzzlesCanBeReused > 0);
+			!this.usedZones.contains(zone) ||
+			(zoneType === Zone.Type.Goal && this.puzzlesCanBeReused > 0);
 		const zones = this.getZonesForType(zoneType);
 		const usableZones = zones.slice().shuffle();
 		return usableZones
 			.filter(zoneIsUnused)
 			.find((zone: Zone) =>
-				this.getUnusedZone(zone, puzzleIndex, puzzleIndex2, providedItem, providedItem2, distance, useAlternateStrain)
+				this.getUnusedZone(
+					zone,
+					puzzleIndex,
+					puzzleIndex2,
+					providedItem,
+					providedItem2,
+					distance,
+					useAlternateStrain
+				)
 			);
 	}
 
@@ -385,7 +435,8 @@ class WorldGenerator {
 
 		let zoneMatchesType = (zone: Zone) => zone.type === type;
 		if (type === Zone.Type.Find || type === Zone.Type.FindUniqueWeapon)
-			zoneMatchesType = zone => zone.type === Zone.Type.Find || zone.type === Zone.Type.FindUniqueWeapon;
+			zoneMatchesType = zone =>
+				zone.type === Zone.Type.Find || zone.type === Zone.Type.FindUniqueWeapon;
 
 		result = this._zones.filter(zoneMatchesType);
 		this._zonesByType.set(type, result);
@@ -416,7 +467,9 @@ class WorldGenerator {
 				if (!this.requiredItemForZoneWasNotPlaced(zone)) {
 					return false;
 				}
-				const itemCandidates = zone.requiredItems.filter(itemID => !this.hasQuestRequiringItem(itemID));
+				const itemCandidates = zone.requiredItems.filter(
+					itemID => !this.hasQuestRequiringItem(itemID)
+				);
 				if (itemCandidates.length === 0) {
 					return false;
 				}
@@ -491,7 +544,8 @@ class WorldGenerator {
 					didAddItem = didAddItem & +this.placeQuestItem(zone, puzzle3.item1);
 
 					didAddItem = didAddItem & +this.chooseItemFromZone(zone, puzzle2.item1, true);
-					didAddItem = didAddItem & +this.placeQuestItem(zone, puzzle3.item2 ? puzzle3.item2 : null);
+					didAddItem =
+						didAddItem & +this.placeQuestItem(zone, puzzle3.item2 ? puzzle3.item2 : null);
 
 					if (!didAddItem) return false;
 
@@ -611,7 +665,15 @@ class WorldGenerator {
 			const point = candidates[rand() % candidates.length];
 			this.errorWhen(!point, `No place to find item ${quest.item} found!`);
 
-			const zone = this.getUnusedZoneRandomly(Zone.Type.Find, -1, -1, quest.item, null, quest.distance, false);
+			const zone = this.getUnusedZoneRandomly(
+				Zone.Type.Find,
+				-1,
+				-1,
+				quest.item,
+				null,
+				quest.distance,
+				false
+			);
 			this.errorWhen(!zone, "No zone for puzzle found");
 			this.placeZone(point.x, point.y, zone, Zone.Type.Find, { findItem: this.findItem });
 			const idx = point.x + 10 * point.y;
@@ -629,7 +691,11 @@ class WorldGenerator {
 		for (let y = 0; y < 10; y++) {
 			for (let x = 0; x < 10; x++) {
 				const sectorType = world[x + 10 * y];
-				if (sectorType !== SectorType.Empty && sectorType !== SectorType.Candidate && sectorType !== SectorType.Island)
+				if (
+					sectorType !== SectorType.Empty &&
+					sectorType !== SectorType.Candidate &&
+					sectorType !== SectorType.Island
+				)
 					continue;
 
 				const distance = GetDistanceToCenter(x, y);
@@ -701,11 +767,21 @@ class WorldGenerator {
 	}
 
 	private zoneLeadsToRequiredItem(zone: Zone, targetItem: Tile): boolean {
-		return this._traverseZoneUntil(zone, ({ requiredItems }: Zone) => requiredItems.contains(targetItem), false, identity);
+		return this._traverseZoneUntil(
+			zone,
+			({ requiredItems }: Zone) => requiredItems.contains(targetItem),
+			false,
+			identity
+		);
 	}
 
 	private zoneLeadsToProvidedItem(zone: Zone, targetItem: Tile): boolean {
-		return this._traverseZoneUntil(zone, ({ providedItems }: Zone) => providedItems.contains(targetItem), false, identity);
+		return this._traverseZoneUntil(
+			zone,
+			({ providedItems }: Zone) => providedItems.contains(targetItem),
+			false,
+			identity
+		);
 	}
 
 	private hasQuestRequiringItem(item: Tile): boolean {
@@ -739,8 +815,15 @@ class WorldGenerator {
 	private requiredItemForZoneWasNotPlaced(zone: Zone): boolean {
 		for (const hotspot of zone.hotspots) {
 			if (hotspot.arg === -1) continue;
-			if (hotspot.type.canHoldItem() && this.hasQuestRequiringItem(this.lookupTileById(hotspot.arg))) return false;
-			if (hotspot.type === Hotspot.Type.DoorIn && !this.requiredItemForZoneWasNotPlaced(this.lookupZoneById(hotspot.arg)))
+			if (
+				hotspot.type.canHoldItem() &&
+				this.hasQuestRequiringItem(this.lookupTileById(hotspot.arg))
+			)
+				return false;
+			if (
+				hotspot.type === Hotspot.Type.DoorIn &&
+				!this.requiredItemForZoneWasNotPlaced(this.lookupZoneById(hotspot.arg))
+			)
 				return false;
 		}
 
@@ -750,8 +833,10 @@ class WorldGenerator {
 	private addRequiredItemQuestsFromHotspots(zone: Zone): void {
 		zone.hotspots.forEach(hotspot => {
 			if (hotspot.arg === -1) return;
-			if (hotspot.type.canHoldItem()) this.addRequiredItemQuest(this.lookupTileById(hotspot.arg), -1);
-			if (hotspot.type === Hotspot.Type.DoorIn) this.addRequiredItemQuestsFromHotspots(this.lookupZoneById(hotspot.arg));
+			if (hotspot.type.canHoldItem())
+				this.addRequiredItemQuest(this.lookupTileById(hotspot.arg), -1);
+			if (hotspot.type === Hotspot.Type.DoorIn)
+				this.addRequiredItemQuestsFromHotspots(this.lookupZoneById(hotspot.arg));
 		});
 	}
 
@@ -953,7 +1038,13 @@ class WorldGenerator {
 		}
 	}
 
-	private placeZone(x: number, y: number, zone: Zone, type: Zone.Type, options: Partial<Sector> = {}): void {
+	private placeZone(
+		x: number,
+		y: number,
+		zone: Zone,
+		type: Zone.Type,
+		options: Partial<Sector> = {}
+	): void {
 		const idx = x + 10 * y;
 		const sector = this.world.at(idx);
 		sector.zone = zone;
@@ -962,8 +1053,10 @@ class WorldGenerator {
 		sector.requiredItem = options.requiredItem !== undefined ? options.requiredItem : null;
 		sector.npc = options.npc !== undefined ? options.npc : null;
 		sector.findItem = options.findItem !== undefined ? options.findItem : null;
-		sector.additionalRequiredItem = options.additionalRequiredItem !== undefined ? options.additionalRequiredItem : null;
-		sector.additionalGainItem = options.additionalGainItem !== undefined ? options.additionalGainItem : null;
+		sector.additionalRequiredItem =
+			options.additionalRequiredItem !== undefined ? options.additionalRequiredItem : null;
+		sector.additionalGainItem =
+			options.additionalGainItem !== undefined ? options.additionalGainItem : null;
 		sector.usedAlternateStrain = this.usedAlternateStrain;
 		if (zone !== null && type !== Zone.Type.Town) this.usedZones.unshift(zone);
 	}

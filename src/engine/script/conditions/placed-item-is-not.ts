@@ -7,7 +7,12 @@ import { Zone } from "src/engine/objects";
 export default {
 	Opcode: 0x17,
 	Arguments: [Type.Number, Type.Number, Type.Number, Type.Number, Type.Number],
-	Implementation: async (args: int16[], zone: Zone, engine: Engine, mode: EvaluationMode): Promise<boolean> => {
+	Implementation: async (
+		args: int16[],
+		zone: Zone,
+		engine: Engine,
+		mode: EvaluationMode
+	): Promise<boolean> => {
 		if (mode !== EvaluationMode.PlaceItem) return false;
 
 		let [x, y, z, target, item] = args;

@@ -27,7 +27,8 @@ export default {
 	Mixer: (): Mixer => new Mixer(),
 	InputManager: (): InputManager => new InputManager(),
 	Renderer: (): Renderer => new Renderer(),
-	SceneManager: (): SceneManager => new SceneManager(() => new Rectangle(new Point(0, 0), new Size(0, 0))),
+	SceneManager: (): SceneManager =>
+		new SceneManager(() => new Rectangle(new Point(0, 0), new Size(0, 0))),
 	AssetManager: (): AssetManager => new AssetManager(),
 	ResourceManager: (): ResourceManager => new ResourceManager()
 };

@@ -68,8 +68,10 @@ class ColorPicker extends Component {
 		this._brightnessInput.type = "range";
 		this._brightnessInput.min = "0";
 		this._brightnessInput.max = "255";
-		this._brightnessInput.onchange = _ => this._updateBrightness(+this._brightnessInput.value / 255.0);
-		this._brightnessInput.oninput = _ => this._updateBrightness(+this._brightnessInput.value / 255.0);
+		this._brightnessInput.onchange = _ =>
+			this._updateBrightness(+this._brightnessInput.value / 255.0);
+		this._brightnessInput.oninput = _ =>
+			this._updateBrightness(+this._brightnessInput.value / 255.0);
 	}
 
 	private _updateBrightness(newValue: number) {

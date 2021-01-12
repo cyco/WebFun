@@ -8,7 +8,10 @@ const ColorPaletteByteLength = 0x400;
 class PaletteProvider {
 	private url: Map<GameType, string> = new Map<GameType, string>();
 
-	constructor(yodaUrl: string = Settings.url.yoda.palette, indyUrl: string = Settings.url.indy.palette) {
+	constructor(
+		yodaUrl: string = Settings.url.yoda.palette,
+		indyUrl: string = Settings.url.indy.palette
+	) {
 		this.url.set(GameTypeYoda, yodaUrl);
 		this.url.set(GameTypeIndy, indyUrl);
 	}

@@ -28,7 +28,9 @@ class ZonePicker extends Component {
 				searchDelegate={new ZoneFilter()}
 				cell={
 					<ZonePickerCell
-						onclick={({ currentTarget }: MouseEvent) => this._cellClicked(currentTarget as ZonePickerCell)}
+						onclick={({ currentTarget }: MouseEvent) =>
+							this._cellClicked(currentTarget as ZonePickerCell)
+						}
 					/>
 				}
 			/>
@@ -47,7 +49,10 @@ class ZonePicker extends Component {
 		if (previousCell) previousCell.classList.remove("active");
 
 		this.zone = cell.data;
-		this.changeZone(this.zone, this._list.querySelectorAll(ZonePickerCell.tagName).indexOf(cell) - 1);
+		this.changeZone(
+			this.zone,
+			this._list.querySelectorAll(ZonePickerCell.tagName).indexOf(cell) - 1
+		);
 
 		cell.classList.add("active");
 	}
@@ -60,7 +65,9 @@ class ZonePicker extends Component {
 
 	private changeZone(zone: Zone, index: number) {
 		this.zone = zone;
-		this.dispatchEvent(new CustomEvent(Events.ZoneDidChange, { detail: { zone, index }, bubbles: true }));
+		this.dispatchEvent(
+			new CustomEvent(Events.ZoneDidChange, { detail: { zone, index }, bubbles: true })
+		);
 	}
 
 	set zones(s: Zone[]) {

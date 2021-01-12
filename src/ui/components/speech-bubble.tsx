@@ -39,7 +39,9 @@ class SpeechBubble extends Component {
 	private _width = 170;
 	private _arrowStyle = ArrowStyle.Top;
 	private _up = (<Button className="up" icon="caret-up" onmousedown={() => this.scrollUp()} />);
-	private _down = (<Button className="down" icon="caret-down" onmousedown={() => this.scrollDown()} />);
+	private _down = (
+		<Button className="down" icon="caret-down" onmousedown={() => this.scrollDown()} />
+	);
 	private _end = (<Button className="end" icon="circle" onclick={() => this.end()} />);
 	private _text: HTMLElement = (<div className="text" style={DefaultTextStyle} />);
 	private _keepScrolling: number = -1;
@@ -251,7 +253,9 @@ class SpeechBubble extends Component {
 	}
 
 	private _calculateNumberOfLines(skipClipping: boolean): number {
-		const lineCount = Math.ceil(this._text.getBoundingClientRect().height / parseInt(DefaultTextStyle.lineHeight));
+		const lineCount = Math.ceil(
+			this._text.getBoundingClientRect().height / parseInt(DefaultTextStyle.lineHeight)
+		);
 		const line = Math.max(1, lineCount);
 
 		if (skipClipping) return line;

@@ -28,7 +28,13 @@ class StatisticsWindow extends AbstractWindow {
 		return (
 			<li>
 				<span>{name}</span>
-				<Textbox editable={false} align="right" width={60} height={20} value={`${(this._state as any)[key]}`} />
+				<Textbox
+					editable={false}
+					align="right"
+					width={60}
+					height={20}
+					value={`${(this._state as any)[key]}`}
+				/>
 			</li>
 		);
 	}

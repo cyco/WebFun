@@ -36,7 +36,10 @@ class InventoryComponent extends AbstractList<Tile> {
 		const row = this._cells.indexOf(cell);
 		const item = cell.data;
 
-		const event = new CustomEvent(Events.ItemActivated, { detail: { item, row }, cancelable: true });
+		const event = new CustomEvent(Events.ItemActivated, {
+			detail: { item, row },
+			cancelable: true
+		});
 		if (!this.dispatchEvent(event) || !item || !this._canPlaceItem(item)) {
 			return;
 		}
@@ -68,14 +71,20 @@ class InventoryComponent extends AbstractList<Tile> {
 
 	set inventory(i: Inventory) {
 		if (this._inventory) {
-			this._inventory.removeEventListener(InventoryEvent.DidChangeItems, this._inventoryChangedHandler);
+			this._inventory.removeEventListener(
+				InventoryEvent.DidChangeItems,
+				this._inventoryChangedHandler
+			);
 			this.items = Array.Repeat(null, MinRows);
 		}
 
 		this._inventory = i;
 
 		if (this._inventory) {
-			this._inventory.addEventListener(InventoryEvent.DidChangeItems, this._inventoryChangedHandler);
+			this._inventory.addEventListener(
+				InventoryEvent.DidChangeItems,
+				this._inventoryChangedHandler
+			);
 			this._rebuildTable();
 		}
 	}

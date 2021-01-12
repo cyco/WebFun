@@ -1,6 +1,11 @@
 import "./editor-view.scss";
 
-import { AmmoControl, InteractiveHealth as Health, Inventory, InteractiveMap as Map } from "./components";
+import {
+	AmmoControl,
+	InteractiveHealth as Health,
+	Inventory,
+	InteractiveMap as Map
+} from "./components";
 import { ColorPalette, GameData } from "src/engine";
 import { Component, Menu } from "src/ui";
 import { DiscardingStorage, Point, identity } from "src/util";
@@ -42,7 +47,9 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 	}
 
 	private _showSegment(segment: Segment): void {
-		Array.from(this._save.querySelectorAll(".content")).forEach((c: HTMLElement) => (c.style.display = "none"));
+		Array.from(this._save.querySelectorAll(".content")).forEach(
+			(c: HTMLElement) => (c.style.display = "none")
+		);
 		let r = this._save.querySelector(".content." + segment.textContent) as Segment;
 		if (!r) r = this._save.querySelector(".content") as Segment;
 		r.style.display = "";
@@ -243,7 +250,9 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 					worldSize{" "}
 					<input
 						value={`${this._state.worldSize}`}
-						onchange={e => (this._state.worldSize = WorldSize.fromNumber(+(e.target as HTMLInputElement).value))}
+						onchange={e =>
+							(this._state.worldSize = WorldSize.fromNumber(+(e.target as HTMLInputElement).value))
+						}
 					/>
 				</label>
 				<label>

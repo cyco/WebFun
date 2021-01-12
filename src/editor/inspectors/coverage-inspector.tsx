@@ -11,7 +11,9 @@ enum ViewMode {
 const ViewModeStateKey = "view-mode";
 class CoverageInspector extends AbstractInspector {
 	private covergeLoaded: boolean = false;
-	private _sourceLevelCoverage: SourceLevelCoverage = (<SourceLevelCoverage />) as SourceLevelCoverage;
+	private _sourceLevelCoverage: SourceLevelCoverage = (
+		<SourceLevelCoverage />
+	) as SourceLevelCoverage;
 	private _symbolicCoverage: SymbolicCoverage = (<SymbolicCoverage />) as SymbolicCoverage;
 	private _viewModeSelector = (
 		<InlineSelector
@@ -41,7 +43,8 @@ class CoverageInspector extends AbstractInspector {
 
 		this._sourceLevelCoverage.state = state.prefixedWith("source-level");
 		this._symbolicCoverage.state = state.prefixedWith("symbolic");
-		this._viewModeSelector.value = (+state.load(ViewModeStateKey) as ViewMode) || this._viewModeSelector.options[0].value;
+		this._viewModeSelector.value =
+			(+state.load(ViewModeStateKey) as ViewMode) || this._viewModeSelector.options[0].value;
 	}
 
 	public async build() {

@@ -174,7 +174,10 @@ class Engine extends EventTarget {
 			return;
 		}
 
-		const weaponChar = this.assets.find(Char, c => c.isWeapon && c.frames[0].extensionRight === tile);
+		const weaponChar = this.assets.find(
+			Char,
+			c => c.isWeapon && c.frames[0].extensionRight === tile
+		);
 		if (this.hero.weapon === weaponChar) return;
 
 		this.hero.weapon = weaponChar;
@@ -255,7 +258,10 @@ class Engine extends EventTarget {
 			const score = calculateScore(this);
 			this.persistentState.gamesWon += 1;
 			this.persistentState.lastScore = score;
-			this.persistentState.highScore = max(this.persistentState.highScore, this.persistentState.lastScore);
+			this.persistentState.highScore = max(
+				this.persistentState.highScore,
+				this.persistentState.lastScore
+			);
 		}
 	}
 

@@ -23,7 +23,8 @@ const shuffle = function () {
 	for (let i = count - 1; i !== 0; i--) {
 		while (true) {
 			let didFindFreeSpot = false;
-			for (let j = 0; !didFindFreeSpot && j < count; j++) didFindFreeSpot = tempArray[j] === undefined;
+			for (let j = 0; !didFindFreeSpot && j < count; j++)
+				didFindFreeSpot = tempArray[j] === undefined;
 			if (!didFindFreeSpot) break;
 
 			idx = rand() % count;

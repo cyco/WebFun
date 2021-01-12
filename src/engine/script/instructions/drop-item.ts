@@ -10,7 +10,11 @@ export default {
 	Arguments: [Type.TileID, Type.ZoneX, Type.ZoneY],
 	Description:
 		"Drops item `arg_0` for pickup at `arg_1`x`arg_2`. If the item is -1, it drops the current sector's find item. instead",
-	Implementation: async (instruction: Instruction, engine: Engine, action: Action): Promise<Result> => {
+	Implementation: async (
+		instruction: Instruction,
+		engine: Engine,
+		action: Action
+	): Promise<Result> => {
 		let [itemID, x, y] = instruction.arguments;
 
 		if (itemID === -1) {

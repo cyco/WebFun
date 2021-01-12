@@ -38,7 +38,16 @@ class SectorPreview extends Component {
 
 	private _rebuildDetails() {
 		const { palette } = this;
-		const { findItem, requiredItem, additionalRequiredItem, solved1, solved2, solved3, solved4, zone } = this._sector;
+		const {
+			findItem,
+			requiredItem,
+			additionalRequiredItem,
+			solved1,
+			solved2,
+			solved3,
+			solved4,
+			zone
+		} = this._sector;
 
 		const tileRow = (label: string, tile: Tile, tile2?: Tile) =>
 			tile ? (

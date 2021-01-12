@@ -1,7 +1,13 @@
 import { Monster, Zone, Sound } from "../objects";
 import { Point, randmod } from "src/util";
 import randomDirection from "./helpers/random-direction";
-import { evade, canPerformMeleeAttack, moveCheck, playSound, performMoveAfterDoorwayCheck } from "./helpers";
+import {
+	evade,
+	canPerformMeleeAttack,
+	moveCheck,
+	playSound,
+	performMoveAfterDoorwayCheck
+} from "./helpers";
 import { Engine } from "src/engine";
 import YodaViewRedrawTile from "./helpers/yoda-view-redraw";
 import CharSetDefaultFace from "./helpers/char-set-default-face";
@@ -19,7 +25,13 @@ function _performMeleeAttackIfUnarmed(hit: boolean, monster: Monster, zone: Zone
 	return _noMovement(monster, zone, engine);
 }
 
-function _performMove(monster: Monster, direction: Point, move: boolean, zone: Zone, engine: Engine) {
+function _performMove(
+	monster: Monster,
+	direction: Point,
+	move: boolean,
+	zone: Zone,
+	engine: Engine
+) {
 	const hero = engine.hero.location;
 	const directionToHero = hero.comparedTo(monster.position);
 

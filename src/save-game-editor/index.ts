@@ -29,7 +29,10 @@ const main = async (windowManager: WindowManager = WindowManager.defaultManager)
 			editor.title = file.name;
 			windowManager.showWindow(editor);
 			editor.center();
-			editor.origin = editor.origin.byAdding(OverlayedWindowOffset * editors, OverlayedWindowOffset * editors);
+			editor.origin = editor.origin.byAdding(
+				OverlayedWindowOffset * editors,
+				OverlayedWindowOffset * editors
+			);
 			editors++;
 			await editor.loadGameFromStream(stream);
 		})

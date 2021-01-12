@@ -44,7 +44,9 @@ class BreakpointStore extends EventTarget {
 	public removeBreakpoint(bpt: Breakpoint): void {
 		delete this._breakpoints[bpt.id];
 		this._store();
-		this.dispatchEvent(new CustomEvent(Events.DidRemoveBreakpoint, { detail: { breakpoint: bpt } }));
+		this.dispatchEvent(
+			new CustomEvent(Events.DidRemoveBreakpoint, { detail: { breakpoint: bpt } })
+		);
 	}
 
 	private _store() {

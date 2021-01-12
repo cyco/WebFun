@@ -24,7 +24,12 @@ class PathUIScene extends Scene {
 		}
 
 		if (this.target) {
-			this.highlightTile(renderer, this.target.byAdding(this.cameraOffset), rgba(255, 255, 255, 0.8), this.offset);
+			this.highlightTile(
+				renderer,
+				this.target.byAdding(this.cameraOffset),
+				rgba(255, 255, 255, 0.8),
+				this.offset
+			);
 		}
 	}
 
@@ -32,7 +37,12 @@ class PathUIScene extends Scene {
 		this.offset--;
 	}
 
-	private highlightTile(renderer: CanvasRenderer.Renderer, tile: Point, color: string, offset: number) {
+	private highlightTile(
+		renderer: CanvasRenderer.Renderer,
+		tile: Point,
+		color: string,
+		offset: number
+	) {
 		const ctx = renderer.context;
 
 		ctx.save();
@@ -49,7 +59,9 @@ class PathUIScene extends Scene {
 	public get walkable(): boolean {
 		const scene = this.engine.sceneManager.currentScene as ZoneScene;
 
-		return scene.zone.placeWalkable(this.highlight.byScalingBy(9).floor().subtract(this.cameraOffset));
+		return scene.zone.placeWalkable(
+			this.highlight.byScalingBy(9).floor().subtract(this.cameraOffset)
+		);
 	}
 
 	canRender(renderer: Renderer): renderer is CanvasRenderer.Renderer {

@@ -25,7 +25,9 @@ class ZoneInspector extends AbstractInspector {
 		this.window.style.width = "326px";
 		this.window.content.style.maxHeight = "300px";
 		this.window.content.style.flexDirection = "column";
-		this.window.addTitlebarButton(<IconButton icon="plus" title="Add new zone" onclick={() => this.addZone()} />);
+		this.window.addTitlebarButton(
+			<IconButton icon="plus" title="Add new zone" onclick={() => this.addZone()} />
+		);
 
 		this._list = (<List state={state.prefixedWith("list")} searchDelegate={this} />) as List<Zone>;
 		this._list.cell = (
@@ -43,8 +45,15 @@ class ZoneInspector extends AbstractInspector {
 			const resolver = new ReferenceResolver(this.data.currentData);
 			const references = resolver.find(zone);
 
-			if (confirm(`Remove zone ${e.detail.zone.id}?` + (references.length ? `\nIt is still used in ${references.length} places` : "")))
-				this.data.currentData.zones.splice(this.data.currentData.zones.indexOf(e.detail.zone.id, 1));
+			if (
+				confirm(
+					`Remove zone ${e.detail.zone.id}?` +
+						(references.length ? `\nIt is still used in ${references.length} places` : "")
+				)
+			)
+				this.data.currentData.zones.splice(
+					this.data.currentData.zones.indexOf(e.detail.zone.id, 1)
+				);
 			this.build();
 		});
 		this._list.addEventListener(ZoneInspectorCell.Events.ChangeType, (e: CustomEvent) => {
@@ -136,7 +145,9 @@ class ZoneInspector extends AbstractInspector {
 				return;
 			}
 
-			const controller = document.createElement(ZoneEditorController.tagName) as ZoneEditorController;
+			const controller = document.createElement(
+				ZoneEditorController.tagName
+			) as ZoneEditorController;
 			controller.manager = this.windowManager;
 			controller.data = this.data;
 			controller.zone = this.data.currentData.zones[id];
@@ -184,7 +195,12 @@ class ZoneInspector extends AbstractInspector {
 		return searchValue.split(" ").map(s => new RegExp(s, "i"));
 	}
 
-	includeListItem(searchValue: RegExp[], item: Zone, _1: ZoneInspectorCell, _2: List<Zone>): boolean {
+	includeListItem(
+		searchValue: RegExp[],
+		item: Zone,
+		_1: ZoneInspectorCell,
+		_2: List<Zone>
+	): boolean {
 		const searchableAttributes = [
 			item.id,
 			item.size.width + "x" + item.size.height,

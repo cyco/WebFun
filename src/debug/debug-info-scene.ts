@@ -23,8 +23,14 @@ class DebugInfoScene extends Scene {
 			}
 		}
 
-		renderer.renderText(`${(this.engine.metronome as any)._tickCount[0]} ticks`, new Point(10, 246));
-		renderer.renderText(`${this._fps.toFixed(0)} fps, ${this._tps.toFixed(0)} tps`, new Point(10, 265));
+		renderer.renderText(
+			`${(this.engine.metronome as any)._tickCount[0]} ticks`,
+			new Point(10, 246)
+		);
+		renderer.renderText(
+			`${this._fps.toFixed(0)} fps, ${this._tps.toFixed(0)} tps`,
+			new Point(10, 265)
+		);
 	}
 
 	public async update(ticks: number): Promise<void> {

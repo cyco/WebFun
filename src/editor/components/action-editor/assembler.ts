@@ -36,7 +36,11 @@ class Assembler {
 	public assemble(input: AST): Action {
 		const result = new MutableAction();
 
-		let [defaction, name, ...body] = this.validateInputStructure(input) as [Symbol, Symbol, ...AST[]];
+		let [defaction, name, ...body] = this.validateInputStructure(input) as [
+			Symbol,
+			Symbol,
+			...AST[]
+		];
 		console.assert(defaction === s`defaction`);
 
 		if (typeof name === "string") {
@@ -114,7 +118,10 @@ class Assembler {
 		const text = opcode.UsesText ? args.pop() : "";
 
 		if (this.checkArgumentCount && ~opcode.Arguments && args.length !== opcode.Arguments.length) {
-			throw new AssemblerInputError(`Expected ${opcode.Arguments} arguments but found ${args.length}.`, input);
+			throw new AssemblerInputError(
+				`Expected ${opcode.Arguments} arguments but found ${args.length}.`,
+				input
+			);
 		}
 
 		if (typeof text !== "string") {

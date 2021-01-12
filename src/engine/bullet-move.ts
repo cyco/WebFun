@@ -24,7 +24,9 @@ function _dropLoot(monster: Monster, zone: Zone, assets: AssetManager) {
 	let itemId = -1;
 	if (monster.loot > 0) itemId = monster.loot - 1;
 	else {
-		const hotspots = zone.hotspots.withType(Hotspot.Type.DropQuestItem).filter(htsp => htsp.arg > 0);
+		const hotspots = zone.hotspots
+			.withType(Hotspot.Type.DropQuestItem)
+			.filter(htsp => htsp.arg > 0);
 
 		if (!hotspots.length) return;
 
@@ -96,7 +98,8 @@ export default async (engine: Engine, zone: Zone): Promise<ScriptResult> => {
 		  ];
 
 	const hitMonsters = zone.monsters.filter(
-		({ position, alive, enabled }) => alive && enabled && targets.some(target => position.isEqualTo(target))
+		({ position, alive, enabled }) =>
+			alive && enabled && targets.some(target => position.isEqualTo(target))
 	);
 
 	hitMonsters.forEach(monster => hitMonster(monster, hero.weapon, zone, assets));

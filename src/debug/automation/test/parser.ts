@@ -118,9 +118,12 @@ class TestFileParser {
 					? 50
 					: 100;
 			if (key.contains("health")) configuration.health = value.parseInt();
-			if (key.contains("require") && configuration.requiredItem1 >= 0) configuration.requiredItem2 = value.parseInt();
-			if (key.contains("require") && configuration.requiredItem1 < 0) configuration.requiredItem1 = value.parseInt();
-			if (key.contains("inventory")) configuration.inventory = value.split(",").map(i => i.trim().parseInt());
+			if (key.contains("require") && configuration.requiredItem1 >= 0)
+				configuration.requiredItem2 = value.parseInt();
+			if (key.contains("require") && configuration.requiredItem1 < 0)
+				configuration.requiredItem1 = value.parseInt();
+			if (key.contains("inventory"))
+				configuration.inventory = value.split(",").map(i => i.trim().parseInt());
 			if (key.contains("tag"))
 				configuration.tags = it.value
 					.split(":")
@@ -129,7 +132,8 @@ class TestFileParser {
 					.split(",")
 					.map(i => i.trim())
 					.filter(i => i.length);
-			if (key.contains("description")) configuration.description = it.value.split(":").rest().join(":").trim();
+			if (key.contains("description"))
+				configuration.description = it.value.split(":").rest().join(":").trim();
 		} while (true);
 
 		return configuration;

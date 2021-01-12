@@ -6,5 +6,6 @@ export default {
 	Opcode: 0x1f,
 	Arguments: [Type.Number],
 	Description: "Current zone's `counter` value is not equal to `arg_0`",
-	Implementation: async (args: int16[], zone: Zone, _: Engine): Promise<boolean> => zone.counter !== args[0]
+	Implementation: async (args: int16[], zone: Zone, _: Engine): Promise<boolean> =>
+		zone.counter !== args[0]
 };

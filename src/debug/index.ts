@@ -1,4 +1,9 @@
-import { CompareSectors, ComparisonResult, ParseExpectation, PrepareExpectations } from "./expectation";
+import {
+	CompareSectors,
+	ComparisonResult,
+	ParseExpectation,
+	PrepareExpectations
+} from "./expectation";
 import buildMenu from "./menu";
 import ScriptDebugger from "./script-debugger";
 import SimulatedStory from "./simulated-story";

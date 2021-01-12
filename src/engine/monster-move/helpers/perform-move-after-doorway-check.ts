@@ -5,7 +5,13 @@ import { Engine } from "src/engine";
 import performMove from "./perform-move";
 import isDoorway from "./is-doorway";
 
-export default (direction: Point, monster: Monster, zone: Zone, engine: Engine, mover = performMove): void => {
+export default (
+	direction: Point,
+	monster: Monster,
+	zone: Zone,
+	engine: Engine,
+	mover = performMove
+): void => {
 	const target = monster.position.byAdding(direction);
 	if (!zone.bounds.contains(target)) {
 		return noMovement(monster, zone, engine, mover);

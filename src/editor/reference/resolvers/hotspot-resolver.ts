@@ -18,11 +18,17 @@ class HotspotResolver {
 
 			for (const action of zone.actions) {
 				for (const instruction of action.instructions) {
-					if (instruction.opcode === DisableHotspot.Opcode && op(instruction.arguments[0], hotspot.id)) {
+					if (
+						instruction.opcode === DisableHotspot.Opcode &&
+						op(instruction.arguments[0], hotspot.id)
+					) {
 						result.push({ from: instruction, to: hotspot, via: [zone, action] });
 					}
 
-					if (instruction.opcode === EnableHotspot.Opcode && op(instruction.arguments[0], hotspot.id)) {
+					if (
+						instruction.opcode === EnableHotspot.Opcode &&
+						op(instruction.arguments[0], hotspot.id)
+					) {
 						result.push({ from: instruction, to: hotspot, via: [zone, action] });
 					}
 				}

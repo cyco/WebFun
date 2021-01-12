@@ -22,7 +22,8 @@ class SidebarCell extends Component {
 
 		this._expandButton = document.createElement(ExpandButton.tagName) as ExpandButton;
 		this._expandButton.element = this;
-		this._expandButton.ontoggle = () => this._state.store("expanded", this.classList.contains("expanded"));
+		this._expandButton.ontoggle = () =>
+			this._state.store("expanded", this.classList.contains("expanded"));
 		this._header.appendChild(this._expandButton);
 
 		this._newButton = document.createElement(IconButton.tagName) as IconButton;

@@ -1,6 +1,9 @@
 import "./editor.scss";
 
-import { default as Assembler, AssemblerInputError } from "src/editor/components/action-editor/assembler";
+import {
+	default as Assembler,
+	AssemblerInputError
+} from "src/editor/components/action-editor/assembler";
 import { default as Parser, ParserError } from "src/editor/components/action-editor/parser";
 
 import { Action, Zone } from "src/engine/objects";

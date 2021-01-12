@@ -15,7 +15,9 @@ abstract class SettingsWindow extends AbstractWindow {
 
 		this.content.appendChild(this._slider);
 		this.content.appendChild(
-			<div style={{ justifyContent: "space-between" }}>{[this._minLabel, this._midLabel, this._maxLabel]}</div>
+			<div style={{ justifyContent: "space-between" }}>
+				{[this._minLabel, this._midLabel, this._maxLabel]}
+			</div>
 		);
 		this.content.appendChild(
 			<div style={{ justifyContent: "center" }}>

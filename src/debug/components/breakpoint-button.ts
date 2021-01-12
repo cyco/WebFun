@@ -15,8 +15,10 @@ class BreakpointButton extends Component {
 	static readonly observedAttributes = ["active"];
 	public breakpoint: Breakpoint = null;
 	public store: BreakpointStore = BreakpointStore.sharedStore;
-	private _removeHandler = ({ detail: { breakpoint } }: CustomEvent) => breakpoint === this.breakpoint && (this.active = false);
-	private _addHandler = ({ detail: { breakpoint } }: CustomEvent) => breakpoint === this.breakpoint && (this.active = true);
+	private _removeHandler = ({ detail: { breakpoint } }: CustomEvent) =>
+		breakpoint === this.breakpoint && (this.active = false);
+	private _addHandler = ({ detail: { breakpoint } }: CustomEvent) =>
+		breakpoint === this.breakpoint && (this.active = true);
 
 	get active(): boolean {
 		return this.hasAttribute("active");

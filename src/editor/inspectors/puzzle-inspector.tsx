@@ -35,8 +35,18 @@ class PuzzleInspector extends AbstractInspector {
 		return searchValue.split(" ").map(s => new RegExp(s, "i"));
 	}
 
-	includeListItem(searchValue: RegExp[], puzzle: Puzzle, _1: PuzzleInspectorCell, _2: List<Puzzle>): boolean {
-		const string = puzzle.id + " " + puzzle.strings.join(" ") + puzzle.item1.name + (puzzle.item2 ? puzzle.item2.name : "");
+	includeListItem(
+		searchValue: RegExp[],
+		puzzle: Puzzle,
+		_1: PuzzleInspectorCell,
+		_2: List<Puzzle>
+	): boolean {
+		const string =
+			puzzle.id +
+			" " +
+			puzzle.strings.join(" ") +
+			puzzle.item1.name +
+			(puzzle.item2 ? puzzle.item2.name : "");
 		return searchValue.every(r => r.test(string));
 	}
 }

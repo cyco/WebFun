@@ -12,7 +12,9 @@ class TaggedLineBuffer extends LineBuffer {
 		while (parts.length) {
 			const part = parts.shift();
 			this._currentTagLine += className
-				? `<${this.tagName} class="${className}">${part.split(" ").join("&nbsp;")}</${this.tagName}>`
+				? `<${this.tagName} class="${className}">${part.split(" ").join("&nbsp;")}</${
+						this.tagName
+				  }>`
 				: part;
 			if (parts.length) this.endLine();
 		}

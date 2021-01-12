@@ -7,7 +7,9 @@ import {
 	Instruction as InstructionComponent
 } from "src/debug/components";
 import { ConditionImplementations, ConditionsByName } from "src/engine/script/conditions";
-import DebuggingScriptProcessingUnit, { DebuggingScriptProcessingUnitDelegate } from "./debugging-script-processing-unit";
+import DebuggingScriptProcessingUnit, {
+	DebuggingScriptProcessingUnitDelegate
+} from "./debugging-script-processing-unit";
 import { Engine, EngineEvents } from "src/engine";
 import { InstructionImplementations, InstructionsByName } from "src/engine/script/instructions";
 import { Result, ScriptResult } from "src/engine/script";
@@ -63,7 +65,10 @@ class ScriptDebugger implements DebuggingScriptProcessingUnitDelegate {
 		) as Window;
 		this._window.content.style.minWidth = "200px";
 		this._window.content.appendChild(
-			<Controls onstep={(): void => this.stepOnce()} ontogglepause={(): void => this.togglePause()} />
+			<Controls
+				onstep={(): void => this.stepOnce()}
+				ontogglepause={(): void => this.togglePause()}
+			/>
 		);
 		this._window.content.appendChild(this._buildZoneState());
 		this._actionList = (<Group className="action-list" />) as Group;
@@ -119,7 +124,11 @@ class ScriptDebugger implements DebuggingScriptProcessingUnitDelegate {
 		Settings.debuggerActive = false;
 
 		this._engine.removeEventListener(EngineEvents.CurrentZoneChange, this._handlers.zoneChange);
-		this._engine.spu = new ScriptProcessingUnit(this._engine, InstructionImplementations, ConditionImplementations);
+		this._engine.spu = new ScriptProcessingUnit(
+			this._engine,
+			InstructionImplementations,
+			ConditionImplementations
+		);
 		this._isActive = false;
 	}
 
@@ -141,7 +150,8 @@ class ScriptDebugger implements DebuggingScriptProcessingUnitDelegate {
 			this._actionList.appendChild(component);
 		});
 
-		if (this._actionList.firstElementChild) (this._actionList.firstElementChild as any).scrollIntoViewIfNeeded();
+		if (this._actionList.firstElementChild)
+			(this._actionList.firstElementChild as any).scrollIntoViewIfNeeded();
 	}
 
 	private _rebuildVariableMap(): void {
@@ -202,11 +212,16 @@ class ScriptDebugger implements DebuggingScriptProcessingUnitDelegate {
 		if (!action) return;
 		action.setAttribute("current", "");
 		if (!type) return;
-		const thing = action.querySelectorAll(type === "c" ? ConditionComponent.tagName : InstructionComponent.tagName)[+idx];
+		const thing = action.querySelectorAll(
+			type === "c" ? ConditionComponent.tagName : InstructionComponent.tagName
+		)[+idx];
 		if (thing) thing.setAttribute("current", "");
 	}
 
-	executorWillExecute(executor: DebuggingScriptProcessingUnit, thing: Zone | Action | Condition | Instruction): void {
+	executorWillExecute(
+		executor: DebuggingScriptProcessingUnit,
+		thing: Zone | Action | Condition | Instruction
+	): void {
 		if (thing instanceof Zone) {
 			this._currentZone = thing;
 			this._currentAction = null;
@@ -216,17 +231,22 @@ class ScriptDebugger implements DebuggingScriptProcessingUnitDelegate {
 		if (thing instanceof Action) {
 			this._currentAction = thing;
 			if (thing.zone !== this._currentZone) console.warn("action does not belong to current zone!");
-			if (this._currentAction.zone !== this.engine.currentZone) console.warn("Engine thinks we're on a differente zone!");
+			if (this._currentAction.zone !== this.engine.currentZone)
+				console.warn("Engine thinks we're on a differente zone!");
 		}
 
 		if ("isCondition" in thing) {
-			if (this._currentAction.zone !== this._currentZone) console.warn("action does not belong to current zone!");
-			if (this._currentAction.conditions.indexOf(thing) === -1) console.warn("Condition not found in current action!");
+			if (this._currentAction.zone !== this._currentZone)
+				console.warn("action does not belong to current zone!");
+			if (this._currentAction.conditions.indexOf(thing) === -1)
+				console.warn("Condition not found in current action!");
 		}
 
 		if ("isInstruction" in thing) {
-			if (this._currentAction.zone !== this._currentZone) console.warn("action does not belong to current zone!");
-			if (this._currentAction.instructions.indexOf(thing) === -1) console.warn("Instruction not found in current action!");
+			if (this._currentAction.zone !== this._currentZone)
+				console.warn("action does not belong to current zone!");
+			if (this._currentAction.instructions.indexOf(thing) === -1)
+				console.warn("Instruction not found in current action!");
 		}
 
 		const breakpoint = this.buildBreakpoint(thing);

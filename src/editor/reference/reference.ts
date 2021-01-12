@@ -1,4 +1,15 @@
-import { Zone, Tile, Action, Instruction, Condition, Hotspot, Monster, Sound, Char, Puzzle } from "src/engine/objects";
+import {
+	Zone,
+	Tile,
+	Action,
+	Instruction,
+	Condition,
+	Hotspot,
+	Monster,
+	Sound,
+	Char,
+	Puzzle
+} from "src/engine/objects";
 
 type Ref<To, From, Via = []> = { to: To; from: From; via: Via };
 

@@ -8,7 +8,12 @@ import { DiscardingStorage } from "src/util";
 export declare interface SearchDelegate<T, PreparedSearchValue> {
 	prepareListSearch(searchValue: string, list: AbstractList<T>): PreparedSearchValue;
 
-	includeListItem(searchValue: PreparedSearchValue, item: T, cell: Cell<T>, list: AbstractList<T>): boolean;
+	includeListItem(
+		searchValue: PreparedSearchValue,
+		item: T,
+		cell: Cell<T>,
+		list: AbstractList<T>
+	): boolean;
 }
 
 const FILTER_DELAY = 100;
@@ -32,7 +37,8 @@ abstract class AbstractList<T> extends Component {
 	private _state: Storage = new DiscardingStorage();
 
 	protected connectedCallback(): void {
-		if (this.searchDelegate && !this._bar.parentElement) this.insertBefore(this._bar, this.firstElementChild);
+		if (this.searchDelegate && !this._bar.parentElement)
+			this.insertBefore(this._bar, this.firstElementChild);
 
 		this.rebuild();
 

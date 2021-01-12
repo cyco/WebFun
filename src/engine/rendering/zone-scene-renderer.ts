@@ -10,7 +10,13 @@ import { NullIfMissing } from "../asset-manager";
 import { findTileIdForCharFrameWithDirection } from "../monster-move/helpers";
 
 class ZoneSceneRenderer {
-	public render(zone: Zone, engine: Engine, renderer: Renderer, palette: ColorPalette, sprites: Sprite[]): void {
+	public render(
+		zone: Zone,
+		engine: Engine,
+		renderer: Renderer,
+		palette: ColorPalette,
+		sprites: Sprite[]
+	): void {
 		const offset = engine.camera.offset;
 		const TileWidth = Tile.WIDTH;
 		const TileHeight = Tile.HEIGHT;
@@ -37,7 +43,13 @@ class ZoneSceneRenderer {
 			}
 		};
 
-		const drawImageAt = (pixels: Uint8Array, x: number, y: number, width: number, height: number) => {
+		const drawImageAt = (
+			pixels: Uint8Array,
+			x: number,
+			y: number,
+			width: number,
+			height: number
+		) => {
 			let tx, ty;
 			let j = y * bpr + x;
 			for (ty = 0; ty < height; ty++) {
@@ -104,7 +116,13 @@ class ZoneSceneRenderer {
 						"Sprites must be located on the zone."
 					);
 
-					drawImageAt(sprite.pixels, x * TileWidth, y * TileHeight, sprite.size.width, sprite.size.height);
+					drawImageAt(
+						sprite.pixels,
+						x * TileWidth,
+						y * TileHeight,
+						sprite.size.width,
+						sprite.size.height
+					);
 				});
 			}
 		}

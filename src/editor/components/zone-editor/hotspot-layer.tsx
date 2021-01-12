@@ -29,7 +29,9 @@ class HotspotLayer extends Component {
 		this.textContent = "";
 		this._zone.hotspots
 			.groupedBy(htsp => htsp.location)
-			.forEach(({ length, 0: { x, y } }) => this.appendChild(this.buildNode(new Point(x, y), length)));
+			.forEach(({ length, 0: { x, y } }) =>
+				this.appendChild(this.buildNode(new Point(x, y), length))
+			);
 	}
 
 	private buildNode(point: Point, count: number) {

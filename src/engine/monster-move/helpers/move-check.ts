@@ -5,7 +5,13 @@ import { Engine } from "src/engine";
 
 export const EvasionStrategy = (tickCount: number): 1 | -1 => ((tickCount & 1) < 1 ? 1 : -1);
 
-export default (source: Point, rel: Point, zone: Zone, flag = false, engine: Engine): MoveCheckResult => {
+export default (
+	source: Point,
+	rel: Point,
+	zone: Zone,
+	flag = false,
+	engine: Engine
+): MoveCheckResult => {
 	const target = source.byAdding(rel);
 
 	if (!zone.bounds.contains(target)) {
@@ -19,7 +25,10 @@ export default (source: Point, rel: Point, zone: Zone, flag = false, engine: Eng
 	const isFree = (evade: Point) => {
 		const checkTarget = target.byAdding(evade);
 
-		return zone.bounds.contains(checkTarget) && (flag || !zone.getTile(checkTarget.x, checkTarget.y, Zone.Layer.Object));
+		return (
+			zone.bounds.contains(checkTarget) &&
+			(flag || !zone.getTile(checkTarget.x, checkTarget.y, Zone.Layer.Object))
+		);
 	};
 
 	const evade = EvasionStrategy(engine.metronome.tickCount);

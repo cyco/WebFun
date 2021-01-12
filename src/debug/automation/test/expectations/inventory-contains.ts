@@ -32,9 +32,9 @@ class InventoryContainsExpectation implements expectation {
 
 				const message =
 					this.items.length > 1
-						? `Expected inventory to contain items ${this.items.map(i => i.toHex(3)).join(", ")}, but ${item.toHex(
-								3
-						  )} is missing.`
+						? `Expected inventory to contain items ${this.items
+								.map(i => i.toHex(3))
+								.join(", ")}, but ${item.toHex(3)} is missing.`
 						: `Expected inventory to contain item ${item.toHex(3)}.`;
 				fail(message);
 			}

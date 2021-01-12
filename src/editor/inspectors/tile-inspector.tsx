@@ -25,9 +25,15 @@ class TileInspector extends AbstractInspector {
 		this.window.style.width = "502px";
 		this.window.content.style.maxHeight = "300px";
 		this.window.content.style.flexDirection = "column";
-		this.window.addTitlebarButton(<IconButton icon="plus" title="Add new tile" onclick={() => this.addTile()} />);
 		this.window.addTitlebarButton(
-			<IconButton icon="download" title="Download tileset image" onclick={() => this.downloadTileset()} />
+			<IconButton icon="plus" title="Add new tile" onclick={() => this.addTile()} />
+		);
+		this.window.addTitlebarButton(
+			<IconButton
+				icon="download"
+				title="Download tileset image"
+				onclick={() => this.downloadTileset()}
+			/>
 		);
 		this.window.addTitlebarButton(
 			<IconButton icon="upload" title="Upload tileset image" onclick={() => this.uploadTileset()} />
@@ -146,7 +152,9 @@ class TileInspector extends AbstractInspector {
 				this._prohibitedAttributes = 0;
 			}
 
-			(Array.from(cells) as HTMLTableHeaderCellElement[]).slice(1).forEach(c => (c.textContent = targetValue));
+			(Array.from(cells) as HTMLTableHeaderCellElement[])
+				.slice(1)
+				.forEach(c => (c.textContent = targetValue));
 			this.updateFilter();
 		};
 		headRow.appendChild(tileCell);
@@ -179,16 +187,21 @@ class TileInspector extends AbstractInspector {
 				const bitCell = document.createElement("td");
 				bitCell.textContent = `${tile.attributes & (1 << i) ? 1 : 0}`;
 				bitCell.title = `Bit ${i}` + (titles[i] ? ": " + titles[i] : "");
-				bitCell.onclick = (e: MouseEvent) => this.toggleBit(tile, i, e.currentTarget as HTMLElement);
+				bitCell.onclick = (e: MouseEvent) =>
+					this.toggleBit(tile, i, e.currentTarget as HTMLElement);
 				row.appendChild(bitCell);
 			}
 			body.appendChild(row);
 		});
 		table.appendChild(body);
 		this.window.content.appendChild(table);
-		this.window.content.addEventListener("scroll", () => this.state.store("scroll", this.window.content.scrollTop), {
-			passive: true
-		});
+		this.window.content.addEventListener(
+			"scroll",
+			() => this.state.store("scroll", this.window.content.scrollTop),
+			{
+				passive: true
+			}
+		);
 	}
 
 	show(): void {
@@ -202,7 +215,12 @@ class TileInspector extends AbstractInspector {
 		}
 
 		const editor = (
-			<TileEditor palette={this.data.palette} pixels={tile.imageData} tile={tile} autosaveName="tile-editor" />
+			<TileEditor
+				palette={this.data.palette}
+				pixels={tile.imageData}
+				tile={tile}
+				autosaveName="tile-editor"
+			/>
 		) as TileEditor;
 
 		this.windowManager.showWindow(editor);

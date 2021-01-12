@@ -28,7 +28,9 @@ class ReferenceUpdater {
 			}
 
 			if ("isInstruction" in ref) {
-				const zone = this._data.zones.find(z => z.actions.some(action => action.instructions.includes(ref)));
+				const zone = this._data.zones.find(z =>
+					z.actions.some(action => action.instructions.includes(ref))
+				);
 				const action = zone.actions.find(action => action.instructions.includes(ref));
 				action.instructions.splice(action.instructions.indexOf(ref), 1);
 				if (action.instructions.length === 0) {
@@ -38,7 +40,10 @@ class ReferenceUpdater {
 		}
 	}
 
-	private deleteHotspot(htsp: Hotspot, zone = this._data.zones.find(z => z.hotspots.includes(htsp))): void {
+	private deleteHotspot(
+		htsp: Hotspot,
+		zone = this._data.zones.find(z => z.hotspots.includes(htsp))
+	): void {
 		const index = zone.hotspots.indexOf(htsp);
 		zone.hotspots.splice(index, 1);
 		for (let a = 0; a < zone.actions.length; a++) {
@@ -46,7 +51,10 @@ class ReferenceUpdater {
 			for (let i = 0; i < action.instructions.length; i++) {
 				const instruction = action.instructions[i];
 				const opcode = instruction.opcode;
-				if (opcode !== InstructionsByName.EnableHotspot.Opcode && opcode !== InstructionsByName.DisableHotspot.Opcode) {
+				if (
+					opcode !== InstructionsByName.EnableHotspot.Opcode &&
+					opcode !== InstructionsByName.DisableHotspot.Opcode
+				) {
 					continue;
 				}
 

@@ -15,7 +15,9 @@ import { Yoda } from "src/engine/type";
 import Settings from "src/settings";
 
 class SaveGameInspector extends AbstractInspector {
-	private _editorView: EditorView = (<EditorView state={this.state.prefixedWith("editor-view")} />) as EditorView;
+	private _editorView: EditorView = (
+		<EditorView state={this.state.prefixedWith("editor-view")} />
+	) as EditorView;
 
 	constructor(state: Storage) {
 		super(state);
@@ -25,10 +27,18 @@ class SaveGameInspector extends AbstractInspector {
 		this.window.content.style.flexDirection = "column";
 		this.window.classList.add("wf-resource-editor-save-game-inspector");
 		this.window.addTitlebarButton(
-			<IconButton icon="download" title="Download modified save game" onclick={() => this.downloadSaveGame()} />
+			<IconButton
+				icon="download"
+				title="Download modified save game"
+				onclick={() => this.downloadSaveGame()}
+			/>
 		);
 		this.window.addTitlebarButton(
-			<IconButton icon="play" title="Load and play this save game" onclick={() => this.playSaveGame()} />
+			<IconButton
+				icon="play"
+				title="Load and play this save game"
+				onclick={() => this.playSaveGame()}
+			/>
 		);
 	}
 

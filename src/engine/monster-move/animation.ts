@@ -7,7 +7,10 @@ import YodaViewRedrawTile from "./helpers/yoda-view-redraw";
 import ZoneSetTileAt from "./helpers/zone-set-tile-at";
 
 function updateFaceAndRedraw(monster: Monster, zone: Zone, engine: Engine) {
-	const tile = findAnimationTileIdForCharFrame(monster.face.frames.first(), monster.facingDirection);
+	const tile = findAnimationTileIdForCharFrame(
+		monster.face.frames.first(),
+		monster.facingDirection
+	);
 	ZoneSetTileAt(engine, zone, monster.position, tile.id);
 	monster.facingDirection++;
 	monster.facingDirection %= 6;

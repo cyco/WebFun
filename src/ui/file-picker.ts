@@ -8,7 +8,8 @@ class FilePicker implements FilePickerOptions {
 	public allowedTypes: string[] = [];
 
 	constructor(options: FilePickerOptions = {}) {
-		if (options.allowsMultipleFiles !== undefined) this.allowsMultipleFiles = options.allowsMultipleFiles;
+		if (options.allowsMultipleFiles !== undefined)
+			this.allowsMultipleFiles = options.allowsMultipleFiles;
 
 		if (options.allowedTypes !== undefined) {
 			this.allowedTypes = options.allowedTypes;
@@ -27,7 +28,9 @@ class FilePicker implements FilePickerOptions {
 			input.style.opacity = "0.0";
 
 			if (this.allowedTypes.length) {
-				input.accept = this.allowedTypes.map(type => (type.indexOf("/") === -1 ? type : "." + type)).join(",");
+				input.accept = this.allowedTypes
+					.map(type => (type.indexOf("/") === -1 ? type : "." + type))
+					.join(",");
 			}
 
 			if (this.allowsMultipleFiles) {

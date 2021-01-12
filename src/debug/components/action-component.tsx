@@ -97,9 +97,12 @@ class ActionComponent extends Component {
 
 	public async evaluateConditions(): Promise<void> {
 		let checker = this.checker;
-		if (!checker) checker = this.checker = new ConditionChecker(ConditionImplementations, this.engine);
+		if (!checker)
+			checker = this.checker = new ConditionChecker(ConditionImplementations, this.engine);
 
-		const conditions: ConditionComponent[] = Array.from(this.querySelectorAll(ConditionComponent.tagName));
+		const conditions: ConditionComponent[] = Array.from(
+			this.querySelectorAll(ConditionComponent.tagName)
+		);
 		for (const condition of conditions) {
 			if (await checker.check(condition.condition, EvaluationMode.Walk, this._action.zone)) {
 				condition.setAttribute("truthy", "");

@@ -6,5 +6,6 @@ export default {
 	Opcode: 0x23,
 	Arguments: [Type.Number],
 	Description: "Total games won is greater than `arg_0`",
-	Implementation: async (args: int16[], _: Zone, engine: Engine): Promise<boolean> => engine.persistentState.gamesWon > args[0]
+	Implementation: async (args: int16[], _: Zone, engine: Engine): Promise<boolean> =>
+		engine.persistentState.gamesWon > args[0]
 };

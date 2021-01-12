@@ -8,4 +8,14 @@ import trimCharacter from "./trim-character";
 import uuid from "./uuid";
 import ensureTail from "./ensure-tail";
 
-export { parseInt, padEnd, padStart, uuid, trimCharacter, contains, dasherize, camelize, ensureTail };
+export {
+	parseInt,
+	padEnd,
+	padStart,
+	uuid,
+	trimCharacter,
+	contains,
+	dasherize,
+	camelize,
+	ensureTail
+};

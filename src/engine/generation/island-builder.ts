@@ -62,7 +62,10 @@ class IslandBuilder {
 		range.iterate((point: Point) => {
 			const currentItem = this.at(point);
 			const neighborItem = this.at(Point.add(point, neighbor));
-			if (currentItem !== SectorType.None || (neighborItem !== SectorType.None && neighborItem !== SectorType.KeptFree)) {
+			if (
+				currentItem !== SectorType.None ||
+				(neighborItem !== SectorType.None && neighborItem !== SectorType.KeptFree)
+			) {
 				if (length < currentRun) {
 					length = currentRun;
 					start = i - currentRun;

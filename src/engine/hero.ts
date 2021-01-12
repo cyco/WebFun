@@ -161,7 +161,8 @@ class Hero extends EventTarget {
 			return (this._walking = false);
 		}
 
-		if (this._doMove(relative, zone, relative.isUnidirectional() && this._dragging)) return (this._walking = true);
+		if (this._doMove(relative, zone, relative.isUnidirectional() && this._dragging))
+			return (this._walking = true);
 
 		const y = relative.y;
 		const x = relative.x;
@@ -186,19 +187,31 @@ class Hero extends EventTarget {
 		if (y !== 0 && x === 0) {
 			relative.x = x - 1.0;
 
-			if (Point.add(targetPoint, relative).isInBounds(zoneSize) && this._doMove(relative, zone, false))
+			if (
+				Point.add(targetPoint, relative).isInBounds(zoneSize) &&
+				this._doMove(relative, zone, false)
+			)
 				return (this._walking = true);
 
 			relative.x = x + 1.0;
-			if (Point.add(targetPoint, relative).isInBounds(zoneSize) && this._doMove(relative, zone, false))
+			if (
+				Point.add(targetPoint, relative).isInBounds(zoneSize) &&
+				this._doMove(relative, zone, false)
+			)
 				return (this._walking = true);
 		} else if (x !== 0 && y === 0) {
 			relative.y = y + 1.0;
-			if (Point.add(targetPoint, relative).isInBounds(zoneSize) && this._doMove(relative, zone, false))
+			if (
+				Point.add(targetPoint, relative).isInBounds(zoneSize) &&
+				this._doMove(relative, zone, false)
+			)
 				return (this._walking = true);
 
 			relative.y = y - 1.0;
-			if (Point.add(targetPoint, relative).isInBounds(zoneSize) && this._doMove(relative, zone, false))
+			if (
+				Point.add(targetPoint, relative).isInBounds(zoneSize) &&
+				this._doMove(relative, zone, false)
+			)
 				return (this._walking = true);
 		}
 

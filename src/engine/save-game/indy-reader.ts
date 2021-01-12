@@ -48,7 +48,10 @@ class IndyReader extends Reader {
 
 		const goalPuzzle = stream.readInt16();
 
-		console.assert(stream.isAtEnd(), `Encountered ${stream.length - stream.offset} unknown bytes at end of stream`);
+		console.assert(
+			stream.isAtEnd(),
+			`Encountered ${stream.length - stream.offset} unknown bytes at end of stream`
+		);
 
 		const state = new SaveState();
 		state.type = Indy;

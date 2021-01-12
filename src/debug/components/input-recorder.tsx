@@ -17,7 +17,9 @@ class InputRecorder extends Component {
 		<IconButton style={{ color: "red" }} icon="circle" onclick={() => this.toggleRecording()} />
 	) as IconButton;
 	private _dump = (<IconButton icon="print" onclick={() => this.showLog()} />);
-	private _clear = (<IconButton icon="ban" onclick={() => this._recorder.clearRecords()} />) as IconButton;
+	private _clear = (
+		<IconButton icon="ban" onclick={() => this._recorder.clearRecords()} />
+	) as IconButton;
 
 	protected connectedCallback(): void {
 		super.connectedCallback();
@@ -50,7 +52,9 @@ class InputRecorder extends Component {
 	}
 
 	private showLog() {
-		const window = (<Window title="Recorded Input" autosaveName="input-recorder.output" closable={true} />) as Window;
+		const window = (
+			<Window title="Recorded Input" autosaveName="input-recorder.output" closable={true} />
+		) as Window;
 		window.content.style.width = "320px";
 		window.content.style.height = "270px";
 		window.content.appendChild(<textarea value={this.input} style={{ width: "100%" }} readOnly />);

@@ -55,7 +55,9 @@ class HelpViewer extends AbstractWindow {
 	}
 
 	private showTopic(nextTopic: number) {
-		const nextTopicElement = this.querySelector(`.help-contents ${TopicTag}[id="topic-${nextTopic + 1}"]`) as HTMLElement;
+		const nextTopicElement = this.querySelector(
+			`.help-contents ${TopicTag}[id="topic-${nextTopic + 1}"]`
+		) as HTMLElement;
 		if (!nextTopicElement) {
 			return;
 		}
@@ -88,7 +90,9 @@ class HelpViewer extends AbstractWindow {
 				<Button disabled={this.history.length <= 1} onclick={() => this.visitLastTopic()}>
 					Back
 				</Button>
-				<Button disabled={this.currentTopic <= 0} onclick={() => this.visitTopic(this.currentTopic - 1)}>
+				<Button
+					disabled={this.currentTopic <= 0}
+					onclick={() => this.visitTopic(this.currentTopic - 1)}>
 					&lt;&lt;
 				</Button>
 				<Button

@@ -1,4 +1,10 @@
-import { Menu, MenuItemInit, MenuItemSeparator as Separator, MenuItem, WindowManager } from "src/ui";
+import {
+	Menu,
+	MenuItemInit,
+	MenuItemSeparator as Separator,
+	MenuItem,
+	WindowManager
+} from "src/ui";
 
 import { document, window } from "src/std/dom";
 import { GameState } from "src/engine";

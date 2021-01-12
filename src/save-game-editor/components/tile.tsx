@@ -22,7 +22,11 @@ class TileComponent extends Component {
 
 		if (this._tile && this._palette) {
 			const newImage = (
-				<PaletteView size={new Size(Tile.WIDTH, Tile.HEIGHT)} palette={this.palette} image={this._tile.imageData} />
+				<PaletteView
+					size={new Size(Tile.WIDTH, Tile.HEIGHT)}
+					palette={this.palette}
+					image={this._tile.imageData}
+				/>
 			);
 			this._image.replaceWith(newImage);
 			this._image = newImage;

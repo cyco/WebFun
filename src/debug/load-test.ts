@@ -11,7 +11,9 @@ export default (gameController: GameController) => async (file: File = null): Pr
 
 	const TestCreatorWindow = (await import("./components")).TestCreatorWindow;
 	testCases.forEach(testCase => {
-		const simulator = document.createElement(TestCreatorWindow.tagName) as InstanceType<typeof TestCreatorWindow>;
+		const simulator = document.createElement(TestCreatorWindow.tagName) as InstanceType<
+			typeof TestCreatorWindow
+		>;
 		simulator.gameController = gameController;
 		simulator.state = localStorage.prefixedWith("simulator");
 		simulator.testCase = testCase;

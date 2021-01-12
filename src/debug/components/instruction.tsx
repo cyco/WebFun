@@ -26,7 +26,9 @@ class InstructionComponent extends InstructionThing {
 	}
 
 	private _rebuild() {
-		const name = Object.keys(Instructions).find(key => (Instructions as any)[key].Opcode === this._instruction.opcode);
+		const name = Object.keys(Instructions).find(
+			key => (Instructions as any)[key].Opcode === this._instruction.opcode
+		);
 		const definition = (Instructions as any)[name];
 
 		this.textContent = "";
@@ -38,7 +40,12 @@ class InstructionComponent extends InstructionThing {
 			<BreakpointButton
 				store={this.breakpointStore}
 				breakpoint={
-					new LocationBreakpoint(this.zone.id, this.action.id, "i", this.action.instructions.indexOf(this.instruction))
+					new LocationBreakpoint(
+						this.zone.id,
+						this.action.id,
+						"i",
+						this.action.instructions.indexOf(this.instruction)
+					)
 				}
 			/>
 		);
@@ -120,7 +127,9 @@ class InstructionComponent extends InstructionThing {
 				const [x, y, z, value] = this._instruction.arguments;
 				const id = `${x.toString()}x${y.toString()}x${z.toString()}`;
 
-				this.appendChild(<span className="argument variable">{this.variableMap[id].toString()}</span>);
+				this.appendChild(
+					<span className="argument variable">{this.variableMap[id].toString()}</span>
+				);
 				this.appendChild(<span className="argument number">{value.toString()}</span>);
 
 				break;
@@ -187,7 +196,9 @@ class InstructionComponent extends InstructionThing {
 	}
 
 	protected appendSoundArgument(sound: number): void {
-		this.appendChild(<span className="argument sound">{this.engine.assets.get(Sound, sound).file}</span>);
+		this.appendChild(
+			<span className="argument sound">{this.engine.assets.get(Sound, sound).file}</span>
+		);
 	}
 }
 

@@ -116,11 +116,18 @@ class Menubar extends AbstractMenuView {
 
 	private _elementContainsPoint(element: Element, point: Point): boolean {
 		const frame = element.getBoundingClientRect();
-		return point.x >= frame.left && point.x <= frame.right && point.y >= frame.top && point.y <= frame.bottom;
+		return (
+			point.x >= frame.left &&
+			point.x <= frame.right &&
+			point.y >= frame.top &&
+			point.y <= frame.bottom
+		);
 	}
 
 	private _findItemAt(location: Point): number {
-		return Array.from(this.children).findIndex(child => this._elementContainsPoint(child, location));
+		return Array.from(this.children).findIndex(child =>
+			this._elementContainsPoint(child, location)
+		);
 	}
 }
 

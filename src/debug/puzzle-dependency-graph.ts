@@ -70,7 +70,10 @@ class PuzzleDependencyGraph {
 
 	private precomputeDistances(candidates: number[], world: World) {
 		const length = candidates.length;
-		const distances = candidates.reduce((d, v) => ((d[v] = {}), d), {} as { [_: string]: { [_: string]: number } });
+		const distances = candidates.reduce(
+			(d, v) => ((d[v] = {}), d),
+			{} as { [_: string]: { [_: string]: number } }
+		);
 		return candidates.reduce((d, c, idx, array) => {
 			for (let i = idx; i < length; i++) {
 				d[c][array[i]] = d[array[i]][c] = this.calculateShortestPath(c, array[i], world).length;
@@ -159,7 +162,10 @@ class PuzzleDependencyGraph {
 				// result is modified during iteration, calculate length before any modification is made
 				for (let i = 0, len = result.length; i < len; i++) {
 					const sector = world.sectors[result[i]];
-					if (sector.zoneType === Zone.Type.TravelStart || sector.zoneType === Zone.Type.TravelEnd) {
+					if (
+						sector.zoneType === Zone.Type.TravelStart ||
+						sector.zoneType === Zone.Type.TravelEnd
+					) {
 						result.push(this._findCounterpart(world, result[i]));
 					}
 				}
@@ -223,18 +229,23 @@ class PuzzleDependencyGraph {
 			if (!bounds.contains(current)) return null;
 			const sector = world.at(current);
 			if (sector.zone === null) return null;
-			if (sector.zoneType === type || sector.zoneType === Zone.Type.TravelEnd) return current.y * 10 + current.x;
+			if (sector.zoneType === type || sector.zoneType === Zone.Type.TravelEnd)
+				return current.y * 10 + current.x;
 			current.add(step);
 		} while (true);
 	}
 
 	private _findCounterpart(world: World, sectorId: number): number {
 		const sector = world.sectors[sectorId];
-		if (sector.zoneType !== Zone.Type.TravelEnd && sector.zoneType !== Zone.Type.TravelStart) return sectorId;
+		if (sector.zoneType !== Zone.Type.TravelEnd && sector.zoneType !== Zone.Type.TravelStart)
+			return sectorId;
 
-		const searchType = sector.zoneType === Zone.Type.TravelEnd ? Zone.Type.TravelStart : Zone.Type.TravelEnd;
+		const searchType =
+			sector.zoneType === Zone.Type.TravelEnd ? Zone.Type.TravelStart : Zone.Type.TravelEnd;
 
-		return world.sectors.findIndex(s => s.zoneType === searchType && s.requiredItem === sector.requiredItem);
+		return world.sectors.findIndex(
+			s => s.zoneType === searchType && s.requiredItem === sector.requiredItem
+		);
 	}
 }
 

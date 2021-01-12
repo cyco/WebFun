@@ -26,7 +26,9 @@ class ConditionComponent extends InstructionThing {
 	}
 
 	private _rebuild() {
-		const name = Object.keys(Conditions).find(key => (Conditions as any)[key].Opcode === this._condition.opcode);
+		const name = Object.keys(Conditions).find(
+			key => (Conditions as any)[key].Opcode === this._condition.opcode
+		);
 		const definition = (Conditions as any)[name];
 
 		this.textContent = "";
@@ -38,7 +40,12 @@ class ConditionComponent extends InstructionThing {
 			<BreakpointButton
 				store={this.breakpointStore}
 				breakpoint={
-					new LocationBreakpoint(this.zone.id, this.action.id, "c", this.action.conditions.indexOf(this.condition))
+					new LocationBreakpoint(
+						this.zone.id,
+						this.action.id,
+						"c",
+						this.action.conditions.indexOf(this.condition)
+					)
 				}
 			/>
 		);
@@ -147,7 +154,9 @@ class ConditionComponent extends InstructionThing {
 				const [value, x, y, z] = this._condition.arguments;
 				const id = `${x.toString()}x${y.toString()}x${z.toString()}`;
 
-				this.appendChild(<span className="argument variable">{this.variableMap[id].toString()}</span>);
+				this.appendChild(
+					<span className="argument variable">{this.variableMap[id].toString()}</span>
+				);
 				this.appendChild(<span className="argument number">{value.toString()}</span>);
 				break;
 			case Conditions.GamesWonIsGreaterThan.Opcode:

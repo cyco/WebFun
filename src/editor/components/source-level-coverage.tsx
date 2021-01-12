@@ -107,13 +107,19 @@ class SourceLevelCoverage extends Component {
 	}
 
 	private renderOverview() {
-		const zonesCovered = this.datapoints.reduce((acc, dp) => acc + (dp.actionsCovered > 0 ? 1 : 0), 0);
+		const zonesCovered = this.datapoints.reduce(
+			(acc, dp) => acc + (dp.actionsCovered > 0 ? 1 : 0),
+			0
+		);
 		const zonesTotal = this.datapoints.length;
 
 		const actionsCovered = this.datapoints.reduce((acc, dp) => acc + dp.actionsCovered, 0);
 		const actionsTotal = this.datapoints.reduce((acc, dp) => acc + dp.actionsTotal, 0);
 
-		const instructionsCovered = this.datapoints.reduce((acc, dp) => acc + dp.instructionsCovered, 0);
+		const instructionsCovered = this.datapoints.reduce(
+			(acc, dp) => acc + dp.instructionsCovered,
+			0
+		);
 		const instructionsTotal = this.datapoints.reduce((acc, dp) => acc + dp.instructionsTotal, 0);
 
 		const conditionsCovered = this.datapoints.reduce((acc, dp) => acc + dp.conditionsCovered, 0);
@@ -140,7 +146,8 @@ class SourceLevelCoverage extends Component {
 					</span>
 				</span>
 				<span>
-					<span className="percentage">{pcnt(instructionsCovered / instructionsTotal)}</span> Instructions{" "}
+					<span className="percentage">{pcnt(instructionsCovered / instructionsTotal)}</span>{" "}
+					Instructions{" "}
 					<span className="details">
 						{n(instructionsCovered)}/{n(instructionsTotal)}
 					</span>
@@ -155,7 +162,9 @@ class SourceLevelCoverage extends Component {
 				<thead>
 					<tr>
 						{this._columns.map(([t, s]) => (
-							<th className={t === "" ? "extend-previous-cell" : ""} onclick={() => (this.sortDescriptor = s)}>
+							<th
+								className={t === "" ? "extend-previous-cell" : ""}
+								onclick={() => (this.sortDescriptor = s)}>
 								{t}
 							</th>
 						))}
@@ -172,7 +181,8 @@ class SourceLevelCoverage extends Component {
 			const actions = zone.actions.map((_, i) => this._coverage.actions[`${zone.id}_${i}`]);
 			const actionsTotal = zone.actions.length;
 			const actionsCovered = actions.reduce(
-				(acc, a) => acc + (a.conditions.some(i => i > 0) || a.instructions.some(i => i > 0) ? 1 : 0),
+				(acc, a) =>
+					acc + (a.conditions.some(i => i > 0) || a.instructions.some(i => i > 0) ? 1 : 0),
 				0
 			);
 			const actionsRatio = zone.actions.length === 0 ? 1 : actionsCovered / zone.actions.length;
@@ -186,10 +196,12 @@ class SourceLevelCoverage extends Component {
 
 			const instructionsTotal = actions.reduce((acc, ac) => acc + ac.instructions.length, 0);
 			const instructionsCovered = actions.reduce(
-				(acc: number, ac) => acc + ac.instructions.map(i => (i > 0 ? 1 : 0)).reduce((a, b) => a + b, 0),
+				(acc: number, ac) =>
+					acc + ac.instructions.map(i => (i > 0 ? 1 : 0)).reduce((a, b) => a + b, 0),
 				0
 			);
-			const instructionsRatio = instructionsTotal === 0 ? 1 : instructionsCovered / instructionsTotal;
+			const instructionsRatio =
+				instructionsTotal === 0 ? 1 : instructionsCovered / instructionsTotal;
 
 			return {
 				zone: zone.id,
@@ -252,7 +264,8 @@ class SourceLevelCoverage extends Component {
 	}
 
 	public get sortDescriptor() {
-		if (this._invertSortDescriptor) return (a: DataPoint, b: DataPoint) => -1 * this._sortDescriptor(a, b);
+		if (this._invertSortDescriptor)
+			return (a: DataPoint, b: DataPoint) => -1 * this._sortDescriptor(a, b);
 
 		return this._sortDescriptor;
 	}

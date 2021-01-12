@@ -65,7 +65,10 @@ class YodaReader extends Reader {
 			goalPuzzle === goalPuzzleAgain,
 			`Expected goal ${goalPuzzle} to be reapeted. Found ${goalPuzzleAgain} instead`
 		);
-		console.assert(stream.isAtEnd(), `Encountered ${stream.length - stream.offset} unknown bytes at end of stream`);
+		console.assert(
+			stream.isAtEnd(),
+			`Encountered ${stream.length - stream.offset} unknown bytes at end of stream`
+		);
 
 		const state = new SaveState();
 		state.type = Yoda;
@@ -93,7 +96,9 @@ class YodaReader extends Reader {
 		state.unknownCount = unknownCount;
 		state.unknownSum = unknownSum;
 		try {
-			state.worldSize = WorldSize.isWorldSize(1 + worldSize) ? WorldSize.fromNumber(1 + worldSize) : WorldSize.Medium;
+			state.worldSize = WorldSize.isWorldSize(1 + worldSize)
+				? WorldSize.fromNumber(1 + worldSize)
+				: WorldSize.Medium;
 		} catch (_) {
 			state.worldSize = WorldSize.Small;
 		}
@@ -134,7 +139,9 @@ class YodaReader extends Reader {
 		sector.additionalGainItem = this._assets.get(Tile, additionalGainItem, NullIfMissing);
 		sector.usedAlternateStrain = usedAlternateStrain === -1 ? null : usedAlternateStrain === 1;
 		sector.npc = this._assets.get(Tile, npcId, NullIfMissing);
-		sector.zoneType = Zone.Type.isZoneType(zoneType) ? Zone.Type.fromNumber(zoneType) : Zone.Type.None;
+		sector.zoneType = Zone.Type.isZoneType(zoneType)
+			? Zone.Type.fromNumber(zoneType)
+			: Zone.Type.None;
 
 		return sector;
 	}

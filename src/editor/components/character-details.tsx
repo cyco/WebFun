@@ -59,7 +59,10 @@ class CharacterDetails extends Component {
 						(this._character.frames[this._currentPreviewFrame % 3].tiles[idx] = tile)
 					}
 				/>
-				<button onclick={() => (this._framePreview.frame = this._character.frames[++this._currentPreviewFrame % 3])}>
+				<button
+					onclick={() =>
+						(this._framePreview.frame = this._character.frames[++this._currentPreviewFrame % 3])
+					}>
 					Step
 				</button>
 				<label>
@@ -136,7 +139,9 @@ class CharacterDetails extends Component {
 						{weapons.map(weapon => (
 							<option
 								value={weapon.id.toString()}
-								selected={(type === Char.Type.Hero || type === Char.Type.Enemy) && reference === weapon.id}>
+								selected={
+									(type === Char.Type.Hero || type === Char.Type.Enemy) && reference === weapon.id
+								}>
 								{weapon.id} {weapon.name}
 							</option>
 						))}
@@ -153,7 +158,9 @@ class CharacterDetails extends Component {
 						}}>
 						<option value="-1">None</option>
 						{sounds.map((sound, index) => (
-							<option value={`${index}`} selected={type === Char.Type.Weapon && reference === index}>
+							<option
+								value={`${index}`}
+								selected={type === Char.Type.Weapon && reference === index}>
 								{index} {sound}
 							</option>
 						))}

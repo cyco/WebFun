@@ -1,6 +1,9 @@
 import FieldEditor from "./field-editor";
 import GlobalFileDrop from "./global-file-drop";
-import ModalConfirm, { Options as ConfirmationOptions, Result as ConfirmationResult } from "./modals/confirm";
+import ModalConfirm, {
+	Options as ConfirmationOptions,
+	Result as ConfirmationResult
+} from "./modals/confirm";
 import ModalPrompt from "./modals/prompt";
 import ModalSession from "./modal-session";
 import PopoverModalSession from "./popover-modal-session";

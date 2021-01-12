@@ -29,7 +29,10 @@ export default (renderer: Renderer, hotspots: Hotspot[], offset: Point): void =>
 			shadowOffsetX: 0,
 			shadowOffsetY: 0
 		};
-		const location = new Point((h.x + offset.x) * Tile.WIDTH, c * 10 + (h.y + offset.y) * Tile.HEIGHT);
+		const location = new Point(
+			(h.x + offset.x) * Tile.WIDTH,
+			c * 10 + (h.y + offset.y) * Tile.HEIGHT
+		);
 		renderer.renderText(shortName(h.type), location, style);
 		c++;
 	});

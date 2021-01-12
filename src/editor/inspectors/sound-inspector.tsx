@@ -16,7 +16,9 @@ class SoundInspector extends AbstractInspector {
 		this.window.style.width = "200px";
 		this.window.content.style.height = "450px";
 		this.window.content.style.flexDirection = "column";
-		this.window.addTitlebarButton(<IconButton icon="plus" title="Add new sound" onclick={() => this.addSound()} />);
+		this.window.addTitlebarButton(
+			<IconButton icon="plus" title="Add new sound" onclick={() => this.addSound()} />
+		);
 
 		this._list = (
 			<List
@@ -71,7 +73,12 @@ class SoundInspector extends AbstractInspector {
 		return searchValue.split(" ").map(s => new RegExp(s, "i"));
 	}
 
-	includeListItem(searchValue: RegExp[], item: Sound, _: SoundInspectorCell, __: List<Sound>): boolean {
+	includeListItem(
+		searchValue: RegExp[],
+		item: Sound,
+		_: SoundInspectorCell,
+		__: List<Sound>
+	): boolean {
 		const string = item.id + " " + item.file;
 		return searchValue.every(r => r.test(string));
 	}

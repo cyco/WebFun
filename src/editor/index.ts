@@ -14,7 +14,10 @@ let Initialize = () => {
 };
 Initialize();
 
-const main = async (windowManager: WindowManager = WindowManager.defaultManager, data: GameData = null) => {
+const main = async (
+	windowManager: WindowManager = WindowManager.defaultManager,
+	data: GameData = null
+) => {
 	Initialize();
 	if (data) {
 		const editor = document.createElement(EditorWindow.tagName) as EditorWindow;

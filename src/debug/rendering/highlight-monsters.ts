@@ -20,7 +20,13 @@ export default (renderer: Renderer, monsters: Monster[], offset: Point): void =>
 			new Size(Tile.WIDTH, MonsterHealthBarHeight)
 		).inset(MonsterHealthBarInset, MonsterHealthBarInset);
 
-		renderer.fillRect(barArea.origin.x, barArea.origin.y, barArea.size.width, barArea.size.height, rgba(0, 0, 0, 0.2));
+		renderer.fillRect(
+			barArea.origin.x,
+			barArea.origin.y,
+			barArea.size.width,
+			barArea.size.height,
+			rgba(0, 0, 0, 0.2)
+		);
 
 		const health = 1 - n.damageTaken / n.face.health;
 		let color = rgba(0, 255, 0, 0.6);
@@ -28,6 +34,12 @@ export default (renderer: Renderer, monsters: Monster[], offset: Point): void =>
 		if (health < 1 / 3) color = rgba(255, 0, 0, 0.6);
 
 		barArea.size.width = round(barArea.size.width * health);
-		renderer.fillRect(barArea.origin.x, barArea.origin.y, barArea.size.width, barArea.size.height, color);
+		renderer.fillRect(
+			barArea.origin.x,
+			barArea.origin.y,
+			barArea.size.width,
+			barArea.size.height,
+			color
+		);
 	});
 };

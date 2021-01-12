@@ -1,6 +1,10 @@
 import sleep from "./sleep";
 
-const downloadImage = async (content: ImageData, filename: string, type: string = "png"): Promise<void> => {
+const downloadImage = async (
+	content: ImageData,
+	filename: string,
+	type: string = "png"
+): Promise<void> => {
 	if (!content) return;
 
 	const canvas = document.createElement("canvas");

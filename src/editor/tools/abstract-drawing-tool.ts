@@ -13,7 +13,14 @@ abstract class AbstractDrawingTool extends AbstractTool implements EventListener
 
 		this._ctx = overlay.getContext("2d");
 		this._ctx.save();
-		this._ctx.setTransform(window.devicePixelRatio * Tile.WIDTH, 0, 0, window.devicePixelRatio * Tile.HEIGHT, 0, 0);
+		this._ctx.setTransform(
+			window.devicePixelRatio * Tile.WIDTH,
+			0,
+			0,
+			window.devicePixelRatio * Tile.HEIGHT,
+			0,
+			0
+		);
 
 		this.canvas.addEventListener("mousedown", this);
 		this.canvas.addEventListener("mousemove", this);
@@ -115,7 +122,8 @@ abstract class AbstractDrawingTool extends AbstractTool implements EventListener
 
 		const offset = event.offsetIn(this.canvas);
 		const point = offset.scaleBy(1 / Tile.WIDTH).floor();
-		if (point.x < 0 || point.y < 0 || point.x >= zone.size.width || point.y >= zone.size.height) return null;
+		if (point.x < 0 || point.y < 0 || point.x >= zone.size.width || point.y >= zone.size.height)
+			return null;
 
 		return point;
 	}

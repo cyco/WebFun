@@ -11,7 +11,8 @@ import ZoneScene from "src/engine/scenes/zone-scene";
 export default {
 	Opcode: 0x21,
 	Arguments: [Type.ZoneID, Type.ZoneX, Type.ZoneY],
-	Description: "Change current zone to `arg_0`. Hero will be placed at `arg_1`x`arg_2` in the new zone.",
+	Description:
+		"Change current zone to `arg_0`. Hero will be placed at `arg_1`x`arg_2` in the new zone.",
 	Implementation: async (instruction: Instruction, engine: Engine, _: Action): Promise<Result> => {
 		const [zoneID, x, y] = instruction.arguments;
 

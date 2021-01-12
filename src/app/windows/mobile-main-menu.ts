@@ -68,7 +68,12 @@ class MobileMainMenu extends Menu {
 			{
 				title: "Statistics...",
 				mnemonic: 0,
-				submenu: [{ title: "High Score" }, { title: "Last Score" }, { title: "Games Won" }, { title: "Games Lost" }]
+				submenu: [
+					{ title: "High Score" },
+					{ title: "Last Score" },
+					{ title: "Games Won" },
+					{ title: "Games Lost" }
+				]
 			},
 			SoundMenuItem(controller, "Sound", "playEffects"),
 

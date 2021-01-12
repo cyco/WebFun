@@ -7,5 +7,6 @@ export default {
 	Opcode: 0x06,
 	Arguments: [Type.Number],
 	Description: "Current zone's `random` value is equal to `arg_0`",
-	Implementation: async (args: int16[], zone: Zone, _: Engine): Promise<boolean> => zone.random === args[0]
+	Implementation: async (args: int16[], zone: Zone, _: Engine): Promise<boolean> =>
+		zone.random === args[0]
 };

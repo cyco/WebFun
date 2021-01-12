@@ -3,7 +3,10 @@ import { download } from "src/util";
 
 class ZoneExporter {
 	async export(zone: Zone, tilesetPath: string, filename: string): Promise<void> {
-		const doc = new DOMParser().parseFromString(`<?xml version="1.0" encoding="UTF-8"?><map></map>`, "text/xml");
+		const doc = new DOMParser().parseFromString(
+			`<?xml version="1.0" encoding="UTF-8"?><map></map>`,
+			"text/xml"
+		);
 
 		const map = doc.documentElement;
 		map.setAttribute("version", "1.4");
@@ -47,7 +50,11 @@ class ZoneExporter {
 		}
 
 		const serializer = new XMLSerializer();
-		return await download(serializer.serializeToString(doc), `${filename}.tmx`, "application/binary");
+		return await download(
+			serializer.serializeToString(doc),
+			`${filename}.tmx`,
+			"application/binary"
+		);
 	}
 }
 

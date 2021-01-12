@@ -49,7 +49,9 @@ class PaintBucketTool extends AbstractDrawingTool {
 		}
 
 		const connected = (g1: Set<Point>, g2: Set<Point>) => {
-			return g1.some((point1: Point) => g2.some((point2: Point) => point1.distanceTo(point2) === 1));
+			return g1.some((point1: Point) =>
+				g2.some((point2: Point) => point1.distanceTo(point2) === 1)
+			);
 		};
 
 		while (true) {

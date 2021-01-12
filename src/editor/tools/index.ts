@@ -5,4 +5,13 @@ import RectangleTool from "./rectangle-tool";
 import PaintBucketTool from "./paint-bucket-tool";
 import { TileChangeEvent, TileChangeEventInitDict } from "src/editor/tools/tile-change-event";
 
-export { Events, AbstractTool, NoTool, PencilTool, RectangleTool, PaintBucketTool, TileChangeEvent, TileChangeEventInitDict };
+export {
+	Events,
+	AbstractTool,
+	NoTool,
+	PencilTool,
+	RectangleTool,
+	PaintBucketTool,
+	TileChangeEvent,
+	TileChangeEventInitDict
+};

@@ -8,7 +8,9 @@ export default (engine: Engine, hotspot: Hotspot): HotspotExecutionResult => {
 	console.assert(hotspot.arg !== -1, "This is not where we're coming from!");
 
 	const destinationZone = engine.assets.get(Zone, hotspot.arg);
-	const otherHotspot = destinationZone.hotspots.find(({ type }) => type === Hotspot.Type.ShipFromPlanet);
+	const otherHotspot = destinationZone.hotspots.find(
+		({ type }) => type === Hotspot.Type.ShipFromPlanet
+	);
 	console.assert(otherHotspot !== null);
 	const scene = new RoomTransitionScene();
 	scene.destinationHeroLocation = new Point(otherHotspot.x, otherHotspot.y);

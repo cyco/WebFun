@@ -58,7 +58,12 @@ class Editor extends AbstractPanel {
 
 		for (let i = 0; i < size; i++) {
 			const j = i * 4;
-			const [r, g, b, a] = [imageData.data[j + 0], imageData.data[j + 1], imageData.data[j + 2], imageData.data[j + 3]];
+			const [r, g, b, a] = [
+				imageData.data[j + 0],
+				imageData.data[j + 1],
+				imageData.data[j + 2],
+				imageData.data[j + 3]
+			];
 
 			pixels[i] = palette.findColor(r, g, b, a);
 		}

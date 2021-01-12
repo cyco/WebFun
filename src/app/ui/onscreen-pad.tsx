@@ -17,7 +17,9 @@ class OnscreenPad extends Component implements EventListenerObject {
 	public static readonly tagName = "wf-onscreen-pad";
 	private _base: SVGSVGElement = r(BaseSVG);
 	private _input: InputMask = InputMask.None;
-	private _label: HTMLElement = (<div style="position: absolute; top: 0px; left: 0px; font-size: .9em" />);
+	private _label: HTMLElement = (
+		<div style="position: absolute; top: 0px; left: 0px; font-size: .9em" />
+	);
 	private _label2: HTMLElement = (
 		<div style="position: absolute; top: 0px; right: 0px; font-size: .9em; text-align: right;" />
 	);
@@ -64,7 +66,9 @@ class OnscreenPad extends Component implements EventListenerObject {
 			document.removeEventListener("mousemove", this);
 		} else {
 			const touches = "changedTouches" in event ? Array.from(event.changedTouches) : [];
-			let touch: Touch | MouseEvent = touches.find(({ identifier }) => identifier === this.trackedTouch);
+			let touch: Touch | MouseEvent = touches.find(
+				({ identifier }) => identifier === this.trackedTouch
+			);
 			if (!touch && event.type === "touchmove") return;
 			if (!touch) touch = event as MouseEvent;
 
@@ -91,11 +95,17 @@ class OnscreenPad extends Component implements EventListenerObject {
 		const [rho, theta] = xy2polar(x, y);
 		const wrap = (input: number) => (360 + input) % 360;
 		const angle = wrap(rad2deg(theta)) % 360;
-		if (rho > DEADZONE && (angle.isInRange(0, ANGLE_RANGE) || angle.isInRange(360 - ANGLE_RANGE, 360)))
+		if (
+			rho > DEADZONE &&
+			(angle.isInRange(0, ANGLE_RANGE) || angle.isInRange(360 - ANGLE_RANGE, 360))
+		)
 			input |= InputMask.Right;
-		if (rho > DEADZONE && angle.isInRange(180 - ANGLE_RANGE, 180 + ANGLE_RANGE)) input |= InputMask.Left;
-		if (rho > DEADZONE && angle.isInRange(90 - ANGLE_RANGE, 90 + ANGLE_RANGE)) input |= InputMask.Up;
-		if (rho > DEADZONE && angle.isInRange(270 - ANGLE_RANGE, 270 + ANGLE_RANGE)) input |= InputMask.Down;
+		if (rho > DEADZONE && angle.isInRange(180 - ANGLE_RANGE, 180 + ANGLE_RANGE))
+			input |= InputMask.Left;
+		if (rho > DEADZONE && angle.isInRange(90 - ANGLE_RANGE, 90 + ANGLE_RANGE))
+			input |= InputMask.Up;
+		if (rho > DEADZONE && angle.isInRange(270 - ANGLE_RANGE, 270 + ANGLE_RANGE))
+			input |= InputMask.Down;
 		if (input !== InputMask.None && rho > DEADZONE_WALK) input |= InputMask.Walk;
 
 		if (Settings.debug) {

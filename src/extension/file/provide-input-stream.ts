@@ -6,7 +6,8 @@ const provideInputStream = async function (): Promise<InputStream> {
 	return new InputStream(buffer);
 };
 
-if (File) File.prototype.provideInputStream = File.prototype.provideInputStream || provideInputStream;
+if (File)
+	File.prototype.provideInputStream = File.prototype.provideInputStream || provideInputStream;
 
 declare global {
 	interface File {

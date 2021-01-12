@@ -1,6 +1,16 @@
 import "./color-wheel.scss";
 
-import { Color, Size, deg2rad, dispatch, hsv2rgb, polar2xy, rad2deg, rgba, xy2polar } from "src/util";
+import {
+	Color,
+	Size,
+	deg2rad,
+	dispatch,
+	hsv2rgb,
+	polar2xy,
+	rad2deg,
+	rgba,
+	xy2polar
+} from "src/util";
 
 import { Component } from "src/ui";
 

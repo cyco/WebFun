@@ -31,25 +31,38 @@ export default (gameController: GameController) => {
 			SettingsItem("Show Hotspots", "drawHotspots", gameController.settings),
 			SettingsItem("Skip Dialogs", "skipDialogs", gameController.settings),
 			SettingsItem("Skip Transitions", "skipTransitions", gameController.settings),
-			SettingsItem("Automatically pick up items", "pickupItemsAutomatically", gameController.settings),
+			SettingsItem(
+				"Automatically pick up items",
+				"pickupItemsAutomatically",
+				gameController.settings
+			),
 			MenuItemSeparator,
 			SettingsAction("Create Test", async () => {
 				const TestCreatorWindow = (await import("./components")).TestCreatorWindow;
-				const simulator = document.createElement(TestCreatorWindow.tagName) as InstanceType<typeof TestCreatorWindow>;
+				const simulator = document.createElement(TestCreatorWindow.tagName) as InstanceType<
+					typeof TestCreatorWindow
+				>;
 				simulator.gameController = gameController;
 				simulator.state = localStorage.prefixedWith("simulator");
 				WindowManager.defaultManager.showWindow(simulator);
 			}),
 			SettingsAction("Load Test", loadTest(gameController)),
 			MenuItemSeparator,
-			SettingsAction("Debug Scripts", async () => (await import("./script-debugger")).default.sharedDebugger.show()),
+			SettingsAction("Debug Scripts", async () =>
+				(await import("./script-debugger")).default.sharedDebugger.show()
+			),
 			SettingsAction(
 				"Edit Current Data",
-				async () => (await import("src/editor")).main(WindowManager.defaultManager, gameController.data),
+				async () =>
+					(await import("src/editor")).main(WindowManager.defaultManager, gameController.data),
 				true
 			),
 			SettingsAction("Edit Game Data...", async () => (await import("src/editor")).main(), true),
-			SettingsAction("Edit Save Game...", async () => (await import("src/save-game-editor")).main(), true)
+			SettingsAction(
+				"Edit Save Game...",
+				async () => (await import("src/save-game-editor")).main(),
+				true
+			)
 		]
 	};
 };

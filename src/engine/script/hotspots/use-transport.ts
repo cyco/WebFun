@@ -4,7 +4,8 @@ import { RoomTransitionScene, ZoneScene } from "src/engine/scenes";
 import { HotspotExecutionResult } from "../hotspot-execution-result";
 
 export default (engine: Engine, htsp: Hotspot): HotspotExecutionResult => {
-	const counterPart = htsp.type === Hotspot.Type.VehicleTo ? Hotspot.Type.VehicleBack : Hotspot.Type.VehicleTo;
+	const counterPart =
+		htsp.type === Hotspot.Type.VehicleTo ? Hotspot.Type.VehicleBack : Hotspot.Type.VehicleTo;
 	const destinationZone = engine.assets.get(Zone, htsp.arg);
 	const worldLocation = engine.currentWorld.findLocationOfZone(destinationZone);
 	const zoneLocation = destinationZone.hotspots.withType(counterPart).first().location;

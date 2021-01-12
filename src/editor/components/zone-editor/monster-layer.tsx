@@ -89,7 +89,10 @@ class MonsterLayer extends Component {
 				.map(monster => [
 					MenuItemSeparator,
 					{
-						title: `${monster.id.toString()}: ` + monster.face.name + (monster.enabled ? "" : " (disabled)")
+						title:
+							`${monster.id.toString()}: ` +
+							monster.face.name +
+							(monster.enabled ? "" : " (disabled)")
 					},
 					...(monster.loot !== -1
 						? [

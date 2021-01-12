@@ -28,7 +28,9 @@ class TilePicker extends Component {
 				searchDelegate={new TileFilter()}
 				cell={
 					<TilePickerCell
-						onclick={({ currentTarget }: MouseEvent) => this._cellClicked(currentTarget as TilePickerCell)}
+						onclick={({ currentTarget }: MouseEvent) =>
+							this._cellClicked(currentTarget as TilePickerCell)
+						}
 					/>
 				}
 			/>
@@ -47,14 +49,19 @@ class TilePicker extends Component {
 		if (previousCell) previousCell.classList.remove("active");
 
 		this.tile = cell.data;
-		this.changeTile(this.tile, this._list.querySelectorAll(TilePickerCell.tagName).indexOf(cell) - 1);
+		this.changeTile(
+			this.tile,
+			this._list.querySelectorAll(TilePickerCell.tagName).indexOf(cell) - 1
+		);
 
 		cell.classList.add("active");
 	}
 
 	private changeTile(tile: Tile, index: number) {
 		this.tile = tile;
-		this.dispatchEvent(new CustomEvent(Events.TileDidChange, { detail: { tile, index }, bubbles: true }));
+		this.dispatchEvent(
+			new CustomEvent(Events.TileDidChange, { detail: { tile, index }, bubbles: true })
+		);
 	}
 
 	protected disconnectedCallback(): void {

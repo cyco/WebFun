@@ -6,4 +6,12 @@ import MutablePuzzle from "./mutable-puzzle";
 import MutableTile from "./mutable-tile";
 import MutableZone from "./mutable-zone";
 
-export { MutableChar, MutableTile, MutableAction, MutablePuzzle, MutableZone, MutableMonster, MutableHotspot };
+export {
+	MutableChar,
+	MutableTile,
+	MutableAction,
+	MutablePuzzle,
+	MutableZone,
+	MutableMonster,
+	MutableHotspot
+};

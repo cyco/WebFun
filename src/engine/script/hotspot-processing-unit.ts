@@ -125,7 +125,11 @@ class HotspotProcessingUnit {
 						sector.solved1 = true;
 						sector.solved2 = true;
 					});
-				return HotspotExecutionResult.Speak | HotspotExecutionResult.Drop | HotspotExecutionResult.Inventory;
+				return (
+					HotspotExecutionResult.Speak |
+					HotspotExecutionResult.Drop |
+					HotspotExecutionResult.Inventory
+				);
 			} else {
 				const nogo = engine.assets.get(Sound, engine.type.sounds.NoGo);
 				engine.mixer.play(nogo, Channel.Effect);
@@ -135,7 +139,11 @@ class HotspotProcessingUnit {
 
 		if (puzzle.type === Puzzle.Type.Trade) {
 			const hotspot = zone.hotspots.find(
-				htsp => htsp.location.isEqualTo(point) && htsp.enabled && htsp.type === Hotspot.Type.Lock && htsp.arg === tile.id
+				htsp =>
+					htsp.location.isEqualTo(point) &&
+					htsp.enabled &&
+					htsp.type === Hotspot.Type.Lock &&
+					htsp.arg === tile.id
 			);
 			if (!hotspot) {
 				const nogo = engine.assets.get(Sound, engine.type.sounds.NoGo);

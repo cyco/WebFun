@@ -29,8 +29,12 @@ class PaletteInspector extends AbstractInspector {
 			onchange={() => this._paletteView.updateCurrentColor(this._colorPicker.color)}
 		/>
 	) as ColorPicker;
-	private _download: IconButton = (<IconButton icon="download" onclick={() => this.downloadPalette()} />) as IconButton;
-	private _animate: IconButton = (<IconButton icon="play" onclick={() => this.togglePaletteAnimation()} />) as IconButton;
+	private _download: IconButton = (
+		<IconButton icon="download" onclick={() => this.downloadPalette()} />
+	) as IconButton;
+	private _animate: IconButton = (
+		<IconButton icon="play" onclick={() => this.togglePaletteAnimation()} />
+	) as IconButton;
 	private _animator: PaletteAnimation = null;
 
 	constructor(state: Storage) {
@@ -60,7 +64,10 @@ class PaletteInspector extends AbstractInspector {
 		if (type === null) return;
 
 		const name = "Yoda Stories";
-		const data = type === "gpl" ? this._paletteView.palette.toGIMP(name) : this._paletteView.palette.toAdobeColorTable();
+		const data =
+			type === "gpl"
+				? this._paletteView.palette.toGIMP(name)
+				: this._paletteView.palette.toAdobeColorTable();
 		download(data, `${name}.${type}`);
 	}
 

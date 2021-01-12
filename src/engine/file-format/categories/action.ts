@@ -13,8 +13,10 @@ const parseActionItem = (stream: InputStream) => {
 	return { opcode, arguments: args, text };
 };
 
-const parseCondition = (stream: InputStream) => Object.assign(parseActionItem(stream), { isCondition: true });
-const parseInstruction = (stream: InputStream) => Object.assign(parseActionItem(stream), { isInstruction: true });
+const parseCondition = (stream: InputStream) =>
+	Object.assign(parseActionItem(stream), { isCondition: true });
+const parseInstruction = (stream: InputStream) =>
+	Object.assign(parseActionItem(stream), { isInstruction: true });
 
 export const parseAction = (stream: InputStream, _: Data): Action => {
 	const category = stream.readCharacters(4);

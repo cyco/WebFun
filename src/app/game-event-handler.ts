@@ -69,7 +69,12 @@ class GameEventHandler {
 				const element =
 					targetElement &&
 					targetElement.closest(
-						[AmmoComponet.tagName, WeaponComponent.tagName, HealthComponent.tagName, SceneView.tagName].join(",")
+						[
+							AmmoComponet.tagName,
+							WeaponComponent.tagName,
+							HealthComponent.tagName,
+							SceneView.tagName
+						].join(",")
 					);
 
 				let used = false;
@@ -78,7 +83,10 @@ class GameEventHandler {
 					used = true;
 				}
 
-				if (item.isWeapon && (element instanceof AmmoComponet || element instanceof WeaponComponent)) {
+				if (
+					item.isWeapon &&
+					(element instanceof AmmoComponet || element instanceof WeaponComponent)
+				) {
 					engine.equip(item);
 					used = true;
 				}
@@ -95,7 +103,10 @@ class GameEventHandler {
 						return;
 					}
 
-					const pointInZone = pointInView.bySubtracting(engine.camera.offset.x, engine.camera.offset.y);
+					const pointInZone = pointInView.bySubtracting(
+						engine.camera.offset.x,
+						engine.camera.offset.y
+					);
 					pointInZone.z = null;
 					if (!new Rectangle(new Point(0, 0), engine.currentZone.size).contains(pointInZone)) {
 						engine.metronome.start();

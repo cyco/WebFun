@@ -26,9 +26,15 @@ class App {
 
 		const fileDrop = GlobalFileDrop.defaultHandler;
 		const loadFile = await require("src/debug/load-test");
-		fileDrop.addHandler("wftest", (file: File) => loadFile.default(this.defaultGameController)(file));
-		fileDrop.addHandler("xwftest", (file: File) => loadFile.default(this.defaultGameController)(file));
-		fileDrop.addHandler("fwftest", (file: File) => loadFile.default(this.defaultGameController)(file));
+		fileDrop.addHandler("wftest", (file: File) =>
+			loadFile.default(this.defaultGameController)(file)
+		);
+		fileDrop.addHandler("xwftest", (file: File) =>
+			loadFile.default(this.defaultGameController)(file)
+		);
+		fileDrop.addHandler("fwftest", (file: File) =>
+			loadFile.default(this.defaultGameController)(file)
+		);
 	}
 
 	private showInitialWindow(): void {
