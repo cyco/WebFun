@@ -5,7 +5,7 @@ import AbstractInspector from "./abstract-inspector";
 import { Menu } from "src/ui";
 import { ModalPrompt } from "src/ux";
 import { MutableZone } from "src/engine/mutable-objects";
-import ReferenceResolver from "src/editor/reference-resolver";
+import { Resolver as ReferenceResolver } from "src/editor/reference";
 import { Zone } from "src/engine/objects";
 import ZoneEditorController from "../components/zone-editor/window";
 import { ZoneInspectorCell } from "../components";
@@ -39,7 +39,11 @@ class ZoneInspector extends AbstractInspector {
 			this._revealReferences(e.detail.zone)
 		);
 		this._list.addEventListener(ZoneInspectorCell.Events.RemoveZone, (e: CustomEvent) => {
-			if (confirm(`Remove zone ${e.detail.zone.id}?`))
+			const zone = e.detail.zone;
+			const resolver = new ReferenceResolver(this.data.currentData);
+			const references = resolver.find(zone);
+
+			if (confirm(`Remove zone ${e.detail.zone.id}?` + (references.length ? `\nIt is still used in ${references.length} places` : "")))
 				this.data.currentData.zones.splice(this.data.currentData.zones.indexOf(e.detail.zone.id, 1));
 			this.build();
 		});
@@ -108,7 +112,7 @@ class ZoneInspector extends AbstractInspector {
 
 	private _revealReferences(zone: Zone) {
 		const resolver = new ReferenceResolver(this.data.currentData);
-		console.log("references", resolver.findReferencesTo(zone));
+		console.log("references", resolver.find(zone));
 	}
 
 	private _storeZones() {

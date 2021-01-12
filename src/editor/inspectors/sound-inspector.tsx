@@ -2,7 +2,7 @@ import { IconButton, List } from "src/ui/components";
 
 import SoundInspectorCell from "../components/sound-inspector-cell";
 import AbstractInspector from "src/editor/inspectors/abstract-inspector";
-import ReferenceResolver from "src/editor/reference-resolver";
+import { Resolver as ReferenceResolver } from "src/editor/reference";
 import { Sound } from "src/engine/objects";
 
 class SoundInspector extends AbstractInspector {
@@ -62,7 +62,7 @@ class SoundInspector extends AbstractInspector {
 
 	private revealReferences(sound: Sound) {
 		const resolver = new ReferenceResolver(this.data.currentData);
-		const references = resolver.findReferencesTo(sound);
+		const references = resolver.find(sound);
 		console.log("references", references);
 	}
 
