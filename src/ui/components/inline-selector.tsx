@@ -29,7 +29,7 @@ class InlineSelector<T> extends Component implements EventListenerObject {
 						this.value = this.options[+select.value].value;
 						select.remove();
 						e.stopPropagation();
-						if (this.onchange) this.onchange(new CustomEvent("change"));
+						// if (this.onchange) this.onchange(new CustomEvent("change"));
 						this.dispatchEvent(new CustomEvent("change"));
 					}}
 					onblur={() => select.remove()}>
