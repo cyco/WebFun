@@ -3,8 +3,9 @@ import GameData from "src/engine/game-data";
 import { Hotspot, Zone } from "src/engine/objects";
 import { ReferencesTo } from "src/editor/reference";
 import { equal } from "src/util/functional";
+import ResolverInterface from "./resolver-interface";
 
-class ZoneResolver {
+class ZoneResolver implements ResolverInterface<Zone> {
 	private data: GameData;
 	constructor(data: GameData) {
 		this.data = data;
@@ -14,12 +15,32 @@ class ZoneResolver {
 		const result: ReferencesTo<Zone> = [];
 
 		for (const zone of this.data.zones) {
+			if (op(zone.id, needle.id)) {
+				result.push({ from: zone, to: zone, via: ["id"] });
+			}
+
 			for (const hotspot of zone.hotspots) {
 				if (hotspot.type === Hotspot.Type.DoorIn && op(hotspot.arg, needle.id)) {
 					result.push({ from: hotspot, to: needle, via: [zone] });
 				}
 
 				if (hotspot.type === Hotspot.Type.DoorOut && op(hotspot.arg, needle.id)) {
+					result.push({ from: hotspot, to: needle, via: [zone] });
+				}
+
+				if (hotspot.type === Hotspot.Type.ShipFromPlanet && op(hotspot.arg, needle.id)) {
+					result.push({ from: hotspot, to: needle, via: [zone] });
+				}
+
+				if (hotspot.type === Hotspot.Type.ShipToPlanet && op(hotspot.arg, needle.id)) {
+					result.push({ from: hotspot, to: needle, via: [zone] });
+				}
+
+				if (hotspot.type === Hotspot.Type.VehicleTo && op(hotspot.arg, needle.id)) {
+					result.push({ from: hotspot, to: needle, via: [zone] });
+				}
+
+				if (hotspot.type === Hotspot.Type.VehicleBack && op(hotspot.arg, needle.id)) {
 					result.push({ from: hotspot, to: needle, via: [zone] });
 				}
 			}

@@ -17,6 +17,15 @@ export type Reference =
 	| Ref<Zone, Instruction, [Zone, Action]>
 	| Ref<Zone, Hotspot, [Zone]>
 	| Ref<Hotspot, Instruction, [Zone, Action]>
+	| Ref<Hotspot, Zone>
+	// self references, required to update ids
+	| Ref<Zone, Zone, ["id"]>
+	| Ref<Hotspot, Hotspot, ["id"]>
+	| Ref<Tile, Tile, ["id"]>
+	| Ref<Sound, Sound, ["id"]>
+	| Ref<Char, Char, ["id"]>
+	| Ref<Monster, Monster, ["id"]>
+	| Ref<Puzzle, Puzzle, ["id"]>
 	// lookup not implemented yet:
 	| Ref<Sound, Instruction, [Zone, Action]>
 	| Ref<Sound, Char>

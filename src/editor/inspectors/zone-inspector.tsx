@@ -5,7 +5,7 @@ import AbstractInspector from "./abstract-inspector";
 import { Menu } from "src/ui";
 import { ModalPrompt } from "src/ux";
 import { MutableZone } from "src/engine/mutable-objects";
-import { Resolver as ReferenceResolver } from "src/editor/reference";
+import { Resolver as ReferenceResolver, Updater as ReferenceUpdater } from "src/editor/reference";
 import { Zone } from "src/engine/objects";
 import ZoneEditorController from "../components/zone-editor/window";
 import { ZoneInspectorCell } from "../components";
@@ -44,16 +44,16 @@ class ZoneInspector extends AbstractInspector {
 			const zone = e.detail.zone;
 			const resolver = new ReferenceResolver(this.data.currentData);
 			const references = resolver.find(zone);
-
+			console.log(references);
 			if (
 				confirm(
 					`Remove zone ${e.detail.zone.id}?` +
 						(references.length ? `\nIt is still used in ${references.length} places` : "")
 				)
-			)
-				this.data.currentData.zones.splice(
-					this.data.currentData.zones.indexOf(e.detail.zone.id, 1)
-				);
+			) {
+				const updater = new ReferenceUpdater(this.data.currentData);
+				updater.deleteItem(e.detail.zone);
+			}
 			this.build();
 		});
 		this._list.addEventListener(ZoneInspectorCell.Events.ChangeType, (e: CustomEvent) => {
