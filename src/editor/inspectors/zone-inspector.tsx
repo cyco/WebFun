@@ -43,8 +43,8 @@ class ZoneInspector extends AbstractInspector {
 		this._list.addEventListener(ZoneInspectorCell.Events.RemoveZone, (e: CustomEvent) => {
 			const zone = e.detail.zone;
 			const resolver = new ReferenceResolver(this.data.currentData);
-			const references = resolver.find(zone);
-			console.log(references);
+			const references = resolver.find(zone).filter(i => i.via[0] !== "id");
+
 			if (
 				confirm(
 					`Remove zone ${e.detail.zone.id}?` +
@@ -131,7 +131,7 @@ class ZoneInspector extends AbstractInspector {
 		);
 	}
 
-	build() {
+	build(): void {
 		const cell = this._list.cell as ZoneInspectorCell;
 		cell.palette = this.data.palette;
 		cell.tiles = this.data.currentData.tiles;

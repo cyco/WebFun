@@ -3,24 +3,44 @@ import GameData from "src/engine/game-data";
 import ReferenceResolver from "./resolver";
 import { greaterThan } from "src/util/functional";
 import { Reference } from "./reference";
+import { Yoda } from "src/engine/type";
 
 class Updater {
-	private _data: GameData;
+	private data: GameData;
 	public constructor(data: GameData) {
-		this._data = data;
+		this.data = data;
 	}
 
 	public deleteItem(thing: Zone | Hotspot): void {
-		const resolver = new ReferenceResolver(this._data);
+		const resolver = new ReferenceResolver(this.data);
 		const references = resolver.find(thing);
 		references.forEach(r => this.deleteReference(r));
 
 		if (thing instanceof Zone) {
-			this.removeItemFrom(thing, this._data.zones);
+			this.removeItemFrom(thing, this.data.zones);
 		}
 
 		const outdatedReferences = resolver.find(thing, greaterThan);
-		outdatedReferences.forEach(r => this.updateReferences(r, (v: number) => v - 1));
+		outdatedReferences.forEach(r => this.updateReferences(r, this.determineUpdater(r)));
+
+		if (thing instanceof Zone) {
+			this.data.zones.sort(({ id: a }, { id: b }) => a - b);
+		}
+	}
+
+	private determineUpdater(r: Reference) {
+		const protectedZones = Object.values(Yoda.zoneIDs).filter(i => typeof i === "number");
+		if (r.to instanceof Zone) {
+			return (id: number) => {
+				if (protectedZones.contains(id)) return id;
+
+				let result = id - 1;
+				while (protectedZones.contains(result)) result -= 1;
+				return result;
+			};
+		}
+
+		return (id: number) => id - 1;
 	}
 
 	private deleteReference(ref: Reference) {

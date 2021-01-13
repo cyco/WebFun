@@ -20,7 +20,6 @@ class Resolver {
 		const resolver = this.determineResolver(thing);
 		if (!resolver) return [];
 
-		console.log("resovler", resolver);
 		return resolver.resolve(thing, op);
 	}
 

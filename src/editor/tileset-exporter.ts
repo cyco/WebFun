@@ -5,13 +5,13 @@ import { ceil } from "src/std/math";
 import { drawZoneImageData } from "src/app/rendering";
 import { MutableZone } from "src/engine/mutable-objects";
 
-class TilemapExporter {
+class TilesetExporter {
 	private colorPalette: ColorPalette;
 	constructor(colorPalette: ColorPalette) {
 		this.colorPalette = colorPalette;
 	}
 
-	export(tiles: Tile[], filename: string): void {
+	export(tiles: Tile[], filename: string): Promise<void> {
 		const zone = new MutableZone();
 		zone.tileStore = tiles;
 		zone.size = this.findFittingSize(tiles.length);
@@ -33,4 +33,4 @@ class TilemapExporter {
 	}
 }
 
-export default TilemapExporter;
+export default TilesetExporter;
