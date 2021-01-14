@@ -1,0 +1,14 @@
+@import "../../webfun/ui/health";
+
+wf-save-game-editor-health {
+	@extend wf-health;
+
+	svg {
+		transform: scale(1);
+	}
+
+	svg,
+	svg * {
+		cursor: pointer;
+	}
+}

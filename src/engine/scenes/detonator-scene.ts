@@ -4,7 +4,7 @@ import { Point } from "src/util";
 import Scene from "./scene";
 import { Tile } from "src/engine/objects";
 import { Yoda } from "src/engine/type";
-import { drawTileImageData } from "src/app/rendering";
+import { drawTileImageData } from "src/app/webfun/rendering";
 import { abs } from "src/std/math";
 
 class DetonatorScene extends Scene {

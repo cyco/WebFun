@@ -1,10 +1,15 @@
 import { Zone, Tile } from "src/engine/objects";
 import { srand } from "src/util";
-import { SimulatedStory } from "src/debug";
+import { SimulatedStory } from "src/app/webfun/debug";
 import { Story } from "src/engine";
 import { Planet, WorldSize } from "src/engine/types";
 
-import { Parser, TestCase, Expectation, GameplayContext } from "src/debug/automation/test";
+import {
+	Parser,
+	TestCase,
+	Expectation,
+	GameplayContext
+} from "src/app/webfun/debug/automation/test";
 import loadGameData from "test/helpers/game-data";
 import { Settings } from "src";
 
@@ -29,7 +34,8 @@ const run = (prefix: string, fileName: string, testFileContents: string): void =
 						srand(testCase.configuration.seed);
 						ctx.engine.persistentState.gamesWon = testCase.configuration.gamesWon;
 
-						if (testCase.configuration.health) ctx.engine.hero.health = testCase.configuration.health;
+						if (testCase.configuration.health)
+							ctx.engine.hero.health = testCase.configuration.health;
 
 						ctx.engine.inventory.removeAllItems();
 						testCase.configuration.inventory.forEach(i =>
@@ -74,7 +80,10 @@ const run = (prefix: string, fileName: string, testFileContents: string): void =
 					function surroundingZones(zone: Zone): Zone[] {
 						srand(zone.id);
 						return ctx.engine.assets
-							.getFiltered(Zone, (z: Zone) => z !== zone && z.type === Zone.Type.Empty && z.planet === zone.planet)
+							.getFiltered(
+								Zone,
+								(z: Zone) => z !== zone && z.type === Zone.Type.Empty && z.planet === zone.planet
+							)
 							.slice()
 							.shuffle();
 					}

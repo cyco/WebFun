@@ -1,0 +1,24 @@
+@import "variables.scss";
+@import "border.scss";
+@import "colors.scss";
+@import "src/ui/components/abstract-list";
+
+wf-inventory {
+	@include inset-border(2px);
+	@extend wf-abstract-list;
+	background: $window-background-color;
+
+	flex-grow: 1;
+	flex-shrink: 2;
+
+	height: 7 * $tile-size + 2 * $border-size;
+	min-height: 3 * $tile-size + 2 * $border-size;
+	max-height: 7 * $tile-size + 2 * $border-size;
+	width: 206px;
+
+	overflow-y: auto;
+	> div {
+		overflow-y: unset;
+		max-height: unset;
+	}
+}

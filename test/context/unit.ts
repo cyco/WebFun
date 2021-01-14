@@ -18,7 +18,7 @@ global.describeInstruction = describeInstruction;
 global.xdescribeInstruction = xdescribeInstruction;
 global.fdescribeInstruction = fdescribeInstruction;
 
-import "src/app/windows";
+import "src/app/webfun/windows";
 
 const testsContext = require.context("../unit/", true, /\.test\.ts$/);
 testsContext.keys().forEach(testsContext);

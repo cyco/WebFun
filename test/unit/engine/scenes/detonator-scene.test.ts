@@ -2,7 +2,7 @@ import DetonatorScene from "src/engine/scenes/detonator-scene";
 import { Engine } from "src/engine";
 import { Point, Rectangle, Size } from "src/util";
 import { Renderer } from "src/engine/rendering";
-import * as Rendering from "src/app/rendering";
+import * as Rendering from "src/app/webfun/rendering";
 
 describe("WebFun.Engine.Scenes.DetonatorScene", () => {
 	let subject: DetonatorScene;

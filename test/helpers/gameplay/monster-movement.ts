@@ -1,12 +1,12 @@
 import { MutableZone, MutableMonster, MutableChar } from "src/engine/mutable-objects";
 import { Char, Zone, Tile } from "src/engine/objects";
 import { srand, Size, Point } from "src/util";
-import { SimulatedStory } from "src/debug";
+import { SimulatedStory } from "src/app/webfun/debug";
 import { Story, AssetManager } from "src/engine";
 import { Planet } from "src/engine/types";
-import { GameplayContext } from "src/debug/automation/test";
+import { GameplayContext } from "src/app/webfun/debug/automation/test";
 import loadGameData from "test/helpers/game-data";
-import { ReplayingInputManager } from "src/debug/automation";
+import { ReplayingInputManager } from "src/app/webfun/debug/automation";
 
 declare let withTimeout: (t: number, block: () => void) => () => void;
 const FiveMinutes = 5 * 60 * 1000;
@@ -63,7 +63,10 @@ const makeFunction = (describe: any): describeMonsterMovement => (
 						ctx.onInputEnd = async () => {
 							await ctx.engine.metronome.stop();
 							ctx.engine.inputManager.removeListeners();
-							inputManager.removeEventListener(ReplayingInputManager.Event.InputEnd, ctx.onInputEnd);
+							inputManager.removeEventListener(
+								ReplayingInputManager.Event.InputEnd,
+								ctx.onInputEnd
+							);
 							ctx.onInputEnd = () => void 0;
 							resolve();
 						};
@@ -87,7 +90,15 @@ const makeFunction = (describe: any): describeMonsterMovement => (
 
 				assets.populate(Zone, assets.getAll(Zone).concat([vars.zone]));
 
-				return new SimulatedStory(null, null, null, null, vars.zone, Array.Repeat(vars.zone, 8), assets);
+				return new SimulatedStory(
+					null,
+					null,
+					null,
+					null,
+					vars.zone,
+					Array.Repeat(vars.zone, 8),
+					assets
+				);
 			}
 
 			function buildZone(assets: AssetManager): MutableZone {
@@ -106,7 +117,12 @@ const makeFunction = (describe: any): describeMonsterMovement => (
 				for (let y = 0; y < zone.size.height; y++) {
 					for (let x = 0; x < zone.size.width; x++) {
 						zone.setTile(null, x, y, Zone.Layer.Roof);
-						zone.setTile(innerRegion.contains(new Point(x, y)) ? null : wall, x, y, Zone.Layer.Object);
+						zone.setTile(
+							innerRegion.contains(new Point(x, y)) ? null : wall,
+							x,
+							y,
+							Zone.Layer.Object
+						);
 						zone.setTile(floor, x, y, Zone.Layer.Floor);
 					}
 				}

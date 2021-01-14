@@ -1,4 +1,4 @@
-import * as App from "./app";
+import * as App from "./app/webfun";
 import * as Engine from "./engine";
 import * as Extension from "./extension";
 import * as Std from "./std";

@@ -3,7 +3,7 @@ import Scene from "./scene";
 import ZoneScene from "./zone-scene";
 import { Zone } from "src/engine/objects";
 import { Point } from "src/util";
-import CanvasRenderer from "src/app/rendering/canvas/canvas-renderer";
+import CanvasRenderer from "src/app/webfun/rendering/canvas/canvas-renderer";
 import { round } from "src/std/math";
 import Settings from "src/settings";
 import { InputMask } from "../input";

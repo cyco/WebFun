@@ -1,4 +1,4 @@
-import { ParseExpectation, PrepareExpectations } from "src/debug/expectation";
+import { ParseExpectation, PrepareExpectations } from "src/app/webfun/debug/expectation";
 
 import loadGameData from "test/helpers/game-data";
 import { GameData, AssetManager, Story } from "src/engine";
@@ -84,7 +84,9 @@ const compareSector = (pos: { x: number; y: number }, actual: Sector, expected: 
 
 	if (requiredItemID !== id(actual.requiredItem)) {
 		return fail(
-			`Required item ${id(actual.requiredItem)} in sector ${pos.x}x${pos.y} is not ${requiredItemID}`
+			`Required item ${id(actual.requiredItem)} in sector ${pos.x}x${
+				pos.y
+			} is not ${requiredItemID}`
 		);
 	}
 

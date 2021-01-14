@@ -1,6 +1,6 @@
 declare let require: any;
 import loadGameData from "test/helpers/game-data";
-import { GameplayContext } from "src/debug/automation/test";
+import { GameplayContext } from "src/app/webfun/debug/automation/test";
 import { Zone } from "src/engine/objects";
 
 declare global {
@@ -46,11 +46,13 @@ describe("WebFun.Acceptance.InGameCoverage", () => {
 			z.actions.forEach(a => {
 				a.instructions.forEach(
 					({ opcode }) =>
-						(window.__webfun_coverage__.instructions[opcode] = window.__webfun_coverage__.instructions[opcode] || 0)
+						(window.__webfun_coverage__.instructions[opcode] =
+							window.__webfun_coverage__.instructions[opcode] || 0)
 				);
 				a.conditions.forEach(
 					({ opcode }) =>
-						(window.__webfun_coverage__.conditions[opcode] = window.__webfun_coverage__.conditions[opcode] || 0)
+						(window.__webfun_coverage__.conditions[opcode] =
+							window.__webfun_coverage__.conditions[opcode] || 0)
 				);
 			})
 		);

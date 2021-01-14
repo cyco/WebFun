@@ -10,7 +10,7 @@ const BaseConfig = require("./webpack.common");
 
 module.exports = merge(BaseConfig, {
 	entry: {
-		webfun: Path.resolve(Paths.sourceRoot, "app/main")
+		webfun: Path.resolve(Paths.sourceRoot, "app/webfun/main")
 	},
 	devtool: "eval-source-map",
 	mode: "development",
@@ -24,8 +24,8 @@ module.exports = merge(BaseConfig, {
 		contentBase: [
 			Paths.projectRoot,
 			Paths.assetsRoot,
-			Path.resolve(Paths.sourceRoot, "app"),
-			Path.resolve(Paths.sourceRoot, "app/windows/help-viewer"),
+			Path.resolve(Paths.sourceRoot, "app/webfun"),
+			Path.resolve(Paths.sourceRoot, "app/webfun/windows/help-viewer"),
 			Path.resolve(Paths.assetsRoot, "favicons")
 		],
 		host: process.env.host || "127.0.0.1",
@@ -39,7 +39,7 @@ module.exports = merge(BaseConfig, {
 	},
 	plugins: [
 		new HtmlWebpackPlugin({
-			template: Path.resolve(Paths.sourceRoot, "./app/index.html"),
+			template: Path.resolve(Paths.sourceRoot, "./app/webfun/index.html"),
 			title: "WebFun Development",
 			meta: {
 				"viewport": "width=device-width, user-scalable=no, viewport-fit=cover",

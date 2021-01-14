@@ -16,7 +16,7 @@ const postcss = require("postcss");
 
 module.exports = {
 	entry: {
-		webfun: Path.resolve(Paths.sourceRoot, "app/main")
+		webfun: Path.resolve(Paths.sourceRoot, "app/webfun/main")
 	},
 	mode: "production",
 	output: {
@@ -28,7 +28,10 @@ module.exports = {
 	node: false,
 	optimization: {
 		minimize: true,
-		minimizer: [new TerserPlugin(), new OptimizeCSSAssetsPlugin({ cssProcessor: postcss([cssnano]) })],
+		minimizer: [
+			new TerserPlugin(),
+			new OptimizeCSSAssetsPlugin({ cssProcessor: postcss([cssnano]) })
+		],
 		splitChunks: {
 			chunks: "all",
 			cacheGroups: {
@@ -39,19 +42,19 @@ module.exports = {
 					enforce: true
 				},
 				"save-game-editor": {
-					test: /src[/\\]save-game-editor[/\\]/,
+					test: /src[/\\]app[/\\][/\\]save-game-editor[/\\]/,
 					priority: 10,
 					reuseExistingChunk: true,
 					enforce: true
 				},
 				"debug": {
-					test: /src[/\\]debug[/\\]/,
+					test: /src[/\\]app[/\\]webfun[/\\]debug[/\\]/,
 					priority: 10,
 					reuseExistingChunk: true,
 					enforce: true
 				},
 				"editor": {
-					test: /src[/\\]editor[/\\]/,
+					test: /src[/\\]app[/\\]editor[/\\]/,
 					priority: 10,
 					reuseExistingChunk: true,
 					enforce: true
@@ -74,7 +77,7 @@ module.exports = {
 	plugins: [
 		new CleanWebpackPlugin({ root: Paths.buildRoot }),
 		new HtmlWebpackPlugin({
-			template: Path.resolve(Paths.sourceRoot, "./app/index.html"),
+			template: Path.resolve(Paths.sourceRoot, "./app/webfun/index.html"),
 			minify: {
 				collapseWhitespace: true,
 				minifyCSS: true,
@@ -134,7 +137,10 @@ module.exports = {
 			{
 				test: /\.tsx?$/,
 				exclude: /node_modules/,
-				use: [{ loader: "babel-loader", options: { cacheDirectory: true } }, { loader: "ts-loader" }]
+				use: [
+					{ loader: "babel-loader", options: { cacheDirectory: true } },
+					{ loader: "ts-loader" }
+				]
 			},
 			{
 				test: /\.scss$/,

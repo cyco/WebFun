@@ -1,0 +1,25 @@
+@import "../../../../../ui/components/abstract-window";
+
+wf-debug-test-creator-window {
+	@extend wf-abstract-window;
+
+	.content {
+		flex-direction: column;
+
+		> div + div {
+			margin-top: 10px;
+		}
+
+		.button-container {
+			flex-grow: 0;
+			flex-shrink: 0;
+			display: flex;
+			flex-direction: row;
+			align-self: center;
+
+			wf-button + wf-button {
+				margin-left: 10px;
+			}
+		}
+	}
+}

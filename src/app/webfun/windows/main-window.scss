@@ -1,0 +1,229 @@
+@import "animation.scss";
+@import "border.scss";
+@import "variables.scss";
+@import "../ui/settings-window.scss";
+@import "src/ui/components/abstract-window";
+@import "aspect-ratio.scss";
+
+wf-main-window {
+	@extend wf-abstract-window;
+
+	.equipment {
+		display: flex;
+		flex-direction: row;
+
+		wf-ammo + wf-weapon {
+			margin-left: 2px;
+		}
+	}
+
+	.content {
+		display: grid;
+		overflow: hidden;
+	}
+
+	.main {
+		@include inset-border(2px);
+		grid-area: main;
+	}
+
+	.status {
+		display: flex;
+		align-items: center;
+		justify-content: space-around;
+		grid-area: status;
+	}
+
+	.actions {
+		align-items: center;
+		justify-content: stretch;
+		display: flex;
+		min-height: 34px;
+		grid-area: actions;
+
+		> wf-button {
+			padding: 2px;
+			font-size: 0.9em;
+			flex-grow: 1;
+			margin: 5px;
+		}
+	}
+
+	.controls {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+		padding: 2px;
+		grid-area: controls;
+
+		padding-bottom: env(safe-area-inset-bottom);
+		padding-left: 10px;
+		padding-right: 10px;
+
+		wf-onscreen-button + wf-onscreen-button {
+			margin-left: 15px;
+		}
+	}
+
+	wf-inventory {
+		grid-area: inventory;
+	}
+
+	/**************************************************************************************************************/
+	/**                                                  DESKTOP                                                 **/
+	/**************************************************************************************************************/
+	&:not(.mobile) {
+		> wf-window-titlebar > wf-menubar {
+			margin-left: 0px;
+		}
+		> .content {
+			grid-column-gap: 14px;
+			grid-row-gap: 14px;
+			grid-template-columns: 288px + 2 * 2px 206px;
+			grid-template-rows: 228px 64px - 14px;
+			grid-template-areas:
+				"main inventory"
+				"main status";
+
+			> .buttons,
+			> .controls,
+			> .actions {
+				display: none;
+			}
+		}
+	}
+
+	/**************************************************************************************************************/
+	/**                                                  Tablet                                                  **/
+	/**************************************************************************************************************/
+	&.tablet {
+		zoom: 1.4;
+		transform: translate(-25%, -35%);
+	}
+	/**************************************************************************************************************/
+	/**                                                  Mobile                                                  **/
+	/**************************************************************************************************************/
+	&.mobile {
+		position: fixed;
+		top: 0 !important;
+		left: 0 !important;
+		width: 100vw;
+		height: 100vh;
+		box-shadow: none;
+		border: none;
+
+		> wf-window-titlebar {
+			display: none;
+		}
+
+		> .content {
+			padding: 0;
+			height: 100vh;
+
+			> .main {
+				border: none;
+			}
+		}
+
+		.status {
+			@include inset-border(1px);
+			border-left: 0;
+			border-right: 0;
+			border-top: 0px;
+			padding: 10px;
+			padding-top: 0px;
+		}
+
+		wf-onscreen-pad {
+			height: 100%;
+			width: 100%;
+			max-width: 160px;
+			max-height: 160px;
+		}
+
+		.buttons {
+			display: flex;
+			flex-direction: row;
+			justify-content: center;
+		}
+		/**********************************************************************************************/
+		/**                                         Portrait                                         **/
+		/**********************************************************************************************/
+		@media (orientation: portrait) {
+			> .content {
+				grid-template-columns: 100%;
+				grid-template-rows: min-content min-content min-content 1fr;
+
+				grid-template-areas:
+					"main"
+					"actions"
+					"status"
+					"controls";
+			}
+
+			wf-inventory {
+				min-height: unset;
+				height: unset;
+				max-height: unset;
+				width: 100%;
+				z-index: 1;
+
+				transform: translate(0, 100%);
+				transition: transform 0.2s ease-out;
+
+				grid-area: controls;
+				&.slide-up {
+					transform: translate(0, 0%);
+				}
+			}
+		}
+		/**********************************************************************************************/
+		/**                                        Landscape                                         **/
+		/**********************************************************************************************/
+		@media (orientation: landscape) {
+			> .content {
+				grid-template-columns: 1fr 100vh 1fr;
+				grid-template-rows: min-content min-content min-content;
+				grid-template-areas:
+					"actions main empty"
+					"inventory main status"
+					"ctrl-left main ctrl-right";
+				grid-auto-flow: column;
+				overflow: auto;
+				> .controls {
+					display: contents;
+				}
+
+				wf-onscreen-pad {
+					grid-area: ctrl-left;
+					margin-left: env(safe-area-inset-left);
+				}
+
+				.actions > :not(:last-child) {
+					display: none;
+				}
+
+				.status {
+					padding: 0px;
+					> * + * {
+						margin-left: 2px;
+					}
+				}
+
+				wf-inventory {
+					width: unset;
+					height: unset;
+					border-left: none;
+					border-right: none;
+
+					max-height: calc(100% - 20px);
+				}
+
+				.buttons {
+					grid-area: ctrl-right;
+				}
+			}
+		}
+	}
+}

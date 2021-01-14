@@ -1,0 +1,13 @@
+@import "abstract-tile-view";
+@import "variables";
+
+wf-debug-tile-view {
+	@extend wf-debug-abstract-tile-view;
+	width: $tile-size;
+	height: $tile-size;
+
+	> canvas {
+		width: $tile-size;
+		height: $tile-size;
+	}
+}

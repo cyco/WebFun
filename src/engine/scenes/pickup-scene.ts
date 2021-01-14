@@ -2,7 +2,7 @@ import { Renderer } from "../rendering";
 import Engine from "../engine";
 import { Point } from "src/util";
 import Scene from "./scene";
-import { drawTileImageData } from "src/app/rendering";
+import { drawTileImageData } from "src/app/webfun/rendering";
 import { Tile } from "src/engine/objects";
 import { InputMask } from "../input";
 

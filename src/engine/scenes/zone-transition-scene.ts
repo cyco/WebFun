@@ -1,7 +1,7 @@
 import TransitionScene from "./transition-scene";
 import { min } from "src/std/math";
 import { Tile } from "../objects";
-import { drawZoneImageData } from "src/app/rendering";
+import { drawZoneImageData } from "src/app/webfun/rendering";
 import { Renderer } from "../rendering";
 import { Point } from "src/util";
 

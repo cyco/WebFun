@@ -1,0 +1,5 @@
+@import "src/app/webfun/ui/palette-view.scss";
+
+wf-editor-palette-image-editor {
+	@extend wf-palette-view;
+}

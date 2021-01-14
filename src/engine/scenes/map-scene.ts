@@ -16,8 +16,8 @@ import SpeechScene from "./speech-scene";
 import RoomTransitionScene from "./room-transition-scene";
 import World from "src/engine/world";
 import ZoneScene from "./zone-scene";
-import { Renderer as CanvasRenderer } from "src/app/rendering/canvas";
-import PuzzleDependencyGraph from "src/debug/puzzle-dependency-graph";
+import { Renderer as CanvasRenderer } from "src/app/webfun/rendering/canvas";
+import PuzzleDependencyGraph from "src/app/webfun/debug/puzzle-dependency-graph";
 import { InputMask } from "../input";
 
 const MapTileWidth = 28;

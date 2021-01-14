@@ -23,7 +23,10 @@ module.exports = {
 			{
 				test: /\.tsx?$/,
 				exclude: /node_modules/,
-				use: [{ loader: "babel-loader", options: { cacheDirectory: true } }, { loader: "ts-loader" }]
+				use: [
+					{ loader: "babel-loader", options: { cacheDirectory: true } },
+					{ loader: "ts-loader" }
+				]
 			},
 			{
 				test: /\.(woff(2)?|ttf|eot|svg|otf)(\?v=\d+\.\d+\.\d+)?$/,

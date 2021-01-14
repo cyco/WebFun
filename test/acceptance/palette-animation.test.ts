@@ -1,6 +1,6 @@
 import "test/helpers/declarations.ts";
 import "src/extension";
-import { drawImage } from "src/app/rendering";
+import { drawImage } from "src/app/webfun/rendering";
 import { ColorPalette, PaletteAnimation } from "src/engine/rendering";
 import { Size } from "src/util";
 
