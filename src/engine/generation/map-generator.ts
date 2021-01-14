@@ -29,7 +29,7 @@ class MapGenerator {
 	private min: Point = new Point(0, 0);
 	private alternate: Point = new Point(0, 0);
 	private variance: number = 0;
-	private probablility: number = 0;
+	private probability: number = 0;
 	private threshold: number = 0;
 	private travelThreshold: number = 0;
 	private lastType: SectorType = 0;
@@ -168,7 +168,7 @@ class MapGenerator {
 		if (neighbor === SectorType.Candidate) return true;
 		if (this.isBlockade(neighbor)) return true;
 
-		const shouldPlaceBlockade = this.blockades > 0 && rand() % this.probablility < this.threshold;
+		const shouldPlaceBlockade = this.blockades > 0 && rand() % this.probability < this.threshold;
 		const isWithinBlockadeRange = GetDistanceToCenter(x + xdif, y + ydif) < iteration;
 		const allNeighborsAreFree = this.neighbors(this.typeMap, x, y).every(this.isLessThanCandidate);
 
@@ -503,7 +503,7 @@ class MapGenerator {
 				this.min = new Point(3, 3);
 				this.alternate = new Point(6, 6);
 				this.variance = 4;
-				this.probablility = 9;
+				this.probability = 9;
 				this.threshold = 2;
 				this.travelThreshold = 1;
 				break;
@@ -511,7 +511,7 @@ class MapGenerator {
 				this.min = new Point(2, 2);
 				this.alternate = new Point(7, 7);
 				this.variance = 6;
-				this.probablility = 4;
+				this.probability = 4;
 				this.travelThreshold = 3;
 				this.threshold = 2;
 				break;
@@ -520,7 +520,7 @@ class MapGenerator {
 				this.alternate = new Point(8, 8);
 				this.variance = 8;
 				this.threshold = 1;
-				this.probablility = 5;
+				this.probability = 5;
 				this.travelThreshold = 6;
 				break;
 			default:

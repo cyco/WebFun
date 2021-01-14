@@ -22,11 +22,7 @@ describe("WebFun.Engine.Type.Yoda.LocatorTile", () => {
 		expect(subject.forZone(null, false)).toEqual(0x344);
 	});
 
-	it("shows the correct map tile for zones thats have not been visited", () => {
-		expect(subject.forZone({} as any, false)).toEqual(0x343);
-	});
-
-	it("shows the correct map tile for zones thats have not been visited", () => {
+	it("shows the correct map tile for zones that have not been visited", () => {
 		expect(subject.forZone({} as any, false)).toEqual(0x343);
 		expect(subject.forZone({ type: 0, visited: false } as any)).toEqual(0x343);
 	});
@@ -57,7 +53,10 @@ describe("WebFun.Engine.Type.Yoda.LocatorTile", () => {
 	it("shows the correct map tile for puzzle zones", () => {
 		expect(subject.forZone({ type: Zone.Type.Trade } as any, true)).toEqual([0x331, 0x332]);
 		expect(subject.forZone({ type: Zone.Type.Use } as any, true)).toEqual([0x331, 0x332]);
-		expect(subject.forZone({ type: Zone.Type.FindUniqueWeapon } as any, true)).toEqual([0x331, 0x332]);
+		expect(subject.forZone({ type: Zone.Type.FindUniqueWeapon } as any, true)).toEqual([
+			0x331,
+			0x332
+		]);
 	});
 
 	it("shows the correct map tile for other zones", () => {

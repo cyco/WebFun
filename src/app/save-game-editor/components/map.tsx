@@ -11,7 +11,7 @@ import { Point } from "src/util";
 import TileView from "src/app/webfun/debug/components/tile-view";
 
 const TileSize = 28;
-const HereInteval = 1000;
+const HereInterval = 1000;
 
 class Map extends Component {
 	public static tagName = "wf-save-game-editor-map";
@@ -64,7 +64,7 @@ class Map extends Component {
 		this._hereInterval = setInterval(() => {
 			this._here.style.display = this._here.style.display === "none" ? "" : "none";
 			this._canvas.getBoundingClientRect();
-		}, HereInteval);
+		}, HereInterval);
 	}
 
 	private _drawWorld() {

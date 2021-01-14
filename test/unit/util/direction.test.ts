@@ -37,7 +37,7 @@ describe("WebFun.Util.Direction", () => {
 		expect(Direction.Confine(350, false)).toBe(0);
 	});
 
-	it("calculates the angle from the origin point to a gien point", () => {
+	it("calculates the angle from the origin point to a given point", () => {
 		expect(Direction.CalculateAngleFromRelativePoint(new Point(1, 0))).toBe(0);
 		expect(Direction.CalculateAngleFromRelativePoint(new Point(-1, 0))).toBe(180);
 	});

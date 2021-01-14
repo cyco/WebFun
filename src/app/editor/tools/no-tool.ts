@@ -14,7 +14,7 @@ class NoTool extends AbstractTool implements EventListenerObject {
 
 		this.canvas.addEventListener("mousemove", this);
 		this.canvas.addEventListener("mouseenter", this);
-		this.canvas.addEventListener("mouveleave", this);
+		this.canvas.addEventListener("mouseleave", this);
 
 		this._ctx = overlay.getContext("2d");
 		this._ctx.save();
@@ -65,7 +65,7 @@ class NoTool extends AbstractTool implements EventListenerObject {
 	public deactivate() {
 		this.canvas.removeEventListener("mousemove", this);
 		this.canvas.removeEventListener("mouseenter", this);
-		this.canvas.removeEventListener("mouveleave", this);
+		this.canvas.removeEventListener("mouseleave", this);
 
 		this._ctx.restore();
 		this._ctx = null;

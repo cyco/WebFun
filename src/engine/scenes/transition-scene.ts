@@ -66,7 +66,7 @@ abstract class TransitionScene extends Scene {
 		if (!engine.currentZone.visited) {
 			engine.currentZone.visited = true;
 			engine.currentZone.initialize();
-			engine.spu.prepeareExecution(EvaluationMode.Initialize, engine.currentZone);
+			engine.spu.prepareExecution(EvaluationMode.Initialize, engine.currentZone);
 			engine.spu.run();
 		}
 

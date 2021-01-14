@@ -52,7 +52,7 @@ describe("WebFun.Extension.Storage.store", () => {
 		expect(warnings.length).toBe(1);
 	});
 
-	it("uses toString for unknown obejcts if defined", () => {
+	it("uses toString for unknown objects if defined", () => {
 		const object = { toString: () => 5 };
 		localStorage.store("sample", object);
 		expect(store["sample"]).toBe("5");

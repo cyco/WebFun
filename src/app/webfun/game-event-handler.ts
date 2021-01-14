@@ -1,5 +1,5 @@
 import {
-	Ammo as AmmoComponet,
+	Ammo as AmmoComponent,
 	Health as HealthComponent,
 	Inventory as InventoryComponent,
 	SceneView,
@@ -70,7 +70,7 @@ class GameEventHandler {
 					targetElement &&
 					targetElement.closest(
 						[
-							AmmoComponet.tagName,
+							AmmoComponent.tagName,
 							WeaponComponent.tagName,
 							HealthComponent.tagName,
 							SceneView.tagName
@@ -85,7 +85,7 @@ class GameEventHandler {
 
 				if (
 					item.isWeapon &&
-					(element instanceof AmmoComponet || element instanceof WeaponComponent)
+					(element instanceof AmmoComponent || element instanceof WeaponComponent)
 				) {
 					engine.equip(item);
 					used = true;

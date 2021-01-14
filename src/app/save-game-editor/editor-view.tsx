@@ -327,7 +327,7 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 				}
 			},
 			{
-				title: item.visited ? "Mark unvisted" : "Mark visited",
+				title: item.visited ? "Mark unvisited" : "Mark visited",
 				callback: () => {
 					item.visited = !item.visited;
 					item.additionalRequiredItem = null;

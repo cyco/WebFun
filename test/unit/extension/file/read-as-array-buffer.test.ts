@@ -16,18 +16,18 @@ describe("WebFun.Extension.File.readAsArrayBuffer", () => {
 
 	it("properly rejects the promise if an error occurs", async () => {
 		const mockedError: Error = {} as any;
-		const mockedFileReder: FileReader = {
+		const mockedFileReader: FileReader = {
 			readAsArrayBuffer() {
 				const error: ProgressEvent<FileReader> = { type: "error", error: mockedError } as any;
-				setTimeout(() => mockedFileReder.onerror(error));
+				setTimeout(() => mockedFileReader.onerror(error));
 			}
 		} as any;
-		spyOn(DOM, "FileReader").and.returnValue(mockedFileReder);
+		spyOn(DOM, "FileReader").and.returnValue(mockedFileReader);
 
 		try {
 			const file = new File(["content"], "my-file");
 			await file.readAsArrayBuffer();
-			fail("readAsArrayBuffer should have thrown an execption");
+			fail("readAsArrayBuffer should have thrown an exception");
 		} catch (e) {
 			expect(e).toBe(mockedError);
 		}

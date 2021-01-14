@@ -10,7 +10,7 @@ describe("WebFun.UX.UndoManager", () => {
 		subject = new UndoManager();
 	});
 
-	it("keeps a stack of `UndoOperation`s to revert user actoins", () => {
+	it("keeps a stack of `UndoOperation`s to revert user actions", () => {
 		expect(UndoManager).toBeAClass();
 	});
 

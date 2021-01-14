@@ -135,7 +135,7 @@ const compareSector = (pos: { x: number; y: number }, actual: Sector, expected: 
 const compare = (story: any, expectation: any) => {
 	if (!story.world || !expectation.world) return;
 	if (story.world === null && expectation.world !== null)
-		return fail("Expected a successfull world but found reseed");
+		return fail("Expected a successful world but found reseed");
 	if (story.world !== null && expectation.world === null) return fail("Expected a reseed");
 	if (story.world === null && expectation.world === null) return;
 

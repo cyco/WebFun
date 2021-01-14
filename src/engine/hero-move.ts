@@ -74,8 +74,8 @@ export default async (
 ): Promise<ScriptResult> => {
 	const hero = engine.hero;
 
-	const diri = Direction.Confine(direction);
-	const point = Direction.CalculateRelativeCoordinates(diri, 1);
+	const dir = Direction.Confine(direction);
+	const point = Direction.CalculateRelativeCoordinates(dir, 1);
 	const p = new Point(point.x, point.y, 0);
 
 	hero.isWalking = true;
@@ -89,7 +89,7 @@ export default async (
 		// TODO: get rid of temporary state
 		engine.temporaryState.bump = targetPoint;
 		if (engine.hpu.execute(HotspotExecutionMode.Bump, targetPoint, null)) return;
-		engine.spu.prepeareExecution(EvaluationMode.Bump, zone);
+		engine.spu.prepareExecution(EvaluationMode.Bump, zone);
 		const scriptResult = await engine.spu.run();
 		if (scriptResult !== ScriptResult.Done) {
 			return scriptResult;

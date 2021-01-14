@@ -63,7 +63,7 @@ describe("WebFun.Engine.Scenes.DetonatorScene", () => {
 						subject.update();
 					});
 
-					it("damages all active monsters to a variying degree", () => {
+					it("damages all active monsters to a varying degree", () => {
 						expect(subject.engine.currentZone.monsters[0].damageTaken).toBe(10);
 						expect(subject.engine.currentZone.monsters[1].damageTaken).toBe(8);
 						expect(subject.engine.currentZone.monsters[2].damageTaken).toBe(8);

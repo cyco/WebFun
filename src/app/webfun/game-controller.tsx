@@ -56,12 +56,9 @@ class GameController extends EventTarget implements EventListenerObject {
 		super();
 
 		this.settings.mobile = !!(SmartPhone(false).isAndroid() || SmartPhone(false).isIPhone());
-		const mainMenuClasss = this.settings.mobile ? MobileMainMenu : MainMenu;
+		const mainMenuClass = this.settings.mobile ? MobileMainMenu : MainMenu;
 		this._window = (
-			<MainWindow
-				menu={new mainMenuClasss(this)}
-				className={this.settings.mobile ? "mobile" : ""}
-			/>
+			<MainWindow menu={new mainMenuClass(this)} className={this.settings.mobile ? "mobile" : ""} />
 		) as MainWindow;
 
 		if (SmartPhone(false).isIPad()) {

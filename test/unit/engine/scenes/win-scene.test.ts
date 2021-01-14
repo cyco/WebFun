@@ -53,7 +53,7 @@ describe("WebFun.Engine.Scenes.WinScene", () => {
 				expect(engine.temporaryState.justEntered).toBeTrue();
 			});
 
-			it("tells the zone scene it just became visisble", () => {
+			it("tells the zone scene it just became visible", () => {
 				expect(zoneScene.didShow).toHaveBeenCalled();
 			});
 

@@ -20,7 +20,7 @@ describe("WebFun.UX.PopoverModalSession", () => {
 
 		afterEach(async () => await subject.end(1));
 
-		it("shows the popver", () => {
+		it("shows the popover", () => {
 			expect(document.querySelector("popover-mock")).not.toBeFalsy();
 		});
 

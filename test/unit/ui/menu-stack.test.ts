@@ -78,7 +78,7 @@ describe("WebFun.UI.MenuStack", () => {
 		menu2.remove();
 	});
 
-	it("ignores unregisterd menus", () => {
+	it("ignores unregistered menus", () => {
 		expect(() => subject.pop(menu1)).not.toThrow();
 	});
 

@@ -127,7 +127,7 @@ class SidebarLayersCell extends Component {
 			})
 		);
 		this._shortcuts.push(
-			manager.registerShortcut(() => this._toggleVisiblilty(), {
+			manager.registerShortcut(() => this._toggleVisibility(), {
 				ctrlKey: true,
 				keyCode: 188
 			})
@@ -142,7 +142,7 @@ class SidebarLayersCell extends Component {
 		this._shortcuts = [];
 	}
 
-	private _toggleVisiblilty() {
+	private _toggleVisibility() {
 		this._toggle(["i.fa-eye", "i.fa-eye-slash"].join(","));
 	}
 

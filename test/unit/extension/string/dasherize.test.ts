@@ -5,7 +5,7 @@ describe("WebFun.Extension.String.dasherize", () => {
 		expect("".dasherize).toBeFunction();
 	});
 
-	it("converts strings corretly", () => {
+	it("converts strings correctly", () => {
 		expect("MyTestString".dasherize()).toEqual("my-test-string");
 	});
 });

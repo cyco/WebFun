@@ -71,7 +71,8 @@ class CharMovementType {
 	}
 
 	static fromNumber(number: number): CharMovementType {
-		if (!this.isMovementType(number)) throw RangeError(`Invalid movment type ${number} specified!`);
+		if (!this.isMovementType(number))
+			throw RangeError(`Invalid movement type ${number} specified!`);
 		return CharMovementType.knownTypes[number];
 	}
 

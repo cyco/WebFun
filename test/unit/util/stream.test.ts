@@ -6,7 +6,7 @@ describe("WebFun.Util.Stream", () => {
 		subject = new Stream();
 	});
 
-	it("keeps track of the current position in the stram", () => {
+	it("keeps track of the current position in the stream", () => {
 		expect(subject.offset).toBe(0);
 	});
 
@@ -23,12 +23,12 @@ describe("WebFun.Util.Stream", () => {
 		expect(subject.offset).toBe(27);
 	});
 
-	it("the endianess of the stream values can be set", () => {
-		expect(subject.endianess).not.toBe(undefined);
+	it("the endianness of the stream values can be set", () => {
+		expect(subject.endianness).not.toBe(undefined);
 
-		subject.endianess = Stream.Endian.Little;
+		subject.endianness = Stream.Endian.Little;
 		expect(subject.littleEndian).toBeTrue();
-		subject.endianess = Stream.Endian.Big;
+		subject.endianness = Stream.Endian.Big;
 		expect(subject.littleEndian).toBeFalse();
 	});
 });

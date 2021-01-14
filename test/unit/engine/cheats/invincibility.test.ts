@@ -14,7 +14,7 @@ describe("WebFun.Engine.Cheats.Invincibility", () => {
 		expect(subject.message).toEqual("Invincible!");
 	});
 
-	it("makes the hero invinicible when executed", () => {
+	it("makes the hero invincible when executed", () => {
 		const mockEngine: Engine = { hero: {} } as any;
 		subject.execute(mockEngine);
 		expect(mockEngine.hero.invincible).toBeTrue();

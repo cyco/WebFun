@@ -18,15 +18,15 @@ describe("WebFun.Util.OutputStream", () => {
 		expect(getByte(1)).toBe(0x42);
 	});
 
-	it("but endianess can be changed at any time", () => {
+	it("but endianness can be changed at any time", () => {
 		outputStream = new OutputStream(8);
 
-		outputStream.endianess = Stream.Endian.Big;
+		outputStream.endianness = Stream.Endian.Big;
 		outputStream.writeUint16(0x4223);
 		expect(getByte(0)).toBe(0x42);
 		expect(getByte(1)).toBe(0x23);
 
-		outputStream.endianess = Stream.Endian.Little;
+		outputStream.endianness = Stream.Endian.Little;
 		outputStream.writeUint16(0x4223);
 		expect(getByte(2)).toBe(0x23);
 		expect(getByte(3)).toBe(0x42);
@@ -128,7 +128,7 @@ describe("WebFun.Util.OutputStream", () => {
 		expect(getByte(5)).toBe(0x74);
 	});
 
-	it("has a function to write a length-prefixed string with null termiantor", () => {
+	it("has a function to write a length-prefixed string with null terminator", () => {
 		outputStream = new OutputStream(7);
 
 		outputStream.writeLengthPrefixedNullTerminatedString("test");

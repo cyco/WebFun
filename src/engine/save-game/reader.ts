@@ -28,7 +28,7 @@ abstract class Reader {
 
 	protected abstract _doRead(): SaveState;
 	protected abstract readInt(stream: InputStream): number;
-	protected abstract readSector(stram: InputStream, x: number, y: number): Sector;
+	protected abstract readSector(stream: InputStream, x: number, y: number): Sector;
 	protected abstract readMonster(stream: InputStream): MutableMonster;
 	protected abstract readHotspot(stream: InputStream, hotspot: Hotspot): Hotspot;
 

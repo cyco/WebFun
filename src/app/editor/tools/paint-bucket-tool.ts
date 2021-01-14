@@ -10,8 +10,8 @@ class PaintBucketTool extends AbstractDrawingTool {
 	public readonly icon = "";
 	public readonly shortcut = { keyCode: 71 };
 
-	protected applyTo(point: Point, continous: boolean) {
-		if (continous) return;
+	protected applyTo(point: Point, continuous: boolean) {
+		if (continuous) return;
 		if (this.layer.locked) return;
 		if (!this.zone.bounds.contains(point)) return;
 

@@ -63,7 +63,7 @@ class YodaReader extends Reader {
 
 		console.assert(
 			goalPuzzle === goalPuzzleAgain,
-			`Expected goal ${goalPuzzle} to be reapeted. Found ${goalPuzzleAgain} instead`
+			`Expected goal ${goalPuzzle} to be repeated. Found ${goalPuzzleAgain} instead`
 		);
 		console.assert(
 			stream.isAtEnd(),

@@ -22,7 +22,7 @@ describe("WebFun.Engine.Type.Indy.LocatorTile", () => {
 		expect(subject.forZone(null, false)).toEqual(-1);
 	});
 
-	it("shows the correct map tile for zones thats have not been visited", () => {
+	it("shows the correct map tile for zones that have not been visited", () => {
 		expect(subject.forZone({} as any, false)).toEqual(1138);
 		expect(subject.forZone({ type: 0, visited: false } as any)).toEqual(1138);
 	});

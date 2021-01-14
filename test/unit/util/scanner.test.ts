@@ -12,7 +12,7 @@ describe("WebFun.Util.Scanner", () => {
 	});
 
 	describe("method peek", () => {
-		it("is used to get the current character without chaning the offset", () => {
+		it("is used to get the current character without chaining the offset", () => {
 			expect(subject.peek()).toBe("i");
 			expect(subject.peek()).toBe("i");
 			expect(subject.peek()).toBe("i");
@@ -89,7 +89,7 @@ describe("WebFun.Util.Scanner", () => {
 		});
 	});
 
-	it("works with mutli-byte characters", () => {
+	it("works with multi-byte characters", () => {
 		subject = new Scanner("€");
 		expect(subject.poke()).toEqual("€");
 		expect(subject.offset).toBe(1);

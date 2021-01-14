@@ -2,7 +2,7 @@ import groupedBy from "src/extension/array/grouped-by";
 import { floor } from "src/std/math";
 
 describe("WebFun.Extension.Array.groupedBy", () => {
-	it("extends to arra prototype to group elements in an array", () => {
+	it("extends to array prototype to group elements in an array", () => {
 		expect(typeof groupedBy).toBe("function");
 		expect(typeof [].groupedBy).toBe("function");
 	});

@@ -1,7 +1,7 @@
 import Action from "src/engine/mutable-objects/mutable-action";
 import { Zone, Instruction, Condition } from "src/engine/objects";
 
-describe("WebFun.Engine.MutableObjecs.MutableAction", () => {
+describe("WebFun.Engine.MutableObjects.MutableAction", () => {
 	let template: Action;
 	let zoneMock: Zone;
 	let instructionMock: Instruction;

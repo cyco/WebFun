@@ -232,7 +232,7 @@ class ScriptDebugger implements DebuggingScriptProcessingUnitDelegate {
 			this._currentAction = thing;
 			if (thing.zone !== this._currentZone) console.warn("action does not belong to current zone!");
 			if (this._currentAction.zone !== this.engine.currentZone)
-				console.warn("Engine thinks we're on a differente zone!");
+				console.warn("Engine thinks we're on a different zone!");
 		}
 
 		if ("isCondition" in thing) {

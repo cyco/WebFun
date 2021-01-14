@@ -248,8 +248,8 @@ class MouseInputManager implements InputManager {
 								p => (zone.bounds.contains(p) && zone.placeWalkable(p)) || p.isEqualTo(target)
 							)
 							.map(p2n),
-					(n1, n2) => n2p(n1).manhattenDistanceTo(n2p(n2)),
-					n => n2p(n).manhattenDistanceTo(target)
+					(n1, n2) => n2p(n1).manhattanDistanceTo(n2p(n2)),
+					n => n2p(n).manhattanDistanceTo(target)
 				) ?? [];
 
 			path.shift();

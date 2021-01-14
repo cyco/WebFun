@@ -4,7 +4,7 @@ enum TileIDs {
 	R2D2 = 0x31a,
 	// Items
 	Locator = 0x1a5,
-	// Consumeables
+	// Consumables
 	QRations = 0x1fb,
 	IceMushroom = 0x4ac,
 	ScrubRoot = 0x4ae,

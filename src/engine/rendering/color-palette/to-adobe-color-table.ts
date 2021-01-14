@@ -11,7 +11,7 @@ function toAdobeColorTable(buffer: Uint32Array, transparentColorIndex: number = 
 		stream.writeUint8((value >> 8) & 0xff);
 		stream.writeUint8(value & 0xff);
 	}
-	stream.endianess = OutputStream.Endian.Big;
+	stream.endianness = OutputStream.Endian.Big;
 	stream.writeUint16(floor(length / 4));
 	stream.writeUint16(transparentColorIndex);
 

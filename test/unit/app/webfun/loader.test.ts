@@ -163,7 +163,7 @@ describe("WebFun.App.Loader", () => {
 								await dispatch(() => resolveCB(palette));
 							});
 
-							it("uses the reosource manager to load sounds from a server", () => {
+							it("uses the resource manager to load sounds from a server", () => {
 								expect(resourceManager.loadSound).toHaveBeenCalledWith(
 									"MySound.wav",
 									jasmine.anything()

@@ -17,7 +17,7 @@ class AssetManager {
 		missingHandler: MissingEntityHandler = ThrowIfMissing
 	): T {
 		const entries = this.entries.get(type);
-		if (!entries) throw new Error(`Type ${type} is not registed`);
+		if (!entries) throw new Error(`Type ${type} is not registered`);
 		return entries[id] || missingHandler(type, id);
 	}
 

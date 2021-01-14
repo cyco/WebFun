@@ -11,7 +11,7 @@ const parseCharacterFrame = (stream: InputStream, _: Data): Int16Array => {
 
 const parseCharacter = (stream: InputStream, data: Data, gameType: GameType): Character => {
 	const marker = stream.readCharacters(4);
-	assert(marker === ICHA, "Expected to find ICHAR marker.", stream);
+	assert(marker === ICHA, "Expected to find ICHA marker.", stream);
 	// skip over size
 	stream.readUint32();
 	const name = stream.readCStringWithLength(0x10, "iso-8859-2");

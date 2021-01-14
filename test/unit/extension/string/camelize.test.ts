@@ -5,7 +5,7 @@ describe("WebFun.Extension.String.camelize", () => {
 		expect("".camelize).toBeFunction();
 	});
 
-	it("converts strings corretly", () => {
+	it("converts strings correctly", () => {
 		expect("my-test-string".camelize()).toEqual("MyTestString");
 		expect("".camelize()).toEqual("");
 	});

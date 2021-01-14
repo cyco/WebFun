@@ -6,7 +6,7 @@ import Instruction from "./instruction";
 import TileCell from "./tile-cell";
 import {
 	TestCreatorWindow,
-	ConfiguationBuilder,
+	ConfigurationBuilder,
 	SimulationConfigurationBuilder,
 	WorldConfigurationBuilder
 } from "./test-creator";
@@ -32,7 +32,7 @@ export {
 	Action,
 	BreakpointButton,
 	Condition,
-	ConfiguationBuilder,
+	ConfigurationBuilder,
 	Controls,
 	ExpectationEditor,
 	InputRecorder,

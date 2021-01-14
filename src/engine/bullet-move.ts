@@ -116,7 +116,7 @@ export default async (engine: Engine, zone: Zone): Promise<ScriptResult> => {
 		// evaluate scripts
 		engine.inputManager.placedTileLocation = targets[0];
 		engine.inputManager.placedTile = hero.weapon.frames[0].tiles[Char.FrameEntry.ExtensionRight];
-		engine.spu.prepeareExecution(EvaluationMode.PlaceItem, zone);
+		engine.spu.prepareExecution(EvaluationMode.PlaceItem, zone);
 		const result = await engine.spu.run();
 		return result;
 	}

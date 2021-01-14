@@ -222,7 +222,7 @@ describe("WebFun.App.Input.InputManager", () => {
 		beforeEach(() => subject.addListeners());
 		afterEach(() => subject.removeListeners());
 
-		it("overrides the browsers context menu if the click occured in a scene view", () => {
+		it("overrides the browsers context menu if the click occurred in a scene view", () => {
 			const event: any = {
 				type: "contextmenu",
 				preventDefault() {},

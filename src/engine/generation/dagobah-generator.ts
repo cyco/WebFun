@@ -48,7 +48,7 @@ class DagobahGenerator {
 		dagobah.at(5, 5).zoneType = world.at(5, 5).zoneType;
 		//*/
 
-		const spawn = this.determineYodasSpawnLocation(generator.goalPuzzle);
+		const spawn = this.determineYodaSpawnLocation(generator.goalPuzzle);
 		switch (spawn) {
 			case YodaSpawn.NorthWest:
 			case YodaSpawn.SouthEast:
@@ -65,7 +65,7 @@ class DagobahGenerator {
 		this._world = dagobah;
 	}
 
-	private determineYodasSpawnLocation(goal: Puzzle) {
+	private determineYodaSpawnLocation = (goal: Puzzle) => {
 		const spawn = randmod(4);
 
 		if (goal === this.assets.get(Puzzle, Yoda.goalIDs.IMPERIAL_BATTLE_CODE)) {
@@ -77,7 +77,7 @@ class DagobahGenerator {
 		}
 
 		return spawn;
-	}
+	};
 
 	private setupOutdoorSpawn(spawn: YodaSpawn, tile: Tile, dagobah: World) {
 		const npcID = Yoda.tileIDs.Yoda;

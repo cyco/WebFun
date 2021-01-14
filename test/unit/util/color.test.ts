@@ -1,7 +1,7 @@
 import { default as Color, hsv2rgb, rgb, rgb2hsv, rgb2rgba, rgba } from "src/util/color";
 
 describe("WebFun.Util.Color", () => {
-	it("defines two funtions in the global namespace", () => {
+	it("defines two functions in the global namespace", () => {
 		expect(typeof rgb).toBe("function");
 		expect(typeof rgba).toBe("function");
 	});

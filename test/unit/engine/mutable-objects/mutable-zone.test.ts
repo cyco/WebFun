@@ -1,3 +1,3 @@
 import Zone from "src/engine/mutable-objects/mutable-zone";
 
-describe("WebFun.Engine.MutableObjecs.MutableZone", () => {});
+describe("WebFun.Engine.MutableObjects.MutableZone", () => {});

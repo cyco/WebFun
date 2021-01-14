@@ -49,7 +49,7 @@ describe("WebFun.Util.Logger", () => {
 		expect(console.error).toHaveBeenCalledWith("ENGINE", "A message");
 	});
 
-	it("Passes the severity on to the conosle if appropriate", () => {
+	it("Passes the severity on to the console if appropriate", () => {
 		subject.warn("A message");
 		expect(console.warn).toHaveBeenCalledWith("A message");
 	});

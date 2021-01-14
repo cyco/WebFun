@@ -113,8 +113,8 @@ describe("WebFun.Util.astar", () => {
 					.filter(node => bounds.contains(node))
 					.map(i)
 					.filter((n: number) => !field.walls[n]),
-			(p1, p2) => p(p1).manhattenDistanceTo(p(p2)),
-			p1 => p(p1).manhattenDistanceTo(end)
+			(p1, p2) => p(p1).manhattanDistanceTo(p(p2)),
+			p1 => p(p1).manhattanDistanceTo(end)
 		);
 		return result ? result.map(p) : result;
 	}

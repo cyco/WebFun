@@ -1,7 +1,7 @@
 import Settings from "src/settings";
 
 describe("WebFun.Settings", () => {
-	it("is a simple obejct", () => {
+	it("is a simple object", () => {
 		expect(Settings.constructor).toBe(Object);
 	});
 

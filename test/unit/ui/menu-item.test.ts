@@ -6,7 +6,7 @@ describe("WebFun.UI.MenuItem", () => {
 		const menuItem = new MenuItem();
 	});
 
-	it("can be initiated with an object specifying releveant properties", () => {
+	it("can be initiated with an object specifying relevant properties", () => {
 		const properties: Partial<MenuItemInit> = {
 			title: "test-title",
 			state: State.Mixed,
@@ -24,7 +24,7 @@ describe("WebFun.UI.MenuItem", () => {
 		expect(menuItem.beta).toBeTrue();
 	});
 
-	it("defines a special item used to represent separatation between other items", () => {
+	it("defines a special item used to represent separation between other items", () => {
 		expect(Separator).not.toBe(undefined);
 	});
 

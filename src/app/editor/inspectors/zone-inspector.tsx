@@ -5,7 +5,10 @@ import AbstractInspector from "./abstract-inspector";
 import { Menu } from "src/ui";
 import { ModalPrompt } from "src/ux";
 import { MutableZone } from "src/engine/mutable-objects";
-import { Resolver as ReferenceResolver, Updater as ReferenceUpdater } from "src/app/editor/reference";
+import {
+	Resolver as ReferenceResolver,
+	Updater as ReferenceUpdater
+} from "src/app/editor/reference";
 import { Zone } from "src/engine/objects";
 import ZoneEditorController from "../components/zone-editor/window";
 import { ZoneInspectorCell } from "../components";
@@ -92,7 +95,7 @@ class ZoneInspector extends AbstractInspector {
 				menu={
 					new Menu([
 						{
-							title: "Reisze…",
+							title: "Resize…",
 							callback: async () => {
 								const value = await ModalPrompt("", {
 									defaultValue: `${zone.size.width}x${zone.size.height}`

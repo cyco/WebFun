@@ -5,7 +5,7 @@ describeComponent(StatisticsWindow, () => {
 	let subject: StatisticsWindow;
 	beforeEach(() => (subject = render(StatisticsWindow) as any));
 
-	it("renders serveral text boxes", () => {
+	it("renders several text boxes", () => {
 		expect(subject.querySelector(Textbox.tagName)).not.toBeNull();
 	});
 });

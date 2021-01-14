@@ -3,7 +3,7 @@ import ChangeZone from "src/engine/script/instructions/change-zone";
 import { RoomTransitionScene } from "src/engine/scenes";
 
 describeInstruction("ChangeZone", (execute, engine) => {
-	it("Switches to a differnt zone using the room animation", async () => {
+	it("Switches to a different zone using the room animation", async () => {
 		const zone = {};
 		engine.assets.populate(Zone, [null, null, zone, null]);
 		engine.sceneManager = {

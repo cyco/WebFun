@@ -44,7 +44,7 @@ describe("WebFun.Engine.Cheats.CheatCodeInput", () => {
 		expect(subject.execute(engine)).toEqual(["test executed"]);
 	});
 
-	it("can reset previously given iinput", () => {
+	it("can reset previously given input", () => {
 		const subject = new CheatCodeInput([mockCheat]);
 
 		subject.addCharacter("t");

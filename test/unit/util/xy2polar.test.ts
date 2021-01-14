@@ -2,7 +2,7 @@ import { PI, sqrt } from "src/std/math";
 import xy2polar from "src/util/xy2polar";
 
 describe("WebFun.Util.xy2polar", () => {
-	it("is a function used to convert x,y-coordinats to radius & distance", () => {
+	it("is a function used to convert x,y-coordinates to radius & distance", () => {
 		expect(typeof xy2polar).toBe("function");
 	});
 

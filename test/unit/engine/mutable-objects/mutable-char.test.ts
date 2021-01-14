@@ -1,7 +1,7 @@
 import MutableChar from "src/engine/mutable-objects/mutable-char";
 import { Char } from "src/engine/objects";
 
-describe("WebFun.Engine.MutableObjecs.MutableChar", () => {
+describe("WebFun.Engine.MutableObjects.MutableChar", () => {
 	let subject: MutableChar;
 
 	it("can be created as a copy of an existing Char", () => {

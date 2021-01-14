@@ -155,7 +155,7 @@ class Point implements PointLike {
 		return Math.sqrt(x ** 2 + y ** 2);
 	}
 
-	public manhattenDistanceTo(point: Point): number {
+	public manhattanDistanceTo(point: Point): number {
 		return abs(this.x - point.x) + abs(this.y - point.y);
 	}
 

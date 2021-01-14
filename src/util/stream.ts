@@ -12,11 +12,11 @@ class Stream {
 	public static readonly Seek = Seek;
 	public static readonly Endian = Endian;
 
-	public endianess: number = Stream.Endian.Big;
+	public endianness: number = Stream.Endian.Big;
 	protected _offset: number = 0;
 
 	public get littleEndian() {
-		return this.endianess === Stream.Endian.Little;
+		return this.endianness === Stream.Endian.Little;
 	}
 
 	public get offset() {

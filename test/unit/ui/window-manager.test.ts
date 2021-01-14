@@ -49,7 +49,7 @@ describe("WebFun.UI.WindowManager", () => {
 			expect(firstWindow.manager).toBe(subject);
 		});
 
-		describe("when a different window is focues", () => {
+		describe("when a different window is focused", () => {
 			beforeEach(() => {
 				subject.focus(firstWindow);
 			});

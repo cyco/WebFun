@@ -58,13 +58,13 @@ class ModalSession {
 	run(): void {
 		document.body.appendChild(this._overlay);
 		this._locationHandler = e => (this._lastMouseLocation = new Point(e.clientX, e.clientY));
-		["mouseup", "mousedown", "mousemove", "mousedrag"].forEach(eventName =>
+		["mouseup", "mousedown", "mousemove"].forEach(eventName =>
 			window.addEventListener(eventName, this._locationHandler)
 		);
 	}
 
 	async end(code: number): Promise<void> {
-		["mouseup", "mousedown", "mousemove", "mousedrag"].forEach(eventName =>
+		["mouseup", "mousedown", "mousemove"].forEach(eventName =>
 			window.removeEventListener(eventName, this._locationHandler)
 		);
 		this.cursor = null;

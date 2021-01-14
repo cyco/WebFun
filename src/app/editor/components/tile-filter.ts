@@ -48,8 +48,8 @@ class TileFilter implements SearchDelegate<Tile, RegExp[]> {
 		if (tile.getAttribute(Tile.Attribute.Item)) {
 			components.push("item");
 
-			if (tile.getSubtype(Tile.Subtype.Item.Consumeable)) {
-				components.push("consumeable");
+			if (tile.getSubtype(Tile.Subtype.Item.Consumable)) {
+				components.push("consumable");
 				components.push("health");
 			}
 

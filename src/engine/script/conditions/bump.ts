@@ -26,9 +26,9 @@ export default {
 /*
  case BUMP:
  if ( mode != 2
- || hero_x + relativeXMovment != condition->arg1
+ || hero_x + relativeXMovement != condition->arg1
  || condition->arg2 != relativeYMovement + hero_y
- || zone->tile_ids[3 * (hero_x + relativeXMovment + 18 * (relativeYMovement + hero_y)) + 1] != condition->arg3 )
+ || zone->tile_ids[3 * (hero_x + relativeXMovement + 18 * (relativeYMovement + hero_y)) + 1] != condition->arg3 )
  {
  goto condition_NOT_satisfied;
  }

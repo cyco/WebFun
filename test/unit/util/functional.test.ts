@@ -2,7 +2,7 @@ import { and, not, or } from "src/util/functional";
 
 describe("WebFun.Util.functional", () => {
 	describe("and", () => {
-		it("returns a function that evalutes to true if all inputs evaluate to true", () => {
+		it("returns a function that evaluates to true if all inputs evaluate to true", () => {
 			const evenp = (n: number) => n % 2 === 0;
 			const lessThan5 = (n: number) => n < 5;
 
@@ -13,7 +13,7 @@ describe("WebFun.Util.functional", () => {
 	});
 
 	describe("or", () => {
-		it("returns a function that evalutes to true if some inputs evaluate to true", () => {
+		it("returns a function that evaluates to true if some inputs evaluate to true", () => {
 			const evenp = (n: number) => n % 2 === 0;
 			const lessThan5 = (n: number) => n < 5;
 

@@ -17,11 +17,11 @@ export default {
 		const [zoneID, x, y] = instruction.arguments;
 
 		const destinationZone = engine.assets.get(Zone, zoneID);
-		const destinationLocatoin = new Point(x, y);
+		const destinationLocation = new Point(x, y);
 		const { world, location } = engine.findLocationOfZone(destinationZone);
 
 		const transitionScene = new RoomTransitionScene();
-		transitionScene.destinationHeroLocation = destinationLocatoin;
+		transitionScene.destinationHeroLocation = destinationLocation;
 		transitionScene.destinationZone = destinationZone;
 		transitionScene.destinationWorld = world;
 		transitionScene.destinationZoneLocation = location;

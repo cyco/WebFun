@@ -8,14 +8,14 @@ export default (engine: Engine, hotspot: Hotspot): HotspotExecutionResult => {
 	console.assert(hotspot.arg !== -1, "This is not where we're coming from!");
 
 	const destinationZone = engine.assets.get(Zone, hotspot.arg);
-	const desinationHotspot = destinationZone.hotspots.withType(Hotspot.Type.ShipToPlanet).first();
+	const destinationHotspot = destinationZone.hotspots.withType(Hotspot.Type.ShipToPlanet).first();
 	const location = engine.dagobah.findLocationOfZone(destinationZone);
-	console.assert(desinationHotspot !== null, "Zone does not have a proper target spot");
+	console.assert(destinationHotspot !== null, "Zone does not have a proper target spot");
 	console.assert(location !== null, "ShipFromPlanet destination must not be on main world!");
 	console.assert(engine.sceneManager.currentScene instanceof ZoneScene);
 
 	const scene = new RoomTransitionScene();
-	scene.destinationHeroLocation = new Point(desinationHotspot.x, desinationHotspot.y);
+	scene.destinationHeroLocation = new Point(destinationHotspot.x, destinationHotspot.y);
 	scene.destinationZone = destinationZone;
 	scene.scene = engine.sceneManager.currentScene as ZoneScene;
 	scene.destinationWorld = engine.dagobah;

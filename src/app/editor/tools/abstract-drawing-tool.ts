@@ -25,7 +25,7 @@ abstract class AbstractDrawingTool extends AbstractTool implements EventListener
 		this.canvas.addEventListener("mousedown", this);
 		this.canvas.addEventListener("mousemove", this);
 		this.canvas.addEventListener("mouseenter", this);
-		this.canvas.addEventListener("mouveleave", this);
+		this.canvas.addEventListener("mouseleave", this);
 	}
 
 	public deactivate(): void {
@@ -37,7 +37,7 @@ abstract class AbstractDrawingTool extends AbstractTool implements EventListener
 		this.canvas.removeEventListener("mousedown", this);
 		this.canvas.removeEventListener("mousemove", this);
 		this.canvas.removeEventListener("mouseenter", this);
-		this.canvas.removeEventListener("mouveleave", this);
+		this.canvas.removeEventListener("mouseleave", this);
 
 		document.removeEventListener("mousemove", this);
 		document.removeEventListener("mouseup", this);
@@ -52,14 +52,14 @@ abstract class AbstractDrawingTool extends AbstractTool implements EventListener
 		this.drawPreview(point);
 	}
 
-	private _applyTo(point: Point, continous: boolean) {
+	private _applyTo(point: Point, continuous: boolean) {
 		this._ctx.clearRect(0, 0, this.zone.size.width, this.zone.size.height);
-		this.applyTo(point, continous);
+		this.applyTo(point, continuous);
 	}
 
 	protected abstract drawPreview(point: Point): void;
 
-	protected abstract applyTo(point: Point, continous: boolean): void;
+	protected abstract applyTo(point: Point, continuous: boolean): void;
 
 	protected finalize(_: Point): void {}
 

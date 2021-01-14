@@ -1,7 +1,7 @@
-import DiableAllMonsters from "src/engine/script/instructions/disable-all-monsters";
+import DisableAllMonsters from "src/engine/script/instructions/disable-all-monsters";
 import { Point } from "src/util";
 
-describeInstruction("DiableAllMonsters", (execute, engine) => {
+describeInstruction("DisableAllMonsters", (execute, engine) => {
 	it("enables all monsters in the current zone", async () => {
 		engine.currentZone.monsters = [
 			{ position: new Point(0, 0) },
@@ -10,7 +10,7 @@ describeInstruction("DiableAllMonsters", (execute, engine) => {
 		];
 
 		const instruction: any = {};
-		instruction.opcode = DiableAllMonsters.Opcode;
+		instruction.opcode = DisableAllMonsters.Opcode;
 		instruction.arguments = [];
 
 		await execute(instruction);

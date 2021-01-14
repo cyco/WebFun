@@ -56,7 +56,7 @@ class ZoneScene extends Scene {
 			return;
 		}
 
-		engine.spu.prepeareExecution(EvaluationMode.Walk, this.zone);
+		engine.spu.prepareExecution(EvaluationMode.Walk, this.zone);
 		scriptResult = await engine.spu.run();
 		if (scriptResult !== ScriptResult.Done) {
 			return;
@@ -75,7 +75,7 @@ class ZoneScene extends Scene {
 		if (scriptResult !== ScriptResult.Done) {
 			return;
 		}
-		this._moveMonsers();
+		this._moveMonsters();
 
 		const stop = await this.handleInput(ticks);
 		if (stop) return;
@@ -87,7 +87,7 @@ class ZoneScene extends Scene {
 			return;
 		}
 
-		engine.spu.prepeareExecution(EvaluationMode.Walk, this.zone);
+		engine.spu.prepareExecution(EvaluationMode.Walk, this.zone);
 		scriptResult = await engine.spu.run();
 		if (scriptResult !== ScriptResult.Done) {
 			return;
@@ -205,7 +205,7 @@ class ZoneScene extends Scene {
 		}
 	}
 
-	private _moveMonsers() {
+	private _moveMonsters() {
 		this._zone.monsters.forEach(monster => moveMonster(monster, this.zone, this.engine));
 	}
 
@@ -389,7 +389,7 @@ class ZoneScene extends Scene {
 			return ScriptResult.Void;
 		}
 
-		this.engine.spu.prepeareExecution(EvaluationMode.PlaceItem, this.zone);
+		this.engine.spu.prepareExecution(EvaluationMode.PlaceItem, this.zone);
 		const result = await this.engine.spu.run();
 		return result;
 	}

@@ -5,7 +5,7 @@ class DiscardingOutputStream extends OutputStream {
 	constructor() {
 		super(0);
 
-		this.endianess = Stream.Endian.Little;
+		this.endianness = Stream.Endian.Little;
 	}
 
 	get buffer(): ArrayBuffer {

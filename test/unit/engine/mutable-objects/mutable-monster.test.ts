@@ -2,7 +2,7 @@ import MutableMonster from "src/engine/mutable-objects/mutable-monster";
 import { Monster } from "src/engine/objects";
 import { Point } from "src/util";
 
-describe("WebFun.Engine.MutableObjecs.MutableMonster", () => {
+describe("WebFun.Engine.MutableObjects.MutableMonster", () => {
 	let subject: MutableMonster;
 
 	it("can be created as a copy of an existing NPC", () => {

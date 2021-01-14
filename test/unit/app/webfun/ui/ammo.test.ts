@@ -5,7 +5,7 @@ describeComponent(Ammo, () => {
 
 	beforeAll(() => (subject = render(Ammo) as any));
 
-	it("shows a simple bar inidcating how much ammo is left", () => {
+	it("shows a simple bar indicating how much ammo is left", () => {
 		expect(subject).not.toBeNull();
 	});
 

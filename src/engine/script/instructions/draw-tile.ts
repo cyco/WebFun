@@ -12,7 +12,7 @@ export default {
 		 tile_2 = document->tiles.ptrs[instruction->arg3];
 		 if ( tile_2 )
 		 {
-		 SetPixelsForRectWithTransparancey(
+		 SetPixelsForRectWithTransparency(
 		 document->hdc_surface,
 		 (int)tile_2->pixels,
 		 0x20u,

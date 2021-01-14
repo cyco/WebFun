@@ -84,7 +84,7 @@ class SpeechBubble extends Component {
 		this._setupButtons();
 		this._setupBackground();
 		this._setupBackground();
-		this._udpateButtonVisibility();
+		this._updateButtonVisibility();
 		this._scrollTo(0);
 	}
 
@@ -262,7 +262,7 @@ class SpeechBubble extends Component {
 		return Math.min(line, 5);
 	}
 
-	private _udpateButtonVisibility() {
+	private _updateButtonVisibility() {
 		const canScroll = this._calculateNumberOfLines(true) > 5;
 		if (!canScroll) {
 			this._up.setAttribute("hidden", "");

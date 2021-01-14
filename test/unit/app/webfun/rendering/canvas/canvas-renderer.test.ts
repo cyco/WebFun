@@ -62,7 +62,7 @@ describe("WebFun.App.Rendering.Canvas.Renderer", () => {
 		expect(context.fillText).toHaveBeenCalledWith("A String!", 5, 11.5);
 	});
 
-	it("determines support by querrying a canvas", () => {
+	it("determines support by querying a canvas", () => {
 		const mockedCanvas = { getContext: jasmine.createSpy() } as any;
 		spyOn(document, "createElement").and.returnValue(mockedCanvas);
 

@@ -107,7 +107,7 @@ describe("WebFun.Engine.Scenes.MapScene", () => {
 				clickZone(0, 0);
 			});
 
-			it("pops iteself from the scene stack", () => {
+			it("pops itself from the scene stack", () => {
 				expect(engine.sceneManager.popScene).toHaveBeenCalled();
 			});
 		});
@@ -118,7 +118,7 @@ describe("WebFun.Engine.Scenes.MapScene", () => {
 				clickZone(0, 0);
 			});
 
-			it("pops iteself from the scene stack", () => {
+			it("pops itself from the scene stack", () => {
 				expect(engine.sceneManager.popScene).toHaveBeenCalled();
 			});
 		});

@@ -4,7 +4,7 @@ import { Engine } from "src/engine";
 import "./expectation-editor.scss";
 
 class ExpectationEditor extends Component {
-	public static readonly tagName = "wf-debug-expection-editor";
+	public static readonly tagName = "wf-debug-expectation-editor";
 	private _expectations: Expectation[] = [];
 	private _engine: Engine = null;
 

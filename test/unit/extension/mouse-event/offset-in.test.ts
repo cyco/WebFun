@@ -2,7 +2,7 @@ import { MouseEvent } from "src/std/dom";
 import offsetIn from "src/extension/mouse-event/offset-in";
 
 describe("WebFun.Extension.MouseEvent.offsetIn", () => {
-	it("extends the MouseEvent prototype to determine where an event happend", () => {
+	it("extends the MouseEvent prototype to determine where an event happened", () => {
 		const event = new MouseEvent("click");
 		expect(event.offsetIn).toBeFunction();
 	});
@@ -23,7 +23,7 @@ describe("WebFun.Extension.MouseEvent.offsetIn", () => {
 		node.style.left = "7px";
 		document.body.appendChild(node);
 
-		const event = { type: "click", clientX: 50, clientY: 70, taret: eventNode };
+		const event = { type: "click", clientX: 50, clientY: 70, target: eventNode };
 		const point = offsetIn.call(event, node);
 		expect(point.x).toBe(43);
 		expect(point.y).toBe(65);

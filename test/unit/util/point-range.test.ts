@@ -39,7 +39,7 @@ describe("WebFun.Util.PointRange", () => {
 		});
 	});
 
-	it("iterations can be stopped by setting a paramter in the second arguments", () => {
+	it("iterations can be stopped by setting a parameter in the second arguments", () => {
 		const visited: { [_: string]: boolean } = {};
 		const range = new PointRange(new Point(3, 6), new Point(4, 7));
 

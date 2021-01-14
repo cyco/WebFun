@@ -10,7 +10,7 @@ enum ViewMode {
 
 const ViewModeStateKey = "view-mode";
 class CoverageInspector extends AbstractInspector {
-	private covergeLoaded: boolean = false;
+	private coverageLoaded: boolean = false;
 	private _sourceLevelCoverage: SourceLevelCoverage = (
 		<SourceLevelCoverage />
 	) as SourceLevelCoverage;
@@ -48,7 +48,7 @@ class CoverageInspector extends AbstractInspector {
 	}
 
 	public async build() {
-		if (!this.covergeLoaded) {
+		if (!this.coverageLoaded) {
 			this.window.content.textContent = "";
 			this.window.content.appendChild(<ProgressIndicator />);
 
@@ -59,7 +59,7 @@ class CoverageInspector extends AbstractInspector {
 			this._symbolicCoverage.data = this.data;
 			this._symbolicCoverage.coverage = coverage;
 
-			this.covergeLoaded = true;
+			this.coverageLoaded = true;
 			this.build();
 		} else {
 			this.state.store(ViewModeStateKey, this._viewModeSelector.value);

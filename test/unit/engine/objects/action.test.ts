@@ -28,7 +28,7 @@ describe("WebFun.Engine.Objects.Action", () => {
 		expect(subject.zone).toBeNull();
 	});
 
-	it("has a name (eventhough it's only used in indy)", () => {
+	it("has a name (even though it's only used in indy)", () => {
 		expect(subject.name).toBe("");
 	});
 });

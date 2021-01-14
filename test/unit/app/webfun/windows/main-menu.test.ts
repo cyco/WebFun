@@ -160,7 +160,7 @@ describe("WebFun.App.Windows.MainMenu", () => {
 		});
 
 		describe("->", () => {
-			let dificultyItem: MenuItem;
+			let difficultyItem: MenuItem;
 			let speedItem: MenuItem;
 			let worldSizeItem: MenuItem;
 			let statisticsItem: MenuItem;
@@ -173,7 +173,7 @@ describe("WebFun.App.Windows.MainMenu", () => {
 
 			beforeEach(() => {
 				[
-					dificultyItem,
+					difficultyItem,
 					speedItem,
 					worldSizeItem,
 					statisticsItem,
@@ -199,11 +199,11 @@ describe("WebFun.App.Windows.MainMenu", () => {
 
 			describe("Combat Difficulty...", () => {
 				it("has the right title", () => {
-					expect(dificultyItem.title).toBe("Combat Difficulty...");
+					expect(difficultyItem.title).toBe("Combat Difficulty...");
 				});
 
 				describe("when clicked", () => {
-					beforeEach(() => dificultyItem.callback());
+					beforeEach(() => difficultyItem.callback());
 
 					it("runs a modal session for a new DifficultyWindow", () => {
 						expect(document.createElement).toHaveBeenCalledWith(DifficultyWindow.tagName);

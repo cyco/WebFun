@@ -10,7 +10,7 @@ import {
 	InputRecorder,
 	ExpectationEditor
 } from "src/app/webfun/debug/components/index";
-import ConfiguationBuilder from "./configuration-builder";
+import ConfigurationBuilder from "./configuration-builder";
 import SimulatedStory from "src/app/webfun/debug/simulated-story";
 import adjacentZones from "./adjacent-zones";
 import { Zone, Tile, Sound, Puzzle, Char } from "src/engine/objects";
@@ -26,7 +26,7 @@ class TestCreatorWindow extends AbstractWindow implements EventListenerObject {
 	private _gameController: GameController;
 	private _state: Storage = new DiscardingStorage();
 	private _testCase: TestCase = null;
-	private _configBuilder: ConfiguationBuilder = (<ConfiguationBuilder />) as ConfiguationBuilder;
+	private _configBuilder: ConfigurationBuilder = (<ConfigurationBuilder />) as ConfigurationBuilder;
 	private _replayer: InputReplayer = (<InputReplayer />) as InputReplayer;
 	private _recorder: InputRecorder = (<InputRecorder />) as InputRecorder;
 	private _expectationEditor: ExpectationEditor = (<ExpectationEditor />) as ExpectationEditor;

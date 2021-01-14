@@ -63,7 +63,7 @@ const TileSubtype = {
 		Part: 16 + 2,
 		Valuable: 16 + 3,
 		Locator: 16 + 4,
-		Consumeable: 16 + 6
+		Consumable: 16 + 6
 	},
 	Character: {
 		Hero: 16,

@@ -49,8 +49,8 @@ class DebuggingScriptProcessingUnit extends ScriptProcessingUnit {
 		this._engine = engine;
 	}
 
-	prepeareExecution(mode: Mode, zone: Zone): void {
-		console.assert(!this._inUse, "Executor is already prepeared!");
+	prepareExecution(mode: Mode, zone: Zone): void {
+		console.assert(!this._inUse, "Executor is already prepared!");
 		this.willExecute(zone);
 		this._executor = this._buildExecutor(mode, zone);
 	}

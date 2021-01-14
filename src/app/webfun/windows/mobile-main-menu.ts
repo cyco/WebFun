@@ -57,7 +57,7 @@ class MobileMainMenu extends Menu {
 				title: "Options",
 				mnemonic: 0,
 				submenu: [
-					{ title: "Diffculty" },
+					{ title: "Difficulty" },
 					{ title: "Game Speed" },
 					{ title: "World Size" },
 					Separator,

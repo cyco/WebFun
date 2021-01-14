@@ -14,7 +14,7 @@ describe("WebFun.Extension.HTMLCollection.map", () => {
 		expect(subject.map).toBeFunction();
 	});
 
-	it("is used to create an array by applying a funtion to each node in a collection", () => {
+	it("is used to create an array by applying a function to each node in a collection", () => {
 		const result = subject.map(node => node.className);
 		expect(result).toEqual(["first", "second", "third"]);
 	});

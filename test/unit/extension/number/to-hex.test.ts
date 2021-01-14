@@ -12,7 +12,7 @@ describe("WebFun.Extension.Number.toHex", () => {
 		expect((0xff).toHex()).toBe("0xff");
 	});
 
-	it("takes an optional argument specifiy how many digits a number should use", () => {
+	it("takes an optional argument specifying how many digits a number should use", () => {
 		expect((0).toHex(3)).toBe("0x000");
 		expect((10).toHex(2)).toBe("0x0a");
 		expect((0xff).toHex(1)).toBe("0xff");

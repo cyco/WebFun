@@ -1,7 +1,7 @@
 import ensureTail from "src/extension/string/ensure-tail";
 
 describe("WebFun.Extension.String.ensureTail", () => {
-	it("appned the given string to the end of a string if it's not already present", () => {
+	it("append the given string to the end of a string if it's not already present", () => {
 		expect("path/to/directory".ensureTail("/")).toEqual("path/to/directory/");
 		expect("path/to/directory/".ensureTail("/")).toEqual("path/to/directory/");
 
