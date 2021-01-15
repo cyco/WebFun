@@ -10,13 +10,13 @@ class WindowModalSession extends ModalSession {
 		this._window = window;
 	}
 
-	run() {
+	public run(): void {
 		this._overlay.appendChild(this._window);
 		super.run();
 		this._window.center();
 	}
 
-	protected _whenOverlayIsGone(callback: Function) {
+	protected _whenOverlayIsGone(callback: Function): void {
 		// HACK: give WebKit time to remove the overlay, so elementFromPoint works correctly
 		if (document.elementFromPoint(0, 0) === this._overlay) {
 			dispatch(() => this._whenOverlayIsGone(callback), 1);

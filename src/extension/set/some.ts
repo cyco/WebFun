@@ -6,7 +6,7 @@ Set.prototype.some = Set.prototype.some || some;
 
 declare global {
 	interface Set<T> {
-		some<T>(predicate: (item: T) => boolean): boolean;
+		some(predicate: (item: T) => boolean): boolean;
 	}
 }
 

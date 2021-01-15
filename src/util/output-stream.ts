@@ -12,7 +12,7 @@ class OutputStream extends Stream {
 		this._dataView = new DataView(this._arrayBuffer);
 	}
 
-	public get buffer() {
+	public get buffer(): ArrayBuffer {
 		return this._arrayBuffer.slice(0, this._offset);
 	}
 

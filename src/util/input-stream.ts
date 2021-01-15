@@ -16,11 +16,11 @@ class InputStream extends Stream {
 		this._dataView = new DataView(this._arrayBuffer);
 	}
 
-	public get length() {
+	public get length(): number {
 		return this._arrayBuffer.byteLength;
 	}
 
-	public isAtEnd() {
+	public isAtEnd(): boolean {
 		return this.offset === this.length;
 	}
 
@@ -174,7 +174,7 @@ class InputStream extends Stream {
 		return result;
 	}
 
-	public get buffer() {
+	public get buffer(): ArrayBuffer | SharedArrayBuffer {
 		return this._arrayBuffer;
 	}
 }

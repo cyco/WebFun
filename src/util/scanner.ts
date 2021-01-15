@@ -17,7 +17,7 @@ class Scanner {
 		return result;
 	}
 
-	public skipWhitespace() {
+	public skipWhitespace(): void {
 		while (this.isAtWhitespace()) this.poke();
 	}
 
@@ -36,11 +36,11 @@ class Scanner {
 		return this._offset === this._string.length;
 	}
 
-	public get offset() {
+	public get offset(): number {
 		return this._offset;
 	}
 
-	public get rest() {
+	public get rest(): string {
 		return this._string.slice(this._offset);
 	}
 }

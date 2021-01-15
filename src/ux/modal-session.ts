@@ -16,11 +16,11 @@ class ModalSession {
 		this._overlay = overlay;
 	}
 
-	get lastMouseLocation() {
+	get lastMouseLocation(): Point {
 		return this._lastMouseLocation;
 	}
 
-	get style() {
+	get style(): CSSStyleDeclaration {
 		return this._overlay.style;
 	}
 
@@ -47,7 +47,7 @@ class ModalSession {
 		this._overlay.onmouseup = h;
 	}
 
-	get onend() {
+	get onend(): (_: number) => void {
 		return this._endHandler;
 	}
 

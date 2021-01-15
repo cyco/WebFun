@@ -9,7 +9,7 @@ class DiscardingStorage implements Storage {
 	[key: string]: any;
 	[index: number]: string;
 
-	clear() {}
+	clear(): void {}
 
 	getItem(_: string): string | null {
 		return null;

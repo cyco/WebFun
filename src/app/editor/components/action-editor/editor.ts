@@ -50,9 +50,6 @@ class Editor extends Component {
 			keyCode: 83
 		});
 		this._shortcuts.push(shortcut);
-
-		shortcut = manager.registerShortcut(() => this.indent(), { node: this, keyCode: 9 });
-		this._shortcuts.push(shortcut);
 	}
 
 	public save(): void {
@@ -80,8 +77,6 @@ class Editor extends Component {
 			this.actions = actions;
 		}
 	}
-
-	public indent(): void {}
 
 	private unregisterShortcuts() {
 		const manager = ShortcutManager.sharedManager;

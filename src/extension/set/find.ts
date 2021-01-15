@@ -6,7 +6,7 @@ Set.prototype.find = Set.prototype.find || find;
 
 declare global {
 	interface Set<T> {
-		find<T>(predicate: (item: T) => boolean): T;
+		find(predicate: (item: T) => boolean): T;
 	}
 }
 

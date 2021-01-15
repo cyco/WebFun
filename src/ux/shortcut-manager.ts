@@ -13,7 +13,7 @@ type RegisteredShortcut = [ShortcutDescription, () => void];
 
 class ShortcutManager implements EventListenerObject {
 	private static _sharedManager: ShortcutManager;
-	public static get sharedManager() {
+	public static get sharedManager(): ShortcutManager {
 		return (this._sharedManager = this._sharedManager || new ShortcutManager());
 	}
 
@@ -28,7 +28,7 @@ class ShortcutManager implements EventListenerObject {
 		window.addEventListener("mousedown", this, true);
 	}
 
-	registerShortcut(callback: () => void, shortcut: ShortcutDescription): Shortcut {
+	public registerShortcut(callback: () => void, shortcut: ShortcutDescription): Shortcut {
 		let index = this._shortcuts.indexOf(null);
 		if (index === -1) {
 			index = this._shortcuts.length;
@@ -40,14 +40,14 @@ class ShortcutManager implements EventListenerObject {
 		return index;
 	}
 
-	unregisterShortcut(shortcut: Shortcut) {
+	public unregisterShortcut(shortcut: Shortcut): void {
 		const description = this._shortcuts[shortcut];
 		if (!description) return;
 		if (!description[0].metaKey && !description[0].ctrlKey) this._plainKeyShortcutCount--;
 		this._shortcuts[shortcut] = null;
 	}
 
-	handleEvent(e: FocusEvent | MouseEvent | KeyboardEvent) {
+	handleEvent(e: FocusEvent | MouseEvent | KeyboardEvent): void {
 		if (e instanceof MouseEvent || e instanceof FocusEvent) {
 			this._node = e.target instanceof Node ? e.target : null;
 			return;

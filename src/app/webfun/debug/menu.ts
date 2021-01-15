@@ -57,7 +57,11 @@ export default (gameController: GameController) => {
 					(await import("src/app/editor")).main(WindowManager.defaultManager, gameController.data),
 				true
 			),
-			SettingsAction("Edit Game Data...", async () => (await import("src/app/editor")).main(), true),
+			SettingsAction(
+				"Edit Game Data...",
+				async () => (await import("src/app/editor")).main(),
+				true
+			),
 			SettingsAction(
 				"Edit Save Game...",
 				async () => (await import("src/app/save-game-editor")).main(),

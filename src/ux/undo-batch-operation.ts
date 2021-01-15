@@ -16,7 +16,7 @@ class UndoBatchOperation extends UndoOperation {
 		this._operations = operations;
 	}
 
-	add(operation: UndoOperation) {
+	public add(operation: UndoOperation): void {
 		this._operations.push(operation);
 	}
 }

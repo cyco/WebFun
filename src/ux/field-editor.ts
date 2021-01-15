@@ -99,7 +99,7 @@ class FieldEditor extends EventTarget {
 		if (this.onend instanceof Function) this.onend();
 	}
 
-	public abort() {
+	public abort(): void {
 		this._restoreNode();
 		this._restoreNodeContents();
 	}

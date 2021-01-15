@@ -21,7 +21,7 @@ class PrefixedStorage implements Storage {
 		return new PrefixedStorage(this._storage, this._buildKey(prefix));
 	}
 
-	clear() {}
+	clear(): void {}
 
 	getItem(key: string): string | null {
 		return this._storage.getItem(this._buildKey(key));
@@ -43,7 +43,7 @@ class PrefixedStorage implements Storage {
 		return `${this.prefix}.${key}`;
 	}
 
-	get prefix() {
+	get prefix(): string {
 		return this._prefix;
 	}
 }

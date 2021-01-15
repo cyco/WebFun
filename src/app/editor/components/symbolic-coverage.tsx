@@ -24,6 +24,15 @@ type DataPoint = {
 const SortDescriptorKey = "sort-column";
 const InvertSortDescriptorKey = "sort-inverted";
 
+type Coverage = {
+	instructions: {
+		[_: number]: number;
+	};
+	conditions: {
+		[_: number]: number;
+	};
+};
+
 type SortDescriptor = (dp1: DataPoint, dp2: DataPoint) => number;
 function sortBy(key: keyof DataPoint) {
 	return (dp1: DataPoint, dp2: DataPoint) => {
@@ -43,14 +52,7 @@ class SymbolicCoverage extends Component {
 	public static readonly observedAttributes: string[] = [];
 	public data: DataManager;
 	private _state: Storage = new DiscardingStorage();
-	private _coverage: {
-		instructions: {
-			[_: number]: number;
-		};
-		conditions: {
-			[_: number]: number;
-		};
-	} = null;
+	private _coverage: Coverage = null;
 	private _invertSortDescriptor = false;
 	private _datapoints: DataPoint[];
 	private _columns: [string, SortDescriptor][] = [
@@ -183,15 +185,10 @@ class SymbolicCoverage extends Component {
 			if (coverage > 0.75) return "high";
 			if (coverage > 0.5) return "medium";
 			return "low";
-
-			if (coverage > 0.75) return "rgb(230,245,208)"; // green (light)
-			if (coverage > 0.5) return "#fff4c2";
-			// yellow (light)
-			else return "#FCE1E5"; // red (light)
 		}
 
 		return (
-			<tr onclick={(e: any) => this.logZonesUsing(dp.opcode, dp.type)}>
+			<tr onclick={() => this.logZonesUsing(dp.opcode, dp.type)}>
 				<td className={colorClass(dp.hits)}>{dp.type}</td>
 				<td className={colorClass(dp.hits)}>{dp.opcode.toHex(2)}</td>
 				<td className={colorClass(dp.hits)}>{dp.name}</td>
@@ -222,25 +219,25 @@ class SymbolicCoverage extends Component {
 
 		this._state.store(
 			SortDescriptorKey,
-			this._columns.findIndex(([_, sd]) => s == sd)
+			this._columns.findIndex(([_, sd]) => s === sd)
 		);
 		this._state.store(InvertSortDescriptorKey, this._invertSortDescriptor);
 
 		this.rebuild();
 	}
 
-	public get sortDescriptor() {
+	public get sortDescriptor(): SortDescriptor {
 		if (this._invertSortDescriptor)
 			return (a: DataPoint, b: DataPoint) => -1 * this._sortDescriptor(a, b);
 
 		return this._sortDescriptor;
 	}
 
-	public set coverage(coverage) {
+	public set coverage(coverage: Coverage) {
 		this._coverage = coverage;
 	}
 
-	public get coverage() {
+	public get coverage(): Coverage {
 		return this._coverage;
 	}
 
@@ -255,7 +252,7 @@ class SymbolicCoverage extends Component {
 		this.rebuild();
 	}
 
-	get state() {
+	get state(): Storage {
 		return this._state;
 	}
 }

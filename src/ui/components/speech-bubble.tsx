@@ -71,11 +71,11 @@ class SpeechBubble extends Component {
 		this.text = newValue;
 	}
 
-	get text() {
+	get text(): string {
 		return this._text.textContent;
 	}
 
-	set text(t) {
+	set text(t: string) {
 		this._text.textContent = t;
 
 		if (!this.isConnected) return;
@@ -200,19 +200,19 @@ class SpeechBubble extends Component {
 		return path.map(([first, ...rest]) => first + rest.join(",")).join(" ");
 	}
 
-	public scrollDown() {
+	public scrollDown(): void {
 		this._scrollBy(1);
 		this._keepScrolling = setTimeout(() => this.scrollDown(), ScrollRepeatInterval);
 		this.stopScrollingOnMouseUp();
 	}
 
-	public scrollUp() {
+	public scrollUp(): void {
 		this._scrollBy(-1);
 		this._keepScrolling = setTimeout(() => this.scrollUp(), ScrollRepeatInterval);
 		this.stopScrollingOnMouseUp();
 	}
 
-	public end() {
+	public end(): void {
 		clearTimeout(this._keepScrolling);
 		this.remove();
 		this.dispatchEvent(new CustomEvent(SpeechBubble.Event.End));
@@ -227,7 +227,7 @@ class SpeechBubble extends Component {
 		});
 	}
 
-	public show(container: HTMLElement = document.body) {
+	public show(container: HTMLElement = document.body): void {
 		container.appendChild(this);
 	}
 

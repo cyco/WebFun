@@ -47,8 +47,6 @@ class CharacterInspectorCell extends Cell<Char> {
 			/>
 		].forEach(c => this.appendChild(c));
 	}
-
-	protected disconnectedCallback(): void {}
 }
 
 export default CharacterInspectorCell;

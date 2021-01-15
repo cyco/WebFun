@@ -10,12 +10,12 @@ class PopoverModalSession extends ModalSession {
 		this._popover = popover;
 	}
 
-	run() {
+	public run(): void {
 		this._overlay.appendChild(this._popover);
 		return super.run();
 	}
 
-	protected _whenOverlayIsGone(callback: Function) {
+	protected _whenOverlayIsGone(callback: Function): void {
 		// HACK: give WebKit time to remove the overlay, so elementFromPoint works correctly
 		if (document.elementFromPoint(0, 0) === this._overlay) {
 			dispatch(() => this._whenOverlayIsGone(callback), 1);

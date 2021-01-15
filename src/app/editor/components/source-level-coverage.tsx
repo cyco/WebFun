@@ -19,6 +19,25 @@ type DataPoint = {
 };
 
 type SortDescriptor = (dp1: DataPoint, dp2: DataPoint) => number;
+
+type Coverage = {
+	zones: {
+		[_: string]: {
+			id: string;
+			type: string;
+			actionCount: string;
+			conditionCount: string;
+			instructionCount: string;
+		};
+	};
+	actions: {
+		[_: string]: {
+			conditions: number[];
+			instructions: number[];
+		};
+	};
+};
+
 function sortBy(key: keyof DataPoint) {
 	return (dp1: DataPoint, dp2: DataPoint) => {
 		return dp1[key] - dp2[key];
@@ -50,23 +69,7 @@ class SourceLevelCoverage extends Component {
 	private _state: Storage = new DiscardingStorage();
 
 	public data: DataManager;
-	private _coverage: {
-		zones: {
-			[_: string]: {
-				id: string;
-				type: string;
-				actionCount: string;
-				conditionCount: string;
-				instructionCount: string;
-			};
-		};
-		actions: {
-			[_: string]: {
-				conditions: number[];
-				instructions: number[];
-			};
-		};
-	} = null;
+	private _coverage: Coverage = null;
 	private _invertSortDescriptor = false;
 	private _datapoints: DataPoint[];
 	private _columns: [string, SortDescriptor][] = [
@@ -246,7 +249,7 @@ class SourceLevelCoverage extends Component {
 		);
 	}
 
-	public set sortDescriptor(s) {
+	public set sortDescriptor(s: SortDescriptor) {
 		if (this._sortDescriptor === s) {
 			this._invertSortDescriptor = !this._invertSortDescriptor;
 		} else {
@@ -256,25 +259,25 @@ class SourceLevelCoverage extends Component {
 
 		this._state.store(
 			SortDescriptorKey,
-			this._columns.findIndex(([_, sd]) => s == sd)
+			this._columns.findIndex(([_, sd]) => s === sd)
 		);
 		this._state.store(InvertSortDescriptorKey, this._invertSortDescriptor);
 
 		this.rebuild();
 	}
 
-	public get sortDescriptor() {
+	public get sortDescriptor(): SortDescriptor {
 		if (this._invertSortDescriptor)
 			return (a: DataPoint, b: DataPoint) => -1 * this._sortDescriptor(a, b);
 
 		return this._sortDescriptor;
 	}
 
-	public set coverage(coverage) {
+	public set coverage(coverage: Coverage) {
 		this._coverage = coverage;
 	}
 
-	public get coverage() {
+	public get coverage(): Coverage {
 		return this._coverage;
 	}
 
@@ -289,7 +292,7 @@ class SourceLevelCoverage extends Component {
 		this.rebuild();
 	}
 
-	get state() {
+	get state(): Storage {
 		return this._state;
 	}
 }

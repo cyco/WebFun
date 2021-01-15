@@ -1,6 +1,6 @@
 import { Array } from "src/std";
 
-const From = <T>(thing: T) => {
+const From = <T>(thing: T): T[] => {
 	return Array.prototype.slice.call(thing);
 };
 

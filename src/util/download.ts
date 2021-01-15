@@ -1,4 +1,3 @@
-import { dispatch } from "src/util";
 import sleep from "./sleep";
 
 const download = (

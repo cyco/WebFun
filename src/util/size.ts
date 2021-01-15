@@ -17,7 +17,7 @@ class Size implements SizeLike {
 		return new Size(this.width * a, this.height * a);
 	}
 
-	toString() {
+	toString(): string {
 		return `Size {${this.width}x${this.height}}`;
 	}
 }

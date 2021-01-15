@@ -15,7 +15,7 @@ class WindowMenuItem extends MenuItem {
 		this.windowManager = windowManager;
 	}
 
-	set submenu(_) {
+	set submenu(_: Menu) {
 		/* disable external submenu overwriting */
 	}
 

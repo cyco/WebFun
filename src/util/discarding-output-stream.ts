@@ -12,71 +12,71 @@ class DiscardingOutputStream extends OutputStream {
 		return null;
 	}
 
-	writeUint8(_: number) {
+	writeUint8(_: number): void {
 		this._offset += Uint8Array.BYTES_PER_ELEMENT;
 	}
 
-	writeUint16(_: number) {
+	writeUint16(_: number): void {
 		this._offset += Uint16Array.BYTES_PER_ELEMENT;
 	}
 
-	writeUint32(_: number) {
+	writeUint32(_: number): void {
 		this._offset += Uint32Array.BYTES_PER_ELEMENT;
 	}
 
-	writeInt8(_: number) {
+	writeInt8(_: number): void {
 		this._offset += Uint8Array.BYTES_PER_ELEMENT;
 	}
 
-	writeInt16(_: number) {
+	writeInt16(_: number): void {
 		this._offset += Uint16Array.BYTES_PER_ELEMENT;
 	}
 
-	writeInt32(_: number) {
+	writeInt32(_: number): void {
 		this._offset += Uint32Array.BYTES_PER_ELEMENT;
 	}
 
-	writeCharacters(string: string) {
+	writeCharacters(string: string): void {
 		for (let i = 0, len = string.length; i < len; i++) {
 			this.writeUint8(string.charCodeAt(i));
 		}
 	}
 
-	writeNullTerminatedString(string: string) {
+	writeNullTerminatedString(string: string): void {
 		this.writeCharacters(string);
 		this.writeUint8(0);
 	}
 
-	writeLengthPrefixedString(string: string) {
+	writeLengthPrefixedString(string: string): void {
 		this.writeUint16(string.length);
 		this.writeCharacters(string);
 	}
 
-	writeLengthPrefixedNullTerminatedString(string: string) {
+	writeLengthPrefixedNullTerminatedString(string: string): void {
 		this.writeUint16(string.length + 1);
 		this.writeCharacters(string);
 		this.writeUint8(0);
 	}
 
-	writeUint8Array(array: number[]) {
+	writeUint8Array(array: number[]): void {
 		for (let i = 0, len = array.length; i < len; i++) {
 			this.writeUint8(array[i]);
 		}
 	}
 
-	writeUint16Array(array: number[]) {
+	writeUint16Array(array: number[]): void {
 		for (let i = 0, len = array.length; i < len; i++) {
 			this.writeUint16(array[i]);
 		}
 	}
 
-	writeInt16Array(array: number[]) {
+	writeInt16Array(array: number[]): void {
 		for (let i = 0, len = array.length; i < len; i++) {
 			this.writeInt16(array[i]);
 		}
 	}
 
-	writeUint32Array(array: number[]) {
+	writeUint32Array(array: number[]): void {
 		for (let i = 0, len = array.length; i < len; i++) {
 			this.writeUint32(array[i]);
 		}
