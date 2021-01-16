@@ -32,7 +32,7 @@ class TilePickerCell extends Cell<Tile> {
 		this.view.tile = tile;
 	}
 
-	get data() {
+	get data(): Tile {
 		return this.view.tile;
 	}
 

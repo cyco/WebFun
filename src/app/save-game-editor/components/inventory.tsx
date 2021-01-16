@@ -63,7 +63,7 @@ class Inventory extends AbstractList<Tile> {
 		this.cell.tiles = t.filter(t => t.name && t.name.length);
 	}
 
-	get tiles() {
+	get tiles(): Tile[] {
 		return this.cell.tiles;
 	}
 

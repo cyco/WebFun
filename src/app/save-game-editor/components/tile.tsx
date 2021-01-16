@@ -33,11 +33,11 @@ class TileComponent extends Component {
 		}
 	}
 
-	get tile() {
+	get tile(): Tile {
 		return this._tile;
 	}
 
-	set palette(p) {
+	set palette(p: ColorPalette) {
 		this._palette = p;
 	}
 

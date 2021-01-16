@@ -2,7 +2,11 @@ import Component from "./component";
 import { iterate } from "src/util";
 
 class ComponentJSXRenderer {
-	render(thing: string | typeof Component | Node, props: any, ...children: any[]) {
+	public render(
+		thing: string | typeof Component | Node,
+		props: any,
+		...children: any[]
+	): Node | Component {
 		let node: Node;
 
 		if (typeof thing === "string") {

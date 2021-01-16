@@ -125,7 +125,7 @@ class Map extends Component {
 		return point.dividedBy({ width: TileSize, height: TileSize }).byFlooring();
 	}
 
-	public redraw() {
+	public redraw(): void {
 		this._drawWorld();
 	}
 }

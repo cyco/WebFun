@@ -25,7 +25,7 @@ class Sector {
 		return this.zone.leadsTo(zone, assets);
 	}
 
-	public get solved() {
+	public get solved(): boolean {
 		if (!this.zone) return false;
 
 		switch (this.zone.type) {

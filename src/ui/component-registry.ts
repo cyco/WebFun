@@ -4,17 +4,19 @@ class ComponentRegistry {
 	private static registry: ComponentRegistry;
 	private components: { [_: string]: typeof Component } = {};
 
-	static get sharedRegistry() {
+	static get sharedRegistry(): ComponentRegistry {
 		return this.registry || (this.registry = new this());
 	}
 
-	public registerComponents(components: { [_: string]: typeof Component } | typeof Component[]) {
+	public registerComponents(
+		components: { [_: string]: typeof Component } | typeof Component[]
+	): void {
 		Object.values(components)
 			.filter(x => x.tagName)
 			.forEach(c => this.registerComponent(c));
 	}
 
-	public registerComponent(ComponentDefinition: typeof Component) {
+	public registerComponent(ComponentDefinition: typeof Component): void {
 		console.assert(
 			!!ComponentDefinition.tagName,
 			`ComponentDefinitions must define a tag to be used!`

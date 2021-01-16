@@ -6,7 +6,7 @@ let sharedMenuStack: MenuStack = null;
 class MenuStack extends EventTarget {
 	private baseIndex: number = 1001;
 	private _stack: MenuWindow[] = [];
-	private _overlay: HTMLElement;
+	private readonly _overlay: HTMLElement;
 
 	constructor() {
 		super();
@@ -25,11 +25,11 @@ class MenuStack extends EventTarget {
 		this._overlay.addEventListener("mousedown", () => this.clear());
 	}
 
-	static get sharedStack() {
+	static get sharedStack(): MenuStack {
 		return (sharedMenuStack = sharedMenuStack || new MenuStack());
 	}
 
-	get size() {
+	get size(): number {
 		return this._stack.length;
 	}
 

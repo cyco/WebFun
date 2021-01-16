@@ -1,4 +1,4 @@
-import { MenuItemSeparator, MenuItemState, WindowManager } from "src/ui";
+import { MenuItemInit, MenuItemSeparator, MenuItemState, WindowManager } from "src/ui";
 
 import GameController from "src/app/webfun/game-controller";
 import Settings from "src/settings";
@@ -10,13 +10,13 @@ const SettingsItem = (label: string, key: keyof typeof Settings, settings: typeo
 	state: (): MenuItemState => (settings[key] ? MenuItemState.On : MenuItemState.Off)
 });
 
-const SettingsAction = (title: string, callback: Function, beta: boolean = false) => ({
+const SettingsAction = (title: string, callback: () => void, beta: boolean = false) => ({
 	title,
 	callback,
 	beta
 });
 
-export default (gameController: GameController) => {
+export default (gameController: GameController): Partial<MenuItemInit> => {
 	import("./initialize").then(({ default: initialize }) => initialize(gameController));
 	import("src/app/editor");
 

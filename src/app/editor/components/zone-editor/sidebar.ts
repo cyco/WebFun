@@ -34,7 +34,7 @@ class Sidebar extends Component {
 		cells.forEach(c => (c.state = this.state.prefixedWith(c.name)));
 	}
 
-	get state() {
+	get state(): Storage {
 		return this._state;
 	}
 }

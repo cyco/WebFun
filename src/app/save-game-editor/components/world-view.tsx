@@ -26,7 +26,7 @@ class WorldView extends Component {
 		this._canvas.draw = ctx => this.draw(ctx);
 	}
 
-	public async connectedCallback() {
+	public async connectedCallback(): Promise<void> {
 		const zoneIds = (world: World) => {
 			const ids = [];
 			for (let y = 0; y < World.Size.height; y++) {
@@ -46,6 +46,10 @@ class WorldView extends Component {
 				drawZone(this.gameData.zones[id], this.palette).toImage()
 			)
 		);
+
+		if (!this.isConnected) {
+			return;
+		}
 
 		this._canvas.width = 10 * 32 * 18;
 		this._canvas.height = 10 * 32 * 18;

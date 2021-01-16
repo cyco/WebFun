@@ -47,7 +47,7 @@ class CoverageInspector extends AbstractInspector {
 			(+state.load(ViewModeStateKey) as ViewMode) || this._viewModeSelector.options[0].value;
 	}
 
-	public async build() {
+	public async build(): Promise<void> {
 		if (!this.coverageLoaded) {
 			this.window.content.textContent = "";
 			this.window.content.appendChild(<ProgressIndicator />);

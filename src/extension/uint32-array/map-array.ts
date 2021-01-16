@@ -2,7 +2,7 @@ import mapArray from "../map-array";
 
 declare global {
 	interface Uint32Array {
-		mapArray<T>(callbackfn: (value: number, index: number, array: Uint32Array) => T): T[];
+		mapArray<T>(cb: (value: number, index: number, array: Uint32Array) => T): T[];
 	}
 }
 

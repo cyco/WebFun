@@ -51,7 +51,7 @@ class TransformCanvas extends Component implements EventListenerObject {
 		super.disconnectedCallback();
 	}
 
-	public handleEvent(event: MouseEvent) {
+	public handleEvent(event: MouseEvent): void {
 		const canvas = this._canvas;
 		const ctx = this.getContext("2d");
 		switch (event.type) {
@@ -96,11 +96,11 @@ class TransformCanvas extends Component implements EventListenerObject {
 		}
 	}
 
-	public redraw() {
+	public redraw(): void {
 		this.draw(this.getContext("2d"));
 	}
 
-	public zoom(clicks: number) {
+	public zoom(clicks: number): void {
 		const ctx = this.getContext("2d");
 		const pt = ctx.transformedPoint(this.lastMouse.x, this.lastMouse.y);
 		ctx.translate(pt.x, pt.y);
@@ -194,19 +194,19 @@ class TransformCanvas extends Component implements EventListenerObject {
 		};
 	}
 
-	set width(w) {
+	set width(w: number) {
 		this._canvas.width = w;
 	}
 
-	get width() {
+	get width(): number {
 		return this._canvas.width;
 	}
 
-	set height(w) {
+	set height(w: number) {
 		this._canvas.height = w;
 	}
 
-	get height() {
+	get height(): number {
 		return this._canvas.height;
 	}
 }

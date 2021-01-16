@@ -1,35 +1,35 @@
 import { Tile } from "src/engine/objects";
 
 class MutableTile extends Tile {
-	public get id() {
+	public get id(): number {
 		return this._id;
 	}
 
-	public set id(value) {
+	public set id(value: number) {
 		this._id = value;
 	}
 
-	public get name() {
+	public get name(): string {
 		return this._name;
 	}
 
-	public set name(value) {
+	public set name(value: string) {
 		this._name = value;
 	}
 
-	public get attributes() {
+	public get attributes(): number {
 		return this._attributes;
 	}
 
-	public set attributes(value) {
+	public set attributes(value: number) {
 		this._attributes = value;
 	}
 
-	public get imageData() {
+	public get imageData(): Uint8Array {
 		return this._imageData;
 	}
 
-	public set imageData(value) {
+	public set imageData(value: Uint8Array) {
 		this._imageData = value;
 	}
 }

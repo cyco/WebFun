@@ -9,8 +9,7 @@ import {
 	InstructionsByOpcode
 } from "src/engine/script";
 
-import { min, max } from "src/std/math";
-import { DiscardingStorage } from "src/util";
+import { clamp, DiscardingStorage } from "src/util";
 import { Engine } from "src/engine";
 import { Zone } from "src/engine/objects";
 
@@ -90,7 +89,7 @@ class SymbolicCoverage extends Component {
 
 	private renderOverview() {
 		function pcnt(percentage: number): string {
-			return (max(0, min(1, percentage)) * 100).toFixed(2).replace(".00", "") + "%";
+			return (clamp(0, percentage, 1) * 100).toFixed(2).replace(".00", "") + "%";
 		}
 		function n(number: number): string {
 			return number.toString();
@@ -209,7 +208,7 @@ class SymbolicCoverage extends Component {
 		console.log(zones.map(z => z.id.toHex(2)));
 	}
 
-	public set sortDescriptor(s) {
+	public set sortDescriptor(s: (dp1: DataPoint, dp2: DataPoint) => number) {
 		if (this._sortDescriptor === s) {
 			this._invertSortDescriptor = !this._invertSortDescriptor;
 		} else {

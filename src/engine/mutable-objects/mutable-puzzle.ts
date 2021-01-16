@@ -1,75 +1,75 @@
-import { Puzzle } from "src/engine/objects";
+import { Puzzle, Tile } from "src/engine/objects";
 
 class MutablePuzzle extends Puzzle {
-	get id() {
+	get id(): number {
 		return this._id;
 	}
 
-	set id(value) {
+	set id(value: number) {
 		this._id = value;
 	}
 
-	get item1() {
+	get item1(): Tile {
 		return this._item1;
 	}
 
-	set item1(value) {
+	set item1(value: Tile) {
 		this._item1 = value;
 	}
 
-	get item2() {
+	get item2(): Tile {
 		return this._item2;
 	}
 
-	set item2(value) {
+	set item2(value: Tile) {
 		this._item2 = value;
 	}
 
-	get strings() {
+	get strings(): string[] {
 		return this._strings;
 	}
 
-	set strings(value) {
+	set strings(value: string[]) {
 		this._strings = value;
 	}
 
-	get name() {
+	get name(): string {
 		return this._name;
 	}
 
-	set name(value) {
+	set name(value: string) {
 		this._name = value;
 	}
 
-	get type() {
+	get type(): Puzzle.Type {
 		return this._type;
 	}
 
-	set type(value) {
+	set type(value: Puzzle.Type) {
 		this._type = value;
 	}
 
-	get unknown1() {
+	get unknown1(): number {
 		return this._unknown1;
 	}
 
-	set unknown1(value) {
+	set unknown1(value: number) {
 		this._unknown1 = value;
 	}
 
-	get unknown2() {
+	get unknown2(): number {
 		return this._unknown2;
 	}
 
-	set unknown2(value) {
+	set unknown2(value: number) {
 		this._unknown2 = value;
 	}
 
-	get unknown3() {
+	get unknown3(): number {
 		return this._unknown3;
 	}
 
-	set unknown3(value) {
+	set unknown3(value: number) {
 		this._unknown3 = value;
 	}
 }

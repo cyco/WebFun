@@ -48,18 +48,18 @@ class CharacterInspector extends AbstractInspector {
 		this._details.character = cell.data;
 	}
 
-	public addCharacter() {
+	public addCharacter(): void {
 		const newCharacter = new MutableChar(this.data.currentData.characters.last());
 		newCharacter.name = "New Character";
 		this.data.currentData.characters.push(newCharacter);
 		this._list.items = this.data.currentData.characters;
 	}
 
-	public renameCharacter(character: MutableChar, name: string) {
+	public renameCharacter(character: MutableChar, name: string): void {
 		character.name = name;
 	}
 
-	public removeCharacter(character: Char) {
+	public removeCharacter(character: Char): void {
 		const index = this.data.currentData.characters.indexOf(character);
 		if (index === -1) return;
 		if (!confirm(`Delete character ${character.id} (${character.name})?`)) {
@@ -69,7 +69,7 @@ class CharacterInspector extends AbstractInspector {
 		this._list.items = this.data.currentData.characters;
 	}
 
-	public build() {
+	public build(): void {
 		this._details.palette = this.data.palette;
 		this._details.sounds = this.data.currentData.sounds.map(s => s.file);
 		this._details.weapons = this.data.currentData.characters.filter(

@@ -11,7 +11,7 @@ export const parseHotspot = (stream: InputStream): Hotspot => {
 	return { type, x, y, enabled, argument };
 };
 
-export const parseHotspots = (stream: InputStream, data: Data) => {
+export const parseHotspots = (stream: InputStream, data: Data): void => {
 	// skip over count
 	stream.readUint32();
 

@@ -24,7 +24,7 @@ class PuzzleInspector extends AbstractInspector {
 		this.window.content.appendChild(this._list);
 	}
 
-	build() {
+	build(): void {
 		const cell = this._list.cell as PuzzleInspectorCell;
 		cell.palette = this.data.palette;
 		this._list.items = this.data.currentData.puzzles;

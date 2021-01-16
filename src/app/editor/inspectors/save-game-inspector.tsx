@@ -42,7 +42,7 @@ class SaveGameInspector extends AbstractInspector {
 		);
 	}
 
-	build() {
+	build(): void {
 		this._editorView.presentState(this.data.state, this.data.currentData, this.data.palette);
 		this.window.content.appendChild(this._editorView);
 	}

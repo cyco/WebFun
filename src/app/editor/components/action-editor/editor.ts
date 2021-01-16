@@ -22,7 +22,7 @@ class Editor extends Component {
 	static readonly observedAttributes: string[] = [];
 	private _actions: Action[];
 	private _shortcuts: Shortcut[];
-	private _errorArea: HTMLDivElement;
+	private readonly _errorArea: HTMLDivElement;
 	private _editorArea: HTMLDivElement;
 	private _zone: Zone;
 	public data: GameData;
@@ -43,8 +43,7 @@ class Editor extends Component {
 	private registerShortcuts() {
 		this._shortcuts = [];
 		const manager = ShortcutManager.sharedManager;
-		let shortcut;
-		shortcut = manager.registerShortcut(() => this.save(), {
+		const shortcut = manager.registerShortcut(() => this.save(), {
 			node: this,
 			metaKey: true,
 			keyCode: 83

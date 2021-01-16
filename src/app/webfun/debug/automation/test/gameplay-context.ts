@@ -11,7 +11,7 @@ import { Tile, Zone, Puzzle, Sound, Char, Action } from "src/engine/objects";
 import { PaletteAnimation, ColorPalette } from "src/engine/rendering";
 import { Renderer as DummyRenderer } from "src/engine/dummy-interface";
 import Settings from "src/settings";
-import { dispatch, Point } from "src/util";
+import { Point } from "src/util";
 import { SimulatedStory } from "src/app/webfun/debug/index";
 import DebuggingScriptProcessingUnit from "src/app/webfun/debug/debugging-script-processing-unit";
 import { ScriptProcessingUnit } from "src/engine/script";

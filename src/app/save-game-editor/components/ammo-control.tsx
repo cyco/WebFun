@@ -17,11 +17,11 @@ class AmmoControl extends Component implements EventListenerObject {
 		this.addEventListener("mousedown", this);
 	}
 
-	attributeValueChanged() {
+	attributeValueChanged(): void {
 		this.vertical = this.hasAttribute("vertical");
 	}
 
-	handleEvent(event: MouseEvent) {
+	handleEvent(event: MouseEvent): void {
 		if (event.type === "mouseup") {
 			document.removeEventListener("mousemove", this, { capture: true } as any);
 		}
@@ -74,11 +74,11 @@ class AmmoControl extends Component implements EventListenerObject {
 		this.value = this._value;
 	}
 
-	get vertical() {
+	get vertical(): boolean {
 		return this._vertical;
 	}
 
-	get value() {
+	get value(): number {
 		return this._value;
 	}
 

@@ -20,7 +20,7 @@ class ZoneView extends Component implements EventListenerObject {
 		this.appendChild(this._canvas);
 	}
 
-	handleEvent() {
+	handleEvent(): void {
 		this.redraw();
 	}
 
@@ -59,7 +59,7 @@ class ZoneView extends Component implements EventListenerObject {
 		this.redraw();
 	}
 
-	get zone() {
+	get zone(): Zone {
 		return this._zone;
 	}
 }

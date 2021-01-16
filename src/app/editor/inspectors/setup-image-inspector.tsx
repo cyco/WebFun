@@ -49,11 +49,11 @@ class SetupImageInspector extends AbstractInspector {
 		);
 	}
 
-	public saveImage() {
+	public saveImage(): void {
 		downloadImage(this._imageEditor.renderedImage, "setup-image.png", "png");
 	}
 
-	public async loadImage() {
+	public async loadImage(): Promise<void> {
 		const [imageFile] = await FilePicker.Pick();
 		const image = await imageFile.readAsImage();
 		document.body.appendChild(image as HTMLImageElement);
@@ -81,7 +81,7 @@ class SetupImageInspector extends AbstractInspector {
 		this._imageEditor.redraw();
 	}
 
-	build() {
+	build(): void {
 		this._colorPicker.palette = this.data.palette;
 		this._imageEditor.palette = this.data.palette;
 		this._imageEditor.image = this.data.currentData.setupImageData;

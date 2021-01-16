@@ -5,19 +5,19 @@ import DataManager from "./data-manager";
 import EditorWindow from "./editor-window";
 import { GameData } from "src/engine";
 
-let Initialize = () => {
+let Initialize = (): void => {
 	ComponentRegistry.sharedRegistry.registerComponents(Components as any);
 	ComponentRegistry.sharedRegistry.registerComponent(EditorWindow);
 	ComponentRegistry.sharedRegistry.registerComponent(EditorView);
 
-	Initialize = () => {};
+	Initialize = (): void => {};
 };
 Initialize();
 
 const main = async (
 	windowManager: WindowManager = WindowManager.defaultManager,
 	data: GameData = null
-) => {
+): Promise<void> => {
 	Initialize();
 	if (data) {
 		const editor = document.createElement(EditorWindow.tagName) as EditorWindow;

@@ -10,7 +10,7 @@ class PaintBucketTool extends AbstractDrawingTool {
 	public readonly icon = "";
 	public readonly shortcut = { keyCode: 71 };
 
-	protected applyTo(point: Point, continuous: boolean) {
+	protected applyTo(point: Point, continuous: boolean): void {
 		if (continuous) return;
 		if (this.layer.locked) return;
 		if (!this.zone.bounds.contains(point)) return;
@@ -24,7 +24,7 @@ class PaintBucketTool extends AbstractDrawingTool {
 		this.dispatchEvent(event);
 	}
 
-	protected drawPreview(point: Point) {
+	protected drawPreview(point: Point): void {
 		this._ctx.fillStyle = HighlightColor;
 		this.findConnectedPoints(point).forEach(p => {
 			this._ctx.fillRect(p.x, p.y, 1, 1);

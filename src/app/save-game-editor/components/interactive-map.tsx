@@ -31,7 +31,7 @@ class InteractiveMap extends Map implements EventListenerObject {
 		this.addEventListener("contextmenu", this);
 	}
 
-	public handleEvent(event: MouseEvent) {
+	public handleEvent(event: MouseEvent): void {
 		const x = event.offsetX;
 		const y = event.offsetY;
 
@@ -99,7 +99,7 @@ class InteractiveMap extends Map implements EventListenerObject {
 		document.body.appendChild(this._highlight);
 	}
 
-	public get highlightTile() {
+	public get highlightTile(): Point {
 		return this._highlightTile;
 	}
 }

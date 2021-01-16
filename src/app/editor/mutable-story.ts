@@ -1,19 +1,20 @@
 import { Story } from "src/engine";
+import World from "src/engine/world";
 
 class MutableStory extends Story {
-	set world(w) {
+	set world(w: World) {
 		this._world = w;
 	}
 
-	get world() {
+	get world(): World {
 		return this._world;
 	}
 
-	set dagobah(d) {
+	set dagobah(d: World) {
 		this._dagobah = d;
 	}
 
-	get dagobah() {
+	get dagobah(): World {
 		return this._dagobah;
 	}
 }

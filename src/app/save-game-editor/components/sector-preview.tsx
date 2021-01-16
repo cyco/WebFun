@@ -25,7 +25,7 @@ class SectorPreview extends Component {
 		super.disconnectedCallback();
 	}
 
-	public get sector() {
+	public get sector(): Sector {
 		return this._sector;
 	}
 

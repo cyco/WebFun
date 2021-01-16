@@ -1,6 +1,6 @@
 import { HTMLImageElement } from "src/std/dom";
 
-const toImageData = function (pixelated: boolean = true) {
+const toImageData = function (pixelated: boolean = true): ImageData {
 	const canvas = document.createElement("canvas");
 	canvas.width = this.width;
 	canvas.height = this.height;

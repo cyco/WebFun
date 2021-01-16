@@ -1,8 +1,8 @@
 import { has, load, store } from "src/extension/storage";
 
 class PrefixedStorage implements Storage {
-	private _prefix: string;
-	private _storage: Storage;
+	private readonly _prefix: string;
+	private readonly _storage: Storage;
 
 	public readonly has = has;
 	public readonly load = load;

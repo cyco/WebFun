@@ -13,7 +13,7 @@ class Menu {
 		return this._items;
 	}
 
-	set items(items) {
+	set items(items: MenuItem[]) {
 		this._items = items;
 	}
 }

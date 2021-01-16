@@ -1,6 +1,6 @@
 import { Array } from "src/std";
 
-const unique = function <T>() {
+const unique = function <T>(): any {
 	return this.sort().filter((item: T, pos: number, ary: T[]) => !pos || item !== ary[pos - 1]);
 };
 

@@ -5,6 +5,7 @@ import { Point, identity } from "src/util";
 import AbstractWindow from "./abstract-window";
 import Component from "../component";
 import Menubar from "./menubar";
+import Menu from "../menu";
 
 class WindowTitlebar extends Component {
 	public static readonly tagName = "wf-window-titlebar";
@@ -14,7 +15,7 @@ class WindowTitlebar extends Component {
 	private _menubar: Menubar = null;
 	private _titleNode: HTMLElement = null;
 	private _window: AbstractWindow;
-	private _closeButton: HTMLElement;
+	private readonly _closeButton: HTMLElement;
 	private _pinButton: HTMLElement;
 	private _buttons: HTMLElement[] = [];
 
@@ -26,7 +27,7 @@ class WindowTitlebar extends Component {
 		this._closeButton.style.display = "";
 	}
 
-	get window() {
+	get window(): AbstractWindow {
 		return this._window;
 	}
 
@@ -37,11 +38,11 @@ class WindowTitlebar extends Component {
 		if (this.movable) this._setupDragging(window);
 	}
 
-	get menu() {
-		return this._menubar?.menu;
+	get menu(): Menu {
+		return this._menubar?.menu || null;
 	}
 
-	set menu(m) {
+	set menu(m: Menu) {
 		if (this._menubar) {
 			this._menubar.remove();
 			this._menubar = null;
@@ -58,11 +59,11 @@ class WindowTitlebar extends Component {
 		}
 	}
 
-	get title() {
+	get title(): string {
 		return this._titleNode ? this._titleNode.innerText : "";
 	}
 
-	set title(t) {
+	set title(t: string) {
 		if (this._titleNode) {
 			this._titleNode.remove();
 			this._titleNode = null;
@@ -79,11 +80,11 @@ class WindowTitlebar extends Component {
 		}
 	}
 
-	get closable() {
+	get closable(): boolean {
 		return this._closeButton.style.display !== "none";
 	}
 
-	set closable(flag) {
+	set closable(flag: boolean) {
 		this._closeButton.style.display = flag ? "" : "none";
 	}
 
@@ -142,7 +143,7 @@ class WindowTitlebar extends Component {
 		}
 	}
 
-	get pinnable() {
+	get pinnable(): boolean {
 		return !!this._pinButton;
 	}
 
@@ -154,11 +155,11 @@ class WindowTitlebar extends Component {
 		if (this.onpin instanceof Function) this.onpin(new CustomEvent("pin"));
 	}
 
-	get pinned() {
+	get pinned(): boolean {
 		return this.pinnable && this._pinButton.classList.contains("on");
 	}
 
-	public addButton(button: HTMLElement) {
+	public addButton(button: HTMLElement): void {
 		this._buttons.push(button);
 		if (this.isConnected) {
 			this.appendChild(button);

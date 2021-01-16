@@ -22,7 +22,7 @@ class ScriptProcessingUnit {
 		this._engine = engine;
 	}
 
-	prepareExecution(mode: Mode, zone: Zone) {
+	prepareExecution(mode: Mode, zone: Zone): void {
 		console.assert(!this._inUse, "Executor is already prepared!");
 		this._executor = this._buildExecutor(mode, zone);
 	}

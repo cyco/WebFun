@@ -11,7 +11,7 @@ class RectangleTool extends AbstractDrawingTool {
 	public readonly shortcut = { keyCode: 85 };
 	private _startingPoint: Point = null;
 
-	protected applyTo(point: Point, _: boolean) {
+	protected applyTo(point: Point, _: boolean): void {
 		if (!this.zone.bounds.contains(point)) return;
 		if (!this._startingPoint) this._startingPoint = point;
 
@@ -21,7 +21,7 @@ class RectangleTool extends AbstractDrawingTool {
 		this._ctx.fillRect(rect.minX, rect.minY, rect.size.width, rect.size.height);
 	}
 
-	protected finalize(point: Point) {
+	protected finalize(point: Point): void {
 		if (this.layer.locked) {
 			this._startingPoint = null;
 			return;
@@ -41,7 +41,7 @@ class RectangleTool extends AbstractDrawingTool {
 		this._startingPoint = null;
 	}
 
-	protected drawPreview(point: Point) {
+	protected drawPreview(point: Point): void {
 		this._startingPoint = point;
 
 		this._ctx.fillStyle = HighlightColor;

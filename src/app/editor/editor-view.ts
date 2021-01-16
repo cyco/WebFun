@@ -61,7 +61,7 @@ class EditorView extends Component {
 		const [file] = await filePicker.pickFile();
 		if (!file) return;
 
-		this.loadSaveGameFile(file);
+		await this.loadSaveGameFile(file);
 	}
 
 	public async loadSaveGameFile(file: File): Promise<void> {

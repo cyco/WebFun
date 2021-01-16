@@ -22,7 +22,7 @@ abstract class AbstractInspector {
 
 	abstract build(): void;
 
-	show() {
+	public show(): void {
 		this.state.store("visible", true);
 		this.windowManager.showWindow(this.window);
 	}
@@ -33,23 +33,23 @@ abstract class AbstractInspector {
 		this.restoreState();
 	}
 
-	get data() {
+	get data(): DataManager {
 		return this._data;
 	}
 
-	protected stateDidChange() {
+	protected stateDidChange(): void {
 		if (this._stateUpdateDelay) return;
 		this._stateUpdateDelay = setTimeout(() => this.updateState(), StateStorageDelay);
 	}
 
-	protected updateState() {
+	protected updateState(): void {
 		if (this._stateUpdateDelay) {
 			clearTimeout(this._stateUpdateDelay);
 		}
 		this._stateUpdateDelay = null;
 	}
 
-	protected restoreState() {
+	protected restoreState(): void {
 		if (this.state.load("visible")) this.show();
 	}
 }

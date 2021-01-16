@@ -4,11 +4,11 @@ import { Yoda } from "src/engine/type";
 import { Tile } from "src/engine/objects";
 
 class WeaponsCheat extends Cheat {
-	get code() {
+	get code(): string {
 		return "gojedi";
 	}
 
-	get message() {
+	get message(): string {
 		return "Super Jedi!";
 	}
 

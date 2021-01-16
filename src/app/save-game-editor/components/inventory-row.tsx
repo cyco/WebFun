@@ -58,7 +58,7 @@ class InventoryRow extends Cell<Tile> {
 		return copy;
 	}
 
-	get data() {
+	get data(): Tile {
 		return this._tile;
 	}
 

@@ -2,17 +2,25 @@ abstract class Component extends HTMLElement {
 	public static readonly tagName: string;
 	public static observedAttributes: string[];
 
-	protected adoptedCallback(): void {}
+	protected adoptedCallback(): void {
+		/* empty definition to ensure subclasses can safely make the super call */
+	}
 
-	protected connectedCallback(): void {}
+	protected connectedCallback(): void {
+		/* empty definition to ensure subclasses can safely make the super call */
+	}
 
-	protected disconnectedCallback(): void {}
+	protected disconnectedCallback(): void {
+		/* empty definition to ensure subclasses can safely make the super call */
+	}
 
 	protected attributeChangedCallback(
 		_attributeName: string,
 		_oldValue: string,
 		_newValue: string
-	): void {}
+	): void {
+		/* empty definition to ensure subclasses can safely make the super call */
+	}
 }
 
 declare global {
@@ -44,7 +52,7 @@ declare global {
 		}
 
 		interface ElementClass extends Component {}
-		interface IntrinsicClassAttributes<T> {
+		interface IntrinsicClassAttributes {
 			[_: string]: any;
 		}
 	}

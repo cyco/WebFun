@@ -13,13 +13,21 @@ abstract class Scene {
 
 	public abstract async update(ticks: number): Promise<void>;
 
-	willShow(): void {}
+	willShow(): void {
+		/* empty definition to ensure subclasses can safely make the super call */
+	}
 
-	didShow(): void {}
+	didShow(): void {
+		/* empty definition to ensure subclasses can safely make the super call */
+	}
 
-	willHide(): void {}
+	willHide(): void {
+		/* empty definition to ensure subclasses can safely make the super call */
+	}
 
-	didHide(): void {}
+	didHide(): void {
+		/* empty definition to ensure subclasses can safely make the super call */
+	}
 
 	isOpaque(): boolean {
 		return true;

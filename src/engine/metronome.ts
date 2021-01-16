@@ -43,7 +43,7 @@ class Metronome extends EventTarget {
 		this._nextTick = performance.now();
 	}
 
-	start() {
+	public start(): void {
 		this._stopped = false;
 		this._nextTick = 0;
 
@@ -68,7 +68,7 @@ class Metronome extends EventTarget {
 		this.onrender();
 	}
 
-	async _executeRenderAndUpdateLoop(now = performance.now()) {
+	private async _executeRenderAndUpdateLoop(now = performance.now()) {
 		if (this._stopped) return;
 
 		this._mainLoop = window.requestAnimationFrame(this._tickCallback);
@@ -110,7 +110,7 @@ class Metronome extends EventTarget {
 		this.dispatchEvent(new MetronomeEvent(Event.Stop));
 	}
 
-	public async withSuspendedUpdates<T>(thing: Function | Promise<T>) {
+	public async withSuspendedUpdates<T>(thing: Function | Promise<T>): Promise<void> {
 		console.assert(!this._updatesSuspended, "withSuspendedUpdates does not support reentry");
 		this._updatesSuspended = true;
 		try {
@@ -131,11 +131,11 @@ class Metronome extends EventTarget {
 		this._tickDuration = t;
 	}
 
-	public get tickDuration() {
+	public get tickDuration(): number {
 		return this._tickDuration;
 	}
 
-	public get tickCount() {
+	public get tickCount(): number {
 		return this._tickCount[0];
 	}
 }

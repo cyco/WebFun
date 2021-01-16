@@ -22,7 +22,7 @@ class EditorWindow extends AbstractWindow {
 		this.content.appendChild(this._progressIndicator);
 	}
 
-	public async loadGameFromStream(stream: InputStream) {
+	public async loadGameFromStream(stream: InputStream): Promise<void> {
 		if (!this._progressIndicator.parentElement) {
 			this.textContent = "";
 			this.content.appendChild(this._progressIndicator);
@@ -47,7 +47,7 @@ class EditorWindow extends AbstractWindow {
 		}
 	}
 
-	public presentSaveGame(saveGame: SaveState, gameData: GameData, palette: ColorPalette) {
+	public presentSaveGame(saveGame: SaveState, gameData: GameData, palette: ColorPalette): void {
 		this._progressIndicator.remove();
 		this._editorView.presentState(saveGame, gameData, palette);
 		this.content.appendChild(this._editorView);

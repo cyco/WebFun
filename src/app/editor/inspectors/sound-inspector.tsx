@@ -38,16 +38,16 @@ class SoundInspector extends AbstractInspector {
 		this.window.content.appendChild(this._list);
 	}
 
-	public build() {
+	public build(): void {
 		this._list.items = this.data.currentData.sounds;
 	}
 
-	public addSound() {
+	public addSound(): void {
 		this.data.currentData.sounds.push(new Sound(this.data.currentData.sounds.length, "New Sound"));
 		this.build();
 	}
 
-	public removeSound(sound: Sound) {
+	public removeSound(sound: Sound): void {
 		const index = this._list.items.indexOf(sound);
 		if (index === -1) return;
 		if (!confirm(`Do you really want to delete sound ${sound.id} (${sound.file})`)) return;
@@ -55,7 +55,7 @@ class SoundInspector extends AbstractInspector {
 		this.build();
 	}
 
-	public renameSound(sound: Sound, name: string) {
+	public renameSound(sound: Sound, name: string): void {
 		const index = this._list.items.indexOf(sound);
 		if (index === -1) return;
 		this.data.currentData.sounds.splice(index, 1, new Sound(index, name));

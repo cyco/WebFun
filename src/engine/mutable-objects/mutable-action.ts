@@ -1,4 +1,4 @@
-import { Action } from "src/engine/objects";
+import { Action, Condition, Instruction, Zone } from "src/engine/objects";
 
 class MutableAction extends Action {
 	constructor(action?: Action) {
@@ -13,43 +13,43 @@ class MutableAction extends Action {
 		this._name = action.name;
 	}
 
-	get id() {
+	get id(): number {
 		return this._id;
 	}
 
-	set id(value) {
+	set id(value: number) {
 		this._id = value;
 	}
 
-	set name(value) {
+	set name(value: string) {
 		this._name = value;
 	}
 
-	get name() {
+	get name(): string {
 		return this._name;
 	}
 
-	set conditions(value) {
+	set conditions(value: Condition[]) {
 		this._conditions = value;
 	}
 
-	get conditions() {
+	get conditions(): Condition[] {
 		return this._conditions;
 	}
 
-	set instructions(value) {
+	set instructions(value: Instruction[]) {
 		this._instructions = value;
 	}
 
-	get instructions() {
+	get instructions(): Instruction[] {
 		return this._instructions;
 	}
 
-	get zone() {
+	get zone(): Zone {
 		return this._zone;
 	}
 
-	set zone(value) {
+	set zone(value: Zone) {
 		this._zone = value;
 	}
 }

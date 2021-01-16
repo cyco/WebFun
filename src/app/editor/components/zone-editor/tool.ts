@@ -64,7 +64,7 @@ class ToolComponent extends Component implements EventListenerObject {
 		}
 	}
 
-	get tool() {
+	get tool(): AbstractTool {
 		return this._tool;
 	}
 }

@@ -34,9 +34,9 @@ declare global {
 class WorldGenerator {
 	public world: World = null;
 	private _seed: number = 0;
-	private _size: WorldSize;
-	private _planet: Planet;
-	private _assets: AssetManager;
+	private readonly _size: WorldSize;
+	private readonly _planet: Planet;
+	private readonly _assets: AssetManager;
 
 	private usedZones: Zone[] = [];
 	private mapGenerator: MapGenerator = null;

@@ -7,8 +7,8 @@ import AssetManager from "./asset-manager";
 
 class World {
 	public static readonly Size = new Size(10, 10);
-	private _sectors: Sector[];
-	private _assets: AssetManager;
+	private readonly _sectors: Sector[];
+	private readonly _assets: AssetManager;
 
 	constructor(assets: AssetManager) {
 		const items = new Array(World.Size.width * World.Size.height);
@@ -58,11 +58,11 @@ class World {
 		return x.y * World.Size.width + x.x;
 	}
 
-	public get sectors() {
+	public get sectors(): Sector[] {
 		return this._sectors;
 	}
 
-	public get bounds() {
+	public get bounds(): Rectangle {
 		return new Rectangle(new Point(0, 0), World.Size);
 	}
 }

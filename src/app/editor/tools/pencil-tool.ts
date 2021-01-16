@@ -16,7 +16,7 @@ class PencilTool extends AbstractDrawingTool {
 		this._ctx.fillStyle = HighlightColor;
 	}
 
-	protected applyTo(p: Point, _: boolean) {
+	protected applyTo(p: Point, _: boolean): void {
 		if (this.layer.locked) return;
 
 		this._ctx.fillStyle = rgba(0, 255, 0, 0.3);
@@ -28,7 +28,7 @@ class PencilTool extends AbstractDrawingTool {
 		this.dispatchEvent(new TileChangeEvent({ affectedPoints: [point] }));
 	}
 
-	protected drawPreview(point: Point) {
+	protected drawPreview(point: Point): void {
 		this._ctx.fillStyle = HighlightColor;
 		this._ctx.fillRect(point.x, point.y, 1, 1);
 	}

@@ -35,7 +35,7 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 		this.appendChild(this._save);
 	}
 
-	public presentState(state: SaveState, data: GameData, palette: ColorPalette) {
+	public presentState(state: SaveState, data: GameData, palette: ColorPalette): void {
 		this._state = state;
 		this._gameData = data;
 		this._palette = palette;

@@ -1,6 +1,6 @@
 import { Array } from "src/std";
 
-const resize = function <T>(targetSize: number, element: T) {
+const resize = function <T>(targetSize: number, element: T): any {
 	this.splice(0, this.length);
 	for (let i = 0; i < targetSize; i++) {
 		this.push(element);

@@ -14,7 +14,7 @@ module.exports = {
 		"eqeqeq": "warn",
 		"react/jsx-uses-vars": "warn",
 		"prefer-const": ["warn", { destructuring: "all" }],
-		"no-unused-vars": ["warn", { argsIgnorePattern: "^_[a-zA-Z0-9_]*$" }],
+		"no-unused-vars": "off",
 		"@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_[a-zA-Z0-9_]*$" }],
 		"no-new-wrappers": "off",
 		"@typescript-eslint/ban-types": "off", // disable because it does not inspect imports

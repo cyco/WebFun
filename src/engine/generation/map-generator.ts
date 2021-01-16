@@ -207,7 +207,7 @@ class MapGenerator {
 		}
 	}
 
-	public generate(seed: number, size: WorldSize) {
+	public generate(seed: number, size: WorldSize): Uint16Array {
 		if (seed >= 0) srand(seed);
 
 		this.travels = 0;
@@ -657,15 +657,15 @@ class MapGenerator {
 		}
 	}
 
-	get puzzleCount() {
+	get puzzleCount(): any {
 		return max(...Array.from(this.orderMap)) + 1;
 	}
 
-	public get orderMap() {
+	public get orderMap(): Uint16Array {
 		return this._orderMap;
 	}
 
-	public get typeMap() {
+	public get typeMap(): Uint16Array {
 		return this._typeMap;
 	}
 }

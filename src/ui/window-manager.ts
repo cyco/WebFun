@@ -15,14 +15,14 @@ class WindowManager implements EventListenerObject {
 		this._container = container;
 	}
 
-	asDefaultManager(block: () => void) {
+	public asDefaultManager(block: () => void): void {
 		const globalManager = WindowManager._defaultManager;
 		WindowManager._defaultManager = this;
 		block();
 		WindowManager._defaultManager = globalManager;
 	}
 
-	showWindow(window: AbstractWindow) {
+	public showWindow(window: AbstractWindow): void {
 		if (~this._windows.indexOf(window)) {
 			this.focus(window);
 			return;
@@ -58,18 +58,18 @@ class WindowManager implements EventListenerObject {
 		}
 	}
 
-	public focus(window: AbstractWindow) {
+	public focus(window: AbstractWindow): void {
 		if (window === this._topMostWindow) return;
 
 		window.style.zIndex = `${this._topIndex++}`;
 		this._topMostWindow = window;
 	}
 
-	public get windows() {
+	public get windows(): AbstractWindow[] {
 		return this._windows;
 	}
 
-	public get topMostWindow() {
+	public get topMostWindow(): AbstractWindow {
 		return this._topMostWindow;
 	}
 }

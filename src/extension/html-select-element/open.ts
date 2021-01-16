@@ -1,6 +1,6 @@
 import { HTMLSelectElement, document, window } from "src/std/dom";
 
-function open() {
+function open(): Promise<unknown> {
 	return new Promise((resolve, reject) =>
 		setTimeout(() => {
 			if (document.createEvent) {

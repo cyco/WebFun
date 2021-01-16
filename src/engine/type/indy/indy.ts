@@ -5,23 +5,23 @@ import LocatorTile from "./locator-tile";
 import Sounds from "./sounds";
 
 class Indy extends GameType {
-	get name() {
+	get name(): string {
 		return "Indy";
 	}
 
-	get saveGameMagic() {
+	get saveGameMagic(): string {
 		return "INDYSAV44";
 	}
 
-	get locatorTile() {
+	get locatorTile(): LocatorTile {
 		return new LocatorTile();
 	}
 
-	get strings() {
+	get strings(): {} {
 		return {};
 	}
 
-	get sounds() {
+	get sounds(): typeof Sounds {
 		return Sounds;
 	}
 

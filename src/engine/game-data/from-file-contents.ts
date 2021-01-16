@@ -1,4 +1,4 @@
-import { Action, Condition, Hotspot, Instruction, Sound, Puzzle, Char, Zone } from "../objects";
+import { Action, Hotspot, Sound, Puzzle, Char, Zone } from "../objects";
 import {
 	MutableAction,
 	MutableChar,
@@ -173,7 +173,7 @@ const makeZone = (raw: RawZone, idx: number, data: GameData) => {
 	return zone;
 };
 
-export default (data: any, raw: RawData) => {
+export default (data: any, raw: RawData): void => {
 	data._rawInput = raw;
 	data._type = raw.type;
 	data._version = raw.version;

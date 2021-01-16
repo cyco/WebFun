@@ -53,7 +53,7 @@ class PaletteInspector extends AbstractInspector {
 		this.window.addTitlebarButton(this._animate);
 	}
 
-	async downloadPalette() {
+	async downloadPalette(): Promise<void> {
 		const type = await ModalPrompt("Pick file format:", {
 			defaultValue: "gpl",
 			options: [
@@ -76,13 +76,13 @@ class PaletteInspector extends AbstractInspector {
 		this.state.store("color", this._colorPicker.color);
 	}
 
-	public build() {
+	public build(): void {
 		this._paletteView.palette = this.data.palette;
 		this._paletteView.color = this.state.load("color") || rgba(0, 0, 0, 0);
 		this._paletteView.redraw();
 	}
 
-	public togglePaletteAnimation() {
+	public togglePaletteAnimation(): void {
 		if (!this._animator) {
 			this._animator = new PaletteAnimation(this.data.palette);
 		}

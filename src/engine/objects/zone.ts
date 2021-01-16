@@ -55,11 +55,7 @@ class Zone {
 	}
 
 	getTile(x: number | PointLike, y?: number, z?: number): Tile {
-		if (typeof x === "object") {
-			y = x.y;
-			z = x.z;
-			x = x.x;
-		}
+		({ x, y, z } = this.normalizeInput(x, y, z));
 
 		if (!this.bounds.contains(new Point(x, y))) {
 			console.warn("Missing bounds check");
@@ -73,12 +69,8 @@ class Zone {
 		return this._tileStore[index];
 	}
 
-	setTile(tile: Tile, x: number | PointLike, y: number = null, z: number = null): void {
-		if (typeof x === "object") {
-			y = x.y;
-			z = x.z;
-			x = x.x;
-		}
+	setTile(tile: Tile, x: number | PointLike, y?: number, z?: number): void {
+		({ x, y, z } = this.normalizeInput(x, y, z));
 
 		if (!this.bounds.contains(new Point(x, y))) {
 			console.warn("Missing bounds check");
@@ -91,13 +83,15 @@ class Zone {
 	}
 
 	placeWalkable(x: number | PointLike, y?: number): boolean {
-		if (typeof x === "object") {
-			y = x.y;
-			x = x.x;
-		}
+		({ x, y } = this.normalizeInput(x, y));
 
 		const object = this.getTile(x, y, 1);
 		return !object;
+	}
+
+	private normalizeInput(x: number | PointLike, y: number = null, z: number = null) {
+		if (typeof x === "object") return x;
+		return { x, y, z };
 	}
 
 	leadsTo(needleZone: Zone, assets: AssetManager): boolean {
@@ -209,11 +203,11 @@ class Zone {
 		return this._hotspots;
 	}
 
-	get tileStore() {
+	get tileStore(): Tile[] {
 		return this._tileStore;
 	}
 
-	get zoneStore() {
+	get zoneStore(): Zone[] {
 		return this._zoneStore;
 	}
 

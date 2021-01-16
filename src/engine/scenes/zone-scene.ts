@@ -218,8 +218,6 @@ class ZoneScene extends Scene {
 		this.camera.hero = this.engine.hero;
 	}
 
-	public willHide(): void {}
-
 	private async handleInput(ticks: number): Promise<boolean> {
 		const engine = this.engine;
 		const inputManager = engine.inputManager;
@@ -390,8 +388,7 @@ class ZoneScene extends Scene {
 		}
 
 		this.engine.spu.prepareExecution(EvaluationMode.PlaceItem, this.zone);
-		const result = await this.engine.spu.run();
-		return result;
+		return await this.engine.spu.run();
 	}
 
 	get zone(): Zone {

@@ -22,27 +22,27 @@ class Story {
 		this._size = size;
 	}
 
-	get seed() {
+	get seed(): number {
 		return this._seed;
 	}
 
-	get planet() {
+	get planet(): Planet {
 		return this._planet;
 	}
 
-	get size() {
+	get size(): WorldSize {
 		return this._size;
 	}
 
-	get world() {
+	get world(): World {
 		return this._world;
 	}
 
-	get dagobah() {
+	get dagobah(): World {
 		return this._dagobah;
 	}
 
-	get puzzles() {
+	get puzzles(): [Puzzle[], Puzzle[]] {
 		return this._puzzles;
 	}
 

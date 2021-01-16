@@ -21,7 +21,7 @@ class DagobahGenerator {
 		this.assets = assets;
 	}
 
-	get world() {
+	get world(): World {
 		console.assert(this._world !== null);
 		return this._world;
 	}

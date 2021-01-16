@@ -1,4 +1,4 @@
-const withType = function <T>(searchType: T) {
+const withType = function <T>(searchType: T): any {
 	return this.filter(({ type }: { type: T }) => type === searchType);
 };
 

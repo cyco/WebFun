@@ -2,7 +2,7 @@ import { HTMLCollection } from "src/std/dom";
 
 const map = function <T extends Element, U>(
 	cb: (_: T, idx: number, collection: HTMLCollectionOf<T>) => U
-) {
+): U[] {
 	const result = [];
 	for (let i = 0, len = this.length; i < len; i++) {
 		result.push(cb(this[i], i, this));

@@ -4,13 +4,11 @@ import { AudioContext } from "src/std/webaudio";
 import Settings from "src/settings";
 
 class Mixer implements MixerInterface {
-	public muted: boolean;
-
-	private _context: AudioContext;
-	private _settings: typeof Settings;
-	private _master: GainNode;
-	private _effects: GainNode;
-	private _music: GainNode;
+	private readonly _context: AudioContext;
+	private readonly _settings: typeof Settings;
+	private readonly _master: GainNode;
+	private readonly _effects: GainNode;
+	private readonly _music: GainNode;
 
 	constructor(settings: typeof Settings) {
 		this._context = new AudioContext();

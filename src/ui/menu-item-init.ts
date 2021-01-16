@@ -1,11 +1,12 @@
 import Menu from "./menu";
 import MenuItem from "./menu-item";
+import MenuItemState from "./menu-item-state";
 
 declare interface MenuItemInit {
 	title: string;
-	state: number | Function;
-	callback: Function;
-	enabled: boolean | Function;
+	state: number | (() => MenuItemState);
+	callback: () => void;
+	enabled: boolean | (() => boolean);
 	mnemonic: number;
 	submenu?: Menu | MenuItem[] | Partial<MenuItemInit>[];
 	beta: boolean;

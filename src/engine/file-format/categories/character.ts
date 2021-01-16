@@ -43,7 +43,7 @@ const parseCharacter = (stream: InputStream, data: Data, gameType: GameType): Ch
 	};
 };
 
-export const parseCharacters = (stream: InputStream, data: Data, type: GameType) => {
+export const parseCharacters = (stream: InputStream, data: Data, type: GameType): void => {
 	// skip over size
 	stream.readUint32();
 	const characters = [];
@@ -58,7 +58,7 @@ export const parseCharacters = (stream: InputStream, data: Data, type: GameType)
 	data.characters = characters;
 };
 
-export const parseCharacterAux = (stream: InputStream, data: Data) => {
+export const parseCharacterAux = (stream: InputStream, data: Data): void => {
 	// skip over size
 	stream.readUint32();
 
@@ -70,12 +70,12 @@ export const parseCharacterAux = (stream: InputStream, data: Data) => {
 	} while (true);
 };
 
-export const parseCharacterAux1 = (stream: InputStream, data: Data, index: number) => {
+export const parseCharacterAux1 = (stream: InputStream, data: Data, index: number): void => {
 	const damage = stream.readInt16();
 	data.characters[index].damage = damage;
 };
 
-export const parseCharacterWeapon = (stream: InputStream, data: Data, index: number) => {
+export const parseCharacterWeapon = (stream: InputStream, data: Data, index: number): void => {
 	const reference = stream.readInt16();
 	const health = stream.readInt16();
 

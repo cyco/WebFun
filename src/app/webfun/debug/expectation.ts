@@ -2,7 +2,7 @@ export const PrepareExpectations = (string: string): string[] => {
 	return string.split("\n");
 };
 
-export const ParseExpectation = (expectation: any, line: number) => {
+export const ParseExpectation = (expectation: string, line: number): { seed: number } => {
 	if (!expectation) {
 		return { seed: -1 };
 	}

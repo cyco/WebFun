@@ -16,13 +16,13 @@ interface Run {
 }
 
 class IslandBuilder {
-	private typeMap: WorldMap;
+	private readonly typeMap: WorldMap;
 
 	constructor(world: WorldMap) {
 		this.typeMap = world;
 	}
 
-	public placeIslands(count: number) {
+	public placeIslands(count: number): void {
 		for (let i = 0; i < count; i++) {
 			this._placeIsland();
 		}

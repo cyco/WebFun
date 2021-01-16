@@ -3,17 +3,18 @@ import Menu from "./menu";
 import MenuItemDefaults from "./menu-item-defaults";
 import MenuItemInit from "./menu-item-init";
 import State from "./menu-item-state";
+import MenuItemState from "./menu-item-state";
 
 class MenuItem extends EventTarget {
 	public static readonly State = State;
 	public title: string;
-	private _state: number | Function;
-	public callback: Function;
+	private readonly _state: number | (() => MenuItemState);
+	public callback: () => void;
 	public submenu: Menu;
 	public mnemonic: number;
 	public isSeparator: boolean = false;
-	private _enabled: boolean | Function;
-	private _beta: boolean;
+	private _enabled: boolean | (() => boolean);
+	private readonly _beta: boolean;
 
 	constructor(item: Partial<MenuItemInit> = {}) {
 		super();
@@ -39,7 +40,7 @@ class MenuItem extends EventTarget {
 		return this._enabled;
 	}
 
-	set enabled(flag) {
+	set enabled(flag: boolean) {
 		this._enabled = flag;
 	}
 
@@ -47,12 +48,12 @@ class MenuItem extends EventTarget {
 		return !!this.submenu;
 	}
 
-	get state() {
+	get state(): MenuItemState {
 		if (this._state instanceof Function) return this._state();
 		return this._state;
 	}
 
-	get beta() {
+	get beta(): boolean {
 		return this._beta;
 	}
 }

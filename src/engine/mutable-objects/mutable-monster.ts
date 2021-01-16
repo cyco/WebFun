@@ -1,43 +1,44 @@
 import { Monster } from "src/engine/objects";
+import { Point } from "../../util";
 
 class MutableMonster extends Monster {
-	get id() {
+	get id(): number {
 		return this._id;
 	}
 
-	set id(id) {
+	set id(id: number) {
 		this._id = id;
 	}
 
-	get position() {
+	get position(): Point {
 		return this._position;
 	}
 
-	set position(position) {
+	set position(position: Point) {
 		this._position = position;
 	}
 
-	get loot() {
+	get loot(): number {
 		return this._loot;
 	}
 
-	set loot(loot) {
+	set loot(loot: number) {
 		this._loot = loot;
 	}
 
-	set dropsLoot(dropsLoot) {
+	set dropsLoot(dropsLoot: boolean) {
 		this._dropsLoot = dropsLoot;
 	}
 
-	get dropsLoot() {
+	get dropsLoot(): boolean {
 		return this._dropsLoot;
 	}
 
-	get waypoints() {
+	get waypoints(): Point[] {
 		return this._waypoints;
 	}
 
-	set waypoints(waypoints) {
+	set waypoints(waypoints: Point[]) {
 		this._waypoints = waypoints;
 	}
 }

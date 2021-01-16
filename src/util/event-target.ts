@@ -1,18 +1,17 @@
-let globalInstance: EventTarget;
-
 class EventTarget {
+	private static globalInstance = new EventTarget();
 	private listeners: { [_: string]: (EventListener | EventListenerObject)[] } = {};
 
 	static addEventListener(type: string, listener: EventListener | EventListenerObject): void {
-		globalInstance.addEventListener(type, listener);
+		EventTarget.globalInstance.addEventListener(type, listener);
 	}
 
 	static removeEventListener(type: string, listener: EventListener | EventListenerObject): void {
-		globalInstance.removeEventListener(type, listener);
+		EventTarget.globalInstance.removeEventListener(type, listener);
 	}
 
 	static dispatchEvent(type: string | Event, detail?: any): void {
-		globalInstance.dispatchEvent(type, detail);
+		EventTarget.globalInstance.dispatchEvent(type, detail);
 	}
 
 	addEventListener(type: string, listener: EventListener | EventListenerObject): void {
@@ -65,8 +64,8 @@ class EventTarget {
 			} else listener.handleEvent(event);
 		}
 
-		if (this !== globalInstance) {
-			globalInstance.dispatchEvent(type, detail);
+		if (this !== EventTarget.globalInstance) {
+			EventTarget.globalInstance.dispatchEvent(type, detail);
 		}
 	}
 
@@ -77,5 +76,4 @@ class EventTarget {
 	}
 }
 
-globalInstance = new EventTarget();
 export default EventTarget;

@@ -16,7 +16,7 @@ class InteractiveHealth extends AbstractHealth implements EventListenerObject {
 		this.addEventListener("mousedown", this);
 	}
 
-	handleEvent(event: MouseEvent) {
+	handleEvent(event: MouseEvent): void {
 		if (event.type === "mousedown") {
 			document.addEventListener("mouseup", this, { capture: true } as any);
 			document.addEventListener("mousemove", this, { capture: true } as any);

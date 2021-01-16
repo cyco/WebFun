@@ -1,7 +1,7 @@
 import { InputStream } from "src/util";
 import ParseError from "./parse-error";
 
-export const error = (message: string | Error | ParseError, _?: InputStream) => {
+export const error = (message: string | Error | ParseError, _?: InputStream): void => {
 	let error: ParseError = null;
 
 	if (message instanceof ParseError) {
@@ -17,7 +17,7 @@ export const error = (message: string | Error | ParseError, _?: InputStream) => 
 	throw error;
 };
 
-export const assert = (condition: boolean, err: string | Error, stream: InputStream) => {
+export const assert = (condition: boolean, err: string | Error, stream: InputStream): void => {
 	if (!condition) error(err, stream);
 };
 

@@ -23,7 +23,7 @@ class Action extends Component {
 		this.onclick = () => this._action.command();
 	}
 
-	get action() {
+	get action(): ActionDescription {
 		return this._action;
 	}
 }

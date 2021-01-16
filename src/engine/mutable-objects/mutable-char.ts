@@ -18,83 +18,83 @@ class MutableChar extends Char {
 		this._health = char.health;
 	}
 
-	public set id(id) {
+	public set id(id: number) {
 		this._id = id;
 	}
 
-	public get id() {
+	public get id(): number {
 		return this._id;
 	}
 
-	public set name(name) {
+	public set name(name: string) {
 		this._name = name;
 	}
 
-	public get name() {
+	public get name(): string {
 		return this._name;
 	}
 
-	public set frames(frames) {
+	public set frames(frames: [Char.Frame, Char.Frame, Char.Frame]) {
 		this._frames = frames;
 	}
 
-	public get frames() {
+	public get frames(): [Char.Frame, Char.Frame, Char.Frame] {
 		return this._frames;
 	}
 
-	public set type(type) {
+	public set type(type: Char.Type) {
 		this._type = type;
 	}
 
-	public get type() {
+	public get type(): Char.Type {
 		return this._type;
 	}
 
-	public set movementType(movementType) {
+	public set movementType(movementType: Char.MovementType) {
 		this._movementType = movementType;
 	}
 
-	public get movementType() {
+	public get movementType(): Char.MovementType {
 		return this._movementType;
 	}
 
-	public set garbage1(garbage1) {
+	public set garbage1(garbage1: number) {
 		this._garbage1 = garbage1;
 	}
 
-	public get garbage1() {
+	public get garbage1(): number {
 		return this._garbage1;
 	}
 
-	public set garbage2(garbage2) {
+	public set garbage2(garbage2: number) {
 		this._garbage2 = garbage2;
 	}
 
-	public get garbage2() {
+	public get garbage2(): number {
 		return this._garbage2;
 	}
 
-	public set damage(d) {
+	public set damage(d: number) {
 		this._damage = d;
 	}
 
-	public get damage() {
+	public get damage(): number {
 		return this._damage;
 	}
 
-	public get health() {
+	public get health(): number {
 		return this._health;
 	}
 
-	public set health(s) {
+	public set health(s: number) {
 		this._health = s;
 	}
 
-	public set reference(r) {
+	public set reference(r: number) {
 		this._reference = r;
 	}
 
-	public get reference() {
+	public get reference(): number {
 		return this._reference;
 	}
 }

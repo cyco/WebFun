@@ -9,7 +9,7 @@ class NoTool extends AbstractTool implements EventListenerObject {
 	public readonly icon = "";
 	private _ctx: CanvasRenderingContext2D;
 
-	public activate(zone: Zone, overlay: HTMLCanvasElement) {
+	public activate(zone: Zone, overlay: HTMLCanvasElement): void {
 		super.activate(zone, overlay);
 
 		this.canvas.addEventListener("mousemove", this);
@@ -51,7 +51,7 @@ class NoTool extends AbstractTool implements EventListenerObject {
 		this._ctx.fillText(text, location.x, location.y + 13 / 2);
 	}
 
-	protected extractTileCoordinates(event: MouseEvent) {
+	protected extractTileCoordinates(event: MouseEvent): Point {
 		const zone = this.zone;
 
 		const offset = event.offsetIn(this.canvas);
@@ -62,7 +62,7 @@ class NoTool extends AbstractTool implements EventListenerObject {
 		return point;
 	}
 
-	public deactivate() {
+	public deactivate(): void {
 		this.canvas.removeEventListener("mousemove", this);
 		this.canvas.removeEventListener("mouseenter", this);
 		this.canvas.removeEventListener("mouseleave", this);

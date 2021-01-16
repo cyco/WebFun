@@ -18,11 +18,11 @@ class GameData {
 		fromFileContents(this, raw);
 	}
 
-	public copy() {
+	public copy(): GameData {
 		return new GameData(this._rawInput);
 	}
 
-	public resetAfterWorldGeneration() {
+	public resetAfterWorldGeneration(): void {
 		// TODO: UNDO
 		// const puzzle: MutablePuzzle = this._assets.get(Puzzle, Yoda.goalIDs.RESCUE_YODA) as any;
 		// puzzle.type = Puzzle.Type.End;

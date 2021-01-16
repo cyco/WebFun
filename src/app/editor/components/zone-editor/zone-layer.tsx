@@ -108,7 +108,7 @@ class ZoneLayer extends Component {
 		imageData.data.set(byteArray);
 	}
 
-	public update(points: Point[]) {
+	public update(points: Point[]): void {
 		if (this._layer === null) return;
 		if (!this._zone) return;
 
@@ -134,7 +134,7 @@ class ZoneLayer extends Component {
 		if (this.isConnected) this.draw();
 	}
 
-	get zone() {
+	get zone(): Zone {
 		return this._zone;
 	}
 
@@ -145,7 +145,7 @@ class ZoneLayer extends Component {
 		if (this.isConnected) this.draw();
 	}
 
-	get layer() {
+	get layer(): number {
 		return this._layer;
 	}
 

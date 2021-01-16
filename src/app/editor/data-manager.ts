@@ -13,7 +13,7 @@ class DataManager {
 		this._type = type;
 	}
 
-	get currentData() {
+	get currentData(): GameData {
 		return this._currentData;
 	}
 
@@ -21,7 +21,7 @@ class DataManager {
 		return this._palette;
 	}
 
-	get type() {
+	get type(): GameType {
 		return this._type;
 	}
 

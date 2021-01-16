@@ -164,13 +164,13 @@ class SidebarLayersCell extends Component {
 		return this.querySelector(SidebarLayer.tagName + ".active") as SidebarLayer;
 	}
 
-	public activateLayer(idx: number) {
+	public activateLayer(idx: number): void {
 		const layer = this._list.querySelectorAll(SidebarLayer.tagName)[idx] as SidebarLayer;
 		if (layer.classList.contains("active")) return;
 		this.activateLayerForCell(layer);
 	}
 
-	public activateLayerForCell(cell: SidebarLayer) {
+	public activateLayerForCell(cell: SidebarLayer): void {
 		const currentLayer = this._list.querySelector(SidebarLayer.tagName + ".active");
 		if (currentLayer) currentLayer.classList.remove("active");
 

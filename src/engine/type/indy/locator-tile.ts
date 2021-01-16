@@ -5,11 +5,11 @@ import LocatorTile from "src/engine/types/locator-tile";
 import { rgb } from "src/util";
 
 export default class extends LocatorTile {
-	get here() {
+	get here(): number {
 		return 639;
 	}
 
-	get backgroundColor() {
+	get backgroundColor(): string {
 		return rgb(79, 79, 15);
 	}
 

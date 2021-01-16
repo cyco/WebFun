@@ -72,7 +72,7 @@ class Inventory extends EventTarget {
 		this._items.forEach(fn);
 	}
 
-	get items() {
+	get items(): Tile[] {
 		return this._items.slice();
 	}
 }

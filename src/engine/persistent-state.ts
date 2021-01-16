@@ -5,5 +5,5 @@ let State = {
 	gamesWon: 0,
 	gamesLost: 0
 };
-export const loadState = () => (State = persistent(State, "settings"));
+export const loadState = (): typeof State => (State = persistent(State, "settings"));
 export default State;

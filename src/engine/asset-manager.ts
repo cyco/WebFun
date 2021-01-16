@@ -4,7 +4,7 @@ interface AssetType<T> {
 
 type MissingEntityHandler = <T>(type: AssetType<T>, id?: number) => T;
 const NullIfMissing = (): null => null;
-const ThrowIfMissing = <T>(type: AssetType<T>, id: number = null) => {
+const ThrowIfMissing = <T>(type: AssetType<T>, id: number = null): never => {
 	throw new Error(`Entity ${id} of type ${type} cannot be found`);
 };
 

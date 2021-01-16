@@ -1,7 +1,7 @@
 import { Array } from "src/std";
 import { NodeList } from "src/std/dom";
 
-const find = function <TNode extends Node>(predicate: (_: TNode) => boolean) {
+const find = function <TNode extends Node>(predicate: (_: TNode) => boolean): TNode {
 	return Array.from(this).find(predicate) || null;
 };
 

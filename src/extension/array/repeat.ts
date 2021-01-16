@@ -1,6 +1,6 @@
 import { Array } from "src/std";
 
-const repeat = <T>(item: T, count: number) => Array(count).fill(item);
+const repeat = <T>(item: T, count: number): T[] => Array(count).fill(item);
 
 Array.Repeat = Array.Repeat || repeat;
 

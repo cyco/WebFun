@@ -8,14 +8,14 @@ export type ConditionStore = ConditionImplementation[];
 
 class ConditionChecker {
 	public engine: Engine;
-	private _conditions: ConditionStore;
+	private readonly _conditions: ConditionStore;
 
 	constructor(conditions: ConditionStore, engine: Engine = null) {
 		this.engine = engine;
 		this._conditions = conditions;
 	}
 
-	public async check(condition: Condition, mode: EvaluationMode, zone: Zone) {
+	public async check(condition: Condition, mode: EvaluationMode, zone: Zone): Promise<boolean> {
 		const handler = this._conditions[condition.opcode];
 		console.assert(!!handler, `Unknown condition opcode 0x${condition.opcode.toString(0x10)}!`);
 
