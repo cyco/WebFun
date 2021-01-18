@@ -8,7 +8,6 @@ import {
 	HotspotResolver,
 	SoundResolver,
 	TileResolver,
-	PuzzleResolver,
 	CharResolver
 } from "./resolvers";
 
@@ -21,7 +20,6 @@ class Resolver {
 		this.resolvers.set(Monster, new MonsterResolver(data));
 		this.resolvers.set(Sound, new SoundResolver(data));
 		this.resolvers.set(Tile, new TileResolver(data));
-		this.resolvers.set(Puzzle, new PuzzleResolver(data));
 		this.resolvers.set(Char, new CharResolver(data));
 	}
 

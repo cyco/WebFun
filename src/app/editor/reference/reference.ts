@@ -23,17 +23,16 @@ export type Reference =
 	| Ref<Hotspot, Hotspot, ["id"]>
 	| Ref<Tile, Tile, ["id"]>
 	| Ref<Sound, Sound, ["id"]>
+	| Ref<Char, Monster, [Zone]>
+	| Ref<Char, Char, ["weapon"]>
 	| Ref<Char, Char, ["id"]>
 	| Ref<Monster, Monster, ["id"]>
-	| Ref<Puzzle, Puzzle, ["id"]>
 	| Ref<Monster, Zone>
 	| Ref<Monster, Condition, [Zone, Action]>
 	| Ref<Monster, Instruction, [Zone, Action]>
 	| Ref<Sound, Instruction, [Zone, Action]>
 	| Ref<Sound, Char>
 	// lookup not implemented yet:
-	| Ref<Char, Monster>
-	| Ref<Char, Char>
 	| Ref<Tile, Char>
 	| Ref<Tile, Condition, [Zone, Action]>
 	| Ref<Tile, Instruction, [Zone, Action]>
@@ -42,8 +41,7 @@ export type Reference =
 	| Ref<Tile, Zone, ["goalItems"]>
 	| Ref<Tile, Zone, ["requiredItems"]>
 	| Ref<Tile, Zone, ["providedItems"]>
-	| Ref<Tile, Puzzle>
-	| Ref<Puzzle, Condition, [Zone, Action]>;
+	| Ref<Tile, Puzzle>;
 export type Resolvable = Reference["to"];
 export type ReferenceTo<T> = Extract<Reference, { to: T }>;
 export type ReferencesTo<T> = ReferenceTo<T>[];

@@ -1,4 +1,4 @@
-import { Zone, Hotspot, Monster, Sound, Tile, Char, Puzzle } from "src/engine/objects";
+import { Zone, Hotspot, Monster, Sound, Tile, Char } from "src/engine/objects";
 import GameData from "src/engine/game-data";
 import ReferenceResolver from "./resolver";
 import { greaterThan } from "src/util/functional";
@@ -12,7 +12,7 @@ class Updater {
 		this.data = data;
 	}
 
-	public deleteItem(thing: Zone | Hotspot | Monster | Sound | Tile | Char | Puzzle): void {
+	public deleteItem(thing: Zone | Hotspot | Monster | Sound | Tile | Char): void {
 		const resolver = new ReferenceResolver(this.data);
 		const references = resolver.find(thing);
 		const outdatedReferences = resolver.find(thing, greaterThan);
@@ -41,10 +41,6 @@ class Updater {
 
 		if (thing instanceof Char) {
 			this.removeItemFrom(thing, this.data.characters);
-		}
-
-		if (thing instanceof Puzzle) {
-			this.removeItemFrom(thing, this.data.puzzles);
 		}
 	}
 
