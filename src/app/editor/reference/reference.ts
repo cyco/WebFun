@@ -29,9 +29,9 @@ export type Reference =
 	| Ref<Monster, Zone>
 	| Ref<Monster, Condition, [Zone, Action]>
 	| Ref<Monster, Instruction, [Zone, Action]>
-	// lookup not implemented yet:
 	| Ref<Sound, Instruction, [Zone, Action]>
 	| Ref<Sound, Char>
+	// lookup not implemented yet:
 	| Ref<Char, Monster>
 	| Ref<Char, Char>
 	| Ref<Tile, Char>
