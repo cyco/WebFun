@@ -9,6 +9,8 @@ import { ModalPrompt } from "src/ux";
 import { MutableMonster } from "src/engine/mutable-objects";
 import MonsterLayerMonster from "./monster-layer-monster";
 import { Point } from "src/util";
+import {Updater} from "../../reference";
+import ServiceContainer from "../../service-container";
 
 class MonsterLayer extends Component {
 	public static readonly tagName = "wf-monster-layer";
@@ -17,6 +19,7 @@ class MonsterLayer extends Component {
 	public tiles: Tile[] = [];
 	public characters: Char[] = [];
 	private _zone: Zone = null;
+	private updater: Updater = ServiceContainer.default.get(Updater);
 
 	protected connectedCallback(): void {
 		this.draw();
@@ -123,7 +126,7 @@ class MonsterLayer extends Component {
 					{
 						title: "Remove",
 						callback: () => {
-							this.zone.monsters.splice(this.zone.monsters.indexOf(monsters[0]), 1);
+							this.updater.deleteItem(monsters[0]);
 							this.draw();
 						}
 					}

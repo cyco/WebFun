@@ -26,12 +26,12 @@ export type Reference =
 	| Ref<Char, Char, ["id"]>
 	| Ref<Monster, Monster, ["id"]>
 	| Ref<Puzzle, Puzzle, ["id"]>
-	// lookup not implemented yet:
-	| Ref<Sound, Instruction, [Zone, Action]>
-	| Ref<Sound, Char>
 	| Ref<Monster, Zone>
 	| Ref<Monster, Condition, [Zone, Action]>
 	| Ref<Monster, Instruction, [Zone, Action]>
+	// lookup not implemented yet:
+	| Ref<Sound, Instruction, [Zone, Action]>
+	| Ref<Sound, Char>
 	| Ref<Char, Monster>
 	| Ref<Char, Char>
 	| Ref<Tile, Char>

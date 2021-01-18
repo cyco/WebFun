@@ -1,7 +1,7 @@
 import "./editor-window.scss";
 
 import { AbstractWindow, ProgressIndicator } from "src/ui/components";
-import { GameData, GameType, GameTypeIndy, GameTypeYoda, readGameDataFile } from "src/engine";
+import { GameData, GameType, GameTypeIndy, GameTypeYoda, readGameDataFile, ColorPalette } from "src/engine";
 import { Menu, WindowMenuItem } from "src/ui";
 
 import CharacterInspector from "src/app/editor/inspectors/character-inspector";
@@ -18,12 +18,15 @@ import ZoneInspector from "src/app/editor/inspectors/zone-inspector";
 import CoverageInspector from "src/app/editor/inspectors/coverage-inspector";
 
 import buildEditorMenu from "./menu";
+import ServiceContainer from "./service-container";
+import { Resolver, Updater } from "./reference";
 
 class EditorWindow extends AbstractWindow {
 	static readonly tagName = "wf-resource-editor-window";
 	title: string = "Resource Editor";
 	private _progressIndicator: HTMLElement = (<ProgressIndicator />);
 	private _editor: EditorView = null;
+	private di: ServiceContainer = ServiceContainer.default.get(ServiceContainer);
 
 	protected connectedCallback(): void {
 		super.connectedCallback();
@@ -40,11 +43,19 @@ class EditorWindow extends AbstractWindow {
 		const rawData = readGameDataFile(stream, type);
 		const data = new GameData(rawData);
 		(data as any)._type = type;
+		this.di.register(GameData, data);
 		await this.loadGameData(data);
 	}
 
 	public async loadGameData(data: GameData): Promise<void> {
 		const palette = await new PaletteProvider().provide(data.type);
+
+		const dm = new DataManager(data, palette, data.type);
+		this.di.register(DataManager, dm);
+		this.di.register(GameData, dm.currentData);
+		this.di.register(ColorPalette, palette);
+		this.di.register(Updater, new Updater(dm.currentData));
+		this.di.register(Resolver, new Resolver(dm.currentData));
 
 		this._gotoFullscreen();
 		const editor = document.createElement(EditorView.tagName) as EditorView;
@@ -57,8 +68,9 @@ class EditorWindow extends AbstractWindow {
 		editor.addInspector("setup-image", new SetupImageInspector(state.prefixedWith("setup-image")));
 		editor.addInspector("palette", new PaletteInspector(state.prefixedWith("palette")));
 		editor.addInspector("coverage", new CoverageInspector(state.prefixedWith("coverage")));
-		editor.data = new DataManager(data, palette, data.type);
+		editor.data = dm;
 		editor.state = state;
+
 		this._showMenu(editor);
 		this.content.textContent = "";
 		this.content.appendChild(editor);

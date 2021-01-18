@@ -1,4 +1,4 @@
-import { Zone, Hotspot } from "src/engine/objects";
+import { Zone, Hotspot, Monster } from "src/engine/objects";
 import GameData from "src/engine/game-data";
 import ReferenceResolver from "./resolver";
 import { greaterThan } from "src/util/functional";
@@ -11,16 +11,16 @@ class Updater {
 		this.data = data;
 	}
 
-	public deleteItem(thing: Zone | Hotspot): void {
+	public deleteItem(thing: Zone | Hotspot | Monster): void {
 		const resolver = new ReferenceResolver(this.data);
 		const references = resolver.find(thing);
-		references.forEach(r => this.deleteReference(r));
+		const outdatedReferences = resolver.find(thing, greaterThan);
 
+		references.forEach(r => this.deleteReference(r));
 		if (thing instanceof Zone) {
 			this.removeItemFrom(thing, this.data.zones);
 		}
 
-		const outdatedReferences = resolver.find(thing, greaterThan);
 		outdatedReferences.forEach(r => this.updateReferences(r, this.determineUpdater(r)));
 
 		if (thing instanceof Zone) {
@@ -63,6 +63,21 @@ class Updater {
 			return;
 		}
 
+		if (ref.to instanceof Monster && ref.from instanceof Zone) {
+			this.removeItemFrom(ref.to, ref.from.monsters);
+			return;
+		}
+
+		if (ref.to instanceof Monster && "isInstruction" in ref.from) {
+			this.removeItemFrom(ref.from, ref.via[1].instructions);
+			return;
+		}
+
+		if (ref.to instanceof Monster && "isCondition" in ref.from) {
+			this.removeItemFrom(ref.from, ref.via[1].conditions);
+			return;
+		}
+
 		console.assert(false, `Don't know how to clear reference`);
 	}
 
@@ -91,6 +106,15 @@ class Updater {
 		if (reference.to instanceof Hotspot && "isInstruction" in reference.from) {
 			reference.from.arguments[0] = update(reference.from.arguments[0]);
 			return;
+		}
+
+		if (reference.to instanceof Monster && "isInstruction" in reference.from) {
+			reference.from.arguments[0] = update(reference.from.arguments[0]);
+			return;
+		}
+
+		if (reference.to instanceof Monster && "isCondition" in reference.from) {
+			reference.from.arguments[0] = update(reference.from.arguments[0]);
 		}
 
 		console.assert(false, "Don't know how to update reference");
