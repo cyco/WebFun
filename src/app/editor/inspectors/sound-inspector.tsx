@@ -2,10 +2,13 @@ import { IconButton, List } from "src/ui/components";
 
 import SoundInspectorCell from "../components/sound-inspector-cell";
 import AbstractInspector from "src/app/editor/inspectors/abstract-inspector";
-import { Resolver as ReferenceResolver } from "src/app/editor/reference";
+import { Resolver, Updater } from "src/app/editor/reference";
 import { Sound } from "src/engine/objects";
+import ServiceContainer from "../service-container";
 
 class SoundInspector extends AbstractInspector {
+	private readonly updater: Updater = ServiceContainer.default.get(Updater);
+	private readonly resolver: Resolver = ServiceContainer.default.get(Resolver);
 	private _list: List<Sound>;
 
 	constructor(state: Storage) {
@@ -51,7 +54,7 @@ class SoundInspector extends AbstractInspector {
 		const index = this._list.items.indexOf(sound);
 		if (index === -1) return;
 		if (!confirm(`Do you really want to delete sound ${sound.id} (${sound.file})`)) return;
-		this.data.currentData.sounds.splice(index, 1);
+		this.updater.deleteItem(sound);
 		this.build();
 	}
 
@@ -63,8 +66,7 @@ class SoundInspector extends AbstractInspector {
 	}
 
 	private revealReferences(sound: Sound) {
-		const resolver = new ReferenceResolver(this.data.currentData);
-		const references = resolver.find(sound);
+		const references = this.resolver.find(sound);
 		console.log("references", references);
 	}
 

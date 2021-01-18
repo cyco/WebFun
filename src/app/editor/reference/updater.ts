@@ -1,9 +1,10 @@
-import { Zone, Hotspot, Monster } from "src/engine/objects";
+import { Zone, Hotspot, Monster, Sound, Tile, Char, Puzzle } from "src/engine/objects";
 import GameData from "src/engine/game-data";
 import ReferenceResolver from "./resolver";
 import { greaterThan } from "src/util/functional";
-import { Reference } from "./reference";
+import { Reference, Resolvable } from "./reference";
 import { Yoda } from "src/engine/type";
+import { MutableChar } from "src/engine/mutable-objects";
 
 class Updater {
 	private data: GameData;
@@ -11,20 +12,39 @@ class Updater {
 		this.data = data;
 	}
 
-	public deleteItem(thing: Zone | Hotspot | Monster): void {
+	public deleteItem(thing: Zone | Hotspot | Monster | Sound | Tile | Char | Puzzle): void {
 		const resolver = new ReferenceResolver(this.data);
 		const references = resolver.find(thing);
 		const outdatedReferences = resolver.find(thing, greaterThan);
 
 		references.forEach(r => this.deleteReference(r));
-		if (thing instanceof Zone) {
-			this.removeItemFrom(thing, this.data.zones);
-		}
-
+		this.removeTopLevelReference(thing);
 		outdatedReferences.forEach(r => this.updateReferences(r, this.determineUpdater(r)));
 
 		if (thing instanceof Zone) {
 			this.data.zones.sort(({ id: a }, { id: b }) => a - b);
+		}
+	}
+
+	private removeTopLevelReference(thing: Resolvable) {
+		if (thing instanceof Zone) {
+			this.removeItemFrom(thing, this.data.zones);
+		}
+
+		if (thing instanceof Tile) {
+			this.removeItemFrom(thing, this.data.tiles);
+		}
+
+		if (thing instanceof Sound) {
+			this.removeItemFrom(thing, this.data.sounds);
+		}
+
+		if (thing instanceof Char) {
+			this.removeItemFrom(thing, this.data.characters);
+		}
+
+		if (thing instanceof Puzzle) {
+			this.removeItemFrom(thing, this.data.puzzles);
 		}
 	}
 
@@ -78,6 +98,16 @@ class Updater {
 			return;
 		}
 
+		if (ref.to instanceof Sound && ref.from instanceof Char) {
+			(ref.from as MutableChar).reference = -1;
+			return;
+		}
+
+		if (ref.to instanceof Sound && "isInstruction" in ref.from) {
+			this.removeItemFrom(ref.from, ref.via[1].instructions);
+			return;
+		}
+
 		console.assert(false, `Don't know how to clear reference`);
 	}
 
@@ -114,6 +144,10 @@ class Updater {
 		}
 
 		if (reference.to instanceof Monster && "isCondition" in reference.from) {
+			reference.from.arguments[0] = update(reference.from.arguments[0]);
+		}
+
+		if (reference.to instanceof Sound && "isInstruction" in reference.from) {
 			reference.from.arguments[0] = update(reference.from.arguments[0]);
 		}
 
