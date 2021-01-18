@@ -8,11 +8,14 @@ import { ColorPalette } from "src/engine/rendering";
 import Component from "src/ui/component";
 import { ModalPrompt } from "src/ux";
 import { Point } from "src/util";
+import { Updater } from "../../reference";
+import ServiceContainer from "../../service-container";
 
 class HotspotLayer extends Component {
 	public static readonly tagName = "wf-hotspot-layer";
 	public static readonly observedAttributes: string[] = [];
 	public palette: ColorPalette;
+	private readonly updater: Updater = ServiceContainer.default.get(Updater);
 	private _zone: Zone;
 
 	protected connectedCallback(): void {
@@ -68,6 +71,7 @@ class HotspotLayer extends Component {
 				title: "Place hotspot",
 				callback: (): void => {
 					const hotspot = new MutableHotspot();
+					hotspot.id = this.zone.hotspots.length;
 					hotspot.type = MutableHotspot.Type.DropQuestItem;
 					hotspot.arg = -1;
 					hotspot.x = point.x;
@@ -124,7 +128,7 @@ class HotspotLayer extends Component {
 					{
 						title: "remove",
 						callback: () => {
-							this.zone.hotspots.splice(this.zone.hotspots.indexOf(hotspots[0]), 1);
+							this.updater.deleteItem(hotspots[0]);
 							this.draw();
 						}
 					}
