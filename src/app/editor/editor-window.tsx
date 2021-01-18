@@ -1,7 +1,14 @@
 import "./editor-window.scss";
 
 import { AbstractWindow, ProgressIndicator } from "src/ui/components";
-import { GameData, GameType, GameTypeIndy, GameTypeYoda, readGameDataFile, ColorPalette } from "src/engine";
+import {
+	GameData,
+	GameType,
+	GameTypeIndy,
+	GameTypeYoda,
+	readGameDataFile,
+	ColorPalette
+} from "src/engine";
 import { Menu, WindowMenuItem } from "src/ui";
 
 import CharacterInspector from "src/app/editor/inspectors/character-inspector";

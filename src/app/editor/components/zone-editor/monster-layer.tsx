@@ -9,7 +9,7 @@ import { ModalPrompt } from "src/ux";
 import { MutableMonster } from "src/engine/mutable-objects";
 import MonsterLayerMonster from "./monster-layer-monster";
 import { Point } from "src/util";
-import {Updater} from "../../reference";
+import { Updater } from "../../reference";
 import ServiceContainer from "../../service-container";
 
 class MonsterLayer extends Component {
