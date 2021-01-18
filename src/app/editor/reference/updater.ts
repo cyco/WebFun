@@ -104,6 +104,16 @@ class Updater {
 			return;
 		}
 
+		if (ref.to instanceof Char && ref.from instanceof Char && ref.via[0] === "weapon") {
+			(ref.from as MutableChar).reference = -1;
+			return;
+		}
+
+		if (ref.to instanceof Char && ref.from instanceof Monster) {
+			ref.from.face = null;
+			return;
+		}
+
 		console.assert(false, `Don't know how to clear reference`);
 	}
 
@@ -141,10 +151,22 @@ class Updater {
 
 		if (reference.to instanceof Monster && "isCondition" in reference.from) {
 			reference.from.arguments[0] = update(reference.from.arguments[0]);
+			return;
 		}
 
 		if (reference.to instanceof Sound && "isInstruction" in reference.from) {
 			reference.from.arguments[0] = update(reference.from.arguments[0]);
+			return;
+		}
+
+		if (reference.to instanceof Char && reference.from instanceof Char) {
+			(reference.from as MutableChar).reference = update(reference.from.reference);
+			return;
+		}
+
+		if (reference.to instanceof Char && reference.from instanceof Monster) {
+			// Monster references should be updated automatically when the data is serialized
+			return;
 		}
 
 		console.assert(false, "Don't know how to update reference");

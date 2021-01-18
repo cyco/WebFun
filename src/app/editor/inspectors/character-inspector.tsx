@@ -4,10 +4,13 @@ import { IconButton, List } from "src/ui/components";
 
 import AbstractInspector from "src/app/editor/inspectors/abstract-inspector";
 import { MutableChar } from "src/engine/mutable-objects";
+import ServiceContainer from "../service-container";
+import { Updater } from "../reference";
 
 class CharacterInspector extends AbstractInspector {
 	private _list: List<Char>;
 	private _details: CharacterDetails;
+	private readonly updater = ServiceContainer.default.get(Updater);
 
 	constructor(state: Storage) {
 		super(state);
@@ -65,7 +68,7 @@ class CharacterInspector extends AbstractInspector {
 		if (!confirm(`Delete character ${character.id} (${character.name})?`)) {
 			return;
 		}
-		this.data.currentData.characters.splice(index, 1);
+		this.updater.deleteItem(character);
 		this._list.items = this.data.currentData.characters;
 	}
 
