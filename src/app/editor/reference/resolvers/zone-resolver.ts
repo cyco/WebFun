@@ -48,7 +48,7 @@ class ZoneResolver implements ResolverInterface<Zone> {
 			for (const action of zone.actions) {
 				for (const instruction of action.instructions) {
 					if (instruction.opcode === ChangeZone.Opcode && op(instruction.arguments[0], needle.id)) {
-						result.push({ to: needle, from: instruction, via: [zone, action] });
+						result.push({ to: needle, from: instruction, via: [zone, action, 0] });
 					}
 				}
 			}

@@ -27,7 +27,7 @@ class MonsterResolver implements ResolverInterface<Monster> {
 			for (const action of zone.actions) {
 				for (const condition of action.conditions) {
 					if (condition.opcode === MonsterIsDead.Opcode && op(condition.arguments[0], needle.id)) {
-						result.push({ from: condition, to: needle, via: [zone, action] });
+						result.push({ from: condition, to: needle, via: [zone, action, 0] });
 					}
 				}
 
@@ -36,14 +36,14 @@ class MonsterResolver implements ResolverInterface<Monster> {
 						instruction.opcode === DisableMonster.Opcode &&
 						op(instruction.arguments[0], needle.id)
 					) {
-						result.push({ from: instruction, to: needle, via: [zone, action] });
+						result.push({ from: instruction, to: needle, via: [zone, action, 0] });
 					}
 
 					if (
 						instruction.opcode === EnableMonster.Opcode &&
 						op(instruction.arguments[0], needle.id)
 					) {
-						result.push({ from: instruction, to: needle, via: [zone, action] });
+						result.push({ from: instruction, to: needle, via: [zone, action, 0] });
 					}
 				}
 			}

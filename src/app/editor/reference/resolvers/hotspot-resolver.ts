@@ -29,14 +29,14 @@ class HotspotResolver implements ResolverInterface<Hotspot> {
 						instruction.opcode === DisableHotspot.Opcode &&
 						op(instruction.arguments[0], needle.id)
 					) {
-						result.push({ from: instruction, to: needle, via: [zone, action] });
+						result.push({ from: instruction, to: needle, via: [zone, action, 0] });
 					}
 
 					if (
 						instruction.opcode === EnableHotspot.Opcode &&
 						op(instruction.arguments[0], needle.id)
 					) {
-						result.push({ from: instruction, to: needle, via: [zone, action] });
+						result.push({ from: instruction, to: needle, via: [zone, action, 0] });
 					}
 				}
 			}

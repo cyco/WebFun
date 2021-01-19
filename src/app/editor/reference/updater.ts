@@ -1,4 +1,4 @@
-import { Zone, Hotspot, Monster, Sound, Tile, Char } from "src/engine/objects";
+import { Zone, Hotspot, Monster, Sound, Tile, Char, Action } from "src/engine/objects";
 import GameData from "src/engine/game-data";
 import ReferenceResolver from "./resolver";
 import { greaterThan } from "src/util/functional";
@@ -64,6 +64,16 @@ class Updater {
 			return;
 		}
 
+		if ("isCondition" in ref.from && ref.via[1] instanceof Action) {
+			this.removeItemFrom(ref.from, ref.via[1].conditions);
+			return;
+		}
+
+		if ("isInstruction" in ref.from && ref.via[1] instanceof Action) {
+			this.removeItemFrom(ref.from, ref.via[1].instructions);
+			return;
+		}
+
 		if (ref.to instanceof Zone && ref.from instanceof Hotspot) {
 			this.deleteItem(ref.from);
 			return;
@@ -74,33 +84,13 @@ class Updater {
 			return;
 		}
 
-		if (ref.to instanceof Hotspot && "isInstruction" in ref.from) {
-			this.removeItemFrom(ref.from, ref.via[1].instructions);
-			return;
-		}
-
 		if (ref.to instanceof Monster && ref.from instanceof Zone) {
 			this.removeItemFrom(ref.to, ref.from.monsters);
 			return;
 		}
 
-		if (ref.to instanceof Monster && "isInstruction" in ref.from) {
-			this.removeItemFrom(ref.from, ref.via[1].instructions);
-			return;
-		}
-
-		if (ref.to instanceof Monster && "isCondition" in ref.from) {
-			this.removeItemFrom(ref.from, ref.via[1].conditions);
-			return;
-		}
-
 		if (ref.to instanceof Sound && ref.from instanceof Char) {
 			(ref.from as MutableChar).reference = -1;
-			return;
-		}
-
-		if (ref.to instanceof Sound && "isInstruction" in ref.from) {
-			this.removeItemFrom(ref.from, ref.via[1].instructions);
 			return;
 		}
 
@@ -114,7 +104,7 @@ class Updater {
 			return;
 		}
 
-		console.assert(false, `Don't know how to clear reference`);
+		console.assert(false, "Don't know how to clear reference", ref);
 	}
 
 	private removeItemFrom<T>(item: T, array: T[]) {
@@ -124,6 +114,23 @@ class Updater {
 	}
 
 	private updateReferences(reference: Reference, update: (_: number) => number): void {
+		if ("isInstruction" in reference.from) {
+			const argpos = reference.via[2];
+			reference.from.arguments[argpos] = update(reference.from.arguments[argpos]);
+			return;
+		}
+
+		if ("isCondition" in reference.from) {
+			const argpos = reference.via[2];
+			reference.from.arguments[argpos] = update(reference.from.arguments[argpos]);
+			return;
+		}
+
+		if (reference.to instanceof Char && reference.from instanceof Char) {
+			(reference.from as MutableChar).reference = update(reference.from.reference);
+			return;
+		}
+
 		if (reference.via[0] === "id") {
 			(reference.to as any).id = update(reference.to.id);
 			return;
@@ -134,42 +141,23 @@ class Updater {
 			return;
 		}
 
-		if (reference.to instanceof Zone && "isInstruction" in reference.from) {
-			reference.from.arguments[0] = update(reference.from.arguments[0]);
-			return;
-		}
-
-		if (reference.to instanceof Hotspot && "isInstruction" in reference.from) {
-			reference.from.arguments[0] = update(reference.from.arguments[0]);
-			return;
-		}
-
-		if (reference.to instanceof Monster && "isInstruction" in reference.from) {
-			reference.from.arguments[0] = update(reference.from.arguments[0]);
-			return;
-		}
-
-		if (reference.to instanceof Monster && "isCondition" in reference.from) {
-			reference.from.arguments[0] = update(reference.from.arguments[0]);
-			return;
-		}
-
-		if (reference.to instanceof Sound && "isInstruction" in reference.from) {
-			reference.from.arguments[0] = update(reference.from.arguments[0]);
-			return;
-		}
-
-		if (reference.to instanceof Char && reference.from instanceof Char) {
-			(reference.from as MutableChar).reference = update(reference.from.reference);
-			return;
-		}
-
 		if (reference.to instanceof Char && reference.from instanceof Monster) {
 			// Monster references should be updated automatically when the data is serialized
 			return;
 		}
 
-		console.assert(false, "Don't know how to update reference");
+		if (
+			reference.to instanceof Tile &&
+			reference.from instanceof Char &&
+			typeof reference.via[0] === "number" &&
+			typeof reference.via[1] === "number"
+		) {
+			reference.from.frames[reference.via[0]].tiles[reference.via[1]] = this.data.tiles[
+				update(reference.from.frames[reference.via[0]].tiles[reference.via[1]].id)
+			];
+		}
+
+		console.assert(false, "Don't know how to update reference", reference);
 	}
 }
 

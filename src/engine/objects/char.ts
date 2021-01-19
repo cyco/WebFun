@@ -23,6 +23,7 @@ class Char {
 	protected _health: number = null;
 	protected _damage: number = null;
 
+	// TODO: remove property
 	public tile: Tile;
 
 	get id(): number {
