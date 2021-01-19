@@ -34,7 +34,7 @@ describe("WebFun.Util.FileLoader", () => {
 
 	it("rejects the promise if the url is invalid ", async () => {
 		try {
-			await FileLoader.loadAsStream("scheme://something.local");
+			await FileLoader.loadAsStream("data:image\\png;base64,iVBOR");
 			expect(false).toBeTrue();
 		} catch (e) {
 			expect(true).toBeTrue();
