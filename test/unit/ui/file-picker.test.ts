@@ -1,8 +1,15 @@
 import FilePicker from "src/ui/file-picker";
 
 describe("WebFun.UI.FilePicker", () => {
+	let mockedInputElement: HTMLInputElement;
+	beforeEach(() => {
+		mockedInputElement = document.createElement("div") as any;
+		spyOn(document, "createElement").and.returnValue(mockedInputElement as any);
+	});
+
 	afterEach(() => {
 		if (document.body.onfocus) document.body.onfocus(({} as any) as FocusEvent);
+		mockedInputElement.remove();
 	});
 
 	it("is a class used to prompt the user for a file", () => {
@@ -13,12 +20,13 @@ describe("WebFun.UI.FilePicker", () => {
 		const picker = new FilePicker();
 		picker.pickFile();
 
-		expect(document.querySelector('input[type="file"]')).not.toBeNull();
+		expect(mockedInputElement.type).toBe("file");
+		expect(mockedInputElement.parentNode).not.toBeNull();
 	});
 
 	it("has a static function to allow picking files in a functional manner", () => {
 		const promise = FilePicker.Pick({});
-		expect(document.querySelector('input[type="file"]')).not.toBeNull();
+		expect(mockedInputElement.parentNode).not.toBeNull();
 	});
 
 	it("configures the input element based on the configuration", () => {
@@ -26,9 +34,8 @@ describe("WebFun.UI.FilePicker", () => {
 		const picker = new FilePicker(options);
 		picker.pickFile();
 
-		const input: HTMLInputElement = document.querySelector('input[type="file"]');
-		expect(input.multiple).toBeTrue();
-		expect(input.accept).toEqual(".wld,.sav");
+		expect(mockedInputElement).toHaveAttribute("multiple");
+		expect(mockedInputElement.accept).toEqual(".wld,.sav");
 	});
 
 	it("resolves to an empty array if no files were picked", done => {
