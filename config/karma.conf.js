@@ -49,12 +49,7 @@ const config = {
 			chunks: false
 		}
 	},
-	reportSlowerThan: 500,
-	browserDisconnectTimeout: 200000,
-	processKillTimeout: 200000,
-	browserSocketTimeout: 200000,
-	captureTimeout: 200000,
-	browserNoActivityTimeout: 200000
+	reportSlowerThan: 500
 };
 
 delete config.webpack.entry;
