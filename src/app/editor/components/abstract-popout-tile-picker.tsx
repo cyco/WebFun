@@ -98,13 +98,13 @@ abstract class PopoverTilePicker extends Component implements EventListenerObjec
 		return this._tiles;
 	}
 
-	protected set tile(tile: Tile) {
+	public set tile(tile: Tile) {
 		this._tile = tile;
 		this._tileView.tile = tile;
 		this._state.store("tile", tile ? tile.id : -1);
 	}
 
-	protected get tile(): Tile {
+	public get tile(): Tile {
 		return this._tile;
 	}
 

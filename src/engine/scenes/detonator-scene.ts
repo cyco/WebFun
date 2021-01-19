@@ -1,5 +1,4 @@
 import RendererInterface from "../rendering/renderer";
-import Engine from "../engine";
 import { Point } from "src/util";
 import Scene from "./scene";
 import { Tile } from "src/engine/objects";
@@ -8,13 +7,13 @@ import { drawTileImageData } from "src/app/webfun/rendering";
 import { abs } from "src/std/math";
 
 class DetonatorScene extends Scene {
-	private _detonatorFrames: HTMLImageElement[] = [];
+	private _detonatorFrames: HTMLImageElement[] = null;
 	private _ticks: number = -1;
 	public detonatorLocation: Point = null;
-	private _engine: Engine = null;
 
 	public willShow(): void {
 		this._ticks = 0;
+		this.cacheDetonatorFrames();
 	}
 
 	public willHide(): void {
@@ -67,25 +66,21 @@ class DetonatorScene extends Scene {
 		renderer.renderImage(frame, p.x, p.y);
 	}
 
-	public set engine(e: Engine) {
-		if (this._engine) {
-			this._detonatorFrames = [];
+	private cacheDetonatorFrames() {
+		if (!this.engine) {
+			return;
 		}
 
-		this._engine = e;
-
-		if (this._engine) {
-			this._detonatorFrames = [];
-			for (const id of Yoda.animations.ThermalDetonatorAnimation) {
-				drawTileImageData(e.assets.get(Tile, id), e.palette.original)
-					.toImage()
-					.then(i => this._detonatorFrames.push(i));
-			}
+		if (this._detonatorFrames) {
+			return;
 		}
-	}
 
-	public get engine(): Engine {
-		return this._engine;
+		this._detonatorFrames = [];
+		for (const id of Yoda.animations.ThermalDetonatorAnimation) {
+			drawTileImageData(this.engine.assets.get(Tile, id), this.engine.palette.original)
+				.toImage()
+				.then(i => this._detonatorFrames.push(i));
+		}
 	}
 }
 

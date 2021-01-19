@@ -1,5 +1,5 @@
 abstract class Breakpoint {
-	public readonly id: string;
+	abstract get id(): string;
 }
 
 export default Breakpoint;

@@ -60,7 +60,7 @@ describe("WebFun.Acceptance.Palette Animation", () => {
 
 	async function assertCurrentImageIsEqualTo(src: string) {
 		const actualImage = drawImage(sampleImage, new Size(16, 16), animator.current);
-		return new Promise(resolve => {
+		return new Promise<void>(resolve => {
 			const expectedImage = new Image();
 			expectedImage.onerror = expectedImage.onload = () => {
 				const equal = compareImage(actualImage, expectedImage.toImageData());

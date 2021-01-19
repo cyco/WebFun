@@ -80,13 +80,15 @@ class ZonePicker extends Component {
 	}
 
 	set palette(p: ColorPalette) {
-		const cell = this._list.cell as ZonePickerCell;
-		cell.palette = p;
+		this.cell.palette = p;
 	}
 
 	get palette(): ColorPalette {
-		const cell = this._list.cell as ZonePickerCell;
-		return cell.palette;
+		return this.cell.palette;
+	}
+
+	private get cell(): ZonePickerCell {
+		return this._list.cell as any;
 	}
 
 	set zone(zone: Zone) {

@@ -11,11 +11,16 @@ import { InputStream, PrefixedStorage } from "src/util";
 
 class EditorWindow extends AbstractWindow {
 	static readonly tagName = "wf-save-game-editor-window";
-	title: string = "Save Game Editor";
 	private _progressIndicator: HTMLElement = (<ProgressIndicator />);
 	private _editorView: EditorView = (
 		<EditorView storage={new PrefixedStorage(localStorage, "save-game-editor")} />
 	) as EditorView;
+
+	constructor() {
+		super();
+
+		this.title = "Save Game Editor";
+	}
 
 	protected connectedCallback(): void {
 		super.connectedCallback();

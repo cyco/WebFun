@@ -8,7 +8,6 @@ interface WellKnownSounds {
 }
 
 abstract class GameType {
-	public readonly name: string;
 	abstract get saveGameMagic(): string;
 	abstract get locatorTile(): LocatorTile;
 	abstract get strings(): { [_: number]: string };
@@ -21,6 +20,7 @@ abstract class GameType {
 	abstract getHealthBonus(_: Tile): number;
 	abstract getMaxAmmo(_: Char): number;
 	abstract getEquipSound(_: Char): number;
+	abstract get name(): string;
 }
 
 export default GameType;

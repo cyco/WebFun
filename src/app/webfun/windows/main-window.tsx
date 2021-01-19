@@ -33,13 +33,13 @@ class MainWindow extends AbstractWindow {
 	};
 	private cache: Map<string, Element> = new Map();
 	private _menu: FullscreenMenu = null;
-	autosaveName: string = "main-window";
-	onclose: () => void = () => this._engine && this._engine.metronome.stop();
 
 	constructor() {
 		super();
 
+		this.autosaveName = "main-window";
 		this.closable = false;
+		this.onclose = () => this._engine && this._engine.metronome.stop();
 
 		this.content = (
 			<div>

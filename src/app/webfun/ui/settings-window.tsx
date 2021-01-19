@@ -3,7 +3,6 @@ import "./settings-window.scss";
 import { AbstractWindow, Button, Slider } from "src/ui/components";
 
 abstract class SettingsWindow extends AbstractWindow {
-	public closable: boolean = false;
 	private _minLabel: HTMLLabelElement = (<label />) as HTMLLabelElement;
 	private _midLabel: HTMLLabelElement = (<label />) as HTMLLabelElement;
 	private _maxLabel: HTMLLabelElement = (<label />) as HTMLLabelElement;
@@ -13,6 +12,7 @@ abstract class SettingsWindow extends AbstractWindow {
 	constructor() {
 		super();
 
+		this.closable = false;
 		this.content.appendChild(this._slider);
 		this.content.appendChild(
 			<div style={{ justifyContent: "space-between" }}>

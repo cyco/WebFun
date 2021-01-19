@@ -11,7 +11,7 @@ abstract class Scene {
 
 	public abstract render(renderer: Renderer): void;
 
-	public abstract async update(ticks: number): Promise<void>;
+	public abstract update(ticks: number): Promise<void>;
 
 	willShow(): void {
 		/* empty definition to ensure subclasses can safely make the super call */

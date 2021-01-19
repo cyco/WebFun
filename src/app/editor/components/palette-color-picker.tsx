@@ -5,11 +5,16 @@ import { Color, Point, Rectangle, Size } from "src/util";
 import { AbstractPaletteView } from "src/app/webfun/ui";
 import { floor } from "src/std/math";
 
+const PaletteImage = new Uint8Array(16 * 16).map((_, idx) => idx);
 class PaletteColorPicker extends AbstractPaletteView implements EventListenerObject {
 	public static readonly tagName = "wf-editor-palette-color-picker";
-	public readonly image = new Uint8Array(16 * 16).map((_, idx) => idx);
 	private highlighter: HTMLElement = (<div className="highlighter" />);
 	private _colorIndex: number = 0;
+
+	constructor() {
+		super();
+		this.image = PaletteImage;
+	}
 
 	protected connectedCallback(): void {
 		super.connectedCallback();

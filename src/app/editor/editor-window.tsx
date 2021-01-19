@@ -30,10 +30,15 @@ import { Resolver, Updater } from "./reference";
 
 class EditorWindow extends AbstractWindow {
 	static readonly tagName = "wf-resource-editor-window";
-	title: string = "Resource Editor";
 	private _progressIndicator: HTMLElement = (<ProgressIndicator />);
 	private _editor: EditorView = null;
 	private di: ServiceContainer = ServiceContainer.default.get(ServiceContainer);
+
+	constructor() {
+		super();
+
+		this.title = "Resource Editor";
+	}
 
 	protected connectedCallback(): void {
 		super.connectedCallback();

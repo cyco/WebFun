@@ -10,7 +10,7 @@ class MenuItem extends EventTarget {
 	public title: string;
 	private readonly _state: number | (() => MenuItemState);
 	public callback: () => void;
-	public submenu: Menu;
+	private _submenu: Menu;
 	public mnemonic: number;
 	public isSeparator: boolean = false;
 	private _enabled: boolean | (() => boolean);
@@ -26,7 +26,6 @@ class MenuItem extends EventTarget {
 		this.callback = options.callback;
 		this._enabled = options.enabled;
 		this._beta = options.beta;
-		this.submenu = null;
 		if (options.submenu) {
 			this.submenu = options.submenu instanceof Menu ? options.submenu : new Menu(options.submenu);
 		}
@@ -55,6 +54,14 @@ class MenuItem extends EventTarget {
 
 	get beta(): boolean {
 		return this._beta;
+	}
+
+	set submenu(m: Menu) {
+		this._submenu = m;
+	}
+
+	get submenu(): Menu {
+		return this._submenu;
 	}
 }
 

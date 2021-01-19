@@ -12,7 +12,6 @@ class ZonePickerCell extends Cell<Zone> {
 
 	private _palette: ColorPalette;
 	private _canvas = (<canvas className="pixelated" />) as HTMLCanvasElement;
-	private _data: Zone;
 
 	protected connectedCallback(): void {
 		super.connectedCallback();

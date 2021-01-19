@@ -21,8 +21,6 @@ import Metronome, { MetronomeInternals } from "src/engine/metronome";
 
 class TestCreatorWindow extends AbstractWindow implements EventListenerObject {
 	public static readonly tagName = "wf-debug-test-creator-window";
-	title: string = "Test Creator";
-	autosaveName: string = "test-creator-window";
 	private _gameController: GameController;
 	private _state: Storage = new DiscardingStorage();
 	private _testCase: TestCase = null;
@@ -34,6 +32,8 @@ class TestCreatorWindow extends AbstractWindow implements EventListenerObject {
 	public constructor() {
 		super();
 
+		this.title = "Test Creator";
+		this.autosaveName = "test-creator-window";
 		this.addTitlebarButton(
 			<IconButton icon="download" title="Download test file" onclick={() => this.downloadTest()} />
 		);

@@ -11,7 +11,6 @@ import PaletteImageEditor from "../palette-image-editor";
 
 class Editor extends AbstractPanel {
 	static tagName = "wf-editor-tile-editor";
-	public title = "Tile Editor";
 	public tile: MutableTile;
 	private _imageEditor = (
 		<PaletteImageEditor size={new Size(32, 32)} style={{ width: "128px", height: "128px" }} />
@@ -26,6 +25,8 @@ class Editor extends AbstractPanel {
 
 	constructor() {
 		super();
+
+		this.title = "Tile Editor";
 
 		this.content.appendChild(
 			<div>

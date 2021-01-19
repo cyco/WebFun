@@ -6,10 +6,14 @@ import { PersistentState } from "src/engine";
 
 class StatisticsWindow extends AbstractWindow {
 	public static readonly tagName = "wf-statistics-window";
-	public readonly title: string = "Player Statistics";
-	public readonly closable: boolean = true;
 
 	private _state: typeof PersistentState = PersistentState;
+
+	constructor() {
+		super();
+		this.closable = true;
+		this.title = "Player Statistics";
+	}
 
 	protected connectedCallback(): void {
 		super.connectedCallback();

@@ -21,6 +21,10 @@ describe("WebFun.Engine.GameType", () => {
 			getEquipSound(_: any): number {
 				throw new Error("Method not implemented.");
 			}
+
+			get name(): string {
+				return "mock-type";
+			}
 		})();
 		const mockWeapon: Tile = {
 			isWeapon() {

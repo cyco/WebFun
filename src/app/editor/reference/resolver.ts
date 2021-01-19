@@ -1,6 +1,6 @@
 import GameData from "src/engine/game-data";
 import { Resolvable, ReferencesTo } from "./reference";
-import { Zone, Hotspot, Tile, Char, Sound, Monster, Puzzle } from "src/engine/objects";
+import { Zone, Hotspot, Tile, Char, Sound, Monster } from "src/engine/objects";
 import { equal } from "src/util/functional";
 import {
 	MonsterResolver,
