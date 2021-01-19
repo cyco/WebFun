@@ -6,7 +6,7 @@ import { Zone } from "src/engine/objects";
 export default {
 	Opcode: 0x02,
 	Name: "bump",
-	Arguments: [Type.Number, Type.Number, Type.Number],
+	Arguments: [Type.Number, Type.Number, Type.TileID],
 	Implementation: async (args: int16[], zone: Zone, engine: Engine): Promise<boolean> => {
 		const state = engine.temporaryState;
 		const bump = state.bump;

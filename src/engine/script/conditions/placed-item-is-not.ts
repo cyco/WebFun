@@ -6,7 +6,7 @@ import { Zone } from "src/engine/objects";
 
 export default {
 	Opcode: 0x17,
-	Arguments: [Type.Number, Type.Number, Type.Number, Type.Number, Type.Number],
+	Arguments: [Type.Number, Type.Number, Type.Number, Type.TileID, Type.TileID],
 	Implementation: async (
 		args: int16[],
 		zone: Zone,
