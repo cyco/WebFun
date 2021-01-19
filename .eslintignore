@@ -4,3 +4,4 @@ node_modules
 build
 test/fixtures
 assets
+src/app/webfun/windows/help-viewer/helpdeco.js
