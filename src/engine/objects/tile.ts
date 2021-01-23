@@ -1,79 +1,9 @@
+import { TileAttribute, TileAttributes } from "./tile-attributes";
+import { TileSubtype } from "./tile-subtype";
+
 export const WIDTH = 32;
 export const HEIGHT = 32;
 export const SIZE = WIDTH * HEIGHT;
-
-enum TileAttributes {
-	Transparent = 1 << 0,
-	Floor = 1 << 1,
-	Object = 1 << 2,
-	Draggable = 1 << 3,
-	Roof = 1 << 4,
-	Locator = 1 << 5,
-	Weapon = 1 << 6,
-	Item = 1 << 7,
-	Character = 1 << 8,
-
-	Edible = Item | (1 << 22),
-	Doorway = Floor | (1 << 15)
-}
-
-const TileAttribute = {
-	Transparent: 0,
-	Floor: 1,
-	Object: 2,
-	Draggable: 3,
-	Roof: 4,
-	Locator: 5,
-	Weapon: 6,
-	Item: 7,
-	Character: 8
-};
-
-const TileSubtype = {
-	Weapon: {
-		BlasterLow: 16,
-		BlasterHigh: 17,
-		Lightsaber: 18,
-		TheForce: 19
-	},
-	Locator: {
-		Town: 1,
-
-		PuzzleUnsolved: 2,
-		PuzzleSolved: 3,
-		TravelUnsolved: 4,
-		TravelSolved: 5,
-
-		NorthUnsolved: 6,
-		SouthUnsolved: 7,
-		WestUnsolved: 8,
-		EastUnsolved: 9,
-
-		NorthSolved: 10,
-		SouthSolved: 11,
-		WestSolved: 12,
-		EastSolved: 13,
-
-		Goal: 14,
-		YouAreHere: 15
-	},
-	Item: {
-		Keycard: 16 + 0,
-		Tool: 16 + 1,
-		Part: 16 + 2,
-		Valuable: 16 + 3,
-		Locator: 16 + 4,
-		Consumable: 16 + 6
-	},
-	Character: {
-		Hero: 16,
-		Enemy: 17,
-		NPC: 18
-	},
-	Floor: {
-		Doorway: 16
-	}
-};
 
 class Tile {
 	public static readonly WIDTH = WIDTH;
