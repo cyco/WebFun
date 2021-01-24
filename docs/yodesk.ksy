@@ -9,7 +9,6 @@ seq:
     type: catalog_entry
     repeat: until
     repeat-until: _.type == "ENDF"
-
 types:
   catalog_entry:
     seq:
@@ -46,7 +45,6 @@ types:
         type: u4
       - id: pixels
         size: size
-
   sounds:
     seq:
       - id: size
@@ -119,7 +117,7 @@ types:
       - id: text
         type: str
         size: text_length
-  npc:
+  monster:
     seq:
       - id: character
         type: u2
@@ -127,15 +125,14 @@ types:
         type: u2
       - id: y
         type: u2
-      - id: unknown1
+      - id: loot
         type: s2
-      - id: unknown2
+      - id: drops_loot
         type: s4
-      - id: unknown3
-        type: s1
+      - id: waypoints
+        type: waypoint
         repeat: expr
-        repeat-expr: 0x20
-
+        repeat-expr: 4
   zone:
     seq:
       - id: planet
@@ -154,7 +151,7 @@ types:
         type: u2
       - id: type
         type: u4
-      - id: unknown # shared-counter
+      - id: shared_counter
         type: u2
         # contents: 0xFF FF
       - id: planet_again
@@ -203,12 +200,12 @@ types:
         type: u4
       - id: unknown_count
         type: u2
-      - id: npc_count
+      - id: monster_count
         type: u2
-      - id: npcs
-        type: npc
+      - id: monsters
+        type: monster
         repeat: expr
-        repeat-expr: npc_count
+        repeat-expr: monster_count
       - id: required_item_count
         type: u2
       - id: required_items
@@ -240,12 +237,12 @@ types:
         contents: "IZX3"
       - id: size
         type: u4
-      - id: puzzle_npc_count
+      - id: npc_count
         type: u2
-      - id: puzzle_npc
+      - id: npc
         type: u2
         repeat: expr
-        repeat-expr: puzzle_npc_count
+        repeat-expr: npc_count
   zone_auxiliary_4:
      seq:
       - id: marker
@@ -384,7 +381,7 @@ types:
       - id: index
         type: s2
       - id: reference
-          # if character is npc this is a reference to the their weapon (char idx)
+        # if character is monster this is a reference to the their weapon (char idx)
         # otherwise this is the index of the gun sound
         type: u2
         if: index != -1
@@ -407,3 +404,9 @@ types:
       - id: content
         type: strz
         size: length
+  waypoint:
+    seq:
+    - id: x
+      type: s4
+    - id: y
+      type: s4
