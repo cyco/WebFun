@@ -72,7 +72,7 @@ class MonsterLayer extends Component {
 	public getMenuForTile(point: Point): Partial<MenuItemInit>[] {
 		const monsters = this._findMonstersAt(point) as MutableMonster[];
 		monsters.forEach(monster =>
-			console.log(monster.id, monster.face.name, monster.loot, monster.dropsLoot, monster.waypoints)
+			console.log(monster.id, monster.face?.name, monster.loot, monster.dropsLoot, monster.waypoints)
 		);
 		return [
 			{
@@ -94,13 +94,13 @@ class MonsterLayer extends Component {
 					{
 						title:
 							`${monster.id.toString()}: ` +
-							monster.face.name +
+							monster.face?.name +
 							(monster.enabled ? "" : " (disabled)")
 					},
 					...(monster.loot !== -1
 						? [
 								{
-									title: `Drops ${monster.loot ? this.tiles[monster.loot].name : "<puzzle item>"}`
+									title: `Drops ${monster.loot ? this.tiles[monster.loot]?.name : "<puzzle item>"}`
 								}
 						  ]
 						: []),
