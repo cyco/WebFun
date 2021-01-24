@@ -12,6 +12,7 @@ import {
 import { Zone } from "src/engine/objects";
 import ZoneEditorController from "../components/zone-editor/window";
 import { ZoneInspectorCell } from "../components";
+import { min } from "src/std/math";
 
 class ZoneInspector extends AbstractInspector {
 	private _list: List<Zone>;
@@ -47,7 +48,7 @@ class ZoneInspector extends AbstractInspector {
 			const zone = e.detail.zone;
 			const resolver = new ReferenceResolver(this.data.currentData);
 			const references = resolver.find(zone).filter(i => i.via[0] !== "id");
-
+			console.log(references);
 			if (
 				confirm(
 					`Remove zone ${e.detail.zone.id}?` +
@@ -107,9 +108,22 @@ class ZoneInspector extends AbstractInspector {
 								const y = ystr.parseInt();
 								if (isNaN(x) || isNaN(y)) return;
 
+								const previousTiles = zone.tileIDs;
+								const previousSize = zone.size;
+
 								const size = new Size(x, y);
 								(zone as MutableZone).size = size;
 								(zone as MutableZone).tileIDs = new Int16Array(size.area * 3).map(_ => -1);
+
+								for (let y = 0; y < min(previousSize.height, size.height); y++) {
+									for (let x = 0; x < min(previousSize.width, size.width); x++) {
+										for (let z = 0; z < 3; z++) {
+											const idx = 3 * y * previousSize.width + 3 * x + z;
+											const t = zone.tileStore[previousTiles[idx]] || null;
+											zone.setTile(t, x, y, z);
+										}
+									}
+								}
 							}
 						}
 					])
