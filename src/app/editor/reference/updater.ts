@@ -23,6 +23,30 @@ class Updater {
 
 		if (thing instanceof Zone) {
 			this.data.zones.sort(({ id: a }, { id: b }) => a - b);
+			for (let i = 0; i < this.data.zones.length; i++) {
+				if (this.data.zones[i].id !== i) {
+					const zone = new MutableZone();
+					zone.id = i;
+					zone.planet = Planet.None;
+					zone.type = Zone.Type.None;
+					zone.size = new Size(9, 9);
+					zone.tileIDs = new Int16Array(zone.size.area * 3);
+					zone.tileIDs = zone.tileIDs.map(_ => -1);
+					this.data.zones.splice(i, 0, zone);
+				}
+			}
+		}
+
+		if (thing instanceof Tile) {
+			this.data.tiles.sort(({ id: a }, { id: b }) => a - b);
+			for (let i = 0; i < this.data.tiles.length; i++) {
+				if (this.data.tiles[i].id !== i) {
+					const tile = new MutableTile();
+					tile.id = i;
+					tile.imageData = new Uint8Array(Tile.WIDTH * Tile.HEIGHT);
+					this.data.tiles.splice(i, 0, tile);
+				}
+			}
 		}
 	}
 
