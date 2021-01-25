@@ -21,6 +21,7 @@ class MonsterResolver implements ResolverInterface<Monster> {
 			for (const monster of zone.monsters) {
 				if (op(monster.id, needle.id)) {
 					result.push({ from: monster, to: monster, via: ["id"] });
+					result.push({ from: zone, to: monster, via: [] });
 				}
 			}
 
@@ -47,8 +48,6 @@ class MonsterResolver implements ResolverInterface<Monster> {
 					}
 				}
 			}
-
-			result.push({ from: zone, to: needle, via: [] });
 		}
 
 		return result;
