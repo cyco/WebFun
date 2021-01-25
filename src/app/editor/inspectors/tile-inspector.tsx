@@ -10,19 +10,25 @@ import { MutableTile } from "src/engine/mutable-objects";
 import { TileEditor } from "../components";
 import TileView from "src/app/webfun/debug/components/tile-view";
 import { downloadImage } from "src/util";
+import ServiceContainer from "../service-container";
+import { Resolver, Updater } from "../reference";
+import { Tile } from "src/engine/objects";
 
 class TileInspector extends AbstractInspector {
 	private _palette: ColorPalette;
 	private _requiredAttributes: number = 0;
 	private _prohibitedAttributes: number = 0;
 	protected _editor: TileEditor = null;
+	private di = ServiceContainer.default;
+	private updater = this.di.get(Updater);
+	private resolver = this.di.get(Resolver);
 
 	constructor(state: Storage) {
 		super(state);
 
 		this.window.title = "Tiles";
 		this.window.autosaveName = "tile-inspector";
-		this.window.style.width = "502px";
+		this.window.style.width = "532px";
 		this.window.content.style.maxHeight = "300px";
 		this.window.content.style.flexDirection = "column";
 		this.window.addTitlebarButton(
@@ -165,6 +171,7 @@ class TileInspector extends AbstractInspector {
 			bitCell.onclick = (e: MouseEvent) => this.toggleBitFilter(i, e.currentTarget as HTMLElement);
 			headRow.appendChild(bitCell);
 		}
+		headRow.appendChild(<th></th>);
 		head.appendChild(headRow);
 		table.appendChild(head);
 
@@ -191,6 +198,14 @@ class TileInspector extends AbstractInspector {
 					this.toggleBit(tile, i, e.currentTarget as HTMLElement);
 				row.appendChild(bitCell);
 			}
+			row.appendChild(
+				<td>
+					<IconButton
+						title="Delete Tile"
+						icon="remove"
+						onclick={() => this.deleteTile(tile)}></IconButton>
+				</td>
+			);
 			body.appendChild(row);
 		});
 		table.appendChild(body);
@@ -202,6 +217,19 @@ class TileInspector extends AbstractInspector {
 				passive: true
 			}
 		);
+	}
+
+	private deleteTile(tile: Tile): void {
+		const references = this.resolver.find(tile);
+		console.log(references);
+		if (
+			references.length > 1 &&
+			!confirm("The tile is still referenced somewhere. Do you really want to delete it?")
+		) {
+			return;
+		}
+		this.updater.deleteItem(tile);
+		this.build();
 	}
 
 	show(): void {
