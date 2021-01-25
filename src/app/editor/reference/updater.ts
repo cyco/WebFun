@@ -4,7 +4,9 @@ import ReferenceResolver from "./resolver";
 import { greaterThan } from "src/util/functional";
 import { Reference, Resolvable } from "./reference";
 import { Yoda } from "src/engine/type";
-import { MutableChar } from "src/engine/mutable-objects";
+import { MutableChar, MutableTile, MutableZone } from "src/engine/mutable-objects";
+import { Size } from "src/util";
+import { Planet } from "src/engine/types";
 
 class Updater {
 	private data: GameData;
@@ -182,6 +184,23 @@ class Updater {
 			return;
 		}
 
+		if (reference.from instanceof Zone && reference.to instanceof Hotspot) {
+			return;
+		}
+
+		if (reference.from instanceof Zone && reference.to instanceof Monster) {
+			return;
+		}
+
+		if (
+			reference.from instanceof Zone &&
+			reference.to instanceof Tile &&
+			reference.via[0] === "tileIDs"
+		) {
+			reference.from.tileIDs[reference.via[1]] = update(reference.from.tileIDs[reference.via[1]]);
+			return;
+		}
+
 		if (
 			reference.to instanceof Tile &&
 			reference.from instanceof Char &&
@@ -191,6 +210,7 @@ class Updater {
 			reference.from.frames[reference.via[0]].tiles[reference.via[1]] = this.data.tiles[
 				update(reference.from.frames[reference.via[0]].tiles[reference.via[1]].id)
 			];
+			return;
 		}
 
 		console.assert(false, "Don't know how to update reference", reference);
