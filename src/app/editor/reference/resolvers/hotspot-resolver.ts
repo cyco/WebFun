@@ -20,6 +20,7 @@ class HotspotResolver implements ResolverInterface<Hotspot> {
 			for (const hotspot of zone.hotspots) {
 				if (op(hotspot.id, needle.id)) {
 					result.push({ from: hotspot, to: hotspot, via: ["id"] });
+					result.push({ from: zone, to: hotspot, via: [] });
 				}
 			}
 
@@ -40,8 +41,6 @@ class HotspotResolver implements ResolverInterface<Hotspot> {
 					}
 				}
 			}
-
-			result.push({ from: zone, to: needle, via: [] });
 		}
 
 		return result;
