@@ -72,7 +72,13 @@ class MonsterLayer extends Component {
 	public getMenuForTile(point: Point): Partial<MenuItemInit>[] {
 		const monsters = this._findMonstersAt(point) as MutableMonster[];
 		monsters.forEach(monster =>
-			console.log(monster.id, monster.face?.name, monster.loot, monster.dropsLoot, monster.waypoints)
+			console.log(
+				monster.id,
+				monster.face?.name,
+				monster.loot,
+				monster.dropsLoot,
+				monster.waypoints
+			)
 		);
 		return [
 			{
