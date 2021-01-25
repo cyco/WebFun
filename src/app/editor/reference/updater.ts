@@ -70,12 +70,24 @@ class Updater {
 
 	private determineUpdater(r: Reference) {
 		const protectedZones = Object.values(Yoda.zoneIDs).filter(i => typeof i === "number");
+		const protectedTiles = Object.values(Yoda.tileIDs).filter(i => typeof i === "number");
+
 		if (r.to instanceof Zone) {
 			return (id: number) => {
 				if (protectedZones.contains(id)) return id;
 
 				let result = id - 1;
 				while (protectedZones.contains(result)) result -= 1;
+				return result;
+			};
+		}
+
+		if (r.to instanceof Tile) {
+			return (id: number) => {
+				if (protectedTiles.contains(id)) return id;
+
+				let result = id - 1;
+				while (protectedTiles.contains(result)) result -= 1;
 				return result;
 			};
 		}
