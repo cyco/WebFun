@@ -6,7 +6,7 @@ import Component from "src/ui/component";
 import { ContextMenu } from "src/ui/components";
 import HotspotLayerComponent from "./hotspot-layer";
 import Layer from "./layer";
-import LayerComponent from "./zone-layer";
+import LayerComponent from "./tile-layer";
 import MonsterLayerComponent from "./monster-layer";
 import { Point } from "src/util";
 import { Zone, Tile, Char } from "src/engine/objects";

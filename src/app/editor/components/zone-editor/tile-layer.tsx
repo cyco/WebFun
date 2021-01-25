@@ -1,4 +1,4 @@
-import "./zone-layer.scss";
+import "./tile-layer.scss";
 
 import { Tile, Zone } from "src/engine/objects";
 
@@ -7,8 +7,8 @@ import Component from "src/ui/component";
 import { MenuItemInit } from "src/ui";
 import { Point } from "src/util";
 
-class ZoneLayer extends Component {
-	public static readonly tagName = "wf-zone-layer";
+class TileLayer extends Component {
+	public static readonly tagName = "wf-tile-layer";
 	public static readonly observedAttributes: string[] = [];
 	private _zone: Zone = null;
 	private _layer: number = null;
@@ -165,4 +165,4 @@ class ZoneLayer extends Component {
 	}
 }
 
-export default ZoneLayer;
+export default TileLayer;

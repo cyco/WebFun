@@ -9,12 +9,12 @@ import SidebarLayersCell from "./sidebar-layers-cell";
 import Tool from "./tool";
 import View from "./view";
 import Window from "./window";
-import ZoneLayer from "./zone-layer";
+import TileLayer from "./tile-layer";
 
 export {
 	Tool,
 	View,
-	ZoneLayer,
+	TileLayer,
 	Window,
 	Sidebar,
 	SidebarCell,

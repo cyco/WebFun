@@ -28,7 +28,7 @@ import {
 	Tool as ZoneEditorTool,
 	View as ZoneEditorView,
 	Window as ZoneEditorWindow,
-	ZoneLayer
+	TileLayer
 } from "./zone-editor";
 import { Editor as ActionEditor, Token as ActionEditorToken } from "./action-editor";
 import { Editor as TileEditor } from "./tile-editor";
@@ -66,5 +66,5 @@ export {
 	ZoneEditorView,
 	ZoneEditorWindow,
 	ZoneInspectorCell,
-	ZoneLayer
+	TileLayer
 };
