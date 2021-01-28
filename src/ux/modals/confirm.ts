@@ -29,8 +29,8 @@ const MergeDefaultOptions = (options: Options): Options => ({
 	abortText: options.abortText || "No"
 });
 
-export default async (content: ConfirmDialogContent, o: Options = {}): Promise<Result> => {
-	const options = MergeDefaultOptions(o);
+export default async (content: ConfirmDialogContent, options: Options = {}): Promise<Result> => {
+	options = MergeDefaultOptions(options);
 
 	const window = document.createElement(options.component) as ConfirmableWindow;
 	window.setAttribute("confirm-text", options.confirmText);

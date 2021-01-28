@@ -23,11 +23,12 @@ const MergeDefaultOptions = (options: Options): Options => ({
 	component: options.component || ConfirmationWindow.tagName,
 	confirmText: options.confirmText || "OK",
 	abortText: options.abortText || "No",
-	defaultValue: options.defaultValue || ""
+	defaultValue: options.defaultValue || "",
+	options: options.options || null
 });
 
-export default async (prompt: string, o: Options = {}): Promise<string> => {
-	const options = MergeDefaultOptions(o);
+export default async (prompt: string, options: Options = {}): Promise<string> => {
+	options = MergeDefaultOptions(options);
 
 	const window = (
 		<ConfirmationWindow
@@ -37,10 +38,10 @@ export default async (prompt: string, o: Options = {}): Promise<string> => {
 				<div>
 					{prompt}
 					<br />
-					{o.options ? (
-						<Selector value={o.defaultValue} options={o.options} />
+					{options.options ? (
+						<Selector value={options.defaultValue} options={options.options} />
 					) : (
-						<Textbox value={o.defaultValue} />
+						<Textbox value={options.defaultValue} />
 					)}
 				</div>
 			}

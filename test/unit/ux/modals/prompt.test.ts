@@ -61,4 +61,14 @@ describe("WebFun.UX.Modal.Prompt", () => {
 		const result = await prompt;
 		expect(result).toBe(null);
 	});
+
+	it("can pre-fill the prompt if a defaultValue is given", async () => {
+		Prompt("Hi", { defaultValue: "Suggested Value" });
+		expect(textbox.value).toEqual("Suggested Value");
+	});
+
+	it("keeps the input box empty if no default value is given", async () => {
+		Prompt("Hi");
+		expect(textbox.value).toEqual("");
+	});
 });
