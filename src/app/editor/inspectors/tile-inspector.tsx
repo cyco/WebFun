@@ -9,10 +9,11 @@ import { IconButton } from "src/ui/components";
 import { MutableTile } from "src/engine/mutable-objects";
 import { TileEditor } from "../components";
 import TileView from "src/app/webfun/debug/components/tile-view";
-import { downloadImage } from "src/util";
+import { download, downloadImage, Size } from "src/util";
 import ServiceContainer from "../service-container";
 import { Resolver, Updater } from "../reference";
 import { Tile } from "src/engine/objects";
+import BMPWriter from "../bmp-writer";
 
 class TileInspector extends AbstractInspector {
 	private _palette: ColorPalette;
@@ -204,6 +205,10 @@ class TileInspector extends AbstractInspector {
 						title="Delete Tile"
 						icon="remove"
 						onclick={() => this.deleteTile(tile)}></IconButton>
+					<IconButton
+						title="Download as Image"
+						icon="download"
+						onclick={() => this.downloadTile(tile)}></IconButton>
 				</td>
 			);
 			body.appendChild(row);
@@ -230,6 +235,11 @@ class TileInspector extends AbstractInspector {
 		}
 		this.updater.deleteItem(tile);
 		this.build();
+	}
+
+	private downloadTile(tile: Tile): void {
+		const bmp = new BMPWriter().write(tile.imageData, this._palette, new Size(32, 32));
+		download(bmp, `tile_${tile.id}.bmp`);
 	}
 
 	show(): void {
