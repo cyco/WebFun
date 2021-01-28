@@ -113,7 +113,7 @@ class TileResolver implements ResolverInterface<Tile> {
 			for (let i = 0; i < character.frames.length; i++) {
 				const frame = character.frames[i];
 				for (let j = 0; j < frame.tiles.length; j++) {
-					const tile = frame.tiles[i];
+					const tile = frame.tiles[j];
 					if (tile && op(tile.id, needle.id)) {
 						result.push({ from: character, to: needle, via: [i, j] });
 					}
