@@ -138,7 +138,7 @@ class Updater {
 		}
 
 		if (ref.to instanceof Char && ref.from instanceof Monster) {
-			ref.from.face = null;
+			this.deleteItem(ref.from);
 			return;
 		}
 
