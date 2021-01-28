@@ -79,7 +79,7 @@ wf-character-inspector-cell {
 		}
 	}
 
-	&:hover {
+	&[selected],&:hover {
 		.fa.fa-remove {
 			display: inline-block;
 		}
