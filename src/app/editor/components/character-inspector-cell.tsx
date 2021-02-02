@@ -27,6 +27,10 @@ class CharacterInspectorCell extends Cell<Char> {
 		const tile = this.data.frames[0].extensionRight;
 		[
 			<TileView palette={this.palette} tile={tile} />,
+			<IconButton
+				className="fa fa-remove"
+				onclick={() => this.onremove(new CustomEvent("remove", { detail: { cell: this } }))}
+			/>,
 			<div className="text">
 				<span className="id">{this.data.id.toString()}</span>
 				<Label
@@ -40,11 +44,7 @@ class CharacterInspectorCell extends Cell<Char> {
 					}>
 					{this.data.name}
 				</Label>
-			</div>,
-			<IconButton
-				className="fa fa-remove"
-				onclick={() => this.onremove(new CustomEvent("remove", { detail: { cell: this } }))}
-			/>
+			</div>
 		].forEach(c => this.appendChild(c));
 	}
 }
