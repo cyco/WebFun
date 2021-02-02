@@ -36,14 +36,14 @@ class EditorView extends Component {
 		this._windowManager.asDefaultManager(() => this._inspectors[key].show());
 	}
 
-	public save(): void {
+	public save(): Promise<void> {
 		const serializer = new GameDataSerializer();
 		const sizeCalculationStream = new DiscardingOutputStream();
 		serializer.serialize(this.data.currentData, sizeCalculationStream);
 		const outputStream = new OutputStream(sizeCalculationStream.offset);
 		serializer.serialize(this.data.currentData, outputStream);
 
-		download(outputStream.buffer, "yoda.data");
+		return download(outputStream.buffer, "yoda.data");
 	}
 
 	public async load(): Promise<void> {

@@ -9,7 +9,7 @@ import { IconButton } from "src/ui/components";
 import { MutableTile } from "src/engine/mutable-objects";
 import { TileEditor } from "../components";
 import TileView from "src/app/webfun/debug/components/tile-view";
-import { download, downloadImage, Size } from "src/util";
+import { download, downloadImage, Size, sleep } from "src/util";
 import ServiceContainer from "../service-container";
 import { Resolver, Updater } from "../reference";
 import { Tile } from "src/engine/objects";
@@ -38,7 +38,7 @@ class TileInspector extends AbstractInspector {
 		this.window.addTitlebarButton(
 			<IconButton
 				icon="download"
-				title="Download tileset image"
+				title="Download tile images"
 				onclick={() => this.downloadTileset()}
 			/>
 		);
@@ -237,9 +237,9 @@ class TileInspector extends AbstractInspector {
 		this.build();
 	}
 
-	private downloadTile(tile: Tile): void {
+	private downloadTile(tile: Tile): Promise<void> {
 		const bmp = new BMPWriter().write(tile.imageData, this._palette, new Size(32, 32));
-		download(bmp, `tile_${tile.id}.bmp`);
+		return download(bmp, `tile_${tile.id}.bmp`);
 	}
 
 	show(): void {
@@ -265,44 +265,11 @@ class TileInspector extends AbstractInspector {
 		this._editor = editor;
 	}
 
-	public downloadTileset(): void {
-		const size = ceil(sqrt(this.data.currentData.tiles.length));
-
-		const TileWidth = MutableTile.WIDTH;
-		const TileHeight = MutableTile.HEIGHT;
-		const imageData = new ImageData(size * TileWidth, size * TileHeight);
-		const rawImageData = imageData.data;
-		const palette = this.data.palette;
-
-		const bpr = 4 * size * TileWidth;
-		for (let y = 0; y < size; y++) {
-			for (let x = 0; x < size; x++) {
-				const tile = this.data.currentData.tiles[x + y * size];
-				if (!tile) break;
-
-				const pixels = tile.imageData;
-				const sy = y * TileHeight;
-				const sx = x * TileWidth;
-				let j = sy * bpr + sx * 4;
-
-				for (let ty = 0; ty < TileHeight; ty++) {
-					for (let tx = 0; tx < TileWidth; tx++) {
-						const i = ty * TileWidth + tx;
-						const paletteIndex = pixels[i] * 4;
-						if (paletteIndex === 0) continue;
-
-						rawImageData[j + 4 * tx + 0] = palette[paletteIndex + 2];
-						rawImageData[j + 4 * tx + 1] = palette[paletteIndex + 1];
-						rawImageData[j + 4 * tx + 2] = palette[paletteIndex + 0];
-						rawImageData[j + 4 * tx + 3] = paletteIndex === 0 ? 0x00 : 0xff;
-					}
-
-					j += bpr;
-				}
-			}
+	public async downloadTileset(): Promise<void> {
+		for (const tile of this.data.currentData.tiles) {
+			await this.downloadTile(tile);
+			await sleep(100);
 		}
-
-		downloadImage(imageData, `${this.data.type.name} tileset.png`);
 	}
 
 	public async uploadTileset(): Promise<void> {
