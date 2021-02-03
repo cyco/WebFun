@@ -25,7 +25,7 @@ class Label extends Component implements EventListenerObject {
 		this.dispatchEvent(new Event("change"));
 	}
 
-	public beginEditing(): void {
+	private beginEditing(): void {
 		if (this._editor) return;
 
 		const editor = new FieldEditor(this);
@@ -34,10 +34,9 @@ class Label extends Component implements EventListenerObject {
 		this._editor = editor;
 	}
 
-	public endEditing(): void {
+	private endEditing(): void {
 		if (!this._editor) return;
 
-		this._editor.abort();
 		this._editor = null;
 		this.scrollLeft = 0;
 		this.scrollTop = 0;
