@@ -13,9 +13,9 @@ class Tile {
 	public static readonly Attributes = TileAttributes;
 	public static readonly Subtype = TileSubtype;
 
-	protected _id: number;
-	protected _name: string;
-	protected _attributes: number;
+	protected _id: number = 0;
+	protected _name: string = "";
+	protected _attributes: number = 0;
 	protected _imageData: Uint8Array;
 
 	get walkable(): boolean {
