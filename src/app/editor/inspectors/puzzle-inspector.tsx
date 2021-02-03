@@ -26,6 +26,7 @@ class PuzzleInspector extends AbstractInspector {
 
 	build(): void {
 		const cell = this._list.cell as PuzzleInspectorCell;
+		cell.tiles = this.data.currentData.tiles;
 		cell.palette = this.data.palette;
 		this._list.items = this.data.currentData.puzzles;
 	}

@@ -1,86 +1,65 @@
 @import "border.scss";
+@import "colors.scss";
+@import "selection.scss";
 
 $cell-height: 34px;
+
 wf-puzzle-inspector-cell {
-	height: $cell-height;
-	line-height: $cell-height;
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
+	display: block;
 
-	transition: height 0.25s ease;
-	overflow: hidden;
+	& > div {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
 
-	&:first-child > * {
-		border-top-width: 0;
-	}
-	&:last-child > * {
-		border-bottom-width: 0;
-	}
+		.title {
+			line-height: $cell-height;
+			margin-left: 5px;
+			margin-right: 5px;
+		}
 
-	&.expanded {
-		height: calc(#{$cell-height} + var(--text-height, 0));
-	}
+		.dialogs {
+			display: flex;
+			flex-direction: column;
+			width: 100%;
 
-	& > * {
-		@include inset-border-inverted(1px);
+			.s {
+				color: $border-dark;
+				font-size: 0.5em;
+				text-transform: uppercase;
+				width: 44px;
 
-		display: inline-block;
-		height: $cell-height;
-	}
+				padding: 2px;
+				padding-right: 5px;
+				border-right: 1px solid $border-dark;
+				margin-right: 5px;
 
-	.tile {
-		width: $cell-height;
-		height: $cell-height;
-		flex-grow: 0;
-		flex-shrink: 0;
+				flex-grow: 0;
+				flex-shrink: 0;
 
-		&:first-child {
-			border-left-width: 0;
-			width: $cell-height - 1px;
+				text-align: right;
+				display: flex;
+				align-items: center;
+			}
+
+			wf-label {
+				@include selectable;
+
+				white-space: pre-wrap;
+				min-height: 23px;
+				flex-grow: 2;
+			}
+
+			.dialog {
+				margin: 5px;
+				display: flex;
+				flex-direction: row;
+				align-items: stretch;
+			}
 		}
 	}
 
-	.tile.double {
-		width: 2 * $cell-height - 1px;
-		padding-left: $cell-height / 2;
-		padding-right: $cell-height / 2;
-		background-clip: content-box;
-		background-origin: content-box;
-	}
-
-	.title {
-		flex-grow: 1;
-
-		& > * + * {
-			margin-left: 40px;
-		}
-
-		.id {
-			display: inline-block;
-			width: 27px;
-			text-align: right;
-		}
-
-		wf-editor-expand-button {
-			margin-top: 8px;
-			margin-right: 8px;
-		}
-	}
-
-	&.expanded .title wf-editor-expand-button {
-		transform: rotate(90deg);
-	}
-
-	.text {
-		width: 100%;
-		height: unset;
-		font-size: 0.8em;
-		line-height: 1.5;
-		padding: 4px;
-
-		div + div {
-			border-top: 1px solid $border-light;
-		}
+	& + & {
+		margin-top: 15px;
 	}
 }
