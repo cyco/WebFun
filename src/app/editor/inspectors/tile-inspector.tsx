@@ -1,25 +1,23 @@
 import "./tile-inspector.scss";
 
-import { ceil, floor, sqrt } from "src/std/math";
-
 import AbstractInspector from "./abstract-inspector";
 import { ColorPalette } from "src/engine/rendering";
-import { FilePicker } from "src/ui";
 import { IconButton } from "src/ui/components";
-import { MutableTile } from "src/engine/mutable-objects";
-import { TileEditor } from "../components";
-import TileView from "src/app/webfun/debug/components/tile-view";
-import { download, downloadImage, Size, sleep } from "src/util";
+import { TilePicker } from "src/app/editor/components";
 import ServiceContainer from "../service-container";
 import { Resolver, Updater } from "../reference";
 import { Tile } from "src/engine/objects";
-import BMPWriter from "../bmp-writer";
+import { Label, Button } from "src/ui/components";
+import { MutableTile } from "src/engine/mutable-objects";
+import getTileAttributeName from "src/app/editor/inspectors/tile-attribute-name";
+import { FilePicker } from "src/ui";
+import { Reader as BMPReader, Writer as BMPWriter } from "src/app/editor/bmp";
+import { download, OutputStream, Size } from "src/util";
+import { ceil } from "src/std/math";
 
 class TileInspector extends AbstractInspector {
 	private _palette: ColorPalette;
-	private _requiredAttributes: number = 0;
-	private _prohibitedAttributes: number = 0;
-	protected _editor: TileEditor = null;
+	private tile: MutableTile = null;
 	private di = ServiceContainer.default;
 	private updater = this.di.get(Updater);
 	private resolver = this.di.get(Resolver);
@@ -32,284 +30,214 @@ class TileInspector extends AbstractInspector {
 		this.window.style.width = "532px";
 		this.window.content.style.maxHeight = "300px";
 		this.window.content.style.flexDirection = "column";
+		this.window.addTitlebarButton(<IconButton icon="plus" title="Add new tile" />);
 		this.window.addTitlebarButton(
-			<IconButton icon="plus" title="Add new tile" onclick={() => this.addTile()} />
-		);
-		this.window.addTitlebarButton(
-			<IconButton
-				icon="download"
-				title="Download tile images"
-				onclick={() => this.downloadTileset()}
-			/>
+			<IconButton icon="upload" onclick={() => this.uploadTileset()} title="Upload Tileset" />
 		);
 		this.window.addTitlebarButton(
-			<IconButton icon="upload" title="Upload tileset image" onclick={() => this.uploadTileset()} />
+			<IconButton icon="download" onclick={() => this.downloadTileset()} title="Download Tileset" />
 		);
 	}
 
-	private toggleBitFilter(bit: number, cell: HTMLElement) {
-		if (cell.textContent === "") {
-			cell.textContent = "1";
-			this._requiredAttributes |= 1 << bit;
-			this._prohibitedAttributes &= ~(1 << bit);
-
-			this.updateFilter();
-			return;
-		}
-
-		if (cell.textContent === "1") {
-			cell.textContent = "0";
-			this._requiredAttributes &= ~(1 << bit);
-			this._prohibitedAttributes |= 1 << bit;
-
-			this.updateFilter();
-			return;
-		}
-
-		if (cell.textContent === "0") {
-			cell.textContent = "";
-			this._requiredAttributes &= ~(1 << bit);
-			this._prohibitedAttributes &= ~(1 << bit);
-
-			this.updateFilter();
-			return;
-		}
-	}
-
-	private toggleBit(tile: MutableTile, bit: number, cell: HTMLElement) {
-		tile.attributes ^= 1 << bit;
-		cell.textContent = tile.attributes & (1 << bit) ? "1" : "0";
-	}
-
-	private updateFilter() {
-		const table = this.window.content.firstElementChild;
-		table.remove();
-		const rows = Array.from(table.querySelectorAll("tbody > tr")) as HTMLElement[];
-
-		for (let i = 0; i < rows.length; i++) {
-			const row = rows[i];
-			const rowAttributes = parseInt(row.dataset.attributes);
-
-			const show =
-				(rowAttributes & this._requiredAttributes) === this._requiredAttributes &&
-				(rowAttributes & this._prohibitedAttributes) === 0;
-
-			row.style.display = show ? "" : "none";
-		}
-		this.window.content.appendChild(table);
-	}
-
-	protected addTile(): void {
-		const tile = new MutableTile();
-		tile.id = this.data.currentData.tiles.length;
-		tile.imageData = new Uint8Array(MutableTile.WIDTH * MutableTile.HEIGHT);
-		tile.attributes = 0;
-
-		this.data.currentData.tiles.push(tile);
-		this.build();
-		this.window.content.scrollTop = this.window.content.scrollHeight;
-	}
-
-	build(): void {
-		this._palette = this.data.palette;
-		const previousContent = this.window.content.querySelectorAll(TileView.tagName);
-		this.window.content.textContent = "";
-		previousContent.forEach((c: TileView) => {
-			c.onclick = () => void 0;
-			c.tile = null;
-			c.palette = null;
-		});
-
-		const titles: { [_: number]: string } = {
-			0: "transparent",
-			1: "floor",
-			2: "object",
-			3: "draggable",
-			4: "roof",
-			5: "locator",
-			6: "weapon",
-			7: "item",
-			8: "character"
-		};
-
-		const table = document.createElement("table");
-		table.classList.add("tile-inspector-table");
-		table.setAttribute("cellspacing", "0");
-		table.setAttribute("cellpadding", "0");
-		const head = document.createElement("thead");
-		const headRow = document.createElement("tr");
-
-		const tileCell = document.createElement("th");
-		tileCell.innerHTML = "&nbsp;";
-		tileCell.onclick = () => {
-			const cells = headRow.querySelectorAll("th");
-			const currentValue = cells[1].textContent;
-			let targetValue = "";
-			if (currentValue === "") {
-				targetValue = "1";
-				this._requiredAttributes = -1;
-				this._prohibitedAttributes = 0;
-			} else if (currentValue === "1") {
-				targetValue = "0";
-				this._requiredAttributes = 0;
-				this._prohibitedAttributes = -1;
-			} else {
-				targetValue = "";
-				this._requiredAttributes = 0;
-				this._prohibitedAttributes = 0;
-			}
-
-			(Array.from(cells) as HTMLTableHeaderCellElement[])
-				.slice(1)
-				.forEach(c => (c.textContent = targetValue));
-			this.updateFilter();
-		};
-		headRow.appendChild(tileCell);
-
-		for (let i = 31; i >= 0; i--) {
-			const bitCell = document.createElement("th");
-			bitCell.title = `Bit ${i}` + (titles[i] ? ": " + titles[i] : "");
-			bitCell.onclick = (e: MouseEvent) => this.toggleBitFilter(i, e.currentTarget as HTMLElement);
-			headRow.appendChild(bitCell);
-		}
-		headRow.appendChild(<th></th>);
-		head.appendChild(headRow);
-		table.appendChild(head);
-
-		const body = document.createElement("tbody");
-		this.data.currentData.tiles.forEach(tile => {
-			const row = document.createElement("tr");
-			row.dataset.attributes = tile.attributes.toString(10);
-			const tileCell = document.createElement("td");
-
-			const tilePreview = document.createElement(TileView.tagName) as TileView;
-			tilePreview.palette = this._palette;
-			tilePreview.tile = tile;
-			tilePreview.style.cursor = "pointer";
-			tileCell.onclick = () => this.editTile(tile);
-			tileCell.appendChild(tilePreview);
-			if (tile.name) tileCell.title = tile.name;
-			row.appendChild(tileCell);
-
-			for (let i = 31; i >= 0; i--) {
-				const bitCell = document.createElement("td");
-				bitCell.textContent = `${tile.attributes & (1 << i) ? 1 : 0}`;
-				bitCell.title = `Bit ${i}` + (titles[i] ? ": " + titles[i] : "");
-				bitCell.onclick = (e: MouseEvent) =>
-					this.toggleBit(tile, i, e.currentTarget as HTMLElement);
-				row.appendChild(bitCell);
-			}
-			row.appendChild(
-				<td>
-					<IconButton
-						title="Delete Tile"
-						icon="remove"
-						onclick={() => this.deleteTile(tile)}></IconButton>
-					<IconButton
-						title="Download as Image"
-						icon="download"
-						onclick={() => this.downloadTile(tile)}></IconButton>
-				</td>
-			);
-			body.appendChild(row);
-		});
-		table.appendChild(body);
-		this.window.content.appendChild(table);
-		this.window.content.addEventListener(
-			"scroll",
-			() => this.state.store("scroll", this.window.content.scrollTop),
-			{
-				passive: true
-			}
+	public build(): void {
+		const tiles = this.data.currentData.tiles as MutableTile[];
+		const palette = this.data.palette;
+		const lastTile = this.state.load("last-tile");
+		this.tile = tiles[lastTile] ?? null;
+		this.window.content.appendChild(
+			<div className="wf-tile-inspector">
+				<TilePicker
+					palette={palette}
+					tiles={tiles}
+					tile={this.tile}
+					state={this.state.prefixedWith("popover-tile-picker")}
+					onchange={(e: Event) => this.changeTile(e)}></TilePicker>
+				{this.buildDetailsForTile(this.tile)}
+			</div>
 		);
 	}
 
-	private deleteTile(tile: Tile): void {
-		const references = this.resolver.find(tile);
-		console.log(references);
-		if (
-			references.length > 1 &&
-			!confirm("The tile is still referenced somewhere. Do you really want to delete it?")
-		) {
+	protected changeTile(event: Event): void {
+		this.tile = (event.target as TilePicker).tile;
+		this.state.store("last-tile", this.tile?.id);
+
+		this.rebuild();
+	}
+
+	private rebuild() {
+		const previousDetail = this.window.content.querySelector(".detail:last-child");
+		previousDetail.replaceWith(this.buildDetailsForTile(this.tile));
+	}
+
+	private buildDetailsForTile(tile: MutableTile) {
+		if (!tile) {
+			return <div className="detail">no selection</div>;
+		}
+
+		return (
+			<div className="detail">
+				<span className="title">
+					<span className="tile-id" title={tile.id.toString()}>
+						{tile.id.toHex()}
+					</span>
+					:
+					<Label onchange={(e: Event) => (tile.name = (e.target as Label).textContent)}>
+						{tile.name.length ? `${tile.name}` : ""}
+					</Label>
+				</span>
+				<div className="attributes">{this.formatAttributes(tile)}</div>
+				<div className="actions">
+					<Button onclick={() => this.clearImage()}>Clear Image</Button>
+					<Button onclick={() => this.loadImageFromFile()}>Replace Image</Button>
+				</div>
+			</div>
+		);
+	}
+
+	private async loadImageFromFile(): Promise<void> {
+		const [file] = await FilePicker.Pick({});
+		if (!file) return;
+
+		try {
+			const data = await file.provideInputStream();
+			const [, pixels] = new BMPReader().read(data);
+			this.tile.imageData = pixels;
+			this.updatePicker();
 			return;
-		}
-		this.updater.deleteItem(tile);
-		this.build();
-	}
+		} catch (e) {}
 
-	private downloadTile(tile: Tile): Promise<void> {
-		const bmp = new BMPWriter().write(tile.imageData, this._palette, new Size(32, 32));
-		return download(bmp, `tile_${tile.id}.bmp`);
-	}
+		const mappedPixels = new Uint8Array(new ArrayBuffer(32 * 32));
+		const image = await file.readAsImage();
+		const imageData = image.toImageData();
+		const memo = new Map<number, number>();
+		for (let y = 0; y < 32; y++) {
+			for (let x = 0; x < 32; x++) {
+				const r = imageData.data[y * 32 * 4 + x * 4 + 0];
+				const g = imageData.data[y * 32 * 4 + x * 4 + 1];
+				const b = imageData.data[y * 32 * 4 + x * 4 + 2];
+				const a = imageData.data[y * 32 * 4 + x * 4 + 3];
 
-	show(): void {
-		super.show();
-		setTimeout(() => (this.window.content.scrollTop = this.state.load("scroll") | 0));
-	}
-
-	public editTile(tile: MutableTile): void {
-		if (this._editor) {
-			this._editor.remove();
+				const color = (r << 24) | (g << 16) | (b << 8) | a;
+				mappedPixels[y * Tile.WIDTH + x] = this.findClosestColor(color, memo);
+			}
 		}
 
-		const editor = (
-			<TileEditor
-				palette={this.data.palette}
-				pixels={tile.imageData}
-				tile={tile}
-				autosaveName="tile-editor"
-			/>
-		) as TileEditor;
-
-		this.windowManager.showWindow(editor);
-		this._editor = editor;
+		this.tile.imageData = mappedPixels;
+		this.updatePicker();
 	}
 
-	public async downloadTileset(): Promise<void> {
-		for (const tile of this.data.currentData.tiles) {
-			await this.downloadTile(tile);
-			await sleep(100);
+	private clearImage() {
+		this.tile.imageData = new Uint8Array(new ArrayBuffer(Tile.WIDTH * Tile.HEIGHT));
+		this.updatePicker();
+	}
+
+	private updatePicker() {
+		const picker = this.window.content.querySelector(TilePicker.tagName) as TilePicker;
+		picker.updateTile(this.tile);
+	}
+
+	private formatAttributes(tile: Tile): Element[] {
+		return tile.attributes
+			.toString(0b10)
+			.padStart(32, "0")
+			.split("")
+			.map((b, i) => (
+				<code
+					title={`Bit ${31 - i}: ${getTileAttributeName(31 - i, tile.attributes) ?? "<unknown>"}`}
+					onclick={() => this.toggleAttribute(31 - i)}>
+					{b}
+				</code>
+			));
+	}
+
+	private downloadTileset() {
+		const tiles = this.data.currentData.tiles;
+		const width = 21;
+		const height = ceil(tiles.length / width);
+		const size = new Size(width, height).scaleBy(Tile.WIDTH);
+		const data = new OutputStream(size.width * size.height);
+
+		const emptyRow = new Uint8Array(Tile.WIDTH);
+		for (let ty = 0; ty < height; ty++) {
+			for (let y = 0; y < Tile.HEIGHT; y++) {
+				for (let t = 0; t < width; t++) {
+					const img = tiles[ty * width + t]?.imageData;
+					const slice = img ? img.slice(y * Tile.WIDTH, (y + 1) * Tile.WIDTH) : emptyRow;
+					data.writeUint8Array(slice);
+				}
+			}
 		}
+
+		const bmpImageData = new Uint8Array(data.buffer);
+		const bmpWriter = new BMPWriter();
+		const bmp = bmpWriter.write(bmpImageData, this.data.palette, size);
+		download(bmp, "Tileset.bmp");
 	}
 
-	public async uploadTileset(): Promise<void> {
-		const [file] = await FilePicker.Pick({ allowedTypes: ["png"] });
+	private async uploadTileset() {
+		const [file] = await FilePicker.Pick();
 		if (!file) return;
 
 		const image = await file.readAsImage();
-		const { width, height, data: rawImageData } = image.toImageData();
-		const bpr = 4 * width;
+		const imageData = image.toImageData();
+		const width = imageData.width / Tile.WIDTH;
+		const height = imageData.height / Tile.HEIGHT;
 
-		const tilesPerColumn = floor(height / MutableTile.HEIGHT);
-		const tilesPerRow = floor(width / MutableTile.WIDTH);
+		const memo = new Map<number, number>();
+		for (let ty = 0; ty < height; ty++) {
+			for (let tx = 0; tx < width; tx++) {
+				const tile = this.data.currentData.tiles[ty * width + tx];
+				if (!tile) continue;
 
-		for (let y = 0; y < tilesPerColumn; y++) {
-			for (let x = 0; x < tilesPerRow; x++) {
-				let j = 4 * MutableTile.WIDTH * x + MutableTile.HEIGHT * y * bpr;
-				const tileIdx = x + y * tilesPerRow;
+				const tOffset = 4 * (ty * Tile.HEIGHT * imageData.width + tx * Tile.WIDTH);
 
-				if (tileIdx >= this.data.currentData.tiles.length) break;
-				const tile = this.data.currentData.tiles[tileIdx];
-				const pixels = new Uint8Array(MutableTile.WIDTH * MutableTile.HEIGHT);
+				for (let y = 0; y < Tile.HEIGHT; y++) {
+					for (let x = 0; x < Tile.WIDTH; x++) {
+						const offset = tOffset + 4 * (y * imageData.width + x);
+						const r = imageData.data[offset + 0] & 0xff;
+						const g = imageData.data[offset + 1] & 0xff;
+						const b = imageData.data[offset + 2] & 0xff;
+						const a = imageData.data[offset + 3] & 0xff;
 
-				for (let ty = 0; ty < MutableTile.HEIGHT; ty++) {
-					for (let tx = 0; tx < MutableTile.WIDTH; tx++) {
-						const i = ty * MutableTile.WIDTH + tx;
-						const [r, g, b, a] = [
-							rawImageData[j + 4 * tx + 0],
-							rawImageData[j + 4 * tx + 1],
-							rawImageData[j + 4 * tx + 2],
-							rawImageData[j + 4 * tx + 3]
-						];
-						pixels[i] = this.data.palette.findColor(r, g, b, a);
+						const color = (r << 24) | (g << 16) | (b << 8) | a;
+						tile.imageData[y * Tile.WIDTH + x] = this.findClosestColor(color, memo);
 					}
-
-					j += bpr;
 				}
-
-				(tile as MutableTile).imageData = pixels;
 			}
 		}
+
+		const picker = this.window.content.querySelector(TilePicker.tagName) as TilePicker;
+		picker.tiles = this.data.currentData.tiles;
+	}
+	private findClosestColor(color: number, memo = new Map<number, number>()) {
+		if (memo.has(color)) return memo.get(color);
+
+		const r = (color >> 24) & 0xff;
+		const g = (color >> 16) & 0xff;
+		const b = (color >> 8) & 0xff;
+		const a = (color >> 0) & 0xff;
+
+		const mappedColor =
+			a < 64
+				? 0
+				: this.data.palette
+						.mapArray((c, i) => [
+							(r - ((c >> 0) & 0xff)) ** 2 +
+								(g - ((c >> 8) & 0xff)) ** 2 +
+								(b - ((c >> 16) & 0xff)) ** 2,
+							i
+						])
+						.slice(1)
+						.sort((a, b) => a[0] - b[0])
+						.first()[1];
+
+		memo.set(color, mappedColor);
+		return mappedColor;
+	}
+
+	private toggleAttribute(i: number) {
+		this.tile.attributes ^= 1 << i;
+		this.rebuild();
 	}
 }
 

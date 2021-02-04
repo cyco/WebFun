@@ -1,64 +1,54 @@
 @import "border.scss";
 @import "colors.scss";
 
-.tile-inspector-table {
-	table-layout: fixed;
-	width: 100%;
-	height: calc(100%);
-	max-height: calc(100%);
-	border-collapse: separate;
-	margin: 0px;
-	overflow-y: auto;
+.wf-tile-inspector {
+	height: 300px;
+	display: flex;
+	flex-direction: row;
 
-	> thead {
-		position: sticky;
-		position: -webkit-sticky;
-		top: 0px;
+	wf-tile-picker {
+		flex-grow: 0;
+		flex-shrink: 0;
 	}
 
-	> thead,
-	tbody > tr {
-		height: 34px;
-		background-color: $window-background-color;
+	.detail {
+		flex-grow: 1;
+		padding: 10px;
 
-		> td,
-		th {
-			@include inset-border-inverted(1px);
-			width: 14px;
-			text-align: center;
-			font-weight: normal;
+		.title {
+			width: 100%;
+			display: flex;
+			flex-direction: row;
 
-			margin: 0px;
-			padding: 0px;
-
-			&:nth-child(29),
-			&:nth-child(25) {
-				border-left-width: 2px;
+			.tile-id {
+				flex-grow: 0;
+				flex-shrink: 0;
 			}
 
-			&:first-child {
-				border-left-width: 0;
-				width: 34px;
-			}
-
-			&:last-child {
-				width: 24px;
+			wf-label {
+				margin-left: 10px;
+				flex-grow: 1;
+				flex-shrink: 0;
 			}
 		}
-	}
 
-	thead > tr:first-child {
-		> td,
-		th {
-			border-top-width: 0;
+		.attributes {
+			margin-top: 10px;
+			width: 100%;
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+			font-size: 0.85em;
 		}
-	}
 
-	wf-icon-button {
-		cursor: pointer;
-		line-height: 34px;
-		color: #606060;
-		font-size: 0.9em;
-		margin: 0 3px;
+		.actions {
+			display: flex;
+			flex-direction: column;
+			margin-top: 20px;
+
+			wf-button + wf-button {
+				margin-top: 5px;
+			}
+		}
 	}
 }

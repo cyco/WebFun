@@ -31,7 +31,6 @@ import {
 	TileLayer
 } from "./zone-editor";
 import { Editor as ActionEditor, Token as ActionEditorToken } from "./action-editor";
-import { Editor as TileEditor } from "./tile-editor";
 
 export {
 	ActionEditor,
@@ -54,7 +53,6 @@ export {
 	SoundInspectorCell,
 	SourceLevelCoverage,
 	SymbolicCoverage,
-	TileEditor,
 	TilePicker,
 	TilePickerCell,
 	ZoneEditorAction,

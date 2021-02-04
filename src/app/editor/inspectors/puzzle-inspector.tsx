@@ -46,8 +46,8 @@ class PuzzleInspector extends AbstractInspector {
 			puzzle.id +
 			" " +
 			puzzle.strings.join(" ") +
-			puzzle.item1.name +
-			(puzzle.item2 ? puzzle.item2.name : "");
+			(puzzle.item1?.name ?? "") +
+			(puzzle.item2?.name ?? "");
 		return searchValue.every(r => r.test(string));
 	}
 }

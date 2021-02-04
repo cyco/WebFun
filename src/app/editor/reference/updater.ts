@@ -4,7 +4,7 @@ import ReferenceResolver from "./resolver";
 import { greaterThan } from "src/util/functional";
 import { Reference, Resolvable } from "./reference";
 import { Yoda } from "src/engine/type";
-import { MutableChar, MutableTile, MutableZone } from "src/engine/mutable-objects";
+import { MutableChar, MutablePuzzle, MutableTile, MutableZone } from "src/engine/mutable-objects";
 import { Size } from "src/util";
 import { Planet } from "src/engine/types";
 
@@ -69,11 +69,12 @@ class Updater {
 		}
 	}
 
-	private determineUpdater(r: Reference) {
+	private determineUpdater(ref: Reference) {
+		const { to } = ref;
 		const protectedZones = Object.values(Yoda.zoneIDs).filter(i => typeof i === "number");
 		const protectedTiles = Object.values(Yoda.tileIDs).filter(i => typeof i === "number");
 
-		if (r.to instanceof Zone) {
+		if (to instanceof Zone) {
 			return (id: number) => {
 				if (protectedZones.contains(id)) return id;
 
@@ -83,7 +84,7 @@ class Updater {
 			};
 		}
 
-		if (r.to instanceof Tile) {
+		if (to instanceof Tile) {
 			return (id: number) => {
 				if (protectedTiles.contains(id)) return id;
 
@@ -97,52 +98,60 @@ class Updater {
 	}
 
 	private deleteReference(ref: Reference) {
-		if (ref.via[0] === "id") {
+		const { from, to, via } = ref;
+		if (via[0] === "id") {
 			return;
 		}
 
-		if ("isCondition" in ref.from && ref.via[1] instanceof Action) {
-			this.removeItemFrom(ref.from, ref.via[1].conditions);
+		if ("isCondition" in from && via[1] instanceof Action) {
+			this.removeItemFrom(from, via[1].conditions);
 			return;
 		}
 
-		if ("isInstruction" in ref.from && ref.via[1] instanceof Action) {
-			this.removeItemFrom(ref.from, ref.via[1].instructions);
+		if ("isInstruction" in from && via[1] instanceof Action) {
+			this.removeItemFrom(from, via[1].instructions);
 			return;
 		}
 
-		if (ref.to instanceof Zone && ref.from instanceof Hotspot) {
-			this.deleteItem(ref.from);
+		if (to instanceof Zone && from instanceof Hotspot) {
+			this.deleteItem(from);
 			return;
 		}
 
-		if (ref.to instanceof Hotspot && ref.from instanceof Zone) {
-			this.removeItemFrom(ref.to, ref.from.hotspots);
+		if (to instanceof Hotspot && from instanceof Zone) {
+			this.removeItemFrom(to, from.hotspots);
 			return;
 		}
 
-		if (ref.to instanceof Monster && ref.from instanceof Zone) {
-			this.removeItemFrom(ref.to, ref.from.monsters);
+		if (to instanceof Monster && from instanceof Zone) {
+			this.removeItemFrom(to, from.monsters);
 			return;
 		}
 
-		if (ref.to instanceof Sound && ref.from instanceof Char) {
-			(ref.from as MutableChar).reference = -1;
+		if (to instanceof Sound && from instanceof Char) {
+			(from as MutableChar).reference = -1;
 			return;
 		}
 
-		if (ref.to instanceof Char && ref.from instanceof Char && ref.via[0] === "weapon") {
-			(ref.from as MutableChar).reference = -1;
+		if (to instanceof Char && from instanceof Char && via[0] === "weapon") {
+			(from as MutableChar).reference = -1;
 			return;
 		}
 
-		if (ref.to instanceof Char && ref.from instanceof Monster) {
-			this.deleteItem(ref.from);
+		if (to instanceof Char && from instanceof Monster) {
+			this.deleteItem(from);
 			return;
 		}
 
-		if (ref.to instanceof Tile && ref.from instanceof Hotspot) {
-			this.deleteItem(ref.from);
+		if (to instanceof Tile && from instanceof Hotspot) {
+			this.deleteItem(from);
+			return;
+		}
+
+		if (to instanceof Tile && from instanceof Puzzle) {
+			if (via[0] === "item1") (from as MutablePuzzle).item1 = null;
+			else (from as MutablePuzzle).item2 = null;
+
 			return;
 		}
 
@@ -156,83 +165,84 @@ class Updater {
 	}
 
 	private updateReference(ref: Reference, update: (_: number) => number): void {
-		if ("isInstruction" in ref.from) {
-			const argpos = ref.via[2];
-			ref.from.arguments[argpos] = update(ref.from.arguments[argpos]);
+		const { from, to, via } = ref;
+		if ("isInstruction" in from) {
+			const argpos = via[2];
+			from.arguments[argpos] = update(from.arguments[argpos]);
 			return;
 		}
 
-		if ("isCondition" in ref.from) {
-			const argpos = ref.via[2];
-			ref.from.arguments[argpos] = update(ref.from.arguments[argpos]);
+		if ("isCondition" in from) {
+			const argpos = via[2];
+			from.arguments[argpos] = update(from.arguments[argpos]);
 			return;
 		}
 
-		if (ref.to instanceof Char && ref.from instanceof Char && ref.via[0] === "weapon") {
-			(ref.from as MutableChar).reference = update(ref.from.reference);
+		if (to instanceof Char && from instanceof Char && via[0] === "weapon") {
+			(from as MutableChar).reference = update(from.reference);
 			return;
 		}
 
-		if (ref.via[0] === "id") {
-			(ref.to as any).id = update(ref.to.id);
+		if (via[0] === "id") {
+			(to as any).id = update(to.id);
 			return;
 		}
 
-		if (ref.to instanceof Zone && ref.from instanceof Hotspot) {
-			ref.from.arg = update(ref.from.arg);
+		if (to instanceof Zone && from instanceof Hotspot) {
+			from.arg = update(from.arg);
 			return;
 		}
 
-		if (ref.to instanceof Char && ref.from instanceof Monster) {
+		if (to instanceof Char && from instanceof Monster) {
 			// Monster references should be updated automatically when the data is serialized
 			return;
 		}
 
-		if (ref.from instanceof Zone && ref.to instanceof Hotspot) {
+		if (from instanceof Zone && to instanceof Hotspot) {
 			return;
 		}
 
-		if (ref.from instanceof Zone && ref.to instanceof Monster) {
+		if (from instanceof Zone && to instanceof Monster) {
 			return;
 		}
 
-		if (ref.from instanceof Zone && ref.to instanceof Tile && ref.via[0] === "tileIDs") {
-			const i = ref.via[1];
-			ref.from.tileIDs[i] = update(ref.from.tileIDs[i]);
+		if (from instanceof Zone && to instanceof Tile && via[0] === "tileIDs") {
+			const i = via[1];
+			from.tileIDs[i] = update(from.tileIDs[i]);
 			return;
 		}
 
-		if (ref.from instanceof Zone && ref.to instanceof Tile && ref.via[0] === "npcs") {
+		if (from instanceof Zone && to instanceof Tile && via[0] === "npcs") {
 			return;
 		}
 
-		if (ref.from instanceof Zone && ref.to instanceof Tile && ref.via[0] === "providedItems") {
+		if (from instanceof Zone && to instanceof Tile && via[0] === "providedItems") {
 			return;
 		}
 
-		if (ref.from instanceof Zone && ref.to instanceof Tile && ref.via[0] === "requiredItems") {
+		if (from instanceof Zone && to instanceof Tile && via[0] === "requiredItems") {
 			return;
 		}
 
-		if (ref.from instanceof Zone && ref.to instanceof Tile && ref.via[0] === "goalItems") {
+		if (from instanceof Zone && to instanceof Tile && via[0] === "goalItems") {
 			return;
 		}
 
 		if (
-			ref.to instanceof Tile &&
-			ref.from instanceof Char &&
-			typeof ref.via[0] === "number" &&
-			typeof ref.via[1] === "number"
+			to instanceof Tile &&
+			from instanceof Char &&
+			typeof via[0] === "number" &&
+			typeof via[1] === "number"
 		) {
 			return;
 		}
 
-		if (ref.to instanceof Tile && ref.from instanceof Hotspot) {
-			ref.from.arg = update(ref.from.arg);
+		if (to instanceof Tile && from instanceof Hotspot) {
+			from.arg = update(from.arg);
 			return;
 		}
 
-		if (ref.to instanceof Tile && ref.from instanceof Puzzle) {
+		if (to instanceof Tile && from instanceof Puzzle) {
 			return;
 		}
 

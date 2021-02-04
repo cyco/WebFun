@@ -24,7 +24,7 @@ const MergeDefaultOptions = (options: Options): Options => ({
 	confirmText: options.confirmText || "OK",
 	abortText: options.abortText || "No",
 	defaultValue: options.defaultValue || "",
-	options: options.options || null
+	options: options.options || null
 });
 
 export default async (prompt: string, options: Options = {}): Promise<string> => {

@@ -49,6 +49,7 @@ declare global {
 			th: Styleable<HTMLTableCellElement>;
 			a: Styleable<HTMLAnchorElement>;
 			h1: Styleable<HTMLHeadingElement>;
+			code: Styleable<HTMLSpanElement>;
 		}
 
 		interface ElementClass extends Component {}

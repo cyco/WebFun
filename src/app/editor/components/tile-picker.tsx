@@ -42,11 +42,34 @@ class TilePicker extends Component {
 		super.connectedCallback();
 
 		this.appendChild(this._list);
+
+		if (this.tile) {
+			const cell = this.findCellForTile(this.tile);
+			const previousCell = this._list.querySelector(TilePickerCell.tagName + ".active");
+			if (previousCell) previousCell.classList.remove("active");
+			if (!cell) return;
+
+			this.tile = cell.data;
+			cell.classList.add("active");
+		}
+	}
+
+	private findCellForTile(tile: Tile): TilePickerCell {
+		const cells = this._list.querySelectorAll(TilePickerCell.tagName) as NodeListOf<TilePickerCell>;
+
+		for (let i = 0, len = cells.length; i < len; i++) {
+			if (cells[i].data === tile) {
+				return cells[i];
+			}
+		}
+
+		return null;
 	}
 
 	private _cellClicked(cell: TilePickerCell) {
 		const previousCell = this._list.querySelector(TilePickerCell.tagName + ".active");
 		if (previousCell) previousCell.classList.remove("active");
+		if (!cell) return;
 
 		this.tile = cell.data;
 		this.changeTile(
@@ -62,6 +85,7 @@ class TilePicker extends Component {
 		this.dispatchEvent(
 			new CustomEvent(Events.TileDidChange, { detail: { tile, index }, bubbles: true })
 		);
+		this.dispatchEvent(new CustomEvent("change", { detail: { tile, index }, bubbles: true }));
 	}
 
 	protected disconnectedCallback(): void {
@@ -106,6 +130,12 @@ class TilePicker extends Component {
 
 	get state(): Storage {
 		return this._list.state;
+	}
+
+	public updateTile(tile: Tile): void {
+		const cell = this.findCellForTile(tile);
+		if (!cell) return;
+		cell.data = tile;
 	}
 }
 

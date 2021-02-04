@@ -33,6 +33,24 @@ class ColorPalette extends Uint32Array {
 		return this.Create(colorPalette);
 	}
 
+	public static FromRGB8(buffer: Uint8Array, bpc: number = 4): ColorPalette {
+		const length = floor(buffer.length / 4);
+		const colorPalette = new Uint32Array(length);
+
+		// Color at index 0 is transparent, handle special case outside of loop to improve performance
+		colorPalette[0] = (buffer[0] << 0) | (buffer[1] << 8) | (buffer[2] << 16);
+
+		for (let i = 1; i < length; i++) {
+			colorPalette[i] =
+				(0xff << 24) |
+				(buffer[i * bpc + 0] << 0) |
+				(buffer[i * bpc + 1] << 8) |
+				(buffer[i * bpc + 2] << 16);
+		}
+
+		return this.Create(colorPalette);
+	}
+
 	private static Create(palette: Uint32Array): ColorPalette {
 		// HACK: In order to support array syntax (e.g. palette[5]) without performance penalties we just insert
 		// ColorPalette into the prototype chain of the existing Uint32Array.

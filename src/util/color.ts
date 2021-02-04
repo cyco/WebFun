@@ -5,6 +5,19 @@ const rgb = (r: number, g: number, b: number): string => `rgb(${r},${g},${b})`;
 
 const rgbf2rgbi = (...args: number[]): number[] => args.map(i => round(i * 255.0));
 const rgb2rgba = (...args: number[]): number[] => [...args, 1];
+const rgb24decode = (c: number): [number, number, number] => [
+	(c >> 24) & 0xff,
+	(c >> 16) & 0xff,
+	(c >> 8) & 0xff
+];
+const rgb24encode = (r: number, b: number, c: number): number => 0;
+const rgba32decode = (c: number): [number, number, number, number] => [
+	(c >> 24) & 0xff,
+	(c >> 16) & 0xff,
+	(c >> 8) & 0xff,
+	(c >> 0) & 0xff
+];
+const rgba32encode = (r: number, b: number, c: number, a: number): number => 0;
 
 const hsv2rgb = (h: number, s: number, v: number): number[] => {
 	h = h % 360;
@@ -43,7 +56,17 @@ const rgb2hsv = (r: number, g: number, b: number): [number, number, number] => {
 	const h = r === minV ? 3 : b === minV ? 1 : 5;
 	return [60 * (h - d / (maxV - minV)), (maxV - minV) / maxV, maxV];
 };
-export { rgba, rgb, rgb2rgba, hsv2rgb, rgb2hsv };
+export {
+	rgba,
+	rgb,
+	rgb2rgba,
+	hsv2rgb,
+	rgb2hsv,
+	rgb24decode,
+	rgb24encode,
+	rgba32decode,
+	rgba32encode
+};
 
 const HexRegex = /^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i;
 const RGBRegex = /^rgb\((\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)$/i;
