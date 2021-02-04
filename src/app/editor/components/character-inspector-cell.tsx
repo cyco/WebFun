@@ -41,7 +41,8 @@ class CharacterInspectorCell extends Cell<Char> {
 								detail: { cell: this, name: (e.target as Element).textContent }
 							})
 						)
-					}>
+					}
+					maxLength={15}>
 					{this.data.name}
 				</Label>
 			</div>

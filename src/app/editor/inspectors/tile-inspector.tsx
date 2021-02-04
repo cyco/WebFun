@@ -81,7 +81,9 @@ class TileInspector extends AbstractInspector {
 						{tile.id.toHex()}
 					</span>
 					:
-					<Label onchange={(e: Event) => (tile.name = (e.target as Label).textContent)}>
+					<Label
+						maxLength={0x17}
+						onchange={(e: Event) => (tile.name = (e.target as Label).textContent)}>
 						{tile.name.length ? `${tile.name}` : ""}
 					</Label>
 				</span>

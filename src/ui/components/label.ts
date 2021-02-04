@@ -6,6 +6,7 @@ import { FieldEditor } from "src/ux";
 class Label extends Component implements EventListenerObject {
 	public static readonly tagName = "wf-label";
 	public static readonly observedAttributes: string[] = [];
+	public maxLength: number = 0;
 	private _editor: FieldEditor;
 
 	constructor() {
@@ -29,6 +30,7 @@ class Label extends Component implements EventListenerObject {
 		if (this._editor) return;
 
 		const editor = new FieldEditor(this);
+		editor.maxLength = this.maxLength;
 		editor.onconfirm = () => this._triggerOnChange();
 		editor.onend = () => this.endEditing();
 		this._editor = editor;
