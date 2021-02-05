@@ -9,8 +9,10 @@ enum TileAttributes {
 	Item = 1 << 7,
 	Character = 1 << 8,
 
+	Hero = Character | (1 << 16),
 	Edible = Item | (1 << 22),
-	Doorway = Floor | (1 << 15)
+	Doorway = Floor | (1 << 15),
+	Map = Item | (1 << 20)
 }
 
 const TileAttribute = {
