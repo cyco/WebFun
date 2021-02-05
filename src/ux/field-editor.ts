@@ -1,3 +1,4 @@
+import { min } from "src/std/math";
 import { EventTarget } from "src/util";
 
 export const Event = {
@@ -10,6 +11,7 @@ class FieldEditor extends EventTarget {
 	public onconfirm: () => void;
 	public onend: () => void;
 	public oncancel: () => void;
+	public maxLength: number = 0;
 
 	private _originalContent: string;
 	private _originalOnBlur: (this: HTMLElement, ev: FocusEvent) => any;
@@ -81,6 +83,7 @@ class FieldEditor extends EventTarget {
 
 	private confirm(event: Event) {
 		if (event) event.preventDefault();
+		this.enforceMaxLength();
 		this.dispatchEvent(new CustomEvent(Event.DidConfirm));
 		if (this.onconfirm instanceof Function) this.onconfirm();
 
@@ -102,6 +105,14 @@ class FieldEditor extends EventTarget {
 	public abort(): void {
 		this._restoreNode();
 		this._restoreNodeContents();
+	}
+
+	private enforceMaxLength() {
+		if (this.maxLength === 0) return;
+		this._node.textContent = this._node.textContent.slice(
+			0,
+			min(this._node.textContent.length, this.maxLength)
+		);
 	}
 }
 
