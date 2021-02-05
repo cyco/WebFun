@@ -85,6 +85,7 @@ class MonsterLayer extends Component {
 				title: "Place Monster",
 				callback: (): void => {
 					const monster = new MutableMonster();
+					monster.id = this.zone.monsters.length;
 					monster.face = this.enemies.first();
 					monster.position = point;
 					monster.loot = -1;
@@ -114,7 +115,7 @@ class MonsterLayer extends Component {
 						title: "Change Type",
 						callback: async () => {
 							const t = await ModalPrompt("Pick enemy type:", {
-								defaultValue: monster.face.id.toString(),
+								defaultValue: monster.face?.id.toString(),
 								options: this.enemies.map(e => ({
 									label: e.name,
 									value: e.id.toString()
