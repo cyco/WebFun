@@ -143,7 +143,9 @@ const makeFunction = (describe: any): describeMonsterMovement => (
 				char.id = assets.getAll(Char).length;
 				char.movementType = movementType;
 				char.health = 1;
-				const charTiles = assets.getAll(Tile).filter(t => t.isCharacter());
+				const charTiles = assets
+					.getAll(Tile)
+					.filter(t => t.hasAttributes(Tile.Attributes.Character));
 
 				const frame1 = new Char.Frame(charTiles.slice(1, 9));
 				const frame2 = new Char.Frame(charTiles.slice(9, 17).concat(charTiles));

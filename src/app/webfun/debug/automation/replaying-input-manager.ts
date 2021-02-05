@@ -43,7 +43,7 @@ class ReplayingInputManager extends EventTarget implements InputManager, EventLi
 			this._offset++;
 
 			if (this.token !== "at") {
-				if (tile.isEdible()) {
+				if (tile.hasAttributes(Tile.Attributes.Edible)) {
 					this.engine.consume(tile);
 				} else {
 					this.engine.equip(tile);

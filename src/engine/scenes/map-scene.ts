@@ -205,13 +205,13 @@ class MapScene extends Scene {
 		);
 
 		const typeForTile = (tile: Tile): number => {
-			if (tile.isTool()) return StringID.aTool;
-			if (tile.isPart()) return StringID.aPart;
-			if (tile.isValuable()) return StringID.aValuable;
-			if (tile.isKeycard()) return StringID.aKeyCard;
-			if (tile.isLocator()) return StringID.aMap;
-			if (tile.isWeapon()) return StringID.TheForce;
-			if (tile.isItem()) return StringID.SomethingUseful;
+			if (tile.hasAttributes(Tile.Attributes.Tool)) return StringID.aTool;
+			if (tile.hasAttributes(Tile.Attributes.Part)) return StringID.aPart;
+			if (tile.hasAttributes(Tile.Attributes.Valuable)) return StringID.aValuable;
+			if (tile.hasAttributes(Tile.Attributes.Keycard)) return StringID.aKeyCard;
+			if (tile.hasAttributes(Tile.Attributes.Locator)) return StringID.aMap;
+			if (tile.hasAttributes(Tile.Attributes.Weapon)) return StringID.TheForce;
+			if (tile.hasAttributes(Tile.Attributes.Item)) return StringID.SomethingUseful;
 
 			return StringID.aUnknown;
 		};
@@ -237,9 +237,12 @@ class MapScene extends Scene {
 			case Zone.Type.FindUniqueWeapon:
 				if (!sector.findItem) return StringID.None;
 				if (sector.solved1) return StringID.Solved;
-				if (sector.findItem.isLocator()) return [StringID.find, StringID.aMap];
-				if (sector.findItem.isWeapon()) return [StringID.find, StringID.TheForce];
-				if (sector.findItem.isItem()) return [StringID.find, StringID.SomethingUseful];
+				if (sector.findItem.hasAttributes(Tile.Attributes.Map))
+					return [StringID.find, StringID.aMap];
+				if (sector.findItem.hasAttributes(Tile.Attributes.Weapon))
+					return [StringID.find, StringID.TheForce];
+				if (sector.findItem.hasAttributes(Tile.Attributes.Item))
+					return [StringID.find, StringID.SomethingUseful];
 				console.assert(false, "Unknown find item!");
 			case Zone.Type.Trade:
 				if (!sector.requiredItem) return StringID.None;

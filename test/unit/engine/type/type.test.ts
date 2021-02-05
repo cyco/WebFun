@@ -1,7 +1,7 @@
 import { GameType } from "src/engine/type";
 import { Tile } from "src/engine/objects";
 
-describe("WebFun.Engine.GameType", () => {
+describe("WebFun.Engine.Type", () => {
 	it("holds information specific to each game", () => {
 		expect(GameType).toBeClass();
 	});
@@ -27,12 +27,12 @@ describe("WebFun.Engine.GameType", () => {
 			}
 		})();
 		const mockWeapon: Tile = {
-			isWeapon() {
-				return true;
+			hasAttributes(i: number) {
+				return (i & Tile.Attributes.Weapon) === i;
 			}
 		} as any;
 		const mockItem: Tile = {
-			isWeapon() {
+			hasAttributes(_: number) {
 				return false;
 			}
 		} as any;

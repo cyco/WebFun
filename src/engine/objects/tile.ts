@@ -1,5 +1,4 @@
-import { TileAttribute, TileAttributes } from "./tile-attributes";
-import { TileSubtype } from "./tile-subtype";
+import TileAttributes from "./tile-attributes";
 
 export const WIDTH = 32;
 export const HEIGHT = 32;
@@ -9,84 +8,19 @@ class Tile {
 	public static readonly WIDTH = WIDTH;
 	public static readonly HEIGHT = HEIGHT;
 	public static readonly SIZE = SIZE;
-	public static readonly Attribute = TileAttribute;
 	public static readonly Attributes = TileAttributes;
-	public static readonly Subtype = TileSubtype;
 
 	protected _id: number = 0;
 	protected _name: string = "";
 	protected _attributes: number = 0;
 	protected _imageData: Uint8Array;
 
-	get walkable(): boolean {
-		return !this.getAttribute(TileAttribute.Object) && !this.getAttribute(TileAttribute.Character);
-	}
-
-	get subtype(): number {
-		return this._attributes & ~0xff;
-	}
-
-	public isObject(): boolean {
-		return this.getAttribute(TileAttribute.Object);
-	}
-
-	public isDraggable(): boolean {
-		return this.getAttribute(TileAttribute.Draggable);
-	}
-
-	public isLocator(): boolean {
-		return (
-			this.getAttribute(TileAttribute.Locator) ||
-			(this.isItem() && this.getSubtype(TileSubtype.Item.Locator))
-		);
-	}
-
 	public isOpaque(): boolean {
-		return 0 === (this._attributes & 1);
+		return !this.hasAttributes(Tile.Attributes.Transparent);
 	}
 
-	public isItem(): boolean {
-		return this.getAttribute(TileAttribute.Item);
-	}
-
-	public isKeycard(): boolean {
-		return this.isItem() && this.getSubtype(TileSubtype.Item.Keycard);
-	}
-
-	public isPart(): boolean {
-		return this.isItem() && this.getSubtype(TileSubtype.Item.Part);
-	}
-
-	public isTool(): boolean {
-		return this.isItem() && this.getSubtype(TileSubtype.Item.Tool);
-	}
-
-	public isValuable(): boolean {
-		return this.isItem() && this.getSubtype(TileSubtype.Item.Valuable);
-	}
-
-	public isWeapon(): boolean {
-		return (this._attributes & TileAttributes.Weapon) !== 0;
-	}
-
-	public isEdible(): boolean {
-		return (this._attributes & TileAttributes.Edible) === TileAttributes.Edible;
-	}
-
-	public isDoorway(): boolean {
-		return (this._attributes & TileAttributes.Doorway) === TileAttributes.Doorway;
-	}
-
-	public isCharacter(): boolean {
-		return (this._attributes & TileAttributes.Character) === TileAttributes.Character;
-	}
-
-	getAttribute(attr: number): boolean {
-		return !!(this._attributes & (1 << attr));
-	}
-
-	getSubtype(attr: number): boolean {
-		return !!(this.subtype & (1 << attr));
+	public hasAttributes(mask: number): boolean {
+		return (this._attributes & mask) === mask;
 	}
 
 	public get id(): number {

@@ -140,7 +140,7 @@ class Engine extends EventTarget {
 	}
 
 	public consume(tile: Tile): void {
-		if (!tile.isEdible) {
+		if (!tile.hasAttributes(Tile.Attributes.Edible)) {
 			const sound = this.assets.get(Sound, this.type.sounds.NoGo, NullIfMissing);
 			this.mixer.play(sound, Channel.Effect);
 			return;
@@ -162,7 +162,7 @@ class Engine extends EventTarget {
 	}
 
 	public equip(tile: Tile): void {
-		if (!tile.isWeapon) {
+		if (!tile.hasAttributes(Tile.Attributes.Weapon)) {
 			const sound = this.assets.get(Sound, this.type.sounds.NoGo, NullIfMissing);
 			this.mixer.play(sound, Channel.Effect);
 			return;
@@ -176,7 +176,7 @@ class Engine extends EventTarget {
 
 		const weaponChar = this.assets.find(
 			Char,
-			c => c.isWeapon && c.frames[0].extensionRight === tile
+			c => c.isWeapon() && c.frames[0].extensionRight === tile
 		);
 		if (this.hero.weapon === weaponChar) return;
 

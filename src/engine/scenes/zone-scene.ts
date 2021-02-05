@@ -329,7 +329,7 @@ class ZoneScene extends Scene {
 		if (inventory.contains(weaponTile)) {
 			engine.equip(weaponTile);
 			hero.ammo = engine.type.getMaxAmmo(weapon);
-		} else engine.equip(inventory.find(tile => tile.isWeapon()));
+		} else engine.equip(inventory.find(tile => tile.hasAttributes(Tile.Attributes.Weapon)));
 	}
 
 	private async _handlePlacedTile(): Promise<ScriptResult> {
@@ -357,9 +357,9 @@ class ZoneScene extends Scene {
 		}
 
 		if (location.isEqualTo(new Point(heroLocation.x, heroLocation.y))) {
-			if (tile.isWeapon()) {
+			if (tile.hasAttributes(Tile.Attributes.Weapon)) {
 				engine.equip(tile);
-			} else if (tile.isEdible()) {
+			} else if (tile.hasAttributes(Tile.Attributes.Edible)) {
 				engine.consume(tile);
 			} else {
 				const nogo = engine.assets.get(Sound, engine.type.sounds.NoGo);

@@ -64,7 +64,10 @@ describe("WebFun.Engine.Type.Yoda", () => {
 	});
 
 	function mockTile(id: number, isWeapon = false): Tile {
-		return ({ id, isWeapon: () => isWeapon } as unknown) as Tile;
+		return ({
+			id,
+			hasAttributes: (i: number) => (i & (isWeapon ? Tile.Attributes.Weapon : 0)) === i
+		} as unknown) as Tile;
 	}
 
 	function mockWeapon(id: number): Char {

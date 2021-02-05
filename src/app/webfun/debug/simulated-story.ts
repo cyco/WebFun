@@ -79,16 +79,16 @@ class SimulatedStory extends Story {
 				break;
 			case Zone.Type.Find:
 			case Zone.Type.FindUniqueWeapon:
-				const hotspotTypeForTileAttributes = (input: number) => {
-					if ((input & Tile.Attributes.Weapon) !== 0) {
+				const hotspotTypeForTile = (input: Tile) => {
+					if (input.hasAttributes(Tile.Attributes.Weapon)) {
 						return Hotspot.Type.DropUniqueWeapon;
-					} else if ((input & (1 << Tile.Subtype.Item.Locator)) !== 0) {
+					} else if (input.hasAttributes(Tile.Attributes.Map)) {
 						return Hotspot.Type.DropMap;
-					} else if ((input & Tile.Attributes.Item) !== 0) {
+					} else if (input.hasAttributes(Tile.Attributes.Item)) {
 						return Hotspot.Type.DropQuestItem;
 					}
 				};
-				const type = hotspotTypeForTileAttributes(find.attributes);
+				const type = hotspotTypeForTile(find);
 				for (const room of RoomIterator(zone, this.assets)) {
 					const candidates = room.hotspots.withType(type);
 					if (!candidates.length) continue;

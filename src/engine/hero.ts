@@ -1,4 +1,4 @@
-import { Char, Zone } from "./objects";
+import { Char, Tile, Zone } from "./objects";
 import { Direction, EventTarget, Point } from "src/util";
 import Settings from "src/settings";
 import { floor, min, max, ceil } from "src/std/math";
@@ -246,7 +246,7 @@ class Hero extends EventTarget {
 		if (!src.isInBounds(z.size)) return;
 
 		const t = z.getTile(src);
-		if (!t || !t.isDraggable()) return false;
+		if (!t || !t.hasAttributes(Tile.Attributes.Draggable)) return false;
 
 		if (z.getTile(target.x, target.y, 1) !== null) return false;
 

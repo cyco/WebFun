@@ -1019,7 +1019,7 @@ class WorldGenerator {
 			zone,
 			zone => {
 				if (!zone.providedItems.includes(item)) return false;
-				const hotspotType = this.hotspotTypeForTileAttributes(item.attributes);
+				const hotspotType = this.hotspotTypeForTile(item);
 				const candidates = zone.hotspots.withType(hotspotType);
 				return this.placeItemAtHotspotRandomly(candidates, item);
 			},
@@ -1028,12 +1028,12 @@ class WorldGenerator {
 		);
 	}
 
-	private hotspotTypeForTileAttributes(input: number): Hotspot.Type {
-		if ((input & Tile.Attributes.Weapon) !== 0) {
+	private hotspotTypeForTile(input: Tile): Hotspot.Type {
+		if (input.hasAttributes(Tile.Attributes.Weapon)) {
 			return Hotspot.Type.DropUniqueWeapon;
-		} else if ((input & (1 << Tile.Subtype.Item.Locator)) !== 0) {
+		} else if (input.hasAttributes(Tile.Attributes.Map)) {
 			return Hotspot.Type.DropMap;
-		} else if ((input & Tile.Attributes.Item) !== 0) {
+		} else if (input.hasAttributes(Tile.Attributes.Item)) {
 			return Hotspot.Type.DropQuestItem;
 		}
 	}
