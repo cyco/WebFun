@@ -54,6 +54,7 @@ class CharacterInspector extends AbstractInspector {
 	public addCharacter(): void {
 		const newCharacter = new MutableChar(this.data.currentData.characters.last());
 		newCharacter.name = "New Character";
+		newCharacter.id = this.data.currentData.characters.length;
 		this.data.currentData.characters.push(newCharacter);
 		this._list.items = this.data.currentData.characters;
 	}
