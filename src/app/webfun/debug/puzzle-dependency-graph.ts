@@ -4,7 +4,6 @@ import { Zone, Tile } from "src/engine/objects";
 import World from "src/engine/world";
 
 import { floor, abs } from "src/std/math";
-import Yoda from "src/engine/type/yoda";
 
 class PuzzleDependencyGraph {
 	private _engine: Engine;
@@ -44,7 +43,7 @@ class PuzzleDependencyGraph {
 		const candidates = world.sectors
 			.map((s, idx) => {
 				if (this.ignoredTypes.has(s.zoneType)) return -1;
-				if (s.findItem && s.findItem.id === Yoda.tileIDs.Locator) return -1;
+				if (s.findItem && s.findItem.hasAttributes(Tile.Attributes.Map)) return -1;
 				return idx;
 			})
 			.filter(i => i !== -1);

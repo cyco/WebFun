@@ -1,6 +1,5 @@
 import {
 	Engine,
-	GameType,
 	Interface,
 	Hero,
 	GameState,
@@ -27,6 +26,7 @@ import InventoryComponent from "src/app/webfun/ui/inventory";
 import ResourceManager from "src/app/webfun/resource-manager";
 import { Size } from "src/util";
 import * as LoaderModule from "src/app/webfun/loader";
+import { Tile } from "src/engine/objects";
 
 describe("WebFun.App.GameController", () => {
 	let originalSettings: any;
@@ -121,7 +121,14 @@ describe("WebFun.App.GameController", () => {
 						beforeEach(() => {
 							subject.handleEvent(
 								new CustomEvent(InventoryComponent.Events.ItemActivated, {
-									detail: { item: { id: Yoda.tileIDs.Locator } }
+									detail: {
+										item: {
+											id: 9,
+											hasAttributes(attr: number) {
+												return (attr & Tile.Attributes.Map) === attr;
+											}
+										}
+									}
 								})
 							);
 						});

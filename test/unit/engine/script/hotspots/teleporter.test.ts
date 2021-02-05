@@ -9,17 +9,19 @@ describe("WebFun.Engine.Script.Hotspots.Teleport", () => {
 	beforeEach(() => mockEngine());
 
 	it("does not if the hero holds no locator", () => {
-		engine.inventory.contains.and.returnValue(false);
-		expect(teleporter(engine, mockHotspot(Hotspot.Type.Teleporter))).toEqual(HotspotExecutionResult.Void);
-		expect(engine.inventory.contains).toHaveBeenCalledWith(0x1a5);
+		engine.inventory.find.and.returnValue(false);
+		expect(teleporter(engine, mockHotspot(Hotspot.Type.Teleporter))).toEqual(
+			HotspotExecutionResult.Void
+		);
+		expect(engine.inventory.find).toHaveBeenCalled();
 	});
 
 	it("simply pushes a new teleport scene if the hero holds a locator", () => {
-		engine.inventory.contains.and.returnValue(true);
+		engine.inventory.find.and.returnValue(true);
 		expect(teleporter(engine, mockHotspot(Hotspot.Type.Teleporter))).toEqual(
 			HotspotExecutionResult.ChangeZone
 		);
-		expect(engine.inventory.contains).toHaveBeenCalledWith(0x1a5);
+		expect(engine.inventory.find).toHaveBeenCalled();
 		expect(engine.sceneManager.pushScene).toHaveBeenCalledWith(jasmine.any(TeleportScene));
 	});
 
@@ -29,7 +31,7 @@ describe("WebFun.Engine.Script.Hotspots.Teleport", () => {
 
 	function mockEngine() {
 		engine = {
-			inventory: { contains: jasmine.createSpy("inventory.contains") },
+			inventory: { find: jasmine.createSpy("inventory.find") },
 			sceneManager: { pushScene: jasmine.createSpy("sceneManager.pushScene") }
 		} as any;
 	}

@@ -8,10 +8,9 @@ import { AbstractWindow, Button } from "src/ui/components";
 import { Direction } from "../ui/location";
 import { Hero, SceneManager, Inventory } from "src/engine";
 import World from "src/engine/world";
-import { Zone } from "src/engine/objects";
+import { Zone, Tile } from "src/engine/objects";
 import { Point } from "src/util";
 import { MapScene, ZoneScene } from "src/engine/scenes";
-import { Yoda } from "src/engine/type";
 
 class MainWindow extends AbstractWindow {
 	public static readonly tagName = "wf-main-window";
@@ -155,7 +154,7 @@ class MainWindow extends AbstractWindow {
 		}
 
 		if (source instanceof Inventory) {
-			this.mapButton.disabled = !source.contains(Yoda.tileIDs.Locator);
+			this.mapButton.disabled = !source.find(t => t.hasAttributes(Tile.Attributes.Map));
 		}
 	}
 
@@ -168,7 +167,7 @@ class MainWindow extends AbstractWindow {
 	}
 
 	private toggleMap() {
-		if (!this.engine.inventory.contains(Yoda.tileIDs.Locator)) {
+		if (!this.engine.inventory.find(t => t.hasAttributes(Tile.Attributes.Map))) {
 			return;
 		}
 

@@ -59,11 +59,11 @@ describeComponent(InventoryComponent, () => {
 		describe("row click handlers", () => {
 			it("notifies when an item is clicked", done => {
 				const inventory = new Inventory();
-				inventory.addItem(mockTile(Yoda.tileIDs.Locator));
+				inventory.addItem(mockTile(7, Tile.Attributes.Map));
 				subject.inventory = inventory;
 
 				subject.addEventListener(InventoryEvent.ItemActivated, (e: any) => {
-					expect(e.detail.item.id).toBe(Yoda.tileIDs.Locator);
+					expect(e.detail.item.id).toBe(7);
 					expect(e.detail.row).toBe(0);
 
 					done();
@@ -101,7 +101,7 @@ describeComponent(InventoryComponent, () => {
 		});
 	});
 
-	function mockTile(id: Number): Tile {
-		return { id, imageData: new Uint8Array(1) } as any;
+	function mockTile(id: number, attributes: number = 0): Tile {
+		return { id, imageData: new Uint8Array(1), attributes } as any;
 	}
 });

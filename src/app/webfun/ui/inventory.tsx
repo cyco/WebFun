@@ -8,7 +8,6 @@ import InventoryRow from "./inventory-row";
 import { ModalSession } from "src/ux";
 import { Point } from "src/util";
 import { Tile } from "src/engine/objects";
-import { Yoda } from "src/engine/type";
 import { max } from "src/std/math";
 
 export const Events = {
@@ -99,7 +98,7 @@ class InventoryComponent extends AbstractList<Tile> {
 	}
 
 	private _canPlaceItem(item: Tile): boolean {
-		return item.id !== Yoda.tileIDs.Locator;
+		return !item.hasAttributes(Tile.Attributes.Map);
 	}
 
 	public set palette(palette: ColorPalette) {

@@ -1,5 +1,5 @@
 import { Events, default as Inventory } from "src/engine/inventory";
-import { Yoda } from "src/engine/type";
+import { MutableTile } from "src/engine/mutable-objects";
 import { Tile } from "src/engine/objects";
 
 describe("WebFun.Engine.Inventory", () => {
@@ -13,13 +13,13 @@ describe("WebFun.Engine.Inventory", () => {
 	});
 
 	it("items can be added", () => {
-		const mockItem: Tile = {} as any;
+		const mockItem: Tile = mockTile({}) as any;
 
 		expect(() => subject.addItem(mockItem)).not.toThrow();
 	});
 
 	it("items can be removed", () => {
-		const mockItem: Tile = {} as any;
+		const mockItem: Tile = mockTile({}) as any;
 
 		expect(() => {
 			subject.removeItem(mockItem);
@@ -27,8 +27,8 @@ describe("WebFun.Engine.Inventory", () => {
 	});
 
 	it("has method to check if it contains an item", () => {
-		const mockItem: Tile = { id: 5 } as any;
-		subject.addItem(({ id: 10 } as any) as Tile);
+		const mockItem: Tile = mockTile({ id: 5 });
+		subject.addItem(mockTile({ id: 10 }));
 		subject.addItem(mockItem);
 
 		expect(subject.contains(mockItem)).toBeTrue();
@@ -41,7 +41,7 @@ describe("WebFun.Engine.Inventory", () => {
 	});
 
 	it("can return the first item satisfying a given predicated", () => {
-		const mockItem: Tile = { id: 10 } as any;
+		const mockItem: Tile = mockTile({ id: 10 });
 		subject.addItem(mockItem);
 
 		expect(subject.find(tile => tile.id > 5)).toBe(mockItem);
@@ -49,8 +49,8 @@ describe("WebFun.Engine.Inventory", () => {
 	});
 
 	it("has a method to remove all items", () => {
-		const mockItem1: Tile = { id: 5 } as any;
-		const mockItem2: Tile = { id: 7 } as any;
+		const mockItem1: Tile = mockTile({ id: 5 });
+		const mockItem2: Tile = mockTile({ id: 7 });
 
 		subject.addItem(mockItem1);
 		subject.addItem(mockItem2);
@@ -63,20 +63,25 @@ describe("WebFun.Engine.Inventory", () => {
 	});
 
 	it("has a method for easy enumeration", () => {
-		subject.addItem(({ id: 3 } as any) as Tile);
-		subject.addItem(({ id: 4 } as any) as Tile);
+		subject.addItem(mockTile({ id: 3 }));
+		subject.addItem(mockTile({ id: 4 }));
 
 		const enumeratedItemIds: number[] = [];
 		subject.forEach(item => enumeratedItemIds.push(item.id));
 		expect(enumeratedItemIds).toEqual([3, 4]);
 	});
 
-	it("keeps the locator on top", () => {
-		subject.addItem(({ id: 3 } as any) as Tile);
-		subject.addItem(({ id: 4 } as any) as Tile);
-		subject.addItem(({ id: Yoda.tileIDs.Locator } as any) as Tile);
+	it("keeps the map on top", () => {
+		subject.addItem(mockTile({ id: 3 }));
+		subject.addItem(mockTile({ id: 4 }));
+		subject.addItem(
+			mockTile({
+				id: 7,
+				attributes: Tile.Attributes.Map
+			})
+		);
 
-		expect((subject as any)._items[0].id).toEqual(Yoda.tileIDs.Locator);
+		expect((subject as any)._items[0].id).toEqual(7);
 	});
 
 	describe("Events", () => {
@@ -85,7 +90,7 @@ describe("WebFun.Engine.Inventory", () => {
 		});
 
 		it("sends an event when an item is added", done => {
-			const mockItem: Tile = { id: 3 } as any;
+			const mockItem: Tile = mockTile({ id: 3 });
 			subject.addEventListener(Events.DidChangeItems, function (event: any) {
 				expect(event.detail.mode).toEqual("add");
 				expect(event.detail.item).toBe(mockItem);
@@ -96,7 +101,7 @@ describe("WebFun.Engine.Inventory", () => {
 		});
 
 		it("sends an event when an item is removed", done => {
-			const mockItem: Tile = { id: 3 } as any;
+			const mockItem: Tile = mockTile({ id: 3 });
 			subject.addItem(mockItem);
 
 			subject.addEventListener(Events.DidChangeItems, function (event: any) {
@@ -109,4 +114,11 @@ describe("WebFun.Engine.Inventory", () => {
 			subject.removeItem(mockItem);
 		});
 	});
+
+	function mockTile(spec: any): Tile {
+		const tile = new MutableTile();
+		tile.id = spec.id ?? 0;
+		tile.attributes = spec.attributes ?? 0;
+		return tile;
+	}
 });

@@ -121,7 +121,7 @@ class WorldGenerator {
 		this.determineBlockadeAndTownZones(mapGenerator.typeMap);
 
 		this.addProvidedItemQuest(this.lookupTileById(Yoda.tileIDs.TheForce), 2);
-		this.addProvidedItemQuest(this.lookupTileById(Yoda.tileIDs.Locator), 1);
+		this.addProvidedItemQuest(this.lookupTileByAttributes(Tile.Attributes.Map), 1);
 		this.determineFindZones(mapGenerator.typeMap);
 		this.determineTeleporters(mapGenerator.typeMap);
 
@@ -131,6 +131,10 @@ class WorldGenerator {
 		this.writePlanetValues();
 
 		return true;
+	}
+
+	private lookupTileByAttributes(mask: number): Tile {
+		return this._assets.find(Tile, t => t.hasAttributes(mask));
 	}
 
 	private determineTransportZones(): void {

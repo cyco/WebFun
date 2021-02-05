@@ -47,7 +47,7 @@ class GameEventHandler {
 				const item = evt.detail.item;
 				if (!item) return;
 
-				if (item.id === Yoda.tileIDs.Locator) {
+				if (item.hasAttributes(Tile.Attributes.Map)) {
 					engine.sceneManager.pushScene(new MapScene());
 					return;
 				}

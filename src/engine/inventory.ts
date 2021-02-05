@@ -1,6 +1,5 @@
 import { EventTarget } from "src/util";
 import { Tile } from "./objects";
-import { Yoda } from "./type";
 
 export const Events = {
 	DidAddItem: "ItemAdded",
@@ -20,7 +19,7 @@ class Inventory extends EventTarget {
 
 	public addItem(item: Tile): void {
 		let index = this._items.length;
-		if (item.id === Yoda.tileIDs.Locator) {
+		if (item.hasAttributes(Tile.Attributes.Map)) {
 			index = 0;
 		}
 		this._items.splice(index, 0, item);
