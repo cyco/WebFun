@@ -25,6 +25,7 @@ import SidebarLayer from "src/app/editor/components/zone-editor/sidebar-layer";
 import ToolComponent from "./tool";
 import { Zone } from "src/engine/objects";
 import ZoneEditor from "src/app/editor/components/zone-editor/view";
+import { TileView } from "src/app/webfun/debug/components";
 
 class Window extends AbstractPanel {
 	public static readonly tagName = "wf-zone-editor-window";
@@ -84,6 +85,27 @@ class Window extends AbstractPanel {
 				{[this._tilePicker, ...toolComponents, ...actionComponents]}
 			</div>,
 			"Tools"
+		);
+		this._sidebar.addEntry(
+			<div className="items" style={{ display: "flex", flexDirection: "column" }}>
+				<div>
+					<label>Provided</label>
+					<div></div>
+				</div>
+				<div>
+					<label>Required</label>
+					<div>{[]}</div>
+				</div>
+				<div>
+					<label>Goad</label>
+					<div>{[]}</div>
+				</div>
+				<div>
+					<label>NPCs</label>
+					<div>{[]}</div>
+				</div>
+			</div>,
+			"Items"
 		);
 	}
 
@@ -165,6 +187,45 @@ class Window extends AbstractPanel {
 
 		this._zone = zone;
 		this._editor.zone = zone;
+		this.rebuildItems();
+	}
+
+	private rebuildItems() {
+		const containers = this._sidebar.querySelectorAll(".items label+div") as NodeListOf<Element>;
+		if (!containers.length) return;
+		if (!this.zone) return;
+
+		containers[0].replaceWith(
+			<div>
+				{this.zone.providedItems.map(t => (
+					<TileView tile={t} palette={this._editor.palette}></TileView>
+				))}
+			</div>
+		);
+
+		containers[1].replaceWith(
+			<div>
+				{this.zone.requiredItems.map(t => (
+					<TileView tile={t} palette={this._editor.palette}></TileView>
+				))}
+			</div>
+		);
+
+		containers[2].replaceWith(
+			<div>
+				{this.zone.goalItems.map(t => (
+					<TileView tile={t} palette={this._editor.palette}></TileView>
+				))}
+			</div>
+		);
+
+		containers[3].replaceWith(
+			<div>
+				{this.zone.npcs.map(t => (
+					<TileView tile={t} palette={this._editor.palette}></TileView>
+				))}
+			</div>
+		);
 	}
 
 	get zone(): Zone {
