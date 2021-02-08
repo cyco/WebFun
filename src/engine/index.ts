@@ -19,7 +19,6 @@ import ResourceManager from "./resource-manager";
 import Interface from "./interface";
 import * as Objects from "./objects";
 import * as Script from "./script";
-import * as Types from "./types";
 
 export {
 	ColorPalette,
@@ -46,6 +45,5 @@ export {
 	Interface,
 	Story,
 	AssetManager,
-	ResourceManager,
-	Types
+	ResourceManager
 };

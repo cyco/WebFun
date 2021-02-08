@@ -1,4 +1,4 @@
-import BaseLocatorTile from "src/engine/types/locator-tile";
+import BaseLocatorTile from "src/engine/type/locator-tile";
 import LocatorTile from "src/engine/type/yoda/locator-tile";
 import { Hotspot, Zone } from "src/engine/objects";
 

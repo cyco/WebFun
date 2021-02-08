@@ -16,7 +16,7 @@ import { EventTarget, rand, srand } from "src/util";
 import { FilePicker, WindowManager } from "src/ui";
 import { ZoneScene } from "src/engine/scenes";
 import { MainMenu, MobileMainMenu, MainWindow } from "./windows";
-import { WorldSize } from "src/engine/types";
+import { WorldSize } from "src/engine/generation";
 import GameState from "src/engine/game-state";
 import { Reader } from "src/engine/save-game";
 import Settings from "src/settings";

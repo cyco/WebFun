@@ -12,7 +12,7 @@ import {
 	CurrentZoneIsExpectation,
 	HealthIsExpectation
 } from "./expectations";
-import { WorldSize } from "src/engine/types";
+import { WorldSize } from "src/engine/generation";
 import { Zone } from "src/engine/objects";
 
 const Expectations = [

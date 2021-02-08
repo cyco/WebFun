@@ -1,4 +1,4 @@
-import { WorldSize } from "../types";
+import WorldSize from "./world-size";
 import { Zone } from "src/engine/objects";
 
 class WorldGenerationError extends Error {

@@ -2,7 +2,7 @@ import { Zone, Tile } from "src/engine/objects";
 import { srand } from "src/util";
 import { SimulatedStory } from "src/app/webfun/debug";
 import { Story } from "src/engine";
-import { WorldSize } from "src/engine/types";
+import { WorldSize } from "src/engine/generation";
 
 import {
 	Parser,

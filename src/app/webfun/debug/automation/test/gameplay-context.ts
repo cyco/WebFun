@@ -6,7 +6,7 @@ import { ZoneScene } from "src/engine/scenes";
 import { CanvasRenderer } from "src/app/webfun/rendering";
 import { SceneView } from "src/app/webfun/ui";
 import { GameData, Engine, Story, AssetManager } from "src/engine";
-import { WorldSize } from "src/engine/types";
+import { WorldSize } from "src/engine/generation";
 import { Tile, Zone, Puzzle, Sound, Char, Action } from "src/engine/objects";
 import { PaletteAnimation, ColorPalette } from "src/engine/rendering";
 import { Renderer as DummyRenderer } from "src/engine/dummy-interface";

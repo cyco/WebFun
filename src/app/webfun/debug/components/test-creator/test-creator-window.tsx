@@ -14,7 +14,7 @@ import ConfigurationBuilder from "./configuration-builder";
 import SimulatedStory from "src/app/webfun/debug/simulated-story";
 import adjacentZones from "./adjacent-zones";
 import { Zone, Tile, Sound, Puzzle, Char } from "src/engine/objects";
-import { WorldSize } from "src/engine/types";
+import { WorldSize } from "src/engine/generation";
 import { Story, Engine, AssetManager, Hero } from "src/engine";
 import Settings from "src/settings";
 import Metronome, { MetronomeInternals } from "src/engine/metronome";

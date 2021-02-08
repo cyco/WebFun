@@ -1,5 +1,5 @@
 import { DagobahGenerator, WorldGenerationError, WorldGenerator } from "src/engine/generation";
-import { WorldSize } from "./types";
+import { WorldSize } from "./generation";
 
 import AssetManager from "./asset-manager";
 import { Puzzle, Zone } from "src/engine/objects";

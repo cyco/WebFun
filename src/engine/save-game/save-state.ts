@@ -1,4 +1,4 @@
-import { WorldSize } from "../types";
+import { WorldSize } from "src/engine/generation";
 
 import { GameType } from "../type";
 import { Point } from "../../util";

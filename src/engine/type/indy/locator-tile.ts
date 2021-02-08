@@ -1,7 +1,7 @@
 import Hotspot from "src/engine/objects/hotspot";
 import Zone from "src/engine/objects/zone";
 
-import LocatorTile from "src/engine/types/locator-tile";
+import LocatorTile from "../locator-tile";
 import { rgb } from "src/util";
 
 export default class extends LocatorTile {

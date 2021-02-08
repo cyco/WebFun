@@ -2,7 +2,7 @@ import { ParseExpectation, PrepareExpectations } from "src/app/webfun/debug/expe
 
 import loadGameData from "test/helpers/game-data";
 import { GameData, AssetManager, Story } from "src/engine";
-import { WorldSize } from "../../src/engine/types";
+import { WorldSize } from "src/engine/generation";
 import Worlds from "test/fixtures/worlds.txt";
 import { Yoda } from "src/engine/type";
 import { Tile, Zone, Puzzle } from "src/engine/objects";

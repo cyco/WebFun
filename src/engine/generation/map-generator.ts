@@ -12,7 +12,7 @@ import GetDistanceToCenter from "./distance-to-center";
 import IslandBuilder from "./island-builder";
 import WorldMap from "./map";
 import SectorType from "./sector-type";
-import { WorldSize } from "../types";
+import WorldSize from "./world-size";
 import { max } from "src/std/math";
 
 const MapWidth = 10;

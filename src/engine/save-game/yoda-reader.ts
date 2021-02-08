@@ -1,7 +1,7 @@
 import { Hotspot, Tile, Char, Zone } from "src/engine/objects";
 import { InputStream, Point } from "src/util";
 import { MutableHotspot, MutableMonster } from "src/engine/mutable-objects";
-import { WorldSize } from "../types";
+import { WorldSize } from "src/engine/generation";
 
 import Reader from "./reader";
 import SaveState from "./save-state";

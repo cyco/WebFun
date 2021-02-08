@@ -1,6 +1,6 @@
 import Expectation from "./expectation";
 import Configuration from "./configuration";
-import { WorldSize } from "src/engine/types";
+import { WorldSize } from "src/engine/generation";
 import { Zone } from "src/engine/objects";
 
 class Serializer {

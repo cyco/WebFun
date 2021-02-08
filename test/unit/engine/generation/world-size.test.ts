@@ -1,6 +1,6 @@
-import WorldSize from "src/engine/types/world-size";
+import WorldSize from "src/engine/generation/world-size";
 
-describe("WebFun.Engine.Types.WorldSize", () => {
+describe("WebFun.Engine.Generation.WorldSize", () => {
 	it("defines constants for the size of a world", () => {
 		expect(WorldSize.Small).toBeDefined();
 		expect(WorldSize.Medium).toBeDefined();

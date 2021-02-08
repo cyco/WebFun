@@ -7,7 +7,7 @@ import score, {
 } from "src/engine/score";
 import { Engine } from "src/engine";
 import Settings from "src/settings";
-import { WorldSize } from "src/engine/types";
+import { WorldSize } from "src/engine/generation";
 
 describe("WebFun.Engine.Score", () => {
 	let engine: Engine;
@@ -37,7 +37,9 @@ describe("WebFun.Engine.Score", () => {
 			(engine.story as any).size = size;
 			(engine.story as any).puzzles = Array.Repeat({}, puzzlesTotal);
 			engine.temporaryState.totalPlayTime = 0;
-			engine.temporaryState.currentPlayStart = new Date(new Date().getTime() - totalPlayTime * 1000);
+			engine.temporaryState.currentPlayStart = new Date(
+				new Date().getTime() - totalPlayTime * 1000
+			);
 
 			const sectors = Array.Repeat({ zone: null }, 100) as any[];
 			for (let i = 0; i < sectorsTotal; i++) {
@@ -139,7 +141,9 @@ describe("WebFun.Engine.Score", () => {
 		function score(currentPlayTime: number, previousPlayTime: number, size: WorldSize) {
 			(engine.story as any).size = size;
 			engine.temporaryState.totalPlayTime = previousPlayTime;
-			engine.temporaryState.currentPlayStart = new Date(new Date().getTime() - currentPlayTime * 1000);
+			engine.temporaryState.currentPlayStart = new Date(
+				new Date().getTime() - currentPlayTime * 1000
+			);
 
 			return CalculateScoreBasedOnTime(engine);
 		}

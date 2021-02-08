@@ -1,5 +1,5 @@
 import Story from "src/engine/story";
-import { WorldSize } from "src/engine/types";
+import { WorldSize } from "src/engine/generation";
 import { srand } from "src/util";
 import * as Generation from "src/engine/generation";
 import { WorldGenerationError } from "src/engine/generation";

@@ -3,7 +3,7 @@ import "./world-configuration-builder.scss";
 import { Component } from "src/ui";
 import { DiscardingStorage } from "src/util";
 import { Selector, Textbox } from "src/ui/components";
-import { WorldSize } from "src/engine/types";
+import { WorldSize } from "src/engine/generation";
 import { Configuration } from "src/app/webfun/debug/automation/test";
 import { Zone } from "src/engine/objects";
 

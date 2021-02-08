@@ -1,6 +1,6 @@
 import { Char, Tile } from "../objects";
 
-import LocatorTile from "../types/locator-tile";
+import LocatorTile from "./locator-tile";
 
 interface WellKnownSounds {
 	NoGo: number;

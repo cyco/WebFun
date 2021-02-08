@@ -20,7 +20,7 @@ import { SaveState } from "src/engine/save-game";
 import { Tile } from "src/engine/objects";
 import World from "src/engine/world";
 import Sector from "src/engine/sector";
-import { WorldSize } from "src/engine/types";
+import { WorldSize } from "src/engine/generation";
 
 class EditorView extends Component implements InventoryDelegate, InteractiveMapContextMenuProvider {
 	public static readonly tagName = "wf-save-game-editor-view";

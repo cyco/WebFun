@@ -6,7 +6,7 @@ import World from "src/engine/world";
 
 import { ColorPalette } from "src/engine/rendering";
 import { Component } from "src/ui";
-import { LocatorTile } from "src/engine/types";
+import LocatorTile from "src/engine/type/locator-tile";
 import { Point } from "src/util";
 import TileView from "src/app/webfun/debug/components/tile-view";
 

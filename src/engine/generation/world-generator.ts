@@ -8,7 +8,7 @@ import {
 	srand
 } from "src/util";
 import { Hotspot, Puzzle, Tile, Zone } from "src/engine/objects";
-import { WorldSize } from "src/engine/types";
+import WorldSize from "./world-size";
 import { abs, floor } from "src/std/math";
 import { and, not } from "src/util/functional";
 
