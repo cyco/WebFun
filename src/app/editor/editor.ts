@@ -24,7 +24,9 @@ class Editor {
 			return editorWindow.loadGameData(data);
 		} else {
 			const [file] = await FilePicker.Pick({ allowedTypes: ["data", "dta"] });
-			if (!file) return;
+			if (!file) {
+				editorWindow.close();
+			}
 
 			return editorWindow.loadFile(file);
 		}
