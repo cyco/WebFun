@@ -40,4 +40,10 @@ describe("WebFun.Util.DownloadImage", () => {
 		expect(link.getAttribute("href")).toStartWith("data:image/png;base64");
 		expect(link.getAttribute("href").length).toBe(130);
 	});
+
+	it("does nothing if no content is given", () => {
+		spyOn(document, "createElement");
+		DownloadImage(null, "Test.png");
+		expect(document.createElement).not.toHaveBeenCalled();
+	});
 });

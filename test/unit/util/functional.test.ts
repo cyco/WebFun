@@ -1,4 +1,4 @@
-import { and, not, or } from "src/util/functional";
+import { and, equal, greaterThan, lessThan, not, or } from "src/util/functional";
 
 describe("WebFun.Util.functional", () => {
 	describe("and", () => {
@@ -29,6 +29,36 @@ describe("WebFun.Util.functional", () => {
 
 			expect(not(evenp)(1)).toBeTrue();
 			expect(not(evenp)(2)).toBeFalse();
+		});
+	});
+
+	describe("equal", () => {
+		it("simply wraps the strict equality operator in a callback", () => {
+			expect(equal(5, 5)).toBeTrue();
+			expect(equal("test", "test")).toBeTrue();
+
+			expect(equal(5, 7)).toBeFalse();
+			expect(equal("5", 5)).toBeFalse();
+		});
+	});
+
+	describe("lessThan", () => {
+		it("simply wraps the <  operator in a callback", () => {
+			expect(lessThan(5, 6)).toBeTrue();
+			expect(lessThan(-1, 0)).toBeTrue();
+
+			expect(lessThan(5, 5)).toBeFalse();
+			expect(lessThan(6, 5)).toBeFalse();
+		});
+	});
+
+	describe("greaterThan", () => {
+		it("simply wraps the >  operator in a callback", () => {
+			expect(greaterThan(7, 6)).toBeTrue();
+			expect(greaterThan(0, -1)).toBeTrue();
+
+			expect(greaterThan(5, 5)).toBeFalse();
+			expect(greaterThan(5, 6)).toBeFalse();
 		});
 	});
 

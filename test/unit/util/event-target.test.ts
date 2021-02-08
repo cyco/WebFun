@@ -144,4 +144,14 @@ describe("WebFun.Util.EventTarget", () => {
 		expect(protectedSubject.ontestEvent1).toBe(null);
 		expect(protectedSubject.ontestEvent2).toBe(null);
 	});
+
+	it("sets the `target` property of the dispatched event", done => {
+		const subject = new EventTarget();
+		const event = new CustomEvent("Test");
+		subject.addEventListener("Test", (e: CustomEvent) => {
+			expect(e.target).toBe(subject);
+			done();
+		});
+		subject.dispatchEvent(event);
+	});
 });

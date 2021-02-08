@@ -1,14 +1,4 @@
-import Color, {
-	hsv2rgb,
-	rgb,
-	rgb2hsv,
-	rgb2rgba,
-	rgba,
-	rgb24decode,
-	rgb24encode,
-	rgba32decode,
-	rgba32encode
-} from "./color";
+import Color, { hsv2rgb, rgb, rgb2hsv, rgb2rgba, rgba } from "./color";
 import { rand, randmod, srand } from "./random";
 
 import Direction from "./direction";
@@ -94,13 +84,9 @@ export {
 	rand,
 	randmod,
 	rgb,
-	rgb24decode,
-	rgb24encode,
 	rgb2hsv,
 	rgb2rgba,
 	rgba,
-	rgba32decode,
-	rgba32encode,
 	sleep,
 	srand,
 	xy2polar

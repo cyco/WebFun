@@ -240,4 +240,11 @@ describe("WebFun.Util.InputStream", () => {
 			expect(subject.offset).toBe(17);
 		});
 	});
+
+	it("offers access to the underlying array buffer", () => {
+		const buffer = new ArrayBuffer(10);
+		const subject = new InputStream(buffer);
+
+		expect(subject.buffer).toBe(buffer);
+	});
 });
