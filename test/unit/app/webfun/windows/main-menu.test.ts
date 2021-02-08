@@ -135,10 +135,6 @@ describe("WebFun.App.Windows.MainMenu", () => {
 				it("has the right title", () => {
 					expect(exitItem.title).toBe("Exit");
 				});
-
-				it("is always disabled", () => {
-					expect(exitItem.enabled).toBeFalsy();
-				});
 			});
 		});
 	});

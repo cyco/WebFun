@@ -1,7 +1,5 @@
 import PuzzleType from "./puzzle-type";
 import Tile from "./tile";
-import Zone from "./zone";
-import Goals from "./goals";
 
 class Puzzle {
 	public static readonly Type = PuzzleType;
@@ -15,10 +13,6 @@ class Puzzle {
 	protected _unknown1: number = null;
 	protected _unknown2: number = null;
 	protected _unknown3: number = null;
-
-	public isGoalOnPlanet(planet: Zone.Planet): boolean {
-		return Goals().get(planet).has(this.id);
-	}
 
 	get id(): number {
 		return this._id;

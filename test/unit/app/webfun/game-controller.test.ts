@@ -40,7 +40,8 @@ describe("WebFun.App.GameController", () => {
 	let engineInterface: Interface;
 	let mockedData: GameData;
 	let mockedPalette: ColorPalette;
-
+	let mockedStory: Story;
+	
 	beforeEach(() => {
 		originalSettings = Object.assign({}, Settings);
 		createElement = document.createElement.bind(document);
@@ -86,13 +87,11 @@ describe("WebFun.App.GameController", () => {
 		});
 
 		describe("a new game is started", () => {
-			let mockedStory: Story;
 			let mockedPaletteAnimation: PaletteAnimation;
 
 			beforeEach(async () => {
 				mockedStory = { generateWorld: jasmine.createSpy() } as any;
 				mockedPaletteAnimation = {} as any;
-				spyOn(EngineModule, "Story").and.returnValue(mockedStory);
 				spyOn(EngineModule, "PaletteAnimation").and.returnValue(mockedPaletteAnimation);
 				(engine.assets.find as jasmine.Spy).and.returnValue({ size: new Size(9, 9) });
 				await subject.newStory();
@@ -241,7 +240,9 @@ describe("WebFun.App.GameController", () => {
 			persistentState: { gamesWon: 0 },
 			world: { findLocationOfZone: jasmine.createSpy() },
 			inputManager: { addListeners: jasmine.createSpy() },
-			camera: {}
+			camera: {},
+			type: {
+			createNewStory() { return mockedStory; }}
 		} as any;
 	}
 });

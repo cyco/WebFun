@@ -1,5 +1,3 @@
-import { Tile } from "src/engine/objects";
-
-export default (attr: number, attrs: number): string => {
+export default (_attr: number, _attrs: number): string => {
 	return null;
 };

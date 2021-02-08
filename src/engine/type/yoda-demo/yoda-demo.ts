@@ -1,4 +1,4 @@
-import { Char, Tile, Zone } from "src/engine/objects";
+import { Char, Puzzle, Tile, Zone } from "src/engine/objects";
 
 import GameType from "../type";
 import LocatorTile from "./locator-tile";
@@ -10,10 +10,11 @@ import GoalIDs from "./goal-ids";
 import ZoneIDs from "./zone-ids";
 import TileIDs from "./tile-ids";
 import { Engine, Story } from "src/engine";
-import { rand } from "src/util";
 import { WorldSize } from "src/engine/generation";
+import { rand } from "src/util";
+import { MutableZone } from "src/engine/mutable-objects";
 
-class Yoda extends GameType {
+class YodaDemo extends GameType {
 	public static readonly goalIDs = GoalIDs;
 	public static readonly zoneIDs = ZoneIDs;
 	public static readonly charIDs = CharIDs;
@@ -86,13 +87,20 @@ class Yoda extends GameType {
 		}
 	}
 
-	public createNewStory(_: Engine): Story {
+	public createNewStory(engine: Engine): Story {
+		const goal = engine.assets.get(Puzzle, GoalIDs.HIDDEN_FACTORY);
+		const unavailableGoalZones = engine.assets.getFiltered(
+			Zone,
+			zone => zone.type === Zone.Type.Goal && !zone.goalItems.contains(goal.item1)
+		);
+		unavailableGoalZones.forEach(z => ((z as MutableZone).type = Zone.Type.None));
+
 		return new Story(
 			rand(),
-			[Zone.Planet.Endor, Zone.Planet.Hoth, Zone.Planet.Tatooine].random(),
+			Zone.Planet.Hoth,
 			[WorldSize.Small, WorldSize.Medium, WorldSize.Large].random()
 		);
 	}
 }
 
-export default Yoda;
+export default YodaDemo;

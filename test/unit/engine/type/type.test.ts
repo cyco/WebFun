@@ -1,5 +1,6 @@
 import { GameType } from "src/engine/type";
 import { Tile } from "src/engine/objects";
+import { Engine, Story } from "src/engine";
 
 describe("WebFun.Engine.Type", () => {
 	it("holds information specific to each game", () => {
@@ -24,6 +25,10 @@ describe("WebFun.Engine.Type", () => {
 
 			get name(): string {
 				return "mock-type";
+			}
+
+			createNewStory(_engine: Engine): Story {
+				throw new Error("Method not implemented.");
 			}
 		})();
 		const mockWeapon: Tile = {

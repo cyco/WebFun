@@ -1,6 +1,8 @@
+import Story from "../story";
 import { Char, Tile } from "../objects";
 
 import LocatorTile from "./locator-tile";
+import Engine from "../engine";
 
 interface WellKnownSounds {
 	NoGo: number;
@@ -21,6 +23,8 @@ abstract class GameType {
 	abstract getMaxAmmo(_: Char): number;
 	abstract getEquipSound(_: Char): number;
 	abstract get name(): string;
+
+	abstract createNewStory(_engine: Engine): Story;
 }
 
 export default GameType;

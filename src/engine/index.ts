@@ -18,32 +18,34 @@ import AssetManager from "./asset-manager";
 import ResourceManager from "./resource-manager";
 import Interface from "./interface";
 import * as Objects from "./objects";
+import * as MutableObjects from "./mutable-objects";
 import * as Script from "./script";
 
 export {
+	AssetManager,
 	ColorPalette,
-	PaletteAnimation,
 	Engine,
-	Objects,
 	EngineEvents,
 	GameData,
+	GameState,
 	GameType,
 	GameTypeIndy,
 	GameTypeYoda,
-	GameState,
 	Hero,
+	Interface,
 	Inventory,
 	Metronome,
+	MutableObjects,
+	Objects,
+	PaletteAnimation,
 	PersistentState,
-	readGameDataFile,
+	ResourceManager,
 	SaveGameReader,
 	SaveGameWriter,
 	SaveState,
 	Scene,
 	SceneManager,
 	Script,
-	Interface,
 	Story,
-	AssetManager,
-	ResourceManager
+	readGameDataFile
 };

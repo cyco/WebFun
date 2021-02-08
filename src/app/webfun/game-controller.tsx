@@ -5,18 +5,16 @@ import {
 	Engine,
 	GameData,
 	Hero,
-	Story,
 	AssetManager,
 	GameType,
 	Interface,
 	PaletteAnimation
 } from "src/engine";
 import { ConfirmationResult, ModalConfirm } from "src/ux";
-import { EventTarget, rand, srand } from "src/util";
+import { EventTarget, srand } from "src/util";
 import { FilePicker, WindowManager } from "src/ui";
 import { ZoneScene } from "src/engine/scenes";
 import { MainMenu, MobileMainMenu, MainWindow } from "./windows";
-import { WorldSize } from "src/engine/generation";
 import GameState from "src/engine/game-state";
 import { Reader } from "src/engine/save-game";
 import Settings from "src/settings";
@@ -127,11 +125,8 @@ class GameController extends EventTarget implements EventListenerObject {
 
 		srand(floor(random() * 0xffff));
 		await this._loadGameData();
-		const story = new Story(
-			rand(),
-			[Zone.Planet.Endor, Zone.Planet.Hoth, Zone.Planet.Tatooine].random(),
-			[WorldSize.Small, WorldSize.Medium, WorldSize.Large].random()
-		);
+		const story = this.engine.type.createNewStory(this.engine);
+
 		this._engine.inventory.removeAllItems();
 		story.generateWorld(this._engine.assets, this.engine.persistentState.gamesWon);
 		this._engine.story = story;
@@ -283,6 +278,12 @@ class GameController extends EventTarget implements EventListenerObject {
 
 	public get engine(): Engine {
 		return this._engine;
+	}
+
+	public async stop(): Promise<void> {
+		await this._engine.metronome.stop();
+		if ((window as any).engine === this._engine) (window as any).engine = null;
+		this._window.close();
 	}
 }
 

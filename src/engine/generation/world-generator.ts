@@ -24,6 +24,7 @@ import SectorType from "./sector-type";
 import RoomIterator from "../room-iterator";
 import { Yoda } from "src/engine/type";
 import { MutablePuzzle } from "src/engine/mutable-objects";
+import ZonePlanet from "../objects/zone-planet";
 
 declare global {
 	interface Array<T> {
@@ -947,12 +948,48 @@ class WorldGenerator {
 					return (
 						puzzle.type === Puzzle.Type.End &&
 						(!this.puzzleUsedInLastGame(puzzle, this._planet) || this.goalPuzzle !== null) &&
-						puzzle.isGoalOnPlanet(this._planet)
+						this.isGoalOnPlanet(this._planet, puzzle)
 					);
 				default:
 					return true;
 			}
 		});
+	}
+
+	private isGoalOnPlanet(planet: ZonePlanet, puzzle: Puzzle): boolean {
+		const Goals = new Map<Zone.Planet, Set<number>>([
+			[
+				Zone.Planet.Tatooine,
+				new Set([
+					Yoda.goalIDs.FALCON,
+					Yoda.goalIDs.HAN,
+					Yoda.goalIDs.AMULET,
+					Yoda.goalIDs.ADEGAN_CRYSTAL,
+					Yoda.goalIDs.THREEPIOS_PARTS
+				])
+			],
+			[
+				Zone.Planet.Hoth,
+				new Set([
+					Yoda.goalIDs.GENERAL_MARUTZ,
+					Yoda.goalIDs.HIDDEN_FACTORY,
+					Yoda.goalIDs.WARN_THE_REBELS,
+					Yoda.goalIDs.RESCUE_YODA,
+					Yoda.goalIDs.CAR
+				])
+			],
+			[
+				Zone.Planet.Endor,
+				new Set([
+					Yoda.goalIDs.FIND_LEIA,
+					Yoda.goalIDs.IMPERIAL_BATTLE_STATION,
+					Yoda.goalIDs.LANTERN_OF_SACRED_LIGHT,
+					Yoda.goalIDs.IMPERIAL_BATTLE_CODE,
+					Yoda.goalIDs.RELAY_STATION
+				])
+			]
+		]);
+		return Goals.get(planet).has(puzzle.id);
 	}
 
 	private placeQuestItem(zone: Zone, item: Tile): boolean {

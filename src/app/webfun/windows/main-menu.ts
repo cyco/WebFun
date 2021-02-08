@@ -70,7 +70,8 @@ class MainMenu extends Menu {
 					Separator,
 					{
 						title: "Exit",
-						mnemonic: 1
+						mnemonic: 1,
+						callback: () => controller.stop()
 					}
 				]
 			},

@@ -10,8 +10,6 @@ import {
 } from "src/engine/script";
 
 import { clamp, DiscardingStorage } from "src/util";
-import { Engine } from "src/engine";
-import { Zone } from "src/engine/objects";
 
 type DataPoint = {
 	type: "Condition" | "Instruction";
@@ -198,6 +196,7 @@ class SymbolicCoverage extends Component {
 	}
 
 	private logZonesUsing(opcode: number, type: "Condition" | "Instruction") {
+		/*
 		const engine = (window as any).engine as Engine;
 		const filter =
 			type === "Condition"
@@ -206,6 +205,7 @@ class SymbolicCoverage extends Component {
 		const zones = engine.assets.getFiltered(Zone, filter);
 		console.log(`Zones containing ${type.toLowerCase()} with opcode ${opcode.toHex(2)}: `);
 		console.log(zones.map(z => z.id.toHex(2)));
+		*/
 	}
 
 	public set sortDescriptor(s: (dp1: DataPoint, dp2: DataPoint) => number) {
