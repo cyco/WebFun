@@ -1,5 +1,4 @@
 import { Action, Hotspot, Monster, Tile, Zone } from "src/engine/objects";
-import { Planet } from "../types";
 import { Size } from "src/util";
 
 class MutableZone extends Zone {
@@ -27,11 +26,11 @@ class MutableZone extends Zone {
 		this._name = value;
 	}
 
-	get planet(): Planet {
+	get planet(): Zone.Planet {
 		return this._planet;
 	}
 
-	set planet(value: Planet) {
+	set planet(value: Zone.Planet) {
 		this._planet = value;
 	}
 

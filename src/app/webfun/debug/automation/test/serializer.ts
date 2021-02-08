@@ -1,6 +1,7 @@
 import Expectation from "./expectation";
 import Configuration from "./configuration";
-import { Planet, WorldSize } from "src/engine/types";
+import { WorldSize } from "src/engine/types";
+import { Zone } from "src/engine/objects";
 
 class Serializer {
 	public serialize(config: Configuration, input: string, expectations: Expectation[]): string {
@@ -27,7 +28,7 @@ class Serializer {
 		if (description || (tags && tags.length)) configuration.push(``);
 
 		if (seed >= 0) configuration.push(`Seed: ${seed.toHex(3)}`);
-		if (planet > 0) configuration.push(`Planet: ${Planet.fromNumber(planet).name}`);
+		if (planet > 0) configuration.push(`Planet: ${Zone.Planet.fromNumber(planet).name}`);
 		if (size > 0) configuration.push(`Size: ${WorldSize.fromNumber(size).name}`);
 		if (gamesWon > 0) configuration.push(`Games Won: ${gamesWon.toString(10)}`);
 		if (difficulty !== 50) configuration.push(`Difficulty: ${difficulty < 50 ? "easy" : "hard"}`);

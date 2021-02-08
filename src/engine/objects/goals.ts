@@ -1,10 +1,10 @@
-import Planet from "src/engine/types/planet";
 import { Yoda } from "src/engine/type";
+import Zone from "./zone";
 
-export default (): Map<Planet, Set<number>> =>
-	new Map<Planet, Set<number>>([
+export default (): Map<Zone.Planet, Set<number>> =>
+	new Map<Zone.Planet, Set<number>>([
 		[
-			Planet.Tatooine,
+			Zone.Planet.Tatooine,
 			new Set([
 				Yoda.goalIDs.FALCON,
 				Yoda.goalIDs.HAN,
@@ -14,7 +14,7 @@ export default (): Map<Planet, Set<number>> =>
 			])
 		],
 		[
-			Planet.Hoth,
+			Zone.Planet.Hoth,
 			new Set([
 				Yoda.goalIDs.GENERAL_MARUTZ,
 				Yoda.goalIDs.HIDDEN_FACTORY,
@@ -24,7 +24,7 @@ export default (): Map<Planet, Set<number>> =>
 			])
 		],
 		[
-			Planet.Endor,
+			Zone.Planet.Endor,
 			new Set([
 				Yoda.goalIDs.FIND_LEIA,
 				Yoda.goalIDs.IMPERIAL_BATTLE_STATION,

@@ -4,7 +4,6 @@ import { Cell, InlineSelector } from "src/ui/components";
 import { Tile, Zone } from "src/engine/objects";
 
 import { ColorPalette } from "src/engine/rendering";
-import { Planet } from "src/engine/types";
 import TileView from "src/app/webfun/debug/components/tile-view";
 
 const Events = {
@@ -76,7 +75,7 @@ class ZoneInspectorCell extends Cell<Zone> {
 						this.dispatchEvent(
 							new CustomEvent(Events.ChangePlanet, {
 								detail: {
-									planet: (e.target as InlineSelector<Planet>).value,
+									planet: (e.target as InlineSelector<Zone.Planet>).value,
 									zone: this.data
 								},
 								bubbles: true
@@ -84,11 +83,11 @@ class ZoneInspectorCell extends Cell<Zone> {
 						)
 					}
 					options={[
-						{ label: "None", value: Planet.None },
-						{ label: "Tatooine", value: Planet.Tatooine },
-						{ label: "Endor", value: Planet.Endor },
-						{ label: "Hoth", value: Planet.Hoth },
-						{ label: "Dagobah", value: Planet.Dagobah }
+						{ label: "None", value: Zone.Planet.None },
+						{ label: "Tatooine", value: Zone.Planet.Tatooine },
+						{ label: "Endor", value: Zone.Planet.Endor },
+						{ label: "Hoth", value: Zone.Planet.Hoth },
+						{ label: "Dagobah", value: Zone.Planet.Dagobah }
 					]}
 					value={this.data.planet}
 				/>

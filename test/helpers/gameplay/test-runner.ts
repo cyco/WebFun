@@ -2,7 +2,7 @@ import { Zone, Tile } from "src/engine/objects";
 import { srand } from "src/util";
 import { SimulatedStory } from "src/app/webfun/debug";
 import { Story } from "src/engine";
-import { Planet, WorldSize } from "src/engine/types";
+import { WorldSize } from "src/engine/types";
 
 import {
 	Parser,
@@ -74,7 +74,7 @@ const run = (prefix: string, fileName: string, testFileContents: string): void =
 					function buildRealWorldStory(testCase: TestCase) {
 						const { seed, planet, size } = testCase.configuration;
 
-						return new Story(seed, Planet.fromNumber(planet), WorldSize.fromNumber(size));
+						return new Story(seed, Zone.Planet.fromNumber(planet), WorldSize.fromNumber(size));
 					}
 
 					function surroundingZones(zone: Zone): Zone[] {

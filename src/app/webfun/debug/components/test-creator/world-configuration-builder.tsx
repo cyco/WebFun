@@ -3,8 +3,9 @@ import "./world-configuration-builder.scss";
 import { Component } from "src/ui";
 import { DiscardingStorage } from "src/util";
 import { Selector, Textbox } from "src/ui/components";
-import { Planet, WorldSize } from "src/engine/types";
+import { WorldSize } from "src/engine/types";
 import { Configuration } from "src/app/webfun/debug/automation/test";
+import { Zone } from "src/engine/objects";
 
 class WorldConfigurationBuilder extends Component {
 	public static readonly tagName = "wf-debug-test-creator-world-configuration-builder";
@@ -16,9 +17,9 @@ class WorldConfigurationBuilder extends Component {
 		<Selector
 			onchange={() => this._state.store("planet", this._planet.value)}
 			options={[
-				{ label: Planet.Tatooine.name, value: Planet.Tatooine.rawValue },
-				{ label: Planet.Hoth.name, value: Planet.Hoth.rawValue },
-				{ label: Planet.Endor.name, value: Planet.Endor.rawValue }
+				{ label: Zone.Planet.Tatooine.name, value: Zone.Planet.Tatooine.rawValue },
+				{ label: Zone.Planet.Hoth.name, value: Zone.Planet.Hoth.rawValue },
+				{ label: Zone.Planet.Endor.name, value: Zone.Planet.Endor.rawValue }
 			]}
 		/>
 	) as Selector;
@@ -98,7 +99,7 @@ class WorldConfigurationBuilder extends Component {
 	public set state(s: Storage) {
 		this._state = s;
 		this._seed.value = s.load("seed") || (0).toHex(4);
-		this._planet.value = s.load("planet") || Planet.Tatooine.rawValue;
+		this._planet.value = s.load("planet") || Zone.Planet.Tatooine.rawValue;
 		this._size.value = s.load("size") || WorldSize.Small.rawValue;
 		this._gamesWon.value = s.load("gamesWon") || "0";
 	}

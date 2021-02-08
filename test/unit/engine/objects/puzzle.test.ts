@@ -1,12 +1,12 @@
 import Puzzle from "src/engine/objects/puzzle";
-import Planet from "src/engine/types/planet";
+import Zone from "src/engine/objects/zone";
 
 describe("WebFun.Engine.Objects.Puzzle", () => {
 	let subject: Puzzle;
 	beforeEach(() => (subject = new Puzzle()));
 
 	it("might be a goal", () => {
-		expect(subject.isGoalOnPlanet(Planet.Endor)).toBeFalse();
+		expect(subject.isGoalOnPlanet(Zone.Planet.Endor)).toBeFalse();
 	});
 
 	it("has default values", () => {

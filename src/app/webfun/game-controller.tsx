@@ -16,7 +16,7 @@ import { EventTarget, rand, srand } from "src/util";
 import { FilePicker, WindowManager } from "src/ui";
 import { ZoneScene } from "src/engine/scenes";
 import { MainMenu, MobileMainMenu, MainWindow } from "./windows";
-import { Planet, WorldSize } from "src/engine/types";
+import { WorldSize } from "src/engine/types";
 import GameState from "src/engine/game-state";
 import { Reader } from "src/engine/save-game";
 import Settings from "src/settings";
@@ -129,7 +129,7 @@ class GameController extends EventTarget implements EventListenerObject {
 		await this._loadGameData();
 		const story = new Story(
 			rand(),
-			[Planet.Endor, Planet.Hoth, Planet.Tatooine].random(),
+			[Zone.Planet.Endor, Zone.Planet.Hoth, Zone.Planet.Tatooine].random(),
 			[WorldSize.Small, WorldSize.Medium, WorldSize.Large].random()
 		);
 		this._engine.inventory.removeAllItems();

@@ -1,15 +1,16 @@
 import Story from "src/engine/story";
-import { Planet, WorldSize } from "src/engine/types";
+import { WorldSize } from "src/engine/types";
 import { srand } from "src/util";
 import * as Generation from "src/engine/generation";
 import { WorldGenerationError } from "src/engine/generation";
+import Zone from "src/engine/objects/zone";
 
 describe("WebFun.Engine.Story", () => {
 	let subject: Story;
-	beforeEach(() => (subject = new Story(1, Planet.Hoth, WorldSize.Small)));
+	beforeEach(() => (subject = new Story(1, Zone.Planet.Hoth, WorldSize.Small)));
 	it("is a simple container for seed, size and world size", () => {
 		expect(subject.seed).toBe(1);
-		expect(subject.planet).toBe(Planet.Hoth);
+		expect(subject.planet).toBe(Zone.Planet.Hoth);
 		expect(subject.size).toBe(WorldSize.Small);
 	});
 
@@ -31,7 +32,11 @@ describe("WebFun.Engine.Story", () => {
 			spyOn(worldGeneratorMock, "generate").and.returnValue(true);
 			subject.generateWorld(engineMock);
 
-			expect(Generation.WorldGenerator).toHaveBeenCalledWith(subject.size, subject.planet, engineMock);
+			expect(Generation.WorldGenerator).toHaveBeenCalledWith(
+				subject.size,
+				subject.planet,
+				engineMock
+			);
 			expect(worldGeneratorMock.generate).toHaveBeenCalledWith(subject.seed, 0);
 		});
 

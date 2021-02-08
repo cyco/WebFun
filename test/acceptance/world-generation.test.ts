@@ -2,7 +2,7 @@ import { ParseExpectation, PrepareExpectations } from "src/app/webfun/debug/expe
 
 import loadGameData from "test/helpers/game-data";
 import { GameData, AssetManager, Story } from "src/engine";
-import { Planet, WorldSize } from "../../src/engine/types";
+import { WorldSize } from "../../src/engine/types";
 import Worlds from "test/fixtures/worlds.txt";
 import { Yoda } from "src/engine/type";
 import { Tile, Zone, Puzzle } from "src/engine/objects";
@@ -159,7 +159,7 @@ const runTest = ({ seed, planet, size, world, dagobah }: any) => {
 	describe(`World ${seed} ${planet.toString()} ${size.toString()}`, () => {
 		it("is generated correctly", () => {
 			try {
-				const story = new Story(seed, Planet.fromNumber(planet), WorldSize.fromNumber(size));
+				const story = new Story(seed, Zone.Planet.fromNumber(planet), WorldSize.fromNumber(size));
 				story.generateWorld(assets, 0, 0);
 				compare(story, { seed, planet, size, world, dagobah });
 			} catch (e) {

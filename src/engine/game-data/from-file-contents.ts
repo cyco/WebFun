@@ -19,7 +19,6 @@ import {
 	Data as RawData
 } from "../file-format/types";
 
-import { Planet } from "../types";
 import { Yoda } from "src/engine/type";
 import GameData from "./index";
 
@@ -154,7 +153,7 @@ const makeZone = (raw: RawZone, idx: number, data: GameData) => {
 
 	zone.id = idx;
 	zone.name = raw.name || "";
-	zone.planet = Planet.fromNumber(raw.planet);
+	zone.planet = Zone.Planet.fromNumber(raw.planet);
 	zone.size = new Size(raw.width, raw.height);
 	zone.type = Zone.Type.fromNumber(raw.zoneType);
 	zone.tileIDs = raw.tileIDs.slice();

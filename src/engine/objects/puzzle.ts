@@ -1,6 +1,6 @@
 import PuzzleType from "./puzzle-type";
-import Planet from "src/engine/types/planet";
 import Tile from "./tile";
+import Zone from "./zone";
 import Goals from "./goals";
 
 class Puzzle {
@@ -16,7 +16,7 @@ class Puzzle {
 	protected _unknown2: number = null;
 	protected _unknown3: number = null;
 
-	public isGoalOnPlanet(planet: Planet): boolean {
+	public isGoalOnPlanet(planet: Zone.Planet): boolean {
 		return Goals().get(planet).has(this.id);
 	}
 

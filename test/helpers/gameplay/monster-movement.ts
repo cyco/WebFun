@@ -3,7 +3,6 @@ import { Char, Zone, Tile } from "src/engine/objects";
 import { srand, Size, Point } from "src/util";
 import { SimulatedStory } from "src/app/webfun/debug";
 import { Story, AssetManager } from "src/engine";
-import { Planet } from "src/engine/types";
 import { GameplayContext } from "src/app/webfun/debug/automation/test";
 import loadGameData from "test/helpers/game-data";
 import { ReplayingInputManager } from "src/app/webfun/debug/automation";
@@ -104,7 +103,7 @@ const makeFunction = (describe: any): describeMonsterMovement => (
 			function buildZone(assets: AssetManager): MutableZone {
 				const zone = new MutableZone();
 				zone.type = Zone.Type.Room;
-				zone.planet = Planet.None;
+				zone.planet = Zone.Planet.None;
 				zone.tileStore = assets.getAll(Tile);
 				zone.zoneStore = assets.getAll(Zone);
 				zone.size = new Size(9, 9);

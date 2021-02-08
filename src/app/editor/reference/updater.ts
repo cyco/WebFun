@@ -6,7 +6,6 @@ import { Reference, Resolvable } from "./reference";
 import { Yoda } from "src/engine/type";
 import { MutableChar, MutablePuzzle, MutableTile, MutableZone } from "src/engine/mutable-objects";
 import { Size } from "src/util";
-import { Planet } from "src/engine/types";
 
 class Updater {
 	private data: GameData;
@@ -28,7 +27,7 @@ class Updater {
 				if (this.data.zones[i].id !== i) {
 					const zone = new MutableZone();
 					zone.id = i;
-					zone.planet = Planet.None;
+					zone.planet = Zone.Planet.None;
 					zone.type = Zone.Type.None;
 					zone.size = new Size(9, 9);
 					zone.tileIDs = new Int16Array(zone.size.area * 3);

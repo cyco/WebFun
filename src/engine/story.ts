@@ -1,22 +1,22 @@
 import { DagobahGenerator, WorldGenerationError, WorldGenerator } from "src/engine/generation";
-import { Planet, WorldSize } from "./types";
+import { WorldSize } from "./types";
 
 import AssetManager from "./asset-manager";
-import { Puzzle } from "src/engine/objects";
+import { Puzzle, Zone } from "src/engine/objects";
 import World from "./world";
 import { rand } from "src/util";
 
 class Story {
 	public goal: Puzzle;
 	protected _seed: number;
-	protected _planet: Planet;
+	protected _planet: Zone.Planet;
 	protected _size: WorldSize;
 	protected _world: World = null;
 	protected _dagobah: World = null;
 	protected _reseeded: boolean = false;
 	protected _puzzles: [Puzzle[], Puzzle[]] = [[], []];
 
-	constructor(seed: number, planet: Planet, size: WorldSize) {
+	constructor(seed: number, planet: Zone.Planet, size: WorldSize) {
 		this._seed = seed;
 		this._planet = planet;
 		this._size = size;
@@ -26,7 +26,7 @@ class Story {
 		return this._seed;
 	}
 
-	get planet(): Planet {
+	get planet(): Zone.Planet {
 		return this._planet;
 	}
 

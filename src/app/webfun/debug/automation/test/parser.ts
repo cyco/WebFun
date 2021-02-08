@@ -12,7 +12,8 @@ import {
 	CurrentZoneIsExpectation,
 	HealthIsExpectation
 } from "./expectations";
-import { Planet, WorldSize } from "src/engine/types";
+import { WorldSize } from "src/engine/types";
+import { Zone } from "src/engine/objects";
 
 const Expectations = [
 	StorySolvedExpectation,
@@ -142,11 +143,11 @@ class TestFileParser {
 	private parsePlanet(value: string) {
 		switch (value) {
 			case "tatooine":
-				return Planet.Tatooine.rawValue;
+				return Zone.Planet.Tatooine.rawValue;
 			case "endor":
-				return Planet.Endor.rawValue;
+				return Zone.Planet.Endor.rawValue;
 			case "hoth":
-				return Planet.Hoth.rawValue;
+				return Zone.Planet.Hoth.rawValue;
 		}
 	}
 

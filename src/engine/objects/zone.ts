@@ -1,11 +1,11 @@
 import Hotspot from "./hotspot";
 import { Point, PointLike, Rectangle, Size } from "src/util";
 import ZoneType from "./zone-type";
+import ZonePlanet from "./zone-planet";
 
 import Action from "./action";
 import ZoneLayer from "./zone-layer";
 import Monster from "./monster";
-import { Planet } from "../types";
 import Tile from "./tile";
 import AssetManager, { NullIfMissing } from "src/engine/asset-manager";
 
@@ -15,6 +15,7 @@ class Zone {
 	public static readonly LAYERS = 3;
 	public static readonly Type = ZoneType;
 	public static readonly Layer = ZoneLayer;
+	public static readonly Planet = ZonePlanet;
 
 	public visited: boolean = false;
 	public actionsInitialized: boolean = false;
@@ -25,7 +26,7 @@ class Zone {
 	protected _monsters: Monster[] = [];
 	protected _id: number = -1;
 	protected _name: string = "";
-	protected _planet: Planet = Planet.None;
+	protected _planet: ZonePlanet = ZonePlanet.None;
 	protected _size: Size = null;
 	protected _type: ZoneType = null;
 	protected _tileIDs: Int16Array = new Int16Array(0);
@@ -183,7 +184,7 @@ class Zone {
 		return this._name;
 	}
 
-	get planet(): Planet {
+	get planet(): ZonePlanet {
 		return this._planet;
 	}
 
@@ -243,6 +244,7 @@ class Zone {
 declare namespace Zone {
 	export type Layer = ZoneLayer;
 	export type Type = ZoneType;
+	export type Planet = ZonePlanet;
 }
 
 export default Zone;

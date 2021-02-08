@@ -8,7 +8,7 @@ import {
 	srand
 } from "src/util";
 import { Hotspot, Puzzle, Tile, Zone } from "src/engine/objects";
-import { Planet, WorldSize } from "src/engine/types";
+import { WorldSize } from "src/engine/types";
 import { abs, floor } from "src/std/math";
 import { and, not } from "src/util/functional";
 
@@ -35,7 +35,7 @@ class WorldGenerator {
 	public world: World = null;
 	private _seed: number = 0;
 	private readonly _size: WorldSize;
-	private readonly _planet: Planet;
+	private readonly _planet: Zone.Planet;
 	private readonly _assets: AssetManager;
 
 	private usedZones: Zone[] = [];
@@ -57,7 +57,7 @@ class WorldGenerator {
 	private _zones: Zone[];
 	private _zonesByType: Map<Zone.Type, Zone[]>;
 
-	constructor(size: WorldSize, planet: Planet, assets: AssetManager) {
+	constructor(size: WorldSize, planet: Zone.Planet, assets: AssetManager) {
 		this._size = size;
 		this._planet = planet;
 		this._assets = assets;
@@ -762,7 +762,7 @@ class WorldGenerator {
 
 	private writePlanetValues(): void {}
 
-	private puzzleUsedInLastGame(_: Puzzle, _2: Planet): boolean {
+	private puzzleUsedInLastGame(_: Puzzle, _2: Zone.Planet): boolean {
 		return false;
 	}
 

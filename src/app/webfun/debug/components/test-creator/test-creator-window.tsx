@@ -14,7 +14,7 @@ import ConfigurationBuilder from "./configuration-builder";
 import SimulatedStory from "src/app/webfun/debug/simulated-story";
 import adjacentZones from "./adjacent-zones";
 import { Zone, Tile, Sound, Puzzle, Char } from "src/engine/objects";
-import { Planet, WorldSize } from "src/engine/types";
+import { WorldSize } from "src/engine/types";
 import { Story, Engine, AssetManager, Hero } from "src/engine";
 import Settings from "src/settings";
 import Metronome, { MetronomeInternals } from "src/engine/metronome";
@@ -171,7 +171,7 @@ class TestCreatorWindow extends AbstractWindow implements EventListenerObject {
 	private _buildStory(config: Configuration) {
 		return new Story(
 			config.seed,
-			Planet.fromNumber(config.planet),
+			Zone.Planet.fromNumber(config.planet),
 			WorldSize.fromNumber(config.size)
 		);
 	}
@@ -190,7 +190,7 @@ class TestCreatorWindow extends AbstractWindow implements EventListenerObject {
 			data,
 			zone >= 0
 				? `zone-${zone.toHex(3)}.wftest`
-				: `world-${seed.toHex(3)}-${Planet.fromNumber(
+				: `world-${seed.toHex(3)}-${Zone.Planet.fromNumber(
 						planet
 				  ).name.toLowerCase()}-${WorldSize.fromNumber(size).name.toLowerCase()}.wftest`
 		);

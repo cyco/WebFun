@@ -1,13 +1,14 @@
-import { Planet, WorldSize } from "../types";
+import { WorldSize } from "../types";
 
 import { GameType } from "../type";
 import { Point } from "../../util";
 import World from "src/engine/world";
+import { Zone } from "src/engine/objects";
 
 class SaveState {
 	public type: GameType;
 	public seed: number;
-	public planet: Planet;
+	public planet: Zone.Planet;
 	public puzzleIDs1: Int16Array;
 	public puzzleIDs2: Int16Array;
 	public goalPuzzle: number;

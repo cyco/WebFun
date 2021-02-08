@@ -3,7 +3,6 @@ import { InputStream, Point } from "src/util";
 import { Hotspot, Char, Zone, Tile } from "src/engine/objects";
 import { Indy } from "src/engine/type";
 import { MutableHotspot, MutableMonster } from "src/engine/mutable-objects";
-import { Planet } from "../types";
 import Reader from "./reader";
 import SaveState from "./save-state";
 import Sector from "src/engine/sector";
@@ -55,7 +54,7 @@ class IndyReader extends Reader {
 
 		const state = new SaveState();
 		state.type = Indy;
-		state.planet = Planet.None;
+		state.planet = Zone.Planet.None;
 		state.seed = seed;
 		state.puzzleIDs1 = puzzleIDs1;
 		state.puzzleIDs2 = null;

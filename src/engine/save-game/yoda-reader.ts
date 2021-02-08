@@ -1,7 +1,7 @@
 import { Hotspot, Tile, Char, Zone } from "src/engine/objects";
 import { InputStream, Point } from "src/util";
 import { MutableHotspot, MutableMonster } from "src/engine/mutable-objects";
-import { Planet, WorldSize } from "../types";
+import { WorldSize } from "../types";
 
 import Reader from "./reader";
 import SaveState from "./save-state";
@@ -72,7 +72,7 @@ class YodaReader extends Reader {
 
 		const state = new SaveState();
 		state.type = Yoda;
-		state.planet = Planet.isPlanet(planet) ? Planet.fromNumber(planet) : Planet.None;
+		state.planet = Zone.Planet.isPlanet(planet) ? Zone.Planet.fromNumber(planet) : Zone.Planet.None;
 		state.seed = seed;
 		state.puzzleIDs1 = puzzleIDs1;
 		state.puzzleIDs2 = puzzleIDs2;
