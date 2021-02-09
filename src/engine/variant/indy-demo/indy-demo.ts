@@ -1,15 +1,14 @@
 import Engine from "src/engine/engine";
+import { WorldSize } from "src/engine/generation";
 import Story from "src/engine/story";
-import { Char, Tile } from "../../objects";
+import { rand } from "src/util";
+import { Char, Tile, Zone } from "../../objects";
 
 import Variant from "../variant";
 import LocatorTile from "./locator-tile";
 import Sounds from "./sounds";
 
 class IndyDemo extends Variant {
-	createNewStory(_engine: Engine): Story {
-		throw new Error("Method not implemented.");
-	}
 	get name(): string {
 		return "Indy";
 	}
@@ -40,6 +39,14 @@ class IndyDemo extends Variant {
 
 	public getEquipSound(_: Char): number {
 		return 0;
+	}
+
+	public createNewStory(_: Engine): Story {
+		return new Story(
+			rand(),
+			Zone.Planet.None,
+			[WorldSize.Small, WorldSize.Medium, WorldSize.Large].random()
+		);
 	}
 }
 

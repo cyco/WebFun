@@ -59,7 +59,6 @@ class WorldGenerator {
 
 	constructor(size: WorldSize, planet: Zone.Planet, assets: AssetManager) {
 		this._size = size;
-		console.log("this._size", size);
 		this._planet = planet;
 		this._assets = assets;
 	}

@@ -48,6 +48,12 @@ class ErrorView extends Component {
 		}
 
 		this.appendChild(<h2>An unknown error occured</h2>);
+		this.appendChild(
+			<div>
+				<label>Details</label>
+				<div>{this._error.message ?? this._error}</div>
+			</div>
+		);
 	}
 
 	set error(error: Error) {
