@@ -1,5 +1,4 @@
 import clear from "./clear";
-import contains from "./contains";
 import first from "./first";
 import flatten from "./flatten";
 import from from "./from";
@@ -21,7 +20,6 @@ export {
 	remove,
 	padEnd,
 	clear,
-	contains,
 	first,
 	flatten,
 	from,

@@ -9,7 +9,6 @@ interface NodeModule {
 interface Array<T> {
 	first(): T | null;
 	last(): T | null;
-	contains(_: T): boolean;
 	shuffle(): T[];
 }
 

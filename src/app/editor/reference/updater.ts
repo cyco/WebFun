@@ -75,20 +75,20 @@ class Updater {
 
 		if (to instanceof Zone) {
 			return (id: number) => {
-				if (protectedZones.contains(id)) return id;
+				if (protectedZones.includes(id)) return id;
 
 				let result = id - 1;
-				while (protectedZones.contains(result)) result -= 1;
+				while (protectedZones.includes(result)) result -= 1;
 				return result;
 			};
 		}
 
 		if (to instanceof Tile) {
 			return (id: number) => {
-				if (protectedTiles.contains(id)) return id;
+				if (protectedTiles.includes(id)) return id;
 
 				let result = id - 1;
-				while (protectedTiles.contains(result)) result -= 1;
+				while (protectedTiles.includes(result)) result -= 1;
 				return result;
 			};
 		}

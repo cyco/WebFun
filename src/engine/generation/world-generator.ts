@@ -189,7 +189,7 @@ class WorldGenerator {
 
 				console.assert(!!travelTarget, "Could not determine location for travel target");
 				console.assert(
-					!this.usedZones.contains(connectedZone),
+					!this.usedZones.includes(connectedZone),
 					"Zone is already in use for a different travel sector"
 				);
 
@@ -404,7 +404,7 @@ class WorldGenerator {
 	): Zone {
 		this.usedAlternateStrain = useAlternateStrain;
 		const zoneIsUnused = (zone: Zone) =>
-			!this.usedZones.contains(zone) ||
+			!this.usedZones.includes(zone) ||
 			(zoneType === Zone.Type.Goal && this.puzzlesCanBeReused > 0);
 		const zones = this.getZonesForType(zoneType);
 		const usableZones = zones.slice().shuffle();
@@ -757,13 +757,13 @@ class WorldGenerator {
 	}
 
 	private hasPuzzleBeenPlaced(puzzle: Puzzle): boolean {
-		return this.usedPuzzles.contains(puzzle);
+		return this.usedPuzzles.includes(puzzle);
 	}
 
 	private zoneLeadsToRequiredItem(zone: Zone, targetItem: Tile): boolean {
 		return this._traverseZoneUntil(
 			zone,
-			({ requiredItems }: Zone) => requiredItems.contains(targetItem),
+			({ requiredItems }: Zone) => requiredItems.includes(targetItem),
 			false,
 			identity
 		);
@@ -772,7 +772,7 @@ class WorldGenerator {
 	private zoneLeadsToProvidedItem(zone: Zone, targetItem: Tile): boolean {
 		return this._traverseZoneUntil(
 			zone,
-			({ providedItems }: Zone) => providedItems.contains(targetItem),
+			({ providedItems }: Zone) => providedItems.includes(targetItem),
 			false,
 			identity
 		);
@@ -839,7 +839,7 @@ class WorldGenerator {
 			zone,
 			zone => {
 				const items = fromAssignedItems ? zone.goalItems : zone.requiredItems;
-				return items.contains(item);
+				return items.includes(item);
 			},
 			false,
 			identity

@@ -100,7 +100,7 @@ class Printer {
 	}
 
 	private isKeyword(symbol: AST): boolean {
-		return symbol instanceof Symbol && Keywords.contains(symbol.name);
+		return symbol instanceof Symbol && Keywords.includes(symbol.name);
 	}
 }
 
