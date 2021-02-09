@@ -49,6 +49,8 @@ declare global {
 			th: Styleable<HTMLTableCellElement>;
 			a: Styleable<HTMLAnchorElement>;
 			h1: Styleable<HTMLHeadingElement>;
+			h2: Styleable<HTMLHeadingElement>;
+			h3: Styleable<HTMLHeadingElement>;
 			code: Styleable<HTMLSpanElement>;
 		}
 

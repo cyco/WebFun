@@ -12,6 +12,7 @@ import SceneView from "./scene-view";
 import OnscreenPad from "./onscreen-pad";
 import OnscreenButton from "./onscreen-button";
 import PaletteView from "./palette-view";
+import ErrorView from "./error-view";
 import FullscreenMenu from "./fullscreen-menu";
 
 export {
@@ -21,6 +22,7 @@ export {
 	FullscreenMenu,
 	Health,
 	Inventory,
+	ErrorView,
 	InventoryRow,
 	LoadingView,
 	Location,

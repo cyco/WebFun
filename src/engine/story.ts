@@ -67,7 +67,14 @@ class Story {
 			}
 		}
 
-		if (!success) throw new WorldGenerationError("Too many reseeds");
+		if (!success) {
+			const error = new WorldGenerationError("Too many reseeds");
+			error.size = this.size;
+			error.seed = effectiveSeed;
+			error.planet = this.planet;
+
+			throw error;
+		}
 
 		this.goal = generator.goalPuzzle;
 		this._puzzles = generator.puzzles;

@@ -1,4 +1,4 @@
-import { Inventory as InventoryComponent, LoadingView, SceneView } from "./ui";
+import { Inventory as InventoryComponent, ErrorView, LoadingView, SceneView } from "./ui";
 import { Char, Tile, Zone, Sound, Puzzle } from "src/engine/objects";
 import {
 	ColorPalette,
@@ -113,26 +113,30 @@ class GameController extends EventTarget implements EventListenerObject {
 	}
 
 	public async newStory(): Promise<void> {
-		const gameState = this.engine.gameState;
-		if (
-			gameState === GameState.Running &&
-			(await ModalConfirm(
-				"This command will discard the current world.\nBuild a new world anyway?"
-			)) !== ConfirmationResult.Confirmed
-		) {
-			return;
+		try {
+			const gameState = this.engine.gameState;
+			if (
+				gameState === GameState.Running &&
+				(await ModalConfirm(
+					"This command will discard the current world.\nBuild a new world anyway?"
+				)) !== ConfirmationResult.Confirmed
+			) {
+				return;
+			}
+
+			srand(floor(random() * 0xffff));
+			await this._loadGameData();
+			const story = this.engine.variant.createNewStory(this.engine);
+
+			this._engine.inventory.removeAllItems();
+			story.generateWorld(this._engine.assets, this.engine.persistentState.gamesWon);
+			this._engine.story = story;
+
+			this._showSceneView();
+			this._engine.gameState = GameState.Running;
+		} catch (error) {
+			this.presentView(<ErrorView error={error}></ErrorView>);
 		}
-
-		srand(floor(random() * 0xffff));
-		await this._loadGameData();
-		const story = this.engine.variant.createNewStory(this.engine);
-
-		this._engine.inventory.removeAllItems();
-		story.generateWorld(this._engine.assets, this.engine.persistentState.gamesWon);
-		this._engine.story = story;
-
-		this._showSceneView();
-		this._engine.gameState = GameState.Running;
 	}
 
 	public async replayStory(): Promise<void> {
@@ -213,9 +217,7 @@ class GameController extends EventTarget implements EventListenerObject {
 		engine.sceneManager.clear();
 		engine.sceneManager.pushScene(zoneScene);
 
-		const windowContent = this._window.mainContent;
-		windowContent.textContent = "";
-		windowContent.appendChild(this._sceneView);
+		this.presentView(this._sceneView);
 
 		engine.inputManager.engine = engine;
 		engine.inputManager.addListeners();
@@ -230,10 +232,8 @@ class GameController extends EventTarget implements EventListenerObject {
 
 	private _loadGameData(): Promise<void> {
 		return new Promise((resolve, reject) => {
-			const loadingView = (<LoadingView />) as LoadingView;
-			const windowContent = this._window.mainContent;
-			windowContent.textContent = "";
-			windowContent.appendChild(loadingView);
+			const loadingView: LoadingView = <LoadingView />;
+			this.presentView(loadingView);
 
 			const engine = this.engine;
 			const loader = new Loader(engine.resources, engine.mixer as Mixer, this.engine.variant);
@@ -268,6 +268,12 @@ class GameController extends EventTarget implements EventListenerObject {
 			};
 			loader.load();
 		});
+	}
+
+	private presentView(view: Element): void {
+		const windowContent = this._window.mainContent;
+		windowContent.textContent = "";
+		windowContent.appendChild(view);
 	}
 
 	public jumpStartEngine(zone: Zone): void {
