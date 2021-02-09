@@ -89,11 +89,14 @@ class YodaDemo extends Variant {
 
 	public createNewStory(engine: Engine): Story {
 		const goal = engine.assets.get(Puzzle, GoalIDs.HIDDEN_FACTORY);
-		const unavailableGoalZones = engine.assets.getFiltered(
-			Zone,
-			zone => zone.type === Zone.Type.Goal && !zone.goalItems.contains(goal.item1)
-		);
-		unavailableGoalZones.forEach(z => ((z as MutableZone).type = Zone.Type.None));
+		engine.assets
+			.getFiltered(
+				Zone,
+				zone =>
+					zone.type === Zone.Type.Goal &&
+					(!zone.providedItems.includes(goal.item1) || !zone.providedItems.includes(goal.item2))
+			)
+			.forEach(z => ((z as MutableZone).type = Zone.Type.None));
 
 		return new Story(
 			rand(),
