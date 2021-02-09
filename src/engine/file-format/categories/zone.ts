@@ -1,4 +1,4 @@
-import { Variant, Indy, Yoda } from "src/engine/variant";
+import { Variant, Indy, Yoda, YodaDemo, IndyDemo } from "src/engine/variant";
 
 import { InputStream } from "src/util";
 import { assert } from "../error";
@@ -15,7 +15,7 @@ const IZX4 = "IZX4";
 
 const parseZone = (stream: InputStream, data: Data, gameType: Variant): Zone => {
 	let planet = 0;
-	if (gameType === Yoda) {
+	if (gameType === Yoda || gameType === YodaDemo) {
 		planet = stream.readUint16();
 		// skip over size
 		stream.readUint32();
@@ -31,7 +31,7 @@ const parseZone = (stream: InputStream, data: Data, gameType: Variant): Zone => 
 	const width = stream.readUint16();
 	const height = stream.readUint16();
 	const zoneType = stream.readUint32();
-	if (gameType === Yoda) {
+	if (gameType === Yoda || gameType === YodaDemo) {
 		// skip over sharedCounter value
 		stream.readUint16();
 
@@ -40,7 +40,7 @@ const parseZone = (stream: InputStream, data: Data, gameType: Variant): Zone => 
 	}
 
 	const tileIDs = stream.readInt16Array(3 * width * height);
-	if (gameType === Indy) {
+	if (gameType === Indy || gameType === IndyDemo) {
 		return {
 			planet,
 			width,
@@ -94,7 +94,7 @@ const parseZone = (stream: InputStream, data: Data, gameType: Variant): Zone => 
 
 export const parseZones = (stream: InputStream, data: Data, gameType: Variant): void => {
 	let count = stream.readUint16();
-	if (gameType === Indy) {
+	if (gameType === Indy || gameType === IndyDemo) {
 		// skip over unknown value
 		stream.readUint16();
 		count = stream.readUint16();

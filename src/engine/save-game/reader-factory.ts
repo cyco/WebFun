@@ -1,4 +1,4 @@
-import { Variant, Indy, Yoda } from "../variant";
+import { Variant, Indy, Yoda, IndyDemo, YodaDemo } from "../variant";
 
 import IndyReader from "./indy-reader";
 import { InputStream } from "src/util";
@@ -14,11 +14,11 @@ abstract class ReaderFactory {
 	}
 
 	protected static buildReader(type: Variant, stream: InputStream): IndyReader | YodaReader {
-		if (type === Indy) {
+		if (type === Indy || type === IndyDemo) {
 			return new IndyReader(stream);
 		}
 
-		if (type === Yoda) {
+		if (type === Yoda || type === YodaDemo) {
 			return new YodaReader(stream);
 		}
 	}

@@ -1,4 +1,4 @@
-import { Variant, Yoda } from "src/engine/variant";
+import { Variant, Yoda, YodaDemo } from "src/engine/variant";
 import { InputStream } from "src/util";
 import { assert } from "../error";
 import { Data, Puzzle } from "../types";
@@ -12,7 +12,7 @@ const parsePuzzle = (stream: InputStream, _: Data, gameType: Variant): Puzzle =>
 	stream.readUint32();
 
 	let type = 0;
-	if (gameType === Yoda) {
+	if (gameType === Yoda || gameType === YodaDemo) {
 		type = stream.readUint32();
 	}
 
@@ -28,7 +28,7 @@ const parsePuzzle = (stream: InputStream, _: Data, gameType: Variant): Puzzle =>
 
 	const item1 = stream.readUint16();
 	let item2 = null;
-	if (gameType === Yoda) {
+	if (gameType === Yoda || gameType === YodaDemo) {
 		item2 = stream.readUint16();
 	}
 

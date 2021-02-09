@@ -1,4 +1,4 @@
-import { Variant, Yoda } from "src/engine/variant";
+import { Variant, Yoda, YodaDemo } from "src/engine/variant";
 
 import { InputStream } from "src/util";
 import { Tile } from "src/engine/objects";
@@ -30,7 +30,7 @@ export const parseTileNames = (stream: InputStream, data: Data, gameType: Varian
 		const index = stream.readInt16();
 		if (index === -1) break;
 
-		const length = gameType === Yoda ? 0x18 : 0x10;
+		const length = gameType === Yoda || gameType === YodaDemo ? 0x18 : 0x10;
 		data.tiles[index].name = stream.readCStringWithLength(length, "iso-8859-2");
 	} while (true);
 };

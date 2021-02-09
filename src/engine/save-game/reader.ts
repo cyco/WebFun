@@ -1,4 +1,4 @@
-import { Variant, Indy, Yoda } from "../variant";
+import { Variant, Indy, Yoda, YodaDemo, IndyDemo } from "../variant";
 import { Hotspot, Zone } from "src/engine/objects";
 
 import AssetManager from "../asset-manager";
@@ -108,7 +108,7 @@ abstract class Reader {
 			const y = this.readInt(stream);
 			zone.doorInLocation = new Point(x, y);
 
-			if (this._type === Yoda) {
+			if (this._type === Yoda || this._type === YodaDemo) {
 				zone.sharedCounter = stream.readInt16();
 
 				const planet = stream.readInt16();
@@ -141,7 +141,7 @@ abstract class Reader {
 		const count = this.readInt(stream);
 		console.assert(count >= 0);
 
-		if (this._type === Indy) zone.monsters = new Array(count);
+		if (this._type === Indy || this._type === IndyDemo) zone.monsters = new Array(count);
 
 		for (let i = 0; i < zone.monsters.length; i++) {
 			const monster = this.readMonster(stream);
