@@ -25,7 +25,12 @@ class ResourceManager implements ResourceManagerInterface {
 
 	loadSound(name: string, _progress: (progress: number) => void): Promise<ArrayBuffer> {
 		return new Promise((resolve, reject) => {
-			const url = this._soundBaseURL.ensureTail("/") + encodeURIComponent(name + ".mp3");
+			// Indy games use a full (Windows) path instead of just the file name so we have to remove it
+			const fileName = name
+				.split(/[\/\\]/)
+				.last()
+				.toLowerCase();
+			const url = this._soundBaseURL.ensureTail("/") + encodeURIComponent(fileName + ".mp3");
 			const request = new XMLHttpRequest();
 			request.open("GET", url);
 			request.responseType = "arraybuffer";
