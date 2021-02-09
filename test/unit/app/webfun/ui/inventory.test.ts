@@ -1,7 +1,7 @@
 import InventoryComponent, { Events as InventoryEvent } from "src/app/webfun/ui/inventory";
 import InventoryRow from "src/app/webfun/ui/inventory-row";
 import Inventory from "src/engine/inventory";
-import { Yoda } from "src/engine/type";
+import { Yoda } from "src/engine/variant";
 import { Tile } from "src/engine/objects";
 
 describeComponent(InventoryComponent, () => {

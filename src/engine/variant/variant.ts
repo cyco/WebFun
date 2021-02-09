@@ -9,7 +9,7 @@ interface WellKnownSounds {
 	Hurt: number;
 }
 
-abstract class GameType {
+abstract class Variant {
 	abstract get saveGameMagic(): string;
 	abstract get locatorTile(): LocatorTile;
 	abstract get strings(): { [_: number]: string };
@@ -27,4 +27,4 @@ abstract class GameType {
 	abstract createNewStory(_engine: Engine): Story;
 }
 
-export default GameType;
+export default Variant;

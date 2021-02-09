@@ -4,7 +4,7 @@ import loadGameData from "test/helpers/game-data";
 import { GameData, AssetManager, Story } from "src/engine";
 import { WorldSize } from "src/engine/generation";
 import Worlds from "test/fixtures/worlds.txt";
-import { Yoda } from "src/engine/type";
+import { Yoda } from "src/engine/variant";
 import { Tile, Zone, Puzzle } from "src/engine/objects";
 import Sector from "src/engine/sector";
 import { WorldGenerationError } from "src/engine/generation";

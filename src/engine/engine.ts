@@ -14,7 +14,7 @@ import SceneManager from "./scene-manager";
 import { ScriptProcessingUnit, HotspotProcessingUnit } from "./script";
 import State from "./persistent-state";
 import Story from "./story";
-import { GameType as Type } from "./type";
+import { Variant as Type } from "./variant";
 import World from "./world";
 import { SpeechScene, PickupScene } from "src/engine/scenes";
 import { Point } from "src/util";

@@ -1,4 +1,4 @@
-import { GameType, Indy as GameTypeIndy, Yoda as GameTypeYoda } from "./type";
+import { Variant, Indy as VariantIndy, Yoda as VariantYoda } from "./variant";
 import { Reader as SaveGameReader, Writer as SaveGameWriter, SaveState } from "./save-game";
 
 import { ColorPalette, PaletteAnimation } from "./rendering";
@@ -28,9 +28,9 @@ export {
 	EngineEvents,
 	GameData,
 	GameState,
-	GameType,
-	GameTypeIndy,
-	GameTypeYoda,
+	Variant,
+	VariantIndy,
+	VariantYoda,
 	Hero,
 	Interface,
 	Inventory,

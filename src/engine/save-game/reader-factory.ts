@@ -1,4 +1,4 @@
-import { GameType, Indy, Yoda } from "../type";
+import { Variant, Indy, Yoda } from "../variant";
 
 import IndyReader from "./indy-reader";
 import { InputStream } from "src/util";
@@ -7,13 +7,13 @@ import YodaReader from "./yoda-reader";
 import identify from "./identify";
 
 abstract class ReaderFactory {
-	static build(stream: InputStream): { type: GameType; read: Reader["read"] } {
+	static build(stream: InputStream): { type: Variant; read: Reader["read"] } {
 		const type = identify(stream);
 		const reader = this.buildReader(type, stream);
 		return { type, read: reader.read.bind(reader) };
 	}
 
-	protected static buildReader(type: GameType, stream: InputStream): IndyReader | YodaReader {
+	protected static buildReader(type: Variant, stream: InputStream): IndyReader | YodaReader {
 		if (type === Indy) {
 			return new IndyReader(stream);
 		}

@@ -4,7 +4,7 @@ import { Zone, Tile, Char, Sound } from "src/engine/objects";
 import { InputMask } from "src/engine/input";
 import { Renderer } from "src/engine/rendering";
 import { Sprite } from "../rendering";
-import { Yoda } from "src/engine/type";
+import { Yoda } from "src/engine/variant";
 import DetonatorScene from "./detonator-scene";
 import Engine from "src/engine/engine";
 import Hero from "src/engine/hero";

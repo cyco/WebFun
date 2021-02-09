@@ -1,11 +1,11 @@
-import Indy from "src/engine/type/indy";
-import GameType from "src/engine/type/type";
+import Indy from "src/engine/variant/indy";
+import Variant from "src/engine/variant/variant";
 
-describe("WebFun.Engine.Type.Indy", () => {
+describe("WebFun.Engine.Variant.Indy", () => {
 	let subject: Indy;
 	beforeEach(() => (subject = new Indy()));
 	it("is a class representing a variation of the engine", () => {
-		expect(subject).toBeInstanceOf(GameType);
+		expect(subject).toBeInstanceOf(Variant);
 	});
 
 	it("is used to identify a save game's format", () => {

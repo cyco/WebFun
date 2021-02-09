@@ -1,5 +1,5 @@
 import { EventTarget, InputStream } from "src/util";
-import { GameData, GameTypeYoda, readGameDataFile, ResourceManager } from "src/engine";
+import { GameData, VariantYoda, readGameDataFile, ResourceManager } from "src/engine";
 
 import { ColorPalette } from "src/engine/rendering";
 import { Mixer } from "./audio";
@@ -45,7 +45,7 @@ class Loader extends EventTarget {
 
 	private _readGameData(stream: InputStream) {
 		this._progress(1, 0);
-		this._rawData = readGameDataFile(stream, GameTypeYoda);
+		this._rawData = readGameDataFile(stream, VariantYoda);
 		this._progress(1, 1);
 		this._loadPalette();
 	}

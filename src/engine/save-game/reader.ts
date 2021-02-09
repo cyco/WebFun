@@ -1,4 +1,4 @@
-import { GameType, Indy, Yoda } from "../type";
+import { Variant, Indy, Yoda } from "../variant";
 import { Hotspot, Zone } from "src/engine/objects";
 
 import AssetManager from "../asset-manager";
@@ -16,11 +16,11 @@ interface Range {
 abstract class Reader {
 	protected _stream: InputStream;
 	protected _assets: AssetManager;
-	private _type: GameType;
+	private _type: Variant;
 
 	abstract read(assets: AssetManager): SaveState;
 
-	constructor(stream: InputStream, type: GameType) {
+	constructor(stream: InputStream, type: Variant) {
 		this._stream = stream;
 		this._assets = null;
 		this._type = type;

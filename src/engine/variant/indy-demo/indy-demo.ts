@@ -2,11 +2,11 @@ import Engine from "src/engine/engine";
 import Story from "src/engine/story";
 import { Char, Tile } from "../../objects";
 
-import GameType from "../type";
+import Variant from "../variant";
 import LocatorTile from "./locator-tile";
 import Sounds from "./sounds";
 
-class IndyDemo extends GameType {
+class IndyDemo extends Variant {
 	createNewStory(_engine: Engine): Story {
 		throw new Error("Method not implemented.");
 	}

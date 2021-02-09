@@ -4,7 +4,7 @@ import { Engine } from "src/engine";
 import { NullIfMissing } from "src/engine/asset-manager";
 import moveCheck from "./move-check";
 import MoveCheckResult from "./move-check-result";
-import { Yoda } from "src/engine/type";
+import { Yoda } from "src/engine/variant";
 import { Channel } from "src/engine/audio";
 
 export default (monster: Monster, zone: Zone, engine: Engine): boolean => {

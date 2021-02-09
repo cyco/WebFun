@@ -1,4 +1,4 @@
-import { GameType, Yoda } from "src/engine/type";
+import { Variant, Yoda } from "src/engine/variant";
 
 import { InputStream } from "src/util";
 import { Tile } from "src/engine/objects";
@@ -22,7 +22,7 @@ export const parseTiles = (stream: InputStream, data: Data): void => {
 	data.tiles = tiles;
 };
 
-export const parseTileNames = (stream: InputStream, data: Data, gameType: GameType): void => {
+export const parseTileNames = (stream: InputStream, data: Data, gameType: Variant): void => {
 	// skip over size
 	stream.readUint32();
 

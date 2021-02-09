@@ -6,7 +6,7 @@ import { WorldSize } from "src/engine/generation";
 import Reader from "./reader";
 import SaveState from "./save-state";
 import Sector from "src/engine/sector";
-import { Yoda } from "../type";
+import { Yoda } from "src/engine/variant";
 import { floor } from "src/std/math";
 import AssetManager, { NullIfMissing } from "src/engine/asset-manager";
 

@@ -1,11 +1,11 @@
-import { GameType, Yoda } from "src/engine/type";
+import { Variant, Yoda } from "src/engine/variant";
 import { InputStream } from "src/util";
 import { assert } from "../error";
 import { Data, Puzzle } from "../types";
 
 const IPUZ = "IPUZ";
 
-const parsePuzzle = (stream: InputStream, _: Data, gameType: GameType): Puzzle => {
+const parsePuzzle = (stream: InputStream, _: Data, gameType: Variant): Puzzle => {
 	const marker = stream.readCharacters(4);
 	assert(marker === IPUZ, "Expected to find category marker IPUZ", stream);
 	// skip over size
@@ -44,7 +44,7 @@ const parsePuzzle = (stream: InputStream, _: Data, gameType: GameType): Puzzle =
 	};
 };
 
-export const parsePuzzles = (stream: InputStream, data: Data, gameType: GameType): void => {
+export const parsePuzzles = (stream: InputStream, data: Data, gameType: Variant): void => {
 	// skip over size
 	stream.readUint32();
 

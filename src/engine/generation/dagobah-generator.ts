@@ -2,7 +2,7 @@ import AssetManager from "src/engine/asset-manager";
 import { Tile, Zone, Hotspot, Puzzle } from "src/engine/objects";
 import World from "src/engine/world";
 import WorldGenerator from "./world-generator";
-import { Yoda } from "src/engine/type";
+import { Yoda } from "src/engine/variant";
 import { randmod } from "src/util";
 
 enum YodaSpawn {

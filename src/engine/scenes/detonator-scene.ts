@@ -2,7 +2,7 @@ import RendererInterface from "../rendering/renderer";
 import { Point } from "src/util";
 import Scene from "./scene";
 import { Tile } from "src/engine/objects";
-import { Yoda } from "src/engine/type";
+import { Yoda } from "src/engine/variant";
 import { drawTileImageData } from "src/app/webfun/rendering";
 import { abs } from "src/std/math";
 

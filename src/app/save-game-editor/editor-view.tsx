@@ -11,7 +11,7 @@ import { Component, Menu } from "src/ui";
 import { DiscardingStorage, Point, identity } from "src/util";
 import { Segment, SegmentControl } from "src/ui/components";
 
-import { Yoda as GameTypeYoda } from "src/engine/type";
+import { Yoda as VariantYoda } from "src/engine/variant";
 import { InteractiveMapContextMenuProvider } from "./components/interactive-map";
 import { InventoryDelegate } from "./components/inventory";
 import { ModalPrompt } from "src/ux";
@@ -88,7 +88,7 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 							(this._state.currentWeapon = e.detail.character ? e.detail.character.id : -1)
 						}
 					/>
-					{state.type === GameTypeYoda && <AmmoControl vertical value={state.currentAmmo} />}
+					{state.type === VariantYoda && <AmmoControl vertical value={state.currentAmmo} />}
 				</div>
 
 				<Health
@@ -106,7 +106,7 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 					onsegmentchange={(segment: Segment) => this._showSegment(segment)}
 					state={this.state.prefixedWith("content")}>
 					<Segment>World</Segment>
-					{state.type === GameTypeYoda && <Segment>Dagobah</Segment>}
+					{state.type === VariantYoda && <Segment>Dagobah</Segment>}
 					<Segment>Inventory</Segment>
 					<Segment>Props</Segment>
 				</SegmentControl>
@@ -123,7 +123,7 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 					contextMenuProvider={this}
 				/>
 
-				{state.type === GameTypeYoda && (
+				{state.type === VariantYoda && (
 					<Map
 						className="content Dagobah"
 						world={state.dagobah}

@@ -1,5 +1,5 @@
 import { Engine, SceneManager } from "src/engine";
-import { Yoda } from "src/engine/type";
+import { Yoda } from "src/engine/variant";
 import { Point, dispatch } from "src/util";
 import Settings from "src/settings";
 import * as Scenes from "src/engine/scenes";

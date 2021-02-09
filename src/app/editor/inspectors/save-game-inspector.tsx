@@ -11,7 +11,7 @@ import World from "src/engine/world";
 import { Writer } from "src/engine/save-game";
 import { AssetManager } from "src/engine";
 import { Zone, Puzzle, Tile, Sound, Char } from "src/engine/objects";
-import { Yoda } from "src/engine/type";
+import { Yoda } from "src/engine/variant";
 import Settings from "src/settings";
 
 class SaveGameInspector extends AbstractInspector {

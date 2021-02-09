@@ -1,14 +1,14 @@
-import { GameType } from "src/engine/type";
+import { Variant } from "src/engine/variant";
 import { Tile } from "src/engine/objects";
 import { Engine, Story } from "src/engine";
 
-describe("WebFun.Engine.Type", () => {
+describe("WebFun.Engine.Variant", () => {
 	it("holds information specific to each game", () => {
-		expect(GameType).toBeClass();
+		expect(Variant).toBeClass();
 	});
 
 	it("allow for items to be equipped if they are weapons", () => {
-		const mockType = new (class extends GameType {
+		const mockType = new (class extends Variant {
 			saveGameMagic: string;
 			locatorTile: any;
 			strings: { [_: number]: string };

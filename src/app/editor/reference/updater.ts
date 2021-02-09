@@ -3,7 +3,7 @@ import GameData from "src/engine/game-data";
 import ReferenceResolver from "./resolver";
 import { greaterThan } from "src/util/functional";
 import { Reference, Resolvable } from "./reference";
-import { Yoda } from "src/engine/type";
+import { Yoda } from "src/engine/variant";
 import { MutableChar, MutablePuzzle, MutableTile, MutableZone } from "src/engine/mutable-objects";
 import { Size } from "src/util";
 

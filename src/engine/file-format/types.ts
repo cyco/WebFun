@@ -1,4 +1,4 @@
-import { GameType } from "src/engine";
+import { Variant } from "src/engine";
 import { Condition, Instruction } from "src/engine/objects";
 
 interface Action {
@@ -75,7 +75,7 @@ interface Character {
 }
 
 interface Data {
-	type: GameType;
+	type: Variant;
 	version: number;
 	setup: Uint8Array;
 	zones: Zone[];

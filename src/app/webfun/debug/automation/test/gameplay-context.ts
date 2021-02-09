@@ -1,7 +1,7 @@
 import { ComponentRegistry } from "src/ui";
 
 import { ReplayingInputManager } from "src/app/webfun/debug/automation/index";
-import { GameType, Yoda } from "src/engine/type";
+import { Variant, Yoda } from "src/engine/variant";
 import { ZoneScene } from "src/engine/scenes";
 import { CanvasRenderer } from "src/app/webfun/rendering";
 import { SceneView } from "src/app/webfun/ui";
@@ -29,7 +29,7 @@ class GameplayContext {
 		this.debug = debug;
 	}
 
-	public async prepare(loadGameData: (_: GameType) => Promise<any>): Promise<void> {
+	public async prepare(loadGameData: (_: Variant) => Promise<any>): Promise<void> {
 		if (rawData) {
 			return;
 		}

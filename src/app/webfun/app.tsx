@@ -1,5 +1,5 @@
 import { Settings } from "src";
-import { GameType, Indy, IndyDemo, Yoda, YodaDemo } from "src/engine/type";
+import { Variant, Indy, IndyDemo, Yoda, YodaDemo } from "src/engine/variant";
 import { WindowManager } from "src/ui";
 import { GlobalFileDrop } from "src/ux";
 import GameController from "./game-controller";
@@ -46,7 +46,7 @@ class App {
 	}
 
 	private createLinks(): void {
-		const games: [string, GameType, any][] = [
+		const games: [string, Variant, any][] = [
 			["Yoda Stories", Yoda, Settings.url.yoda],
 			["Demo: Yoda Stories", YodaDemo, Settings.url.yodaDemo],
 			["Indiana Jones and his Desktop Adventures", Indy, Settings.url.indy],
@@ -71,7 +71,7 @@ class App {
 		setTimeout(() => (window.document.scrollingElement.scrollTop = 0));
 	}
 
-	private load(type: GameType, urls: any): void {
+	private load(type: Variant, urls: any): void {
 		const controller = new GameController(type, urls);
 		controller.newStory();
 		controller.show(this.windowManager);

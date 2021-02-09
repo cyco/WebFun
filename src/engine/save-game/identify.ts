@@ -1,8 +1,8 @@
-import { GameType, Indy, Yoda } from "../type";
+import { Variant, Indy, Yoda } from "../variant";
 
 import { InputStream } from "src/util";
 
-export default (stream: InputStream): GameType => {
+export default (stream: InputStream): Variant => {
 	const magic = stream.readCharacters(9);
 
 	if (magic === Yoda.saveGameMagic) return Yoda;

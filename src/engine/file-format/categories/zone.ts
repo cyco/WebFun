@@ -1,4 +1,4 @@
-import { GameType, Indy, Yoda } from "src/engine/type";
+import { Variant, Indy, Yoda } from "src/engine/variant";
 
 import { InputStream } from "src/util";
 import { assert } from "../error";
@@ -13,7 +13,7 @@ const IZX2 = "IZX2";
 const IZX3 = "IZX3";
 const IZX4 = "IZX4";
 
-const parseZone = (stream: InputStream, data: Data, gameType: GameType): Zone => {
+const parseZone = (stream: InputStream, data: Data, gameType: Variant): Zone => {
 	let planet = 0;
 	if (gameType === Yoda) {
 		planet = stream.readUint16();
@@ -92,7 +92,7 @@ const parseZone = (stream: InputStream, data: Data, gameType: GameType): Zone =>
 	};
 };
 
-export const parseZones = (stream: InputStream, data: Data, gameType: GameType): void => {
+export const parseZones = (stream: InputStream, data: Data, gameType: Variant): void => {
 	let count = stream.readUint16();
 	if (gameType === Indy) {
 		// skip over unknown value

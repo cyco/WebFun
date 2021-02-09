@@ -6,7 +6,7 @@ import {
 	GameData,
 	Hero,
 	AssetManager,
-	GameType,
+	Variant,
 	Interface,
 	PaletteAnimation
 } from "src/engine";
@@ -50,7 +50,7 @@ class GameController extends EventTarget implements EventListenerObject {
 	private _engine: Engine;
 	private _eventHandler = new GameEventHandler();
 
-	constructor(type: GameType, paths: PathConfiguration) {
+	constructor(type: Variant, paths: PathConfiguration) {
 		super();
 
 		this.settings.mobile = !!(SmartPhone(false).isAndroid() || SmartPhone(false).isIPhone());
@@ -68,7 +68,7 @@ class GameController extends EventTarget implements EventListenerObject {
 		if (this.settings.mobile) this._window.classList.add("mobile");
 	}
 
-	private _buildEngine(type: GameType, paths: PathConfiguration) {
+	private _buildEngine(type: Variant, paths: PathConfiguration) {
 		const engine: Engine = new Engine(type, this._buildInterface(paths));
 		engine.hero.addEventListener(Hero.Event.HealthDidChange, this);
 

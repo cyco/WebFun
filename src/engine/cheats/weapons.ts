@@ -1,6 +1,6 @@
 import Cheat from "./cheat";
 import Engine from "../engine";
-import { Yoda } from "src/engine/type";
+import { Yoda } from "src/engine/variant";
 import { Tile } from "src/engine/objects";
 
 class WeaponsCheat extends Cheat {

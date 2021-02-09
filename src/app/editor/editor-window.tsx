@@ -3,9 +3,9 @@ import "./editor-window.scss";
 import { AbstractWindow, ProgressIndicator } from "src/ui/components";
 import {
 	GameData,
-	GameType,
-	GameTypeIndy,
-	GameTypeYoda,
+	Variant,
+	VariantIndy,
+	VariantYoda,
 	readGameDataFile,
 	ColorPalette
 } from "src/engine";
@@ -47,11 +47,11 @@ class EditorWindow extends AbstractWindow {
 
 	public async loadFile(file: File): Promise<void> {
 		const stream = await file.provideInputStream();
-		const type = file.name.toLowerCase().indexOf("yod") === -1 ? GameTypeIndy : GameTypeYoda;
+		const type = file.name.toLowerCase().indexOf("yod") === -1 ? VariantIndy : VariantYoda;
 		await this.loadStream(stream, type);
 	}
 
-	public async loadStream(stream: InputStream, type: GameType): Promise<void> {
+	public async loadStream(stream: InputStream, type: Variant): Promise<void> {
 		const rawData = readGameDataFile(stream, type);
 		const data = new GameData(rawData);
 		(data as any)._type = type;

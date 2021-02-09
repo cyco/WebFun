@@ -1,10 +1,10 @@
 import { Char, Puzzle, Sound, Tile, Zone } from "src/engine/objects";
-import { GameType } from "../type";
+import { Variant } from "../variant";
 import fromFileContents from "./from-file-contents";
 import { Data as RawData } from "../file-format/types";
 
 class GameData {
-	private _type: GameType;
+	private _type: Variant;
 	private _rawInput: any;
 	private _version: number;
 	private _sounds: Sound[];
@@ -39,7 +39,7 @@ class GameData {
 		});
 	}
 
-	get type(): GameType {
+	get type(): Variant {
 		return this._type;
 	}
 

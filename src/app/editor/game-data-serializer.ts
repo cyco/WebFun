@@ -11,7 +11,7 @@ import {
 	Zone
 } from "src/engine/objects";
 import { OutputStream, add } from "src/util";
-import { Yoda } from "src/engine/type";
+import { Yoda } from "src/engine/variant";
 
 import { GameData } from "src/engine";
 

@@ -1,4 +1,4 @@
-import { GameType } from "src/engine";
+import { Variant } from "src/engine";
 import { InputStream } from "src/util";
 import ParseError from "./parse-error";
 import { error } from "./error";
@@ -7,7 +7,7 @@ import dispatch from "./dispatch";
 
 const ENDF = "ENDF";
 
-export default (input: InputStream, type: GameType): Data => {
+export default (input: InputStream, type: Variant): Data => {
 	const data: Data = {
 		version: 0,
 		setup: new Uint8Array(0),

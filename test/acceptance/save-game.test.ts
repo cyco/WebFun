@@ -1,4 +1,4 @@
-import { Indy, Yoda, GameType } from "src/engine/type";
+import { Indy, Yoda, Variant } from "src/engine/variant";
 import { Reader, Writer } from "src/engine/save-game";
 import { GameData, AssetManager, SaveState } from "src/engine";
 import { getFixtureData } from "test/helpers/fixture-loading";
@@ -46,7 +46,7 @@ describe("WebFun.Acceptance.Save game reading", () => {
 
 	async function readSaveGame(
 		game: string,
-		type: GameType
+		type: Variant
 	): Promise<{ state: SaveState; assets: AssetManager }> {
 		const gameData = new GameData(type === Indy ? rawIndyData : rawYodaData);
 		const assets = new AssetManager();

@@ -3,11 +3,11 @@ import { WorldSize } from "src/engine/generation";
 import { rand } from "src/util";
 import { Char, Tile, Zone } from "../../objects";
 
-import GameType from "../type";
+import Variant from "../variant";
 import LocatorTile from "./locator-tile";
 import Sounds from "./sounds";
 
-class Indy extends GameType {
+class Indy extends Variant {
 	get name(): string {
 		return "Indy";
 	}

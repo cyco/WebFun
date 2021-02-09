@@ -1,13 +1,13 @@
-import { ColorPalette, GameData, GameType, SaveState } from "src/engine";
+import { ColorPalette, GameData, Variant, SaveState } from "src/engine";
 
 class DataManager {
 	private _currentData: GameData;
 	private _palette: ColorPalette;
-	private _type: GameType;
+	private _type: Variant;
 	private _state: SaveState;
 	private _stateData: GameData;
 
-	constructor(data: GameData, palette: ColorPalette, type: GameType) {
+	constructor(data: GameData, palette: ColorPalette, type: Variant) {
 		this._currentData = data.copy();
 		this._palette = palette;
 		this._type = type;
@@ -21,7 +21,7 @@ class DataManager {
 		return this._palette;
 	}
 
-	get type(): GameType {
+	get type(): Variant {
 		return this._type;
 	}
 

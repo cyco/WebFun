@@ -1,7 +1,7 @@
 import { InputStream, Point } from "src/util";
 
 import { Hotspot, Char, Zone, Tile } from "src/engine/objects";
-import { Indy } from "src/engine/type";
+import { Indy } from "src/engine/variant";
 import { MutableHotspot, MutableMonster } from "src/engine/mutable-objects";
 import Reader from "./reader";
 import SaveState from "./save-state";

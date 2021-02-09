@@ -22,7 +22,7 @@ import WorldGenerationError from "./world-generation-error";
 import Sector from "src/engine/sector";
 import SectorType from "./sector-type";
 import RoomIterator from "../room-iterator";
-import { Yoda } from "src/engine/type";
+import { Yoda } from "src/engine/variant";
 import ZonePlanet from "../objects/zone-planet";
 
 declare global {

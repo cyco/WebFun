@@ -1,4 +1,4 @@
-import { GameType, Yoda } from "src/engine/type";
+import { Variant, Yoda } from "src/engine/variant";
 
 import { InputStream } from "src/util";
 import { assert } from "../error";
@@ -9,7 +9,7 @@ const parseCharacterFrame = (stream: InputStream, _: Data): Int16Array => {
 	return stream.readInt16Array(0x8);
 };
 
-const parseCharacter = (stream: InputStream, data: Data, gameType: GameType): Character => {
+const parseCharacter = (stream: InputStream, data: Data, gameType: Variant): Character => {
 	const marker = stream.readCharacters(4);
 	assert(marker === ICHA, "Expected to find ICHA marker.", stream);
 	// skip over size
@@ -43,7 +43,7 @@ const parseCharacter = (stream: InputStream, data: Data, gameType: GameType): Ch
 	};
 };
 
-export const parseCharacters = (stream: InputStream, data: Data, type: GameType): void => {
+export const parseCharacters = (stream: InputStream, data: Data, type: Variant): void => {
 	// skip over size
 	stream.readUint32();
 	const characters = [];
