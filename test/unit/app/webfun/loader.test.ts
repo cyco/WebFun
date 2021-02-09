@@ -1,5 +1,5 @@
 import Loader, { Events } from "src/app/webfun/loader";
-import { ResourceManager, GameData } from "src/engine";
+import { ResourceManager, GameData, VariantYoda } from "src/engine";
 import { Mixer } from "src/app/webfun/audio";
 import { dispatch, InputStream } from "src/util";
 import * as EngineModule from "src/engine";
@@ -29,7 +29,7 @@ describe("WebFun.App.Loader", () => {
 			failHandler = jasmine.createSpy("failHandler");
 			loadHandler = jasmine.createSpy("loadHandler");
 
-			subject = new Loader(resourceManager, mixer);
+			subject = new Loader(resourceManager, mixer, VariantYoda);
 			subject.addEventListener(Events.Progress, progressHandler);
 			subject.addEventListener(Events.Fail, failHandler);
 			subject.addEventListener(Events.Load, loadHandler);

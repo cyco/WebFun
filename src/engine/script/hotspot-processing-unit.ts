@@ -131,7 +131,7 @@ class HotspotProcessingUnit {
 					HotspotExecutionResult.Inventory
 				);
 			} else {
-				const nogo = engine.assets.get(Sound, engine.type.sounds.NoGo);
+				const nogo = engine.assets.get(Sound, engine.variant.sounds.NoGo);
 				engine.mixer.play(nogo, Channel.Effect);
 				return HotspotExecutionResult.Sounds;
 			}
@@ -146,7 +146,7 @@ class HotspotProcessingUnit {
 					htsp.arg === tile.id
 			);
 			if (!hotspot) {
-				const nogo = engine.assets.get(Sound, engine.type.sounds.NoGo);
+				const nogo = engine.assets.get(Sound, engine.variant.sounds.NoGo);
 				engine.mixer.play(nogo, Channel.Effect);
 				return HotspotExecutionResult.Sounds;
 			}

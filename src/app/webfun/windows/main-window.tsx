@@ -227,7 +227,7 @@ class MainWindow extends AbstractWindow {
 	private _updateAmmo() {
 		const weapon = this.engine.hero.weapon;
 		const current = this.engine.hero.ammo;
-		const max = this.engine.type.getMaxAmmo(weapon);
+		const max = this.engine.variant.getMaxAmmo(weapon);
 		this.ammo.ammo = weapon ? current / max : 0;
 	}
 

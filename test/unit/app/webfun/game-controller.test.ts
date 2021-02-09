@@ -41,7 +41,7 @@ describe("WebFun.App.GameController", () => {
 	let mockedData: GameData;
 	let mockedPalette: ColorPalette;
 	let mockedStory: Story;
-	
+
 	beforeEach(() => {
 		originalSettings = Object.assign({}, Settings);
 		createElement = document.createElement.bind(document);
@@ -241,8 +241,11 @@ describe("WebFun.App.GameController", () => {
 			world: { findLocationOfZone: jasmine.createSpy() },
 			inputManager: { addListeners: jasmine.createSpy() },
 			camera: {},
-			type: {
-			createNewStory() { return mockedStory; }}
+			variant: {
+				createNewStory() {
+					return mockedStory;
+				}
+			}
 		} as any;
 	}
 });

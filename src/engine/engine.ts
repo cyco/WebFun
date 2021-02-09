@@ -36,7 +36,7 @@ export { Events };
 class Engine extends EventTarget {
 	static readonly Event = Events;
 
-	public readonly type: Type = null;
+	public readonly variant: Type = null;
 	public assets: AssetManager = null;
 	public resources: ResourceManager = null;
 	public camera: Camera = new Camera();
@@ -82,7 +82,7 @@ class Engine extends EventTarget {
 		this.spu = ifce.ScriptProcessingUnit(this, Instructions, Conditions);
 		this.hero = ifce.Hero();
 
-		this.type = type;
+		this.variant = type;
 		this._hpu = new HotspotProcessingUnit(this);
 		// TODO: remove state
 		this.temporaryState = {
@@ -141,21 +141,21 @@ class Engine extends EventTarget {
 
 	public consume(tile: Tile): void {
 		if (!tile.hasAttributes(Tile.Attributes.Edible)) {
-			const sound = this.assets.get(Sound, this.type.sounds.NoGo, NullIfMissing);
+			const sound = this.assets.get(Sound, this.variant.sounds.NoGo, NullIfMissing);
 			this.mixer.play(sound, Channel.Effect);
 			return;
 		}
 
-		const healthBonus = this.type.getHealthBonus(tile);
+		const healthBonus = this.variant.getHealthBonus(tile);
 		if (healthBonus > 0 && this.hero.health >= Hero.MaxHealth) {
-			const sound = this.assets.get(Sound, this.type.sounds.NoGo, NullIfMissing);
+			const sound = this.assets.get(Sound, this.variant.sounds.NoGo, NullIfMissing);
 			this.mixer.play(sound, Channel.Effect);
 			return;
 		}
 		this.hero.health += healthBonus;
 		this.inventory.removeItem(tile);
 		if (healthBonus < 0) {
-			const sound = this.assets.get(Sound, this.type.sounds.Hurt, NullIfMissing);
+			const sound = this.assets.get(Sound, this.variant.sounds.Hurt, NullIfMissing);
 			this.mixer.play(sound, Channel.Effect);
 			return;
 		}
@@ -163,13 +163,13 @@ class Engine extends EventTarget {
 
 	public equip(tile: Tile): void {
 		if (!tile.hasAttributes(Tile.Attributes.Weapon)) {
-			const sound = this.assets.get(Sound, this.type.sounds.NoGo, NullIfMissing);
+			const sound = this.assets.get(Sound, this.variant.sounds.NoGo, NullIfMissing);
 			this.mixer.play(sound, Channel.Effect);
 			return;
 		}
 
-		if (!this.type.canBeEquipped(tile)) {
-			const sound = this.assets.get(Sound, this.type.sounds.NoGo, NullIfMissing);
+		if (!this.variant.canBeEquipped(tile)) {
+			const sound = this.assets.get(Sound, this.variant.sounds.NoGo, NullIfMissing);
 			this.mixer.play(sound, Channel.Effect);
 			return;
 		}
@@ -183,10 +183,10 @@ class Engine extends EventTarget {
 		this.hero.weapon = weaponChar;
 
 		let ammo = this.hero.getAmmoForWeapon(weaponChar);
-		if (!ammo) ammo = this.type.getMaxAmmo(weaponChar);
+		if (!ammo) ammo = this.variant.getMaxAmmo(weaponChar);
 		this.hero.ammo = ammo;
 
-		const equipSoundID = this.type.getEquipSound(weaponChar);
+		const equipSoundID = this.variant.getEquipSound(weaponChar);
 		const sound = this.assets.get(Sound, equipSoundID, NullIfMissing);
 		this.mixer.play(sound, Channel.Effect);
 

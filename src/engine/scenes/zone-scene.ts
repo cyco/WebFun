@@ -328,7 +328,7 @@ class ZoneScene extends Scene {
 		inventory.removeItem(weaponTile);
 		if (inventory.contains(weaponTile)) {
 			engine.equip(weaponTile);
-			hero.ammo = engine.type.getMaxAmmo(weapon);
+			hero.ammo = engine.variant.getMaxAmmo(weapon);
 		} else engine.equip(inventory.find(tile => tile.hasAttributes(Tile.Attributes.Weapon)));
 	}
 
@@ -362,7 +362,7 @@ class ZoneScene extends Scene {
 			} else if (tile.hasAttributes(Tile.Attributes.Edible)) {
 				engine.consume(tile);
 			} else {
-				const nogo = engine.assets.get(Sound, engine.type.sounds.NoGo);
+				const nogo = engine.assets.get(Sound, engine.variant.sounds.NoGo);
 				engine.mixer.play(nogo, Channel.Effect);
 			}
 

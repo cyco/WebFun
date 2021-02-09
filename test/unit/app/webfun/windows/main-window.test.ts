@@ -126,8 +126,11 @@ describeComponent(MainWindow, () => {
 		const metronome: Metronome = { stop() {} } as any;
 
 		class MockEngine extends EventTarget {
-			type = { getMaxAmmo: () => 10 };
-			inventory = { addEventListener: jasmine.createSpy(), removeEventListener: jasmine.createSpy() };
+			variant = { getMaxAmmo: () => 10 };
+			inventory = {
+				addEventListener: jasmine.createSpy(),
+				removeEventListener: jasmine.createSpy()
+			};
 			sceneManager = {
 				addEventListener: jasmine.createSpy(),
 				removeEventListener: jasmine.createSpy()

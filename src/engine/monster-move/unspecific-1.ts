@@ -45,7 +45,7 @@ export default (monster: Monster, zone: Zone, engine: Engine): void => {
 	if (canPerformMeleeAttack(direction, monster, hero)) {
 		direction = new Point(0, 0);
 		if (monster.face.damage >= 0) {
-			playSound(engine.assets.get(Sound, engine.type.sounds.Hurt), engine);
+			playSound(engine.assets.get(Sound, engine.variant.sounds.Hurt), engine);
 			engine.hero.changeHealth(-monster.face.damage);
 		}
 		monster.currentFrame++;

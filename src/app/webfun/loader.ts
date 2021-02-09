@@ -1,5 +1,5 @@
 import { EventTarget, InputStream } from "src/util";
-import { GameData, VariantYoda, readGameDataFile, ResourceManager } from "src/engine";
+import { GameData, readGameDataFile, ResourceManager, Variant } from "src/engine";
 
 import { ColorPalette } from "src/engine/rendering";
 import { Mixer } from "./audio";
@@ -27,11 +27,13 @@ class Loader extends EventTarget {
 	private _palette: ColorPalette;
 	private _resources: ResourceManager;
 	private _mixer: Mixer;
+	private _variant: Variant;
 
-	constructor(resources: ResourceManager, mixer: Mixer) {
+	constructor(resources: ResourceManager, mixer: Mixer, variant: Variant) {
 		super();
 		this._resources = resources;
 		this._mixer = mixer;
+		this._variant = variant;
 
 		this.registerEvents(Events);
 	}
@@ -45,7 +47,7 @@ class Loader extends EventTarget {
 
 	private _readGameData(stream: InputStream) {
 		this._progress(1, 0);
-		this._rawData = readGameDataFile(stream, VariantYoda);
+		this._rawData = readGameDataFile(stream, this._variant);
 		this._progress(1, 1);
 		this._loadPalette();
 	}

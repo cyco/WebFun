@@ -181,7 +181,7 @@ class MapScene extends Scene {
 	}
 
 	private _locatorDescription(at: Point): string {
-		const strings = this.engine.type.strings;
+		const strings = this.engine.variant.strings;
 		const string = this._locatorDescriptionId(at);
 		if (typeof string === "number") return strings[string];
 		if (typeof string === "string") return string;

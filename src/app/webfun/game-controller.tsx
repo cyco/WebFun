@@ -125,7 +125,7 @@ class GameController extends EventTarget implements EventListenerObject {
 
 		srand(floor(random() * 0xffff));
 		await this._loadGameData();
-		const story = this.engine.type.createNewStory(this.engine);
+		const story = this.engine.variant.createNewStory(this.engine);
 
 		this._engine.inventory.removeAllItems();
 		story.generateWorld(this._engine.assets, this.engine.persistentState.gamesWon);
@@ -236,7 +236,7 @@ class GameController extends EventTarget implements EventListenerObject {
 			windowContent.appendChild(loadingView);
 
 			const engine = this.engine;
-			const loader = new Loader(engine.resources, engine.mixer as Mixer);
+			const loader = new Loader(engine.resources, engine.mixer as Mixer, this.engine.variant);
 			loader.onfail = event => reject(event);
 			loader.onprogress = ({ detail: { progress } }) => (loadingView.progress = progress);
 			loader.onloadpalette = ({ detail: { palette } }) => {

@@ -4,7 +4,7 @@ import { Engine } from "src/engine";
 
 export default (hit: boolean, monster: Monster, engine: Engine): void => {
 	if (monster.face.reference < 0 && monster.face.damage >= 0 && hit) {
-		playSound(engine.assets.get(Sound, engine.type.sounds.Hurt), engine);
+		playSound(engine.assets.get(Sound, engine.variant.sounds.Hurt), engine);
 		engine.hero.changeHealth(-monster.face.damage);
 	}
 };
