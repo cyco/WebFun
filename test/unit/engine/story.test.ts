@@ -4,6 +4,7 @@ import { srand } from "src/util";
 import * as Generation from "src/engine/generation";
 import { WorldGenerationError } from "src/engine/generation";
 import Zone from "src/engine/objects/zone";
+import { AssetManager, Variant } from "src/engine";
 
 describe("WebFun.Engine.Story", () => {
 	let subject: Story;
@@ -15,12 +16,14 @@ describe("WebFun.Engine.Story", () => {
 	});
 
 	describe("generating the world", () => {
-		let engineMock: any;
-		let worldGeneratorMock: any;
-		let dagobahGeneratorMock: any;
+		let assetsMock: AssetManager;
+		let worldGeneratorMock: Generation.WorldGenerator;
+		let dagobahGeneratorMock: Generation.DagobahGenerator;
+		let variantMock: Variant;
 
 		beforeEach(() => {
-			engineMock = mockEngine();
+			variantMock = mockVariant();
+			assetsMock = mockAssets();
 			worldGeneratorMock = mockGenerator();
 			dagobahGeneratorMock = mockGenerator();
 
@@ -29,13 +32,14 @@ describe("WebFun.Engine.Story", () => {
 		});
 
 		it("can generate the original world", () => {
-			spyOn(worldGeneratorMock, "generate").and.returnValue(true);
-			subject.generateWorld(engineMock);
+			spyOn(worldGeneratorMock, "generate").and.returnValue(void 0);
+			subject.generateWorld(assetsMock, variantMock);
 
 			expect(Generation.WorldGenerator).toHaveBeenCalledWith(
 				subject.size,
 				subject.planet,
-				engineMock
+				assetsMock,
+				variantMock
 			);
 			expect(worldGeneratorMock.generate).toHaveBeenCalledWith(subject.seed);
 		});
@@ -45,22 +49,25 @@ describe("WebFun.Engine.Story", () => {
 
 			spyOn(worldGeneratorMock, "generate").and.callFake((seed: number) => {
 				if (seed === 1) throw new WorldGenerationError();
-				if (seed === 38) return false;
-				return true;
+				if (seed === 38) throw new WorldGenerationError();
 			});
 
-			subject.generateWorld(engineMock, 50);
+			subject.generateWorld(assetsMock, variantMock, 50);
 
 			expect(worldGeneratorMock.generate).toHaveBeenCalledWith(1);
 			expect(worldGeneratorMock.generate).toHaveBeenCalledWith(38);
 			expect(worldGeneratorMock.generate).toHaveBeenCalledWith(7719);
 		});
 
-		function mockEngine() {
+		function mockVariant(): any {
 			return {};
 		}
 
-		function mockGenerator() {
+		function mockAssets(): any {
+			return {};
+		}
+
+		function mockGenerator(): any {
 			return {
 				world: mockWorld(),
 				dagobah: mockWorld(),
@@ -68,7 +75,7 @@ describe("WebFun.Engine.Story", () => {
 			};
 		}
 
-		function mockWorld() {
+		function mockWorld(): any {
 			return {};
 		}
 	});

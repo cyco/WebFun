@@ -5,6 +5,7 @@ enum TileIDs {
 	R2D2 = 0x31a,
 
 	// Items
+	Locator = 0x1a5,
 	Locator817 = 817,
 	Locator818 = 818,
 	Locator819 = 819,

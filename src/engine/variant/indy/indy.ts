@@ -40,6 +40,14 @@ class Indy extends Variant {
 		return 0;
 	}
 
+	public get mapTileId(): number {
+		return 0x1bb;
+	}
+
+	public get weaponTileId(): number {
+		return 0x1c2;
+	}
+
 	public createNewStory(_: Engine): Story {
 		return new Story(
 			rand(),

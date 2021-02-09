@@ -160,10 +160,10 @@ const runTest = ({ seed, planet, size, world, dagobah }: any) => {
 		it("is generated correctly", () => {
 			try {
 				const story = new Story(seed, Zone.Planet.fromNumber(planet), WorldSize.fromNumber(size));
-				story.generateWorld(assets, 0);
+				story.generateWorld(assets, Yoda, 0);
 				compare(story, { seed, planet, size, world, dagobah });
 			} catch (e) {
-				if (e instanceof WorldGenerationError && e.message === "Too many reseeds") {
+				if (e instanceof WorldGenerationError) {
 					compare(
 						{ seed, planet, size, world: null, dagobah: null },
 						{ seed, planet, size, world, dagobah }

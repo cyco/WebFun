@@ -22,8 +22,8 @@ import WorldGenerationError from "./world-generation-error";
 import Sector from "src/engine/sector";
 import SectorType from "./sector-type";
 import RoomIterator from "../room-iterator";
-import { Yoda } from "src/engine/variant";
 import ZonePlanet from "../objects/zone-planet";
+import { Variant } from "../variant";
 
 declare global {
 	interface Array<T> {
@@ -56,14 +56,16 @@ class WorldGenerator {
 	private usedAlternateStrain: boolean = false;
 	private _zones: Zone[];
 	private _zonesByType: Map<Zone.Type, Zone[]>;
+	private _variant: Variant;
 
-	constructor(size: WorldSize, planet: Zone.Planet, assets: AssetManager) {
+	constructor(size: WorldSize, planet: Zone.Planet, assets: AssetManager, variant: Variant) {
 		this._size = size;
 		this._planet = planet;
 		this._assets = assets;
+		this._variant = variant;
 	}
 
-	public generate(seed: number): boolean {
+	public generate(seed: number): void {
 		this._seed = seed;
 		srand(this._seed);
 
@@ -95,7 +97,7 @@ class WorldGenerator {
 		this.requiredItemQuests = [];
 
 		const goalPuzzle = this.getUnusedPuzzleRandomly(null, Zone.Type.PlaceholderForEndPuzzle);
-		console.assert(!!goalPuzzle, "Could not find a suitable goal puzzle");
+		this.errorWhen(!goalPuzzle, "Could not find a suitable goal puzzle");
 
 		this.usedPuzzles.push(goalPuzzle);
 		this.puzzleStrain1[puzzles1Count] = goalPuzzle;
@@ -108,8 +110,8 @@ class WorldGenerator {
 		this.placePuzzlesZones(puzzles2Count - 1, mapGenerator.orderMap);
 		this.determineBlockadeAndTownZones(mapGenerator.typeMap);
 
-		this.addProvidedItemQuest(this.lookupTileById(Yoda.tileIDs.TheForce), 2);
-		this.addProvidedItemQuest(this.lookupTileByAttributes(Tile.Attributes.Map), 1);
+		this.addProvidedItemQuest(this.lookupTileById(this._variant.weaponTileId), 2);
+		this.addProvidedItemQuest(this.lookupTileById(this._variant.mapTileId), 1);
 		this.determineFindZones(mapGenerator.typeMap);
 		this.determineTeleporters(mapGenerator.typeMap);
 
@@ -117,12 +119,6 @@ class WorldGenerator {
 		rand();
 
 		this.writePlanetValues();
-
-		return true;
-	}
-
-	private lookupTileByAttributes(mask: number): Tile {
-		return this._assets.find(Tile, t => t.hasAttributes(mask));
 	}
 
 	private determineTransportZones(): void {
@@ -148,7 +144,7 @@ class WorldGenerator {
 					distance,
 					true
 				);
-				console.assert(!!zone, "Could not determine zone for travel start");
+				this.errorWhen(!zone, "Could not determine zone for travel start");
 
 				this.placeZone(x, y, zone, Zone.Type.TravelStart, {
 					requiredItem: this.requiredItem
@@ -156,7 +152,7 @@ class WorldGenerator {
 
 				const vehicleHotspot = zone.hotspots.withType(Hotspot.Type.VehicleTo).first();
 				const connectedZone = this.lookupZoneById(vehicleHotspot ? vehicleHotspot.arg : -1);
-				console.assert(!!zone, "Could not determine zone for travel end");
+				this.errorWhen(!zone, "Could not determine zone for travel end");
 
 				let range = null;
 				let travelTarget = null;
@@ -185,9 +181,9 @@ class WorldGenerator {
 					travelTarget = range.find(isTravelTarget);
 				}
 
-				console.assert(!!travelTarget, "Could not determine location for travel target");
-				console.assert(
-					!this.usedZones.includes(connectedZone),
+				this.errorWhen(!travelTarget, "Could not determine location for travel target");
+				this.errorWhen(
+					this.usedZones.includes(connectedZone),
 					"Zone is already in use for a different travel sector"
 				);
 
@@ -237,7 +233,7 @@ class WorldGenerator {
 			let zone = this.getUnusedZoneRandomly(type, -1, -1, null, null, distance, false);
 			if (!zone)
 				zone = this.getUnusedZoneRandomly(Zone.Type.Empty, -1, -1, null, null, distance, false);
-			console.assert(!!zone, "Could not find an unused empty zone");
+			this.errorWhen(!zone, "Could not find an unused empty zone");
 
 			const options: Partial<Sector> = {};
 			if (type !== Zone.Type.Town) options.requiredItem = this.requiredItem;
@@ -343,7 +339,7 @@ class WorldGenerator {
 			let iterationLimit = 10000;
 			do {
 				iterationLimit--;
-				console.assert(iterationLimit !== 0, "Maximum number of iterations exceeded.");
+				this.errorWhen(iterationLimit === 0, "Maximum number of iterations exceeded.");
 				let type = rand() % 2 ? Zone.Type.Trade : Zone.Type.Use;
 				zone = this.getUnusedZoneRandomly(type, puzzleIdIndex - 1, -1, item1, null, distance, true);
 
@@ -666,6 +662,7 @@ class WorldGenerator {
 				quest.distance,
 				false
 			);
+
 			this.errorWhen(!zone, "No zone for puzzle found");
 			this.placeZone(point.x, point.y, zone, Zone.Type.Find, { findItem: this.findItem });
 			const idx = point.x + 10 * point.y;
@@ -702,7 +699,7 @@ class WorldGenerator {
 				let iterationLimit = 5000;
 				while (true) {
 					iterationLimit--;
-					console.assert(iterationLimit !== 0, "Maximum number of iterations exceeded");
+					this.errorWhen(iterationLimit === 0, "Maximum number of iterations exceeded");
 					if (this.somethingWithTeleporters) break;
 
 					const hasTeleporter = zone.hotspots.withType(Hotspot.Type.Teleporter).first();

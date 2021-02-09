@@ -29,6 +29,14 @@ class IndyDemo extends Variant {
 		return Sounds;
 	}
 
+	public get mapTileId(): number {
+		return -1;
+	}
+
+	public get weaponTileId(): number {
+		return -1;
+	}
+
 	public getHealthBonus(_: Tile): number {
 		return 0;
 	}

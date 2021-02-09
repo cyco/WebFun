@@ -24,6 +24,8 @@ abstract class Variant {
 	abstract getEquipSound(_: Char): number;
 	abstract get name(): string;
 
+	abstract get mapTileId(): number;
+	abstract get weaponTileId(): number;
 	abstract createNewStory(_engine: Engine): Story;
 }
 

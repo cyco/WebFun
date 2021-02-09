@@ -129,7 +129,7 @@ class GameController extends EventTarget implements EventListenerObject {
 			const story = this.engine.variant.createNewStory(this.engine);
 
 			this._engine.inventory.removeAllItems();
-			story.generateWorld(this._engine.assets, this.engine.persistentState.gamesWon);
+			story.generateWorld(this._engine.assets, this._engine.variant, 10);
 			this._engine.story = story;
 
 			this._showSceneView();

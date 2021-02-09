@@ -58,6 +58,8 @@ class ErrorView extends Component {
 
 	set error(error: Error) {
 		console.error(error);
+		console.log((error as any).previousErrors);
+		console.log(error);
 		this._error = error;
 		this.presentError();
 	}

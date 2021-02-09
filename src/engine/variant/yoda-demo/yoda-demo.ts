@@ -32,6 +32,14 @@ class YodaDemo extends Variant {
 	public readonly animations = Animations;
 	public readonly tileIDs = TileIDs;
 
+	public get mapTileId(): number {
+		return TileIDs.Locator;
+	}
+
+	public get weaponTileId(): number {
+		return TileIDs.TheForce;
+	}
+
 	public canBeEquipped(tile: Tile): boolean {
 		return super.canBeEquipped(tile) && tile.id !== TileIDs.ThermalDetonator;
 	}

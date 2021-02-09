@@ -27,6 +27,13 @@ describe("WebFun.Engine.Variant", () => {
 				return "mock-type";
 			}
 
+			get mapTileId(): number {
+				throw new Error("Method not implemented.");
+			}
+			get weaponTileId(): number {
+				throw new Error("Method not implemented.");
+			}
+
 			createNewStory(_engine: Engine): Story {
 				throw new Error("Method not implemented.");
 			}

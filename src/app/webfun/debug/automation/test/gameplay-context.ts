@@ -151,7 +151,7 @@ class GameplayContext {
 		document.body.appendChild(sceneView);
 
 		engine.story = story;
-		story.generateWorld(engine.assets, engine.persistentState.gamesWon);
+		story.generateWorld(engine.assets, Yoda, 50);
 
 		engine.metronome.tickDuration = 1;
 		engine.metronome.ontick = (delta: number) => engine.update(delta);

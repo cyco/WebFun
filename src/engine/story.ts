@@ -5,6 +5,7 @@ import AssetManager from "./asset-manager";
 import { Puzzle, Zone } from "src/engine/objects";
 import World from "./world";
 import { rand } from "src/util";
+import { Variant } from ".";
 
 class Story {
 	public goal: Puzzle;
@@ -46,35 +47,32 @@ class Story {
 		return this._puzzles;
 	}
 
-	public generateWorld(assets: AssetManager, maxRetries = 1): void {
-		let generator = null;
-		let success = false;
+	public generateWorld(assets: AssetManager, variant: Variant, maxRetries = 1): void {
+		const history: { seed: number; error: WorldGenerationError }[] = [];
 		let effectiveSeed = this.seed;
-		while (maxRetries >= 0) {
-			maxRetries--;
+		for (let i = 0; i < maxRetries; i++) {
 			try {
-				generator = new WorldGenerator(this.size, this.planet, assets);
-				success = generator.generate(effectiveSeed);
-			} catch (e) {
-				if (e instanceof WorldGenerationError) success = false;
+				return this.tryGenerateWorld(effectiveSeed, assets, variant);
+			} catch (error) {
+				if (!(error instanceof WorldGenerationError)) throw error;
+				history.push({ seed: effectiveSeed, error });
 			}
-
-			if (!success) {
-				this._reseeded = true;
-				effectiveSeed = rand();
-			} else {
-				break;
-			}
+			this._reseeded = true;
+			effectiveSeed = rand();
 		}
 
-		if (!success) {
-			const error = new WorldGenerationError("Too many reseeds");
-			error.size = this.size;
-			error.seed = effectiveSeed;
-			error.planet = this.planet;
+		const error = new WorldGenerationError("Too many reseeds");
+		error.history = history;
+		error.iterations = maxRetries;
+		error.seed = this.seed;
+		error.planet = this.planet;
+		error.size = this.size;
+		throw error;
+	}
 
-			throw error;
-		}
+	private tryGenerateWorld(seed: number, assets: AssetManager, variant: Variant): void {
+		const generator = new WorldGenerator(this.size, this.planet, assets, variant);
+		generator.generate(seed);
 
 		this.goal = generator.goalPuzzle;
 		this._puzzles = generator.puzzles;

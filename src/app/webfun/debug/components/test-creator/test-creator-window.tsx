@@ -18,6 +18,7 @@ import { WorldSize } from "src/engine/generation";
 import { Story, Engine, AssetManager, Hero } from "src/engine";
 import Settings from "src/settings";
 import Metronome, { MetronomeInternals } from "src/engine/metronome";
+import { Yoda } from "src/engine/variant";
 
 class TestCreatorWindow extends AbstractWindow implements EventListenerObject {
 	public static readonly tagName = "wf-debug-test-creator-window";
@@ -89,7 +90,7 @@ class TestCreatorWindow extends AbstractWindow implements EventListenerObject {
 
 		if (this.testCase.configuration.health) engine.hero.health = this.testCase.configuration.health;
 
-		story.generateWorld(engine.assets, engine.persistentState.gamesWon);
+		story.generateWorld(engine.assets, Yoda, 0);
 		if (!(story instanceof SimulatedStory)) {
 			engine.currentWorld = story.dagobah;
 			engine.hero.visible = false;
