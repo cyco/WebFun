@@ -21,7 +21,7 @@ class ZoneType {
 	public static readonly Find = new ZoneType();
 	public static readonly FindUniqueWeapon = new ZoneType();
 
-	public static readonly Unknown = new ZoneType();
+	public static readonly PlaceholderForEndPuzzle = new ZoneType();
 
 	private static readonly knownTypes = [
 		ZoneType.None,
@@ -48,7 +48,7 @@ class ZoneType {
 	];
 
 	get rawValue(): number {
-		if (this === ZoneType.Unknown) return 9999;
+		if (this === ZoneType.PlaceholderForEndPuzzle) return 9999;
 		return ZoneType.knownTypes.indexOf(this);
 	}
 
@@ -104,7 +104,7 @@ class ZoneType {
 
 	static fromNumber(number: number): ZoneType {
 		if (!this.isZoneType(number)) throw RangeError(`Invalid zone type ${number} specified!`);
-		if (number === 9999) return ZoneType.Unknown;
+		if (number === 9999) return ZoneType.PlaceholderForEndPuzzle;
 
 		return ZoneType.knownTypes[number];
 	}
@@ -125,7 +125,7 @@ class ZoneType {
 		switch (this) {
 			case ZoneType.Use:
 				return PuzzleType.Use;
-			case ZoneType.Unknown:
+			case ZoneType.PlaceholderForEndPuzzle:
 				return PuzzleType.End;
 			case ZoneType.Goal:
 				return PuzzleType.Goal;

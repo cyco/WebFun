@@ -60,9 +60,7 @@ class ZoneInspectorCell extends Cell<Zone> {
 						Zone.Type.Trade,
 						Zone.Type.Use,
 						Zone.Type.Find,
-						Zone.Type.FindUniqueWeapon,
-
-						Zone.Type.Unknown
+						Zone.Type.FindUniqueWeapon
 					].map(t => ({
 						value: t,
 						label: t === Zone.Type.Empty && this.data.hasTeleporter ? "Teleporter" : t.name
@@ -160,7 +158,6 @@ class ZoneInspectorCell extends Cell<Zone> {
 				return 835;
 			case Zone.Type.None:
 			case Zone.Type.Load:
-			case Zone.Type.Unknown:
 				return 836;
 		}
 		return -1;

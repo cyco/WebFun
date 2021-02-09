@@ -23,7 +23,6 @@ import Sector from "src/engine/sector";
 import SectorType from "./sector-type";
 import RoomIterator from "../room-iterator";
 import { Yoda } from "src/engine/type";
-import { MutablePuzzle } from "src/engine/mutable-objects";
 import ZonePlanet from "../objects/zone-planet";
 
 declare global {
@@ -64,7 +63,7 @@ class WorldGenerator {
 		this._assets = assets;
 	}
 
-	public generate(seed: number, gamesWon: number = 0): boolean {
+	public generate(seed: number): boolean {
 		this._seed = seed;
 		srand(this._seed);
 
@@ -97,17 +96,7 @@ class WorldGenerator {
 
 		// FIXME: Two puzzles are only available after a certain amount of games have been won. This is basically
 		// what the original implementation did, but there's got to be a better way.
-		if (gamesWon >= 1) {
-			const puzzle: MutablePuzzle = this._assets.get(Puzzle, Yoda.goalIDs.RESCUE_YODA) as any;
-			puzzle.type = Puzzle.Type.End;
-		}
-
-		if (gamesWon >= 10) {
-			const puzzle: MutablePuzzle = this._assets.get(Puzzle, Yoda.goalIDs.CAR) as any;
-			puzzle.type = Puzzle.Type.End;
-		}
-
-		const goalPuzzle = this.getUnusedPuzzleRandomly(null, Zone.Type.Unknown);
+		const goalPuzzle = this.getUnusedPuzzleRandomly(null, Zone.Type.PlaceholderForEndPuzzle);
 		console.assert(!!goalPuzzle, "Could not find a suitable goal puzzle");
 
 		this.usedPuzzles.push(goalPuzzle);
@@ -399,7 +388,7 @@ class WorldGenerator {
 		const hasPuzzleBeenPlaced = (puzzle: Puzzle) => this.hasPuzzleBeenPlaced(puzzle);
 
 		let hasRequiredItem = ({ item1 }: Puzzle) => item1 === item;
-		if (zoneType === Zone.Type.Unknown) hasRequiredItem = constantly(true);
+		if (zoneType === Zone.Type.PlaceholderForEndPuzzle) hasRequiredItem = constantly(true);
 
 		return puzzles.find(and(typeIsCompatible, not(hasPuzzleBeenPlaced), hasRequiredItem));
 	}
@@ -944,7 +933,7 @@ class WorldGenerator {
 				case Zone.Type.Trade:
 				case Zone.Type.Goal:
 					return !this.hasPuzzleBeenPlaced(puzzle) && puzzle.type === zoneType.toPuzzleType();
-				case Zone.Type.Unknown:
+				case Zone.Type.PlaceholderForEndPuzzle:
 					return (
 						puzzle.type === Puzzle.Type.End &&
 						(!this.puzzleUsedInLastGame(puzzle, this._planet) || this.goalPuzzle !== null) &&
@@ -957,39 +946,14 @@ class WorldGenerator {
 	}
 
 	private isGoalOnPlanet(planet: ZonePlanet, puzzle: Puzzle): boolean {
-		const Goals = new Map<Zone.Planet, Set<number>>([
-			[
-				Zone.Planet.Tatooine,
-				new Set([
-					Yoda.goalIDs.FALCON,
-					Yoda.goalIDs.HAN,
-					Yoda.goalIDs.AMULET,
-					Yoda.goalIDs.ADEGAN_CRYSTAL,
-					Yoda.goalIDs.THREEPIOS_PARTS
-				])
-			],
-			[
-				Zone.Planet.Hoth,
-				new Set([
-					Yoda.goalIDs.GENERAL_MARUTZ,
-					Yoda.goalIDs.HIDDEN_FACTORY,
-					Yoda.goalIDs.WARN_THE_REBELS,
-					Yoda.goalIDs.RESCUE_YODA,
-					Yoda.goalIDs.CAR
-				])
-			],
-			[
-				Zone.Planet.Endor,
-				new Set([
-					Yoda.goalIDs.FIND_LEIA,
-					Yoda.goalIDs.IMPERIAL_BATTLE_STATION,
-					Yoda.goalIDs.LANTERN_OF_SACRED_LIGHT,
-					Yoda.goalIDs.IMPERIAL_BATTLE_CODE,
-					Yoda.goalIDs.RELAY_STATION
-				])
-			]
-		]);
-		return Goals.get(planet).has(puzzle.id);
+		return !!this._assets.find(
+			Zone,
+			zone =>
+				zone.type === Zone.Type.Goal &&
+				zone.planet === planet &&
+				this.zoneLeadsToProvidedItem(zone, puzzle.item1) &&
+				this.zoneLeadsToProvidedItem(zone, puzzle.item2)
+		);
 	}
 
 	private placeQuestItem(zone: Zone, item: Tile): boolean {

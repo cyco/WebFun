@@ -1,4 +1,4 @@
-import { Char, Tile, Zone } from "src/engine/objects";
+import { Char, Puzzle, Tile, Zone } from "src/engine/objects";
 
 import GameType from "../type";
 import LocatorTile from "./locator-tile";
@@ -12,6 +12,7 @@ import TileIDs from "./tile-ids";
 import { Engine, Story } from "src/engine";
 import { rand } from "src/util";
 import { WorldSize } from "src/engine/generation";
+import { MutablePuzzle } from "src/engine/mutable-objects";
 
 class Yoda extends GameType {
 	public static readonly goalIDs = GoalIDs;
@@ -86,7 +87,19 @@ class Yoda extends GameType {
 		}
 	}
 
-	public createNewStory(_: Engine): Story {
+	public createNewStory(engine: Engine): Story {
+		const gamesWon = engine.persistentState.gamesWon;
+
+		if (gamesWon >= 1) {
+			const puzzle: MutablePuzzle = engine.assets.get(Puzzle, this.goalIDs.RESCUE_YODA) as any;
+			puzzle.type = Puzzle.Type.End;
+		}
+
+		if (gamesWon >= 10) {
+			const puzzle: MutablePuzzle = engine.assets.get(Puzzle, this.goalIDs.CAR) as any;
+			puzzle.type = Puzzle.Type.End;
+		}
+
 		return new Story(
 			rand(),
 			[Zone.Planet.Endor, Zone.Planet.Hoth, Zone.Planet.Tatooine].random(),

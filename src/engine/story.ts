@@ -46,7 +46,7 @@ class Story {
 		return this._puzzles;
 	}
 
-	public generateWorld(assets: AssetManager, gamesWon: number = 0, maxRetries = 1): void {
+	public generateWorld(assets: AssetManager, maxRetries = 1): void {
 		let generator = null;
 		let success = false;
 		let effectiveSeed = this.seed;
@@ -54,7 +54,7 @@ class Story {
 			maxRetries--;
 			try {
 				generator = new WorldGenerator(this.size, this.planet, assets);
-				success = generator.generate(effectiveSeed, gamesWon);
+				success = generator.generate(effectiveSeed);
 			} catch (e) {
 				if (e instanceof WorldGenerationError) success = false;
 			}

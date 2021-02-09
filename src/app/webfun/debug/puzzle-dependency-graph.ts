@@ -15,7 +15,6 @@ class PuzzleDependencyGraph {
 		Zone.Type.None,
 		Zone.Type.Room,
 		Zone.Type.Town,
-		Zone.Type.Unknown,
 		Zone.Type.Win,
 		Zone.Type.TravelEnd,
 		Zone.Type.FindUniqueWeapon,

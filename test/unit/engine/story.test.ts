@@ -37,7 +37,7 @@ describe("WebFun.Engine.Story", () => {
 				subject.planet,
 				engineMock
 			);
-			expect(worldGeneratorMock.generate).toHaveBeenCalledWith(subject.seed, 0);
+			expect(worldGeneratorMock.generate).toHaveBeenCalledWith(subject.seed);
 		});
 
 		it("keeps generating worlds with varying seed until it succeeds", () => {
@@ -49,11 +49,11 @@ describe("WebFun.Engine.Story", () => {
 				return true;
 			});
 
-			subject.generateWorld(engineMock, 0, 50);
+			subject.generateWorld(engineMock, 50);
 
-			expect(worldGeneratorMock.generate).toHaveBeenCalledWith(1, 0);
-			expect(worldGeneratorMock.generate).toHaveBeenCalledWith(38, 0);
-			expect(worldGeneratorMock.generate).toHaveBeenCalledWith(7719, 0);
+			expect(worldGeneratorMock.generate).toHaveBeenCalledWith(1);
+			expect(worldGeneratorMock.generate).toHaveBeenCalledWith(38);
+			expect(worldGeneratorMock.generate).toHaveBeenCalledWith(7719);
 		});
 
 		function mockEngine() {
