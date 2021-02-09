@@ -3,7 +3,9 @@ import { ComponentRegistry } from "src/ui";
 
 const initialize = async (gameController?: GameController): Promise<void> => {
 	const Components = await import("./components");
-	ComponentRegistry.sharedRegistry.registerComponents(Components);
+	if (!ComponentRegistry.sharedRegistry.contains(Object.values(Components).last())) {
+		ComponentRegistry.sharedRegistry.registerComponents(Components);
+	}
 	const ScriptDebugger = (await import("./script-debugger")).default;
 
 	if (gameController) {
