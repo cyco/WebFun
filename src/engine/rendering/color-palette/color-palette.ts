@@ -64,18 +64,6 @@ class ColorPalette extends Uint32Array {
 		return ColorPalette.Create(result);
 	}
 
-	public findColor(r: number, g: number, b: number, a: number = 255): number {
-		if (a === 0) return 0;
-
-		// HACK: Send needle through Uint32Array to get unsigned value for comparison
-		const needle = new Uint32Array([(0xff << 24) | (b << 16) | (g << 8) | r])[0];
-		for (let i = 1; i < this.length; i++) {
-			if (this[i] === needle) return i;
-		}
-
-		return -1;
-	}
-
 	public toGIMP(name: string): string {
 		return toGIMP(this, name);
 	}

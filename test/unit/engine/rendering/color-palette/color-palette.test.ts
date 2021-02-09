@@ -33,15 +33,6 @@ describe("WebFun.Engine.Rendering.ColorPalette", () => {
 		expect(copy).toEqual(subject);
 	});
 
-	it("can return the index of a color", () => {
-		expect(subject.findColor(1, 2, 3, 0)).toBe(0);
-		expect(subject.findColor(255, 0, 0, 255)).toBe(2);
-		expect(subject.findColor(255, 0, 255)).toBe(5);
-
-		subject = ColorPalette.FromBGR8(new Uint8Array());
-		expect(subject.findColor(1, 2, 3)).toBe(-1);
-	});
-
 	it("can be serialized to GIMP's palette format", () => {
 		expect(subject.toGIMP("test.gpl").split("\n")).toEqual(
 			`GIMP Palette

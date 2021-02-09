@@ -4,6 +4,7 @@ import { Size, downloadImage } from "src/util";
 import AbstractInspector from "./abstract-inspector";
 import { Button } from "src/ui/components";
 import { FilePicker } from "src/ui";
+import { ColorPalette } from "src/engine";
 
 class SetupImageInspector extends AbstractInspector {
 	private _imageEditor = (
@@ -63,6 +64,7 @@ class SetupImageInspector extends AbstractInspector {
 		const paletteImage = new Uint8Array(size);
 		const palette = this._imageEditor.palette;
 
+		const memo = new Map<number, number>();
 		for (let i = 0; i < size; i++) {
 			const j = i * 4;
 			const [r, g, b, a] = [
@@ -71,14 +73,41 @@ class SetupImageInspector extends AbstractInspector {
 				imageData.data[j + 2],
 				imageData.data[j + 3]
 			];
-
-			const color = palette.findColor(r, g, b, a);
-			paletteImage[i] = color;
+			paletteImage[i] = this.findColor(palette, r, g, b, a, memo);
 		}
 
 		this._imageEditor.image = paletteImage;
 		(this.data.currentData as any)._setup = paletteImage;
 		this._imageEditor.redraw();
+	}
+
+	private findColor(
+		palette: ColorPalette,
+		r: number,
+		g: number,
+		b: number,
+		a: number,
+		memo: Map<number, number>
+	): number {
+		const color = (r << 24) | (g << 16) | (b << 8) | a;
+		if (memo.has(color)) return memo.get(color);
+
+		const mappedColor =
+			a < 64
+				? 0
+				: palette
+						.mapArray((c, i) => [
+							(r - ((c >> 0) & 0xff)) ** 2 +
+								(g - ((c >> 8) & 0xff)) ** 2 +
+								(b - ((c >> 16) & 0xff)) ** 2,
+							i
+						])
+						.slice(1)
+						.sort((a, b) => a[0] - b[0])
+						.first()[1];
+
+		memo.set(color, mappedColor);
+		return mappedColor;
 	}
 
 	build(): void {
