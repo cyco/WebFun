@@ -10,7 +10,7 @@ class SetupImageInspector extends AbstractInspector {
 	private _imageEditor = (
 		<PaletteImageEditor
 			size={new Size(288, 288)}
-			style={{ width: "230px", height: "230px", display: "inline-block" }}
+			style={{ width: "288px", height: "288px", display: "inline-block" }}
 		/>
 	) as PaletteImageEditor;
 	private _colorPicker = (
@@ -31,8 +31,8 @@ class SetupImageInspector extends AbstractInspector {
 
 		this.window.title = "Setup Image";
 		this.window.autosaveName = "setup-image-inspector";
-		this.window.style.width = "380px";
-		this.window.content.style.height = "270px";
+		this.window.style.width = "438px";
+		this.window.content.style.height = "331px";
 		this.window.content.style.flexDirection = "column";
 
 		this.window.content.appendChild(
