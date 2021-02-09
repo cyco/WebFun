@@ -22,7 +22,7 @@ export const parseTiles = (stream: InputStream, data: Data): void => {
 	data.tiles = tiles;
 };
 
-export const parseTileNames = (stream: InputStream, data: Data, gameType: Variant): void => {
+export const parseTileNames = (stream: InputStream, data: Data, variant: Variant): void => {
 	// skip over size
 	stream.readUint32();
 
@@ -30,7 +30,7 @@ export const parseTileNames = (stream: InputStream, data: Data, gameType: Varian
 		const index = stream.readInt16();
 		if (index === -1) break;
 
-		const length = gameType === Yoda || gameType === YodaDemo ? 0x18 : 0x10;
+		const length = variant === Yoda || variant === YodaDemo ? 0x18 : 0x10;
 		data.tiles[index].name = stream.readCStringWithLength(length, "iso-8859-2");
 	} while (true);
 };

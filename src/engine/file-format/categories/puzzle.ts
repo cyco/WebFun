@@ -5,14 +5,14 @@ import { Data, Puzzle } from "../types";
 
 const IPUZ = "IPUZ";
 
-const parsePuzzle = (stream: InputStream, _: Data, gameType: Variant): Puzzle => {
+const parsePuzzle = (stream: InputStream, _: Data, variant: Variant): Puzzle => {
 	const marker = stream.readCharacters(4);
 	assert(marker === IPUZ, "Expected to find category marker IPUZ", stream);
 	// skip over size
 	stream.readUint32();
 
 	let type = 0;
-	if (gameType === Yoda || gameType === YodaDemo) {
+	if (variant === Yoda || variant === YodaDemo) {
 		type = stream.readUint32();
 	}
 
@@ -28,7 +28,7 @@ const parsePuzzle = (stream: InputStream, _: Data, gameType: Variant): Puzzle =>
 
 	const item1 = stream.readUint16();
 	let item2 = null;
-	if (gameType === Yoda || gameType === YodaDemo) {
+	if (variant === Yoda || variant === YodaDemo) {
 		item2 = stream.readUint16();
 	}
 
@@ -44,7 +44,7 @@ const parsePuzzle = (stream: InputStream, _: Data, gameType: Variant): Puzzle =>
 	};
 };
 
-export const parsePuzzles = (stream: InputStream, data: Data, gameType: Variant): void => {
+export const parsePuzzles = (stream: InputStream, data: Data, variant: Variant): void => {
 	// skip over size
 	stream.readUint32();
 
@@ -53,7 +53,7 @@ export const parsePuzzles = (stream: InputStream, data: Data, gameType: Variant)
 		const index = stream.readInt16();
 		if (index === -1) break;
 
-		puzzles.push(parsePuzzle(stream, data, gameType));
+		puzzles.push(parsePuzzle(stream, data, variant));
 	} while (true);
 	data.puzzles = puzzles;
 };
