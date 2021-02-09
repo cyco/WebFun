@@ -94,8 +94,6 @@ class WorldGenerator {
 		this.providedItemQuests = [];
 		this.requiredItemQuests = [];
 
-		// FIXME: Two puzzles are only available after a certain amount of games have been won. This is basically
-		// what the original implementation did, but there's got to be a better way.
 		const goalPuzzle = this.getUnusedPuzzleRandomly(null, Zone.Type.PlaceholderForEndPuzzle);
 		console.assert(!!goalPuzzle, "Could not find a suitable goal puzzle");
 
