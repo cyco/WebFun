@@ -59,9 +59,8 @@ class PathUIScene extends Scene {
 	public get walkable(): boolean {
 		const scene = this.engine.sceneManager.currentScene as ZoneScene;
 
-		return scene.zone.placeWalkable(
-			this.highlight.byScalingBy(9).floor().subtract(this.cameraOffset)
-		);
+		const location = this.highlight.byScalingBy(9).floor().subtract(this.cameraOffset);
+		return scene.zone.bounds.contains(location) && scene.zone.placeWalkable(location);
 	}
 
 	canRender(renderer: Renderer): renderer is CanvasRenderer.Renderer {
