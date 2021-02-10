@@ -20,7 +20,7 @@ class Hero extends EventTarget {
 	public static readonly Event = Events;
 
 	public visible: boolean = true;
-	public _location: Point = new Point(10, 10, 1); // TODO: make private again
+	public location: Point = new Point(10, 10, 1); // TODO: make private again
 	public invincible: boolean = false;
 	public unlimitedAmmo: boolean = false;
 	public _actionFrames: number = 0; // TODO: make private again
@@ -87,14 +87,6 @@ class Hero extends EventTarget {
 		});
 	}
 
-	get location(): Point {
-		return this._location;
-	}
-
-	set location(l: Point) {
-		this._location = l;
-	}
-
 	get direction(): number {
 		return Direction.Confine(this._direction);
 	}
@@ -150,7 +142,7 @@ class Hero extends EventTarget {
 	}
 
 	move(relative: Point, zone: Zone): boolean {
-		const targetPoint = Point.add(relative, this._location);
+		const targetPoint = Point.add(relative, this.location);
 
 		// Look where we're going
 		//    this.face(relative);
@@ -221,19 +213,19 @@ class Hero extends EventTarget {
 	private _doMove(rel: Point, z: Zone, dragging: boolean): boolean {
 		if (rel.isZeroPoint()) return false;
 
-		const source = this._location;
+		const source = this.location;
 		const target = Point.add(source, rel);
 		target.z = 1;
 
 		if (z.placeWalkable(target)) {
 			if (dragging) this._doDrag(Point.subtract(source, rel), source, z);
-			this._location = target;
+			this.location = target;
 			return true;
 		} else if (dragging) {
 			const dragTarget = Point.add(target, rel);
 			dragTarget.z = 1;
 			if (dragTarget.isInBounds(z.size) && this._doDrag(target, dragTarget, z)) {
-				this._location = target;
+				this.location = target;
 				return true;
 			}
 		}

@@ -94,8 +94,8 @@ class ZoneSceneRenderer {
 
 					const tile = appearance.getFace(hero._direction, frame);
 					if (tile) {
-						const x = hero._location.x + offset.x;
-						const y = hero._location.y + offset.y;
+						const x = hero.location.x + offset.x;
+						const y = hero.location.y + offset.y;
 						if (x >= 0 && x < VisibleWidth && y >= 0 && y < VisibleHeight) {
 							drawTileAt(tile, x, y);
 						}
