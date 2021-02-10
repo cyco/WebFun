@@ -75,8 +75,8 @@ class SpeechBubble extends Component {
 		return this._text.textContent;
 	}
 
-	set text(t: string) {
-		this._text.textContent = t;
+	set text(text: string) {
+		this._text.textContent = text.replace(/(?:\r\n|\r|\n)/g, "\n");
 
 		if (!this.isConnected) return;
 

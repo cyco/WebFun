@@ -29,10 +29,10 @@ class SpeechScene extends Scene {
 		return this._bubble.text;
 	}
 
-	set text(t: string) {
+	set text(text: string) {
 		const world = this.engine.currentWorld;
 		const sector = world?.findSectorContainingZone(this.engine.currentZone);
-		this._bubble.text = this.resolveVariables(t, sector);
+		this._bubble.text = this.resolveVariables(text, sector);
 	}
 
 	private resolveVariables(text: string, quest: Sector) {
