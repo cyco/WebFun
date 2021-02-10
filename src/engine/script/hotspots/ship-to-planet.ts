@@ -18,6 +18,10 @@ export default (engine: Engine, hotspot: Hotspot): HotspotExecutionResult => {
 	console.assert(engine.sceneManager.currentScene instanceof ZoneScene);
 	scene.scene = engine.sceneManager.currentScene as ZoneScene;
 
+	if (engine.sceneManager.currentScene instanceof RoomTransitionScene) {
+		engine.sceneManager.popScene();
+	}
+
 	const location = engine.world.findLocationOfZone(destinationZone);
 	console.assert(location !== null, "ShipToPlanet destination must be on the main world!");
 	scene.destinationWorld = engine.world;

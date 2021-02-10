@@ -10,6 +10,10 @@ export default (engine: Engine, htsp: Hotspot): HotspotExecutionResult => {
 	const worldLocation = engine.currentWorld.findLocationOfZone(destinationZone);
 	const zoneLocation = destinationZone.hotspots.withType(counterPart).first().location;
 
+	if (engine.sceneManager.currentScene instanceof RoomTransitionScene) {
+		engine.sceneManager.popScene();
+	}
+
 	const transitionScene = new RoomTransitionScene();
 	transitionScene.destinationHeroLocation = zoneLocation;
 	transitionScene.destinationZone = destinationZone;

@@ -18,6 +18,10 @@ class TeleportScene extends MapScene {
 		const target = zone.hotspots.withType(Hotspot.Type.Teleporter).find(htsp => htsp.enabled);
 		if (!target) return;
 
+		if (engine.sceneManager.currentScene instanceof RoomTransitionScene) {
+			engine.sceneManager.popScene();
+		}
+
 		const scene = new RoomTransitionScene();
 		scene.destinationHeroLocation = target.location;
 		scene.destinationZone = zone;

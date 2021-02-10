@@ -74,7 +74,11 @@ class ScriptProcessingUnit {
 		const normalizedResult = result.value || ScriptResult.Done;
 		if (normalizedResult & ScriptResult.Done) {
 			this._executor = null;
+		} else {
+			this._engine.camera.update(Infinity);
 		}
+
+		if (!this._executor) return normalizedResult;
 
 		if ((normalizedResult as any) === Result.UpdateZone) {
 			do {
@@ -82,11 +86,16 @@ class ScriptProcessingUnit {
 				if (!result) break;
 				if (!result.value) break;
 				if (result.value & ScriptResult.Done) break;
-			} while (true);
+			} while (this._executor);
 
 			this._executor = null;
 		}
 		return normalizedResult;
+	}
+
+	public drain(): void {
+		this._executor = null;
+		this._inUse = false;
 	}
 }
 

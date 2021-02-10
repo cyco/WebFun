@@ -105,6 +105,10 @@ class GameplayContext {
 						if (thing instanceof Action) {
 							currentAction = null;
 						}
+					},
+					executorDidDrain(_: DebuggingScriptProcessingUnit): void {
+						currentZone = null;
+						currentAction = null;
 					}
 				};
 
@@ -141,7 +145,6 @@ class GameplayContext {
 
 	public setupEngine(story: Story, input: string, debug = false): void {
 		const { sceneView, engine, inputManager } = this;
-
 		Settings.debug = debug;
 		Settings.skipDialogs = true;
 		Settings.skipTransitions = true;
@@ -151,7 +154,7 @@ class GameplayContext {
 		document.body.appendChild(sceneView);
 
 		engine.story = story;
-		story.generateWorld(engine.assets, Yoda, 50);
+		story.generateWorld(engine.assets, Yoda);
 
 		engine.metronome.tickDuration = 1;
 		engine.metronome.ontick = (delta: number) => engine.update(delta);

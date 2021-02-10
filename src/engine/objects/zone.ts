@@ -59,8 +59,8 @@ class Zone {
 		({ x, y, z } = this.normalizeInput(x, y, z));
 
 		if (!this.bounds.contains(new Point(x, y))) {
-			console.warn("Missing bounds check");
-			console.trace();
+			//console.warn("Missing bounds check");
+			//console.trace();
 			return;
 		}
 

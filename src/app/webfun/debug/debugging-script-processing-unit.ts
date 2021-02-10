@@ -25,6 +25,7 @@ export interface DebuggingScriptProcessingUnitDelegate {
 		thing: Zone | Action | Condition | Instruction,
 		result: ScriptResult | Result | boolean
 	): void;
+	executorDidDrain(executor: DebuggingScriptProcessingUnit): void;
 }
 
 class DebuggingScriptProcessingUnit extends ScriptProcessingUnit {
@@ -121,26 +122,11 @@ class DebuggingScriptProcessingUnit extends ScriptProcessingUnit {
 		this.delegate.executorDidExecute(this, thing, result);
 	}
 
-	public async run(): Promise<ScriptResult> {
-		if (!this._executor) return ScriptResult.Done;
+	public drain(): void {
+		super.drain();
 
-		const result = await this._executor.next();
-		const normalizedResult = result.value || ScriptResult.Done;
-		if (normalizedResult & ScriptResult.Done) {
-			this._executor = null;
-		}
-
-		if ((normalizedResult as any) === Result.UpdateZone) {
-			do {
-				const result = await this._executor.next();
-				if (!result) break;
-				if (!result.value) break;
-				if (result.value & ScriptResult.Done) break;
-			} while (true);
-
-			this._executor = null;
-		}
-		return normalizedResult;
+		if (!this.delegate) return;
+		this.delegate.executorDidDrain(this);
 	}
 }
 

@@ -236,8 +236,18 @@ class ScriptDebugger implements DebuggingScriptProcessingUnitDelegate {
 		if (thing instanceof Action) {
 			this._currentAction = thing;
 			if (thing.zone !== this._currentZone) console.warn("action does not belong to current zone!");
-			if (this._currentAction.zone !== this.engine.currentZone)
+			if (this._currentAction.zone !== this.engine.currentZone) {
 				console.warn("Engine thinks we're on a different zone!");
+				console.log(
+					"Action is on ",
+					this._currentAction.zone.id,
+					"engine thinks it is zone",
+					this.engine.currentZone.id,
+					"debugger thinks is",
+					this._currentZone.id
+				);
+				debugger;
+			}
 		}
 
 		if ("isCondition" in thing) {
@@ -319,6 +329,11 @@ class ScriptDebugger implements DebuggingScriptProcessingUnitDelegate {
 				this._updateZoneState();
 			}
 		}
+	}
+
+	executorDidDrain(executor: DebuggingScriptProcessingUnit): void {
+		this._currentZone = null;
+		this._currentAction = null;
 	}
 
 	private continueExecution(executor: DebuggingScriptProcessingUnit) {

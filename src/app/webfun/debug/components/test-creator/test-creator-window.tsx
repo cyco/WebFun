@@ -78,7 +78,7 @@ class TestCreatorWindow extends AbstractWindow implements EventListenerObject {
 		engine.hero.health = Hero.MaxHealth;
 		engine.story = story;
 		engine.currentWorld = story.world;
-		engine.camera.update(0);
+		engine.camera.update(Infinity);
 		engine.persistentState.gamesWon = this.testCase.configuration.gamesWon;
 		engine.metronome.addEventListener(Metronome.Event.AfterTick, this);
 		engine.metronome.addEventListener(Metronome.Event.BeforeTick, this);
@@ -90,7 +90,7 @@ class TestCreatorWindow extends AbstractWindow implements EventListenerObject {
 
 		if (this.testCase.configuration.health) engine.hero.health = this.testCase.configuration.health;
 
-		story.generateWorld(engine.assets, Yoda, 0);
+		story.generateWorld(engine.assets, Yoda);
 		if (!(story instanceof SimulatedStory)) {
 			engine.currentWorld = story.dagobah;
 			engine.hero.visible = false;
@@ -126,6 +126,7 @@ class TestCreatorWindow extends AbstractWindow implements EventListenerObject {
 		replayer.load(input);
 		replayer.start();
 		replayer.fastForward();
+		replayer.normalizeSpeed();
 	}
 
 	public buildStory(engine: Engine): SimulatedStory | Story {

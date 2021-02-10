@@ -19,13 +19,16 @@ export default (engine: Engine, hotspot: Hotspot): HotspotExecutionResult => {
 	destinationZone.doorInLocation = hotspot.location;
 	doorOut.arg = zone.id;
 
+	if (engine.sceneManager.currentScene instanceof RoomTransitionScene) {
+		engine.sceneManager.popScene();
+	}
+
 	const scene = new RoomTransitionScene();
 	scene.destinationHeroLocation = new Point(doorOut.x, doorOut.y);
 	scene.destinationZone = destinationZone;
 	scene.scene = engine.sceneManager.currentScene as ZoneScene;
 	scene.destinationWorld = world;
 	scene.destinationZoneLocation = location;
-
 	engine.sceneManager.pushScene(scene);
 
 	return HotspotExecutionResult.ChangeZone;
