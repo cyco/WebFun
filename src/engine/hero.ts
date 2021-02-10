@@ -19,8 +19,8 @@ class Hero extends EventTarget {
 	public static readonly MaxLives = MaxLives;
 	public static readonly Event = Events;
 
-	public visible: boolean = false;
-	public _location: Point = new Point(0, 0, 1); // TODO: make private again
+	public visible: boolean = true;
+	public _location: Point = new Point(10, 10, 1); // TODO: make private again
 	public invincible: boolean = false;
 	public unlimitedAmmo: boolean = false;
 	public _actionFrames: number = 0; // TODO: make private again
