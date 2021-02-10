@@ -98,10 +98,13 @@ class DagobahGenerator {
 		const candidates = zone.hotspots.withType(Hotspot.Type.SpawnLocation);
 		console.assert(candidates.length === 1);
 		const hotspot = candidates[randmod(candidates.length)];
-		if (hotspot) {
-			hotspot.arg = npcID;
-			hotspot.enabled = true;
+		if (!hotspot) {
+			console.warn("Could not find npc hotspot on daboah hut!");
+			return;
 		}
+
+		hotspot.arg = npcID;
+		hotspot.enabled = true;
 	}
 
 	private _setupIndoorSpawn(dagobah: World, tile: Tile, npcID: number) {
@@ -118,8 +121,13 @@ class DagobahGenerator {
 		} else {
 			hotspotFilter = ({ x, y }: Hotspot) => x === 3 && y === 2;
 		}
+
 		const hotspot = zone.hotspots.find(hotspotFilter);
-		console.assert(!!hotspot);
+		if (!hotspot) {
+			console.warn("Could not find npc hotspot in yoda's hut!");
+			return;
+		}
+
 		hotspot.arg = npcID;
 		hotspot.enabled = true;
 	}
