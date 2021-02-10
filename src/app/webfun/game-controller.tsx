@@ -29,6 +29,7 @@ import { OnscreenPad, OnscreenButton } from "./ui";
 import { random, floor } from "src/std/math";
 import * as SmartPhone from "detect-mobile-browser";
 import GameEventHandler from "./game-event-handler";
+import Logger from "./logger";
 
 export const Event = {
 	DidLoadData: "didLoadData"
@@ -94,13 +95,15 @@ class GameController extends EventTarget implements EventListenerObject {
 			this._window.content.querySelector(`${OnscreenButton.tagName}.drag`)
 		);
 		const resources = new ResourceManager(paths.palette, paths.data, paths.sfx);
+		const logger = new Logger(console);
 
 		return {
 			Renderer: () => renderer,
 			InputManager: () => inputManager,
 			SceneManager: () => this._sceneView.manager,
 			ResourceManager: () => resources,
-			Mixer: () => mixer
+			Mixer: () => mixer,
+			Logger: () => logger
 		};
 	}
 

@@ -12,6 +12,7 @@ import SceneManager from "./scene-manager";
 
 import { ConditionImplementations as Conditions } from "./script/conditions";
 import { InstructionImplementations as Instructions } from "./script/instructions";
+import Logger from "./logger";
 
 interface Interface {
 	InputManager: (view: any) => InputManager;
@@ -28,6 +29,7 @@ interface Interface {
 	Mixer: () => Mixer;
 	AssetManager: () => AssetManager;
 	ResourceManager: () => ResourceManager;
+	Logger: () => Logger;
 }
 
 export default Interface;

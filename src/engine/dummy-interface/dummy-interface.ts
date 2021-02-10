@@ -9,6 +9,7 @@ import Mixer from "./mixer";
 import SceneManager from "../scene-manager";
 import AssetManager from "../asset-manager";
 import ResourceManager from "./resource-manager";
+import Logger from "./logger";
 
 import { ConditionImplementations as Conditions } from "../script/conditions";
 import { InstructionImplementations as Instructions } from "../script/instructions";
@@ -30,5 +31,6 @@ export default {
 	SceneManager: (): SceneManager =>
 		new SceneManager(() => new Rectangle(new Point(0, 0), new Size(0, 0))),
 	AssetManager: (): AssetManager => new AssetManager(),
-	ResourceManager: (): ResourceManager => new ResourceManager()
+	ResourceManager: (): ResourceManager => new ResourceManager(),
+	Logger: (): Logger => new Logger()
 };

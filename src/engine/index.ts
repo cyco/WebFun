@@ -20,6 +20,7 @@ import Interface from "./interface";
 import * as Objects from "./objects";
 import * as MutableObjects from "./mutable-objects";
 import * as Script from "./script";
+import Logger from "./logger";
 
 export {
 	AssetManager,
@@ -35,6 +36,7 @@ export {
 	Interface,
 	Inventory,
 	Metronome,
+	Logger,
 	MutableObjects,
 	Objects,
 	PaletteAnimation,
