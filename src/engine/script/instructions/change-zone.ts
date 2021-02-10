@@ -23,7 +23,7 @@ export default {
 		const transitionScene = new RoomTransitionScene();
 		transitionScene.destinationHeroLocation = destinationLocation;
 		transitionScene.destinationZone = destinationZone;
-		transitionScene.destinationWorld = world;
+		transitionScene.destinationWorld = world ?? engine.currentWorld;
 		transitionScene.destinationZoneLocation = location;
 		transitionScene.scene = engine.sceneManager.currentScene as ZoneScene;
 
