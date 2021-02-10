@@ -101,7 +101,10 @@ describe("WebFun.App.Input.PathUIScene", () => {
 		});
 
 		const zoneScene = new ZoneScene();
-		spyOnProperty(zoneScene, "zone").and.returnValue({ placeWalkable: jasmine.createSpy() });
+		spyOnProperty(zoneScene, "zone").and.returnValue({
+			placeWalkable: jasmine.createSpy(),
+			bounds: { contains: () => true }
+		});
 
 		subject.engine = {
 			hero: { visible: true },
