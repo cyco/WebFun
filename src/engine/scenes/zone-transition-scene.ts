@@ -1,42 +1,123 @@
-import TransitionScene from "./transition-scene";
-import { min } from "src/std/math";
-import { Tile } from "../objects";
+import { max, min } from "src/std/math";
+import { Tile, Zone } from "../objects";
 import { drawZoneImageData } from "src/app/webfun/rendering";
 import { Renderer } from "../rendering";
 import { Point } from "src/util";
+import Scene from "./scene";
+import ZoneScene from "./zone-scene";
+import World from "../world";
+import Settings from "src/settings";
+import { EvaluationMode, ScriptResult } from "../script";
 
-class ZoneTransitionScene extends TransitionScene {
+const ViewportWidth = 9.0;
+const ViewportHeight = 9.0;
+const TotalFadeDuration = 1000.0;
+
+class ZoneTransitionScene extends Scene {
+	public scene: ZoneScene = null;
+	public destinationHeroLocation: Point = null;
+	public destinationZoneLocation: Point = null;
+	public originZoneLocation: Point = null;
+	public destinationZone: Zone = null;
+	public destinationWorld: World = null;
+	private _originZone: Zone = null;
+	private _startTime: number = -Infinity;
+	private duration: number = Infinity;
 	private _direction: Point;
 	private _originImage: ImageData;
 	private _destinationImage: ImageData;
+	private _executingActions: boolean = false;
+	private _sequence: AsyncGenerator<void>;
 
 	public willShow(): void {
-		this._duration = 1000.0;
-		this._zoneSwapTime = this._duration;
-
-		super.willShow();
+		if (this._executingActions) return;
+		this.duration = Settings.skipTransitions ? 0 : TotalFadeDuration;
+		this._direction = this.originZoneLocation.bySubtracting(this.destinationZoneLocation);
+		this._sequence = this.buildSequence();
+		this._startTime = Infinity;
+		this._originZone = this.engine.currentZone;
 	}
 
 	public didHide(): void {
-		super.didHide();
-
+		if (this._executingActions) return;
+		this.scene = null;
+		this.destinationHeroLocation = null;
+		this.destinationZoneLocation = null;
+		this.originZoneLocation = null;
+		this.destinationZone = null;
+		this.destinationWorld = null;
 		this._direction = null;
 		this._originImage = null;
 		this._destinationImage = null;
+		this._originZone = null;
+	}
+
+	async update(/*ticks*/): Promise<void> {
+		this._executingActions = true;
+		const result = await this.engine.spu.run();
+		if (result !== ScriptResult.Done) {
+			return;
+		}
+		this._executingActions = false;
+
+		await this._sequence.next();
+	}
+
+	private async *buildSequence(): AsyncGenerator<void> {
+		const { engine, destinationZone, destinationHeroLocation, destinationWorld } = this;
+		const hero = this.engine.hero;
+		const state = engine.temporaryState;
+
+		hero.location = destinationHeroLocation;
+		engine.currentWorld = destinationWorld;
+		engine.currentZone = destinationZone;
+		this.scene.zone = destinationZone;
+
+		state.justEntered = true;
+		engine.spu.prepareExecution(EvaluationMode.JustEntered, destinationZone);
+		yield;
+
+		if (!destinationZone.visited) {
+			state.justEntered = false;
+			engine.spu.prepareExecution(EvaluationMode.Initialize, destinationZone);
+			yield;
+		}
+
+		if (!destinationZone.visited) {
+			destinationZone.visited = true;
+			destinationZone.initialize();
+		}
+		this._destinationImage = null;
+		this._startTime = performance.now();
+		while (!this.isFadeComplete()) yield;
+
+		this.scene.prepareCamera();
+		engine.sceneManager.popScene();
+	}
+
+	private isFadeComplete() {
+		return this.duration < performance.now() - this._startTime;
+	}
+
+	render(renderer: Renderer): void {
+		const state = performance.now() - this._startTime;
+		this.renderState(renderer, state);
 	}
 
 	protected renderState(renderer: Renderer, state: number): void {
-		if (!this._direction) {
-			this._direction = this.originZoneLocation.bySubtracting(this.destinationZoneLocation);
-			this._originImage = drawZoneImageData(this.engine.currentZone, this.engine.palette.current);
+		if (!this._originImage) {
+			this._originImage = drawZoneImageData(this._originZone, this.engine.palette.current);
+		}
+
+		if (!this._destinationImage) {
 			this._destinationImage = drawZoneImageData(this.destinationZone, this.engine.palette.current);
 		}
 
 		const camera = this.engine.camera;
-		const animationState = min(state / this._duration, 1);
+		const animationState = max(min(state / this.duration, 1), 0);
 		const cameraOffset = camera.offset.byScalingBy(Tile.WIDTH);
-		const viewportWidth = Tile.WIDTH * 9;
-		const viewportHeight = Tile.HEIGHT * 9;
+		const viewportWidth = Tile.WIDTH * ViewportWidth;
+		const viewportHeight = Tile.HEIGHT * ViewportHeight;
 
 		renderer.renderImageData(
 			this._originImage,
@@ -48,6 +129,10 @@ class ZoneTransitionScene extends TransitionScene {
 			cameraOffset.x + this._direction.x * viewportWidth * (animationState - 2),
 			cameraOffset.y + this._direction.y * viewportHeight * (animationState - 2)
 		);
+	}
+
+	public isOpaque(): boolean {
+		return false;
 	}
 }
 
