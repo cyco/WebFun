@@ -18,8 +18,12 @@ const FiveMinutes = 5 * 60 * 1000;
 const debug = false;
 
 const run = (prefix: string, fileName: string, testFileContents: string): void => {
-	describe(
-		`WebFun.Acceptance.${prefix}.${fileName.replace(/[\./]*(.*)\.wftest/gi, "$1")}`,
+	(fileName.endsWith(".fwftest")
+		? fdescribe
+		: fileName.endsWith(".xwftest")
+		? xdescribe
+		: describe)(
+		`WebFun.Acceptance.${prefix}.${fileName.replace(/[\./]*(.*)\.(x|f)?wftest/gi, "$1")}`,
 		withTimeout(FiveMinutes, () => {
 			const testCases = Parser.Parse(fileName, testFileContents);
 

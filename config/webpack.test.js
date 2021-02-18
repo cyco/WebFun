@@ -23,7 +23,7 @@ const config = merge(BaseConfig, {
 				loader: "raw-loader"
 			},
 			{
-				test: /\.wftest/,
+				test: /\.(x|f)?wftest/,
 				exclude: /node_modules/,
 				loader: "raw-loader"
 			}
