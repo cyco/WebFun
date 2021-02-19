@@ -47,7 +47,7 @@ describe("WebFun.Engine.Script.Hotspots.ShipToPlanet", () => {
 		});
 
 		it("sets the location of the zone on the destination world", () => {
-			expect(transitionScene.destinationZoneLocation).toEqual(new Point(3, 4));
+			expect(transitionScene.destinationSector).toEqual(new Point(3, 4));
 		});
 
 		it("sets the hero's location on the destination zone", () => {

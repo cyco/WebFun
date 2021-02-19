@@ -2,7 +2,7 @@ import { Zone } from "./objects";
 import Engine from "./engine";
 import { Direction, Point } from "src/util";
 import { EvaluationMode, ScriptResult } from "./script";
-import { ZoneTransitionScene, ZoneScene } from "./scenes";
+import { SectorTransitionScene, ZoneScene } from "./scenes";
 import { HotspotExecutionMode } from "./script/hotspot-execution-mode";
 import { HotspotExecutionResult } from "./script/hotspot-execution-result";
 
@@ -28,17 +28,17 @@ function _tryTransition(direction: Point, engine: Engine, scene: ZoneScene): boo
 		return false;
 	}
 
-	const { world, location: zoneLocation } = engine.findLocationOfZone(engine.currentZone);
-	if (!zoneLocation) return;
+	const { world, location: sectorLocation } = engine.findLocationOfZone(engine.currentZone);
+	if (!sectorLocation) return;
 	if (!world) return;
 
-	const sector = world.at(zoneLocation);
+	const sector = world.at(sectorLocation);
 	if (!sector || sector.zone !== engine.currentZone) {
 		return;
 	}
 
-	const destinationZoneLocation = Point.add(zoneLocation, zoneDirection);
-	const destinationSector = world.at(destinationZoneLocation);
+	const destinationSectorLocation = Point.add(sectorLocation, zoneDirection);
+	const destinationSector = world.at(destinationSectorLocation);
 	if (!destinationSector) return false;
 
 	const destinationZone = destinationSector.zone;
@@ -54,10 +54,10 @@ function _tryTransition(direction: Point, engine: Engine, scene: ZoneScene): boo
 		return false;
 	}
 
-	const transitionScene = new ZoneTransitionScene();
+	const transitionScene = new SectorTransitionScene();
 	transitionScene.destinationHeroLocation = destinationHeroLocation;
-	transitionScene.destinationZoneLocation = destinationZoneLocation;
-	transitionScene.originZoneLocation = zoneLocation;
+	transitionScene.destinationSector = destinationSectorLocation;
+	transitionScene.originSector = sectorLocation;
 	transitionScene.destinationZone = destinationZone;
 	transitionScene.destinationWorld = world;
 	transitionScene.scene = scene;

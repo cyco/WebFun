@@ -32,7 +32,7 @@ const parseZone = (stream: InputStream, data: Data, variant: Variant): Zone => {
 	const height = stream.readUint16();
 	const zoneType = stream.readUint32();
 	if (variant === Yoda || variant === YodaDemo) {
-		// skip over sharedCounter value
+		// skip over sectorCounter value
 		stream.readUint16();
 
 		const planetAgain = stream.readUint16();

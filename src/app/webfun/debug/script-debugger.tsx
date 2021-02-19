@@ -25,8 +25,8 @@ import { Window } from "src/ui/components";
 import { WindowManager } from "src/ui";
 
 const StateChangingOpcodes = {
-	[InstructionsByName.SetSharedCounter.Opcode]: true,
-	[InstructionsByName.AddToSharedCounter.Opcode]: true,
+	[InstructionsByName.SetSectorCounter.Opcode]: true,
+	[InstructionsByName.AddToSectorCounter.Opcode]: true,
 	[InstructionsByName.AddToCounter.Opcode]: true,
 	[InstructionsByName.SetCounter.Opcode]: true,
 	[InstructionsByName.RollDice.Opcode]: true,
@@ -370,12 +370,12 @@ class ScriptDebugger implements DebuggingScriptProcessingUnitDelegate {
 		const zone = this.engine && this.engine.currentZone;
 		let counter = "";
 		let random = "";
-		let sharedCounter = "";
+		let sectorCounter = "";
 
 		if (zone) {
 			counter = zone.counter.toString();
 			random = zone.random.toString();
-			sharedCounter = zone.sharedCounter.toString();
+			sectorCounter = zone.sectorCounter.toString();
 		}
 
 		return (
@@ -385,7 +385,7 @@ class ScriptDebugger implements DebuggingScriptProcessingUnitDelegate {
 				<label>Random:</label>
 				<span>{random}</span>
 				<label>Shared counter:</label>
-				<span>{sharedCounter}</span>
+				<span>{sectorCounter}</span>
 			</Group>
 		);
 	}

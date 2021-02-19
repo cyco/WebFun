@@ -25,10 +25,10 @@ import RandomIsGreaterThan from "./random-is-greater-than";
 import RandomIsLessThan from "./random-is-less-than";
 import RandomIsNot from "./random-is-not";
 import RequiredItemIs from "./required-item-is";
-import SharedCounterIs from "./shared-counter-is";
-import SharedCounterIsGreaterThan from "./shared-counter-is-greater-than";
-import SharedCounterIsLessThan from "./shared-counter-is-less-than";
-import SharedCounterIsNot from "./shared-counter-is-not";
+import SectorCounterIs from "./sector-counter-is";
+import SectorCounterIsGreaterThan from "./sector-counter-is-greater-than";
+import SectorCounterIsLessThan from "./sector-counter-is-less-than";
+import SectorCounterIsNot from "./sector-counter-is-not";
 import StandingOn from "./standing-on";
 import TileAtIs from "./tile-at-is";
 import Unused from "./unused";
@@ -63,10 +63,10 @@ const ConditionsByName = {
 	RandomIsLessThan,
 	RandomIsNot,
 	RequiredItemIs,
-	SharedCounterIs,
-	SharedCounterIsGreaterThan,
-	SharedCounterIsLessThan,
-	SharedCounterIsNot,
+	SectorCounterIs,
+	SectorCounterIsGreaterThan,
+	SectorCounterIsLessThan,
+	SectorCounterIsNot,
 	StandingOn,
 	TileAtIs,
 	Unused,

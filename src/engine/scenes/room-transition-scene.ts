@@ -19,8 +19,8 @@ const ViewportHeight = 9.0;
 class RoomTransitionScene extends Scene {
 	public scene: ZoneScene = null;
 	public destinationHeroLocation: Point = null;
-	public destinationZoneLocation: Point = null;
-	public originZoneLocation: Point = null;
+	public destinationSector: Point = null;
+	public originSector: Point = null;
 	public destinationZone: Zone = null;
 	public destinationWorld: World = null;
 
@@ -46,8 +46,8 @@ class RoomTransitionScene extends Scene {
 		this.scene = null;
 		this._sequence = null;
 		this.destinationHeroLocation = null;
-		this.destinationZoneLocation = null;
-		this.originZoneLocation = null;
+		this.destinationSector = null;
+		this.originSector = null;
 		this.destinationZone = null;
 		this.destinationWorld = null;
 	}
@@ -117,8 +117,8 @@ class RoomTransitionScene extends Scene {
 		engine.camera.zoneSize = engine.currentZone.size;
 		engine.camera.update(Infinity);
 
-		if (this.engine.currentZone.sharedCounter >= 0) {
-			this.destinationZone.sharedCounter = engine.currentZone.sharedCounter;
+		if (this.engine.currentZone.sectorCounter >= 0) {
+			this.destinationZone.sectorCounter = engine.currentZone.sectorCounter;
 		}
 
 		state.justEntered = true;

@@ -28,7 +28,7 @@ export default {
 		transitionScene.destinationHeroLocation = destinationLocation;
 		transitionScene.destinationZone = destinationZone;
 		transitionScene.destinationWorld = world ?? engine.currentWorld;
-		transitionScene.destinationZoneLocation = location;
+		transitionScene.destinationSector = location;
 		transitionScene.scene = engine.sceneManager.currentScene as ZoneScene;
 		engine.sceneManager.pushScene(transitionScene);
 

@@ -25,7 +25,7 @@ export default (engine: Engine, hotspot: Hotspot): HotspotExecutionResult => {
 	const location = engine.world.findLocationOfZone(destinationZone);
 	console.assert(location !== null, "ShipToPlanet destination must be on the main world!");
 	scene.destinationWorld = engine.world;
-	scene.destinationZoneLocation = location;
+	scene.destinationSector = location;
 	engine.sceneManager.pushScene(scene);
 	engine.temporaryState.enteredByPlane = true;
 

@@ -13,11 +13,11 @@ const ViewportWidth = 9.0;
 const ViewportHeight = 9.0;
 const TotalFadeDuration = 1000.0;
 
-class ZoneTransitionScene extends Scene {
+class SectorTransitionScene extends Scene {
 	public scene: ZoneScene = null;
 	public destinationHeroLocation: Point = null;
-	public destinationZoneLocation: Point = null;
-	public originZoneLocation: Point = null;
+	public destinationSector: Point = null;
+	public originSector: Point = null;
 	public destinationZone: Zone = null;
 	public destinationWorld: World = null;
 	private _originZone: Zone = null;
@@ -32,7 +32,7 @@ class ZoneTransitionScene extends Scene {
 	public willShow(): void {
 		if (this._executingActions) return;
 		this.duration = Settings.skipTransitions ? 0 : TotalFadeDuration;
-		this._direction = this.originZoneLocation.bySubtracting(this.destinationZoneLocation);
+		this._direction = this.originSector.bySubtracting(this.destinationSector);
 		this._sequence = this.buildSequence();
 		this._startTime = Infinity;
 		this._originZone = this.engine.currentZone;
@@ -42,8 +42,8 @@ class ZoneTransitionScene extends Scene {
 		if (this._executingActions) return;
 		this.scene = null;
 		this.destinationHeroLocation = null;
-		this.destinationZoneLocation = null;
-		this.originZoneLocation = null;
+		this.destinationSector = null;
+		this.originSector = null;
 		this.destinationZone = null;
 		this.destinationWorld = null;
 		this._direction = null;
@@ -136,4 +136,4 @@ class ZoneTransitionScene extends Scene {
 	}
 }
 
-export default ZoneTransitionScene;
+export default SectorTransitionScene;

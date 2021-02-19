@@ -124,13 +124,13 @@ class ConditionComponent extends InstructionThing {
 			case Conditions.HeroIsAt.Opcode:
 				this.appendLocationArgument(this._condition.arguments[0], this._condition.arguments[1]);
 				break;
-			case Conditions.SharedCounterIs.Opcode:
+			case Conditions.SectorCounterIs.Opcode:
 				this.appendNumberArgument(this._condition.arguments[0]);
 				break;
-			case Conditions.SharedCounterIsLessThan.Opcode:
+			case Conditions.SectorCounterIsLessThan.Opcode:
 				this.appendNumberArgument(this._condition.arguments[0]);
 				break;
-			case Conditions.SharedCounterIsGreaterThan.Opcode:
+			case Conditions.SectorCounterIsGreaterThan.Opcode:
 				this.appendNumberArgument(this._condition.arguments[0]);
 				break;
 			case Conditions.GamesWonIs.Opcode:
@@ -147,7 +147,7 @@ class ConditionComponent extends InstructionThing {
 			case Conditions.RandomIsNot.Opcode:
 				this.appendNumberArgument(this._condition.arguments[0]);
 				break;
-			case Conditions.SharedCounterIsNot.Opcode:
+			case Conditions.SectorCounterIsNot.Opcode:
 				this.appendNumberArgument(this._condition.arguments[0]);
 				break;
 			case Conditions.IsVariable.Opcode:

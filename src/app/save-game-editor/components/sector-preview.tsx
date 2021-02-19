@@ -76,7 +76,7 @@ class SectorPreview extends Component {
 					<span>{`${zone.type.name}`}</span>
 					<span>{`ctr ${zone.counter}`}</span>
 					<span>{`rnd ${zone.random}`}</span>
-					<span>{`sctr ${zone.sharedCounter}`}</span>
+					<span>{`sctr ${zone.sectorCounter}`}</span>
 				</div>
 			</div>
 		);

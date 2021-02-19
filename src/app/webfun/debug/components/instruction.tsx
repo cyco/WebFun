@@ -160,10 +160,10 @@ class InstructionComponent extends InstructionThing {
 				break;
 			case Instructions.ChangeZone.Opcode:
 				break;
-			case Instructions.SetSharedCounter.Opcode:
+			case Instructions.SetSectorCounter.Opcode:
 				this.appendNumberArgument(this._instruction.arguments[0]);
 				break;
-			case Instructions.AddToSharedCounter.Opcode:
+			case Instructions.AddToSectorCounter.Opcode:
 				this.appendNumberArgument(this._instruction.arguments[0]);
 				break;
 			case Instructions.SetRandom.Opcode:

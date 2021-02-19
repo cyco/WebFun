@@ -44,7 +44,7 @@ describe("WebFun.Engine.Script.Hotspots.DoorOut", () => {
 		});
 
 		it("sets the location of the zone on the target world", () => {
-			expect(transitionScene.destinationZoneLocation).toEqual(new Point(3, 4));
+			expect(transitionScene.destinationSector).toEqual(new Point(3, 4));
 		});
 
 		it("sets the hero's location on the target zone", () => {

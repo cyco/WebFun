@@ -109,7 +109,7 @@ abstract class Reader {
 			zone.doorInLocation = new Point(x, y);
 
 			if (this._type === Yoda || this._type === YodaDemo) {
-				zone.sharedCounter = stream.readInt16();
+				zone.sectorCounter = stream.readInt16();
 
 				const planet = stream.readInt16();
 				console.assert(planet === zone.planet.rawValue);

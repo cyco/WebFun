@@ -9,7 +9,7 @@ import SpeechScene from "./speech-scene";
 import TeleportScene from "./teleport-scene";
 import WinScene from "./win-scene";
 import ZoneScene from "./zone-scene";
-import ZoneTransitionScene from "./zone-transition-scene";
+import SectorTransitionScene from "./sector-transition-scene";
 
 export {
 	DetonatorScene,
@@ -23,5 +23,5 @@ export {
 	TeleportScene,
 	WinScene,
 	ZoneScene,
-	ZoneTransitionScene
+	SectorTransitionScene
 };

@@ -176,7 +176,7 @@ class MapScene extends Scene {
 		transitionScene.destinationZone = zone;
 		transitionScene.scene = engine.sceneManager.currentScene as ZoneScene;
 		transitionScene.destinationWorld = engine.currentWorld;
-		transitionScene.destinationZoneLocation = engine.currentWorld.findLocationOfZone(zone);
+		transitionScene.destinationSector = engine.currentWorld.findLocationOfZone(zone);
 		engine.sceneManager.pushScene(transitionScene);
 	}
 

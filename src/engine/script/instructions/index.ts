@@ -3,7 +3,7 @@ import Instruction from "../instruction";
 import AddHealth from "./add-health";
 import AddItem from "./add-item";
 import AddToCounter from "./add-to-counter";
-import AddToSharedCounter from "./add-to-shared-counter";
+import AddToSectorCounter from "./add-to-sector-counter";
 import ChangeZone from "./change-zone";
 import DisableAction from "./disable-action";
 import DisableAllMonsters from "./disable-all-monsters";
@@ -28,7 +28,7 @@ import RemoveTile from "./remove-tile";
 import RollDice from "./roll-dice";
 import SetCounter from "./set-counter";
 import MoveHeroTo from "./move-hero-to";
-import SetSharedCounter from "./set-shared-counter";
+import SetSectorCounter from "./set-sector-counter";
 import SetRandom from "./set-random";
 import SetRectNeedsDisplay from "./set-rect-needs-display";
 import SetTileNeedsDisplay from "./set-tile-needs-display";
@@ -43,7 +43,7 @@ const InstructionsByName = {
 	AddHealth,
 	AddItem,
 	AddToCounter,
-	AddToSharedCounter,
+	AddToSectorCounter,
 	ChangeZone,
 	DisableAction,
 	DisableAllMonsters,
@@ -69,7 +69,7 @@ const InstructionsByName = {
 	SetCounter,
 	SetRandom,
 	SetRectNeedsDisplay,
-	SetSharedCounter,
+	SetSectorCounter,
 	SetTileNeedsDisplay,
 	SetVariable,
 	ShowHero,

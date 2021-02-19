@@ -103,7 +103,7 @@ class Writer {
 			stream.writeUint32(zone.random);
 			stream.writeInt32(zone.doorInLocation.x);
 			stream.writeInt32(zone.doorInLocation.y);
-			stream.writeInt16(zone.sharedCounter);
+			stream.writeInt16(zone.sectorCounter);
 			stream.writeUint16(zone.planet.rawValue);
 
 			stream.writeInt16Array(zone.tileIDs);

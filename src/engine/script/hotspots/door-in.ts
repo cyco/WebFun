@@ -28,7 +28,7 @@ export default (engine: Engine, hotspot: Hotspot): HotspotExecutionResult => {
 	scene.destinationZone = destinationZone;
 	scene.scene = engine.sceneManager.currentScene as ZoneScene;
 	scene.destinationWorld = world;
-	scene.destinationZoneLocation = location;
+	scene.destinationSector = location;
 	engine.sceneManager.pushScene(scene);
 
 	return HotspotExecutionResult.ChangeZone;
