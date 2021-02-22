@@ -23,6 +23,7 @@ class RoomTransitionScene extends Scene {
 	public originSector: Point = null;
 	public destinationZone: Zone = null;
 	public destinationWorld: World = null;
+	public originZone: Zone = null;
 
 	private duration = TotalFadeDuration / 2.0;
 	private _startTime: number = Infinity;
@@ -38,6 +39,7 @@ class RoomTransitionScene extends Scene {
 		if (Settings.skipTransitions) this.duration = 0;
 		this._sequence = this.buildSequence();
 		this._startTime = performance.now();
+		this.originZone = this.engine.currentZone;
 	}
 
 	public didHide(): void {
@@ -50,6 +52,7 @@ class RoomTransitionScene extends Scene {
 		this.originSector = null;
 		this.destinationZone = null;
 		this.destinationWorld = null;
+		this.originZone = null;
 	}
 
 	async update(/*ticks*/): Promise<void> {
@@ -117,9 +120,7 @@ class RoomTransitionScene extends Scene {
 		engine.camera.zoneSize = engine.currentZone.size;
 		engine.camera.update(Infinity);
 
-		if (this.engine.currentZone.sectorCounter >= 0) {
-			this.destinationZone.sectorCounter = engine.currentZone.sectorCounter;
-		}
+		this.destinationZone.sectorCounter = this.originZone.sectorCounter;
 
 		state.justEntered = true;
 		engine.spu.prepareExecution(EvaluationMode.JustEntered, destinationZone);
