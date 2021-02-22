@@ -1,15 +1,9 @@
-const Paths = require("./paths");
 const { merge } = require("webpack-merge");
 const SpyOnImportsWebpackPlugin = require("./spy-on-imports-webpack-plugin");
 
 const BaseConfig = require("./webpack.common");
-
 const config = merge(BaseConfig, {
 	devtool: "inline-source-map",
-	output: {
-		filename: "[name].js",
-		path: Paths.buildRoot
-	},
 	module: {
 		rules: [
 			{
