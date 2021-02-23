@@ -36,7 +36,6 @@ class RoomTransitionScene extends Scene {
 	public willShow(): void {
 		if (this._executingActions) return;
 		this.engine.spu.drain();
-		if (Settings.skipTransitions) this.duration = 0;
 		this._sequence = this.buildSequence();
 		this._startTime = performance.now();
 		this.originZone = this.engine.currentZone;
@@ -64,7 +63,7 @@ class RoomTransitionScene extends Scene {
 				this._startTime = performance.now();
 				this._mode = FadeMode.FadeIn;
 			}
-			if (performance.now() - this._startTime < this.duration) return;
+			if (!this.isFadeComplete()) return;
 		}
 
 		const result = await this.engine.spu.run();
@@ -150,6 +149,8 @@ class RoomTransitionScene extends Scene {
 	}
 
 	private isFadeComplete() {
+		if (Settings.skipTransitions) return true;
+
 		return this.duration < performance.now() - this._startTime;
 	}
 

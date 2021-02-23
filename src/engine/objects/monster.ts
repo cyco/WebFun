@@ -94,7 +94,7 @@ class Monster {
 	}
 
 	public get alive(): boolean {
-		return this.face && this._damageTaken < this.face.health;
+		return this.face && (!this._damageTaken || this._damageTaken < this.face.health);
 	}
 
 	public get damageTaken(): number {

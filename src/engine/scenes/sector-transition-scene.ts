@@ -96,6 +96,8 @@ class SectorTransitionScene extends Scene {
 	}
 
 	private isFadeComplete() {
+		if (Settings.skipTransitions) return true;
+
 		return this.duration < performance.now() - this._startTime;
 	}
 
