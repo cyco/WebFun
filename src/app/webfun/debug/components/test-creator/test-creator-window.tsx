@@ -126,7 +126,6 @@ class TestCreatorWindow extends AbstractWindow implements EventListenerObject {
 		replayer.load(input);
 		replayer.start();
 		replayer.fastForward();
-		replayer.normalizeSpeed();
 	}
 
 	public buildStory(engine: Engine): SimulatedStory | Story {

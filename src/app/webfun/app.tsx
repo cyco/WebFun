@@ -12,7 +12,7 @@ class App {
 	public run(): void {
 		this.setupSaveGameFileHandler();
 		this.setupTestFileHandler();
-		//this.showInitialWindow();
+		//this.showDefaultGameController();
 		this.createLinks();
 		this.ensureAddressbarCanBeHidden();
 	}
@@ -26,23 +26,23 @@ class App {
 		if (!this.settings.debug) return;
 
 		const fileDrop = GlobalFileDrop.defaultHandler;
-		const loadFile = await require("src/app/webfun/debug/load-test");
-		fileDrop.addHandler("wftest", (file: File) =>
-			loadFile.default(this.defaultGameController)(file)
-		);
-		fileDrop.addHandler("xwftest", (file: File) =>
-			loadFile.default(this.defaultGameController)(file)
-		);
-		fileDrop.addHandler("fwftest", (file: File) =>
-			loadFile.default(this.defaultGameController)(file)
-		);
+		fileDrop.addHandler("wftest", (file: File) => this.loadTest(file));
+		fileDrop.addHandler("fwftest", (file: File) => this.loadTest(file));
+		fileDrop.addHandler("xwftest", (file: File) => this.loadTest(file));
 	}
 
-	private showInitialWindow(): void {
-		this.defaultGameController = new GameController(Yoda, Settings.url.yoda);
-		this.defaultGameController.newStory();
+	private async loadTest(file: File): Promise<void> {
+		const loadFile = await require("src/app/webfun/debug/load-test");
+		if (!this.defaultGameController) await this.showDefaultGameController();
+		loadFile.default(this.defaultGameController)(file);
+	}
+
+	private async showDefaultGameController(): Promise<GameController> {
+		this.defaultGameController = new GameController(Yoda, this.settings.url.yoda);
 		this.defaultGameController.show(this.windowManager);
-		this.defaultGameController = null;
+		await this.defaultGameController.newStory();
+
+		return this.defaultGameController;
 	}
 
 	private createLinks(): void {
@@ -71,11 +71,12 @@ class App {
 		setTimeout(() => (window.document.scrollingElement.scrollTop = 0));
 	}
 
-	private load(type: Variant, urls: any): void {
-		const controller = new GameController(type, urls);
-		controller.newStory();
+	private async load(variant: Variant, urls: any): Promise<void> {
+		const controller = new GameController(variant, urls);
 		controller.show(this.windowManager);
+		await controller.newStory();
+
+		if (!this.defaultGameController) this.defaultGameController = controller;
 	}
 }
-
 export default App;

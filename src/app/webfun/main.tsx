@@ -12,8 +12,8 @@ import { Settings } from "src";
 
 const main = async () => {
 	if (Settings.debug) {
-		localStorage.clear();
 		window.WebFun = await require("src/index");
+		//localStorage.clear();
 	}
 
 	// Setup custom elements
@@ -30,6 +30,11 @@ const main = async () => {
 	// End preload
 	const container = document.getElementById("webfun-preload");
 	if (container) container.remove();
+
+	if (Settings.debug) {
+		(await require("src/app/editor/initialize")).default();
+		(await require("src/app/webfun/debug/initialize")).default();
+	}
 };
 
 window.addEventListener("load", main, { once: true });

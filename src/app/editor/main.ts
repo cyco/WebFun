@@ -1,7 +1,11 @@
 import { GameData } from "src/engine";
+import initialize from "./initialize";
 import Editor from "./editor";
 
-export default (data: GameData = null): void => {
+export default async (data: GameData = null): Promise<Editor> => {
+	initialize();
 	const editor = new Editor();
-	editor.run(data);
+	await editor.run(data);
+
+	return editor;
 };

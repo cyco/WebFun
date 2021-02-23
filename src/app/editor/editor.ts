@@ -1,44 +1,43 @@
 import ServiceContainer from "./service-container";
-import { WindowManager, FilePicker, ComponentRegistry } from "src/ui";
+import { WindowManager, FilePicker } from "src/ui";
 import { GameData } from "src/engine";
-
-import * as Components from "./components";
-import EditorView from "./editor-view";
 import EditorWindow from "./editor-window";
 
 class Editor {
+	private window: EditorWindow;
+	private container = ServiceContainer.default;
+
 	public async run(data: GameData = null): Promise<void> {
-		this.registerComponents();
-
-		const container = ServiceContainer.default;
-		container.register(ServiceContainer, container);
 		const windowManager = new WindowManager(document.body);
-		container.register(WindowManager, windowManager);
-		container.register(Document, document);
+		this.container.register(ServiceContainer, this.container);
+		this.container.register(WindowManager, windowManager);
+		this.container.register(Document, document);
 
-		const editorWindow = document.createElement(EditorWindow.tagName) as EditorWindow;
-		windowManager.showWindow(editorWindow);
-		editorWindow.center();
+		try {
+			this.window = document.createElement(EditorWindow.tagName) as EditorWindow;
+			windowManager.showWindow(this.window);
+			this.window.center();
 
-		if (data) {
-			return editorWindow.loadGameData(data);
-		} else {
-			const [file] = await FilePicker.Pick({ allowedTypes: ["data", "dta"] });
-			if (!file) {
-				editorWindow.close();
+			if (data) {
+				return await this.window.loadGameData(data);
+			} else {
+				const [file] = await FilePicker.Pick({ allowedTypes: ["data", "dta"] });
+				if (!file) {
+					this.window.close();
+				}
+
+				return await this.window.loadFile(file);
 			}
-
-			return editorWindow.loadFile(file);
+		} catch (e) {
+			this.stop();
 		}
 	}
 
-	private registerComponents() {
-		const registry = ComponentRegistry.sharedRegistry;
-		if (registry.contains(EditorWindow)) return;
+	private stop(): void {
+		if (!this.window) return;
 
-		registry.registerComponents(Components as any);
-		registry.registerComponent(EditorWindow);
-		registry.registerComponent(EditorView);
+		this.window.close();
+		this.window = null;
 	}
 }
 
