@@ -194,10 +194,10 @@ class Engine extends EventTarget {
 	}
 
 	public speak(text: string, place: Point): Promise<void> {
-		const dir = place.bySubtracting(this.hero.location);
-		const d =
-			dir.x < 0 ? "left" : dir.x > 0 ? "right" : dir.y < 0 ? "up" : dir.x < 0 ? "down" : "none";
-		console.log(d, text);
+		//const dir = place.bySubtracting(this.hero.location);
+		//const d =
+			//dir.x < 0 ? "left" : dir.x > 0 ? "right" : dir.y < 0 ? "up" : dir.x < 0 ? "down" : "none";
+		//console.log(d, text);
 		if (Settings.skipDialogs) return Promise.resolve();
 
 		const scene = new SpeechScene(this);
