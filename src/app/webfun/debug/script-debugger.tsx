@@ -331,7 +331,7 @@ class ScriptDebugger implements DebuggingScriptProcessingUnitDelegate {
 		}
 	}
 
-	executorDidDrain(executor: DebuggingScriptProcessingUnit): void {
+	executorDidDrain(_: DebuggingScriptProcessingUnit): void {
 		this._currentZone = null;
 		this._currentAction = null;
 	}

@@ -195,7 +195,7 @@ class SymbolicCoverage extends Component {
 		);
 	}
 
-	private logZonesUsing(opcode: number, type: "Condition" | "Instruction") {
+	private logZonesUsing(_opcode: number, _type: "Condition" | "Instruction") {
 		/*
 		const engine = (window as any).engine as Engine;
 		const filter =

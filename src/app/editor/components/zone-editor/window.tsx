@@ -190,6 +190,10 @@ class Window extends AbstractPanel {
 		this.rebuildItems();
 	}
 
+	get zone(): Zone {
+		return this._zone;
+	}
+
 	private rebuildItems() {
 		const containers = this._sidebar.querySelectorAll(".items label+div") as NodeListOf<Element>;
 		if (!containers.length) return;
@@ -226,10 +230,6 @@ class Window extends AbstractPanel {
 				))}
 			</div>
 		);
-	}
-
-	get zone(): Zone {
-		return this._zone;
 	}
 
 	public set data(d: DataManager) {
