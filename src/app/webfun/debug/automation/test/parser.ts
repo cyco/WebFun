@@ -85,7 +85,8 @@ class TestFileParser {
 			planet: -1,
 			size: -1,
 			tags: [],
-			difficulty: 50
+			difficulty: 0,
+			health: 0x300
 		};
 
 		do {

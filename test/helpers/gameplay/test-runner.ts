@@ -12,6 +12,7 @@ import {
 } from "src/app/webfun/debug/automation/test";
 import loadGameData from "test/helpers/game-data";
 import { Settings } from "src";
+import { NullIfMissing } from "src/engine/asset-manager";
 
 declare let withTimeout: (t: number, block: () => void) => () => void;
 const FiveMinutes = 5 * 60 * 1000;
@@ -34,12 +35,10 @@ const run = (prefix: string, fileName: string, testFileContents: string): void =
 						await ctx.prepare(loadGameData);
 						ctx.buildEngine();
 
-						Settings.difficulty = testCase.configuration.difficulty;
 						srand(testCase.configuration.seed);
 						ctx.engine.persistentState.gamesWon = testCase.configuration.gamesWon;
-
-						if (testCase.configuration.health)
-							ctx.engine.hero.health = testCase.configuration.health;
+						ctx.engine.hero.health = testCase.configuration.health;
+						Settings.difficulty = testCase.configuration.difficulty;
 
 						ctx.engine.inventory.removeAllItems();
 						testCase.configuration.inventory.forEach(i =>
@@ -58,11 +57,11 @@ const run = (prefix: string, fileName: string, testFileContents: string): void =
 						return buildRealWorldStory(testCase);
 					}
 
-					function buildSimulatedStory(testCase: TestCase) {
+					function buildSimulatedStory(testCase: TestCase): Story {
 						const engine = ctx.engine;
 						const { findItem, npc, requiredItem1, requiredItem2, zone } = testCase.configuration;
-						const t = (t: number) => (t < 0 ? null : engine.assets.get(Tile, t));
-						const z = (z: number) => (z < 0 ? null : engine.assets.get(Zone, z));
+						const t = (t: number) => engine.assets.get(Tile, t, NullIfMissing);
+						const z = (z: number) => engine.assets.get(Zone, z, NullIfMissing);
 
 						return new SimulatedStory(
 							t(findItem),
@@ -75,7 +74,7 @@ const run = (prefix: string, fileName: string, testFileContents: string): void =
 						);
 					}
 
-					function buildRealWorldStory(testCase: TestCase) {
+					function buildRealWorldStory(testCase: TestCase): Story {
 						const { seed, planet, size } = testCase.configuration;
 
 						return new Story(seed, Zone.Planet.fromNumber(planet), WorldSize.fromNumber(size));
