@@ -29,6 +29,7 @@ module.exports = {
 		// temporarily disabled:
 		"sort-imports": "off",
 		"@typescript-eslint/explicit-member-accessibility": "off",
-		"prettier/prettier": "warn"
+		"prettier/prettier": "warn",
+		"@typescript-eslint/no-empty-function": "off"
 	}
 };
