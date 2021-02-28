@@ -174,6 +174,7 @@ class HotspotProcessingUnit {
 
 	private _laydownHotspotItem(zone: Zone, hotspot: Hotspot): void {
 		if (!hotspot.enabled) return;
+
 		if (hotspot.arg === -1) return;
 		if (!this.initializeTypes.has(hotspot.type)) return;
 

@@ -27,6 +27,11 @@ class MenuItemComponent extends Component {
 		this._rebuild();
 	}
 
+	protected disconnectedCallback(): void {
+		this.textContent = "";
+		super.disconnectedCallback();
+	}
+
 	private _rebuild() {
 		this.textContent = "";
 		const item: Partial<MenuItem> = this.item || {};

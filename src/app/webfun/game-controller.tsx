@@ -291,7 +291,18 @@ class GameController extends EventTarget implements EventListenerObject {
 
 	public async stop(): Promise<void> {
 		await this._engine.metronome.stop();
+		this._engine.hero.removeEventListener(Hero.Event.HealthDidChange, this);
+		this._window.inventory.removeEventListener(InventoryComponent.Events.ItemActivated, this);
+		this._window.inventory.removeEventListener(InventoryComponent.Events.ItemPlaced, this);
+		this._window.inventory.inventory = null;
+		this._engine.teardown();
+		this._window.engine = null;
+		this._engine = null;
+
+		this.data = null;
+
 		if ((window as any).engine === this._engine) (window as any).engine = null;
+
 		this._window.close();
 	}
 }

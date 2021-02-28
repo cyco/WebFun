@@ -284,6 +284,7 @@ class MouseInputManager implements InputManager {
 		document.removeEventListener("mousedown", this);
 		document.removeEventListener("mouseup", this);
 
+		this.engine.removeEventListener(Engine.Event.CurrentZoneChange, this);
 		this.engine.sceneManager.removeOverlay(this._highlight);
 	}
 

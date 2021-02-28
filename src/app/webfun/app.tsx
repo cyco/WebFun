@@ -76,7 +76,7 @@ class App {
 		controller.show(this.windowManager);
 		await controller.newStory();
 
-		if (!this.defaultGameController) this.defaultGameController = controller;
+		//if (!this.defaultGameController) this.defaultGameController = controller;
 	}
 }
 export default App;

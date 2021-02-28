@@ -35,7 +35,6 @@ export { Events };
 
 class Engine extends EventTarget {
 	static readonly Event = Events;
-
 	public readonly variant: Type = null;
 	public assets: AssetManager = null;
 	public resources: ResourceManager = null;
@@ -271,6 +270,17 @@ class Engine extends EventTarget {
 
 	public get gameState(): GameState {
 		return this._gameState;
+	}
+
+	public teardown() {
+		this.inputManager.mouseDownHandler = null;
+		this.inputManager.keyDownHandler = null;
+		this.inputManager.removeListeners();
+		this.metronome.ontick = null;
+		this.metronome.onrender = null;
+		this.sceneManager.engine = null;
+		this.inputManager.engine = null;
+		this.currentZone = null;
 	}
 }
 
