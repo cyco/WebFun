@@ -14,11 +14,13 @@ import OnscreenButton from "./onscreen-button";
 import PaletteView from "./palette-view";
 import ErrorView from "./error-view";
 import FullscreenMenu from "./fullscreen-menu";
+import CurrentStatusInfo from "./current-status-info";
 
 export {
 	AbstractHealth,
 	AbstractPaletteView,
 	Ammo,
+	CurrentStatusInfo,
 	FullscreenMenu,
 	Health,
 	Inventory,

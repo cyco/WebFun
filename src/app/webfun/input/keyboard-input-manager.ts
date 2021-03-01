@@ -2,6 +2,8 @@ import { Tile } from "src/engine/objects";
 import { Engine } from "src/engine";
 import { Point } from "src/util";
 import { Direction, InputMask, InputManager } from "src/engine/input";
+import { CurrentStatusInfo } from "src/app/webfun/ui";
+import { WindowManager } from "src/ui";
 
 class KeyboardInputManager implements InputManager {
 	public mouseDownHandler: (_: Point) => void;
@@ -45,11 +47,22 @@ class KeyboardInputManager implements InputManager {
 			return;
 		}
 
-		if (!event.repeat && event.type === "keydown") this._keyDown(event);
-		else if (!event.repeat && event.type === "keyup") this._keyUp(event);
-
 		event.stopPropagation();
 		event.preventDefault();
+
+		if (event.type === "keydown" && event.code === "F8" && event.ctrlKey && event.shiftKey) {
+			const window = document.createElement(CurrentStatusInfo.tagName);
+			window.engine = this.engine;
+			window.onclose = () => this.engine.metronome.start();
+
+			this.engine.metronome.stop();
+			WindowManager.defaultManager.showWindow(window);
+			window.center();
+			return;
+		}
+
+		if (!event.repeat && event.type === "keydown") this._keyDown(event);
+		else if (!event.repeat && event.type === "keyup") this._keyUp(event);
 	}
 
 	private _keyDown(e: KeyboardEvent) {

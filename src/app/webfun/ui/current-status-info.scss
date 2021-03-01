@@ -1,0 +1,42 @@
+@import "src/ui/components/abstract-window.scss";
+
+wf-current-status-info {
+	@extend wf-abstract-window;
+
+	> .content {
+		flex-direction: column;
+		min-width: 210px;
+		min-height: 110px;
+		justify-content: space-between;
+
+		font-size: 0.9em;
+
+		wf-button {
+			margin-top: 10px;
+			font-size: 1.1em;
+			min-width: 60px;
+		}
+
+		span {
+			border: 1px solid black;
+			min-width: 30px;
+			text-align: center;
+		}
+
+		> div {
+			display: flex;
+			justify-content: center;
+		}
+
+		.row {
+			justify-content: space-between;
+			padding: 0px 15px;
+
+			> div {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+			}
+		}
+	}
+}
