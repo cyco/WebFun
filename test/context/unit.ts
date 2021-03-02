@@ -20,5 +20,5 @@ global.fdescribeInstruction = fdescribeInstruction;
 
 import "src/app/webfun/windows";
 
-const testsContext = require.context("../unit/", true, /\.test\.ts$/);
+const testsContext = require.context("../unit/", true, /\.test\.tsx?$/);
 testsContext.keys().forEach(testsContext);
