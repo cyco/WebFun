@@ -9,8 +9,7 @@ describe("WebFun.Script.ConditionChecker", () => {
 		engine = {
 			currentZone: {},
 			hero: { location: {} },
-			persistentState: {},
-			temporaryState: {}
+			persistentState: {}
 		} as any;
 		condition = {} as any;
 		checker = new ConditionChecker(Conditions, engine);

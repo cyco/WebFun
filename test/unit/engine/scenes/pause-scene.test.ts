@@ -21,7 +21,8 @@ describe("WebFun.Engine.Scenes.PauseScene", () => {
 					pause = false;
 				}
 			},
-			temporaryState: { totalPlayTime: 0, currentPlayStart: new Date() },
+			totalPlayTime: 0,
+			currentPlayStart: new Date(),
 			sceneManager: { popScene: () => (popCalled = true) }
 		} as any;
 
@@ -45,7 +46,7 @@ describe("WebFun.Engine.Scenes.PauseScene", () => {
 		spyOn(renderer, "drawImage");
 
 		subject = new PauseScene();
-		subject.engine = { temporaryState: {} } as any;
+		subject.engine = {} as any;
 		subject.render(renderer);
 
 		expect(subject.isOpaque()).toBeFalse();

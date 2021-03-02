@@ -86,8 +86,7 @@ export default async (
 		zone.getTile(targetPoint.x, targetPoint.y, Zone.Layer.Object);
 
 	if (targetTile) {
-		// TODO: get rid of temporary state
-		engine.temporaryState.bump = targetPoint;
+		engine.bumpedLocation = targetPoint;
 		if (engine.hpu.execute(HotspotExecutionMode.Bump, targetPoint, null)) return;
 		engine.spu.prepareExecution(EvaluationMode.Bump, zone);
 		const scriptResult = await engine.spu.run();

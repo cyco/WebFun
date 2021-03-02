@@ -93,11 +93,6 @@ class DebuggingScriptProcessingUnit extends ScriptProcessingUnit {
 		}
 
 		zone.actionsInitialized = true;
-		// TODO: get rid of temporaryState
-		this._engine.temporaryState.justEntered = false;
-		this._engine.temporaryState.enteredByPlane = false;
-		this._engine.temporaryState.bump = null;
-
 		if (mode === Mode.PlaceItem) {
 			this._engine.inputManager.placedTile = null;
 			this._engine.inputManager.placedTileLocation = null;

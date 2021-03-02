@@ -50,19 +50,15 @@ class Engine extends EventTarget {
 	public sceneManager: SceneManager = null;
 	public spu: ScriptProcessingUnit = null;
 	public story: Story = null;
-	public temporaryState: {
-		enteredByPlane: boolean;
-		justEntered: boolean;
-		bump: Point | false;
-		totalPlayTime: number;
-		currentPlayStart: Date;
-	} = null;
 	private _currentWorld: World = null;
 	private _currentZone: Zone = null;
 	private _updateInProgress: boolean = false;
 	private _hpu: HotspotProcessingUnit;
 	private _gameState: GameState = GameState.Stopped;
 	private _currentSector: Sector;
+	public currentPlayStart: Date;
+	public totalPlayTime: number;
+	public bumpedLocation: Point;
 
 	constructor(type: Type, ifce: Partial<Interface> = {}) {
 		super();
@@ -83,14 +79,6 @@ class Engine extends EventTarget {
 
 		this.variant = type;
 		this._hpu = new HotspotProcessingUnit(this);
-		// TODO: remove state
-		this.temporaryState = {
-			justEntered: true,
-			enteredByPlane: true,
-			bump: false,
-			totalPlayTime: 0,
-			currentPlayStart: new Date()
-		};
 		this.registerEvents(Events);
 	}
 

@@ -36,10 +36,8 @@ describe("WebFun.Engine.Score", () => {
 			Settings.difficulty = difficulty;
 			(engine.story as any).size = size;
 			(engine.story as any).puzzles = Array.Repeat({}, puzzlesTotal);
-			engine.temporaryState.totalPlayTime = 0;
-			engine.temporaryState.currentPlayStart = new Date(
-				new Date().getTime() - totalPlayTime * 1000
-			);
+			engine.totalPlayTime = 0;
+			engine.currentPlayStart = new Date(new Date().getTime() - totalPlayTime * 1000);
 
 			const sectors = Array.Repeat({ zone: null }, 100) as any[];
 			for (let i = 0; i < sectorsTotal; i++) {
@@ -140,10 +138,8 @@ describe("WebFun.Engine.Score", () => {
 
 		function score(currentPlayTime: number, previousPlayTime: number, size: WorldSize) {
 			(engine.story as any).size = size;
-			engine.temporaryState.totalPlayTime = previousPlayTime;
-			engine.temporaryState.currentPlayStart = new Date(
-				new Date().getTime() - currentPlayTime * 1000
-			);
+			engine.totalPlayTime = previousPlayTime;
+			engine.currentPlayStart = new Date(new Date().getTime() - currentPlayTime * 1000);
 
 			return CalculateScoreBasedOnTime(engine);
 		}
@@ -390,6 +386,6 @@ describe("WebFun.Engine.Score", () => {
 	});
 
 	function mockEngine(): Engine {
-		return { story: {}, temporaryState: {}, world: {} } as any;
+		return { story: {}, world: {} } as any;
 	}
 });

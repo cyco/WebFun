@@ -5,8 +5,7 @@ import { ceil, floor } from "src/std/math";
 
 const CalculateScoreBasedOnTime = (engine: Engine): number => {
 	const time =
-		engine.temporaryState.totalPlayTime +
-		(new Date().getTime() - engine.temporaryState.currentPlayStart.getTime()) / 1000;
+		engine.totalPlayTime + (new Date().getTime() - engine.currentPlayStart.getTime()) / 1000;
 	const expectedPlaytime = 5 * engine.story.size.rawValue;
 	const actualPlaytime = floor(time / 60);
 	const overtime = actualPlaytime - expectedPlaytime;

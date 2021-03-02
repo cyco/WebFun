@@ -49,9 +49,7 @@ describe("WebFun.Engine.Scenes.WinScene", () => {
 				subject.didShow();
 			});
 
-			it("sets up the engine to execute the proper scripts", () => {
-				expect(engine.temporaryState.justEntered).toBeTrue();
-			});
+			it("sets up the engine to execute the proper scripts", () => {});
 
 			it("tells the zone scene it just became visible", () => {
 				expect(zoneScene.didShow).toHaveBeenCalled();
@@ -191,7 +189,6 @@ describe("WebFun.Engine.Scenes.WinScene", () => {
 			hero: { location: new Point(7, 4), visible: true },
 			assets: { find: jasmine.createSpy() },
 			inputManager: { readInput: jasmine.createSpy() },
-			temporaryState: { justEntered: false },
 			sceneManager: { popScene: jasmine.createSpy() },
 			camera: { update: jasmine.createSpy() }
 		} as any;

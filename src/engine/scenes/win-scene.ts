@@ -37,7 +37,6 @@ class WinScene extends Scene {
 	}
 
 	public didShow(): void {
-		this.engine.temporaryState.justEntered = true;
 		this._zoneScene.didShow();
 		if (Settings.skipWinScene) this.engine.sceneManager.popScene();
 	}

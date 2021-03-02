@@ -25,7 +25,6 @@ export default (engine: Engine, hotspot: Hotspot): HotspotExecutionResult => {
 	scene.destinationWorld = engine.dagobah;
 	scene.destinationSector = location;
 	engine.sceneManager.pushScene(scene);
-	engine.temporaryState.enteredByPlane = true;
 
 	return HotspotExecutionResult.ChangeZone;
 };

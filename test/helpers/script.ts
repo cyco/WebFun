@@ -1,4 +1,9 @@
-import { Result, ConditionChecker, EvaluationMode, InstructionExecutor } from "../../src/engine/script";
+import {
+	Result,
+	ConditionChecker,
+	EvaluationMode,
+	InstructionExecutor
+} from "../../src/engine/script";
 import { ConditionImplementations } from "src/engine/script/conditions";
 import { InstructionImplementations } from "src/engine/script/instructions";
 import { Condition, Instruction } from "src/engine/objects";
@@ -31,7 +36,10 @@ const makeConditionDescription = (
 	});
 };
 
-const makeInstructionDescription = (desc: JasmineDescribe) => (Name: string, block: InstructionTester) => {
+const makeInstructionDescription = (desc: JasmineDescribe) => (
+	Name: string,
+	block: InstructionTester
+) => {
 	desc(`WebFun.Engine.Script.Instruction.${Name}`, () => {
 		const engine = mockEngine();
 		const executor = new InstructionExecutor(InstructionImplementations, engine);
@@ -52,7 +60,6 @@ function mockEngine(): Engine {
 	return {
 		currentZone: { setTile: (): void => void 0, getTile: (): void => void 0 },
 		hero: {},
-		temporaryState: {},
 		assets: new AssetManager(),
 		currentWorld: {
 			findLocationOfZone: (): void => void 0,

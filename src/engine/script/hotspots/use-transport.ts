@@ -21,7 +21,6 @@ export default (engine: Engine, htsp: Hotspot): HotspotExecutionResult => {
 	transitionScene.destinationWorld = engine.currentWorld;
 	transitionScene.destinationSector = worldLocation;
 	engine.sceneManager.pushScene(transitionScene);
-	engine.temporaryState.enteredByPlane = true;
 
 	return HotspotExecutionResult.ChangeZone;
 };

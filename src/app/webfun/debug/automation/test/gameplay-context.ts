@@ -14,7 +14,7 @@ import Settings from "src/settings";
 import { Point } from "src/util";
 import { SimulatedStory } from "src/app/webfun/debug/index";
 import DebuggingScriptProcessingUnit from "src/app/webfun/debug/debugging-script-processing-unit";
-import { ScriptProcessingUnit } from "src/engine/script";
+import { EvaluationMode, ScriptProcessingUnit } from "src/engine/script";
 
 let rawData: any, paletteData: any;
 
@@ -167,6 +167,7 @@ class GameplayContext {
 				? engine.world.at(4, 5).zone
 				: engine.assets.find(Zone, z => z.isLoadingZone());
 		const zoneScene = new ZoneScene(engine, zone);
+		engine.spu.prepareExecution(EvaluationMode.JustEntered, zone);
 		engine.currentZone = zone;
 		engine.currentWorld = engine.world.findLocationOfZone(zone) ? engine.world : null;
 		engine.hero.appearance = engine.assets.find(Char, c => c.isHero());

@@ -245,7 +245,8 @@ describe("WebFun.App.GameController", () => {
 				createNewStory() {
 					return mockedStory;
 				}
-			}
+			},
+			spu: { prepareExecution: jasmine.createSpy() }
 		} as any;
 	}
 });

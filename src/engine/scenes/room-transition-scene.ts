@@ -107,7 +107,6 @@ class RoomTransitionScene extends Scene {
 
 	private async *buildSequence(): AsyncGenerator<void> {
 		const { scene, engine, destinationZone, destinationWorld, destinationHeroLocation } = this;
-		const state = engine.temporaryState;
 
 		while (!this.isFadeComplete()) yield;
 
@@ -121,13 +120,12 @@ class RoomTransitionScene extends Scene {
 
 		this.destinationZone.sectorCounter = this.originZone.sectorCounter;
 
-		state.justEntered = true;
 		engine.spu.prepareExecution(EvaluationMode.JustEntered, destinationZone);
 		yield;
 
-		state.justEntered = false;
-		state.enteredByPlane = true;
-		const mode = destinationZone.visited ? EvaluationMode.ByPlane : EvaluationMode.Initialize;
+		const mode = destinationZone.visited
+			? EvaluationMode.ByPlane
+			: EvaluationMode.Initialize | EvaluationMode.ByPlane;
 		engine.spu.prepareExecution(mode, destinationZone);
 		yield;
 
@@ -143,7 +141,6 @@ class RoomTransitionScene extends Scene {
 
 		while (!this.isFadeComplete()) yield;
 
-		state.enteredByPlane = true;
 		engine.spu.prepareExecution(EvaluationMode.ByPlane, destinationZone);
 		engine.sceneManager.popScene();
 	}

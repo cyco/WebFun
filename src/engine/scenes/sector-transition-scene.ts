@@ -66,19 +66,16 @@ class SectorTransitionScene extends Scene {
 	private async *buildSequence(): AsyncGenerator<void> {
 		const { engine, destinationZone, destinationHeroLocation, destinationWorld } = this;
 		const hero = this.engine.hero;
-		const state = engine.temporaryState;
 
 		hero.location = destinationHeroLocation;
 		engine.currentWorld = destinationWorld;
 		engine.currentZone = destinationZone;
 		this.scene.zone = destinationZone;
 
-		state.justEntered = true;
 		engine.spu.prepareExecution(EvaluationMode.JustEntered, destinationZone);
 		yield;
 
 		if (!destinationZone.visited) {
-			state.justEntered = false;
 			engine.spu.prepareExecution(EvaluationMode.Initialize, destinationZone);
 			yield;
 		}

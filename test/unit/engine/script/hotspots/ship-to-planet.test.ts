@@ -53,13 +53,13 @@ describe("WebFun.Engine.Script.Hotspots.ShipToPlanet", () => {
 		it("sets the hero's location on the destination zone", () => {
 			expect(transitionScene.destinationHeroLocation).toEqual(new Point(2, 5));
 		});
-
-		it("sets a flag so EnterByPlane scripts are executed after the transition", () => {
-			expect(engine.temporaryState.enteredByPlane).toBeTrue();
-		});
 	});
 
-	function mockHotspot(type: Hotspot.Type, arg: number = -1, pos: Point = new Point(0, 0)): Hotspot {
+	function mockHotspot(
+		type: Hotspot.Type,
+		arg: number = -1,
+		pos: Point = new Point(0, 0)
+	): Hotspot {
 		return { type, arg, x: pos.x, y: pos.y, enabled: true } as Hotspot;
 	}
 
@@ -69,8 +69,7 @@ describe("WebFun.Engine.Script.Hotspots.ShipToPlanet", () => {
 			inventory: { contains: jasmine.createSpy("inventory.contains") },
 			sceneManager: { pushScene: jasmine.createSpy("sceneManager.pushScene"), currentScene: {} },
 			dagobah: { findLocationOfZone: jasmine.createSpy("dagobah.findLocationOfZone") },
-			world: { findLocationOfZone: jasmine.createSpy("world.findLocationOfZone") },
-			temporaryState: { enteredByPlane: false }
+			world: { findLocationOfZone: jasmine.createSpy("world.findLocationOfZone") }
 		} as any;
 	}
 });

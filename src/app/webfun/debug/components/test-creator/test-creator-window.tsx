@@ -94,13 +94,8 @@ class TestCreatorWindow extends AbstractWindow implements EventListenerObject {
 		if (!(story instanceof SimulatedStory)) {
 			engine.currentWorld = story.dagobah;
 			engine.hero.visible = false;
-			engine.temporaryState = {
-				justEntered: true,
-				enteredByPlane: true,
-				bump: false,
-				totalPlayTime: 0,
-				currentPlayStart: new Date()
-			};
+			engine.totalPlayTime = 0;
+			engine.currentPlayStart = new Date();
 		}
 
 		controller.jumpStartEngine(

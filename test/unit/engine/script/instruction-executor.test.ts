@@ -8,7 +8,6 @@ describe("WebFun.Engine.Script.InstructionExecutor", () => {
 		engine = {
 			currentZone: {},
 			hero: {},
-			temporaryState: {},
 			data: {}
 		} as any;
 

@@ -30,6 +30,7 @@ import { random, floor } from "src/std/math";
 import * as SmartPhone from "detect-mobile-browser";
 import GameEventHandler from "./game-event-handler";
 import Logger from "./logger";
+import { EvaluationMode } from "src/engine/script";
 
 export const Event = {
 	DidLoadData: "didLoadData"
@@ -216,6 +217,7 @@ class GameController extends EventTarget implements EventListenerObject {
 		engine.currentZone = zone;
 		engine.currentWorld = engine.world.findLocationOfZone(zone) ? engine.world : engine.dagobah;
 		engine.hero.appearance = engine.assets.find(Char, (c: Char) => c.isHero());
+		engine.spu.prepareExecution(EvaluationMode.JustEntered, zone);
 
 		engine.sceneManager.clear();
 		engine.sceneManager.pushScene(zoneScene);

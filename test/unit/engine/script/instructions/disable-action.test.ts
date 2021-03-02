@@ -9,7 +9,6 @@ describeInstruction("DisableAction", () => {
 		const engine: Engine = {
 			currentZone: {},
 			hero: {},
-			temporaryState: {},
 			data: {}
 		} as any;
 
