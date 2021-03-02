@@ -4,7 +4,7 @@ import { iterate } from "src/util";
 class ComponentJSXRenderer {
 	public render(
 		thing: string | typeof Component | Node,
-		props: any,
+		props: object,
 		...children: any[]
 	): Node | Component {
 		let node: Node;
@@ -36,7 +36,7 @@ class ComponentJSXRenderer {
 				} else if (c instanceof Array) {
 					c.filter((e: any) => e).forEach(append);
 				} else {
-					console.error("don\t know how to append", c);
+					console.error("don't know how to append", c);
 				}
 			};
 
