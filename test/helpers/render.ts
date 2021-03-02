@@ -1,6 +1,10 @@
 import Component from "src/ui/component";
 
-export default (text: string | Component | typeof Component, attributes = {}, flags: string[] = []) => {
+export default (
+	text: string | Component | typeof Component | HTMLElement,
+	attributes = {},
+	flags: string[] = []
+) => {
 	const id = "WebFun Test Container";
 	let container = document.getElementById(id);
 	if (!container) {
@@ -20,9 +24,12 @@ export default (text: string | Component | typeof Component, attributes = {}, fl
 
 	container.textContent = "";
 
-	const node = document.createElement(
-		textIsString ? (text as string) : ((text as unknown) as typeof Component).tagName
-	);
+	const node =
+		text instanceof HTMLElement
+			? text
+			: document.createElement(
+					textIsString ? (text as string) : ((text as unknown) as typeof Component).tagName
+			  );
 
 	if (textIsComponent) {
 		attributes.each((key: string, value: string) => ((node as any)[key] = value));
