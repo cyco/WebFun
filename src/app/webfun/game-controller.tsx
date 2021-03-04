@@ -50,11 +50,16 @@ class GameController extends EventTarget implements EventListenerObject {
 	public palette: ColorPalette;
 	private _window: MainWindow;
 	private _sceneView: SceneView = (<SceneView />) as SceneView;
-	private _engine: Engine;
+	private _engine: Engine = null;
 	private _eventHandler = new GameEventHandler();
+	private _variant: Variant;
+	private _paths: PathConfiguration;
 
-	constructor(type: Variant, paths: PathConfiguration) {
+	constructor(variant: Variant, paths: PathConfiguration) {
 		super();
+
+		this._variant = variant;
+		this._paths = paths;
 
 		this.settings.mobile = !!(SmartPhone(false).isAndroid() || SmartPhone(false).isIPhone());
 		const mainMenuClass = this.settings.mobile ? MobileMainMenu : MainMenu;
@@ -62,24 +67,7 @@ class GameController extends EventTarget implements EventListenerObject {
 			<MainWindow menu={new mainMenuClass(this)} className={this.settings.mobile ? "mobile" : ""} />
 		) as MainWindow;
 
-		if (SmartPhone(false).isIPad()) {
-		}
-
-		this._engine = this._buildEngine(type, paths);
-		this._sceneView.manager.engine = this._engine;
-		if (this.settings.debug) (window as any).engine = this._engine;
 		if (this.settings.mobile) this._window.classList.add("mobile");
-	}
-
-	private _buildEngine(type: Variant, paths: PathConfiguration) {
-		const engine: Engine = new Engine(type, this._buildInterface(paths));
-		engine.hero.addEventListener(Hero.Event.HealthDidChange, this);
-
-		if (this.settings.drawDebugStats) {
-			engine.sceneManager.addOverlay(new DebugInfoScene());
-		}
-
-		return engine;
 	}
 
 	handleEvent(evt: CustomEvent): void {
@@ -109,7 +97,7 @@ class GameController extends EventTarget implements EventListenerObject {
 		};
 	}
 
-	public show(windowManager: WindowManager = WindowManager.defaultManager): void {
+	public async show(windowManager: WindowManager = WindowManager.defaultManager): Promise<void> {
 		windowManager.showWindow(this._window);
 
 		if (!this._window.x && !this._window.y) {
@@ -119,9 +107,8 @@ class GameController extends EventTarget implements EventListenerObject {
 
 	public async newStory(): Promise<void> {
 		try {
-			const gameState = this.engine.gameState;
 			if (
-				gameState === GameState.Running &&
+				this.engine?.gameState === GameState.Running &&
 				(await ModalConfirm(
 					"This command will discard the current world.\nBuild a new world anyway?"
 				)) !== ConfirmationResult.Confirmed
@@ -129,14 +116,13 @@ class GameController extends EventTarget implements EventListenerObject {
 				return;
 			}
 
-			srand(floor(random() * 0xffff));
-			await this._loadGameData();
-			const story = this.engine.variant.createNewStory(this.engine);
+			await this.resetEngine();
+			await this.loadGameData();
 
-			this._engine.inventory.removeAllItems();
+			srand(floor(random() * 0xffff));
+			const story = this.engine.variant.createNewStory(this.engine);
 			story.generateWorld(this._engine.assets, this._engine.variant, 10);
 			this._engine.story = story;
-
 			this._showSceneView();
 		} catch (error) {
 			this.presentView(<ErrorView error={error}></ErrorView>);
@@ -144,9 +130,8 @@ class GameController extends EventTarget implements EventListenerObject {
 	}
 
 	public async replayStory(): Promise<void> {
-		const gameState = this.engine.gameState;
 		if (
-			gameState === GameState.Running &&
+			this.engine?.gameState === GameState.Running &&
 			(await ModalConfirm("This command will discard the current world.\nReplay anyway?")) !==
 				ConfirmationResult.Confirmed
 		) {
@@ -154,21 +139,25 @@ class GameController extends EventTarget implements EventListenerObject {
 		}
 
 		const { seed, planet, size } = this.engine.story;
-		srand(seed);
-		await this._loadGameData();
-		const story = new Story(seed, planet, size);
+		await this.resetEngine();
+		await this.loadGameData();
 
-		this._engine.inventory.removeAllItems();
+		srand(seed);
+		const story = new Story(seed, planet, size);
 		story.generateWorld(this._engine.assets, this._engine.variant, 10);
 		this._engine.story = story;
 
 		this._showSceneView();
 	}
 
+	public async resetEngine(): Promise<void> {
+		await this.teardownEngine();
+		this.setupEngine();
+	}
+
 	public async load(file: File = null): Promise<void> {
-		const gameState = this.engine.gameState;
 		if (
-			gameState === GameState.Running &&
+			this.engine?.gameState === GameState.Running &&
 			(await ModalConfirm("This command will discard the current world.\nLoad anyway?")) !==
 				ConfirmationResult.Confirmed
 		) {
@@ -179,19 +168,12 @@ class GameController extends EventTarget implements EventListenerObject {
 		if (!stream) return;
 		const { read } = Reader.build(stream);
 
-		await this.engine.metronome.stop();
+		await this.resetEngine();
+		await this.loadGameData();
+
 		const assets = new AssetManager();
 		this.populateAssetManager(assets);
 		const state = read(assets);
-		console.log("state", state);
-	}
-
-	private populateAssetManager(manager: AssetManager) {
-		manager.populate(Zone, this.data.zones);
-		manager.populate(Tile, this.data.tiles);
-		manager.populate(Puzzle, this.data.puzzles);
-		manager.populate(Char, this.data.characters);
-		manager.populate(Sound, this.data.sounds);
 	}
 
 	private async pickSaveGame(file: File = null) {
@@ -211,15 +193,56 @@ class GameController extends EventTarget implements EventListenerObject {
 		console.log("Save");
 	}
 
-	private _showSceneView(zone: Zone = this._engine.assets.find(Zone, z => z.isLoadingZone())) {
+	public async exit(): Promise<void> {
+		this.teardownEngine();
+		this._window.close();
+	}
+
+	private setupEngine() {
+		const engine: Engine = new Engine(this._variant, this._buildInterface(this._paths));
+		engine.camera.hero = engine.hero;
+		engine.hero.addEventListener(Hero.Event.HealthDidChange, this);
+
+		if (this.settings.drawDebugStats) {
+			engine.sceneManager.addOverlay(new DebugInfoScene());
+		}
+
+		this._sceneView.manager.engine = engine;
+		this._window.engine = engine;
+		this._engine = engine;
+
+		if (this.settings.debug) (window as any).engine = this._engine;
+	}
+
+	private async teardownEngine(): Promise<void> {
+		if (!this._engine) return;
+
+		this._engine.hero.removeEventListener(Hero.Event.HealthDidChange, this);
 		this._window.inventory.removeEventListener(InventoryComponent.Events.ItemActivated, this);
 		this._window.inventory.removeEventListener(InventoryComponent.Events.ItemPlaced, this);
+		this._window.engine = null;
 
+		await this._engine.metronome.stop();
+		this._engine.teardown();
+		this._engine = null;
+		this.data = null;
+
+		if ((window as any).engine === this._engine) (window as any).engine = null;
+	}
+
+	private populateAssetManager(manager: AssetManager) {
+		manager.populate(Zone, this.data.zones);
+		manager.populate(Tile, this.data.tiles);
+		manager.populate(Puzzle, this.data.puzzles);
+		manager.populate(Char, this.data.characters);
+		manager.populate(Sound, this.data.sounds);
+	}
+
+	private _showSceneView(zone: Zone = this._engine.assets.find(Zone, z => z.isLoadingZone())) {
 		const engine = this._engine;
-		engine.metronome.stop();
+
 		engine.metronome.ontick = (delta: number) => engine.update(delta);
 		engine.metronome.onrender = () => engine.render();
-
 		engine.palette = new PaletteAnimation(this.palette);
 
 		const zoneScene = new ZoneScene();
@@ -228,10 +251,7 @@ class GameController extends EventTarget implements EventListenerObject {
 		engine.currentZone = zone;
 		engine.currentWorld = engine.world.findLocationOfZone(zone) ? engine.world : engine.dagobah;
 		engine.hero.appearance = engine.assets.find(Char, (c: Char) => c.isHero());
-		engine.hero.location = new Point(9, 9);
 		engine.spu.prepareExecution(EvaluationMode.JustEntered, zone);
-
-		engine.sceneManager.clear();
 		engine.sceneManager.pushScene(zoneScene);
 
 		this.presentView(this._sceneView);
@@ -248,13 +268,15 @@ class GameController extends EventTarget implements EventListenerObject {
 		this._engine.gameState = GameState.Running;
 	}
 
-	private _loadGameData(): Promise<void> {
+	public loadGameData(): Promise<void> {
 		return new Promise((resolve, reject) => {
 			const loadingView: LoadingView = <LoadingView />;
 			this.presentView(loadingView);
 
+			if (!this.engine) this.setupEngine();
 			const engine = this.engine;
-			const loader = new Loader(engine.resources, engine.mixer as Mixer, this.engine.variant);
+
+			const loader = new Loader(engine.resources, engine.mixer as Mixer, engine.variant);
 			loader.onfail = event => reject(event);
 			loader.onprogress = ({ detail: { progress } }) => (loadingView.progress = progress);
 			loader.onloadpalette = ({ detail: { palette } }) => {
@@ -281,7 +303,6 @@ class GameController extends EventTarget implements EventListenerObject {
 						}
 					})
 				);
-
 				resolve();
 			};
 			loader.load();
@@ -294,31 +315,12 @@ class GameController extends EventTarget implements EventListenerObject {
 		windowContent.appendChild(view);
 	}
 
-	public jumpStartEngine(zone: Zone): void {
+	public async jumpStartEngine(zone: Zone): Promise<void> {
 		this._showSceneView(zone);
-		this._window.inventory.palette = this.palette;
-		this._window.engine = this.engine;
 	}
 
 	public get engine(): Engine {
 		return this._engine;
-	}
-
-	public async stop(): Promise<void> {
-		await this._engine.metronome.stop();
-		this._engine.hero.removeEventListener(Hero.Event.HealthDidChange, this);
-		this._window.inventory.removeEventListener(InventoryComponent.Events.ItemActivated, this);
-		this._window.inventory.removeEventListener(InventoryComponent.Events.ItemPlaced, this);
-		this._window.inventory.inventory = null;
-		this._engine.teardown();
-		this._window.engine = null;
-		this._engine = null;
-
-		this.data = null;
-
-		if ((window as any).engine === this._engine) (window as any).engine = null;
-
-		this._window.close();
 	}
 }
 

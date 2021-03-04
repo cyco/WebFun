@@ -52,58 +52,44 @@ class TestCreatorWindow extends AbstractWindow implements EventListenerObject {
 
 	private async start() {
 		const controller = this.gameController;
+		await controller.resetEngine();
+		if (!controller.data) await controller.loadGameData();
 		const engine = controller.engine;
+		const assets = controller.engine.assets;
 
 		Settings.pickupItemsAutomatically = true;
 		Settings.skipDialogs = true;
 		Settings.skipTransitions = true;
 		Settings.difficulty = this.testCase.configuration.difficulty;
+		Settings.autostartEngine = false;
 
-		if (engine.metronome) {
-			await engine.metronome.stop();
-			((engine.metronome as any) as MetronomeInternals)._tickCount[0] = 0;
-		}
-
-		const data = (controller.data = controller.data.copy());
-		engine.assets = new AssetManager();
-		engine.assets.populate(Zone, data.zones);
-		engine.assets.populate(Tile, data.tiles);
-		engine.assets.populate(Puzzle, data.puzzles);
-		engine.assets.populate(Char, data.characters);
-		engine.assets.populate(Sound, data.sounds);
-
-		const story = this.buildStory(engine);
-		engine.hero.location = new Point(0, 0);
-		engine.hero.visible = true;
-		engine.hero.health = Hero.MaxHealth;
+		const story = this.buildStory(assets);
+		story.generateWorld(assets, Yoda);
 		engine.story = story;
 		engine.currentWorld = story.world;
 		engine.camera.update(Infinity);
-		engine.persistentState.gamesWon = this.testCase.configuration.gamesWon;
-		engine.metronome.addEventListener(Metronome.Event.AfterTick, this);
-		engine.metronome.addEventListener(Metronome.Event.BeforeTick, this);
-
-		engine.inventory.removeAllItems();
-		this.testCase.configuration.inventory.forEach(i =>
-			engine.inventory.addItem(engine.assets.get(Tile, i))
-		);
-
-		if (this.testCase.configuration.health) engine.hero.health = this.testCase.configuration.health;
-
-		story.generateWorld(engine.assets, Yoda);
-		if (!(story instanceof SimulatedStory)) {
-			engine.currentWorld = story.dagobah;
-			engine.hero.visible = false;
-			engine.totalPlayTime = 0;
-			engine.currentPlayStart = new Date();
-		}
 
 		controller.jumpStartEngine(
 			story instanceof SimulatedStory
 				? story.world.at(4, 5).zone
-				: engine.assets.find(Zone, ({ type }) => type === Zone.Type.Load)
+				: assets.find(Zone, ({ type }) => type === Zone.Type.Load)
 		);
 
+		this.testCase.configuration.inventory.forEach(i =>
+			engine.inventory.addItem(engine.assets.get(Tile, i))
+		);
+		if (!(story instanceof SimulatedStory)) {
+			engine.currentWorld = story.dagobah;
+			engine.totalPlayTime = 0;
+			engine.currentPlayStart = new Date();
+		}
+
+		if (this.testCase.configuration.health) engine.hero.health = this.testCase.configuration.health;
+		engine.hero.location = new Point(0, 0);
+		engine.persistentState.gamesWon = this.testCase.configuration.gamesWon;
+
+		engine.metronome.addEventListener(Metronome.Event.AfterTick, this);
+		engine.metronome.addEventListener(Metronome.Event.BeforeTick, this);
 		this._expectationEditor.engine = engine;
 
 		this.content.textContent = "";
@@ -114,6 +100,9 @@ class TestCreatorWindow extends AbstractWindow implements EventListenerObject {
 		if (this.testCase) {
 			this.setupInput(this.testCase.input);
 		}
+
+		((engine.metronome as any) as MetronomeInternals)._tickCount[0] = 0;
+		engine.metronome.start();
 	}
 
 	private setupInput(input: string): void {
@@ -123,14 +112,12 @@ class TestCreatorWindow extends AbstractWindow implements EventListenerObject {
 		replayer.fastForward();
 	}
 
-	public buildStory(engine: Engine): SimulatedStory | Story {
+	private buildStory(assets: AssetManager): SimulatedStory | Story {
 		const config = this._configBuilder.configuration;
 		if (config.zone >= 0) {
-			return this._buildSimulatedStory(engine, config);
+			return this._buildSimulatedStory(assets, config);
 		}
 
-		engine.removeEventListener(Engine.Event.CurrentZoneChange, this);
-		engine.addEventListener(Engine.Event.CurrentZoneChange, this);
 		return this._buildStory(config);
 	}
 
@@ -146,8 +133,7 @@ class TestCreatorWindow extends AbstractWindow implements EventListenerObject {
 		this._expectationEditor.evaluateExpectations();
 	}
 
-	private _buildSimulatedStory(engine: Engine, config: Configuration) {
-		const assets = engine.assets;
+	private _buildSimulatedStory(assets: AssetManager, config: Configuration) {
 		const t = (t: number) => (t > 0 ? assets.get(Tile, t) : null);
 		const z = (z: number) => (z > 0 ? assets.get(Zone, z) : null);
 
@@ -159,7 +145,7 @@ class TestCreatorWindow extends AbstractWindow implements EventListenerObject {
 			t(requiredItem1),
 			t(requiredItem2),
 			z(zone),
-			adjacentZones(z(zone), this._gameController.data.zones),
+			adjacentZones(z(zone), assets.getAll(Zone)),
 			assets
 		);
 	}
@@ -206,10 +192,10 @@ class TestCreatorWindow extends AbstractWindow implements EventListenerObject {
 
 	public set gameController(controller: GameController) {
 		this._gameController = controller;
-		this._replayer.gameController = controller;
-		this._recorder.gameController = controller;
 		this._configBuilder.palette = controller.palette;
 		this._configBuilder.gameData = controller.data;
+		this._replayer.gameController = controller;
+		this._recorder.gameController = controller;
 	}
 
 	public set testCase(testCase: TestCase) {

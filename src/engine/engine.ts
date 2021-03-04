@@ -264,8 +264,6 @@ class Engine extends EventTarget {
 		this.inputManager.mouseDownHandler = null;
 		this.inputManager.keyDownHandler = null;
 		this.inputManager.removeListeners();
-		this.metronome.ontick = null;
-		this.metronome.onrender = null;
 		this.sceneManager.engine = null;
 		this.inputManager.engine = null;
 		this.currentZone = null;

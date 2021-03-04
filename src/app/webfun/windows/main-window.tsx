@@ -218,6 +218,8 @@ class MainWindow extends AbstractWindow {
 		this.inventory.inventory = engine ? engine.inventory : null;
 		this.ammo.ammo = engine ? engine.hero.ammo : 0;
 		this.weapon.weapon = engine ? engine.hero.weapon : null;
+		this._updateHealth();
+		this._updateLocation({});
 	}
 
 	get mainContent(): Element {
@@ -235,7 +237,7 @@ class MainWindow extends AbstractWindow {
 		this.weapon.weapon = this.engine.hero.weapon;
 	}
 
-	private _updateLocation({ zone, world }: { zone: Zone; world: World }) {
+	private _updateLocation({ zone, world }: { zone?: Zone; world?: World }) {
 		const locationView = this.content.querySelector(Location.tagName) as Location;
 
 		let mask = Direction.None;
@@ -262,7 +264,7 @@ class MainWindow extends AbstractWindow {
 
 	private _updateHealth() {
 		const healthView = this.querySelectorCache(Health.tagName) as Health;
-		healthView.health = this._engine.hero.health;
+		healthView.health = this._engine?.hero.health ?? Hero.MaxHealth;
 	}
 
 	public get inventory(): InventoryComponent {

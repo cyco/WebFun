@@ -71,7 +71,7 @@ class MainMenu extends Menu {
 					{
 						title: "Exit",
 						mnemonic: 1,
-						callback: () => controller.stop()
+						callback: () => controller.exit()
 					}
 				]
 			},

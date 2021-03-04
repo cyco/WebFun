@@ -13,7 +13,6 @@ import { MainMenu, MainWindow } from "src/app/webfun/windows";
 import { Mixer } from "src/app/webfun/audio";
 import { Renderer } from "src/app/webfun/rendering/canvas";
 import { SceneView } from "src/app/webfun/ui";
-import { Settings } from "src";
 import { InputManager } from "src/app/webfun/input";
 import { Yoda } from "src/engine/variant";
 import { ZoneScene, MapScene } from "src/engine/scenes";
@@ -29,7 +28,6 @@ import * as LoaderModule from "src/app/webfun/loader";
 import { Tile } from "src/engine/objects";
 
 describe("WebFun.App.GameController", () => {
-	let originalSettings: any;
 	let subject: GameController;
 	let mainMenu: MainMenu;
 	let engine: Engine;
@@ -43,13 +41,11 @@ describe("WebFun.App.GameController", () => {
 	let mockedStory: Story;
 
 	beforeEach(() => {
-		originalSettings = Object.assign({}, Settings);
 		createElement = document.createElement.bind(document);
 	});
 
 	afterEach(() => {
-		localStorage.clear();
-		Object.assign(Settings, originalSettings);
+		(window as any).engine = null;
 	});
 
 	describe("when created", () => {
@@ -57,36 +53,7 @@ describe("WebFun.App.GameController", () => {
 			createSubject();
 		});
 
-		describe("it creates a new engine", () => {
-			it("provides a input manager", () => {
-				expect(engineInterface.InputManager(null)).toBeInstanceOf(InputManager);
-			});
-
-			it("provides a renderer", () => {
-				expect(engineInterface.Renderer(null)).toBe(mockRenderer);
-			});
-
-			it("provides a scene manager", () => {
-				expect(engineInterface.SceneManager()).toBe(engine.sceneManager);
-			});
-
-			it("provides a resource manager", () => {
-				expect(engineInterface.ResourceManager()).toBeInstanceOf(ResourceManager);
-			});
-
-			it("provides a mixer", () => {
-				expect(engineInterface.Mixer()).toBe(mockMixer);
-			});
-		});
-
-		it("listens for changes to hero's health", () => {
-			expect(engine.hero.addEventListener).toHaveBeenCalledWith(
-				Hero.Event.HealthDidChange,
-				subject
-			);
-		});
-
-		describe("a new game is started", () => {
+		describe("and a new game is started", () => {
 			let mockedPaletteAnimation: PaletteAnimation;
 
 			beforeEach(async () => {
@@ -97,11 +64,66 @@ describe("WebFun.App.GameController", () => {
 				await subject.newStory();
 			});
 
+			describe("it creates a new engine", () => {
+				it("provides a input manager", () => {
+					expect(engineInterface.InputManager(null)).toBeInstanceOf(InputManager);
+				});
+
+				it("provides a renderer", () => {
+					expect(engineInterface.Renderer(null)).toBe(mockRenderer);
+				});
+
+				it("provides a scene manager", () => {
+					expect(engineInterface.SceneManager()).toBe(engine.sceneManager);
+				});
+
+				it("provides a resource manager", () => {
+					expect(engineInterface.ResourceManager()).toBeInstanceOf(ResourceManager);
+				});
+
+				it("provides a mixer", () => {
+					expect(engineInterface.Mixer()).toBe(mockMixer);
+				});
+			});
+
+			it("listens for changes to hero's health", () => {
+				expect(engine.hero.addEventListener).toHaveBeenCalledWith(
+					Hero.Event.HealthDidChange,
+					subject
+				);
+			});
+
 			it("listens for item activate events", () => {
 				expect((mockedWindow as any).inventory.addEventListener).toHaveBeenCalledWith(
 					InventoryComponent.Events.ItemActivated,
 					subject
 				);
+			});
+
+			describe("with drawDebugStats active", () => {
+				beforeEach(async () => {
+					engine.gameState = GameState.Stopped;
+					subject.settings.drawDebugStats = true;
+					(engine.metronome.stop as jasmine.Spy).and.returnValue(Promise.resolve(void 0));
+					await subject.newStory();
+				});
+
+				it("adds an overlay to draw debug stats", () => {
+					expect(engine.sceneManager.addOverlay).toHaveBeenCalledWith(jasmine.any(DebugInfoScene));
+				});
+			});
+
+			describe("with debug mode active", () => {
+				beforeEach(async () => {
+					engine.gameState = GameState.Stopped;
+					subject.settings.debug = true;
+					(engine.metronome.stop as jasmine.Spy).and.returnValue(Promise.resolve(void 0));
+					await subject.newStory();
+				});
+
+				it("stores the newly created engine globally", () => {
+					expect((window as any).engine).toBe(engine);
+				});
 			});
 
 			describe("and the game is running", () => {
@@ -145,31 +167,6 @@ describe("WebFun.App.GameController", () => {
 		});
 	});
 
-	describe("when created with drawDebugStats active", () => {
-		beforeEach(() => {
-			Settings.drawDebugStats = true;
-			createSubject();
-		});
-
-		it("adds an overlay to draw debug stats", () => {
-			expect(engine.sceneManager.addOverlay).toHaveBeenCalledWith(jasmine.any(DebugInfoScene));
-		});
-	});
-
-	describe("when created with debug mode active", () => {
-		beforeEach(() => {
-			Settings.debug = true;
-			createSubject();
-		});
-		afterEach(() => {
-			delete (window as any).engine;
-		});
-
-		it("stores the newly created engine globally", () => {
-			expect((window as any).engine).toBe(engine);
-		});
-	});
-
 	function createSubject() {
 		mockMixer = {} as any;
 		mainMenu = {} as any;
@@ -186,6 +183,7 @@ describe("WebFun.App.GameController", () => {
 		spyOn(AppCanvasRendererModule, "Renderer").and.returnValue(mockRenderer);
 
 		subject = new GameController(Yoda, { data: "", palette: "", sfx: "" });
+		subject.settings = {} as any;
 	}
 
 	function mockElement(tagName: string) {
@@ -226,7 +224,7 @@ describe("WebFun.App.GameController", () => {
 		} as any);
 
 		return {
-			hero: { addEventListener: jasmine.createSpy() },
+			hero: { addEventListener: jasmine.createSpy(), removeEventListener: jasmine.createSpy() },
 			sceneManager: {
 				addOverlay: jasmine.createSpy(),
 				pushScene: jasmine.createSpy(),
@@ -234,7 +232,7 @@ describe("WebFun.App.GameController", () => {
 				currentScene: null,
 				popScene: jasmine.createSpy()
 			},
-			inventory: { removeAllItems: jasmine.createSpy() },
+			inventory: { removeAllItems: jasmine.createSpy(), removeEventListener: jasmine.createSpy() },
 			assets: { populate: jasmine.createSpy(), find: jasmine.createSpy() },
 			metronome: { start: jasmine.createSpy(), stop: jasmine.createSpy() },
 			persistentState: { gamesWon: 0 },
@@ -246,7 +244,8 @@ describe("WebFun.App.GameController", () => {
 					return mockedStory;
 				}
 			},
-			spu: { prepareExecution: jasmine.createSpy() }
+			spu: { prepareExecution: jasmine.createSpy() },
+			teardown: jasmine.createSpy()
 		} as any;
 	}
 });

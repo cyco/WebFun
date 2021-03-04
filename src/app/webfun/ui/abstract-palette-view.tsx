@@ -28,6 +28,10 @@ abstract class AbstractPaletteView extends Component {
 	}
 
 	public redraw(_: Point = null): void {
+		if (this.size) {
+			this.ctx.clearRect(0, 0, this.size.width, this.size.height);
+		}
+
 		if (!this.ctx) return;
 		if (!this.size) return;
 		if (!this.palette) return;

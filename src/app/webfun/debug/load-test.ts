@@ -8,6 +8,8 @@ export default (gameController: GameController) => async (file: File = null): Pr
 	const contents = await file.readAsText();
 	const Parser = (await import("./automation/test")).Parser;
 	const testCases = Parser.Parse(file.name, contents);
+	if (!testCases.length) return;
+	if (!gameController.data) await gameController.loadGameData();
 
 	const TestCreatorWindow = (await import("./components")).TestCreatorWindow;
 	testCases.forEach(testCase => {

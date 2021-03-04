@@ -40,7 +40,6 @@ class App {
 	private async showDefaultGameController(): Promise<GameController> {
 		this.defaultGameController = new GameController(Yoda, this.settings.url.yoda);
 		this.defaultGameController.show(this.windowManager);
-		await this.defaultGameController.newStory();
 
 		return this.defaultGameController;
 	}
@@ -55,7 +54,7 @@ class App {
 		];
 		games.forEach(([name, type, urls]) => {
 			document.body.appendChild(
-				<a onclick={() => this.load(type, urls)}>
+				<a onclick={() => this.load(type, urls).then(c => c.newStory())}>
 					Load <i>{name}</i>
 				</a>
 			);
@@ -71,12 +70,12 @@ class App {
 		setTimeout(() => (window.document.scrollingElement.scrollTop = 0));
 	}
 
-	private async load(variant: Variant, urls: any): Promise<void> {
+	private async load(variant: Variant, urls: any): Promise<GameController> {
 		const controller = new GameController(variant, urls);
-		controller.show(this.windowManager);
-		await controller.newStory();
+		await controller.show(this.windowManager);
 
 		//if (!this.defaultGameController) this.defaultGameController = controller;
+		return controller;
 	}
 }
 export default App;
