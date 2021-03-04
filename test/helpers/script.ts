@@ -71,9 +71,18 @@ function mockEngine(): Engine {
 		persistentState: {},
 		sceneManager: { pushScene: (): void => void 0 },
 		mixer: { play: (): void => void 0 },
-		inventory: { contains: (): boolean => false },
+		inventory: {
+			items: [],
+			contains(i: any) {
+				return this.items.includes(i);
+			},
+			addItem(i: any) {
+				this.items.push(i);
+			}
+		},
 		inputManager: {},
-		findLocationOfZone: (): void => void 0
+		findLocationOfZone: (): void => void 0,
+		story: { goal: {} }
 	} as any;
 }
 

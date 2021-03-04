@@ -15,7 +15,7 @@ import HealthIsGreaterThan from "./health-is-greater-than";
 import HealthIsLessThan from "./health-is-less-than";
 import HeroIsAt from "./hero-is-at";
 import IsVariable from "./is-variable";
-import ItemPlaced from "./item-placed";
+import HasGoalItem from "./has-goal-item";
 import NoItemPlaced from "./no-item-placed";
 import MonsterIsDead from "./monster-is-dead";
 import PlacedItemIs from "./placed-item-is";
@@ -53,7 +53,7 @@ const ConditionsByName = {
 	HealthIsLessThan,
 	HeroIsAt,
 	IsVariable,
-	ItemPlaced,
+	HasGoalItem,
 	MonsterIsDead,
 	NoItemPlaced,
 	PlacedItemIs,
