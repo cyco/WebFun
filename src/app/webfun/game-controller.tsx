@@ -8,10 +8,11 @@ import {
 	AssetManager,
 	Variant,
 	Interface,
-	PaletteAnimation
+	PaletteAnimation,
+	Story
 } from "src/engine";
 import { ConfirmationResult, ModalConfirm } from "src/ux";
-import { EventTarget, srand } from "src/util";
+import { EventTarget, Point, srand } from "src/util";
 import { FilePicker, WindowManager } from "src/ui";
 import { ZoneScene } from "src/engine/scenes";
 import { MainMenu, MobileMainMenu, MainWindow } from "./windows";
@@ -137,7 +138,6 @@ class GameController extends EventTarget implements EventListenerObject {
 			this._engine.story = story;
 
 			this._showSceneView();
-			this._engine.gameState = GameState.Running;
 		} catch (error) {
 			this.presentView(<ErrorView error={error}></ErrorView>);
 		}
@@ -152,6 +152,17 @@ class GameController extends EventTarget implements EventListenerObject {
 		) {
 			return;
 		}
+
+		const { seed, planet, size } = this.engine.story;
+		srand(seed);
+		await this._loadGameData();
+		const story = new Story(seed, planet, size);
+
+		this._engine.inventory.removeAllItems();
+		story.generateWorld(this._engine.assets, this._engine.variant, 10);
+		this._engine.story = story;
+
+		this._showSceneView();
 	}
 
 	public async load(file: File = null): Promise<void> {
@@ -217,6 +228,7 @@ class GameController extends EventTarget implements EventListenerObject {
 		engine.currentZone = zone;
 		engine.currentWorld = engine.world.findLocationOfZone(zone) ? engine.world : engine.dagobah;
 		engine.hero.appearance = engine.assets.find(Char, (c: Char) => c.isHero());
+		engine.hero.location = new Point(9, 9);
 		engine.spu.prepareExecution(EvaluationMode.JustEntered, zone);
 
 		engine.sceneManager.clear();
@@ -233,6 +245,7 @@ class GameController extends EventTarget implements EventListenerObject {
 		if (this.settings.autostartEngine) {
 			engine.metronome.start();
 		}
+		this._engine.gameState = GameState.Running;
 	}
 
 	private _loadGameData(): Promise<void> {
