@@ -65,7 +65,6 @@ class ScriptDebugger implements DebuggingScriptProcessingUnitDelegate {
 		) as Window;
 
 		if (!this._window || !this._window.content) {
-			console.log("no window or no content: ", this._window);
 			return;
 		}
 		this._window.content.style.minWidth = "200px";
