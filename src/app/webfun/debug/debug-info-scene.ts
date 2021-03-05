@@ -4,7 +4,6 @@ import { Renderer } from "src/engine/rendering";
 import { Scene, ZoneScene } from "src/engine/scenes";
 
 class DebugInfoScene extends Scene {
-	private _ticks = 0;
 	private _fps = 0;
 	private _tps = 0;
 	private _lastFrame = performance.now();
@@ -33,15 +32,14 @@ class DebugInfoScene extends Scene {
 		);
 	}
 
-	public async update(ticks: number): Promise<void> {
-		this._ticks += ticks;
+	public async update(_: number): Promise<void> {
 		this.calculateTPS();
 	}
 
 	private calculateTPS() {
 		const now = performance.now();
 		const currentTPS = 1000 / (now - this._lastTick);
-		this._tps = this.smoothen(currentTPS, this._tps, 0.1);
+		this._tps = this.smoothen(currentTPS, this._tps);
 		this._lastTick = now;
 	}
 
