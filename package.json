@@ -87,8 +87,6 @@
     "eslint-plugin-prettier": "^3.3.0",
     "eslint-plugin-react": "^7.22.0",
     "file-loader": "^6.2.0",
-    "font-loader": "^0.1.2",
-    "google-fonts-plugin": "^5.0.2",
     "html-webpack-plugin": "^5.2.0",
     "ignore-loader": "^0.1.2",
     "jasmine-core": "^3.6.0",
