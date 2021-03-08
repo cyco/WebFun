@@ -1,0 +1,36 @@
+-= WebFun Test =--
+Description: Test getting item from crashed fighter
+Seed: 0x25b
+Difficulty: hard
+Health: 768
+Zone: 0x25b
+Find: 0x50c
+Required: 0x1b0
+Inventory: 0x12, 0x1b0
+
+- Input -
+. 👋 0x012 . → → → → → → → . ↑ . . . → → → → ↑ ↑ ↑ . → . ↑ . . . . . . . . . . . . . . ↑ . . . . . . . . . . ↑ . . . . ↑ . . . . . . . . ← ← ← ↖ ↖ ↖ ↖ ↑ ↑ → → . ↓ ↓ . 👋 0x1b0 at 7x9 . . . . . 🔫 🔫 🔫 . . . ↓ . . → . 🔫 🔫 🔫 🔫 🔫 🔫 🔫 🔫 🔫 🔫 🔫 🔫 🔫 . 🔫 🔫 . ↓ ↘ → → → → . . ↗ . . . ↗ . . . . . . . . . . 
+
+- Expect -
+Inventory contains 0x50c
+-- FIXME: This zone is dropping the quest item multiple times! Expectation should be
+-- Inventory is 0x12, 0x50c
+
+--------------------------------------------------------------------------------
+
+-= WebFun Test =--
+Description: Test getting item from NPC
+
+Seed: 0x25b
+Difficulty: hard
+Health: 768
+Zone: 0x25b
+Find: 0x50c
+Required: 0x1b0
+Inventory: 0x012, 0x1b0
+
+- Input -
+. 👋 0x012 . ↑ ↑ . ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ . → → → → → → → . ↓ . 👋 0x1b0 at 7x9 . . . . . . . . . . . . 
+
+- Expect -
+Inventory contains 0x50c
