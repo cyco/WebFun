@@ -5,20 +5,20 @@ import { Point, DiscardingStorage, download } from "src/util";
 
 import { GameController } from "src/app/webfun/index";
 import { TestCase, Configuration, Serializer } from "src/app/webfun/debug/automation/test";
-import {
-	InputReplayer,
-	InputRecorder,
-	ExpectationEditor
-} from "src/app/webfun/debug/components/index";
+import { ExpectationEditor } from "src/app/webfun/debug/components/index";
 import ConfigurationBuilder from "./configuration-builder";
 import SimulatedStory from "src/app/webfun/debug/simulated-story";
 import adjacentZones from "./adjacent-zones";
-import { Zone, Tile, Sound, Puzzle, Char } from "src/engine/objects";
+import { Zone, Tile } from "src/engine/objects";
 import { WorldSize } from "src/engine/generation";
-import { Story, Engine, AssetManager, Hero } from "src/engine";
+import { Story, Engine, AssetManager } from "src/engine";
 import Settings from "src/settings";
 import Metronome, { MetronomeInternals } from "src/engine/metronome";
 import { Yoda } from "src/engine/variant";
+import { RecordingInputManager, ReplayingInputManager } from "../../automation";
+import { InputManager as AppInputManager } from "src/app/webfun/input";
+import { assemble, parse } from "../../automation/input";
+import { DefaultTickDuration } from "src/engine/metronome";
 
 class TestCreatorWindow extends AbstractWindow implements EventListenerObject {
 	public static readonly tagName = "wf-debug-test-creator-window";
@@ -26,9 +26,9 @@ class TestCreatorWindow extends AbstractWindow implements EventListenerObject {
 	private _state: Storage = new DiscardingStorage();
 	private _testCase: TestCase = null;
 	private _configBuilder: ConfigurationBuilder = (<ConfigurationBuilder />) as ConfigurationBuilder;
-	private _replayer: InputReplayer = (<InputReplayer />) as InputReplayer;
-	private _recorder: InputRecorder = (<InputRecorder />) as InputRecorder;
 	private _expectationEditor: ExpectationEditor = (<ExpectationEditor />) as ExpectationEditor;
+	private _recorder: RecordingInputManager = null;
+	private _input: string = ".";
 
 	public constructor() {
 		super();
@@ -63,6 +63,27 @@ class TestCreatorWindow extends AbstractWindow implements EventListenerObject {
 		Settings.difficulty = this.testCase.configuration.difficulty;
 		Settings.autostartEngine = false;
 
+		const recorder = new RecordingInputManager(engine.inputManager as AppInputManager);
+		recorder.records = parse(this.testCase.input);
+		recorder.engine = engine;
+		this._recorder = recorder;
+
+		const replayer = new ReplayingInputManager();
+		replayer.input = this.testCase.input;
+		replayer.engine = engine;
+
+		const handler = () => {
+			engine.metronome.tickDuration = DefaultTickDuration;
+			replayer.removeEventListener(ReplayingInputManager.Event.InputEnd, handler);
+
+			replayer.removeListeners();
+			engine.inputManager = recorder;
+			recorder.addListeners();
+			recorder.isRecording = true;
+		};
+		replayer.addEventListener(ReplayingInputManager.Event.InputEnd, handler);
+		engine.inputManager = replayer;
+
 		const story = this.buildStory(assets);
 		story.generateWorld(assets, Yoda);
 		engine.story = story;
@@ -93,23 +114,11 @@ class TestCreatorWindow extends AbstractWindow implements EventListenerObject {
 		this._expectationEditor.engine = engine;
 
 		this.content.textContent = "";
-		this.content.appendChild(this._replayer);
-		this.content.appendChild(this._recorder);
 		this.content.appendChild(this._expectationEditor);
 
-		if (this.testCase) {
-			this.setupInput(this.testCase.input);
-		}
-
+		engine.metronome.tickDuration = 1;
 		((engine.metronome as any) as MetronomeInternals)._tickCount[0] = 0;
 		engine.metronome.start();
-	}
-
-	private setupInput(input: string): void {
-		const replayer: InputReplayer = this._replayer;
-		replayer.load(input);
-		replayer.start();
-		replayer.fastForward();
 	}
 
 	private buildStory(assets: AssetManager): SimulatedStory | Story {
@@ -121,15 +130,7 @@ class TestCreatorWindow extends AbstractWindow implements EventListenerObject {
 		return this._buildStory(config);
 	}
 
-	handleEvent(evt: Event): void {
-		if (
-			evt.type === Engine.Event.CurrentZoneChange &&
-			!this._replayer.isInstalled() &&
-			Settings.autosaveTestOnZoneChange
-		) {
-			this.downloadTest();
-		}
-
+	handleEvent(_: Event): void {
 		this._expectationEditor.evaluateExpectations();
 	}
 
@@ -162,7 +163,7 @@ class TestCreatorWindow extends AbstractWindow implements EventListenerObject {
 		const serializer = new Serializer();
 		const data = serializer.serialize(
 			this._configBuilder.configuration,
-			this._recorder.input.replace(/(\s\.)+$/gi, ""),
+			this._recorder ? assemble(this._recorder?.records).replace(/(\s\.)+$/gi, "") : this._input,
 			this._expectationEditor.expectations
 		);
 
@@ -194,15 +195,13 @@ class TestCreatorWindow extends AbstractWindow implements EventListenerObject {
 		this._gameController = controller;
 		this._configBuilder.palette = controller.palette;
 		this._configBuilder.gameData = controller.data;
-		this._replayer.gameController = controller;
-		this._recorder.gameController = controller;
 	}
 
 	public set testCase(testCase: TestCase) {
 		this._testCase = testCase;
 		this._configBuilder.configuration = testCase.configuration;
 		this._expectationEditor.expectations = testCase.expectations;
-		this._recorder.input = testCase.input;
+		this._input = testCase.input;
 	}
 
 	public get testCase(): TestCase {
@@ -210,7 +209,7 @@ class TestCreatorWindow extends AbstractWindow implements EventListenerObject {
 
 		testCase.expectations = this._expectationEditor.expectations;
 		testCase.configuration = this._configBuilder.configuration;
-		testCase.input = this._recorder.input;
+		testCase.input = this._recorder ? assemble(this._recorder.records) : this._input;
 
 		return testCase;
 	}

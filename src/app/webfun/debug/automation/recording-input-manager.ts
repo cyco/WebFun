@@ -86,11 +86,19 @@ class RecordingInputManager implements InputManager {
 	}
 
 	public addListeners(): void {
+		this.implementation.engine.metronome.addEventListener(Metronome.Event.Start, this);
+		this.implementation.engine.metronome.addEventListener(Metronome.Event.BeforeTick, this);
+		this.implementation.engine.addEventListener(Engine.Event.WeaponChanged, this);
+
 		this.implementation && this.implementation.addListeners();
 	}
 
 	public removeListeners(): void {
-		this.engine.removeEventListener(Engine.Event.CurrentZoneChange, this);
+		this.implementation && this.implementation.removeListeners();
+
+		this.implementation.engine.removeEventListener(Engine.Event.WeaponChanged, this);
+		this.implementation.engine.metronome.removeEventListener(Metronome.Event.Start, this);
+		this.implementation.engine.metronome.removeEventListener(Metronome.Event.BeforeTick, this);
 	}
 
 	public clear(): void {
@@ -144,20 +152,8 @@ class RecordingInputManager implements InputManager {
 		}
 	}
 
-	public set engine(s: Engine) {
-		if (this.implementation && this.implementation.engine) {
-			this.implementation.engine.removeEventListener(Engine.Event.WeaponChanged, this);
-			this.implementation.engine.metronome.removeEventListener(Metronome.Event.Start, this);
-			this.implementation.engine.metronome.removeEventListener(Metronome.Event.BeforeTick, this);
-		}
-
-		this.implementation && (this.implementation.engine = s);
-
-		if (this.implementation && this.implementation.engine) {
-			this.implementation.engine.metronome.addEventListener(Metronome.Event.Start, this);
-			this.implementation.engine.metronome.addEventListener(Metronome.Event.BeforeTick, this);
-			this.implementation.engine.addEventListener(Engine.Event.WeaponChanged, this);
-		}
+	public set engine(e: Engine) {
+		this.implementation && (this.implementation.engine = e);
 	}
 
 	public get engine(): Engine {

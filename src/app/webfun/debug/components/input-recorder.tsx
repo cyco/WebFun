@@ -4,13 +4,13 @@ import { Component, WindowManager } from "src/ui";
 import { IconButton, Window } from "src/ui/components";
 
 import { InputManager as AppInputManager } from "src/app/webfun/input";
-import { GameController } from "src/app/webfun/index";
 import { RecordingInputManager } from "src/app/webfun/debug/automation";
 import { assemble, parse } from "../automation/input";
+import { Engine } from "src/engine";
 
 class InputRecorder extends Component {
 	public static readonly tagName = "wf-debug-input-recorder";
-	private _gameController: GameController = null;
+	private _engine: Engine = null;
 	private _recorder: RecordingInputManager = null;
 
 	private _record = (
@@ -34,8 +34,8 @@ class InputRecorder extends Component {
 	protected disconnectedCallback(): void {
 		this._recorder.isRecording = false;
 		this._recorder.engine = null;
-		this._gameController.engine.inputManager = this._recorder.implementation;
-		this._gameController.engine.inputManager.engine = this._gameController.engine;
+		this._engine.inputManager = this._recorder.implementation;
+		this._engine.inputManager.engine = this._engine;
 
 		super.disconnectedCallback();
 	}
@@ -62,22 +62,22 @@ class InputRecorder extends Component {
 	}
 
 	public get input(): string {
-		return assemble(this._recorder.records);
+		return assemble(this._recorder?.records);
 	}
 
 	public set input(i: string) {
 		this._recorder.records = parse(i);
 	}
 
-	public set gameController(c: GameController) {
-		this._gameController = c;
-		this._recorder = new RecordingInputManager(c.engine.inputManager as AppInputManager);
-		c.engine.inputManager = this._recorder;
-		c.engine.inputManager.engine = c.engine;
+	public set engine(engine: Engine) {
+		this._recorder = new RecordingInputManager(engine.inputManager as AppInputManager);
+		engine.inputManager = this._recorder;
+		engine.inputManager.engine = engine;
+		this._engine = engine;
 	}
 
-	public get gameController(): GameController {
-		return this._gameController;
+	public get engine(): Engine {
+		return this._engine;
 	}
 }
 

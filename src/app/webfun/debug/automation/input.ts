@@ -63,7 +63,7 @@ function parse(input: string): string[] {
 }
 
 function assemble(input: string[]): string {
-	if (input.length === 0) return ".";
+	if (!input || input.length === 0) return ".";
 
 	let result = "";
 	for (let i = 0; i < input.length; i++) {

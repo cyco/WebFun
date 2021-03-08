@@ -200,13 +200,13 @@ class GameController extends EventTarget implements EventListenerObject {
 
 	private setupEngine() {
 		const engine: Engine = new Engine(this._variant, this._buildInterface(this._paths));
-		engine.camera.hero = engine.hero;
 		engine.hero.addEventListener(Hero.Event.HealthDidChange, this);
 
 		if (this.settings.drawDebugStats) {
 			engine.sceneManager.addOverlay(new DebugInfoScene());
 		}
 
+		engine.camera.hero = engine.hero;
 		this._sceneView.manager.engine = engine;
 		this._window.engine = engine;
 		this._engine = engine;
