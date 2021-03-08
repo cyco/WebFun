@@ -12,7 +12,7 @@ import {
 	Story
 } from "src/engine";
 import { ConfirmationResult, ModalConfirm } from "src/ux";
-import { EventTarget, Point, srand } from "src/util";
+import { EventTarget, srand } from "src/util";
 import { FilePicker, WindowManager } from "src/ui";
 import { ZoneScene } from "src/engine/scenes";
 import { MainMenu, MobileMainMenu, MainWindow } from "./windows";
