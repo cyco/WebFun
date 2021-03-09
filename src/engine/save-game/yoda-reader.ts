@@ -173,9 +173,9 @@ class YodaReader extends Reader {
 		const cooldown = stream.readInt16();
 		const preferred = stream.readInt16();
 
+		const waypoints: Point[] = [];
 		for (let i = 0; i < 4; i++) {
-			stream.readUint32();
-			stream.readUint32();
+			waypoints.push(new Point(stream.readUint32(), stream.readUint32()));
 		}
 
 		const monster = new MutableMonster();
@@ -201,6 +201,7 @@ class YodaReader extends Reader {
 		monster.flag34 = flag34;
 		monster.hasItem = hasItem;
 		monster.preferredDirection = preferred;
+		monster.waypoints = waypoints;
 
 		return monster;
 	}

@@ -150,7 +150,9 @@ class Writer {
 		stream.writeInt16(0);
 
 		for (let i = 0; i < 4; i++) {
-			stream.writeInt32(0); // TODO;
+			const waypoint = npc.waypoints[i];
+			stream.writeInt32(waypoint.x);
+			stream.writeInt32(waypoint.y);
 		}
 	}
 
