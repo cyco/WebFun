@@ -55,7 +55,7 @@ class Writer {
 		stream.writeUint32(state.difficulty);
 		stream.writeUint32(state.timeElapsed);
 
-		stream.writeInt32(state.worldSize.rawValue - 1);
+		stream.writeInt32(state.worldSize);
 
 		stream.writeInt16(state.unknownCount);
 		stream.writeInt16(state.unknownSum);

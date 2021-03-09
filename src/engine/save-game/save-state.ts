@@ -1,5 +1,3 @@
-import { WorldSize } from "src/engine/generation";
-
 import { Variant } from "../variant";
 import { Point } from "../../util";
 import World from "src/engine/world";
@@ -35,7 +33,7 @@ class SaveState {
 
 	public difficulty: number;
 	public timeElapsed: number;
-	public worldSize: WorldSize;
+	public worldSize: number; // in puzzles (?)
 
 	public unknownCount: number;
 	public unknownSum: number;

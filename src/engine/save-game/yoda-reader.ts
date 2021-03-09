@@ -95,13 +95,8 @@ class YodaReader extends Reader {
 		state.difficulty = difficulty;
 		state.unknownCount = unknownCount;
 		state.unknownSum = unknownSum;
-		try {
-			state.worldSize = WorldSize.isWorldSize(1 + worldSize)
-				? WorldSize.fromNumber(1 + worldSize)
-				: WorldSize.Medium;
-		} catch (_) {
-			state.worldSize = WorldSize.Small;
-		}
+		state.worldSize = worldSize;
+
 		return state;
 	}
 

@@ -13,6 +13,7 @@ import { AssetManager } from "src/engine";
 import { Zone, Puzzle, Tile, Sound, Char } from "src/engine/objects";
 import { Yoda } from "src/engine/variant";
 import Settings from "src/settings";
+import { WorldSize } from "src/engine/generation";
 
 class SaveGameInspector extends AbstractInspector {
 	private _editorView: EditorView = (
@@ -75,7 +76,7 @@ class SaveGameInspector extends AbstractInspector {
 		const data = controller.data;
 		const engine = controller.engine;
 		const state = this.data.state;
-		const story = new MutableStory(state.seed, state.planet, state.worldSize);
+		const story = new MutableStory(state.seed, state.planet, WorldSize.Medium);
 		story.world = this._createWorld(state.world);
 		story.dagobah = this._createWorld(state.dagobah);
 

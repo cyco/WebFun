@@ -250,9 +250,7 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 					worldSize{" "}
 					<input
 						value={`${this._state.worldSize}`}
-						onchange={e =>
-							(this._state.worldSize = WorldSize.fromNumber(+(e.target as HTMLInputElement).value))
-						}
+						onchange={e => (this._state.worldSize = +(e.target as HTMLInputElement).value)}
 					/>
 				</label>
 				<label>
