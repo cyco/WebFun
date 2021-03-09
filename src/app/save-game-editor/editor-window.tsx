@@ -1,13 +1,19 @@
 import "./editor-window.scss";
 
-import { AbstractWindow, ProgressIndicator } from "src/ui/components";
+import { AbstractWindow, ProgressIndicator, IconButton } from "src/ui/components";
 import { ColorPalette, GameData, AssetManager } from "src/engine";
 import { DataProvider, PaletteProvider } from "src/app/editor/data";
-import { Reader as SaveGameReaderFactory, SaveState } from "src/engine/save-game";
+import { Reader as SaveGameReaderFactory, SaveState, Writer } from "src/engine/save-game";
 import { Tile, Zone, Puzzle, Char, Sound } from "src/engine/objects";
 
 import EditorView from "./editor-view";
-import { InputStream, PrefixedStorage } from "src/util";
+import {
+	DiscardingOutputStream,
+	download,
+	InputStream,
+	OutputStream,
+	PrefixedStorage
+} from "src/util";
 
 class EditorWindow extends AbstractWindow {
 	static readonly tagName = "wf-save-game-editor-window";
@@ -15,11 +21,15 @@ class EditorWindow extends AbstractWindow {
 	private _editorView: EditorView = (
 		<EditorView storage={new PrefixedStorage(localStorage, "save-game-editor")} />
 	) as EditorView;
+	private _assets: AssetManager;
 
 	constructor() {
 		super();
 
 		this.title = "Save Game Editor";
+		this.addTitlebarButton(
+			<IconButton icon="download" onclick={() => this.downloadSaveGame()}></IconButton>
+		);
 	}
 
 	protected connectedCallback(): void {
@@ -44,6 +54,7 @@ class EditorWindow extends AbstractWindow {
 			assets.populate(Puzzle, gameData.puzzles);
 			assets.populate(Char, gameData.characters);
 			assets.populate(Sound, gameData.sounds);
+			this._assets = assets;
 			const saveGame = read(assets);
 
 			this.presentSaveGame(saveGame, gameData, palette);
@@ -56,6 +67,18 @@ class EditorWindow extends AbstractWindow {
 		this._progressIndicator.remove();
 		this._editorView.presentState(saveGame, gameData, palette);
 		this.content.appendChild(this._editorView);
+	}
+
+	private downloadSaveGame(): void {
+		const saveGame = this._editorView.saveGame;
+		const writer = new Writer(this._assets);
+
+		const sizingStream = new DiscardingOutputStream();
+		writer.write(saveGame, sizingStream);
+
+		const output = new OutputStream(sizingStream.offset);
+		writer.write(saveGame, output);
+		download(output.buffer, "savegame.wld");
 	}
 }
 
