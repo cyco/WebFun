@@ -41,7 +41,7 @@ describe("WebFun.Acceptance.Save game reading", () => {
 	it("writes save games correctly", async () => {
 		const { state, assets } = await readSaveGame("save-games/yoda.wld", Yoda);
 		const outputStream = writeSaveGame(state, assets);
-		expect(outputStream.buffer.byteLength).toEqual(73953);
+		expect(outputStream.buffer.byteLength).toEqual(76065);
 	});
 
 	async function readSaveGame(

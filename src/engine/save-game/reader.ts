@@ -119,7 +119,7 @@ abstract class Reader {
 			zone.tileIDs = stream.readInt16Array(tileCount);
 		}
 
-		zone.visited = this.readBool(stream);
+		zone.visited = this.readBool(stream) || visited;
 		this.readHotspots(stream, zone);
 
 		if (visited) {
