@@ -278,8 +278,8 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 		return this._gameData;
 	}
 
-	public contextMenuForSector(item: Sector, _at: Point, _i: World, of: Map): Menu {
-		if (!item.zone) {
+	public contextMenuForSector(sector: Sector, _at: Point, _i: World, of: Map): Menu {
+		if (!sector.zone) {
 			return new Menu([
 				{
 					title: "Place zone",
@@ -289,30 +289,45 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 
 						const newId = id.parseInt();
 						this._state.currentZoneID = newId;
-						item.zone = this.data.zones[newId] || null;
+						sector.zone = this.data.zones[newId] || null;
 						of.redraw();
 					}
 				}
 			]);
 		}
 
+		const promptForId = async function (
+			text: string,
+			defaultValue: number = null
+		): Promise<number> {
+			const input = await ModalPrompt(text, {
+				defaultValue: defaultValue?.toHex() ?? ""
+			});
+			if (input === null) return null;
+
+			const id = input.parseInt();
+			if (isNaN(id)) return null;
+
+			return id;
+		};
+
 		return new Menu([
 			{
 				title: "Clear",
 				callback: () => {
-					item.additionalGainItem = null;
-					item.puzzleIndex = -1;
-					item.isGoal = -1;
-					item.findItem = null;
-					item.npc = null;
-					item.requiredItem = null;
-					item.solved1 = false;
-					item.solved2 = false;
-					item.solved3 = false;
-					item.solved4 = false;
-					item.visited = false;
-					item.zone = null;
-					item.additionalRequiredItem = null;
+					sector.additionalGainItem = null;
+					sector.puzzleIndex = -1;
+					sector.isGoal = -1;
+					sector.findItem = null;
+					sector.npc = null;
+					sector.requiredItem = null;
+					sector.solved1 = false;
+					sector.solved2 = false;
+					sector.solved3 = false;
+					sector.solved4 = false;
+					sector.visited = false;
+					sector.zone = null;
+					sector.additionalRequiredItem = null;
 
 					of.redraw();
 				}
@@ -320,32 +335,54 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 			{
 				title: "Change Zone",
 				callback: async () => {
-					const id = await ModalPrompt("New Zone ID", {
-						defaultValue: (item.zone ? item.zone.id : null).toHex(2)
-					});
+					const id = await promptForId("New zone id", sector.zone?.id);
 					if (id === null) return;
-
-					const newId = id.parseInt();
-					this._state.currentZoneID = newId;
-					item.zone = this.data.zones[newId] || null;
+					this._state.currentZoneID = id;
+					sector.zone = this.data.zones[id] || null;
 					of.redraw();
 				}
 			},
+			...(sector.zone.providedItems.length
+				? [
+						{
+							title: "Set provided item",
+							callback: async () => {
+								const id = await promptForId("Provided item id:", sector.findItem?.id);
+								if (id === null) return;
+
+								sector.findItem = this.data.tiles[id];
+							}
+						}
+				  ]
+				: []),
+			...(sector.zone.requiredItems.length
+				? [
+						{
+							title: "Set required item",
+							callback: async () => {
+								const id = await promptForId("Required item id:", sector.requiredItem?.id);
+								if (id === null) return;
+
+								sector.requiredItem = this.data.tiles[id];
+							}
+						}
+				  ]
+				: []),
 			{
-				title: item.visited ? "Mark unvisited" : "Mark visited",
+				title: sector.visited ? "Mark unvisited" : "Mark visited",
 				callback: () => {
-					item.visited = !item.visited;
-					item.additionalRequiredItem = null;
-					item.additionalGainItem = null;
-					item.puzzleIndex = -1;
-					item.isGoal = -1;
-					item.findItem = null;
-					item.npc = null;
-					item.requiredItem = null;
-					item.solved1 = !item.visited ? false : item.solved1;
-					item.solved2 = !item.visited ? false : item.solved2;
-					item.solved3 = !item.visited ? false : item.solved3;
-					item.solved4 = !item.visited ? false : item.solved4;
+					sector.visited = !sector.visited;
+					sector.additionalRequiredItem = null;
+					sector.additionalGainItem = null;
+					sector.puzzleIndex = -1;
+					sector.isGoal = -1;
+					sector.findItem = null;
+					sector.npc = null;
+					sector.requiredItem = null;
+					sector.solved1 = !sector.visited ? false : sector.solved1;
+					sector.solved2 = !sector.visited ? false : sector.solved2;
+					sector.solved3 = !sector.visited ? false : sector.solved3;
+					sector.solved4 = !sector.visited ? false : sector.solved4;
 
 					of.redraw();
 				}
