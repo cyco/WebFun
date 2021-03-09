@@ -116,19 +116,19 @@ class Writer {
 
 		if (visited) {
 			stream.writeUint32(zone.monsters.length);
-			zone.monsters.forEach((npc: Monster) => this._writeNPC(npc, stream));
+			zone.monsters.forEach((monster: Monster) => this.writeMonster(monster, stream));
 
 			stream.writeUint32(zone.actions.length);
 			zone.actions.forEach((action: Action) => stream.writeUint32(+action.enabled));
 		}
 	}
 
-	private _writeNPC(npc: Monster, stream: OutputStream): void {
-		stream.writeInt16(npc.alive ? npc.face.id : -1);
-		stream.writeInt16(npc.position.x);
-		stream.writeInt16(npc.position.y);
-		stream.writeInt16(npc.damageTaken);
-		stream.writeUint32(+npc.enabled);
+	private writeMonster(monster: Monster, stream: OutputStream): void {
+		stream.writeInt16(monster.alive ? monster.face.id : -1);
+		stream.writeInt16(monster.position.x);
+		stream.writeInt16(monster.position.y);
+		stream.writeInt16(monster.damageTaken);
+		stream.writeUint32(+monster.enabled);
 		stream.writeInt16(0); // TODO: field_10
 		stream.writeInt16(0); // TODO: y__
 		stream.writeInt16(0); // TODO: x__
@@ -150,7 +150,7 @@ class Writer {
 		stream.writeInt16(0);
 
 		for (let i = 0; i < 4; i++) {
-			const waypoint = npc.waypoints[i];
+			const waypoint = monster.waypoints[i];
 			stream.writeInt32(waypoint.x);
 			stream.writeInt32(waypoint.y);
 		}
