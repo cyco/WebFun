@@ -39,7 +39,6 @@ class SaveState {
 
 	public unknownCount: number;
 	public unknownSum: number;
-	public unknownThing: number;
 }
 
 export default SaveState;

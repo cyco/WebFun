@@ -269,13 +269,6 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 						onchange={e => (this._state.unknownSum = +(e.target as HTMLInputElement).value)}
 					/>
 				</label>
-				<label>
-					unknownThing{" "}
-					<input
-						value={`${this._state.unknownThing}`}
-						onchange={e => (this._state.unknownThing = +(e.target as HTMLInputElement).value)}
-					/>
-				</label>
 			</div>
 		);
 	}
