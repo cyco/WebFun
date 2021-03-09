@@ -1,7 +1,6 @@
 import { Hotspot, Tile, Char, Zone } from "src/engine/objects";
 import { InputStream, Point } from "src/util";
 import { MutableHotspot, MutableMonster } from "src/engine/mutable-objects";
-import { WorldSize } from "src/engine/generation";
 
 import Reader from "./reader";
 import SaveState from "./save-state";
@@ -116,7 +115,7 @@ class YodaReader extends Reader {
 		const additionalGainItem = stream.readInt16();
 		const npcId = stream.readInt16();
 
-		const zoneType = stream.readInt32();
+		const unknown = stream.readInt32();
 		const usedAlternateStrain = stream.readInt16();
 
 		const sector = new Sector();
@@ -134,9 +133,7 @@ class YodaReader extends Reader {
 		sector.additionalGainItem = this._assets.get(Tile, additionalGainItem, NullIfMissing);
 		sector.usedAlternateStrain = usedAlternateStrain === -1 ? null : usedAlternateStrain === 1;
 		sector.npc = this._assets.get(Tile, npcId, NullIfMissing);
-		sector.zoneType = Zone.Type.isZoneType(zoneType)
-			? Zone.Type.fromNumber(zoneType)
-			: Zone.Type.None;
+		sector.unknown = unknown;
 
 		return sector;
 	}

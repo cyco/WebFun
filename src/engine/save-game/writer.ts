@@ -204,9 +204,8 @@ class Writer {
 		stream.writeInt16(id(sector.additionalGainItem));
 		stream.writeInt16(id(sector.npc));
 
-		// TODO: fix unknown values
-		stream.writeInt32(sector.zoneType.rawValue);
-		stream.writeInt16(0);
+		stream.writeInt32(sector.unknown);
+		stream.writeInt16(sector.usedAlternateStrain === null ? -1 : +sector.usedAlternateStrain);
 	}
 }
 
