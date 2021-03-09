@@ -129,25 +129,26 @@ class Writer {
 		stream.writeInt16(monster.position.y);
 		stream.writeInt16(monster.damageTaken);
 		stream.writeUint32(+monster.enabled);
-		stream.writeInt16(0); // TODO: field_10
-		stream.writeInt16(0); // TODO: y__
-		stream.writeInt16(0); // TODO: x__
-		stream.writeInt16(0); // TODO: current_frame
-		stream.writeUint32(0); // field_18
-		stream.writeUint32(0); // field_1C
-		stream.writeUint32(0); // field_20
-		stream.writeInt16(0); // TODO: x_
-		stream.writeInt16(0); // TODO: y_
-		stream.writeInt16(0); // TODO: field_3C
-		stream.writeInt16(0); // TODO: field_3E
-		stream.writeInt16(0); // TODO: field_60
-		stream.writeInt16(0); // TODO: field_26
 
-		stream.writeUint32(0); // TODO: field_2C
-		stream.writeUint32(0); // TODO: field_34
-		stream.writeUint32(0); // TODO: field_28
-		stream.writeInt16(0); // TODO: field_24
-		stream.writeInt16(0);
+		stream.writeInt16(monster.field10);
+		stream.writeInt16(monster.bulletX);
+		stream.writeInt16(monster.bulletY);
+		stream.writeInt16(monster.currentFrame);
+		stream.writeUint32(+monster.flag18);
+		stream.writeUint32(+monster.flag1c);
+		stream.writeUint32(+monster.flag20);
+		stream.writeInt16(monster.directionX);
+		stream.writeInt16(monster.directionY);
+		stream.writeInt16(monster.bulletOffset);
+		stream.writeInt16(monster.facingDirection);
+		stream.writeInt16(monster.field60);
+		stream.writeInt16(monster.loot);
+
+		stream.writeUint32(+monster.flag2c);
+		stream.writeUint32(+monster.flag34);
+		stream.writeUint32(+monster.hasItem);
+		stream.writeInt16(monster.cooldown);
+		stream.writeInt16(monster.preferredDirection);
 
 		for (let i = 0; i < 4; i++) {
 			const waypoint = monster.waypoints[i];
