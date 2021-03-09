@@ -20,7 +20,6 @@ import { SaveState } from "src/engine/save-game";
 import { Tile } from "src/engine/objects";
 import World from "src/engine/world";
 import Sector from "src/engine/sector";
-import { WorldSize } from "src/engine/generation";
 
 class EditorView extends Component implements InventoryDelegate, InteractiveMapContextMenuProvider {
 	public static readonly tagName = "wf-save-game-editor-view";
@@ -280,7 +279,22 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 	}
 
 	public contextMenuForSector(item: Sector, _at: Point, _i: World, of: Map): Menu {
-		if (!item.zone) return null;
+		if (!item.zone) {
+			return new Menu([
+				{
+					title: "Place zone",
+					callback: async () => {
+						const id = await ModalPrompt("New Zone ID");
+						if (id === null) return;
+
+						const newId = id.parseInt();
+						this._state.currentZoneID = newId;
+						item.zone = this.data.zones[newId] || null;
+						of.redraw();
+					}
+				}
+			]);
+		}
 
 		return new Menu([
 			{
