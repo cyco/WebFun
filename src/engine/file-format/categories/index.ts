@@ -9,6 +9,7 @@ import { parseHotspots } from "./hotspot";
 import { parseSetupImage } from "./setup-image";
 import { parseSounds } from "./sound";
 import { parseVersion } from "./version";
+import { parseTgen } from "./tgen";
 
 export {
 	parseActions,
@@ -30,5 +31,6 @@ export {
 	parseZax3,
 	parseZax4,
 	parseZoneNames,
+	parseTgen,
 	parseEndOfFile
 };

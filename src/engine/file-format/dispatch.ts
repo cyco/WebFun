@@ -18,6 +18,7 @@ import {
 	parseZoneNames as ZNAM,
 	parsePuzzleNames as PNAM,
 	parseActionNames as ANAM,
+	parseTgen as TGEN,
 	parseEndOfFile as ENDF
 } from "./categories";
 
@@ -41,5 +42,6 @@ export default {
 	ZNAM,
 	PNAM,
 	ANAM,
+	TGEN,
 	ENDF
 } as any;
