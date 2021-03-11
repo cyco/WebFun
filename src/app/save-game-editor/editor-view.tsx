@@ -288,7 +288,6 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 						if (id === null) return;
 
 						const newId = id.parseInt();
-						this._state.currentZoneID = newId;
 						sector.zone = this.data.zones[newId] || null;
 						of.redraw();
 					}
@@ -337,7 +336,9 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 				callback: async () => {
 					const id = await promptForId("New zone id", sector.zone?.id);
 					if (id === null) return;
-					this._state.currentZoneID = id;
+					if (sector.zone?.id === this._state.currentZoneID) {
+						this._state.currentZoneID = id;
+					}
 					sector.zone = this.data.zones[id] || null;
 					of.redraw();
 				}
