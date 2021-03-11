@@ -8,13 +8,24 @@ class App {
 	private settings = Settings;
 	private defaultGameController: GameController;
 	private windowManager: WindowManager = WindowManager.defaultManager;
+	private _root: HTMLElement;
+
+	public constructor(container: HTMLElement) {
+		this._root = container;
+	}
 
 	public run(): void {
+		this.endPreload();
 		this.setupSaveGameFileHandler();
 		this.setupTestFileHandler();
 		//this.showDefaultGameController();
 		this.createLinks();
 		this.ensureAddressbarCanBeHidden();
+	}
+
+	private endPreload() {
+		this._root.classList.remove("preload");
+		this._root.textContent = "";
 	}
 
 	private setupSaveGameFileHandler(): void {
@@ -53,12 +64,12 @@ class App {
 			["The Construct", YodaDemo, Settings.url.theConstruct]
 		];
 		games.forEach(([name, type, urls]) => {
-			document.body.appendChild(
+			this._root.appendChild(
 				<a onclick={() => this.load(type, urls).then(c => c.newStory())}>
 					Load <i>{name}</i>
 				</a>
 			);
-			document.body.appendChild(<br></br>);
+			this._root.appendChild(<br></br>);
 		});
 	}
 

@@ -24,12 +24,9 @@ const main = async () => {
 	ComponentRegistry.sharedRegistry.registerComponents(AppComponents);
 	ComponentRegistry.sharedRegistry.registerComponents(WindowComponents as any);
 
-	const app = new App();
+	const container = document.getElementById("webfun");
+	const app = new App(container);
 	app.run();
-
-	// End preload
-	const container = document.getElementById("webfun-preload");
-	if (container) container.remove();
 
 	if (Settings.debug) {
 		(await require("src/app/editor/initialize")).default();

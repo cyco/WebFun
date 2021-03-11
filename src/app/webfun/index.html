@@ -14,19 +14,16 @@
 </head>
 
 <body>
-	<div id="webfun-preload">
+	<div id="webfun" class="preload" style="height: 90vh">
 		<style>
 			body {
 				margin: 0;
 				padding: 0
 			}
 
-			#webfun-preload {
-				position: fixed;
-				top: 0;
-				left: 0;
+			#webfun.preload {
 				width: 100vw;
-				height: 100vh;
+				height: 90vh;
 				z-index: 1000;
 				background: #2d2d2d;
 				display: flex;
@@ -36,7 +33,7 @@
 				box-sizing: border-box
 			}
 
-			#webfun-preload * {
+			#webfun.preload * {
 				user-select: none !important;
 				cursor: default !important;
 				box-sizing: border-box
