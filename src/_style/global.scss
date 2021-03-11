@@ -11,6 +11,24 @@ body {
 	padding: 0;
 }
 
+.webfun {
+	@include unselectable;
+
+	a {
+		cursor: default;
+	}
+
+	input:not([type]),
+	input[type="text"],
+	input[type="number"],
+	input[type="search"],
+	textarea,
+	[contenteditable],
+	[contenteditable] * {
+		@include selectable;
+	}
+}
+
 @media (prefers-color-scheme: light) {
 	body {
 		background: #a6aab9;

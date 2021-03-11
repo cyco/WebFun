@@ -1,23 +1,13 @@
-* {
+@mixin unselectable {
 	user-select: none;
 	-webkit-user-select: none;
 	cursor: default;
-}
 
-input:not([type]),
-input[type="text"],
-input[type="number"],
-input[type="search"],
-textarea,
-[contenteditable],
-[contenteditable] * {
-	user-select: text;
-	-webkit-user-select: text;
-	cursor: initial;
-}
-
-a {
-	cursor: default;
+	& * {
+		user-select: none;
+		-webkit-user-select: none;
+		cursor: default;
+	}
 }
 
 @mixin selectable {

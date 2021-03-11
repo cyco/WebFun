@@ -24,6 +24,7 @@ class App {
 	}
 
 	private endPreload() {
+		this._root.classList.add("webfun");
 		this._root.classList.remove("preload");
 		this._root.textContent = "";
 	}
