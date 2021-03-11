@@ -7,11 +7,12 @@ import GameController from "./game-controller";
 class App {
 	private settings = Settings;
 	private defaultGameController: GameController;
-	private windowManager: WindowManager = WindowManager.defaultManager;
-	private _root: HTMLElement;
+	private windowManager: WindowManager;
+	private root: HTMLElement;
 
 	public constructor(container: HTMLElement) {
-		this._root = container;
+		this.root = container;
+		this.windowManager= new WindowManager(container);
 	}
 
 	public run(): void {
@@ -24,9 +25,9 @@ class App {
 	}
 
 	private endPreload() {
-		this._root.classList.add("webfun");
-		this._root.classList.remove("preload");
-		this._root.textContent = "";
+		this.root.classList.add("webfun");
+		this.root.classList.remove("preload");
+		this.root.textContent = "";
 	}
 
 	private setupSaveGameFileHandler(): void {
@@ -65,12 +66,12 @@ class App {
 			["The Construct", YodaDemo, Settings.url.theConstruct]
 		];
 		games.forEach(([name, type, urls]) => {
-			this._root.appendChild(
+			this.root.appendChild(
 				<a onclick={() => this.load(type, urls).then(c => c.newStory())}>
 					Load <i>{name}</i>
 				</a>
 			);
-			this._root.appendChild(<br></br>);
+			this.root.appendChild(<br></br>);
 		});
 	}
 
