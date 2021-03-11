@@ -17,7 +17,8 @@ wf-current-status-info {
 			min-width: 60px;
 		}
 
-		span {
+		> div > span,
+		> .row span {
 			border: 1px solid black;
 			min-width: 30px;
 			text-align: center;
