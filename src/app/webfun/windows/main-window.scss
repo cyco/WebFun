@@ -8,66 +8,66 @@
 wf-main-window {
 	@extend wf-abstract-window;
 
-	.equipment {
-		display: flex;
-		flex-direction: row;
-
-		wf-ammo + wf-weapon {
-			margin-left: 2px;
-		}
-	}
-
 	.content {
 		display: grid;
 		overflow: hidden;
-	}
 
-	.main {
-		@include inset-border(2px);
-		grid-area: main;
-	}
+		.equipment {
+			display: flex;
+			flex-direction: row;
 
-	.status {
-		display: flex;
-		align-items: center;
-		justify-content: space-around;
-		grid-area: status;
-	}
+			wf-ammo + wf-weapon {
+				margin-left: 2px;
+			}
+		}
 
-	.actions {
-		align-items: center;
-		justify-content: stretch;
-		display: flex;
-		min-height: 34px;
-		grid-area: actions;
+		.main {
+			@include inset-border(2px);
+			grid-area: main;
+		}
 
-		> wf-button {
+		.status {
+			display: flex;
+			align-items: center;
+			justify-content: space-around;
+			grid-area: status;
+		}
+
+		.actions {
+			align-items: center;
+			justify-content: stretch;
+			display: flex;
+			min-height: 34px;
+			grid-area: actions;
+
+			> wf-button {
+				padding: 2px;
+				font-size: 0.9em;
+				flex-grow: 1;
+				margin: 5px;
+			}
+		}
+
+		.controls {
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+			align-items: center;
 			padding: 2px;
-			font-size: 0.9em;
-			flex-grow: 1;
-			margin: 5px;
+			grid-area: controls;
+
+			padding-bottom: env(safe-area-inset-bottom);
+			padding-left: 10px;
+			padding-right: 10px;
+
+			wf-onscreen-button + wf-onscreen-button {
+				margin-left: 15px;
+			}
 		}
-	}
 
-	.controls {
-		display: flex;
-		flex-direction: row;
-		justify-content: space-between;
-		align-items: center;
-		padding: 2px;
-		grid-area: controls;
-
-		padding-bottom: env(safe-area-inset-bottom);
-		padding-left: 10px;
-		padding-right: 10px;
-
-		wf-onscreen-button + wf-onscreen-button {
-			margin-left: 15px;
+		wf-inventory {
+			grid-area: inventory;
 		}
-	}
-
-	wf-inventory {
-		grid-area: inventory;
 	}
 
 	/**************************************************************************************************************/
