@@ -13,6 +13,7 @@ import SceneManager from "./scene-manager";
 import { ConditionImplementations as Conditions } from "./script/conditions";
 import { InstructionImplementations as Instructions } from "./script/instructions";
 import Logger from "./logger";
+import { Point } from "src/util";
 
 interface Interface {
 	InputManager: (view: any) => InputManager;
@@ -30,6 +31,7 @@ interface Interface {
 	AssetManager: () => AssetManager;
 	ResourceManager: () => ResourceManager;
 	Logger: () => Logger;
+	ShowText: (text: string, at: Point) => Promise<void>;
 }
 
 export default Interface;

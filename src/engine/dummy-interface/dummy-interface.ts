@@ -14,8 +14,6 @@ import Logger from "./logger";
 import { ConditionImplementations as Conditions } from "../script/conditions";
 import { InstructionImplementations as Instructions } from "../script/instructions";
 
-import { Rectangle, Point, Size } from "src/util";
-
 export default {
 	Metronome: (): Metronome => new Metronome(),
 	Inventory: (): Inventory => new Inventory(),
@@ -28,9 +26,9 @@ export default {
 	Mixer: (): Mixer => new Mixer(),
 	InputManager: (): InputManager => new InputManager(),
 	Renderer: (): Renderer => new Renderer(),
-	SceneManager: (): SceneManager =>
-		new SceneManager(() => new Rectangle(new Point(0, 0), new Size(0, 0))),
+	SceneManager: (): SceneManager => new SceneManager(),
 	AssetManager: (): AssetManager => new AssetManager(),
 	ResourceManager: (): ResourceManager => new ResourceManager(),
-	Logger: (): Logger => new Logger()
+	Logger: (): Logger => new Logger(),
+	ShowText: (): Promise<void> => Promise.resolve()
 };

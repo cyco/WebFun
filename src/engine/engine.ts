@@ -50,6 +50,7 @@ class Engine extends EventTarget {
 	public sceneManager: SceneManager = null;
 	public spu: ScriptProcessingUnit = null;
 	public story: Story = null;
+	public _interface: Interface;
 	private _currentWorld: World = null;
 	private _currentZone: Zone = null;
 	private _updateInProgress: boolean = false;
@@ -65,6 +66,7 @@ class Engine extends EventTarget {
 
 		ifce = Object.assign({}, DummyInterface, ifce) as Interface;
 
+		this._interface = ifce as Interface;
 		this.mixer = ifce.Mixer();
 
 		this.resources = ifce.ResourceManager();
@@ -188,6 +190,10 @@ class Engine extends EventTarget {
 		scene.location = place;
 
 		return this.sceneManager.presentScene(scene);
+	}
+
+	public showText(text: string, at: Point): Promise<void> {
+		return this._interface.ShowText(text, at);
 	}
 
 	public dropItem(tile: Tile, place: Point): Promise<void> {

@@ -1,7 +1,6 @@
 import "./scene-view.scss";
 
-import { Point, Rectangle, Size, rgb } from "src/util";
-
+import { rgb } from "src/util";
 import Component from "src/ui/component";
 import { SceneManager } from "src/engine";
 
@@ -10,7 +9,7 @@ class SceneView extends Component {
 	public readonly canvas: HTMLCanvasElement = (
 		<canvas className="pixelated" width={288} height={288} style={{ background: rgb(0, 0, 0) }} />
 	) as HTMLCanvasElement;
-	private _manager: SceneManager = this._buildSceneManager();
+	private _manager: SceneManager = new SceneManager();
 
 	protected connectedCallback(): void {
 		this.appendChild(this.canvas);
@@ -18,15 +17,6 @@ class SceneView extends Component {
 
 	get manager(): SceneManager {
 		return this._manager;
-	}
-
-	private _buildSceneManager() {
-		const determineBounds = () => {
-			const { left, top, width, height } = this.getBoundingClientRect();
-			return new Rectangle(new Point(left, top), new Size(width, height));
-		};
-
-		return new SceneManager(determineBounds);
 	}
 }
 

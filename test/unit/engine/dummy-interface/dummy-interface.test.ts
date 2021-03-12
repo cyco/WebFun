@@ -8,8 +8,7 @@ describe("WebFun.Engine.DummyInterface", () => {
 		expect(Interface.InputManager()).toBeInstanceOf(InputManager);
 		expect(Interface.Mixer()).toBeInstanceOf(Mixer);
 		expect(Interface.Renderer()).toBeInstanceOf(Renderer);
-
-		const sceneManager = Interface.SceneManager();
-		expect(() => (sceneManager as any)._determineBounds()).not.toThrow();
+		expect(Interface.SceneManager()).toBeInstanceOf(SceneManager);
+		expect(Interface.ShowText).toBeInstanceOf(Function);
 	});
 });

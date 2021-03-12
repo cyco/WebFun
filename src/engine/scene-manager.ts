@@ -11,16 +11,10 @@ class SceneManager extends EventTarget {
 	public static readonly Event = Event;
 	private _engine: Engine = null;
 	private _stack: Scene[] = [];
-	private _determineBounds: () => Rectangle;
 	private _popHandlers = new Map<Scene, () => void>();
 	private _currentScene: Scene;
 	private _overlays: Scene[] = [];
 	private _visibleScenes: Scene[] = [];
-
-	constructor(determineBounds: () => Rectangle) {
-		super();
-		this._determineBounds = determineBounds;
-	}
 
 	pushScene(scene: Scene): void {
 		scene.engine = this.engine;
@@ -74,10 +68,6 @@ class SceneManager extends EventTarget {
 
 	clear(): void {
 		while (this._stack.length) this.popScene();
-	}
-
-	get bounds(): Rectangle {
-		return this._determineBounds();
 	}
 
 	public get currentScene(): Scene {

@@ -11,8 +11,8 @@ import {
 	PaletteAnimation,
 	Story
 } from "src/engine";
-import { ConfirmationResult, ModalConfirm } from "src/ux";
-import { EventTarget, srand } from "src/util";
+import { ConfirmationResult, ModalConfirm, ModalSession } from "src/ux";
+import { EventTarget, Point, srand } from "src/util";
 import { FilePicker, WindowManager } from "src/ui";
 import { ZoneScene } from "src/engine/scenes";
 import { MainMenu, MobileMainMenu, MainWindow } from "./windows";
@@ -32,6 +32,7 @@ import * as SmartPhone from "detect-mobile-browser";
 import GameEventHandler from "./game-event-handler";
 import Logger from "./logger";
 import { EvaluationMode } from "src/engine/script";
+import { SpeechBubble } from "src/ui/components";
 
 export const Event = {
 	DidLoadData: "didLoadData"
@@ -93,7 +94,8 @@ class GameController extends EventTarget implements EventListenerObject {
 			SceneManager: () => this._sceneView.manager,
 			ResourceManager: () => resources,
 			Mixer: () => mixer,
-			Logger: () => logger
+			Logger: () => logger,
+			ShowText: (text: string, at: Point) => this.showText(text, at)
 		};
 	}
 
@@ -103,6 +105,29 @@ class GameController extends EventTarget implements EventListenerObject {
 		if (!this._window.x && !this._window.y) {
 			this._window.center();
 		}
+	}
+
+	private showText(text: string, at: Point): Promise<void> {
+		return new Promise<void>(resolve => {
+			const modalSession = new ModalSession();
+			modalSession.onend = () => resolve();
+
+			const { left: windowX, top: windowY } = this._window.getBoundingClientRect();
+			const { left: sceneX, top: sceneY } = this._sceneView.getBoundingClientRect();
+
+			at = at.byScalingBy(Tile.WIDTH).byAdding(sceneX, sceneY).bySubtracting(windowX, windowY);
+
+			const bubble = (
+				<SpeechBubble
+					text={text}
+					onend={() => modalSession.end(0)}
+					style={{ position: "absolute", left: `${at.x}px`, top: `${at.y}px` }}
+				/>
+			);
+
+			modalSession.runForWindow(this._window);
+			this._window.appendChild(bubble);
+		});
 	}
 
 	public async newStory(): Promise<void> {

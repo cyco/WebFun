@@ -1,38 +1,34 @@
 import { Point, Size } from "src/util";
 
 import Engine from "../engine";
-import { ModalSession } from "src/ux";
 import Scene from "./scene";
-import { SpeechBubble } from "src/ui/components";
 import { Tile } from "src/engine/objects";
 import Sector from "src/engine/sector";
 import { InputMask } from "../input";
-import Settings from "src/settings";
 
 class SpeechScene extends Scene {
 	public engine: Engine;
 	public location: Point;
 	public tileSize: Size = new Size(Tile.WIDTH, Tile.HEIGHT);
 	public offset = new Point(0, 0);
-	private _modalSession: ModalSession = null;
-	private _bubble: SpeechBubble = (
-		<SpeechBubble onend={() => this.engine.sceneManager.popScene()} style={{ position: "fixed" }} />
-	) as SpeechBubble;
+	public text: string = "";
 
-	constructor(engine: Engine = null) {
+	constructor(engine: Engine) {
 		super();
 
 		this.engine = engine;
 	}
 
-	get text(): string {
-		return this._bubble.text;
-	}
+	render(): void {}
 
-	set text(text: string) {
-		const world = this.engine.currentWorld;
-		const sector = world?.findSectorContainingZone(this.engine.currentZone);
-		this._bubble.text = this.resolveVariables(text, sector);
+	public willShow(): void {
+		this.engine.inputManager.mouseDownHandler = (_: Point): void => null;
+
+		const anchor = Point.add(this.location, this.cameraOffset);
+		const sector = this.engine.currentSector;
+		const text = this.resolveVariables(this.text, sector);
+
+		this.engine.showText(text, anchor).then(() => this.engine.sceneManager.popScene());
 	}
 
 	private resolveVariables(text: string, quest: Sector) {
@@ -45,34 +41,14 @@ class SpeechScene extends Scene {
 		return text;
 	}
 
-	render(): void {}
-
-	public willShow(): void {
-		this.engine.inputManager.mouseDownHandler = (_: Point): void => null;
-		this._modalSession = new ModalSession();
-		this._modalSession.run();
-
-		const anchor = Point.add(this.location, this.cameraOffset);
-		const { origin } = this.engine.sceneManager.bounds;
-
-		const x = anchor.x * this.tileSize.width + origin.x + 16 + this.offset.x;
-		const y = anchor.y * this.tileSize.height + origin.y + 32 + 32 + this.offset.y;
-		this._bubble.origin = new Point(x, y);
-		if (Settings.mobile) this._bubble.style.zoom = "1.2";
-
-		this._bubble.show();
-	}
-
 	async update(ticks: number): Promise<void> {
 		const input = this.engine.inputManager.readInput(ticks);
 		if (input & InputMask.EndDialog) {
-			this._bubble.end();
 		}
 	}
 
 	public willHide(): void {
 		this.engine.inputManager.mouseDownHandler = () => void 0;
-		this._modalSession.end(0);
 	}
 
 	isOpaque(): boolean {

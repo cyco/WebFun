@@ -1,12 +1,9 @@
 import SceneManager from "src/engine/scene-manager";
 import { Scene } from "src/engine/scenes";
-import { Rectangle, Point, Size } from "src/util";
 
 describe("WebFun.Engine.SceneManager", () => {
 	let subject: SceneManager;
-	beforeEach(() => {
-		subject = new SceneManager(() => new Rectangle(new Point(0, 0), new Size(0, 0)));
-	});
+	beforeEach(() => (subject = new SceneManager()));
 
 	it("is in charge of managing the stack of scenes visible during gameplay", () => {
 		const scene1 = new (class extends Scene {

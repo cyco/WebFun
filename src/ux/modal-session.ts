@@ -9,6 +9,8 @@ class ModalSession {
 	private _locationHandler: (_: MouseEvent) => void;
 	private _endHandler: (_: number) => void;
 	private _lastMouseLocation: Point;
+	private _overlayContainer: Element = window.document.body;
+	private _eventNode: Element = (window as unknown) as Element;
 
 	constructor() {
 		const overlay = document.createElement("div");
@@ -55,17 +57,33 @@ class ModalSession {
 		this._endHandler = h;
 	}
 
-	run(): void {
-		document.body.appendChild(this._overlay);
+	public run(): void {
+		this._overlay.classList.add("global");
+		this.setupEvents();
+	}
+
+	public runForWindow(node: Element): void {
+		this._overlayContainer = node;
+		this._eventNode = node;
+
+		const { width, height } = node.getBoundingClientRect();
+		this._overlay.style.width = `${width}px`;
+		this._overlay.style.height = `${height}px`;
+		this._overlay.classList.add("attached");
+		this.setupEvents();
+	}
+
+	private setupEvents(): void {
+		this._overlayContainer.appendChild(this._overlay);
 		this._locationHandler = e => (this._lastMouseLocation = new Point(e.clientX, e.clientY));
 		["mouseup", "mousedown", "mousemove"].forEach(eventName =>
-			window.addEventListener(eventName, this._locationHandler)
+			this._eventNode.addEventListener(eventName, this._locationHandler)
 		);
 	}
 
-	async end(code: number): Promise<void> {
+	public async end(code: number): Promise<void> {
 		["mouseup", "mousedown", "mousemove"].forEach(eventName =>
-			window.removeEventListener(eventName, this._locationHandler)
+			this._eventNode.removeEventListener(eventName, this._locationHandler)
 		);
 		this.cursor = null;
 		await dispatch(() => this._overlay && this._overlay.remove(), 10);

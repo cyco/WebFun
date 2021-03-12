@@ -2,6 +2,7 @@
 
 .modal-session {
 	@include fullsize();
+
 	position: absolute;
 	z-index: 900;
 }
