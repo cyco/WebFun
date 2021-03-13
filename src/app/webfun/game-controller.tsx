@@ -347,6 +347,10 @@ class GameController extends EventTarget implements EventListenerObject {
 	public get engine(): Engine {
 		return this._engine;
 	}
+
+	public get window(): MainWindow {
+		return this._window;
+	}
 }
 
 export default GameController;

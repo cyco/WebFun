@@ -17,15 +17,18 @@ describe("WebFun.App.Windows.MainMenu", () => {
 	let gameController: GameController;
 
 	beforeEach(() => {
-		gameController = ({
+		gameController = {
 			settings: {},
 			data: null,
 			engine: null,
 			newStory() {},
 			replayStory() {},
 			load() {},
-			save() {}
-		} as any) as GameController;
+			save() {},
+			window: {
+				manager: { showWindow: jasmine.createSpy() }
+			}
+		} as any;
 		subject = new MainMenu(gameController);
 	});
 
@@ -180,7 +183,11 @@ describe("WebFun.App.Windows.MainMenu", () => {
 					pauseItem
 				] = optionsMenu.items;
 
-				mockedSession = ({ run: jasmine.createSpy(), end() {} } as any) as UX.WindowModalSession;
+				mockedSession = ({
+					run: jasmine.createSpy(),
+					runForWindow: jasmine.createSpy(),
+					end() {}
+				} as any) as UX.WindowModalSession;
 				mockWindow = document.createElement("div");
 				const originalCreateElement = document.createElement;
 				spyOn(document, "createElement").and.callFake((tag: string) =>
@@ -203,7 +210,7 @@ describe("WebFun.App.Windows.MainMenu", () => {
 
 					it("runs a modal session for a new DifficultyWindow", () => {
 						expect(document.createElement).toHaveBeenCalledWith(DifficultyWindow.tagName);
-						expect(mockedSession.run).toHaveBeenCalled();
+						expect(mockedSession.runForWindow).toHaveBeenCalled();
 					});
 				});
 			});
@@ -218,7 +225,7 @@ describe("WebFun.App.Windows.MainMenu", () => {
 
 					it("runs a modal session for a new GameSpeedWindow", () => {
 						expect(document.createElement).toHaveBeenCalledWith(GameSpeedWindow.tagName);
-						expect(mockedSession.run).toHaveBeenCalled();
+						expect(mockedSession.runForWindow).toHaveBeenCalled();
 					});
 				});
 			});
@@ -233,7 +240,7 @@ describe("WebFun.App.Windows.MainMenu", () => {
 
 					it("runs a modal session for a new WorldSizeWindow", () => {
 						expect(document.createElement).toHaveBeenCalledWith(WorldSizeWindow.tagName);
-						expect(mockedSession.run).toHaveBeenCalled();
+						expect(mockedSession.runForWindow).toHaveBeenCalled();
 					});
 				});
 			});
@@ -248,7 +255,7 @@ describe("WebFun.App.Windows.MainMenu", () => {
 
 					it("runs a modal session for a new StatisticsWindow", () => {
 						expect(document.createElement).toHaveBeenCalledWith(StatisticsWindow.tagName);
-						expect(mockedSession.run).toHaveBeenCalled();
+						expect(mockedSession.runForWindow).toHaveBeenCalled();
 					});
 
 					it("ends the session when the window is closed", () => {

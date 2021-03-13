@@ -1,5 +1,5 @@
 import ModalSession from "./modal-session";
-import { Window } from "src/ui/components";
+import { AbstractWindow, Window } from "src/ui/components";
 import { dispatch } from "src/util";
 
 class WindowModalSession extends ModalSession {
@@ -14,6 +14,11 @@ class WindowModalSession extends ModalSession {
 		this._overlay.appendChild(this._window);
 		super.run();
 		this._window.center();
+	}
+
+	public runForWindow(window: AbstractWindow): void {
+		super.runForWindow(window);
+		this._overlay.appendChild(this._window);
 	}
 
 	protected _whenOverlayIsGone(callback: Function): void {

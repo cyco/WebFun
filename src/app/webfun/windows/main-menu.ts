@@ -36,6 +36,8 @@ function SoundMenuItem(
 }
 
 class MainMenu extends Menu {
+	private controller: GameController;
+
 	constructor(controller: GameController) {
 		super([
 			{
@@ -155,13 +157,14 @@ class MainMenu extends Menu {
 					{
 						title: "About...",
 						mnemonic: 0,
-						callback: () =>
-							WindowManager.defaultManager.showWindow(document.createElement(AboutWindow.tagName))
+						callback: () => this._runModalSessionForWindowComponent(AboutWindow.tagName)
 					}
 				]
 			},
 			...(controller.settings.debug ? [buildDebugMenu(controller)] : [])
 		]);
+
+		this.controller = controller;
 	}
 
 	private _runModalSessionForWindowComponent(tagName: string) {
@@ -172,7 +175,7 @@ class MainMenu extends Menu {
 	private _runModalSession(window: WindowComponent) {
 		const session = new WindowModalSession(window);
 		window.onclose = () => session.end(0);
-		session.run();
+		session.runForWindow(this.controller.window);
 	}
 }
 
