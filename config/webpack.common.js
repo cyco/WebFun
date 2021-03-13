@@ -1,6 +1,9 @@
 const Path = require("path");
 const Paths = require("./paths");
 const Dotenv = require("dotenv-webpack");
+const GitRevisionPlugin = require("git-revision-webpack-plugin");
+const gitRevisionPlugin = new GitRevisionPlugin();
+const Webpack = require("webpack");
 
 module.exports = {
 	resolve: {
@@ -17,7 +20,15 @@ module.exports = {
 	mode: "development",
 	cache: true,
 	stats: "errors-only",
-	plugins: [new Dotenv({ systemvars: true, silent: true, defaults: true })],
+	plugins: [
+		gitRevisionPlugin,
+		new Webpack.DefinePlugin({
+			"process.env.VERSION": JSON.stringify(gitRevisionPlugin.version()),
+			"process.env.COMMITHASH": JSON.stringify(gitRevisionPlugin.commithash()),
+			"process.env.BRANCH": JSON.stringify(gitRevisionPlugin.branch())
+		}),
+		new Dotenv({ systemvars: true, silent: true, defaults: true })
+	],
 	module: {
 		rules: [
 			{

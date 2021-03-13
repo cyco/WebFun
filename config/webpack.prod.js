@@ -11,8 +11,11 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const WebpackVisualizerPlugin = require("webpack-visualizer-plugin");
+const Webpack = require("webpack");
 const cssnano = require("cssnano");
 const postcss = require("postcss");
+const GitRevisionPlugin = require("git-revision-webpack-plugin");
+const gitRevisionPlugin = new GitRevisionPlugin();
 
 module.exports = {
 	entry: {
@@ -75,6 +78,12 @@ module.exports = {
 	cache: true,
 	stats: "errors-only",
 	plugins: [
+		gitRevisionPlugin,
+		new Webpack.DefinePlugin({
+			"process.env.VERSION": JSON.stringify(gitRevisionPlugin.version()),
+			"process.env.COMMITHASH": JSON.stringify(gitRevisionPlugin.commithash()),
+			"process.env.BRANCH": JSON.stringify(gitRevisionPlugin.branch())
+		}),
 		new CleanWebpackPlugin({ root: Paths.buildRoot }),
 		new HtmlWebpackPlugin({
 			template: Path.resolve(Paths.sourceRoot, "./app/webfun/index.html"),
