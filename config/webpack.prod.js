@@ -25,8 +25,8 @@ module.exports = {
 	output: {
 		path: Paths.buildRoot,
 		publicPath: "",
-		filename: "assets/[name].js",
-		chunkFilename: "assets/webfun.[name].js"
+		filename: "assets/[name]-[git-revision-version].js",
+		chunkFilename: "assets/webfun.[name]-[git-revision-version].js"
 	},
 	node: false,
 	optimization: {
@@ -96,8 +96,8 @@ module.exports = {
 		}),
 		new CssUrlRelativePlugin(),
 		new MiniCssExtractPlugin({
-			filename: "assets/[name].css",
-			chunkFilename: "assets/webfun.[name].css"
+			filename: "assets/[name]-[git-revision-version].css",
+			chunkFilename: "assets/webfun.[name]-[git-revision-version].css"
 		}),
 		new Dotenv({ systemvars: true, silent: true, defaults: true }),
 		new CopyPlugin({
