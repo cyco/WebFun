@@ -1,0 +1,76 @@
+@import "src/ui/components/abstract-window.scss";
+@import "colors.scss";
+@import "selection.scss";
+
+wf-about-window {
+	@extend wf-abstract-window;
+
+	> .content {
+		> :not(wf-button) {
+			@include selectable;
+		}
+
+		width: 255px;
+		height: 317px;
+		padding: 10px;
+		overflow: hidden;
+
+		flex-direction: column;
+		align-items: center;
+
+		text-align: center;
+		h1 {
+			font-size: 1.2em;
+			margin: 0;
+			margin-top: 5px;
+		}
+
+		h2 {
+			font-size: 1em;
+			margin: 0;
+			font-weight: normal;
+		}
+
+		.version {
+			font-size: 0.8em;
+			font-color: #555;
+		}
+
+		.source-link {
+			margin-top: 10px;
+		}
+
+		.copyright {
+			font-size: 0.7em;
+			margin-top: 5px;
+			margin-bottom: 5px;
+		}
+
+		.box {
+			border: 1px solid $border-dark;
+			box-shadow: inset 1px 1px $border-light, 1px 1px $border-light;
+			padding: 10px;
+			font-size: 0.8em;
+
+			.team {
+				margin-top: 10px;
+				column-count: 2;
+			}
+		}
+
+		wf-button {
+			margin-top: 15px;
+			flex-grow: 0;
+			min-width: 8px;
+			min-height: 20px;
+		}
+
+		hr {
+			height: 1px;
+			width: 100%;
+			box-shadow: inset 1px 1px $border-light, 1px 1px $border-light;
+			margin-top: 15px;
+			margin-bottom: 15px;
+		}
+	}
+}

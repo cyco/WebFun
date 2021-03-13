@@ -52,6 +52,7 @@ declare global {
 			h2: Styleable<HTMLHeadingElement>;
 			h3: Styleable<HTMLHeadingElement>;
 			code: Styleable<HTMLSpanElement>;
+			hr: Styleable<HTMLHRElement>;
 		}
 
 		interface ElementClass extends Component {}

@@ -12,6 +12,7 @@ import { PauseScene } from "src/engine/scenes";
 import { Window as WindowComponent } from "src/ui/components";
 import { WindowModalSession } from "src/ux";
 import buildDebugMenu from "src/app/webfun/debug/menu";
+import AboutWindow from "./about-window";
 import DifficultyWindow from "./difficulty-window";
 import GameController from "../game-controller";
 import GameSpeedWindow from "./game-speed-window";
@@ -153,7 +154,9 @@ class MainMenu extends Menu {
 					Separator,
 					{
 						title: "About...",
-						mnemonic: 0
+						mnemonic: 0,
+						callback: () =>
+							WindowManager.defaultManager.showWindow(document.createElement(AboutWindow.tagName))
 					}
 				]
 			},
