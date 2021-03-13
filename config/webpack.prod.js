@@ -104,19 +104,19 @@ module.exports = {
 			patterns: [
 				{
 					from: "assets/*.wasm",
-					to: "assets/[name].[ext]"
+					to: "assets/[name][ext]"
 				},
 				{
 					from: "src/*.webmanifest",
-					to: "assets/[name].[ext]"
+					to: "assets/[name][ext]"
 				},
 				{
 					from: "assets/icon/**",
-					to: "assets/icon/[name].[ext]"
+					to: "assets/icon/[name][ext]"
 				},
 				{
 					from: "assets/game-data/*.{data,pal,hlp}",
-					to: "data/[name].[ext]",
+					to: "data/[name][ext]",
 					noErrorOnMissing: true
 				},
 				{
@@ -179,7 +179,7 @@ module.exports = {
 					{
 						loader: "file-loader",
 						options: {
-							name: "[name].[ext]",
+							name: "[name][ext]",
 							outputPath: "assets/font/"
 						}
 					}
