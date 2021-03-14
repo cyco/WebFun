@@ -7,7 +7,7 @@ import {
 } from "src/ui";
 
 import { document, window } from "src/std/dom";
-import { GameState } from "src/engine";
+import { GameState, VariantYoda } from "src/engine";
 import { PauseScene } from "src/engine/scenes";
 import { Window as WindowComponent } from "src/ui/components";
 import { WindowModalSession } from "src/ux";
@@ -67,7 +67,7 @@ class MainMenu extends Menu {
 						title: "Save World",
 						mnemonic: 0,
 						callback: () => controller.save(),
-						enabled: () => controller.engine !== null,
+						enabled: () => controller.engine?.variant === VariantYoda,
 						beta: true
 					},
 					Separator,

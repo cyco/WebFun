@@ -11,6 +11,7 @@ import {
 import Settings from "src/settings";
 import { PauseScene } from "src/engine/scenes";
 import { GameState } from "src/engine";
+import { Indy, Yoda } from "src/engine/variant";
 
 describe("WebFun.App.Windows.MainMenu", () => {
 	let subject: MainMenu;
@@ -121,10 +122,14 @@ describe("WebFun.App.Windows.MainMenu", () => {
 					expect(saveSector.title).toBe("Save World");
 				});
 
-				it("is enabled when a game is in progress", () => {
+				it("is enabled when a game of Yoda Stories is in progress", () => {
 					expect(saveSector.enabled).toBeFalsy();
-					(gameController as any).engine = {};
+
+					(gameController as any).engine = { variant: Yoda };
 					expect(saveSector.enabled).toBeTruthy();
+
+					(gameController as any).engine = { variant: Indy };
+					expect(saveSector.enabled).toBeFalsy();
 				});
 
 				it("saves the current story when clicked", () => {
