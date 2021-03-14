@@ -13,6 +13,7 @@ import { Engine, Story } from "src/engine";
 import { WorldSize } from "src/engine/generation";
 import { rand } from "src/util";
 import { MutableZone } from "src/engine/mutable-objects";
+import { SaveState } from "src/engine/save-game";
 
 class YodaDemo extends Variant {
 	public static readonly goalIDs = GoalIDs;
@@ -111,6 +112,10 @@ class YodaDemo extends Variant {
 			Zone.Planet.Hoth,
 			[WorldSize.Small, WorldSize.Medium, WorldSize.Large].random()
 		);
+	}
+
+	public save(_: Engine): SaveState {
+		throw new Error("Method not implemented.");
 	}
 }
 

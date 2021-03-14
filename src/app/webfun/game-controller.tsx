@@ -12,12 +12,19 @@ import {
 	Story
 } from "src/engine";
 import { ConfirmationResult, ModalConfirm, ModalSession } from "src/ux";
-import { EventTarget, Point, srand } from "src/util";
+import {
+	DiscardingOutputStream,
+	download,
+	EventTarget,
+	OutputStream,
+	Point,
+	srand
+} from "src/util";
 import { FilePicker, WindowManager } from "src/ui";
 import { ZoneScene } from "src/engine/scenes";
 import { MainMenu, MobileMainMenu, MainWindow } from "./windows";
 import GameState from "src/engine/game-state";
-import { Reader } from "src/engine/save-game";
+import { Reader, Writer } from "src/engine/save-game";
 import Settings from "src/settings";
 import { CanvasRenderer } from "./rendering";
 import { InputManager } from "./input";
@@ -215,7 +222,16 @@ class GameController extends EventTarget implements EventListenerObject {
 	}
 
 	public async save(): Promise<void> {
-		console.log("Save");
+		const engine = this.engine;
+		const state = engine.variant.save(engine);
+		const writer = new Writer(engine.assets);
+		const sizingStream = new DiscardingOutputStream();
+		writer.write(state, sizingStream);
+
+		const stream = new OutputStream(sizingStream.offset);
+		writer.write(state, stream);
+
+		return download(stream.buffer, "savegame.wld");
 	}
 
 	public async exit(): Promise<void> {

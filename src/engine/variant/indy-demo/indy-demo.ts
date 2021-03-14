@@ -1,3 +1,4 @@
+import { SaveState } from "src/engine";
 import Engine from "src/engine/engine";
 import { WorldSize } from "src/engine/generation";
 import Story from "src/engine/story";
@@ -55,6 +56,10 @@ class IndyDemo extends Variant {
 			Zone.Planet.None,
 			[WorldSize.Small, WorldSize.Medium, WorldSize.Large].random()
 		);
+	}
+
+	public save(_: Engine): SaveState {
+		throw new Error("Method not implemented.");
 	}
 }
 

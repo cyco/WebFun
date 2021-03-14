@@ -1,6 +1,6 @@
 import { Variant } from "src/engine/variant";
 import { Tile } from "src/engine/objects";
-import { Engine, Story } from "src/engine";
+import { Engine, SaveState, Story } from "src/engine";
 
 describe("WebFun.Engine.Variant", () => {
 	it("holds information specific to each game", () => {
@@ -20,6 +20,9 @@ describe("WebFun.Engine.Variant", () => {
 				throw new Error("Method not implemented.");
 			}
 			getEquipSound(_: any): number {
+				throw new Error("Method not implemented.");
+			}
+			save(_: Engine): SaveState {
 				throw new Error("Method not implemented.");
 			}
 

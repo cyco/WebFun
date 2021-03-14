@@ -12,7 +12,7 @@ class App {
 
 	public constructor(container: HTMLElement) {
 		this.root = container;
-		this.windowManager= new WindowManager(container);
+		this.windowManager = new WindowManager(container);
 	}
 
 	public run(): void {

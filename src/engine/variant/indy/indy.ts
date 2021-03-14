@@ -1,4 +1,4 @@
-import { Engine, Story } from "src/engine";
+import { Engine, SaveState, Story } from "src/engine";
 import { WorldSize } from "src/engine/generation";
 import { rand } from "src/util";
 import { Char, Tile, Zone } from "../../objects";
@@ -54,6 +54,10 @@ class Indy extends Variant {
 			Zone.Planet.None,
 			[WorldSize.Small, WorldSize.Medium, WorldSize.Large].random()
 		);
+	}
+
+	public save(_: Engine): SaveState {
+		throw new Error("Method not implemented.");
 	}
 }
 

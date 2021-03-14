@@ -8,4 +8,5 @@ export const Indy = new IndyVariant();
 export const Yoda = new YodaVariant();
 export const IndyDemo = new IndyDemoVariant();
 export const YodaDemo = new YodaDemoVariant();
+
 export { Variant };

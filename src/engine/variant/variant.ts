@@ -3,6 +3,7 @@ import { Char, Tile } from "../objects";
 
 import LocatorTile from "./locator-tile";
 import Engine from "../engine";
+import { SaveState } from "src/engine/save-game";
 
 interface WellKnownSounds {
 	NoGo: number;
@@ -27,6 +28,7 @@ abstract class Variant {
 	abstract get mapTileId(): number;
 	abstract get weaponTileId(): number;
 	abstract createNewStory(_engine: Engine): Story;
+	abstract save(engine: Engine): SaveState;
 }
 
 export default Variant;

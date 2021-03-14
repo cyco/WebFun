@@ -13,6 +13,8 @@ import { Engine, Story } from "src/engine";
 import { rand } from "src/util";
 import { WorldSize } from "src/engine/generation";
 import { MutablePuzzle } from "src/engine/mutable-objects";
+import { SaveState } from "src/engine/save-game";
+import Settings from "src/settings";
 
 class Yoda extends Variant {
 	public static readonly goalIDs = GoalIDs;
@@ -113,6 +115,48 @@ class Yoda extends Variant {
 			[Zone.Planet.Endor, Zone.Planet.Hoth, Zone.Planet.Tatooine].random(),
 			[WorldSize.Small, WorldSize.Medium, WorldSize.Large].random()
 		);
+	}
+
+	public save(engine: Engine): SaveState {
+		const state = new SaveState();
+
+		state.type = engine.variant;
+		state.seed = engine.story.seed;
+		state.planet = engine.story.planet;
+		state.puzzleIDs1 = new Int16Array(engine.story.puzzles[0].map(p => p.id));
+		state.puzzleIDs2 = new Int16Array(engine.story.puzzles[1].map(p => p.id));
+		state.goalPuzzle = engine.story.goal?.id ?? -1;
+
+		state.dagobah = engine.dagobah;
+		state.world = engine.world;
+
+		state.onDagobah = engine.currentWorld === engine.dagobah;
+		state.positionOnWorld = engine.currentWorld.locationOfSector(engine.currentSector);
+		state.currentZoneID = engine.currentZone.id;
+		state.positionOnZone = engine.hero.location;
+
+		state.damageTaken = engine.hero.damage;
+		state.livesLost = engine.hero.lives;
+
+		state.inventoryIDs = new Int16Array(engine.inventory.items.map(i => i.id));
+
+		state.currentWeapon = engine.hero.weapon?.id ?? -1;
+		state.currentAmmo = engine.hero.ammo;
+
+		state.forceAmmo = engine.hero.getAmmoForWeapon(engine.assets.get(Char, CharIDs.TheForce));
+		state.blasterAmmo = engine.hero.getAmmoForWeapon(engine.assets.get(Char, CharIDs.Blaster));
+		state.blasterRifleAmmo = engine.hero.getAmmoForWeapon(
+			engine.assets.get(Char, CharIDs.BlasterRifle)
+		);
+
+		state.difficulty = Settings.difficulty;
+		state.timeElapsed = engine.totalPlayTime;
+		state.worldSize = 0;
+
+		state.unknownCount = 0;
+		state.unknownSum = 0;
+
+		return state;
 	}
 }
 
