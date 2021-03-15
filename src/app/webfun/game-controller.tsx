@@ -122,13 +122,24 @@ class GameController extends EventTarget implements EventListenerObject {
 			const { left: windowX, top: windowY } = this._window.getBoundingClientRect();
 			const { left: sceneX, top: sceneY } = this._sceneView.getBoundingClientRect();
 
-			at = at.byScalingBy(Tile.WIDTH).byAdding(sceneX, sceneY).bySubtracting(windowX, windowY);
+			const attachBelow = at.y < 2;
+
+			const anchor = new Point(
+				at.x * Tile.WIDTH + sceneX - windowX + Tile.WIDTH / 2.0,
+				at.y * Tile.HEIGHT +
+					sceneY -
+					windowY +
+					Tile.HEIGHT / 2.0 +
+					(attachBelow ? 1 : -1) * (Tile.HEIGHT / 2 - 4)
+			);
 
 			const bubble = (
 				<SpeechBubble
 					text={text}
 					onend={() => modalSession.end(0)}
-					style={{ position: "absolute", left: `${at.x}px`, top: `${at.y}px` }}
+					style={{ position: "absolute" }}
+					arrowStyle={!attachBelow ? SpeechBubble.ArrowStyle.Bottom : SpeechBubble.ArrowStyle.Top}
+					origin={anchor}
 				/>
 			);
 

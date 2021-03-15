@@ -14,7 +14,7 @@ const ArrowWidth = 16;
 const ScrollRepeatInterval = 100;
 
 const MODIFIED = 1;
-const enum ArrowStyle {
+enum ArrowStyle {
 	Top = 1 << 1,
 	Bottom = 1 << 2,
 
@@ -22,7 +22,7 @@ const enum ArrowStyle {
 	Right = 1 << 4,
 
 	Horizontal = ArrowStyle.Left | ArrowStyle.Right,
-	Vertical = ArrowStyle.Top | ArrowStyle.Left
+	Vertical = ArrowStyle.Top | ArrowStyle.Bottom
 }
 const DefaultTextStyle = {
 	fontSize: "11px",
@@ -31,9 +31,9 @@ const DefaultTextStyle = {
 };
 
 class SpeechBubble extends Component {
+	public static readonly ArrowStyle = ArrowStyle;
 	public static readonly Event = Event;
 	public static readonly tagName = "wf-speech-bubble";
-	public static readonly observedAttributes = ["text"];
 
 	public onend: (e: CustomEvent) => void;
 	private _width = 170;
@@ -45,6 +45,7 @@ class SpeechBubble extends Component {
 	private _end = (<Button className="end" icon="circle" onclick={() => this.end()} />);
 	private _text: HTMLElement = (<div className="text" style={DefaultTextStyle} />);
 	private _keepScrolling: number = -1;
+	private _origin: Point = new Point(0, 0);
 
 	constructor() {
 		super();
@@ -67,17 +68,7 @@ class SpeechBubble extends Component {
 		this.text = this.text || "";
 	}
 
-	protected attributeChangedCallback(_: string, _2: string, newValue: string): void {
-		this.text = newValue;
-	}
-
-	get text(): string {
-		return this._text.textContent;
-	}
-
-	set text(text: string) {
-		this._text.textContent = text.replace(/(?:\r\n|\r|\n)/g, "\n");
-
+	private rebuild() {
 		if (!this.isConnected) return;
 
 		this.appendChild(this._text.parentNode);
@@ -86,15 +77,40 @@ class SpeechBubble extends Component {
 		this._setupBackground();
 		this._updateButtonVisibility();
 		this._scrollTo(0);
-	}
 
-	set origin(p: Point) {
+		const p = this.origin;
+		if (this._arrowStyle === ArrowStyle.Bottom) {
+			p.y -= parseInt(this.style.height);
+		}
 		this.style.left = p.x - parseInt(this._width + "") / 2 + "px";
 		this.style.top = p.y + "px";
 	}
 
+	get text(): string {
+		return this._text.textContent;
+	}
+
+	set text(text: string) {
+		this._text.textContent = text.replace(/(?:\r\n|\r|\n)/g, "\n");
+		this.rebuild();
+	}
+
+	set origin(p: Point) {
+		this._origin = p;
+		this.rebuild();
+	}
+
 	get origin(): Point {
-		return new Point(parseInt(this.style.left), parseInt(this.style.top));
+		return this._origin;
+	}
+
+	set arrowStyle(style: ArrowStyle) {
+		this._arrowStyle = style;
+		this.rebuild();
+	}
+
+	get arrowStyle(): ArrowStyle {
+		return this._arrowStyle;
 	}
 
 	private _setupButtons() {
@@ -170,7 +186,7 @@ class SpeechBubble extends Component {
 		path.push(["M", left + b, top]);
 		if (this._arrowStyle & ArrowStyle.Top) {
 			const arrowLeft = !!(this._arrowStyle & MODIFIED);
-			const arrowStart = (right - left) / 2 - ArrowWidth / 2;
+			const arrowStart = (right - left) / 2 - ArrowWidth / 2 - ArrowWidth / 2.0;
 			const arrowTipX = arrowLeft ? arrowStart : arrowStart + ArrowWidth;
 
 			path.push(["L", arrowStart, top]);
@@ -183,7 +199,7 @@ class SpeechBubble extends Component {
 		path.push(["L", right, bottom - b]);
 		path.push(["A", b, b, 0, 0, 1, width - b, bottom]);
 		if (this._arrowStyle & ArrowStyle.Bottom) {
-			const arrowStart = (right - left) / 2 - ArrowWidth / 2;
+			const arrowStart = (right - left) / 2 - ArrowWidth / 2 - ArrowWidth / 2.0;
 			const arrowLeft = !!(this._arrowStyle & MODIFIED);
 			const arrowTipX = arrowLeft ? arrowStart : arrowStart + ArrowWidth;
 
