@@ -233,7 +233,7 @@ class Engine extends EventTarget {
 		location = this.dagobah.findLocationOfZone(zone);
 		if (location) return { location, world: this.dagobah };
 
-		return { location: null, world: null };
+		return { location: null, world: this.currentWorld };
 	}
 
 	get hpu(): HotspotProcessingUnit {
