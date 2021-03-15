@@ -57,7 +57,7 @@ class Engine extends EventTarget {
 	private _hpu: HotspotProcessingUnit;
 	private _gameState: GameState = GameState.Stopped;
 	private _currentSector: Sector;
-	public currentPlayStart: Date;
+	public currentPlayStart: Date = new Date();
 	public totalPlayTime: number;
 	public bumpedLocation: Point;
 

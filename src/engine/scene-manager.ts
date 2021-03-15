@@ -1,4 +1,4 @@
-import { Rectangle, EventTarget } from "src/util";
+import { EventTarget } from "src/util";
 import { Renderer } from "./rendering";
 import Engine from "./engine";
 import Scene from "./scenes/scene";
