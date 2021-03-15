@@ -52,6 +52,8 @@ class PickupScene extends Scene {
 
 		inventory.addItem(this.tile);
 
+		engine.inputManager.clear();
+
 		this._image = null;
 		super.willHide();
 	}

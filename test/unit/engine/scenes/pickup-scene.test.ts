@@ -7,54 +7,45 @@ import { Point } from "src/util";
 import { InputMask } from "src/engine/input";
 
 describe("WebFun.Engine.Scenes.PickupScene", () => {
-	it("can be instantiated without throwing exceptions", () => {
-		expect(() => new PickupScene()).not.toThrow();
+	let subject: PickupScene;
+	let item: Tile;
+	beforeEach(() => {
+		item = { imageData: new Uint8Array() } as any;
+		subject = new PickupScene();
+		subject.tile = item;
 	});
 
-	it("watches the input manager for pause button input and eventually pops itself from the scene manager", () => {
-		let popCalled = false;
-		let input = InputMask.None;
-		const engine: Engine = ({
-			camera: new Camera(),
-			inputManager: {
-				readInput() {
-					return input;
-				}
-			},
-			sceneManager: { popScene: () => (popCalled = true) },
-			inventory: {
-				addItem: () => {}
-			}
-		} as any) as Engine;
+	describe("when shown", () => {
+		let engine: Engine;
+		beforeEach(() => {
+			engine = mockEngine();
+			subject.engine = engine;
+			subject.willShow();
+			subject.didShow();
+			subject.update(0);
+		});
 
-		const scene = new PickupScene();
-		scene.engine = engine;
-		scene.update(0);
+		describe("and the item is picked up", () => {
+			beforeEach(() => {
+				(engine.inputManager.readInput as jasmine.Spy).and.returnValue(InputMask.PickUp);
+				subject.update(0);
 
-		expect(popCalled).toBeFalse();
+				subject.willHide();
+				subject.didHide();
+			});
 
-		input = InputMask.PickUp;
+			it("removes the scene", () => {
+				expect(engine.sceneManager.popScene).toHaveBeenCalled();
+			});
 
-		scene.update(0);
-		expect(popCalled).toBeTrue();
-	});
+			it("adds the item to the inventory", () => {
+				expect(engine.inventory.addItem).toHaveBeenCalledWith(item);
+			});
 
-	it("adds the current item to the inventory when it is removed from the scene manager", () => {
-		const item: Tile = ({} as any) as Tile;
-		const engine: Engine = ({
-			camera: new Camera(),
-			inventory: {
-				addItem() {}
-			}
-		} as any) as Engine;
-		spyOn(engine.inventory, "addItem");
-
-		const scene = new PickupScene();
-		scene.tile = item;
-		scene.engine = engine;
-		scene.willHide();
-
-		expect(engine.inventory.addItem).toHaveBeenCalledWith(item);
+			it("clears the input manager so space does not trigger an attack", () => {
+				expect(engine.inputManager.clear).toHaveBeenCalled();
+			});
+		});
 	});
 
 	it("counts ticks and flashes the item", () => {
@@ -121,4 +112,19 @@ describe("WebFun.Engine.Scenes.PickupScene", () => {
 
 		expect(renderer.renderImage).toHaveBeenCalledWith(undefined, 64, 224);
 	});
+
+	function mockEngine(): Engine {
+		return {
+			camera: new Camera(),
+			inputManager: {
+				readInput: jasmine.createSpy(),
+				clear: jasmine.createSpy()
+			},
+			sceneManager: { popScene: jasmine.createSpy() },
+			inventory: {
+				addItem: jasmine.createSpy()
+			},
+			palette: { current: new Uint8Array() }
+		} as any;
+	}
 });
