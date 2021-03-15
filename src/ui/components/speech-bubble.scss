@@ -2,6 +2,13 @@ wf-speech-bubble {
 	position: absolute;
 	z-index: 1001;
 
+	svg {
+		overflow: visible;
+		path {
+			shape-rendering: crispedges;
+		}
+	}
+
 	.text-container {
 		position: absolute;
 		overflow: hidden;
