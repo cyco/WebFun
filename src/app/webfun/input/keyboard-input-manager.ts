@@ -47,9 +47,6 @@ class KeyboardInputManager implements InputManager {
 			return;
 		}
 
-		event.stopPropagation();
-		event.preventDefault();
-
 		if (event.type === "keydown" && event.code === "F8" && event.ctrlKey && event.shiftKey) {
 			const window = document.createElement(CurrentStatusInfo.tagName);
 			window.engine = this.engine;
@@ -58,6 +55,10 @@ class KeyboardInputManager implements InputManager {
 			this.engine.metronome.stop();
 			WindowManager.defaultManager.showWindow(window);
 			window.center();
+
+			event.stopPropagation();
+			event.preventDefault();
+
 			return;
 		}
 
@@ -66,6 +67,7 @@ class KeyboardInputManager implements InputManager {
 	}
 
 	private _keyDown(e: KeyboardEvent) {
+		let eventHandled = true;
 		let directionMask = 0;
 		switch (e.code) {
 			case "ArrowUp":
@@ -106,15 +108,23 @@ class KeyboardInputManager implements InputManager {
 				this._currentInput ^= InputMask.Locator;
 				break;
 			default:
+				eventHandled = false;
 				break;
 		}
+
+		if (e.metaKey || e.ctrlKey) return;
 
 		this._keyboardDirection |= directionMask;
 		if (this._keyboardDirection) this._currentInput |= InputMask.Walk;
 		if (this.keyDownHandler) this.keyDownHandler(e);
+		else if (eventHandled) {
+			e.stopPropagation();
+			e.preventDefault();
+		}
 	}
 
 	private _keyUp(e: KeyboardEvent) {
+		let eventHandled = true;
 		let directionMask = 0xffff;
 		switch (e.code) {
 			case "ArrowUp":
@@ -148,17 +158,17 @@ class KeyboardInputManager implements InputManager {
 			case "ShiftRight":
 				this._currentInput &= ~InputMask.Drag;
 				break;
-			case "ControlLeft":
-			case "ControlLeftRight":
-				// TODO: re-implement
-				break;
-
 			default:
+				eventHandled = false;
 				break;
 		}
 
 		this._keyboardDirection &= directionMask;
 		if (!this._keyboardDirection) this._currentInput &= ~InputMask.Walk;
+		if (eventHandled) {
+			e.preventDefault();
+			e.stopPropagation();
+		}
 	}
 
 	public readInput(_: number): InputMask {
