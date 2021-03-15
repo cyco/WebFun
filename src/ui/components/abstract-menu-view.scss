@@ -3,7 +3,7 @@
 
 wf-abstract-menu-view {
 	@include inset-border-inverted(2px);
-	@include unselectable;
+	@include no-selection;
 
 	margin: 0px;
 	padding: 0px;

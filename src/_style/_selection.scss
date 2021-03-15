@@ -1,4 +1,4 @@
-@mixin unselectable {
+@mixin no-selection {
 	user-select: none;
 	-webkit-user-select: none;
 	cursor: default;

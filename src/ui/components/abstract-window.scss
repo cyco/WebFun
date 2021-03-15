@@ -37,7 +37,7 @@ wf-abstract-window {
 		}
 	}
 
-	@include unselectable;
+	@include no-selection;
 
 	input:not([type]),
 	input[type="text"],
