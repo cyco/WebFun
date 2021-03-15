@@ -18,6 +18,8 @@ import {
 	EventTarget,
 	OutputStream,
 	Point,
+	Rectangle,
+	Size,
 	srand
 } from "src/util";
 import { FilePicker, WindowManager } from "src/ui";
@@ -34,7 +36,7 @@ import CursorManager from "./input/cursor-manager";
 import { Mixer } from "./audio";
 import DebugInfoScene from "src/app/webfun/debug/debug-info-scene";
 import { OnscreenPad, OnscreenButton } from "./ui";
-import { random, floor } from "src/std/math";
+import { random, floor, min, max } from "src/std/math";
 import * as SmartPhone from "detect-mobile-browser";
 import GameEventHandler from "./game-event-handler";
 import Logger from "./logger";
@@ -123,6 +125,10 @@ class GameController extends EventTarget implements EventListenerObject {
 			const { left: sceneX, top: sceneY } = this._sceneView.getBoundingClientRect();
 
 			const attachBelow = at.y < 2;
+			const offScreen = !new Rectangle(new Point(0, 0), new Size(9, 9)).contains(at);
+
+			at.x = min(max(0, at.x), 9);
+			at.y = min(max(0, at.y), 9);
 
 			const anchor = new Point(
 				at.x * Tile.WIDTH + sceneX - windowX + Tile.WIDTH / 2.0,
@@ -138,7 +144,13 @@ class GameController extends EventTarget implements EventListenerObject {
 					text={text}
 					onend={() => modalSession.end(0)}
 					style={{ position: "absolute" }}
-					arrowStyle={!attachBelow ? SpeechBubble.ArrowStyle.Bottom : SpeechBubble.ArrowStyle.Top}
+					arrowStyle={
+						offScreen
+							? SpeechBubble.ArrowStyle.None
+							: attachBelow
+							? SpeechBubble.ArrowStyle.Top
+							: SpeechBubble.ArrowStyle.Bottom
+					}
 					origin={anchor}
 				/>
 			);

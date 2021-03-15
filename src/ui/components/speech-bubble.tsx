@@ -15,6 +15,8 @@ const ScrollRepeatInterval = 100;
 
 const MODIFIED = 1;
 enum ArrowStyle {
+	None = 1 << 5,
+
 	Top = 1 << 1,
 	Bottom = 1 << 2,
 
@@ -24,6 +26,7 @@ enum ArrowStyle {
 	Horizontal = ArrowStyle.Left | ArrowStyle.Right,
 	Vertical = ArrowStyle.Top | ArrowStyle.Bottom
 }
+
 const DefaultTextStyle = {
 	fontSize: "11px",
 	fontFamily: `"Trueno", sans-serif`,
@@ -156,6 +159,11 @@ class SpeechBubble extends Component {
 			this.style.width = width + ArrowWidth + "px";
 			background.setAttribute("height", "" + height);
 			background.setAttribute("width", `${width + ArrowWidth}`);
+		} else if (this._arrowStyle & ArrowStyle.None) {
+			this.style.height = height + "px";
+			this.style.width = width + "px";
+			background.setAttribute("height", "" + height);
+			background.setAttribute("width", `${width}`);
 		}
 
 		const leftArrowWidth = this._arrowStyle & ArrowStyle.Left ? ArrowWidth : 0;
