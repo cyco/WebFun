@@ -1,6 +1,5 @@
 @charset "utf-8";
 @import "reset.scss";
-@import "selection.scss";
 @import "colors.scss";
 @import "fonts.scss";
 
@@ -12,20 +11,8 @@ body {
 }
 
 .webfun {
-	@include unselectable;
-
 	a {
 		cursor: default;
-	}
-
-	input:not([type]),
-	input[type="text"],
-	input[type="number"],
-	input[type="search"],
-	textarea,
-	[contenteditable],
-	[contenteditable] * {
-		@include selectable;
 	}
 }
 

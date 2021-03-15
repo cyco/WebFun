@@ -1,4 +1,5 @@
 @import "colors.scss";
+@import "selection.scss";
 @import "./window-titlebar";
 
 wf-abstract-window {
@@ -34,5 +35,17 @@ wf-abstract-window {
 			border-bottom: solid 1px rgba(0, 0, 0, 0.4);
 			box-shadow: 0px 1px 0px 0px #ffffff;
 		}
+	}
+
+	@include unselectable;
+
+	input:not([type]),
+	input[type="text"],
+	input[type="number"],
+	input[type="search"],
+	textarea,
+	[contenteditable],
+	[contenteditable] * {
+		@include selectable;
 	}
 }
