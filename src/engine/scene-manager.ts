@@ -117,6 +117,10 @@ class SceneManager extends EventTarget {
 		this._stack.forEach(s => (s.engine = e));
 		this._overlays.forEach(o => (o.engine = e));
 	}
+
+	public get stack(): Scene[] {
+		return this._stack;
+	}
 }
 
 export default SceneManager;

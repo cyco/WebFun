@@ -23,7 +23,7 @@ import {
 	srand
 } from "src/util";
 import { FilePicker, WindowManager } from "src/ui";
-import { ZoneScene } from "src/engine/scenes";
+import { MapScene, ZoneScene } from "src/engine/scenes";
 import { MainMenu, MobileMainMenu, MainWindow } from "./windows";
 import GameState from "src/engine/game-state";
 import { Reader, Writer } from "src/engine/save-game";
@@ -118,6 +118,11 @@ class GameController extends EventTarget implements EventListenerObject {
 
 	private showText(text: string, at: Point): Promise<void> {
 		return new Promise<void>(resolve => {
+			const isMap = !!this.engine.sceneManager.stack.find(scene => scene instanceof MapScene);
+			const offset = isMap ? new Point(4, 4) : new Point(0, 0);
+			const tileSize = isMap ? new Size(28, 28) : new Size(Tile.WIDTH, Tile.HEIGHT);
+			const maxSize = isMap ? new Size(10, 10) : new Size(9, 9);
+
 			const modalSession = new ModalSession();
 			modalSession.onend = () => resolve();
 
@@ -125,18 +130,19 @@ class GameController extends EventTarget implements EventListenerObject {
 			const { left: sceneX, top: sceneY } = this._sceneView.getBoundingClientRect();
 
 			const attachBelow = at.y < 2;
-			const offScreen = !new Rectangle(new Point(0, 0), new Size(9, 9)).contains(at);
+			const offScreen = !new Rectangle(new Point(0, 0), maxSize).contains(at);
 
-			at.x = min(max(0, at.x), 9);
-			at.y = min(max(0, at.y), 9);
+			at.x = min(max(0, at.x), maxSize.width);
+			at.y = min(max(0, at.y), maxSize.height);
 
 			const anchor = new Point(
-				at.x * Tile.WIDTH + sceneX - windowX + Tile.WIDTH / 2.0,
-				at.y * Tile.HEIGHT +
+				offset.x + at.x * tileSize.width + sceneX - windowX + tileSize.width / 2.0,
+				offset.y +
+					at.y * tileSize.height +
 					sceneY -
 					windowY +
-					Tile.HEIGHT / 2.0 +
-					(attachBelow ? 1 : -1) * (Tile.HEIGHT / 2 - 4)
+					tileSize.height / 2.0 +
+					(attachBelow ? 1 : -1) * (tileSize.height / 2 - 4)
 			);
 
 			const bubble = (
