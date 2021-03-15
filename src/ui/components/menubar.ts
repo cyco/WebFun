@@ -117,10 +117,10 @@ class Menubar extends AbstractMenuView {
 	private _elementContainsPoint(element: Element, point: Point): boolean {
 		const frame = element.getBoundingClientRect();
 		return (
-			point.x >= frame.left &&
-			point.x <= frame.right &&
-			point.y >= frame.top &&
-			point.y <= frame.bottom
+			point.x >= frame.left + window.scrollX &&
+			point.x <= frame.right + window.scrollX &&
+			point.y >= frame.top + window.scrollY &&
+			point.y <= frame.bottom + window.scrollY
 		);
 	}
 

@@ -17,7 +17,7 @@ abstract class AbstractMenuWindow extends AbstractMenuView {
 
 		if (location instanceof Element) {
 			const box = location.getBoundingClientRect();
-			origin = new Point(box.left, box.bottom + 1);
+			origin = new Point(box.left, box.bottom + 1).add(window.scrollX, window.scrollY);
 			minWidth = box.width;
 		}
 		console.assert(!!origin, "Expected location to be either Point or Element");
