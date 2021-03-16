@@ -10,14 +10,14 @@ describe("WebFun.Settings", () => {
 	});
 
 	it("also provides access to urls for yoda's game data", () => {
-		expect(Settings.url.yoda.data).toContain("yoda.data");
+		expect(Settings.url.yoda.data).toContain("yoda.en.data");
 		expect(Settings.url.yoda.palette).toContain("yoda.pal");
 
 		expect(Settings.url.yoda.sfx).toContain("sfx-yoda");
 	});
 
 	it("also provides access to urls for indy's game data", () => {
-		expect(Settings.url.indy.data).toContain("indy.data");
+		expect(Settings.url.indy.data).toContain("indy.en.data");
 		expect(Settings.url.indy.palette).toContain("indy.pal");
 
 		expect(Settings.url.indy.sfx).toContain("sfx-indy");
