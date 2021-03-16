@@ -1,16 +1,24 @@
 import ResourceManager from "src/app/webfun/resource-manager";
-import { FileLoader, InputStream } from "src/util";
+import { FetchInputStream, FileLoader, InputStream } from "src/util";
+import * as UtilModule from "src/util";
 import { ColorPalette } from "src/engine";
 
 describe("WebFun.App.ResourceManager", () => {
 	const progressHandler: () => void = () => void 0;
 	let subject: ResourceManager;
-	let resultStream: InputStream;
+	let resultStream: FetchInputStream;
 	let xhr: XMLHttpRequest;
+	let mockResponse: Response;
+	let inputStream: InputStream;
 
 	beforeEach(() => {
-		resultStream = new InputStream("");
-		spyOn(FileLoader, "loadAsStream").and.returnValue(Promise.resolve(resultStream));
+		resultStream = {} as any;
+		mockResponse = {} as any;
+		inputStream = new InputStream("");
+
+		spyOn(UtilModule, "FetchInputStream").and.returnValue(resultStream);
+		spyOn(FileLoader, "loadAsStream").and.returnValue(Promise.resolve(inputStream));
+		spyOn(window, "fetch").and.returnValue(Promise.resolve(mockResponse));
 		spyOn(window, "XMLHttpRequest").and.callFake(
 			() => (xhr = { open: jasmine.createSpy(), send: jasmine.createSpy() } as any)
 		);
@@ -20,18 +28,18 @@ describe("WebFun.App.ResourceManager", () => {
 	it("loads the palette", async () => {
 		const mockedBuffer = ({} as unknown) as Uint8Array;
 		spyOn(ColorPalette, "FromBGR8");
-		spyOn(resultStream, "readUint8Array").and.returnValue(mockedBuffer);
+		spyOn(inputStream, "readUint8Array").and.returnValue(mockedBuffer);
 
 		await subject.loadPalette(progressHandler);
 
 		expect(FileLoader.loadAsStream).toHaveBeenCalled();
-		expect(resultStream.readUint8Array).toHaveBeenCalledWith(0x400);
+		expect(inputStream.readUint8Array).toHaveBeenCalledWith(0x400);
 		expect(ColorPalette.FromBGR8).toHaveBeenCalledWith(mockedBuffer);
 	});
 
 	it("loads the game data", async () => {
 		const result = await subject.loadGameFile(progressHandler);
-		expect(FileLoader.loadAsStream).toHaveBeenCalled();
+		expect(window.fetch).toHaveBeenCalledWith("data.data");
 		expect(result).toBe(resultStream);
 	});
 

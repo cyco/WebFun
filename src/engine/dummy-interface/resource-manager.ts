@@ -1,9 +1,9 @@
-import { InputStream } from "src/util";
+import { ReaderStream } from "src/util";
 import ResourceManagerInterface from "src/engine/resource-manager";
 import { ColorPalette } from "src/engine/rendering";
 
 class ResourceManager implements ResourceManagerInterface {
-	loadGameFile(_progress: (progress: number) => void): Promise<InputStream> {
+	loadGameFile(_progress: (progress: number) => void): Promise<ReaderStream> {
 		throw new Error("Method not implemented.");
 	}
 

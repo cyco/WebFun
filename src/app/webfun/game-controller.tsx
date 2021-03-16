@@ -349,14 +349,14 @@ class GameController extends EventTarget implements EventListenerObject {
 			const loader = new Loader(engine.resources, engine.mixer as Mixer, engine.variant);
 			loader.onfail = event => reject(event);
 			loader.onprogress = ({ detail: { progress } }) => (loadingView.progress = progress);
-			loader.onloadpalette = ({ detail: { palette } }) => {
-				this.palette = palette;
+			loader.onloadsetupimage = ({ detail: { pixels, palette } }) => {
+				loadingView.palette = palette;
+				loadingView.image = pixels;
+
 				this._window.inventory.palette = palette;
 				this._window.weapon.palette = palette;
-				loadingView.palette = palette;
-			};
-			loader.onloadsetupimage = ({ detail: { pixels } }) => {
-				loadingView.image = pixels;
+
+				this.palette = palette;
 			};
 
 			loader.onload = ({ detail: { data } }) => {

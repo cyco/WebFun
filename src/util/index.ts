@@ -6,11 +6,13 @@ import DiscardingOutputStream from "./discarding-output-stream";
 import DiscardingStorage from "./discarding-storage";
 import Event from "./event";
 import EventTarget from "./event-target";
+import FetchInputStream from "./fetch-input-stream";
 import FileLoader from "./file-loader";
 import HorizontalPointRange from "./horizontal-point-range";
 import InputStream from "./input-stream";
 import LogLevel from "./log-level";
 import Logger from "./logger";
+import MouseButton from "./mouse-button";
 import OutputStream from "./output-stream";
 import Point from "./point";
 import PointLike from "./point-like";
@@ -18,6 +20,7 @@ import PointRange from "./point-range";
 import PrefixedStorage from "./prefixed-storage";
 import QueryString from "./query-string";
 import Range from "./range";
+import ReaderStream from "./reader-stream";
 import Rectangle from "./rectangle";
 import Scanner from "./scanner";
 import Size from "./size";
@@ -25,6 +28,7 @@ import SizeLike from "./size-like";
 import Stream from "./stream";
 import VerticalPointRange from "./vertical-point-range";
 import add from "./add";
+import astar from "./a-star";
 import clamp from "./clamp";
 import constantly from "./constantly";
 import deg2rad from "./deg2rad";
@@ -38,8 +42,6 @@ import polar2xy from "./polar2xy";
 import rad2deg from "./rad2deg";
 import sleep from "./sleep";
 import xy2polar from "./xy2polar";
-import astar from "./a-star";
-import MouseButton from "./mouse-button";
 
 export {
 	Color,
@@ -48,6 +50,7 @@ export {
 	DiscardingStorage,
 	Event,
 	EventTarget,
+	FetchInputStream,
 	FileLoader,
 	HorizontalPointRange,
 	InputStream,
@@ -61,6 +64,7 @@ export {
 	PrefixedStorage,
 	QueryString,
 	Range,
+	ReaderStream,
 	Rectangle,
 	Scanner,
 	Size,

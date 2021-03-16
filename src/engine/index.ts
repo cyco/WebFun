@@ -11,7 +11,10 @@ import Metronome from "./metronome";
 import PersistentState from "./persistent-state";
 import SceneManager from "./scene-manager";
 import Story from "./story";
-import readGameDataFile from "./file-format";
+import {
+	read as readGameDataFile,
+	readProgressively as readGameDataFileProgressively
+} from "./file-format";
 import { Scene } from "./scenes";
 import GameState from "./game-state";
 import AssetManager from "./asset-manager";
@@ -49,5 +52,6 @@ export {
 	SceneManager,
 	Script,
 	Story,
-	readGameDataFile
+	readGameDataFile,
+	readGameDataFileProgressively
 };

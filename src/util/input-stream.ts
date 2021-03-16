@@ -5,19 +5,19 @@ import Stream from "./stream";
 const DefaultEncoding = "utf-8";
 
 class InputStream extends Stream {
-	private _arrayBuffer: ArrayBuffer | SharedArrayBuffer;
-	private _dataView: DataView;
+	protected arrayBuffer: ArrayBuffer | SharedArrayBuffer;
+	protected dataView: DataView;
 
 	constructor(data: ArrayBuffer | SharedArrayBuffer | string, endianness = Stream.Endian.Little) {
 		super();
 
 		this.endianness = endianness;
-		this._arrayBuffer = this._makeArrayBuffer(data);
-		this._dataView = new DataView(this._arrayBuffer);
+		this.arrayBuffer = this._makeArrayBuffer(data);
+		this.dataView = new DataView(this.arrayBuffer);
 	}
 
 	public get length(): number {
-		return this._arrayBuffer.byteLength;
+		return this.arrayBuffer.byteLength;
 	}
 
 	public isAtEnd(): boolean {
@@ -44,37 +44,37 @@ class InputStream extends Stream {
 	}
 
 	public readUint8(): number {
-		const result = this._dataView.getUint8(this._offset);
+		const result = this.dataView.getUint8(this._offset);
 		this._offset += Uint8Array.BYTES_PER_ELEMENT;
 		return result;
 	}
 
 	public readUint16(): number {
-		const result = this._dataView.getUint16(this._offset, this.littleEndian);
+		const result = this.dataView.getUint16(this._offset, this.littleEndian);
 		this._offset += Uint16Array.BYTES_PER_ELEMENT;
 		return result;
 	}
 
 	public readUint32(): number {
-		const result = this._dataView.getUint32(this._offset, this.littleEndian);
+		const result = this.dataView.getUint32(this._offset, this.littleEndian);
 		this._offset += Uint32Array.BYTES_PER_ELEMENT;
 		return result;
 	}
 
 	public readInt8(): number {
-		const result = this._dataView.getInt8(this._offset);
+		const result = this.dataView.getInt8(this._offset);
 		this._offset += Uint8Array.BYTES_PER_ELEMENT;
 		return result;
 	}
 
 	public readInt16(): number {
-		const result = this._dataView.getInt16(this._offset, this.littleEndian);
+		const result = this.dataView.getInt16(this._offset, this.littleEndian);
 		this._offset += Uint16Array.BYTES_PER_ELEMENT;
 		return result;
 	}
 
 	public readInt32(): number {
-		const result = this._dataView.getInt32(this._offset, this.littleEndian);
+		const result = this.dataView.getInt32(this._offset, this.littleEndian);
 		this._offset += Uint32Array.BYTES_PER_ELEMENT;
 		return result;
 	}
@@ -82,7 +82,7 @@ class InputStream extends Stream {
 	public readCharacters(length: number, encoding: string = DefaultEncoding): string {
 		if (length === 0) return "";
 
-		const data = new Uint8Array(this._arrayBuffer, this._offset, length);
+		const data = new Uint8Array(this.arrayBuffer, this._offset, length);
 		this._offset += length;
 
 		const decoder = new TextDecoder(encoding);
@@ -99,7 +99,7 @@ class InputStream extends Stream {
 	}
 
 	public readNullTerminatedString(maxLength: number, encoding: string = DefaultEncoding): string {
-		const uint8Array = new Uint8Array(this._arrayBuffer, this._offset, maxLength);
+		const uint8Array = new Uint8Array(this.arrayBuffer, this._offset, maxLength);
 
 		let length = 0;
 		while (uint8Array[length]) length++;
@@ -113,7 +113,7 @@ class InputStream extends Stream {
 	}
 
 	public readUint8Array(length: number): Uint8Array {
-		const result = new Uint8Array(this._arrayBuffer, this._offset, length);
+		const result = new Uint8Array(this.arrayBuffer, this._offset, length);
 		this._offset += length;
 		return result;
 	}
@@ -122,10 +122,10 @@ class InputStream extends Stream {
 		let result;
 
 		if (this._offset % 2 !== 0) {
-			const buffer = this._arrayBuffer.slice(this._offset, this._offset + length * 2);
+			const buffer = this.arrayBuffer.slice(this._offset, this._offset + length * 2);
 			result = new Uint16Array(buffer);
 		} else {
-			result = new Uint16Array(this._arrayBuffer, this._offset, length);
+			result = new Uint16Array(this.arrayBuffer, this._offset, length);
 		}
 
 		this._offset += length * 2;
@@ -136,10 +136,10 @@ class InputStream extends Stream {
 		let result;
 
 		if (this._offset % 2 !== 0) {
-			const buffer = this._arrayBuffer.slice(this._offset, this._offset + length * 2);
+			const buffer = this.arrayBuffer.slice(this._offset, this._offset + length * 2);
 			result = new Int16Array(buffer);
 		} else {
-			result = new Int16Array(this._arrayBuffer, this._offset, length);
+			result = new Int16Array(this.arrayBuffer, this._offset, length);
 		}
 
 		this._offset += length * 2;
@@ -150,10 +150,10 @@ class InputStream extends Stream {
 		let result;
 
 		if (this._offset % 4 !== 0) {
-			const buffer = this._arrayBuffer.slice(this._offset, this._offset + length * 4);
+			const buffer = this.arrayBuffer.slice(this._offset, this._offset + length * 4);
 			result = new Uint32Array(buffer);
 		} else {
-			result = new Uint32Array(this._arrayBuffer, this._offset, length);
+			result = new Uint32Array(this.arrayBuffer, this._offset, length);
 		}
 
 		this._offset += length * 4;
@@ -164,10 +164,10 @@ class InputStream extends Stream {
 		let result;
 
 		if (this._offset % 4 !== 0) {
-			const buffer = this._arrayBuffer.slice(this._offset, this._offset + length * 4);
+			const buffer = this.arrayBuffer.slice(this._offset, this._offset + length * 4);
 			result = new Int32Array(buffer);
 		} else {
-			result = new Int32Array(this._arrayBuffer, this._offset, length);
+			result = new Int32Array(this.arrayBuffer, this._offset, length);
 		}
 
 		this._offset += length * 4;
@@ -175,7 +175,7 @@ class InputStream extends Stream {
 	}
 
 	public get buffer(): ArrayBuffer | SharedArrayBuffer {
-		return this._arrayBuffer;
+		return this.arrayBuffer.slice(0, this.length);
 	}
 }
 

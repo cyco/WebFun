@@ -245,6 +245,6 @@ describe("WebFun.Util.InputStream", () => {
 		const buffer = new ArrayBuffer(10);
 		const subject = new InputStream(buffer);
 
-		expect(subject.buffer).toBe(buffer);
+		expect(subject.buffer).toEqual(buffer);
 	});
 });

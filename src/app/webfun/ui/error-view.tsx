@@ -56,15 +56,20 @@ class ErrorView extends Component {
 		);
 	}
 
-	set error(error: Error) {
+	set error(error: Error | ErrorEvent | CustomEvent) {
 		console.error(error);
 		console.log((error as any).previousErrors);
 		console.log(error);
-		this._error = error;
+		if (error instanceof ErrorEvent) {
+			error = error.error;
+		} else if (error instanceof CustomEvent) {
+			error = (error.detail.error ?? error.detail.reason) as Error;
+		}
+		this._error = error as any;
 		this.presentError();
 	}
 
-	get error(): Error {
+	get error(): Error | ErrorEvent | CustomEvent {
 		return this._error;
 	}
 }
