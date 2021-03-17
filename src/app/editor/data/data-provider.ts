@@ -1,4 +1,4 @@
-import { GameData, Variant, readGameDataFile } from "src/engine";
+import { GameData, readGameDataFile, Variant } from "src/engine";
 
 import { FileLoader } from "src/util";
 import Settings from "src/settings";

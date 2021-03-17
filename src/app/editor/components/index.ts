@@ -17,18 +17,18 @@ import PopoverCharacterPicker from "./popover-character-picker";
 import SourceLevelCoverage from "./source-level-coverage";
 import SymbolicCoverage from "./symbolic-coverage";
 import {
+	Action as ZoneEditorAction,
 	HotspotLayer,
 	MonsterLayer,
 	MonsterLayerMonster,
-	Action as ZoneEditorAction,
 	Sidebar as ZoneEditorSidebar,
 	SidebarCell as ZoneEditorSidebarCell,
 	SidebarLayer as ZoneEditorSidebarLayer,
 	SidebarLayersCell as ZoneEditorSidebarLayerCell,
+	TileLayer,
 	Tool as ZoneEditorTool,
 	View as ZoneEditorView,
-	Window as ZoneEditorWindow,
-	TileLayer
+	Window as ZoneEditorWindow
 } from "./zone-editor";
 import { Editor as ActionEditor, Token as ActionEditorToken } from "./action-editor";
 

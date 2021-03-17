@@ -3,10 +3,10 @@ import { GameController } from "src/app/webfun";
 import { Menu, MenuItem, MenuItemState } from "src/ui";
 import * as UX from "src/ux";
 import {
-	StatisticsWindow,
-	WorldSizeWindow,
+	DifficultyWindow,
 	GameSpeedWindow,
-	DifficultyWindow
+	StatisticsWindow,
+	WorldSizeWindow
 } from "src/app/webfun/windows";
 import Settings from "src/settings";
 import { PauseScene } from "src/engine/scenes";

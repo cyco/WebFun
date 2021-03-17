@@ -7,6 +7,7 @@ abstract class Cell<T> extends Component {
 	public set data(d: T) {
 		this._data = d;
 	}
+
 	public get data(): T {
 		return this._data;
 	}

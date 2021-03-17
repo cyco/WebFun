@@ -1,5 +1,6 @@
 import * as stdlib from "src/std";
 import sleep from "src/util/sleep";
+
 declare let jasmine: any;
 
 describe("WebFun.Util.sleep", () => {

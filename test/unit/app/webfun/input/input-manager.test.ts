@@ -2,7 +2,7 @@ import InputManager from "src/app/webfun/input/input-manager";
 import { InputMask } from "src/engine/input";
 import { MouseButton, Point, Size } from "src/util";
 import CursorManager from "src/app/webfun/input/cursor-manager";
-import { OnscreenButton, OnscreenPad, SceneView } from "src/app/webfun/ui";
+import { OnscreenButton, OnscreenPad } from "src/app/webfun/ui";
 
 describe("WebFun.App.Input.InputManager", () => {
 	let subject: InputManager;
@@ -28,7 +28,10 @@ describe("WebFun.App.Input.InputManager", () => {
 		);
 		subject.engine = {
 			hero: { location: new Point(0, 0) },
-			sceneManager: { addOverlay() {}, removeOverlay() {} },
+			sceneManager: {
+				addOverlay() {},
+				removeOverlay() {}
+			},
 			camera: { offset: new Point(0, 0), size: new Size(288, 288) },
 			addEventListener() {},
 			removeEventListener() {}

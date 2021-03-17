@@ -1,4 +1,4 @@
-import { Zone, Hotspot, Monster, Sound, Tile, Char, Action, Puzzle } from "src/engine/objects";
+import { Action, Char, Hotspot, Monster, Puzzle, Sound, Tile, Zone } from "src/engine/objects";
 import GameData from "src/engine/game-data";
 import ReferenceResolver from "./resolver";
 import { greaterThan } from "src/util/functional";
@@ -9,6 +9,7 @@ import { Size } from "src/util";
 
 class Updater {
 	private data: GameData;
+
 	public constructor(data: GameData) {
 		this.data = data;
 	}

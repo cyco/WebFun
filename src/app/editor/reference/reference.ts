@@ -1,14 +1,14 @@
 import {
-	Zone,
-	Tile,
 	Action,
-	Instruction,
+	Char,
 	Condition,
 	Hotspot,
+	Instruction,
 	Monster,
+	Puzzle,
 	Sound,
-	Char,
-	Puzzle
+	Tile,
+	Zone
 } from "src/engine/objects";
 
 type Ref<To, From, Via = []> = { to: To; from: From; via: Via };

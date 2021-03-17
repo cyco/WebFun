@@ -14,6 +14,7 @@ const ArrowWidth = 16;
 const ScrollRepeatInterval = 100;
 
 const MODIFIED = 1;
+
 enum ArrowStyle {
 	None = 1 << 5,
 

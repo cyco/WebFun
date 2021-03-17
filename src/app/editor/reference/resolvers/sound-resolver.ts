@@ -1,5 +1,5 @@
 import { GameData } from "src/engine";
-import { Sound, Char } from "src/engine/objects";
+import { Char, Sound } from "src/engine/objects";
 import { ReferencesTo } from "src/app/editor/reference";
 import { equal } from "src/util/functional";
 import ResolverInterface from "./resolver-interface";
@@ -8,6 +8,7 @@ import StopSound from "src/engine/script/instructions/stop-sound";
 
 class SoundResolver implements ResolverInterface<Sound> {
 	private data: GameData;
+
 	constructor(data: GameData) {
 		this.data = data;
 	}

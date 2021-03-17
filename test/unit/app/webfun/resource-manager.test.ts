@@ -1,6 +1,6 @@
 import ResourceManager from "src/app/webfun/resource-manager";
-import { FetchInputStream, FileLoader, InputStream } from "src/util";
 import * as UtilModule from "src/util";
+import { FetchInputStream, FileLoader, InputStream } from "src/util";
 import { ColorPalette } from "src/engine";
 
 describe("WebFun.App.ResourceManager", () => {

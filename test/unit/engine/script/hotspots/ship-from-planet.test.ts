@@ -1,8 +1,8 @@
 import { Hotspot, Zone } from "src/engine/objects";
 import { Engine } from "src/engine";
 import { Point } from "src/util";
-import { RoomTransitionScene } from "src/engine/scenes";
 import * as Scenes from "src/engine/scenes";
+import { RoomTransitionScene } from "src/engine/scenes";
 import ShipFromPlanet from "src/engine/script/hotspots/ship-from-planet";
 
 describe("WebFun.Engine.Script.Hotspots.ShipFromPlanet", () => {

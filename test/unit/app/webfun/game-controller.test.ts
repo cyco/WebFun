@@ -1,25 +1,25 @@
+import * as EngineModule from "src/engine";
 import {
-	Engine,
-	Interface,
-	Hero,
-	GameState,
-	GameData,
 	ColorPalette,
-	Story,
-	PaletteAnimation
+	Engine,
+	GameData,
+	GameState,
+	Hero,
+	Interface,
+	PaletteAnimation,
+	Story
 } from "src/engine";
 import { GameController } from "src/app/webfun";
+import * as AppWindowModule from "src/app/webfun/windows";
 import { MainMenu, MainWindow } from "src/app/webfun/windows";
+import * as AppAudioModule from "src/app/webfun/audio";
 import { Mixer } from "src/app/webfun/audio";
+import * as AppCanvasRendererModule from "src/app/webfun/rendering/canvas";
 import { Renderer } from "src/app/webfun/rendering/canvas";
 import { SceneView } from "src/app/webfun/ui";
 import { InputManager } from "src/app/webfun/input";
 import { Yoda } from "src/variant";
-import { ZoneScene, MapScene } from "src/engine/scenes";
-import * as AppAudioModule from "src/app/webfun/audio";
-import * as AppCanvasRendererModule from "src/app/webfun/rendering/canvas";
-import * as AppWindowModule from "src/app/webfun/windows";
-import * as EngineModule from "src/engine";
+import { MapScene, ZoneScene } from "src/engine/scenes";
 import DebugInfoScene from "src/app/webfun/debug/debug-info-scene";
 import InventoryComponent from "src/app/webfun/ui/inventory";
 import ResourceManager from "src/app/webfun/resource-manager";

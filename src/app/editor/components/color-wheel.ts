@@ -2,13 +2,13 @@ import "./color-wheel.scss";
 
 import {
 	Color,
-	Size,
 	deg2rad,
 	dispatch,
 	hsv2rgb,
 	polar2xy,
 	rad2deg,
 	rgba,
+	Size,
 	xy2polar
 } from "src/util";
 

@@ -1,5 +1,5 @@
 import astar from "src/util/a-star";
-import { Point, Size, Rectangle } from "src/util";
+import { Point, Rectangle, Size } from "src/util";
 import { floor } from "src/std/math";
 
 const FieldDescriptions = `

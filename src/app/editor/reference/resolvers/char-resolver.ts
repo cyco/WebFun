@@ -6,6 +6,7 @@ import ResolverInterface from "./resolver-interface";
 
 class CharResolver implements ResolverInterface<Char> {
 	private data: GameData;
+
 	constructor(data: GameData) {
 		this.data = data;
 	}

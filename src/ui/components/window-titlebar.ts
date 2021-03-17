@@ -1,6 +1,6 @@
 import "./window-titlebar.scss";
 
-import { Point, identity } from "src/util";
+import { identity, Point } from "src/util";
 
 import AbstractWindow from "./abstract-window";
 import Component from "../component";

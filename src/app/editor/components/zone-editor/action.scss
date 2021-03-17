@@ -3,6 +3,7 @@
 
 wf-zone-editor-action {
 	@extend wf-zone-editor-tool;
+
 	&:active {
 		@include inset-border(2px);
 	}

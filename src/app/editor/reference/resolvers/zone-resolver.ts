@@ -7,6 +7,7 @@ import ResolverInterface from "./resolver-interface";
 
 class ZoneResolver implements ResolverInterface<Zone> {
 	private data: GameData;
+
 	constructor(data: GameData) {
 		this.data = data;
 	}

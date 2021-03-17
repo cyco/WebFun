@@ -1,14 +1,14 @@
 import GameData from "src/engine/game-data";
-import { Resolvable, ReferencesTo } from "./reference";
-import { Zone, Hotspot, Tile, Char, Sound, Monster } from "src/engine/objects";
+import { ReferencesTo, Resolvable } from "./reference";
+import { Char, Hotspot, Monster, Sound, Tile, Zone } from "src/engine/objects";
 import { equal } from "src/util/functional";
 import {
-	MonsterResolver,
-	ZoneResolver,
+	CharResolver,
 	HotspotResolver,
+	MonsterResolver,
 	SoundResolver,
 	TileResolver,
-	CharResolver
+	ZoneResolver
 } from "./resolvers";
 
 class Resolver {

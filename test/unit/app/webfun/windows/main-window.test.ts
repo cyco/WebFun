@@ -2,7 +2,7 @@ import { Ammo, Health, Inventory, Location, Weapon } from "src/app/webfun/ui";
 import MainWindow from "src/app/webfun/windows/main-window";
 import Engine, { Events as EngineEvents } from "src/engine/engine";
 import Hero, { Events as HeroEvents } from "src/engine/hero";
-import { EventTarget, Rectangle, Point, Size } from "src/util";
+import { EventTarget, Point, Rectangle, Size } from "src/util";
 import { Metronome } from "src/engine";
 import { Char } from "src/engine/objects";
 
@@ -123,7 +123,9 @@ describeComponent(MainWindow, () => {
 		class MockHero extends EventTarget {}
 
 		const hero: Hero = new MockHero() as any;
-		const metronome: Metronome = { stop() {} } as any;
+		const metronome: Metronome = {
+			stop() {}
+		} as any;
 
 		class MockEngine extends EventTarget {
 			variant = { getMaxAmmo: () => 10 };

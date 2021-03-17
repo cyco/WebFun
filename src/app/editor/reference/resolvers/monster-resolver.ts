@@ -9,6 +9,7 @@ import MonsterIsDead from "src/engine/script/conditions/monster-is-dead";
 
 class MonsterResolver implements ResolverInterface<Monster> {
 	private data: GameData;
+
 	constructor(data: GameData) {
 		this.data = data;
 	}

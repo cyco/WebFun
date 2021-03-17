@@ -1,5 +1,5 @@
 import ServiceContainer from "./service-container";
-import { WindowManager, FilePicker } from "src/ui";
+import { FilePicker, WindowManager } from "src/ui";
 import { GameData } from "src/engine";
 import EditorWindow from "./editor-window";
 

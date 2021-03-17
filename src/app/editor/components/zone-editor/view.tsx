@@ -9,7 +9,7 @@ import Layer from "./layer";
 import LayerComponent from "./tile-layer";
 import MonsterLayerComponent from "./monster-layer";
 import { Point } from "src/util";
-import { Zone, Tile, Char } from "src/engine/objects";
+import { Char, Tile, Zone } from "src/engine/objects";
 import { ColorPalette } from "src/engine";
 
 class View extends Component implements EventListenerObject {

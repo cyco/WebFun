@@ -1,8 +1,7 @@
-import { Zone } from "src/engine/objects";
+import { Tile, Zone } from "src/engine/objects";
 
 import AbstractTool from "./abstract-tool";
 import { Point } from "src/util";
-import { Tile } from "src/engine/objects";
 
 class NoTool extends AbstractTool implements EventListenerObject {
 	public readonly name = "None";

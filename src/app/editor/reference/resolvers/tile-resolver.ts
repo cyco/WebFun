@@ -1,5 +1,5 @@
 import { GameData } from "src/engine";
-import { Tile, Hotspot } from "src/engine/objects";
+import { Hotspot, Tile } from "src/engine/objects";
 import { ReferencesTo } from "src/app/editor/reference";
 import { equal } from "src/util/functional";
 import ResolverInterface from "./resolver-interface";
@@ -8,6 +8,7 @@ import { InstructionsByName as I } from "src/engine/script/instructions";
 
 class TileResolver implements ResolverInterface<Tile> {
 	private data: GameData;
+
 	constructor(data: GameData) {
 		this.data = data;
 	}

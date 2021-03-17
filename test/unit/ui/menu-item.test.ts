@@ -1,5 +1,5 @@
 import Menu from "src/ui/menu";
-import { default as MenuItem, Separator, State, MenuItemInit } from "src/ui/menu-item";
+import { default as MenuItem, MenuItemInit, Separator, State } from "src/ui/menu-item";
 
 describe("WebFun.UI.MenuItem", () => {
 	it("represents an item in a menu", () => {

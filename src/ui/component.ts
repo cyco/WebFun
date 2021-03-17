@@ -26,6 +26,7 @@ abstract class Component extends HTMLElement {
 declare global {
 	namespace JSX {
 		type Styleable<T extends HTMLElement> = Partial<T | { style: Partial<CSSStyleDeclaration> }>;
+
 		export interface IntrinsicElements {
 			div: Styleable<HTMLDivElement>;
 			label: Styleable<HTMLLabelElement>;
@@ -56,6 +57,7 @@ declare global {
 		}
 
 		interface ElementClass extends Component {}
+
 		interface IntrinsicClassAttributes {
 			[_: string]: any;
 		}

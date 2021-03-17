@@ -1,5 +1,5 @@
 import { ColorPalette, Variant } from "src/engine";
-import { Yoda, Indy } from "src/variant";
+import { Indy, Yoda } from "src/variant";
 
 import { FileLoader } from "src/util";
 import Settings from "src/settings";

@@ -1,6 +1,6 @@
 import AbstractTool from "src/app/editor/tools/abstract-tool";
 import { Point } from "src/util";
-import { Zone, Tile } from "src/engine/objects";
+import { Tile, Zone } from "src/engine/objects";
 
 abstract class AbstractDrawingTool extends AbstractTool implements EventListenerObject {
 	protected _ctx: CanvasRenderingContext2D;

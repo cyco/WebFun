@@ -43,7 +43,9 @@ describeComponent(WindowTitlebar, () => {
 		});
 
 		it("calls close on the window when clicked", () => {
-			const mockWindow: Window = { close() {} } as any;
+			const mockWindow: Window = {
+				close() {}
+			} as any;
 			spyOn(mockWindow, "close");
 			subject.window = mockWindow;
 			expect(subject.window).toEqual(mockWindow);

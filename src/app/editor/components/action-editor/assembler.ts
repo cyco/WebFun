@@ -17,12 +17,14 @@ class AssemblerInputError extends Error {
 }
 
 type ASTFunctionDefinition = [Symbol, Symbol, AST, AST[]];
+
 interface Opcode {
 	Opcode: number;
 	Arguments: Type[];
 	UsesText?: boolean;
 	Description?: string;
 }
+
 interface OpcodeMap {
 	[_: string]: Opcode;
 }

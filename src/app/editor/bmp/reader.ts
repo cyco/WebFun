@@ -38,4 +38,5 @@ class Reader {
 		return [new Size(width, height), new Uint8Array(imageData.buffer), palette];
 	}
 }
+
 export default Reader;

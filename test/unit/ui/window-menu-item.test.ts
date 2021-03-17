@@ -1,11 +1,13 @@
 import WindowMenuItem from "src/ui/window-menu-item";
-import { WindowManager, Menu, MenuItemState } from "src/ui";
+import { Menu, MenuItemState, WindowManager } from "src/ui";
 
 describe("WebFun.UI.WindowMenuItem", () => {
 	let windowManagerMock: WindowManager | any;
 	let subject: WindowMenuItem;
 	beforeEach(() => {
-		windowManagerMock = ({ focus: () => {} } as unknown) as WindowManager;
+		windowManagerMock = ({
+			focus: () => {}
+		} as unknown) as WindowManager;
 		subject = new WindowMenuItem(windowManagerMock);
 	});
 

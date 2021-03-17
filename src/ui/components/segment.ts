@@ -26,4 +26,5 @@ class Segment extends Component {
 		else this.removeAttribute("selected");
 	}
 }
+
 export default Segment;

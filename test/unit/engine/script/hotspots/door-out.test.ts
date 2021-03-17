@@ -2,8 +2,8 @@ import { Hotspot, Zone } from "src/engine/objects";
 import { Engine } from "src/engine";
 import { Point } from "src/util";
 import doorOut from "src/engine/script/hotspots/door-out";
-import { RoomTransitionScene } from "src/engine/scenes";
 import * as Scenes from "src/engine/scenes";
+import { RoomTransitionScene } from "src/engine/scenes";
 
 describe("WebFun.Engine.Script.Hotspots.DoorOut", () => {
 	let engine: Engine;

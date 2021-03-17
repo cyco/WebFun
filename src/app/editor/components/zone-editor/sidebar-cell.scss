@@ -1,4 +1,5 @@
 @import "border.scss";
+
 $header-height: 25px;
 
 wf-zone-editor-sidebar-cell {
@@ -8,6 +9,7 @@ wf-zone-editor-sidebar-cell {
 	&:first-child {
 		border-top-width: 0;
 	}
+
 	flex-shrink: 0;
 
 	header {

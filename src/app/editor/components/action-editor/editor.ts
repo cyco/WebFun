@@ -1,8 +1,8 @@
 import "./editor.scss";
 
 import {
-	default as Assembler,
-	AssemblerInputError
+	AssemblerInputError,
+	default as Assembler
 } from "src/app/editor/components/action-editor/assembler";
 import { default as Parser, ParserError } from "src/app/editor/components/action-editor/parser";
 

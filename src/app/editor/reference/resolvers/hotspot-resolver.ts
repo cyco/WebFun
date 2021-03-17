@@ -8,6 +8,7 @@ import ResolverInterface from "./resolver-interface";
 
 class HotspotResolver implements ResolverInterface<Hotspot> {
 	private data: GameData;
+
 	constructor(data: GameData) {
 		this.data = data;
 	}

@@ -1,4 +1,4 @@
-import { Point, Rectangle, Size, rgba } from "src/util";
+import { Point, Rectangle, rgba, Size } from "src/util";
 
 import AbstractDrawingTool from "./abstract-drawing-tool";
 import TileChangeEvent from "./tile-change-event";
