@@ -1,4 +1,4 @@
-import Yoda from "src/variant/yoda";
+import { Yoda } from "src/variant/yoda";
 import Variant from "src/engine/variant";
 import TileID from "src/variant/yoda/tile-ids";
 import Sounds from "src/variant/yoda/sounds";

@@ -1,4 +1,4 @@
-import Indy from "src/variant/indy";
+import { Indy } from "src/variant/indy";
 import Variant from "src/engine/variant";
 
 describe("WebFun.Variant.Indy", () => {

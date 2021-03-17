@@ -7,7 +7,7 @@ import { Engine, Story, SaveState } from "src/engine";
 import LocatorTile from "./locator-tile";
 import Sounds from "./sounds";
 
-class Indy extends Variant {
+class IndyFull extends Variant {
 	get name(): string {
 		return "Indy";
 	}
@@ -65,4 +65,4 @@ class Indy extends Variant {
 	}
 }
 
-export default Indy;
+export default IndyFull;

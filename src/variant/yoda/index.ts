@@ -1,3 +1,4 @@
 import Yoda from "./yoda";
+import YodaDemo from "./demo";
 
-export default Yoda;
+export { Yoda, YodaDemo };

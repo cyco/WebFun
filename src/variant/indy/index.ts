@@ -1,3 +1,4 @@
 import Indy from "./indy";
+import IndyDemo from "./demo";
 
-export default Indy;
+export { Indy, IndyDemo };
