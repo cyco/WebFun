@@ -67,7 +67,7 @@ class Loader extends EventTarget {
 
 	private async loadGameData(): Promise<void> {
 		this._progress(1, 0);
-
+		let hasSentSetupImage = false;
 		return new Promise(async (resolve, reject) => {
 			const stream = await this._resources.loadGameFile(p => this._progress(1, p));
 			const reader = readGameDataFileProgressively(stream, this._variant);
@@ -79,7 +79,7 @@ class Loader extends EventTarget {
 				if (!data.setup) return;
 
 				stream.onprogress = () => this._progress(1, stream.bytesAvailable / stream.bytesTotal);
-
+				hasSentSetupImage = true;
 				this.dispatchEvent(Events.DidLoadSetupImage, {
 					pixels: data.setup,
 					palette: this._palette
@@ -96,6 +96,13 @@ class Loader extends EventTarget {
 					if (value) this._rawData = value;
 					if (done) break;
 				} while (true);
+
+				if (!hasSentSetupImage) {
+					this.dispatchEvent(Events.DidLoadSetupImage, {
+						pixels: this._rawData.setup,
+						palette: this._palette
+					});
+				}
 
 				this._progress(1, 1);
 
