@@ -1,6 +1,5 @@
 import LocatorTile from "./locator-tile";
 import Sounds from "./sounds";
-import Strings from "./strings";
 import CharIDs from "./char-ids";
 import GoalIDs from "./goal-ids";
 import ZoneIDs from "./zone-ids";
@@ -25,7 +24,6 @@ class Yoda extends Variant {
 	public readonly name = "Yoda Stories";
 	public readonly saveGameMagic = "YODASAV44";
 	public readonly locatorTile = new LocatorTile();
-	public readonly strings = Strings;
 	public readonly sounds = Sounds;
 	public readonly goalIDs = GoalIDs;
 	public readonly zoneIDs = ZoneIDs;

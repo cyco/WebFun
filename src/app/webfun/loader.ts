@@ -10,17 +10,17 @@ export const Events = {
 	Progress: "progress",
 	Fail: "fail",
 	Load: "load",
-	DidLoadPalette: "loadpalette",
-	DidLoadSetupImage: "loadsetupimage"
+	DidLoadSetupImage: "loadsetupimage",
+	DidLoadStrings: "loadstrings"
 };
 
-export const StageCount = 4;
+export const StageCount = 5;
 
 class Loader extends EventTarget {
 	public onfail: (_: LoaderEvent) => void;
 	public onprogress: (_: LoaderEvent) => void;
-	public onloadpalette: (_: LoaderEvent) => void;
 	public onloadsetupimage: (_: LoaderEvent) => void;
+	public onloadstrings: (_: LoaderEvent) => void;
 	public onload: (_: LoaderEvent) => void;
 
 	private _rawData: any;
@@ -46,6 +46,7 @@ class Loader extends EventTarget {
 			await this.loadGameData();
 			await this.readGameData();
 			await this.loadSounds();
+			await this.loadStrings();
 
 			this.dispatchEvent(Events.Load, {
 				palette: this._palette,
@@ -132,6 +133,14 @@ class Loader extends EventTarget {
 			await this._mixer.prepare(sound, await request);
 		}
 		this._progress(3, 1);
+	}
+
+	private async loadStrings() {
+		this._progress(4, 0);
+		this.dispatchEvent(Events.DidLoadStrings, {
+			strings: await this._resources.loadStrings(n => this._progress(4, n))
+		});
+		this._progress(4, 1);
 	}
 
 	private _progress(state: number, progress: number) {

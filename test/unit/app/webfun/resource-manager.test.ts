@@ -22,7 +22,7 @@ describe("WebFun.App.ResourceManager", () => {
 		spyOn(window, "XMLHttpRequest").and.callFake(
 			() => (xhr = { open: jasmine.createSpy(), send: jasmine.createSpy() } as any)
 		);
-		subject = new ResourceManager("palette.data", "data.data", "sound-base");
+		subject = new ResourceManager("palette.data", "data.data", "strings.json", "sound-base");
 	});
 
 	it("loads the palette", async () => {

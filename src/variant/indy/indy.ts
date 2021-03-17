@@ -20,10 +20,6 @@ class IndyFull extends Variant {
 		return new LocatorTile();
 	}
 
-	get strings(): {} {
-		return {};
-	}
-
 	get sounds(): typeof Sounds {
 		return Sounds;
 	}

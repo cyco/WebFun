@@ -14,6 +14,10 @@ class ResourceManager implements ResourceManagerInterface {
 	loadSound(_name: string, _progress: (progress: number) => void): Promise<ArrayBuffer> {
 		throw new Error("Method not implemented.");
 	}
+
+	loadStrings(_progress: (progress: number) => void): Promise<{ [_: number]: string }> {
+		throw new Error("Method not implemented.");
+	}
 }
 
 export default ResourceManager;

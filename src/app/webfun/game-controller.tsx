@@ -51,6 +51,7 @@ interface PathConfiguration {
 	data: string;
 	palette: string;
 	sfx: string;
+	strings: string;
 }
 
 class GameController extends EventTarget implements EventListenerObject {
@@ -64,6 +65,7 @@ class GameController extends EventTarget implements EventListenerObject {
 	private _eventHandler = new GameEventHandler();
 	private _variant: Variant;
 	private _paths: PathConfiguration;
+	private _strings: { [_: number]: string } = {};
 
 	constructor(variant: Variant, paths: PathConfiguration) {
 		super();
@@ -84,7 +86,7 @@ class GameController extends EventTarget implements EventListenerObject {
 		this._eventHandler.handleEvent(this.engine, this._sceneView, evt);
 	}
 
-	private _buildInterface(paths: any): Partial<Interface> {
+	private _buildInterface(paths: PathConfiguration): Partial<Interface> {
 		const mixer = new Mixer(this.settings);
 		const renderer = new CanvasRenderer.Renderer(this._sceneView.canvas);
 		const inputManager = new InputManager(
@@ -94,7 +96,7 @@ class GameController extends EventTarget implements EventListenerObject {
 			this._window.content.querySelector(`${OnscreenButton.tagName}.shoot`),
 			this._window.content.querySelector(`${OnscreenButton.tagName}.drag`)
 		);
-		const resources = new ResourceManager(paths.palette, paths.data, paths.sfx);
+		const resources = new ResourceManager(paths.palette, paths.data, paths.strings, paths.sfx);
 		const logger = new Logger(console);
 
 		return {
@@ -357,6 +359,11 @@ class GameController extends EventTarget implements EventListenerObject {
 				this._window.weapon.palette = palette;
 
 				this.palette = palette;
+			};
+			loader.onloadstrings = ({ detail: { strings } }) => {
+				for (const [id, string] of Object.entries(strings)) {
+					this.engine.assets.set(String, String(string), +id);
+				}
 			};
 
 			loader.onload = ({ detail: { data } }) => {

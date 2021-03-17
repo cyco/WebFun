@@ -7,10 +7,12 @@ class ResourceManager implements ResourceManagerInterface {
 	private _paletteURL: string;
 	private _dataURL: string;
 	private _soundBaseURL: string;
+	private _stringsURL: string;
 
-	constructor(palette: string, data: string, soundBase: string) {
+	constructor(palette: string, data: string, strings: string, soundBase: string) {
 		this._paletteURL = palette;
 		this._dataURL = data;
+		this._stringsURL = strings;
 		this._soundBaseURL = soundBase;
 	}
 
@@ -38,6 +40,21 @@ class ResourceManager implements ResourceManagerInterface {
 			const request = new XMLHttpRequest();
 			request.open("GET", url);
 			request.responseType = "arraybuffer";
+			request.onerror = reject;
+			request.onprogress = (e: ProgressEvent) => {
+				if (!e.lengthComputable) return;
+				progress(e.loaded / e.total);
+			};
+			request.onload = () => resolve(request.response);
+			request.send();
+		});
+	}
+
+	async loadStrings(progress: (progress: number) => void): Promise<{ [_: number]: string }> {
+		return new Promise((resolve, reject) => {
+			const request = new XMLHttpRequest();
+			request.open("GET", this._stringsURL);
+			request.responseType = "json";
 			request.onerror = reject;
 			request.onprogress = (e: ProgressEvent) => {
 				if (!e.lengthComputable) return;

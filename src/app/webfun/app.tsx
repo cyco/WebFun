@@ -60,7 +60,9 @@ class App {
 
 	private createLinks(): void {
 		const games: [string, Variant, any][] = [
-			["Yoda Stories", Yoda, Settings.url.yoda],
+			["Yoda Stories (🇺🇸)", Yoda, Settings.url.yoda],
+			["Yoda Stories (🇪🇸)", Yoda, Settings.url["yoda-es"]],
+			["Yoda Stories (🇩🇪)", Yoda, Settings.url["yoda-de"]],
 			["Demo: Yoda Stories", YodaDemo, Settings.url.yodaDemo],
 			["Indiana Jones and his Desktop Adventures", Indy, Settings.url.indy],
 			["Demo: Indiana Jones and his Desktop Adventures", IndyDemo, Settings.url.indyDemo],

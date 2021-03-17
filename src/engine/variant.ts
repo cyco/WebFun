@@ -14,7 +14,6 @@ interface WellKnownSounds {
 abstract class Variant {
 	abstract get saveGameMagic(): string;
 	abstract get locatorTile(): LocatorTile;
-	abstract get strings(): { [_: number]: string };
 	abstract get sounds(): WellKnownSounds;
 
 	canBeEquipped(tile: Tile): boolean {

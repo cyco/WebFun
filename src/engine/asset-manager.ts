@@ -2,7 +2,7 @@ interface AssetType<T> {
 	new (...args: any[]): T;
 }
 
-type MissingEntityHandler = <T>(type: AssetType<T>, id?: number) => T;
+type MissingEntityHandler<T> = (type: AssetType<T>, id?: number) => T;
 const NullIfMissing = (): null => null;
 const ThrowIfMissing = <T>(type: AssetType<T>, id: number = null): never => {
 	throw new Error(`Entity ${id} of type ${type} cannot be found`);
@@ -14,7 +14,7 @@ class AssetManager {
 	public get<T>(
 		type: AssetType<T>,
 		id: number = null,
-		missingHandler: MissingEntityHandler = ThrowIfMissing
+		missingHandler: MissingEntityHandler<T> = ThrowIfMissing
 	): T {
 		const entries = this.entries.get(type);
 		if (!entries) throw new Error(`Type ${type} is not registered`);

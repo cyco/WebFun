@@ -24,10 +24,6 @@ describe("WebFun.Variant.Yoda", () => {
 		expect(subject.locatorTile.here).toEqual(0x345);
 	});
 
-	it("provides access to in-game descriptions and help", () => {
-		expect(subject.strings[57400]).toEqual("This is a WEAPON.  Pick it up!");
-	});
-
 	it("provides access to sound ids by name", () => {
 		expect(subject.sounds).toHaveMember("Hurt");
 	});

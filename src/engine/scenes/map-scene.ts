@@ -19,6 +19,7 @@ import ZoneScene from "./zone-scene";
 import { Renderer as CanvasRenderer } from "src/app/webfun/rendering/canvas";
 import PuzzleDependencyGraph from "src/app/webfun/debug/puzzle-dependency-graph";
 import { InputMask } from "../input";
+import { NullIfMissing } from "../asset-manager";
 
 const MapTileWidth = 28;
 const MapTileHeight = 28;
@@ -181,13 +182,19 @@ class MapScene extends Scene {
 	}
 
 	private _locatorDescription(at: Point): string {
-		const strings = this.engine.variant.strings;
 		const string = this._locatorDescriptionId(at);
-		if (typeof string === "number") return strings[string];
+		if (typeof string === "number")
+			return this.engine.assets.get(String, string, NullIfMissing)?.toString();
 		if (typeof string === "string") return string;
 
 		return (
-			string.map(string => (typeof string === "string" ? string : strings[string])).join("") + "!"
+			string
+				.map(string =>
+					typeof string === "string"
+						? string
+						: this.engine.assets.get(String, string, NullIfMissing)?.toString()
+				)
+				.join("") + "!"
 		);
 	}
 

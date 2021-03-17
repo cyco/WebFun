@@ -7,6 +7,7 @@ interface ResourceManager {
 	loadGameFile(progress: ProgressHandler): Promise<ReaderStream>;
 	loadPalette(progress: ProgressHandler): Promise<ColorPalette>;
 	loadSound(name: string, progress: ProgressHandler): Promise<ArrayBuffer>;
+	loadStrings(progress: ProgressHandler): Promise<{ [_: number]: string }>;
 }
 
 export default ResourceManager;
