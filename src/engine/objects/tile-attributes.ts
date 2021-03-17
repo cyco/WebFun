@@ -9,7 +9,7 @@ enum TileAttributes {
 	Item = 1 << 7,
 	Character = 1 << 8,
 
-	Doorway = Floor | (1 << 15),
+	Doorway = Floor | (1 << 16),
 
 	Town = Locator | (1 << 1),
 
