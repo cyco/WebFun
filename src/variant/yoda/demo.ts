@@ -1,20 +1,11 @@
-import { Char, Puzzle, Tile, Zone } from "src/engine/objects";
-
-import LocatorTile from "./locator-tile";
-import Sounds from "./sounds";
-import Strings from "./strings";
-import Animations from "./animations";
-import CharIDs from "./char-ids";
-import GoalIDs from "./goal-ids";
-import ZoneIDs from "./zone-ids";
-import TileIDs from "./tile-ids";
-import { Variant, Engine, Story } from "src/engine";
-import { WorldSize } from "src/engine/generation";
-import { Point, rand } from "src/util";
-import { MutableZone } from "src/engine/mutable-objects";
-import { SaveState } from "src/engine/save-game";
-
 import Yoda from "./yoda";
+
+import { Puzzle, Zone } from "src/engine/objects";
+import { Engine, Story } from "src/engine";
+import { WorldSize } from "src/engine/generation";
+import { rand } from "src/util";
+import { MutableZone } from "src/engine/mutable-objects";
+import GoalIDs from "./goal-ids";
 
 class YodaDemo extends Yoda {
 	public createNewStory(engine: Engine): Story {

@@ -1,10 +1,10 @@
-import DetonatorScene from "src/engine/scenes/detonator-scene";
+import DetonatorScene from "src/variant/yoda/detonator-scene";
 import { Engine } from "src/engine";
 import { Point, Rectangle, Size } from "src/util";
 import { Renderer } from "src/engine/rendering";
 import * as Rendering from "src/app/webfun/rendering";
 
-describe("WebFun.Engine.Scenes.DetonatorScene", () => {
+describe("WebFun.Variant.Yoda.DetonatorScene", () => {
 	let subject: DetonatorScene;
 	beforeEach(() => {
 		spyOn(Rendering, "drawTileImageData").and.returnValues(

@@ -1,10 +1,12 @@
-import RendererInterface from "../rendering/renderer";
+import Scene from "src/engine/scenes/scene";
+
+import RendererInterface from "src/engine/rendering/renderer";
 import { Point } from "src/util";
-import Scene from "./scene";
 import { Tile } from "src/engine/objects";
-import { Yoda } from "src/variant";
 import { drawTileImageData } from "src/app/webfun/rendering";
 import { abs } from "src/std/math";
+
+const ThermalDetonatorAnimation = [0x202, 0x431, 0x432, 0x433];
 
 class DetonatorScene extends Scene {
 	private _detonatorFrames: HTMLImageElement[] = null;
@@ -76,7 +78,7 @@ class DetonatorScene extends Scene {
 		}
 
 		this._detonatorFrames = [];
-		for (const id of Yoda.animations.ThermalDetonatorAnimation) {
+		for (const id of ThermalDetonatorAnimation) {
 			drawTileImageData(this.engine.assets.get(Tile, id), this.engine.palette.original)
 				.toImage()
 				.then(i => this._detonatorFrames.push(i));

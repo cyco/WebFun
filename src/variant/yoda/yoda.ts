@@ -1,25 +1,25 @@
-import { Char, Puzzle, Tile, Zone } from "src/engine/objects";
-
 import LocatorTile from "./locator-tile";
 import Sounds from "./sounds";
 import Strings from "./strings";
-import Animations from "./animations";
 import CharIDs from "./char-ids";
 import GoalIDs from "./goal-ids";
 import ZoneIDs from "./zone-ids";
 import TileIDs from "./tile-ids";
-import { Engine, Story, Variant } from "src/engine";
+import Variant from "src/engine/variant";
+import { Char, Puzzle, Tile, Zone } from "src/engine/objects";
+import { Engine, Story } from "src/engine";
 import { Point, rand } from "src/util";
 import { WorldSize } from "src/engine/generation";
 import { MutablePuzzle } from "src/engine/mutable-objects";
 import { SaveState } from "src/engine/save-game";
 import Settings from "src/settings";
 
+import DetonatorScene from "./detonator-scene";
+
 class Yoda extends Variant {
 	public static readonly goalIDs = GoalIDs;
 	public static readonly zoneIDs = ZoneIDs;
 	public static readonly charIDs = CharIDs;
-	public static readonly animations = Animations;
 	public static readonly tileIDs = TileIDs;
 
 	public readonly name = "Yoda Stories";
@@ -30,7 +30,6 @@ class Yoda extends Variant {
 	public readonly goalIDs = GoalIDs;
 	public readonly zoneIDs = ZoneIDs;
 	public readonly charIDs = CharIDs;
-	public readonly animations = Animations;
 	public readonly tileIDs = TileIDs;
 
 	public get mapTileId(): number {
@@ -158,7 +157,20 @@ class Yoda extends Variant {
 		return state;
 	}
 
-	onPlaceTile(_tile: Tile, _at: Point, _engine: Engine): boolean {
+	onPlaceTile(tile: Tile, at: Point, engine: Engine): boolean {
+		if (tile.id === TileIDs.ThermalDetonator) {
+			const scene = new DetonatorScene();
+			scene.detonatorLocation = at;
+
+			engine.inventory.removeItem(TileIDs.ThermalDetonator);
+			engine.inputManager.clear();
+			engine.inputManager.placedTile = null;
+			engine.inputManager.placedTileLocation = null;
+			engine.sceneManager.pushScene(scene);
+
+			return true;
+		}
+
 		return false;
 	}
 }

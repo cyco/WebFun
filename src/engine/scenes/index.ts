@@ -1,4 +1,3 @@
-import DetonatorScene from "./detonator-scene";
 import LoseScene from "./lose-scene";
 import MapScene from "./map-scene";
 import PauseScene from "./pause-scene";
@@ -12,7 +11,6 @@ import ZoneScene from "./zone-scene";
 import SectorTransitionScene from "./sector-transition-scene";
 
 export {
-	DetonatorScene,
 	LoseScene,
 	MapScene,
 	PauseScene,

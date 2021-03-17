@@ -4,8 +4,6 @@ import { Zone, Tile, Char, Sound } from "src/engine/objects";
 import { InputMask } from "src/engine/input";
 import { Renderer } from "src/engine/rendering";
 import { Sprite } from "../rendering";
-import { Yoda } from "src/variant";
-import DetonatorScene from "./detonator-scene";
 import Engine from "src/engine/engine";
 import Hero from "src/engine/hero";
 import MapScene from "./map-scene";
@@ -345,17 +343,6 @@ class ZoneScene extends Scene {
 
 		if (engine.variant.onPlaceTile(tile, location, engine)) {
 			return ScriptResult.UpdateScene;
-		}
-
-		if (tile.id === Yoda.tileIDs.ThermalDetonator) {
-			const scene = new DetonatorScene();
-			scene.detonatorLocation = location;
-
-			this.engine.inventory.removeItem(Yoda.tileIDs.ThermalDetonator);
-			this.engine.inputManager.clear();
-			this.engine.inputManager.placedTile = null;
-			this.engine.inputManager.placedTileLocation = null;
-			engine.sceneManager.pushScene(scene);
 		}
 
 		if (location.isEqualTo(new Point(heroLocation.x, heroLocation.y))) {
