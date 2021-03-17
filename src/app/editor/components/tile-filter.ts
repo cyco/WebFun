@@ -21,6 +21,9 @@ class TileFilter implements SearchDelegate<Tile, RegExp[]> {
 		if (cachedValue) return cachedValue;
 
 		const components: string[] = [tile.name, `${tile.id}`];
+		for (let i = 0; i < 32; i++) {
+			if (tile.attributes & (1 << i)) components.push(`bit-${i}.`);
+		}
 
 		return (this._cache[tile.id] = components.join(" "));
 	}
