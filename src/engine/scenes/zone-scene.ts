@@ -343,6 +343,10 @@ class ZoneScene extends Scene {
 			return ScriptResult.Done;
 		}
 
+		if (engine.variant.onPlaceTile(tile, location, engine)) {
+			return ScriptResult.UpdateScene;
+		}
+
 		if (tile.id === Yoda.tileIDs.ThermalDetonator) {
 			const scene = new DetonatorScene();
 			scene.detonatorLocation = location;
@@ -352,8 +356,6 @@ class ZoneScene extends Scene {
 			this.engine.inputManager.placedTile = null;
 			this.engine.inputManager.placedTileLocation = null;
 			engine.sceneManager.pushScene(scene);
-
-			return ScriptResult.UpdateScene;
 		}
 
 		if (location.isEqualTo(new Point(heroLocation.x, heroLocation.y))) {

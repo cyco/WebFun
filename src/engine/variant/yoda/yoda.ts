@@ -10,7 +10,7 @@ import GoalIDs from "./goal-ids";
 import ZoneIDs from "./zone-ids";
 import TileIDs from "./tile-ids";
 import { Engine, Story } from "src/engine";
-import { rand } from "src/util";
+import { Point, rand } from "src/util";
 import { WorldSize } from "src/engine/generation";
 import { MutablePuzzle } from "src/engine/mutable-objects";
 import { SaveState } from "src/engine/save-game";
@@ -157,6 +157,10 @@ class Yoda extends Variant {
 		state.unknownSum = 0;
 
 		return state;
+	}
+
+	onPlaceTile(_tile: Tile, _at: Point, _engine: Engine): boolean {
+		return false;
 	}
 }
 

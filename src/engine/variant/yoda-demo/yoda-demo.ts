@@ -11,7 +11,7 @@ import ZoneIDs from "./zone-ids";
 import TileIDs from "./tile-ids";
 import { Engine, Story } from "src/engine";
 import { WorldSize } from "src/engine/generation";
-import { rand } from "src/util";
+import { Point, rand } from "src/util";
 import { MutableZone } from "src/engine/mutable-objects";
 import { SaveState } from "src/engine/save-game";
 
@@ -116,6 +116,10 @@ class YodaDemo extends Variant {
 
 	public save(_: Engine): SaveState {
 		throw new Error("Method not implemented.");
+	}
+
+	public onPlaceTile(_tile: Tile, _at: Point, _engine: Engine): boolean {
+		return false;
 	}
 }
 

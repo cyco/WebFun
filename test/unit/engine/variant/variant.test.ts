@@ -1,6 +1,7 @@
 import { Variant } from "src/engine/variant";
 import { Tile } from "src/engine/objects";
 import { Engine, SaveState, Story } from "src/engine";
+import { Point } from "src/util";
 
 describe("WebFun.Engine.Variant", () => {
 	it("holds information specific to each game", () => {
@@ -33,11 +34,16 @@ describe("WebFun.Engine.Variant", () => {
 			get mapTileId(): number {
 				throw new Error("Method not implemented.");
 			}
+
 			get weaponTileId(): number {
 				throw new Error("Method not implemented.");
 			}
 
 			createNewStory(_engine: Engine): Story {
+				throw new Error("Method not implemented.");
+			}
+
+			onPlaceTile(_tile: Tile, _at: Point, _engine: Engine): boolean {
 				throw new Error("Method not implemented.");
 			}
 		})();

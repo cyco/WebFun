@@ -2,7 +2,7 @@ import { SaveState } from "src/engine";
 import Engine from "src/engine/engine";
 import { WorldSize } from "src/engine/generation";
 import Story from "src/engine/story";
-import { rand } from "src/util";
+import { Point, rand } from "src/util";
 import { Char, Tile, Zone } from "../../objects";
 
 import Variant from "../variant";
@@ -60,6 +60,10 @@ class IndyDemo extends Variant {
 
 	public save(_: Engine): SaveState {
 		throw new Error("Method not implemented.");
+	}
+
+	public onPlaceTile(_tile: Tile, _at: Point, _engine: Engine): boolean {
+		return false;
 	}
 }
 
