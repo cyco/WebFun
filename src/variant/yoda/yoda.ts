@@ -1,6 +1,5 @@
 import { Char, Puzzle, Tile, Zone } from "src/engine/objects";
 
-import Variant from "../variant";
 import LocatorTile from "./locator-tile";
 import Sounds from "./sounds";
 import Strings from "./strings";
@@ -9,13 +8,14 @@ import CharIDs from "./char-ids";
 import GoalIDs from "./goal-ids";
 import ZoneIDs from "./zone-ids";
 import TileIDs from "./tile-ids";
-import { Engine, Story } from "src/engine";
-import { WorldSize } from "src/engine/generation";
+import { Engine, Story, Variant } from "src/engine";
 import { Point, rand } from "src/util";
-import { MutableZone } from "src/engine/mutable-objects";
+import { WorldSize } from "src/engine/generation";
+import { MutablePuzzle } from "src/engine/mutable-objects";
 import { SaveState } from "src/engine/save-game";
+import Settings from "src/settings";
 
-class YodaDemo extends Variant {
+class Yoda extends Variant {
 	public static readonly goalIDs = GoalIDs;
 	public static readonly zoneIDs = ZoneIDs;
 	public static readonly charIDs = CharIDs;
@@ -97,30 +97,70 @@ class YodaDemo extends Variant {
 	}
 
 	public createNewStory(engine: Engine): Story {
-		const goal = engine.assets.get(Puzzle, GoalIDs.HIDDEN_FACTORY);
-		engine.assets
-			.getFiltered(
-				Zone,
-				zone =>
-					zone.type === Zone.Type.Goal &&
-					(!zone.providedItems.includes(goal.item1) || !zone.providedItems.includes(goal.item2))
-			)
-			.forEach(z => ((z as MutableZone).type = Zone.Type.None));
+		const gamesWon = engine.persistentState.gamesWon;
+
+		if (gamesWon >= 1) {
+			const puzzle: MutablePuzzle = engine.assets.get(Puzzle, this.goalIDs.RESCUE_YODA) as any;
+			puzzle.type = Puzzle.Type.End;
+		}
+
+		if (gamesWon >= 10) {
+			const puzzle: MutablePuzzle = engine.assets.get(Puzzle, this.goalIDs.CAR) as any;
+			puzzle.type = Puzzle.Type.End;
+		}
 
 		return new Story(
 			rand(),
-			Zone.Planet.Hoth,
+			[Zone.Planet.Endor, Zone.Planet.Hoth, Zone.Planet.Tatooine].random(),
 			[WorldSize.Small, WorldSize.Medium, WorldSize.Large].random()
 		);
 	}
 
-	public save(_: Engine): SaveState {
-		throw new Error("Method not implemented.");
+	public save(engine: Engine): SaveState {
+		const state = new SaveState();
+
+		state.type = engine.variant;
+		state.seed = engine.story.seed;
+		state.planet = engine.story.planet;
+		state.puzzleIDs1 = new Int16Array(engine.story.puzzles[0].map(p => p.id));
+		state.puzzleIDs2 = new Int16Array(engine.story.puzzles[1].map(p => p.id));
+		state.goalPuzzle = engine.story.goal?.id ?? -1;
+
+		state.dagobah = engine.dagobah;
+		state.world = engine.world;
+
+		state.onDagobah = engine.currentWorld === engine.dagobah;
+		state.positionOnWorld = engine.currentWorld.locationOfSector(engine.currentSector);
+		state.currentZoneID = engine.currentZone.id;
+		state.positionOnZone = engine.hero.location;
+
+		state.damageTaken = engine.hero.damage;
+		state.livesLost = engine.hero.lives;
+
+		state.inventoryIDs = new Int16Array(engine.inventory.items.map(i => i.id));
+
+		state.currentWeapon = engine.hero.weapon?.id ?? -1;
+		state.currentAmmo = engine.hero.ammo;
+
+		state.forceAmmo = engine.hero.getAmmoForWeapon(engine.assets.get(Char, CharIDs.TheForce));
+		state.blasterAmmo = engine.hero.getAmmoForWeapon(engine.assets.get(Char, CharIDs.Blaster));
+		state.blasterRifleAmmo = engine.hero.getAmmoForWeapon(
+			engine.assets.get(Char, CharIDs.BlasterRifle)
+		);
+
+		state.difficulty = Settings.difficulty;
+		state.timeElapsed = engine.totalPlayTime;
+		state.worldSize = 0;
+
+		state.unknownCount = 0;
+		state.unknownSum = 0;
+
+		return state;
 	}
 
-	public onPlaceTile(_tile: Tile, _at: Point, _engine: Engine): boolean {
+	onPlaceTile(_tile: Tile, _at: Point, _engine: Engine): boolean {
 		return false;
 	}
 }
 
-export default YodaDemo;
+export default Yoda;

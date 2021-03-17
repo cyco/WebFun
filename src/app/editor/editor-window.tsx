@@ -1,15 +1,9 @@
 import "./editor-window.scss";
 
 import { AbstractWindow, ProgressIndicator } from "src/ui/components";
-import {
-	GameData,
-	Variant,
-	VariantIndy,
-	VariantYoda,
-	readGameDataFile,
-	ColorPalette
-} from "src/engine";
+import { GameData, Variant, readGameDataFile, ColorPalette } from "src/engine";
 import { Menu, WindowMenuItem } from "src/ui";
+import { Indy as VariantIndy, Yoda as VariantYoda } from "src/variant";
 
 import CharacterInspector from "src/app/editor/inspectors/character-inspector";
 import DataManager from "./data-manager";

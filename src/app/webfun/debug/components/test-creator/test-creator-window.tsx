@@ -14,7 +14,7 @@ import { WorldSize } from "src/engine/generation";
 import { Story, Engine, AssetManager } from "src/engine";
 import Settings from "src/settings";
 import Metronome, { MetronomeInternals } from "src/engine/metronome";
-import { Yoda } from "src/engine/variant";
+import { Yoda } from "src/variant";
 import { RecordingInputManager, ReplayingInputManager } from "../../automation";
 import { InputManager as AppInputManager } from "src/app/webfun/input";
 import { assemble, parse } from "../../automation/input";

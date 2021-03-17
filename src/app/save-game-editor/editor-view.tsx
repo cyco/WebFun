@@ -11,7 +11,7 @@ import { Component, Menu } from "src/ui";
 import { DiscardingStorage, Point, identity } from "src/util";
 import { Segment, SegmentControl } from "src/ui/components";
 
-import { Yoda as VariantYoda } from "src/engine/variant";
+import { Yoda as VariantYoda } from "src/variant";
 import { InteractiveMapContextMenuProvider } from "./components/interactive-map";
 import { InventoryDelegate } from "./components/inventory";
 import { ModalPrompt } from "src/ux";

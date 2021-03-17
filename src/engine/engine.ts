@@ -14,7 +14,7 @@ import SceneManager from "./scene-manager";
 import { ScriptProcessingUnit, HotspotProcessingUnit } from "./script";
 import State from "./persistent-state";
 import Story from "./story";
-import { Variant as Type } from "./variant";
+import Variant from "./variant";
 import World from "./world";
 import { SpeechScene, PickupScene } from "src/engine/scenes";
 import { Point } from "src/util";
@@ -35,7 +35,7 @@ export { Events };
 
 class Engine extends EventTarget {
 	static readonly Event = Events;
-	public readonly variant: Type = null;
+	public readonly variant: Variant = null;
 	public assets: AssetManager = null;
 	public resources: ResourceManager = null;
 	public camera: Camera = new Camera();
@@ -61,7 +61,7 @@ class Engine extends EventTarget {
 	public totalPlayTime: number;
 	public bumpedLocation: Point;
 
-	constructor(type: Type, ifce: Partial<Interface> = {}) {
+	constructor(type: Variant, ifce: Partial<Interface> = {}) {
 		super();
 
 		ifce = Object.assign({}, DummyInterface, ifce) as Interface;

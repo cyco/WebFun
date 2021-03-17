@@ -1,4 +1,4 @@
-import Zone from "src/engine/objects/zone";
+import Zone from "./objects/zone";
 
 abstract class LocatorTile {
 	abstract get here(): number;

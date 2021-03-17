@@ -19,7 +19,7 @@ import {
 	Data as RawData
 } from "../file-format/types";
 
-import { Yoda, YodaDemo } from "src/engine/variant";
+import { Yoda, YodaDemo } from "src/variant";
 import GameData from "./index";
 
 const makeTile = (t: RawTile, idx: number) => {

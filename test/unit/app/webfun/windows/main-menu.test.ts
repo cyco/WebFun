@@ -11,7 +11,7 @@ import {
 import Settings from "src/settings";
 import { PauseScene } from "src/engine/scenes";
 import { GameState } from "src/engine";
-import { Indy, Yoda } from "src/engine/variant";
+import { Indy, Yoda } from "src/variant";
 
 describe("WebFun.App.Windows.MainMenu", () => {
 	let subject: MainMenu;

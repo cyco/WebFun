@@ -1,4 +1,5 @@
-import { Variant, Indy, Yoda, YodaDemo, IndyDemo } from "src/engine/variant";
+import { Indy, Yoda, YodaDemo, IndyDemo } from "src/variant";
+import Variant from "src/engine/variant";
 
 import { InputStream } from "src/util";
 import { assert } from "../error";

@@ -9,7 +9,7 @@ import { Point, Size, rgba } from "src/util";
 import { Tile, Zone } from "src/engine/objects";
 
 import Renderer from "../rendering/renderer";
-import LocatorTile from "src/engine/variant/yoda/locator-tile";
+import LocatorTile from "src/variant/yoda/locator-tile";
 import Scene from "./scene";
 import Settings from "src/settings";
 import SpeechScene from "./speech-scene";

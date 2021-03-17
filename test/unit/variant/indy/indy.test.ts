@@ -1,7 +1,7 @@
-import Indy from "src/engine/variant/indy";
-import Variant from "src/engine/variant/variant";
+import Indy from "src/variant/indy";
+import Variant from "src/engine/variant";
 
-describe("WebFun.Engine.Variant.Indy", () => {
+describe("WebFun.Variant.Indy", () => {
 	let subject: Indy;
 	beforeEach(() => (subject = new Indy()));
 	it("is a class representing a variation of the engine", () => {

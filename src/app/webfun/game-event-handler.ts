@@ -11,7 +11,7 @@ import { Point, Rectangle, Size } from "src/util";
 import { LoseScene, ZoneScene, MapScene } from "src/engine/scenes";
 import GameState from "src/engine/game-state";
 import { Channel } from "src/engine/audio";
-import { Yoda } from "src/engine/variant";
+import { Yoda } from "src/variant";
 
 class GameEventHandler {
 	public handleEvent(engine: Engine, sceneView: SceneView, evt: CustomEvent): void {

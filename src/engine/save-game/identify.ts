@@ -1,5 +1,5 @@
-import { Variant, Indy, Yoda } from "../variant";
-
+import { Indy, Yoda } from "src/variant";
+import Variant from "src/engine/variant";
 import { InputStream } from "src/util";
 
 export default (stream: InputStream): Variant => {

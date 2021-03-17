@@ -1,5 +1,5 @@
-import { Variant } from "../variant";
-import { Point } from "../../util";
+import Variant from "../variant";
+import { Point } from "src/util";
 import World from "src/engine/world";
 import { Zone } from "src/engine/objects";
 

@@ -14,7 +14,7 @@ import { Mixer } from "src/app/webfun/audio";
 import { Renderer } from "src/app/webfun/rendering/canvas";
 import { SceneView } from "src/app/webfun/ui";
 import { InputManager } from "src/app/webfun/input";
-import { Yoda } from "src/engine/variant";
+import { Yoda } from "src/variant";
 import { ZoneScene, MapScene } from "src/engine/scenes";
 import * as AppAudioModule from "src/app/webfun/audio";
 import * as AppCanvasRendererModule from "src/app/webfun/rendering/canvas";

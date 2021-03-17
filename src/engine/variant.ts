@@ -1,9 +1,9 @@
-import Story from "../story";
-import { Char, Tile } from "../objects";
+import Story from "./story";
+import { Char, Tile } from "./objects";
 
 import LocatorTile from "./locator-tile";
-import Engine from "../engine";
-import { SaveState } from "src/engine/save-game";
+import Engine from "./engine";
+import { SaveState } from "./save-game";
 import { Point } from "src/util";
 
 interface WellKnownSounds {

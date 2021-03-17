@@ -1,4 +1,5 @@
-import { ColorPalette, Variant, VariantIndy, VariantYoda } from "src/engine";
+import { ColorPalette, Variant } from "src/engine";
+import { Yoda, Indy } from "src/variant";
 
 import { FileLoader } from "src/util";
 import Settings from "src/settings";
@@ -12,8 +13,8 @@ class PaletteProvider {
 		yodaUrl: string = Settings.url.yoda.palette,
 		indyUrl: string = Settings.url.indy.palette
 	) {
-		this.url.set(VariantYoda, yodaUrl);
-		this.url.set(VariantIndy, indyUrl);
+		this.url.set(Yoda, yodaUrl);
+		this.url.set(Indy, indyUrl);
 	}
 
 	async provide(type: Variant): Promise<ColorPalette> {

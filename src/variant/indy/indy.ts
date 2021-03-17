@@ -1,9 +1,9 @@
-import { Engine, SaveState, Story } from "src/engine";
 import { WorldSize } from "src/engine/generation";
 import { Point, rand } from "src/util";
-import { Char, Tile, Zone } from "../../objects";
+import { Char, Tile, Zone } from "src/engine/objects";
+import Variant from "src/engine/variant";
+import { Engine, Story, SaveState } from "src/engine";
 
-import Variant from "../variant";
 import LocatorTile from "./locator-tile";
 import Sounds from "./sounds";
 

@@ -1,4 +1,4 @@
-import { Variant } from "src/engine/variant";
+import Variant from "src/engine/variant";
 import { Tile } from "src/engine/objects";
 import { Engine, SaveState, Story } from "src/engine";
 import { Point } from "src/util";

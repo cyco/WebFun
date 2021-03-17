@@ -1,4 +1,5 @@
-import { Variant, Indy, Yoda, IndyDemo, YodaDemo } from "../variant";
+import { Indy, Yoda, IndyDemo, YodaDemo } from "src/variant";
+import Variant from "../variant";
 
 import IndyReader from "./indy-reader";
 import { InputStream } from "src/util";

@@ -1,4 +1,5 @@
-import { Variant, Indy, Yoda, YodaDemo, IndyDemo } from "../variant";
+import Variant from "../variant";
+import { Indy, Yoda, YodaDemo, IndyDemo } from "src/variant";
 import { Hotspot, Zone } from "src/engine/objects";
 
 import AssetManager from "../asset-manager";

@@ -1,6 +1,7 @@
 import { getFixtureData } from "test/helpers/fixture-loading";
-import { GameData, Variant, VariantIndy, VariantYoda, readGameDataFile } from "src/engine";
+import { GameData, Variant, readGameDataFile } from "src/engine";
 import { InputStream } from "src/util";
+import { Yoda, Indy } from "src/variant";
 
 describe("WebFun.Acceptance.DataReading", () => {
 	const loadData = async (file: string): Promise<InputStream> => {
@@ -27,7 +28,7 @@ describe("WebFun.Acceptance.DataReading", () => {
 
 	it("reads indy's data without errors", async () => {
 		const file = await loadData("indy.data");
-		const data = new GameData(readGameDataFile(file, VariantIndy));
+		const data = new GameData(readGameDataFile(file, Indy));
 
 		expect(data.version).toEqual(512);
 		expect(data.sounds.length).toBe(18);
@@ -39,12 +40,12 @@ describe("WebFun.Acceptance.DataReading", () => {
 		expect(data.copy()).toBeInstanceOf(GameData);
 	});
 
-	it("reads indy's demo data without errors", parsesWithoutError(VariantIndy, "indy-demo.data"));
-	it("reads yoda's data without errors", parsesWithoutError(VariantYoda, "yoda.data"));
-	it("reads yoda's demo data without errors", parsesWithoutError(VariantYoda, "yoda-demo.data"));
+	it("reads indy's demo data without errors", parsesWithoutError(Indy, "indy-demo.data"));
+	it("reads yoda's data without errors", parsesWithoutError(Yoda, "yoda.data"));
+	it("reads yoda's demo data without errors", parsesWithoutError(Yoda, "yoda-demo.data"));
 	it("throws an error when the data can not be parsed", async () => {
 		const data = await getFixtureData("someData");
-		expect(() => readGameDataFile(new InputStream(data), VariantYoda)).toThrow();
-		expect(() => readGameDataFile(new InputStream(data), VariantIndy)).toThrow();
+		expect(() => readGameDataFile(new InputStream(data), Yoda)).toThrow();
+		expect(() => readGameDataFile(new InputStream(data), Indy)).toThrow();
 	});
 });

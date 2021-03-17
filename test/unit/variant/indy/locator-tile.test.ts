@@ -1,8 +1,8 @@
-import BaseLocatorTile from "src/engine/variant/locator-tile";
-import LocatorTile from "src/engine/variant/indy/locator-tile";
+import BaseLocatorTile from "src/engine/locator-tile";
+import LocatorTile from "src/variant/indy/locator-tile";
 import { Hotspot, Zone } from "src/engine/objects";
 
-describe("WebFun.Engine.Variant.Indy.LocatorTile", () => {
+describe("WebFun.Variant.Indy.LocatorTile", () => {
 	let subject: LocatorTile;
 	beforeEach(() => (subject = new LocatorTile()));
 

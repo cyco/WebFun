@@ -1,4 +1,3 @@
-import Variant from "./variant";
 import IndyVariant from "./indy";
 import YodaVariant from "./yoda";
 import IndyDemoVariant from "./indy-demo";
@@ -9,4 +8,3 @@ export const Yoda = new YodaVariant();
 export const IndyDemo = new IndyDemoVariant();
 export const YodaDemo = new YodaDemoVariant();
 
-export { Variant };

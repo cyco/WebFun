@@ -1,4 +1,4 @@
-import { Yoda } from "src/engine/variant";
+import { Yoda } from "src/variant";
 import Weapons from "src/engine/cheats/weapons";
 import { Tile } from "src/engine/objects";
 import { AssetManager, Engine } from "src/engine";

@@ -1,5 +1,5 @@
 import { Char, Puzzle, Sound, Tile, Zone } from "src/engine/objects";
-import { Variant } from "../variant";
+import Variant from "../variant";
 import fromFileContents from "./from-file-contents";
 import { Data as RawData } from "../file-format/types";
 

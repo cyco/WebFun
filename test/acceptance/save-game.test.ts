@@ -1,6 +1,6 @@
-import { Indy, Yoda, Variant } from "src/engine/variant";
+import { Indy, Yoda } from "src/variant";
 import { Reader, Writer } from "src/engine/save-game";
-import { GameData, AssetManager, SaveState } from "src/engine";
+import { GameData, AssetManager, SaveState, Variant } from "src/engine";
 import { getFixtureData } from "test/helpers/fixture-loading";
 import { InputStream, DiscardingOutputStream, OutputStream } from "src/util";
 import loadGameData from "test/helpers/game-data";

@@ -23,7 +23,7 @@ import Sector from "src/engine/sector";
 import SectorType from "./sector-type";
 import RoomIterator from "../room-iterator";
 import ZonePlanet from "../objects/zone-planet";
-import { Variant } from "../variant";
+import Variant from "../variant";
 
 declare global {
 	interface Array<T> {

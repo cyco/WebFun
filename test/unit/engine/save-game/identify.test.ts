@@ -1,5 +1,5 @@
 import identify from "src/engine/save-game/identify";
-import { Indy, Yoda } from "src/engine/variant";
+import { Indy, Yoda } from "src/variant";
 import { InputStream } from "src/util";
 
 describe("WebFun.Engine.SaveGame.identify", () => {

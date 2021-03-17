@@ -1,14 +1,15 @@
-import { GameData, Variant, VariantIndy, VariantYoda, readGameDataFile } from "src/engine";
+import { GameData, Variant, readGameDataFile } from "src/engine";
 
 import { FileLoader } from "src/util";
 import Settings from "src/settings";
+import { Indy, Yoda } from "src/variant";
 
 class DataProvider {
 	private url: Map<Variant, string> = new Map<Variant, string>();
 
 	constructor(yodaUrl: string = Settings.url.yoda.data, indyUrl: string = Settings.url.indy.data) {
-		this.url.set(VariantYoda, yodaUrl);
-		this.url.set(VariantIndy, indyUrl);
+		this.url.set(Yoda, yodaUrl);
+		this.url.set(Indy, indyUrl);
 	}
 
 	async provide(type: Variant): Promise<GameData> {

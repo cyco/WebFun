@@ -1,5 +1,6 @@
 import { Settings } from "src";
-import { Variant, Indy, IndyDemo, Yoda, YodaDemo } from "src/engine/variant";
+import { Indy, IndyDemo, Yoda, YodaDemo } from "src/variant";
+import { Variant } from "src/engine";
 import { WindowManager } from "src/ui";
 import { GlobalFileDrop } from "src/ux";
 import GameController from "./game-controller";

@@ -1,11 +1,11 @@
 import { ComponentRegistry } from "src/ui";
 
 import { ReplayingInputManager } from "src/app/webfun/debug/automation/index";
-import { Variant, Yoda } from "src/engine/variant";
+import { Yoda } from "src/variant";
 import { ZoneScene } from "src/engine/scenes";
 import { CanvasRenderer } from "src/app/webfun/rendering";
 import { SceneView } from "src/app/webfun/ui";
-import { GameData, Engine, Story, AssetManager } from "src/engine";
+import { GameData, Engine, Story, AssetManager, Variant } from "src/engine";
 import { WorldSize } from "src/engine/generation";
 import { Tile, Zone, Puzzle, Sound, Char, Action } from "src/engine/objects";
 import { PaletteAnimation, ColorPalette } from "src/engine/rendering";

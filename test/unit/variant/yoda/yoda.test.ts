@@ -1,11 +1,11 @@
-import Yoda from "src/engine/variant/yoda";
-import Variant from "src/engine/variant/variant";
-import TileID from "src/engine/variant/yoda/tile-ids";
-import Sounds from "src/engine/variant/yoda/sounds";
+import Yoda from "src/variant/yoda";
+import Variant from "src/engine/variant";
+import TileID from "src/variant/yoda/tile-ids";
+import Sounds from "src/variant/yoda/sounds";
 import { Tile, Char, Puzzle } from "src/engine/objects";
 import { Engine } from "src/engine";
 
-describe("WebFun.Engine.Variant.Yoda", () => {
+describe("WebFun.Variant.Yoda", () => {
 	let subject: Yoda;
 	beforeEach(() => (subject = new Yoda()));
 	it("is a class representing a variation of the engine", () => {

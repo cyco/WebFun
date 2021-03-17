@@ -5,7 +5,7 @@ import { MutableHotspot, MutableMonster } from "src/engine/mutable-objects";
 import Reader from "./reader";
 import SaveState from "./save-state";
 import Sector from "src/engine/sector";
-import { Yoda } from "src/engine/variant";
+import { Yoda } from "src/variant";
 import { floor } from "src/std/math";
 import AssetManager, { NullIfMissing } from "src/engine/asset-manager";
 

@@ -1,4 +1,5 @@
-import { Variant, Yoda, YodaDemo } from "src/engine/variant";
+import { Yoda, YodaDemo } from "src/variant";
+import Variant from "src/engine/variant";
 import { InputStream } from "src/util";
 import { assert } from "../error";
 import { Data, Puzzle } from "../types";

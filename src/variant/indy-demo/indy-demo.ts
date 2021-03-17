@@ -1,13 +1,11 @@
-import { SaveState } from "src/engine";
-import Engine from "src/engine/engine";
 import { WorldSize } from "src/engine/generation";
-import Story from "src/engine/story";
 import { Point, rand } from "src/util";
-import { Char, Tile, Zone } from "../../objects";
+import { Char, Tile, Zone } from "src/engine/objects";
 
-import Variant from "../variant";
 import LocatorTile from "./locator-tile";
 import Sounds from "./sounds";
+import Variant from "src/engine/variant";
+import { Engine, SaveState, Story } from "src/engine";
 
 class IndyDemo extends Variant {
 	get name(): string {

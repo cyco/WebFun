@@ -1,4 +1,3 @@
-import { Variant, Indy as VariantIndy, Yoda as VariantYoda } from "./variant";
 import { Reader as SaveGameReader, Writer as SaveGameWriter, SaveState } from "./save-game";
 
 import { ColorPalette, PaletteAnimation } from "./rendering";
@@ -24,6 +23,7 @@ import * as Objects from "./objects";
 import * as MutableObjects from "./mutable-objects";
 import * as Script from "./script";
 import Logger from "./logger";
+import Variant from "./variant";
 
 export {
 	AssetManager,
@@ -33,8 +33,6 @@ export {
 	GameData,
 	GameState,
 	Variant,
-	VariantIndy,
-	VariantYoda,
 	Hero,
 	Interface,
 	Inventory,
