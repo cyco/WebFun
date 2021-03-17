@@ -4,8 +4,9 @@ import render from "test/helpers/render";
 describe("WebFun.Extension.HTMLCollection.find", () => {
 	let subject: HTMLCollectionOf<any>;
 	beforeAll(() => {
-		subject = render(`<div><span></span><span class="second"></span><span class="third"></span></div>`)
-			.children as HTMLCollectionOf<any>;
+		subject = render(
+			`<div><span></span><span class="second"></span><span class="third"></span></div>`
+		).children as HTMLCollectionOf<any>;
 	});
 
 	it("is a function extending the HTMLCollection prototype", () => {

@@ -7,7 +7,8 @@ describe("WebFun.Extension.Array.Repeat", () => {
 	});
 
 	it(
-		"creates a new array of the specified length and fills it " + "with the first argument passed in",
+		"creates a new array of the specified length and fills it " +
+			"with the first argument passed in",
 		() => {
 			const array = Array.Repeat("something", 10);
 			expect(array.length).toBe(10);

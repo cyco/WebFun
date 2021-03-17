@@ -5,7 +5,8 @@ import { rand } from "src/util";
 describeMonsterMovement(Char.MovementType.Animation, (ctx, tick, vars) => {
 	it("moves as expected", async () => {
 		const { char, zone, InitialPosition, monster } = vars;
-		const tileId = () => zone.getTile(InitialPosition.x, InitialPosition.y, Zone.Layer.Object)?.id ?? -1;
+		const tileId = () =>
+			zone.getTile(InitialPosition.x, InitialPosition.y, Zone.Layer.Object)?.id ?? -1;
 
 		await tick(".");
 		expect(monster.position).toEqual(InitialPosition);

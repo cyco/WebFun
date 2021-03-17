@@ -6,7 +6,12 @@ import { Size } from "src/util";
 describe("WebFun.App.Rendering.Canvas.DrawZoneImageData", () => {
 	let colorPalette: ColorPalette;
 	beforeAll(() => {
-		const paletteData = new Uint8Array([...[0, 0, 0], ...[255, 0, 0], ...[0, 255, 0], ...[0, 0, 255]]);
+		const paletteData = new Uint8Array([
+			...[0, 0, 0],
+			...[255, 0, 0],
+			...[0, 255, 0],
+			...[0, 0, 255]
+		]);
 		colorPalette = ColorPalette.FromBGR8(paletteData, 3);
 	});
 

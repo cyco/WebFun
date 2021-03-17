@@ -11,7 +11,10 @@ const getFixtureContent = (name: string) => {
 	return xhr.responseText;
 };
 
-const getFixtureData = (name: string, callback?: (buffer: ArrayBuffer) => void): Promise<ArrayBuffer> => {
+const getFixtureData = (
+	name: string,
+	callback?: (buffer: ArrayBuffer) => void
+): Promise<ArrayBuffer> => {
 	return new Promise(resolve => {
 		const url = buildFixtureUrl(name);
 		const xhr = new XMLHttpRequest();

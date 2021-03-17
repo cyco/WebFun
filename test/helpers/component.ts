@@ -8,7 +8,10 @@ const buildName = (tagName: string) =>
 		.map(p => p[0].toUpperCase() + p.substr(1))
 		.join("");
 
-const makeFunction = (desc: Function) => (ComponentDefinition: typeof Component, block: Function) => {
+const makeFunction = (desc: Function) => (
+	ComponentDefinition: typeof Component,
+	block: Function
+) => {
 	desc(`WebFun.UI.Component ${buildName(ComponentDefinition.tagName || "")}`, () => {
 		beforeAll(() => customElements.define(ComponentDefinition.tagName, ComponentDefinition));
 		block();

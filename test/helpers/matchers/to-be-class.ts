@@ -1,7 +1,9 @@
 import addMatchers from "add-matchers";
 
 const isNativeClass = (thing: any) =>
-	typeof thing === "function" && thing.hasOwnProperty("prototype") && !thing.hasOwnProperty("arguments");
+	typeof thing === "function" &&
+	thing.hasOwnProperty("prototype") &&
+	!thing.hasOwnProperty("arguments");
 
 addMatchers({
 	toBeClass: isNativeClass,

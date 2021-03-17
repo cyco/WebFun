@@ -24,7 +24,10 @@ describe("WebFun.UX.ShortcutManager", () => {
 			meta10ShortcutHandler = jasmine.createSpy();
 			ctrl10ShortcutHandler = jasmine.createSpy();
 
-			meta10Shortcut = subject.registerShortcut(meta10ShortcutHandler, { metaKey: true, keyCode: 10 });
+			meta10Shortcut = subject.registerShortcut(meta10ShortcutHandler, {
+				metaKey: true,
+				keyCode: 10
+			});
 			subject.registerShortcut(ctrl10ShortcutHandler, { ctrlKey: true, keyCode: 10 });
 		});
 
@@ -157,7 +160,11 @@ describe("WebFun.UX.ShortcutManager", () => {
 	});
 
 	function mockKeyboardEvent(desc: any) {
-		return { ...desc, stopImmediatePropagation: (): void => void 0, preventDefault: (): void => void 0 };
+		return {
+			...desc,
+			stopImmediatePropagation: (): void => void 0,
+			preventDefault: (): void => void 0
+		};
 	}
 
 	function mockFocusEvent(node: any) {

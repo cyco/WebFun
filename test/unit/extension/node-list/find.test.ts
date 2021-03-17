@@ -4,8 +4,9 @@ import render from "test/helpers/render";
 describe("WebFun.Extension.NodeList.find", () => {
 	let subject: NodeListOf<any>;
 	beforeAll(() => {
-		subject = render(`<div><span></span><span class="second"></span><span class="third"></span></div>`)
-			.childNodes;
+		subject = render(
+			`<div><span></span><span class="second"></span><span class="third"></span></div>`
+		).childNodes;
 	});
 
 	it("is a function extending the NodeList prototype", () => {
