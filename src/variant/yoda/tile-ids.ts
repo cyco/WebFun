@@ -4,6 +4,15 @@ enum TileIDs {
 	YodasSeat = 2034,
 	R2D2 = 0x31a,
 
+	// Used for help texts
+	TeleporterInactive = 0x218,
+	TeleporterActive = 0x219,
+	MedicalDroid = 0x31d,
+
+	XWingPart1 = 0x3b4,
+	XWingPart2 = 0x3b5,
+	XWingPart3 = 0x3b6,
+
 	// Items
 	Locator = 0x1a5,
 	Locator817 = 817,

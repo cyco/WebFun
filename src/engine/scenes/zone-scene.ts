@@ -21,6 +21,7 @@ import Camera from "../camera";
 class ZoneScene extends Scene {
 	private _zone: Zone;
 	private _renderer = new ZoneSceneRenderer();
+	public sprites: Sprite[] = [];
 
 	constructor(engine: Engine = null, zone: Zone = null) {
 		super();
@@ -127,13 +128,10 @@ class ZoneScene extends Scene {
 			}
 		}
 
-		this._renderer.render(
-			this._zone,
-			this.engine,
-			renderer,
-			this.engine.palette.current,
-			bulletTiles
-		);
+		this._renderer.render(this._zone, this.engine, renderer, this.engine.palette.current, [
+			...bulletTiles,
+			...this.sprites
+		]);
 	}
 
 	private _extensionTileForBullet(): Tile {
@@ -342,6 +340,10 @@ class ZoneScene extends Scene {
 		}
 
 		if (engine.variant.onPlaceTile(tile, location, engine)) {
+			inputManager.clear();
+			inputManager.placedTile = null;
+			inputManager.placedTileLocation = null;
+
 			return ScriptResult.UpdateScene;
 		}
 

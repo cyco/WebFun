@@ -7,13 +7,16 @@ import TileIDs from "./tile-ids";
 import Variant from "src/engine/variant";
 import { Char, Puzzle, Tile, Zone } from "src/engine/objects";
 import { Engine, Story } from "src/engine";
-import { Point, rand } from "src/util";
+import { Point, rand, Size } from "src/util";
 import { WorldSize } from "src/engine/generation";
 import { MutablePuzzle } from "src/engine/mutable-objects";
 import { SaveState } from "src/engine/save-game";
 import Settings from "src/settings";
+import { Sprite } from "src/engine/rendering";
 
 import DetonatorScene from "./detonator-scene";
+import { ZoneScene } from "src/engine/scenes";
+import { NullIfMissing } from "src/engine/asset-manager";
 
 class Yoda extends Variant {
 	public static readonly goalIDs = GoalIDs;
@@ -169,7 +172,192 @@ class Yoda extends Variant {
 			return true;
 		}
 
+		if (tile.id === TileIDs.R2D2) {
+			const sprite = new Sprite(
+				new Point(at.x, at.y, 2),
+				new Size(Tile.WIDTH, Tile.HEIGHT),
+				tile.imageData
+			);
+			const scene = engine.sceneManager.currentScene as ZoneScene;
+			scene.sprites.push(sprite);
+			const textId = this.findDescription(at, engine);
+			const text = engine.assets.get(String, textId).toString();
+			engine.speak(text, at).then(() => {
+				const index = scene.sprites.indexOf(sprite);
+				scene.sprites.splice(index, 1);
+			});
+
+			return true;
+		}
+
 		return false;
+	}
+
+	findDescription(at: Point, engine: Engine): number {
+		enum StringIDs {
+			AboutWalking = 57383,
+			AboutFinding = 57384,
+			AboutUsing = 57385,
+			AboutWeapons = 57386,
+			AboutHealth = 57387,
+
+			Yoda = 57382,
+			Hero = 57395,
+			Vader = 57388,
+			MedicalDroid = 57398,
+
+			TeleporterActive = 57396,
+			TeleporterInactive = 57397,
+
+			Draggable = 57380,
+			Weapon = 57400,
+			Enemy = 57378,
+			NPC = 57381,
+
+			Ewok = 57391,
+			Jawa = 57392,
+			Droid = 57393,
+
+			xWing = 57377,
+			Storage = 57376,
+			Door = 57379,
+
+			Win = 37389,
+			Lose = 57390
+		}
+		const storageIDs = [0x102, 0x10, 0x48d, 0x279, 0x27b, 0x27c, 0x6e5];
+		const doorIDs = [
+			70,
+			71,
+			72,
+			73,
+			74,
+			75,
+			76,
+			145,
+			149,
+			152,
+			153,
+			220,
+			221,
+			223,
+			231,
+			232,
+			233,
+			350,
+			582,
+			584,
+			586,
+			588,
+			702,
+			709,
+			755,
+			756,
+			759,
+			760,
+			804,
+			806,
+			983,
+			984,
+			1047,
+			1048,
+			1081,
+			1112,
+			1120,
+			1259,
+			1461,
+			1462,
+			1472,
+			1473,
+			1539,
+			1544,
+			1858
+		];
+
+		if (at.isEqualTo(engine.hero.location)) return StringIDs.Hero;
+		for (const v of Object.keys(StringIDs)) {
+			if (typeof v !== "number") continue;
+			const str = engine.assets.get(String, v, NullIfMissing);
+			if (!str) console.warn("String ", v, StringIDs[v], "does not exist!");
+		}
+
+		const currentZone = engine.currentZone;
+
+		const tile = currentZone.getTile(at.x, at.y, 1) ?? currentZone.getTile(at.x, at.y, 0);
+
+		const monster = currentZone.monsters.find(({ x, y }) => at.isEqualTo({ x, y, z: null }));
+		if (monster && monster.face && monster.alive) {
+			const charID = monster.face.id;
+			if (charID === CharIDs.Vader) return StringIDs.Vader;
+
+			if (charID === CharIDs.Blank) return StringIDs.Jawa;
+			if (charID === CharIDs.Jawa) return StringIDs.Jawa;
+			if (charID === CharIDs.MadJawa) return StringIDs.Jawa;
+
+			if (charID === CharIDs.Ewok) return StringIDs.Ewok;
+
+			if (charID === CharIDs.R2Unit) return StringIDs.Droid;
+		}
+
+		if (tile.id === TileIDs.Yoda) {
+			return StringIDs.Yoda;
+		}
+
+		if (tile.id === TileIDs.MedicalDroid) {
+			return StringIDs.MedicalDroid;
+		}
+
+		if (tile.id === TileIDs.TeleporterInactive) {
+			return StringIDs.TeleporterInactive;
+		}
+
+		if (tile.id === TileIDs.TeleporterActive) {
+			return StringIDs.TeleporterActive;
+		}
+
+		if (tile.id === TileIDs.XWingPart1) {
+			return StringIDs.xWing;
+		}
+
+		if (tile.id === TileIDs.XWingPart2) {
+			return StringIDs.xWing;
+		}
+
+		if (tile.id === TileIDs.XWingPart3) {
+			return StringIDs.xWing;
+		}
+
+		if (storageIDs.includes(tile.id)) {
+			return StringIDs.Storage;
+		}
+
+		if (doorIDs.includes(tile.id)) {
+			return StringIDs.Door;
+		}
+
+		if (tile.hasAttributes(Tile.Attributes.Draggable)) {
+			return StringIDs.Draggable;
+		}
+
+		if (tile.hasAttributes(Tile.Attributes.Weapon)) {
+			return StringIDs.Weapon;
+		}
+
+		if (tile.hasAttributes(Tile.Attributes.Enemy)) {
+			return StringIDs.Enemy;
+		}
+
+		if (tile.hasAttributes(Tile.Attributes.NPC)) {
+			return StringIDs.NPC;
+		}
+
+		return [
+			StringIDs.AboutWalking,
+			StringIDs.AboutUsing,
+			StringIDs.AboutFinding,
+			StringIDs.AboutWeapons,
+			StringIDs.AboutHealth
+		].random();
 	}
 }
 
