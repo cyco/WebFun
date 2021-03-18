@@ -63,10 +63,12 @@ class App {
 			["Yoda Stories (🇺🇸)", Yoda, Settings.url.yoda],
 			["Yoda Stories (🇪🇸)", Yoda, Settings.url["yoda-es"]],
 			["Yoda Stories (🇩🇪)", Yoda, Settings.url["yoda-de"]],
-			["Demo: Yoda Stories", YodaDemo, Settings.url.yodaDemo],
-			["Indiana Jones and his Desktop Adventures", Indy, Settings.url.indy],
-			["Demo: Indiana Jones and his Desktop Adventures", IndyDemo, Settings.url.indyDemo],
-			["The Construct", YodaDemo, Settings.url.theConstruct]
+			["Demo: Yoda Stories", YodaDemo, Settings.url["yoda-demo"]],
+			["Indiana Jones and his Desktop Adventures (🇺🇸)", Indy, Settings.url.indy],
+			["Indiana Jones and his Desktop Adventures (🇪🇸)", Indy, Settings.url["indy-es"]],
+			["Indiana Jones and his Desktop Adventures (🇫🇷)", Indy, Settings.url["indy-fr"]],
+			["Demo: Indiana Jones and his Desktop Adventures", IndyDemo, Settings.url["indy-demo"]],
+			["The Construct", YodaDemo, Settings.url["the-construct"]]
 		];
 		games.forEach(([name, type, urls]) => {
 			this.root.appendChild(
