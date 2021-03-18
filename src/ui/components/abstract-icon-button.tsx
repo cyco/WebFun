@@ -6,6 +6,8 @@ abstract class AbstractIconButton extends Component {
 	public static observedAttributes = ["icon"];
 	private _icon: HTMLElement = (<i></i>);
 	private _iconName: string;
+	private _checkDisabled = (e: Event) =>
+		this.hasAttribute("disabled") && e.stopImmediatePropagation();
 
 	get icon(): string {
 		return this._iconName;
@@ -26,7 +28,15 @@ abstract class AbstractIconButton extends Component {
 	}
 
 	protected connectedCallback(): void {
+		super.connectedCallback();
 		if (!this._icon.parentNode) this.appendChild(this._icon);
+
+		this.addEventListener("click", this._checkDisabled, { capture: true });
+	}
+
+	protected disconnectedCallback(): void {
+		this.removeEventListener("click", this._checkDisabled, { capture: true });
+		super.disconnectedCallback();
 	}
 
 	protected attributeChangedCallback(
