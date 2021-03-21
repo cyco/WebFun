@@ -42,6 +42,7 @@ import GameEventHandler from "./game-event-handler";
 import Logger from "./logger";
 import { EvaluationMode } from "src/engine/script";
 import { SpeechBubble } from "src/ui/components";
+import Indy from "src/variant/indy/indy";
 
 export const Event = {
 	DidLoadData: "didLoadData"
@@ -113,6 +114,7 @@ class GameController extends EventTarget implements EventListenerObject {
 	public async show(windowManager: WindowManager = WindowManager.defaultManager): Promise<void> {
 		windowManager.showWindow(this._window);
 
+		if (this._variant instanceof Indy) this._window.ammo.style.display = "none";
 		if (!this._window.x && !this._window.y) {
 			this._window.center();
 		}
