@@ -13,10 +13,6 @@ class PuzzleInspectorCell extends Cell<Puzzle> {
 	public palette: ColorPalette;
 	public tiles: Tile[];
 
-	constructor() {
-		super();
-	}
-
 	public cloneNode(deep?: boolean): Node {
 		const node = super.cloneNode(deep) as PuzzleInspectorCell;
 		node.palette = this.palette;
@@ -49,6 +45,11 @@ class PuzzleInspectorCell extends Cell<Puzzle> {
 					onchange={(e: Event) => this.changeTile(1, e)}></PopoutTilePicker>
 				<div className="title">{`${this.data.id.toHex(2)} ${this.data.name}
 			${this.data.type.name}`}</div>
+				<div className="unknowns">
+					<div>{this.data.unknown1.toHex(2)}</div>
+					<div>{this.data.unknown2.toHex(2)}</div>
+					<div>{this.data.unknown3.toHex(2)}</div>
+				</div>
 				<div className="dialogs">
 					<div className="dialog">
 						<span className="s s1">ask</span>

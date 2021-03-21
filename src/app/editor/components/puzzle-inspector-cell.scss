@@ -18,6 +18,16 @@ wf-puzzle-inspector-cell {
 			margin-right: 5px;
 		}
 
+		.unknowns {
+			display: flex;
+			width: 100%;
+			flex-direction: row;
+			justify-content: center;
+			> div + div {
+				margin-left: 10px;
+			}
+		}
+
 		.dialogs {
 			display: flex;
 			flex-direction: column;
