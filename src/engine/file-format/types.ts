@@ -30,7 +30,7 @@ interface Monster {
 	y: number;
 	loot: number;
 	dropsLoot: boolean;
-	waypoints: Int32Array;
+	waypoints: Int32Array | Int16Array;
 }
 
 interface Hotspot {

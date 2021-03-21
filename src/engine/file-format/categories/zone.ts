@@ -108,27 +108,30 @@ export const parseZones = (stream: InputStream, data: Data, variant: Variant): v
 	data.zones = zones;
 };
 
-const parseZoneAux = (stream: InputStream, _: Data): any => {
+const parseZoneAux = (stream: InputStream, data: Data): any => {
 	const marker = stream.readCharacters(4);
 	assert(marker === IZAX, `Expected to find category ${IZAX}.`, stream);
 	// skip over size
 	stream.readUint32();
-	// skip over unknown value
-	stream.readUint16();
+	const unknown = stream.readUint16();
 
 	const monsterCount = stream.readUint16();
 	const monsters = [];
 	for (let i = 0; i < monsterCount; i++) {
-		monsters.push(parseMonster(stream));
+		monsters.push(parseMonster(stream, data));
 	}
 
 	const requiredItemCount = stream.readUint16();
 	const requiredItemIDs = stream.readInt16Array(requiredItemCount);
 
-	const goalItemCount = stream.readUint16();
-	const goalItemIDs = stream.readInt16Array(goalItemCount);
+	if (data.type === Yoda || data.type === YodaDemo) {
+		const goalItemCount = stream.readUint16();
+		const goalItemIDs = stream.readInt16Array(goalItemCount);
 
-	return { monsters, requiredItemIDs, goalItemIDs };
+		return { unknown, monsters, requiredItemIDs, goalItemIDs };
+	}
+
+	return { unknown, monsters, requiredItemIDs, goalItemIDs: new Int16Array() };
 };
 
 const parseZoneAux2 = (stream: InputStream, _: Data): any => {
@@ -179,26 +182,44 @@ export const parseZoneNames = (stream: InputStream, data: Data): void => {
 	} while (true);
 };
 
-export const parseZaux = (stream: InputStream): void => {
-	const size = stream.readUint32();
-	stream.readUint8Array(size);
-	// TODO: use aux data
+export const parseZaux = (stream: InputStream, data: Data): void => {
+	// skip over size
+	stream.readUint32();
+
+	for (let i = 0; i < data.zones.length; i++) {
+		const { monsters, requiredItemIDs, goalItemIDs } = parseZoneAux(stream, data);
+		data.zones[i].monsters = monsters;
+		data.zones[i].requiredItemIDs = requiredItemIDs;
+		data.zones[i].goalItemIDs = goalItemIDs;
+	}
 };
 
-export const parseZax2 = (stream: InputStream): void => {
-	const size = stream.readUint32();
-	stream.readUint8Array(size);
-	// TODO: use aux data
+export const parseZax2 = (stream: InputStream, data: Data): void => {
+	// skip oiver size
+	stream.readUint32();
+
+	for (let i = 0; i < data.zones.length; i++) {
+		const { providedItemIDs } = parseZoneAux2(stream, data);
+		data.zones[i].npcIDs = providedItemIDs;
+	}
 };
 
-export const parseZax3 = (stream: InputStream): void => {
-	const size = stream.readUint32();
-	stream.readUint8Array(size);
-	// TODO: use aux data
+export const parseZax3 = (stream: InputStream, data: Data): void => {
+	// skip oiver size
+	stream.readUint32();
+
+	for (let i = 0; i < data.zones.length; i++) {
+		const { npcIDs } = parseZoneAux3(stream, data);
+		data.zones[i].npcIDs = npcIDs;
+	}
 };
 
-export const parseZax4 = (stream: InputStream): void => {
-	const size = stream.readUint32();
-	stream.readUint8Array(size);
-	// TODO: use aux data
+export const parseZax4 = (stream: InputStream, data: Data): void => {
+	// skip oiver size
+	stream.readUint32();
+
+	for (let i = 0; i < data.zones.length; i++) {
+		const { unknown } = parseZoneAux4(stream, data);
+		data.zones[i].unknown = unknown;
+	}
 };
