@@ -58,7 +58,7 @@ const makePuzzle = (raw: RawPuzzle, idx: number, data: GameData) => {
 
 	puzzle.id = idx;
 	puzzle.name = raw.name || "";
-	puzzle.type = Puzzle.Type.fromNumber(raw.type);
+	puzzle.type = raw.type === -1 ? Puzzle.Type.None : Puzzle.Type.fromNumber(raw.type);
 	puzzle.unknown1 = raw.unknown1;
 	puzzle.unknown2 = raw.unknown2;
 	puzzle.unknown3 = raw.unknown3;

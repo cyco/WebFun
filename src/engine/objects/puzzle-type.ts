@@ -5,7 +5,9 @@ class PuzzleType {
 	public static readonly End = new PuzzleType();
 	public static readonly U4 = new PuzzleType();
 
+	public static readonly None = new PuzzleType();
 	public static readonly Disabled = new PuzzleType();
+
 	private static knownTypes = [
 		PuzzleType.Use,
 		PuzzleType.Trade,
@@ -16,6 +18,7 @@ class PuzzleType {
 
 	public get rawValue(): number {
 		if (this === PuzzleType.Disabled) return -1;
+		if (this === PuzzleType.None) return -1;
 
 		return PuzzleType.knownTypes.indexOf(this);
 	}
@@ -32,6 +35,8 @@ class PuzzleType {
 				return "End";
 			case PuzzleType.U4:
 				return "U4";
+			case PuzzleType.None:
+				return "None";
 		}
 	}
 

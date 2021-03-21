@@ -12,7 +12,7 @@ const parsePuzzle = (stream: InputStream, _: Data, variant: Variant): Puzzle => 
 	// skip over size
 	stream.readUint32();
 
-	let type = 0;
+	let type = -1;
 	if (variant === Yoda || variant === YodaDemo) {
 		type = stream.readUint32();
 	}
