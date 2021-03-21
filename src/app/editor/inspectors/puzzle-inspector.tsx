@@ -42,7 +42,7 @@ class PuzzleInspector extends AbstractInspector {
 		_1: PuzzleInspectorCell,
 		_2: List<Puzzle>
 	): boolean {
-		const string = puzzle.id + " " + puzzle.type.name + " ";
+		const string = puzzle.id + " " + puzzle.type.name + " " + puzzle.name;
 		puzzle.strings.join(" ") + (puzzle.item1?.name ?? "") + (puzzle.item2?.name ?? "");
 		return searchValue.every(r => r.test(string));
 	}
