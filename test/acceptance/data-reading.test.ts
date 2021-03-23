@@ -12,18 +12,16 @@ describe("WebFun.Acceptance.DataReading", () => {
 		});
 	};
 
-	const parsesWithoutError = (variant: Variant, file: string) => async (done: () => void) => {
+	const parsesWithoutError = (variant: Variant, file: string) => async () => {
 		const data = await loadData(file);
 		if (!data) {
 			console.warn(
 				`Unable to find fixture data. Place ${file} into test/fixtures to run this test.`
 			);
-			done();
 			return;
 		}
 
 		expect(() => readGameDataFile(data, variant)).not.toThrow();
-		done();
 	};
 
 	it("reads indy's data without errors", async () => {
