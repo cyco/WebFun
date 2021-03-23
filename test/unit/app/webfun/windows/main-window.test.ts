@@ -1,4 +1,4 @@
-import { Ammo, Health, Inventory, Location, Weapon } from "src/app/webfun/ui";
+import { Ammo, Health, Inventory, Compass, Weapon } from "src/app/webfun/ui";
 import MainWindow from "src/app/webfun/windows/main-window";
 import Engine, { Events as EngineEvents } from "src/engine/engine";
 import Hero, { Events as HeroEvents } from "src/engine/hero";
@@ -24,7 +24,7 @@ describeComponent(MainWindow, () => {
 		});
 
 		it("such as the location indicator", () => {
-			expect(subject.querySelector(Location.tagName)).not.toBeNull();
+			expect(subject.querySelector(Compass.tagName)).not.toBeNull();
 		});
 
 		it("such as the health meter", () => {
@@ -69,13 +69,13 @@ describeComponent(MainWindow, () => {
 
 		it("registers for location change events (no world)", () => {
 			(engine as any).triggerLocationChange(0);
-			const location: Location = subject.querySelector(Location.tagName) as any;
+			const location: Compass = subject.querySelector(Compass.tagName) as any;
 			expect(location.mask).toBe(0);
 		});
 
 		it("registers for location change events (can go every where)", () => {
 			(engine as any).triggerLocationChange(0xffff);
-			const location: Location = subject.querySelector(Location.tagName) as any;
+			const location: Compass = subject.querySelector(Compass.tagName) as any;
 			expect(location.mask).toBe(15);
 		});
 

@@ -1,11 +1,11 @@
 import "./main-window.scss";
 
-import { Ammo, Health, Inventory as InventoryComponent, Location, Weapon } from "../ui";
+import { Ammo, Health, Inventory as InventoryComponent, Compass, Weapon } from "../ui";
 import { OnscreenPad, OnscreenButton, FullscreenMenu } from "../ui";
 import { default as Engine } from "src/engine/engine";
 
 import { AbstractWindow, Button } from "src/ui/components";
-import { Direction } from "../ui/location";
+import { Direction } from "../ui/compass";
 import { Hero, SceneManager, Inventory } from "src/engine";
 import World from "src/engine/world";
 import { Zone, Tile } from "src/engine/objects";
@@ -52,7 +52,7 @@ class MainWindow extends AbstractWindow {
 					<Button label="Menu" onclick={(e: MouseEvent) => this.toggleMenu(e)}></Button>
 				</div>
 				<div className="status">
-					<Location />
+					<Compass />
 					<div className="equipment">
 						<Ammo />
 						<Weapon />
@@ -238,7 +238,7 @@ class MainWindow extends AbstractWindow {
 	}
 
 	private _updateLocation({ zone, world }: { zone?: Zone; world?: World }) {
-		const locationView = this.content.querySelector(Location.tagName) as Location;
+		const locationView = this.content.querySelector(Compass.tagName) as Compass;
 
 		let mask = Direction.None;
 

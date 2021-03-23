@@ -1,8 +1,8 @@
-import Location, { Direction } from "src/app/webfun/ui/location";
+import Compass, { Direction } from "src/app/webfun/ui/compass";
 
-describeComponent(Location, () => {
-	let subject: Location;
-	beforeEach(() => (subject = render(Location) as any));
+describeComponent(Compass, () => {
+	let subject: Compass;
+	beforeEach(() => (subject = render(Compass) as any));
 	afterEach(() => subject.remove());
 
 	it("shows which adjacent zones can be accessed, by default all directions are inaccessible", () => {
