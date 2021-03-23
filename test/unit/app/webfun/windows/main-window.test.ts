@@ -168,6 +168,11 @@ describeComponent(MainWindow, () => {
 						at() {
 							return { zone: {} } as any;
 						}
+					},
+					zone: {
+						isRoom() {
+							return false;
+						}
 					}
 				};
 				this.dispatchEvent(EngineEvents.LocationChanged, detail);

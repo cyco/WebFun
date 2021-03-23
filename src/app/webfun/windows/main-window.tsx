@@ -240,18 +240,18 @@ class MainWindow extends AbstractWindow {
 	private _updateLocation({ zone, world }: { zone?: Zone; world?: World }) {
 		const locationView = this.content.querySelector(Compass.tagName) as Compass;
 
-		let mask = Direction.None;
-
-		if (!world) {
-			locationView.mask = mask;
+		if (!world || !zone || zone.isRoom()) {
+			locationView.mask = Direction.None;
 			return;
 		}
 
 		const location = world.findLocationOfZone(zone);
 		if (!location) {
-			locationView.mask = mask;
+			locationView.mask = Direction.None;
 			return;
 		}
+
+		let mask = Direction.None;
 		const getZone = (pos: Point): Zone => (world.bounds.contains(pos) ? world.at(pos).zone : null);
 
 		mask |= getZone(location.byAdding(-1, 0)) ? Direction.West : 0;
