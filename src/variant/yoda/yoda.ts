@@ -24,7 +24,6 @@ class Yoda extends Variant {
 	public static readonly charIDs = CharIDs;
 	public static readonly tileIDs = TileIDs;
 
-	public readonly name = "Yoda Stories";
 	public readonly saveGameMagic = "YODASAV44";
 	public readonly mapKey = "KeyL";
 	public readonly locatorTile = new LocatorTile();
@@ -33,14 +32,8 @@ class Yoda extends Variant {
 	public readonly zoneIDs = ZoneIDs;
 	public readonly charIDs = CharIDs;
 	public readonly tileIDs = TileIDs;
-
-	public get mapTileId(): number {
-		return TileIDs.Locator;
-	}
-
-	public get weaponTileId(): number {
-		return TileIDs.TheForce;
-	}
+	public readonly mapTileId = TileIDs.Locator;
+	public readonly weaponTileId = TileIDs.TheForce;
 
 	public canBeEquipped(tile: Tile): boolean {
 		return super.canBeEquipped(tile) && tile.id !== TileIDs.ThermalDetonator;

@@ -9,14 +9,9 @@ import Sounds from "./sounds";
 
 class IndyFull extends Variant {
 	public readonly mapKey = "KeyM";
-
-	get name(): string {
-		return "Indy";
-	}
-
-	get saveGameMagic(): string {
-		return "INDYSAV44";
-	}
+	public readonly saveGameMagic = "INDYSAV44";
+	public readonly mapTileId = 0x1bb;
+	public readonly weaponTileId = 0x1c2;
 
 	get locatorTile(): LocatorTile {
 		return new LocatorTile();
@@ -36,14 +31,6 @@ class IndyFull extends Variant {
 
 	public getEquipSound(_: Char): number {
 		return 0;
-	}
-
-	public get mapTileId(): number {
-		return 0x1bb;
-	}
-
-	public get weaponTileId(): number {
-		return 0x1c2;
 	}
 
 	public createNewStory(_: Engine): Story {

@@ -25,7 +25,6 @@ abstract class Variant {
 	abstract getHealthBonus(_: Tile): number;
 	abstract getMaxAmmo(_: Char): number;
 	abstract getEquipSound(_: Char): number;
-	abstract get name(): string;
 
 	abstract get mapTileId(): number;
 	abstract get weaponTileId(): number;

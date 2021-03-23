@@ -12,10 +12,6 @@ describe("WebFun.Variant.Yoda", () => {
 		expect(subject).toBeInstanceOf(Variant);
 	});
 
-	it("has a human-readable identifier", () => {
-		expect(subject.name).toBe("Yoda Stories");
-	});
-
 	it("is used to identify a save game's format", () => {
 		expect(subject.saveGameMagic).toBe("YODASAV44");
 	});

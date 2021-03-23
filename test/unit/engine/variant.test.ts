@@ -28,10 +28,6 @@ describe("WebFun.Engine.Variant", () => {
 				throw new Error("Method not implemented.");
 			}
 
-			get name(): string {
-				return "mock-type";
-			}
-
 			get mapTileId(): number {
 				throw new Error("Method not implemented.");
 			}
@@ -40,7 +36,7 @@ describe("WebFun.Engine.Variant", () => {
 				throw new Error("Method not implemented.");
 			}
 
-			createNewStory(_engine: Engine): Story {
+			createNewStory(_: Engine): Story {
 				throw new Error("Method not implemented.");
 			}
 
