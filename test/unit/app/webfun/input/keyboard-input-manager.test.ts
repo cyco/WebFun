@@ -12,7 +12,8 @@ describe("WebFun.App.Input.KeyboardInputManager", () => {
 		beforeEach(() => {
 			mockWindow = { center: (): void => void 0 };
 			mockedEngine = {
-				metronome: { start: jasmine.createSpy(), stop: jasmine.createSpy() }
+				metronome: { start: jasmine.createSpy(), stop: jasmine.createSpy() },
+				variant: { mapKey: "KeyM" }
 			} as any;
 			spyOn(document, "createElement").and.returnValue(mockWindow);
 			spyOn(WindowManager.defaultManager, "showWindow");

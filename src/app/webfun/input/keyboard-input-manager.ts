@@ -29,7 +29,7 @@ class KeyboardInputManager implements InputManager {
 	private _keyboardDirection: number;
 
 	public clear(): void {
-		this._currentInput &= ~InputMask.Locator;
+		this._currentInput &= ~InputMask.Map;
 		this._currentInput &= ~InputMask.Pause;
 	}
 
@@ -108,8 +108,8 @@ class KeyboardInputManager implements InputManager {
 			case "KeyP":
 				this._currentInput ^= InputMask.Pause;
 				break;
-			case "KeyL":
-				this._currentInput ^= InputMask.Locator;
+			case this.engine.variant.mapKey:
+				this._currentInput ^= InputMask.Map;
 				break;
 			default:
 				eventHandled = false;

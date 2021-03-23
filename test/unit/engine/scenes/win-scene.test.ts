@@ -87,7 +87,7 @@ describe("WebFun.Engine.Scenes.WinScene", () => {
 
 				describe("and the locator key is pressed", () => {
 					beforeEach(() => {
-						(engine.inputManager.readInput as jasmine.Spy).and.returnValue(InputMask.Locator);
+						(engine.inputManager.readInput as jasmine.Spy).and.returnValue(InputMask.Map);
 						subject.update(1);
 					});
 
@@ -126,7 +126,7 @@ describe("WebFun.Engine.Scenes.WinScene", () => {
 
 				describe("and the locator key is pressed", () => {
 					beforeEach(() => {
-						(engine.inputManager.readInput as jasmine.Spy).and.returnValue(InputMask.Locator);
+						(engine.inputManager.readInput as jasmine.Spy).and.returnValue(InputMask.Map);
 						subject.update(1);
 					});
 

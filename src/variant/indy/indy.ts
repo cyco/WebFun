@@ -8,6 +8,8 @@ import LocatorTile from "./locator-tile";
 import Sounds from "./sounds";
 
 class IndyFull extends Variant {
+	public readonly mapKey = "KeyM";
+
 	get name(): string {
 		return "Indy";
 	}

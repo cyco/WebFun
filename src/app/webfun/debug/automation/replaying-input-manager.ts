@@ -69,7 +69,7 @@ class ReplayingInputManager extends EventTarget implements InputManager, EventLi
 		let result = InputMask.None;
 
 		if (this.pause) result |= InputMask.Pause;
-		if (this.locator) result |= InputMask.Locator;
+		if (this.locator) result |= InputMask.Map;
 
 		if (this.endDialog) result |= InputMask.EndDialog;
 		if (this.scrollDown) result |= InputMask.ScrollDown;

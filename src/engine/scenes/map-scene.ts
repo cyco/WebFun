@@ -86,7 +86,7 @@ class MapScene extends Scene {
 	async update(ticks: number): Promise<void> {
 		const engine = this.engine;
 		const input = engine.inputManager.readInput(ticks);
-		if (input & InputMask.Locator) {
+		if (input & InputMask.Map) {
 			this.exitScene();
 			return;
 		}

@@ -26,6 +26,7 @@ class Yoda extends Variant {
 
 	public readonly name = "Yoda Stories";
 	public readonly saveGameMagic = "YODASAV44";
+	public readonly mapKey = "KeyL";
 	public readonly locatorTile = new LocatorTile();
 	public readonly sounds = Sounds;
 	public readonly goalIDs = GoalIDs;

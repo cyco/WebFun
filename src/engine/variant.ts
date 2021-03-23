@@ -12,6 +12,8 @@ interface WellKnownSounds {
 }
 
 abstract class Variant {
+	abstract readonly mapKey: string;
+
 	abstract get saveGameMagic(): string;
 	abstract get locatorTile(): LocatorTile;
 	abstract get sounds(): WellKnownSounds;

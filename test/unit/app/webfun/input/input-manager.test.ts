@@ -33,6 +33,7 @@ describe("WebFun.App.Input.InputManager", () => {
 				removeOverlay() {}
 			},
 			camera: { offset: new Point(0, 0), size: new Size(288, 288) },
+			variant: { mapKey: "KeyL" },
 			addEventListener() {},
 			removeEventListener() {}
 		} as any;
@@ -49,13 +50,13 @@ describe("WebFun.App.Input.InputManager", () => {
 
 		it("toggles locator when the l-key is pressed", () => {
 			mockKeyboardEvent("KeyL", true);
-			expect(subject.readInput(0) & InputMask.Locator).toBeTruthy();
+			expect(subject.readInput(0) & InputMask.Map).toBeTruthy();
 
 			mockKeyboardEvent("KeyL", true);
-			expect(subject.readInput(0) & InputMask.Locator).toBeFalsy();
+			expect(subject.readInput(0) & InputMask.Map).toBeFalsy();
 
 			mockKeyboardEvent("KeyL", true);
-			expect(subject.readInput(0) & InputMask.Locator).toBeTruthy();
+			expect(subject.readInput(0) & InputMask.Map).toBeTruthy();
 		});
 
 		it("toggles pause when the p-key is pressed", () => {

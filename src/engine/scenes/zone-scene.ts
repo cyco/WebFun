@@ -226,7 +226,7 @@ class ZoneScene extends Scene {
 			return true;
 		}
 
-		if (input & InputMask.Locator) {
+		if (input & InputMask.Map) {
 			// && hero.hasLocator();
 			const mapScene = new MapScene();
 			this.engine.sceneManager.pushScene(mapScene);

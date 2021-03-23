@@ -27,7 +27,7 @@ describe("WebFun.Engine.Scenes.MapScene", () => {
 
 		describe("and the locator key is pressed", () => {
 			beforeEach(() => {
-				input = InputMask.Locator;
+				input = InputMask.Map;
 				subject.update(0);
 			});
 

@@ -46,7 +46,7 @@ class WinScene extends Scene {
 		if (this._ticksUntilScoreIsShown < 0) {
 			const engine = this.engine;
 			const input = engine.inputManager.readInput(ticks);
-			if (input & InputMask.Locator || input & InputMask.Attack || input & InputMask.Walk) {
+			if (input & InputMask.Map || input & InputMask.Attack || input & InputMask.Walk) {
 				engine.sceneManager.popScene();
 				return;
 			}

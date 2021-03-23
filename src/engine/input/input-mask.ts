@@ -8,7 +8,7 @@ enum InputMask {
 
 	PickUp = 1 << 4,
 	Pause = 1 << 5,
-	Locator = 1 << 6,
+	Map = 1 << 6,
 	EndDialog = 1 << 7,
 	ScrollDown = 1 << 8,
 	Attack = 1 << 9,

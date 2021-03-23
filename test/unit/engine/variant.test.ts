@@ -10,6 +10,7 @@ describe("WebFun.Engine.Variant", () => {
 
 	it("allow for items to be equipped if they are weapons", () => {
 		const mockType = new (class extends Variant {
+			mapKey = "KeyM";
 			saveGameMagic: string;
 			locatorTile: any;
 			strings: { [_: number]: string };
