@@ -62,6 +62,7 @@ class RoomTransitionScene extends Scene {
 			if (this._mode !== FadeMode.FadeIn) {
 				this._startTime = performance.now();
 				this._mode = FadeMode.FadeIn;
+				this.engine.triggerLocationChange();
 			}
 			if (!this.isFadeComplete()) return;
 		}
@@ -137,6 +138,7 @@ class RoomTransitionScene extends Scene {
 		if (this._mode !== FadeMode.FadeIn) {
 			this._startTime = performance.now();
 			this._mode = FadeMode.FadeIn;
+			this.engine.triggerLocationChange();
 		}
 
 		while (!this.isFadeComplete()) yield;

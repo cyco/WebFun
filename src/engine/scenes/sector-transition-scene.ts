@@ -87,6 +87,7 @@ class SectorTransitionScene extends Scene {
 		this._destinationImage = null;
 		this._startTime = performance.now();
 		while (!this.isFadeComplete()) yield;
+		this.engine.triggerLocationChange();
 
 		this.scene.prepareCamera();
 		engine.sceneManager.popScene();

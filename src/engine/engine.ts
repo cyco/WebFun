@@ -99,7 +99,6 @@ class Engine extends EventTarget {
 	set currentZone(z: Zone) {
 		this._currentZone = z;
 		this.dispatchEvent(Events.CurrentZoneChange);
-		this.dispatchEvent(Events.LocationChanged, { zone: z, world: this._currentWorld });
 	}
 
 	get currentSector(): Sector {
@@ -112,6 +111,13 @@ class Engine extends EventTarget {
 
 	set currentWorld(w: World) {
 		this._currentWorld = w;
+	}
+
+	public triggerLocationChange(): void {
+		this.dispatchEvent(Events.LocationChanged, {
+			zone: this._currentZone,
+			world: this._currentWorld
+		});
 	}
 
 	update(ticks: number): Promise<void> {
