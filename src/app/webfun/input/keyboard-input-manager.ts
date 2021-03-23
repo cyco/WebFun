@@ -64,6 +64,10 @@ class KeyboardInputManager implements InputManager {
 
 		if (!event.repeat && event.type === "keydown") this._keyDown(event);
 		else if (!event.repeat && event.type === "keyup") this._keyUp(event);
+
+		if (event.repeat) {
+			event.preventDefault();
+		}
 	}
 
 	private _keyDown(e: KeyboardEvent) {
