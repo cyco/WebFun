@@ -151,7 +151,7 @@ types:
         type: u2
       - id: type
         type: u4
-      - id: shared_counter
+      - id: sector_counter
         type: u2
         # contents: 0xFF FF
       - id: planet_again

@@ -383,7 +383,7 @@ class ScriptDebugger implements DebuggingScriptProcessingUnitDelegate {
 				<span>{counter}</span>
 				<label>Random:</label>
 				<span>{random}</span>
-				<label>Shared counter:</label>
+				<label>Sector counter:</label>
 				<span>{sectorCounter}</span>
 			</Group>
 		);
