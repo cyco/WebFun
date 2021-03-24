@@ -26,9 +26,11 @@ import ToolComponent from "./tool";
 import { Zone } from "src/engine/objects";
 import ZoneEditor from "src/app/editor/components/zone-editor/view";
 import { TileView } from "src/app/webfun/debug/components";
+import ServiceContainer from "../../service-container";
 
 class Window extends AbstractPanel {
 	public static readonly tagName = "wf-zone-editor-window";
+	private _di: ServiceContainer;
 	private _zone: Zone;
 	private _editor: ZoneEditor = (<ZoneEditor />) as ZoneEditor;
 	private _state: Storage;
@@ -244,6 +246,15 @@ class Window extends AbstractPanel {
 
 	public get data(): DataManager {
 		return this._data;
+	}
+
+	public set di(di: ServiceContainer) {
+		this._di = di;
+		this._editor.di = this.di;
+	}
+
+	public get di(): ServiceContainer {
+		return this._di;
 	}
 }
 

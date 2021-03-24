@@ -5,6 +5,7 @@ import AbstractInspector from "./abstract-inspector";
 import { Button } from "src/ui/components";
 import { FilePicker } from "src/ui";
 import { ColorPalette } from "src/engine";
+import ServiceContainer from "../service-container";
 
 class SetupImageInspector extends AbstractInspector {
 	private _imageEditor = (
@@ -26,8 +27,8 @@ class SetupImageInspector extends AbstractInspector {
 		/>
 	) as PaletteColorPicker;
 
-	constructor(state: Storage) {
-		super(state);
+	constructor(state: Storage, di: ServiceContainer) {
+		super(state, di);
 
 		this.window.title = "Setup Image";
 		this.window.autosaveName = "setup-image-inspector";

@@ -1,12 +1,7 @@
 type Class = { new (...args: any[]): any };
 
 class ServiceContainer {
-	private static _default = new ServiceContainer();
 	private _services = new Map<any, any>();
-
-	static get default(): ServiceContainer {
-		return this._default;
-	}
 
 	public register<T extends Class>(c: T, o: InstanceType<T>): void {
 		this._services.set(c, o);

@@ -18,10 +18,12 @@ class MonsterLayer extends Component {
 	public palette: ColorPalette = null;
 	public tiles: Tile[] = [];
 	public characters: Char[] = [];
+	public di: ServiceContainer;
 	private _zone: Zone = null;
-	private updater: Updater = ServiceContainer.default.get(Updater);
+	private updater: Updater;
 
 	protected connectedCallback(): void {
+		this.updater = this.di.get(Updater);
 		this.draw();
 	}
 

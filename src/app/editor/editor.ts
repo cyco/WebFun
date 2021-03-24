@@ -5,16 +5,18 @@ import EditorWindow from "./editor-window";
 
 class Editor {
 	private window: EditorWindow;
-	private container = ServiceContainer.default;
+	private container: ServiceContainer;
 
 	public async run(data: GameData = null): Promise<void> {
 		const windowManager = new WindowManager(document.body);
+		this.container = new ServiceContainer();
 		this.container.register(ServiceContainer, this.container);
 		this.container.register(WindowManager, windowManager);
 		this.container.register(Document, document);
 
 		try {
 			this.window = document.createElement(EditorWindow.tagName) as EditorWindow;
+			this.window.di = this.container;
 			windowManager.showWindow(this.window);
 			this.window.center();
 
@@ -29,6 +31,9 @@ class Editor {
 				return await this.window.loadFile(file);
 			}
 		} catch (e) {
+			console.error("Closing editor because of error!");
+			console.error(e);
+
 			this.stop();
 		}
 	}

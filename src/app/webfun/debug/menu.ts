@@ -17,7 +17,7 @@ const SettingsAction = (title: string, callback: () => void, beta: boolean = fal
 });
 
 export default (gameController: GameController): Partial<MenuItemInit> => {
-	import("./initialize").then(({ default: initialize }) => initialize(gameController));
+	import("./initialize").then(({ default: initialize }) => initialize());
 	import("src/app/editor");
 
 	return {
@@ -44,13 +44,18 @@ export default (gameController: GameController): Partial<MenuItemInit> => {
 				>;
 				simulator.gameController = gameController;
 				simulator.state = localStorage.prefixedWith("simulator");
-				WindowManager.defaultManager.showWindow(simulator);
+				gameController.window.manager.showWindow(simulator);
 			}),
 			SettingsAction("Load Test", loadTest(gameController)),
 			MenuItemSeparator,
-			SettingsAction("Debug Scripts", async () =>
-				(await import("./script-debugger")).default.sharedDebugger.show()
-			),
+			SettingsAction("Debug Scripts", async () => {
+				const ScriptDebugger = (await import("./script-debugger")).default;
+
+				const windowManager = gameController.window.manager;
+				const scriptDebugger = new ScriptDebugger(windowManager);
+				scriptDebugger.engine = gameController.engine;
+				scriptDebugger.show();
+			}),
 			SettingsAction(
 				"Edit Current Data",
 				async () => (await import("src/app/editor")).main(gameController.data),
@@ -63,7 +68,7 @@ export default (gameController: GameController): Partial<MenuItemInit> => {
 			),
 			SettingsAction(
 				"Edit Save Game...",
-				async () => (await import("src/app/save-game-editor")).main(),
+				async () => (await import("src/app/save-game-editor")).main(gameController.window.manager),
 				true
 			)
 		]

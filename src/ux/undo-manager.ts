@@ -3,11 +3,6 @@ import UndoBatchOperation from "src/ux/undo-batch-operation";
 import UndoOperation from "./undo-operation";
 
 class UndoManager extends EventTarget {
-	private static _sharedManager: UndoManager;
-	public static get sharedManager(): UndoManager {
-		return (this._sharedManager = this._sharedManager || new UndoManager());
-	}
-
 	private _stack: UndoOperation[] = [];
 	private _stackPointer: number = -1;
 	private _batchStack: UndoBatchOperation[] = [];

@@ -11,6 +11,7 @@ import { SaveGameInspector } from "./inspectors";
 import { SaveGameReader, AssetManager } from "src/engine";
 import WindowManager from "src/ui/window-manager";
 import { Tile, Zone, Puzzle, Char, Sound } from "src/engine/objects";
+import ServiceContainer from "./service-container";
 
 class EditorView extends Component {
 	public static readonly tagName = "wf-editor-view";
@@ -18,6 +19,7 @@ class EditorView extends Component {
 	private _inspectors: { [_: string]: AbstractInspector } = {};
 	private _data: DataManager;
 	public state: Storage;
+	public di: ServiceContainer;
 
 	constructor() {
 		super();
@@ -33,7 +35,7 @@ class EditorView extends Component {
 	}
 
 	public show(key: string): void {
-		this._windowManager.asDefaultManager(() => this._inspectors[key].show());
+		this._inspectors[key].show();
 	}
 
 	public save(): Promise<void> {
@@ -84,7 +86,7 @@ class EditorView extends Component {
 		assets.populate(Char, data.characters);
 		assets.populate(Sound, data.sounds);
 		const state = read(assets);
-		const inspector = new SaveGameInspector(this.state.prefixedWith("save-game"));
+		const inspector = new SaveGameInspector(this.state.prefixedWith("save-game"), this.di);
 		this.addInspector("save-game", inspector);
 		this.data.state = state;
 		inspector.data = this.data;

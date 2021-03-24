@@ -2,12 +2,13 @@ import AbstractInspector from "./abstract-inspector";
 import { List } from "src/ui/components";
 import { Puzzle } from "src/engine/objects";
 import { PuzzleInspectorCell } from "../components";
+import ServiceContainer from "../service-container";
 
 class PuzzleInspector extends AbstractInspector {
 	private _list: List<Puzzle>;
 
-	constructor(state: Storage) {
-		super(state);
+	constructor(state: Storage, di: ServiceContainer) {
+		super(state, di);
 
 		this.window.title = "Puzzles";
 		this.window.autosaveName = "puzzle-inspector";

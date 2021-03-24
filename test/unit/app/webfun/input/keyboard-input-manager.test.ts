@@ -1,7 +1,5 @@
 import { Engine } from "src/engine";
 import KeyboardInputManager from "src/app/webfun/input/keyboard-input-manager";
-import { CurrentStatusInfo } from "src/app/webfun/ui";
-import { WindowManager } from "src/ui";
 
 describe("WebFun.App.Input.KeyboardInputManager", () => {
 	let subject: KeyboardInputManager;
@@ -10,13 +8,13 @@ describe("WebFun.App.Input.KeyboardInputManager", () => {
 
 	describe("when created", () => {
 		beforeEach(() => {
-			mockWindow = { center: (): void => void 0 };
+			mockWindow = { center: (): void => void 0, manager: { showWindow: jasmine.createSpy() } };
 			mockedEngine = {
 				metronome: { start: jasmine.createSpy(), stop: jasmine.createSpy() },
-				variant: { mapKey: "KeyM" }
+				variant: { mapKey: "KeyM" },
+				showDebugStatusInfo: jasmine.createSpy()
 			} as any;
 			spyOn(document, "createElement").and.returnValue(mockWindow);
-			spyOn(WindowManager.defaultManager, "showWindow");
 
 			subject = new KeyboardInputManager();
 			subject.engine = mockedEngine;
@@ -34,24 +32,8 @@ describe("WebFun.App.Input.KeyboardInputManager", () => {
 					);
 				});
 
-				it("stops the timer", () => {
-					expect(mockedEngine.metronome.stop).toHaveBeenCalled();
-				});
-
-				it("shows a window displaying debug information", () => {
-					expect(document.createElement).toHaveBeenCalledWith(CurrentStatusInfo.tagName);
-					expect(WindowManager.defaultManager.showWindow).toHaveBeenCalledWith(mockWindow);
-					expect(mockWindow.engine).toBe(mockedEngine);
-				});
-
-				describe("and the window is closed", () => {
-					beforeEach(() => {
-						mockWindow.onclose();
-					});
-
-					it("starts the metronome again", () => {
-						expect(mockedEngine.metronome.start).toHaveBeenCalled();
-					});
+				it("shows the current status info window", () => {
+					expect(mockedEngine.showDebugStatusInfo).toHaveBeenCalled();
 				});
 			});
 		});

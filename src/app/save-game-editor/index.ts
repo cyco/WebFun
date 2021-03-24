@@ -13,9 +13,7 @@ let Initialize = () => {
 Initialize();
 
 const OverlayedWindowOffset = 10.0;
-const main = async (
-	windowManager: WindowManager = WindowManager.defaultManager
-): Promise<void[]> => {
+const main = async (windowManager: WindowManager): Promise<void[]> => {
 	Initialize();
 
 	let editors = 0;

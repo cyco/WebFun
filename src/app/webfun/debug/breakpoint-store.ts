@@ -12,7 +12,6 @@ const StorageKey = "breakpoints";
 
 class BreakpointStore extends EventTarget {
 	public static readonly Event = Events;
-	private static _sharedStore: BreakpointStore;
 	private _breakpoints: { [_: string]: Breakpoint } = {};
 	private _backend: Storage = new DiscardingStorage();
 
@@ -21,10 +20,6 @@ class BreakpointStore extends EventTarget {
 
 		this.registerEvents(Events);
 		this._load();
-	}
-
-	public static get sharedStore(): BreakpointStore {
-		return (this._sharedStore = this._sharedStore || new BreakpointStore());
 	}
 
 	public addBreakpoint(bpt: Breakpoint): void {

@@ -10,10 +10,10 @@ import { Updater } from "../reference";
 class CharacterInspector extends AbstractInspector {
 	private _list: List<Char>;
 	private _details: CharacterDetails;
-	private readonly updater = ServiceContainer.default.get(Updater);
+	private readonly updater = this.di.get(Updater);
 
-	constructor(state: Storage) {
-		super(state);
+	constructor(state: Storage, di: ServiceContainer) {
+		super(state, di);
 
 		this.window.title = "Characters";
 		this.window.autosaveName = "character-inspector";

@@ -26,7 +26,7 @@ class EditorWindow extends AbstractWindow {
 	static readonly tagName = "wf-resource-editor-window";
 	private _progressIndicator: HTMLElement = (<ProgressIndicator />);
 	private _editor: EditorView = null;
-	private di: ServiceContainer = ServiceContainer.default.get(ServiceContainer);
+	public di: ServiceContainer;
 
 	constructor() {
 		super();
@@ -56,24 +56,29 @@ class EditorWindow extends AbstractWindow {
 	public async loadGameData(data: GameData): Promise<void> {
 		const palette = await new PaletteProvider().provide(data.type);
 
+		const di = this.di;
 		const dm = new DataManager(data, palette, data.type);
-		this.di.register(DataManager, dm);
-		this.di.register(GameData, dm.currentData);
-		this.di.register(ColorPalette, palette);
-		this.di.register(Updater, new Updater(dm.currentData));
-		this.di.register(Resolver, new Resolver(dm.currentData));
+		di.register(DataManager, dm);
+		di.register(GameData, dm.currentData);
+		di.register(ColorPalette, palette);
+		di.register(Updater, new Updater(dm.currentData));
+		di.register(Resolver, new Resolver(dm.currentData));
 
 		this._gotoFullscreen();
 		const editor = document.createElement(EditorView.tagName) as EditorView;
 		const state = localStorage.prefixedWith("editor");
-		editor.addInspector("tile", new TileInspector(state.prefixedWith("tile")));
-		editor.addInspector("zone", new ZoneInspector(state.prefixedWith("zone")));
-		editor.addInspector("sound", new SoundInspector(state.prefixedWith("sound")));
-		editor.addInspector("puzzle", new PuzzleInspector(state.prefixedWith("puzzle")));
-		editor.addInspector("character", new CharacterInspector(state.prefixedWith("character")));
-		editor.addInspector("setup-image", new SetupImageInspector(state.prefixedWith("setup-image")));
-		editor.addInspector("palette", new PaletteInspector(state.prefixedWith("palette")));
-		editor.addInspector("coverage", new CoverageInspector(state.prefixedWith("coverage")));
+		editor.di = di;
+		editor.addInspector("tile", new TileInspector(state.prefixedWith("tile"), di));
+		editor.addInspector("zone", new ZoneInspector(state.prefixedWith("zone"), di));
+		editor.addInspector("sound", new SoundInspector(state.prefixedWith("sound"), di));
+		editor.addInspector("puzzle", new PuzzleInspector(state.prefixedWith("puzzle"), di));
+		editor.addInspector("character", new CharacterInspector(state.prefixedWith("character"), di));
+		editor.addInspector(
+			"setup-image",
+			new SetupImageInspector(state.prefixedWith("setup-image"), di)
+		);
+		editor.addInspector("palette", new PaletteInspector(state.prefixedWith("palette"), di));
+		editor.addInspector("coverage", new CoverageInspector(state.prefixedWith("coverage"), di));
 		editor.data = dm;
 		editor.state = state;
 

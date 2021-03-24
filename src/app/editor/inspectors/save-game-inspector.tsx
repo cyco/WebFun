@@ -14,14 +14,15 @@ import { Zone, Puzzle, Tile, Sound, Char } from "src/engine/objects";
 import { Yoda } from "src/variant";
 import Settings from "src/settings";
 import { WorldSize } from "src/engine/generation";
+import ServiceContainer from "../service-container";
 
 class SaveGameInspector extends AbstractInspector {
 	private _editorView: EditorView = (
 		<EditorView state={this.state.prefixedWith("editor-view")} />
 	) as EditorView;
 
-	constructor(state: Storage) {
-		super(state);
+	constructor(state: Storage, di: ServiceContainer) {
+		super(state, di);
 
 		this.window.title = "Save Game Inspector";
 		this.window.autosaveName = "save-game-inspector";

@@ -48,13 +48,7 @@ class KeyboardInputManager implements InputManager {
 		}
 
 		if (event.type === "keydown" && event.code === "F8" && event.ctrlKey && event.shiftKey) {
-			const window = document.createElement(CurrentStatusInfo.tagName);
-			window.engine = this.engine;
-			window.onclose = () => this.engine.metronome.start();
-
-			this.engine.metronome.stop();
-			WindowManager.defaultManager.showWindow(window);
-			window.center();
+			this.engine.showDebugStatusInfo();
 
 			event.stopPropagation();
 			event.preventDefault();

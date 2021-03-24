@@ -14,11 +14,6 @@ describe("WebFun.UX.UndoManager", () => {
 		expect(UndoManager).toBeAClass();
 	});
 
-	it("offers a shared instance to be used as a global manager for all user operations", () => {
-		expect(UndoManager.sharedManager).toBeInstanceOf(UndoManager);
-		expect(UndoManager.sharedManager).toBe(UndoManager.sharedManager);
-	});
-
 	describe("when some operations are added", () => {
 		beforeEach(() => {
 			state += 1;

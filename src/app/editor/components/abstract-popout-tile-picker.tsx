@@ -68,7 +68,7 @@ abstract class PopoverTilePicker extends Component implements EventListenerObjec
 			}
 		}
 
-		return WindowManager.defaultManager;
+		return null;
 	}
 
 	set palette(s: ColorPalette) {

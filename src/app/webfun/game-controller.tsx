@@ -1,4 +1,10 @@
-import { Inventory as InventoryComponent, ErrorView, LoadingView, SceneView } from "./ui";
+import {
+	Inventory as InventoryComponent,
+	ErrorView,
+	LoadingView,
+	SceneView,
+	CurrentStatusInfo
+} from "./ui";
 import { Char, Tile, Zone, Sound, Puzzle } from "src/engine/objects";
 import {
 	ColorPalette,
@@ -119,11 +125,20 @@ class GameController extends EventTarget implements EventListenerObject {
 			ResourceManager: () => resources,
 			Mixer: () => mixer,
 			Logger: () => logger,
-			ShowText: (text: string, at: Point) => this.showText(text, at)
+			ShowText: (text: string, at: Point) => this.showText(text, at),
+			ShowDebugStatusInfo: (engine: Engine) => {
+				const window = document.createElement(CurrentStatusInfo.tagName);
+				window.engine = engine;
+				window.onclose = () => engine.metronome.start();
+
+				engine.metronome.stop();
+				this.window.manager.showWindow(window);
+				window.center();
+			}
 		};
 	}
 
-	public async show(windowManager: WindowManager = WindowManager.defaultManager): Promise<void> {
+	public async show(windowManager: WindowManager): Promise<void> {
 		windowManager.showWindow(this._window);
 
 		if (this._variant instanceof Indy) this._window.ammo.style.display = "none";

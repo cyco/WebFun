@@ -5,6 +5,7 @@ import AbstractInspector from "./abstract-inspector";
 import { IconButton } from "src/ui/components";
 import { ModalPrompt } from "src/ux";
 import PaletteAnimation from "src/engine/rendering/palette-animation";
+import ServiceContainer from "../service-container";
 
 const PaletteAnimationInterval = 100;
 
@@ -37,8 +38,8 @@ class PaletteInspector extends AbstractInspector {
 	) as IconButton;
 	private _animator: PaletteAnimation = null;
 
-	constructor(state: Storage) {
-		super(state);
+	constructor(state: Storage, di: ServiceContainer) {
+		super(state, di);
 
 		this.window.title = "Palette";
 		this.window.autosaveName = "palette-inspector";

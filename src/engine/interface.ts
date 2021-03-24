@@ -32,6 +32,7 @@ interface Interface {
 	ResourceManager: () => ResourceManager;
 	Logger: () => Logger;
 	ShowText: (text: string, at: Point) => Promise<void>;
+	ShowDebugStatusInfo: (engine: Engine) => void;
 }
 
 export default Interface;

@@ -202,6 +202,10 @@ class Engine extends EventTarget {
 		return this._interface.ShowText(text, at);
 	}
 
+	public showDebugStatusInfo(): void {
+		this._interface.ShowDebugStatusInfo(this);
+	}
+
 	public dropItem(tile: Tile, place: Point): Promise<void> {
 		console.assert(!!tile && !!place);
 		const solveSector = () => {

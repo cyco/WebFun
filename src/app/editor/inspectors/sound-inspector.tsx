@@ -7,12 +7,12 @@ import { Sound } from "src/engine/objects";
 import ServiceContainer from "../service-container";
 
 class SoundInspector extends AbstractInspector {
-	private readonly updater: Updater = ServiceContainer.default.get(Updater);
-	private readonly resolver: Resolver = ServiceContainer.default.get(Resolver);
+	private readonly updater: Updater = this.di.get(Updater);
+	private readonly resolver: Resolver = this.di.get(Resolver);
 	private _list: List<Sound>;
 
-	constructor(state: Storage) {
-		super(state);
+	constructor(state: Storage, di: ServiceContainer) {
+		super(state, di);
 
 		this.window.title = "Sounds";
 		this.window.autosaveName = "sound-inspector";

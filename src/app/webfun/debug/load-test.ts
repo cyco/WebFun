@@ -1,5 +1,5 @@
 import { GameController } from "src/app/webfun/index";
-import { WindowManager, FilePicker } from "src/ui";
+import { FilePicker } from "src/ui";
 
 export default (gameController: GameController) => async (file: File = null): Promise<void> => {
 	if (!file) [file] = await FilePicker.Pick();
@@ -19,6 +19,6 @@ export default (gameController: GameController) => async (file: File = null): Pr
 		simulator.gameController = gameController;
 		simulator.state = localStorage.prefixedWith("simulator");
 		simulator.testCase = testCase;
-		WindowManager.defaultManager.showWindow(simulator);
+		gameController.window.manager.showWindow(simulator);
 	});
 };

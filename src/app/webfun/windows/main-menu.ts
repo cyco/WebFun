@@ -141,7 +141,7 @@ class MainMenu extends Menu {
 						title: "How to Play",
 						callback: () => {
 							const helpWindow = document.createElement(HelpViewer.tagName);
-							WindowManager.defaultManager.showWindow(helpWindow);
+							controller.window.manager.showWindow(helpWindow);
 							helpWindow.loadHelpFile(settings.url.yoda.help);
 						},
 						mnemonic: 0

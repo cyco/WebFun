@@ -6,14 +6,16 @@ import { GlobalFileDrop } from "src/ux";
 import GameController from "./game-controller";
 
 class App {
+	public static sharedApp: App;
 	private settings = Settings;
 	private defaultGameController: GameController;
-	private windowManager: WindowManager;
+	private _windowManager: WindowManager;
 	private root: HTMLElement;
 
 	public constructor(container: HTMLElement) {
 		this.root = container;
-		this.windowManager = new WindowManager(container);
+		this._windowManager = new WindowManager(container);
+		App.sharedApp = this;
 	}
 
 	public run(): void {
@@ -53,7 +55,7 @@ class App {
 
 	private async showDefaultGameController(): Promise<GameController> {
 		this.defaultGameController = new GameController(Yoda, this.settings.url.yoda);
-		this.defaultGameController.show(this.windowManager);
+		this.defaultGameController.show(this._windowManager);
 
 		return this.defaultGameController;
 	}
@@ -90,10 +92,14 @@ class App {
 
 	private async load(variant: Variant, urls: any): Promise<GameController> {
 		const controller = new GameController(variant, urls);
-		await controller.show(this.windowManager);
+		await controller.show(this._windowManager);
 
 		//if (!this.defaultGameController) this.defaultGameController = controller;
 		return controller;
+	}
+
+	public get windowManager(): WindowManager {
+		return this.windowManager;
 	}
 }
 export default App;

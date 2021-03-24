@@ -2,6 +2,7 @@ import { Panel, Window } from "src/ui/components";
 
 import DataManager from "src/app/editor/data-manager";
 import WindowManager from "src/ui/window-manager";
+import ServiceContainer from "../service-container";
 
 const StateStorageDelay = 1.0;
 
@@ -15,7 +16,8 @@ abstract class AbstractInspector {
 		windowDidClose: () => this.state.store("visible", false)
 	};
 
-	constructor(state: Storage) {
+	constructor(state: Storage, public di: ServiceContainer) {
+		this.di = di;
 		this.state = state;
 		this.window.addEventListener(Window.Event.DidClose, this._handlers.windowDidClose);
 	}

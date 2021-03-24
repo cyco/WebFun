@@ -11,6 +11,7 @@ import MonsterLayerComponent from "./monster-layer";
 import { Point } from "src/util";
 import { Char, Tile, Zone } from "src/engine/objects";
 import { ColorPalette } from "src/engine";
+import ServiceContainer from "../../service-container";
 
 class View extends Component implements EventListenerObject {
 	public static readonly tagName = "wf-zone-editor-view";
@@ -188,6 +189,15 @@ class View extends Component implements EventListenerObject {
 
 	public get tiles(): Tile[] {
 		return this._monsters.tiles;
+	}
+
+	public set di(di: ServiceContainer) {
+		this._monsters.di = di;
+		this._hotspots.di = di;
+	}
+
+	public get di(): ServiceContainer {
+		return this._monsters.di;
 	}
 }
 

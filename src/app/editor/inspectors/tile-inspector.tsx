@@ -1,11 +1,9 @@
 import "./tile-inspector.scss";
 
 import AbstractInspector from "./abstract-inspector";
-import { ColorPalette } from "src/engine/rendering";
 import { IconButton } from "src/ui/components";
 import { TilePicker } from "src/app/editor/components";
 import ServiceContainer from "../service-container";
-import { Resolver, Updater } from "../reference";
 import { Tile } from "src/engine/objects";
 import { Label, Button } from "src/ui/components";
 import { MutableTile } from "src/engine/mutable-objects";
@@ -16,14 +14,10 @@ import { download, OutputStream, Size } from "src/util";
 import { ceil } from "src/std/math";
 
 class TileInspector extends AbstractInspector {
-	private _palette: ColorPalette;
 	private tile: MutableTile = null;
-	private di = ServiceContainer.default;
-	private updater = this.di.get(Updater);
-	private resolver = this.di.get(Resolver);
 
-	constructor(state: Storage) {
-		super(state);
+	constructor(state: Storage, di: ServiceContainer) {
+		super(state, di);
 
 		this.window.title = "Tiles";
 		this.window.autosaveName = "tile-inspector";

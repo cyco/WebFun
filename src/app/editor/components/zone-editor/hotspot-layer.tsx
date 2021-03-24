@@ -15,10 +15,13 @@ class HotspotLayer extends Component {
 	public static readonly tagName = "wf-hotspot-layer";
 	public static readonly observedAttributes: string[] = [];
 	public palette: ColorPalette;
-	private readonly updater: Updater = ServiceContainer.default.get(Updater);
+	public di: ServiceContainer;
+	private updater: Updater;
 	private _zone: Zone;
 
 	protected connectedCallback(): void {
+		this.updater = this.di.get(Updater);
+
 		this.draw();
 	}
 

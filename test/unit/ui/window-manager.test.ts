@@ -14,11 +14,6 @@ describe("WebFun.UI.WindowManager", () => {
 		expect(WindowManager).toBeAClass();
 	});
 
-	it("acts as a multiton with the default instance managing windows in `document.body`", () => {
-		expect(WindowManager.defaultManager).toBe(WindowManager.defaultManager);
-		expect((WindowManager.defaultManager as any)._container).toBe(document.body);
-	});
-
 	describe("when a window is show", () => {
 		let firstWindow: Window, secondWindow: Window;
 		beforeEach(() => {
@@ -142,14 +137,6 @@ describe("WebFun.UI.WindowManager", () => {
 			it("'s z-index does not increase", () => {
 				expect(subject.topMostWindow.style.zIndex).toEqual(originalZIndex);
 			});
-		});
-	});
-
-	it("has a method to temporarily override the default window manager", () => {
-		const originalDefault = WindowManager.defaultManager;
-		subject.asDefaultManager(() => {
-			expect(WindowManager.defaultManager).not.toBe(originalDefault);
-			expect(WindowManager.defaultManager).toBe(subject);
 		});
 	});
 

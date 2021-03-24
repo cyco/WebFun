@@ -14,7 +14,7 @@ class BreakpointButton extends Component {
 	static readonly tagName = "wf-debug-breakpoint-button";
 	static readonly observedAttributes = ["active"];
 	public breakpoint: Breakpoint = null;
-	public store: BreakpointStore = BreakpointStore.sharedStore;
+	public store: BreakpointStore;
 	private _removeHandler = ({ detail: { breakpoint } }: CustomEvent) =>
 		breakpoint === this.breakpoint && (this.active = false);
 	private _addHandler = ({ detail: { breakpoint } }: CustomEvent) =>

@@ -13,14 +13,15 @@ import { Zone } from "src/engine/objects";
 import ZoneEditorController from "../components/zone-editor/window";
 import { ZoneInspectorCell } from "../components";
 import { min } from "src/std/math";
+import ServiceContainer from "../service-container";
 
 class ZoneInspector extends AbstractInspector {
 	private _list: List<Zone>;
 	private _controllers: ZoneEditorController[] = [];
 	private _state: Storage;
 
-	constructor(state: Storage) {
-		super(state);
+	constructor(state: Storage, di: ServiceContainer) {
+		super(state, di);
 
 		this._state = state;
 
@@ -76,6 +77,7 @@ class ZoneInspector extends AbstractInspector {
 
 		if (!controller) {
 			controller = document.createElement(ZoneEditorController.tagName) as ZoneEditorController;
+			controller.di = this.di;
 			controller.data = this.data;
 			controller.state = this._state.prefixedWith("editor-" + this._controllers.length);
 			this._controllers.push(controller);
@@ -165,6 +167,7 @@ class ZoneInspector extends AbstractInspector {
 			const controller = document.createElement(
 				ZoneEditorController.tagName
 			) as ZoneEditorController;
+			controller.di = this.di;
 			controller.manager = this.windowManager;
 			controller.data = this.data;
 			controller.zone = this.data.currentData.zones[id];

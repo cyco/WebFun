@@ -2,6 +2,7 @@ import AbstractInspector from "./abstract-inspector";
 import { InlineSelector, ProgressIndicator } from "src/ui/components";
 import "./coverage-inspector.scss";
 import { SourceLevelCoverage, SymbolicCoverage } from "../components";
+import ServiceContainer from "../service-container";
 
 enum ViewMode {
 	SourceLevel,
@@ -31,8 +32,8 @@ class CoverageInspector extends AbstractInspector {
 		/>
 	) as InlineSelector<ViewMode>;
 
-	constructor(state: Storage) {
-		super(state);
+	constructor(state: Storage, di: ServiceContainer) {
+		super(state, di);
 
 		this.window.title = "Coverage";
 		this.window.autosaveName = "coverage-inspector";

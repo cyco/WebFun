@@ -34,7 +34,7 @@ const StateChangingOpcodes = {
 };
 
 class ScriptDebugger implements DebuggingScriptProcessingUnitDelegate {
-	private static _sharedDebugger: ScriptDebugger;
+	private _windowManager: WindowManager;
 	private _window: Window;
 	private _engine: Engine;
 	private _isActive: boolean = false;
@@ -49,10 +49,12 @@ class ScriptDebugger implements DebuggingScriptProcessingUnitDelegate {
 
 	private _currentZone: Zone = null;
 	private _currentAction: Action = null;
-	private _breakpointStore: BreakpointStore = BreakpointStore.sharedStore;
+	private _breakpointStore: BreakpointStore;
 	private _variableMap: any = {};
 
-	constructor() {
+	constructor(windowManager: WindowManager) {
+		this._windowManager = windowManager;
+		this._breakpointStore = new BreakpointStore();
 		this._breakpointStore.backend = localStorage.prefixedWith("debug");
 
 		this._window = (
@@ -79,10 +81,6 @@ class ScriptDebugger implements DebuggingScriptProcessingUnitDelegate {
 		this._window.content.appendChild(this._actionList);
 	}
 
-	public static get sharedDebugger(): ScriptDebugger {
-		return (this._sharedDebugger = this._sharedDebugger || new ScriptDebugger());
-	}
-
 	get engine(): Engine {
 		return this._engine;
 	}
@@ -104,7 +102,7 @@ class ScriptDebugger implements DebuggingScriptProcessingUnitDelegate {
 	public show(): void {
 		this._setupDebugger();
 		this._window.onclose = () => this._teardownDebugger();
-		WindowManager.defaultManager.showWindow(this._window);
+		this._windowManager.showWindow(this._window);
 	}
 
 	private _setupDebugger() {
