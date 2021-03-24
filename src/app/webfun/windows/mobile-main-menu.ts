@@ -10,19 +10,20 @@ import { document, window } from "src/std/dom";
 function SoundMenuItem(
 	controller: GameController,
 	name: string,
-	settingsName: "playEffects" | "playMusic"
+	settingsName: "playEffects" | "playMusic",
+	settings: typeof Settings
 ): Partial<MenuItemInit> {
 	return {
 		title: `${name} On`,
 		mnemonic: 0,
 		enabled: () => controller.engine !== null,
-		state: () => (Settings[settingsName] ? +1 : +0),
-		callback: (): void => void (Settings[settingsName] = !Settings[settingsName])
+		state: () => (settings[settingsName] ? +1 : +0),
+		callback: (): void => void (settings[settingsName] = !settings[settingsName])
 	};
 }
 
 class MobileMainMenu extends Menu {
-	constructor(controller: GameController) {
+	constructor(controller: GameController, settings: typeof Settings) {
 		super([
 			{
 				title: "New World",
@@ -75,7 +76,7 @@ class MobileMainMenu extends Menu {
 					{ title: "Games Lost" }
 				]
 			},
-			SoundMenuItem(controller, "Sound", "playEffects"),
+			SoundMenuItem(controller, "Sound", "playEffects", settings),
 
 			Separator,
 			{
@@ -85,21 +86,10 @@ class MobileMainMenu extends Menu {
 			{
 				title: "Report a Bug",
 				mnemonic: 0,
-				callback: () => window.open(Settings.issueTracker)
+				callback: () => window.open(settings.issueTracker)
 			},
 			...(controller.settings.debug ? [buildDebugMenu(controller)] : [])
 		]);
-	}
-
-	private _runModalSessionForWindowComponent(tagName: string) {
-		const window = document.createElement(tagName) as WindowComponent;
-		this._runModalSession(window);
-	}
-
-	private _runModalSession(window: WindowComponent) {
-		const session = new WindowModalSession(window);
-		window.onclose = () => session.end(0);
-		session.run();
 	}
 }
 

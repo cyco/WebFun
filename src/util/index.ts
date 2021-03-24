@@ -5,6 +5,7 @@ import Direction from "./direction";
 import DiscardingOutputStream from "./discarding-output-stream";
 import DiscardingStorage from "./discarding-storage";
 import Event from "./event";
+import PropertyChangeEvent from "./property-change-event";
 import EventTarget from "./event-target";
 import FetchInputStream from "./fetch-input-stream";
 import FileLoader from "./file-loader";
@@ -38,6 +39,7 @@ import downloadImage from "./download-image";
 import identity from "./identity";
 import iterate from "./iterate";
 import persistent from "./persistent";
+import observable from "./observable";
 import polar2xy from "./polar2xy";
 import rad2deg from "./rad2deg";
 import sleep from "./sleep";
@@ -64,7 +66,9 @@ export {
 	PrefixedStorage,
 	QueryString,
 	Range,
+	observable,
 	ReaderStream,
+	PropertyChangeEvent,
 	Rectangle,
 	Scanner,
 	Size,

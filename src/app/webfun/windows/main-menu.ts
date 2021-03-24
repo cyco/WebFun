@@ -18,28 +18,29 @@ import DifficultyWindow from "./difficulty-window";
 import GameController from "../game-controller";
 import GameSpeedWindow from "./game-speed-window";
 import HelpViewer from "./help-viewer";
-import Settings from "src/settings";
 import StatisticsWindow from "./statistics-window";
 import WorldSizeWindow from "./world-size-window";
+import { Settings } from "src";
 
 function SoundMenuItem(
 	controller: GameController,
 	name: string,
-	settingsName: "playEffects" | "playMusic"
+	settingsName: "playEffects" | "playMusic",
+	settings: typeof Settings
 ): Partial<MenuItemInit> {
 	return {
 		title: `${name} On`,
 		mnemonic: 0,
 		enabled: () => controller.engine !== null,
-		state: () => (Settings[settingsName] ? +1 : +0),
-		callback: (): void => void (Settings[settingsName] = !Settings[settingsName])
+		state: () => (settings[settingsName] ? +1 : +0),
+		callback: (): void => void (settings[settingsName] = !settings[settingsName])
 	};
 }
 
 class MainMenu extends Menu {
 	private controller: GameController;
 
-	constructor(controller: GameController) {
+	constructor(controller: GameController, settings: typeof Settings) {
 		super([
 			{
 				title: "File",
@@ -104,8 +105,8 @@ class MainMenu extends Menu {
 						callback: () => this._runModalSessionForWindowComponent(StatisticsWindow.tagName)
 					},
 					Separator,
-					SoundMenuItem(controller, "Music", "playMusic"),
-					SoundMenuItem(controller, "Sound", "playEffects"),
+					SoundMenuItem(controller, "Music", "playMusic", settings),
+					SoundMenuItem(controller, "Sound", "playEffects", settings),
 					Separator,
 					{
 						title: "Pause",
@@ -141,7 +142,7 @@ class MainMenu extends Menu {
 						callback: () => {
 							const helpWindow = document.createElement(HelpViewer.tagName);
 							WindowManager.defaultManager.showWindow(helpWindow);
-							helpWindow.loadHelpFile(Settings.url.yoda.help);
+							helpWindow.loadHelpFile(settings.url.yoda.help);
 						},
 						mnemonic: 0
 					},
@@ -152,7 +153,7 @@ class MainMenu extends Menu {
 					{
 						title: "Report a Bug",
 						mnemonic: 0,
-						callback: () => window.open(Settings.issueTracker)
+						callback: () => window.open(settings.issueTracker)
 					},
 					Separator,
 					{

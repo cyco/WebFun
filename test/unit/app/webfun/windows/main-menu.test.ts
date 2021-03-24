@@ -8,14 +8,15 @@ import {
 	StatisticsWindow,
 	WorldSizeWindow
 } from "src/app/webfun/windows";
-import Settings from "src/settings";
 import { PauseScene } from "src/engine/scenes";
 import { GameState } from "src/engine";
 import { Indy, Yoda } from "src/variant";
+import Settings from "src/settings";
 
 describe("WebFun.App.Windows.MainMenu", () => {
 	let subject: MainMenu;
 	let gameController: GameController;
+	let settings: typeof Settings;
 
 	beforeEach(() => {
 		gameController = {
@@ -30,7 +31,11 @@ describe("WebFun.App.Windows.MainMenu", () => {
 				manager: { showWindow: jasmine.createSpy() }
 			}
 		} as any;
-		subject = new MainMenu(gameController);
+		settings = {
+			addEventListener: jasmine.createSpy(),
+			removeEventListener: jasmine.createSpy()
+		} as any;
+		subject = new MainMenu(gameController, settings);
 	});
 
 	it("is the menu of the main window", () => {
@@ -286,23 +291,23 @@ describe("WebFun.App.Windows.MainMenu", () => {
 
 				describe("when no game is running", () => {
 					beforeEach(() => {
-						Settings.playMusic = true;
+						settings.playMusic = true;
 						(gameController as any).engine = null;
 					});
 
 					it("determines it's state according to the global settings", () => {
-						Settings.playMusic = true;
+						settings.playMusic = true;
 						expect(playMusicItem.state).toBe(MenuItemState.On);
-						Settings.playMusic = false;
+						settings.playMusic = false;
 						expect(playMusicItem.state).toBe(MenuItemState.None);
 					});
 
 					it("just toggles the setting when clicked", () => {
-						Settings.playMusic = true;
+						settings.playMusic = true;
 						playMusicItem.callback();
-						expect(Settings.playMusic).toBeFalse();
+						expect(settings.playMusic).toBeFalse();
 						playMusicItem.callback();
-						expect(Settings.playMusic).toBeTrue();
+						expect(settings.playMusic).toBeTrue();
 					});
 				});
 			});
@@ -395,7 +400,7 @@ describe("WebFun.App.Windows.MainMenu", () => {
 	describe("(when debug is active)", () => {
 		beforeEach(() => {
 			gameController.settings.debug = true;
-			subject = new MainMenu(gameController);
+			subject = new MainMenu(gameController, settings);
 		});
 		describe("-> Debug", () => {
 			let debugItem: MenuItem;
@@ -411,7 +416,7 @@ describe("WebFun.App.Windows.MainMenu", () => {
 		let debugItem: MenuItem;
 		beforeEach(() => {
 			gameController.settings.debug = false;
-			subject = new MainMenu(gameController);
+			subject = new MainMenu(gameController, settings);
 			debugItem = subject.items[4];
 		});
 

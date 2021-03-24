@@ -18,6 +18,7 @@ import {
 	EventTarget,
 	OutputStream,
 	Point,
+	PropertyChangeEvent,
 	Rectangle,
 	Size,
 	srand
@@ -66,7 +67,6 @@ class GameController extends EventTarget implements EventListenerObject {
 	private _eventHandler = new GameEventHandler();
 	private _variant: Variant;
 	private _paths: PathConfiguration;
-	private _strings: { [_: number]: string } = {};
 
 	constructor(variant: Variant, paths: PathConfiguration) {
 		super();
@@ -75,16 +75,28 @@ class GameController extends EventTarget implements EventListenerObject {
 		this._paths = paths;
 
 		this.settings.mobile = !!(SmartPhone(false).isAndroid() || SmartPhone(false).isIPhone());
-		const mainMenuClass = this.settings.mobile ? MobileMainMenu : MainMenu;
-		this._window = (
-			<MainWindow menu={new mainMenuClass(this)} className={this.settings.mobile ? "mobile" : ""} />
-		) as MainWindow;
-
+		this._window = (<MainWindow className={this.settings.mobile ? "mobile" : ""} />) as MainWindow;
+		this.setupMainMenu();
 		if (this.settings.mobile) this._window.classList.add("mobile");
+
+		this.settings.addEventListener(PropertyChangeEvent.type, this);
 	}
 
 	handleEvent(evt: CustomEvent): void {
+		if (
+			evt.type === PropertyChangeEvent.type &&
+			(evt.detail.property === "debug" || evt.detail.property === "mobile")
+		) {
+			this.setupMainMenu();
+			return;
+		}
+
 		this._eventHandler.handleEvent(this.engine, this._sceneView, evt);
+	}
+
+	private setupMainMenu() {
+		const mainMenuClass = this.settings.mobile ? MobileMainMenu : MainMenu;
+		this._window.menu = new mainMenuClass(this, this.settings);
 	}
 
 	private _buildInterface(paths: PathConfiguration): Partial<Interface> {
@@ -270,6 +282,7 @@ class GameController extends EventTarget implements EventListenerObject {
 	public async exit(): Promise<void> {
 		this.teardownEngine();
 		this._window.close();
+		this.settings.removeEventListener("propertyChanged", this);
 	}
 
 	private setupEngine() {
