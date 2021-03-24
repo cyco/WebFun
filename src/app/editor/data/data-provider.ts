@@ -1,13 +1,15 @@
 import { GameData, readGameDataFile, Variant } from "src/engine";
 
 import { FileLoader } from "src/util";
-import Settings from "src/settings";
 import { Indy, Yoda } from "src/variant";
 
 class DataProvider {
 	private url: Map<Variant, string> = new Map<Variant, string>();
 
-	constructor(yodaUrl: string = Settings.url.yoda.data, indyUrl: string = Settings.url.indy.data) {
+	constructor(
+		yodaUrl: string = JSON.parse(process.env["WEBFUN_GAMES"])[0].data,
+		indyUrl: string = JSON.parse(process.env["WEBFUN_GAMES"])[4].data
+	) {
 		this.url.set(Yoda, yodaUrl);
 		this.url.set(Indy, indyUrl);
 	}

@@ -55,7 +55,7 @@ export const Event = {
 	DidLoadData: "didLoadData"
 };
 
-interface PathConfiguration {
+export interface PathConfiguration {
 	data: string;
 	palette: string;
 	sfx: string;

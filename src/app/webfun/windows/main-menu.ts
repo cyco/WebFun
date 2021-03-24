@@ -1,10 +1,4 @@
-import {
-	Menu,
-	MenuItemInit,
-	MenuItemSeparator as Separator,
-	MenuItem,
-	WindowManager
-} from "src/ui";
+import { Menu, MenuItemInit, MenuItemSeparator as Separator, MenuItem } from "src/ui";
 
 import { document, window } from "src/std/dom";
 import { GameState } from "src/engine";
@@ -144,7 +138,7 @@ class MainMenu extends Menu {
 							controller.window.manager.showWindow(helpWindow);
 							helpWindow.loadHelpFile(controller.paths.help);
 						},
-						enabled: () => !!controller.paths.help,
+						enabled: () => controller.paths.help?.length > 0,
 						mnemonic: 0
 					},
 					{

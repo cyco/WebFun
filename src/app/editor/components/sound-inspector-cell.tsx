@@ -98,7 +98,8 @@ class SoundInspectorCell extends Cell<Sound> {
 
 	public togglePlaying(): void {
 		if (!this._sound) {
-			const url = [Settings.url.yoda.sfx, encodeURIComponent(this.data.file)].join("/");
+			const base = JSON.parse(process.env["WEBFUN_GAMES"])[0].sfx;
+			const url = [base, encodeURIComponent(this.data.file)].join("/");
 			this._sound = new Audio(url);
 			this._sound.autoplay = true;
 			this._playButton.classList.remove("fa-play-circle");

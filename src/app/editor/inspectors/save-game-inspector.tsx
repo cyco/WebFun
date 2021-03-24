@@ -70,7 +70,8 @@ class SaveGameInspector extends AbstractInspector {
 	}
 
 	public playSaveGame(): void {
-		const controller = new GameController(Yoda, Settings.url.yoda);
+		const base = JSON.parse(process.env["WEBFUN_GAMES"])[0];
+		const controller = new GameController(Yoda, base);
 		controller.data = this.data.currentData.copy();
 		controller.palette = this.data.palette.slice();
 

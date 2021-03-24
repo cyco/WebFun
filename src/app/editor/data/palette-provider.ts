@@ -2,7 +2,6 @@ import { ColorPalette, Variant } from "src/engine";
 import { Indy, Yoda } from "src/variant";
 
 import { FileLoader } from "src/util";
-import Settings from "src/settings";
 
 const ColorPaletteByteLength = 0x400;
 
@@ -10,8 +9,8 @@ class PaletteProvider {
 	private url: Map<Variant, string> = new Map<Variant, string>();
 
 	constructor(
-		yodaUrl: string = Settings.url.yoda.palette,
-		indyUrl: string = Settings.url.indy.palette
+		yodaUrl: string = JSON.parse(process.env["WEBFUN_GAMES"])[0].palette,
+		indyUrl: string = JSON.parse(process.env["WEBFUN_GAMES"])[4].palette
 	) {
 		this.url.set(Yoda, yodaUrl);
 		this.url.set(Indy, indyUrl);
