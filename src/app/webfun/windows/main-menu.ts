@@ -142,8 +142,9 @@ class MainMenu extends Menu {
 						callback: () => {
 							const helpWindow = document.createElement(HelpViewer.tagName);
 							controller.window.manager.showWindow(helpWindow);
-							helpWindow.loadHelpFile(settings.url.yoda.help);
+							helpWindow.loadHelpFile(controller.paths.help);
 						},
+						enabled: () => !!controller.paths.help,
 						mnemonic: 0
 					},
 					{

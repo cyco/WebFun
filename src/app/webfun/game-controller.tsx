@@ -60,6 +60,7 @@ interface PathConfiguration {
 	palette: string;
 	sfx: string;
 	strings: string;
+	help?: string;
 }
 
 class GameController extends EventTarget implements EventListenerObject {
@@ -71,14 +72,14 @@ class GameController extends EventTarget implements EventListenerObject {
 	private _sceneView: SceneView = (<SceneView />) as SceneView;
 	private _engine: Engine = null;
 	private _eventHandler = new GameEventHandler();
-	private _variant: Variant;
-	private _paths: PathConfiguration;
+	public readonly variant: Variant;
+	public readonly paths: PathConfiguration;
 
 	constructor(variant: Variant, paths: PathConfiguration) {
 		super();
 
-		this._variant = variant;
-		this._paths = paths;
+		this.variant = variant;
+		this.paths = paths;
 
 		this.settings.mobile = !!(SmartPhone(false).isAndroid() || SmartPhone(false).isIPhone());
 		this._window = (<MainWindow className={this.settings.mobile ? "mobile" : ""} />) as MainWindow;
@@ -141,7 +142,7 @@ class GameController extends EventTarget implements EventListenerObject {
 	public async show(windowManager: WindowManager): Promise<void> {
 		windowManager.showWindow(this._window);
 
-		if (this._variant instanceof Indy) this._window.ammo.style.display = "none";
+		if (this.variant instanceof Indy) this._window.ammo.style.display = "none";
 		if (!this._window.x && !this._window.y) {
 			this._window.center();
 		}
@@ -301,7 +302,7 @@ class GameController extends EventTarget implements EventListenerObject {
 	}
 
 	private setupEngine() {
-		const engine: Engine = new Engine(this._variant, this._buildInterface(this._paths));
+		const engine: Engine = new Engine(this.variant, this._buildInterface(this.paths));
 		engine.hero.addEventListener(Hero.Event.HealthDidChange, this);
 
 		if (this.settings.drawDebugStats) {
