@@ -4,8 +4,14 @@ import { Direction } from "src/util";
 import { Monster, Char, Hotspot, Zone, Tile } from "./objects";
 import { MutableHotspot } from "./mutable-objects";
 import AssetManager from "./asset-manager";
+import { Yoda } from "src/variant";
 
 function hitMonster(monster: Monster, weapon: Char, zone: Zone, assets: AssetManager) {
+	if (weapon.id === Yoda.charIDs.TheForce) {
+		monster.cooldown = weapon.damage;
+		return;
+	}
+
 	monster.damageTaken += weapon.damage;
 	if (!monster.alive) {
 		zone.setTile(null, monster.position);
