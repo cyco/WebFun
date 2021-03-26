@@ -41,8 +41,8 @@ describe("WebFun.Engine.Scenes.MapScene", () => {
 				});
 
 				it("disables the keyboard and mouse handlers", () => {
-					expect(() => engine.inputManager.mouseDownHandler({} as any)).not.toThrow();
-					expect(() => engine.inputManager.keyDownHandler({} as any)).not.toThrow();
+					expect(engine.inputManager.mouseDownHandler).toBeNull();
+					expect(engine.inputManager.keyDownHandler).toBeNull();
 				});
 			});
 		});

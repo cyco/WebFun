@@ -78,8 +78,8 @@ class MapScene extends Scene {
 	}
 
 	public willHide(): void {
-		this.engine.inputManager.mouseDownHandler = () => void 0;
-		this.engine.inputManager.keyDownHandler = () => void 0;
+		this.engine.inputManager.mouseDownHandler = null;
+		this.engine.inputManager.keyDownHandler = null;
 		this.engine.inputManager.clear();
 	}
 
