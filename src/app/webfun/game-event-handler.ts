@@ -41,6 +41,7 @@ class GameEventHandler {
 
 				if (!(engine.sceneManager.currentScene instanceof ZoneScene)) {
 					engine.sceneManager.popScene();
+					evt.preventDefault();
 					return;
 				}
 
