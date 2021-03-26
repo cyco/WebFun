@@ -136,7 +136,7 @@ class IndyReader extends Reader {
 
 		const monster = new MutableMonster();
 		monster.face = this._assets.get(Char, characterId, NullIfMissing);
-		monster.position = new Point(x, y);
+		monster.position = new Point(x, y, Zone.Layer.Object);
 		monster.damageTaken = damageTaken;
 
 		return monster;

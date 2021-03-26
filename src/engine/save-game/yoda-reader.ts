@@ -173,7 +173,7 @@ class YodaReader extends Reader {
 		const monster = new MutableMonster();
 		monster.face = this._assets.get(Char, characterId, NullIfMissing);
 		monster.enabled = enabled;
-		monster.position = new Point(x, y);
+		monster.position = new Point(x, y, Zone.Layer.Object);
 		monster.damageTaken = damageTaken;
 		monster.loot = loot;
 		monster.field10 = field10;
