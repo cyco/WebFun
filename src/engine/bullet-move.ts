@@ -95,13 +95,20 @@ export default async (engine: Engine, zone: Zone): Promise<ScriptResult> => {
 
 	const direction = Direction.Confine(hero.direction, false);
 	const weaponHasProjectile = !!hero.weapon.frames[0].left;
-	const targets = weaponHasProjectile
+	const targets = (weaponHasProjectile
 		? [hero.location.byAdding(Direction.CalculateRelativeCoordinates(direction, frames + 1))]
 		: [
 				hero.location.byAdding(Direction.CalculateRelativeCoordinates(direction, 1)),
 				hero.location.byAdding(Direction.CalculateRelativeCoordinates(direction - 45, 1)),
 				hero.location.byAdding(Direction.CalculateRelativeCoordinates(direction + 50, 1))
-		  ];
+		  ]
+	).filter(p => zone.bounds.contains(p));
+
+	if (targets.length === 0) {
+		hero.isAttacking = false;
+		hero._actionFrames = 0;
+		return ScriptResult.Done;
+	}
 
 	const hitMonsters = zone.monsters.filter(
 		({ position, alive, enabled }) =>

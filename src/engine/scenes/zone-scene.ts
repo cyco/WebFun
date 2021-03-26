@@ -104,7 +104,11 @@ class ZoneScene extends Scene {
 
 	public render(renderer: Renderer): void {
 		const bulletTiles: Sprite[] = [];
-		const hero = this.engine.hero;
+		const zone = this.zone;
+		const engine = this.engine;
+		const hero = engine.hero;
+		const palette = engine.palette;
+
 		if (hero.isAttacking && hero.weapon) {
 			let tile = this._extensionTileForBullet();
 			if (tile) {
@@ -120,7 +124,7 @@ class ZoneScene extends Scene {
 				const direction = Direction.Confine(hero.direction, false);
 				const rel = Direction.CalculateRelativeCoordinates(direction, hero._actionFrames + 1);
 				const position = hero.location.byAdding(rel);
-				const object = this.zone.getTile(position);
+				const object = zone.getTile(position);
 				if (!object || object.isOpaque()) {
 					const sprite = new Sprite(position, new Size(Tile.WIDTH, Tile.HEIGHT), tile.imageData);
 					bulletTiles.push(sprite);
@@ -128,8 +132,8 @@ class ZoneScene extends Scene {
 			}
 		}
 
-		this._renderer.render(this._zone, this.engine, renderer, this.engine.palette.current, [
-			...bulletTiles,
+		this._renderer.render(zone, engine, renderer, palette.current, [
+			...bulletTiles.filter(b => zone.bounds.contains(b.position)),
 			...this.sprites
 		]);
 	}

@@ -39,7 +39,7 @@ class Rectangle {
 
 	contains(point: Point): boolean {
 		return (
-			point.x >= this.minX && point.x < this.maxX && point.y >= this.minY && point.y < this.maxY
+			this.minX <= point.x && point.x < this.maxX && this.minY <= point.y && point.y < this.maxY
 		);
 	}
 }
