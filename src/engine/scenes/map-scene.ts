@@ -80,7 +80,6 @@ class MapScene extends Scene {
 	public willHide(): void {
 		this.engine.inputManager.mouseDownHandler = null;
 		this.engine.inputManager.keyDownHandler = null;
-		this.engine.inputManager.clear();
 	}
 
 	async update(ticks: number): Promise<void> {
@@ -272,6 +271,7 @@ class MapScene extends Scene {
 	}
 
 	protected exitScene(): void {
+		this.engine.inputManager.clear();
 		this.engine.sceneManager.popScene();
 	}
 

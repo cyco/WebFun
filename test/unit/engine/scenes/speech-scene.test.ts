@@ -46,7 +46,7 @@ describe("WebFun.Engine.Scenes.SpeechScene", () => {
 		});
 
 		it("clears the current mouse handler", () => {
-			expect(() => subject.engine.inputManager.mouseDownHandler(null)).not.toThrow();
+			expect(subject.engine.inputManager.mouseDownHandler).toBeNull();
 		});
 
 		afterEach(() => {
@@ -67,7 +67,7 @@ describe("WebFun.Engine.Scenes.SpeechScene", () => {
 				}
 			},
 			showText: jasmine.createSpy(),
-			inputManager: { readInput: jasmine.createSpy() },
+			inputManager: { readInput: jasmine.createSpy(), clear() {} },
 			sceneManager: {
 				popScene: jasmine.createSpy()
 			},

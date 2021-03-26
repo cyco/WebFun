@@ -4,7 +4,6 @@ import Engine from "../engine";
 import Scene from "./scene";
 import { Tile } from "src/engine/objects";
 import Sector from "src/engine/sector";
-import { InputMask } from "../input";
 
 class SpeechScene extends Scene {
 	public engine: Engine;
@@ -22,7 +21,7 @@ class SpeechScene extends Scene {
 	render(): void {}
 
 	public willShow(): void {
-		this.engine.inputManager.mouseDownHandler = (_: Point): void => null;
+		this.engine.inputManager.mouseDownHandler = null;
 
 		const anchor = Point.add(this.location, this.cameraOffset);
 		const sector = this.engine.currentSector;
@@ -41,14 +40,11 @@ class SpeechScene extends Scene {
 		return text;
 	}
 
-	async update(ticks: number): Promise<void> {
-		const input = this.engine.inputManager.readInput(ticks);
-		if (input & InputMask.EndDialog) {
-		}
-	}
+	async update(_: number): Promise<void> {}
 
 	public willHide(): void {
-		this.engine.inputManager.mouseDownHandler = () => void 0;
+		this.engine.inputManager.mouseDownHandler = null;
+		this.engine.inputManager.clear();
 	}
 
 	isOpaque(): boolean {

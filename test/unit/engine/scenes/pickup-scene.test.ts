@@ -52,6 +52,7 @@ describe("WebFun.Engine.Scenes.PickupScene", () => {
 		const engine: Engine = ({
 			camera: { offset: {} },
 			inputManager: {
+				clear() {},
 				readInput() {
 					return InputMask.None;
 				}
@@ -90,6 +91,7 @@ describe("WebFun.Engine.Scenes.PickupScene", () => {
 		const engine = ({
 			camera: { offset: { x: -2, y: -1 } },
 			inputManager: {
+				clear() {},
 				readInput() {
 					return InputMask.None;
 				}
