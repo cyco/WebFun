@@ -12,6 +12,8 @@ function hitMonster(monster: Monster, weapon: Char, zone: Zone, assets: AssetMan
 		return;
 	}
 
+	if (monster.face?.health < 0) return;
+
 	monster.damageTaken += weapon.damage;
 	if (!monster.alive) {
 		zone.setTile(null, monster.position);
