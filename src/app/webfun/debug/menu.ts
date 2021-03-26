@@ -1,4 +1,4 @@
-import { MenuItemInit, MenuItemSeparator, MenuItemState, WindowManager } from "src/ui";
+import { MenuItemInit, MenuItemSeparator, MenuItemState} from "src/ui";
 
 import GameController from "src/app/webfun/game-controller";
 import Settings from "src/settings";

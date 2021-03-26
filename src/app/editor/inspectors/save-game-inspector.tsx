@@ -12,7 +12,6 @@ import { Writer } from "src/engine/save-game";
 import { AssetManager } from "src/engine";
 import { Zone, Puzzle, Tile, Sound, Char } from "src/engine/objects";
 import { Yoda } from "src/variant";
-import Settings from "src/settings";
 import { WorldSize } from "src/engine/generation";
 import ServiceContainer from "../service-container";
 

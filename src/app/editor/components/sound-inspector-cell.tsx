@@ -1,6 +1,5 @@
 import "./sound-inspector-cell.scss";
 
-import Settings from "../../../settings";
 import { Cell, Label } from "src/ui/components";
 import { encodeURIComponent } from "src/std";
 

@@ -2,10 +2,8 @@ import { Menu, MenuItemInit, MenuItemSeparator as Separator } from "src/ui";
 
 import GameController from "../game-controller";
 import Settings from "src/settings";
-import { Window as WindowComponent } from "src/ui/components";
-import { WindowModalSession } from "src/ux";
 import buildDebugMenu from "src/app/webfun/debug/menu";
-import { document, window } from "src/std/dom";
+import {  window } from "src/std/dom";
 
 function SoundMenuItem(
 	controller: GameController,

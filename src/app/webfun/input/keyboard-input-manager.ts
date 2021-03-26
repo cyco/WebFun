@@ -2,8 +2,6 @@ import { Tile } from "src/engine/objects";
 import { Engine } from "src/engine";
 import { Point } from "src/util";
 import { Direction, InputMask, InputManager } from "src/engine/input";
-import { CurrentStatusInfo } from "src/app/webfun/ui";
-import { WindowManager } from "src/ui";
 
 class KeyboardInputManager implements InputManager {
 	public mouseDownHandler: (_: Point) => void;

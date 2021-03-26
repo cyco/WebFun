@@ -272,7 +272,7 @@ class Engine extends EventTarget {
 		return this._gameState;
 	}
 
-	public teardown() {
+	public teardown(): void {
 		this.inputManager.mouseDownHandler = null;
 		this.inputManager.keyDownHandler = null;
 		this.inputManager.removeListeners();
