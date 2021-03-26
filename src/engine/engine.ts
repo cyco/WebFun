@@ -58,7 +58,7 @@ class Engine extends EventTarget {
 	private _gameState: GameState = GameState.Stopped;
 	private _currentSector: Sector;
 	public currentPlayStart: Date = new Date();
-	public totalPlayTime: number;
+	public totalPlayTime: number = 0;
 	public bumpedLocation: Point;
 
 	constructor(type: Variant, ifce: Partial<Interface> = {}) {
