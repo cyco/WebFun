@@ -50,6 +50,10 @@ import Logger from "./logger";
 import { EvaluationMode } from "src/engine/script";
 import { SpeechBubble } from "src/ui/components";
 import Indy from "src/variant/indy/indy";
+import { WorldSize } from "src/engine/generation";
+import MutableStory from "../editor/mutable-story";
+import { NullIfMissing } from "src/engine/asset-manager";
+import { Yoda } from "src/variant";
 
 export const Event = {
 	DidLoadData: "didLoadData"
@@ -267,6 +271,44 @@ class GameController extends EventTarget implements EventListenerObject {
 		const assets = new AssetManager();
 		this.populateAssetManager(assets);
 		const state = read(assets);
+		// TODO: asset state matches engines variant
+
+		const engine = this.engine;
+
+		const story = new MutableStory(state.seed, state.planet, WorldSize.Medium);
+		story.goal = assets.get(Puzzle, state.goalPuzzle);
+		story.world = state.world;
+		story.dagobah = state.dagobah;
+		story.puzzles = [
+			state.puzzleIDs1.mapArray(id => assets.get(Puzzle, id)),
+			state.puzzleIDs2.mapArray(id => assets.get(Puzzle, id))
+		];
+
+		engine.story = story;
+		engine.currentZone = assets.get(Zone, state.currentZoneID);
+		engine.currentWorld = state.onDagobah ? engine.dagobah : engine.world;
+		// TODO: engine.currentSector = engine.currentWorld.at(state.positionOnWorld);
+
+		engine.inventory.removeAllItems();
+		state.inventoryIDs.forEach(id => engine.inventory.addItem(assets.get(Tile, id)));
+		engine.hero.location = state.positionOnZone;
+		engine.hero.weapon = assets.get(Char, state.currentWeapon, NullIfMissing);
+		engine.hero.setAmmoForWeapon(assets.get(Char, Yoda.charIDs.TheForce), state.forceAmmo);
+		engine.hero.setAmmoForWeapon(assets.get(Char, Yoda.charIDs.Blaster), state.blasterAmmo);
+		engine.hero.setAmmoForWeapon(
+			assets.get(Char, Yoda.charIDs.BlasterRifle),
+			state.blasterRifleAmmo
+		);
+		engine.hero.ammo = state.currentAmmo;
+		engine.hero.health = Hero.ConvertDamageToHealth(state.damageTaken, state.livesLost);
+
+		engine.totalPlayTime = state.timeElapsed;
+		engine.currentPlayStart = new Date();
+
+		// TODO: handle world size
+		// TODO: handle unknownCount
+		// TODO: handle unknownSum
+		this._showSceneView(engine.currentZone);
 	}
 
 	private async pickSaveGame(file: File = null) {

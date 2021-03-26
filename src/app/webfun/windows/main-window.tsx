@@ -216,8 +216,8 @@ class MainWindow extends AbstractWindow {
 		const engine = this._engine;
 
 		this.inventory.inventory = engine ? engine.inventory : null;
-		this.ammo.ammo = engine ? engine.hero.ammo : 0;
 		this.weapon.weapon = engine ? engine.hero.weapon : null;
+		this._updateAmmo();
 		this._updateHealth();
 		this._updateLocation({});
 	}
@@ -227,10 +227,10 @@ class MainWindow extends AbstractWindow {
 	}
 
 	private _updateAmmo() {
-		const weapon = this.engine.hero.weapon;
-		const current = this.engine.hero.ammo;
-		const max = this.engine.variant.getMaxAmmo(weapon);
-		this.ammo.ammo = weapon ? current / max : 0;
+		const weapon = this.engine?.hero.weapon;
+		const current = this.engine?.hero.ammo;
+		const max = this.engine?.variant.getMaxAmmo(weapon);
+		this.ammo.ammo = weapon ? current / max : 0xff;
 	}
 
 	private _updateWeapon() {

@@ -132,6 +132,13 @@ class Hero extends EventTarget {
 		return this._ammoByWeapon.has(weapon) ? this._ammoByWeapon.get(weapon) : 0;
 	}
 
+	public setAmmoForWeapon(weapon: Char, ammo: number): void {
+		this._ammoByWeapon.set(weapon, ammo);
+		if (weapon === this.weapon) {
+			this._ammo = ammo;
+		}
+	}
+
 	update(ticks: number): void {
 		if (this.isWalking || this.isAttacking) this._actionFrames += ticks;
 		else this._actionFrames = 0;

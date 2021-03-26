@@ -3,7 +3,7 @@ import { Menu, MenuItemInit, MenuItemSeparator as Separator } from "src/ui";
 import GameController from "../game-controller";
 import Settings from "src/settings";
 import buildDebugMenu from "src/app/webfun/debug/menu";
-import {  window } from "src/std/dom";
+import { window } from "src/std/dom";
 
 function SoundMenuItem(
 	controller: GameController,
