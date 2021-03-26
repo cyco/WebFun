@@ -1,3 +1,5 @@
+import "./app.scss";
+
 import { Settings } from "src";
 import { Indy, IndyDemo, Yoda, YodaDemo } from "src/variant";
 import { Variant } from "src/engine";
@@ -22,7 +24,7 @@ class App {
 		this.endPreload();
 		this.setupSaveGameFileHandler();
 		this.setupTestFileHandler();
-		this.createLinks();
+		this.createDebugGameLinks();
 		this.ensureAddressbarCanBeHidden();
 	}
 
@@ -53,7 +55,21 @@ class App {
 		loadFile.default(this.defaultGameController)(file);
 	}
 
-	private createLinks(): void {
+	private createDebugGameLinks(): void {
+		const games = this.loadGamesFromEnvironment();
+		if (!games.length) return;
+
+		const container = <div className="sources" />;
+		games.forEach(([name, type, urls]) => {
+			container.appendChild(
+				<a onclick={() => this.load(type, urls).then(c => c.newStory())}>{name} </a>
+			);
+			container.appendChild(<br></br>);
+		});
+		this.root.appendChild(container);
+	}
+
+	private loadGamesFromEnvironment(): [string, Variant, PathConfiguration][] {
 		const games: [string, Variant, PathConfiguration][] = [];
 		for (const config of JSON.parse(process.env["WEBFUN_GAMES"])) {
 			games.push([
@@ -69,14 +85,7 @@ class App {
 			]);
 		}
 
-		games.forEach(([name, type, urls]) => {
-			this.root.appendChild(
-				<a onclick={() => this.load(type, urls).then(c => c.newStory())}>
-					Load <i>{name}</i>
-				</a>
-			);
-			this.root.appendChild(<br></br>);
-		});
+		return games;
 	}
 
 	private resolveVariantFromEnvironment(name: string): Variant {

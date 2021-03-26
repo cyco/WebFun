@@ -24,7 +24,7 @@ const main = async () => {
 	ComponentRegistry.sharedRegistry.registerComponents(AppComponents);
 	ComponentRegistry.sharedRegistry.registerComponents(WindowComponents as any);
 
-	const container = document.getElementById("webfun");
+	const container = document.querySelector("wf-app") as HTMLElement;
 	const app = new App(container);
 	app.run();
 

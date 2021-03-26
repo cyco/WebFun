@@ -1,0 +1,37 @@
+wf-app {
+	width: 100vw;
+	min-height: 371px;
+	z-index: 1000;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	box-sizing: border-box;
+
+	> .sources {
+		border-radius: 2px;
+		padding: 20px;
+		background: white;
+		box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+
+		&::before {
+			content: "Games";
+			font-size: 1.6em;
+			display: block;
+			margin-bottom: 1.2em;
+			font-weight: bold;
+			text-align: center;
+		}
+
+		a {
+			line-height: 32px;
+			font-style: italic;
+			cursor: pointer;
+
+			&::before {
+				content: "Launch  ";
+				font-style: normal;
+			}
+		}
+	}
+}
