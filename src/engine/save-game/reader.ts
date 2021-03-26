@@ -156,7 +156,7 @@ abstract class Reader {
 		console.assert(count >= 0);
 
 		for (const action of zone.actions) {
-			action.enabled = this.readBool(stream);
+			action.enabled = !this.readBool(stream);
 		}
 
 		for (let i = zone.actions.length; i < count; i++) {
