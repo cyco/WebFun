@@ -372,6 +372,8 @@ class GameController extends EventTarget implements EventListenerObject {
 		this._engine = null;
 		this.data = null;
 
+		this._sceneView.manager.clear();
+
 		if ((window as any).engine === this._engine) (window as any).engine = null;
 	}
 
