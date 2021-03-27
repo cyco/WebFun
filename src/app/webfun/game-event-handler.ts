@@ -34,7 +34,7 @@ class GameEventHandler {
 				return;
 			}
 			case InventoryComponent.Events.ItemActivated: {
-				if (engine.gameState !== GameState.Running) {
+				if (engine.gameState !== GameState.Running && engine.gameState !== GameState.Won) {
 					evt.preventDefault();
 					return;
 				}
@@ -58,7 +58,7 @@ class GameEventHandler {
 			}
 
 			case InventoryComponent.Events.ItemPlaced: {
-				if (engine.gameState !== GameState.Running) {
+				if (engine.gameState !== GameState.Running && engine.gameState !== GameState.Won) {
 					evt.preventDefault();
 					return;
 				}
