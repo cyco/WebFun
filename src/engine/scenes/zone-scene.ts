@@ -218,6 +218,10 @@ class ZoneScene extends Scene {
 		this.camera.hero = this.engine.hero;
 	}
 
+	public didShow(): void {
+		this.prepareCamera();
+	}
+
 	private async handleInput(ticks: number): Promise<boolean> {
 		const engine = this.engine;
 		const inputManager = engine.inputManager;
