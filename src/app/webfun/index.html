@@ -1,34 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-	<title>WebFun</title>
-	<meta charset="UTF-8">
-	<meta viewport="width=device-width, user-scalable=no, viewport-fit=cover" />
-	<meta apple-mobile-web-app-capable="yes" />
-	<link rel="mask-icon" href="assets/icon/safari-pinned-tab.svg" color="#5bbad5" />
-	<link rel="apple-touch-icon" href="assets/icon/apple-touch-icon.png" />
-	<link rel="icon" type="image/png" sizes="32x32" href="assets/icon/favicon-32x32.png" />
-	<link rel="icon" type="image/png" sizes="16x16" href="assets/icon/favicon-16x16.png" />
-	<link rel="manifest" href="assets/webfun.webmanifest">
-	<style>
-	body > article {
-		background: white;
-		border-top: 1px solid black;
-		padding: 20px;
-	}
-
-	body > article > * {
-			max-width: 800px;
-			margin: auto;
-
-	}
-	</style>
-</head>
-
-<body>
-	<wf-app id="webfun" class="preload" style="height: 90vh">
+	<head>
+		<title>WebFun</title>
+		<meta charset="UTF-8">
+		<meta viewport="width=device-width, user-scalable=no, viewport-fit=cover" />
+		<meta apple-mobile-web-app-capable="yes" />
+		<link rel="mask-icon" href="assets/icon/safari-pinned-tab.svg" color="#5bbad5" />
+		<link rel="apple-touch-icon" href="assets/icon/apple-touch-icon.png" />
+		<link rel="icon" type="image/png" sizes="32x32" href="assets/icon/favicon-32x32.png" />
+		<link rel="icon" type="image/png" sizes="16x16" href="assets/icon/favicon-16x16.png" />
+		<link rel="manifest" href="assets/webfun.webmanifest">
 		<style>
+		body > main {
+			background: white;
+			border-top: 1px solid black;
+			padding: 20px;
+		}
+
+		body > main  > article {
+			max-width: 750px;
+			margin: auto;
+			font-size: 1.2em;
+		}
+
+		body > article > * {
+		}
+
+		body > main  > article > h1 {
+			display: block;
+			font-size: 2em;
+			margin-block-start: 0.67em;
+			margin-block-end: 0.67em;
+			margin-inline-start: 0px;
+			margin-inline-end: 0px;
+			font-weight: bold;
+		}
+
+		body  > main > article > h2 {
+			display: block;
+			font-size: 1.5em;
+			margin-block-start: 0.83em;
+			margin-block-end: 0.83em;
+			margin-inline-start: 0px;
+			margin-inline-end: 0px;
+			font-weight: bold;
+		}
+
+		body  > main > article > p {
+			display: block;
+			margin-block-start: 1em;
+			margin-block-end: 1em;
+			margin-inline-start: 0px;
+			margin-inline-end: 0px;
+
+			line-height: 1.45em;
+		}
+
+		.switch {
+			position: relative;
+			display: inline-block;
+			width: 40px;
+			height: 20px;
+			line-height: 19px;
+		}
+
+		.switch input {
+			opacity: 0;
+			width: 0;
+			height: 0;
+		}
+
+		.switch span {
+			position: absolute;
+			cursor: pointer;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background-color: #ccc;
+			transition: .25s;
+			border-radius: 34px;
+		}
+
+		.switch span:before {
+			position: absolute;
+			content: "";
+			height: 18px;
+			width: 18px;
+			left: 1px;
+			bottom: 1px;
+			background-color: white;
+			transition: .25s;
+			border-radius: 50%;
+		}
+
+		.switch input:checked + span {
+			background-color: #2196F3;
+		}
+
+		.switch input:focus + span {
+			box-shadow: 0 0 1px #2196F3;
+		}
+
+		.switch input:checked + span:before {
+			transform: translateX(20px);
+		}
+		</style>
+	</head>
+
+	<body onload="articleMain()">
+		<wf-app class="preload" style="height: 90vh">
+			<style>
 			body {
 				margin: 0;
 				padding: 0
@@ -59,10 +141,7 @@
 				min-height: 150px;
 				border: 16px solid #444;
 				border-top: 16px solid #363636;
-				border-radius: 50%
-			}
-
-			#webfun-preload-spinner {
+				border-radius: 50%;
 				animation: spin 2s linear infinite;
 				z-index: 1001
 			}
@@ -92,67 +171,71 @@
 					transform: rotate(360deg)
 				}
 			}
-		</style>
-		<div id="webfun-preload-spinner"></div>
-		<div id="webfun-preload-text">LOADING</div>
-	</wf-app>
-	<article>
-		<h1>Tempus Iaculis Urna Id</h1>
-		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-		ut labore et dolore magna aliqua. Est ante in nibh mauris. Neque laoreet suspendisse
-		interdum consectetur libero id. Massa vitae tortor condimentum lacinia quis vel eros donec
-		ac. Cum sociis natoque penatibus et magnis dis. Diam maecenas sed enim ut sem viverra. Eu
-		non diam phasellus vestibulum lorem sed risus. Id nibh tortor id aliquet lectus proin.
-		Fringilla urna porttitor rhoncus dolor. Sit amet mauris commodo quis imperdiet massa
-		tincidunt nunc. Faucibus a pellentesque sit amet porttitor. Auctor eu augue ut lectus.
-		Aliquam vestibulum morbi blandit cursus risus. Turpis massa tincidunt dui ut ornare.
-		Facilisi nullam vehicula ipsum a arcu cursus vitae congue mauris. Consequat id porta nibh
-		venenatis cras sed felis eget. Tempus urna et pharetra pharetra massa massa. Proin libero
-		nunc consequat interdum.</p>
-		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-		ut labore et dolore magna aliqua. Rutrum tellus pellentesque eu tincidunt tortor aliquam
-		nulla facilisi. Tortor pretium viverra suspendisse potenti nullam. Urna duis convallis
-		convallis tellus id interdum velit. Blandit massa enim nec dui. Massa tincidunt nunc
-		pulvinar sapien et ligula. Enim praesent elementum facilisis leo vel fringilla. Et malesuada
-		fames ac turpis egestas. In metus vulputate eu scelerisque felis imperdiet proin fermentum
-		leo. Mattis pellentesque id nibh tortor id aliquet lectus. Tristique senectus et netus et.
-		Eu volutpat odio facilisis mauris sit amet massa vitae.</p>
-		<h2>Tempus Iaculis Urna Id</h2>
-		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-		ut labore et dolore magna aliqua. Est ante in nibh mauris. Neque laoreet suspendisse
-		interdum consectetur libero id. Massa vitae tortor condimentum lacinia quis vel eros donec
-		ac. Cum sociis natoque penatibus et magnis dis. Diam maecenas sed enim ut sem viverra. Eu
-		non diam phasellus vestibulum lorem sed risus. Id nibh tortor id aliquet lectus proin.
-		Fringilla urna porttitor rhoncus dolor. Sit amet mauris commodo quis imperdiet massa
-		tincidunt nunc. Faucibus a pellentesque sit amet porttitor. Auctor eu augue ut lectus.
-		Aliquam vestibulum morbi blandit cursus risus. Turpis massa tincidunt dui ut ornare.
-		Facilisi nullam vehicula ipsum a arcu cursus vitae congue mauris. Consequat id porta nibh
-		venenatis cras sed felis eget. Tempus urna et pharetra pharetra massa massa. Proin libero
-		nunc consequat interdum.</p>
-		<h2>Tempus Iaculis Urna Id</h2>
-		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-		ut labore et dolore magna aliqua. Est ante in nibh mauris. Neque laoreet suspendisse
-		interdum consectetur libero id. Massa vitae tortor condimentum lacinia quis vel eros donec
-		ac. Cum sociis natoque penatibus et magnis dis. Diam maecenas sed enim ut sem viverra. Eu
-		non diam phasellus vestibulum lorem sed risus. Id nibh tortor id aliquet lectus proin.
-		Fringilla urna porttitor rhoncus dolor. Sit amet mauris commodo quis imperdiet massa
-		tincidunt nunc. Faucibus a pellentesque sit amet porttitor. Auctor eu augue ut lectus.
-		Aliquam vestibulum morbi blandit cursus risus. Turpis massa tincidunt dui ut ornare.
-		Facilisi nullam vehicula ipsum a arcu cursus vitae congue mauris. Consequat id porta nibh
-		venenatis cras sed felis eget. Tempus urna et pharetra pharetra massa massa. Proin libero
-		nunc consequat interdum.</p>
-		<h2>Tempus Iaculis Urna Id</h2>
-		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-		ut labore et dolore magna aliqua. Est ante in nibh mauris. Neque laoreet suspendisse
-		interdum consectetur libero id. Massa vitae tortor condimentum lacinia quis vel eros donec
-		ac. Cum sociis natoque penatibus et magnis dis. Diam maecenas sed enim ut sem viverra. Eu
-		non diam phasellus vestibulum lorem sed risus. Id nibh tortor id aliquet lectus proin.
-		Fringilla urna porttitor rhoncus dolor. Sit amet mauris commodo quis imperdiet massa
-		tincidunt nunc. Faucibus a pellentesque sit amet porttitor. Auctor eu augue ut lectus.
-		Aliquam vestibulum morbi blandit cursus risus. Turpis massa tincidunt dui ut ornare.
-		Facilisi nullam vehicula ipsum a arcu cursus vitae congue mauris. Consequat id porta nibh
-		venenatis cras sed felis eget. Tempus urna et pharetra pharetra massa massa. Proin libero
-		nunc consequat interdum.</p>
-	</article>
-</body>
+			</style>
+			<div id="webfun-preload-spinner"></div>
+			<div id="webfun-preload-text">LOADING</div>
+		</wf-app>
+		<main>
+			<article>
+				<h1>What is WebFun?</h1>
+				<p>WebFun is an open source re-implementation of the game engine powering <em>Yoda
+					Stories</em> and <em>Indiana Jones and his Desktop Adventures</em>. That means you can
+				use it to play these games right here in your browser! (Well, at the moment only <em>Yoda
+					Stories</em> is actually playable.)</p>
+
+				<p>If you're feeling extra adventurous you can enable debug mode (<label class="switch"><input
+					type="checkbox" id="toggle-debug"/><span></span></label>) and check out some advanced features.
+					There's a script debugger, asset editor, save game inspector and more to
+					discover from the debug menu.</p>
+
+				<h3>What's with the silly name?</h3>
+				<p>Some strings within the original binaries suggest that <em>DeskFun</em> was the project
+				name used internally at LucasArts. Since this implementation runs on the web instead of a
+				Windows desktop the name <em>WebFun</em> was born.</p>
+
+				<h1>Get involved!</h1>
+				<p>The main	source code repository is hosted at GitHub <a href="https://github.com/cyco/WebFun">https://github.com/cyco/WebFun</a>.
+					If you're interested in more technical aspects of the game engine you can take a look at the documentation <a href="./docs/">here</a>.
+				</p>
+
+				<h1>Related Projects</h1>
+				<p>There are a number of related projects.</p>
+				<ul>
+					<li><a
+							href="https://github.com/shinyquagsire23/DesktopAdventures">https://github.com/shinyquagsire23/DesktopAdventures</a>
+						- reimplementation in c</li>
+					<li><a
+							href="https://github.com/IceReaper/DesktopAdventuresToolkit">https://github.com/IceReaper/DesktopAdventuresToolkit</a>
+						- packer / unpacker for game files</li>
+					<li><a
+							href="https://github.com/digitall/scummvm-deskadv">https://github.com/digitall/scummvm-deskadv</a>
+						- reimplementation for use in ScummVM</li>
+					<li><a
+								href="https://github.com/cyco/deskfun-preview.git">https://github.com/cyco/deskfun-preview.git</a>
+						- QuickLook generator to show save game previews right in macOS Finder</li>
+				</ul>
+
+				<h1>Disclaimer</h1>
+				<p><em>WebFun</em> is not in any way affiliated with LucasArts or Disney. It is
+				merely a <em>player</em> for the original game files, which must
+				either be provided by the user or downloaded from <a
+																		  href="https://archive.org">archive.org</a>.</p>
+				<script>
+					function articleMain() {
+						var selector = document.getElementById("toggle-debug");
+						selector.onchange = function() {
+							if(window.WebFun?.Settings) {
+								window.WebFun.Settings.debug = selector.checked;
+							} else {
+								localStorage.setItem("settings.debug", JSON.stringify(selector.checked));
+							}
+						};
+						try {
+							selector.checked = JSON.parse(localStorage.getItem("settings.debug"));
+						} catch(e) {}
+					}
+				</script>
+			</article>
+		</main>
+	</body>
 </html>
