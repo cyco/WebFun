@@ -17,7 +17,7 @@ const main = async () => {
 	}
 
 	// Setup custom elements
-	window.WebFun = window.WebFun || { JSX: null };
+	window.WebFun = window.WebFun || { JSX: null, Settings };
 	window.WebFun.JSX = new ComponentJSXRenderer();
 
 	ComponentRegistry.sharedRegistry.registerComponents(Components);

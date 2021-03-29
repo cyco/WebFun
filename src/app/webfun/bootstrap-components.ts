@@ -7,7 +7,7 @@ import * as UIComponents from "src/ui/components";
 
 declare global {
 	interface Window {
-		WebFun: { JSX: ComponentJSXRenderer };
+		WebFun: { JSX: ComponentJSXRenderer; Settings: object };
 	}
 }
 type Components<Entry> = Extract<
