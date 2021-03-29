@@ -115,7 +115,7 @@ module.exports = {
 					to: "assets/icon/[name][ext]"
 				},
 				{
-					from: "assets/game-data/*.{data,pal,hlp}",
+					from: "assets/game-data/*.{data,pal,hlp,json}",
 					to: "data/[name][ext]",
 					noErrorOnMissing: true
 				},
