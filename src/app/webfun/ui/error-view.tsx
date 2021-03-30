@@ -23,12 +23,13 @@ class ErrorView extends Component {
 		this.textContent = "";
 		if (!this._error) return;
 
-		this.appendChild(<h1>Oh, no!</h1>);
+		const container = <div></div>;
+		container.appendChild(<h1>Oh, no!</h1>);
 
 		if (this._error instanceof WorldGenerationError) {
 			const { seed, planet, size } = this._error;
-			this.appendChild(<h2>Something went wrong while generating the new world.</h2>);
-			this.appendChild(
+			container.appendChild(<h2>Something went wrong while generating the new world.</h2>);
+			container.appendChild(
 				<div>
 					<label>Details</label>
 					<div>
@@ -39,21 +40,24 @@ class ErrorView extends Component {
 					</div>
 				</div>
 			);
+			this.appendChild(container);
 			return;
 		}
 
 		if (this._error instanceof FileFormatParseError) {
-			this.appendChild(<h2>Something went wrong while reading the game file..</h2>);
+			container.appendChild(<h2>Something went wrong while reading the game file..</h2>);
+			this.appendChild(container);
 			return;
 		}
 
-		this.appendChild(<h2>An unknown error occured</h2>);
-		this.appendChild(
+		container.appendChild(<h2>An unknown error occured</h2>);
+		container.appendChild(
 			<div>
 				<label>Details</label>
 				<div>{this._error.message ?? this._error}</div>
 			</div>
 		);
+		this.appendChild(container);
 	}
 
 	set error(error: Error | ErrorEvent | CustomEvent) {
