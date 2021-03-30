@@ -78,10 +78,6 @@ class MobileMainMenu extends Menu {
 
 			Separator,
 			{
-				title: "How to Play",
-				mnemonic: 0
-			},
-			{
 				title: "Report a Bug",
 				mnemonic: 0,
 				callback: () => window.open(settings.issueTracker)
