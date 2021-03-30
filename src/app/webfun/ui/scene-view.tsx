@@ -1,6 +1,6 @@
 import "./scene-view.scss";
 
-import { rgb } from "src/util";
+import { rgb, Size } from "src/util";
 import Component from "src/ui/component";
 import { SceneManager } from "src/engine";
 
@@ -13,6 +13,12 @@ class SceneView extends Component {
 
 	protected connectedCallback(): void {
 		this.appendChild(this.canvas);
+	}
+
+	get effectiveTileSize(): Size {
+		const { width, height } = this.getBoundingClientRect();
+
+		return new Size(width / 9, height / 9);
 	}
 
 	get manager(): SceneManager {

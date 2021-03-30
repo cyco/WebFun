@@ -96,7 +96,7 @@ class GameEventHandler {
 					const { left, top } = sceneView.getBoundingClientRect();
 					const pointInView = location
 						.bySubtracting(left, top)
-						.dividedBy(new Size(Tile.WIDTH, Tile.HEIGHT))
+						.dividedBy(sceneView.effectiveTileSize)
 						.byFlooring();
 
 					if (!new Rectangle(new Point(0, 0), new Size(9, 9)).contains(pointInView)) {

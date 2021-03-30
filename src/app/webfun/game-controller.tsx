@@ -159,7 +159,7 @@ class GameController extends EventTarget implements EventListenerObject {
 		return new Promise<void>(resolve => {
 			const isMap = !!this.engine.sceneManager.stack.find(scene => scene instanceof MapScene);
 			const offset = isMap ? new Point(4, 4) : new Point(0, 0);
-			const tileSize = isMap ? new Size(28, 28) : new Size(Tile.WIDTH, Tile.HEIGHT);
+			const tileSize = this._sceneView.effectiveTileSize.scaleBy(isMap ? 9 / 10 : 1);
 			const maxSize = isMap ? new Size(10, 10) : new Size(9, 9);
 
 			const modalSession = new ModalSession();
