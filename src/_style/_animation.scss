@@ -15,7 +15,7 @@
 }
 
 .pulse-animation {
-	animation: pulse 0.25s;
+	animation: pulse 0.4s;
 }
 
 @keyframes fadeIn {
@@ -80,8 +80,8 @@
 	}
 
 	50% {
-		-webkit-transform: scale3d(1.05, 1.05, 1.05);
-		transform: scale3d(1.05, 1.05, 1.05);
+		-webkit-transform: scale3d(1.1, 1.1, 1.1);
+		transform: scale3d(1.1, 1.1, 1.1);
 	}
 
 	to {
