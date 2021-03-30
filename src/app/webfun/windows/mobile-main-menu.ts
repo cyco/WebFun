@@ -67,7 +67,7 @@ class MobileMainMenu extends Menu {
 				]
 			},
 			{
-				title: "Statistics...",
+				title: "Statistics",
 				mnemonic: 0,
 				submenu: [
 					{ title: "High Score" },
