@@ -82,6 +82,13 @@ class FullscreenMenu extends Component {
 					) : (
 						""
 					)}
+					{item.hasSubmenu ? (
+						<span className="submenu-indicator">
+							<IconButton icon="chevron-right" />
+						</span>
+					) : (
+						""
+					)}
 				</a>
 				{item.hasSubmenu && this.renderMenu(item.submenu, item.title)}
 			</li>
