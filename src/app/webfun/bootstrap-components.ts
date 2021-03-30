@@ -4,10 +4,11 @@ import { Components } from "src/ui";
 import * as AppComponents from "./ui";
 import * as WindowComponents from "./windows";
 import * as UIComponents from "src/ui/components";
+import * as AppModule from "src/app/webfun";
 
 declare global {
 	interface Window {
-		WebFun: { JSX: ComponentJSXRenderer; Settings: object };
+		WebFun: { JSX: ComponentJSXRenderer; App: typeof AppModule };
 	}
 }
 type Components<Entry> = Extract<

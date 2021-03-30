@@ -69,7 +69,7 @@ export interface PathConfiguration {
 
 class GameController extends EventTarget implements EventListenerObject {
 	public static readonly Event = Event;
-	public settings: typeof Settings = Settings;
+	public settings: Settings & EventTarget;
 	public data: GameData;
 	public palette: ColorPalette;
 	private _window: MainWindow;
@@ -79,11 +79,12 @@ class GameController extends EventTarget implements EventListenerObject {
 	public readonly variant: Variant;
 	public readonly paths: PathConfiguration;
 
-	constructor(variant: Variant, paths: PathConfiguration) {
+	constructor(variant: Variant, paths: PathConfiguration, settings: Settings & EventTarget) {
 		super();
 
 		this.variant = variant;
 		this.paths = paths;
+		this.settings = settings;
 
 		this.settings.mobile = !!(SmartPhone(false).isAndroid() || SmartPhone(false).isIPhone());
 		this._window = (<MainWindow className={this.settings.mobile ? "mobile" : ""} />) as MainWindow;
@@ -349,6 +350,7 @@ class GameController extends EventTarget implements EventListenerObject {
 
 	private setupEngine() {
 		const engine: Engine = new Engine(this.variant, this._buildInterface(this.paths));
+		engine.settings = this.settings;
 		engine.hero.addEventListener(Hero.Event.HealthDidChange, this);
 
 		if (this.settings.drawDebugStats) {

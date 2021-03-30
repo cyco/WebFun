@@ -43,7 +43,7 @@ export default (monster: Monster, zone: Zone, engine: Engine): void => {
 			if (!(tickCount % 3))
 				// only play sound sometimes
 				playSound(engine.assets.get(Sound, engine.variant.sounds.Hurt), engine);
-			engine.hero.changeHealth(-monster.face.damage);
+			engine.hero.changeHealth(-monster.face.damage, engine.settings);
 		}
 
 		monster.currentActionFrame++;

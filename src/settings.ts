@@ -1,41 +1,66 @@
 import { LogLevel, persistent, observable } from "src/util";
 import * as SmartPhone from "detect-mobile-browser";
 
-const Settings = observable(
-	persistent(
-		{
-			mobile: SmartPhone(false).isAndroid() || SmartPhone(false).isIPhone(),
-			pwa: new URLSearchParams(window.location.search).get("source") === "pwa",
-			debug: true,
+type Settings = {
+	mobile: boolean;
+	pwa: boolean;
+	debug: boolean;
 
-			drawDebugStats: false,
-			drawHotspots: false,
-			drawHeroTile: false,
-			drawMonsterState: false,
-			skipDialogs: false,
-			skipTransitions: false,
-			skipWinScene: false,
-			pickupItemsAutomatically: false,
-			lookTowardsMouse: true,
-			autosaveTestOnZoneChange: true,
+	drawDebugStats: boolean;
+	drawHotspots: boolean;
+	drawHeroTile: boolean;
+	drawMonsterState: boolean;
+	skipDialogs: boolean;
+	skipTransitions: boolean;
+	skipWinScene: boolean;
+	pickupItemsAutomatically: boolean;
+	lookTowardsMouse: boolean;
+	autosaveTestOnZoneChange: boolean;
 
-			autostartEngine: true,
-			revealWorld: false,
+	autostartEngine: boolean;
+	revealWorld: boolean;
 
-			playEffects: false,
-			playMusic: false,
+	playEffects: boolean;
+	playMusic: boolean;
 
-			difficulty: 50,
+	difficulty: number;
 
-			logLevel: LogLevel.Debug,
+	logLevel: LogLevel;
 
-			issueTracker: "https://github.com/cyco/WebFun/issues/new",
+	issueTracker: string;
 
-			debuggerActive: false
-		},
-		"settings",
-		localStorage
-	)
-);
+	debuggerActive: boolean;
+};
+
+export const defaultSettings: Settings = {
+	mobile: SmartPhone(false).isAndroid() || SmartPhone(false).isIPhone(),
+	pwa: new URLSearchParams(window.location.search).get("source") === "pwa",
+	debug: true,
+
+	drawDebugStats: false,
+	drawHotspots: false,
+	drawHeroTile: false,
+	drawMonsterState: false,
+	skipDialogs: false,
+	skipTransitions: false,
+	skipWinScene: false,
+	pickupItemsAutomatically: false,
+	lookTowardsMouse: true,
+	autosaveTestOnZoneChange: true,
+
+	autostartEngine: true,
+	revealWorld: false,
+
+	playEffects: false,
+	playMusic: false,
+
+	difficulty: 50,
+
+	logLevel: LogLevel.Debug,
+
+	issueTracker: "https://github.com/cyco/WebFun/issues/new",
+
+	debuggerActive: false
+};
 
 export default Settings;

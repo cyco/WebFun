@@ -6,7 +6,6 @@ import { Point } from "src/util";
 import { Renderer } from "../rendering";
 import { Tile, Zone } from "../objects";
 import { floor } from "src/std/math";
-import Settings from "src/settings";
 
 const enum FadeMode {
 	FadeIn = -1,
@@ -148,7 +147,7 @@ class RoomTransitionScene extends Scene {
 	}
 
 	private isFadeComplete() {
-		if (Settings.skipTransitions) return true;
+		if (this.engine.settings.skipTransitions) return true;
 
 		return this.duration < performance.now() - this._startTime;
 	}

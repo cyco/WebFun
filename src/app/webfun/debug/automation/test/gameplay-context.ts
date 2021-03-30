@@ -10,7 +10,7 @@ import { WorldSize } from "src/engine/generation";
 import { Tile, Zone, Puzzle, Sound, Char, Action } from "src/engine/objects";
 import { PaletteAnimation, ColorPalette } from "src/engine/rendering";
 import { Renderer as DummyRenderer } from "src/engine/dummy-interface";
-import Settings from "src/settings";
+import Settings, { defaultSettings } from "src/settings";
 import { Point } from "src/util";
 import { SimulatedStory } from "src/app/webfun/debug/index";
 import DebuggingScriptProcessingUnit from "src/app/webfun/debug/debugging-script-processing-unit";
@@ -20,6 +20,7 @@ let rawData: any, paletteData: any;
 
 class GameplayContext {
 	public engine: Engine;
+	public settings: Settings;
 	private debug: boolean;
 	private inputManager: ReplayingInputManager;
 	public sceneView: SceneView;
@@ -27,6 +28,7 @@ class GameplayContext {
 
 	constructor(debug = false) {
 		this.debug = debug;
+		this.settings = Object.assign({}, defaultSettings);
 	}
 
 	public async prepare(loadGameData: (_: Variant) => Promise<any>): Promise<void> {
@@ -117,6 +119,7 @@ class GameplayContext {
 		});
 
 		this.engine.palette = new PaletteAnimation(paletteData);
+		this.engine.settings = this.settings;
 	}
 
 	private buildAssetManagerFromGameData(rawData: any) {
@@ -145,11 +148,11 @@ class GameplayContext {
 
 	public setupEngine(story: Story, input: string, debug = false): void {
 		const { sceneView, engine, inputManager } = this;
-		Settings.debug = debug;
-		Settings.skipDialogs = true;
-		Settings.skipTransitions = true;
-		Settings.pickupItemsAutomatically = true;
-		Settings.skipWinScene = true;
+		this.settings.debug = debug;
+		this.settings.skipDialogs = true;
+		this.settings.skipTransitions = true;
+		this.settings.pickupItemsAutomatically = true;
+		this.settings.skipWinScene = true;
 
 		document.body.appendChild(sceneView);
 

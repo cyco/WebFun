@@ -255,11 +255,11 @@ class Hero extends EventTarget {
 		return true;
 	}
 
-	public changeHealth(damage: number): void {
+	public changeHealth(damage: number, settings: Settings): void {
 		if (this.invincible) return;
 
 		let [damageTaken, lives] = Hero.ConvertHealthToDamage(this.health);
-		const difficultyAdjustment = floor(100 / Settings.difficulty);
+		const difficultyAdjustment = floor(100 / settings.difficulty);
 		const effectiveDamage = floor(damage / difficultyAdjustment);
 		if (effectiveDamage > -100) {
 			damageTaken -= effectiveDamage;

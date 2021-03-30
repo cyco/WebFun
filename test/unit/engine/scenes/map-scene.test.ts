@@ -156,7 +156,8 @@ describe("WebFun.Engine.Scenes.MapScene", () => {
 			currentWorld: {
 				findLocationOfZone: (): void => void 0,
 				at: (): void => void 0
-			}
+			},
+			settings: {}
 		} as any) as Engine);
 	}
 });

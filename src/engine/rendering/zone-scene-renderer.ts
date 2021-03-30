@@ -134,15 +134,15 @@ class ZoneSceneRenderer {
 		result.data.set(byteArray);
 		renderer.renderImageData(result, 0, 0);
 
-		if (!hero.visible && Settings.drawHeroTile) {
+		if (!hero.visible && engine.settings.drawHeroTile) {
 			highlightHero(renderer, hero.location, offset);
 		}
 
-		if (Settings.drawHotspots) {
+		if (engine.settings.drawHotspots) {
 			highlightHotspots(renderer, zone.hotspots, offset);
 		}
 
-		if (Settings.drawMonsterState) {
+		if (engine.settings.drawMonsterState) {
 			highlightMonsters(renderer, zone.monsters, offset);
 		}
 	}

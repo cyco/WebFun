@@ -62,7 +62,7 @@ export default (monster: Monster, zone: Zone, engine: Engine): boolean => {
 				engine.mixer.play(sound, Channel.Effect);
 			}
 		} else {
-			engine.hero.changeHealth(-monster.face.damage);
+			engine.hero.changeHealth(-monster.face.damage, engine.settings);
 			const sound = engine.assets.get(Sound, Yoda.sounds.Hurt);
 			engine.mixer.play(sound, Channel.Effect);
 			canActuallyMove = false;

@@ -8,7 +8,7 @@ describe("WebFun.App.Audio.Mixer", () => {
 	let subject: Mixer;
 	let contextMock: AudioContext;
 	let bufferSourceMock: AudioBufferSourceNode;
-	let settings: typeof Settings;
+	let settings: Settings;
 	let master: GainNode, effect: GainNode, music: GainNode;
 
 	beforeEach(() => {
@@ -25,7 +25,7 @@ describe("WebFun.App.Audio.Mixer", () => {
 		} as any;
 		spyOn(WebAudio, "AudioContext").and.returnValue(contextMock);
 		spyOn(contextMock, "createGain").and.returnValues(master, effect, music);
-		subject = new Mixer(settings as any);
+		subject = new Mixer(settings);
 	});
 
 	it("creates an audio context on construction", () => {

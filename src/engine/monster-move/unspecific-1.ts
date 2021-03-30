@@ -46,7 +46,7 @@ export default (monster: Monster, zone: Zone, engine: Engine): void => {
 		direction = new Point(0, 0);
 		if (monster.face.damage >= 0) {
 			playSound(engine.assets.get(Sound, engine.variant.sounds.Hurt), engine);
-			engine.hero.changeHealth(-monster.face.damage);
+			engine.hero.changeHealth(-monster.face.damage, engine.settings);
 		}
 		monster.currentFrame++;
 		if (monster.currentFrame > 1) {

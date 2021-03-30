@@ -8,16 +8,18 @@ import { ComponentJSXRenderer, ComponentRegistry, Components } from "src/ui";
 
 import "./bootstrap-components.ts";
 import App from "./app";
-import { Settings } from "src";
+import { observable, persistent } from "src/util";
+import { defaultSettings } from "src/settings";
 
 const main = async () => {
-	if (Settings.debug) {
+	const settings = observable(persistent(defaultSettings, "settings", localStorage));
+	if (settings.debug) {
 		window.WebFun = await require("src/index");
-		//localStorage.clear();
+		require("src/app/editor/initialize").default();
+		require("src/app/webfun/debug/initialize").default();
 	}
 
-	// Setup custom elements
-	window.WebFun = window.WebFun || { JSX: null, Settings };
+	window.WebFun = window.WebFun || { JSX: null, App: { App } as any };
 	window.WebFun.JSX = new ComponentJSXRenderer();
 
 	ComponentRegistry.sharedRegistry.registerComponents(Components);
@@ -25,13 +27,8 @@ const main = async () => {
 	ComponentRegistry.sharedRegistry.registerComponents(WindowComponents as any);
 
 	const container = document.querySelector("wf-app") as HTMLElement;
-	const app = new App(container);
+	const app = new App(container, settings);
 	app.run();
-
-	if (Settings.debug) {
-		(await require("src/app/editor/initialize")).default();
-		(await require("src/app/webfun/debug/initialize")).default();
-	}
 };
 
 window.addEventListener("load", main, { once: true });

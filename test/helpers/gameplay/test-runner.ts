@@ -11,7 +11,6 @@ import {
 	GameplayContext
 } from "src/app/webfun/debug/automation/test";
 import loadGameData from "test/helpers/game-data";
-import { Settings } from "src";
 import { NullIfMissing } from "src/engine/asset-manager";
 
 declare let withTimeout: (t: number, block: () => void) => () => void;
@@ -38,7 +37,7 @@ const run = (prefix: string, fileName: string, testFileContents: string): void =
 						srand(testCase.configuration.seed);
 						ctx.engine.persistentState.gamesWon = testCase.configuration.gamesWon;
 						ctx.engine.hero.health = testCase.configuration.health;
-						Settings.difficulty = testCase.configuration.difficulty;
+						ctx.settings.difficulty = testCase.configuration.difficulty;
 
 						ctx.engine.inventory.removeAllItems();
 						testCase.configuration.inventory.forEach(i =>

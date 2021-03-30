@@ -1,6 +1,5 @@
 import Engine from "./engine";
 import { rand, clamp } from "src/util";
-import Settings from "src/settings";
 import { ceil, floor } from "src/std/math";
 
 const CalculateScoreBasedOnTime = (engine: Engine): number => {
@@ -20,8 +19,8 @@ const CalculateScoreBasedOnVisitedSectors = (engine: Engine): number => {
 	return clamp(10, ceil((visitedSectors / totalSectors) * 10) * 10, 100);
 };
 
-const CalculateScoreBasedOnDifficulty = (_: Engine): number => {
-	const difficulty = Settings.difficulty;
+const CalculateScoreBasedOnDifficulty = (engine: Engine): number => {
+	const difficulty = engine.settings.difficulty;
 	if (difficulty < 0 || difficulty > 100) return 0;
 
 	return clamp(1, ceil(difficulty / 10), 10) * 40;

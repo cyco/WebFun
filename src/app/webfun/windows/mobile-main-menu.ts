@@ -9,7 +9,7 @@ function SoundMenuItem(
 	controller: GameController,
 	name: string,
 	settingsName: "playEffects" | "playMusic",
-	settings: typeof Settings
+	settings: Settings
 ): Partial<MenuItemInit> {
 	return {
 		title: `${name}`,
@@ -23,7 +23,7 @@ function SoundMenuItem(
 }
 
 class MobileMainMenu extends Menu {
-	constructor(controller: GameController, settings: typeof Settings) {
+	constructor(controller: GameController, settings: Settings) {
 		super([
 			{
 				title: "New World",

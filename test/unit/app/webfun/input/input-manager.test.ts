@@ -35,7 +35,8 @@ describe("WebFun.App.Input.InputManager", () => {
 			camera: { offset: new Point(0, 0), size: new Size(288, 288) },
 			variant: { mapKey: "KeyL" },
 			addEventListener() {},
-			removeEventListener() {}
+			removeEventListener() {},
+			settings: {}
 		} as any;
 		mockElement = {} as any;
 		spyOn(element, "contains").and.callFake(e => e === mockElement);

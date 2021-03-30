@@ -1,6 +1,6 @@
 import "./save-game-inspector.scss";
 
-import { DiscardingOutputStream, OutputStream, download } from "src/util";
+import { DiscardingOutputStream, OutputStream, download, observable } from "src/util";
 
 import AbstractInspector from "./abstract-inspector";
 import { EditorView } from "src/app/save-game-editor";
@@ -14,6 +14,7 @@ import { Zone, Puzzle, Tile, Sound, Char } from "src/engine/objects";
 import { Yoda } from "src/variant";
 import { WorldSize } from "src/engine/generation";
 import ServiceContainer from "../service-container";
+import { defaultSettings } from "src/settings";
 
 class SaveGameInspector extends AbstractInspector {
 	private _editorView: EditorView = (
@@ -70,7 +71,7 @@ class SaveGameInspector extends AbstractInspector {
 
 	public playSaveGame(): void {
 		const base = JSON.parse(process.env["WEBFUN_GAMES"])[0];
-		const controller = new GameController(Yoda, base);
+		const controller = new GameController(Yoda, base, observable(defaultSettings));
 		controller.data = this.data.currentData.copy();
 		controller.palette = this.data.palette.slice();
 

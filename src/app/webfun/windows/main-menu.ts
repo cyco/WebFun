@@ -14,13 +14,13 @@ import GameSpeedWindow from "./game-speed-window";
 import HelpViewer from "./help-viewer";
 import StatisticsWindow from "./statistics-window";
 import WorldSizeWindow from "./world-size-window";
-import { Settings } from "src";
+import Settings from "src/settings";
 
 function SoundMenuItem(
 	controller: GameController,
 	name: string,
 	settingsName: "playEffects" | "playMusic",
-	settings: typeof Settings
+	settings: Settings
 ): Partial<MenuItemInit> {
 	return {
 		title: `${name} On`,
@@ -34,7 +34,7 @@ function SoundMenuItem(
 class MainMenu extends Menu {
 	private controller: GameController;
 
-	constructor(controller: GameController, settings: typeof Settings) {
+	constructor(controller: GameController, settings: Settings) {
 		super([
 			{
 				title: "File",

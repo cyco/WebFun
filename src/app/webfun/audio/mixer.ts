@@ -5,12 +5,12 @@ import Settings from "src/settings";
 
 class Mixer implements MixerInterface {
 	private readonly _context: AudioContext;
-	private readonly _settings: typeof Settings;
+	private readonly _settings: Settings;
 	private readonly _master: GainNode;
 	private readonly _effects: GainNode;
 	private readonly _music: GainNode;
 
-	constructor(settings: typeof Settings) {
+	constructor(settings: Settings) {
 		this._context = new AudioContext();
 		this._settings = settings;
 

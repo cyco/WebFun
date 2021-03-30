@@ -10,6 +10,7 @@ import Sector from "src/engine/sector";
 describe("WebFun.Engine", () => {
 	let subject: Engine;
 	let sceneManager: SceneManager;
+	const settings: Settings = {} as any;
 
 	beforeEach(() => {
 		sceneManager = {
@@ -18,6 +19,7 @@ describe("WebFun.Engine", () => {
 			presentScene() {}
 		} as any;
 		subject = new Engine(Yoda, { SceneManager: () => sceneManager });
+		subject.settings = settings;
 	});
 
 	it("it holds all state required for running a game", () => {
@@ -88,13 +90,13 @@ describe("WebFun.Engine", () => {
 		});
 
 		it("does nothing if spoken text is skipped according to debug setting", async () => {
-			Settings.skipDialogs = true;
+			settings.skipDialogs = true;
 			await subject.speak("Some text!", new Point(4, 5));
 			expect(Scenes.SpeechScene).not.toHaveBeenCalled();
 		});
 
 		it("has a function to show a speech bubble", async () => {
-			Settings.skipDialogs = false;
+			settings.skipDialogs = false;
 			await subject.speak("Test Text", new Point(5, 3));
 			expect(Scenes.SpeechScene).toHaveBeenCalled();
 			expect(scene.text).toEqual("Test Text");
@@ -119,7 +121,7 @@ describe("WebFun.Engine", () => {
 		});
 
 		it("just adds the item to the inventory if items are picked up automatically according to debug setting", async () => {
-			Settings.pickupItemsAutomatically = true;
+			settings.pickupItemsAutomatically = true;
 			await subject.dropItem(tile, new Point(4, 5));
 			expect(Scenes.PickupScene).not.toHaveBeenCalled();
 			expect(subject.inventory.addItem).toHaveBeenCalledWith(tile);
@@ -128,7 +130,7 @@ describe("WebFun.Engine", () => {
 		it("solves the current zone after pick up if the item is the sector's findItem", async () => {
 			sectorMock.findItem = tile;
 
-			Settings.pickupItemsAutomatically = true;
+			settings.pickupItemsAutomatically = true;
 			await subject.dropItem(tile, new Point(4, 5));
 			expect(Scenes.PickupScene).not.toHaveBeenCalled();
 			expect(subject.inventory.addItem).toHaveBeenCalledWith(tile);
@@ -138,7 +140,7 @@ describe("WebFun.Engine", () => {
 		it("does not solve the current zone after pick up if the item is not the sector's findItem", async () => {
 			sectorMock.findItem = {} as Tile;
 
-			Settings.pickupItemsAutomatically = true;
+			settings.pickupItemsAutomatically = true;
 			await subject.dropItem(tile, new Point(4, 5));
 			expect(Scenes.PickupScene).not.toHaveBeenCalled();
 			expect(subject.inventory.addItem).toHaveBeenCalledWith(tile);
@@ -146,7 +148,7 @@ describe("WebFun.Engine", () => {
 		});
 
 		it("shows a pick up scene at the specified location", async () => {
-			Settings.pickupItemsAutomatically = false;
+			settings.pickupItemsAutomatically = false;
 			await subject.dropItem(tile, new Point(5, 3));
 			expect(Scenes.PickupScene).toHaveBeenCalled();
 			expect(scene.tile).toBe(tile);

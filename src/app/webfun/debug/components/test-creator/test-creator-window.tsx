@@ -12,7 +12,6 @@ import adjacentZones from "./adjacent-zones";
 import { Zone, Tile } from "src/engine/objects";
 import { WorldSize } from "src/engine/generation";
 import { Story, Engine, AssetManager } from "src/engine";
-import Settings from "src/settings";
 import Metronome, { MetronomeInternals } from "src/engine/metronome";
 import { Yoda } from "src/variant";
 import { RecordingInputManager, ReplayingInputManager } from "../../automation";
@@ -57,11 +56,11 @@ class TestCreatorWindow extends AbstractWindow implements EventListenerObject {
 		const engine = controller.engine;
 		const assets = controller.engine.assets;
 
-		Settings.pickupItemsAutomatically = true;
-		Settings.skipDialogs = true;
-		Settings.skipTransitions = true;
-		Settings.difficulty = this.testCase.configuration.difficulty;
-		Settings.autostartEngine = false;
+		engine.settings.pickupItemsAutomatically = true;
+		engine.settings.skipDialogs = true;
+		engine.settings.skipTransitions = true;
+		engine.settings.difficulty = this.testCase.configuration.difficulty;
+		engine.settings.autostartEngine = false;
 
 		const recorder = new RecordingInputManager(engine.inputManager as AppInputManager);
 		recorder.records = parse(this.testCase.input);

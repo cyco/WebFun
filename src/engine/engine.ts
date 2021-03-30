@@ -18,7 +18,7 @@ import Variant from "./variant";
 import World from "./world";
 import { SpeechScene, PickupScene } from "src/engine/scenes";
 import { Point } from "src/util";
-import Settings from "src/settings";
+import Settings, { defaultSettings } from "src/settings";
 import AssetManager, { NullIfMissing } from "./asset-manager";
 import ResourceManager from "./resource-manager";
 
@@ -51,15 +51,16 @@ class Engine extends EventTarget {
 	public spu: ScriptProcessingUnit = null;
 	public story: Story = null;
 	public _interface: Interface;
+	public currentPlayStart: Date = new Date();
+	public totalPlayTime: number = 0;
+	public bumpedLocation: Point;
+	public settings: Settings = defaultSettings;
 	private _currentWorld: World = null;
 	private _currentZone: Zone = null;
 	private _updateInProgress: boolean = false;
 	private _hpu: HotspotProcessingUnit;
 	private _gameState: GameState = GameState.Stopped;
 	private _currentSector: Sector;
-	public currentPlayStart: Date = new Date();
-	public totalPlayTime: number = 0;
-	public bumpedLocation: Point;
 
 	constructor(type: Variant, ifce: Partial<Interface> = {}) {
 		super();
@@ -189,7 +190,7 @@ class Engine extends EventTarget {
 	}
 
 	public speak(text: string, place: Point): Promise<void> {
-		if (Settings.skipDialogs) return Promise.resolve();
+		if (this.settings.skipDialogs) return Promise.resolve();
 
 		const scene = new SpeechScene(this);
 		scene.text = text;
@@ -215,7 +216,7 @@ class Engine extends EventTarget {
 			}
 		};
 
-		if (Settings.pickupItemsAutomatically) {
+		if (this.settings.pickupItemsAutomatically) {
 			this.inventory.addItem(tile);
 			solveSector();
 			return Promise.resolve();

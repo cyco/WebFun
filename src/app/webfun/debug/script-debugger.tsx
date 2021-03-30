@@ -20,7 +20,6 @@ import Group from "src/ui/components/group";
 import { LocationBreakpoint } from "./breakpoint";
 import { Point } from "src/util";
 import ScriptProcessingUnit from "src/engine/script/script-processing-unit";
-import Settings from "src/settings";
 import { Window } from "src/ui/components";
 import { WindowManager } from "src/ui";
 
@@ -118,12 +117,12 @@ class ScriptDebugger implements DebuggingScriptProcessingUnitDelegate {
 		this._engine.addEventListener(EngineEvents.CurrentZoneChange, this._handlers.zoneChange);
 
 		this._isActive = true;
-		Settings.debuggerActive = true;
+		this._engine.settings.debuggerActive = true;
 	}
 
 	private _teardownDebugger() {
 		if (!this._isActive) return;
-		Settings.debuggerActive = false;
+		this._engine.settings.debuggerActive = false;
 
 		this._engine.removeEventListener(EngineEvents.CurrentZoneChange, this._handlers.zoneChange);
 		this._engine.spu = new ScriptProcessingUnit(

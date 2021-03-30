@@ -1,21 +1,23 @@
 import "./app.scss";
 
-import { Settings } from "src";
+import Settings from "src/settings";
 import { Indy, IndyDemo, Yoda, YodaDemo } from "src/variant";
 import { Variant } from "src/engine";
 import { WindowManager } from "src/ui";
 import { GlobalFileDrop } from "src/ux";
 import GameController, { PathConfiguration } from "./game-controller";
+import { EventTarget } from "src/util";
 
 class App {
 	public static sharedApp: App;
-	private settings = Settings;
+	public readonly settings: Settings & EventTarget;
+	private root: HTMLElement;
 	private defaultGameController: GameController;
 	private _windowManager: WindowManager;
-	private root: HTMLElement;
 
-	public constructor(container: HTMLElement) {
+	public constructor(container: HTMLElement, settings: Settings & EventTarget) {
 		this.root = container;
+		this.settings = settings;
 		this._windowManager = new WindowManager(container);
 		App.sharedApp = this;
 	}
@@ -112,7 +114,7 @@ class App {
 	}
 
 	private async load(variant: Variant, urls: any): Promise<GameController> {
-		const controller = new GameController(variant, urls);
+		const controller = new GameController(variant, urls, this.settings);
 		await controller.show(this._windowManager);
 
 		//if (!this.defaultGameController) this.defaultGameController = controller;

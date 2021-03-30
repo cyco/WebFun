@@ -33,11 +33,11 @@ describe("WebFun.Engine.Score", () => {
 			puzzlesTotal: number,
 			difficulty: number
 		): number {
-			Settings.difficulty = difficulty;
 			(engine.story as any).size = size;
 			(engine.story as any).puzzles = Array.Repeat({}, puzzlesTotal);
 			engine.totalPlayTime = 0;
 			engine.currentPlayStart = new Date(new Date().getTime() - totalPlayTime * 1000);
+			engine.settings = { difficulty: difficulty } as any;
 
 			const sectors = Array.Repeat({ zone: null }, 100) as any[];
 			for (let i = 0; i < sectorsTotal; i++) {
@@ -293,8 +293,9 @@ describe("WebFun.Engine.Score", () => {
 		});
 
 		function score(number: number) {
-			Settings.difficulty = number;
-			return CalculateScoreBasedOnDifficulty(null);
+			return CalculateScoreBasedOnDifficulty({
+				settings: { difficulty: number }
+			} as any);
 		}
 	});
 

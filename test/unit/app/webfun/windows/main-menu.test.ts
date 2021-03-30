@@ -16,7 +16,7 @@ import Settings from "src/settings";
 describe("WebFun.App.Windows.MainMenu", () => {
 	let subject: MainMenu;
 	let gameController: GameController;
-	let settings: typeof Settings;
+	let settings: Settings;
 
 	beforeEach(() => {
 		gameController = {

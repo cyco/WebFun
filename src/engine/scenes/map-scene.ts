@@ -11,7 +11,6 @@ import { Tile, Zone } from "src/engine/objects";
 import Renderer from "../rendering/renderer";
 import LocatorTile from "src/variant/yoda/locator-tile";
 import Scene from "./scene";
-import Settings from "src/settings";
 import SpeechScene from "./speech-scene";
 import RoomTransitionScene from "./room-transition-scene";
 import World from "src/engine/world";
@@ -149,7 +148,7 @@ class MapScene extends Scene {
 		}
 
 		const input = this.engine.inputManager.readInput(0);
-		if (Settings.debug && input & InputMask.Drag) {
+		if (this.engine.settings.debug && input & InputMask.Drag) {
 			return this.performDebugTeleportAndExit(sector.zone);
 		}
 
@@ -200,7 +199,7 @@ class MapScene extends Scene {
 	private _locatorDescriptionId(at: Point): (number | string) | (number | string)[] {
 		const sector = this.engine.currentWorld.at(at.x, at.y);
 		if (!sector || !sector.zone) return StringID.None;
-		if (!sector.zone.visited && !Settings.revealWorld) return -2;
+		if (!sector.zone.visited && !this.engine.settings.revealWorld) return -2;
 
 		const requires = sector.requiredItem;
 		const gives = sector.findItem;
@@ -343,7 +342,7 @@ class MapScene extends Scene {
 		result.data.set(byteArray);
 		renderer.renderImageData(result, 0, 0);
 
-		if (Settings.drawDebugStats && engine.currentWorld === engine.world) {
+		if (this.engine.settings.drawDebugStats && engine.currentWorld === engine.world) {
 			this._renderPDG(renderer as CanvasRenderer);
 		}
 	}
@@ -371,7 +370,11 @@ class MapScene extends Scene {
 	}
 
 	private _tileForZone(zone: Zone): Tile {
-		let tile = this._locatorTile.forZone(zone, zone && zone.visited, Settings.revealWorld);
+		let tile = this._locatorTile.forZone(
+			zone,
+			zone && zone.visited,
+			this.engine.settings.revealWorld
+		);
 		if (tile instanceof Array) tile = tile[zone && this.isZoneConsideredSolved(zone) ? 1 : 0];
 
 		return this.engine.assets.get(Tile, tile);
@@ -383,7 +386,7 @@ class MapScene extends Scene {
 	}
 
 	protected isZoneConsideredVisited(zone: Zone): boolean {
-		return zone.visited || Settings.revealWorld;
+		return zone.visited || this.engine.settings.revealWorld;
 	}
 }
 

@@ -23,9 +23,10 @@ import { MapScene, ZoneScene } from "src/engine/scenes";
 import DebugInfoScene from "src/app/webfun/debug/debug-info-scene";
 import InventoryComponent from "src/app/webfun/ui/inventory";
 import ResourceManager from "src/app/webfun/resource-manager";
-import { Size } from "src/util";
+import { Size, observable, EventTarget } from "src/util";
 import * as LoaderModule from "src/app/webfun/loader";
 import { Tile } from "src/engine/objects";
+import Settings from "src/settings";
 
 describe("WebFun.App.GameController", () => {
 	let subject: GameController;
@@ -39,6 +40,7 @@ describe("WebFun.App.GameController", () => {
 	let mockedData: GameData;
 	let mockedPalette: ColorPalette;
 	let mockedStory: Story;
+	let mockSettings: Settings & EventTarget;
 
 	beforeEach(() => {
 		createElement = document.createElement.bind(document);
@@ -171,7 +173,9 @@ describe("WebFun.App.GameController", () => {
 		mockMixer = {} as any;
 		mainMenu = {} as any;
 		mockRenderer = {} as any;
+		mockSettings = observable({}) as any;
 		engine = mockEngine();
+		engine.settings = mockSettings;
 
 		spyOn(AppWindowModule, "MainMenu").and.returnValue(mainMenu);
 		spyOn(document, "createElement").and.callFake(mockElement as any);
@@ -182,7 +186,11 @@ describe("WebFun.App.GameController", () => {
 		spyOn(AppAudioModule, "Mixer").and.returnValue(mockMixer);
 		spyOn(AppCanvasRendererModule, "Renderer").and.returnValue(mockRenderer);
 
-		subject = new GameController(Yoda, { data: "", palette: "", strings: "", sfx: "" });
+		subject = new GameController(
+			Yoda,
+			{ data: "", palette: "", strings: "", sfx: "" },
+			mockSettings
+		);
 		subject.settings = {} as any;
 	}
 
@@ -249,3 +257,7 @@ describe("WebFun.App.GameController", () => {
 		} as any;
 	}
 });
+
+function observeable(arg0: {}): any {
+	throw new Error("Function not implemented.");
+}

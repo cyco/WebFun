@@ -5,7 +5,6 @@ import { Zone } from "src/engine/objects";
 import { Point } from "src/util";
 import CanvasRenderer from "src/app/webfun/rendering/canvas/canvas-renderer";
 import { round } from "src/std/math";
-import Settings from "src/settings";
 import { InputMask } from "../input";
 
 class WinScene extends Scene {
@@ -38,7 +37,7 @@ class WinScene extends Scene {
 
 	public didShow(): void {
 		this._zoneScene.didShow();
-		if (Settings.skipWinScene) this.engine.sceneManager.popScene();
+		if (this.engine.settings.skipWinScene) this.engine.sceneManager.popScene();
 	}
 
 	async update(ticks: number): Promise<void> {

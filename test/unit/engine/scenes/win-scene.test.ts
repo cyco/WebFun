@@ -4,18 +4,20 @@ import { ZoneScene } from "src/engine/scenes";
 import * as ZoneSceneModule from "src/engine/scenes/zone-scene";
 import { Point } from "src/util";
 import { InputMask } from "src/engine/input";
-import { Settings } from "src";
+import Settings from "src/settings";
 
 describe("WebFun.Engine.Scenes.WinScene", () => {
 	let subject: WinScene;
 	let engine: Engine;
 	let zoneScene: ZoneScene;
+	let settings: Settings;
 
 	beforeEach(() => {
+		settings = {} as any;
 		subject = new WinScene(512.12);
 
-		Settings.skipWinScene = false;
-		Settings.debug = false;
+		settings.skipWinScene = false;
+		settings.debug = false;
 	});
 
 	describe("when it is about to be shown", () => {
@@ -169,13 +171,13 @@ describe("WebFun.Engine.Scenes.WinScene", () => {
 		describe("and it's shown with the skip scene setting active", () => {
 			let originalValue: boolean;
 			beforeEach(() => {
-				originalValue = Settings.skipWinScene;
-				Settings.skipWinScene = true;
+				originalValue = settings.skipWinScene;
+				settings.skipWinScene = true;
 				subject.didShow();
 			});
 
 			afterEach(() => {
-				Settings.skipWinScene = originalValue;
+				settings.skipWinScene = originalValue;
 			});
 
 			it("immediately leaves the scene again", () => {
@@ -185,12 +187,15 @@ describe("WebFun.Engine.Scenes.WinScene", () => {
 	});
 
 	function mockEngine(): Engine {
+		settings = {} as any;
+
 		return {
 			hero: { location: new Point(7, 4), visible: true },
 			assets: { find: jasmine.createSpy() },
 			inputManager: { readInput: jasmine.createSpy() },
 			sceneManager: { popScene: jasmine.createSpy() },
-			camera: { update: jasmine.createSpy() }
+			camera: { update: jasmine.createSpy() },
+			settings
 		} as any;
 	}
 

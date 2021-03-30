@@ -6,7 +6,6 @@ import { Point } from "src/util";
 import Scene from "./scene";
 import ZoneScene from "./zone-scene";
 import World from "../world";
-import Settings from "src/settings";
 import { EvaluationMode, ScriptResult } from "../script";
 
 const ViewportWidth = 9.0;
@@ -31,7 +30,7 @@ class SectorTransitionScene extends Scene {
 
 	public willShow(): void {
 		if (this._executingActions) return;
-		this.duration = Settings.skipTransitions ? 0 : TotalFadeDuration;
+		this.duration = this.engine.settings.skipTransitions ? 0 : TotalFadeDuration;
 		this._direction = this.originSector.bySubtracting(this.destinationSector);
 		this._sequence = this.buildSequence();
 		this._startTime = Infinity;
@@ -94,7 +93,7 @@ class SectorTransitionScene extends Scene {
 	}
 
 	private isFadeComplete() {
-		if (Settings.skipTransitions) return true;
+		if (this.engine.settings.skipTransitions) return true;
 
 		return this.duration < performance.now() - this._startTime;
 	}

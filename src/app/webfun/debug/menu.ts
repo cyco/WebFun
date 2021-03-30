@@ -4,7 +4,7 @@ import GameController from "src/app/webfun/game-controller";
 import Settings from "src/settings";
 import loadTest from "./load-test";
 
-const SettingsItem = (label: string, key: keyof typeof Settings, settings: typeof Settings) => ({
+const SettingsItem = (label: string, key: keyof Settings, settings: Settings) => ({
 	title: label,
 	callback: (): void => void ((settings as any)[key] = !(settings as any)[key]),
 	state: (): MenuItemState => (settings[key] ? MenuItemState.On : MenuItemState.Off)
@@ -36,6 +36,10 @@ export default (gameController: GameController): Partial<MenuItemInit> => {
 				"pickupItemsAutomatically",
 				gameController.settings
 			),
+			MenuItemSeparator,
+			SettingsAction("Clear Settings", () => {
+				localStorage.clear();
+			}),
 			MenuItemSeparator,
 			SettingsAction("Create Test", async () => {
 				const TestCreatorWindow = (await import("./components")).TestCreatorWindow;

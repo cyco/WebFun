@@ -222,8 +222,9 @@
 					function articleMain() {
 						var selector = document.getElementById("toggle-debug");
 						selector.onchange = function() {
-							if(window.WebFun?.Settings) {
-								window.WebFun.Settings.debug = selector.checked;
+							const app = WebFun.App.App.sharedApp;
+							if(app) {
+								app.settings.debug = selector.checked;
 							} else {
 								localStorage.setItem("settings.debug", JSON.stringify(selector.checked));
 							}

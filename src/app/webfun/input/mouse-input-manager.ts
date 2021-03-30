@@ -3,7 +3,6 @@ import { Tile } from "src/engine/objects";
 import { Engine } from "src/engine";
 import { Point, Direction as DirectionHelper, astar, MouseButton } from "src/util";
 import { ZoneScene } from "src/engine/scenes";
-import Settings from "src/settings";
 import CursorManager from "./cursor-manager";
 import { floor } from "src/std/math";
 import PathUIScene from "./path-ui-scene";
@@ -122,7 +121,7 @@ class MouseInputManager implements InputManager {
 	}
 
 	private updateMouse() {
-		if (!Settings.lookTowardsMouse) return;
+		if (!this.engine.settings.lookTowardsMouse) return;
 
 		const [dir, angle] = this.calculateDirectionFromHero(this._lastMouse);
 		this._mouseDirection = dir;

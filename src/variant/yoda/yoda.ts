@@ -11,7 +11,6 @@ import { Point, rand, Size } from "src/util";
 import { WorldSize } from "src/engine/generation";
 import { MutablePuzzle } from "src/engine/mutable-objects";
 import { SaveState } from "src/engine/save-game";
-import Settings from "src/settings";
 import { Sprite } from "src/engine/rendering";
 
 import DetonatorScene from "./detonator-scene";
@@ -143,7 +142,7 @@ class Yoda extends Variant {
 			engine.assets.get(Char, CharIDs.BlasterRifle)
 		);
 
-		state.difficulty = Settings.difficulty;
+		state.difficulty = engine.settings.difficulty;
 		state.timeElapsed = engine.totalPlayTime;
 		state.worldSize = 0;
 
