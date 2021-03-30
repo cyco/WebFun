@@ -1,4 +1,4 @@
-import { Menu, MenuItemInit, MenuItemSeparator as Separator } from "src/ui";
+import { Menu, MenuItem, MenuItemInit, MenuItemSeparator as Separator } from "src/ui";
 
 import GameController from "../game-controller";
 import Settings from "src/settings";
@@ -12,11 +12,13 @@ function SoundMenuItem(
 	settings: typeof Settings
 ): Partial<MenuItemInit> {
 	return {
-		title: `${name} On`,
+		title: `${name}`,
 		mnemonic: 0,
 		enabled: () => controller.engine !== null,
-		state: () => (settings[settingsName] ? +1 : +0),
-		callback: (): void => void (settings[settingsName] = !settings[settingsName])
+		state: () => (settings[settingsName] ? MenuItem.State.On : MenuItem.State.Off),
+		callback: (): void => {
+			settings[settingsName] = !settings[settingsName];
+		}
 	};
 }
 
@@ -60,8 +62,8 @@ class MobileMainMenu extends Menu {
 					{ title: "Game Speed" },
 					{ title: "World Size" },
 					Separator,
-					{ title: "Music" },
-					{ title: "Sound" }
+					SoundMenuItem(controller, "Play Music", "playMusic", settings),
+					SoundMenuItem(controller, "Play Effects", "playEffects", settings)
 				]
 			},
 			{
@@ -74,7 +76,6 @@ class MobileMainMenu extends Menu {
 					{ title: "Games Lost" }
 				]
 			},
-			SoundMenuItem(controller, "Sound", "playEffects", settings),
 
 			Separator,
 			{
