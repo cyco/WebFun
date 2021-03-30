@@ -110,6 +110,31 @@ wf-fullscreen-menu {
 				padding-left: 10px;
 				padding-right: 10px;
 				> li {
+					&.submenu-title {
+						color: #aaa;
+						a {
+							position: relative;
+							font-size: 18px;
+							width: 100%;
+							display: inline-block;
+						}
+
+						span {
+							line-height: 35px;
+							text-align: center;
+							width: 100%;
+							display: inline-block;
+						}
+
+						wf-icon-button {
+							position: absolute;
+							left: 0;
+							height: 35px;
+							line-height: 34px;
+							width: 15px;
+						}
+					}
+
 					> a {
 						display: flex;
 						align-items: center;

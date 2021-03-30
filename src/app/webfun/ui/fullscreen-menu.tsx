@@ -1,6 +1,7 @@
 import "./fullscreen-menu.scss";
 
 import { Component, Menu, MenuItem } from "src/ui";
+import { IconButton } from "src/ui/components";
 
 const TransitionDuration = 250 + 50;
 
@@ -49,10 +50,20 @@ class FullscreenMenu extends Component {
 		return this._rootMenu;
 	}
 
-	private renderMenu(menu: Menu) {
+	private renderMenu(menu: Menu, title?: string) {
 		if (!menu) return;
 
-		return <ul>{menu.items.map(i => this.renderItem(i))}</ul>;
+		return (
+			<ul>
+				<li className="submenu-title" style={{ display: title ? "" : "none" }}>
+					<a onclick={() => this.navigateToRoot()}>
+						<IconButton icon="chevron-left" />
+						<span>{title}</span>
+					</a>
+				</li>
+				{menu.items.map(i => this.renderItem(i))}
+			</ul>
+		);
 	}
 
 	private renderItems(menu: Menu): HTMLElement {
@@ -65,7 +76,7 @@ class FullscreenMenu extends Component {
 		return (
 			<li>
 				<a onclick={e => this.itemClickHandler(item, e.target as any)}>{item.title}</a>
-				{item.hasSubmenu && this.renderMenu(item.submenu)}
+				{item.hasSubmenu && this.renderMenu(item.submenu, item.title)}
 			</li>
 		);
 	}
@@ -83,6 +94,12 @@ class FullscreenMenu extends Component {
 		parent.style.transform = "translateX(-100%)";
 		const child = li.querySelector("ul");
 		child.style.display = "block";
+	}
+
+	private navigateToRoot(): void {
+		const parent = this.querySelector(".items > ul") as HTMLElement;
+		parent.style.transform = "translateX(0%)";
+		parent.querySelectorAll("ul").forEach(child => (child.style.display = "none"));
 	}
 }
 
