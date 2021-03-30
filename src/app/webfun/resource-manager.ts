@@ -51,6 +51,10 @@ class ResourceManager implements ResourceManagerInterface {
 	}
 
 	async loadStrings(progress: (progress: number) => void): Promise<{ [_: number]: string }> {
+		if (!this._stringsURL || this._stringsURL.length === 0) {
+			return Promise.resolve({});
+		}
+
 		return new Promise((resolve, reject) => {
 			const request = new XMLHttpRequest();
 			request.open("GET", this._stringsURL);
