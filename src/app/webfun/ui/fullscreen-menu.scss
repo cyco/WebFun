@@ -14,7 +14,7 @@ wf-fullscreen-menu {
 	z-index: 800;
 
 	@at-root {
-		body[fs-menu-open] {
+		wf-app[fs-menu-open] {
 			wf-main-window,
 			wf-speech-bubble {
 				filter: blur(8px);
@@ -23,7 +23,7 @@ wf-fullscreen-menu {
 				transform: translateX(0);
 			}
 		}
-		body[fs-menu-open] {
+		wf-app[fs-menu-open] {
 			wf-main-window,
 			wf-speech-bubble {
 				transition: filter $transition-duration ease-in-out;
@@ -102,6 +102,7 @@ wf-fullscreen-menu {
 					position: absolute;
 					top: 0;
 					left: 100%;
+					display: none;
 				}
 
 				width: 100%;

@@ -86,7 +86,14 @@ class MobileMainMenu extends Menu {
 				mnemonic: 0,
 				callback: () => window.open(settings.issueTracker)
 			},
-			...(controller.settings.debug ? [buildDebugMenu(controller)] : [])
+			...(controller.settings.debug ? [buildDebugMenu(controller)] : []),
+
+			Separator,
+			{
+				title: "Leave",
+				mnemonic: 0,
+				callback: () => controller.exit()
+			}
 		]);
 	}
 }

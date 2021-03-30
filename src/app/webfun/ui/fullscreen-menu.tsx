@@ -15,9 +15,9 @@ class FullscreenMenu extends Component {
 		super.connectedCallback();
 
 		this._parent = this.parentElement;
-		setTimeout(
-			() => this._parent === this.parentElement && this._parent.setAttribute("fs-menu-open", "")
-		);
+		setTimeout(() => {
+			this._parent === this.parentElement && this._parent.setAttribute("fs-menu-open", "");
+		});
 	}
 
 	disconnectedCallback(): void {
@@ -71,8 +71,11 @@ class FullscreenMenu extends Component {
 	}
 
 	private itemClickHandler(item: MenuItem, node: HTMLElement) {
-		if (item.enabled && item.callback) item.callback();
 		if (item.enabled && item.submenu) this.navigateTo(item, node.closest("li"));
+		if (item.enabled && item.callback) {
+			item.callback();
+			this.close();
+		}
 	}
 
 	public navigateTo(item: MenuItem, li: HTMLElement): void {
