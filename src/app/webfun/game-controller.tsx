@@ -88,7 +88,10 @@ class GameController extends EventTarget implements EventListenerObject {
 		this.settings.mobile = !!(SmartPhone(false).isAndroid() || SmartPhone(false).isIPhone());
 		this._window = (<MainWindow className={this.settings.mobile ? "mobile" : ""} />) as MainWindow;
 		this.setupMainMenu();
-		if (this.settings.mobile) this._window.classList.add("mobile");
+		if (this.settings.mobile) {
+			this._window.classList.add("mobile");
+			document.body.setAttribute("wf-fullscreen-game", "");
+		}
 
 		this.settings.addEventListener(PropertyChangeEvent.type, this);
 	}
@@ -341,6 +344,7 @@ class GameController extends EventTarget implements EventListenerObject {
 		this.teardownEngine();
 		this._window.close();
 		this.settings.removeEventListener("propertyChanged", this);
+		document.body.removeAttribute("wf-fullscreen-game");
 	}
 
 	private setupEngine() {
