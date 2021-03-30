@@ -3,7 +3,7 @@ import State from "./menu-item-state";
 
 const MenuItemDefaults: MenuItemInit = {
 	title: "",
-	state: State.Off,
+	state: State.None,
 	callback: null,
 	mnemonic: undefined,
 	submenu: null,

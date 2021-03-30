@@ -137,6 +137,7 @@ wf-fullscreen-menu {
 
 					> a {
 						display: flex;
+						justify-content: space-between;
 						align-items: center;
 						font-size: 17px;
 						height: 48px;
@@ -147,6 +148,12 @@ wf-fullscreen-menu {
 
 						cursor: pointer;
 						padding: 10px;
+
+						span.state {
+							font-size: 14px;
+							margin-left: 10px;
+						}
+
 						&:hover {
 						}
 					}

@@ -75,7 +75,14 @@ class FullscreenMenu extends Component {
 
 		return (
 			<li>
-				<a onclick={e => this.itemClickHandler(item, e.target as any)}>{item.title}</a>
+				<a onclick={e => this.itemClickHandler(item, e.target as any)}>
+					{item.title}
+					{item.state !== MenuItem.State.None ? (
+						<span className="state">{MenuItem.State[item.state]}</span>
+					) : (
+						""
+					)}
+				</a>
 				{item.hasSubmenu && this.renderMenu(item.submenu, item.title)}
 			</li>
 		);
