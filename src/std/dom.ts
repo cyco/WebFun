@@ -21,4 +21,5 @@ export const {
 
 export const document = global.document as Document;
 export const window = global.window;
+export const navigator = global.navigator as Navigator;
 export const localStorage = (window.localStorage || new global.Storage()) as Storage;

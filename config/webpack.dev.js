@@ -5,12 +5,14 @@ const { merge } = require("webpack-merge");
 
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
+const Webpack = require("webpack");
 
 const BaseConfig = require("./webpack.common");
 
 module.exports = merge(BaseConfig, {
 	entry: {
-		webfun: Path.resolve(Paths.sourceRoot, "app/webfun/main")
+		"webfun": Path.resolve(Paths.sourceRoot, "app/webfun/main"),
+		"service-worker": Path.resolve(Paths.sourceRoot, "app/service-worker/main")
 	},
 	devtool: "eval-source-map",
 	mode: "development",
@@ -26,7 +28,8 @@ module.exports = merge(BaseConfig, {
 			Paths.assetsRoot,
 			Path.resolve(Paths.sourceRoot, "app/webfun"),
 			Path.resolve(Paths.sourceRoot, "app/webfun/windows/help-viewer"),
-			Path.resolve(Paths.assetsRoot, "favicons")
+			Path.resolve(Paths.assetsRoot, "favicons"),
+			Path.resolve(Paths.sourceRoot)
 		],
 		host: process.env.host || "127.0.0.1",
 		https: FS.existsSync(Path.resolve(Paths.configRoot, "ssl.key"))
@@ -48,7 +51,10 @@ module.exports = merge(BaseConfig, {
 				"apple-mobile-web-app-capable": "yes"
 			}
 		}),
-		new Dotenv({ silent: true })
+		new Dotenv({ silent: true }),
+		new Webpack.DefinePlugin({
+			"process.env.SWURL": JSON.stringify("/service-worker.js")
+		})
 	],
 	module: {
 		rules: [

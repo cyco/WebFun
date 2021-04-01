@@ -7,6 +7,7 @@ import { WindowManager } from "src/ui";
 import { GlobalFileDrop } from "src/ux";
 import GameController, { PathConfiguration } from "./game-controller";
 import { EventTarget } from "src/util";
+import { navigator } from "src/std/dom";
 
 class App {
 	public static sharedApp: App;
@@ -24,6 +25,7 @@ class App {
 
 	public run(): void {
 		this.endPreload();
+		this.registerServiceWorker();
 		this.setupSaveGameFileHandler();
 		this.setupTestFileHandler();
 		this.createDebugGameLinks();
@@ -34,6 +36,27 @@ class App {
 		this.root.classList.add("webfun");
 		this.root.classList.remove("preload");
 		this.root.textContent = "";
+	}
+
+	private registerServiceWorker(): void {
+		if (!("serviceWorker" in navigator)) {
+			console.log("[ServiceWorkerClient]", "Service workers are not supported");
+			return;
+		}
+
+		if (process.env.WEBPACK_MODE !== "production") {
+			console.log("[ServiceWorkerClient]", "Skipping registration in development mode");
+			return;
+		}
+
+		navigator.serviceWorker
+			.register(process.env.SWURL, { scope: "./" })
+			.then((reg: ServiceWorkerRegistration) => {
+				console.log("[ServiceWorkerClient]", "Service worker registration succeeded.", reg);
+			})
+			.catch((error: any) => {
+				console.log("[ServiceWorkerClient]", "Service worker registration failed:", error);
+			});
 	}
 
 	private setupSaveGameFileHandler(): void {

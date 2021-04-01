@@ -16,7 +16,7 @@
     "rootDir": ".",
     "jsx": "preserve",
     "typeRoots": ["src/@types"],
-    "lib": ["es2020", "dom", "esnext.asynciterable"],
+    "lib": ["es2020", "dom", "webworker", "esnext.asynciterable"],
     "types": [
       "jasmine",
       "jasmine-matchers",

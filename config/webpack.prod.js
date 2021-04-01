@@ -19,14 +19,23 @@ const gitRevisionPlugin = new GitRevisionPlugin();
 
 module.exports = {
 	entry: {
-		webfun: Path.resolve(Paths.sourceRoot, "app/webfun/main")
+		"webfun": Path.resolve(Paths.sourceRoot, "app/webfun/main"),
+		"service-worker": Path.resolve(Paths.sourceRoot, "app/service-worker/main")
 	},
 	mode: "production",
 	output: {
 		path: Paths.buildRoot,
 		publicPath: "",
-		filename: "assets/[name]-[git-revision-version].js",
-		chunkFilename: "assets/webfun.[name]-[git-revision-version].js"
+		filename: pathData => {
+			return pathData.chunk.name === "service-worker"
+				? "assets/[name].js"
+				: "assets/webfun.[name]-[git-revision-version].js";
+		},
+		chunkFilename: pathData => {
+			return pathData.chunk.name === "service-worker"
+				? "assets/[name].js"
+				: "assets/webfun.[name]-[git-revision-version].js";
+		}
 	},
 	node: false,
 	optimization: {
@@ -61,6 +70,12 @@ module.exports = {
 					priority: 10,
 					reuseExistingChunk: true,
 					enforce: true
+				},
+				"service-worker": {
+					test: /src[/\\]app[/\\]service-worker[/\\]/,
+					priority: 10,
+					reuseExistingChunk: true,
+					enforce: true
 				}
 			},
 			name(module, chunks, cacheGroupKey) {
@@ -82,7 +97,8 @@ module.exports = {
 		new Webpack.DefinePlugin({
 			"process.env.VERSION": JSON.stringify(gitRevisionPlugin.version()),
 			"process.env.COMMITHASH": JSON.stringify(gitRevisionPlugin.commithash()),
-			"process.env.BRANCH": JSON.stringify(gitRevisionPlugin.branch())
+			"process.env.BRANCH": JSON.stringify(gitRevisionPlugin.branch()),
+			"process.env.SWURL": JSON.stringify("assets/service-worker.js")
 		}),
 		new CleanWebpackPlugin({ root: Paths.buildRoot }),
 		new HtmlWebpackPlugin({
@@ -107,8 +123,8 @@ module.exports = {
 					to: "assets/[name][ext]"
 				},
 				{
-					from: "src/*.webmanifest",
-					to: "assets/[name][ext]"
+					from: "src/manifest.json",
+					to: "[name][ext]"
 				},
 				{
 					from: "assets/icon/**",

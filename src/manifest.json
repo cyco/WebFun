@@ -9,24 +9,24 @@
 	"scope": "../",
 	"icons": [
 		{
-			"src": "../assets/icon/apple-touch-icon.png",
+			"src": "assets/icon/apple-touch-icon.png",
 			"type": "image/png",
 			"sizes": "180x180"
 		},
 		{
-			"src": "../assets/icon/appicon-192x192.png",
+			"src": "assets/icon/appicon-192x192.png",
 			"type": "image/png",
 			"sizes": "192x192",
 			"purpose": "maskable any"
 		},
 		{
-			"src": "../assets/icon/appicon-384x384.png",
+			"src": "assets/icon/appicon-384x384.png",
 			"type": "image/png",
 			"sizes": "384x384",
 			"purpose": "maskable any"
 		},
 		{
-			"src": "../assets/icon/appicon-483x483.png",
+			"src": "assets/icon/appicon-483x483.png",
 			"type": "image/png",
 			"sizes": "483x483",
 			"purpose": "maskable any"

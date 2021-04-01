@@ -3,6 +3,7 @@ import { MenuItemInit, MenuItemSeparator, MenuItemState } from "src/ui";
 import GameController from "src/app/webfun/game-controller";
 import Settings from "src/settings";
 import loadTest from "./load-test";
+import { navigator } from "src/std/dom";
 
 const SettingsItem = (label: string, key: keyof Settings, settings: Settings) => ({
 	title: label,
@@ -39,6 +40,18 @@ export default (gameController: GameController): Partial<MenuItemInit> => {
 			MenuItemSeparator,
 			SettingsAction("Clear Settings", () => {
 				localStorage.clear();
+			}),
+			SettingsAction("Remove Service Workers", async () => {
+				const registrations = await navigator.serviceWorker.getRegistrations();
+				for (const registration of registrations) {
+					try {
+						console.log("[ServiceWorkerClient]", "Unregistering worker", registration);
+						await registration.unregister();
+						console.log("[ServiceWorkerClient]", "Unregistering worker succeeded");
+					} catch (e) {
+						console.log("[ServiceWorkerClient]", "Unregistering worker failed:", e);
+					}
+				}
 			}),
 			MenuItemSeparator,
 			SettingsAction("Create Test", async () => {
