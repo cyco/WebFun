@@ -63,6 +63,7 @@ export interface PathConfiguration {
 	data: string;
 	palette: string;
 	sfx: string;
+	sfxFormat: string;
 	strings: string;
 	help?: string;
 }
@@ -124,7 +125,13 @@ class GameController extends EventTarget implements EventListenerObject {
 			this._window.content.querySelector(`${OnscreenButton.tagName}.shoot`),
 			this._window.content.querySelector(`${OnscreenButton.tagName}.drag`)
 		);
-		const resources = new ResourceManager(paths.palette, paths.data, paths.strings, paths.sfx);
+		const resources = new ResourceManager(
+			paths.palette,
+			paths.data,
+			paths.strings,
+			paths.sfx,
+			paths.sfxFormat
+		);
 		const logger = new Logger(console);
 
 		return {

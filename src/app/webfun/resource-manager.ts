@@ -8,12 +8,20 @@ class ResourceManager implements ResourceManagerInterface {
 	private _dataURL: string;
 	private _soundBaseURL: string;
 	private _stringsURL: string;
+	private _soundFormat: string;
 
-	constructor(palette: string, data: string, strings: string, soundBase: string) {
+	constructor(
+		palette: string,
+		data: string,
+		strings: string,
+		soundBase: string,
+		soundFormat: string
+	) {
 		this._paletteURL = palette;
 		this._dataURL = data;
 		this._stringsURL = strings;
 		this._soundBaseURL = soundBase;
+		this._soundFormat = soundFormat;
 	}
 
 	async loadPalette(progress: (progress: number) => void): Promise<ColorPalette> {
@@ -35,8 +43,9 @@ class ResourceManager implements ResourceManagerInterface {
 			const fileName = name
 				.split(/[\/\\]/)
 				.last()
-				.toLowerCase();
-			const url = this._soundBaseURL.ensureTail("/") + encodeURIComponent(fileName + ".mp3");
+				.toLowerCase()
+				.replace(/\.(wav|mid|midi)/g, "");
+			const url = this._soundBaseURL + encodeURIComponent(`${fileName}.${this._soundFormat}`);
 			const request = new XMLHttpRequest();
 			request.open("GET", url);
 			request.responseType = "arraybuffer";

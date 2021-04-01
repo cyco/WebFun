@@ -188,7 +188,7 @@ describe("WebFun.App.GameController", () => {
 
 		subject = new GameController(
 			Yoda,
-			{ data: "", palette: "", strings: "", sfx: "" },
+			{ data: "", palette: "", strings: "", sfx: "", sfxFormat: "" },
 			mockSettings
 		);
 		subject.settings = {} as any;

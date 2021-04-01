@@ -103,6 +103,7 @@ class App {
 				{
 					data: config.data,
 					sfx: config.sfx,
+					sfxFormat: config["sfx-format"],
 					help: config.help,
 					strings: config.strings,
 					palette: config.palette
