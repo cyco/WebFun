@@ -1,32 +1,38 @@
 import ResourceManagerInterface from "src/engine/resource-manager";
 import { ColorPalette } from "src/engine/rendering";
 import { encodeURIComponent } from "src/std";
-import { FetchInputStream, FileLoader, ReaderStream } from "src/util";
+import { FetchInputStream, FileLoader, InputStream, ReaderStream } from "src/util";
+import { Section } from "./portable-executable/portable-executable";
+import DataSectionPaletteExtractor from "./data-section-palette-extractor";
+import {
+	PortableExecutableParser,
+	ResourceSectionParser,
+	ResourceType,
+	StringResourceParser
+} from "./portable-executable";
 
 class ResourceManager implements ResourceManagerInterface {
-	private _paletteURL: string;
 	private _dataURL: string;
 	private _soundBaseURL: string;
-	private _stringsURL: string;
 	private _soundFormat: string;
+	private _sections: Section[];
+	private _exeStream: InputStream;
+	private _exeURL: string;
 
-	constructor(
-		palette: string,
-		data: string,
-		strings: string,
-		soundBase: string,
-		soundFormat: string
-	) {
-		this._paletteURL = palette;
+	constructor(exe: string, data: string, soundBase: string, soundFormat: string) {
+		this._exeURL = exe;
 		this._dataURL = data;
-		this._stringsURL = strings;
 		this._soundBaseURL = soundBase;
 		this._soundFormat = soundFormat;
 	}
 
 	async loadPalette(progress: (progress: number) => void): Promise<ColorPalette> {
-		const stream = await FileLoader.loadAsStream(this._paletteURL, progress);
-		return ColorPalette.FromBGR8(stream.readUint8Array(0x400));
+		const sections = await this.loadSections(progress);
+		const dataSection = sections.find(s => s.name === ".data");
+		const extractor = new DataSectionPaletteExtractor();
+		const paletteData = extractor.extractPalette(dataSection, this._exeStream);
+
+		return ColorPalette.FromBGR8(paletteData);
 	}
 
 	async loadGameFile(progress: (progress: number) => void): Promise<ReaderStream> {
@@ -60,22 +66,32 @@ class ResourceManager implements ResourceManagerInterface {
 	}
 
 	async loadStrings(progress: (progress: number) => void): Promise<{ [_: number]: string }> {
-		if (!this._stringsURL || this._stringsURL.length === 0) {
-			return Promise.resolve({});
+		const sections = await this.loadSections(progress);
+		const resourceSection = sections.find(s => s.name === ".rsrc");
+		const resourceSectionParser = new ResourceSectionParser();
+		const resources = resourceSectionParser.parse(resourceSection, this._exeStream);
+		const stringResourceParser = new StringResourceParser();
+
+		return resources
+			.filter(r => r.type === ResourceType.RT_STRING)
+			.map(rsrc => stringResourceParser.parse(rsrc, resourceSection, this._exeStream))
+			.reduce((prev, val) => Object.assign(prev, val), {});
+	}
+
+	private async loadSections(progress: (_: number) => void) {
+		if (this._sections) {
+			progress(1);
+			return this._sections;
 		}
 
-		return new Promise((resolve, reject) => {
-			const request = new XMLHttpRequest();
-			request.open("GET", this._stringsURL);
-			request.responseType = "json";
-			request.onerror = reject;
-			request.onprogress = (e: ProgressEvent) => {
-				if (!e.lengthComputable) return;
-				progress(e.loaded / e.total);
-			};
-			request.onload = () => resolve(request.response);
-			request.send();
-		});
+		const stream = await FileLoader.loadAsStream(this._exeURL, progress);
+
+		this._exeStream = stream;
+		const parser = new PortableExecutableParser();
+		const executable = parser.parse(stream);
+		this._sections = executable.sections;
+
+		return this._sections;
 	}
 }
 

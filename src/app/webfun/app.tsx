@@ -105,8 +105,7 @@ class App {
 					sfx: config.sfx,
 					sfxFormat: config["sfx-format"],
 					help: config.help,
-					strings: config.strings,
-					palette: config.palette
+					exe: config.exe
 				}
 			]);
 		}

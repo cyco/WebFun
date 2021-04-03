@@ -1,7 +1,6 @@
 import ResourceManager from "src/app/webfun/resource-manager";
 import * as UtilModule from "src/util";
 import { FetchInputStream, FileLoader, InputStream } from "src/util";
-import { ColorPalette } from "src/engine";
 
 describe("WebFun.App.ResourceManager", () => {
 	const progressHandler: () => void = () => void 0;
@@ -22,25 +21,7 @@ describe("WebFun.App.ResourceManager", () => {
 		spyOn(window, "XMLHttpRequest").and.callFake(
 			() => (xhr = { open: jasmine.createSpy(), send: jasmine.createSpy() } as any)
 		);
-		subject = new ResourceManager(
-			"palette.data",
-			"data.data",
-			"strings.json",
-			"sound-base/",
-			"mp3"
-		);
-	});
-
-	it("loads the palette", async () => {
-		const mockedBuffer = ({} as unknown) as Uint8Array;
-		spyOn(ColorPalette, "FromBGR8");
-		spyOn(inputStream, "readUint8Array").and.returnValue(mockedBuffer);
-
-		await subject.loadPalette(progressHandler);
-
-		expect(FileLoader.loadAsStream).toHaveBeenCalled();
-		expect(inputStream.readUint8Array).toHaveBeenCalledWith(0x400);
-		expect(ColorPalette.FromBGR8).toHaveBeenCalledWith(mockedBuffer);
+		subject = new ResourceManager("yoda.exe", "data.data", "sound-base/", "mp3");
 	});
 
 	it("loads the game data", async () => {

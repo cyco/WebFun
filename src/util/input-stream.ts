@@ -79,11 +79,11 @@ class InputStream extends Stream {
 		return result;
 	}
 
-	public readCharacters(length: number, encoding: string = DefaultEncoding): string {
-		if (length === 0) return "";
+	public readCharacters(bytes: number, encoding: string = DefaultEncoding): string {
+		if (bytes === 0) return "";
 
-		const data = new Uint8Array(this.arrayBuffer, this._offset, length);
-		this._offset += length;
+		const data = new Uint8Array(this.arrayBuffer, this._offset, bytes);
+		this._offset += bytes;
 
 		const decoder = new TextDecoder(encoding);
 		return decoder.decode(data);
