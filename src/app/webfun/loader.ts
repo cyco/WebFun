@@ -30,7 +30,12 @@ class Loader extends EventTarget {
 	private _mixer: Mixer;
 	private _variant: Variant;
 
-	constructor(resources: ResourceManager, mixer: Mixer, variant: Variant) {
+	constructor(
+		resources: ResourceManager,
+		mixer: Mixer,
+		variant: Variant,
+		private log: (...args: any[]) => void
+	) {
 		super();
 
 		this._resources = resources;
@@ -47,12 +52,14 @@ class Loader extends EventTarget {
 			await this.readGameData();
 			await this.loadSounds();
 			await this.loadStrings();
+			this.log("All resources loaded");
 
 			this.dispatchEvent(Events.Load, {
 				palette: this._palette,
 				data: this._data
 			});
 		} catch (error) {
+			this.log("Failed", error);
 			this.dispatchEvent(Events.Fail, {
 				reason: error
 			});
@@ -60,12 +67,14 @@ class Loader extends EventTarget {
 	}
 
 	private async loadPalette(): Promise<void> {
+		this.log("Load palette");
 		this._progress(0, 0);
 		this._palette = await this._resources.loadPalette(p => this._progress(0, p));
 		this._progress(0, 1);
 	}
 
 	private async loadGameData(): Promise<void> {
+		this.log("Load game data");
 		this._progress(1, 0);
 		let hasSentSetupImage = false;
 		return new Promise(async (resolve, reject) => {
@@ -115,6 +124,7 @@ class Loader extends EventTarget {
 	}
 
 	private readGameData(): Promise<void> {
+		this.log("Read game data");
 		this._progress(2, 0);
 		this._data = new GameData(this._rawData);
 		this._progress(2, 1);
@@ -123,6 +133,7 @@ class Loader extends EventTarget {
 	}
 
 	private async loadSounds() {
+		this.log("Load sounds");
 		this._progress(3, 0);
 
 		let totalProgress = 0;
@@ -137,12 +148,14 @@ class Loader extends EventTarget {
 			]);
 
 		for (const [sound, request] of soundBufferRequests) {
-			await this._mixer.prepare(sound, await request);
+			const response = await request;
+			await this._mixer.prepare(sound, response);
 		}
 		this._progress(3, 1);
 	}
 
 	private async loadStrings() {
+		this.log("Load strings");
 		this._progress(4, 0);
 		this.dispatchEvent(Events.DidLoadStrings, {
 			strings: await this._resources.loadStrings(n => this._progress(4, n))
