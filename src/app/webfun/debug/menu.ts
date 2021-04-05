@@ -41,7 +41,18 @@ export default (gameController: GameController): Partial<MenuItemInit> => {
 			SettingsAction("Clear Settings", () => {
 				localStorage.clear();
 			}),
-			SettingsAction("Remove Service Workers", async () => {
+			MenuItemSeparator,
+			SettingsAction("Install Service Workers", async () => {
+				navigator.serviceWorker
+					.register(process.env.SWURL, { scope: "./" })
+					.then((reg: ServiceWorkerRegistration) => {
+						console.log("[ServiceWorkerClient]", "Service worker registration succeeded.", reg);
+					})
+					.catch((error: any) => {
+						console.log("[ServiceWorkerClient]", "Service worker registration failed:", error);
+					});
+			}),
+			SettingsAction("Uninstall Service Workers", async () => {
 				const registrations = await navigator.serviceWorker.getRegistrations();
 				for (const registration of registrations) {
 					try {
