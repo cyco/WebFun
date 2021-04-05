@@ -15,6 +15,10 @@ class AssetsHandler implements Handler {
 		if (cachedResponse) return cachedResponse;
 
 		const response = await fetch(request);
+		if (response.type === "error" || response.type === "opaque") {
+			return response;
+		}
+
 		const cache = await caches.open(this.cacheName);
 		cache.put(request, response.clone());
 
