@@ -16,6 +16,7 @@ const cssnano = require("cssnano");
 const postcss = require("postcss");
 const GitRevisionPlugin = require("git-revision-webpack-plugin");
 const gitRevisionPlugin = new GitRevisionPlugin();
+const FileListPlugin = require("./file-list-webpack-plugin");
 
 module.exports = {
 	entry: {
@@ -143,6 +144,10 @@ module.exports = {
 					context: "assets/game-data"
 				}
 			]
+		}),
+		new FileListPlugin({
+			output: "assets/install.json",
+			filter: file => file.match(/\.(js|css|woff|woff2|ttf|wasm|svg)$/)
 		}),
 		...(function (args) {
 			if (!args.includes("--stats")) return [];

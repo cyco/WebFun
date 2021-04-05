@@ -16,7 +16,6 @@ class ServiceWorker implements EventListenerObject {
 	}
 
 	handleEvent(e: ExtendableEvent): void {
-		this.log("handle event", e.type);
 		switch (e.type) {
 			case "activate":
 				e.waitUntil(this.handleActivate());
@@ -34,7 +33,7 @@ class ServiceWorker implements EventListenerObject {
 	}
 
 	private async handleActivate(): Promise<void> {
-		this.log("activate");
+		this.log("Activate");
 		await this.clearOldCaches();
 		await this.global.clients.claim();
 	}
@@ -52,7 +51,12 @@ class ServiceWorker implements EventListenerObject {
 	}
 
 	private async handleInstall(_: Event): Promise<void> {
-		this.log("install");
+		this.log("Install");
+		const filesResponse = await fetch("assets/install.json");
+		const files = await filesResponse.json();
+		const cache = await caches.open(this.fetchHandlers[1].cacheName);
+		this.log("Preload", files.length, "files");
+		await cache.addAll(files);
 		await this.global.skipWaiting();
 	}
 

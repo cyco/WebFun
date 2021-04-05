@@ -11,6 +11,7 @@ class AppShellHandler implements FetchHandler {
 			url.pathname.includes("/webfun.js") ||
 			url.pathname.includes("/service-worker.js") ||
 			url.pathname.includes("/manifest.json") ||
+			url.pathname.includes("/assets/install.json") ||
 			url.pathname.endsWith("/")
 		);
 	}
