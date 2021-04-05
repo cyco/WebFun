@@ -15,7 +15,7 @@ class DataSectionPaletteExtractor {
 			return data.slice(i + marker.length, i + marker.length + 0x400);
 		}
 
-		return null;
+		throw new Error("Could not find color palette in data section of executable");
 	}
 }
 
