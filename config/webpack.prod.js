@@ -117,18 +117,6 @@ module.exports = {
 					to: "assets/icon/[name][ext]"
 				},
 				{
-					from: "assets/game-data/*.{data,pal,hlp,json}",
-					to: "data/[name][ext]",
-					noErrorOnMissing: true
-				},
-				{
-					from: "sfx-*/**/*",
-					to: "data",
-					noErrorOnMissing: true,
-					toType: "dir",
-					context: "assets/game-data"
-				},
-				{
 					from: "assets/icon/favicon.ico",
 					to: "[name][ext]"
 				}
