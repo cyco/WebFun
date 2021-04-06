@@ -46,6 +46,8 @@ export default (gameController: GameController): Partial<MenuItemInit> => {
 				navigator.serviceWorker
 					.register(process.env.SWURL)
 					.then((reg: ServiceWorkerRegistration) => {
+						reg.onupdatefound = () =>
+							console.log("[ServiceWorkerClient]", "Service worker found an update", reg);
 						console.log("[ServiceWorkerClient]", "Service worker registration succeeded.", reg);
 					})
 					.catch((error: any) => {
