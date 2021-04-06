@@ -23,12 +23,17 @@ class AppShellHandler implements FetchHandler {
 				const cache = await caches.open(this.cacheName);
 				cache.put(request, response.clone());
 				// TODO: consider caching response under alternative url (`/` vs `/index.html`) as well
+				this.log("Caching", response.url, "in", this.cacheName);
 			}
 
 			return response;
 		} catch (error) {}
 
 		return await caches.match(request);
+	}
+
+	private log(...args: any[]): void {
+		console.log("[ServiceWorker]", ...args);
 	}
 }
 

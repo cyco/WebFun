@@ -19,8 +19,13 @@ class AssetsHandler implements Handler {
 
 		const cache = await caches.open(this.cacheName);
 		cache.put(request, response.clone());
+		this.log("Caching", response.url, "in", this.cacheName);
 
 		return response;
+	}
+
+	private log(...args: any[]): void {
+		console.log("[ServiceWorker]", ...args);
 	}
 }
 
