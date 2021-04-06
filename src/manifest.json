@@ -6,12 +6,13 @@
 	"theme_color": "#000",
 	"start_url": "/?source=pwa",
 	"display": "fullscreen",
-	"scope": "../",
+	"scope": "/",
 	"icons": [
 		{
 			"src": "assets/icon/apple-touch-icon.png",
 			"type": "image/png",
-			"sizes": "180x180"
+			"sizes": "180x180",
+			"purpose": "maskable any"
 		},
 		{
 			"src": "assets/icon/appicon-192x192.png",
