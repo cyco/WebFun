@@ -84,7 +84,7 @@ class ResourceManager implements ResourceManagerInterface {
 			return this._sections;
 		}
 
-		const stream = await FileLoader.loadAsStream(this._exeURL, progress);
+		const stream = await FileLoader.loadAsStream(this._exeURL, progress, { expectedSize: 450_000 });
 
 		this._exeStream = stream;
 		const parser = new PortableExecutableParser();

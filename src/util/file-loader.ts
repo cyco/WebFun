@@ -8,18 +8,28 @@ export const Event = {
 	Fail: "fail"
 };
 
+export type FileLoaderOptions = {
+	expectedSize: number;
+};
+
+const FileLoaderDefaultOptions = {
+	expectedSize: Infinity
+};
+
 class FileLoader extends EventTarget {
 	public onfail: (_: CustomEvent) => void;
 	public onprogress: (_: CustomEvent) => void;
 	public onload: (_: CustomEvent) => void;
 	private _path: string;
+	private _options: FileLoaderOptions;
 
 	public static async loadAsStream(
 		path: string,
-		progress?: (p: number) => void
+		progress?: (p: number) => void,
+		options: Partial<FileLoaderOptions> = {}
 	): Promise<InputStream> {
 		return new Promise<InputStream>((resolve, reject) => {
-			const loader = new this(path);
+			const loader = new this(path, options);
 			loader.onload = (e: any) => resolve(e.detail.stream);
 			loader.onfail = reject;
 			if (progress)
@@ -28,9 +38,10 @@ class FileLoader extends EventTarget {
 		});
 	}
 
-	constructor(path: string) {
+	constructor(path: string, options: Partial<FileLoaderOptions>) {
 		super();
 		this._path = path;
+		this._options = Object.assign({}, FileLoaderDefaultOptions, options);
 	}
 
 	public load(): void {
@@ -42,7 +53,8 @@ class FileLoader extends EventTarget {
 
 		reader.onload = ({ target }) => this._didLoad(target as XMLHttpRequest);
 		reader.onerror = event => this._didFail(event);
-		reader.onprogress = (e: any) => this._didProgress(e.loaded / e.total);
+		reader.onprogress = (e: any) =>
+			this._didProgress(e.loaded / (e.total === 0 ? this._options.expectedSize : e.total));
 		reader.send(void 0);
 
 		this.dispatchEvent(Event.Start);
