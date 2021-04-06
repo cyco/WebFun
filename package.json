@@ -7,7 +7,7 @@
     "node": "15"
   },
   "scripts": {
-    "build": "webpack --mode=production --config config/webpack.prod.js",
+    "build": "webpack --mode=production --config config/webpack.prod.js && webpack --mode=production --config config/webpack.service-worker.js",
     "start": "webpack serve --open --mode=development --config config/webpack.dev.js",
     "test": "karma start config/karma.conf.js --single-run",
     "test:cont": "karma start config/karma.conf.js --watch --single-run=false",

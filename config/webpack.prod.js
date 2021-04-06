@@ -20,23 +20,14 @@ const FileListPlugin = require("./file-list-webpack-plugin");
 
 module.exports = {
 	entry: {
-		"webfun": Path.resolve(Paths.sourceRoot, "app/webfun/main"),
-		"service-worker": Path.resolve(Paths.sourceRoot, "app/service-worker/main")
+		webfun: Path.resolve(Paths.sourceRoot, "app/webfun/main")
 	},
 	mode: "production",
 	output: {
 		path: Paths.buildRoot,
 		publicPath: "",
-		filename: pathData => {
-			return pathData.chunk.name === "service-worker"
-				? "/[name].js"
-				: "assets/webfun.[name]-[git-revision-version].js";
-		},
-		chunkFilename: pathData => {
-			return pathData.chunk.name === "service-worker"
-				? "[name].js"
-				: "assets/webfun.[name]-[git-revision-version].js";
-		}
+		filename: "assets/webfun.[name]-[git-revision-version].js",
+		chunkFilename: "assets/webfun.[name]-[git-revision-version].js"
 	},
 	node: false,
 	optimization: {
@@ -68,12 +59,6 @@ module.exports = {
 				},
 				"editor": {
 					test: /src[/\\]app[/\\]editor[/\\]/,
-					priority: 10,
-					reuseExistingChunk: true,
-					enforce: true
-				},
-				"service-worker": {
-					test: /src[/\\]app[/\\]service-worker[/\\]/,
 					priority: 10,
 					reuseExistingChunk: true,
 					enforce: true
