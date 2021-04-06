@@ -29,12 +29,12 @@ module.exports = {
 		publicPath: "",
 		filename: pathData => {
 			return pathData.chunk.name === "service-worker"
-				? "assets/[name].js"
+				? "/[name].js"
 				: "assets/webfun.[name]-[git-revision-version].js";
 		},
 		chunkFilename: pathData => {
 			return pathData.chunk.name === "service-worker"
-				? "assets/[name].js"
+				? "[name].js"
 				: "assets/webfun.[name]-[git-revision-version].js";
 		}
 	},
@@ -99,7 +99,7 @@ module.exports = {
 			"process.env.VERSION": JSON.stringify(gitRevisionPlugin.version()),
 			"process.env.COMMITHASH": JSON.stringify(gitRevisionPlugin.commithash()),
 			"process.env.BRANCH": JSON.stringify(gitRevisionPlugin.branch()),
-			"process.env.SWURL": JSON.stringify("assets/service-worker.js")
+			"process.env.SWURL": JSON.stringify("/service-worker.js")
 		}),
 		new CleanWebpackPlugin({ root: Paths.buildRoot }),
 		new HtmlWebpackPlugin({

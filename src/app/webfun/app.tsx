@@ -50,7 +50,7 @@ class App {
 		}
 
 		navigator.serviceWorker
-			.register(process.env.SWURL, { scope: "./" })
+			.register(process.env.SWURL)
 			.then((reg: ServiceWorkerRegistration) => {
 				console.log("[ServiceWorkerClient]", "Service worker registration succeeded.", reg);
 			})
