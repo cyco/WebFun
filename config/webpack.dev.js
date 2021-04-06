@@ -11,8 +11,7 @@ const BaseConfig = require("./webpack.common");
 
 module.exports = merge(BaseConfig, {
 	entry: {
-		"webfun": Path.resolve(Paths.sourceRoot, "app/webfun/main"),
-		"service-worker": Path.resolve(Paths.sourceRoot, "app/service-worker/main")
+		webfun: Path.resolve(Paths.sourceRoot, "app/webfun/main")
 	},
 	devtool: "eval-source-map",
 	mode: "development",
