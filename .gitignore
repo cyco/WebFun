@@ -13,6 +13,8 @@ assets/save-games/construct.wld
 assets/ingame-coverage.json
 bin
 build
+config/deploy.sh
+config/nginx.conf
 config/.babel
 config/.hard-source
 config/.typescript
