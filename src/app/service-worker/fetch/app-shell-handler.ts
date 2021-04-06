@@ -19,21 +19,16 @@ class AppShellHandler implements FetchHandler {
 	async handle(request: Request): Promise<Response> {
 		try {
 			const response = await fetch(request);
-			if (response.type === "error" || response.type === "opaque") {
-				return response;
+			if (response.ok) {
+				const cache = await caches.open(this.cacheName);
+				cache.put(request, response.clone());
+				// TODO: consider caching response under alternative url (`/` vs `/index.html`) as well
 			}
 
-			const cache = await caches.open(this.cacheName);
-			cache.put(request, response.clone());
-			// TODO: consider caching response under alternative url (`/` vs `/index.html`) as well
-
 			return response;
-		} catch (error) {
-			const response = await caches.match(error.request);
-			if (!response) throw error;
+		} catch (error) {}
 
-			return response;
-		}
+		return await caches.match(request);
 	}
 }
 
