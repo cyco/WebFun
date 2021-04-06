@@ -132,7 +132,8 @@ module.exports = {
 		}),
 		new FileListPlugin({
 			output: "assets/install.json",
-			filter: file => file.match(/\.(js|css|woff|woff2|ttf|wasm|svg)$/)
+			filter: file => file.match(/\.(js|css|woff|woff2|ttf|otf|wasm|svg)$/),
+			static: ["/", "/index.html", "/?source=pwa"]
 		}),
 		...(function (args) {
 			if (!args.includes("--stats")) return [];
