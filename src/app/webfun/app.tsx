@@ -30,6 +30,7 @@ class App {
 		this.setupTestFileHandler();
 		this.createDebugGameLinks();
 		this.ensureAddressbarCanBeHidden();
+		this.enterPWA();
 	}
 
 	private endPreload() {
@@ -146,8 +147,20 @@ class App {
 		return controller;
 	}
 
+	private enterPWA() {
+		if (!this.isUsingPWA()) return;
+
+		this.root.querySelector("a").click();
+	}
+
+	private isUsingPWA() {
+		const url = new URL(window.location.href);
+		return url.searchParams.get("source") === "pwa";
+	}
+
 	public get windowManager(): WindowManager {
 		return this.windowManager;
 	}
 }
+
 export default App;
