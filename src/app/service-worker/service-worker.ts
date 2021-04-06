@@ -1,5 +1,7 @@
 import { Handler as FetchHandler, AppShellHandler, GameFilesHandler, AssetsHandler } from "./fetch";
 
+console.log("imported service worker class");
+
 class ServiceWorker implements EventListenerObject {
 	private global: ServiceWorkerGlobalScope;
 	private fetchHandlers: FetchHandler[];
@@ -10,9 +12,14 @@ class ServiceWorker implements EventListenerObject {
 	}
 
 	public run(): void {
-		this.global.addEventListener("install", this);
-		this.global.addEventListener("activate", this);
-		this.global.addEventListener("fetch", this);
+		console.assert(
+			!("document" in this.global),
+			"[ServiceWorker] Worker should not run in main window context!"
+		);
+
+		this.global.addEventListener("activate", () => console.log("activate 1"));
+		this.global.addEventListener("install", () => console.log("install"));
+		this.global.addEventListener("fetch", () => console.log("fetch"));
 	}
 
 	handleEvent(e: ExtendableEvent): void {
@@ -29,6 +36,8 @@ class ServiceWorker implements EventListenerObject {
 				if (handler) event.respondWith(handler.handle(event.request));
 				return;
 			}
+			default:
+				this.log(`Unknown ${e.type} event received`);
 		}
 	}
 
