@@ -127,6 +127,10 @@ module.exports = {
 					noErrorOnMissing: true,
 					toType: "dir",
 					context: "assets/game-data"
+				},
+				{
+					from: "assets/icon/favicon.ico",
+					to: "[name][ext]"
 				}
 			]
 		}),
