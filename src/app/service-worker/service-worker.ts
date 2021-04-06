@@ -30,7 +30,8 @@ class ServiceWorker implements EventListenerObject {
 				return;
 			case "fetch": {
 				const event = e as FetchEvent;
-				const handler = this.fetchHandlers.find(handler => handler.shouldHandle(event.request));
+				const url = new URL(event.request.url);
+				const handler = this.fetchHandlers.find(handler => handler.shouldHandle(url));
 				if (handler) event.respondWith(handler.handle(event.request));
 				return;
 			}
@@ -61,9 +62,13 @@ class ServiceWorker implements EventListenerObject {
 		this.log("Install");
 		const filesResponse = await fetch("assets/install.json");
 		const files = await filesResponse.json();
-		const cache = await caches.open(this.fetchHandlers[1].cacheName);
 		this.log("Preload", files.length, "files");
-		await cache.addAll(files);
+		for (const file of files) {
+			const url = new URL(file, self.location.href.split("/").slice(0, -1).join("/"));
+			const handler = this.fetchHandlers.find(handler => handler.shouldHandle(url));
+			const cache = await caches.open(handler.cacheName);
+			await cache.add(file);
+		}
 		await this.global.skipWaiting();
 	}
 

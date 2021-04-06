@@ -1,6 +1,6 @@
 interface Handler {
 	readonly cacheName: string;
-	shouldHandle(request: Request): boolean;
+	shouldHandle(url: URL): boolean;
 	handle(request: Request): Promise<Response>;
 }
 

@@ -3,9 +3,7 @@ import Handler from "./handler";
 class GameFilesHandler implements Handler {
 	public readonly cacheName: string = "webfun/games";
 
-	shouldHandle(request: Request): boolean {
-		const url = new URL(request.url);
-
+	shouldHandle(url: URL): boolean {
 		return (
 			url.hostname.endsWith("archive.org") ||
 			url.pathname.includes("/game-data/") ||

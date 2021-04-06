@@ -3,10 +3,10 @@ import Handler from "./handler";
 class AssetsHandler implements Handler {
 	public readonly cacheName = `webfun/assets-${process.env.VERSION}`;
 
-	shouldHandle(request: Request): boolean {
+	shouldHandle(url: URL): boolean {
 		return (
-			!request.url.includes("__webpack_dev_server__") &&
-			(request.url.endsWith(".js") || request.url.includes("/assets/"))
+			!url.pathname.includes("__webpack_dev_server__") &&
+			(url.pathname.endsWith(".js") || url.pathname.includes("/assets/"))
 		);
 	}
 
@@ -19,7 +19,6 @@ class AssetsHandler implements Handler {
 
 		const cache = await caches.open(this.cacheName);
 		cache.put(request, response.clone());
-		this.log("Caching", response.url, "in", this.cacheName);
 
 		return response;
 	}

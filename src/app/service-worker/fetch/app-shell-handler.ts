@@ -3,16 +3,16 @@ import FetchHandler from "./handler";
 class AppShellHandler implements FetchHandler {
 	public readonly cacheName = "webfun/shell";
 
-	shouldHandle(request: Request): boolean {
-		const url = new URL(request.url);
-
+	shouldHandle(url: URL): boolean {
 		return (
+			url.pathname.endsWith("/") ||
+			url.pathname.endsWith("/?source=pwa") ||
 			url.pathname.endsWith("index.html") ||
+			url.pathname.endsWith("index.html/?source=pwa") ||
 			url.pathname.includes("/webfun.js") ||
 			url.pathname.includes("/service-worker.js") ||
 			url.pathname.includes("/manifest.json") ||
-			url.pathname.includes("/assets/install.json") ||
-			url.pathname.endsWith("/")
+			url.pathname.includes("/assets/install.json")
 		);
 	}
 
@@ -27,7 +27,9 @@ class AppShellHandler implements FetchHandler {
 			}
 
 			return response;
-		} catch (error) {}
+		} catch (error) {
+			console.warn("[ServiceWorker]", "AppShellHandler caught", error);
+		}
 
 		return await caches.match(request);
 	}
