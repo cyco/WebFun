@@ -109,7 +109,7 @@
 	</head>
 
 	<body onload="articleMain()">
-		<wf-app class="preload" style="height: 90vh">
+		<wf-app class="preload" style="height: 371px">
 			<style>
 			body {
 				margin: 0;
@@ -162,6 +162,21 @@
 				text-shadow: -0.5px -0.5px 0.5px #111, 1px 1px 0.5px #363636
 			}
 
+			noscript {
+				margin-top: 0.8em;
+				display: block;
+				font-size: 2em;
+				z-index: 1001;
+				text-align: center;
+				font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, "AppleGothic", sans-serif;
+				text-transform: uppercase;
+				text-rendering: optimizeLegibility;
+				color: #202020;
+				background-color: #2d2d2d;
+				text-shadow: -1px -1px 1px #111, 2px 2px 1px #363636;
+				text-shadow: -0.5px -0.5px 0.5px #111, 1px 1px 0.5px #363636
+			}
+
 			@keyframes spin {
 				0% {
 					transform: rotate(0deg)
@@ -172,8 +187,16 @@
 				}
 			}
 			</style>
-			<div id="webfun-preload-spinner"></div>
-			<div id="webfun-preload-text">LOADING</div>
+			<div style="display: none;" id="webfun-preload-spinner"></div>
+			<div style="display: none;" id="webfun-preload-text">LOADING</div>
+			<noscript>Enable JavaScript to play!</noscript>
+			<script>
+				const script = document.currentScript;
+				const parent = script.parentElement;
+				parent.style.height = "90vh";
+				parent.children[1].style.display = "";
+				parent.children[2].style.display = "";
+			</script>
 		</wf-app>
 		<main>
 			<article>
