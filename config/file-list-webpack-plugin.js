@@ -1,6 +1,8 @@
+const DefaultOptions = { output: "file-list.json", filter: () => true };
+
 class FileListPlugin {
 	constructor(options) {
-		this.options = Object.assign({}, options, { output: "file-list.json", filter: () => true });
+		this.options = Object.assign({}, DefaultOptions, options);
 	}
 
 	apply(compiler) {
