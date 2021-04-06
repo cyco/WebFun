@@ -44,7 +44,7 @@ class App {
 			return;
 		}
 
-		if (process.env.WEBPACK_MODE !== "production") {
+		if (process.env.NODE_ENV !== "production") {
 			console.log("[ServiceWorkerClient]", "Skipping registration in development mode");
 			return;
 		}
