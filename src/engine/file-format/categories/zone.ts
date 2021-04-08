@@ -200,7 +200,7 @@ export const parseZax2 = (stream: InputStream, data: Data): void => {
 
 	for (let i = 0; i < data.zones.length; i++) {
 		const { providedItemIDs } = parseZoneAux2(stream, data);
-		data.zones[i].npcIDs = providedItemIDs;
+		data.zones[i].providedItemIDs = providedItemIDs;
 	}
 };
 
