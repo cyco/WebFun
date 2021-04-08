@@ -34,7 +34,7 @@ class GlobalFileDrop implements EventListenerObject {
 	}
 
 	public addHandler(type: string, onDrop: (file: File) => void): void {
-		this._handlers[type] = onDrop;
+		this._handlers[type.toLowerCase()] = onDrop;
 	}
 
 	public handleEvent(event: DragEvent): void {
@@ -54,7 +54,7 @@ class GlobalFileDrop implements EventListenerObject {
 			const files = Array.from(event.dataTransfer.files);
 			let acceptedSomething = false;
 			for (const file of files) {
-				const ext = file.name.split(".").last();
+				const ext = file.name.split(".").last().toLowerCase();
 				const handler = this._handlers[ext];
 				if (handler) {
 					acceptedSomething = true;
