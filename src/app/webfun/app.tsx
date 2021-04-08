@@ -6,8 +6,9 @@ import { Variant } from "src/engine";
 import { WindowManager } from "src/ui";
 import { GlobalFileDrop } from "src/ux";
 import GameController, { PathConfiguration } from "./game-controller";
-import { EventTarget } from "src/util";
+import { EventTarget, FileLoader } from "src/util";
 import { navigator } from "src/std/dom";
+import IniReader from "./ini-reader";
 
 class App {
 	public static sharedApp: App;
@@ -28,6 +29,7 @@ class App {
 		this.registerServiceWorker();
 		this.setupSaveGameFileHandler();
 		this.setupTestFileHandler();
+		this.setupIniFileHandler();
 		this.createDebugGameLinks();
 		this.ensureAddressbarCanBeHidden();
 		this.enterPWA();
@@ -81,6 +83,33 @@ class App {
 		//if (!this.defaultGameController) await this.showDefaultGameController();
 		//this.showDefaultGameController();
 		loadFile.default(this.defaultGameController)(file);
+	}
+
+	private async setupIniFileHandler(): Promise<void> {
+		const fileDrop = GlobalFileDrop.defaultHandler;
+		fileDrop.addHandler("ini", (file: File) => this.loadIni(file));
+	}
+
+	private async loadIni(file: File): Promise<void> {
+		const text = await file.readAsText();
+		const reader = new IniReader();
+		const contents = reader.readFromString(text);
+
+		const apply = <T extends keyof Settings>(settingsKey: T, iniKey: string) => {
+			if (!contents[iniKey]) return;
+
+			if (typeof this.settings[settingsKey] === "boolean") {
+				(this.settings as any)[settingsKey] = !!+contents[iniKey];
+			}
+
+			if (typeof this.settings[settingsKey] === "number") {
+				(this.settings as any)[settingsKey] = +contents[iniKey];
+			}
+		};
+
+		apply("playMusic", "options.playMusic");
+		apply("playEffects", "options.playSound");
+		apply("difficulty", "options.difficulty");
 	}
 
 	private createDebugGameLinks(): void {
