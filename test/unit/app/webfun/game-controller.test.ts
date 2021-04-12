@@ -186,7 +186,11 @@ describe("WebFun.App.GameController", () => {
 		spyOn(AppAudioModule, "Mixer").and.returnValue(mockMixer);
 		spyOn(AppCanvasRendererModule, "Renderer").and.returnValue(mockRenderer);
 
-		subject = new GameController(Yoda, { data: "", exe: "", sfx: "", sfxFormat: "" }, mockSettings);
+		subject = new GameController(
+			Yoda,
+			{ variant: "yoda", data: "", exe: "", sfx: "", sfxFormat: "" },
+			mockSettings
+		);
 		subject.settings = {} as any;
 	}
 

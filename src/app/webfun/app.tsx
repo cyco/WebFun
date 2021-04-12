@@ -137,7 +137,8 @@ class App {
 					sfx: config.sfx,
 					sfxFormat: config["sfx-format"],
 					help: config.help,
-					exe: config.exe
+					exe: config.exe,
+					variant: config.variant
 				}
 			]);
 		}
