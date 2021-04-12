@@ -69,7 +69,13 @@ class ResourceManager implements ResourceManagerInterface {
 				if (!e.lengthComputable) return;
 				progress(e.loaded / e.total);
 			};
-			request.onload = () => resolve(request.response);
+			request.onload = () => {
+				if (request.status !== 200) {
+					reject(new Error(`Could not retrieve sound file ${name}`));
+				} else {
+					resolve(request.response);
+				}
+			};
 			request.send();
 		});
 	}
