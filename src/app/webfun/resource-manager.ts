@@ -10,6 +10,7 @@ import {
 	ResourceType,
 	StringResourceParser
 } from "./portable-executable";
+import { PortaleExecutableFileFormatError } from "./portable-executable/portable-executable-parser";
 
 class ResourceManager implements ResourceManagerInterface {
 	private _dataURL: string;
@@ -27,12 +28,19 @@ class ResourceManager implements ResourceManagerInterface {
 	}
 
 	async loadPalette(progress: (progress: number) => void): Promise<ColorPalette> {
-		const sections = await this.loadSections(progress);
-		const dataSection = sections.find(s => s.name === ".data");
-		const extractor = new DataSectionPaletteExtractor();
-		const paletteData = extractor.extractPalette(dataSection, this._exeStream);
+		try {
+			const sections = await this.loadSections(progress);
+			const dataSection = sections.find(s => s.name === ".data");
+			const extractor = new DataSectionPaletteExtractor();
+			const paletteData = extractor.extractFromDataSection(dataSection, this._exeStream);
+			return ColorPalette.FromBGR8(paletteData);
+		} catch (e) {
+			if (!(e instanceof PortaleExecutableFileFormatError)) throw e;
 
-		return ColorPalette.FromBGR8(paletteData);
+			const extractor = new DataSectionPaletteExtractor();
+			const paletteData = extractor.extractFromBinary(this._exeStream);
+			return ColorPalette.FromBGR8(paletteData);
+		}
 	}
 
 	async loadGameFile(progress: (progress: number) => void): Promise<ReaderStream> {
@@ -66,16 +74,22 @@ class ResourceManager implements ResourceManagerInterface {
 	}
 
 	async loadStrings(progress: (progress: number) => void): Promise<{ [_: number]: string }> {
-		const sections = await this.loadSections(progress);
-		const resourceSection = sections.find(s => s.name === ".rsrc");
-		const resourceSectionParser = new ResourceSectionParser();
-		const resources = resourceSectionParser.parse(resourceSection, this._exeStream);
-		const stringResourceParser = new StringResourceParser();
+		try {
+			const sections = await this.loadSections(progress);
+			const resourceSection = sections.find(s => s.name === ".rsrc");
+			const resourceSectionParser = new ResourceSectionParser();
+			const resources = resourceSectionParser.parse(resourceSection, this._exeStream);
+			const stringResourceParser = new StringResourceParser();
 
-		return resources
-			.filter(r => r.type === ResourceType.RT_STRING)
-			.map(rsrc => stringResourceParser.parse(rsrc, resourceSection, this._exeStream))
-			.reduce((prev, val) => Object.assign(prev, val), {});
+			return resources
+				.filter(r => r.type === ResourceType.RT_STRING)
+				.map(rsrc => stringResourceParser.parse(rsrc, resourceSection, this._exeStream))
+				.reduce((prev, val) => Object.assign(prev, val), {});
+		} catch (e) {
+			if (e instanceof PortaleExecutableFileFormatError) return {};
+
+			throw e;
+		}
 	}
 
 	private async loadSections(progress: (_: number) => void) {

@@ -1,6 +1,8 @@
 import { InputStream } from "src/util";
 import { PortableExecutable } from "./portable-executable";
 
+export class PortaleExecutableFileFormatError extends Error {}
+
 class PortableExecutableParser {
 	public parse(stream: InputStream): PortableExecutable {
 		const mzHeader = this.readMZ(stream);
@@ -15,7 +17,9 @@ class PortableExecutableParser {
 
 	private readMZ(stream: InputStream) {
 		const magic = stream.readCharacters(2) as "MZ";
-		console.assert(magic === "MZ");
+		if (magic !== "MZ") {
+			throw new PortaleExecutableFileFormatError("File does not contain a valid MZ header.");
+		}
 
 		const data = stream.readUint8Array(0x3a);
 		const peHeaderOffset = stream.readUint32();
@@ -25,7 +29,10 @@ class PortableExecutableParser {
 
 	private readPEHeader(stream: InputStream) {
 		const magic = stream.readCharacters(2);
-		console.assert(magic === "PE");
+		if (magic !== "PE") {
+			throw new PortaleExecutableFileFormatError("File does not contain a valid PE header");
+		}
+
 		const reserved1 = stream.readUint16();
 		console.assert(reserved1 === 0);
 
