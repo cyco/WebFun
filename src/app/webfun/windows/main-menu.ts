@@ -136,9 +136,9 @@ class MainMenu extends Menu {
 						callback: () => {
 							const helpWindow = document.createElement(HelpViewer.tagName);
 							controller.window.manager.showWindow(helpWindow);
-							helpWindow.loadHelpFile(controller.paths.help);
+							helpWindow.loadHelpFile(controller.gameSource.help);
 						},
-						enabled: () => controller.paths.help?.length > 0,
+						enabled: () => controller.gameSource.help?.length > 0,
 						mnemonic: 0
 					},
 					{

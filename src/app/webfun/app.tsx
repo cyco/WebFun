@@ -5,7 +5,7 @@ import { Indy, IndyDemo, Yoda, YodaDemo } from "src/variant";
 import { Variant } from "src/engine";
 import { WindowManager } from "src/ui";
 import { GlobalFileDrop } from "src/ux";
-import GameController, { PathConfiguration } from "./game-controller";
+import GameController, { GameSource } from "./game-controller";
 import { EventTarget, FileLoader } from "src/util";
 import { navigator } from "src/std/dom";
 import IniReader from "./ini-reader";
@@ -126,8 +126,8 @@ class App {
 		this.root.appendChild(container);
 	}
 
-	private loadGamesFromEnvironment(): [string, Variant, PathConfiguration][] {
-		const games: [string, Variant, PathConfiguration][] = [];
+	private loadGamesFromEnvironment(): [string, Variant, GameSource][] {
+		const games: [string, Variant, GameSource][] = [];
 		for (const config of JSON.parse(process.env["WEBFUN_GAMES"])) {
 			games.push([
 				config.title,

@@ -59,7 +59,7 @@ export const Event = {
 	DidLoadData: "didLoadData"
 };
 
-export interface PathConfiguration {
+export interface GameSource {
 	data: string;
 	exe: string;
 	sfx: string;
@@ -77,13 +77,13 @@ class GameController extends EventTarget implements EventListenerObject {
 	private _engine: Engine = null;
 	private _eventHandler = new GameEventHandler();
 	public readonly variant: Variant;
-	public readonly paths: PathConfiguration;
+	public readonly gameSource: GameSource;
 
-	constructor(variant: Variant, paths: PathConfiguration, settings: Settings & EventTarget) {
+	constructor(variant: Variant, gameSource: GameSource, settings: Settings & EventTarget) {
 		super();
 
 		this.variant = variant;
-		this.paths = paths;
+		this.gameSource = gameSource;
 		this.settings = settings;
 
 		this.settings.mobile = !!(SmartPhone(false).isAndroid() || SmartPhone(false).isIPhone());
@@ -114,7 +114,7 @@ class GameController extends EventTarget implements EventListenerObject {
 		this._window.menu = new mainMenuClass(this, this.settings);
 	}
 
-	private _buildInterface(paths: PathConfiguration): Partial<Interface> {
+	private _buildInterface(paths: GameSource): Partial<Interface> {
 		const mixer = new Mixer(this.settings);
 		const renderer = new CanvasRenderer.Renderer(this._sceneView.canvas);
 		const inputManager = new InputManager(
@@ -349,7 +349,7 @@ class GameController extends EventTarget implements EventListenerObject {
 	}
 
 	private setupEngine() {
-		const engine: Engine = new Engine(this.variant, this._buildInterface(this.paths));
+		const engine: Engine = new Engine(this.variant, this._buildInterface(this.gameSource));
 		engine.settings = this.settings;
 		engine.hero.addEventListener(Hero.Event.HealthDidChange, this);
 
