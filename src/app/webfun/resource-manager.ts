@@ -15,12 +15,12 @@ import { PortaleExecutableFileFormatError } from "./portable-executable/portable
 class ResourceManager implements ResourceManagerInterface {
 	private _dataURL: string;
 	private _soundBaseURL: string;
-	private _soundFormat: string;
+	private _soundFormat?: string;
 	private _sections: Section[];
 	private _exeStream: InputStream;
 	private _exeURL: string;
 
-	constructor(exe: string, data: string, soundBase: string, soundFormat: string) {
+	constructor(exe: string, data: string, soundBase: string, soundFormat?: string) {
 		this._exeURL = exe;
 		this._dataURL = data;
 		this._soundBaseURL = soundBase;
@@ -59,7 +59,8 @@ class ResourceManager implements ResourceManagerInterface {
 				.last()
 				.toLowerCase()
 				.replace(/\.(wav|mid|midi)/g, "");
-			const url = this._soundBaseURL + encodeURIComponent(`${fileName}.${this._soundFormat}`);
+			const extension = this._soundFormat ?? name.toLowerCase().split(".").last();
+			const url = this._soundBaseURL + encodeURIComponent(`${fileName}.${extension}`);
 			const request = new XMLHttpRequest();
 			request.open("GET", url);
 			request.responseType = "arraybuffer";

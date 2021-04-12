@@ -63,7 +63,7 @@ export interface GameSource {
 	data: string;
 	exe: string;
 	sfx: string;
-	sfxFormat: string;
+	sfxFormat?: string;
 	help?: string;
 }
 
