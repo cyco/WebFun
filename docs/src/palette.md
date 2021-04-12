@@ -1,15 +1,15 @@
 Palette
 =======
 
-Like many 2D games, *Yoda Stories* and *Indy’s Desktop Adventure* use a color palette. That means colors you see on the screen are not specified directly by supplying values for the three components red, green and blue, but rather by supplying an offset into a color palette.
+Like many 2D games, *Yoda Stories* and *Indy’s Desktop Adventures* use a color palette. That means colors you see on the screen are not specified directly by supplying values for the three components red, green and blue, but rather by supplying an offset into a color palette.
 
 This has two main advantages. First, the amount of data required to specify an image is drastically reduced by 2/3. Second, and more importantly, changing a color in the palette affects all pixels on screen that are using that specific palette spot. This allows for very efficient animations and the results for cleverly composed images are pretty impressive. Check out [this site](http://www.effectgames.com/effect/article-Old_School_Color_Cycling_with_HTML5.html) to see what can be done with palette animations.
 
 Back to *Yoda Stories*, there are several regions in the color palette that are animated during game play to make the environment more lively.
 
-![Color palette used by Yoda Stories](images/palette.png)
-
-![Color palette of Yoda Stories with animation](images/palette.mov)
+|  *Indy's Desktop Adventures*                                                               |  *Yoda Stories*                                                |
+|--------------------------------------------------------------------------------------------|----------------------------------------------------------------|
+| ![Color palette used by Indiana Jones and His Desktop Adventures](images/palette-indy.png) | ![Color palette used by Yoda Stories](images/palette-yoda.png) |
 
 Extracting the color palette
 ----------------------------
