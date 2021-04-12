@@ -33,3 +33,18 @@ yarn start
 ```
 
 Now you're all set up. The development page will reload whenever a code change is detected. See [Build System](build-system.md) for a list of tasks `yarn` can execute for you.
+
+Data Sources
+------------
+
+By default *WebFun* is set up to load game assets from [archive.org](htts://archive.org/). For local development it's often helpful to load the files from disk and speed things up a bit. *WebFun* uses an environment variable called `WEBFUN_GAMES` to determine where to find games.
+
+To override the default configuration (stored in the file `.env-default`), you can either set it in your shell before starting the web server or create a new file `.env` and put the value there. The value of the variable should be a `JSON` encoded array of [GameSource](https://github.com/cyco/WebFun/blob/master/src/app/webfun/game-controller.tsx#L62) objects.
+
+> **Note:** Environment variables are only read when a program is started. Make sure to restart your development server after making changes to `.env`
+
+The following configuration would add a local Yoda Stories installation to the default *archive.org* game source.
+
+```env
+WEBFUN_GAMES=[{"title":"Yoda Stories (local)","variant":"yoda","data":"game-data/YODESK.DTA","exe":"game-data/YODESK.EXE","help":"game-data/YODESK.HLP","sfx":"game-data/SFX/"},{"title":"Yoda Stories from archive.org","variant":"yoda","exe":"https://cors.archive.org/download/Star_Wars_-_Yoda_Stories_1997_LucasArts/Star%20Wars%20-%20Yoda%20Stories%20%281997%29%28LucasArts%29.iso/Yoda%2FYodesk.exe","sfx":"https://cors.archive.org/download/Star_Wars_-_Yoda_Stories_1997_LucasArts/Star%20Wars%20-%20Yoda%20Stories%20%281997%29%28LucasArts%29.iso/Yoda%2Fsfx%2F","data":"https://cors.archive.org/download/Star_Wars_-_Yoda_Stories_1997_LucasArts/Star%20Wars%20-%20Yoda%20Stories%20%281997%29%28LucasArts%29.iso/Yoda%2Fyodesk.dta","help":"https://cors.archive.org/download/Star_Wars_-_Yoda_Stories_1997_LucasArts/Star%20Wars%20-%20Yoda%20Stories%20%281997%29%28LucasArts%29.iso/Yoda%2FYodesk.hlp"}]
+```
