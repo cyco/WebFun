@@ -11,7 +11,7 @@ enum TileAttributes {
 
 	Doorway = Floor | (1 << 16),
 
-	Town = Locator | (1 << 1),
+	Town = Locator | (1 << 17),
 
 	PuzzleUnsolved = Locator | (1 << 18),
 	PuzzleSolved = Locator | (1 << 19),
