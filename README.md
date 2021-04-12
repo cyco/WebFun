@@ -1,45 +1,38 @@
-# WebFun
+WebFun
+======
 
-An unfinished web based reimplementation of the desktop adventures game engine.
+A reimplementation of the game engine powering *Indiana Jones and His Desktop Adventures* and *Yoda Stories*.
 
-### similar efforts
+Quick Start
+-----------
 
--   https://github.com/shinyquagsire23/DesktopAdventures - reimplementation in c
--   https://github.com/IceReaper/DesktopAdventuresToolkit - packer / unpacker for game files
--   https://github.com/digitall/scummvm-deskadv - reimplementation for use in ScummVM
-
-## Usage
-
-### Prerequisites
-
--   Browser (tested on Safari 11, up to date Chrome should also work)
--   Node.js
--   [yarn](https://yarnpkg.com)
--   game file placed in `assets/game-data` (rename `YODESK.DTA` to `yoda.data`)
-
-### How to build
-
-The project uses yarn to manage dependencies, webpack as a build system and karma/jasmine to run tests.
-To compile the project and start a local webserver run the following command:
+Make sure you have `node` and `yarn` installed. Then run the following steps in your favorite terminal.
 
 ```bash
-# check out project
-git clone https://github.com/cyco/WebFun.git
-cd WebFun
+# check out the code
+$ git clone https://github.com/cyco/webfun
+$ cd webfun
 
 # install dependencies
-yarn
+$ yarn install
 
-# start local web server, then navigate to http://localhost:8080
-yarn start
-
-# run tests
-yarn test:full
+# start a local web server
+$ yarn start
 ```
 
-Check the `scripts` section of `package.json` for other commands.
+See the documentation at [docs/src/SUMMARY.md](docs/src/SUMMARY.md) to learn more information about the build system.
 
-## Screenshots
+Similar Efforts
+---------------
+
+-	[shinyquagsire23/DesktopAdventures[(https://github.com/shinyquagsire23/DesktopAdventures) -- reimplementation in c
+-	[IceReaper/DesktopAdventuresToolkit](https://github.com/IceReaper/DesktopAdventuresToolkit) -- packer / unpacker for game files
+-	[digitall/scummvm-deskadv](https://github.com/digitall/scummvm-deskadv) -- reimplementation for use in ScummVM
+
+Screenshots
+-----------
+
+Here are some screenshots in case you just want to know what it looks likes.
 
 ### Loading Screen
 
