@@ -7,6 +7,8 @@ The following tasks are defined in `package.json` and can be started using `yarn
 
 **build** -- Initiate production build.
 
+**build:docs** -- Build this documentation. This script requires `mdbook` to be installed, see [documentation](documentation.md) for details.
+
 **format** -- Format source code files using [eslint](https://eslint.org) & [prettier](https://prettier.io).
 
 **start** -- Start a local web server for development.
