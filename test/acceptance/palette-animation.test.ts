@@ -3,6 +3,7 @@ import "src/extension";
 import { drawImage } from "src/app/webfun/rendering";
 import { ColorPalette, PaletteAnimation } from "src/engine/rendering";
 import { Size } from "src/util";
+import { Yoda } from "src/variant";
 
 describe("WebFun.Acceptance.Palette Animation", () => {
 	const sampleImage = Uint8Array.from({ length: 0x100 }).map((_, i) => i);
@@ -19,7 +20,9 @@ describe("WebFun.Acceptance.Palette Animation", () => {
 		paletteData = ColorPalette.FromBGR8Buffer(await getFixtureData("yoda.pal"));
 	});
 
-	beforeEach(() => (animator = new PaletteAnimation(paletteData)));
+	beforeEach(
+		() => (animator = new PaletteAnimation(paletteData, Yoda.fastColorCycles, Yoda.slowColorCycles))
+	);
 
 	it("renders the initial image correctly", async () => {
 		animateXSteps(0);

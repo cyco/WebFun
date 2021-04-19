@@ -6,6 +6,7 @@ import { IconButton } from "src/ui/components";
 import { ModalPrompt } from "src/ux";
 import PaletteAnimation from "src/engine/rendering/palette-animation";
 import ServiceContainer from "../service-container";
+import { Yoda } from "src/variant";
 
 const PaletteAnimationInterval = 100;
 
@@ -85,7 +86,11 @@ class PaletteInspector extends AbstractInspector {
 
 	public togglePaletteAnimation(): void {
 		if (!this._animator) {
-			this._animator = new PaletteAnimation(this.data.palette);
+			this._animator = new PaletteAnimation(
+				this.data.palette,
+				Yoda.fastColorCycles,
+				Yoda.slowColorCycles
+			);
 		}
 
 		if (this._animate.icon === "stop") {

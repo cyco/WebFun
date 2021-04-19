@@ -397,7 +397,11 @@ class GameController extends EventTarget implements EventListenerObject {
 
 		engine.metronome.ontick = (delta: number) => engine.update(delta);
 		engine.metronome.onrender = () => engine.render();
-		engine.palette = new PaletteAnimation(this.palette);
+		engine.palette = new PaletteAnimation(
+			this.palette,
+			engine.variant.fastColorCycles,
+			engine.variant.slowColorCycles
+		);
 
 		const zoneScene = new ZoneScene();
 		zoneScene.engine = engine;

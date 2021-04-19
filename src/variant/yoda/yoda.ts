@@ -16,8 +16,26 @@ import { Sprite } from "src/engine/rendering";
 import DetonatorScene from "./detonator-scene";
 import { ZoneScene } from "src/engine/scenes";
 import { NullIfMissing } from "src/engine/asset-manager";
+import { ColorCycle } from "src/engine/rendering/palette-animation";
 
 class Yoda extends Variant {
+	public slowColorCycles: ColorCycle[] = [
+		/* [start , color count ] */
+		[0xc6, 2],
+		[0xc8, 2],
+		[0xd7, 9],
+		[0xe5, 9],
+		[0xf4, 2]
+	];
+	public fastColorCycles: ColorCycle[] = [
+		/* [start , color count ] */
+		[0x0a, 6],
+		[0xca, 2],
+		[0xcc, 2],
+		[0xce, 2],
+		[0xe0, 5],
+		[0xee, 6]
+	];
 	public static readonly goalIDs = GoalIDs;
 	public static readonly zoneIDs = ZoneIDs;
 	public static readonly charIDs = CharIDs;

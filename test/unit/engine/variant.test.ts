@@ -2,6 +2,7 @@ import Variant from "src/engine/variant";
 import { Tile } from "src/engine/objects";
 import { Engine, SaveState, Story } from "src/engine";
 import { Point } from "src/util";
+import { ColorCycle } from "src/engine/rendering/palette-animation";
 
 describe("WebFun.Engine.Variant", () => {
 	it("holds information specific to each game", () => {
@@ -10,6 +11,8 @@ describe("WebFun.Engine.Variant", () => {
 
 	it("allow for items to be equipped if they are weapons", () => {
 		const mockType = new (class extends Variant {
+			slowColorCycles: ColorCycle[] = [];
+			fastColorCycles: ColorCycle[] = [];
 			mapKey = "KeyM";
 			saveGameMagic: string;
 			locatorTile: any;

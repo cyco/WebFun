@@ -118,7 +118,12 @@ class GameplayContext {
 			}
 		});
 
-		this.engine.palette = new PaletteAnimation(paletteData);
+		const variant = this.engine.variant;
+		this.engine.palette = new PaletteAnimation(
+			paletteData,
+			variant.fastColorCycles,
+			variant.slowColorCycles
+		);
 		this.engine.settings = this.settings;
 	}
 

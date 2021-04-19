@@ -6,8 +6,20 @@ import { Engine, Story, SaveState } from "src/engine";
 
 import LocatorTile from "./locator-tile";
 import Sounds from "./sounds";
+import { ColorCycle } from "src/engine/rendering/palette-animation";
 
 class IndyFull extends Variant {
+	public slowColorCycles: ColorCycle[] = [
+		/* [start , color count ] */
+		[0xee, 6],
+		[0xf4, 2]
+	];
+	public fastColorCycles: ColorCycle[] = [
+		/* [start , color count ] */
+		[0xa0, 8],
+		[0xe0, 5],
+		[0xe5, 9]
+	];
 	public readonly mapKey = "KeyM";
 	public readonly saveGameMagic = "INDYSAV44";
 	public readonly mapTileId = 0x1bb;

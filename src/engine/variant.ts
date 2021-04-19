@@ -5,6 +5,7 @@ import LocatorTile from "./locator-tile";
 import Engine from "./engine";
 import { SaveState } from "./save-game";
 import { Point } from "src/util";
+import { ColorCycle } from "./rendering/palette-animation";
 
 interface WellKnownSounds {
 	NoGo: number;
@@ -12,6 +13,8 @@ interface WellKnownSounds {
 }
 
 abstract class Variant {
+	abstract readonly slowColorCycles: ColorCycle[];
+	abstract readonly fastColorCycles: ColorCycle[];
 	abstract readonly mapKey: string;
 
 	abstract get saveGameMagic(): string;

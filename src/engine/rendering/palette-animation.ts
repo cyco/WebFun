@@ -1,11 +1,17 @@
 import ColorPalette from "./color-palette";
 
+export type ColorCycle = [number, number];
+
 class PaletteAnimation {
 	private _original: ColorPalette;
 	private _current: ColorPalette;
 	private _state: boolean = true;
 
-	public constructor(palette: ColorPalette) {
+	public constructor(
+		palette: ColorPalette,
+		private fastAnimations: ColorCycle[],
+		private slowAnimations: ColorCycle[]
+	) {
 		this._original = palette;
 		this._current = palette.slice();
 	}
@@ -16,29 +22,19 @@ class PaletteAnimation {
 	}
 
 	public step(): void {
-		// normal cycles
-		this.cycle(10, 5);
-		this.cycle(202, 1);
-		this.cycle(204, 1);
-		this.cycle(206, 1);
-		this.cycle(224, 4);
-		this.cycle(238, 5);
+		this.fastAnimations.forEach(([start, colorCount]) => this.cycle(start, colorCount));
 
-		// the remaining colors are animated slower
-		if ((this._state = !this._state)) return;
+		if ((this._state = !this._state)) return; // wait for next update
 
-		this.cycle(198, 1);
-		this.cycle(200, 1);
-		this.cycle(229, 8);
-		this.cycle(215, 8);
-		this.cycle(244, 1);
+		this.slowAnimations.forEach(([start, colorCount]) => this.cycle(start, colorCount));
 	}
 
 	private cycle(start: number, count: number) {
-		const end = this._current[start + count];
+		let remaining = count - 1;
+		const end = this._current[start + remaining];
 		do {
-			this._current[start + count] = this._current[start + count - 1];
-		} while (--count);
+			this._current[start + remaining] = this._current[start + remaining - 1];
+		} while (--remaining);
 
 		this._current[start] = end;
 	}
