@@ -7,6 +7,7 @@ title = "WebFun"
 
 [build]
 build-dir = "../build/docs"
+create-missing = false
 
 [preprocessor.open-on-gh]
 command = "mdbook-open-on-gh"

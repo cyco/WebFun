@@ -5,13 +5,23 @@ Build System
 
 The following tasks are defined in `package.json` and can be started using `yarn <task-name>` on the command line.
 
-**build** -- Initiate production build.
-
-**build:docs** -- Build this documentation. This script requires `mdbook` to be installed, see [documentation](documentation.md) for details.
-
-**format** -- Format source code files using [eslint](https://eslint.org) & [prettier](https://prettier.io).
-
 **start** -- Start a local web server for development.
+
+By default this starts the server on `localhost` port `8080`. You can change the hostname to listen on with the environment variable `host`. Some features like the service worker might require an HTTPS connection to work properly. If you place a self-signed certificate under `config/ssl.key` and `config/ssl.pem` the server will accept HTTPS connections.
+
+Assuming you have mapped `webfun.local` to `127.0.0.1` in your hosts file (like `echo "127.0.0.1 webfun.local" >> /etc/hosts`), you can use [mkcert](https://github.com/FiloSottile/mkcert) to generate certificates that will be valid on your system like this:
+
+```bash
+# change to the project directory
+$ cd webfun
+# create a certificate
+$ mkcert -cert-file config/ssl.pem -key-file config/ssl.key webfun.local localhost 127.0.0.1 ::1
+
+# start the development server with the proper hostname
+$ host=webfun.local yarn start
+```
+
+**format** -- Format source code files using [eslint](https://eslint.org) & [prettier](https://prettier.io). You should always run this task before committing a code change to make sure everything is properly formatted and adheres es to the coding standards.
 
 **test** -- Run basic test suite once without collecting code coverage.
 
@@ -22,6 +32,10 @@ The following tasks are defined in `package.json` and can be started using `yarn
 **test:unit** -- Run unit tests with code coverage enabled.
 
 **test:unit:cont** -- Run unit tests with code coverage whenever a change is detected
+
+**build** -- Clear `build` directory and run a fresh build suitable for production.
+
+**build:docs** -- Build this documentation. This script requires `mdbook` to be installed, see [documentation](documentation.md) for details.
 
 Webpack
 -------
@@ -40,7 +54,7 @@ Webpack
 
 ### Custom Plugins
 
-WebFun uses a few custom webpack plugins. These are also single-file scripts found in the `config` directory.
+WebFun uses a few custom webpack plugins. These are all single-file scripts found in the `config` directory.
 
 **file-list-webpack-plugin** -- Creates a list of files produce during a production build and stores it in a json file. This file is used to pre-load assets when the service worker is installed.
 
