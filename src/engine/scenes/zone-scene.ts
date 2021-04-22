@@ -234,8 +234,10 @@ class ZoneScene extends Scene {
 			return true;
 		}
 
-		if (input & InputMask.Map) {
-			// && hero.hasLocator();
+		if (
+			input & InputMask.Map &&
+			(engine.settings.debug || engine.inventory.find(t => t.hasAttributes(Tile.Attributes.Map)))
+		) {
 			const mapScene = new MapScene();
 			this.engine.sceneManager.pushScene(mapScene);
 			return true;
