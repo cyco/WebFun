@@ -35,6 +35,10 @@ RUN curl -sSL https://dl.google.com/linux/linux_signing_key.pub | apt-key add - 
 # java for sonar scanner
 RUN apt-get update -y && apt-get install -y default-jre
 
+# rust to build the documentation
+RUN apt-get update -y && apt-get install -y rust
+RUN cargo install mdbook mdbook-linkcheck mdbook-open-on-gh
+
 # cleanup
 RUN apt-get purge --auto-remove -y curl gnupg \
 	&& rm -rf /var/lib/apt/lists/*
