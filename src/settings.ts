@@ -35,7 +35,7 @@ type Settings = {
 export const defaultSettings: Settings = {
 	mobile: SmartPhone(false).isAndroid() || SmartPhone(false).isIPhone(),
 	pwa: new URLSearchParams(window.location.search).get("source") === "pwa",
-	debug: true,
+	debug: false,
 
 	drawDebugStats: false,
 	drawHotspots: false,
