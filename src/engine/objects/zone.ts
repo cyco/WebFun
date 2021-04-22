@@ -113,17 +113,17 @@ class Zone {
 	}
 
 	initialize(): void {
-		this.placeNPCs();
+		this.placeMonsters();
 		this.layDownHotspotItems();
 	}
 
-	private placeNPCs(): void {
+	private placeMonsters(): void {
 		this.monsters
-			.filter(npc => npc.enabled)
-			.forEach(npc => {
-				if (this.getTile(npc.x, npc.y, ZoneLayer.Object) === null) {
-					const tile = npc.face.frames[0].down;
-					this.setTile(tile, npc.x, npc.y, ZoneLayer.Object);
+			.filter(monster => monster.enabled)
+			.forEach(monster => {
+				if (this.getTile(monster.x, monster.y, ZoneLayer.Object) === null) {
+					const tile = monster.face.frames[0].down;
+					this.setTile(tile, monster.x, monster.y, ZoneLayer.Object);
 				}
 			});
 	}

@@ -6,7 +6,7 @@ import { Variant } from "src/engine";
 import { WindowManager } from "src/ui";
 import { GlobalFileDrop } from "src/ux";
 import GameController, { GameSource } from "./game-controller";
-import { EventTarget, FileLoader } from "src/util";
+import { EventTarget } from "src/util";
 import { navigator } from "src/std/dom";
 import IniReader from "./ini-reader";
 

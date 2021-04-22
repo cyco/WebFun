@@ -1,4 +1,4 @@
-import { LogLevel, persistent, observable } from "src/util";
+import { LogLevel } from "src/util";
 import * as SmartPhone from "detect-mobile-browser";
 
 type Settings = {

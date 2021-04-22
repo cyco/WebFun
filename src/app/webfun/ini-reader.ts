@@ -4,8 +4,6 @@ export type IniFile = {
 	[_: string]: string;
 };
 
-class IniReaderReadError {}
-
 export type IniReaderOptions = {
 	caseSensitiveKeys: boolean;
 	caseNormalizationStrategy: (str: string) => string;
