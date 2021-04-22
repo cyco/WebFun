@@ -128,12 +128,26 @@ abstract class AbstractWindow extends Component {
 	protected connectedCallback(): void {
 		super.connectedCallback();
 
+		this.addEventListener("mousedown", this);
+		this.addEventListener("dragstart", this);
+
 		this._titlebar.window = this;
 
 		this.appendChild(this._titlebar);
 		this.appendChild(this._content);
 
 		this._update();
+	}
+
+	public handleEvent(event: Event): void {
+		event.preventDefault();
+	}
+
+	protected disconnectedCallback(): void {
+		this.removeEventListener("mousedown", this);
+		this.removeEventListener("dragstart", this);
+
+		super.disconnectedCallback();
 	}
 
 	public center(): void {
