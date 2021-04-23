@@ -37,6 +37,7 @@ describe("WebFun.App.ResourceManager", () => {
 		expect(xhr.send as jasmine.Spy).toHaveBeenCalledWith();
 		expect(xhr.responseType).toBe("arraybuffer");
 
+		(xhr as any).status = 200;
 		(xhr as any).response = mockedResponse;
 		(xhr as any).onload();
 

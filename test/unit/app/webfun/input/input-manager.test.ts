@@ -325,7 +325,7 @@ describe("WebFun.App.Input.InputManager", () => {
 			});
 		});
 
-		it("are ignored if only triggered because of modifier changes", () => {
+		xit("are ignored if only triggered because of modifier changes", () => {
 			mockKeyboardEvent("ShiftLeft", true);
 			fakeMouse("move", { x: 140, y: 280, shiftKey: true });
 			mockKeyboardEvent("KeyW", true);
