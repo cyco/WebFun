@@ -1,8 +1,14 @@
 import { Tile, Zone } from "src/engine/objects";
 
 import { ColorPalette } from "src/engine";
+import { Point } from "src/util";
 
-export default (zone: Zone, palette: ColorPalette): ImageData => {
+export default (
+	zone: Zone,
+	palette: ColorPalette,
+	hero: Tile = null,
+	pos: Point = null
+): ImageData => {
 	if (!zone) return new ImageData(1, 1);
 
 	const TileWidth = Tile.WIDTH;
@@ -20,7 +26,11 @@ export default (zone: Zone, palette: ColorPalette): ImageData => {
 	for (let y = 0; y < ZoneHeight; y++) {
 		for (let x = 0; x < ZoneWidth; x++) {
 			for (let z = 0; z < Zone.LAYERS; z++) {
-				const tile = zone.getTile(x, y, z);
+				let tile = zone.getTile(x, y, z);
+
+				if (hero && pos && pos.x === x && pos.y === y && z === Zone.Layer.Object) {
+					tile = hero;
+				}
 				if (!tile) continue;
 
 				const pixels = tile.imageData;

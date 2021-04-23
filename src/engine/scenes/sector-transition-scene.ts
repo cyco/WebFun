@@ -11,6 +11,7 @@ import { EvaluationMode, ScriptResult } from "../script";
 const ViewportWidth = 9.0;
 const ViewportHeight = 9.0;
 const TotalFadeDuration = 1000.0;
+const HeroPush = 0.87;
 
 class SectorTransitionScene extends Scene {
 	public scene: ZoneScene = null;
@@ -27,6 +28,7 @@ class SectorTransitionScene extends Scene {
 	private _destinationImage: ImageData;
 	private _executingActions: boolean = false;
 	private _sequence: AsyncGenerator<void>;
+	private _originLocation: Point;
 
 	public willShow(): void {
 		if (this._executingActions) return;
@@ -35,6 +37,7 @@ class SectorTransitionScene extends Scene {
 		this._sequence = this.buildSequence();
 		this._startTime = Infinity;
 		this._originZone = this.engine.currentZone;
+		this._originLocation = this.engine.hero.location;
 	}
 
 	public didHide(): void {
@@ -49,6 +52,7 @@ class SectorTransitionScene extends Scene {
 		this._originImage = null;
 		this._destinationImage = null;
 		this._originZone = null;
+		this._originLocation = null;
 	}
 
 	async update(/*ticks*/): Promise<void> {
@@ -83,8 +87,18 @@ class SectorTransitionScene extends Scene {
 			destinationZone.visited = true;
 			destinationZone.initialize();
 		}
+
 		this._destinationImage = null;
+		this._originImage = null;
 		this._startTime = performance.now();
+
+		// wait for hero to be "pushed" of the old map
+		while (max(min((performance.now() - this._startTime) / this.duration, 1), 0) < HeroPush) yield;
+
+		// redraw images
+		this._destinationImage = null;
+		this._originImage = null;
+
 		while (!this.isFadeComplete()) yield;
 		this.engine.triggerLocationChange();
 
@@ -104,16 +118,30 @@ class SectorTransitionScene extends Scene {
 	}
 
 	protected renderState(renderer: Renderer, state: number): void {
-		if (!this._originImage) {
-			this._originImage = drawZoneImageData(this._originZone, this.engine.palette.current);
-		}
+		const animationState = max(min(state / this.duration, 1), 0);
 
-		if (!this._destinationImage) {
-			this._destinationImage = drawZoneImageData(this.destinationZone, this.engine.palette.current);
+		if (!this._originImage) {
+			const hero = this.engine.hero;
+			const appearance = hero._appearance;
+			const frame = hero._actionFrames;
+			let tile = animationState < HeroPush ? appearance.getFace(hero._direction, frame) : null;
+			this._originImage = drawZoneImageData(
+				this._originZone,
+				this.engine.palette.current,
+				tile,
+				this._originLocation
+			);
+
+			tile = animationState >= HeroPush ? appearance.getFace(hero._direction, frame) : null;
+			this._destinationImage = drawZoneImageData(
+				this.destinationZone,
+				this.engine.palette.current,
+				tile,
+				hero.location
+			);
 		}
 
 		const camera = this.engine.camera;
-		const animationState = max(min(state / this.duration, 1), 0);
 		const cameraOffset = camera.offset.byScalingBy(Tile.WIDTH);
 		const viewportWidth = Tile.WIDTH * ViewportWidth;
 		const viewportHeight = Tile.HEIGHT * ViewportHeight;
