@@ -4,6 +4,7 @@ import identity from "src/util/identity";
 export declare interface ShortcutDescription {
 	node?: Node;
 	keyCode?: number;
+	key?: string;
 	metaKey?: boolean;
 	ctrlKey?: boolean;
 }
@@ -53,12 +54,14 @@ class ShortcutManager implements EventListenerObject {
 			return;
 		}
 
+		const currentKey = e.key;
 		const currentKeyCode = e.keyCode;
 		const currentMetaKey = e.metaKey;
 		const currentCtrlKey = e.ctrlKey;
 
 		if (!currentCtrlKey && !currentMetaKey && this._plainKeyShortcutCount === 0) return;
 
+		const keyMatches = ([{ key }]: RegisteredShortcut) => key === undefined || key === currentKey;
 		const keyCodeMatches = ([{ keyCode }]: RegisteredShortcut) =>
 			keyCode === undefined || keyCode === currentKeyCode;
 		const ctrlKeyMatches = ([{ ctrlKey }]: RegisteredShortcut) =>
@@ -69,7 +72,7 @@ class ShortcutManager implements EventListenerObject {
 			!node || (this._node && node.contains(this._node));
 
 		const [, callback] = this._shortcuts.find(
-			and(identity, keyCodeMatches, ctrlKeyMatches, metaKeyMatches, isInNode)
+			and(identity, keyMatches, keyCodeMatches, ctrlKeyMatches, metaKeyMatches, isInNode)
 		) || [null, null];
 
 		if (callback instanceof Function) {

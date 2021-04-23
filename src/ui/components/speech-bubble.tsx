@@ -3,6 +3,7 @@ import "./speech-bubble.scss";
 import Button from "./button";
 import Component from "../component";
 import { Point } from "src/util";
+import { Shortcut, ShortcutManager } from "src/ux";
 
 export const Event = {
 	End: "end"
@@ -50,6 +51,8 @@ class SpeechBubble extends Component {
 	private _text: HTMLElement = (<div className="text" style={DefaultTextStyle} />);
 	private _keepScrolling: number = -1;
 	private _origin: Point = new Point(0, 0);
+	private readonly shortcutManager = ShortcutManager.sharedManager;
+	private shortcuts: Shortcut[] = [];
 
 	constructor() {
 		super();
@@ -68,8 +71,18 @@ class SpeechBubble extends Component {
 		this.style.width = this._width + "px";
 
 		this.appendChild(this._text.parentNode);
+		this.shortcuts = [
+			this.shortcutManager.registerShortcut(() => this.scrollUp(), { key: "ArrowUp" }),
+			this.shortcutManager.registerShortcut(() => this.scrollDown(), { key: "ArrowDown" }),
+			this.shortcutManager.registerShortcut(() => this.end(), { key: " " })
+		];
 
 		this.text = this.text || "";
+	}
+
+	protected disconnectedCallback(): void {
+		this.shortcuts.forEach(s => this.shortcutManager.unregisterShortcut(s));
+		super.disconnectedCallback();
 	}
 
 	private rebuild() {
@@ -229,12 +242,14 @@ class SpeechBubble extends Component {
 		this._scrollBy(1);
 		this._keepScrolling = setTimeout(() => this.scrollDown(), ScrollRepeatInterval);
 		this.stopScrollingOnMouseUp();
+		this.stopScrollingOnKeyUp();
 	}
 
 	public scrollUp(): void {
 		this._scrollBy(-1);
 		this._keepScrolling = setTimeout(() => this.scrollUp(), ScrollRepeatInterval);
 		this.stopScrollingOnMouseUp();
+		this.stopScrollingOnKeyUp();
 	}
 
 	public end(): void {
@@ -246,6 +261,14 @@ class SpeechBubble extends Component {
 
 	private stopScrollingOnMouseUp() {
 		document.addEventListener("mouseup", () => clearTimeout(this._keepScrolling), {
+			capture: true,
+			passive: true,
+			once: true
+		});
+	}
+
+	private stopScrollingOnKeyUp() {
+		document.addEventListener("keyup", () => clearTimeout(this._keepScrolling), {
 			capture: true,
 			passive: true,
 			once: true
