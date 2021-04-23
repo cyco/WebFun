@@ -19,6 +19,7 @@ class WindowModalSession extends ModalSession {
 	public runForWindow(window: AbstractWindow): void {
 		super.runForWindow(window);
 		this._overlay.appendChild(this._window);
+		this._window.center(window);
 	}
 
 	protected _whenOverlayIsGone(callback: Function): void {

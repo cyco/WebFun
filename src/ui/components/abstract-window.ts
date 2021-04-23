@@ -150,9 +150,9 @@ abstract class AbstractWindow extends Component {
 		super.disconnectedCallback();
 	}
 
-	public center(): void {
-		const windowWidth = window.document.documentElement.clientWidth;
-		const windowHeight = window.document.documentElement.clientHeight;
+	public center(container: Element = window.document.documentElement): void {
+		const windowWidth = container.clientWidth;
+		const windowHeight = container.clientHeight;
 
 		const style = window.getComputedStyle(this);
 		this._x = (windowWidth - parseFloat(style.width)) / 2.0;
