@@ -8,42 +8,36 @@ RUN apt-get update && apt-get install -y \
 	gnupg \
 	--no-install-recommends
 
-# node
-RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \
+# Install Node.js
+RUN curl -sL https://deb.nodesource.com/setup_15.x | bash - \
 	&& apt-get install -y nodejs build-essential
 
-# yarn
+# Install Java for sonar scanner
+RUN apt-get update -y && DEBIAN_FRONTEND=noninteractive apt-get install -y default-jre
+
+# Install Rust to build the documentation
+RUN apt-get update -y && apt-get install -y cargo
+RUN cargo install mdbook mdbook-open-on-gh
+RUN apt-get update -y \
+	&& apt-get install -y perl pkg-config libssl-dev \
+	&& cargo install mdbook-linkcheck
+
+# Install yarn for package management
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
- 	&& echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
+	&& echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
 	&& apt-get update -y && apt-get install -y --no-install-recommends yarn \
 	&& rm -rf /etc/apt/sources.list.d/yarn.list
 
-# chrome for test execution
-RUN curl -sSL https://dl.google.com/linux/linux_signing_key.pub | apt-key add - \
-	&& echo "deb https://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list \
-	&& apt-get update -y && apt-get install -y \
-	google-chrome-stable \
-	fontconfig \
-	fonts-ipafont-gothic \
-	fonts-wqy-zenhei \
-	fonts-thai-tlwg \
-	fonts-kacst \
-	fonts-symbola \
-	fonts-noto \
-	--no-install-recommends
+# Install Chromium for test execution
+RUN apt-get update -y && DEBIAN_FRONTEND=noninteractive apt-get install -y chromium-browser
 
-# java for sonar scanner
-RUN apt-get update -y && apt-get install -y default-jre
-
-# rust to build the documentation
-RUN apt-get update -y && apt-get install -y rust
-RUN cargo install mdbook mdbook-linkcheck mdbook-open-on-gh
-
-# cleanup
+# Perform cleanup
 RUN apt-get purge --auto-remove -y curl gnupg \
 	&& rm -rf /var/lib/apt/lists/*
 
+# Setup package cache for yarn and cache current dependencies
 ENV YARN_CACHE_FOLDER=/cache/yarn
 ADD yarn.lock yarn.lock
 ADD package.json package.json
+
 RUN yarn install --frozen-lockfile --non-interactive && rm -rf node_modules package.json yarn.lock
