@@ -1,6 +1,6 @@
 import "./window-titlebar.scss";
 
-import { identity, Point } from "src/util";
+import { identity, MouseButton, Point } from "src/util";
 
 import AbstractWindow from "./abstract-window";
 import Component from "../component";
@@ -112,6 +112,7 @@ class WindowTitlebar extends Component {
 
 		const mouseDown = (event: MouseEvent) => {
 			if (event.target !== this) return;
+			if (event.button !== MouseButton.Main) return;
 			dragLocation = new Point(event.clientX - win.x, event.clientY - win.y);
 			document.addEventListener("mouseup", mouseUp);
 			document.addEventListener("mousemove", mouseMove);
