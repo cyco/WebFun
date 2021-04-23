@@ -13,6 +13,9 @@ class WordSizeWindow extends SettingsWindow {
 		this.minLabel = "Small";
 		this.midLabel = "Medium";
 		this.maxLabel = "Large";
+		this.slider.min = 1;
+		this.slider.max = 3;
+		this.slider.snapToIntegers = true;
 	}
 }
 

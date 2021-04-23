@@ -397,6 +397,7 @@ class GameController extends EventTarget implements EventListenerObject {
 
 		engine.metronome.ontick = (delta: number) => engine.update(delta);
 		engine.metronome.onrender = () => engine.render();
+		engine.metronome.tickDuration = engine.settings.tickDuration;
 		engine.palette = new PaletteAnimation(
 			this.palette,
 			engine.variant.fastColorCycles,

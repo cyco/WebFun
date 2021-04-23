@@ -12,6 +12,9 @@ class DifficultyWindow extends SettingsWindow {
 		this.minLabel = "Easy";
 		this.midLabel = "Medium";
 		this.maxLabel = "Hard";
+		this.slider.min = 1;
+		this.slider.max = 100;
+		this.slider.snapToIntegers = true;
 	}
 }
 

@@ -45,11 +45,15 @@ class IndyFull extends Variant {
 		return 0;
 	}
 
-	public createNewStory(_: Engine): Story {
+	public createNewStory(engine: Engine): Story {
+		const size = engine.settings.worldSize;
+
 		return new Story(
 			rand(),
 			Zone.Planet.None,
-			[WorldSize.Small, WorldSize.Medium, WorldSize.Large].random()
+			WorldSize.isWorldSize(size)
+				? WorldSize.fromNumber(size)
+				: [WorldSize.Small, WorldSize.Medium, WorldSize.Large].random()
 		);
 	}
 

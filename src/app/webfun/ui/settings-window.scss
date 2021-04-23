@@ -5,9 +5,18 @@ wf-settings-window {
 
 	> .content {
 		flex-direction: column;
+		padding: 20px;
+
+		wf-slider {
+			margin-bottom: 10px;
+		}
 
 		> div {
 			display: flex;
+
+			&:last-child {
+				margin-top: 20px;
+			}
 
 			wf-button + wf-button {
 				margin-left: 10px;

@@ -45,6 +45,8 @@ import rad2deg from "./rad2deg";
 import sleep from "./sleep";
 import xy2polar from "./xy2polar";
 
+const px = (a: number): string => `${a}px`;
+
 export {
 	Color,
 	Direction,
@@ -64,11 +66,10 @@ export {
 	PointLike,
 	PointRange,
 	PrefixedStorage,
+	PropertyChangeEvent,
 	QueryString,
 	Range,
-	observable,
 	ReaderStream,
-	PropertyChangeEvent,
 	Rectangle,
 	Scanner,
 	Size,
@@ -86,8 +87,10 @@ export {
 	hsv2rgb,
 	identity,
 	iterate,
+	observable,
 	persistent,
 	polar2xy,
+	px,
 	rad2deg,
 	rand,
 	randmod,

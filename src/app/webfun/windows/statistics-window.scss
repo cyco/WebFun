@@ -3,17 +3,21 @@
 wf-statistics-window {
 	@extend wf-abstract-window;
 
-	li {
-		display: flex;
-		flex-wrap: nowrap;
-		justify-content: space-between;
+	> .content {
+		padding: 20px;
 
-		span + wf-textbox {
-			margin-left: 5px;
+		li {
+			display: flex;
+			flex-wrap: nowrap;
+			justify-content: space-between;
+
+			span + wf-textbox {
+				margin-left: 5px;
+			}
 		}
-	}
 
-	li + li {
-		margin-top: 5px;
+		li + li {
+			margin-top: 5px;
+		}
 	}
 }

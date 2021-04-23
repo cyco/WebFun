@@ -1,10 +1,15 @@
 import "./slider.scss";
 
 import Component from "../component";
-import { dispatch } from "src/util";
-import { document } from "src/std/dom";
+import { clamp, px } from "src/util";
+import { max, min, round } from "src/std/math";
 
-class Slider extends Component {
+const leftButtonWidth = 18;
+const rightButtonWidth = 20;
+const knobWidth = 18;
+const RepeatDelay = 80;
+
+class Slider extends Component implements EventListenerObject {
 	public static readonly tagName = "wf-slider";
 
 	private _value = 0;
@@ -14,9 +19,23 @@ class Slider extends Component {
 	private _snapToIntegers = false;
 	private _continuous = false;
 	private _onChange: (_: Event) => void = null;
-	private _knob: HTMLDivElement;
-	private _left: HTMLDivElement;
-	private _right: HTMLDivElement;
+	private _repeat: number = null;
+	private _knob: HTMLDivElement = (
+		<div className="knob thumb">
+			<div></div>
+		</div>
+	);
+	private _left: HTMLDivElement = (
+		<div className="knob left">
+			<div></div>
+		</div>
+	);
+	private _right: HTMLDivElement = (
+		<div className="knob right">
+			<div></div>
+		</div>
+	);
+
 	private _minText: string;
 	private _midText: string;
 	private _maxText: string;
@@ -35,7 +54,7 @@ class Slider extends Component {
 	}
 
 	set value(v: number) {
-		this._value = Math.max(this._min, Math.min(v, this._max));
+		this._value = clamp(this._min, v, this._max);
 		this.layout();
 	}
 
@@ -107,16 +126,44 @@ class Slider extends Component {
 	protected connectedCallback(): void {
 		super.connectedCallback();
 
-		this._setupLeftButton();
+		this._right.addEventListener("mousedown", this);
+		this._left.addEventListener("mousedown", this);
+
+		this.appendChild(this._right);
+		this.appendChild(this._left);
 		this._setupThumb();
-		this._setupRightButton();
 
 		this.layout();
 	}
 
+	protected disconnectedCallback(): void {
+		this._right.removeEventListener("mousedown", this);
+		this._left.removeEventListener("mousedown", this);
+		document.removeEventListener("mouseup", this);
+
+		super.disconnectedCallback();
+	}
+
+	handleEvent(event: Event): void {
+		const { type, currentTarget } = event;
+
+		if (type === "mousedown" && currentTarget === this._left) {
+			this._tickLeft();
+			document.addEventListener("mouseup", this);
+		}
+
+		if (type === "mousedown" && currentTarget === this._right) {
+			this._tickRight();
+			document.addEventListener("mouseup", this);
+		}
+
+		if (type === "mouseup") {
+			document.removeEventListener("mouseup", this);
+			clearTimeout(this._repeat);
+		}
+	}
+
 	private _setupThumb() {
-		this._knob = this._makeButton();
-		this._knob.classList.add("thumb");
 		this.appendChild(this._knob);
 
 		const mouseCoordinates = {
@@ -141,25 +188,19 @@ class Slider extends Component {
 		const mouseMove = (e: MouseEvent) => {
 			const difX = e.pageX - mouseCoordinates.x;
 
-			const buttonWidth = 16;
-			const width = this.getBoundingClientRect().width - 2 * buttonWidth;
 			let pos = buttonCoordinates.x + difX;
+			const sliderLength = this.sliderLength;
 
-			pos = Math.max(buttonWidth, pos);
-			pos = Math.min(width, pos);
+			pos = max(leftButtonWidth, pos);
+			pos = min(leftButtonWidth + sliderLength, pos);
 
-			this._knob.style.left = pos + "px";
+			this._value = this._min + ((pos - leftButtonWidth) / sliderLength) * (this._max - this._min);
 
-			this._value =
-				this._min +
-				((pos - buttonWidth) / (this.getBoundingClientRect().width - 3 * buttonWidth)) *
-					(this._max - this._min);
 			if (this._snapToIntegers) {
-				this._value = Math.round(this._value);
+				this._value = round(this._value);
 			}
 
-			this._value = Math.max(this._min, this._value);
-			this._value = Math.min(this._max, this._value);
+			this.layout();
 
 			if (this.continuous) this._postChangeNotification();
 		};
@@ -178,72 +219,31 @@ class Slider extends Component {
 		this._knob.addEventListener("mousedown", mouseDown);
 	}
 
-	private _setupLeftButton() {
-		this._left = this._makeButton();
-		this._left.classList.add("left");
-		this._left.onmousedown = () => {
-			this._left.classList.add("active");
-			this._tickLeft();
-		};
-		this._left.onmouseup = () => {
-			this._left.classList.remove("active");
-		};
-
-		this.appendChild(this._left);
-	}
-
-	private _setupRightButton() {
-		this._right = this._makeButton();
-		this._right.classList.add("right");
-		this._right.onmousedown = () => {
-			this._right.classList.add("active");
-			this._tickRight();
-		};
-		this._right.onmouseup = () => {
-			this._right.classList.remove("active");
-		};
-
-		this.appendChild(this._right);
-	}
-
-	private _makeButton() {
-		const button = document.createElement("div");
-		button.classList.add("knob");
-
-		const inside = document.createElement("div");
-		button.appendChild(inside);
-
-		return button;
-	}
-
 	private _tickLeft() {
 		const tickWidth = this._snapToIntegers ? 1 : 0.02;
 		this.value -= tickWidth;
 
-		dispatch(() => {
-			if (this._left.classList.contains("active")) this._tickLeft();
-		}, 80);
+		if (this._repeat) clearTimeout(this._repeat);
+		this._repeat = setTimeout(() => this._tickLeft(), RepeatDelay);
 	}
 
 	private _tickRight() {
 		const tickWidth = this._snapToIntegers ? 1 : 0.02;
 		this.value += tickWidth;
 
-		dispatch(() => {
-			if (this._right.classList.contains("active")) this._tickRight();
-		}, 80);
+		if (this._repeat) clearTimeout(this._repeat);
+		this._repeat = setTimeout(() => this._tickRight(), RepeatDelay);
 	}
 
-	layout(): void {
-		this._value = Math.max(this._min, this._value);
-		this._value = Math.min(this._max, this._value);
-
+	private layout(): void {
 		if (!this.isConnected) return;
 
 		const relativeValue = (this._value - this._min) / (this._max - this._min);
-		const knobWidth = 16;
-		const width = this.getBoundingClientRect().width - 3 * knobWidth;
-		this._knob.style.left = knobWidth + width * relativeValue + "px";
+		this._knob.style.left = px(round(leftButtonWidth + this.sliderLength * relativeValue));
+	}
+
+	private get sliderLength(): number {
+		return this.getBoundingClientRect().width - leftButtonWidth - knobWidth - rightButtonWidth;
 	}
 
 	private _postChangeNotification() {

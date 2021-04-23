@@ -8,6 +8,7 @@ abstract class SettingsWindow extends AbstractWindow {
 	private _maxLabel: HTMLLabelElement = (<label />) as HTMLLabelElement;
 	private _slider: Slider = (<Slider min={0} value={0.5} max={1} />) as Slider;
 	private _key: string;
+	public store: Storage = localStorage;
 
 	constructor() {
 		super();
@@ -39,14 +40,20 @@ abstract class SettingsWindow extends AbstractWindow {
 		);
 	}
 
+	protected connectedCallback(): void {
+		super.connectedCallback();
+
+		this._updateValue();
+	}
+
 	private _storeValue() {
 		if (!this._key) return;
-		localStorage.store(`settings.${this._key}`, this._slider.value);
+		this.store.store(`settings.${this._key}`, this._slider.value);
 	}
 
 	private _updateValue() {
 		if (!this._key) return;
-		this._slider.value = localStorage.load(`settings.${this._key}`);
+		this._slider.value = this.store.load(`settings.${this._key}`);
 	}
 
 	protected set steps(s: number) {
@@ -88,6 +95,10 @@ abstract class SettingsWindow extends AbstractWindow {
 
 	protected get maxLabel(): string {
 		return this._maxLabel.textContent;
+	}
+
+	protected get slider(): Slider {
+		return this._slider;
 	}
 }
 

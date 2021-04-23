@@ -9,6 +9,8 @@ import GoalIDs from "./goal-ids";
 
 class YodaDemo extends Yoda {
 	public createNewStory(engine: Engine): Story {
+		const size = engine.settings.worldSize;
+
 		const goal = engine.assets.get(Puzzle, GoalIDs.HIDDEN_FACTORY);
 		engine.assets
 			.getFiltered(
@@ -22,7 +24,9 @@ class YodaDemo extends Yoda {
 		return new Story(
 			rand(),
 			Zone.Planet.Hoth,
-			[WorldSize.Small, WorldSize.Medium, WorldSize.Large].random()
+			WorldSize.isWorldSize(size)
+				? WorldSize.fromNumber(size)
+				: [WorldSize.Small, WorldSize.Medium, WorldSize.Large].random()
 		);
 	}
 }

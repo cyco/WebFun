@@ -1,5 +1,6 @@
 import { LogLevel } from "src/util";
 import * as SmartPhone from "detect-mobile-browser";
+import { WorldSize } from "./engine/generation";
 
 type Settings = {
 	mobile: boolean;
@@ -24,6 +25,8 @@ type Settings = {
 	playMusic: boolean;
 
 	difficulty: number;
+	worldSize: number;
+	tickDuration: number;
 
 	logLevel: LogLevel;
 
@@ -55,6 +58,8 @@ export const defaultSettings: Settings = {
 	playMusic: false,
 
 	difficulty: 50,
+	worldSize: WorldSize.Medium.rawValue,
+	tickDuration: 100,
 
 	logLevel: LogLevel.Debug,
 

@@ -166,6 +166,10 @@ class MainMenu extends Menu {
 
 	private _runModalSessionForWindowComponent(tagName: string) {
 		const window = document.createElement(tagName) as WindowComponent;
+		if (window instanceof GameSpeedWindow) {
+			window.metronome = this.controller.engine.metronome;
+		}
+
 		this._runModalSession(window);
 	}
 

@@ -110,6 +110,7 @@ class Yoda extends Variant {
 
 	public createNewStory(engine: Engine): Story {
 		const gamesWon = engine.persistentState.gamesWon;
+		const size = engine.settings.worldSize;
 
 		if (gamesWon >= 1) {
 			const puzzle: MutablePuzzle = engine.assets.get(Puzzle, this.goalIDs.RESCUE_YODA) as any;
@@ -124,7 +125,9 @@ class Yoda extends Variant {
 		return new Story(
 			rand(),
 			[Zone.Planet.Endor, Zone.Planet.Hoth, Zone.Planet.Tatooine].random(),
-			[WorldSize.Small, WorldSize.Medium, WorldSize.Large].random()
+			WorldSize.isWorldSize(size)
+				? WorldSize.fromNumber(size)
+				: [WorldSize.Small, WorldSize.Medium, WorldSize.Large].random()
 		);
 	}
 
