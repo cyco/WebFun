@@ -94,6 +94,7 @@ class App {
 		const text = await file.readAsText();
 		const reader = new IniReader();
 		const contents = reader.readFromString(text);
+		console.log("contents", contents);
 
 		const apply = <T extends keyof Settings>(settingsKey: T, iniKey: string) => {
 			if (!contents[iniKey]) return;
@@ -112,6 +113,7 @@ class App {
 		apply("difficulty", "options.difficulty");
 		apply("tickDuration", "options.gameSpeed");
 		apply("worldSize", "options.worldSize");
+		apply("lastPlanet", "options.terrain");
 	}
 
 	private createDebugGameLinks(): void {

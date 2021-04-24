@@ -1,6 +1,7 @@
 import { LogLevel } from "src/util";
 import * as SmartPhone from "detect-mobile-browser";
 import { WorldSize } from "./engine/generation";
+import { Zone } from "./engine/objects";
 
 type Settings = {
 	mobile: boolean;
@@ -27,6 +28,7 @@ type Settings = {
 	difficulty: number;
 	worldSize: number;
 	tickDuration: number;
+	lastPlanet: number;
 
 	logLevel: LogLevel;
 
@@ -60,6 +62,7 @@ export const defaultSettings: Settings = {
 	difficulty: 50,
 	worldSize: WorldSize.Medium.rawValue,
 	tickDuration: 100,
+	lastPlanet: Zone.Planet.None.rawValue,
 
 	logLevel: LogLevel.Debug,
 
