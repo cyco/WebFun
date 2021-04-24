@@ -110,6 +110,8 @@ class App {
 		apply("playMusic", "options.playMusic");
 		apply("playEffects", "options.playSound");
 		apply("difficulty", "options.difficulty");
+		apply("tickDuration", "options.gameSpeed");
+		apply("worldSize", "options.worldSize");
 	}
 
 	private createDebugGameLinks(): void {
