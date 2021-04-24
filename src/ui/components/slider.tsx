@@ -39,6 +39,14 @@ class Slider extends Component implements EventListenerObject {
 	private _minText: string;
 	private _midText: string;
 	private _maxText: string;
+	private mouseCoordinates = {
+		x: 0,
+		y: 0
+	};
+	private buttonCoordinates = {
+		x: 0,
+		y: 0
+	};
 
 	get min(): number {
 		return this._min;
@@ -128,10 +136,11 @@ class Slider extends Component implements EventListenerObject {
 
 		this._right.addEventListener("mousedown", this);
 		this._left.addEventListener("mousedown", this);
+		this._knob.addEventListener("mousedown", this);
 
 		this.appendChild(this._right);
 		this.appendChild(this._left);
-		this._setupThumb();
+		this.appendChild(this._knob);
 
 		this.layout();
 	}
@@ -139,56 +148,56 @@ class Slider extends Component implements EventListenerObject {
 	protected disconnectedCallback(): void {
 		this._right.removeEventListener("mousedown", this);
 		this._left.removeEventListener("mousedown", this);
+		this._knob.removeEventListener("mousedown", this);
 		document.removeEventListener("mouseup", this);
+		window.removeEventListener("mousemove", this);
+		window.removeEventListener("mouseup", this);
 
 		super.disconnectedCallback();
 	}
 
-	handleEvent(event: Event): void {
+	handleEvent(event: MouseEvent): void {
 		const { type, currentTarget } = event;
 
 		if (type === "mousedown" && currentTarget === this._left) {
 			this._tickLeft();
 			document.addEventListener("mouseup", this);
+
+			event.preventDefault();
+			event.stopPropagation();
 		}
 
 		if (type === "mousedown" && currentTarget === this._right) {
 			this._tickRight();
 			document.addEventListener("mouseup", this);
+
+			event.preventDefault();
+			event.stopPropagation();
 		}
 
-		if (type === "mouseup") {
-			document.removeEventListener("mouseup", this);
-			clearTimeout(this._repeat);
+		if (type === "mousedown" && currentTarget === this._knob) {
+			this.mouseCoordinates.x = event.pageX;
+			this.mouseCoordinates.y = event.pageY;
+
+			this.buttonCoordinates.x = parseInt(this._knob.style.left);
+			this.buttonCoordinates.y = parseInt(this._knob.style.top);
+
+			window.addEventListener("mouseup", this);
+			window.addEventListener("mousemove", this);
+
+			event.preventDefault();
+			event.stopPropagation();
 		}
-	}
 
-	private _setupThumb() {
-		this.appendChild(this._knob);
+		if (type === "mousedown" && currentTarget === this) {
+			event.preventDefault();
+			event.stopPropagation();
+		}
 
-		const mouseCoordinates = {
-			x: 0,
-			y: 0
-		};
-		const buttonCoordinates = {
-			x: 0,
-			y: 0
-		};
-		const mouseDown = (e: MouseEvent) => {
-			mouseCoordinates.x = e.pageX;
-			mouseCoordinates.y = e.pageY;
+		if (type === "mousemove" && currentTarget === window) {
+			const difX = event.pageX - this.mouseCoordinates.x;
 
-			buttonCoordinates.x = parseInt(this._knob.style.left);
-			buttonCoordinates.y = parseInt(this._knob.style.top);
-
-			window.addEventListener("mouseup", mouseUp);
-			window.addEventListener("mousemove", mouseMove);
-		};
-
-		const mouseMove = (e: MouseEvent) => {
-			const difX = e.pageX - mouseCoordinates.x;
-
-			let pos = buttonCoordinates.x + difX;
+			let pos = this.buttonCoordinates.x + difX;
 			const sliderLength = this.sliderLength;
 
 			pos = max(leftButtonWidth, pos);
@@ -203,20 +212,25 @@ class Slider extends Component implements EventListenerObject {
 			this.layout();
 
 			if (this.continuous) this._postChangeNotification();
-		};
+		}
 
-		const mouseUp = () => {
-			window.removeEventListener("mousemove", mouseMove);
-			window.removeEventListener("mouseup", mouseUp);
+		if (event.type === "mouseup" && event.currentTarget === window) {
+			window.removeEventListener("mousemove", this);
+			window.removeEventListener("mouseup", this);
 
 			if (this._snapToIntegers) {
 				this.layout();
 			}
 
 			this._postChangeNotification();
-		};
+		}
 
-		this._knob.addEventListener("mousedown", mouseDown);
+		if (type === "mouseup") {
+			document.removeEventListener("mouseup", this);
+			clearTimeout(this._repeat);
+
+			event.stopPropagation();
+		}
 	}
 
 	private _tickLeft() {
