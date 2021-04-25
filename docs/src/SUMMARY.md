@@ -19,9 +19,11 @@ Summary
 		-	[Conditions](scripting/conditions.md)
 		-	[Instructions](scripting/instructions.md)
 	-	[Score](gameplay/score.md)
+	-	[Settings]()
 	-	[Map Screen](gameplay/map-screen.md)
 	-	[R2D2 Help](gameplay/r2d2-help.md)
 	-	[Cheats](gameplay/cheats.md)
+	-	[Debug Mode]()
 -	[World Generation]()
 -	[Files](files/index.md)
 
