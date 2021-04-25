@@ -92,6 +92,6 @@ describe("WebFun.Variant.Yoda", () => {
 	}
 
 	function mockEngine(): Engine {
-		return { persistentState: {}, assets: { get: (): void => void 0 } } as any;
+		return { persistentState: {}, settings: {}, assets: { get: (): void => void 0 } } as any;
 	}
 });
