@@ -27,7 +27,7 @@ See the [Getting Started](https://www.webfun.io/docs/architecture/getting-starte
 Similar Efforts
 ---------------
 
--	[shinyquagsire23/DesktopAdventures[(https://github.com/shinyquagsire23/DesktopAdventures) -- reimplementation in c
+-	[shinyquagsire23/DesktopAdventures](https://github.com/shinyquagsire23/DesktopAdventures) -- reimplementation in c
 -	[IceReaper/DesktopAdventuresToolkit](https://github.com/IceReaper/DesktopAdventuresToolkit) -- packer / unpacker for game files
 -	[digitall/scummvm-deskadv](https://github.com/digitall/scummvm-deskadv) -- reimplementation for use in ScummVM
 
