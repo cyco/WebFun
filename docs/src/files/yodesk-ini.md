@@ -41,9 +41,9 @@ Options section
 GameData section
 ----------------
 
-The `GameData` section is to keep track of the zones last used on each planet. When a new world on the planet is generated, these zones are excluded. This is supposed to increase variety between consecutive games.
+The `GameData` section is used to keep track of the end puzzles last used on each planet. When a new world on the planet is generated, these puzzles are excluded. This is supposed to increase variety between consecutive games so the player get different endings every time.
 
-Each entry holds a comma separated list. The first entry is the last used PRNG seed while the rest specifies which puzzles were used in that story.
+Each entry holds a comma separated list. The first entry is the last used PRNG seed, written out as a `32`-bit integer, eventhough only `16`-bits are used. The second number is a random value between `1` and `256` that is added to the puzzle ids. The third value is the number of puzzle ids, followed by the actual end puzzle ids that are to be excluded, each offset by the random value generated before.
 
 | Key     | Mapping | Comment                  |
 |---------|---------|--------------------------|
