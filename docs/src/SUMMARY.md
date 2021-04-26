@@ -11,7 +11,7 @@ Summary
 	-	[Testing]()
 	-	[Documentation](architecture/documentation.md)
 -	[Gameplay](gameplay/index.md)
-	-	[Window](gameplay/window.md)
+	-	[Main Window](gameplay/main-window.md)
 	-	[Color Palette](gameplay/color-palette.md)
 	-	[Tiles](gameplay/tiles.md)
 	-	[Zones](gameplay/zones.md)
