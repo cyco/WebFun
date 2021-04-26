@@ -43,6 +43,11 @@ class AboutWindow extends AbstractWindow {
 			<Button onclick={() => this.close()} label="OK" />
 		);
 	}
+
+	public handleEvent(event: Event): void {
+		/* overridden to allow selection in the window */
+		event.stopImmediatePropagation();
+	}
 }
 
 export default AboutWindow;

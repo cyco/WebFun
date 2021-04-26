@@ -103,6 +103,10 @@ class HelpViewer extends AbstractWindow {
 			</div>
 		);
 	}
+
+	public handleEvent(_: Event): void {
+		/* overridden to allow selection in the window */
+	}
 }
 
 export default HelpViewer;
