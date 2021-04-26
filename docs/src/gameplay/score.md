@@ -25,22 +25,22 @@ return 0
 ### Puzzles:
 
 ```javascript
-const solved = worldSpots.filter(zone => zone && zone.visited).length
+const solved = sectors.filter(zone => zone && zone.visited).length
 return solved / worldSize * 100.0
 ```
 
 ### Difficulty:
 
 ```javascript
-const solved = worldSpots.filter(zone => zone && zone.visited && zone.solved).length
-const total = worldSpots.length
+const solved = sectors.filter(zone => zone && zone.visited && zone.solved).length
+const total = sectors.length
 return solved / worldSize * 100.0
 ```
 
 ### Visited Zones:
 
 ```javascript
-const solved = worldSpots.filter(zone => zone && zone.visited).length
+const solved = sectors.filter(zone => zone && zone.visited).length
 return solved / worldSize * 100.0
 ```
 
