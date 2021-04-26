@@ -16,5 +16,6 @@ renderer = ["html"]
 # [output.linkcheck]
 
 [output.html]
-git-repository-url = "https://github.com/cyco/webfun/docs/"
+git-repository-url = "https://github.com/cyco/webfun/"
+git-branch = "master"
 additional-css = ["open-in.css"]
