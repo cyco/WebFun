@@ -22,7 +22,7 @@ $ yarn install
 $ yarn start
 ```
 
-See the documentation at [docs/src/SUMMARY.md](docs/src/SUMMARY.md) to learn more information about the build system.
+See the [Getting Started](https://www.webfun.io/docs/architecture/getting-started.html) section in the docs to learn more information about the build system.
 
 Similar Efforts
 ---------------
