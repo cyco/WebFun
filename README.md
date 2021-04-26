@@ -3,6 +3,8 @@ WebFun
 
 A reimplementation of the game engine powering *Indiana Jones and His Desktop Adventures* and *Yoda Stories*.
 
+#### See it live at [www.webfun.io](https://www.webfun.io/)
+
 Quick Start
 -----------
 
