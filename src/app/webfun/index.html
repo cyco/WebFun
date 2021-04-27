@@ -75,6 +75,22 @@
 			object-fit: contain;
 		}
 
+		.screenshot-gallery figure {
+			position: relative;
+		}
+
+		.screenshot-gallery figcaption {
+			bottom: 5px;
+			position: absolute;
+			font-size: .8em;
+			width: 100%;
+			line-break: after-white-space;
+			white-space: normal;
+			text-align: center;
+			background-color: rgba(238,238,238,.8);
+			padding: 8px;
+		}
+
 		.switch {
 			position: relative;
 			display: inline-block;
@@ -243,12 +259,29 @@
 
 				<h2>Screenshots</h2>
 				<ul class="screenshot-gallery">
-				  <li><img src="docs/screenshots/game.png"/></li>
-				  <li><img src="docs/screenshots/in-game-debug.png"/></li>
-				  <li><img src="docs/screenshots/save-game-inspector.png"/></li>
-				  <li><img src="docs/screenshots/puzzle-inspector.png"/></li>
-				  <li><img src="docs/screenshots/character-inspector-2.png"/></li>
-				  <li><img src="docs/screenshots/zone-editor.png"/></li>
+				  <li><figure>
+					<img src="docs/screenshots/game.png" alt="Screenshot of the main game window running in a local development environment"/>
+<figcaption>The main game window, running in a local development environment</figcaption>
+					</figure></li>
+				  <li><figure>
+						<img src="docs/screenshots/in-game-debug.png" alt="The main window with active debug overlays and an overview of the debug menu"/>
+					<figcaption>The main window with active debug overlays and an overview of the debug menu</figcaption>
+					</figure></li>
+				  <li><figure><img src="docs/screenshots/save-game-inspector.png" alt="Screenshot of the save game inspector"/>
+
+
+					<figcaption>Screenshot of the save game inspector</figcaption>
+</figure></li>
+				  <li><figure><img src="docs/screenshots/puzzle-inspector.png" alt="Puzzles can be inspected in the asset editor"/>
+
+					<figcaption>Puzzles can be inspected in the asset editor</figcaption>
+</figure></li>
+				  <li><figure><img src="docs/screenshots/character-inspector-2.png" alt="List of characters in the asset editor"/>
+					<figcaption>List of characters in the asset editor</figcaption>
+</figure></li>
+				  <li><figure><img src="docs/screenshots/zone-editor.png" alt="Multiple windows allow editing zones and actions at the same time"/>
+					<figcaption>Multiple windows allow editing zones and actions at the same time</figcaption>
+</figure></li>
 				</ul>
 
 				<h2>Related Projects</h2>
