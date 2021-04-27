@@ -1,11 +1,18 @@
 module.exports = {
 	parser: "@typescript-eslint/parser",
 	extends: ["plugin:@typescript-eslint/recommended", "plugin:prettier/recommended"],
-	plugins: ["eslint-plugin-react", "only-warn"],
+	plugins: ["@html-eslint", "eslint-plugin-react", "only-warn"],
 	parserOptions: {
 		ecmaVersion: 2018,
 		sourceType: "module"
 	},
+	overrides: [
+		{
+			files: ["*.html"],
+			parser: "@html-eslint/parser",
+			extends: ["plugin:@html-eslint/recommended"]
+		}
+	],
 	rules: {
 		"eqeqeq": "warn",
 		"react/jsx-uses-vars": "warn",

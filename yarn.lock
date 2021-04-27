@@ -904,6 +904,16 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
+"@html-eslint/eslint-plugin@^0.9.0":
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/@html-eslint/eslint-plugin/-/eslint-plugin-0.9.0.tgz#d8ec596631ceecc3bd86ef44ae5eeca6de8784be"
+  integrity sha512-8mgxHBUofWNdNnM+9eyIVt5UU/fcTrntxKfkaKkeCcp9WP2swW4kc/i//1BoJLpRSeUoU59gQH8vcthVIX9XoA==
+
+"@html-eslint/parser@^0.9.0":
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/@html-eslint/parser/-/parser-0.9.0.tgz#a3d54a75c1998c49d9faf1610c48d68cac13be37"
+  integrity sha512-93IwdFT1XerU/q8/8i38MCDU2If8hXt160H/XsLC2qwo4fu9xE6769ggj4uHBFiqUkPuYsPqrZGpqaCWWg+NNg==
+
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@istanbuljs/load-nyc-config/-/load-nyc-config-1.1.0.tgz#fd3db1d59ecf7cf121e80650bb86712f9b55eced"
