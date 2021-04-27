@@ -38,11 +38,15 @@ Here are some screenshots in case you just want to know what it looks likes.
 
 ### Loading Screen
 
-![Loading screen](docs/screenshots/game.png)
+![Loading screen](docs/screenshots/game-start.png)
+
+### A fierce fight erupts
+
+![Fight](docs/screenshots/game-fight.png)
 
 ### In-Game view with active debug overlays
 
-![Loading screen](docs/screenshots/in-game-debug.png)
+![In-Game debug overlays](docs/screenshots/game-debug.png)
 
 ### Save Game Inspector
 

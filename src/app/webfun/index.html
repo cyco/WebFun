@@ -65,10 +65,12 @@
 				width: 100%;
 				overflow-x: auto;
 				background-color: #eee;
+				scroll-snap-type: x mandatory;
 			}
 
 			.screenshot-gallery li {
 				display: inline-block;
+				scroll-snap-align: center;
 			}
 
 			.screenshot-gallery li img {
@@ -275,19 +277,35 @@
 					<li>
 						<figure>
 							<img
-								src="docs/screenshots/game.png"
-								alt="Screenshot of the main game window running in a local development environment"
+								src="docs/screenshots/game-start.png"
+								alt="Screenshot of the main window loading assets from
+								archive.org"
+								loading="lazy"
 							/>
 							<figcaption>
-								The main game window, running in a local development environment
+								Screenshot of the main window loading assets from archive.org
 							</figcaption>
 						</figure>
 					</li>
 					<li>
 						<figure>
 							<img
-								src="docs/screenshots/in-game-debug.png"
+								src="docs/screenshots/game-fight.png"
+								alt="A fierce fight breaks out on a forest planet"
+								loading="lazy"
+							/>
+							<figcaption>
+								A fierce fight breaks out in a forest, after our hero steals a very
+								valuable <em>Droid Detector</em>
+							</figcaption>
+						</figure>
+					</li>
+					<li>
+						<figure>
+							<img
+								src="docs/screenshots/game-debug.png"
 								alt="The main window with active debug overlays and an overview of the debug menu"
+								loading="lazy"
 							/>
 							<figcaption>
 								The main window with active debug overlays and an overview of the
@@ -298,8 +316,37 @@
 					<li>
 						<figure>
 							<img
-								src="docs/screenshots/save-game-inspector.png"
+								src="docs/screenshots/mobile-game.png"
+								alt="The reimplementation features a mobile view for devices without
+									 mouse and keyboard"
+								loading="lazy"
+							/>
+
+							<figcaption>
+								The reimplementation features a mobile view for devices without
+								mouse and keyboard
+							</figcaption>
+						</figure>
+					</li>
+					<li>
+						<figure>
+							<img
+								src="docs/screenshots/mobile-menu.png"
+								alt="In mobile mode the main menu slides in from the left"
+								loading="lazy"
+							/>
+
+							<figcaption>
+								In mobile mode the main menu slides in from the left
+							</figcaption>
+						</figure>
+					</li>
+					<li>
+						<figure>
+							<img
+								src="docs/screenshots/save-game-editor.png"
 								alt="Screenshot of the save game inspector"
+								loading="lazy"
 							/>
 
 							<figcaption>Screenshot of the save game inspector</figcaption>
@@ -308,18 +355,19 @@
 					<li>
 						<figure>
 							<img
-								src="docs/screenshots/puzzle-inspector.png"
-								alt="Puzzles can be inspected in the asset editor"
+								src="docs/screenshots/tile-editor.png"
+								alt="Inspecting a tile in the tile editor"
+								loading="lazy"
 							/>
-
-							<figcaption>Puzzles can be inspected in the asset editor</figcaption>
+							<figcaption>Inspecting a tile in the tile editor</figcaption>
 						</figure>
 					</li>
 					<li>
 						<figure>
 							<img
-								src="docs/screenshots/character-inspector-2.png"
+								src="docs/screenshots/character-editor.png"
 								alt="List of characters in the asset editor"
+								loading="lazy"
 							/>
 							<figcaption>List of characters in the asset editor</figcaption>
 						</figure>
@@ -327,12 +375,24 @@
 					<li>
 						<figure>
 							<img
-								src="docs/screenshots/zone-editor.png"
-								alt="Multiple windows allow editing zones and actions at the same time"
+								src="docs/screenshots/action-editor.png"
+								alt="The zone editor can be used to program actions in a lisp-like language"
+								loading="lazy"
 							/>
 							<figcaption>
-								Multiple windows allow editing zones and actions at the same time
+								The zone editor can be used to program actions in a lisp-like
+								language
 							</figcaption>
+						</figure>
+					</li>
+					<li>
+						<figure>
+							<img
+								src="docs/screenshots/coverage-by-source.png"
+								alt="Code coverage repport for in-game scripts"
+								loading="lazy"
+							/>
+							<figcaption>Code coverage repport for in-game scripts</figcaption>
 						</figure>
 					</li>
 				</ul>
