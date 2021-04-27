@@ -56,6 +56,25 @@
 			word-break: break-word;
 		}
 
+		.screenshot-gallery {
+		  margin: 0;
+		  padding: 0;
+		  white-space: nowrap;
+		  width: 100%;
+		  overflow-x: auto;
+		  background-color: #eee;
+		}
+
+		.screenshot-gallery li {
+		  display: inline-block;
+		}
+
+		.screenshot-gallery li img {
+			width: 300px;
+			height: 300px;
+			object-fit: contain;
+		}
+
 		.switch {
 			position: relative;
 			display: inline-block;
@@ -176,6 +195,7 @@
 				text-shadow: -0.5px -0.5px 0.5px #111, 1px 1px 0.5px #000
 			}
 
+
 			@keyframes spin {
 				0% {
 					transform: rotate(0deg)
@@ -220,6 +240,16 @@
 					If you're interested in more technical aspects of the game engine you can take a
 					look at the <a href="./docs/">documentation</a>.
 				</p>
+
+				<h2>Screenshots</h2>
+				<ul class="screenshot-gallery">
+				  <li><img src="docs/screenshots/game.png"/></li>
+				  <li><img src="docs/screenshots/in-game-debug.png"/></li>
+				  <li><img src="docs/screenshots/save-game-inspector.png"/></li>
+				  <li><img src="docs/screenshots/puzzle-inspector.png"/></li>
+				  <li><img src="docs/screenshots/character-inspector-2.png"/></li>
+				  <li><img src="docs/screenshots/zone-editor.png"/></li>
+				</ul>
 
 				<h2>Related Projects</h2>
 				<p>There are a number of related projects.</p>
