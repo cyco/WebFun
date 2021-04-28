@@ -77,7 +77,7 @@ interface Character {
 interface Data {
 	type: Variant;
 	version: number;
-	setup: Uint8Array;
+	startup: Uint8Array;
 	zones: Zone[];
 	tiles: Tile[];
 	puzzles: Puzzle[];

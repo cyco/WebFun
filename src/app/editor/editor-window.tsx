@@ -12,7 +12,7 @@ import { InputStream } from "src/util";
 import PaletteInspector from "src/app/editor/inspectors/palette-inspector";
 import { PaletteProvider } from "./data";
 import PuzzleInspector from "src/app/editor/inspectors/puzzle-inspector";
-import SetupImageInspector from "src/app/editor/inspectors/setup-image-inspector";
+import StartupImageInspector from "src/app/editor/inspectors/startup-image-inspector";
 import SoundInspector from "src/app/editor/inspectors/sound-inspector";
 import TileInspector from "src/app/editor/inspectors/tile-inspector";
 import ZoneInspector from "src/app/editor/inspectors/zone-inspector";
@@ -74,8 +74,8 @@ class EditorWindow extends AbstractWindow {
 		editor.addInspector("puzzle", new PuzzleInspector(state.prefixedWith("puzzle"), di));
 		editor.addInspector("character", new CharacterInspector(state.prefixedWith("character"), di));
 		editor.addInspector(
-			"setup-image",
-			new SetupImageInspector(state.prefixedWith("setup-image"), di)
+			"startup-image",
+			new StartupImageInspector(state.prefixedWith("startup-image"), di)
 		);
 		editor.addInspector("palette", new PaletteInspector(state.prefixedWith("palette"), di));
 		editor.addInspector("coverage", new CoverageInspector(state.prefixedWith("coverage"), di));

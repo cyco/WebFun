@@ -8,7 +8,7 @@ const ENDF = "ENDF";
 export default function* (input: ReaderStream, type: Variant): Generator<Data> {
 	const data: Data = {
 		version: null,
-		setup: null,
+		startup: null,
 		sounds: [],
 		tiles: [],
 		zones: [],
@@ -29,7 +29,7 @@ export default function* (input: ReaderStream, type: Variant): Generator<Data> {
 		if (category === "VERS") data.version = size;
 		if (category === "STUP") {
 			while (input.bytesAvailable < size) yield data;
-			data.setup = input.readUint8Array(size);
+			data.startup = input.readUint8Array(size);
 			yield data;
 			break;
 		}

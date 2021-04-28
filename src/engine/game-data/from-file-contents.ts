@@ -179,7 +179,7 @@ export default (data: any, raw: RawData): void => {
 	data._rawInput = raw;
 	data._type = raw.type;
 	data._version = raw.version;
-	data._setup = raw.setup;
+	data._startup = raw.startup;
 	data._sounds = raw.sounds.map((name: string, id: number) => new Sound(id, name));
 	data._tiles = raw.tiles.map(makeTile);
 	data._characters = raw.characters.map((r: any, i: number) => makeCharacter(r, i, data));

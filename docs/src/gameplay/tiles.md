@@ -7,7 +7,7 @@ Tiles
 
 The Desktop Adventures engine is almost entirely tile based. That means small re-usable images are used as the fundamental elements for all graphics. Maps, enemies and bullets are all made up of tiles.
 
-> **Note:** Only the setup image and the speech bubbles are not rendered using tiles.
+> **Note:** Only the startup image and the speech bubbles are not rendered using tiles.
 
 Each tile is made up of `32x32` pixels image data – an array of `8`-bit color palette indexes – and some flags that specify the properties of the tile.
 

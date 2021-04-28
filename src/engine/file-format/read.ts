@@ -9,7 +9,7 @@ const ENDF = "ENDF";
 export default (input: InputStream, type: Variant): Data => {
 	const data: Data = {
 		version: 0,
-		setup: new Uint8Array(0),
+		startup: new Uint8Array(0),
 		sounds: [],
 		tiles: [],
 		zones: [],

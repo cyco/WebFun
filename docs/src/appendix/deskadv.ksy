@@ -25,7 +25,7 @@ types:
           switch-on: type
           cases:
              '"VERS"': version
-             '"STUP"': setup_image
+             '"STUP"': startup_image
              '"CHAR"': characters
              '"CAUX"': character_auxiliaries
              '"CHWP"': character_weapons
@@ -49,7 +49,7 @@ types:
     seq:
       - id: version
         type: u4
-  setup_image:
+  startup_image:
     seq:
       - id: pixels
         size: _parent.len

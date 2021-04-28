@@ -10,7 +10,7 @@ describeComponent(LoadingView, () => {
 	beforeEach(() => (subject = render(LoadingView) as any));
 	afterEach(() => subject.remove());
 
-	it("renders the game's setup image in a palette view once it becomes available", () => {
+	it("renders the game's startup image in a palette view once it becomes available", () => {
 		const paletteView = subject.querySelector(PaletteView.tagName) as PaletteView;
 		const mockedPalette = ColorPalette.FromBGR8(new Uint8Array());
 		const mockedImage = new Uint8Array();

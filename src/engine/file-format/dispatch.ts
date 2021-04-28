@@ -1,6 +1,6 @@
 import {
 	parseVersion as VERS,
-	parseSetupImage as STUP,
+	parseStartupImage as STUP,
 	parseSounds as SNDS,
 	parseTiles as TILE,
 	parseZones as ZONE,

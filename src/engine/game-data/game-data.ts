@@ -12,7 +12,7 @@ class GameData {
 	private _puzzles: Puzzle[];
 	private _zones: Zone[];
 	private _characters: Char[];
-	private _setup: Uint8Array;
+	private _startup: Uint8Array;
 
 	constructor(raw: RawData) {
 		fromFileContents(this, raw);
@@ -67,8 +67,8 @@ class GameData {
 		return this._characters;
 	}
 
-	get setupImageData(): Uint8Array {
-		return this._setup;
+	get startupImageData(): Uint8Array {
+		return this._startup;
 	}
 }
 

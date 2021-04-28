@@ -7,7 +7,7 @@ import { FilePicker } from "src/ui";
 import { ColorPalette } from "src/engine";
 import ServiceContainer from "../service-container";
 
-class SetupImageInspector extends AbstractInspector {
+class StartupImageInspector extends AbstractInspector {
 	private _imageEditor = (
 		<PaletteImageEditor
 			size={new Size(288, 288)}
@@ -30,8 +30,8 @@ class SetupImageInspector extends AbstractInspector {
 	constructor(state: Storage, di: ServiceContainer) {
 		super(state, di);
 
-		this.window.title = "Setup Image";
-		this.window.autosaveName = "setup-image-inspector";
+		this.window.title = "Startup Image";
+		this.window.autosaveName = "startup-image-inspector";
 		this.window.style.width = "438px";
 		this.window.content.style.height = "331px";
 		this.window.content.style.flexDirection = "column";
@@ -52,7 +52,7 @@ class SetupImageInspector extends AbstractInspector {
 	}
 
 	public saveImage(): void {
-		downloadImage(this._imageEditor.renderedImage, "setup-image.png", "png");
+		downloadImage(this._imageEditor.renderedImage, "startup-image.png", "png");
 	}
 
 	public async loadImage(): Promise<void> {
@@ -78,7 +78,7 @@ class SetupImageInspector extends AbstractInspector {
 		}
 
 		this._imageEditor.image = paletteImage;
-		(this.data.currentData as any)._setup = paletteImage;
+		(this.data.currentData as any)._startup = paletteImage;
 		this._imageEditor.redraw();
 	}
 
@@ -114,10 +114,10 @@ class SetupImageInspector extends AbstractInspector {
 	build(): void {
 		this._colorPicker.palette = this.data.palette;
 		this._imageEditor.palette = this.data.palette;
-		this._imageEditor.image = this.data.currentData.setupImageData;
+		this._imageEditor.image = this.data.currentData.startupImageData;
 
 		this._imageEditor.redraw();
 	}
 }
 
-export default SetupImageInspector;
+export default StartupImageInspector;

@@ -18,7 +18,7 @@ import { GameData } from "src/engine";
 class GameDataSerializer {
 	public serialize(data: GameData, stream: OutputStream): void {
 		this.writeVersion(data, stream);
-		this.writeSetupImage(data, stream);
+		this.writeStartupImage(data, stream);
 		this.writeSounds(data, stream);
 		this.writeTiles(data, stream);
 		this.writeZones(data, stream);
@@ -35,10 +35,10 @@ class GameDataSerializer {
 		stream.writeUint32(512);
 	}
 
-	private writeSetupImage(data: GameData, stream: OutputStream) {
+	private writeStartupImage(data: GameData, stream: OutputStream) {
 		stream.writeCharacters("STUP");
 		stream.writeUint32(288 * 288);
-		stream.writeUint8Array(data.setupImageData);
+		stream.writeUint8Array(data.startupImageData);
 	}
 
 	private writeSounds(data: GameData, stream: OutputStream) {

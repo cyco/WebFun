@@ -6,7 +6,7 @@ import { parseZaux, parseZax2, parseZax3, parseZax4, parseZoneNames, parseZones 
 
 import { parseEndOfFile } from "./end-of-file";
 import { parseHotspots } from "./hotspot";
-import { parseSetupImage } from "./setup-image";
+import { parseStartupImage } from "./startup-image";
 import { parseSounds } from "./sound";
 import { parseVersion } from "./version";
 import { parseTgen } from "./tgen";
@@ -20,7 +20,7 @@ export {
 	parseHotspots,
 	parsePuzzles,
 	parsePuzzleNames,
-	parseSetupImage,
+	parseStartupImage,
 	parseSounds,
 	parseTiles,
 	parseTileNames,

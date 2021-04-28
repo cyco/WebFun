@@ -36,7 +36,7 @@ export default (editor: EditorView, window: Window): MenuItemInit[] =>
 				MenuItemAction("Chars", () => editor.show("character")),
 				MenuItemAction("Puzzles", () => editor.show("puzzle")),
 				MenuItemAction("Sound", () => editor.show("sound")),
-				MenuItemAction("Setup Image", () => editor.show("setup-image")),
+				MenuItemAction("Startup Image", () => editor.show("startup-image")),
 				MenuItemAction("Palette", () => editor.show("palette")),
 				MenuItemAction(
 					"Save Game",

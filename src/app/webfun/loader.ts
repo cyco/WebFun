@@ -10,7 +10,7 @@ export const Events = {
 	Progress: "progress",
 	Fail: "fail",
 	Load: "load",
-	DidLoadSetupImage: "loadsetupimage",
+	DidLoadStartupImage: "loadstartupimage",
 	DidLoadStrings: "loadstrings"
 };
 
@@ -19,7 +19,7 @@ export const StageCount = 5;
 class Loader extends EventTarget {
 	public onfail: (_: LoaderEvent) => void;
 	public onprogress: (_: LoaderEvent) => void;
-	public onloadsetupimage: (_: LoaderEvent) => void;
+	public onloadstartupimage: (_: LoaderEvent) => void;
 	public onloadstrings: (_: LoaderEvent) => void;
 	public onload: (_: LoaderEvent) => void;
 
@@ -76,7 +76,7 @@ class Loader extends EventTarget {
 	private async loadGameData(): Promise<void> {
 		this.log("Load game data");
 		this._progress(1, 0);
-		let hasSentSetupImage = false;
+		let hasSentStartupImage = false;
 		return new Promise(async (resolve, reject) => {
 			const stream = await this._resources.loadGameFile(p => this._progress(1, p));
 			const reader = readGameDataFileProgressively(stream, this._variant);
@@ -85,12 +85,12 @@ class Loader extends EventTarget {
 				const { done, value: data } = reader.next();
 				if (done) return;
 				if (!data) return;
-				if (!data.setup) return;
+				if (!data.startup) return;
 
 				stream.onprogress = () => this._progress(1, stream.bytesAvailable / stream.bytesTotal);
-				hasSentSetupImage = true;
-				this.dispatchEvent(Events.DidLoadSetupImage, {
-					pixels: data.setup,
+				hasSentStartupImage = true;
+				this.dispatchEvent(Events.DidLoadStartupImage, {
+					pixels: data.startup,
 					palette: this._palette
 				});
 			};
@@ -106,9 +106,9 @@ class Loader extends EventTarget {
 					if (done) break;
 				} while (true);
 
-				if (!hasSentSetupImage) {
-					this.dispatchEvent(Events.DidLoadSetupImage, {
-						pixels: this._rawData.setup,
+				if (!hasSentStartupImage) {
+					this.dispatchEvent(Events.DidLoadStartupImage, {
+						pixels: this._rawData.startup,
 						palette: this._palette
 					});
 				}

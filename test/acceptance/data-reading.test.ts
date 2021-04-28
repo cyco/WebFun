@@ -34,7 +34,7 @@ describe("WebFun.Acceptance.DataReading", () => {
 		expect(data.puzzles.length).toBe(157);
 		expect(data.zones.length).toBe(366);
 		expect(data.characters.length).toBe(27);
-		expect(data.setupImageData.length).toBe(82944);
+		expect(data.startupImageData.length).toBe(82944);
 		expect(data.copy()).toBeInstanceOf(GameData);
 	});
 

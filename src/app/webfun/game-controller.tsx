@@ -443,7 +443,7 @@ class GameController extends EventTarget implements EventListenerObject {
 			);
 			loader.onfail = event => reject(event);
 			loader.onprogress = ({ detail: { progress } }) => (loadingView.progress = progress);
-			loader.onloadsetupimage = ({ detail: { pixels, palette } }) => {
+			loader.onloadstartupimage = ({ detail: { pixels, palette } }) => {
 				loadingView.palette = palette;
 				loadingView.image = pixels;
 
