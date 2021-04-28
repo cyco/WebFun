@@ -59,8 +59,11 @@ const makePuzzle = (raw: RawPuzzle, idx: number, data: GameData) => {
 	puzzle.id = idx;
 	puzzle.name = raw.name || "";
 	puzzle.type = raw.type === -1 ? Puzzle.Type.None : Puzzle.Type.fromNumber(raw.type);
-	puzzle.unknown1 = raw.unknown1;
-	puzzle.unknown2 = raw.unknown2;
+	puzzle.item1Class = Puzzle.ItemClass.fromNumber(raw.item1Class);
+	puzzle.item2Class =
+		raw.item2 && (puzzle.type === Puzzle.Type.End || puzzle.type === Puzzle.Type.Disabled)
+			? Puzzle.ItemClass.fromNumber(raw.item2Class)
+			: Puzzle.Type.None;
 	puzzle.unknown3 = raw.unknown3;
 
 	puzzle.strings = raw.texts.slice();
@@ -69,6 +72,7 @@ const makePuzzle = (raw: RawPuzzle, idx: number, data: GameData) => {
 
 	if (puzzle.type !== Puzzle.Type.End && puzzle.type !== Puzzle.Type.Disabled) {
 		puzzle.item2 = null;
+		puzzle.item2Class = Puzzle.ItemClass.None;
 	}
 
 	if (

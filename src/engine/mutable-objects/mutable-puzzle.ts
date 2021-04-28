@@ -49,20 +49,20 @@ class MutablePuzzle extends Puzzle {
 		this._type = value;
 	}
 
-	get unknown1(): number {
-		return this._unknown1;
+	get item1Class(): Puzzle.ItemClass {
+		return this._item1Class;
 	}
 
-	set unknown1(value: number) {
-		this._unknown1 = value;
+	set item1Class(value: Puzzle.ItemClass) {
+		this._item1Class = value;
 	}
 
-	get unknown2(): number {
-		return this._unknown2;
+	get item2Class(): Puzzle.ItemClass {
+		return this._item2Class;
 	}
 
-	set unknown2(value: number) {
-		this._unknown2 = value;
+	set item2Class(value: Puzzle.ItemClass) {
+		this._item2Class = value;
 	}
 
 	get unknown3(): number {

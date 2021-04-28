@@ -208,8 +208,8 @@ class GameDataSerializer {
 				stream.writeUint32(Puzzle.Type.End.rawValue);
 			} else stream.writeUint32(puzzle.type.rawValue);
 
-			stream.writeUint32(puzzle.unknown1);
-			stream.writeUint32(puzzle.unknown2);
+			stream.writeUint32(puzzle.item1Class.rawValue);
+			stream.writeUint32(puzzle.item2Class.rawValue);
 			stream.writeUint16(puzzle.unknown3);
 
 			puzzle.strings.forEach(string => {

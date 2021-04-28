@@ -11,8 +11,8 @@ describe("WebFun.Engine.Objects.Puzzle", () => {
 		expect(subject.strings).toEqual(["", "", "", "", ""]);
 		expect(subject.name).toBe("");
 		expect(subject.type).toBeNull();
-		expect(subject.unknown1).toBeNull();
-		expect(subject.unknown2).toBeNull();
+		expect(subject.item1Class).toBe(Puzzle.ItemClass.None);
+		expect(subject.item2Class).toBe(Puzzle.ItemClass.None);
 		expect(subject.unknown3).toBeNull();
 	});
 });

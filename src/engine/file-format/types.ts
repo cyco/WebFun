@@ -50,8 +50,8 @@ interface Tile {
 interface Puzzle {
 	name: string;
 	type: number;
-	unknown1: number;
-	unknown2: number;
+	item1Class: number;
+	item2Class: number;
 	unknown3: number;
 	texts: string[];
 	item1: number;

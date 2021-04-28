@@ -17,8 +17,8 @@ const parsePuzzle = (stream: InputStream, _: Data, variant: Variant): Puzzle => 
 		type = stream.readUint32();
 	}
 
-	const unknown1 = stream.readUint32();
-	const unknown2 = stream.readUint32();
+	const item1Class = stream.readUint32();
+	const item2Class = stream.readUint32();
 	const unknown3 = stream.readUint16();
 
 	const texts: string[] = Array.Repeat("", 5);
@@ -36,8 +36,8 @@ const parsePuzzle = (stream: InputStream, _: Data, variant: Variant): Puzzle => 
 	return {
 		name: "",
 		type,
-		unknown1,
-		unknown2,
+		item1Class,
+		item2Class,
 		unknown3,
 		texts,
 		item1,

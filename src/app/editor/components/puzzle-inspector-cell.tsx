@@ -46,8 +46,8 @@ class PuzzleInspectorCell extends Cell<Puzzle> {
 				<div className="title">{`${this.data.id.toHex(2)} ${this.data.name}
 			${this.data.type.name}`}</div>
 				<div className="unknowns">
-					<div>{this.data.unknown1.toHex(2)}</div>
-					<div>{this.data.unknown2.toHex(2)}</div>
+					<div>{this.data.item1Class.name}</div>
+					<div>{this.data.item2Class.name}</div>
 					<div>{this.data.unknown3.toHex(2)}</div>
 				</div>
 				<div className="dialogs">
