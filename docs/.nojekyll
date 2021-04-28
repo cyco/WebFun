@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:235d4f83c4c71612f43995dbda167720cd0c5384bf9ea64f9328b187c409b51d
-size 72
+This file makes sure that Github Pages doesn't process mdBook's output.

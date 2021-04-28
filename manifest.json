@@ -1,3 +1,36 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:d48c331005f897cbdcb0821b279b82dcb345313ee7e7999d91b2baae9893bf8e
-size 785
+{
+	"name": "WebFun",
+	"short_name": "WebFun",
+	"description": "A re-implementation of the Desktop Adventures game engine.",
+	"background_color": "#000",
+	"theme_color": "#000",
+	"start_url": "/?source=pwa",
+	"display": "fullscreen",
+	"scope": "/",
+	"icons": [
+		{
+			"src": "assets/icon/apple-touch-icon.png",
+			"type": "image/png",
+			"sizes": "180x180",
+			"purpose": "maskable any"
+		},
+		{
+			"src": "assets/icon/appicon-192x192.png",
+			"type": "image/png",
+			"sizes": "192x192",
+			"purpose": "maskable any"
+		},
+		{
+			"src": "assets/icon/appicon-384x384.png",
+			"type": "image/png",
+			"sizes": "384x384",
+			"purpose": "maskable any"
+		},
+		{
+			"src": "assets/icon/appicon-483x483.png",
+			"type": "image/png",
+			"sizes": "483x483",
+			"purpose": "maskable any"
+		}
+	]
+}
