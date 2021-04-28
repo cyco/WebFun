@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "engines": {
-    "node": "15"
+    "node": ">=14"
   },
   "scripts": {
     "build": "webpack --mode=production --config config/webpack.prod.js && webpack --mode=production --config config/webpack.service-worker.js",
