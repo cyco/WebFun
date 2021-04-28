@@ -223,7 +223,7 @@
 					text-shadow: -0.5px -0.5px 0.5px #111, 1px 1px 0.5px #363636;
 				}
 
-				noscript {
+				noscript.app {
 					margin-top: 0.8em;
 					display: block;
 					font-size: 2em;
@@ -238,6 +238,13 @@
 					text-shadow: -0.5px -0.5px 0.5px #111, 1px 1px 0.5px #000;
 				}
 
+				noscript.required {
+					margin-left: 4px;
+					margin-rightt: 4px;
+					font-size: 0.7em;
+					font-style: italic;
+				}
+
 				@keyframes spin {
 					0% {
 						transform: rotate(0deg);
@@ -250,7 +257,7 @@
 			</style>
 			<div style="display: none" id="webfun-preload-spinner"></div>
 			<div style="display: none" id="webfun-preload-text">LOADING</div>
-			<noscript>Enable JavaScript to play!</noscript>
+			<noscript class="app">Enable JavaScript to play!</noscript>
 			<script>
 				const script = document.currentScript;
 				const parent = script.parentElement;
@@ -274,8 +281,9 @@
 						class="switch"
 					>
 						<input type="checkbox" id="toggle-debug" /><span></span> </label
-					>) and check out some advanced features. There's a script debugger, asset
-					editor, save game inspector and more to discover from the debug menu.
+					><noscript class="required">JavaScript required</noscript>) and check out some
+					advanced features. There's a script debugger, asset editor, save game inspector
+					and more to discover from the debug menu.
 				</p>
 
 				<h2>What's with the silly name?</h2>
