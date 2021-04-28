@@ -1,4 +1,4 @@
-import { Action, Hotspot, Sound, Puzzle, Char, Zone } from "../objects";
+import { Action, Hotspot, Sound, Char, Zone, Puzzle } from "../objects";
 import {
 	MutableAction,
 	MutableChar,
@@ -59,7 +59,10 @@ const makePuzzle = (raw: RawPuzzle, idx: number, data: GameData) => {
 	puzzle.id = idx;
 	puzzle.name = raw.name || "";
 	puzzle.type = raw.type === -1 ? Puzzle.Type.None : Puzzle.Type.fromNumber(raw.type);
-	puzzle.item1Class = Puzzle.ItemClass.fromNumber(raw.item1Class);
+	puzzle.item1Class =
+		data.type === Yoda || data.type === YodaDemo
+			? Puzzle.ItemClass.fromNumber(raw.item1Class)
+			: Puzzle.Type.None;
 	puzzle.item2Class =
 		raw.item2 && (puzzle.type === Puzzle.Type.End || puzzle.type === Puzzle.Type.Disabled)
 			? Puzzle.ItemClass.fromNumber(raw.item2Class)
