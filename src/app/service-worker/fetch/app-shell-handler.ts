@@ -5,14 +5,15 @@ class AppShellHandler implements FetchHandler {
 
 	shouldHandle(url: URL): boolean {
 		return (
-			url.pathname.endsWith("/") ||
-			url.pathname.endsWith("/?source=pwa") ||
-			url.pathname.endsWith("index.html") ||
-			url.pathname.endsWith("index.html/?source=pwa") ||
-			url.pathname.includes("/webfun.js") ||
-			url.pathname.includes("/service-worker.js") ||
-			url.pathname.includes("/manifest.json") ||
-			url.pathname.includes("/assets/install.json")
+			!url.pathname.includes("/docs/") &&
+			(url.pathname.endsWith("/") ||
+				url.pathname.endsWith("/?source=pwa") ||
+				url.pathname.endsWith("index.html") ||
+				url.pathname.endsWith("index.html?source=pwa") ||
+				url.pathname.includes("/webfun.js") ||
+				url.pathname.includes("/service-worker.js") ||
+				url.pathname.includes("/manifest.json") ||
+				url.pathname.includes("/assets/install.json"))
 		);
 	}
 
