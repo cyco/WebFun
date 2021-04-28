@@ -10,6 +10,7 @@ Summary
 	-	[Modules]()
 	-	[Testing]()
 	-	[Documentation](architecture/documentation.md)
+	-	[Deployment](architecture/deployment.md)
 -	[Gameplay](gameplay/index.md)
 	-	[Main Window](gameplay/main-window.md)
 	-	[Color Palette](gameplay/color-palette.md)
