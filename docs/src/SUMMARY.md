@@ -2,6 +2,7 @@ Summary
 =======
 
 -	[Introduction](introduction.md)
+-	[Related Projects](related-projects.md)
 -	[Project Architecture](architecture/index.md)
 	-	[Getting Started](architecture/getting-started.md)
 	-	[Code]()
