@@ -49,7 +49,7 @@ types:
           switch-on: type
           cases:
              '"VERS"': version
-             '"STUP"': setup_image
+             '"STUP"': startup_image
              '"CHAR"': characters
              '"CAUX"': character_auxiliaries
              '"CHWP"': character_weapons
@@ -58,6 +58,7 @@ types:
              '"TILE"': tiles
              '"TNAM"': tile_names
              '"ZONE"': zones
+             '"TGEN"': tgen
              '"ENDF"': endf
              _: unknown_catalog_entry
   unknown_catalog_entry:
@@ -69,7 +70,7 @@ types:
       - id: version
         doc: Version of the file. This value is always set to 512.
         type: u4
-  setup_image:
+  startup_image:
     doc: |
       A 288x288 bitmap to be shown while other assets are loaded and a new
       world is generated.
@@ -807,7 +808,7 @@ types:
           doc: |
             This type of zone is shown after the game has loaded all assets.
             It should resemble the image from the catalog entry of type
-            `setup_image` for a smooth transition from loading to game play.
+            `startup_image` for a smooth transition from loading to game play.
         10:
           id: goal
           doc: |
@@ -1044,9 +1045,13 @@ types:
       - id: type
         type: u4
         if: index != 0xFF_FF
-      - type: u4
+      - id: item1_class
+        type: u4
+        enum: puzzle_item_class
         if: index != 0xFF_FF
-      - type: u4
+      - id: item2_class
+        type: u4
+        enum: puzzle_item_class
         if: index != 0xFF_FF
       - type: u2
         if: index != 0xFF_FF
@@ -1061,8 +1066,22 @@ types:
       - id: item_2
         type: u2
         if: index != 0xFF_FF
+    enums:
+      puzzle_item_class:
+        0: keycard
+        1: tool
+        2: part
+        4: valuable
+        0xFFFF_FFFF: none
   endf:
     seq: []
+  tgen:
+    doc: |
+        The TGEN section is only present in non-english versions of the game. It's purpose or
+        internal structure is unknown.
+    seq:
+      - id: data
+        size: _parent.size
   characters:
     seq:
       - id: characters
