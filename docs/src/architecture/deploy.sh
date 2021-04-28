@@ -6,6 +6,7 @@ TARGET="$HOME/Source/webfun-release"
 # Stop on errors
 set -e
 
+# Clone release branch to $TARGET if it does not exist
 if [ ! -d "$TARGET" ]; then
 	git clone -b release git@github.com:cyco/WebFun.git "$TARGET"
 fi
