@@ -8,7 +8,7 @@ A reimplementation of the game engine powering *Indiana Jones and His Desktop Ad
 Quick Start
 -----------
 
-Make sure you have `node` and `yarn` installed. Then run the following steps in your favorite terminal.
+Make sure you have `node` (v14 or newer) and `yarn` installed. Then run the following steps in your favorite terminal.
 
 ```bash
 # check out the code

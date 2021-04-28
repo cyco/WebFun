@@ -4,7 +4,7 @@ Getting Started
 To set up a local development environment you'll need:
 
 -	[Git](https://git-scm.com) to download the source code
--	[Node.js](https://nodejs.org), version 15 or newer
+-	[Node.js](https://nodejs.org), version 14 or newer
 -	[Yarn](https://yarnpkg.com) to install dependencies and run dev tasks
 
 ### Get the Source Code
