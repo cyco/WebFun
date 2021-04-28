@@ -36,30 +36,42 @@ Screenshots
 
 Here are some screenshots in case you just want to know what it looks likes.
 
-### Loading Screen
+#### Screenshot of the main window loading assets from archive.org
 
-![Loading screen](docs/screenshots/game-start.png)
+![Screenshot of the main window loading assets from archive.org](docs/screenshots/game-start.png)
 
-### A fierce fight erupts
+#### A fierce fight breaks out in a forest, after our hero steals a very valuable *Droid Detector*
 
-![Fight](docs/screenshots/game-fight.png)
+![A fierce fight breaks out in a forest, after our hero steals a very valuable _Droid Detector_](docs/screenshots/game-fight.png)
 
-### In-Game view with active debug overlays
+#### The main window with active debug overlays and an overview of the debug menu
 
-![In-Game debug overlays](docs/screenshots/game-debug.png)
+![The main window with active debug overlays and an overview of the debug menu](docs/screenshots/game-debug.png)
 
-### Save Game Inspector
+#### The reimplementation features a mobile view for devices without mouse and keyboard
 
-![Save Game Inspector](docs/screenshots/save-game-inspector.png)
+![The reimplementation features a mobile view for devices without mouse and keyboard](docs/screenshots/mobile-game.png)
 
-### Character view of resource editor
+#### In mobile mode the main menu slides in from the left
 
-![Character view of resource editor](docs/screenshots/character-inspector-2.png)
+![In mobile mode the main menu slides in from the left](docs/screenshots/mobile-menu.png)
 
-### Puzzle view of resource editor
+#### Screenshot of the save game inspector
 
-![Puzzle view of resource editor](docs/screenshots/puzzle-inspector.png)
+![Screenshot of the save game inspector](docs/screenshots/save-game-editor.png)
 
-### Zone & action editor
+#### Inspecting a tile in the asset editor
 
-![Zone & action editor](docs/screenshots/zone-editor.png)
+![Inspecting a tile in the asset editor](docs/screenshots/tile-editor.png)
+
+#### List of characters in the asset editor
+
+![List of characters in the asset editor](docs/screenshots/character-editor.png)
+
+#### The zone editor can be used to program actions in a lisp-like language
+
+![The zone editor can be used to program actions in a lisp-like language](docs/screenshots/action-editor.png)
+
+#### Code coverage repport for in-game scripts
+
+![Code coverage repport for in-game scripts](docs/screenshots/coverage-by-source.png)
