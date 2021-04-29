@@ -14,6 +14,9 @@ fi
 # Change to project root
 cd "$SOURCE"
 
+# Execute full test suite
+yarn test:full
+
 # Set environment variable to load game files from archive.org
 export WEBFUN_GAMES="[{\"title\":\"Yoda Stories from archive.org\",\"variant\":\"yoda\",\"sfx-format\":\"wav\",\"exe\":\"https://cors.archive.org/download/Star_Wars_-_Yoda_Stories_1997_LucasArts/Star%20Wars%20-%20Yoda%20Stories%20%281997%29%28LucasArts%29.iso/Yoda%2FYodesk.exe\",\"sfx\":\"https://cors.archive.org/download/Star_Wars_-_Yoda_Stories_1997_LucasArts/Star%20Wars%20-%20Yoda%20Stories%20%281997%29%28LucasArts%29.iso/Yoda%2Fsfx%2F\",\"data\":\"https://cors.archive.org/download/Star_Wars_-_Yoda_Stories_1997_LucasArts/Star%20Wars%20-%20Yoda%20Stories%20%281997%29%28LucasArts%29.iso/Yoda%2Fyodesk.dta\",\"help\":\"https://cors.archive.org/download/Star_Wars_-_Yoda_Stories_1997_LucasArts/Star%20Wars%20-%20Yoda%20Stories%20%281997%29%28LucasArts%29.iso/Yoda%2FYodesk.hlp\"},{\"title\":\"Yoda Stories Demo (archive.org)\",\"variant\":\"yoda-demo\",\"sfx-format\":\"wav\",\"exe\":\"https://cors.archive.org/download/StarWarsYodaStories_1020/YodaDemo.zip/YodaDemo%2FYodaDemo.exe\",\"sfx\":\"https://archive.org/download/StarWarsYodaStories_1020/YodaDemo.zip/YodaDemo%2Fsfx%2F\",\"data\":\"https://cors.archive.org/download/StarWarsYodaStories_1020/YodaDemo.zip/YodaDemo%2FYodaDemo.dta\",\"help\":\"https://cors.archive.org/download/StarWarsYodaStories_1020/YodaDemo.zip/YodaDemo%2FYodaDemo.hlp\"}]"
 
