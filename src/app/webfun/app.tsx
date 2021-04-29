@@ -9,6 +9,7 @@ import GameController, { GameSource } from "./game-controller";
 import { EventTarget } from "src/util";
 import { navigator } from "src/std/dom";
 import IniReader from "./ini-reader";
+import { HelpViewer } from "./windows";
 
 class App {
 	public static sharedApp: App;
@@ -30,6 +31,7 @@ class App {
 		this.setupSaveGameFileHandler();
 		this.setupTestFileHandler();
 		this.setupIniFileHandler();
+		this.setupHlpFileHandler();
 		this.createDebugGameLinks();
 		this.ensureAddressbarCanBeHidden();
 		this.enterPWA();
@@ -116,6 +118,15 @@ class App {
 		apply("lastPlanet", "options.terrain");
 	}
 
+	private setupHlpFileHandler() {
+		const fileDrop = GlobalFileDrop.defaultHandler;
+		fileDrop.addHandler("hlp", (file: File) => {
+			const helpWindow = document.createElement(HelpViewer.tagName);
+			this.windowManager.showWindow(helpWindow);
+			helpWindow.loadHelpFile(file);
+		});
+	}
+
 	private createDebugGameLinks(): void {
 		const games = this.loadGamesFromEnvironment();
 		if (!games.length) return;
@@ -193,7 +204,7 @@ class App {
 	}
 
 	public get windowManager(): WindowManager {
-		return this.windowManager;
+		return this._windowManager;
 	}
 }
 

@@ -58,7 +58,11 @@ class GlobalFileDrop implements EventListenerObject {
 				const handler = this._handlers[ext];
 				if (handler) {
 					acceptedSomething = true;
-					handler(file);
+					try {
+						handler(file);
+					} catch (e) {
+						console.error("FileHandler failed with error", e);
+					}
 				}
 			}
 

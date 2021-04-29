@@ -31,7 +31,7 @@ class HelpViewer extends AbstractWindow {
 		);
 	}
 
-	public async loadHelpFile(source: string): Promise<void> {
+	public async loadHelpFile(source: string | File): Promise<void> {
 		this.history = [];
 		this.topicCount = 0;
 		this.currentTopic = 0;
@@ -46,8 +46,13 @@ class HelpViewer extends AbstractWindow {
 				locateFile: (path: string) => "assets/" + path
 			});
 		}
-		const stream = await FileLoader.loadAsStream(source);
-		hc.innerHTML = this.helpdeco.render(stream.buffer, source.split(".").last());
+		const stream =
+			source instanceof File
+				? await source.provideInputStream()
+				: await FileLoader.loadAsStream(source);
+		const name = source instanceof File ? source.name : source.split(".").last();
+
+		hc.innerHTML = this.helpdeco.render(stream.buffer, name);
 		this.topicCount = this.getElementsByTagName(TopicTag).length;
 		this.history = [0];
 		this.title = this.querySelector(TitleTag).textContent;
