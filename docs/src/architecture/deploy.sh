@@ -37,6 +37,7 @@ cp -r build/* "$TARGET"
 
 # Copy screenshots for landing page
 cp -r docs/screenshots "$TARGET"/docs/screenshots
+cp -r assets/preview.png "$TARGET"/preview.png
 
 # Re-create CNAME to setup custom URL for GitHub pages
 echo -n www.webfun.io > "$TARGET"/CNAME
