@@ -140,6 +140,16 @@ abstract class AbstractWindow extends Component {
 	}
 
 	public handleEvent(event: Event): void {
+		const { target } = event;
+		if (
+			target instanceof HTMLInputElement ||
+			target instanceof HTMLTextAreaElement ||
+			target instanceof HTMLSelectElement ||
+			target instanceof HTMLButtonElement ||
+			(target instanceof Element && target.hasAttribute("contenteditable"))
+		)
+			return;
+
 		event.preventDefault();
 	}
 
