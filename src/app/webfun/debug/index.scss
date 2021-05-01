@@ -1,0 +1,27 @@
+body.screenshot {
+	background: none;
+
+	wf-app > div {
+		display: none;
+	}
+
+	wf-about-window,
+	wf-abstract-menu-window,
+	wf-abstract-window,
+	wf-confirmation-window,
+	wf-debug-test-creator-window,
+	wf-difficulty-window,
+	wf-fullscreen-window,
+	wf-game-speed-window,
+	wf-main-window,
+	wf-menu-window,
+	wf-resource-editor-window,
+	wf-save-game-editor-window,
+	wf-settings-window,
+	wf-statistics-window,
+	wf-submenu-window,
+	wf-world-size-window,
+	wf-zone-editor-window {
+		box-shadow: none;
+	}
+}
