@@ -235,7 +235,7 @@ class Slider extends Component implements EventListenerObject {
 
 	private _tickLeft() {
 		const tickWidth = this._snapToIntegers ? 1 : 0.02;
-		this.value -= tickWidth;
+		this.value -= tickWidth * (this._max < this._min ? -1 : 1);
 
 		if (this._repeat) clearTimeout(this._repeat);
 		this._repeat = setTimeout(() => this._tickLeft(), RepeatDelay);
@@ -243,7 +243,7 @@ class Slider extends Component implements EventListenerObject {
 
 	private _tickRight() {
 		const tickWidth = this._snapToIntegers ? 1 : 0.02;
-		this.value += tickWidth;
+		this.value += tickWidth * (this._max < this._min ? -1 : 1);
 
 		if (this._repeat) clearTimeout(this._repeat);
 		this._repeat = setTimeout(() => this._tickRight(), RepeatDelay);
