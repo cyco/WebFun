@@ -32,7 +32,7 @@ wf-menu-item {
 	}
 
 	&[state="on"] .state {
-		background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 16 16" x="0" y="0"><path d="M13 .156l-1.406 1.438-5.594 5.594-1.594-1.594-1.406-1.438-2.844 2.844 1.438 1.406 3 3 1.406 1.438 1.406-1.438 7-7 1.438-1.406-2.844-2.844z"></path></svg>');
+		background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDE2IDE2IiB4PSIwIiB5PSIwIj48cGF0aCBkPSJNMTMgLjE1NmwtMS40MDYgMS40MzgtNS41OTQgNS41OTQtMS41OTQtMS41OTQtMS40MDYtMS40MzgtMi44NDQgMi44NDQgMS40MzggMS40MDYgMyAzIDEuNDA2IDEuNDM4IDEuNDA2LTEuNDM4IDctNyAxLjQzOC0xLjQwNi0yLjg0NC0yLjg0NHoiPjwvcGF0aD48L3N2Zz4=');
 	}
 
 	&[state="off"] .state {
