@@ -10,3 +10,4 @@ worlds.txt filter=lfs diff=lfs merge=lfs -text
 assets/game-data/worlds.txt filter=lfs diff=lfs merge=lfs -text
 *.afphoto filter=lfs diff=lfs merge=lfs -text
 *.wld filter=lfs diff=lfs merge=lfs -text
+assets/preview.png filter=lfs diff=lfs merge=lfs -text
