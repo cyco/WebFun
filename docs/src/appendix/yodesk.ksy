@@ -58,6 +58,7 @@ types:
              '"TILE"': tiles
              '"TNAM"': tile_names
              '"ZONE"': zones
+             '"TGEN"': tgen
              '"ENDF"': endf
              _: unknown_catalog_entry
   unknown_catalog_entry:
@@ -1074,6 +1075,13 @@ types:
         0xFFFF_FFFF: none
   endf:
     seq: []
+  tgen:
+    doc: |
+        The TGEN section is only present in non-english versions of the game. It's purpose or
+        internal structure is unknown.
+    seq:
+      - id: data
+        size: _parent.size
   characters:
     seq:
       - id: characters
