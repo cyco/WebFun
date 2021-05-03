@@ -195,7 +195,7 @@ export const parseZaux = (stream: InputStream, data: Data): void => {
 };
 
 export const parseZax2 = (stream: InputStream, data: Data): void => {
-	// skip oiver size
+	// skip over size
 	stream.readUint32();
 
 	for (let i = 0; i < data.zones.length; i++) {
@@ -205,7 +205,7 @@ export const parseZax2 = (stream: InputStream, data: Data): void => {
 };
 
 export const parseZax3 = (stream: InputStream, data: Data): void => {
-	// skip oiver size
+	// skip over size
 	stream.readUint32();
 
 	for (let i = 0; i < data.zones.length; i++) {
@@ -215,7 +215,7 @@ export const parseZax3 = (stream: InputStream, data: Data): void => {
 };
 
 export const parseZax4 = (stream: InputStream, data: Data): void => {
-	// skip oiver size
+	// skip over size
 	stream.readUint32();
 
 	for (let i = 0; i < data.zones.length; i++) {
