@@ -1,7 +1,7 @@
 const Path = require("path");
 const Paths = require("./paths");
 const Dotenv = require("dotenv-webpack");
-const GitRevisionPlugin = require("git-revision-webpack-plugin");
+const { GitRevisionPlugin } = require("git-revision-webpack-plugin");
 const gitRevisionPlugin = new GitRevisionPlugin();
 const Webpack = require("webpack");
 

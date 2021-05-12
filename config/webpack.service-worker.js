@@ -7,7 +7,7 @@ const TerserPlugin = require("terser-webpack-plugin");
 const Webpack = require("webpack");
 const cssnano = require("cssnano");
 const postcss = require("postcss");
-const GitRevisionPlugin = require("git-revision-webpack-plugin");
+const { GitRevisionPlugin } = require("git-revision-webpack-plugin");
 const gitRevisionPlugin = new GitRevisionPlugin();
 
 module.exports = {
