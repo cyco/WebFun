@@ -3,7 +3,7 @@ Zones
 
 Zones are the game's maps, where the hero can walk around, solve puzzles and fight monsters.
 
-They are made up of `9x9` or `10x10` tiles in three layers. A ground layer, and object layer, used for collision detection, and a roof layer that is rendered above the hero.
+They are made up of `9x9` or `18x18` tiles in three layers. A ground layer, and object layer, used for collision detection, and a roof layer that is rendered above the hero.
 
 Each zone has a type that is used in the world generation process. See the following table for a list of zone types:
 
