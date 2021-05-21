@@ -14,7 +14,7 @@ Zone \#294 is very close to the one depicted in the second screenshot, the only 
 
 The last screenshot was taken on a desert world. Zone \#483 has very similar building and wall structures, but the dewback in the top left corner is missing.
 
-I've created re-created the situation in each of the screenshots. They are available as downloads [here](./promo-1.wld), [here](./promo-2.wld) and [here](./promo-3.wld).
+I've re-created the situation in each of the screenshots. They are available as downloads [here](./promo-1.wld), [here](./promo-2.wld) and [here](./promo-3.wld).
 
 Interestingly enough, the italian version of the box uses entirely different images that actually look like screenshots from the real game.
 
