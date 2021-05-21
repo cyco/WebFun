@@ -144,13 +144,15 @@
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
                         
+                        
+
                     </div>
                 </div>
 
                 
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -178,7 +180,7 @@
 </blockquote>
 <p><strong>WebFun</strong> aims to be a faithful re-implementation of the game engine driving the Desktop Adventures series and document to its inner workings.</p>
 <p>This documentation describes various observations made while reverse-engineering the games. Some of it applies to <em>Indiana Jones and His Desktop Adventures</em> as well, but due to personal preference most of the reverse-engineering efforts have been focused on <em>Yoda Stories</em>.</p>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/cyco/webfun//edit/master/docs/src/introduction.md">Edit this file on GitHub.</a></footer><h1 id="releated-projects"><a class="header" href="#releated-projects">Releated Projects</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/cyco/webfun//edit/master/docs/src/introduction.md">Edit this file on GitHub.</a></footer><div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="releated-projects"><a class="header" href="#releated-projects">Releated Projects</a></h1>
 <p>The Desktop Adventures games have infected quite a few people over the years. Here are some projects with similar goals as WebFun.</p>
 <table><thead><tr><th>Project</th><th>Language</th><th>Description</th></tr></thead><tbody>
 <tr><td><a href="https://github.com/LeonisX/yoda-stories-translation-tool">LeonisX/yoda-stories-translation-tool</a></td><td>Java</td><td> Yoda Stories Translation Tool</td></tr>
@@ -187,9 +189,9 @@
 <tr><td><a href="https://github.com/IceReaper/DesktopAdventuresToolkit">IceReaper/DesktopAdventuresToolkit</a></td><td>Java</td><td>packer / unpacker for game files</td></tr>
 <tr><td><a href="https://github.com/digitall/scummvm-deskadv">digitall/scummvm-deskadv</a></td><td>C++</td><td>reimplementation for use in ScummVM</td></tr>
 </tbody></table>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/cyco/webfun//edit/master/docs/src/related-projects.md">Edit this file on GitHub.</a></footer><h1 id="project-architecture"><a class="header" href="#project-architecture">Project Architecture</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/cyco/webfun//edit/master/docs/src/related-projects.md">Edit this file on GitHub.</a></footer><div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="project-architecture"><a class="header" href="#project-architecture">Project Architecture</a></h1>
 <p>This section describes some of the fundamental structures underlying <em>WebFun</em>.</p>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/cyco/webfun//edit/master/docs/src/architecture/index.md">Edit this file on GitHub.</a></footer><h1 id="getting-started"><a class="header" href="#getting-started">Getting Started</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/cyco/webfun//edit/master/docs/src/architecture/index.md">Edit this file on GitHub.</a></footer><div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="getting-started"><a class="header" href="#getting-started">Getting Started</a></h1>
 <p>To set up a local development environment you'll need:</p>
 <ul>
 <li><a href="https://git-scm.com">Git</a> to download the source code</li>
@@ -220,7 +222,7 @@ yarn install
 <p>The following configuration adds a local Yoda Stories installation to the default <em>archive.org</em> game source.</p>
 <pre><code class="language-env">WEBFUN_GAMES=[{&quot;title&quot;:&quot;Yoda Stories (local)&quot;,&quot;variant&quot;:&quot;yoda&quot;,&quot;data&quot;:&quot;game-data/YODESK.DTA&quot;,&quot;exe&quot;:&quot;game-data/YODESK.EXE&quot;,&quot;help&quot;:&quot;game-data/YODESK.HLP&quot;,&quot;sfx&quot;:&quot;game-data/SFX/&quot;},{&quot;title&quot;:&quot;Yoda Stories from archive.org&quot;,&quot;variant&quot;:&quot;yoda&quot;,&quot;exe&quot;:&quot;https://cors.archive.org/download/Star_Wars_-_Yoda_Stories_1997_LucasArts/Star%20Wars%20-%20Yoda%20Stories%20%281997%29%28LucasArts%29.iso/Yoda%2FYodesk.exe&quot;,&quot;sfx&quot;:&quot;https://cors.archive.org/download/Star_Wars_-_Yoda_Stories_1997_LucasArts/Star%20Wars%20-%20Yoda%20Stories%20%281997%29%28LucasArts%29.iso/Yoda%2Fsfx%2F&quot;,&quot;data&quot;:&quot;https://cors.archive.org/download/Star_Wars_-_Yoda_Stories_1997_LucasArts/Star%20Wars%20-%20Yoda%20Stories%20%281997%29%28LucasArts%29.iso/Yoda%2Fyodesk.dta&quot;,&quot;help&quot;:&quot;https://cors.archive.org/download/Star_Wars_-_Yoda_Stories_1997_LucasArts/Star%20Wars%20-%20Yoda%20Stories%20%281997%29%28LucasArts%29.iso/Yoda%2FYodesk.hlp&quot;}]
 </code></pre>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/cyco/webfun//edit/master/docs/src/architecture/getting-started.md">Edit this file on GitHub.</a></footer><h1 id="build-system"><a class="header" href="#build-system">Build System</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/cyco/webfun//edit/master/docs/src/architecture/getting-started.md">Edit this file on GitHub.</a></footer><div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="build-system"><a class="header" href="#build-system">Build System</a></h1>
 <p><em>WebFun</em> uses the package manager <a href="https://yarnpkg.com">yarn</a> to manage dependencies and run build scripts.</p>
 <p>The following tasks are defined in <code>package.json</code> and can be started using <code>yarn &lt;task-name&gt;</code> on the command line.</p>
 <p><strong>start</strong> -- Start a local web server for development.</p>
@@ -265,7 +267,7 @@ describe(&quot;some test&quot;, () =&gt; {
 	});
 });
 </code></pre>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/cyco/webfun//edit/master/docs/src/architecture/build-system.md">Edit this file on GitHub.</a></footer><h1 id="documentation"><a class="header" href="#documentation">Documentation</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/cyco/webfun//edit/master/docs/src/architecture/build-system.md">Edit this file on GitHub.</a></footer><div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="documentation"><a class="header" href="#documentation">Documentation</a></h1>
 <p>This source for documentation is at <code>docs</code> and built using <a href="https://github.com/rust-lang/mdBook">mdbook</a>. You can trigger a manual build by executing the following command from the project root:</p>
 <pre><code class="language-bash">$ yarn build:docs
 </code></pre>
@@ -281,7 +283,7 @@ $ mdbook serve
 <p>You can install the plugins with <a href="https://doc.rust-lang.org/cargo/">cargo</a> from you command line:</p>
 <pre><code class="language-bash">$ cargo install mdbook-linkcheck mdbook-open-on-gh
 </code></pre>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/cyco/webfun//edit/master/docs/src/architecture/documentation.md">Edit this file on GitHub.</a></footer><h1 id="deployment"><a class="header" href="#deployment">Deployment</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/cyco/webfun//edit/master/docs/src/architecture/documentation.md">Edit this file on GitHub.</a></footer><div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="deployment"><a class="header" href="#deployment">Deployment</a></h1>
 <p><em>WebFun</em> is hosted on GitHub pages using the branch <code>release</code> with a custom domain. The deployment process takes several steps, automated by this simple shell script:</p>
 <pre><code class="language-bash">#!/usr/bin/env bash
 
@@ -343,12 +345,12 @@ echo &quot;   git push&quot;
 echo &quot;&quot;
 
 </code></pre>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/cyco/webfun//edit/master/docs/src/architecture/deployment.md">Edit this file on GitHub.</a></footer><h1 id="gameplay"><a class="header" href="#gameplay">Gameplay</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/cyco/webfun//edit/master/docs/src/architecture/deployment.md">Edit this file on GitHub.</a></footer><div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="gameplay"><a class="header" href="#gameplay">Gameplay</a></h1>
 <p>The following section describes various aspects of the gameplay.</p>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/cyco/webfun//edit/master/docs/src/gameplay/index.md">Edit this file on GitHub.</a></footer><h1 id="window"><a class="header" href="#window">Window</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/cyco/webfun//edit/master/docs/src/gameplay/index.md">Edit this file on GitHub.</a></footer><div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="window"><a class="header" href="#window">Window</a></h1>
 <p><img src="gameplay/../images/window-overview.png" alt="" /></p>
 <p><em>Desktop Adventures</em> are played in a window. There's no fullscreen mode and no resolution choices. The virtual world is rendered in a <code>288</code>x<code>288</code> pixel view. The player's item are dispalyed in an inventory table to the right. Each item can be clicked to pick up and then dropped on the scene. Below the inventory you'll find a <em>compass</em> that shows where the player can go, and indcator for the currently equipped weapon plus remaining ammo and a circular health indicator. As the hero takes damage this changes from green, over yellow and red to black. Once the black circle is completed the player dies and the game is over.</p>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/cyco/webfun//edit/master/docs/src/gameplay/main-window.md">Edit this file on GitHub.</a></footer><h1 id="color-palette"><a class="header" href="#color-palette">Color Palette</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/cyco/webfun//edit/master/docs/src/gameplay/main-window.md">Edit this file on GitHub.</a></footer><div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="color-palette"><a class="header" href="#color-palette">Color Palette</a></h1>
 <table><thead><tr><th align="center"></th></tr></thead><tbody>
 <tr><td align="center"><img src="gameplay/../images/palette-anim-swamp.gif" alt="" /> <img src="gameplay/../images/palette-anim-tele.gif" alt="" /> <img src="gameplay/../images/palette-anim-water.gif" alt="" /></td></tr>
 <tr><td align="center"><em>Color cycling effects in Yoda Stories</em></td></tr>
@@ -399,7 +401,7 @@ echo &quot;&quot;
 <h2 id="free-colors"><a class="header" href="#free-colors">&quot;Free&quot; colors</a></h2>
 <p>The following colors are not referenced by any tile in <em>Yoda Stories</em> and could be used for UI elements in restricted environments (e.g. ScummVM or gaming console).</p>
 <p><code>3, 4, 5, 6, 7, 8, 196, 197, 198, 199, 206, 246, 247, 248, 249, 250, 251, 252, 253, 254</code></p>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/cyco/webfun//edit/master/docs/src/gameplay/color-palette.md">Edit this file on GitHub.</a></footer><h1 id="tiles"><a class="header" href="#tiles">Tiles</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/cyco/webfun//edit/master/docs/src/gameplay/color-palette.md">Edit this file on GitHub.</a></footer><div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="tiles"><a class="header" href="#tiles">Tiles</a></h1>
 <table><thead><tr><th align="center"></th></tr></thead><tbody>
 <tr><td align="center"><img src="gameplay/../images/tile-grid.png" alt="" /></td></tr>
 </tbody></table>
@@ -467,9 +469,9 @@ echo &quot;&quot;
 <tr><td>17</td><td>Enemy</td><td></td></tr>
 <tr><td>18</td><td>NPC</td><td></td></tr>
 </tbody></table>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/cyco/webfun//edit/master/docs/src/gameplay/tiles.md">Edit this file on GitHub.</a></footer><h1 id="zones"><a class="header" href="#zones">Zones</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/cyco/webfun//edit/master/docs/src/gameplay/tiles.md">Edit this file on GitHub.</a></footer><div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="zones"><a class="header" href="#zones">Zones</a></h1>
 <p>Zones are the game's maps, where the hero can walk around, solve puzzles and fight monsters.</p>
-<p>They are made up of <code>9x9</code> or <code>10x10</code> tiles in three layers. A ground layer, and object layer, used for collision detection, and a roof layer that is rendered above the hero.</p>
+<p>They are made up of <code>9x9</code> or <code>18x18</code> tiles in three layers. A ground layer, and object layer, used for collision detection, and a roof layer that is rendered above the hero.</p>
 <p>Each zone has a type that is used in the world generation process. See the following table for a list of zone types:</p>
 <table><thead><tr><th>Type</th><th>Name</th><th>Description</th></tr></thead><tbody>
 <tr><td>0</td><td>None</td><td></td></tr>
@@ -532,7 +534,7 @@ echo &quot;&quot;
 <blockquote>
 <p><em>TODO:</em> Describe monster attributes, waypoints, drops, etc.</p>
 </blockquote>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/cyco/webfun//edit/master/docs/src/gameplay/zones.md">Edit this file on GitHub.</a></footer><h1 id="scripting"><a class="header" href="#scripting">Scripting</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/cyco/webfun//edit/master/docs/src/gameplay/zones.md">Edit this file on GitHub.</a></footer><div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="scripting"><a class="header" href="#scripting">Scripting</a></h1>
 <p>The <em>Desktop Adventures</em> engine includes a binary scripting language. Each zone can have a number of <em>actions</em>. Each action consists of <em>conditions</em> and <em>instructions</em>.</p>
 <p>Conditions and instructions have the following structure:</p>
 <pre><code class="language-typescript">type Condition = {
@@ -561,7 +563,7 @@ echo &quot;&quot;
 <li><code>sector-counter</code> – <code>16</code>-bit register that is propagated to connected rooms</li>
 <li><code>random</code> – <code>16</code>-bit register that can be set to random values</li>
 </ul>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/cyco/webfun//edit/master/docs/src/scripting/index.md">Edit this file on GitHub.</a></footer><h1 id="conditions"><a class="header" href="#conditions">Conditions</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/cyco/webfun//edit/master/docs/src/scripting/index.md">Edit this file on GitHub.</a></footer><div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="conditions"><a class="header" href="#conditions">Conditions</a></h1>
 <p>The following is a list of condition opcodes used by <em>Yoda Stories</em>.</p>
 <blockquote>
 <p><em>TODO:</em> Check if <em>Indy</em> uses the same opcodes</p>
@@ -604,7 +606,7 @@ echo &quot;&quot;
 <tr><td>0x022</td><td>IsVariable</td><td>4</td><td>Check if variable identified by <code>arg_0</code>⊕<code>arg_1</code>⊕<code>arg_2</code> is set to <code>arg_3</code>. Internally this is implemented as opcode 0x0a, check if tile at <code>arg_0</code>x<code>arg_1</code>x<code>arg_2</code> is equal to <code>arg_3</code></td></tr>
 <tr><td>0x023</td><td>GamesWonIsGreaterThan</td><td>1</td><td>Total games won is greater than <code>arg_0</code></td></tr>
 </tbody></table>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/cyco/webfun//edit/master/docs/src/scripting/conditions.md">Edit this file on GitHub.</a></footer><h1 id="instructions"><a class="header" href="#instructions">Instructions</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/cyco/webfun//edit/master/docs/src/scripting/conditions.md">Edit this file on GitHub.</a></footer><div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="instructions"><a class="header" href="#instructions">Instructions</a></h1>
 <p>The following is a list of instructions opcodes used by <em>Yoda Stories</em>.</p>
 <blockquote>
 <p><em>TODO:</em> Check if <em>Indy</em> uses the same opcodes</p>
@@ -649,7 +651,7 @@ echo &quot;&quot;
 <tr><td>0x024</td><td>SetRandom</td><td>1</td><td>Set current zone's <code>random</code> value to a <code>arg_0</code></td></tr>
 <tr><td>0x025</td><td>AddHealth</td><td>1</td><td>Increase hero's health by <code>arg_0</code>. New health is capped at hero's max health (0x300).</td></tr>
 </tbody></table>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/cyco/webfun//edit/master/docs/src/scripting/instructions.md">Edit this file on GitHub.</a></footer><h2 id="score"><a class="header" href="#score">Score</a></h2>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/cyco/webfun//edit/master/docs/src/scripting/instructions.md">Edit this file on GitHub.</a></footer><div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h2 id="score"><a class="header" href="#score">Score</a></h2>
 <p>At the end of each game a score called the <em>Indy Quotient</em> or <em>Force Factor</em> is calculated. The game keeps track of the last and highest scores in the ini file at <code>C:/WINDOWS/Yodesk.ini</code> (see <a href="gameplay/../files/yodesk-ini.html">files/yodesk-ini.md</a>) using the keys <code>HScore</code> and <code>LScore</code>, respectively.</p>
 <p><img src="gameplay/../images/yoda-win.png" alt="you-win" /></p>
 <p>The game combines four components to rate the player's performance:</p>
@@ -682,7 +684,7 @@ return solved / worldSize * 100.0
 <h3 id="final-score"><a class="header" href="#final-score">Final Score:</a></h3>
 <pre><code class="language-javascript">return Sum(components)
 </code></pre>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/cyco/webfun//edit/master/docs/src/gameplay/score.md">Edit this file on GitHub.</a></footer><h1 id="map-screen"><a class="header" href="#map-screen">Map Screen</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/cyco/webfun//edit/master/docs/src/gameplay/score.md">Edit this file on GitHub.</a></footer><div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="map-screen"><a class="header" href="#map-screen">Map Screen</a></h1>
 <p><img src="gameplay/../images/map-screen.png" alt="" /></p>
 <p>In order for the player to find their way around the world and get some hints on how to solve the puzzles, the game includes a map screen. The screen can be accesses after the player finds the map (aka <em>Locator</em>) item.</p>
 <blockquote>
@@ -696,7 +698,7 @@ return solved / worldSize * 100.0
 <li>The map can be activated by hitting <em>L</em> on the keyboard</li>
 <li>Hints check tile attributes to determine if something is valuable, a tool, a part, etc.</li>
 </ul>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/cyco/webfun//edit/master/docs/src/gameplay/map-screen.md">Edit this file on GitHub.</a></footer><h1 id="r2d2-help"><a class="header" href="#r2d2-help">R2D2 Help</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/cyco/webfun//edit/master/docs/src/gameplay/map-screen.md">Edit this file on GitHub.</a></footer><div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="r2d2-help"><a class="header" href="#r2d2-help">R2D2 Help</a></h1>
 <p><img src="gameplay/../images/r2d2-help.png" alt="" /></p>
 <p>When Luke first visits <em>Dagobah</em> his trusty companion <em>R2-D2</em> is already waiting for him, ready to be picked up and help out.</p>
 <p>R2D2 can be placed anywhere on the game screen and will try to give some information on whatever it was dropped on.</p>
@@ -736,7 +738,7 @@ return solved / worldSize * 100.0
 <h4 id="list-of-x-wing-tile-ids"><a class="header" href="#list-of-x-wing-tile-ids">List of X-Wing Tile IDs</a></h4>
 <pre><code class="language-json">[0x3b4, 0x3b5, 0x3b6]
 </code></pre>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/cyco/webfun//edit/master/docs/src/gameplay/r2d2-help.md">Edit this file on GitHub.</a></footer><h1 id="cheats"><a class="header" href="#cheats">Cheats</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/cyco/webfun//edit/master/docs/src/gameplay/r2d2-help.md">Edit this file on GitHub.</a></footer><div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="cheats"><a class="header" href="#cheats">Cheats</a></h1>
 <p>On most websites for cheat codes you can find mentions of cheat codes like <code>BLASTERS</code> and <code>OBJECTS</code> that supposedly fill up the inventory with all items. These codes <strong>do not work</strong> and the executable does not even contain any reference to those codes.</p>
 <p><em>Yoda Stories</em> does however contain two cheat codes that actually work. To input them you have to activate the <code>Locator</code> and type one of the codes. It is important to click the <code>Locator</code> in the inventory instead of using the keyboard shortcut <code>L</code> (the <code>L</code>-key is interpreted as the first character of the cheat code).</p>
 <p><img src="gameplay/../images/gojedi.png" alt="After successfully entering a cheat code a message appears on the current zone." /></p>
@@ -747,9 +749,9 @@ return solved / worldSize * 100.0
 <tr><td><code>goyoda</code></td><td><em>Invincible!</em></td><td>The player's health is locked at the current value. Neither healing nor taking damage is possible.</td></tr>
 </tbody></table>
 <p><em>Indiana Jones and His Desktop Adventures</em> does not have any cheat codes.</p>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/cyco/webfun//edit/master/docs/src/gameplay/cheats.md">Edit this file on GitHub.</a></footer><h1 id="files"><a class="header" href="#files">Files</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/cyco/webfun//edit/master/docs/src/gameplay/cheats.md">Edit this file on GitHub.</a></footer><div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="files"><a class="header" href="#files">Files</a></h1>
 <p>This sections describes several custom or unusual file and binary formats used by the engine.</p>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/cyco/webfun//edit/master/docs/src/files/index.md">Edit this file on GitHub.</a></footer><h1 id="yodeskini"><a class="header" href="#yodeskini">Yodesk.ini</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/cyco/webfun//edit/master/docs/src/files/index.md">Edit this file on GitHub.</a></footer><div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="yodeskini"><a class="header" href="#yodeskini">Yodesk.ini</a></h1>
 <p>Data that persists between launches of a <em>Desktop Adventures</em> game, like settings, highscore and information about the last generated worlds is stored in a ini-file.</p>
 <table><thead><tr><th>Variant</th><th>Path</th></tr></thead><tbody>
 <tr><td>Yoda Stories</td><td><code>C:\Windows\Yodesk.ini</code></td></tr>
@@ -803,7 +805,7 @@ Nevada0=950869581,163,3,364,348,362
 <tr><td>Hawaii</td><td>Indy</td><td></td></tr>
 <tr><td>Wyoming</td><td>Indy</td><td></td></tr>
 </tbody></table>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/cyco/webfun//edit/master/docs/src/files/yodesk-ini.md">Edit this file on GitHub.</a></footer><h1 id="releases"><a class="header" href="#releases">Releases</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/cyco/webfun//edit/master/docs/src/files/yodesk-ini.md">Edit this file on GitHub.</a></footer><div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="releases"><a class="header" href="#releases">Releases</a></h1>
 <p>It's hard to find a complete list of releases of <em>Yoda Stories</em>. <a href="https://www.mobygames.com/game/star-wars-yoda-stories/release-info">MobyGames lists</a> only two releases of the Windows version of the game - the US and a German version. The <a href="http://theswca.com/index.php?action=proc_search&amp;search_string=yoda+stories"><em>Star Wars Collectors Archive</em> (SWCA)</a> has additional information on releases from Japan, Taiwan, Italy and the Netherlands and there is a Spanish release version up on the internet archive.</p>
 <p>If you know of any other releases please feel free to edit this page. And if you have access to a version that is not on the <a href="https://archive.org">internet archive</a> yet, please consider submitting it.</p>
 <table><thead><tr><th>Release</th><th>Year</th><th>Publisher</th><th>Source</th></tr></thead><tbody>
@@ -815,7 +817,7 @@ Nevada0=950869581,163,3,364,348,362
 <tr><td>The Netherlands</td><td>1997</td><td></td><td>SWCA</td></tr>
 <tr><td>Taiwan</td><td>1997</td><td>Unalis</td><td>SWCA</td></tr>
 </tbody></table>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/cyco/webfun//edit/master/docs/src/yoda/releases.md">Edit this file on GitHub.</a></footer><h2 id="the-patch"><a class="header" href="#the-patch">The Patch</a></h2>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/cyco/webfun//edit/master/docs/src/yoda/releases.md">Edit this file on GitHub.</a></footer><div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h2 id="the-patch"><a class="header" href="#the-patch">The Patch</a></h2>
 <p>In February of '97 Lucas Arts released a patch called <em>Yoda Update #6</em> that fixes problems in some zones. The Patch is a self-extracting archive that replaces the main game data file <code>Yodesk.dta</code> with a new one.</p>
 <p>A prompt saying <em>zones <a href="yoda/patch/./zone-072.html">#72</a>, <a href="yoda/patch/./zone-236.html">#236</a>, <a href="yoda/patch/./zone-407.html">#407</a>, <a href="yoda/patch/./zone-474.html">#474</a> and <a href="yoda/patch/./zone-572.html">#572</a> have been fixed</em> appears when the update is run.</p>
 <p><img src="yoda/patch/../../images/patched-zones.png" alt="Message shown when Yoda Update #6 is run" /></p>
@@ -827,22 +829,22 @@ a8e18864184d49feaf0b74b93f60855f40ffe9bf  yopatch6.exe
 $ file yopatch6.exe
 yopatch6.exe: PE32 executable (GUI) Intel 80386, for MS Windows
 </code></pre>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/cyco/webfun//edit/master/docs/src/yoda/patch/index.md">Edit this file on GitHub.</a></footer><h1 id="zone-72"><a class="header" href="#zone-72">Zone 72</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/cyco/webfun//edit/master/docs/src/yoda/patch/index.md">Edit this file on GitHub.</a></footer><div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="zone-72"><a class="header" href="#zone-72">Zone 72</a></h1>
 <p>Zone #72 was one of the zones patch by update #6.</p>
 <p><img src="yoda/patch/../../images/zone-072.png" alt="072" /></p>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/cyco/webfun//edit/master/docs/src/yoda/patch/zone-072.md">Edit this file on GitHub.</a></footer><h1 id="zone-236"><a class="header" href="#zone-236">Zone 236</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/cyco/webfun//edit/master/docs/src/yoda/patch/zone-072.md">Edit this file on GitHub.</a></footer><div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="zone-236"><a class="header" href="#zone-236">Zone 236</a></h1>
 <p>Zone #236 was one of the zones patch by update #6.</p>
 <p><img src="yoda/patch/../../images/zone-236.png" alt="236" /></p>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/cyco/webfun//edit/master/docs/src/yoda/patch/zone-236.md">Edit this file on GitHub.</a></footer><h1 id="zone-407"><a class="header" href="#zone-407">Zone 407</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/cyco/webfun//edit/master/docs/src/yoda/patch/zone-236.md">Edit this file on GitHub.</a></footer><div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="zone-407"><a class="header" href="#zone-407">Zone 407</a></h1>
 <p>Zone #407 was one of the zones patch by update #6.</p>
 <p><img src="yoda/patch/../../images/zone-407.png" alt="407" /></p>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/cyco/webfun//edit/master/docs/src/yoda/patch/zone-407.md">Edit this file on GitHub.</a></footer><h1 id="zone-474"><a class="header" href="#zone-474">Zone 474</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/cyco/webfun//edit/master/docs/src/yoda/patch/zone-407.md">Edit this file on GitHub.</a></footer><div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="zone-474"><a class="header" href="#zone-474">Zone 474</a></h1>
 <p>Zone #474 was one of the zones patch by update #6.</p>
 <p><img src="yoda/patch/../../images/zone-474.png" alt="474" /></p>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/cyco/webfun//edit/master/docs/src/yoda/patch/zone-474.md">Edit this file on GitHub.</a></footer><h1 id="zone-572"><a class="header" href="#zone-572">Zone 572</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/cyco/webfun//edit/master/docs/src/yoda/patch/zone-474.md">Edit this file on GitHub.</a></footer><div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="zone-572"><a class="header" href="#zone-572">Zone 572</a></h1>
 <p>Zone #572 was one of the zones patch by update #6.</p>
 <p><img src="yoda/patch/../../images/zone-572.png" alt="572" /></p>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/cyco/webfun//edit/master/docs/src/yoda/patch/zone-572.md">Edit this file on GitHub.</a></footer><h1 id="trivia"><a class="header" href="#trivia">Trivia</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/cyco/webfun//edit/master/docs/src/yoda/patch/zone-572.md">Edit this file on GitHub.</a></footer><div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="trivia"><a class="header" href="#trivia">Trivia</a></h1>
 <h2 id="promotional-screenshots"><a class="header" href="#promotional-screenshots">Promotional Screenshots</a></h2>
 <p><img src="yoda/../images/promo.png" alt="Recreation of the promotional screenshots" /></p>
 <p>After getting my hands on an actual retail copy of <em>Yoda Stories</em> I became curious of the screenshots shown on the back of the box. At first glance they seem to be captures of zones #95, #294 and #483. But after further inspection it's clear that none of the screenshots could have come from the final version of the game.</p>
@@ -857,7 +859,7 @@ yopatch6.exe: PE32 executable (GUI) Intel 80386, for MS Windows
 </blockquote>
 <p>Apart from the cheat codes there is a debug window that can be accessed using the key combination <code>ctrl-F8</code>. A modal comes up that shows the current zone id, position and the id of this world's goal. The shortcut works in both <em>Yoda Stories</em> and <em>Indiana Jones and his Desktop Adventures</em>.</p>
 <p><img src="yoda/../images/current-status-info.png" alt="Debug window showing information about the current zone" /></p>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/cyco/webfun//edit/master/docs/src/yoda/trivia.md">Edit this file on GitHub.</a></footer><h1 id="yodeskksy"><a class="header" href="#yodeskksy">Yodesk.ksy</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/cyco/webfun//edit/master/docs/src/yoda/trivia.md">Edit this file on GitHub.</a></footer><div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="yodeskksy"><a class="header" href="#yodeskksy">Yodesk.ksy</a></h1>
 <p>This is a machine-readable definition of the file format used by <em>Yoda Stories</em>. It can be used to generate a parser or inspect files online in the <a href="https://ide.kaitai.io">Kaitai Web IDE</a>.</p>
 <pre><code class="language-yaml">meta:
   id: yodesk
@@ -2058,7 +2060,7 @@ types:
     - id: y
       type: u4
 </code></pre>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/cyco/webfun//edit/master/docs/src/appendix/yodesk.md">Edit this file on GitHub.</a></footer><h1 id="deskadvksy"><a class="header" href="#deskadvksy">Deskadv.ksy</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/cyco/webfun//edit/master/docs/src/appendix/yodesk.md">Edit this file on GitHub.</a></footer><div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="deskadvksy"><a class="header" href="#deskadvksy">Deskadv.ksy</a></h1>
 <p>This is a machine-readable definition of the file format used by <em>Indiana Jones and His Desktop Adventures</em>. It can be used to generate a parser or inspect files online in the <a href="https://ide.kaitai.io">Kaitai Web IDE</a>.</p>
 <pre><code class="language-yaml">meta:
   id: deskadv
@@ -3272,7 +3274,7 @@ types:
         size: len_content
 
 </code></pre>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/cyco/webfun//edit/master/docs/src/appendix/deskadv.md">Edit this file on GitHub.</a></footer><h1 id="yodasavksy"><a class="header" href="#yodasavksy">Yodasav.ksy</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/cyco/webfun//edit/master/docs/src/appendix/deskadv.md">Edit this file on GitHub.</a></footer><div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="yodasavksy"><a class="header" href="#yodasavksy">Yodasav.ksy</a></h1>
 <p>This is a machine-readable definition of the save game format used by <em>Yoda Stories</em>. It can be used to generate a parser or inspect files online in the <a href="https://ide.kaitai.io">Kaitai Web IDE</a>.</p>
 <pre><code class="language-yaml">meta:
   id: yodasav
@@ -3431,7 +3433,7 @@ types:
       - id: unknown2
         type: s4
 </code></pre>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/cyco/webfun//edit/master/docs/src/appendix/yodasav.md">Edit this file on GitHub.</a></footer><h1 id="list-of-game-files"><a class="header" href="#list-of-game-files">List of game files</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/cyco/webfun//edit/master/docs/src/appendix/yodasav.md">Edit this file on GitHub.</a></footer><div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="list-of-game-files"><a class="header" href="#list-of-game-files">List of game files</a></h1>
 <p>The following is a list of checksum of files related to <em>Yoda Stories</em> or <em>Indiana Jones and His Desktop Adventures</em>. If you have access to other versions of the games feel free to add them below.</p>
 <table><thead><tr><th>sha1</th><th>Common Name</th><th>Description</th></tr></thead><tbody>
 <tr><td>a8e18864184d49feaf0b74b93f60855f40ffe9bf</td><td>yopatch6.exe</td><td>Installer for Yoda Stories update</td></tr>
