@@ -99,7 +99,7 @@ class Window extends AbstractPanel {
 					<div>{[]}</div>
 				</div>
 				<div>
-					<label>Goad</label>
+					<label>Goal</label>
 					<div>{[]}</div>
 				</div>
 				<div>
