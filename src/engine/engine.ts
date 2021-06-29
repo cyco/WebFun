@@ -30,6 +30,7 @@ import DummyInterface from "./dummy-interface";
 import Sector from "./sector";
 import calculateScore from "./score";
 import { max } from "src/std/math";
+import Logger from "./logger";
 
 export { Events };
 
@@ -61,6 +62,7 @@ class Engine extends EventTarget {
 	private _hpu: HotspotProcessingUnit;
 	private _gameState: GameState = GameState.Stopped;
 	private _currentSector: Sector;
+	private logger: Logger;
 
 	constructor(type: Variant, ifce: Partial<Interface> = {}) {
 		super();
@@ -79,6 +81,7 @@ class Engine extends EventTarget {
 		this.inventory = ifce.Inventory();
 		this.spu = ifce.ScriptProcessingUnit(this, Instructions, Conditions);
 		this.hero = ifce.Hero();
+		this.logger = ifce.Logger();
 
 		this.variant = type;
 		this._hpu = new HotspotProcessingUnit(this);
@@ -190,7 +193,10 @@ class Engine extends EventTarget {
 	}
 
 	public speak(text: string, place: Point): Promise<void> {
-		if (this.settings.skipDialogs) return Promise.resolve();
+		if (this.settings.skipDialogs) {
+			this.logger.debug("[Engine]", "speak", `»${text}«`, place.x, place.y);
+			return Promise.resolve();
+		}
 
 		const scene = new SpeechScene(this);
 		scene.text = text;
