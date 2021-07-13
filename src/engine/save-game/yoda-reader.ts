@@ -5,16 +5,10 @@ import Reader from "./reader";
 import SaveState, { SavedHotspot, SavedMonster, SavedSector } from "./save-state";
 import { Yoda } from "src/variant";
 import { floor } from "src/std/math";
-import AssetManager from "src/engine/asset-manager";
 
 class YodaReader extends Reader {
 	constructor(stream: InputStream) {
 		super(stream, Yoda);
-	}
-
-	public read(assets: AssetManager): SaveState {
-		this._assets = assets;
-		return this._doRead();
 	}
 
 	protected _doRead(): SaveState {
@@ -67,7 +61,7 @@ class YodaReader extends Reader {
 			`Encountered ${stream.length - stream.offset} unknown bytes at end of stream`
 		);
 
-		const state = new SaveState();
+		const state = this._state;
 		state.type = Yoda;
 		state.planet = Zone.Planet.isPlanet(planet) ? Zone.Planet.fromNumber(planet) : Zone.Planet.None;
 		state.seed = seed;

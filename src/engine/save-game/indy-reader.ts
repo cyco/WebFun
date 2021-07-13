@@ -4,16 +4,10 @@ import { Zone } from "src/engine/objects";
 import { Indy } from "src/variant";
 import Reader from "./reader";
 import SaveState, { SavedHotspot, SavedMonster, SavedSector } from "./save-state";
-import AssetManager from "../asset-manager";
 
 class IndyReader extends Reader {
 	constructor(stream: InputStream) {
 		super(stream, Indy);
-	}
-
-	public read(assets: AssetManager): SaveState {
-		this._assets = assets;
-		return this._doRead();
 	}
 
 	protected _doRead(): SaveState {
@@ -50,7 +44,7 @@ class IndyReader extends Reader {
 			`Encountered ${stream.length - stream.offset} unknown bytes at end of stream`
 		);
 
-		const state = new SaveState();
+		const state = this._state;
 		state.type = Indy;
 		state.planet = Zone.Planet.None;
 		state.seed = seed;
@@ -106,15 +100,7 @@ class IndyReader extends Reader {
 			zone: zoneID,
 			requiredItem: requiredItemID,
 			findItem: findItemID,
-			npc: npcID,
-
-			solved3: false,
-			solved4: false,
-			additionalGainItem: -1,
-			additionalRequiredItem: -1,
-			usedAlternateStrain: false,
-			isGoal: false,
-			unknown: -1
+			npc: npcID
 		};
 	}
 
@@ -124,10 +110,7 @@ class IndyReader extends Reader {
 
 		return {
 			enabled,
-			argument,
-			x: -1,
-			y: -1,
-			type: -1
+			argument
 		};
 	}
 
@@ -140,28 +123,6 @@ class IndyReader extends Reader {
 		stream.readUint8Array(0x18);
 
 		return {
-			preferredDirection: -1,
-			bulletOffset: -1,
-			currentFrame: -1,
-			cooldown: -1,
-			field10: -1,
-			field60: -1,
-			flag18: false,
-			flag1c: false,
-			flag20: false,
-			flag2c: false,
-			flag34: false,
-
-			bulletX: -1,
-			bulletY: -1,
-			directionX: -1,
-			directionY: -1,
-			facingDirection: -1,
-			waypoints: null,
-			enabled: true,
-			loot: -1,
-			hasItem: false,
-
 			face: characterId,
 			position: new Point(x, y, Zone.Layer.Object),
 			damageTaken: damageTaken

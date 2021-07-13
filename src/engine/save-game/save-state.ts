@@ -4,67 +4,64 @@ import { Zone } from "src/engine/objects";
 
 export type SavedZone = {
 	id: number;
+	visited: boolean;
 	counter: number;
 	sectorCounter: number;
-	doorInLocation: Point;
-	visited: boolean;
 	random: number;
+	doorInLocation: Point;
 	tileIDs: Int16Array;
-	hotspots: SavedHotspot[];
-	actions: SavedAction[];
-	monsters: SavedMonster[];
 };
 
 export type SavedMonster = {
 	face: number;
-	enabled: boolean;
+	enabled?: boolean;
 	position: Point;
 	damageTaken: number;
-	loot: number;
-	field10: number;
-	bulletX: number;
-	bulletY: number;
-	currentFrame: number;
-	facingDirection: number;
-	cooldown: number;
-	flag18: boolean;
-	flag20: boolean;
-	flag1c: boolean;
-	directionX: number;
-	directionY: number;
-	bulletOffset: number;
-	field60: number;
-	flag2c: boolean;
-	flag34: boolean;
-	hasItem: boolean;
-	preferredDirection: number;
-	waypoints: Point[];
+	loot?: number;
+	field10?: number;
+	bulletX?: number;
+	bulletY?: number;
+	currentFrame?: number;
+	facingDirection?: number;
+	cooldown?: number;
+	flag18?: boolean;
+	flag20?: boolean;
+	flag1c?: boolean;
+	directionX?: number;
+	directionY?: number;
+	bulletOffset?: number;
+	field60?: number;
+	flag2c?: boolean;
+	flag34?: boolean;
+	hasItem?: boolean;
+	preferredDirection?: number;
+	waypoints?: Point[];
 };
 
 export type SavedHotspot = {
-	type: number;
 	enabled: boolean;
 	argument: number;
-	x: number;
-	y: number;
+	x?: number;
+	y?: number;
+	type?: number;
 };
 
 export type SavedSector = {
 	visited: boolean;
 	solved1: boolean;
 	solved2: boolean;
-	solved3: boolean;
-	solved4: boolean;
+	solved3?: boolean;
+	solved4?: boolean;
 	zone: number;
 	puzzleIndex: number;
 	requiredItem: number;
 	findItem: number;
-	isGoal: boolean;
-	additionalRequiredItem: number;
-	additionalGainItem: number;
-	usedAlternateStrain: boolean;
+	isGoal?: boolean;
+	additionalRequiredItem?: number;
+	additionalGainItem?: number;
+	usedAlternateStrain?: boolean;
 	npc: number;
-	unknown: number;
+	unknown?: number;
 };
 
 export type SavedAction = boolean;
@@ -81,6 +78,11 @@ class SaveState {
 
 	public dagobah: SavedWorld;
 	public world: SavedWorld;
+
+	public zones: Map<number, SavedZone>;
+	public hotspots: Map<number, SavedHotspot[]>;
+	public actions: Map<number, SavedAction[]>;
+	public monsters: Map<number, SavedMonster[]>;
 
 	public onDagobah: boolean;
 	public positionOnWorld: Point;

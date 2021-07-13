@@ -1,16 +1,10 @@
 import Variant from "../variant";
-import { Indy, Yoda, YodaDemo, IndyDemo } from "src/variant";
+import { Yoda, YodaDemo } from "src/variant";
 import { Hotspot, Zone } from "src/engine/objects";
 
 import AssetManager from "../asset-manager";
 import { InputStream, Point } from "src/util";
-import SaveState, {
-	SavedHotspot,
-	SavedMonster,
-	SavedSector,
-	SavedWorld,
-	SavedZone
-} from "./save-state";
+import SaveState, { SavedHotspot, SavedMonster, SavedSector, SavedWorld } from "./save-state";
 
 interface Range {
 	start: number;
@@ -21,15 +15,27 @@ abstract class Reader {
 	protected _stream: InputStream;
 	protected _assets: AssetManager;
 	protected _type: Variant;
-	protected _zones: Map<number, SavedZone>;
-
-	abstract read(assets: AssetManager): SaveState;
+	protected _state: SaveState;
 
 	constructor(stream: InputStream, type: Variant) {
 		this._stream = stream;
 		this._assets = null;
 		this._type = type;
-		this._zones = new Map();
+	}
+
+	public read(assets: AssetManager): SaveState {
+		try {
+			this._state = new SaveState();
+			this._state.zones = new Map();
+			this._state.hotspots = new Map();
+			this._state.monsters = new Map();
+			this._state.actions = new Map();
+			this._assets = assets;
+
+			return this._doRead();
+		} finally {
+			this._state = null;
+		}
 	}
 
 	protected abstract _doRead(): SaveState;
@@ -62,7 +68,7 @@ abstract class Reader {
 		const zoneIDs: [number, boolean][] = [];
 
 		const assetHotspots = this._assets.get(Zone, zoneID).hotspots;
-		const hotspots = this._zones.get(zoneID).hotspots;
+		const hotspots = this._state.hotspots.get(zoneID);
 		const count = hotspots.length;
 
 		for (let i = start; i < count; i++) {
@@ -108,7 +114,7 @@ abstract class Reader {
 
 	protected readZone(stream: InputStream, id: number, visited: boolean): void {
 		const assetZone: Zone = this._assets.get(Zone, id);
-		let zone = this._zones.get(id);
+		let zone = this._state.zones.get(id);
 		if (!zone) {
 			zone = {
 				id,
@@ -116,13 +122,13 @@ abstract class Reader {
 				counter: -1,
 				sectorCounter: -1,
 				random: -1,
-				hotspots: [],
-				monsters: [],
-				actions: [],
 				doorInLocation: null,
 				tileIDs: null
 			};
-			this._zones.set(id, zone);
+			this._state.zones.set(id, zone);
+			this._state.hotspots.set(id, []);
+			this._state.monsters.set(id, []);
+			this._state.actions.set(id, []);
 		}
 
 		if (visited) {
@@ -154,32 +160,31 @@ abstract class Reader {
 	}
 
 	protected readHotspots(stream: InputStream, zoneID: number): void {
-		const zone = this._zones.get(zoneID);
 		const count = this.readInt(stream);
 		console.assert(count >= 0);
-		zone.hotspots = count.times(_ => this.readHotspot(stream));
+		this._state.hotspots.set(
+			zoneID,
+			count.times(_ => this.readHotspot(stream))
+		);
 	}
 
 	protected readMonsters(stream: InputStream, zoneID: number): void {
-		const zone = this._zones.get(zoneID);
 		const count = this.readInt(stream);
 		console.assert(count >= 0);
-		zone.monsters = count.times(_ => this.readMonster(stream));
+		this._state.monsters.set(
+			zoneID,
+			count.times(_ => this.readMonster(stream))
+		);
 	}
 
 	protected readActions(stream: InputStream, zoneID: number): void {
-		const zone = this._zones.get(zoneID);
 		const count = this.readInt(stream);
 		console.assert(count >= 0);
 
-		zone.actions = count.times(() => !this.readBool(stream));
-
-		for (let i = zone.actions.length; i < count; i++) {
-			if (i === zone.actions.length) {
-				console.log(`Zone ${zone.id} has additional actions`);
-			}
-			this.readInt(stream);
-		}
+		this._state.actions.set(
+			zoneID,
+			count.times(() => !this.readBool(stream))
+		);
 	}
 
 	protected readInventory(stream: InputStream): Int16Array {
