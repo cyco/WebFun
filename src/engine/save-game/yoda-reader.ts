@@ -1,13 +1,11 @@
-import { Hotspot, Tile, Char, Zone } from "src/engine/objects";
+import { Tile, Zone } from "src/engine/objects";
 import { InputStream, Point } from "src/util";
-import { MutableHotspot, MutableMonster } from "src/engine/mutable-objects";
 
 import Reader from "./reader";
-import SaveState from "./save-state";
-import Sector from "src/engine/sector";
+import SaveState, { SavedHotspot, SavedMonster, SavedSector } from "./save-state";
 import { Yoda } from "src/variant";
 import { floor } from "src/std/math";
-import AssetManager, { NullIfMissing } from "src/engine/asset-manager";
+import AssetManager from "src/engine/asset-manager";
 
 class YodaReader extends Reader {
 	constructor(stream: InputStream) {
@@ -99,7 +97,7 @@ class YodaReader extends Reader {
 		return state;
 	}
 
-	protected readSector(stream: InputStream, _x: number, _y: number): Sector {
+	protected readSector(stream: InputStream, _x: number, _y: number): SavedSector {
 		const visited = this.readBool(stream);
 		const solved1 = this.readBool(stream);
 		const solved2 = this.readBool(stream);
@@ -118,27 +116,26 @@ class YodaReader extends Reader {
 		const unknown = stream.readInt32();
 		const usedAlternateStrain = stream.readInt16();
 
-		const sector = new Sector();
-		sector.visited = visited;
-		sector.solved1 = solved1;
-		sector.solved2 = solved2;
-		sector.solved3 = solved3;
-		sector.solved4 = solved4;
-		sector.zone = this._assets.get(Zone, zoneId, NullIfMissing);
-		sector.puzzleIndex = puzzleIndex;
-		sector.requiredItem = this._assets.get(Tile, requiredItemId, NullIfMissing);
-		sector.findItem = this._assets.get(Tile, findItemId, NullIfMissing);
-		sector.isGoal = isGoal;
-		sector.additionalRequiredItem = this._assets.get(Tile, additionalRequiredItem, NullIfMissing);
-		sector.additionalGainItem = this._assets.get(Tile, additionalGainItem, NullIfMissing);
-		sector.usedAlternateStrain = usedAlternateStrain === -1 ? null : usedAlternateStrain === 1;
-		sector.npc = this._assets.get(Tile, npcId, NullIfMissing);
-		sector.unknown = unknown;
-
-		return sector;
+		return {
+			visited,
+			solved1,
+			solved2,
+			solved3,
+			solved4,
+			zone: zoneId,
+			puzzleIndex,
+			requiredItem: requiredItemId,
+			findItem: findItemId,
+			isGoal: !!isGoal,
+			additionalRequiredItem: additionalRequiredItem,
+			additionalGainItem: additionalGainItem,
+			usedAlternateStrain: usedAlternateStrain === -1 ? null : usedAlternateStrain === 1,
+			npc: npcId,
+			unknown
+		};
 	}
 
-	protected readMonster(stream: InputStream): MutableMonster {
+	protected readMonster(stream: InputStream): SavedMonster {
 		const characterId = stream.readInt16();
 		const x = stream.readInt16();
 		const y = stream.readInt16();
@@ -170,49 +167,47 @@ class YodaReader extends Reader {
 			waypoints.push(new Point(stream.readUint32(), stream.readUint32()));
 		}
 
-		const monster = new MutableMonster();
-		monster.face = this._assets.get(Char, characterId, NullIfMissing);
-		monster.enabled = enabled;
-		monster.position = new Point(x, y, Zone.Layer.Object);
-		monster.damageTaken = damageTaken;
-		monster.loot = loot;
-		monster.field10 = field10;
-		monster.bulletX = bulletX;
-		monster.bulletY = bulletY;
-		monster.currentFrame = currentFrame;
-		monster.facingDirection = facingDirection;
-		monster.cooldown = cooldown;
-		monster.flag18 = flag18;
-		monster.flag20 = flag20;
-		monster.flag1c = flag1c;
-		monster.directionX = directionX;
-		monster.directionY = directionY;
-		monster.bulletOffset = bulletOffset;
-		monster.field60 = field60;
-		monster.flag2c = flag2c;
-		monster.flag34 = flag34;
-		monster.hasItem = hasItem;
-		monster.preferredDirection = preferred;
-		monster.waypoints = waypoints;
-
-		return monster;
+		return {
+			face: characterId,
+			enabled: enabled,
+			position: new Point(x, y, Zone.Layer.Object),
+			damageTaken: damageTaken,
+			loot: loot,
+			field10: field10,
+			bulletX: bulletX,
+			bulletY: bulletY,
+			currentFrame: currentFrame,
+			facingDirection: facingDirection,
+			cooldown: cooldown,
+			flag18: flag18,
+			flag20: flag20,
+			flag1c: flag1c,
+			directionX: directionX,
+			directionY: directionY,
+			bulletOffset: bulletOffset,
+			field60: field60,
+			flag2c: flag2c,
+			flag34: flag34,
+			hasItem: hasItem,
+			preferredDirection: preferred,
+			waypoints: waypoints
+		};
 	}
 
-	protected readHotspot(stream: InputStream, _: Hotspot): Hotspot {
+	protected readHotspot(stream: InputStream): SavedHotspot {
 		const enabled = stream.readUint16() !== 0;
 		const argument = stream.readInt16();
-		const type = Hotspot.Type.fromNumber(stream.readUint32());
+		const type = stream.readUint32();
 		const x = stream.readInt16();
 		const y = stream.readInt16();
 
-		const hotspot = new MutableHotspot();
-		hotspot.enabled = enabled;
-		hotspot.type = type;
-		hotspot.arg = argument;
-		hotspot.x = x;
-		hotspot.y = y;
-
-		return hotspot;
+		return {
+			enabled,
+			type,
+			argument,
+			x,
+			y
+		};
 	}
 
 	protected readInt(stream: InputStream): number {

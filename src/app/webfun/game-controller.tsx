@@ -282,8 +282,8 @@ class GameController extends EventTarget implements EventListenerObject {
 
 		const story = new MutableStory(state.seed, state.planet, WorldSize.Medium);
 		story.goal = assets.get(Puzzle, state.goalPuzzle);
-		story.world = state.world;
-		story.dagobah = state.dagobah;
+		//story.world = state.world;
+		//story.dagobah = state.dagobah;
 		story.puzzles = [
 			state.puzzleIDs1.mapArray(id => assets.get(Puzzle, id)),
 			state.puzzleIDs2.mapArray(id => assets.get(Puzzle, id))

@@ -4,10 +4,13 @@ import { Hotspot, Zone } from "src/engine/objects";
 
 import AssetManager from "../asset-manager";
 import { InputStream, Point } from "src/util";
-import { MutableZone, MutableMonster } from "src/engine/mutable-objects";
-import SaveState from "./save-state";
-import World from "src/engine/world";
-import Sector from "src/engine/sector";
+import SaveState, {
+	SavedHotspot,
+	SavedMonster,
+	SavedSector,
+	SavedWorld,
+	SavedZone
+} from "./save-state";
 
 interface Range {
 	start: number;
@@ -17,7 +20,8 @@ interface Range {
 abstract class Reader {
 	protected _stream: InputStream;
 	protected _assets: AssetManager;
-	private _type: Variant;
+	protected _type: Variant;
+	protected _zones: Map<number, SavedZone>;
 
 	abstract read(assets: AssetManager): SaveState;
 
@@ -25,13 +29,14 @@ abstract class Reader {
 		this._stream = stream;
 		this._assets = null;
 		this._type = type;
+		this._zones = new Map();
 	}
 
 	protected abstract _doRead(): SaveState;
 	protected abstract readInt(stream: InputStream): number;
-	protected abstract readSector(stream: InputStream, x: number, y: number): Sector;
-	protected abstract readMonster(stream: InputStream): MutableMonster;
-	protected abstract readHotspot(stream: InputStream, hotspot: Hotspot): Hotspot;
+	protected abstract readSector(stream: InputStream, x: number, y: number): SavedSector;
+	protected abstract readMonster(stream: InputStream): SavedMonster;
+	protected abstract readHotspot(stream: InputStream): SavedHotspot;
 
 	protected readBool(stream: InputStream): boolean {
 		return this.readInt(stream) !== 0;
@@ -56,20 +61,22 @@ abstract class Reader {
 	protected readRooms(stream: InputStream, zoneID: number, start: number): void {
 		const zoneIDs: [number, boolean][] = [];
 
-		const zone = this._assets.get(Zone, zoneID);
-		const hotspots = zone.hotspots;
+		const assetHotspots = this._assets.get(Zone, zoneID).hotspots;
+		const hotspots = this._zones.get(zoneID).hotspots;
 		const count = hotspots.length;
 
 		for (let i = start; i < count; i++) {
 			start = i;
 			let door;
 			const hotspot = hotspots[i];
-			if (Hotspot.Type.DoorIn === hotspot.type) {
-				if (hotspot.arg === -1) {
+			const type = assetHotspots[i]?.type.rawValue ?? hotspot.type;
+
+			if (Hotspot.Type.DoorIn.rawValue === type) {
+				if (hotspot.argument === -1) {
 					continue;
 				}
 
-				door = hotspot.arg;
+				door = hotspot.argument;
 			} else continue;
 
 			const zoneID = stream.readInt16();
@@ -95,12 +102,29 @@ abstract class Reader {
 	}
 
 	protected readRoom(stream: InputStream, zoneID: number, visited: boolean): void {
-		const zone: Zone = this._assets.get(Zone, zoneID);
-		this.readZone(stream, zone, visited);
+		this.readZone(stream, zoneID, visited);
 		this.readRooms(stream, zoneID, 0);
 	}
 
-	protected readZone(stream: InputStream, zone: MutableZone, visited: boolean): void {
+	protected readZone(stream: InputStream, id: number, visited: boolean): void {
+		const assetZone: Zone = this._assets.get(Zone, id);
+		let zone = this._zones.get(id);
+		if (!zone) {
+			zone = {
+				id,
+				visited: false,
+				counter: -1,
+				sectorCounter: -1,
+				random: -1,
+				hotspots: [],
+				monsters: [],
+				actions: [],
+				doorInLocation: null,
+				tileIDs: null
+			};
+			this._zones.set(id, zone);
+		}
+
 		if (visited) {
 			zone.counter = this.readInt(stream);
 			zone.random = this.readInt(stream);
@@ -113,51 +137,42 @@ abstract class Reader {
 				zone.sectorCounter = stream.readInt16();
 
 				const planet = stream.readInt16();
-				console.assert(planet === zone.planet.rawValue);
+				console.assert(planet === assetZone.planet.rawValue);
 			}
 
-			const tileCount = zone.size.width * zone.size.height * Zone.LAYERS;
+			const tileCount = assetZone.size.width * assetZone.size.height * Zone.LAYERS;
 			zone.tileIDs = stream.readInt16Array(tileCount);
 		}
 
 		zone.visited = this.readBool(stream) || visited;
-		this.readHotspots(stream, zone);
+		this.readHotspots(stream, zone.id);
 
 		if (visited) {
-			this.readMonsters(stream, zone);
-			this.readActions(stream, zone);
+			this.readMonsters(stream, zone.id);
+			this.readActions(stream, zone.id);
 		}
 	}
 
-	protected readHotspots(stream: InputStream, zone: MutableZone): void {
+	protected readHotspots(stream: InputStream, zoneID: number): void {
+		const zone = this._zones.get(zoneID);
 		const count = this.readInt(stream);
 		console.assert(count >= 0);
-		if (count !== zone.hotspots.length) {
-			zone.hotspots = Array.Repeat(new Hotspot(), count);
-		}
-		zone.hotspots = zone.hotspots.map(htsp => this.readHotspot(stream, htsp));
+		zone.hotspots = count.times(_ => this.readHotspot(stream));
 	}
 
-	protected readMonsters(stream: InputStream, zone: MutableZone): void {
+	protected readMonsters(stream: InputStream, zoneID: number): void {
+		const zone = this._zones.get(zoneID);
 		const count = this.readInt(stream);
 		console.assert(count >= 0);
-
-		if (this._type === Indy || this._type === IndyDemo) zone.monsters = new Array(count);
-
-		for (let i = 0; i < zone.monsters.length; i++) {
-			const monster = this.readMonster(stream);
-			monster.id = i;
-			zone.monsters[i] = monster;
-		}
+		zone.monsters = count.times(_ => this.readMonster(stream));
 	}
 
-	protected readActions(stream: InputStream, zone: Zone): void {
+	protected readActions(stream: InputStream, zoneID: number): void {
+		const zone = this._zones.get(zoneID);
 		const count = this.readInt(stream);
 		console.assert(count >= 0);
 
-		for (const action of zone.actions) {
-			action.enabled = !this.readBool(stream);
-		}
+		zone.actions = count.times(() => !this.readBool(stream));
 
 		for (let i = zone.actions.length; i < count; i++) {
 			if (i === zone.actions.length) {
@@ -174,13 +189,13 @@ abstract class Reader {
 		return result;
 	}
 
-	protected readWorld(stream: InputStream, xRange: Range, yRange: Range): World {
-		const world = new World(this._assets);
+	protected readWorld(stream: InputStream, xRange: Range, yRange: Range): SavedWorld {
+		const world: SavedWorld = { sectors: new Array(10 * 10) };
 
 		for (let y = yRange.start; y < yRange.end; y++) {
 			for (let x = xRange.start; x < xRange.end; x++) {
 				const item = this.readSector(stream, x, y);
-				world.replaceSector(x, y, item);
+				world.sectors[y * 10 + x] = item;
 			}
 		}
 

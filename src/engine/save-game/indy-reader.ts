@@ -1,12 +1,10 @@
 import { InputStream, Point } from "src/util";
 
-import { Hotspot, Char, Zone, Tile } from "src/engine/objects";
+import { Zone } from "src/engine/objects";
 import { Indy } from "src/variant";
-import { MutableHotspot, MutableMonster } from "src/engine/mutable-objects";
 import Reader from "./reader";
-import SaveState from "./save-state";
-import Sector from "src/engine/sector";
-import AssetManager, { NullIfMissing } from "../asset-manager";
+import SaveState, { SavedHotspot, SavedMonster, SavedSector } from "./save-state";
+import AssetManager from "../asset-manager";
 
 class IndyReader extends Reader {
 	constructor(stream: InputStream) {
@@ -85,7 +83,7 @@ class IndyReader extends Reader {
 		return state;
 	}
 
-	protected readSector(stream: InputStream, _x: number, _y: number): Sector {
+	protected readSector(stream: InputStream, _x: number, _y: number): SavedSector {
 		const visited = this.readBool(stream);
 		const solved1 = this.readBool(stream);
 		const solved2 = this.readBool(stream);
@@ -100,33 +98,40 @@ class IndyReader extends Reader {
 		// possibly zone or puzzle type, skip over it
 		stream.readInt16();
 
-		const sector = new Sector();
-		sector.visited = visited;
-		sector.solved1 = solved1;
-		sector.solved2 = solved2;
-		sector.zone = this._assets.get(Zone, zoneID, NullIfMissing);
-		sector.puzzleIndex = puzzleIndex;
-		sector.requiredItem = this._assets.get(Tile, requiredItemID, NullIfMissing);
-		sector.findItem = this._assets.get(Tile, findItemID, NullIfMissing);
-		sector.npc = this._assets.get(Tile, npcID, NullIfMissing);
+		return {
+			visited,
+			solved1,
+			solved2,
+			puzzleIndex,
+			zone: zoneID,
+			requiredItem: requiredItemID,
+			findItem: findItemID,
+			npc: npcID,
 
-		return sector;
+			solved3: false,
+			solved4: false,
+			additionalGainItem: -1,
+			additionalRequiredItem: -1,
+			usedAlternateStrain: false,
+			isGoal: false,
+			unknown: -1
+		};
 	}
 
-	protected readHotspot(stream: InputStream, oldHotspot: Hotspot): Hotspot {
+	protected readHotspot(stream: InputStream): SavedHotspot {
 		const enabled = stream.readUint16() !== 0;
 		const argument = stream.readInt16();
 
-		const hotspot = new MutableHotspot();
-		hotspot.enabled = enabled;
-		hotspot.type = oldHotspot.type;
-		hotspot.arg = argument;
-		hotspot.x = oldHotspot.x;
-		hotspot.y = oldHotspot.y;
-		return hotspot;
+		return {
+			enabled,
+			argument,
+			x: -1,
+			y: -1,
+			type: -1
+		};
 	}
 
-	protected readMonster(stream: InputStream): MutableMonster {
+	protected readMonster(stream: InputStream): SavedMonster {
 		const characterId = stream.readInt16();
 		const x = stream.readInt16();
 		const y = stream.readInt16();
@@ -134,12 +139,33 @@ class IndyReader extends Reader {
 
 		stream.readUint8Array(0x18);
 
-		const monster = new MutableMonster();
-		monster.face = this._assets.get(Char, characterId, NullIfMissing);
-		monster.position = new Point(x, y, Zone.Layer.Object);
-		monster.damageTaken = damageTaken;
+		return {
+			preferredDirection: -1,
+			bulletOffset: -1,
+			currentFrame: -1,
+			cooldown: -1,
+			field10: -1,
+			field60: -1,
+			flag18: false,
+			flag1c: false,
+			flag20: false,
+			flag2c: false,
+			flag34: false,
 
-		return monster;
+			bulletX: -1,
+			bulletY: -1,
+			directionX: -1,
+			directionY: -1,
+			facingDirection: -1,
+			waypoints: null,
+			enabled: true,
+			loot: -1,
+			hasItem: false,
+
+			face: characterId,
+			position: new Point(x, y, Zone.Layer.Object),
+			damageTaken: damageTaken
+		};
 	}
 
 	protected readInt(stream: InputStream): number {

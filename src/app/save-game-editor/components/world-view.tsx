@@ -41,11 +41,11 @@ class WorldView extends Component {
 
 		super.connectedCallback();
 
-		this._zoneImages = await Promise.all(
-			zoneIds(this.state.world).map((id: number) =>
-				drawZone(this.gameData.zones[id], this.palette).toImage()
-			)
-		);
+		//this._zoneImages = await Promise.all(
+		//zoneIds(this.state.world).map((id: number) =>
+		//drawZone(this.gameData.zones[id], this.palette).toImage()
+		//)
+		//);
 
 		if (!this.isConnected) {
 			return;

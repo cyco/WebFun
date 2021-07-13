@@ -14,54 +14,55 @@ class Writer {
 	}
 
 	public write(state: SaveState, stream: OutputStream): void {
-		stream.writeCharacters("YODASAV44");
-		stream.writeUint32(state.seed);
-		stream.writeUint32(state.planet.rawValue);
+		throw "Not implemented yet!";
+		//stream.writeCharacters("YODASAV44");
+		//stream.writeUint32(state.seed);
+		//stream.writeUint32(state.planet.rawValue);
 
-		stream.writeUint32(+state.onDagobah);
+		//stream.writeUint32(+state.onDagobah);
 
-		stream.writeUint16(state.puzzleIDs1.length);
-		stream.writeUint16Array(state.puzzleIDs1);
+		//stream.writeUint16(state.puzzleIDs1.length);
+		//stream.writeUint16Array(state.puzzleIDs1);
 
-		stream.writeUint16(state.puzzleIDs2.length);
-		stream.writeUint16Array(state.puzzleIDs2);
+		//stream.writeUint16(state.puzzleIDs2.length);
+		//stream.writeUint16Array(state.puzzleIDs2);
 
-		this._writeDagobah(state.dagobah, stream);
-		this._writeWorld(state.world, stream);
+		//this._writeDagobah(state.dagobah, stream);
+		//this._writeWorld(state.world, stream);
 
-		stream.writeInt32(state.inventoryIDs.length);
-		stream.writeInt16Array(state.inventoryIDs);
+		//stream.writeInt32(state.inventoryIDs.length);
+		//stream.writeInt16Array(state.inventoryIDs);
 
-		stream.writeInt16(state.currentZoneID);
+		//stream.writeInt16(state.currentZoneID);
 
-		stream.writeUint32(state.positionOnWorld.x);
-		stream.writeUint32(state.positionOnWorld.y);
+		//stream.writeUint32(state.positionOnWorld.x);
+		//stream.writeUint32(state.positionOnWorld.y);
 
-		stream.writeInt16(state.currentWeapon);
-		if (state.currentWeapon !== -1) {
-			stream.writeInt16(state.currentAmmo);
-		}
+		//stream.writeInt16(state.currentWeapon);
+		//if (state.currentWeapon !== -1) {
+		//stream.writeInt16(state.currentAmmo);
+		//}
 
-		stream.writeInt16(state.forceAmmo);
-		stream.writeInt16(state.blasterAmmo);
-		stream.writeInt16(state.blasterRifleAmmo);
+		//stream.writeInt16(state.forceAmmo);
+		//stream.writeInt16(state.blasterAmmo);
+		//stream.writeInt16(state.blasterRifleAmmo);
 
-		stream.writeUint32(state.positionOnZone.x * Tile.WIDTH);
-		stream.writeUint32(state.positionOnZone.y * Tile.HEIGHT);
+		//stream.writeUint32(state.positionOnZone.x * Tile.WIDTH);
+		//stream.writeUint32(state.positionOnZone.y * Tile.HEIGHT);
 
-		stream.writeUint32(state.damageTaken);
-		stream.writeUint32(state.livesLost);
+		//stream.writeUint32(state.damageTaken);
+		//stream.writeUint32(state.livesLost);
 
-		stream.writeUint32(state.difficulty);
-		stream.writeUint32(state.timeElapsed);
+		//stream.writeUint32(state.difficulty);
+		//stream.writeUint32(state.timeElapsed);
 
-		stream.writeInt32(state.worldSize);
+		//stream.writeInt32(state.worldSize);
 
-		stream.writeInt16(state.unknownCount);
-		stream.writeInt16(state.unknownSum);
+		//stream.writeInt16(state.unknownCount);
+		//stream.writeInt16(state.unknownSum);
 
-		stream.writeUint32(state.goalPuzzle);
-		stream.writeUint32(state.goalPuzzle);
+		//stream.writeUint32(state.goalPuzzle);
+		//stream.writeUint32(state.goalPuzzle);
 	}
 
 	private _writeDagobah(world: World, stream: OutputStream): void {

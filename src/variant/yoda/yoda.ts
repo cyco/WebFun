@@ -146,8 +146,8 @@ class Yoda extends Variant {
 		state.puzzleIDs2 = new Int16Array(engine.story.puzzles[1].map(p => p.id));
 		state.goalPuzzle = engine.story.goal?.id ?? -1;
 
-		state.dagobah = engine.dagobah;
-		state.world = engine.world;
+		//state.dagobah = engine.dagobah;
+		//state.world = engine.world;
 
 		state.onDagobah = engine.currentWorld === engine.dagobah;
 		state.positionOnWorld = engine.currentWorld.locationOfSector(engine.currentSector);
@@ -247,51 +247,9 @@ class Yoda extends Variant {
 		}
 		const storageIDs = [0x102, 0x10, 0x48d, 0x279, 0x27b, 0x27c, 0x6e5];
 		const doorIDs = [
-			70,
-			71,
-			72,
-			73,
-			74,
-			75,
-			76,
-			145,
-			149,
-			152,
-			153,
-			220,
-			221,
-			223,
-			231,
-			232,
-			233,
-			350,
-			582,
-			584,
-			586,
-			588,
-			702,
-			709,
-			755,
-			756,
-			759,
-			760,
-			804,
-			806,
-			983,
-			984,
-			1047,
-			1048,
-			1081,
-			1112,
-			1120,
-			1259,
-			1461,
-			1462,
-			1472,
-			1473,
-			1539,
-			1544,
-			1858
+			70, 71, 72, 73, 74, 75, 76, 145, 149, 152, 153, 220, 221, 223, 231, 232, 233, 350, 582, 584,
+			586, 588, 702, 709, 755, 756, 759, 760, 804, 806, 983, 984, 1047, 1048, 1081, 1112, 1120,
+			1259, 1461, 1462, 1472, 1473, 1539, 1544, 1858
 		];
 
 		if (at.isEqualTo(engine.hero.location)) return StringIDs.Hero;
