@@ -71,7 +71,7 @@ class EditorWindow extends AbstractWindow {
 
 	private downloadSaveGame(): void {
 		const saveGame = this._editorView.saveGame;
-		const writer = new Writer(this._assets);
+		const writer = new Writer();
 
 		const sizingStream = new DiscardingOutputStream();
 		writer.write(saveGame, sizingStream);

@@ -4,6 +4,7 @@ import { Zone } from "src/engine/objects";
 
 export type SavedZone = {
 	id: number;
+	planet: number;
 	visited: boolean;
 	counter: number;
 	sectorCounter: number;

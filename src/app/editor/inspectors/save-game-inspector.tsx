@@ -52,14 +52,8 @@ class SaveGameInspector extends AbstractInspector {
 	public downloadSaveGame(): void {
 		const state = this._editorView.saveGame;
 		const data = this._editorView.data;
-		const assets = new AssetManager();
-		assets.populate(Zone, data.zones);
-		assets.populate(Tile, data.tiles);
-		assets.populate(Puzzle, data.puzzles);
-		assets.populate(Char, data.characters);
-		assets.populate(Sound, data.sounds);
 
-		const writer = new Writer(assets);
+		const writer = new Writer();
 
 		const countingStream = new DiscardingOutputStream();
 		writer.write(state, countingStream);

@@ -118,6 +118,7 @@ abstract class Reader {
 		if (!zone) {
 			zone = {
 				id,
+				planet: -1,
 				visited: false,
 				counter: -1,
 				sectorCounter: -1,
@@ -143,6 +144,7 @@ abstract class Reader {
 				zone.sectorCounter = stream.readInt16();
 
 				const planet = stream.readInt16();
+				zone.planet = planet;
 				console.assert(planet === assetZone.planet.rawValue);
 			}
 

@@ -38,9 +38,9 @@ describe("WebFun.Acceptance.Save game reading", () => {
 		expect(Array.from(state.inventoryIDs)).toEqual([443, 449]);
 	});
 
-	xit("writes save games correctly", async () => {
-		const { state, assets } = await readSaveGame("save-games/yoda.wld", Yoda);
-		const outputStream = writeSaveGame(state, assets);
+	it("writes save games correctly", async () => {
+		const { state } = await readSaveGame("save-games/yoda.wld", Yoda);
+		const outputStream = writeSaveGame(state);
 		expect(outputStream.buffer.byteLength).toEqual(76065);
 	});
 
@@ -63,8 +63,8 @@ describe("WebFun.Acceptance.Save game reading", () => {
 		return { state: await read(assets), assets: assets };
 	}
 
-	function writeSaveGame(state: SaveState, assets: AssetManager): OutputStream {
-		const writer = new Writer(assets);
+	function writeSaveGame(state: SaveState): OutputStream {
+		const writer = new Writer();
 		const sizeStream = new DiscardingOutputStream();
 		writer.write(state, sizeStream);
 		const stream = new OutputStream(sizeStream.offset);

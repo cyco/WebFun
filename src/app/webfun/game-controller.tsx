@@ -332,7 +332,7 @@ class GameController extends EventTarget implements EventListenerObject {
 	public async save(): Promise<void> {
 		const engine = this.engine;
 		const state = engine.variant.save(engine);
-		const writer = new Writer(engine.assets);
+		const writer = new Writer();
 		const sizingStream = new DiscardingOutputStream();
 		writer.write(state, sizingStream);
 
