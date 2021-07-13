@@ -142,8 +142,8 @@ class Yoda extends Variant {
 		state.type = engine.variant;
 		state.seed = engine.story.seed;
 		state.planet = engine.story.planet;
-		state.puzzleIDs1 = new Int16Array(engine.story.puzzles[0].map(p => p.id));
-		state.puzzleIDs2 = new Int16Array(engine.story.puzzles[1].map(p => p.id));
+		state.puzzleIDs1 = engine.story.puzzles[0].map(p => p.id);
+		state.puzzleIDs2 = engine.story.puzzles[1].map(p => p.id);
 		state.goalPuzzle = engine.story.goal?.id ?? -1;
 
 		//state.dagobah = engine.dagobah;
@@ -157,7 +157,7 @@ class Yoda extends Variant {
 		state.damageTaken = engine.hero.damage;
 		state.livesLost = engine.hero.lives;
 
-		state.inventoryIDs = new Int16Array(engine.inventory.items.map(i => i.id));
+		state.inventoryIDs = engine.inventory.items.map(i => i.id);
 
 		state.currentWeapon = engine.hero.weapon?.id ?? -1;
 		state.currentAmmo = engine.hero.ammo;

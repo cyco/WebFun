@@ -1,11 +1,11 @@
 import { DagobahGenerator, WorldGenerationError, WorldGenerator } from "src/engine/generation";
 import { WorldSize } from "./generation";
 
-import AssetManager from "./asset-manager";
-import { Puzzle, Zone } from "src/engine/objects";
+import AssetManager, { NullIfMissing } from "./asset-manager";
+import { Puzzle, Tile, Zone } from "src/engine/objects";
 import World from "./world";
 import { rand } from "src/util";
-import { Variant } from ".";
+import { SaveState, Variant } from ".";
 
 class Story {
 	public goal: Puzzle;
@@ -72,23 +72,66 @@ class Story {
 
 	private tryGenerateWorld(seed: number, assets: AssetManager, variant: Variant): void {
 		const generator = new WorldGenerator(this.size, this.planet, assets, variant);
-		generator.generate(seed);
+		const state = generator.generate(seed);
 
-		this.goal = generator.goalPuzzle;
-		this._puzzles = generator.puzzles;
+		this.goal = assets.get(Puzzle, state.goalPuzzle);
+		this._puzzles = [
+			state.puzzleIDs1.map(id => assets.get(Puzzle, id)),
+			state.puzzleIDs2.map(id => assets.get(Puzzle, id))
+		];
 
-		this._setupWorld(generator);
-		this._setupDagobah(generator, assets);
+		this._setupWorld(state, assets);
+		this._setupDagobah(state, assets);
 	}
 
-	private _setupWorld(generator: WorldGenerator): void {
-		this._world = generator.world;
+	private _setupWorld(state: SaveState, assets: AssetManager): void {
+		const world = state.world;
+
+		this._world = new World(assets);
+
+		for (let i = 0; i < 100; i++) {
+			const sec = world.sectors[i];
+			if (sec.zone === -1) continue;
+
+			const sector = this._world.at(i);
+			sector.npc = assets.get(Tile, sec.npc, NullIfMissing);
+			sector.findItem = assets.get(Tile, sec.findItem, NullIfMissing);
+			sector.requiredItem = assets.get(Tile, sec.requiredItem, NullIfMissing);
+			sector.zone = assets.get(Zone, sec.zone, NullIfMissing);
+			sector.zoneType = sector.zone.type;
+			sector.puzzleIndex = sec.puzzleIndex;
+			sector.visited = false;
+			sector.additionalGainItem = assets.get(Tile, sec.additionalGainItem, NullIfMissing);
+			sector.additionalRequiredItem = assets.get(Tile, sec.additionalRequiredItem, NullIfMissing);
+			sector.usedAlternateStrain = sec.usedAlternateStrain;
+		}
 	}
 
-	private _setupDagobah(worldGenerator: WorldGenerator, assets: AssetManager): void {
+	private _setupDagobah(state: SaveState, assets: AssetManager): void {
 		const generator = new DagobahGenerator(assets);
-		generator.generate(worldGenerator);
-		this._dagobah = generator.world;
+		const world = generator.generate(
+			assets.get(Puzzle, state.goalPuzzle),
+			assets.get(Puzzle, state.puzzleIDs2[0]).item1
+		);
+
+		this._dagobah = new World(assets);
+
+		for (let i = 0; i < 100; i++) {
+			const sec = world.sectors[i];
+			if (sec.zone === -1) continue;
+
+			const sector = this._dagobah.at(i);
+			sector.npc = assets.get(Tile, sec.npc, NullIfMissing);
+			sector.findItem = assets.get(Tile, sec.findItem, NullIfMissing);
+			sector.requiredItem = assets.get(Tile, sec.requiredItem, NullIfMissing);
+			sector.zone = assets.get(Zone, sec.zone, NullIfMissing);
+			sector.zoneType = sector.zone.type;
+			sector.puzzleIndex = sec.puzzleIndex;
+			sector.visited = false;
+			sector.additionalGainItem = assets.get(Tile, sec.additionalGainItem, NullIfMissing);
+			sector.additionalRequiredItem = assets.get(Tile, sec.additionalRequiredItem, NullIfMissing);
+			sector.usedAlternateStrain = sec.usedAlternateStrain;
+		}
 	}
 }
 

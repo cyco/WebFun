@@ -285,8 +285,8 @@ class GameController extends EventTarget implements EventListenerObject {
 		//story.world = state.world;
 		//story.dagobah = state.dagobah;
 		story.puzzles = [
-			state.puzzleIDs1.mapArray(id => assets.get(Puzzle, id)),
-			state.puzzleIDs2.mapArray(id => assets.get(Puzzle, id))
+			state.puzzleIDs1.map(id => assets.get(Puzzle, id)),
+			state.puzzleIDs2.map(id => assets.get(Puzzle, id))
 		];
 
 		engine.story = story;

@@ -1,4 +1,4 @@
-import { Action, Hotspot, Monster, Tile, Zone } from "src/engine/objects";
+import { Hotspot, Tile } from "src/engine/objects";
 
 import { OutputStream } from "src/util";
 import SaveState, {

@@ -17,13 +17,13 @@ import GetDistanceToCenter from "./distance-to-center";
 import WorldMap from "./map";
 import MapGenerator from "./map-generator";
 import Quest from "./quest";
-import World from "src/engine/world";
 import WorldGenerationError from "./world-generation-error";
 import Sector from "src/engine/sector";
 import SectorType from "./sector-type";
 import RoomIterator from "../room-iterator";
 import ZonePlanet from "../objects/zone-planet";
 import Variant from "../variant";
+import { SaveState } from "../save-game";
 
 declare global {
 	interface Array<T> {
@@ -32,7 +32,6 @@ declare global {
 }
 
 class WorldGenerator {
-	public world: World = null;
 	private _seed: number = 0;
 	private readonly _size: WorldSize;
 	private readonly _planet: Zone.Planet;
@@ -57,6 +56,7 @@ class WorldGenerator {
 	private _zones: Zone[];
 	private _zonesByType: Map<Zone.Type, Zone[]>;
 	private _variant: Variant;
+	private _state: SaveState;
 
 	constructor(size: WorldSize, planet: Zone.Planet, assets: AssetManager, variant: Variant) {
 		this._size = size;
@@ -65,7 +65,11 @@ class WorldGenerator {
 		this._variant = variant;
 	}
 
-	public generate(seed: number): void {
+	public generate(seed: number): SaveState {
+		this._state = new SaveState();
+		this._state.world = { sectors: [] };
+		this._state.dagobah = { sectors: [] };
+
 		this._seed = seed;
 		srand(this._seed);
 
@@ -75,9 +79,25 @@ class WorldGenerator {
 		const mapGenerator = (this.mapGenerator = new MapGenerator());
 		mapGenerator.generate(-1, this._size);
 
-		this.world = new World(this._assets);
 		for (let i = 0; i < 100; i++) {
-			this.world.at(i).puzzleIndex = mapGenerator.orderMap[i];
+			this._state.world.sectors = (100).times(i => ({
+				puzzleIndex: mapGenerator.orderMap[i],
+				usedAlternateStrain: false,
+				visited: false,
+				solved1: false,
+				solved2: false,
+				solved3: false,
+				solved4: false,
+				zone: -1,
+
+				requiredItem: -1,
+				findItem: -1,
+				isGoal: false,
+				additionalRequiredItem: -1,
+				additionalGainItem: -1,
+				npc: -1,
+				unknown: -1
+			}));
 		}
 
 		const puzzleCount = mapGenerator.puzzleCount;
@@ -98,6 +118,7 @@ class WorldGenerator {
 
 		const goalPuzzle = this.getUnusedPuzzleRandomly(null, Zone.Type.PlaceholderForEndPuzzle);
 		this.errorWhen(!goalPuzzle, "Could not find a suitable goal puzzle");
+		this._state.goalPuzzle = goalPuzzle.id;
 
 		this.usedPuzzles.push(goalPuzzle);
 		this.puzzleStrain1[puzzles1Count] = goalPuzzle;
@@ -119,13 +140,20 @@ class WorldGenerator {
 		rand();
 
 		this.writePlanetValues();
+
+		this._state.puzzleIDs1 = this.puzzleStrain1.map(p => p.id);
+		this._state.puzzleIDs2 = this.puzzleStrain1.map(p => p.id);
+
+		return this._state;
 	}
 
 	private determineTransportZones(): void {
 		const typeMap = this.mapGenerator.typeMap;
 		const isTravelTarget = (point: Point) => {
 			const index = point.x + point.y * 10;
-			return typeMap[index] === SectorType.TravelEnd && !this.world.at(index).zone;
+			return (
+				typeMap[index] === SectorType.TravelEnd && this._state.world.sectors[index].zone === -1
+			);
 		};
 
 		for (let y = 0; y < 10; y++) {
@@ -931,7 +959,7 @@ class WorldGenerator {
 				case Zone.Type.PlaceholderForEndPuzzle:
 					return (
 						puzzle.type === Puzzle.Type.End &&
-						(!this.puzzleUsedInLastGame(puzzle, this._planet) || this.goalPuzzle !== null) &&
+						!this.puzzleUsedInLastGame(puzzle, this._planet) &&
 						this.isGoalOnPlanet(this._planet, puzzle)
 					);
 				default:
@@ -1046,17 +1074,14 @@ class WorldGenerator {
 		options: Partial<Sector> = {}
 	): void {
 		const idx = x + 10 * y;
-		const sector = this.world.at(idx);
-		sector.zone = zone;
-		sector.zoneType = type;
-		sector.puzzleIndex = options.puzzleIndex !== undefined ? options.puzzleIndex : -1;
-		sector.requiredItem = options.requiredItem !== undefined ? options.requiredItem : null;
-		sector.npc = options.npc !== undefined ? options.npc : null;
-		sector.findItem = options.findItem !== undefined ? options.findItem : null;
-		sector.additionalRequiredItem =
-			options.additionalRequiredItem !== undefined ? options.additionalRequiredItem : null;
-		sector.additionalGainItem =
-			options.additionalGainItem !== undefined ? options.additionalGainItem : null;
+		const sector = this._state.world.sectors[idx];
+		sector.zone = zone.id;
+		sector.puzzleIndex = options.puzzleIndex ?? -1;
+		sector.requiredItem = options.requiredItem?.id ?? -1;
+		sector.npc = options.npc?.id ?? -1;
+		sector.findItem = options.findItem?.id ?? -1;
+		sector.additionalRequiredItem = options.additionalRequiredItem?.id ?? -1;
+		sector.additionalGainItem = options.additionalGainItem?.id ?? -1;
 		sector.usedAlternateStrain = this.usedAlternateStrain;
 		if (zone !== null && type !== Zone.Type.Town) this.usedZones.unshift(zone);
 	}
@@ -1069,18 +1094,6 @@ class WorldGenerator {
 		error.size = this._size;
 		error.planet = this._planet;
 		throw error;
-	}
-
-	get initialItem(): Tile {
-		return this.puzzleStrain2[0].item1;
-	}
-
-	get goalPuzzle(): Puzzle {
-		return this.usedPuzzles[0] || null;
-	}
-
-	get puzzles(): [Puzzle[], Puzzle[]] {
-		return [this.puzzleStrain1, this.puzzleStrain2];
 	}
 
 	private lookupTileById(id: number): Tile {

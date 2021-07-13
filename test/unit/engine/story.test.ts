@@ -4,7 +4,7 @@ import { srand } from "src/util";
 import * as Generation from "src/engine/generation";
 import { WorldGenerationError } from "src/engine/generation";
 import Zone from "src/engine/objects/zone";
-import { AssetManager, Variant } from "src/engine";
+import { AssetManager, SaveState, Variant } from "src/engine";
 
 describe("WebFun.Engine.Story", () => {
 	let subject: Story;
@@ -25,14 +25,14 @@ describe("WebFun.Engine.Story", () => {
 			variantMock = mockVariant();
 			assetsMock = mockAssets();
 			worldGeneratorMock = mockGenerator();
-			dagobahGeneratorMock = mockGenerator();
+			dagobahGeneratorMock = mockDagobahGenerator();
 
 			spyOn(Generation, "WorldGenerator").and.returnValue(worldGeneratorMock);
 			spyOn(Generation, "DagobahGenerator").and.returnValue(dagobahGeneratorMock);
 		});
 
 		it("can generate the original world", () => {
-			spyOn(worldGeneratorMock, "generate").and.returnValue(void 0);
+			spyOn(worldGeneratorMock, "generate").and.returnValue(mockSaveState());
 			subject.generateWorld(assetsMock, variantMock);
 
 			expect(Generation.WorldGenerator).toHaveBeenCalledWith(
@@ -47,9 +47,11 @@ describe("WebFun.Engine.Story", () => {
 		it("keeps generating worlds with varying seed until it succeeds", () => {
 			srand(0);
 
-			spyOn(worldGeneratorMock, "generate").and.callFake((seed: number) => {
+			spyOn(worldGeneratorMock, "generate").and.callFake((seed: number): SaveState => {
 				if (seed === 1) throw new WorldGenerationError();
 				if (seed === 38) throw new WorldGenerationError();
+
+				return mockSaveState();
 			});
 
 			subject.generateWorld(assetsMock, variantMock, 50);
@@ -64,19 +66,37 @@ describe("WebFun.Engine.Story", () => {
 		}
 
 		function mockAssets(): any {
-			return {};
+			return {
+				get() {
+					return {};
+				}
+			};
 		}
 
 		function mockGenerator(): any {
 			return {
-				world: mockWorld(),
-				dagobah: mockWorld(),
-				generate() {}
+				generate() {
+					return mockSaveState();
+				}
 			};
 		}
 
-		function mockWorld(): any {
-			return {};
+		function mockDagobahGenerator(): any {
+			return {
+				generate() {
+					return { sectors: (100).times(_ => ({ zone: -1 })) };
+				}
+			};
+		}
+
+		function mockSaveState(): any {
+			return {
+				world: { sectors: (100).times(() => ({ zone: -1 })) },
+				dagobah: { sectors: (100).times(_ => ({ zone: -1 })) },
+				goalPuzzle: -1,
+				puzzleIDs1: new Int16Array(1),
+				puzzleIDs2: new Int16Array(1)
+			};
 		}
 	});
 });

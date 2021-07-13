@@ -404,7 +404,7 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 	}
 
 	private _updateInventory(items: Tile[]) {
-		this._state.inventoryIDs = new Int16Array(items.filter(identity).map(({ id }) => id));
+		this._state.inventoryIDs = items.filter(identity).map(({ id }) => id);
 	}
 }
 

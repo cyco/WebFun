@@ -189,11 +189,11 @@ abstract class Reader {
 		);
 	}
 
-	protected readInventory(stream: InputStream): Int16Array {
+	protected readInventory(stream: InputStream): number[] {
 		const count = this.readInt(stream);
-		if (count < 0) return new Int16Array([]);
+		if (count < 0) return [];
 		const result = stream.readInt16Array(count);
-		return result;
+		return Array.from(result);
 	}
 
 	protected readWorld(stream: InputStream, xRange: Range, yRange: Range): SavedWorld {
@@ -211,9 +211,9 @@ abstract class Reader {
 		return world;
 	}
 
-	protected readPuzzles(stream: InputStream): Int16Array {
+	protected readPuzzles(stream: InputStream): number[] {
 		const count = stream.readUint16();
-		return stream.readInt16Array(count);
+		return Array.from(stream.readInt16Array(count));
 	}
 }
 

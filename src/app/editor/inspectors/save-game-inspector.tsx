@@ -51,8 +51,6 @@ class SaveGameInspector extends AbstractInspector {
 
 	public downloadSaveGame(): void {
 		const state = this._editorView.saveGame;
-		const data = this._editorView.data;
-
 		const writer = new Writer();
 
 		const countingStream = new DiscardingOutputStream();

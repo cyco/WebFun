@@ -73,8 +73,8 @@ class SaveState {
 	public type: Variant;
 	public seed: number;
 	public planet: Zone.Planet;
-	public puzzleIDs1: Int16Array;
-	public puzzleIDs2: Int16Array;
+	public puzzleIDs1: number[];
+	public puzzleIDs2: number[];
 	public goalPuzzle: number;
 
 	public dagobah: SavedWorld;
@@ -93,7 +93,7 @@ class SaveState {
 	public damageTaken: number;
 	public livesLost: number;
 
-	public inventoryIDs: Int16Array;
+	public inventoryIDs: number[];
 
 	public currentWeapon: number;
 	public currentAmmo: number;

@@ -1,9 +1,8 @@
 import AssetManager from "src/engine/asset-manager";
 import { Tile, Zone, Hotspot, Puzzle } from "src/engine/objects";
-import World from "src/engine/world";
-import WorldGenerator from "./world-generator";
 import { Yoda } from "src/variant";
 import { randmod } from "src/util";
+import { SavedWorld } from "../save-game/save-state";
 
 enum YodaSpawn {
 	NorthWest = 0,
@@ -15,54 +14,56 @@ enum YodaSpawn {
 
 class DagobahGenerator {
 	private readonly assets: AssetManager;
-	private _world: World = null;
 
 	constructor(assets: AssetManager) {
 		this.assets = assets;
 	}
 
-	get world(): World {
-		console.assert(this._world !== null);
-		return this._world;
-	}
+	public generate(goal: Puzzle, item: Tile): SavedWorld {
+		const dagobah: SavedWorld = {
+			sectors: (100).times(_ => ({
+				visited: false,
+				solved1: false,
+				solved2: false,
+				solved3: false,
+				solved4: false,
+				zone: -1,
 
-	generate(generator: WorldGenerator): void {
-		const assets = this.assets;
-		const dagobah = new World(this.assets);
+				puzzleIndex: -1,
+				usedAlternateStrain: false,
+				isGoal: false,
 
-		dagobah.at(4, 4).zone = assets.get(Zone, Yoda.zoneIDs.DagobahNorthWest);
-		dagobah.at(4, 4).zoneType = Zone.Type.Find;
-		dagobah.at(5, 4).zone = assets.get(Zone, Yoda.zoneIDs.DagobahNorthEast);
-		dagobah.at(5, 4).zoneType = Zone.Type.Find;
-		dagobah.at(4, 5).zone = assets.get(Zone, Yoda.zoneIDs.DagobahSouthWest);
-		dagobah.at(4, 5).zoneType = Zone.Type.Find;
-		dagobah.at(5, 5).zone = assets.get(Zone, Yoda.zoneIDs.DagobahSouthEast);
-		dagobah.at(5, 5).zoneType = Zone.Type.Town;
+				findItem: -1,
+				requiredItem: -1,
+				additionalGainItem: -1,
+				additionalRequiredItem: -1,
+				npc: -1,
 
-		//* temporarily copy zone types over from main world for easy comparison against original
-		// FIXME: remove this section when comparisons are not necessary anymore
-		const world = generator.world;
-		dagobah.at(4, 4).zoneType = world.at(4, 4).zoneType;
-		dagobah.at(5, 4).zoneType = world.at(5, 4).zoneType;
-		dagobah.at(4, 5).zoneType = world.at(4, 5).zoneType;
-		dagobah.at(5, 5).zoneType = world.at(5, 5).zoneType;
-		//*/
+				unknown: -1
+			}))
+		};
 
-		const spawn = this.determineYodaSpawnLocation(generator.goalPuzzle);
+		dagobah.sectors[4 * 10 + 4].zone = Yoda.zoneIDs.DagobahNorthWest;
+		dagobah.sectors[4 * 10 + 5].zone = Yoda.zoneIDs.DagobahNorthEast;
+		dagobah.sectors[5 * 10 + 4].zone = Yoda.zoneIDs.DagobahSouthWest;
+		dagobah.sectors[5 * 10 + 5].zone = Yoda.zoneIDs.DagobahSouthEast;
+
+		const spawn = this.determineYodaSpawnLocation(goal);
 		switch (spawn) {
 			case YodaSpawn.NorthWest:
 			case YodaSpawn.SouthEast:
 			case YodaSpawn.SouthWest:
-				this.setupOutdoorSpawn(spawn, generator.initialItem, dagobah);
+				this.setupOutdoorSpawn(spawn, item, dagobah);
 				break;
 			case YodaSpawn.Hut:
-				this._setupIndoorSpawn(dagobah, generator.initialItem, Yoda.tileIDs.Yoda);
+				this._setupIndoorSpawn(dagobah, item, Yoda.tileIDs.Yoda);
 				break;
 			case YodaSpawn.None:
-				this._setupIndoorSpawn(dagobah, generator.initialItem, Yoda.tileIDs.YodasSeat);
+				this._setupIndoorSpawn(dagobah, item, Yoda.tileIDs.YodasSeat);
 				break;
 		}
-		this._world = dagobah;
+
+		return dagobah;
 	}
 
 	private determineYodaSpawnLocation = (goal: Puzzle) => {
@@ -79,7 +80,7 @@ class DagobahGenerator {
 		return spawn;
 	};
 
-	private setupOutdoorSpawn(spawn: YodaSpawn, tile: Tile, dagobah: World) {
+	private setupOutdoorSpawn(spawn: YodaSpawn, tile: Tile, dagobah: SavedWorld) {
 		const npcID = Yoda.tileIDs.Yoda;
 		const places = [
 			[4, 4],
@@ -88,12 +89,11 @@ class DagobahGenerator {
 			[4, 5]
 		];
 		const [x, y] = places[spawn];
-		const place = dagobah.at(x, y);
-		place.zoneType = Zone.Type.Use;
-		place.npc = this.assets.get(Tile, npcID);
-		place.findItem = tile;
+		const place = dagobah.sectors[y * 10 + x];
+		place.npc = this.assets.get(Tile, npcID)?.id ?? -1;
+		place.findItem = tile?.id ?? -1;
 
-		const zone = this.assets.get(Zone, place.zone.id);
+		const zone = this.assets.get(Zone, place.zone);
 		console.assert(!!zone.npcs.find(i => i.id === npcID));
 		const candidates = zone.hotspots.withType(Hotspot.Type.SpawnLocation);
 		console.assert(candidates.length === 1);
@@ -107,13 +107,12 @@ class DagobahGenerator {
 		hotspot.enabled = true;
 	}
 
-	private _setupIndoorSpawn(dagobah: World, tile: Tile, npcID: number) {
+	private _setupIndoorSpawn(dagobah: SavedWorld, tile: Tile, npcID: number) {
 		const zoneID = Yoda.zoneIDs.YodasHut;
 		const zone = this.assets.get(Zone, zoneID);
-		const place = dagobah.at(5, 4);
-		place.zoneType = Zone.Type.Use;
-		place.npc = this.assets.get(Tile, npcID);
-		place.findItem = tile;
+		const place = dagobah.sectors[4 * 10 + 5];
+		place.npc = this.assets.get(Tile, npcID)?.id ?? -1;
+		place.findItem = tile?.id ?? -1;
 
 		let hotspotFilter: (hotspot: Hotspot) => boolean;
 		if (npcID === Yoda.tileIDs.Yoda) {
