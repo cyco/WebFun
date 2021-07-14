@@ -174,7 +174,7 @@ class WorldGenerator {
 				);
 				this.errorWhen(!zone, "Could not determine zone for travel start");
 
-				this.placeZone(x, y, zone, Zone.Type.TravelStart, {
+				this.placeZone(x, y, zone, {
 					requiredItem: this.requiredItem
 				});
 
@@ -215,7 +215,7 @@ class WorldGenerator {
 					"Zone is already in use for a different travel sector"
 				);
 
-				this.placeZone(travelTarget.x, travelTarget.y, connectedZone, Zone.Type.TravelEnd, {
+				this.placeZone(travelTarget.x, travelTarget.y, connectedZone, {
 					requiredItem: this.requiredItem
 				});
 			}
@@ -265,7 +265,7 @@ class WorldGenerator {
 
 			const options: Partial<Sector> = {};
 			if (type !== Zone.Type.Town) options.requiredItem = this.requiredItem;
-			this.placeZone(x, y, zone, zone.type, options);
+			this.placeZone(x, y, zone, options);
 		});
 	}
 
@@ -306,7 +306,7 @@ class WorldGenerator {
 
 			this.errorWhen(!zone, "Unable to find suitable puzzle zone");
 
-			this.placeZone(point.x, point.y, zone, zone.type, {
+			this.placeZone(point.x, point.y, zone, {
 				findItem: this.findItem,
 				puzzleIndex: this.currentPuzzleIndex,
 				requiredItem: this.requiredItem,
@@ -333,7 +333,7 @@ class WorldGenerator {
 			true
 		);
 		this.errorWhen(!zone, "Unable to find suitable goal zone.");
-		this.placeZone(pos.x, pos.y, zone, Zone.Type.Goal, {
+		this.placeZone(pos.x, pos.y, zone, {
 			findItem: this.findItem,
 			puzzleIndex: this.currentPuzzleIndex,
 			requiredItem: this.requiredItem,
@@ -386,7 +386,7 @@ class WorldGenerator {
 
 				this.errorWhen(!zone, `Unable to find suitable zone for puzzle at ${pos.x}x${pos.y}`);
 
-				this.placeZone(pos.x, pos.y, zone, zone.type, {
+				this.placeZone(pos.x, pos.y, zone, {
 					findItem: this.findItem,
 					puzzleIndex: this.currentPuzzleIndex,
 					requiredItem: this.requiredItem,
@@ -692,7 +692,7 @@ class WorldGenerator {
 			);
 
 			this.errorWhen(!zone, "No zone for puzzle found");
-			this.placeZone(point.x, point.y, zone, Zone.Type.Find, { findItem: this.findItem });
+			this.placeZone(point.x, point.y, zone, { findItem: this.findItem });
 			const idx = point.x + 10 * point.y;
 			world[idx] = SectorType.Puzzle;
 		}
@@ -756,7 +756,7 @@ class WorldGenerator {
 					this.errorWhen(!zone, "No zone found");
 				}
 
-				this.placeZone(x, y, zone ? zone : null, Zone.Type.Empty);
+				this.placeZone(x, y, zone ? zone : null);
 			}
 		}
 
@@ -766,7 +766,7 @@ class WorldGenerator {
 			const distance = GetDistanceToCenter(teleporterSource.x, teleporterSource.y);
 			const zone = this.getUnusedZoneRandomly(Zone.Type.Empty, -1, -1, null, null, distance, false);
 			if (zone) {
-				this.placeZone(teleporterSource.x, teleporterSource.y, zone, Zone.Type.Empty);
+				this.placeZone(teleporterSource.x, teleporterSource.y, zone);
 			}
 		}
 
@@ -1018,8 +1018,10 @@ class WorldGenerator {
 
 	private dropItemAtHotspot(item: Tile, hotspot: Hotspot): boolean {
 		if (!hotspot) return false;
+
 		hotspot.arg = item.id;
 		hotspot.enabled = true;
+
 		return true;
 	}
 
@@ -1047,6 +1049,7 @@ class WorldGenerator {
 			zone,
 			zone => {
 				if (!zone.providedItems.includes(item)) return false;
+
 				const hotspotType = this.hotspotTypeForTile(item);
 				const candidates = zone.hotspots.withType(hotspotType);
 				return this.placeItemAtHotspotRandomly(candidates, item);
@@ -1066,13 +1069,7 @@ class WorldGenerator {
 		}
 	}
 
-	private placeZone(
-		x: number,
-		y: number,
-		zone: Zone,
-		type: Zone.Type,
-		options: Partial<Sector> = {}
-	): void {
+	private placeZone(x: number, y: number, zone: Zone, options: Partial<Sector> = {}): void {
 		const idx = x + 10 * y;
 		const sector = this._state.world.sectors[idx];
 		sector.zone = zone.id;
@@ -1083,7 +1080,8 @@ class WorldGenerator {
 		sector.additionalRequiredItem = options.additionalRequiredItem?.id ?? -1;
 		sector.additionalGainItem = options.additionalGainItem?.id ?? -1;
 		sector.usedAlternateStrain = this.usedAlternateStrain;
-		if (zone !== null && type !== Zone.Type.Town) this.usedZones.unshift(zone);
+
+		this.usedZones.unshift(zone);
 	}
 
 	private errorWhen(condition: boolean, message: string): void {
