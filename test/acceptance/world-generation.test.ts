@@ -133,24 +133,14 @@ const compareSector = (pos: { x: number; y: number }, actual: Sector, expected: 
 };
 
 const compare = (story: any, expectation: any) => {
-	if (!story.world || !expectation.world) return;
 	if (story.world === null && expectation.world !== null)
 		return fail("Expected a successful world but found reseed");
 	if (story.world !== null && expectation.world === null) return fail("Expected a reseed");
 	if (story.world === null && expectation.world === null) return;
 
-	/* main world */
 	for (let i = 0; i < 100; i++) {
 		compareSector({ x: i % 10, y: floor(i / 10) }, story.world.at(i), expectation.world[i]);
 	}
-
-	/* dagobah */
-	/*
-	compareSector({ x: 4, y: 4 }, story.dagobah.at(4, 4), expectation.dagobah[0]);
-	compareSector({ x: 5, y: 4 }, story.dagobah.at(5, 4), expectation.dagobah[1]);
-	compareSector({ x: 4, y: 5 }, story.dagobah.at(4, 5), expectation.dagobah[2]);
-	compareSector({ x: 5, y: 5 }, story.dagobah.at(5, 5), expectation.dagobah[3]);#
-	*/
 };
 
 const runTest = ({ seed, planet, size, world, dagobah }: any) => {
@@ -160,7 +150,7 @@ const runTest = ({ seed, planet, size, world, dagobah }: any) => {
 		it("is generated correctly", () => {
 			try {
 				const story = new Story(seed, Zone.Planet.fromNumber(planet), WorldSize.fromNumber(size));
-				story.generateWorld(assets, Yoda, 0);
+				story.generateWorld(assets, Yoda, 1);
 				compare(story, { seed, planet, size, world, dagobah });
 			} catch (e) {
 				if (e instanceof WorldGenerationError) {
