@@ -22,23 +22,6 @@ class GameData {
 		return new GameData(this._rawInput);
 	}
 
-	public resetAfterWorldGeneration(): void {
-		// TODO: UNDO
-		// const puzzle: MutablePuzzle = this._assets.get(Puzzle, Yoda.goalIDs.RESCUE_YODA) as any;
-		// puzzle.type = Puzzle.Type.End;
-		// TODO: UNDO
-		// const puzzle: MutablePuzzle = this._assets.get(Puzzle, Yoda.goalIDs.CAR) as any;
-		// puzzle.type = Puzzle.Type.End;
-		this._zones.forEach((zone, zoneId) => {
-			const originalZone = this._rawInput.zones[zoneId];
-			zone.hotspots.forEach((hotspot, hotspotId) => {
-				const originalHotspot = originalZone.hotspots[hotspotId];
-				hotspot.enabled = originalHotspot.enabled;
-				hotspot.arg = originalHotspot.argument;
-			});
-		});
-	}
-
 	get type(): Variant {
 		return this._type;
 	}

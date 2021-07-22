@@ -69,6 +69,12 @@ class WorldGenerator {
 		this._state = new SaveState();
 		this._state.world = { sectors: [] };
 		this._state.dagobah = { sectors: [] };
+		this._state.zones = new Map();
+		this._state.hotspots = new Map();
+		this._state.actions = new Map();
+		this._state.monsters = new Map();
+
+		this._assets.getAll(Zone).forEach(z => this.noteZoneInState(z));
 
 		this._seed = seed;
 		srand(this._seed);
@@ -986,18 +992,18 @@ class WorldGenerator {
 				if (!zone.providedItems.includes(item)) return false;
 
 				const candidates = zone.hotspots.withType(Hotspot.Type.DropQuestItem);
-				return this.placeItemAtHotspotRandomly(candidates, item);
+				return this.placeItemAtHotspotRandomly(zone, candidates, item);
 			},
 			false,
 			identity
 		);
 	}
 
-	private placeItemAtHotspotRandomly(candidates: Hotspot[], item: Tile): boolean {
+	private placeItemAtHotspotRandomly(zone: Zone, candidates: Hotspot[], item: Tile): boolean {
 		if (!candidates.length) return false;
 
 		const hotspot = candidates[rand() % candidates.length];
-		return this.dropItemAtHotspot(item, hotspot);
+		return this.dropItemAtHotspot(item, hotspot, zone);
 	}
 
 	private dropItemAtLockHotspot(zone: Zone, item: Tile): boolean {
@@ -1009,18 +1015,23 @@ class WorldGenerator {
 				const hotspot = zone.hotspots.withType(Hotspot.Type.Lock);
 				if (!hotspot.length) return false;
 
-				return this.dropItemAtHotspot(item, hotspot[0]);
+				return this.dropItemAtHotspot(item, hotspot[0], zone);
 			},
 			false,
 			identity
 		);
 	}
 
-	private dropItemAtHotspot(item: Tile, hotspot: Hotspot): boolean {
+	private dropItemAtHotspot(item: Tile, hotspot: Hotspot, zone: Zone): boolean {
 		if (!hotspot) return false;
 
-		hotspot.arg = item.id;
-		hotspot.enabled = true;
+		const idx = zone.hotspots.indexOf(hotspot);
+		if (idx === -1) return false;
+
+		const htsps = this._state.hotspots.get(zone.id);
+		const htsp = htsps[idx];
+		htsp.argument = item.id;
+		htsp.enabled = true;
 
 		return true;
 	}
@@ -1033,7 +1044,7 @@ class WorldGenerator {
 			zone => {
 				if (!zone.npcs.includes(npc)) return false;
 				const candidates = zone.hotspots.withType(Hotspot.Type.SpawnLocation).filter(isFree);
-				return this.placeItemAtHotspotRandomly(candidates, npc);
+				return this.placeItemAtHotspotRandomly(zone, candidates, npc);
 			},
 			false,
 			identity
@@ -1052,7 +1063,7 @@ class WorldGenerator {
 
 				const hotspotType = this.hotspotTypeForTile(item);
 				const candidates = zone.hotspots.withType(hotspotType);
-				return this.placeItemAtHotspotRandomly(candidates, item);
+				return this.placeItemAtHotspotRandomly(zone, candidates, item);
 			},
 			false,
 			identity
@@ -1081,7 +1092,46 @@ class WorldGenerator {
 		sector.additionalGainItem = options.additionalGainItem?.id ?? -1;
 		sector.usedAlternateStrain = this.usedAlternateStrain;
 
+		this.noteZoneInState(zone);
+
 		this.usedZones.unshift(zone);
+	}
+
+	private noteZoneInState(zone: Zone): void {
+		if (this._state.zones.has(zone.id)) return;
+
+		this._state.zones.set(zone.id, {
+			id: zone.id,
+			planet: zone.planet.rawValue,
+			visited: false,
+			counter: -1,
+			sectorCounter: -1,
+			random: -1,
+			doorInLocation: null,
+			tileIDs: new Int16Array(zone.tileIDs)
+		});
+		this._state.hotspots.set(
+			zone.id,
+			zone.hotspots.map(htsp => ({
+				enabled: htsp.enabled,
+				argument: htsp.arg,
+				x: htsp.x,
+				y: htsp.y,
+				type: htsp.type.rawValue
+			}))
+		);
+		this._state.monsters.set(
+			zone.id,
+			zone.monsters.map(m => ({
+				face: m.face?.id ?? -1,
+				position: m.position,
+				damageTaken: m.damageTaken
+			}))
+		);
+		this._state.actions.set(
+			zone.id,
+			zone.actions.map(a => a.enabled)
+		);
 	}
 
 	private errorWhen(condition: boolean, message: string): void {

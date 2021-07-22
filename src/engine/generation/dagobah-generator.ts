@@ -2,7 +2,7 @@ import AssetManager from "src/engine/asset-manager";
 import { Tile, Zone, Hotspot, Puzzle } from "src/engine/objects";
 import { Yoda } from "src/variant";
 import { randmod } from "src/util";
-import { SavedWorld } from "../save-game/save-state";
+import SaveState, { SavedHotspot, SavedWorld } from "../save-game/save-state";
 
 enum YodaSpawn {
 	NorthWest = 0,
@@ -14,12 +14,14 @@ enum YodaSpawn {
 
 class DagobahGenerator {
 	private readonly assets: AssetManager;
+	private state: SaveState;
 
 	constructor(assets: AssetManager) {
 		this.assets = assets;
 	}
 
-	public generate(goal: Puzzle, item: Tile): SavedWorld {
+	public generate(state: SaveState, goal: Puzzle, item: Tile): SavedWorld {
+		this.state = state;
 		const dagobah: SavedWorld = {
 			sectors: (100).times(_ => ({
 				visited: false,
@@ -97,13 +99,15 @@ class DagobahGenerator {
 		console.assert(!!zone.npcs.find(i => i.id === npcID));
 		const candidates = zone.hotspots.withType(Hotspot.Type.SpawnLocation);
 		console.assert(candidates.length === 1);
-		const hotspot = candidates[randmod(candidates.length)];
+		const hotspotIdx = randmod(candidates.length);
+		const idx = candidates[hotspotIdx].id;
+		const hotspot = this.state.hotspots.get(zone.id)[idx];
 		if (!hotspot) {
 			console.warn("Could not find npc hotspot on daboah hut!");
 			return;
 		}
 
-		hotspot.arg = npcID;
+		hotspot.argument = npcID;
 		hotspot.enabled = true;
 	}
 
@@ -114,20 +118,21 @@ class DagobahGenerator {
 		place.npc = this.assets.get(Tile, npcID)?.id ?? -1;
 		place.findItem = tile?.id ?? -1;
 
-		let hotspotFilter: (hotspot: Hotspot) => boolean;
+		let hotspotFilter: (hotspot: SavedHotspot) => boolean;
 		if (npcID === Yoda.tileIDs.Yoda) {
-			hotspotFilter = ({ x, y }: Hotspot) => x === 3 && y === 3;
+			hotspotFilter = ({ x, y }: SavedHotspot) => x === 3 && y === 3;
 		} else {
-			hotspotFilter = ({ x, y }: Hotspot) => x === 3 && y === 2;
+			hotspotFilter = ({ x, y }: SavedHotspot) => x === 3 && y === 2;
 		}
 
-		const hotspot = zone.hotspots.find(hotspotFilter);
+		const hotspots = this.state.hotspots.get(zone.id);
+		const hotspot = hotspots.find(hotspotFilter);
 		if (!hotspot) {
 			console.warn("Could not find npc hotspot in yoda's hut!");
 			return;
 		}
 
-		hotspot.arg = npcID;
+		hotspot.argument = npcID;
 		hotspot.enabled = true;
 	}
 }

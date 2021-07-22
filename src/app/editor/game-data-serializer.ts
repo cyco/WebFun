@@ -102,7 +102,6 @@ class GameDataSerializer {
 			stream.writeUint32(zone.type.rawValue);
 			stream.writeInt16(-1);
 			stream.writeUint16(zone.planet.rawValue);
-
 			for (let y = 0; y < zone.size.height; y++) {
 				for (let x = 0; x < zone.size.width; x++) {
 					for (let l = 0; l < Zone.LAYERS; l++) {

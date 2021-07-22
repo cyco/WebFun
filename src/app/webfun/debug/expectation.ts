@@ -2,9 +2,12 @@ export const PrepareExpectations = (string: string): string[] => {
 	return string.split("\n");
 };
 
-export const ParseExpectation = (expectation: string, line: number): { seed: number } => {
+export const ParseExpectation = (
+	expectation: string,
+	line: number
+): { seed: number; planet: number; size: number } => {
 	if (!expectation) {
-		return { seed: -1 };
+		return { seed: -1, planet: -1, size: -1 };
 	}
 
 	try {
@@ -14,7 +17,7 @@ export const ParseExpectation = (expectation: string, line: number): { seed: num
 		else console.warn(`Unable to parse expectation!`);
 		console.log(e);
 	}
-	return { seed: -1 };
+	return { seed: -1, planet: -1, size: -1 };
 };
 
 export const ComparisonResult = {

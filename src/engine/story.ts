@@ -110,6 +110,7 @@ class Story {
 	private _setupDagobah(state: SaveState, assets: AssetManager): void {
 		const generator = new DagobahGenerator(assets);
 		const world = generator.generate(
+			state,
 			assets.get(Puzzle, state.goalPuzzle),
 			assets.get(Puzzle, state.puzzleIDs2[0]).item1
 		);

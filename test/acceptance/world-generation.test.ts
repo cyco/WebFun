@@ -9,6 +9,8 @@ import { Tile, Zone, Puzzle } from "src/engine/objects";
 import Sector from "src/engine/sector";
 import { WorldGenerationError } from "src/engine/generation";
 import { floor } from "src/std/math";
+import GameDataSerializer from "src/app/editor/game-data-serializer";
+import { DiscardingOutputStream, OutputStream } from "src/util";
 
 let rawData: any = null;
 let data: GameData = null;
@@ -149,9 +151,35 @@ const runTest = ({ seed, planet, size, world, dagobah }: any) => {
 	describe(`World ${seed} ${planet.toString()} ${size.toString()}`, () => {
 		it("is generated correctly", () => {
 			try {
+				let s = new GameDataSerializer();
+				let lengthStream = new DiscardingOutputStream();
+				s.serialize(data, lengthStream);
+				const stream = new OutputStream(lengthStream.offset);
+				s.serialize(data, stream);
+
 				const story = new Story(seed, Zone.Planet.fromNumber(planet), WorldSize.fromNumber(size));
 				story.generateWorld(assets, Yoda, 1);
 				compare(story, { seed, planet, size, world, dagobah });
+
+				s = new GameDataSerializer();
+				lengthStream = new DiscardingOutputStream();
+				s.serialize(data, lengthStream);
+				const stream2 = new OutputStream(lengthStream.offset);
+				s.serialize(data, stream2);
+
+				const b1 = new Uint8Array(stream.buffer);
+				const b2 = new Uint8Array(stream2.buffer);
+
+				if (b1.byteLength !== b2.byteLength) {
+					console.log("size mismatch", b1.byteLength, b2.byteLength);
+					return;
+				}
+
+				for (let i = 0; i < b1.byteLength; i++) {
+					if (b1[i] !== b2[i]) {
+						console.log(`${b1[i].toHex()} != ${b2[i].toHex()} at 0x${i.toHex()}`);
+					}
+				}
 			} catch (e) {
 				if (e instanceof WorldGenerationError) {
 					compare(
@@ -168,6 +196,7 @@ describe("WebFun.Acceptance.World Generation", () => {
 	beforeAll(async () => {
 		rawData = await loadGameData(Yoda);
 	});
+
 	beforeEach(() => {
 		if (!data) {
 			data = new GameData(rawData);
@@ -181,5 +210,10 @@ describe("WebFun.Acceptance.World Generation", () => {
 		}
 	});
 
-	PrepareExpectations(Worlds).sort().map(ParseExpectation).forEach(runTest);
+	PrepareExpectations(Worlds)
+		.sort()
+		.map(ParseExpectation)
+		.filter(i => i.size === 3)
+		.slice(0)
+		.forEach(runTest);
 });
