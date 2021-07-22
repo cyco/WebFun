@@ -50,7 +50,7 @@ class Engine extends EventTarget {
 	public renderer: Renderer = null;
 	public sceneManager: SceneManager = null;
 	public spu: ScriptProcessingUnit = null;
-	public story: Story = null;
+	private _story: Story = null;
 	public _interface: Interface;
 	public currentPlayStart: Date = new Date();
 	public totalPlayTime: number = 0;
@@ -277,6 +277,25 @@ class Engine extends EventTarget {
 
 	public get gameState(): GameState {
 		return this._gameState;
+	}
+
+	public set story(story: Story) {
+		this._story = story;
+		if (this._story && this._story.state) {
+			for (const [id, htsps] of this._story.state.hotspots.entries()) {
+				const zone = this.assets.get(Zone, id);
+				if (!zone) return;
+
+				zone.hotspots.forEach((htsp, i) => {
+					htsp.enabled = htsps[i].enabled;
+					htsp.arg = htsps[i].argument;
+				});
+			}
+		}
+	}
+
+	public get story(): Story {
+		return this._story;
 	}
 
 	public teardown(): void {

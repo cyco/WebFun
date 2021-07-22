@@ -1,14 +1,13 @@
-import { Story, AssetManager } from "src/engine";
+import { Story, AssetManager, Variant } from "src/engine";
 import { Tile, Zone, Hotspot, Puzzle } from "src/engine/objects";
 
 import World from "src/engine/world";
-import { WorldSize } from "src/engine/generation";
 import { srand, randmod } from "src/util";
 import RoomIterator from "src/engine/room-iterator";
+import { Yoda } from "src/variant";
+import { WorldSize } from "src/engine/generation";
 
 class SimulatedStory extends Story {
-	private readonly assets: AssetManager;
-
 	constructor(
 		find: Tile,
 		npc: Tile,
@@ -16,12 +15,12 @@ class SimulatedStory extends Story {
 		required2: Tile,
 		mainZone: Zone,
 		surroundingZones: Zone[],
-		assets: AssetManager
+		assets: AssetManager,
+		variant: Variant = Yoda
 	) {
-		super(0, mainZone.planet, WorldSize.Small);
+		super(assets, variant);
 		srand(0);
 
-		this.assets = assets;
 		this._buildWorld(mainZone, surroundingZones, assets);
 		this._buildPuzzle(mainZone, find, npc, required, required2);
 		this._initializeZone(mainZone, find, npc, required, required2);
@@ -105,11 +104,15 @@ class SimulatedStory extends Story {
 		}
 	}
 
-	generateWorld(assets: AssetManager): void {
-		const copy = new World(assets);
+	public generate(seed: number, planet: Zone.Planet, size: WorldSize): void {
+		this._seed = seed;
+		this._planet = planet;
+		this._size = size;
 
-		const mapItem = (i: Tile) => i && assets.get(Tile, i.id);
-		const mapZone = (z: Zone) => z && assets.get(Zone, z.id);
+		const copy = new World(this.assets);
+
+		const mapItem = (i: Tile) => i && this.assets.get(Tile, i.id);
+		const mapZone = (z: Zone) => z && this.assets.get(Zone, z.id);
 
 		for (let y = 0; y < World.Size.height; y++) {
 			for (let x = 0; x < World.Size.width; x++) {
@@ -129,7 +132,7 @@ class SimulatedStory extends Story {
 		this._world = copy;
 		this._dagobah = copy;
 
-		this.goal = assets.get(Puzzle, 0);
+		this.goal = this.assets.get(Puzzle, 0);
 	}
 
 	set world(w: World) {

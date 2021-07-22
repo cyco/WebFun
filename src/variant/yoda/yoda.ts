@@ -127,13 +127,15 @@ class Yoda extends Variant {
 			planets.remove(Zone.Planet.fromNumber(lastPlanet));
 		}
 
-		return new Story(
+		const story = new Story(engine.assets, engine.variant);
+		story.generate(
 			rand(),
 			planets.random(),
 			WorldSize.isWorldSize(size)
 				? WorldSize.fromNumber(size)
 				: [WorldSize.Small, WorldSize.Medium, WorldSize.Large].random()
 		);
+		return story;
 	}
 
 	public save(engine: Engine): SaveState {

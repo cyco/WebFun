@@ -59,7 +59,7 @@ describe("WebFun.App.GameController", () => {
 			let mockedPaletteAnimation: PaletteAnimation;
 
 			beforeEach(async () => {
-				mockedStory = { generateWorld: jasmine.createSpy() } as any;
+				mockedStory = { generate: jasmine.createSpy() } as any;
 				mockedPaletteAnimation = {} as any;
 				spyOn(EngineModule, "PaletteAnimation").and.returnValue(mockedPaletteAnimation);
 				(engine.assets.find as jasmine.Spy).and.returnValue({ size: new Size(9, 9) });

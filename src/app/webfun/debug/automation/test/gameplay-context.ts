@@ -147,7 +147,8 @@ class GameplayContext {
 		input: string,
 		debug = false
 	): Promise<void> {
-		const story = new Story(seed, planet, size);
+		const story = new Story(this.engine.assets, this.engine.variant);
+		story.generate(seed, planet, size);
 		return await this.playStory(story, input, debug);
 	}
 
@@ -162,7 +163,7 @@ class GameplayContext {
 		document.body.appendChild(sceneView);
 
 		engine.story = story;
-		story.generateWorld(engine.assets, Yoda);
+		story.generate(story.seed, story.planet, story.size);
 
 		engine.metronome.tickDuration = 1;
 		engine.metronome.ontick = (delta: number) => engine.update(delta);

@@ -84,7 +84,11 @@ class TestCreatorWindow extends AbstractWindow implements EventListenerObject {
 		engine.inputManager = replayer;
 
 		const story = this.buildStory(assets);
-		story.generateWorld(assets, Yoda);
+		story.generate(
+			this.testCase.configuration.seed,
+			Zone.Planet.fromNumber(this.testCase.configuration.planet),
+			WorldSize.fromNumber(this.testCase.configuration.size)
+		);
 		engine.story = story;
 		engine.currentWorld = story.world;
 		engine.camera.update(Infinity);
@@ -126,7 +130,7 @@ class TestCreatorWindow extends AbstractWindow implements EventListenerObject {
 			return this._buildSimulatedStory(assets, config);
 		}
 
-		return this._buildStory(config);
+		return this._buildStory(assets, config);
 	}
 
 	handleEvent(_: Event): void {
@@ -150,12 +154,14 @@ class TestCreatorWindow extends AbstractWindow implements EventListenerObject {
 		);
 	}
 
-	private _buildStory(config: Configuration) {
-		return new Story(
+	private _buildStory(assets: AssetManager, config: Configuration) {
+		const story = new Story(assets, Yoda);
+		story.generate(
 			config.seed,
 			Zone.Planet.fromNumber(config.planet),
 			WorldSize.fromNumber(config.size)
 		);
+		return story;
 	}
 
 	public downloadTest(): void {

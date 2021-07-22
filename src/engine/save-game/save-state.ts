@@ -1,6 +1,7 @@
 import Variant from "../variant";
 import { Point } from "src/util";
 import { Zone } from "src/engine/objects";
+import { WorldSize } from "../generation";
 
 export type SavedZone = {
 	id: number;
@@ -73,17 +74,18 @@ class SaveState {
 	public type: Variant;
 	public seed: number;
 	public planet: Zone.Planet;
-	public puzzleIDs1: number[];
-	public puzzleIDs2: number[];
+	public size: WorldSize;
+	public puzzleIDs1: number[] = [];
+	public puzzleIDs2: number[] = [];
 	public goalPuzzle: number;
 
-	public dagobah: SavedWorld;
-	public world: SavedWorld;
+	public dagobah: SavedWorld = { sectors: [] };
+	public world: SavedWorld = { sectors: [] };
 
-	public zones: Map<number, SavedZone>;
-	public hotspots: Map<number, SavedHotspot[]>;
-	public actions: Map<number, SavedAction[]>;
-	public monsters: Map<number, SavedMonster[]>;
+	public zones: Map<number, SavedZone> = new Map();
+	public hotspots: Map<number, SavedHotspot[]> = new Map();
+	public actions: Map<number, SavedAction[]> = new Map();
+	public monsters: Map<number, SavedMonster[]> = new Map();
 
 	public onDagobah: boolean;
 	public positionOnWorld: Point;

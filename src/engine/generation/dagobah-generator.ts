@@ -21,51 +21,55 @@ class DagobahGenerator {
 	}
 
 	public generate(state: SaveState, goal: Puzzle, item: Tile): SavedWorld {
-		this.state = state;
-		const dagobah: SavedWorld = {
-			sectors: (100).times(_ => ({
-				visited: false,
-				solved1: false,
-				solved2: false,
-				solved3: false,
-				solved4: false,
-				zone: -1,
+		try {
+			this.state = state;
+			const dagobah: SavedWorld = {
+				sectors: (100).times(_ => ({
+					visited: false,
+					solved1: false,
+					solved2: false,
+					solved3: false,
+					solved4: false,
+					zone: -1,
 
-				puzzleIndex: -1,
-				usedAlternateStrain: false,
-				isGoal: false,
+					puzzleIndex: -1,
+					usedAlternateStrain: false,
+					isGoal: false,
 
-				findItem: -1,
-				requiredItem: -1,
-				additionalGainItem: -1,
-				additionalRequiredItem: -1,
-				npc: -1,
+					findItem: -1,
+					requiredItem: -1,
+					additionalGainItem: -1,
+					additionalRequiredItem: -1,
+					npc: -1,
 
-				unknown: -1
-			}))
-		};
+					unknown: -1
+				}))
+			};
 
-		dagobah.sectors[4 * 10 + 4].zone = Yoda.zoneIDs.DagobahNorthWest;
-		dagobah.sectors[4 * 10 + 5].zone = Yoda.zoneIDs.DagobahNorthEast;
-		dagobah.sectors[5 * 10 + 4].zone = Yoda.zoneIDs.DagobahSouthWest;
-		dagobah.sectors[5 * 10 + 5].zone = Yoda.zoneIDs.DagobahSouthEast;
+			dagobah.sectors[4 * 10 + 4].zone = Yoda.zoneIDs.DagobahNorthWest;
+			dagobah.sectors[4 * 10 + 5].zone = Yoda.zoneIDs.DagobahNorthEast;
+			dagobah.sectors[5 * 10 + 4].zone = Yoda.zoneIDs.DagobahSouthWest;
+			dagobah.sectors[5 * 10 + 5].zone = Yoda.zoneIDs.DagobahSouthEast;
 
-		const spawn = this.determineYodaSpawnLocation(goal);
-		switch (spawn) {
-			case YodaSpawn.NorthWest:
-			case YodaSpawn.SouthEast:
-			case YodaSpawn.SouthWest:
-				this.setupOutdoorSpawn(spawn, item, dagobah);
-				break;
-			case YodaSpawn.Hut:
-				this._setupIndoorSpawn(dagobah, item, Yoda.tileIDs.Yoda);
-				break;
-			case YodaSpawn.None:
-				this._setupIndoorSpawn(dagobah, item, Yoda.tileIDs.YodasSeat);
-				break;
+			const spawn = this.determineYodaSpawnLocation(goal);
+			switch (spawn) {
+				case YodaSpawn.NorthWest:
+				case YodaSpawn.SouthEast:
+				case YodaSpawn.SouthWest:
+					this.setupOutdoorSpawn(spawn, item, dagobah);
+					break;
+				case YodaSpawn.Hut:
+					this._setupIndoorSpawn(dagobah, item, Yoda.tileIDs.Yoda);
+					break;
+				case YodaSpawn.None:
+					this._setupIndoorSpawn(dagobah, item, Yoda.tileIDs.YodasSeat);
+					break;
+			}
+
+			return dagobah;
+		} finally {
+			this.state = null;
 		}
-
-		return dagobah;
 	}
 
 	private determineYodaSpawnLocation = (goal: Puzzle) => {

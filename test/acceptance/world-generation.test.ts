@@ -147,8 +147,8 @@ const runTest = ({ seed, planet, size, world, dagobah }: any) => {
 	describe(`World ${seed} ${planet.toString()} ${size.toString()}`, () => {
 		it("is generated correctly", () => {
 			try {
-				const story = new Story(seed, Zone.Planet.fromNumber(planet), WorldSize.fromNumber(size));
-				story.generateWorld(assets, Yoda, 1);
+				const story = new Story(assets, Yoda);
+				story.generate(seed, Zone.Planet.fromNumber(planet), WorldSize.fromNumber(size), 1);
 				compare(story, { seed, planet, size, world, dagobah });
 			} catch (e) {
 				if (e instanceof WorldGenerationError) {

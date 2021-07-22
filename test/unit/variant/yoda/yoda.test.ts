@@ -3,11 +3,15 @@ import Variant from "src/engine/variant";
 import TileID from "src/variant/yoda/tile-ids";
 import Sounds from "src/variant/yoda/sounds";
 import { Tile, Char, Puzzle } from "src/engine/objects";
-import { Engine } from "src/engine";
+import { Engine, Story } from "src/engine";
+import * as EngineModule from "src/engine";
 
 describe("WebFun.Variant.Yoda", () => {
 	let subject: Yoda;
-	beforeEach(() => (subject = new Yoda()));
+	beforeEach(() => {
+		spyOn(EngineModule, "Story").and.returnValues(mockStory());
+		subject = new Yoda();
+	});
 	it("is a class representing a variation of the engine", () => {
 		expect(subject).toBeInstanceOf(Variant);
 	});
@@ -80,6 +84,10 @@ describe("WebFun.Variant.Yoda", () => {
 		expect(engineMock.assets.get).toHaveBeenCalledWith(Puzzle, 0xc5);
 	});
 
+	function mockStory(): Story {
+		return { generate: (): void => void 0 } as any;
+	}
+
 	function mockTile(id: number, isWeapon = false): Tile {
 		return {
 			id,
@@ -92,6 +100,10 @@ describe("WebFun.Variant.Yoda", () => {
 	}
 
 	function mockEngine(): Engine {
-		return { persistentState: {}, settings: {}, assets: { get: (): void => void 0 } } as any;
+		return {
+			persistentState: {},
+			settings: {},
+			assets: { get: (): void => void 0, getAll: (): any[] => [], getFiltered: (): any[] => [] }
+		} as any;
 	}
 });

@@ -32,10 +32,8 @@ declare global {
 }
 
 class WorldGenerator {
-	private _seed: number = 0;
-	private readonly _size: WorldSize;
-	private readonly _planet: Zone.Planet;
 	private readonly _assets: AssetManager;
+	private readonly _variant: Variant;
 
 	private usedZones: Zone[] = [];
 	private mapGenerator: MapGenerator = null;
@@ -53,104 +51,127 @@ class WorldGenerator {
 	private somethingWithTeleporters: number = -1;
 	private puzzlesCanBeReused: number = 0;
 	private usedAlternateStrain: boolean = false;
-	private _zones: Zone[];
-	private _zonesByType: Map<Zone.Type, Zone[]>;
-	private _variant: Variant;
-	private _state: SaveState;
+	private _zones: Zone[] = [];
+	private _zonesByType: Map<Zone.Type, Zone[]> = new Map();
+	private _state: SaveState = null;
 
-	constructor(size: WorldSize, planet: Zone.Planet, assets: AssetManager, variant: Variant) {
-		this._size = size;
-		this._planet = planet;
+	constructor(assets: AssetManager, variant: Variant) {
 		this._assets = assets;
 		this._variant = variant;
 	}
 
-	public generate(seed: number): SaveState {
-		this._state = new SaveState();
-		this._state.world = { sectors: [] };
-		this._state.dagobah = { sectors: [] };
-		this._state.zones = new Map();
-		this._state.hotspots = new Map();
-		this._state.actions = new Map();
-		this._state.monsters = new Map();
+	public generate(state: SaveState): boolean {
+		try {
+			this._state = state;
+			this._state.world = { sectors: [] };
+			this._state.dagobah = { sectors: [] };
+			this._state.zones = new Map();
+			this._state.hotspots = new Map();
+			this._state.actions = new Map();
+			this._state.monsters = new Map();
 
-		this._assets.getAll(Zone).forEach(z => this.noteZoneInState(z));
+			this._assets.getAll(Zone).forEach(z => this.noteZoneInState(z));
 
-		this._seed = seed;
-		srand(this._seed);
+			srand(this._state.seed);
 
-		this._zones = this._assets.getFiltered(Zone, z => z.planet === this._planet);
-		this._zonesByType = new Map();
+			this._zones = this._assets.getFiltered(Zone, z => z.planet === this._state.planet);
+			this._zonesByType = new Map();
 
-		const mapGenerator = (this.mapGenerator = new MapGenerator());
-		mapGenerator.generate(-1, this._size);
+			const mapGenerator = (this.mapGenerator = new MapGenerator());
+			mapGenerator.generate(-1, this._state.size);
 
-		for (let i = 0; i < 100; i++) {
-			this._state.world.sectors = (100).times(i => ({
-				puzzleIndex: mapGenerator.orderMap[i],
-				usedAlternateStrain: false,
-				visited: false,
-				solved1: false,
-				solved2: false,
-				solved3: false,
-				solved4: false,
-				zone: -1,
+			for (let i = 0; i < 100; i++) {
+				this._state.world.sectors = (100).times(i => ({
+					puzzleIndex: mapGenerator.orderMap[i],
+					usedAlternateStrain: false,
+					visited: false,
+					solved1: false,
+					solved2: false,
+					solved3: false,
+					solved4: false,
+					zone: -1,
 
-				requiredItem: -1,
-				findItem: -1,
-				isGoal: false,
-				additionalRequiredItem: -1,
-				additionalGainItem: -1,
-				npc: -1,
-				unknown: -1
-			}));
+					requiredItem: -1,
+					findItem: -1,
+					isGoal: false,
+					additionalRequiredItem: -1,
+					additionalGainItem: -1,
+					npc: -1,
+					unknown: -1
+				}));
+			}
+
+			const puzzleCount = mapGenerator.puzzleCount;
+			const puzzles1Count = floor(
+				puzzleCount % 2 === 1 ? (puzzleCount + 1) / 2 : puzzleCount / 2 + 1
+			);
+			const puzzles2Count = floor(puzzleCount % 2 === 1 ? (puzzleCount + 1) / 2 : puzzleCount / 2);
+
+			this.puzzleStrain1 = Array.Repeat(null, puzzles1Count + 1);
+			this.puzzleStrain2 = Array.Repeat(null, puzzles2Count + 1);
+
+			this.currentPuzzleIndex = -1;
+
+			this.usedPuzzles = [];
+
+			this.providedItemQuests = [];
+			this.requiredItemQuests = [];
+
+			const goalPuzzle = this.getUnusedPuzzleRandomly(null, Zone.Type.PlaceholderForEndPuzzle);
+			this.errorWhen(!goalPuzzle, "Could not find a suitable goal puzzle");
+			this._state.goalPuzzle = goalPuzzle.id;
+
+			this.usedPuzzles.push(goalPuzzle);
+			this.puzzleStrain1[puzzles1Count] = goalPuzzle;
+			this.puzzleStrain2[puzzles2Count] = goalPuzzle;
+
+			this.determineTransportZones();
+			this.determineGoalZone(puzzleCount, puzzles2Count, mapGenerator.orderMap);
+
+			this.determineQuestZones(puzzleCount, mapGenerator.orderMap);
+			this.placePuzzlesZones(puzzles2Count - 1, mapGenerator.orderMap);
+			this.determineBlockadeAndTownZones(mapGenerator.typeMap);
+
+			this.addProvidedItemQuest(this.lookupTileById(this._variant.weaponTileId), 2);
+			this.addProvidedItemQuest(this.lookupTileById(this._variant.mapTileId), 1);
+			this.determineFindZones(mapGenerator.typeMap);
+			this.determineTeleporters(mapGenerator.typeMap);
+
+			// waste another random number
+			rand();
+
+			this.writePlanetValues();
+
+			this._state.puzzleIDs1 = this.puzzleStrain1.map(p => p.id);
+			this._state.puzzleIDs2 = this.puzzleStrain1.map(p => p.id);
+
+			return true;
+		} finally {
+			this.cleanup();
 		}
+	}
 
-		const puzzleCount = mapGenerator.puzzleCount;
-		const puzzles1Count = floor(
-			puzzleCount % 2 === 1 ? (puzzleCount + 1) / 2 : puzzleCount / 2 + 1
-		);
-		const puzzles2Count = floor(puzzleCount % 2 === 1 ? (puzzleCount + 1) / 2 : puzzleCount / 2);
+	private cleanup(): void {
+		this._state = null;
 
-		this.puzzleStrain1 = Array.Repeat(null, puzzles1Count + 1);
-		this.puzzleStrain2 = Array.Repeat(null, puzzles2Count + 1);
-
-		this.currentPuzzleIndex = -1;
-
-		this.usedPuzzles = [];
-
+		this.usedZones = [];
+		this.mapGenerator = null;
+		this.additionalRequiredItem = null;
+		this.additionalFindItem = null;
 		this.providedItemQuests = [];
+		this.usedPuzzles = [];
+		this.puzzleStrain1 = [];
+		this.puzzleStrain2 = [];
 		this.requiredItemQuests = [];
-
-		const goalPuzzle = this.getUnusedPuzzleRandomly(null, Zone.Type.PlaceholderForEndPuzzle);
-		this.errorWhen(!goalPuzzle, "Could not find a suitable goal puzzle");
-		this._state.goalPuzzle = goalPuzzle.id;
-
-		this.usedPuzzles.push(goalPuzzle);
-		this.puzzleStrain1[puzzles1Count] = goalPuzzle;
-		this.puzzleStrain2[puzzles2Count] = goalPuzzle;
-
-		this.determineTransportZones();
-		this.determineGoalZone(puzzleCount, puzzles2Count, mapGenerator.orderMap);
-
-		this.determineQuestZones(puzzleCount, mapGenerator.orderMap);
-		this.placePuzzlesZones(puzzles2Count - 1, mapGenerator.orderMap);
-		this.determineBlockadeAndTownZones(mapGenerator.typeMap);
-
-		this.addProvidedItemQuest(this.lookupTileById(this._variant.weaponTileId), 2);
-		this.addProvidedItemQuest(this.lookupTileById(this._variant.mapTileId), 1);
-		this.determineFindZones(mapGenerator.typeMap);
-		this.determineTeleporters(mapGenerator.typeMap);
-
-		// waste another random number
-		rand();
-
-		this.writePlanetValues();
-
-		this._state.puzzleIDs1 = this.puzzleStrain1.map(p => p.id);
-		this._state.puzzleIDs2 = this.puzzleStrain1.map(p => p.id);
-
-		return this._state;
+		this.currentPuzzleIndex = -1;
+		this.requiredItem = null;
+		this.findItem = null;
+		this.npc = null;
+		this.somethingWithTeleporters = -1;
+		this.puzzlesCanBeReused = 0;
+		this.usedAlternateStrain = false;
+		this._zones = null;
+		this._zonesByType = null;
 	}
 
 	private determineTransportZones(): void {
@@ -745,7 +766,7 @@ class WorldGenerator {
 						break;
 					}
 
-					const distance = this._size === WorldSize.Large ? 2 : 1;
+					const distance = this._state.size === WorldSize.Large ? 2 : 1;
 					if (abs(teleporterSource.x - x) > distance || abs(teleporterSource.y - y) > distance) {
 						teleportersFound++;
 						teleporterSource = new Point(x, y);
@@ -965,8 +986,8 @@ class WorldGenerator {
 				case Zone.Type.PlaceholderForEndPuzzle:
 					return (
 						puzzle.type === Puzzle.Type.End &&
-						!this.puzzleUsedInLastGame(puzzle, this._planet) &&
-						this.isGoalOnPlanet(this._planet, puzzle)
+						!this.puzzleUsedInLastGame(puzzle, this._state.planet) &&
+						this.isGoalOnPlanet(this._state.planet, puzzle)
 					);
 				default:
 					return true;
@@ -1138,9 +1159,10 @@ class WorldGenerator {
 		if (!condition) return;
 
 		const error = new WorldGenerationError(message);
-		error.seed = this._seed;
-		error.size = this._size;
-		error.planet = this._planet;
+		error.seed = this._state.seed;
+		error.size = this._state.size;
+		error.planet = this._state.planet;
+
 		throw error;
 	}
 

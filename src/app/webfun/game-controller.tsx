@@ -223,7 +223,6 @@ class GameController extends EventTarget implements EventListenerObject {
 
 			srand(floor(random() * 0xffff));
 			const story = this.engine.variant.createNewStory(this.engine);
-			story.generateWorld(this._engine.assets, this._engine.variant, 10);
 			this._engine.story = story;
 			this._showSceneView();
 		} catch (error) {
@@ -245,8 +244,8 @@ class GameController extends EventTarget implements EventListenerObject {
 		await this.loadGameData();
 
 		srand(seed);
-		const story = new Story(seed, planet, size);
-		story.generateWorld(this._engine.assets, this._engine.variant, 10);
+		const story = new Story(this._engine.assets, this._engine.variant);
+		story.generate(seed, planet, size, 10);
 		this._engine.story = story;
 
 		this._showSceneView();
@@ -280,7 +279,8 @@ class GameController extends EventTarget implements EventListenerObject {
 
 		const engine = this.engine;
 
-		const story = new MutableStory(state.seed, state.planet, WorldSize.Medium);
+		const story = new MutableStory(assets, this.variant);
+		story.generate(state.seed, state.planet, WorldSize.Medium);
 		story.goal = assets.get(Puzzle, state.goalPuzzle);
 		//story.world = state.world;
 		//story.dagobah = state.dagobah;

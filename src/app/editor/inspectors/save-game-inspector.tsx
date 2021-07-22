@@ -70,7 +70,8 @@ class SaveGameInspector extends AbstractInspector {
 		const data = controller.data;
 		const engine = controller.engine;
 		const state = this.data.state;
-		const story = new MutableStory(state.seed, state.planet, WorldSize.Medium);
+		const story = new MutableStory(engine.assets, engine.variant);
+		story.generate(state.seed, state.planet, WorldSize.Medium);
 		//story.world = this._createWorld(state.world);
 		//story.dagobah = this._createWorld(state.dagobah);
 

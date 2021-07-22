@@ -74,9 +74,12 @@ const run = (prefix: string, fileName: string, testFileContents: string): void =
 					}
 
 					function buildRealWorldStory(testCase: TestCase): Story {
+						const engine = ctx.engine;
 						const { seed, planet, size } = testCase.configuration;
 
-						return new Story(seed, Zone.Planet.fromNumber(planet), WorldSize.fromNumber(size));
+						const story = new Story(engine.assets, engine.variant);
+						story.generate(seed, Zone.Planet.fromNumber(planet), WorldSize.fromNumber(size));
+						return story;
 					}
 
 					function surroundingZones(zone: Zone): Zone[] {

@@ -21,13 +21,15 @@ class YodaDemo extends Yoda {
 			)
 			.forEach(z => ((z as MutableZone).type = Zone.Type.None));
 
-		return new Story(
+		const story = new Story(engine.assets, engine.variant);
+		story.generate(
 			rand(),
 			Zone.Planet.Hoth,
 			WorldSize.isWorldSize(size)
 				? WorldSize.fromNumber(size)
 				: [WorldSize.Small, WorldSize.Medium, WorldSize.Large].random()
 		);
+		return story;
 	}
 }
 

@@ -48,13 +48,15 @@ class IndyFull extends Variant {
 	public createNewStory(engine: Engine): Story {
 		const size = engine.settings.worldSize;
 
-		return new Story(
+		const story = new Story(engine.assets, engine.variant);
+		story.generate(
 			rand(),
 			Zone.Planet.None,
 			WorldSize.isWorldSize(size)
 				? WorldSize.fromNumber(size)
 				: [WorldSize.Small, WorldSize.Medium, WorldSize.Large].random()
 		);
+		return story;
 	}
 
 	public save(_: Engine): SaveState {
