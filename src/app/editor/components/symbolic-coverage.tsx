@@ -37,7 +37,7 @@ function sortBy(key: keyof DataPoint) {
 		const v2 = dp2[key];
 
 		if (typeof v1 === "string") {
-			return (v1 as string).localeCompare((v2 as unknown) as string);
+			return (v1 as string).localeCompare(v2 as unknown as string);
 		}
 
 		return (v1 as number) - (v2 as number);
@@ -155,17 +155,19 @@ class SymbolicCoverage extends Component {
 		if (this._datapoints) return this._datapoints;
 		this._datapoints = [];
 
-		const prepare = (
-			type: "Condition" | "Instruction",
-			nameMap: typeof ConditionsByName | typeof InstructionsByName,
-			store: typeof ConditionsByOpcode | typeof InstructionsByOpcode
-		) => ([opcode, hits]: [string, number]) => ({
-			type,
-			hits,
-			opcode: +opcode,
-			name: Object.keys(nameMap).find(key => (nameMap as any)[key].Opcode === +opcode),
-			description: store[+opcode].Description ?? ""
-		});
+		const prepare =
+			(
+				type: "Condition" | "Instruction",
+				nameMap: typeof ConditionsByName | typeof InstructionsByName,
+				store: typeof ConditionsByOpcode | typeof InstructionsByOpcode
+			) =>
+			([opcode, hits]: [string, number]) => ({
+				type,
+				hits,
+				opcode: +opcode,
+				name: Object.keys(nameMap).find(key => (nameMap as any)[key].Opcode === +opcode),
+				description: store[+opcode].Description ?? ""
+			});
 
 		const conditionData = Object.entries(this._coverage.conditions).map(
 			prepare("Condition", ConditionsByName, ConditionsByOpcode)

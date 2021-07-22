@@ -56,7 +56,7 @@ class ColorPalette extends Uint32Array {
 		// ColorPalette into the prototype chain of the existing Uint32Array.
 		// Usage of __proto__ is non-standard and will break in the future.
 		(palette as any).__proto__ = ColorPalette.prototype;
-		return (palette as any) as ColorPalette;
+		return palette as any as ColorPalette;
 	}
 
 	public slice(start?: number, end?: number): ColorPalette {

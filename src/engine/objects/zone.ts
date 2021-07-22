@@ -145,7 +145,7 @@ class Zone {
 					case Hotspot.Type.DropWeapon:
 						if (hotspot.arg < 0) break;
 						if (this.getTile(hotspot.x, hotspot.y, 1)) return;
-						this.setTile(({ id: hotspot.arg } as unknown) as Tile, hotspot.x, hotspot.y, 1);
+						this.setTile({ id: hotspot.arg } as unknown as Tile, hotspot.x, hotspot.y, 1);
 						break;
 					case Hotspot.Type.DoorIn:
 						if (hotspot.arg < 0) break;

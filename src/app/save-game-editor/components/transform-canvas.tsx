@@ -111,7 +111,7 @@ class TransformCanvas extends Component implements EventListenerObject {
 	}
 
 	public getContext(type: "2d"): TransformCanvasRenderingContext2D {
-		return (this._canvas.getContext(type) as any) as TransformCanvasRenderingContext2D;
+		return this._canvas.getContext(type) as any as TransformCanvasRenderingContext2D;
 	}
 
 	private trackTransforms() {

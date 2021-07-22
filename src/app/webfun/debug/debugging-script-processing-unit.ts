@@ -84,7 +84,7 @@ class DebuggingScriptProcessingUnit extends ScriptProcessingUnit {
 				this.didExecute(instruction, result);
 				while (this.stopped) yield ScriptResult.Wait;
 				if (result !== Result.Void) {
-					yield (result as any) as ScriptResult;
+					yield result as any as ScriptResult;
 				}
 			}
 

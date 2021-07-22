@@ -37,8 +37,14 @@ class MonsterLayer extends Component {
 		this.textContent = "";
 		this._zone.monsters
 			.groupedBy(monster => monster.position)
-			.forEach(({ length, 0: { face, position: { x, y } } }) =>
-				this.appendChild(this.buildNode(new Point(x, y), length, length === 1 ? face : null))
+			.forEach(
+				({
+					length,
+					0: {
+						face,
+						position: { x, y }
+					}
+				}) => this.appendChild(this.buildNode(new Point(x, y), length, length === 1 ? face : null))
 			);
 	}
 

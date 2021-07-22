@@ -23,9 +23,9 @@ class Map extends Component {
 	public locatorTile: LocatorTile;
 	public reveal: boolean = false;
 
-	private _canvas: HTMLCanvasElement = ((
+	private _canvas: HTMLCanvasElement = (
 		<canvas width={280} height={280} className="pixelated" />
-	) as any) as HTMLCanvasElement;
+	) as any as HTMLCanvasElement;
 	private _here: HTMLElement;
 	private _hereInterval: number;
 

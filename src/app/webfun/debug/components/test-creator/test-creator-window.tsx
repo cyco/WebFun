@@ -116,7 +116,7 @@ class TestCreatorWindow extends AbstractWindow implements EventListenerObject {
 		this.content.appendChild(this._expectationEditor);
 
 		engine.metronome.tickDuration = 1;
-		((engine.metronome as any) as MetronomeInternals)._tickCount[0] = 0;
+		(engine.metronome as any as MetronomeInternals)._tickCount[0] = 0;
 		engine.metronome.start();
 	}
 

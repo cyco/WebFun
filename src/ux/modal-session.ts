@@ -10,7 +10,7 @@ class ModalSession {
 	private _endHandler: (_: number) => void;
 	private _lastMouseLocation: Point;
 	private _overlayContainer: Element = window.document.body;
-	private _eventNode: Element = (window as unknown) as Element;
+	private _eventNode: Element = window as unknown as Element;
 
 	constructor() {
 		const overlay = document.createElement("div");

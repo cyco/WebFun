@@ -46,7 +46,7 @@ class ScriptProcessingUnit {
 				const result = (await this._instructionExecutor.execute(instruction)) || Result.Void;
 
 				if (result !== Result.Void) {
-					yield (result as any) as ScriptResult;
+					yield result as any as ScriptResult;
 				}
 			}
 		}
