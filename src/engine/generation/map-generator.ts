@@ -668,6 +668,14 @@ class MapGenerator {
 	public get typeMap(): Uint16Array {
 		return this._typeMap;
 	}
+
+	public get blockadeCount(): number {
+		return this.blockades;
+	}
+
+	public get travelCount(): number {
+		return this.travels;
+	}
 }
 
 export default MapGenerator;

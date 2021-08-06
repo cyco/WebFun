@@ -63,8 +63,8 @@ class WorldGenerator {
 	public generate(state: SaveState): boolean {
 		try {
 			this._state = state;
-			this._state.world = { sectors: [] };
-			this._state.dagobah = { sectors: [] };
+			this._state.world = { sectors: (100).times(_ => undefined as any) };
+			this._state.dagobah = { sectors: (100).times(_ => undefined as any) };
 			this._state.zones = new Map();
 			this._state.hotspots = new Map();
 			this._state.actions = new Map();
@@ -93,11 +93,11 @@ class WorldGenerator {
 
 					requiredItem: -1,
 					findItem: -1,
-					isGoal: false,
+					isGoal: true,
 					additionalRequiredItem: -1,
 					additionalGainItem: -1,
 					npc: -1,
-					unknown: -1
+					unknown: Zone.Type.None.rawValue
 				}));
 			}
 
@@ -143,7 +143,12 @@ class WorldGenerator {
 			this.writePlanetValues();
 
 			this._state.puzzleIDs1 = this.puzzleStrain1.map(p => p.id);
-			this._state.puzzleIDs2 = this.puzzleStrain1.map(p => p.id);
+			this._state.puzzleIDs2 = this.puzzleStrain2.map(p => p.id);
+
+			this._state.worldSize =
+				this.puzzleStrain1.length +
+				this.puzzleStrain2.length +
+				2 * (mapGenerator.blockadeCount + mapGenerator.travelCount);
 
 			return true;
 		} finally {
@@ -197,7 +202,7 @@ class WorldGenerator {
 					null,
 					null,
 					distance,
-					true
+					false
 				);
 				this.errorWhen(!zone, "Could not determine zone for travel start");
 
@@ -483,8 +488,10 @@ class WorldGenerator {
 
 		result = this._zones.filter(zoneMatchesType);
 		this._zonesByType.set(type, result);
+
 		if (type === Zone.Type.Find) this._zonesByType.set(Zone.Type.FindUniqueWeapon, result);
 		if (type === Zone.Type.FindUniqueWeapon) this._zonesByType.set(Zone.Type.Find, result);
+
 		return result;
 	}
 
@@ -497,7 +504,6 @@ class WorldGenerator {
 		distance: number,
 		useAlternateStrain: boolean
 	): boolean {
-		this.usedAlternateStrain = useAlternateStrain;
 		switch (zone.type) {
 			case Zone.Type.Town:
 				return true;
@@ -615,6 +621,7 @@ class WorldGenerator {
 				const puzzle = this.getUnusedPuzzleRandomly(requiredItem, Zone.Type.Trade);
 				if (!puzzle) return false;
 
+				this.usedAlternateStrain = useAlternateStrain;
 				const array = useAlternateStrain ? this.puzzleStrain1 : this.puzzleStrain2;
 				array[puzzleIndex] = puzzle;
 
@@ -656,6 +663,7 @@ class WorldGenerator {
 				const puzzle2 = this.getUnusedPuzzleRandomly(puzzleItem, Zone.Type.Use);
 				if (!puzzle2) return false;
 
+				this.usedAlternateStrain = useAlternateStrain;
 				const array = useAlternateStrain ? this.puzzleStrain1 : this.puzzleStrain2;
 				array[puzzleIndex] = puzzle2;
 
@@ -835,12 +843,14 @@ class WorldGenerator {
 	private addProvidedItemQuest(item: Tile, maximumDistance: number): Quest {
 		const quest = new Quest(item, maximumDistance);
 		this.providedItemQuests.unshift(quest);
+
 		return quest;
 	}
 
 	private addRequiredItemQuest(item: Tile, maximumDistance: number): Quest {
 		const quest = new Quest(item, maximumDistance);
 		this.requiredItemQuests.push(quest);
+
 		return quest;
 	}
 
@@ -1112,9 +1122,12 @@ class WorldGenerator {
 		sector.additionalRequiredItem = options.additionalRequiredItem?.id ?? -1;
 		sector.additionalGainItem = options.additionalGainItem?.id ?? -1;
 		sector.usedAlternateStrain = this.usedAlternateStrain;
+		sector.unknown =
+			zone.type === Zone.Type.FindUniqueWeapon ? Zone.Type.Find.rawValue : zone.type.rawValue;
+
+		this.usedAlternateStrain = false;
 
 		this.noteZoneInState(zone);
-
 		this.usedZones.unshift(zone);
 	}
 

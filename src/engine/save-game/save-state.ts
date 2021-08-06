@@ -88,14 +88,14 @@ class SaveState {
 	public monsters: Map<number, SavedMonster[]> = new Map();
 
 	public onDagobah: boolean;
-	public positionOnWorld: Point;
+	public positionOnWorld: Point = new Point(-1, -1);
 	public currentZoneID: number;
-	public positionOnZone: Point;
+	public positionOnZone: Point = new Point(-1, -1);
 
 	public damageTaken: number;
 	public livesLost: number;
 
-	public inventoryIDs: number[];
+	public inventoryIDs: number[] = [];
 
 	public currentWeapon: number;
 	public currentAmmo: number;

@@ -20,36 +20,53 @@ class DagobahGenerator {
 		this.assets = assets;
 	}
 
+	private makeSector() {
+		return {
+			visited: false,
+			solved1: false,
+			solved2: false,
+			solved3: false,
+			solved4: false,
+			zone: -1,
+
+			puzzleIndex: -1,
+			usedAlternateStrain: false,
+			isGoal: true,
+
+			findItem: -1,
+			requiredItem: -1,
+			additionalGainItem: -1,
+			additionalRequiredItem: -1,
+			npc: -1,
+
+			unknown: 1
+		};
+	}
+
 	public generate(state: SaveState, goal: Puzzle, item: Tile): SavedWorld {
 		try {
 			this.state = state;
 			const dagobah: SavedWorld = {
-				sectors: (100).times(_ => ({
-					visited: false,
-					solved1: false,
-					solved2: false,
-					solved3: false,
-					solved4: false,
-					zone: -1,
-
-					puzzleIndex: -1,
-					usedAlternateStrain: false,
-					isGoal: false,
-
-					findItem: -1,
-					requiredItem: -1,
-					additionalGainItem: -1,
-					additionalRequiredItem: -1,
-					npc: -1,
-
-					unknown: -1
-				}))
+				sectors: []
 			};
+			dagobah.sectors[4 * 10 + 4] = this.makeSector();
+			dagobah.sectors[4 * 10 + 5] = this.makeSector();
+			dagobah.sectors[5 * 10 + 4] = this.makeSector();
+			dagobah.sectors[5 * 10 + 5] = this.makeSector();
 
 			dagobah.sectors[4 * 10 + 4].zone = Yoda.zoneIDs.DagobahNorthWest;
 			dagobah.sectors[4 * 10 + 5].zone = Yoda.zoneIDs.DagobahNorthEast;
 			dagobah.sectors[5 * 10 + 4].zone = Yoda.zoneIDs.DagobahSouthWest;
 			dagobah.sectors[5 * 10 + 5].zone = Yoda.zoneIDs.DagobahSouthEast;
+
+			dagobah.sectors[4 * 10 + 4].unknown =
+				state.world.sectors[4 * 10 + 4]?.unknown ?? Zone.Type.Empty.rawValue;
+			dagobah.sectors[4 * 10 + 5].unknown =
+				state.world.sectors[4 * 10 + 5]?.unknown ?? Zone.Type.Empty.rawValue;
+			dagobah.sectors[5 * 10 + 4].unknown =
+				state.world.sectors[5 * 10 + 4]?.unknown ?? Zone.Type.Empty.rawValue;
+			dagobah.sectors[5 * 10 + 5].unknown =
+				state.world.sectors[5 * 10 + 5]?.unknown ?? Zone.Type.Empty.rawValue;
 
 			const spawn = this.determineYodaSpawnLocation(goal);
 			switch (spawn) {
@@ -98,6 +115,8 @@ class DagobahGenerator {
 		const place = dagobah.sectors[y * 10 + x];
 		place.npc = this.assets.get(Tile, npcID)?.id ?? -1;
 		place.findItem = tile?.id ?? -1;
+
+		place.unknown = Zone.Type.Use.rawValue;
 
 		const zone = this.assets.get(Zone, place.zone);
 		console.assert(!!zone.npcs.find(i => i.id === npcID));

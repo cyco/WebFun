@@ -4,7 +4,7 @@ import { WorldSize } from "./generation";
 import AssetManager, { NullIfMissing } from "./asset-manager";
 import { Puzzle, Tile, Zone } from "src/engine/objects";
 import World from "./world";
-import { rand } from "src/util";
+import { Point, rand } from "src/util";
 import { SaveState, Variant } from ".";
 
 class Story {
@@ -78,6 +78,15 @@ class Story {
 		state.seed = seed;
 		state.planet = this.planet;
 		state.size = this.size;
+		state.onDagobah = true;
+		state.positionOnWorld = new Point(4, 5);
+		state.positionOnZone = new Point(10, 10);
+		state.currentZoneID = -1;
+		state.currentWeapon = -1;
+		state.currentAmmo = -1;
+		state.damageTaken = 1;
+		state.livesLost = 1;
+		state.difficulty = 50;
 
 		const generator = new WorldGenerator(assets, variant);
 		generator.generate(state);
@@ -125,6 +134,8 @@ class Story {
 			assets.get(Puzzle, state.goalPuzzle),
 			assets.get(Puzzle, state.puzzleIDs2[0]).item1
 		);
+
+		state.dagobah = world;
 
 		this._dagobah = new World(assets);
 

@@ -25,7 +25,7 @@ class YodaReader extends Reader {
 		const world = this.readWorld(stream, { start: 0, end: 10 }, { start: 0, end: 10 });
 		const inventoryIDs = this.readInventory(stream);
 
-		const currentZoneID = stream.readUint16();
+		const currentZoneID = stream.readInt16();
 		const posXOnWorld = stream.readUint32();
 		const posYOnWorld = stream.readUint32();
 
@@ -123,7 +123,7 @@ class YodaReader extends Reader {
 			isGoal: !!isGoal,
 			additionalRequiredItem: additionalRequiredItem,
 			additionalGainItem: additionalGainItem,
-			usedAlternateStrain: usedAlternateStrain === -1 ? null : usedAlternateStrain === 1,
+			usedAlternateStrain: usedAlternateStrain === -1 ? false : usedAlternateStrain === 1,
 			npc: npcId,
 			unknown
 		};
