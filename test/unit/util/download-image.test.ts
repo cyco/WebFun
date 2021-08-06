@@ -22,7 +22,7 @@ describe("WebFun.Util.DownloadImage", () => {
 
 		expect(link.getAttribute("download")).toEqual("Test.jpg");
 		expect(link.getAttribute("href")).toStartWith("data:image/jpeg;base64");
-		expect(link.getAttribute("href").length).toBe(503);
+		expect(link.getAttribute("href").length).toBe(1243);
 		expect(link.click).toHaveBeenCalled();
 	});
 
@@ -38,7 +38,7 @@ describe("WebFun.Util.DownloadImage", () => {
 
 		expect(link.getAttribute("download")).toEqual("Test.png");
 		expect(link.getAttribute("href")).toStartWith("data:image/png;base64");
-		expect(link.getAttribute("href").length).toBe(130);
+		expect(link.getAttribute("href").length).toBe(146);
 	});
 
 	it("does nothing if no content is given", () => {

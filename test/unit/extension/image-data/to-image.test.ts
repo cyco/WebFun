@@ -1,5 +1,5 @@
 import toImage from "src/extension/image-data/to-image";
-import { HTMLImageElement, Image, ImageData } from "src/std/dom";
+import { HTMLImageElement, ImageData } from "src/std/dom";
 
 describe("WebFun.Extension.ImageData.toImage", () => {
 	it("is an extension of ImageData to allow conversion to an HTMLImageElement", () => {
@@ -18,7 +18,7 @@ describe("WebFun.Extension.ImageData.toImage", () => {
 		const image = await subject.toImage();
 		expect(image).toBeInstanceOf(HTMLImageElement);
 		expect(image.src).toBe(
-			"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAF0lEQVQYVwXBAQEAAACCIPs/mmAVtMR0Q+wH/DyFmbQAAAAASUVORK5CYII="
+			"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAAXNSR0IArs4c6QAAABdJREFUGFcFwQEBAAAAgiD7P5pgFbTEdEPsB/w8hZm0AAAAAElFTkSuQmCC"
 		);
 	});
 
@@ -34,7 +34,7 @@ describe("WebFun.Extension.ImageData.toImage", () => {
 		const image = await subject.toImage(false);
 		expect(image).toBeInstanceOf(HTMLImageElement);
 		expect(image.src).toBe(
-			"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAF0lEQVQYVwXBAQEAAACCIPs/mmAVtMR0Q+wH/DyFmbQAAAAASUVORK5CYII="
+			"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAAXNSR0IArs4c6QAAABdJREFUGFcFwQEBAAAAgiD7P5pgFbTEdEPsB/w8hZm0AAAAAElFTkSuQmCC"
 		);
 	});
 

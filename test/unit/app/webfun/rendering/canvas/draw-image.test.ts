@@ -16,7 +16,7 @@ describe("WebFun.App.Rendering.Canvas.DrawImage", () => {
 
 	it("converts raw pixel data to an ImageData object using a color palette ", async () => {
 		const expectedPNGData =
-			"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVQYV2NgAAIAAAUAAarVyFEAAAAASUVORK5CYII=";
+			"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAAtJREFUGFdjYAACAAAFAAGq1chRAAAAAElFTkSuQmCC";
 		const pixels = new Uint8Array([0, 1, 2, 3]);
 		const imageData = drawImage(pixels, new Size(1, 1), colorPalette);
 		const actual = convertImageDataToPNG(imageData);
