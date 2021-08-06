@@ -8,7 +8,7 @@ describe("WebFun.Engine.Objects.ZoneType", () => {
 
 	it("can be created from a number", () => {
 		expect(ZoneType.fromNumber(0)).toBe(ZoneType.None);
-		expect(() => ZoneType.fromNumber(-1)).toThrow();
+		expect(() => ZoneType.fromNumber(-2)).toThrow();
 	});
 
 	it("can be represented as a string", () => {

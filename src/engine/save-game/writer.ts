@@ -96,8 +96,7 @@ class Writer {
 		const doors = this._state.hotspots
 			.get(zoneID)
 			.filter(
-				(hotspot: SavedHotspot) =>
-					hotspot.type === Hotspot.Type.DoorIn.rawValue && hotspot.argument !== -1
+				(hotspot: SavedHotspot) => hotspot.type === Hotspot.Type.DoorIn && hotspot.argument !== -1
 			);
 		doors.forEach((hotspot: SavedHotspot) => {
 			const zone = this._state.zones.get(hotspot.argument);
@@ -115,7 +114,7 @@ class Writer {
 			stream.writeInt32(zone.doorInLocation.x);
 			stream.writeInt32(zone.doorInLocation.y);
 			stream.writeInt16(zone.sectorCounter);
-			stream.writeUint16(zone.planet);
+			stream.writeUint16(zone.planet.rawValue);
 
 			stream.writeInt16Array(zone.tileIDs);
 		}
@@ -174,7 +173,7 @@ class Writer {
 	private _writeHotspot(hotspot: SavedHotspot, stream: OutputStream): void {
 		stream.writeUint16(+hotspot.enabled);
 		stream.writeInt16(hotspot.argument);
-		stream.writeUint32(hotspot.type);
+		stream.writeUint32(hotspot.type.rawValue);
 		stream.writeInt16(hotspot.x);
 		stream.writeInt16(hotspot.y);
 	}
@@ -216,7 +215,7 @@ class Writer {
 		stream.writeInt16(sector.additionalGainItem);
 		stream.writeInt16(sector.npc);
 
-		stream.writeInt32(sector.unknown);
+		stream.writeInt32(sector.type.rawValue);
 		stream.writeInt16(sector.usedAlternateStrain === null ? -1 : +sector.usedAlternateStrain);
 	}
 }

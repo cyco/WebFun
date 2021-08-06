@@ -99,12 +99,13 @@ class ZoneType {
 	}
 
 	static isZoneType(number: number): boolean {
-		return (number >= 0 && number < ZoneType.knownTypes.length) || number === 9999;
+		return (number >= 0 && number < ZoneType.knownTypes.length) || number === 9999 || number === -1;
 	}
 
 	static fromNumber(number: number): ZoneType {
 		if (!this.isZoneType(number)) throw RangeError(`Invalid zone type ${number} specified!`);
 		if (number === 9999) return ZoneType.PlaceholderForEndPuzzle;
+		if (number === -1) return ZoneType.None;
 
 		return ZoneType.knownTypes[number];
 	}

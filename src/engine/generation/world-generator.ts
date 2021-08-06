@@ -97,7 +97,7 @@ class WorldGenerator {
 					additionalRequiredItem: -1,
 					additionalGainItem: -1,
 					npc: -1,
-					unknown: Zone.Type.None.rawValue
+					type: Zone.Type.None
 				}));
 			}
 
@@ -1122,8 +1122,7 @@ class WorldGenerator {
 		sector.additionalRequiredItem = options.additionalRequiredItem?.id ?? -1;
 		sector.additionalGainItem = options.additionalGainItem?.id ?? -1;
 		sector.usedAlternateStrain = this.usedAlternateStrain;
-		sector.unknown =
-			zone.type === Zone.Type.FindUniqueWeapon ? Zone.Type.Find.rawValue : zone.type.rawValue;
+		sector.type = zone.type === Zone.Type.FindUniqueWeapon ? Zone.Type.Find : zone.type;
 
 		this.usedAlternateStrain = false;
 
@@ -1136,7 +1135,7 @@ class WorldGenerator {
 
 		this._state.zones.set(zone.id, {
 			id: zone.id,
-			planet: zone.planet.rawValue,
+			planet: zone.planet,
 			visited: false,
 			counter: -1,
 			sectorCounter: -1,
@@ -1151,7 +1150,7 @@ class WorldGenerator {
 				argument: htsp.arg,
 				x: htsp.x,
 				y: htsp.y,
-				type: htsp.type.rawValue
+				type: htsp.type
 			}))
 		);
 		this._state.monsters.set(

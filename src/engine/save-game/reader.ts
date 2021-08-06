@@ -75,9 +75,9 @@ abstract class Reader {
 			start = i;
 			let door;
 			const hotspot = hotspots[i];
-			const type = assetHotspots[i]?.type.rawValue ?? hotspot.type;
+			const type = assetHotspots[i]?.type ?? hotspot.type;
 
-			if (Hotspot.Type.DoorIn.rawValue === type) {
+			if (Hotspot.Type.DoorIn === type) {
 				if (hotspot.argument === -1) {
 					continue;
 				}
@@ -118,7 +118,7 @@ abstract class Reader {
 		if (!zone) {
 			zone = {
 				id,
-				planet: -1,
+				planet: Zone.Planet.None,
 				visited: false,
 				counter: -1,
 				sectorCounter: -1,
@@ -143,9 +143,9 @@ abstract class Reader {
 			if (this._type === Yoda || this._type === YodaDemo) {
 				zone.sectorCounter = stream.readInt16();
 
-				const planet = stream.readInt16();
+				const planet = Zone.Planet.fromNumber(stream.readInt16());
 				zone.planet = planet;
-				console.assert(planet === assetZone.planet.rawValue);
+				console.assert(planet === assetZone.planet);
 			}
 
 			const tileCount = assetZone.size.width * assetZone.size.height * Zone.LAYERS;

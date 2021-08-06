@@ -1,11 +1,11 @@
 import Variant from "../variant";
 import { Point } from "src/util";
-import { Zone } from "src/engine/objects";
+import { Zone, Hotspot } from "src/engine/objects";
 import { WorldSize } from "../generation";
 
 export type SavedZone = {
 	id: number;
-	planet: number;
+	planet: Zone.Planet;
 	visited: boolean;
 	counter: number;
 	sectorCounter: number;
@@ -45,7 +45,7 @@ export type SavedHotspot = {
 	argument: number;
 	x?: number;
 	y?: number;
-	type?: number;
+	type?: Hotspot.Type;
 };
 
 export type SavedSector = {
@@ -63,7 +63,7 @@ export type SavedSector = {
 	additionalGainItem?: number;
 	usedAlternateStrain?: boolean;
 	npc: number;
-	unknown?: number;
+	type: Zone.Type;
 };
 
 export type SavedAction = boolean;

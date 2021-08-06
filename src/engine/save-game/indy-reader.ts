@@ -90,7 +90,7 @@ class IndyReader extends Reader {
 
 		const npcID = stream.readInt16();
 		// possibly zone or puzzle type, skip over it
-		stream.readInt16();
+		const type = Zone.Type.fromNumber(stream.readInt16());
 
 		return {
 			visited,
@@ -100,7 +100,8 @@ class IndyReader extends Reader {
 			zone: zoneID,
 			requiredItem: requiredItemID,
 			findItem: findItemID,
-			npc: npcID
+			npc: npcID,
+			type
 		};
 	}
 

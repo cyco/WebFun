@@ -39,7 +39,7 @@ class DagobahGenerator {
 			additionalRequiredItem: -1,
 			npc: -1,
 
-			unknown: 1
+			type: Zone.Type.None
 		};
 	}
 
@@ -59,14 +59,10 @@ class DagobahGenerator {
 			dagobah.sectors[5 * 10 + 4].zone = Yoda.zoneIDs.DagobahSouthWest;
 			dagobah.sectors[5 * 10 + 5].zone = Yoda.zoneIDs.DagobahSouthEast;
 
-			dagobah.sectors[4 * 10 + 4].unknown =
-				state.world.sectors[4 * 10 + 4]?.unknown ?? Zone.Type.Empty.rawValue;
-			dagobah.sectors[4 * 10 + 5].unknown =
-				state.world.sectors[4 * 10 + 5]?.unknown ?? Zone.Type.Empty.rawValue;
-			dagobah.sectors[5 * 10 + 4].unknown =
-				state.world.sectors[5 * 10 + 4]?.unknown ?? Zone.Type.Empty.rawValue;
-			dagobah.sectors[5 * 10 + 5].unknown =
-				state.world.sectors[5 * 10 + 5]?.unknown ?? Zone.Type.Empty.rawValue;
+			dagobah.sectors[4 * 10 + 4].type = state.world.sectors[4 * 10 + 4]?.type ?? Zone.Type.Empty;
+			dagobah.sectors[4 * 10 + 5].type = state.world.sectors[4 * 10 + 5]?.type ?? Zone.Type.Empty;
+			dagobah.sectors[5 * 10 + 4].type = state.world.sectors[5 * 10 + 4]?.type ?? Zone.Type.Empty;
+			dagobah.sectors[5 * 10 + 5].type = state.world.sectors[5 * 10 + 5]?.type ?? Zone.Type.Empty;
 
 			const spawn = this.determineYodaSpawnLocation(goal);
 			switch (spawn) {
@@ -116,7 +112,7 @@ class DagobahGenerator {
 		place.npc = this.assets.get(Tile, npcID)?.id ?? -1;
 		place.findItem = tile?.id ?? -1;
 
-		place.unknown = Zone.Type.Use.rawValue;
+		place.type = Zone.Type.Use;
 
 		const zone = this.assets.get(Zone, place.zone);
 		console.assert(!!zone.npcs.find(i => i.id === npcID));

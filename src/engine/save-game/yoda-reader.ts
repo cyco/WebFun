@@ -1,4 +1,4 @@
-import { Tile, Zone } from "src/engine/objects";
+import { Tile, Zone, Hotspot } from "src/engine/objects";
 import { InputStream, Point } from "src/util";
 
 import Reader from "./reader";
@@ -107,7 +107,7 @@ class YodaReader extends Reader {
 		const additionalGainItem = stream.readInt16();
 		const npcId = stream.readInt16();
 
-		const unknown = stream.readInt32();
+		const type = Zone.Type.fromNumber(stream.readInt32());
 		const usedAlternateStrain = stream.readInt16();
 
 		return {
@@ -125,7 +125,7 @@ class YodaReader extends Reader {
 			additionalGainItem: additionalGainItem,
 			usedAlternateStrain: usedAlternateStrain === -1 ? false : usedAlternateStrain === 1,
 			npc: npcId,
-			unknown
+			type
 		};
 	}
 
@@ -191,7 +191,7 @@ class YodaReader extends Reader {
 	protected readHotspot(stream: InputStream): SavedHotspot {
 		const enabled = stream.readUint16() !== 0;
 		const argument = stream.readInt16();
-		const type = stream.readUint32();
+		const type = Hotspot.Type.fromNumber(stream.readUint32());
 		const x = stream.readInt16();
 		const y = stream.readInt16();
 

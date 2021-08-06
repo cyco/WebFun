@@ -6,7 +6,7 @@ import { InputStream, DiscardingOutputStream, OutputStream } from "src/util";
 import loadGameData from "test/helpers/game-data";
 import { Sound, Zone, Tile, Puzzle, Char } from "src/engine/objects";
 
-describe("WebFun.Acceptance.Save game reading", () => {
+describe("WebFun.Acceptance.Save Games", () => {
 	let rawYodaData: any;
 	let rawIndyData: any;
 
