@@ -27,7 +27,8 @@ module.exports = {
 		path: Paths.buildRoot,
 		publicPath: "",
 		filename: "assets/webfun.[name]-[git-revision-version].js",
-		chunkFilename: "assets/webfun.[name]-[git-revision-version].js"
+		chunkFilename: "assets/webfun.[name]-[git-revision-version].js",
+		assetModuleFilename: "assets/[name]-[hash][ext][query]"
 	},
 	node: false,
 	optimization: {
@@ -169,20 +170,15 @@ module.exports = {
 			{
 				test: /\.svg$/,
 				include: Paths.assetsRoot,
-				loader: "url-loader"
+				type: "asset/inline"
 			},
 			{
 				test: /\.(woff(2)?|ttf|eot|svg|otf)(\?v=\d+\.\d+\.\d+)?$/,
 				exclude: /cursor/,
-				use: [
-					{
-						loader: "file-loader",
-						options: {
-							name: "[name].[ext]",
-							outputPath: "assets/font/"
-						}
-					}
-				]
+				type: "asset/resource",
+				generator: {
+					filename: "assets/font/[name]-[hash].[ext]"
+				}
 			}
 		]
 	}
