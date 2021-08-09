@@ -2,7 +2,7 @@ import { Tile, Zone } from "src/engine/objects";
 import AssetManager from "./asset-manager";
 
 class Sector {
-	public isGoal: number = -1;
+	public isGoal: boolean = false;
 	public findItem: Tile = null;
 	public npc: Tile = null;
 	public additionalRequiredItem: Tile = null;

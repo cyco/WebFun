@@ -329,9 +329,9 @@ class GameController extends EventTarget implements EventListenerObject {
 		return await file.provideInputStream();
 	}
 
-	public async save(): Promise<void> {
+	public async saveGame(): Promise<void> {
 		const engine = this.engine;
-		const state = engine.variant.save(engine);
+		const state = engine.variant.takeSnapshot(engine);
 		const writer = new Writer();
 		const sizingStream = new DiscardingOutputStream();
 		writer.write(state, sizingStream);

@@ -33,7 +33,7 @@ abstract class Variant {
 	abstract get weaponTileId(): number;
 
 	abstract createNewStory(_engine: Engine): Story;
-	abstract save(engine: Engine): SaveState;
+	abstract takeSnapshot(engine: Engine): SaveState;
 
 	abstract onPlaceTile(tile: Tile, at: Point, engine: Engine): boolean;
 }

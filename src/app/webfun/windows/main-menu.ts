@@ -62,9 +62,8 @@ class MainMenu extends Menu {
 					{
 						title: "Save World",
 						mnemonic: 0,
-						callback: () => controller.save(),
-						enabled: () => controller.engine?.variant === Yoda,
-						beta: true
+						callback: () => controller.saveGame(),
+						enabled: () => controller.engine?.variant === Yoda
 					},
 					Separator,
 					{

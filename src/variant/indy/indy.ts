@@ -59,7 +59,7 @@ class IndyFull extends Variant {
 		return story;
 	}
 
-	public save(_: Engine): SaveState {
+	public takeSnapshot(_: Engine): SaveState {
 		throw new Error("Method not implemented.");
 	}
 

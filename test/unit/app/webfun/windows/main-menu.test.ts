@@ -26,7 +26,7 @@ describe("WebFun.App.Windows.MainMenu", () => {
 			newStory() {},
 			replayStory() {},
 			load() {},
-			save() {},
+			saveGame() {},
 			window: {
 				manager: { showWindow: jasmine.createSpy() }
 			}
@@ -138,9 +138,9 @@ describe("WebFun.App.Windows.MainMenu", () => {
 				});
 
 				it("saves the current story when clicked", () => {
-					spyOn(gameController, "save");
+					spyOn(gameController, "saveGame");
 					saveSector.callback();
-					expect(gameController.save).toHaveBeenCalled();
+					expect(gameController.saveGame).toHaveBeenCalled();
 				});
 			});
 
@@ -193,11 +193,11 @@ describe("WebFun.App.Windows.MainMenu", () => {
 					pauseItem
 				] = optionsMenu.items;
 
-				mockedSession = ({
+				mockedSession = {
 					run: jasmine.createSpy(),
 					runForWindow: jasmine.createSpy(),
 					end() {}
-				} as any) as UX.WindowModalSession;
+				} as any as UX.WindowModalSession;
 				mockWindow = document.createElement("div");
 				const originalCreateElement = document.createElement;
 				spyOn(document, "createElement").and.callFake((tag: string) =>

@@ -70,7 +70,7 @@ class WorldGenerator {
 			this._state.actions = new Map();
 			this._state.monsters = new Map();
 
-			this._assets.getAll(Zone).forEach(z => this.noteZoneInState(z));
+			this._assets.getAll(Zone).forEach(z => this._state.noteZone(z));
 
 			srand(this._state.seed);
 
@@ -1126,45 +1126,8 @@ class WorldGenerator {
 
 		this.usedAlternateStrain = false;
 
-		this.noteZoneInState(zone);
+		this._state.noteZone(zone);
 		this.usedZones.unshift(zone);
-	}
-
-	private noteZoneInState(zone: Zone): void {
-		if (this._state.zones.has(zone.id)) return;
-
-		this._state.zones.set(zone.id, {
-			id: zone.id,
-			planet: zone.planet,
-			visited: false,
-			counter: -1,
-			sectorCounter: -1,
-			random: -1,
-			doorInLocation: null,
-			tileIDs: new Int16Array(zone.tileIDs)
-		});
-		this._state.hotspots.set(
-			zone.id,
-			zone.hotspots.map(htsp => ({
-				enabled: htsp.enabled,
-				argument: htsp.arg,
-				x: htsp.x,
-				y: htsp.y,
-				type: htsp.type
-			}))
-		);
-		this._state.monsters.set(
-			zone.id,
-			zone.monsters.map(m => ({
-				face: m.face?.id ?? -1,
-				position: m.position,
-				damageTaken: m.damageTaken
-			}))
-		);
-		this._state.actions.set(
-			zone.id,
-			zone.actions.map(a => a.enabled)
-		);
 	}
 
 	private errorWhen(condition: boolean, message: string): void {

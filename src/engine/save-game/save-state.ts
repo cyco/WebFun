@@ -110,6 +110,43 @@ class SaveState {
 
 	public unknownCount: number;
 	public unknownSum: number;
+
+	public noteZone(zone: Zone): void {
+		if (this.zones.has(zone.id)) return;
+
+		this.zones.set(zone.id, {
+			id: zone.id,
+			planet: zone.planet,
+			visited: false,
+			counter: -1,
+			sectorCounter: -1,
+			random: -1,
+			doorInLocation: null,
+			tileIDs: new Int16Array(zone.tileIDs)
+		});
+		this.hotspots.set(
+			zone.id,
+			zone.hotspots.map(htsp => ({
+				enabled: htsp.enabled,
+				argument: htsp.arg,
+				x: htsp.x,
+				y: htsp.y,
+				type: htsp.type
+			}))
+		);
+		this.monsters.set(
+			zone.id,
+			zone.monsters.map(m => ({
+				face: m.face?.id ?? -1,
+				position: m.position,
+				damageTaken: m.damageTaken
+			}))
+		);
+		this.actions.set(
+			zone.id,
+			zone.actions.map(a => a.enabled)
+		);
+	}
 }
 
 export default SaveState;

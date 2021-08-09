@@ -316,7 +316,7 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 				callback: () => {
 					sector.additionalGainItem = null;
 					sector.puzzleIndex = -1;
-					sector.isGoal = -1;
+					sector.isGoal = false;
 					sector.findItem = null;
 					sector.npc = null;
 					sector.requiredItem = null;
@@ -376,7 +376,7 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 					sector.additionalRequiredItem = null;
 					sector.additionalGainItem = null;
 					sector.puzzleIndex = -1;
-					sector.isGoal = -1;
+					sector.isGoal = false;
 					sector.findItem = null;
 					sector.npc = null;
 					sector.requiredItem = null;

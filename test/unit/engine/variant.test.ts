@@ -27,7 +27,7 @@ describe("WebFun.Engine.Variant", () => {
 			getEquipSound(_: any): number {
 				throw new Error("Method not implemented.");
 			}
-			save(_: Engine): SaveState {
+			takeSnapshot(_: Engine): SaveState {
 				throw new Error("Method not implemented.");
 			}
 

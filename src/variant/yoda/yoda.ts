@@ -15,8 +15,11 @@ import { Sprite } from "src/engine/rendering";
 
 import DetonatorScene from "./detonator-scene";
 import { ZoneScene } from "src/engine/scenes";
-import { NullIfMissing } from "src/engine/asset-manager";
+import AssetManager, { NullIfMissing } from "src/engine/asset-manager";
 import { ColorCycle } from "src/engine/rendering/palette-animation";
+import { SavedWorld } from "src/engine/save-game/save-state";
+import World from "src/engine/world";
+import RoomIterator from "src/engine/room-iterator";
 
 class Yoda extends Variant {
 	public slowColorCycles: ColorCycle[] = [
@@ -138,7 +141,7 @@ class Yoda extends Variant {
 		return story;
 	}
 
-	public save(engine: Engine): SaveState {
+	public takeSnapshot(engine: Engine): SaveState {
 		const state = new SaveState();
 
 		state.type = engine.variant;
@@ -148,8 +151,8 @@ class Yoda extends Variant {
 		state.puzzleIDs2 = engine.story.puzzles[1].map(p => p.id);
 		state.goalPuzzle = engine.story.goal?.id ?? -1;
 
-		//state.dagobah = engine.dagobah;
-		//state.world = engine.world;
+		state.dagobah = this.saveWorld(engine.dagobah, state, engine.assets);
+		state.world = this.saveWorld(engine.world, state, engine.assets);
 
 		state.onDagobah = engine.currentWorld === engine.dagobah;
 		state.positionOnWorld = engine.currentWorld.locationOfSector(engine.currentSector);
@@ -178,6 +181,37 @@ class Yoda extends Variant {
 		state.unknownSum = 0;
 
 		return state;
+	}
+
+	private saveWorld(world: World, state: SaveState, assets: AssetManager): SavedWorld {
+		return {
+			sectors: world.sectors.map(s => {
+				if (s.zone) {
+					state.noteZone(s.zone);
+					for (const zone of RoomIterator(s.zone, assets)) {
+						state.noteZone(zone);
+					}
+				}
+
+				return {
+					visited: s.visited,
+					solved1: s.solved1,
+					solved2: s.solved2,
+					solved3: s.solved3,
+					solved4: s.solved4,
+					zone: s.zone?.id ?? -1,
+					puzzleIndex: s.puzzleIndex,
+					requiredItem: s.requiredItem?.id ?? -1,
+					findItem: s.findItem?.id ?? -1,
+					isGoal: s.isGoal,
+					additionalRequiredItem: s.additionalRequiredItem?.id ?? -1,
+					additionalGainItem: s.additionalGainItem?.id ?? -1,
+					usedAlternateStrain: s.usedAlternateStrain,
+					npc: s.npc?.id ?? -1,
+					type: s.zone?.type ?? Zone.Type.None
+				};
+			})
+		};
 	}
 
 	onPlaceTile(tile: Tile, at: Point, engine: Engine): boolean {

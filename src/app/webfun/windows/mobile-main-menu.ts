@@ -47,7 +47,7 @@ class MobileMainMenu extends Menu {
 			{
 				title: "Save World",
 				mnemonic: 0,
-				callback: () => controller.save(),
+				callback: () => controller.saveGame(),
 				enabled: () => controller.engine !== null,
 				beta: true
 			},
