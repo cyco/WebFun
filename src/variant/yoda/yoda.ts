@@ -175,7 +175,7 @@ class Yoda extends Variant {
 
 		state.difficulty = engine.settings.difficulty;
 		state.timeElapsed = engine.totalPlayTime;
-		state.worldSize = 0;
+		state.complexity = engine.story.complexity;
 
 		state.unknownCount = 0;
 		state.unknownSum = 0;

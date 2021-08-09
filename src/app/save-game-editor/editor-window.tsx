@@ -56,6 +56,7 @@ class EditorWindow extends AbstractWindow {
 			assets.populate(Sound, gameData.sounds);
 			this._assets = assets;
 			const saveGame = read(assets);
+			console.log(saveGame);
 
 			this.presentSaveGame(saveGame, gameData, palette);
 		} catch (e) {

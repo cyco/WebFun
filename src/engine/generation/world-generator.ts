@@ -145,7 +145,7 @@ class WorldGenerator {
 			this._state.puzzleIDs1 = this.puzzleStrain1.map(p => p.id);
 			this._state.puzzleIDs2 = this.puzzleStrain2.map(p => p.id);
 
-			this._state.worldSize =
+			this._state.complexity =
 				this.puzzleStrain1.length +
 				this.puzzleStrain2.length +
 				2 * (mapGenerator.blockadeCount + mapGenerator.travelCount);

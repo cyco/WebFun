@@ -86,7 +86,7 @@ class YodaReader extends Reader {
 		state.difficulty = difficulty;
 		state.unknownCount = unknownCount;
 		state.unknownSum = unknownSum;
-		state.worldSize = worldSize;
+		state.complexity = worldSize;
 
 		return state;
 	}

@@ -9,6 +9,7 @@ import { SaveState, Variant } from ".";
 
 class Story {
 	public goal: Puzzle;
+
 	protected _seed: number;
 	protected _planet: Zone.Planet;
 	protected _size: WorldSize;
@@ -16,6 +17,8 @@ class Story {
 	protected _dagobah: World = null;
 	protected _reseeded: boolean = false;
 	protected _puzzles: [Puzzle[], Puzzle[]] = [[], []];
+	protected _complexity: number;
+
 	private _state: SaveState = null;
 
 	constructor(protected readonly assets: AssetManager, protected readonly variant: Variant) {}
@@ -160,6 +163,10 @@ class Story {
 
 	public get state(): SaveState {
 		return this._state;
+	}
+
+	public get complexity(): number {
+		return this._state.complexity;
 	}
 }
 

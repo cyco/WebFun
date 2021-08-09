@@ -36,6 +36,7 @@ export { Events };
 
 class Engine extends EventTarget {
 	static readonly Event = Events;
+
 	public readonly variant: Variant = null;
 	public assets: AssetManager = null;
 	public resources: ResourceManager = null;
@@ -50,12 +51,13 @@ class Engine extends EventTarget {
 	public renderer: Renderer = null;
 	public sceneManager: SceneManager = null;
 	public spu: ScriptProcessingUnit = null;
-	private _story: Story = null;
 	public _interface: Interface;
 	public currentPlayStart: Date = new Date();
 	public totalPlayTime: number = 0;
 	public bumpedLocation: Point;
 	public settings: Settings = defaultSettings;
+
+	private _story: Story = null;
 	private _currentWorld: World = null;
 	private _currentZone: Zone = null;
 	private _updateInProgress: boolean = false;

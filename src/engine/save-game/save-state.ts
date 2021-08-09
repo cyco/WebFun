@@ -106,7 +106,7 @@ class SaveState {
 
 	public difficulty: number;
 	public timeElapsed: number;
-	public worldSize: number; // in puzzles (?)
+	public complexity: number; // in puzzles (?)
 
 	public unknownCount: number;
 	public unknownSum: number;
