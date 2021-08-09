@@ -118,18 +118,39 @@ abstract class Reader {
 		if (!zone) {
 			zone = {
 				id,
-				planet: Zone.Planet.None,
-				visited: false,
-				counter: -1,
-				sectorCounter: -1,
-				random: -1,
-				doorInLocation: null,
-				tileIDs: null
+				planet: assetZone.planet,
+				visited: assetZone.visited,
+				counter: assetZone.counter,
+				sectorCounter: assetZone.sectorCounter,
+				random: assetZone.random,
+				doorInLocation: assetZone.doorInLocation,
+				tileIDs: new Int16Array(assetZone.tileIDs)
 			};
 			this._state.zones.set(id, zone);
-			this._state.hotspots.set(id, []);
-			this._state.monsters.set(id, []);
-			this._state.actions.set(id, []);
+			this._state.hotspots.set(
+				id,
+				assetZone.hotspots.map(htsp => ({
+					enabled: htsp.enabled,
+					type: htsp.type,
+					x: htsp.x,
+					y: htsp.y,
+					argument: htsp.arg
+				}))
+			);
+			this._state.monsters.set(
+				id,
+				assetZone.monsters.map(m => ({
+					// TODO: Implement missing properties
+					face: m.face?.id ?? -1,
+					enabled: m.enabled,
+					damageTaken: m.damageTaken,
+					position: m.position
+				}))
+			);
+			this._state.actions.set(
+				id,
+				assetZone.actions.map(a => a.enabled)
+			);
 		}
 
 		if (visited) {

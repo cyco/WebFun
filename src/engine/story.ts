@@ -10,9 +10,9 @@ import { SaveState, Variant } from ".";
 class Story {
 	public goal: Puzzle;
 
-	protected _seed: number;
-	protected _planet: Zone.Planet;
-	protected _size: WorldSize;
+	public _seed: number;
+	public _planet: Zone.Planet;
+	public _size: WorldSize;
 	protected _world: World = null;
 	protected _dagobah: World = null;
 	protected _reseeded: boolean = false;

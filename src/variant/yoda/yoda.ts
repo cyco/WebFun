@@ -155,8 +155,10 @@ class Yoda extends Variant {
 		state.world = this.saveWorld(engine.world, state, engine.assets);
 
 		state.onDagobah = engine.currentWorld === engine.dagobah;
-		state.positionOnWorld = engine.currentWorld.locationOfSector(engine.currentSector);
-		state.currentZoneID = engine.currentZone.id;
+
+		const currentSector = engine.currentSector ?? engine.dagobah.at(4, 5);
+		state.positionOnWorld = engine.currentWorld.locationOfSector(currentSector);
+		state.currentZoneID = engine.currentZone.id === 0 ? -1 : engine.currentZone.id;
 		state.positionOnZone = engine.hero.location;
 
 		state.damageTaken = engine.hero.damage;
@@ -186,11 +188,8 @@ class Yoda extends Variant {
 	private saveWorld(world: World, state: SaveState, assets: AssetManager): SavedWorld {
 		return {
 			sectors: world.sectors.map(s => {
-				if (s.zone) {
-					state.noteZone(s.zone);
-					for (const zone of RoomIterator(s.zone, assets)) {
-						state.noteZone(zone);
-					}
+				for (const zone of RoomIterator(s.zone, assets)) {
+					state.noteZone(zone);
 				}
 
 				return {

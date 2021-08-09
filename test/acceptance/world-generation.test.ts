@@ -217,12 +217,13 @@ describe("WebFun.Acceptance.World Generation", () => {
 
 		const lenStream = new DiscardingOutputStream();
 		const writer = new Writer();
+
 		writer.write(story.state, lenStream);
 		const stream = new OutputStream(lenStream.offset);
 		writer.write(story.state, stream);
 
 		const { read: read1 } = Reader.build(new InputStream(stream.buffer));
-		const state = await read1(assets);
+		const state = read1(assets);
 
 		const saveData = await getFixtureData("save-games/yoda-0-1-3.wld");
 		const saveStream = new InputStream(saveData);

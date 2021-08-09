@@ -2,6 +2,8 @@ import { Zone, Hotspot } from "./objects";
 import AssetManager from "./asset-manager";
 
 function* iterate(zone: Zone, assets: AssetManager): Iterable<Zone> {
+	if (!zone) return;
+
 	yield zone;
 
 	for (const { type, arg } of zone.hotspots) {

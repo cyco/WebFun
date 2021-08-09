@@ -1057,7 +1057,9 @@ class WorldGenerator {
 		if (!hotspot) return false;
 
 		const idx = zone.hotspots.indexOf(hotspot);
-		if (idx === -1) return false;
+		if (idx === -1) {
+			return false;
+		}
 
 		const htsps = this._state.hotspots.get(zone.id);
 		const htsp = htsps[idx];

@@ -5,7 +5,7 @@ import {
 	SceneView,
 	CurrentStatusInfo
 } from "./ui";
-import { Char, Tile, Zone, Sound, Puzzle } from "src/engine/objects";
+import { Char, Tile, Zone, Sound, Puzzle, Hotspot } from "src/engine/objects";
 import {
 	ColorPalette,
 	Engine,
@@ -22,6 +22,7 @@ import {
 	DiscardingOutputStream,
 	download,
 	EventTarget,
+	InputStream,
 	OutputStream,
 	Point,
 	PropertyChangeEvent,
@@ -54,6 +55,11 @@ import { WorldSize } from "src/engine/generation";
 import MutableStory from "../editor/mutable-story";
 import { NullIfMissing } from "src/engine/asset-manager";
 import { Yoda } from "src/variant";
+import SaveState, { SavedWorld } from "src/engine/save-game/save-state";
+import World from "src/engine/world";
+import RoomIterator from "src/engine/room-iterator";
+import { MutableMonster, MutableZone } from "src/engine/mutable-objects";
+import diff, { Differences, DifferenceType } from "src/util/diff";
 
 export const Event = {
 	DidLoadData: "didLoadData"
@@ -272,25 +278,26 @@ class GameController extends EventTarget implements EventListenerObject {
 		await this.resetEngine();
 		await this.loadGameData();
 
-		const assets = new AssetManager();
-		this.populateAssetManager(assets);
+		const engine = this.engine;
+		const assets = this.engine.assets;
 		const state = read(assets);
 		// TODO: asset state matches engines variant
 
-		const engine = this.engine;
-
 		const story = new MutableStory(assets, this.variant);
-		story.generate(state.seed, state.planet, WorldSize.Medium);
+		story._seed = state.seed;
+		story._planet = state.planet;
+		story._size = WorldSize.Medium;
 		story.goal = assets.get(Puzzle, state.goalPuzzle);
-		//story.world = state.world;
-		//story.dagobah = state.dagobah;
+		story.world = this.unwrapWorld(state.world, assets, state);
+		story.dagobah = this.unwrapWorld(state.dagobah, assets, state);
 		story.puzzles = [
 			state.puzzleIDs1.map(id => assets.get(Puzzle, id)),
 			state.puzzleIDs2.map(id => assets.get(Puzzle, id))
 		];
 
 		engine.story = story;
-		engine.currentZone = assets.get(Zone, state.currentZoneID);
+		engine.currentZone =
+			assets.get(Zone, state.currentZoneID, NullIfMissing) ?? assets.get(Zone, 0);
 		engine.currentWorld = state.onDagobah ? engine.dagobah : engine.world;
 		// TODO: engine.currentSector = engine.currentWorld.at(state.positionOnWorld);
 
@@ -309,11 +316,138 @@ class GameController extends EventTarget implements EventListenerObject {
 
 		engine.totalPlayTime = state.timeElapsed;
 		engine.currentPlayStart = new Date();
-
-		// TODO: handle world size
+		story.complexity = state.complexity;
 		// TODO: handle unknownCount
 		// TODO: handle unknownSum
 		this._showSceneView(engine.currentZone);
+
+		const state2 = engine.variant.takeSnapshot(engine);
+		const writer = new Writer();
+		const sizingStream = new DiscardingOutputStream();
+		writer.write(state2, sizingStream);
+		const stream2 = new OutputStream(sizingStream.offset);
+		writer.write(state2, stream2);
+
+		const { read: read2 } = Reader.build(new InputStream(stream2.buffer));
+		const assets2 = new AssetManager();
+		this.populateAssetManager(assets2);
+		const state3 = read2(assets2);
+
+		console.log(diff(state, state3));
+		printDifferences(diff(state, state3), state, state3);
+	}
+
+	private unwrapWorld(world: SavedWorld, assets: AssetManager, save: SaveState): World {
+		const w = new World(assets);
+
+		world.sectors.forEach((s, idx) => {
+			const sector = w.sectors[idx];
+
+			sector.visited = s.visited;
+			sector.zone = assets.get(Zone, s.zone, NullIfMissing);
+			sector.isGoal = s.isGoal;
+			sector.npc = assets.get(Tile, s.npc, NullIfMissing);
+			sector.additionalRequiredItem = assets.get(Tile, s.additionalRequiredItem, NullIfMissing);
+			sector.additionalGainItem = assets.get(Tile, s.additionalGainItem, NullIfMissing);
+			sector.requiredItem = assets.get(Tile, s.requiredItem, NullIfMissing);
+			sector.findItem = assets.get(Tile, s.findItem, NullIfMissing);
+			sector.puzzleIndex = s.puzzleIndex;
+			sector.solved1 = s.solved1;
+			sector.solved2 = s.solved2;
+			sector.solved3 = s.solved3;
+			sector.solved4 = s.solved4;
+			sector.zoneType = s.type;
+			sector.usedAlternateStrain = s.usedAlternateStrain;
+
+			if (!sector.zone) return;
+
+			for (const zone of RoomIterator(sector.zone, assets)) {
+				const savedZone = save.zones.get(zone.id);
+				zone.visited = savedZone.visited;
+
+				if (zone.visited) {
+					zone.counter = savedZone.counter;
+					zone.sectorCounter = savedZone.sectorCounter;
+					zone.random = savedZone.random;
+					zone.doorInLocation = savedZone.doorInLocation;
+					(zone as MutableZone).tileIDs = savedZone.tileIDs;
+					console.log(savedZone);
+					console.log("tileIDs:", zone.tileIDs);
+				}
+
+				const savedHotspots = save.hotspots.get(zone.id);
+				for (let i = 0; i < zone.hotspots.length; i++) {
+					const hotspot = zone.hotspots[i];
+					const savedHostpot = savedHotspots[i];
+
+					hotspot.enabled = savedHostpot.enabled;
+					hotspot.arg = savedHostpot.argument;
+
+					if (savedHostpot.type) {
+						hotspot.type = savedHostpot.type;
+						hotspot.x = savedHostpot.x;
+						hotspot.y = savedHostpot.y;
+					}
+				}
+
+				for (let i = zone.hotspots.length; i < savedHotspots.length; i++) {
+					const savedHostpot = savedHotspots[i];
+					const hotspot = new Hotspot();
+					hotspot.enabled = savedHostpot.enabled;
+					hotspot.arg = savedHostpot.argument;
+
+					if (savedHostpot.type) {
+						hotspot.type = savedHostpot.type;
+						hotspot.x = savedHostpot.x;
+						hotspot.y = savedHostpot.y;
+					}
+
+					zone.hotspots.push(hotspot);
+				}
+
+				if (zone.visited) {
+					const savedActions = save.actions.get(zone.id);
+					for (let i = 0; i < zone.actions.length; i++) {
+						zone.actions[i].enabled = savedActions[i];
+					}
+				}
+
+				if (zone.visited) {
+					const savedMonsters = save.monsters.get(zone.id);
+					for (let i = 0; i < zone.monsters.length; i++) {
+						const monster = zone.monsters[i] as MutableMonster;
+						const savedMonster = savedMonsters[i];
+						// TODO: apply remaining values
+						//face: number;
+						monster.enabled = savedMonster.enabled;
+						//position: Point;
+						//damageTaken: number;
+						monster.damageTaken = savedMonster.damageTaken;
+						monster.loot = savedMonster.loot;
+						//field10?: number;
+						//bulletX?: number;
+						//bulletY?: number;
+						//currentFrame?: number;
+						//facingDirection?: number;
+						monster.cooldown = savedMonster.cooldown;
+						//flag18?: boolean;
+						//flag20?: boolean;
+						//flag1c?: boolean;
+						//directionX?: number;
+						//directionY?: number;
+						//bulletOffset?: number;
+						//field60?: number;
+						//flag2c?: boolean;
+						//flag34?: boolean;
+						//hasItem?: boolean;
+						//preferredDirection?: number;
+						//waypoints?: Point[];
+					}
+				}
+			}
+		});
+
+		return w;
 	}
 
 	private async pickSaveGame(file: File = null) {
@@ -494,6 +628,38 @@ class GameController extends EventTarget implements EventListenerObject {
 
 	public get window(): MainWindow {
 		return this._window;
+	}
+}
+
+function printDifferences(differences: Differences, a: any, b: any): void {
+	let out = "\n";
+	for (const difference of differences) {
+		const c =
+			difference.type === DifferenceType.Added
+				? "+"
+				: difference.type === DifferenceType.Deleted
+				? "-"
+				: "~";
+
+		const left =
+			difference.type === DifferenceType.Deleted || difference.type === DifferenceType.Updated
+				? JSON.stringify(
+						difference.key.reduce((acc, k) => (acc instanceof Map ? acc.get(k) : acc[k]), a)
+				  )
+				: "";
+
+		const right =
+			difference.type === DifferenceType.Added || difference.type === DifferenceType.Updated
+				? JSON.stringify(
+						difference.key.reduce((acc, k) => (acc instanceof Map ? acc.get(k) : acc[k]), b)
+				  )
+				: "";
+
+		out += `${c} ${difference.key.join(".").padStart(20, " ")}  ${left} ${right}\n`;
+	}
+
+	if (out.trim()) {
+		console.log(out);
 	}
 }
 

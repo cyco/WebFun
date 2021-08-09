@@ -26,6 +26,14 @@ class MutableStory extends Story {
 	get puzzles(): [Puzzle[], Puzzle[]] {
 		return this._puzzles;
 	}
+
+	public set complexity(c: number) {
+		this._complexity = c;
+	}
+
+	public get complexity(): number {
+		return this._complexity;
+	}
 }
 
 export default MutableStory;

@@ -117,11 +117,11 @@ class SaveState {
 		this.zones.set(zone.id, {
 			id: zone.id,
 			planet: zone.planet,
-			visited: false,
-			counter: -1,
-			sectorCounter: -1,
-			random: -1,
-			doorInLocation: null,
+			visited: zone.visited,
+			counter: zone.counter,
+			sectorCounter: zone.sectorCounter,
+			random: zone.random,
+			doorInLocation: zone.doorInLocation,
 			tileIDs: new Int16Array(zone.tileIDs)
 		});
 		this.hotspots.set(

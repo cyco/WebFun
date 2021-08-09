@@ -56,8 +56,7 @@ class MainMenu extends Menu {
 						title: "Load World",
 						mnemonic: 0,
 						callback: () => controller.load(),
-						enabled: () => controller.data !== null,
-						beta: true
+						enabled: () => controller.data !== null
 					},
 					{
 						title: "Save World",
