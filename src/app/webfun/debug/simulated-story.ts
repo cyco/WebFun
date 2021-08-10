@@ -27,7 +27,7 @@ class SimulatedStory extends Story {
 	}
 
 	private _buildPuzzle(_: Zone, find: Tile, npc: Tile, required: Tile, required2: Tile) {
-		const item = this._world.at(4, 4);
+		const item = this.world.at(4, 4);
 		item.findItem = find;
 		item.npc = npc;
 		item.requiredItem = required;
@@ -45,9 +45,9 @@ class SimulatedStory extends Story {
 		world.at(3, 5).zone = surroundingZones[5];
 		world.at(4, 5).zone = surroundingZones[6];
 		world.at(5, 5).zone = surroundingZones[7];
-		this._world = world;
+		this.world = world;
 
-		this._dagobah = new World(assets);
+		this.dagobah = new World(assets);
 	}
 
 	private _initializeZone(zone: Zone, find: Tile, _npc: Tile, _required: Tile, _required2: Tile) {
@@ -105,9 +105,9 @@ class SimulatedStory extends Story {
 	}
 
 	public generate(seed: number, planet: Zone.Planet, size: WorldSize): void {
-		this._seed = seed;
-		this._planet = planet;
-		this._size = size;
+		this.seed = seed;
+		this.planet = planet;
+		this.size = size;
 
 		const copy = new World(this.assets);
 
@@ -116,7 +116,7 @@ class SimulatedStory extends Story {
 
 		for (let y = 0; y < World.Size.height; y++) {
 			for (let x = 0; x < World.Size.width; x++) {
-				const item = this._world.at(x, y);
+				const item = this.world.at(x, y);
 				const copiedItem = copy.at(x, y);
 
 				copiedItem.zone = mapZone(item.zone);
@@ -129,18 +129,10 @@ class SimulatedStory extends Story {
 			}
 		}
 
-		this._world = copy;
-		this._dagobah = copy;
+		this.world = copy;
+		this.dagobah = copy;
 
 		this.goal = this.assets.get(Puzzle, 0);
-	}
-
-	set world(w: World) {
-		this._world = w;
-	}
-
-	get world(): World {
-		return this._world;
 	}
 }
 

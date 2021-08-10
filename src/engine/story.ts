@@ -9,48 +9,23 @@ import { SaveState, Variant } from ".";
 
 class Story {
 	public goal: Puzzle;
-
-	public _seed: number;
-	public _planet: Zone.Planet;
-	public _size: WorldSize;
-	protected _world: World = null;
-	protected _dagobah: World = null;
-	protected _reseeded: boolean = false;
-	protected _puzzles: [Puzzle[], Puzzle[]] = [[], []];
-	protected _complexity: number;
+	public seed: number;
+	public planet: Zone.Planet;
+	public size: WorldSize;
+	public world: World = null;
+	public dagobah: World = null;
+	public reseeded: boolean = false;
+	public puzzles: [Puzzle[], Puzzle[]] = [[], []];
+	public complexity: number;
 
 	private _state: SaveState = null;
 
 	constructor(protected readonly assets: AssetManager, protected readonly variant: Variant) {}
 
-	get seed(): number {
-		return this._seed;
-	}
-
-	get planet(): Zone.Planet {
-		return this._planet;
-	}
-
-	get size(): WorldSize {
-		return this._size;
-	}
-
-	get world(): World {
-		return this._world;
-	}
-
-	get dagobah(): World {
-		return this._dagobah;
-	}
-
-	get puzzles(): [Puzzle[], Puzzle[]] {
-		return this._puzzles;
-	}
-
 	public generate(seed: number, planet: Zone.Planet, size: WorldSize, maxTries = 1): void {
-		this._seed = seed;
-		this._planet = planet;
-		this._size = size;
+		this.seed = seed;
+		this.planet = planet;
+		this.size = size;
 
 		const history: { seed: number; error: WorldGenerationError }[] = [];
 		let effectiveSeed = this.seed;
@@ -63,7 +38,7 @@ class Story {
 				if (!(error instanceof WorldGenerationError)) throw error;
 				history.push({ seed: effectiveSeed, error });
 			}
-			this._reseeded = true;
+			this.reseeded = true;
 			effectiveSeed = rand();
 		}
 
@@ -95,7 +70,7 @@ class Story {
 		generator.generate(state);
 
 		this.goal = assets.get(Puzzle, state.goalPuzzle);
-		this._puzzles = [
+		this.puzzles = [
 			state.puzzleIDs1.map(id => assets.get(Puzzle, id)),
 			state.puzzleIDs2.map(id => assets.get(Puzzle, id))
 		];
@@ -109,14 +84,14 @@ class Story {
 	private _setupWorld(state: SaveState, assets: AssetManager): void {
 		const world = state.world;
 
-		this._world = new World(assets);
+		this.world = new World(assets);
 
 		for (let i = 0; i < 100; i++) {
 			const sec = world.sectors[i];
 			if (!sec) continue;
 			if (sec.zone === -1) continue;
 
-			const sector = this._world.at(i);
+			const sector = this.world.at(i);
 			sector.npc = assets.get(Tile, sec.npc, NullIfMissing);
 			sector.findItem = assets.get(Tile, sec.findItem, NullIfMissing);
 			sector.requiredItem = assets.get(Tile, sec.requiredItem, NullIfMissing);
@@ -140,14 +115,14 @@ class Story {
 
 		state.dagobah = world;
 
-		this._dagobah = new World(assets);
+		this.dagobah = new World(assets);
 
 		for (let i = 0; i < 100; i++) {
 			const sec = world.sectors[i];
 			if (!sec) continue;
 			if (sec.zone === -1) continue;
 
-			const sector = this._dagobah.at(i);
+			const sector = this.dagobah.at(i);
 			sector.npc = assets.get(Tile, sec.npc, NullIfMissing);
 			sector.findItem = assets.get(Tile, sec.findItem, NullIfMissing);
 			sector.requiredItem = assets.get(Tile, sec.requiredItem, NullIfMissing);
@@ -163,10 +138,6 @@ class Story {
 
 	public get state(): SaveState {
 		return this._state;
-	}
-
-	public get complexity(): number {
-		return this._state.complexity;
 	}
 }
 

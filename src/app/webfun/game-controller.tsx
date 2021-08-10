@@ -52,7 +52,6 @@ import { EvaluationMode } from "src/engine/script";
 import { SpeechBubble } from "src/ui/components";
 import Indy from "src/variant/indy/indy";
 import { WorldSize } from "src/engine/generation";
-import MutableStory from "../editor/mutable-story";
 import { NullIfMissing } from "src/engine/asset-manager";
 import { Yoda } from "src/variant";
 import SaveState, { SavedWorld } from "src/engine/save-game/save-state";
@@ -283,10 +282,10 @@ class GameController extends EventTarget implements EventListenerObject {
 		const state = read(assets);
 		// TODO: asset state matches engines variant
 
-		const story = new MutableStory(assets, this.variant);
-		story._seed = state.seed;
-		story._planet = state.planet;
-		story._size = WorldSize.Medium;
+		const story = new Story(assets, this.variant);
+		story.seed = state.seed;
+		story.planet = state.planet;
+		story.size = WorldSize.Medium;
 		story.goal = assets.get(Puzzle, state.goalPuzzle);
 		story.world = this.unwrapWorld(state.world, assets, state);
 		story.dagobah = this.unwrapWorld(state.dagobah, assets, state);
