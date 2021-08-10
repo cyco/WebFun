@@ -370,8 +370,6 @@ class GameController extends EventTarget implements EventListenerObject {
 					zone.random = savedZone.random;
 					zone.doorInLocation = savedZone.doorInLocation;
 					(zone as MutableZone).tileIDs = savedZone.tileIDs;
-					console.log(savedZone);
-					console.log("tileIDs:", zone.tileIDs);
 				}
 
 				const savedHotspots = save.hotspots.get(zone.id);
