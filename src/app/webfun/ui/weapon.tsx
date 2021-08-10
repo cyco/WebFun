@@ -1,16 +1,15 @@
 import "./weapon.scss";
 
 import { Char, Tile } from "src/engine/objects";
-
 import { ColorPalette } from "src/engine/rendering";
 import { Component } from "src/ui";
-import GameData from "src/engine/game-data";
 import { PaletteView } from "src/app/webfun/ui";
 import { Size } from "src/util";
+import { AssetManager } from "src/engine";
 
 class Weapon extends Component {
 	public static readonly tagName = "wf-weapon";
-	public data: GameData = null;
+	public assets: AssetManager = null;
 	private _weapon: Char = null;
 	private _background: HTMLDivElement = (<div className="background" />) as HTMLDivElement;
 	private _paletteView: PaletteView = (

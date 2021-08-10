@@ -1,11 +1,11 @@
-import { GameData } from "src/engine";
+import { AssetManager } from "src/engine";
 import initialize from "./initialize";
 import Editor from "./editor";
 
-export default async (data: GameData = null): Promise<Editor> => {
+export default async (assets: AssetManager = null): Promise<Editor> => {
 	initialize();
 	const editor = new Editor();
-	await editor.run(data);
+	await editor.run(assets);
 
 	return editor;
 };

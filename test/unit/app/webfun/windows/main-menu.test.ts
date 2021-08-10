@@ -21,7 +21,7 @@ describe("WebFun.App.Windows.MainMenu", () => {
 	beforeEach(() => {
 		gameController = {
 			settings: {},
-			data: null,
+			assets: null,
 			engine: null,
 			newStory() {},
 			replayStory() {},
@@ -74,9 +74,9 @@ describe("WebFun.App.Windows.MainMenu", () => {
 					expect(newSector.title).toBe("New World");
 				});
 
-				it("is enabled when the game data is available", () => {
+				it("is enabled when the game assets are available", () => {
 					expect(newSector.enabled).toBeFalsy();
-					gameController.data = {} as any;
+					gameController.assets = {} as any;
 					expect(newSector.enabled).toBeTruthy();
 				});
 
@@ -110,9 +110,9 @@ describe("WebFun.App.Windows.MainMenu", () => {
 					expect(loadSector.title).toBe("Load World");
 				});
 
-				it("is enabled when the game data is available", () => {
+				it("is enabled when the game assets are available", () => {
 					expect(loadSector.enabled).toBeFalsy();
-					gameController.data = {} as any;
+					gameController.assets = {} as any;
 					expect(loadSector.enabled).toBeTruthy();
 				});
 

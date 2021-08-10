@@ -1,96 +1,59 @@
 import Char from "./char";
 import { Point } from "src/util";
-import Zone from "./zone";
 import { min } from "src/std/math";
-
-const MonsterInit = {
-	_id: -1,
-	enabled: true,
-	face: null as Char,
-	_position: null as Point,
-	_loot: -1,
-	_dropsLoot: false,
-	_waypoints: [] as Point[],
-	_damageTaken: 0,
-	field10: 0,
-	bulletX: 0,
-	bulletY: 0,
-	currentFrame: 0,
-	flag18: false,
-	flag1c: false,
-	flag20: false,
-	cooldown: 0,
-	hasItem: false,
-	flag2c: false,
-	preferredDirection: 1,
-	field32: 0,
-	flag34: false,
-	directionX: 0,
-	directionY: 0,
-	bulletOffset: 0,
-	facingDirection: Char.FrameEntry.Up,
-	field60: 0,
-	field62: 0,
-	currentActionFrame: 0
-};
+import { Monster as RawMonster } from "src/engine/file-format/types";
+import AssetManager, { NullIfMissing } from "../asset-manager";
+import Zone from "./zone";
 
 class Monster {
-	protected _id: number;
-	public enabled: boolean;
+	public id: number;
+	public enabled: boolean = true;
 	public face: Char;
-	protected _position: Point;
-	protected _loot: number;
-	protected _dropsLoot: boolean;
-	protected _waypoints: Point[];
-	private _damageTaken: number;
-	public field10: number;
-	public bulletX: number;
-	public bulletY: number;
-	public currentFrame: number;
-	public flag18: boolean;
-	public flag1c: boolean;
-	public flag20: boolean;
-	public cooldown: number;
-	public hasItem: boolean;
-	public flag2c: boolean;
-	public preferredDirection: number;
-	public field32: number;
-	public flag34: boolean;
-	public directionX: number;
-	public directionY: number;
-	public bulletOffset: number;
-	public facingDirection: Char.FrameEntry;
-	public field60: number;
-	public field62: number;
-	public currentActionFrame: number;
+	public position: Point;
+	public loot: number;
+	public dropsLoot: boolean;
+	public waypoints: Point[];
 
-	constructor(npc: Monster | typeof MonsterInit | Partial<typeof MonsterInit> = MonsterInit) {
-		Object.assign(this, MonsterInit, npc);
-	}
+	// Runtime attributes
+	private _damageTaken: number = 0;
+	public field10: number = 0;
+	public bulletX: number = 0;
+	public bulletY: number = 0;
+	public currentFrame: number = 0;
+	public flag18: boolean = false;
+	public flag1c: boolean = false;
+	public flag20: boolean = false;
+	public cooldown: number = 0;
+	public hasItem: boolean = false;
+	public flag2c: boolean = false;
+	public preferredDirection: Char.FrameEntry = Char.FrameEntry.Down;
+	public field32: number = 0;
+	public flag34: boolean = false;
+	public directionX: number = 0;
+	public directionY: number = 0;
+	public bulletOffset: number = 0;
+	public facingDirection: Char.FrameEntry = Char.FrameEntry.Up;
+	public field60: number = 0;
+	public field62: number = 0;
+	public currentActionFrame: number = 0;
 
-	get id(): number {
-		return this._id;
-	}
+	constructor(id: number, data: Monster | RawMonster, assets: AssetManager) {
+		this.id = id;
+		this.position = new Point(data.x, data.y, Zone.Layer.Object);
+		this.dropsLoot = data.dropsLoot;
+		this.loot = data.loot;
 
-	get loot(): number {
-		return this._loot;
-	}
-
-	get dropsLoot(): boolean {
-		return this._dropsLoot;
-	}
-
-	get waypoints(): Point[] {
-		return this._waypoints;
-	}
-
-	get position(): Point {
-		return this._position;
-	}
-
-	set position(p: Point) {
-		console.assert(p.z === Zone.Layer.Object, "Monsters must be placed on object layer!");
-		this._position = p;
+		if (data instanceof Monster) {
+			this.face = data.face;
+			this.waypoints = data.waypoints.map(p => new Point(p.x, p.y));
+		} else {
+			this.face = assets.get(Char, data.character, NullIfMissing);
+			const waypoints = [];
+			for (let i = 0; i < data.waypoints.length; i += 2) {
+				waypoints.push(new Point(data.waypoints[i], data.waypoints[i + 1]));
+			}
+			this.waypoints = waypoints;
+		}
 	}
 
 	public get alive(): boolean {

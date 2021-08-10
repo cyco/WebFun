@@ -6,11 +6,12 @@ import { MenuItemInit, MenuItemSeparator } from "src/ui";
 import { ColorPalette } from "src/engine/rendering";
 import Component from "src/ui/component";
 import { ModalPrompt } from "src/ux";
-import { MutableMonster } from "src/engine/mutable-objects";
+import { Monster } from "src/engine/objects";
 import MonsterLayerMonster from "./monster-layer-monster";
 import { Point } from "src/util";
 import { Updater } from "../../reference";
 import ServiceContainer from "../../service-container";
+import { AssetManager } from "src/engine";
 
 class MonsterLayer extends Component {
 	public static readonly tagName = "wf-monster-layer";
@@ -21,6 +22,7 @@ class MonsterLayer extends Component {
 	public di: ServiceContainer;
 	private _zone: Zone = null;
 	private updater: Updater;
+	public assets: AssetManager = null;
 
 	protected connectedCallback(): void {
 		this.updater = this.di.get(Updater);
@@ -78,7 +80,7 @@ class MonsterLayer extends Component {
 	}
 
 	public getMenuForTile(point: Point): Partial<MenuItemInit>[] {
-		const monsters = this._findMonstersAt(point) as MutableMonster[];
+		const monsters = this._findMonstersAt(point) as Monster[];
 		monsters.forEach(monster =>
 			console.log(
 				monster.id,
@@ -92,13 +94,18 @@ class MonsterLayer extends Component {
 			{
 				title: "Place Monster",
 				callback: (): void => {
-					const monster = new MutableMonster();
-					monster.id = this.zone.monsters.length;
-					monster.face = this.enemies.first();
-					monster.position = point;
-					monster.loot = -1;
-					monster.dropsLoot = false;
-					monster.waypoints = [];
+					const monster = new Monster(
+						this.zone.monsters.length,
+						{
+							character: this.enemies.first()?.id,
+							x: point.x,
+							y: point.y,
+							loot: -1,
+							dropsLoot: false,
+							waypoints: new Int32Array()
+						},
+						this.assets
+					);
 					this.zone.monsters.push(monster);
 					this.draw();
 				}

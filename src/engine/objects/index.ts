@@ -9,4 +9,18 @@ import Sound from "./sound";
 import Tile from "./tile";
 import Zone from "./zone";
 
-export { Char, Condition, Instruction, Puzzle, Tile, Action, Zone, Hotspot, Monster, Sound };
+const StartupImage = 0;
+
+export {
+	Char,
+	Condition,
+	StartupImage,
+	Instruction,
+	Puzzle,
+	Tile,
+	Action,
+	Zone,
+	Hotspot,
+	Monster,
+	Sound
+};

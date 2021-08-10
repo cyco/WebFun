@@ -2,46 +2,42 @@ import Tile from "./tile";
 import { CharFrameEntry } from "./char-frame-entry";
 
 class CharFrame {
-	private _tiles: Tile[];
+	public tiles: Tile[];
 
 	constructor(tiles: Tile[]) {
-		this._tiles = tiles;
-	}
-
-	get tiles(): Tile[] {
-		return this._tiles;
+		this.tiles = tiles;
 	}
 
 	get up(): Tile {
-		return this._tiles[CharFrameEntry.Up];
+		return this.tiles[CharFrameEntry.Up];
 	}
 
 	get down(): Tile {
-		return this._tiles[CharFrameEntry.Down];
+		return this.tiles[CharFrameEntry.Down];
 	}
 
 	get extensionUp(): Tile {
-		return this._tiles[CharFrameEntry.ExtensionUp];
+		return this.tiles[CharFrameEntry.ExtensionUp];
 	}
 
 	get left(): Tile {
-		return this._tiles[CharFrameEntry.Left];
+		return this.tiles[CharFrameEntry.Left];
 	}
 
 	get extensionDown(): Tile {
-		return this._tiles[CharFrameEntry.ExtensionDown];
+		return this.tiles[CharFrameEntry.ExtensionDown];
 	}
 
 	get extensionLeft(): Tile {
-		return this._tiles[CharFrameEntry.ExtensionLeft];
+		return this.tiles[CharFrameEntry.ExtensionLeft];
 	}
 
 	get right(): Tile {
-		return this._tiles[CharFrameEntry.Right];
+		return this.tiles[CharFrameEntry.Right];
 	}
 
 	get extensionRight(): Tile {
-		return this._tiles[CharFrameEntry.ExtensionRight];
+		return this.tiles[CharFrameEntry.ExtensionRight];
 	}
 }
 

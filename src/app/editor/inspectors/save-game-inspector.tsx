@@ -8,12 +8,13 @@ import GameController from "src/app/webfun/game-controller";
 import { IconButton } from "src/ui/components";
 import World from "src/engine/world";
 import { Writer } from "src/engine/save-game";
-import { AssetManager, Story } from "src/engine";
+import { Story } from "src/engine";
 import { Zone, Puzzle, Tile, Sound, Char } from "src/engine/objects";
 import { Yoda } from "src/variant";
 import { WorldSize } from "src/engine/generation";
 import ServiceContainer from "../service-container";
 import { defaultSettings } from "src/settings";
+import { NullIfMissing } from "src/engine/asset-manager";
 
 class SaveGameInspector extends AbstractInspector {
 	private _editorView: EditorView = (
@@ -63,10 +64,10 @@ class SaveGameInspector extends AbstractInspector {
 	public playSaveGame(): void {
 		const base = JSON.parse(process.env["WEBFUN_GAMES"])[0];
 		const controller = new GameController(Yoda, base, observable(defaultSettings));
-		controller.data = this.data.currentData.copy();
+		controller.assets = this.data.currentData;
 		controller.palette = this.data.palette.slice();
 
-		const data = controller.data;
+		const assets = controller.assets;
 		const engine = controller.engine;
 		const state = this.data.state;
 		const story = new Story(engine.assets, engine.variant);
@@ -75,34 +76,29 @@ class SaveGameInspector extends AbstractInspector {
 		//story.dagobah = this._createWorld(state.dagobah);
 
 		engine.inventory.removeAllItems();
-		Array.from(state.inventoryIDs).forEach(id => engine.inventory.addItem(data.tiles[id]));
+		Array.from(state.inventoryIDs).forEach(id => engine.inventory.addItem(assets.get(Tile, id)));
 
 		engine.hero.ammo = state.currentAmmo;
-		engine.hero.weapon = state.currentWeapon !== -1 ? data.characters[state.currentWeapon] : null;
+		engine.hero.weapon =
+			state.currentWeapon !== -1 ? assets.get(Char, state.currentWeapon, NullIfMissing) : null;
 		engine.hero.location = state.positionOnZone;
 		engine.hero.health = (4 - state.livesLost) * 100 - state.damageTaken;
 		engine.currentWorld = state.onDagobah ? story.dagobah : story.world;
 
 		engine.story = story;
 
-		engine.assets.populate(Zone, data.zones);
-		engine.assets.populate(Tile, data.tiles);
-		engine.assets.populate(Puzzle, data.puzzles);
-		engine.assets.populate(Char, data.characters);
-		engine.assets.populate(Sound, data.sounds);
+		engine.assets.populate(Zone, assets.getAll(Zone));
+		engine.assets.populate(Tile, assets.getAll(Tile));
+		engine.assets.populate(Puzzle, assets.getAll(Puzzle));
+		engine.assets.populate(Char, assets.getAll(Char));
+		engine.assets.populate(Sound, assets.getAll(Sound));
 
 		controller.show(this.window.manager);
-		controller.jumpStartEngine(controller.data.zones[state.currentZoneID]);
+		controller.jumpStartEngine(controller.assets.get(Zone, state.currentZoneID));
 	}
 
 	private _createWorld(world: World): World {
-		const data = this._editorView.data;
-		const assets = new AssetManager();
-		assets.populate(Zone, data.zones);
-		assets.populate(Tile, data.tiles);
-		assets.populate(Puzzle, data.puzzles);
-		assets.populate(Char, data.characters);
-		assets.populate(Sound, data.sounds);
+		const assets = this._editorView.assets;
 		const result = new World(assets);
 
 		for (let y = 0; y < 10; y++) {

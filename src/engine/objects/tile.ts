@@ -1,4 +1,5 @@
 import TileAttributes from "./tile-attributes";
+import { Tile as RawTile } from "src/engine/file-format/types";
 
 export const WIDTH = 32;
 export const HEIGHT = 32;
@@ -10,33 +11,24 @@ class Tile {
 	public static readonly SIZE = SIZE;
 	public static readonly Attributes = TileAttributes;
 
-	protected _id: number = 0;
-	protected _name: string = "";
-	protected _attributes: number = 0;
-	protected _imageData: Uint8Array;
+	public id: number;
+	public name: string;
+	public attributes: number;
+	public imageData: Uint8Array;
+
+	public constructor(id: number, data: Tile | RawTile) {
+		this.id = id;
+		this.name = data.name ?? "";
+		this.attributes = data.attributes;
+		this.imageData = data instanceof Tile ? data.imageData : data.pixels;
+	}
 
 	public isOpaque(): boolean {
 		return !this.hasAttributes(Tile.Attributes.Transparent);
 	}
 
 	public hasAttributes(mask: number): boolean {
-		return (this._attributes & mask) === mask;
-	}
-
-	public get id(): number {
-		return this._id;
-	}
-
-	public get name(): string {
-		return this._name;
-	}
-
-	public get attributes(): number {
-		return this._attributes;
-	}
-
-	public get imageData(): Uint8Array {
-		return this._imageData;
+		return (this.attributes & mask) === mask;
 	}
 }
 

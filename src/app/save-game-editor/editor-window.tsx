@@ -1,7 +1,7 @@
 import "./editor-window.scss";
 
 import { AbstractWindow, ProgressIndicator, IconButton } from "src/ui/components";
-import { ColorPalette, GameData, AssetManager } from "src/engine";
+import { ColorPalette, AssetManager } from "src/engine";
 import { DataProvider, PaletteProvider } from "src/app/editor/data";
 import { Reader as SaveGameReaderFactory, SaveState, Writer } from "src/engine/save-game";
 import { Tile, Zone, Puzzle, Char, Sound } from "src/engine/objects";
@@ -45,28 +45,44 @@ class EditorWindow extends AbstractWindow {
 
 		try {
 			const { type, read } = SaveGameReaderFactory.build(stream);
-			const gameData = await new DataProvider().provide(type);
+			const data = await new DataProvider().provide(type);
 			const palette = await new PaletteProvider().provide(type);
 
 			const assets = new AssetManager();
-			assets.populate(Zone, gameData.zones);
-			assets.populate(Tile, gameData.tiles);
-			assets.populate(Puzzle, gameData.puzzles);
-			assets.populate(Char, gameData.characters);
-			assets.populate(Sound, gameData.sounds);
+			assets.populate(Uint8Array, [data.startup]);
+			assets.populate(
+				Sound,
+				data.sounds.map((s, idx) => new Sound(idx, s))
+			);
+			assets.populate(
+				Tile,
+				data.tiles.map((t, idx) => new Tile(idx, t))
+			);
+			assets.populate(
+				Puzzle,
+				data.puzzles.map((p, idx) => new Puzzle(idx, p, assets))
+			);
+			assets.populate(
+				Char,
+				data.characters.map((c, idx) => new Char(idx, c, assets))
+			);
+			assets.populate(
+				Zone,
+				data.zones.map((z, idx) => new Zone(idx, z, assets))
+			);
 			this._assets = assets;
 			const saveGame = read(assets);
 			console.log(saveGame);
 
-			this.presentSaveGame(saveGame, gameData, palette);
+			this.presentSaveGame(saveGame, assets, palette);
 		} catch (e) {
 			console.warn(e);
 		}
 	}
 
-	public presentSaveGame(saveGame: SaveState, gameData: GameData, palette: ColorPalette): void {
+	public presentSaveGame(saveGame: SaveState, assets: AssetManager, palette: ColorPalette): void {
 		this._progressIndicator.remove();
-		this._editorView.presentState(saveGame, gameData, palette);
+		this._editorView.presentState(saveGame, assets, palette);
 		this.content.appendChild(this._editorView);
 	}
 

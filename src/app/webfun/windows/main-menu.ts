@@ -44,7 +44,7 @@ class MainMenu extends Menu {
 						title: "New World",
 						mnemonic: 0,
 						callback: () => controller.newStory(),
-						enabled: () => controller.data !== null
+						enabled: () => controller.assets !== null
 					},
 					{
 						title: "Replay Story",
@@ -56,7 +56,7 @@ class MainMenu extends Menu {
 						title: "Load World",
 						mnemonic: 0,
 						callback: () => controller.load(),
-						enabled: () => controller.data !== null
+						enabled: () => controller.assets !== null
 					},
 					{
 						title: "Save World",

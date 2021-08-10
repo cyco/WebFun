@@ -5,7 +5,7 @@ import { Yoda } from "src/variant";
 import { ZoneScene } from "src/engine/scenes";
 import { CanvasRenderer } from "src/app/webfun/rendering";
 import { SceneView } from "src/app/webfun/ui";
-import { GameData, Engine, Story, AssetManager, Variant } from "src/engine";
+import { Engine, Story, AssetManager, Variant } from "src/engine";
 import { WorldSize } from "src/engine/generation";
 import { Tile, Zone, Puzzle, Sound, Char, Action } from "src/engine/objects";
 import { PaletteAnimation, ColorPalette } from "src/engine/rendering";
@@ -15,8 +15,9 @@ import { Point } from "src/util";
 import { SimulatedStory } from "src/app/webfun/debug/index";
 import DebuggingScriptProcessingUnit from "src/app/webfun/debug/debugging-script-processing-unit";
 import { EvaluationMode, ScriptProcessingUnit } from "src/engine/script";
+import { Data } from "src/engine/file-format";
 
-let rawData: any, paletteData: any;
+let rawData: Data, paletteData: any;
 
 class GameplayContext {
 	public engine: Engine;
@@ -31,7 +32,7 @@ class GameplayContext {
 		this.settings = Object.assign({}, defaultSettings);
 	}
 
-	public async prepare(loadGameData: (_: Variant) => Promise<any>): Promise<void> {
+	public async prepare(loadGameData: (_: Variant) => Promise<Data>): Promise<void> {
 		if (rawData) {
 			return;
 		}
@@ -127,15 +128,31 @@ class GameplayContext {
 		this.engine.settings = this.settings;
 	}
 
-	private buildAssetManagerFromGameData(rawData: any) {
-		const data = new GameData(rawData);
+	private buildAssetManagerFromGameData(rawData: Data) {
+		const data = rawData;
 		const assets = new AssetManager();
 
-		assets.populate(Zone, data.zones);
-		assets.populate(Tile, data.tiles);
-		assets.populate(Puzzle, data.puzzles);
-		assets.populate(Char, data.characters);
-		assets.populate(Sound, data.sounds);
+		assets.populate(Uint8Array, [data.startup]);
+		assets.populate(
+			Sound,
+			data.sounds.map((s, idx) => new Sound(idx, s))
+		);
+		assets.populate(
+			Tile,
+			data.tiles.map((t, idx) => new Tile(idx, t))
+		);
+		assets.populate(
+			Puzzle,
+			data.puzzles.map((p, idx) => new Puzzle(idx, p, assets))
+		);
+		assets.populate(
+			Char,
+			data.characters.map((c, idx) => new Char(idx, c, assets))
+		);
+		assets.populate(
+			Zone,
+			data.zones.map((z, idx) => new Zone(idx, z, assets))
+		);
 
 		return assets;
 	}
@@ -165,7 +182,7 @@ class GameplayContext {
 		engine.story = story;
 		story.generate(story.seed, story.planet, story.size);
 
-		engine.metronome.tickDuration = 1;
+		engine.metronome.tickDuration = debug ? 50 : 1;
 		engine.metronome.ontick = (delta: number) => engine.update(delta);
 		engine.metronome.onrender = () => engine.render();
 

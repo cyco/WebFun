@@ -1,9 +1,8 @@
-import { ColorPalette } from "src/engine";
+import { AssetManager, ColorPalette } from "src/engine";
 import { Tile, Zone } from "src/engine/objects";
 import { Size, downloadImage } from "src/util";
 import { ceil } from "src/std/math";
 import { drawZoneImageData } from "src/app/webfun/rendering";
-import { MutableZone } from "src/engine/mutable-objects";
 
 class TilesetExporter {
 	private colorPalette: ColorPalette;
@@ -12,10 +11,32 @@ class TilesetExporter {
 	}
 
 	export(tiles: Tile[], filename: string): Promise<void> {
-		const zone = new MutableZone();
-		zone.tileStore = tiles;
-		zone.size = this.findFittingSize(tiles.length);
-		zone.tileIDs = new Int16Array(zone.size.width * zone.size.height * Zone.LAYERS);
+		const assets = new AssetManager();
+		assets.populate(Tile, tiles);
+
+		const size = this.findFittingSize(tiles.length);
+		const zone = new Zone(
+			0,
+			{
+				zoneType: Zone.Type.None.rawValue,
+				planet: Zone.Planet.None.rawValue,
+
+				width: size.width,
+				height: size.height,
+				providedItemIDs: new Int16Array(),
+				goalItemIDs: new Int16Array(),
+				npcIDs: new Int16Array(),
+				requiredItemIDs: new Int16Array(),
+
+				monsters: [],
+				hotspots: [],
+				actions: [],
+
+				unknown: -1,
+				tileIDs: new Int16Array(size.width * size.height * Zone.LAYERS)
+			},
+			assets
+		);
 		zone.tileIDs.fill(-1);
 		for (let i = 0; i < tiles.length; i++) {
 			zone.tileIDs[i * 3] = tiles[i].id;

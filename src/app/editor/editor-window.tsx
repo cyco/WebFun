@@ -1,7 +1,7 @@
 import "./editor-window.scss";
 
 import { AbstractWindow, ProgressIndicator } from "src/ui/components";
-import { GameData, Variant, readGameDataFile, ColorPalette } from "src/engine";
+import { Variant, readGameDataFile, ColorPalette, AssetManager } from "src/engine";
 import { Menu, WindowMenuItem } from "src/ui";
 import { Indy as VariantIndy, Yoda as VariantYoda } from "src/variant";
 
@@ -21,6 +21,7 @@ import CoverageInspector from "src/app/editor/inspectors/coverage-inspector";
 import buildEditorMenu from "./menu";
 import ServiceContainer from "./service-container";
 import { Resolver, Updater } from "./reference";
+import { Char, Puzzle, Sound, Tile, Zone } from "src/engine/objects";
 
 class EditorWindow extends AbstractWindow {
 	static readonly tagName = "wf-resource-editor-window";
@@ -46,20 +47,39 @@ class EditorWindow extends AbstractWindow {
 	}
 
 	public async loadStream(stream: InputStream, type: Variant): Promise<void> {
-		const rawData = readGameDataFile(stream, type);
-		const data = new GameData(rawData);
-		(data as any)._type = type;
-		this.di.register(GameData, data);
-		await this.loadGameData(data);
+		const data = readGameDataFile(stream, type);
+		const assets = new AssetManager();
+		assets.populate(Uint8Array, [data.startup]);
+		assets.populate(
+			Sound,
+			data.sounds.map((s, idx) => new Sound(idx, s))
+		);
+		assets.populate(
+			Tile,
+			data.tiles.map((t, idx) => new Tile(idx, t))
+		);
+		assets.populate(
+			Puzzle,
+			data.puzzles.map((p, idx) => new Puzzle(idx, p, assets))
+		);
+		assets.populate(
+			Char,
+			data.characters.map((c, idx) => new Char(idx, c, assets))
+		);
+		assets.populate(
+			Zone,
+			data.zones.map((z, idx) => new Zone(idx, z, assets))
+		);
+
+		await this.loadGameData(assets, type);
 	}
 
-	public async loadGameData(data: GameData): Promise<void> {
-		const palette = await new PaletteProvider().provide(data.type);
+	public async loadGameData(assets: AssetManager, type: Variant): Promise<void> {
+		const palette = await new PaletteProvider().provide(type);
 
 		const di = this.di;
-		const dm = new DataManager(data, palette, data.type);
+		const dm = new DataManager(assets, palette, type);
 		di.register(DataManager, dm);
-		di.register(GameData, dm.currentData);
 		di.register(ColorPalette, palette);
 		di.register(Updater, new Updater(dm.currentData));
 		di.register(Resolver, new Resolver(dm.currentData));

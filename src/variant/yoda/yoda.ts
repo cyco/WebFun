@@ -9,7 +9,6 @@ import { Char, Puzzle, Tile, Zone } from "src/engine/objects";
 import { Engine, Story } from "src/engine";
 import { Point, rand, Size } from "src/util";
 import { WorldSize } from "src/engine/generation";
-import { MutablePuzzle } from "src/engine/mutable-objects";
 import { SaveState } from "src/engine/save-game";
 import { Sprite } from "src/engine/rendering";
 
@@ -116,13 +115,16 @@ class Yoda extends Variant {
 		const size = engine.settings.worldSize;
 		const lastPlanet = engine.settings.lastPlanet;
 
+		engine.assets.get(Puzzle, this.goalIDs.RESCUE_YODA).type = Puzzle.Type.Disabled;
+		engine.assets.get(Puzzle, this.goalIDs.CAR).type = Puzzle.Type.Disabled;
+
 		if (gamesWon >= 1) {
-			const puzzle: MutablePuzzle = engine.assets.get(Puzzle, this.goalIDs.RESCUE_YODA) as any;
+			const puzzle: Puzzle = engine.assets.get(Puzzle, this.goalIDs.RESCUE_YODA) as any;
 			puzzle.type = Puzzle.Type.End;
 		}
 
 		if (gamesWon >= 10) {
-			const puzzle: MutablePuzzle = engine.assets.get(Puzzle, this.goalIDs.CAR) as any;
+			const puzzle: Puzzle = engine.assets.get(Puzzle, this.goalIDs.CAR) as any;
 			puzzle.type = Puzzle.Type.End;
 		}
 		const planets = [Zone.Planet.Endor, Zone.Planet.Hoth, Zone.Planet.Tatooine];

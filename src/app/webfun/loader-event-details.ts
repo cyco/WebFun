@@ -1,7 +1,8 @@
-import { GameData, ColorPalette } from "src/engine";
+import { ColorPalette } from "src/engine";
+import { Data } from "src/engine/file-format";
 
 declare interface LoaderEventDetails {
-	data: GameData;
+	data: Data;
 	palette: ColorPalette;
 	progress: number;
 	pixels: Uint8Array;

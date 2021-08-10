@@ -5,11 +5,10 @@ import {
 	SceneView,
 	CurrentStatusInfo
 } from "./ui";
-import { Char, Tile, Zone, Sound, Puzzle, Hotspot } from "src/engine/objects";
+import { Char, Tile, Zone, Monster, Sound, Puzzle, Hotspot } from "src/engine/objects";
 import {
 	ColorPalette,
 	Engine,
-	GameData,
 	Hero,
 	AssetManager,
 	Variant,
@@ -58,8 +57,8 @@ import { Yoda } from "src/variant";
 import SaveState, { SavedWorld } from "src/engine/save-game/save-state";
 import World from "src/engine/world";
 import RoomIterator from "src/engine/room-iterator";
-import { MutableMonster, MutableZone } from "src/engine/mutable-objects";
 import diff from "src/util/diff";
+import { Data } from "src/engine/file-format";
 
 export const Event = {
 	DidLoadData: "didLoadData"
@@ -77,7 +76,7 @@ export interface GameSource {
 class GameController extends EventTarget implements EventListenerObject {
 	public static readonly Event = Event;
 	public settings: Settings & EventTarget;
-	public data: GameData;
+	public assets: AssetManager;
 	public palette: ColorPalette;
 	private _window: MainWindow;
 	private _sceneView: SceneView = (<SceneView />) as SceneView;
@@ -85,6 +84,7 @@ class GameController extends EventTarget implements EventListenerObject {
 	private _eventHandler = new GameEventHandler();
 	public readonly variant: Variant;
 	public readonly gameSource: GameSource;
+	private rawData: Data;
 
 	constructor(variant: Variant, gameSource: GameSource, settings: Settings & EventTarget) {
 		super();
@@ -290,6 +290,7 @@ class GameController extends EventTarget implements EventListenerObject {
 		story.goal = assets.get(Puzzle, state.goalPuzzle);
 		story.world = this.unwrapWorld(state.world, assets, state);
 		story.dagobah = this.unwrapWorld(state.dagobah, assets, state);
+
 		story.puzzles = [
 			state.puzzleIDs1.map(id => assets.get(Puzzle, id)),
 			state.puzzleIDs2.map(id => assets.get(Puzzle, id))
@@ -330,7 +331,7 @@ class GameController extends EventTarget implements EventListenerObject {
 
 		const { read: read2 } = Reader.build(new InputStream(stream2.buffer));
 		const assets2 = new AssetManager();
-		this.populateAssetManager(assets2);
+		this.populateAssetManager(this.rawData, assets2);
 		const state3 = read2(assets2);
 
 		console.log(diff(state, state3));
@@ -370,7 +371,7 @@ class GameController extends EventTarget implements EventListenerObject {
 					zone.sectorCounter = savedZone.sectorCounter;
 					zone.random = savedZone.random;
 					zone.doorInLocation = savedZone.doorInLocation;
-					(zone as MutableZone).tileIDs = savedZone.tileIDs;
+					(zone as Zone).tileIDs = savedZone.tileIDs;
 				}
 
 				const savedHotspots = save.hotspots.get(zone.id);
@@ -390,7 +391,7 @@ class GameController extends EventTarget implements EventListenerObject {
 
 				for (let i = zone.hotspots.length; i < savedHotspots.length; i++) {
 					const savedHostpot = savedHotspots[i];
-					const hotspot = new Hotspot();
+					const hotspot = new Hotspot(zone.hotspots.length, savedHostpot as any);
 					hotspot.enabled = savedHostpot.enabled;
 					hotspot.arg = savedHostpot.argument;
 
@@ -413,7 +414,7 @@ class GameController extends EventTarget implements EventListenerObject {
 				if (zone.visited) {
 					const savedMonsters = save.monsters.get(zone.id);
 					for (let i = 0; i < zone.monsters.length; i++) {
-						const monster = zone.monsters[i] as MutableMonster;
+						const monster = zone.monsters[i] as Monster;
 						const savedMonster = savedMonsters[i];
 						// TODO: apply remaining values
 						//face: number;
@@ -509,19 +510,36 @@ class GameController extends EventTarget implements EventListenerObject {
 		await this._engine.metronome.stop();
 		this._engine.teardown();
 		this._engine = null;
-		this.data = null;
+		this.rawData = null;
+		this.assets = null;
 
 		this._sceneView.manager.clear();
 
 		if ((window as any).engine === this._engine) (window as any).engine = null;
 	}
 
-	private populateAssetManager(manager: AssetManager) {
-		manager.populate(Zone, this.data.zones);
-		manager.populate(Tile, this.data.tiles);
-		manager.populate(Puzzle, this.data.puzzles);
-		manager.populate(Char, this.data.characters);
-		manager.populate(Sound, this.data.sounds);
+	private populateAssetManager(data: Data, assets: AssetManager) {
+		assets.populate(Uint8Array, [data.startup]);
+		assets.populate(
+			Sound,
+			data.sounds.map((s, idx) => new Sound(idx, s))
+		);
+		assets.populate(
+			Tile,
+			data.tiles.map((t, idx) => new Tile(idx, t))
+		);
+		assets.populate(
+			Puzzle,
+			data.puzzles.map((p, idx) => new Puzzle(idx, p, assets))
+		);
+		assets.populate(
+			Char,
+			data.characters.map((c, idx) => new Char(idx, c, assets))
+		);
+		assets.populate(
+			Zone,
+			data.zones.map((z, idx) => new Zone(idx, z, assets))
+		);
 	}
 
 	private _showSceneView(zone: Zone = this._engine.assets.find(Zone, z => z.isLoadingZone())) {
@@ -592,14 +610,15 @@ class GameController extends EventTarget implements EventListenerObject {
 
 			loader.onload = ({ detail: { data } }) => {
 				loadingView.progress = 1.0;
-				this.data = data;
+				this.rawData = data;
 
-				this.populateAssetManager(this._engine.assets);
+				this.populateAssetManager(this.rawData, this._engine.assets);
+				this.assets = this._engine.assets;
 
 				this.dispatchEvent(
 					new CustomEvent(Event.DidLoadData, {
 						detail: {
-							data: this.data,
+							data: this.rawData,
 							palette: this.palette
 						}
 					})

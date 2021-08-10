@@ -2,7 +2,6 @@ import { ScriptResult, EvaluationMode } from "./script";
 import Engine from "./engine";
 import { Direction } from "src/util";
 import { Monster, Char, Hotspot, Zone, Tile } from "./objects";
-import { MutableHotspot } from "./mutable-objects";
 import AssetManager from "./asset-manager";
 import { Yoda } from "src/variant";
 
@@ -24,10 +23,13 @@ function hitMonster(monster: Monster, weapon: Char, zone: Zone, assets: AssetMan
 }
 
 function _dropLoot(monster: Monster, zone: Zone, assets: AssetManager) {
-	const hotspot = new MutableHotspot();
-	hotspot.type = Hotspot.Type.DropItem;
-	hotspot.enabled = true;
-	hotspot.location = monster.position;
+	const hotspot = new Hotspot(0, {
+		type: Hotspot.Type.DropItem.rawValue,
+		enabled: true,
+		x: monster.position.x,
+		y: monster.position.y,
+		argument: -1
+	});
 
 	let itemId = -1;
 	if (monster.loot > 0) itemId = monster.loot - 1;

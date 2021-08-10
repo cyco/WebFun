@@ -84,7 +84,7 @@ class HotspotType {
 
 	public static fromNumber(num: number): HotspotType {
 		if (!HotspotType.isHotspotType(num)) {
-			throw `Value ${num} does not specify a valid hotspot type!`;
+			throw new RangeError(`Value ${num} does not specify a valid hotspot type!`);
 		}
 
 		return HotspotType.knownTypes[num];

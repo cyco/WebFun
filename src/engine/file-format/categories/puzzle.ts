@@ -17,8 +17,8 @@ const parsePuzzle = (stream: InputStream, _: Data, variant: Variant): Puzzle => 
 		type = stream.readUint32();
 	}
 
-	const item1Class = stream.readUint32();
-	const item2Class = stream.readUint32();
+	const item1Class = stream.readInt32();
+	let item2Class = stream.readInt32();
 	const unknown3 = stream.readUint16();
 
 	const texts: string[] = Array.Repeat("", 5);
@@ -32,6 +32,8 @@ const parsePuzzle = (stream: InputStream, _: Data, variant: Variant): Puzzle => 
 	if (variant === Yoda || variant === YodaDemo) {
 		item2 = stream.readUint16();
 	}
+
+	if (!item2) item2Class = -1;
 
 	return {
 		name: "",

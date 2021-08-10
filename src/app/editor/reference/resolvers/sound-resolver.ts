@@ -1,5 +1,5 @@
-import { GameData } from "src/engine";
-import { Char, Sound } from "src/engine/objects";
+import { AssetManager } from "src/engine";
+import { Char, Sound, Zone } from "src/engine/objects";
 import { ReferencesTo } from "src/app/editor/reference";
 import { equal } from "src/util/functional";
 import ResolverInterface from "./resolver-interface";
@@ -7,22 +7,22 @@ import PlaySound from "src/engine/script/instructions/play-sound";
 import StopSound from "src/engine/script/instructions/stop-sound";
 
 class SoundResolver implements ResolverInterface<Sound> {
-	private data: GameData;
+	private _assets: AssetManager;
 
-	constructor(data: GameData) {
-		this.data = data;
+	constructor(assets: AssetManager) {
+		this._assets = assets;
 	}
 
 	public resolve(needle: Sound, op = equal): ReferencesTo<Sound> {
 		const result: ReferencesTo<Sound> = [];
 
-		for (const sound of this.data.sounds) {
+		for (const sound of this._assets.getAll(Sound)) {
 			if (op(sound.id, needle.id)) {
 				result.push({ from: sound, to: sound, via: ["id"] });
 			}
 		}
 
-		for (const zone of this.data.zones) {
+		for (const zone of this._assets.getAll(Zone)) {
 			for (const action of zone.actions) {
 				for (const instruction of action.instructions) {
 					if (
@@ -44,7 +44,7 @@ class SoundResolver implements ResolverInterface<Sound> {
 			}
 		}
 
-		for (const character of this.data.characters) {
+		for (const character of this._assets.getAll(Char)) {
 			if (
 				character.type === Char.Type.Weapon &&
 				character.reference !== -1 &&

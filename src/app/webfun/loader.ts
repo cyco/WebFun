@@ -1,10 +1,11 @@
 import { EventTarget } from "src/util";
-import { GameData, readGameDataFileProgressively, ResourceManager, Variant } from "src/engine";
+import { AssetManager, readGameDataFileProgressively, ResourceManager, Variant } from "src/engine";
 
 import { ColorPalette } from "src/engine/rendering";
 import { Mixer } from "./audio";
 import LoaderEvent from "./loader-event";
 import { Sound } from "src/engine/objects";
+import { Data } from "src/engine/file-format";
 
 export const Events = {
 	Progress: "progress",
@@ -23,8 +24,8 @@ class Loader extends EventTarget {
 	public onloadstrings: (_: LoaderEvent) => void;
 	public onload: (_: LoaderEvent) => void;
 
-	private _rawData: any;
-	private _data: GameData;
+	private _rawData: Data;
+	private _assets: AssetManager;
 	private _palette: ColorPalette;
 	private _resources: ResourceManager;
 	private _mixer: Mixer;
@@ -56,7 +57,7 @@ class Loader extends EventTarget {
 
 			this.dispatchEvent(Events.Load, {
 				palette: this._palette,
-				data: this._data
+				data: this._rawData
 			});
 		} catch (error) {
 			this.log("Failed", error);
@@ -85,7 +86,7 @@ class Loader extends EventTarget {
 				const { done, value: data } = reader.next();
 				if (done) return;
 				if (!data) return;
-				if (!data.startup) return;
+				if (!data.stjrtup) return;
 
 				stream.onprogress = () => this._progress(1, stream.bytesAvailable / stream.bytesTotal);
 				hasSentStartupImage = true;
@@ -126,7 +127,6 @@ class Loader extends EventTarget {
 	private readGameData(): Promise<void> {
 		this.log("Read game data");
 		this._progress(2, 0);
-		this._data = new GameData(this._rawData);
 		this._progress(2, 1);
 
 		return Promise.resolve();
@@ -137,7 +137,8 @@ class Loader extends EventTarget {
 		this._progress(3, 0);
 
 		let totalProgress = 0;
-		const soundBufferRequests: [Sound, Promise<ArrayBuffer>][] = this._data.sounds
+		const soundBufferRequests: [Sound, Promise<ArrayBuffer>][] = this._rawData.sounds
+			.map((s, idx) => new Sound(idx, s))
 			.filter(snd => snd.file)
 			.map(snd => [
 				snd,

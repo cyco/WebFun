@@ -6,15 +6,15 @@ import { TilePicker } from "src/app/editor/components";
 import ServiceContainer from "../service-container";
 import { Tile } from "src/engine/objects";
 import { Label, Button } from "src/ui/components";
-import { MutableTile } from "src/engine/mutable-objects";
 import getTileAttributeName from "src/app/editor/inspectors/tile-attribute-name";
 import { FilePicker } from "src/ui";
 import { Reader as BMPReader, Writer as BMPWriter } from "src/app/editor/bmp";
 import { download, OutputStream, Size } from "src/util";
 import { ceil } from "src/std/math";
+import { NullIfMissing } from "src/engine/asset-manager";
 
 class TileInspector extends AbstractInspector {
-	private tile: MutableTile = null;
+	private tile: Tile = null;
 
 	constructor(state: Storage, di: ServiceContainer) {
 		super(state, di);
@@ -34,7 +34,7 @@ class TileInspector extends AbstractInspector {
 	}
 
 	public build(): void {
-		const tiles = this.data.currentData.tiles as MutableTile[];
+		const tiles = this.data.currentData.getAll(Tile) as Tile[];
 		const palette = this.data.palette;
 		const lastTile = this.state.load("last-tile");
 		this.tile = tiles[lastTile] ?? null;
@@ -63,7 +63,7 @@ class TileInspector extends AbstractInspector {
 		previousDetail.replaceWith(this.buildDetailsForTile(this.tile));
 	}
 
-	private buildDetailsForTile(tile: MutableTile) {
+	private buildDetailsForTile(tile: Tile) {
 		if (!tile) {
 			return <div className="detail">no selection</div>;
 		}
@@ -147,7 +147,7 @@ class TileInspector extends AbstractInspector {
 	}
 
 	private downloadTileset() {
-		const tiles = this.data.currentData.tiles;
+		const tiles = this.data.currentData.getAll(Tile);
 		const width = 21;
 		const height = ceil(tiles.length / width);
 		const size = new Size(width, height).scaleBy(Tile.WIDTH);
@@ -182,7 +182,7 @@ class TileInspector extends AbstractInspector {
 		const memo = new Map<number, number>();
 		for (let ty = 0; ty < height; ty++) {
 			for (let tx = 0; tx < width; tx++) {
-				const tile = this.data.currentData.tiles[ty * width + tx];
+				const tile = this.data.currentData.get(Tile, ty * width + tx, NullIfMissing);
 				if (!tile) continue;
 
 				const tOffset = 4 * (ty * Tile.HEIGHT * imageData.width + tx * Tile.WIDTH);
@@ -203,7 +203,7 @@ class TileInspector extends AbstractInspector {
 		}
 
 		const picker = this.window.content.querySelector(TilePicker.tagName) as TilePicker;
-		picker.tiles = this.data.currentData.tiles;
+		picker.tiles = this.data.currentData.getAll(Tile);
 	}
 	private findClosestColor(color: number, memo = new Map<number, number>()) {
 		if (memo.has(color)) return memo.get(color);

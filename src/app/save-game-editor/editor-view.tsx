@@ -6,7 +6,7 @@ import {
 	Inventory,
 	InteractiveMap as Map
 } from "./components";
-import { ColorPalette, GameData } from "src/engine";
+import { AssetManager, ColorPalette } from "src/engine";
 import { Component, Menu } from "src/ui";
 import { DiscardingStorage, Point, identity } from "src/util";
 import { Segment, SegmentControl } from "src/ui/components";
@@ -17,16 +17,17 @@ import { InventoryDelegate } from "./components/inventory";
 import { ModalPrompt } from "src/ux";
 import { PopoverCharacterPicker } from "src/app/editor/components";
 import { SaveState } from "src/engine/save-game";
-import { Tile } from "src/engine/objects";
+import { Char, Puzzle, Tile, Zone } from "src/engine/objects";
 import World from "src/engine/world";
 import Sector from "src/engine/sector";
+import { NullIfMissing } from "src/engine/asset-manager";
 
 class EditorView extends Component implements InventoryDelegate, InteractiveMapContextMenuProvider {
 	public static readonly tagName = "wf-save-game-editor-view";
-	private _gameData: GameData;
 	private _palette: ColorPalette;
 	private _state: SaveState;
 	private _save: Element = (<div className="save" />);
+	private _assets: AssetManager = null;
 	public state: Storage = new DiscardingStorage();
 
 	protected connectedCallback(): void {
@@ -34,9 +35,9 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 		this.appendChild(this._save);
 	}
 
-	public presentState(state: SaveState, data: GameData, palette: ColorPalette): void {
+	public presentState(state: SaveState, assets: AssetManager, palette: ColorPalette): void {
 		this._state = state;
-		this._gameData = data;
+		this._assets = assets;
 		this._palette = palette;
 
 		const node = this._buildNodes(state);
@@ -55,9 +56,9 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 	}
 
 	private _buildNodes(state: SaveState) {
-		const puzzle = this._gameData.puzzles[state.goalPuzzle];
+		const puzzle = this._assets.get(Puzzle, state.goalPuzzle);
 		const missionStatement = puzzle.strings[2];
-		const tiles = this._gameData.tiles;
+		const tiles = this._assets.getAll(Tile);
 
 		return (
 			<div className="save">
@@ -81,8 +82,8 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 				<div className="current-weapon">
 					<PopoverCharacterPicker
 						palette={this._palette}
-						characters={this.data.characters.filter(c => c.isWeapon())}
-						character={this.data.characters[this._state.currentWeapon]}
+						characters={this.assets.getFiltered(Char, c => c.isWeapon())}
+						character={this._assets.get(Char, this._state.currentWeapon, NullIfMissing)}
 						onchange={(e: CustomEvent) =>
 							(this._state.currentWeapon = e.detail.character ? e.detail.character.id : -1)
 						}
@@ -114,8 +115,8 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 					className="content World"
 					world={state.world}
 					location={!state.onDagobah ? state.positionOnWorld : null}
-					tiles={this._gameData.tiles}
-					zones={this._gameData.zones}
+					tiles={this._assets.getAll(Tile)}
+					zones={this._assets.getAll(Zone)}
 					palette={this._palette}
 					locatorTile={state.type.locatorTile}
 					reveal={true}
@@ -127,8 +128,8 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 						className="content Dagobah"
 						world={state.dagobah}
 						location={state.onDagobah ? state.positionOnWorld : null}
-						tiles={this._gameData.tiles}
-						zones={this._gameData.zones}
+						tiles={this._assets.getAll(Tile)}
+						zones={this._assets.getAll(Zone)}
 						palette={this._palette}
 						locatorTile={state.type.locatorTile}
 						reveal={true}
@@ -274,8 +275,8 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 		return this._state;
 	}
 
-	get data(): GameData {
-		return this._gameData;
+	get assets(): AssetManager {
+		return this._assets;
 	}
 
 	public contextMenuForSector(sector: Sector, _at: Point, _i: World, of: Map): Menu {
@@ -288,7 +289,7 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 						if (id === null) return;
 
 						const newId = id.parseInt();
-						sector.zone = this.data.zones[newId] || null;
+						sector.zone = this._assets.get(Zone, newId, NullIfMissing);
 						of.redraw();
 					}
 				}
@@ -339,7 +340,7 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 					if (sector.zone?.id === this._state.currentZoneID) {
 						this._state.currentZoneID = id;
 					}
-					sector.zone = this.data.zones[id] || null;
+					sector.zone = this._assets.get(Zone, id, NullIfMissing);
 					of.redraw();
 				}
 			},
@@ -351,7 +352,7 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 								const id = await promptForId("Provided item id:", sector.findItem?.id);
 								if (id === null) return;
 
-								sector.findItem = this.data.tiles[id];
+								sector.findItem = this._assets.get(Tile, id, NullIfMissing);
 							}
 						}
 				  ]
@@ -364,7 +365,7 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 								const id = await promptForId("Required item id:", sector.requiredItem?.id);
 								if (id === null) return;
 
-								sector.requiredItem = this.data.tiles[id];
+								sector.requiredItem = this._assets.get(Tile, id, NullIfMissing);
 							}
 						}
 				  ]

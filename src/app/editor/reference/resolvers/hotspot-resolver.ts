@@ -1,21 +1,21 @@
 import DisableHotspot from "src/engine/script/instructions/disable-hotspot";
 import EnableHotspot from "src/engine/script/instructions/enable-hotspot";
-import { GameData } from "src/engine";
-import { Hotspot } from "src/engine/objects";
+import { AssetManager } from "src/engine";
+import { Hotspot, Zone } from "src/engine/objects";
 import { ReferencesTo } from "src/app/editor/reference";
 import { equal } from "src/util/functional";
 import ResolverInterface from "./resolver-interface";
 
 class HotspotResolver implements ResolverInterface<Hotspot> {
-	private data: GameData;
+	private _assets: AssetManager;
 
-	constructor(data: GameData) {
-		this.data = data;
+	constructor(assets: AssetManager) {
+		this._assets = assets;
 	}
 
 	public resolve(needle: Hotspot, op = equal): ReferencesTo<Hotspot> {
 		const result: ReferencesTo<Hotspot> = [];
-		for (const zone of this.data.zones) {
+		for (const zone of this._assets.getAll(Zone)) {
 			if (!zone.hotspots.includes(needle)) continue;
 
 			for (const hotspot of zone.hotspots) {

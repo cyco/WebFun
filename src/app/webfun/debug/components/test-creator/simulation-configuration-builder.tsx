@@ -5,15 +5,15 @@ import { DiscardingStorage } from "src/util";
 import { PopoverTilePicker } from "src/app/editor/components";
 import PopoverZonePicker from "../popover-zone-picker";
 import testableZoneFilter from "./testable-zone-filter";
-import { Zone, Hotspot } from "src/engine/objects";
+import { Zone, Hotspot, Tile } from "src/engine/objects";
 import { Configuration } from "src/app/webfun/debug/automation/test";
 import adjacentZones from "./adjacent-zones";
-import { ColorPalette, GameData } from "src/engine";
+import { AssetManager, ColorPalette } from "src/engine";
+import { NullIfMissing } from "src/engine/asset-manager";
 
 class SimulationConfigurationBuilder extends Component {
 	public static readonly tagName = "wf-debug-test-creator-simulation-configuration-builder";
 
-	private _gameData: GameData = null;
 	private _state: Storage = new DiscardingStorage();
 	private _mainPicker = (
 		<PopoverZonePicker
@@ -45,6 +45,7 @@ class SimulationConfigurationBuilder extends Component {
 	private _description: string;
 	private _difficulty: number;
 	private _health: number;
+	private _assets: AssetManager;
 
 	protected connectedCallback(): void {
 		super.connectedCallback();
@@ -79,7 +80,7 @@ class SimulationConfigurationBuilder extends Component {
 	}
 
 	public get currentZone(): Zone {
-		return this._mainPicker.zone || this._gameData.zones[0];
+		return this._mainPicker.zone || this._assets.get(Zone, 0);
 	}
 
 	public set currentZone(zone: Zone) {
@@ -109,7 +110,7 @@ class SimulationConfigurationBuilder extends Component {
 		return zone.doors
 			.filter(({ arg }: Hotspot) => arg !== -1)
 			.map(({ arg }) => {
-				const zone = this._gameData.zones[arg];
+				const zone = this._assets.get(Zone, arg);
 				return [zone, ...this.connectedZones(zone)];
 			})
 			.flatten();
@@ -130,30 +131,30 @@ class SimulationConfigurationBuilder extends Component {
 		return this._findTile.palette;
 	}
 
-	public set gameData(gameData: GameData) {
-		this._gameData = gameData;
+	public set assets(assets: AssetManager) {
+		this._assets = assets;
 
-		this._mainPicker.zones = gameData.zones;
+		this._mainPicker.zones = assets.getAll(Zone);
 		this._mainPicker.zone = this._mainPicker.filteredZones[0];
 
-		this._zonePickers.forEach(picker => (picker.zones = gameData.zones));
+		this._zonePickers.forEach(picker => (picker.zones = assets.getAll(Zone)));
 
 		this.currentZone = this.currentZone;
 	}
 
-	public get gameData(): GameData {
-		return this._gameData;
+	public get assets(): AssetManager {
+		return this._assets;
 	}
 
 	public set configuration(config: Configuration) {
-		const data = this._gameData;
+		const data = this._assets;
 
 		if (config.zone >= 0) {
-			this.currentZone = data.zones[config.zone];
-			this._findTile.tile = data.tiles[config.findItem];
-			this._npcTile.tile = data.tiles[config.npc];
-			this._requiredTile.tile = data.tiles[config.requiredItem1];
-			this._required2Tile.tile = data.tiles[config.requiredItem2];
+			this.currentZone = data.get(Zone, config.zone);
+			this._findTile.tile = data.get(Tile, config.findItem, NullIfMissing);
+			this._npcTile.tile = data.get(Tile, config.npc, NullIfMissing);
+			this._requiredTile.tile = data.get(Tile, config.requiredItem1, NullIfMissing);
+			this._required2Tile.tile = data.get(Tile, config.requiredItem2, NullIfMissing);
 		}
 		this._inventory = config.inventory;
 		this._tags = config.tags;

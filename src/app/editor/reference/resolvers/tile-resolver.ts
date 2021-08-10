@@ -1,5 +1,5 @@
-import { GameData } from "src/engine";
-import { Hotspot, Tile } from "src/engine/objects";
+import { AssetManager } from "src/engine";
+import { Char, Hotspot, Puzzle, Tile, Zone } from "src/engine/objects";
 import { ReferencesTo } from "src/app/editor/reference";
 import { equal } from "src/util/functional";
 import ResolverInterface from "./resolver-interface";
@@ -7,22 +7,22 @@ import { ConditionsByName as C } from "src/engine/script/conditions";
 import { InstructionsByName as I } from "src/engine/script/instructions";
 
 class TileResolver implements ResolverInterface<Tile> {
-	private data: GameData;
+	private _assets: AssetManager;
 
-	constructor(data: GameData) {
-		this.data = data;
+	constructor(assets: AssetManager) {
+		this._assets = assets;
 	}
 
 	public resolve(needle: Tile, op = equal): ReferencesTo<Tile> {
 		const result: ReferencesTo<Tile> = [];
 
-		for (const tile of this.data.tiles) {
+		for (const tile of this._assets.getAll(Tile)) {
 			if (op(tile.id, needle.id)) {
 				result.push({ from: tile, to: tile, via: ["id"] });
 			}
 		}
 
-		for (const zone of this.data.zones) {
+		for (const zone of this._assets.getAll(Zone)) {
 			for (const tile of zone.requiredItems) {
 				if (op(tile.id, needle.id)) {
 					result.push({ from: zone, to: needle, via: ["requiredItems"] });
@@ -110,7 +110,7 @@ class TileResolver implements ResolverInterface<Tile> {
 			}
 		}
 
-		for (const character of this.data.characters) {
+		for (const character of this._assets.getAll(Char)) {
 			for (let i = 0; i < character.frames.length; i++) {
 				const frame = character.frames[i];
 				for (let j = 0; j < frame.tiles.length; j++) {
@@ -122,7 +122,7 @@ class TileResolver implements ResolverInterface<Tile> {
 			}
 		}
 
-		for (const puzzle of this.data.puzzles) {
+		for (const puzzle of this._assets.getAll(Puzzle)) {
 			if (puzzle.item1 && op(puzzle.item1.id, needle.id)) {
 				result.push({ from: puzzle, to: needle, via: ["item1"] });
 			}

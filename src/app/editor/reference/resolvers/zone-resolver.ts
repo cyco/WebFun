@@ -1,21 +1,21 @@
 import ChangeZone from "src/engine/script/instructions/change-zone";
-import GameData from "src/engine/game-data";
 import { Hotspot, Zone } from "src/engine/objects";
 import { ReferencesTo } from "src/app/editor/reference";
 import { equal } from "src/util/functional";
 import ResolverInterface from "./resolver-interface";
+import { AssetManager } from "src/engine";
 
 class ZoneResolver implements ResolverInterface<Zone> {
-	private data: GameData;
+	private _assets: AssetManager;
 
-	constructor(data: GameData) {
-		this.data = data;
+	constructor(assets: AssetManager) {
+		this._assets = assets;
 	}
 
 	public resolve(needle: Zone, op = equal): ReferencesTo<Zone> {
 		const result: ReferencesTo<Zone> = [];
 
-		for (const zone of this.data.zones) {
+		for (const zone of this._assets.getAll(Zone)) {
 			if (op(zone.id, needle.id)) {
 				result.push({ from: zone, to: zone, via: ["id"] });
 			}

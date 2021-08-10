@@ -1,4 +1,4 @@
-import { Zone, Tile } from "src/engine/objects";
+import { Zone, Tile, Puzzle } from "src/engine/objects";
 import { srand } from "src/util";
 import { SimulatedStory } from "src/app/webfun/debug";
 import { Story } from "src/engine";
@@ -12,6 +12,7 @@ import {
 } from "src/app/webfun/debug/automation/test";
 import loadGameData from "test/helpers/game-data";
 import { NullIfMissing } from "src/engine/asset-manager";
+import { Yoda } from "src/variant";
 
 declare let withTimeout: (t: number, block: () => void) => () => void;
 const FiveMinutes = 5 * 60 * 1000;
@@ -33,6 +34,8 @@ const run = (prefix: string, fileName: string, testFileContents: string): void =
 					beforeAll(async () => {
 						await ctx.prepare(loadGameData);
 						ctx.buildEngine();
+						ctx.engine.assets.get(Puzzle, Yoda.goalIDs.RESCUE_YODA).type = Puzzle.Type.Disabled;
+						ctx.engine.assets.get(Puzzle, Yoda.goalIDs.CAR).type = Puzzle.Type.Disabled;
 
 						srand(testCase.configuration.seed);
 						ctx.engine.persistentState.gamesWon = testCase.configuration.gamesWon;

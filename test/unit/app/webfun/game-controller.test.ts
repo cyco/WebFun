@@ -2,7 +2,6 @@ import * as EngineModule from "src/engine";
 import {
 	ColorPalette,
 	Engine,
-	GameData,
 	GameState,
 	Hero,
 	Interface,
@@ -27,6 +26,7 @@ import { Size, observable, EventTarget } from "src/util";
 import * as LoaderModule from "src/app/webfun/loader";
 import { Tile } from "src/engine/objects";
 import Settings from "src/settings";
+import { Data } from "src/engine/file-format";
 
 describe("WebFun.App.GameController", () => {
 	let subject: GameController;
@@ -37,7 +37,7 @@ describe("WebFun.App.GameController", () => {
 	let createElement: (tagName: string) => HTMLElement;
 	let mockMixer: Mixer;
 	let engineInterface: Interface;
-	let mockedData: GameData;
+	let mockedData: Data;
 	let mockedPalette: ColorPalette;
 	let mockedStory: Story;
 	let mockSettings: Settings & EventTarget;
@@ -219,7 +219,7 @@ describe("WebFun.App.GameController", () => {
 	}
 
 	function mockEngine(): Engine {
-		mockedData = {} as any;
+		mockedData = { sounds: [], zones: [], tiles: [], puzzles: [], characters: [] } as any;
 		mockedPalette = {} as any;
 		spyOn(LoaderModule, "default").and.returnValue({
 			load: function () {
@@ -241,7 +241,7 @@ describe("WebFun.App.GameController", () => {
 				popScene: jasmine.createSpy()
 			},
 			inventory: { removeAllItems: jasmine.createSpy(), removeEventListener: jasmine.createSpy() },
-			assets: { populate: jasmine.createSpy(), find: jasmine.createSpy() },
+			assets: { populate: jasmine.createSpy(), find: jasmine.createSpy(), getAll: (): any[] => [] },
 			metronome: { start: jasmine.createSpy(), stop: jasmine.createSpy() },
 			persistentState: { gamesWon: 0 },
 			world: { findLocationOfZone: jasmine.createSpy() },
@@ -257,7 +257,3 @@ describe("WebFun.App.GameController", () => {
 		} as any;
 	}
 });
-
-function observeable(arg0: {}): any {
-	throw new Error("Function not implemented.");
-}

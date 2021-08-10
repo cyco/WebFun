@@ -2,7 +2,7 @@ import Action from "src/engine/objects/action";
 
 describe("WebFun.Engine.Objects.Action", () => {
 	let subject: Action;
-	beforeEach(() => (subject = new Action()));
+	beforeEach(() => (subject = new Action(5, {} as any, { conditions: [], instructions: [] })));
 
 	it("can have several conditions", () => {
 		expect(subject.conditions).toEqual([]);
@@ -17,7 +17,7 @@ describe("WebFun.Engine.Objects.Action", () => {
 	});
 
 	it("has an id", () => {
-		expect(subject.id).toBe(-1);
+		expect(subject.id).toBe(5);
 	});
 
 	it("is initially enabled", () => {
@@ -25,7 +25,7 @@ describe("WebFun.Engine.Objects.Action", () => {
 	});
 
 	it("holds a reference to its zone", () => {
-		expect(subject.zone).toBeNull();
+		expect(subject.zone).not.toBeNull();
 	});
 
 	it("has a name (even though it's only used in indy)", () => {

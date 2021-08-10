@@ -6,9 +6,10 @@ import {
 	Type
 } from "src/engine/script";
 
-import GameData from "src/engine/game-data";
+import AssetManager, { NullIfMissing } from "src/engine/asset-manager";
 import { Point } from "src/util";
 import Token from "./token";
+import { Sound, Tile } from "src/engine/objects";
 
 class ArgumentProcessor {
 	private definitions: { [_: string]: Condition | Instruction } = Object.assign(
@@ -16,10 +17,10 @@ class ArgumentProcessor {
 		ConditionsByName,
 		InstructionsByName
 	);
-	private _data: GameData;
+	private _assets: AssetManager;
 
-	constructor(data: GameData) {
-		this._data = data;
+	constructor(assets: AssetManager) {
+		this._assets = assets;
 	}
 
 	process(container: HTMLDivElement): HTMLDivElement {
@@ -44,10 +45,12 @@ class ArgumentProcessor {
 
 			if (type === Type.SoundID) {
 				argumentNode.sound =
-					+argumentNode === -1 ? null : this._data.sounds[+argumentNode]?.file ?? "<unknown>";
+					+argumentNode === -1
+						? null
+						: this._assets.get(Sound, +argumentNode, NullIfMissing)?.file ?? "<unknown>";
 			}
 			if (type === Type.TileID) {
-				argumentNode.tile = +argumentNode === -1 ? null : this._data.tiles[+argumentNode];
+				argumentNode.tile = +argumentNode === -1 ? null : this._assets.get(Tile, +argumentNode);
 			}
 
 			if (type === Type.ZoneX) {

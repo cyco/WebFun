@@ -96,6 +96,7 @@ class View extends Component implements EventListenerObject {
 		this._roof.zone = zone;
 		this._hotspots.zone = zone;
 		this._monsters.zone = zone;
+		this._monsters.assets = zone.assets;
 
 		this._overlay.style.width = zone.size.width * Tile.WIDTH + "px";
 		this._overlay.style.height = zone.size.height * Tile.HEIGHT + "px";

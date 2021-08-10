@@ -3,6 +3,7 @@ import "./source-level-coverage.scss";
 import { Component } from "src/ui";
 import DataManager from "../data-manager";
 import { DiscardingStorage } from "src/util";
+import { Zone } from "src/engine/objects";
 
 type DataPoint = {
 	zone: number;
@@ -180,7 +181,7 @@ class SourceLevelCoverage extends Component {
 
 	private get datapoints() {
 		if (this._datapoints) return this._datapoints;
-		this._datapoints = this.data.currentData.zones.map(zone => {
+		this._datapoints = this.data.currentData.getAll(Zone).map(zone => {
 			const actions = zone.actions.map((_, i) => this._coverage.actions[`${zone.id}_${i}`]);
 			const actionsTotal = zone.actions.length;
 			const actionsCovered = actions.reduce(

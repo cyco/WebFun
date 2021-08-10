@@ -23,7 +23,7 @@ import PopoutTilePicker from "src/app/editor/components/popout-tile-picker";
 import Sidebar from "./sidebar";
 import SidebarLayer from "src/app/editor/components/zone-editor/sidebar-layer";
 import ToolComponent from "./tool";
-import { Zone } from "src/engine/objects";
+import { Char, Tile, Zone } from "src/engine/objects";
 import ZoneEditor from "src/app/editor/components/zone-editor/view";
 import { TileView } from "src/app/webfun/debug/components";
 import ServiceContainer from "../../service-container";
@@ -148,7 +148,7 @@ class Window extends AbstractPanel {
 		}
 
 		const editor = this._actionsWindow.content.firstElementChild as ActionEditor;
-		editor.data = this._data.currentData;
+		editor.assets = this._data.currentData;
 		editor.zone = this.zone;
 		this._actionsWindow.title = `Zone ${this.zone.id}: Actions`;
 		this.manager.showWindow(this._actionsWindow);
@@ -237,11 +237,11 @@ class Window extends AbstractPanel {
 	public set data(d: DataManager) {
 		this._data = d;
 		this._editor.palette = d.palette;
-		this._editor.characters = d.currentData.characters;
-		this._editor.tiles = d.currentData.tiles;
+		this._editor.characters = d.currentData.getAll(Char);
+		this._editor.tiles = d.currentData.getAll(Tile);
 
 		this._tilePicker.palette = this._data.palette;
-		this._tilePicker.tiles = this._data.currentData.tiles;
+		this._tilePicker.tiles = this._data.currentData.getAll(Tile);
 	}
 
 	public get data(): DataManager {

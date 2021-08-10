@@ -1,32 +1,49 @@
 import Zone from "src/engine/objects/zone";
 import Hotspot from "src/engine/objects/hotspot";
+import AssetManager from "src/engine/asset-manager";
 
 describe("Zone", () => {
+	let assets: AssetManager;
+	let subject: Zone;
+
+	beforeEach(() => {
+		assets = new AssetManager();
+		subject = new Zone(
+			0,
+			{
+				planet: Zone.Planet.Endor.rawValue,
+				zoneType: Zone.Type.Empty.rawValue,
+				width: 9,
+				height: 9,
+				requiredItemIDs: new Int16Array(),
+				npcIDs: new Int16Array(),
+				goalItemIDs: new Int16Array(),
+				providedItemIDs: new Int16Array(),
+				tileIDs: new Int16Array(),
+				actions: [],
+				monsters: [],
+				hotspots: [
+					{ enabled: true, type: Hotspot.Type.DoorIn.rawValue, argument: -1, x: 0, y: 0 },
+					{ enabled: true, type: Hotspot.Type.DoorIn.rawValue, argument: 0x72, x: 0, y: 0 },
+					{ enabled: true, type: Hotspot.Type.Teleporter.rawValue, argument: -1, x: 0, y: 0 }
+				],
+				unknown: 0
+			},
+			assets
+		);
+	});
+
 	it("is a class representing an in-game map", () => {
-		const zone = new Zone();
-		expect(zone instanceof Zone).toBeTrue();
+		expect(subject instanceof Zone).toBeTrue();
 	});
 
 	it("has a method identifying the loading zone", () => {
-		const zone = new Zone();
-		(zone as any)._type = Zone.Type.Load;
+		subject.type = Zone.Type.Load;
 
-		expect(zone.isLoadingZone()).toBeTrue();
+		expect(subject.isLoadingZone()).toBeTrue();
 	});
 
 	describe("hotspots", () => {
-		let subject: Zone;
-		beforeEach(() => {
-			subject = new Zone();
-			(subject as any)._type = Zone.Type.Empty;
-			(subject as any)._hotspots = [
-				{ type: Hotspot.Type.DoorIn, arg: -1 },
-				{ type: Hotspot.Type.DoorIn, arg: 0x72 },
-				{},
-				{ type: Hotspot.Type.Teleporter, arg: -1 }
-			];
-		});
-
 		it("mark special places on the map", () => {
 			expect(subject.hotspots).toBeArray();
 		});
@@ -38,7 +55,7 @@ describe("Zone", () => {
 
 		it("mark teleporters", () => {
 			expect(subject.hasTeleporter).toBeTrue();
-			(subject as any)._hotspots = [];
+			subject.hotspots = [];
 			expect(subject.hasTeleporter).toBeFalse();
 		});
 	});

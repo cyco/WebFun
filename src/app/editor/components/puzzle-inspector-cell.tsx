@@ -5,7 +5,6 @@ import { Puzzle, Tile } from "src/engine/objects";
 import { Cell, Label } from "src/ui/components";
 import { ColorPalette } from "src/engine/rendering";
 import { PopoutTilePicker } from "src/app/editor/components";
-import { MutablePuzzle } from "src/engine/mutable-objects";
 
 class PuzzleInspectorCell extends Cell<Puzzle> {
 	public static readonly tagName = "wf-puzzle-inspector-cell";
@@ -82,7 +81,7 @@ class PuzzleInspectorCell extends Cell<Puzzle> {
 
 	private changeTile(idx: number, event: Event) {
 		const tile = (event.target as PopoutTilePicker).tile;
-		const puzzle = this.data as MutablePuzzle;
+		const puzzle = this.data as Puzzle;
 
 		if (idx === 0) puzzle.item1 = tile;
 		else puzzle.item2 = tile;

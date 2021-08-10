@@ -42,11 +42,13 @@ class SoundInspector extends AbstractInspector {
 	}
 
 	public build(): void {
-		this._list.items = this.data.currentData.sounds;
+		this._list.items = this.data.currentData.getAll(Sound);
 	}
 
 	public addSound(): void {
-		this.data.currentData.sounds.push(new Sound(this.data.currentData.sounds.length, "New Sound"));
+		this.data.currentData
+			.getAll(Sound)
+			.push(new Sound(this.data.currentData.getAll(Sound).length, "New Sound"));
 		this.build();
 	}
 
@@ -61,7 +63,7 @@ class SoundInspector extends AbstractInspector {
 	public renameSound(sound: Sound, name: string): void {
 		const index = this._list.items.indexOf(sound);
 		if (index === -1) return;
-		this.data.currentData.sounds.splice(index, 1, new Sound(index, name));
+		this.data.currentData.getAll(Sound).splice(index, 1, new Sound(index, name));
 		this.build();
 	}
 

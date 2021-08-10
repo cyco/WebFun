@@ -1,6 +1,6 @@
 import "./world-view.scss";
 
-import { ColorPalette, GameData } from "src/engine";
+import { AssetManager, ColorPalette } from "src/engine";
 import TransformCanvas, { TransformCanvasRenderingContext2D } from "./transform-canvas";
 
 import { Component } from "src/ui";
@@ -13,7 +13,7 @@ class WorldView extends Component {
 	private _canvas: TransformCanvas = (
 		<TransformCanvas className="pixelated" width={288} height={288} />
 	) as TransformCanvas;
-	public gameData: GameData;
+	public assets: AssetManager;
 	public state: SaveState;
 	public world: World;
 	public palette: ColorPalette;

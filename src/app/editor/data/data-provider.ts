@@ -1,4 +1,5 @@
-import { GameData, readGameDataFile, Variant } from "src/engine";
+import { readGameDataFile, Variant } from "src/engine";
+import { Data } from "src/engine/file-format";
 
 import { FileLoader } from "src/util";
 import { Indy, Yoda } from "src/variant";
@@ -14,11 +15,11 @@ class DataProvider {
 		this.url.set(Indy, indyUrl);
 	}
 
-	async provide(type: Variant): Promise<GameData> {
+	async provide(type: Variant): Promise<Data> {
 		const url = this.url.get(type);
 		const stream = await FileLoader.loadAsStream(url);
 		const rawData = readGameDataFile(stream, type);
-		return new GameData(rawData);
+		return rawData;
 	}
 }
 

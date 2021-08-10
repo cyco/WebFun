@@ -88,7 +88,7 @@ export default (gameController: GameController): Partial<MenuItemInit> => {
 			}),
 			SettingsAction(
 				"Edit Current Data",
-				async () => (await import("src/app/editor")).main(gameController.data),
+				async () => (await import("src/app/editor")).main(gameController.assets),
 				true
 			),
 			SettingsAction(

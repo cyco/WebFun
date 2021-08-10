@@ -1,13 +1,14 @@
 import ServiceContainer from "./service-container";
 import { FilePicker, WindowManager } from "src/ui";
-import { GameData } from "src/engine";
+import { AssetManager } from "src/engine";
 import EditorWindow from "./editor-window";
+import { Yoda } from "src/variant";
 
 class Editor {
 	private window: EditorWindow;
 	private container: ServiceContainer;
 
-	public async run(data: GameData = null): Promise<void> {
+	public async run(assets: AssetManager = null): Promise<void> {
 		const windowManager = new WindowManager(document.body);
 		this.container = new ServiceContainer();
 		this.container.register(ServiceContainer, this.container);
@@ -20,8 +21,8 @@ class Editor {
 			windowManager.showWindow(this.window);
 			this.window.center();
 
-			if (data) {
-				return await this.window.loadGameData(data);
+			if (assets) {
+				return await this.window.loadGameData(assets, Yoda);
 			} else {
 				const [file] = await FilePicker.Pick({ allowedTypes: ["data", "dta"] });
 				if (!file) {

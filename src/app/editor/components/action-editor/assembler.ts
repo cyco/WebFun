@@ -3,7 +3,6 @@ import AST, { s } from "./ast";
 import { Action, Condition, Instruction } from "src/engine/objects";
 import { ConditionsByName } from "src/engine/script/conditions";
 import { InstructionsByName } from "src/engine/script/instructions";
-import { MutableAction } from "src/engine/mutable-objects";
 import Symbol from "./symbol";
 import { Type } from "src/engine/script/types";
 
@@ -36,7 +35,7 @@ class Assembler {
 	private checkArgumentCount: boolean = false;
 
 	public assemble(input: AST): Action {
-		const result = new MutableAction();
+		const result = new Action(0, null, { conditions: [], instructions: [] });
 
 		let [defaction, name, ...body] = this.validateInputStructure(input) as [
 			Symbol,

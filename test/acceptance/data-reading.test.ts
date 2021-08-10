@@ -1,5 +1,5 @@
 import { getFixtureData } from "test/helpers/fixture-loading";
-import { GameData, Variant, readGameDataFile } from "src/engine";
+import { Variant, readGameDataFile } from "src/engine";
 import { InputStream } from "src/util";
 import { Yoda, Indy } from "src/variant";
 
@@ -26,7 +26,7 @@ describe("WebFun.Acceptance.DataReading", () => {
 
 	it("reads indy's data without errors", async () => {
 		const file = await loadData("indy.data");
-		const data = new GameData(readGameDataFile(file, Indy));
+		const data = readGameDataFile(file, Indy);
 
 		expect(data.version).toEqual(512);
 		expect(data.sounds.length).toBe(18);
@@ -34,8 +34,7 @@ describe("WebFun.Acceptance.DataReading", () => {
 		expect(data.puzzles.length).toBe(157);
 		expect(data.zones.length).toBe(366);
 		expect(data.characters.length).toBe(27);
-		expect(data.startupImageData.length).toBe(82944);
-		expect(data.copy()).toBeInstanceOf(GameData);
+		expect(data.startup.length).toBe(82944);
 	});
 
 	it("reads indy's demo data without errors", parsesWithoutError(Indy, "indy-demo.data"));

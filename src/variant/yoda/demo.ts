@@ -4,7 +4,6 @@ import { Puzzle, Zone } from "src/engine/objects";
 import { Engine, Story } from "src/engine";
 import { WorldSize } from "src/engine/generation";
 import { rand } from "src/util";
-import { MutableZone } from "src/engine/mutable-objects";
 import GoalIDs from "./goal-ids";
 
 class YodaDemo extends Yoda {
@@ -19,7 +18,7 @@ class YodaDemo extends Yoda {
 					zone.type === Zone.Type.Goal &&
 					(!zone.providedItems.includes(goal.item1) || !zone.providedItems.includes(goal.item2))
 			)
-			.forEach(z => ((z as MutableZone).type = Zone.Type.None));
+			.forEach(z => ((z as Zone).type = Zone.Type.None));
 
 		const story = new Story(engine.assets, engine.variant);
 		story.generate(

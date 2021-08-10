@@ -52,7 +52,7 @@ class TestCreatorWindow extends AbstractWindow implements EventListenerObject {
 	private async start() {
 		const controller = this.gameController;
 		await controller.resetEngine();
-		if (!controller.data) await controller.loadGameData();
+		if (!controller.assets) await controller.loadGameData();
 		const engine = controller.engine;
 		const assets = controller.engine.assets;
 
@@ -86,8 +86,8 @@ class TestCreatorWindow extends AbstractWindow implements EventListenerObject {
 		const story = this.buildStory(assets);
 		story.generate(
 			this.testCase.configuration.seed,
-			Zone.Planet.fromNumber(this.testCase.configuration.planet),
-			WorldSize.fromNumber(this.testCase.configuration.size)
+			Zone.Planet.fromNumber(this.testCase.configuration.planet ?? Zone.Planet.Endor.rawValue),
+			WorldSize.fromNumber(this.testCase.configuration.size ?? WorldSize.Medium.rawValue)
 		);
 		engine.story = story;
 		engine.currentWorld = story.world;
@@ -199,7 +199,7 @@ class TestCreatorWindow extends AbstractWindow implements EventListenerObject {
 	public set gameController(controller: GameController) {
 		this._gameController = controller;
 		this._configBuilder.palette = controller.palette;
-		this._configBuilder.gameData = controller.data;
+		this._configBuilder.assets = controller.assets;
 	}
 
 	public set testCase(testCase: TestCase) {

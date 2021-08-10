@@ -6,6 +6,7 @@ import { Button } from "src/ui/components";
 import { FilePicker } from "src/ui";
 import { ColorPalette } from "src/engine";
 import ServiceContainer from "../service-container";
+import { StartupImage } from "src/engine/objects";
 
 class StartupImageInspector extends AbstractInspector {
 	private _imageEditor = (
@@ -114,7 +115,7 @@ class StartupImageInspector extends AbstractInspector {
 	build(): void {
 		this._colorPicker.palette = this.data.palette;
 		this._imageEditor.palette = this.data.palette;
-		this._imageEditor.image = this.data.currentData.startupImageData;
+		this._imageEditor.image = this.data.currentData.get(Uint8Array, StartupImage);
 
 		this._imageEditor.redraw();
 	}

@@ -9,7 +9,25 @@ describe("WebFun.Engine.World", () => {
 	let assets: AssetManager = null;
 
 	beforeEach(() => {
-		zone = new Zone();
+		zone = new Zone(
+			4,
+			{
+				planet: Zone.Planet.Hoth.rawValue,
+				zoneType: Zone.Type.Use.rawValue,
+				width: 9,
+				height: 9,
+				unknown: -1,
+				hotspots: [],
+				monsters: [],
+				actions: [],
+				goalItemIDs: new Int16Array(),
+				npcIDs: new Int16Array(),
+				providedItemIDs: new Int16Array(),
+				requiredItemIDs: new Int16Array(),
+				tileIDs: new Int16Array()
+			},
+			{} as any
+		);
 		assets = { get: () => zone } as any;
 		subject = new World(assets);
 	});

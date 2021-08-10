@@ -4,16 +4,16 @@ import { Point, Size } from "src/util";
 import AbstractInspector from "./abstract-inspector";
 import { Menu } from "src/ui";
 import { ModalPrompt } from "src/ux";
-import { MutableZone } from "src/engine/mutable-objects";
+import { Tile, Zone } from "src/engine/objects";
 import {
 	Resolver as ReferenceResolver,
 	Updater as ReferenceUpdater
 } from "src/app/editor/reference";
-import { Zone } from "src/engine/objects";
 import ZoneEditorController from "../components/zone-editor/window";
 import { ZoneInspectorCell } from "../components";
 import { min } from "src/std/math";
 import ServiceContainer from "../service-container";
+import { NullIfMissing } from "src/engine/asset-manager";
 
 class ZoneInspector extends AbstractInspector {
 	private _list: List<Zone>;
@@ -114,14 +114,14 @@ class ZoneInspector extends AbstractInspector {
 								const previousSize = zone.size;
 
 								const size = new Size(x, y);
-								(zone as MutableZone).size = size;
-								(zone as MutableZone).tileIDs = new Int16Array(size.area * 3).map(_ => -1);
+								(zone as Zone).size = size;
+								(zone as Zone).tileIDs = new Int16Array(size.area * 3).map(_ => -1);
 
 								for (let y = 0; y < min(previousSize.height, size.height); y++) {
 									for (let x = 0; x < min(previousSize.width, size.width); x++) {
 										for (let z = 0; z < 3; z++) {
 											const idx = 3 * y * previousSize.width + 3 * x + z;
-											const t = zone.tileStore[previousTiles[idx]] || null;
+											const t = this.data.currentData.get(Tile, previousTiles[idx], NullIfMissing);
 											zone.setTile(t, x, y, z);
 										}
 									}
@@ -153,12 +153,12 @@ class ZoneInspector extends AbstractInspector {
 	build(): void {
 		const cell = this._list.cell as ZoneInspectorCell;
 		cell.palette = this.data.palette;
-		cell.tiles = this.data.currentData.tiles;
-		this._list.items = this.data.currentData.zones;
+		cell.tiles = this.data.currentData.getAll(Tile);
+		this._list.items = this.data.currentData.getAll(Zone);
 
 		const zones = (this._state.load("zones") as number[]) || [];
 		zones.forEach(id => {
-			const zone = this.data.currentData.zones[id];
+			const zone = this.data.currentData.get(Zone, id, NullIfMissing);
 			if (!zone) {
 				console.warn(`inspector for zone ${id.toHex(4)} could not be restored.`);
 				return;
@@ -170,16 +170,20 @@ class ZoneInspector extends AbstractInspector {
 			controller.di = this.di;
 			controller.manager = this.windowManager;
 			controller.data = this.data;
-			controller.zone = this.data.currentData.zones[id];
+			controller.zone = this.data.currentData.get(Zone, id, NullIfMissing);
 			controller.state = this._state.prefixedWith("editor-" + this._controllers.length);
 			this._controllers.push(controller);
 		});
 	}
 
 	private addZone() {
-		const template = this.data.currentData.zones.last();
-		const zone = new MutableZone();
-		zone.id = this.data.currentData.zones.length;
+		const template = this.data.currentData.getAll(Zone).last();
+		const zone = new Zone(
+			this.data.currentData.getAll(Zone).length,
+			template,
+			this.data.currentData
+		);
+		zone.id = this.data.currentData.getAll(Zone).length;
 		zone.type = template.type;
 		zone.size = template.size;
 		zone.name = "New Zone";
@@ -202,11 +206,8 @@ class ZoneInspector extends AbstractInspector {
 
 		zone.tileIDs = template.tileIDs;
 
-		zone.tileStore = this.data.currentData.tiles;
-		zone.zoneStore = this.data.currentData.zones;
-
-		this.data.currentData.zones.push(zone);
-		this._list.items = this.data.currentData.zones;
+		this.data.currentData.getAll(Zone).push(zone);
+		this._list.items = this.data.currentData.getAll(Zone);
 		this._list.firstElementChild.lastElementChild.scrollIntoView();
 	}
 

@@ -1,5 +1,5 @@
-import { GameData } from "src/engine";
-import { Monster } from "src/engine/objects";
+import { AssetManager } from "src/engine";
+import { Monster, Zone } from "src/engine/objects";
 import { ReferencesTo } from "src/app/editor/reference";
 import { equal } from "src/util/functional";
 import ResolverInterface from "./resolver-interface";
@@ -8,15 +8,15 @@ import EnableMonster from "src/engine/script/instructions/enable-monster";
 import MonsterIsDead from "src/engine/script/conditions/monster-is-dead";
 
 class MonsterResolver implements ResolverInterface<Monster> {
-	private data: GameData;
+	private _assets: AssetManager;
 
-	constructor(data: GameData) {
-		this.data = data;
+	constructor(assets: AssetManager) {
+		this._assets = assets;
 	}
 
 	public resolve(needle: Monster, op = equal): ReferencesTo<Monster> {
 		const result: ReferencesTo<Monster> = [];
-		for (const zone of this.data.zones) {
+		for (const zone of this._assets.getAll(Zone)) {
 			if (!zone.monsters.includes(needle)) continue;
 
 			for (const monster of zone.monsters) {

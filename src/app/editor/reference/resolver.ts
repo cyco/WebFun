@@ -1,4 +1,3 @@
-import GameData from "src/engine/game-data";
 import { ReferencesTo, Resolvable } from "./reference";
 import { Char, Hotspot, Monster, Sound, Tile, Zone } from "src/engine/objects";
 import { equal } from "src/util/functional";
@@ -10,17 +9,18 @@ import {
 	TileResolver,
 	ZoneResolver
 } from "./resolvers";
+import { AssetManager } from "src/engine";
 
 class Resolver {
 	private resolvers: Map<any, any> = new Map();
 
-	constructor(data: GameData) {
-		this.resolvers.set(Zone, new ZoneResolver(data));
-		this.resolvers.set(Hotspot, new HotspotResolver(data));
-		this.resolvers.set(Monster, new MonsterResolver(data));
-		this.resolvers.set(Sound, new SoundResolver(data));
-		this.resolvers.set(Tile, new TileResolver(data));
-		this.resolvers.set(Char, new CharResolver(data));
+	constructor(assets: AssetManager) {
+		this.resolvers.set(Zone, new ZoneResolver(assets));
+		this.resolvers.set(Hotspot, new HotspotResolver(assets));
+		this.resolvers.set(Monster, new MonsterResolver(assets));
+		this.resolvers.set(Sound, new SoundResolver(assets));
+		this.resolvers.set(Tile, new TileResolver(assets));
+		this.resolvers.set(Char, new CharResolver(assets));
 	}
 
 	public find<T extends Resolvable>(thing: T, op = equal): ReferencesTo<T> {

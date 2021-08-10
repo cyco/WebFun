@@ -42,13 +42,13 @@ interface Hotspot {
 }
 
 interface Tile {
-	name: string;
+	name?: string;
 	attributes: number;
 	pixels: Uint8Array;
 }
 
 interface Puzzle {
-	name: string;
+	name?: string;
 	type: number;
 	item1Class: number;
 	item2Class: number;

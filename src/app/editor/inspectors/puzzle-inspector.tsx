@@ -1,6 +1,6 @@
 import AbstractInspector from "./abstract-inspector";
 import { List } from "src/ui/components";
-import { Puzzle } from "src/engine/objects";
+import { Puzzle, Tile } from "src/engine/objects";
 import { PuzzleInspectorCell } from "../components";
 import ServiceContainer from "../service-container";
 
@@ -27,9 +27,9 @@ class PuzzleInspector extends AbstractInspector {
 
 	build(): void {
 		const cell = this._list.cell as PuzzleInspectorCell;
-		cell.tiles = this.data.currentData.tiles;
+		cell.tiles = this.data.currentData.getAll(Tile);
 		cell.palette = this.data.palette;
-		this._list.items = this.data.currentData.puzzles;
+		this._list.items = this.data.currentData.getAll(Puzzle);
 	}
 
 	prepareListSearch(searchValue: string, _: List<Puzzle>): RegExp[] {

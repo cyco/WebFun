@@ -1,21 +1,15 @@
 import { Action, Char, Hotspot, Monster, Puzzle, Sound, Tile, Zone } from "src/engine/objects";
-import GameData from "src/engine/game-data";
 import ReferenceResolver from "./resolver";
 import { greaterThan } from "src/util/functional";
 import { Reference, Resolvable } from "./reference";
 import { Yoda } from "src/variant";
-import { MutableChar, MutablePuzzle, MutableTile, MutableZone } from "src/engine/mutable-objects";
-import { Size } from "src/util";
+import { AssetManager } from "src/engine";
 
 class Updater {
-	private data: GameData;
-
-	public constructor(data: GameData) {
-		this.data = data;
-	}
+	public constructor(private assets: AssetManager) {}
 
 	public deleteItem(thing: Zone | Hotspot | Monster | Sound | Tile | Char): void {
-		const resolver = new ReferenceResolver(this.data);
+		const resolver = new ReferenceResolver(this.assets);
 		const references = resolver.find(thing);
 		const outdatedReferences = resolver.find(thing, greaterThan);
 		references.forEach(r => this.deleteReference(r));
@@ -23,29 +17,42 @@ class Updater {
 		outdatedReferences.forEach(r => this.updateReference(r, this.determineUpdater(r)));
 
 		if (thing instanceof Zone) {
-			this.data.zones.sort(({ id: a }, { id: b }) => a - b);
-			for (let i = 0; i < this.data.zones.length; i++) {
-				if (this.data.zones[i].id !== i) {
-					const zone = new MutableZone();
-					zone.id = i;
-					zone.planet = Zone.Planet.None;
-					zone.type = Zone.Type.None;
-					zone.size = new Size(9, 9);
-					zone.tileIDs = new Int16Array(zone.size.area * 3);
-					zone.tileIDs = zone.tileIDs.map(_ => -1);
-					this.data.zones.splice(i, 0, zone);
+			this.assets.getAll(Zone).sort(({ id: a }, { id: b }) => a - b);
+			for (let i = 0; i < this.assets.getAll(Zone).length; i++) {
+				if (this.assets.get(Zone, i).id !== i) {
+					const zone = new Zone(
+						i,
+						{
+							planet: Zone.Planet.None.rawValue,
+							zoneType: Zone.Type.None.rawValue,
+							width: 9,
+							height: 9,
+							tileIDs: new Int16Array(9 * 9 * 3).map(_ => -1),
+							providedItemIDs: new Int16Array(),
+							requiredItemIDs: new Int16Array(),
+							goalItemIDs: new Int16Array(),
+							npcIDs: new Int16Array(),
+							hotspots: [],
+							actions: [],
+							monsters: [],
+							unknown: -1
+						},
+						this.assets
+					);
+					this.assets.getAll(Zone).splice(i, 0, zone);
 				}
 			}
 		}
 
 		if (thing instanceof Tile) {
-			this.data.tiles.sort(({ id: a }, { id: b }) => a - b);
-			for (let i = 0; i < this.data.tiles.length; i++) {
-				if (this.data.tiles[i].id !== i) {
-					const tile = new MutableTile();
-					tile.id = i;
-					tile.imageData = new Uint8Array(Tile.WIDTH * Tile.HEIGHT);
-					this.data.tiles.splice(i, 0, tile);
+			this.assets.getAll(Tile).sort(({ id: a }, { id: b }) => a - b);
+			for (let i = 0; i < this.assets.getAll(Tile).length; i++) {
+				if (this.assets.get(Tile, i).id !== i) {
+					const tile = new Tile(i, {
+						attributes: 0,
+						pixels: new Uint8Array(Tile.WIDTH * Tile.HEIGHT)
+					});
+					this.assets.getAll(Tile).splice(i, 0, tile);
 				}
 			}
 		}
@@ -53,19 +60,19 @@ class Updater {
 
 	private removeTopLevelReference(thing: Resolvable) {
 		if (thing instanceof Zone) {
-			this.removeItemFrom(thing, this.data.zones);
+			this.removeItemFrom(thing, this.assets.getAll(Zone));
 		}
 
 		if (thing instanceof Tile) {
-			this.removeItemFrom(thing, this.data.tiles);
+			this.removeItemFrom(thing, this.assets.getAll(Tile));
 		}
 
 		if (thing instanceof Sound) {
-			this.removeItemFrom(thing, this.data.sounds);
+			this.removeItemFrom(thing, this.assets.getAll(Sound));
 		}
 
 		if (thing instanceof Char) {
-			this.removeItemFrom(thing, this.data.characters);
+			this.removeItemFrom(thing, this.assets.getAll(Char));
 		}
 	}
 
@@ -129,12 +136,12 @@ class Updater {
 		}
 
 		if (to instanceof Sound && from instanceof Char) {
-			(from as MutableChar).reference = -1;
+			(from as Char).reference = -1;
 			return;
 		}
 
 		if (to instanceof Char && from instanceof Char && via[0] === "weapon") {
-			(from as MutableChar).reference = -1;
+			(from as Char).reference = -1;
 			return;
 		}
 
@@ -149,8 +156,8 @@ class Updater {
 		}
 
 		if (to instanceof Tile && from instanceof Puzzle) {
-			if (via[0] === "item1") (from as MutablePuzzle).item1 = null;
-			else (from as MutablePuzzle).item2 = null;
+			if (via[0] === "item1") (from as Puzzle).item1 = null;
+			else (from as Puzzle).item2 = null;
 
 			return;
 		}
@@ -179,12 +186,12 @@ class Updater {
 		}
 
 		if (to instanceof Char && from instanceof Char && via[0] === "weapon") {
-			(from as MutableChar).reference = update(from.reference);
+			(from as Char).reference = update(from.reference);
 			return;
 		}
 
 		if (via[0] === "id") {
-			(to as any).id = update(to.id);
+			to.id = update(to.id);
 			return;
 		}
 
@@ -194,7 +201,7 @@ class Updater {
 		}
 
 		if (to instanceof Char && from instanceof Monster) {
-			// Monster references should be updated automatically when the data is serialized
+			// Monster references should be updated automatically when the.assets.is serialized
 			return;
 		}
 

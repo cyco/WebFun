@@ -8,6 +8,7 @@ import ZoneLayer from "./zone-layer";
 import Monster from "./monster";
 import Tile from "./tile";
 import AssetManager, { NullIfMissing } from "src/engine/asset-manager";
+import { Zone as RawZone } from "src/engine/file-format/types";
 
 const TILE_ADEGAN_CRYSTAL = 12;
 
@@ -17,42 +18,77 @@ class Zone {
 	public static readonly Layer = ZoneLayer;
 	public static readonly Planet = ZonePlanet;
 
+	public id: number;
+	public name: string;
+	public planet: ZonePlanet;
+	public size: Size;
+	public type: ZoneType;
+	public tileIDs: Int16Array;
+	public hotspots: Hotspot[];
+	public goalItems: Tile[];
+	public requiredItems: Tile[];
+	public providedItems: Tile[];
+	public npcs: Tile[];
+	public izx4Unknown: number;
+	public izaxUnknown: number;
+	public actions: Action[];
+	public monsters: Monster[];
+
+	public assets: AssetManager;
+
+	// Runtime attributes
 	public visited: boolean = false;
 	public actionsInitialized: boolean = false;
 	public counter: number = 0;
 	public random: number = 0;
 	public sectorCounter: number = 0;
-
-	protected _monsters: Monster[] = [];
-	protected _id: number = -1;
-	protected _name: string = "";
-	protected _planet: ZonePlanet = ZonePlanet.None;
-	protected _size: Size = null;
-	protected _type: ZoneType = null;
-	protected _tileIDs: Int16Array = new Int16Array(0);
-	protected _hotspots: Hotspot[] = [];
-	protected _tileStore: any = null;
-	protected _zoneStore: any = null;
-	protected _goalItems: Tile[] = [];
-	protected _requiredItems: Tile[] = [];
-	protected _providedItems: Tile[] = [];
-	protected _npcs: Tile[] = [];
-	protected _izx4Unknown: number = 0;
-	protected _izaxUnknown: number = 0;
-	protected _actions: Action[] = [];
 	public doorInLocation: Point = new Point(0, 0);
 
+	public constructor(id: number, data: Zone | RawZone, assets: AssetManager) {
+		this.id = id;
+		this.name = data.name;
+		this.actions = data.actions.map((a, idx) => new Action(idx, this, a));
+		this.monsters = data.monsters.map((m, idx) => new Monster(idx, m, assets));
+		this.assets = assets;
+
+		if (data instanceof Zone) {
+			this.planet = data.planet;
+			this.size = data.size;
+			this.type = data.type;
+			this.tileIDs = new Int16Array(data.tileIDs);
+			this.hotspots = data.hotspots.map((htsp, idx) => new Hotspot(idx, htsp));
+			this.goalItems = data.goalItems.slice();
+			this.providedItems = data.providedItems.slice();
+			this.requiredItems = data.requiredItems.slice();
+			this.npcs = data.npcs.slice();
+			this.izaxUnknown = data.izaxUnknown;
+			this.izx4Unknown = data.izx4Unknown;
+		} else {
+			this.planet = Zone.Planet.fromNumber(data.planet);
+			this.size = new Size(data.width, data.height);
+			this.type = Zone.Type.fromNumber(data.zoneType);
+			this.tileIDs = new Int16Array(data.tileIDs);
+			this.hotspots = data.hotspots.map((htsp, idx) => new Hotspot(idx, htsp));
+			this.goalItems = data.goalItemIDs.mapArray(id => assets.get(Tile, id));
+			this.providedItems = data.providedItemIDs.mapArray(id => assets.get(Tile, id));
+			this.requiredItems = data.requiredItemIDs.mapArray(id => assets.get(Tile, id));
+			this.npcs = data.npcIDs.mapArray(id => assets.get(Tile, id));
+			this.izaxUnknown = data.unknown;
+			//this.izx4Unknown = data.unknown;
+		}
+	}
+
 	get doors(): Hotspot[] {
-		return this._hotspots.filter(
+		return this.hotspots.filter(
 			hotspot => hotspot.type === Hotspot.Type.DoorIn && hotspot.arg !== -1
 		);
 	}
 
 	getTileID(x: number, y: number, z: number): number {
-		if (x < 0 || x >= this._size.width || y < 0 || y >= this._size.height) {
+		if (x < 0 || x >= this.size.width || y < 0 || y >= this.size.height) {
 			return null;
 		}
-		return this.tileIDs[Zone.LAYERS * (y * this._size.width + x) + z];
+		return this.tileIDs[Zone.LAYERS * (y * this.size.width + x) + z];
 	}
 
 	getTile(x: number | PointLike, y?: number, z?: number): Tile {
@@ -65,9 +101,9 @@ class Zone {
 		}
 
 		const index = this.getTileID(x, y, z);
-		if (index === -1 || index === 0xffff || index >= this._tileStore.length) return null;
+		if (index === -1 || index === 0xffff) return null;
 
-		return this._tileStore[index];
+		return this.assets.get(Tile, index, NullIfMissing);
 	}
 
 	setTile(tile: Tile, x: number | PointLike, y?: number, z?: number): void {
@@ -79,7 +115,7 @@ class Zone {
 			return;
 		}
 
-		const index = Zone.LAYERS * (y * this._size.width + x) + z;
+		const index = Zone.LAYERS * (y * this.size.width + x) + z;
 		this.tileIDs[index] = tile === null ? -1 : tile.id;
 	}
 
@@ -98,7 +134,7 @@ class Zone {
 	leadsTo(needleZone: Zone, assets: AssetManager): boolean {
 		if (needleZone === this) return true;
 
-		for (const hotspot of this._hotspots) {
+		for (const hotspot of this.hotspots) {
 			if (hotspot.type === Hotspot.Type.DoorIn && hotspot.arg !== -1) {
 				const zone = assets.get(Zone, hotspot.arg, NullIfMissing);
 				if (zone.leadsTo(needleZone, assets)) return true;
@@ -108,11 +144,11 @@ class Zone {
 		return false;
 	}
 
-	isLoadingZone(): boolean {
-		return this._type === ZoneType.Load;
+	public isLoadingZone(): boolean {
+		return this.type === ZoneType.Load;
 	}
 
-	initialize(): void {
+	public initialize(): void {
 		this.placeMonsters();
 		this.layDownHotspotItems();
 	}
@@ -149,7 +185,7 @@ class Zone {
 						break;
 					case Hotspot.Type.DoorIn:
 						if (hotspot.arg < 0) break;
-						const zone = this._zoneStore[hotspot.arg];
+						const zone = this.assets.get(Zone, hotspot.arg);
 						zone.layDownHotspotItems();
 						break;
 					default:
@@ -159,85 +195,17 @@ class Zone {
 	}
 
 	public isRoom(): boolean {
-		return this._size.width === 9;
+		return this.size.width === 9;
 	}
 
 	get hasTeleporter(): boolean {
 		return (
-			this._type === ZoneType.Empty && this.hotspots.withType(Hotspot.Type.Teleporter).length !== 0
+			this.type === ZoneType.Empty && this.hotspots.withType(Hotspot.Type.Teleporter).length !== 0
 		);
 	}
 
 	public get bounds(): Rectangle {
-		return new Rectangle(new Point(0, 0), this._size);
-	}
-
-	get monsters(): Monster[] {
-		return this._monsters;
-	}
-
-	get id(): number {
-		return this._id;
-	}
-
-	get name(): string {
-		return this._name;
-	}
-
-	get planet(): ZonePlanet {
-		return this._planet;
-	}
-
-	get size(): Size {
-		return this._size;
-	}
-
-	get type(): ZoneType {
-		return this._type;
-	}
-
-	get tileIDs(): Int16Array {
-		return this._tileIDs;
-	}
-
-	get hotspots(): Hotspot[] {
-		return this._hotspots;
-	}
-
-	get tileStore(): Tile[] {
-		return this._tileStore;
-	}
-
-	get zoneStore(): Zone[] {
-		return this._zoneStore;
-	}
-
-	get goalItems(): Tile[] {
-		return this._goalItems;
-	}
-
-	get requiredItems(): Tile[] {
-		return this._requiredItems;
-	}
-
-	get providedItems(): Tile[] {
-		return this._providedItems;
-	}
-
-	get npcs(): Tile[] {
-		return this._npcs;
-	}
-
-	get izx4Unknown(): number {
-		return this._izx4Unknown;
-	}
-
-	get izaxUnknown(): number {
-		return this._izaxUnknown;
-	}
-
-	get actions(): Action[] {
-		return this._actions;
+		return new Rectangle(new Point(0, 0), this.size);
 	}
 }
 

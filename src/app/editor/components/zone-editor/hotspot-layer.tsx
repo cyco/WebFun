@@ -2,7 +2,6 @@ import "./hotspot-layer.scss";
 
 import { Hotspot, Tile, Zone } from "src/engine/objects";
 import { MenuItemInit, MenuItemSeparator } from "src/ui";
-import { MutableHotspot } from "src/engine/mutable-objects";
 
 import { ColorPalette } from "src/engine/rendering";
 import Component from "src/ui/component";
@@ -73,12 +72,13 @@ class HotspotLayer extends Component {
 			{
 				title: "Place hotspot",
 				callback: (): void => {
-					const hotspot = new MutableHotspot();
-					hotspot.id = this.zone.hotspots.length;
-					hotspot.type = MutableHotspot.Type.DropQuestItem;
-					hotspot.arg = -1;
-					hotspot.x = point.x;
-					hotspot.y = point.y;
+					const hotspot = new Hotspot(this.zone.hotspots.length, {
+						type: Hotspot.Type.DropQuestItem.rawValue,
+						argument: -1,
+						x: point.x,
+						y: point.y,
+						enabled: true
+					});
 
 					this.zone.hotspots.push(hotspot);
 					this.draw();

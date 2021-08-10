@@ -6,7 +6,7 @@ import { SegmentControl, Segment } from "src/ui/components";
 import { Configuration } from "src/app/webfun/debug/automation/test";
 import SimulationConfigurationBuilder from "./simulation-configuration-builder";
 import WorldConfigurationBuilder from "./world-configuration-builder";
-import { ColorPalette, GameData } from "src/engine";
+import { AssetManager, ColorPalette } from "src/engine";
 
 class ConfigurationBuilder extends Component {
 	public static readonly tagName = "wf-debug-test-creator-configuration-builder";
@@ -86,12 +86,12 @@ class ConfigurationBuilder extends Component {
 		return this._simulationConfigurationBuilder;
 	}
 
-	public set gameData(p: GameData) {
-		this._simulationConfigurationBuilder.gameData = p;
+	public set assets(p: AssetManager) {
+		this._simulationConfigurationBuilder.assets = p;
 	}
 
-	public get gameData(): GameData {
-		return this._simulationConfigurationBuilder.gameData;
+	public get assets(): AssetManager {
+		return this._simulationConfigurationBuilder.assets;
 	}
 
 	public set palette(p: ColorPalette) {

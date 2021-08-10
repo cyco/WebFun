@@ -1,11 +1,11 @@
-import { Char } from "src/engine/objects";
+import { Char, Sound, Tile } from "src/engine/objects";
 import { CharacterDetails, CharacterInspectorCell } from "../components";
 import { IconButton, List } from "src/ui/components";
 
 import AbstractInspector from "src/app/editor/inspectors/abstract-inspector";
-import { MutableChar } from "src/engine/mutable-objects";
 import ServiceContainer from "../service-container";
 import { Updater } from "../reference";
+import { NullIfMissing } from "src/engine/asset-manager";
 
 class CharacterInspector extends AbstractInspector {
 	private _list: List<Char>;
@@ -52,39 +52,43 @@ class CharacterInspector extends AbstractInspector {
 	}
 
 	public addCharacter(): void {
-		const newCharacter = new MutableChar(this.data.currentData.characters.last());
+		const newCharacter = new Char(
+			this.data.currentData.getAll(Char).length,
+			this.data.currentData.getAll(Char).last(),
+			this.data.currentData
+		);
 		newCharacter.name = "New Character";
-		newCharacter.id = this.data.currentData.characters.length;
-		this.data.currentData.characters.push(newCharacter);
-		this._list.items = this.data.currentData.characters;
+		newCharacter.id = this.data.currentData.getAll(Char).length;
+		this.data.currentData.getAll(Char).push(newCharacter);
+		this._list.items = this.data.currentData.getAll(Char);
 	}
 
-	public renameCharacter(character: MutableChar, name: string): void {
+	public renameCharacter(character: Char, name: string): void {
 		character.name = name;
 	}
 
 	public removeCharacter(character: Char): void {
-		const index = this.data.currentData.characters.indexOf(character);
+		const index = this.data.currentData.getAll(Char).indexOf(character);
 		if (index === -1) return;
 		if (!confirm(`Delete character ${character.id} (${character.name})?`)) {
 			return;
 		}
 		this.updater.deleteItem(character);
-		this._list.items = this.data.currentData.characters;
+		this._list.items = this.data.currentData.getAll(Char);
 	}
 
 	public build(): void {
 		this._details.palette = this.data.palette;
-		this._details.sounds = this.data.currentData.sounds.map(s => s.file);
-		this._details.weapons = this.data.currentData.characters.filter(
-			c => c.type === Char.Type.Weapon
-		);
-		this._details.tiles = this.data.currentData.tiles;
+		this._details.sounds = this.data.currentData.getAll(Sound).map(s => s.file);
+		this._details.weapons = this.data.currentData
+			.getAll(Char)
+			.filter(c => c.type === Char.Type.Weapon);
+		this._details.tiles = this.data.currentData.getAll(Tile);
 		this._details.palette = this.data.palette;
 
 		const cell = this._list.cell as CharacterInspectorCell;
 		cell.palette = this.data.palette;
-		this._list.items = this.data.currentData.characters;
+		this._list.items = this.data.currentData.getAll(Char);
 	}
 
 	prepareListSearch(searchValue: string, _: List<Char>): RegExp[] {
@@ -101,12 +105,12 @@ class CharacterInspector extends AbstractInspector {
 		const searchableAttributes = [item.id, item.name, item.movementType.name];
 
 		if (item.isWeapon()) {
-			const sound = this.data.currentData.sounds[item.reference];
+			const sound = this.data.currentData.get(Sound, item.reference, NullIfMissing);
 			if (sound) {
 				searchableAttributes.push(sound.file);
 			}
 		} else {
-			const weapon = this.data.currentData.characters[item.reference];
+			const weapon = this.data.currentData.get(Char, item.reference, NullIfMissing);
 			if (weapon) {
 				searchableAttributes.push(weapon.name);
 			}

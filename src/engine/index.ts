@@ -3,7 +3,6 @@ import { Reader as SaveGameReader, Writer as SaveGameWriter, SaveState } from ".
 import { ColorPalette, PaletteAnimation } from "./rendering";
 import Engine from "./engine";
 import EngineEvents from "./events";
-import GameData from "./game-data";
 import Hero from "./hero";
 import Inventory from "./inventory";
 import Metronome from "./metronome";
@@ -20,7 +19,6 @@ import AssetManager from "./asset-manager";
 import ResourceManager from "./resource-manager";
 import Interface from "./interface";
 import * as Objects from "./objects";
-import * as MutableObjects from "./mutable-objects";
 import * as Script from "./script";
 import Logger from "./logger";
 import Variant from "./variant";
@@ -30,7 +28,6 @@ export {
 	ColorPalette,
 	Engine,
 	EngineEvents,
-	GameData,
 	GameState,
 	Variant,
 	Hero,
@@ -38,7 +35,6 @@ export {
 	Inventory,
 	Metronome,
 	Logger,
-	MutableObjects,
 	Objects,
 	PaletteAnimation,
 	PersistentState,

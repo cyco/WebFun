@@ -29,7 +29,7 @@ class MobileMainMenu extends Menu {
 				title: "New World",
 				mnemonic: 0,
 				callback: () => controller.newStory(),
-				enabled: () => controller.data !== null
+				enabled: () => controller.assets !== null
 			},
 			{
 				title: "Replay Story",
@@ -41,7 +41,7 @@ class MobileMainMenu extends Menu {
 				title: "Load World",
 				mnemonic: 0,
 				callback: () => controller.load(),
-				enabled: () => controller.data !== null,
+				enabled: () => controller.assets !== null,
 				beta: true
 			},
 			{

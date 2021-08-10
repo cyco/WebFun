@@ -4,14 +4,13 @@ import { Component } from "src/ui";
 import CharacterFramePreview from "./character-frame-preview";
 
 import { Char, Tile } from "src/engine/objects";
-import { MutableChar } from "src/engine/mutable-objects";
-import { ColorPalette } from "src/engine";
+import { AssetManager, ColorPalette } from "src/engine";
 
 class CharacterDetails extends Component {
 	public static readonly tagName = "wf-character-details";
 	public static readonly observedAttributes: string[] = [];
 
-	private _character: MutableChar;
+	private _character: Char;
 	private _weapons: Char[];
 	private _sounds: string[];
 	private _tiles: Tile[];
@@ -184,14 +183,14 @@ class CharacterDetails extends Component {
 		return this._palette;
 	}
 
-	set character(c: MutableChar | Char) {
-		if (!(c instanceof MutableChar)) c = new MutableChar(c);
+	set character(c: Char) {
+		if (!(c instanceof Char)) c = new Char(0, c, new AssetManager());
 		this._character = c;
 		this._currentPreviewFrame = 0;
 		this._rebuild();
 	}
 
-	get character(): MutableChar | Char {
+	get character(): Char | Char {
 		return this._character;
 	}
 

@@ -4,7 +4,15 @@ import { Point } from "src/util";
 
 describe("WebFun.Engine.Objects.Hotspot", () => {
 	let subject: Hotspot;
-	beforeEach(() => (subject = new Hotspot()));
+	beforeEach(() => {
+		subject = new Hotspot(3, {
+			enabled: false,
+			type: Hotspot.Type.DropMap.rawValue,
+			x: 2,
+			y: 3,
+			argument: -1
+		});
+	});
 
 	it("marks a point of interest on a zone", () => {
 		expect(subject.location).toBeInstanceOf(Point);

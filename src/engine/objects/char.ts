@@ -5,6 +5,8 @@ import { CharFrameEntry } from "./char-frame-entry";
 import CharMovementType from "./char-movement-type";
 import { Direction } from "src/util";
 import Tile from "./tile";
+import AssetManager, { NullIfMissing } from "../asset-manager";
+import { Character as RawChar } from "src/engine/file-format/types";
 
 class Char {
 	public static readonly Frame = CharFrame;
@@ -12,34 +14,42 @@ class Char {
 	public static readonly Type = CharType;
 	public static readonly MovementType = CharMovementType;
 
-	protected _id: number;
-	protected _frames: [CharFrame, CharFrame, CharFrame];
-	protected _name: string = null;
-	protected _type: CharType = null;
-	protected _movementType: CharMovementType;
-	protected _garbage1: number = null;
-	protected _garbage2: number = null;
-	protected _reference: number = null;
-	protected _health: number = null;
-	protected _damage: number = null;
+	public id: number;
+	public frames: [CharFrame, CharFrame, CharFrame];
+	public name: string = null;
+	public type: CharType = null;
+	public movementType: CharMovementType;
+	public probablyGarbage1: number;
+	public probablyGarbage2: number;
+	public reference: number;
+	public health: number;
+	public damage: number;
 
 	// TODO: remove property
 	public tile: Tile;
 
-	get id(): number {
-		return this._id;
-	}
+	public constructor(id: number, data: Char | RawChar, assets: AssetManager) {
+		this.id = id;
+		this.name = data.name;
+		this.probablyGarbage1 = data.probablyGarbage1;
+		this.probablyGarbage2 = data.probablyGarbage2;
+		this.reference = data.reference;
+		this.health = data.health;
+		this.damage = data.damage;
 
-	get frames(): [CharFrame, CharFrame, CharFrame] {
-		return this._frames;
-	}
-
-	get name(): string {
-		return this._name;
-	}
-
-	get type(): CharType {
-		return this._type;
+		if (data instanceof Char) {
+			this.type = data.type;
+			this.movementType = data.movementType;
+			this.frames = data.frames.map(f => new CharFrame(f.tiles.slice())) as any;
+		} else {
+			this.type = CharType.fromNumber(data.type);
+			this.movementType = CharMovementType.fromNumber(data.movementType);
+			this.frames = [
+				new CharFrame(data.frame1.mapArray(i => assets.get(Tile, i, NullIfMissing))),
+				new CharFrame(data.frame2.mapArray(i => assets.get(Tile, i, NullIfMissing))),
+				new CharFrame(data.frame3.mapArray(i => assets.get(Tile, i, NullIfMissing)))
+			];
+		}
 	}
 
 	get attackDuration(): number {
@@ -54,7 +64,7 @@ class Char {
 		}
 
 		let tile = null;
-		const frame = this._frames[frameIdx];
+		const frame = this.frames[frameIdx];
 		if (!frame) return null;
 
 		const dir = Direction.Confine(direction);
@@ -90,30 +100,6 @@ class Char {
 
 	isWeapon(): boolean {
 		return this.type === CharType.Weapon;
-	}
-
-	get movementType(): CharMovementType {
-		return this._movementType;
-	}
-
-	get garbage1(): number {
-		return this._garbage1;
-	}
-
-	get garbage2(): number {
-		return this._garbage2;
-	}
-
-	get damage(): number {
-		return this._damage;
-	}
-
-	get health(): number {
-		return this._health;
-	}
-
-	get reference(): number {
-		return this._reference;
 	}
 
 	public getWeaponIcon(): Tile {

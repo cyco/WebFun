@@ -7,63 +7,69 @@ import {
 	Monster,
 	Puzzle,
 	Sound,
+	StartupImage,
 	Tile,
 	Zone
 } from "src/engine/objects";
 import { OutputStream, add } from "src/util";
 import { Yoda } from "src/variant";
 
-import { GameData } from "src/engine";
+import { AssetManager } from "src/engine";
 
-class GameDataSerializer {
-	public serialize(data: GameData, stream: OutputStream): void {
-		this.writeVersion(data, stream);
-		this.writeStartupImage(data, stream);
-		this.writeSounds(data, stream);
-		this.writeTiles(data, stream);
-		this.writeZones(data, stream);
-		this.writePuzzles(data, stream);
-		this.writeCharacters(data, stream);
-		this.writeCharacterWeapons(data, stream);
-		this.writeCharacterAuxiliary(data, stream);
-		this.writeTileNames(data, stream);
+class AssetManagerSerializer {
+	public serialize(assets: AssetManager, stream: OutputStream): void {
+		this.writeVersion(assets, stream);
+		this.writeStartupImage(assets, stream);
+		this.writeSounds(assets, stream);
+		this.writeTiles(assets, stream);
+		this.writeZones(assets, stream);
+		this.writePuzzles(assets, stream);
+		this.writeCharacters(assets, stream);
+		this.writeCharacterWeapons(assets, stream);
+		this.writeCharacterAuxiliary(assets, stream);
+		this.writeTileNames(assets, stream);
 		this.writeEndOfFile(stream);
 	}
 
-	private writeVersion(_: GameData, stream: OutputStream) {
+	private writeVersion(_: AssetManager, stream: OutputStream) {
 		stream.writeCharacters("VERS");
 		stream.writeUint32(512);
 	}
 
-	private writeStartupImage(data: GameData, stream: OutputStream) {
+	private writeStartupImage(assets: AssetManager, stream: OutputStream) {
 		stream.writeCharacters("STUP");
 		stream.writeUint32(288 * 288);
-		stream.writeUint8Array(data.startupImageData);
+		stream.writeUint8Array(assets.get(Uint8Array, StartupImage));
 	}
 
-	private writeSounds(data: GameData, stream: OutputStream) {
+	private writeSounds(assets: AssetManager, stream: OutputStream) {
 		stream.writeCharacters("SNDS");
-		const size = data.sounds.map((snd: Sound) => 2 + snd.file.length + 1).reduce(add, 0);
+		const size = assets
+			.getAll(Sound)
+			.map((snd: Sound) => 2 + snd.file.length + 1)
+			.reduce(add, 0);
 		stream.writeUint32(2 + size);
-		stream.writeUint16(-data.sounds.length);
+		stream.writeUint16(-assets.getAll(Sound).length);
 
-		data.sounds.forEach((snd: Sound) => stream.writeLengthPrefixedNullTerminatedString(snd.file));
+		assets
+			.getAll(Sound)
+			.forEach((snd: Sound) => stream.writeLengthPrefixedNullTerminatedString(snd.file));
 	}
 
-	private writeTiles(data: GameData, stream: OutputStream) {
+	private writeTiles(assets: AssetManager, stream: OutputStream) {
 		stream.writeCharacters("TILE");
-		stream.writeUint32(data.tiles.length * (32 * 32 + 4));
-		data.tiles.forEach((tile: Tile) => {
+		stream.writeUint32(assets.getAll(Tile).length * (32 * 32 + 4));
+		assets.getAll(Tile).forEach((tile: Tile) => {
 			stream.writeUint32(tile.attributes);
 			stream.writeUint8Array(tile.imageData);
 		});
 	}
 
-	private writeZones(data: GameData, stream: OutputStream) {
+	private writeZones(assets: AssetManager, stream: OutputStream) {
 		stream.writeCharacters("ZONE");
-		stream.writeUint16(data.zones.length);
+		stream.writeUint16(assets.getAll(Zone).length);
 
-		data.zones.forEach((zone: Zone, index: number) => {
+		assets.getAll(Zone).forEach((zone: Zone, index: number) => {
 			const izaxSize =
 				8 +
 				2 +
@@ -188,17 +194,18 @@ class GameDataSerializer {
 		});
 	}
 
-	private writePuzzles(data: GameData, stream: OutputStream) {
+	private writePuzzles(assets: AssetManager, stream: OutputStream) {
 		stream.writeCharacters("PUZ2");
 		stream.writeUint32(
-			data.puzzles.length * 28 +
-				data.puzzles
+			assets.getAll(Puzzle).length * 28 +
+				assets
+					.getAll(Puzzle)
 					.map((p: Puzzle) => p.strings.map(p => 2 + p.length).reduce(add, 0))
 					.reduce(add, 0) +
 				2
 		);
 
-		data.puzzles.forEach((puzzle: Puzzle, index: number) => {
+		assets.getAll(Puzzle).forEach((puzzle: Puzzle, index: number) => {
 			stream.writeUint16(index);
 			stream.writeCharacters("IPUZ");
 			stream.writeUint32(18 + puzzle.strings.map(s => 2 + s.length).reduce(add, 0));
@@ -221,19 +228,19 @@ class GameDataSerializer {
 		stream.writeUint16(-1);
 	}
 
-	private writeCharacters(data: GameData, stream: OutputStream) {
+	private writeCharacters(assets: AssetManager, stream: OutputStream) {
 		stream.writeCharacters("CHAR");
-		stream.writeUint32(2 + data.characters.length * (10 + 26 + 3 * 2 * 8));
+		stream.writeUint32(2 + assets.getAll(Char).length * (10 + 26 + 3 * 2 * 8));
 
-		data.characters.forEach((c: Char, index: number) => {
+		assets.getAll(Char).forEach((c: Char, index: number) => {
 			stream.writeUint16(index);
 			stream.writeCharacters("ICHA");
 			stream.writeUint32(26 + c.frames.length * 2 * 8);
 			stream.writeNullTerminatedString(c.name.padEnd(15, "\0"));
 			stream.writeUint16(c.type.rawValue);
 			stream.writeUint16(c.movementType.rawValue);
-			stream.writeUint16(c.garbage1);
-			stream.writeUint32(c.garbage2);
+			stream.writeUint16(c.probablyGarbage1);
+			stream.writeUint32(c.probablyGarbage2);
 
 			c.frames.forEach(frame => {
 				stream.writeUint16Array(frame.tiles.map(t => (t ? t.id : -1)));
@@ -242,11 +249,11 @@ class GameDataSerializer {
 		stream.writeUint16(-1);
 	}
 
-	private writeCharacterWeapons(data: GameData, stream: OutputStream) {
+	private writeCharacterWeapons(assets: AssetManager, stream: OutputStream) {
 		stream.writeCharacters("CHWP");
-		stream.writeUint32(data.characters.length * 6 + 2);
+		stream.writeUint32(assets.getAll(Char).length * 6 + 2);
 
-		data.characters.forEach((c: Char, index: number) => {
+		assets.getAll(Char).forEach((c: Char, index: number) => {
 			stream.writeUint16(index);
 			stream.writeUint16(c.reference);
 			stream.writeUint16(c.health);
@@ -254,19 +261,19 @@ class GameDataSerializer {
 		stream.writeUint16(-1);
 	}
 
-	private writeCharacterAuxiliary(data: GameData, stream: OutputStream) {
+	private writeCharacterAuxiliary(assets: AssetManager, stream: OutputStream) {
 		stream.writeCharacters("CAUX");
-		stream.writeUint32(data.characters.length * 4 + 2);
+		stream.writeUint32(assets.getAll(Char).length * 4 + 2);
 
-		data.characters.forEach((c: Char, index: number) => {
+		assets.getAll(Char).forEach((c: Char, index: number) => {
 			stream.writeUint16(index);
 			stream.writeUint16(c.damage);
 		});
 		stream.writeUint16(-1);
 	}
 
-	private writeTileNames(data: GameData, stream: OutputStream) {
-		const namedTiles = data.tiles.filter((t: Tile) => t.name);
+	private writeTileNames(assets: AssetManager, stream: OutputStream) {
+		const namedTiles = assets.getFiltered(Tile, t => !!t.name);
 
 		stream.writeCharacters("TNAM");
 		stream.writeUint32(namedTiles.length * 0x1a + 2);
@@ -284,4 +291,4 @@ class GameDataSerializer {
 	}
 }
 
-export default GameDataSerializer;
+export default AssetManagerSerializer;

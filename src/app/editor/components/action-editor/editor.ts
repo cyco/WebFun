@@ -10,8 +10,7 @@ import { Action, Zone } from "src/engine/objects";
 import ArgumentProcessor from "./argument-processor";
 import Component from "src/ui/component";
 import Disassembler from "src/app/editor/components/action-editor/disassembler";
-import GameData from "src/engine/game-data";
-import { MutableAction, MutableZone } from "src/engine/mutable-objects";
+import AssetManager from "src/engine/asset-manager";
 import Printer from "src/app/editor/components/action-editor/printer";
 import { Shortcut } from "src/ux";
 import ShortcutManager from "src/ux/shortcut-manager";
@@ -25,7 +24,7 @@ class Editor extends Component {
 	private readonly _errorArea: HTMLDivElement;
 	private _editorArea: HTMLDivElement;
 	private _zone: Zone;
-	public data: GameData;
+	public assets: AssetManager;
 
 	constructor() {
 		super();
@@ -61,10 +60,7 @@ class Editor extends Component {
 		const errors: Error[] = [];
 		const actions = ast.map((ast, idx) => {
 			try {
-				const action = new MutableAction(assembler.assemble(ast));
-				action.id = idx;
-				action.zone = this._zone;
-				return action;
+				return new Action(idx, this._zone, assembler.assemble(ast));
 			} catch (e) {
 				errors.push(e);
 				return null;
@@ -72,7 +68,7 @@ class Editor extends Component {
 		});
 		this._showErrors(errors);
 		if (!errors.length) {
-			(this._zone as MutableZone).actions = actions;
+			(this._zone as Zone).actions = actions;
 			this.actions = actions;
 		}
 	}
@@ -108,7 +104,7 @@ class Editor extends Component {
 		const printer = new Printer();
 		printer.tagName = Token.tagName;
 		const disassembler = new Disassembler();
-		const argumentProcessor = new ArgumentProcessor(this.data);
+		const argumentProcessor = new ArgumentProcessor(this.assets);
 
 		const errors: Error[] = [];
 		this._actions.forEach((action, idx) => {

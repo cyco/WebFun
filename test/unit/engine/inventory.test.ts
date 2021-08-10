@@ -1,5 +1,4 @@
 import { Events, default as Inventory } from "src/engine/inventory";
-import { MutableTile } from "src/engine/mutable-objects";
 import { Tile } from "src/engine/objects";
 
 describe("WebFun.Engine.Inventory", () => {
@@ -116,7 +115,7 @@ describe("WebFun.Engine.Inventory", () => {
 	});
 
 	function mockTile(spec: any): Tile {
-		const tile = new MutableTile();
+		const tile = new Tile(3, {} as any);
 		tile.id = spec.id ?? 0;
 		tile.attributes = spec.attributes ?? 0;
 		return tile;

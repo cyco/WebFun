@@ -8,9 +8,8 @@ import DataManager from "./data-manager";
 import FilePicker from "src/ui/file-picker";
 import GameDataSerializer from "./game-data-serializer";
 import { SaveGameInspector } from "./inspectors";
-import { SaveGameReader, AssetManager } from "src/engine";
+import { SaveGameReader } from "src/engine";
 import WindowManager from "src/ui/window-manager";
-import { Tile, Zone, Puzzle, Char, Sound } from "src/engine/objects";
 import ServiceContainer from "./service-container";
 
 class EditorView extends Component {
@@ -78,13 +77,7 @@ class EditorView extends Component {
 			return;
 		}
 
-		const data = this.data.currentData;
-		const assets = new AssetManager();
-		assets.populate(Zone, data.zones);
-		assets.populate(Tile, data.tiles);
-		assets.populate(Puzzle, data.puzzles);
-		assets.populate(Char, data.characters);
-		assets.populate(Sound, data.sounds);
+		const assets = this.data.currentData;
 		const state = read(assets);
 		const inspector = new SaveGameInspector(this.state.prefixedWith("save-game"), this.di);
 		this.addInspector("save-game", inspector);

@@ -1,11 +1,14 @@
+import { Sound as RawSound } from "src/engine/file-format/types";
+
 class Sound {
-	public readonly id: number;
-	public readonly file: string;
+	public id: number;
+	public file: string;
 	public representation: any;
 
-	constructor(id: number, file: string) {
+	public constructor(id: number, data: Sound | RawSound) {
 		this.id = id;
-		this.file = file;
+		this.file = data instanceof Sound ? data.file : data;
+		this.representation = data instanceof Sound ? data.representation : null;
 	}
 }
 export default Sound;

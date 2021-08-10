@@ -1,11 +1,11 @@
 import { ParseExpectation, PrepareExpectations } from "src/app/webfun/debug/expectation";
 
 import loadGameData from "test/helpers/game-data";
-import { GameData, AssetManager, Story} from "src/engine";
+import { AssetManager, Story } from "src/engine";
 import { WorldSize } from "src/engine/generation";
 import Worlds from "test/fixtures/worlds.txt";
 import { Yoda } from "src/variant";
-import { Tile, Zone, Puzzle } from "src/engine/objects";
+import { Tile, Zone, Puzzle, Sound, Char } from "src/engine/objects";
 import Sector from "src/engine/sector";
 import { WorldGenerationError } from "src/engine/generation";
 import { floor } from "src/std/math";
@@ -168,13 +168,33 @@ const runTest = ({ seed, planet, size, world, dagobah }: any) => {
 
 describe("WebFun.Acceptance.World Generation", () => {
 	beforeAll(async () => {
-		const rawData = await loadGameData(Yoda);
-		const data = new GameData(rawData);
+		const data = await loadGameData(Yoda);
 		assets = new AssetManager();
 
-		assets.populate(Zone, data.zones);
-		assets.populate(Tile, data.tiles);
-		assets.populate(Puzzle, data.puzzles);
+		assets.populate(Uint8Array, [data.startup]);
+		assets.populate(
+			Sound,
+			data.sounds.map((s, idx) => new Sound(idx, s))
+		);
+		assets.populate(
+			Tile,
+			data.tiles.map((t, idx) => new Tile(idx, t))
+		);
+		assets.populate(
+			Puzzle,
+			data.puzzles.map((p, idx) => new Puzzle(idx, p, assets))
+		);
+		assets.populate(
+			Char,
+			data.characters.map((c, idx) => new Char(idx, c, assets))
+		);
+		assets.populate(
+			Zone,
+			data.zones.map((z, idx) => new Zone(idx, z, assets))
+		);
+
+		assets.get(Puzzle, Yoda.goalIDs.RESCUE_YODA).type = Puzzle.Type.Disabled;
+		assets.get(Puzzle, Yoda.goalIDs.CAR).type = Puzzle.Type.Disabled;
 	});
 
 	PrepareExpectations(Worlds).sort().map(ParseExpectation).forEach(runTest);
