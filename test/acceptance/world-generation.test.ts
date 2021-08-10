@@ -11,7 +11,7 @@ import { WorldGenerationError } from "src/engine/generation";
 import { floor } from "src/std/math";
 import { DiscardingOutputStream, download, InputStream, OutputStream } from "src/util";
 import { Reader, Writer } from "src/engine/save-game";
-import diff, { Differences, DifferenceType } from "src/util/diff";
+import { diff, Differences, DifferenceType, formatDifferences } from "src/util";
 
 let assets: AssetManager = null;
 
@@ -166,38 +166,6 @@ const runTest = ({ seed, planet, size, world, dagobah }: any) => {
 	});
 };
 
-function printDifferences(differences: Differences, a: any, b: any): void {
-	let out = "\n";
-	for (const difference of differences) {
-		const c =
-			difference.type === DifferenceType.Added
-				? "+"
-				: difference.type === DifferenceType.Deleted
-				? "-"
-				: "~";
-
-		const left =
-			difference.type === DifferenceType.Deleted || difference.type === DifferenceType.Updated
-				? JSON.stringify(
-						difference.key.reduce((acc, k) => (acc instanceof Map ? acc.get(k) : acc[k]), a)
-				  )
-				: "";
-
-		const right =
-			difference.type === DifferenceType.Added || difference.type === DifferenceType.Updated
-				? JSON.stringify(
-						difference.key.reduce((acc, k) => (acc instanceof Map ? acc.get(k) : acc[k]), b)
-				  )
-				: "";
-
-		out += `${c} ${difference.key.join(".").padStart(20, " ")}  ${left} ${right}\n`;
-	}
-
-	if (out.trim()) {
-		console.log(out);
-	}
-}
-
 describe("WebFun.Acceptance.World Generation", () => {
 	beforeAll(async () => {
 		const rawData = await loadGameData(Yoda);
@@ -230,7 +198,7 @@ describe("WebFun.Acceptance.World Generation", () => {
 		const { read } = Reader.build(saveStream);
 		const baseline = read(assets);
 
-		printDifferences(diff(baseline, state), baseline, state);
+		console.log(formatDifferences(diff(baseline, state), baseline, state));
 		expect(diff(baseline, state)).toBeEmptyArray();
 	});
 

@@ -117,3 +117,33 @@ export default function diff(a: any, b: any, depth: number = Infinity): Differen
 
 	return [{ key: [], type: DifferenceType.Updated }];
 }
+
+export function formatDifferences(differences: Differences, a: any, b: any): string {
+	let out = "\n";
+	for (const difference of differences) {
+		const c =
+			difference.type === DifferenceType.Added
+				? "+"
+				: difference.type === DifferenceType.Deleted
+				? "-"
+				: "~";
+
+		const left =
+			difference.type === DifferenceType.Deleted || difference.type === DifferenceType.Updated
+				? JSON.stringify(
+						difference.key.reduce((acc, k) => (acc instanceof Map ? acc.get(k) : acc[k]), a)
+				  )
+				: "";
+
+		const right =
+			difference.type === DifferenceType.Added || difference.type === DifferenceType.Updated
+				? JSON.stringify(
+						difference.key.reduce((acc, k) => (acc instanceof Map ? acc.get(k) : acc[k]), b)
+				  )
+				: "";
+
+		out += `${c} ${difference.key.join(".").padStart(20, " ")}  ${left} ${right}\n`;
+	}
+
+	return out.trim();
+}

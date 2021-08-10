@@ -28,6 +28,7 @@ import {
 	PropertyChangeEvent,
 	Rectangle,
 	Size,
+	formatDifferences,
 	srand
 } from "src/util";
 import { FilePicker, WindowManager } from "src/ui";
@@ -333,7 +334,7 @@ class GameController extends EventTarget implements EventListenerObject {
 		const state3 = read2(assets2);
 
 		console.log(diff(state, state3));
-		printDifferences(diff(state, state3), state, state3);
+		console.log(formatDifferences(diff(state, state3), state, state3));
 	}
 
 	private unwrapWorld(world: SavedWorld, assets: AssetManager, save: SaveState): World {
@@ -625,38 +626,6 @@ class GameController extends EventTarget implements EventListenerObject {
 
 	public get window(): MainWindow {
 		return this._window;
-	}
-}
-
-function printDifferences(differences: Differences, a: any, b: any): void {
-	let out = "\n";
-	for (const difference of differences) {
-		const c =
-			difference.type === DifferenceType.Added
-				? "+"
-				: difference.type === DifferenceType.Deleted
-				? "-"
-				: "~";
-
-		const left =
-			difference.type === DifferenceType.Deleted || difference.type === DifferenceType.Updated
-				? JSON.stringify(
-						difference.key.reduce((acc, k) => (acc instanceof Map ? acc.get(k) : acc[k]), a)
-				  )
-				: "";
-
-		const right =
-			difference.type === DifferenceType.Added || difference.type === DifferenceType.Updated
-				? JSON.stringify(
-						difference.key.reduce((acc, k) => (acc instanceof Map ? acc.get(k) : acc[k]), b)
-				  )
-				: "";
-
-		out += `${c} ${difference.key.join(".").padStart(20, " ")}  ${left} ${right}\n`;
-	}
-
-	if (out.trim()) {
-		console.log(out);
 	}
 }
 

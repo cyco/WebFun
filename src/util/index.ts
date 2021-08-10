@@ -44,11 +44,15 @@ import polar2xy from "./polar2xy";
 import rad2deg from "./rad2deg";
 import sleep from "./sleep";
 import xy2polar from "./xy2polar";
+import diff, { formatDifferences, Differences, Difference, DifferenceType } from "./diff";
 
 const px = (a: number): string => `${a}px`;
 
 export {
 	Color,
+	Difference,
+	DifferenceType,
+	Differences,
 	Direction,
 	DiscardingOutputStream,
 	DiscardingStorage,
@@ -81,9 +85,11 @@ export {
 	clamp,
 	constantly,
 	deg2rad,
+	diff,
 	dispatch,
 	download,
 	downloadImage,
+	formatDifferences,
 	hsv2rgb,
 	identity,
 	iterate,
