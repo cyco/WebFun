@@ -4,7 +4,6 @@ import Renderer from "src/engine/rendering/renderer";
 import ColorPalette from "src/engine/rendering/color-palette";
 import Sprite from "src/engine/rendering/sprite";
 import Engine from "src/engine/engine";
-import Settings from "src/settings";
 import {
 	highlightHero,
 	highlightHotspots,

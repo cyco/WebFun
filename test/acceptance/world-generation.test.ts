@@ -1,7 +1,7 @@
 import { ParseExpectation, PrepareExpectations } from "src/app/webfun/debug/expectation";
 
 import loadGameData from "test/helpers/game-data";
-import { GameData, AssetManager, Story, SaveGameWriter } from "src/engine";
+import { GameData, AssetManager, Story} from "src/engine";
 import { WorldSize } from "src/engine/generation";
 import Worlds from "test/fixtures/worlds.txt";
 import { Yoda } from "src/variant";
@@ -9,9 +9,9 @@ import { Tile, Zone, Puzzle } from "src/engine/objects";
 import Sector from "src/engine/sector";
 import { WorldGenerationError } from "src/engine/generation";
 import { floor } from "src/std/math";
-import { DiscardingOutputStream, download, InputStream, OutputStream } from "src/util";
+import { DiscardingOutputStream, InputStream, OutputStream } from "src/util";
 import { Reader, Writer } from "src/engine/save-game";
-import { diff, Differences, DifferenceType, formatDifferences } from "src/util";
+import { diff, formatDifferences } from "src/util";
 
 let assets: AssetManager = null;
 

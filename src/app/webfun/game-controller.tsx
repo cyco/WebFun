@@ -59,7 +59,7 @@ import SaveState, { SavedWorld } from "src/engine/save-game/save-state";
 import World from "src/engine/world";
 import RoomIterator from "src/engine/room-iterator";
 import { MutableMonster, MutableZone } from "src/engine/mutable-objects";
-import diff, { Differences, DifferenceType } from "src/util/diff";
+import diff from "src/util/diff";
 
 export const Event = {
 	DidLoadData: "didLoadData"
