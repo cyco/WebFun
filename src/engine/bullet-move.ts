@@ -1,11 +1,11 @@
 import { ScriptResult, EvaluationMode } from "./script";
 import Engine from "./engine";
 import { Direction } from "src/util";
-import { Monster, Char, Hotspot, Zone, Tile } from "./objects";
+import { Monster, Character, Hotspot, Zone, Tile } from "./objects";
 import AssetManager from "./asset-manager";
 import { Yoda } from "src/variant";
 
-function hitMonster(monster: Monster, weapon: Char, zone: Zone, assets: AssetManager) {
+function hitMonster(monster: Monster, weapon: Character, zone: Zone, assets: AssetManager) {
 	if (weapon.id === Yoda.charIDs.TheForce) {
 		monster.cooldown = weapon.damage;
 		return;
@@ -72,15 +72,15 @@ function frameLocationForDirection(direction: number) {
 		case Direction.South:
 		case Direction.SouthEast:
 		case Direction.SouthWest:
-			return Char.FrameEntry.Down;
+			return Character.FrameEntry.Down;
 		case Direction.North:
 		case Direction.NorthEast:
 		case Direction.NorthWest:
-			return Char.FrameEntry.Up;
+			return Character.FrameEntry.Up;
 		case Direction.East:
-			return Char.FrameEntry.Right;
+			return Character.FrameEntry.Right;
 		case Direction.West:
-			return Char.FrameEntry.Left;
+			return Character.FrameEntry.Left;
 	}
 }
 
@@ -133,7 +133,8 @@ export default async (engine: Engine, zone: Zone): Promise<ScriptResult> => {
 	if (!tile || tile.isOpaque()) {
 		// evaluate scripts
 		engine.inputManager.placedTileLocation = targets[0];
-		engine.inputManager.placedTile = hero.weapon.frames[0].tiles[Char.FrameEntry.ExtensionRight];
+		engine.inputManager.placedTile =
+			hero.weapon.frames[0].tiles[Character.FrameEntry.ExtensionRight];
 		engine.spu.prepareExecution(EvaluationMode.PlaceItem, zone);
 		const result = await engine.spu.run();
 		return result;

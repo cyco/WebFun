@@ -9,7 +9,7 @@ import { IconButton } from "src/ui/components";
 import World from "src/engine/world";
 import { Writer } from "src/engine/save-game";
 import { Story } from "src/engine";
-import { Zone, Puzzle, Tile, Sound, Char } from "src/engine/objects";
+import { Zone, Puzzle, Tile, Sound, Character } from "src/engine/objects";
 import { Yoda } from "src/variant";
 import { WorldSize } from "src/engine/generation";
 import ServiceContainer from "../service-container";
@@ -80,7 +80,7 @@ class SaveGameInspector extends AbstractInspector {
 
 		engine.hero.ammo = state.currentAmmo;
 		engine.hero.weapon =
-			state.currentWeapon !== -1 ? assets.get(Char, state.currentWeapon, NullIfMissing) : null;
+			state.currentWeapon !== -1 ? assets.get(Character, state.currentWeapon, NullIfMissing) : null;
 		engine.hero.location = state.positionOnZone;
 		engine.hero.health = (4 - state.livesLost) * 100 - state.damageTaken;
 		engine.currentWorld = state.onDagobah ? story.dagobah : story.world;
@@ -90,7 +90,7 @@ class SaveGameInspector extends AbstractInspector {
 		engine.assets.populate(Zone, assets.getAll(Zone));
 		engine.assets.populate(Tile, assets.getAll(Tile));
 		engine.assets.populate(Puzzle, assets.getAll(Puzzle));
-		engine.assets.populate(Char, assets.getAll(Char));
+		engine.assets.populate(Character, assets.getAll(Character));
 		engine.assets.populate(Sound, assets.getAll(Sound));
 
 		controller.show(this.window.manager);

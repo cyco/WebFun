@@ -1,5 +1,5 @@
 import Action from "./action";
-import Char from "./char";
+import Character from "./character";
 import Condition from "./condition";
 import Hotspot from "./hotspot";
 import Instruction from "./instruction";
@@ -12,7 +12,7 @@ import Zone from "./zone";
 const StartupImage = 0;
 
 export {
-	Char,
+	Character,
 	Condition,
 	StartupImage,
 	Instruction,

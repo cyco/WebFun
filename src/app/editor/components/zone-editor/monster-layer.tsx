@@ -1,6 +1,6 @@
 import "./monster-layer.scss";
 
-import { Char, Tile, Zone } from "src/engine/objects";
+import { Character, Tile, Zone } from "src/engine/objects";
 import { MenuItemInit, MenuItemSeparator } from "src/ui";
 
 import { ColorPalette } from "src/engine/rendering";
@@ -18,7 +18,7 @@ class MonsterLayer extends Component {
 	public static readonly observedAttributes: string[] = [];
 	public palette: ColorPalette = null;
 	public tiles: Tile[] = [];
-	public characters: Char[] = [];
+	public characters: Character[] = [];
 	public di: ServiceContainer;
 	private _zone: Zone = null;
 	private updater: Updater;
@@ -50,7 +50,7 @@ class MonsterLayer extends Component {
 			);
 	}
 
-	private buildNode(point: Point, count: number, face: Char) {
+	private buildNode(point: Point, count: number, face: Character) {
 		return (
 			<MonsterLayerMonster
 				className="wf-monster-layer-monster"
@@ -162,7 +162,7 @@ class MonsterLayer extends Component {
 	}
 
 	private get enemies() {
-		return this.characters.withType(Char.Type.Enemy);
+		return this.characters.withType(Character.Type.Enemy);
 	}
 }
 

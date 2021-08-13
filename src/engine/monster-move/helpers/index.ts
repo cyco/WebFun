@@ -1,7 +1,7 @@
-import findTileIdForCharFrameWithDirection from "./find-tile-id-for-char-frame-with-direction";
+import findTileIdForCharacterFrameWithDirection from "./find-tile-id-for-character-frame-with-direction";
 import MoveCheckResult from "./move-check-result";
 import moveCheck from "./move-check";
-import findAnimationTileIdForCharFrame from "./find-animation-tile-id-for-char-frame";
+import findAnimationTileIdForCharacterFrame from "./find-animation-tile-id-for-character-frame";
 import performMove from "./perform-move";
 import evade from "./evade";
 import randomDirection from "./random-direction";
@@ -17,8 +17,8 @@ import even from "./even";
 import shoot from "./shoot";
 
 export {
-	findAnimationTileIdForCharFrame,
-	findTileIdForCharFrameWithDirection,
+	findAnimationTileIdForCharacterFrame,
+	findTileIdForCharacterFrameWithDirection,
 	moveCheck,
 	MoveCheckResult,
 	performMove,

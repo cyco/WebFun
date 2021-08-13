@@ -4,7 +4,7 @@ import { AssetManager, SaveState, Variant } from "src/engine";
 import { getFixtureData } from "test/helpers/fixture-loading";
 import { InputStream, DiscardingOutputStream, OutputStream } from "src/util";
 import loadGameData from "test/helpers/game-data";
-import { Sound, Zone, Tile, Puzzle, Char } from "src/engine/objects";
+import { Sound, Zone, Tile, Puzzle, Character } from "src/engine/objects";
 import { Data } from "src/engine/file-format";
 
 describe("WebFun.Acceptance.Save Games", () => {
@@ -66,8 +66,8 @@ describe("WebFun.Acceptance.Save Games", () => {
 			data.puzzles.map((p, idx) => new Puzzle(idx, p, assets))
 		);
 		assets.populate(
-			Char,
-			data.characters.map((c, idx) => new Char(idx, c, assets))
+			Character,
+			data.characters.map((c, idx) => new Character(idx, c, assets))
 		);
 		assets.populate(
 			Zone,

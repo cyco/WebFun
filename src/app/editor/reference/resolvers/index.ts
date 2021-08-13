@@ -1,5 +1,5 @@
 import ResolverInterface from "./resolver-interface";
-import CharResolver from "./char-resolver";
+import CharResolver from "./character-resolver";
 import HotspotResolver from "./hotspot-resolver";
 import MonsterResolver from "./monster-resolver";
 import SoundResolver from "./sound-resolver";

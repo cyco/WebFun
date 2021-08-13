@@ -1,11 +1,11 @@
 import LocatorTile from "./locator-tile";
 import Sounds from "./sounds";
-import CharIDs from "./char-ids";
+import CharIDs from "./character-ids";
 import GoalIDs from "./goal-ids";
 import ZoneIDs from "./zone-ids";
 import TileIDs from "./tile-ids";
 import Variant from "src/engine/variant";
-import { Char, Puzzle, Tile, Zone } from "src/engine/objects";
+import { Character, Puzzle, Tile, Zone } from "src/engine/objects";
 import { Engine, Story } from "src/engine";
 import { Point, rand, Size } from "src/util";
 import { WorldSize } from "src/engine/generation";
@@ -76,7 +76,7 @@ class Yoda extends Variant {
 		}
 	}
 
-	public getMaxAmmo(weapon: Char): number {
+	public getMaxAmmo(weapon: Character): number {
 		if (!weapon) return -1;
 		const tile = weapon.frames[0].extensionRight;
 		switch (tile.id) {
@@ -94,7 +94,7 @@ class Yoda extends Variant {
 		}
 	}
 
-	public getEquipSound(weapon: Char): number {
+	public getEquipSound(weapon: Character): number {
 		const tile = weapon.frames[0].extensionRight;
 		switch (tile.id) {
 			case TileIDs.BlasterRifle:
@@ -171,10 +171,10 @@ class Yoda extends Variant {
 		state.currentWeapon = engine.hero.weapon?.id ?? -1;
 		state.currentAmmo = engine.hero.ammo;
 
-		state.forceAmmo = engine.hero.getAmmoForWeapon(engine.assets.get(Char, CharIDs.TheForce));
-		state.blasterAmmo = engine.hero.getAmmoForWeapon(engine.assets.get(Char, CharIDs.Blaster));
+		state.forceAmmo = engine.hero.getAmmoForWeapon(engine.assets.get(Character, CharIDs.TheForce));
+		state.blasterAmmo = engine.hero.getAmmoForWeapon(engine.assets.get(Character, CharIDs.Blaster));
 		state.blasterRifleAmmo = engine.hero.getAmmoForWeapon(
-			engine.assets.get(Char, CharIDs.BlasterRifle)
+			engine.assets.get(Character, CharIDs.BlasterRifle)
 		);
 
 		state.difficulty = engine.settings.difficulty;

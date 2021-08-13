@@ -1,7 +1,7 @@
-import { Char, Monster, Zone } from "src/engine/objects";
+import { Character, Monster, Zone } from "src/engine/objects";
 import { Point } from "src/util";
 import { Engine } from "src/engine";
-import { findTileIdForCharFrameWithDirection, shoot } from "./helpers";
+import { findTileIdForCharacterFrameWithDirection, shoot } from "./helpers";
 import { NullIfMissing } from "src/engine/asset-manager";
 import YodaViewRedrawTile from "./helpers/yoda-view-redraw";
 import unspecific1 from "./unspecific-1";
@@ -15,32 +15,32 @@ import wander from "./wander";
 import patrol from "./patrol";
 import scaredy from "./scaredy";
 import animation from "./animation";
-import CharSetDefaultFace from "./helpers/char-set-default-face";
+import CharSetDefaultFace from "./helpers/character-set-default-face";
 
 const dispatch = new Map([
-	[Char.MovementType.Unspecific1, unspecific1],
-	[Char.MovementType.Unspecific2, unspecific2],
-	[Char.MovementType.Unspecific3, unspecific3],
-	[Char.MovementType.Sit, sit],
-	[Char.MovementType.Unspecific4, unspecific4],
-	[Char.MovementType.Unspecific5, unspecific5],
-	[Char.MovementType.Droid, droid],
-	[Char.MovementType.Wander, wander],
-	[Char.MovementType.Patrol, patrol],
-	[Char.MovementType.Scaredy, scaredy],
-	[Char.MovementType.Animation, animation]
-	// [Char.MovementType.UnknownIndyOnly, unknownIndyOnly]
+	[Character.MovementType.Unspecific1, unspecific1],
+	[Character.MovementType.Unspecific2, unspecific2],
+	[Character.MovementType.Unspecific3, unspecific3],
+	[Character.MovementType.Sit, sit],
+	[Character.MovementType.Unspecific4, unspecific4],
+	[Character.MovementType.Unspecific5, unspecific5],
+	[Character.MovementType.Droid, droid],
+	[Character.MovementType.Wander, wander],
+	[Character.MovementType.Patrol, patrol],
+	[Character.MovementType.Scaredy, scaredy],
+	[Character.MovementType.Animation, animation]
+	// [Character.MovementType.UnknownIndyOnly, unknownIndyOnly]
 ]);
 
 function handleRemainingBullet(monster: Monster, zone: Zone, engine: Engine) {
 	const hero = engine.hero.location;
-	const character = engine.assets.get(Char, monster.face.id, NullIfMissing);
+	const character = engine.assets.get(Character, monster.face.id, NullIfMissing);
 	if (!character) return;
 
-	const weapon = engine.assets.get(Char, character.reference, NullIfMissing);
+	const weapon = engine.assets.get(Character, character.reference, NullIfMissing);
 	if (!weapon) return;
 
-	const tile = findTileIdForCharFrameWithDirection(weapon.frames[0], monster.direction);
+	const tile = findTileIdForCharacterFrameWithDirection(weapon.frames[0], monster.direction);
 	if (zone.getTile(monster.bullet.x, monster.bullet.y, Zone.Layer.Object) === tile) {
 		if (!monster.bullet.isEqualTo(hero)) {
 			YodaViewRedrawTile(monster.bullet, zone);

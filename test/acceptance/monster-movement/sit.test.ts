@@ -1,7 +1,7 @@
 import { describeMonsterMovement } from "test/helpers";
-import { Char } from "src/engine/objects";
+import { Character } from "src/engine/objects";
 
-describeMonsterMovement(Char.MovementType.Sit, (ctx, tick, vars) => {
+describeMonsterMovement(Character.MovementType.Sit, (ctx, tick, vars) => {
 	it("moves as expected", async () => {
 		const { monster, InitialPosition } = vars;
 

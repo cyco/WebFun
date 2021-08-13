@@ -9,7 +9,7 @@ import Layer from "./layer";
 import LayerComponent from "./tile-layer";
 import MonsterLayerComponent from "./monster-layer";
 import { Point } from "src/util";
-import { Char, Tile, Zone } from "src/engine/objects";
+import { Character, Tile, Zone } from "src/engine/objects";
 import { ColorPalette } from "src/engine";
 import ServiceContainer from "../../service-container";
 
@@ -176,11 +176,11 @@ class View extends Component implements EventListenerObject {
 		return this._floor.palette;
 	}
 
-	public set characters(c: Char[]) {
+	public set characters(c: Character[]) {
 		this._monsters.characters = c;
 	}
 
-	public get characters(): Char[] {
+	public get characters(): Character[] {
 		return this._monsters.characters;
 	}
 

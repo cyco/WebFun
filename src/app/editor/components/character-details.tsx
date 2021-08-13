@@ -3,15 +3,15 @@ import "./character-details.scss";
 import { Component } from "src/ui";
 import CharacterFramePreview from "./character-frame-preview";
 
-import { Char, Tile } from "src/engine/objects";
+import { Character, Tile } from "src/engine/objects";
 import { AssetManager, ColorPalette } from "src/engine";
 
 class CharacterDetails extends Component {
 	public static readonly tagName = "wf-character-details";
 	public static readonly observedAttributes: string[] = [];
 
-	private _character: Char;
-	private _weapons: Char[];
+	private _character: Character;
+	private _weapons: Character[];
 	private _sounds: string[];
 	private _tiles: Tile[];
 
@@ -43,9 +43,9 @@ class CharacterDetails extends Component {
 			reference: -1,
 			health: -1,
 			damage: -1,
-			type: Char.Type.Hero,
-			movementType: Char.MovementType.None,
-			frames: [null, null, null] as Char.Frame[]
+			type: Character.Type.Hero,
+			movementType: Character.MovementType.None,
+			frames: [null, null, null] as Character.Frame[]
 		};
 
 		return (
@@ -70,11 +70,11 @@ class CharacterDetails extends Component {
 						className="type"
 						onchange={({ currentTarget }: CustomEvent) => {
 							const rawValue = (currentTarget as HTMLSelectElement).value.parseInt();
-							this._character.type = Char.Type.fromNumber(rawValue);
+							this._character.type = Character.Type.fromNumber(rawValue);
 							this._character.reference = -1;
 							this._rebuild();
 						}}>
-						{Char.Type.knownTypes
+						{Character.Type.knownTypes
 							.filter(t => t)
 							.map(t => (
 								<option value={t.rawValue.toString()} selected={type === t}>
@@ -90,10 +90,10 @@ class CharacterDetails extends Component {
 						value={movementType.rawValue.toString()}
 						onchange={({ currentTarget }: CustomEvent) => {
 							const rawValue = (currentTarget as HTMLSelectElement).value.parseInt();
-							this._character.movementType = Char.MovementType.fromNumber(rawValue);
+							this._character.movementType = Character.MovementType.fromNumber(rawValue);
 							this._rebuild();
 						}}>
-						{Char.MovementType.knownTypes.map(type => (
+						{Character.MovementType.knownTypes.map(type => (
 							<option value={type.rawValue.toString()} selected={type === movementType}>
 								{type.name}
 							</option>
@@ -129,7 +129,7 @@ class CharacterDetails extends Component {
 					<div className="tile" />
 					<select
 						className="weapon"
-						disabled={type !== Char.Type.Hero && type !== Char.Type.Enemy}
+						disabled={type !== Character.Type.Hero && type !== Character.Type.Enemy}
 						onchange={({ currentTarget }: CustomEvent) => {
 							this._character.reference = (currentTarget as HTMLSelectElement).value.parseInt();
 							this._rebuild();
@@ -139,7 +139,8 @@ class CharacterDetails extends Component {
 							<option
 								value={weapon.id.toString()}
 								selected={
-									(type === Char.Type.Hero || type === Char.Type.Enemy) && reference === weapon.id
+									(type === Character.Type.Hero || type === Character.Type.Enemy) &&
+									reference === weapon.id
 								}>
 								{weapon.id} {weapon.name}
 							</option>
@@ -150,7 +151,7 @@ class CharacterDetails extends Component {
 					<span> </span>
 					<select
 						className="sound"
-						disabled={type !== Char.Type.Weapon}
+						disabled={type !== Character.Type.Weapon}
 						onchange={({ currentTarget }: CustomEvent) => {
 							this._character.reference = (currentTarget as HTMLSelectElement).value.parseInt();
 							this._rebuild();
@@ -159,7 +160,7 @@ class CharacterDetails extends Component {
 						{sounds.map((sound, index) => (
 							<option
 								value={`${index}`}
-								selected={type === Char.Type.Weapon && reference === index}>
+								selected={type === Character.Type.Weapon && reference === index}>
 								{index} {sound}
 							</option>
 						))}
@@ -183,14 +184,14 @@ class CharacterDetails extends Component {
 		return this._palette;
 	}
 
-	set character(c: Char) {
-		if (!(c instanceof Char)) c = new Char(0, c, new AssetManager());
+	set character(c: Character) {
+		if (!(c instanceof Character)) c = new Character(0, c, new AssetManager());
 		this._character = c;
 		this._currentPreviewFrame = 0;
 		this._rebuild();
 	}
 
-	get character(): Char | Char {
+	get character(): Character | Character {
 		return this._character;
 	}
 
@@ -203,12 +204,12 @@ class CharacterDetails extends Component {
 		return this._sounds;
 	}
 
-	set weapons(weapons: Char[]) {
+	set weapons(weapons: Character[]) {
 		this._weapons = weapons;
 		this._rebuild();
 	}
 
-	get weapons(): Char[] {
+	get weapons(): Character[] {
 		return this._weapons;
 	}
 

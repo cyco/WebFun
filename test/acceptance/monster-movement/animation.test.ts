@@ -1,8 +1,8 @@
 import { describeMonsterMovement } from "test/helpers";
-import { Zone, Char } from "src/engine/objects";
+import { Zone, Character } from "src/engine/objects";
 import { rand } from "src/util";
 
-describeMonsterMovement(Char.MovementType.Animation, (ctx, tick, vars) => {
+describeMonsterMovement(Character.MovementType.Animation, (ctx, tick, vars) => {
 	it("moves as expected", async () => {
 		const { char, zone, InitialPosition, monster } = vars;
 		const tileId = () =>

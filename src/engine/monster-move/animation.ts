@@ -1,13 +1,13 @@
-import { Monster, Zone, Char } from "../objects";
+import { Monster, Zone, Character } from "../objects";
 import { Point } from "src/util";
-import { findAnimationTileIdForCharFrame } from "./helpers";
+import { findAnimationTileIdForCharacterFrame } from "./helpers";
 import { Engine } from "src/engine";
-import CharSetDefaultFace from "./helpers/char-set-default-face";
+import CharSetDefaultFace from "./helpers/character-set-default-face";
 import YodaViewRedrawTile from "./helpers/yoda-view-redraw";
 import ZoneSetTileAt from "./helpers/zone-set-tile-at";
 
 function updateFaceAndRedraw(monster: Monster, zone: Zone, engine: Engine) {
-	const tile = findAnimationTileIdForCharFrame(
+	const tile = findAnimationTileIdForCharacterFrame(
 		monster.face.frames.first(),
 		monster.facingDirection
 	);
@@ -34,7 +34,7 @@ export default (monster: Monster, zone: Zone, engine: Engine): void => {
 		return;
 	}
 
-	console.assert(monster.face.movementType !== Char.MovementType.Unspecific3);
+	console.assert(monster.face.movementType !== Character.MovementType.Unspecific3);
 
 	if (direction.x || direction.y) {
 		return maybeRestoreFaceThenDraw(monster, direction, zone, engine);

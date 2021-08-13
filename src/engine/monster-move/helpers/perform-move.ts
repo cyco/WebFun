@@ -1,8 +1,8 @@
-import { Monster, Zone, Char } from "src/engine/objects";
+import { Monster, Zone, Character } from "src/engine/objects";
 import { Point } from "src/util";
 import { Engine } from "src/engine";
 import YodaViewRedrawTile from "./yoda-view-redraw";
-import CharSetDefaultFace from "./char-set-default-face";
+import CharSetDefaultFace from "./character-set-default-face";
 import ZoneSetTileAt from "./zone-set-tile-at";
 
 function maybeRestoreFaceThenDraw(monster: Monster, direction: Point, zone: Zone) {
@@ -28,8 +28,8 @@ export default (
 		return;
 	}
 
-	console.assert(monster.face.movementType !== Char.MovementType.Animation);
-	console.assert(monster.face.movementType !== Char.MovementType.Unspecific3);
+	console.assert(monster.face.movementType !== Character.MovementType.Animation);
+	console.assert(monster.face.movementType !== Character.MovementType.Unspecific3);
 
 	if (direction.x || direction.y) {
 		if (move) {

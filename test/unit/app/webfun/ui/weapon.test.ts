@@ -1,5 +1,5 @@
 import Weapon from "src/app/webfun/ui/weapon";
-import { Char } from "src/engine/objects";
+import { Character } from "src/engine/objects";
 import { PaletteView } from "src/app/webfun/ui";
 
 describeComponent(Weapon, () => {
@@ -12,7 +12,7 @@ describeComponent(Weapon, () => {
 	});
 
 	it("has a setter / getter for the equipped weapon", () => {
-		const weapon: Char = {
+		const weapon: Character = {
 			frames: [{ extensionRight: { imageData: {} } }]
 		} as any;
 
@@ -27,7 +27,7 @@ describeComponent(Weapon, () => {
 	});
 
 	it("shows the correct image if a weapon is set", () => {
-		const weapon: Char = {
+		const weapon: Character = {
 			frames: [{ extensionRight: { imageData: mockImageData } }]
 		} as any;
 		subject.weapon = weapon;
@@ -36,7 +36,7 @@ describeComponent(Weapon, () => {
 	});
 
 	it("also shows no image if the weapon does not supply one", () => {
-		subject.weapon = ({ frames: [{ extensionRight: null }] } as any) as Char;
+		subject.weapon = { frames: [{ extensionRight: null }] } as any as Character;
 		expect((subject.querySelector(PaletteView.tagName) as any).image).toEqual(null);
 	});
 });

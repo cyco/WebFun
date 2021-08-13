@@ -1,5 +1,5 @@
 import { ReferencesTo, Resolvable } from "./reference";
-import { Char, Hotspot, Monster, Sound, Tile, Zone } from "src/engine/objects";
+import { Character, Hotspot, Monster, Sound, Tile, Zone } from "src/engine/objects";
 import { equal } from "src/util/functional";
 import {
 	CharResolver,
@@ -20,7 +20,7 @@ class Resolver {
 		this.resolvers.set(Monster, new MonsterResolver(assets));
 		this.resolvers.set(Sound, new SoundResolver(assets));
 		this.resolvers.set(Tile, new TileResolver(assets));
-		this.resolvers.set(Char, new CharResolver(assets));
+		this.resolvers.set(Character, new CharResolver(assets));
 	}
 
 	public find<T extends Resolvable>(thing: T, op = equal): ReferencesTo<T> {
@@ -31,7 +31,7 @@ class Resolver {
 	}
 
 	private determineResolver(thing: Resolvable) {
-		const classes = [Zone, Tile, Hotspot, Char, Sound, Monster];
+		const classes = [Zone, Tile, Hotspot, Character, Sound, Monster];
 		const resolvableClass = classes.find(c => thing instanceof c);
 		return this.resolvers.get(resolvableClass);
 	}

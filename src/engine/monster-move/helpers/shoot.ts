@@ -1,4 +1,4 @@
-import { Monster, Zone, Char, Sound } from "src/engine/objects";
+import { Monster, Zone, Character, Sound } from "src/engine/objects";
 import { Point, rand } from "src/util";
 import { Engine } from "src/engine";
 import { NullIfMissing } from "src/engine/asset-manager";
@@ -12,7 +12,7 @@ export default (monster: Monster, zone: Zone, engine: Engine): boolean => {
 	const distanceToHero = monster.position.bySubtracting(hero).abs();
 	const directionToHero = hero.comparedTo(monster.position);
 
-	const weapon = engine.assets.get(Char, monster.face.reference, NullIfMissing);
+	const weapon = engine.assets.get(Character, monster.face.reference, NullIfMissing);
 	if (!weapon) return false;
 
 	let monsterJustFired = false;

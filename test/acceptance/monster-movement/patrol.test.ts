@@ -1,7 +1,7 @@
-import { Char } from "src/engine/objects";
+import { Character } from "src/engine/objects";
 import { Point, rand } from "src/util";
 
-describeMonsterMovement(Char.MovementType.Patrol, (ctx, tick, vars) => {
+describeMonsterMovement(Character.MovementType.Patrol, (ctx, tick, vars) => {
 	it("moves as expected", async () => {
 		const { monster } = vars;
 		monster.waypoints = [new Point(1, 1), new Point(7, 1), new Point(7, 7), new Point(1, 7)];

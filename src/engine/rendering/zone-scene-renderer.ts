@@ -1,4 +1,4 @@
-import { Char, Tile, Zone } from "src/engine/objects";
+import { Character, Tile, Zone } from "src/engine/objects";
 
 import Renderer from "src/engine/rendering/renderer";
 import ColorPalette from "src/engine/rendering/color-palette";
@@ -10,7 +10,7 @@ import {
 	highlightMonsters
 } from "src/app/webfun/debug/rendering";
 import { NullIfMissing } from "../asset-manager";
-import { findTileIdForCharFrameWithDirection } from "../monster-move/helpers";
+import { findTileIdForCharacterFrameWithDirection } from "../monster-move/helpers";
 
 class ZoneSceneRenderer {
 	public render(
@@ -105,9 +105,12 @@ class ZoneSceneRenderer {
 					if (!monster.bulletOffset) {
 						continue;
 					}
-					const weapon = engine.assets.get(Char, monster.face.reference, NullIfMissing);
+					const weapon = engine.assets.get(Character, monster.face.reference, NullIfMissing);
 					if (!weapon) continue;
-					const tile = findTileIdForCharFrameWithDirection(weapon.frames[0], monster.direction);
+					const tile = findTileIdForCharacterFrameWithDirection(
+						weapon.frames[0],
+						monster.direction
+					);
 					drawTileAt(tile, monster.bulletX + offset.x, monster.bulletY + offset.y);
 				}
 

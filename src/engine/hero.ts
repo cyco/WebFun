@@ -1,4 +1,4 @@
-import { Char, Tile, Zone } from "./objects";
+import { Character, Tile, Zone } from "./objects";
 import { Direction, EventTarget, Point } from "src/util";
 import Settings from "src/settings";
 import { floor, min, max, ceil } from "src/std/math";
@@ -25,15 +25,15 @@ class Hero extends EventTarget {
 	public unlimitedAmmo: boolean = false;
 	public _actionFrames: number = 0; // TODO: make private again
 	public _direction: number = Direction.South; // TODO: make private again
-	public _appearance: Char = null; // TODO: make private again
+	public _appearance: Character = null; // TODO: make private again
 
 	private _health: number = MaxHealth;
 	private _walking: boolean = false;
 	private _attacking: boolean = false;
 	private _dragging: boolean = false;
-	private _weapon: Char = null;
+	private _weapon: Character = null;
 	private _ammo: number = -1;
-	private _ammoByWeapon: WeakMap<Char, number> = new WeakMap();
+	private _ammoByWeapon: WeakMap<Character, number> = new WeakMap();
 
 	public static ConvertDamageToHealth(damage: number, lives: number): number {
 		if (damage > 99 && lives >= 3) return 0;
@@ -91,19 +91,19 @@ class Hero extends EventTarget {
 		return Direction.Confine(this._direction);
 	}
 
-	get appearance(): Char {
+	get appearance(): Character {
 		return this._appearance;
 	}
 
-	set appearance(a: Char) {
+	set appearance(a: Character) {
 		this._appearance = a;
 	}
 
-	get weapon(): Char {
+	get weapon(): Character {
 		return this._weapon;
 	}
 
-	set weapon(weapon: Char) {
+	set weapon(weapon: Character) {
 		if (this._weapon) {
 			this._ammoByWeapon.set(this._weapon, this._ammo);
 		}
@@ -128,11 +128,11 @@ class Hero extends EventTarget {
 		this.dispatchEvent(Events.AmmoChanged, { ammo });
 	}
 
-	public getAmmoForWeapon(weapon: Char): number {
+	public getAmmoForWeapon(weapon: Character): number {
 		return this._ammoByWeapon.has(weapon) ? this._ammoByWeapon.get(weapon) : 0;
 	}
 
-	public setAmmoForWeapon(weapon: Char, ammo: number): void {
+	public setAmmoForWeapon(weapon: Character, ammo: number): void {
 		this._ammoByWeapon.set(weapon, ammo);
 		if (weapon === this.weapon) {
 			this._ammo = ammo;

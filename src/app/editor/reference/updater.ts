@@ -1,4 +1,4 @@
-import { Action, Char, Hotspot, Monster, Puzzle, Sound, Tile, Zone } from "src/engine/objects";
+import { Action, Character, Hotspot, Monster, Puzzle, Sound, Tile, Zone } from "src/engine/objects";
 import ReferenceResolver from "./resolver";
 import { greaterThan } from "src/util/functional";
 import { Reference, Resolvable } from "./reference";
@@ -8,7 +8,7 @@ import { AssetManager } from "src/engine";
 class Updater {
 	public constructor(private assets: AssetManager) {}
 
-	public deleteItem(thing: Zone | Hotspot | Monster | Sound | Tile | Char): void {
+	public deleteItem(thing: Zone | Hotspot | Monster | Sound | Tile | Character): void {
 		const resolver = new ReferenceResolver(this.assets);
 		const references = resolver.find(thing);
 		const outdatedReferences = resolver.find(thing, greaterThan);
@@ -71,8 +71,8 @@ class Updater {
 			this.removeItemFrom(thing, this.assets.getAll(Sound));
 		}
 
-		if (thing instanceof Char) {
-			this.removeItemFrom(thing, this.assets.getAll(Char));
+		if (thing instanceof Character) {
+			this.removeItemFrom(thing, this.assets.getAll(Character));
 		}
 	}
 
@@ -135,17 +135,17 @@ class Updater {
 			return;
 		}
 
-		if (to instanceof Sound && from instanceof Char) {
-			(from as Char).reference = -1;
+		if (to instanceof Sound && from instanceof Character) {
+			(from as Character).reference = -1;
 			return;
 		}
 
-		if (to instanceof Char && from instanceof Char && via[0] === "weapon") {
-			(from as Char).reference = -1;
+		if (to instanceof Character && from instanceof Character && via[0] === "weapon") {
+			(from as Character).reference = -1;
 			return;
 		}
 
-		if (to instanceof Char && from instanceof Monster) {
+		if (to instanceof Character && from instanceof Monster) {
 			this.deleteItem(from);
 			return;
 		}
@@ -185,8 +185,8 @@ class Updater {
 			return;
 		}
 
-		if (to instanceof Char && from instanceof Char && via[0] === "weapon") {
-			(from as Char).reference = update(from.reference);
+		if (to instanceof Character && from instanceof Character && via[0] === "weapon") {
+			(from as Character).reference = update(from.reference);
 			return;
 		}
 
@@ -200,7 +200,7 @@ class Updater {
 			return;
 		}
 
-		if (to instanceof Char && from instanceof Monster) {
+		if (to instanceof Character && from instanceof Monster) {
 			// Monster references should be updated automatically when the.assets.is serialized
 			return;
 		}
@@ -237,7 +237,7 @@ class Updater {
 
 		if (
 			to instanceof Tile &&
-			from instanceof Char &&
+			from instanceof Character &&
 			typeof via[0] === "number" &&
 			typeof via[1] === "number"
 		) {

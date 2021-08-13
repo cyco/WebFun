@@ -10,7 +10,7 @@ import {
 } from "./helpers";
 import { Engine } from "src/engine";
 import YodaViewRedrawTile from "./helpers/yoda-view-redraw";
-import CharSetDefaultFace from "./helpers/char-set-default-face";
+import CharSetDefaultFace from "./helpers/character-set-default-face";
 import ZoneSetTileAt from "./helpers/zone-set-tile-at";
 
 function _noMovement(monster: Monster, zone: Zone, engine: Engine) {

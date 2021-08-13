@@ -5,7 +5,7 @@ import {
 	SceneView,
 	CurrentStatusInfo
 } from "./ui";
-import { Char, Tile, Zone, Monster, Sound, Puzzle, Hotspot } from "src/engine/objects";
+import { Character, Tile, Zone, Monster, Sound, Puzzle, Hotspot } from "src/engine/objects";
 import {
 	ColorPalette,
 	Engine,
@@ -305,11 +305,11 @@ class GameController extends EventTarget implements EventListenerObject {
 		engine.inventory.removeAllItems();
 		state.inventoryIDs.forEach(id => engine.inventory.addItem(assets.get(Tile, id)));
 		engine.hero.location = state.positionOnZone;
-		engine.hero.weapon = assets.get(Char, state.currentWeapon, NullIfMissing);
-		engine.hero.setAmmoForWeapon(assets.get(Char, Yoda.charIDs.TheForce), state.forceAmmo);
-		engine.hero.setAmmoForWeapon(assets.get(Char, Yoda.charIDs.Blaster), state.blasterAmmo);
+		engine.hero.weapon = assets.get(Character, state.currentWeapon, NullIfMissing);
+		engine.hero.setAmmoForWeapon(assets.get(Character, Yoda.charIDs.TheForce), state.forceAmmo);
+		engine.hero.setAmmoForWeapon(assets.get(Character, Yoda.charIDs.Blaster), state.blasterAmmo);
 		engine.hero.setAmmoForWeapon(
-			assets.get(Char, Yoda.charIDs.BlasterRifle),
+			assets.get(Character, Yoda.charIDs.BlasterRifle),
 			state.blasterRifleAmmo
 		);
 		engine.hero.ammo = state.currentAmmo;
@@ -533,8 +533,8 @@ class GameController extends EventTarget implements EventListenerObject {
 			data.puzzles.map((p, idx) => new Puzzle(idx, p, assets))
 		);
 		assets.populate(
-			Char,
-			data.characters.map((c, idx) => new Char(idx, c, assets))
+			Character,
+			data.characters.map((c, idx) => new Character(idx, c, assets))
 		);
 		assets.populate(
 			Zone,
@@ -559,7 +559,7 @@ class GameController extends EventTarget implements EventListenerObject {
 		zoneScene.zone = zone;
 		engine.currentZone = zone;
 		engine.currentWorld = engine.world.findLocationOfZone(zone) ? engine.world : engine.dagobah;
-		engine.hero.appearance = engine.assets.find(Char, (c: Char) => c.isHero());
+		engine.hero.appearance = engine.assets.find(Character, (c: Character) => c.isHero());
 		engine.spu.prepareExecution(EvaluationMode.JustEntered, zone);
 		engine.sceneManager.pushScene(zoneScene);
 

@@ -1,6 +1,6 @@
 import {
 	Action,
-	Char,
+	Character,
 	Condition,
 	Hotspot,
 	Instruction,
@@ -230,9 +230,9 @@ class AssetManagerSerializer {
 
 	private writeCharacters(assets: AssetManager, stream: OutputStream) {
 		stream.writeCharacters("CHAR");
-		stream.writeUint32(2 + assets.getAll(Char).length * (10 + 26 + 3 * 2 * 8));
+		stream.writeUint32(2 + assets.getAll(Character).length * (10 + 26 + 3 * 2 * 8));
 
-		assets.getAll(Char).forEach((c: Char, index: number) => {
+		assets.getAll(Character).forEach((c: Character, index: number) => {
 			stream.writeUint16(index);
 			stream.writeCharacters("ICHA");
 			stream.writeUint32(26 + c.frames.length * 2 * 8);
@@ -251,9 +251,9 @@ class AssetManagerSerializer {
 
 	private writeCharacterWeapons(assets: AssetManager, stream: OutputStream) {
 		stream.writeCharacters("CHWP");
-		stream.writeUint32(assets.getAll(Char).length * 6 + 2);
+		stream.writeUint32(assets.getAll(Character).length * 6 + 2);
 
-		assets.getAll(Char).forEach((c: Char, index: number) => {
+		assets.getAll(Character).forEach((c: Character, index: number) => {
 			stream.writeUint16(index);
 			stream.writeUint16(c.reference);
 			stream.writeUint16(c.health);
@@ -263,9 +263,9 @@ class AssetManagerSerializer {
 
 	private writeCharacterAuxiliary(assets: AssetManager, stream: OutputStream) {
 		stream.writeCharacters("CAUX");
-		stream.writeUint32(assets.getAll(Char).length * 4 + 2);
+		stream.writeUint32(assets.getAll(Character).length * 4 + 2);
 
-		assets.getAll(Char).forEach((c: Char, index: number) => {
+		assets.getAll(Character).forEach((c: Character, index: number) => {
 			stream.writeUint16(index);
 			stream.writeUint16(c.damage);
 		});

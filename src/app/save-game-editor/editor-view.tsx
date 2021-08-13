@@ -17,7 +17,7 @@ import { InventoryDelegate } from "./components/inventory";
 import { ModalPrompt } from "src/ux";
 import { PopoverCharacterPicker } from "src/app/editor/components";
 import { SaveState } from "src/engine/save-game";
-import { Char, Puzzle, Tile, Zone } from "src/engine/objects";
+import { Character, Puzzle, Tile, Zone } from "src/engine/objects";
 import World from "src/engine/world";
 import Sector from "src/engine/sector";
 import { NullIfMissing } from "src/engine/asset-manager";
@@ -82,8 +82,8 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 				<div className="current-weapon">
 					<PopoverCharacterPicker
 						palette={this._palette}
-						characters={this.assets.getFiltered(Char, c => c.isWeapon())}
-						character={this._assets.get(Char, this._state.currentWeapon, NullIfMissing)}
+						characters={this.assets.getFiltered(Character, c => c.isWeapon())}
+						character={this._assets.get(Character, this._state.currentWeapon, NullIfMissing)}
 						onchange={(e: CustomEvent) =>
 							(this._state.currentWeapon = e.detail.character ? e.detail.character.id : -1)
 						}

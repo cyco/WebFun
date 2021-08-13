@@ -1,6 +1,6 @@
 import { WorldSize } from "src/engine/generation";
 import { Point, rand } from "src/util";
-import { Char, Tile, Zone } from "src/engine/objects";
+import { Character, Tile, Zone } from "src/engine/objects";
 import Variant from "src/engine/variant";
 import { Engine, Story, SaveState } from "src/engine";
 
@@ -37,11 +37,11 @@ class IndyFull extends Variant {
 		return 0;
 	}
 
-	public getMaxAmmo(_: Char): number {
+	public getMaxAmmo(_: Character): number {
 		return -1;
 	}
 
-	public getEquipSound(_: Char): number {
+	public getEquipSound(_: Character): number {
 		return 0;
 	}
 

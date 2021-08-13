@@ -1,5 +1,5 @@
 import Story from "./story";
-import { Char, Tile } from "./objects";
+import { Character, Tile } from "./objects";
 
 import LocatorTile from "./locator-tile";
 import Engine from "./engine";
@@ -26,8 +26,8 @@ abstract class Variant {
 	}
 
 	abstract getHealthBonus(_: Tile): number;
-	abstract getMaxAmmo(_: Char): number;
-	abstract getEquipSound(_: Char): number;
+	abstract getMaxAmmo(_: Character): number;
+	abstract getEquipSound(_: Character): number;
 
 	abstract get mapTileId(): number;
 	abstract get weaponTileId(): number;

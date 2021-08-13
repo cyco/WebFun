@@ -1,8 +1,8 @@
 import { describeMonsterMovement } from "test/helpers";
-import { Char } from "src/engine/objects";
+import { Character } from "src/engine/objects";
 import { rand, Point } from "src/util";
 
-describeMonsterMovement(Char.MovementType.Unspecific5, (ctx, t, vars) => {
+describeMonsterMovement(Character.MovementType.Unspecific5, (ctx, t, vars) => {
 	it("moves as expected", async () => {
 		const { monster } = vars;
 

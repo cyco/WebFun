@@ -1,20 +1,20 @@
 import { AssetManager } from "src/engine";
-import { Char, Zone } from "src/engine/objects";
+import { Character, Zone } from "src/engine/objects";
 import { ReferencesTo } from "src/app/editor/reference";
 import { equal } from "src/util/functional";
 import ResolverInterface from "./resolver-interface";
 
-class CharResolver implements ResolverInterface<Char> {
+class CharResolver implements ResolverInterface<Character> {
 	private _assets: AssetManager;
 
 	constructor(assets: AssetManager) {
 		this._assets = assets;
 	}
 
-	public resolve(needle: Char, op = equal): ReferencesTo<Char> {
-		const result: ReferencesTo<Char> = [];
+	public resolve(needle: Character, op = equal): ReferencesTo<Character> {
+		const result: ReferencesTo<Character> = [];
 
-		for (const character of this._assets.getAll(Char)) {
+		for (const character of this._assets.getAll(Character)) {
 			if (op(character.id, needle.id)) {
 				result.push({ from: character, to: character, via: ["id"] });
 			}

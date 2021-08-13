@@ -1,13 +1,13 @@
 import "./monster-layer-monster.scss";
 
-import { Char } from "src/engine/objects";
+import { Character } from "src/engine/objects";
 import { ColorPalette } from "src/engine/rendering";
 import { Component } from "src/ui";
 import { drawTileImageData } from "src/app/webfun/rendering/canvas";
 
 class MonsterLayerMonster extends Component {
 	public static readonly tagName = "wf-monster-layer-monster";
-	public character: Char;
+	public character: Character;
 	public palette: ColorPalette;
 	public canvas = (<canvas width={32} height={32} className="pixelated" />) as HTMLCanvasElement;
 

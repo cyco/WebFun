@@ -1,6 +1,6 @@
 import { Direction, Point, Size } from "src/util";
 import { EvaluationMode, ScriptResult } from "../script";
-import { Zone, Tile, Char, Sound } from "src/engine/objects";
+import { Zone, Tile, Character, Sound } from "src/engine/objects";
 import { InputMask } from "src/engine/input";
 import { Renderer } from "src/engine/rendering";
 import { Sprite } from "../rendering";
@@ -176,15 +176,15 @@ class ZoneScene extends Scene {
 			case Direction.SouthWest:
 			case Direction.South:
 			case Direction.SouthEast:
-				return Char.FrameEntry.ExtensionDown;
+				return Character.FrameEntry.ExtensionDown;
 			case Direction.NorthWest:
 			case Direction.North:
 			case Direction.NorthEast:
-				return Char.FrameEntry.ExtensionUp;
+				return Character.FrameEntry.ExtensionUp;
 			case Direction.East:
-				return Char.FrameEntry.ExtensionRight;
+				return Character.FrameEntry.ExtensionRight;
 			case Direction.West:
-				return Char.FrameEntry.ExtensionLeft;
+				return Character.FrameEntry.ExtensionLeft;
 		}
 	}
 
@@ -193,15 +193,15 @@ class ZoneScene extends Scene {
 			case Direction.South:
 			case Direction.SouthWest:
 			case Direction.SouthEast:
-				return Char.FrameEntry.Down;
+				return Character.FrameEntry.Down;
 			case Direction.North:
 			case Direction.NorthWest:
 			case Direction.NorthEast:
-				return Char.FrameEntry.Up;
+				return Character.FrameEntry.Up;
 			case Direction.East:
-				return Char.FrameEntry.Right;
+				return Character.FrameEntry.Right;
 			case Direction.West:
-				return Char.FrameEntry.Left;
+				return Character.FrameEntry.Left;
 		}
 	}
 

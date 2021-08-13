@@ -1,4 +1,4 @@
-export enum CharFrameEntry {
+export enum CharacterFrameEntry {
 	Up = 0,
 	Down = 1,
 	ExtensionUp = 2,

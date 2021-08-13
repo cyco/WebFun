@@ -1,4 +1,4 @@
-import { Char, Zone, Tile, Monster } from "src/engine/objects";
+import { Character, Zone, Tile, Monster } from "src/engine/objects";
 import { srand, Size, Point } from "src/util";
 import { SimulatedStory } from "src/app/webfun/debug";
 import { Story, AssetManager } from "src/engine";
@@ -13,18 +13,18 @@ const InitialPosition = new Point(4, 3);
 interface Vars {
 	InitialPosition: Point;
 	zone: Zone;
-	char: Char;
+	char: Character;
 	monster: Monster;
 }
 
 export type describeMonsterMovement = (
-	type: Char.MovementType,
+	type: Character.MovementType,
 	block: (ctx: GameplayContext, tick: (input?: string) => Promise<void>, vars: Vars) => void
 ) => void;
 const makeFunction =
 	(describe: any): describeMonsterMovement =>
 	(
-		type: Char.MovementType,
+		type: Character.MovementType,
 		block: (ctx: GameplayContext, tick: (input?: string) => Promise<void>, vars: Vars) => void
 	) =>
 		describe(
@@ -148,7 +148,7 @@ const makeFunction =
 				}
 
 				function buildMonster(assets: AssetManager): Monster {
-					const c = assets.getAll(Char).length - 1;
+					const c = assets.getAll(Character).length - 1;
 					return new Monster(
 						0,
 						{
@@ -163,7 +163,7 @@ const makeFunction =
 					);
 				}
 
-				function buildChar(movementType: Char.MovementType, assets: AssetManager): Char {
+				function buildChar(movementType: Character.MovementType, assets: AssetManager): Character {
 					const charTiles = assets
 						.getAll(Tile)
 						.filter(t => t.hasAttributes(Tile.Attributes.Character));
@@ -177,11 +177,11 @@ const makeFunction =
 						.slice(17, 25)
 						.concat(charTiles)
 						.map(i => i.id);
-					const char = new Char(
-						assets.getAll(Char).length,
+					const char = new Character(
+						assets.getAll(Character).length,
 						{
 							name: "Test Monster",
-							type: Char.Type.Enemy.rawValue,
+							type: Character.Type.Enemy.rawValue,
 							movementType: movementType.rawValue,
 							health: 1,
 							damage: 0,
@@ -195,7 +195,7 @@ const makeFunction =
 						assets
 					);
 
-					assets.populate(Char, assets.getAll(Char).concat([char]));
+					assets.populate(Character, assets.getAll(Character).concat([char]));
 					return char;
 				}
 			})

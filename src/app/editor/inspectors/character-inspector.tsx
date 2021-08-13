@@ -1,4 +1,4 @@
-import { Char, Sound, Tile } from "src/engine/objects";
+import { Character, Sound, Tile } from "src/engine/objects";
 import { CharacterDetails, CharacterInspectorCell } from "../components";
 import { IconButton, List } from "src/ui/components";
 
@@ -8,7 +8,7 @@ import { Updater } from "../reference";
 import { NullIfMissing } from "src/engine/asset-manager";
 
 class CharacterInspector extends AbstractInspector {
-	private _list: List<Char>;
+	private _list: List<Character>;
 	private _details: CharacterDetails;
 	private readonly updater = this.di.get(Updater);
 
@@ -23,7 +23,7 @@ class CharacterInspector extends AbstractInspector {
 			<IconButton icon="plus" title="Add new character" onclick={() => this.addCharacter()} />
 		);
 
-		this._list = (<List state={state.prefixedWith("list")} />) as List<Char>;
+		this._list = (<List state={state.prefixedWith("list")} />) as List<Character>;
 		this._list.cell = (
 			<CharacterInspectorCell
 				className="character-inspector-list"
@@ -52,55 +52,55 @@ class CharacterInspector extends AbstractInspector {
 	}
 
 	public addCharacter(): void {
-		const newCharacter = new Char(
-			this.data.currentData.getAll(Char).length,
-			this.data.currentData.getAll(Char).last(),
+		const newCharacter = new Character(
+			this.data.currentData.getAll(Character).length,
+			this.data.currentData.getAll(Character).last(),
 			this.data.currentData
 		);
 		newCharacter.name = "New Character";
-		newCharacter.id = this.data.currentData.getAll(Char).length;
-		this.data.currentData.getAll(Char).push(newCharacter);
-		this._list.items = this.data.currentData.getAll(Char);
+		newCharacter.id = this.data.currentData.getAll(Character).length;
+		this.data.currentData.getAll(Character).push(newCharacter);
+		this._list.items = this.data.currentData.getAll(Character);
 	}
 
-	public renameCharacter(character: Char, name: string): void {
+	public renameCharacter(character: Character, name: string): void {
 		character.name = name;
 	}
 
-	public removeCharacter(character: Char): void {
-		const index = this.data.currentData.getAll(Char).indexOf(character);
+	public removeCharacter(character: Character): void {
+		const index = this.data.currentData.getAll(Character).indexOf(character);
 		if (index === -1) return;
 		if (!confirm(`Delete character ${character.id} (${character.name})?`)) {
 			return;
 		}
 		this.updater.deleteItem(character);
-		this._list.items = this.data.currentData.getAll(Char);
+		this._list.items = this.data.currentData.getAll(Character);
 	}
 
 	public build(): void {
 		this._details.palette = this.data.palette;
 		this._details.sounds = this.data.currentData.getAll(Sound).map(s => s.file);
 		this._details.weapons = this.data.currentData
-			.getAll(Char)
-			.filter(c => c.type === Char.Type.Weapon);
+			.getAll(Character)
+			.filter(c => c.type === Character.Type.Weapon);
 		this._details.tiles = this.data.currentData.getAll(Tile);
 		this._details.palette = this.data.palette;
 
 		const cell = this._list.cell as CharacterInspectorCell;
 		cell.palette = this.data.palette;
-		this._list.items = this.data.currentData.getAll(Char);
+		this._list.items = this.data.currentData.getAll(Character);
 	}
 
-	prepareListSearch(searchValue: string, _: List<Char>): RegExp[] {
+	prepareListSearch(searchValue: string, _: List<Character>): RegExp[] {
 		this.stateDidChange();
 		return searchValue.split(" ").map(s => new RegExp(s, "i"));
 	}
 
 	includeListItem(
 		searchValue: RegExp[],
-		item: Char,
+		item: Character,
 		_1: CharacterInspectorCell,
-		_2: List<Char>
+		_2: List<Character>
 	): boolean {
 		const searchableAttributes = [item.id, item.name, item.movementType.name];
 
@@ -110,7 +110,7 @@ class CharacterInspector extends AbstractInspector {
 				searchableAttributes.push(sound.file);
 			}
 		} else {
-			const weapon = this.data.currentData.get(Char, item.reference, NullIfMissing);
+			const weapon = this.data.currentData.get(Character, item.reference, NullIfMissing);
 			if (weapon) {
 				searchableAttributes.push(weapon.name);
 			}

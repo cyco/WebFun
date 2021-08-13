@@ -1,7 +1,7 @@
 import AssetManager from "src/engine/asset-manager";
-import Char from "src/engine/objects/char";
+import Character from "src/engine/objects/character";
 
-describe("Char", () => {
+describe("Character", () => {
 	let assets: AssetManager;
 
 	beforeEach(() => {
@@ -9,12 +9,12 @@ describe("Char", () => {
 	});
 
 	it("is a class representing character specification", () => {
-		const char = new Char(
+		const char = new Character(
 			3,
 			{
 				name: "",
-				type: Char.Type.Enemy.rawValue,
-				movementType: Char.MovementType.None.rawValue,
+				type: Character.Type.Enemy.rawValue,
+				movementType: Character.MovementType.None.rawValue,
 				probablyGarbage1: -1,
 				probablyGarbage2: -2,
 				frame1: new Int16Array(),
@@ -26,6 +26,6 @@ describe("Char", () => {
 			},
 			assets
 		);
-		expect(char instanceof Char).toBeTrue();
+		expect(char instanceof Character).toBeTrue();
 	});
 });

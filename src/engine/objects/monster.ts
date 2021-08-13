@@ -1,4 +1,4 @@
-import Char from "./char";
+import Character from "./character";
 import { Point } from "src/util";
 import { min } from "src/std/math";
 import { Monster as RawMonster } from "src/engine/file-format/types";
@@ -8,7 +8,7 @@ import Zone from "./zone";
 class Monster {
 	public id: number;
 	public enabled: boolean = true;
-	public face: Char;
+	public face: Character;
 	public position: Point;
 	public loot: number;
 	public dropsLoot: boolean;
@@ -26,13 +26,13 @@ class Monster {
 	public cooldown: number = 0;
 	public hasItem: boolean = false;
 	public flag2c: boolean = false;
-	public preferredDirection: Char.FrameEntry = Char.FrameEntry.Down;
+	public preferredDirection: Character.FrameEntry = Character.FrameEntry.Down;
 	public field32: number = 0;
 	public flag34: boolean = false;
 	public directionX: number = 0;
 	public directionY: number = 0;
 	public bulletOffset: number = 0;
-	public facingDirection: Char.FrameEntry = Char.FrameEntry.Up;
+	public facingDirection: Character.FrameEntry = Character.FrameEntry.Up;
 	public field60: number = 0;
 	public field62: number = 0;
 	public currentActionFrame: number = 0;
@@ -47,7 +47,7 @@ class Monster {
 			this.face = data.face;
 			this.waypoints = data.waypoints.map(p => new Point(p.x, p.y));
 		} else {
-			this.face = assets.get(Char, data.character, NullIfMissing);
+			this.face = assets.get(Character, data.character, NullIfMissing);
 			const waypoints = [];
 			for (let i = 0; i < data.waypoints.length; i += 2) {
 				waypoints.push(new Point(data.waypoints[i], data.waypoints[i + 1]));

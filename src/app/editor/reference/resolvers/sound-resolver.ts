@@ -1,5 +1,5 @@
 import { AssetManager } from "src/engine";
-import { Char, Sound, Zone } from "src/engine/objects";
+import { Character, Sound, Zone } from "src/engine/objects";
 import { ReferencesTo } from "src/app/editor/reference";
 import { equal } from "src/util/functional";
 import ResolverInterface from "./resolver-interface";
@@ -44,9 +44,9 @@ class SoundResolver implements ResolverInterface<Sound> {
 			}
 		}
 
-		for (const character of this._assets.getAll(Char)) {
+		for (const character of this._assets.getAll(Character)) {
 			if (
-				character.type === Char.Type.Weapon &&
+				character.type === Character.Type.Weapon &&
 				character.reference !== -1 &&
 				op(character.reference, needle.id)
 			) {

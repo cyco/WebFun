@@ -1,5 +1,5 @@
 import { PaletteAnimation, Renderer } from "./rendering";
-import { Tile, Zone, Sound, Char } from "./objects";
+import { Tile, Zone, Sound, Character } from "./objects";
 
 import Camera from "./camera";
 import { EventTarget } from "src/util";
@@ -176,7 +176,7 @@ class Engine extends EventTarget {
 		}
 
 		const weaponChar = this.assets.find(
-			Char,
+			Character,
 			c => c.isWeapon() && c.frames[0].extensionRight === tile
 		);
 		if (this.hero.weapon === weaponChar) return;

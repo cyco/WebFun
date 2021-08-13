@@ -5,7 +5,7 @@ import { AssetManager, Story } from "src/engine";
 import { WorldSize } from "src/engine/generation";
 import Worlds from "test/fixtures/worlds.txt";
 import { Yoda } from "src/variant";
-import { Tile, Zone, Puzzle, Sound, Char } from "src/engine/objects";
+import { Tile, Zone, Puzzle, Sound, Character } from "src/engine/objects";
 import Sector from "src/engine/sector";
 import { WorldGenerationError } from "src/engine/generation";
 import { floor } from "src/std/math";
@@ -185,8 +185,8 @@ describe("WebFun.Acceptance.World Generation", () => {
 			data.puzzles.map((p, idx) => new Puzzle(idx, p, assets))
 		);
 		assets.populate(
-			Char,
-			data.characters.map((c, idx) => new Char(idx, c, assets))
+			Character,
+			data.characters.map((c, idx) => new Character(idx, c, assets))
 		);
 		assets.populate(
 			Zone,

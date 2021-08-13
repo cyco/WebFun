@@ -7,7 +7,7 @@ import { CanvasRenderer } from "src/app/webfun/rendering";
 import { SceneView } from "src/app/webfun/ui";
 import { Engine, Story, AssetManager, Variant } from "src/engine";
 import { WorldSize } from "src/engine/generation";
-import { Tile, Zone, Puzzle, Sound, Char, Action } from "src/engine/objects";
+import { Tile, Zone, Puzzle, Sound, Character, Action } from "src/engine/objects";
 import { PaletteAnimation, ColorPalette } from "src/engine/rendering";
 import { Renderer as DummyRenderer } from "src/engine/dummy-interface";
 import Settings, { defaultSettings } from "src/settings";
@@ -146,8 +146,8 @@ class GameplayContext {
 			data.puzzles.map((p, idx) => new Puzzle(idx, p, assets))
 		);
 		assets.populate(
-			Char,
-			data.characters.map((c, idx) => new Char(idx, c, assets))
+			Character,
+			data.characters.map((c, idx) => new Character(idx, c, assets))
 		);
 		assets.populate(
 			Zone,
@@ -196,7 +196,7 @@ class GameplayContext {
 		engine.spu.prepareExecution(EvaluationMode.JustEntered, zone);
 		engine.currentZone = zone;
 		engine.currentWorld = engine.world.findLocationOfZone(zone) ? engine.world : null;
-		engine.hero.appearance = engine.assets.find(Char, c => c.isHero());
+		engine.hero.appearance = engine.assets.find(Character, c => c.isHero());
 		engine.sceneManager.pushScene(zoneScene);
 		if (story instanceof SimulatedStory) {
 			engine.hero.visible = true;
@@ -244,7 +244,7 @@ class GameplayContext {
 		engine.assets.populate(Zone, []);
 		engine.assets.populate(Tile, []);
 		engine.assets.populate(Puzzle, []);
-		engine.assets.populate(Char, []);
+		engine.assets.populate(Character, []);
 		engine.assets.populate(Sound, []);
 		engine.assets = null;
 		engine.hero.appearance = null;

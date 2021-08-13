@@ -1,5 +1,5 @@
 import { AssetManager } from "src/engine";
-import { Char, Hotspot, Puzzle, Tile, Zone } from "src/engine/objects";
+import { Character, Hotspot, Puzzle, Tile, Zone } from "src/engine/objects";
 import { ReferencesTo } from "src/app/editor/reference";
 import { equal } from "src/util/functional";
 import ResolverInterface from "./resolver-interface";
@@ -110,7 +110,7 @@ class TileResolver implements ResolverInterface<Tile> {
 			}
 		}
 
-		for (const character of this._assets.getAll(Char)) {
+		for (const character of this._assets.getAll(Character)) {
 			for (let i = 0; i < character.frames.length; i++) {
 				const frame = character.frames[i];
 				for (let j = 0; j < frame.tiles.length; j++) {

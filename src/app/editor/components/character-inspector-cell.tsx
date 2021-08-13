@@ -2,11 +2,11 @@ import "./character-inspector-cell.scss";
 
 import { Cell, IconButton, Label } from "src/ui/components";
 
-import { Char } from "src/engine/objects";
+import { Character } from "src/engine/objects";
 import { ColorPalette } from "src/engine/rendering";
 import TileView from "src/app/webfun/debug/components/tile-view";
 
-class CharacterInspectorCell extends Cell<Char> {
+class CharacterInspectorCell extends Cell<Character> {
 	public static readonly tagName = "wf-character-inspector-cell";
 	public static readonly observedAttributes: string[] = [];
 

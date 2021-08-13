@@ -1,5 +1,5 @@
 import AssetManager from "src/engine/asset-manager";
-import { Char } from "src/engine/objects";
+import { Character } from "src/engine/objects";
 import Monster from "src/engine/objects/monster";
 import { Point } from "src/util";
 
@@ -8,7 +8,7 @@ describe("WebFun.Engine.Objects.Monster", () => {
 	let subject: Monster;
 	beforeEach(() => {
 		assets = new AssetManager();
-		assets.populate(Char, []);
+		assets.populate(Character, []);
 
 		subject = new Monster(
 			0,

@@ -4,7 +4,7 @@ import { AbstractWindow, ProgressIndicator, IconButton } from "src/ui/components
 import { ColorPalette, AssetManager } from "src/engine";
 import { DataProvider, PaletteProvider } from "src/app/editor/data";
 import { Reader as SaveGameReaderFactory, SaveState, Writer } from "src/engine/save-game";
-import { Tile, Zone, Puzzle, Char, Sound } from "src/engine/objects";
+import { Tile, Zone, Puzzle, Character, Sound } from "src/engine/objects";
 
 import EditorView from "./editor-view";
 import {
@@ -63,8 +63,8 @@ class EditorWindow extends AbstractWindow {
 				data.puzzles.map((p, idx) => new Puzzle(idx, p, assets))
 			);
 			assets.populate(
-				Char,
-				data.characters.map((c, idx) => new Char(idx, c, assets))
+				Character,
+				data.characters.map((c, idx) => new Character(idx, c, assets))
 			);
 			assets.populate(
 				Zone,

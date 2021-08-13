@@ -2,7 +2,7 @@ import { Yoda } from "src/variant/yoda";
 import Variant from "src/engine/variant";
 import TileID from "src/variant/yoda/tile-ids";
 import Sounds from "src/variant/yoda/sounds";
-import { Tile, Char, Puzzle } from "src/engine/objects";
+import { Tile, Character, Puzzle } from "src/engine/objects";
 import { Engine, Story } from "src/engine";
 import * as EngineModule from "src/engine";
 
@@ -95,7 +95,7 @@ describe("WebFun.Variant.Yoda", () => {
 		} as any;
 	}
 
-	function mockWeapon(id: number): Char {
+	function mockWeapon(id: number): Character {
 		return { frames: [{ extensionRight: { id } }] } as any;
 	}
 

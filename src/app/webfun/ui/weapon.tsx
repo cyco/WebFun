@@ -1,6 +1,6 @@
 import "./weapon.scss";
 
-import { Char, Tile } from "src/engine/objects";
+import { Character, Tile } from "src/engine/objects";
 import { ColorPalette } from "src/engine/rendering";
 import { Component } from "src/ui";
 import { PaletteView } from "src/app/webfun/ui";
@@ -10,7 +10,7 @@ import { AssetManager } from "src/engine";
 class Weapon extends Component {
 	public static readonly tagName = "wf-weapon";
 	public assets: AssetManager = null;
-	private _weapon: Char = null;
+	private _weapon: Character = null;
 	private _background: HTMLDivElement = (<div className="background" />) as HTMLDivElement;
 	private _paletteView: PaletteView = (
 		<PaletteView size={new Size(Tile.WIDTH, Tile.HEIGHT)} />
@@ -29,12 +29,12 @@ class Weapon extends Component {
 		}
 	}
 
-	set weapon(w: Char) {
+	set weapon(w: Character) {
 		this._weapon = w;
 		this._update();
 	}
 
-	get weapon(): Char {
+	get weapon(): Character {
 		return this._weapon;
 	}
 

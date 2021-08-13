@@ -21,7 +21,7 @@ import CoverageInspector from "src/app/editor/inspectors/coverage-inspector";
 import buildEditorMenu from "./menu";
 import ServiceContainer from "./service-container";
 import { Resolver, Updater } from "./reference";
-import { Char, Puzzle, Sound, Tile, Zone } from "src/engine/objects";
+import { Character, Puzzle, Sound, Tile, Zone } from "src/engine/objects";
 
 class EditorWindow extends AbstractWindow {
 	static readonly tagName = "wf-resource-editor-window";
@@ -63,8 +63,8 @@ class EditorWindow extends AbstractWindow {
 			data.puzzles.map((p, idx) => new Puzzle(idx, p, assets))
 		);
 		assets.populate(
-			Char,
-			data.characters.map((c, idx) => new Char(idx, c, assets))
+			Character,
+			data.characters.map((c, idx) => new Character(idx, c, assets))
 		);
 		assets.populate(
 			Zone,

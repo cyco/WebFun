@@ -1,6 +1,6 @@
 import {
 	Action,
-	Char,
+	Character,
 	Condition,
 	Hotspot,
 	Instruction,
@@ -14,9 +14,9 @@ import {
 type Ref<To, From, Via = []> = { to: To; from: From; via: Via };
 
 export type Reference =
-	| Ref<Char, Char, ["id"]>
-	| Ref<Char, Char, ["weapon"]>
-	| Ref<Char, Monster, [Zone]>
+	| Ref<Character, Character, ["id"]>
+	| Ref<Character, Character, ["weapon"]>
+	| Ref<Character, Monster, [Zone]>
 	| Ref<Hotspot, Hotspot, ["id"]>
 	| Ref<Hotspot, Instruction, [Zone, Action, number]>
 	| Ref<Hotspot, Zone>
@@ -24,10 +24,10 @@ export type Reference =
 	| Ref<Monster, Instruction, [Zone, Action, number]>
 	| Ref<Monster, Monster, ["id"]>
 	| Ref<Monster, Zone>
-	| Ref<Sound, Char>
+	| Ref<Sound, Character>
 	| Ref<Sound, Instruction, [Zone, Action, number]>
 	| Ref<Sound, Sound, ["id"]>
-	| Ref<Tile, Char, [number, number]>
+	| Ref<Tile, Character, [number, number]>
 	| Ref<Tile, Condition, [Zone, Action, number]>
 	| Ref<Tile, Hotspot, [Zone]>
 	| Ref<Tile, Instruction, [Zone, Action, number]>

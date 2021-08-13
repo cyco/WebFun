@@ -1,7 +1,7 @@
-import { Char } from "src/engine/objects";
+import { Character } from "src/engine/objects";
 import { rand, Point } from "src/util";
 
-describeMonsterMovement(Char.MovementType.Scaredy, (ctx, tick, vars) => {
+describeMonsterMovement(Character.MovementType.Scaredy, (ctx, tick, vars) => {
 	it("moves as expected", async () => {
 		const { monster, InitialPosition } = vars;
 

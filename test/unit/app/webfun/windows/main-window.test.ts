@@ -4,7 +4,7 @@ import Engine, { Events as EngineEvents } from "src/engine/engine";
 import Hero, { Events as HeroEvents } from "src/engine/hero";
 import { EventTarget, Point, Rectangle, Size } from "src/util";
 import { Metronome } from "src/engine";
-import { Char } from "src/engine/objects";
+import { Character } from "src/engine/objects";
 
 describeComponent(MainWindow, () => {
 	let subject: MainWindow;
@@ -80,7 +80,7 @@ describeComponent(MainWindow, () => {
 		});
 
 		it("registers for ammo change events", () => {
-			const mockWeapon = ({} as any) as Char;
+			const mockWeapon = {} as any as Character;
 			engine.hero.weapon = mockWeapon;
 			engine.hero.ammo = 4;
 			(engine as any).triggerAmmoChange();
@@ -93,7 +93,7 @@ describeComponent(MainWindow, () => {
 		});
 
 		it("registers for weapon change events", () => {
-			const mockWeapon = ({} as any) as Char;
+			const mockWeapon = {} as any as Character;
 			engine.hero.weapon = mockWeapon;
 			(engine as any).triggerWeaponChange();
 			expect(subject.weapon.weapon).toEqual(mockWeapon);
