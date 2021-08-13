@@ -6,7 +6,7 @@ import {
 	Weapons
 } from "src/engine/cheats";
 import { Point, Size, rgba } from "src/util";
-import { Tile, Zone } from "src/engine/objects";
+import { Hotspot, Tile, Zone } from "src/engine/objects";
 
 import Renderer from "../rendering/renderer";
 import LocatorTile from "src/variant/yoda/locator-tile";
@@ -233,7 +233,7 @@ class MapScene extends Scene {
 			case Zone.Type.TravelStart:
 			case Zone.Type.TravelEnd:
 				if (!sector.requiredItem) return StringID.None;
-				if (sector.solved1) return StringID.TravelSolved;
+				if (this.isZoneConsideredSolved(sector.zone)) return StringID.TravelSolved;
 				return [StringID.requires, typeForTile(sector.requiredItem)];
 			case Zone.Type.Goal:
 				if (sector.solved1 && sector.solved2) return StringID.GoalSolved;
@@ -381,7 +381,18 @@ class MapScene extends Scene {
 	}
 
 	protected isZoneConsideredSolved(zone: Zone): boolean {
-		const sector = this.engine.currentWorld.findSectorContainingZone(zone);
+		let sector = this.engine.currentWorld.findSectorContainingZone(zone);
+		if (!sector) return;
+
+		if (sector.zone.type === Zone.Type.TravelEnd) {
+			sector = this.engine.currentWorld.sectors.find(
+				s =>
+					s.zone &&
+					s.zone.hotspots.some(
+						htsp => htsp.type === Hotspot.Type.VehicleTo && htsp.arg === sector.zone.id
+					)
+			);
+		}
 		return sector && sector.solved;
 	}
 
