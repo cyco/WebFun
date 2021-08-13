@@ -391,16 +391,14 @@ class GameController extends EventTarget implements EventListenerObject {
 
 				for (let i = zone.hotspots.length; i < savedHotspots.length; i++) {
 					const savedHostpot = savedHotspots[i];
-					const hotspot = new Hotspot(zone.hotspots.length, savedHostpot as any);
+					const hotspot = new Hotspot(zone.hotspots.length, {
+						enabled: savedHostpot.enabled,
+						argument: savedHostpot.argument,
+						type: savedHostpot.type?.rawValue,
+						x: savedHostpot.x,
+						y: savedHostpot.y
+					});
 					hotspot.enabled = savedHostpot.enabled;
-					hotspot.argument = savedHostpot.argument;
-
-					if (savedHostpot.type) {
-						hotspot.type = savedHostpot.type;
-						hotspot.x = savedHostpot.x;
-						hotspot.y = savedHostpot.y;
-					}
-
 					zone.hotspots.push(hotspot);
 				}
 
