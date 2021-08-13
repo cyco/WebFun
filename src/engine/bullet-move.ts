@@ -36,22 +36,22 @@ function _dropLoot(monster: Monster, zone: Zone, assets: AssetManager) {
 	else {
 		const hotspots = zone.hotspots
 			.withType(Hotspot.Type.DropQuestItem)
-			.filter(htsp => htsp.arg > 0);
+			.filter(htsp => htsp.argument > 0);
 
 		if (!hotspots.length) return;
 
 		const hotspot = hotspots.first();
-		itemId = hotspot.arg;
+		itemId = hotspot.argument;
 		hotspot.enabled = false;
 	}
 
 	if (itemId === -1) return;
 
-	hotspot.arg = itemId;
+	hotspot.argument = itemId;
 
 	zone.hotspots.push(hotspot);
 
-	const tile = assets.get(Tile, hotspot.arg);
+	const tile = assets.get(Tile, hotspot.argument);
 	zone.setTile(tile, hotspot.location.x, hotspot.location.y, Zone.Layer.Object);
 }
 

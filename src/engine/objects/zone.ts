@@ -80,7 +80,7 @@ class Zone {
 
 	get doors(): Hotspot[] {
 		return this.hotspots.filter(
-			hotspot => hotspot.type === Hotspot.Type.DoorIn && hotspot.arg !== -1
+			hotspot => hotspot.type === Hotspot.Type.DoorIn && hotspot.argument !== -1
 		);
 	}
 
@@ -135,8 +135,8 @@ class Zone {
 		if (needleZone === this) return true;
 
 		for (const hotspot of this.hotspots) {
-			if (hotspot.type === Hotspot.Type.DoorIn && hotspot.arg !== -1) {
-				const zone = assets.get(Zone, hotspot.arg, NullIfMissing);
+			if (hotspot.type === Hotspot.Type.DoorIn && hotspot.argument !== -1) {
+				const zone = assets.get(Zone, hotspot.argument, NullIfMissing);
 				if (zone.leadsTo(needleZone, assets)) return true;
 			}
 		}
@@ -170,7 +170,7 @@ class Zone {
 			.forEach(hotspot => {
 				switch (hotspot.type) {
 					case Hotspot.Type.Unused:
-						hotspot.arg = TILE_ADEGAN_CRYSTAL;
+						hotspot.argument = TILE_ADEGAN_CRYSTAL;
 					/* intentional fallthrough */
 					case Hotspot.Type.DropQuestItem:
 					case Hotspot.Type.SpawnLocation:
@@ -179,13 +179,13 @@ class Zone {
 					case Hotspot.Type.DropItem:
 					case Hotspot.Type.NPC:
 					case Hotspot.Type.DropWeapon:
-						if (hotspot.arg < 0) break;
+						if (hotspot.argument < 0) break;
 						if (this.getTile(hotspot.x, hotspot.y, 1)) return;
-						this.setTile({ id: hotspot.arg } as unknown as Tile, hotspot.x, hotspot.y, 1);
+						this.setTile({ id: hotspot.argument } as unknown as Tile, hotspot.x, hotspot.y, 1);
 						break;
 					case Hotspot.Type.DoorIn:
-						if (hotspot.arg < 0) break;
-						const zone = this.assets.get(Zone, hotspot.arg);
+						if (hotspot.argument < 0) break;
+						const zone = this.assets.get(Zone, hotspot.argument);
 						zone.layDownHotspotItems();
 						break;
 					default:

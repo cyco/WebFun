@@ -8,16 +8,16 @@ import { HotspotExecutionResult } from "../hotspot-execution-result";
 export default (engine: Engine, hotspot: Hotspot): HotspotExecutionResult => {
 	console.assert(engine.sceneManager.currentScene instanceof ZoneScene);
 	const zone = engine.currentZone;
-	const destinationZone = engine.assets.get(Zone, hotspot.arg, NullIfMissing);
+	const destinationZone = engine.assets.get(Zone, hotspot.argument, NullIfMissing);
 	const doorOut = destinationZone.hotspots.find(
-		(h: Hotspot) => h.type === Hotspot.Type.DoorOut && (h.arg === -1 || h.arg === zone.id)
+		(h: Hotspot) => h.type === Hotspot.Type.DoorOut && (h.argument === -1 || h.argument === zone.id)
 	);
 	console.assert(!!doorOut, "Found no way to return to current zone");
 
 	const { world, location } = engine.findLocationOfZone(destinationZone);
 
 	destinationZone.doorInLocation = hotspot.location;
-	doorOut.arg = zone.id;
+	doorOut.argument = zone.id;
 
 	if (engine.sceneManager.currentScene instanceof RoomTransitionScene) {
 		engine.sceneManager.popScene();

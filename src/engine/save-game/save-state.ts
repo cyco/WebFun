@@ -128,7 +128,7 @@ class SaveState {
 			zone.id,
 			zone.hotspots.map(htsp => ({
 				enabled: htsp.enabled,
-				argument: htsp.arg,
+				argument: htsp.argument,
 				x: htsp.x,
 				y: htsp.y,
 				type: htsp.type

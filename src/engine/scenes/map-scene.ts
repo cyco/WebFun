@@ -389,7 +389,7 @@ class MapScene extends Scene {
 				s =>
 					s.zone &&
 					s.zone.hotspots.some(
-						htsp => htsp.type === Hotspot.Type.VehicleTo && htsp.arg === sector.zone.id
+						htsp => htsp.type === Hotspot.Type.VehicleTo && htsp.argument === sector.zone.id
 					)
 			);
 		}

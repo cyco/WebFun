@@ -94,7 +94,7 @@ class HotspotLayer extends Component {
 						title: `${htsp.x}x${htsp.y}`
 					},
 					{
-						title: htsp.arg.toHex(2)
+						title: htsp.argument.toHex(2)
 					},
 					{
 						title: () => (htsp.enabled ? "Disable" : "Enable"),
@@ -107,10 +107,10 @@ class HotspotLayer extends Component {
 						title: "Change Argument",
 						callback: async () => {
 							const raw = await ModalPrompt("Set new argument", {
-								defaultValue: htsp.arg.toHex(2)
+								defaultValue: htsp.argument.toHex(2)
 							});
 							if (raw === null) return;
-							htsp.arg = +raw;
+							htsp.argument = +raw;
 						}
 					},
 					{

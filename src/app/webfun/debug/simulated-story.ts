@@ -93,7 +93,7 @@ class SimulatedStory extends Story {
 					if (!candidates.length) continue;
 					const hotspot = candidates[randmod(candidates.length)];
 					hotspot.enabled = true;
-					hotspot.arg = find.id;
+					hotspot.argument = find.id;
 					break;
 				}
 				break;

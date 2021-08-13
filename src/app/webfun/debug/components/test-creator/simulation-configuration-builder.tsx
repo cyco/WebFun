@@ -108,9 +108,9 @@ class SimulationConfigurationBuilder extends Component {
 
 	private connectedZones(zone: Zone): Zone[] {
 		return zone.doors
-			.filter(({ arg }: Hotspot) => arg !== -1)
-			.map(({ arg }) => {
-				const zone = this._assets.get(Zone, arg);
+			.filter(({ argument }: Hotspot) => argument !== -1)
+			.map(({ argument }) => {
+				const zone = this._assets.get(Zone, argument);
 				return [zone, ...this.connectedZones(zone)];
 			})
 			.flatten();

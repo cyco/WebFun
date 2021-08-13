@@ -10,8 +10,8 @@ export default (zone: Zone, zones: Zone[]): Zone[] => {
 
 	if (zone.type === Zone.Type.TravelStart) {
 		zone.hotspots
-			.filter(htsp => htsp.type === Hotspot.Type.VehicleTo && htsp.arg !== -1)
-			.map(htsp => htsp.arg)
+			.filter(htsp => htsp.type === Hotspot.Type.VehicleTo && htsp.argument !== -1)
+			.map(htsp => htsp.argument)
 			.forEach((id, idx) => (adjacentZones[idx] = zones[id]));
 	}
 

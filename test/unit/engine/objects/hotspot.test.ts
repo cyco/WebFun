@@ -27,7 +27,7 @@ describe("WebFun.Engine.Objects.Hotspot", () => {
 	});
 
 	it("holds one argument (16-bit signed, not enforced)", () => {
-		expect(subject.arg).toBe(-1);
-		expect(() => (subject.arg = 0x10000)).not.toThrow();
+		expect(subject.argument).toBe(-1);
+		expect(() => (subject.argument = 0x10000)).not.toThrow();
 	});
 });

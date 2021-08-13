@@ -6,10 +6,10 @@ function* iterate(zone: Zone, assets: AssetManager): Iterable<Zone> {
 
 	yield zone;
 
-	for (const { type, arg } of zone.hotspots) {
+	for (const { type, argument } of zone.hotspots) {
 		if (type !== Hotspot.Type.DoorIn) continue;
-		if (arg < 0) continue;
-		for (const room of iterate(assets.get(Zone, arg), assets)) yield room;
+		if (argument < 0) continue;
+		for (const room of iterate(assets.get(Zone, argument), assets)) yield room;
 	}
 }
 

@@ -124,7 +124,7 @@ class AssetManagerSerializer {
 				stream.writeUint16(hotspot.x);
 				stream.writeUint16(hotspot.y);
 				stream.writeUint16(1); // hotspot.enabled ? 1 : 0
-				stream.writeInt16(hotspot.arg);
+				stream.writeInt16(hotspot.argument);
 			});
 
 			stream.writeCharacters("IZAX");

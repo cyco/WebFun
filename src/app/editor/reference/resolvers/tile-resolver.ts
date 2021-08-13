@@ -60,7 +60,11 @@ class TileResolver implements ResolverInterface<Tile> {
 					Hotspot.Type.DropUniqueWeapon,
 					Hotspot.Type.DropMap
 				];
-				if (types.includes(hotspot.type) && hotspot.arg !== -1 && op(hotspot.arg, needle.id)) {
+				if (
+					types.includes(hotspot.type) &&
+					hotspot.argument !== -1 &&
+					op(hotspot.argument, needle.id)
+				) {
 					result.push({ from: hotspot, to: needle, via: [zone] });
 				}
 			}

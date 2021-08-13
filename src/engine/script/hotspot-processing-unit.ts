@@ -143,7 +143,7 @@ class HotspotProcessingUnit {
 					htsp.location.isEqualTo(point) &&
 					htsp.enabled &&
 					htsp.type === Hotspot.Type.Lock &&
-					htsp.arg === tile.id
+					htsp.argument === tile.id
 			);
 			if (!hotspot) {
 				const nogo = engine.assets.get(Sound, engine.variant.sounds.NoGo);
@@ -157,7 +157,8 @@ class HotspotProcessingUnit {
 				return HotspotExecutionResult.Inventory;
 			}
 			const unlockedHotspot = zone.hotspots.find(
-				htsp => htsp.type === Hotspot.Type.DropQuestItem && htsp.enabled && htsp.arg === findItem.id
+				htsp =>
+					htsp.type === Hotspot.Type.DropQuestItem && htsp.enabled && htsp.argument === findItem.id
 			);
 
 			if (!unlockedHotspot) {
@@ -175,7 +176,7 @@ class HotspotProcessingUnit {
 	private _laydownHotspotItem(zone: Zone, hotspot: Hotspot): void {
 		if (!hotspot.enabled) return;
 
-		if (hotspot.arg === -1) return;
+		if (hotspot.argument === -1) return;
 		if (!this.initializeTypes.has(hotspot.type)) return;
 
 		const location = hotspot.location.clone();
@@ -184,7 +185,7 @@ class HotspotProcessingUnit {
 		const currentTile = zone.getTile(location);
 		if (currentTile) return;
 
-		const tile = this._engine.assets.get(Tile, hotspot.arg, NullIfMissing);
+		const tile = this._engine.assets.get(Tile, hotspot.argument, NullIfMissing);
 		zone.setTile(tile, location);
 	}
 }

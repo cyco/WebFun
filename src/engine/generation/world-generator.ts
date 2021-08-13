@@ -211,7 +211,7 @@ class WorldGenerator {
 				});
 
 				const vehicleHotspot = zone.hotspots.withType(Hotspot.Type.VehicleTo).first();
-				const connectedZone = this.lookupZoneById(vehicleHotspot ? vehicleHotspot.arg : -1);
+				const connectedZone = this.lookupZoneById(vehicleHotspot ? vehicleHotspot.argument : -1);
 				this.errorWhen(!zone, "Could not determine zone for travel end");
 
 				let range = null;
@@ -868,15 +868,15 @@ class WorldGenerator {
 
 	private requiredItemForZoneWasNotPlaced(zone: Zone): boolean {
 		for (const hotspot of zone.hotspots) {
-			if (hotspot.arg === -1) continue;
+			if (hotspot.argument === -1) continue;
 			if (
 				hotspot.type.canHoldItem() &&
-				this.hasQuestRequiringItem(this.lookupTileById(hotspot.arg))
+				this.hasQuestRequiringItem(this.lookupTileById(hotspot.argument))
 			)
 				return false;
 			if (
 				hotspot.type === Hotspot.Type.DoorIn &&
-				!this.requiredItemForZoneWasNotPlaced(this.lookupZoneById(hotspot.arg))
+				!this.requiredItemForZoneWasNotPlaced(this.lookupZoneById(hotspot.argument))
 			)
 				return false;
 		}
@@ -886,11 +886,11 @@ class WorldGenerator {
 
 	private addRequiredItemQuestsFromHotspots(zone: Zone): void {
 		zone.hotspots.forEach(hotspot => {
-			if (hotspot.arg === -1) return;
+			if (hotspot.argument === -1) return;
 			if (hotspot.type.canHoldItem())
-				this.addRequiredItemQuest(this.lookupTileById(hotspot.arg), -1);
+				this.addRequiredItemQuest(this.lookupTileById(hotspot.argument), -1);
 			if (hotspot.type === Hotspot.Type.DoorIn)
-				this.addRequiredItemQuestsFromHotspots(this.lookupZoneById(hotspot.arg));
+				this.addRequiredItemQuestsFromHotspots(this.lookupZoneById(hotspot.argument));
 		});
 	}
 
@@ -1070,7 +1070,7 @@ class WorldGenerator {
 	}
 
 	private dropNPCAtHotspotRandomly(zone: Zone, npc: Tile): boolean {
-		const isFree = ({ arg }: Hotspot) => arg === -1;
+		const isFree = ({ argument }: Hotspot) => argument === -1;
 
 		return this._traverseZoneUntil(
 			zone,

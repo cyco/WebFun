@@ -21,27 +21,27 @@ class ZoneResolver implements ResolverInterface<Zone> {
 			}
 
 			for (const hotspot of zone.hotspots) {
-				if (hotspot.type === Hotspot.Type.DoorIn && op(hotspot.arg, needle.id)) {
+				if (hotspot.type === Hotspot.Type.DoorIn && op(hotspot.argument, needle.id)) {
 					result.push({ from: hotspot, to: needle, via: [zone] });
 				}
 
-				if (hotspot.type === Hotspot.Type.DoorOut && op(hotspot.arg, needle.id)) {
+				if (hotspot.type === Hotspot.Type.DoorOut && op(hotspot.argument, needle.id)) {
 					result.push({ from: hotspot, to: needle, via: [zone] });
 				}
 
-				if (hotspot.type === Hotspot.Type.ShipFromPlanet && op(hotspot.arg, needle.id)) {
+				if (hotspot.type === Hotspot.Type.ShipFromPlanet && op(hotspot.argument, needle.id)) {
 					result.push({ from: hotspot, to: needle, via: [zone] });
 				}
 
-				if (hotspot.type === Hotspot.Type.ShipToPlanet && op(hotspot.arg, needle.id)) {
+				if (hotspot.type === Hotspot.Type.ShipToPlanet && op(hotspot.argument, needle.id)) {
 					result.push({ from: hotspot, to: needle, via: [zone] });
 				}
 
-				if (hotspot.type === Hotspot.Type.VehicleTo && op(hotspot.arg, needle.id)) {
+				if (hotspot.type === Hotspot.Type.VehicleTo && op(hotspot.argument, needle.id)) {
 					result.push({ from: hotspot, to: needle, via: [zone] });
 				}
 
-				if (hotspot.type === Hotspot.Type.VehicleBack && op(hotspot.arg, needle.id)) {
+				if (hotspot.type === Hotspot.Type.VehicleBack && op(hotspot.argument, needle.id)) {
 					result.push({ from: hotspot, to: needle, via: [zone] });
 				}
 			}

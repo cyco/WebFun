@@ -76,10 +76,10 @@ describe("WebFun.Engine.Script.Hotspots.DoorOut", () => {
 
 	function mockHotspot(
 		type: Hotspot.Type,
-		arg: number = -1,
+		argument: number = -1,
 		pos: Point = new Point(0, 0)
 	): Hotspot {
-		return { type, arg, x: pos.x, y: pos.y, enabled: true, location: pos } as Hotspot;
+		return { type, argument, x: pos.x, y: pos.y, enabled: true, location: pos } as Hotspot;
 	}
 
 	function mockEngine() {

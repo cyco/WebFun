@@ -196,7 +196,7 @@ class Updater {
 		}
 
 		if (to instanceof Zone && from instanceof Hotspot) {
-			from.arg = update(from.arg);
+			from.argument = update(from.argument);
 			return;
 		}
 
@@ -245,7 +245,7 @@ class Updater {
 		}
 
 		if (to instanceof Tile && from instanceof Hotspot) {
-			from.arg = update(from.arg);
+			from.argument = update(from.argument);
 			return;
 		}
 

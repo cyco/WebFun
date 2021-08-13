@@ -5,9 +5,9 @@ import { Point } from "src/util";
 import { HotspotExecutionResult } from "../hotspot-execution-result";
 
 export default (engine: Engine, hotspot: Hotspot): HotspotExecutionResult => {
-	console.assert(hotspot.arg !== -1, "This is not where we're coming from!");
+	console.assert(hotspot.argument !== -1, "This is not where we're coming from!");
 
-	const destinationZone = engine.assets.get(Zone, hotspot.arg);
+	const destinationZone = engine.assets.get(Zone, hotspot.argument);
 	const otherHotspot = destinationZone.hotspots.find(
 		({ type }) => type === Hotspot.Type.ShipFromPlanet
 	);

@@ -25,8 +25,8 @@ describe("WebFun.Engine.Script.Hotspots.Teleport", () => {
 		expect(engine.sceneManager.pushScene).toHaveBeenCalledWith(jasmine.any(TeleportScene));
 	});
 
-	function mockHotspot(type: Hotspot.Type, arg: number = -1): Hotspot {
-		return { type, arg } as Hotspot;
+	function mockHotspot(type: Hotspot.Type, argument: number = -1): Hotspot {
+		return { type, argument } as Hotspot;
 	}
 
 	function mockEngine() {

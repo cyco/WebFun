@@ -290,7 +290,7 @@ class Engine extends EventTarget {
 
 				zone.hotspots.forEach((htsp, i) => {
 					htsp.enabled = htsps[i].enabled;
-					htsp.arg = htsps[i].argument;
+					htsp.argument = htsps[i].argument;
 				});
 			}
 		}

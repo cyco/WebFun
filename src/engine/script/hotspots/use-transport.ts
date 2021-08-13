@@ -6,7 +6,7 @@ import { HotspotExecutionResult } from "../hotspot-execution-result";
 export default (engine: Engine, htsp: Hotspot): HotspotExecutionResult => {
 	const counterPart =
 		htsp.type === Hotspot.Type.VehicleTo ? Hotspot.Type.VehicleBack : Hotspot.Type.VehicleTo;
-	const destinationZone = engine.assets.get(Zone, htsp.arg);
+	const destinationZone = engine.assets.get(Zone, htsp.argument);
 	const worldLocation = engine.currentWorld.findLocationOfZone(destinationZone);
 	const sector = destinationZone.hotspots.withType(counterPart).first().location;
 

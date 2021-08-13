@@ -380,7 +380,7 @@ class GameController extends EventTarget implements EventListenerObject {
 					const savedHostpot = savedHotspots[i];
 
 					hotspot.enabled = savedHostpot.enabled;
-					hotspot.arg = savedHostpot.argument;
+					hotspot.argument = savedHostpot.argument;
 
 					if (savedHostpot.type) {
 						hotspot.type = savedHostpot.type;
@@ -393,7 +393,7 @@ class GameController extends EventTarget implements EventListenerObject {
 					const savedHostpot = savedHotspots[i];
 					const hotspot = new Hotspot(zone.hotspots.length, savedHostpot as any);
 					hotspot.enabled = savedHostpot.enabled;
-					hotspot.arg = savedHostpot.argument;
+					hotspot.argument = savedHostpot.argument;
 
 					if (savedHostpot.type) {
 						hotspot.type = savedHostpot.type;

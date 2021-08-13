@@ -134,7 +134,7 @@ abstract class Reader {
 					type: htsp.type,
 					x: htsp.x,
 					y: htsp.y,
-					argument: htsp.arg
+					argument: htsp.argument
 				}))
 			);
 			this._state.monsters.set(

@@ -57,10 +57,10 @@ describe("WebFun.Engine.Script.Hotspots.ShipFromPlanet", () => {
 
 	function mockHotspot(
 		type: Hotspot.Type,
-		arg: number = -1,
+		argument: number = -1,
 		pos: Point = new Point(0, 0)
 	): Hotspot {
-		return { type, arg, x: pos.x, y: pos.y, enabled: true } as Hotspot;
+		return { type, argument, x: pos.x, y: pos.y, enabled: true } as Hotspot;
 	}
 
 	function mockEngine() {

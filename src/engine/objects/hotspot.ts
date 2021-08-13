@@ -10,7 +10,7 @@ class Hotspot {
 	public y: number;
 
 	public enabled: boolean;
-	public arg: number;
+	public argument: number;
 	public type: HotspotType;
 
 	public constructor(id: number, data: Hotspot | RawHotspot) {
@@ -20,10 +20,10 @@ class Hotspot {
 		this.y = data.y;
 
 		if (data instanceof Hotspot) {
-			this.arg = data.arg;
+			this.argument = data.argument;
 			this.type = data.type;
 		} else {
-			this.arg = data.argument;
+			this.argument = data.argument;
 			this.type = Hotspot.Type.fromNumber(data.type);
 
 			switch (this.type) {
@@ -45,7 +45,7 @@ class Hotspot {
 					this.enabled = true;
 					break;
 				default:
-					this.arg = -1;
+					this.argument = -1;
 					this.enabled = true;
 					break;
 			}
