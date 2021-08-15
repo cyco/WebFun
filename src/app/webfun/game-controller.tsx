@@ -300,7 +300,6 @@ class GameController extends EventTarget implements EventListenerObject {
 		engine.currentZone =
 			assets.get(Zone, state.currentZoneID, NullIfMissing) ?? assets.get(Zone, 0);
 		engine.currentWorld = state.onDagobah ? engine.dagobah : engine.world;
-		// TODO: engine.currentSector = engine.currentWorld.at(state.positionOnWorld);
 
 		engine.inventory.removeAllItems();
 		state.inventoryIDs.forEach(id => engine.inventory.addItem(assets.get(Tile, id)));
@@ -321,6 +320,7 @@ class GameController extends EventTarget implements EventListenerObject {
 		// TODO: handle unknownCount
 		// TODO: handle unknownSum
 		this._showSceneView(engine.currentZone);
+		engine.triggerLocationChange();
 
 		const state2 = engine.variant.takeSnapshot(engine);
 		const writer = new Writer();
