@@ -301,10 +301,12 @@ class Engine extends EventTarget {
 	}
 
 	public teardown(): void {
-		this.inputManager.mouseDownHandler = null;
-		this.inputManager.keyDownHandler = null;
-		this.inputManager.removeListeners();
-		this.inputManager.engine = null;
+		if (this.inputManager) {
+			this.inputManager.mouseDownHandler = null;
+			this.inputManager.keyDownHandler = null;
+			this.inputManager.removeListeners();
+			this.inputManager.engine = null;
+		}
 		this.sceneManager.engine = null;
 		this.currentZone = null;
 	}

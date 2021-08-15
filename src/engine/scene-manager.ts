@@ -67,7 +67,9 @@ class SceneManager extends EventTarget {
 	}
 
 	clear(): void {
-		while (this._stack.length) this.popScene();
+		this._popHandlers = new Map();
+		this._stack = [];
+		this._currentScene = null;
 	}
 
 	public get currentScene(): Scene {
