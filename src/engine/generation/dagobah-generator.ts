@@ -112,7 +112,7 @@ class DagobahGenerator {
 		place.npc = this.assets.get(Tile, npcID)?.id ?? -1;
 		place.findItem = tile?.id ?? -1;
 
-		place.type = Zone.Type.Use;
+		place.type = Zone.Type.Trade;
 
 		const zone = this.assets.get(Zone, place.zone);
 		console.assert(!!zone.npcs.find(i => i.id === npcID));

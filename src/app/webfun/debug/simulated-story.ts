@@ -68,12 +68,12 @@ class SimulatedStory extends Story {
 				this.placeQuestItem(zone, puzzle3.item2 ? puzzle3.item2 : null)
 			}
 		*/
-			case Zone.Type.Trade:
+			case Zone.Type.Use:
 				// if(this.dropItemAtLockHotspot(zone, p1.item1)) {
 				// 	this.placeQuestItem(zone, p2.item1)
 				// }
 				break;
-			case Zone.Type.Use:
+			case Zone.Type.Trade:
 				// this.dropNPCAtHotspotRandomly(zone, npc);
 				break;
 			case Zone.Type.Find:

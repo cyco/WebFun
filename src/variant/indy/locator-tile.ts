@@ -44,8 +44,8 @@ export default class extends LocatorTile {
 				return [367, 368];
 			case Zone.Type.BlockadeSouth:
 				return [371, 372];
-			case Zone.Type.Use:
 			case Zone.Type.Trade:
+			case Zone.Type.Use:
 			case Zone.Type.Find:
 			case Zone.Type.FindUniqueWeapon:
 				return [363, 364];

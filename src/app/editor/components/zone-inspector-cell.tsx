@@ -57,8 +57,8 @@ class ZoneInspectorCell extends Cell<Zone> {
 						Zone.Type.Town,
 						Zone.Type.Win,
 						Zone.Type.Lose,
-						Zone.Type.Trade,
 						Zone.Type.Use,
+						Zone.Type.Trade,
 						Zone.Type.Find,
 						Zone.Type.FindUniqueWeapon
 					].map(t => ({
@@ -145,8 +145,8 @@ class ZoneInspectorCell extends Cell<Zone> {
 				return 825;
 			case Zone.Type.Find:
 			case Zone.Type.FindUniqueWeapon:
-			case Zone.Type.Trade:
 			case Zone.Type.Use:
+			case Zone.Type.Trade:
 				return 818;
 			case Zone.Type.TravelStart:
 			case Zone.Type.TravelEnd:

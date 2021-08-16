@@ -13,7 +13,7 @@ describe("WebFun.Engine.World", () => {
 			4,
 			{
 				planet: Zone.Planet.Hoth.rawValue,
-				zoneType: Zone.Type.Use.rawValue,
+				zoneType: Zone.Type.Trade.rawValue,
 				width: 9,
 				height: 9,
 				unknown: -1,

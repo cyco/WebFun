@@ -16,8 +16,8 @@ class ZoneType {
 	public static readonly Town = new ZoneType();
 	public static readonly Win = new ZoneType();
 	public static readonly Lose = new ZoneType();
-	public static readonly Trade = new ZoneType();
 	public static readonly Use = new ZoneType();
+	public static readonly Trade = new ZoneType();
 	public static readonly Find = new ZoneType();
 	public static readonly FindUniqueWeapon = new ZoneType();
 
@@ -41,8 +41,8 @@ class ZoneType {
 
 		ZoneType.Win,
 		ZoneType.Lose,
-		ZoneType.Trade,
 		ZoneType.Use,
+		ZoneType.Trade,
 		ZoneType.Find,
 		ZoneType.FindUniqueWeapon
 	];
@@ -82,10 +82,10 @@ class ZoneType {
 				return "Win";
 			case ZoneType.Lose:
 				return "Lose";
-			case ZoneType.Trade:
-				return "Trade";
 			case ZoneType.Use:
 				return "Use";
+			case ZoneType.Trade:
+				return "Trade";
 			case ZoneType.Find:
 				return "Find";
 			case ZoneType.FindUniqueWeapon:
@@ -124,14 +124,14 @@ class ZoneType {
 
 	public toPuzzleType(): PuzzleType {
 		switch (this) {
-			case ZoneType.Use:
-				return PuzzleType.Use;
+			case ZoneType.Trade:
+				return PuzzleType.Trade;
 			case ZoneType.PlaceholderForEndPuzzle:
 				return PuzzleType.End;
 			case ZoneType.Goal:
 				return PuzzleType.Goal;
-			case ZoneType.Trade:
-				return PuzzleType.Trade;
+			case ZoneType.Use:
+				return PuzzleType.Use;
 			default:
 				throw `Zone type ${this} does not match any puzzle type!`;
 		}

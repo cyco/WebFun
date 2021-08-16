@@ -320,7 +320,7 @@ class WorldGenerator {
 			const puzzle = this.puzzleStrain2[puzzleIndex];
 			const item1 = puzzle.item1;
 
-			let type = rand() % 2 ? Zone.Type.Use : Zone.Type.Trade;
+			let type = rand() % 2 ? Zone.Type.Trade : Zone.Type.Use;
 			let zone = this.getUnusedZoneRandomly(
 				type,
 				puzzleIndex - 1,
@@ -332,7 +332,7 @@ class WorldGenerator {
 			);
 
 			if (!zone) {
-				type = type === Zone.Type.Use ? Zone.Type.Trade : Zone.Type.Use;
+				type = type === Zone.Type.Trade ? Zone.Type.Use : Zone.Type.Trade;
 				zone = this.getUnusedZoneRandomly(type, puzzleIndex - 1, -1, item1, null, distance, false);
 			}
 
@@ -400,11 +400,11 @@ class WorldGenerator {
 			do {
 				iterationLimit--;
 				this.errorWhen(iterationLimit === 0, "Maximum number of iterations exceeded.");
-				let type = rand() % 2 ? Zone.Type.Trade : Zone.Type.Use;
+				let type = rand() % 2 ? Zone.Type.Use : Zone.Type.Trade;
 				zone = this.getUnusedZoneRandomly(type, puzzleIdIndex - 1, -1, item1, null, distance, true);
 
 				if (!zone) {
-					type = type === Zone.Type.Use ? Zone.Type.Trade : Zone.Type.Use;
+					type = type === Zone.Type.Trade ? Zone.Type.Use : Zone.Type.Trade;
 					zone = this.getUnusedZoneRandomly(
 						type,
 						puzzleIdIndex - 1,
@@ -614,11 +614,11 @@ class WorldGenerator {
 				this.addRequiredItemQuest(newPuzzleItem1, distance);
 				this.addRequiredItemQuest(newPuzzleItem2, distance);
 				return true;
-			case Zone.Type.Trade:
+			case Zone.Type.Use:
 				if (!this.zoneLeadsToProvidedItem(zone, providedItem)) return false;
 				const requiredItem = this.getUnusedRequiredItemForZoneRandomly(zone, false);
 				if (requiredItem === null) return false;
-				const puzzle = this.getUnusedPuzzleRandomly(requiredItem, Zone.Type.Trade);
+				const puzzle = this.getUnusedPuzzleRandomly(requiredItem, Zone.Type.Use);
 				if (!puzzle) return false;
 
 				this.usedAlternateStrain = useAlternateStrain;
@@ -655,19 +655,19 @@ class WorldGenerator {
 				this.addRequiredItemQuest(requiredItem, distance);
 
 				return true;
-			case Zone.Type.Use: {
+			case Zone.Type.Trade: {
 				if (!this.zoneLeadsToProvidedItem(zone, providedItem)) return false;
 				const puzzleItem = this.getUnusedRequiredItemForZoneRandomly(zone, false);
 				if (puzzleItem === null) return false;
 
-				const puzzle2 = this.getUnusedPuzzleRandomly(puzzleItem, Zone.Type.Use);
+				const puzzle2 = this.getUnusedPuzzleRandomly(puzzleItem, Zone.Type.Trade);
 				if (!puzzle2) return false;
 
 				this.usedAlternateStrain = useAlternateStrain;
 				const array = useAlternateStrain ? this.puzzleStrain1 : this.puzzleStrain2;
 				array[puzzleIndex] = puzzle2;
 
-				if (zone.type !== Zone.Type.Use) return false;
+				if (zone.type !== Zone.Type.Trade) return false;
 				if (!this.requiredItemForZoneWasNotPlaced(zone)) return false;
 
 				const npc = this.findUnusedNPCForZoneRandomly(zone);
@@ -989,8 +989,8 @@ class WorldGenerator {
 				case Zone.Type.Find:
 				case Zone.Type.FindUniqueWeapon:
 					return false;
-				case Zone.Type.Use:
 				case Zone.Type.Trade:
+				case Zone.Type.Use:
 				case Zone.Type.Goal:
 					return !this.hasPuzzleBeenPlaced(puzzle) && puzzle.type === zoneType.toPuzzleType();
 				case Zone.Type.PlaceholderForEndPuzzle:

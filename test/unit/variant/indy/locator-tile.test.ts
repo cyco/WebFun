@@ -51,8 +51,8 @@ describe("WebFun.Variant.Indy.LocatorTile", () => {
 	});
 
 	it("shows the correct map tile for puzzle zones", () => {
-		expect(subject.forZone({ type: Zone.Type.Trade } as any, true)).toEqual([363, 364]);
 		expect(subject.forZone({ type: Zone.Type.Use } as any, true)).toEqual([363, 364]);
+		expect(subject.forZone({ type: Zone.Type.Trade } as any, true)).toEqual([363, 364]);
 		expect(subject.forZone({ type: Zone.Type.FindUniqueWeapon } as any, true)).toEqual([363, 364]);
 	});
 

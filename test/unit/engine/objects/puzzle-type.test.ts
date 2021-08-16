@@ -13,8 +13,8 @@ describe("WebFun.Engine.Objects.PuzzleType", () => {
 	});
 
 	it("can be represented as a string", () => {
-		expect(PuzzleType.Use.name).toBe("Use");
 		expect(PuzzleType.Trade.name).toBe("Trade");
+		expect(PuzzleType.Use.name).toBe("Use");
 		expect(PuzzleType.Goal.name).toBe("Goal");
 		expect(PuzzleType.End.name).toBe("End");
 		expect(PuzzleType.U4.name).toBe("U4");
@@ -22,8 +22,8 @@ describe("WebFun.Engine.Objects.PuzzleType", () => {
 	});
 
 	it("can be represented as a number", () => {
-		expect(PuzzleType.Use.rawValue).toBe(0);
-		expect(PuzzleType.Trade.rawValue).toBe(1);
+		expect(PuzzleType.Trade.rawValue).toBe(0);
+		expect(PuzzleType.Use.rawValue).toBe(1);
 		expect(PuzzleType.Goal.rawValue).toBe(2);
 		expect(PuzzleType.End.rawValue).toBe(3);
 		expect(PuzzleType.U4.rawValue).toBe(4);

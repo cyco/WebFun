@@ -27,8 +27,8 @@ describe("WebFun.Engine.Objects.ZoneType", () => {
 		expect(ZoneType.UnknownIndyOnly.name).toBe("Unknown (indy)");
 		expect(ZoneType.Win.name).toBe("Win");
 		expect(ZoneType.Lose.name).toBe("Lose");
-		expect(ZoneType.Trade.name).toBe("Trade");
 		expect(ZoneType.Use.name).toBe("Use");
+		expect(ZoneType.Trade.name).toBe("Trade");
 		expect(ZoneType.Find.name).toBe("Find");
 		expect(ZoneType.FindUniqueWeapon.name).toBe("Find Unique Weapon");
 		expect(ZoneType.FindUniqueWeapon.toString()).toBe("ZoneType{FindUniqueWeapon}");
@@ -50,16 +50,16 @@ describe("WebFun.Engine.Objects.ZoneType", () => {
 		expect(ZoneType.UnknownIndyOnly.rawValue).toBe(12);
 		expect(ZoneType.Win.rawValue).toBe(13);
 		expect(ZoneType.Lose.rawValue).toBe(14);
-		expect(ZoneType.Trade.rawValue).toBe(15);
-		expect(ZoneType.Use.rawValue).toBe(16);
+		expect(ZoneType.Use.rawValue).toBe(15);
+		expect(ZoneType.Trade.rawValue).toBe(16);
 		expect(ZoneType.Find.rawValue).toBe(17);
 		expect(ZoneType.FindUniqueWeapon.rawValue).toBe(18);
 	});
 
 	it("can be converted to a puzzle type", () => {
-		expect(ZoneType.Use.toPuzzleType()).toBe(PuzzleType.Use);
-		expect(ZoneType.Goal.toPuzzleType()).toBe(PuzzleType.Goal);
 		expect(ZoneType.Trade.toPuzzleType()).toBe(PuzzleType.Trade);
+		expect(ZoneType.Goal.toPuzzleType()).toBe(PuzzleType.Goal);
+		expect(ZoneType.Use.toPuzzleType()).toBe(PuzzleType.Use);
 		expect(() => ZoneType.Room.toPuzzleType()).toThrow();
 	});
 });

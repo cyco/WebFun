@@ -249,11 +249,11 @@ class MapScene extends Scene {
 				if (sector.findItem.hasAttributes(Tile.Attributes.Item))
 					return [StringID.find, StringID.SomethingUseful];
 				console.assert(false, "Unknown find item!");
-			case Zone.Type.Trade:
+			case Zone.Type.Use:
 				if (!sector.requiredItem) return StringID.None;
 				if (sector.solved2) return StringID.Solved;
 				return [StringID.requires, typeForTile(sector.requiredItem)];
-			case Zone.Type.Use:
+			case Zone.Type.Trade:
 				if (!sector.requiredItem) return StringID.None;
 				if (sector.solved2) return StringID.Solved;
 				return [StringID.requires, sector.requiredItem.name];

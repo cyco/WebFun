@@ -1,6 +1,6 @@
 class PuzzleType {
-	public static readonly Use = new PuzzleType();
 	public static readonly Trade = new PuzzleType();
+	public static readonly Use = new PuzzleType();
 	public static readonly Goal = new PuzzleType();
 	public static readonly End = new PuzzleType();
 	public static readonly U4 = new PuzzleType();
@@ -9,8 +9,8 @@ class PuzzleType {
 	public static readonly Disabled = new PuzzleType();
 
 	private static knownTypes = [
-		PuzzleType.Use,
 		PuzzleType.Trade,
+		PuzzleType.Use,
 		PuzzleType.Goal,
 		PuzzleType.End,
 		PuzzleType.U4
@@ -25,10 +25,10 @@ class PuzzleType {
 
 	public get name(): string {
 		switch (this) {
-			case PuzzleType.Use:
-				return "Use";
 			case PuzzleType.Trade:
 				return "Trade";
+			case PuzzleType.Use:
+				return "Use";
 			case PuzzleType.Goal:
 				return "Goal";
 			case PuzzleType.End:

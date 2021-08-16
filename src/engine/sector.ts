@@ -46,9 +46,9 @@ class Sector {
 			case Zone.Type.Find:
 			case Zone.Type.FindUniqueWeapon:
 				return this.solved1;
-			case Zone.Type.Trade:
-				return this.solved2;
 			case Zone.Type.Use:
+				return this.solved2;
+			case Zone.Type.Trade:
 				return this.solved2;
 			case Zone.Type.Load:
 			case Zone.Type.Room:
