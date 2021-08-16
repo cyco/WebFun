@@ -35,7 +35,7 @@ class Serializer {
 		if (health) configuration.push(`Health: ${health}`);
 		if (zone >= 0) configuration.push(`Zone: ${zone.toHex(3)}`);
 		if (findItem > 0) configuration.push(`Find: ${findItem.toHex(3)}`);
-		if (npc > 0) configuration.push(`NPC: ${findItem.toHex(3)}`);
+		if (npc > 0) configuration.push(`NPC: ${npc.toHex(3)}`);
 		if (requiredItem1 > 0) configuration.push(`Required: ${requiredItem1.toHex(3)}`);
 		if (requiredItem2 > 0) configuration.push(`Required: ${requiredItem2.toHex(3)}`);
 		if (inventory.length)
