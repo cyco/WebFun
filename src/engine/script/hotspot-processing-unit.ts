@@ -109,7 +109,7 @@ class HotspotProcessingUnit {
 		const puzzle = puzzles[puzzleIndex];
 		if (!puzzle) return HotspotExecutionResult.Void;
 
-		if (puzzle.type === Puzzle.Type.Trade) {
+		if (puzzle.type === Puzzle.Type.Transaction) {
 			if (sector.requiredItem !== tile) return HotspotExecutionResult.Void;
 
 			const npc = zone.getTile(point.x, point.y, Zone.Layer.Object);
@@ -137,7 +137,7 @@ class HotspotProcessingUnit {
 			}
 		}
 
-		if (puzzle.type === Puzzle.Type.Use) {
+		if (puzzle.type === Puzzle.Type.Offer) {
 			const hotspot = zone.hotspots.find(
 				htsp =>
 					htsp.location.isEqualTo(point) &&

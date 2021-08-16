@@ -125,13 +125,13 @@ class ZoneType {
 	public toPuzzleType(): PuzzleType {
 		switch (this) {
 			case ZoneType.Trade:
-				return PuzzleType.Trade;
+				return PuzzleType.Transaction;
 			case ZoneType.PlaceholderForEndPuzzle:
-				return PuzzleType.End;
+				return PuzzleType.Mission;
 			case ZoneType.Goal:
 				return PuzzleType.Goal;
 			case ZoneType.Use:
-				return PuzzleType.Use;
+				return PuzzleType.Offer;
 			default:
 				throw `Zone type ${this} does not match any puzzle type!`;
 		}

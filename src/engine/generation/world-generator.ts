@@ -995,7 +995,7 @@ class WorldGenerator {
 					return !this.hasPuzzleBeenPlaced(puzzle) && puzzle.type === zoneType.toPuzzleType();
 				case Zone.Type.PlaceholderForEndPuzzle:
 					return (
-						puzzle.type === Puzzle.Type.End &&
+						puzzle.type === Puzzle.Type.Mission &&
 						!this.puzzleUsedInLastGame(puzzle, this._state.planet) &&
 						this.isGoalOnPlanet(this._state.planet, puzzle)
 					);

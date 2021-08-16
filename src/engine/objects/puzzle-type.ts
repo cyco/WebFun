@@ -1,19 +1,19 @@
 class PuzzleType {
-	public static readonly Trade = new PuzzleType();
-	public static readonly Use = new PuzzleType();
+	public static readonly Transaction = new PuzzleType();
+	public static readonly Offer = new PuzzleType();
 	public static readonly Goal = new PuzzleType();
-	public static readonly End = new PuzzleType();
-	public static readonly U4 = new PuzzleType();
+	public static readonly Mission = new PuzzleType();
+	public static readonly Unknown = new PuzzleType();
 
 	public static readonly None = new PuzzleType();
 	public static readonly Disabled = new PuzzleType();
 
 	private static knownTypes = [
-		PuzzleType.Trade,
-		PuzzleType.Use,
+		PuzzleType.Transaction,
+		PuzzleType.Offer,
 		PuzzleType.Goal,
-		PuzzleType.End,
-		PuzzleType.U4
+		PuzzleType.Mission,
+		PuzzleType.Unknown
 	];
 
 	public get rawValue(): number {
@@ -25,16 +25,16 @@ class PuzzleType {
 
 	public get name(): string {
 		switch (this) {
-			case PuzzleType.Trade:
-				return "Trade";
-			case PuzzleType.Use:
-				return "Use";
+			case PuzzleType.Transaction:
+				return "Transaction";
+			case PuzzleType.Offer:
+				return "Offer";
 			case PuzzleType.Goal:
 				return "Goal";
-			case PuzzleType.End:
-				return "End";
-			case PuzzleType.U4:
-				return "U4";
+			case PuzzleType.Mission:
+				return "Mission";
+			case PuzzleType.Unknown:
+				return "Unknown";
 			case PuzzleType.None:
 				return "None";
 		}

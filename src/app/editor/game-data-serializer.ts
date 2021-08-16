@@ -211,7 +211,7 @@ class AssetManagerSerializer {
 			stream.writeUint32(18 + puzzle.strings.map(s => 2 + s.length).reduce(add, 0));
 
 			if (index === Yoda.goalIDs.RESCUE_YODA || index === Yoda.goalIDs.CAR) {
-				stream.writeUint32(Puzzle.Type.End.rawValue);
+				stream.writeUint32(Puzzle.Type.Mission.rawValue);
 			} else stream.writeUint32(puzzle.type.rawValue);
 
 			stream.writeUint32(puzzle.item1Class.rawValue);

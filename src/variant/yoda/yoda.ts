@@ -120,12 +120,12 @@ class Yoda extends Variant {
 
 		if (gamesWon >= 1) {
 			const puzzle: Puzzle = engine.assets.get(Puzzle, this.goalIDs.RESCUE_YODA) as any;
-			puzzle.type = Puzzle.Type.End;
+			puzzle.type = Puzzle.Type.Mission;
 		}
 
 		if (gamesWon >= 10) {
 			const puzzle: Puzzle = engine.assets.get(Puzzle, this.goalIDs.CAR) as any;
-			puzzle.type = Puzzle.Type.End;
+			puzzle.type = Puzzle.Type.Mission;
 		}
 		const planets = [Zone.Planet.Endor, Zone.Planet.Hoth, Zone.Planet.Tatooine];
 		if (lastPlanet && Zone.Planet.isPlanet(lastPlanet)) {

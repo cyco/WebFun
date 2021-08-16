@@ -68,7 +68,7 @@ describe("WebFun.Variant.Yoda", () => {
 
 		subject.createNewStory(engineMock);
 
-		expect(puzzleMock.type).toBe(Puzzle.Type.End);
+		expect(puzzleMock.type).toBe(Puzzle.Type.Mission);
 		expect(engineMock.assets.get).toHaveBeenCalledWith(Puzzle, 0xbd);
 	});
 
@@ -80,7 +80,7 @@ describe("WebFun.Variant.Yoda", () => {
 
 		subject.createNewStory(engineMock);
 
-		expect(puzzleMock.type).toBe(Puzzle.Type.End);
+		expect(puzzleMock.type).toBe(Puzzle.Type.Mission);
 		expect(engineMock.assets.get).toHaveBeenCalledWith(Puzzle, 0xc5);
 	});
 
