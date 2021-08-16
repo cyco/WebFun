@@ -13,6 +13,25 @@ wf-zone-editor-window {
 			display: inline-block;
 		}
 
+		.items {
+			padding: 5px;
+
+			label {
+				font-size: 0.9em;
+			}
+
+			label.room {
+				display: block;
+				text-align: right;
+			}
+
+			wf-debug-tile-view {
+				position: relative;
+				display: inline-block;
+				zoom: 0.92;
+			}
+		}
+
 		.action {
 			@include inset-border(1px);
 			display: block;

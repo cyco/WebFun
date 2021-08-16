@@ -27,6 +27,7 @@ import { Character, Tile, Zone } from "src/engine/objects";
 import ZoneEditor from "src/app/editor/components/zone-editor/view";
 import { TileView } from "src/app/webfun/debug/components";
 import ServiceContainer from "../../service-container";
+import RoomIterator from "src/engine/room-iterator";
 
 class Window extends AbstractPanel {
 	public static readonly tagName = "wf-zone-editor-window";
@@ -96,15 +97,15 @@ class Window extends AbstractPanel {
 				</div>
 				<div>
 					<label>Required</label>
-					<div>{[]}</div>
+					<div></div>
 				</div>
 				<div>
 					<label>Goal</label>
-					<div>{[]}</div>
+					<div></div>
 				</div>
 				<div>
 					<label>NPCs</label>
-					<div>{[]}</div>
+					<div></div>
 				</div>
 			</div>,
 			"Items"
@@ -201,37 +202,28 @@ class Window extends AbstractPanel {
 		if (!containers.length) return;
 		if (!this.zone) return;
 
-		containers[0].replaceWith(
-			<div>
-				{this.zone.providedItems.map(t => (
-					<TileView tile={t} palette={this._editor.palette}></TileView>
-				))}
-			</div>
-		);
+		containers[0].replaceWith(<div>{this.buildItems("providedItems")}</div>);
+		containers[1].replaceWith(<div>{this.buildItems("requiredItems")}</div>);
+		containers[2].replaceWith(<div>{this.buildItems("goalItems")}</div>);
+		containers[3].replaceWith(<div>{this.buildItems("npcs")}</div>);
+	}
 
-		containers[1].replaceWith(
-			<div>
-				{this.zone.requiredItems.map(t => (
-					<TileView tile={t} palette={this._editor.palette}></TileView>
-				))}
-			</div>
-		);
+	private buildItems(type: "providedItems" | "requiredItems" | "npcs" | "goalItems") {
+		let items = this.zone[type].map(t => (
+			<TileView tile={t} palette={this._editor.palette}></TileView>
+		));
 
-		containers[2].replaceWith(
-			<div>
-				{this.zone.goalItems.map(t => (
-					<TileView tile={t} palette={this._editor.palette}></TileView>
-				))}
-			</div>
-		);
+		for (const room of RoomIterator(this.zone, this.data.currentData)) {
+			if (room === this.zone) continue;
+			if (!room[type].length) continue;
 
-		containers[3].replaceWith(
-			<div>
-				{this.zone.npcs.map(t => (
-					<TileView tile={t} palette={this._editor.palette}></TileView>
-				))}
-			</div>
-		);
+			items.push(<label className="room">Zone {room.id}</label>);
+			items = items.concat(
+				room[type].map(t => <TileView tile={t} palette={this._editor.palette}></TileView>)
+			);
+		}
+
+		return items;
 	}
 
 	public set data(d: DataManager) {
