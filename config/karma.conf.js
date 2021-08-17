@@ -37,6 +37,7 @@ const config = {
 	],
 	reporters: ["dots"],
 	browsers: ["ChromeHeadless"],
+	browserNoActivityTimeout: 100000,
 	webpack: webpackConfig,
 	watch: false,
 	singleRun: true,
