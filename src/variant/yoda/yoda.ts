@@ -138,7 +138,8 @@ class Yoda extends Variant {
 			planets.random(),
 			WorldSize.isWorldSize(size)
 				? WorldSize.fromNumber(size)
-				: [WorldSize.Small, WorldSize.Medium, WorldSize.Large].random()
+				: [WorldSize.Small, WorldSize.Medium, WorldSize.Large].random(),
+			10
 		);
 		return story;
 	}
