@@ -52,13 +52,38 @@ class SimulatedStory extends Story {
 	}
 
 	private _buildPuzzles(zone: Zone, find: Tile, required: Tile) {
+		let p1candidates: Puzzle[];
+		let p2candidates: Puzzle[];
+
 		switch (zone.type) {
-			case Zone.Type.Trade:
-				const p1candidates = this.assets.getFiltered(
+			case Zone.Type.Use:
+				p1candidates = this.assets.getFiltered(
 					Puzzle,
 					p => p.type === Puzzle.Type.Transaction && p.item1 === find
 				);
-				const p2candidates = this.assets.getFiltered(
+				p2candidates = this.assets.getFiltered(
+					Puzzle,
+					p => p.type === Puzzle.Type.Transaction && p.item1 === required
+				);
+
+				this.puzzles = [
+					[p1candidates[randmod(p1candidates.length)], p2candidates[randmod(p2candidates.length)]],
+					[]
+				];
+				break;
+			case Zone.Type.Find:
+				p1candidates = this.assets.getFiltered(
+					Puzzle,
+					p => p.type === Puzzle.Type.Transaction && p.item1 === find
+				);
+				this.puzzles = [[p1candidates[randmod(p1candidates.length)]], []];
+				break;
+			case Zone.Type.Trade:
+				p1candidates = this.assets.getFiltered(
+					Puzzle,
+					p => p.type === Puzzle.Type.Transaction && p.item1 === find
+				);
+				p2candidates = this.assets.getFiltered(
 					Puzzle,
 					p => p.type === Puzzle.Type.Transaction && p.item1 === required
 				);
@@ -92,9 +117,29 @@ class SimulatedStory extends Story {
 			}
 			*/
 			case Zone.Type.Use:
-				// if(this.dropItemAtLockHotspot(zone, p1.item1)) {
-				// 	this.placeQuestItem(zone, p2.item1)
-				// }
+				for (const room of RoomIterator(zone, this.assets)) {
+					if (!room.requiredItems.includes(required)) continue;
+
+					const candidates = room.hotspots.withType(Hotspot.Type.Lock);
+					if (!candidates.length) continue;
+
+					const hotspot = candidates[randmod(candidates.length)];
+					hotspot.enabled = true;
+					hotspot.argument = required.id;
+					break;
+				}
+
+				for (const room of RoomIterator(zone, this.assets)) {
+					if (!room.providedItems.includes(find)) continue;
+
+					const candidates = room.hotspots.withType(Hotspot.Type.DropQuestItem);
+					if (!candidates.length) continue;
+
+					const hotspot = candidates[randmod(candidates.length)];
+					hotspot.enabled = true;
+					hotspot.argument = find.id;
+					break;
+				}
 				break;
 			case Zone.Type.Trade:
 				for (const room of RoomIterator(zone, this.assets)) {
