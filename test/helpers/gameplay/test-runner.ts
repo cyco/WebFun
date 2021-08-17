@@ -26,75 +26,80 @@ const run = (prefix: string, fileName: string, testFileContents: string): void =
 		: describe)(
 		`WebFun.Acceptance.${prefix}.${fileName.replace(/[\./]*(.*)\.(x|f)?wftest/gi, "$1")}`,
 		withTimeout(FiveMinutes, () => {
-			const testCases = Parser.Parse(fileName, testFileContents);
+			try {
+				const testCases = Parser.Parse(fileName, testFileContents);
 
-			testCases.forEach(testCase => {
-				const ctx = new GameplayContext(debug);
+				testCases.forEach(testCase => {
+					const ctx = new GameplayContext(debug);
 
-				describe(`${testCase.description}`, () => {
-					beforeAll(async () => {
-						await ctx.prepare(loadGameData);
-						ctx.buildEngine();
-						ctx.engine.assets.get(Puzzle, Yoda.goalIDs.RESCUE_YODA).type = Puzzle.Type.Disabled;
-						ctx.engine.assets.get(Puzzle, Yoda.goalIDs.CAR).type = Puzzle.Type.Disabled;
+					describe(`${testCase.description}`, () => {
+						beforeAll(async () => {
+							await ctx.prepare(loadGameData);
+							ctx.buildEngine();
+							ctx.engine.assets.get(Puzzle, Yoda.goalIDs.RESCUE_YODA).type = Puzzle.Type.Disabled;
+							ctx.engine.assets.get(Puzzle, Yoda.goalIDs.CAR).type = Puzzle.Type.Disabled;
 
-						ctx.engine.persistentState.gamesWon = testCase.configuration.gamesWon;
-						ctx.engine.hero.health = testCase.configuration.health;
-						ctx.settings.difficulty = testCase.configuration.difficulty;
+							ctx.engine.persistentState.gamesWon = testCase.configuration.gamesWon;
+							ctx.engine.hero.health = testCase.configuration.health;
+							ctx.settings.difficulty = testCase.configuration.difficulty;
 
-						ctx.engine.inventory.removeAllItems();
-						testCase.configuration.inventory.forEach(i =>
-							ctx.engine.inventory.addItem(ctx.engine.assets.get(Tile, i))
-						);
-						await ctx.playStory(buildStory(testCase), testCase.input, debug);
+							ctx.engine.inventory.removeAllItems();
+							testCase.configuration.inventory.forEach(i =>
+								ctx.engine.inventory.addItem(ctx.engine.assets.get(Tile, i))
+							);
+							await ctx.playStory(buildStory(testCase), testCase.input, debug);
+						});
+
+						testCase.expectations.forEach((exp: Expectation) => exp.evaluate(ctx));
+
+						afterAll(async () => await ctx.cleanup());
+
+						function buildStory(testCase: TestCase) {
+							if (testCase.configuration.zone >= 0) return buildSimulatedStory(testCase);
+
+							return buildRealWorldStory(testCase);
+						}
+
+						function buildSimulatedStory(testCase: TestCase): Story {
+							const engine = ctx.engine;
+							const { findItem, npc, requiredItem1, requiredItem2, zone } = testCase.configuration;
+							const t = (t: number) => engine.assets.get(Tile, t, NullIfMissing);
+							const z = (z: number) => engine.assets.get(Zone, z, NullIfMissing);
+
+							const { seed } = testCase.configuration;
+							const story = new SimulatedStory(
+								t(findItem),
+								t(npc),
+								t(requiredItem1),
+								t(requiredItem2),
+								z(zone),
+								adjacentZones(z(zone), engine.assets.getAll(Zone)),
+								engine.assets
+							);
+							story.seed = seed;
+							story.planet = Zone.Planet.None;
+							story.size = WorldSize.Small;
+
+							return story;
+						}
+
+						function buildRealWorldStory(testCase: TestCase): Story {
+							const engine = ctx.engine;
+							const { seed, planet, size } = testCase.configuration;
+
+							const story = new Story(engine.assets, engine.variant);
+							story.seed = seed;
+							story.planet = Zone.Planet.fromNumber(planet);
+							story.size = WorldSize.fromNumber(size);
+
+							return story;
+						}
 					});
-
-					testCase.expectations.forEach((exp: Expectation) => exp.evaluate(ctx));
-
-					afterAll(async () => await ctx.cleanup());
-
-					function buildStory(testCase: TestCase) {
-						if (testCase.configuration.zone >= 0) return buildSimulatedStory(testCase);
-
-						return buildRealWorldStory(testCase);
-					}
-
-					function buildSimulatedStory(testCase: TestCase): Story {
-						const engine = ctx.engine;
-						const { findItem, npc, requiredItem1, requiredItem2, zone } = testCase.configuration;
-						const t = (t: number) => engine.assets.get(Tile, t, NullIfMissing);
-						const z = (z: number) => engine.assets.get(Zone, z, NullIfMissing);
-
-						const { seed } = testCase.configuration;
-						const story = new SimulatedStory(
-							t(findItem),
-							t(npc),
-							t(requiredItem1),
-							t(requiredItem2),
-							z(zone),
-							adjacentZones(z(zone), engine.assets.getAll(Zone)),
-							engine.assets
-						);
-						story.seed = seed;
-						story.planet = Zone.Planet.None;
-						story.size = WorldSize.Small;
-
-						return story;
-					}
-
-					function buildRealWorldStory(testCase: TestCase): Story {
-						const engine = ctx.engine;
-						const { seed, planet, size } = testCase.configuration;
-
-						const story = new Story(engine.assets, engine.variant);
-						story.seed = seed;
-						story.planet = Zone.Planet.fromNumber(planet);
-						story.size = WorldSize.fromNumber(size);
-
-						return story;
-					}
 				});
-			});
+			} catch (e) {
+				console.warn(`Parsing test ${fileName} failed`);
+				console.error(e);
+			}
 		})
 	);
 };
