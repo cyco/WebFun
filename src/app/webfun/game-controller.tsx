@@ -552,9 +552,7 @@ class GameController extends EventTarget implements EventListenerObject {
 			engine.variant.slowColorCycles
 		);
 
-		const zoneScene = new ZoneScene();
-		zoneScene.engine = engine;
-		zoneScene.zone = zone;
+		const zoneScene = new ZoneScene(engine, zone);
 		engine.currentZone = zone;
 		engine.currentWorld = engine.world.findLocationOfZone(zone) ? engine.world : engine.dagobah;
 		engine.hero.appearance = engine.assets.find(Character, (c: Character) => c.isHero());

@@ -45,6 +45,7 @@ class SimulationConfigurationBuilder extends Component {
 	private _description: string;
 	private _difficulty: number;
 	private _health: number;
+	private _seed: number;
 	private _assets: AssetManager;
 
 	protected connectedCallback(): void {
@@ -148,7 +149,6 @@ class SimulationConfigurationBuilder extends Component {
 
 	public set configuration(config: Configuration) {
 		const data = this._assets;
-
 		if (config.zone >= 0) {
 			this.currentZone = data.get(Zone, config.zone);
 			this._findTile.tile = data.get(Tile, config.findItem, NullIfMissing);
@@ -161,6 +161,7 @@ class SimulationConfigurationBuilder extends Component {
 		this._description = config.description;
 		this._difficulty = config.difficulty;
 		this._health = config.health;
+		this._seed = config.seed;
 	}
 
 	public get configuration(): Configuration {
@@ -171,7 +172,7 @@ class SimulationConfigurationBuilder extends Component {
 		const npc = this._npcTile.tile ? this._npcTile.tile.id : null;
 
 		return {
-			seed: zone,
+			seed: this._seed ?? zone,
 			zone,
 			findItem,
 			npc,

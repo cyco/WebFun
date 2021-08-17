@@ -141,7 +141,7 @@ class TestCreatorWindow extends AbstractWindow implements EventListenerObject {
 		const t = (t: number) => (t > 0 ? assets.get(Tile, t) : null);
 		const z = (z: number) => (z > 0 ? assets.get(Zone, z) : null);
 
-		const { zone, findItem, npc, requiredItem1, requiredItem2 } = config;
+		const { zone, findItem, npc, requiredItem1, requiredItem2, seed } = config;
 
 		return new SimulatedStory(
 			t(findItem),
@@ -156,11 +156,10 @@ class TestCreatorWindow extends AbstractWindow implements EventListenerObject {
 
 	private _buildStory(assets: AssetManager, config: Configuration) {
 		const story = new Story(assets, Yoda);
-		story.generate(
-			config.seed,
-			Zone.Planet.fromNumber(config.planet),
-			WorldSize.fromNumber(config.size)
-		);
+		story.seed = config.seed;
+		story.planet = Zone.Planet.fromNumber(config.planet);
+		story.size = WorldSize.fromNumber(config.size);
+
 		return story;
 	}
 

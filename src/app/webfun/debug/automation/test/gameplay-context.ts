@@ -5,7 +5,7 @@ import { Yoda } from "src/variant";
 import { ZoneScene } from "src/engine/scenes";
 import { CanvasRenderer } from "src/app/webfun/rendering";
 import { SceneView } from "src/app/webfun/ui";
-import { Engine, Story, AssetManager, Variant } from "src/engine";
+import { Engine, Story, AssetManager, Variant, GameState } from "src/engine";
 import { WorldSize } from "src/engine/generation";
 import { Tile, Zone, Puzzle, Sound, Character, Action } from "src/engine/objects";
 import { PaletteAnimation, ColorPalette } from "src/engine/rendering";
@@ -179,8 +179,8 @@ class GameplayContext {
 
 		document.body.appendChild(sceneView);
 
-		engine.story = story;
 		story.generate(story.seed, story.planet, story.size);
+		engine.story = story;
 
 		engine.metronome.tickDuration = debug ? 50 : 1;
 		engine.metronome.ontick = (delta: number) => engine.update(delta);
@@ -193,16 +193,14 @@ class GameplayContext {
 				? engine.world.at(4, 5).zone
 				: engine.assets.find(Zone, z => z.isLoadingZone());
 		const zoneScene = new ZoneScene(engine, zone);
-		engine.spu.prepareExecution(EvaluationMode.JustEntered, zone);
 		engine.currentZone = zone;
-		engine.currentWorld = engine.world.findLocationOfZone(zone) ? engine.world : null;
+		engine.currentWorld = engine.world.findLocationOfZone(zone) ? story.world : story.dagobah;
 		engine.hero.appearance = engine.assets.find(Character, c => c.isHero());
+		engine.spu.prepareExecution(EvaluationMode.JustEntered, zone);
 		engine.sceneManager.pushScene(zoneScene);
 		if (story instanceof SimulatedStory) {
 			engine.hero.visible = true;
 			engine.hero.location = new Point(0, 0);
-		} else {
-			engine.currentWorld = story.dagobah;
 		}
 
 		inputManager.engine = engine;
@@ -217,6 +215,7 @@ class GameplayContext {
 			inputManager.addEventListener(ReplayingInputManager.Event.InputEnd, this.onInputEnd);
 			inputManager.addListeners();
 			this.engine.metronome.start();
+			this.engine.gameState = GameState.Running;
 		});
 	}
 

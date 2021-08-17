@@ -2,16 +2,10 @@
 Seed: 0x018
 Planet: Endor
 Size: Medium
+Difficulty: easy
 
 - Input -
-.
-# Entering zone 0x05d at tick 13
-→ → ↑ ↑ → → → ↑ ↑ ↑ ↑ ↑ → → . ↓ ↓ ↙ ↙ ↙ ↓ ← ← ← . ← . . → → ↗ ↗ ↗ ↑ ↑ ↑ ↗ ↗ ↑ ↑ . . → → → . . → ↓ ↓ ↓ ↓ ↓ ↓ ↓ ← ← ← ← ← . . ← .
-# Entering zone 0x282 at tick 118
-# Entering zone 0x1d7 at tick 97
-← ← ← . ← . ← . ↓ . ↑ ← ← ← . . ← ↓ ↓ . . ← ↓ ↓ ↓ .
-# Entering zone 0x1dc at tick 156
-.
+. . . . → → → . . . ↑ . . . ↑ . . . . . . . → . ↑ ↑ ↑ ↑ ↑ ↑ → → → . . ↑ ↑ . . . . . . . . . . . ↑ . . . ← ↓ ↓ ↓ ↓ ↓ ↓ ← ← ← ← . . . ↓ . ← . . . ← . . . . . ← ← ↓ . . . ← ← ↓ ↓ ↓ . . . . . . . . . . . . . . . . . .
 
 - Expect -
 Current zone is 0x1dc

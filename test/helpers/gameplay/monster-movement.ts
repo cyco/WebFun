@@ -1,10 +1,11 @@
 import { Character, Zone, Tile, Monster } from "src/engine/objects";
 import { srand, Size, Point } from "src/util";
 import { SimulatedStory } from "src/app/webfun/debug";
-import { Story, AssetManager } from "src/engine";
+import { AssetManager } from "src/engine";
 import { GameplayContext } from "src/app/webfun/debug/automation/test";
 import loadGameData from "test/helpers/game-data";
 import { ReplayingInputManager } from "src/app/webfun/debug/automation";
+import { WorldSize } from "src/engine/generation";
 
 declare let withTimeout: (t: number, block: () => void) => () => void;
 const FiveMinutes = 5 * 60 * 1000;
@@ -43,13 +44,13 @@ const makeFunction =
 					await ctx.prepare(loadGameData);
 					ctx.buildEngine();
 
-					const story = buildStory(ctx.engine.assets);
 					try {
-						srand(0xdead);
+						const story = buildStory(ctx.engine.assets);
 						ctx.setupEngine(story, "", debug);
 						ctx.engine.hero.location = new Point(4, 6);
 						await ctx.engine.metronome.stop();
 					} catch (e) {}
+					srand(0xdead);
 				});
 
 				block(ctx, tick, vars);
@@ -79,7 +80,7 @@ const makeFunction =
 					});
 				}
 
-				function buildStory(assets: AssetManager): Story {
+				function buildStory(assets: AssetManager): SimulatedStory {
 					vars.zone = buildZone(assets);
 					vars.zone.id = assets.getAll(Zone).length;
 					vars.char = buildChar(type, assets);
@@ -91,7 +92,7 @@ const makeFunction =
 
 					assets.populate(Zone, assets.getAll(Zone).concat([vars.zone]));
 
-					return new SimulatedStory(
+					const story = new SimulatedStory(
 						null,
 						null,
 						null,
@@ -100,6 +101,10 @@ const makeFunction =
 						Array.Repeat(vars.zone, 8),
 						assets
 					);
+					story.generate(0, Zone.Planet.None, WorldSize.Small);
+					story.dagobah = story.world;
+
+					return story;
 				}
 
 				function buildZone(assets: AssetManager): Zone {

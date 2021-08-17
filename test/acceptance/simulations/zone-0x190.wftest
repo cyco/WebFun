@@ -1,7 +1,7 @@
 -= WebFun Test =--
 Description: Test opening the chest to find a data cube
 
-Seed: 0x190
+Seed: 0
 Zone: 0x190
 Find: 0x4bf
 Required: 0x1f3
@@ -23,7 +23,7 @@ Zone solved
 -= WebFun Test =--
 Description: Test quest where 3-PO is locked up in the ship
 
-Seed: 0x190
+Seed: 0
 Zone: 0x190
 Find: 0x549
 Required: 0x1f3

@@ -1,5 +1,4 @@
 import { Zone, Tile, Puzzle } from "src/engine/objects";
-import { srand } from "src/util";
 import { SimulatedStory } from "src/app/webfun/debug";
 import { Story } from "src/engine";
 import { WorldSize } from "src/engine/generation";
@@ -13,6 +12,7 @@ import {
 import loadGameData from "test/helpers/game-data";
 import { NullIfMissing } from "src/engine/asset-manager";
 import { Yoda } from "src/variant";
+import adjacentZones from "src/app/webfun/debug/components/test-creator/adjacent-zones";
 
 declare let withTimeout: (t: number, block: () => void) => () => void;
 const FiveMinutes = 5 * 60 * 1000;
@@ -30,6 +30,7 @@ const run = (prefix: string, fileName: string, testFileContents: string): void =
 
 			testCases.forEach(testCase => {
 				const ctx = new GameplayContext(debug);
+
 				describe(`${testCase.description}`, () => {
 					beforeAll(async () => {
 						await ctx.prepare(loadGameData);
@@ -37,7 +38,6 @@ const run = (prefix: string, fileName: string, testFileContents: string): void =
 						ctx.engine.assets.get(Puzzle, Yoda.goalIDs.RESCUE_YODA).type = Puzzle.Type.Disabled;
 						ctx.engine.assets.get(Puzzle, Yoda.goalIDs.CAR).type = Puzzle.Type.Disabled;
 
-						srand(testCase.configuration.seed);
 						ctx.engine.persistentState.gamesWon = testCase.configuration.gamesWon;
 						ctx.engine.hero.health = testCase.configuration.health;
 						ctx.settings.difficulty = testCase.configuration.difficulty;
@@ -65,15 +65,21 @@ const run = (prefix: string, fileName: string, testFileContents: string): void =
 						const t = (t: number) => engine.assets.get(Tile, t, NullIfMissing);
 						const z = (z: number) => engine.assets.get(Zone, z, NullIfMissing);
 
-						return new SimulatedStory(
+						const { seed } = testCase.configuration;
+						const story = new SimulatedStory(
 							t(findItem),
 							t(npc),
 							t(requiredItem1),
 							t(requiredItem2),
 							z(zone),
-							surroundingZones(z(zone)),
+							adjacentZones(z(zone), engine.assets.getAll(Zone)),
 							engine.assets
 						);
+						story.seed = seed;
+						story.planet = Zone.Planet.None;
+						story.size = WorldSize.Small;
+
+						return story;
 					}
 
 					function buildRealWorldStory(testCase: TestCase): Story {
@@ -81,19 +87,11 @@ const run = (prefix: string, fileName: string, testFileContents: string): void =
 						const { seed, planet, size } = testCase.configuration;
 
 						const story = new Story(engine.assets, engine.variant);
-						story.generate(seed, Zone.Planet.fromNumber(planet), WorldSize.fromNumber(size));
-						return story;
-					}
+						story.seed = seed;
+						story.planet = Zone.Planet.fromNumber(planet);
+						story.size = WorldSize.fromNumber(size);
 
-					function surroundingZones(zone: Zone): Zone[] {
-						srand(zone.id);
-						return ctx.engine.assets
-							.getFiltered(
-								Zone,
-								(z: Zone) => z !== zone && z.type === Zone.Type.Empty && z.planet === zone.planet
-							)
-							.slice()
-							.shuffle();
+						return story;
 					}
 				});
 			});
