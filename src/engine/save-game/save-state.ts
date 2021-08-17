@@ -139,7 +139,21 @@ class SaveState {
 			zone.monsters.map(m => ({
 				face: m.face?.id ?? -1,
 				position: m.position,
-				damageTaken: m.damageTaken
+				damageTaken: m.damageTaken,
+				enabled: m.enabled,
+				loot: m.loot,
+				field10: m.field10,
+				bulletX: m.bulletX,
+				bulletY: m.bulletY,
+				currentFrame: m.currentFrame,
+				facingDirection: m.facingDirection,
+				cooldown: m.cooldown,
+				flag1c: m.flag18,
+				flag20: m.flag20,
+				flag34: m.flag34,
+				hasItem: m.hasItem,
+				preferredDirection: m.preferredDirection,
+				waypoints: m.waypoints
 			}))
 		);
 		this.actions.set(
