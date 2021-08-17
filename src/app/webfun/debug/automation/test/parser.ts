@@ -2,15 +2,16 @@ import TestConfiguration from "./configuration";
 import TestExpectation from "./expectation";
 import TestCase from "./test-case";
 import {
-	ZoneSolvedExpectation,
-	NOPExpectation,
-	InventoryContainsExpectation,
-	UnknownExpectation,
-	StorySolvedExpectation,
-	InventoryContainsNotExpectation,
-	TicksExpectation,
 	CurrentZoneIsExpectation,
-	HealthIsExpectation
+	HealthIsExpectation,
+	InventoryContainsExpectation,
+	InventoryContainsNotExpectation,
+	InventoryIsExpectation,
+	NOPExpectation,
+	StorySolvedExpectation,
+	TicksExpectation,
+	UnknownExpectation,
+	ZoneSolvedExpectation
 } from "./expectations";
 import { WorldSize } from "src/engine/generation";
 import { Zone } from "src/engine/objects";
@@ -20,6 +21,7 @@ const Expectations = [
 	ZoneSolvedExpectation,
 	NOPExpectation,
 	InventoryContainsExpectation,
+	InventoryIsExpectation,
 	InventoryContainsNotExpectation,
 	CurrentZoneIsExpectation,
 	TicksExpectation,
@@ -124,8 +126,12 @@ class TestFileParser {
 				configuration.requiredItem2 = value.parseInt();
 			if (key.contains("require") && configuration.requiredItem1 < 0)
 				configuration.requiredItem1 = value.parseInt();
-			if (key.contains("inventory"))
+			if (key.contains("inventory")) {
 				configuration.inventory = value.split(",").map(i => i.trim().parseInt());
+				if (configuration.inventory.filter(isNaN).length) {
+					console.log(configuration);
+				}
+			}
 			if (key.contains("tag"))
 				configuration.tags = it.value
 					.split(":")

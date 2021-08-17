@@ -1,11 +1,16 @@
-import expectation, { EngineRef } from "../expectation";
+import Expectation, { EngineRef } from "../expectation";
 import { not } from "src/util/functional";
 
-class InventoryContainsExpectation implements expectation {
+class InventoryContainsExpectation implements Expectation {
 	private items: number[];
 
 	public static CanBeBuiltFrom(value: string): boolean {
-		return value.contains("inventory") && !value.contains("not");
+		return (
+			value.contains("inventory") &&
+			value.contains("contains") &&
+			!value.contains("not") &&
+			!value.contains(" is")
+		);
 	}
 
 	public static BuildFrom(it: IteratorResult<string, string>): InventoryContainsExpectation {
@@ -22,11 +27,11 @@ class InventoryContainsExpectation implements expectation {
 	}
 
 	format(): string {
-		return `Inventory: ${this.items.map(i => i.toHex(3)).join(", ")}`;
+		return `Inventory contains ${this.items.map(i => i.toHex(3)).join(", ")}`;
 	}
 
 	evaluate(ref: EngineRef): void {
-		it(`hero has items ${this.items.map(i => i.toHex(3)).join(", ")}`, () => {
+		it(`hero's inventory contains items ${this.items.map(i => i.toHex(3)).join(", ")}`, () => {
 			for (const item of this.items) {
 				if (ref.engine.inventory.contains(item)) continue;
 

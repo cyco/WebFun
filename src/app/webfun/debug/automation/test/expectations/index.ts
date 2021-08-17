@@ -7,10 +7,12 @@ import InventoryContainsNotExpectation from "./inventory-contains-not";
 import TicksExpectation from "./ticks";
 import CurrentZoneIsExpectation from "./current-zone-is";
 import HealthIsExpectation from "./health-is";
+import InventoryIsExpectation from "./inventory-is";
 
 export {
 	CurrentZoneIsExpectation,
 	HealthIsExpectation,
+	InventoryIsExpectation,
 	InventoryContainsExpectation,
 	InventoryContainsNotExpectation,
 	NOPExpectation,

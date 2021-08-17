@@ -1,6 +1,7 @@
-import expectation, { EngineRef } from "../expectation";
+import { not } from "src/util/functional";
+import Expectation, { EngineRef } from "../expectation";
 
-class InventoryContainsNotExpectation implements expectation {
+class InventoryContainsNotExpectation implements Expectation {
 	private items: number[];
 
 	public static CanBeBuiltFrom(value: string): boolean {
@@ -10,10 +11,9 @@ class InventoryContainsNotExpectation implements expectation {
 	public static BuildFrom(it: IteratorResult<string, string>): InventoryContainsNotExpectation {
 		return new InventoryContainsNotExpectation(
 			it.value
-				.split(":")[1]
-				.split(", ")
-				.map(i => i.trim())
-				.map(i => i.parseInt())
+				.split(/[^A-Za-z0-9]+/)
+				.map(i => i.trim().parseInt())
+				.filter(not(isNaN))
 		);
 	}
 
@@ -22,7 +22,7 @@ class InventoryContainsNotExpectation implements expectation {
 	}
 
 	format(): string {
-		return `Inventory does not contain: ${this.items.map(i => i.toHex(3)).join(", ")}`;
+		return `Inventory does not contain ${this.items.map(i => i.toHex(3)).join(", ")}`;
 	}
 
 	evaluate(ref: EngineRef): void {
