@@ -156,18 +156,20 @@ class HotspotProcessingUnit {
 			if (!findItem) {
 				return HotspotExecutionResult.Inventory;
 			}
-			const unlockedHotspot = zone.hotspots.find(
-				htsp =>
-					htsp.type === Hotspot.Type.DropQuestItem && htsp.enabled && htsp.argument === findItem.id
+			const unlockedHotspots = zone.hotspots.filter(
+				htsp => htsp.type === Hotspot.Type.DropQuestItem && htsp.argument === findItem.id
 			);
 
-			if (!unlockedHotspot) {
+			if (unlockedHotspots.length) {
+				unlockedHotspots.first().enabled = true;
 				return HotspotExecutionResult.Inventory;
 			}
-			sector.solved2 = true;
-			engine.dropItem(findItem, point);
 
-			return HotspotExecutionResult.Inventory | HotspotExecutionResult.Drop;
+			return HotspotExecutionResult.Inventory;
+		}
+
+		if (puzzle.type === Puzzle.Type.Goal) {
+			return;
 		}
 
 		console.log("unhandled case for puzzle type", puzzle.type.name);
