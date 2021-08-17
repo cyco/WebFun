@@ -1,19 +1,13 @@
 -= WebFun Test =--
-Seed: 0x019
+Seed: 0x000
+Difficulty: easy
+Health: 768
 Zone: 0x019
 Find: 0x1b2
 Inventory: 0x1fe
 
 - Input -
-. . → → . ← ← ← .
-# Entering zone 0x1e1 at tick 9
-↑ ←
-# Entering zone 0x02b at tick 12
-. ↑ ↑ ↑ → → .
-# Entering zone 0x019 at tick 20
-. ↑ ↑ ↑ ↑ ↑ ↑ . → . . ⇡ . → → . . ← ← . 🔫 . → ↗ → . ⇢ ⇢ . . → . ↓ . . ↑ ↑ → . . ⇣ . . ⇢ . . ← . ↓ ↓ . . ← ↓ .
-# Entering zone 0x03c at tick 0
-. . . . . . . . . . . . . . . . 
+. . . . . . ↑ ↑ ↗ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ . . . ↑ → → → → → . . . → . . → → . . → . . . . . . . . ↑ → . . . . → ↑ . . . ↓ . . . . . . . . . . . ⇢ . . ↑ ↑ ← ← ↓ ↓ .
 
 - Expect -
-Inventory: 0x1b2
+Inventory contains 0x1b2

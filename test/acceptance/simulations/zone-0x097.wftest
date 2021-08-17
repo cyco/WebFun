@@ -12,7 +12,7 @@ Inventory: 0x1fe
 . ↑ ↑ ↑ ↑ ↑ . . ↑ . . ↑ ↑ . ↑ ↑ . ↑ .
 # Entering zone 0x05d at tick 17
 # Entering zone 0x083 at tick 0
-. . . . . . . . . . 
+. . . . . . . . . .
 
 - Expect -
 Health is 0x12c

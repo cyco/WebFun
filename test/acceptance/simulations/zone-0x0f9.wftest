@@ -1,5 +1,5 @@
 -= WebFun Test =--
-Seed: 0
+Seed: 4
 Zone: 0x0f9
 Find: 0x1b2
 
@@ -8,7 +8,7 @@ Find: 0x1b2
 # Entering zone 0x0f9 at tick 11
 ← ← ← . ← ← . ↑ . . → → ↑ ↑ ↑ . ← ← . . ↑ . . ⇢ . . ↓ . . → . . ⇡ . ↑ . . ⇡ ⇡ ⇡ ⇡ ⇡ . ⇡ . ⇡ . . → . ⇣ . . ↖ . ⇢ . . ↑ → . . ↑ . . ⇠ . ↗ . ⇣ ⇣ . . ↙ . ⇢ . . → → . . ↓ ↓ ↓ ↓ ↓ ↓ ← . . ↑ . ⇣ ⇣ . ↑ . ⇢ ⇢ . . → ↑ . . → . ⇡ ⇡ ⇡ ⇡ ⇡ ⇡ . . ⇡ . ← . ⇢ . → → → . ↓ .
 # Entering zone 0x0bf at tick 0
-. . . . . . . . . . . . 
+. . . . . . . . . . . .
 
 - Expect -
-Inventory: 0x1b2
+Inventory contains 0x1b2
