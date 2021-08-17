@@ -321,21 +321,6 @@ class GameController extends EventTarget implements EventListenerObject {
 		// TODO: handle unknownSum
 		this._showSceneView(engine.currentZone);
 		engine.triggerLocationChange();
-
-		const state2 = engine.variant.takeSnapshot(engine);
-		const writer = new Writer();
-		const sizingStream = new DiscardingOutputStream();
-		writer.write(state2, sizingStream);
-		const stream2 = new OutputStream(sizingStream.offset);
-		writer.write(state2, stream2);
-
-		const { read: read2 } = Reader.build(new InputStream(stream2.buffer));
-		const assets2 = new AssetManager();
-		this.populateAssetManager(this.rawData, assets2);
-		const state3 = read2(assets2);
-
-		console.log(diff(state, state3));
-		console.log(formatDifferences(diff(state, state3), state, state3));
 	}
 
 	private unwrapWorld(world: SavedWorld, assets: AssetManager, save: SaveState): World {
