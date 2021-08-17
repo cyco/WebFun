@@ -182,7 +182,7 @@ class GameplayContext {
 		story.generate(story.seed, story.planet, story.size);
 		engine.story = story;
 
-		engine.metronome.tickDuration = debug ? 50 : 1;
+		engine.metronome.tickDuration = debug ? 50 : 0;
 		engine.metronome.ontick = (delta: number) => engine.update(delta);
 		engine.metronome.onrender = () => engine.render();
 
