@@ -1,13 +1,15 @@
 import { Story, AssetManager, Variant } from "src/engine";
 import { Tile, Zone, Hotspot, Puzzle } from "src/engine/objects";
 
-import World from "src/engine/world";
-import { srand, randmod } from "src/util";
 import RoomIterator from "src/engine/room-iterator";
-import { Yoda } from "src/variant";
+import World from "src/engine/world";
 import { WorldSize } from "src/engine/generation";
+import { Yoda } from "src/variant";
+import { randmod, srand } from "src/util";
 
 class SimulatedStory extends Story {
+	private config: any;
+
 	constructor(
 		find: Tile,
 		npc: Tile,
@@ -19,19 +21,8 @@ class SimulatedStory extends Story {
 		variant: Variant = Yoda
 	) {
 		super(assets, variant);
-		srand(0);
 
-		this._buildWorld(mainZone, surroundingZones, assets);
-		this._buildPuzzle(mainZone, find, npc, required, required2);
-		this._initializeZone(mainZone, find, npc, required, required2);
-	}
-
-	private _buildPuzzle(_: Zone, find: Tile, npc: Tile, required: Tile, required2: Tile) {
-		const item = this.world.at(4, 4);
-		item.findItem = find;
-		item.npc = npc;
-		item.requiredItem = required;
-		item.additionalRequiredItem = required2;
+		this.config = { find, npc, required, required2, mainZone, surroundingZones };
 	}
 
 	private _buildWorld(zone: Zone, surroundingZones: Zone[], assets: AssetManager) {
@@ -45,12 +36,44 @@ class SimulatedStory extends Story {
 		world.at(3, 5).zone = surroundingZones[5];
 		world.at(4, 5).zone = surroundingZones[6];
 		world.at(5, 5).zone = surroundingZones[7];
-		this.world = world;
 
+		this.world = world;
 		this.dagobah = new World(assets);
 	}
 
-	private _initializeZone(zone: Zone, find: Tile, _npc: Tile, _required: Tile, _required2: Tile) {
+	private _setupSector(_: Zone, find: Tile, npc: Tile, required: Tile, required2: Tile) {
+		const item = this.world.at(4, 4);
+		item.findItem = find;
+		item.npc = npc;
+		item.requiredItem = required;
+		item.additionalRequiredItem = required2;
+		item.puzzleIndex = 0;
+		item.usedAlternateStrain = true;
+	}
+
+	private _buildPuzzles(zone: Zone, find: Tile, required: Tile) {
+		switch (zone.type) {
+			case Zone.Type.Trade:
+				const p1candidates = this.assets.getFiltered(
+					Puzzle,
+					p => p.type === Puzzle.Type.Transaction && p.item1 === find
+				);
+				const p2candidates = this.assets.getFiltered(
+					Puzzle,
+					p => p.type === Puzzle.Type.Transaction && p.item1 === required
+				);
+
+				this.puzzles = [
+					[p1candidates[randmod(p1candidates.length)], p2candidates[randmod(p2candidates.length)]],
+					[]
+				];
+				return;
+			default:
+				return;
+		}
+	}
+
+	private _initializeZone(zone: Zone, find: Tile, npc: Tile, required: Tile, required2: Tile) {
 		switch (zone.type) {
 			case Zone.Type.BlockadeNorth:
 			case Zone.Type.BlockadeSouth:
@@ -67,14 +90,24 @@ class SimulatedStory extends Story {
 				this.placeQuestItem(zone, puzzle3.item1);
 				this.placeQuestItem(zone, puzzle3.item2 ? puzzle3.item2 : null)
 			}
-		*/
+			*/
 			case Zone.Type.Use:
 				// if(this.dropItemAtLockHotspot(zone, p1.item1)) {
 				// 	this.placeQuestItem(zone, p2.item1)
 				// }
 				break;
 			case Zone.Type.Trade:
-				// this.dropNPCAtHotspotRandomly(zone, npc);
+				for (const room of RoomIterator(zone, this.assets)) {
+					if (!room.npcs.includes(npc)) continue;
+
+					const candidates = room.hotspots.withType(Hotspot.Type.SpawnLocation);
+					if (!candidates.length) continue;
+
+					const hotspot = candidates[randmod(candidates.length)];
+					hotspot.enabled = true;
+					hotspot.argument = npc.id;
+					break;
+				}
 				break;
 			case Zone.Type.Find:
 			case Zone.Type.FindUniqueWeapon:
@@ -109,6 +142,25 @@ class SimulatedStory extends Story {
 		this.planet = planet;
 		this.size = size;
 
+		srand(seed);
+
+		this._buildWorld(this.config.mainZone, this.config.surroundingZones, this.config.assets);
+		this._setupSector(
+			this.config.mainZone,
+			this.config.find,
+			this.config.npc,
+			this.config.required,
+			this.config.required2
+		);
+		this._buildPuzzles(this.config.mainZone, this.config.find, this.config.required);
+		this._initializeZone(
+			this.config.mainZone,
+			this.config.find,
+			this.config.npc,
+			this.config.required,
+			this.config.required2
+		);
+
 		const copy = new World(this.assets);
 
 		const mapItem = (i: Tile) => i && this.assets.get(Tile, i.id);
@@ -126,11 +178,12 @@ class SimulatedStory extends Story {
 				copiedItem.additionalRequiredItem = mapItem(item.additionalRequiredItem);
 				copiedItem.npc = mapItem(item.npc);
 				copiedItem.findItem = mapItem(item.findItem);
+				copiedItem.usedAlternateStrain = item.usedAlternateStrain;
 			}
 		}
 
 		this.world = copy;
-		this.dagobah = copy;
+		this.dagobah = new World(this.assets);
 
 		this.goal = this.assets.get(Puzzle, 0);
 	}
