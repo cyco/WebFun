@@ -82,8 +82,6 @@ class App {
 
 	private async loadTest(file: File): Promise<void> {
 		const loadFile = await require("src/app/webfun/debug/load-test");
-		//if (!this.defaultGameController) await this.showDefaultGameController();
-		//this.showDefaultGameController();
 		loadFile.default(this.defaultGameController)(file);
 	}
 
@@ -188,7 +186,7 @@ class App {
 		const controller = new GameController(variant, urls, this.settings);
 		await controller.show(this._windowManager);
 
-		//if (!this.defaultGameController) this.defaultGameController = controller;
+		if (!this.defaultGameController) this.defaultGameController = controller;
 		return controller;
 	}
 
