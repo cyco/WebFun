@@ -42,7 +42,7 @@ class PuzzleInspectorCell extends Cell<Puzzle> {
 					tiles={this.tiles}
 					palette={this.palette}
 					onchange={(e: Event) => this.changeTile(1, e)}></PopoutTilePicker>
-				<div className="title">{`${this.data.id.toHex(2)} ${this.data.name}
+				<div className="title">{`${this.data.id} ${this.data.name}
 			${this.data.type.name}`}</div>
 				<div className="unknowns">
 					<div>{this.data.item1Class.name}</div>

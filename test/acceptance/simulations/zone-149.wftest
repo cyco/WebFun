@@ -1,8 +1,8 @@
 -= WebFun Test =--
-Seed: 0
-Zone: 0x095
-Find: 0x1b0
-Inventory: 0x1fe
+Seed: 0x000
+Zone: 149
+Find: 432
+Inventory: 510
 
 - Input -
 . 👋 0x1fe . . . . . . . . → → ↗
@@ -30,4 +30,4 @@ Inventory: 0x1fe
 . . . . . . . . . .
 
 - Expect -
-Inventory contains 0x1b0
+Inventory contains 432

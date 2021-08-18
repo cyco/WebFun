@@ -28,11 +28,11 @@ class InventoryIs implements Expectation {
 	}
 
 	format(): string {
-		return `Inventory is ${this.items.map(i => i.toHex(3)).join(", ")}`;
+		return `Inventory is ${this.items.join(", ")}`;
 	}
 
 	evaluate(ref: EngineRef): void {
-		it(`hero has items ${this.items.map(i => i.toHex(3)).join(", ")}`, () => {
+		it(`hero has items ${this.items.join(", ")}`, () => {
 			const actualItems = ref.engine.inventory.items.map(i => i.id).sort();
 			if (actualItems.length !== this.items.length) {
 				const message = `Expected inventory to contain excatly ${this.items.length} items but it has

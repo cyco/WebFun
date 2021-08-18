@@ -1,34 +1,31 @@
 -= WebFun Test =--
 Description: Test getting item from crashed fighter
+
 Seed: 0x25b
 Difficulty: hard
-Health: 768
-Zone: 0x25b
-Find: 0x50c
-Required: 0x1b0
-Inventory: 0x12, 0x1b0
+Zone: 603
+Find: 1292
+Required: 432
+Inventory: 18, 432
 
 - Input -
 . 👋 0x012 . → → → → → → → . ↑ . . . → → → → ↑ ↑ ↑ . → . ↑ . . . . . . . . . . . . . . ↑ . . . . . . . . . . ↑ . . . . ↑ . . . . . . . . ← ← ← ↖ ↖ ↖ ↖ ↑ ↑ → → . ↓ ↓ . 👋 0x1b0 at 7x9 . . . . . 🔫 🔫 🔫 . . . ↓ . . → . 🔫 🔫 🔫 🔫 🔫 🔫 🔫 🔫 🔫 🔫 🔫 🔫 🔫 . 🔫 🔫 . ↓ ↘ → → → → . . ↗ . . . ↗ . . . . . . . . . .
 
 - Expect -
-Inventory contains 0x50c
-
+Inventory contains 1292
 --------------------------------------------------------------------------------
-
 -= WebFun Test =--
 Description: Test getting item from NPC
 
 Seed: 0x25b
 Difficulty: hard
-Health: 768
-Zone: 0x25b
-Find: 0x50c
-Required: 0x1b0
-Inventory: 0x012, 0x1b0
+Zone: 603
+Find: 1292
+Required: 432
+Inventory: 18, 432
 
 - Input -
 . 👋 0x012 . ↑ ↑ . ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ . → → → → → → → . ↓ . 👋 0x1b0 at 7x9 . . . . . . . . . . . .
 
 - Expect -
-Inventory contains 0x50c
+Inventory contains 1292

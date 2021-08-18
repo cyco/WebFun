@@ -206,7 +206,7 @@ class SymbolicCoverage extends Component {
 				: (z: Zone) => z.actions.some(a => a.instructions.some(i => i.opcode === opcode));
 		const zones = engine.assets.getFiltered(Zone, filter);
 		console.log(`Zones containing ${type.toLowerCase()} with opcode ${opcode.toHex(2)}: `);
-		console.log(zones.map(z => z.id.toHex(2)));
+		console.log(zones.map(z => z.id));
 		*/
 	}
 

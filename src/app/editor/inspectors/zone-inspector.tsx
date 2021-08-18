@@ -160,7 +160,7 @@ class ZoneInspector extends AbstractInspector {
 		zones.forEach(id => {
 			const zone = this.data.currentData.get(Zone, id, NullIfMissing);
 			if (!zone) {
-				console.warn(`inspector for zone ${id.toHex(4)} could not be restored.`);
+				console.warn(`inspector for zone ${id} could not be restored.`);
 				return;
 			}
 

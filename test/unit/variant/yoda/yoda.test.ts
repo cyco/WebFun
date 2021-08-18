@@ -21,7 +21,7 @@ describe("WebFun.Variant.Yoda", () => {
 	});
 
 	it("is used to determine which tiles to show in map view", () => {
-		expect(subject.locatorTile.here).toEqual(0x345);
+		expect(subject.locatorTile.here).toEqual(837);
 	});
 
 	it("provides access to sound ids by name", () => {
@@ -60,7 +60,7 @@ describe("WebFun.Variant.Yoda", () => {
 		expect(subject.getEquipSound(mockWeapon(5))).toEqual(-1);
 	});
 
-	it("enables goal 0xbd (yoda missing) if more than 1 game has been won", () => {
+	it("enables goal 189 (yoda missing) if more than 1 game has been won", () => {
 		const engineMock = mockEngine();
 		engineMock.persistentState.gamesWon = 1;
 		const puzzleMock: Puzzle = {} as any;
@@ -69,10 +69,10 @@ describe("WebFun.Variant.Yoda", () => {
 		subject.createNewStory(engineMock);
 
 		expect(puzzleMock.type).toBe(Puzzle.Type.Mission);
-		expect(engineMock.assets.get).toHaveBeenCalledWith(Puzzle, 0xbd);
+		expect(engineMock.assets.get).toHaveBeenCalledWith(Puzzle, 189);
 	});
 
-	it("enables goal 0xc5 if more than 10 games have been won", () => {
+	it("enables goal 197 if more than 10 games have been won", () => {
 		const engineMock = mockEngine();
 		engineMock.persistentState.gamesWon = 10;
 		const puzzleMock: Puzzle = {} as any;
@@ -81,7 +81,7 @@ describe("WebFun.Variant.Yoda", () => {
 		subject.createNewStory(engineMock);
 
 		expect(puzzleMock.type).toBe(Puzzle.Type.Mission);
-		expect(engineMock.assets.get).toHaveBeenCalledWith(Puzzle, 0xc5);
+		expect(engineMock.assets.get).toHaveBeenCalledWith(Puzzle, 197);
 	});
 
 	function mockStory(): Story {

@@ -1,7 +1,7 @@
 -= WebFun Test =--
-Seed: 4
-Zone: 0x0f9
-Find: 0x1b2
+Seed: 0x004
+Zone: 249
+Find: 434
 
 - Input -
 . . → ↓ → → → → → ↑ .
@@ -11,4 +11,4 @@ Find: 0x1b2
 . . . . . . . . . . . .
 
 - Expect -
-Inventory contains 0x1b2
+Inventory contains 434

@@ -3,15 +3,15 @@ Description: Quest NPC should not drop items until all monsters are dead
 Tag: regression
 
 Seed: 0x202
-Zone: 0x202
-Find: 0x1db
+Zone: 514
+Find: 475
 
 - Input -
 . → → → → → . ↑ .
 # Entering zone 0x202 at tick 9
 ↑ ↗ → → → ↗ ↑ ↑ ↑ ↑ → → . → . .
 # Entering zone 0x1c8 at tick 0
-. . . . . . . . . . 
+. . . . . . . . . .
 
 - Expect -
-Inventory does not contain: 0x1db
+Inventory does not contain 475

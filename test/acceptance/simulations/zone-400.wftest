@@ -1,11 +1,11 @@
 -= WebFun Test =--
 Description: Test opening the chest to find a data cube
 
-Seed: 0
-Zone: 0x190
-Find: 0x4bf
-Required: 0x1f3
-Inventory: 0x1f3
+Seed: 0x000
+Zone: 400
+Find: 1215
+Required: 499
+Inventory: 499
 
 - Input -
 . . . . . → → → → ↗ .
@@ -17,17 +17,17 @@ Inventory: 0x1f3
 . . . . . . . . . . . . . . . . . . . . . . . .
 
 - Expect -
-Inventory contains 0x4bf
+Inventory contains 1215
 Zone solved
 --------------------------------------------------------------------------------------------------------------------------------
 -= WebFun Test =--
 Description: Test quest where 3-PO is locked up in the ship
 
-Seed: 0
-Zone: 0x190
-Find: 0x549
-Required: 0x1f3
-Inventory: 0x1f3
+Seed: 0x000
+Zone: 400
+Find: 1353
+Required: 499
+Inventory: 499
 
 - Input -
 . . . . . . → → → → ↑ .
@@ -39,5 +39,5 @@ Inventory: 0x1f3
 .
 
 - Expect -
-Inventory contains 0x549
+Inventory contains 1353
 Zone solved

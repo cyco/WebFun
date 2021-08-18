@@ -72,7 +72,7 @@ class TileInspector extends AbstractInspector {
 			<div className="detail">
 				<span className="title">
 					<span className="tile-id" title={tile.id.toString()}>
-						{tile.id.toHex()}
+						{tile.id}
 					</span>
 					:
 					<Label

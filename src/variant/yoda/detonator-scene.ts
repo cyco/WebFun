@@ -6,7 +6,7 @@ import { Tile } from "src/engine/objects";
 import { drawTileImageData } from "src/app/webfun/rendering";
 import { abs } from "src/std/math";
 
-const ThermalDetonatorAnimation = [0x202, 0x431, 0x432, 0x433];
+const ThermalDetonatorAnimation = [514, 1073, 1074, 1075];
 
 class DetonatorScene extends Scene {
 	private _detonatorFrames: HTMLImageElement[] = null;

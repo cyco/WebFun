@@ -1,6 +1,6 @@
 const Sounds = {
-	Hurt: 0x4,
-	NoGo: 0x6
+	Hurt: 4,
+	NoGo: 6
 };
 
 export default Sounds;

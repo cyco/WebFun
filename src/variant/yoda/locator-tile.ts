@@ -6,7 +6,7 @@ import { rgb } from "src/util";
 
 export default class extends LocatorTile {
 	get here(): number {
-		return 0x345;
+		return 837;
 	}
 
 	get backgroundColor(): string {
@@ -18,39 +18,39 @@ export default class extends LocatorTile {
 		visited?: boolean,
 		reveal: boolean = false
 	): number | [number] | [number, number] {
-		if (!zone) return 0x344;
+		if (!zone) return 836;
 
-		if (!reveal && (visited === false || (visited === undefined && !zone.visited))) return 0x343;
+		if (!reveal && (visited === false || (visited === undefined && !zone.visited))) return 835;
 
 		switch (zone.type) {
 			case Zone.Type.Empty:
 				if (this._hasTeleporterHotspot(zone)) {
-					return [0x341, 0x342];
+					return [833, 834];
 				}
-				return 0x340;
+				return 832;
 			case Zone.Type.Town:
-				return [0x33d];
+				return [829];
 			case Zone.Type.Goal:
-				return [0x33f, 0x33e];
+				return [831, 830];
 			case Zone.Type.TravelStart:
-				return [0x333, 0x334];
+				return [819, 820];
 			case Zone.Type.TravelEnd:
-				return [0x333, 0x334];
+				return [819, 820];
 			case Zone.Type.BlockadeEast:
-				return [0x337, 0x338];
+				return [823, 824];
 			case Zone.Type.BlockadeWest:
-				return [0x33b, 0x33c];
+				return [827, 828];
 			case Zone.Type.BlockadeNorth:
-				return [0x335, 0x336];
+				return [821, 822];
 			case Zone.Type.BlockadeSouth:
-				return [0x339, 0x33a];
+				return [825, 826];
 			case Zone.Type.Trade:
 			case Zone.Type.Use:
 			case Zone.Type.Find:
 			case Zone.Type.FindUniqueWeapon:
-				return [0x331, 0x332];
+				return [817, 818];
 			default:
-				return 0x340;
+				return 832;
 		}
 	}
 

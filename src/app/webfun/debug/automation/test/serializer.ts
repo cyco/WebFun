@@ -31,15 +31,14 @@ class Serializer {
 		if (planet > 0) configuration.push(`Planet: ${Zone.Planet.fromNumber(planet).name}`);
 		if (size > 0) configuration.push(`Size: ${WorldSize.fromNumber(size).name}`);
 		if (gamesWon > 0) configuration.push(`Games Won: ${gamesWon.toString(10)}`);
-		if (difficulty !== 50) configuration.push(`Difficulty: ${difficulty < 50 ? "easy" : "hard"}`);
-		if (health) configuration.push(`Health: ${health}`);
-		if (zone >= 0) configuration.push(`Zone: ${zone.toHex(3)}`);
-		if (findItem > 0) configuration.push(`Find: ${findItem.toHex(3)}`);
-		if (npc > 0) configuration.push(`NPC: ${npc.toHex(3)}`);
-		if (requiredItem1 > 0) configuration.push(`Required: ${requiredItem1.toHex(3)}`);
-		if (requiredItem2 > 0) configuration.push(`Required: ${requiredItem2.toHex(3)}`);
-		if (inventory.length)
-			configuration.push(`Inventory: ${inventory.map(i => i.toHex(3)).join(", ")}`);
+		if (difficulty !== 0) configuration.push(`Difficulty: ${difficulty < 50 ? "easy" : "hard"}`);
+		if (health && health !== 768) configuration.push(`Health: ${health}`);
+		if (zone >= 0) configuration.push(`Zone: ${zone}`);
+		if (findItem > 0) configuration.push(`Find: ${findItem}`);
+		if (npc > 0) configuration.push(`NPC: ${npc}`);
+		if (requiredItem1 > 0) configuration.push(`Required: ${requiredItem1}`);
+		if (requiredItem2 > 0) configuration.push(`Required: ${requiredItem2}`);
+		if (inventory.length) configuration.push(`Inventory: ${inventory.map(i => i).join(", ")}`);
 
 		return [
 			"-= WebFun Test =--",

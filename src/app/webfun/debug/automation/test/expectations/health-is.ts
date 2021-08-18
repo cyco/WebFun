@@ -16,13 +16,13 @@ class HealthIsExpectation implements Expectation {
 	}
 
 	evaluate(ref: EngineRef): void {
-		it(`the hero's health is ${this._health.toHex(3)}`, () => {
+		it(`the hero's health is ${this._health}`, () => {
 			expect(ref.engine.hero.health).toBe(this._health);
 		});
 	}
 
 	format(): string {
-		return `Health is ${this._health.toHex(3)}`;
+		return `Health is ${this._health}`;
 	}
 }
 

@@ -1,13 +1,11 @@
 -= WebFun Test =--
 Seed: 0x000
-Difficulty: easy
-Health: 768
-Zone: 0x019
-Find: 0x1b2
-Inventory: 0x1fe
+Zone: 25
+Find: 434
+Inventory: 510
 
 - Input -
 . . . . . . ↑ ↑ ↗ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ . . . ↑ → → → → → . . . → . . → → . . → . . . . . . . . ↑ → . . . . → ↑ . . . ↓ . . . . . . . . . . . ⇢ . . ↑ ↑ ← ← ↓ ↓ .
 
 - Expect -
-Inventory contains 0x1b2
+Inventory contains 434

@@ -1,8 +1,8 @@
 -= WebFun Test =--
 Seed: 0x097
 Health: 20
-Zone: 0x097
-Inventory: 0x1fe
+Zone: 151
+Inventory: 510
 
 - Input -
 . . → → ← . ↑ .
@@ -15,4 +15,4 @@ Inventory: 0x1fe
 . . . . . . . . . .
 
 - Expect -
-Health is 0x12c
+Health is 300

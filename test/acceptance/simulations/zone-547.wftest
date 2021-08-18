@@ -1,14 +1,13 @@
 -= WebFun Test =--
 Seed: 0x223
-Zone: 0x223
-Find: 0x1ff
+Zone: 547
+Find: 511
 
 - Input -
 . . → → → ↑ .
 # Entering zone 0x223 at tick 7
 ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ → → → → ↗ ↗ ↗ ↑ . ← . . ← ← ↓ ← ← ← ← ← ← . . ← ↑ ↑ . ↗ → . ⇣ . . ↓ ↓ → → ↗ ↗ ↑ . ↑ . ⇡ . . → → . . ↓ . → → . → . → . . →
 
-
 - Expect -
 Zone solved
-Inventory contains 0x1ff
+Inventory contains 511

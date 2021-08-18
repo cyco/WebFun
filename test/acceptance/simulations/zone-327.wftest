@@ -1,13 +1,13 @@
 -= WebFun Test =--
 Seed: 0x147
 Difficulty: hard
-Zone: 0x147
-Find: 0x1ae
-Required: 0x1b7
-Inventory: 0x1b7
+Zone: 327
+Find: 430
+Required: 439
+Inventory: 439
 
 - Input -
 . ↘ . . . ← ← ↓ . . . ← ← . . . . . . . → → → . → → ↑ ↑ ↑ . . → → → → → → ↑ ↑ ↑ ↑ ↑ ↑ ↖ ↖ ↑ . . ↑ . . . . . . . . . . ↑ ↑ . . . . ← . ↑ . . ↖ . . . . . . . . ← . ↑ . . → . . . . . . . . ↘ . . . . ↑ ↑ . . . . 👋 0x1b7 at 7x7 . . ↑ . . ← . . . ← . . . . . . . . . . ← . ↑ . . . . . . . . ↑ . . . . . . . . . . .
 
 - Expect -
-Inventory contains 0x1ae
+Inventory contains 430

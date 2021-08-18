@@ -94,7 +94,7 @@ class HotspotLayer extends Component {
 						title: `${htsp.x}x${htsp.y}`
 					},
 					{
-						title: htsp.argument.toHex(2)
+						title: htsp.argument
 					},
 					{
 						title: () => (htsp.enabled ? "Disable" : "Enable"),
@@ -107,7 +107,7 @@ class HotspotLayer extends Component {
 						title: "Change Argument",
 						callback: async () => {
 							const raw = await ModalPrompt("Set new argument", {
-								defaultValue: htsp.argument.toHex(2)
+								defaultValue: htsp.argument.toString(10)
 							});
 							if (raw === null) return;
 							htsp.argument = +raw;

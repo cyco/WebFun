@@ -22,8 +22,8 @@ class IndyFull extends Variant {
 	];
 	public readonly mapKey = "KeyM";
 	public readonly saveGameMagic = "INDYSAV44";
-	public readonly mapTileId = 0x1bb;
-	public readonly weaponTileId = 0x1c2;
+	public readonly mapTileId = 443;
+	public readonly weaponTileId = 450;
 
 	get locatorTile(): LocatorTile {
 		return new LocatorTile();

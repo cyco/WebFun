@@ -3,15 +3,15 @@ Description: Ensure that disable-all-monsters instruction clears the way
 Tag: regression
 
 Seed: 0x1c7
-Zone: 0x1c7
-Find: 0x1d5
+Zone: 455
+Find: 469
 
 - Input -
 . . → → → → ↑ .
 # Entering zone 0x1c7 at tick 8
 → → → → → ↑ ↑ ↑ ↑ ↑ . . ← ← ↖ ↖ . . ← ↖ ← . ← ↖ ↖ . .
 # Entering zone 0x24e at tick 0
-. . . . . . . . . . 
+. . . . . . . . . .
 
 - Expect -
-Inventory contains 0x1d5
+Inventory contains 469

@@ -141,7 +141,7 @@ class TestCreatorWindow extends AbstractWindow implements EventListenerObject {
 		const t = (t: number) => (t > 0 ? assets.get(Tile, t) : null);
 		const z = (z: number) => (z > 0 ? assets.get(Zone, z) : null);
 
-		const { zone, findItem, npc, requiredItem1, requiredItem2, seed } = config;
+		const { zone, findItem, npc, requiredItem1, requiredItem2 } = config;
 
 		return new SimulatedStory(
 			t(findItem),
@@ -176,8 +176,8 @@ class TestCreatorWindow extends AbstractWindow implements EventListenerObject {
 		download(
 			data,
 			zone >= 0
-				? `zone-${zone.toHex(3)}.wftest`
-				: `world-${seed.toHex(3)}-${Zone.Planet.fromNumber(
+				? `zone-${zone}.wftest`
+				: `world-${seed.toHex(4)}-${Zone.Planet.fromNumber(
 						planet
 				  ).name.toLowerCase()}-${WorldSize.fromNumber(size).name.toLowerCase()}.wftest`
 		);

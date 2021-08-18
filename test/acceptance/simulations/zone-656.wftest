@@ -1,8 +1,8 @@
 -= WebFun Test =--
 Description: Test item placement (rand = 3)
 
-Seed: 0
-Zone: 0x290
+Seed: 0x000
+Zone: 656
 
 - Input -
 . . . . ↑ .
@@ -10,4 +10,4 @@ Zone: 0x290
 . . ↑ ↑ ↑ ↑ ↗ → → → → → → → ↑ ↑ ↑ ↑ . → → → → .
 
 - Expect -
-Inventory contains 0x4ae
+Inventory contains 1198

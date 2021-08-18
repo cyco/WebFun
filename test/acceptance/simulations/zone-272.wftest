@@ -1,7 +1,7 @@
 -= WebFun Test =--
 Seed: 0x110
-Zone: 0x110
-Find: 0x1ff
+Zone: 272
+Find: 511
 
 - Input -
 . . → → → ↑ ↑
@@ -10,8 +10,8 @@ Find: 0x1ff
 # Entering zone 0x111 at tick 79
 ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ .
 # Entering zone 0x1bc at tick 0
-. . . . . . 
+. . . . . .
 
 - Expect -
 Zone solved
-Inventory contains 0x1ff
+Inventory contains 511

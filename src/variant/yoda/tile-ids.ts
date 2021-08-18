@@ -1,20 +1,20 @@
 enum TileIDs {
-	Yoda = 0x030c,
+	Yoda = 780,
 	YodasBack = 1993,
 	YodasSeat = 2034,
-	R2D2 = 0x31a,
+	R2D2 = 794,
 
 	// Used for help texts
-	TeleporterInactive = 0x218,
-	TeleporterActive = 0x219,
-	MedicalDroid = 0x31d,
+	TeleporterInactive = 536,
+	TeleporterActive = 537,
+	MedicalDroid = 797,
 
-	XWingPart1 = 0x3b4,
-	XWingPart2 = 0x3b5,
-	XWingPart3 = 0x3b6,
+	XWingPart1 = 948,
+	XWingPart2 = 949,
+	XWingPart3 = 950,
 
 	// Items
-	Locator = 0x1a5,
+	Locator = 421,
 	Locator817 = 817,
 	Locator818 = 818,
 	Locator819 = 819,
@@ -38,22 +38,22 @@ enum TileIDs {
 	Locator837 = 837,
 
 	// Consumables
-	QRations = 0x1fb,
-	IceMushroom = 0x4ac,
-	ScrubRoot = 0x4ae,
-	RebelFirstAidKit = 0x1f9,
-	ImperialFirstAidKit = 0x1fa,
-	BactaFluid = 0x1e0,
-	Mushroom = 0x4ad,
-	CharkRoot = 0x1e2,
+	QRations = 507,
+	IceMushroom = 1196,
+	ScrubRoot = 1198,
+	RebelFirstAidKit = 505,
+	ImperialFirstAidKit = 506,
+	BactaFluid = 480,
+	Mushroom = 1197,
+	CharkRoot = 482,
 
 	// Weapons
-	TheForce = 0x1ff,
-	Blaster = 0x200,
-	BlasterRifle = 0x201,
-	LightsaberGreen = 0x1fe,
-	LightsaberBlue = 0x12,
-	ThermalDetonator = 0x202,
+	TheForce = 511,
+	Blaster = 512,
+	BlasterRifle = 513,
+	LightsaberGreen = 510,
+	LightsaberBlue = 18,
+	ThermalDetonator = 514,
 
 	// Animation
 	Explosion1073 = 1073,

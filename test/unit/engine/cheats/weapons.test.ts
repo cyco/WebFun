@@ -22,13 +22,13 @@ describe("WebFun.Engine.Cheats.Weapons", () => {
 			assets: new AssetManager()
 		};
 
-		mockEngine.assets.set(Tile, (0x1a5 as any) as Tile, 0x1a5);
-		mockEngine.assets.set(Tile, (0x1ff as any) as Tile, 0x1ff);
-		mockEngine.assets.set(Tile, (0x200 as any) as Tile, 0x200);
-		mockEngine.assets.set(Tile, (0x201 as any) as Tile, 0x201);
-		mockEngine.assets.set(Tile, (0x202 as any) as Tile, 0x202);
+		mockEngine.assets.set(Tile, 421 as any as Tile, 421);
+		mockEngine.assets.set(Tile, 511 as any as Tile, 511);
+		mockEngine.assets.set(Tile, 512 as any as Tile, 512);
+		mockEngine.assets.set(Tile, 513 as any as Tile, 513);
+		mockEngine.assets.set(Tile, 514 as any as Tile, 514);
 
-		subject.execute((mockEngine as any) as Engine);
+		subject.execute(mockEngine as any as Engine);
 
 		expect(items).toEqual([
 			Yoda.tileIDs.ThermalDetonator,

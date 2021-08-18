@@ -301,7 +301,7 @@ class EditorView extends Component implements InventoryDelegate, InteractiveMapC
 			defaultValue: number = null
 		): Promise<number> {
 			const input = await ModalPrompt(text, {
-				defaultValue: defaultValue?.toHex() ?? ""
+				defaultValue: defaultValue?.toString(10) ?? ""
 			});
 			if (input === null) return null;
 

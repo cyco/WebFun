@@ -137,7 +137,7 @@ class RecordingInputManager implements InputManager {
 	public handleEvent(e: CustomEvent): void {
 		if (e.type === Engine.Event.WeaponChanged) {
 			const id = (e.detail as any).weapon.id;
-			this._records.push(`${Syntax.Place.Start} ${id.toHex(3)}${Syntax.Place.End}`);
+			this._records.push(`${Syntax.Place.Start} ${id}${Syntax.Place.End}`);
 			return;
 		}
 
@@ -146,7 +146,7 @@ class RecordingInputManager implements InputManager {
 				const id = this.placedTile.id;
 				const { x, y } = this.placedTileLocation;
 
-				this._records.push(`${Syntax.Place.Start} ${id.toHex(3)} at ${x}x${y}${Syntax.Place.End}`);
+				this._records.push(`${Syntax.Place.Start} ${id} at ${x}x${y}${Syntax.Place.End}`);
 				return;
 			}
 		}

@@ -21,13 +21,13 @@ class CurrentZoneIsExpectation implements Expectation {
 	}
 
 	evaluate(ref: EngineRef): void {
-		it(`the current zone is ${this._zone.toHex(3)}`, () => {
+		it(`the current zone is ${this._zone}`, () => {
 			expect(ref.engine.currentZone.id).toBe(this._zone);
 		});
 	}
 
 	format(): string {
-		return `Current zone is ${this._zone.toHex(3)}`;
+		return `Current zone is ${this._zone}`;
 	}
 }
 

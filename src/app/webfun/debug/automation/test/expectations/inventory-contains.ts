@@ -27,20 +27,20 @@ class InventoryContainsExpectation implements Expectation {
 	}
 
 	format(): string {
-		return `Inventory contains ${this.items.map(i => i.toHex(3)).join(", ")}`;
+		return `Inventory contains ${this.items.join(", ")}`;
 	}
 
 	evaluate(ref: EngineRef): void {
-		it(`hero's inventory contains items ${this.items.map(i => i.toHex(3)).join(", ")}`, () => {
+		it(`hero's inventory contains items ${this.items.join(", ")}`, () => {
 			for (const item of this.items) {
 				if (ref.engine.inventory.contains(item)) continue;
 
 				const message =
 					this.items.length > 1
-						? `Expected inventory to contain items ${this.items
-								.map(i => i.toHex(3))
-								.join(", ")}, but ${item.toHex(3)} is missing.`
-						: `Expected inventory to contain item ${item.toHex(3)}.`;
+						? `Expected inventory to contain items ${this.items.join(
+								", "
+						  )}, but ${item} is missing.`
+						: `Expected inventory to contain item ${item}.`;
 				fail(message);
 			}
 		});

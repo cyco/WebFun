@@ -18,7 +18,7 @@ class DebugInfoScene extends Scene {
 			const sceneStack: Scene[] = (this.engine.sceneManager as any)._stack;
 			const zoneScene = sceneStack.find(s => s instanceof ZoneScene) as ZoneScene;
 			if (zoneScene) {
-				renderer.renderText(`Zone ${zoneScene.zone.id.toHex(3)}`, new Point(200, 266));
+				renderer.renderText(`Zone ${zoneScene.zone.id}`, new Point(200, 266));
 			}
 		}
 
